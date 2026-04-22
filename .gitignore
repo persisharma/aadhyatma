@@ -1,0 +1,14 @@
+# /ship pipeline state (ephemeral, per-run)
+.ship-pipeline-state
+.ship-1b-verdict
+.ship-baseline-tests.json
+.ship-4a-regression-check.json
+
+# Per-session logs and learnings (local tooling)
+.claude/ship-logs/
+
+# Conductor workspace scratchpad
+.context/
+
+# macOS
+.DS_Store
