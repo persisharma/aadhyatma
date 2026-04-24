@@ -14,10 +14,13 @@ import {
   useFonts as useCormorantFonts,
   CormorantGaramond_400Regular_Italic,
   CormorantGaramond_500Medium,
+  CormorantGaramond_600SemiBold,
   CormorantGaramond_600SemiBold_Italic,
+  CormorantGaramond_700Bold,
 } from '@expo-google-fonts/cormorant-garamond';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { lightColors } from '@/theme/colors';
+import { GitaLanguageProvider } from '@/data/gita/language';
 import RootNavigator from '@/navigation/RootNavigator';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -32,7 +35,9 @@ export default function App() {
   const [cormorantLoaded] = useCormorantFonts({
     CormorantGaramond_400Regular_Italic,
     CormorantGaramond_500Medium,
+    CormorantGaramond_600SemiBold,
     CormorantGaramond_600SemiBold_Italic,
+    CormorantGaramond_700Bold,
   });
 
   const fontsReady = notoLoaded && cormorantLoaded;
@@ -57,10 +62,12 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayout}>
       <SafeAreaProvider>
         <ThemeProvider>
-          <NavigationContainer>
-            <StatusBar style="dark" />
-            <RootNavigator />
-          </NavigationContainer>
+          <GitaLanguageProvider>
+            <NavigationContainer>
+              <StatusBar style="dark" />
+              <RootNavigator />
+            </NavigationContainer>
+          </GitaLanguageProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
