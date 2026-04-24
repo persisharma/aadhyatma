@@ -4,13 +4,16 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@/*": ["src/*"],
+      "@assets/*": ["assets/*"]
+    },
+    "resolveJsonModule": true
   },
   "include": [
     "App.tsx",
     "index.ts",
-    "src/**/*"
+    "src/**/*",
+    "assets/**/*.ts"
   ],
   "exclude": [
     "node_modules",

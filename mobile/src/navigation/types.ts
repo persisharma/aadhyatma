@@ -1,3 +1,4 @@
 export type RootStackParamList = {
-  Sanatan: undefined;
+  Home: undefined;
+  ChalisaReader: { initialIndex?: number } | undefined;
 };
