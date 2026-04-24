@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sanatan · Hanuman Chalisa — Design Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --parchment: #f3e7c9;
+        --parchment-soft: #f8efd6;
+        --parchment-deep: #e9d9b1;
+        --ink: #2f1e10;
+        --ink-soft: #5a3a1e;
+        --ink-muted: #8a6a47;
+        --saffron: #b8621b;
+        --saffron-deep: #8a3e0b;
+        --gold: #a67c34;
+        --divider: rgba(138, 62, 11, 0.18);
+        --shadow-sm: 0 1px 2px rgba(60, 30, 10, 0.06);
+        --shadow-md: 0 8px 24px rgba(60, 30, 10, 0.14);
+        --shadow-lg: 0 30px 60px rgba(60, 30, 10, 0.22);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(160deg, #1a140c 0%, #2a1d10 60%, #1a140c 100%);
+        font-family: 'Inter', system-ui, sans-serif;
+        color: #d9c9a6;
+        min-height: 100vh;
+      }
+
+      body {
+        padding: 48px 24px 64px;
+      }
+
+      .wrap {
+        max-width: 1360px;
+        margin: 0 auto;
+      }
+
+      header.intro {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      header.intro h1 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 36px;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        color: #f3e7c9;
+        margin: 0 0 8px;
+      }
+
+      header.intro .tag {
+        font-size: 13px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #a67c34;
+      }
+
+      header.intro p {
+        margin: 18px auto 0;
+        max-width: 640px;
+        line-height: 1.55;
+        color: #c9b896;
+        font-size: 14px;
+      }
+
+      .phones {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 36px;
+        align-items: start;
+      }
+
+      @media (max-width: 1100px) {
+        .phones {
+          grid-template-columns: 1fr;
+          justify-items: center;
+        }
+      }
+
+      .phone-label {
+        text-align: center;
+        font-size: 12px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #a67c34;
+        margin-top: 14px;
+      }
+
+      .phone {
+        position: relative;
+        width: 360px;
+        height: 760px;
+        margin: 0 auto;
+        border-radius: 48px;
+        background: #0d0804;
+        padding: 14px;
+        box-shadow: var(--shadow-lg), 0 0 0 1px rgba(166, 124, 52, 0.2);
+      }
+
+      .phone::before {
+        content: '';
+        position: absolute;
+        top: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 110px;
+        height: 28px;
+        background: #0d0804;
+        border-radius: 16px;
+        z-index: 10;
+      }
+
+      .screen {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 36px;
+        overflow: hidden;
+        background: var(--parchment);
+        color: var(--ink);
+        font-family: 'Inter', system-ui, sans-serif;
+      }
+
+      .screen .status-bar {
+        height: 44px;
+        padding: 0 24px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink);
+        padding-bottom: 6px;
+      }
+
+      .screen .status-bar .ico {
+        display: inline-flex;
+        gap: 4px;
+        align-items: center;
+      }
+
+      /* ============================= */
+      /* Screen 1: Home / Index        */
+      /* ============================= */
+
+      .screen.home {
+        background:
+          radial-gradient(120% 50% at 50% -10%, rgba(184, 98, 27, 0.14), transparent 60%),
+          linear-gradient(180deg, #f6ecd0 0%, #f1e3bf 100%);
+      }
+
+      .home .hero {
+        padding: 28px 28px 20px;
+        text-align: center;
+        position: relative;
+      }
+
+      .home .crest {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 18px;
+        margin-bottom: 14px;
+      }
+
+      .home .crest .mark {
+        width: 28px;
+        height: 28px;
+        border: 1.5px solid var(--saffron);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--saffron);
+        font-family: 'Noto Serif Devanagari', serif;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .home .crest .line {
+        width: 40px;
+        height: 1px;
+        background: var(--saffron);
+        opacity: 0.6;
+      }
+
+      .home h1.title {
+        margin: 0;
+        font-family: 'Noto Serif Devanagari', 'Cormorant Garamond', serif;
+        font-size: 34px;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: 0.01em;
+      }
+
+      .home .sub {
+        margin-top: 6px;
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 15px;
+        color: var(--ink-muted);
+        letter-spacing: 0.04em;
+      }
+
+      .home .section-label {
+        padding: 8px 28px;
+        margin-top: 20px;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        font-weight: 600;
+      }
+
+      .home .library {
+        padding: 0 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .card {
+        background: rgba(255, 250, 235, 0.72);
+        border: 1px solid var(--divider);
+        border-radius: 18px;
+        padding: 18px 18px 18px 18px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: var(--shadow-sm);
+        position: relative;
+      }
+
+      .card.active {
+        background: linear-gradient(135deg, #fff5e0 0%, #f5deac 100%);
+        border-color: rgba(184, 98, 27, 0.4);
+        box-shadow: var(--shadow-md);
+      }
+
+      .card .thumb {
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        border-radius: 14px;
+        background: #f1e0b3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Noto Serif Devanagari', serif;
+        font-size: 22px;
+        color: var(--saffron-deep);
+        border: 1px solid rgba(166, 124, 52, 0.25);
+      }
+
+      .card.active .thumb {
+        background: linear-gradient(135deg, #f8d291 0%, #e0a255 100%);
+        color: #fff;
+        border-color: transparent;
+      }
+
+      .card .meta {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .card .meta .name {
+        font-family: 'Noto Serif Devanagari', serif;
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--ink);
+        line-height: 1.2;
+      }
+
+      .card .meta .name-en {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 13px;
+        color: var(--ink-muted);
+        font-style: italic;
+        margin-top: 2px;
+      }
+
+      .card .meta .sub {
+        font-size: 11px;
+        color: var(--ink-muted);
+        margin-top: 6px;
+        letter-spacing: 0.04em;
+      }
+
+      .card .chev {
+        color: var(--saffron);
+        font-size: 20px;
+      }
+
+      .card .badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        background: rgba(166, 124, 52, 0.14);
+        padding: 3px 8px;
+        border-radius: 999px;
+        font-weight: 600;
+      }
+
+      .card.coming .thumb,
+      .card.coming .meta .name,
+      .card.coming .meta .name-en {
+        opacity: 0.55;
+      }
+
+      .home .footer-om {
+        position: absolute;
+        bottom: 28px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: var(--ink-muted);
+        font-family: 'Noto Serif Devanagari', serif;
+        font-size: 28px;
+        opacity: 0.55;
+      }
+
+      /* ============================= */
+      /* Screen 2 & 3: Reader          */
+      /* ============================= */
+
+      .screen.reader {
+        position: relative;
+        background: var(--parchment);
+      }
+
+      .screen.reader .bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.52;
+        filter: sepia(0.35) saturate(0.85) brightness(1.02);
+      }
+
+      .screen.reader .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(243, 231, 201, 0.85) 0%,
+          rgba(243, 231, 201, 0.55) 40%,
+          rgba(243, 231, 201, 0.75) 85%,
+          rgba(233, 217, 177, 0.95) 100%
+        );
+      }
+
+      .screen.reader .content {
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .reader .top-bar {
+        padding: 14px 22px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .reader .back {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(255, 248, 227, 0.7);
+        border: 1px solid var(--divider);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ink-soft);
+        font-size: 18px;
+      }
+
+      .reader .title {
+        font-family: 'Noto Serif Devanagari', serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: 0.01em;
+      }
+
+      .reader .progress {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 14px;
+        color: var(--ink-muted);
+        font-feature-settings: 'lnum';
+        font-style: italic;
+      }
+
+      .reader .verse-area {
+        flex: 1;
+        padding: 28px 28px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .reader .verse-label {
+        display: inline-flex;
+        align-self: flex-start;
+        padding: 4px 12px;
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--saffron-deep);
+        background: rgba(184, 98, 27, 0.12);
+        border-radius: 999px;
+        font-weight: 600;
+        margin-bottom: 18px;
+      }
+
+      .reader .verse {
+        font-family: 'Noto Serif Devanagari', serif;
+        color: var(--ink);
+        font-size: 23px;
+        line-height: 1.7;
+        font-weight: 500;
+        letter-spacing: 0.005em;
+      }
+
+      .reader .verse .line {
+        display: block;
+      }
+
+      .reader .verse .line + .line {
+        margin-top: 4px;
+      }
+
+      .reader .ornament {
+        margin: 26px auto;
+        width: 80px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--saffron);
+        opacity: 0.6;
+      }
+
+      .reader .ornament::before,
+      .reader .ornament::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: currentColor;
+      }
+
+      .reader .ornament span {
+        padding: 0 8px;
+        font-family: 'Noto Serif Devanagari', serif;
+        font-size: 14px;
+      }
+
+      .reader .meaning-label {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--saffron-deep);
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .reader .meaning {
+        font-family: 'Noto Serif Devanagari', serif;
+        color: var(--ink-soft);
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      .reader .bottom {
+        padding: 16px 28px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .reader .dots {
+        display: flex;
+        gap: 6px;
+      }
+
+      .reader .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(138, 62, 11, 0.25);
+      }
+
+      .reader .dot.current {
+        background: var(--saffron-deep);
+        width: 18px;
+        border-radius: 999px;
+      }
+
+      .reader .swipe-hint {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 12px;
+        color: var(--ink-muted);
+      }
+
+      .home-indicator {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 4px;
+        background: rgba(47, 30, 16, 0.3);
+        border-radius: 999px;
+        z-index: 5;
+      }
+
+      .legend {
+        margin-top: 56px;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        background: rgba(18, 12, 6, 0.5);
+        border: 1px solid rgba(166, 124, 52, 0.2);
+        border-radius: 16px;
+        padding: 22px 28px;
+      }
+
+      .legend h2 {
+        margin: 0 0 10px;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 20px;
+        color: #f3e7c9;
+        font-weight: 500;
+      }
+
+      .legend ul {
+        margin: 0;
+        padding-left: 20px;
+        color: #c9b896;
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .legend strong {
+        color: #f3e7c9;
+        font-weight: 600;
+      }
+
+      .palette {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .swatch {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 6px 10px;
+        border-radius: 10px;
+        font-size: 12px;
+        color: #c9b896;
+      }
+
+      .swatch i {
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+        display: inline-block;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="intro">
+        <div class="tag">Design Preview · v0</div>
+        <h1>Sanatan · Hanuman Chalisa</h1>
+        <p>
+          Parchment-first reverent design. Home index of sacred texts → tap Hanuman Chalisa → read
+          one doha / chaupai per page with its meaning, over a rotating faded vintage sketch
+          background. Tap any phone to imagine swiping between verses.
+        </p>
+      </header>
+
+      <div class="phones">
+        <!-- ============================================ -->
+        <!-- Screen 1 · Home / Index                      -->
+        <!-- ============================================ -->
+        <div>
+          <div class="phone">
+            <div class="screen home">
+              <div class="status-bar">
+                <span>9:41</span>
+                <span class="ico">􀟛 􀛪 􀋦</span>
+              </div>
+
+              <div class="hero">
+                <div class="crest">
+                  <span class="line"></span>
+                  <span class="mark">ॐ</span>
+                  <span class="line"></span>
+                </div>
+                <h1 class="title">सनातन</h1>
+                <div class="sub">Sacred Texts · Daily Reading</div>
+              </div>
+
+              <div class="section-label">Library</div>
+              <div class="library">
+                <div class="card active">
+                  <div class="thumb">ह</div>
+                  <div class="meta">
+                    <div class="name">हनुमान चालीसा</div>
+                    <div class="name-en">Hanuman Chalisa</div>
+                    <div class="sub">43 verses · Hindi with meaning</div>
+                  </div>
+                  <div class="chev">›</div>
+                </div>
+
+                <div class="card coming">
+                  <div class="thumb">रा</div>
+                  <div class="meta">
+                    <div class="name">रामचरितमानस</div>
+                    <div class="name-en">Ramcharitmanas</div>
+                    <div class="sub">Seven kāṇḍas</div>
+                  </div>
+                  <div class="badge">Soon</div>
+                </div>
+
+                <div class="card coming">
+                  <div class="thumb">भ</div>
+                  <div class="meta">
+                    <div class="name">भगवद् गीता</div>
+                    <div class="name-en">Bhagavad Gītā</div>
+                    <div class="sub">18 adhyāyas</div>
+                  </div>
+                  <div class="badge">Soon</div>
+                </div>
+
+                <div class="card coming">
+                  <div class="thumb">सु</div>
+                  <div class="meta">
+                    <div class="name">सुंदरकाण्ड</div>
+                    <div class="name-en">Sundarkand</div>
+                    <div class="sub">From Ramcharitmanas</div>
+                  </div>
+                  <div class="badge">Soon</div>
+                </div>
+              </div>
+
+              <div class="footer-om">॥ श्रीरामचन्द्र चरणौ शरणं प्रपद्ये ॥</div>
+              <div class="home-indicator"></div>
+            </div>
+          </div>
+          <div class="phone-label">Home · Index</div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- Screen 2 · Reader · Opening Doha 1           -->
+        <!-- ============================================ -->
+        <div>
+          <div class="phone">
+            <div class="screen reader">
+              <div
+                class="bg"
+                style="background-image: url('images/Ram_hanuman.png');"
+              ></div>
+              <div class="overlay"></div>
+              <div class="content">
+                <div class="status-bar">
+                  <span>9:41</span>
+                  <span class="ico">􀟛 􀛪 􀋦</span>
+                </div>
+
+                <div class="top-bar">
+                  <div class="back">‹</div>
+                  <div class="title">हनुमान चालीसा</div>
+                  <div class="progress">1 / 43</div>
+                </div>
+
+                <div class="verse-area">
+                  <span class="verse-label">दोहा · Opening</span>
+                  <div class="verse">
+                    <span class="line">श्रीगुरु चरन सरोज रज,</span>
+                    <span class="line">निज मन मुकुर सुधारि।</span>
+                    <span class="line">बरनउँ रघुबर बिमल जसु,</span>
+                    <span class="line">जो दायक फल चारि॥</span>
+                  </div>
+
+                  <div class="ornament"><span>॥</span></div>
+
+                  <div class="meaning-label">अर्थ · Meaning</div>
+                  <div class="meaning">
+                    गुरुचरणों की कृपा से मन को निर्मल करके मैं श्रीराम के पवित्र यश का वर्णन करता हूँ,
+                    जो धर्म, अर्थ, काम और मोक्ष देने वाले हैं।
+                  </div>
+                </div>
+
+                <div class="bottom">
+                  <div class="dots">
+                    <span class="dot current"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                  </div>
+                  <div class="swipe-hint">swipe →</div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-label">Reader · Opening Doha</div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- Screen 3 · Reader · Chaupai 9 (Lanka Dahan)  -->
+        <!-- ============================================ -->
+        <div>
+          <div class="phone">
+            <div class="screen reader">
+              <div
+                class="bg"
+                style="background-image: url('images/hanuman_lankadahan.png');"
+              ></div>
+              <div class="overlay"></div>
+              <div class="content">
+                <div class="status-bar">
+                  <span>9:41</span>
+                  <span class="ico">􀟛 􀛪 􀋦</span>
+                </div>
+
+                <div class="top-bar">
+                  <div class="back">‹</div>
+                  <div class="title">हनुमान चालीसा</div>
+                  <div class="progress">11 / 43</div>
+                </div>
+
+                <div class="verse-area">
+                  <span class="verse-label">चौपाई · 9</span>
+                  <div class="verse">
+                    <span class="line">सूक्ष्म रूप धरि सियहिं दिखावा।</span>
+                    <span class="line">बिकट रूप धरि लंक जरावा॥९॥</span>
+                  </div>
+
+                  <div class="ornament"><span>॥</span></div>
+
+                  <div class="meaning-label">अर्थ · Meaning</div>
+                  <div class="meaning">
+                    आपने सीता जी के सामने सूक्ष्म रूप धारण किया और लंका में विकराल रूप लेकर उसे जलाया।
+                  </div>
+                </div>
+
+                <div class="bottom">
+                  <div class="dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot current"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                  </div>
+                  <div class="swipe-hint">← swipe →</div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-label">Reader · Chaupai + Lanka Dahan BG</div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <h2>What you're seeing</h2>
+        <ul>
+          <li>
+            <strong>Home / Index</strong> — single scroll of sacred texts. Hanuman Chalisa is live;
+            others show a muted "Soon" badge so the library looks alive from day one.
+          </li>
+          <li>
+            <strong>Reader pages</strong> — one doha or chaupai per screen with its Hindi meaning
+            just below. Each page picks a random background from the 3 vintage sketches you
+            provided, with a parchment overlay so text stays fully readable.
+          </li>
+          <li>
+            <strong>Navigation</strong> — swipe left/right to go between the 43 verses (2 opening
+            dohas → 40 chaupais → closing doha). Pager dots at the bottom show broad progress.
+          </li>
+          <li>
+            <strong>Typography</strong> — <em>Noto Serif Devanagari</em> for Hindi (warm, book-like)
+            paired with <em>Cormorant Garamond</em> for the Latin secondary labels.
+          </li>
+        </ul>
+        <div class="palette">
+          <span class="swatch"><i style="background:#f3e7c9"></i>Parchment #F3E7C9</span>
+          <span class="swatch"><i style="background:#e9d9b1"></i>Parchment Deep #E9D9B1</span>
+          <span class="swatch"><i style="background:#2f1e10"></i>Ink #2F1E10</span>
+          <span class="swatch"><i style="background:#b8621b"></i>Saffron #B8621B</span>
+          <span class="swatch"><i style="background:#a67c34"></i>Gold #A67C34</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
