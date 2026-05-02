@@ -76,17 +76,15 @@ export default function HomeScreen({ navigation }: Props) {
           </Text>
 
           <View style={[styles.library, { gap: spacing.md }]}>
-            {library.map((entry) => (
-              <LibraryCard
-                key={entry.id}
-                entry={entry}
-                onPress={
-                  entry.id === 'hanuman-chalisa'
-                    ? () => navigation.navigate('ChalisaReader', { initialIndex: 0 })
-                    : undefined
-                }
-              />
-            ))}
+            {library.map((entry) => {
+              let onPress: (() => void) | undefined;
+              if (entry.id === 'hanuman-chalisa') {
+                onPress = () => navigation.navigate('ChalisaReader', { initialIndex: 0 });
+              } else if (entry.id === 'bhagavad-gita') {
+                onPress = () => navigation.navigate('GitaChapters');
+              }
+              return <LibraryCard key={entry.id} entry={entry} onPress={onPress} />;
+            })}
           </View>
 
           <Text

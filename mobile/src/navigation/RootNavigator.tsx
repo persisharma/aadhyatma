@@ -2,6 +2,8 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '@/screens/HomeScreen';
 import ChalisaReaderScreen from '@/screens/ChalisaReaderScreen';
+import GitaChaptersIndexScreen from '@/screens/GitaChaptersIndexScreen';
+import GitaReaderScreen from '@/screens/GitaReaderScreen';
 import type { RootStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -19,6 +21,15 @@ export default function RootNavigator() {
       <Stack.Screen
         name="ChalisaReader"
         component={ChalisaReaderScreen}
+        options={{
+          gestureEnabled: false,
+          animation: 'fade',
+        }}
+      />
+      <Stack.Screen name="GitaChapters" component={GitaChaptersIndexScreen} />
+      <Stack.Screen
+        name="GitaReader"
+        component={GitaReaderScreen}
         options={{
           gestureEnabled: false,
           animation: 'fade',

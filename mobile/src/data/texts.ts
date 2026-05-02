@@ -23,19 +23,20 @@ export const library: readonly LibraryEntry[] = [
     verseCount: hanumanChalisaTotal,
   },
   {
+    id: 'bhagavad-gita',
+    nameHi: 'भगवद् गीता',
+    nameEn: 'Bhagavad Gītā',
+    sub: '18 अध्याय · 701 श्लोक',
+    thumb: 'भ',
+    status: 'active',
+    verseCount: 701,
+  },
+  {
     id: 'ramcharitmanas',
     nameHi: 'रामचरितमानस',
     nameEn: 'Ramcharitmanas',
     sub: 'Seven kāṇḍas',
     thumb: 'रा',
-    status: 'coming',
-  },
-  {
-    id: 'bhagavad-gita',
-    nameHi: 'भगवद् गीता',
-    nameEn: 'Bhagavad Gītā',
-    sub: '18 adhyāyas',
-    thumb: 'भ',
     status: 'coming',
   },
   {
