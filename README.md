@@ -1,6 +1,6 @@
 # Aadhyatma
 
-Umbrella repo. Currently houses a single React Native app for the **Sanatan** experience.
+Umbrella repo. Currently houses a single React Native app for the **Vedansh** experience.
 
 ## Layout
 
