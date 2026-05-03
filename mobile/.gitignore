@@ -32,7 +32,11 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
 .env*.local
+
+# EAS credentials (paths + passwords for cert/provisioning profile)
+credentials.json
 
 # typescript
 *.tsbuildinfo

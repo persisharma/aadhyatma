@@ -44,7 +44,7 @@ export default function HomeScreen({ navigation }: Props) {
                 },
               ]}
             >
-              सनातन
+              वेदांश़
             </Text>
             <Text
               style={[

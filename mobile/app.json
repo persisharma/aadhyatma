@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Sanatan",
-    "slug": "sanatan",
-    "scheme": "sanatan",
-    "version": "0.1.0",
+    "name": "Vedansh",
+    "slug": "vedansh",
+    "scheme": "vedansh",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -14,7 +14,12 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.prashantsharma.vedansh",
+      "buildNumber": "2",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -29,6 +34,12 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "owner": "prashant.sharma",
+    "extra": {
+      "eas": {
+        "projectId": "c83547c2-423c-4902-9087-a9ec9879a1f9"
+      }
+    }
   }
 }
