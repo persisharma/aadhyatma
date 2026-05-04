@@ -4,6 +4,7 @@ import HomeScreen from '@/screens/HomeScreen';
 import ChalisaReaderScreen from '@/screens/ChalisaReaderScreen';
 import GitaChaptersIndexScreen from '@/screens/GitaChaptersIndexScreen';
 import GitaReaderScreen from '@/screens/GitaReaderScreen';
+import SundarkandReaderScreen from '@/screens/SundarkandReaderScreen';
 import type { RootStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -30,6 +31,14 @@ export default function RootNavigator() {
       <Stack.Screen
         name="GitaReader"
         component={GitaReaderScreen}
+        options={{
+          gestureEnabled: false,
+          animation: 'fade',
+        }}
+      />
+      <Stack.Screen
+        name="SundarkandReader"
+        component={SundarkandReaderScreen}
         options={{
           gestureEnabled: false,
           animation: 'fade',

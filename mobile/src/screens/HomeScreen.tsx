@@ -76,12 +76,14 @@ export default function HomeScreen({ navigation }: Props) {
           </Text>
 
           <View style={[styles.library, { gap: spacing.md }]}>
-            {library.map((entry) => {
+            {library.filter((entry) => !entry.hidden).map((entry) => {
               let onPress: (() => void) | undefined;
               if (entry.id === 'hanuman-chalisa') {
                 onPress = () => navigation.navigate('ChalisaReader', { initialIndex: 0 });
               } else if (entry.id === 'bhagavad-gita') {
                 onPress = () => navigation.navigate('GitaChapters');
+              } else if (entry.id === 'sundarkand') {
+                onPress = () => navigation.navigate('SundarkandReader', { initialIndex: 0 });
               }
               return <LibraryCard key={entry.id} entry={entry} onPress={onPress} />;
             })}
