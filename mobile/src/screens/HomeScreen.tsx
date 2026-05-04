@@ -82,6 +82,8 @@ export default function HomeScreen({ navigation }: Props) {
                 onPress = () => navigation.navigate('ChalisaReader', { initialIndex: 0 });
               } else if (entry.id === 'bhagavad-gita') {
                 onPress = () => navigation.navigate('GitaChapters');
+              } else if (entry.id === 'sundarkand') {
+                onPress = () => navigation.navigate('SundarkandReader', { initialIndex: 0 });
               }
               return <LibraryCard key={entry.id} entry={entry} onPress={onPress} />;
             })}
