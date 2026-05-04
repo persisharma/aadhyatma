@@ -47,10 +47,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   markText: {
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 18,
+    lineHeight: 28,
     includeFontPadding: false,
     textAlign: 'center',
-    transform: [{ translateY: -1 }],
+    textAlignVertical: 'center',
   },
 });
