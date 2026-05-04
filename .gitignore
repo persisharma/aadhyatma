@@ -6,6 +6,7 @@
 
 # Per-session logs and learnings (local tooling)
 .claude/ship-logs/
+.claude/scheduled_tasks.lock
 
 # Conductor workspace scratchpad
 .context/
