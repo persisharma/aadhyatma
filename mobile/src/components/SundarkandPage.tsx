@@ -13,7 +13,7 @@ type Props = {
 
 export default function SundarkandPage({ reading, width }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
-  const bg = chalisaImages[reading.imageKey];
+  const bg = chalisaImages[reading.imageKey] ?? chalisaImages.ram_hanuman;
   const pill = `सुंदरकाण्ड · ${reading.number}`;
 
   const bodyHiStyle = {
