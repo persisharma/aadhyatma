@@ -3,4 +3,5 @@ export type RootStackParamList = {
   ChalisaReader: { initialIndex?: number } | undefined;
   GitaChapters: undefined;
   GitaReader: { chapter: number; initialIndex?: number };
+  SundarkandReader: { initialIndex?: number } | undefined;
 };

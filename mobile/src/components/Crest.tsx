@@ -48,7 +48,9 @@ const styles = StyleSheet.create({
   },
   markText: {
     fontSize: 16,
-    lineHeight: 18,
+    lineHeight: 22,
     includeFontPadding: false,
+    textAlign: 'center',
+    transform: [{ translateY: -1 }],
   },
 });

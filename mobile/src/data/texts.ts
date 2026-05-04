@@ -1,4 +1,5 @@
 import { hanumanChalisaTotal } from './hanumanChalisa';
+import { sundarkandCounts, sundarkandTotal } from './sundarkand';
 
 export type TextStatus = 'active' | 'coming';
 
@@ -10,6 +11,8 @@ export type LibraryEntry = {
   thumb: string;
   status: TextStatus;
   verseCount?: number;
+  /** When true, HomeScreen omits this entry from the library list. */
+  hidden?: boolean;
 };
 
 export const library: readonly LibraryEntry[] = [
@@ -17,7 +20,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'hanuman-chalisa',
     nameHi: 'हनुमान चालीसा',
     nameEn: 'Hanuman Chalisa',
-    sub: `${hanumanChalisaTotal} verses · Hindi with meaning`,
+    sub: `${hanumanChalisaTotal} चौपाई · अर्थ सहित`,
     thumb: 'ह',
     status: 'active',
     verseCount: hanumanChalisaTotal,
@@ -32,19 +35,21 @@ export const library: readonly LibraryEntry[] = [
     verseCount: 701,
   },
   {
+    id: 'sundarkand',
+    nameHi: 'सुंदरकाण्ड',
+    nameEn: 'Sundarkand',
+    sub: `${sundarkandCounts.dohas} दोहे · अर्थ सहित`,
+    thumb: 'सु',
+    status: 'active',
+    verseCount: sundarkandTotal,
+  },
+  {
     id: 'ramcharitmanas',
     nameHi: 'रामचरितमानस',
     nameEn: 'Ramcharitmanas',
     sub: 'Seven kāṇḍas',
     thumb: 'रा',
     status: 'coming',
-  },
-  {
-    id: 'sundarkand',
-    nameHi: 'सुंदरकाण्ड',
-    nameEn: 'Sundarkand',
-    sub: 'From Ramcharitmanas',
-    thumb: 'सु',
-    status: 'coming',
+    hidden: true,
   },
 ];
