@@ -15,6 +15,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { getGitaChapter, type GitaVerse } from '@/data/gita';
 import { useGitaLanguage } from '@/data/gita/language';
 import GitaVersePage from '@/components/GitaVersePage';
+import LanguageToggle from '@/components/LanguageToggle';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'GitaReader'>;
@@ -126,6 +127,10 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           </Text>
         </View>
 
+        <View style={styles.toggleRow}>
+          <LanguageToggle />
+        </View>
+
         <FlatList
           ref={listRef}
           data={chapter.verses}
@@ -216,6 +221,11 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     minWidth: 48,
     textAlign: 'right',
+  },
+  toggleRow: {
+    paddingVertical: 6,
+    paddingBottom: 12,
+    alignItems: 'center',
   },
   list: {
     flex: 1,
