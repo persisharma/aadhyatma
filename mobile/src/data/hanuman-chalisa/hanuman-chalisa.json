@@ -8,7 +8,7 @@
   "source": {
     "baseText": "हनुमान चालीसा — गोस्वामी तुलसीदास (~16th century, public domain)",
     "devanagariReference": "https://www.artofliving.org/in-hi/culture/reads/hanuman-chalisa-lyrics-meaning",
-    "meaningsAttribution": "Hindi भावार्थ adapted from Art of Living. English meanings adapted from Neem Karoli Baba Ashram (nkbashram.org/hanuman-chalisa). Romanized transliteration generated from the Devanagari source by scripts/transliterate-shloka.mjs in the IAST + Hunterian-digraph style (design.md §3.1).",
+    "meaningsAttribution": "Hindi भावार्थ adapted from Art of Living. English meanings adapted from Neem Karoli Baba Ashram (nkbashram.org/hanuman-chalisa). Romanized transliteration by the Aadhyatma editorial team.",
     "retrievedOn": "2026-05-05"
   },
   "counts": {
@@ -30,8 +30,8 @@
         "बरनउँ रघुबर बिमल जसु, जो दायक फल चारि॥"
       ],
       "linesEn": [
-        "śrīguru charana saroja raja, nija mana mukura sudhāri",
-        "baranauṁ raghubara bimala jasu, jo dāyaka phala chāri"
+        "Shri guru charan saroj raj, nij man mukur sudhaari.",
+        "Baranau raghubar bimal jasu, jo daayak phal chaari."
       ],
       "meaningHi": "गुरुचरणों की कृपा से मन को निर्मल करके मैं श्रीराम के पवित्र यश का वर्णन करता हूँ, जो धर्म, अर्थ, काम और मोक्ष देने वाले हैं।",
       "meaningEn": "Having polished the mirror of my heart with the dust of my Guru's lotus feet, I sing the pure fame of the best of the Raghus, which bestows the four fruits of life: righteousness, prosperity, pleasure and liberation."
@@ -48,8 +48,8 @@
         "बल बुधि विद्या देहु मोहिं, हरहु कलेस विकार॥"
       ],
       "linesEn": [
-        "buddhihīna tanu jānike, sumirauṁ pavana-kumāra",
-        "bala budhi vidyā dehu mohiṁ, harahu kalesa vikāra"
+        "Buddhiheen tanu jaanike, sumirau pavan-kumaar.",
+        "Bal budhi vidyaa dehu mohi, harahu kales vikaar."
       ],
       "meaningHi": "अपनी सीमित बुद्धि को मानकर मैं पवनपुत्र हनुमान का स्मरण करता हूँ; वे मुझे बल, बुद्धि और विद्या दें और मेरे दुख-दोष दूर करें।",
       "meaningEn": "Knowing this body of mine to lack intelligence, I remember the Son of the Wind. Grant me strength, wisdom and knowledge, and remove all my afflictions and impurities."
@@ -66,8 +66,8 @@
         "जय कपीस तिहुँ लोक उजागर॥1॥"
       ],
       "linesEn": [
-        "jaya hanumāna jñāna guna sāgara",
-        "jaya kapīsa tihuṁ loka ujāgara"
+        "Jai Hanumaan gyaan gun saagar.",
+        "Jai Kapees tihu lok ujaagar"
       ],
       "meaningHi": "हे हनुमान, आप ज्ञान और गुणों के अथाह सागर हैं; आपकी महिमा तीनों लोकों में प्रसिद्ध है।",
       "meaningEn": "Hail Hanuman, ocean of wisdom and virtue. Hail Lord of the monkeys, illuminator of the three worlds."
@@ -84,8 +84,8 @@
         "अंजनि-पुत्र पवनसुत नामा॥2॥"
       ],
       "linesEn": [
-        "rāma dūta atulita bala dhāmā",
-        "aṁjani-putra pavanasuta nāmā"
+        "Raam doot atulit bal dhaamaa.",
+        "Anjani-putra pavanasut naamaa"
       ],
       "meaningHi": "आप श्रीराम के दूत और अपार शक्ति के धाम हैं; आप अंजनी के पुत्र और पवनसुत कहलाते हैं।",
       "meaningEn": "You are Sri Ram's emissary and the abode of matchless power. You are Anjani's son, known as the Son of the Wind."
@@ -102,8 +102,8 @@
         "कुमति निवार सुमति के संगी॥3॥"
       ],
       "linesEn": [
-        "mahābīra bikrama bajaraṁgī",
-        "kumati nivāra sumati ke saṁgī"
+        "Mahaabeer bikram bajarangee.",
+        "Kumati nivaar sumati ke sangee"
       ],
       "meaningHi": "आप महान वीर और पराक्रमी हैं; आप बुरी बुद्धि को हटाकर अच्छी बुद्धि का साथ देते हैं।",
       "meaningEn": "Great hero, mighty as a thunderbolt; you dispel base thoughts and stand as the companion of those of pure mind."
@@ -120,8 +120,8 @@
         "कानन कुंडल कुंचित केसा॥4॥"
       ],
       "linesEn": [
-        "kaṁchana barana birāja subesā",
-        "kānana kuṁḍala kuṁchita kesā"
+        "Kanchan baran biraaj subesaa.",
+        "Kaanan kundal kunchit kesaa"
       ],
       "meaningHi": "आपका स्वरूप स्वर्ण जैसा तेजस्वी है; सुंदर वस्त्र, कुंडल और घुंघराले केश आपकी शोभा बढ़ाते हैं।",
       "meaningEn": "Golden-hued and splendidly attired, you wear shining earrings and your hair falls in graceful curls."
@@ -138,8 +138,8 @@
         "काँधे मूँज जनेऊ साजै॥5॥"
       ],
       "linesEn": [
-        "hātha bajra au dhvajā birājai",
-        "kāṁdhe mūṁja janeū sājai"
+        "Haath bajra au dhvajaa biraajai.",
+        "Kaandhe moonj janeu saajai"
       ],
       "meaningHi": "आपके हाथ में वज्र और ध्वजा शोभा देते हैं, और कंधे पर जनेऊ सुशोभित है।",
       "meaningEn": "In your hands the mace and the banner shine, and across your shoulder the sacred munja-thread is borne."
@@ -156,8 +156,8 @@
         "तेज प्रताप महा जग वंदन॥6॥"
       ],
       "linesEn": [
-        "śhaṁkara suvana kesarī naṁdana",
-        "teja pratāpa mahā jaga vaṁdana"
+        "Shankar suvan kesari nandan.",
+        "Tej prataap mahaa jag vandan"
       ],
       "meaningHi": "आप शिव-अंश और केसरीनंदन हैं; आपके तेज और प्रताप को सारा जगत प्रणाम करता है।",
       "meaningEn": "Born of Shiva's grace and the joy of Kesari, your splendour and might are revered by the whole world."
@@ -174,8 +174,8 @@
         "राम काज करिबे को आतुर॥7॥"
       ],
       "linesEn": [
-        "vidyāvāna gunī ati chātura",
-        "rāma kāja karibe ko ātura"
+        "Vidyaavaan gunee ati chaatur.",
+        "Raam kaaj karibe ko aatur"
       ],
       "meaningHi": "आप विद्वान, गुणवान और अत्यंत कुशल हैं; आप सदा रामकाज के लिए तत्पर रहते हैं।",
       "meaningEn": "Learned, virtuous and supremely skilful, you remain ever eager to accomplish the work of Sri Ram."
@@ -192,8 +192,8 @@
         "राम लखन सीता मन बसिया॥8॥"
       ],
       "linesEn": [
-        "prabhu charitra sunibe ko rasiyā",
-        "rāma lakhana sītā mana basiyā"
+        "Prabhu charitra sunibe ko rasiyaa.",
+        "Raam Lakhan Seetaa man basiyaa"
       ],
       "meaningHi": "आपको प्रभु की लीला और कथा सुनना अत्यंत प्रिय है; राम, लक्ष्मण और सीता आपके हृदय में बसते हैं।",
       "meaningEn": "You delight in hearing the deeds of the Lord, and Ram, Lakshman and Sita dwell forever in your heart."
@@ -210,8 +210,8 @@
         "बिकट रूप धरि लंक जरावा॥9॥"
       ],
       "linesEn": [
-        "sūkṣma rūpa dhari siyahiṁ dikhāvā",
-        "bikaṭa rūpa dhari laṁka jarāvā"
+        "Sookshm roop dhari siyahi dikhaavaa.",
+        "Bikat roop dhari lank jaraavaa"
       ],
       "meaningHi": "आपने सीता जी के सामने सूक्ष्म रूप धारण किया और लंका में विकराल रूप लेकर उसे जलाया।",
       "meaningEn": "Taking a tiny form you appeared before Sita; assuming an awesome form you set Lanka ablaze."
@@ -228,8 +228,8 @@
         "रामचंद्र के काज सवारे॥10॥"
       ],
       "linesEn": [
-        "bhīma rūpa dhari asura saṁhāre",
-        "rāmachaṁdra ke kāja savāre"
+        "Bheem roop dhari asur sanhaare.",
+        "Raamchandra ke kaaj savaare"
       ],
       "meaningHi": "आपने भयंकर रूप धारण कर असुरों का नाश किया और श्रीराम का कार्य सफल बनाया।",
       "meaningEn": "Taking a fearsome form you slew the demons and brought every task of Sri Ramachandra to a perfect end."
@@ -246,8 +246,8 @@
         "श्रीरघुबीर हरषि उर लाए॥11॥"
       ],
       "linesEn": [
-        "lāya sajīvana lakhana jiyāe",
-        "śrīraghubīra haraṣhi ura lāe"
+        "Laay sajeevan Lakhan jiyaae.",
+        "Shri Raghubeer harashi ur laae"
       ],
       "meaningHi": "संजीवनी लाकर आपने लक्ष्मण के प्राण बचाए, जिससे श्रीराम प्रसन्न होकर आपको हृदय से लगा लिया।",
       "meaningEn": "You brought the life-giving Sanjivani and revived Lakshman; in joy, Sri Raghubir drew you to his heart."
@@ -264,8 +264,8 @@
         "तुम मम प्रिय भरतहि सम भाई॥12॥"
       ],
       "linesEn": [
-        "raghupati kīnhī bahuta baḍāī",
-        "tuma mama priya bharatahi sama bhāī"
+        "Raghupati keenhee bahut badaai.",
+        "Tum mam priya Bharatahi sam bhaai"
       ],
       "meaningHi": "श्रीराम ने आपकी बहुत प्रशंसा की और आपको भरत के समान प्रिय बताया।",
       "meaningEn": "The Lord of the Raghus praised you greatly, saying, \"You are as dear to me as my brother Bharat.\""
@@ -282,8 +282,8 @@
         "अस कहि श्रीपति कंठ लगावैं॥13॥"
       ],
       "linesEn": [
-        "sahasa badana tumharo jasa gāvaiṁ",
-        "asa kahi śrīpati kaṁṭha lagāvaiṁ"
+        "Sahas badan tumharo jas gaavai.",
+        "As kahi Shripati kanth lagaavai"
       ],
       "meaningHi": "श्रीराम ने कहा कि हजार मुख वाले भी आपकी महिमा गाते हैं, और यह कहकर आपको गले लगा लिया।",
       "meaningEn": "\"The thousand-mouthed Shesha sings your fame,\" said the Lord of Lakshmi, and so saying, embraced you."
@@ -300,8 +300,8 @@
         "नारद सारद सहित अहीसा॥14॥"
       ],
       "linesEn": [
-        "sanakādika brahmādi munīsā",
-        "nārada sārada sahita ahīsā"
+        "Sanakaadik Brahmaadi muneesaa.",
+        "Naarad Saarad sahit Aheesaa"
       ],
       "meaningHi": "सनकादि ऋषि, ब्रह्मा, नारद, सरस्वती और शेषनाग जैसे महान जन भी आपकी महिमा का स्मरण करते हैं।",
       "meaningEn": "The sages Sanaka and his brothers, Brahma and the great seers, Narada, Saraswati and the king of serpents — all sing your praise."
@@ -318,8 +318,8 @@
         "कवि कोविद कहि सके कहाँ ते॥15॥"
       ],
       "linesEn": [
-        "jama kubera digapāla jahāṁ te",
-        "kavi kovida kahi sake kahāṁ te"
+        "Jam Kuber Digpaal jahaan te.",
+        "Kavi Kovid kahi sake kahaan te"
       ],
       "meaningHi": "यम, कुबेर और दिग्पाल भी आपकी महिमा का पूर्ण वर्णन नहीं कर सकते; फिर कवि और विद्वान कैसे कर पाएँ।",
       "meaningEn": "Yama, Kubera and the guardians of the directions cannot describe your full glory; how then can poets or scholars?"
@@ -336,8 +336,8 @@
         "राम मिलाय राज पद दीन्हा॥16॥"
       ],
       "linesEn": [
-        "tuma upakāra sugrīvahiṁ kīnhā",
-        "rāma milāya rāja pada dīnhā"
+        "Tum upakaar Sugreevahi keenhaa.",
+        "Raam milaay raaj pad deenhaa"
       ],
       "meaningHi": "आपने सुग्रीव को राम से मिलवाकर उसका खोया हुआ राज्य वापस दिलाया।",
       "meaningEn": "You did Sugriva a great service: presenting him to Ram and restoring him to his royal throne."
@@ -354,8 +354,8 @@
         "लंकेश्वर भए सब जग जाना॥17॥"
       ],
       "linesEn": [
-        "tumharo maṁtra vibhīṣhaṇa mānā",
-        "laṁkeśvara bhae saba jaga jānā"
+        "Tumharo mantra Vibheeshan maanaa.",
+        "Lankeshvar bhae sab jag jaanaa"
       ],
       "meaningHi": "विभीषण ने आपकी सलाह मानी और वह लंका का राजा बना; यह बात सब जानते हैं।",
       "meaningEn": "Vibhishana heeded your counsel and became the Lord of Lanka, as all the world knows well."
@@ -372,8 +372,8 @@
         "लील्यो ताहि मधुर फल जानू॥18॥"
       ],
       "linesEn": [
-        "juga sahasra jojana para bhānū",
-        "līlyo tāhi madhura phala jānū"
+        "Jug sahasra jojan par Bhaanoo.",
+        "Leelyo taahi madhur phal jaanoo"
       ],
       "meaningHi": "आपने सूर्य को दूर स्थित होने पर भी मीठा फल समझ लिया और उसे निगलने दौड़ पड़े।",
       "meaningEn": "Though the sun stood thousands of yojanas away, you took it for a sweet fruit and made to swallow it whole."
@@ -390,8 +390,8 @@
         "जलधि लाँघि गए अचरज नाहीं॥19॥"
       ],
       "linesEn": [
-        "prabhu mudrikā meli mukha māhīṁ",
-        "jaladhi lāṁghi gae acharaja nāhīṁ"
+        "Prabhu mudrikaa meli mukh maahee.",
+        "Jaladhi laanghi gae acharaj naahee"
       ],
       "meaningHi": "श्रीराम की मुद्रिका मुख में रखकर आपने समुद्र पार कर लिया; आपके लिए यह आश्चर्य की बात नहीं थी।",
       "meaningEn": "Holding the Lord's signet ring in your mouth, you leapt across the ocean — for you, no wonder at all."
@@ -408,8 +408,8 @@
         "सुगम अनुग्रह तुम्हरे तेते॥20॥"
       ],
       "linesEn": [
-        "durgama kāja jagata ke jete",
-        "sugama anugraha tumhare tete"
+        "Durgam kaaj jagat ke jete.",
+        "Sugam anugrah tumhare tete"
       ],
       "meaningHi": "आपकी कृपा से संसार के कठिन काम भी आसान हो जाते हैं।",
       "meaningEn": "Every difficult task in the world becomes easy through your grace."
@@ -426,8 +426,8 @@
         "होत न आज्ञा बिनु पैसारे॥21॥"
       ],
       "linesEn": [
-        "rāma duāre tuma rakhavāre",
-        "hota na ājñā binu paisāre"
+        "Raam duaare tum rakhavaare.",
+        "Hot na aagyaa binu paisaare"
       ],
       "meaningHi": "आप रामद्वार के रक्षक हैं; आपकी अनुमति और कृपा के बिना वहाँ प्रवेश नहीं होता।",
       "meaningEn": "You are the gatekeeper at Sri Ram's door; none may enter there without your leave."
@@ -444,8 +444,8 @@
         "तुम रक्षक काहू को डरना॥22॥"
       ],
       "linesEn": [
-        "saba sukha lahai tumhārī saranā",
-        "tuma rakṣhaka kāhū ko ḍaranā"
+        "Sab sukh lahai tumhaaree saranaa.",
+        "Tum rakshak kaahoo ko daranaa"
       ],
       "meaningHi": "जो आपकी शरण में आता है उसे सुख मिलता है; आपके रहते उसे किसी बात का भय नहीं रहता।",
       "meaningEn": "Whoever takes refuge in you finds every joy; with you as protector, what is there to fear?"
@@ -462,8 +462,8 @@
         "तीनों लोक हाँक तें काँपै॥23॥"
       ],
       "linesEn": [
-        "āpana teja samhāro āpai",
-        "tīnoṁ loka hāṁka teṁ kāṁpai"
+        "Aapan tej samhaaro aapai.",
+        "Teeno lok haank te kaanpai"
       ],
       "meaningHi": "आपके तेज को आप ही संभाल सकते हैं; आपकी हुंकार से तीनों लोक काँप उठते हैं।",
       "meaningEn": "Only you can contain your own splendour; the three worlds tremble at your mighty roar."
@@ -480,8 +480,8 @@
         "महाबीर जब नाम सुनावै॥24॥"
       ],
       "linesEn": [
-        "bhūta piśhācha nikaṭa nahiṁ āvai",
-        "mahābīra jaba nāma sunāvai"
+        "Bhoot pishaach nikat nahin aavai.",
+        "Mahaabeer jab naam sunaavai"
       ],
       "meaningHi": "महावीर हनुमान का नाम लेने से नकारात्मक शक्तियाँ पास नहीं आतीं।",
       "meaningEn": "Ghosts and goblins dare not come near once the name of Mahaveer Hanuman is spoken aloud."
@@ -498,8 +498,8 @@
         "जपत निरंतर हनुमत बीरा॥25॥"
       ],
       "linesEn": [
-        "nāsai roga harai saba pīrā",
-        "japata niraṁtara hanumata bīrā"
+        "Naasai rog harai sab peeraa.",
+        "Japat nirantar Hanumat beeraa"
       ],
       "meaningHi": "हनुमान जी का निरंतर स्मरण रोग, पीड़ा और कष्टों को दूर करने वाला माना गया है।",
       "meaningEn": "All illness departs and every pain is lifted by the unbroken remembrance of brave Hanuman."
@@ -516,8 +516,8 @@
         "मन क्रम वचन ध्यान जो लावै॥26॥"
       ],
       "linesEn": [
-        "saṁkaṭa teṁ hanumāna chhuḍāvai",
-        "mana krama vachana dhyāna jo lāvai"
+        "Sankat te Hanumaan chhudaavai.",
+        "Man kram vachan dhyaan jo laavai"
       ],
       "meaningHi": "जो मन, कर्म और वचन से हनुमान जी का ध्यान करता है, उसके संकट दूर होते हैं।",
       "meaningEn": "Hanuman frees from peril whoever turns to him in thought, deed and word with steady devotion."
@@ -534,8 +534,8 @@
         "तिन के काज सकल तुम साजा॥27॥"
       ],
       "linesEn": [
-        "saba para rāma tapasvī rājā",
-        "tina ke kāja sakala tuma sājā"
+        "Sab par Raam tapasvee raajaa.",
+        "Tin ke kaaj sakal tum saajaa"
       ],
       "meaningHi": "श्रीराम सर्वोच्च तपस्वी राजा हैं, और उनके भक्तों के काम आप पूर्ण कराते हैं।",
       "meaningEn": "Sri Ram is the supreme ascetic king above all, and you bring every one of his tasks to completion."
@@ -552,8 +552,8 @@
         "सोई अमित जीवन फल पावै॥28॥"
       ],
       "linesEn": [
-        "aura manoratha jo koī lāvai",
-        "soī amita jīvana phala pāvai"
+        "Aur manorath jo koee laavai.",
+        "Soee amit jeevan phal paavai"
       ],
       "meaningHi": "जो अपनी सच्ची इच्छा आपके सामने रखता है, उसे श्रेष्ठ और व्यापक फल प्राप्त होता है।",
       "meaningEn": "Whoever brings any sincere wish before you receives boundless and lasting fruit in this very life."
@@ -570,8 +570,8 @@
         "है परसिद्ध जगत उजियारा॥29॥"
       ],
       "linesEn": [
-        "chāroṁ juga paratāpa tumhārā",
-        "hai parasiddha jagata ujiyārā"
+        "Chaaro jug parataap tumhaaraa.",
+        "Hai parasiddh jagat ujiyaaraa"
       ],
       "meaningHi": "आपकी कीर्ति चारों युगों में फैली हुई है और संसार को आलोकित करती है।",
       "meaningEn": "Your glory shines through all four ages, renowned everywhere and lighting up the world."
@@ -588,8 +588,8 @@
         "असुर निकंदन राम दुलारे॥30॥"
       ],
       "linesEn": [
-        "sādhu saṁta ke tuma rakhavāre",
-        "asura nikaṁdana rāma dulāre"
+        "Saadhu sant ke tum rakhavaare.",
+        "Asur nikandan Raam dulaare"
       ],
       "meaningHi": "आप साधु-संतों की रक्षा करते हैं, दुष्टों का नाश करते हैं और श्रीराम के प्रिय हैं।",
       "meaningEn": "Guardian of saints and seekers, slayer of demons, dearly beloved of Sri Ram."
@@ -606,8 +606,8 @@
         "अस बर दीन जानकी माता॥31॥"
       ],
       "linesEn": [
-        "aṣṭa siddhi nau nidhi ke dātā",
-        "asa bara dīna jānakī mātā"
+        "Asht siddhi nau nidhi ke daataa.",
+        "As bar deen Jaanakee maataa"
       ],
       "meaningHi": "माता जानकी ने आपको ऐसा वर दिया कि आप अष्ट सिद्धि और नौ निधि प्रदान करने वाले हैं।",
       "meaningEn": "By the boon of Mother Janaki, you bestow the eight powers and the nine treasures upon your devotees."
@@ -624,8 +624,8 @@
         "सदा रहो रघुपति के दासा॥32॥"
       ],
       "linesEn": [
-        "rāma rasāyana tumhare pāsā",
-        "sadā raho raghupati ke dāsā"
+        "Raam rasaayan tumhare paasaa.",
+        "Sadaa raho Raghupati ke daasaa"
       ],
       "meaningHi": "आपके पास रामभक्ति का अमृत है, और आप सदा रघुपति के सेवक बने रहते हैं।",
       "meaningEn": "The elixir of Ram's name rests with you, and you remain forever the devoted servant of the Lord of the Raghus."
@@ -642,8 +642,8 @@
         "जनम जनम के दुख बिसरावै॥33॥"
       ],
       "linesEn": [
-        "tumhare bhajana rāma ko pāvai",
-        "janama janama ke dukha bisarāvai"
+        "Tumhare bhajan Raam ko paavai.",
+        "Janam janam ke dukh bisaraavai"
       ],
       "meaningHi": "आपके भजन से श्रीराम की प्राप्ति होती है और जन्म-जन्म के दुख हल्के पड़ जाते हैं।",
       "meaningEn": "By singing your praise one comes to Ram and forgets the sorrows of birth after birth."
@@ -660,8 +660,8 @@
         "जहाँ जन्म हरि-भक्त कहाई॥34॥"
       ],
       "linesEn": [
-        "aṁta kāla raghubara pura jāī",
-        "jahāṁ janma hari-bhakta kahāī"
+        "Ant kaal Raghubar pur jaaee.",
+        "Jahaan janma Hari-bhakt kahaaee"
       ],
       "meaningHi": "आपका भक्त अंत समय में रामधाम को प्राप्त होता है और पुनर्जन्म हो तो हरिभक्त कहलाता है।",
       "meaningEn": "At the final hour your devotee reaches Sri Ram's abode; if reborn, is known thereafter as a devotee of Hari."
@@ -678,8 +678,8 @@
         "हनुमत सेइ सर्व सुख करई॥35॥"
       ],
       "linesEn": [
-        "aura devatā chitta na dharaī",
-        "hanumata sei sarva sukha karaī"
+        "Aur devataa chitta na dharaee.",
+        "Hanumat sei sarva sukh karaee"
       ],
       "meaningHi": "हनुमान भक्ति से मन एकाग्र होता है और साधक को सर्व सुख की अनुभूति होती है।",
       "meaningEn": "One who keeps no other deity in mind and serves Hanuman alone tastes every joy."
@@ -696,8 +696,8 @@
         "जो सुमिरै हनुमत बलबीरा॥36॥"
       ],
       "linesEn": [
-        "saṁkaṭa kaṭai miṭai saba pīrā",
-        "jo sumirai hanumata balabīrā"
+        "Sankat katai mitai sab peeraa.",
+        "Jo sumirai Hanumat balabeeraa"
       ],
       "meaningHi": "जो बलवान हनुमान का स्मरण करता है, उसके संकट और पीड़ा मिटते हैं।",
       "meaningEn": "Whoever remembers mighty Hanuman finds every peril cut away and every pain dissolved."
@@ -714,8 +714,8 @@
         "कृपा करहु गुरुदेव की नाईं॥37॥"
       ],
       "linesEn": [
-        "jai jai jai hanumāna gosāīṁ",
-        "kṛipā karahu gurudeva kī nāīṁ"
+        "Jai jai jai Hanumaan Gosaaee.",
+        "Kripaa karahu Gurudev kee naaee"
       ],
       "meaningHi": "हे स्वामी हनुमान, आप पर बार-बार वंदन; कृपया गुरु के समान करुणा और मार्गदर्शन दें।",
       "meaningEn": "Victory, victory, victory to Lord Hanuman! Bestow your grace upon me as a true Guru would."
@@ -732,8 +732,8 @@
         "छूटहि बंदि महा सुख होई॥38॥"
       ],
       "linesEn": [
-        "jo sata bāra pāṭha kara koī",
-        "chhūṭahi baṁdi mahā sukha hoī"
+        "Jo sat baar paath kar koee.",
+        "Chhootahi bandi mahaa sukh hoee"
       ],
       "meaningHi": "जो श्रद्धा से बार-बार इस पाठ का अभ्यास करता है, वह बंधनों से मुक्त होकर गहरा आनंद पाता है।",
       "meaningEn": "Whoever recites this prayer a hundred times is freed from bondage and tastes the deepest bliss."
@@ -750,8 +750,8 @@
         "होय सिद्धि साखी गौरीसा॥39॥"
       ],
       "linesEn": [
-        "jo yaha paḍhai hanumāna chālīsā",
-        "hoya siddhi sākhī gaurīsā"
+        "Jo yah padhai Hanumaan Chaaleesaa.",
+        "Hoy siddhi saakhee Gaureesaa"
       ],
       "meaningHi": "जो हनुमान चालीसा का पाठ करता है, उसके कार्य सिद्ध होते हैं; भगवान शिव इस बात के साक्षी माने गए हैं।",
       "meaningEn": "Whoever reads this Hanuman Chalisa attains success — Lord Shiva, husband of Gauri, stands witness."
@@ -768,8 +768,8 @@
         "कीजै नाथ हृदय महँ डेरा॥40॥"
       ],
       "linesEn": [
-        "tulasīdāsa sadā hari cherā",
-        "kījai nātha hṛidaya mahaṁ ḍerā"
+        "Tulaseedaas sadaa Hari cheraa.",
+        "Keejai naath hriday maha deraa"
       ],
       "meaningHi": "तुलसीदास प्रार्थना करते हैं कि वे सदा हरि के सेवक रहें और हनुमान जी उनके हृदय में निवास करें।",
       "meaningEn": "Tulsidas, ever the servant of Hari, prays: \"Lord, make your dwelling in my heart, always.\""
@@ -785,8 +785,8 @@
         "राम लखन सीता सहित, हृदय बसहु सुर भूप॥"
       ],
       "linesEn": [
-        "pavanatanaya saṁkaṭa harana, maṁgala mūrati rūpa",
-        "rāma lakhana sītā sahita, hṛidaya basahu sura bhūpa"
+        "Pavantanay sankat haran, mangal moorati roop.",
+        "Raam Lakhan Seetaa sahit, hriday basahu sur bhoop."
       ],
       "meaningHi": "हे पवनपुत्र, आप संकट हरने वाले और मंगलमय स्वरूप हैं; श्रीराम, लक्ष्मण और सीता सहित मेरे हृदय में निवास करें।",
       "meaningEn": "Son of the Wind, dispeller of distress, embodiment of all that is auspicious — together with Ram, Lakshman and Sita, dwell within my heart, O King of the gods."
