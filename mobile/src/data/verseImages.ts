@@ -1,5 +1,5 @@
 import type { ChalisaImageKey } from '@assets/chalisa';
-import { hanumanChalisaVerses } from './hanumanChalisa';
+import { hanumanChalisaVerses } from './hanuman-chalisa';
 
 const overrides: Record<string, ChalisaImageKey> = {
   'chaupai-09': 'hanuman_sita',

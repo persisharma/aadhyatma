@@ -1,4 +1,4 @@
-import { hanumanChalisaTotal } from './hanumanChalisa';
+import { hanumanChalisaTotal } from './hanuman-chalisa';
 import { sundarkandCounts, sundarkandTotal } from './sundarkand';
 
 export type TextStatus = 'active' | 'coming';
