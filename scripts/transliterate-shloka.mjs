@@ -1,9 +1,13 @@
 #!/usr/bin/env node
-// Regenerates `linesEn` (IAST) from `lines` (Devanagari) for Sundarkand and Hanuman Chalisa.
+// Regenerates `linesEn` (IAST) from `lines` (Devanagari) for **Sanskrit shlokas only**.
 // Run from repo root:
-//   node scripts/transliterate-shloka.mjs                     # both texts
-//   node scripts/transliterate-shloka.mjs --target sundarkand
-//   node scripts/transliterate-shloka.mjs --target hanuman-chalisa
+//   node scripts/transliterate-shloka.mjs
+//
+// Currently scoped to Sundarkand's three opening shlokas (verses where
+// section === 'shloka'). Awadhi/Hindi verse forms (chaupai, doha, sortha,
+// chhand, and the entirety of Hanuman Chalisa) keep their pronunciation-based
+// ASCII linesEn — IAST is a Sanskrit-spelling transliteration and does not
+// reflect how those texts are actually recited. See design.md §3.1.
 //
 // Idempotent: re-running produces a byte-identical diff once committed.
 // Style standard: design.md §3.1 — IAST diacritics + Hunterian-style digraphs.
@@ -15,9 +19,13 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..');
 
+// Each target lists the file plus a predicate selecting the verses to rewrite.
+// Verses not matching the predicate are left untouched.
 const TARGETS = {
-  sundarkand: join(REPO_ROOT, 'mobile', 'src', 'data', 'sundarkand', 'sundarkand.json'),
-  'hanuman-chalisa': join(REPO_ROOT, 'mobile', 'src', 'data', 'hanuman-chalisa', 'hanuman-chalisa.json'),
+  sundarkand: {
+    path: join(REPO_ROOT, 'mobile', 'src', 'data', 'sundarkand', 'sundarkand.json'),
+    selector: (verse) => verse.section === 'shloka',
+  },
 };
 
 // --- Devanagari → IAST mapping --------------------------------------------------
@@ -194,16 +202,19 @@ export function transliterateLine(devanagari) {
 
 // --- Driver --------------------------------------------------------------------
 
-function processFile(filePath, label) {
-  const raw = readFileSync(filePath, 'utf8');
+function processFile({ path, selector }, label) {
+  const raw = readFileSync(path, 'utf8');
   const data = JSON.parse(raw);
   const verses = data.verses;
   if (!Array.isArray(verses)) {
     throw new Error(`${label}: expected top-level "verses" array`);
   }
 
+  let matched = 0;
   let updated = 0;
   for (const verse of verses) {
+    if (!selector(verse)) continue;
+    matched += 1;
     if (!Array.isArray(verse.lines) || !Array.isArray(verse.linesEn)) {
       throw new Error(`${label}: verse ${verse.id} missing lines or linesEn`);
     }
@@ -221,8 +232,8 @@ function processFile(filePath, label) {
 
   const out = JSON.stringify(data, null, 2) + '\n';
   const fileChanged = out !== raw;
-  if (fileChanged) writeFileSync(filePath, out, 'utf8');
-  return { total: verses.length, updated, fileChanged };
+  if (fileChanged) writeFileSync(path, out, 'utf8');
+  return { matched, updated, fileChanged };
 }
 
 function main() {
@@ -243,7 +254,7 @@ function main() {
     }
     const stats = processFile(TARGETS[t], t);
     const fileMsg = stats.fileChanged ? 'file rewritten' : 'no changes';
-    console.log(`${t}: ${stats.updated}/${stats.total} verses updated (${fileMsg})`);
+    console.log(`${t}: ${stats.updated}/${stats.matched} matching verses updated (${fileMsg})`);
   }
 }
 

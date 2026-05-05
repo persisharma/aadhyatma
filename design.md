@@ -50,15 +50,16 @@ Two typefaces, four roles.
 | **Cormorant Garamond** | Latin subtitles, page counters, swipe hints, italic labels. Weights 400/500 for body prose, **600 non-italic** for transliteration and Latin chapter numbers, 600 italic for section labels. Italic is reserved for labels and short flourishes; long prose is always roman (non-italic) to keep English paragraphs readable over the faded parchment bg. |
 | **Inter** | Only for tiny UI chrome (uppercase section labels, status bar) where Devanagari is not used. 500/600. |
 
-### 3.1 Romanization & Transliteration Standard
+### 3.1 Romanization Style by Source Language
 
-Any time we render a Sanskrit/Awadhi/Hindi *verse line* in Latin script — Gita's `transliteration[]`, Sundarkand's `linesEn[]`, Hanuman Chalisa's `linesEn[]`, future texts' equivalents — the romanization MUST follow the same style: **IAST diacritics + Hunterian-style digraphs**.
+The Latin-script `linesEn` / `transliteration` field is rendered very differently depending on the source language of the verse. Use the rule that matches the *source*, not the *module*:
 
-**Diacritics in scope:** `ā ī ū ṛ ṝ ṅ ñ ṭ ḍ ṇ ś ṣ ḥ ṁ`.
+**Sanskrit verses → IAST + Hunterian digraphs.**
+This applies to the Bhagavad Gītā in full (`transliteration[]`) and to the Sanskrit shlokas embedded in other texts (e.g., the three opening shlokas in Sundarkand, where `section === 'shloka'`).
 
-**Digraphs:** `śh` (श + h aspirate), `kṣh` (क्ष), `chh` (छ), `ch` (च). An epenthetic `i` is inserted after `ṛ` (e.g., `dhṛitarāśhtra`, `pṛithivī`) — this matches the popular BhaktiVedanta-style romanization the Gita corpus already uses, not strict Sanskrit IAST (`dhṛtarāṣṭra`).
-
-**Reference example (Gita 1.1):**
+- Diacritics in scope: `ā ī ū ṛ ṝ ṅ ñ ṭ ḍ ṇ ś ṣ ḥ ṁ`.
+- Digraphs: `śh` (श + h aspirate), `kṣh` (क्ष), `chh` (छ), `ch` (च). An epenthetic `i` follows `ṛ` (e.g., `dhṛitarāśhtra`, `pṛithivī`) — this matches the popular BhaktiVedanta-style romanization the Gita corpus already uses, not strict Sanskrit IAST (`dhṛtarāṣṭra`).
+- Reference (Gita 1.1):
 
 ```
 dhṛitarāśhtra uvācha
@@ -66,14 +67,19 @@ dharma-kṣhetre kuru-kṣhetre samavetā yuyutsavaḥ
 māmakāḥ pāṇḍavāśhchaiva kimakurvata sañjaya
 ```
 
+**Awadhi / Hindi verses → pronunciation-based ASCII (no diacritics).**
+This applies to Sundarkand's chaupais, dohas, sorthas, and chhands, and to all of Hanuman Chalisa (opening dohas, chaupais, closing doha). Tulsidas's Awadhi is recited with schwa-deletion and regional consonant variations that strict IAST does not capture — IAST `mahābīra bikrama bajaraṁgī` does not match how `महाबीर बिक्रम बजरंगी` is actually chanted, but `Mahaabeer bikram bajarangee` does. The romanization is hand-curated to reflect recitation; do not regenerate mechanically from the Devanagari.
+
 | | Verse-line romanization |
 |---|---|
-| ✓ | `dhṛitarāśhtra uvācha` |
-| ✓ | `nānyā spṛihā raghupate hṛidaye'smadīye` |
-| ✗ | `dhritarashtra uvacha` (no diacritics) |
-| ✗ | `Naanyaa sprihaa raghupate hridaye'smadeeye` (digit-style romanization) |
+| ✓ Sanskrit shloka | `dhṛitarāśhtra uvācha` (Gita) |
+| ✓ Sanskrit shloka | `nānyā spṛihā raghupate hṛidaye'smadīye` (Sundarkand opening shloka) |
+| ✓ Awadhi chaupai | `Mahaabeer bikram bajarangee` (Hanuman Chalisa) |
+| ✓ Awadhi doha | `Buddhiheen tanu jaanike, sumirau pavan-kumaar.` |
+| ✗ | `dhritarashtra uvacha` for a Sanskrit verse (diacritics dropped) |
+| ✗ | `mahābīra bikrama bajaraṁgī` for an Awadhi chaupai (IAST imposed where it doesn't fit) |
 
-**This rule does NOT apply to:**
+**This whole section does NOT apply to:**
 
 - Chapter titles' English subtitles (e.g., `Bhagavad Gītā`, `Arjuna's Dilemma`)
 - Verse-pill subtitles (e.g., `Chapter 1`, `Opening`, `Closing`)
@@ -85,9 +91,7 @@ These remain in everyday English. A handful of common Sanskrit terms keep their 
 **Rendering layout** is module-specific:
 
 - **Gita pattern (always-show-both):** Devanagari and IAST render side-by-side on every reader page; the language toggle only flips meaning/commentary. See §9.
-- **Sundarkand / Hanuman Chalisa pattern (swap-on-toggle):** the toggle swaps Devanagari ↔ IAST in place, so only one script is visible at a time. See §9 / §10.
-
-The IAST quality rule (this section) is shared across both layouts.
+- **Sundarkand / Hanuman Chalisa pattern (swap-on-toggle):** the toggle swaps Devanagari ↔ romanization in place, so only one script is visible at a time. See §9 / §10. Sanskrit shlokas inside these texts swap to IAST; Awadhi chaupais swap to pronunciation-based ASCII.
 
 ### Type scale
 
@@ -401,7 +405,7 @@ When a new text is added, pick the pattern that fits the source:
 - Never hard-code colours, spacings, or font names in a component — always pull from the theme.
 - If a token is missing, add it to `colors.ts` / `typography.ts` / `spacing.ts` first, then update this doc, then use it.
 - For bilingual prose (meaning, commentary): Cormorant Garamond 18 / 30 500 medium **non-italic** `ink` is the English body standard. Italic is reserved for labels, fallback notes, and short flourishes.
-- **Romanization.** Any Latin-script verse line — Gita's `transliteration[]`, Sundarkand's / Hanuman Chalisa's `linesEn[]`, future texts' equivalents — MUST follow the IAST + Hunterian-digraph standard in §3.1. Plain ASCII romanization (no diacritics) is rejected at review.
+- **Romanization.** Pick the style that matches the source language per §3.1: IAST + Hunterian digraphs for Sanskrit verses (Gita, embedded shlokas); pronunciation-based ASCII for Awadhi/Hindi verses (Tulsidas chaupais and dohas). Don't impose IAST on Awadhi — the diacritics misrepresent recitation.
 - **Language toggle.** Reuse `useGitaLanguage()`. Render the toggle on every reader page; for sections with a subsection listing (e.g., Gita's Chapters Index), render it there too. State is shared.
 
 ---
@@ -416,7 +420,7 @@ When a new text is added, pick the pattern that fits the source:
 - `HanumanChalisa/hanuman-chalisa-hi-en.md` — curated bilingual source markdown for the Chalisa module.
 - `BhagwadGita/chapters/chapter-NN-*.md` — 18 published-translation Markdown files for the Gita module.
 - `scripts/parse-gita.mjs` — one-shot Node parser (`node scripts/parse-gita.mjs` from repo root) that reads the Gita Markdown, normalises it, and writes the per-chapter JSON + manifest. Idempotent.
-- `scripts/transliterate-shloka.mjs` — one-shot Node script that regenerates Sundarkand's and Hanuman Chalisa's `linesEn` (IAST) from their Devanagari `lines`. Idempotent. See §3.1 for the romanization standard.
+- `scripts/transliterate-shloka.mjs` — one-shot Node script that regenerates `linesEn` (IAST) from Devanagari `lines` for **Sanskrit shlokas only** (verses where `section === 'shloka'`). Currently scoped to Sundarkand's three opening shlokas; Awadhi/Hindi verses are not regenerated mechanically (see §3.1). Idempotent.
 
 **Generated / committed data consumed by Metro:**
 - `mobile/src/data/gita/chapter-NN.json` — one per chapter, imported statically.
