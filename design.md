@@ -50,6 +50,45 @@ Two typefaces, four roles.
 | **Cormorant Garamond** | Latin subtitles, page counters, swipe hints, italic labels. Weights 400/500 for body prose, **600 non-italic** for transliteration and Latin chapter numbers, 600 italic for section labels. Italic is reserved for labels and short flourishes; long prose is always roman (non-italic) to keep English paragraphs readable over the faded parchment bg. |
 | **Inter** | Only for tiny UI chrome (uppercase section labels, status bar) where Devanagari is not used. 500/600. |
 
+### 3.1 Romanization & Transliteration Standard
+
+Any time we render a Sanskrit/Awadhi/Hindi *verse line* in Latin script — Gita's `transliteration[]`, Sundarkand's `linesEn[]`, Hanuman Chalisa's `linesEn[]`, future texts' equivalents — the romanization MUST follow the same style: **IAST diacritics + Hunterian-style digraphs**.
+
+**Diacritics in scope:** `ā ī ū ṛ ṝ ṅ ñ ṭ ḍ ṇ ś ṣ ḥ ṁ`.
+
+**Digraphs:** `śh` (श + h aspirate), `kṣh` (क्ष), `chh` (छ), `ch` (च). An epenthetic `i` is inserted after `ṛ` (e.g., `dhṛitarāśhtra`, `pṛithivī`) — this matches the popular BhaktiVedanta-style romanization the Gita corpus already uses, not strict Sanskrit IAST (`dhṛtarāṣṭra`).
+
+**Reference example (Gita 1.1):**
+
+```
+dhṛitarāśhtra uvācha
+dharma-kṣhetre kuru-kṣhetre samavetā yuyutsavaḥ
+māmakāḥ pāṇḍavāśhchaiva kimakurvata sañjaya
+```
+
+| | Verse-line romanization |
+|---|---|
+| ✓ | `dhṛitarāśhtra uvācha` |
+| ✓ | `nānyā spṛihā raghupate hṛidaye'smadīye` |
+| ✗ | `dhritarashtra uvacha` (no diacritics) |
+| ✗ | `Naanyaa sprihaa raghupate hridaye'smadeeye` (digit-style romanization) |
+
+**This rule does NOT apply to:**
+
+- Chapter titles' English subtitles (e.g., `Bhagavad Gītā`, `Arjuna's Dilemma`)
+- Verse-pill subtitles (e.g., `Chapter 1`, `Opening`, `Closing`)
+- Library-card English names (e.g., `Hanuman Chalisa`, `Sundarkand`)
+- UI chrome — counts (`47 verses`), hints (`← swipe →`), labels (`Meaning`, `Commentary`)
+
+These remain in everyday English. A handful of common Sanskrit terms keep their conventional spelling outside verse-lines (`Gītā`, `kāṇḍa`) — the diacritic-or-not call belongs to the editorial team, not this rule.
+
+**Rendering layout** is module-specific:
+
+- **Gita pattern (always-show-both):** Devanagari and IAST render side-by-side on every reader page; the language toggle only flips meaning/commentary. See §9.
+- **Sundarkand / Hanuman Chalisa pattern (swap-on-toggle):** the toggle swaps Devanagari ↔ IAST in place, so only one script is visible at a time. See §9 / §10.
+
+The IAST quality rule (this section) is shared across both layouts.
+
 ### Type scale
 
 | Role | Typeface | Size | Weight | Notes |
@@ -229,7 +268,7 @@ Applies to both readers — the Hanuman Chalisa reader (linear, single text) and
 **Interaction.**
 
 - Horizontal swipe (pager). Left-edge swipe from first page or right-edge from last page should bounce, not dismiss.
-- Language toggle: set on the Chapters Index (Section 15). Reader respects the current selection; there is no inline toggle in the Reader top bar in v1.
+- Language toggle: rendered on **every reader page** (Section 16) for all bilingual modules — Gita, Sundarkand, Hanuman Chalisa. Sections that have a subsection listing (e.g., Gita's Chapters Index, Section 15) ALSO surface the toggle there. Both surfaces share state via `useGitaLanguage()` — same control, two screens, one source of truth.
 - Tap-hold on the verse (future): audio playback hook — leave structural space now, don't ship until audio lands.
 - Back button or gesture returns one level up.
 
@@ -311,7 +350,7 @@ Keep the verse-pill vocabulary consistent across modules — each pill pairs a D
 
 ### Language state (Gita)
 
-The Gita section carries a single in-memory language preference (`'hi' | 'en'`) exposed via a React context (`useGitaLanguage()`). Default `'hi'`. The toggle lives on the Chapters Index (Section 15); the Reader (Section 9) only reads the current value. Preference is **session-only** in v1 — no `AsyncStorage` persistence. Sanskrit and transliteration always render regardless of the current language; only meaning + commentary honour the toggle.
+The Gita section carries a single in-memory language preference (`'hi' | 'en'`) exposed via a React context (`useGitaLanguage()`). Default `'hi'`. The same hook is also reused by Sundarkand and Hanuman Chalisa — there is no per-section context — so the language preference is shared across modules within a session. The toggle is rendered both on subsection listings (Chapters Index, Section 15) and on every reader page (Section 9). Preference is **session-only** in v1 — no `AsyncStorage` persistence. For Gita, Sanskrit and transliteration always render regardless of the current language; only meaning + commentary honour the toggle. For Sundarkand and Hanuman Chalisa, the toggle swaps the verse lines between Devanagari (`lines[]`) and IAST (`linesEn[]`).
 
 ---
 
@@ -350,8 +389,8 @@ When a new text is added, pick the pattern that fits the source:
 1. Add the source Markdown files under `<Module>/chapters/chapter-NN-*.md` using the same `### BG N.M` + `**Section Name**` format the Gita parser consumes (or write a module-specific parser with the same output shape).
 2. Generate per-chapter JSONs via a build-time Node script and commit the output to `mobile/src/data/<module>/chapter-NN.json` + `chapters-manifest.json`.
 3. Define the module's content types (shape mirrors Gita's `GitaVerse` / `GitaChapter`) in `mobile/src/data/<module>/index.ts` with module-load invariants (chapter count, verse count per chapter, no duplicate ids, at least one language populated for optional sections).
-4. Add a `<Module>LanguageContext` if the text is bilingual (Section 15). Wrap the app in `App.tsx` inside `ThemeProvider`.
-5. Add a Chapters Index screen (Section 15) with a Language Toggle (Section 16) and a list of chapter cards.
+4. Reuse the existing `useGitaLanguage()` context (`mobile/src/data/gita/language.tsx`) — do not create a parallel per-module context. The hook is already shared across Gita, Sundarkand, and Hanuman Chalisa.
+5. Add a Chapters Index screen (Section 15) with a Language Toggle (Section 16) and a list of chapter cards. Render the same Language Toggle on every reader page too — same control, two surfaces, shared state.
 6. Build a Reader screen that scopes the pager to a single chapter (one verse per page, chapter-scoped counter).
 7. Add 1–3 faded sketches to `mobile/assets/<module>/` — for v1 a single image covering all verses is acceptable if sourcing more is a separate ticket.
 8. Flip the Home card from `coming` to `active`. Active modules sort above `coming` ones in the library list.
@@ -362,6 +401,8 @@ When a new text is added, pick the pattern that fits the source:
 - Never hard-code colours, spacings, or font names in a component — always pull from the theme.
 - If a token is missing, add it to `colors.ts` / `typography.ts` / `spacing.ts` first, then update this doc, then use it.
 - For bilingual prose (meaning, commentary): Cormorant Garamond 18 / 30 500 medium **non-italic** `ink` is the English body standard. Italic is reserved for labels, fallback notes, and short flourishes.
+- **Romanization.** Any Latin-script verse line — Gita's `transliteration[]`, Sundarkand's / Hanuman Chalisa's `linesEn[]`, future texts' equivalents — MUST follow the IAST + Hunterian-digraph standard in §3.1. Plain ASCII romanization (no diacritics) is rejected at review.
+- **Language toggle.** Reuse `useGitaLanguage()`. Render the toggle on every reader page; for sections with a subsection listing (e.g., Gita's Chapters Index), render it there too. State is shared.
 
 ---
 
@@ -372,13 +413,16 @@ When a new text is added, pick the pattern that fits the source:
 - `design.md` — this document.
 
 **Source content:**
-- `HanumanChalisa/hanuman-chalisa.hi.json` — curated source for the Chalisa module.
+- `HanumanChalisa/hanuman-chalisa-hi-en.md` — curated bilingual source markdown for the Chalisa module.
 - `BhagwadGita/chapters/chapter-NN-*.md` — 18 published-translation Markdown files for the Gita module.
 - `scripts/parse-gita.mjs` — one-shot Node parser (`node scripts/parse-gita.mjs` from repo root) that reads the Gita Markdown, normalises it, and writes the per-chapter JSON + manifest. Idempotent.
+- `scripts/transliterate-shloka.mjs` — one-shot Node script that regenerates Sundarkand's and Hanuman Chalisa's `linesEn` (IAST) from their Devanagari `lines`. Idempotent. See §3.1 for the romanization standard.
 
 **Generated / committed data consumed by Metro:**
 - `mobile/src/data/gita/chapter-NN.json` — one per chapter, imported statically.
 - `mobile/src/data/gita/chapters-manifest.json` — lightweight list of `{ chapter, titleHi, titleEn, verseCount }` used by the Chapters Index.
+- `mobile/src/data/sundarkand/sundarkand.json` — 343 verses across 5 verse types (shloka, doha, chaupai, sortha, chhand).
+- `mobile/src/data/hanuman-chalisa/hanuman-chalisa.json` — 43 verses (2 opening dohas + 40 chaupais + 1 closing doha).
 
 **Assets:**
 - `images/*.png` — Hanuman parchment sketches (consumed in `mobile/assets/chalisa/`).
@@ -394,12 +438,15 @@ When a new text is added, pick the pattern that fits the source:
 - `mobile/src/components/LibraryCard.tsx` — Home library entry (Section 8).
 - `mobile/src/components/GitaChapterCard.tsx` — Chapters Index entry (Section 15).
 - `mobile/src/components/LanguageToggle.tsx` — the hi/en segmented pill (Section 16).
-- `mobile/src/components/VersePage.tsx` / `GitaVersePage.tsx` — Reader page body for each module.
+- `mobile/src/components/VersePage.tsx` — Hanuman Chalisa reader page body.
+- `mobile/src/components/GitaVersePage.tsx` — Gita reader page body (always-show-both layout).
+- `mobile/src/components/SundarkandVersePage.tsx` — Sundarkand reader page body.
 - `mobile/src/components/Ornament.tsx` — the `॥` verse divider (Section 5).
 
 **Screens:**
 - `mobile/src/screens/HomeScreen.tsx` — Home (Section 7).
 - `mobile/src/screens/ChalisaReaderScreen.tsx` — Chalisa Reader.
+- `mobile/src/screens/SundarkandReaderScreen.tsx` — Sundarkand Reader.
 - `mobile/src/screens/GitaChaptersIndexScreen.tsx` — Gita Chapters Index (Section 15).
 - `mobile/src/screens/GitaReaderScreen.tsx` — Gita Reader (chapter-scoped pager).
 

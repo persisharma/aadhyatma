@@ -60,9 +60,11 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
 - **Typography.** Devanagari → `NotoSerifDevanagari_500Medium` / `_600SemiBold`. English → `CormorantGaramond_500Medium` / `_400Regular_Italic` / `_600SemiBold_Italic`. (`design.md` §3) The full type scale is in `mobile/src/theme/typography.ts`; copy it via the role names (e.g. `theme.type.verseBody`), don't re-derive.
 - **Background image.** Render with `<ImageBackground source={…} resizeMode="cover">` then layer the parchment `<LinearGradient>` overlay on top per `design.md` §6. Selection must be **deterministic per verse id** (e.g. `images[hash(verse.id) % images.length]`) — not random per render.
 - **Reader shell.** Horizontal paginated `FlatList`, ornament divider (`Ornament.tsx`), pager dots, bilingual top-bar title. Match the layouts of `GitaReaderScreen.tsx` and `SundarkandReaderScreen.tsx` — do not invent a third shell.
+- **Romanization.** Any Latin-script verse line — `transliteration[]` for Gita-style modules, `linesEn[]` for swap-on-toggle modules (Sundarkand, Hanuman Chalisa) — MUST follow `design.md §3.1`: IAST diacritics with Hunterian-style digraphs (`śh`, `kṣh`, `ch`, `chh`, epenthetic `i` after `ṛ`). Plain ASCII romanization (no diacritics) is rejected at review.
 - **Language toggle.** Reuse the existing context: `import { useGitaLanguage } from 'mobile/src/data/gita/language.tsx'`. Default `'hi'`. **Do not** create a parallel context per section. (Renaming the hook to `useReadingLanguage` is a follow-up tracked outside this rulebook.)
-  - Sections **with subsections** put the toggle on their Chapters Index screen (Gita pattern, `design.md` §15–16). The Reader reads it but doesn't show it inline.
-  - Sections **without subsections** put the toggle on the Reader screen itself (Sundarkand pattern).
+  - The toggle is rendered on **every reader page** for all bilingual sections.
+  - Sections with a subsection listing (Chapters Index, kāṇḍa list, etc.) ALSO surface the toggle on that listing.
+  - State is shared across surfaces via the same hook — no per-screen forks.
 - **Pill vocabulary.** Verse-type pill is always `<Devanagari term> · <Latin subtitle or N>` (`दोहा · Opening`, `चौपाई · 9`, `श्लोक · 1.1`, …). Do not invent new vocabulary without updating `design.md` first.
 - **No emoji, no photos.** Backgrounds are always faded hand-drawn sketches per the Section 6 treatment.
 
@@ -76,8 +78,9 @@ The slash command runs the first three; the human PR author runs the rest.
 2. `mobile/assets/<id>/` contains ≥ 1 image and `mobile/src/data/<id>/index.ts` invariant checks pass at app boot (no thrown errors).
 3. PR diff contains zero new hex literals or hardcoded font names — search the diff for `#[0-9A-Fa-f]{3,6}` and `fontFamily:` to confirm.
 4. App boots in Expo dev client; the new card is visible on Home below the existing active sections; tapping navigates to a working reader; every page shows a background image; every verse has `meaningHi` and `meaningEn` populated.
-5. Hindi/English toggle flips meaning text on **every** page (sample at least page 1, middle, and last).
-6. If subsections exist: chapters list renders; tapping any chapter lands on verse 1 of that chapter; back button returns to chapters list, not Home.
+5. Hindi/English toggle flips meaning text on **every** page (sample at least page 1, middle, and last). Toggle is visible on every reader page; if a subsection listing exists, also visible there.
+6. If the section ships an English transliteration field (`transliteration[]` or `linesEn[]`), spot-check at least 3 verses for IAST diacritics. Plain ASCII (no `ā`, `ṛ`, `ḥ`, `ṁ`, `ñ`, `ṣ`, `ś`, `ṭ`, `ḍ`, `ṇ` anywhere) is a hard reject — see `design.md §3.1`.
+7. If subsections exist: chapters list renders; tapping any chapter lands on verse 1 of that chapter; back button returns to chapters list, not Home.
 
 ---
 
