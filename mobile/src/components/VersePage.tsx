@@ -1,38 +1,47 @@
 import React, { useMemo } from 'react';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
 import { chalisaImages } from '@assets/chalisa';
 import { imageKeyForVerse } from '@/data/verseImages';
-import type { Verse } from '@/data/hanumanChalisa';
+import type { HanumanChalisaVerse } from '@/data/hanuman-chalisa';
 import Ornament from './Ornament';
 
 type Props = {
-  verse: Verse;
+  verse: HanumanChalisaVerse;
   width: number;
 };
 
-function pillLabel(verse: Verse, englishLabel: string): string {
-  if (verse.type === 'doha' && verse.section === 'opening') {
-    const num = verse.number ? ` · ${verse.number}` : '';
-    return `दोहा${num} · Opening`;
-  }
-  if (verse.type === 'doha' && verse.section === 'closing') {
-    return `समापन दोहा · Closing`;
-  }
-  if (verse.number != null) {
-    return `चौपाई · ${verse.number}`;
-  }
-  return englishLabel;
-}
-
 export default function VersePage({ verse, width }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
+  const { lang } = useGitaLanguage();
+
   const imageKey = useMemo(() => imageKeyForVerse(verse.id), [verse.id]);
   const bg = chalisaImages[imageKey];
-  const pill = pillLabel(verse, verse.label);
 
-  const a11yLabel = [pill, ...verse.lines, 'Meaning', verse.meaning].join('. ');
+  const verseLines = lang === 'hi' ? verse.lines : verse.linesEn;
+  const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
+  const meaningLabel = lang === 'hi' ? 'भावार्थ' : 'Meaning';
+  const pillText = lang === 'hi' ? verse.labelHi : verse.labelEn;
+
+  const bodyHiStyle = {
+    color: colors.inkSoft,
+    fontFamily: typography.meaning.fontFamily,
+    fontSize: typography.meaning.fontSize,
+    lineHeight: typography.meaning.lineHeight,
+  } as const;
+
+  const bodyEnStyle = {
+    color: colors.ink,
+    fontFamily: 'CormorantGaramond_500Medium' as const,
+    fontSize: 18,
+    lineHeight: 30,
+  };
+
+  const bodyStyle = lang === 'hi' ? bodyHiStyle : bodyEnStyle;
+
+  const a11yLabel = [pillText, ...verseLines, meaningLabel, meaning].join('. ');
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
@@ -49,18 +58,20 @@ export default function VersePage({ verse, width }: Props) {
         />
       </ImageBackground>
 
-      <View
-        style={[styles.content, { paddingHorizontal: spacing.screenGutter }]}
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingHorizontal: spacing.screenGutter },
+        ]}
+        showsVerticalScrollIndicator={false}
         accessible
         accessibilityLabel={a11yLabel}
       >
         <View
           style={[
             styles.pill,
-            {
-              backgroundColor: colors.saffronTint,
-              borderRadius: radii.pill,
-            },
+            { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
           ]}
         >
           <Text
@@ -74,21 +85,25 @@ export default function VersePage({ verse, width }: Props) {
               },
             ]}
           >
-            {pill}
+            {pillText}
           </Text>
         </View>
 
         <View style={styles.verseBlock}>
-          {verse.lines.map((line, idx) => (
+          {verseLines.map((line, idx) => (
             <Text
-              key={idx}
+              key={`l-${idx}`}
               style={[
                 styles.verseLine,
                 {
                   color: colors.ink,
-                  fontFamily: typography.verse.fontFamily,
-                  fontSize: typography.verse.fontSize,
-                  lineHeight: typography.verse.lineHeight,
+                  fontFamily:
+                    lang === 'hi'
+                      ? typography.verse.fontFamily
+                      : 'CormorantGaramond_600SemiBold',
+                  fontSize: lang === 'hi' ? typography.verse.fontSize : 18,
+                  lineHeight: lang === 'hi' ? typography.verse.lineHeight : 28,
+                  fontStyle: lang === 'en' ? 'italic' : 'normal',
                 },
               ]}
             >
@@ -101,7 +116,7 @@ export default function VersePage({ verse, width }: Props) {
 
         <Text
           style={[
-            styles.meaningLabel,
+            styles.sectionLabel,
             {
               color: colors.saffronDeep,
               fontFamily: typography.meaningLabel.fontFamily,
@@ -110,22 +125,10 @@ export default function VersePage({ verse, width }: Props) {
             },
           ]}
         >
-          अर्थ · Meaning
+          {meaningLabel}
         </Text>
-        <Text
-          style={[
-            styles.meaning,
-            {
-              color: colors.inkSoft,
-              fontFamily: typography.meaning.fontFamily,
-              fontSize: typography.meaning.fontSize,
-              lineHeight: typography.meaning.lineHeight,
-            },
-          ]}
-        >
-          {verse.meaning}
-        </Text>
-      </View>
+        <Text style={[styles.body, bodyStyle]}>{meaning}</Text>
+      </ScrollView>
     </View>
   );
 }
@@ -135,10 +138,12 @@ const styles = StyleSheet.create({
     flex: 1,
     overflow: 'hidden',
   },
-  content: {
+  scroll: {
     flex: 1,
-    justifyContent: 'center',
-    paddingVertical: 24,
+  },
+  scrollContent: {
+    paddingTop: 16,
+    paddingBottom: 40,
   },
   pill: {
     alignSelf: 'flex-start',
@@ -151,17 +156,18 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   verseBlock: {
-    gap: 4,
+    gap: 6,
   },
   verseLine: {
     includeFontPadding: false,
   },
-  meaningLabel: {
+  sectionLabel: {
     textTransform: 'uppercase',
-    marginBottom: 10,
+    marginBottom: 12,
+    alignSelf: 'center',
     includeFontPadding: false,
   },
-  meaning: {
+  body: {
     includeFontPadding: false,
   },
 });
