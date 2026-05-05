@@ -13,11 +13,14 @@ import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import {
-  hanumanChalisaTitle,
+  hanumanChalisaTitleEn,
+  hanumanChalisaTitleHi,
   hanumanChalisaTotal,
   hanumanChalisaVerses,
-  type Verse,
-} from '@/data/hanumanChalisa';
+  type HanumanChalisaVerse,
+} from '@/data/hanuman-chalisa';
+import { useGitaLanguage } from '@/data/gita/language';
+import LanguageToggle from '@/components/LanguageToggle';
 import VersePage from '@/components/VersePage';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -27,8 +30,9 @@ const DOT_COUNT = 5;
 
 export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
+  const { lang } = useGitaLanguage();
   const { width } = useWindowDimensions();
-  const listRef = useRef<FlatList<Verse>>(null);
+  const listRef = useRef<FlatList<HanumanChalisaVerse>>(null);
   const [currentIndex, setCurrentIndex] = useState(route.params?.initialIndex ?? 0);
 
   const viewabilityConfig = useRef({
@@ -90,13 +94,17 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
               styles.title,
               {
                 color: colors.ink,
-                fontFamily: typography.readerTitle.fontFamily,
+                fontFamily:
+                  lang === 'hi'
+                    ? typography.readerTitle.fontFamily
+                    : typography.cardLatin.fontFamily,
                 fontSize: typography.readerTitle.fontSize,
+                fontStyle: lang === 'en' ? 'italic' : 'normal',
               },
             ]}
             numberOfLines={1}
           >
-            {hanumanChalisaTitle}
+            {lang === 'hi' ? hanumanChalisaTitleHi : hanumanChalisaTitleEn}
           </Text>
 
           <Text
@@ -114,9 +122,13 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
           </Text>
         </View>
 
+        <View style={styles.toggleRow}>
+          <LanguageToggle />
+        </View>
+
         <FlatList
           ref={listRef}
-          data={hanumanChalisaVerses as Verse[]}
+          data={hanumanChalisaVerses as HanumanChalisaVerse[]}
           keyExtractor={(v) => v.id}
           renderItem={({ item }) => <VersePage verse={item} width={width} />}
           horizontal
@@ -203,6 +215,11 @@ const styles = StyleSheet.create({
   },
   counter: {
     includeFontPadding: false,
+  },
+  toggleRow: {
+    paddingVertical: 6,
+    paddingBottom: 12,
+    alignItems: 'center',
   },
   list: {
     flex: 1,
