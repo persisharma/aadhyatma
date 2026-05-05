@@ -60,7 +60,7 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
 - **Typography.** Devanagari → `NotoSerifDevanagari_500Medium` / `_600SemiBold`. English → `CormorantGaramond_500Medium` / `_400Regular_Italic` / `_600SemiBold_Italic`. (`design.md` §3) The full type scale is in `mobile/src/theme/typography.ts`; copy it via the role names (e.g. `theme.type.verseBody`), don't re-derive.
 - **Background image.** Render with `<ImageBackground source={…} resizeMode="cover">` then layer the parchment `<LinearGradient>` overlay on top per `design.md` §6. Selection must be **deterministic per verse id** (e.g. `images[hash(verse.id) % images.length]`) — not random per render.
 - **Reader shell.** Horizontal paginated `FlatList`, ornament divider (`Ornament.tsx`), pager dots, bilingual top-bar title. Match the layouts of `GitaReaderScreen.tsx` and `SundarkandReaderScreen.tsx` — do not invent a third shell.
-- **Romanization.** Any Latin-script verse line — `transliteration[]` for Gita-style modules, `linesEn[]` for swap-on-toggle modules (Sundarkand, Hanuman Chalisa) — MUST follow `design.md §3.1`: IAST diacritics with Hunterian-style digraphs (`śh`, `kṣh`, `ch`, `chh`, epenthetic `i` after `ṛ`). Plain ASCII romanization (no diacritics) is rejected at review.
+- **Romanization.** Per `design.md §3.1`, the romanization style is chosen by the source language of the verse, not by the module: Sanskrit verses (Gita, embedded shlokas) use IAST + Hunterian digraphs; Awadhi/Hindi verses (Tulsidas chaupais, dohas, sorthas, chhands) use hand-curated pronunciation-based ASCII. Do not impose IAST on Awadhi — the diacritics misrepresent recitation.
 - **Language toggle.** Reuse the existing context: `import { useGitaLanguage } from 'mobile/src/data/gita/language.tsx'`. Default `'hi'`. **Do not** create a parallel context per section. (Renaming the hook to `useReadingLanguage` is a follow-up tracked outside this rulebook.)
   - The toggle is rendered on **every reader page** for all bilingual sections.
   - Sections with a subsection listing (Chapters Index, kāṇḍa list, etc.) ALSO surface the toggle on that listing.
@@ -79,7 +79,7 @@ The slash command runs the first three; the human PR author runs the rest.
 3. PR diff contains zero new hex literals or hardcoded font names — search the diff for `#[0-9A-Fa-f]{3,6}` and `fontFamily:` to confirm.
 4. App boots in Expo dev client; the new card is visible on Home below the existing active sections; tapping navigates to a working reader; every page shows a background image; every verse has `meaningHi` and `meaningEn` populated.
 5. Hindi/English toggle flips meaning text on **every** page (sample at least page 1, middle, and last). Toggle is visible on every reader page; if a subsection listing exists, also visible there.
-6. If the section ships an English transliteration field (`transliteration[]` or `linesEn[]`), spot-check at least 3 verses for IAST diacritics. Plain ASCII (no `ā`, `ṛ`, `ḥ`, `ṁ`, `ñ`, `ṣ`, `ś`, `ṭ`, `ḍ`, `ṇ` anywhere) is a hard reject — see `design.md §3.1`.
+6. If the section ships an English transliteration field (`transliteration[]` or `linesEn[]`), spot-check the romanization style matches the source language per `design.md §3.1`: Sanskrit verses use IAST diacritics; Awadhi/Hindi verses use pronunciation-based ASCII. Mismatched style (IAST on Awadhi or plain ASCII on a Sanskrit shloka) is a hard reject.
 7. If subsections exist: chapters list renders; tapping any chapter lands on verse 1 of that chapter; back button returns to chapters list, not Home.
 
 ---
