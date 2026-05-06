@@ -24,7 +24,8 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 export default function HomeScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const [helpVisible, setHelpVisible] = useState(false);
-  const copy = helpContent.hi;
+  const hi = helpContent.hi;
+  const en = helpContent.en;
 
   const openHelp = useCallback(() => setHelpVisible(true), []);
   const closeHelp = useCallback(() => setHelpVisible(false), []);
@@ -144,7 +145,7 @@ export default function HomeScreen({ navigation }: Props) {
                   },
                 ]}
               >
-                {copy.title}
+                {hi.title} / {en.title}
               </Text>
               <Pressable onPress={closeHelp} hitSlop={12}>
                 <Text style={[styles.closeButton, { color: colors.saffron }]}>✕</Text>
@@ -167,11 +168,11 @@ export default function HomeScreen({ navigation }: Props) {
                   },
                 ]}
               >
-                {copy.disclaimerHeading}
+                {hi.disclaimerHeading}
               </Text>
-              {copy.disclaimerParagraphs.map((para, i) => (
+              {hi.disclaimerParagraphs.map((para, i) => (
                 <Text
-                  key={i}
+                  key={`hi-${i}`}
                   style={[
                     styles.modalPara,
                     {
@@ -186,17 +187,49 @@ export default function HomeScreen({ navigation }: Props) {
                 </Text>
               ))}
 
+              <View style={[styles.langDivider, { borderBottomColor: colors.divider }]} />
+
               <Text
                 style={[
                   styles.modalSectionHeading,
                   {
                     color: colors.ink,
                     fontFamily: typography.readerTitle.fontFamily,
-                    marginTop: 28,
                   },
                 ]}
               >
-                {copy.reportHeading}
+                {en.disclaimerHeading}
+              </Text>
+              {en.disclaimerParagraphs.map((para, i) => (
+                <Text
+                  key={`en-${i}`}
+                  style={[
+                    styles.modalPara,
+                    {
+                      color: colors.inkSoft,
+                      fontFamily: typography.meaning.fontFamily,
+                      fontSize: 14,
+                      lineHeight: 24,
+                    },
+                  ]}
+                >
+                  {para}
+                </Text>
+              ))}
+
+              <View style={[styles.langDivider, { borderBottomColor: colors.divider }]} />
+
+              <Text
+                style={[
+                  styles.modalSectionHeading,
+                  {
+                    color: colors.ink,
+                    fontFamily: typography.readerTitle.fontFamily,
+                    marginTop: 8,
+                  },
+                ]}
+              >
+                {hi.reportHeading} / {en.reportHeading}
               </Text>
               <Text
                 style={[
@@ -209,7 +242,20 @@ export default function HomeScreen({ navigation }: Props) {
                   },
                 ]}
               >
-                {copy.reportIntro}
+                {hi.reportIntro}
+              </Text>
+              <Text
+                style={[
+                  styles.modalPara,
+                  {
+                    color: colors.inkSoft,
+                    fontFamily: typography.meaning.fontFamily,
+                    fontSize: 14,
+                    lineHeight: 24,
+                  },
+                ]}
+              >
+                {en.reportIntro}
               </Text>
               <Pressable
                 onPress={openMailto}
@@ -227,7 +273,7 @@ export default function HomeScreen({ navigation }: Props) {
                     { fontFamily: typography.readerTitle.fontFamily },
                   ]}
                 >
-                  {copy.reportButtonLabel}
+                  {hi.reportButtonLabel} / {en.reportButtonLabel}
                 </Text>
               </Pressable>
             </ScrollView>
@@ -306,6 +352,11 @@ const styles = StyleSheet.create({
   modalPara: {
     marginBottom: 14,
     includeFontPadding: false,
+  },
+  langDivider: {
+    borderBottomWidth: 1,
+    marginVertical: 20,
+    opacity: 0.5,
   },
   emailButton: {
     marginTop: 16,
