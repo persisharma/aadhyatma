@@ -52,5 +52,6 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     textAlign: 'center',
     textAlignVertical: 'center',
+    transform: [{ translateY: 1.5 }],
   },
 });
