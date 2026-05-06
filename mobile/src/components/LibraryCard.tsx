@@ -92,7 +92,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
           style={[
             styles.nameEn,
             {
-              color: colors.inkMuted,
+              color: colors.inkSoft,
               fontFamily: typography.cardLatin.fontFamily,
               fontSize: typography.cardLatin.fontSize,
               opacity: isActive ? 1 : 0.55,
