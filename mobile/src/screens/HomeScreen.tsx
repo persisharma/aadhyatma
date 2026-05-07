@@ -102,7 +102,7 @@ export default function HomeScreen({ navigation }: Props) {
               } else if (entry.id === 'bhagavad-gita') {
                 onPress = () => navigation.navigate('GitaChapters');
               } else if (entry.id === 'sundarkand') {
-                onPress = () => navigation.navigate('SundarkandReader', { initialIndex: 0 });
+                onPress = () => navigation.navigate('SundarkandChapters');
               } else if (entry.id === 'shiva-strotam') {
                 onPress = () => navigation.navigate('ShivaStrotamChapters');
               }
