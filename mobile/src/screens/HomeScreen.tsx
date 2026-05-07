@@ -103,6 +103,8 @@ export default function HomeScreen({ navigation }: Props) {
                 onPress = () => navigation.navigate('GitaChapters');
               } else if (entry.id === 'sundarkand') {
                 onPress = () => navigation.navigate('SundarkandReader', { initialIndex: 0 });
+              } else if (entry.id === 'shiva-strotam') {
+                onPress = () => navigation.navigate('ShivaStrotamChapters');
               }
               return <LibraryCard key={entry.id} entry={entry} onPress={onPress} />;
             })}

@@ -4,4 +4,6 @@ export type RootStackParamList = {
   GitaChapters: undefined;
   GitaReader: { chapter: number; initialIndex?: number };
   SundarkandReader: { initialIndex?: number } | undefined;
+  ShivaStrotamChapters: undefined;
+  ShivaStrotamReader: { chapter: number; initialIndex?: number };
 };

@@ -1,5 +1,6 @@
 import { hanumanChalisaTotal } from './hanuman-chalisa';
 import { sundarkandCounts, sundarkandTotal } from './sundarkand';
+import { shivaStrotamTotal } from './shiva-strotam';
 
 export type TextStatus = 'active' | 'coming';
 
@@ -42,6 +43,15 @@ export const library: readonly LibraryEntry[] = [
     thumb: 'सु',
     status: 'active',
     verseCount: sundarkandTotal,
+  },
+  {
+    id: 'shiva-strotam',
+    nameHi: 'शिव स्तोत्रम्',
+    nameEn: 'Shiva Stotram',
+    sub: `2 स्तोत्र · अर्थ सहित`,
+    thumb: 'श',
+    status: 'active',
+    verseCount: shivaStrotamTotal,
   },
   {
     id: 'ramcharitmanas',
