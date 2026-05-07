@@ -2,15 +2,18 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import type { DeityIconKey } from '@/data/deities';
+import DeityIcon from './DeityIcon';
 
 type Props = {
   nameHi: string;
   nameEn: string;
   itemCount: string;
+  iconKey?: DeityIconKey;
   onPress?: () => void;
 };
 
-export default function DeityCard({ nameHi, nameEn, itemCount, onPress }: Props) {
+export default function DeityCard({ nameHi, nameEn, itemCount, iconKey, onPress }: Props) {
   const { colors, typography, radii } = useTheme();
 
   return (
@@ -39,18 +42,7 @@ export default function DeityCard({ nameHi, nameEn, itemCount, onPress }: Props)
         end={{ x: 1, y: 1 }}
         style={styles.avatar}
       >
-        <Text
-          style={[
-            styles.avatarText,
-            {
-              color: colors.parchmentSoft,
-              fontFamily: typography.cardHindi.fontFamily,
-              fontSize: 16,
-            },
-          ]}
-        >
-          {nameHi.slice(0, 2)}
-        </Text>
+        <DeityIcon iconKey={iconKey} fallbackText={nameHi.slice(0, 2)} />
       </LinearGradient>
 
       <View style={styles.meta}>
@@ -110,9 +102,6 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  avatarText: {
-    includeFontPadding: false,
   },
   meta: {
     flex: 1,

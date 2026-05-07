@@ -73,6 +73,7 @@ export default function DeityIndexScreen({ navigation }: Props) {
               nameHi={deity.nameHi}
               nameEn={deity.nameEn}
               itemCount={getItemCount(deity.id)}
+              iconKey={deity.iconKey}
               onPress={() => navigation.navigate('DeityList', { deityId: deity.id })}
             />
           ))}
