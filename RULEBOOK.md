@@ -17,13 +17,15 @@ Every section, regardless of size, must supply these inputs. The slash command w
 | 3 | `nameEn` | **yes** | `Hanuman Chalisa` | listing card title (italic English row) |
 | 4 | `sub` | **yes** | `40 चौपाई · अर्थ सहित` | listing subtitle. Devanagari, follows the `<count> <unit> · अर्थ सहित` pattern of existing sections |
 | 5 | `thumb` | **yes** | `ह` / `भ` / `सु` / `ॐ` | single Devanagari glyph rendered inside `LibraryCard` |
-| 6 | Subsection structure | optional | 18 chapters / 7 kāṇḍas / none | if present, supply count + per-subsection `titleHi`/`titleEn` (mirrors Gita's `chapters-manifest.json`) |
-| 7 | **Background image(s)** for content page | **yes** | `mobile/assets/<id>/*.png` | at least one bundled local PNG/WebP. Faded vintage sketch per `design.md` §6 (≈50 % opacity after sepia, subject top-anchored, bottom third clean) |
-| 8 | Per-verse `lines` (Devanagari) | **yes** | `["जय हनुमान ज्ञान गुण सागर", …]` | array of strings; preserve original line breaks |
-| 9 | Per-verse `meaningHi` | **yes** | non-empty string | Hindi prose |
-| 10 | Per-verse `meaningEn` | **yes** | non-empty string | English prose |
-| 11 | Per-verse `commentaryHi` | optional | `string[]` | array of paragraphs; may be `[]` |
-| 12 | Per-verse `commentaryEn` | optional | `string[]` | array of paragraphs; may be `[]` |
+| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `aarti`, `bhajan`, `veda`. Determines which grid tile this section appears under on Home. |
+| 7 | `deities` | **yes** | `['hanuman', 'rama']` | Array of deity tags from: `rama`, `krishna`, `shiva`, `hanuman`, `durga`, `ganesha`. The section appears under each tagged deity's cross-reference on Home. At least one required. |
+| 8 | Subsection structure | optional | 18 chapters / 7 kāṇḍas / none | if present, supply count + per-subsection `titleHi`/`titleEn` (mirrors Gita's `chapters-manifest.json`) |
+| 9 | **Background image(s)** for content page | **yes** | `mobile/assets/<id>/*.png` | at least one bundled local PNG/WebP. Faded vintage sketch per `design.md` §6 (≈50 % opacity after sepia, subject top-anchored, bottom third clean) |
+| 10 | Per-verse `lines` (Devanagari) | **yes** | `["जय हनुमान ज्ञान गुण सागर", …]` | array of strings; preserve original line breaks |
+| 11 | Per-verse `meaningHi` | **yes** | non-empty string | Hindi prose |
+| 12 | Per-verse `meaningEn` | **yes** | non-empty string | English prose |
+| 13 | Per-verse `commentaryHi` | optional | `string[]` | array of paragraphs; may be `[]` |
+| 14 | Per-verse `commentaryEn` | optional | `string[]` | array of paragraphs; may be `[]` |
 
 **Both languages required.** Even sections without commentary must ship `meaningHi` and `meaningEn` so the Hindi/English toggle (§3 below) works on every page.
 
@@ -44,9 +46,10 @@ Exact paths, in build order. Each row maps to a Phase-C step in `/add-section`.
 | 5 | `mobile/src/screens/<Pascal>ReaderScreen.tsx` | create | `GitaReaderScreen.tsx` or `SundarkandReaderScreen.tsx` |
 | 6 | `mobile/src/screens/<Pascal>ChaptersScreen.tsx` | create *if subsections* | `GitaChaptersIndexScreen.tsx` |
 | 7 | `mobile/src/navigation/types.ts` | edit | add route param types for the new screen(s) |
-| 8 | `mobile/src/navigation/RootNavigator.tsx` | edit | register the new screen(s) |
-| 9 | `mobile/src/data/texts.ts` | edit | append `LibraryEntry` to the `library` array |
-| 10 | `mobile/src/screens/HomeScreen.tsx` | edit | add `id` branch in the routing if/else (≈ lines 81–87) |
+| 8 | `mobile/src/navigation/HomeStackNavigator.tsx` | edit | register the new screen(s) in the Home stack |
+| 9 | `mobile/src/data/texts.ts` | edit | append `LibraryEntry` (with `category` and `deities` fields) to the `library` array |
+| 10 | `mobile/src/screens/HomeScreen.tsx` | no edit needed | categories and deities are rendered dynamically from data |
+| 11 | `mobile/src/screens/CategoryListScreen.tsx` | no edit needed | items auto-filter by `category` field — no per-section routing code required |
 
 `<Pascal>` = the `id` converted to PascalCase (e.g. `hanuman-chalisa` → `HanumanChalisa`).
 
@@ -65,6 +68,7 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
   - The toggle is rendered on **every reader page** for all bilingual sections.
   - Sections with a subsection listing (Chapters Index, kāṇḍa list, etc.) ALSO surface the toggle on that listing.
   - State is shared across surfaces via the same hook — no per-screen forks.
+- **Categories & Deities.** Every `LibraryEntry` must have a valid `category` (one of the six defined types) and at least one `deity` tag. The Home screen grid and deity section derive their content from these fields — no manual wiring required.
 - **Pill vocabulary.** Verse-type pill is always `<Devanagari term> · <Latin subtitle or N>` (`दोहा · Opening`, `चौपाई · 9`, `श्लोक · 1.1`, …). Do not invent new vocabulary without updating `design.md` first.
 - **No emoji, no photos.** Backgrounds are always faded hand-drawn sketches per the Section 6 treatment.
 
@@ -78,9 +82,10 @@ The slash command runs the first three; the human PR author runs the rest.
 2. `mobile/assets/<id>/` contains ≥ 1 image and `mobile/src/data/<id>/index.ts` invariant checks pass at app boot (no thrown errors).
 3. PR diff contains zero new hex literals or hardcoded font names — search the diff for `#[0-9A-Fa-f]{3,6}` and `fontFamily:` to confirm.
 4. App boots in Expo dev client; the new card is visible on Home below the existing active sections; tapping navigates to a working reader; every page shows a background image; every verse has `meaningHi` and `meaningEn` populated.
-5. Hindi/English toggle flips meaning text on **every** page (sample at least page 1, middle, and last). Toggle is visible on every reader page; if a subsection listing exists, also visible there.
-6. If the section ships an English transliteration field (`transliteration[]` or `linesEn[]`), spot-check the romanization style matches the source language per `design.md §3.1`: Sanskrit verses use IAST diacritics; Awadhi/Hindi verses use pronunciation-based ASCII. Mismatched style (IAST on Awadhi or plain ASCII on a Sanskrit shloka) is a hard reject.
-7. If subsections exist: chapters list renders; tapping any chapter lands on verse 1 of that chapter; back button returns to chapters list, not Home.
+5. The new section appears correctly under its category tile (tap the tile on Home → item is listed). If deity tags are set, also verify the item shows under those deity chips.
+6. Hindi/English toggle flips meaning text on **every** page (sample at least page 1, middle, and last). Toggle is visible on every reader page; if a subsection listing exists, also visible there.
+7. If the section ships an English transliteration field (`transliteration[]` or `linesEn[]`), spot-check the romanization style matches the source language per `design.md §3.1`: Sanskrit verses use IAST diacritics; Awadhi/Hindi verses use pronunciation-based ASCII. Mismatched style (IAST on Awadhi or plain ASCII on a Sanskrit shloka) is a hard reject.
+8. If subsections exist: chapters list renders; tapping any chapter lands on verse 1 of that chapter; back button returns to chapters list, not Home.
 
 ---
 
@@ -89,3 +94,15 @@ The slash command runs the first three; the human PR author runs the rest.
 - Not a substitute for `design.md`. This rulebook governs the **integration shape**; `design.md` governs the **visual language**. Read both.
 - Not a substitute for testing on a device. `tsc` does not catch broken `require('./missing.png')`.
 - Not a license to skip review. A scaffolded section still needs human eyes on the content data and the chosen background image.
+
+---
+
+## 6. Navigation architecture
+
+The app uses a bottom tab bar with three tabs: Home (गृह), Daily Bhakti (भक्ति), and Bookmarks (संग्रह). Reader screens hide the tab bar for immersive reading.
+
+New sections are registered in `mobile/src/navigation/HomeStackNavigator.tsx` (not the old `RootNavigator.tsx`). The Home screen dynamically renders categories from `mobile/src/data/categories.ts` and deities from `mobile/src/data/deities.ts` — adding a new section only requires:
+1. Adding the `LibraryEntry` to `texts.ts` (with `category` and `deities` fields)
+2. Registering reader route(s) in `HomeStackNavigator.tsx`
+
+No manual routing in HomeScreen is needed — `CategoryListScreen` filters items by their `category` field automatically.

@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import {
+  Dimensions,
   Linking,
   Modal,
   Pressable,
@@ -12,14 +13,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { library } from '@/data/texts';
+import { categories } from '@/data/categories';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
-import LibraryCard from '@/components/LibraryCard';
+import CategoryCard from '@/components/CategoryCard';
 import Crest from '@/components/Crest';
 import HelpFloatingButton from '@/components/HelpFloatingButton';
-import type { RootStackParamList } from '@/navigation/types';
+import type { HomeStackParamList } from '@/navigation/types';
+import type { ContentCategory } from '@/data/texts';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
@@ -32,6 +34,63 @@ export default function HomeScreen({ navigation }: Props) {
   const openMailto = useCallback(() => {
     Linking.openURL(buildDiscrepancyMailto());
   }, []);
+
+  // Build tile list: 3 active categories + deity virtual tile + 3 coming-soon
+  const activeCategories = categories.filter((c) => c.status === 'active');
+  const comingCategories = categories.filter((c) => c.status === 'coming');
+
+  const iconColor = colors.saffronDeep;
+
+  const categoryIcons: Record<string, React.ReactNode> = {
+    granth: <Text style={{ fontSize: 22 }}>📖</Text>,
+    stotram: <Text style={{ fontSize: 22 }}>🕉️</Text>,
+    chalisa: <Text style={{ fontSize: 22 }}>📿</Text>,
+    deity: <Text style={{ fontSize: 22 }}>🙏</Text>,
+    aarti: <Text style={{ fontSize: 22 }}>🪔</Text>,
+    bhajan: <Text style={{ fontSize: 22 }}>🎵</Text>,
+    veda: <Text style={{ fontSize: 22 }}>📜</Text>,
+  };
+
+  type TileItem = {
+    key: string;
+    nameHi: string;
+    nameEn: string;
+    status: 'active' | 'coming';
+    icon?: React.ReactNode;
+    onPress?: () => void;
+  };
+
+  const tiles: TileItem[] = [
+    ...activeCategories.map((c) => ({
+      key: c.id,
+      nameHi: c.nameHi,
+      nameEn: c.nameEn,
+      status: c.status,
+      icon: categoryIcons[c.id],
+      onPress: () => navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
+    })),
+    {
+      key: 'deity',
+      nameHi: 'देवता',
+      nameEn: 'By Deity',
+      status: 'active' as const,
+      icon: categoryIcons['deity'],
+      onPress: () => navigation.navigate('DeityIndex'),
+    },
+    ...comingCategories.map((c) => ({
+      key: c.id,
+      nameHi: c.nameHi,
+      nameEn: c.nameEn,
+      status: c.status,
+      icon: categoryIcons[c.id],
+      onPress: undefined,
+    })),
+  ];
+
+  const screenWidth = Dimensions.get('window').width;
+  const gridPadding = spacing.xxl;
+  const gridGap = 10;
+  const tileWidth = (screenWidth - 2 * gridPadding - gridGap) / 2;
 
   return (
     <View style={styles.root}>
@@ -91,23 +150,21 @@ export default function HomeScreen({ navigation }: Props) {
               },
             ]}
           >
-            LIBRARY
+            CATEGORIES
           </Text>
 
-          <View style={[styles.library, { gap: spacing.md }]}>
-            {library.filter((entry) => !entry.hidden).map((entry) => {
-              let onPress: (() => void) | undefined;
-              if (entry.id === 'hanuman-chalisa') {
-                onPress = () => navigation.navigate('ChalisaReader', { initialIndex: 0 });
-              } else if (entry.id === 'bhagavad-gita') {
-                onPress = () => navigation.navigate('GitaChapters');
-              } else if (entry.id === 'sundarkand') {
-                onPress = () => navigation.navigate('SundarkandChapters');
-              } else if (entry.id === 'shiva-strotam') {
-                onPress = () => navigation.navigate('ShivaStrotamChapters');
-              }
-              return <LibraryCard key={entry.id} entry={entry} onPress={onPress} />;
-            })}
+          <View style={[styles.grid, { gap: gridGap }]}>
+            {tiles.map((tile) => (
+              <View key={tile.key} style={{ width: tileWidth }}>
+                <CategoryCard
+                  nameHi={tile.nameHi}
+                  nameEn={tile.nameEn}
+                  status={tile.status}
+                  icon={tile.icon}
+                  onPress={tile.onPress}
+                />
+              </View>
+            ))}
           </View>
 
           <Text
@@ -315,8 +372,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 4,
   },
-  library: {
-    gap: 12,
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   footer: {
     textAlign: 'center',

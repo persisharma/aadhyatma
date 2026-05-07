@@ -19,6 +19,8 @@ import {
   type SundarkandVerse,
 } from '@/data/sundarkand';
 import { useGitaLanguage } from '@/data/gita/language';
+import { useBookmarks } from '@/contexts/BookmarksContext';
+import BookmarkButton from '@/components/BookmarkButton';
 import LanguageToggle from '@/components/LanguageToggle';
 import SundarkandVersePage from '@/components/SundarkandVersePage';
 import type { RootStackParamList } from '@/navigation/types';
@@ -30,6 +32,7 @@ const DOT_COUNT = 5;
 export default function SundarkandReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
+  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { width } = useWindowDimensions();
 
   const chapter = getSundarkandChapter(route.params.chapter);
@@ -112,6 +115,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
             {title}
           </Text>
 
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Text
             style={[
               styles.counter,
@@ -125,6 +129,27 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
           >
             {currentIndex + 1} / {verseCount}
           </Text>
+          <BookmarkButton
+            isBookmarked={isBookmarked(`sundarkand:${chapter.chapter}:${currentIndex}`)}
+            onToggle={() => {
+              const id = `sundarkand:${chapter.chapter}:${currentIndex}`;
+              if (isBookmarked(id)) {
+                removeBookmark(id);
+              } else {
+                const v = verses[currentIndex];
+                addBookmark({
+                  id,
+                  sourceId: 'sundarkand',
+                  chapter: chapter.chapter,
+                  verseIndex: currentIndex,
+                  savedAt: Date.now(),
+                  previewHi: v.lines[0] ?? '',
+                  previewEn: v.linesEn[0] ?? '',
+                });
+              }
+            }}
+          />
+          </View>
         </View>
 
         <View style={styles.toggleRow}>
@@ -232,8 +257,8 @@ const styles = StyleSheet.create({
   },
   bottom: {
     paddingHorizontal: 28,
-    paddingTop: 16,
-    paddingBottom: 20,
+    paddingTop: 4,
+    paddingBottom: 4,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

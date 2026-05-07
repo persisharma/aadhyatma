@@ -14,6 +14,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { getShivaStrotamChapter, type ShivaStrotamVerse } from '@/data/shiva-strotam';
 import { useGitaLanguage } from '@/data/gita/language';
+import { useBookmarks } from '@/contexts/BookmarksContext';
+import BookmarkButton from '@/components/BookmarkButton';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import type { RootStackParamList } from '@/navigation/types';
@@ -25,6 +27,7 @@ const DOT_COUNT = 5;
 export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
+  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { width } = useWindowDimensions();
 
   const chapter = useMemo(() => getShivaStrotamChapter(route.params.chapter), [route.params.chapter]);
@@ -112,6 +115,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
             {topTitle}
           </Text>
 
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Text
             style={[
               styles.counter,
@@ -125,6 +129,27 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
           >
             {currentIndex + 1} / {chapter.verses.length}
           </Text>
+          <BookmarkButton
+            isBookmarked={isBookmarked(`shiva-strotam:${chapter.chapter}:${currentIndex}`)}
+            onToggle={() => {
+              const id = `shiva-strotam:${chapter.chapter}:${currentIndex}`;
+              if (isBookmarked(id)) {
+                removeBookmark(id);
+              } else {
+                const v = chapter.verses[currentIndex];
+                addBookmark({
+                  id,
+                  sourceId: 'shiva-strotam',
+                  chapter: chapter.chapter,
+                  verseIndex: currentIndex,
+                  savedAt: Date.now(),
+                  previewHi: v.sanskrit[0] ?? '',
+                  previewEn: v.linesEn[0] ?? '',
+                });
+              }
+            }}
+          />
+          </View>
         </View>
 
         <View style={styles.toggleRow}>
@@ -232,8 +257,8 @@ const styles = StyleSheet.create({
   },
   bottom: {
     paddingHorizontal: 28,
-    paddingTop: 16,
-    paddingBottom: 20,
+    paddingTop: 4,
+    paddingBottom: 4,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
