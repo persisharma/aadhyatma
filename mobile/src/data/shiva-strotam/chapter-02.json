@@ -1,0 +1,38 @@
+{
+  "chapter": 2,
+  "titleHi": "शिव स्तुति मंत्र",
+  "titleEn": "Karpoor Gauram",
+  "verseCount": 2,
+  "verses": [
+    {
+      "id": "ss-2-0",
+      "chapter": 2,
+      "number": 0,
+      "sanskrit": [
+        "॥ शिव स्तुति मंत्र ॥",
+        "कर्पूरगौरं करुणावतारम्"
+      ],
+      "linesEn": [
+        "Shiva Stuti Mantra",
+        "Karpoor Gauram Karunavataram"
+      ],
+      "meaningHi": "लाभ:\n\nकर्पूरगौरं मंत्र शिव-पार्वती की संयुक्त आराधना का सबसे प्रसिद्ध श्लोक है। यह मंत्र शिव आरती के अंत में बोला जाता है। इसके पाठ से हृदय में शांति, दाम्पत्य सुख, और संसार के सार का बोध होता है। यह मंत्र भय और दुःख का नाश करता है तथा करुणा और वैराग्य की भावना जागृत करता है।\n\nकथा:\n\nयह श्लोक आदि शंकराचार्य को समर्पित है। इसमें शिव को कर्पूर (कपूर) के समान गौरवर्ण, करुणा के अवतार, और संसार के सार के रूप में वर्णित किया गया है। भुजंग (सर्प) की माला धारण करने वाले शिव सदैव भक्तों के हृदय-कमल में निवास करते हैं। पार्वती (भवानी) के साथ विराजमान शिव को नमन करने से गृहस्थ जीवन में सुख-शांति और अंततः मोक्ष की प्राप्ति होती है।",
+      "meaningEn": "Benefits:\n\nThe Karpoor Gauram mantra is the most celebrated shloka for the joint worship of Shiva and Parvati. It is traditionally chanted at the conclusion of Shiva Aarti. Reciting this mantra brings peace to the heart, marital harmony, and awareness of the essence of existence. It destroys fear and sorrow while awakening compassion and detachment.\n\nStory:\n\nThis shloka is attributed to Adi Shankaracharya. It describes Shiva as radiant white like camphor, an incarnation of compassion, and the essence of worldly existence. Shiva, who wears the king of serpents as a garland, eternally resides in the lotus of devotees' hearts. Bowing to Shiva together with Parvati (Bhavani) grants happiness and peace in household life, and ultimately liberation."
+    },
+    {
+      "id": "ss-2-1",
+      "chapter": 2,
+      "number": 1,
+      "sanskrit": [
+        "कर्पूरगौरं करुणावतारं संसारसारं भुजगेन्द्रहारम्।",
+        "सदा वसन्तं हृदयारविन्दे भवं भवानीसहितं नमामि॥"
+      ],
+      "linesEn": [
+        "karpūragauraṁ karuṇāvatāraṁ saṁsārasāraṁ bhujagendrahāram",
+        "sadā vasantaṁ hṛidayāravinde bhavaṁ bhavānīsahitaṁ namāmi"
+      ],
+      "meaningHi": "जो कर्पूर के समान गौरवर्ण हैं, जो करुणा के साक्षात् अवतार हैं, जो इस संसार के सार हैं, जो सर्पराज (वासुकि) को हार के रूप में धारण करते हैं, जो सदैव भक्तों के हृदय-कमल में निवास करते हैं — उन भव (शिव) को भवानी (पार्वती) सहित मैं नमन करता हूँ।",
+      "meaningEn": "He who is as radiant white as camphor, who is the incarnation of compassion, who is the essence of worldly existence, who wears the king of serpents as a garland, who forever dwells in the lotus of the heart — to that Bhava (Shiva) together with Bhavani (Parvati), I bow."
+    }
+  ]
+}
