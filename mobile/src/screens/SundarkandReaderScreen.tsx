@@ -161,6 +161,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
           data={verses}
           keyExtractor={(v) => v.id}
           renderItem={({ item }) => <SundarkandVersePage verse={item} width={width} />}
+          extraData={lang}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}

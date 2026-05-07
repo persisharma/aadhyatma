@@ -161,6 +161,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           data={chapter.verses}
           keyExtractor={(v) => v.id}
           renderItem={({ item }) => <GitaVersePage verse={item} width={width} />}
+          extraData={lang}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}

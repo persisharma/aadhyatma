@@ -155,6 +155,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
           data={hanumanChalisaVerses as HanumanChalisaVerse[]}
           keyExtractor={(v) => v.id}
           renderItem={({ item }) => <VersePage verse={item} width={width} />}
+          extraData={lang}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}

@@ -161,6 +161,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
           data={chapter.verses}
           keyExtractor={(v) => v.id}
           renderItem={({ item }) => <ShivaStrotamVersePage verse={item} width={width} />}
+          extraData={lang}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
