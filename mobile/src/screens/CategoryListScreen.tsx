@@ -21,7 +21,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   const handlePress = (entryId: string) => {
     if (entryId === 'hanuman-chalisa') navigation.navigate('ChalisaReader', { initialIndex: 0 });
     else if (entryId === 'bhagavad-gita') navigation.navigate('GitaChapters');
-    else if (entryId === 'sundarkand') navigation.navigate('SundarkandReader', { initialIndex: 0 });
+    else if (entryId === 'sundarkand') navigation.navigate('SundarkandChapters');
     else if (entryId === 'shiva-strotam') navigation.navigate('ShivaStrotamChapters');
   };
 

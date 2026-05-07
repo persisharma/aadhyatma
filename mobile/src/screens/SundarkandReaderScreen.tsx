@@ -13,10 +13,9 @@ import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import {
+  getSundarkandChapter,
   sundarkandTitleEn,
   sundarkandTitleHi,
-  sundarkandTotal,
-  sundarkandVerses,
   type SundarkandVerse,
 } from '@/data/sundarkand';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -35,6 +34,10 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { width } = useWindowDimensions();
+
+  const chapter = getSundarkandChapter(route.params.chapter);
+  const verses = chapter.verses as SundarkandVerse[];
+  const verseCount = verses.length;
 
   const listRef = useRef<FlatList<SundarkandVerse>>(null);
   const [currentIndex, setCurrentIndex] = useState(route.params?.initialIndex ?? 0);
@@ -59,10 +62,10 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
   );
 
   const dotStyles = useMemo(() => {
-    const buckets = Math.max(1, Math.ceil(sundarkandTotal / DOT_COUNT));
+    const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
-  }, [currentIndex]);
+  }, [currentIndex, verseCount]);
 
   const title = lang === 'hi' ? sundarkandTitleHi : sundarkandTitleEn;
   const titleFontFamily =
@@ -72,7 +75,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
   const swipeHint =
     currentIndex === 0
       ? 'swipe →'
-      : currentIndex === sundarkandTotal - 1
+      : currentIndex === verseCount - 1
         ? '← swipe'
         : '← swipe →';
 
@@ -83,7 +86,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back to home"
+            accessibilityLabel="Back to chapters"
             hitSlop={12}
             style={({ pressed }) => [
               styles.back,
@@ -124,19 +127,20 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
               },
             ]}
           >
-            {currentIndex + 1} / {sundarkandTotal}
+            {currentIndex + 1} / {verseCount}
           </Text>
           <BookmarkButton
-            isBookmarked={isBookmarked(`sundarkand::${currentIndex}`)}
+            isBookmarked={isBookmarked(`sundarkand:${chapter.chapter}:${currentIndex}`)}
             onToggle={() => {
-              const id = `sundarkand::${currentIndex}`;
+              const id = `sundarkand:${chapter.chapter}:${currentIndex}`;
               if (isBookmarked(id)) {
                 removeBookmark(id);
               } else {
-                const v = sundarkandVerses[currentIndex];
+                const v = verses[currentIndex];
                 addBookmark({
                   id,
                   sourceId: 'sundarkand',
+                  chapter: chapter.chapter,
                   verseIndex: currentIndex,
                   savedAt: Date.now(),
                   previewHi: v.lines[0] ?? '',
@@ -154,7 +158,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
 
         <FlatList
           ref={listRef}
-          data={sundarkandVerses as SundarkandVerse[]}
+          data={verses}
           keyExtractor={(v) => v.id}
           renderItem={({ item }) => <SundarkandVersePage verse={item} width={width} />}
           horizontal

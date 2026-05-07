@@ -1,7 +1,7 @@
 import { library } from './texts';
 import type { ContentCategory } from './texts';
 import { getGitaChapter, gitaChaptersManifest } from './gita';
-import { sundarkandVerses } from './sundarkand';
+import { getSundarkandChapter, sundarkandChaptersManifest } from './sundarkand';
 import { getShivaStrotamChapter, shivaStrotamChaptersManifest } from './shiva-strotam';
 
 export type UniformVerse = {
@@ -48,20 +48,24 @@ function buildPool(): UniformVerse[] {
         });
       }
     } else if (item.id === 'sundarkand') {
-      sundarkandVerses.forEach((v, idx) => {
-        pool.push({
-          sourceId: item.id,
-          sourceNameHi: item.nameHi,
-          sourceNameEn: item.nameEn,
-          verseIndex: idx,
-          textHi: v.lines,
-          textEn: v.linesEn,
-          meaningHi: v.meaningHi,
-          meaningEn: v.meaningEn,
-          labelHi: v.labelHi,
-          labelEn: v.labelEn,
+      for (const ch of sundarkandChaptersManifest) {
+        const chapter = getSundarkandChapter(ch.chapter);
+        chapter.verses.forEach((v, idx) => {
+          pool.push({
+            sourceId: item.id,
+            sourceNameHi: item.nameHi,
+            sourceNameEn: item.nameEn,
+            chapter: ch.chapter,
+            verseIndex: idx,
+            textHi: v.lines,
+            textEn: v.linesEn,
+            meaningHi: v.meaningHi,
+            meaningEn: v.meaningEn,
+            labelHi: v.labelHi,
+            labelEn: v.labelEn,
+          });
         });
-      });
+      }
     } else if (item.id === 'shiva-strotam') {
       for (const ch of shivaStrotamChaptersManifest) {
         const chapter = getShivaStrotamChapter(ch.chapter);
