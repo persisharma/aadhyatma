@@ -8,6 +8,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks, type BookmarkRef } from '@/contexts/BookmarksContext';
 import { library } from '@/data/texts';
+import { buildWishlistNavigationTarget } from '@/navigation/wishlistRoutes';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Wishlist'>;
@@ -36,20 +37,7 @@ export default function WishlistScreen({ navigation }: Props) {
   const rootNav = useNavigation<any>();
 
   const handlePress = (bm: BookmarkRef) => {
-    rootNav.navigate('HomeTab', {
-      screen: bm.sourceId === 'bhagavad-gita'
-        ? 'GitaReader'
-        : bm.sourceId === 'shiva-strotam'
-          ? 'ShivaStrotamReader'
-          : bm.sourceId === 'sundarkand'
-            ? 'SundarkandReader'
-            : 'ChalisaReader',
-      params: bm.sourceId === 'bhagavad-gita'
-        ? { chapter: bm.chapter ?? 1, initialIndex: bm.verseIndex }
-        : bm.sourceId === 'shiva-strotam'
-          ? { chapter: bm.chapter ?? 1, initialIndex: bm.verseIndex }
-          : { initialIndex: bm.verseIndex },
-    });
+    rootNav.navigate('HomeTab', buildWishlistNavigationTarget(bm));
   };
 
   return (
