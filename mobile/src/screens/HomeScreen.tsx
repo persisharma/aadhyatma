@@ -147,7 +147,7 @@ export default function HomeScreen({ navigation }: Props) {
                   },
                 ]}
               >
-                {hi.title} / {en.title}
+                {en.title} / {hi.title}
               </Text>
               <Pressable onPress={closeHelp} hitSlop={12}>
                 <Text style={[styles.closeButton, { color: colors.saffron }]}>✕</Text>
@@ -161,36 +161,6 @@ export default function HomeScreen({ navigation }: Props) {
               ]}
               showsVerticalScrollIndicator={false}
             >
-              <Text
-                style={[
-                  styles.modalSectionHeading,
-                  {
-                    color: colors.ink,
-                    fontFamily: typography.readerTitle.fontFamily,
-                  },
-                ]}
-              >
-                {hi.disclaimerHeading}
-              </Text>
-              {hi.disclaimerParagraphs.map((para, i) => (
-                <Text
-                  key={`hi-${i}`}
-                  style={[
-                    styles.modalPara,
-                    {
-                      color: colors.inkSoft,
-                      fontFamily: typography.meaning.fontFamily,
-                      fontSize: 14,
-                      lineHeight: 24,
-                    },
-                  ]}
-                >
-                  {para}
-                </Text>
-              ))}
-
-              <View style={[styles.langDivider, { borderBottomColor: colors.divider }]} />
-
               <Text
                 style={[
                   styles.modalSectionHeading,
@@ -227,24 +197,41 @@ export default function HomeScreen({ navigation }: Props) {
                   {
                     color: colors.ink,
                     fontFamily: typography.readerTitle.fontFamily,
+                  },
+                ]}
+              >
+                {hi.disclaimerHeading}
+              </Text>
+              {hi.disclaimerParagraphs.map((para, i) => (
+                <Text
+                  key={`hi-${i}`}
+                  style={[
+                    styles.modalPara,
+                    {
+                      color: colors.inkSoft,
+                      fontFamily: typography.meaning.fontFamily,
+                      fontSize: 14,
+                      lineHeight: 24,
+                    },
+                  ]}
+                >
+                  {para}
+                </Text>
+              ))}
+
+              <View style={[styles.langDivider, { borderBottomColor: colors.divider }]} />
+
+              <Text
+                style={[
+                  styles.modalSectionHeading,
+                  {
+                    color: colors.ink,
+                    fontFamily: typography.readerTitle.fontFamily,
                     marginTop: 8,
                   },
                 ]}
               >
-                {hi.reportHeading} / {en.reportHeading}
-              </Text>
-              <Text
-                style={[
-                  styles.modalPara,
-                  {
-                    color: colors.inkSoft,
-                    fontFamily: typography.meaning.fontFamily,
-                    fontSize: 14,
-                    lineHeight: 24,
-                  },
-                ]}
-              >
-                {hi.reportIntro}
+                {en.reportHeading} / {hi.reportHeading}
               </Text>
               <Text
                 style={[
@@ -258,6 +245,19 @@ export default function HomeScreen({ navigation }: Props) {
                 ]}
               >
                 {en.reportIntro}
+              </Text>
+              <Text
+                style={[
+                  styles.modalPara,
+                  {
+                    color: colors.inkSoft,
+                    fontFamily: typography.meaning.fontFamily,
+                    fontSize: 14,
+                    lineHeight: 24,
+                  },
+                ]}
+              >
+                {hi.reportIntro}
               </Text>
               <Pressable
                 onPress={openMailto}
@@ -275,7 +275,7 @@ export default function HomeScreen({ navigation }: Props) {
                     { fontFamily: typography.readerTitle.fontFamily },
                   ]}
                 >
-                  {hi.reportButtonLabel} / {en.reportButtonLabel}
+                  {en.reportButtonLabel} / {hi.reportButtonLabel}
                 </Text>
               </Pressable>
             </ScrollView>
