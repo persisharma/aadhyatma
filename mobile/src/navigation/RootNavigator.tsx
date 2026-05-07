@@ -4,6 +4,7 @@ import HomeScreen from '@/screens/HomeScreen';
 import ChalisaReaderScreen from '@/screens/ChalisaReaderScreen';
 import GitaChaptersIndexScreen from '@/screens/GitaChaptersIndexScreen';
 import GitaReaderScreen from '@/screens/GitaReaderScreen';
+import SundarkandChaptersScreen from '@/screens/SundarkandChaptersScreen';
 import SundarkandReaderScreen from '@/screens/SundarkandReaderScreen';
 import ShivaStrotamChaptersScreen from '@/screens/ShivaStrotamChaptersScreen';
 import ShivaStrotamReaderScreen from '@/screens/ShivaStrotamReaderScreen';
@@ -38,6 +39,7 @@ export default function RootNavigator() {
           animation: 'fade',
         }}
       />
+      <Stack.Screen name="SundarkandChapters" component={SundarkandChaptersScreen} />
       <Stack.Screen
         name="SundarkandReader"
         component={SundarkandReaderScreen}

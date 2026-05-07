@@ -1,5 +1,5 @@
 import { hanumanChalisaTotal } from './hanuman-chalisa';
-import { sundarkandCounts, sundarkandTotal } from './sundarkand';
+import { sundarkandTotal } from './sundarkand';
 import { shivaStrotamTotal } from './shiva-strotam';
 
 export type TextStatus = 'active' | 'coming';
@@ -39,7 +39,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'sundarkand',
     nameHi: 'सुंदरकाण्ड',
     nameEn: 'Sundarkand',
-    sub: `${sundarkandCounts.dohas} दोहे · अर्थ सहित`,
+    sub: `16 सर्ग · ${sundarkandTotal} पद`,
     thumb: 'सु',
     status: 'active',
     verseCount: sundarkandTotal,
