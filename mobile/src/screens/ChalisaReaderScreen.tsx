@@ -193,7 +193,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             style={styles.list}
           />
 
-          <View style={[styles.dotsOverlay, { backgroundColor: colors.parchment + 'CC' }]}>
+          <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (
                 <View
@@ -269,13 +269,10 @@ const styles = StyleSheet.create({
   },
   dotsOverlay: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 4,
     left: 0,
     right: 0,
     alignItems: 'center',
-    paddingVertical: 6,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
   },
   dots: {
     flexDirection: 'row',
