@@ -1,12 +1,24 @@
 [
   {
     "chapter": 1,
+    "titleHi": "ॐ नमः शिवाय",
+    "titleEn": "Om Namah Shivaya",
+    "verseCount": 2
+  },
+  {
+    "chapter": 2,
+    "titleHi": "शिव स्तुति मंत्र",
+    "titleEn": "Karpoor Gauram",
+    "verseCount": 2
+  },
+  {
+    "chapter": 3,
     "titleHi": "महामृत्युंजय मंत्र",
     "titleEn": "Maha Mrityunjay Mantra",
     "verseCount": 2
   },
   {
-    "chapter": 2,
+    "chapter": 4,
     "titleHi": "शिव ताण्डव स्तोत्रम्",
     "titleEn": "Shiv Tandav Stotram",
     "verseCount": 17

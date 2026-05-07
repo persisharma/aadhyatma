@@ -1,6 +1,8 @@
 import manifest from './chapters-manifest.json';
 import ch01 from './chapter-01.json';
 import ch02 from './chapter-02.json';
+import ch03 from './chapter-03.json';
+import ch04 from './chapter-04.json';
 
 export type ShivaStrotamVerse = {
   id: string;
@@ -36,6 +38,8 @@ export const shivaStrotamChaptersManifest: readonly ShivaStrotamChapterSummary[]
 export const shivaStrotamChapters: readonly ShivaStrotamChapter[] = [
   ch01 as ShivaStrotamChapter,
   ch02 as ShivaStrotamChapter,
+  ch03 as ShivaStrotamChapter,
+  ch04 as ShivaStrotamChapter,
 ];
 
 export const shivaStrotamTotal = shivaStrotamChapters.reduce(
@@ -52,11 +56,11 @@ export function getShivaStrotamChapter(chapter: number): ShivaStrotamChapter {
 }
 
 (function assertShivaStrotamInvariants() {
-  if (shivaStrotamChapters.length !== 2) {
-    throw new Error(`shiva-strotam: expected 2 chapters, got ${shivaStrotamChapters.length}`);
+  if (shivaStrotamChapters.length !== 4) {
+    throw new Error(`shiva-strotam: expected 4 chapters, got ${shivaStrotamChapters.length}`);
   }
-  if (shivaStrotamChaptersManifest.length !== 2) {
-    throw new Error(`shiva-strotam: manifest should list 2 chapters, got ${shivaStrotamChaptersManifest.length}`);
+  if (shivaStrotamChaptersManifest.length !== 4) {
+    throw new Error(`shiva-strotam: manifest should list 4 chapters, got ${shivaStrotamChaptersManifest.length}`);
   }
   const seenIds = new Set<string>();
   let totalVerses = 0;
@@ -97,7 +101,7 @@ export function getShivaStrotamChapter(chapter: number): ShivaStrotamChapter {
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 19) {
-    throw new Error(`shiva-strotam: expected 19 total verses, got ${totalVerses}`);
+  if (totalVerses !== 23) {
+    throw new Error(`shiva-strotam: expected 23 total verses, got ${totalVerses}`);
   }
 })();

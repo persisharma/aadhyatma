@@ -1,7 +1,7 @@
 {
   "chapter": 1,
-  "titleHi": "महामृत्युंजय मंत्र",
-  "titleEn": "Maha Mrityunjay Mantra",
+  "titleHi": "ॐ नमः शिवाय",
+  "titleEn": "Om Namah Shivaya",
   "verseCount": 2,
   "verses": [
     {
@@ -9,30 +9,28 @@
       "chapter": 1,
       "number": 0,
       "sanskrit": [
-        "॥ महामृत्युंजय मंत्र ॥",
-        "ऋग्वेद ७.५९.१२ · त्र्यम्बक मन्त्र"
+        "॥ ॐ नमः शिवाय ॥",
+        "पञ्चाक्षर मंत्र"
       ],
       "linesEn": [
-        "Maha Mrityunjay Mantra",
-        "Rigveda 7.59.12 · Tryambaka Mantra"
+        "Om Namah Shivaya",
+        "Panchakshara Mantra (Five-Syllable Mantra)"
       ],
-      "meaningHi": "लाभ:\n\nमहामृत्युंजय मंत्र को 'संजीवनी मंत्र' भी कहा जाता है। यह मंत्र अकाल मृत्यु से रक्षा करता है, गंभीर रोगों से मुक्ति दिलाता है, और भय का नाश करता है। इसके नियमित जाप से आयु, आरोग्य और आत्मबल की वृद्धि होती है। यह मंत्र मोक्ष-प्राप्ति का भी साधन माना गया है।\n\nकथा:\n\nयह मंत्र ऋषि मार्कण्डेय से जुड़ा है। मार्कण्डेय को केवल 16 वर्ष की आयु प्राप्त थी। जब यमराज उन्हें लेने आए, तो मार्कण्डेय ने शिवलिंग को पकड़कर इसी मंत्र का जाप किया। भगवान शिव प्रकट हुए और यमराज को भगाकर मार्कण्डेय को चिरंजीवी बना दिया। तभी से यह मंत्र मृत्यु पर विजय का प्रतीक है।",
-      "meaningEn": "Benefits:\n\nThe Maha Mrityunjay Mantra is also called the 'Sanjeevani Mantra' (life-restoring mantra). It protects against untimely death, grants liberation from serious illnesses, and destroys fear. Regular chanting increases longevity, health, and inner strength. It is also considered a path to moksha (liberation).\n\nStory:\n\nThis mantra is associated with Rishi Markandeya, who was destined to live only 16 years. When Yama (the god of death) came to claim him, Markandeya clung to a Shiva lingam and chanted this mantra with deep devotion. Lord Shiva appeared, drove away Yama, and granted Markandeya immortality. Since then, this mantra symbolizes victory over death."
+      "meaningHi": "लाभ:\n\nॐ नमः शिवाय शैव परम्परा का सबसे पवित्र पञ्चाक्षर (पाँच अक्षर) मंत्र है। 'न', 'मः', 'शि', 'वा', 'य' — ये पाँच अक्षर पंचभूतों (पृथ्वी, जल, अग्नि, वायु, आकाश) का प्रतिनिधित्व करते हैं। इस मंत्र के जाप से मन शान्त होता है, पापों का नाश होता है, और आत्मा शिव से एकाकार होती है। यह मंत्र किसी भी समय, किसी भी स्थिति में जपा जा सकता है — इसके लिए कोई विशेष नियम या दीक्षा अनिवार्य नहीं है।\n\nकथा:\n\nयह मंत्र यजुर्वेद के श्री रुद्रम् (तैत्तिरीय संहिता) में प्रकट होता है। पुराणों के अनुसार, जब देवताओं और असुरों ने समुद्र मंथन किया तो विष (हलाहल) निकला जिसने सम्पूर्ण सृष्टि को नष्ट करने की धमकी दी। तब सभी देवताओं ने 'ॐ नमः शिवाय' का जाप करके शिव से प्रार्थना की। शिव ने उस विष को पी लिया और अपने कण्ठ में रोक लिया — जिससे उनका कण्ठ नीला पड़ गया और वे 'नीलकण्ठ' कहलाए।",
+      "meaningEn": "Benefits:\n\nOm Namah Shivaya is the most sacred Panchakshara (five-syllable) mantra of the Shaiva tradition. The five syllables 'Na', 'Mah', 'Shi', 'Va', 'Ya' represent the five elements (earth, water, fire, air, ether). Chanting this mantra calms the mind, destroys sins, and unites the soul with Shiva. This mantra can be chanted at any time, in any situation — no special rules or initiation are mandatory.\n\nStory:\n\nThis mantra appears in the Sri Rudram of the Yajurveda (Taittiriya Samhita). According to the Puranas, when the gods and demons churned the ocean, a deadly poison (Halahala) emerged that threatened to destroy all creation. All the gods chanted 'Om Namah Shivaya' and prayed to Shiva. Shiva drank the poison and held it in his throat — turning his neck blue, earning him the name 'Neelakantha' (the blue-throated one)."
     },
     {
       "id": "ss-1-1",
       "chapter": 1,
       "number": 1,
       "sanskrit": [
-        "ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्।",
-        "उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय माऽमृतात्॥"
+        "ॐ नमः शिवाय॥"
       ],
       "linesEn": [
-        "oṁ tryambakaṁ yajāmahe sugandhiṁ puṣhṭivardhanam",
-        "urvārukamiva bandhanānmṛityormukṣhīya mā'mṛitāt"
+        "oṁ namaḥ śhivāya"
       ],
-      "meaningHi": "हम तीन नेत्रों वाले भगवान शिव की पूजा करते हैं, जो सुगन्धित हैं और सभी प्राणियों का पोषण करते हैं। जिस प्रकार एक पका हुआ ककड़ी अपनी लता के बन्धन से स्वतः मुक्त हो जाती है, उसी प्रकार हमें मृत्यु के बन्धन से मुक्ति मिले, किन्तु अमरत्व (मोक्ष) से वंचित न हों।",
-      "meaningEn": "We worship the three-eyed Lord Shiva, who is fragrant and who nourishes all beings. Just as a ripe cucumber is naturally released from its bondage to the vine, may we be liberated from the bondage of death, but not from immortality (moksha)."
+      "meaningHi": "ॐ — परमात्मा का प्रतीक, सृष्टि की आदि ध्वनि। नमः — नमन, समर्पण, 'मेरा कुछ नहीं'। शिवाय — शिव को, कल्याणकारी को, परम मंगल स्वरूप को।\n\nसम्पूर्ण अर्थ: मैं उस कल्याणकारी परमात्मा शिव को नमन करता हूँ। मैं अपने अहंकार का त्याग कर शिव में समर्पित होता हूँ।",
+      "meaningEn": "Om — the symbol of the Supreme, the primordial sound of creation. Namah — I bow, I surrender, 'nothing is mine'. Shivaya — to Shiva, to the auspicious one, to the embodiment of supreme welfare.\n\nComplete meaning: I bow to that auspicious Supreme Lord Shiva. I surrender my ego and offer myself unto Shiva."
     }
   ]
 }

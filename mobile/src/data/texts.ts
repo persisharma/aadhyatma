@@ -48,7 +48,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'shiva-strotam',
     nameHi: 'शिव स्तोत्रम्',
     nameEn: 'Shiva Stotram',
-    sub: `2 स्तोत्र · अर्थ सहित`,
+    sub: `4 स्तोत्र · अर्थ सहित`,
     thumb: 'श',
     status: 'active',
     verseCount: shivaStrotamTotal,
