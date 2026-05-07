@@ -20,7 +20,7 @@ This means:
 Use symbolic deity attributes:
 
 - Rama: bow and arrow
-- Krishna: bansuri with peacock feather, matching the original A emoji-like style
+- Krishna: bansuri plus a peacock-feather plume, not a full peacock, matching the original A emoji-like style
 - Shiva: trishul
 - Hanuman: gada
 - Durga: lotus
