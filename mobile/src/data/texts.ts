@@ -3,6 +3,8 @@ import { sundarkandCounts, sundarkandTotal } from './sundarkand';
 import { shivaStrotamTotal } from './shiva-strotam';
 
 export type TextStatus = 'active' | 'coming';
+export type ContentCategory = 'granth' | 'stotram' | 'chalisa' | 'aarti' | 'bhajan' | 'veda';
+export type Deity = 'rama' | 'krishna' | 'shiva' | 'hanuman' | 'durga' | 'ganesha';
 
 export type LibraryEntry = {
   id: string;
@@ -11,6 +13,8 @@ export type LibraryEntry = {
   sub: string;
   thumb: string;
   status: TextStatus;
+  category: ContentCategory;
+  deities: Deity[];
   verseCount?: number;
   /** When true, HomeScreen omits this entry from the library list. */
   hidden?: boolean;
@@ -24,6 +28,8 @@ export const library: readonly LibraryEntry[] = [
     sub: `${hanumanChalisaTotal} चौपाई · अर्थ सहित`,
     thumb: 'ह',
     status: 'active',
+    category: 'chalisa',
+    deities: ['hanuman', 'rama'],
     verseCount: hanumanChalisaTotal,
   },
   {
@@ -33,6 +39,8 @@ export const library: readonly LibraryEntry[] = [
     sub: '18 अध्याय · 701 श्लोक',
     thumb: 'भ',
     status: 'active',
+    category: 'granth',
+    deities: ['krishna'],
     verseCount: 701,
   },
   {
@@ -42,6 +50,8 @@ export const library: readonly LibraryEntry[] = [
     sub: `${sundarkandCounts.dohas} दोहे · अर्थ सहित`,
     thumb: 'सु',
     status: 'active',
+    category: 'granth',
+    deities: ['hanuman', 'rama'],
     verseCount: sundarkandTotal,
   },
   {
@@ -51,6 +61,8 @@ export const library: readonly LibraryEntry[] = [
     sub: `4 स्तोत्र · अर्थ सहित`,
     thumb: 'श',
     status: 'active',
+    category: 'stotram',
+    deities: ['shiva'],
     verseCount: shivaStrotamTotal,
   },
   {
@@ -60,6 +72,8 @@ export const library: readonly LibraryEntry[] = [
     sub: 'Seven kāṇḍas',
     thumb: 'रा',
     status: 'coming',
+    category: 'granth',
+    deities: ['rama'],
     hidden: true,
   },
 ];

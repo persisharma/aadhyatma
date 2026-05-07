@@ -24,6 +24,8 @@ Ask the user (in a single AskUserQuestion call where possible, or in plain prose
 - `nameEn` (English title)
 - `sub` (Devanagari listing subtitle, e.g. `40 चौपाई · अर्थ सहित`)
 - `thumb` (single Devanagari glyph)
+- `category` (one of: `granth`, `stotram`, `chalisa`, `aarti`, `bhajan`, `veda`)
+- `deities` (array, at least one of: `rama`, `krishna`, `shiva`, `hanuman`, `durga`, `ganesha`)
 
 If `$ARGUMENTS` provided an `id`, pre-fill it and confirm rather than asking again.
 
@@ -93,9 +95,9 @@ Choose the template based on the section's shape:
 5. **`mobile/src/screens/<Pascal>ReaderScreen.tsx`** — copy template, substitute identifiers.
 6. **`mobile/src/screens/<Pascal>ChaptersScreen.tsx`** *(only if subsections)* — copy `GitaChaptersIndexScreen.tsx`.
 7. **`mobile/src/navigation/types.ts`** — `Edit` to add the new route param types. Read first, locate the existing `GitaReader` / `SundarkandReader` declarations, and add a sibling block for `<Pascal>Reader` (and `<Pascal>Chapters` if applicable).
-8. **`mobile/src/navigation/RootNavigator.tsx`** — `Edit` to register the screen(s) using the same `gestureEnabled: false, animation: 'fade'` options as existing screens.
-9. **`mobile/src/data/texts.ts`** — `Edit` to append a `LibraryEntry` for `<id>`. Status `'active'`. Place it before the `coming` entries.
-10. **`mobile/src/screens/HomeScreen.tsx`** — `Edit` the routing if/else (≈ lines 81–87) to add a branch: `if (entry.id === '<id>') navigation.navigate('<Pascal>Reader' / '<Pascal>Chapters', …)`.
+8. **`mobile/src/navigation/HomeStackNavigator.tsx`** — `Edit` to register the screen(s) in the Home stack using the same `gestureEnabled: false, animation: 'fade'` options as existing screens.
+9. **`mobile/src/data/texts.ts`** — `Edit` to append a `LibraryEntry` for `<id>`. Status `'active'`. Include the `category` and `deities` fields collected in Phase A. Place it before the `coming` entries.
+10. **`mobile/src/screens/CategoryListScreen.tsx`** — no edit needed. Items auto-filter by `category` field — no per-section routing code required. The only registration needed is in `HomeStackNavigator.tsx` (step 8 above).
 
 ---
 

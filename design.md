@@ -513,3 +513,196 @@ When building new components, pull tokens from the theme — never hard-code a h
 - 8 px `hitSlop` on each half so the tap target meets the 44×44 minimum even though the visual hits ~36 px.
 
 **State scope.** In-memory, per-session. No persistence in v1 — document on-boarding flows may re-nudge the user's language on first launch in a later iteration.
+
+---
+
+## 17. Bottom Tab Bar
+
+**Purpose.** Persistent navigation chrome providing access to Home (catalog), Daily Bhakti (random verse), and Bookmarks (saved verses). Replaces the previous one-scroll-no-tabs Home.
+
+**Spec:**
+
+- Position: fixed bottom, above safe area inset
+- Background: `parchment-soft` with 1px `divider` border on top edge
+- Height: 56px (content) + safe area bottom inset
+- 3 tabs, equally distributed:
+  - गृह (Home) — active: `saffron` text + 4px dot above label; inactive: `ink-muted`
+  - भक्ति (Daily Bhakti) — same active/inactive pattern
+  - संग्रह (Bookmarks) — same active/inactive pattern
+- Tab labels: Noto Serif Devanagari 11 500
+- Active indicator: 4px circle, `saffron`, centered 4px above label
+- No icons — Devanagari labels only (consistent with the app's glyph-based aesthetic)
+- Tap targets: full tab width × full bar height (well above 44×44 minimum)
+- The tab bar is hidden when inside reader screens (full-screen immersive reading)
+
+---
+
+## 18. Screen: Home (Revised)
+
+**Purpose.** Surface available content organized by category type and deity. Replaces the flat LIBRARY list from Section 7.
+
+**Structure (top to bottom):**
+
+1. Status bar area (safe region)
+2. Hero block (same as original Section 7): Crest + "वेदांश़" title + "Sacred Texts · Daily Reading" subtitle
+3. Section label "CATEGORIES" (Inter 11, uppercase, ink-muted, 0.22em tracking)
+4. **Category grid** (2-column FlatList, numColumns=2):
+   - 6 tiles: ग्रन्थ, स्तोत्रम्, चालीसा, आरती, भजन, वेद
+   - Gap: 12px between tiles, 28px side padding
+   - Active tiles: gradient `#FFF5E0 → #F5DEAC`, saffron border (0.4 opacity), shadow md, radius 18
+   - Coming-soon tiles: flat `rgba(255, 250, 235, 0.72)`, divider border, shadow sm, 55% opacity, "SOON" badge
+   - Tile content: large centered Devanagari glyph (Noto Serif 28 600, saffron-deep), Hindi name below (Noto Serif 15 600, ink), English name (Cormorant 12 400 italic, ink-muted)
+   - Tile height: auto-sized to content, minimum 110px
+5. Section heading "देवता · By Deity" (Noto Serif 14 600 `ink` + Cormorant 13 400 italic `ink-muted`, left-aligned with side padding)
+6. **Deity scroll row** (horizontal ScrollView, 12px gap, 28px side padding):
+   - 6 deity chips: श्री राम, श्री कृष्ण, श्री शिव, श्री हनुमान, माँ दुर्गा, श्री गणेश
+   - Each chip: 48px circle (gradient `#F8D291 → #E0A255`) with white Devanagari glyph (Noto Serif 18 600), deity name below (Noto Serif 11 500, ink-soft), 8px gap between circle and label
+   - Tapping → pushes DeityList screen (filtered items)
+7. Footer mantra (same as Section 7)
+
+**Gradient background:** same as Section 2 Home gradient.
+
+Note: The Help floating button and modal remain as before.
+
+---
+
+## 19. Component: Category Card
+
+**Purpose.** Grid tile representing a content category on the Home screen.
+
+Two variants: `active` (has content) and `coming` (placeholder).
+
+**Active:**
+
+- Background: linear-gradient `#FFF5E0 → #F5DEAC` (same gradient as library card)
+- Border: 1px `rgba(184, 98, 27, 0.4)`
+- Shadow: `md`
+- Radius: 18
+- Layout (vertical, centered):
+  - Glyph: Noto Serif Devanagari 28 600, `saffron-deep`, centered. Represents the category (ग्र, स्तो, चा)
+  - Name Hindi: Noto Serif Devanagari 15 600, `ink`, 6px below glyph
+  - Name English: Cormorant Garamond 12 400 italic, `ink-muted`, 2px below Hindi
+- Padding: 20px vertical, 12px horizontal
+- Tap → pushes CategoryList screen
+
+**Coming:**
+
+- Background: `rgba(255, 250, 235, 0.72)` flat
+- Border: 1px `divider`
+- Shadow: `sm`
+- Content at 55% opacity
+- "SOON" pill badge: top-right corner, 4px inset. Inter 9, uppercase, 0.18em tracking, `rgba(166,124,52,0.14)` fill, `gold` text
+- Tap disabled (no navigation)
+
+---
+
+## 20. Component: Deity Chip
+
+**Purpose.** Circular avatar + label representing a deity for cross-reference navigation.
+
+- Circle: 48×48, gradient `#F8D291 → #E0A255`
+- Glyph inside circle: Noto Serif Devanagari 18 600, `parchment-soft` (white-ish)
+- Label below: Noto Serif Devanagari 11 500, `ink-soft`, centered, max 2 lines, 8px below circle
+- Tap → pushes DeityList screen filtered by this deity
+- Hit slop: 8px all sides
+
+---
+
+## 21. Screen: Category List
+
+**Purpose.** Shows all items belonging to a specific category type. Reached by tapping a category tile on Home.
+
+**Structure:**
+
+1. Status bar
+2. Top bar: back button (‹ in 34px circle) + title "ग्रन्थ · Sacred Books" (Noto Serif 16 600 for Hindi + Cormorant 14 400 italic for English, separated by `·`)
+3. Item list: renders `LibraryCard` (Section 8) for each item in the category, 12px gap, 28px side padding
+4. Items sorted: active first, then coming-soon
+
+Same parchment gradient background as Home.
+
+---
+
+## 22. Screen: Deity List
+
+Same as Section 21, but filtered by deity tag instead of category. Title shows deity name: "श्री राम · Shri Rama".
+
+---
+
+## 23. Screen: Daily Bhakti
+
+**Purpose.** A devotional "verse of the day" experience. Shows a random verse each time the user opens the tab.
+
+**Structure:**
+
+1. Status bar
+2. Title area (centered): "दैनिक भक्ति" (Noto Serif 20 600, ink) + "Daily Verse" (Cormorant 14 400 italic, ink-muted, 4px below)
+3. **Verse card** (centered, 28px side margins):
+   - Background: `parchment-soft`
+   - Border: 1px `divider`
+   - Shadow: `md`
+   - Radius: 18
+   - Padding: 24px
+   - Content (top to bottom):
+     - Source pill: Inter 10 600, 0.3em tracking, saffron-deep on `rgba(184, 98, 27, 0.08)` bg, radius 999. Shows "भगवद् गीता · 2.47" format.
+     - Verse text: Noto Serif 21 500, `ink`, line-height 1.7. 16px below pill.
+     - Ornament divider (Section 5 `॥` style). 16px vertical margin.
+     - Meaning label: "अर्थ · Meaning" (same style as Section 9)
+     - Meaning body: Noto Serif 14 400, `ink-soft`, line-height 1.7
+4. Refresh button (centered, 20px below card):
+   - Circle: 40px, `saffron` background, `parchment-soft` "↻" glyph (16px)
+   - Shadow: sm
+   - Tap picks a new random verse
+5. Source attribution (centered, 8px below button): Cormorant 12 400 italic, ink-muted. "From भगवद् गीता"
+
+**Gradient background:** same as Home.
+
+**Verse pool:** configurable source categories (default: `['granth', 'stotram']`). Pool is a flat index of all verses from active items in those categories. Selection: `Math.random()` on each tab visit.
+
+---
+
+## 24. Screen: Bookmarks
+
+**Purpose.** Displays user-saved verses for quick re-access. Persisted locally via AsyncStorage.
+
+**Structure:**
+
+1. Status bar
+2. Title area (centered): "संग्रह" (Noto Serif 20 600, ink) + "Saved Verses" (Cormorant 14 400 italic, ink-muted)
+3. **Bookmark list** (28px side padding, 12px gap):
+   - Each card:
+     - Background: `parchment-soft`
+     - Border: 1px `divider`
+     - Shadow: sm
+     - Radius: 14
+     - Padding: 16px
+     - Layout (horizontal): verse info (flex-1) + bookmark icon + chevron
+     - Verse-type pill (same style as reader pills): e.g. "चौपाई · 9"
+     - Preview text: first line of verse, Noto Serif 15 500, `ink`, numberOfLines=1
+     - Source: Cormorant 12 400 italic, `ink-muted`, e.g. "हनुमान चालीसा"
+     - Bookmark icon: filled, `saffron`, 16px
+     - Chevron: `›`, `saffron`, right-aligned
+   - Tap → navigates to that verse in its reader
+4. **Empty state** (when no bookmarks):
+   - Centered vertically
+   - `॥` ornament (32px, ink-muted, 40% opacity)
+   - Text: "अभी तक कोई श्लोक सहेजा नहीं" (Noto Serif 15 500, ink-muted, centered)
+   - Subtext: "No verses saved yet" (Cormorant 14 400 italic, ink-muted)
+   - Hint: "Tap the bookmark icon while reading" (Cormorant 12 400 italic, ink-muted, 40% opacity)
+
+**Gradient background:** same as Home.
+
+---
+
+## 25. Component: Bookmark Button
+
+**Purpose.** Toggle button on reader screens allowing users to save/unsave the current verse.
+
+- Position: top bar area of reader screens, right-aligned (after the page counter)
+- Shape: 34×34 circle, `parchment-soft` fill, `divider` border
+- Icon: bookmark outline (unfilled) when not saved; filled `saffron` when saved
+- Icon rendered as text: "◇" (outline) / "◆" (filled) in saffron, 16px. Or use a simple flag/ribbon shape via SVG path.
+- Tap: toggles bookmark state via BookmarksContext
+- Animation: light scale pulse (1.0 → 1.15 → 1.0, 200ms) on save
+- Haptic: `Haptics.ImpactFeedbackStyle.Light` on toggle
+- Hit slop: 12px all sides

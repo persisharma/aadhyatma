@@ -20,6 +20,8 @@ import {
   type HanumanChalisaVerse,
 } from '@/data/hanuman-chalisa';
 import { useGitaLanguage } from '@/data/gita/language';
+import { useBookmarks } from '@/contexts/BookmarksContext';
+import BookmarkButton from '@/components/BookmarkButton';
 import LanguageToggle from '@/components/LanguageToggle';
 import VersePage from '@/components/VersePage';
 import type { RootStackParamList } from '@/navigation/types';
@@ -31,6 +33,7 @@ const DOT_COUNT = 5;
 export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
+  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { width } = useWindowDimensions();
   const listRef = useRef<FlatList<HanumanChalisaVerse>>(null);
   const [currentIndex, setCurrentIndex] = useState(route.params?.initialIndex ?? 0);
@@ -107,6 +110,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             {lang === 'hi' ? hanumanChalisaTitleHi : hanumanChalisaTitleEn}
           </Text>
 
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Text
             style={[
               styles.counter,
@@ -120,6 +124,26 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
           >
             {currentIndex + 1} / {hanumanChalisaTotal}
           </Text>
+          <BookmarkButton
+            isBookmarked={isBookmarked(`hanuman-chalisa::${currentIndex}`)}
+            onToggle={() => {
+              const id = `hanuman-chalisa::${currentIndex}`;
+              if (isBookmarked(id)) {
+                removeBookmark(id);
+              } else {
+                const v = hanumanChalisaVerses[currentIndex];
+                addBookmark({
+                  id,
+                  sourceId: 'hanuman-chalisa',
+                  verseIndex: currentIndex,
+                  savedAt: Date.now(),
+                  previewHi: v.lines[0] ?? '',
+                  previewEn: v.linesEn[0] ?? '',
+                });
+              }
+            }}
+          />
+          </View>
         </View>
 
         <View style={styles.toggleRow}>
@@ -226,8 +250,8 @@ const styles = StyleSheet.create({
   },
   bottom: {
     paddingHorizontal: 28,
-    paddingTop: 16,
-    paddingBottom: 20,
+    paddingTop: 4,
+    paddingBottom: 4,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
