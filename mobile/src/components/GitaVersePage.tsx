@@ -108,36 +108,24 @@ export default function GitaVersePage({ verse, width }: Props) {
         </View>
 
         <View style={styles.verseBlock}>
-          {verse.sanskrit.map((line, idx) => (
+          {(lang === 'hi' ? verse.sanskrit : verse.transliteration).map((line, idx) => (
             <Text
-              key={`s-${idx}`}
+              key={`v-${idx}`}
               style={[
                 styles.verseLine,
-                {
-                  color: colors.ink,
-                  fontFamily: typography.verse.fontFamily,
-                  fontSize: typography.verse.fontSize,
-                  lineHeight: typography.verse.lineHeight,
-                },
-              ]}
-            >
-              {line}
-            </Text>
-          ))}
-        </View>
-
-        <View style={styles.translitBlock}>
-          {verse.transliteration.map((line, idx) => (
-            <Text
-              key={`t-${idx}`}
-              style={[
-                styles.translitLine,
-                {
-                  color: colors.ink,
-                  fontFamily: 'CormorantGaramond_600SemiBold',
-                  fontSize: 17,
-                  lineHeight: 26,
-                },
+                lang === 'hi'
+                  ? {
+                      color: colors.ink,
+                      fontFamily: typography.verse.fontFamily,
+                      fontSize: typography.verse.fontSize,
+                      lineHeight: typography.verse.lineHeight,
+                    }
+                  : {
+                      color: colors.ink,
+                      fontFamily: 'CormorantGaramond_600SemiBold',
+                      fontSize: 20,
+                      lineHeight: 32,
+                    },
               ]}
             >
               {line}

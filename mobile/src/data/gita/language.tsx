@@ -21,9 +21,11 @@ export function GitaLanguageProvider({ initialLang = 'hi', children }: ProviderP
   const [lang, setLangState] = useState<GitaLang>(initialLang);
 
   useEffect(() => {
-    AsyncStorage.getItem(LANG_STORAGE_KEY).then((stored) => {
-      if (stored === 'hi' || stored === 'en') setLangState(stored);
-    });
+    AsyncStorage.getItem(LANG_STORAGE_KEY)
+      .then((stored) => {
+        if (stored === 'hi' || stored === 'en') setLangState(stored);
+      })
+      .catch(() => undefined);
   }, []);
 
   const setLang = (next: GitaLang) => {

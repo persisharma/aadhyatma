@@ -128,7 +128,7 @@ export default function HomeScreen({ navigation }: Props) {
               style={[
                 styles.subtitle,
                 {
-                  color: colors.inkMuted,
+                  color: colors.inkSoft,
                   fontFamily: typography.subtitle.fontFamily,
                   fontSize: typography.subtitle.fontSize,
                   letterSpacing: typography.subtitle.letterSpacing,
@@ -351,12 +351,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scroll: {
-    paddingTop: 12,
+    paddingTop: 4,
   },
   hero: {
     alignItems: 'center',
-    marginTop: 18,
-    marginBottom: 20,
+    marginTop: 6,
+    marginBottom: 12,
   },
   title: {
     textAlign: 'center',

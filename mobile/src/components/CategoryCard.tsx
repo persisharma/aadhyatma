@@ -34,9 +34,9 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress }: 
         style={[
           styles.nameEn,
           {
-            color: colors.inkMuted,
+            color: colors.inkSoft,
             fontFamily: typography.cardLatin.fontFamily,
-            fontSize: 11,
+            fontSize: 13,
           },
         ]}
       >
