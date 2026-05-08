@@ -97,7 +97,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
               onPress={() => navigation.goBack()}
               accessibilityRole="button"
               accessibilityLabel="Back to home"
-              hitSlop={12}
+              hitSlop={16}
               style={({ pressed }) => [
                 styles.back,
                 {
@@ -234,9 +234,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   back: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
