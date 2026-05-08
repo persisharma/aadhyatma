@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
   NativeScrollEvent,
@@ -22,6 +22,7 @@ import {
 } from '@/data/sundarkand';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import LanguageToggle from '@/components/LanguageToggle';
 import SundarkandVersePage from '@/components/SundarkandVersePage';
@@ -35,6 +36,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { setProgress } = useReadingProgress();
   const { width } = useWindowDimensions();
 
   const chapter = getSundarkandChapter(route.params.chapter);
@@ -43,6 +45,15 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
 
   const listRef = useRef<FlatList<SundarkandVerse>>(null);
   const [currentIndex, setCurrentIndex] = useState(route.params?.initialIndex ?? 0);
+
+  useEffect(() => {
+    setProgress({
+      sourceId: 'sundarkand',
+      chapter: chapter.chapter,
+      verseIndex: currentIndex,
+      updatedAt: Date.now(),
+    });
+  }, [chapter.chapter, currentIndex, setProgress]);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 

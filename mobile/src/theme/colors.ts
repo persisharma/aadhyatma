@@ -22,6 +22,9 @@ export const lightColors = {
   overlayLower: 'rgba(243, 231, 201, 0.75)',
   overlayBottom: 'rgba(233, 217, 177, 0.95)',
 
+  modalBackdrop: 'rgba(47, 30, 16, 0.55)',
+  onPrimary: '#FFFFFF',
+
   cardSurface: 'rgba(255, 250, 235, 0.72)',
   cardActiveFrom: '#FFF5E0',
   cardActiveTo: '#F5DEAC',
