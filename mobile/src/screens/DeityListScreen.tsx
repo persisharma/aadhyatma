@@ -1,11 +1,12 @@
-import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo } from 'react';
+import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { library } from '@/data/texts';
 import { deities } from '@/data/deities';
+import { getDeityBackground } from '@/data/listingBackgrounds';
 import LibraryCard from '@/components/LibraryCard';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -15,6 +16,7 @@ export default function DeityListScreen({ navigation, route }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { deityId } = route.params;
 
+  const backgroundImage = useMemo(() => getDeityBackground(deityId), [deityId]);
   const deityMeta = deities.find((d) => d.id === deityId);
   const items = library.filter((e) => !e.hidden && e.deities.includes(deityId));
 
@@ -27,10 +29,20 @@ export default function DeityListScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      {backgroundImage ? (
+        <ImageBackground source={backgroundImage} style={StyleSheet.absoluteFill} resizeMode="cover">
+          <LinearGradient
+            colors={[colors.overlayTop, colors.overlayUpper, colors.overlayLower, colors.overlayBottom]}
+            locations={[0, 0.4, 0.85, 1]}
+            style={StyleSheet.absoluteFill}
+          />
+        </ImageBackground>
+      ) : (
+        <LinearGradient
+          colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
+          style={StyleSheet.absoluteFill}
+        />
+      )}
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable
