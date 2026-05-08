@@ -107,39 +107,25 @@ export default function GitaVersePage({ verse, width }: Props) {
           </Text>
         </View>
 
-        {lang === 'hi' && (
-          <View style={styles.verseBlock}>
-            {verse.sanskrit.map((line, idx) => (
-              <Text
-                key={`s-${idx}`}
-                style={[
-                  styles.verseLine,
-                  {
-                    color: colors.ink,
-                    fontFamily: typography.verse.fontFamily,
-                    fontSize: typography.verse.fontSize,
-                    lineHeight: typography.verse.lineHeight,
-                  },
-                ]}
-              >
-                {line}
-              </Text>
-            ))}
-          </View>
-        )}
-
-        <View style={lang === 'hi' ? styles.translitBlock : styles.verseBlock}>
-          {verse.transliteration.map((line, idx) => (
+        <View style={styles.verseBlock}>
+          {(lang === 'hi' ? verse.sanskrit : verse.transliteration).map((line, idx) => (
             <Text
-              key={`t-${idx}`}
+              key={`v-${idx}`}
               style={[
-                styles.translitLine,
-                {
-                  color: colors.ink,
-                  fontFamily: 'CormorantGaramond_600SemiBold',
-                  fontSize: lang === 'hi' ? 17 : 20,
-                  lineHeight: lang === 'hi' ? 26 : 32,
-                },
+                styles.verseLine,
+                lang === 'hi'
+                  ? {
+                      color: colors.ink,
+                      fontFamily: typography.verse.fontFamily,
+                      fontSize: typography.verse.fontSize,
+                      lineHeight: typography.verse.lineHeight,
+                    }
+                  : {
+                      color: colors.ink,
+                      fontFamily: 'CormorantGaramond_600SemiBold',
+                      fontSize: 20,
+                      lineHeight: 32,
+                    },
               ]}
             >
               {line}

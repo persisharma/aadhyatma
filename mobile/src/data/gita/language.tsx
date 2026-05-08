@@ -19,13 +19,13 @@ type ProviderProps = {
 
 export function GitaLanguageProvider({ initialLang = 'hi', children }: ProviderProps) {
   const [lang, setLangState] = useState<GitaLang>(initialLang);
-  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    AsyncStorage.getItem(LANG_STORAGE_KEY).then((stored) => {
-      if (stored === 'hi' || stored === 'en') setLangState(stored);
-      setIsReady(true);
-    });
+    AsyncStorage.getItem(LANG_STORAGE_KEY)
+      .then((stored) => {
+        if (stored === 'hi' || stored === 'en') setLangState(stored);
+      })
+      .catch(() => undefined);
   }, []);
 
   const setLang = (next: GitaLang) => {
@@ -34,9 +34,6 @@ export function GitaLanguageProvider({ initialLang = 'hi', children }: ProviderP
   };
 
   const value = useMemo<GitaLanguageContextValue>(() => ({ lang, setLang }), [lang]);
-
-  if (!isReady) return null;
-
   return <GitaLanguageContext.Provider value={value}>{children}</GitaLanguageContext.Provider>;
 }
 
