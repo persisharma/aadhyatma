@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeStackNavigator from './HomeStackNavigator';
@@ -9,6 +9,15 @@ import { useTheme } from '@/theme/ThemeContext';
 import type { TabParamList } from './types';
 
 const Tab = createBottomTabNavigator<TabParamList>();
+
+type TabIconProps = {
+  color: string;
+  size: number;
+};
+
+type BhaktiIconProps = TabIconProps & {
+  accentColor: string;
+};
 
 export default function TabNavigator() {
   const { colors } = useTheme();
@@ -51,7 +60,7 @@ export default function TabNavigator() {
         options={{
           tabBarLabel: 'Bhakti',
           tabBarIcon: ({ color, size }) => (
-            <BhaktiIcon color={color} size={size} />
+            <BhaktiIcon color={color} accentColor={colors.saffron} size={size} />
           ),
         }}
       />
@@ -69,30 +78,160 @@ export default function TabNavigator() {
   );
 }
 
-function HomeIcon({ color, size }: { color: string; size: number }) {
+function HomeIcon({ color, size }: TabIconProps) {
+  const stroke = Math.max(1.5, size * 0.07);
+  const windowSize = size * 0.11;
+
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{ width: size * 0.7, height: size * 0.5, borderWidth: 1.5, borderColor: color, borderTopWidth: 0 }} />
-      <View style={{ position: 'absolute', top: 2, width: 0, height: 0, borderLeftWidth: size * 0.45, borderRightWidth: size * 0.45, borderBottomWidth: size * 0.35, borderLeftColor: 'transparent', borderRightColor: 'transparent', borderBottomColor: color }} />
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.28,
+          left: size * 0.12,
+          width: size * 0.5,
+          height: stroke,
+          borderRadius: stroke / 2,
+          backgroundColor: color,
+          transform: [{ rotate: '-43deg' }],
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.28,
+          right: size * 0.12,
+          width: size * 0.5,
+          height: stroke,
+          borderRadius: stroke / 2,
+          backgroundColor: color,
+          transform: [{ rotate: '43deg' }],
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.2,
+          right: size * 0.17,
+          width: stroke,
+          height: size * 0.22,
+          backgroundColor: color,
+          borderRadius: stroke / 2,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.42,
+          width: size * 0.56,
+          height: size * 0.38,
+          borderWidth: stroke,
+          borderTopWidth: 0,
+          borderColor: color,
+          borderBottomLeftRadius: stroke,
+          borderBottomRightRadius: stroke,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.52,
+          width: size * 0.28,
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          gap: size * 0.05,
+        }}
+      >
+        {[0, 1, 2, 3].map((pane) => (
+          <View
+            key={pane}
+            style={{
+              width: windowSize,
+              height: windowSize,
+              borderRadius: stroke * 0.3,
+              backgroundColor: color,
+            }}
+          />
+        ))}
+      </View>
     </View>
   );
 }
 
-function BhaktiIcon({ color, size }: { color: string; size: number }) {
+function BhaktiIcon({ color, accentColor, size }: BhaktiIconProps) {
+  const stroke = Math.max(1.5, size * 0.07);
+
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: size * 0.75, color, fontFamily: 'NotoSerifDevanagari_600SemiBold', lineHeight: size }}>॥</Text>
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.08,
+          width: stroke,
+          height: size * 0.58,
+          borderRadius: stroke / 2,
+          backgroundColor: accentColor,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.12,
+          width: size * 0.48,
+          height: size * 0.58,
+          borderLeftWidth: stroke,
+          borderRightWidth: stroke,
+          borderBottomWidth: stroke,
+          borderColor: color,
+          borderBottomLeftRadius: size * 0.24,
+          borderBottomRightRadius: size * 0.24,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.78,
+          width: size * 0.12,
+          height: size * 0.12,
+          borderRadius: size * 0.06,
+          backgroundColor: color,
+        }}
+      />
     </View>
   );
 }
 
-function MoreIcon({ color, size }: { color: string; size: number }) {
-  const dotSize = size * 0.18;
+function MoreIcon({ color, size }: TabIconProps) {
+  const stroke = Math.max(1.5, size * 0.07);
+  const dotSize = size * 0.11;
+
   return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center', gap: 3 }}>
-      <View style={{ width: dotSize, height: dotSize, borderRadius: dotSize / 2, backgroundColor: color }} />
-      <View style={{ width: dotSize, height: dotSize, borderRadius: dotSize / 2, backgroundColor: color }} />
-      <View style={{ width: dotSize, height: dotSize, borderRadius: dotSize / 2, backgroundColor: color }} />
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      <View
+        style={{
+          width: size * 0.74,
+          height: size * 0.74,
+          borderWidth: stroke,
+          borderColor: color,
+          borderRadius: size * 0.37,
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'row',
+          gap: size * 0.08,
+        }}
+      >
+        {[0, 1, 2].map((dot) => (
+          <View
+            key={dot}
+            style={{
+              width: dotSize,
+              height: dotSize,
+              borderRadius: dotSize / 2,
+              backgroundColor: color,
+            }}
+          />
+        ))}
+      </View>
     </View>
   );
 }
