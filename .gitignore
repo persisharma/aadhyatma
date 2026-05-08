@@ -11,5 +11,8 @@
 # Conductor workspace scratchpad
 .context/
 
+# Superpowers visual brainstorming scratchpad
+.superpowers/
+
 # macOS
 .DS_Store

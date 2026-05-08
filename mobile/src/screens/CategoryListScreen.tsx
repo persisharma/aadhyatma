@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -34,16 +34,13 @@ export default function CategoryListScreen({ navigation, route }: Props) {
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         {/* Top bar */}
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
-          <View
+          <Pressable
+            onPress={() => navigation.goBack()}
+            hitSlop={16}
             style={[styles.backBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
           >
-            <Text
-              style={{ color: colors.inkSoft, fontSize: 18 }}
-              onPress={() => navigation.goBack()}
-            >
-              ‹
-            </Text>
-          </View>
+            <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
+          </Pressable>
           <View style={styles.titleRow}>
             <Text
               style={{
@@ -91,9 +88,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   backBtn: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',

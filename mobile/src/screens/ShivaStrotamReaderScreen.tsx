@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Pressable,
   StyleSheet,
   Text,
@@ -69,33 +71,43 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
       ? `${chapter.titleHi}`
       : `${chapter.titleEn}`;
 
-  const swipeHint =
-    currentIndex === 0
-      ? 'swipe →'
-      : currentIndex === chapter.verses.length - 1
-        ? '← swipe'
-        : '← swipe →';
+  const handleScroll = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const offsetX = e.nativeEvent.contentOffset.x;
+      const idx = Math.round(offsetX / width);
+      setCurrentIndex((prev) => {
+        if (prev !== idx && idx >= 0 && idx < chapter.verses.length) {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
+          return idx;
+        }
+        return prev;
+      });
+    },
+    [width, chapter.verses.length]
+  );
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
         <View style={styles.topBar}>
-          <Pressable
-            onPress={() => navigation.goBack()}
-            accessibilityRole="button"
-            accessibilityLabel="Back to stotram list"
-            hitSlop={12}
-            style={({ pressed }) => [
-              styles.back,
-              {
-                backgroundColor: colors.parchmentSoft,
-                borderColor: colors.divider,
-              },
-              pressed && { opacity: 0.7 },
-            ]}
-          >
-            <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
-          </Pressable>
+          <View style={styles.topSide}>
+            <Pressable
+              onPress={() => navigation.goBack()}
+              accessibilityRole="button"
+              accessibilityLabel="Back to stotram list"
+              hitSlop={16}
+              style={({ pressed }) => [
+                styles.back,
+                {
+                  backgroundColor: colors.parchmentSoft,
+                  borderColor: colors.divider,
+                },
+                pressed && { opacity: 0.7 },
+              ]}
+            >
+              <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
+            </Pressable>
+          </View>
 
           <Text
             style={[
@@ -115,40 +127,42 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
             {topTitle}
           </Text>
 
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-          <Text
-            style={[
-              styles.counter,
-              {
-                color: colors.inkMuted,
-                fontFamily: typography.pageCounter.fontFamily,
-                fontSize: typography.pageCounter.fontSize,
-                fontStyle: 'italic',
-              },
-            ]}
-          >
-            {currentIndex + 1} / {chapter.verses.length}
-          </Text>
-          <BookmarkButton
-            isBookmarked={isBookmarked(`shiva-strotam:${chapter.chapter}:${currentIndex}`)}
-            onToggle={() => {
-              const id = `shiva-strotam:${chapter.chapter}:${currentIndex}`;
-              if (isBookmarked(id)) {
-                removeBookmark(id);
-              } else {
-                const v = chapter.verses[currentIndex];
-                addBookmark({
-                  id,
-                  sourceId: 'shiva-strotam',
-                  chapter: chapter.chapter,
-                  verseIndex: currentIndex,
-                  savedAt: Date.now(),
-                  previewHi: v.sanskrit[0] ?? '',
-                  previewEn: v.linesEn[0] ?? '',
-                });
-              }
-            }}
-          />
+          <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <Text
+                style={[
+                  styles.counter,
+                  {
+                    color: colors.inkMuted,
+                    fontFamily: typography.pageCounter.fontFamily,
+                    fontSize: typography.pageCounter.fontSize,
+                    fontStyle: 'italic',
+                  },
+                ]}
+              >
+                {currentIndex + 1} / {chapter.verses.length}
+              </Text>
+              <BookmarkButton
+                isBookmarked={isBookmarked(`shiva-strotam:${chapter.chapter}:${currentIndex}`)}
+                onToggle={() => {
+                  const id = `shiva-strotam:${chapter.chapter}:${currentIndex}`;
+                  if (isBookmarked(id)) {
+                    removeBookmark(id);
+                  } else {
+                    const v = chapter.verses[currentIndex];
+                    addBookmark({
+                      id,
+                      sourceId: 'shiva-strotam',
+                      chapter: chapter.chapter,
+                      verseIndex: currentIndex,
+                      savedAt: Date.now(),
+                      previewHi: v.sanskrit[0] ?? '',
+                      previewEn: v.linesEn[0] ?? '',
+                    });
+                  }
+                }}
+              />
+            </View>
           </View>
         </View>
 
@@ -156,52 +170,43 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
           <LanguageToggle />
         </View>
 
-        <FlatList
-          ref={listRef}
-          data={chapter.verses}
-          keyExtractor={(v) => v.id}
-          renderItem={({ item }) => <ShivaStrotamVersePage verse={item} width={width} />}
-          extraData={lang}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          initialNumToRender={1}
-          windowSize={3}
-          removeClippedSubviews
-          maxToRenderPerBatch={2}
-          viewabilityConfig={viewabilityConfig}
-          onViewableItemsChanged={onViewableItemsChanged}
-          getItemLayout={getItemLayout}
-          initialScrollIndex={route.params.initialIndex ?? 0}
-          style={styles.list}
-        />
+        <View style={styles.listContainer}>
+          <FlatList
+            ref={listRef}
+            data={chapter.verses}
+            keyExtractor={(v) => v.id}
+            renderItem={({ item }) => <ShivaStrotamVersePage verse={item} width={width} />}
+            extraData={lang}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            initialNumToRender={1}
+            windowSize={3}
+            removeClippedSubviews
+            maxToRenderPerBatch={2}
+            viewabilityConfig={viewabilityConfig}
+            onViewableItemsChanged={onViewableItemsChanged}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            getItemLayout={getItemLayout}
+            initialScrollIndex={route.params.initialIndex ?? 0}
+            style={styles.list}
+          />
 
-        <View style={styles.bottom}>
-          <View style={styles.dots}>
-            {dotStyles.map((isCurrent, i) => (
-              <View
-                key={i}
-                style={
-                  isCurrent
-                    ? [styles.dotCurrent, { backgroundColor: colors.saffronDeep }]
-                    : [styles.dot, { backgroundColor: colors.dotRest }]
-                }
-              />
-            ))}
+          <View style={styles.dotsOverlay}>
+            <View style={styles.dots}>
+              {dotStyles.map((isCurrent, i) => (
+                <View
+                  key={i}
+                  style={
+                    isCurrent
+                      ? [styles.dotCurrent, { backgroundColor: colors.saffronDeep }]
+                      : [styles.dot, { backgroundColor: colors.dotRest }]
+                  }
+                />
+              ))}
+            </View>
           </View>
-          <Text
-            style={[
-              styles.swipeHint,
-              {
-                color: colors.inkMuted,
-                fontFamily: typography.swipeHint.fontFamily,
-                fontSize: typography.swipeHint.fontSize,
-                fontStyle: 'italic',
-              },
-            ]}
-          >
-            {swipeHint}
-          </Text>
         </View>
       </SafeAreaView>
     </View>
@@ -222,12 +227,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 12,
+  },
+  topSide: {
+    width: 80,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   back: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -242,6 +251,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     includeFontPadding: false,
+    marginHorizontal: 4,
   },
   counter: {
     includeFontPadding: false,
@@ -253,16 +263,18 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     alignItems: 'center',
   },
+  listContainer: {
+    flex: 1,
+  },
   list: {
     flex: 1,
   },
-  bottom: {
-    paddingHorizontal: 28,
-    paddingTop: 4,
-    paddingBottom: 4,
-    flexDirection: 'row',
+  dotsOverlay: {
+    position: 'absolute',
+    bottom: 4,
+    left: 0,
+    right: 0,
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   dots: {
     flexDirection: 'row',
@@ -277,8 +289,5 @@ const styles = StyleSheet.create({
     width: 18,
     height: 6,
     borderRadius: 999,
-  },
-  swipeHint: {
-    includeFontPadding: false,
   },
 });
