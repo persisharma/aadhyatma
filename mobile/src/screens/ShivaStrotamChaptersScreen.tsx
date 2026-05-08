@@ -55,7 +55,7 @@ export default function ShivaStrotamChaptersScreen({ navigation }: Props) {
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
             accessibilityLabel="Back to home"
-            hitSlop={12}
+            hitSlop={16}
             style={({ pressed }) => [
               styles.back,
               {
@@ -130,16 +130,16 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   back: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   backSpacer: {
-    width: 34,
-    height: 34,
+    width: 44,
+    height: 44,
   },
   backGlyph: {
     fontSize: 22,

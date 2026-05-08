@@ -50,6 +50,7 @@ export default function WishlistScreen({ navigation }: Props) {
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable
             onPress={() => navigation.goBack()}
+            hitSlop={16}
             style={[styles.backBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   topBar: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, gap: 12 },
-  backBtn: { width: 34, height: 34, borderRadius: 17, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  backBtn: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 8, paddingBottom: 40, gap: 10 },
   empty: { alignItems: 'center', justifyContent: 'center', paddingTop: 80 },
   bmCard: { borderRadius: 14, borderWidth: 1, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 10 },
