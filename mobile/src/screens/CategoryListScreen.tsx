@@ -1,11 +1,12 @@
-import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo } from 'react';
+import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { library } from '@/data/texts';
 import { categories } from '@/data/categories';
+import { getRandomListingBackground } from '@/data/listingBackgrounds';
 import LibraryCard from '@/components/LibraryCard';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -15,6 +16,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { categoryId } = route.params;
 
+  const backgroundImage = useMemo(() => getRandomListingBackground(), []);
   const categoryMeta = categories.find((c) => c.id === categoryId);
   const items = library.filter((e) => e.category === categoryId && !e.hidden);
 
@@ -27,10 +29,13 @@ export default function CategoryListScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <ImageBackground source={backgroundImage} style={StyleSheet.absoluteFill} resizeMode="cover">
+        <LinearGradient
+          colors={[colors.overlayTop, colors.overlayUpper, colors.overlayLower, colors.overlayBottom]}
+          locations={[0, 0.4, 0.85, 1]}
+          style={StyleSheet.absoluteFill}
+        />
+      </ImageBackground>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         {/* Top bar */}
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
