@@ -133,32 +133,24 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         >
           <View style={[styles.tapContent, { paddingHorizontal: spacing.xxl }]}>
             <View style={styles.mantraBlock}>
-              {mantra.lines.map((line, i) => (
+              {(lang === 'hi' ? mantra.lines : mantra.linesEn).map((line, i) => (
                 <Text
-                  key={`hi-${i}`}
+                  key={`${lang}-${i}`}
                   style={[
-                    styles.mantraLine,
-                    {
-                      color: colors.ink,
-                      fontFamily: typography.verse.fontFamily,
-                      fontSize: typography.verse.fontSize,
-                      lineHeight: typography.verse.lineHeight,
-                    },
-                  ]}
-                >
-                  {line}
-                </Text>
-              ))}
-              {mantra.linesEn.map((line, i) => (
-                <Text
-                  key={`en-${i}`}
-                  style={[
-                    styles.mantraLineEn,
-                    {
-                      color: colors.inkMuted,
-                      fontFamily: typography.cardLatin.fontFamily,
-                      fontSize: 14,
-                    },
+                    lang === 'hi' ? styles.mantraLine : styles.mantraLineEn,
+                    lang === 'hi'
+                      ? {
+                          color: colors.ink,
+                          fontFamily: typography.verse.fontFamily,
+                          fontSize: typography.verse.fontSize,
+                          lineHeight: typography.verse.lineHeight,
+                        }
+                      : {
+                          color: colors.ink,
+                          fontFamily: typography.cardLatin.fontFamily,
+                          fontSize: 20,
+                          lineHeight: 34,
+                        },
                   ]}
                 >
                   {line}
