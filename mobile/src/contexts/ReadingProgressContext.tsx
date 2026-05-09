@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useUserActivity } from '@/contexts/UserActivityContext';
 
 const STORAGE_KEY = '@vedansh/reading-progress';
 
@@ -28,6 +29,7 @@ const ReadingProgressContext = createContext<ReadingProgressContextValue>({
 
 export function ReadingProgressProvider({ children }: { children: React.ReactNode }) {
   const [progress, setProgressState] = useState<ProgressMap>({});
+  const { logRead } = useUserActivity();
 
   useEffect(() => {
     AsyncStorage.getItem(STORAGE_KEY).then((raw) => {
@@ -55,8 +57,9 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
         return;
       }
       persist({ ...progress, [entry.sourceId]: entry });
+      logRead(entry.sourceId);
     },
-    [progress, persist]
+    [progress, persist, logRead]
   );
 
   const clearProgress = useCallback(

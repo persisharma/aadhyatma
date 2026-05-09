@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { JAPAM_BEADS_PER_ROUND } from '@/data/japam';
+import { useUserActivity } from '@/contexts/UserActivityContext';
 
 const STORAGE_KEY = '@vedansh/japam-counter';
 
@@ -33,6 +34,7 @@ const JapamCounterContext = createContext<JapamCounterContextValue>({
 
 export function JapamCounterProvider({ children }: { children: React.ReactNode }) {
   const [entries, setEntries] = useState<EntryMap>({});
+  const { logJapaBead, logJapaRound } = useUserActivity();
 
   useEffect(() => {
     AsyncStorage.getItem(STORAGE_KEY).then((raw) => {
@@ -65,9 +67,11 @@ export function JapamCounterProvider({ children }: { children: React.ReactNode }
         updatedAt: Date.now(),
       };
       persist({ ...entries, [mantraId]: updated });
+      logJapaBead(mantraId);
+      if (completedRound) logJapaRound(mantraId);
       return updated;
     },
-    [entries, persist]
+    [entries, persist, logJapaBead, logJapaRound]
   );
 
   const resetBeads = useCallback(
