@@ -18,6 +18,7 @@ export type HomeStackParamList = {
   SundarkandReader: { chapter: number; initialIndex?: number };
   ShivaStrotamChapters: undefined;
   ShivaStrotamReader: { chapter: number; initialIndex?: number };
+  JapamCounter: { mantraId: string };
 };
 
 export type MoreStackParamList = {

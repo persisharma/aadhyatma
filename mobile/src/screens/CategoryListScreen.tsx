@@ -29,7 +29,9 @@ export default function CategoryListScreen({ navigation, route }: Props) {
 
   const navigateFromStart = useCallback(
     (entryId: string) => {
-      if (entryId === 'hanuman-chalisa') {
+      if (categoryId === 'japam') {
+        navigation.navigate('JapamCounter', { mantraId: entryId });
+      } else if (entryId === 'hanuman-chalisa') {
         navigation.navigate('ChalisaReader', { initialIndex: 0 });
       } else if (entryId === 'bhagavad-gita') {
         navigation.navigate('GitaChapters');
@@ -39,7 +41,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
         navigation.navigate('ShivaStrotamChapters');
       }
     },
-    [navigation]
+    [navigation, categoryId]
   );
 
   const navigateToProgress = useCallback(

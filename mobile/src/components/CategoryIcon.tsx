@@ -25,6 +25,9 @@ export default function CategoryIcon({ iconKey }: Props) {
         <OmGlyphIcon {...paint} fontFamily={typography.thumb.fontFamily} />
       )}
       {iconKey === 'chalisa' && <MalaIcon {...paint} />}
+      {iconKey === 'japam' && (
+        <JapamBeadIcon {...paint} fontFamily={typography.thumb.fontFamily} />
+      )}
       {iconKey === 'deity' && <TempleIcon {...paint} />}
       {iconKey === 'aarti' && <DiyaIcon {...paint} />}
       {iconKey === 'bhajan' && <TanpuraIcon {...paint} />}
@@ -73,6 +76,25 @@ function MalaIcon({ color, accent }: IconPaint) {
       <View style={[styles.malaThread, { backgroundColor: accent }]} />
       <View style={[styles.tasselKnot, { backgroundColor: color }]} />
       <View style={[styles.tasselCord, { backgroundColor: color }]} />
+    </View>
+  );
+}
+
+function JapamBeadIcon({
+  color,
+  accent,
+  fontFamily,
+}: IconPaint & { fontFamily: string }) {
+  return (
+    <View style={styles.japamWrap}>
+      <View style={[styles.japamChantA, { backgroundColor: accent }]} />
+      <View style={[styles.japamChantB, { backgroundColor: accent }]} />
+      <View style={[styles.japamChantC, { backgroundColor: accent }]} />
+      <View style={[styles.japamBead, { borderColor: color }]}>
+        <Text style={[styles.japamOm, { color, fontFamily }]}>ॐ</Text>
+      </View>
+      <View style={[styles.japamCord, { backgroundColor: color }]} />
+      <View style={[styles.japamTassel, { backgroundColor: color }]} />
     </View>
   );
 }
@@ -278,6 +300,69 @@ const styles = StyleSheet.create({
     width: 1.2,
     height: 11,
     borderRadius: 1,
+  },
+  japamWrap: {
+    width: 32,
+    height: 34,
+    position: 'relative',
+    alignItems: 'center',
+  },
+  japamChantA: {
+    position: 'absolute',
+    top: 1,
+    left: 8,
+    width: 3,
+    height: 3,
+    borderRadius: 1.5,
+    opacity: 0.8,
+  },
+  japamChantB: {
+    position: 'absolute',
+    top: 0,
+    left: 14.5,
+    width: 3,
+    height: 3,
+    borderRadius: 1.5,
+    opacity: 0.9,
+  },
+  japamChantC: {
+    position: 'absolute',
+    top: 1,
+    right: 8,
+    width: 3,
+    height: 3,
+    borderRadius: 1.5,
+    opacity: 0.8,
+  },
+  japamBead: {
+    position: 'absolute',
+    top: 6,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  japamOm: {
+    fontSize: 13,
+    lineHeight: 16,
+    includeFontPadding: false,
+    transform: [{ translateY: 1 }],
+  },
+  japamCord: {
+    position: 'absolute',
+    bottom: 3,
+    width: 1.4,
+    height: 4,
+    borderRadius: 1,
+  },
+  japamTassel: {
+    position: 'absolute',
+    bottom: 0,
+    width: 6,
+    height: 3,
+    borderRadius: 2,
   },
   templeWrap: {
     width: 34,
