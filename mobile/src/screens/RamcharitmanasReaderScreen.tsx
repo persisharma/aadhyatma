@@ -85,7 +85,7 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
                   if (isBookmarked(id)) { removeBookmark(id); }
                   else {
                     const v = chapter.verses[currentIndex];
-                    addBookmark({ id, sourceId: 'ramcharitmanas', chapter: chapter.chapter, verseIndex: currentIndex, savedAt: Date.now(), previewHi: v.sanskrit[0] ?? '', previewEn: v.linesEn[0] ?? '' });
+                    addBookmark({ id, sourceId: 'ramcharitmanas', chapter: chapter.chapter, verseIndex: currentIndex, savedAt: Date.now(), previewHi: v.lines[0] ?? '', previewEn: v.linesEn[0] ?? '' });
                   }
                 }}
               />
@@ -100,7 +100,7 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <ShivaStrotamVersePage verse={item} width={width} />}
+            renderItem={({ item }) => <ShivaStrotamVersePage verse={item as any} width={width} />}
             extraData={lang}
             horizontal
             pagingEnabled
