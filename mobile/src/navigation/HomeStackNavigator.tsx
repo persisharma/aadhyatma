@@ -11,6 +11,7 @@ import SundarkandChaptersScreen from '@/screens/SundarkandChaptersScreen';
 import SundarkandReaderScreen from '@/screens/SundarkandReaderScreen';
 import ShivaStrotamChaptersScreen from '@/screens/ShivaStrotamChaptersScreen';
 import ShivaStrotamReaderScreen from '@/screens/ShivaStrotamReaderScreen';
+import JapamCounterScreen from '@/screens/JapamCounterScreen';
 import type { HomeStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
@@ -49,6 +50,11 @@ export default function HomeStackNavigator() {
       <Stack.Screen
         name="ShivaStrotamReader"
         component={ShivaStrotamReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="JapamCounter"
+        component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
     </Stack.Navigator>

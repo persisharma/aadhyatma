@@ -44,6 +44,7 @@ export default function HomeScreen({ navigation }: Props) {
     granth: <CategoryIcon iconKey="granth" />,
     stotram: <CategoryIcon iconKey="stotram" />,
     chalisa: <CategoryIcon iconKey="chalisa" />,
+    japam: <CategoryIcon iconKey="japam" />,
     deity: <CategoryIcon iconKey="deity" />,
     aarti: <CategoryIcon iconKey="aarti" />,
     bhajan: <CategoryIcon iconKey="bhajan" />,

@@ -17,7 +17,7 @@ Every section, regardless of size, must supply these inputs. The slash command w
 | 3 | `nameEn` | **yes** | `Hanuman Chalisa` | listing card title (italic English row) |
 | 4 | `sub` | **yes** | `40 चौपाई · अर्थ सहित` | listing subtitle. Devanagari, follows the `<count> <unit> · अर्थ सहित` pattern of existing sections |
 | 5 | `thumb` | **yes** | `ह` / `भ` / `सु` / `ॐ` | single Devanagari glyph rendered inside `LibraryCard` |
-| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `aarti`, `bhajan`, `veda`. Determines which grid tile this section appears under on Home. |
+| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `bhajan`, `veda`. Determines which grid tile this section appears under on Home. The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. |
 | 7 | `deities` | **yes** | `['hanuman', 'rama']` | Array of deity tags from: `rama`, `krishna`, `shiva`, `hanuman`, `durga`, `ganesha`. The section appears under each tagged deity's cross-reference on Home. At least one required. |
 | 8 | Subsection structure | optional | 18 chapters / 7 kāṇḍas / none | if present, supply count + per-subsection `titleHi`/`titleEn` (mirrors Gita's `chapters-manifest.json`) |
 | 9 | **Background image(s)** for content page | **yes** | `mobile/assets/<id>/*.png` | at least one bundled local PNG/WebP. Faded vintage sketch per `design.md` §6 (≈50 % opacity after sepia, subject top-anchored, bottom third clean) |

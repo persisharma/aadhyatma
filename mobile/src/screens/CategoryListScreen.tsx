@@ -25,6 +25,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
     else if (entryId === 'bhagavad-gita') navigation.navigate('GitaChapters');
     else if (entryId === 'sundarkand') navigation.navigate('SundarkandChapters');
     else if (entryId === 'shiva-strotam') navigation.navigate('ShivaStrotamChapters');
+    else if (categoryId === 'japam') navigation.navigate('JapamCounter', { mantraId: entryId });
   };
 
   return (
