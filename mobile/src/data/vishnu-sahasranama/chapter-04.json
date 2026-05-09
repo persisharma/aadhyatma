@@ -1,0 +1,62 @@
+{
+  "chapter": 4,
+  "titleHi": "फलश्रुति",
+  "titleEn": "Phalashruti",
+  "verseCount": 6,
+  "verses": [
+    {
+      "id": "vs-4-0",
+      "chapter": 4,
+      "number": 0,
+      "sanskrit": ["इतीदं कीर्तनीयस्य केशवस्य महात्मनः।", "नाम्नां सहस्रं दिव्यानामशेषेण प्रकीर्तितम्।।"],
+      "linesEn": ["itīdaṁ kīrtanīyasya keśhavasya mahātmanaḥ", "nāmnāṁ sahasraṁ divyānāmaśheṣheṇa prakīrtitam"],
+      "meaningHi": "इस प्रकार कीर्तन करने योग्य, महात्मा केशव के सहस्र दिव्य नामों का सम्पूर्ण रूप से कीर्तन किया गया।\n\nभीष्म ने युधिष्ठिर को सम्पूर्ण सहस्रनाम सुनाकर यह समापन वाक्य कहा। 'केशव' — क (ब्रह्मा) + ईश (शिव) + व (विष्णु) — तीनों के ईश्वर।",
+      "meaningEn": "Thus the thousand divine names of the great-souled Keshava, worthy of glorification, have been fully recited.\n\nBhishma concludes after reciting the complete Sahasranama to Yudhishthira. 'Keshava' = Ka (Brahma) + Isha (Shiva) + Va (Vishnu) — lord of all three."
+    },
+    {
+      "id": "vs-4-1",
+      "chapter": 4,
+      "number": 1,
+      "sanskrit": ["य इदं शृणुयान्नित्यं यश्चापि परिकीर्तयेत्।", "नाशुभं प्राप्नुयात् किञ्चित् सोऽमुत्रेह च मानवः।।"],
+      "linesEn": ["ya idaṁ śhṛiṇuyānnityaṁ yaśhchāpi parikīrtayet", "nāśhubhaṁ prāpnuyāt kiñchit so'mutreha cha mānavaḥ"],
+      "meaningHi": "जो मनुष्य इसे नित्य सुनता है और जो इसका कीर्तन करता है, उसे इस लोक में और परलोक में कोई अशुभ प्राप्त नहीं होता।\n\nयह फलश्रुति का प्रथम लाभ है — अशुभ-निवृत्ति। 'इह च अमुत्र च' — इस जन्म में भी, अगले जन्म में भी।",
+      "meaningEn": "The person who daily listens to this or recites it — no inauspiciousness shall touch them in this world or the next.\n\nThis is the first benefit in the Phalashruti — removal of all inauspiciousness. 'Iha cha amutra cha' — in this life and the hereafter."
+    },
+    {
+      "id": "vs-4-2",
+      "chapter": 4,
+      "number": 2,
+      "sanskrit": ["वेदान्तगो ब्राह्मणः स्यात् क्षत्रियो विजयी भवेत्।", "वैश्यो धनसमृद्धः स्याच्छूद्रः सुखमवाप्नुयात्।।"],
+      "linesEn": ["vedāntago brāhmaṇaḥ syāt kṣhatriyo vijayī bhavet", "vaiśhyo dhanasamṛiddhaḥ syāchchhūdraḥ sukhamavāpnuyāt"],
+      "meaningHi": "ब्राह्मण वेदान्त का ज्ञाता हो जाए, क्षत्रिय विजयी हो, वैश्य धन-समृद्ध हो, और शूद्र सुख प्राप्त करे।\n\nप्राचीन वर्ण-व्यवस्था के अनुसार प्रत्येक वर्ण को उसके स्वधर्म की सिद्धि मिलती है। आधुनिक व्याख्या में — प्रत्येक व्यक्ति को उसके क्षेत्र में उत्कृष्टता प्राप्त होती है।",
+      "meaningEn": "A Brahmana attains Vedantic knowledge, a Kshatriya becomes victorious, a Vaishya gains wealth, and a Shudra obtains happiness.\n\nPer the ancient Varna system, each class achieves mastery in their domain. In modern interpretation — every person attains excellence in their field."
+    },
+    {
+      "id": "vs-4-3",
+      "chapter": 4,
+      "number": 3,
+      "sanskrit": ["धर्मार्थी प्राप्नुयाद्धर्ममर्थार्थी चार्थमाप्नुयात्।", "कामानवाप्नुयात्कामी प्रजार्थी चाप्नुयात्प्रजाम्।।"],
+      "linesEn": ["dharmārthī prāpnuyāddharamamarthārthī chārthamāpnuyāt", "kāmānavāpnuyātkāmī prajārthī chāpnuyātprajām"],
+      "meaningHi": "धर्म चाहने वाले को धर्म प्राप्त हो, अर्थ चाहने वाले को अर्थ, काम (इच्छा) चाहने वाले को काम-पूर्ति, और सन्तान चाहने वाले को सन्तान प्राप्त हो।\n\nचार पुरुषार्थ — धर्म, अर्थ, काम, मोक्ष — सभी इस पाठ के फल हैं। जो जिसकी कामना करता है, वही प्राप्त करता है।",
+      "meaningEn": "One seeking dharma attains dharma, one seeking wealth attains wealth, one seeking desires gets them fulfilled, one seeking progeny obtains children.\n\nThe four Purusharthas — Dharma, Artha, Kama, Moksha — are all fruits of this recitation. Whatever one desires, one obtains."
+    },
+    {
+      "id": "vs-4-4",
+      "chapter": 4,
+      "number": 4,
+      "sanskrit": ["भक्तिमान् यः सदोत्थाय शुचिस्तद्गतमानसः।", "सहस्रं वासुदेवस्य नाम्नामेतत् प्रकीर्तयेत्।।"],
+      "linesEn": ["bhaktimān yaḥ sadotthāya śhuchistadgatamānasaḥ", "sahasraṁ vāsudevasya nāmnāmetat prakīrtayet"],
+      "meaningHi": "जो भक्तिमान मनुष्य सदा उठकर (प्रातःकाल), शुद्ध होकर, मन को वासुदेव में लगाकर इन सहस्र नामों का कीर्तन करता है —\n\nविधि: प्रातःकाल स्नान के बाद, शुद्ध वस्त्र पहनकर, एकाग्र मन से पाठ करना चाहिए। 'तद्गतमानस' — मन पूरी तरह भगवान में।",
+      "meaningEn": "The devotee who rises early, is purified, with mind absorbed in Vasudeva, and recites these thousand names —\n\nThe prescribed method: after morning bath, in clean clothes, with concentrated mind. 'Tadgatamānasa' — mind completely absorbed in the Lord."
+    },
+    {
+      "id": "vs-4-5",
+      "chapter": 4,
+      "number": 5,
+      "sanskrit": ["वासनाद्वासुदेवस्य वासितं भुवनत्रयम्।", "सर्वभूतनिवासोऽसि वासुदेव नमोऽस्तु ते।।"],
+      "linesEn": ["vāsanādvāsudevasya vāsitaṁ bhuvanatrayam", "sarvabhūtanivāso'si vāsudeva namo'stu te"],
+      "meaningHi": "वासुदेव की वासना (सर्वव्यापकता) से तीनों लोक वासित (परिपूर्ण/सुवासित) हैं। हे वासुदेव! आप सभी प्राणियों के निवास-स्थान हैं — आपको नमस्कार।\n\nयह सहस्रनाम का समापन श्लोक है। 'वासुदेव' शब्द की तीन व्युत्पत्तियाँ एक श्लोक में: वासना (व्याप्ति) से, वासित (सुगन्धित) करने से, और निवास (सबमें रहने) से। वसुदेव के पुत्र होने से भी 'वासुदेव' नाम है।",
+      "meaningEn": "By the pervasion of Vasudeva, the three worlds are pervaded/perfumed. O Vasudeva! You are the dwelling place of all beings — salutations to you.\n\nThis is the closing verse of the Sahasranama. Three etymologies of 'Vasudeva' in one shloka: from vasana (pervasion), vasita (pervading/perfuming), and nivasa (dwelling in all). Also: son of Vasudeva."
+    }
+  ]
+}

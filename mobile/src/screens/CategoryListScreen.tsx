@@ -32,13 +32,45 @@ export default function CategoryListScreen({ navigation, route }: Props) {
       if (categoryId === 'japam') {
         navigation.navigate('JapamCounter', { mantraId: entryId });
       } else if (entryId === 'hanuman-chalisa') {
-        navigation.navigate('ChalisaReader', { initialIndex: 0 });
+        navigation.navigate('ChalisaReader', { initialIndex: 0, chalisaId: 'hanuman-chalisa' });
+      } else if (entryId === 'shiv-chalisa') {
+        navigation.navigate('ChalisaReader', { initialIndex: 0, chalisaId: 'shiv-chalisa' });
+      } else if (entryId === 'durga-chalisa') {
+        navigation.navigate('ChalisaReader', { initialIndex: 0, chalisaId: 'durga-chalisa' });
+      } else if (entryId === 'ganesh-chalisa') {
+        navigation.navigate('ChalisaReader', { initialIndex: 0, chalisaId: 'ganesh-chalisa' });
       } else if (entryId === 'bhagavad-gita') {
         navigation.navigate('GitaChapters');
       } else if (entryId === 'sundarkand') {
         navigation.navigate('SundarkandChapters');
       } else if (entryId === 'shiva-strotam') {
         navigation.navigate('ShivaStrotamChapters');
+      } else if (entryId === 'durga-stotram') {
+        navigation.navigate('DurgaStotramChapters');
+      } else if (entryId === 'ganesh-stotram') {
+        navigation.navigate('GaneshStotramChapters');
+      } else if (entryId === 'vishnu-sahasranama') {
+        navigation.navigate('VishnuSahasranamaChapters');
+      } else if (entryId === 'hanuman-ashtak') {
+        navigation.navigate('HanumanAshtakChapters');
+      } else if (entryId === 'ram-stuti') {
+        navigation.navigate('RamStutiChapters');
+      } else if (entryId === 'ramcharitmanas') {
+        navigation.navigate('RamcharitmanasChapters');
+      } else if (entryId === 'om-jai-jagdish') {
+        navigation.navigate('AartiReader', { aartiIndex: 0 });
+      } else if (entryId === 'hanuman-aarti') {
+        navigation.navigate('AartiReader', { aartiIndex: 1 });
+      } else if (entryId === 'sankat-mochan') {
+        navigation.navigate('AartiReader', { aartiIndex: 2 });
+      } else if (entryId === 'jai-ganesh-deva') {
+        navigation.navigate('AartiReader', { aartiIndex: 3 });
+      } else if (entryId === 'om-jai-shiv-omkara') {
+        navigation.navigate('AartiReader', { aartiIndex: 4 });
+      } else if (entryId === 'jai-ambe-gauri') {
+        navigation.navigate('AartiReader', { aartiIndex: 5 });
+      } else if (entryId === 'aarti-kunj-bihari') {
+        navigation.navigate('AartiReader', { aartiIndex: 6 });
       }
     },
     [navigation, categoryId]
@@ -48,7 +80,16 @@ export default function CategoryListScreen({ navigation, route }: Props) {
     (progress: ReadingProgress) => {
       switch (progress.sourceId) {
         case 'hanuman-chalisa':
-          navigation.navigate('ChalisaReader', { initialIndex: progress.verseIndex });
+          navigation.navigate('ChalisaReader', { initialIndex: progress.verseIndex, chalisaId: 'hanuman-chalisa' });
+          return;
+        case 'shiv-chalisa':
+          navigation.navigate('ChalisaReader', { initialIndex: progress.verseIndex, chalisaId: 'shiv-chalisa' });
+          return;
+        case 'durga-chalisa':
+          navigation.navigate('ChalisaReader', { initialIndex: progress.verseIndex, chalisaId: 'durga-chalisa' });
+          return;
+        case 'ganesh-chalisa':
+          navigation.navigate('ChalisaReader', { initialIndex: progress.verseIndex, chalisaId: 'ganesh-chalisa' });
           return;
         case 'bhagavad-gita':
           if (progress.chapter == null) return;
@@ -70,6 +111,69 @@ export default function CategoryListScreen({ navigation, route }: Props) {
             chapter: progress.chapter,
             initialIndex: progress.verseIndex,
           });
+          return;
+        case 'durga-stotram':
+          if (progress.chapter == null) return;
+          navigation.navigate('DurgaStotramReader', {
+            chapter: progress.chapter,
+            initialIndex: progress.verseIndex,
+          });
+          return;
+        case 'ganesh-stotram':
+          if (progress.chapter == null) return;
+          navigation.navigate('GaneshStotramReader', {
+            chapter: progress.chapter,
+            initialIndex: progress.verseIndex,
+          });
+          return;
+        case 'vishnu-sahasranama':
+          if (progress.chapter == null) return;
+          navigation.navigate('VishnuSahasranamaReader', {
+            chapter: progress.chapter,
+            initialIndex: progress.verseIndex,
+          });
+          return;
+        case 'hanuman-ashtak':
+          if (progress.chapter == null) return;
+          navigation.navigate('HanumanAshtakReader', {
+            chapter: progress.chapter,
+            initialIndex: progress.verseIndex,
+          });
+          return;
+        case 'ram-stuti':
+          if (progress.chapter == null) return;
+          navigation.navigate('RamStutiReader', {
+            chapter: progress.chapter,
+            initialIndex: progress.verseIndex,
+          });
+          return;
+        case 'ramcharitmanas':
+          if (progress.chapter == null) return;
+          navigation.navigate('RamcharitmanasReader', {
+            chapter: progress.chapter,
+            initialIndex: progress.verseIndex,
+          });
+          return;
+        case 'om-jai-jagdish':
+          navigation.navigate('AartiReader', { aartiIndex: 0, initialIndex: progress.verseIndex });
+          return;
+        case 'hanuman-aarti':
+          navigation.navigate('AartiReader', { aartiIndex: 1, initialIndex: progress.verseIndex });
+          return;
+        case 'sankat-mochan':
+          navigation.navigate('AartiReader', { aartiIndex: 2, initialIndex: progress.verseIndex });
+          return;
+        case 'jai-ganesh-deva':
+          navigation.navigate('AartiReader', { aartiIndex: 3, initialIndex: progress.verseIndex });
+          return;
+        case 'om-jai-shiv-omkara':
+          navigation.navigate('AartiReader', { aartiIndex: 4, initialIndex: progress.verseIndex });
+          return;
+        case 'jai-ambe-gauri':
+          navigation.navigate('AartiReader', { aartiIndex: 5, initialIndex: progress.verseIndex });
+          return;
+        case 'aarti-kunj-bihari':
+          navigation.navigate('AartiReader', { aartiIndex: 6, initialIndex: progress.verseIndex });
           return;
       }
     },
@@ -170,6 +274,9 @@ function formatLocation(progress: ReadingProgress): { hi: string; en: string } {
   const verseNum = progress.verseIndex + 1;
   switch (progress.sourceId) {
     case 'hanuman-chalisa':
+    case 'shiv-chalisa':
+    case 'durga-chalisa':
+    case 'ganesh-chalisa':
       return { hi: `पद ${verseNum}`, en: `Verse ${verseNum}` };
     case 'bhagavad-gita':
       return {
@@ -182,10 +289,28 @@ function formatLocation(progress: ReadingProgress): { hi: string; en: string } {
         en: `Sarga ${progress.chapter} · Verse ${verseNum}`,
       };
     case 'shiva-strotam':
+    case 'durga-stotram':
+    case 'ganesh-stotram':
+    case 'vishnu-sahasranama':
+    case 'hanuman-ashtak':
+    case 'ram-stuti':
       return {
         hi: `स्तोत्र ${progress.chapter} · पद ${verseNum}`,
         en: `Stotram ${progress.chapter} · Verse ${verseNum}`,
       };
+    case 'ramcharitmanas':
+      return {
+        hi: `काण्ड ${progress.chapter} · पद ${verseNum}`,
+        en: `Kanda ${progress.chapter} · Verse ${verseNum}`,
+      };
+    case 'om-jai-jagdish':
+    case 'hanuman-aarti':
+    case 'sankat-mochan':
+    case 'jai-ganesh-deva':
+    case 'om-jai-shiv-omkara':
+    case 'jai-ambe-gauri':
+    case 'aarti-kunj-bihari':
+      return { hi: `पद ${verseNum}`, en: `Verse ${verseNum}` };
     default:
       return { hi: `पद ${verseNum}`, en: `Verse ${verseNum}` };
   }
