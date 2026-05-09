@@ -14,13 +14,28 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { getShivaStrotamChapter, type ShivaStrotamVerse } from '@/data/shiva-strotam';
+import {
+  getShivaStrotamChapter,
+  shivaStrotamChaptersManifest,
+  type ShivaStrotamVerse,
+} from '@/data/shiva-strotam';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import BookmarkButton from '@/components/BookmarkButton';
+import NextChapterCard from '@/components/NextChapterCard';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import type { RootStackParamList } from '@/navigation/types';
+
+type TransitionItem = {
+  __type: 'transition';
+  id: string;
+  nextChapter: number;
+  nextTitleHi: string;
+  nextTitleEn: string;
+};
+
+type FlatListItem = ShivaStrotamVerse | TransitionItem;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ShivaStrotamReader'>;
 
@@ -33,8 +48,25 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
   const { width } = useWindowDimensions();
 
   const chapter = useMemo(() => getShivaStrotamChapter(route.params.chapter), [route.params.chapter]);
-  const listRef = useRef<FlatList<ShivaStrotamVerse>>(null);
+  const isLastChapter = route.params.chapter >= shivaStrotamChaptersManifest.length;
+  const data: FlatListItem[] = useMemo(() => {
+    if (isLastChapter) return chapter.verses;
+    const next = shivaStrotamChaptersManifest[route.params.chapter];
+    return [
+      ...chapter.verses,
+      {
+        __type: 'transition' as const,
+        id: 'transition-next',
+        nextChapter: route.params.chapter + 1,
+        nextTitleHi: next.titleHi,
+        nextTitleEn: next.titleEn,
+      },
+    ];
+  }, [chapter, isLastChapter, route.params.chapter]);
+
+  const listRef = useRef<FlatList<FlatListItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(route.params.initialIndex ?? 0);
+  const hasNavigatedRef = useRef(false);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -42,6 +74,17 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
     if (viewableItems.length === 0) return;
     const first = viewableItems[0];
     if (first.index == null) return;
+    const item = first.item as FlatListItem;
+    if ('__type' in item && item.__type === 'transition') {
+      if (!hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
+        setTimeout(() => {
+          navigation.replace('ShivaStrotamReader', { chapter: item.nextChapter });
+        }, 400);
+      }
+      return;
+    }
     setCurrentIndex((prev) => {
       if (prev !== first.index) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
@@ -75,6 +118,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offsetX = e.nativeEvent.contentOffset.x;
       const idx = Math.round(offsetX / width);
+      if (idx >= chapter.verses.length) return;
       setCurrentIndex((prev) => {
         if (prev !== idx && idx >= 0 && idx < chapter.verses.length) {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
@@ -173,9 +217,19 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
         <View style={styles.listContainer}>
           <FlatList
             ref={listRef}
-            data={chapter.verses}
-            keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <ShivaStrotamVersePage verse={item} width={width} />}
+            data={data}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) =>
+              '__type' in item ? (
+                <NextChapterCard
+                  width={width}
+                  nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn}
+                  lang={lang}
+                />
+              ) : (
+                <ShivaStrotamVersePage verse={item} width={width} />
+              )
+            }
             extraData={lang}
             horizontal
             pagingEnabled
