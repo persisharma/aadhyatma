@@ -2,7 +2,6 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Modal,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -61,8 +60,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const resetBeadsLabel = lang === 'hi' ? 'बीज पुनः ०' : 'Reset Beads';
   const clearAllLabel = lang === 'hi' ? 'सब साफ़' : 'Clear All';
 
-  const meaningText = lang === 'hi' ? mantra.meaningHi : mantra.meaningEn;
-  const meaningLabel = lang === 'hi' ? 'अर्थ' : 'Meaning';
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -134,15 +131,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             pressed && styles.tapAreaPressed,
           ]}
         >
-          <ScrollView
-            style={styles.tapScroll}
-            contentContainerStyle={[
-              styles.tapContent,
-              { paddingHorizontal: spacing.xxl },
-            ]}
-            showsVerticalScrollIndicator={false}
-            scrollEnabled={false}
-          >
+          <View style={[styles.tapContent, { paddingHorizontal: spacing.xxl }]}>
             <View style={styles.mantraBlock}>
               {mantra.lines.map((line, i) => (
                 <Text
@@ -245,45 +234,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             >
               {tapHint}
             </Text>
-
-            <View
-              style={[
-                styles.meaningCard,
-                {
-                  backgroundColor: colors.parchmentSoft,
-                  borderColor: colors.divider,
-                  borderRadius: radii.md,
-                },
-              ]}
-            >
-              <Text
-                style={[
-                  styles.meaningLabel,
-                  {
-                    color: colors.inkMuted,
-                    fontSize: typography.meaningLabel.fontSize,
-                    fontFamily: typography.meaningLabel.fontFamily,
-                    letterSpacing: typography.meaningLabel.letterSpacing,
-                  },
-                ]}
-              >
-                {meaningLabel}
-              </Text>
-              <Text
-                style={[
-                  styles.meaningText,
-                  {
-                    color: colors.inkSoft,
-                    fontFamily: typography.meaning.fontFamily,
-                    fontSize: typography.meaning.fontSize,
-                    lineHeight: typography.meaning.lineHeight,
-                  },
-                ]}
-              >
-                {meaningText}
-              </Text>
-            </View>
-          </ScrollView>
+          </View>
         </Pressable>
 
         <View
@@ -518,13 +469,11 @@ const styles = StyleSheet.create({
   tapAreaPressed: {
     opacity: 0.92,
   },
-  tapScroll: {
-    flex: 1,
-  },
   tapContent: {
-    paddingTop: 8,
-    paddingBottom: 24,
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 12,
   },
   mantraBlock: {
     alignItems: 'center',
@@ -576,20 +525,6 @@ const styles = StyleSheet.create({
     marginTop: 18,
     fontStyle: 'italic',
     opacity: 0.8,
-    includeFontPadding: false,
-  },
-  meaningCard: {
-    marginTop: 22,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    width: '100%',
-  },
-  meaningLabel: {
-    textTransform: 'uppercase',
-    marginBottom: 8,
-  },
-  meaningText: {
     includeFontPadding: false,
   },
   actionsRow: {
