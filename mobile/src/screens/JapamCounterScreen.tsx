@@ -174,7 +174,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                   styles.countNumber,
                   {
                     color: colors.saffronDeep,
-                    fontFamily: typography.thumb.fontFamily,
                   },
                 ]}
               >
@@ -507,14 +506,14 @@ const styles = StyleSheet.create({
   },
   progressTrack: {
     width: '78%',
-    height: 4,
-    borderRadius: 2,
+    height: 6,
+    borderRadius: 3,
     marginTop: 18,
     overflow: 'hidden',
   },
   progressFill: {
-    height: 4,
-    borderRadius: 2,
+    height: 6,
+    borderRadius: 3,
   },
   roundsLabel: {
     marginTop: 14,
