@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
   NativeScrollEvent,
@@ -17,6 +17,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { getGitaChapter, gitaChaptersManifest, type GitaVerse } from '@/data/gita';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import GitaVersePage from '@/components/GitaVersePage';
 import NextChapterCard from '@/components/NextChapterCard';
@@ -41,6 +42,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { setProgress } = useReadingProgress();
   const { width } = useWindowDimensions();
 
   const chapter = useMemo(() => getGitaChapter(route.params.chapter), [route.params.chapter]);
@@ -63,6 +65,15 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   const listRef = useRef<FlatList<FlatListItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(route.params.initialIndex ?? 0);
   const hasNavigatedRef = useRef(false);
+
+  useEffect(() => {
+    setProgress({
+      sourceId: 'bhagavad-gita',
+      chapter: chapter.chapter,
+      verseIndex: currentIndex,
+      updatedAt: Date.now(),
+    });
+  }, [chapter.chapter, currentIndex, setProgress]);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 

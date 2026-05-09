@@ -1,13 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { library } from '@/data/texts';
+import { library, type LibraryEntry } from '@/data/texts';
 import { categories } from '@/data/categories';
 import { getRandomListingBackground } from '@/data/listingBackgrounds';
 import LibraryCard from '@/components/LibraryCard';
+import ResumeReadingSheet from '@/components/ResumeReadingSheet';
+import {
+  useReadingProgress,
+  type ReadingProgress,
+} from '@/contexts/ReadingProgressContext';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'CategoryList'>;
@@ -15,18 +20,73 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'CategoryList'>;
 export default function CategoryListScreen({ navigation, route }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { categoryId } = route.params;
+  const { getProgress, clearProgress } = useReadingProgress();
+  const [pendingEntry, setPendingEntry] = useState<LibraryEntry | null>(null);
 
   const backgroundImage = useMemo(() => getRandomListingBackground(), []);
   const categoryMeta = categories.find((c) => c.id === categoryId);
   const items = library.filter((e) => e.category === categoryId && !e.hidden);
 
-  const handlePress = (entryId: string) => {
-    if (entryId === 'hanuman-chalisa') navigation.navigate('ChalisaReader', { initialIndex: 0 });
-    else if (entryId === 'bhagavad-gita') navigation.navigate('GitaChapters');
-    else if (entryId === 'sundarkand') navigation.navigate('SundarkandChapters');
-    else if (entryId === 'shiva-strotam') navigation.navigate('ShivaStrotamChapters');
-    else if (categoryId === 'japam') navigation.navigate('JapamCounter', { mantraId: entryId });
+  const navigateFromStart = useCallback(
+    (entryId: string) => {
+      if (categoryId === 'japam') {
+        navigation.navigate('JapamCounter', { mantraId: entryId });
+      } else if (entryId === 'hanuman-chalisa') {
+        navigation.navigate('ChalisaReader', { initialIndex: 0 });
+      } else if (entryId === 'bhagavad-gita') {
+        navigation.navigate('GitaChapters');
+      } else if (entryId === 'sundarkand') {
+        navigation.navigate('SundarkandChapters');
+      } else if (entryId === 'shiva-strotam') {
+        navigation.navigate('ShivaStrotamChapters');
+      }
+    },
+    [navigation, categoryId]
+  );
+
+  const navigateToProgress = useCallback(
+    (progress: ReadingProgress) => {
+      switch (progress.sourceId) {
+        case 'hanuman-chalisa':
+          navigation.navigate('ChalisaReader', { initialIndex: progress.verseIndex });
+          return;
+        case 'bhagavad-gita':
+          if (progress.chapter == null) return;
+          navigation.navigate('GitaReader', {
+            chapter: progress.chapter,
+            initialIndex: progress.verseIndex,
+          });
+          return;
+        case 'sundarkand':
+          if (progress.chapter == null) return;
+          navigation.navigate('SundarkandReader', {
+            chapter: progress.chapter,
+            initialIndex: progress.verseIndex,
+          });
+          return;
+        case 'shiva-strotam':
+          if (progress.chapter == null) return;
+          navigation.navigate('ShivaStrotamReader', {
+            chapter: progress.chapter,
+            initialIndex: progress.verseIndex,
+          });
+          return;
+      }
+    },
+    [navigation]
+  );
+
+  const handlePress = (entry: LibraryEntry) => {
+    const progress = getProgress(entry.id);
+    if (progress && progress.verseIndex > 0) {
+      setPendingEntry(entry);
+      return;
+    }
+    navigateFromStart(entry.id);
   };
+
+  const pendingProgress = pendingEntry ? getProgress(pendingEntry.id) : undefined;
+  const location = pendingProgress ? formatLocation(pendingProgress) : null;
 
   return (
     <View style={styles.root}>
@@ -75,13 +135,60 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           showsVerticalScrollIndicator={false}
         >
           {items.map((entry) => {
-            const onPress = entry.status === 'active' ? () => handlePress(entry.id) : undefined;
+            const onPress = entry.status === 'active' ? () => handlePress(entry) : undefined;
             return <LibraryCard key={entry.id} entry={entry} onPress={onPress} />;
           })}
         </ScrollView>
       </SafeAreaView>
+
+      {pendingEntry && pendingProgress && location && (
+        <ResumeReadingSheet
+          visible
+          titleHi={pendingEntry.nameHi}
+          titleEn={pendingEntry.nameEn}
+          locationHi={location.hi}
+          locationEn={location.en}
+          onResume={() => {
+            const progress = pendingProgress;
+            setPendingEntry(null);
+            navigateToProgress(progress);
+          }}
+          onStartOver={() => {
+            const entryId = pendingEntry.id;
+            setPendingEntry(null);
+            clearProgress(entryId);
+            navigateFromStart(entryId);
+          }}
+          onDismiss={() => setPendingEntry(null)}
+        />
+      )}
     </View>
   );
+}
+
+function formatLocation(progress: ReadingProgress): { hi: string; en: string } {
+  const verseNum = progress.verseIndex + 1;
+  switch (progress.sourceId) {
+    case 'hanuman-chalisa':
+      return { hi: `पद ${verseNum}`, en: `Verse ${verseNum}` };
+    case 'bhagavad-gita':
+      return {
+        hi: `अध्याय ${progress.chapter} · श्लोक ${verseNum}`,
+        en: `Chapter ${progress.chapter} · Verse ${verseNum}`,
+      };
+    case 'sundarkand':
+      return {
+        hi: `सर्ग ${progress.chapter} · पद ${verseNum}`,
+        en: `Sarga ${progress.chapter} · Verse ${verseNum}`,
+      };
+    case 'shiva-strotam':
+      return {
+        hi: `स्तोत्र ${progress.chapter} · पद ${verseNum}`,
+        en: `Stotram ${progress.chapter} · Verse ${verseNum}`,
+      };
+    default:
+      return { hi: `पद ${verseNum}`, en: `Verse ${verseNum}` };
+  }
 }
 
 const styles = StyleSheet.create({
