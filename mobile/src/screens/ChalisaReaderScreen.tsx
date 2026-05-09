@@ -17,17 +17,81 @@ import { useTheme } from '@/theme/ThemeContext';
 import {
   hanumanChalisaTitleEn,
   hanumanChalisaTitleHi,
-  hanumanChalisaTotal,
   hanumanChalisaVerses,
   type HanumanChalisaVerse,
 } from '@/data/hanuman-chalisa';
+import {
+  shivChalisaTitleEn,
+  shivChalisaTitleHi,
+  shivChalisaVerses,
+  type ShivChalisaVerse,
+} from '@/data/shiv-chalisa';
+import {
+  durgaChalisaTitleEn,
+  durgaChalisaTitleHi,
+  durgaChalisaVerses,
+  type DurgaChalisaVerse,
+} from '@/data/durga-chalisa';
+import {
+  ganeshChalisaTitleEn,
+  ganeshChalisaTitleHi,
+  ganeshChalisaVerses,
+  type GaneshChalisaVerse,
+} from '@/data/ganesh-chalisa';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import LanguageToggle from '@/components/LanguageToggle';
 import VersePage from '@/components/VersePage';
+import NextChapterCard from '@/components/NextChapterCard';
 import type { RootStackParamList } from '@/navigation/types';
+
+type ChalisaVerse = HanumanChalisaVerse | ShivChalisaVerse | DurgaChalisaVerse | GaneshChalisaVerse;
+
+type ChalisaConfig = {
+  id: string;
+  titleHi: string;
+  titleEn: string;
+  verses: readonly ChalisaVerse[];
+};
+
+const chalisaConfigs: ChalisaConfig[] = [
+  {
+    id: 'hanuman-chalisa',
+    titleHi: hanumanChalisaTitleHi,
+    titleEn: hanumanChalisaTitleEn,
+    verses: hanumanChalisaVerses,
+  },
+  {
+    id: 'shiv-chalisa',
+    titleHi: shivChalisaTitleHi,
+    titleEn: shivChalisaTitleEn,
+    verses: shivChalisaVerses,
+  },
+  {
+    id: 'durga-chalisa',
+    titleHi: durgaChalisaTitleHi,
+    titleEn: durgaChalisaTitleEn,
+    verses: durgaChalisaVerses,
+  },
+  {
+    id: 'ganesh-chalisa',
+    titleHi: ganeshChalisaTitleHi,
+    titleEn: ganeshChalisaTitleEn,
+    verses: ganeshChalisaVerses,
+  },
+];
+
+type TransitionItem = {
+  __type: 'transition';
+  id: string;
+  nextChalisaId: string;
+  nextTitleHi: string;
+  nextTitleEn: string;
+};
+
+type FlatListItem = ChalisaVerse | TransitionItem;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
 
@@ -39,16 +103,38 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { width } = useWindowDimensions();
-  const listRef = useRef<FlatList<HanumanChalisaVerse>>(null);
+
+  const chalisaId = route.params?.chalisaId ?? 'hanuman-chalisa';
+  const configIndex = chalisaConfigs.findIndex((c) => c.id === chalisaId);
+  const config = chalisaConfigs[configIndex >= 0 ? configIndex : 0];
+  const isLastChalisa = configIndex >= chalisaConfigs.length - 1;
+
+  const data: FlatListItem[] = useMemo(() => {
+    if (isLastChalisa) return [...config.verses];
+    const next = chalisaConfigs[configIndex + 1];
+    return [
+      ...config.verses,
+      {
+        __type: 'transition' as const,
+        id: 'transition-next',
+        nextChalisaId: next.id,
+        nextTitleHi: next.titleHi,
+        nextTitleEn: next.titleEn,
+      },
+    ];
+  }, [config, configIndex, isLastChalisa]);
+
+  const listRef = useRef<FlatList<FlatListItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(route.params?.initialIndex ?? 0);
+  const hasNavigatedRef = useRef(false);
 
   useEffect(() => {
     setProgress({
-      sourceId: 'hanuman-chalisa',
+      sourceId: config.id,
       verseIndex: currentIndex,
       updatedAt: Date.now(),
     });
-  }, [currentIndex, setProgress]);
+  }, [currentIndex, setProgress, config.id]);
 
   const viewabilityConfig = useRef({
     itemVisiblePercentThreshold: 60,
@@ -58,6 +144,17 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     if (viewableItems.length === 0) return;
     const first = viewableItems[0];
     if (first.index == null) return;
+    const item = first.item as FlatListItem;
+    if ('__type' in item && item.__type === 'transition') {
+      if (!hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
+        setTimeout(() => {
+          navigation.replace('ChalisaReader', { initialIndex: 0, chalisaId: item.nextChalisaId });
+        }, 400);
+      }
+      return;
+    }
     setCurrentIndex((prev) => {
       if (prev !== first.index) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {
@@ -77,25 +174,43 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     [width]
   );
 
+  const verseCount = config.verses.length;
+
   const dotStyles = useMemo(() => {
-    const buckets = Math.ceil(hanumanChalisaTotal / DOT_COUNT);
+    const buckets = Math.ceil(verseCount / DOT_COUNT);
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
-  }, [currentIndex]);
+  }, [currentIndex, verseCount]);
 
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offsetX = e.nativeEvent.contentOffset.x;
       const idx = Math.round(offsetX / width);
       setCurrentIndex((prev) => {
-        if (prev !== idx && idx >= 0 && idx < hanumanChalisaTotal) {
+        if (prev !== idx && idx >= 0 && idx < verseCount) {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
           return idx;
         }
         return prev;
       });
     },
-    [width]
+    [width, verseCount]
+  );
+
+  const renderItem = useCallback(
+    ({ item }: { item: FlatListItem }) => {
+      if ('__type' in item && item.__type === 'transition') {
+        return (
+          <NextChapterCard
+            width={width}
+            nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn}
+            lang={lang}
+          />
+        );
+      }
+      return <VersePage verse={item as ChalisaVerse} width={width} />;
+    },
+    [width, lang]
   );
 
   return (
@@ -136,7 +251,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             ]}
             numberOfLines={1}
           >
-            {lang === 'hi' ? hanumanChalisaTitleHi : hanumanChalisaTitleEn}
+            {lang === 'hi' ? config.titleHi : config.titleEn}
           </Text>
 
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
@@ -152,19 +267,19 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
                   },
                 ]}
               >
-                {currentIndex + 1} / {hanumanChalisaTotal}
+                {currentIndex + 1} / {verseCount}
               </Text>
               <BookmarkButton
-                isBookmarked={isBookmarked(`hanuman-chalisa::${currentIndex}`)}
+                isBookmarked={isBookmarked(`${config.id}::${currentIndex}`)}
                 onToggle={() => {
-                  const id = `hanuman-chalisa::${currentIndex}`;
+                  const id = `${config.id}::${currentIndex}`;
                   if (isBookmarked(id)) {
                     removeBookmark(id);
                   } else {
-                    const v = hanumanChalisaVerses[currentIndex];
+                    const v = config.verses[currentIndex];
                     addBookmark({
                       id,
-                      sourceId: 'hanuman-chalisa',
+                      sourceId: config.id,
                       verseIndex: currentIndex,
                       savedAt: Date.now(),
                       previewHi: v.lines[0] ?? '',
@@ -184,9 +299,9 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
         <View style={styles.listContainer}>
           <FlatList
             ref={listRef}
-            data={hanumanChalisaVerses as HanumanChalisaVerse[]}
-            keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <VersePage verse={item} width={width} />}
+            data={data}
+            keyExtractor={(item) => ('__type' in item ? item.id : item.id)}
+            renderItem={renderItem}
             extraData={lang}
             horizontal
             pagingEnabled
