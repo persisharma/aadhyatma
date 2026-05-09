@@ -89,29 +89,22 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <View style={styles.titleBlock}>
             <Text
               style={[
-                styles.titleHi,
-                {
-                  color: colors.ink,
-                  fontFamily: typography.readerTitle.fontFamily,
-                  fontSize: typography.readerTitle.fontSize,
-                },
+                lang === 'hi' ? styles.titleHi : styles.titleEn,
+                lang === 'hi'
+                  ? {
+                      color: colors.ink,
+                      fontFamily: typography.readerTitle.fontFamily,
+                      fontSize: typography.readerTitle.fontSize,
+                    }
+                  : {
+                      color: colors.ink,
+                      fontFamily: typography.cardLatin.fontFamily,
+                      fontSize: 16,
+                    },
               ]}
               numberOfLines={1}
             >
-              {titleHi}
-            </Text>
-            <Text
-              style={[
-                styles.titleEn,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.cardLatin.fontFamily,
-                  fontSize: typography.cardLatin.fontSize,
-                },
-              ]}
-              numberOfLines={1}
-            >
-              {titleEn}
+              {lang === 'hi' ? titleHi : titleEn}
             </Text>
           </View>
 
