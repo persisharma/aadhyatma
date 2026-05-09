@@ -11,13 +11,26 @@ export type HomeStackParamList = {
   CategoryList: { categoryId: ContentCategory };
   DeityList: { deityId: Deity };
   DeityIndex: undefined;
-  ChalisaReader: { initialIndex?: number } | undefined;
+  ChalisaReader: { initialIndex?: number; chalisaId?: string } | undefined;
   GitaChapters: undefined;
   GitaReader: { chapter: number; initialIndex?: number };
   SundarkandChapters: undefined;
   SundarkandReader: { chapter: number; initialIndex?: number };
   ShivaStrotamChapters: undefined;
   ShivaStrotamReader: { chapter: number; initialIndex?: number };
+  DurgaStotramChapters: undefined;
+  DurgaStotramReader: { chapter: number; initialIndex?: number };
+  GaneshStotramChapters: undefined;
+  GaneshStotramReader: { chapter: number; initialIndex?: number };
+  VishnuSahasranamaChapters: undefined;
+  VishnuSahasranamaReader: { chapter: number; initialIndex?: number };
+  HanumanAshtakChapters: undefined;
+  HanumanAshtakReader: { chapter: number; initialIndex?: number };
+  RamStutiChapters: undefined;
+  RamStutiReader: { chapter: number; initialIndex?: number };
+  RamcharitmanasChapters: undefined;
+  RamcharitmanasReader: { chapter: number; initialIndex?: number };
+  AartiReader: { aartiIndex: number; initialIndex?: number };
 };
 
 export type MoreStackParamList = {

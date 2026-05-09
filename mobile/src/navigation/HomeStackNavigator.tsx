@@ -11,6 +11,19 @@ import SundarkandChaptersScreen from '@/screens/SundarkandChaptersScreen';
 import SundarkandReaderScreen from '@/screens/SundarkandReaderScreen';
 import ShivaStrotamChaptersScreen from '@/screens/ShivaStrotamChaptersScreen';
 import ShivaStrotamReaderScreen from '@/screens/ShivaStrotamReaderScreen';
+import DurgaStotramChaptersScreen from '@/screens/DurgaStotramChaptersScreen';
+import DurgaStotramReaderScreen from '@/screens/DurgaStotramReaderScreen';
+import GaneshStotramChaptersScreen from '@/screens/GaneshStotramChaptersScreen';
+import GaneshStotramReaderScreen from '@/screens/GaneshStotramReaderScreen';
+import VishnuSahasranamaChaptersScreen from '@/screens/VishnuSahasranamaChaptersScreen';
+import VishnuSahasranamaReaderScreen from '@/screens/VishnuSahasranamaReaderScreen';
+import HanumanAshtakChaptersScreen from '@/screens/HanumanAshtakChaptersScreen';
+import HanumanAshtakReaderScreen from '@/screens/HanumanAshtakReaderScreen';
+import RamStutiChaptersScreen from '@/screens/RamStutiChaptersScreen';
+import RamStutiReaderScreen from '@/screens/RamStutiReaderScreen';
+import RamcharitmanasChaptersScreen from '@/screens/RamcharitmanasChaptersScreen';
+import RamcharitmanasReaderScreen from '@/screens/RamcharitmanasReaderScreen';
+import AartiReaderScreen from '@/screens/AartiReaderScreen';
 import type { HomeStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
@@ -49,6 +62,47 @@ export default function HomeStackNavigator() {
       <Stack.Screen
         name="ShivaStrotamReader"
         component={ShivaStrotamReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="DurgaStotramChapters" component={DurgaStotramChaptersScreen} />
+      <Stack.Screen
+        name="DurgaStotramReader"
+        component={DurgaStotramReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="GaneshStotramChapters" component={GaneshStotramChaptersScreen} />
+      <Stack.Screen
+        name="GaneshStotramReader"
+        component={GaneshStotramReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="VishnuSahasranamaChapters" component={VishnuSahasranamaChaptersScreen} />
+      <Stack.Screen
+        name="VishnuSahasranamaReader"
+        component={VishnuSahasranamaReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="HanumanAshtakChapters" component={HanumanAshtakChaptersScreen} />
+      <Stack.Screen
+        name="HanumanAshtakReader"
+        component={HanumanAshtakReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="RamStutiChapters" component={RamStutiChaptersScreen} />
+      <Stack.Screen
+        name="RamStutiReader"
+        component={RamStutiReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="RamcharitmanasChapters" component={RamcharitmanasChaptersScreen} />
+      <Stack.Screen
+        name="RamcharitmanasReader"
+        component={RamcharitmanasReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="AartiReader"
+        component={AartiReaderScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
     </Stack.Navigator>

@@ -19,10 +19,26 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   const items = library.filter((e) => e.category === categoryId && !e.hidden);
 
   const handlePress = (entryId: string) => {
-    if (entryId === 'hanuman-chalisa') navigation.navigate('ChalisaReader', { initialIndex: 0 });
+    if (entryId === 'hanuman-chalisa') navigation.navigate('ChalisaReader', { initialIndex: 0, chalisaId: 'hanuman-chalisa' });
+    else if (entryId === 'shiv-chalisa') navigation.navigate('ChalisaReader', { initialIndex: 0, chalisaId: 'shiv-chalisa' });
+    else if (entryId === 'durga-chalisa') navigation.navigate('ChalisaReader', { initialIndex: 0, chalisaId: 'durga-chalisa' });
+    else if (entryId === 'ganesh-chalisa') navigation.navigate('ChalisaReader', { initialIndex: 0, chalisaId: 'ganesh-chalisa' });
     else if (entryId === 'bhagavad-gita') navigation.navigate('GitaChapters');
     else if (entryId === 'sundarkand') navigation.navigate('SundarkandChapters');
     else if (entryId === 'shiva-strotam') navigation.navigate('ShivaStrotamChapters');
+    else if (entryId === 'durga-stotram') navigation.navigate('DurgaStotramChapters');
+    else if (entryId === 'ganesh-stotram') navigation.navigate('GaneshStotramChapters');
+    else if (entryId === 'vishnu-sahasranama') navigation.navigate('VishnuSahasranamaChapters');
+    else if (entryId === 'hanuman-ashtak') navigation.navigate('HanumanAshtakChapters');
+    else if (entryId === 'ram-stuti') navigation.navigate('RamStutiChapters');
+    else if (entryId === 'ramcharitmanas') navigation.navigate('RamcharitmanasChapters');
+    else if (entryId === 'om-jai-jagdish') navigation.navigate('AartiReader', { aartiIndex: 0 });
+    else if (entryId === 'hanuman-aarti') navigation.navigate('AartiReader', { aartiIndex: 1 });
+    else if (entryId === 'sankat-mochan') navigation.navigate('AartiReader', { aartiIndex: 2 });
+    else if (entryId === 'jai-ganesh-deva') navigation.navigate('AartiReader', { aartiIndex: 3 });
+    else if (entryId === 'om-jai-shiv-omkara') navigation.navigate('AartiReader', { aartiIndex: 4 });
+    else if (entryId === 'jai-ambe-gauri') navigation.navigate('AartiReader', { aartiIndex: 5 });
+    else if (entryId === 'aarti-kunj-bihari') navigation.navigate('AartiReader', { aartiIndex: 6 });
   };
 
   return (
