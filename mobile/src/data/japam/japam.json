@@ -1,0 +1,72 @@
+{
+  "mantras": [
+    {
+      "id": "om-namah-shivaya",
+      "nameHi": "ॐ नमः शिवाय",
+      "nameEn": "Om Namah Shivaya",
+      "sub": "पञ्चाक्षर मंत्र · 5-syllable",
+      "thumb": "ॐ",
+      "deities": ["shiva"],
+      "lines": ["ॐ नमः शिवाय"],
+      "linesEn": ["Om Namah Shivaya"],
+      "meaningHi": "मैं शिव को प्रणाम करता हूँ। यह पाँच अक्षरों का मंत्र शिव के पाँच मुख तथा पाँच तत्त्वों — पृथ्वी, जल, अग्नि, वायु, आकाश — का स्मरण कराता है।",
+      "meaningEn": "Salutations to Lord Shiva. This five-syllable mantra evokes Shiva's five faces and the five elements — earth, water, fire, air, and ether."
+    },
+    {
+      "id": "hare-krishna-mahamantra",
+      "nameHi": "हरे कृष्ण महामंत्र",
+      "nameEn": "Hare Krishna Mahamantra",
+      "sub": "16 शब्द · Vaishnava",
+      "thumb": "ह",
+      "deities": ["krishna"],
+      "lines": [
+        "हरे कृष्ण हरे कृष्ण",
+        "कृष्ण कृष्ण हरे हरे",
+        "हरे राम हरे राम",
+        "राम राम हरे हरे"
+      ],
+      "linesEn": [
+        "Hare Krishna Hare Krishna",
+        "Krishna Krishna Hare Hare",
+        "Hare Rama Hare Rama",
+        "Rama Rama Hare Hare"
+      ],
+      "meaningHi": "हे हरि की शक्ति! हे कृष्ण! हे राम! कलियुग का सर्वश्रेष्ठ नाम-संकीर्तन; भगवान् और उनकी आह्लादिनी शक्ति का संयुक्त आह्वान।",
+      "meaningEn": "An invocation of the Lord (Krishna, Rama) along with His joy-giving energy (Hare). The Vaishnava tradition holds this as the great mantra of deliverance in the present age."
+    },
+    {
+      "id": "gayatri-mantra",
+      "nameHi": "गायत्री मंत्र",
+      "nameEn": "Gayatri Mantra",
+      "sub": "ऋग्वेद ३.६२.१०",
+      "thumb": "गा",
+      "deities": ["durga"],
+      "lines": [
+        "ॐ भूर्भुवः स्वः",
+        "तत् सवितुर्वरेण्यं",
+        "भर्गो देवस्य धीमहि",
+        "धियो यो नः प्रचोदयात्"
+      ],
+      "linesEn": [
+        "Om bhur bhuvah svah",
+        "tat savitur varenyam",
+        "bhargo devasya dhimahi",
+        "dhiyo yo nah prachodayat"
+      ],
+      "meaningHi": "ॐ — पृथ्वी, अंतरिक्ष और स्वर्गलोक के स्वामी। हम उस सविता देव के वरेण्य तेज का ध्यान करते हैं — जो हमारी बुद्धि को सत्पथ की ओर प्रेरित करें।",
+      "meaningEn": "Om — earth, atmosphere, and heavens. We meditate upon the supreme radiance of the divine Sun (Savitr). May He inspire our intellect toward right understanding."
+    },
+    {
+      "id": "om-namo-bhagavate-vasudevaya",
+      "nameHi": "ॐ नमो भगवते वासुदेवाय",
+      "nameEn": "Om Namo Bhagavate Vasudevaya",
+      "sub": "द्वादशाक्षर मंत्र · 12-syllable",
+      "thumb": "वा",
+      "deities": ["krishna"],
+      "lines": ["ॐ नमो भगवते वासुदेवाय"],
+      "linesEn": ["Om Namo Bhagavate Vasudevaya"],
+      "meaningHi": "उस भगवान् वासुदेव को मेरा प्रणाम — जो वसुदेवपुत्र, सबमें वास करने वाले, समस्त ऐश्वर्य के स्वामी हैं।",
+      "meaningEn": "Salutations to the Divine Vasudeva — son of Vasudeva, dweller in all beings, possessor of all auspicious qualities. The twelve-syllable Vaishnava mantra of refuge."
+    }
+  ]
+}

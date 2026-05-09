@@ -16,6 +16,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { categories } from '@/data/categories';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import CategoryCard from '@/components/CategoryCard';
+import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import Crest from '@/components/Crest';
 import HelpFloatingButton from '@/components/HelpFloatingButton';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -39,16 +40,15 @@ export default function HomeScreen({ navigation }: Props) {
   const activeCategories = categories.filter((c) => c.status === 'active');
   const comingCategories = categories.filter((c) => c.status === 'coming');
 
-  const iconColor = colors.saffronDeep;
-
-  const categoryIcons: Record<string, React.ReactNode> = {
-    granth: <Text style={{ fontSize: 22 }}>📖</Text>,
-    stotram: <Text style={{ fontSize: 22 }}>🕉️</Text>,
-    chalisa: <Text style={{ fontSize: 22 }}>📿</Text>,
-    deity: <Text style={{ fontSize: 22 }}>🙏</Text>,
-    aarti: <Text style={{ fontSize: 22 }}>🪔</Text>,
-    bhajan: <Text style={{ fontSize: 22 }}>🎵</Text>,
-    veda: <Text style={{ fontSize: 22 }}>📜</Text>,
+  const categoryIcons: Record<CategoryIconKey, React.ReactNode> = {
+    granth: <CategoryIcon iconKey="granth" />,
+    stotram: <CategoryIcon iconKey="stotram" />,
+    chalisa: <CategoryIcon iconKey="chalisa" />,
+    japam: <CategoryIcon iconKey="japam" />,
+    deity: <CategoryIcon iconKey="deity" />,
+    aarti: <CategoryIcon iconKey="aarti" />,
+    bhajan: <CategoryIcon iconKey="bhajan" />,
+    veda: <CategoryIcon iconKey="veda" />,
   };
 
   type TileItem = {

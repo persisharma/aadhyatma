@@ -31,6 +31,7 @@ export type HomeStackParamList = {
   RamcharitmanasChapters: undefined;
   RamcharitmanasReader: { chapter: number; initialIndex?: number };
   AartiReader: { aartiIndex: number; initialIndex?: number };
+  JapamCounter: { mantraId: string };
 };
 
 export type MoreStackParamList = {

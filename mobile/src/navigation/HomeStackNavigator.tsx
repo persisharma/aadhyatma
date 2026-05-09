@@ -24,6 +24,7 @@ import RamStutiReaderScreen from '@/screens/RamStutiReaderScreen';
 import RamcharitmanasChaptersScreen from '@/screens/RamcharitmanasChaptersScreen';
 import RamcharitmanasReaderScreen from '@/screens/RamcharitmanasReaderScreen';
 import AartiReaderScreen from '@/screens/AartiReaderScreen';
+import JapamCounterScreen from '@/screens/JapamCounterScreen';
 import type { HomeStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
@@ -103,6 +104,11 @@ export default function HomeStackNavigator() {
       <Stack.Screen
         name="AartiReader"
         component={AartiReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="JapamCounter"
+        component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
     </Stack.Navigator>

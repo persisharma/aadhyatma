@@ -11,9 +11,17 @@ import { hanumanAshtakTotal } from './hanuman-ashtak';
 import { ramStutiTotal } from './ram-stuti';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { aartiCollection } from './aarti';
+import { japamMantras } from './japam';
 
 export type TextStatus = 'active' | 'coming';
-export type ContentCategory = 'granth' | 'stotram' | 'chalisa' | 'aarti' | 'bhajan' | 'veda';
+export type ContentCategory =
+  | 'granth'
+  | 'stotram'
+  | 'chalisa'
+  | 'japam'
+  | 'aarti'
+  | 'bhajan'
+  | 'veda';
 export type Deity = 'rama' | 'krishna' | 'shiva' | 'hanuman' | 'durga' | 'ganesha';
 
 export type LibraryEntry = {
@@ -75,6 +83,16 @@ export const library: readonly LibraryEntry[] = [
     deities: ['shiva'],
     verseCount: shivaStrotamTotal,
   },
+  ...japamMantras.map<LibraryEntry>((m) => ({
+    id: m.id,
+    nameHi: m.nameHi,
+    nameEn: m.nameEn,
+    sub: m.sub,
+    thumb: m.thumb,
+    status: 'active',
+    category: 'japam',
+    deities: m.deities,
+  })),
   {
     id: 'ramcharitmanas',
     nameHi: 'रामचरितमानस',
