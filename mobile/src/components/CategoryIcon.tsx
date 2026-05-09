@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import type { ContentCategory } from '@/data/texts';
 import { useTheme } from '@/theme/ThemeContext';
 
@@ -21,9 +21,7 @@ export default function CategoryIcon({ iconKey }: Props) {
   return (
     <View style={styles.frame} accessible={false}>
       {iconKey === 'granth' && <PalmLeafManuscriptIcon {...paint} />}
-      {iconKey === 'stotram' && (
-        <OmGlyphIcon {...paint} fontFamily={typography.thumb.fontFamily} />
-      )}
+      {iconKey === 'stotram' && <OmGlyphIcon {...paint} />}
       {iconKey === 'chalisa' && <MalaIcon {...paint} />}
       {iconKey === 'japam' && (
         <JapamBeadIcon {...paint} fontFamily={typography.thumb.fontFamily} />
@@ -49,14 +47,18 @@ function PalmLeafManuscriptIcon({ color, accent }: IconPaint) {
   );
 }
 
-function OmGlyphIcon({
-  color,
-  accent,
-  fontFamily,
-}: IconPaint & { fontFamily: string }) {
+function OmGlyphIcon({ color, accent }: IconPaint) {
   return (
     <View style={styles.omWrap}>
-      <Text style={[styles.omText, { color, fontFamily }]}>ॐ</Text>
+      {/* Main body curve */}
+      <View style={[styles.omBody, { borderColor: color }]} />
+      {/* Upper hook / tail */}
+      <View style={[styles.omTail, { borderColor: color }]} />
+      {/* Crescent */}
+      <View style={[styles.omCrescent, { borderColor: color }]} />
+      {/* Bindu dot */}
+      <View style={[styles.omDot, { backgroundColor: color }]} />
+      {/* Decorative underline */}
       <View style={[styles.omRule, { backgroundColor: accent }]} />
     </View>
   );
@@ -65,6 +67,7 @@ function OmGlyphIcon({
 function MalaIcon({ color, accent }: IconPaint) {
   return (
     <View style={styles.malaWrap}>
+      <View style={[styles.malaThread, { backgroundColor: accent }]} />
       <View style={[styles.bead, styles.beadOne, { borderColor: color }]} />
       <View style={[styles.bead, styles.beadTwo, { borderColor: color }]} />
       <View style={[styles.bead, styles.beadThree, { borderColor: color }]} />
@@ -73,25 +76,26 @@ function MalaIcon({ color, accent }: IconPaint) {
       <View style={[styles.bead, styles.beadSix, { borderColor: color }]} />
       <View style={[styles.bead, styles.beadSeven, { borderColor: color }]} />
       <View style={[styles.bead, styles.beadEight, { borderColor: color }]} />
-      <View style={[styles.malaThread, { backgroundColor: accent }]} />
       <View style={[styles.tasselKnot, { backgroundColor: color }]} />
       <View style={[styles.tasselCord, { backgroundColor: color }]} />
+      <View style={[styles.tasselEnd, { backgroundColor: color }]} />
     </View>
   );
 }
 
-function JapamBeadIcon({
-  color,
-  accent,
-  fontFamily,
-}: IconPaint & { fontFamily: string }) {
+function JapamBeadIcon({ color, accent }: IconPaint & { fontFamily: string }) {
   return (
     <View style={styles.japamWrap}>
       <View style={[styles.japamChantA, { backgroundColor: accent }]} />
       <View style={[styles.japamChantB, { backgroundColor: accent }]} />
       <View style={[styles.japamChantC, { backgroundColor: accent }]} />
-      <View style={[styles.japamBead, { borderColor: color }]}>
-        <Text style={[styles.japamOm, { color, fontFamily }]}>ॐ</Text>
+      <View style={[styles.japamCounter, { borderColor: color }]}>
+        <View style={[styles.japamWindow, { backgroundColor: accent }]} />
+        <View style={styles.japamBeadRow}>
+          <View style={[styles.japamBead, { borderColor: color }]} />
+          <View style={[styles.japamBead, { borderColor: color }]} />
+          <View style={[styles.japamBead, { borderColor: color }]} />
+        </View>
       </View>
       <View style={[styles.japamCord, { backgroundColor: color }]} />
       <View style={[styles.japamTassel, { backgroundColor: color }]} />
@@ -104,7 +108,6 @@ function TempleIcon({ color, accent }: IconPaint) {
     <View style={styles.templeWrap}>
       <View style={[styles.templeFlagPole, { backgroundColor: color }]} />
       <View style={[styles.templeFlag, { borderLeftColor: accent }]} />
-      <View style={[styles.templeHalo, { borderColor: accent }]} />
       <View style={[styles.templeRoof, { borderBottomColor: color }]} />
       <View style={[styles.templeCap, { backgroundColor: color }]} />
       <View style={styles.pillarRow}>
@@ -132,6 +135,7 @@ function DiyaIcon({ color, accent }: IconPaint) {
 function TanpuraIcon({ color, accent }: IconPaint) {
   return (
     <View style={styles.tanpuraWrap}>
+      <View style={[styles.tanpuraHead, { backgroundColor: color }]} />
       <View style={[styles.tanpuraNeck, { backgroundColor: color }]} />
       <View style={[styles.tanpuraString, { backgroundColor: accent }]} />
       <View style={[styles.tanpuraPegLeft, { backgroundColor: color }]} />
@@ -146,13 +150,12 @@ function TanpuraIcon({ color, accent }: IconPaint) {
 function VedaManuscriptIcon({ color, accent }: IconPaint) {
   return (
     <View style={styles.vedaWrap}>
-      <View style={[styles.vedaLeaf, styles.vedaLeafTop, { borderColor: color }]} />
-      <View style={[styles.vedaLeaf, styles.vedaLeafMid, { borderColor: color }]} />
-      <View style={[styles.vedaLeaf, styles.vedaLeafBottom, { borderColor: color }]} />
-      <View style={[styles.vedaLine, styles.vedaLineOne, { backgroundColor: accent }]} />
-      <View style={[styles.vedaLine, styles.vedaLineTwo, { backgroundColor: accent }]} />
-      <View style={[styles.vedaBand, { backgroundColor: color }]} />
-      <View style={[styles.vedaKnot, { borderColor: color }]} />
+      <View style={[styles.vedaPage, styles.vedaPageBack, { borderColor: accent }]} />
+      <View style={[styles.vedaPage, styles.vedaPageFront, { borderColor: color }]} />
+      <View style={[styles.vedaSpine, { backgroundColor: color }]} />
+      <View style={[styles.vedaRule, styles.vedaRuleTop, { backgroundColor: accent }]} />
+      <View style={[styles.vedaRule, styles.vedaRuleBottom, { backgroundColor: accent }]} />
+      <View style={[styles.vedaSeal, { borderColor: color }]} />
     </View>
   );
 }
@@ -165,52 +168,52 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   manuscriptWrap: {
-    width: 34,
-    height: 26,
+    width: 36,
+    height: 28,
     position: 'relative',
   },
   leaf: {
     position: 'absolute',
-    left: 3,
-    width: 28,
-    height: 8,
-    borderWidth: 1.4,
+    left: 2,
+    width: 32,
+    height: 9,
+    borderWidth: 1.8,
     borderRadius: 5,
   },
   leafTop: {
-    top: 4,
+    top: 3,
   },
   leafBottom: {
     top: 14,
   },
   leafLine: {
     position: 'absolute',
-    left: 10,
-    width: 14,
-    height: 1,
+    left: 9,
+    width: 18,
+    height: 1.5,
     borderRadius: 1,
   },
   leafLineTop: {
-    top: 8,
+    top: 7,
   },
   leafLineBottom: {
     top: 18,
   },
   thread: {
     position: 'absolute',
-    left: 16,
-    top: 2,
-    width: 2,
-    height: 23,
+    left: 16.5,
+    top: 1,
+    width: 2.4,
+    height: 26,
     borderRadius: 1,
   },
   threadDot: {
     position: 'absolute',
-    left: 14,
-    top: 11,
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+    left: 13.8,
+    top: 10.5,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
   },
   omWrap: {
     width: 32,
@@ -218,31 +221,64 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  omText: {
-    fontSize: 25,
-    lineHeight: 30,
-    includeFontPadding: false,
-    textAlign: 'center',
-    transform: [{ translateY: 1 }],
+  omBody: {
+    position: 'absolute',
+    bottom: 6,
+    width: 18,
+    height: 14,
+    borderWidth: 2,
+    borderRadius: 9,
+    borderTopWidth: 2,
+    borderRightWidth: 0.5,
+  },
+  omTail: {
+    position: 'absolute',
+    top: 4,
+    right: 5,
+    width: 10,
+    height: 10,
+    borderWidth: 2,
+    borderRadius: 5,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+  },
+  omCrescent: {
+    position: 'absolute',
+    top: 2,
+    right: 7,
+    width: 8,
+    height: 5,
+    borderWidth: 1.8,
+    borderTopWidth: 0,
+    borderRadius: 4,
+  },
+  omDot: {
+    position: 'absolute',
+    top: 1,
+    right: 9,
+    width: 4,
+    height: 4,
+    borderRadius: 2,
   },
   omRule: {
-    width: 15,
-    height: 1.3,
+    position: 'absolute',
+    bottom: 2,
+    width: 16,
+    height: 1.6,
     borderRadius: 1,
     opacity: 0.75,
-    transform: [{ translateY: -1 }],
   },
   malaWrap: {
-    width: 34,
+    width: 36,
     height: 32,
     position: 'relative',
   },
   bead: {
     position: 'absolute',
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    borderWidth: 1.4,
+    width: 7,
+    height: 7,
+    borderRadius: 4,
+    borderWidth: 1.7,
   },
   beadOne: {
     left: 5,
@@ -257,7 +293,7 @@ const styles = StyleSheet.create({
     top: 20,
   },
   beadFour: {
-    left: 14,
+    left: 14.5,
     top: 23,
   },
   beadFive: {
@@ -273,44 +309,52 @@ const styles = StyleSheet.create({
     top: 4,
   },
   beadEight: {
-    left: 14,
+    left: 14.5,
     top: 1,
   },
   malaThread: {
     position: 'absolute',
-    left: 16,
+    left: 17,
     top: 7,
-    width: 1.2,
-    height: 16,
+    width: 1.6,
+    height: 17,
     borderRadius: 1,
-    opacity: 0.7,
+    opacity: 0.65,
   },
   tasselKnot: {
     position: 'absolute',
-    left: 15,
+    left: 15.5,
     top: 15,
-    width: 4,
-    height: 4,
-    borderRadius: 2,
+    width: 5,
+    height: 5,
+    borderRadius: 3,
   },
   tasselCord: {
     position: 'absolute',
-    left: 16.4,
-    top: 18,
-    width: 1.2,
-    height: 11,
+    left: 17.2,
+    top: 19,
+    width: 1.6,
+    height: 9,
     borderRadius: 1,
   },
+  tasselEnd: {
+    position: 'absolute',
+    left: 14,
+    bottom: 0,
+    width: 8,
+    height: 3,
+    borderRadius: 2,
+  },
   japamWrap: {
-    width: 32,
-    height: 34,
+    width: 34,
+    height: 32,
     position: 'relative',
     alignItems: 'center',
   },
   japamChantA: {
     position: 'absolute',
-    top: 1,
-    left: 8,
+    top: 0,
+    left: 9,
     width: 3,
     height: 3,
     borderRadius: 1.5,
@@ -319,7 +363,7 @@ const styles = StyleSheet.create({
   japamChantB: {
     position: 'absolute',
     top: 0,
-    left: 14.5,
+    left: 15.5,
     width: 3,
     height: 3,
     borderRadius: 1.5,
@@ -327,33 +371,44 @@ const styles = StyleSheet.create({
   },
   japamChantC: {
     position: 'absolute',
-    top: 1,
-    right: 8,
+    top: 0,
+    right: 9,
     width: 3,
     height: 3,
     borderRadius: 1.5,
     opacity: 0.8,
   },
-  japamBead: {
+  japamCounter: {
     position: 'absolute',
     top: 6,
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    borderWidth: 1.5,
+    width: 23,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 1.7,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  japamOm: {
-    fontSize: 13,
-    lineHeight: 16,
-    includeFontPadding: false,
-    transform: [{ translateY: 1 }],
+  japamWindow: {
+    width: 11,
+    height: 3,
+    borderRadius: 2,
+    marginBottom: 3,
+    opacity: 0.8,
+  },
+  japamBeadRow: {
+    flexDirection: 'row',
+    gap: 2,
+  },
+  japamBead: {
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    borderWidth: 1.3,
   },
   japamCord: {
     position: 'absolute',
     bottom: 3,
-    width: 1.4,
+    width: 1.6,
     height: 4,
     borderRadius: 1,
   },
@@ -370,78 +425,69 @@ const styles = StyleSheet.create({
     position: 'relative',
     alignItems: 'center',
   },
-  templeHalo: {
-    position: 'absolute',
-    top: 1,
-    width: 17,
-    height: 17,
-    borderRadius: 9,
-    borderWidth: 1.2,
-    opacity: 0.45,
-  },
   templeFlagPole: {
     position: 'absolute',
     left: 17,
-    top: 0,
-    width: 1.4,
-    height: 8,
+    top: 1,
+    width: 1.6,
+    height: 7,
     borderRadius: 1,
   },
   templeFlag: {
     position: 'absolute',
-    left: 18,
-    top: 0,
+    left: 18.5,
+    top: 1,
     width: 0,
     height: 0,
-    borderTopWidth: 2.5,
-    borderBottomWidth: 2.5,
+    borderTopWidth: 2.4,
+    borderBottomWidth: 2.4,
     borderLeftWidth: 6,
     borderTopColor: 'transparent',
     borderBottomColor: 'transparent',
   },
   templeRoof: {
     position: 'absolute',
-    top: 7,
+    top: 8,
     width: 0,
     height: 0,
-    borderLeftWidth: 14,
-    borderRightWidth: 14,
-    borderBottomWidth: 8,
+    borderLeftWidth: 15,
+    borderRightWidth: 15,
+    borderBottomWidth: 9,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
   },
   templeCap: {
     position: 'absolute',
-    top: 5,
-    width: 6,
+    top: 6,
+    width: 7,
     height: 3,
     borderRadius: 2,
   },
   pillarRow: {
     position: 'absolute',
-    top: 16,
-    width: 24,
-    height: 9,
+    top: 17,
+    width: 23,
+    height: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   pillar: {
-    width: 4,
-    height: 9,
+    width: 4.5,
+    height: 8,
     borderRadius: 2,
   },
   templeBase: {
     position: 'absolute',
     bottom: 5,
-    width: 28,
-    height: 3,
+    width: 29,
+    height: 3.4,
     borderRadius: 2,
   },
   templeStep: {
     position: 'absolute',
     bottom: 1,
-    width: 22,
-    height: 2,
+    width: 24,
+    height: 2.4,
     borderRadius: 1,
     opacity: 0.85,
   },
@@ -453,9 +499,9 @@ const styles = StyleSheet.create({
   },
   flameOuter: {
     position: 'absolute',
-    top: 2,
-    width: 10,
-    height: 16,
+    top: 1,
+    width: 12,
+    height: 18,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     borderBottomLeftRadius: 8,
@@ -465,8 +511,8 @@ const styles = StyleSheet.create({
   flameInner: {
     position: 'absolute',
     top: 7,
-    width: 5,
-    height: 8,
+    width: 6,
+    height: 9,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     borderBottomLeftRadius: 5,
@@ -475,134 +521,140 @@ const styles = StyleSheet.create({
   },
   diyaBowl: {
     position: 'absolute',
-    bottom: 4,
-    width: 27,
-    height: 12,
-    borderWidth: 1.5,
+    bottom: 3,
+    width: 31,
+    height: 13,
+    borderWidth: 1.8,
     borderTopWidth: 0,
-    borderBottomLeftRadius: 14,
-    borderBottomRightRadius: 14,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
   },
   diyaLip: {
     position: 'absolute',
-    bottom: 14,
-    width: 29,
-    height: 2,
+    bottom: 15,
+    width: 32,
+    height: 2.4,
     borderRadius: 1,
   },
   tanpuraWrap: {
-    width: 32,
-    height: 34,
+    width: 34,
+    height: 32,
     position: 'relative',
     alignItems: 'center',
   },
-  tanpuraNeck: {
+  tanpuraHead: {
     position: 'absolute',
     top: 2,
+    width: 7,
+    height: 7,
+    borderRadius: 4,
+  },
+  tanpuraNeck: {
+    position: 'absolute',
+    top: 5,
     width: 3,
-    height: 22,
+    height: 19,
     borderRadius: 2,
   },
   tanpuraString: {
     position: 'absolute',
-    top: 3,
+    top: 5,
     width: 1,
-    height: 25,
+    height: 23,
     borderRadius: 1,
     opacity: 0.85,
   },
   tanpuraPegLeft: {
     position: 'absolute',
-    top: 7,
-    left: 9,
-    width: 8,
+    top: 8,
+    left: 8,
+    width: 9,
     height: 3,
     borderRadius: 2,
     transform: [{ rotate: '-18deg' }],
   },
   tanpuraPegRight: {
     position: 'absolute',
-    top: 11,
-    right: 9,
-    width: 8,
+    top: 12,
+    right: 8,
+    width: 9,
     height: 3,
     borderRadius: 2,
     transform: [{ rotate: '18deg' }],
   },
   tanpuraBridge: {
     position: 'absolute',
-    bottom: 10,
-    width: 10,
-    height: 2,
+    bottom: 9,
+    width: 12,
+    height: 2.2,
     borderRadius: 1,
   },
   tanpuraResonator: {
     position: 'absolute',
-    bottom: 2,
-    width: 18,
-    height: 14,
-    borderRadius: 9,
-    borderWidth: 1.5,
+    bottom: 1,
+    width: 22,
+    height: 15,
+    borderRadius: 12,
+    borderWidth: 1.8,
   },
   tanpuraResonatorDot: {
     position: 'absolute',
     bottom: 7,
-    width: 5,
-    height: 5,
+    width: 6,
+    height: 6,
     borderRadius: 3,
     opacity: 0.85,
   },
   vedaWrap: {
     width: 34,
-    height: 28,
+    height: 30,
     position: 'relative',
   },
-  vedaLeaf: {
+  vedaPage: {
     position: 'absolute',
-    left: 2,
-    width: 30,
-    height: 7,
-    borderWidth: 1.2,
-    borderRadius: 5,
+    width: 25,
+    height: 22,
+    borderWidth: 1.7,
+    borderRadius: 3,
   },
-  vedaLeafTop: {
+  vedaPageBack: {
+    left: 6,
     top: 3,
+    opacity: 0.55,
   },
-  vedaLeafMid: {
-    top: 10,
+  vedaPageFront: {
+    left: 3,
+    top: 6,
   },
-  vedaLeafBottom: {
-    top: 17,
-  },
-  vedaLine: {
+  vedaSpine: {
     position: 'absolute',
     left: 8,
-    height: 1,
+    top: 7,
+    width: 2.4,
+    height: 20,
     borderRadius: 1,
   },
-  vedaLineOne: {
-    top: 13,
-    width: 18,
-  },
-  vedaLineTwo: {
-    top: 20,
-    width: 14,
-  },
-  vedaBand: {
+  vedaRule: {
     position: 'absolute',
-    right: 8,
-    top: 1,
-    width: 2,
-    height: 25,
+    left: 14,
+    height: 1.5,
     borderRadius: 1,
   },
-  vedaKnot: {
+  vedaRuleTop: {
+    top: 13,
+    width: 13,
+  },
+  vedaRuleBottom: {
+    top: 19,
+    width: 10,
+  },
+  vedaSeal: {
     position: 'absolute',
     right: 5,
-    top: 10,
-    width: 8,
-    height: 8,
+    bottom: 4,
+    width: 7,
+    height: 7,
     borderRadius: 4,
-    borderWidth: 1.4,
+    borderWidth: 1.5,
   },
 });
