@@ -22,6 +22,7 @@ import { ThemeProvider } from '@/theme/ThemeContext';
 import { lightColors } from '@/theme/colors';
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
+import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
 import RootNavigator from '@/navigation/RootNavigator';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -65,10 +66,12 @@ export default function App() {
         <ThemeProvider>
           <GitaLanguageProvider>
             <BookmarksProvider>
+              <ReadingProgressProvider>
                 <NavigationContainer>
                   <StatusBar style="dark" />
                   <RootNavigator />
                 </NavigationContainer>
+              </ReadingProgressProvider>
             </BookmarksProvider>
           </GitaLanguageProvider>
         </ThemeProvider>
