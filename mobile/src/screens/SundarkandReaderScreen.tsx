@@ -16,6 +16,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import {
   getSundarkandChapter,
+  sundarkandChaptersManifest,
   sundarkandTitleEn,
   sundarkandTitleHi,
   type SundarkandVerse,
@@ -23,9 +24,20 @@ import {
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import BookmarkButton from '@/components/BookmarkButton';
+import NextChapterCard from '@/components/NextChapterCard';
 import LanguageToggle from '@/components/LanguageToggle';
 import SundarkandVersePage from '@/components/SundarkandVersePage';
 import type { RootStackParamList } from '@/navigation/types';
+
+type TransitionItem = {
+  __type: 'transition';
+  id: string;
+  nextChapter: number;
+  nextTitleHi: string;
+  nextTitleEn: string;
+};
+
+type FlatListItem = SundarkandVerse | TransitionItem;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SundarkandReader'>;
 
@@ -40,9 +52,25 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
   const chapter = getSundarkandChapter(route.params.chapter);
   const verses = chapter.verses as SundarkandVerse[];
   const verseCount = verses.length;
+  const isLastChapter = route.params.chapter >= sundarkandChaptersManifest.length;
+  const data: FlatListItem[] = useMemo(() => {
+    if (isLastChapter) return verses;
+    const next = sundarkandChaptersManifest[route.params.chapter];
+    return [
+      ...verses,
+      {
+        __type: 'transition' as const,
+        id: 'transition-next',
+        nextChapter: route.params.chapter + 1,
+        nextTitleHi: next.titleHi,
+        nextTitleEn: next.titleEn,
+      },
+    ];
+  }, [verses, isLastChapter, route.params.chapter]);
 
-  const listRef = useRef<FlatList<SundarkandVerse>>(null);
+  const listRef = useRef<FlatList<FlatListItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(route.params?.initialIndex ?? 0);
+  const hasNavigatedRef = useRef(false);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -50,6 +78,17 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
     if (viewableItems.length === 0) return;
     const first = viewableItems[0];
     if (first.index == null) return;
+    const item = first.item as FlatListItem;
+    if ('__type' in item && item.__type === 'transition') {
+      if (!hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
+        setTimeout(() => {
+          navigation.replace('SundarkandReader', { chapter: item.nextChapter });
+        }, 400);
+      }
+      return;
+    }
     setCurrentIndex((prev) => {
       if (prev !== first.index) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
@@ -78,6 +117,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offsetX = e.nativeEvent.contentOffset.x;
       const idx = Math.round(offsetX / width);
+      if (idx >= verseCount) return;
       setCurrentIndex((prev) => {
         if (prev !== idx && idx >= 0 && idx < verseCount) {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
@@ -173,9 +213,19 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
         <View style={styles.listContainer}>
           <FlatList
             ref={listRef}
-            data={verses}
-            keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <SundarkandVersePage verse={item} width={width} />}
+            data={data}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) =>
+              '__type' in item ? (
+                <NextChapterCard
+                  width={width}
+                  nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn}
+                  lang={lang}
+                />
+              ) : (
+                <SundarkandVersePage verse={item} width={width} />
+              )
+            }
             extraData={lang}
             horizontal
             pagingEnabled
