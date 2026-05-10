@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -25,6 +25,7 @@ export default function DeityListScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.root}>
+      {backgroundImage ? <StatusBar barStyle="light-content" /> : null}
       {backgroundImage ? (
         <ImageBackground source={backgroundImage} style={StyleSheet.absoluteFill} resizeMode="cover">
           <LinearGradient

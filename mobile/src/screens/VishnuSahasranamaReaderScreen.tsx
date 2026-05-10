@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, NativeScrollEvent, NativeSyntheticEvent, Pressable, StyleSheet, Text, View, useWindowDimensions, type ViewToken } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -7,6 +7,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { getVishnuSahasranamaChapter, type VishnuSahasranamaVerse } from '@/data/vishnu-sahasranama';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -22,6 +23,7 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { setProgress } = useReadingProgress();
   const { width } = useWindowDimensions();
 
   const chapter = useSafeChapter(route.params.chapter, getVishnuSahasranamaChapter, navigation, 'VishnuSahasranamaChapters');
@@ -29,6 +31,11 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
   const verseCount = chapter?.verses.length ?? 0;
   const initialIndex = clampIndex(route.params.initialIndex, verseCount);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  useEffect(() => {
+    if (chapter == null) return;
+    setProgress({ sourceId: 'vishnu-sahasranama', chapter: chapter.chapter, verseIndex: currentIndex, updatedAt: Date.now() });
+  }, [chapter, currentIndex, setProgress]);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 

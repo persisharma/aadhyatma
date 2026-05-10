@@ -207,6 +207,8 @@ export default function HomeScreen({ navigation }: Props) {
           <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
             <View style={[styles.modalHeader, { borderBottomColor: colors.divider }]}>
               <Text
+                accessibilityRole="header"
+                accessibilityLabel={`${en.title}. ${hi.title}.`}
                 style={[
                   styles.modalTitle,
                   {
@@ -297,6 +299,8 @@ export default function HomeScreen({ navigation }: Props) {
               <View style={[styles.langDivider, { borderBottomColor: colors.divider }]} />
 
               <Text
+                accessibilityRole="header"
+                accessibilityLabel={`${en.reportHeading}. ${hi.reportHeading}.`}
                 style={[
                   styles.modalSectionHeading,
                   {
@@ -336,6 +340,8 @@ export default function HomeScreen({ navigation }: Props) {
               </Text>
               <Pressable
                 onPress={openMailto}
+                accessibilityRole="button"
+                accessibilityLabel={`${en.reportButtonLabel}. ${hi.reportButtonLabel}.`}
                 style={[
                   styles.emailButton,
                   {
@@ -445,7 +451,9 @@ const styles = StyleSheet.create({
   emailButton: {
     marginTop: 16,
     paddingVertical: 14,
+    minHeight: 44,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   emailButtonText: {
     color: '#FFFFFF',
