@@ -18,3 +18,21 @@ export function canonicalSourceId(raw: string): string {
   }
   return raw;
 }
+
+/**
+ * Normalize a legacy bookmark id to its canonical form. Aarti bookmarks were
+ * stored as `aarti:<index>:<verse>`; the canonical form mirrors the new write
+ * path used by `AartiReaderScreen` — `<canonicalSourceId>:<verse>`.
+ *
+ * Without this, a migrated bookmark's `sourceId` would point at the right
+ * aarti but its `id` would still match the legacy `aarti:N:M` pattern, so
+ * `isBookmarked('<canonical>:M')` from the new reader returns false and the
+ * verse appears unbookmarked.
+ */
+export function canonicalBookmarkId(rawId: string, canonicalSource: string): string {
+  const aartiMatch = /^aarti:(\d+):(\d+)$/.exec(rawId);
+  if (aartiMatch) {
+    return `${canonicalSource}:${aartiMatch[2]}`;
+  }
+  return rawId;
+}

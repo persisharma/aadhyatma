@@ -234,6 +234,6 @@ const styles = StyleSheet.create({
   confirmBody: { marginTop: 10, fontSize: 13, fontStyle: 'italic', textAlign: 'center', includeFontPadding: false },
   confirmPrimary: { marginTop: 18, paddingVertical: 13, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   confirmPrimaryText: { fontSize: 15, includeFontPadding: false },
-  confirmCancel: { marginTop: 10, paddingVertical: 8, alignItems: 'center' },
+  confirmCancel: { marginTop: 10, paddingVertical: 12, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   confirmCancelText: { fontSize: 13, fontStyle: 'italic', opacity: 0.85 },
 });

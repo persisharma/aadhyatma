@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { canonicalSourceId } from '@/data/sourceIdMigration';
+import { canonicalBookmarkId, canonicalSourceId } from '@/data/sourceIdMigration';
 
 const STORAGE_KEY = '@vedansh/bookmarks';
 
@@ -33,6 +33,7 @@ const BookmarksContext = createContext<BookmarksContextValue>({
 function migrate(list: unknown): { items: BookmarkRef[]; changed: boolean } {
   if (!Array.isArray(list)) return { items: [], changed: false };
   let changed = false;
+  const seenIds = new Set<string>();
   const items: BookmarkRef[] = [];
   for (const raw of list) {
     if (!raw || typeof raw !== 'object') {
@@ -40,13 +41,23 @@ function migrate(list: unknown): { items: BookmarkRef[]; changed: boolean } {
       continue;
     }
     const item = raw as BookmarkRef;
-    const canonical = canonicalSourceId(item.sourceId);
-    if (canonical !== item.sourceId) {
+    const newSourceId = canonicalSourceId(item.sourceId);
+    const newId = canonicalBookmarkId(item.id, newSourceId);
+    const rewritten = newSourceId !== item.sourceId || newId !== item.id;
+    if (rewritten) changed = true;
+    // De-dup: if migration produces an id that already exists (because the
+    // user re-bookmarked the same verse under the canonical id after install),
+    // keep the most recent one and drop the older.
+    if (seenIds.has(newId)) {
       changed = true;
-      items.push({ ...item, sourceId: canonical });
-    } else {
-      items.push(item);
+      const existingIdx = items.findIndex((b) => b.id === newId);
+      if (existingIdx >= 0 && items[existingIdx].savedAt < item.savedAt) {
+        items[existingIdx] = { ...item, sourceId: newSourceId, id: newId };
+      }
+      continue;
     }
+    seenIds.add(newId);
+    items.push(rewritten ? { ...item, sourceId: newSourceId, id: newId } : item);
   }
   return { items, changed };
 }

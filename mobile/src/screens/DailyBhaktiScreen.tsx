@@ -207,8 +207,8 @@ const styles = StyleSheet.create({
   },
   nextBtn: {
     minWidth: 68,
-    minHeight: 32,
-    paddingVertical: 6,
+    minHeight: 44,
+    paddingVertical: 10,
     paddingHorizontal: 8,
     alignItems: 'center',
     justifyContent: 'center',

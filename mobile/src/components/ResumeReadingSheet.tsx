@@ -318,8 +318,10 @@ const styles = StyleSheet.create({
   },
   cancelBtn: {
     marginTop: 12,
-    paddingVertical: 8,
+    paddingVertical: 12,
+    minHeight: 44,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   cancelBtnText: {
     fontSize: 13,

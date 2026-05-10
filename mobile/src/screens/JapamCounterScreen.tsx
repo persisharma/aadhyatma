@@ -580,8 +580,10 @@ const styles = StyleSheet.create({
   },
   confirmCancel: {
     marginTop: 10,
-    paddingVertical: 8,
+    paddingVertical: 12,
+    minHeight: 44,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   confirmCancelText: {
     fontSize: 13,
