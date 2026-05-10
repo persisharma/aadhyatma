@@ -8,6 +8,7 @@ import { library } from '@/data/texts';
 import { deities } from '@/data/deities';
 import { getDeityBackground } from '@/data/listingBackgrounds';
 import LibraryCard from '@/components/LibraryCard';
+import { navigateToEntryStart } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'DeityList'>;
@@ -19,13 +20,6 @@ export default function DeityListScreen({ navigation, route }: Props) {
   const backgroundImage = useMemo(() => getDeityBackground(deityId), [deityId]);
   const deityMeta = deities.find((d) => d.id === deityId);
   const items = library.filter((e) => !e.hidden && e.deities.includes(deityId));
-
-  const handlePress = (entryId: string) => {
-    if (entryId === 'hanuman-chalisa') navigation.navigate('ChalisaReader', { initialIndex: 0 });
-    else if (entryId === 'bhagavad-gita') navigation.navigate('GitaChapters');
-    else if (entryId === 'sundarkand') navigation.navigate('SundarkandChapters');
-    else if (entryId === 'shiva-strotam') navigation.navigate('ShivaStrotamChapters');
-  };
 
   return (
     <View style={styles.root}>
@@ -80,7 +74,8 @@ export default function DeityListScreen({ navigation, route }: Props) {
           showsVerticalScrollIndicator={false}
         >
           {items.map((entry) => {
-            const onPress = entry.status === 'active' ? () => handlePress(entry.id) : undefined;
+            const onPress =
+              entry.status === 'active' ? () => navigateToEntryStart(navigation, entry) : undefined;
             return <LibraryCard key={entry.id} entry={entry} onPress={onPress} />;
           })}
         </ScrollView>
