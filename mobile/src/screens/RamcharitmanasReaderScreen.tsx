@@ -8,7 +8,7 @@ import { getRamcharitmanasChapter, type RamcharitmanasVerse } from '@/data/ramch
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import BookmarkButton from '@/components/BookmarkButton';
-import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
+import SundarkandVersePage from '@/components/SundarkandVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -100,7 +100,7 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <ShivaStrotamVersePage verse={item as any} width={width} />}
+            renderItem={({ item }) => <SundarkandVersePage verse={item as any} width={width} />}
             extraData={lang}
             horizontal
             pagingEnabled
