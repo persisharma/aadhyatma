@@ -26,6 +26,8 @@ import BookmarkButton from '@/components/BookmarkButton';
 import NextChapterCard from '@/components/NextChapterCard';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import { clampIndex } from '@/utils/clamp';
+import { useSafeChapter } from './_useSafeChapter';
 import type { RootStackParamList } from '@/navigation/types';
 
 type TransitionItem = {
@@ -49,35 +51,41 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
   const { setProgress } = useReadingProgress();
   const { width } = useWindowDimensions();
 
-  const chapter = useMemo(() => getShivaStrotamChapter(route.params.chapter), [route.params.chapter]);
-  const isLastChapter = route.params.chapter >= shivaStrotamChaptersManifest.length;
+  const chapter = useSafeChapter(route.params.chapter, getShivaStrotamChapter, navigation, 'ShivaStrotamChapters');
+  const verseCount = chapter?.verses.length ?? 0;
+  const initialIndex = clampIndex(route.params.initialIndex, verseCount);
+  const isLastChapter =
+    chapter == null ? true : chapter.chapter >= shivaStrotamChaptersManifest.length;
   const data: FlatListItem[] = useMemo(() => {
+    if (chapter == null) return [];
     if (isLastChapter) return chapter.verses;
-    const next = shivaStrotamChaptersManifest[route.params.chapter];
+    const next = shivaStrotamChaptersManifest[chapter.chapter];
+    if (!next) return chapter.verses;
     return [
       ...chapter.verses,
       {
         __type: 'transition' as const,
         id: 'transition-next',
-        nextChapter: route.params.chapter + 1,
+        nextChapter: chapter.chapter + 1,
         nextTitleHi: next.titleHi,
         nextTitleEn: next.titleEn,
       },
     ];
-  }, [chapter, isLastChapter, route.params.chapter]);
+  }, [chapter, isLastChapter]);
 
   const listRef = useRef<FlatList<FlatListItem>>(null);
-  const [currentIndex, setCurrentIndex] = useState(route.params.initialIndex ?? 0);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const hasNavigatedRef = useRef(false);
 
   useEffect(() => {
+    if (chapter == null) return;
     setProgress({
       sourceId: 'shiva-strotam',
       chapter: chapter.chapter,
       verseIndex: currentIndex,
       updatedAt: Date.now(),
     });
-  }, [chapter.chapter, currentIndex, setProgress]);
+  }, [chapter, currentIndex, setProgress]);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -114,32 +122,30 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
   );
 
   const dotStyles = useMemo(() => {
-    const total = chapter.verses.length;
-    const buckets = Math.max(1, Math.ceil(total / DOT_COUNT));
+    const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
-  }, [chapter.verses.length, currentIndex]);
+  }, [verseCount, currentIndex]);
 
-  const topTitle =
-    lang === 'hi'
-      ? `${chapter.titleHi}`
-      : `${chapter.titleEn}`;
+  const topTitle = chapter ? (lang === 'hi' ? chapter.titleHi : chapter.titleEn) : '';
 
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offsetX = e.nativeEvent.contentOffset.x;
       const idx = Math.round(offsetX / width);
-      if (idx >= chapter.verses.length) return;
+      if (idx >= verseCount) return;
       setCurrentIndex((prev) => {
-        if (prev !== idx && idx >= 0 && idx < chapter.verses.length) {
+        if (prev !== idx && idx >= 0 && idx < verseCount) {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
           return idx;
         }
         return prev;
       });
     },
-    [width, chapter.verses.length]
+    [width, verseCount]
   );
+
+  if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -195,7 +201,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
                   },
                 ]}
               >
-                {currentIndex + 1} / {chapter.verses.length}
+                {currentIndex + 1} / {verseCount}
               </Text>
               <BookmarkButton
                 isBookmarked={isBookmarked(`shiva-strotam:${chapter.chapter}:${currentIndex}`)}
@@ -254,7 +260,8 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
             onScroll={handleScroll}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}
-            initialScrollIndex={route.params.initialIndex ?? 0}
+            initialScrollIndex={initialIndex}
+            onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
 

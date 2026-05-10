@@ -100,8 +100,9 @@ export function getVersePool(): UniformVerse[] {
   return cachedPool;
 }
 
-export function getRandomVerse(): UniformVerse {
+export function getRandomVerse(): UniformVerse | null {
   const pool = getVersePool();
+  if (pool.length === 0) return null;
   const idx = Math.floor(Math.random() * pool.length);
-  return pool[idx];
+  return pool[idx] ?? null;
 }

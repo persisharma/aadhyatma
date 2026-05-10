@@ -1,15 +1,17 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, NativeScrollEvent, NativeSyntheticEvent, Pressable, StyleSheet, Text, View, useWindowDimensions, type ViewToken } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { getAarti, type AartiVerse } from '@/data/aarti';
+import { aartiIdByIndex, getAarti, type AartiVerse } from '@/data/aarti';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import VersePage from '@/components/VersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import { clampIndex } from '@/utils/clamp';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'AartiReader'>;
@@ -20,11 +22,28 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { setProgress } = useReadingProgress();
   const { width } = useWindowDimensions();
 
-  const aarti = useMemo(() => getAarti(route.params.aartiIndex), [route.params.aartiIndex]);
+  // Out-of-range aartiIndex would throw inside getAarti(); fall back to 0 and let
+  // the screen render rather than crash, since route params can be stale.
+  const safeAartiIndex =
+    route.params.aartiIndex >= 0 && route.params.aartiIndex < aartiIdByIndex.length
+      ? route.params.aartiIndex
+      : 0;
+  const sourceId = aartiIdByIndex[safeAartiIndex];
+  const aarti = useMemo(() => getAarti(safeAartiIndex), [safeAartiIndex]);
   const listRef = useRef<FlatList<AartiVerse>>(null);
-  const [currentIndex, setCurrentIndex] = useState(route.params.initialIndex ?? 0);
+  const initialIndex = clampIndex(route.params.initialIndex, aarti.verses.length);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  useEffect(() => {
+    setProgress({
+      sourceId,
+      verseIndex: currentIndex,
+      updatedAt: Date.now(),
+    });
+  }, [sourceId, currentIndex, setProgress]);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -79,13 +98,13 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
                 {currentIndex + 1} / {aarti.verses.length}
               </Text>
               <BookmarkButton
-                isBookmarked={isBookmarked(`aarti:${route.params.aartiIndex}:${currentIndex}`)}
+                isBookmarked={isBookmarked(`${sourceId}:${currentIndex}`)}
                 onToggle={() => {
-                  const id = `aarti:${route.params.aartiIndex}:${currentIndex}`;
+                  const id = `${sourceId}:${currentIndex}`;
                   if (isBookmarked(id)) { removeBookmark(id); }
                   else {
                     const v = aarti.verses[currentIndex];
-                    addBookmark({ id, sourceId: `aarti-${route.params.aartiIndex}`, verseIndex: currentIndex, savedAt: Date.now(), previewHi: v.lines[0] ?? '', previewEn: v.linesEn[0] ?? '' });
+                    addBookmark({ id, sourceId, verseIndex: currentIndex, savedAt: Date.now(), previewHi: v.lines[0] ?? '', previewEn: v.linesEn[0] ?? '' });
                   }
                 }}
               />
@@ -114,7 +133,8 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
             onScroll={handleScroll}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}
-            initialScrollIndex={route.params.initialIndex ?? 0}
+            initialScrollIndex={initialIndex}
+            onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
           <View style={styles.dotsOverlay}>

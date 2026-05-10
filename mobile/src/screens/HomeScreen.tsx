@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import {
+  Alert,
   Dimensions,
   Linking,
   Modal,
@@ -33,7 +34,18 @@ export default function HomeScreen({ navigation }: Props) {
   const openHelp = useCallback(() => setHelpVisible(true), []);
   const closeHelp = useCallback(() => setHelpVisible(false), []);
   const openMailto = useCallback(() => {
-    Linking.openURL(buildDiscrepancyMailto());
+    const url = buildDiscrepancyMailto();
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(url).catch(() => undefined);
+        } else {
+          Alert.alert('Email', 'Please email us at incardible.app@gmail.com');
+        }
+      })
+      .catch(() => {
+        Alert.alert('Email', 'Please email us at incardible.app@gmail.com');
+      });
   }, []);
 
   // Build tile list: 3 active categories + deity virtual tile + 3 coming-soon
@@ -206,7 +218,13 @@ export default function HomeScreen({ navigation }: Props) {
               >
                 {en.title} / {hi.title}
               </Text>
-              <Pressable onPress={closeHelp} hitSlop={12}>
+              <Pressable
+                onPress={closeHelp}
+                accessibilityRole="button"
+                accessibilityLabel="Close help"
+                hitSlop={16}
+                style={({ pressed }) => [styles.modalClose, pressed && { opacity: 0.7 }]}
+              >
                 <Text style={[styles.closeButton, { color: colors.saffron }]}>✕</Text>
               </Pressable>
             </View>
@@ -399,6 +417,12 @@ const styles = StyleSheet.create({
   closeButton: {
     fontSize: 20,
     fontWeight: '600',
+  },
+  modalClose: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   modalScroll: {
     paddingTop: 24,

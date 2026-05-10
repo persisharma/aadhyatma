@@ -157,7 +157,13 @@ export default function MoreScreen({ navigation }: Props) {
               <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 20, color: colors.ink }}>
                 {en.title} / {hi.title}
               </Text>
-              <Pressable onPress={() => setDisclaimerVisible(false)} hitSlop={12}>
+              <Pressable
+                onPress={() => setDisclaimerVisible(false)}
+                accessibilityRole="button"
+                accessibilityLabel="Close"
+                hitSlop={16}
+                style={({ pressed }) => [styles.modalClose, pressed && { opacity: 0.7 }]}
+              >
                 <Text style={{ fontSize: 20, fontWeight: '600', color: colors.saffron }}>✕</Text>
               </Pressable>
             </View>
@@ -277,5 +283,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
     borderBottomWidth: 1,
+  },
+  modalClose: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

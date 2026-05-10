@@ -21,6 +21,7 @@ import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import LanguageToggle from '@/components/LanguageToggle';
 import VersePage from '@/components/VersePage';
+import { clampIndex } from '@/utils/clamp';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
@@ -38,7 +39,8 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const verses = chalisa.verses;
   const total = verses.length;
   const listRef = useRef<FlatList<ChalisaVerse>>(null);
-  const [currentIndex, setCurrentIndex] = useState(route.params?.initialIndex ?? 0);
+  const initialIndex = clampIndex(route.params?.initialIndex, total);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   useEffect(() => {
     setProgress({
@@ -198,7 +200,8 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             onScroll={handleScroll}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}
-            initialScrollIndex={route.params?.initialIndex ?? 0}
+            initialScrollIndex={initialIndex}
+            onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
 

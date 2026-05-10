@@ -1,19 +1,12 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { LibraryEntry } from '@/data/texts';
+import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
+import { aartiIndexById } from '@/data/aarti';
+import { canonicalSourceId } from '@/data/sourceIdMigration';
 import type { HomeStackParamList } from './types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
-
-const aartiIndexById: Record<string, number> = {
-  'om-jai-jagdish': 0,
-  'hanuman-aarti': 1,
-  'sankat-mochan': 2,
-  'jai-ganesh-deva': 3,
-  'om-jai-shiv-omkara': 4,
-  'jai-ambe-gauri': 5,
-  'aarti-kunj-bihari': 6,
-};
 
 const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa']);
 
@@ -41,43 +34,110 @@ const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'bhagavad-gita': 'GitaReader',
 };
 
-export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): void {
+export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
   if (entry.category === 'japam') {
     nav.navigate('JapamCounter', { mantraId: entry.id });
-    return;
+    return true;
   }
   if (chalisaIds.has(entry.id)) {
     nav.navigate('ChalisaReader', { initialIndex: 0, chalisaId: entry.id });
-    return;
+    return true;
   }
-  const aartiIndex = aartiIndexById[entry.id];
+  const aartiIndex = (aartiIndexById as Record<string, number>)[entry.id];
   if (aartiIndex != null) {
     nav.navigate('AartiReader', { aartiIndex });
-    return;
+    return true;
   }
   const chaptersRoute = stotramChaptersRouteById[entry.id];
   if (chaptersRoute) {
     (nav.navigate as (name: keyof HomeStackParamList) => void)(chaptersRoute);
-    return;
+    return true;
   }
+  return false;
 }
 
-export function navigateToProgress(nav: Nav, progress: ReadingProgress): void {
-  if (chalisaIds.has(progress.sourceId)) {
-    nav.navigate('ChalisaReader', { initialIndex: progress.verseIndex, chalisaId: progress.sourceId });
-    return;
+export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean {
+  const sourceId = canonicalSourceId(progress.sourceId);
+  if (chalisaIds.has(sourceId)) {
+    nav.navigate('ChalisaReader', { initialIndex: progress.verseIndex, chalisaId: sourceId });
+    return true;
   }
-  const aartiIndex = aartiIndexById[progress.sourceId];
+  const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];
   if (aartiIndex != null) {
     nav.navigate('AartiReader', { aartiIndex, initialIndex: progress.verseIndex });
-    return;
+    return true;
   }
-  const readerRoute = stotramReaderRouteBySourceId[progress.sourceId];
+  const readerRoute = stotramReaderRouteBySourceId[sourceId];
   if (readerRoute && progress.chapter != null) {
     (nav.navigate as (name: keyof HomeStackParamList, params: object) => void)(readerRoute, {
       chapter: progress.chapter,
       initialIndex: progress.verseIndex,
     });
-    return;
+    return true;
   }
+  return false;
+}
+
+function chapterFromBookmark(bm: BookmarkRef): number | null {
+  if (typeof bm.chapter === 'number' && bm.chapter > 0) return bm.chapter;
+  // Legacy bookmark ids encoded chapter at parts[1]:
+  // `<sourceId>:<chapter>:<verseIndex>` for chaptered readers.
+  const parts = bm.id.split(':');
+  if (parts.length >= 3) {
+    const parsed = Number(parts[1]);
+    if (Number.isFinite(parsed) && parsed > 0) return parsed;
+  }
+  return null;
+}
+
+export type BookmarkTarget = {
+  screen: keyof HomeStackParamList;
+  params: object;
+};
+
+/**
+ * Build a React Navigation descriptor for a bookmark, suitable for use as the
+ * second argument of `rootNav.navigate('HomeTab', target)` from a screen
+ * outside the Home stack. Returns null if the bookmark's sourceId is unknown
+ * or a chaptered reader is missing a chapter.
+ */
+export function buildBookmarkTarget(bm: BookmarkRef): BookmarkTarget | null {
+  const sourceId = canonicalSourceId(bm.sourceId);
+  if (chalisaIds.has(sourceId)) {
+    return {
+      screen: 'ChalisaReader',
+      params: { initialIndex: bm.verseIndex, chalisaId: sourceId },
+    };
+  }
+  const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];
+  if (aartiIndex != null) {
+    return {
+      screen: 'AartiReader',
+      params: { aartiIndex, initialIndex: bm.verseIndex },
+    };
+  }
+  const readerRoute = stotramReaderRouteBySourceId[sourceId];
+  if (readerRoute) {
+    const chapter = chapterFromBookmark(bm);
+    if (chapter == null) return null;
+    return {
+      screen: readerRoute,
+      params: { chapter, initialIndex: bm.verseIndex },
+    };
+  }
+  return null;
+}
+
+/**
+ * Navigate to the reader for a saved bookmark from inside the Home stack.
+ * Returns false on unknown sourceId or missing chapter.
+ */
+export function navigateToBookmark(nav: Nav, bm: BookmarkRef): boolean {
+  const target = buildBookmarkTarget(bm);
+  if (!target) return false;
+  (nav.navigate as (name: keyof HomeStackParamList, params: object) => void)(
+    target.screen,
+    target.params
+  );
+  return true;
 }

@@ -11,13 +11,32 @@ import Ornament from '@/components/Ornament';
 export default function DailyBhaktiScreen() {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const [verse, setVerse] = useState<UniformVerse>(() => getRandomVerse());
+  const [verse, setVerse] = useState<UniformVerse | null>(() => getRandomVerse());
 
   const refresh = useCallback(() => {
     setVerse(getRandomVerse());
   }, []);
 
   const isHindi = lang === 'hi';
+
+  if (!verse) {
+    return (
+      <View style={styles.root}>
+        <LinearGradient
+          colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
+          style={StyleSheet.absoluteFill}
+        />
+        <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
+          <View style={[styles.empty, { paddingHorizontal: spacing.xxl }]}>
+            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 32, color: colors.inkMuted, opacity: 0.4 }}>॥</Text>
+            <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 15, color: colors.inkMuted, textAlign: 'center', marginTop: 12 }}>
+              {isHindi ? 'दैनिक श्लोक उपलब्ध नहीं' : 'No verses available'}
+            </Text>
+          </View>
+        </SafeAreaView>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.root}>
@@ -128,7 +147,13 @@ export default function DailyBhaktiScreen() {
               >
                 {isHindi ? verse.sourceNameHi : verse.sourceNameEn}
               </Text>
-              <Pressable onPress={refresh} hitSlop={12}>
+              <Pressable
+                onPress={refresh}
+                accessibilityRole="button"
+                accessibilityLabel={isHindi ? 'अगला श्लोक' : 'Next verse'}
+                hitSlop={16}
+                style={({ pressed }) => [styles.nextBtn, pressed && { opacity: 0.7 }]}
+              >
                 <Text style={{ fontSize: 14, color: colors.saffron }}>↻ next</Text>
               </Pressable>
             </View>
@@ -179,5 +204,18 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'rgba(138, 62, 11, 0.15)',
+  },
+  nextBtn: {
+    minWidth: 68,
+    minHeight: 32,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  empty: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

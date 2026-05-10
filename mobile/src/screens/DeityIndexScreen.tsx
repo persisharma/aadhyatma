@@ -36,8 +36,14 @@ export default function DeityIndexScreen({ navigation }: Props) {
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable
             onPress={() => navigation.goBack()}
+            accessibilityRole="button"
+            accessibilityLabel="Back"
             hitSlop={16}
-            style={[styles.backBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
+            style={({ pressed }) => [
+              styles.backBtn,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
+              pressed && { opacity: 0.7 },
+            ]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
           </Pressable>
