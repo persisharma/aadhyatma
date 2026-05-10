@@ -19,7 +19,9 @@ export default function DeityListScreen({ navigation, route }: Props) {
 
   const backgroundImage = useMemo(() => getDeityBackground(deityId), [deityId]);
   const deityMeta = deities.find((d) => d.id === deityId);
-  const items = library.filter((e) => !e.hidden && e.deities.includes(deityId));
+  const items = library.filter(
+    (e) => !e.hidden && e.category !== 'japam' && e.deities.includes(deityId)
+  );
 
   return (
     <View style={styles.root}>

@@ -16,7 +16,11 @@ export default function DeityIndexScreen({ navigation }: Props) {
 
   const getItemCount = (deityId: string): string => {
     const count = library.filter(
-      (e) => !e.hidden && e.status === 'active' && e.deities.includes(deityId as any)
+      (e) =>
+        !e.hidden &&
+        e.status === 'active' &&
+        e.category !== 'japam' &&
+        e.deities.includes(deityId as any)
     ).length;
     if (count === 0) return 'Coming soon';
     return `${count} text${count > 1 ? 's' : ''}`;
