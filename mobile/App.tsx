@@ -24,6 +24,7 @@ import { GitaLanguageProvider } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
+import { UserActivityProvider } from '@/contexts/UserActivityContext';
 import RootNavigator from '@/navigation/RootNavigator';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -67,14 +68,16 @@ export default function App() {
         <ThemeProvider>
           <GitaLanguageProvider>
             <BookmarksProvider>
-              <ReadingProgressProvider>
-                <JapamCounterProvider>
-                  <NavigationContainer>
-                    <StatusBar style="dark" />
-                    <RootNavigator />
-                  </NavigationContainer>
-                </JapamCounterProvider>
-              </ReadingProgressProvider>
+              <UserActivityProvider>
+                <ReadingProgressProvider>
+                  <JapamCounterProvider>
+                    <NavigationContainer>
+                      <StatusBar style="dark" />
+                      <RootNavigator />
+                    </NavigationContainer>
+                  </JapamCounterProvider>
+                </ReadingProgressProvider>
+              </UserActivityProvider>
             </BookmarksProvider>
           </GitaLanguageProvider>
         </ThemeProvider>

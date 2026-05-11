@@ -7,6 +7,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
+import { useUserActivity } from '@/contexts/UserActivityContext';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'MoreHome'>;
@@ -15,9 +16,12 @@ export default function MoreScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { bookmarks } = useBookmarks();
   const { lang: defaultLang, setLang: setDefaultLang } = useGitaLanguage();
+  const { lifetimeTotals, currentStreak } = useUserActivity();
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
   const hi = helpContent.hi;
   const en = helpContent.en;
+  const profileTotals = lifetimeTotals();
+  const streak = currentStreak();
 
   return (
     <View style={styles.root}>
@@ -39,6 +43,118 @@ export default function MoreScreen({ navigation }: Props) {
               More
             </Text>
           </View>
+
+          {/* Profile Card with insights snapshot */}
+          <Pressable
+            onPress={() => navigation.navigate('Profile')}
+            accessibilityRole="button"
+            accessibilityLabel="Open Sadhak profile"
+            style={({ pressed }) => [
+              styles.profileCard,
+              {
+                borderColor: colors.cardActiveBorder,
+                borderRadius: radii.lg,
+                opacity: pressed ? 0.92 : 1,
+              },
+            ]}
+          >
+            <LinearGradient
+              colors={[colors.cardActiveFrom, colors.cardActiveTo]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={[StyleSheet.absoluteFill, { borderRadius: radii.lg }]}
+            />
+            <View style={styles.profileTopRow}>
+              <View style={[styles.profileCrest, { backgroundColor: colors.saffron }]}>
+                <Text
+                  style={{
+                    color: colors.onPrimary,
+                    fontFamily: typography.readerTitle.fontFamily,
+                    fontSize: 22,
+                  }}
+                >
+                  ॐ
+                </Text>
+              </View>
+              <View style={styles.profileTitleBlock}>
+                <Text
+                  style={{
+                    fontFamily: typography.readerTitle.fontFamily,
+                    fontSize: 18,
+                    color: colors.ink,
+                  }}
+                >
+                  साधक प्रोफ़ाइल
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'CormorantGaramond_400Regular_Italic',
+                    fontSize: 13,
+                    color: colors.inkMuted,
+                    marginTop: 2,
+                  }}
+                >
+                  Sadhak Profile · Insights
+                </Text>
+              </View>
+              <Text style={{ color: colors.saffron, fontSize: 22 }}>›</Text>
+            </View>
+
+            <View style={[styles.profileDivider, { backgroundColor: colors.divider }]} />
+
+            <View style={styles.profileStatsRow}>
+              <View style={styles.profileStatCell}>
+                <Text
+                  style={[
+                    styles.profileStatValue,
+                    {
+                      color: colors.saffronDeep,
+                      fontFamily: typography.readerTitle.fontFamily,
+                    },
+                  ]}
+                >
+                  {profileTotals.totalReads}
+                </Text>
+                <Text style={[styles.profileStatLabel, { color: colors.inkMuted }]}>
+                  {defaultLang === 'hi' ? 'श्लोक' : 'VERSES'}
+                </Text>
+              </View>
+              <View style={[styles.profileStatRule, { backgroundColor: colors.divider }]} />
+              <View style={styles.profileStatCell}>
+                <Text
+                  style={[
+                    styles.profileStatValue,
+                    {
+                      color: colors.saffronDeep,
+                      fontFamily: typography.readerTitle.fontFamily,
+                    },
+                  ]}
+                >
+                  {profileTotals.totalRounds}
+                </Text>
+                <Text style={[styles.profileStatLabel, { color: colors.inkMuted }]}>
+                  {defaultLang === 'hi' ? 'आवृत्ति' : 'ROUNDS'}
+                </Text>
+              </View>
+              <View style={[styles.profileStatRule, { backgroundColor: colors.divider }]} />
+              <View style={styles.profileStatCell}>
+                <Text
+                  style={[
+                    styles.profileStatValue,
+                    {
+                      color: colors.saffronDeep,
+                      fontFamily: typography.readerTitle.fontFamily,
+                    },
+                  ]}
+                >
+                  {streak}
+                </Text>
+                <Text style={[styles.profileStatLabel, { color: colors.inkMuted }]}>
+                  {defaultLang === 'hi' ? 'श्रृंखला' : 'STREAK'}
+                </Text>
+              </View>
+            </View>
+          </Pressable>
 
           {/* Wishlist Card */}
           <Pressable
@@ -314,5 +430,60 @@ const styles = StyleSheet.create({
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  profileCard: {
+    borderWidth: 1,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    overflow: 'hidden',
+    shadowColor: '#3c1e0a',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  profileTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  profileCrest: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profileTitleBlock: {
+    flex: 1,
+  },
+  profileDivider: {
+    height: 1,
+    opacity: 0.55,
+    marginTop: 14,
+    marginBottom: 12,
+  },
+  profileStatsRow: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  profileStatCell: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  profileStatRule: {
+    width: 1,
+    opacity: 0.5,
+  },
+  profileStatValue: {
+    fontSize: 20,
+    includeFontPadding: false,
+  },
+  profileStatLabel: {
+    fontSize: 10,
+    fontWeight: '600',
+    letterSpacing: 1.6,
+    textTransform: 'uppercase',
+    marginTop: 4,
   },
 });
