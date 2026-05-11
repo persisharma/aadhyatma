@@ -119,7 +119,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
             ref={listRef}
             data={aarti.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <VersePage verse={item} width={width} />}
+            renderItem={({ item }) => <VersePage verse={item} sourceId={sourceId} width={width} />}
             extraData={lang}
             horizontal
             pagingEnabled

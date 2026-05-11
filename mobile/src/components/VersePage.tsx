@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react';
-import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { chalisaImages } from '@assets/chalisa';
-import { imageKeyForVerse } from '@/data/verseImages';
+import { getReaderBackground } from '@/data/backgrounds';
+import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
 
 export type VersePageVerse = {
@@ -19,15 +18,15 @@ export type VersePageVerse = {
 
 type Props = {
   verse: VersePageVerse;
+  sourceId: string;
   width: number;
 };
 
-export default function VersePage({ verse, width }: Props) {
+export default function VersePage({ verse, sourceId, width }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
-  const imageKey = useMemo(() => imageKeyForVerse(verse.id), [verse.id]);
-  const bg = chalisaImages[imageKey];
+  const bg = useMemo(() => getReaderBackground(sourceId, verse), [sourceId, verse]);
 
   const verseLines = lang === 'hi' ? verse.lines : verse.linesEn;
   const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
@@ -54,18 +53,7 @@ export default function VersePage({ verse, width }: Props) {
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <ImageBackground source={bg} style={StyleSheet.absoluteFill} resizeMode="cover">
-        <LinearGradient
-          colors={[
-            colors.overlayTop,
-            colors.overlayUpper,
-            colors.overlayLower,
-            colors.overlayBottom,
-          ]}
-          locations={[0, 0.4, 0.85, 1]}
-          style={StyleSheet.absoluteFill}
-        />
-      </ImageBackground>
+      <BackgroundLayer source={bg} />
 
       <ScrollView
         style={styles.scroll}

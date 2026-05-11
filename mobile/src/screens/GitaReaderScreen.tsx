@@ -244,7 +244,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                   lang={lang}
                 />
               ) : (
-                <GitaVersePage verse={item} width={width} />
+                <GitaVersePage verse={item} sourceId="bhagavad-gita" width={width} />
               )
             }
             extraData={lang}

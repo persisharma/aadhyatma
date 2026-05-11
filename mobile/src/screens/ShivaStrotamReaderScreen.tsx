@@ -244,7 +244,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
                   lang={lang}
                 />
               ) : (
-                <ShivaStrotamVersePage verse={item} width={width} />
+                <ShivaStrotamVersePage verse={item} sourceId="shiva-strotam" width={width} />
               )
             }
             extraData={lang}

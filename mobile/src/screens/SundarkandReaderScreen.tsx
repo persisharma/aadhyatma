@@ -243,7 +243,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
                   lang={lang}
                 />
               ) : (
-                <SundarkandVersePage verse={item} width={width} />
+                <SundarkandVersePage verse={item} sourceId="sundarkand" width={width} />
               )
             }
             extraData={lang}
