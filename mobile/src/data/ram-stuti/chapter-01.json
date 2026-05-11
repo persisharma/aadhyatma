@@ -6,10 +6,10 @@
   "verses": [
     {
       "id": "rs-1-0", "chapter": 1, "number": 0,
-      "sanskrit": ["श्रीरामचन्द्र कृपालु भजु मन हरण भवभय दारुणम्।", "नवकञ्ज लोचन कञ्ज मुख कर कञ्ज पद कञ्जारुणम्।।"],
-      "linesEn": ["śhrīrāmachandra kṛipālu bhaju mana haraṇa bhavabhaya dāruṇam", "navakañja lochana kañja mukha kara kañja pada kañjāruṇam"],
-      "meaningHi": "हे मन! श्रीरामचन्द्र का भजन कर — जो कृपालु हैं, संसार के दारुण (भयंकर) भय को हरने वाले हैं। जिनके नेत्र नवीन कमल सदृश, मुख कमल समान, हाथ कमल सदृश और चरण लाल कमल के समान हैं।\n\nयह तुलसीदास जी की प्रसिद्ध राम स्तुति है — रामचरितमानस से। यह प्रातःकालीन भजन के रूप में अत्यन्त लोकप्रिय है।",
-      "meaningEn": "O mind! Worship Lord Ramachandra, the compassionate one who destroys the dreadful fear of worldly existence — whose eyes are like fresh lotuses, face like a lotus, hands like lotuses, and feet rosy like red lotuses.\n\nThis is Tulsidas's famous Ram Stuti from Ramcharitmanas. It is extremely popular as a morning devotional hymn."
+      "sanskrit": ["॥ राम स्तुति ॥", "तुलसीदास कृत"],
+      "linesEn": ["Ram Stuti", "Composed by Tulsidas"],
+      "meaningHi": "लाभ:\n\nराम स्तुति गोस्वामी तुलसीदास द्वारा रचित श्रीराम की सर्वाधिक लोकप्रिय स्तुति है। इसके पाठ से मन को शान्ति, भवभय (संसार के भय) से मुक्ति, और भगवान राम की कृपा प्राप्त होती है। यह प्रातःकालीन भजन के रूप में अत्यन्त लोकप्रिय है। प्रतिदिन पाठ से जीवन में सुख-शान्ति और धर्म-मार्ग पर स्थिरता आती है।\n\nकथा:\n\nयह स्तुति रामचरितमानस से है। तुलसीदास जी (16वीं शताब्दी) ने अयोध्या और काशी में रहकर रामचरितमानस की रचना की। इस स्तुति में राम के सौन्दर्य, करुणा और दिव्य गुणों का अनुपम वर्णन है — कमल जैसे नेत्र, मुख, हाथ और चरण। यह मन को राम-भक्ति में लगाने की प्रार्थना है।",
+      "meaningEn": "Benefits:\n\nRam Stuti is the most popular hymn to Lord Rama, composed by Goswami Tulsidas. Its recitation brings peace of mind, liberation from worldly fears, and the grace of Lord Rama. It is extremely popular as a morning devotional hymn. Daily recitation brings happiness, peace, and steadfastness on the path of dharma.\n\nStory:\n\nThis stuti is from the Ramcharitmanas. Tulsidas (16th century) composed the Ramcharitmanas while living in Ayodhya and Kashi. This stuti contains an unparalleled description of Rama's beauty, compassion, and divine qualities — lotus-like eyes, face, hands, and feet. It is a prayer to engage the mind in devotion to Rama."
     },
     {
       "id": "rs-1-1", "chapter": 1, "number": 1,
