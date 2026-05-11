@@ -14,6 +14,7 @@ export type JapamCounterEntry = {
 type EntryMap = Record<string, JapamCounterEntry>;
 
 type JapamCounterContextValue = {
+  isLoading: boolean;
   getEntry: (mantraId: string) => JapamCounterEntry;
   /** Increments the bead count, rolling over to a new round at JAPAM_BEADS_PER_ROUND. */
   increment: (mantraId: string) => JapamCounterEntry;
@@ -26,6 +27,7 @@ type JapamCounterContextValue = {
 const EMPTY: JapamCounterEntry = { count: 0, rounds: 0, updatedAt: 0 };
 
 const JapamCounterContext = createContext<JapamCounterContextValue>({
+  isLoading: true,
   getEntry: () => EMPTY,
   increment: () => EMPTY,
   resetBeads: () => {},
@@ -34,16 +36,23 @@ const JapamCounterContext = createContext<JapamCounterContextValue>({
 
 export function JapamCounterProvider({ children }: { children: React.ReactNode }) {
   const [entries, setEntries] = useState<EntryMap>({});
+  const [isLoading, setIsLoading] = useState(true);
   const { logJapaBead, logJapaRound } = useUserActivity();
 
   useEffect(() => {
-    AsyncStorage.getItem(STORAGE_KEY).then((raw) => {
-      if (raw) {
-        try {
-          setEntries(JSON.parse(raw));
-        } catch {}
-      }
-    });
+    AsyncStorage.getItem(STORAGE_KEY)
+      .then((raw) => {
+        if (raw) {
+          try {
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === 'object') setEntries(parsed as EntryMap);
+          } catch {
+            /* corrupted JSON — leave empty */
+          }
+        }
+      })
+      .catch(() => undefined)
+      .finally(() => setIsLoading(false));
   }, []);
 
   const persist = useCallback((next: EntryMap) => {
@@ -97,7 +106,7 @@ export function JapamCounterProvider({ children }: { children: React.ReactNode }
   );
 
   return (
-    <JapamCounterContext.Provider value={{ getEntry, increment, resetBeads, clear }}>
+    <JapamCounterContext.Provider value={{ isLoading, getEntry, increment, resetBeads, clear }}>
       {children}
     </JapamCounterContext.Provider>
   );

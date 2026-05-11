@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -8,6 +8,7 @@ import { library } from '@/data/texts';
 import { deities } from '@/data/deities';
 import { getDeityBackground } from '@/data/listingBackgrounds';
 import LibraryCard from '@/components/LibraryCard';
+import { navigateToEntryStart } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'DeityList'>;
@@ -18,17 +19,13 @@ export default function DeityListScreen({ navigation, route }: Props) {
 
   const backgroundImage = useMemo(() => getDeityBackground(deityId), [deityId]);
   const deityMeta = deities.find((d) => d.id === deityId);
-  const items = library.filter((e) => !e.hidden && e.deities.includes(deityId));
-
-  const handlePress = (entryId: string) => {
-    if (entryId === 'hanuman-chalisa') navigation.navigate('ChalisaReader', { initialIndex: 0 });
-    else if (entryId === 'bhagavad-gita') navigation.navigate('GitaChapters');
-    else if (entryId === 'sundarkand') navigation.navigate('SundarkandChapters');
-    else if (entryId === 'shiva-strotam') navigation.navigate('ShivaStrotamChapters');
-  };
+  const items = library.filter(
+    (e) => !e.hidden && e.category !== 'japam' && e.deities.includes(deityId)
+  );
 
   return (
     <View style={styles.root}>
+      {backgroundImage ? <StatusBar barStyle="light-content" /> : null}
       {backgroundImage ? (
         <ImageBackground source={backgroundImage} style={StyleSheet.absoluteFill} resizeMode="cover">
           <LinearGradient
@@ -47,8 +44,14 @@ export default function DeityListScreen({ navigation, route }: Props) {
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable
             onPress={() => navigation.goBack()}
+            accessibilityRole="button"
+            accessibilityLabel="Back"
             hitSlop={16}
-            style={[styles.backBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
+            style={({ pressed }) => [
+              styles.backBtn,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
+              pressed && { opacity: 0.7 },
+            ]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
           </Pressable>
@@ -80,7 +83,8 @@ export default function DeityListScreen({ navigation, route }: Props) {
           showsVerticalScrollIndicator={false}
         >
           {items.map((entry) => {
-            const onPress = entry.status === 'active' ? () => handlePress(entry.id) : undefined;
+            const onPress =
+              entry.status === 'active' ? () => navigateToEntryStart(navigation, entry) : undefined;
             return <LibraryCard key={entry.id} entry={entry} onPress={onPress} />;
           })}
         </ScrollView>

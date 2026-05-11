@@ -92,9 +92,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   half: {
-    paddingVertical: 7,
+    paddingVertical: 11,
     paddingHorizontal: 22,
     minWidth: 96,
+    minHeight: 44,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -48,10 +48,14 @@ Exact paths, in build order. Each row maps to a Phase-C step in `/add-section`.
 | 7 | `mobile/src/navigation/types.ts` | edit | add route param types for the new screen(s) |
 | 8 | `mobile/src/navigation/HomeStackNavigator.tsx` | edit | register the new screen(s) in the Home stack |
 | 9 | `mobile/src/data/texts.ts` | edit | append `LibraryEntry` (with `category` and `deities` fields) to the `library` array |
-| 10 | `mobile/src/screens/HomeScreen.tsx` | no edit needed | categories and deities are rendered dynamically from data |
-| 11 | `mobile/src/screens/CategoryListScreen.tsx` | no edit needed | items auto-filter by `category` field — no per-section routing code required |
+| 10 | `mobile/src/navigation/entryRoutes.ts` | edit | register the new section's `entryId` in both `navigateToEntryStart` and `navigateToProgress`. Both `CategoryListScreen` and `DeityListScreen` use this single helper, so missing it here means the section's card will appear in the lists but tapping it will be a no-op (silent dead end) on at least one path. |
+| 11 | `mobile/src/screens/HomeScreen.tsx` | no edit needed | categories and deities are rendered dynamically from data |
+| 12 | `mobile/src/screens/CategoryListScreen.tsx` | no edit needed | items auto-filter by `category` field; routing is delegated to `entryRoutes.ts` (row 10) |
+| 13 | `mobile/src/screens/DeityListScreen.tsx` | no edit needed | items auto-filter by `deities` field; routing is delegated to `entryRoutes.ts` (row 10) |
 
 `<Pascal>` = the `id` converted to PascalCase (e.g. `hanuman-chalisa` → `HanumanChalisa`).
+
+**Row 4 is mandatory even when an existing `*VersePage.tsx` *appears* to fit.** If the shapes are genuinely identical and you want to share rendering, the new file must re-export the existing component (`export { default } from './SundarkandVersePage';`) so the dependency is explicit and survives future shape changes. A reader screen must import only its own section's verse page — never another section's directly. (See §3 *Type safety on verse pages*.)
 
 ---
 
@@ -70,8 +74,13 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
   - Sections with a subsection listing (Chapters Index, kāṇḍa list, etc.) ALSO surface the toggle on that listing.
   - State is shared across surfaces via the same hook — no per-screen forks.
 - **Categories & Deities.** Every `LibraryEntry` must have a valid `category` (one of the six defined types) and at least one `deity` tag. The Home screen grid and deity section derive their content from these fields — no manual wiring required.
+- **Japam is excluded from deity listings.** Japam mantras live behind their own Home tile (`Japam`) and are intentionally filtered out of `DeityListScreen` and the `DeityIndex` count. Reasons: (a) japam mantras are typically a single line that's already embedded as the opening verse of the matching stotram (e.g. `om-namah-shivaya` is also chapter 1 of `shiva-strotam`), so re-listing them under the deity is redundant; (b) the deity card is a reading-list surface, the Japam tile is a counting-mode surface — different intents. Keep the `'japam'` deity-list filter in place when adding new mantras.
 - **Pill vocabulary.** Verse-type pill is always `<Devanagari term> · <Latin subtitle or N>` (`दोहा · Opening`, `चौपाई · 9`, `श्लोक · 1.1`, …). Do not invent new vocabulary without updating `design.md` first.
 - **No emoji, no photos.** Backgrounds are always faded hand-drawn sketches per the Section 6 treatment.
+- **Type safety on verse pages.** A reader screen renders only its own section's `<Pascal>VersePage.tsx`. Cross-section reuse via direct import is forbidden — it silently couples two sections to the same field shape and any drift becomes a runtime crash. The `verse` prop must type-check without escape hatches: `as any`, `as unknown as`, and `// @ts-ignore`/`// @ts-expect-error` on a `*VersePage` prop are a hard reject in review. If `tsc --noEmit` complains when wiring up a reader, the fix is the data shape or a section-specific page, **not** a cast. (Origin: PR #31 Balkand crash — `RamcharitmanasReaderScreen` cast `RamcharitmanasVerse` into `ShivaStrotamVersePage`, whose `verse.sanskrit` access threw on first paint because Ramcharitmanas uses `verse.lines`.)
+- **Reader smoke test.** Every new `<Pascal>ReaderScreen.tsx` ships with `mobile/src/screens/__tests__/<Pascal>ReaderScreen.test.tsx` that mounts the screen with the chapter-1 fixture and asserts the first verse renders without throwing. The test runs in CI and gates the merge — `tsc` alone does not catch field-shape mismatches that have been cast away.
+- **Routing is centralised.** All section-from-listing navigation goes through `mobile/src/navigation/entryRoutes.ts` (`navigateToEntryStart` and `navigateToProgress`). Listing screens (`CategoryList`, `DeityList`) must not contain inline `if (entryId === 'foo') navigation.navigate(...)` ladders — those drift independently and a section appears in one listing but is a dead tile in another. (Origin: PR #31 — `DeityListScreen` only routed the original four sections, so all 14 new sections were silent no-ops under every deity until this rule.) When adding a section, register it in `entryRoutes.ts`; both listing screens then route it for free.
+- **Multi-instance reader screens dispatch on a route param, not a hardcoded module.** A single screen that serves N entries (today: `ChalisaReaderScreen` for the four chalisas, `AartiReaderScreen` for the seven aartis) must read its `route.params` discriminator (`chalisaId`, `aartiIndex`, etc.) and pick its data through a registry — never import a single section's data at the top of the file. Bookmark ids and `setProgress({ sourceId })` must use the discriminator, not a constant. (Origin: PR #31 — `ChalisaReaderScreen` accepted `chalisaId` in route params but ignored it; tapping Shiv/Durga/Ganesh Chalisa rendered Hanuman Chalisa content with `sourceId: 'hanuman-chalisa'` in progress.)
 
 ---
 
@@ -87,6 +96,11 @@ The slash command runs the first three; the human PR author runs the rest.
 6. Hindi/English toggle flips meaning text on **every** page (sample at least page 1, middle, and last). Toggle is visible on every reader page; if a subsection listing exists, also visible there.
 7. If the section ships an English transliteration field (`transliteration[]` or `linesEn[]`), spot-check the romanization style matches the source language per `design.md §3.1`: Sanskrit verses use IAST diacritics; Awadhi/Hindi verses use pronunciation-based ASCII. Mismatched style (IAST on Awadhi or plain ASCII on a Sanskrit shloka) is a hard reject.
 8. If subsections exist: chapters list renders; tapping any chapter lands on verse 1 of that chapter; back button returns to chapters list, not Home.
+9. Grep the new screen and component files for `as any`, `as unknown as`, `@ts-ignore`, and `@ts-expect-error`. Any hit on a `*VersePage` `verse=` prop or on a navigation `route.params` access is a hard reject — re-shape the data or add a section-specific component instead.
+10. The new `<Pascal>ReaderScreen.test.tsx` exists and passes locally and in CI. Do not merge a green PR whose test file is missing.
+11. **Per-section device check.** If the PR adds N sections, every one of them must be opened in the Expo dev client individually — Home tile → reader → toggle language → swipe to last verse → back. A single "tested locally" sign-off does not cover N sections; capture one screenshot per section and paste them in the PR description.
+12. **Both listings reach the reader.** Open the section from Home → its category tile **and** from Home → By Deity → its deity card. Both paths must land on the same reader. If the section appears as a card but tapping is a no-op, the routing helper (`entryRoutes.ts`) is missing a case.
+13. **Multi-instance readers serve the right content.** For sections that share a screen (chalisas, aartis, future N-of-a-kind), open at least two distinct entries and confirm titles, verses, and `sourceId` (visible via bookmarks) actually differ — a reader hardcoded to one variant will silently render the wrong content for the others.
 
 ---
 
@@ -107,3 +121,18 @@ New sections are registered in `mobile/src/navigation/HomeStackNavigator.tsx` (n
 2. Registering reader route(s) in `HomeStackNavigator.tsx`
 
 No manual routing in HomeScreen is needed — `CategoryListScreen` filters items by their `category` field automatically.
+
+---
+
+## 7. Pull-request hygiene for new sections
+
+These rules exist because PR #31 (the Balkand crash) demonstrated that bulk multi-section PRs invite pattern-match review, and that `tsc` escape hatches will be approved if the commit message frames them as "compatibility casts." Both failure modes are now closed.
+
+- **One section per PR by default.** Up to three only when they share a parent (e.g., three kāṇḍas of the same granth) and only with a per-section checklist in the description. A PR adding 14 sections is a hard reject regardless of how clean each diff looks.
+- **PR description template (mandatory for any PR adding a new section):**
+  - Section `id`, category, deities — one row per section.
+  - Screenshot of the loaded reader for each section (page 1, language toggle visible).
+  - Confirmation that `mobile/src/screens/__tests__/<Pascal>ReaderScreen.test.tsx` exists and passes.
+  - Explicit line: "No `as any` / `@ts-ignore` introduced on verse-page props or route params."
+- **Self-flagged casts are flags, not justifications.** Commit messages that contain "cast", "compatible interface", "type compatibility", or "as any" against a verse-page prop must be challenged in review. The fix is upstream (data shape or new component), not the cast.
+- **Reviewer responsibility.** Approving a new-section PR requires confirming items 1, 9, 10, and 11 of §4 yourself — not trusting the author's checklist. Sign off only after opening the dev client (or the included screenshots) and seeing the reader render.

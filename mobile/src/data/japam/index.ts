@@ -78,5 +78,10 @@ export function getJapamMantra(id: string): JapamMantra {
   return found;
 }
 
+/** Like `getJapamMantra` but returns null for unknown ids instead of throwing. */
+export function findJapamMantra(id: string): JapamMantra | null {
+  return japamMantras.find((m) => m.id === id) ?? null;
+}
+
 /** Beads per round in a traditional japa mala. */
 export const JAPAM_BEADS_PER_ROUND = 108;

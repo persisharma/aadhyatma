@@ -28,6 +28,8 @@ import BookmarkButton from '@/components/BookmarkButton';
 import NextChapterCard from '@/components/NextChapterCard';
 import LanguageToggle from '@/components/LanguageToggle';
 import SundarkandVersePage from '@/components/SundarkandVersePage';
+import { clampIndex } from '@/utils/clamp';
+import { useSafeChapter } from './_useSafeChapter';
 import type { RootStackParamList } from '@/navigation/types';
 
 type TransitionItem = {
@@ -51,37 +53,42 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
   const { setProgress } = useReadingProgress();
   const { width } = useWindowDimensions();
 
-  const chapter = getSundarkandChapter(route.params.chapter);
-  const verses = chapter.verses as SundarkandVerse[];
+  const chapter = useSafeChapter(route.params.chapter, getSundarkandChapter, navigation, 'SundarkandChapters');
+  const verses = useMemo(() => (chapter?.verses ?? []) as SundarkandVerse[], [chapter]);
   const verseCount = verses.length;
-  const isLastChapter = route.params.chapter >= sundarkandChaptersManifest.length;
+  const initialIndex = clampIndex(route.params?.initialIndex, verseCount);
+  const isLastChapter =
+    chapter == null ? true : chapter.chapter >= sundarkandChaptersManifest.length;
   const data: FlatListItem[] = useMemo(() => {
+    if (chapter == null) return [];
     if (isLastChapter) return verses;
-    const next = sundarkandChaptersManifest[route.params.chapter];
+    const next = sundarkandChaptersManifest[chapter.chapter];
+    if (!next) return verses;
     return [
       ...verses,
       {
         __type: 'transition' as const,
         id: 'transition-next',
-        nextChapter: route.params.chapter + 1,
+        nextChapter: chapter.chapter + 1,
         nextTitleHi: next.titleHi,
         nextTitleEn: next.titleEn,
       },
     ];
-  }, [verses, isLastChapter, route.params.chapter]);
+  }, [chapter, verses, isLastChapter]);
 
   const listRef = useRef<FlatList<FlatListItem>>(null);
-  const [currentIndex, setCurrentIndex] = useState(route.params?.initialIndex ?? 0);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const hasNavigatedRef = useRef(false);
 
   useEffect(() => {
+    if (chapter == null) return;
     setProgress({
       sourceId: 'sundarkand',
       chapter: chapter.chapter,
       verseIndex: currentIndex,
       updatedAt: Date.now(),
     });
-  }, [chapter.chapter, currentIndex, setProgress]);
+  }, [chapter, currentIndex, setProgress]);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -139,6 +146,8 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
     },
     [width, verseCount]
   );
+
+  if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -250,7 +259,8 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
             onScroll={handleScroll}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}
-            initialScrollIndex={route.params?.initialIndex ?? 0}
+            initialScrollIndex={initialIndex}
+            onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
 

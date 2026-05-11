@@ -5,11 +5,20 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { chalisaImages } from '@assets/chalisa';
 import { imageKeyForVerse } from '@/data/verseImages';
-import type { HanumanChalisaVerse } from '@/data/hanuman-chalisa';
 import Ornament from './Ornament';
 
+export type VersePageVerse = {
+  id: string;
+  labelHi: string;
+  labelEn: string;
+  lines: string[];
+  linesEn: string[];
+  meaningHi: string;
+  meaningEn: string;
+};
+
 type Props = {
-  verse: HanumanChalisaVerse;
+  verse: VersePageVerse;
   width: number;
 };
 

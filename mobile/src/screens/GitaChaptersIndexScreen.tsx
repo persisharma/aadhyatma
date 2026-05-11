@@ -3,6 +3,7 @@ import {
   ImageBackground,
   Pressable,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -32,6 +33,7 @@ export default function GitaChaptersIndexScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+      <StatusBar barStyle="light-content" />
       <ImageBackground
         source={gitaImages.krishna_arjuna_vishvarupa}
         style={StyleSheet.absoluteFill}

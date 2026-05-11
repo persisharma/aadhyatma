@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, NativeScrollEvent, NativeSyntheticEvent, Pressable, StyleSheet, Text, View, useWindowDimensions, type ViewToken } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -7,9 +7,12 @@ import { useTheme } from '@/theme/ThemeContext';
 import { getGaneshStotramChapter, type GaneshStotramVerse } from '@/data/ganesh-stotram';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import { clampIndex } from '@/utils/clamp';
+import { useSafeChapter } from './_useSafeChapter';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'GaneshStotramReader'>;
@@ -20,11 +23,19 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { setProgress } = useReadingProgress();
   const { width } = useWindowDimensions();
 
-  const chapter = useMemo(() => getGaneshStotramChapter(route.params.chapter), [route.params.chapter]);
+  const chapter = useSafeChapter(route.params.chapter, getGaneshStotramChapter, navigation, 'GaneshStotramChapters');
   const listRef = useRef<FlatList<GaneshStotramVerse>>(null);
-  const [currentIndex, setCurrentIndex] = useState(route.params.initialIndex ?? 0);
+  const verseCount = chapter?.verses.length ?? 0;
+  const initialIndex = clampIndex(route.params.initialIndex, verseCount);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  useEffect(() => {
+    if (chapter == null) return;
+    setProgress({ sourceId: 'ganesh-stotram', chapter: chapter.chapter, verseIndex: currentIndex, updatedAt: Date.now() });
+  }, [chapter, currentIndex, setProgress]);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -41,25 +52,26 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
   const getItemLayout = useCallback((_: unknown, index: number) => ({ length: width, offset: width * index, index }), [width]);
 
   const dotStyles = useMemo(() => {
-    const total = chapter.verses.length;
-    const buckets = Math.max(1, Math.ceil(total / DOT_COUNT));
+    const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
-  }, [chapter.verses.length, currentIndex]);
+  }, [verseCount, currentIndex]);
 
-  const topTitle = lang === 'hi' ? chapter.titleHi : chapter.titleEn;
+  const topTitle = chapter ? (lang === 'hi' ? chapter.titleHi : chapter.titleEn) : '';
 
   const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = e.nativeEvent.contentOffset.x;
     const idx = Math.round(offsetX / width);
     setCurrentIndex((prev) => {
-      if (prev !== idx && idx >= 0 && idx < chapter.verses.length) {
+      if (prev !== idx && idx >= 0 && idx < verseCount) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
         return idx;
       }
       return prev;
     });
-  }, [width, chapter.verses.length]);
+  }, [width, verseCount]);
+
+  if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -76,7 +88,7 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
               <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
-                {currentIndex + 1} / {chapter.verses.length}
+                {currentIndex + 1} / {verseCount}
               </Text>
               <BookmarkButton
                 isBookmarked={isBookmarked(`ganesh-stotram:${chapter.chapter}:${currentIndex}`)}
@@ -114,7 +126,8 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
             onScroll={handleScroll}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}
-            initialScrollIndex={route.params.initialIndex ?? 0}
+            initialScrollIndex={initialIndex}
+            onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
           <View style={styles.dotsOverlay}>

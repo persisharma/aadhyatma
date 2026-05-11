@@ -14,19 +14,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import {
-  hanumanChalisaTitleEn,
-  hanumanChalisaTitleHi,
-  hanumanChalisaTotal,
-  hanumanChalisaVerses,
-  type HanumanChalisaVerse,
-} from '@/data/hanuman-chalisa';
+import { getChalisa, type ChalisaVerse } from '@/data/chalisaRegistry';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import LanguageToggle from '@/components/LanguageToggle';
 import VersePage from '@/components/VersePage';
+import { clampIndex } from '@/utils/clamp';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
@@ -39,16 +34,21 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { width } = useWindowDimensions();
-  const listRef = useRef<FlatList<HanumanChalisaVerse>>(null);
-  const [currentIndex, setCurrentIndex] = useState(route.params?.initialIndex ?? 0);
+  const chalisaId = route.params?.chalisaId ?? 'hanuman-chalisa';
+  const chalisa = useMemo(() => getChalisa(chalisaId), [chalisaId]);
+  const verses = chalisa.verses;
+  const total = verses.length;
+  const listRef = useRef<FlatList<ChalisaVerse>>(null);
+  const initialIndex = clampIndex(route.params?.initialIndex, total);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   useEffect(() => {
     setProgress({
-      sourceId: 'hanuman-chalisa',
+      sourceId: chalisaId,
       verseIndex: currentIndex,
       updatedAt: Date.now(),
     });
-  }, [currentIndex, setProgress]);
+  }, [chalisaId, currentIndex, setProgress]);
 
   const viewabilityConfig = useRef({
     itemVisiblePercentThreshold: 60,
@@ -78,24 +78,24 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
   );
 
   const dotStyles = useMemo(() => {
-    const buckets = Math.ceil(hanumanChalisaTotal / DOT_COUNT);
+    const buckets = Math.max(1, Math.ceil(total / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
-  }, [currentIndex]);
+  }, [currentIndex, total]);
 
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offsetX = e.nativeEvent.contentOffset.x;
       const idx = Math.round(offsetX / width);
       setCurrentIndex((prev) => {
-        if (prev !== idx && idx >= 0 && idx < hanumanChalisaTotal) {
+        if (prev !== idx && idx >= 0 && idx < total) {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
           return idx;
         }
         return prev;
       });
     },
-    [width]
+    [width, total]
   );
 
   return (
@@ -136,7 +136,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             ]}
             numberOfLines={1}
           >
-            {lang === 'hi' ? hanumanChalisaTitleHi : hanumanChalisaTitleEn}
+            {lang === 'hi' ? chalisa.titleHi : chalisa.titleEn}
           </Text>
 
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
@@ -152,19 +152,19 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
                   },
                 ]}
               >
-                {currentIndex + 1} / {hanumanChalisaTotal}
+                {currentIndex + 1} / {total}
               </Text>
               <BookmarkButton
-                isBookmarked={isBookmarked(`hanuman-chalisa::${currentIndex}`)}
+                isBookmarked={isBookmarked(`${chalisaId}::${currentIndex}`)}
                 onToggle={() => {
-                  const id = `hanuman-chalisa::${currentIndex}`;
+                  const id = `${chalisaId}::${currentIndex}`;
                   if (isBookmarked(id)) {
                     removeBookmark(id);
                   } else {
-                    const v = hanumanChalisaVerses[currentIndex];
+                    const v = verses[currentIndex];
                     addBookmark({
                       id,
-                      sourceId: 'hanuman-chalisa',
+                      sourceId: chalisaId,
                       verseIndex: currentIndex,
                       savedAt: Date.now(),
                       previewHi: v.lines[0] ?? '',
@@ -184,7 +184,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
         <View style={styles.listContainer}>
           <FlatList
             ref={listRef}
-            data={hanumanChalisaVerses as HanumanChalisaVerse[]}
+            data={verses as ChalisaVerse[]}
             keyExtractor={(v) => v.id}
             renderItem={({ item }) => <VersePage verse={item} width={width} />}
             extraData={lang}
@@ -200,7 +200,8 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             onScroll={handleScroll}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}
-            initialScrollIndex={route.params?.initialIndex ?? 0}
+            initialScrollIndex={initialIndex}
+            onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
 

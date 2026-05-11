@@ -41,6 +41,30 @@ export const aartiCollection: readonly AartiData[] = [
   aartiKunjBihari as AartiData,
 ];
 
+/**
+ * Canonical aarti sourceIds in their fixed display order. The position in this
+ * array is the value used by `AartiReader`'s `aartiIndex` route param, and is
+ * also the suffix in the legacy `aarti-N` sourceId form (migrated on hydrate).
+ */
+export const aartiIdByIndex = [
+  'om-jai-jagdish',
+  'hanuman-aarti',
+  'sankat-mochan',
+  'jai-ganesh-deva',
+  'om-jai-shiv-omkara',
+  'jai-ambe-gauri',
+  'aarti-kunj-bihari',
+] as const satisfies readonly string[];
+
+export type AartiId = (typeof aartiIdByIndex)[number];
+
+export const aartiIndexById: Readonly<Record<AartiId, number>> = Object.freeze(
+  aartiIdByIndex.reduce<Record<string, number>>((acc, id, i) => {
+    acc[id] = i;
+    return acc;
+  }, {}) as Record<AartiId, number>
+);
+
 export const aartiTitleHi = 'आरती संग्रह';
 export const aartiTitleEn = 'Aarti Collection';
 

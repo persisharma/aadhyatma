@@ -13,7 +13,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import {
-  getJapamMantra,
+  findJapamMantra,
   JAPAM_BEADS_PER_ROUND,
   type JapamMantra,
 } from '@/data/japam';
@@ -29,16 +29,25 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { lang } = useGitaLanguage();
   const { getEntry, increment, resetBeads, clear } = useJapamCounter();
 
-  const mantra: JapamMantra = useMemo(
-    () => getJapamMantra(route.params.mantraId),
+  const mantra: JapamMantra | null = useMemo(
+    () => findJapamMantra(route.params.mantraId),
     [route.params.mantraId]
   );
 
-  const entry = getEntry(mantra.id);
+  React.useEffect(() => {
+    if (!mantra) {
+      const id = setTimeout(() => navigation.goBack(), 0);
+      return () => clearTimeout(id);
+    }
+    return undefined;
+  }, [mantra, navigation]);
+
+  const entry = getEntry(mantra?.id ?? '__none__');
   const [confirmKind, setConfirmKind] = useState<'beads' | 'all' | null>(null);
   const lastRoundRef = useRef(entry.rounds);
 
   const handleTap = useCallback(() => {
+    if (!mantra) return;
     const next = increment(mantra.id);
     if (next.rounds > lastRoundRef.current) {
       lastRoundRef.current = next.rounds;
@@ -48,7 +57,11 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     } else {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
     }
-  }, [increment, mantra.id]);
+  }, [increment, mantra]);
+
+  if (!mantra) {
+    return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
+  }
 
   const titleHi = mantra.nameHi;
   const titleEn = mantra.nameEn;
@@ -231,6 +244,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             onPress={() => setConfirmKind('beads')}
             accessibilityRole="button"
             accessibilityLabel="Reset bead count"
+            accessibilityState={{ disabled: entry.count === 0 }}
             disabled={entry.count === 0}
             hitSlop={8}
             style={({ pressed }) => [
@@ -260,6 +274,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             onPress={() => setConfirmKind('all')}
             accessibilityRole="button"
             accessibilityLabel="Clear bead count and rounds"
+            accessibilityState={{ disabled: entry.count === 0 && entry.rounds === 0 }}
             disabled={entry.count === 0 && entry.rounds === 0}
             hitSlop={8}
             style={({ pressed }) => [
@@ -555,7 +570,9 @@ const styles = StyleSheet.create({
   confirmPrimary: {
     marginTop: 18,
     paddingVertical: 13,
+    minHeight: 44,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   confirmPrimaryText: {
     fontSize: 15,
@@ -563,8 +580,10 @@ const styles = StyleSheet.create({
   },
   confirmCancel: {
     marginTop: 10,
-    paddingVertical: 8,
+    paddingVertical: 12,
+    minHeight: 44,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   confirmCancelText: {
     fontSize: 13,

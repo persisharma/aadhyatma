@@ -159,6 +159,8 @@ export default function MoreScreen({ navigation }: Props) {
           {/* Wishlist Card */}
           <Pressable
             onPress={() => navigation.navigate('Wishlist')}
+            accessibilityRole="button"
+            accessibilityLabel={`Wishlist, ${bookmarks.length} verse${bookmarks.length !== 1 ? 's' : ''} saved`}
             style={({ pressed }) => [
               styles.section,
               { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: pressed ? 0.85 : 1 },
@@ -180,7 +182,10 @@ export default function MoreScreen({ navigation }: Props) {
 
           {/* Language Card */}
           <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, flexDirection: 'column', alignItems: 'stretch' }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+            <View
+              accessibilityRole="header"
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 12 }}
+            >
               <View style={[styles.sectionIcon, { backgroundColor: colors.gold }]}>
                 <Text style={{ color: '#fff', fontSize: 14 }}>अ</Text>
               </View>
@@ -194,9 +199,12 @@ export default function MoreScreen({ navigation }: Props) {
               </View>
             </View>
 
-            <View style={styles.langRow}>
+            <View style={styles.langRow} accessibilityRole="radiogroup" accessibilityLabel="Default reading language">
               <Pressable
                 onPress={() => setDefaultLang('hi')}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: defaultLang === 'hi' }}
+                accessibilityLabel="Hindi"
                 style={[
                   styles.langOption,
                   { borderColor: defaultLang === 'hi' ? colors.saffron : colors.divider },
@@ -214,6 +222,9 @@ export default function MoreScreen({ navigation }: Props) {
 
               <Pressable
                 onPress={() => setDefaultLang('en')}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: defaultLang === 'en' }}
+                accessibilityLabel="English"
                 style={[
                   styles.langOption,
                   { borderColor: defaultLang === 'en' ? colors.saffron : colors.divider },
@@ -235,6 +246,8 @@ export default function MoreScreen({ navigation }: Props) {
           <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, flexDirection: 'column', alignItems: 'stretch', paddingVertical: 4, paddingHorizontal: 16 }]}>
             <Pressable
               onPress={() => setDisclaimerVisible(true)}
+              accessibilityRole="button"
+              accessibilityLabel="About and disclaimer"
               style={[styles.linkRow, { borderBottomColor: colors.divider }]}
             >
               <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 13, color: colors.ink }}>About & Disclaimer</Text>
@@ -251,6 +264,8 @@ export default function MoreScreen({ navigation }: Props) {
                   }
                 });
               }}
+              accessibilityRole="button"
+              accessibilityLabel="Report an error"
               style={({ pressed }) => [styles.linkRowLast, pressed && { opacity: 0.6 }]}
             >
               <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 13, color: colors.ink }}>Report an Error</Text>
@@ -270,10 +285,20 @@ export default function MoreScreen({ navigation }: Props) {
         <View style={[styles.modalRoot, { backgroundColor: colors.parchment }]}>
           <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
             <View style={[styles.modalHeader, { borderBottomColor: colors.divider }]}>
-              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 20, color: colors.ink }}>
+              <Text
+                accessibilityRole="header"
+                accessibilityLabel={`${en.title}. ${hi.title}.`}
+                style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 20, color: colors.ink }}
+              >
                 {en.title} / {hi.title}
               </Text>
-              <Pressable onPress={() => setDisclaimerVisible(false)} hitSlop={12}>
+              <Pressable
+                onPress={() => setDisclaimerVisible(false)}
+                accessibilityRole="button"
+                accessibilityLabel="Close"
+                hitSlop={16}
+                style={({ pressed }) => [styles.modalClose, pressed && { opacity: 0.7 }]}
+              >
                 <Text style={{ fontSize: 20, fontWeight: '600', color: colors.saffron }}>✕</Text>
               </Pressable>
             </View>
@@ -296,7 +321,11 @@ export default function MoreScreen({ navigation }: Props) {
                 </Text>
               ))}
               <View style={{ borderBottomWidth: 1, borderBottomColor: colors.divider, marginVertical: 20, opacity: 0.5 }} />
-              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink, marginBottom: 12 }}>
+              <Text
+                accessibilityRole="header"
+                accessibilityLabel={`${en.reportHeading}. ${hi.reportHeading}.`}
+                style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink, marginBottom: 12 }}
+              >
                 {en.reportHeading} / {hi.reportHeading}
               </Text>
               <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 14, lineHeight: 24, color: colors.inkSoft, marginBottom: 14 }}>
@@ -316,7 +345,9 @@ export default function MoreScreen({ navigation }: Props) {
                   }
                 });
               }}
-                style={{ backgroundColor: colors.saffron, borderRadius: radii.md, paddingVertical: 14, alignItems: 'center', marginTop: 16 }}
+                accessibilityRole="button"
+                accessibilityLabel={`${en.reportButtonLabel}. ${hi.reportButtonLabel}.`}
+                style={{ backgroundColor: colors.saffron, borderRadius: radii.md, paddingVertical: 14, minHeight: 44, alignItems: 'center', justifyContent: 'center', marginTop: 16 }}
               >
                 <Text style={{ color: '#fff', fontFamily: typography.readerTitle.fontFamily, fontSize: 15 }}>
                   {en.reportButtonLabel} / {hi.reportButtonLabel}
@@ -393,6 +424,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
     borderBottomWidth: 1,
+  },
+  modalClose: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   profileCard: {
     borderWidth: 1,

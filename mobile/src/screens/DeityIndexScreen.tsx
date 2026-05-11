@@ -16,7 +16,11 @@ export default function DeityIndexScreen({ navigation }: Props) {
 
   const getItemCount = (deityId: string): string => {
     const count = library.filter(
-      (e) => !e.hidden && e.status === 'active' && e.deities.includes(deityId as any)
+      (e) =>
+        !e.hidden &&
+        e.status === 'active' &&
+        e.category !== 'japam' &&
+        e.deities.includes(deityId as any)
     ).length;
     if (count === 0) return 'Coming soon';
     return `${count} text${count > 1 ? 's' : ''}`;
@@ -32,8 +36,14 @@ export default function DeityIndexScreen({ navigation }: Props) {
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable
             onPress={() => navigation.goBack()}
+            accessibilityRole="button"
+            accessibilityLabel="Back"
             hitSlop={16}
-            style={[styles.backBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
+            style={({ pressed }) => [
+              styles.backBtn,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
+              pressed && { opacity: 0.7 },
+            ]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
           </Pressable>

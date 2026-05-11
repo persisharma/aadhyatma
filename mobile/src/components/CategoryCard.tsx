@@ -94,6 +94,8 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress }: 
           elevation: 1,
         },
       ]}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: true }}
       accessibilityLabel={`${nameEn}. Coming soon.`}
     >
       {content}
