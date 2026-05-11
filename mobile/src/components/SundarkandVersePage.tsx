@@ -1,29 +1,23 @@
 import React, { useMemo } from 'react';
-import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import type { SundarkandVerse } from '@/data/sundarkand';
-import { chalisaImages, type ChalisaImageKey } from '@assets/chalisa';
+import { getReaderBackground } from '@/data/backgrounds';
+import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
 
 type Props = {
   verse: SundarkandVerse;
+  sourceId: string;
   width: number;
 };
 
-function imageKeyForStanza(stanza: number): ChalisaImageKey {
-  if (stanza <= 4) return 'hanuman_sea';
-  if (stanza <= 11) return 'hanuman_sita';
-  if (stanza <= 18) return 'hanuman_lankadahan';
-  return 'ram_hanuman';
-}
-
-export default function SundarkandVersePage({ verse, width }: Props) {
+export default function SundarkandVersePage({ verse, sourceId, width }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
-  const bg = chalisaImages[imageKeyForStanza(verse.stanza)];
+  const bg = useMemo(() => getReaderBackground(sourceId, verse), [sourceId, verse]);
   const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
   const meaningLabel = lang === 'hi' ? 'भावार्थ' : 'Meaning';
   const verseLines = lang === 'hi' ? verse.lines : verse.linesEn;
@@ -52,18 +46,7 @@ export default function SundarkandVersePage({ verse, width }: Props) {
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <ImageBackground source={bg} style={StyleSheet.absoluteFill} resizeMode="cover">
-        <LinearGradient
-          colors={[
-            colors.overlayTop,
-            colors.overlayUpper,
-            colors.overlayLower,
-            colors.overlayBottom,
-          ]}
-          locations={[0, 0.4, 0.85, 1]}
-          style={StyleSheet.absoluteFill}
-        />
-      </ImageBackground>
+      <BackgroundLayer source={bg} />
 
       <ScrollView
         style={styles.scroll}

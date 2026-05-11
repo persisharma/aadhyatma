@@ -1,11 +1,12 @@
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { durgaStotramChaptersManifest, durgaStotramTitleHi, durgaStotramTitleEn } from '@/data/durga-stotram';
 import { useGitaLanguage } from '@/data/gita/language';
+import { getSourceBackground } from '@/data/backgrounds';
+import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -24,10 +25,7 @@ export default function DurgaStotramChaptersScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <BackgroundLayer source={getSourceBackground('durga-stotram')} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
         <View style={styles.topBar}>
           <Pressable

@@ -112,7 +112,7 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <ShivaStrotamVersePage verse={item} width={width} />}
+            renderItem={({ item }) => <ShivaStrotamVersePage verse={item} sourceId="ganesh-stotram" width={width} />}
             extraData={lang}
             horizontal
             pagingEnabled

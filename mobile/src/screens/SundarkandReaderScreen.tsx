@@ -295,7 +295,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
                   />
                 );
               }
-              return <SundarkandVersePage verse={item} width={width} />;
+              return <SundarkandVersePage verse={item} sourceId="sundarkand" width={width} />;
             }}
             extraData={lang}
             horizontal

@@ -1,19 +1,18 @@
 import React from 'react';
 import {
-  ImageBackground,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { shivaStrotamChaptersManifest, shivaStrotamTitleEn, shivaStrotamTitleHi } from '@/data/shiva-strotam';
 import { useGitaLanguage } from '@/data/gita/language';
-import { shivaStrotamImages } from '@assets/shiva-strotam';
+import { getSourceBackground } from '@/data/backgrounds';
+import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
 import type { RootStackParamList } from '@/navigation/types';
@@ -32,22 +31,7 @@ export default function ShivaStrotamChaptersScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      <ImageBackground
-        source={shivaStrotamImages.shiva}
-        style={StyleSheet.absoluteFill}
-        resizeMode="cover"
-      >
-        <LinearGradient
-          colors={[
-            colors.overlayTop,
-            colors.overlayUpper,
-            colors.overlayLower,
-            colors.overlayBottom,
-          ]}
-          locations={[0, 0.4, 0.85, 1]}
-          style={StyleSheet.absoluteFill}
-        />
-      </ImageBackground>
+      <BackgroundLayer source={getSourceBackground('shiva-strotam')} />
 
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
         <View style={styles.topBar}>

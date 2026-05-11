@@ -112,7 +112,7 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <SundarkandVersePage verse={item as any} width={width} />}
+            renderItem={({ item }) => <SundarkandVersePage verse={item as any} sourceId="ramcharitmanas" width={width} />}
             extraData={lang}
             horizontal
             pagingEnabled

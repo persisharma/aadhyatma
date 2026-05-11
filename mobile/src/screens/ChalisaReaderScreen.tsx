@@ -186,7 +186,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             ref={listRef}
             data={verses as ChalisaVerse[]}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <VersePage verse={item} width={width} />}
+            renderItem={({ item }) => <VersePage verse={item} sourceId={chalisaId} width={width} />}
             extraData={lang}
             horizontal
             pagingEnabled

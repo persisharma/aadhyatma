@@ -296,7 +296,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
                   />
                 );
               }
-              return <ShivaStrotamVersePage verse={item} width={width} />;
+              return <ShivaStrotamVersePage verse={item} sourceId="shiva-strotam" width={width} />;
             }}
             extraData={lang}
             horizontal

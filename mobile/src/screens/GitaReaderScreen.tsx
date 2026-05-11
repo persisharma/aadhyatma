@@ -296,7 +296,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                   />
                 );
               }
-              return <GitaVersePage verse={item} width={width} />;
+              return <GitaVersePage verse={item} sourceId="bhagavad-gita" width={width} />;
             }}
             extraData={lang}
             horizontal

@@ -112,7 +112,7 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <ShivaStrotamVersePage verse={item} width={width} />}
+            renderItem={({ item }) => <ShivaStrotamVersePage verse={item} sourceId="vishnu-sahasranama" width={width} />}
             extraData={lang}
             horizontal
             pagingEnabled

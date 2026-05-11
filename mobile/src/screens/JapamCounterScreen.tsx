@@ -6,18 +6,19 @@ import {
   Text,
   View,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { getSourceBackground } from '@/data/backgrounds';
 import {
   findJapamMantra,
   JAPAM_BEADS_PER_ROUND,
   type JapamMantra,
 } from '@/data/japam';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
+import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import type { RootStackParamList } from '@/navigation/types';
@@ -76,10 +77,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <BackgroundLayer source={getSourceBackground(mantra.id)} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
         <View style={styles.topBar}>
           <Pressable

@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react';
-import { ImageBackground, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { library, type LibraryEntry } from '@/data/texts';
 import { categories } from '@/data/categories';
-import { getRandomListingBackground } from '@/data/listingBackgrounds';
+import { getCategoryBackground } from '@/data/backgrounds';
+import BackgroundLayer from '@/components/BackgroundLayer';
 import LibraryCard from '@/components/LibraryCard';
 import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import {
@@ -24,7 +24,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   const { getProgress, clearProgress } = useReadingProgress();
   const [pendingEntry, setPendingEntry] = useState<LibraryEntry | null>(null);
 
-  const backgroundImage = useMemo(() => getRandomListingBackground(), []);
+  const backgroundImage = useMemo(() => getCategoryBackground(categoryId), [categoryId]);
   const categoryMeta = categories.find((c) => c.id === categoryId);
   const items = library.filter((e) => e.category === categoryId && !e.hidden);
 
@@ -43,13 +43,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
-      <ImageBackground source={backgroundImage} style={StyleSheet.absoluteFill} resizeMode="cover">
-        <LinearGradient
-          colors={[colors.overlayTop, colors.overlayUpper, colors.overlayLower, colors.overlayBottom]}
-          locations={[0, 0.4, 0.85, 1]}
-          style={StyleSheet.absoluteFill}
-        />
-      </ImageBackground>
+      <BackgroundLayer source={backgroundImage} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         {/* Top bar */}
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
