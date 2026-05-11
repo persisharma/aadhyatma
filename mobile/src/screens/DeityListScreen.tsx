@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
-import { ImageBackground, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { library } from '@/data/texts';
 import { deities } from '@/data/deities';
-import { getDeityBackground } from '@/data/listingBackgrounds';
+import { getDeityBackground } from '@/data/backgrounds';
+import BackgroundLayer from '@/components/BackgroundLayer';
 import LibraryCard from '@/components/LibraryCard';
 import { navigateToEntryStart } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -25,21 +25,8 @@ export default function DeityListScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.root}>
-      {backgroundImage ? <StatusBar barStyle="light-content" /> : null}
-      {backgroundImage ? (
-        <ImageBackground source={backgroundImage} style={StyleSheet.absoluteFill} resizeMode="cover">
-          <LinearGradient
-            colors={[colors.overlayTop, colors.overlayUpper, colors.overlayLower, colors.overlayBottom]}
-            locations={[0, 0.4, 0.85, 1]}
-            style={StyleSheet.absoluteFill}
-          />
-        </ImageBackground>
-      ) : (
-        <LinearGradient
-          colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-          style={StyleSheet.absoluteFill}
-        />
-      )}
+      <StatusBar barStyle="light-content" />
+      <BackgroundLayer source={backgroundImage} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable

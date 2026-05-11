@@ -1,20 +1,22 @@
 import React from 'react';
-import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import type { GitaVerse } from '@/data/gita';
-import { gitaImages } from '@assets/gita';
+import { getReaderBackground } from '@/data/backgrounds';
+import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
 
 type Props = {
   verse: GitaVerse;
+  sourceId: string;
   width: number;
 };
 
-export default function GitaVersePage({ verse, width }: Props) {
+export default function GitaVersePage({ verse, sourceId, width }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const bg = getReaderBackground(sourceId, verse);
 
   const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
   const commentary = lang === 'hi' ? verse.commentaryHi : verse.commentaryEn;
@@ -59,22 +61,7 @@ export default function GitaVersePage({ verse, width }: Props) {
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <ImageBackground
-        source={gitaImages.krishna_arjuna_vishvarupa}
-        style={StyleSheet.absoluteFill}
-        resizeMode="cover"
-      >
-        <LinearGradient
-          colors={[
-            colors.overlayTop,
-            colors.overlayUpper,
-            colors.overlayLower,
-            colors.overlayBottom,
-          ]}
-          locations={[0, 0.4, 0.85, 1]}
-          style={StyleSheet.absoluteFill}
-        />
-      </ImageBackground>
+      <BackgroundLayer source={bg} />
 
       <ScrollView
         style={styles.scroll}

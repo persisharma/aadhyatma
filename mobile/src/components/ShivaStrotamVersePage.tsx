@@ -1,20 +1,22 @@
 import React from 'react';
-import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import type { ShivaStrotamVerse } from '@/data/shiva-strotam';
-import { shivaStrotamImages } from '@assets/shiva-strotam';
+import { getReaderBackground } from '@/data/backgrounds';
+import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
 
 type Props = {
   verse: ShivaStrotamVerse;
+  sourceId: string;
   width: number;
 };
 
-export default function ShivaStrotamVersePage({ verse, width }: Props) {
+export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const bg = getReaderBackground(sourceId, verse);
 
   const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
   const meaningLabel = lang === 'hi' ? 'अर्थ · Meaning' : 'Meaning · अर्थ';
@@ -49,22 +51,7 @@ export default function ShivaStrotamVersePage({ verse, width }: Props) {
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <ImageBackground
-        source={shivaStrotamImages.shiva}
-        style={StyleSheet.absoluteFill}
-        resizeMode="cover"
-      >
-        <LinearGradient
-          colors={[
-            colors.overlayTop,
-            colors.overlayUpper,
-            colors.overlayLower,
-            colors.overlayBottom,
-          ]}
-          locations={[0, 0.4, 0.85, 1]}
-          style={StyleSheet.absoluteFill}
-        />
-      </ImageBackground>
+      <BackgroundLayer source={bg} />
 
       <ScrollView
         style={styles.scroll}
