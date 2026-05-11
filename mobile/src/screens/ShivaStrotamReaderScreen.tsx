@@ -24,13 +24,14 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import NextChapterCard from '@/components/NextChapterCard';
+import PrevChapterCard from '@/components/PrevChapterCard';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import { clampIndex } from '@/utils/clamp';
 import { useSafeChapter } from './_useSafeChapter';
 import type { RootStackParamList } from '@/navigation/types';
 
-type TransitionItem = {
+type NextTransitionItem = {
   __type: 'transition';
   id: string;
   nextChapter: number;
@@ -38,7 +39,16 @@ type TransitionItem = {
   nextTitleEn: string;
 };
 
-type FlatListItem = ShivaStrotamVerse | TransitionItem;
+type PrevTransitionItem = {
+  __type: 'prev-transition';
+  id: string;
+  prevChapter: number;
+  prevTitleHi: string;
+  prevTitleEn: string;
+  prevVerseCount: number;
+};
+
+type FlatListItem = ShivaStrotamVerse | NextTransitionItem | PrevTransitionItem;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ShivaStrotamReader'>;
 
@@ -56,23 +66,40 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
   const initialIndex = clampIndex(route.params.initialIndex, verseCount);
   const isLastChapter =
     chapter == null ? true : chapter.chapter >= shivaStrotamChaptersManifest.length;
+  const isFirstChapter = chapter == null ? true : chapter.chapter <= 1;
   const data: FlatListItem[] = useMemo(() => {
     if (chapter == null) return [];
-    if (isLastChapter) return chapter.verses;
-    const next = shivaStrotamChaptersManifest[chapter.chapter];
-    if (!next) return chapter.verses;
-    return [
-      ...chapter.verses,
-      {
-        __type: 'transition' as const,
-        id: 'transition-next',
-        nextChapter: chapter.chapter + 1,
-        nextTitleHi: next.titleHi,
-        nextTitleEn: next.titleEn,
-      },
-    ];
-  }, [chapter, isLastChapter]);
+    const items: FlatListItem[] = [];
+    if (!isFirstChapter) {
+      const prev = shivaStrotamChaptersManifest[chapter.chapter - 2];
+      if (prev) {
+        items.push({
+          __type: 'prev-transition' as const,
+          id: 'transition-prev',
+          prevChapter: chapter.chapter - 1,
+          prevTitleHi: prev.titleHi,
+          prevTitleEn: prev.titleEn,
+          prevVerseCount: prev.verseCount,
+        });
+      }
+    }
+    items.push(...chapter.verses);
+    if (!isLastChapter) {
+      const next = shivaStrotamChaptersManifest[chapter.chapter];
+      if (next) {
+        items.push({
+          __type: 'transition' as const,
+          id: 'transition-next',
+          nextChapter: chapter.chapter + 1,
+          nextTitleHi: next.titleHi,
+          nextTitleEn: next.titleEn,
+        });
+      }
+    }
+    return items;
+  }, [chapter, isFirstChapter, isLastChapter]);
 
+  const offset = isFirstChapter ? 0 : 1;
   const listRef = useRef<FlatList<FlatListItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const hasNavigatedRef = useRef(false);
@@ -104,11 +131,25 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
       }
       return;
     }
+    if ('__type' in item && item.__type === 'prev-transition') {
+      if (!hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
+        setTimeout(() => {
+          navigation.replace('ShivaStrotamReader', {
+            chapter: item.prevChapter,
+            initialIndex: item.prevVerseCount - 1,
+          });
+        }, 400);
+      }
+      return;
+    }
+    const verseIdx = first.index - offset;
     setCurrentIndex((prev) => {
-      if (prev !== first.index) {
+      if (prev !== verseIdx) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
       }
-      return first.index ?? prev;
+      return verseIdx >= 0 ? verseIdx : prev;
     });
   }).current;
 
@@ -132,17 +173,17 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offsetX = e.nativeEvent.contentOffset.x;
-      const idx = Math.round(offsetX / width);
-      if (idx >= verseCount) return;
+      const idx = Math.round(offsetX / width) - offset;
+      if (idx < 0 || idx >= verseCount) return;
       setCurrentIndex((prev) => {
-        if (prev !== idx && idx >= 0 && idx < verseCount) {
+        if (prev !== idx) {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
           return idx;
         }
         return prev;
       });
     },
-    [width, verseCount]
+    [width, verseCount, offset]
   );
 
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
@@ -236,17 +277,27 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) =>
-              '__type' in item ? (
-                <NextChapterCard
-                  width={width}
-                  nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn}
-                  lang={lang}
-                />
-              ) : (
-                <ShivaStrotamVersePage verse={item} sourceId="shiva-strotam" width={width} />
-              )
-            }
+            renderItem={({ item }) => {
+              if ('__type' in item && item.__type === 'transition') {
+                return (
+                  <NextChapterCard
+                    width={width}
+                    nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn}
+                    lang={lang}
+                  />
+                );
+              }
+              if ('__type' in item && item.__type === 'prev-transition') {
+                return (
+                  <PrevChapterCard
+                    width={width}
+                    prevTitle={lang === 'hi' ? item.prevTitleHi : item.prevTitleEn}
+                    lang={lang}
+                  />
+                );
+              }
+              return <ShivaStrotamVersePage verse={item} sourceId="shiva-strotam" width={width} />;
+            }}
             extraData={lang}
             horizontal
             pagingEnabled
@@ -260,7 +311,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
             onScroll={handleScroll}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}
-            initialScrollIndex={initialIndex}
+            initialScrollIndex={initialIndex + offset}
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
