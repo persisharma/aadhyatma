@@ -2,7 +2,7 @@
   "chapter": 3,
   "titleHi": "संकटनाशन गणेश स्तोत्र",
   "titleEn": "Sankatnashan Ganesh Stotram",
-  "verseCount": 4,
+  "verseCount": 5,
   "verses": [
     {
       "id": "gs-3-0",
@@ -24,6 +24,23 @@
       "chapter": 3,
       "number": 1,
       "sanskrit": [
+        "नारद उवाच —",
+        "प्रणम्य शिरसा देवं गौरीपुत्रं विनायकम्।",
+        "भक्तावासं स्मरेन्नित्यमायुःकामार्थसिद्धये।।"
+      ],
+      "linesEn": [
+        "nārada uvācha —",
+        "praṇamya śhirasā devaṁ gaurīputraṁ vināyakam",
+        "bhaktāvāsaṁ smarennityamāyuḥkāmārthasiddhaye"
+      ],
+      "meaningHi": "नारद जी कहते हैं — गौरी-पुत्र (पार्वती के पुत्र) विनायक देव को शिर झुकाकर प्रणाम करके, भक्तों के हृदय में निवास करने वाले उन्हें नित्य स्मरण करना चाहिए — आयु, इच्छापूर्ति और अर्थ (धन) की सिद्धि के लिए।\n\nयह स्तोत्र नारद पुराण से है। नारद मुनि — देवर्षि, ब्रह्मा के मानसपुत्र — इसके वक्ता हैं। 'संकटनाशन' — सभी संकटों (विपत्तियों) को नष्ट करने वाला।",
+      "meaningEn": "Narada says — Bowing one's head to Lord Vinayaka, the son of Gauri (Parvati), one should remember daily the one who dwells in devotees' hearts — for the attainment of longevity, desires, and prosperity.\n\nThis stotram is from the Narada Purana. Sage Narada — celestial sage, mind-born son of Brahma — is the speaker. 'Sankatnashan' means 'destroyer of all calamities.'"
+    },
+    {
+      "id": "gs-3-2",
+      "chapter": 3,
+      "number": 2,
+      "sanskrit": [
         "प्रथमं वक्रतुण्डं च एकदन्तं द्वितीयकम्।",
         "तृतीयं कृष्णपिङ्गाक्षं गजवक्त्रं चतुर्थकम्।।"
       ],
@@ -35,9 +52,9 @@
       "meaningEn": "The first name is Vakratunda (curved trunk), second Ekadanta (single tusk), third Krishnapingaksha (dark-brown eyed), fourth Gajavaktra (elephant-faced) — these names should be remembered.\n\nThis begins the Ashta Nama (8 names) section of the Ganesha stotram. Each name describes a specific aspect of Ganesha's form."
     },
     {
-      "id": "gs-3-2",
+      "id": "gs-3-3",
       "chapter": 3,
-      "number": 2,
+      "number": 3,
       "sanskrit": [
         "लम्बोदरं पञ्चमं च षष्ठं विकटमेव च।",
         "सप्तमं विघ्नराजेन्द्रं धूम्रवर्णं तथाऽष्टमम्।।"
@@ -50,9 +67,9 @@
       "meaningEn": "Fifth is Lambodara (large-bellied), sixth Vikata (the formidable), seventh Vighnarajendra (supreme lord of obstacles), eighth Dhumravarna (smoke-colored).\n\n'Lambodara' — containing the universe in his belly. 'Vikata' — terrifying form for demons. 'Vighnarajendra' — supreme remover of obstacles. 'Dhumravarna' — a fierce aspect of Ganesha."
     },
     {
-      "id": "gs-3-3",
+      "id": "gs-3-4",
       "chapter": 3,
-      "number": 3,
+      "number": 4,
       "sanskrit": [
         "नवमं भालचन्द्रं च दशमं तु विनायकम्।",
         "एकादशं गणपतिं द्वादशं तु गजाननम्।।",

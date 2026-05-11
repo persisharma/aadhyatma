@@ -2,7 +2,7 @@
   "chapter": 1,
   "titleHi": "पूर्वपीठिका",
   "titleEn": "Purva Pithika",
-  "verseCount": 5,
+  "verseCount": 6,
   "verses": [
     {
       "id": "vs-1-0",
@@ -24,6 +24,21 @@
       "chapter": 1,
       "number": 1,
       "sanskrit": [
+        "शुक्लाम्बरधरं विष्णुं शशिवर्णं चतुर्भुजम्।",
+        "प्रसन्नवदनं ध्यायेत् सर्वविघ्नोपशान्तये।।"
+      ],
+      "linesEn": [
+        "śhuklāmbaradharaṁ viṣṇuṁ śhaśhivarṇaṁ chaturbhujam",
+        "prasannavadanaṁ dhyāyet sarvavighnopaśhāntaye"
+      ],
+      "meaningHi": "शुक्ल (श्वेत) वस्त्र धारण करने वाले, चन्द्रमा के समान वर्ण वाले, चार भुजाओं वाले, प्रसन्न मुख वाले विष्णु का ध्यान करना चाहिए — सभी विघ्नों की शान्ति के लिए।\n\nयह विष्णु सहस्रनाम का आरम्भिक ध्यान-श्लोक है। किसी भी पाठ से पूर्व विघ्न-निवारण हेतु इसका उच्चारण किया जाता है। कुछ परम्पराओं में यह गणेश को भी समर्पित माना जाता है।",
+      "meaningEn": "One should meditate upon Vishnu — who wears white garments, whose complexion is like the moon, who has four arms, and whose face is serene — for the removal of all obstacles.\n\nThis is the opening meditation verse of Vishnu Sahasranama. It is recited before the main text for obstacle removal. Some traditions also attribute this verse to Ganesha."
+    },
+    {
+      "id": "vs-1-2",
+      "chapter": 1,
+      "number": 2,
+      "sanskrit": [
         "व्यासं वसिष्ठनप्तारं शक्तेः पौत्रमकल्मषम्।",
         "पराशरात्मजं वन्दे शुकतातं तपोनिधिम्।।"
       ],
@@ -35,9 +50,9 @@
       "meaningEn": "I bow to Vyasa — great-grandson of Vasishtha, grandson of Shakti, spotless one, son of Parashara, father of Shukadeva, treasury of austerity.\n\nVedavyasa composed the Mahabharata, within which he compiled this Sahasranama as heard from Bhishma. His lineage: Vasishtha → Shakti → Parashara → Vyasa → Shukadeva."
     },
     {
-      "id": "vs-1-2",
+      "id": "vs-1-3",
       "chapter": 1,
-      "number": 2,
+      "number": 3,
       "sanskrit": [
         "व्यासाय विष्णुरूपाय व्यासरूपाय विष्णवे।",
         "नमो वै ब्रह्मनिधये वासिष्ठाय नमो नमः।।"
@@ -50,9 +65,9 @@
       "meaningEn": "Salutations to Vyasa who is Vishnu's form, to Vishnu who manifested as Vyasa — repeated obeisance to the treasury of Brahman-knowledge, descendant of Vasishtha.\n\nThis verse establishes the identity of Vyasa and Vishnu — Vyasa is considered an avatar of Vishnu who appears in every Dvapara Yuga to protect dharma."
     },
     {
-      "id": "vs-1-3",
+      "id": "vs-1-4",
       "chapter": 1,
-      "number": 3,
+      "number": 4,
       "sanskrit": [
         "युधिष्ठिर उवाच —",
         "किमेकं दैवतं लोके किं वाप्येकं परायणम्।",
@@ -67,9 +82,9 @@
       "meaningEn": "Yudhishthira asked — Who is the one supreme deity in the world? What is the one ultimate refuge? By praising whom, by worshipping whom, do humans attain auspiciousness?\n\nThis is from the Anushasana Parva (Chapter 149) of the Mahabharata. After the Kurukshetra war, Yudhishthira asks these six questions to Bhishma lying on his bed of arrows."
     },
     {
-      "id": "vs-1-4",
+      "id": "vs-1-5",
       "chapter": 1,
-      "number": 4,
+      "number": 5,
       "sanskrit": [
         "भीष्म उवाच —",
         "जगत्प्रभुं देवदेवमनन्तं पुरुषोत्तमम्।",

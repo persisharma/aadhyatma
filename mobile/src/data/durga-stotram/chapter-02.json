@@ -2,7 +2,7 @@
   "chapter": 2,
   "titleHi": "महिषासुर मर्दिनी स्तोत्रम्",
   "titleEn": "Mahishasura Mardini Stotram",
-  "verseCount": 11,
+  "verseCount": 12,
   "verses": [
     {
       "id": "ds-2-0",
@@ -24,6 +24,21 @@
       "chapter": 2,
       "number": 1,
       "sanskrit": [
+        "अयि गिरिनन्दिनि नन्दितमेदिनि विश्वविनोदिनि नन्दनुते।",
+        "गिरिवरविन्ध्यशिरोऽधिनिवासिनि विष्णुविलासिनि जिष्णुनुते।।"
+      ],
+      "linesEn": [
+        "ayi girinandini nanditamedini viśhvavinodini nandanute",
+        "girivara-vindhya-śhiro'dhinivasini viṣṇuvilāsini jiṣṇunute"
+      ],
+      "meaningHi": "हे गिरिराज हिमालय की पुत्री! आप पृथ्वी को आनन्दित करने वाली, विश्व को विनोद प्रदान करने वाली हैं, नन्द (शिव) द्वारा स्तुत हैं। आप विन्ध्य पर्वत के शिखर पर निवास करती हैं, विष्णु की शक्ति हैं, और इन्द्र (जिष्णु) द्वारा वन्दित हैं।\n\nयह आदि शंकराचार्य द्वारा रचित महिषासुर मर्दिनी स्तोत्र का प्रथम श्लोक है। प्रत्येक श्लोक में देवी के एक युद्ध-रूप का वर्णन है।",
+      "meaningEn": "O daughter of the Mountain King (Himalaya)! You bring joy to the earth, delight to the universe, and are praised by Nanda (Shiva). You dwell atop the Vindhya peaks, are the power of Vishnu, and are worshipped by Indra (Jishnu).\n\nThis is the first verse of the Mahishasura Mardini Stotram composed by Adi Shankaracharya. Each verse describes a battle-form of the Goddess."
+    },
+    {
+      "id": "ds-2-2",
+      "chapter": 2,
+      "number": 2,
+      "sanskrit": [
         "सुरवरवर्षिणि दुर्धरधर्षिणि दुर्मुखमर्षिणि हर्षरते।",
         "त्रिभुवनपोषिणि शङ्करतोषिणि किल्बिषमोषिणि घोषरते।।"
       ],
@@ -35,9 +50,9 @@
       "meaningEn": "O Goddess! You shower blessings upon the gods, vanquish invincible foes, suppress the ugly-faced demons, and delight in joy. You nourish the three worlds, please Lord Shankara, destroy sins, and revel in the battle cry."
     },
     {
-      "id": "ds-2-2",
+      "id": "ds-2-3",
       "chapter": 2,
-      "number": 2,
+      "number": 3,
       "sanskrit": [
         "दनुजनिरोषिणि दितिसुतरोषिणि दुर्मदशोषिणि सिन्धुसुते।",
         "रजनीचरवंशनिकन्दनी रणधनमालिनी रंजनुते।।"
@@ -50,9 +65,9 @@
       "meaningEn": "O daughter of the ocean! You who anger the Danavas, enrage the sons of Diti (demons), and dry up wicked pride. You who uproot the lineage of night-wanderers (Rakshasas), adorned with garlands of battlefield weapons."
     },
     {
-      "id": "ds-2-3",
+      "id": "ds-2-4",
       "chapter": 2,
-      "number": 3,
+      "number": 4,
       "sanskrit": [
         "अयि जगदम्ब मदम्ब कदम्बवनप्रियवासिनि हासरते।",
         "शिखरि शिरोमणि तुङ्गहिमालय शृङ्गनिजालय मध्यगते।।"
@@ -65,9 +80,9 @@
       "meaningEn": "O Mother of the Universe! O my Mother! You lovingly dwell in the Kadamba forest and delight in laughter. You reside amidst the peaks of the lofty Himalaya, the crown jewel among mountains.\n\nThe Kadamba forest is associated with Shakti Peethas — especially Kanchi and the Meenakshi temple at Madurai."
     },
     {
-      "id": "ds-2-4",
+      "id": "ds-2-5",
       "chapter": 2,
-      "number": 4,
+      "number": 5,
       "sanskrit": [
         "मधुमधुरे मधुकैटभगञ्जिनि कैटभभञ्जिनि रासरते।",
         "जयजयहे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते।।"
@@ -80,9 +95,9 @@
       "meaningEn": "O one sweeter than honey! You who vanquish Madhu and Kaitabha, destroyer of Kaitabha, lover of divine dance. Victory! O slayer of Mahishasura, beautiful matted-locked one, daughter of the Mountain!\n\nMadhu and Kaitabha were demons born from Brahma's earwax — slain by Vishnu through the Goddess's power."
     },
     {
-      "id": "ds-2-5",
+      "id": "ds-2-6",
       "chapter": 2,
-      "number": 5,
+      "number": 6,
       "sanskrit": [
         "अयि निजहुङ्कृतिमात्रनिराकृतधूम्रविलोचनधूम्रशते।",
         "समरविशोषितशोणितबीजसमुद्भवशोणितबीजलते।।"
@@ -95,9 +110,9 @@
       "meaningEn": "O Goddess! You destroyed demon Dhumralochan merely with your war-cry. In battle, you dried up the blood-seed vine of Raktabeeja — from whose every blood-drop a new demon would sprout.\n\nFor the Raktabeeja battle, the Goddess assumed her Kali form to drink every drop before it touched the ground."
     },
     {
-      "id": "ds-2-6",
+      "id": "ds-2-7",
       "chapter": 2,
-      "number": 6,
+      "number": 7,
       "sanskrit": [
         "अयि शरणागतवैरिवधूवरवीरवराभयदायकरे।",
         "त्रिभुवनमस्तकशूलविरोधिशिरोऽधिकृतामलशूलकरे।।"
@@ -110,9 +125,9 @@
       "meaningEn": "O Goddess! You protect those who seek refuge, granting fearlessness even to the wives of enemies (sparing the innocent). In your hand is the pure trident that strikes at the heads of those who rebel against the three worlds.\n\nThe Goddess's trident was gifted by Shiva — it symbolizes mastery over the three Gunas (Sattva, Rajas, Tamas)."
     },
     {
-      "id": "ds-2-7",
+      "id": "ds-2-8",
       "chapter": 2,
-      "number": 7,
+      "number": 8,
       "sanskrit": [
         "कमलदलामलकोमलकान्तिकलाकलितामलभाललते।",
         "सकलविलासकलानिलयक्रमकेलिचलत्कलहंसकुले।।"
@@ -125,9 +140,9 @@
       "meaningEn": "O Goddess! Your forehead is pure, soft, and radiant like a lotus petal. You are the abode of all 64 arts, and your gait is as graceful as that of swans.\n\nAlongside her fierce battle form, the Goddess's gentle beauty is equally magnificent — Shankaracharya describes both aspects."
     },
     {
-      "id": "ds-2-8",
+      "id": "ds-2-9",
       "chapter": 2,
-      "number": 8,
+      "number": 9,
       "sanskrit": [
         "विजितसहस्रकरैकसहस्रकरैकसहस्रकरैकनुते।",
         "कृतसुरतारकसङ्गरतारकसङ्गरतारकसूनुनुते।।"
@@ -140,9 +155,9 @@
       "meaningEn": "Your radiance defeats a thousand suns. You are praised by Kartikeya — the son who slew Tarakasura, the protector of the gods.\n\nTarakasura could only be killed by Shiva's son — this is why Parvati married Shiva, leading to Kartikeya's birth."
     },
     {
-      "id": "ds-2-9",
+      "id": "ds-2-10",
       "chapter": 2,
-      "number": 9,
+      "number": 10,
       "sanskrit": [
         "सुरललना ततथेइ ततथेइ कृताभिनयोदरनृत्यरते।",
         "कृतकुकुथः कुकुथो गडदादिकताल कुतूहलगानरते।।"
@@ -155,9 +170,9 @@
       "meaningEn": "Celestial maidens dance with 'tatathei tatathei' rhythm. Drums beat 'kukuthah kukutho' with percussion in joyful song — this is the celebration after the Goddess's victory.\n\nAfter slaying Mahishasura, heaven celebrated — Apsaras danced and Gandharvas sang."
     },
     {
-      "id": "ds-2-10",
+      "id": "ds-2-11",
       "chapter": 2,
-      "number": 10,
+      "number": 11,
       "sanskrit": [
         "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते।",
         "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते।।"
