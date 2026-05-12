@@ -89,6 +89,7 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
 
   const setProgress = useCallback(
     (entry: ReadingProgress) => {
+      if (isLoading) return;
       const current = progress[entry.sourceId];
       if (
         current &&
@@ -100,7 +101,7 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
       persist({ ...progress, [entry.sourceId]: entry });
       logRead(entry.sourceId);
     },
-    [progress, persist, logRead]
+    [isLoading, progress, persist, logRead]
   );
 
   const clearProgress = useCallback(

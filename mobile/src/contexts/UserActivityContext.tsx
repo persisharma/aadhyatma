@@ -35,6 +35,7 @@ export type ActivityTotals = {
 
 export type UserActivityContextValue = {
   activity: ActivityMap;
+  isLoading: boolean;
   /** Log a verse advance on a reader. Called when the user pages forward to a new verse/chapter pair. */
   logRead: (sourceId: string) => void;
   /** Log a single bead tap. */
@@ -66,6 +67,7 @@ const EMPTY_TOTALS: ActivityTotals = {
 
 const UserActivityContext = createContext<UserActivityContextValue>({
   activity: {},
+  isLoading: true,
   logRead: () => {},
   logJapaBead: () => {},
   logJapaRound: () => {},
@@ -127,17 +129,20 @@ function aggregate(entries: DailyEntry[]): ActivityTotals {
 
 export function UserActivityProvider({ children }: { children: React.ReactNode }) {
   const [activity, setActivity] = useState<ActivityMap>({});
+  const [isLoading, setIsLoading] = useState(true);
   const activityRef = useRef<ActivityMap>({});
   activityRef.current = activity;
 
   useEffect(() => {
-    AsyncStorage.getItem(STORAGE_KEY).then((raw) => {
-      if (!raw) return;
-      try {
-        const parsed = JSON.parse(raw) as ActivityMap;
-        if (parsed && typeof parsed === 'object') setActivity(parsed);
-      } catch {}
-    });
+    AsyncStorage.getItem(STORAGE_KEY)
+      .then((raw) => {
+        if (!raw) return;
+        try {
+          const parsed = JSON.parse(raw) as ActivityMap;
+          if (parsed && typeof parsed === 'object') setActivity(parsed);
+        } catch {}
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   const persist = useCallback((next: ActivityMap) => {
@@ -147,6 +152,7 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
 
   const mutateToday = useCallback(
     (mutate: (day: DailyEntry) => DailyEntry) => {
+      if (isLoading) return;
       const key = toDateKey(new Date());
       const cur = activityRef.current[key] ?? emptyDay();
       const next = mutate({
@@ -155,7 +161,7 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
       });
       persist({ ...activityRef.current, [key]: next });
     },
-    [persist]
+    [isLoading, persist]
   );
 
   const logRead = useCallback(
@@ -245,6 +251,7 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
   const value = useMemo<UserActivityContextValue>(
     () => ({
       activity,
+      isLoading,
       logRead,
       logJapaBead,
       logJapaRound,
@@ -257,6 +264,7 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
     }),
     [
       activity,
+      isLoading,
       logRead,
       logJapaBead,
       logJapaRound,

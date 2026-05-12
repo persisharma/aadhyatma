@@ -1,14 +1,17 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { library } from '@/data/texts';
+import { library, type LibraryEntry } from '@/data/texts';
 import { deities } from '@/data/deities';
 import { getDeityBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LibraryCard from '@/components/LibraryCard';
-import { navigateToEntryStart } from '@/navigation/entryRoutes';
+import ResumeReadingSheet from '@/components/ResumeReadingSheet';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
+import { formatLocation } from '@/utils/formatLocation';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'DeityList'>;
@@ -16,12 +19,30 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'DeityList'>;
 export default function DeityListScreen({ navigation, route }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { deityId } = route.params;
+  const { getProgress, clearProgress, isLoading } = useReadingProgress();
+  const [pendingEntry, setPendingEntry] = useState<LibraryEntry | null>(null);
 
   const backgroundImage = useMemo(() => getDeityBackground(deityId), [deityId]);
   const deityMeta = deities.find((d) => d.id === deityId);
   const items = library.filter(
     (e) => !e.hidden && e.category !== 'japam' && e.deities.includes(deityId)
   );
+
+  const handlePress = (entry: LibraryEntry) => {
+    if (isLoading) {
+      navigateToEntryStart(navigation, entry);
+      return;
+    }
+    const progress = getProgress(entry.id);
+    if (progress && progress.verseIndex > 0) {
+      setPendingEntry(entry);
+      return;
+    }
+    navigateToEntryStart(navigation, entry);
+  };
+
+  const pendingProgress = pendingEntry ? getProgress(pendingEntry.id) : undefined;
+  const location = pendingProgress ? formatLocation(pendingProgress) : null;
 
   return (
     <View style={styles.root}>
@@ -71,11 +92,33 @@ export default function DeityListScreen({ navigation, route }: Props) {
         >
           {items.map((entry) => {
             const onPress =
-              entry.status === 'active' ? () => navigateToEntryStart(navigation, entry) : undefined;
+              entry.status === 'active' ? () => handlePress(entry) : undefined;
             return <LibraryCard key={entry.id} entry={entry} onPress={onPress} />;
           })}
         </ScrollView>
       </SafeAreaView>
+
+      {pendingEntry && pendingProgress && location && (
+        <ResumeReadingSheet
+          visible
+          titleHi={pendingEntry.nameHi}
+          titleEn={pendingEntry.nameEn}
+          locationHi={location.hi}
+          locationEn={location.en}
+          onResume={() => {
+            const progress = pendingProgress;
+            setPendingEntry(null);
+            navigateToProgress(navigation, progress);
+          }}
+          onStartOver={() => {
+            const entry = pendingEntry;
+            setPendingEntry(null);
+            clearProgress(entry.id);
+            navigateToEntryStart(navigation, entry);
+          }}
+          onDismiss={() => setPendingEntry(null)}
+        />
+      )}
     </View>
   );
 }
