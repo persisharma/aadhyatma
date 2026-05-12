@@ -9,11 +9,9 @@ import { getCategoryBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LibraryCard from '@/components/LibraryCard';
 import ResumeReadingSheet from '@/components/ResumeReadingSheet';
-import {
-  useReadingProgress,
-  type ReadingProgress,
-} from '@/contexts/ReadingProgressContext';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
+import { formatLocation } from '@/utils/formatLocation';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'CategoryList'>;
@@ -21,7 +19,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'CategoryList'>;
 export default function CategoryListScreen({ navigation, route }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { categoryId } = route.params;
-  const { getProgress, clearProgress } = useReadingProgress();
+  const { getProgress, clearProgress, isLoading } = useReadingProgress();
   const [pendingEntry, setPendingEntry] = useState<LibraryEntry | null>(null);
 
   const backgroundImage = useMemo(() => getCategoryBackground(categoryId), [categoryId]);
@@ -29,6 +27,10 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   const items = library.filter((e) => e.category === categoryId && !e.hidden);
 
   const handlePress = (entry: LibraryEntry) => {
+    if (isLoading) {
+      navigateToEntryStart(navigation, entry);
+      return;
+    }
     const progress = getProgress(entry.id);
     if (progress && progress.verseIndex > 0) {
       setPendingEntry(entry);
@@ -117,52 +119,6 @@ export default function CategoryListScreen({ navigation, route }: Props) {
       )}
     </View>
   );
-}
-
-function formatLocation(progress: ReadingProgress): { hi: string; en: string } {
-  const verseNum = progress.verseIndex + 1;
-  switch (progress.sourceId) {
-    case 'hanuman-chalisa':
-    case 'shiv-chalisa':
-    case 'durga-chalisa':
-    case 'ganesh-chalisa':
-      return { hi: `पद ${verseNum}`, en: `Verse ${verseNum}` };
-    case 'bhagavad-gita':
-      return {
-        hi: `अध्याय ${progress.chapter} · श्लोक ${verseNum}`,
-        en: `Chapter ${progress.chapter} · Verse ${verseNum}`,
-      };
-    case 'sundarkand':
-      return {
-        hi: `सर्ग ${progress.chapter} · पद ${verseNum}`,
-        en: `Sarga ${progress.chapter} · Verse ${verseNum}`,
-      };
-    case 'shiva-strotam':
-    case 'durga-stotram':
-    case 'ganesh-stotram':
-    case 'vishnu-sahasranama':
-    case 'hanuman-ashtak':
-    case 'ram-stuti':
-      return {
-        hi: `स्तोत्र ${progress.chapter} · पद ${verseNum}`,
-        en: `Stotram ${progress.chapter} · Verse ${verseNum}`,
-      };
-    case 'ramcharitmanas':
-      return {
-        hi: `काण्ड ${progress.chapter} · पद ${verseNum}`,
-        en: `Kanda ${progress.chapter} · Verse ${verseNum}`,
-      };
-    case 'om-jai-jagdish':
-    case 'hanuman-aarti':
-    case 'sankat-mochan':
-    case 'jai-ganesh-deva':
-    case 'om-jai-shiv-omkara':
-    case 'jai-ambe-gauri':
-    case 'aarti-kunj-bihari':
-      return { hi: `पद ${verseNum}`, en: `Verse ${verseNum}` };
-    default:
-      return { hi: `पद ${verseNum}`, en: `Verse ${verseNum}` };
-  }
 }
 
 const styles = StyleSheet.create({

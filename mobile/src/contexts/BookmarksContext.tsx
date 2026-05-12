@@ -93,16 +93,18 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
 
   const addBookmark = useCallback(
     (ref: BookmarkRef) => {
+      if (isLoading) return;
       persist([ref, ...bookmarks.filter((b) => b.id !== ref.id)]);
     },
-    [bookmarks, persist]
+    [isLoading, bookmarks, persist]
   );
 
   const removeBookmark = useCallback(
     (id: string) => {
+      if (isLoading) return;
       persist(bookmarks.filter((b) => b.id !== id));
     },
-    [bookmarks, persist]
+    [isLoading, bookmarks, persist]
   );
 
   const isBookmarked = useCallback(
