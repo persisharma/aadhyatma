@@ -19,6 +19,7 @@ import {
 } from '@/data/japam';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import type { RootStackParamList } from '@/navigation/types';
@@ -47,7 +48,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [confirmKind, setConfirmKind] = useState<'beads' | 'all' | null>(null);
   const lastRoundRef = useRef(entry.rounds);
 
-  const handleTap = useCallback(() => {
+  const registerBead = useCallback(() => {
     if (!mantra) return;
     const next = increment(mantra.id);
     if (next.rounds > lastRoundRef.current) {
@@ -59,6 +60,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
     }
   }, [increment, mantra]);
+
+  const handleTap = registerBead;
 
   if (!mantra) {
     return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
@@ -231,6 +234,19 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             </Text>
           </View>
         </Pressable>
+
+        <View
+          style={[
+            styles.audioRow,
+            { borderTopColor: colors.divider },
+          ]}
+        >
+          <JapamAudioPlayer
+            mantraId={mantra.id}
+            lang={lang}
+            onIteration={registerBead}
+          />
+        </View>
 
         <View
           style={[
@@ -523,6 +539,10 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     opacity: 0.8,
     includeFontPadding: false,
+  },
+  audioRow: {
+    borderTopWidth: 1,
+    paddingVertical: 8,
   },
   actionsRow: {
     flexDirection: 'row',
