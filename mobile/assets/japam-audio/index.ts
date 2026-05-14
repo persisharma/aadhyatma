@@ -9,7 +9,7 @@
  * loops the file and increments on each iteration.
  */
 export const japamAudio: Record<string, number> = {
-  // 'om-namah-shivaya': require('./om-namah-shivaya.mp3'),
+  'om-namah-shivaya': require('./om-namah-shivaya.mp3'),
   // 'hare-krishna-mahamantra': require('./hare-krishna-mahamantra.mp3'),
   // 'gayatri-mantra': require('./gayatri-mantra.mp3'),
   // 'om-namo-bhagavate-vasudevaya': require('./om-namo-bhagavate-vasudevaya.mp3'),
