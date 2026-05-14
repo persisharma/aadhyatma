@@ -2,7 +2,7 @@
   "chapter": 3,
   "titleHi": "दुर्गा अष्टोत्तर शतनाम",
   "titleEn": "Durga Ashtottara Shatanam",
-  "verseCount": 5,
+  "verseCount": 6,
   "verses": [
     {
       "id": "ds-3-0",
@@ -24,6 +24,21 @@
       "chapter": 3,
       "number": 1,
       "sanskrit": [
+        "दुर्गा दुर्गार्तिशमनी दुर्गापद्विनिवारिणी।",
+        "दुर्गमच्छेदिनी दुर्गसाधिनी दुर्गनाशिनी।।"
+      ],
+      "linesEn": [
+        "durgā durgārtiśhamanī durgāpadvinivāriṇī",
+        "durgamachchhedinī durgasādhinī durganāśhinī"
+      ],
+      "meaningHi": "देवी दुर्गा हैं — दुर्गति को शान्त करने वाली, विपत्तियों को दूर करने वाली, कठिन मार्ग को छेदने वाली, बाधाओं को साधने वाली, और पाप-रूपी दुर्ग का नाश करने वाली।\n\nये छह नाम सभी 'दुर्ग' धातु से बने हैं — जिसका अर्थ है 'कठिनाई' या 'किला'। देवी वह शक्ति हैं जो हर प्रकार की कठिनाई का अन्त करती हैं।",
+      "meaningEn": "She is Durga — the one who pacifies distress, removes calamities, cuts through impassable paths, conquers fortress-like obstacles, and destroys the fortress of sin.\n\nAll six names derive from the root 'durga' meaning 'difficulty' or 'fortress.' The Goddess is that power which ends every form of hardship."
+    },
+    {
+      "id": "ds-3-2",
+      "chapter": 3,
+      "number": 2,
+      "sanskrit": [
         "दुर्गमज्ञानदा दुर्गदैत्यलोकदवानला।",
         "दुर्गमा दुर्गमालोका दुर्गमात्मस्वरूपिणी।।"
       ],
@@ -35,9 +50,9 @@
       "meaningEn": "She grants knowledge that is difficult to attain, burns the demon world like a forest fire. She herself is inaccessible, difficult to behold, and her true self is beyond the reach of intellect.\n\nThe word 'durgama' (inaccessible) recurs — the Goddess both grants difficult knowledge and is herself difficult to attain."
     },
     {
-      "id": "ds-3-2",
+      "id": "ds-3-3",
       "chapter": 3,
-      "number": 2,
+      "number": 3,
       "sanskrit": [
         "दुर्गमविद्या दुर्गमाश्रिता दुर्गमज्ञानसंस्थाना।",
         "दुर्गमध्यानभासिनी दुर्गमोहा दुर्गमगा।।"
@@ -50,9 +65,9 @@
       "meaningEn": "She presides over esoteric knowledge, her refuge is rare to attain, she is established in transcendent wisdom. She shines forth in deep meditation, makes delusion inaccessible (removes illusion), and her path is beyond ordinary reach."
     },
     {
-      "id": "ds-3-3",
+      "id": "ds-3-4",
       "chapter": 3,
-      "number": 3,
+      "number": 4,
       "sanskrit": [
         "शूलिनी सर्वमन्त्रमयी सर्वयन्त्रस्वरूपिणी।",
         "सर्वतन्त्ररूपा महाविद्या महामेधा महास्मृतिः।।"
@@ -65,9 +80,9 @@
       "meaningEn": "She bears the trident, is composed of all mantras, embodies all yantras. She is the form of all tantras, the supreme knowledge, supreme intellect, and supreme memory.\n\nThis verse describes the Goddess's tantric aspect — mantra, yantra, and tantra are all emanations of her being."
     },
     {
-      "id": "ds-3-4",
+      "id": "ds-3-5",
       "chapter": 3,
-      "number": 4,
+      "number": 5,
       "sanskrit": [
         "नमो देव्यै महादेव्यै शिवायै सततं नमः।",
         "नमः प्रकृत्यै भद्रायै नियताः प्रणताः स्म ताम्।।"

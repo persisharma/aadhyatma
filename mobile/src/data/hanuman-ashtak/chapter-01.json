@@ -2,7 +2,7 @@
   "chapter": 1,
   "titleHi": "हनुमान अष्टक",
   "titleEn": "Hanuman Ashtak",
-  "verseCount": 8,
+  "verseCount": 9,
   "verses": [
     {
       "id": "ha-1-0", "chapter": 1, "number": 0,
@@ -13,48 +13,55 @@
     },
     {
       "id": "ha-1-1", "chapter": 1, "number": 1,
+      "sanskrit": ["बाल समय रवि भक्षि लियो तब तीनहुँ लोक भयो अँधियारो।", "ताहि सों त्रास भयो जग को यह संकट काटन को कौन हारो।।"],
+      "linesEn": ["bāla samaya ravi bhakṣhi liyo taba tīnahūṁ loka bhayo aṁdhiyāro", "tāhī soṁ trāsa bhayo jaga ko yaha saṁkaṭa kāṭana ko kauna hāro"],
+      "meaningHi": "बाल्यकाल में हनुमान जी ने सूर्य को भक्षण (निगल) लिया, तब तीनों लोकों में अंधकार छा गया। उससे जगत को भय हुआ — यह संकट काटने में कौन समर्थ है?\n\nयह हनुमान जी की बाल-लीला है। शिशु हनुमान ने उगते सूर्य को फल समझकर उड़कर निगल लिया। इन्द्र ने वज्र से प्रहार किया जिससे उनकी ठुड्डी (हनु) टूटी — इसी से नाम 'हनुमान' पड़ा।",
+      "meaningEn": "In childhood, Hanuman swallowed the sun, plunging all three worlds into darkness. The universe trembled in fear — who could possibly remove such a crisis?\n\nThis is Hanuman's childhood feat. Baby Hanuman flew up and swallowed the rising sun thinking it a fruit. Indra struck him with his thunderbolt, breaking his jaw (hanu) — hence the name 'Hanuman.'"
+    },
+    {
+      "id": "ha-1-2", "chapter": 1, "number": 2,
       "sanskrit": ["बालपना में तिन्ह के संगा।", "क्षीरसिन्धु तट जाय खेलत संगा।।", "सीता शोक विनाशन लंका।", "दाहन सकल सुभट रन रंका।।"],
       "linesEn": ["bālapanā meṁ tinha ke saṁgā", "kṣhīrasindhu taṭa jāya khelata saṁgā", "sītā śhoka vināśhana laṁkā", "dāhana sakala subhaṭa rana raṁkā"],
       "meaningHi": "बालपन में वानरों के संग क्षीर-सागर के तट पर खेलते थे। सीता जी के शोक (दुख) को नष्ट करने वाले, लंका को दहन (जलाने) करने वाले, रणभूमि में सभी शूर-वीरों (सुभटों) को रंक (पराजित) करने वाले हैं।\n\nयह सुन्दरकाण्ड की कथा का संक्षेप है — सीता को ढूँढने लंका गए, अशोक वाटिका में सान्त्वना दी, और लंका दहन किया।",
       "meaningEn": "In childhood, playing with monkeys on the shore of the Milky Ocean. Destroyer of Sita's sorrow, burner of Lanka, making all great warriors helpless in battle.\n\nThis summarizes the Sundarkand narrative — going to Lanka to find Sita, consoling her in Ashoka Vatika, and burning Lanka."
     },
     {
-      "id": "ha-1-2", "chapter": 1, "number": 2,
+      "id": "ha-1-3", "chapter": 1, "number": 3,
       "sanskrit": ["लक्ष्मण मूर्छित पड़े सकारे।", "आनि संजीवन प्रान उबारे।।", "लक्ष्मण के प्रान जब जाहीं।", "लियो महावीर बूटी लाहीं।।"],
       "linesEn": ["lakṣhmaṇa mūrchchhita paḍe sakāre", "āni sañjīvana prāṇa ubāre", "lakṣhmaṇa ke prāṇa jaba jāhīṁ", "liyo mahāvīra būṭī lāhīṁ"],
       "meaningHi": "लक्ष्मण मूर्छित (बेहोश) होकर गिर पड़े। संजीवनी लाकर उनके प्राण बचा लिए। जब लक्ष्मण के प्राण जा रहे थे, महावीर (हनुमान) बूटी (संजीवनी) ले आए।\n\nमेघनाद की शक्ति (शस्त्र) से लक्ष्मण मृतप्राय हो गए। वैद्य सुषेण ने बताया कि द्रोणगिरि पर्वत से संजीवनी बूटी चाहिए। हनुमान ने पूरा पर्वत उठा लिया।",
       "meaningEn": "Lakshmana fell unconscious. Bringing the Sanjeevani herb, his life was saved. When Lakshmana's life was departing, the great hero (Hanuman) brought the herb.\n\nMeghnad's weapon left Lakshmana near-death. The physician Sushena said Sanjeevani from Dronagiri mountain was needed. Hanuman lifted the entire mountain."
     },
     {
-      "id": "ha-1-3", "chapter": 1, "number": 3,
+      "id": "ha-1-4", "chapter": 1, "number": 4,
       "sanskrit": ["रावण युद्ध अजान कियो तब।", "नागपाश बंधे सब तब।।", "श्री रघुनाथ समेत सवाये।", "ताहि समय हनुमान छुडाये।।"],
       "linesEn": ["rāvaṇa yuddha ajāna kiyo taba", "nāgapāśha baṁdhe saba taba", "śhrī raghunātha sameta savāye", "tāhi samaya hanumāna chhuḍāye"],
       "meaningHi": "रावण ने अज्ञान (छल) से युद्ध किया, तब नागपाश से सबको बाँध दिया — श्री रघुनाथ (राम) समेत सभी। उस समय हनुमान ने सबको छुड़ाया।\n\nइन्द्रजीत (मेघनाद) ने नागपाश अस्त्र चलाया जिससे राम-लक्ष्मण सहित सेना बंध गई। हनुमान ने गरुड़ को बुलाकर सबको मुक्त कराया।",
       "meaningEn": "Ravana fought deceitfully, then bound everyone with the Nagapasha (serpent-weapon) — including Lord Raghunatha (Rama). At that time Hanuman freed them all.\n\nIndrajit (Meghnad) launched the Nagapasha weapon binding Rama, Lakshmana and the army. Hanuman summoned Garuda to release everyone."
     },
     {
-      "id": "ha-1-4", "chapter": 1, "number": 4,
+      "id": "ha-1-5", "chapter": 1, "number": 5,
       "sanskrit": ["भीम रूप धरि असुर सँहारे।", "रामचन्द्र के काज सँवारे।।", "सेवक भक्ति सुमिरन प्रिय लागे।", "राम लखन सीता मन जागे।।"],
       "linesEn": ["bhīma rūpa dhari asura saṁhāre", "rāmachandra ke kāja saṁvāre", "sevaka bhakti sumirana priya lāge", "rāma lakhana sītā mana jāge"],
       "meaningHi": "भीम (विशाल/भयंकर) रूप धारण कर असुरों का संहार किया। रामचन्द्र के कार्य सँवारे (सफल किए)। सेवक-भक्ति और स्मरण — ये प्रिय लगते हैं। राम, लक्षमण, सीता — मन में जागते (विराजते) हैं।\n\nहनुमान जी का विशाल रूप — लंका में पंचमुखी हनुमान, अहिरावण वध आदि प्रसंगों में प्रकट हुआ।",
       "meaningEn": "Taking a fearsome form, he slew the demons. He accomplished Ramachandra's missions. Servant-devotion and remembrance are dear to him. Rama, Lakshmana, Sita dwell awake in his mind.\n\nHanuman's colossal form appeared in episodes like the Panchmukhi form in Lanka and the slaying of Ahiravana."
     },
     {
-      "id": "ha-1-5", "chapter": 1, "number": 5,
+      "id": "ha-1-6", "chapter": 1, "number": 6,
       "sanskrit": ["उर में राम लखन सिय राजें।", "हृदय छाँड़ के कहुँ नहिं बाजें।।", "सकल अमित चरित्र तुम्हारे।", "कहि न सकें सहसानन पारे।।"],
       "linesEn": ["ura meṁ rāma lakhana siya rājaiṁ", "hṛidaya chhāṁḍa ke kahūṁ nahīṁ bājaiṁ", "sakala amita charitra tumhāre", "kahi na sakaiṁ sahasānana pāre"],
       "meaningHi": "हृदय (उर) में राम, लक्षमण, सीता विराजते हैं। हृदय छोड़कर कहीं अन्यत्र नहीं विराजते। आपके सकल (सभी) अमित (अपार) चरित्र — सहस्रानन (शेषनाग — हजार मुख वाले) भी पार नहीं कर सकते (वर्णन नहीं कर सकते)।\n\nहनुमान जी ने अपना वक्ष फाड़कर दिखाया कि उसमें राम-सीता विराजते हैं — भक्ति का सर्वोच्च प्रतीक।",
       "meaningEn": "Rama, Lakshmana, and Sita reign in his heart. They reside nowhere but in his heart. All your infinite deeds — even Sheshanaga (thousand-mouthed) cannot fully describe them.\n\nHanuman tore open his chest to show Rama-Sita dwelling within — the supreme symbol of devotion."
     },
     {
-      "id": "ha-1-6", "chapter": 1, "number": 6,
+      "id": "ha-1-7", "chapter": 1, "number": 7,
       "sanskrit": ["सकल सुमंगल दायक राजा।", "कीजे नाथ हृदय महँ काजा।।", "किये धर्म जो रक्षे धारी।", "जुगन जुगन प्रतिपालक भारी।।"],
       "linesEn": ["sakala sumaṁgala dāyaka rājā", "kīje nātha hṛidaya mahaṁ kājā", "kiye dharma jo rakṣhe dhārī", "jugana jugana pratipālaka bhārī"],
       "meaningHi": "सकल (सभी) सुमंगल देने वाले राजा! हे नाथ! हृदय में (अपने भक्तों का) कार्य कीजिए। जिन्होंने धर्म की रक्षा धारण की — युग-युग में (प्रत्येक युग में) बड़े प्रतिपालक (रक्षक) हैं।\n\nहनुमान चिरंजीवी हैं — सात चिरंजीवियों में से एक। प्रत्येक युग में धर्म की रक्षा करते हैं।",
       "meaningEn": "King who grants all auspiciousness! O Lord! Work within the hearts (of your devotees). He who upheld the protection of dharma — the great protector age after age.\n\nHanuman is immortal (Chiranjeevi) — one of the seven immortals. He protects dharma in every age."
     },
     {
-      "id": "ha-1-7", "chapter": 1, "number": 7,
+      "id": "ha-1-8", "chapter": 1, "number": 8,
       "sanskrit": ["अष्टसिद्धि नव निधि के दाता।", "अस बर दीन्ह जानकी माता।।", "जो सत बार पाठ कर कोई।", "छूटहि बन्दि महासुख होई।।"],
       "linesEn": ["aṣhṭasiddhi nava nidhi ke dātā", "asa bara dīnha jānakī mātā", "jo sata bāra pāṭha kara koī", "chhūṭahi bandi mahāsukha hoī"],
       "meaningHi": "अष्ट सिद्धियों और नव निधियों के दाता — ऐसा वर जानकी माता (सीता) ने दिया है। जो सौ बार इस (अष्टक) का पाठ करता है, उसके बन्धन छूट जाते हैं और महासुख प्राप्त होता है।\n\nसीता जी ने हनुमान को वर दिया: 'तुम अष्ट सिद्धि, नव निधि के दाता बनोगे।' यह चालीसा में भी आया है। यह अष्टक का फलश्रुति (समापन) श्लोक है।",

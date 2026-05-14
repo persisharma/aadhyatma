@@ -2,7 +2,7 @@
   "chapter": 2,
   "titleHi": "गणेश अथर्वशीर्ष",
   "titleEn": "Ganesh Atharvashirsha",
-  "verseCount": 6,
+  "verseCount": 7,
   "verses": [
     {
       "id": "gs-2-0",
@@ -24,6 +24,23 @@
       "chapter": 2,
       "number": 1,
       "sanskrit": [
+        "ॐ नमस्ते गणपतये।",
+        "त्वमेव प्रत्यक्षं तत्त्वमसि। त्वमेव केवलं कर्ताऽसि।",
+        "त्वमेव केवलं धर्ताऽसि। त्वमेव केवलं हर्ताऽसि।"
+      ],
+      "linesEn": [
+        "oṁ namaste gaṇapataye",
+        "tvameva pratyakṣhaṁ tattvamasi tvameva kevalaṁ kartā'si",
+        "tvameva kevalaṁ dhartā'si tvameva kevalaṁ hartā'si"
+      ],
+      "meaningHi": "ॐ! हे गणपति, आपको नमस्कार। आप ही प्रत्यक्ष तत्व (परब्रह्म) हैं। आप ही एकमात्र कर्ता (सृष्टिकर्ता) हैं, आप ही एकमात्र धर्ता (पालनकर्ता) हैं, आप ही एकमात्र हर्ता (संहारकर्ता) हैं।\n\nगणपति अथर्वशीर्ष अथर्ववेद का एक उपनिषद है जो गणेश को परब्रह्म के रूप में स्थापित करता है। यहाँ 'तत्त्वमसि' — वेदान्त का महावाक्य — गणेश पर आरोपित है।",
+      "meaningEn": "Om! Salutations to Lord Ganapati. You are the visible manifestation of the supreme reality (Tat Tvam Asi). You alone are the creator, you alone are the sustainer, you alone are the destroyer.\n\nThe Ganapati Atharvashirsha is an Upanishad from the Atharvaveda that establishes Ganesha as the Supreme Brahman. Here 'Tat Tvam Asi' — the great Vedantic statement — is attributed to Ganesha."
+    },
+    {
+      "id": "gs-2-2",
+      "chapter": 2,
+      "number": 2,
+      "sanskrit": [
         "त्वमेव सर्वं खल्विदं ब्रह्मासि।",
         "त्वं साक्षादात्माऽसि नित्यम्।।"
       ],
@@ -35,9 +52,9 @@
       "meaningEn": "You are indeed all this — you are Brahman. You are directly the eternal Self.\n\n'Sarvam Khalvidam Brahma' (All this is Brahman) from Chandogya Upanishad is applied here to Ganesha. In the Ganapatya sect, Ganesha is worshipped in both saguna (with form) and nirguna (formless) aspects."
     },
     {
-      "id": "gs-2-2",
+      "id": "gs-2-3",
       "chapter": 2,
-      "number": 2,
+      "number": 3,
       "sanskrit": [
         "ऋतं वच्मि। सत्यं वच्मि।",
         "अव त्वं माम्। अव वक्तारम्।",
@@ -52,9 +69,9 @@
       "meaningEn": "I speak Rta (cosmic truth). I speak Satya (factual truth). Protect me. Protect the speaker. Protect the listener. Protect the giver.\n\nThis follows the Vedic oath pattern — before studying an Upanishad, the student pledges adherence to both Rta (cosmic order) and Satya (factual truth)."
     },
     {
-      "id": "gs-2-3",
+      "id": "gs-2-4",
       "chapter": 2,
-      "number": 3,
+      "number": 4,
       "sanskrit": [
         "त्वं वाङ्मयस्त्वं चिन्मयः।",
         "त्वमानन्दमयस्त्वं ब्रह्ममयः।",
@@ -69,9 +86,9 @@
       "meaningEn": "You are speech-embodied, you are consciousness-embodied. You are bliss-embodied, you are Brahman-embodied. You are Sat-Chit-Ananda (existence-consciousness-bliss) without a second.\n\n'Sat-Chit-Ananda' — existence, consciousness, bliss — is the Vedantic description of Brahman. 'Advitiya' (without a second) is the core concept of Advaita (non-dual) philosophy."
     },
     {
-      "id": "gs-2-4",
+      "id": "gs-2-5",
       "chapter": 2,
-      "number": 4,
+      "number": 5,
       "sanskrit": [
         "त्वं प्रत्यक्षं ब्रह्मासि।",
         "त्वं ज्ञानमयो विज्ञानमयोऽसि।।"
@@ -84,9 +101,9 @@
       "meaningEn": "You are the directly perceivable Brahman. You are made of Jnana (theoretical knowledge) and Vijnana (experiential knowledge).\n\nThe distinction between Jnana and Vijnana is important in Upanishadic thought — Jnana is scriptural understanding, Vijnana is experiential realization. Ganesha embodies both."
     },
     {
-      "id": "gs-2-5",
+      "id": "gs-2-6",
       "chapter": 2,
-      "number": 5,
+      "number": 6,
       "sanskrit": [
         "सर्वं जगदिदं त्वत्तो जायते।",
         "सर्वं जगदिदं त्वत्तस्तिष्ठति।",
