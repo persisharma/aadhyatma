@@ -294,7 +294,7 @@ function UnavailableNotice({ lang }: { lang: 'hi' | 'en' }) {
 const styles = StyleSheet.create({
   wrap: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
     gap: 18,
     paddingHorizontal: 16,
