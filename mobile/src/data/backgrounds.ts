@@ -21,8 +21,6 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
   chalisa: backgroundImages.category_chalisa_booklet_mala,
   japam: backgroundImages.category_japam_mala,
   aarti: backgroundImages.category_aarti_diya,
-  bhajan: backgroundImages.category_stotram_hymn_scroll,
-  veda: backgroundImages.category_granth_open_scripture,
 };
 
 const deityBackgrounds: Record<Deity, BackgroundImage> = {

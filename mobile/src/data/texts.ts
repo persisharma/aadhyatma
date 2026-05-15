@@ -19,9 +19,7 @@ export type ContentCategory =
   | 'stotram'
   | 'chalisa'
   | 'japam'
-  | 'aarti'
-  | 'bhajan'
-  | 'veda';
+  | 'aarti';
 export type Deity = 'rama' | 'krishna' | 'shiva' | 'hanuman' | 'durga' | 'ganesha';
 
 export type LibraryEntry = {
