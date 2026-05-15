@@ -25,11 +25,13 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
+import ShareButton from '@/components/ShareButton';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import LanguageToggle from '@/components/LanguageToggle';
 import SundarkandVersePage from '@/components/SundarkandVersePage';
 import { clampIndex } from '@/utils/clamp';
+import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -61,6 +63,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { setProgress } = useReadingProgress();
+  const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
 
   const chapter = useSafeChapter(route.params.chapter, getSundarkandChapter, navigation, 'SundarkandChapters');
@@ -261,6 +264,26 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
                       previewEn: v.linesEn[0] ?? '',
                     });
                   }
+                }}
+              />
+              <ShareButton
+                busy={shareBusy}
+                onPress={() => {
+                  const v = verses[currentIndex];
+                  share(
+                    {
+                      sourceId: 'sundarkand',
+                      sectionNameHi: chapter.titleHi,
+                      sectionNameEn: chapter.titleEn,
+                      verseLabelHi: v.labelHi,
+                      verseLabelEn: v.labelEn,
+                      linesHi: [...v.lines],
+                      linesEn: [...v.linesEn],
+                      meaningHi: v.meaningHi,
+                      meaningEn: v.meaningEn,
+                    },
+                    lang
+                  );
                 }}
               />
             </View>

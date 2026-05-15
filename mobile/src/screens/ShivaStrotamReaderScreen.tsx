@@ -23,11 +23,13 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
+import ShareButton from '@/components/ShareButton';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import { clampIndex } from '@/utils/clamp';
+import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -59,6 +61,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { setProgress } = useReadingProgress();
+  const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
 
   const chapter = useSafeChapter(route.params.chapter, getShivaStrotamChapter, navigation, 'ShivaStrotamChapters');
@@ -262,6 +265,27 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
                       previewEn: v.linesEn[0] ?? '',
                     });
                   }
+                }}
+              />
+              <ShareButton
+                busy={shareBusy}
+                onPress={() => {
+                  const v = chapter.verses[currentIndex];
+                  const isIntro = v.number === 0;
+                  share(
+                    {
+                      sourceId: 'shiva-strotam',
+                      sectionNameHi: chapter.titleHi,
+                      sectionNameEn: chapter.titleEn,
+                      verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${v.chapter}.${v.number}`,
+                      verseLabelEn: isIntro ? 'Introduction' : `Verse ${v.chapter}.${v.number}`,
+                      linesHi: [...v.sanskrit],
+                      linesEn: [...v.linesEn],
+                      meaningHi: v.meaningHi,
+                      meaningEn: v.meaningEn,
+                    },
+                    lang
+                  );
                 }}
               />
             </View>
