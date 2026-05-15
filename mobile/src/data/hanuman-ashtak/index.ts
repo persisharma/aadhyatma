@@ -67,7 +67,7 @@ export function getHanumanAshtakChapter(chapter: number): HanumanAshtakChapter {
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 8) {
-    throw new Error(`hanuman-ashtak: expected 8 total verses, got ${totalVerses}`);
+  if (totalVerses !== 9) {
+    throw new Error(`hanuman-ashtak: expected 9 total verses, got ${totalVerses}`);
   }
 })();

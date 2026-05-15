@@ -1,5 +1,9 @@
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { lazy, Suspense } from 'react';
+import { ActivityIndicator, View } from 'react-native';
+import {
+  createNativeStackNavigator,
+  type NativeStackScreenProps,
+} from '@react-navigation/native-stack';
 import HomeScreen from '@/screens/HomeScreen';
 import CategoryListScreen from '@/screens/CategoryListScreen';
 import DeityListScreen from '@/screens/DeityListScreen';
@@ -24,8 +28,24 @@ import RamStutiReaderScreen from '@/screens/RamStutiReaderScreen';
 import RamcharitmanasChaptersScreen from '@/screens/RamcharitmanasChaptersScreen';
 import RamcharitmanasReaderScreen from '@/screens/RamcharitmanasReaderScreen';
 import AartiReaderScreen from '@/screens/AartiReaderScreen';
-import JapamCounterScreen from '@/screens/JapamCounterScreen';
 import type { HomeStackParamList } from './types';
+
+const LazyJapamCounterScreen = lazy(() => import('@/screens/JapamCounterScreen'));
+type JapamCounterScreenProps = NativeStackScreenProps<HomeStackParamList, 'JapamCounter'>;
+
+function JapamCounterScreen(props: JapamCounterScreenProps) {
+  return (
+    <Suspense
+      fallback={
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator />
+        </View>
+      }
+    >
+      <LazyJapamCounterScreen {...props} />
+    </Suspense>
+  );
+}
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 

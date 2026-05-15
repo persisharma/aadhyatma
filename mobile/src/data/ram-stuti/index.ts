@@ -67,7 +67,7 @@ export function getRamStutiChapter(chapter: number): RamStutiChapter {
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 12) {
-    throw new Error(`ram-stuti: expected 12 total verses, got ${totalVerses}`);
+  if (totalVerses !== 13) {
+    throw new Error(`ram-stuti: expected 13 total verses, got ${totalVerses}`);
   }
 })();

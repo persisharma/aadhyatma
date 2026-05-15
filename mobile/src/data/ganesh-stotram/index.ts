@@ -96,7 +96,7 @@ export function getGaneshStotramChapter(chapter: number): GaneshStotramChapter {
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 12) {
-    throw new Error(`ganesh-stotram: expected 12 total verses, got ${totalVerses}`);
+  if (totalVerses !== 15) {
+    throw new Error(`ganesh-stotram: expected 15 total verses, got ${totalVerses}`);
   }
 })();
