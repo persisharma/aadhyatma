@@ -48,10 +48,6 @@ export default function HomeScreen({ navigation }: Props) {
       });
   }, []);
 
-  // Build tile list: 3 active categories + deity virtual tile + 3 coming-soon
-  const activeCategories = categories.filter((c) => c.status === 'active');
-  const comingCategories = categories.filter((c) => c.status === 'coming');
-
   const categoryIcons: Record<CategoryIconKey, React.ReactNode> = {
     granth: <CategoryIcon iconKey="granth" />,
     stotram: <CategoryIcon iconKey="stotram" />,
@@ -59,25 +55,23 @@ export default function HomeScreen({ navigation }: Props) {
     japam: <CategoryIcon iconKey="japam" />,
     deity: <CategoryIcon iconKey="deity" />,
     aarti: <CategoryIcon iconKey="aarti" />,
-    bhajan: <CategoryIcon iconKey="bhajan" />,
-    veda: <CategoryIcon iconKey="veda" />,
   };
 
   type TileItem = {
     key: string;
     nameHi: string;
     nameEn: string;
-    status: 'active' | 'coming';
+    status: 'active';
     icon?: React.ReactNode;
-    onPress?: () => void;
+    onPress: () => void;
   };
 
   const tiles: TileItem[] = [
-    ...activeCategories.map((c) => ({
+    ...categories.map((c) => ({
       key: c.id,
       nameHi: c.nameHi,
       nameEn: c.nameEn,
-      status: c.status,
+      status: 'active' as const,
       icon: categoryIcons[c.id],
       onPress: () => navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
     })),
@@ -89,14 +83,6 @@ export default function HomeScreen({ navigation }: Props) {
       icon: categoryIcons['deity'],
       onPress: () => navigation.navigate('DeityIndex'),
     },
-    ...comingCategories.map((c) => ({
-      key: c.id,
-      nameHi: c.nameHi,
-      nameEn: c.nameEn,
-      status: c.status,
-      icon: categoryIcons[c.id],
-      onPress: undefined,
-    })),
   ];
 
   const screenWidth = Dimensions.get('window').width;

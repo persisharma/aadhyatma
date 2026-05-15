@@ -22,7 +22,7 @@ export default function DeityIndexScreen({ navigation }: Props) {
         e.category !== 'japam' &&
         e.deities.includes(deityId as any)
     ).length;
-    if (count === 0) return 'Coming soon';
+    if (count === 0) return '';
     return `${count} text${count > 1 ? 's' : ''}`;
   };
 

@@ -271,8 +271,8 @@ function UnavailableNotice({ lang }: { lang: 'hi' | 'en' }) {
   const { colors, typography } = useTheme();
   const text =
     lang === 'hi'
-      ? 'इस मंत्र की ध्वनि शीघ्र उपलब्ध होगी'
-      : 'Audio recording coming soon';
+      ? 'इस मंत्र की ध्वनि उपलब्ध नहीं है'
+      : 'Audio not available';
   return (
     <View style={styles.wrap}>
       <Text
