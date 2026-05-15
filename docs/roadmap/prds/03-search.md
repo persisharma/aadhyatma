@@ -10,6 +10,10 @@
 
 ---
 
+**Bundle-only constraint:** the search index is built **on-device at runtime** from the same bundled data the reader already loads (`mobile/src/data/`). No remote search backend, no analytics SDK, no query text leaves the device.
+
+---
+
 ## 1. Problem
 
 The library has 20+ sections and ~3 500 verses. Today the only way to reach a verse is: Home → category tile → list → reader → swipe N times. A user who recalls *"कर्मण्येवाधिकारस्ते"* cannot get to BG 2.47 without knowing it's chapter 2. The Sadhak Profile tracks reads and the catalog keeps growing; without search, the back-catalog is invisible.
@@ -27,7 +31,8 @@ Ship a single search screen that searches verse text (Devanagari + romanization 
 
 ## 3. Non-goals
 
-- Cloud search (everything is on-device).
+- Cloud search. Out by constraint.
+- Server-side query telemetry — query *length* and result count are logged locally only; query *text* never leaves the device and is never persisted beyond the in-memory recent-search list.
 - Fuzzy / phonetic Sanskrit matching beyond ASCII-folded normalization. (E.g., "krishna" matches "kṛṣṇa" because both fold to `krsna`, but "krsn" with no vowel is not a v1 query.)
 - Search history or saved searches (Q4 if used).
 - Voice search.
@@ -84,17 +89,17 @@ Ship a single search screen that searches verse text (Devanagari + romanization 
 - Search is a linear scan with early exit at 50 hits — at 3 500 verses + 25 entries, this is < 50 ms even on a low-end device.
 - Memoize per query (LRU 20).
 - Result component reuses `LibraryCard` styling for the "Sections" group and a new lightweight `VerseResultRow` for verses.
-- Telemetry: log query length, result count, tap-through index — no query text leaves the device (privacy hygiene; matches the no-account stance).
+- Telemetry: query length, result count, tap-through index — written only to the local diagnostics ledger that PRD-06 manages. Nothing transmitted.
 
 ## 8. Success metrics & instrumentation
 
 | Metric | Source | Target |
 |---|---|---|
-| WAU search rate | Local event | ≥ 35% |
-| Search → tap rate | Local event | ≥ 60% |
-| p95 keystroke→render latency | Sentry performance | < 200 ms |
-| Zero-result rate | Local event | < 15% (signals indexing gap if higher) |
-| Index build time at app start | Sentry timing | < 80 ms p95 |
+| WAU search rate | Local diagnostics ledger | ≥ 35% |
+| Search → tap rate | Local diagnostics ledger | ≥ 60% |
+| p95 keystroke→render latency | Local perf timer + diagnostics screen (manual read) | < 200 ms |
+| Zero-result rate | Local diagnostics ledger | < 15% (signals indexing gap if higher) |
+| Index build time at app start | Local perf timer | < 80 ms p95 |
 
 ## 9. Risks
 

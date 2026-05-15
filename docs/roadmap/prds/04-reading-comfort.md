@@ -10,6 +10,10 @@
 
 ---
 
+**Bundle-only constraint:** preferences persist in `AsyncStorage`. Theme palette is compiled into the JS bundle. No remote config, no A/B testing service.
+
+---
+
 ## 1. Problem
 
 The reader is well-designed for default users but inflexible:

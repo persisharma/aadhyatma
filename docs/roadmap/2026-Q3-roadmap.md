@@ -7,6 +7,19 @@
 
 ---
 
+## Operating constraint — bundle-only
+
+**Every feature in this quarter ships entirely inside the app binary. No runtime backend, no remote CDN, no analytics SaaS, no cloud sync.** All data — verses, audio, festival dates, search indices — lives in `mobile/assets/` or `mobile/src/data/` and is loaded from the device. Anything that traditionally required a server is rebuilt as an on-device equivalent (local notifications, local crash log, document-picker import/export). PRDs are written against this constraint.
+
+Implications surfaced upfront:
+
+- **App-binary size budget for the quarter: +60 MB.** Audio (PRD-02) is the dominant consumer. Anything that pushes us past this gets cut or staged across two releases.
+- **Updates ship via store releases only.** No OTA hot-reload of data (festival calendars, audio, etc.); those refresh with the next App Store version.
+- **Crash analytics is local-first.** A buffered crash log on device, user-initiated send via the OS share sheet. No Sentry.
+- **Backup is user-driven export/import.** A JSON file the user moves between devices via the OS share sheet (iCloud Drive, Files, AirDrop, email). No cloud bucket.
+
+---
+
 ## 1. Where the product is today
 
 Vedansh ships 20+ active content sections (4 chalisas, 5 stotrams, 3 granths, 1 japam group with N mantras, 7 aartis) under a parchment-first reader with bilingual Hindi/English toggle. Anchor experiences in production:
@@ -27,7 +40,7 @@ What is **not** in production yet (gap inventory):
 | Comfort | No dark mode, no font-size control, no sleep timer. | README §Roadmap lists dark mode as deferred. |
 | Sharing | No way to share a verse outside the app — high-intent moment lost. | No `expo-sharing` or `react-native-view-shot` deps. |
 | Reliability | RULEBOOK §4.10 requires `<Pascal>ReaderScreen.test.tsx` per section; the `__tests__` directory is empty. No crash analytics. | `find mobile/src/screens/__tests__` returns nothing. |
-| Sync | Bookmarks and progress are device-local; uninstall loses sadhana history. | `BookmarksContext`, `ReadingProgressContext`, `UserActivityContext` all use `AsyncStorage` only. |
+| Backup | Bookmarks and progress are device-local; uninstall loses sadhana history. The bundle-only constraint forbids cloud sync — we close this with user-driven file export/import instead. | `BookmarksContext`, `ReadingProgressContext`, `UserActivityContext` all use `AsyncStorage` only. |
 
 These gaps frame the quarter's themes.
 
@@ -49,17 +62,17 @@ Themes **explicitly deferred** to Q4 2026: full dark mode, account login, Androi
 
 **North-star:** D30 / D7 return rate of users who completed onboarding.
 
-| Metric | Today (est.) | Q3 target |
-|---|---|---|
-| D7 return | ~28% (no analytics — baseline TBD week 1) | 38% |
-| D30 return | ~14% (estimated) | 22% |
-| Median weekly active days/user | 1.8 | 3.0 |
-| Notification opt-in rate (new) | n/a | ≥ 55% |
-| Search adoption (% WAU who search at least once) | n/a | ≥ 35% |
-| Verse-audio playthrough rate (chalisa pilot) | n/a | ≥ 40% |
-| Crash-free sessions (iOS) | unknown | ≥ 99.5% |
+| Metric | Today (est.) | Q3 target | How measured (bundle-only) |
+|---|---|---|---|
+| D7 return | unknown | 38% | Local launch-date ring buffer (last 30 days of `YYYY-MM-DD` open keys) read via in-app diagnostics screen |
+| D30 return | unknown | 22% | Same ring buffer |
+| Median weekly active days/user | 1.8 (estimated from `UserActivityContext` proxy) | 3.0 | `UserActivityContext.activeDateKeys()` already exists |
+| Notification opt-in rate (new) | n/a | ≥ 55% | Local opt-in flag rate (TestFlight cohort) |
+| Search adoption (% WAU who search at least once) | n/a | ≥ 35% | Local counter |
+| Verse-audio playthrough rate (chalisa pilot) | n/a | ≥ 40% | Local counter |
+| Crash-free sessions (iOS) | unknown (App Store dashboard only) | ≥ 99.5% | App Store Connect's built-in crash dashboard (no SDK needed) + the local crash-log feature in PRD-06 |
 
-Baseline collection (Sentry + an opt-in lightweight event log) ships in week 1 of the quarter as part of PRD-06.
+We do **not** ship a third-party analytics SDK. The bundle-only constraint means everything above is either (a) read off-device by us via App Store Connect, or (b) accessible only from inside the app via a hidden diagnostics screen the user can share with us if they want. Baselines come from TestFlight + App Store Connect, not Sentry.
 
 ---
 
@@ -73,8 +86,8 @@ Six PRDs land in three thematic waves. Detailed PRDs in `docs/roadmap/prds/`.
 | [PRD-02](./prds/02-verse-audio.md) | Verse audio for chalisas & aartis (pilot → full) | Habit | L (6 wk) | Jul–Aug |
 | [PRD-03](./prds/03-search.md) | Global library search | Discovery | M (3 wk) | Aug |
 | [PRD-04](./prds/04-reading-comfort.md) | Reading comfort pack (font scale, dark mode, sleep timer) | Habit | M (4 wk) | Aug–Sep |
-| [PRD-05](./prds/05-share-verse-card.md) | Share verse as parchment card | Habit / Growth | S (2 wk) | Sep |
-| [PRD-06](./prds/06-foundation-hardening.md) | Test foundation, crash analytics, cloud-lite backup | Reliability | L (parallel, 8 wk) | Jul–Sep |
+| [PRD-05](./prds/05-share-verse-card.md) | Share verse on WhatsApp (image + app link) | Growth | S (2 wk) | Sep |
+| [PRD-06](./prds/06-foundation-hardening.md) | Test foundation, local crash log, on-device backup export/import | Reliability | L (parallel, 8 wk) | Jul–Sep |
 
 PRD-06 runs as a continuous track across the quarter and lands as a sequence of PRs rather than a single release.
 
@@ -115,21 +128,25 @@ Release v1.4    v1.5            v1.6 v1.7 v1.7.1
 
 | Risk | Likelihood | Mitigation |
 |---|---|---|
+| Bundled audio inflates binary past 200 MB perceived "big app" threshold | Medium | Hard budget +60 MB for the quarter. AAC at 64 kbps mono, pandit-style recitations are ~0.5 MB/min. Stage chalisa rollouts: pilot Hanuman Chalisa (~6 MB) in v1.5.0; remaining chalisas + aartis (~30 MB) in v1.5.1. Bhagavad Gītā audio remains out of scope (would be ~80 MB alone). |
 | Audio recitation licensing / quality | Medium | Use creative-commons / commissioned recitations of Hanuman Chalisa as the pilot; gate PRD-02 expansion on legal sign-off (see PRD-02 §Open Questions). |
 | Notification fatigue / opt-out spiral | Medium | Cap to 1 daily verse + opt-in festival reminders. Quiet-hours default (see PRD-01). |
+| Festival calendar staleness (lunar dates shift annually) | Medium | Bundle 18 months of dates; refresh the bundled JSON each App Store release. Show a "calendar through {month, year}" line in Settings so users know when to update. |
 | Search index size hurts cold-start | Low | Build the index at runtime once on first search (memoized), not at app boot. |
 | Dark mode regression across 18 reader screens | Medium | Token-only audit gate before any screen changes; ship behind a feature flag for 1 release. |
 | SDK 55 upgrade required by App Store before quarter ends | Low–Medium | Track Expo's release calendar; reserve 1 week in week 36 buffer. |
 | No Android user feedback because we have no Play Store release | High | Treat Android Play Store launch as a Q4 item; do not block Q3 features on Play submission. |
+| Without an external crash service, regressions can go undetected | Medium | Buffered local crash log + App Store Connect's built-in crash dashboard. TestFlight 7-day soak per release. See PRD-06. |
 
 **Open decisions (need user input):**
 
 1. Are we committing to an Android Play Store launch in this quarter, or treating Q3 as iOS-only?
-2. Audio: do we commission recitations or license public-domain recordings? Budget implication.
-3. Do we want lightweight anonymous cloud backup (PRD-06) in Q3, or wait until accounts ship in Q4?
+2. Audio: do we commission recitations or license public-domain recordings? Bundle-only means whatever we pick gets baked into the binary; storage cost is paid once at build time, not per stream. Budget implication.
+3. Audio rollout shape: ship Hanuman Chalisa alone in v1.5.0 (smaller binary jump) and remaining chalisas+aartis in v1.5.1, or batch them all in v1.5.0? Default plan: stage them.
 4. App-name decision: the codebase says "Vedansh" but `RULEBOOK.md` and the umbrella repo say "Aadhyatma." Pick one before any marketing artifact (notifications text, share-card branding) goes live.
+5. Hard binary size ceiling — pick a number. Today the app is small (no audio). Once chalisas land, the binary will sit ~50–60 MB heavier. Are we ok with that? If we cap at +30 MB, half the chalisas push to Q4.
 
-These four are surfaced in this doc so they get answered in a planning review, not discovered mid-sprint.
+These five are surfaced in this doc so they get answered in a planning review, not discovered mid-sprint.
 
 ---
 
@@ -137,12 +154,14 @@ These four are surfaced in this doc so they get answered in a planning review, n
 
 To prevent scope creep, these are off the table for Q3:
 
-- User accounts / login (Q4).
+- User accounts / login (would require a backend; conflicts with bundle-only constraint anyway).
+- **Anything network-backed:** cloud sync, server-pushed notifications, streaming audio, server analytics SDK, remote feature flags, server-fetched festival data. All Q4+ if ever.
 - Multi-language support beyond Hindi/English (Q4+).
-- In-app purchases / donations (TBD, separate brief).
+- In-app purchases / donations (TBD, separate brief; bundle-only does not preclude IAP but it's still out of scope this quarter).
 - New content sections beyond bug-fix data corrections. The 20+ existing sections are enough to validate the new engagement surfaces; adding more parallel to feature work re-creates the PR #31 risk.
 - A redesign of the parchment system. The design language is working; iterate, don't rebuild.
 - Web app / responsive web. The umbrella repo's `design-preview.html` is a mockup, not a target.
+- Bhagavad Gītā full-length audio (~80 MB bundled — defer to a separate "Gītā audio" release once we know users want it from chalisa metrics).
 
 ---
 
@@ -151,10 +170,11 @@ To prevent scope creep, these are off the table for Q3:
 At the end of Q3 2026 the product is considered to have delivered if:
 
 1. v1.4.0, v1.5.0, v1.6.0, v1.7.0 are live on the iOS App Store (v1.7.1 stretch).
-2. Notification opt-in rate ≥ 55% on new installs, with daily-verse delivery confirmed end-to-end.
-3. At least Hanuman Chalisa and Sundarkand have working verse audio.
-4. Global search returns results across all active sections within 200 ms perceived latency.
+2. Notification opt-in rate ≥ 55% on new installs, with daily-verse delivery confirmed end-to-end. **All notifications are scheduled locally on-device.**
+3. At least Hanuman Chalisa has working bundled audio. All 4 chalisas + 7 aartis have audio by quarter-end.
+4. Global search returns results across all active sections within 200 ms perceived latency, using an on-device index built from bundled data.
 5. Dark mode ships behind a setting toggle, defaults to "system."
-6. Every reader screen has a smoke test per RULEBOOK §4.10. Sentry is wired in production.
+6. Every reader screen has a smoke test per RULEBOOK §4.10. Local crash log feature ships; App Store Connect crash dashboard is monitored weekly.
 7. The "share verse as parchment card" surface is reachable from any reader page.
-8. Quarterly retrospective happens in week 39 with metrics-against-targets table populated.
+8. On-device backup export/import flow works end-to-end (verified by uninstall → reinstall → import).
+9. Quarterly retrospective happens in week 39 with metrics-against-targets table populated.

@@ -14,8 +14,12 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 | [PRD-02](./prds/02-verse-audio.md) | Verse audio for chalisas & aartis | v1.5.0 |
 | [PRD-03](./prds/03-search.md) | Global library search | v1.6.0 |
 | [PRD-04](./prds/04-reading-comfort.md) | Reading comfort pack (font scale, dark mode, sleep timer) | v1.7.0 |
-| [PRD-05](./prds/05-share-verse-card.md) | Share verse as parchment card | v1.7.1 |
-| [PRD-06](./prds/06-foundation-hardening.md) | Test foundation, crash analytics, cloud-lite backup | continuous |
+| [PRD-05](./prds/05-share-verse-card.md) | Share verse on WhatsApp (image + app link) | v1.7.1 |
+| [PRD-06](./prds/06-foundation-hardening.md) | Test foundation, local crash log, on-device backup export/import | continuous |
+
+## Constraint
+
+**Every feature ships entirely inside the app binary.** No runtime backend, no remote CDN, no analytics SaaS, no cloud sync. Audio, festival dates, and search indices are bundled. Notifications are scheduled locally. Crash logs and backups are device-controlled (user shares them out via the OS share sheet if they choose).
 
 ## Convention
 

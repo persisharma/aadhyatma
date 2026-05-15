@@ -1,4 +1,4 @@
-# PRD-06 — Foundation Hardening: Tests, Crash Analytics, Cloud-lite Backup
+# PRD-06 — Foundation Hardening: Tests, Local Crash Log, On-Device Backup
 
 | | |
 |---|---|
@@ -8,6 +8,8 @@
 | **T-shirt size** | L (~8 dev-weeks, spread across the quarter) |
 | **Owner** | TBA |
 
+**Bundle-only constraint:** there is no third-party SDK that phones home, no cloud sync, no remote logging. Crash reports are buffered on-device and the user opts to share via the OS share sheet. Backup is a JSON file the user moves between devices through Files / iCloud Drive / AirDrop / email — Vedansh never sees the blob.
+
 ---
 
 ## 1. Problem
@@ -15,8 +17,8 @@
 Three foundation gaps are dragging on every shipping decision:
 
 1. **No reader smoke tests.** `RULEBOOK.md` §4.10 mandates a `<Pascal>ReaderScreen.test.tsx` per section. The `mobile/src/screens/__tests__/` directory **does not exist**. PR #31 (Balkand crash) shipped because `tsc` alone doesn't catch field-shape drift after a cast. Every future section is exposed to the same risk.
-2. **No crash analytics.** We can't tell if v1.3.0 is stable in the wild. Crash rate, OS distribution, route at crash — all unknown. App Store crash dashboard is too low-resolution to act on.
-3. **No backup.** `BookmarksContext`, `ReadingProgressContext`, `UserActivityContext` all live in `AsyncStorage`. An app uninstall / device migration wipes the streak data that the Sadhak Profile makes meaningful. Worse: users **don't know** their data is fragile, so the loss is silent.
+2. **Crash visibility is App-Store-dashboard-only.** Apple's own crash dashboard tells us crash rate and stack frames, but lags 24–48 h and gives no in-app context (which screen, what verse, what state). The bundle-only constraint rules out Sentry. We need an on-device crash record the user can voluntarily share.
+3. **No backup.** `BookmarksContext`, `ReadingProgressContext`, `UserActivityContext` all live in `AsyncStorage`. An app uninstall / device migration wipes the streak data that the Sadhak Profile makes meaningful. The bundle-only constraint rules out cloud sync — we close the gap with **user-controlled export/import** instead.
 
 These aren't features users see, but every one of PRD-01 through PRD-05 leans on them.
 
@@ -25,23 +27,33 @@ These aren't features users see, but every one of PRD-01 through PRD-05 leans on
 By end of Q3 2026:
 
 - 100% of `*ReaderScreen` files have a co-located smoke test that mounts the screen with the chapter-1 fixture.
-- Sentry (or equivalent) in production with a populated dashboard: crash-free sessions, top-5 crash groups, top-5 perf transactions.
-- Anonymous, opt-out, device-bound backup of bookmarks + reading progress + sadhak activity to a key-value cloud bucket. Restore on reinstall via a short recovery code.
-- EAS OTA pipeline scripted so that bug-fixes between store releases take < 10 minutes from merge to user.
+- An on-device crash log captures the last N errors with screen + state context, and surfaces a "Send report" affordance on next launch — opens the user's mail app via `expo-mail-composer` (or the OS share sheet as fallback). **Nothing transmitted without explicit user tap.**
+- A user can export their bookmarks + reading progress + sadhak activity to a single `.json` file via the OS share sheet, and import that file on another device (or after a reinstall) to restore state.
+- App Store Connect crash dashboard is checked weekly as the operational baseline.
+- EAS build pipeline scripted so that store submissions take < 30 minutes from `git tag` to TestFlight upload.
 
 ## 3. Non-goals
 
-- Full user accounts. The backup is anonymous and device-bound; auth is a Q4 project.
-- A custom analytics product. We use Sentry's built-in feature flagging / breadcrumbs for product events; no separate PostHog / Amplitude installation unless the metric set demands it.
-- 100% test coverage. The goal is meaningful smoke-test coverage on the user-visible critical path, not a coverage percentage chase.
+- Sentry, Crashlytics, or any third-party crash service. Out by constraint.
+- Cloud sync. Out by constraint.
+- User accounts. Q4 at earliest.
+- Server-side analytics. Out by constraint.
+- `expo-updates` OTA. The OTA mechanism fetches a JS bundle from Expo's servers at runtime — this conflicts with the bundle-only stance. **Removed from this PRD.** Updates ship via App Store releases only.
+- 100% test coverage. The goal is meaningful smoke-test coverage on the user-visible critical path.
 
-## 4. User-visible behavior (for the cloud-lite backup track)
+## 4. User-visible behavior
 
-> When I uninstall and reinstall Vedansh, the app asks: "Restore from a previous device? Enter your 6-digit recovery code." If I have one (shown in More → Backup), my bookmarks and streak come back.
+### 4.1 Crash log
 
-> If I never set up backup, nothing changes. The app behaves like today.
+> When the app crashes (or hits a captured JS error), nothing visible happens that session. On next launch, a small parchment sheet appears: "Vedansh hit an issue last time. Send a short, anonymous report to the developers?" Tap **Send** → opens the mail composer with the buffered log pre-attached and a pre-filled subject. Tap **Discard** → log is cleared. **Nothing leaves the device unless I tap Send.**
 
-> I can turn backup off at any time, which deletes the cloud copy within 24 hours.
+### 4.2 Backup export
+
+> In More → Backup, I tap **Export my data**. The app writes a `vedansh-backup-2026-09-15.json` file and opens the OS share sheet. I save it to Files, iCloud Drive, AirDrop to my new phone, or email to myself — my choice. The app does not upload anywhere.
+
+### 4.3 Backup import
+
+> On a fresh install, in More → Backup, I tap **Restore from file**. iOS opens its document picker. I pick the `vedansh-backup-*.json` I saved earlier. The app merges it in. My bookmarks, progress, and streaks come back.
 
 ## 5. Scope
 
@@ -56,85 +68,109 @@ By end of Q3 2026:
 3. Wire tests into CI (GitHub Actions). Block merge on red CI for any PR touching `mobile/src`.
 4. Update `RULEBOOK.md §4.10` to reflect the harness is live.
 
-### Track B — Crash analytics & telemetry (weeks 28–31)
+### Track B — Local crash log & in-app diagnostics (weeks 28–31)
 
-1. Add `@sentry/react-native`. Configure in `mobile/App.tsx`. DSN injected from EAS env (never committed to repo).
-2. Wrap navigation in `Sentry.ReactNavigationInstrumentation` for automatic transaction tracing.
-3. Define a single `analytics` module (`mobile/src/utils/analytics.ts`) wrapping Sentry breadcrumbs + custom events. **All telemetry from PRD-01 → PRD-05 goes through this module** so we can swap providers later.
-4. Define an event whitelist (no free-form strings). Initial set:
-   - `notif_opt_in`, `notif_opened`, `notif_scheduled_failed`
-   - `audio_play`, `audio_complete`, `audio_seek`, `audio_error`
-   - `search_query`, `search_tap`
-   - `theme_change`, `font_scale_change`, `sleep_timer_set`
-   - `share_initiated`, `share_completed`, `share_failed`
-   - `bookmark_added`, `bookmark_removed`
-   - `app_open`, `app_open_from_notif`
-5. Privacy: no PII / no user-input text in events. Query *length* yes, query *text* no. Document this in `docs/roadmap/prds/06-foundation-hardening.md` (this file).
-6. Publish a Sentry dashboard with: crash-free sessions, top-5 crash groups, p95 reader cold-start.
+1. Install a JS global error handler in `App.tsx` via `ErrorUtils.setGlobalHandler`. Wrap each top-level screen in a `<CrashBoundary>` React error boundary that funnels errors into the same sink.
+2. New module `mobile/src/diagnostics/crashLog.ts`:
+   - Ring buffer of last 20 entries in `AsyncStorage` under `@vedansh/crash-log`.
+   - Entry shape: `{ ts, kind: 'fatal' | 'caught' | 'event', screen, message, stackHead /* 10 lines */, appVersion, osVersion, locale }`. **No PII, no verse text, no bookmark contents, no user-typed queries** — all values come from a pre-vetted whitelist.
+3. On app launch, if buffer is non-empty and last entry is from a previous session, show the "Send report?" sheet (§4.1).
+4. **Send mechanism:** `expo-mail-composer` with a pre-filled subject `[Vedansh] Crash report from v{ver}` and the log JSON as attachment. If mail isn't configured on the device, fall back to the OS share sheet (the user can pick "Save to Files" or anything else). Either way, the user is in the driver's seat.
+5. **Local diagnostics ledger** for product metrics that previously would have gone to Sentry:
+   - Same module exposes `logEvent(name, props)` where `name` is from a whitelist (notif_opt_in, audio_play, search_query, theme_change, share_initiated, …) and `props` are bounded primitives only (no free-form strings, no query text, no verse ids that could identify content preferences as PII).
+   - Aggregated daily into `@vedansh/diagnostics-ledger`. The user can view their own ledger in a hidden "About → Diagnostics" screen and share it on request.
+   - **PM consumption:** weekly review of TestFlight tester diagnostics shares + App Store Connect dashboards. We accept that fleet-wide quantitative measurement is harder than with a SaaS analytics tool; that's the price of bundle-only.
 
-### Track C — Cloud-lite backup (weeks 30–37)
+### Track C — On-device backup export/import (weeks 30–37)
 
-1. Choose a key-value cloud store with anonymous writes: **recommended: Cloudflare Workers KV** behind a thin Worker that gates write rate per-IP and per-key. No user identity; no email.
-2. Generate a recovery code on first launch and persist locally — `XXXX-XXXX` random alphanumeric. Display in More → Backup with a "Copy to clipboard" CTA.
-3. Periodic sync: every 24 h, write the merged state of `bookmarks + readingProgress + userActivity` to `KV[recoveryCode]` as a single gzipped JSON blob. Cap blob size at 256 KB.
-4. On a fresh install, More → Backup → "Restore from another device" prompts the user to enter their 6-digit code. Worker fetches blob → app merges into local state (always merge, never overwrite — collision resolution: union of bookmarks, max of activity counts, latest progress timestamp wins).
-5. Privacy posture (must appear in the help modal): "Backup stores only your bookmarks, progress, and counter totals. No name, no email, no verses you read. You can disable backup any time, which deletes the cloud copy within 24 hours."
-6. Server: a thin Cloudflare Worker, ~150 lines of TS. Add `infra/backup-worker/` to the repo with its own deploy script. Source-of-truth is in this repo.
+1. New module `mobile/src/backup/backup.ts` exposing `exportBackup()` and `importBackup(uri)`.
+2. **Export.** Serialize `bookmarks + readingProgress + userActivity + notificationPreferences + readingPreferences` into a single JSON, version-stamped:
+   ```ts
+   type BackupBlob = {
+     version: 1;
+     createdAt: string;        // ISO
+     appVersion: string;       // e.g. '1.7.0'
+     bookmarks: BookmarkRef[];
+     readingProgress: Record<string, { chapterIndex: number; verseIndex: number; updatedAt: string }>;
+     userActivity: Record<DateKey, DailyEntry>;
+     notificationPreferences: NotificationPreferences;
+     readingPreferences: ReadingPreferences;
+   };
+   ```
+3. Write to a temp file via `expo-file-system`, then hand to `expo-sharing.shareAsync(uri)`. The OS share sheet takes it from there (Files, iCloud Drive, AirDrop, mail attachment, etc.).
+4. **Import.** `expo-document-picker.getDocumentAsync({ type: 'application/json' })` → read file → validate against schema (zod, lightweight) → merge.
+5. **Merge rules**, explicit and unit-tested:
+   - `bookmarks`: union by `id`. Local wins on duplicate timestamp.
+   - `readingProgress`: per `sourceId`, latest `updatedAt` wins.
+   - `userActivity`: per `DateKey`, sum `reads` and **max** `japa` counters (re-importing same day twice does not double-count).
+   - `notificationPreferences`, `readingPreferences`: imported overrides only if local is at defaults; otherwise we keep local and surface a one-line "Some preferences preserved from this device" toast.
+6. **No "Backup ID" or codes.** The file is the artifact. Lose the file = lose the backup. We explain this clearly in the help text — the trade for not running any servers.
+7. **Privacy:** the backup file contains nothing the app doesn't already store locally. It is plaintext JSON so a savvy user can inspect it before sharing.
 
-### Track D — EAS OTA pipeline (week 27, one-shot)
+### Track D — Build & release scripting (week 27, one-shot)
 
-1. Add `scripts/release-ota.sh` that runs `eas update --branch production` after a `git tag`.
-2. Document in `mobile/README.md` (small section) so anyone can ship a bug-fix without app-store delay.
-3. Confirm `expo-updates` runtime config works against the current SDK 54 setup.
+1. Add `scripts/eas-submit.sh` wrapping the `eas build && eas submit` flow with parameter checks (branch name, version bump prompts).
+2. Document in `mobile/README.md` so anyone can ship without remembering flags.
+3. **Removed** from earlier draft: OTA via `expo-updates`. The OTA mechanism fetches code from Expo's servers at runtime; that conflicts with bundle-only. All updates go through the App Store.
 
-## 6. Technical sketch — backup blob shape
+## 6. Technical sketch — crash log surface flow
 
-```ts
-type BackupBlob = {
-  version: 1;
-  createdAt: string;       // ISO
-  recoveryCode: string;
-  bookmarks: BookmarkRef[];
-  readingProgress: Record<string, { chapterIndex: number; verseIndex: number; updatedAt: string }>;
-  userActivity: Record<DateKey, DailyEntry>;
-};
+```
+App launch
+  ↓
+loadCrashBuffer()
+  ↓
+buffer.length > 0 && last entry from previous session?
+  ↓ yes                                       ↓ no
+show CrashReportSheet (parchment modal)       continue normally
+  ↓
+user taps:
+  • Send → openMailComposer({ subject, body, attachments: [logUri] })
+           ↓
+           mail composer / share sheet handles delivery (user-controlled)
+           ↓
+           on dismiss → clearBuffer()
+  • Discard → clearBuffer()
+  • Later → leave buffer; ask again next launch (cap 3 asks)
 ```
 
-Merge rules on restore are explicit and unit-tested:
-
-- `bookmarks`: union by `id`. Local wins on duplicate timestamp.
-- `readingProgress`: per `sourceId`, latest `updatedAt` wins.
-- `userActivity`: per `DateKey`, sum `reads` and max `japa` counters (so re-importing same day twice doesn't double-count).
+No automatic send. No background upload. No "anonymous" silent transmission. The bundle-only stance is the user's privacy guarantee.
 
 ## 7. Success metrics
 
 | Metric | Source | Target |
 |---|---|---|
 | `*ReaderScreen` smoke-test coverage | CI report | 100% of active sections |
-| Crash-free sessions, iOS | Sentry | ≥ 99.5% |
-| % of users with backup enabled | Local + Worker count | ≥ 20% within 30 days |
-| Backup restore success rate | Worker logs | ≥ 95% |
-| Median time from PR merge to OTA-live | Manual log | < 10 min |
+| Crash-free sessions, iOS | App Store Connect | ≥ 99.5% |
+| Crash-report send rate (when prompted) | Local counter | ≥ 30% (low expectations — users have to actively tap Send) |
+| Backup export usage | Local counter | ≥ 15% of users within 30 days |
+| Backup import success rate | Local counter (validate → merge → no thrown error) | ≥ 95% |
+| Median time from `git tag` → TestFlight | Manual log | < 30 min |
 
 ## 8. Risks
 
 | Risk | Mitigation |
 |---|---|
-| Worker abuse (someone bulk-writing junk to KV) | Per-IP rate limit; per-recovery-code write rate cap (1 write / 5 min); 256 KB cap; alphanumeric code with ≥ 36^8 keyspace. |
-| Sentry SDK conflicts with `expo-audio` or other native modules | Pin to the SDK-54-compatible Sentry version; add a smoke test for app cold-start with Sentry enabled. |
+| Without a fleet analytics SDK, we'll miss low-frequency bugs | TestFlight cohort + the local crash log + App Store Connect's free crash dashboard. Accept slower iteration on rare bugs as a deliberate trade. |
+| User loses backup file and asks for "their data back" | Cannot recover — there's no cloud copy. Make this **extremely** explicit in the export flow's help text. Encourage users to email the backup to themselves as a copy. |
+| Backup JSON schema drift between app versions breaks imports | Version-stamped blob; importer runs migration steps (`v1 → v2` etc.); imports from a higher version than the running app show "This backup is from a newer app version — please update Vedansh first." |
+| Mail composer not configured on user's device → can't send crash report | Fallback to OS share sheet; user picks any sharing target. |
 | RNTL setup with Expo SDK 54 is flaky | Pre-research in week 27 (1 day); if flaky, swap to Jest + react-test-renderer for smoke tests only. |
-| Privacy review of backup posture | Pre-launch external eyes on the help-modal copy and the Worker source. |
+| Diagnostics ledger grows unbounded | Cap at 90 days; trim on each app launch. |
+| User reads our crash log and is alarmed by what it contains | The log entry shape is small and audit-able. Show an example log in the help modal. |
 
 ## 9. Definition of done
 
 - Every `*ReaderScreen` has a co-located smoke test that runs in CI.
-- Sentry shows crash-free sessions ≥ 99.5% for 7 consecutive days in production.
-- ≥ 20% of users have backup enabled within 30 days of launch.
-- A test "restore from another device" flow completes end-to-end in QA on a fresh simulator.
-- `scripts/release-ota.sh` shipped a bug fix in production at least once.
+- App Store Connect dashboard shows crash-free sessions ≥ 99.5% for 7 consecutive days in production.
+- Crash-log prompt fires correctly in QA after a synthetic crash; sending opens the mail composer with the JSON attached.
+- ≥ 15% of users export at least once within 30 days of launch (TestFlight cohort).
+- A test "export → uninstall → reinstall → import" flow completes end-to-end in QA. State is restored.
+- `scripts/eas-submit.sh` ships a build to TestFlight at least once during the quarter.
 
 ## 10. Open questions
 
-1. Should the recovery code be 6-digit numeric (easier to type) or 8-char alphanumeric (more secure)? Recommend 8-char alphanumeric, displayed as `XXXX-XXXX`. Less collision risk; same UX with a copy button.
-2. Do we want a "Backup now" manual trigger or rely solely on the 24-hour periodic sync? Recommend both: periodic + a Settings button.
-3. Cloudflare Workers KV is the recommendation, but a Firebase Anonymous Auth + Firestore document is also viable. Lean on Workers KV because the no-account stance benefits from there being no Firebase user object at all — there is literally nothing to leak.
+1. Should the crash-report prompt offer a free-text field ("describe what you were doing") so users can add context, or keep it strictly attachment-only to minimize cognitive load? Recommend offer free-text **inside the mail composer** (where the user is already in a "write" mood); don't prompt for it in-app.
+2. Should the backup file be encrypted with a user-chosen passphrase? Adds friction; the file already lives in user-chosen storage (iCloud Drive, Files). Recommend **no** for v1, **yes** as a v2 option.
+3. Where does the "About → Diagnostics" hidden screen live? Recommend behind a 5-tap on the app version number in More tab (classic Easter-egg pattern; non-discoverable to regular users).
+4. Do we want to surface "Last backup: 2026-09-15" in More → Backup as a nudge to re-export periodically? Recommend yes — backup files go stale fast as users accumulate progress.

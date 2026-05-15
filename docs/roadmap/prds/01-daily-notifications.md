@@ -10,6 +10,10 @@
 
 ---
 
+**Bundle-only constraint:** all notifications are scheduled locally on-device via `expo-notifications`; the festival calendar is a bundled JSON; no server push, no remote calendar fetch.
+
+---
+
 ## 1. Problem
 
 Vedansh has a **Daily Bhakti** tab that surfaces one random verse from the pool (`mobile/src/data/versePool.ts`). It only fires when the user opens the tab. There is no surface that brings a user back to the app once they've left it. For a devotional product this is a defining gap — the use-case is morning sadhana, evening aarti, and festival days, all of which are time-anchored rituals the user wants the app to nudge.
@@ -54,10 +58,11 @@ Ship a single, reverent daily-verse notification, plus opt-in reminders on major
 
 ### Out of scope
 
-- Server-pushed personalization.
+- Server-pushed personalization, server-fetched festival data, or any FCM/APNS push from us. Out of scope by constraint, not preference.
 - Audio playback from notification.
 - Granular per-festival opt-out (all-or-nothing for v1).
 - Android-specific notification channels until the Play Store launch lands.
+- "Refresh festival calendar" affordance that hits a server. Calendar updates ship with App Store releases.
 
 ## 6. UX notes
 
@@ -73,7 +78,7 @@ Ship a single, reverent daily-verse notification, plus opt-in reminders on major
 
 - New dep: `expo-notifications`. Requires updating `app.json` plugin list and `mobile/ios/` config; iOS push permission strings in `infoPlist`.
 - New context: `NotificationPreferencesContext` (parallel to existing persistence contexts in `mobile/src/contexts/`), backed by `AsyncStorage` key `@vedansh/notif-prefs`.
-- Scheduling layer in `mobile/src/notifications/scheduler.ts`. On app foreground, reconcile the OS schedule against the preference state. iOS limits 64 pending local notifications — we'll schedule a rolling 30-day window and refresh on each open.
+- Scheduling layer in `mobile/src/notifications/scheduler.ts`. On app foreground, reconcile the OS schedule against the preference state. iOS limits 64 pending local notifications — we'll schedule a rolling 30-day window and refresh on each app open. All scheduling is on-device; no server is involved at any point.
 - Daily verse selection at scheduling time pulls from `versePool.ts`. Seed by `(YYYY-MM-DD + deviceId-hash) % poolSize` for deterministic same-day verses across reschedule.
 - Festival JSON in `mobile/src/data/calendar/festivals.json` with shape:
   ```ts
@@ -95,9 +100,10 @@ Ship a single, reverent daily-verse notification, plus opt-in reminders on major
 
 | Risk | Mitigation |
 |---|---|
-| iOS APNS permission ask backfires (user denies forever) | Defer prompt to app-open #3, use OS-native sheet only after the in-app sheet's primary CTA tap (never auto-prompt). |
-| Festival calendar drift (lunar dates) | Bundle 18 months, but make the JSON server-hot-reloadable via `expo-updates` once cloud config lands (PRD-06). |
-| Multiple-device same-user duplication | N/A in Q3 (no accounts). Flag for Q4 sync work. |
+| iOS permission ask backfires (user denies forever) | Defer prompt to app-open #3, use OS-native sheet only after the in-app sheet's primary CTA tap (never auto-prompt). |
+| Festival calendar drift (lunar dates) | Bundle 18 months of pre-computed dates in `mobile/src/data/calendar/festivals.json`. Refresh the bundled file each App Store release. Settings shows "Festival reminders accurate through {Month, Year}" so users know to update the app for fresh dates. **No server hot-reload** (out by constraint). |
+| Multiple-device same-user duplication | N/A in Q3 (no accounts). Each device schedules its own local notifications. |
+| User keeps an older app build that has stale festival dates | Add a "Calendar through" line in Settings → Reminders so the issue is visible to the user. |
 
 ## 10. Definition of done
 
