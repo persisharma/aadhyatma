@@ -136,9 +136,11 @@ export default function WishlistScreen({ navigation }: Props) {
                     {lang === 'hi' ? bm.previewHi : bm.previewEn}
                   </Text>
                   <View style={styles.bmMeta}>
-                    <Text style={[styles.bmPill, { color: colors.saffronDeep, backgroundColor: 'rgba(184, 98, 27, 0.14)' }]}>
-                      {getVerseLabel(bm)}
-                    </Text>
+                    <View style={[styles.bmPillWrap, { backgroundColor: 'rgba(184, 98, 27, 0.14)' }]}>
+                      <Text style={[styles.bmPillText, { color: colors.saffronDeep }]}>
+                        {getVerseLabel(bm)}
+                      </Text>
+                    </View>
                     <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted }}>
                       {getSourceLabel(bm, lang)}
                     </Text>
@@ -226,7 +228,8 @@ const styles = StyleSheet.create({
   bmCard: { borderRadius: 14, borderWidth: 1, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 10 },
   bmContent: { flex: 1, minWidth: 0 },
   bmMeta: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 6 },
-  bmPill: { fontSize: 11, fontFamily: 'CormorantGaramond_600SemiBold', paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999, overflow: 'hidden' },
+  bmPillWrap: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
+  bmPillText: { fontSize: 11, fontFamily: 'CormorantGaramond_600SemiBold' },
   removeBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   backdrop: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24 },
   confirmCard: { width: '100%', maxWidth: 360, borderWidth: 1, paddingVertical: 22, paddingHorizontal: 22 },
