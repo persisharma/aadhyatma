@@ -55,7 +55,7 @@ const DOT_COUNT = 5;
 export default function GitaReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
@@ -173,6 +173,11 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
       : `Chapter ${chapter.chapter} · ${chapter.titleEn}`
     : '';
 
+  const listExtraData = useMemo(
+    () => ({ lang, bookmarks, shareBusy }),
+    [lang, bookmarks, shareBusy]
+  );
+
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offsetX = e.nativeEvent.contentOffset.x;
@@ -233,61 +238,19 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           </Text>
 
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Text
-                style={[
-                  styles.counter,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.pageCounter.fontFamily,
-                    fontSize: typography.pageCounter.fontSize,
-                    fontStyle: 'italic',
-                  },
-                ]}
-              >
-                {currentIndex + 1} / {verseCount}
-              </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`bhagavad-gita:${chapter.chapter}:${currentIndex}`)}
-                onToggle={() => {
-                  const id = `bhagavad-gita:${chapter.chapter}:${currentIndex}`;
-                  if (isBookmarked(id)) {
-                    removeBookmark(id);
-                  } else {
-                    const v = chapter.verses[currentIndex];
-                    addBookmark({
-                      id,
-                      sourceId: 'bhagavad-gita',
-                      chapter: chapter.chapter,
-                      verseIndex: currentIndex,
-                      savedAt: Date.now(),
-                      previewHi: v.sanskrit.slice(0, 2).join(' '),
-                      previewEn: v.transliteration.slice(0, 2).join(' '),
-                    });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = chapter.verses[currentIndex];
-                  share(
-                    {
-                      sourceId: 'bhagavad-gita',
-                      sectionNameHi: 'भगवद् गीता',
-                      sectionNameEn: 'Bhagavad Gītā',
-                      verseLabelHi: `श्लोक ${v.chapter}.${v.number}`,
-                      verseLabelEn: `Verse ${v.chapter}.${v.number}`,
-                      linesHi: [...v.sanskrit],
-                      linesEn: [...v.transliteration],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                    },
-                    lang
-                  );
-                }}
-              />
-            </View>
+            <Text
+              style={[
+                styles.counter,
+                {
+                  color: colors.inkMuted,
+                  fontFamily: typography.pageCounter.fontFamily,
+                  fontSize: typography.pageCounter.fontSize,
+                  fontStyle: 'italic',
+                },
+              ]}
+            >
+              {currentIndex + 1} / {verseCount}
+            </Text>
           </View>
         </View>
 
@@ -300,7 +263,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => {
+            renderItem={({ item, index }) => {
               if ('__type' in item && item.__type === 'transition') {
                 return (
                   <NextChapterCard
@@ -319,9 +282,58 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                   />
                 );
               }
-              return <GitaVersePage verse={item} sourceId="bhagavad-gita" width={width} />;
+              const verseIdx = index - offset;
+              const bookmarkId = `bhagavad-gita:${chapter.chapter}:${verseIdx}`;
+              return (
+                <GitaVersePage
+                  verse={item}
+                  sourceId="bhagavad-gita"
+                  width={width}
+                  topActions={
+                    <>
+                      <BookmarkButton
+                        isBookmarked={isBookmarked(bookmarkId)}
+                        onToggle={() => {
+                          if (isBookmarked(bookmarkId)) {
+                            removeBookmark(bookmarkId);
+                          } else {
+                            addBookmark({
+                              id: bookmarkId,
+                              sourceId: 'bhagavad-gita',
+                              chapter: chapter.chapter,
+                              verseIndex: verseIdx,
+                              savedAt: Date.now(),
+                              previewHi: item.sanskrit.slice(0, 2).join(' '),
+                              previewEn: item.transliteration.slice(0, 2).join(' '),
+                            });
+                          }
+                        }}
+                      />
+                      <ShareButton
+                        busy={shareBusy}
+                        onPress={() => {
+                          share(
+                            {
+                              sourceId: 'bhagavad-gita',
+                              sectionNameHi: 'भगवद् गीता',
+                              sectionNameEn: 'Bhagavad Gītā',
+                              verseLabelHi: `श्लोक ${item.chapter}.${item.number}`,
+                              verseLabelEn: `Verse ${item.chapter}.${item.number}`,
+                              linesHi: [...item.sanskrit],
+                              linesEn: [...item.transliteration],
+                              meaningHi: item.meaningHi,
+                              meaningEn: item.meaningEn,
+                            },
+                            lang
+                          );
+                        }}
+                      />
+                    </>
+                  }
+                />
+              );
             }}
-            extraData={lang}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
@@ -375,7 +387,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   topSide: {
-    width: 120,
+    width: 60,
     flexDirection: 'row',
     alignItems: 'center',
   },
