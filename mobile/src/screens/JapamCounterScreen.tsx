@@ -22,6 +22,8 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'JapamCounter'>;
@@ -30,6 +32,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { getEntry, increment, resetBeads, clear } = useJapamCounter();
+  const { share, busy: shareBusy } = useShare();
 
   const mantra: JapamMantra | null = useMemo(
     () => findJapamMantra(route.params.mantraId),
@@ -122,7 +125,27 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             </Text>
           </View>
 
-          <View style={styles.backSpacer} />
+          <View style={styles.backSpacer}>
+            <ShareButton
+              busy={shareBusy}
+              onPress={() => {
+                share(
+                  {
+                    sourceId: mantra.id,
+                    sectionNameHi: mantra.nameHi,
+                    sectionNameEn: mantra.nameEn,
+                    verseLabelHi: `जप · ${entry.rounds} आवृत्ति`,
+                    verseLabelEn: `Japa · ${entry.rounds} rounds`,
+                    linesHi: [...mantra.lines],
+                    linesEn: [...mantra.linesEn],
+                    meaningHi: mantra.meaningHi,
+                    meaningEn: mantra.meaningEn,
+                  },
+                  lang
+                );
+              }}
+            />
+          </View>
         </View>
 
         <View style={styles.toggleRow}>
@@ -450,6 +473,8 @@ const styles = StyleSheet.create({
   backSpacer: {
     width: 44,
     height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   backGlyph: {
     fontSize: 22,

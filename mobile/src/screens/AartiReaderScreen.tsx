@@ -9,9 +9,11 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
+import ShareButton from '@/components/ShareButton';
 import VersePage from '@/components/VersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import { clampIndex } from '@/utils/clamp';
+import { useShare } from '@/utils/shareVerse';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'AartiReader'>;
@@ -23,6 +25,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { setProgress } = useReadingProgress();
+  const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
 
   // Out-of-range aartiIndex would throw inside getAarti(); fall back to 0 and let
@@ -106,6 +109,26 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
                     const v = aarti.verses[currentIndex];
                     addBookmark({ id, sourceId, verseIndex: currentIndex, savedAt: Date.now(), previewHi: v.lines[0] ?? '', previewEn: v.linesEn[0] ?? '' });
                   }
+                }}
+              />
+              <ShareButton
+                busy={shareBusy}
+                onPress={() => {
+                  const v = aarti.verses[currentIndex];
+                  share(
+                    {
+                      sourceId,
+                      sectionNameHi: aarti.titleHi,
+                      sectionNameEn: aarti.titleEn,
+                      verseLabelHi: v.labelHi,
+                      verseLabelEn: v.labelEn,
+                      linesHi: [...v.lines],
+                      linesEn: [...v.linesEn],
+                      meaningHi: v.meaningHi,
+                      meaningEn: v.meaningEn,
+                    },
+                    lang
+                  );
                 }}
               />
             </View>

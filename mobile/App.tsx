@@ -25,6 +25,7 @@ import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
+import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -71,10 +72,12 @@ export default function App() {
               <UserActivityProvider>
                 <ReadingProgressProvider>
                   <JapamCounterProvider>
-                    <NavigationContainer>
-                      <StatusBar style="dark" />
-                      <RootNavigator />
-                    </NavigationContainer>
+                    <ShareProvider>
+                      <NavigationContainer>
+                        <StatusBar style="dark" />
+                        <RootNavigator />
+                      </NavigationContainer>
+                    </ShareProvider>
                   </JapamCounterProvider>
                 </ReadingProgressProvider>
               </UserActivityProvider>

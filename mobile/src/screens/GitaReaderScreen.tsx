@@ -19,11 +19,13 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
+import ShareButton from '@/components/ShareButton';
 import GitaVersePage from '@/components/GitaVersePage';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import LanguageToggle from '@/components/LanguageToggle';
 import { clampIndex } from '@/utils/clamp';
+import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -55,6 +57,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { setProgress } = useReadingProgress();
+  const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
 
   const chapter = useSafeChapter(route.params.chapter, getGitaChapter, navigation, 'GitaChapters');
@@ -262,6 +265,26 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                       previewEn: v.transliteration.slice(0, 2).join(' '),
                     });
                   }
+                }}
+              />
+              <ShareButton
+                busy={shareBusy}
+                onPress={() => {
+                  const v = chapter.verses[currentIndex];
+                  share(
+                    {
+                      sourceId: 'bhagavad-gita',
+                      sectionNameHi: 'भगवद् गीता',
+                      sectionNameEn: 'Bhagavad Gītā',
+                      verseLabelHi: `श्लोक ${v.chapter}.${v.number}`,
+                      verseLabelEn: `Verse ${v.chapter}.${v.number}`,
+                      linesHi: [...v.sanskrit],
+                      linesEn: [...v.transliteration],
+                      meaningHi: v.meaningHi,
+                      meaningEn: v.meaningEn,
+                    },
+                    lang
+                  );
                 }}
               />
             </View>

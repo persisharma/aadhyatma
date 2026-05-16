@@ -19,9 +19,11 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
+import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
 import VersePage from '@/components/VersePage';
 import { clampIndex } from '@/utils/clamp';
+import { useShare } from '@/utils/shareVerse';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
@@ -33,6 +35,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { setProgress } = useReadingProgress();
+  const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
   const chalisaId = route.params?.chalisaId ?? 'hanuman-chalisa';
   const chalisa = useMemo(() => getChalisa(chalisaId), [chalisaId]);
@@ -171,6 +174,26 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
                       previewEn: v.linesEn[0] ?? '',
                     });
                   }
+                }}
+              />
+              <ShareButton
+                busy={shareBusy}
+                onPress={() => {
+                  const v = verses[currentIndex];
+                  share(
+                    {
+                      sourceId: chalisaId,
+                      sectionNameHi: chalisa.titleHi,
+                      sectionNameEn: chalisa.titleEn,
+                      verseLabelHi: v.labelHi,
+                      verseLabelEn: v.labelEn,
+                      linesHi: [...v.lines],
+                      linesEn: [...v.linesEn],
+                      meaningHi: v.meaningHi,
+                      meaningEn: v.meaningEn,
+                    },
+                    lang
+                  );
                 }}
               />
             </View>
