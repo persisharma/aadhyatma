@@ -161,6 +161,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               verseLabelHi={pending.verse.verseLabelHi}
               verseLabelEn={pending.verse.verseLabelEn}
               linesHi={pending.verse.linesHi}
+              linesEn={pending.verse.linesEn}
               meaningHi={pending.verse.meaningHi}
               meaningEn={pending.verse.meaningEn}
               lang={pending.lang}
