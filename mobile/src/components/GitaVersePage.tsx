@@ -11,9 +11,10 @@ type Props = {
   verse: GitaVerse;
   sourceId: string;
   width: number;
+  topActions?: React.ReactNode;
 };
 
-export default function GitaVersePage({ verse, sourceId, width }: Props) {
+export default function GitaVersePage({ verse, sourceId, width, topActions }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const bg = getReaderBackground(sourceId, verse);
@@ -73,25 +74,28 @@ export default function GitaVersePage({ verse, sourceId, width }: Props) {
         accessible
         accessibilityLabel={a11yLabel}
       >
-        <View
-          style={[
-            styles.pill,
-            { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
-          ]}
-        >
-          <Text
+        <View style={styles.headerRow}>
+          <View
             style={[
-              styles.pillText,
-              {
-                color: colors.saffronDeep,
-                fontSize: typography.versePill.fontSize,
-                fontWeight: typography.versePill.fontWeight,
-                letterSpacing: typography.versePill.letterSpacing,
-              },
+              styles.pill,
+              { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
             ]}
           >
-            {pillText}
-          </Text>
+            <Text
+              style={[
+                styles.pillText,
+                {
+                  color: colors.saffronDeep,
+                  fontSize: typography.versePill.fontSize,
+                  fontWeight: typography.versePill.fontWeight,
+                  letterSpacing: typography.versePill.letterSpacing,
+                },
+              ]}
+            >
+              {pillText}
+            </Text>
+          </View>
+          {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
         </View>
 
         <View style={styles.verseBlock}>
@@ -196,11 +200,20 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 40,
   },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 18,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   pill: {
-    alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 4,
-    marginBottom: 18,
   },
   pillText: {
     textTransform: 'uppercase',
