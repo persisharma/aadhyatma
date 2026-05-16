@@ -173,6 +173,11 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
       : `Chapter ${chapter.chapter} · ${chapter.titleEn}`
     : '';
 
+  const listExtraData = useMemo(
+    () => ({ lang, bookmarks, shareBusy }),
+    [lang, bookmarks, shareBusy]
+  );
+
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offsetX = e.nativeEvent.contentOffset.x;
@@ -328,7 +333,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                 />
               );
             }}
-            extraData={{ lang, bookmarks, shareBusy }}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
