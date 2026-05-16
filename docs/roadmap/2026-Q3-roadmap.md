@@ -50,7 +50,7 @@ These gaps frame the quarter's themes.
 
 Three themes, ranked by user impact × strategic leverage:
 
-1. **Build a daily habit loop.** A devotional app's north-star metric is consecutive-day return rate, not session length. Notifications + festival anchoring + verse audio together convert "opens during a puja" into "opens every morning."
+1. **Build a daily habit loop.** A devotional app's north-star metric is consecutive-day return rate, not session length. Daily notifications plus verse audio convert "opens during a puja" into "opens every morning." (Festival reminders, originally bundled here, are deferred to land alongside audio in v1.5.x where their payoff is materially higher — see PRD-01 §12.)
 2. **Make the library searchable.** As the catalog crossed ~20 sections, drill-down is no longer enough. Users coming with a phrase ("कर्मण्येवाधिकारस्ते") cannot find it. Search unlocks the back-catalog without new content.
 3. **Earn permission for the next 6 months.** Ship the test/observability foundation that PR #31 (Balkand crash) exposed, so the next quarter can move faster without re-litigating reliability. Backups (light cloud sync) protect the streak data the Sadhak Profile makes meaningful.
 
@@ -82,7 +82,7 @@ Six PRDs land in three thematic waves. Detailed PRDs in `docs/roadmap/prds/`.
 
 | ID | Title | Theme | Sized | Wave |
 |---|---|---|---|---|
-| [PRD-01](./prds/01-daily-notifications.md) | Daily Bhakti notifications & festival reminders | Habit | M (4 wk) | Jul |
+| [PRD-01](./prds/01-daily-notifications.md) | Daily Bhakti notifications | Habit | M (3 wk) | Jul |
 | [PRD-02](./prds/02-verse-audio.md) | Verse audio for chalisas & aartis (pilot → full) | Habit | L (6 wk) | Jul–Aug |
 | [PRD-03](./prds/03-search.md) | Global library search | Discovery | M (3 wk) | Aug |
 | [PRD-04](./prds/04-reading-comfort.md) | Reading comfort pack (font scale, dark mode, sleep timer) | Habit | M (4 wk) | Aug–Sep |
@@ -99,7 +99,7 @@ PRD-06 runs as a continuous track across the quarter and lands as a sequence of 
         Jul 2026                Aug 2026                Sep 2026
 Week    27 28 29 30 31 32 33 34 35 36 37 38 39
         ─────────────────────────────────────────
-PRD-01  ████████████              (ship 1.4.0 — Notifications)
+PRD-01  █████████                 (ship 1.4.0 — Daily Notifications)
 PRD-02     ████████████████████████   (ship 1.5.0 — Audio: chalisas)
 PRD-03              ████████████      (ship 1.6.0 — Search)
 PRD-04                    ████████████ (ship 1.7.0 — Comfort)
@@ -109,7 +109,7 @@ PRD-06  ████████████████████████
 Release v1.4    v1.5            v1.6 v1.7 v1.7.1
 ```
 
-**Release cadence:** one **App Store** version every 3-4 weeks (4 releases this quarter). Bug-fix OTA via `expo-updates` between store releases (capability already in the dependency tree; surface scripts in PRD-06).
+**Release cadence:** one **App Store** version every 3-4 weeks (4 releases this quarter). PRD-01 lands ~1 week earlier than originally planned now that festival reminders are deferred — the extra week buffers PRD-02's audio licensing track. Bug-fix OTA via `expo-updates` between store releases (capability already in the dependency tree; surface scripts in PRD-06).
 
 ---
 
@@ -130,8 +130,8 @@ Release v1.4    v1.5            v1.6 v1.7 v1.7.1
 |---|---|---|
 | Bundled audio inflates binary past 200 MB perceived "big app" threshold | Medium | Hard budget +60 MB for the quarter. AAC at 64 kbps mono, pandit-style recitations are ~0.5 MB/min. Stage chalisa rollouts: pilot Hanuman Chalisa (~6 MB) in v1.5.0; remaining chalisas + aartis (~30 MB) in v1.5.1. Bhagavad Gītā audio remains out of scope (would be ~80 MB alone). |
 | Audio recitation licensing / quality | Medium | Use creative-commons / commissioned recitations of Hanuman Chalisa as the pilot; gate PRD-02 expansion on legal sign-off (see PRD-02 §Open Questions). |
-| Notification fatigue / opt-out spiral | Medium | Cap to 1 daily verse + opt-in festival reminders. Quiet-hours default (see PRD-01). |
-| Festival calendar staleness (lunar dates shift annually) | Medium | Bundle 18 months of dates; refresh the bundled JSON each App Store release. Show a "calendar through {month, year}" line in Settings so users know when to update. |
+| Notification fatigue / opt-out spiral | Medium | Cap to 1 daily verse. Quiet-hours default (see PRD-01). |
+| Festival calendar staleness (lunar dates shift annually) | Medium | Deferred with festival reminders themselves to v1.5.x. When it lands, bundle 18 months of dates, refresh per App Store release, and show a "calendar through {month, year}" line in Settings. |
 | Search index size hurts cold-start | Low | Build the index at runtime once on first search (memoized), not at app boot. |
 | Dark mode regression across 18 reader screens | Medium | Token-only audit gate before any screen changes; ship behind a feature flag for 1 release. |
 | SDK 55 upgrade required by App Store before quarter ends | Low–Medium | Track Expo's release calendar; reserve 1 week in week 36 buffer. |
@@ -170,7 +170,7 @@ To prevent scope creep, these are off the table for Q3:
 At the end of Q3 2026 the product is considered to have delivered if:
 
 1. v1.4.0, v1.5.0, v1.6.0, v1.7.0 are live on the iOS App Store (v1.7.1 stretch).
-2. Notification opt-in rate ≥ 55% on new installs, with daily-verse delivery confirmed end-to-end. **All notifications are scheduled locally on-device.**
+2. Notification opt-in rate ≥ 55% on new installs, with daily-verse delivery confirmed end-to-end. **All notifications are scheduled locally on-device.** (Festival reminders deferred to v1.5.x to ship alongside audio — see PRD-01 §12.)
 3. At least Hanuman Chalisa has working bundled audio. All 4 chalisas + 7 aartis have audio by quarter-end.
 4. Global search returns results across all active sections within 200 ms perceived latency, using an on-device index built from bundled data.
 5. Dark mode ships behind a setting toggle, defaults to "system."

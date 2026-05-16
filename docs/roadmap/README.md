@@ -10,7 +10,7 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 | ID | Title | Target release |
 |---|---|---|
-| [PRD-01](./prds/01-daily-notifications.md) | Daily Bhakti notifications & festival reminders | v1.4.0 |
+| [PRD-01](./prds/01-daily-notifications.md) | Daily Bhakti notifications (festival reminders deferred) | v1.4.0 |
 | [PRD-02](./prds/02-verse-audio.md) | Verse audio for chalisas & aartis | v1.5.0 |
 | [PRD-03](./prds/03-search.md) | Global library search | v1.6.0 |
 | [PRD-04](./prds/04-reading-comfort.md) | Reading comfort pack (font scale, dark mode, sleep timer) | v1.7.0 |
