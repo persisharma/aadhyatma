@@ -9,6 +9,7 @@ export type ShareCardProps = {
   verseLabelHi: string;
   verseLabelEn: string;
   linesHi: string[];
+  linesEn: string[];
   meaningHi?: string;
   meaningEn?: string;
   lang: 'hi' | 'en';
@@ -21,6 +22,7 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
   const sectionName = props.lang === 'hi' ? props.sectionNameHi : props.sectionNameEn;
   const verseLabel = props.lang === 'hi' ? props.verseLabelHi : props.verseLabelEn;
   const meaning = props.lang === 'hi' ? props.meaningHi : props.meaningEn;
+  const lines = props.lang === 'hi' ? props.linesHi : props.linesEn;
 
   return (
     <View
@@ -52,7 +54,7 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
       </View>
 
       <View style={styles.body}>
-        {props.linesHi.map((line, i) => (
+        {lines.map((line, i) => (
           <Text
             key={i}
             style={[

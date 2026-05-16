@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   topBar: { paddingHorizontal: 22, paddingTop: 8, paddingBottom: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  topSide: { width: 80, flexDirection: 'row', alignItems: 'center' },
+  topSide: { width: 120, flexDirection: 'row', alignItems: 'center' },
   back: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   backGlyph: { fontSize: 22, lineHeight: 24, marginTop: -2, includeFontPadding: false },
   title: { flex: 1, textAlign: 'center', includeFontPadding: false, marginHorizontal: 4 },

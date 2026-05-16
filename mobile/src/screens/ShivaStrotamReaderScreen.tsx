@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   topSide: {
-    width: 80,
+    width: 120,
     flexDirection: 'row',
     alignItems: 'center',
   },
