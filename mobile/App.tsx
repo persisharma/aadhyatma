@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Notifications from 'expo-notifications';
 import {
   useFonts as useNotoFonts,
   NotoSerifDevanagari_500Medium,
@@ -25,12 +26,21 @@ import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
+import {
+  NotificationPreferencesProvider,
+  configureForegroundNotificationHandler,
+} from '@/contexts/NotificationPreferencesContext';
+import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
+import ReminderOptInModal from '@/components/ReminderOptInModal';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* noop — already prevented */
 });
+
+// One-time global setup: foreground notification presentation.
+configureForegroundNotificationHandler();
 
 export default function App() {
   const [notoLoaded] = useNotoFonts({
@@ -59,6 +69,47 @@ export default function App() {
     }
   }, [fontsReady]);
 
+  // Wire notification taps to deep-link navigation. Handles both:
+  //  (a) Cold start — app was killed; iOS launches us with the tap response,
+  //      pulled via `getLastNotificationResponseAsync()`.
+  //  (b) Warm start — app already running; subscribe via
+  //      `addNotificationResponseReceivedListener`.
+  // The handler is a no-op until `navigationRef.isReady()` so we don't lose
+  // taps that arrive before navigation has mounted.
+  useEffect(() => {
+    if (!fontsReady) return undefined;
+
+    let cancelled = false;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    Notifications.getLastNotificationResponseAsync()
+      .then((response) => {
+        if (cancelled || !response) return;
+        // Defer until NavigationContainer marks itself ready, but bound the
+        // retry — if navigation never readies in ~5 s, give up rather than
+        // spinning forever.
+        let attempts = 0;
+        const tryHandle = () => {
+          if (cancelled) return;
+          if (handleNotificationResponse(response)) return;
+          if (attempts >= 50) return;
+          attempts += 1;
+          timeoutId = setTimeout(tryHandle, 100);
+        };
+        tryHandle();
+      })
+      .catch(() => undefined);
+
+    const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      handleNotificationResponse(response);
+    });
+
+    return () => {
+      cancelled = true;
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
+      sub.remove();
+    };
+  }, [fontsReady]);
+
   if (!fontsReady) {
     return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
   }
@@ -72,12 +123,15 @@ export default function App() {
               <UserActivityProvider>
                 <ReadingProgressProvider>
                   <JapamCounterProvider>
-                    <ShareProvider>
-                      <NavigationContainer>
-                        <StatusBar style="dark" />
-                        <RootNavigator />
-                      </NavigationContainer>
-                    </ShareProvider>
+                    <NotificationPreferencesProvider>
+                      <ShareProvider>
+                        <NavigationContainer ref={navigationRef}>
+                          <StatusBar style="dark" />
+                          <RootNavigator />
+                          <ReminderOptInModal />
+                        </NavigationContainer>
+                      </ShareProvider>
+                    </NotificationPreferencesProvider>
                   </JapamCounterProvider>
                 </ReadingProgressProvider>
               </UserActivityProvider>

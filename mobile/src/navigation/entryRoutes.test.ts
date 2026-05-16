@@ -2,7 +2,12 @@ import assert from 'node:assert/strict';
 
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
-import { buildBookmarkTarget, navigateToBookmark, navigateToProgress } from './entryRoutes';
+import {
+  buildBookmarkTarget,
+  buildProgressTarget,
+  navigateToBookmark,
+  navigateToProgress,
+} from './entryRoutes';
 import type { HomeStackParamList } from './types';
 
 type NavCall = { name: string; params: unknown };
@@ -182,4 +187,38 @@ for (const sourceId of [
   const ok = navigateToProgress(nav as never, progress);
   assert.equal(ok, true);
   assert.deepEqual(calls, [{ name: 'AartiReader', params: { aartiIndex: 2, initialIndex: 3 } }]);
+}
+
+// buildProgressTarget routes a chaptered notification payload correctly.
+{
+  const target = buildProgressTarget({
+    sourceId: 'bhagavad-gita',
+    chapter: 2,
+    verseIndex: 46,
+  });
+  assert.deepEqual(target, {
+    screen: 'GitaReader',
+    params: { chapter: 2, initialIndex: 46 },
+  });
+}
+
+// buildProgressTarget routes a chalisa notification payload.
+{
+  const target = buildProgressTarget({
+    sourceId: 'hanuman-chalisa',
+    verseIndex: 8,
+  });
+  assert.deepEqual(target, {
+    screen: 'ChalisaReader',
+    params: { initialIndex: 8, chalisaId: 'hanuman-chalisa' },
+  });
+}
+
+// buildProgressTarget returns null when a chaptered source has no chapter.
+{
+  const target = buildProgressTarget({
+    sourceId: 'sundarkand',
+    verseIndex: 4,
+  });
+  assert.equal(target, null);
 }

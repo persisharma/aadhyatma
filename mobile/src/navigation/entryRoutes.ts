@@ -96,6 +96,40 @@ export type BookmarkTarget = {
 };
 
 /**
+ * Build a HomeStack target from a progress-like descriptor. Used by the
+ * notification deep-link handler (PRD-01); shares the same routing tables as
+ * `navigateToProgress` so behaviour stays consistent.
+ */
+export function buildProgressTarget(p: {
+  sourceId: string;
+  chapter?: number;
+  verseIndex: number;
+}): BookmarkTarget | null {
+  const sourceId = canonicalSourceId(p.sourceId);
+  if (chalisaIds.has(sourceId)) {
+    return {
+      screen: 'ChalisaReader',
+      params: { initialIndex: p.verseIndex, chalisaId: sourceId },
+    };
+  }
+  const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];
+  if (aartiIndex != null) {
+    return {
+      screen: 'AartiReader',
+      params: { aartiIndex, initialIndex: p.verseIndex },
+    };
+  }
+  const readerRoute = stotramReaderRouteBySourceId[sourceId];
+  if (readerRoute && p.chapter != null) {
+    return {
+      screen: readerRoute,
+      params: { chapter: p.chapter, initialIndex: p.verseIndex },
+    };
+  }
+  return null;
+}
+
+/**
  * Build a React Navigation descriptor for a bookmark, suitable for use as the
  * second argument of `rootNav.navigate('HomeTab', target)` from a screen
  * outside the Home stack. Returns null if the bookmark's sourceId is unknown

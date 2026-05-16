@@ -8,6 +8,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
+import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'MoreHome'>;
@@ -17,6 +18,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { bookmarks } = useBookmarks();
   const { lang: defaultLang, setLang: setDefaultLang } = useGitaLanguage();
   const { lifetimeTotals, currentStreak } = useUserActivity();
+  const { prefs: notifPrefs } = useNotificationPreferences();
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
   const hi = helpContent.hi;
   const en = helpContent.en;
@@ -175,6 +177,38 @@ export default function MoreScreen({ navigation }: Props) {
               </Text>
               <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
                 {bookmarks.length} verse{bookmarks.length !== 1 ? 's' : ''} saved
+              </Text>
+            </View>
+            <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
+          </Pressable>
+
+          {/* Reminders Card */}
+          <Pressable
+            onPress={() => navigation.navigate('Reminders')}
+            accessibilityRole="button"
+            accessibilityLabel={
+              notifPrefs.dailyVerseEnabled
+                ? `Reminders, daily verse on at ${`${notifPrefs.time.hour}`.padStart(2, '0')}:${`${notifPrefs.time.minute}`.padStart(2, '0')}`
+                : 'Reminders, daily verse off'
+            }
+            style={({ pressed }) => [
+              styles.section,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: pressed ? 0.85 : 1 },
+            ]}
+          >
+            <View style={[styles.sectionIcon, { backgroundColor: colors.gold }]}>
+              <Text style={{ color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>
+                ॐ
+              </Text>
+            </View>
+            <View style={styles.sectionMeta}>
+              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
+                Reminders
+              </Text>
+              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
+                {notifPrefs.dailyVerseEnabled
+                  ? `Daily verse at ${`${notifPrefs.time.hour}`.padStart(2, '0')}:${`${notifPrefs.time.minute}`.padStart(2, '0')}`
+                  : 'Daily verse off'}
               </Text>
             </View>
             <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
