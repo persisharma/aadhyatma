@@ -59,7 +59,7 @@ function GadaIcon() {
       <View style={styles.gadaHead} />
       <View style={styles.gadaNeck} />
       <View style={styles.gadaHandle} />
-      <View style={styles.gadaBase} />
+      <View style={styles.gadaPommel} />
     </View>
   );
 }
@@ -67,10 +67,10 @@ function GadaIcon() {
 function ModakIcon() {
   return (
     <View style={styles.modakWrap} accessible={false}>
+      <View style={styles.modakPeak} />
       <View style={styles.modakBody} />
-      <View style={styles.modakCrease} />
-      <View style={[styles.modakDot, styles.modakDotOne]} />
-      <View style={[styles.modakDot, styles.modakDotTwo]} />
+      <View style={styles.modakPleatLeft} />
+      <View style={styles.modakPleatRight} />
     </View>
   );
 }
@@ -217,86 +217,87 @@ const styles = StyleSheet.create({
     backgroundColor: featherBlue,
   },
   gadaWrap: {
-    width: 30,
+    width: 22,
     height: 30,
-    position: 'relative',
-    transform: [{ rotate: '-28deg' }],
+    alignItems: 'center',
+    transform: [{ rotate: '-12deg' }],
   },
   gadaHead: {
-    position: 'absolute',
-    left: 3,
-    top: 1,
-    width: 15,
-    height: 15,
+    width: 16,
+    height: 16,
     borderRadius: 8,
     backgroundColor: ink,
-    borderWidth: 1,
+    borderWidth: 1.2,
     borderColor: '#F4C872',
   },
   gadaNeck: {
-    position: 'absolute',
-    left: 15,
-    top: 11,
     width: 5,
-    height: 5,
-    borderRadius: 3,
-    backgroundColor: ink,
+    height: 2,
+    backgroundColor: '#F4C872',
+    marginTop: -1,
+    opacity: 0.85,
   },
   gadaHandle: {
-    position: 'absolute',
-    left: 18,
-    top: 13,
-    width: 4,
-    height: 17,
-    borderRadius: 2,
+    width: 3.5,
+    height: 9,
+    borderRadius: 1,
     backgroundColor: ink,
   },
-  gadaBase: {
-    position: 'absolute',
-    left: 15,
-    bottom: 0,
-    width: 10,
-    height: 4,
-    borderRadius: 2,
+  gadaPommel: {
+    width: 9,
+    height: 3,
+    borderRadius: 1.5,
     backgroundColor: ink,
+    marginTop: -1,
   },
   modakWrap: {
     width: 30,
-    height: 30,
-    position: 'relative',
+    height: 32,
     alignItems: 'center',
+    justifyContent: 'flex-end',
+    position: 'relative',
+  },
+  modakPeak: {
+    width: 0,
+    height: 0,
+    borderStyle: 'solid',
+    borderLeftWidth: 5,
+    borderRightWidth: 5,
+    borderBottomWidth: 13,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: ink,
+    marginBottom: -3,
   },
   modakBody: {
-    position: 'absolute',
-    top: 2,
-    width: 21,
-    height: 26,
-    borderRadius: 11,
+    width: 22,
+    height: 19,
+    borderTopLeftRadius: 9,
+    borderTopRightRadius: 9,
+    borderBottomLeftRadius: 11,
+    borderBottomRightRadius: 11,
     backgroundColor: ink,
-    transform: [{ scaleX: 0.9 }],
   },
-  modakCrease: {
+  modakPleatLeft: {
     position: 'absolute',
-    top: 6,
-    width: 3,
-    height: 15,
-    borderRadius: 2,
+    top: 4,
+    left: 7,
+    width: 1.5,
+    height: 14,
+    borderRadius: 1,
     backgroundColor: '#F4C872',
-    opacity: 0.55,
+    opacity: 0.45,
+    transform: [{ rotate: '-22deg' }],
   },
-  modakDot: {
+  modakPleatRight: {
     position: 'absolute',
-    top: 21,
-    width: 3,
-    height: 3,
-    borderRadius: 2,
+    top: 4,
+    right: 7,
+    width: 1.5,
+    height: 14,
+    borderRadius: 1,
     backgroundColor: '#F4C872',
-    opacity: 0.65,
-  },
-  modakDotOne: {
-    left: 10,
-  },
-  modakDotTwo: {
-    right: 10,
+    opacity: 0.45,
+    transform: [{ rotate: '22deg' }],
   },
 });
