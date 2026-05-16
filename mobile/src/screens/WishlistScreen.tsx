@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   bmContent: { flex: 1, minWidth: 0 },
   bmMeta: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 6 },
   bmPillWrap: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
-  bmPillText: { fontSize: 11, fontFamily: 'CormorantGaramond_600SemiBold' },
+  bmPillText: { fontSize: 10, fontFamily: 'CormorantGaramond_600SemiBold' },
   removeBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   backdrop: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24 },
   confirmCard: { width: '100%', maxWidth: 360, borderWidth: 1, paddingVertical: 22, paddingHorizontal: 22 },

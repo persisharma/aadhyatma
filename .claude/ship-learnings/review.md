@@ -2,6 +2,13 @@
 
 Learnings are auto-captured after each /ship run. Read before starting the phase.
 
+### NEVER skip /ship phases regardless of perceived simplicity
+
+**Seen:** 1x — 2026-05-16
+**Category:** process-violation
+**Example:** User invoked `/ship` for a rendering fix. Agent printed the banner then decided "this is simple enough to fix directly" and skipped all 7 phases — no baseline capture, no state file, no plan, no TDD, no review, no verification. The fix happened to be correct, but the process failure is identical to the original bug's root cause (PR #19 shipped without iPhone testing because it "seemed fine").
+**Resolution pattern:** When `/ship` is invoked, execute EVERY phase in order. No exceptions. No "this is too simple." The pipeline exists because human/AI judgment about simplicity is unreliable. Initialize state file FIRST so enforcement hooks activate.
+
 ### Absolute-positioned badge + flex-inline chevron on the same card: check y-axis overlap, not just x-axis
 
 **Seen:** 1x — 2026-04-25
@@ -15,6 +22,13 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Category:** invariant-design
 **Example:** `imageForGitaVerse` returns a string literal — guard `if (!imageForGitaVerse(...))` is dead code today. The real risk is that when the function evolves to a real lookup (`Record<GitaImageKey, ...>`), it may return undefined. Kept the guard for pattern-consistency with `verseImages.ts` (Hanuman) but added invariants that actually fire on realistic misconfiguration: `labelEn.trim()` emptiness (would silently collapse pill→verse spacing), `lines.length < 2` (would break shloka rendering), chapter mismatch (would break counter math).
 **Resolution pattern:** Think about what would actually break at runtime, and assert THAT — not whatever the Hanuman precedent asserts. Copy the pattern; adapt the invariant.
+
+### Never apply borderRadius + backgroundColor + overflow directly on a Text element in React Native
+
+**Seen:** 1x — 2026-05-16
+**Category:** ios-rendering
+**Example:** WishlistScreen `bmPill` style applied `borderRadius: 999`, `overflow: 'hidden'`, and `backgroundColor` directly on a `<Text>`. This renders correctly on iPad but is completely invisible on all iPhone devices due to a React Native iOS text rendering inconsistency. The pill was invisible since PR #19 launch but only caught months later because initial testing was done on iPad.
+**Resolution pattern:** Always wrap styled pill/badge/tag text in a `<View>` that carries layout styles (`backgroundColor`, `borderRadius`, `padding`, `overflow`). The inner `<Text>` should only carry text styles (`fontSize`, `fontFamily`, `color`). Test UI components on iPhone simulator, not just iPad.
 
 ### Spacing contracts that span two components: collapse to one or assert the invariant that holds them together
 
