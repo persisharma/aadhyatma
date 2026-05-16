@@ -29,7 +29,7 @@ export default function ShareButton({ onPress, onLongPress, busy }: Props) {
       accessibilityLabel="Share verse"
       accessibilityHint="Long-press to share a screenshot of this reader instead"
     >
-      <Text style={[styles.icon, { color: colors.saffron }]}>→</Text>
+      <Text style={[styles.icon, { color: colors.saffron }]}>↗</Text>
     </Pressable>
   );
 }
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 18,
     fontWeight: '600',
+    marginTop: -1,
     includeFontPadding: false,
-    transform: [{ rotate: '-45deg' }],
   },
 });
