@@ -24,7 +24,9 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props)
   const isIntro = verse.number === 0;
   const pillText = isIntro
     ? (lang === 'hi' ? 'परिचय · Introduction' : 'Introduction · परिचय')
-    : `श्लोक · ${verse.chapter}.${verse.number}`;
+    : lang === 'hi'
+      ? `श्लोक · ${verse.chapter}.${verse.number}`
+      : `Shloka · ${verse.chapter}.${verse.number}`;
 
   const bodyHiStyle = {
     color: colors.inkSoft,
