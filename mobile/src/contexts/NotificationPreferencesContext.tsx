@@ -139,6 +139,12 @@ export function NotificationPreferencesProvider({
   /** Tracks whether we've already bumped the app-open count for this mount. */
   const openCountBumpedRef = useRef(false);
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
+  // Mirror of the latest prefs/meta so updater-style writes don't read stale
+  // state from a setter's closure. Without this, two writes in the same tick
+  // (e.g. setTime + setDailyVerseEnabled from the opt-in modal) clobber each
+  // other and the saved time silently reverts to the previous value.
+  const prefsRef = useRef<NotificationPreferences>(DEFAULTS);
+  const metaRef = useRef<NotificationMeta>(META_DEFAULTS);
 
   // Hydrate on mount.
   useEffect(() => {
@@ -153,6 +159,8 @@ export function NotificationPreferencesProvider({
         if (cancelled) return;
         const loadedPrefs = parsePrefs(prefsRaw);
         const loadedMeta = parseMeta(metaRaw);
+        prefsRef.current = loadedPrefs;
+        metaRef.current = loadedMeta;
         setPrefs(loadedPrefs);
         setMeta(loadedMeta);
         setPermissionStatus(status);
@@ -165,6 +173,7 @@ export function NotificationPreferencesProvider({
           const next = Math.min(loadedMeta.appOpenCount + 1, 9999);
           if (next !== loadedMeta.appOpenCount) {
             const updated = { ...loadedMeta, appOpenCount: next };
+            metaRef.current = updated;
             setMeta(updated);
             AsyncStorage.setItem(META_KEY, JSON.stringify(updated)).catch(() => undefined);
           }
@@ -223,15 +232,25 @@ export function NotificationPreferencesProvider({
     return () => sub.remove();
   }, [prefs]);
 
-  const persistPrefs = useCallback(async (next: NotificationPreferences) => {
-    setPrefs(next);
-    await AsyncStorage.setItem(PREFS_KEY, JSON.stringify(next)).catch(() => undefined);
-  }, []);
+  const persistPrefs = useCallback(
+    async (updater: (prev: NotificationPreferences) => NotificationPreferences) => {
+      const next = updater(prefsRef.current);
+      prefsRef.current = next;
+      setPrefs(next);
+      await AsyncStorage.setItem(PREFS_KEY, JSON.stringify(next)).catch(() => undefined);
+    },
+    []
+  );
 
-  const persistMeta = useCallback(async (next: NotificationMeta) => {
-    setMeta(next);
-    await AsyncStorage.setItem(META_KEY, JSON.stringify(next)).catch(() => undefined);
-  }, []);
+  const persistMeta = useCallback(
+    async (updater: (prev: NotificationMeta) => NotificationMeta) => {
+      const next = updater(metaRef.current);
+      metaRef.current = next;
+      setMeta(next);
+      await AsyncStorage.setItem(META_KEY, JSON.stringify(next)).catch(() => undefined);
+    },
+    []
+  );
 
   const requestPermission = useCallback<
     NotificationPreferencesContextValue['requestPermission']
@@ -262,35 +281,36 @@ export function NotificationPreferencesProvider({
         if (status !== 'granted') {
           status = await requestPermission();
         }
-        await persistPrefs({ ...prefs, dailyVerseEnabled: status === 'granted' });
+        const granted = status === 'granted';
+        await persistPrefs((prev) => ({ ...prev, dailyVerseEnabled: granted }));
       } else {
-        await persistPrefs({ ...prefs, dailyVerseEnabled: false });
+        await persistPrefs((prev) => ({ ...prev, dailyVerseEnabled: false }));
       }
     },
-    [prefs, permissionStatus, persistPrefs, requestPermission]
+    [permissionStatus, persistPrefs, requestPermission]
   );
 
   const setTime = useCallback<NotificationPreferencesContextValue['setTime']>(
     async (time) => {
-      await persistPrefs({ ...prefs, time });
+      await persistPrefs((prev) => ({ ...prev, time }));
     },
-    [prefs, persistPrefs]
+    [persistPrefs]
   );
 
   const setQuietHours = useCallback<
     NotificationPreferencesContextValue['setQuietHours']
   >(
     async (quietStart, quietEnd) => {
-      await persistPrefs({ ...prefs, quietStart, quietEnd });
+      await persistPrefs((prev) => ({ ...prev, quietStart, quietEnd }));
     },
-    [prefs, persistPrefs]
+    [persistPrefs]
   );
 
   const markOptInPromptShown = useCallback<
     NotificationPreferencesContextValue['markOptInPromptShown']
   >(async () => {
-    await persistMeta({ ...meta, optInPromptShown: true });
-  }, [meta, persistMeta]);
+    await persistMeta((prev) => ({ ...prev, optInPromptShown: true }));
+  }, [persistMeta]);
 
   const shouldShowOptIn =
     !isLoading &&
