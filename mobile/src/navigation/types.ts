@@ -38,6 +38,7 @@ export type MoreStackParamList = {
   MoreHome: undefined;
   Wishlist: undefined;
   Profile: undefined;
+  Reminders: undefined;
 };
 
 /** @deprecated Use HomeStackParamList instead */
