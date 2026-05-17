@@ -33,7 +33,10 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
   const meaningLabel = lang === 'hi' ? 'अर्थ · Meaning' : 'Meaning · अर्थ';
   const commentaryLabel = lang === 'hi' ? 'व्याख्या · Commentary' : 'Commentary · व्याख्या';
 
-  const pillText = `श्लोक · ${verse.chapter}.${verse.number}`;
+  const pillText =
+    lang === 'hi'
+      ? `श्लोक · ${verse.chapter}.${verse.number}`
+      : `Shloka · ${verse.chapter}.${verse.number}`;
 
   const bodyHiStyle = {
     color: colors.inkSoft,
