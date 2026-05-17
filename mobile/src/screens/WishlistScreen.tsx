@@ -37,15 +37,14 @@ function getSourceLabel(bm: BookmarkRef, lang: 'hi' | 'en'): string {
   return sourceId;
 }
 
-function getVerseLabel(bm: BookmarkRef): string {
+function getVerseLabel(bm: BookmarkRef, lang: 'hi' | 'en'): string {
   const parts = bm.id.split(':');
-  if (bm.sourceId === 'bhagavad-gita') {
-    return `श्लोक ${parts[1]}.${Number(parts[2]) + 1}`;
+  if (bm.sourceId === 'bhagavad-gita' || bm.sourceId === 'shiva-strotam') {
+    const ref = `${parts[1]}.${Number(parts[2]) + 1}`;
+    return lang === 'hi' ? `श्लोक ${ref}` : `Shloka ${ref}`;
   }
-  if (bm.sourceId === 'shiva-strotam') {
-    return `श्लोक ${parts[1]}.${Number(parts[2]) + 1}`;
-  }
-  return `verse ${bm.verseIndex + 1}`;
+  const n = bm.verseIndex + 1;
+  return lang === 'hi' ? `श्लोक ${n}` : `Verse ${n}`;
 }
 
 export default function WishlistScreen({ navigation }: Props) {
@@ -121,7 +120,7 @@ export default function WishlistScreen({ navigation }: Props) {
                 key={bm.id}
                 onPress={() => handlePress(bm)}
                 accessibilityRole="button"
-                accessibilityLabel={`${getSourceLabel(bm, lang)}, ${getVerseLabel(bm)}`}
+                accessibilityLabel={`${getSourceLabel(bm, lang)}, ${getVerseLabel(bm, lang)}`}
                 style={({ pressed }) => [
                   styles.bmCard,
                   { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
@@ -138,7 +137,7 @@ export default function WishlistScreen({ navigation }: Props) {
                   <View style={styles.bmMeta}>
                     <View style={[styles.bmPillWrap, { backgroundColor: 'rgba(184, 98, 27, 0.14)' }]}>
                       <Text style={[styles.bmPillText, { color: colors.saffronDeep }]}>
-                        {getVerseLabel(bm)}
+                        {getVerseLabel(bm, lang)}
                       </Text>
                     </View>
                     <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted }}>
