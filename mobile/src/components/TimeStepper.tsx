@@ -6,17 +6,11 @@ import type { TimeOfDay } from '@/notifications/pure';
 type Props = {
   value: TimeOfDay;
   onChange: (next: TimeOfDay) => void;
-  /** Minute granularity. Default 15. */
   minuteStep?: number;
 };
 
-/**
- * Compact, dependency-free time picker. Two columns (hour / minute) with
- * arrow buttons. Wraps at 24 hours and at 60 minutes. Matches the parchment
- * design tokens — no platform date picker, no extra deps (bundle-only).
- */
 export default function TimeStepper({ value, onChange, minuteStep = 15 }: Props) {
-  const { colors, typography, radii } = useTheme();
+  const { colors, radii } = useTheme();
 
   const bumpHour = useCallback(
     (delta: number) => {
@@ -55,36 +49,21 @@ export default function TimeStepper({ value, onChange, minuteStep = 15 }: Props)
       accessibilityLabel={`Time: ${hh}:${mm}`}
     >
       <Column
-        label="Hr"
+        label="HR"
         valueText={hh}
-        onIncrement={() => bumpHour(1)}
-        onDecrement={() => bumpHour(-1)}
-        valueColor={colors.ink}
-        labelColor={colors.inkMuted}
+        onUp={() => bumpHour(1)}
+        onDown={() => bumpHour(-1)}
+        accentColor={colors.saffronDeep}
         chevronColor={colors.saffron}
-        labelFontFamily={typography.cardLatin.fontFamily}
-        valueFontFamily={typography.readerTitle.fontFamily}
       />
-      <View style={[styles.colon, { backgroundColor: 'transparent' }]}>
-        <Text
-          style={[
-            styles.colonText,
-            { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
-          ]}
-        >
-          :
-        </Text>
-      </View>
+      <Text style={[styles.colon, { color: colors.inkMuted }]}>:</Text>
       <Column
-        label="Min"
+        label="MIN"
         valueText={mm}
-        onIncrement={() => bumpMinute(1)}
-        onDecrement={() => bumpMinute(-1)}
-        valueColor={colors.ink}
-        labelColor={colors.inkMuted}
+        onUp={() => bumpMinute(1)}
+        onDown={() => bumpMinute(-1)}
+        accentColor={colors.saffronDeep}
         chevronColor={colors.saffron}
-        labelFontFamily={typography.cardLatin.fontFamily}
-        valueFontFamily={typography.readerTitle.fontFamily}
       />
     </View>
   );
@@ -93,52 +72,36 @@ export default function TimeStepper({ value, onChange, minuteStep = 15 }: Props)
 type ColumnProps = {
   label: string;
   valueText: string;
-  onIncrement: () => void;
-  onDecrement: () => void;
-  valueColor: string;
-  labelColor: string;
+  onUp: () => void;
+  onDown: () => void;
+  accentColor: string;
   chevronColor: string;
-  labelFontFamily: string;
-  valueFontFamily: string;
 };
 
-function Column({
-  label,
-  valueText,
-  onIncrement,
-  onDecrement,
-  valueColor,
-  labelColor,
-  chevronColor,
-  labelFontFamily,
-  valueFontFamily,
-}: ColumnProps) {
+function Column({ label, valueText, onUp, onDown, accentColor, chevronColor }: ColumnProps) {
+  const { colors } = useTheme();
   return (
     <View style={styles.col}>
       <Pressable
-        onPress={onIncrement}
+        onPress={onUp}
         accessibilityRole="button"
         accessibilityLabel={`Increase ${label}`}
-        hitSlop={8}
+        hitSlop={10}
         style={({ pressed }) => [styles.chevron, pressed && { opacity: 0.5 }]}
       >
-        <Text style={[styles.chevronText, { color: chevronColor }]}>▲</Text>
+        <Text style={[styles.chevronText, { color: chevronColor }]}>▵</Text>
       </Pressable>
-      <Text style={[styles.value, { color: valueColor, fontFamily: valueFontFamily }]}>
-        {valueText}
-      </Text>
+      <Text style={[styles.value, { color: accentColor }]}>{valueText}</Text>
       <Pressable
-        onPress={onDecrement}
+        onPress={onDown}
         accessibilityRole="button"
         accessibilityLabel={`Decrease ${label}`}
-        hitSlop={8}
+        hitSlop={10}
         style={({ pressed }) => [styles.chevron, pressed && { opacity: 0.5 }]}
       >
-        <Text style={[styles.chevronText, { color: chevronColor }]}>▼</Text>
+        <Text style={[styles.chevronText, { color: chevronColor }]}>▿</Text>
       </Pressable>
-      <Text style={[styles.label, { color: labelColor, fontFamily: labelFontFamily }]}>
-        {label.toUpperCase()}
-      </Text>
+      <Text style={[styles.label, { color: colors.inkMuted }]}>{label}</Text>
     </View>
   );
 }
@@ -148,44 +111,46 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 24,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
     borderWidth: 1,
     alignSelf: 'flex-start',
-    gap: 6,
+    gap: 2,
   },
   col: {
     alignItems: 'center',
-    paddingHorizontal: 14,
+    width: 48,
   },
   colon: {
-    paddingHorizontal: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  colonText: {
-    fontSize: 28,
-    lineHeight: 36,
+    fontSize: 18,
+    fontFamily: 'Inter_600SemiBold',
+    lineHeight: 22,
+    marginBottom: 14,
     includeFontPadding: false,
   },
   chevron: {
-    paddingVertical: 4,
+    width: 36,
+    height: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   chevronText: {
-    fontSize: 14,
+    fontSize: 16,
     includeFontPadding: false,
   },
   value: {
-    fontSize: 30,
-    lineHeight: 36,
-    minWidth: 44,
+    fontSize: 22,
+    lineHeight: 28,
+    fontFamily: 'Inter_600SemiBold',
     textAlign: 'center',
     includeFontPadding: false,
+    marginVertical: 1,
   },
   label: {
-    fontSize: 9,
-    letterSpacing: 2,
-    marginTop: 4,
+    fontSize: 8,
+    fontFamily: 'Inter_500Medium',
+    letterSpacing: 1.5,
+    marginTop: 2,
     includeFontPadding: false,
   },
 });

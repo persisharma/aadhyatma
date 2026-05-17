@@ -34,7 +34,7 @@ type NotificationMeta = {
 };
 
 const DEFAULTS: NotificationPreferences = {
-  dailyVerseEnabled: false,
+  dailyVerseEnabled: true,
   time: { hour: 7, minute: 0 },
   quietStart: { hour: 22, minute: 0 },
   quietEnd: { hour: 6, minute: 0 },
