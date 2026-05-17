@@ -8,6 +8,7 @@ export type TabParamList = {
 
 export type HomeStackParamList = {
   Home: undefined;
+  Search: undefined;
   CategoryList: { categoryId: ContentCategory };
   DeityList: { deityId: Deity };
   DeityIndex: undefined;

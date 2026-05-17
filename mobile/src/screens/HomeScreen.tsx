@@ -20,6 +20,7 @@ import CategoryCard from '@/components/CategoryCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import Crest from '@/components/Crest';
 import HelpFloatingButton from '@/components/HelpFloatingButton';
+import SearchFloatingButton from '@/components/SearchFloatingButton';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 
@@ -181,6 +182,7 @@ export default function HomeScreen({ navigation }: Props) {
         </ScrollView>
       </SafeAreaView>
 
+      <SearchFloatingButton onPress={() => navigation.navigate('Search')} />
       <HelpFloatingButton onPress={openHelp} />
 
       <Modal

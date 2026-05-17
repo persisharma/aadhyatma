@@ -5,6 +5,7 @@ import {
   type NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import HomeScreen from '@/screens/HomeScreen';
+import SearchScreen from '@/screens/SearchScreen';
 import CategoryListScreen from '@/screens/CategoryListScreen';
 import DeityListScreen from '@/screens/DeityListScreen';
 import DeityIndexScreen from '@/screens/DeityIndexScreen';
@@ -59,6 +60,11 @@ export default function HomeStackNavigator() {
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ animation: 'fade' }}
+      />
       <Stack.Screen name="CategoryList" component={CategoryListScreen} />
       <Stack.Screen name="DeityList" component={DeityListScreen} />
       <Stack.Screen name="DeityIndex" component={DeityIndexScreen} />

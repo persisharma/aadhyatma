@@ -102,6 +102,7 @@ The slash command runs the first three; the human PR author runs the rest.
 11. **Per-section device check.** If the PR adds N sections, every one of them must be opened in the Expo dev client individually — Home tile → reader → toggle language → swipe to last verse → back. A single "tested locally" sign-off does not cover N sections; capture one screenshot per section and paste them in the PR description.
 12. **Both listings reach the reader.** Open the section from Home → its category tile **and** from Home → By Deity → its deity card. Both paths must land on the same reader. If the section appears as a card but tapping is a no-op, the routing helper (`entryRoutes.ts`) is missing a case.
 13. **Multi-instance readers serve the right content.** For sections that share a screen (chalisas, aartis, future N-of-a-kind), open at least two distinct entries and confirm titles, verses, and `sourceId` (visible via bookmarks) actually differ — a reader hardcoded to one variant will silently render the wrong content for the others.
+14. **Section is reachable from search.** `mobile/src/data/__tests__/searchIndex.test.ts` already enforces that every active `library` entry produces verse entries in the search index — but verify manually: open the global search (top-right magnifier on Home), type a unique word from the section's first verse, confirm the result row tap lands on the correct reader page. See §8 for the per-shape integration paths.
 
 ---
 
@@ -125,7 +126,34 @@ No manual routing in HomeScreen is needed — `CategoryListScreen` filters items
 
 ---
 
-## 7. Pull-request hygiene for new sections
+## 8. Search index integration for new sections
+
+Every new section must also be reachable from global search (`SearchScreen`). The on-device index is built by `mobile/src/data/searchIndex.ts` from the same data the readers consume — there is no parallel content source. New sections must satisfy one of two integration paths:
+
+**Path A — standard verse shapes (no code change required).** The index already handles three verse shapes:
+
+| Verse shape | Devanagari source | Latin source | Used by |
+|---|---|---|---|
+| `lines` + `linesEn` | `lines` | `linesEn` | chalisas, aartis, sundarkand, ramcharitmanas |
+| `sanskrit` + `linesEn` | `sanskrit` | `linesEn` | shiva-strotam, durga-stotram, ganesh-stotram, vishnu-sahasranama, hanuman-ashtak, ram-stuti |
+| `sanskrit` + `transliteration` | `sanskrit` | `transliteration` | bhagavad-gita |
+
+If a new section uses one of the above shapes **and** its data accessor follows the established pattern (`get<Section>Chapter(chapter)` returning `{ verses: V[], titleHi, titleEn }`, plus a `<section>ChaptersManifest` array), it is integrated by adding one branch to `buildVerseEntries()` in `searchIndex.ts` that selects the right accessor. No new normalization, no new ranking. The accessor branch is ~10 lines.
+
+**Path B — novel verse shape.** If the section invents a new field shape (e.g. multi-script transliteration, multiple-language meanings beyond Hi/En), the integration is bigger:
+1. Extend the `makeVerseEntry` call site in `searchIndex.ts` with the new fields appended to the searchable `fields` array.
+2. Update `SearchVerseEntry` if a new field needs to be rendered in the result row.
+3. Add a test case in `mobile/src/data/__tests__/searchIndex.test.ts` that queries against the new field and asserts hits.
+
+**Hard CI gate.** `searchIndex.test.ts` contains a coverage assertion: every active, non-hidden entry in `library` must produce at least one verse entry in the index. A new section that adds `LibraryEntry` to `texts.ts` without wiring `buildVerseEntries()` will fail this test before merge. There is no way to silently ship an un-searchable section.
+
+**Section-name + deity-name fields are free.** `nameHi`, `nameEn`, and `sub` from the `LibraryEntry` itself are indexed for the "Sections" result group with zero extra code. Same for deity tags. Adding a section to `library` and `entryRoutes.ts` is enough to make the section name itself searchable; only verse-level search needs the per-shape branch.
+
+**Routing.** Search result taps route through `buildProgressTarget` (verses) or `navigateToEntryStart` (sections) in `entryRoutes.ts`. Both already use the same registries that bookmarks and resume use, so a section already registered in `entryRoutes.ts` is reachable from search results without extra work.
+
+---
+
+## 9. Pull-request hygiene for new sections
 
 These rules exist because PR #31 (the Balkand crash) demonstrated that bulk multi-section PRs invite pattern-match review, and that `tsc` escape hatches will be approved if the commit message frames them as "compatibility casts." Both failure modes are now closed.
 

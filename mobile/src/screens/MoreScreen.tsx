@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Alert, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useBookmarks } from '@/contexts/BookmarksContext';
@@ -19,6 +20,10 @@ export default function MoreScreen({ navigation }: Props) {
   const { lang: defaultLang, setLang: setDefaultLang } = useGitaLanguage();
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
+  // Root-tab nav for cross-tab navigation (More → Home tab → Search screen).
+  // Typed loosely because @react-navigation's nested-screen typing through the
+  // tab navigator isn't expressible without threading the tab param list here.
+  const rootNav = useNavigation<{ navigate: (tab: string, params?: object) => void }>();
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
   const hi = helpContent.hi;
   const en = helpContent.en;
@@ -177,6 +182,32 @@ export default function MoreScreen({ navigation }: Props) {
               </Text>
               <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
                 {bookmarks.length} verse{bookmarks.length !== 1 ? 's' : ''} saved
+              </Text>
+            </View>
+            <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
+          </Pressable>
+
+          {/* Search Card */}
+          <Pressable
+            onPress={() => rootNav.navigate('HomeTab', { screen: 'Search' })}
+            accessibilityRole="button"
+            accessibilityLabel="Search verses, sections, and mantras"
+            style={({ pressed }) => [
+              styles.section,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: pressed ? 0.85 : 1 },
+            ]}
+          >
+            <View style={[styles.sectionIcon, { backgroundColor: colors.saffronDeep }]}>
+              <Text style={{ color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>
+                ⌕
+              </Text>
+            </View>
+            <View style={styles.sectionMeta}>
+              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
+                Search
+              </Text>
+              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
+                Find any verse, section, or mantra
               </Text>
             </View>
             <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
