@@ -7,7 +7,7 @@ type Props = {
   onPress: () => void;
 };
 
-export default function HelpFloatingButton({ onPress }: Props) {
+export default function SearchFloatingButton({ onPress }: Props) {
   const { colors, typography, spacing } = useTheme();
   const insets = useSafeAreaInsets();
 
@@ -15,7 +15,7 @@ export default function HelpFloatingButton({ onPress }: Props) {
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel="Help and disclaimer"
+      accessibilityLabel="Search verses, sections, and mantras"
       hitSlop={8}
       style={({ pressed }) => [
         styles.button,
@@ -32,12 +32,12 @@ export default function HelpFloatingButton({ onPress }: Props) {
         style={[
           styles.glyph,
           {
-            color: colors.inkMuted,
-            fontFamily: typography.cardLatin.fontFamily,
+            color: colors.saffron,
+            fontFamily: typography.readerTitle.fontFamily,
           },
         ]}
       >
-        ?
+        ⌕
       </Text>
     </Pressable>
   );
@@ -46,18 +46,16 @@ export default function HelpFloatingButton({ onPress }: Props) {
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   glyph: {
-    fontSize: 22,
-    lineHeight: 26,
-    fontStyle: 'italic',
+    fontSize: 26,
+    lineHeight: 28,
     includeFontPadding: false,
-    marginTop: -1,
   },
 });
