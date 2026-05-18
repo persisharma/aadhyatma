@@ -786,7 +786,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   searchGlyph: {
-    fontSize: 20,
+    fontSize: 24,
     includeFontPadding: false,
   },
   input: {

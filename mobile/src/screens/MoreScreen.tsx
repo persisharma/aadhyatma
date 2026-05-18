@@ -198,7 +198,7 @@ export default function MoreScreen({ navigation }: Props) {
             ]}
           >
             <View style={[styles.sectionIcon, { backgroundColor: colors.saffronDeep }]}>
-              <Text style={{ color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>
+              <Text style={{ color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily, fontSize: 18, includeFontPadding: false, lineHeight: 20, textAlign: 'center' }}>
                 ⌕
               </Text>
             </View>
