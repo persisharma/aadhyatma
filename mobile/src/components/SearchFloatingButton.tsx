@@ -7,10 +7,6 @@ type Props = {
   onPress: () => void;
 };
 
-/**
- * Top-right circular pill on the Home screen that opens the global search.
- * Mirrors the HelpFloatingButton pattern (RULEBOOK §3 — no system blue).
- */
 export default function SearchFloatingButton({ onPress }: Props) {
   const { colors, typography, spacing } = useTheme();
   const insets = useSafeAreaInsets();
@@ -25,7 +21,7 @@ export default function SearchFloatingButton({ onPress }: Props) {
         styles.button,
         {
           right: spacing.xl,
-          top: spacing.xl + insets.top,
+          bottom: spacing.xl + insets.bottom,
           backgroundColor: colors.parchmentSoft,
           borderColor: colors.divider,
         },

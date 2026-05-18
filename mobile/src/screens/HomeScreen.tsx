@@ -1,10 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import {
-  Alert,
   Dimensions,
-  Linking,
-  Modal,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,11 +11,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { categories } from '@/data/categories';
-import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import CategoryCard from '@/components/CategoryCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import Crest from '@/components/Crest';
-import HelpFloatingButton from '@/components/HelpFloatingButton';
 import SearchFloatingButton from '@/components/SearchFloatingButton';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
@@ -27,27 +21,7 @@ import type { ContentCategory } from '@/data/texts';
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
-  const { colors, typography, spacing, radii } = useTheme();
-  const [helpVisible, setHelpVisible] = useState(false);
-  const hi = helpContent.hi;
-  const en = helpContent.en;
-
-  const openHelp = useCallback(() => setHelpVisible(true), []);
-  const closeHelp = useCallback(() => setHelpVisible(false), []);
-  const openMailto = useCallback(() => {
-    const url = buildDiscrepancyMailto();
-    Linking.canOpenURL(url)
-      .then((supported) => {
-        if (supported) {
-          Linking.openURL(url).catch(() => undefined);
-        } else {
-          Alert.alert('Email', 'Please email us at incardible.app@gmail.com');
-        }
-      })
-      .catch(() => {
-        Alert.alert('Email', 'Please email us at incardible.app@gmail.com');
-      });
-  }, []);
+  const { colors, typography, spacing } = useTheme();
 
   const categoryIcons: Record<CategoryIconKey, React.ReactNode> = {
     granth: <CategoryIcon iconKey="granth" />,
@@ -183,174 +157,6 @@ export default function HomeScreen({ navigation }: Props) {
       </SafeAreaView>
 
       <SearchFloatingButton onPress={() => navigation.navigate('Search')} />
-      <HelpFloatingButton onPress={openHelp} />
-
-      <Modal
-        visible={helpVisible}
-        animationType="slide"
-        presentationStyle="pageSheet"
-        onRequestClose={closeHelp}
-      >
-        <View style={[styles.modalRoot, { backgroundColor: colors.parchment }]}>
-          <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-            <View style={[styles.modalHeader, { borderBottomColor: colors.divider }]}>
-              <Text
-                accessibilityRole="header"
-                accessibilityLabel={`${en.title}. ${hi.title}.`}
-                style={[
-                  styles.modalTitle,
-                  {
-                    color: colors.ink,
-                    fontFamily: typography.readerTitle.fontFamily,
-                    fontSize: 20,
-                  },
-                ]}
-              >
-                {en.title} / {hi.title}
-              </Text>
-              <Pressable
-                onPress={closeHelp}
-                accessibilityRole="button"
-                accessibilityLabel="Close help"
-                hitSlop={16}
-                style={({ pressed }) => [styles.modalClose, pressed && { opacity: 0.7 }]}
-              >
-                <Text style={[styles.closeButton, { color: colors.saffron }]}>✕</Text>
-              </Pressable>
-            </View>
-
-            <ScrollView
-              contentContainerStyle={[
-                styles.modalScroll,
-                { paddingHorizontal: spacing.xxl },
-              ]}
-              showsVerticalScrollIndicator={false}
-            >
-              <Text
-                style={[
-                  styles.modalSectionHeading,
-                  {
-                    color: colors.ink,
-                    fontFamily: typography.readerTitle.fontFamily,
-                  },
-                ]}
-              >
-                {en.disclaimerHeading}
-              </Text>
-              {en.disclaimerParagraphs.map((para, i) => (
-                <Text
-                  key={`en-${i}`}
-                  style={[
-                    styles.modalPara,
-                    {
-                      color: colors.inkSoft,
-                      fontFamily: typography.meaning.fontFamily,
-                      fontSize: 14,
-                      lineHeight: 24,
-                    },
-                  ]}
-                >
-                  {para}
-                </Text>
-              ))}
-
-              <View style={[styles.langDivider, { borderBottomColor: colors.divider }]} />
-
-              <Text
-                style={[
-                  styles.modalSectionHeading,
-                  {
-                    color: colors.ink,
-                    fontFamily: typography.readerTitle.fontFamily,
-                  },
-                ]}
-              >
-                {hi.disclaimerHeading}
-              </Text>
-              {hi.disclaimerParagraphs.map((para, i) => (
-                <Text
-                  key={`hi-${i}`}
-                  style={[
-                    styles.modalPara,
-                    {
-                      color: colors.inkSoft,
-                      fontFamily: typography.meaning.fontFamily,
-                      fontSize: 14,
-                      lineHeight: 24,
-                    },
-                  ]}
-                >
-                  {para}
-                </Text>
-              ))}
-
-              <View style={[styles.langDivider, { borderBottomColor: colors.divider }]} />
-
-              <Text
-                accessibilityRole="header"
-                accessibilityLabel={`${en.reportHeading}. ${hi.reportHeading}.`}
-                style={[
-                  styles.modalSectionHeading,
-                  {
-                    color: colors.ink,
-                    fontFamily: typography.readerTitle.fontFamily,
-                    marginTop: 8,
-                  },
-                ]}
-              >
-                {en.reportHeading} / {hi.reportHeading}
-              </Text>
-              <Text
-                style={[
-                  styles.modalPara,
-                  {
-                    color: colors.inkSoft,
-                    fontFamily: typography.meaning.fontFamily,
-                    fontSize: 14,
-                    lineHeight: 24,
-                  },
-                ]}
-              >
-                {en.reportIntro}
-              </Text>
-              <Text
-                style={[
-                  styles.modalPara,
-                  {
-                    color: colors.inkSoft,
-                    fontFamily: typography.meaning.fontFamily,
-                    fontSize: 14,
-                    lineHeight: 24,
-                  },
-                ]}
-              >
-                {hi.reportIntro}
-              </Text>
-              <Pressable
-                onPress={openMailto}
-                accessibilityRole="button"
-                accessibilityLabel={`${en.reportButtonLabel}. ${hi.reportButtonLabel}.`}
-                style={[
-                  styles.emailButton,
-                  {
-                    backgroundColor: colors.saffron,
-                    borderRadius: radii.md,
-                  },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.emailButtonText,
-                    { fontFamily: typography.readerTitle.fontFamily },
-                  ]}
-                >
-                  {en.reportButtonLabel} / {hi.reportButtonLabel}
-                </Text>
-              </Pressable>
-            </ScrollView>
-          </SafeAreaView>
-        </View>
-      </Modal>
     </View>
   );
 }
@@ -393,58 +199,5 @@ const styles = StyleSheet.create({
     opacity: 0.55,
     marginTop: 36,
     includeFontPadding: false,
-  },
-  modalRoot: {
-    flex: 1,
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-  },
-  modalTitle: {
-    includeFontPadding: false,
-  },
-  closeButton: {
-    fontSize: 20,
-    fontWeight: '600',
-  },
-  modalClose: {
-    width: 44,
-    height: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalScroll: {
-    paddingTop: 24,
-    paddingBottom: 48,
-  },
-  modalSectionHeading: {
-    fontSize: 16,
-    marginBottom: 12,
-    includeFontPadding: false,
-  },
-  modalPara: {
-    marginBottom: 14,
-    includeFontPadding: false,
-  },
-  langDivider: {
-    borderBottomWidth: 1,
-    marginVertical: 20,
-    opacity: 0.5,
-  },
-  emailButton: {
-    marginTop: 16,
-    paddingVertical: 14,
-    minHeight: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  emailButtonText: {
-    color: '#FFFFFF',
-    fontSize: 15,
   },
 });
