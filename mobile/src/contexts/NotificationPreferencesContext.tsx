@@ -139,6 +139,7 @@ export function NotificationPreferencesProvider({
   /** Tracks whether we've already bumped the app-open count for this mount. */
   const openCountBumpedRef = useRef(false);
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
+  const [foregroundTick, setForegroundTick] = useState(0);
   // Mirror of the latest prefs/meta so updater-style writes don't read stale
   // state from a setter's closure. Without this, two writes in the same tick
   // (e.g. setTime + setDailyVerseEnabled from the opt-in modal) clobber each
@@ -187,8 +188,10 @@ export function NotificationPreferencesProvider({
     };
   }, []);
 
-  // Reconcile the OS notification schedule whenever prefs change and after
-  // app foreground (dates advance).
+  // Reconcile the OS notification schedule whenever prefs change, permission
+  // changes, or the app returns to foreground (foregroundTick advances dates).
+  // Single scheduling path eliminates the race where two concurrent calls to
+  // scheduleDailyVerseRollingWindow cancel each other's work.
   useEffect(() => {
     if (isLoading) return;
     let cancelled = false;
@@ -208,9 +211,10 @@ export function NotificationPreferencesProvider({
     return () => {
       cancelled = true;
     };
-  }, [isLoading, prefs, permissionStatus]);
+  }, [isLoading, prefs, permissionStatus, foregroundTick]);
 
-  // On app foreground transitions, re-check permission and reconcile.
+  // On app foreground transitions, re-check permission and bump foregroundTick
+  // so the reconciliation effect re-runs with fresh dates.
   useEffect(() => {
     const sub = AppState.addEventListener('change', (next) => {
       const prev = appStateRef.current;
@@ -219,18 +223,11 @@ export function NotificationPreferencesProvider({
         readPermissionStatus().then((status) => {
           setPermissionStatus((cur) => (cur === status ? cur : status));
         });
-        if (prefs.dailyVerseEnabled) {
-          scheduleDailyVerseRollingWindow({
-            enabled: true,
-            time: prefs.time,
-            quietStart: prefs.quietStart,
-            quietEnd: prefs.quietEnd,
-          }).catch(() => undefined);
-        }
+        setForegroundTick((t) => t + 1);
       }
     });
     return () => sub.remove();
-  }, [prefs]);
+  }, []);
 
   const persistPrefs = useCallback(
     async (updater: (prev: NotificationPreferences) => NotificationPreferences) => {
