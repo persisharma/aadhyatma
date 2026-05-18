@@ -46,17 +46,16 @@ export default function SearchFloatingButton({ onPress }: Props) {
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   glyph: {
-    fontSize: 22,
-    lineHeight: 24,
+    fontSize: 26,
+    lineHeight: 28,
     includeFontPadding: false,
-    marginTop: -1,
   },
 });

@@ -109,6 +109,19 @@ export default function SearchScreen({ navigation }: Props) {
     AsyncStorage.setItem(RECENT_KEY, JSON.stringify(updated)).catch(() => undefined);
   }, [recent]);
 
+  const removeRecent = useCallback((q: string) => {
+    setRecent((prev) => {
+      const updated = prev.filter((r) => r !== q);
+      AsyncStorage.setItem(RECENT_KEY, JSON.stringify(updated)).catch(() => undefined);
+      return updated;
+    });
+  }, []);
+
+  const clearAllRecent = useCallback(() => {
+    setRecent([]);
+    AsyncStorage.removeItem(RECENT_KEY).catch(() => undefined);
+  }, []);
+
   const openSection = useCallback(
     (sourceId: string) => {
       const entry = library.find((e) => e.id === sourceId);
@@ -241,6 +254,8 @@ export default function SearchScreen({ navigation }: Props) {
               setQuery(q);
               inputRef.current?.focus();
             }}
+            onRecentRemove={removeRecent}
+            onRecentClearAll={clearAllRecent}
             onPopularPress={(id) => openSection(id)}
             isHi={isHi}
           />
@@ -306,6 +321,8 @@ function EmptyState({
   spacing,
   radii,
   onRecentPress,
+  onRecentRemove,
+  onRecentClearAll,
   onPopularPress,
   isHi,
 }: {
@@ -316,6 +333,8 @@ function EmptyState({
   spacing: Theme['spacing'];
   radii: Theme['radii'];
   onRecentPress: (q: string) => void;
+  onRecentRemove: (q: string) => void;
+  onRecentClearAll: () => void;
   onPopularPress: (sourceId: string) => void;
   isHi: boolean;
 }) {
@@ -329,39 +348,61 @@ function EmptyState({
         <View style={[styles.emptyContent, { paddingHorizontal: spacing.xxl }]}>
           {recent.length > 0 ? (
             <>
-              <GroupHeader
-                label={isHi ? 'हाल ही में' : 'Recent'}
-                count={recent.length}
-                colors={colors}
-                typography={typography}
-              />
+              <View style={styles.recentHeader}>
+                <GroupHeader
+                  label={isHi ? 'हाल ही में' : 'Recent'}
+                  count={recent.length}
+                  colors={colors}
+                  typography={typography}
+                />
+                <Pressable
+                  onPress={onRecentClearAll}
+                  accessibilityRole="button"
+                  accessibilityLabel={isHi ? 'सभी हटाएं' : 'Clear all'}
+                  hitSlop={8}
+                  style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
+                >
+                  <Text style={{ color: colors.saffron, fontFamily: 'Inter_500Medium', fontSize: 12 }}>
+                    {isHi ? 'सभी हटाएं' : 'Clear All'}
+                  </Text>
+                </Pressable>
+              </View>
               <View style={styles.recentRow}>
                 {recent.map((q) => (
-                  <Pressable
-                    key={q}
-                    onPress={() => onRecentPress(q)}
-                    accessibilityRole="button"
-                    accessibilityLabel={`Search again: ${q}`}
-                    style={({ pressed }) => [
-                      styles.recentChip,
-                      {
-                        backgroundColor: colors.parchmentSoft,
-                        borderColor: colors.divider,
-                        borderRadius: radii.pill,
-                        opacity: pressed ? 0.7 : 1,
-                      },
-                    ]}
-                  >
-                    <Text
-                      numberOfLines={1}
-                      style={[
-                        styles.recentChipText,
-                        { color: colors.inkSoft, fontFamily: 'Inter_500Medium' },
-                      ]}
+                  <View key={q} style={[
+                    styles.recentChip,
+                    {
+                      backgroundColor: colors.parchmentSoft,
+                      borderColor: colors.divider,
+                      borderRadius: radii.pill,
+                    },
+                  ]}>
+                    <Pressable
+                      onPress={() => onRecentPress(q)}
+                      accessibilityRole="button"
+                      accessibilityLabel={`Search again: ${q}`}
+                      style={({ pressed }) => [{ opacity: pressed ? 0.7 : 1 }]}
                     >
-                      {q}
-                    </Text>
-                  </Pressable>
+                      <Text
+                        numberOfLines={1}
+                        style={[
+                          styles.recentChipText,
+                          { color: colors.inkSoft, fontFamily: 'Inter_500Medium' },
+                        ]}
+                      >
+                        {q}
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      onPress={() => onRecentRemove(q)}
+                      accessibilityRole="button"
+                      accessibilityLabel={`Remove ${q} from recent`}
+                      hitSlop={6}
+                      style={({ pressed }) => [styles.recentRemoveBtn, { opacity: pressed ? 0.4 : 1 }]}
+                    >
+                      <Text style={[styles.recentRemoveGlyph, { color: colors.inkMuted }]}>✕</Text>
+                    </Pressable>
+                  </View>
                 ))}
               </View>
             </>
@@ -820,6 +861,11 @@ const styles = StyleSheet.create({
   emptyContent: {
     paddingTop: 4,
   },
+  recentHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   recentRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -829,11 +875,25 @@ const styles = StyleSheet.create({
   recentChip: {
     borderWidth: 1,
     paddingVertical: 6,
-    paddingHorizontal: 12,
+    paddingLeft: 12,
+    paddingRight: 6,
     maxWidth: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
   },
   recentChipText: {
     fontSize: 13,
+    includeFontPadding: false,
+  },
+  recentRemoveBtn: {
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  recentRemoveGlyph: {
+    fontSize: 10,
     includeFontPadding: false,
   },
   popularRow: {
