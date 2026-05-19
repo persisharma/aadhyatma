@@ -7,11 +7,15 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { getRandomVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
 import Ornament from '@/components/Ornament';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
 
 export default function DailyBhaktiScreen() {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const [verse, setVerse] = useState<UniformVerse | null>(() => getRandomVerse());
+
+  const { share, busy: shareBusy } = useShare();
 
   const refresh = useCallback(() => {
     setVerse(getRandomVerse());
@@ -136,7 +140,7 @@ export default function DailyBhaktiScreen() {
               {isHindi ? verse.meaningHi : verse.meaningEn}
             </Text>
 
-            {/* Refresh - inline at card bottom */}
+            {/* Card footer: source label | share + next */}
             <View style={styles.cardFooter}>
               <Text
                 style={{
@@ -147,15 +151,36 @@ export default function DailyBhaktiScreen() {
               >
                 {isHindi ? verse.sourceNameHi : verse.sourceNameEn}
               </Text>
-              <Pressable
-                onPress={refresh}
-                accessibilityRole="button"
-                accessibilityLabel={isHindi ? 'अगला श्लोक' : 'Next verse'}
-                hitSlop={16}
-                style={({ pressed }) => [styles.nextBtn, pressed && { opacity: 0.7 }]}
-              >
-                <Text style={{ fontSize: 14, color: colors.saffron }}>↻ next</Text>
-              </Pressable>
+              <View style={styles.footerActions}>
+                <ShareButton
+                  busy={shareBusy}
+                  onPress={() => {
+                    share(
+                      {
+                        sourceId: verse.sourceId,
+                        sectionNameHi: verse.sourceNameHi,
+                        sectionNameEn: verse.sourceNameEn,
+                        verseLabelHi: verse.labelHi ?? '',
+                        verseLabelEn: verse.labelEn ?? '',
+                        linesHi: verse.textHi,
+                        linesEn: verse.textEn,
+                        meaningHi: verse.meaningHi,
+                        meaningEn: verse.meaningEn,
+                      },
+                      lang
+                    );
+                  }}
+                />
+                <Pressable
+                  onPress={refresh}
+                  accessibilityRole="button"
+                  accessibilityLabel={isHindi ? 'अगला श्लोक' : 'Next verse'}
+                  hitSlop={16}
+                  style={({ pressed }) => [styles.nextBtn, pressed && { opacity: 0.7 }]}
+                >
+                  <Text style={{ fontSize: 14, color: colors.saffron }}>↻ next</Text>
+                </Pressable>
+              </View>
             </View>
           </View>
         </ScrollView>
@@ -204,6 +229,11 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'rgba(138, 62, 11, 0.15)',
+  },
+  footerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   nextBtn: {
     minWidth: 68,
