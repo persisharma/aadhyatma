@@ -8,7 +8,9 @@ import { getRandomVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
+import BookmarkButton from '@/components/BookmarkButton';
 import { useShare } from '@/utils/shareVerse';
+import { useBookmarks } from '@/contexts/BookmarksContext';
 
 export default function DailyBhaktiScreen() {
   const { colors, typography, spacing } = useTheme();
@@ -16,12 +18,16 @@ export default function DailyBhaktiScreen() {
   const [verse, setVerse] = useState<UniformVerse | null>(() => getRandomVerse());
 
   const { share, busy: shareBusy } = useShare();
+  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
 
   const refresh = useCallback(() => {
     setVerse(getRandomVerse());
   }, []);
 
   const isHindi = lang === 'hi';
+  const bookmarkId = verse
+    ? `${verse.sourceId}:${verse.chapter ?? 0}:${verse.verseIndex}`
+    : '';
 
   if (!verse) {
     return (
@@ -80,11 +86,52 @@ export default function DailyBhaktiScreen() {
 
           {/* Verse Card */}
           <View style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
-            {/* Source pill */}
-            <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
-              <Text style={[styles.pillText, { color: colors.saffronDeep }]}>
-                {isHindi ? verse.sourceNameHi : verse.sourceNameEn} · {isHindi ? verse.labelHi : verse.labelEn}
-              </Text>
+            {/* Top row: source pill + action icons */}
+            <View style={styles.cardHeader}>
+              <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
+                <Text style={[styles.pillText, { color: colors.saffronDeep }]}>
+                  {isHindi ? verse.sourceNameHi : verse.sourceNameEn} · {isHindi ? verse.labelHi : verse.labelEn}
+                </Text>
+              </View>
+              <View style={styles.headerActions}>
+                <BookmarkButton
+                  isBookmarked={isBookmarked(bookmarkId)}
+                  onToggle={() => {
+                    if (isBookmarked(bookmarkId)) {
+                      removeBookmark(bookmarkId);
+                    } else {
+                      addBookmark({
+                        id: bookmarkId,
+                        sourceId: verse.sourceId,
+                        chapter: verse.chapter,
+                        verseIndex: verse.verseIndex,
+                        savedAt: Date.now(),
+                        previewHi: verse.textHi.slice(0, 2).join(' '),
+                        previewEn: verse.textEn.slice(0, 2).join(' '),
+                      });
+                    }
+                  }}
+                />
+                <ShareButton
+                  busy={shareBusy}
+                  onPress={() => {
+                    share(
+                      {
+                        sourceId: verse.sourceId,
+                        sectionNameHi: verse.sourceNameHi,
+                        sectionNameEn: verse.sourceNameEn,
+                        verseLabelHi: verse.labelHi ?? '',
+                        verseLabelEn: verse.labelEn ?? '',
+                        linesHi: verse.textHi,
+                        linesEn: verse.textEn,
+                        meaningHi: verse.meaningHi,
+                        meaningEn: verse.meaningEn,
+                      },
+                      lang
+                    );
+                  }}
+                />
+              </View>
             </View>
 
             {/* Verse text — swap based on language */}
@@ -140,7 +187,7 @@ export default function DailyBhaktiScreen() {
               {isHindi ? verse.meaningHi : verse.meaningEn}
             </Text>
 
-            {/* Card footer: source label | share + next */}
+            {/* Card footer: source label | next */}
             <View style={styles.cardFooter}>
               <Text
                 style={{
@@ -151,36 +198,15 @@ export default function DailyBhaktiScreen() {
               >
                 {isHindi ? verse.sourceNameHi : verse.sourceNameEn}
               </Text>
-              <View style={styles.footerActions}>
-                <ShareButton
-                  busy={shareBusy}
-                  onPress={() => {
-                    share(
-                      {
-                        sourceId: verse.sourceId,
-                        sectionNameHi: verse.sourceNameHi,
-                        sectionNameEn: verse.sourceNameEn,
-                        verseLabelHi: verse.labelHi ?? '',
-                        verseLabelEn: verse.labelEn ?? '',
-                        linesHi: verse.textHi,
-                        linesEn: verse.textEn,
-                        meaningHi: verse.meaningHi,
-                        meaningEn: verse.meaningEn,
-                      },
-                      lang
-                    );
-                  }}
-                />
-                <Pressable
-                  onPress={refresh}
-                  accessibilityRole="button"
-                  accessibilityLabel={isHindi ? 'अगला श्लोक' : 'Next verse'}
-                  hitSlop={16}
-                  style={({ pressed }) => [styles.nextBtn, pressed && { opacity: 0.7 }]}
-                >
-                  <Text style={{ fontSize: 14, color: colors.saffron }}>↻ next</Text>
-                </Pressable>
-              </View>
+              <Pressable
+                onPress={refresh}
+                accessibilityRole="button"
+                accessibilityLabel={isHindi ? 'अगला श्लोक' : 'Next verse'}
+                hitSlop={16}
+                style={({ pressed }) => [styles.nextBtn, pressed && { opacity: 0.7 }]}
+              >
+                <Text style={{ fontSize: 14, color: colors.saffron }}>↻ next</Text>
+              </Pressable>
             </View>
           </View>
         </ScrollView>
@@ -205,11 +231,21 @@ const styles = StyleSheet.create({
     shadowRadius: 24,
     elevation: 6,
   },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   pill: {
-    alignSelf: 'flex-start',
     paddingHorizontal: 10,
     paddingVertical: 3,
     borderRadius: 999,
+    flexShrink: 1,
   },
   pillText: {
     fontFamily: 'CormorantGaramond_600SemiBold',
@@ -229,11 +265,6 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'rgba(138, 62, 11, 0.15)',
-  },
-  footerActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
   },
   nextBtn: {
     minWidth: 68,
