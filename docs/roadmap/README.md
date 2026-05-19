@@ -8,14 +8,25 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 ## PRDs (Q3 2026)
 
-| ID | Title | Target release |
-|---|---|---|
-| [PRD-01](./prds/01-daily-notifications.md) | Daily Bhakti notifications & festival reminders | v1.4.0 |
-| [PRD-02](./prds/02-verse-audio.md) | Verse audio for chalisas & aartis | v1.5.0 |
-| [PRD-03](./prds/03-search.md) | Global library search | v1.6.0 |
-| [PRD-04](./prds/04-reading-comfort.md) | Reading comfort pack (font scale, dark mode, sleep timer) | v1.7.0 |
-| [PRD-05](./prds/05-share-verse-card.md) | Share verse on WhatsApp (image + app link) | v1.7.1 |
-| [PRD-06](./prds/06-foundation-hardening.md) | Test foundation, local crash log, on-device backup export/import | continuous |
+| ID | Title | Target release | Status |
+|---|---|---|---|
+| [PRD-01](./prds/01-daily-notifications.md) | Daily Bhakti notifications | v1.4.0 | ✅ Shipped (festivals deferred to Q4) |
+| [PRD-02](./prds/02-verse-audio.md) | Verse audio for chalisas & aartis | v1.5.0 | ⏸ On hold (revisit when network is on the table) |
+| [PRD-03](./prds/03-search.md) | Global library search | v1.6.0 | ✅ Shipped |
+| [PRD-04](./prds/04-reading-comfort.md) | Reading comfort pack | v1.7.0 | ❌ Cut (font scale = UI risk; dark mode kills the parchment aesthetic) |
+| [PRD-05](./prds/05-share-verse-card.md) | Share verse on WhatsApp (image + app link) | v1.7.1 | ✅ Shipped |
+| [PRD-06](./prds/06-foundation-hardening.md) | Test foundation, local crash log, on-device backup | continuous | ⏳ Continuous |
+
+## PRDs (Q4 2026 — drafting)
+
+Q4 shifts emphasis from engagement plumbing (Q3) to **content as the product**. The unifying theme: turn Vedansh from a *timeless library* into a *daily, time-aware companion*. Panchang is the keystone — every subsequent Q4 PRD routes off the panchang engine.
+
+| ID | Title | Target release | Status |
+|---|---|---|---|
+| [PRD-07](./prds/07-panchang.md) | Panchang — Today strip + Calendar view | v1.8.0 | 📝 Drafted |
+| [PRD-08](./prds/08-vrats.md) | Vrat & festival library (~50 vrat-kathas + vidhi) | v1.9.0 | 📝 Drafted |
+| PRD-09 | Temple stories (Char Dham + Jyotirlinga + Shakti Peeth) | v1.10.0 | TBD |
+| PRD-10 | "आज / Today" home — panchang + today's story + vrat link | v1.10.1 | TBD |
 
 ## Constraint
 
@@ -27,7 +38,7 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 - Roadmap doc owns sequencing, themes, and the cross-PRD risks.
 - After ship, the PRD stays — append a "Postmortem" section with what landed, what slipped, and what we learned.
 
-## Out of scope this quarter (Q4+ candidates)
+## Out of scope (Q4+ candidates, but not committed)
 
 - User accounts / login
 - Android Play Store launch
@@ -36,3 +47,6 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 - Bhagavad Gītā full-length audio
 - Lock-screen widgets
 - Web app
+- Dark mode (decided cut — fights the parchment-manuscript design language)
+- Bundled verse audio (decided cut — incompatible with bundle-only at meaningful catalog coverage; revisit if/when network is allowed)
+- Regional vrat variants beyond Hindi-belt (Q5 candidate — see PRD-08 §3)
