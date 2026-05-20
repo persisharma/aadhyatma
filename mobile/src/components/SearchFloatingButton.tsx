@@ -1,6 +1,5 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 
 type Props = {
@@ -9,7 +8,6 @@ type Props = {
 
 export default function SearchFloatingButton({ onPress }: Props) {
   const { colors, typography, spacing } = useTheme();
-  const insets = useSafeAreaInsets();
 
   return (
     <Pressable
@@ -21,7 +19,7 @@ export default function SearchFloatingButton({ onPress }: Props) {
         styles.button,
         {
           right: spacing.xl,
-          bottom: spacing.xl + insets.bottom,
+          bottom: spacing.xl,
           backgroundColor: colors.parchmentSoft,
           borderColor: colors.divider,
         },

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+  useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -33,6 +34,16 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { lang } = useGitaLanguage();
   const { getEntry, increment, resetBeads, clear } = useJapamCounter();
   const { share, busy: shareBusy } = useShare();
+  const { height: windowHeight } = useWindowDimensions();
+  const isShortScreen = windowHeight < 720;
+  const isVeryShortScreen = windowHeight < 640;
+
+  const verseFontSize = isVeryShortScreen ? 19 : isShortScreen ? 21 : typography.verse.fontSize;
+  const verseLineHeight = isVeryShortScreen ? 32 : isShortScreen ? 35 : typography.verse.lineHeight;
+  const verseFontSizeEn = isVeryShortScreen ? 17 : isShortScreen ? 18 : 20;
+  const verseLineHeightEn = isVeryShortScreen ? 28 : isShortScreen ? 30 : 34;
+  const countFontSize = isVeryShortScreen ? 64 : isShortScreen ? 76 : 88;
+  const countLineHeight = isVeryShortScreen ? 70 : isShortScreen ? 82 : 94;
 
   const mantra: JapamMantra | null = useMemo(
     () => findJapamMantra(route.params.mantraId),
@@ -172,14 +183,14 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                       ? {
                           color: colors.ink,
                           fontFamily: typography.verse.fontFamily,
-                          fontSize: typography.verse.fontSize,
-                          lineHeight: typography.verse.lineHeight,
+                          fontSize: verseFontSize,
+                          lineHeight: verseLineHeight,
                         }
                       : {
                           color: colors.ink,
                           fontFamily: typography.cardLatin.fontFamily,
-                          fontSize: 20,
-                          lineHeight: 34,
+                          fontSize: verseFontSizeEn,
+                          lineHeight: verseLineHeightEn,
                         },
                   ]}
                 >
@@ -196,6 +207,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                   styles.countNumber,
                   {
                     color: colors.saffronDeep,
+                    fontSize: countFontSize,
+                    lineHeight: countLineHeight,
                   },
                 ]}
               >
@@ -503,6 +516,7 @@ const styles = StyleSheet.create({
   },
   tapArea: {
     flex: 1,
+    overflow: 'hidden',
   },
   tapAreaPressed: {
     opacity: 0.92,
@@ -511,11 +525,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 12,
+    paddingVertical: 8,
   },
   mantraBlock: {
     alignItems: 'center',
-    paddingTop: 8,
   },
   mantraLine: {
     textAlign: 'center',
@@ -547,7 +560,7 @@ const styles = StyleSheet.create({
     width: '78%',
     height: 6,
     borderRadius: 3,
-    marginTop: 18,
+    marginTop: 14,
     overflow: 'hidden',
   },
   progressFill: {
@@ -555,12 +568,12 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   roundsLabel: {
-    marginTop: 14,
+    marginTop: 12,
     fontSize: 16,
     includeFontPadding: false,
   },
   tapHint: {
-    marginTop: 18,
+    marginTop: 14,
     fontStyle: 'italic',
     opacity: 0.8,
     includeFontPadding: false,
