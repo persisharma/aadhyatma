@@ -5,9 +5,9 @@
  * Update the store URLs here when the iOS / Play Store listings are finalised.
  */
 
-const IOS_APP_ID_PLACEHOLDER = '0000000000'; // Replace with the real numeric App Store ID before launch.
+const IOS_APP_ID = '6766086529';
 
-export const APP_STORE_URL = `https://apps.apple.com/app/id${IOS_APP_ID_PLACEHOLDER}`;
+export const APP_STORE_URL = `https://apps.apple.com/app/id${IOS_APP_ID}`;
 export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh';
 
 /**
