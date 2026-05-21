@@ -7,7 +7,7 @@
 
 const IOS_APP_ID = '6766086529';
 
-export const APP_STORE_URL = `https://apps.apple.com/app/id${IOS_APP_ID}`;
+export const APP_STORE_URL = `https://apps.apple.com/app/vedansh/id${IOS_APP_ID}`;
 export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh';
 
 /**
