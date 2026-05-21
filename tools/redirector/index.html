@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vedansh — Sacred Texts, Daily Reading</title>
+  <meta name="description" content="Hanuman Chalisa, Bhagavad Gita, Sundarkand, and more. A parchment-first reader for sacred Hindu texts." />
+  <meta property="og:title" content="Vedansh — Sacred Texts, Daily Reading" />
+  <meta property="og:description" content="Hanuman Chalisa, Bhagavad Gita, Sundarkand, and more. A parchment-first reader for sacred Hindu texts." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <style>
+    :root { color-scheme: light; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f5ebd8;
+      color: #3d2914;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    main { max-width: 360px; width: 100%; text-align: center; }
+    .glyph { font-size: 56px; color: #cc6b2a; margin-bottom: 12px; line-height: 1; }
+    h1 { font-size: 28px; margin: 0 0 8px; font-weight: 600; letter-spacing: 0.5px; }
+    p.tagline { margin: 0 0 28px; color: #5a4530; font-size: 15px; }
+    .stores { display: flex; flex-direction: column; gap: 12px; }
+    a.btn {
+      display: block;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: #3d2914;
+      color: #f5ebd8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+    }
+    a.btn.secondary {
+      background: transparent;
+      color: #3d2914;
+      border: 1px solid #3d2914;
+    }
+    .fallback-note {
+      margin-top: 24px;
+      font-size: 13px;
+      color: #8a6f4f;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="glyph">ॐ</div>
+    <h1>Vedansh</h1>
+    <p class="tagline">Sacred texts, daily reading.</p>
+    <div class="stores">
+      <a class="btn" id="ios-link" href="https://apps.apple.com/app/vedansh/id6766086529">Download on the App Store</a>
+      <a class="btn secondary" id="android-link" href="https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh">Get it on Google Play</a>
+    </div>
+    <p class="fallback-note">If you aren't redirected automatically, pick your store above.</p>
+  </main>
+  <script>
+    (function () {
+      var ua = navigator.userAgent || navigator.vendor || '';
+      var isAndroid = /android/i.test(ua);
+      var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      if (isAndroid) {
+        window.location.replace('https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh');
+      } else if (isIOS) {
+        window.location.replace('https://apps.apple.com/app/vedansh/id6766086529');
+      }
+    })();
+  </script>
+</body>
+</html>
