@@ -32,6 +32,9 @@ import {
 } from '@/contexts/NotificationPreferencesContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
+import FeatureTour from '@/components/FeatureTour';
+import WhatsNewModal from '@/components/WhatsNewModal';
+import { TourProvider } from '@/contexts/TourContext';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
@@ -124,13 +127,17 @@ export default function App() {
                 <ReadingProgressProvider>
                   <JapamCounterProvider>
                     <NotificationPreferencesProvider>
-                      <ShareProvider>
-                        <NavigationContainer ref={navigationRef}>
-                          <StatusBar style="dark" />
-                          <RootNavigator />
-                          <ReminderOptInModal />
-                        </NavigationContainer>
-                      </ShareProvider>
+                      <TourProvider>
+                        <ShareProvider>
+                          <NavigationContainer ref={navigationRef}>
+                            <StatusBar style="dark" />
+                            <RootNavigator />
+                            <ReminderOptInModal />
+                            <WhatsNewModal />
+                            <FeatureTour />
+                          </NavigationContainer>
+                        </ShareProvider>
+                      </TourProvider>
                     </NotificationPreferencesProvider>
                   </JapamCounterProvider>
                 </ReadingProgressProvider>
