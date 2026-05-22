@@ -11,8 +11,7 @@ import * as Notifications from 'expo-notifications';
 import { getVersePool } from '@/data/versePool';
 import { pickVerseForDateKey, toDateKey } from './seed';
 import {
-  applyQuietHours,
-  computeFireDates,
+  computeFireDatesMulti,
   formatNotificationContent,
   IOS_PENDING_CAP,
   NOTIF_IDENTIFIER_PREFIX,
@@ -21,10 +20,11 @@ import {
 } from './pure';
 
 export {
-  applyQuietHours,
   computeFireDates,
+  computeFireDatesMulti,
   formatNotificationContent,
   IOS_PENDING_CAP,
+  MAX_REMINDER_TIMES,
   NOTIF_IDENTIFIER_PREFIX,
   ROLLING_WINDOW_DAYS,
 } from './pure';
@@ -58,14 +58,16 @@ export async function scheduleDailyVerseRollingWindow(
   await cancelAllDailyVerseNotifications();
 
   if (!config.enabled) return 0;
+  if (config.times.length === 0) return 0;
 
   const pool = getVersePool();
   if (pool.length === 0) return 0;
 
-  const adjustedTime = applyQuietHours(config.time, config.quietStart, config.quietEnd);
-  const dates = computeFireDates(adjustedTime, now);
+  const dates = computeFireDatesMulti(config.times, now);
 
-  // Hard cap: never exceed iOS's pending-notification budget.
+  // Hard cap: never exceed iOS's pending-notification budget. When the user
+  // has multiple reminder times, this caps total notifications across all of
+  // them — the nearest fire instants win.
   const limit = Math.min(dates.length, IOS_PENDING_CAP);
 
   let scheduled = 0;
@@ -84,9 +86,12 @@ export async function scheduleDailyVerseRollingWindow(
       ...(verse.chapter != null ? { chapter: verse.chapter } : {}),
     };
 
+    const hh = `${fire.getHours()}`.padStart(2, '0');
+    const mm = `${fire.getMinutes()}`.padStart(2, '0');
+
     try {
       await Notifications.scheduleNotificationAsync({
-        identifier: `${NOTIF_IDENTIFIER_PREFIX}:${dateKey}`,
+        identifier: `${NOTIF_IDENTIFIER_PREFIX}:${dateKey}:${hh}${mm}`,
         content: {
           title,
           body,
@@ -100,7 +105,7 @@ export async function scheduleDailyVerseRollingWindow(
       });
       scheduled += 1;
     } catch {
-      // Per-day scheduling failure is non-fatal — a future PRD-06 diagnostics
+      // Per-slot scheduling failure is non-fatal — a future PRD-06 diagnostics
       // pass can ingest these via a local crash log.
     }
   }

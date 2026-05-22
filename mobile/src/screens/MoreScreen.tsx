@@ -10,7 +10,17 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import type { TimeOfDay } from '@/notifications/pure';
 import type { MoreStackParamList } from '@/navigation/types';
+
+function formatReminderTimes(times: TimeOfDay[]): string {
+  if (times.length === 0) return '';
+  return times
+    .map(
+      (t) => `${`${t.hour}`.padStart(2, '0')}:${`${t.minute}`.padStart(2, '0')}`
+    )
+    .join(', ');
+}
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'MoreHome'>;
 
@@ -219,7 +229,7 @@ export default function MoreScreen({ navigation }: Props) {
             accessibilityRole="button"
             accessibilityLabel={
               notifPrefs.dailyVerseEnabled
-                ? `Reminders, daily verse on at ${`${notifPrefs.time.hour}`.padStart(2, '0')}:${`${notifPrefs.time.minute}`.padStart(2, '0')}`
+                ? `Reminders, daily verse on at ${formatReminderTimes(notifPrefs.times)}`
                 : 'Reminders, daily verse off'
             }
             style={({ pressed }) => [
@@ -238,7 +248,7 @@ export default function MoreScreen({ navigation }: Props) {
               </Text>
               <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
                 {notifPrefs.dailyVerseEnabled
-                  ? `Daily verse at ${`${notifPrefs.time.hour}`.padStart(2, '0')}:${`${notifPrefs.time.minute}`.padStart(2, '0')}`
+                  ? `Daily verse at ${formatReminderTimes(notifPrefs.times)}`
                   : 'Daily verse off'}
               </Text>
             </View>

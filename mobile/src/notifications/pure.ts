@@ -21,13 +21,15 @@ export type TimeOfDay = { hour: number; minute: number };
 
 export type DailyReminderConfig = {
   enabled: boolean;
-  /** When the daily notification should fire (24h local time). */
-  time: TimeOfDay;
-  /** Inclusive start of quiet hours (24h). */
-  quietStart: TimeOfDay;
-  /** Exclusive end of quiet hours (24h). E.g. 22:00–06:00 means no notifications between 22:00 and 06:00. */
-  quietEnd: TimeOfDay;
+  /**
+   * One or more times-of-day at which the daily notification should fire
+   * (24h local time). Each entry produces its own series in the rolling window.
+   */
+  times: TimeOfDay[];
 };
+
+/** Hard cap on how many reminder times the user can configure per day. */
+export const MAX_REMINDER_TIMES = 4;
 
 export type NotificationPayload = {
   type: 'daily-verse';
@@ -36,33 +38,6 @@ export type NotificationPayload = {
   verseIndex: number;
   chapter?: number;
 };
-
-/**
- * Return the supplied time, clamped forward to the next allowed slot if it falls
- * inside quiet hours. Quiet hours wrap across midnight (e.g. 22:00 → 06:00).
- *
- * The clamping rule is simple and predictable:
- *  - If the time is inside the quiet window, shift it to `quietEnd`.
- *  - Otherwise, return it unchanged.
- *
- * Pure function — used by the scheduler and surfaced in Settings copy.
- */
-export function applyQuietHours(
-  time: TimeOfDay,
-  quietStart: TimeOfDay,
-  quietEnd: TimeOfDay
-): TimeOfDay {
-  const t = time.hour * 60 + time.minute;
-  const s = quietStart.hour * 60 + quietStart.minute;
-  const e = quietEnd.hour * 60 + quietEnd.minute;
-  const inside =
-    s === e
-      ? false // empty quiet window
-      : s < e
-        ? t >= s && t < e // non-wrapping window
-        : t >= s || t < e; // wraps across midnight
-  return inside ? { hour: quietEnd.hour, minute: quietEnd.minute } : time;
-}
 
 /**
  * Compute the array of fire dates for the next `ROLLING_WINDOW_DAYS` days at the
@@ -84,6 +59,28 @@ export function computeFireDates(time: TimeOfDay, now: Date): Date[] {
     out.push(fire);
   }
   return out;
+}
+
+/**
+ * Compute the merged, time-sorted, deduplicated list of fire dates for a set of
+ * reminder times across the rolling window. Two times that produce the same
+ * exact fire instant collapse to a single entry — this can happen at the
+ * window boundary when callers pass duplicate times.
+ */
+export function computeFireDatesMulti(times: TimeOfDay[], now: Date): Date[] {
+  if (times.length === 0) return [];
+  const seen = new Set<number>();
+  const merged: Date[] = [];
+  for (const t of times) {
+    for (const d of computeFireDates(t, now)) {
+      const ms = d.getTime();
+      if (seen.has(ms)) continue;
+      seen.add(ms);
+      merged.push(d);
+    }
+  }
+  merged.sort((a, b) => a.getTime() - b.getTime());
+  return merged;
 }
 
 /**

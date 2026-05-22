@@ -19,20 +19,20 @@ export default function ReminderOptInModal() {
     shouldShowOptIn,
     prefs,
     setDailyVerseEnabled,
-    setTime,
+    setTimes,
     markOptInPromptShown,
   } = useNotificationPreferences();
   const [visible, setVisible] = useState(false);
-  const [chosenTime, setChosenTime] = useState(prefs.time);
+  const [chosenTime, setChosenTime] = useState(prefs.times[0]);
   const [busy, setBusy] = useState(false);
 
   // Sync visible when the gate flips on; reset chosenTime when we open.
   useEffect(() => {
     if (shouldShowOptIn && !visible) {
-      setChosenTime(prefs.time);
+      setChosenTime(prefs.times[0]);
       setVisible(true);
     }
-  }, [shouldShowOptIn, visible, prefs.time]);
+  }, [shouldShowOptIn, visible, prefs.times]);
 
   const close = useCallback(async () => {
     setVisible(false);
@@ -43,14 +43,14 @@ export default function ReminderOptInModal() {
     if (busy) return;
     setBusy(true);
     try {
-      await setTime(chosenTime);
+      await setTimes([chosenTime]);
       await setDailyVerseEnabled(true);
     } finally {
       setBusy(false);
       await markOptInPromptShown();
       setVisible(false);
     }
-  }, [busy, chosenTime, setTime, setDailyVerseEnabled, markOptInPromptShown]);
+  }, [busy, chosenTime, setTimes, setDailyVerseEnabled, markOptInPromptShown]);
 
   const isHi = lang === 'hi';
 

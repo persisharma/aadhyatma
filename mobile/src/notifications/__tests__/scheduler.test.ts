@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 
 import {
-  applyQuietHours,
   computeFireDates,
+  computeFireDatesMulti,
   formatNotificationContent,
   IOS_PENDING_CAP,
+  MAX_REMINDER_TIMES,
   ROLLING_WINDOW_DAYS,
 } from '../pure';
 import { hashDateKey, pickVerseForDateKey, toDateKey } from '../seed';
@@ -16,6 +17,14 @@ import type { UniformVerse } from '@/data/versePool';
     ROLLING_WINDOW_DAYS <= IOS_PENDING_CAP,
     'ROLLING_WINDOW_DAYS must be ≤ IOS_PENDING_CAP to stay within iOS limits'
   );
+}
+
+// MAX_REMINDER_TIMES × ROLLING_WINDOW_DAYS stays scheduleable on iOS in
+// the worst case — sched caps at IOS_PENDING_CAP but a sane max keeps us
+// from silently dropping reminders.
+{
+  assert.ok(MAX_REMINDER_TIMES >= 1);
+  assert.ok(MAX_REMINDER_TIMES * ROLLING_WINDOW_DAYS >= ROLLING_WINDOW_DAYS);
 }
 
 // computeFireDates produces exactly ROLLING_WINDOW_DAYS entries.
@@ -53,51 +62,54 @@ import type { UniformVerse } from '@/data/versePool';
   assert.equal(dates[2].getMonth(), 7);
 }
 
-// applyQuietHours: non-wrapping window shifts time forward to quietEnd.
+// computeFireDatesMulti: empty input → empty output.
 {
-  const shifted = applyQuietHours(
-    { hour: 5, minute: 30 },
-    { hour: 5, minute: 0 },
-    { hour: 8, minute: 0 }
-  );
-  assert.deepEqual(shifted, { hour: 8, minute: 0 });
+  const now = new Date(2026, 6, 1, 12, 0, 0, 0);
+  assert.deepEqual(computeFireDatesMulti([], now), []);
 }
 
-// applyQuietHours: wrapping window (22:00 → 06:00). Time inside wraps to quietEnd.
+// computeFireDatesMulti: single-time matches computeFireDates exactly.
 {
-  const shiftedEarly = applyQuietHours(
-    { hour: 5, minute: 0 },
-    { hour: 22, minute: 0 },
-    { hour: 6, minute: 0 }
-  );
-  assert.deepEqual(shiftedEarly, { hour: 6, minute: 0 });
-
-  const shiftedLate = applyQuietHours(
-    { hour: 23, minute: 0 },
-    { hour: 22, minute: 0 },
-    { hour: 6, minute: 0 }
-  );
-  assert.deepEqual(shiftedLate, { hour: 6, minute: 0 });
+  const now = new Date(2026, 6, 1, 6, 0, 0, 0);
+  const single = computeFireDates({ hour: 7, minute: 0 }, now);
+  const multi = computeFireDatesMulti([{ hour: 7, minute: 0 }], now);
+  assert.equal(multi.length, single.length);
+  for (let i = 0; i < single.length; i += 1) {
+    assert.equal(multi[i].getTime(), single[i].getTime());
+  }
 }
 
-// applyQuietHours: time outside wrapping window is preserved verbatim.
+// computeFireDatesMulti: two times produce 2× entries, fully time-sorted.
 {
-  const preserved = applyQuietHours(
-    { hour: 7, minute: 0 },
-    { hour: 22, minute: 0 },
-    { hour: 6, minute: 0 }
+  const now = new Date(2026, 6, 1, 6, 0, 0, 0); // 06:00 — both 07:00 and 18:00 still future today
+  const multi = computeFireDatesMulti(
+    [{ hour: 7, minute: 0 }, { hour: 18, minute: 0 }],
+    now
   );
-  assert.deepEqual(preserved, { hour: 7, minute: 0 });
+  assert.equal(multi.length, ROLLING_WINDOW_DAYS * 2);
+  // Sorted ascending end-to-end.
+  for (let i = 1; i < multi.length; i += 1) {
+    assert.ok(
+      multi[i - 1].getTime() < multi[i].getTime(),
+      'fire dates must be strictly ascending'
+    );
+  }
+  // First two slots are today 07:00 then today 18:00.
+  assert.equal(multi[0].getDate(), 1);
+  assert.equal(multi[0].getHours(), 7);
+  assert.equal(multi[1].getDate(), 1);
+  assert.equal(multi[1].getHours(), 18);
 }
 
-// applyQuietHours: time exactly at quietEnd is preserved (boundary is exclusive end).
+// computeFireDatesMulti: duplicate times collapse to a single series, not
+// scheduled twice for the same instant.
 {
-  const atBoundary = applyQuietHours(
-    { hour: 6, minute: 0 },
-    { hour: 22, minute: 0 },
-    { hour: 6, minute: 0 }
+  const now = new Date(2026, 6, 1, 6, 0, 0, 0);
+  const multi = computeFireDatesMulti(
+    [{ hour: 7, minute: 0 }, { hour: 7, minute: 0 }],
+    now
   );
-  assert.deepEqual(atBoundary, { hour: 6, minute: 0 });
+  assert.equal(multi.length, ROLLING_WINDOW_DAYS);
 }
 
 // toDateKey produces a stable local-time YYYY-MM-DD.
