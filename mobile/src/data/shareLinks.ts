@@ -10,11 +10,7 @@ const IOS_APP_ID = '6766086529';
 export const APP_STORE_URL = `https://apps.apple.com/app/id${IOS_APP_ID}`;
 export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh';
 
-/**
- * Smart link — until a static landing page exists, point to the App Store URL.
- * Swap this constant with the redirector URL once shipped; nothing else needs to change.
- */
-export const SMART_LINK = APP_STORE_URL;
+export const SMART_LINK = 'https://persisharma.github.io/get-vedansh/';
 
 export type ShareCaptionParams = {
   sectionNameHi: string;
