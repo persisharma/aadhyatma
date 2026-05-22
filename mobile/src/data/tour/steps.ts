@@ -59,6 +59,16 @@ export const tourSteps: readonly TourStep[] = [
       'The Bhakti tab opens one random verse each visit. Tap refresh for another — a quiet way to start the day.',
   },
   {
+    id: 'japa',
+    glyph: '१०८',
+    titleHi: 'जप',
+    titleEn: 'Japa & Mantras',
+    bodyHi:
+      'मुख पृष्ठ → जप से कोई मंत्र चुनें। प्रत्येक स्पर्श पर माला आगे बढ़ती है, १०८ मनकों पर एक आवृत्ति पूर्ण। आपकी प्रगति स्वतः सहेजी जाती है।',
+    bodyEn:
+      'Pick a mantra from Home → Japa & Mantras. Each tap moves the mala forward; 108 beads complete one round. Your progress is saved automatically.',
+  },
+  {
     id: 'share',
     glyph: '↗',
     titleHi: 'साझा करें',

@@ -10,6 +10,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { useTour } from '@/contexts/TourContext';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'MoreHome'>;
@@ -20,6 +21,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { lang: defaultLang, setLang: setDefaultLang } = useGitaLanguage();
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
+  const { resetTour } = useTour();
   // Root-tab nav for cross-tab navigation (More → Home tab → Search screen).
   // Typed loosely because @react-navigation's nested-screen typing through the
   // tab navigator isn't expressible without threading the tab param list here.
@@ -309,6 +311,21 @@ export default function MoreScreen({ navigation }: Props) {
 
           {/* Links */}
           <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, flexDirection: 'column', alignItems: 'stretch', paddingVertical: 4, paddingHorizontal: 16 }]}>
+            <Pressable
+              onPress={() => {
+                resetTour();
+              }}
+              accessibilityRole="button"
+              accessibilityLabel="Show feature tour again"
+              style={({ pressed }) => [
+                styles.linkRow,
+                { borderBottomColor: colors.divider },
+                pressed && { opacity: 0.6 },
+              ]}
+            >
+              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 13, color: colors.ink }}>Show Tour Again</Text>
+              <Text style={{ color: colors.inkMuted, fontSize: 16 }}>›</Text>
+            </Pressable>
             <Pressable
               onPress={() => setDisclaimerVisible(true)}
               accessibilityRole="button"
