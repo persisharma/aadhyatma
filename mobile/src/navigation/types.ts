@@ -27,6 +27,8 @@ export type HomeStackParamList = {
   VishnuSahasranamaReader: { chapter: number; initialIndex?: number };
   HanumanAshtakChapters: undefined;
   HanumanAshtakReader: { chapter: number; initialIndex?: number };
+  BajrangBaanChapters: undefined;
+  BajrangBaanReader: { chapter: number; initialIndex?: number };
   RamStutiChapters: undefined;
   RamStutiReader: { chapter: number; initialIndex?: number };
   RamcharitmanasChapters: undefined;
