@@ -73,13 +73,21 @@ export function computeFireDates(
  */
 export function computeFireDatesMulti(times: TimeOfDay[], now: Date): Date[] {
   if (times.length === 0) return [];
+  const uniqueTimes: TimeOfDay[] = [];
+  const seenKeys = new Set<number>();
+  for (const t of times) {
+    const key = t.hour * 60 + t.minute;
+    if (seenKeys.has(key)) continue;
+    seenKeys.add(key);
+    uniqueTimes.push(t);
+  }
   const daysPerTime = Math.min(
     ROLLING_WINDOW_DAYS,
-    Math.floor(IOS_PENDING_CAP / times.length)
+    Math.floor(IOS_PENDING_CAP / uniqueTimes.length)
   );
   const seen = new Set<number>();
   const merged: Date[] = [];
-  for (const t of times) {
+  for (const t of uniqueTimes) {
     for (const d of computeFireDates(t, now, daysPerTime)) {
       const ms = d.getTime();
       if (seen.has(ms)) continue;
