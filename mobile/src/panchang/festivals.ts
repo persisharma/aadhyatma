@@ -1,7 +1,7 @@
 import type { FestivalRule } from './types';
 
 export const FESTIVAL_RULES: FestivalRule[] = [
-  { id: 'makar-sankranti', nameHi: 'मकर संक्रांति', nameEn: 'Makar Sankranti', lunarMonth: 10, paksha: 'krishna', tithi: 1, marker: 'star' },
+  { id: 'makar-sankranti', nameHi: 'मकर संक्रांति', nameEn: 'Makar Sankranti', type: 'solar', lunarMonth: 10, paksha: 'krishna', tithi: 1, solarLongitude: 270, marker: 'star' },
   { id: 'vasant-panchami', nameHi: 'वसंत पंचमी', nameEn: 'Vasant Panchami', lunarMonth: 11, paksha: 'shukla', tithi: 5, marker: 'star' },
   { id: 'maha-shivaratri', nameHi: 'महा शिवरात्रि', nameEn: 'Maha Shivaratri', lunarMonth: 11, paksha: 'krishna', tithi: 14, marker: 'star', linkSectionId: 'shiv-chalisa' },
   { id: 'holi', nameHi: 'होली', nameEn: 'Holi', lunarMonth: 12, paksha: 'shukla', tithi: 15, marker: 'star' },

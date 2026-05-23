@@ -46,3 +46,23 @@ test('each resolved festival has valid rule fields', () => {
     assert.ok(f.date instanceof Date, 'date is Date');
   }
 });
+
+test('Makar Sankranti 2026 resolves to Jan 14 or 15', () => {
+  const festivals = resolveFestivalsForYear(2026);
+  const sankranti = festivals.find((f) => f.rule.id === 'makar-sankranti');
+  assert.ok(sankranti, 'Makar Sankranti should be resolved');
+  const day = sankranti.date.getDate();
+  const month = sankranti.date.getMonth();
+  assert.equal(month, 0, 'Makar Sankranti should be in January');
+  assert.ok(day === 14 || day === 15, `Makar Sankranti should be Jan 14 or 15, got Jan ${day}`);
+});
+
+test('getUpcomingFestivals includes today festival when called mid-day', () => {
+  const festivals = resolveFestivalsForYear(2026);
+  const holi = festivals.find((f) => f.rule.id === 'holi');
+  assert.ok(holi, 'Holi must be resolved');
+  const holiNoon = new Date(holi.date.getFullYear(), holi.date.getMonth(), holi.date.getDate(), 12, 0, 0);
+  const upcoming = getUpcomingFestivals(holiNoon, 5);
+  const holiInUpcoming = upcoming.find((f) => f.rule.id === 'holi');
+  assert.ok(holiInUpcoming, 'Holi should still be in upcoming when called at noon on Holi day');
+});

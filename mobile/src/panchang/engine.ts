@@ -27,7 +27,7 @@ function getAyanamsa(year: number): number {
   return 23.853 + 0.01396 * (year - 2000);
 }
 
-function getSiderealSunLng(date: Date, year: number): number {
+export function getSiderealSunLng(date: Date, year: number): number {
   const astroTime = MakeTime(date);
   const tropical = SunPosition(astroTime).elon;
   return (tropical - getAyanamsa(year) + 360) % 360;

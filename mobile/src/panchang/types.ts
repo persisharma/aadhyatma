@@ -28,9 +28,11 @@ export type FestivalRule = {
   id: string;
   nameHi: string;
   nameEn: string;
+  type?: 'lunar' | 'solar';
   lunarMonth: number;
   paksha: Paksha;
   tithi: number;
+  solarLongitude?: number;
   marker: FestivalMarker;
   linkSectionId?: string;
 };

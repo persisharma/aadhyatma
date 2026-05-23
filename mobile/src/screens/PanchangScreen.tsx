@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTodayPanchang } from '@/panchang/usePanchang';
 import type { PanchangElement } from '@/panchang/types';
-
-type PanchangSchool = 'drik' | 'surya';
 
 function formatTime12(date: Date | null): string {
   if (!date) return '';
@@ -22,7 +20,6 @@ export default function PanchangScreen() {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const isHindi = lang === 'hi';
-  const [school, setSchool] = useState<PanchangSchool>('drik');
   const { today: p, upcoming } = useTodayPanchang();
 
   return (
@@ -45,24 +42,10 @@ export default function PanchangScreen() {
             </Text>
           </View>
 
-          <View style={[styles.toggleRow, { borderColor: colors.divider, borderRadius: radii.sm }]}>
-            <Pressable
-              onPress={() => setSchool('drik')}
-              style={[styles.toggleBtn, school === 'drik' && { backgroundColor: 'rgba(184, 98, 27, 0.12)' }, { borderTopLeftRadius: radii.sm, borderBottomLeftRadius: radii.sm }]}
-            >
-              <Text style={{ fontFamily: school === 'drik' ? typography.readerTitle.fontFamily : 'CormorantGaramond_500Medium', fontSize: 12, color: school === 'drik' ? colors.saffronDeep : colors.inkMuted }}>
-                {isHindi ? 'दृक् पंचांग' : 'Drik Panchang'}
-              </Text>
-            </Pressable>
-            <View style={[styles.toggleDivider, { backgroundColor: colors.divider }]} />
-            <Pressable
-              onPress={() => setSchool('surya')}
-              style={[styles.toggleBtn, school === 'surya' && { backgroundColor: 'rgba(184, 98, 27, 0.12)' }, { borderTopRightRadius: radii.sm, borderBottomRightRadius: radii.sm }]}
-            >
-              <Text style={{ fontFamily: school === 'surya' ? typography.readerTitle.fontFamily : 'CormorantGaramond_500Medium', fontSize: 12, color: school === 'surya' ? colors.saffronDeep : colors.inkMuted }}>
-                {isHindi ? 'सूर्य सिद्धांत' : 'Surya Siddhanta'}
-              </Text>
-            </Pressable>
+          <View style={[styles.schoolPill, { backgroundColor: 'rgba(184, 98, 27, 0.1)', borderRadius: radii.sm }]}>
+            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 12, color: colors.saffronDeep }}>
+              {isHindi ? 'दृक् पंचांग' : 'Drik Panchang'}
+            </Text>
           </View>
 
           <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, textAlign: 'center', marginTop: 6 }}>
@@ -165,9 +148,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: { paddingTop: 12, paddingBottom: 24 },
   titleArea: { marginBottom: 6, alignItems: 'center' },
-  toggleRow: { flexDirection: 'row', borderWidth: 1, alignSelf: 'center', overflow: 'hidden' },
-  toggleBtn: { paddingHorizontal: 12, paddingVertical: 6 },
-  toggleDivider: { width: 1 },
+  schoolPill: { alignSelf: 'center', paddingHorizontal: 14, paddingVertical: 6 },
   dateHeader: { marginTop: 10, paddingBottom: 8, borderBottomWidth: StyleSheet.hairlineWidth, marginBottom: 8 },
   detailCard: { borderWidth: 1, padding: 10 },
   pRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 7 },
