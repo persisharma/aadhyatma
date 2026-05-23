@@ -1,26 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+  InteractionManager,
   Modal,
   Pressable,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { CommonActions } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useTour } from '@/contexts/TourContext';
-import { tourSteps } from '@/data/tour/steps';
-import Ornament from './Ornament';
+import { tourSteps, type TourAnchor, type TourStep } from '@/data/tour/steps';
+import { navigationRef } from '@/notifications/deepLink';
 
 /**
- * First-launch feature tour. Self-mounts when `useTour().shouldShowFirstLaunchTour`
- * is true. Renders a parchment-styled multi-page walkthrough of the five
- * core surfaces (Home, Wishlist, Reminders, Bhakti, Share).
+ * In-context first-launch feature tour. Renders a translucent overlay
+ * above the live navigator — the underlying screen remains visible.
+ * Each step navigates the user to the real surface it describes, then
+ * anchors a tooltip card to the relevant region.
  *
- * The tour is fully bilingual — the user has not chosen a reading language
- * yet at first launch, so every page renders Hindi (primary) and English
- * (secondary) per design.md §1.
+ * Self-mounts when `useTour().shouldShowFirstLaunchTour` is true.
  */
 export default function FeatureTour() {
   const { colors, typography, spacing, radii } = useTheme();
@@ -34,6 +34,28 @@ export default function FeatureTour() {
       setVisible(true);
     }
   }, [shouldShowFirstLaunchTour, visible]);
+
+  const navigateToStep = useCallback((step: TourStep) => {
+    if (!navigationRef.isReady()) return;
+    // Defer until current frame settles so the tour overlay's enter
+    // animation doesn't compete with the underlying navigator's swap.
+    InteractionManager.runAfterInteractions(() => {
+      if (!navigationRef.isReady()) return;
+      navigationRef.dispatch(
+        CommonActions.navigate({
+          name: step.navigateTo.name,
+          params: 'params' in step.navigateTo ? step.navigateTo.params : undefined,
+        } as never)
+      );
+    });
+  }, []);
+
+  // Drive navigation on each step change while the tour is up.
+  useEffect(() => {
+    if (!visible) return;
+    const step = tourSteps[stepIndex];
+    if (step) navigateToStep(step);
+  }, [visible, stepIndex, navigateToStep]);
 
   const close = useCallback(async () => {
     setVisible(false);
@@ -52,25 +74,28 @@ export default function FeatureTour() {
   const isLast = stepIndex === tourSteps.length - 1;
   const isFirst = stepIndex === 0;
 
+  const containerStyle = useMemo(() => anchorContainerStyle(step?.anchor), [step]);
+
+  if (!step) return null;
+
   return (
     <Modal
       visible={visible}
       animationType="fade"
-      presentationStyle="fullScreen"
+      presentationStyle="overFullScreen"
+      transparent
+      statusBarTranslucent
       onRequestClose={close}
     >
-      <View style={styles.root}>
-        <LinearGradient
-          colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-          style={StyleSheet.absoluteFill}
-        />
+      {/* Dim layer — semi-transparent so the live screen reads through. */}
+      <View style={[styles.backdrop, { backgroundColor: 'rgba(15, 10, 5, 0.55)' }]} pointerEvents="auto">
         <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-          <View style={styles.headerRow}>
+          <View style={[styles.headerRow, { paddingHorizontal: spacing.xxl }]}>
             <Text
               style={[
                 styles.stepCount,
                 {
-                  color: colors.inkMuted,
+                  color: colors.parchment,
                   fontFamily: typography.cardLatin.fontFamily,
                 },
               ]}
@@ -88,7 +113,7 @@ export default function FeatureTour() {
                 style={[
                   styles.skipLabel,
                   {
-                    color: colors.inkMuted,
+                    color: colors.parchment,
                     fontFamily: typography.cardLatin.fontFamily,
                   },
                 ]}
@@ -98,150 +123,134 @@ export default function FeatureTour() {
             </Pressable>
           </View>
 
-          <View style={[styles.body, { paddingHorizontal: spacing.xxl }]}>
+          <View style={[styles.anchorWrap, containerStyle]}>
+            {step.pointer === 'up' && (
+              <View style={styles.pointerSlot} accessibilityElementsHidden importantForAccessibility="no">
+                <View style={[styles.pointerTriangleUp, { borderBottomColor: colors.parchmentSoft }]} />
+              </View>
+            )}
+
             <View
               style={[
-                styles.glyphBadge,
+                styles.card,
                 {
-                  backgroundColor: colors.saffron,
-                  borderRadius: radii.pill,
+                  backgroundColor: colors.parchmentSoft,
+                  borderColor: colors.divider,
+                  borderRadius: radii.lg,
                 },
               ]}
-              accessibilityElementsHidden
-              importantForAccessibility="no"
             >
               <Text
-                style={{
-                  color: colors.onPrimary,
-                  fontFamily: typography.readerTitle.fontFamily,
-                  fontSize: 30,
-                  includeFontPadding: false,
-                }}
+                accessibilityRole="header"
+                style={[
+                  styles.titleHi,
+                  { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                ]}
               >
-                {step.glyph}
+                {step.titleHi}
               </Text>
-            </View>
-
-            <Text
-              accessibilityRole="header"
-              style={[
-                styles.titleHi,
-                {
-                  color: colors.ink,
-                  fontFamily: typography.screenTitle.fontFamily,
-                },
-              ]}
-            >
-              {step.titleHi}
-            </Text>
-            <Text
-              style={[
-                styles.titleEn,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.subtitle.fontFamily,
-                },
-              ]}
-            >
-              {step.titleEn}
-            </Text>
-
-            <Ornament />
-
-            <Text
-              style={[
-                styles.bodyHi,
-                {
-                  color: colors.ink,
-                  fontFamily: typography.meaning.fontFamily,
-                },
-              ]}
-            >
-              {step.bodyHi}
-            </Text>
-            <Text
-              style={[
-                styles.bodyEn,
-                {
-                  color: colors.inkSoft,
-                  fontFamily: typography.meaning.fontFamily,
-                },
-              ]}
-            >
-              {step.bodyEn}
-            </Text>
-          </View>
-
-          <View style={[styles.footer, { paddingHorizontal: spacing.xxl }]}>
-            <View style={styles.dots} accessibilityElementsHidden importantForAccessibility="no">
-              {tourSteps.map((s, i) => (
-                <View
-                  key={s.id}
-                  style={[
-                    styles.dot,
-                    {
-                      backgroundColor: i === stepIndex ? colors.saffron : colors.dotRest,
-                    },
-                  ]}
-                />
-              ))}
-            </View>
-
-            <View style={styles.controls}>
-              <Pressable
-                onPress={back}
-                accessibilityRole="button"
-                accessibilityLabel="Previous step"
-                accessibilityState={{ disabled: isFirst }}
-                disabled={isFirst}
-                style={({ pressed }) => [
-                  styles.secondary,
+              <Text
+                style={[
+                  styles.titleEn,
                   {
-                    borderColor: colors.divider,
-                    borderRadius: radii.md,
-                    opacity: isFirst ? 0.3 : pressed ? 0.6 : 1,
+                    color: colors.inkMuted,
+                    fontFamily: typography.subtitle.fontFamily,
                   },
                 ]}
               >
-                <Text
-                  style={[
-                    styles.secondaryLabel,
-                    {
-                      color: colors.inkSoft,
-                      fontFamily: typography.cardLatin.fontFamily,
-                    },
-                  ]}
-                >
-                  Back
-                </Text>
-              </Pressable>
+                {step.titleEn}
+              </Text>
 
-              <Pressable
-                onPress={isLast ? close : next}
-                accessibilityRole="button"
-                accessibilityLabel={isLast ? 'Done' : 'Next step'}
-                style={({ pressed }) => [
-                  styles.primary,
-                  {
-                    backgroundColor: colors.saffron,
-                    borderRadius: radii.md,
-                    opacity: pressed ? 0.85 : 1,
-                  },
+              <View style={[styles.rule, { backgroundColor: colors.divider }]} />
+
+              <Text
+                style={[
+                  styles.bodyHi,
+                  { color: colors.ink, fontFamily: typography.meaning.fontFamily },
                 ]}
               >
-                <Text
-                  style={[
-                    styles.primaryLabel,
+                {step.bodyHi}
+              </Text>
+              <Text
+                style={[
+                  styles.bodyEn,
+                  { color: colors.inkSoft, fontFamily: typography.meaning.fontFamily },
+                ]}
+              >
+                {step.bodyEn}
+              </Text>
+
+              <View style={styles.dots} accessibilityElementsHidden importantForAccessibility="no">
+                {tourSteps.map((s, i) => (
+                  <View
+                    key={s.id}
+                    style={[
+                      styles.dot,
+                      { backgroundColor: i === stepIndex ? colors.saffron : colors.dotRest },
+                    ]}
+                  />
+                ))}
+              </View>
+
+              <View style={styles.controls}>
+                <Pressable
+                  onPress={back}
+                  accessibilityRole="button"
+                  accessibilityLabel="Previous step"
+                  accessibilityState={{ disabled: isFirst }}
+                  disabled={isFirst}
+                  style={({ pressed }) => [
+                    styles.secondary,
                     {
-                      color: colors.onPrimary,
-                      fontFamily: typography.readerTitle.fontFamily,
+                      borderColor: colors.divider,
+                      borderRadius: radii.md,
+                      opacity: isFirst ? 0.3 : pressed ? 0.6 : 1,
                     },
                   ]}
                 >
-                  {isLast ? 'Done · पूर्ण' : 'Next · आगे'}
-                </Text>
-              </Pressable>
+                  <Text
+                    style={[
+                      styles.secondaryLabel,
+                      {
+                        color: colors.inkSoft,
+                        fontFamily: typography.cardLatin.fontFamily,
+                      },
+                    ]}
+                  >
+                    Back
+                  </Text>
+                </Pressable>
+
+                <Pressable
+                  onPress={isLast ? close : next}
+                  accessibilityRole="button"
+                  accessibilityLabel={isLast ? 'Done' : 'Next step'}
+                  style={({ pressed }) => [
+                    styles.primary,
+                    {
+                      backgroundColor: colors.saffron,
+                      borderRadius: radii.md,
+                      opacity: pressed ? 0.85 : 1,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.primaryLabel,
+                      { color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily },
+                    ]}
+                  >
+                    {isLast ? 'Done · पूर्ण' : 'Next · आगे'}
+                  </Text>
+                </Pressable>
+              </View>
             </View>
+
+            {step.pointer === 'down' && (
+              <View style={styles.pointerSlot} accessibilityElementsHidden importantForAccessibility="no">
+                <View style={[styles.pointerTriangleDown, { borderTopColor: colors.parchmentSoft }]} />
+              </View>
+            )}
           </View>
         </SafeAreaView>
       </View>
@@ -249,16 +258,30 @@ export default function FeatureTour() {
   );
 }
 
+function anchorContainerStyle(anchor: TourAnchor | undefined) {
+  switch (anchor) {
+    case 'top':
+      return { justifyContent: 'flex-start' as const, paddingTop: 8 };
+    case 'bottom':
+      return { justifyContent: 'flex-end' as const, paddingBottom: 8 };
+    case 'center':
+    default:
+      return { justifyContent: 'center' as const };
+  }
+}
+
+// Pointer triangle dimensions: 14px tall, 22px wide.
+const POINTER_W = 22;
+const POINTER_H = 14;
+
 const styles = StyleSheet.create({
-  root: { flex: 1 },
+  backdrop: { flex: 1 },
   safe: { flex: 1 },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 24,
     paddingTop: 12,
-    paddingBottom: 4,
   },
   stepCount: {
     fontSize: 13,
@@ -266,95 +289,114 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     includeFontPadding: false,
   },
-  skipBtn: {
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-  },
+  skipBtn: { paddingHorizontal: 8, paddingVertical: 6 },
   skipLabel: {
     fontSize: 13,
     letterSpacing: 1.6,
     textTransform: 'uppercase',
     includeFontPadding: false,
   },
-  body: {
+  anchorWrap: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 8,
+    paddingHorizontal: 20,
+    alignItems: 'stretch',
   },
-  glyphBadge: {
-    width: 72,
-    height: 72,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
+  card: {
+    borderWidth: 1,
+    padding: 20,
+    gap: 0,
+    shadowColor: '#0a0604',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 14,
+    elevation: 10,
   },
   titleHi: {
-    fontSize: 30,
-    textAlign: 'center',
+    fontSize: 22,
     includeFontPadding: false,
+    textAlign: 'center',
   },
   titleEn: {
-    fontSize: 15,
-    marginTop: 4,
+    fontSize: 13,
+    marginTop: 2,
     fontStyle: 'italic',
     textAlign: 'center',
     includeFontPadding: false,
   },
+  rule: {
+    height: 1,
+    marginVertical: 14,
+    opacity: 0.8,
+  },
   bodyHi: {
-    fontSize: 16,
-    lineHeight: 28,
-    textAlign: 'center',
+    fontSize: 15,
+    lineHeight: 26,
+    textAlign: 'left',
   },
   bodyEn: {
-    fontSize: 14,
-    lineHeight: 24,
-    marginTop: 14,
-    textAlign: 'center',
+    fontSize: 13,
+    lineHeight: 22,
+    marginTop: 10,
+    textAlign: 'left',
     opacity: 0.85,
-  },
-  footer: {
-    paddingBottom: 8,
-    gap: 16,
   },
   dots: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
+    gap: 6,
+    marginTop: 16,
   },
-  dot: {
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-  },
+  dot: { width: 6, height: 6, borderRadius: 3 },
   controls: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 10,
+    marginTop: 14,
   },
   secondary: {
     flex: 1,
     borderWidth: 1,
-    paddingVertical: 14,
+    paddingVertical: 12,
     minHeight: 44,
     alignItems: 'center',
     justifyContent: 'center',
   },
   secondaryLabel: {
-    fontSize: 13,
-    letterSpacing: 1.6,
+    fontSize: 12,
+    letterSpacing: 1.4,
     textTransform: 'uppercase',
     includeFontPadding: false,
   },
   primary: {
     flex: 2,
-    paddingVertical: 14,
+    paddingVertical: 12,
     minHeight: 44,
     alignItems: 'center',
     justifyContent: 'center',
   },
   primaryLabel: {
-    fontSize: 15,
+    fontSize: 14,
     includeFontPadding: false,
+  },
+  pointerSlot: {
+    alignItems: 'center',
+  },
+  pointerTriangleUp: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: POINTER_W / 2,
+    borderRightWidth: POINTER_W / 2,
+    borderBottomWidth: POINTER_H,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+  },
+  pointerTriangleDown: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: POINTER_W / 2,
+    borderRightWidth: POINTER_W / 2,
+    borderTopWidth: POINTER_H,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
   },
 });

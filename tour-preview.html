@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vedansh · Feature Tour — Prototype</title>
+    <title>Vedansh · Feature Tour — In-Context Prototype</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -31,58 +31,40 @@
       * { box-sizing: border-box; }
 
       html, body {
-        margin: 0;
-        padding: 0;
+        margin: 0; padding: 0;
         background: linear-gradient(160deg, #1a140c 0%, #2a1d10 60%, #1a140c 100%);
         font-family: 'Inter', system-ui, sans-serif;
         color: #d9c9a6;
         min-height: 100vh;
       }
-
       body { padding: 48px 24px 64px; }
-
       .wrap { max-width: 1480px; margin: 0 auto; }
 
       header.intro { text-align: center; margin-bottom: 40px; }
       header.intro h1 {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 38px;
-        font-weight: 500;
-        letter-spacing: 0.02em;
-        color: #f3e7c9;
-        margin: 0 0 8px;
+        font-size: 38px; font-weight: 500; letter-spacing: 0.02em;
+        color: #f3e7c9; margin: 0 0 8px;
       }
       header.intro .tag {
-        font-size: 13px;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
+        font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase;
         color: #a67c34;
       }
       header.intro p {
-        margin: 18px auto 0;
-        max-width: 720px;
-        line-height: 1.6;
-        color: #c9b896;
-        font-size: 14px;
+        margin: 18px auto 0; max-width: 760px;
+        line-height: 1.6; color: #c9b896; font-size: 14px;
       }
 
       h2.section {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 24px;
-        font-weight: 500;
-        color: #f3e7c9;
-        text-align: center;
+        font-size: 24px; font-weight: 500;
+        color: #f3e7c9; text-align: center;
         margin: 56px 0 8px;
       }
       h2.section .sub {
-        display: block;
-        font-size: 11px;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: #a67c34;
-        margin-top: 6px;
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
+        display: block; font-size: 11px; letter-spacing: 0.22em;
+        text-transform: uppercase; color: #a67c34;
+        margin-top: 6px; font-family: 'Inter', sans-serif; font-weight: 600;
       }
 
       .phones {
@@ -96,28 +78,20 @@
       @media (max-width: 800px)  { .phones { grid-template-columns: 1fr; justify-items: center; } }
 
       .phone-label {
-        text-align: center;
-        font-size: 11px;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: #a67c34;
-        margin-top: 14px;
+        text-align: center; font-size: 11px;
+        letter-spacing: 0.22em; text-transform: uppercase;
+        color: #a67c34; margin-top: 14px;
       }
       .phone-label .pl-name {
         display: block;
         font-family: 'Cormorant Garamond', serif;
-        font-size: 16px;
-        font-weight: 500;
-        letter-spacing: 0.04em;
-        text-transform: none;
-        color: #d9c9a6;
-        margin-bottom: 4px;
+        font-size: 16px; font-weight: 500; letter-spacing: 0.04em;
+        text-transform: none; color: #d9c9a6; margin-bottom: 4px;
       }
 
       .phone {
         position: relative;
-        width: 360px;
-        height: 760px;
+        width: 360px; height: 760px;
         margin: 0 auto;
         border-radius: 48px;
         background: #0d0804;
@@ -125,395 +99,405 @@
         box-shadow: var(--shadow-lg), 0 0 0 1px rgba(166, 124, 52, 0.2);
       }
       .phone::before {
-        content: '';
-        position: absolute;
-        top: 22px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 110px;
-        height: 28px;
-        background: #0d0804;
-        border-radius: 16px;
+        content: ''; position: absolute;
+        top: 22px; left: 50%; transform: translateX(-50%);
+        width: 110px; height: 28px;
+        background: #0d0804; border-radius: 16px;
         z-index: 10;
       }
       .screen {
         position: relative;
-        width: 100%;
-        height: 100%;
+        width: 100%; height: 100%;
         border-radius: 36px;
         overflow: hidden;
+        background: var(--parchment);
+        color: var(--ink);
+        font-family: 'Inter', system-ui, sans-serif;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .status-bar {
+        height: 44px; padding: 0 24px 6px;
+        display: flex; align-items: flex-end; justify-content: space-between;
+        font-size: 13px; font-weight: 600;
+        color: var(--ink); flex-shrink: 0;
+      }
+
+      /* ============================= */
+      /* Real screen mockups behind    */
+      /* ============================= */
+
+      .scr-home {
+        background:
+          radial-gradient(120% 50% at 50% -10%, rgba(184, 98, 27, 0.14), transparent 60%),
+          linear-gradient(180deg, var(--parchment-highlight) 0%, var(--parchment-gradient-end) 100%);
+      }
+      .home-hero { text-align: center; padding: 16px 28px 8px; }
+      .home-hero .crest {
+        display: inline-flex; align-items: center; gap: 10px; margin-bottom: 6px;
+      }
+      .home-hero .crest .mark {
+        width: 26px; height: 26px;
+        border: 1.5px solid var(--saffron); border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--saffron); font-family: 'Noto Serif Devanagari', serif;
+        font-size: 14px; font-weight: 600;
+      }
+      .home-hero .crest .line { width: 36px; height: 1px; background: var(--saffron); }
+      .home-hero .title {
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        font-size: 30px; color: var(--ink); margin-top: 4px;
+      }
+      .home-hero .subtitle {
+        font-family: 'Cormorant Garamond', serif; font-style: italic;
+        font-size: 13px; color: var(--ink-muted); margin-top: 4px; letter-spacing: 0.04em;
+      }
+      .section-label {
+        font-family: 'Inter', sans-serif; font-weight: 600;
+        font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+        color: var(--ink-muted);
+        padding: 12px 24px 8px;
+      }
+      .cat-grid {
+        padding: 0 24px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .cat-tile {
+        background: rgba(255, 250, 235, 0.72);
+        border: 1px solid var(--divider);
+        border-radius: 14px;
+        padding: 16px 14px 14px;
+        min-height: 96px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+      }
+      .cat-tile .ti-glyph {
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        color: var(--saffron-deep); font-size: 22px;
+      }
+      .cat-tile .ti-hi {
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        color: var(--ink); font-size: 15px;
+      }
+      .cat-tile .ti-en {
+        font-family: 'Cormorant Garamond', serif; font-style: italic;
+        color: var(--ink-muted); font-size: 11px; margin-top: 1px;
+      }
+      .cat-tile.highlight {
+        outline: 2px solid var(--saffron);
+        box-shadow: 0 0 0 4px rgba(184, 98, 27, 0.25);
+      }
+
+      .tab-bar {
+        margin-top: auto;
+        background: var(--parchment-soft);
+        border-top: 1px solid var(--divider);
+        padding: 6px 0 12px;
+        display: flex;
+        justify-content: space-around;
+      }
+      .tab {
+        flex: 1;
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+        font-family: 'Inter', sans-serif; font-weight: 500;
+        font-size: 10px; letter-spacing: 0.02em;
+        color: var(--ink-muted);
+      }
+      .tab.active { color: var(--saffron); }
+      .tab .ic {
+        width: 22px; height: 22px;
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        font-size: 18px;
+      }
+
+      /* Bhakti screen mockup */
+      .scr-bhakti {
         background:
           radial-gradient(120% 50% at 50% -10%, rgba(184, 98, 27, 0.10), transparent 60%),
           linear-gradient(180deg, var(--parchment-highlight) 0%, var(--parchment-gradient-end) 100%);
-        color: var(--ink);
-        display: flex;
-        flex-direction: column;
       }
-      .status-bar {
-        height: 44px;
-        padding: 0 24px 6px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--ink);
-        flex-shrink: 0;
+      .bh-title {
+        text-align: center; padding: 16px 24px 8px;
+      }
+      .bh-title .hi {
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        font-size: 22px; color: var(--ink);
+      }
+      .bh-title .en {
+        font-family: 'Cormorant Garamond', serif; font-style: italic;
+        color: var(--ink-muted); font-size: 13px; margin-top: 4px;
+      }
+      .bh-card {
+        margin: 14px 22px;
+        background: rgba(255, 250, 235, 0.72);
+        border: 1px solid var(--divider);
+        border-radius: 16px;
+        padding: 20px 18px;
+        text-align: center;
+      }
+      .bh-card .src {
+        font-family: 'Inter', sans-serif; font-weight: 600;
+        font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+        color: var(--ink-muted);
+      }
+      .bh-card .verse {
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 500;
+        font-size: 16px; line-height: 28px; color: var(--ink);
+        margin-top: 10px;
+      }
+      .bh-card .meaning {
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 500;
+        font-size: 13px; line-height: 22px; color: var(--ink-soft);
+        margin-top: 14px;
+      }
+      .bh-actions {
+        display: flex; justify-content: center; gap: 14px;
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid var(--divider);
+      }
+      .bh-actions .btn-circle {
+        width: 38px; height: 38px;
+        border-radius: 999px;
+        border: 1px solid var(--divider);
+        background: var(--parchment-soft);
+        display: flex; align-items: center; justify-content: center;
+        color: var(--saffron); font-size: 16px;
+      }
+      .bh-refresh {
+        margin: 8px 22px 0;
+        background: var(--saffron);
+        color: #fff;
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        border-radius: 14px;
+        padding: 12px;
+        text-align: center;
+        font-size: 14px;
+      }
+      .bh-actions.highlight { outline: 2px solid var(--saffron); box-shadow: 0 0 0 4px rgba(184, 98, 27, 0.25); border-radius: 10px; }
+
+      /* More-tab Wishlist screen mockup */
+      .scr-more {
+        background: linear-gradient(180deg, var(--parchment-highlight) 0%, var(--parchment-gradient-end) 100%);
+      }
+      .header-row {
+        display: flex; align-items: center; gap: 10px;
+        padding: 14px 18px 8px;
+      }
+      .back-chev {
+        width: 32px; height: 32px;
+        border-radius: 999px;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--saffron); font-size: 18px;
+        background: var(--parchment-soft);
+        border: 1px solid var(--divider);
+      }
+      .header-row .hr-title {
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        font-size: 18px; color: var(--ink);
+      }
+      .wl-empty {
+        margin: 40px 24px 0;
+        text-align: center;
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 500;
+        color: var(--ink-muted); font-size: 13px;
+        line-height: 22px;
+      }
+      .wl-empty .om {
+        font-size: 40px; color: var(--ink-muted); opacity: 0.4;
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        display: block; margin-bottom: 8px;
       }
 
-      /* ===== Tour page chrome ===== */
-      .tour-head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 24px 4px;
+      /* Reminders mockup */
+      .rm-time {
+        margin: 24px 24px 0;
+        background: var(--parchment-soft);
+        border: 1px solid var(--divider);
+        border-radius: 16px;
+        padding: 22px;
+        text-align: center;
       }
-      .step-count {
-        font-family: 'Cormorant Garamond', serif;
-        font-style: italic;
-        font-size: 13px;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--ink-muted);
+      .rm-time .label {
+        font-family: 'Inter', sans-serif; font-weight: 600;
+        font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+        color: var(--ink-muted); margin-bottom: 14px;
       }
-      .skip {
-        font-family: 'Cormorant Garamond', serif;
-        font-style: italic;
-        font-size: 13px;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--ink-muted);
+      .rm-time .clock {
+        font-family: 'Cormorant Garamond', serif; font-weight: 600;
+        color: var(--ink); font-size: 38px;
+        letter-spacing: 0.04em;
+      }
+      .rm-toggle {
+        margin: 14px 24px;
+        background: var(--parchment-soft);
+        border: 1px solid var(--divider);
+        border-radius: 16px;
+        padding: 18px;
+        display: flex; align-items: center; justify-content: space-between;
+      }
+      .rm-toggle .lbl {
+        font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px;
+        color: var(--ink);
+      }
+      .switch {
+        width: 42px; height: 24px; border-radius: 999px;
+        background: var(--saffron); position: relative;
+      }
+      .switch .knob {
+        position: absolute; right: 3px; top: 3px;
+        width: 18px; height: 18px;
+        border-radius: 999px; background: #fff;
+      }
+
+      /* ============================= */
+      /* Tour overlay layer            */
+      /* ============================= */
+      .overlay {
+        position: absolute; inset: 0;
+        background: rgba(15, 10, 5, 0.55);
+        display: flex; flex-direction: column;
+        z-index: 20;
+        border-radius: 36px;
+      }
+      .ovh {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 12px 24px 0;
+        margin-top: 44px; /* account for status bar */
+      }
+      .ovh .count {
+        font-family: 'Cormorant Garamond', serif; font-style: italic;
+        font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--parchment);
+      }
+      .ovh .skip {
+        font-family: 'Cormorant Garamond', serif; font-style: italic;
+        font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--parchment);
         padding: 6px 8px;
       }
+      .anchor {
+        flex: 1; padding: 8px 20px;
+        display: flex; flex-direction: column;
+      }
+      .anchor.top { justify-content: flex-start; padding-top: 8px; }
+      .anchor.bottom { justify-content: flex-end; padding-bottom: 24px; }
+      .anchor.center { justify-content: center; }
 
-      .tour-body {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 8px 28px 0;
-        text-align: center;
+      .ptr {
+        align-self: center;
+        width: 0; height: 0;
+        border-left: 11px solid transparent;
+        border-right: 11px solid transparent;
       }
+      .ptr.up { border-bottom: 14px solid var(--parchment-soft); }
+      .ptr.down { border-top: 14px solid var(--parchment-soft); }
 
-      .glyph-badge {
-        width: 72px;
-        height: 72px;
-        border-radius: 999px;
-        background: var(--saffron);
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 600;
-        font-size: 30px;
-        margin-bottom: 20px;
-        box-shadow: 0 6px 16px rgba(138, 62, 11, 0.25);
-      }
-      .glyph-badge.glyph-small { font-size: 22px; letter-spacing: 0.02em; }
-
-      .title-hi {
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 600;
-        font-size: 30px;
-        color: var(--ink);
-        letter-spacing: 0.01em;
-        line-height: 1.1;
-      }
-      .title-en {
-        font-family: 'Cormorant Garamond', serif;
-        font-style: italic;
-        font-size: 15px;
-        color: var(--ink-muted);
-        letter-spacing: 0.04em;
-        margin-top: 4px;
-      }
-
-      .ornament {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        width: 80px;
-        margin: 26px auto;
-        opacity: 0.6;
-      }
-      .ornament .rule { flex: 1; height: 1px; background: var(--saffron); }
-      .ornament .gly {
-        font-family: 'Noto Serif Devanagari', serif;
-        font-size: 14px;
-        color: var(--saffron);
-      }
-
-      .body-hi {
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 28px;
-        color: var(--ink);
-      }
-      .body-en {
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 24px;
-        color: var(--ink-soft);
-        margin-top: 14px;
-        opacity: 0.85;
-      }
-
-      .tour-foot {
-        padding: 0 28px 18px;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        padding-bottom: 28px;
-      }
-      .dots {
-        display: flex;
-        gap: 8px;
-        justify-content: center;
-      }
-      .dot { width: 7px; height: 7px; border-radius: 4px; background: var(--dot-rest); }
-      .dot.active { background: var(--saffron); }
-      .controls { display: flex; gap: 12px; }
-      .btn {
-        min-height: 44px;
-        padding: 12px 18px;
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 13px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-      .btn.secondary {
-        flex: 1;
+      .tt-card {
+        background: var(--parchment-soft);
         border: 1px solid var(--divider);
-        color: var(--ink-soft);
-        background: transparent;
-        font-family: 'Cormorant Garamond', serif;
-        font-style: italic;
-        letter-spacing: 0.16em;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 6px 14px rgba(10, 6, 4, 0.25);
       }
-      .btn.secondary.disabled { opacity: 0.3; }
-      .btn.primary {
-        flex: 2;
-        background: var(--saffron);
-        color: #fff;
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-        text-transform: none;
-        font-size: 15px;
+      .tt-title-hi {
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        font-size: 22px; color: var(--ink); text-align: center;
+      }
+      .tt-title-en {
+        font-family: 'Cormorant Garamond', serif; font-style: italic;
+        font-size: 13px; color: var(--ink-muted);
+        text-align: center; margin-top: 2px; letter-spacing: 0.04em;
+      }
+      .tt-rule { height: 1px; background: var(--divider); opacity: 0.8; margin: 14px 0; }
+      .tt-body-hi {
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 500;
+        font-size: 15px; line-height: 26px; color: var(--ink);
+      }
+      .tt-body-en {
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 500;
+        font-size: 13px; line-height: 22px; color: var(--ink-soft);
+        margin-top: 10px; opacity: 0.85;
+      }
+      .tt-dots {
+        display: flex; gap: 6px; justify-content: center; margin-top: 16px;
+      }
+      .tt-dots .d { width: 6px; height: 6px; border-radius: 3px; background: var(--dot-rest); }
+      .tt-dots .d.on { background: var(--saffron); }
+      .tt-ctrls { display: flex; gap: 10px; margin-top: 14px; }
+      .tt-btn {
+        min-height: 44px;
+        padding: 12px;
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+      }
+      .tt-btn.secondary {
+        flex: 1; border: 1px solid var(--divider);
+        background: transparent; color: var(--ink-soft);
+        font-family: 'Cormorant Garamond', serif; font-style: italic;
+      }
+      .tt-btn.secondary.disabled { opacity: 0.3; }
+      .tt-btn.primary {
+        flex: 2; background: var(--saffron); color: #fff;
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        font-size: 14px; letter-spacing: 0.02em; text-transform: none;
       }
 
-      /* ===== What's New modal (pageSheet style) ===== */
-      .wn-screen {
-        background: var(--parchment);
-      }
+      /* ============================= */
+      /* What's New (post-update)      */
+      /* ============================= */
+      .scr-wn { background: var(--parchment); }
       .wn-head {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        padding: 16px 24px;
-        border-bottom: 1px solid var(--divider);
+        display: flex; align-items: flex-start; justify-content: space-between;
+        padding: 16px 24px; border-bottom: 1px solid var(--divider);
       }
       .wn-title {
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 600;
-        font-size: 20px;
-        color: var(--ink);
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
+        font-size: 20px; color: var(--ink);
       }
       .wn-version {
-        font-family: 'Cormorant Garamond', serif;
-        font-style: italic;
-        font-size: 12px;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--ink-muted);
-        margin-top: 2px;
+        font-family: 'Cormorant Garamond', serif; font-style: italic;
+        font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--ink-muted); margin-top: 2px;
       }
-      .wn-close {
-        font-size: 20px;
-        font-weight: 600;
-        color: var(--saffron);
-        width: 44px;
-        height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .wn-body {
-        flex: 1;
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
+      .wn-close { font-size: 20px; font-weight: 600; color: var(--saffron); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+      .wn-body { flex: 1; padding: 24px; display: flex; flex-direction: column; gap: 20px; }
       .wn-item { display: flex; gap: 14px; align-items: flex-start; }
-      .wn-bullet {
-        width: 6px;
-        height: 6px;
-        border-radius: 3px;
-        background: var(--saffron);
-        margin-top: 9px;
-      }
-      .wn-item-title {
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 600;
-        font-size: 17px;
-        color: var(--ink);
-      }
-      .wn-item-body {
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 24px;
-        color: var(--ink-soft);
-        margin-top: 6px;
-      }
-      .wn-foot {
-        padding: 12px 24px 24px;
-      }
+      .wn-bullet { width: 6px; height: 6px; border-radius: 3px; background: var(--saffron); margin-top: 9px; }
+      .wn-item-title { font-family: 'Noto Serif Devanagari', serif; font-weight: 600; font-size: 17px; color: var(--ink); }
+      .wn-item-body { font-family: 'Noto Serif Devanagari', serif; font-weight: 500; font-size: 14px; line-height: 24px; color: var(--ink-soft); margin-top: 6px; }
+      .wn-foot { padding: 12px 24px 24px; }
       .wn-btn {
-        background: var(--saffron);
-        color: #fff;
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 600;
+        background: var(--saffron); color: #fff;
+        font-family: 'Noto Serif Devanagari', serif; font-weight: 600;
         font-size: 15px;
-        border-radius: 14px;
-        padding: 14px;
-        text-align: center;
+        border-radius: 14px; padding: 14px; text-align: center;
         min-height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      /* ===== More-screen "Show Tour Again" snippet ===== */
-      .more-screen { background: linear-gradient(180deg, var(--parchment-highlight) 0%, var(--parchment-gradient-end) 100%); }
-      .more-title {
-        text-align: center;
-        padding: 16px 24px 4px;
-      }
-      .more-title .hi {
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 600;
-        font-size: 22px;
-        color: var(--ink);
-      }
-      .more-title .en {
-        font-family: 'Cormorant Garamond', serif;
-        font-style: italic;
-        font-size: 14px;
-        color: var(--ink-muted);
-        margin-top: 4px;
-      }
-      .more-cards { padding: 16px 24px; display: flex; flex-direction: column; gap: 14px; }
-      .more-card {
-        background: var(--parchment-soft);
-        border: 1px solid var(--divider);
-        border-radius: 16px;
-        padding: 16px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        box-shadow: 0 1px 2px rgba(60, 30, 10, 0.06);
-      }
-      .mc-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-size: 18px;
-        font-family: 'Noto Serif Devanagari', serif;
-        font-weight: 600;
-      }
-      .mc-icon.saffron { background: var(--saffron); }
-      .mc-icon.saffron-deep { background: var(--saffron-deep); font-size: 20px; }
-      .mc-icon.gold { background: var(--gold); }
-      .mc-meta { flex: 1; }
-      .mc-name {
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        font-size: 14px;
-        color: var(--ink);
-      }
-      .mc-sub {
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        font-size: 11px;
-        color: var(--ink-muted);
-        margin-top: 1px;
-      }
-      .mc-chev { color: var(--saffron); font-size: 20px; }
-
-      .more-links {
-        background: var(--parchment-soft);
-        border: 1px solid var(--divider);
-        border-radius: 16px;
-        padding: 4px 16px;
-      }
-      .more-link {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 14px 0;
-        border-bottom: 1px solid var(--divider);
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        font-size: 13px;
-        color: var(--ink);
-      }
-      .more-link.last { border-bottom: 0; }
-      .more-link .chev { color: var(--ink-muted); font-size: 16px; }
-      .more-link.highlighted {
-        background: rgba(184, 98, 27, 0.06);
-        margin: 0 -16px;
-        padding-left: 16px;
-        padding-right: 16px;
-        border-radius: 8px;
-      }
-      .highlight-pill {
-        margin-left: 8px;
-        padding: 2px 8px;
-        border-radius: 999px;
-        background: var(--saffron);
-        color: #fff;
-        font-size: 9px;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        font-weight: 600;
+        display: flex; align-items: center; justify-content: center;
       }
 
       footer.notes {
-        max-width: 980px;
-        margin: 64px auto 0;
+        max-width: 980px; margin: 64px auto 0;
         padding: 28px 32px;
         border: 1px solid rgba(166, 124, 52, 0.3);
         border-radius: 18px;
-        color: #c9b896;
-        font-size: 13px;
-        line-height: 1.65;
+        color: #c9b896; font-size: 13px; line-height: 1.65;
       }
       footer.notes h3 {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 20px;
-        font-weight: 500;
-        color: #f3e7c9;
-        margin: 0 0 12px;
+        font-size: 20px; font-weight: 500; color: #f3e7c9; margin: 0 0 12px;
       }
       footer.notes code {
         background: rgba(166, 124, 52, 0.12);
-        padding: 1px 6px;
-        border-radius: 4px;
-        font-size: 12px;
-        color: #f3e7c9;
+        padding: 1px 6px; border-radius: 4px;
+        font-size: 12px; color: #f3e7c9;
       }
       footer.notes ul { padding-left: 20px; margin: 8px 0; }
       footer.notes li { margin: 4px 0; }
@@ -523,181 +507,305 @@
     <div class="wrap">
       <header class="intro">
         <div class="tag">Vedansh · Onboarding</div>
-        <h1>Feature Tour &amp; What&rsquo;s New — Prototype</h1>
+        <h1>Feature Tour — In-Context Prototype</h1>
         <p>
-          A 6-step bilingual walkthrough that fires once on first install, plus a per-version
-          &ldquo;What&rsquo;s New&rdquo; sheet that surfaces only the new features after every update.
-          Returning users can replay the tour from More&nbsp;→&nbsp;Show&nbsp;Tour&nbsp;Again.
+          Each step navigates the user to the real screen and pins a tooltip
+          to the relevant region. The live app stays visible through a soft
+          ink-tinted overlay; the pointer triangle (▲ / ▼) marks the surface
+          the copy is talking about. Next / Back drive both navigation and
+          step progression; Skip exits at any time.
         </p>
       </header>
 
-      <h2 class="section">First-Launch Tour — 6 Pages<span class="sub">Step 1 → 6</span></h2>
+      <h2 class="section">First-Launch Tour — Step by Step<span class="sub">overlay on real screens</span></h2>
 
       <div class="phones">
-        <!-- Step 1: Home -->
+
+        <!-- ============ Step 1: Home ============ -->
         <div>
           <div class="phone">
-            <div class="screen">
+            <div class="screen scr-home">
               <div class="status-bar"><span>9:41</span><span>● ●●</span></div>
-              <div class="tour-head"><span class="step-count">1 / 6</span><span class="skip">Skip</span></div>
-              <div class="tour-body">
-                <div class="glyph-badge">ॐ</div>
-                <div class="title-hi">मुख पृष्ठ</div>
-                <div class="title-en">Home</div>
-                <div class="ornament"><span class="rule"></span><span class="gly">॥</span><span class="rule"></span></div>
-                <div class="body-hi">चालीसा, ग्रंथ, स्तोत्रम्, आरती, जप — सभी श्रेणियों में पाठ उपलब्ध हैं। देवता के अनुसार भी पाठ खोज सकते हैं।</div>
-                <div class="body-en">Browse by category — Chalisa, Granth, Stotram, Aarti, Japam — or by deity. Tap any tile to open the list.</div>
+              <div class="home-hero">
+                <div class="crest"><span class="line"></span><span class="mark">ॐ</span><span class="line"></span></div>
+                <div class="title">वेदांश़</div>
+                <div class="subtitle">Sacred Texts · Daily Reading</div>
               </div>
-              <div class="tour-foot">
-                <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                <div class="controls">
-                  <div class="btn secondary disabled">Back</div>
-                  <div class="btn primary">Next · आगे</div>
+              <div class="section-label">Categories</div>
+              <div class="cat-grid">
+                <div class="cat-tile"><div class="ti-glyph">ग्र</div><div><div class="ti-hi">ग्रंथ</div><div class="ti-en">Granth</div></div></div>
+                <div class="cat-tile"><div class="ti-glyph">स्तो</div><div><div class="ti-hi">स्तोत्रम्</div><div class="ti-en">Stotram</div></div></div>
+                <div class="cat-tile"><div class="ti-glyph">चा</div><div><div class="ti-hi">चालीसा</div><div class="ti-en">Chalisa</div></div></div>
+                <div class="cat-tile"><div class="ti-glyph">जप</div><div><div class="ti-hi">जप</div><div class="ti-en">Japa &amp; Mantras</div></div></div>
+                <div class="cat-tile"><div class="ti-glyph">आर</div><div><div class="ti-hi">आरती</div><div class="ti-en">Aarti</div></div></div>
+                <div class="cat-tile"><div class="ti-glyph">देव</div><div><div class="ti-hi">देवता</div><div class="ti-en">By Deity</div></div></div>
+              </div>
+              <div class="tab-bar">
+                <div class="tab active"><div class="ic">⌂</div>Home</div>
+                <div class="tab"><div class="ic">॥</div>Bhakti</div>
+                <div class="tab"><div class="ic">···</div>More</div>
+              </div>
+
+              <!-- Overlay -->
+              <div class="overlay">
+                <div class="ovh"><span class="count">1 / 6</span><span class="skip">Skip</span></div>
+                <div class="anchor bottom">
+                  <div class="ptr up"></div>
+                  <div class="tt-card">
+                    <div class="tt-title-hi">मुख पृष्ठ</div>
+                    <div class="tt-title-en">Home</div>
+                    <div class="tt-rule"></div>
+                    <div class="tt-body-hi">ऊपर श्रेणियों के टाइल देखें — चालीसा, ग्रंथ, स्तोत्रम्, आरती, जप। किसी भी टाइल को दबाकर पाठ खोलें।</div>
+                    <div class="tt-body-en">These tiles group every text by category. Tap any tile — or use "By Deity" — to browse what is inside.</div>
+                    <div class="tt-dots"><span class="d on"></span><span class="d"></span><span class="d"></span><span class="d"></span><span class="d"></span><span class="d"></span></div>
+                    <div class="tt-ctrls">
+                      <div class="tt-btn secondary disabled">Back</div>
+                      <div class="tt-btn primary">Next · आगे</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="phone-label"><span class="pl-name">Home</span>Step 1 of 6</div>
+          <div class="phone-label"><span class="pl-name">Step 1 · Home</span>Tooltip at bottom · pointer up at category grid</div>
         </div>
 
-        <!-- Step 2: Wishlist -->
+        <!-- ============ Step 2: Wishlist ============ -->
         <div>
           <div class="phone">
-            <div class="screen">
+            <div class="screen scr-more">
               <div class="status-bar"><span>9:41</span><span>● ●●</span></div>
-              <div class="tour-head"><span class="step-count">2 / 6</span><span class="skip">Skip</span></div>
-              <div class="tour-body">
-                <div class="glyph-badge glyph-small">♥</div>
-                <div class="title-hi">मेरी सूची</div>
-                <div class="title-en">Wishlist</div>
-                <div class="ornament"><span class="rule"></span><span class="gly">॥</span><span class="rule"></span></div>
-                <div class="body-hi">किसी भी श्लोक पर हृदय चिह्न दबाकर उसे सुरक्षित कर सकते हैं। &ldquo;अन्य&rdquo; टैब में सूची देखें — वहीं से पुनः पढ़ें।</div>
-                <div class="body-en">Tap the heart on any verse to save it. Open the More tab → Wishlist to find your saved verses and tap one to jump straight back.</div>
+              <div class="header-row">
+                <div class="back-chev">‹</div>
+                <div class="hr-title">मेरी सूची · Wishlist</div>
               </div>
-              <div class="tour-foot">
-                <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                <div class="controls">
-                  <div class="btn secondary">Back</div>
-                  <div class="btn primary">Next · आगे</div>
+              <div class="wl-empty">
+                <span class="om">॥</span>
+                अभी कोई श्लोक सहेजे नहीं।<br/>
+                <span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 12px;">No verses saved yet.</span>
+              </div>
+
+              <div class="tab-bar">
+                <div class="tab"><div class="ic">⌂</div>Home</div>
+                <div class="tab"><div class="ic">॥</div>Bhakti</div>
+                <div class="tab active"><div class="ic">···</div>More</div>
+              </div>
+
+              <div class="overlay">
+                <div class="ovh"><span class="count">2 / 6</span><span class="skip">Skip</span></div>
+                <div class="anchor center">
+                  <div class="tt-card">
+                    <div class="tt-title-hi">मेरी सूची</div>
+                    <div class="tt-title-en">Wishlist</div>
+                    <div class="tt-rule"></div>
+                    <div class="tt-body-hi">यह आपकी सूची है। किसी भी श्लोक पर हृदय चिह्न दबाकर यहाँ सहेज लें — फिर एक स्पर्श में वापस पहुँचें।</div>
+                    <div class="tt-body-en">This is your wishlist. Tap the heart on any verse to save it here, then tap an entry to jump straight back to it.</div>
+                    <div class="tt-dots"><span class="d"></span><span class="d on"></span><span class="d"></span><span class="d"></span><span class="d"></span><span class="d"></span></div>
+                    <div class="tt-ctrls">
+                      <div class="tt-btn secondary">Back</div>
+                      <div class="tt-btn primary">Next · आगे</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="phone-label"><span class="pl-name">Wishlist</span>Step 2 of 6</div>
+          <div class="phone-label"><span class="pl-name">Step 2 · Wishlist</span>Lands on More → Wishlist · tooltip centered</div>
         </div>
 
-        <!-- Step 3: Reminders -->
+        <!-- ============ Step 3: Reminders ============ -->
         <div>
           <div class="phone">
-            <div class="screen">
+            <div class="screen scr-more">
               <div class="status-bar"><span>9:41</span><span>● ●●</span></div>
-              <div class="tour-head"><span class="step-count">3 / 6</span><span class="skip">Skip</span></div>
-              <div class="tour-body">
-                <div class="glyph-badge glyph-small">⏰</div>
-                <div class="title-hi">दैनिक स्मरण</div>
-                <div class="title-en">Daily Reminder</div>
-                <div class="ornament"><span class="rule"></span><span class="gly">॥</span><span class="rule"></span></div>
-                <div class="body-hi">अपनी पसंद के समय पर एक श्लोक की सूचना पाएँ। &ldquo;अन्य&rdquo; → &ldquo;Reminders&rdquo; से समय बदलें या बंद करें।</div>
-                <div class="body-en">Get one verse a day at the time you choose. Open the More tab → Reminders to set the time or turn it off.</div>
+              <div class="header-row">
+                <div class="back-chev">‹</div>
+                <div class="hr-title">दैनिक स्मरण · Reminders</div>
               </div>
-              <div class="tour-foot">
-                <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                <div class="controls">
-                  <div class="btn secondary">Back</div>
-                  <div class="btn primary">Next · आगे</div>
+              <div class="rm-time">
+                <div class="label">Time</div>
+                <div class="clock">07 : 00</div>
+              </div>
+              <div class="rm-toggle">
+                <div class="lbl">Daily verse</div>
+                <div class="switch"><div class="knob"></div></div>
+              </div>
+
+              <div class="tab-bar">
+                <div class="tab"><div class="ic">⌂</div>Home</div>
+                <div class="tab"><div class="ic">॥</div>Bhakti</div>
+                <div class="tab active"><div class="ic">···</div>More</div>
+              </div>
+
+              <div class="overlay">
+                <div class="ovh"><span class="count">3 / 6</span><span class="skip">Skip</span></div>
+                <div class="anchor center">
+                  <div class="tt-card">
+                    <div class="tt-title-hi">दैनिक स्मरण</div>
+                    <div class="tt-title-en">Daily Reminder</div>
+                    <div class="tt-rule"></div>
+                    <div class="tt-body-hi">अपनी पसंद का समय चुनें — हर रोज़ एक श्लोक की सूचना मिलेगी। कभी भी बंद कर सकते हैं।</div>
+                    <div class="tt-body-en">Pick a time and you will get one verse a day at that time. Toggle it off any time you like.</div>
+                    <div class="tt-dots"><span class="d"></span><span class="d"></span><span class="d on"></span><span class="d"></span><span class="d"></span><span class="d"></span></div>
+                    <div class="tt-ctrls">
+                      <div class="tt-btn secondary">Back</div>
+                      <div class="tt-btn primary">Next · आगे</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="phone-label"><span class="pl-name">Reminders</span>Step 3 of 6</div>
+          <div class="phone-label"><span class="pl-name">Step 3 · Reminders</span>Lands on More → Reminders · centered</div>
         </div>
 
-        <!-- Step 4: Bhakti -->
+        <!-- ============ Step 4: Bhakti ============ -->
         <div>
           <div class="phone">
-            <div class="screen">
+            <div class="screen scr-bhakti">
               <div class="status-bar"><span>9:41</span><span>● ●●</span></div>
-              <div class="tour-head"><span class="step-count">4 / 6</span><span class="skip">Skip</span></div>
-              <div class="tour-body">
-                <div class="glyph-badge">॥</div>
-                <div class="title-hi">भक्ति</div>
-                <div class="title-en">Bhakti</div>
-                <div class="ornament"><span class="rule"></span><span class="gly">॥</span><span class="rule"></span></div>
-                <div class="body-hi">भक्ति टैब पर हर बार एक यादृच्छिक श्लोक खुलेगा। &ldquo;नवीन&rdquo; दबाकर दूसरा श्लोक देखें — दैनिक चिंतन के लिए सरल।</div>
-                <div class="body-en">The Bhakti tab opens one random verse each visit. Tap refresh for another — a quiet way to start the day.</div>
+              <div class="bh-title"><div class="hi">दैनिक भक्ति</div><div class="en">Daily Bhakti</div></div>
+              <div class="bh-card">
+                <div class="src">श्रीमद्भगवद्गीता · 2.47</div>
+                <div class="verse">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।<br/>मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥</div>
+                <div class="meaning">You have a right to perform your prescribed duty, but not to the fruits of action.</div>
+                <div class="bh-actions">
+                  <div class="btn-circle">♥</div>
+                  <div class="btn-circle">↗</div>
+                </div>
               </div>
-              <div class="tour-foot">
-                <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                <div class="controls">
-                  <div class="btn secondary">Back</div>
-                  <div class="btn primary">Next · आगे</div>
+              <div class="bh-refresh">नवीन श्लोक · New Verse</div>
+
+              <div class="tab-bar">
+                <div class="tab"><div class="ic">⌂</div>Home</div>
+                <div class="tab active"><div class="ic">॥</div>Bhakti</div>
+                <div class="tab"><div class="ic">···</div>More</div>
+              </div>
+
+              <div class="overlay">
+                <div class="ovh"><span class="count">4 / 6</span><span class="skip">Skip</span></div>
+                <div class="anchor top">
+                  <div class="tt-card">
+                    <div class="tt-title-hi">भक्ति</div>
+                    <div class="tt-title-en">Bhakti</div>
+                    <div class="tt-rule"></div>
+                    <div class="tt-body-hi">भक्ति टैब पर हर बार एक नया श्लोक खुलता है। "नवीन" से दूसरा देखें — दैनिक चिंतन के लिए सरल।</div>
+                    <div class="tt-body-en">The Bhakti tab opens one random verse every visit. Tap refresh for another — a quiet way to start the day.</div>
+                    <div class="tt-dots"><span class="d"></span><span class="d"></span><span class="d"></span><span class="d on"></span><span class="d"></span><span class="d"></span></div>
+                    <div class="tt-ctrls">
+                      <div class="tt-btn secondary">Back</div>
+                      <div class="tt-btn primary">Next · आगे</div>
+                    </div>
+                  </div>
+                  <div class="ptr down"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="phone-label"><span class="pl-name">Bhakti</span>Step 4 of 6</div>
+          <div class="phone-label"><span class="pl-name">Step 4 · Bhakti</span>Switches to Bhakti tab · pointer down at verse card</div>
         </div>
 
-        <!-- Step 5: Japa -->
+        <!-- ============ Step 5: Japa ============ -->
         <div>
           <div class="phone">
-            <div class="screen">
+            <div class="screen scr-home">
               <div class="status-bar"><span>9:41</span><span>● ●●</span></div>
-              <div class="tour-head"><span class="step-count">5 / 6</span><span class="skip">Skip</span></div>
-              <div class="tour-body">
-                <div class="glyph-badge glyph-small">१०८</div>
-                <div class="title-hi">जप</div>
-                <div class="title-en">Japa &amp; Mantras</div>
-                <div class="ornament"><span class="rule"></span><span class="gly">॥</span><span class="rule"></span></div>
-                <div class="body-hi">मुख पृष्ठ → जप से कोई मंत्र चुनें। प्रत्येक स्पर्श पर माला आगे बढ़ती है, १०८ मनकों पर एक आवृत्ति पूर्ण। आपकी प्रगति स्वतः सहेजी जाती है।</div>
-                <div class="body-en">Pick a mantra from Home → Japa &amp; Mantras. Each tap moves the mala forward; 108 beads complete one round. Your progress is saved automatically.</div>
+              <div class="home-hero">
+                <div class="crest"><span class="line"></span><span class="mark">ॐ</span><span class="line"></span></div>
+                <div class="title">वेदांश़</div>
+                <div class="subtitle">Sacred Texts · Daily Reading</div>
               </div>
-              <div class="tour-foot">
-                <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
-                <div class="controls">
-                  <div class="btn secondary">Back</div>
-                  <div class="btn primary">Next · आगे</div>
+              <div class="section-label">Categories</div>
+              <div class="cat-grid">
+                <div class="cat-tile"><div class="ti-glyph">ग्र</div><div><div class="ti-hi">ग्रंथ</div><div class="ti-en">Granth</div></div></div>
+                <div class="cat-tile"><div class="ti-glyph">स्तो</div><div><div class="ti-hi">स्तोत्रम्</div><div class="ti-en">Stotram</div></div></div>
+                <div class="cat-tile"><div class="ti-glyph">चा</div><div><div class="ti-hi">चालीसा</div><div class="ti-en">Chalisa</div></div></div>
+                <div class="cat-tile highlight"><div class="ti-glyph">जप</div><div><div class="ti-hi">जप</div><div class="ti-en">Japa &amp; Mantras</div></div></div>
+                <div class="cat-tile"><div class="ti-glyph">आर</div><div><div class="ti-hi">आरती</div><div class="ti-en">Aarti</div></div></div>
+                <div class="cat-tile"><div class="ti-glyph">देव</div><div><div class="ti-hi">देवता</div><div class="ti-en">By Deity</div></div></div>
+              </div>
+              <div class="tab-bar">
+                <div class="tab active"><div class="ic">⌂</div>Home</div>
+                <div class="tab"><div class="ic">॥</div>Bhakti</div>
+                <div class="tab"><div class="ic">···</div>More</div>
+              </div>
+
+              <div class="overlay">
+                <div class="ovh"><span class="count">5 / 6</span><span class="skip">Skip</span></div>
+                <div class="anchor bottom">
+                  <div class="ptr up"></div>
+                  <div class="tt-card">
+                    <div class="tt-title-hi">जप</div>
+                    <div class="tt-title-en">Japa &amp; Mantras</div>
+                    <div class="tt-rule"></div>
+                    <div class="tt-body-hi">ऊपर "जप" टाइल से मंत्र चुनें। प्रत्येक स्पर्श पर माला आगे बढ़ती है, १०८ मनकों पर एक आवृत्ति पूर्ण।</div>
+                    <div class="tt-body-en">Open the "Japa &amp; Mantras" tile above to pick a mantra. Each tap moves the mala; 108 beads complete one round. Progress saves automatically.</div>
+                    <div class="tt-dots"><span class="d"></span><span class="d"></span><span class="d"></span><span class="d"></span><span class="d on"></span><span class="d"></span></div>
+                    <div class="tt-ctrls">
+                      <div class="tt-btn secondary">Back</div>
+                      <div class="tt-btn primary">Next · आगे</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="phone-label"><span class="pl-name">Japa</span>Step 5 of 6</div>
+          <div class="phone-label"><span class="pl-name">Step 5 · Japa</span>Returns to Home · pointer up at highlighted Japa tile</div>
         </div>
 
-        <!-- Step 6: Share -->
+        <!-- ============ Step 6: Share ============ -->
         <div>
           <div class="phone">
-            <div class="screen">
+            <div class="screen scr-bhakti">
               <div class="status-bar"><span>9:41</span><span>● ●●</span></div>
-              <div class="tour-head"><span class="step-count">6 / 6</span><span class="skip">Skip</span></div>
-              <div class="tour-body">
-                <div class="glyph-badge glyph-small">↗</div>
-                <div class="title-hi">साझा करें</div>
-                <div class="title-en">Share</div>
-                <div class="ornament"><span class="rule"></span><span class="gly">॥</span><span class="rule"></span></div>
-                <div class="body-hi">किसी भी श्लोक के नीचे साझा बटन से सुंदर श्लोक कार्ड बनाकर WhatsApp या अन्य ऐप पर भेजें।</div>
-                <div class="body-en">Tap the share icon below any verse to generate a beautifully composed verse card and send it via WhatsApp or any app.</div>
+              <div class="bh-title"><div class="hi">दैनिक भक्ति</div><div class="en">Daily Bhakti</div></div>
+              <div class="bh-card">
+                <div class="src">श्रीमद्भगवद्गीता · 2.47</div>
+                <div class="verse">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।<br/>मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥</div>
+                <div class="meaning">You have a right to perform your prescribed duty, but not to the fruits of action.</div>
+                <div class="bh-actions highlight">
+                  <div class="btn-circle">♥</div>
+                  <div class="btn-circle">↗</div>
+                </div>
               </div>
-              <div class="tour-foot">
-                <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
-                <div class="controls">
-                  <div class="btn secondary">Back</div>
-                  <div class="btn primary">Done · पूर्ण</div>
+              <div class="bh-refresh">नवीन श्लोक · New Verse</div>
+
+              <div class="tab-bar">
+                <div class="tab"><div class="ic">⌂</div>Home</div>
+                <div class="tab active"><div class="ic">॥</div>Bhakti</div>
+                <div class="tab"><div class="ic">···</div>More</div>
+              </div>
+
+              <div class="overlay">
+                <div class="ovh"><span class="count">6 / 6</span><span class="skip">Skip</span></div>
+                <div class="anchor top">
+                  <div class="tt-card">
+                    <div class="tt-title-hi">साझा करें</div>
+                    <div class="tt-title-en">Share</div>
+                    <div class="tt-rule"></div>
+                    <div class="tt-body-hi">श्लोक के नीचे साझा बटन से सुंदर श्लोक कार्ड बनाकर WhatsApp या अन्य ऐप पर भेजें।</div>
+                    <div class="tt-body-en">Below every verse you will see a share icon — tap it to compose a verse card and send it via WhatsApp or any app.</div>
+                    <div class="tt-dots"><span class="d"></span><span class="d"></span><span class="d"></span><span class="d"></span><span class="d"></span><span class="d on"></span></div>
+                    <div class="tt-ctrls">
+                      <div class="tt-btn secondary">Back</div>
+                      <div class="tt-btn primary">Done · पूर्ण</div>
+                    </div>
+                  </div>
+                  <div class="ptr down"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="phone-label"><span class="pl-name">Share</span>Step 6 of 6 · Final</div>
+          <div class="phone-label"><span class="pl-name">Step 6 · Share</span>Pointer down at the share + wishlist buttons</div>
         </div>
       </div>
 
-      <h2 class="section">What&rsquo;s New on Update<span class="sub">Returning user · v1.4.0</span></h2>
+      <h2 class="section">What&rsquo;s New on Update<span class="sub">returning user · v1.4.0</span></h2>
 
       <div class="phones">
-        <!-- What's New modal -->
         <div>
           <div class="phone">
-            <div class="screen wn-screen">
+            <div class="screen scr-wn">
               <div class="status-bar"><span>9:41</span><span>● ●●</span></div>
               <div class="wn-head">
                 <div>
@@ -714,18 +822,16 @@
                     <div class="wn-item-body">The Daily Bhakti verse now has share and wishlist buttons — compose a card or save it without leaving the tab.</div>
                   </div>
                 </div>
-                <!-- example placeholder so the "what only new features look like" intent is visible -->
               </div>
               <div class="wn-foot"><div class="wn-btn">Got it</div></div>
             </div>
           </div>
-          <div class="phone-label"><span class="pl-name">What&rsquo;s New (English)</span>v1.4.0 — only new features listed</div>
+          <div class="phone-label"><span class="pl-name">What&rsquo;s New (English)</span>only new features for v1.4.0</div>
         </div>
 
-        <!-- What's New modal Hindi variant -->
         <div>
           <div class="phone">
-            <div class="screen wn-screen">
+            <div class="screen scr-wn">
               <div class="status-bar"><span>9:41</span><span>● ●●</span></div>
               <div class="wn-head">
                 <div>
@@ -746,65 +852,19 @@
               <div class="wn-foot"><div class="wn-btn">समझ गया</div></div>
             </div>
           </div>
-          <div class="phone-label"><span class="pl-name">नई सुविधाएँ (Hindi)</span>Renders in user&rsquo;s language</div>
-        </div>
-
-        <!-- More screen with Show Tour Again -->
-        <div>
-          <div class="phone">
-            <div class="screen more-screen">
-              <div class="status-bar"><span>9:41</span><span>● ●●</span></div>
-              <div class="more-title">
-                <div class="hi">अन्य</div>
-                <div class="en">More</div>
-              </div>
-              <div class="more-cards">
-                <div class="more-card">
-                  <div class="mc-icon saffron">♥</div>
-                  <div class="mc-meta">
-                    <div class="mc-name">Wishlist</div>
-                    <div class="mc-sub">3 verses saved</div>
-                  </div>
-                  <div class="mc-chev">›</div>
-                </div>
-                <div class="more-card">
-                  <div class="mc-icon gold">ॐ</div>
-                  <div class="mc-meta">
-                    <div class="mc-name">Reminders</div>
-                    <div class="mc-sub">Daily verse at 07:00</div>
-                  </div>
-                  <div class="mc-chev">›</div>
-                </div>
-                <div class="more-links">
-                  <div class="more-link highlighted">
-                    <span>Show Tour Again <span class="highlight-pill">NEW</span></span>
-                    <span class="chev">›</span>
-                  </div>
-                  <div class="more-link">
-                    <span>About &amp; Disclaimer</span>
-                    <span class="chev">›</span>
-                  </div>
-                  <div class="more-link last">
-                    <span>Report an Error</span>
-                    <span class="chev">›</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="phone-label"><span class="pl-name">More — Show Tour Again</span>Replay affordance for returning users</div>
+          <div class="phone-label"><span class="pl-name">नई सुविधाएँ (Hindi)</span>renders in user&rsquo;s chosen language</div>
         </div>
       </div>
 
       <footer class="notes">
-        <h3>Behavior &amp; Mechanics</h3>
+        <h3>How the tour drives navigation</h3>
         <ul>
-          <li><strong>First install</strong> — Tour shows automatically once fonts load &amp; splash hides. Marks both <code>tour-completed-v</code> and <code>whats-new-seen-v</code> in AsyncStorage so the user is not double-prompted.</li>
-          <li><strong>Update launch</strong> — Tour stays dormant. What&rsquo;s New modal fires once, listing <em>only</em> the features added in the current version (per the <code>whatsNew['1.4.0'].items</code> array).</li>
-          <li><strong>Skip / Back / Next / Done</strong> — Skip on any page ends the tour immediately. Back is disabled on step 1. Done on step 6 marks the tour complete.</li>
-          <li><strong>Bilingual</strong> — Every tour page renders Devanagari (primary) and English (secondary) since the user has not picked a reading language yet. The What&rsquo;s New modal honors the chosen language (Hindi or English variant shown above).</li>
-          <li><strong>Adding a new version</strong> — Bump <code>APP_TOUR_VERSION</code> in <code>data/tour/whatsNew.ts</code> to match <code>app.json</code> &amp; add a new keyed entry with the new features.</li>
-          <li><strong>Replay</strong> — More → Show Tour Again calls <code>resetTour()</code>, clears both storage keys, and re-opens the tour on the spot.</li>
+          <li><strong>Overlay, not modal</strong> — <code>FeatureTour.tsx</code> uses a translucent <code>Modal</code> (<code>transparent</code> + <code>overFullScreen</code>) so the real screen reads through behind the dim layer.</li>
+          <li><strong>Live nav</strong> — Each step has a <code>navigateTo</code> route (<code>HomeTab/Home</code>, <code>MoreTab/Wishlist</code>, <code>MoreTab/Reminders</code>, <code>DailyBhaktiTab</code>). The tour calls <code>navigationRef.dispatch(CommonActions.navigate(...))</code> on every step change, so when the user taps Next they actually land on the surface the copy is describing.</li>
+          <li><strong>Anchor + pointer</strong> — Each step chooses <code>top</code> / <code>center</code> / <code>bottom</code> placement plus an optional <code>▲ / ▼</code> pointer triangle that nudges the eye toward the relevant region without spotlight measurement (robust across screen sizes).</li>
+          <li><strong>Touches blocked</strong> — While the overlay is up, only its own buttons receive taps. Stray taps on the real tabs/cards are caught by the modal, so the tour stays linear.</li>
+          <li><strong>Persistence</strong> — <code>TourContext</code> writes <code>tour-completed-v</code> on Done/Skip and <code>whats-new-seen-v</code> on first install so a brand-new user is never double-prompted.</li>
+          <li><strong>Replay</strong> — More → Show Tour Again calls <code>resetTour()</code> and re-opens the overlay from step 1.</li>
         </ul>
       </footer>
     </div>
