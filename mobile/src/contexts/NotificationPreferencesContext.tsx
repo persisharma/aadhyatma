@@ -14,7 +14,7 @@ import {
   cancelAllDailyVerseNotifications,
   scheduleDailyVerseRollingWindow,
 } from '@/notifications/scheduler';
-import type { TimeOfDay } from '@/notifications/pure';
+import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
 
 const PREFS_KEY = '@vedansh/notif-prefs';
 const META_KEY = '@vedansh/notif-meta';
@@ -23,9 +23,8 @@ export type PermissionStatus = 'granted' | 'denied' | 'undetermined';
 
 export type NotificationPreferences = {
   dailyVerseEnabled: boolean;
-  time: TimeOfDay;
-  quietStart: TimeOfDay;
-  quietEnd: TimeOfDay;
+  /** One or more daily reminder times, sorted by hour:minute. */
+  times: TimeOfDay[];
 };
 
 type NotificationMeta = {
@@ -35,9 +34,7 @@ type NotificationMeta = {
 
 const DEFAULTS: NotificationPreferences = {
   dailyVerseEnabled: true,
-  time: { hour: 7, minute: 0 },
-  quietStart: { hour: 22, minute: 0 },
-  quietEnd: { hour: 6, minute: 0 },
+  times: [{ hour: 7, minute: 0 }],
 };
 
 const META_DEFAULTS: NotificationMeta = {
@@ -54,8 +51,9 @@ type NotificationPreferencesContextValue = {
   shouldShowOptIn: boolean;
   /** Toggle daily verse on/off. When turning on, also requests permission. */
   setDailyVerseEnabled: (enabled: boolean) => Promise<void>;
-  setTime: (time: TimeOfDay) => Promise<void>;
-  setQuietHours: (start: TimeOfDay, end: TimeOfDay) => Promise<void>;
+  /** Replace the full set of reminder times. The list is normalised (sorted,
+   * deduped, capped at MAX_REMINDER_TIMES) before being persisted. */
+  setTimes: (times: TimeOfDay[]) => Promise<void>;
   /** Record that the user dismissed (or accepted) the first-run opt-in sheet. */
   markOptInPromptShown: () => Promise<void>;
   /** Ask the OS for notification permission. Returns the new status. */
@@ -78,18 +76,46 @@ function isTimeOfDay(v: unknown): v is TimeOfDay {
   );
 }
 
+function normaliseTimes(times: TimeOfDay[]): TimeOfDay[] {
+  const out = times.map((t) => ({ hour: t.hour, minute: t.minute }));
+  out.sort((a, b) => a.hour * 60 + a.minute - (b.hour * 60 + b.minute));
+  return out.slice(0, MAX_REMINDER_TIMES);
+}
+
+function deduplicateTimes(times: TimeOfDay[]): TimeOfDay[] {
+  const seen = new Set<number>();
+  const out: TimeOfDay[] = [];
+  for (const t of times) {
+    const key = t.hour * 60 + t.minute;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(t);
+  }
+  return out;
+}
+
 function parsePrefs(raw: string | null): NotificationPreferences {
   if (!raw) return DEFAULTS;
   try {
-    const parsed = JSON.parse(raw) as Partial<NotificationPreferences>;
+    const parsed = JSON.parse(raw) as Partial<NotificationPreferences> & {
+      time?: unknown;
+    };
+    // Migrate from the previous single-time shape (`time`) — early users had
+    // exactly one reminder configured before this screen supported many.
+    const rawTimes: unknown[] = Array.isArray(parsed.times)
+      ? parsed.times
+      : isTimeOfDay(parsed.time)
+        ? [parsed.time]
+        : [];
+    const validTimes = rawTimes.filter(isTimeOfDay);
+    const times =
+      validTimes.length > 0 ? normaliseTimes(validTimes) : DEFAULTS.times;
     return {
       dailyVerseEnabled:
         typeof parsed.dailyVerseEnabled === 'boolean'
           ? parsed.dailyVerseEnabled
           : DEFAULTS.dailyVerseEnabled,
-      time: isTimeOfDay(parsed.time) ? parsed.time : DEFAULTS.time,
-      quietStart: isTimeOfDay(parsed.quietStart) ? parsed.quietStart : DEFAULTS.quietStart,
-      quietEnd: isTimeOfDay(parsed.quietEnd) ? parsed.quietEnd : DEFAULTS.quietEnd,
+      times,
     };
   } catch {
     return DEFAULTS;
@@ -142,7 +168,7 @@ export function NotificationPreferencesProvider({
   const [foregroundTick, setForegroundTick] = useState(0);
   // Mirror of the latest prefs/meta so updater-style writes don't read stale
   // state from a setter's closure. Without this, two writes in the same tick
-  // (e.g. setTime + setDailyVerseEnabled from the opt-in modal) clobber each
+  // (e.g. setTimes + setDailyVerseEnabled from the opt-in modal) clobber each
   // other and the saved time silently reverts to the previous value.
   const prefsRef = useRef<NotificationPreferences>(DEFAULTS);
   const metaRef = useRef<NotificationMeta>(META_DEFAULTS);
@@ -199,9 +225,7 @@ export function NotificationPreferencesProvider({
       if (prefs.dailyVerseEnabled && permissionStatus === 'granted') {
         await scheduleDailyVerseRollingWindow({
           enabled: true,
-          time: prefs.time,
-          quietStart: prefs.quietStart,
-          quietEnd: prefs.quietEnd,
+          times: prefs.times,
         }).catch(() => undefined);
       } else {
         await cancelAllDailyVerseNotifications().catch(() => undefined);
@@ -287,18 +311,13 @@ export function NotificationPreferencesProvider({
     [permissionStatus, persistPrefs, requestPermission]
   );
 
-  const setTime = useCallback<NotificationPreferencesContextValue['setTime']>(
-    async (time) => {
-      await persistPrefs((prev) => ({ ...prev, time }));
-    },
-    [persistPrefs]
-  );
-
-  const setQuietHours = useCallback<
-    NotificationPreferencesContextValue['setQuietHours']
-  >(
-    async (quietStart, quietEnd) => {
-      await persistPrefs((prev) => ({ ...prev, quietStart, quietEnd }));
+  const setTimes = useCallback<NotificationPreferencesContextValue['setTimes']>(
+    async (times) => {
+      const next = normaliseTimes(times);
+      // Always keep at least one reminder — the toggle, not an empty list, is
+      // how users turn reminders off.
+      const safe = next.length > 0 ? next : DEFAULTS.times;
+      await persistPrefs((prev) => ({ ...prev, times: safe }));
     },
     [persistPrefs]
   );
@@ -323,8 +342,7 @@ export function NotificationPreferencesProvider({
       isLoading,
       shouldShowOptIn,
       setDailyVerseEnabled,
-      setTime,
-      setQuietHours,
+      setTimes,
       markOptInPromptShown,
       requestPermission,
     }),
@@ -335,8 +353,7 @@ export function NotificationPreferencesProvider({
       isLoading,
       shouldShowOptIn,
       setDailyVerseEnabled,
-      setTime,
-      setQuietHours,
+      setTimes,
       markOptInPromptShown,
       requestPermission,
     ]

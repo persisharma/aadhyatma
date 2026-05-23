@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reminders — prototype</title>
+<style>
+  :root {
+    --parchment: #f5e8c8;
+    --parchment-soft: #f0dfb1;
+    --parchment-deep: #e8d39a;
+    --parchment-highlight: #f9efd1;
+    --parchment-gradient-end: #ecd9a2;
+    --divider: #c7a875;
+    --ink: #5a3a16;
+    --ink-soft: #6e4a1f;
+    --ink-muted: #8a6a3d;
+    --saffron: #c97a2b;
+    --saffron-deep: #a85d18;
+    --gold: #b8862c;
+    --on-primary: #fff8e7;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #2b231a;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 12px;
+  }
+  .phone {
+    width: 390px;
+    border-radius: 38px;
+    background: linear-gradient(180deg, var(--parchment-highlight) 0%, var(--parchment-gradient-end) 100%);
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+    position: relative;
+    padding-top: 44px;
+  }
+  .status-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .status-bar .right { display: flex; gap: 6px; align-items: center; font-size: 13px; }
+  .battery {
+    width: 26px; height: 12px;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    position: relative;
+    display: inline-block;
+  }
+  .battery::after {
+    content: '';
+    position: absolute;
+    width: 2px; height: 6px;
+    background: var(--ink);
+    right: -4px; top: 1.5px;
+    border-radius: 1px;
+  }
+  .battery > i {
+    display: block;
+    width: 60%;
+    height: 100%;
+    background: var(--ink);
+    border-radius: 1px;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    padding: 8px 22px 12px;
+    gap: 12px;
+  }
+  .back {
+    width: 44px; height: 44px;
+    border-radius: 22px;
+    border: 1px solid var(--divider);
+    background: var(--parchment-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .title-block { flex: 1; text-align: center; }
+  .title-hi {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .title-en {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+  .top-spacer { width: 44px; }
+
+  .scroll { padding: 6px 22px 100px; display: flex; flex-direction: column; gap: 14px; }
+
+  .card {
+    background: var(--parchment-soft);
+    border: 1px solid var(--divider);
+    border-radius: 18px;
+    padding: 18px;
+  }
+  .card-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .card-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 20px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .card-sub {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+
+  /* iOS-style toggle */
+  .switch {
+    position: relative;
+    width: 52px; height: 32px;
+    background: var(--saffron);
+    border-radius: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .switch.off { background: var(--divider); }
+  .switch::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 22px;
+    width: 28px; height: 28px;
+    background: var(--parchment);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    transition: left .2s ease;
+  }
+  .switch.off::after { left: 2px; }
+
+  .times-list {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .time-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .stepper {
+    display: inline-flex;
+    align-items: center;
+    background: var(--parchment-soft);
+    border: 1px solid var(--divider);
+    border-radius: 14px;
+    padding: 8px 14px;
+    gap: 2px;
+  }
+  .stepper-col {
+    width: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .chevron {
+    font-size: 16px;
+    color: var(--saffron);
+    line-height: 1;
+    height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .stepper-value {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--saffron-deep);
+    line-height: 1.1;
+    margin: 1px 0;
+  }
+  .stepper-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+    color: var(--ink-muted);
+    font-weight: 600;
+  }
+  .stepper-colon {
+    font-size: 22px;
+    color: var(--ink-muted);
+    font-weight: 600;
+    margin: 0 2px;
+    align-self: center;
+    transform: translateY(-6px);
+  }
+  .remove-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--divider);
+    background: var(--parchment-deep);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .add-btn {
+    margin-top: 14px;
+    align-self: flex-start;
+    display: inline-block;
+    padding: 10px 14px;
+    border: 1px solid var(--saffron);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--saffron-deep);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .footnote {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-align: center;
+    color: var(--ink-muted);
+    margin: 18px 6px 0;
+    line-height: 18px;
+  }
+
+  /* Bottom tab bar */
+  .tabbar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 86px;
+    background: rgba(245,232,200,.85);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 18px;
+  }
+  .tab {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--ink-muted);
+  }
+  .tab.active { color: var(--saffron-deep); font-weight: 600; }
+  .tab .ic {
+    width: 26px; height: 26px;
+    border: 1.5px solid currentColor;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .tab.active .ic {
+    border-color: var(--saffron);
+    color: var(--saffron-deep);
+  }
+  .handle {
+    position: absolute;
+    bottom: 8px; left: 50%; transform: translateX(-50%);
+    width: 134px; height: 5px; background: rgba(0,0,0,.5); border-radius: 3px;
+  }
+
+  /* Two-up preview */
+  .stage {
+    display: flex; flex-wrap: wrap; gap: 28px; justify-content: center;
+  }
+  .caption {
+    text-align: center;
+    color: #ddc88a;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div>
+      <div class="phone">
+        <div class="status-bar">
+          <span>11:04</span>
+          <span class="right">
+            ●●● 5G
+            <span class="battery"><i style="width:27%"></i></span>
+          </span>
+        </div>
+
+        <div class="topbar">
+          <div class="back">‹</div>
+          <div class="title-block">
+            <div class="title-hi">Reminders</div>
+            <div class="title-en">स्मरण</div>
+          </div>
+          <div class="top-spacer"></div>
+        </div>
+
+        <div class="scroll">
+          <!-- Daily verse toggle -->
+          <div class="card">
+            <div class="card-row">
+              <div>
+                <div class="card-title">Daily verse</div>
+                <div class="card-sub">A verse at every time you choose.</div>
+              </div>
+              <div class="switch" aria-label="Toggle daily verse"></div>
+            </div>
+          </div>
+
+          <!-- Times (multiple) -->
+          <div class="card">
+            <div class="card-title">Times</div>
+            <div class="card-sub">When the daily verse arrives. Add as many as you like.</div>
+
+            <div class="times-list">
+              <!-- Reminder 1 -->
+              <div class="time-row">
+                <div class="stepper">
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">07</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">HR</div>
+                  </div>
+                  <div class="stepper-colon">:</div>
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">30</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">MIN</div>
+                  </div>
+                </div>
+                <div class="remove-btn" title="Remove reminder 1">✕</div>
+              </div>
+
+              <!-- Reminder 2 -->
+              <div class="time-row">
+                <div class="stepper">
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">18</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">HR</div>
+                  </div>
+                  <div class="stepper-colon">:</div>
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">00</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">MIN</div>
+                  </div>
+                </div>
+                <div class="remove-btn" title="Remove reminder 2">✕</div>
+              </div>
+            </div>
+
+            <div class="add-btn">+ Add reminder</div>
+          </div>
+
+          <div class="footnote">
+            Notifications are scheduled on this device.<br/>Nothing leaves your phone.
+          </div>
+        </div>
+
+        <div class="tabbar">
+          <div class="tab">
+            <div class="ic">⌂</div>
+            <div>Home</div>
+          </div>
+          <div class="tab">
+            <div class="ic">U</div>
+            <div>Bhakti</div>
+          </div>
+          <div class="tab active">
+            <div class="ic">⋯</div>
+            <div>More</div>
+          </div>
+          <div class="handle"></div>
+        </div>
+      </div>
+      <div class="caption">Two reminders — morning &amp; evening</div>
+    </div>
+
+    <div>
+      <div class="phone">
+        <div class="status-bar">
+          <span>11:04</span>
+          <span class="right">
+            ●●● 5G
+            <span class="battery"><i style="width:27%"></i></span>
+          </span>
+        </div>
+
+        <div class="topbar">
+          <div class="back">‹</div>
+          <div class="title-block">
+            <div class="title-hi">Reminders</div>
+            <div class="title-en">स्मरण</div>
+          </div>
+          <div class="top-spacer"></div>
+        </div>
+
+        <div class="scroll">
+          <div class="card">
+            <div class="card-row">
+              <div>
+                <div class="card-title">Daily verse</div>
+                <div class="card-sub">A verse at every time you choose.</div>
+              </div>
+              <div class="switch" aria-label="Toggle daily verse"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Times</div>
+            <div class="card-sub">When the daily verse arrives. Add as many as you like.</div>
+
+            <div class="times-list">
+              <div class="time-row">
+                <div class="stepper">
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">06</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">HR</div>
+                  </div>
+                  <div class="stepper-colon">:</div>
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">00</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">MIN</div>
+                  </div>
+                </div>
+                <div class="remove-btn">✕</div>
+              </div>
+              <div class="time-row">
+                <div class="stepper">
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">12</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">HR</div>
+                  </div>
+                  <div class="stepper-colon">:</div>
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">30</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">MIN</div>
+                  </div>
+                </div>
+                <div class="remove-btn">✕</div>
+              </div>
+              <div class="time-row">
+                <div class="stepper">
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">18</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">HR</div>
+                  </div>
+                  <div class="stepper-colon">:</div>
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">00</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">MIN</div>
+                  </div>
+                </div>
+                <div class="remove-btn">✕</div>
+              </div>
+              <div class="time-row">
+                <div class="stepper">
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">21</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">HR</div>
+                  </div>
+                  <div class="stepper-colon">:</div>
+                  <div class="stepper-col">
+                    <div class="chevron">▵</div>
+                    <div class="stepper-value">00</div>
+                    <div class="chevron">▿</div>
+                    <div class="stepper-label">MIN</div>
+                  </div>
+                </div>
+                <div class="remove-btn">✕</div>
+              </div>
+            </div>
+
+            <!-- Add button hidden — max reached -->
+            <div class="footnote" style="text-align:left; margin:10px 0 0; font-style:normal; letter-spacing:1.2px; font-family: 'Inter', sans-serif; font-size:11px;">
+              Up to 4 reminders.
+            </div>
+          </div>
+
+          <div class="footnote">
+            Notifications are scheduled on this device.<br/>Nothing leaves your phone.
+          </div>
+        </div>
+
+        <div class="tabbar">
+          <div class="tab">
+            <div class="ic">⌂</div>
+            <div>Home</div>
+          </div>
+          <div class="tab">
+            <div class="ic">U</div>
+            <div>Bhakti</div>
+          </div>
+          <div class="tab active">
+            <div class="ic">⋯</div>
+            <div>More</div>
+          </div>
+          <div class="handle"></div>
+        </div>
+      </div>
+      <div class="caption">Max reached — 4 reminders, no "Add" button</div>
+    </div>
+  </div>
+</body>
+</html>
