@@ -63,6 +63,10 @@ export default function BajrangBaanChaptersScreen({ navigation }: Props) {
             <GitaChapterCard
               key={chapter.chapter}
               chapter={chapter}
+              chapterLabelHi="पाठ"
+              chapterLabelEn="Section"
+              unitLabelHi="दोहा/छन्द"
+              unitLabelEn="doha/chhand"
               onPress={() => navigation.navigate('BajrangBaanReader', { chapter: chapter.chapter })}
             />
           ))}

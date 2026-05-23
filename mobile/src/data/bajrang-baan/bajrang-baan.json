@@ -2,7 +2,7 @@
   "chapter": 1,
   "titleHi": "बजरंग बाण",
   "titleEn": "Bajrang Baan",
-  "verseCount": 30,
+  "verseCount": 18,
   "verses": [
     {
       "id": "bb-1-0",
@@ -12,12 +12,12 @@
       "labelHi": "दोहा · प्रारम्भ",
       "labelEn": "Doha · Opening",
       "lines": [
-        "निश्चय प्रेम प्रतीति ते, विनय करें सनमान।",
-        "तेहि के कारज सकल शुभ, सिद्ध करें हनुमान॥"
+        "निश्चय प्रेम प्रतीति ते, बिनय करैं सनमान।",
+        "तेहि के कारज सकल शुभ, सिद्ध करैं हनुमान॥"
       ],
       "linesEn": [
-        "Nishchay prem prateeti te, vinay karein sanmaan.",
-        "Tehi ke kaaraj sakal shubh, siddh karein Hanumaan."
+        "Nishchay prem prateeti te, binay karain sanmaan.",
+        "Tehi ke kaaraj sakal shubh, siddh karain Hanumaan."
       ],
       "meaningHi": "जो निश्चय, प्रेम और विश्वास के साथ सम्मानपूर्वक विनती करता है, हनुमान जी उसके सभी शुभ कार्य सिद्ध करते हैं।",
       "meaningEn": "Whoever prays with conviction, love, faith and respectful humility — Hanuman fulfils all their auspicious endeavours."
@@ -30,12 +30,12 @@
       "labelHi": "छन्द · १",
       "labelEn": "Chhand · 1",
       "lines": [
-        "जय हनुमंत संत हितकारी। सुनि लीजै प्रभु अरज हमारी॥",
-        "जन के काज विलंब न कीजै। आतुर दौरि महा सुख दीजै॥"
+        "जय हनुमंत संत हितकार। सुन लीजै प्रभु अरज हमारी॥",
+        "जन के काज बिलंब न कीजै। आतुर दौरि महा सुख दीजै॥"
       ],
       "linesEn": [
-        "Jai Hanumant sant hitkaari. Suni leejai Prabhu araj hamaari.",
-        "Jan ke kaaj vilamb na keejai. Aatur dauri mahaa sukh deejai."
+        "Jai Hanumant sant hitkaar. Sun leejai Prabhu araj hamaari.",
+        "Jan ke kaaj bilamb na keejai. Aatur dauri mahaa sukh deejai."
       ],
       "meaningHi": "हे संतों के हितकारी हनुमान जी की जय हो! प्रभु, हमारी अर्ज (प्रार्थना) सुनिए। सेवक के कार्य में विलम्ब न कीजिए, शीघ्र दौड़कर महान सुख प्रदान कीजिए।",
       "meaningEn": "Victory to Hanuman, benefactor of saints! O Lord, hear our prayer. Do not delay in your servant's task — rush swiftly and grant great joy."
@@ -48,15 +48,15 @@
       "labelHi": "छन्द · २",
       "labelEn": "Chhand · 2",
       "lines": [
-        "जैसे कूदि सिंधु महि पारा। सुरसा बदन पैठि बिस्तारा॥",
+        "जैसे कूदि सिंधु महिपारा। सुरसा बदन पैठि बिस्तारा॥",
         "आगे जाय लंकिनी रोका। मारेहु लात गई सुरलोका॥"
       ],
       "linesEn": [
-        "Jaise koodi sindhu mahi paara. Surasaa badan paithi bistaara.",
+        "Jaise koodi sindhu mahipaaraa. Surasaa badan paithi bistaara.",
         "Aage jaay Lankini rokaa. Maarehu laat gayi surlokaa."
       ],
       "meaningHi": "जैसे आपने समुद्र कूदकर पार किया, सुरसा के मुख में प्रवेश कर विस्तार लिया। आगे जाने पर लंकिनी ने रोका, तो आपने लात मारी और वह स्वर्गलोक चली गई।",
-      "meaningEn": "Just as you leapt across the ocean, entered and expanded within Surasa's mouth. When Lankini blocked your path ahead, you kicked her and she departed to the celestial realm."
+      "meaningEn": "Just as you leapt across the ocean and entered and expanded within Surasa's mouth — when Lankini blocked your path ahead, you kicked her and she departed to the celestial realm."
     },
     {
       "id": "bb-1-3",
@@ -66,15 +66,15 @@
       "labelHi": "छन्द · ३",
       "labelEn": "Chhand · 3",
       "lines": [
-        "लाय सजीवन लखन जियाये। श्री रघुबीर हरषि उर लाये॥",
-        "राय सूर्य कहुँ मुख महँ राखी। उनके ताप किये सब साखी॥"
+        "जाय बिभीषन को सुख दीन्हा। सीता निरखि परमपद लीन्हा॥",
+        "बाग उजारि सिंधु महँ बोरा। अति आतुर जमकातर तोरा॥"
       ],
       "linesEn": [
-        "Laay sajeewan Lakhan jiyaaye. Shri Raghubeer harashi ur laaye.",
-        "Raay Soorya kahun mukh mahan raakhi. Unke taap kiye sab saakhi."
+        "Jaay Bibheeshan ko sukh deenhaa. Seetaa nirakhi parampad leenhaa.",
+        "Baag ujaari sindhu mahan boraa. Ati aatur jamkaatar toraa."
       ],
-      "meaningHi": "संजीवनी लाकर लक्ष्मण को जीवित किया, तब श्री रघुवीर ने हर्षित होकर हृदय से लगा लिया। बालसूर्य को मुख में रख लिया — उनके तेज के सब साक्षी हैं।",
-      "meaningEn": "Bringing the Sanjeevani herb, you revived Lakshmana. Shri Raghuveer joyfully embraced you. You held the infant sun in your mouth — all witnessed your radiant power."
+      "meaningHi": "विभीषण के पास जाकर उन्हें सुख दिया। सीता जी के दर्शन कर परम पद प्राप्त किया। अशोक वाटिका उजाड़ी, राक्षसों को समुद्र में डुबोया और अत्यंत आतुर होकर यमदूतों को भगाया।",
+      "meaningEn": "You went to Vibhishana and gave him solace. Beholding Sita, you attained supreme grace. You destroyed the garden, drowned demons in the sea, and in great urgency drove away the messengers of death."
     },
     {
       "id": "bb-1-4",
@@ -84,15 +84,15 @@
       "labelHi": "छन्द · ४",
       "labelEn": "Chhand · 4",
       "lines": [
-        "बालि की त्रास कपीस बसावा। तेहि के सुत को बल उपजावा॥",
-        "राम काज लगि सीता खोजी। बैर बढ़ायो तात सरोजी॥"
+        "अक्षय कुमार मारि संहारा। लूम लपेटि लंक को जारा॥",
+        "लाह समान लंक जरि गई। जय-जय धुनि सुरपुर नभ भई॥"
       ],
       "linesEn": [
-        "Baali ki traas Kapees basaavaa. Tehi ke sut ko bal upjaavaa.",
-        "Raam kaaj lagi Seetaa khoji. Bair badhaayo taat saroji."
+        "Akshay kumaar maari sanhaaraa. Loom lapeti Lank ko jaaraa.",
+        "Laah samaan Lank jari gayi. Jai-jai dhuni surpur nabh bhayi."
       ],
-      "meaningHi": "बालि के भय से सुग्रीव (कपीश) को बसाया। उनके पुत्र (अंगद) को बल प्रदान किया। राम के कार्य के लिए सीता जी की खोज की और शत्रुओं से वैर बढ़ाया।",
-      "meaningEn": "You sheltered Sugreeva from Bali's terror. You gave strength to his son Angad. For Rama's mission you searched for Sita and intensified enmity with the foe."
+      "meaningHi": "अक्षय कुमार को मारकर संहार किया। पूँछ में आग लपेटकर लंका को जला दिया। लाख के समान लंका जल गई और आकाश में देवताओं के नगर तक 'जय-जय' की ध्वनि गूँज उठी।",
+      "meaningEn": "You slew Akshay Kumar in battle. Wrapping fire around your tail, you burnt Lanka. Lanka burned like lac, and cries of 'Victory! Victory!' resounded through the heavens."
     },
     {
       "id": "bb-1-5",
@@ -102,15 +102,15 @@
       "labelHi": "छन्द · ५",
       "labelEn": "Chhand · 5",
       "lines": [
-        "अंगद के संग लेन गये तिहँ। रावण त्रास दई सब तिन्हहिं॥",
-        "मुद्रिका मेलि मन जनि गावा। जानकि हन्नै कपि पहिचान पावा॥"
+        "अब बिलंब केहि कारन स्वामी। कृपा करहु उर अंतरयामी॥",
+        "जय-जय लखन प्रान के दाता। आतुर ह्वै दुख करहु निपाता॥"
       ],
       "linesEn": [
-        "Angad ke sang len gaye tihin. Raavan traas dayi sab tinhaheen.",
-        "Mudrikaa meli man jani gaavaa. Jaanaki hannai kapi pahichaan paavaa."
+        "Ab bilamb kehi kaaran Swaami. Kripaa karahu ur Antaryaami.",
+        "Jai-jai Lakhan praan ke daataa. Aatur hvai dukh karahu nipaataa."
       ],
-      "meaningHi": "अंगद के साथ जाकर रावण को भय दिया। राम जी की अंगूठी देकर जानकी जी को सान्त्वना दी और हनुमान ने पहचान प्राप्त कराई।",
-      "meaningEn": "Going with Angad, you struck terror in Ravana. By placing the ring, you consoled Janaki and the monkey hero was recognised."
+      "meaningHi": "हे स्वामी, अब किस कारण विलम्ब कर रहे हैं? हे अंतर्यामी, हृदय में कृपा कीजिए। जय हो लक्ष्मण के प्राण देने वाले! शीघ्रता से दुखों का नाश कीजिए।",
+      "meaningEn": "Why do you delay now, O Lord? O Indweller of all hearts, bestow your grace. Victory to the giver of Lakshmana's life! Come urgently and destroy all sorrow."
     },
     {
       "id": "bb-1-6",
@@ -120,15 +120,15 @@
       "labelHi": "छन्द · ६",
       "labelEn": "Chhand · 6",
       "lines": [
-        "रावण जुद्ध अजान कियो तब। नाग फाँस बाँधे सब तब॥",
-        "श्री रघुनाथ समेत सबै दल। शक्ति लगी तब भयो भिखारी बल॥"
+        "जय हनुमान जयति बल-सागर। सुर-समूह-समरथ भट-नागर॥",
+        "ॐ हनु-हनु-हनु हनुमंत हठीले। बैरिहि मारु बज्र की कीले॥"
       ],
       "linesEn": [
-        "Raavan juddh ajaan kiyo tab. Naag phaas baandhe sab tab.",
-        "Shri Raghunaath samet sabai dal. Shakti lagi tab bhayo bhikhaari bal."
+        "Jai Hanumaan jayati bal-saagar. Sur-samooh-samarath bhat-naagar.",
+        "Om Hanu-Hanu-Hanu Hanumant hatheele. Bairihi maaru bajra ki keele."
       ],
-      "meaningHi": "रावण ने छल से युद्ध किया, तब नागपाश से सबको बाँध दिया। श्री रघुनाथ समेत सारी सेना को — शक्ति लगने पर बल क्षीण हो गया।",
-      "meaningEn": "Ravana fought with deceit, binding everyone with the serpent-noose. Lord Raghunath along with the entire army — when the weapon struck, their strength was sapped."
+      "meaningHi": "जय हनुमान, बल के सागर की जय हो! देवताओं के समूह में समर्थ, कुशल योद्धा। ॐ हनु-हनु-हनु हठी हनुमंत! शत्रु को वज्र की कील से मारो।",
+      "meaningEn": "Victory to Hanuman, ocean of strength! Mightiest warrior among all the gods. Om Hanu-Hanu-Hanu, resolute Hanumant! Strike the enemy with thunderbolt nails."
     },
     {
       "id": "bb-1-7",
@@ -138,15 +138,15 @@
       "labelHi": "छन्द · ७",
       "labelEn": "Chhand · 7",
       "lines": [
-        "आनि खगेस तबहिं हनुमाना। बंधन काटि किये सब जाना॥",
-        "नहिं कोउ ऐसो बलवंता। जो बल बीर बजरंगी संता॥"
+        "ॐ ह्नीं ह्नीं ह्नीं हनुमंत कपीसा। ॐ हुं हुं हुं हनु अरि उर सीसा॥",
+        "जय अंजनि कुमार बलवंता। शंकरसुवन बीर हनुमंता॥"
       ],
       "linesEn": [
-        "Aani Khages tabaheen Hanumaanaa. Bandhan kaati kiye sab jaanaa.",
-        "Naheen kou aiso balvantaa. Jo bal beer Bajrangi santaa."
+        "Om Hreem Hreem Hreem Hanumant Kapeesaa. Om Hum Hum Hum Hanu ari ur seesaa.",
+        "Jai Anjani kumaar balvantaa. Shankarsuvan beer Hanumantaa."
       ],
-      "meaningHi": "तब हनुमान ने गरुड़ को लाकर सबके बंधन काट दिए और सबको मुक्त किया। ऐसा कोई बलवान नहीं जो संत बजरंगी के बल और वीरता की बराबरी कर सके।",
-      "meaningEn": "Then Hanuman brought Garuda and cut everyone's bonds, freeing them all. There is none as mighty — none can match the strength and valour of saintly Bajrangi."
+      "meaningHi": "ॐ ह्रीं ह्रीं ह्रीं हनुमंत कपीश! ॐ हुं हुं हुं हनुमान शत्रुओं की छाती और सिर पर प्रहार करो। जय हो अंजनि के बलवान पुत्र! शंकर के सुपुत्र वीर हनुमंत।",
+      "meaningEn": "Om Hrim Hrim Hrim, Hanumant lord of monkeys! Om Hum Hum Hum, Hanuman strikes the enemy's chest and head. Victory to Anjani's mighty son! Brave Hanumant, son of Shankar."
     },
     {
       "id": "bb-1-8",
@@ -156,15 +156,15 @@
       "labelHi": "छन्द · ८",
       "labelEn": "Chhand · 8",
       "lines": [
-        "बीर बजरंगी बालि छलावा। राम निकट गहि त्राण बचावा॥",
-        "सुग्रीवहिं ले राज कराये। तिनते कपिन्ह सहाय सम्हाये॥"
+        "बदन कराल काल-कुल-घालक। राम सहाय सदा प्रतिपालक॥",
+        "भूत, प्रेत, पिशाच निसाचर। अगिन बेताल काल मारी मर॥"
       ],
       "linesEn": [
-        "Beer Bajrangi Baali chhalaavaa. Raam nikat gahi traan bachaavaa.",
-        "Sugreevahi le raaj karaaye. Tinte kapinha sahaay samhaaye."
+        "Badan karaal kaal-kul-ghaalak. Raam sahaay sadaa pratipaalak.",
+        "Bhoot, pret, pishaach nisaachar. Agin betaal kaal maari mar."
       ],
-      "meaningHi": "वीर बजरंगी ने बालि का छल देखकर सुग्रीव को राम के पास ले जाकर रक्षा कराई। सुग्रीव को राज्य दिलाया और उनसे वानरों की सहायता प्राप्त कराई।",
-      "meaningEn": "Brave Bajrangi saw Bali's deceit, brought Sugreeva to Rama's protection and saved him. He secured the kingdom for Sugreeva, and through him marshalled the monkey army's aid."
+      "meaningHi": "जिनका मुख भयंकर है, जो काल के कुल का नाश करने वाले हैं, राम के सहायक और सदा पालन करने वाले हैं। भूत, प्रेत, पिशाच, निशाचर, अग्नि-दोष, बेताल, काल — सबको मार डालो।",
+      "meaningEn": "Whose face is fearsome, destroyer of Death's lineage, ever helper of Rama and protector. Ghosts, spirits, demons, night-stalkers, fire-afflictions, vampires, Death itself — slay them all."
     },
     {
       "id": "bb-1-9",
@@ -174,15 +174,15 @@
       "labelHi": "छन्द · ९",
       "labelEn": "Chhand · 9",
       "lines": [
-        "अहिरावण जब अमर चुरायो। देवी द्वार दीप झमकायो॥",
-        "ताही के बल दैत मरायो। एहि बिधि श्रीराम छुड़ायो॥"
+        "इन्हें मारु, तोहि सपथ राम की। राखु नाथ मरजाद नाम की॥",
+        "सत्य होहु हरि सपथ पाइ कै। राम दूत धरु मारु धाइ कै॥"
       ],
       "linesEn": [
-        "Ahiraavan jab amar churaayo. Devi dwaar deep jhamkaayo.",
-        "Taahi ke bal dait maraayo. Ehi bidhi Shri Raam chhuḍaayo."
+        "Inhen maaru, tohi sapath Raam ki. Raakhu Naath marjaad naam ki.",
+        "Satya hohu Hari sapath paai kai. Raam doot dharu maaru dhaai kai."
       ],
-      "meaningHi": "जब अहिरावण ने राम-लक्ष्मण को चुरा लिया, तब हनुमान ने देवी के द्वार पर दीपक बुझाकर उसी के बल से दैत्य को मारा और इस प्रकार श्रीराम को छुड़ाया।",
-      "meaningEn": "When Ahiravana abducted Rama and Lakshmana, Hanuman extinguished the lamps at the goddess's gate, slew the demon with his own power, and thus freed Lord Rama."
+      "meaningHi": "इन्हें मारो, तुम्हें राम की शपथ है! हे नाथ, अपने नाम की मर्यादा रखो। हरि की शपथ पाकर सत्य करो — हे राम दूत, दौड़कर पकड़ो और मारो।",
+      "meaningEn": "Slay them — I adjure you by Rama's oath! O Lord, uphold the honour of your name. Fulfil the oath taken upon Hari — O messenger of Rama, rush forth, seize and strike."
     },
     {
       "id": "bb-1-10",
@@ -192,15 +192,15 @@
       "labelHi": "छन्द · १०",
       "labelEn": "Chhand · 10",
       "lines": [
-        "काज किये बड़ देवन के तुम। बीर महाप्रभु देखि कै सन तुम॥",
-        "कौतुक किये दिव्य पगु धारी। चौमुख कँवल आसन अधिकारी॥"
+        "जय-जय-जय हनुमंत अगाधा। दुख पावत जन केहि अपराधा॥",
+        "पूजा जप तप नेम अचारा। नहिं जानत कछु दास तुम्हारा॥"
       ],
       "linesEn": [
-        "Kaaj kiye bad devan ke tum. Beer Mahaaprabhu dekhi kai san tum.",
-        "Kautuk kiye divya pagu dhaari. Chaumukh kanwal aasan adhikaari."
+        "Jai-jai-jai Hanumant agaadhaa. Dukh paavat jan kehi aparaadhaa.",
+        "Poojaa jap tap nem achaaraa. Nahin jaanat kachhu daas tumhaaraa."
       ],
-      "meaningHi": "आपने देवताओं के बड़े-बड़े कार्य किये। हे वीर महाप्रभु, आपके दर्शन से शान्ति मिलती है। दिव्य पद धारण कर अद्भुत लीलाएँ कीं — चतुर्मुख कमलासन के अधिकारी।",
-      "meaningEn": "You accomplished great tasks for the gods. O mighty Lord, merely seeing you brings peace. You performed wondrous feats in divine form — worthy of the lotus-seat of four-faced Brahma."
+      "meaningHi": "जय जय जय अगाध हनुमंत! आपका सेवक किस अपराध से दुख पा रहा है? पूजा, जप, तप, नियम, आचार — आपका दास कुछ नहीं जानता (फिर भी आप रक्षा करें)।",
+      "meaningEn": "Victory, victory to unfathomable Hanumant! For what offence does your servant suffer? Worship, chanting, penance, vows, rituals — your servant knows none of these (yet still protect me)."
     },
     {
       "id": "bb-1-11",
@@ -210,15 +210,15 @@
       "labelHi": "छन्द · ११",
       "labelEn": "Chhand · 11",
       "lines": [
-        "इहाँ उहाँ सब कहँ भय माना। सकल लोक ते अधिक बलवाना॥",
-        "पूँछ नोहन प्रभुताई लंका। ध्वज उड़ान जनु दीप मलंका॥"
+        "बन उपबन मग गिरि गृह माहीं। तुम्हरे बल हौं डरपत नाहीं॥",
+        "जनकसुता हरि दास कहावौ। ताकी सपथ बिलंब न लावौ॥"
       ],
       "linesEn": [
-        "Ihaan uhaan sab kahan bhay maanaa. Sakal lok te adhik balvaanaa.",
-        "Poonchh nohan prabhutaayi Lankaa. Dhvaj udaan janu deep malankaa."
+        "Ban upban mag giri grih maaheen. Tumhre bal haun darpat naaheen.",
+        "Janaksutaa Hari daas kahaavau. Taaki sapath bilamb na laavau."
       ],
-      "meaningHi": "यहाँ-वहाँ सब ओर भय व्याप्त था। सकल लोकों से अधिक बलवान ने पूँछ से लंका की प्रभुता तोड़ी — ध्वज उड़ाकर जैसे लंका द्वीप को मल दिया।",
-      "meaningEn": "Fear prevailed everywhere. Mightier than all the worlds, with his tail he humbled Lanka's pride — unfurling like a flag, he crushed the island's arrogance."
+      "meaningHi": "वन, उपवन, मार्ग, पर्वत, घर — कहीं भी आपके बल पर मैं डरता नहीं। आप जानकी और हरि के दास कहलाते हैं — उनकी शपथ है, विलम्ब न कीजिए।",
+      "meaningEn": "In forest, grove, road, mountain or home — by your strength I fear nothing. You are called servant of Janaki and Hari — by their oath, do not delay."
     },
     {
       "id": "bb-1-12",
@@ -228,15 +228,15 @@
       "labelHi": "छन्द · १२",
       "labelEn": "Chhand · 12",
       "lines": [
-        "लंका जराय दसानन डाँटो। सीतहि ले रावण सँग भाँटो॥",
-        "बाल समय तुम्हें चंद्र गहेतो। ताते रवि मुख दीख अहेतो॥"
+        "जै जै जै धुनि होत अकासा। सुमिरत होय दुसह दुख नासा॥",
+        "चरन पकरि, कर जोरि मनावौं। यहि औसर अब केहि गोहरावौं॥"
       ],
       "linesEn": [
-        "Lankaa jaraay Dasaanan daanto. Seetahi le Raavan sang bhaanto.",
-        "Baal samay tumhein Chandra gaheto. Taate Ravi mukh deekh aheto."
+        "Jai jai jai dhuni hot akaasaa. Sumirat hoy dusah dukh naasaa.",
+        "Charan pakari, kar jori manaavau. Yahi ausar ab kehi goharaavau."
       ],
-      "meaningHi": "लंका जलाकर दशानन को डाँटा। सीता को रावण ने संग ले जाकर अपमानित किया — इसका बदला लिया। बाल्यकाल में चन्द्रमा को पकड़ना चाहा, तो सूर्य की ओर मुख करके देखा।",
-      "meaningEn": "You burnt Lanka and rebuked ten-headed Ravana. Ravana had taken Sita — you avenged that insult. In childhood you reached for the moon; therefore you turned toward the sun."
+      "meaningHi": "आकाश में 'जय जय जय' की ध्वनि होती है। स्मरण मात्र से असहनीय दुख नष्ट होते हैं। चरण पकड़कर, हाथ जोड़कर मनाता हूँ — इस अवसर पर अब किसे पुकारूँ (आपके सिवा)?",
+      "meaningEn": "The cry of 'Victory! Victory!' resounds in the sky. Merely remembering you destroys unbearable suffering. I clasp your feet, I beseech with folded hands — at this moment, whom else shall I call upon?"
     },
     {
       "id": "bb-1-13",
@@ -246,15 +246,15 @@
       "labelHi": "छन्द · १३",
       "labelEn": "Chhand · 13",
       "lines": [
-        "काम रूप छबि तुम्हरी केहि कहि। सिद्ध बजरंग अचल अहि रहि॥",
-        "माथे मुकुट मनोहर राजा। वीरन केर सजे सब साजा॥"
+        "उठु, उठु, चलु, तोहि राम दुहाई। पायँ परौं, कर जोरि मनाई॥",
+        "ॐ चं चं चं चं चपल चलंता। ॐ हनु हनु हनु हनु हनुमंता॥"
       ],
       "linesEn": [
-        "Kaam roop chhabi tumhari kehi kahi. Siddh Bajrang achal ahi rahi.",
-        "Maathe mukut manohar raajaa. Beeran ker saje sab saajaa."
+        "Uthu, uthu, chalu, tohi Raam duhaayi. Paayen paraun, kar jori manaayi.",
+        "Om Chan Chan Chan Chan chapal chalantaa. Om Hanu Hanu Hanu Hanu Hanumantaa."
       ],
-      "meaningHi": "आपकी कामरूप छवि का कौन वर्णन कर सकता है! सिद्ध बजरंग अचल बने रहते हैं। मस्तक पर मनोहर मुकुट शोभित है — वीरों के सब शृंगार सजे हैं।",
-      "meaningEn": "Who can describe your form that shifts at will! Perfected Bajrang remains ever steadfast. A beautiful crown adorns your head — you are decked with all the adornments of a warrior."
+      "meaningHi": "उठो, उठो, चलो — तुम्हें राम की दुहाई! पैरों पड़ता हूँ, हाथ जोड़कर मनाता हूँ। ॐ चं चं चं चं चपलता से चलने वाले! ॐ हनु हनु हनु हनु हनुमंत!",
+      "meaningEn": "Arise, arise, come forth — I implore you by Rama! I fall at your feet, I beseech with folded hands. Om Chan Chan Chan Chan, swiftly moving one! Om Hanu Hanu Hanu Hanu Hanumant!"
     },
     {
       "id": "bb-1-14",
@@ -264,15 +264,15 @@
       "labelHi": "छन्द · १४",
       "labelEn": "Chhand · 14",
       "lines": [
-        "केहरि नाद बजावत ढोला। खल दल बिदर करत कपि खोला॥",
-        "मानो अमित पराक्रम भारी। तुम समान नहिं कोउ उपकारी॥"
+        "ॐ हं हं हाँक देत कपि चंचल। ॐ सं सं सहमि पराने खल-दल॥",
+        "अपने जन को तुरत उबारौ। सुमिरत होय आनंद हमारौ॥"
       ],
       "linesEn": [
-        "Kehari naad bajaavat dholaa. Khal dal bidar karat kapi kholaa.",
-        "Maano amit paraakram bhaari. Tum samaan naheen kou upkaari."
+        "Om Han Han haank det kapi chanchal. Om San San sahmi paraane khal-dal.",
+        "Apne jan ko turat ubaarau. Sumirat hoy aanand hamaarau."
       ],
-      "meaningHi": "सिंह-नाद करते हुए ढोल बजाते हैं। दुष्टों के दल को विदीर्ण करते हुए वानर विचरते हैं। अपार पराक्रम के धारी — आपके समान कोई उपकारी नहीं।",
-      "meaningEn": "Roaring like a lion, beating the war-drum. The monkey hero tears asunder the hosts of the wicked. Bearer of infinite prowess — there is no benefactor equal to you."
+      "meaningHi": "ॐ हं हं — चंचल कपि हुंकार देते हैं। ॐ सं सं — सुनकर दुष्टों के दल सहमकर भाग जाते हैं। अपने सेवक को तुरंत उबारो। स्मरण करते ही हमें आनंद होता है।",
+      "meaningEn": "Om Han Han — the restless monkey roars. Om San San — hearing it, the wicked hosts flee in terror. Rescue your servant at once. The moment we remember you, bliss arises."
     },
     {
       "id": "bb-1-15",
@@ -282,267 +282,51 @@
       "labelHi": "छन्द · १५",
       "labelEn": "Chhand · 15",
       "lines": [
-        "माथे तिलक हाथ गहि पाहन। सब दुष्टन के गहि गहि माहन॥",
-        "डमरू बजाय करत कपि नाचा। बीर बजरंगी पुरुष अकाचा॥"
+        "यह बजरंग-बाण जेहि मारै। ताहि कहौ फिरि कवन उबारै॥",
+        "पाठ करै बजरंग-बाण की। हनुमत रक्षा करै प्रान की॥"
       ],
       "linesEn": [
-        "Maathe tilak haath gahi paahan. Sab dushtan ke gahi gahi maahan.",
-        "Damroo bajaay karat kapi naachaa. Beer Bajrangi purush akaachaa."
+        "Yah Bajrang-Baan jehi maarai. Taahi kahau phiri kavan ubaarai.",
+        "Paath karai Bajrang-Baan ki. Hanumat rakshaa karai praan ki."
       ],
-      "meaningHi": "मस्तक पर तिलक, हाथ में पत्थर लिए, सब दुष्टों को पकड़-पकड़कर मारते हैं। डमरू बजाकर वानर नृत्य करते हैं — वीर बजरंगी अविनाशी पुरुष हैं।",
-      "meaningEn": "With tilak on your forehead and stone in hand, you seize and smite all the wicked. Playing the damru, the monkey dances — brave Bajrangi, the imperishable being."
+      "meaningHi": "यह बजरंग बाण जिसे मारे, उसे फिर कौन बचा सकता है? जो बजरंग बाण का पाठ करता है, हनुमान जी उसके प्राणों की रक्षा करते हैं।",
+      "meaningEn": "Whoever is struck by this Bajrang Baan — tell me, who can then save them? One who recites the Bajrang Baan — Hanuman protects their very life."
     },
     {
       "id": "bb-1-16",
       "chapter": 1,
       "number": 16,
       "section": "chhand",
-      "labelHi": "छन्द · १६",
-      "labelEn": "Chhand · 16",
+      "labelHi": "छन्द · फलश्रुति",
+      "labelEn": "Chhand · Phala-shruti",
       "lines": [
-        "ॐ ह्नीं ह्नीं ह्नीं हनुमंत कपीसा। ॐ हुं हुं हुं हनु अरि उर सीसा॥",
-        "जय जय जय हनुमंत अगाधा। दुख पावत सब जन के बाधा॥"
+        "यह बजरंग बाण जो जापैं। तासों भूत-प्रेत सब कापैं॥",
+        "धूप देय जो जपै हमेसा। ताके तन नहिं रहै कलेसा॥"
       ],
       "linesEn": [
-        "Om hreen hreen hreen Hanumant Kapeesaa. Om hun hun hun Hanu ari ur seesaa.",
-        "Jai jai jai Hanumant agaadhaa. Dukh paavat sab jan ke baadhaa."
+        "Yah Bajrang Baan jo jaapain. Taason bhoot-pret sab kaapain.",
+        "Dhoop dey jo japai hamesaa. Taake tan nahin rahai kalesaa."
       ],
-      "meaningHi": "ॐ ह्रीं ह्रीं ह्रीं हनुमंत कपीश! ॐ हुं हुं हुं हनुमान शत्रुओं के सिर पर प्रहार करते हैं। जय जय जय अगाध हनुमंत! सेवकों की सब बाधाओं का दुख हरते हैं।",
-      "meaningEn": "Om Hrim Hrim Hrim, Hanumant lord of monkeys! Om Hum Hum Hum, Hanuman strikes the enemy's head and chest. Victory to unfathomable Hanumant! You remove all obstacles and sorrows of devotees."
+      "meaningHi": "जो इस बजरंग बाण का जप करता है, उससे सभी भूत-प्रेत काँपते हैं। जो धूप देकर सदा जपता है, उसके शरीर में कोई क्लेश नहीं रहता।",
+      "meaningEn": "Whoever chants this Bajrang Baan — all ghosts and spirits tremble before them. One who lights incense and recites it always — no affliction remains in their body."
     },
     {
       "id": "bb-1-17",
       "chapter": 1,
       "number": 17,
-      "section": "chhand",
-      "labelHi": "छन्द · १७",
-      "labelEn": "Chhand · 17",
-      "lines": [
-        "भूत प्रेत पिसाच निसाचर। अगिन बेताल काल मारी मर॥",
-        "इनहिं मारु तोहिं सपथ राम की। राखु नाथ मरजाद नाम की॥"
-      ],
-      "linesEn": [
-        "Bhoot pret pisaach nisaachar. Agin betaal kaal maari mar.",
-        "Inheen maaru toheen sapath Raam ki. Raakhu Naath marjaad naam ki."
-      ],
-      "meaningHi": "भूत, प्रेत, पिशाच, निशाचर, अग्नि, बेताल, काल — इन सबको मारो-मारो! तुम्हें राम की शपथ है — हे नाथ, नाम की मर्यादा रक्षा कीजिए।",
-      "meaningEn": "Ghosts, spirits, demons, night-stalkers, fire-spirits, vampires, death itself — slay them all! I adjure you by Rama's oath — O Lord, uphold the honour of your name."
-    },
-    {
-      "id": "bb-1-18",
-      "chapter": 1,
-      "number": 18,
-      "section": "chhand",
-      "labelHi": "छन्द · १८",
-      "labelEn": "Chhand · 18",
-      "lines": [
-        "जनकसुता हरि दास कहावो। ताकी सपथ विलंब न लावो॥",
-        "जय जय जय धुनि कैल उचारो। बोलत ही बल बीर सम्हारो॥"
-      ],
-      "linesEn": [
-        "Janaksutaa Hari daas kahaavo. Taaki sapath vilamb na laavo.",
-        "Jai jai jai dhuni kail uchaaro. Bolat hee bal beer samhaaro."
-      ],
-      "meaningHi": "आप जानकी और हरि के दास कहलाते हैं — उनकी शपथ है, विलम्ब न कीजिए। 'जय जय जय' की ध्वनि उच्चारण करते ही, वीर बजरंग बल सम्हाल कर आएँ।",
-      "meaningEn": "You are called servant of Janaki and Hari — by their oath, do not delay. The moment one utters the cry 'Victory! Victory! Victory!' — brave one, muster your strength and come."
-    },
-    {
-      "id": "bb-1-19",
-      "chapter": 1,
-      "number": 19,
-      "section": "chhand",
-      "labelHi": "छन्द · १९",
-      "labelEn": "Chhand · 19",
-      "lines": [
-        "ॐ ह्नीं ह्नीं ह्नीं हनुमंत हठीला। बजरंग बाण तेज प्रतापी सीला॥",
-        "ओम चां चां चां चां चपल चलंता। ॐ ह्नीं ह्नीं बज्र हनुमंता॥"
-      ],
-      "linesEn": [
-        "Om hreen hreen hreen Hanumant hatheelaa. Bajrang Baan tej prataapi seelaa.",
-        "Om chaan chaan chaan chaan chapal chalantaa. Om hreen hreen bajra Hanumantaa."
-      ],
-      "meaningHi": "ॐ ह्रीं ह्रीं ह्रीं हठी हनुमंत! बजरंग बाण तेजस्वी, प्रतापी शीलवान हैं। ॐ चाँ चाँ चाँ चाँ चपल चलने वाले! ॐ ह्रीं ह्रीं वज्र हनुमंत!",
-      "meaningEn": "Om Hrim Hrim Hrim, resolute Hanumant! The Bajrang Baan is radiant, glorious, and virtuous. Om Chan Chan Chan Chan, swiftly moving one! Om Hrim Hrim, thunderbolt Hanumant!"
-    },
-    {
-      "id": "bb-1-20",
-      "chapter": 1,
-      "number": 20,
-      "section": "chhand",
-      "labelHi": "छन्द · २०",
-      "labelEn": "Chhand · 20",
-      "lines": [
-        "उठु उठु चलु तोहि राम दुहाई। पायँ परौं कर जोरि मनाई॥",
-        "ॐ चां चां चां चां चलंता। ॐ ह्नीं ह्नीं हनुमंता॥"
-      ],
-      "linesEn": [
-        "Uthu uthu chalu tohee Raam duhaayi. Paayen paroun kar jori manaayi.",
-        "Om chaan chaan chaan chaan chalantaa. Om hreen hreen Hanumantaa."
-      ],
-      "meaningHi": "उठो उठो चलो, तुम्हें राम की दुहाई! पैरों पड़ूँ, हाथ जोड़कर मनाऊँ। ॐ चाँ चाँ चाँ चाँ चलो! ॐ ह्रीं ह्रीं हनुमंत!",
-      "meaningEn": "Arise, arise, move! I implore you by Rama! I fall at your feet, I beseech with folded hands. Om Chan Chan Chan Chan, come forth! Om Hrim Hrim Hanumant!"
-    },
-    {
-      "id": "bb-1-21",
-      "chapter": 1,
-      "number": 21,
-      "section": "chhand",
-      "labelHi": "छन्द · २१",
-      "labelEn": "Chhand · 21",
-      "lines": [
-        "जय हनुमंत दुखन दल मर्दन। भूत प्रेत महाभय खर्दन॥",
-        "प्राण प्रण सो बिनती करऊँ। आतुर आय करहु अब धरऊँ॥"
-      ],
-      "linesEn": [
-        "Jai Hanumant dukhan dal mardan. Bhoot pret mahaabhay khardan.",
-        "Praan pran so binatee karoon. Aatur aay karahu ab dharoon."
-      ],
-      "meaningHi": "जय हनुमंत, दुखों के समूह को मर्दन करने वाले! भूत-प्रेत के महाभय को नष्ट करने वाले! प्राण-पण से विनती करता हूँ — शीघ्र आकर अब रक्षा कीजिए।",
-      "meaningEn": "Victory to Hanumant, crusher of legions of sorrow! Destroyer of the great terror of ghosts and spirits! I beseech you with my very life — come swiftly now and protect me."
-    },
-    {
-      "id": "bb-1-22",
-      "chapter": 1,
-      "number": 22,
-      "section": "chhand",
-      "labelHi": "छन्द · २२",
-      "labelEn": "Chhand · 22",
-      "lines": [
-        "जय जय जय लक्ष्मण प्राण रखवारे। आतुर होय दुखी कहुँ पुकारे॥",
-        "करुणा करहु हे बीर बजरंगी। सरन पड़ों सुर संत अबंगी॥"
-      ],
-      "linesEn": [
-        "Jai jai jai Lakshman praan rakhvaare. Aatur hoy dukhi kahun pukaare.",
-        "Karunaa karahu he beer Bajrangi. Saran padoon sur sant abangi."
-      ],
-      "meaningHi": "जय जय जय लक्ष्मण के प्राण-रक्षक! आतुर और दुखी होकर पुकारता हूँ। करुणा कीजिए हे वीर बजरंगी! शरण पड़ता हूँ — हे देव-संत रक्षक, अविनाशी!",
-      "meaningEn": "Victory, victory to the saviour of Lakshmana's life! Distressed and suffering, I cry out to you. Show compassion, O brave Bajrangi! I take your refuge — protector of gods and saints, indestructible one."
-    },
-    {
-      "id": "bb-1-23",
-      "chapter": 1,
-      "number": 23,
-      "section": "chhand",
-      "labelHi": "छन्द · २३",
-      "labelEn": "Chhand · 23",
-      "lines": [
-        "करो सहाय मन अति आतुर। कापत है बिकल बदन ब्यातुर॥",
-        "काज परो मोहिं सरन तिहारी। करहु कृपा बजरंग बिहारी॥"
-      ],
-      "linesEn": [
-        "Karo sahaay man ati aatur. Kaapat hai bikal badan byaatur.",
-        "Kaaj paro moheen saran tihaaree. Karahu kripaa Bajrang Bihaaree."
-      ],
-      "meaningHi": "सहायता कीजिए, मन अत्यंत आतुर है। शरीर काँप रहा है, व्याकुल और पीड़ित है। कार्य पड़ा है, मैं आपकी शरण में हूँ — कृपा कीजिए हे बजरंग बिहारी।",
-      "meaningEn": "Help me, my mind is deeply distressed. My body trembles, agitated and afflicted. A task has arisen, I am in your refuge — bestow grace, O Bajrang Bihari."
-    },
-    {
-      "id": "bb-1-24",
-      "chapter": 1,
-      "number": 24,
-      "section": "chhand",
-      "labelHi": "छन्द · २४",
-      "labelEn": "Chhand · 24",
-      "lines": [
-        "पाहन फेरु हाथ महँ लीजै। शत्रु समूह मर्दि कै दीजै॥",
-        "राम काज लगि हो रन जीते। धर्म बजाय कीर्ति सब कीते॥"
-      ],
-      "linesEn": [
-        "Paahan pheru haath mahan leejai. Shatru samooh mardi kai deejai.",
-        "Raam kaaj lagi ho ran jeete. Dharm bajaay keerti sab keete."
-      ],
-      "meaningHi": "हाथ में पत्थर घुमाकर लीजिए और शत्रु-समूह को मसल दीजिए। राम के कार्य के लिए रणभूमि जीती — धर्म का डंका बजाकर सब कीर्ति अर्जित की।",
-      "meaningEn": "Take up the boulder and whirl it in your hand — crush the host of enemies. For Rama's cause you won every battle — sounding the drum of dharma, you earned all glory."
-    },
-    {
-      "id": "bb-1-25",
-      "chapter": 1,
-      "number": 25,
-      "section": "chhand",
-      "labelHi": "छन्द · २५",
-      "labelEn": "Chhand · 25",
-      "lines": [
-        "गदा बज्र बैरिन के मारू। मुठि हहोलि महा रन डारू॥",
-        "ॐ ह्नीं ह्नीं ह्नीं देव हनुमंता। महा कोपि कस दुर्जन दन्ता॥"
-      ],
-      "linesEn": [
-        "Gadaa bajra bairin ke maaroo. Muthi haholi mahaa ran daaroo.",
-        "Om hreen hreen hreen dev Hanumantaa. Mahaa kopi kas durjan dantaa."
-      ],
-      "meaningHi": "गदा और वज्र से शत्रुओं को मारो! मुट्ठी हिलाकर महारण में प्रहार करो! ॐ ह्रीं ह्रीं ह्रीं देव हनुमंत! महाक्रोध से दुर्जनों के दाँत तोड़ दो।",
-      "meaningEn": "Strike the enemies with mace and thunderbolt! Swing your fist and smash them in the great battle! Om Hrim Hrim Hrim, divine Hanumant! In great fury, shatter the teeth of the wicked."
-    },
-    {
-      "id": "bb-1-26",
-      "chapter": 1,
-      "number": 26,
-      "section": "chhand",
-      "labelHi": "छन्द · २६",
-      "labelEn": "Chhand · 26",
-      "lines": [
-        "रोग दोष जन संकट हारी। गृह भय दुख निवारण हारी॥",
-        "पवनसुत बल पवन समाना। बुद्धि विवेक विज्ञान निधाना॥"
-      ],
-      "linesEn": [
-        "Rog dosh jan sankat haari. Grih bhay dukh nivaaran haari.",
-        "Pavansut bal pavan samaanaa. Buddhi vivek vigyaan nidhaanaa."
-      ],
-      "meaningHi": "रोग, दोष, जन के संकट हरने वाले। गृह-भय और दुख का निवारण करने वाले। पवनसुत, पवन-समान बलशाली। बुद्धि, विवेक और विज्ञान के निधान।",
-      "meaningEn": "Remover of disease, faults, and people's calamities. Dispeller of household fears and sorrows. Son of the Wind, mighty as the wind itself. Treasury of wisdom, discernment, and knowledge."
-    },
-    {
-      "id": "bb-1-27",
-      "chapter": 1,
-      "number": 27,
-      "section": "chhand",
-      "labelHi": "छन्द · २७",
-      "labelEn": "Chhand · 27",
-      "lines": [
-        "बान लागी सत्रु के मारू। बज्र हनन ते कबहुँ न टारू॥",
-        "तेहि के रच्छा करहु हनुमंता। राखहु ताहि जो तव गुण गंता॥"
-      ],
-      "linesEn": [
-        "Baan laagi satru ke maaroo. Bajra hanan te kabahun na taaroo.",
-        "Tehi ke rachhaa karahu Hanumantaa. Raakhahu taahi jo tav gun gantaa."
-      ],
-      "meaningHi": "बाण लगाकर शत्रुओं को मारो। वज्र प्रहार से कभी न चूको। उसकी रक्षा करो हनुमंत — जो आपके गुणों का गान करता है, उसे बचाओ।",
-      "meaningEn": "Let the arrow strike and slay the enemy. Never miss with your thunderbolt blow. Protect that person, O Hanumant — save the one who sings your virtues."
-    },
-    {
-      "id": "bb-1-28",
-      "chapter": 1,
-      "number": 28,
-      "section": "chhand",
-      "labelHi": "छन्द · २८",
-      "labelEn": "Chhand · 28",
-      "lines": [
-        "पंच मुख तुम्हरो तेज निराला। रूप सुरूप वचन कमाला॥",
-        "कहि तुलसीदास सेवक राम को। चलत मोहन जिय काम को॥"
-      ],
-      "linesEn": [
-        "Panch mukh tumhro tej niraalaa. Roop suroop vachan kamaalaa.",
-        "Kahi Tulaseedaas sewak Raam ko. Chalat mohan jiy kaam ko."
-      ],
-      "meaningHi": "पाँच मुखों का आपका तेज निराला है। रूप, सुरूप और वचन कमाल के हैं। तुलसीदास कहते हैं — राम के सेवक के हृदय में बसकर मन के कार्य चलाओ।",
-      "meaningEn": "The radiance of your five faces is incomparable. Your form, beauty, and words are extraordinary. Says Tulsidas, servant of Rama — dwell in the heart and fulfil the mind's purpose."
-    },
-    {
-      "id": "bb-1-29",
-      "chapter": 1,
-      "number": 29,
       "section": "doha",
       "labelHi": "दोहा · समापन",
       "labelEn": "Doha · Closing",
       "lines": [
-        "विनय करत शरणागत बचन, तुलसी के सत संग।",
-        "बजरंग बाण यह प्रबल अति, सदा करहु सत संग॥"
+        "उर प्रतीति दृढ़, सरन ह्वै, पाठ करै धरि ध्यान।",
+        "बाधा सब हर, करैं सब काम सफल हनुमान॥"
       ],
       "linesEn": [
-        "Vinay karat sharnaagat bachan, Tulasi ke sat sang.",
-        "Bajrang Baan yah prabal ati, sadaa karahu sat sang."
+        "Ur prateeti dridh, saran hvai, paath karai dhari dhyaan.",
+        "Baadhaa sab har, karain sab kaam saphal Hanumaan."
       ],
-      "meaningHi": "शरणागत वचनों से विनय करते हुए तुलसी सत्संग में कहते हैं — यह बजरंग बाण अत्यंत प्रबल है, सदा सत्संग करो।",
-      "meaningEn": "Offering humble prayer with words of surrender, Tulsi says in holy company — this Bajrang Baan is supremely powerful; always keep the company of truth."
+      "meaningHi": "हृदय में दृढ़ विश्वास रखकर, शरणागत होकर, ध्यान धरकर पाठ करने से हनुमान जी सब बाधाएँ हरते हैं और सब कार्य सफल करते हैं।",
+      "meaningEn": "With firm faith in the heart, surrendering in refuge, reciting with deep meditation — Hanuman removes all obstacles and makes every endeavour successful."
     }
   ]
 }
