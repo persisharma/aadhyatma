@@ -28,6 +28,22 @@ Then press `i` for iOS simulator or `a` for Android emulator, or scan the QR wit
 - React Navigation 7 (native-stack)
 - Theming via `ThemeContext` + `useTheme()` hook (light only for now)
 
+## OTA updates
+
+`./push.sh` publishes a JS-only update via `eas update`. Notifying users about
+the new bundle is opt-in per push (local notification fired on the next launch
+after the bundle applies — no push server, no tokens):
+
+```bash
+./push.sh "small typo fix"                              # silent
+./push.sh -n "New chapter added"                        # notify (body = message)
+./push.sh -n -t "नया अध्याय" -b "Open to read" "..."   # notify with custom copy
+```
+
+The notification metadata lives in `mobile/src/data/otaRelease.json`. The
+script rewrites it (notify=true) just before `eas update`, then `git checkout`s
+it back so the committed default stays notify=false.
+
 ## Roadmap (deferred)
 
 - Dark mode + persisted theme

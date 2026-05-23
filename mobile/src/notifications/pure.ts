@@ -11,6 +11,13 @@ import type { UniformVerse } from '@/data/versePool';
 /** Identifier prefix for all PRD-01 notifications. Lets us cancel just ours. */
 export const NOTIF_IDENTIFIER_PREFIX = 'daily-verse';
 
+/** Identifier prefix for OTA "new content" notifications. */
+export const OTA_NOTIF_IDENTIFIER_PREFIX = 'ota-release';
+
+/** Default copy when a release ships notify=true without explicit text. */
+export const OTA_DEFAULT_TITLE = 'नया अध्याय जुड़ गया';
+export const OTA_DEFAULT_BODY = 'Open Vedansh to see what\'s new.';
+
 /** Days scheduled ahead. Must stay well under iOS's 64-notification cap. */
 export const ROLLING_WINDOW_DAYS = 30;
 
@@ -104,4 +111,41 @@ export function formatNotificationContent(verse: UniformVerse): {
   const label = verse.labelEn ?? verse.labelHi ?? `verse ${verse.verseIndex + 1}`;
   const body = `${firstLine}\n${verse.sourceNameEn} · ${label}`;
   return { title: 'दैनिक भक्ति', body };
+}
+
+/** Shape of `src/data/otaRelease.json` — bundled per OTA push. */
+export type OtaReleaseMetadata = {
+  version: number;
+  notify: boolean;
+  title: string;
+  body: string;
+};
+
+/**
+ * Decide whether to fire the OTA "new content" notification and with what
+ * copy. Pure: no `expo-notifications`, no AsyncStorage — caller wires those.
+ *
+ * Returns `null` when we should stay silent (already notified, embedded
+ * launch, dev build, metadata says no). Returns `{ title, body }` otherwise.
+ */
+export function planOtaReleaseNotification(input: {
+  metadata: OtaReleaseMetadata | null;
+  /** `Updates.updateId` — null/empty when running an embedded bundle or dev. */
+  currentUpdateId: string | null | undefined;
+  /** Last `updateId` we already fired a notification for. */
+  lastNotifiedUpdateId: string | null | undefined;
+  /** `Updates.isEmbeddedLaunch` — true when the JS bundle came from the binary. */
+  isEmbeddedLaunch: boolean;
+}): { title: string; body: string } | null {
+  const { metadata, currentUpdateId, lastNotifiedUpdateId, isEmbeddedLaunch } = input;
+  if (!metadata || !metadata.notify) return null;
+  if (!currentUpdateId) return null;
+  // Embedded launches mean the user just installed/updated the app from the
+  // store — don't double-notify them about content that shipped in the binary.
+  if (isEmbeddedLaunch) return null;
+  if (lastNotifiedUpdateId === currentUpdateId) return null;
+
+  const title = metadata.title.trim() || OTA_DEFAULT_TITLE;
+  const body = metadata.body.trim() || OTA_DEFAULT_BODY;
+  return { title, body };
 }

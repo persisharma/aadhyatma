@@ -31,6 +31,7 @@ import {
   configureForegroundNotificationHandler,
 } from '@/contexts/NotificationPreferencesContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
+import { checkAndNotifyOtaRelease, fetchPendingOtaUpdate } from '@/updates/otaNotifier';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
@@ -108,6 +109,17 @@ export default function App() {
       if (timeoutId !== undefined) clearTimeout(timeoutId);
       sub.remove();
     };
+  }, [fontsReady]);
+
+  // OTA "new content" notifier. Two passes per app launch:
+  //   1) Surface a local notification if this boot is on a freshly-applied
+  //      OTA bundle that opted in (via `src/data/otaRelease.json`).
+  //   2) Pull any newer pending bundle in the background so it lands on the
+  //      next cold start.
+  useEffect(() => {
+    if (!fontsReady) return;
+    checkAndNotifyOtaRelease().catch(() => undefined);
+    fetchPendingOtaUpdate().catch(() => undefined);
   }, [fontsReady]);
 
   if (!fontsReady) {
