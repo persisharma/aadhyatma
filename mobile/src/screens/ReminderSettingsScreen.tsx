@@ -238,8 +238,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
               ]}
             >
               {isHi
-                ? 'जब आप रोज़ श्लोक प्राप्त करना चाहें। एक से अधिक समय जोड़ सकते हैं।'
-                : 'When the daily verse arrives. Add as many as you like.'}
+                ? `जब आप रोज़ श्लोक प्राप्त करना चाहें। अधिकतम ${MAX_REMINDER_TIMES} समय जोड़ सकते हैं।`
+                : `When the daily verse arrives. Add up to ${MAX_REMINDER_TIMES}.`}
             </Text>
 
             <View style={styles.timesList}>

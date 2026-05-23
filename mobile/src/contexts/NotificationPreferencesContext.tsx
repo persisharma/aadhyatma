@@ -77,16 +77,21 @@ function isTimeOfDay(v: unknown): v is TimeOfDay {
 }
 
 function normaliseTimes(times: TimeOfDay[]): TimeOfDay[] {
+  const out = times.map((t) => ({ hour: t.hour, minute: t.minute }));
+  out.sort((a, b) => a.hour * 60 + a.minute - (b.hour * 60 + b.minute));
+  return out.slice(0, MAX_REMINDER_TIMES);
+}
+
+function deduplicateTimes(times: TimeOfDay[]): TimeOfDay[] {
   const seen = new Set<number>();
   const out: TimeOfDay[] = [];
   for (const t of times) {
     const key = t.hour * 60 + t.minute;
     if (seen.has(key)) continue;
     seen.add(key);
-    out.push({ hour: t.hour, minute: t.minute });
+    out.push(t);
   }
-  out.sort((a, b) => a.hour * 60 + a.minute - (b.hour * 60 + b.minute));
-  return out.slice(0, MAX_REMINDER_TIMES);
+  return out;
 }
 
 function parsePrefs(raw: string | null): NotificationPreferences {
