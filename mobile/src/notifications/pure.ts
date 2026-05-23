@@ -40,19 +40,23 @@ export type NotificationPayload = {
 };
 
 /**
- * Compute the array of fire dates for the next `ROLLING_WINDOW_DAYS` days at the
- * given time-of-day. If the requested time today has already passed, the window
+ * Compute the array of fire dates for the next `days` days at the given
+ * time-of-day. If the requested time today has already passed, the window
  * starts at tomorrow.
  *
  * `now` is parameterised so the function is fully deterministic and testable.
  */
-export function computeFireDates(time: TimeOfDay, now: Date): Date[] {
+export function computeFireDates(
+  time: TimeOfDay,
+  now: Date,
+  days: number = ROLLING_WINDOW_DAYS
+): Date[] {
   const out: Date[] = [];
   const todayAt = new Date(now);
   todayAt.setHours(time.hour, time.minute, 0, 0);
   const startOffset = todayAt.getTime() <= now.getTime() ? 1 : 0;
 
-  for (let i = 0; i < ROLLING_WINDOW_DAYS; i += 1) {
+  for (let i = 0; i < days; i += 1) {
     const fire = new Date(now);
     fire.setDate(fire.getDate() + startOffset + i);
     fire.setHours(time.hour, time.minute, 0, 0);
@@ -63,16 +67,20 @@ export function computeFireDates(time: TimeOfDay, now: Date): Date[] {
 
 /**
  * Compute the merged, time-sorted, deduplicated list of fire dates for a set of
- * reminder times across the rolling window. Two times that produce the same
- * exact fire instant collapse to a single entry — this can happen at the
- * window boundary when callers pass duplicate times.
+ * reminder times. The window per time is reduced so the total stays within
+ * IOS_PENDING_CAP — this ensures all configured times get fair, equal coverage
+ * instead of nearest-wins truncation.
  */
 export function computeFireDatesMulti(times: TimeOfDay[], now: Date): Date[] {
   if (times.length === 0) return [];
+  const daysPerTime = Math.min(
+    ROLLING_WINDOW_DAYS,
+    Math.floor(IOS_PENDING_CAP / times.length)
+  );
   const seen = new Set<number>();
   const merged: Date[] = [];
   for (const t of times) {
-    for (const d of computeFireDates(t, now)) {
+    for (const d of computeFireDates(t, now, daysPerTime)) {
       const ms = d.getTime();
       if (seen.has(ms)) continue;
       seen.add(ms);
