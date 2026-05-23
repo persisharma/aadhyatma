@@ -14,6 +14,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import * as Updates from 'expo-updates';
+import { Platform } from 'react-native';
 
 import otaRelease from '@/data/otaRelease.json';
 import {
@@ -23,6 +24,31 @@ import {
 } from '@/notifications/pure';
 
 const LAST_NOTIFIED_KEY = '@vedansh/ota-last-notified-update-id';
+const OTA_CHANNEL_ID = 'ota-release';
+
+/**
+ * Ensure the Android notification channel exists. iOS no-op.
+ *
+ * Android 8+ requires a channel for any visible notification; without one
+ * the OS routes us to a silent fallback. Idempotent — Android dedups by id.
+ */
+async function ensureAndroidChannel(): Promise<void> {
+  if (Platform.OS !== 'android') return;
+  try {
+    await Notifications.setNotificationChannelAsync(OTA_CHANNEL_ID, {
+      name: 'App updates',
+      description: 'New content delivered via over-the-air updates.',
+      importance: Notifications.AndroidImportance.HIGH,
+      sound: 'default',
+      lightColor: '#B8621B',
+      vibrationPattern: [0, 250, 250, 250],
+      lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
+    });
+  } catch {
+    // Channel registration is best-effort; without it the notification still
+    // fires on the default channel, just with lower priority.
+  }
+}
 
 /**
  * Best-effort check that fires a local "new content" notification the first
@@ -72,6 +98,8 @@ export async function checkAndNotifyOtaRelease(): Promise<void> {
       return;
     }
 
+    await ensureAndroidChannel();
+
     await Notifications.scheduleNotificationAsync({
       identifier: `${OTA_NOTIF_IDENTIFIER_PREFIX}:${currentUpdateId}`,
       content: {
@@ -80,7 +108,10 @@ export async function checkAndNotifyOtaRelease(): Promise<void> {
         sound: 'default',
         data: { type: 'ota-release', updateId: currentUpdateId },
       },
-      trigger: null,
+      // Use a channel-aware trigger for an immediate delivery on the right
+      // Android channel. iOS ignores `channelId` and fires immediately.
+      trigger:
+        Platform.OS === 'android' ? { channelId: OTA_CHANNEL_ID } : null,
     });
 
     await AsyncStorage.setItem(LAST_NOTIFIED_KEY, currentUpdateId!).catch(
