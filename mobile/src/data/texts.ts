@@ -8,6 +8,7 @@ import { shivChalisaCounts } from './shiv-chalisa';
 import { durgaChalisaCounts } from './durga-chalisa';
 import { ganeshChalisaCounts } from './ganesh-chalisa';
 import { hanumanAshtakTotal } from './hanuman-ashtak';
+import { bajrangBaanTotal } from './bajrang-baan';
 import { ramStutiTotal } from './ram-stuti';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { aartiCollection } from './aarti';
@@ -178,6 +179,17 @@ export const library: readonly LibraryEntry[] = [
     category: 'stotram',
     deities: ['hanuman'],
     verseCount: hanumanAshtakTotal,
+  },
+  {
+    id: 'bajrang-baan',
+    nameHi: 'बजरंग बाण',
+    nameEn: 'Bajrang Baan',
+    sub: `${bajrangBaanTotal} छन्द · अर्थ सहित`,
+    thumb: 'ब',
+    status: 'active',
+    category: 'stotram',
+    deities: ['hanuman'],
+    verseCount: bajrangBaanTotal,
   },
   {
     id: 'ram-stuti',
