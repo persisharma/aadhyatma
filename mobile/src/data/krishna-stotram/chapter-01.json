@@ -1,143 +1,195 @@
 {
   "chapter": 1,
-  "titleHi": "कृष्ण अष्टकम्",
-  "titleEn": "Krishna Ashtakam",
-  "verseCount": 9,
+  "titleHi": "कृष्णाष्टकम्",
+  "titleEn": "Krishnashtakam",
+  "verseCount": 10,
+  "source": {"baseText": "sanskritdocuments.org", "retrievedOn": "2026-05-24"},
   "verses": [
     {
       "id": "ks-1-0",
       "chapter": 1,
       "number": 0,
       "sanskrit": [
-        "॥ कृष्ण अष्टकम् ॥",
-        "आदि शंकराचार्य विरचितम्"
+        "॥ श्रीकृष्णाष्टकम् ॥",
+        "श्रीमच्छङ्कराचार्यकृतम्"
       ],
       "linesEn": [
-        "Krishnashtakam",
-        "Composed by Adi Shankaracharya"
+        "Shri Krishnashtakam",
+        "Composed by Shri Shankaracharya"
       ],
-      "meaningHi": "लाभ:\n\nकृष्ण अष्टकम् आदि शंकराचार्य द्वारा रचित आठ श्लोकों का एक स्तोत्र है जिसमें भगवान श्रीकृष्ण की विभिन्न लीलाओं और दिव्य गुणों का वर्णन है। इसके पाठ से भक्ति बढ़ती है, मन को शांति मिलती है, और सांसारिक बंधनों से मुक्ति का मार्ग प्रशस्त होता है। प्रातःकाल और संध्या समय इसका पाठ विशेष फलदायी है।\n\nकथा:\n\nयह स्तोत्र 'कृष्णाय वासुदेवाय' से आरम्भ होता है — जो कृष्ण के परम तत्त्व स्वरूप का स्मरण कराता है। प्रत्येक श्लोक में कृष्ण की एक विशिष्ट लीला या गुण का वर्णन है — बाल-लीला, गोपी-रास, गोवर्धन धारण, कंस वध, और गीता उपदेश।",
-      "meaningEn": "Benefits:\n\nKrishna Ashtakam is an eight-verse hymn composed by Adi Shankaracharya describing the divine pastimes and qualities of Lord Krishna. Its recitation deepens devotion, brings peace of mind, and paves the way to liberation from worldly bonds. Recitation during morning and evening prayers is especially beneficial.\n\nStory:\n\nThis hymn begins with 'Krishnaya Vasudevaya' — invoking Krishna's supreme transcendent nature. Each verse describes a specific pastime or quality of Krishna — childhood exploits, the Rasa dance with gopis, lifting Govardhana, slaying Kamsa, and the Bhagavad Gita teachings."
+      "meaningHi": "लाभ:\n\nश्रीकृष्णाष्टकम् आदि शंकराचार्य द्वारा रचित आठ श्लोकों का स्तोत्र है जिसमें व्रज में विहार करते कृष्ण की दिव्य लीलाओं का वर्णन है — मोरपंख, वेणुवादन, गोवर्धन धारण, गोपिकाओं संग रास, और कुञ्जवन में क्रीड़ा। यह स्तोत्र संगीतात्मक छन्द में है और गाकर सुनाने की परम्परा है। इसके पाठ से कृष्ण-भक्ति दृढ़ होती है और जन्म-जन्म में भक्ति की प्राप्ति होती है।\n\nकथा:\n\nयद्यपि आदि शंकराचार्य ज्ञानमार्ग के प्रवर्तक हैं, तथापि उन्होंने भक्तिमार्ग को भी समान रूप से स्वीकार किया। उन्होंने विष्णु, शिव, देवी, गणपति आदि के अनेक स्तोत्र रचे। यह कृष्णाष्टकम् उनकी भक्ति-काव्य परम्परा की उत्कृष्ट रचना है जिसमें प्रत्येक श्लोक 'नमामि' (मैं नमन करता हूँ) से समाप्त होता है।",
+      "meaningEn": "Benefits:\n\nShri Krishnashtakam is an eight-verse hymn composed by Adi Shankaracharya describing the divine pastimes of Krishna in Vraja — his peacock feather crown, flute-playing, lifting of Govardhana, the Rasa dance with Gopikas, and sports in the groves. This stotra is set in a musical metre and is traditionally sung rather than merely recited. Its recitation strengthens devotion to Krishna and bestows bhakti in every birth.\n\nStory:\n\nAlthough Adi Shankaracharya is the proponent of the path of knowledge (Jnana), he equally embraced the path of devotion (Bhakti). He composed numerous hymns to Vishnu, Shiva, Devi, Ganapati, and others. This Krishnashtakam is an outstanding work of his devotional poetry, with each verse concluding with 'namami' (I bow)."
     },
     {
       "id": "ks-1-1",
       "chapter": 1,
       "number": 1,
       "sanskrit": [
-        "कृष्णाय वासुदेवाय हरये परमात्मने।",
-        "प्रणतक्लेशनाशाय गोविन्दाय नमो नमः॥"
+        "भजे व्रजैकमण्डनं समस्तपापखण्डनं",
+        "स्वभक्तचित्तरञ्जनं सदैव नन्दनन्दनम् ।",
+        "सुपिच्छगुच्छमस्तकं सुनादवेणुहस्तकं",
+        "अनङ्गरङ्गसागरं नमामि कृष्णनागरम् ॥१॥"
       ],
       "linesEn": [
-        "kṛṣṇāya vāsudevāya haraye paramātmane",
-        "praṇatakleśanāśāya govindāya namo namaḥ"
+        "bhaje vrajaikamaNDanaM samastapApakhaNDanaM",
+        "svabhaktachittara~njanaM sadaiva nandanandanam |",
+        "supichChaguchChamastakaM sunAdaveNuhastakaM",
+        "ana~Ngara~NgasAgaraM namAmi kRRiShNanAgaram ||1||"
       ],
-      "meaningHi": "श्रीकृष्ण को, वासुदेव के पुत्र को, हरि को, परमात्मा को, शरणागतों के क्लेशों का नाश करने वाले को, गोविन्द को बारम्बार नमस्कार है।\n\nइस श्लोक में कृष्ण के पाँच नामों का स्मरण है — कृष्ण (सर्वाकर्षक), वासुदेव (वसुदेव-पुत्र एवं सर्वव्यापी), हरि (पापहारी), परमात्मा (सर्वोच्च आत्मा), और गोविन्द (गो-पालक, इन्द्रियों के स्वामी)।",
-      "meaningEn": "Salutations again and again to Krishna, the son of Vasudeva, to Hari, the Supreme Soul, the destroyer of the afflictions of those who surrender, to Govinda.\n\nThis verse invokes five names of Krishna — Krishna (the all-attractive), Vasudeva (son of Vasudeva and the all-pervading), Hari (remover of sins), Paramatma (the Supreme Soul), and Govinda (protector of cows, lord of the senses)."
+      "meaningHi": "मैं व्रज के एकमात्र आभूषण, समस्त पापों का खण्डन करने वाले, अपने भक्तों के चित्त को आनन्दित करने वाले, सदैव नन्द के पुत्र का भजन करता हूँ। जिनके मस्तक पर सुन्दर मोरपंख का गुच्छ है, हाथ में मधुर नाद करने वाली वेणु (बाँसुरी) है — ऐसे अनंग (कामदेव) के रंग (कला) के सागर, नटखट कृष्ण को मैं नमन करता हूँ।",
+      "meaningEn": "I worship Krishna, the sole ornament of Vraja, the destroyer of all sins, who delights the minds of His devotees, the eternal son of Nanda. Whose head is adorned with beautiful peacock feathers, who holds a sweet-sounding flute in His hand — I bow to that naughty Krishna, the ocean of the art of love."
     },
     {
       "id": "ks-1-2",
       "chapter": 1,
       "number": 2,
       "sanskrit": [
-        "नमस्ते कमलेशाय नमस्ते विश्वमूर्तये।",
-        "नमस्तेऽस्तु हृषीकेश नमस्ते परमेश्वर॥"
+        "मनोजगर्वमोचनं विशाललोललोचनं",
+        "विधूतगोपशोचनं नमामि पद्मलोचनम् ।",
+        "करारविन्दभूधरं स्मितावलोकसुन्दरं",
+        "महेन्द्रमानदारणं नमामि कृष्णवारणम् ॥२॥"
       ],
       "linesEn": [
-        "namaste kamaleśāya namaste viśvamūrtaye",
-        "namaste'stu hṛṣīkeśa namaste parameśvara"
+        "manojagarvamochanaM vishAlalolalochanaM",
+        "vidhUtagopashochanaM namAmi padmalochanam |",
+        "karAravindabhUdharaM smitAvalokasundaraM",
+        "mahendramAnadAraNaM namAmi kRRiShNavAraNam ||2||"
       ],
-      "meaningHi": "कमला (लक्ष्मी) के स्वामी को नमस्कार, विश्वरूप धारण करने वाले को नमस्कार, हे हृषीकेश (इन्द्रियों के स्वामी) आपको नमस्कार, हे परमेश्वर आपको नमस्कार।\n\nयहाँ चार सम्बोधन हैं — कमलेश (लक्ष्मीपति), विश्वमूर्ति (जिनमें सम्पूर्ण ब्रह्माण्ड विद्यमान है), हृषीकेश (इन्द्रियों के नियन्ता), और परमेश्वर (सर्वोच्च ईश्वर)।",
-      "meaningEn": "Salutations to the Lord of Kamala (Lakshmi), salutations to the one whose form is the universe, salutations to you O Hrishikesha (master of the senses), salutations to the Supreme Lord.\n\nFour epithets are used here — Kamalesha (Lord of Lakshmi), Vishvamurti (He in whom the entire cosmos resides), Hrishikesha (controller of the senses), and Parameshvara (the Supreme God)."
+      "meaningHi": "कामदेव के गर्व को मोचन (दूर) करने वाले, विशाल चंचल नेत्रों वाले, गोपों के शोक को दूर करने वाले, कमल-नेत्र को मैं नमन करता हूँ। करकमल से पर्वत (गोवर्धन) को धारण करने वाले, मुस्कान और दृष्टि से सुन्दर, इन्द्र के मान (अभिमान) को दारण (चूर) करने वाले — ऐसे गजराज-सदृश कृष्ण को मैं नमन करता हूँ।",
+      "meaningEn": "I bow to the lotus-eyed Krishna who humbles Kamadeva's pride, whose eyes are large and playful, who removes the sorrows of the cowherds. I bow to Krishna, mighty as an elephant, who lifted the mountain (Govardhana) with His lotus hand, whose smile and glance are supremely beautiful, and who shattered the pride of Indra."
     },
     {
       "id": "ks-1-3",
       "chapter": 1,
       "number": 3,
       "sanskrit": [
-        "नमः पुष्करनेत्राय नमस्ते विश्वभावन।",
-        "नमस्तेऽस्तु जगन्नाथ नमस्ते परमात्मने॥"
+        "कदम्बसूनकुण्डलं सुचारुगण्डमण्डलं",
+        "व्रजाङ्गनैकवल्लभं नमामि कृष्णदुर्लभम् ।",
+        "यशोदया समोदया सगोपया सनन्दया",
+        "युतं सुखैकदायकं नमामि गोपनायकम् ॥३॥"
       ],
       "linesEn": [
-        "namaḥ puṣkaranetrāya namaste viśvabhāvana",
-        "namaste'stu jagannātha namaste paramātmane"
+        "kadambasUnakuNDalaM suchArugaNDamaNDalaM",
+        "vrajA~NganaikalallabhaM namAmi kRRiShNadurlabham |",
+        "yashodayA samodayA sagopayA sanandayA",
+        "yutaM sukhaikadAyakaM namAmi gopanAyakam ||3||"
       ],
-      "meaningHi": "कमलनयन (कमल जैसे नेत्रों वाले) को नमस्कार, हे विश्वभावन (सृष्टि के पालक) आपको नमस्कार, हे जगन्नाथ (जगत के स्वामी) आपको नमस्कार, हे परमात्मा आपको नमस्कार।\n\nइस श्लोक में कृष्ण की सृजनात्मक और पालनकर्ता भूमिका का स्तवन है — वे केवल संहारकर्ता नहीं, अपितु विश्व के भावक (उत्पत्ति और पोषण करने वाले) हैं।",
-      "meaningEn": "Salutations to the lotus-eyed one, salutations to you O sustainer of the universe, salutations to you O Lord of the world, salutations to the Supreme Soul.\n\nThis verse praises Krishna's creative and sustaining role — He is not merely a destroyer but the Bhavana (originator and nourisher) of the universe."
+      "meaningHi": "कदम्ब पुष्पों के कुण्डल पहने, सुन्दर गण्ड-मण्डल (गालों) वाले, व्रज की गोपिकाओं के एकमात्र प्रिय — ऐसे दुर्लभ कृष्ण को मैं नमन करता हूँ। आनन्दमयी यशोदा, गोपियों और नन्द सहित — केवल सुख देने वाले, गोपों के नायक को मैं नमन करता हूँ।",
+      "meaningEn": "I bow to Krishna, difficult to attain, who wears earrings of Kadamba flowers, whose cheeks are beautiful, who is the sole beloved of the women of Vraja. I bow to the leader of the cowherds, who bestows only happiness, accompanied by a joyful Yashoda, the Gopis, and Nanda."
     },
     {
       "id": "ks-1-4",
       "chapter": 1,
       "number": 4,
       "sanskrit": [
-        "वासुदेवाय शान्ताय नमस्ते प्रभविष्णवे।",
-        "नमस्ते सर्वलोकेश नमस्ते विद्महे सदा॥"
+        "सदैव पादपङ्कजं मदीय मानसे निजं",
+        "दधानमुक्तमालकं नमामि नन्दबालकम् ।",
+        "समस्तदोषशोषणं समस्तलोकपोषणं",
+        "समस्तगोपमानसं नमामि नन्दलालसम् ॥४॥"
       ],
       "linesEn": [
-        "vāsudevāya śāntāya namaste prabhaviṣṇave",
-        "namaste sarvalokeśa namaste vidmahe sadā"
+        "sadaiva pAdapa~NkajaM madIya mAnase nijaM",
+        "dadhAnamuktamAlakaM namAmi nandabAlakam |",
+        "samastadoShashoShaNaM samastalokApoShaNaM",
+        "samastagopamAnasaM namAmi nandalAlasam ||4||"
       ],
-      "meaningHi": "शान्त स्वरूप वासुदेव को नमस्कार, सर्वशक्तिमान (प्रभविष्णु) को नमस्कार, हे सर्वलोकेश (सभी लोकों के स्वामी) आपको नमस्कार, हम आपको सदैव जानते (ध्यान करते) हैं।\n\n'प्रभविष्णवे' का अर्थ है — जिनसे सब कुछ उत्पन्न होता है, जो सब में समर्थ हैं। 'विद्महे' वेदों के पुरुष सूक्त का प्रतिध्वनन है — 'तं विद्महे'।",
-      "meaningEn": "Salutations to Vasudeva of peaceful nature, salutations to the omnipotent one, salutations O Lord of all worlds, we meditate upon you always.\n\n'Prabhavishnave' means the one from whom everything originates, who is capable in all things. 'Vidmahe' echoes the Vedic Purusha Sukta — 'tam vidmahe' (we know Him)."
+      "meaningHi": "जो सदैव अपने चरण-कमल मेरे मानस में स्थापित किए हुए हैं, मुक्त (खुले) बालों वाले — ऐसे नन्द के बालक को मैं नमन करता हूँ। समस्त दोषों को सुखाने (नष्ट करने) वाले, समस्त लोकों का पोषण करने वाले, समस्त गोपों के मानस (हृदय) में बसने वाले — नन्द के लाडले को मैं नमन करता हूँ।",
+      "meaningEn": "I bow to Nanda's child who has placed His lotus feet firmly in my mind, whose hair hangs in beautiful curls. I bow to Nanda's darling who dries up all defects, who nourishes all the worlds, and who dwells in the hearts of all the cowherds."
     },
     {
       "id": "ks-1-5",
       "chapter": 1,
       "number": 5,
       "sanskrit": [
-        "नमस्ते वामनाय च नमस्ते कृष्ण मेधया।",
-        "नमो विश्वप्रबोधाय नमस्ते परमात्मने॥"
+        "भुवो भरावतारकं भवाब्धिकर्णधारकं",
+        "यशोमतीकिशोरकं नमामि चित्तचोरकम् ।",
+        "दृगन्तकान्तभङ्गिनं सदा सदालिसङ्गिनं",
+        "दिने दिने नवं नवं नमामि नन्दसम्भवम् ॥५॥"
       ],
       "linesEn": [
-        "namaste vāmanāya cha namaste kṛṣṇa medhayā",
-        "namo viśvaprabodhāya namaste paramātmane"
+        "bhuvo bharAvatArakaM bhavAbdhikarNadhArakaM",
+        "yashomatIkishorakaM namAmi chittachorakam |",
+        "dRRigantakAntabha~NginaM sadA sadAlisa~NginaM",
+        "dine dine navaM navaM namAmi nandasambhavam ||5||"
       ],
-      "meaningHi": "वामन अवतार को नमस्कार, हे कृष्ण! मेधा (बुद्धि) के स्वामी को नमस्कार, विश्व को ज्ञान (प्रबोध) देने वाले को नमस्कार, परमात्मा को नमस्कार।\n\nयहाँ वामन अवतार का स्मरण है — जब भगवान ने बौने ब्राह्मण का रूप लेकर बलि राजा से तीन पग में तीनों लोक नाप लिये। 'मेधया' बुद्धि-प्रदाता गुण को सूचित करता है — गीता में कृष्ण कहते हैं 'मत्तः स्मृतिर्ज्ञानमपोहनं च'।",
-      "meaningEn": "Salutations to Vamana (the dwarf incarnation), salutations to Krishna the lord of intellect, salutations to the awakener of the universe, salutations to the Supreme Soul.\n\nThis verse recalls the Vamana avatar — when the Lord took the form of a dwarf Brahmin and measured all three worlds in three steps from King Bali. 'Medhaya' indicates the quality of bestowing intelligence — in the Gita, Krishna declares 'From Me come memory, knowledge, and their removal.'"
+      "meaningHi": "पृथ्वी के भार को उतारने वाले (अवतारक), भवसागर के कर्णधार (पार लगाने वाले नाविक), यशोमती (यशोदा) के किशोर — ऐसे चित्तचोर को मैं नमन करता हूँ। नेत्रों के कोणों से सुन्दर भंगिमा वाले, सदैव सन्त-भक्तों के संगी, दिन-प्रतिदिन नवीन से नवीन (दिखने वाले) — ऐसे नन्द के पुत्र को मैं नमन करता हूँ।",
+      "meaningEn": "I bow to the stealer of hearts, who incarnated to relieve the earth's burden, who is the helmsman across the ocean of worldly existence, the youth of Yashoda. I bow to Nanda's son, whose sidelong glances are enchanting, who is always in the company of saintly devotees, and who appears newer and newer day by day."
     },
     {
       "id": "ks-1-6",
       "chapter": 1,
       "number": 6,
       "sanskrit": [
-        "नमो वृन्दावनेशाय नमो गोपालसुन्दर।",
-        "नमो ब्रह्मण्यदेवाय गोब्राह्मणहिताय च॥"
+        "गुणाकरं सुखाकरं कृपाकरं कृपापरं",
+        "सुरद्विषन्निकन्दनं नमामि गोपनन्दनम् ।",
+        "नवीनगोपनागरं नवीनकेलिलम्पटं",
+        "नमामि मेघसुन्दरं तडित्प्रभालसत्पटम् ॥६॥"
       ],
       "linesEn": [
-        "namo vṛndāvaneśāya namo gopālasundara",
-        "namo brahmaṇyadevāya gobrāhmaṇahitāya cha"
+        "guNAkaraM sukhAkaraM kRRipAkaraM kRRipAparaM",
+        "suradvIShannikandanaM namAmi gopanandanam |",
+        "navInagopanAgaraM navInakelilampatam",
+        "namAmi meghasundaraM taDitprabhAlasatpatam ||6||"
       ],
-      "meaningHi": "वृन्दावन के स्वामी को नमस्कार, सुन्दर गोपाल को नमस्कार, ब्राह्मणों के देव को नमस्कार, गौओं और ब्राह्मणों का हित करने वाले को नमस्कार।\n\nयह श्लोक कृष्ण की वृन्दावन-लीला का स्मरण कराता है — गोपाल (गौओं का पालक) के रूप में उनकी बाल-लीला। 'गोब्राह्मणहिताय' विष्णु सहस्रनाम में भी आता है — यह वैदिक संस्कृति के दो स्तम्भों (गौ-रक्षा और ज्ञान-परम्परा) की रक्षा का संकल्प है।",
-      "meaningEn": "Salutations to the Lord of Vrindavana, salutations to the beautiful Gopala, salutations to the God of the Brahmins, to the benefactor of cows and Brahmins.\n\nThis verse evokes Krishna's Vrindavana pastimes — His childhood as Gopala (cowherd). 'Gobrahmana-hitaya' also appears in the Vishnu Sahasranama — it represents the commitment to protect the two pillars of Vedic culture: cow protection and the knowledge tradition."
+      "meaningHi": "गुणों की खान, सुख की खान, कृपा की खान, कृपा में परम (सर्वोच्च), देवद्रोहियों (असुरों) का उन्मूलन करने वाले — ऐसे गोपनन्दन को मैं नमन करता हूँ। नित्य-नवीन गोप-नागर (चतुर), नित्य-नवीन क्रीड़ाओं में रत, मेघ के समान सुन्दर (श्यामवर्ण), बिजली की प्रभा जैसे चमकते वस्त्र वाले — उन्हें मैं नमन करता हूँ।",
+      "meaningEn": "I bow to the cowherd's son, the mine of virtues, happiness, and mercy, supremely compassionate, the destroyer of the enemies of the gods. I bow to the ever-new gallant cowherd, fond of ever-new sports, beautiful as a dark cloud, whose garment gleams like lightning."
     },
     {
       "id": "ks-1-7",
       "chapter": 1,
       "number": 7,
       "sanskrit": [
-        "नमस्ते दैत्यनाशाय नमः संकर्षणाय च।",
-        "नमो विश्वम्भराय च नमो दिव्यकिशोर ते॥"
+        "समस्तगोपनन्दनं हृदम्बुजैकमोदनं",
+        "नमामि कुञ्जमध्यगं प्रसन्नभानुशोभनम् ।",
+        "निकामकामदायकं दृगन्तचारुसायकं",
+        "रसालवेणुगायकं नमामि कुञ्जनायकम् ॥७॥"
       ],
       "linesEn": [
-        "namaste daityanāśāya namaḥ saṁkarṣaṇāya cha",
-        "namo viśvambharāya cha namo divyakiśora te"
+        "samastagopanandanaM hRRidambujaikamOdanaM",
+        "namAmi ku~njamadhyagaM prasannabhAnushobhanam |",
+        "nikAmakAmadAyakaM dRRigantachArusAyakaM",
+        "rasAlaveNugAyakaM namAmi ku~njanAyakam ||7||"
       ],
-      "meaningHi": "दैत्यों (असुरों) का नाश करने वाले को नमस्कार, संकर्षण (बलराम / आकर्षण करने वाले) को नमस्कार, विश्वम्भर (विश्व को धारण करने वाले) को नमस्कार, हे दिव्य किशोर! आपको नमस्कार।\n\nयहाँ कृष्ण के वीर रूप का स्तवन है — कंस, पूतना, शकटासुर, अघासुर आदि असुरों का संहार। 'दिव्यकिशोर' — कृष्ण सदैव नवयुवक हैं, उन पर वृद्धावस्था का प्रभाव नहीं पड़ता।",
-      "meaningEn": "Salutations to the destroyer of demons, salutations to Sankarshana (Balarama / the one who attracts all), salutations to the upholder of the universe, salutations to you O divine youth.\n\nThis verse praises Krishna's heroic form — the slaying of Kamsa, Putana, Shakatasura, Aghasura, and other demons. 'Divyakishora' — Krishna is eternally youthful, untouched by old age."
+      "meaningHi": "समस्त गोपों को आनन्दित करने वाले, हृदय-कमल को प्रफुल्लित करने वाले, कुञ्ज (लता-वन) के मध्य में विराजमान, प्रसन्न सूर्य के समान शोभायमान — उन्हें मैं नमन करता हूँ। सभी कामनाओं को पूर्ण करने वाले, नेत्रकोणों की सुन्दर दृष्टि जिनके बाण (तीर) हैं, रसीली वेणु (बाँसुरी) बजाने वाले — ऐसे कुञ्जनायक को मैं नमन करता हूँ।",
+      "meaningEn": "I bow to Him who delights all the cowherds, who causes the lotus of the heart to blossom with joy, who sits in the midst of the grove, resplendent as the bright sun. I bow to the Lord of the bower, who fulfills all desires, whose beautiful sidelong glances are like arrows, and who plays melodious tunes on the flute."
     },
     {
       "id": "ks-1-8",
       "chapter": 1,
       "number": 8,
       "sanskrit": [
-        "वसुदेवसुतं देवं कंसचाणूरमर्दनम्।",
-        "देवकीपरमानन्दं कृष्णं वन्दे जगद्गुरुम्॥"
+        "विदग्धगोपिकामनोमनोज्ञतल्पशायिनं",
+        "नमामि कुञ्जकानने प्रवृद्धवह्निपायिनम् ।",
+        "किशोरकान्तिरञ्जितं दृगञ्जनं सुशोभितं",
+        "गजेन्द्रमोक्षकारिणं नमामि श्रीविहारिणम् ॥८॥"
       ],
       "linesEn": [
-        "vasudevasutaṁ devaṁ kaṁsachāṇūramardanam",
-        "devakīparamānandaṁ kṛṣṇaṁ vande jagadgurum"
+        "vidagdhagopikAmanomanoj~natalpaShAyinaM",
+        "namAmi ku~njakAnane pravRRiddhvahnipAyinam |",
+        "kishorakAntiranJitaM dRRiga~njanaM sushobhitaM",
+        "gajendramokShakAriNaM namAmi shrIvihAriNam ||8||"
       ],
-      "meaningHi": "वसुदेव के पुत्र, देवस्वरूप, कंस और चाणूर को मर्दन (वध) करने वाले, देवकी के परम आनन्द, जगद्गुरु कृष्ण को मैं वन्दन करता हूँ।\n\nयह समापन श्लोक कृष्ण के सम्पूर्ण चरित्र का सार है — वसुदेव-पुत्र (जन्म), कंसमर्दन (वीरता), देवकी-आनन्द (पुत्र-प्रेम), और जगद्गुरु (गीता के उपदेशक)। यह श्लोक स्वतन्त्र रूप से भी अत्यन्त प्रसिद्ध है।",
-      "meaningEn": "I bow to Krishna, the son of Vasudeva, the divine one, the slayer of Kamsa and Chanura, the supreme bliss of Devaki, the teacher of the world.\n\nThis concluding verse encapsulates Krishna's complete character — son of Vasudeva (birth), slayer of Kamsa (valor), Devaki's supreme joy (filial love), and Jagadguru (teacher of the Gita). This verse is independently famous and widely recited."
+      "meaningHi": "विदग्ध (चतुर) गोपिकाओं के मनोज्ञ (मनोहर) मन रूपी तल्प (शय्या) पर शयन करने वाले — कुञ्ज-वन में फैली हुई दावाग्नि को पी लेने वाले उन्हें मैं नमन करता हूँ। किशोर-कान्ति (युवा-सुषमा) से रञ्जित, नेत्रों में अंजन (काजल) से सुशोभित, गजेन्द्र (हाथी) को मोक्ष देने वाले — ऐसे श्रीविहारी (लक्ष्मीपति) को मैं नमन करता हूँ।",
+      "meaningEn": "I bow to Him who reclines on the bed that is the beautiful minds of the intelligent Gopis, who drank the spreading forest-fire in the groves to protect the cowherds. I bow to Shri-Vihari (consort of Lakshmi), whose eyes are beautified with collyrium and whose youthful radiance is enchanting, who liberated the elephant Gajendra."
+    },
+    {
+      "id": "ks-1-9",
+      "chapter": 1,
+      "number": 9,
+      "sanskrit": [
+        "यदा तदा यथा तथा तथैव कृष्णसत्कथा",
+        "मया सदैव गीयतां तथा कृपा विधीयताम् ।",
+        "प्रमाणिकाष्टकद्वयं जपत्यधीत्य यः पुमान्",
+        "भवेत्स नन्दनन्दने भवे भवे सुभक्तिमान् ॥९॥"
+      ],
+      "linesEn": [
+        "yadA tadA yathA tathA tathaiva kRRiShNasatkathA",
+        "mayA sadaiva gIyatAM tathA kRRipA vidhIyatAm |",
+        "pramANikAShTakadvayaM japatyadhItya yaH pumAn",
+        "bhavetsa nandanandane bhave bhave subhaktimAn ||9||"
+      ],
+      "meaningHi": "हे कृष्ण! जब भी, जहाँ भी, जैसे भी — कृष्ण की सत्कथा मेरे द्वारा सदैव गाई जाए, ऐसी कृपा कीजिए। जो पुरुष इन दो प्रामाणिक अष्टकों का जप और अध्ययन करता है, वह जन्म-जन्मान्तर में नन्दनन्दन (कृष्ण) की सुदृढ़ भक्ति को प्राप्त करता है।\n\n(यह फल-श्रुति है — स्तोत्र-पाठ का फल बताने वाला अन्तिम श्लोक।)",
+      "meaningEn": "O Lord Krishna! Whenever, wherever, however — may I always sing Your sacred stories; please bestow such grace. Whoever chants and studies these two authoritative ashtakas shall be blessed with firm devotion to Nanda's son in every birth.\n\n(This is the phala-shruti — the concluding verse describing the fruit of reciting the hymn.)"
     }
   ]
 }
