@@ -9,8 +9,8 @@
       "chapter": 1,
       "number": 0,
       "section": "doha",
-      "labelHi": "दोहा - प्रारम्भ",
-      "labelEn": "Doha - Opening",
+      "labelHi": "दोहा",
+      "labelEn": "Doha",
       "lines": [
         "निश्चय प्रेम प्रतीति ते, बिनय करैं सनमान।",
         "तेहि के कारज सकल शुभ, सिद्ध करैं हनुमान॥"
@@ -349,8 +349,8 @@
       "chapter": 1,
       "number": 19,
       "section": "doha",
-      "labelHi": "दोहा - समापन",
-      "labelEn": "Doha - Closing",
+      "labelHi": "समापन दोहा",
+      "labelEn": "Closing Doha",
       "lines": [
         "उर प्रतीति दृढ़ सरन ह्वै, पाठ करै धरि ध्यान।",
         "बाधा सब हर करैं सब, काम सफल हनुमान॥"
