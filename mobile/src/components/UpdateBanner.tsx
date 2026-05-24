@@ -6,39 +6,33 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { APP_STORE_URL, PLAY_STORE_URL } from '@/data/shareLinks';
 
-// Native app versions that should be nudged to update.
-// Keep this list narrow — only versions we've actually shipped a fix for.
-const OUTDATED_VERSIONS = new Set<string>(['1.3.0']);
+// One-time nudge: shown only on the 1.3.0 native build, never on any other version.
+const TARGET_VERSION = '1.3.0';
 
-const DISMISS_KEY_PREFIX = '@vedansh/updateBanner/dismissed/';
-
-function getInstalledVersion(): string | null {
-  return Constants.nativeApplicationVersion ?? null;
-}
+const DISMISS_KEY = '@vedansh/updateBanner/dismissed/1.3.0';
 
 export default function UpdateBanner() {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const isHi = lang === 'hi';
 
-  const installedVersion = getInstalledVersion();
-  const isOutdated = installedVersion !== null && OUTDATED_VERSIONS.has(installedVersion);
+  const isTargetVersion = Constants.nativeApplicationVersion === TARGET_VERSION;
 
   const [hydrated, setHydrated] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    if (!isOutdated || !installedVersion) {
+    if (!isTargetVersion) {
       setHydrated(true);
       return;
     }
-    AsyncStorage.getItem(`${DISMISS_KEY_PREFIX}${installedVersion}`)
+    AsyncStorage.getItem(DISMISS_KEY)
       .then((value) => {
         if (value === '1') setDismissed(true);
       })
       .catch(() => undefined)
       .finally(() => setHydrated(true));
-  }, [isOutdated, installedVersion]);
+  }, [isTargetVersion]);
 
   const onUpdate = useCallback(() => {
     const url = Platform.OS === 'android' ? PLAY_STORE_URL : APP_STORE_URL;
@@ -47,12 +41,10 @@ export default function UpdateBanner() {
 
   const onDismiss = useCallback(() => {
     setDismissed(true);
-    if (installedVersion) {
-      AsyncStorage.setItem(`${DISMISS_KEY_PREFIX}${installedVersion}`, '1').catch(() => undefined);
-    }
-  }, [installedVersion]);
+    AsyncStorage.setItem(DISMISS_KEY, '1').catch(() => undefined);
+  }, []);
 
-  if (!isOutdated || !hydrated || dismissed) return null;
+  if (!isTargetVersion || !hydrated || dismissed) return null;
 
   return (
     <View
