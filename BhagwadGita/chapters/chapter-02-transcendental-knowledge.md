@@ -66,7 +66,7 @@ Sanjaya said: To him, who was thus overcome with pity, despondent, with eyes ful
 
 **English Commentary**
 
-2.1 तम् to him? तथा thus? कृपया with pity? आविष्टम् overcome? अश्रुपूर्णाकुलेक्षणम् with eyes filled with tears and agitated? विषीदन्तम् despondent? इदम् this? वाक्यम् speech? उवाच spoke? मघुसूदनः Madhusudana.No commentary.
+2.1 तम् to him? तथा thus? कृपया with pity? आविष्टम् overcome? अश्रुपूर्णाकुलेक्षणम् with eyes filled with tears and agitated? विषीदन्तम् despondent? इदम् this? वाक्यम् speech? उवाच spoke? मघुसूदनः Madhusudana. No commentary.
 
 ### BG 2.2
 
@@ -104,7 +104,7 @@ The Blessed Lord said, "From whence has this perilous strait come upon you, this
 
 **English Commentary**
 
-2.2 कुतः whence? त्वा upon thee? कश्मलम् dejection? इदम् this? विषमे in perilous strait? समुपस्थितम् comes? अनार्यजुष्टम् unworthy (unaryanlike)? अस्वर्ग्यम् heavenexcluding? अकीर्तिकरम् disgraceful? अर्जुन O Arjuna.No commentary.
+2.2 कुतः whence? त्वा upon thee? कश्मलम् dejection? इदम् this? विषमे in perilous strait? समुपस्थितम् comes? अनार्यजुष्टम् unworthy (unaryanlike)? अस्वर्ग्यम् heavenexcluding? अकीर्तिकरम् disgraceful? अर्जुन O Arjuna. No commentary.
 
 ### BG 2.3
 
@@ -147,7 +147,7 @@ Do not yield to impotence, O Arjuna, son of Pritha. It does not befit you. Cast 
 
 **English Commentary**
 
-2.3 क्लैब्यम् impotence? मा स्म गमः do not get? पार्थ O Partha? न not? एतत् this? त्वयि in thee? उपपद्यते is fitting? क्षुद्रम् mean? हृदयदौर्बल्यम् weakness of the heart? त्यक्त्वा having abandoned? उत्तिष्ठ stand up? परन्तप O scorcher of the foes.No commentary.
+2.3 क्लैब्यम् impotence? मा स्म गमः do not get? पार्थ O Partha? न not? एतत् this? त्वयि in thee? उपपद्यते is fitting? क्षुद्रम् mean? हृदयदौर्बल्यम् weakness of the heart? त्यक्त्वा having abandoned? उत्तिष्ठ stand up? परन्तप O scorcher of the foes. No commentary.
 
 ### BG 2.4
 
@@ -183,7 +183,7 @@ Arjuna said, "O Madhusudana, how can I fight in battle with arrows against Bhish
 
 **English Commentary**
 
-2.4 कथम् how? भीष्मम् Bhishma? अहम् I? संख्ये in battle? द्रोणम् Drona? च and? मधुसूदन O Madhusudana? इषुभिः with arrows? प्रतियोत्स्यामि shall fight? पूजार्हौ worthy to be worshipped? अरिसूदन O destroyer of enemies.No commentary.
+2.4 कथम् how? भीष्मम् Bhishma? अहम् I? संख्ये in battle? द्रोणम् Drona? च and? मधुसूदन O Madhusudana? इषुभिः with arrows? प्रतियोत्स्यामि shall fight? पूजार्हौ worthy to be worshipped? अरिसूदन O destroyer of enemies. No commentary.
 
 ### BG 2.5
 
@@ -219,10 +219,10 @@ Better it is, indeed, in this world to accept alms than to slay the most noble t
 **Hindi Commentary**
 
 [इस श्लोकसे ऐसा प्रतीत होता है कि दूसरे-तीसरे श्लोकोंमें भगवान्के कहे हुए वचन अब अर्जुनके भीतर असर कर रहे हैं। इससे अर्जुनके मनमें यह विचार आ रहा है कि भीष्म, द्रोण आदि गुरुजनोंको मारना धर्मयुक्त नहीं है--ऐसा जानते हुए भी भगवान् मुझे बिना किसी सन्देहके युद्धके लिये आज्ञा दे रहे हैं, तो कहीं-न-कहीं मेरी समझमें ही गलती है! इसलिये अर्जुन अब पूर्वश्लोककी तरह उत्तेजित होकर नहीं बोलते, प्रत्युत कुछ ढिलाईसे बोलते हैं।]
- 'गुरुनहत्वा ৷৷. भैक्ष्यमपीह लोके'-- अब अर्जुन पहले अपने पक्षको सामने रखते हुए कहते हैं कि अगर मैं भीष्म, द्रोण आदि पूज्यजनोंके साथ युद्ध नहीं करूँगा, तो दुर्योधन भी अकेला मेरे साथ युद्ध नहीं करेगा। इस तरह युद्ध न होनेसे मेरेको राज्य नहीं मिलेगा, जिससे मेरेको दुःख पाना पड़ेगा। मेरा जीवननिर्वाह भी कठिनतासे होगा। यहाँतक कि क्षत्रियके लिये निषिद्ध जो भिक्षावृत्ति है, उसको ही जीवन-निर्वाहके लिये ग्रहण करना पड़ सकता है। परन्तु गुरुजनोंको मारनेकी अपेक्षा मैं उस कष्टदायक भिक्षा-वृत्तिको भी ग्रहण करना श्रेष्ठ मानता हूँ।
+ 'गुरुनहत्वा ।।. भैक्ष्यमपीह लोके'-- अब अर्जुन पहले अपने पक्षको सामने रखते हुए कहते हैं कि अगर मैं भीष्म, द्रोण आदि पूज्यजनोंके साथ युद्ध नहीं करूँगा, तो दुर्योधन भी अकेला मेरे साथ युद्ध नहीं करेगा। इस तरह युद्ध न होनेसे मेरेको राज्य नहीं मिलेगा, जिससे मेरेको दुःख पाना पड़ेगा। मेरा जीवननिर्वाह भी कठिनतासे होगा। यहाँतक कि क्षत्रियके लिये निषिद्ध जो भिक्षावृत्ति है, उसको ही जीवन-निर्वाहके लिये ग्रहण करना पड़ सकता है। परन्तु गुरुजनोंको मारनेकी अपेक्षा मैं उस कष्टदायक भिक्षा-वृत्तिको भी ग्रहण करना श्रेष्ठ मानता हूँ।
  'इह लोके'  कहनेका तात्पर्य है कि यद्यपि भिक्षा माँगकर खानेसे इस संसारमें मेरा अपमान-तिरस्कार होगा, लोग मेरी निन्दा करेंगे, तथापि गुरुजनोंको मारनेकी अपेक्षा भिक्षा माँगना श्रेष्ठ है।
  'अपि' कहनेका तात्पर्य है कि मेरे लिये गुरुजनोंको मारना भी निषिद्ध है; और भिक्षा माँगना भी निषिद्ध है परन्तु इन दोनोंमें भी गुरुजनोंको मारना मुझे अधिक निषिद्ध दीखता है।
- 'हत्वार्थकामांस्तु ৷৷. रुधिरप्रदिग्धान्'-- अब अर्जुन भगवान्के वचनोंकी तरफ दृष्टि करते हुए कहते हैं कि अगर मैं आपकी आज्ञाके अनुसार युद्ध करूँ, तो युद्धमें गुरुजनोंकी हत्याके परिणाममें मैं उनके खूनसे सने हुए और जिनमें धन आदिकी कामना ही मुख्य है, ऐसे भोगोंको ही तो भोगूँगा। मेरेको भोग ही तो मिलेंगे। उन भोगोंके मिलनेसे मुक्ति थोड़े ही होगी! शान्ति थोड़े ही मिलेगी!
+ 'हत्वार्थकामांस्तु ।।. रुधिरप्रदिग्धान्'-- अब अर्जुन भगवान्के वचनोंकी तरफ दृष्टि करते हुए कहते हैं कि अगर मैं आपकी आज्ञाके अनुसार युद्ध करूँ, तो युद्धमें गुरुजनोंकी हत्याके परिणाममें मैं उनके खूनसे सने हुए और जिनमें धन आदिकी कामना ही मुख्य है, ऐसे भोगोंको ही तो भोगूँगा। मेरेको भोग ही तो मिलेंगे। उन भोगोंके मिलनेसे मुक्ति थोड़े ही होगी! शान्ति थोड़े ही मिलेगी!
 यहाँ यह प्रश्न हो सकता है कि भीष्म, द्रोण आदि गुरुजन धनके द्वारा ही कौरवोंसे बँधे थे; अतः यहाँ  अर्थकामान्'  पदको  'गुरुन्' पदका विशेषण मान लिया जाय तो क्या आपत्ति है? इसका उत्तर यह है कि 'अर्थकी कामनावाले गुरुजन'--ऐसा अर्थ करना उचित नहीं है। कारण कि पितामह भीष्म, आचार्य द्रोण आदि गुरुजन धनकी कामनावाले नहीं थे। वे तो दुर्योधनके वृत्तिभोगी थे उन्होंने दुर्योधनका अन्न खाया था। अतः युद्धके समय दुर्योधनका साथ छो़ड़ना कर्तव्य न समझकर ही वे कौरवोंके पक्षमें खड़े हुए थे।
 दूसरी बात अर्जुनने भीष्म द्रोण आदिके लिये  'महानुभावान' पदका प्रयोग किया है। अतः ऐसे श्रेष्ठ भाववालोंको अर्थकी कामनावाले कैसे कहा जा सकता है तात्पर्य है कि जो महानुभाव हैं, वे अर्थकी कामनावाले नहीं हो सकते; और जो अर्थकी कामनावाले हैं वे महानुभाव नहीं हो सकते। अतः यहाँ 'अर्थकामान्' पद  'भोगान्' पदका ही विशेषण हो सकता है।
  विशेष बात 
@@ -234,7 +234,7 @@ Better it is, indeed, in this world to accept alms than to slay the most noble t
 
 **English Commentary**
 
-2.5 गुरून् the Gurus (teachers)? अहत्वा instead of slaying? हि indeed? महानुभावान् most noble? श्रेयः better? भोक्तुम् to eat? भैक्ष्यम् alms? अपि even? इह here? लोके in the world? हत्वा having slain? अर्थकामान् desirous of wealth? तु indeed? गुरून् Gurus? इह here? एव also? भुञ्जीय enjoy? भोगान् enjoyments? रुधिरप्रदिग्धान् stained with blood.No commentary.
+2.5 गुरून् the Gurus (teachers)? अहत्वा instead of slaying? हि indeed? महानुभावान् most noble? श्रेयः better? भोक्तुम् to eat? भैक्ष्यम् alms? अपि even? इह here? लोके in the world? हत्वा having slain? अर्थकामान् desirous of wealth? तु indeed? गुरून् Gurus? इह here? एव also? भुञ्जीय enjoy? भोगान् enjoyments? रुधिरप्रदिग्धान् stained with blood. No commentary.
 
 ### BG 2.6
 
@@ -279,7 +279,7 @@ I can hardly tell which would be better, that we should conquer them or that the
 
 **English Commentary**
 
-2.6 न not? च and? एतत् this? विद्मः (we) know? कतरत् which? नः for us? गरीयः better? यत् that? वा or? जयेम we should coner? यदि if? वा or? नः us? जयेयुः they should coner? यान् whom? एव even? हत्वा having slain? न not? जिजीविषामः we wish to live? ते those? अवस्थिताः (are) standing? प्रमुखे in face? धार्तराष्ट्राः sons of Dhritarashtra.No commentary.
+2.6 न not? च and? एतत् this? विद्मः (we) know? कतरत् which? नः for us? गरीयः better? यत् that? वा or? जयेम we should coner? यदि if? वा or? नः us? जयेयुः they should coner? यान् whom? एव even? हत्वा having slain? न not? जिजीविषामः we wish to live? ते those? अवस्थिताः (are) standing? प्रमुखे in face? धार्तराष्ट्राः sons of Dhritarashtra. No commentary.
 
 ### BG 2.7
 
@@ -319,7 +319,7 @@ My heart is overpowered by the taint of pity; my mind is confused as to my duty.
 
 **English Commentary**
 
-2.7 कार्पण्यदोषोपहतस्वभावः with nature overpowered by the taint of pity? पृच्छामि I ask? त्वाम् Thee? धर्मसंमूढचेताः with a mind in confusion about duty? यत् which? श्रेयः good? स्यात् may be? निश्चितम् decisively? ब्रूहि say? तत् that? मे for me? शिष्यः disciple? ते Thy? अहम् I? शाधि teach? माम् me? त्वाम् to Thee? प्रपन्नम् taken refuge.No commentary.
+2.7 कार्पण्यदोषोपहतस्वभावः with nature overpowered by the taint of pity? पृच्छामि I ask? त्वाम् Thee? धर्मसंमूढचेताः with a mind in confusion about duty? यत् which? श्रेयः good? स्यात् may be? निश्चितम् decisively? ब्रूहि say? तत् that? मे for me? शिष्यः disciple? ते Thy? अहम् I? शाधि teach? माम् me? त्वाम् to Thee? प्रपन्नम् taken refuge. No commentary.
 
 ### BG 2.8
 
@@ -359,7 +359,7 @@ I do not see that this sorrow that burns up my senses would be removed, even if 
 
 **English Commentary**
 
-2.8 न हि not? प्रपश्यामि I see? मम my? अपनुद्यात् would remove? यत् that? शोकम् grief? उच्छोषणम् drying up? इन्द्रियाणाम् of my senses? अवाप्य having obtained? भूमौ on the earth? असपत्नम् unrivalled? ऋद्धम् prosperous? राज्यम् dominion? सुराणाम् over the gods? अपि even? च and? आधिपत्यम् lordship.No commentary.
+2.8 न हि not? प्रपश्यामि I see? मम my? अपनुद्यात् would remove? यत् that? शोकम् grief? उच्छोषणम् drying up? इन्द्रियाणाम् of my senses? अवाप्य having obtained? भूमौ on the earth? असपत्नम् unrivalled? ऋद्धम् prosperous? राज्यम् dominion? सुराणाम् over the gods? अपि even? च and? आधिपत्यम् lordship. No commentary.
 
 ### BG 2.9
 
@@ -391,14 +391,14 @@ Sanjaya said: Having spoken thus to Hrishikesha, the Lord of the senses, Arjuna,
 
 **Hindi Commentary**
 
-'एवमुक्त्वा हृषीकेषम् ৷৷. बभूव ह'-- अर्जुनने अपना और भगवान् का--दोनोंका पक्ष सामने रखकर उनपर विचार किया, तो अन्तमें वे इसी निर्णयपर पहुँचे कि युद्ध करनेसे तो अधिक-से-अधिक राज्य प्राप्त हो जायगा, मान हो जायगा, संसारमें यश हो जायगा, परन्तु मेरे हृदयमें जो शोक है, चिन्ता है, दुःख है, वे दूर नहीं होंगे। अतः अर्जुनको युद्ध न करना ही ठीक मालूम दिया।
+'एवमुक्त्वा हृषीकेषम् ।।. बभूव ह'-- अर्जुनने अपना और भगवान् का--दोनोंका पक्ष सामने रखकर उनपर विचार किया, तो अन्तमें वे इसी निर्णयपर पहुँचे कि युद्ध करनेसे तो अधिक-से-अधिक राज्य प्राप्त हो जायगा, मान हो जायगा, संसारमें यश हो जायगा, परन्तु मेरे हृदयमें जो शोक है, चिन्ता है, दुःख है, वे दूर नहीं होंगे। अतः अर्जुनको युद्ध न करना ही ठीक मालूम दिया।
 यद्यपि अर्जुन भगवान्की बातका आदर करते हैं और उसको मानना भी चाहते हैं; परंतु उनके भीतर युद्ध करनेकी बात ठीक-ठीक जँच नहीं रही है। इसलिये अर्जुन अपने भीतर जँची हुई बातको ही यहाँ स्पष्टरूपसे, साफ-साफ कह देते हैं कि 'मैं युद्ध नहीं करूँगा'। इस प्रकार जब अपनी बात, अपना निर्णय भगवान्से साफ-साफ कह दिया, तब भगवान्से कहनेके लिये और कोई बात बाकी नहीं रही; अतः वे चुप हो जाते हैं।
 
 सम्बन्ध-- जब अर्जुनने युद्ध करनेके लिये साफ मना कर दिया तब उसके बाद क्या हुआ--इसको सञ्जय आगेके श्लोकमें बताते हैं।
 
 **English Commentary**
 
-2.9 एवम् thus? उक्त्वा having spoken? हृषीकेशम् to Hrishikesha? गुडाकेशः Arjuna (the coneror of sleep)? परन्तप destroyer of foes? न योत्स्ये I will not fight? इति thus? गोविन्दम् to Govinda? उक्त्वा having said? तूष्णीम् silent? बभूव ह became.No commentary.
+2.9 एवम् thus? उक्त्वा having spoken? हृषीकेशम् to Hrishikesha? गुडाकेशः Arjuna (the coneror of sleep)? परन्तप destroyer of foes? न योत्स्ये I will not fight? इति thus? गोविन्दम् to Govinda? उक्त्वा having said? तूष्णीम् silent? बभूव ह became. No commentary.
 
 ### BG 2.10
 
@@ -427,7 +427,7 @@ To him who was despondent in the midst of the two armies, Krishna, smiling, O Bh
 
 **Hindi Commentary**
 
-।। व्याख्या-- तमुवाच हृषीकेषशः ৷৷. विषीदन्तमिदं वचः-- अर्जुनने बड़ी शूरवीरता और उत्साहपूर्वक योद्धाओंको देखनेके लिये भगवान्से दोनों सेनाओंके बीचमें रथ खड़ा करनेके लिये कहा था। अब वहींपर अर्थात् दोनों सेनाओंके बीचमें अर्जुन विषादमग्न हो गये! वास्तवमें होना यह चाहिये था कि वे जिस उद्देश्यसे आये थे, उस उद्देश्यके अनुसार युद्धके लिये खड़े हो जाते। परन्तु उस उद्देश्यको छोड़कर अर्जुन चिन्ता-शोकमें फँस गये। अतः अब दोनों सेनाओंके बीचमें ही भगवान् शोकमग्न अर्जुनको उपदेश देना आरम्भ करते हैं।
+।। व्याख्या-- तमुवाच हृषीकेषशः ।।. विषीदन्तमिदं वचः-- अर्जुनने बड़ी शूरवीरता और उत्साहपूर्वक योद्धाओंको देखनेके लिये भगवान्से दोनों सेनाओंके बीचमें रथ खड़ा करनेके लिये कहा था। अब वहींपर अर्थात् दोनों सेनाओंके बीचमें अर्जुन विषादमग्न हो गये! वास्तवमें होना यह चाहिये था कि वे जिस उद्देश्यसे आये थे, उस उद्देश्यके अनुसार युद्धके लिये खड़े हो जाते। परन्तु उस उद्देश्यको छोड़कर अर्जुन चिन्ता-शोकमें फँस गये। अतः अब दोनों सेनाओंके बीचमें ही भगवान् शोकमग्न अर्जुनको उपदेश देना आरम्भ करते हैं।
 
 'प्रहसन्निव'-- (विशेषतासे हँसते हुएकी तरह-) का तात्पर्य है कि अर्जुनके भाव बदलनेको देखकर अर्थात् पहले जो युद्ध करनेका भाव था, वह अब विषादमें बदल गया--इसको देखकर भगवान्को हँसी आ गयी। दूसरी बात, अर्जुनने पहले (2। 7 में) कहा था कि मैं आपके शरण हूँ, मेरेको शिक्षा दीजिये अर्थात् मैं युद्ध करूँ या न करूँ, मेरेको क्या करना चाहिये-- इसकी शिक्षा दीजिये; परन्तु यहाँ मेरे कुछ बोले बिना अपनी तरफसे ही निश्चय कर लिया कि 'मैं युद्ध नहीं करूँगा'--यह देखकर भगवान्को हँसी आ गयी। कारण कि शरणागत होनेपर 'मैं क्या करूँ और क्या नहीं करूँ' आदि कुछ भी सोचनेका अधिकार नहीं रहता। उसको तो इतना ही अधिकार रहता है कि शरण्य जो काम कहता है, वही काम करे। अर्जुन भगवान्के शरण होनेके बाद 'मैं युद्ध नहीं करूँगा' ऐसा कहकर एक तरहसे शरणागत होनेसे हट गये। इस बातको लेकर भगवान्को हँसी आ गयी। 'इव' का तात्पर्य है कि जोरसे हँसी आनेपर भी भगवान् मुस्कराते हुए ही बोले।
 
@@ -440,7 +440,7 @@ To him who was despondent in the midst of the two armies, Krishna, smiling, O Bh
 
 **English Commentary**
 
-2.10 तम् to him? उवाच spoke? हृषीकेशः Hrishikesha? प्रहसन् smiling? इव as it were? भारत O Bharata? सेनयोः of the armies? उभयोः (of) both? मध्ये in the middle? विषीदन्तम् despondent? इदम् this? वचः word.No commentary.
+2.10 तम् to him? उवाच spoke? हृषीकेशः Hrishikesha? प्रहसन् smiling? इव as it were? भारत O Bharata? सेनयोः of the armies? उभयोः (of) both? मध्ये in the middle? विषीदन्तम् despondent? इदम् this? वचः word. No commentary.
 
 ### BG 2.11
 
@@ -494,7 +494,7 @@ The Blessed Lord said, "You have grieved for those who should not be grieved for
 
 **English Commentary**
 
--- The philosophy of the Gita begins from this verse.Bhishma and Drona deserve no grief because they are eternal in their real nature and they are virtuous men who possess very good conduct. Though you speak words of wisdom? you are unwise because you grieve for those who are really eternal and who deserve no grief. They who are endowed with the knowledge of the Self are wise men. They will not grieve for the living or for the dead because they know well that the Self is immortal and that It is unborn. They also know that there is no such a thing as death? that it is a separation of the astral body from the physical? that death is nothing more than a disintegration of matter and that the five elements of which the body is composed return to their source. Arjuna had forgotten the eternal nature of the Soul and the changing nature of the body. Because of his ignorance? he began to act as if the temporary relations with kinsmen? teachers? etc.? were permanent. He forgot that his relations with this world in his present life were the results of past actions. These? when exhausted? end all relationship and new ones ones crop up when one takes on another body.The result of past actions is known as karm and that portion of the karma which gave rise to the present incarnation is known as prarabdha karma.
+-- The philosophy of the Gita begins from this verse. Bhishma and Drona deserve no grief because they are eternal in their real nature and they are virtuous men who possess very good conduct. Though you speak words of wisdom, you are unwise because you grieve for those who are really eternal and who deserve no grief. They who are endowed with the knowledge of the Self are wise men. They will not grieve for the living or for the dead because they know well that the Self is immortal and that It is unborn. They also know that there is no such a thing as death, that it is a separation of the astral body from the physical, that death is nothing more than a disintegration of matter and that the five elements of which the body is composed return to their source. Arjuna had forgotten the eternal nature of the Soul and the changing nature of the body. Because of his ignorance, he began to act as if the temporary relations with kinsmen, teachers, etc.? were permanent. He forgot that his relations with this world in his present life were the results of past actions. These, when exhausted, end all relationship and new ones ones crop up when one takes on another body. The result of past actions is known as karm and that portion of the karma which gave rise to the present incarnation is known as prarabdha karma.
 
 ### BG 2.12
 
@@ -524,12 +524,12 @@ Nor, at any time, was I not, nor thou, nor these rulers of men; nor, verily, sha
 **Hindi Commentary**
 
 [मात्र संसारमें दो ही वस्तुएँ हैं--शरीरी (सत्) और शरीर (असत्)। ये दोनों ही अशोच्य हैं अर्थात् शोक न शरीरी-(शरीरमें रहनेवाले-) को लेकर हो सकता है और न शरीरको लेकर ही हो सकता है। कारण कि शरीरीका कभी अभाव होता ही नहीं और शरीर कभी रह सकता ही नहीं। इन दोनोंके लिये पूर्वश्लोकमें जो 'अशोच्यान्' पद आया है, उसकी व्याख्या अब शरीरीकी नित्यता और शरीरकी अनित्यताके रूपमें करते हैं।]
- 'न त्वेहाहं जातु ৷৷. जनाधिपाः'-- लोगोंकी दृष्टिसे मैंने जबतक अवतार नहीं लिया था, तबतक मैं इस रूपसे (कृष्णरूपसे) सबके सामने प्रकट नहीं था और तेरा जबतक जन्म नहीं हुआ था, तबतक तू भी इस रूपसे (अर्जुनरूपसे) सबके सामने प्रकट नहीं था तथा इन राजाओंका भी जबतक जन्म नहीं हुआ था, तबतक ये भी इस रूपसे (राजारूपसे) सबके सामने प्रकट नहीं थे। परन्तु मैं, तू और ये राजालोग इस रूपसे प्रकट न होनेपर भी पहले नहीं थे--ऐसी बात नहीं है।
+ 'न त्वेहाहं जातु ।।. जनाधिपाः'-- लोगोंकी दृष्टिसे मैंने जबतक अवतार नहीं लिया था, तबतक मैं इस रूपसे (कृष्णरूपसे) सबके सामने प्रकट नहीं था और तेरा जबतक जन्म नहीं हुआ था, तबतक तू भी इस रूपसे (अर्जुनरूपसे) सबके सामने प्रकट नहीं था तथा इन राजाओंका भी जबतक जन्म नहीं हुआ था, तबतक ये भी इस रूपसे (राजारूपसे) सबके सामने प्रकट नहीं थे। परन्तु मैं, तू और ये राजालोग इस रूपसे प्रकट न होनेपर भी पहले नहीं थे--ऐसी बात नहीं है।
 यहाँ 'मैं, तू और ये राजालोग पहले थे--ऐसा कहनेसे ही काम चल सकता था, पर ऐसा न कहकर 'मैं, तू और ये राजालोग पहले नहीं थे, ऐसी बात नहीं' ऐसा कहा गया है। इसका कारण यह है कि 'पहले नहीं थे' ऐसी बात नहीं' ऐसा कहनेसे 'पहले हम सब जरूर थे'--यह बात दृढ़ हो जाती है। तात्पर्य यह हुआ कि नित्य-तत्त्व सदा ही नित्य है। इसका कभी अभाव था ही नहीं। 'जातु' कहनेका तात्पर्य है कि भूत, भविष्य और वर्तमान-कालमें तथा किसी भी देश, परिस्थिति, अवस्था, घटना, वस्तु आदिमें नित्यतत्त्वका किञ्चिन्मात्र भी अभाव नहीं हो सकता।
 
 **English Commentary**
 
--- Lord Krishna speaks here of the immortality of the Soul or the imperishable nature of the Self (Atman). The Soul exists in the three periods of time (past? present and future). Man continues to exist even after the death of the physical body. There is life beyond.
+-- Lord Krishna speaks here of the immortality of the Soul or the imperishable nature of the Self (Atman). The Soul exists in the three periods of time (past, present and future). Man continues to exist even after the death of the physical body. There is life beyond.
 
 ### BG 2.13
 
@@ -579,7 +579,7 @@ Just as the embodied soul passes through childhood, youth, and old age in this b
 
 **English Commentary**
 
--- Just as there is no interruption in the passing of childhood into youth and youth into old age in this body? so also there is no interruption by death in the continuity of the ego. The Self is not dead at the termination of the stage? viz.? childhood. It is certainly not born again at the beginning of the second stage? viz.? youth. Just as the Self passes unchanged from childhood to youth and from yourth to old age? so also the Self passes unchanged from one body into,another. Therefore? the wise man is not at all distressed about it.
+-- Just as there is no interruption in the passing of childhood into youth and youth into old age in this body, so also there is no interruption by death in the continuity of the ego. The Self is not dead at the termination of the stage, viz.? childhood. It is certainly not born again at the beginning of the second stage, viz.? youth. Just as the Self passes unchanged from childhood to youth and from yourth to old age, so also the Self passes unchanged from one body into,another. Therefore, the wise man is not at all distressed about it.
 
 ### BG 2.14
 
@@ -627,7 +627,7 @@ The contact of the senses with the objects, O son of Kunti, which causes heat an
 
 **English Commentary**
 
--- Cold is pleasant at one time and painful at another. Heat is pleasant in winter but painful in summer. The same object that gives pleasure at one time gives pain at another time. So the sensecontacts that give rise to the sensations of heat and cold? pleasure and pain come and go. Therefore? they are impermanent in nature. The objects come in contact with the senses or the Indriyas? viz.? skin? ear? eye? nose? etc.? and the sensations are carried by the nerves to the mind which has its seat in the brain. It is the mind that feels pleasure and pain. One should try to bear patiently heat and cold? pleasure and pain and develop a balanced state of mind. (Cf.V.22)
+-- Cold is pleasant at one time and painful at another. Heat is pleasant in winter but painful in summer. The same object that gives pleasure at one time gives pain at another time. So the sensecontacts that give rise to the sensations of heat and cold, pleasure and pain come and go. Therefore, they are impermanent in nature. The objects come in contact with the senses or the Indriyas, viz.? skin, ear, eye, nose, etc.? and the sensations are carried by the nerves to the mind which has its seat in the brain. It is the mind that feels pleasure and pain. One should try to bear patiently heat and cold, pleasure and pain and develop a balanced state of mind. (Cf.V.22)
 
 ### BG 2.15
 
@@ -662,7 +662,7 @@ That firm man, whom surely these afflictions do not, O chief among men, to whom 
 
 **English Commentary**
 
--- Dehadhyasa or identification of the Self with the body is the cause of pleasure and pain. The more you are able to identify yourself with the immortal? allpervading Self? the less will you be affected by the pairs of opposites (Dvandvas? pleasure and pain? etc.)Titiksha or the power of endurance develops the willpower. Calm endurance in pleasure and pain? and heat and cold is one of the alifications of an aspirant on the path of Jnana Yoga. It is one of the Shatsampat or sixfold virtues. It is a condition of right knowledge. Titiksha by itself cannot give you Moksha or liberation? but still? when coupled with discrimination and dispassion? it becomes a means to the attainment of Immortality or knowledge of the Self. (Cf.XVII.53)
+-- Dehadhyasa or identification of the Self with the body is the cause of pleasure and pain. The more you are able to identify yourself with the immortal, allpervading Self, the less will you be affected by the pairs of opposites (Dvandvas, pleasure and pain, etc.)Titiksha or the power of endurance develops the willpower. Calm endurance in pleasure and pain, and heat and cold is one of the alifications of an aspirant on the path of Jnana Yoga. It is one of the Shatsampat or sixfold virtues. It is a condition of right knowledge. Titiksha by itself cannot give you Moksha or liberation, but still, when coupled with discrimination and dispassion, it becomes a means to the attainment of Immortality or knowledge of the Self. (Cf.XVII.53)
 
 ### BG 2.16
 
@@ -710,7 +710,7 @@ The unreal has no being; there is no non-being of the real; the truth about both
 
 **English Commentary**
 
--- The changeless? homogeneous Atman or the Self always exists. It is the only solid Reality. This phenomenal world of names and forms is ever changing. Hence it is unreal. The sage or the Jivanmukta is fully aware that the Self always exists and that this world is like a mirage. Through his Jnanachakshus or the eye of intuition? he directly cognises the Self. This world vanishes for him like the snake in the rope? after it has been seen that only the rope exists. He rejects the names and forms and takes the underlying Essence in all the names and forms? viz.? AstiBhatiPriya or Satchidananda or ExistenceKnowledgeBliss Absolute. Hence he is a Tattvadarshi or a knower of the Truth or the Essence.What is changing must be unreal. What is constant or permanent must be real.
+-- The changeless, homogeneous Atman or the Self always exists. It is the only solid Reality. This phenomenal world of names and forms is ever changing. Hence it is unreal. The sage or the Jivanmukta is fully aware that the Self always exists and that this world is like a mirage. Through his Jnanachakshus or the eye of intuition, he directly cognises the Self. This world vanishes for him like the snake in the rope, after it has been seen that only the rope exists. He rejects the names and forms and takes the underlying Essence in all the names and forms, viz.? AstiBhatiPriya or Satchidananda or ExistenceKnowledgeBliss Absolute. Hence he is a Tattvadarshi or a knower of the Truth or the Essence. What is changing must be unreal. What is constant or permanent must be real.
 
 ### BG 2.17
 
@@ -801,7 +801,7 @@ These bodies of the embodied Self, which are eternal, indestructible, and immeas
 
 **English Commentary**
 
--- Lord Krishna explains to Arjuna the nature of the allpervading? immortal Self in a variety of ways and thus induces him to fight by removing his delusion? grief and despondency which are born of ignorance.
+-- Lord Krishna explains to Arjuna the nature of the allpervading, immortal Self in a variety of ways and thus induces him to fight by removing his delusion, grief and despondency which are born of ignorance.
 
 ### BG 2.19
 
@@ -842,7 +842,7 @@ He who takes the Self to be the slayer and he who thinks it is slain, neither of
 
 **English Commentary**
 
--- The Self is nondoer (Akarta) and as It is immutable? It is neither the agent nor the object of the act of slaying. He who thinks I slay or I am slain with the body or the Ahamkara (ego)? he does not really comprehend the true nature of the Self. The Self is indestructible. It exists in the three periods of time. It is Sat (Existence). When the body is destroyed? the Self is not destroyed. The body has to undergo change in any case. It is inevitable. But the Self is not at all affected by it. Verses 19? 20? 21? 23 and 24 speak of the immortality of the Self or Atman. (Cf.XVIII.17)
+-- The Self is nondoer (Akarta) and as It is immutable, It is neither the agent nor the object of the act of slaying. He who thinks I slay or I am slain with the body or the Ahamkara (ego)? he does not really comprehend the true nature of the Self. The Self is indestructible. It exists in the three periods of time. It is Sat (Existence). When the body is destroyed, the Self is not destroyed. The body has to undergo change in any case. It is inevitable. But the Self is not at all affected by it. Verses 19? 20? 21? 23 and 24 speak of the immortality of the Self or Atman. (Cf.XVIII.17)
 
 ### BG 2.20
 
@@ -882,7 +882,7 @@ It is not born, nor does it ever die; after having been, it again does not cease
 
 **English Commentary**
 
-This Self (Atman) is destitute of the six types of transformation or BhavaVikaras such as birth? existence? growth? transformation? decline and death. As It is indivisible (Akhanda). It does not diminish in size. It neither grows nor does It decline. It is ever the same. Birth and death are for the physical body only. Birth and death cannot touch the immortal? allpervading Self.
+This Self (Atman) is destitute of the six types of transformation or BhavaVikaras such as birth, existence, growth, transformation, decline and death. As It is indivisible (Akhanda). It does not diminish in size. It neither grows nor does It decline. It is ever the same. Birth and death are for the physical body only. Birth and death cannot touch the immortal, allpervading Self.
 
 ### BG 2.21
 
@@ -911,7 +911,7 @@ Whoever knows it to be indestructible, eternal, unborn, and inexhaustible, how c
 
 **Hindi Commentary**
 
-।। व्याख्या-- वेदाविनाशिनम् ৷৷. घातयति हन्ति कम्-- इस शरीरीका कभी नाश नहीं होता   इसमें कभी कोई परिवर्तन नहीं होता इसका कभी जन्म नहीं होता और इसमें कभी किसी तरहकी कोई कमी नहीं आती ऐसा जो ठीक अनुभव कर लेता है वह पुरुष कैसे किसको मारे और कैसे किसको मरवाये अर्थात् दूसरोंको मारने और मरवानेमें उस पुरुषकी प्रवृत्ति नहीं हो सकती। वह किसी क्रियाका न तो कर्ता बन सकता है और न कारयिता बन सकता है।
+।। व्याख्या-- वेदाविनाशिनम् ।।. घातयति हन्ति कम्-- इस शरीरीका कभी नाश नहीं होता   इसमें कभी कोई परिवर्तन नहीं होता इसका कभी जन्म नहीं होता और इसमें कभी किसी तरहकी कोई कमी नहीं आती ऐसा जो ठीक अनुभव कर लेता है वह पुरुष कैसे किसको मारे और कैसे किसको मरवाये अर्थात् दूसरोंको मारने और मरवानेमें उस पुरुषकी प्रवृत्ति नहीं हो सकती। वह किसी क्रियाका न तो कर्ता बन सकता है और न कारयिता बन सकता है।
 यहाँ भगवान्ने शरीरीको अविनाशी नित्य अज और अव्यय कहकर उसमें छहों विकारोंका निषेध किया है जैसे  अविनाशी  कहकर मृत्युरूप विकारका  नित्य  कहकर अवस्थान्तर होना और बढ़नारूप विकारका  अज  कहकर जन्म होना और जन्मके बाद होनेवाली सत्तारूप विकारका तथा  अव्यय  कहकर क्षयरूप विकारका निषेध किया गया है। शरीरीमें किसी भी क्रियासे किञ्चिन्मात्र भी कोई विकार नहीं होता।
 अगर भगवान्को  न हन्यते हन्यमाने शरीरे  और  कं घातयति हन्ति कम्  इन पदोंमें शरीरीके कर्ता और कर्म बननेका ही निषेध करना था तो फिर यहाँ करनेनकरनेकी बात न कहकर मरनेमारनेकी बात क्यों कही इसका उत्तर है कि युद्धका प्रसङ्ग होनेसे यहाँ यह कहना जरूरी है कि शरीरी युद्धमें मारनेवाला नहीं बनता क्योंकि इसमें
 
@@ -952,7 +952,7 @@ Just as a man casts off worn-out clothes and puts on new ones, so too the embodi
 
 **Hindi Commentary**
 
-।। व्याख्या-- 'वासांसि जीर्णानि ৷৷. संयाति नवानि देही'-- इसी अध्यायके तेरहवें श्लोकमें सूत्ररूपसे कहा गया था कि देहान्तरकी प्राप्तिके विषयमें धीर पुरुष शोक नहीं करते। अब उसी बातको उदाहरण देकर स्पष्टरूपसे कह रहे हैं कि जैसे पुराने कपड़ोंके परिवर्तनपर मनुष्यको शोक नहीं होता, ऐसे ही शरीरोंके परिवर्तनपर भी शोक नहीं होना चाहिये।
+।। व्याख्या-- 'वासांसि जीर्णानि ।।. संयाति नवानि देही'-- इसी अध्यायके तेरहवें श्लोकमें सूत्ररूपसे कहा गया था कि देहान्तरकी प्राप्तिके विषयमें धीर पुरुष शोक नहीं करते। अब उसी बातको उदाहरण देकर स्पष्टरूपसे कह रहे हैं कि जैसे पुराने कपड़ोंके परिवर्तनपर मनुष्यको शोक नहीं होता, ऐसे ही शरीरोंके परिवर्तनपर भी शोक नहीं होना चाहिये।
 कपड़े मनुष्य ही बदलते हैं, पशु-पक्षी नहीं; अतः यहाँ कपड़े बदलनेके उदाहरणमें  'नरः' पद दिया है। यह  'नरः'  पद मनुष्ययोनिका वाचक है और इसमें स्त्री-पुरुष, बालक-बालिकाएँ, जवान-बूढ़े आदि सभी आ जाते हैं।
 जैसे मनुष्य पुराने कपड़ोंको छोड़कर दूसरे नये कपड़ोंको धारण करता है, ऐसे ही यह देही पुराने शरीरोंको छोड़कर दूसरे नये शरीरोंको धारण करता है। पुराना शरीर छोड़नेको 'मरना' कह देते हैं, और नया शरीर धारण करनेको 'जन्मना' कह देते हैं। जबतक प्रकृतिके साथ सम्बन्ध रहता है, तबतक यह देही पुराने शरीरोंको छोड़कर कर्मोंके अनुसार या अन्तकालीन चिन्तनके अनुसार नये-नये शरीरोंको प्राप्त होता रहता है।
 यहाँ  'शरीराणि'  पदमें बहुवचन देनेका तात्पर्य है कि जबतक शरीरीको अपने वास्तविक स्वरूपका यथार्थ बोध नहीं होता, तबतक यह शरीरी अनन्तकालतक शरीर धारण करता ही रहता है। आजतक इसने कितने शरीर धारण किये हैं, इसकी गिनती भी सम्भव नहीं है। इस बातको लक्ष्यमें रखकर  'शरीराणि'  पदमें बहुवचनका प्रयोग किया गया है तथा सम्पूर्ण जीवोंका लक्ष्य करानेके लिये यहाँ  'देही'  पद आया है।
@@ -972,7 +972,7 @@ Just as a man casts off worn-out clothes and puts on new ones, so too the embodi
 
 **English Commentary**
 
-2.22 वासांसि clothes? जीर्णानि worn out? यथा as? विहाय having cast away? नवानि new? गृह्णाति takes? नरः man? अपराणि others? तथा so? शरीराणि bodies? विहाय having cast away? जीर्णानि wornout? अन्यानि others? संयाति enters? नवानि new? देही the embodied (one).No commentary.
+2.22 वासांसि clothes? जीर्णानि worn out? यथा as? विहाय having cast away? नवानि new? गृह्णाति takes? नरः man? अपराणि others? तथा so? शरीराणि bodies? विहाय having cast away? जीर्णानि wornout? अन्यानि others? संयाति enters? नवानि new? देही the embodied (one). No commentary.
 
 ### BG 2.23
 
@@ -1016,7 +1016,7 @@ Weapons cannot cut it, fire cannot burn it, water cannot wet it, wind cannot dry
 
 **English Commentary**
 
-The Self is indivisible. It has no parts. It is extremely subtle. It is infinite. Therefore? sword cannot cut It fire cannot burn It water cannot wet It wind cannot dry It.
+The Self is indivisible. It has no parts. It is extremely subtle. It is infinite. Therefore, sword cannot cut It fire cannot burn It water cannot wet It wind cannot dry It.
 
 ### BG 2.24
 
@@ -1069,7 +1069,7 @@ This Self cannot be cut, burned, wetted, nor dried up; it is eternal, all-pervas
 
 **English Commentary**
 
-The Self is very subtle. It is beyond the reach of speech and mind. It is very difficult to understand this subtle Self. So Lord Krishna explains the nature of the immortal Self in a variety of ways with various illustrations and examples? so that It can be grasped by the people.Sword cannot cut this Self. It is eternal. Because It is eternal? It is allpervading. Because It is allpervading? It is stable like a stature. Because It is stable? It is immovable. It is everlasting. Therefore? It is not produced out of any cause. It is not new. It is ancient.
+The Self is very subtle. It is beyond the reach of speech and mind. It is very difficult to understand this subtle Self. So Lord Krishna explains the nature of the immortal Self in a variety of ways with various illustrations and examples, so that It can be grasped by the people. Sword cannot cut this Self. It is eternal. Because It is eternal, It is allpervading. Because It is allpervading, It is stable like a stature. Because It is stable, It is immovable. It is everlasting. Therefore, It is not produced out of any cause. It is not new. It is ancient.
 
 ### BG 2.25
 
@@ -1106,7 +1106,7 @@ This Self is said to be unmanifested, unthinkable, and unchangeable. Therefore, 
 
 **English Commentary**
 
-The Self is not an object of perception. It can hardly be seen by the physical eyes. Therefore? the Self is unmanifested. That which is seen by the eyes becomes an object of thought. As the Self cannot be perceived by the eyes? It is unthinkable. Milk when mixed with buttermilk changes its form. The Self cannot change Its form like milk. Hence? It is changeless and immutable. Therefore? thus understanding the Self? thou shouldst not mourn. Thou shouldst not think also that thou art their slayer and that they are killed by thee.
+The Self is not an object of perception. It can hardly be seen by the physical eyes. Therefore, the Self is unmanifested. That which is seen by the eyes becomes an object of thought. As the Self cannot be perceived by the eyes, It is unthinkable. Milk when mixed with buttermilk changes its form. The Self cannot change Its form like milk. Hence, It is changeless and immutable. Therefore, thus understanding the Self, thou shouldst not mourn. Thou shouldst not think also that thou art their slayer and that they are killed by thee.
 
 ### BG 2.26
 
@@ -1135,13 +1135,13 @@ But even if thou thinkest of It as constantly being born and constantly dying, e
 
 **Hindi Commentary**
 
-'अथ चैनं ৷৷. शोचितुमर्हसि'-- भगवान् यहाँ पक्षान्तररमें  'अथ च'  और  'मन्यसे'  पद देकर कहते हैं कि यद्यपि सिद्धान्तकी और सच्ची बात यही है कि देही किसी भी कालमें जन्मने-मरनेवाला नहीं है (गीता 2। 20), तथापि अगर तुम सिद्धान्तसे बिलकुल विरुद्ध बात भी मान लो कि देही नित्य जन्मनेवाला और नित्य मरनेवाला है, तो भी तुम्हें शोक नहीं होना चाहिये। कारण कि जो जन्मेगा, वह मरेगा ही और जो मरेगा, वह जन्मेगा ही--इस नियमको कोई टाल नहीं सकता।
+'अथ चैनं ।।. शोचितुमर्हसि'-- भगवान् यहाँ पक्षान्तररमें  'अथ च'  और  'मन्यसे'  पद देकर कहते हैं कि यद्यपि सिद्धान्तकी और सच्ची बात यही है कि देही किसी भी कालमें जन्मने-मरनेवाला नहीं है (गीता 2। 20), तथापि अगर तुम सिद्धान्तसे बिलकुल विरुद्ध बात भी मान लो कि देही नित्य जन्मनेवाला और नित्य मरनेवाला है, तो भी तुम्हें शोक नहीं होना चाहिये। कारण कि जो जन्मेगा, वह मरेगा ही और जो मरेगा, वह जन्मेगा ही--इस नियमको कोई टाल नहीं सकता।
 अगर बीजको पृथ्वीमें बो दिया जाय, तो वह फूलकर अङ्कुर दे देता है और वही अङ्कुर क्रमशः बढ़कर वृक्षरूप हो जाता है। इसमें सूक्ष्म दृष्टिसे देखा जाय कि क्या वह बीज एक क्षण भी एकरूपसे रहा? पृथ्वीमें वह पहले अपने कठोररूपको छोड़कर कोमलरूपमें हो गया, फिर कोमल-रूपको छोड़कर अङ्कुररूपमें हो गया, इसके बाद अङ्कुरूपको छोड़कर वृक्षरूपमें हो गया और अन्तमें आयु समाप्त होनेपर वह सूख गया। इस तरह बीज एक क्षण भी एकरूपसे नहीं रहा, प्रत्युत प्रतिक्षण बदलता रहा। अगर बीज एक क्षण भी एकरूपसे रहता, तो वृक्षके सूखनेतककी क्रिया कैसे होती? उसने पहले रूपको छोड़ा--यह उसका मरना हुआ, और दूसरे रूपको धारण किया-- यह उसका जन्मना हुआ। इस तरह वह प्रतिक्षण ही जन्मता-मरता रहा। बीजकी ही तरह यह शरीर है। बहुत सूक्ष्मरूपसे वीर्यका जन्तु रजके साथ मिला। वह बढ़ते-बढ़ते बच्चेके रूपमें हो गया और फिर जन्म गया। जन्मके बाद वह बढ़ा, फिर घटा और अन्तमें मर गया। इस तरह शरीर एक क्षण भी एकरूपसे न रहकर बदलता रहा अर्थात् प्रतिक्षण जन्मता-मरता रहा।
 भगवान् कहते हैं कि अगर तुम शरीरकी तरह शरीरीको भी नित्य जन्मने-मरनेवाला मान लो, तो भी यह शोकका विषय नहीं हो सकता।
 
 **English Commentary**
 
-Lord Krishna here? for the sake of argument? takes up the popular supposition. Granting that the Self is again and again born whenever a body comes into being? and again and again dies whenever the body dies? O mightyarmed (O Arjuna of great valour and strength)? thou shouldst not grieve thus? because birth is inevitable to want is dead and death is inevitable to what is born. This is the inexorable or unrelenting Law of Nature.
+Lord Krishna here, for the sake of argument, takes up the popular supposition. Granting that the Self is again and again born whenever a body comes into being, and again and again dies whenever the body dies, O mightyarmed (O Arjuna of great valour and strength)? thou shouldst not grieve thus, because birth is inevitable to want is dead and death is inevitable to what is born. This is the inexorable or unrelenting Law of Nature.
 
 ### BG 2.27
 
@@ -1176,7 +1176,7 @@ For the born, death is certain, and for the dead, birth is certain; therefore, y
 
 **English Commentary**
 
-Birth is sure to happen to that which is dead death is sure to happen to what which is born. Birth and death are certainly unavoidable. Therefore? you should not grieve over an inevitable matter.
+Birth is sure to happen to that which is dead death is sure to happen to what which is born. Birth and death are certainly unavoidable. Therefore, you should not grieve over an inevitable matter.
 
 ### BG 2.28
 
@@ -1212,7 +1212,7 @@ Beings are unmanifest in their beginning, manifest in their middle state, O Arju
 
 **English Commentary**
 
-The physical body is a combination of the five elements. It is seen by the physical eyes only after the five elements have entered into such combination. After death? the body disintegrates and the five elements go back to their source it cannot be seen. Therefore? the body can be seen only in the middle state. The relationship as son? friend? teacher? father? mother? wife? brother and sister is formed through the body on account of attachment and Moha (delusion). Just as planks unite and separate in a river? just as pilgrims unite and separate in a public inn? so also fathers? mothers? sons and brothers unite and separate in this world. This world is a very big public inn. People unite and separate.There is no pot in the beginning and in the end. Even if you see the pot in the middle? you should think and feel that it is illusory and does not really exist. So also there is no body in the beginning and in the end. That which does not exist in the beginning and in the end must be illusory in the middle also. You must think and feel that the body does not really exist in the middle as well.He who thus understands the nature of the body and all human relationships based on it? will not grieve.
+The physical body is a combination of the five elements. It is seen by the physical eyes only after the five elements have entered into such combination. After death, the body disintegrates and the five elements go back to their source it cannot be seen. Therefore, the body can be seen only in the middle state. The relationship as son, friend, teacher, father, mother, wife, brother and sister is formed through the body on account of attachment and Moha (delusion). Just as planks unite and separate in a river, just as pilgrims unite and separate in a public inn, so also fathers, mothers, sons and brothers unite and separate in this world. This world is a very big public inn. People unite and separate. There is no pot in the beginning and in the end. Even if you see the pot in the middle, you should think and feel that it is illusory and does not really exist. So also there is no body in the beginning and in the end. That which does not exist in the beginning and in the end must be illusory in the middle also. You must think and feel that the body does not really exist in the middle as well. He who thus understands the nature of the body and all human relationships based on it, will not grieve.
 
 ### BG 2.29
 
@@ -1269,7 +1269,7 @@ One sees this (the Self) as a wonder; another speaks of it as a wonder; another 
 
 **English Commentary**
 
-The verse may also be interpreted in this manner. He that sees? hears and speaks of the Self is a wonderful man. Such a man is very rare. He is one among many thousands. Thus the Self is very hard to understand.
+The verse may also be interpreted in this manner. He that sees, hears and speaks of the Self is a wonderful man. Such a man is very rare. He is one among many thousands. Thus the Self is very hard to understand.
 
 ### BG 2.30
 
@@ -1315,7 +1315,7 @@ This indweller in the body of everyone is ever indestructible, O Arjuna; therefo
 
 **English Commentary**
 
-The body of any creature may be destroyed but the Self cannot be killed. Therefore you should not grieve regarding any creature whatever? Bhishma or anybody else.
+The body of any creature may be destroyed but the Self cannot be killed. Therefore you should not grieve regarding any creature whatever, Bhishma or anybody else.
 
 ### BG 2.31
 
@@ -1348,7 +1348,7 @@ Further, having regard to your duty, you should not waver, for there is nothing 
 
 **English Commentary**
 
-Lord Krishna now gives to Arjuna wordly reasons for fighting. Up to this time? He talked to Arjuna on the immortality of the Self and gave him philosophical reasons. Now He says to Arjuna? O Arjuna Fighting is a Kshatriyas own duty. You ought not to swerve from that duty. To a Kshatriyta (one born in the warrior or ruling class) nothing is more welcome than a righteous war. A warrior should fight.
+Lord Krishna now gives to Arjuna wordly reasons for fighting. Up to this time, He talked to Arjuna on the immortality of the Self and gave him philosophical reasons. Now He says to Arjuna, O Arjuna Fighting is a Kshatriyas own duty. You ought not to swerve from that duty. To a Kshatriyta (one born in the warrior or ruling class) nothing is more welcome than a righteous war. A warrior should fight.
 
 ### BG 2.32
 
@@ -1381,7 +1381,7 @@ Happy are the Kshatriyas, O Arjuna! who are called to fight in such a battle tha
 
 **English Commentary**
 
-The scriptures declare that if a Kshatriya dies for a righteous cause on the battlefield? he at once goes to heaven.
+The scriptures declare that if a Kshatriya dies for a righteous cause on the battlefield, he at once goes to heaven.
 
 ### BG 2.33
 
@@ -1410,12 +1410,12 @@ But if you will not fight this righteous war, then having abandoned your own dut
 
 **Hindi Commentary**
 
-।। व्याख्या--'अथ चेत्त्वमिमं ৷৷. पापमवाप्स्यसि'-- यहाँ  'अथ' अव्यय पक्षान्तरमें आया है और  'चेत्'  अव्यय सम्भावनाके अर्थमें आया है। इनका तात्पर्य है कि यद्यपि तू युद्धके बिना रह नहीं सकेगा, अपने क्षात्र स्वभावके परवश हुआ तू युद्ध करेगा ही (गीता 18। 60), तथापि अगर ऐसा मान लें कि तू युद्ध नहीं करेगा, तो तेरे द्वारा क्षात्रधर्मका त्याग हो जायगा। क्षात्रधर्मका त्याग होनेसे तुझे पाप लगेगा और तेरी कीर्तिका भी नाश होगा।
+।। व्याख्या--'अथ चेत्त्वमिमं ।।. पापमवाप्स्यसि'-- यहाँ  'अथ' अव्यय पक्षान्तरमें आया है और  'चेत्'  अव्यय सम्भावनाके अर्थमें आया है। इनका तात्पर्य है कि यद्यपि तू युद्धके बिना रह नहीं सकेगा, अपने क्षात्र स्वभावके परवश हुआ तू युद्ध करेगा ही (गीता 18। 60), तथापि अगर ऐसा मान लें कि तू युद्ध नहीं करेगा, तो तेरे द्वारा क्षात्रधर्मका त्याग हो जायगा। क्षात्रधर्मका त्याग होनेसे तुझे पाप लगेगा और तेरी कीर्तिका भी नाश होगा।
  आप-से-आप प्राप्त हुए धर्मरूप कर्तव्यका त्याग करके तू क्या करेगा? अपने धर्मका त्याग करनेसे तुझे परधर्म स्वीकार करना पड़ेगा, जिससे तुझे पाप लगेगा। युद्धका त्याग करनेसे दूसरे लोग ऐसा मानेंगे कि अर्जुन-जैसा शूरवीर भी मरनेसे भयभीत हो गया ! इससे तेरी कीर्तिका नाश होगा।
 
 **English Commentary**
 
-The Lord reminds Arjuna of the fame he had already earned and which he would now lose if he refused to fight. Arjuna had acired great fame by fighting with Lord Siva. Arjuna proceeded on a pilgrimage to the Himalayas. He fought with Siva Who appeared in the guise of a mountaineer (Kirata) and got from Him the Pasupatastra? a celestial weapon.
+The Lord reminds Arjuna of the fame he had already earned and which he would now lose if he refused to fight. Arjuna had acired great fame by fighting with Lord Siva. Arjuna proceeded on a pilgrimage to the Himalayas. He fought with Siva Who appeared in the guise of a mountaineer (Kirata) and got from Him the Pasupatastra, a celestial weapon.
 
 ### BG 2.34
 
@@ -1487,7 +1487,7 @@ The great chariot-warriors will think that you have withdrawn from the battle ou
 
 **English Commentary**
 
-Duryodhana and others will certainly think that you have fled from the battle from fear of Karna and others? but not through compassion and reverence for elders and teachers. Duryodhana and others who have shown great esteem to you on account of your chivalry? bravery and other noble alities? will think very lightly of you and treat you with contempt.
+Duryodhana and others will certainly think that you have fled from the battle from fear of Karna and others, but not through compassion and reverence for elders and teachers. Duryodhana and others who have shown great esteem to you on account of your chivalry, bravery and other noble alities, will think very lightly of you and treat you with contempt.
 
 ### BG 2.36
 
@@ -1516,7 +1516,7 @@ Your enemies, scoffing at your power, will speak many abusive words—what could
 
 **Hindi Commentary**
 
-।। व्याख्या -- अवाच्यवादांश्च ৷৷. निन्दन्तस्तव सामर्थ्यम्  अहित नाम शत्रुका है, अहित करनेवालेका है। तेरे जो दुर्योधन, दुःशासन, कर्ण आदि शत्रु हैं, तेरे वैर न रखनेपर भी वे स्वयं तेरे साथ वैर रखकर तेरा अहित करनेवाले हैं। वे तेरी सामर्थ्यको जानते हैं कि यह बड़ा भारी शूरवीर है। ऐसा जानते हुए भी वे तेरी सामर्थ्यकी निन्दा करेंगे कि यह तो हिजड़ा है। देखो! यह युद्धके मौकेपर हो गया न अलग! क्या यह हमारे सामने टिक सकता है? क्या यह हमारे साथ युद्ध कर सकता है? इस प्रकार तुझे दुःखी करनेके लिये तेरे भीतर जलन पैदा करनेके लिये न जाने कितने न कहनेलायक वचन कहेंगे। उनके वचनोंको तू कैसे सहेगा?
+।। व्याख्या -- अवाच्यवादांश्च ।।. निन्दन्तस्तव सामर्थ्यम्  अहित नाम शत्रुका है, अहित करनेवालेका है। तेरे जो दुर्योधन, दुःशासन, कर्ण आदि शत्रु हैं, तेरे वैर न रखनेपर भी वे स्वयं तेरे साथ वैर रखकर तेरा अहित करनेवाले हैं। वे तेरी सामर्थ्यको जानते हैं कि यह बड़ा भारी शूरवीर है। ऐसा जानते हुए भी वे तेरी सामर्थ्यकी निन्दा करेंगे कि यह तो हिजड़ा है। देखो! यह युद्धके मौकेपर हो गया न अलग! क्या यह हमारे सामने टिक सकता है? क्या यह हमारे साथ युद्ध कर सकता है? इस प्रकार तुझे दुःखी करनेके लिये तेरे भीतर जलन पैदा करनेके लिये न जाने कितने न कहनेलायक वचन कहेंगे। उनके वचनोंको तू कैसे सहेगा?
 
 **English Commentary**
 
@@ -1553,7 +1553,7 @@ Slain, you will obtain heaven; victorious, you will enjoy the earth; therefore, 
 
 **English Commentary**
 
-In either case you will be benefited. Therefore? stand up with the firm resolution I will coner the enemy or die.
+In either case you will be benefited. Therefore, stand up with the firm resolution I will coner the enemy or die.
 
 ### BG 2.38
 
@@ -1583,7 +1583,7 @@ Having made pleasure and pain, gain and loss, victory and defeat equal, engage i
 **Hindi Commentary**
 
 ।। व्याख्या-- [अर्जुनको यह आशंका थी कि युद्धमें कुटुम्बियोंको मारनेसे हमारेको पाप लग जायगा, पर भगवान् यहाँ कहते हैं कि पापका हेतु युद्ध नहीं है, प्रत्युत अपनी कामना है। अतः कामनाका त्याग करके तू युद्धके लिये खड़ा हो जा।]
-    'सुखदुःखे समे ৷৷. ततो युद्धाय युज्यस्व'-- युद्धमें सबसे पहले जय और पराजय होती है, जय-पराजयका परिणाम
+    'सुखदुःखे समे ।।. ततो युद्धाय युज्यस्व'-- युद्धमें सबसे पहले जय और पराजय होती है, जय-पराजयका परिणाम
 होता है--लाभ और हानि तथा लाभ-हानिका परिणाम होता है सुख और दुःख। जयपराजयमें और लाभ-हानिमें सुखी-दुःखी होना तेरा उद्देश्य नहीं है। तेरा उद्देश्य तो इन तीनोंमें सम होकर अपने कर्तव्यका पालन करना है।
 युद्धमें जय-पराजय, लाभ-हानि और सुख-दुःख तो होंगे ही। अतः तू पहलेसे यह विचार कर ले कि मुझे तो केवल अपने कर्तव्यका पालन करना है, जय-पराजय आदिसे कुछ भी मतलब नहीं रखना है। फिर युद्ध करनेसे पाप नहीं लगेगा अर्थात् संसारका बन्धन नहीं होगा।
 सकाम और निष्काम--दोनों ही भावोंसे अपने कर्तव्य-कर्मका पालन करना आवश्यक है। जिसका सकाम भाव है, उसको तो कर्तव्यकर्मके करनेमें आलस्य, प्रमाद बिलकुल नहीं करने चाहिये, प्रत्युत तत्परतासे अपने कर्तव्यका पालन करना चाहिये। जिसका निष्काम भाव है, जो अपना कल्याण चाहता है, उसको भी तत्परतापूर्वक अपने कर्तव्यका पालन करना चाहिये।
@@ -1646,7 +1646,7 @@ This, which has been taught to you, is wisdom concerning Sankhya. Now listen to 
 
 **English Commentary**
 
-Lord Krishna taught Jnana (knowledge) to Arjuna till now. (Sankhya Yoga is the path of Vedanta or Jnana Yoga? which treats of the nature of the Atman or the Self and the methods to attain Selfrealisation. It is not the Sankhya philosophy of sage Kapila.) He is now giving to teach Arjuna the technie or secret of Karma Yoga endowed with which he (or anybody else) can break through the bonds of Karma. The Karma Yogi should perform work without expectation of fruits of his actions? without the idea of agency (or the notin I do this)? without attachment? after annihilating or going beyond all the pairs of opposites such as heat and cold? gain and loss? victoyr and defeat? etc. Dharma and Adharma? or merit and demerit will not touch that Karma Yogi who works without attachment and egoism. The Karma Yogi consecrates all his works and their fruits as offerings unto the Lord (Isvararpanam) and thus obtains the grace of the Lord (Isvaraprasada).
+Lord Krishna taught Jnana (knowledge) to Arjuna till now. (Sankhya Yoga is the path of Vedanta or Jnana Yoga, which treats of the nature of the Atman or the Self and the methods to attain Selfrealisation. It is not the Sankhya philosophy of sage Kapila.) He is now giving to teach Arjuna the technie or secret of Karma Yoga endowed with which he (or anybody else) can break through the bonds of Karma. The Karma Yogi should perform work without expectation of fruits of his actions, without the idea of agency (or the notin I do this)? without attachment, after annihilating or going beyond all the pairs of opposites such as heat and cold, gain and loss, victoyr and defeat, etc. Dharma and Adharma, or merit and demerit will not touch that Karma Yogi who works without attachment and egoism. The Karma Yogi consecrates all his works and their fruits as offerings unto the Lord (Isvararpanam) and thus obtains the grace of the Lord (Isvaraprasada).
 
 ### BG 2.40
 
@@ -1694,7 +1694,7 @@ In this, there is no loss of effort, nor is there any harm produced, nor any tra
 
 **English Commentary**
 
-If a religious ceremony is left uncompleted? it is a wastage as the performer cannot realise the fruits. But it is not so in the case of Karma Yoga because every action causes immediate purification of the heart.In agriculture there is uncertainty. The farmer may till the land? plough and sow the seed but he may not get a crop if there is no rain. This is not so in Karma Yoga. There is no uncertainty at all. Further? there is no chance of any harm coming out of it. In the case of medical treatment great harm will result from the doctors injudicious treatment if he uses a wrong medicine. But it is not so in the case of Karma Yoga. Anything done? however little it may be? in this path of Yoga? the Yoga of action? saves one from great fear of being caught in the wheel of birth and death. Lord Krishna here extols Karma Yoga in order to create interest in Arjuna in this Yoga.
+If a religious ceremony is left uncompleted, it is a wastage as the performer cannot realise the fruits. But it is not so in the case of Karma Yoga because every action causes immediate purification of the heart. In agriculture there is uncertainty. The farmer may till the land, plough and sow the seed but he may not get a crop if there is no rain. This is not so in Karma Yoga. There is no uncertainty at all. Further, there is no chance of any harm coming out of it. In the case of medical treatment great harm will result from the doctors injudicious treatment if he uses a wrong medicine. But it is not so in the case of Karma Yoga. Anything done, however little it may be, in this path of Yoga, the Yoga of action, saves one from great fear of being caught in the wheel of birth and death. Lord Krishna here extols Karma Yoga in order to create interest in Arjuna in this Yoga.
 
 ### BG 2.41
 
@@ -1727,7 +1727,7 @@ Here, O joy of the Kurus, there is only one single-pointed determination; many-b
 
 **English Commentary**
 
-Here? in this path to Bliss there is only one thought of a resolute nature there is singleminded determination. This single thought arises from the right source of knowledge. The student of Yoga collects all the dissipated rays of the mind. He gathers all of them through discrimination? dispassion and concentration. He is free from wavering or vacillation of the mind.The worldlyminded man who is suck in the mire of Samsara has no singleminded determination. He entertains countless thoughts. His mind is always unsteady and vacillating.If thoughts cease? Samsara also ceases. Mind generates endless thoughts and this world comes into being. Thoughts? and names and forms are inseparable. If the thoughts are controlled? the mind is controlled and the Yogi is liberated.
+Here, in this path to Bliss there is only one thought of a resolute nature there is singleminded determination. This single thought arises from the right source of knowledge. The student of Yoga collects all the dissipated rays of the mind. He gathers all of them through discrimination, dispassion and concentration. He is free from wavering or vacillation of the mind. The worldlyminded man who is suck in the mire of Samsara has no singleminded determination. He entertains countless thoughts. His mind is always unsteady and vacillating. If thoughts cease, Samsara also ceases. Mind generates endless thoughts and this world comes into being. Thoughts, and names and forms are inseparable. If the thoughts are controlled, the mind is controlled and the Yogi is liberated.
 
 ### BG 2.42
 
@@ -1771,7 +1771,7 @@ The unwise, taking pleasure in the eulogizing words of the Vedas, utter flowery 
 
 **English Commentary**
 
-Unwise people who are lacking in discrimination lay great stress upon the Karma Kanda or the ritualistic portion of the Vedas? which lays down specific rules for specific actions for,the attainment of specific fruits and ectol these actions and rewards unduly. They are highly enamoured of such Vedic passages which prescribe ways for the attainment of heavenly enjoyments. They say that there is nothing else beyond the sensual enjoyments in Svarga (heaven) which can be obtained by performing the rites of the Karma Kanda of the Vedas.There are two main divisions of the Vedas -- Karma Kanda (the section dealing with action) and Jnana Kanda (the section dealing with knowledge). The Karma Kanda comprises the Brahmanas and the Samhitas. This is the authority for the Purvamimamsa school founded by Jaimini. The followers of this school deal with rituals and prescribe many of them for attaining enjoyments and power here and happiness in heaven. They regard this as the ultimate object of human existence. Ordinary people are attracted by their panegyrics. The Jnana Kanda comprises the Aranyakas and the Upanishads which deal with the nature of Brahman or the Supreme Self.Life in heaven is also transitory. After the fruits of the good actions are exhausted? one has to come back to this earthplane. Liberatio or Moksha can only be attained by knowledge of the Self but not by performing a thousand and one sacrifices.Lord Krishna assigns a comparatively inferior position to the doctrine of the Mimamsakas of performing Vedic sacrifices for obtaining heaven? power and lordship in this world as they cannot give us final liberation.
+Unwise people who are lacking in discrimination lay great stress upon the Karma Kanda or the ritualistic portion of the Vedas, which lays down specific rules for specific actions for,the attainment of specific fruits and ectol these actions and rewards unduly. They are highly enamoured of such Vedic passages which prescribe ways for the attainment of heavenly enjoyments. They say that there is nothing else beyond the sensual enjoyments in Svarga (heaven) which can be obtained by performing the rites of the Karma Kanda of the Vedas. There are two main divisions of the Vedas -- Karma Kanda (the section dealing with action) and Jnana Kanda (the section dealing with knowledge). The Karma Kanda comprises the Brahmanas and the Samhitas. This is the authority for the Purvamimamsa school founded by Jaimini. The followers of this school deal with rituals and prescribe many of them for attaining enjoyments and power here and happiness in heaven. They regard this as the ultimate object of human existence. Ordinary people are attracted by their panegyrics. The Jnana Kanda comprises the Aranyakas and the Upanishads which deal with the nature of Brahman or the Supreme Self. Life in heaven is also transitory. After the fruits of the good actions are exhausted, one has to come back to this earthplane. Liberatio or Moksha can only be attained by knowledge of the Self but not by performing a thousand and one sacrifices. Lord Krishna assigns a comparatively inferior position to the doctrine of the Mimamsakas of performing Vedic sacrifices for obtaining heaven, power and lordship in this world as they cannot give us final liberation.
 
 ### BG 2.43
 
@@ -1815,7 +1815,7 @@ Full of desires, with heaven as their goal, (they speak words that are directed 
 
 **English Commentary**
 
-2.43 कामात्मानः full of desires? स्वर्गपराः with heaven as their highest goal? जन्मकर्मफलप्रदाम् leading to (new) births as the result of their works? क्रियाविशेषबहुलाम् exuberant with various specifi actions? भोगैश्वर्यगतिम् प्रति for the attainment of pleasure and lordship.No commentary.
+2.43 कामात्मानः full of desires? स्वर्गपराः with heaven as their highest goal? जन्मकर्मफलप्रदाम् leading to (new) births as the result of their works? क्रियाविशेषबहुलाम् exuberant with various specifi actions? भोगैश्वर्यगतिम् प्रति for the attainment of pleasure and lordship. No commentary.
 
 ### BG 2.44
 
@@ -1897,7 +1897,7 @@ The Vedas deal with the three attributes; be thou above these three attributes. 
 
 **English Commentary**
 
-Guna means attribute or ality. It is substance as well as ality. Nature (Prakriti) is made up of three Gunas? viz.? Sattva (purity? light or harmony)? Rajas (passion or motion) and Tamas (darkness or inertia). The pairs of opposites are heat and cold? pleasure and pain? gain and loss? victory and defeat? honour and dishonour? praise and censure. He who is anxious about new acuqisitions or about the preservation of his old possessions cannot have peace of mind. He is ever restless. He cannot concentrate or meditate on the Self. He cannot practise virtue. Therefore? Lord Krishna advises Arjuna that he should be free from the thought of acisition and preservation of things. (Cf.IX.20?21).
+Guna means attribute or ality. It is substance as well as ality. Nature (Prakriti) is made up of three Gunas, viz.? Sattva (purity, light or harmony)? Rajas (passion or motion) and Tamas (darkness or inertia). The pairs of opposites are heat and cold, pleasure and pain, gain and loss, victory and defeat, honour and dishonour, praise and censure. He who is anxious about new acuqisitions or about the preservation of his old possessions cannot have peace of mind. He is ever restless. He cannot concentrate or meditate on the Self. He cannot practise virtue. Therefore, Lord Krishna advises Arjuna that he should be free from the thought of acisition and preservation of things. (Cf.IX.20?21).
 
 ### BG 2.46
 
@@ -1933,7 +1933,7 @@ To the Brahmana who has known the Self, all the Vedas are of as much use as a re
 
 **English Commentary**
 
-Only for a sage who has realised the Self? the Vedas are of no use? because he is in possession of the infinite knowledge of the Self. This does not? however? mean that the Vedas are useless. They are useful for the neophytes or the aspirants who have just started on the spiritual path.All the transient pleasures derivable from the proper performance of all actions enjoined in the Vedas are comprehended in the infinite bliss of Selfknowledge.
+Only for a sage who has realised the Self, the Vedas are of no use, because he is in possession of the infinite knowledge of the Self. This does not, however, mean that the Vedas are useless. They are useful for the neophytes or the aspirants who have just started on the spiritual path. All the transient pleasures derivable from the proper performance of all actions enjoined in the Vedas are comprehended in the infinite bliss of Selfknowledge.
 
 ### BG 2.47
 
@@ -1970,7 +1970,7 @@ Your right is only to work, but not to its results; do not let the results of ac
 
 **English Commentary**
 
-When you perform actions have no desire for the fruits thereof under any circumstances. If you thirst for the fruits of your actions? you will have to take birth again and again to enjoy them. Action done with expectation of fruits (rewards) brings bondage. If you do not thirst for them? you get purification of heart and you will get knowledge of the Self through purity of heart and through the knowledge of the Self you will be freed from the round of births and deaths.Neither let thy attachment be towards inaction thinking what is the use of doing actions when I cannot get any reward for themIn a broad sense Karma means action. It also means duty which one has to perform according to his caste or station of life. According to the followers of the Karma Kanda of the Vedas (the Mimamsakas) Karma means the rituals and sacrifices prescribed in the Vedas. It has a deep meaning also. It signifies the destiny or the storehouse of tendencies of a man which give rise to his future birth.
+When you perform actions have no desire for the fruits thereof under any circumstances. If you thirst for the fruits of your actions, you will have to take birth again and again to enjoy them. Action done with expectation of fruits (rewards) brings bondage. If you do not thirst for them, you get purification of heart and you will get knowledge of the Self through purity of heart and through the knowledge of the Self you will be freed from the round of births and deaths. Neither let thy attachment be towards inaction thinking what is the use of doing actions when I cannot get any reward for themIn a broad sense Karma means action. It also means duty which one has to perform according to his caste or station of life. According to the followers of the Karma Kanda of the Vedas (the Mimamsakas) Karma means the rituals and sacrifices prescribed in the Vedas. It has a deep meaning also. It signifies the destiny or the storehouse of tendencies of a man which give rise to his future birth.
 
 ### BG 2.48
 
@@ -2037,7 +2037,7 @@ Far lower than the Yoga of wisdom is action, O Arjuna. Seek thou refuge in wisdo
 
 **English Commentary**
 
-Action done with evenness of mind is Yoga of wisdom. The yogi who is established in the Yoga of widdom is not affected by success or failure. He does not seek fruits of his actions. He has poised reason. His reason is rooted in the Self. Action performed by one who expects fruits for his actions? is far inferior to the Yoga of wisdom wherein the seeker does not seek fruits because the former leads to bondage and is the cause of birth and death. (Cf.VIII.18).
+Action done with evenness of mind is Yoga of wisdom. The yogi who is established in the Yoga of widdom is not affected by success or failure. He does not seek fruits of his actions. He has poised reason. His reason is rooted in the Self. Action performed by one who expects fruits for his actions, is far inferior to the Yoga of wisdom wherein the seeker does not seek fruits because the former leads to bondage and is the cause of birth and death. (Cf.VIII.18).
 
 ### BG 2.50
 
@@ -2078,7 +2078,7 @@ Endowed with wisdom and evenness of mind, one casts off in this life both good a
 
 **English Commentary**
 
-Work performed with motive towards fruits only can bind a man. It will bring the fruits and the performer of the action will have to take birth again in this mortal world to enjoy them. If work is performed with evennes of mind (the Yoga of wisdom? i.e.? united to pure Buddhi? intelligence or reason) with the mind resting in the Lord? it will not bind him it will not bring any fruit it is no work at all. Actions which are of a binding nature lose that nature when performed with eanimity of mind? or poised reason. The Yogi of poised reason attributes all actions to the Divine Actor within (Isvara or God).
+Work performed with motive towards fruits only can bind a man. It will bring the fruits and the performer of the action will have to take birth again in this mortal world to enjoy them. If work is performed with evennes of mind (the Yoga of wisdom, i.e.? united to pure Buddhi, intelligence or reason) with the mind resting in the Lord, it will not bind him it will not bring any fruit it is no work at all. Actions which are of a binding nature lose that nature when performed with eanimity of mind, or poised reason. The Yogi of poised reason attributes all actions to the Divine Actor within (Isvara or God).
 
 ### BG 2.51
 
@@ -2118,7 +2118,7 @@ The wise, possessing knowledge, having abandoned the fruits of their actions, an
 
 **English Commentary**
 
-Clinging to the fruits of actions is the cause of rirth. Man takes a body to enjoy them. If anyone performs actions for the sake of God in fulfilment of His purpose without desire for the fruits? he is released from the bonds of birth and attains to the blissful state or the immortal abode.Sages who possess evenness of mind abandon the fruits of their actions and thus escape from good and bad actions.Buddhi referred to in the three verses 49? 50 and 51 may be the wisdom of the Sankhyas? i.e.? the knowledge of the Self or AtmaJnana which dawns when the mind is purified by Karma Yoga.
+Clinging to the fruits of actions is the cause of rirth. Man takes a body to enjoy them. If anyone performs actions for the sake of God in fulfilment of His purpose without desire for the fruits, he is released from the bonds of birth and attains to the blissful state or the immortal abode. Sages who possess evenness of mind abandon the fruits of their actions and thus escape from good and bad actions. Buddhi referred to in the three verses 49? 50 and 51 may be the wisdom of the Sankhyas, i.e.? the knowledge of the Self or AtmaJnana which dawns when the mind is purified by Karma Yoga.
 
 ### BG 2.52
 
@@ -2161,7 +2161,7 @@ When your intellect passes beyond the mire of delusion, then you will attain ind
 
 **English Commentary**
 
-The mire of delusion is the identification of the Self with the notself. The sense of discrimination between the Self and the notSelf is confounded by the mire of delusion and the mind runs towards the sensual objects and the body is takes as the pure Self. When you attain purity of mind? you will attain to indifference regarding things heard and yet to be heard. They will appear to you to be of no use. You will not care a bit for them. You will entertain disgust for them. (Cf.XVI.24).
+The mire of delusion is the identification of the Self with the notself. The sense of discrimination between the Self and the notSelf is confounded by the mire of delusion and the mind runs towards the sensual objects and the body is takes as the pure Self. When you attain purity of mind, you will attain to indifference regarding things heard and yet to be heard. They will appear to you to be of no use. You will not care a bit for them. You will entertain disgust for them. (Cf.XVI.24).
 
 ### BG 2.53
 
@@ -2197,7 +2197,7 @@ When your intellect, which is perplexed by the Vedic texts you have read, stands
 
 **English Commentary**
 
-When your intellect which is tossed about by the conflict of opinions regarding the Pravritti Marga (the path of action) and the Nivritti Marga (the path of retirement or renunciation) has become immovable without distraction and doubt and firmly established in the Self? then thou shalt attain Selfrealisation or knowledge of the Self (AtmaJnana).
+When your intellect which is tossed about by the conflict of opinions regarding the Pravritti Marga (the path of action) and the Nivritti Marga (the path of retirement or renunciation) has become immovable without distraction and doubt and firmly established in the Self, then thou shalt attain Selfrealisation or knowledge of the Self (AtmaJnana).
 
 ### BG 2.54
 
@@ -2225,7 +2225,7 @@ arjunaḥ uvācha—Arjun said; sthita-prajñasya—one with steady intellect; k
 
 **English Meaning**
 
-Arjuna said, "O Krishna, what is the description of one who has steady wisdom and is merged in the superconscious state? How does one of steady wisdom speak, how do they sit, and how do they walk?"
+Arjuna said, "O Krishna, what is the description of one who has steady wisdom and is merged in the superconscious state, How does one of steady wisdom speak, how do they sit, and how do they walk?"
 
 **Hindi Commentary**
 
@@ -2233,7 +2233,7 @@ Arjuna said, "O Krishna, what is the description of one who has steady wisdom an
 
 **English Commentary**
 
-Arjuna wants to know from Lord Krishna the characteristic marks of one who is established in the Self in Samadhi how he speaks? how he sits? how he moves about.The characteristic marks of the sage of steady wisdom and the means of attaining that steady knowledge of the Self are described in the verses from 55 to 72 of this chapter.Steady wisdom is settled knowledge of ones identity with Brahman attained by direct realisation. (Cf.XIV.21? 27).
+Arjuna wants to know from Lord Krishna the characteristic marks of one who is established in the Self in Samadhi how he speaks, how he sits, how he moves about. The characteristic marks of the sage of steady wisdom and the means of attaining that steady knowledge of the Self are described in the verses from 55 to 72 of this chapter. Steady wisdom is settled knowledge of ones identity with Brahman attained by direct realisation. (Cf.XIV.21? 27).
 
 ### BG 2.55
 
@@ -2278,7 +2278,7 @@ The Blessed Lord said, "When a man completely casts off, O Arjuna, all the desir
 
 **English Commentary**
 
-In this verse Lord Krishna gives His answer to the first part of Arjunas estion.If anyone gets sugarcandy will he crave for blacksugar Certainly not. If anyone can attain the supreme bliss of the Self? will he thirst for the sensual pleasures No? not at all. The sumtotal of all the pleasures of the world will seem worthless for the sage of steady wisdom who is satisfied in the Self. (Cf.III.17VI.7?8).
+In this verse Lord Krishna gives His answer to the first part of Arjunas estion. If anyone gets sugarcandy will he crave for blacksugar Certainly not. If anyone can attain the supreme bliss of the Self, will he thirst for the sensual pleasures No, not at all. The sumtotal of all the pleasures of the world will seem worthless for the sage of steady wisdom who is satisfied in the Self. (Cf.III.17VI.7?8).
 
 ### BG 2.56
 
@@ -2314,7 +2314,7 @@ He whose mind is not shaken by adversity, who does not long for pleasures, and i
 
 **English Commentary**
 
-Lord Krishna gives His answer to the second part of Arjunas estion as to the conduct of a sage of steady wisdom in the 56th? 57th and 58th verses.The mind of a sage of steady wisdom is not distressed in calamities. He is not affected by the three afflictions (Taapas) -- Adhyatmika (arising from diseases or disorders in ones own body)? Adhidaivika (arising from thunder? lightning? storm? flood? etc.)? and Adhibhautika (arising from scorpions? cobras? tigers? etc.). When he is placed in an affluent condition he does not long for sensual pleasures. (Cf.IV.10).
+Lord Krishna gives His answer to the second part of Arjunas estion as to the conduct of a sage of steady wisdom in the 56th? 57th and 58th verses. The mind of a sage of steady wisdom is not distressed in calamities. He is not affected by the three afflictions (Taapas) -- Adhyatmika (arising from diseases or disorders in ones own body)? Adhidaivika (arising from thunder, lightning, storm, flood, etc.)? and Adhibhautika (arising from scorpions, cobras, tigers, etc.). When he is placed in an affluent condition he does not long for sensual pleasures. (Cf.IV.10).
 
 ### BG 2.57
 
@@ -2389,7 +2389,7 @@ When, like the tortoise which withdraws all its limbs on all sides, he withdraws
 
 **Hindi Commentary**
 
-।। व्याख्या-- 'यदा संहरते ৷৷. प्रज्ञा प्रतिष्ठिता'--  यहाँ कछुएका दृष्टान्त देनेका तात्पर्य है कि जैसे कछुआ चलता है तो उसके छः अङ्ग दीखते हैं--चार पैर, एक पूँछ और एक मस्तक। परन्तु जब वह अपने अङ्गोंको छिपा लेता है, तब केवल उसकी पीठ ही दिखायी देती है। ऐसे ही स्थितप्रज्ञ पाँच इन्द्रियाँ और एक मन--इन छहोंको अपने-अपने विषयसे हटा लेता है। अगर उसका इन्द्रियों आदिके साथ किञ्चिन्मात्र भी मानसिक सम्बन्ध बना रहता है, तो वह स्थितप्रज्ञ नहीं होता।
+।। व्याख्या-- 'यदा संहरते ।।. प्रज्ञा प्रतिष्ठिता'--  यहाँ कछुएका दृष्टान्त देनेका तात्पर्य है कि जैसे कछुआ चलता है तो उसके छः अङ्ग दीखते हैं--चार पैर, एक पूँछ और एक मस्तक। परन्तु जब वह अपने अङ्गोंको छिपा लेता है, तब केवल उसकी पीठ ही दिखायी देती है। ऐसे ही स्थितप्रज्ञ पाँच इन्द्रियाँ और एक मन--इन छहोंको अपने-अपने विषयसे हटा लेता है। अगर उसका इन्द्रियों आदिके साथ किञ्चिन्मात्र भी मानसिक सम्बन्ध बना रहता है, तो वह स्थितप्रज्ञ नहीं होता।
 यहाँ  'संहरते' क्रिया देनेका मतलब यह हुआ कि वह स्थितप्रज्ञ विषयोंसे इन्द्रियोंका उपसंहार कर लेता है अर्थात वह मनसे भी विषयोंका चिन्तन नहीं करता।
 इस श्लोकमें  'यदा'  पद तो दिया है, पर  'तदा'  पद नहीं दिया है। यद्यपि  'यत्तदोर्नित्यसम्बन्धः'  के अनुसार जहाँ  'यदा'  आता है, वहाँ  'तदा'  का अध्याहार लिया जाता है अर्थात्  'यदा'  पदके अन्तर्गत ही  'तदा'  पद आ जाता है, तथापि यहाँ  'तदा'  पदका प्रयोग न करनेका एक गहरा तात्पर्य है कि इन्द्रियोंके अपने-अपने विषयोंसे सर्वथा हट जानेसे स्वतःसिद्ध तत्त्वका जो अनुभव होता है, वह कालके अधीन, कालकी सीमामें नहीं है। कारण कि वह अनुभव किसी क्रिया अथवा त्यागका फल नहीं है। वह अनुभव उत्पन्न होनेवाली वस्तु नहीं है। अतः यहाँ कालवाचक  'तदा'  पद देनेकी जरूरत नहीं है। इसकी जरूरत तो वहाँ होती है, जहाँ कोई वस्तु किसी वस्तुके अधीन होती है। जैसे आकाशमें सूर्य रहनेपर भी आँखें बंद कर लेनेसे सूर्य नहीं दीखता और आँखें खोलते ही सूर्य दीख जाता है, तो यहाँ सूर्य और आँखोंमें कार्य-कारणका सम्बन्ध नहीं है अर्थात् आँखें खुलनेसे सूर्य पैदा नहीं हुआ है। सूर्य तो पहलसे ज्यों-का-त्यों ही है। आँखे बंद करनेसे पहले भी सूर्य वैसा ही है और आँखें बंद करनेपर भी सूर्य वैसा ही है। केवल आँखें बंद करनेसे हमें उसका अनुभव नहीं हुआ था। ऐसे ही यहाँ इन्द्रियोंको विषयोंसे हटानेसे स्वतःसिद्ध परमात्मतत्त्वका जो अनुभव हुआ है, वह अनुभव मनसहित इन्द्रियोंका विषय नहीं है। तात्पर्य है कि वह स्वतः सिद्ध तत्त्व भोगों-(विषयों-) के साथ सम्बन्ध रखते हुए और भोगोंको भोगते हुए भी वैसा ही है। परन्तु भोगोंके साथ सम्बन्धरूप परदा रहनसे उसका अनुभव नहीं होता, और यह परदा हटते ही उसका अनुभव हो जाता है।
 
@@ -2397,7 +2397,7 @@ When, like the tortoise which withdraws all its limbs on all sides, he withdraws
 
 **English Commentary**
 
-Withdrawal of the senses is Pratyahara or abstraction. The mind has a natural,tendency to run towards external objects. The Yogi again and again withdraws the mind from the objects of the senses and fixes it on the Self. A Yogi who is endowed with the power of Pratyahara can enter into Samadhi even in a crowded place by withdrawing his senses within the twinkling of an eye. He is not disturbed by tumultuous sounds and noises of any description. Even on the battlefield he can rest in his centre? the Self? by withdrawing his senses. He who practises Pratyahara is dead to the world. He will not be affected by the outside vibrations. At any time by mere willing he can bring his senses under his perfect control. They are his obedient servants or instruments.
+Withdrawal of the senses is Pratyahara or abstraction. The mind has a natural,tendency to run towards external objects. The Yogi again and again withdraws the mind from the objects of the senses and fixes it on the Self. A Yogi who is endowed with the power of Pratyahara can enter into Samadhi even in a crowded place by withdrawing his senses within the twinkling of an eye. He is not disturbed by tumultuous sounds and noises of any description. Even on the battlefield he can rest in his centre, the Self, by withdrawing his senses. He who practises Pratyahara is dead to the world. He will not be affected by the outside vibrations. At any time by mere willing he can bring his senses under his perfect control. They are his obedient servants or instruments.
 
 ### BG 2.59
 
@@ -2435,7 +2435,7 @@ The objects of the senses turn away from the abstinent man, leaving the longing 
 
 **English Commentary**
 
-Knowledge of the Self alone can destroy in toto the subtle Vasanas (latent tendencies) and all the subtle desires? all subtle attachments and even the longing for objects. By practising severe austerities? by abandoning the sensual objects? the objects of the senses may turn away from the ascetic but the relish or taste or longing for the objects will still remain.
+Knowledge of the Self alone can destroy in toto the subtle Vasanas (latent tendencies) and all the subtle desires, all subtle attachments and even the longing for objects. By practising severe austerities, by abandoning the sensual objects, the objects of the senses may turn away from the ascetic but the relish or taste or longing for the objects will still remain.
 
 ### BG 2.60
 
@@ -2464,14 +2464,14 @@ The turbulent senses, O Arjuna, can violently carry away the mind of a wise pers
 
 **Hindi Commentary**
 
-।। व्याख्या-- 'यततो ह्यपि ৷৷. प्रसभं मनः'-- (टिप्पणी प0 98.1) जो स्वयं यत्न करता है, साधन करता है, हरेक कामको विवेक-पूर्वक करता है, आसक्ति और फलेच्छाका त्याग करता है, दूसरोंका हित हो दूसरोंको सुख पहुँचे, दूसरोंका कल्याण हो--ऐसा भाव रखता है और वैसी क्रिया भी करता है, जो स्वयं कर्त्तव्य-अकर्त्तव्य ,सार-असारको जानता है और कौन-कौन-से कर्म करनेसे उनका क्या-क्या परिणाम होता है--इसको भी जाननेवाला है, ऐसे विद्वान पुरुषके लिय यहाँ 'यततो ह्यपि पुरुषस्य विपश्चितः' पद आये हैं। प्रयत्न करनेवाले ऐसे विद्वान् पुरुषकी भी प्रमथनशील इन्द्रियाँ उसके मनको बलपूर्वक हर लेती हैं विषयोंकी तरफ खींच लेती हैं, अर्थात् वह विषयोंकी तरफ खिंच जाता है आकृष्ट हो जाता है। इसका कारण यह है कि जबतक बुद्धि सर्वथा परमात्म-तत्त्वमें प्रतिष्ठित (स्थित) नहीं होती, बुद्धिमें संसारकी यत्किञ्चित् सत्ता रहती है, विषयेन्द्रिय-सम्बन्धसे सुख होता है, भोगे हुए भोगोंके संस्कार रहते हैं, तबतक साधनपरायण बुद्धिमान् विवेकी पुरुषकी भी इन्द्रियाँ सर्वथा वशमें नहीं होतीं। इन्द्रियोंके विषय सामने आनेपर भोगे हुए भोगोंके संस्कारओंके
+।। व्याख्या-- 'यततो ह्यपि ।।. प्रसभं मनः'-- (टिप्पणी प0 98.1) जो स्वयं यत्न करता है, साधन करता है, हरेक कामको विवेक-पूर्वक करता है, आसक्ति और फलेच्छाका त्याग करता है, दूसरोंका हित हो दूसरोंको सुख पहुँचे, दूसरोंका कल्याण हो--ऐसा भाव रखता है और वैसी क्रिया भी करता है, जो स्वयं कर्त्तव्य-अकर्त्तव्य ,सार-असारको जानता है और कौन-कौन-से कर्म करनेसे उनका क्या-क्या परिणाम होता है--इसको भी जाननेवाला है, ऐसे विद्वान पुरुषके लिय यहाँ 'यततो ह्यपि पुरुषस्य विपश्चितः' पद आये हैं। प्रयत्न करनेवाले ऐसे विद्वान् पुरुषकी भी प्रमथनशील इन्द्रियाँ उसके मनको बलपूर्वक हर लेती हैं विषयोंकी तरफ खींच लेती हैं, अर्थात् वह विषयोंकी तरफ खिंच जाता है आकृष्ट हो जाता है। इसका कारण यह है कि जबतक बुद्धि सर्वथा परमात्म-तत्त्वमें प्रतिष्ठित (स्थित) नहीं होती, बुद्धिमें संसारकी यत्किञ्चित् सत्ता रहती है, विषयेन्द्रिय-सम्बन्धसे सुख होता है, भोगे हुए भोगोंके संस्कार रहते हैं, तबतक साधनपरायण बुद्धिमान् विवेकी पुरुषकी भी इन्द्रियाँ सर्वथा वशमें नहीं होतीं। इन्द्रियोंके विषय सामने आनेपर भोगे हुए भोगोंके संस्कारओंके
 कारण इन्द्रियाँ मन-बुद्धिको जबर्दस्ती विषयोंकी तरफ खींच ले जाती हैं। ऐसे अनेक ऋषियोंके उदाहरण भी आते हैं, जो विषयोंके सामने आनेपर विचलित हो गये। अतः साधकको अपनी इन्द्रियोंपर कभी भी मेरी इन्द्रियाँ वशमें है', ऐसा विश्वास नहीं करना चाहिये  (टिप्पणी प0 98.2)  और कभी भी यह अभिमान नहीं करना चाहिये कि 'मैं जितेन्द्रिय हो गया हूँ।'
 
 सम्बन्ध-- पूर्वश्लोकमें यह बताया कि रसबुद्धि रहनेसे यत्न करते हुए विद्वान् मनुष्यकी भी इन्द्रियाँ उसके मनको हर लेती हैं जिससे उसकी बुद्धि परमात्मामें प्रतिष्ठित नहीं होती। अतः रसबुद्धिको दूर कैसे किया जाय इसका उपाय आगेके श्लोकमें बताते हैं।
 
 **English Commentary**
 
-The aspirant should first bring the senses under his control. The senses are like horses. If you keep the horses under your perfect control you can reach your destinaton safely. Turbulent horses will throw you down on the way. Even so the turbulent senses will hurl you down into the objects of the senses and you cannot reach your spiritual destination? viz.? Param Dhama (the supreme abode) or the abode of eternal peace and immortality or Moksha (final liberation). (Cf.III.33V.14).
+The aspirant should first bring the senses under his control. The senses are like horses. If you keep the horses under your perfect control you can reach your destinaton safely. Turbulent horses will throw you down on the way. Even so the turbulent senses will hurl you down into the objects of the senses and you cannot reach your spiritual destination, viz.? Param Dhama (the supreme abode) or the abode of eternal peace and immortality or Moksha (final liberation). (Cf.III.33V.14).
 
 ### BG 2.61
 
@@ -2510,7 +2510,7 @@ Having restrained them all, he should sit steadfast, intent on Me; his wisdom is
 
 **English Commentary**
 
-He should control the senses and sit focussed on Me as the Supreme? with a calm mind. The wisdom of the Yogi who thus seated has brought all his senses under subjugation is doubtless ite steady. He is established in the Self. Sri Sankaracharya explains Asita Matparah as He should sit contemplating I am no other than He. (Cf.II.64).
+He should control the senses and sit focussed on Me as the Supreme, with a calm mind. The wisdom of the Yogi who thus seated has brought all his senses under subjugation is doubtless ite steady. He is established in the Self. Sri Sankaracharya explains Asita Matparah as He should sit contemplating I am no other than He. (Cf.II.64).
 
 ### BG 2.62
 
@@ -2555,7 +2555,7 @@ When one thinks of objects, attachment to them arises; from attachment, desire i
 
 **English Commentary**
 
-When a man thinks of the beauty and the pleasant and alluring features of the senseobjects he becomes attached to them. He then regards them as something worthy of acisition and possession and hankers after them. He develops a strong desire to possess them. Then he endeavours his level best to obtain them. When his desire is frustrated by some cause or other? anger arises in his mind. If anybody puts any obstruction in his way of obtaining the objects he hates him? fights with him and develops hostility towards hi. (Cf.II.64).
+When a man thinks of the beauty and the pleasant and alluring features of the senseobjects he becomes attached to them. He then regards them as something worthy of acisition and possession and hankers after them. He develops a strong desire to possess them. Then he endeavours his level best to obtain them. When his desire is frustrated by some cause or other, anger arises in his mind. If anybody puts any obstruction in his way of obtaining the objects he hates him, fights with him and develops hostility towards hi. (Cf.II.64).
 
 ### BG 2.63
 
@@ -2647,7 +2647,7 @@ But the self-controlled man, moving among objects with the senses restrained and
 
 **English Commentary**
 
-The mind and the senses are naturally endowed with the two currents of attraction and repulsion. Therefore? the mind and the senses like certain objects and dislike certain other objects. But the disciplined man moves among senseobjects with the mind and the senses free from attraction and repulsion and mastered by the Self? attains to the peace of the Eternal. The senses and the mind obey his will? as the disciplined self has a very strong will. The disciplined self takes only those objects which are ite necessary for the maintenance of the body without any love or hatred. He never takes those objects which are forbidden by the scriptures.In this verse Lord Krishna gives the answer to Arjunas fourth estion? How does a sage of steady wisdom move about (Cf.III.7.19?25XVIII.9).
+The mind and the senses are naturally endowed with the two currents of attraction and repulsion. Therefore, the mind and the senses like certain objects and dislike certain other objects. But the disciplined man moves among senseobjects with the mind and the senses free from attraction and repulsion and mastered by the Self, attains to the peace of the Eternal. The senses and the mind obey his will, as the disciplined self has a very strong will. The disciplined self takes only those objects which are ite necessary for the maintenance of the body without any love or hatred. He never takes those objects which are forbidden by the scriptures. In this verse Lord Krishna gives the answer to Arjunas fourth estion, How does a sage of steady wisdom move about (Cf.III.7.19?25XVIII.9).
 
 ### BG 2.65
 
@@ -2682,7 +2682,7 @@ In that peace, all pains are destroyed; for the intellect of the tranquil-minded
 
 **English Commentary**
 
-When the mental peace is attained? there is no hankering after senseobjects. The Yogi has perfect mastery over his reason. The intellect abides in the Self. It is ite steady. The miseries of the body and the mind come to an end.
+When the mental peace is attained, there is no hankering after senseobjects. The Yogi has perfect mastery over his reason. The intellect abides in the Self. It is ite steady. The miseries of the body and the mind come to an end.
 
 ### BG 2.66
 
@@ -2715,7 +2715,7 @@ There is no knowledge of the Self for the unsteady, and no meditation is possibl
 
 **English Commentary**
 
-The man who cannot fix his mind in meditation cannot have knowledge of the Self. The unsteady man cannot practise meditation. He cannot have even intense devotion to Selfknowledge nor can he have burning longing for liberation or Moksha. He who does not practise meditation cannot possess peace of mind. How can the man who has no peace of mind enjoy happinessDesire or Trishna (thirsting for senseobjects) is the enemy of peace. There cannot be an iota or tinge of happiness for a man who is thirsting for sensual objects. The mind will be ever restless? and will be hankering for the objects. Only when this thirsting dies? does man enjoy peace. Only then can he meditate and rest in the Self.
+The man who cannot fix his mind in meditation cannot have knowledge of the Self. The unsteady man cannot practise meditation. He cannot have even intense devotion to Selfknowledge nor can he have burning longing for liberation or Moksha. He who does not practise meditation cannot possess peace of mind. How can the man who has no peace of mind enjoy happinessDesire or Trishna (thirsting for senseobjects) is the enemy of peace. There cannot be an iota or tinge of happiness for a man who is thirsting for sensual objects. The mind will be ever restless, and will be hankering for the objects. Only when this thirsting dies, does man enjoy peace. Only then can he meditate and rest in the Self.
 
 ### BG 2.67
 
@@ -2756,7 +2756,7 @@ For the mind, which follows in the wake of the wandering senses, carries away hi
 
 **English Commentary**
 
-The mind which constantly dwells on the sensual objects and moves in company with the senses destroys altogether the discrimination of the man. Just as the wind carries away a boat from its course? so also the mind carries away the aspirant from his spiritual path and turns,him towards the objects of the senses.
+The mind which constantly dwells on the sensual objects and moves in company with the senses destroys altogether the discrimination of the man. Just as the wind carries away a boat from its course, so also the mind carries away the aspirant from his spiritual path and turns,him towards the objects of the senses.
 
 ### BG 2.68
 
@@ -2785,7 +2785,7 @@ Therefore, O mighty-armed Arjuna, his knowledge is steady whose senses are compl
 
 **Hindi Commentary**
 
-।। व्याख्या-- 'तस्माद्यस्य ৷৷. प्रज्ञा प्रतिष्ठिता'-- साठवें श्लोकसे मन और इन्द्रियोंको वशमें करनेका जो विषय चला आ रहा है, उसका उपसंहार करते हुए  'तस्मात्'  पदसे कहते हैं कि जिसके मन और इन्द्रियोंमें संसारका आकर्षण नहीं रहा है, उसकी बुद्धि प्रतिष्ठित है। 
+।। व्याख्या-- 'तस्माद्यस्य ।।. प्रज्ञा प्रतिष्ठिता'-- साठवें श्लोकसे मन और इन्द्रियोंको वशमें करनेका जो विषय चला आ रहा है, उसका उपसंहार करते हुए  'तस्मात्'  पदसे कहते हैं कि जिसके मन और इन्द्रियोंमें संसारका आकर्षण नहीं रहा है, उसकी बुद्धि प्रतिष्ठित है। 
 यहाँ 'सर्वशः' पद देनेका तात्पर्य है कि संसारके साथ व्यवहार करते हुए अथवा एकान्तमें चिन्तन करते हुए किसी भी अवस्थामें उसकी इन्द्रियाँ भोगोंमें, विषयोंमें प्रवृत्त नहीं होतीं। व्यवहारकालमें कितने ही विषय उसके सम्पर्कमें क्यों न आ जायँ, पर वे विषय उसको विचलित नहीं कर सकते। उसका मन भी इन्द्रियके साथ मिलकर उसकी बुद्धिको विचलित नहीं कर सकता। जैसे पहाड़को कोई डिगा नहीं सकता, ऐसे ही उसकी बुद्धिमें इतनी दृढ़ता आ जाती है कि उसको मन किसी भी अवस्थामें डिगा नहीं सकता। कारण कि उसके मनमें विषयोंका महत्व नहीं रहा।
  'निगृहीतानि' का तात्पर्य है कि इन्द्रियाँ विषयोंसे पूरी तरहसे वशमें की हुई है अर्थात् विषयोंमें उनका लेशमात्र भी राग, आसक्ति, खिंचाव नहीं रहा है। जैसे साँपके दाँत निकाल दिये जायँ, तो फिर उसमें जहर नहीं रहता। वह किसीको काट भी लेता है तो उसका कोई असर नहीं होता। ऐसे ही इन्द्रियोंको रागद्वेषसे रहित कर देना ही मानो उनके जहरीले दाँत निकाल देना है। फिर उन इन्द्रियोंमें यह ताकत नहीं रहती कि वे साधकको पतनके मार्गमें ले जायँ।
 इस श्लोकका तात्पर्य यह है कि साधकको दृढ़तासे यह निश्चय कर लेना चाहिये कि मेरा लक्ष्य परमात्माकी प्राप्ति करना है भोग भोगना और संग्रह करना मेरा लक्ष्य नहीं है। अगर ऐसी सावधानी साधकमें निरन्तर बनी रहे तो उसकी बुद्धि स्थिर हो जायगी।
@@ -2794,7 +2794,7 @@ Therefore, O mighty-armed Arjuna, his knowledge is steady whose senses are compl
 
 **English Commentary**
 
-When the senses are completely controlled? the mind cannot wander wildly in the sensual grooves. It becomes steady like the lamp in a windless place. The Yogi is now established in the Self and his knowledge is steady. (Cf.III.7).
+When the senses are completely controlled, the mind cannot wander wildly in the sensual grooves. It becomes steady like the lamp in a windless place. The Yogi is now established in the Self and his knowledge is steady. (Cf.III.7).
 
 ### BG 2.69
 
@@ -2836,7 +2836,7 @@ That which is night to all beings, in that the self-controlled man is awake; whe
 
 **English Commentary**
 
-That which is real for the wordlyminded people is illusion for the sage? and vice versa. The sage lives in the Self. This is day for him. He is unconscious of the wordly phenomena. They are night for him? as it were. The ordinary man is unconscious of his real nature. Life in the spirit is night for him. He is experiencing the objects of sensual enjoyment. This is day for him. The Self is a nonentity for him For a sage this world is a nonentity.The wordlyminded people are in utter darkness as they have no knowledge of the Self. What is darkness for them is all light for the sage. The Self? Atman or Brahman is night for the worldlyminded persons. But the sage is fully awake. He is directly cognising the supreme Reality? the Light of lights. He is full of illumination and AtmaJnana or knowledge of the Self.
+That which is real for the wordlyminded people is illusion for the sage, and vice versa. The sage lives in the Self. This is day for him. He is unconscious of the wordly phenomena. They are night for him, as it were. The ordinary man is unconscious of his real nature. Life in the spirit is night for him. He is experiencing the objects of sensual enjoyment. This is day for him. The Self is a nonentity for him For a sage this world is a nonentity. The wordlyminded people are in utter darkness as they have no knowledge of the Self. What is darkness for them is all light for the sage. The Self, Atman or Brahman is night for the worldlyminded persons. But the sage is fully awake. He is directly cognising the supreme Reality, the Light of lights. He is full of illumination and AtmaJnana or knowledge of the Self.
 
 ### BG 2.70
 
@@ -2883,7 +2883,7 @@ He attains peace into whom all desires enter, just as waters enter the ocean whi
 
 **English Commentary**
 
-Just as the ocean filled with waters from all sides remains unmoved? so also the sage who is resting in his own Svarupa or the Self is not a bit affected though desires of all sorts enter from all sides. The sage attains peace or liberation but not he who longs for objects of sensual enjoyment and entertains various desires. (Cf.XVIII.53?54).
+Just as the ocean filled with waters from all sides remains unmoved, so also the sage who is resting in his own Svarupa or the Self is not a bit affected though desires of all sorts enter from all sides. The sage attains peace or liberation but not he who longs for objects of sensual enjoyment and entertains various desires. (Cf.XVIII.53?54).
 
 ### BG 2.71
 
@@ -2925,7 +2925,7 @@ That person attains peace who, abandoning all desires, moves about without longi
 
 **English Commentary**
 
-That man who lives destitute of longing? abandoning all desires? without the senses of I and mine? who is satisfied with the bare necessities of life? who does not care even for those bare necessities of life? who has no attachment even for the bare necessities of life? attains Moksha or eternal peace. (Cf.II.55).
+That man who lives destitute of longing, abandoning all desires, without the senses of I and mine, who is satisfied with the bare necessities of life, who does not care even for those bare necessities of life, who has no attachment even for the bare necessities of life, attains Moksha or eternal peace. (Cf.II.55).
 
 ### BG 2.72
 
@@ -2963,4 +2963,4 @@ O son of Pritha, this is the eternal state, the Brahmic seat. Attaining this, on
 
 **English Commentary**
 
-The state described in the previous verse -- to renounce everything and to live in Brahman -- is the Brahmic state or the state of Brahman. If one attains to this state one is never deluded. He attains Moksha if he stays in that state even at the hour of his death. It is needless to say that he who gets establised in Brahman throughout his life attains to the state of Brahman or,BrahmaNirvana (Cf.VIII.5?6).Maharshi Vidyaranya says in his Panchadasi that Antakala here means the moment at which Avidya or mutual superimposition of the Self and the notSelf ends.Thus in the Upanishads of the glorious Bhagavad Gita? the science of the Eternal? the scripture of Yoga? the dialogue between Sri Krishna and Arjuna? ends the second discourse entitledThe Sankhya Yoga.,
+The state described in the previous verse -- to renounce everything and to live in Brahman -- is the Brahmic state or the state of Brahman. If one attains to this state one is never deluded. He attains Moksha if he stays in that state even at the hour of his death. It is needless to say that he who gets establised in Brahman throughout his life attains to the state of Brahman or,BrahmaNirvana (Cf.VIII.5?6). Maharshi Vidyaranya says in his Panchadasi that Antakala here means the moment at which Avidya or mutual superimposition of the Self and the notSelf ends. Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the second discourse entitledThe Sankhya Yoga.,

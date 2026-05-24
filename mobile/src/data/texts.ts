@@ -20,7 +20,7 @@ export type ContentCategory =
   | 'chalisa'
   | 'japam'
   | 'aarti';
-export type Deity = 'rama' | 'krishna' | 'shiva' | 'hanuman' | 'durga' | 'ganesha';
+export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr';
 
 export type LibraryEntry = {
   id: string;
@@ -198,41 +198,41 @@ export const library: readonly LibraryEntry[] = [
     thumb: 'ॐ',
     status: 'active',
     category: 'aarti',
-    deities: ['krishna'],
+    deities: ['vishnu'],
     verseCount: 9,
   },
   {
     id: 'hanuman-aarti',
     nameHi: 'हनुमान जी की आरती',
     nameEn: 'Hanuman Ji Ki Aarti',
-    sub: '6 पद · व्याख्या सहित',
+    sub: '14 पद · व्याख्या सहित',
     thumb: 'ह',
     status: 'active',
     category: 'aarti',
     deities: ['hanuman'],
-    verseCount: 6,
+    verseCount: 14,
   },
   {
     id: 'sankat-mochan',
     nameHi: 'संकटमोचन हनुमानाष्टक',
     nameEn: 'Sankat Mochan Hanumanashtak',
-    sub: '8 पद · व्याख्या सहित',
+    sub: '9 पद · व्याख्या सहित',
     thumb: 'सं',
     status: 'active',
     category: 'aarti',
     deities: ['hanuman'],
-    verseCount: 8,
+    verseCount: 9,
   },
   {
     id: 'jai-ganesh-deva',
     nameHi: 'जय गणेश देवा',
     nameEn: 'Jai Ganesh Deva',
-    sub: '7 पद · व्याख्या सहित',
+    sub: '6 पद · व्याख्या सहित',
     thumb: 'ग',
     status: 'active',
     category: 'aarti',
     deities: ['ganesha'],
-    verseCount: 7,
+    verseCount: 6,
   },
   {
     id: 'om-jai-shiv-omkara',
@@ -249,22 +249,22 @@ export const library: readonly LibraryEntry[] = [
     id: 'jai-ambe-gauri',
     nameHi: 'जय अम्बे गौरी',
     nameEn: 'Jai Ambe Gauri',
-    sub: '7 पद · व्याख्या सहित',
+    sub: '13 पद · व्याख्या सहित',
     thumb: 'जय',
     status: 'active',
     category: 'aarti',
     deities: ['durga'],
-    verseCount: 7,
+    verseCount: 13,
   },
   {
     id: 'aarti-kunj-bihari',
     nameHi: 'आरती कुंजबिहारी की',
     nameEn: 'Aarti Kunj Bihari Ki',
-    sub: '7 पद · व्याख्या सहित',
+    sub: '5 पद · व्याख्या सहित',
     thumb: 'कृ',
     status: 'active',
     category: 'aarti',
     deities: ['krishna'],
-    verseCount: 7,
+    verseCount: 5,
   },
 ];
