@@ -15,6 +15,7 @@ import CategoryCard from '@/components/CategoryCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import Crest from '@/components/Crest';
 import SearchFloatingButton from '@/components/SearchFloatingButton';
+import UpdateBanner from '@/components/UpdateBanner';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 
@@ -82,6 +83,7 @@ export default function HomeScreen({ navigation }: Props) {
           ]}
           showsVerticalScrollIndicator={false}
         >
+          <UpdateBanner />
           <View style={styles.hero}>
             <Crest />
             <Text
