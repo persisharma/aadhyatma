@@ -29,7 +29,7 @@
       "type": "stanza",
       "section": "body",
       "number": 2,
-      "labelHi": "पद 1",
+      "labelHi": "पद १",
       "labelEn": "Stanza 1",
       "lines": [
         "गले में बैजंती माला, बजावै मुरली मधुर बाला।",
@@ -53,7 +53,7 @@
       "type": "stanza",
       "section": "body",
       "number": 3,
-      "labelHi": "पद 2",
+      "labelHi": "पद २",
       "labelEn": "Stanza 2",
       "lines": [
         "कनकमय मोर मुकुट बिलसै, देवता दरसन को तरसैं।",
@@ -73,7 +73,7 @@
       "type": "stanza",
       "section": "body",
       "number": 4,
-      "labelHi": "पद 3",
+      "labelHi": "पद ३",
       "labelEn": "Stanza 3",
       "lines": [
         "जहां ते प्रकट भई गंगा, सकल मल हारिणि श्री गंगा।",
@@ -93,7 +93,7 @@
       "type": "stanza",
       "section": "body",
       "number": 5,
-      "labelHi": "पद 4",
+      "labelHi": "पद ४",
       "labelEn": "Stanza 4",
       "lines": [
         "चमकती उज्ज्वल तट रेनू, बज रही वृंदावन बेनू।",
