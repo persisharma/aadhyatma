@@ -261,6 +261,25 @@ export function NotificationPreferencesProvider({
     };
   }, [isLoading, prefs, permissionStatus, foregroundTick]);
 
+  // Keep the toggle honest: `enabled=true` with a `denied` OS permission is
+  // an inconsistent state — reminders can't fire, so the UI must not claim
+  // they're on. This catches three cases at once:
+  //   (a) launch-time auto-request returned denied,
+  //   (b) the OS rate-limited subsequent prompts into a hard denial,
+  //   (c) the user revoked notifications in system settings and returned
+  //       to the app (foreground re-check picks up the new status).
+  // Once flipped, the user must toggle on again to re-prompt — and on a
+  // hard denial that toggle bounces back, surfacing the OS-side block.
+  useEffect(() => {
+    if (isLoading) return;
+    if (prefs.dailyVerseEnabled && permissionStatus === 'denied') {
+      const next = { ...prefsRef.current, dailyVerseEnabled: false };
+      prefsRef.current = next;
+      setPrefs(next);
+      AsyncStorage.setItem(PREFS_KEY, JSON.stringify(next)).catch(() => undefined);
+    }
+  }, [isLoading, prefs.dailyVerseEnabled, permissionStatus]);
+
   // On app foreground transitions, re-check permission and bump foregroundTick
   // so the reconciliation effect re-runs with fresh dates.
   useEffect(() => {
