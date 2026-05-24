@@ -21,7 +21,7 @@ assert.equal(omJaiJagdish.deity, 'vishnu', 'Om Jai Jagdish deity should be vishn
 const japam = readJson('japam/japam.json');
 const gayatri = japam.mantras.find((m: any) => m.id === 'gayatri-mantra');
 assert.ok(gayatri, 'Gayatri mantra should exist');
-assert.deepEqual(gayatri.deities, ['savitr'], 'Gayatri deity should be savitr');
+assert.deepEqual(gayatri.deities, ['gayatri'], 'Gayatri deity should be gayatri');
 
 // ─── 2. Aarti verse counts (verified from internet) ─────────────────────────
 

@@ -22,7 +22,7 @@ export type ContentCategory =
   | 'chalisa'
   | 'japam'
   | 'aarti';
-export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr';
+export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'gayatri';
 
 export type LibraryEntry = {
   id: string;
