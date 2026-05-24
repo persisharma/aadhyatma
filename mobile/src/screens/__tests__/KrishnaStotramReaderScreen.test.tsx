@@ -79,6 +79,6 @@ test('renders the first Krishna Stotram verse without throwing', () => {
     .flat(Number.POSITIVE_INFINITY)
     .join(' ');
 
-  assert.match(renderedText, /कृष्ण अष्टकम्/);
+  assert.match(renderedText, /कृष्णाष्टकम्/);
   assert.ok(renderedText.includes(firstVerse.sanskrit[0]));
 });

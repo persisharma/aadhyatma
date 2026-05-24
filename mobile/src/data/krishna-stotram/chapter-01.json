@@ -3,7 +3,10 @@
   "titleHi": "कृष्णाष्टकम्",
   "titleEn": "Krishnashtakam",
   "verseCount": 10,
-  "source": {"baseText": "sanskritdocuments.org", "retrievedOn": "2026-05-24"},
+  "source": {
+    "baseText": "sanskritdocuments.org/doc_vishhnu/krishna8.html, stotranidhi.com",
+    "retrievedOn": "2026-05-24"
+  },
   "verses": [
     {
       "id": "ks-1-0",
