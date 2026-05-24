@@ -31,8 +31,8 @@
       "type": "stanza",
       "section": "body",
       "number": 2,
-      "labelHi": "पद 1",
-      "labelEn": "Stanza 1",
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
       "lines": [
         "जाके बल से गिरिवर कांपे।",
         "रोग दोष जाके निकट न झांके॥"
@@ -49,8 +49,8 @@
       "type": "stanza",
       "section": "body",
       "number": 3,
-      "labelHi": "पद 2",
-      "labelEn": "Stanza 2",
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
       "lines": [
         "अंजनि पुत्र महा बलदाई।",
         "संतन के प्रभु सदा सहाई॥"
@@ -67,8 +67,8 @@
       "type": "stanza",
       "section": "body",
       "number": 4,
-      "labelHi": "पद 3",
-      "labelEn": "Stanza 3",
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
       "lines": [
         "दे बीरा रघुनाथ पठाए।",
         "लंका जारि सिया सुधि लाए॥"
@@ -85,8 +85,8 @@
       "type": "stanza",
       "section": "body",
       "number": 5,
-      "labelHi": "पद 4",
-      "labelEn": "Stanza 4",
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
       "lines": [
         "लंका सो कोट समुद्र सी खाई।",
         "जात पवनसुत बार न लाई॥"
@@ -103,8 +103,8 @@
       "type": "stanza",
       "section": "body",
       "number": 6,
-      "labelHi": "पद 5",
-      "labelEn": "Stanza 5",
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
       "lines": [
         "लंका जारि असुर संहारे।",
         "सियारामजी के काज संवारे॥"
@@ -121,8 +121,8 @@
       "type": "stanza",
       "section": "body",
       "number": 7,
-      "labelHi": "पद 6",
-      "labelEn": "Stanza 6",
+      "labelHi": "पद · ६",
+      "labelEn": "Stanza · 6",
       "lines": [
         "लक्ष्मण मूर्छित पड़े सकारे।",
         "आनि संजीवन प्राण उबारे॥"
@@ -139,8 +139,8 @@
       "type": "stanza",
       "section": "body",
       "number": 8,
-      "labelHi": "पद 7",
-      "labelEn": "Stanza 7",
+      "labelHi": "पद · ७",
+      "labelEn": "Stanza · 7",
       "lines": [
         "पैठि पाताल तोरि जमकारे।",
         "अहिरावण की भुजा उखारे॥"
@@ -157,8 +157,8 @@
       "type": "stanza",
       "section": "body",
       "number": 9,
-      "labelHi": "पद 8",
-      "labelEn": "Stanza 8",
+      "labelHi": "पद · ८",
+      "labelEn": "Stanza · 8",
       "lines": [
         "बाएं भुजा असुर दल मारे।",
         "दाहिने भुजा संतजन तारे॥"
@@ -175,8 +175,8 @@
       "type": "stanza",
       "section": "body",
       "number": 10,
-      "labelHi": "पद 9",
-      "labelEn": "Stanza 9",
+      "labelHi": "पद · ९",
+      "labelEn": "Stanza · 9",
       "lines": [
         "सुर नर मुनि जन आरती उतारें।",
         "जय जय जय हनुमान उचारें॥"
@@ -193,8 +193,8 @@
       "type": "stanza",
       "section": "body",
       "number": 11,
-      "labelHi": "पद 10",
-      "labelEn": "Stanza 10",
+      "labelHi": "पद · १०",
+      "labelEn": "Stanza · 10",
       "lines": [
         "कंचन थार कपूर लौ छाई।",
         "आरती करत अंजना माई॥"
@@ -211,8 +211,8 @@
       "type": "stanza",
       "section": "body",
       "number": 12,
-      "labelHi": "पद 11",
-      "labelEn": "Stanza 11",
+      "labelHi": "पद · ११",
+      "labelEn": "Stanza · 11",
       "lines": [
         "जो हनुमानजी की आरती गावै।",
         "बसि बैकुंठ परम पद पावै॥"
@@ -229,8 +229,8 @@
       "type": "stanza",
       "section": "body",
       "number": 13,
-      "labelHi": "पद 12",
-      "labelEn": "Stanza 12",
+      "labelHi": "पद · १२",
+      "labelEn": "Stanza · 12",
       "lines": [
         "लंक विध्वंस कीन्ह रघुराई।",
         "तुलसीदास प्रभु कीर्ति गाई॥"

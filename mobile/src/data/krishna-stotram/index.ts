@@ -67,7 +67,7 @@ export function getKrishnaStotramChapter(chapter: number): KrishnaStotramChapter
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 9) {
-    throw new Error(`krishna-stotram: expected 9 total verses, got ${totalVerses}`);
+  if (totalVerses !== 10) {
+    throw new Error(`krishna-stotram: expected 10 total verses, got ${totalVerses}`);
   }
 })();

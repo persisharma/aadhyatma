@@ -19,7 +19,6 @@ export default function DeityIndexScreen({ navigation }: Props) {
       (e) =>
         !e.hidden &&
         e.status === 'active' &&
-        e.category !== 'japam' &&
         e.deities.includes(deityId as any)
     ).length;
     if (count === 0) return '';

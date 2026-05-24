@@ -1,6 +1,26 @@
 [
-  {"chapter": 1, "titleHi": "पूर्वपीठिका", "titleEn": "Purva Pithika", "verseCount": 6},
-  {"chapter": 2, "titleHi": "ध्यानम्", "titleEn": "Dhyanam", "verseCount": 5},
-  {"chapter": 3, "titleHi": "स्तोत्र मुख्य भाग", "titleEn": "Main Stotram", "verseCount": 21},
-  {"chapter": 4, "titleHi": "फलश्रुति", "titleEn": "Phalashruti", "verseCount": 7}
+  {
+    "chapter": 1,
+    "titleHi": "पूर्वपीठिका",
+    "titleEn": "Purva Pithika",
+    "verseCount": 23
+  },
+  {
+    "chapter": 2,
+    "titleHi": "ध्यानम्",
+    "titleEn": "Dhyanam",
+    "verseCount": 8
+  },
+  {
+    "chapter": 3,
+    "titleHi": "स्तोत्र मुख्य भाग",
+    "titleEn": "Main Stotram",
+    "verseCount": 31
+  },
+  {
+    "chapter": 4,
+    "titleHi": "फलश्रुति",
+    "titleEn": "Phalashruti",
+    "verseCount": 17
+  }
 ]

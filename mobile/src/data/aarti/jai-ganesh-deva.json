@@ -31,8 +31,8 @@
       "type": "stanza",
       "section": "body",
       "number": 2,
-      "labelHi": "पद 1",
-      "labelEn": "Stanza 1",
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
       "lines": [
         "एकदन्त दयावन्त, चार भुजा धारी।",
         "माथे सिन्दूर सोहे, मूसक की सवारी॥"
@@ -49,8 +49,8 @@
       "type": "stanza",
       "section": "body",
       "number": 3,
-      "labelHi": "पद 2",
-      "labelEn": "Stanza 2",
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
       "lines": [
         "पान चढ़े, फूल चढ़े और चढ़े मेवा।",
         "लड्डुअन का भोग लगे, संत करें सेवा॥"
@@ -67,8 +67,8 @@
       "type": "stanza",
       "section": "body",
       "number": 4,
-      "labelHi": "पद 3",
-      "labelEn": "Stanza 3",
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
       "lines": [
         "अंधन को आंख देत, कोढ़िन को काया।",
         "बांझन को पुत्र देत, निर्धन को माया॥"
@@ -85,8 +85,8 @@
       "type": "stanza",
       "section": "body",
       "number": 5,
-      "labelHi": "पद 4",
-      "labelEn": "Stanza 4",
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
       "lines": [
         "'सूर' श्याम शरण आए, सफल कीजे सेवा।",
         "माता जाकी पार्वती, पिता महादेवा॥"
@@ -103,8 +103,8 @@
       "type": "stanza",
       "section": "body",
       "number": 6,
-      "labelHi": "पद 5",
-      "labelEn": "Stanza 5",
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
       "lines": [
         "दीनन की लाज रखो, शंभु सुतकारी।",
         "कामना को पूर्ण करो, जाऊं बलिहारी॥"
