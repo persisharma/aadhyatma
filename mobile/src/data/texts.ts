@@ -183,8 +183,8 @@ export const library: readonly LibraryEntry[] = [
   },
   {
     id: 'hanuman-ashtak',
-    nameHi: 'हनुमान अष्टक',
-    nameEn: 'Hanuman Ashtak',
+    nameHi: 'संकटमोचन हनुमानाष्टक',
+    nameEn: 'Sankat Mochan Hanuman Ashtak',
     sub: `${hanumanAshtakTotal} श्लोक · अर्थ सहित`,
     thumb: 'ह',
     status: 'active',
@@ -235,17 +235,6 @@ export const library: readonly LibraryEntry[] = [
     category: 'aarti',
     deities: ['hanuman'],
     verseCount: 14,
-  },
-  {
-    id: 'sankat-mochan',
-    nameHi: 'संकटमोचन हनुमानाष्टक',
-    nameEn: 'Sankat Mochan Hanumanashtak',
-    sub: '9 पद · व्याख्या सहित',
-    thumb: 'सं',
-    status: 'active',
-    category: 'aarti',
-    deities: ['hanuman'],
-    verseCount: 9,
   },
   {
     id: 'jai-ganesh-deva',

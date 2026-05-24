@@ -56,7 +56,6 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'krishna-stotram': backgroundImages.deity_krishna_bansuri,
   'om-jai-jagdish': backgroundImages.source_vishnu_narayana,
   'hanuman-aarti': chalisaImages.hanuman_lankadahan,
-  'sankat-mochan': chalisaImages.hanuman_sita,
   'jai-ganesh-deva': backgroundImages.deity_ganesha_modak,
   'om-jai-shiv-omkara': shivaStrotamImages.shiva,
   'jai-ambe-gauri': backgroundImages.deity_durga_lion,

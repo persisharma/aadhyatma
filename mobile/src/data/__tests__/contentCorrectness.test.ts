@@ -31,10 +31,10 @@ assert.ok(
   `Hanuman Aarti should have >= 13 verses, got ${hanumanAarti.verses.length}`
 );
 
-const sankatMochan = readJson('aarti/sankat-mochan.json');
+const sankatMochan = readJson('hanuman-ashtak/chapter-01.json');
 assert.ok(
   sankatMochan.verses.length >= 9,
-  `Sankat Mochan should have >= 9 verses (8 pada + doha), got ${sankatMochan.verses.length}`
+  `Sankat Mochan (in stotram) should have >= 9 verses (8 pada + doha), got ${sankatMochan.verses.length}`
 );
 
 const jaiAmbeGauri = readJson('aarti/jai-ambe-gauri.json');
@@ -64,9 +64,10 @@ assert.ok(
 // ─── 3. Sankat Mochan has correct Tulsidas refrain ───────────────────────────
 
 const SM_REFRAIN = 'संकटमोचन नाम तिहारो';
-const smBodyVerses = sankatMochan.verses.filter((v: any) => v.type === 'stanza' || v.type === 'pada');
+const smBodyVerses = sankatMochan.verses.filter((v: any) => v.number >= 0 && v.number <= 7);
 for (const v of smBodyVerses) {
-  const lastLine = v.lines[v.lines.length - 1];
+  const lines = v.sanskrit || v.lines || [];
+  const lastLine = lines[lines.length - 1];
   assert.ok(
     lastLine.includes(SM_REFRAIN),
     `Sankat Mochan verse ${v.id} should end with refrain "${SM_REFRAIN}", got: "${lastLine.slice(-60)}"`
