@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { AppState, type AppStateStatus } from 'react-native';
+import { AppState, Platform, type AppStateStatus } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import {
@@ -205,6 +205,30 @@ export function NotificationPreferencesProvider({
             AsyncStorage.setItem(META_KEY, JSON.stringify(updated)).catch(() => undefined);
           }
         }
+
+        // The toggle defaults to ON, but a fresh install starts with
+        // `undetermined` permission, so the reconciliation effect below would
+        // silently cancel everything. Request permission once per cold start
+        // while still undetermined so the default-on behaviour actually fires.
+        // The OS rate-limits the prompt itself once the user has answered.
+        if (loadedPrefs.dailyVerseEnabled && status === 'undetermined') {
+          try {
+            const { status: requested } = await Notifications.requestPermissionsAsync({
+              ios: { allowAlert: true, allowBadge: true, allowSound: true },
+            });
+            if (cancelled) return;
+            const next: PermissionStatus =
+              requested === 'granted'
+                ? 'granted'
+                : requested === 'denied'
+                  ? 'denied'
+                  : 'undetermined';
+            setPermissionStatus((cur) => (cur === next ? cur : next));
+          } catch {
+            // Non-fatal: leave status as-is; the reconciliation effect will
+            // simply continue to cancel until permission is granted.
+          }
+        }
       } catch {
         if (!cancelled) setIsLoading(false);
       }
@@ -386,5 +410,17 @@ export function configureForegroundNotificationHandler() {
       shouldSetBadge: false,
     }),
   });
+
+  // Android 8+ drops notifications that aren't bound to a channel. Without
+  // this, scheduled daily-verse reminders can be silently suppressed by the
+  // OS or shown with no heads-up, even when permission is granted.
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'Daily verse reminders',
+      importance: Notifications.AndroidImportance.DEFAULT,
+      sound: 'default',
+      lightColor: '#B8621B',
+    }).catch(() => undefined);
+  }
 }
 
