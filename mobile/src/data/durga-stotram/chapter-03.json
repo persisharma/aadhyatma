@@ -94,5 +94,9 @@
       "meaningHi": "देवी को नमस्कार, महादेवी को नमस्कार, शिवा (कल्याणकारी) को सदैव नमस्कार। प्रकृति को नमन, भद्रा को नमन — हम नियमपूर्वक उन्हें प्रणाम करते हैं।\n\nयह दुर्गा सप्तशती का समापन नमस्कार है। 'शिवा' यहाँ 'कल्याणकारी' अर्थ में है। 'प्रकृति' — सांख्य दर्शन का मूल तत्व जिसे शाक्त परम्परा में देवी माना गया है।",
       "meaningEn": "Salutations to the Goddess, to the Great Goddess, constant salutations to the Auspicious One. Obeisance to Prakriti (primal nature), to the Benevolent One — we bow to her with discipline.\n\nThis is the closing salutation from Durga Saptashati. 'Shiva' here means 'auspicious.' 'Prakriti' is the fundamental principle of Sankhya philosophy, identified with the Goddess in Shakta tradition."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "sanskritdocuments.org, stotranidhi.com",
+    "retrievedOn": "2026-05-24"
+  }
 }

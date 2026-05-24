@@ -154,5 +154,9 @@
       "meaningHi": "इस प्रकार श्री नारद पुराण में वर्णित संकष्टनाशन (सभी संकटों को नष्ट करने वाला) गणेश स्तोत्र सम्पूर्ण हुआ।",
       "meaningEn": "Thus ends the Sankashta-Nashana (destroyer of all calamities) Ganesha Stotram from the Shri Narada Purana."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "greenmesg.org, ganeshastotram.com",
+    "retrievedOn": "2026-05-24"
+  }
 }

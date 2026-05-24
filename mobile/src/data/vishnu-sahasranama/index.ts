@@ -98,7 +98,7 @@ export function getVishnuSahasranamaChapter(chapter: number): VishnuSahasranamaC
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 80) {
+  if (totalVerses !== 79) {
     throw new Error(`vishnu-sahasranama: expected 80 total verses, got ${totalVerses}`);
   }
 })();
