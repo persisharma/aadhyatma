@@ -57,3 +57,17 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Category:** tooling
 **Example:** Skipped `/codex:adversarial-review` across two plan rounds because `codex:adversarial-review` didn't appear in the skills registry at session start. Wrote "self-adversarial pass (no external codex harness in this environment)" — but skills and slash commands live in separate registries; the slash command was wired to `codex-companion.mjs` and callable, I just hadn't checked. User caught the shortcut.
 **Resolution pattern:** If a ship phase references `/codex:*` or any external reviewer, try the invocation rather than inferring absence from a skills-list scan. When a real failure happens, surface the error — never quietly swap a real reviewer for a self-review.
+
+### Single-chapter stotrams should use verse count in `sub` field, not chapter count
+
+**Seen:** 1x — 2026-05-23
+**Category:** data-convention
+**Example:** Plan v1 used `'1 स्तोत्र · अर्थ सहित'` for krishna-stotram. Adversarial review caught it: multi-chapter stotrams (shiva=4, durga=3) show chapter count, but single-chapter ones (hanuman-ashtak, bajrang-baan, ram-stuti) show verse count. Fix: use `${total} श्लोक · अर्थ सहित`.
+**Resolution pattern:** When adding a single-chapter section, check how similar single-chapter sections format their `sub` field in texts.ts. Default to verse count for single-chapter, chapter count for multi-chapter.
+
+### Codex rate limits may require self-adversarial fallback — always attempt the invocation first
+
+**Seen:** 1x — 2026-05-23
+**Category:** tooling
+**Example:** Codex companion hit OpenAI usage limit during adversarial review. Performed thorough manual code-verified adversarial review as fallback, checking 6 specific challenges against actual source files. The manual review caught the same sub-field wording issue that pattern-matching alone would have found.
+**Resolution pattern:** Always attempt the codex invocation first. If it fails with a rate limit or auth error, perform a manual adversarial review verifying each challenge against actual code (not just reasoning about it). Document the failure and the manual findings.

@@ -53,9 +53,18 @@ import {
   hanumanAshtakChaptersManifest,
 } from './hanuman-ashtak';
 import {
+  getBajrangBaanChapter,
+  bajrangBaanChaptersManifest,
+  type BajrangBaanVerse,
+} from './bajrang-baan';
+import {
   getRamStutiChapter,
   ramStutiChaptersManifest,
 } from './ram-stuti';
+import {
+  getKrishnaStotramChapter,
+  krishnaStotramChaptersManifest,
+} from './krishna-stotram';
 import {
   getRamcharitmanasChapter,
   ramcharitmanasChaptersManifest,
@@ -287,12 +296,27 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.id === 'bajrang-baan') {
+      pushChapteredBajrangBaan(verses, entry);
+      continue;
+    }
+
     if (entry.id === 'ram-stuti') {
       pushChapteredShivaStrotamShape(
         verses,
         entry,
         ramStutiChaptersManifest,
         getRamStutiChapter
+      );
+      continue;
+    }
+
+    if (entry.id === 'krishna-stotram') {
+      pushChapteredShivaStrotamShape(
+        verses,
+        entry,
+        krishnaStotramChaptersManifest,
+        getKrishnaStotramChapter
       );
       continue;
     }
@@ -409,6 +433,29 @@ function pushChapteredShivaStrotamShape(
           labelHi: `श्लोक ${ch.chapter}.${v.number}`,
           labelEn: `Verse ${ch.chapter}.${v.number}`,
           linesHi: v.sanskrit,
+          linesEn: v.linesEn,
+          meaningHi: v.meaningHi,
+          meaningEn: v.meaningEn,
+        })
+      );
+    });
+  }
+}
+
+function pushChapteredBajrangBaan(out: SearchVerseEntry[], entry: LibraryEntry) {
+  for (const ch of bajrangBaanChaptersManifest) {
+    const chapter = getBajrangBaanChapter(ch.chapter);
+    chapter.verses.forEach((v: BajrangBaanVerse, idx) => {
+      out.push(
+        makeVerseEntry({
+          sourceId: entry.id,
+          sectionNameHi: entry.nameHi,
+          sectionNameEn: entry.nameEn,
+          chapter: ch.chapter,
+          verseIndex: idx,
+          labelHi: v.labelHi,
+          labelEn: v.labelEn,
+          linesHi: v.lines,
           linesEn: v.linesEn,
           meaningHi: v.meaningHi,
           meaningEn: v.meaningEn,

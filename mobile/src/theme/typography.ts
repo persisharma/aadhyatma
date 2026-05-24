@@ -2,6 +2,7 @@ export const fontFamilies = {
   devanagari: 'NotoSerifDevanagari_500Medium',
   devanagariBold: 'NotoSerifDevanagari_600SemiBold',
   latinItalic: 'CormorantGaramond_400Regular_Italic',
+  latinSemiBold: 'CormorantGaramond_600SemiBold',
   latinSemiBoldItalic: 'CormorantGaramond_600SemiBold_Italic',
   latin: 'CormorantGaramond_500Medium',
 } as const;
@@ -25,6 +26,16 @@ export const typography = {
     fontFamily: fontFamilies.devanagari,
     fontSize: 15,
     lineHeight: 26,
+  },
+  verseLatin: {
+    fontFamily: fontFamilies.latinSemiBold,
+    fontSize: 18,
+    lineHeight: 28,
+  },
+  meaningEnglish: {
+    fontFamily: fontFamilies.latin,
+    fontSize: 18,
+    lineHeight: 30,
   },
   cardHindi: {
     fontFamily: fontFamilies.devanagariBold,
