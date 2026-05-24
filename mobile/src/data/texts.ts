@@ -10,6 +10,7 @@ import { ganeshChalisaCounts } from './ganesh-chalisa';
 import { hanumanAshtakTotal } from './hanuman-ashtak';
 import { bajrangBaanTotal } from './bajrang-baan';
 import { ramStutiTotal } from './ram-stuti';
+import { krishnaStotramTotal } from './krishna-stotram';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
@@ -135,6 +136,17 @@ export const library: readonly LibraryEntry[] = [
     category: 'stotram',
     deities: ['krishna', 'rama'],
     verseCount: vishnuSahasranamaTotal,
+  },
+  {
+    id: 'krishna-stotram',
+    nameHi: 'कृष्ण स्तोत्रम्',
+    nameEn: 'Krishna Stotram',
+    sub: `${krishnaStotramTotal} श्लोक · अर्थ सहित`,
+    thumb: 'कृ',
+    status: 'active',
+    category: 'stotram',
+    deities: ['krishna'],
+    verseCount: krishnaStotramTotal,
   },
   {
     id: 'shiv-chalisa',
