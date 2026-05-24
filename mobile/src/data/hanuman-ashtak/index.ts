@@ -26,8 +26,8 @@ export type HanumanAshtakChapterSummary = {
   verseCount: number;
 };
 
-export const hanumanAshtakTitleHi = 'हनुमान अष्टक';
-export const hanumanAshtakTitleEn = 'Hanuman Ashtak';
+export const hanumanAshtakTitleHi = 'संकटमोचन हनुमानाष्टक';
+export const hanumanAshtakTitleEn = 'Sankat Mochan Hanuman Ashtak';
 
 export const hanumanAshtakChaptersManifest: readonly HanumanAshtakChapterSummary[] =
   manifest as HanumanAshtakChapterSummary[];

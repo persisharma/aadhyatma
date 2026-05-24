@@ -4,10 +4,10 @@ import { canonicalBookmarkId, canonicalSourceId } from './sourceIdMigration';
 
 // canonicalSourceId migrates legacy aarti-N to the canonical library id.
 assert.equal(canonicalSourceId('aarti-0'), 'om-jai-jagdish');
-assert.equal(canonicalSourceId('aarti-3'), 'jai-ganesh-deva');
-assert.equal(canonicalSourceId('aarti-6'), 'aarti-kunj-bihari');
+assert.equal(canonicalSourceId('aarti-2'), 'jai-ganesh-deva');
+assert.equal(canonicalSourceId('aarti-5'), 'aarti-kunj-bihari');
 // Out-of-range index falls through unchanged so the consumer can decide.
-assert.equal(canonicalSourceId('aarti-7'), 'aarti-7');
+assert.equal(canonicalSourceId('aarti-6'), 'aarti-6');
 assert.equal(canonicalSourceId('aarti-x'), 'aarti-x');
 // Already canonical, leave alone.
 assert.equal(canonicalSourceId('om-jai-jagdish'), 'om-jai-jagdish');

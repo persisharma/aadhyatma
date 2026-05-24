@@ -17,10 +17,12 @@ export type JapamMantra = {
 const validDeities: ReadonlySet<Deity> = new Set([
   'rama',
   'krishna',
+  'vishnu',
   'shiva',
   'hanuman',
   'durga',
   'ganesha',
+  'savitr',
 ]);
 
 function assertMantra(m: unknown, i: number): asserts m is JapamMantra {

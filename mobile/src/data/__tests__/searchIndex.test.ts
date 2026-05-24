@@ -50,9 +50,9 @@ const index = getSearchIndex();
   assert.ok(activeCount > 0);
 }
 
-// All six deities are indexed.
+// All eight deities are indexed.
 {
-  assert.equal(index.deities.length, 6);
+  assert.equal(index.deities.length, 8);
 }
 
 // Hanuman query returns multiple sections (chalisa, ashtak, aarti, sankat-mochan).

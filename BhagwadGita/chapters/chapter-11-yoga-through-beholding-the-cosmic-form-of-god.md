@@ -53,7 +53,7 @@ Arjuna said, By this explanation of the highest secret concerning the Self which
 
 **English Commentary**
 
-After hearing the glories of the Lord? Arjuna has an intense longing to have the wonderful vision of the Cosmic Form with his own eyes. His bewilderment and delusion have now vanished.Adhyatma That which treats of the discrimination between the Self and the notSelf metaphysics.I was worried about the sin involved in killing my relations and preceptors. I had the ideas? I am the agent in killing them they are to be killed by me.This delusion has vanished now after receiving Thy most profound and valuable instructions. Thou hast dispelled this delusion of ignorance from me.The vision of the Cosmic Form is not the ultimate goal. If that were so? the Gita would have ended with this chapter. The vision of the Cosmic Form is also one more in a series of graded experiences. It is a terrible experience too. That is the reason why Arjuna said to the Lord? stammering with fear What an awful form Thou hast I have seen that which none hath seen before. My heart is glad? yet faileth me on account of fear. Show me? O God? Thine other form again. O God of gods? support of all the worlds? let me see Thy form with the diadem? and with the mace and discus in Thy hands. Again I wish to see Thee as before assume Thy fourarmed form? O Lord of thousand arms and of forms innumerable.Arjuna heard the Lords statement? viz.? Having pervaded this whole universe with one fragment of Myself? I remain. This induced him to have the vision of the Lords Cosmic Form. He says? O Lord of compassion? Thou hast taught me the spiritual wisdom which can hardly be found in the Vedas. Thou hast saved me. My delusion has disappeared. Thou hast disclosed to me the nature of the Supreme Self? the secrets of Nature and Thy divine glories. My greatest ambition at the present moment is that I should behold with my own eyes Thy entire Cosmic Form.
+After hearing the glories of the Lord, Arjuna has an intense longing to have the wonderful vision of the Cosmic Form with his own eyes. His bewilderment and delusion have now vanished. Adhyatma That which treats of the discrimination between the Self and the notSelf metaphysics. I was worried about the sin involved in killing my relations and preceptors. I had the ideas, I am the agent in killing them they are to be killed by me. This delusion has vanished now after receiving Thy most profound and valuable instructions. Thou hast dispelled this delusion of ignorance from me. The vision of the Cosmic Form is not the ultimate goal. If that were so, the Gita would have ended with this chapter. The vision of the Cosmic Form is also one more in a series of graded experiences. It is a terrible experience too. That is the reason why Arjuna said to the Lord, stammering with fear What an awful form Thou hast I have seen that which none hath seen before. My heart is glad, yet faileth me on account of fear. Show me, O God, Thine other form again. O God of gods, support of all the worlds, let me see Thy form with the diadem, and with the mace and discus in Thy hands. Again I wish to see Thee as before assume Thy fourarmed form, O Lord of thousand arms and of forms innumerable. Arjuna heard the Lords statement, viz.? Having pervaded this whole universe with one fragment of Myself, I remain. This induced him to have the vision of the Lords Cosmic Form. He says, O Lord of compassion, Thou hast taught me the spiritual wisdom which can hardly be found in the Vedas. Thou hast saved me. My delusion has disappeared. Thou hast disclosed to me the nature of the Supreme Self, the secrets of Nature and Thy divine glories. My greatest ambition at the present moment is that I should behold with my own eyes Thy entire Cosmic Form.
 
 ### BG 11.2
 
@@ -119,7 +119,7 @@ Now, O Supreme Lord, as Thou hast thus described Thyself, O Supreme Person, I wi
 
 **English Commentary**
 
-Some commentators take the two halves of this verse as two independent sentences and interpret it thusSo it is? O Supreme Lord? as Thou hast declared Thyself to be. (But still) I desire to see Thy form as Isvara? O Supreme Person.Rupamaisvaram Thy form as Isvara? that of Vishnu as possessed of infinite knowledge? sovereignty? power? strength? prowess and splendour.
+Some commentators take the two halves of this verse as two independent sentences and interpret it thusSo it is, O Supreme Lord, as Thou hast declared Thyself to be. (But still) I desire to see Thy form as Isvara, O Supreme Person. Rupamaisvaram Thy form as Isvara, that of Vishnu as possessed of infinite knowledge, sovereignty, power, strength, prowess and splendour.
 
 ### BG 11.4
 
@@ -152,7 +152,7 @@ If Thou, O Lord, thinkest it possible for me to see it, do Thou, then, O Lord of
 
 **English Commentary**
 
-Arjuna is very keen and eager to see the Cosmic Form of the Lord. He prays to Him to grant him the vision. This supreme vision can be obtained only through His grace.Yogesvara also means the Lord of Yoga. A Yogi is one who is endowed with the eight psychic powers (Siddhis). The Lord of the Yogins is Yogesvara. And? Yoga is identity of the individual soul with the Absolute. He who is able to bestow this realisation of identity on the deserving spiritual aspirant is Yogesvara.He Who is able to create? preserve? destroy? veil and graciously release is the Lord. (These five actions? Panchakriyas? are known respectively as Srishti? Sthiti? Samhara? Tirodhana and Anugraha.)
+Arjuna is very keen and eager to see the Cosmic Form of the Lord. He prays to Him to grant him the vision. This supreme vision can be obtained only through His grace. Yogesvara also means the Lord of Yoga. A Yogi is one who is endowed with the eight psychic powers (Siddhis). The Lord of the Yogins is Yogesvara. And, Yoga is identity of the individual soul with the Absolute. He who is able to bestow this realisation of identity on the deserving spiritual aspirant is Yogesvara. He Who is able to create, preserve, destroy, veil and graciously release is the Lord. (These five actions, Panchakriyas, are known respectively as Srishti, Sthiti, Samhara, Tirodhana and Anugraha.)
 
 ### BG 11.5
 
@@ -188,7 +188,7 @@ The Blessed Lord said, "Behold, O Arjuna, forms of Mine, by the hundreds and tho
 
 **English Commentary**
 
-Divyani Divine supernatural.Satasah? Sahasrasah By the hundreds and thousands -- countless.O Arjuna? I want you to behold the Cosmic Form. All beings and entities are there. The fat and the lean? the short and the tall? the red and the black? the active and the passive? the rich and the poor? the intelligent and the dull? the healthy and the sick? the noisy and the silent? those that are awake? those that are asleep? the beautiful and the ugly? and all grades of beings with their distinctive marks are all there. The blueness of the sky? the yellowness of the silk? the redness of the twilight? the blackness of the coal? the whiteness of the snow? and the greenness of the leaves will be seen by you. You will also behold the objects of various shapes.
+Divyani Divine supernatural. Satasah, Sahasrasah By the hundreds and thousands -- countless. O Arjuna, I want you to behold the Cosmic Form. All beings and entities are there. The fat and the lean, the short and the tall, the red and the black, the active and the passive, the rich and the poor, the intelligent and the dull, the healthy and the sick, the noisy and the silent, those that are awake, those that are asleep, the beautiful and the ugly, and all grades of beings with their distinctive marks are all there. The blueness of the sky, the yellowness of the silk, the redness of the twilight, the blackness of the coal, the whiteness of the snow, and the greenness of the leaves will be seen by you. You will also behold the objects of various shapes.
 
 ### BG 11.6
 
@@ -223,7 +223,7 @@ Behold the Adityas, the Vasus, the Rudras, the two Asvins, and the Maruts; behol
 
 **English Commentary**
 
-Adityas? Vasus? Rudras and Maruts have already been described in the previous chapter.Not these alone Behold also many other wonders never seen before by you or anybody else in this world.
+Adityas, Vasus, Rudras and Maruts have already been described in the previous chapter. Not these alone Behold also many other wonders never seen before by you or anybody else in this world.
 
 ### BG 11.7
 
@@ -256,7 +256,7 @@ Now, behold, O Arjuna, in this My body, the entire universe centered in one, inc
 
 **English Commentary**
 
-Anyat Other whatever else. Your success or defeat in the war? about which you,have entertained a doubt. (Cf.II.6)
+Anyat Other whatever else. Your success or defeat in the war, about which you,have entertained a doubt. (Cf.II.6)
 
 ### BG 11.8
 
@@ -289,7 +289,7 @@ But you are not able to behold Me with these your own eyes; I give you the divin
 
 **English Commentary**
 
-No fleshly eyes can behold Me in My Cosmic Form. One can see It through the divine eye or the eye of intuition. It should not be confused with seeing through the eye or the mind. It is an inner experience.Lord Krishna says to Arjuna I give thee the divine eye? by which you will be able to behold My sovereign form. By it see My marvellous power of Yoga.Anena With this the fleshly eye or the physical eye? the earthly eye. (Cf.VII.25IX.5X.7)
+No fleshly eyes can behold Me in My Cosmic Form. One can see It through the divine eye or the eye of intuition. It should not be confused with seeing through the eye or the mind. It is an inner experience. Lord Krishna says to Arjuna I give thee the divine eye, by which you will be able to behold My sovereign form. By it see My marvellous power of Yoga. Anena With this the fleshly eye or the physical eye, the earthly eye. (Cf.VII.25IX.5X.7)
 
 ### BG 11.9
 
@@ -321,7 +321,7 @@ Sanjaya said, Having thus spoken, O king, the great Lord of Yoga, Hari (Krishna)
 
 **Hindi Commentary**
 
-'एवमुक्त्वा ततो ৷৷. परमं रूपमैश्वरम्'--पूर्वश्लोकमें भगवान्ने जो यह कहा था कि 'तू अपने चर्मचक्षुओंसे मुझे नहीं देख सकता, इसलिये मैं तेरेको दिव्यचक्षु देता हूँ, जिससे तू मेरे ईश्वर-सम्बन्धी योगको देख' उसीका संकेत यहाँ सञ्जयने 'एवमुक्त्वा' पदसे किया है।चौथे श्लोकमें अर्जुनने भगवान्को 'योगेश्वर' कहा और यहाँ सञ्जय भगवान्को 'महायोगेश्वर' कहते हैं। इसका तात्पर्य है कि भगवान्ने अर्जुनकी प्रार्थनासे बहुत अधिक अपना विश्वरूप दिखाया। भक्तकी थोड़ी-सी भी वास्तविक रुचि भगवान्की तरफ होनेपर भगवान् अपनी अपार शक्तिसे उसकी पूर्ति कर देते हैं।
+'एवमुक्त्वा ततो ।।. परमं रूपमैश्वरम्'--पूर्वश्लोकमें भगवान्ने जो यह कहा था कि 'तू अपने चर्मचक्षुओंसे मुझे नहीं देख सकता, इसलिये मैं तेरेको दिव्यचक्षु देता हूँ, जिससे तू मेरे ईश्वर-सम्बन्धी योगको देख' उसीका संकेत यहाँ सञ्जयने 'एवमुक्त्वा' पदसे किया है।चौथे श्लोकमें अर्जुनने भगवान्को 'योगेश्वर' कहा और यहाँ सञ्जय भगवान्को 'महायोगेश्वर' कहते हैं। इसका तात्पर्य है कि भगवान्ने अर्जुनकी प्रार्थनासे बहुत अधिक अपना विश्वरूप दिखाया। भक्तकी थोड़ी-सी भी वास्तविक रुचि भगवान्की तरफ होनेपर भगवान् अपनी अपार शक्तिसे उसकी पूर्ति कर देते हैं।
 
 तीसरे श्लोकमें अर्जुनने जिस रूपके लिये 'रूपमैश्वरम्' कहा, उसी रूपके लिये यहाँ सञ्जय 'परमं रूपमैश्वरम्' कहते हैं। इसका तात्पर्य है कि भगवान्का विश्वरूप बहुत ही विलक्षण है। सम्पूर्ण योगोंके महान् ईश्वर भगवान् श्रीकृष्णने ऐसा विलक्षण, अलौकिक, अद्भुत विश्वरूप दिखाया, जिसको धैर्यशाली, जितेन्द्रिय, शूरवीर और भगवान्से प्राप्त दिव्यदृष्टिवाले अर्जुनको भी दुर्निरीक्ष्य कहना प़ड़ा (11। 17) और भयभीत होना पड़ा (11। 45), तथा भगवान्को भी 'व्यपेतभीः' कहकर अर्जुनको आश्वासन देना पड़ा (11। 49)।
 
@@ -329,7 +329,7 @@ Sanjaya said, Having thus spoken, O king, the great Lord of Yoga, Hari (Krishna)
 
 **English Commentary**
 
-King This verse is addressed by Sanjaya to Dhritarashtra.Supreme Form The Cosmic Form.
+King This verse is addressed by Sanjaya to Dhritarashtra. Supreme Form The Cosmic Form.
 
 ### BG 11.10
 
@@ -395,7 +395,7 @@ Wearing divine garlands and apparel, anointed with divine unguents, the all-wond
 
 **English Commentary**
 
-Visvatomukham With faces on all sides? as He is the Self of all beings.Devam God. Also means resplendent.Anantam Endless. He Who is free from the three kinds of limitations? viz.? DesaKalaVastuPariccheda (limitations of space? time? and thing respectively) is Anantam. He is Brahman. This philosophical concept is explained below.The pot is here. This is spacelimitatio. The pot is now here. This is timelimitation. The pot is not a cloth. This is thing(material) limitation. There is saffron in Kashmir only. This is limitation of space and thing. You can have apples only in September. This is limitation of time and thing. But Brahman is everywhere? as It is allpervading. It exists in the past? the present and the future. It dwells in all parts. Hence It is beyond these three limitations. It is therefore endless.
+Visvatomukham With faces on all sides, as He is the Self of all beings. Devam God. Also means resplendent. Anantam Endless. He Who is free from the three kinds of limitations, viz.? DesaKalaVastuPariccheda (limitations of space, time, and thing respectively) is Anantam. He is Brahman. This philosophical concept is explained below. The pot is here. This is spacelimitatio. The pot is now here. This is timelimitation. The pot is not a cloth. This is thing(material) limitation. There is saffron in Kashmir only. This is limitation of space and thing. You can have apples only in September. This is limitation of time and thing. But Brahman is everywhere, as It is allpervading. It exists in the past, the present and the future. It dwells in all parts. Hence It is beyond these three limitations. It is therefore endless.
 
 ### BG 11.12
 
@@ -424,11 +424,11 @@ If the splendour of a thousand suns were to blaze out simultaneously in the sky,
 
 **Hindi Commentary**
 
-'दिवि सूर्यसहस्रस्य ৷৷. तस्य महात्मनः'--जैसे आकाशमें हजारों तारे एक साथ उदित होनेपर भी उन सबका मिला हुआ प्रकाश एक चन्द्रमाके प्रकाशके सदृश नहीं हो सकता और हजारों चन्द्रमाओंका मिला हुआ प्रकाश एक सूर्यके प्रकाशके सदृश नहीं हो सकता, ऐसे ही आकाशमें हजारों सूर्य एक साथ उदित होनेपर भी उन सबका मिला हुआ प्रकाश विराट् भगवान्के प्रकाशके सदृश नहीं हो सकता। तात्पर्य यह हुआ कि हजारों सूर्योंका प्रकाश भी विराट् भगवान्के प्रकाशका उपमेय नहीं हो सकता। इस प्रकर जब हजारों सूर्योंके प्रकाशको उपमेय बनानेमें भी दिव्यदृष्टिवाले सञ्जयको संकोच होता है, तब वह प्रकाश विराट्रूप भगवान्के प्रकाशका उपमान हो ही कैसे सकता है! कारण कि सूर्यका प्रकाश भौतिक है, जब कि विराट् भगवान्का प्रकाश दिव्य है। भौतिक प्रकाश कितना ही बड़ा क्यों न हो,,दिव्य प्रकाशके सामने वह तुच्छ ही है। भौतिक प्रकाश और दिव्य प्रकाशकी जाति अलग-अलग होनेसे उनकी आपसमें तुलना नहीं की जा सकती। हाँ, अङ्गुलिनिर्देशकी तरह भौतिक प्रकाशसे दिव्य प्रकाशका संकेत किया जा सकता है। यहाँ सञ्जय भी हजारों सूर्योंके भौतिक प्रकाशकी कल्पना करके विराट्रूप भगवान्के प्रकाश-(तेज-) का लक्ष्य कराते हैं।
+'दिवि सूर्यसहस्रस्य ।।. तस्य महात्मनः'--जैसे आकाशमें हजारों तारे एक साथ उदित होनेपर भी उन सबका मिला हुआ प्रकाश एक चन्द्रमाके प्रकाशके सदृश नहीं हो सकता और हजारों चन्द्रमाओंका मिला हुआ प्रकाश एक सूर्यके प्रकाशके सदृश नहीं हो सकता, ऐसे ही आकाशमें हजारों सूर्य एक साथ उदित होनेपर भी उन सबका मिला हुआ प्रकाश विराट् भगवान्के प्रकाशके सदृश नहीं हो सकता। तात्पर्य यह हुआ कि हजारों सूर्योंका प्रकाश भी विराट् भगवान्के प्रकाशका उपमेय नहीं हो सकता। इस प्रकर जब हजारों सूर्योंके प्रकाशको उपमेय बनानेमें भी दिव्यदृष्टिवाले सञ्जयको संकोच होता है, तब वह प्रकाश विराट्रूप भगवान्के प्रकाशका उपमान हो ही कैसे सकता है! कारण कि सूर्यका प्रकाश भौतिक है, जब कि विराट् भगवान्का प्रकाश दिव्य है। भौतिक प्रकाश कितना ही बड़ा क्यों न हो,,दिव्य प्रकाशके सामने वह तुच्छ ही है। भौतिक प्रकाश और दिव्य प्रकाशकी जाति अलग-अलग होनेसे उनकी आपसमें तुलना नहीं की जा सकती। हाँ, अङ्गुलिनिर्देशकी तरह भौतिक प्रकाशसे दिव्य प्रकाशका संकेत किया जा सकता है। यहाँ सञ्जय भी हजारों सूर्योंके भौतिक प्रकाशकी कल्पना करके विराट्रूप भगवान्के प्रकाश-(तेज-) का लक्ष्य कराते हैं।
 
 **English Commentary**
 
-Divi here means in the Antariksha or the sky.Mahatma here refers to the great Soul or the mighty Being? the Cosmic Form.
+Divi here means in the Antariksha or the sky. Mahatma here refers to the great Soul or the mighty Being, the Cosmic Form.
 
 ### BG 11.13
 
@@ -461,7 +461,7 @@ There, in the body of the God of gods, Arjuna then saw the entire universe resti
 
 **English Commentary**
 
-Tatra There -- in the Cosmic Form.Anekadha Many groups -- gods? manes? men and other species of beings.Arjuna beheld all forms as the forms of the Lord? all heads as His heads? all eyes as His eyes? all hands as His hands? all feet as His feet? every part of every body as the limb of the Lords divine form. Wherever he looked he beheld nothing but the Lord. He got mystic divine knowledge.Sanjaya has given a truly graphic description of the Cosmic Form. Yet? it would be futile to grasp it with the finite mind. It is a transcendental vision? beyond the reach of the mind and senses. It has to be realised in Samadhi.
+Tatra There -- in the Cosmic Form. Anekadha Many groups -- gods, manes, men and other species of beings. Arjuna beheld all forms as the forms of the Lord, all heads as His heads, all eyes as His eyes, all hands as His hands, all feet as His feet, every part of every body as the limb of the Lords divine form. Wherever he looked he beheld nothing but the Lord. He got mystic divine knowledge. Sanjaya has given a truly graphic description of the Cosmic Form. Yet, it would be futile to grasp it with the finite mind. It is a transcendental vision, beyond the reach of the mind and senses. It has to be realised in Samadhi.
 
 ### BG 11.14
 
@@ -494,7 +494,7 @@ Then, Arjuna, filled with wonder and his hair standing on end, bowed his head to
 
 **English Commentary**
 
-Tatah Then? having seen the Cosmic Form.Arjuna joined his palms in order to do prostration to the Cosmic Form. The great hero had attained true humility which the bowed head and joined palms represented? and which is the essential ingredient of devotion.
+Tatah Then, having seen the Cosmic Form. Arjuna joined his palms in order to do prostration to the Cosmic Form. The great hero had attained true humility which the bowed head and joined palms represented, and which is the essential ingredient of devotion.
 
 ### BG 11.15
 
@@ -536,7 +536,7 @@ Arjuna said, "O God, I see all the gods in Your body, as well as hosts of variou
 
 **English Commentary**
 
-Arjuna describes his own experience of the Cosmic Form in this and the following verses? 15 to 31.Bhutaviseshasanghan Hosts of various classes of beings? both animate and inanimate. These numerous entities are in Thy Cosmic Form? like hairs on the human body.Brahma? the fourfaced? the Lord of all creatures? is seated in the centre of the earthlotus on the Meru which forms the thalamus as it were of the earthlotus.Sages? such as Vasishtha. Serpents? such as Vasuki.Moreover --
+Arjuna describes his own experience of the Cosmic Form in this and the following verses? 15 to 31. Bhutaviseshasanghan Hosts of various classes of beings, both animate and inanimate. These numerous entities are in Thy Cosmic Form, like hairs on the human body. Brahma, the fourfaced, the Lord of all creatures, is seated in the centre of the earthlotus on the Meru which forms the thalamus as it were of the earthlotus. Sages, such as Vasishtha. Serpents, such as Vasuki. Moreover --
 
 ### BG 11.16
 
@@ -575,7 +575,7 @@ I see You with boundless form on every side, with many arms, stomachs, mouths, a
 
 **English Commentary**
 
-A thing that is limited by space and time has a begining? a middle and an end? but the Lord is omnipresent and eternal. He exists in the three periods of time -- past? present and future? but is not limited by time and space. Therefore He has neither a beginning nor middle nor end.Arjuna could have this divine vision only with the help of the divine eye bestowed upon him by the Lord. He who has supreme devotion to the Lord and on whom the Lord showers His grace can enjoy this wondrous vision.
+A thing that is limited by space and time has a begining, a middle and an end, but the Lord is omnipresent and eternal. He exists in the three periods of time -- past, present and future, but is not limited by time and space. Therefore He has neither a beginning nor middle nor end. Arjuna could have this divine vision only with the help of the divine eye bestowed upon him by the Lord. He who has supreme devotion to the Lord and on whom the Lord showers His grace can enjoy this wondrous vision.
 
 ### BG 11.17
 
@@ -616,7 +616,7 @@ I see You with the diadem, club, and discus, a mass of radiance shining everywhe
 
 **English Commentary**
 
-Kiritam is a special ornament for the head? the crown.Arjuna had worshipped the Lord as having a crown? club and discus and the Lord showed him the same form now. He is in all forms and He is beyond all forms as the transcendental Reality. Who can comprehend His GloryTejorasim A mass of splendour that cannot be perceived without the inner divine eye of intuition.Aprameyam Immeasurable? whose limits cannot be fixed.I infer from this vision of Thy power of Yoga that Thu art the Imperishable? etc.
+Kiritam is a special ornament for the head, the crown. Arjuna had worshipped the Lord as having a crown, club and discus and the Lord showed him the same form now. He is in all forms and He is beyond all forms as the transcendental Reality. Who can comprehend His GloryTejorasim A mass of splendour that cannot be perceived without the inner divine eye of intuition. Aprameyam Immeasurable, whose limits cannot be fixed. I infer from this vision of Thy power of Yoga that Thu art the Imperishable, etc.
 
 ### BG 11.18
 
@@ -655,7 +655,7 @@ You are the Imperishable, the Supreme Being, worthy of being known. You are the 
 
 **English Commentary**
 
-VisvasyaNidhaanam Treasurehouse of this universe? also means abode or refuge or the substratum of this universe. It is because of this that all the beings in the universe are preserved and protected. He is the inexhaustibel source to Whom the devotee turns at all times. Deluded indeed are they that ignore this divine treasurehouse and runa fter the shadow of the objects of the senses which do not contain even an iota of pleasure.Veditavyam To be known by the aspirants or seekrs of liberation? through Sravana (hearing of the scriptures)? Manana (reflection) and Nididhyasana (meditation).Avyayah means inexhaustible? unchanging? undying.
+VisvasyaNidhaanam Treasurehouse of this universe, also means abode or refuge or the substratum of this universe. It is because of this that all the beings in the universe are preserved and protected. He is the inexhaustibel source to Whom the devotee turns at all times. Deluded indeed are they that ignore this divine treasurehouse and runa fter the shadow of the objects of the senses which do not contain even an iota of pleasure. Veditavyam To be known by the aspirants or seekrs of liberation, through Sravana (hearing of the scriptures)? Manana (reflection) and Nididhyasana (meditation). Avyayah means inexhaustible, unchanging, undying.
 
 ### BG 11.19
 
@@ -733,7 +733,7 @@ This space between the earth and the heavens, and all the quarters, is filled by
 
 **English Commentary**
 
-Thee In Thy Cosmic Form.The space and the arters This denotes that the Lord has filled the whole universe of animate and inanimate objects.In order to remove the doubt entertained by Arjuna as to his success (Cf.II.6) Lord Krishna makes him feel now that victoyr for the Pandavas is certain.
+Thee In Thy Cosmic Form. The space and the arters This denotes that the Lord has filled the whole universe of animate and inanimate objects. In order to remove the doubt entertained by Arjuna as to his success (Cf.II.6) Lord Krishna makes him feel now that victoyr for the Pandavas is certain.
 
 ### BG 11.21
 
@@ -772,7 +772,7 @@ Verily, these hosts of gods enter into Thee; some extol Thee with joined palms i
 
 **English Commentary**
 
-Pushkalabhih means complete or wellworded praises or praises full of deep meanings.Great sages like Narada and perfected ones like Kapila praise Thee with inspiring hymns.
+Pushkalabhih means complete or wellworded praises or praises full of deep meanings. Great sages like Narada and perfected ones like Kapila praise Thee with inspiring hymns.
 
 ### BG 11.22
 
@@ -817,7 +817,7 @@ The Rudras, Adityas, Vasus, Sadhyas, Visvedevas, the two Asvins, Maruts, the Man
 
 **English Commentary**
 
-Sadhyas are a class of gods of whom Brahma is the chief.Visvedevas are ten gods who in Vedic times were considered as protectors of human beings. They were called guardians of the world. They were givers of plenty to the human beings. Their names are Krata? Daksha? Vasu? Satya? Kama? Kala? Dhvani? Rochaka? Adrava and Pururava.The two Asvins? born of Prabha (light)? daughter of Tushta and the Sun? are the physicians of the gods.Rudras? Adityas? Vasus and Maruts -- see tenth chapter? verses 21 and 23.Ushmapa A class of manes. They accept the food offered in the Sraaddha (anniversary) ceremony or the obseies? while it is hot. Hence they are called Ushmapas. There are seven groups of manes.Gandharvas are celestial singers such as Haha and Huhu.Yakshas such as Kubera (the god of wealth) Asuras such as Virochana perfected ones such as Kapila.
+Sadhyas are a class of gods of whom Brahma is the chief. Visvedevas are ten gods who in Vedic times were considered as protectors of human beings. They were called guardians of the world. They were givers of plenty to the human beings. Their names are Krata, Daksha, Vasu, Satya, Kama, Kala, Dhvani, Rochaka, Adrava and Pururava. The two Asvins, born of Prabha (light)? daughter of Tushta and the Sun, are the physicians of the gods. Rudras, Adityas, Vasus and Maruts -- see tenth chapter, verses 21 and 23. Ushmapa A class of manes. They accept the food offered in the Sraaddha (anniversary) ceremony or the obseies, while it is hot. Hence they are called Ushmapas. There are seven groups of manes. Gandharvas are celestial singers such as Haha and Huhu. Yakshas such as Kubera (the god of wealth) Asuras such as Virochana perfected ones such as Kapila.
 
 ### BG 11.23
 
@@ -895,7 +895,7 @@ On seeing Thee, touching the sky, shining in many colors, with mouths wide open,
 
 **English Commentary**
 
-Dhriti also means patience and strength. Sama also means control.The vision of the Cosmic Form has frightened Arjuna considerably.
+Dhriti also means patience and strength. Sama also means control. The vision of the Cosmic Form has frightened Arjuna considerably.
 
 ### BG 11.25
 
@@ -938,7 +938,7 @@ Having seen Thy mouths fearful with teeth blazing like the fires of cosmic disso
 
 **English Commentary**
 
-Jagannivasa The substratum of the universe.Kalanala The fires which consume the worlds during the final dissolution of the worlds (Pralaya). Time (Kala) is the consumer of all that is manifest.Diso no jane I do not know the four arters. I cannot distinguish the east from the west? nor the north from the south.
+Jagannivasa The substratum of the universe. Kalanala The fires which consume the worlds during the final dissolution of the worlds (Pralaya). Time (Kala) is the consumer of all that is manifest.Diso no jane I do not know the four arters. I cannot distinguish the east from the west, nor the north from the south.
 
 ### BG 11.26
 
@@ -986,7 +986,7 @@ All the sons of Dhritarashtra, along with the hosts of kings of the earth, Bhish
 
 **English Commentary**
 
-Karna? though he was the son of Kunti? the mother of the Pandavas? was brought up by a charioteer and hence came to be regarded as his son.
+Karna, though he was the son of Kunti, the mother of the Pandavas, was brought up by a charioteer and hence came to be regarded as his son.
 
 ### BG 11.27
 
@@ -1065,7 +1065,7 @@ Verily, just as many torrents of rivers flow towards the ocean, so too these her
 
 **English Commentary**
 
-Ami These warriors such as Bhishma. Arjuna is now seeing all these warriors,whom he did not wish to kill? rushing to death. His delusion has vanished. He thinks now This battle cannot be avoided. It has the sanction of the Supreme Lord. Why should I worry about the inevitable The Lord has already destroyed these warriors. I am only an instrument in His hands. No sin can touch me even if I kill them. This is a just cause also.Why and how do they enter Arjuna says --
+Ami These warriors such as Bhishma. Arjuna is now seeing all these warriors,whom he did not wish to kill, rushing to death. His delusion has vanished. He thinks now This battle cannot be avoided. It has the sanction of the Supreme Lord. Why should I worry about the inevitable The Lord has already destroyed these warriors. I am only an instrument in His hands. No sin can touch me even if I kill them. This is a just cause also. Why and how do they enter Arjuna says --
 
 ### BG 11.29
 
@@ -1147,7 +1147,7 @@ Thou lickest up, devouring all the worlds on every side with Thy flaming mouths.
 
 **English Commentary**
 
-Vishnu means allpervading? Vyapanasila.
+Vishnu means allpervading, Vyapanasila.
 
 ### BG 11.31
 
@@ -1228,7 +1228,7 @@ The Blessed Lord said, "I am the full-grown, world-destroying Time, now engaged 
 
 **English Commentary**
 
-Even without thee Even if thou? O Arjuna? wouldst not fight? these warriors are doomed to die under My dispensation. I am the alldestroying Time. I have already slain them. You have seen them dying. Therefore thy instrumentality is not of much importance.Such being the case? therefore? stand up and obtain fame.
+Even without thee Even if thou, O Arjuna, wouldst not fight, these warriors are doomed to die under My dispensation. I am the alldestroying Time. I have already slain them. You have seen them dying. Therefore thy instrumentality is not of much importance. Such being the case, therefore, stand up and obtain fame.
 
 ### BG 11.33
 
@@ -1271,7 +1271,7 @@ Therefore, stand up and obtain fame. Conquer the enemies and enjoy the unparalle
 
 **English Commentary**
 
-Be thou merely an apparent or nominal cause. I have already killed them in advance. I have destroyed them long ago.Fame People will think that Bhishma? Drona and the other great warriors whom even the gods cannot kill have been defeated by you and so you will obtain great fame. Such fame is due to virtuous Karma only.Satrun Enemies such as Duryodhana.Savyasachi Arjuna who could shoot arrows even with the left hand.
+Be thou merely an apparent or nominal cause. I have already killed them in advance. I have destroyed them long ago. Fame People will think that Bhishma, Drona and the other great warriors whom even the gods cannot kill have been defeated by you and so you will obtain great fame. Such fame is due to virtuous Karma only. Satrun Enemies such as Duryodhana. Savyasachi Arjuna who could shoot arrows even with the left hand.
 
 ### BG 11.34
 
@@ -1316,7 +1316,7 @@ Drona, Bhishma, Jayadratha, Karna, and other brave warriors have already been sl
 
 **English Commentary**
 
-Already slain by Me Therefore? O Arjuna? you need not be afraid of incurring sin by killing them.Drona had celestial weapons. He was Arjunas teacher in the science of archery. He was Arjunas beloved and greatest Guru. Bhishma also possessed celetial weapons. He could die only if and when he wanted to die. He once faught singlehanded with Lord Parasurama and was not defeated. So powerful was he.The father of Jayadratha performed penance with a resolve the head of the man who may cause the head of my son to fall on the ground? shall also fall. During the war? however? Arjunas arrow cuts the head and drops it on the lap of the father who? inadvertently? makes it fall on the ground he too dies at once. Karna? the son of the Sungod? had obtained an unerring missile from Indra.
+Already slain by Me Therefore, O Arjuna, you need not be afraid of incurring sin by killing them. Drona had celestial weapons. He was Arjunas teacher in the science of archery. He was Arjunas beloved and greatest Guru. Bhishma also possessed celetial weapons. He could die only if and when he wanted to die. He once faught singlehanded with Lord Parasurama and was not defeated. So powerful was he. The father of Jayadratha performed penance with a resolve the head of the man who may cause the head of my son to fall on the ground, shall also fall. During the war, however, Arjunas arrow cuts the head and drops it on the lap of the father who, inadvertently, makes it fall on the ground he too dies at once. Karna, the son of the Sungod, had obtained an unerring missile from Indra.
 
 ### BG 11.35
 
@@ -1362,7 +1362,7 @@ Sanjaya said, Having heard that speech of Lord Krishna, Arjuna, with joined palm
 
 **English Commentary**
 
-When anyone is in a state of extreme terror or joy he sheds tears on account of pain or exhilaration of spirits. Then his throat is choked and he stammers or speaks indistinctly or in a dull? choked voice. Arjuna was extremely frightened when he saw the Cosmic Form and so he spoke in a stammering tone.There is great significane in Sanjayas words. He thought that Dhritarashtra might come to terms or make peace with the Pandavas when he knew that his sons would certainly be killed for want of proper support when Drona and Karna would be killed by Arjuna. He hoped that conseently there would be peace and happiness to both the parties. But Dhritarashtra was obstinate he did not listen to this suggestion on account of the force of destiny.
+When anyone is in a state of extreme terror or joy he sheds tears on account of pain or exhilaration of spirits. Then his throat is choked and he stammers or speaks indistinctly or in a dull, choked voice. Arjuna was extremely frightened when he saw the Cosmic Form and so he spoke in a stammering tone. There is great significane in Sanjayas words. He thought that Dhritarashtra might come to terms or make peace with the Pandavas when he knew that his sons would certainly be killed for want of proper support when Drona and Karna would be killed by Arjuna. He hoped that conseently there would be peace and happiness to both the parties. But Dhritarashtra was obstinate he did not listen to this suggestion on account of the force of destiny.
 
 ### BG 11.36
 
@@ -1404,7 +1404,7 @@ Arjuna said, "It is fitting, O Krishna, that the world delights and rejoices in 
 
 **English Commentary**
 
-Praise description of the glory of the Lord. The Lord is the object worthy of adortion? love and delight? because He is the Self and friend of all beings.The Lord is the object of adoration? love and delight for the following reason also. He is the primal cause even of Brahma? the Creator of the universe.
+Praise description of the glory of the Lord. The Lord is the object worthy of adortion, love and delight, because He is the Self and friend of all beings. The Lord is the object of adoration, love and delight for the following reason also. He is the primal cause even of Brahma, the Creator of the universe.
 
 ### BG 11.37
 
@@ -1443,7 +1443,7 @@ And why should they not, O great Soul, bow to Thee Who art greater than all else
 
 **English Commentary**
 
-The Lord is Mahatma. He is greater than all else. He is the imperishable. So He is the proper object of worship? love and delight.That which exists in the three periods of time is Sat. Brahman is Sat. That which does not exist in the three periods of time is Asat. This world is Asat. This body is Asat.The words Sat and Asat mean here the manifested and the unmanifested which form the adjuncts of the Akshara (imperishable). In reality the Akshara transcends both these. The word Akshara is applied in the Gita sometimes to the Unmanifest (Nature) and sometimes to the Supreme Being.Ananta is He Who is free from the three kinds of limitations (of time? space and thing) which have already been explained.Arjuna again praises the Lord thus
+The Lord is Mahatma. He is greater than all else. He is the imperishable. So He is the proper object of worship, love and delight. That which exists in the three periods of time is Sat. Brahman is Sat. That which does not exist in the three periods of time is Asat. This world is Asat. This body is Asat. The words Sat and Asat mean here the manifested and the unmanifested which form the adjuncts of the Akshara (imperishable). In reality the Akshara transcends both these. The word Akshara is applied in the Gita sometimes to the Unmanifest (Nature) and sometimes to the Supreme Being. Ananta is He Who is free from the three kinds of limitations (of time, space and thing) which have already been explained. Arjuna again praises the Lord thus
 
 ### BG 11.38
 
@@ -1482,7 +1482,7 @@ You are the primal God, the ancient Purusha, the supreme refuge of this universe
 
 **English Commentary**
 
-Primal God? because the Lord is the creator of the universe.Purusha? because the Lord lies in the body (Puri Sayanat).Nidhaanam That in which the world rests during the great deluge or cosmic dissolution.The pot comes out of the clay and gets merged in clay. Even so the world has come out of the Lord and gets dissolved or involved in the Lord. So the Lord is the material cause of the world. Therefore? He is the primal God and the supreme refuge also.Vetta Knower of the knowable things. As the Lord is omniscient? He knows all about the world? and He is the instrumental or the efficient cause of this world.Param Dhama Supreme Abode of Vishnu. Just as the rope (the substratum for the superimposed snake) pervades the snake? so also Brahman or Vishnu through His Nature as ExistenceKnowledgeBliss Absolute pervades the whole universe.Moreover --
+Primal God, because the Lord is the creator of the universe. Purusha, because the Lord lies in the body (Puri Sayanat). Nidhaanam That in which the world rests during the great deluge or cosmic dissolution. The pot comes out of the clay and gets merged in clay. Even so the world has come out of the Lord and gets dissolved or involved in the Lord. So the Lord is the material cause of the world. Therefore, He is the primal God and the supreme refuge also. Vetta Knower of the knowable things. As the Lord is omniscient, He knows all about the world, and He is the instrumental or the efficient cause of this world. Param Dhama Supreme Abode of Vishnu. Just as the rope (the substratum for the superimposed snake) pervades the snake, so also Brahman or Vishnu through His Nature as ExistenceKnowledgeBliss Absolute pervades the whole universe. Moreover --
 
 ### BG 11.39
 
@@ -1521,7 +1521,7 @@ You are Vayu, Yama, Agni, Varuna, the moon, the Creator, and the great-grandfath
 
 **English Commentary**
 
-Prajapati Marichi and others were the seven mindborn sons of Brahma. Kasyapa descended from Marichi and from Kasyapa came all other progeny. Therefore? Marichi? Kasyapa and others are known as Prajapatis or the gods or progeny. The word Prajapati here is interpreted by some as Kasyapa and other Prajapatis. But as the word has been used here in the singular number it is appropriate to take Brahma as Prajapati. Brahma is the grandfather (Pitamaha) of Kasyapa. Brahma or the Hiranyagarbha is the Karya Brahman (effect). Isvara is the Karana Brahman (the cause for Brahma). Therefore? Isvara is the greatgrandfather. He is the father of,even Brahma.Isvara has Maya as the limiting adjunct. Maya is His causal body. Isvara has no plane. Maya is in an undifferentiated state. She is in a state where the alities of Nature (Gunas) are in eilibrium. When the eilibrium is disturbed through the will of Isvara? the three Gunas? Brahma? Vishnu and Siva manifest.Thou art the moon alludes to and includes the sun also.Punah? Bhuyah Again. Salutations a thousand times and again salutations. This indicates that Arjuna had intense faith in and boundless devotion for Lord Krishna. He was not satisfied even if he prostrated himself a thousand times.
+Prajapati Marichi and others were the seven mindborn sons of Brahma. Kasyapa descended from Marichi and from Kasyapa came all other progeny. Therefore, Marichi, Kasyapa and others are known as Prajapatis or the gods or progeny. The word Prajapati here is interpreted by some as Kasyapa and other Prajapatis. But as the word has been used here in the singular number it is appropriate to take Brahma as Prajapati. Brahma is the grandfather (Pitamaha) of Kasyapa. Brahma or the Hiranyagarbha is the Karya Brahman (effect). Isvara is the Karana Brahman (the cause for Brahma). Therefore, Isvara is the greatgrandfather. He is the father of,even Brahma. Isvara has Maya as the limiting adjunct. Maya is His causal body. Isvara has no plane. Maya is in an undifferentiated state. She is in a state where the alities of Nature (Gunas) are in eilibrium. When the eilibrium is disturbed through the will of Isvara, the three Gunas, Brahma, Vishnu and Siva manifest.Thou art the moon alludes to and includes the sun also. Punah, Bhuyah Again. Salutations a thousand times and again salutations. This indicates that Arjuna had intense faith in and boundless devotion for Lord Krishna. He was not satisfied even if he prostrated himself a thousand times.
 
 ### BG 11.40
 
@@ -1560,7 +1560,7 @@ Salutations to You in front and behind! Salutations to You on every side! O All!
 
 **English Commentary**
 
-The words I prostrate myself before Thee? behind Thee and on every side indicate the allpervading nature of the Lord. How can the allpervading Self have front and back Finite objects only have front and back sides Arjuna imagined that there were front and back sides to the Lord and so prostrated himself in his extreme faith and devotion.O All Nothing exists without Thee. As the Self is allpervading? He is called the All. There is nothing except the Self.On every side? as Thou art present everywhere or in all arters.One may be powerful but may not possess the courage to kill the enemies or he may be endowed with a mild form of courge but the Lord is infinite in courage and infinite in power.Pervadest by Thy One Self.
+The words I prostrate myself before Thee, behind Thee and on every side indicate the allpervading nature of the Lord. How can the allpervading Self have front and back Finite objects only have front and back sides Arjuna imagined that there were front and back sides to the Lord and so prostrated himself in his extreme faith and devotion. O All Nothing exists without Thee. As the Self is allpervading, He is called the All. There is nothing except the Self. On every side, as Thou art present everywhere or in all arters. One may be powerful but may not possess the courage to kill the enemies or he may be endowed with a mild form of courge but the Lord is infinite in courage and infinite in power. Pervadest by Thy One Self.
 
 ### BG 11.41
 
@@ -1642,7 +1642,7 @@ In whatever way I may have insulted You for the sake of fun, while at play, repo
 
 **English Commentary**
 
-Arjuna? beholding the Cosmic Form of Lord Krishna? seeks forgiveness for his past familiar conduct. He says? I have been stupid. I have treated Thee with familiarity? not knowing Thy greatness. I have taken Thee as my friend on account of misconception. I have behaved badly with Thee. Thou art the origin of this universe and yet I have joked with Thee. I have taken undue liberties with Thee. Kindly forgive me? O Lord.Tat All those offences.Achyuta He who is unchanging.In company In the presence of others.Aprameyam Immeasurable. He Who has unthinkable glory and splendour.
+Arjuna, beholding the Cosmic Form of Lord Krishna, seeks forgiveness for his past familiar conduct. He says, I have been stupid. I have treated Thee with familiarity, not knowing Thy greatness. I have taken Thee as my friend on account of misconception. I have behaved badly with Thee. Thou art the origin of this universe and yet I have joked with Thee. I have taken undue liberties with Thee. Kindly forgive me, O Lord. Tat All those offences. Achyuta He who is unchanging. In company In the presence of others. Aprameyam Immeasurable. He Who has unthinkable glory and splendour.
 
 ### BG 11.43
 
@@ -1681,7 +1681,7 @@ Thou art the Father of this world, both moving and unmoving. Thou art to be ador
 
 **English Commentary**
 
-There exists none who is eal to Thee There cannot be two or more Isvaras. If there were? the world will not get on as it does now. All the Isvaras may not be of one mind? as they would all be independent of one another. What one wishes to create? another may wish to destroyWhen there does not exist one who is eal to Thee? how could there be one superior to TheeFather Creator. As the Lord is the creator of this world He is fit to be adored. He is the greatest Guru also. Therefore there is no one who is eal to the Lord.
+There exists none who is eal to Thee There cannot be two or more Isvaras. If there were, the world will not get on as it does now. All the Isvaras may not be of one mind, as they would all be independent of one another. What one wishes to create, another may wish to destroyWhen there does not exist one who is eal to Thee, how could there be one superior to TheeFather Creator. As the Lord is the creator of this world He is fit to be adored. He is the greatest Guru also. Therefore there is no one who is eal to the Lord.
 
 ### BG 11.44
 
@@ -1722,7 +1722,7 @@ Therefore, bowing down and prostrating my body, I crave Thy forgiveness, O adora
 
 **English Commentary**
 
-O Lord? take me to Thy bosom as a mother does her child. Forgive me for all tht I have hitherto spoken or done. Forgive my faults. Please overlook my past mistakes. I have done this through ignorance. Now I have come to Thee in submission. I beg Your pardon now.
+O Lord, take me to Thy bosom as a mother does her child. Forgive me for all tht I have hitherto spoken or done. Forgive my faults. Please overlook my past mistakes. I have done this through ignorance. Now I have come to Thee in submission. I beg Your pardon now.
 
 ### BG 11.45
 
@@ -1761,7 +1761,7 @@ I am delighted, having seen something never seen before; yet my mind is distress
 
 **English Commentary**
 
-For an ordinary man the Cosmic Form (Vision) is overwhelming and terrifying but for a Yogi it is encouraging? strengthening and soulelevating.Arjuna says The Cosmic Form was never before seen by me. Show me only that form which Thou wearest as my friend.
+For an ordinary man the Cosmic Form (Vision) is overwhelming and terrifying but for a Yogi it is encouraging, strengthening and soulelevating. Arjuna says The Cosmic Form was never before seen by me. Show me only that form which Thou wearest as my friend.
 
 ### BG 11.46
 
@@ -1802,7 +1802,7 @@ I desire to see You as before, crowned, bearing a mace, with the discus in hand,
 
 **English Commentary**
 
-Arjuna says O Lord in the Cosmic Form I do not know where to turn and to whom to address myself. I am frightened. I am longing to see Thee with conch? discus? mace and lotus. Withdraw Thy Cosmic Form. Assume that same fourarmed form as before.Spiritual aspirants are ofen impatient to have the highest spiritual experiences immediately they begin their Sadhana. This is wrong. They will not be able to withstand the great power that will,surge into them. Be patientO thousandarmed refers to the Cosmic Form.
+Arjuna says O Lord in the Cosmic Form I do not know where to turn and to whom to address myself. I am frightened. I am longing to see Thee with conch, discus, mace and lotus. Withdraw Thy Cosmic Form. Assume that same fourarmed form as before. Spiritual aspirants are ofen impatient to have the highest spiritual experiences immediately they begin their Sadhana. This is wrong. They will not be able to withstand the great power that will,surge into them. Be patientO thousandarmed refers to the Cosmic Form.
 
 ### BG 11.47
 
@@ -1844,7 +1844,7 @@ The Blessed Lord said, "O Arjuna, this Cosmic Form has graciously been shown to 
 
 **English Commentary**
 
-Lord Krishna eulogises the Cosmic Form because Arjuna should be regarded to have achieved all his ends by seeing this Cosmic Form.It is also an inducement to all spiritual aspirants to strive to attain this sublime vision. What they should do is explained by the Lord in verse 53 to 55.
+Lord Krishna eulogises the Cosmic Form because Arjuna should be regarded to have achieved all his ends by seeing this Cosmic Form. It is also an inducement to all spiritual aspirants to strive to attain this sublime vision. What they should do is explained by the Lord in verse 53 to 55.
 
 ### BG 11.48
 
@@ -1883,7 +1883,7 @@ Neither by the study of the Vedas, nor by gifts, nor by sacrifices, nor by sever
 
 **English Commentary**
 
-Mere cramming of the texts of the Vedas without knowing the meaning will not do. A study of the sacrifices also is necessary. One should know the meaning of these? also.Dana Charity such as a Tula Purusha (gift of gold eal in weight of a man) Kanyadana (gift of ones daughther in marriage)? gift of a cow? rice? etc.Kriya Rituals such as Agnihotra.Tapas Such as the Chandrayana Vrata. (This is a kind of Vrata or observance. The daily consumption of food is reduced by one mouthful every day for the dark half of the month beginning with the fullmoon. Then the food is increased by one mouthful every day during the bright fortnight during the increase of the moon. This Vrata (observance) is a great purifier of the mind. It destroys sins.)
+Mere cramming of the texts of the Vedas without knowing the meaning will not do. A study of the sacrifices also is necessary. One should know the meaning of these, also. Dana Charity such as a Tula Purusha (gift of gold eal in weight of a man) Kanyadana (gift of ones daughther in marriage)? gift of a cow, rice, etc.Kriya Rituals such as Agnihotra. Tapas Such as the Chandrayana Vrata. (This is a kind of Vrata or observance. The daily consumption of food is reduced by one mouthful every day for the dark half of the month beginning with the fullmoon. Then the food is increased by one mouthful every day during the bright fortnight during the increase of the moon. This Vrata (observance) is a great purifier of the mind. It destroys sins.)
 
 ### BG 11.49
 
@@ -1926,7 +1926,7 @@ Do not be afraid, nor be bewildered on seeing such a terrible form of Mine; with
 
 **English Commentary**
 
-Former form is the form with four hands with conch? discus? club or mace and lotus.The Lord was Arjuna in a state of terror. Therefore? He withdrew the Cosmic Form and assumed His usual gentle form. He consoled Arjuna and spoke sweet? loving words.
+Former form is the form with four hands with conch, discus, club or mace and lotus. The Lord was Arjuna in a state of terror. Therefore, He withdrew the Cosmic Form and assumed His usual gentle form. He consoled Arjuna and spoke sweet, loving words.
 
 ### BG 11.50
 
@@ -2006,7 +2006,7 @@ Arjuna said, "Having seen this Thy gentle human form, O Krishna, now I am compos
 
 **English Commentary**
 
-Arjuna says to Lord Krishna O Lord? I now behold Thy human form. Now my thoughts are collected and I am serene. I can speak. My senses perform their proper functions. My fear has vanished. Thou hast treated me as a mother would treat her erring child whom she embraces and nurses. Just as the calf rejoices when it beholds its mother who was missing for some days? so also I rejoice now when I behold Thy gentle form. I have drunk the nectar. Now I am alive.
+Arjuna says to Lord Krishna O Lord, I now behold Thy human form. Now my thoughts are collected and I am serene. I can speak. My senses perform their proper functions. My fear has vanished. Thou hast treated me as a mother would treat her erring child whom she embraces and nurses. Just as the calf rejoices when it beholds its mother who was missing for some days, so also I rejoice now when I behold Thy gentle form. I have drunk the nectar. Now I am alive.
 
 ### BG 11.52
 
@@ -2042,7 +2042,7 @@ The Blessed Lord said, "It is very hard indeed to see this form of Mine which th
 
 **English Commentary**
 
-Lord Krishna says to Arjuna Though the gods long to behold the Cosmic Form yet they have not seen it as you have done. THey can never behold it.Just as the Chataka (a bird) longs for a drop of rain? eagerly turning its eyes towards the clouds? so also do gods yearn to behold the Cosmic Form but their wishes have not been gratified even in their dreams. Such is that marvellous vision which thou hast easily seen.
+Lord Krishna says to Arjuna Though the gods long to behold the Cosmic Form yet they have not seen it as you have done. THey can never behold it. Just as the Chataka (a bird) longs for a drop of rain, eagerly turning its eyes towards the clouds, so also do gods yearn to behold the Cosmic Form but their wishes have not been gratified even in their dreams. Such is that marvellous vision which thou hast easily seen.
 
 ### BG 11.53
 
@@ -2075,7 +2075,7 @@ Neither by the Vedas, nor by austerity, nor by gift, nor by sacrifice can I be s
 
 **English Commentary**
 
-This Cosmic Form which thou hast seen so easily cannot be obtained either by the study of the Vedas and the six modes of philosophy? nor by the practice of manifold austerities (penances)? nor by charity? nor by sacrifices of various kinds.Arjuna was indeed very fortunate in seeing the Cosmic Form.How can the Lord be seen Listen The heart must be overflowing with true devotion to Him. (Cf.XI.48)
+This Cosmic Form which thou hast seen so easily cannot be obtained either by the study of the Vedas and the six modes of philosophy, nor by the practice of manifold austerities (penances)? nor by charity, nor by sacrifices of various kinds. Arjuna was indeed very fortunate in seeing the Cosmic Form. How can the Lord be seen Listen The heart must be overflowing with true devotion to Him. (Cf.XI.48)
 
 ### BG 11.54
 
@@ -2110,7 +2110,7 @@ But by single-minded devotion, I can be known, seen, and entered into in reality
 
 **English Commentary**
 
-Devotion is the sole means to the realisation of the Cosmic Form.AnanyaBhakti Singleminded devotion. Onepointed unbroken devotion the devotion which does not seek any other object but the Lord alone. In this type of devotion no object other than the Lord is experienced by any of the senses. Egoism and dualism totally vanish.Of this form refers to the Cosmic Form.By singleminded devotion it is possible not only to know Me as declared in the scriptures but also to realise Me? i.e.? to attain liberation. The devotee realises that the Lord is all this and He alone is the ultimate Reality. When he gets this experience of illumination he gets merged in Him. (Cf.VIII.22X.10)
+Devotion is the sole means to the realisation of the Cosmic Form. AnanyaBhakti Singleminded devotion. Onepointed unbroken devotion the devotion which does not seek any other object but the Lord alone. In this type of devotion no object other than the Lord is experienced by any of the senses. Egoism and dualism totally vanish. Of this form refers to the Cosmic Form. By singleminded devotion it is possible not only to know Me as declared in the scriptures but also to realise Me, i.e.? to attain liberation. The devotee realises that the Lord is all this and He alone is the ultimate Reality. When he gets this experience of illumination he gets merged in Him. (Cf.VIII.22X.10)
 
 ### BG 11.55
 
@@ -2143,4 +2143,4 @@ He who does all actions for Me, who regards Me as the Supreme, who is devoted to
 
 **English Commentary**
 
-This is the essence of the whole teaching of the Gita. He who practises this teaching will attain Supreme Bliss and Immortality. This verse contains the summary of the entire philosophy of the Gita.He who performs actions (duties) for the sake of the Lord? who consecrates all his actions to Him? who serves the Lord with his heart and soul? who regards the Lord as his supreme goal? who lives for Him alone? who works for Him alone? who sees the Lord in everything? who sees the whole world as the Cosmic Form of the Lord and therefore cherishes no feeling of hatred or enmity towards any creature even when great injury has been done by others to him? who has no attachment or love to wealth? children? wife? friends and relatives? and who seeks nothing else but the Lord? realises Him and enters into His Being. He becomes one with Him.Thus in the Upanishads of the glorious Bhagavad Gita? the science of the Eternal? the scripture of Yoga? the dialogue between Sri Krishna and Arjuna? ends the eleventh discourse entitledThe Yoga of the Vision of the Cosmic Form.,
+This is the essence of the whole teaching of the Gita. He who practises this teaching will attain Supreme Bliss and Immortality. This verse contains the summary of the entire philosophy of the Gita. He who performs actions (duties) for the sake of the Lord, who consecrates all his actions to Him, who serves the Lord with his heart and soul, who regards the Lord as his supreme goal, who lives for Him alone, who works for Him alone, who sees the Lord in everything, who sees the whole world as the Cosmic Form of the Lord and therefore cherishes no feeling of hatred or enmity towards any creature even when great injury has been done by others to him, who has no attachment or love to wealth, children, wife, friends and relatives, and who seeks nothing else but the Lord, realises Him and enters into His Being. He becomes one with Him. Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the eleventh discourse entitledThe Yoga of the Vision of the Cosmic Form.,

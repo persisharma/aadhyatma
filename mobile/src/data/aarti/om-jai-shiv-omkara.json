@@ -1,20 +1,174 @@
 {
-  "titleHi": "ॐ जय शिव ओमकारा",
+  "titleHi": "ॐ जय शिव ओंकारा",
   "titleEn": "Om Jai Shiv Omkara",
   "subtitleHi": "आरती श्री शिव जी की",
   "subtitleEn": "Aarti of Lord Shiva",
   "deity": "shiva",
   "language": "hi-en",
-  "source": {"baseText": "Traditional Shiva Aarti", "retrievedOn": "2026-05-08"},
-  "counts": {"totalVerses": 8},
+  "source": {"baseText": "divineaarti.com, gyanbhakti.com", "retrievedOn": "2026-05-23"},
+  "counts": {"totalVerses": 9},
   "verses": [
-    {"id": "ojso-01", "type": "stanza", "section": "body", "number": 1, "labelHi": "पद १", "labelEn": "Stanza 1", "lines": ["ॐ जय शिव ओमकारा, स्वामी जय शिव ओमकारा।", "ब्रह्मा विष्णु सदाशिव, अर्द्धांगी धारा।।"], "linesEn": ["Om jai Shiv Omkaara, Swami jai Shiv Omkaara.", "Brahma Vishnu Sadaashiv, ardhaangee dhaaraa."], "meaningHi": "'ओमकारा' — ॐ (प्रणव) का स्वरूप। शिव ही ॐ हैं — यह शैव दर्शन का मूल है। 'ब्रह्मा विष्णु सदाशिव' — त्रिमूर्ति में शिव 'सदाशिव' (सनातन शिव) हैं — सृष्टि (ब्रह्मा), पालन (विष्णु) से परे, शाश्वत। 'अर्द्धांगी धारा' — पार्वती को अर्धांगिनी (शरीर का आधा भाग) धारण किया — अर्द्धनारीश्वर रूप।", "meaningEn": "'Omkara' — the form of Om (Pranava). Shiva IS Om — this is the foundation of Shaiva philosophy. 'Brahma Vishnu Sadashiv' — in the Trinity, Shiva is 'Sadashiva' (eternal Shiva) — beyond creation (Brahma) and sustenance (Vishnu), eternal. 'Ardhangi Dhara' — bearing Parvati as half the body — the Ardhanarishvara form."},
-    {"id": "ojso-02", "type": "stanza", "section": "body", "number": 2, "labelHi": "पद २", "labelEn": "Stanza 2", "lines": ["एकानन चतुरानन पंचानन राजे।", "हंसासन गरुड़ासन वृषवाहन साजे।।"], "linesEn": ["Ekaanan chaturaanan panchaanan raaje.", "Hansaasan Garudaasan vrishvaahan saaje."], "meaningHi": "'एकानन' (एक मुख — शिव), 'चतुरानन' (चार मुख — ब्रह्मा), 'पंचानन' (पाँच मुख — शिव का पंचमुखी रूप) — तीनों विराजते हैं। हंसासन (ब्रह्मा — हंस पर), गरुड़ासन (विष्णु — गरुड़ पर), वृषवाहन (शिव — नन्दी बैल पर)। एक ही पद में तीनों देवों के वाहन — यह दर्शाता है कि शिव-आरती त्रिमूर्ति-स्तुति भी है।", "meaningEn": "'Ekanan' (one-faced — Shiva), 'Chaturanan' (four-faced — Brahma), 'Panchanan' (five-faced — Shiva's Panchamukhi form) — all three reign. Swan-seated (Brahma), Garuda-seated (Vishnu), Bull-vehicled (Shiva on Nandi). All three deities' vehicles in one verse — showing this Shiva aarti is also a Trinity hymn."},
-    {"id": "ojso-03", "type": "stanza", "section": "body", "number": 3, "labelHi": "पद ३", "labelEn": "Stanza 3", "lines": ["दो भुज चार चतुर्भुज दसभुज अति सोहे।", "तीनों रूप निरखता त्रिभुवन जन मोहे।।"], "linesEn": ["Do bhuj chaar chaturbhuj dasbhuj ati sohe.", "Teenon roop nirakhta tribhuvan jan mohe."], "meaningHi": "दो भुज (शिव — सामान्य), चार भुज (विष्णु — चतुर्भुज), दस भुज (शिव/दुर्गा — दशभुज) — अत्यन्त शोभित हैं। तीनों रूपों को देखकर तीनों लोकों के जन मोहित होते हैं। संख्या-प्रतीकवाद: 2 (शिव की सरलता), 4 (विष्णु की पूर्णता), 10 (शक्ति की बहुमुखी सामर्थ्य)।", "meaningEn": "Two arms (Shiva — simplicity), four arms (Vishnu — chaturbhuj), ten arms (Shiva/Durga — dashabhuj) — all look magnificent. Seeing these three forms, beings of all three worlds are enchanted. Number symbolism: 2 (Shiva's simplicity), 4 (Vishnu's completeness), 10 (Shakti's multifaceted power)."},
-    {"id": "ojso-04", "type": "stanza", "section": "body", "number": 4, "labelHi": "पद ४", "labelEn": "Stanza 4", "lines": ["अक्षमाला वनमाला मुण्डमाला धारी।", "चन्दन मृगमद सोहै भोले शुभकारी।।"], "linesEn": ["Akshamaala vanmaala mundmaala dhaaree.", "Chandan mrigmad sohai Bhole shubhkaaree."], "meaningHi": "'अक्षमाला' (रुद्राक्ष माला — जप हेतु), 'वनमाला' (वनफूलों की माला — प्रकृति-प्रेम), 'मुण्डमाला' (खोपड़ियों की माला — संहार-शक्ति)। तीन माला = तीन गुण (सत्व, रजस, तमस)। 'मृगमद' — कस्तूरी (हिरण की नाभि से)। 'भोले' — शिव का लोक-प्रिय नाम — 'भोलेनाथ' — सरल, निश्छल, शीघ्र प्रसन्न होने वाले।", "meaningEn": "'Akshamala' (Rudraksha beads — for chanting), 'Vanamala' (forest flower garland — nature love), 'Mundamala' (skull garland — destructive power). Three garlands = three Gunas (Sattva, Rajas, Tamas). 'Mrigmad' — musk (from deer's navel). 'Bhole' — Shiva's popular folk name — 'Bholenath' — simple, innocent, easily pleased."},
-    {"id": "ojso-05", "type": "stanza", "section": "body", "number": 5, "labelHi": "पद ५", "labelEn": "Stanza 5", "lines": ["श्वेतांबर पीतांबर बाघम्बर अंगे।", "सनकादिक ब्रह्मादिक भूतादिक संगे।।"], "linesEn": ["Shvetaambar peetaambar baaghaambar ange.", "Sanakaadik Brahmaadik bhootaadik sange."], "meaningHi": "'श्वेताम्बर' (सफेद वस्त्र — सत्व), 'पीताम्बर' (पीला — विष्णु-अंश), 'बाघम्बर' (बाघछाला — शिव की तपस्वी वेशभूषा)। 'सनकादिक' (सनक-सनन्दन-सनातन-सनत्कुमार — ब्रह्मा के मानस-पुत्र), 'ब्रह्मादिक' (ब्रह्मा आदि देव), 'भूतादिक' (भूत-प्रेत-गण — शिव के अनुचर)। शिव का दरबार: ऋषि, देवता, और भूतगण — सब साथ बैठते हैं।", "meaningEn": "'Shvetambar' (white garment — Sattva), 'Pitambar' (yellow — Vishnu aspect), 'Baghaambar' (tiger skin — Shiva's ascetic attire). 'Sanakadik' (Sanaka-Sanandana-Sanatana-Sanatkumara — Brahma's mind-born sons), 'Brahmadik' (Brahma and other gods), 'Bhutadik' (ghosts and spirits — Shiva's attendants). Shiva's court: sages, gods, and ghost-beings all sit together."},
-    {"id": "ojso-06", "type": "stanza", "section": "body", "number": 6, "labelHi": "पद ६", "labelEn": "Stanza 6", "lines": ["कर के मध्य कमण्डलु चक्र त्रिशूल धर्ता।", "जगकर्ता जगभर्ता जगसंहारकर्ता।।"], "linesEn": ["Kar ke madhya kamandalu chakra trishool dhartaa.", "Jagkartaa jagbhartaa jagsanhaarkartaa."], "meaningHi": "'कमण्डलु' (तपस्वी का जल-पात्र — ज्ञान), 'चक्र' (सुदर्शन — विष्णु-शक्ति), 'त्रिशूल' (शिव का प्रमुख अस्त्र — तीन शक्तियों का प्रतीक: इच्छा, ज्ञान, क्रिया)। 'जगकर्ता-भर्ता-संहारकर्ता' — सृष्टि-पालन-संहार: त्रिमूर्ति के तीनों कार्य शिव में एकीकृत। शैव-सिद्धान्त में शिव पंचकृत्य (5 कार्य) करते हैं: सृष्टि, स्थिति, संहार, तिरोभाव, अनुग्रह।", "meaningEn": "'Kamandalu' (ascetic's water vessel — knowledge), 'Chakra' (Sudarshana — Vishnu's power), 'Trishul' (Shiva's primary weapon — symbol of three powers: will, knowledge, action). 'Creator-Sustainer-Destroyer of the world' — all three Trinity functions unified in Shiva. In Shaiva Siddhanta, Shiva performs five acts: creation, sustenance, destruction, concealment, and grace."},
-    {"id": "ojso-07", "type": "stanza", "section": "body", "number": 7, "labelHi": "पद ७", "labelEn": "Stanza 7", "lines": ["ब्रह्मा विष्णु सदाशिव जानत अविवेका।", "प्रणवाक्षर के मध्ये यह तीनों एका।।"], "linesEn": ["Brahma Vishnu Sadaashiv jaanat avivekaa.", "Pranavaakshar ke madhye yah teenon ekaa."], "meaningHi": "'अविवेका' — विवेकहीन (अज्ञानी) लोग ब्रह्मा, विष्णु, शिव को अलग-अलग जानते हैं। 'प्रणवाक्षर' (ॐ) के मध्य ये तीनों एक ही हैं! ॐ = अ (ब्रह्मा) + उ (विष्णु) + म (शिव)। यह अद्वैत का सार है — माण्डूक्य उपनिषद में ॐ के तीन मात्राओं का यही विश्लेषण है।", "meaningEn": "'Aviveka' — the undiscerning (ignorant) consider Brahma, Vishnu, Shiva separate. Within the Pranava syllable (Om), these three are ONE! Om = A (Brahma) + U (Vishnu) + M (Shiva). This is the essence of Advaita — Mandukya Upanishad analyzes Om's three matras exactly this way."},
-    {"id": "ojso-08", "type": "stanza", "section": "body", "number": 8, "labelHi": "पद ८", "labelEn": "Stanza 8", "lines": ["ॐ जय शिव ओमकारा, स्वामी जय शिव ओमकारा।", "ब्रह्मा विष्णु सदाशिव, अर्द्धांगी धारा।।"], "linesEn": ["Om jai Shiv Omkaara, Swami jai Shiv Omkaara.", "Brahma Vishnu Sadaashiv, ardhaangee dhaaraa."], "meaningHi": "समापन: प्रथम पद की पुनरावृत्ति। आरती चक्रीय है — जैसे ॐ अनन्त है, आरती भी अनन्त-चक्र में लौटती है। यह 'नित्य-पूजा' का भाव है: आरती कभी 'समाप्त' नहीं होती, बस एक चक्र पूर्ण होता है — कल फिर होगी।", "meaningEn": "Closing: repetition of the first verse. Aarti is circular — as Om is infinite, aarti too returns in an endless cycle. This embodies 'Nitya Puja' (daily worship): aarti never truly 'ends,' only one cycle completes — tomorrow it happens again."}
+    {
+      "id": "ojso-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "ॐ जय शिव ओंकारा, स्वामी जय शिव ओंकारा।",
+        "ब्रह्मा, विष्णु, सदाशिव, अर्द्धांगी धारा॥"
+      ],
+      "linesEn": [
+        "Om jai Shiv Onkaaraa, Swami jai Shiv Onkaaraa.",
+        "Brahma, Vishnu, Sadaashiv, ardhaangi dhaaraa."
+      ],
+      "meaningHi": "ॐ जय शिव ओंकारा — शिव ही ॐ (प्रणव) का स्वरूप हैं। ब्रह्मा, विष्णु और सदाशिव तीनों रूपों में विद्यमान हैं। अर्द्धांगी (पार्वती) को अपने शरीर के आधे भाग में धारण करने वाले अर्धनारीश्वर हैं।",
+      "meaningEn": "Om, victory to Shiva Onkara — Shiva is the embodiment of Om (the primordial sound). Present in the forms of Brahma, Vishnu, and Sadashiva. The Ardhanarishvara who bears Parvati (his consort) as half of his own body."
+    },
+    {
+      "id": "ojso-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद 1",
+      "labelEn": "Stanza 1",
+      "lines": [
+        "एकानन चतुरानन पञ्चानन राजे।",
+        "हंसासन गरूड़ासन वृषवाहन साजे॥"
+      ],
+      "linesEn": [
+        "Ekaanan chaturaanan panchaanan raaje.",
+        "Hansaasan Garudaasan vrishvaahan saaje."
+      ],
+      "meaningHi": "एकानन (एक मुख वाले शिव), चतुरानन (चार मुख वाले ब्रह्मा) और पञ्चानन (पाँच मुख वाले शिव) विराजते हैं। हंसासन (ब्रह्मा हंस पर), गरुड़ासन (विष्णु गरुड़ पर) और वृषवाहन (शिव नन्दी बैल पर) सुशोभित हैं।",
+      "meaningEn": "One-faced (Shiva), four-faced (Brahma), and five-faced (Shiva's Panchamukhi form) all reign. Swan-seated (Brahma), Garuda-seated (Vishnu), and bull-vehicled (Shiva on Nandi) — all magnificently adorned."
+    },
+    {
+      "id": "ojso-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद 2",
+      "labelEn": "Stanza 2",
+      "lines": [
+        "दो भुज चार चतुर्भुज दसभुज अति सोहे।",
+        "त्रिगुण रूप निरखते त्रिभुवन जन मोहे॥"
+      ],
+      "linesEn": [
+        "Do bhuj chaar chaturbhuj dasbhuj ati sohe.",
+        "Trigun roop nirakhte tribhuvan jan mohe."
+      ],
+      "meaningHi": "दो भुजा (शिव), चार भुजा (विष्णु) और दस भुजा (शक्ति/शिव का रौद्र रूप) अत्यंत शोभित हैं। त्रिगुण (सत्व-रजस-तमस) रूप को देखकर तीनों लोकों के प्राणी मोहित हो जाते हैं।",
+      "meaningEn": "Two arms (Shiva), four arms (Vishnu), and ten arms (Shakti/fierce form) shine magnificently. Beholding the form of the three Gunas (Sattva, Rajas, Tamas), beings of all three worlds are enchanted."
+    },
+    {
+      "id": "ojso-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद 3",
+      "labelEn": "Stanza 3",
+      "lines": [
+        "अक्षमाला वनमाला मुण्डमाला धारी।",
+        "त्रिपुरारी कंसारी कर माला धारी॥"
+      ],
+      "linesEn": [
+        "Akshamaala vanmaala mundmaala dhaaree.",
+        "Tripuraari Kansaari kar maala dhaaree."
+      ],
+      "meaningHi": "अक्षमाला (रुद्राक्ष की माला), वनमाला (वनपुष्पों की माला) और मुण्डमाला (मुण्डों की माला) धारण करने वाले। त्रिपुरारी (तीन पुरों को नष्ट करने वाले शिव) और कंसारी (कंस को मारने वाले विष्णु) हाथ में माला धारण किए हैं।",
+      "meaningEn": "Wearing a Rudraksha rosary, a forest-flower garland, and a skull garland. Tripurari (Shiva, destroyer of three cities) and Kansari (Vishnu, slayer of Kamsa) hold prayer beads in hand."
+    },
+    {
+      "id": "ojso-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद 4",
+      "labelEn": "Stanza 4",
+      "lines": [
+        "श्वेताम्बर पीताम्बर बाघम्बर अंगे।",
+        "सनकादिक गरुणादिक भूतादिक संगे॥"
+      ],
+      "linesEn": [
+        "Shvetaambar peetaambar baaghaambar ange.",
+        "Sanakaadik Garunaadik bhootaadik sange."
+      ],
+      "meaningHi": "श्वेताम्बर (सफेद वस्त्र — ब्रह्मा/सत्व), पीताम्बर (पीला वस्त्र — विष्णु) और बाघम्बर (बाघ की खाल — शिव) शरीर पर धारण किए हैं। सनकादिक (सनक आदि मुनि), गरुणादिक (गरुड़ आदि) और भूतादिक (भूत-प्रेत गण) साथ में हैं।",
+      "meaningEn": "White garments (Brahma/Sattva), yellow garments (Vishnu), and tiger skin (Shiva) adorn the body. Sanakadik (sages like Sanaka), Garunadik (Garuda and others), and Bhutadik (ghost-beings) accompany them."
+    },
+    {
+      "id": "ojso-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद 5",
+      "labelEn": "Stanza 5",
+      "lines": [
+        "कर के मध्य कमण्डलु चक्र त्रिशूलधारी।",
+        "सुखकारी दुखहारी जगपालन कारी॥"
+      ],
+      "linesEn": [
+        "Kar ke madhya kamandalu chakra trishooldhaaree.",
+        "Sukhkaaree dukhhaaree jagpaalan kaaree."
+      ],
+      "meaningHi": "हाथों में कमण्डलु (ज्ञान का पात्र), चक्र (सुदर्शन — विष्णु का अस्त्र) और त्रिशूल (शिव का अस्त्र — इच्छा, ज्ञान, क्रिया का प्रतीक) धारण किए हैं। सुख देने वाले, दुख हरने वाले और जगत का पालन करने वाले हैं।",
+      "meaningEn": "In their hands they hold the Kamandalu (vessel of knowledge), Chakra (Vishnu's disc), and Trishul (Shiva's trident — symbol of will, knowledge, and action). They are the givers of joy, removers of sorrow, and sustainers of the world."
+    },
+    {
+      "id": "ojso-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद 6",
+      "labelEn": "Stanza 6",
+      "lines": [
+        "ब्रह्मा विष्णु सदाशिव जानत अविवेका।",
+        "प्रणवाक्षर में शोभित ये तीनों एका॥"
+      ],
+      "linesEn": [
+        "Brahma Vishnu Sadaashiv jaanat avivekaa.",
+        "Pranavaakshar mein shobhit ye teenon ekaa."
+      ],
+      "meaningHi": "अविवेकी (अज्ञानी) लोग ब्रह्मा, विष्णु और सदाशिव को अलग-अलग जानते हैं। परन्तु प्रणवाक्षर (ॐ) में ये तीनों एक ही हैं — ॐ के अ-उ-म ही ब्रह्मा-विष्णु-शिव हैं। यही अद्वैत का सार है।",
+      "meaningEn": "The undiscerning consider Brahma, Vishnu, and Sadashiva to be separate. But within the Pranava syllable (Om), all three are one — the A-U-M of Om are Brahma-Vishnu-Shiva. This is the essence of non-duality."
+    },
+    {
+      "id": "ojso-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद 7",
+      "labelEn": "Stanza 7",
+      "lines": [
+        "त्रिगुण स्वामी जी की आरति जो कोइ नर गावे।",
+        "कहत शिवानन्द स्वामी मनवान्छित फल पावे॥"
+      ],
+      "linesEn": [
+        "Trigun Swami ji ki aarti jo koi nar gaave.",
+        "Kahat Shivaanand Swami manvaanchhit phal paave."
+      ],
+      "meaningHi": "त्रिगुण (तीन गुणों से परे) स्वामी जी की यह आरती जो कोई मनुष्य गाता है — शिवानन्द स्वामी कहते हैं — वह मनवांछित (मन-चाहा) फल पाता है। यह कवि शिवानन्द का नाम-उल्लेख और आरती गाने का फल है।",
+      "meaningEn": "Whoever sings this aarti of the Lord who is beyond the three Gunas — says Shivanand Swami — attains whatever their heart desires. This is the poet Shivanand's signature and a declaration of the fruit of singing this aarti."
+    },
+    {
+      "id": "ojso-09",
+      "type": "refrain",
+      "section": "body",
+      "number": 9,
+      "labelHi": "टेक",
+      "labelEn": "Closing Refrain",
+      "lines": [
+        "ॐ जय शिव ओंकारा, स्वामी जय शिव ओंकारा।",
+        "ब्रह्मा, विष्णु, सदाशिव, अर्द्धांगी धारा॥"
+      ],
+      "linesEn": [
+        "Om jai Shiv Onkaaraa, Swami jai Shiv Onkaaraa.",
+        "Brahma, Vishnu, Sadaashiv, ardhaangi dhaaraa."
+      ],
+      "meaningHi": "समापन में पुनः टेक — ॐ जय शिव ओंकारा। जैसे ॐ अनन्त है, आरती भी अनन्त चक्र में लौटती है। यह नित्य-पूजा का भाव है — आरती कभी समाप्त नहीं होती, केवल एक चक्र पूर्ण होता है।",
+      "meaningEn": "Closing with the refrain — Om Jai Shiv Onkara. As Om is infinite, the aarti too returns in an endless cycle. This embodies daily worship — aarti never truly ends, only one cycle completes."
+    }
   ]
 }

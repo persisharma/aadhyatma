@@ -65,7 +65,7 @@ The Blessed Lord said, "I taught this imperishable Yoga to Vivasvan; he then tol
 
 **English Commentary**
 
-Vivasvan means the sun. Ikshvaku was the son of Manu. Ikshvaku was the reputed ancestor of the solar dynasty of Kshatriyas.This Yoga is said to be imperishable because the result or fruit? i.e.? Moksha? that can be attained through it is imperishable.If the rulers of dominions possess a knowledge of the Yoga taught by Me in the preceding two discourses? they can protect the Brahmanas and rule their kingdom with justice. So I taught this Yoga to the Sungod in the beginning of evolution.
+Vivasvan means the sun. Ikshvaku was the son of Manu. Ikshvaku was the reputed ancestor of the solar dynasty of Kshatriyas. This Yoga is said to be imperishable because the result or fruit, i.e.? Moksha, that can be attained through it is imperishable. If the rulers of dominions possess a knowledge of the Yoga taught by Me in the preceding two discourses, they can protect the Brahmanas and rule their kingdom with justice. So I taught this Yoga to the Sungod in the beginning of evolution.
 
 ### BG 4.2
 
@@ -98,7 +98,7 @@ This, handed down in regular succession by the royal sages, was known. This Yoga
 
 **English Commentary**
 
-The royal sages Men who were kings and at the same time sages also? learnt this Yoga.Arjuna could burn or harass his foes? like the sun? by the heat of his valour and power. Hence the name Parantapa.
+The royal sages Men who were kings and at the same time sages also, learnt this Yoga. Arjuna could burn or harass his foes, like the sun, by the heat of his valour and power. Hence the name Parantapa.
 
 ### BG 4.3
 
@@ -169,7 +169,7 @@ Arjuna said, "Later was Thy birth, and prior to it was the birth of Vivasvan (th
 
 **English Commentary**
 
-Thy birth took place later in the hourse of Vasudeva Vivasvan or Vivasvat (the Sun) was born earlier in the beginning of evolution. How am I to believe that Thou taughtest this Yoga in the beginning to Vivasvan? and that Thou? the selfsame person? hast now taught it to me I am not able to reconcile this. Be kind enought to enlighten me? O my Lord.
+Thy birth took place later in the hourse of Vasudeva Vivasvan or Vivasvat (the Sun) was born earlier in the beginning of evolution. How am I to believe that Thou taughtest this Yoga in the beginning to Vivasvan, and that Thou, the selfsame person, hast now taught it to me I am not able to reconcile this. Be kind enought to enlighten me, O my Lord.
 
 ### BG 4.5
 
@@ -238,7 +238,7 @@ Though I am unborn and of imperishable nature, and though I am the Lord of all b
 
 **English Commentary**
 
-Man is bound by Karma. So he takes birth. He is under the clutches of Nature. He,is deluded by the three alities of Nature whereas the Lord has Maya under His perfect control. He rules over Nature? and so He is not under the thraldom of the alities o Nature. He appears to be born and embodied through His own Maya or illusory power? but is not so in reality. His embodiment is ? as a matter of fact? apparent? It cannot affect in the least His true divine nature. (Cf.IX.8).
+Man is bound by Karma. So he takes birth. He is under the clutches of Nature. He,is deluded by the three alities of Nature whereas the Lord has Maya under His perfect control. He rules over Nature, and so He is not under the thraldom of the alities o Nature. He appears to be born and embodied through His own Maya or illusory power, but is not so in reality. His embodiment is ? as a matter of fact, apparent, It cannot affect in the least His true divine nature. (Cf.IX.8).
 
 ### BG 4.7
 
@@ -267,7 +267,7 @@ Whenever there is a decline of righteousness and an increase of unrighteousness,
 
 **Hindi Commentary**
 
-।। व्याख्या--'यदा यदा हि धर्मस्य ৷৷. अभ्युत्थानमधर्मस्य'-- धर्मकी हानि और अधर्मकी वृद्धिका स्वरूप है--भगवत्प्रेमी, धर्मात्मा, सदाचारी, निरपराध और निर्बल मनुष्योंपर नास्तिक, पापी, दुराचारी और बलवान् मनुष्योंका अत्याचार बढ़ जाना तथा लोगोंमें सद्गुण-सदाचारोंकी अत्यधिक कमी और दुर्गुण-दुराचारोंकी अत्यधिक वृद्धि हो जाना।
+।। व्याख्या--'यदा यदा हि धर्मस्य ।।. अभ्युत्थानमधर्मस्य'-- धर्मकी हानि और अधर्मकी वृद्धिका स्वरूप है--भगवत्प्रेमी, धर्मात्मा, सदाचारी, निरपराध और निर्बल मनुष्योंपर नास्तिक, पापी, दुराचारी और बलवान् मनुष्योंका अत्याचार बढ़ जाना तथा लोगोंमें सद्गुण-सदाचारोंकी अत्यधिक कमी और दुर्गुण-दुराचारोंकी अत्यधिक वृद्धि हो जाना।
 
 **English Commentary**
 
@@ -306,7 +306,7 @@ For the protection of the good, for the destruction of the wicked, and for the e
 
 **English Commentary**
 
-Sadhunam The good who lead a life of righteousness? who utiles their bodies in the service of humanity? who are free from selfishness? lust and greed? and who devote their lives to divine contemplation.Dushkritam Evildoers who lead a life of unrighteousness? who break the laws of the society? who are vain and are dishonest and greedy? who injure others? who take possession of the property of others by force? and who commit atrocious crimes of various sorts.
+Sadhunam The good who lead a life of righteousness, who utiles their bodies in the service of humanity, who are free from selfishness, lust and greed, and who devote their lives to divine contemplation. Dushkritam Evildoers who lead a life of unrighteousness, who break the laws of the society, who are vain and are dishonest and greedy, who injure others, who take possession of the property of others by force, and who commit atrocious crimes of various sorts.
 
 ### BG 4.9
 
@@ -339,7 +339,7 @@ He who thus knows, in their true light, My divine birth and actions, having aban
 
 **English Commentary**
 
-The Lord? though apparently born? is always beyond birth and death though apparently active for firmly establishing righteousness? He is ever beyond all actions. He who knows this is never born again. He attains knowledge of the Self and becomes liberated while living.The birth of the Lord is an illusion. It is Aprakrita (beyond the pale of Nature). It is divine. It is peculiar to the Lord. Though He appears in human form? His body is Chinmaya (full of consciousness? not inert matter as are human bodies composed of the five elements).
+The Lord, though apparently born, is always beyond birth and death though apparently active for firmly establishing righteousness, He is ever beyond all actions. He who knows this is never born again. He attains knowledge of the Self and becomes liberated while living. The birth of the Lord is an illusion. It is Aprakrita (beyond the pale of Nature). It is divine. It is peculiar to the Lord. Though He appears in human form, His body is Chinmaya (full of consciousness, not inert matter as are human bodies composed of the five elements).
 
 ### BG 4.10
 
@@ -372,7 +372,7 @@ Freed from attachment, fear, and anger, absorbed in Me, taking refuge in Me, pur
 
 **English Commentary**
 
-When one gets knowledge of the Self? attachment to senseobjects ceases. When he realises he is the constant? indestructible? eternal Self and that change is simply a ality of the body? then he becomes fearless. When he becomes desireless? when he is free from selfishness? when he beholds the Self only everywhere? how can anger arise in himHe who takes refuge in Brahman or the Absolute becomes firmly devoted to Him. He becomes,absorbed in Him (Brahmalina or Brahmanishtha). Jnanatapas is the fire of wisdom. Just as fire burns cotton? so also this Jnanatapas burns all the latent tendencies (Vasanas)? cravings (Trishnas)? mental impressions (Samskaras)? sins and all actions? and purifies the aspirants. (Cf.II.56IV.19to37).
+When one gets knowledge of the Self, attachment to senseobjects ceases. When he realises he is the constant, indestructible, eternal Self and that change is simply a ality of the body, then he becomes fearless. When he becomes desireless, when he is free from selfishness, when he beholds the Self only everywhere, how can anger arise in himHe who takes refuge in Brahman or the Absolute becomes firmly devoted to Him. He becomes,absorbed in Him (Brahmalina or Brahmanishtha). Jnanatapas is the fire of wisdom. Just as fire burns cotton, so also this Jnanatapas burns all the latent tendencies (Vasanas)? cravings (Trishnas)? mental impressions (Samskaras)? sins and all actions, and purifies the aspirants. (Cf.II.56IV.19to37).
 
 ### BG 4.11
 
@@ -411,7 +411,7 @@ In whatever way men approach Me, even so do I reward them; My path do men tread 
 
 **English Commentary**
 
-I reward men by bestowing on them the objects they desire in accordance with their ways and the motives with which they seek Me. If anyone worships Me with selfish motives I grant him the objects he desires. If he worships Me unselfishly for attaining knowledge of the Self? I grant him Moksha or final liberation. I am not at all partial to anyone. (Cf.VII.21andIX.23).
+I reward men by bestowing on them the objects they desire in accordance with their ways and the motives with which they seek Me. If anyone worships Me with selfish motives I grant him the objects he desires. If he worships Me unselfishly for attaining knowledge of the Self, I grant him Moksha or final liberation. I am not at all partial to anyone. (Cf.VII.21andIX.23).
 
 ### BG 4.12
 
@@ -456,7 +456,7 @@ Those who long for success in action in this world sacrifice to the gods; for su
 
 **English Commentary**
 
-It is very difficult to attain to the knowledge of the Self or Selfrealisation. It demans perfect renunciation. The aspirnat should possess the four means and many other virtues? and practise constant and intense meditaion. But worldly success can be attained ickly and easily.
+It is very difficult to attain to the knowledge of the Self or Selfrealisation. It demans perfect renunciation. The aspirnat should possess the four means and many other virtues, and practise constant and intense meditaion. But worldly success can be attained ickly and easily.
 
 ### BG 4.13
 
@@ -489,7 +489,7 @@ The fourfold caste has been created by Me according to the differentiation of Gu
 
 **English Commentary**
 
-The four castes (Brahmana? Kshatriya? Vaishya and Sudra) are classified according to the differentiation of Guna and Karma. In a Brahmana? Sattva predominates. He possesses selfrestraint? purity? serenity? straightforwardness? devotion? etc. In a Kshatriya? Rajs predominates. He possesses prowess? splendour? firmness? dexterity? generosity and the nature of a ruler. In a Vaishya? Rajas predominates and Tamas is subordinate to Rajas. He does the duty of ploughing? protection of cattle and trade. In a Sudra Tamas predominates and Rajas is subordinate to Tamas. He does service to the other three castes. Human temperaments and tendencies vary according to the Gunas.Though the Lord is the author of the caste system? yet He is not the author as He is the nondoer. He is not subject to Samsara. Really Maya does everything. Maya is the real author. Society can exist in a flourishing state if the four castes do their duties properly. Otherwise there will be chaos? rupture and fighting. (Cf.XVIII.41).
+The four castes (Brahmana, Kshatriya, Vaishya and Sudra) are classified according to the differentiation of Guna and Karma. In a Brahmana, Sattva predominates. He possesses selfrestraint, purity, serenity, straightforwardness, devotion, etc. In a Kshatriya, Rajs predominates. He possesses prowess, splendour, firmness, dexterity, generosity and the nature of a ruler. In a Vaishya, Rajas predominates and Tamas is subordinate to Rajas. He does the duty of ploughing, protection of cattle and trade. In a Sudra Tamas predominates and Rajas is subordinate to Tamas. He does service to the other three castes. Human temperaments and tendencies vary according to the Gunas. Though the Lord is the author of the caste system, yet He is not the author as He is the nondoer. He is not subject to Samsara. Really Maya does everything. Maya is the real author. Society can exist in a flourishing state if the four castes do their duties properly. Otherwise there will be chaos, rupture and fighting. (Cf.XVIII.41).
 
 ### BG 4.14
 
@@ -524,7 +524,7 @@ Actions do not taint Me, nor do I have a desire for the fruit of actions. He who
 
 **English Commentary**
 
-As I have neither egoism nor desire for fruits? I am not bound by actions. Wordly people think they are the agents and they perfrom actions. They also expect fruits for their actions. So they take birth again and again. If one works without attachment? without egoism? without expectation of fruits? he too will not be bound by actions. He will be freed from birth and death. (Cf.IX.9).
+As I have neither egoism nor desire for fruits, I am not bound by actions. Wordly people think they are the agents and they perfrom actions. They also expect fruits for their actions. So they take birth again and again. If one works without attachment, without egoism, without expectation of fruits, he too will not be bound by actions. He will be freed from birth and death. (Cf.IX.9).
 
 ### BG 4.15
 
@@ -563,7 +563,7 @@ Having known this, the ancient seekers of freedom also performed action; therefo
 
 **English Commentary**
 
-Knowing thus that the Self can have no desire for the fruits of actions and cannot be tainted by them? and knowing that no one can be tainted if he works without egoism? attachment and expectation of fruits? do thou perform your duty.If your heart is impure? perform actions for its purification. If you have attained AtmaJnana or the knowledge of the Self? work for the wellbeing of the world. The ancients such as Janaka and others performed actions in the days of yore. So do thou also perform action.
+Knowing thus that the Self can have no desire for the fruits of actions and cannot be tainted by them, and knowing that no one can be tainted if he works without egoism, attachment and expectation of fruits, do thou perform your duty. If your heart is impure, perform actions for its purification. If you have attained AtmaJnana or the knowledge of the Self, work for the wellbeing of the world. The ancients such as Janaka and others performed actions in the days of yore. So do thou also perform action.
 
 ### BG 4.16
 
@@ -588,7 +588,7 @@ kim—what; karma—action; kim—what; akarma—inaction; iti—thus; kavayaḥ
 
 **English Meaning**
 
-What is action? What is inaction? Even the wise are confused about this. Therefore, I shall teach you the nature of action and inaction, by knowing which you will be liberated from the evil of Samsara, the wheel of birth and death.
+What is action, What is inaction, Even the wise are confused about this. Therefore, I shall teach you the nature of action and inaction, by knowing which you will be liberated from the evil of Samsara, the wheel of birth and death.
 
 **Hindi Commentary**
 
@@ -664,7 +664,7 @@ He who sees inaction in action and action in inaction, he is wise among men; he 
 
 **English Commentary**
 
-In common parlance action means movement of the body? movement of the hands and feet? and inaction means to sit iet.It is the idea of agency? the idea I am the doer that binds man to Samsara. If this idea vanishes? action is no action at all. It will not bind one to Samsara. This is inaction in action. If you stand as s spectator or silent witness of Natures activities? feeling Nature does everything I am nondoer (Akarta)? if you identify yourself with the actionless Self? no matter what work or how much of it is done? action is no action at all. This is inaction in action. By such a practice and feeling? action loses its binding nature.A man may sit ietly. He may not do anything. But if he has the idea of agency or doership? or if he thinks that he is the doer? he is every doing action? though he is sitting ietly. This is action in inaction. The restless mind will ever be doing actions even though one sits ietly. Actions of the mind are real actions. Nor can anyone even for one moment remain really actionless? for helplessly is everyone driven to action by the alities of Nature. (Chapter III.5)Inaction also induces the feeling of egoism. The inactive man says? I sit ietly I do nothing. Inaction? like action? is wrongly attributed to the Self.He is the performer of all actions who knows this truth. He has attained the end of all actions? i.e.? freedom or knowledge or perfection.When a steamer moves? the trees on the shore which are motionless? appear to move in the opposite direction to a man who is in the steamer. Moving objects that are very far away appear to be stationary or motionless. Even so in the case of the Self inaction is mistaken for action and,action for inaction.The Self is actionless (Akarta or nondoer? Nishkriya or without work). The body and the senses perform action. The actions of the body and the senses are falsely and wrongly attributed by the ignorant to the actionless Self. Therefore the ignorant man thinks? I act. He thinks that the Self is the doer or the agent of the action. This is a mistake. This is ignorance.Just as motion does not really belong to the trees on the shore which appear to move in the opposite direction to a man on board the ship? so also action does not really pertain to the Self.This ignorance which is the cause of birth and death vanishes when you attain Selfrealisaion.
+In common parlance action means movement of the body, movement of the hands and feet, and inaction means to sit iet. It is the idea of agency, the idea I am the doer that binds man to Samsara. If this idea vanishes, action is no action at all. It will not bind one to Samsara. This is inaction in action. If you stand as s spectator or silent witness of Natures activities, feeling Nature does everything I am nondoer (Akarta)? if you identify yourself with the actionless Self, no matter what work or how much of it is done, action is no action at all. This is inaction in action. By such a practice and feeling, action loses its binding nature. A man may sit ietly. He may not do anything. But if he has the idea of agency or doership, or if he thinks that he is the doer, he is every doing action, though he is sitting ietly. This is action in inaction. The restless mind will ever be doing actions even though one sits ietly. Actions of the mind are real actions. Nor can anyone even for one moment remain really actionless, for helplessly is everyone driven to action by the alities of Nature. (Chapter III.5)Inaction also induces the feeling of egoism. The inactive man says, I sit ietly I do nothing. Inaction, like action, is wrongly attributed to the Self. He is the performer of all actions who knows this truth. He has attained the end of all actions, i.e.? freedom or knowledge or perfection. When a steamer moves, the trees on the shore which are motionless, appear to move in the opposite direction to a man who is in the steamer. Moving objects that are very far away appear to be stationary or motionless. Even so in the case of the Self inaction is mistaken for action and,action for inaction. The Self is actionless (Akarta or nondoer, Nishkriya or without work). The body and the senses perform action. The actions of the body and the senses are falsely and wrongly attributed by the ignorant to the actionless Self. Therefore the ignorant man thinks, I act. He thinks that the Self is the doer or the agent of the action. This is a mistake. This is ignorance. Just as motion does not really belong to the trees on the shore which appear to move in the opposite direction to a man on board the ship, so also action does not really pertain to the Self. This ignorance which is the cause of birth and death vanishes when you attain Selfrealisaion.
 
 ### BG 4.19
 
@@ -699,7 +699,7 @@ He whose undertakings are all devoid of desires and selfish purposes, and whose 
 
 **English Commentary**
 
-A sage performs actions only with a view to set an example to the masses. Though he works? he does nothing as he has no selfish interests? as his actions are burnt by the fire of wisdom which consists in the realisaion of inaction in action? through the knowledge of the Self or BrahmaJnana. BrahmaJnana is a mighty spiritual fire which consumes the results of all kinds of actions (Karmas)? good and bad? and makes the enlightened sage ite free from the bonds of action. The sage who leads a life of perfect renunciation does only what is reired for the bare existence of his body. (Cf.III.19IV.10IV.37).
+A sage performs actions only with a view to set an example to the masses. Though he works, he does nothing as he has no selfish interests, as his actions are burnt by the fire of wisdom which consists in the realisaion of inaction in action, through the knowledge of the Self or BrahmaJnana. BrahmaJnana is a mighty spiritual fire which consumes the results of all kinds of actions (Karmas)? good and bad, and makes the enlightened sage ite free from the bonds of action. The sage who leads a life of perfect renunciation does only what is reired for the bare existence of his body. (Cf.III.19IV.10IV.37).
 
 ### BG 4.20
 
@@ -732,7 +732,7 @@ Having abandoned attachment to the fruits of the action, ever content, depending
 
 **English Commentary**
 
-The same idea of inaction in action is repeated here to produce a deep impression on the minds of the aspirants. He who works for the wellbeing of the world and he who performs actions without egoism and attachment for the fruits? to set an example to the masses? really does nothing at all though he is ever engaged in activity? as he possesses the knowledge of the Self which is beyond all activity and as he has realised his identity with It.As Brahman the Absolute is selfcontained? all the desires are gratified if one realises the Self. He is ever satisfied and does not depend on anything? just as a man who has the favour of the king does not depend on the minister or the government official for anything. (Cf.IV.41)
+The same idea of inaction in action is repeated here to produce a deep impression on the minds of the aspirants. He who works for the wellbeing of the world and he who performs actions without egoism and attachment for the fruits, to set an example to the masses, really does nothing at all though he is ever engaged in activity, as he possesses the knowledge of the Self which is beyond all activity and as he has realised his identity with It. As Brahman the Absolute is selfcontained, all the desires are gratified if one realises the Self. He is ever satisfied and does not depend on anything, just as a man who has the favour of the king does not depend on the minister or the government official for anything. (Cf.IV.41)
 
 ### BG 4.21
 
@@ -765,7 +765,7 @@ Without hope, controlling the mind and the self, having abandoned all covetousne
 
 **English Commentary**
 
-The liberated sage renounces all actions except what is necessary for the bare maintenance of the body. He has abandoned all possessions. He incurs no sin which will cause evil effects. For a man who thirsts for liberation (Mumukshu) even righteous activity (Dharma) is a sin as it causes bondage to Samsara. Dharma is a golden fetter for him. A golden fetter is also a fetter. A sage is liberated from both Dharma and Adharma? good and evil or virtue and vice. (Cf.III.7)
+The liberated sage renounces all actions except what is necessary for the bare maintenance of the body. He has abandoned all possessions. He incurs no sin which will cause evil effects. For a man who thirsts for liberation (Mumukshu) even righteous activity (Dharma) is a sin as it causes bondage to Samsara. Dharma is a golden fetter for him. A golden fetter is also a fetter. A sage is liberated from both Dharma and Adharma, good and evil or virtue and vice. (Cf.III.7)
 
 ### BG 4.22
 
@@ -800,7 +800,7 @@ Content with what comes to him without effort, free from the pairs of opposites 
 
 **English Commentary**
 
-The sage is ite satisfied with what comes to him by chance. In verses IV. 18? 19? 20? 22? 22 and 23 there is only a reiteration of the results of the knowledge of the Self which is beyond action. The sage who identifies himself with the actionless Self is not bound as action and its cause which bind one to the round of birth and death have been burnt in the fire of the knowledge of the Self or BrahmaJnana. Just as a seed burnt in the fire cannot germinate? so also the Karmas or actions burnt by the fire of knowledge of the Self cannot produce future birth.Ordinary people think that the sage is also a doer of actions? an agent? active and therefore bound? when they see him doing actions. This is a mistake. From his own point of view and? in truth? he is not an agent at all. He really does no action at all. He feels and says? I do nothing at all. Nature does or the three alities of Nature do everything.He is not affected by heat and cold? pleasure and pain? success and failure? as he always has a balanced state of mind. He is not attached even to the things which are necessary for the bare maintenance of his body. He experiences neither pleasure nor pain? whether or not he obtains food and the other things which are reired for the maintenance of his body. The reason is that he is resting in his essential nature as ExistenceKnowledgeBliss Absolute (SatchidanandaSvarupa) he is swimming in the ocean of bliss. So he does not care for his body and its needs.
+The sage is ite satisfied with what comes to him by chance. In verses IV. 18? 19? 20? 22? 22 and 23 there is only a reiteration of the results of the knowledge of the Self which is beyond action. The sage who identifies himself with the actionless Self is not bound as action and its cause which bind one to the round of birth and death have been burnt in the fire of the knowledge of the Self or BrahmaJnana. Just as a seed burnt in the fire cannot germinate, so also the Karmas or actions burnt by the fire of knowledge of the Self cannot produce future birth. Ordinary people think that the sage is also a doer of actions, an agent, active and therefore bound, when they see him doing actions. This is a mistake. From his own point of view and, in truth, he is not an agent at all. He really does no action at all. He feels and says, I do nothing at all. Nature does or the three alities of Nature do everything. He is not affected by heat and cold, pleasure and pain, success and failure, as he always has a balanced state of mind. He is not attached even to the things which are necessary for the bare maintenance of his body. He experiences neither pleasure nor pain, whether or not he obtains food and the other things which are reired for the maintenance of his body. The reason is that he is resting in his essential nature as ExistenceKnowledgeBliss Absolute (SatchidanandaSvarupa) he is swimming in the ocean of bliss. So he does not care for his body and its needs.
 
 ### BG 4.23
 
@@ -837,7 +837,7 @@ To one who is devoid of attachment, who is liberated, whose mind is established 
 
 **English Commentary**
 
-One who is free from attachment? who is liberated from the bonds of Karma? whose mind is centred and rooted in wisdom? who performs actions for the sake of sacrifice? in order to please the Lord -- all his actions with their results melt away. His actions are reduced to nothing. They are? in fact? no actions at all.
+One who is free from attachment, who is liberated from the bonds of Karma, whose mind is centred and rooted in wisdom, who performs actions for the sake of sacrifice, in order to please the Lord -- all his actions with their results melt away. His actions are reduced to nothing. They are, in fact, no actions at all.
 
 ### BG 4.24
 
@@ -874,7 +874,7 @@ Brahman is the oblation; Brahman is the melted butter (ghee); by Brahman is the 
 
 **English Commentary**
 
-This is JnanaYajna or wisdomsacrifice wherein the idea of Brahman is substituted for the ideas of the instrument and other accessories of action? the idea of action itself and of its results. By entertaining such an idea the whole action melts away? as stated in the previous verse (No.23).When one attains to the knowledge of the Self or Selfrealisation his whole life becomes a wisdomsacrifice in which the oblation? the melted butter or the offering? the performer of the sacrifice? the action and the goal are all Brahman. He who meditates thus wholly upon Brahman shall verily attain to Brahman.The sage who has the knowledge of the Self knows that the oblation? the fire? the instrument by which the melted butter is poured into the fire and himself have no existence apart from that of Brahman. He who has realised through direct cognitio (Anubhava) that all is Brahman? does no action even if he performs actions. (Cf.III.15)
+This is JnanaYajna or wisdomsacrifice wherein the idea of Brahman is substituted for the ideas of the instrument and other accessories of action, the idea of action itself and of its results. By entertaining such an idea the whole action melts away, as stated in the previous verse (No.23). When one attains to the knowledge of the Self or Selfrealisation his whole life becomes a wisdomsacrifice in which the oblation, the melted butter or the offering, the performer of the sacrifice, the action and the goal are all Brahman. He who meditates thus wholly upon Brahman shall verily attain to Brahman. The sage who has the knowledge of the Self knows that the oblation, the fire, the instrument by which the melted butter is poured into the fire and himself have no existence apart from that of Brahman. He who has realised through direct cognitio (Anubhava) that all is Brahman, does no action even if he performs actions. (Cf.III.15)
 
 ### BG 4.25
 
@@ -907,7 +907,7 @@ Some yogis perform sacrifice to the gods alone; while others, who have realized 
 
 **English Commentary**
 
-Some Yogis who are devoted to Karma Yoga perform sacrificial rites to the shining ones or Devas (gods). The second Yajna is JnanaYajna or the wisdom sacrifice performed by those who are devoted to Jnana Yoga. The oblation in this sacrifice is the Self. Yajna here means the Self. The Upadhis or the limiting adjuncts such as the physical body? the mind? the intellect? etc.? which are superimposed on Brahman through ignorance are sublated and the identity of the individual soul with the Supreme Soul or Brahman is realised. To sacrifice the self in Brahman is to know through direct cognition (Aparoksha Anubhuti) that the individual soul is identical with Brahman. This is the highest Yajna. Those who are established in Brahman? those who have realised their oneness with the Supreme Soul or Paramatma perform this kind of sacrifice. This is superior to all other sacrifices.
+Some Yogis who are devoted to Karma Yoga perform sacrificial rites to the shining ones or Devas (gods). The second Yajna is JnanaYajna or the wisdom sacrifice performed by those who are devoted to Jnana Yoga. The oblation in this sacrifice is the Self. Yajna here means the Self. The Upadhis or the limiting adjuncts such as the physical body, the mind, the intellect, etc.? which are superimposed on Brahman through ignorance are sublated and the identity of the individual soul with the Supreme Soul or Brahman is realised. To sacrifice the self in Brahman is to know through direct cognition (Aparoksha Anubhuti) that the individual soul is identical with Brahman. This is the highest Yajna. Those who are established in Brahman, those who have realised their oneness with the Supreme Soul or Paramatma perform this kind of sacrifice. This is superior to all other sacrifices.
 
 ### BG 4.26
 
@@ -977,7 +977,7 @@ Others again sacrifice all the functions of the senses and those of the breath (
 
 **English Commentary**
 
-Just as a lamp is kindled by oil? so also the fire of the Yoga of selfcontrol is kindled by knowledge. When the Yogi concentrates or fixes his mind on Brahman or the Self? the senses and the breath cease to function. The senses and the breath are absorbed into their cause.
+Just as a lamp is kindled by oil, so also the fire of the Yoga of selfcontrol is kindled by knowledge. When the Yogi concentrates or fixes his mind on Brahman or the Self, the senses and the breath cease to function. The senses and the breath are absorbed into their cause.
 
 ### BG 4.28
 
@@ -1010,7 +1010,7 @@ Others again offer wealth, austerity, and Yoga as sacrifice, while ascetics of s
 
 **English Commentary**
 
-Some do sacrifice by distributing their wealth to the deserving as charity some offer their Tapas (austerities) as sacrifice some practise the eight limbs of Raja Yoga? viz.? Yama (the five great vows)? Niyama (the canons of conduct)? Asana (posture)? Pranayama (restraint of breath)? Pratyahara (withdrawal of the senses)? Dharana (concentration)? Dhyana (meditation) and Samadhi (superconscious state)? and offer this Yoga as a sacrifice some study the scriptures and offer it as sacrifice.
+Some do sacrifice by distributing their wealth to the deserving as charity some offer their Tapas (austerities) as sacrifice some practise the eight limbs of Raja Yoga, viz.? Yama (the five great vows)? Niyama (the canons of conduct)? Asana (posture)? Pranayama (restraint of breath)? Pratyahara (withdrawal of the senses)? Dharana (concentration)? Dhyana (meditation) and Samadhi (superconscious state)? and offer this Yoga as a sacrifice some study the scriptures and offer it as sacrifice.
 
 ### BG 4.29
 
@@ -1042,7 +1042,7 @@ Others offer as sacrifice the outgoing breath into the incoming, and the incomin
 
 **Hindi Commentary**
 
-। व्याख्या--'अपाने जुह्वति ৷৷. प्राणायामपरायणाः'(टिप्पणी प0 258.1)--प्राणका स्थान हृदय (ऊपर) तथा अपानका स्थान गुदा (नीचे) है (टिप्पणी प0 258.2)। श्वासको बाहर निकालते समय वायुकी गति ऊपरकी ओर तथा श्वासको भीतर ले जाते समय वायुकी गति नीचेकी ओर होती है। इसलिये श्वासको बाहर निकालना 'प्राण' का कार्य और श्वासको भीतर ले जाना 'अपान' का कार्य है। योगीलोग पहले बाहरकी वायुको बायीं नासिका-(चन्द्रनाड़ी-) के द्वारा भीतर ले जाते हैं। वह वायु हृदयमें स्थित प्राणवायुको साथ लेकर नाभिसे होती हुई स्वाभाविक ही अपानमें लीन हो जाती है। इसको 'पूरक' कहते हैं। फिर वे प्राणवायु और अपानवायु-- दोनोंकी गति रोक देते हैं। न तो श्वास बाहर जाता है और न श्वास भीतर ही आता है। इसको 'कुम्भक' कहते हैं। इसके बाद वे भीतरकी वायुको दायीं नासिका-(सूर्यनाड़ी-) के द्वारा बाहर निकालते हैं। वह वायु स्वाभाविक ही प्राणवायुको तथा उसके पीछे-पीछे अपानवायुको साथ लेकर बाहर निकलती है। यही प्राण-वायुमें अपानवायुका हवन करना है। इसको 'रेचक' कहते हैं। चार भगवन्नामसे पूरक, सोलह भगवन्नामसे कुम्भक और आठ भगवन्नामसे रेचक किया जाता है।
+। व्याख्या--'अपाने जुह्वति ।।. प्राणायामपरायणाः'(टिप्पणी प0 258.1)--प्राणका स्थान हृदय (ऊपर) तथा अपानका स्थान गुदा (नीचे) है (टिप्पणी प0 258.2)। श्वासको बाहर निकालते समय वायुकी गति ऊपरकी ओर तथा श्वासको भीतर ले जाते समय वायुकी गति नीचेकी ओर होती है। इसलिये श्वासको बाहर निकालना 'प्राण' का कार्य और श्वासको भीतर ले जाना 'अपान' का कार्य है। योगीलोग पहले बाहरकी वायुको बायीं नासिका-(चन्द्रनाड़ी-) के द्वारा भीतर ले जाते हैं। वह वायु हृदयमें स्थित प्राणवायुको साथ लेकर नाभिसे होती हुई स्वाभाविक ही अपानमें लीन हो जाती है। इसको 'पूरक' कहते हैं। फिर वे प्राणवायु और अपानवायु-- दोनोंकी गति रोक देते हैं। न तो श्वास बाहर जाता है और न श्वास भीतर ही आता है। इसको 'कुम्भक' कहते हैं। इसके बाद वे भीतरकी वायुको दायीं नासिका-(सूर्यनाड़ी-) के द्वारा बाहर निकालते हैं। वह वायु स्वाभाविक ही प्राणवायुको तथा उसके पीछे-पीछे अपानवायुको साथ लेकर बाहर निकलती है। यही प्राण-वायुमें अपानवायुका हवन करना है। इसको 'रेचक' कहते हैं। चार भगवन्नामसे पूरक, सोलह भगवन्नामसे कुम्भक और आठ भगवन्नामसे रेचक किया जाता है।
 
 इस प्रकार योगीलोग पहले चन्द्रनाड़ीसे पूरक, फिर कुम्भक और फिर सूर्यनाड़ीसे रेचक करते हैं। इसके बाद सूर्यनाड़ीसे पूरक, फिर कुम्भक और फिर चन्द्रनाड़ीसे रेचक करते हैं। इस तरह बार-बार पूरक-कुम्भक-रेचक करना प्राणायामरूप यज्ञ है। परमात्मप्राप्तिके उद्देश्यसे निष्कामभावपूर्वक प्राणायामके परायण होनेसे सभी पाप नष्ट हो जाते हैं (टिप्पणी प0 258.3)।
 
@@ -1050,7 +1050,7 @@ Others offer as sacrifice the outgoing breath into the incoming, and the incomin
 
 **English Commentary**
 
-Some Yogis practise Puraka (inhalation)? some Yogis practise Rechaka (exhalation)?,and some Yogis practise Kumbhaka (retention of breath).The five subPranas and the other Pranas are merged in the chief Prana (MukhyaPrana) by the practice of Pranayama. When the Prana is controlled? the mind also stops its wanderings and becomes steady the senses are also thinned out and merged in the Prana. It is through the vibration of Prana that the activities of the mind and the senses are kept up. If the Prana is controlled? the mind? the intellect and the senses cease to function.
+Some Yogis practise Puraka (inhalation)? some Yogis practise Rechaka (exhalation)?,and some Yogis practise Kumbhaka (retention of breath). The five subPranas and the other Pranas are merged in the chief Prana (MukhyaPrana) by the practice of Pranayama. When the Prana is controlled, the mind also stops its wanderings and becomes steady the senses are also thinned out and merged in the Prana. It is through the vibration of Prana that the activities of the mind and the senses are kept up. If the Prana is controlled, the mind, the intellect and the senses cease to function.
 
 ### BG 4.30
 
@@ -1080,7 +1080,7 @@ Others who regulate their diet offer life-breaths in each life-breath. All these
 
 **Hindi Commentary**
 
-।। व्याख्या--'अपाने जुह्वति ৷৷. प्राणायामपरायणाः' (टिप्पणी प0 258.1)--प्राणका स्थान हृदय (ऊपर) तथा अपानका स्थान गुदा (नीचे) है (टिप्पणी प0 258.2)। श्वासको बाहर निकालते समय वायुकी गति ऊपरकी ओर तथा श्वासको भीतर ले जाते समय वायुकी गति नीचेकी ओर होती है। इसलिये श्वासको बाहर निकालना 'प्राण' का कार्य और श्वासको भीतर ले जाना 'अपान' का कार्य है। योगीलोग पहले बाहरकी वायुको बायीं नासिका-(चन्द्रनाड़ी-) के द्वारा भीतर ले जाते हैं। वह वायु हृदयमें स्थित प्राणवायुको साथ लेकर नाभिसे होती हुई स्वाभाविक ही अपानमें लीन हो जाती है। इसको 'पूरक' कहते हैं। फिर वे प्राणवायु और अपानवायु-- दोनोंकी गति रोक देते हैं। न तो श्वास बाहर जाता है और न श्वास भीतर ही आता है। इसको 'कुम्भक' कहते हैं। इसके बाद वे भीतरकी वायुको दायीं नासिका-(सूर्यनाड़ी-) के द्वारा बाहर निकालते हैं। वह वायु स्वाभाविक ही प्राणवायुको तथा उसके पीछे-पीछे अपानवायुको साथ लेकर बाहर निकलती है। यही प्राणवायुमें अपानवायुका हवन करना है। इसको 'रेचक' कहते हैं। चार भगवन्नामसे पूरक, सोलह भगवन्नामसे कुम्भक और आठ भगवन्नामसे रेचक किया जाता है।
+।। व्याख्या--'अपाने जुह्वति ।।. प्राणायामपरायणाः' (टिप्पणी प0 258.1)--प्राणका स्थान हृदय (ऊपर) तथा अपानका स्थान गुदा (नीचे) है (टिप्पणी प0 258.2)। श्वासको बाहर निकालते समय वायुकी गति ऊपरकी ओर तथा श्वासको भीतर ले जाते समय वायुकी गति नीचेकी ओर होती है। इसलिये श्वासको बाहर निकालना 'प्राण' का कार्य और श्वासको भीतर ले जाना 'अपान' का कार्य है। योगीलोग पहले बाहरकी वायुको बायीं नासिका-(चन्द्रनाड़ी-) के द्वारा भीतर ले जाते हैं। वह वायु हृदयमें स्थित प्राणवायुको साथ लेकर नाभिसे होती हुई स्वाभाविक ही अपानमें लीन हो जाती है। इसको 'पूरक' कहते हैं। फिर वे प्राणवायु और अपानवायु-- दोनोंकी गति रोक देते हैं। न तो श्वास बाहर जाता है और न श्वास भीतर ही आता है। इसको 'कुम्भक' कहते हैं। इसके बाद वे भीतरकी वायुको दायीं नासिका-(सूर्यनाड़ी-) के द्वारा बाहर निकालते हैं। वह वायु स्वाभाविक ही प्राणवायुको तथा उसके पीछे-पीछे अपानवायुको साथ लेकर बाहर निकलती है। यही प्राणवायुमें अपानवायुका हवन करना है। इसको 'रेचक' कहते हैं। चार भगवन्नामसे पूरक, सोलह भगवन्नामसे कुम्भक और आठ भगवन्नामसे रेचक किया जाता है।
 
 इस प्रकार योगीलोग पहले चन्द्रनाड़ीसे पूरक, फिर कुम्भक और फिर सूर्यनाड़ीसे रेचक करते हैं। इसके बाद सूर्यनाड़ीसे पूरक, फिर कुम्भक और फिर चन्द्रनाड़ीसे रेचक करते हैं। इस तरह बार-बार पूरक-कुम्भक-रेचक करना प्राणायामरूप यज्ञ है। परमात्मप्राप्तिके उद्देश्यसे निष्कामभावपूर्वक प्राणायामके परायण होनेसे सभी पाप नष्ट हो जाते हैं (टिप्पणी प0 258.3)।
 
@@ -1088,7 +1088,7 @@ Others who regulate their diet offer life-breaths in each life-breath. All these
 
 **English Commentary**
 
-Niyataharah means persons of regulated or limited food. They take moderate food. By rigid dieting they control the passions and appetites by weakening the functions of the organs of action.Yogis pour the lifreaths as sacrifice in the controlled lifreath. The former becomes merged in the latter.Performance of the above sacrifice leads to the purification of the mind and destruction of sins.
+Niyataharah means persons of regulated or limited food. They take moderate food. By rigid dieting they control the passions and appetites by weakening the functions of the organs of action. Yogis pour the lifreaths as sacrifice in the controlled lifreath. The former becomes merged in the latter. Performance of the above sacrifice leads to the purification of the mind and destruction of sins.
 
 ### BG 4.31
 
@@ -1158,7 +1158,7 @@ Thus, manifold sacrifices are spread out before Brahman at the face of Brahman. 
 
 **English Commentary**
 
-The word Brahmanah has also been interpreted to mean In the Vedas.Various kinds of sacrifices are spread out at the mouth of Brahman? i.e.? they are known from the Vedas. Know that they are born of action? because the Self is beyond action. If you realise that these actions do not concern me? they are not my actin? and I am actionless? you will surely be liberated from the bondage of Samsara by this right knowledge. (Cf.IX.27XIII.15)
+The word Brahmanah has also been interpreted to mean In the Vedas. Various kinds of sacrifices are spread out at the mouth of Brahman, i.e.? they are known from the Vedas. Know that they are born of action, because the Self is beyond action. If you realise that these actions do not concern me, they are not my actin, and I am actionless, you will surely be liberated from the bondage of Samsara by this right knowledge. (Cf.IX.27XIII.15)
 
 ### BG 4.33
 
@@ -1193,7 +1193,7 @@ Superior is wisdom-sacrifice to the sacrifice with objects, O Parantapa (scorche
 
 **English Commentary**
 
-Sacrifices with material objects cause material effects and bring the sacrificer to this world for the enjoyment of the fruits? while wisdomsacrifice leads to Moksha. Therefore wisdomsacrifice is superior to the sacrifice performed with material objects. Just as rivers join the ocean? so do all actions join knowledge? i.e.? they culminate in knowledge. All actions purify the heart and lead to the dawn of knowledge of the Self.All actions that are performed as offerings unto the Lord with their fruits are contained in the knowledge of Brahman. (Cf.IX.15X.25XVIII.70)
+Sacrifices with material objects cause material effects and bring the sacrificer to this world for the enjoyment of the fruits, while wisdomsacrifice leads to Moksha. Therefore wisdomsacrifice is superior to the sacrifice performed with material objects. Just as rivers join the ocean, so do all actions join knowledge, i.e.? they culminate in knowledge. All actions purify the heart and lead to the dawn of knowledge of the Self. All actions that are performed as offerings unto the Lord with their fruits are contained in the knowledge of Brahman. (Cf.IX.15X.25XVIII.70)
 
 ### BG 4.34
 
@@ -1228,7 +1228,7 @@ Know that the wise who have realized the truth will instruct thee in that knowle
 
 **English Commentary**
 
-Go to the teachers (those who are well versed in the scriptures dealing with Brahman or Brahmasrotris? and who are established in Brahman or Brahmanishthas). Prostrate yourself before them with profound humility and perfect devotion. Ask them estions? O venerable Guru What is the cause of bondage How can I get liberation What is the nature of ignorance What is the nature of knowledge What is the AntarangaSadhana (inward spiritual practice) for attaining Selfrealisation Serve the Guru wholeheartedly. A teacher who is versed in the scriptures (Sastras) but who has no direct Selfrealisaiton will not be able to help you in the attainment of the knowledge of the Self. He who has knowledge of the scriptures and who is also established in Brahman will be able to instruct thee in that knowledge and help thee in the attainment of Selfrealisation. Mere prostrations alone will not do. They may be tinged with hypocrisy. You must have perfect faith in your Guru and his teaching. You must serve him wholeheartedly with great devotion. Now hypocrisy is not possible.
+Go to the teachers (those who are well versed in the scriptures dealing with Brahman or Brahmasrotris, and who are established in Brahman or Brahmanishthas). Prostrate yourself before them with profound humility and perfect devotion. Ask them estions, O venerable Guru What is the cause of bondage How can I get liberation What is the nature of ignorance What is the nature of knowledge What is the AntarangaSadhana (inward spiritual practice) for attaining Selfrealisation Serve the Guru wholeheartedly. A teacher who is versed in the scriptures (Sastras) but who has no direct Selfrealisaiton will not be able to help you in the attainment of the knowledge of the Self. He who has knowledge of the scriptures and who is also established in Brahman will be able to instruct thee in that knowledge and help thee in the attainment of Selfrealisation. Mere prostrations alone will not do. They may be tinged with hypocrisy. You must have perfect faith in your Guru and his teaching. You must serve him wholeheartedly with great devotion. Now hypocrisy is not possible.
 
 ### BG 4.35
 
@@ -1261,7 +1261,7 @@ Knowing that thou shalt not, O Arjuna, again be deluded like this; and by that t
 
 **English Commentary**
 
-That? the knowledge of the Self mentioned in the previous verse? that is to be learnt from the Brahmanishtha Guru through prostration? estioning and service. When you acire this knowledge you will not be again subject to confusion or error. You will behold that underlying basic unity. You will behold or directly cognise through internal experience or intuition that all beings from the Creator down to a blade of grass exist in your own Self and also in Me. (Cf.IX.15XVIII.20)
+That, the knowledge of the Self mentioned in the previous verse, that is to be learnt from the Brahmanishtha Guru through prostration, estioning and service. When you acire this knowledge you will not be again subject to confusion or error. You will behold that underlying basic unity. You will behold or directly cognise through internal experience or intuition that all beings from the Creator down to a blade of grass exist in your own Self and also in Me. (Cf.IX.15XVIII.20)
 
 ### BG 4.36
 
@@ -1327,7 +1327,7 @@ As the blazing fire reduces fuel to ashes, O Arjuna, so does the fire of knowled
 
 **English Commentary**
 
-Just as the sees that are roasted cannot germinate? so also the actions that are burnt by the fire of knowledge cannot bear fruits? i.e.? cannot bring man to this world again for the enjoyment of the fruits of his actions. This is reducing actions to ashes. The actions lose their potency as they are burnt by the fire of knowledge. When the knowledge of the Self dawns? all actions with their results are burnt by the fire of that knowledge just as fuel is burnt by the fire. When there is no agencymentality (the idea I do this)? when there is no desire for the fruits? action is no action at all. It has lost its potency. The fire of knowledge can burn all actions except the Prarabdha Karma? or the result of the past action which has brought this body into existence and which has thus already begun to bear fruits or produce effects.According to some philosophers even the Prarabdha Karma is destroyed by the fire of knowledge. Sri Sankara says in his AparokshanubhutiIn the passage his actions are destroyed when the Supreme is realised the Veda expressly speaks of actions (Karmas) in the plural? in order to signify the destruction of even the Prarabdha.There are three kinds of Karmas or reaction to or fructification of past actions (1) Prarabdha? so much of the past actions as has given rise to the present birth? (2) Sanchita? the balance of the past actions that will give rise to future births -- the storehouse of accumulated actions? and (3) Agami or Kriyamana? acts being done in the present life. If by the knowledge of the Self only the Sanchita and Agami were destroyed and not Prarabdha? the dual number would have been used and not the plural. (Sanskrit grammar has singular? dual and plural numbers). (Cf.IV.1019)
+Just as the sees that are roasted cannot germinate, so also the actions that are burnt by the fire of knowledge cannot bear fruits, i.e.? cannot bring man to this world again for the enjoyment of the fruits of his actions. This is reducing actions to ashes. The actions lose their potency as they are burnt by the fire of knowledge. When the knowledge of the Self dawns, all actions with their results are burnt by the fire of that knowledge just as fuel is burnt by the fire. When there is no agencymentality (the idea I do this)? when there is no desire for the fruits, action is no action at all. It has lost its potency. The fire of knowledge can burn all actions except the Prarabdha Karma, or the result of the past action which has brought this body into existence and which has thus already begun to bear fruits or produce effects. According to some philosophers even the Prarabdha Karma is destroyed by the fire of knowledge. Sri Sankara says in his AparokshanubhutiIn the passage his actions are destroyed when the Supreme is realised the Veda expressly speaks of actions (Karmas) in the plural, in order to signify the destruction of even the Prarabdha. There are three kinds of Karmas or reaction to or fructification of past actions (1) Prarabdha, so much of the past actions as has given rise to the present birth? (2) Sanchita, the balance of the past actions that will give rise to future births -- the storehouse of accumulated actions, and (3) Agami or Kriyamana, acts being done in the present life. If by the knowledge of the Self only the Sanchita and Agami were destroyed and not Prarabdha, the dual number would have been used and not the plural. (Sanskrit grammar has singular, dual and plural numbers). (Cf.IV.1019)
 
 ### BG 4.38
 
@@ -1364,7 +1364,7 @@ Verily, there is no purifier in this world like knowledge. He who is perfected i
 
 **English Commentary**
 
-There exists no purifier eal to knowledge of the Self. He who has attained perfection by the constant practice of Karma Yoga and Dhyana Yoga (the Yoga of meditation) will? after a time? find the knowledge of the Self in himself.
+There exists no purifier eal to knowledge of the Self. He who has attained perfection by the constant practice of Karma Yoga and Dhyana Yoga (the Yoga of meditation) will, after a time, find the knowledge of the Self in himself.
 
 ### BG 4.39
 
@@ -1397,7 +1397,7 @@ The one who is full of faith, devoted to it, and has subdued their senses obtain
 
 **English Commentary**
 
-He who is full of faith? who constantly serves his Guru and hears his teachings? who has subdued the senses surely gets the knowledge and ickly attains the supreme peace or salvation (Moksha). All the above three alifications are indispensable for an aspirant if he wants to attain to the supreme peace of the Eternal ickly. One alifiaction alone will not suffice. (Cf.X.10?11)
+He who is full of faith, who constantly serves his Guru and hears his teachings, who has subdued the senses surely gets the knowledge and ickly attains the supreme peace or salvation (Moksha). All the above three alifications are indispensable for an aspirant if he wants to attain to the supreme peace of the Eternal ickly. One alifiaction alone will not suffice. (Cf.X.10?11)
 
 ### BG 4.40
 
@@ -1432,7 +1432,7 @@ The ignorant, the faithless, and the doubting self go to destruction; there is n
 
 **English Commentary**
 
-The ignorant one who has no knowledge of the Self. The man without faith one who has no faith in his own self? in the scriptures and the teachings of his Guru.A man of doubting mind is the most sinful of all. His condition is very deplorable. He is full of doubts as regards the next world. He does not rejoice in this world also? as he is very suspicious. He has no happiness.
+The ignorant one who has no knowledge of the Self. The man without faith one who has no faith in his own self, in the scriptures and the teachings of his Guru. A man of doubting mind is the most sinful of all. His condition is very deplorable. He is full of doubts as regards the next world. He does not rejoice in this world also, as he is very suspicious. He has no happiness.
 
 ### BG 4.41
 
@@ -1467,7 +1467,7 @@ He who has renounced actions through Yoga, whose doubts have been dispelled by k
 
 **English Commentary**
 
-Sri Madhusudana Sarasvati explains Atmavantam as always watchful.He who has attained to Selfrealisation renounces all actions by means of Yoga or the knowledge of Brahman. As he is established in the knowledge of the identity of the individual soul with the,Supreme Soul? all his doubts are cut asunder. Actions do not bind him as they are burnt in the fire of wisdom and as he is always watchful over himself. (Cf.II.48III.9IV.20)
+Sri Madhusudana Sarasvati explains Atmavantam as always watchful. He who has attained to Selfrealisation renounces all actions by means of Yoga or the knowledge of Brahman. As he is established in the knowledge of the identity of the individual soul with the,Supreme Soul, all his doubts are cut asunder. Actions do not bind him as they are burnt in the fire of wisdom and as he is always watchful over himself. (Cf.II.48III.9IV.20)
 
 ### BG 4.42
 
@@ -1496,7 +1496,7 @@ Therefore, with the sword of knowledge (of the Self), cut asunder the doubt of t
 
 **Hindi Commentary**
 
-'तस्मादज्ञानसम्भूतं ৷৷. छित्त्वैनं संशयम्'--पूर्वश्लोकमें भगवान्ने यह सिद्धान्त बताया कि जिसने समताके द्वारा समस्त कर्मोंसे सम्बन्ध-विच्छेद कर लिया है और ज्ञानके द्वारा समस्त संशयोंको नष्ट कर दिया है, उस आत्मपरायण कर्मयोगीको कर्म नहीं बाँधते अर्थात् वह जन्म-मरणसे मुक्त हो जाता है। अब भगवान् 'तस्मात्' पदसे अर्जुनको भी वैसा ही जानकर कर्तव्य-कर्म करनेकी प्रेरणा करते हैं।अर्जुनके हृदयमें संशय था--युद्धरूप घोर कर्मसे मेरा कल्याण कैसे होगा? और कल्याणके लिये मैं कर्मयोगका अनुष्ठान करूँ अथवा ज्ञानयोगका? इस श्लोकमें भगवान् इस संशयको दूर करनेकी प्रेरणा करते हैं ;क्योंकि संशयके रहते हुए कर्तव्यका पालन ठीक तरहसे नहीं हो सकता।'अज्ञानसम्भूतम्' पदका भाव है कि सब संशय अज्ञानसे अर्थात् कर्मोंके और योगके तत्त्वको ठीक-ठीक न समझनेसे ही उत्पन्न होते हैं। क्रियाओँ और पदार्थोंको अपना और अपने लिये मानना ही अज्ञान है। यह अज्ञान जबतक रहता है, तबतक अन्तःकरणमें संशय रहते हैं; क्योंकि क्रियाएँ और पदार्थ विनाशी हैं और स्वरूप अविनाशी है।
+'तस्मादज्ञानसम्भूतं ।।. छित्त्वैनं संशयम्'--पूर्वश्लोकमें भगवान्ने यह सिद्धान्त बताया कि जिसने समताके द्वारा समस्त कर्मोंसे सम्बन्ध-विच्छेद कर लिया है और ज्ञानके द्वारा समस्त संशयोंको नष्ट कर दिया है, उस आत्मपरायण कर्मयोगीको कर्म नहीं बाँधते अर्थात् वह जन्म-मरणसे मुक्त हो जाता है। अब भगवान् 'तस्मात्' पदसे अर्जुनको भी वैसा ही जानकर कर्तव्य-कर्म करनेकी प्रेरणा करते हैं।अर्जुनके हृदयमें संशय था--युद्धरूप घोर कर्मसे मेरा कल्याण कैसे होगा? और कल्याणके लिये मैं कर्मयोगका अनुष्ठान करूँ अथवा ज्ञानयोगका? इस श्लोकमें भगवान् इस संशयको दूर करनेकी प्रेरणा करते हैं ;क्योंकि संशयके रहते हुए कर्तव्यका पालन ठीक तरहसे नहीं हो सकता।'अज्ञानसम्भूतम्' पदका भाव है कि सब संशय अज्ञानसे अर्थात् कर्मोंके और योगके तत्त्वको ठीक-ठीक न समझनेसे ही उत्पन्न होते हैं। क्रियाओँ और पदार्थोंको अपना और अपने लिये मानना ही अज्ञान है। यह अज्ञान जबतक रहता है, तबतक अन्तःकरणमें संशय रहते हैं; क्योंकि क्रियाएँ और पदार्थ विनाशी हैं और स्वरूप अविनाशी है।
 
 तीसरे अध्यायमें कर्मयोगका आचरण करनेकी और इस चौथे अध्यायमें कर्मयोगको तत्त्वसे जाननेकी बात विशेषरूपसे आयी है। कारण कि कर्म करनेके साथ-साथ कर्मको जाननेकी भी बहुत आवश्यकता है। ठीक-ठीक जाने बिना कोई भी कर्म बढ़िया रीतिसे नहीं होता। इसके सिवाय अच्छी तरह जानकर कर्म करनेसे जो कर्म बाँधने-वाले होते हैं, वे ही कर्म मुक्त करनेवाले हो जाते हैं (गीता 4। 16 32)। इसलिये इसअध्यायमें भगवान्ने कर्मोंको तत्त्वसे जाननेपर विशेष जोर दिया है।पूर्वश्लोकमें भी 'ज्ञानसंछिन्नसंशयम्' पद इसी अर्थमें आया है। जो मनुष्य कर्म करनेकी विद्याको जान लेता है, उसके समस्त संशयोंका नाश हो जाता है। कर्म करनेकी विद्या है--अपने लिये कुछ करना ही नहीं है।
 
@@ -1506,4 +1506,4 @@ Therefore, with the sword of knowledge (of the Self), cut asunder the doubt of t
 
 **English Commentary**
 
-Doubt causes a great deal of mental torment. It is most sinful. It is born of ignorance. Kill it ruthlessly with the knowledge of the Self. Now stand up and fight? O Arjuna.(This chapter is known by the names Jnana Yoga? Abhyasa Yoga and jnanakarmasannyasa Yoga also.)Thus in the Upanishads of the glorious Bhagavad Gita? the science of the Eternal? the scripture of Yoga? the dialogue between Sri Krishna and Arjuna? ends the fourth discourse entitledThe Yoga of the Division of Wisdom. ,
+Doubt causes a great deal of mental torment. It is most sinful. It is born of ignorance. Kill it ruthlessly with the knowledge of the Self. Now stand up and fight, O Arjuna.(This chapter is known by the names Jnana Yoga, Abhyasa Yoga and jnanakarmasannyasa Yoga also.)Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the fourth discourse entitledThe Yoga of the Division of Wisdom. ,

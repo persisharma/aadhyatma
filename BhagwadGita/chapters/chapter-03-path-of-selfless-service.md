@@ -49,7 +49,7 @@ Arjuna said: If Thou thinkest that knowledge is superior to action, O Krishna, w
 
 **Hindi Commentary**
 
-'जनार्दन'-- इस पदसे अर्जुन मानो यह भाव प्रकट करते हैं कि हे श्री कृष्ण! आप सभीकी याचना पूरी करनेवाले हैं; अतः मेरी याचना तो अवश्य ही पूरी करेंगे।'ज्यायसी चेत्कर्मणस्ते ৷৷. नियोजयसि केशव'-- मनुष्यके अन्तःकरणमें एक कमजोरी रहती है कि वह प्रश्न करके उत्तरके रूपमें भी वक्तासे अपनी बात अथवा सिद्धान्तका ही समर्थन चाहता है। इसे कमजोरी इसलिये कहा गया है कि वक्ताके निर्देशका चाहे वह मनोऽनुकूल हो या सर्वथा प्रतिकूल, पालन करनेका निश्चय ही शूरवीरता है, शेष सब कमजोरी या कायरता ही कही जायगी। इस कमजोरीके कारण ही मनुष्यको प्रतिकूलता सहनेमें कठिनाईका अनुभव होता है। जब वह प्रतिकूलताको सह नहीं सकता, तब वह अच्छाईका चोला पहन लेता है अर्थात् तब भलाईकी वेशमें बुराई आती है। जो बुराई भलाईके वशमें आती है, उसका त्याग करना बड़ा कठिन होता है। यहाँ अर्जुनमें भी हिंसा-त्यागरूप भलाईके वशेमें कर्तव्य-त्यागरूप बुराई आयी है। अतः वे कर्तव्य-कर्मसे ज्ञानको श्रेष्ठ मान रहे हैं। इसी कारण वे यहाँ प्रश्न करते हैं कि यदि आप कर्मसे ज्ञानको श्रेष्ठ मानते हैं, तो फिर मुझे युद्धरूप घोर कर्ममें क्यों लगाते हैं?
+'जनार्दन'-- इस पदसे अर्जुन मानो यह भाव प्रकट करते हैं कि हे श्री कृष्ण! आप सभीकी याचना पूरी करनेवाले हैं; अतः मेरी याचना तो अवश्य ही पूरी करेंगे।'ज्यायसी चेत्कर्मणस्ते ।।. नियोजयसि केशव'-- मनुष्यके अन्तःकरणमें एक कमजोरी रहती है कि वह प्रश्न करके उत्तरके रूपमें भी वक्तासे अपनी बात अथवा सिद्धान्तका ही समर्थन चाहता है। इसे कमजोरी इसलिये कहा गया है कि वक्ताके निर्देशका चाहे वह मनोऽनुकूल हो या सर्वथा प्रतिकूल, पालन करनेका निश्चय ही शूरवीरता है, शेष सब कमजोरी या कायरता ही कही जायगी। इस कमजोरीके कारण ही मनुष्यको प्रतिकूलता सहनेमें कठिनाईका अनुभव होता है। जब वह प्रतिकूलताको सह नहीं सकता, तब वह अच्छाईका चोला पहन लेता है अर्थात् तब भलाईकी वेशमें बुराई आती है। जो बुराई भलाईके वशमें आती है, उसका त्याग करना बड़ा कठिन होता है। यहाँ अर्जुनमें भी हिंसा-त्यागरूप भलाईके वशेमें कर्तव्य-त्यागरूप बुराई आयी है। अतः वे कर्तव्य-कर्मसे ज्ञानको श्रेष्ठ मान रहे हैं। इसी कारण वे यहाँ प्रश्न करते हैं कि यदि आप कर्मसे ज्ञानको श्रेष्ठ मानते हैं, तो फिर मुझे युद्धरूप घोर कर्ममें क्यों लगाते हैं?
 
 **English Commentary**
 
@@ -82,11 +82,11 @@ With this seemingly perplexing speech, you seem to be confusing my understanding
 
 **Hindi Commentary**
 
-'जनार्दन'-- इस पदसे अर्जुन मानो यह भाव प्रकट करते हैं कि हे श्री कृष्ण! आप सभीकी याचना पूरी करनेवाले हैं; अतः मेरी याचना तो अवश्य ही पूरी करेंगे।'ज्यायसी चेत्कर्मणस्ते ৷৷. नियोजयसि केशव'-- मनुष्यके अन्तःकरणमें एक कमजोरी रहती है कि वह प्रश्न करके उत्तरके रूपमें भी वक्तासे अपनी बात अथवा सिद्धान्तका ही समर्थन चाहता है। इसे कमजोरी इसलिये कहा गया है कि वक्ताके निर्देशका चाहे वह मनोऽनुकूल हो या सर्वथा प्रतिकूल, पालन करनेका निश्चय ही शूरवीरता है, शेष सब कमजोरी या कायरता ही कही जायगी। इस कमजोरीके कारण ही मनुष्यको प्रतिकूलता सहनेमें कठिनाईका अनुभव होता है। जब वह प्रतिकूलताको सह नहीं सकता, तब वह अच्छाईका चोला पहन लेता है अर्थात् तब भलाईकी वेशमें बुराई आती है। जो बुराई भलाईके वशमें आती है, उसका त्याग करना बड़ा कठिन होता है। यहाँ अर्जुनमें भी हिंसा-त्यागरूप भलाईके वशेमें कर्तव्य-त्यागरूप बुराई आयी है। अतः वे कर्तव्य-कर्मसे ज्ञानको श्रेष्ठ मान रहे हैं। इसी कारण वे यहाँ प्रश्न करते हैं कि यदि आप कर्मसे ज्ञानको श्रेष्ठ मानते हैं, तो फिर मुझे युद्धरूप घोर कर्ममें क्यों लगाते हैं?
+'जनार्दन'-- इस पदसे अर्जुन मानो यह भाव प्रकट करते हैं कि हे श्री कृष्ण! आप सभीकी याचना पूरी करनेवाले हैं; अतः मेरी याचना तो अवश्य ही पूरी करेंगे।'ज्यायसी चेत्कर्मणस्ते ।।. नियोजयसि केशव'-- मनुष्यके अन्तःकरणमें एक कमजोरी रहती है कि वह प्रश्न करके उत्तरके रूपमें भी वक्तासे अपनी बात अथवा सिद्धान्तका ही समर्थन चाहता है। इसे कमजोरी इसलिये कहा गया है कि वक्ताके निर्देशका चाहे वह मनोऽनुकूल हो या सर्वथा प्रतिकूल, पालन करनेका निश्चय ही शूरवीरता है, शेष सब कमजोरी या कायरता ही कही जायगी। इस कमजोरीके कारण ही मनुष्यको प्रतिकूलता सहनेमें कठिनाईका अनुभव होता है। जब वह प्रतिकूलताको सह नहीं सकता, तब वह अच्छाईका चोला पहन लेता है अर्थात् तब भलाईकी वेशमें बुराई आती है। जो बुराई भलाईके वशमें आती है, उसका त्याग करना बड़ा कठिन होता है। यहाँ अर्जुनमें भी हिंसा-त्यागरूप भलाईके वशेमें कर्तव्य-त्यागरूप बुराई आयी है। अतः वे कर्तव्य-कर्मसे ज्ञानको श्रेष्ठ मान रहे हैं। इसी कारण वे यहाँ प्रश्न करते हैं कि यदि आप कर्मसे ज्ञानको श्रेष्ठ मानते हैं, तो फिर मुझे युद्धरूप घोर कर्ममें क्यों लगाते हैं?
 
 **English Commentary**
 
-Arjuna says to Lord Krishna? Tecah me one of the two? knowledge or action? by which I may attain to the highest good or bliss or Moksha. (Cf.V.I).
+Arjuna says to Lord Krishna, Tecah me one of the two, knowledge or action, by which I may attain to the highest good or bliss or Moksha. (Cf.V.I).
 
 ### BG 3.3
 
@@ -122,7 +122,7 @@ The Blessed Lord said, "In this world, there is a twofold path, as I said before
 
 **English Commentary**
 
-The path of knowledge of the Sankhyas (Jnana Yoga) was described by Lord Krishna in chapter II? verses 11 to 38 the path of action (Karma Yoga) from 40 to 53.Pura Prokta may also mean In the beginning of creation the twofold path was given by Me to this world.Those who are endowed with the four means and who have sharp? subtle intellect and bold understanding are fit for Jnana Yoga. Those who have a tendency or inclination for wok are fit for Karma Yoga. (The four means are discrimination? dispassion? sixfold virutes? and longing for liberation. The sixfold virtues are control of the mind? control of the senses? fortitude (endurance)? turning away from the objects of the world? faith and tranillity.)It is not possible for a man to practise the two Yogas simultaneously. Karma Yoga is a means to an end. It purifies the heart and prepares the aspirant for the reception of knowledge. The Karma Yogi should take up Jnana Yoga as soon as his heart is purified. Jnana Yoga takes the aspirant directly to the goal without any extraneous help. (Cf.V.5).
+The path of knowledge of the Sankhyas (Jnana Yoga) was described by Lord Krishna in chapter II? verses 11 to 38 the path of action (Karma Yoga) from 40 to 53. Pura Prokta may also mean In the beginning of creation the twofold path was given by Me to this world. Those who are endowed with the four means and who have sharp, subtle intellect and bold understanding are fit for Jnana Yoga. Those who have a tendency or inclination for wok are fit for Karma Yoga. (The four means are discrimination, dispassion, sixfold virutes, and longing for liberation. The sixfold virtues are control of the mind, control of the senses, fortitude (endurance)? turning away from the objects of the world, faith and tranillity.)It is not possible for a man to practise the two Yogas simultaneously. Karma Yoga is a means to an end. It purifies the heart and prepares the aspirant for the reception of knowledge. The Karma Yogi should take up Jnana Yoga as soon as his heart is purified. Jnana Yoga takes the aspirant directly to the goal without any extraneous help. (Cf.V.5).
 
 ### BG 3.4
 
@@ -155,7 +155,7 @@ Man does not reach actionlessness by not performing actions; nor does he attain 
 
 **English Commentary**
 
-Actionlessness (Naishkarmyam) and perfection (Siddhi) are synonymous. The sage who has attained to perfection or reached the state of actionlessness rests in his own essential nature as ExistenceKnowledgeBliss Absolute (Satchidananda Svarupa). He has neither necessity nor desire for action as a means to an end. He has perfect satisfaction in the Self.One attains to the state of actionlessness by gaining the knowledge of the Self. If a man simply sits iet by abandoning action you cannot say that he has attained to the state of actionlessness. His mind will be planning? scheming and speculating. Thought is real action. The sage who is free from affirmative thoughts? wishes? and likes and dislikes? who has the knowledge of the Self can be said to have attained to the state of actionlessness.No one can reach perfection or freedom from action or knowledge of the Self by mere renunciation or by simply giving up activities without possessing the knowledge of the Self. (Cf.XVIII.49).
+Actionlessness (Naishkarmyam) and perfection (Siddhi) are synonymous. The sage who has attained to perfection or reached the state of actionlessness rests in his own essential nature as ExistenceKnowledgeBliss Absolute (Satchidananda Svarupa). He has neither necessity nor desire for action as a means to an end. He has perfect satisfaction in the Self. One attains to the state of actionlessness by gaining the knowledge of the Self. If a man simply sits iet by abandoning action you cannot say that he has attained to the state of actionlessness. His mind will be planning, scheming and speculating. Thought is real action. The sage who is free from affirmative thoughts, wishes, and likes and dislikes, who has the knowledge of the Self can be said to have attained to the state of actionlessness. No one can reach perfection or freedom from action or knowledge of the Self by mere renunciation or by simply giving up activities without possessing the knowledge of the Self. (Cf.XVIII.49).
 
 ### BG 3.5
 
@@ -190,7 +190,7 @@ Verily, no one can remain for even a moment without performing action; for every
 
 **English Commentary**
 
-The Gunas (alities of Nature) are three? viz.? Sattva? Rajas and Tamas. Sattva is harmony or light or purity Rajas is passion or motion Tamas is inertia or darkness. Sattvic actions help a man to attain to Moksha. Rajasic and Tamasic actions bind a man to Samsara.These alities cannot affect a man who has knowledge of the Self. He has crossed over these alities. He has become a Gunatita (one who has transcended the alities of Nature). The ignorant man who has no knowledge of the Self and who is swayed by Avidya or nescience is driven helplessly to action by the Gunas. (Cf.IV.16?XVIII.11).
+The Gunas (alities of Nature) are three, viz.? Sattva, Rajas and Tamas. Sattva is harmony or light or purity Rajas is passion or motion Tamas is inertia or darkness. Sattvic actions help a man to attain to Moksha. Rajasic and Tamasic actions bind a man to Samsara. These alities cannot affect a man who has knowledge of the Self. He has crossed over these alities. He has become a Gunatita (one who has transcended the alities of Nature). The ignorant man who has no knowledge of the Self and who is swayed by Avidya or nescience is driven helplessly to action by the Gunas. (Cf.IV.16?XVIII.11).
 
 ### BG 3.6
 
@@ -219,7 +219,7 @@ He who, restraining the organs of action, sits thinking of the sense-objects in 
 
 **Hindi Commentary**
 
-।। व्याख्या--'कर्मेन्द्रियाणि संयम्य ৷৷. मिथ्याचारः स उच्यते'-- यहाँ 'कर्मेन्द्रियाणि' पदका अभिप्राय पाँच कर्मेन्द्रियों (वाक्, हस्त, पाद, उपस्थ और गुदा) से ही नहीं है, प्रत्युत इनके साथ पाँच ज्ञानेन्द्रियों (श्रोत्र, त्वचा, नेत्र, रसना और घ्राण) से भी है; क्योंकि ज्ञानेन्द्रियोंके बिना केवल कर्मेन्द्रियोंसे कर्म नहीं हो सकते। इसके सिवाय केवल हाथ, पैर आदि कर्मेन्द्रियोंको रोकनेसे तथा आँख, कान आदि ज्ञानेन्द्रियोंको न रोकनेसे पूरा मिथ्याचार भी सिद्ध नहीं होता।
+।। व्याख्या--'कर्मेन्द्रियाणि संयम्य ।।. मिथ्याचारः स उच्यते'-- यहाँ 'कर्मेन्द्रियाणि' पदका अभिप्राय पाँच कर्मेन्द्रियों (वाक्, हस्त, पाद, उपस्थ और गुदा) से ही नहीं है, प्रत्युत इनके साथ पाँच ज्ञानेन्द्रियों (श्रोत्र, त्वचा, नेत्र, रसना और घ्राण) से भी है; क्योंकि ज्ञानेन्द्रियोंके बिना केवल कर्मेन्द्रियोंसे कर्म नहीं हो सकते। इसके सिवाय केवल हाथ, पैर आदि कर्मेन्द्रियोंको रोकनेसे तथा आँख, कान आदि ज्ञानेन्द्रियोंको न रोकनेसे पूरा मिथ्याचार भी सिद्ध नहीं होता।
 
 गीतामें कर्मेन्द्रियोंके अन्तर्गत ही ज्ञानेन्द्रियाँ मानी गयी हैं। इसलिये गीतामें 'कर्मेन्द्रिय' शब्द तो आता है, पर 'ज्ञानेन्द्रिय' शब्द कहीं नहीं आता। पाँचवें अध्यायके आठवें-नवें श्लोकोंमें देखना, सुनना, स्पर्श करना आदि ज्ञानेन्द्रियोंकी क्रियाओंको भी कर्मेन्द्रियोंकी क्रियाओंके साथ सम्मिलित किया गया है, जिससे सिद्ध होता है कि गीता ज्ञानेन्द्रियोंको भी कर्मेन्द्रियाँ ही मानती है। गीता मनकी क्रियाओंको भी कर्म मानती है--'शरीरवाङ्मनोभिर्यत्कर्म प्रारभते नरः' (18। 15)। तात्पर्य यह है कि मात्र प्रकृति क्रियाशील होनेसे प्रकृतिका कार्यमात्र क्रियाशील है।यद्यपि 'संयम्य' पदका अर्थ होता है--इन्द्रियोंका अच्छी तरहसे नियमन अर्थात् उन्हें वशमें करना, तथापि यहाँ इस पदका अर्थ इन्द्रियोंको वशमें करना न होकर उन्हें हठपूर्वक बाहरसे रोकना ही है। कारण कि इन्द्रियोंके वशमें होनेपर उसे मिथ्याचार कहना नहीं बनता।मूढ़ बुद्धिवाला (सत्-असत् के विवेकसे रहित) मनुष्य बाहरसे तो इन्द्रियोंकी क्रियाओंको हठपूर्वक रोक देता है, पर मनसे उन इन्द्रियोंके विषयोंका चिन्तन करता रहता है और ऐसी स्थितिको क्रियारहित मान लेता है। इसलिये वह मिथ्याचारी अर्थात् मिथ्या आचरण करनेवाला कहा जाता है।यद्यपि उसने इन्द्रियोंके विषयोंको बाहरसे त्याग दिया है और ऐसा समझता है कि मैं कर्म नहीं करता हूँ, तथापि ऐसी अवस्थामें भी वह वस्तुतः कर्मरहित नहीं हुआ है। कारण कि बाहरसे क्रियारहित दीखनेपर भी अहंता, ममता और कामनाके कारण रागपूर्वक विषयचिन्तनके रूपमें विषय-भोगरूप कर्म तो हो ही रहा है।सांसारिक भोगोंको बाहरसे भी भोगा जा सकता है और मनसे भी। बाहरसे रागपूर्वक भोगोंको भोगनेसे अन्तःकरणमें भोगोंके जैसे संस्कार पड़ते हैं, वैसे ही संस्कार मनसे भोगोंको भोगनेसे अर्थात् रागपूर्वक भोगोंका चिन्तन करनेसे भी पड़ते हैं। बाहरसे भोगोंका त्याग तो मनुष्य विचारसे, लोक-लिहाजसे और व्यवहारमें गड़बड़ी आनेके भयसे भी कर सकता है, पर मनसे भोग भोगनेमें बाहरसे कोई बाधा नहीं आती। अतः वह मनसे भोगोंको भोगता रहता है और मिथ्या अभिमान करता है कि मैं भोगोंका त्यागी हूँ। मनसे भोग भोगनेसे विशेष हानि होती है क्योंकि इसके सेवनका विशेष अवसर मिलता है। अतः साधकको चाहिये कि जैसे वह बाहरके भोगोंसे अपनेको बचाता है, उनका त्याग करता है, ऐसे ही मनसे भोगोंके चिन्तनका भी विशेष सावधानीसे त्याग करे।अर्जुन भी कर्मोंका स्वरूपसे त्याग करना चाहते हैं और भगवनान्से पूछते हैं कि आप मुझे घोर कर्ममें क्यों लगाते हैं? इसके उत्तरमें यहाँ भगवान् कहते हैं कि जो मनुष्य अहंता, ममता, आसक्ति, कामना आदि रखते हुए केवल बाहरसे कर्मोंका त्याग करके अपनेको क्रियारहित मानता है, उसका आचरण मिथ्या है। तात्पर्य यह है कि साधकको कर्मोंका स्वरूपसे त्याग न करके उन्हें कामना-आसक्तिसे रहित होकर तत्परतापूर्वक करते रहना चाहिये।
 
@@ -227,7 +227,7 @@ He who, restraining the organs of action, sits thinking of the sense-objects in 
 
 **English Commentary**
 
-The five organs of action? Karma Indriyas? are Vak (organ of speech)? Pani (hands)? Padam (feet)? Upastha (genitals) and Guda (anus). They are born of the Rajasic portion of the five Tanmatras or subtle elements Vak from the Akasa Tanmatra (ether)? Pani from the Vayu Tanmatra (air)? Padam from the Agni Tanmatra (fire)? Upastha from the Apas Tanmatra (water)? and Guda from the Prithivi Tanmatra (earth). That man who? restraining the organs of action? sits revolving in his mind thoughts regarding the objects of the senses is a man of sinful conduct. He is selfdeluded. He is a veritable hypocrite.The organs of action must be controlled. The thoughts should also be controlled. The mind should be firmly fixed on the Lord. Only then will you become a true Yogi. Only then will you attain to Selfrealisation.
+The five organs of action, Karma Indriyas, are Vak (organ of speech)? Pani (hands)? Padam (feet)? Upastha (genitals) and Guda (anus). They are born of the Rajasic portion of the five Tanmatras or subtle elements Vak from the Akasa Tanmatra (ether)? Pani from the Vayu Tanmatra (air)? Padam from the Agni Tanmatra (fire)? Upastha from the Apas Tanmatra (water)? and Guda from the Prithivi Tanmatra (earth). That man who, restraining the organs of action, sits revolving in his mind thoughts regarding the objects of the senses is a man of sinful conduct. He is selfdeluded. He is a veritable hypocrite. The organs of action must be controlled. The thoughts should also be controlled. The mind should be firmly fixed on the Lord. Only then will you become a true Yogi. Only then will you attain to Selfrealisation.
 
 ### BG 3.7
 
@@ -260,7 +260,7 @@ But whoever, controlling the senses by the mind, O Arjuna, engages himself in Ka
 
 **English Commentary**
 
-If anyone performs actions with his organs of action (viz.? hands? feet? organ of speech? etc.) controlling the organs of knowledge by the mind? and without expectation of the fruits of the actions and without egoism? he is certainly more worthy than the other who is a hypocrite or a man of false conduct. (Cf.II.64?68IV.21).The five organs of knowledge are the eyes? the ears? the nose? the skin and the sense of taste (tongue).
+If anyone performs actions with his organs of action (viz.? hands, feet, organ of speech, etc.) controlling the organs of knowledge by the mind, and without expectation of the fruits of the actions and without egoism, he is certainly more worthy than the other who is a hypocrite or a man of false conduct. (Cf.II.64?68IV.21). The five organs of knowledge are the eyes, the ears, the nose, the skin and the sense of taste (tongue).
 
 ### BG 3.8
 
@@ -299,7 +299,7 @@ Perform your bounden duty, for action is superior to inaction, and even the main
 
 **English Commentary**
 
-Niyatam Karma is an obligatory duty which one is bound to perform. Thenonperformance of the bounden duties causes demerit. The performance of the obligatory duties is not a means for the attainment of a specific result. The performance does not cause any merit.Living itself involves several natural and unavoidable actions which have to be performed by all. It is ignorance to say? I can live doing nothing.
+Niyatam Karma is an obligatory duty which one is bound to perform. Thenonperformance of the bounden duties causes demerit. The performance of the obligatory duties is not a means for the attainment of a specific result. The performance does not cause any merit. Living itself involves several natural and unavoidable actions which have to be performed by all. It is ignorance to say, I can live doing nothing.
 
 ### BG 3.9
 
@@ -344,7 +344,7 @@ The world is bound by actions other than those performed for the sake of sacrifi
 
 **English Commentary**
 
-Yajna means sacrifice or religious rite or any unselfish action done with a pure motive. It means also Isvara. The Taittiriya Samhita (of the Veda) says Yajna verily is Vishnu (174). If anyone does actions for the sake of the Lord? he is not bound. His heart is purified by performing actions for the sake of the Lord. Where this spirit of unselfishness does not govern the action? it will bind one to Samsara however good or glorious it may be. (Cf.II.48).
+Yajna means sacrifice or religious rite or any unselfish action done with a pure motive. It means also Isvara. The Taittiriya Samhita (of the Veda) says Yajna verily is Vishnu (174). If anyone does actions for the sake of the Lord, he is not bound. His heart is purified by performing actions for the sake of the Lord. Where this spirit of unselfishness does not govern the action, it will bind one to Samsara however good or glorious it may be. (Cf.II.48).
 
 ### BG 3.10
 
@@ -414,7 +414,7 @@ With this, nourish the gods, and may the gods nourish you; thus, nourishing each
 
 **English Commentary**
 
-Deva literally means the shining one. By this sacrifice you nourish the gods such as Indra. The gods shall nourish you with rain? etc. the highest good is the attainment of the knowledge of the Self which frees one from the round of births and deaths. The highest good may mean the attainment of heaven also. The fruit depends upon the motive of the aspirant.
+Deva literally means the shining one. By this sacrifice you nourish the gods such as Indra. The gods shall nourish you with rain, etc. the highest good is the attainment of the knowledge of the Self which frees one from the round of births and deaths. The highest good may mean the attainment of heaven also. The fruit depends upon the motive of the aspirant.
 
 ### BG 3.12
 
@@ -449,7 +449,7 @@ The gods, nourished by the sacrifice, will give you the desired objects. So, he 
 
 **English Commentary**
 
-When the gods are pleased with you sacrifices? they will bestow on you all the desired objects such as children? cattle? property? etc. He who enjoys what has been given to him by the gods? i.e.? he who gratifies the cravings of his own body and the senses without offering anything to the gods in return is a veritable thief. He is really a dacoit of the property of the gods.
+When the gods are pleased with you sacrifices, they will bestow on you all the desired objects such as children, cattle, property, etc. He who enjoys what has been given to him by the gods, i.e.? he who gratifies the cravings of his own body and the senses without offering anything to the gods in return is a veritable thief. He is really a dacoit of the property of the gods.
 
 ### BG 3.13
 
@@ -488,7 +488,7 @@ The righteous who eat the remnants of the sacrifice are freed from all sins; but
 
 **English Commentary**
 
-Those who? after performing the five great sacrifices? eat the remnants of the food are freed from all the sins committed by these five agents of insect slaughter? viz.? (1) the pestle and mortar? (2) the grinding stone? (3) the fireplace? (4) the place where the waterpot is kept? and (5) the broom. These are the five places where injury to life is daily committed. The sins are washed away by the performance of the five MahaYajnas or great sacrifices which every Dvija(twicorn or the people belonging to the first three castes in Hindu society? especially the Brahmin) ought to perform1. DevaYajna Offering sacrifices to the gods which will satisfy them?2. BrahmaYajna or RishiYajna Teaching and reciting the scriptures which will satisfy Brahman and the Rishis?3. PitriYajna Offering libations of water to ones ancestors which will satisfy the manes?4. NriYajna The feeding of the hungry and the guests? and?5. BhutaYajna The feeding of the subhuman species? such as animals? birds? etc.
+Those who, after performing the five great sacrifices, eat the remnants of the food are freed from all the sins committed by these five agents of insect slaughter, viz.? (1) the pestle and mortar? (2) the grinding stone? (3) the fireplace? (4) the place where the waterpot is kept, and (5) the broom. These are the five places where injury to life is daily committed. The sins are washed away by the performance of the five MahaYajnas or great sacrifices which every Dvija(twicorn or the people belonging to the first three castes in Hindu society, especially the Brahmin) ought to perform1. DevaYajna Offering sacrifices to the gods which will satisfy them?2. BrahmaYajna or RishiYajna Teaching and reciting the scriptures which will satisfy Brahman and the Rishis?3. PitriYajna Offering libations of water to ones ancestors which will satisfy the manes?4. NriYajna The feeding of the hungry and the guests, and?5. BhutaYajna The feeding of the subhuman species, such as animals, birds, etc.
 
 ### BG 3.14
 
@@ -554,7 +554,7 @@ Know that action comes from Brahma, and Brahma comes from the Imperishable. Ther
 
 **English Commentary**
 
-Brahma may mean Veda. Just as the breath comes out of a man? so also the Veda is the breath of the Imperishable or the Omniscient. The Veda ever rests in the sacrifice? i.e.? it deals chiefly with sacrifices and the ways of their performance. (Cf.IV.24 to 32).Karma Action? Brahmodbhavam arisen from the injunctions of the Vedas.
+Brahma may mean Veda. Just as the breath comes out of a man, so also the Veda is the breath of the Imperishable or the Omniscient. The Veda ever rests in the sacrifice, i.e.? it deals chiefly with sacrifices and the ways of their performance. (Cf.IV.24 to 32). Karma Action, Brahmodbhavam arisen from the injunctions of the Vedas.
 
 ### BG 3.16
 
@@ -587,7 +587,7 @@ He who does not follow the wheel thus set in motion, who is of sinful life, rejo
 
 **English Commentary**
 
-This is the wheel of action set in motion by the Creator on the basis of the Veda and sacrifice.He who does not follow the wheel by studying the Vedas and performing the sacrifices prescribed therein but who indulges only in sensual pleasures lives in vain. He is wasting his life. He is leading a worthless life indeed.One who does not live in accordance with this law and who is selfish commits sin. He violates the law of the Creator and that is the worst sin.
+This is the wheel of action set in motion by the Creator on the basis of the Veda and sacrifice. He who does not follow the wheel by studying the Vedas and performing the sacrifices prescribed therein but who indulges only in sensual pleasures lives in vain. He is wasting his life. He is leading a worthless life indeed. One who does not live in accordance with this law and who is selfish commits sin. He violates the law of the Creator and that is the worst sin.
 
 ### BG 3.17
 
@@ -616,13 +616,13 @@ But for that man who rejoices only in the Self, who is satisfied with the Self a
 
 **Hindi Commentary**
 
-'यस्त्वात्मरतिरेव ৷৷. च संतुष्टस्तस्य'--यहाँ 'तु' पद पूर्वश्लोकमें वर्णित अपने कर्तव्यका पालन न करनेवाले मनुष्यसे कर्तव्यकर्मके द्वारा सिद्धिको प्राप्त महापुरुषकी विलक्षणता बतानेके लिये प्रयुक्त हुआ है।जबतक मनुष्य अपना सम्बन्ध संसारसे मानता है, तबतक वह अपनी 'रति' (प्रीति) इन्द्रियोंके भोगोंसे एवं स्त्री, पुत्र, परिवार आदिसे, 'तृप्ति' भोजन (अन्न-जल) से तथा 'सन्तुष्टि' धनसे मानता है। परन्तु इसमें उसकी प्रीति, तृप्ति और सन्तुष्टि न तो कभी पूर्ण ही होती है और न निरन्तर ही रहती है। कारण कि संसार प्रतिक्षण परिवर्तनशील, जड और नाशवान् है तथा 'स्वयं' सदा एकरस रहनेवाला, चेतन और अविनाशी है। तात्पर्य है कि 'स्वयं' का संसारके साथ लेशमात्र भी सम्बन्ध नहीं है। अतः 'स्वयं' की प्रीति, तृप्ति और सन्तुष्टि संसारसे कैसे हो सकती है?किसी भी मनुष्यकी प्रीति संसारमें सदा नहीं रहती--यह सभीका अनुभव है। विवाहके समय स्त्री और पुरुषमें परस्पर जो प्रीति या आकर्षण प्रतीत होता है, वह एकदो सन्तान होनेके बाद नहीं रहता। कहींकहीं तो स्त्रियाँ अपने वृद्ध पतिके लिये यहाँतक कह देती हैं कि बुड्ढा मर जाय तो अच्छा है भोजन करनेसे प्राप्त तृप्ति भी कुछ ही समयके लिये प्रतीत होती है मनुष्यको धनप्राप्तिमें जो सन्तुष्टि प्रतीत होती है वह भी क्षणिक होती है क्योंकि धनकी लालसा सदा उत्तरोत्तर बढ़ती ही रहती है। इसलिये कमी निरन्तर बनी रहती है। तात्पर्य यही है कि संसारमें प्रीति तृप्ति और संतुष्टि कभी स्थायी नहीं रह सकती।
+'यस्त्वात्मरतिरेव ।।. च संतुष्टस्तस्य'--यहाँ 'तु' पद पूर्वश्लोकमें वर्णित अपने कर्तव्यका पालन न करनेवाले मनुष्यसे कर्तव्यकर्मके द्वारा सिद्धिको प्राप्त महापुरुषकी विलक्षणता बतानेके लिये प्रयुक्त हुआ है।जबतक मनुष्य अपना सम्बन्ध संसारसे मानता है, तबतक वह अपनी 'रति' (प्रीति) इन्द्रियोंके भोगोंसे एवं स्त्री, पुत्र, परिवार आदिसे, 'तृप्ति' भोजन (अन्न-जल) से तथा 'सन्तुष्टि' धनसे मानता है। परन्तु इसमें उसकी प्रीति, तृप्ति और सन्तुष्टि न तो कभी पूर्ण ही होती है और न निरन्तर ही रहती है। कारण कि संसार प्रतिक्षण परिवर्तनशील, जड और नाशवान् है तथा 'स्वयं' सदा एकरस रहनेवाला, चेतन और अविनाशी है। तात्पर्य है कि 'स्वयं' का संसारके साथ लेशमात्र भी सम्बन्ध नहीं है। अतः 'स्वयं' की प्रीति, तृप्ति और सन्तुष्टि संसारसे कैसे हो सकती है?किसी भी मनुष्यकी प्रीति संसारमें सदा नहीं रहती--यह सभीका अनुभव है। विवाहके समय स्त्री और पुरुषमें परस्पर जो प्रीति या आकर्षण प्रतीत होता है, वह एकदो सन्तान होनेके बाद नहीं रहता। कहींकहीं तो स्त्रियाँ अपने वृद्ध पतिके लिये यहाँतक कह देती हैं कि बुड्ढा मर जाय तो अच्छा है भोजन करनेसे प्राप्त तृप्ति भी कुछ ही समयके लिये प्रतीत होती है मनुष्यको धनप्राप्तिमें जो सन्तुष्टि प्रतीत होती है वह भी क्षणिक होती है क्योंकि धनकी लालसा सदा उत्तरोत्तर बढ़ती ही रहती है। इसलिये कमी निरन्तर बनी रहती है। तात्पर्य यही है कि संसारमें प्रीति तृप्ति और संतुष्टि कभी स्थायी नहीं रह सकती।
 
 मनुष्यको सांसारिक वस्तुओंमें प्रीति, तृप्ति और संतुष्टिकी केवल प्रतीति होती है, वास्तवमें होती नहीं, अगर होती तो पुनः अरति, अतृप्ति एवं असन्तुष्टि नहीं होती। स्वरूपसे प्रीति, तृप्ति और संतुष्टि स्वतःसिद्ध है। स्वरूप सत् है। सत्में कभी कोई अभाव नहीं होता--'नाभावो विद्यते सतः'(गीता 2। 16) और अभावके बिना कोई कामना पैदा नहीं होती। इसलिये स्वरूपमें निष्कामता स्वतःसिद्ध है। परन्तु जब जीव भूलसे संसारके साथ अपना सम्बन्ध मान लेता है, तब वह प्रीति, तृप्ति और संतुष्टिको संसारमें ढूँढ़ने लगता है और इसके लिये सांसारिक वस्तुओंकी कामना करने लगता है। कामना करनेके बाद जब वह वस्तु (धनादि) मिलती है, तब मनमें स्थित कामनाके निकलनेके बाद (दूसरी कामनाके पैदा होनेसे पहले) उसकी अवस्था निष्काम हो जाती है और उसी निष्कामताका उसे सुख होता है; परन्तु उस सुखको मनुष्य भूलसे सांसारिक वस्तुकी प्राप्तिसे उत्पन्न हुआ मान लेता है तथा उस सुखको ही प्रीति, तृप्ति और संतुष्टिके नामसे कहता है। अगर वस्तुकी प्राप्तिसे वह सुख होता, तो उसके मिलनेके बाद उस वस्तुके रहते हुए सदा सुख रहता, दुःखकभी न होता और पुनः वस्तुकी कामना उत्पन्न न होती। परन्तु सांसारिक वस्तुओंसे कभी भी पूर्ण (सदाके लिये) प्रीति, तृप्ति और संतुष्टि प्राप्त न हो सकनेके कारण तथा संसारसे ममताका सम्बन्ध बना रहनेके कारण वह पुनः नयी-नयी कामनाएँ करने लगता है। कामना उत्पन्न होनेपर अपनेमें अभावका तथा काम्य वस्तुके मिलनेपर अपनेमें पराधीनताका अनुभव होता है। अतः कामनावाला मनुष्य सदा दुःखी रहता है।यहाँ यह बात ध्यान देनेकी है कि साधक तो उस सुखका मूल कारण निष्कामताको मानते हैं और दुःखोंका कारण कामनाको मानते हैं, परन्तु संसारमें आसक्त मनुष्य वस्तुओंकी प्राप्तिसे सुख मानते हैं और वस्तुओंकी अप्राप्तिसे दुःख मानते हैं। यदि आसक्त मनुष्य भी साधकके समान ही यथार्थ दृष्टिसे देखे तो उसको शीघ्र ही स्वतःसिद्ध निष्कामताका अनुभव हो सकता है। सकाम मनुष्योंको कर्मयोगका अधिकारी कहा गया है--
 
 **English Commentary**
 
-The sage does not depend on external objects for his happiness. He is ite satisfied with the Self. He finds his joy? bliss and contentment within his own Self. For such a sage who has knowledge of the Self? there is nothing to do. He has already done all actions. He has satisfied all his desires. He has complete satisfaction. (Cf.II.55).
+The sage does not depend on external objects for his happiness. He is ite satisfied with the Self. He finds his joy, bliss and contentment within his own Self. For such a sage who has knowledge of the Self, there is nothing to do. He has already done all actions. He has satisfied all his desires. He has complete satisfaction. (Cf.II.55).
 
 ### BG 3.18
 
@@ -718,7 +718,7 @@ Therefore, without attachment, always perform the actions that should be done; f
 
 **English Commentary**
 
-If you perform actions without attachment? for the sake of the Lord? you will attain to Selfrealisation through purity of heart. (Cf.II.64IV.19?23XVIII.49).
+If you perform actions without attachment, for the sake of the Lord, you will attain to Selfrealisation through purity of heart. (Cf.II.64IV.19?23XVIII.49).
 
 ### BG 3.20
 
@@ -753,7 +753,7 @@ Janaka and others attained perfection indeed through action alone; even with the
 
 **English Commentary**
 
-Samsiddhi is Moksha (perfection or liberation). Janaka? (Asvapati) and others had perfect knowledge of the Self? and yet they performed actions in order to set an example to the masses. They worked for the guidance of men.
+Samsiddhi is Moksha (perfection or liberation). Janaka? (Asvapati) and others had perfect knowledge of the Self, and yet they performed actions in order to set an example to the masses. They worked for the guidance of men.
 
 ### BG 3.21
 
@@ -788,7 +788,7 @@ Whatever a great man does, others also do; whatever he establishes as the standa
 
 **English Commentary**
 
-Man is a social animal. He is an imitating animal too. He takes his ideas of right and wrong from those whom he regards as his moral superior. Whatever a great man follows? the same is considered as an authority by his followers. They try to follow him. They endeavour to walk in his footsteps.
+Man is a social animal. He is an imitating animal too. He takes his ideas of right and wrong from those whom he regards as his moral superior. Whatever a great man follows, the same is considered as an authority by his followers. They try to follow him. They endeavour to walk in his footsteps.
 
 ### BG 3.22
 
@@ -817,7 +817,7 @@ There is nothing in the three worlds, O Arjuna, that needs to be done by Me, nor
 
 **Hindi Commentary**
 
-'न मे पार्थास्ति ৷৷. नानवाप्तमवाप्तव्यम्'-- भगवान् किसी एक लोकमें सीमित नहीं है। इसलिये वे तीनों लोकोंमें अपना कोई कर्तव्य न होनेकी बात कह रहे हैं।भगवान्के लिये त्रिलोकीमें कोई भी कर्तव्य शेष नहीं है; क्योंकि उनके लिये कुछ भी पाना शेष नहीं है।कुछ-न-कुछ पानेके लिये ही सब (मनुष्य, पशु ,पक्षी आदि) कर्म करते हैं। भगवान् उपर्युक्त पदोंमें बहुत विलक्षण बात कह रहे हैं कि कुछ भी करना और पाना शेष न होनेपर भी मैं कर्म करता हूँ !
+'न मे पार्थास्ति ।।. नानवाप्तमवाप्तव्यम्'-- भगवान् किसी एक लोकमें सीमित नहीं है। इसलिये वे तीनों लोकोंमें अपना कोई कर्तव्य न होनेकी बात कह रहे हैं।भगवान्के लिये त्रिलोकीमें कोई भी कर्तव्य शेष नहीं है; क्योंकि उनके लिये कुछ भी पाना शेष नहीं है।कुछ-न-कुछ पानेके लिये ही सब (मनुष्य, पशु ,पक्षी आदि) कर्म करते हैं। भगवान् उपर्युक्त पदोंमें बहुत विलक्षण बात कह रहे हैं कि कुछ भी करना और पाना शेष न होनेपर भी मैं कर्म करता हूँ !
 
 अपने लिये कोई कर्तव्य न होनेपर भी भगवान् केवल दूसरोंके हितके लिये अवतार लेते हैं और साधु पुरुषोंका उद्धार, पापी पुरुषोंका विनाश तथा धर्मकी संस्थापना करनेके लिये कर्म करते हैं (गीता 4। 8)। अवतारके सिवाय भगवान्की सृष्टि-रचना भी जीवमात्रके उद्धारके लिये ही होती है। स्वर्गलोक पुण्यकर्मोंका फल भुगतानेके लिये है और चौरासी लाख योनियाँ एवं नरक पाप-कर्मोंका फल भुगतानेके लिये हैं। मनुष्य-योनि पुण्य और पाप--दोनोंसे ऊँचे उठकर अपना कल्याण करनेके लिये है। ऐसा तभी सम्भव है, जब मनुष्य अपने लिये कुछ न करे। वह सम्पूर्ण कर्म--स्थूल शरीरसे होनेवाली 'क्रिया', सूक्ष्म शरीरसे होनेवाला 'चिन्तन' और कारण शरीरसे होनेवाली 'स्थिरता' केवल दूसरोंके हितके लिये ही करे, अपने लिये नहीं। कारण कि जिनसे सब कर्म किये जाते हैं, वे स्थूल, सूक्ष्म और कारण--तीनों ही शरीर संसारके हैं, अपने नहीं। इसलिये कर्मयोगी शरीर, इन्द्रियाँ, मन, बुद्धि, पदार्थ आदि सम्पूर्ण सामग्रीको (जो वास्तवमें संसारकी ही है) संसारकी ही मानता है और उसे संसारकी सेवामें लगाता है। अगर मनुष्य संसारकी वस्तुको संसारकी सेवामें न लगाकर अपने सुख-भोगमें लगाता है तो बड़ी भारी भूल करता है। संसारकी वस्तुको अपनी मान लेनेसे ही फलकी इच्छा होती है और फलप्राप्तिके लिये कर्म होता है। इस तरह जबतक मनुष्य कुछ पानेकी इच्छासे कर्म करता है, तबतक उसके लिये कर्तव्य अर्थात् 'करना' शेष रहता है।गम्भीरतापूर्वक विचार किया जाय तो मालूम होता है कि मनुष्यमात्रका अपने लिये कोई कर्तव्य है ही नहीं। कारण कि प्रापणीय वस्तु (परमात्मतत्त्व) नित्यप्राप्त है और स्वयं (स्वरूप) भी नित्य है, जबकि कर्म और कर्म-फल अनित्य अर्थात् उत्पन्न एवं नष्ट होनेवाला है। अनित्य-(कर्म और फल-) का सम्बन्ध नित्य-(स्वयं-) के साथ हो ही कैसे सकता है! कर्मका सम्बन्ध 'पर'- (शरीर और संसार-) से है 'स्व' से नहीं। कर्म सदैव 'पर' के द्वारा और 'पर' के लिये ही होता है। इसलिये अपने लिये कुछ करना है ही नहीं। जब मनुष्यमात्रके लिये कोई कर्तव्य नहीं है, तब भगवान्के लिये कोई कर्तव्य हो ही कैसे सकता है!
 
@@ -825,7 +825,7 @@ There is nothing in the three worlds, O Arjuna, that needs to be done by Me, nor
 
 **English Commentary**
 
-I am the Lord of the universe and therefore I have no personal grounds to engage. Myself in action. I have nothing to achieve as I have all divine wealth? as the wealth of the universe is Mine? and yet I engage Myself in action.Why do you not follow My example Why do you not endeavour to prevent the masses from following the wrong path by setting an example yourself If you set an example? people will follow you as you are a leader with noble alities.
+I am the Lord of the universe and therefore I have no personal grounds to engage. Myself in action. I have nothing to achieve as I have all divine wealth, as the wealth of the universe is Mine, and yet I engage Myself in action. Why do you not follow My example Why do you not endeavour to prevent the masses from following the wrong path by setting an example yourself If you set an example, people will follow you as you are a leader with noble alities.
 
 ### BG 3.23
 
@@ -858,7 +858,7 @@ For, should I not ever engage myself in action, unwearied, people would in every
 
 **English Commentary**
 
-If I remain inactive? people also will imitate Me and keep iet. They will all become Tamasic and pass into a state of inertia.
+If I remain inactive, people also will imitate Me and keep iet. They will all become Tamasic and pass into a state of inertia.
 
 ### BG 3.24
 
@@ -891,7 +891,7 @@ These worlds would perish if I did not perform action; I would be the author of 
 
 **English Commentary**
 
-If I did not engage in action? people would also be inactive. They would not do their duties according to the Varnasrama Dharma (code of morals governing their own order and stage of life). Hence confusion of castes would arise. I would have to destroy these beings.
+If I did not engage in action, people would also be inactive. They would not do their duties according to the Varnasrama Dharma (code of morals governing their own order and stage of life). Hence confusion of castes would arise. I would have to destroy these beings.
 
 ### BG 3.25
 
@@ -926,7 +926,7 @@ As the ignorant act out of attachment to action, O Bharata, so should the wise a
 
 **English Commentary**
 
-The ignorant man works in expectation of fruits. He says? I will do such and such work and will get such and such fruit. But the wise man who knows the Self? serves not for his own end. He should so act that the world? following his example? would attain peace? harmony? purity of heart? divine light and knowledge. A wise man is one who knows the Self. (Cf.II.64III.19XVIII.49).
+The ignorant man works in expectation of fruits. He says, I will do such and such work and will get such and such fruit. But the wise man who knows the Self, serves not for his own end. He should so act that the world, following his example, would attain peace, harmony, purity of heart, divine light and knowledge. A wise man is one who knows the Self. (Cf.II.64III.19XVIII.49).
 
 ### BG 3.26
 
@@ -961,7 +961,7 @@ Let no wise man unsettle the minds of ignorant people who are attached to action
 
 **English Commentary**
 
-An ignorant may says to himelf? I shall do this action and thery enjoy its fruit. A wise man should not unsettle his belief. On the contrary he himself should set an example by performing his duties diligently but without attachment. The wise man should also persuade the ignorant never to neglect their duties. If need be? he should place before them in vivid colours the happiness they would enjoy here and hereafter by discharging such duties. When their hearts get purified in course of time? the wise man could sow the seeds of Karma Yoga (selfless service without deire) in them.
+An ignorant may says to himelf, I shall do this action and thery enjoy its fruit. A wise man should not unsettle his belief. On the contrary he himself should set an example by performing his duties diligently but without attachment. The wise man should also persuade the ignorant never to neglect their duties. If need be, he should place before them in vivid colours the happiness they would enjoy here and hereafter by discharging such duties. When their hearts get purified in course of time, the wise man could sow the seeds of Karma Yoga (selfless service without deire) in them.
 
 ### BG 3.27
 
@@ -994,7 +994,7 @@ All actions are wrought in all cases by the qualities of Nature alone. He whose 
 
 **English Commentary**
 
-Prakriti or Pradhana or Nature is that state in which the three Gunas? viz.? Sattva? Rajas and Tamas exist in a state of eilibrium. When this eilibrium is disturbed? creation begins body? senses? mind? etc.? are formed. The man who is deluded by egoism identifies the Self with the body? mind? the life force and the senses and ascribes to the Self all the attributes of the body and the senses. He? therefore? thinks through ignorance? I am the doer. In reality the Gunas of Nature perform all actions. (Cf.III.29V.9IX.9?10XIII.21?24?30?32XVIII.13?14).
+Prakriti or Pradhana or Nature is that state in which the three Gunas, viz.? Sattva, Rajas and Tamas exist in a state of eilibrium. When this eilibrium is disturbed, creation begins body, senses, mind, etc.? are formed. The man who is deluded by egoism identifies the Self with the body, mind, the life force and the senses and ascribes to the Self all the attributes of the body and the senses. He, therefore, thinks through ignorance, I am the doer. In reality the Gunas of Nature perform all actions. (Cf.III.29V.9IX.9?10XIII.21?24?30?32XVIII.13?14).
 
 ### BG 3.28
 
@@ -1027,7 +1027,7 @@ But he who knows the Truth, O mighty-armed Arjuna, about the divisions of the qu
 
 **English Commentary**
 
-He who knows the truth that the Self is entirely distinct from the three Gunas and actions does not become attached to the actions. He who knows the truth about the classification of the Gunas and their respective functions understands that the alities as senseorgans move amidst the alities as senseobjects. Therefore he is not attached to the actions. He knows? I am Akarta -- I am not the doer. (Cf.XIV.23).
+He who knows the truth that the Self is entirely distinct from the three Gunas and actions does not become attached to the actions. He who knows the truth about the classification of the Gunas and their respective functions understands that the alities as senseorgans move amidst the alities as senseobjects. Therefore he is not attached to the actions. He knows, I am Akarta -- I am not the doer. (Cf.XIV.23).
 
 ### BG 3.29
 
@@ -1060,7 +1060,7 @@ Those deluded by the qualities of Nature are attached to the functions of the qu
 
 **English Commentary**
 
-The ignorant people do action with the expectation of fruits. The wise people who have the knowledge of the Self should not distract the faith or conviction or belief of such ignorant persons. If they unsettle their minds they will give up actions and become victims of inertia. They will lead an idle life. They should be encouraged by the wise to do actions of the Sakama type (actions for the sake of their fruits) in the beginning. The wise ones should turn the minds of the ignorant by giving them gradual instructions on Karma Yoga (Yoga of selfless? desireless action) and its benefits? viz.? purification of the heart that leads to the attainment of Selfrealisation.
+The ignorant people do action with the expectation of fruits. The wise people who have the knowledge of the Self should not distract the faith or conviction or belief of such ignorant persons. If they unsettle their minds they will give up actions and become victims of inertia. They will lead an idle life. They should be encouraged by the wise to do actions of the Sakama type (actions for the sake of their fruits) in the beginning. The wise ones should turn the minds of the ignorant by giving them gradual instructions on Karma Yoga (Yoga of selfless, desireless action) and its benefits, viz.? purification of the heart that leads to the attainment of Selfrealisation.
 
 ### BG 3.30
 
@@ -1095,7 +1095,7 @@ Renouncing all actions in Me, with the mind centered on the Self, free from hope
 
 **English Commentary**
 
-Surrender all the actions to Me with the thought? I perform all actions for the sake of the Lord.Fever means grief? sorrow. (Cf.V.10XVIII.66).
+Surrender all the actions to Me with the thought, I perform all actions for the sake of the Lord. Fever means grief, sorrow. (Cf.V.10XVIII.66).
 
 ### BG 3.31
 
@@ -1124,13 +1124,13 @@ Those who constantly practice this teaching of Mine with faith and without cavil
 
 **Hindi Commentary**
 
-'ये मे मतमिदं ৷৷. श्रद्धावन्तोऽनसूयन्तो'-- किसी भी वर्ण, आश्रम, धर्म, सम्प्रदाय आदिका कोई भी मनुष्य यदि कर्म-बन्धनसे मुक्त होना चाहता है, तो उसे इस सिद्धान्तको मानकर इसका अनुसरण करना चाहिये। शरीर, इन्द्रियाँ, मन, बुद्धि, पदार्थ, कर्म आदि कुछ भी अपना नहीं है-- इस वास्तविकताको जान लेनेवाले सभी मनुष्य कर्म-बन्धनसे छूट जाते हैं। भगवान् और उनके मतमें प्रत्यक्षकी तरह निःसन्देह दृढ़ विश्वास और पूज्यभावसे युक्त मनुष्यको 'श्रद्धावन्तः' पदसे कहा गया है।शरीरादि जड पदार्थोंको अपने और अपने लिये न माननेसे मनुष्य मुक्त हो जाता है--इस वास्तविकतापर श्रद्धा होनेसे जडताके माने हुए सम्बन्धका त्याग करना सुगम हो जाता है।श्रद्धावान् साधक ही सत्- शास्त्र, सत्-चर्चा और सत्सङ्गकी बातें सुनता है और उनको आचरणोंमें लाता है।मनुष्यशरीर परमात्मप्राप्तिके लिये ही मिला है। अतः परमात्माको ही प्राप्त करनेकी एकमात्र उत्कट अभिलाषा होनेपर साधकमें श्रद्धा, तत्परता, संयतेन्द्रियता आदि स्वतः आ जाते हैं। अतः साधकको मुख्यरूपसेपरमात्मप्राप्तिकी अभिलाषा ही तीव्र बनाना चाहिये।पीछेके (तीसवें) श्लोकमें भगवान्ने अपना जो मत बताया है, उसमें दोष-दृष्टि न करनेके लिये यहाँ 'अन-सूयन्तः' पद दिया गया है। गुणोंमें दोष देखनेको 'असूया' कहते हैं। असूया-(दोषदृष्टि-) से रहित मनुष्योंको यहाँ अनसूयन्तः कहा गया है।
+'ये मे मतमिदं ।।. श्रद्धावन्तोऽनसूयन्तो'-- किसी भी वर्ण, आश्रम, धर्म, सम्प्रदाय आदिका कोई भी मनुष्य यदि कर्म-बन्धनसे मुक्त होना चाहता है, तो उसे इस सिद्धान्तको मानकर इसका अनुसरण करना चाहिये। शरीर, इन्द्रियाँ, मन, बुद्धि, पदार्थ, कर्म आदि कुछ भी अपना नहीं है-- इस वास्तविकताको जान लेनेवाले सभी मनुष्य कर्म-बन्धनसे छूट जाते हैं। भगवान् और उनके मतमें प्रत्यक्षकी तरह निःसन्देह दृढ़ विश्वास और पूज्यभावसे युक्त मनुष्यको 'श्रद्धावन्तः' पदसे कहा गया है।शरीरादि जड पदार्थोंको अपने और अपने लिये न माननेसे मनुष्य मुक्त हो जाता है--इस वास्तविकतापर श्रद्धा होनेसे जडताके माने हुए सम्बन्धका त्याग करना सुगम हो जाता है।श्रद्धावान् साधक ही सत्- शास्त्र, सत्-चर्चा और सत्सङ्गकी बातें सुनता है और उनको आचरणोंमें लाता है।मनुष्यशरीर परमात्मप्राप्तिके लिये ही मिला है। अतः परमात्माको ही प्राप्त करनेकी एकमात्र उत्कट अभिलाषा होनेपर साधकमें श्रद्धा, तत्परता, संयतेन्द्रियता आदि स्वतः आ जाते हैं। अतः साधकको मुख्यरूपसेपरमात्मप्राप्तिकी अभिलाषा ही तीव्र बनाना चाहिये।पीछेके (तीसवें) श्लोकमें भगवान्ने अपना जो मत बताया है, उसमें दोष-दृष्टि न करनेके लिये यहाँ 'अन-सूयन्तः' पद दिया गया है। गुणोंमें दोष देखनेको 'असूया' कहते हैं। असूया-(दोषदृष्टि-) से रहित मनुष्योंको यहाँ अनसूयन्तः कहा गया है।
 
 जहाँ श्रद्धा रहती है, वहाँ भी किसी अंशमें दोषदृष्टि रह सकती है। इसलिये भगवान्ने 'श्रद्धावन्तः' पदके साथ 'अनसूयन्तः' पद भी देकर मनुष्यको दोषदृष्टिसे सर्वथा रहित (पूर्ण श्रद्धावान्) होनेके लिये कहा है। इसी प्रकार गीता-श्रवणका माहात्म्य बताते हुए भी भगवान्ने श्रद्धावाननसूयश्च (गीता 18। 71) पद देकर श्रोताके लिये श्रद्धायुक्त और दोषदृष्टिसे रहित होनेकी बात कही है। 'भगवान्का मत तो उत्तम है, पर भगवान् कितनी आत्मश्लाघा, अभिमानकी बात कहते हैं कि सब कुछ मेरे ही अर्पण कर दो' अथवा 'यह मत तो अच्छा है, पर कर्मोंके द्वारा भगवत्प्राप्ति कैसे हो सकती है? कर्म तो जड और बाँधनेवाले होते हैं' आदि-आदि भाव आना ही भगवान्के मतमें दोष-दृष्टि करना है। साधकको भगवान् और उनके मत दोनोंमें ही दोष-दृष्टि नहीं करनी चाहिये।
 
 **English Commentary**
 
-Sraddha is a mental attitude. It means faith. It is faith in ones own Self? in the scriptures and in the teachings of the spiritual preceptor. It is compund of the higher emotion of faith? reverence and humility.
+Sraddha is a mental attitude. It means faith. It is faith in ones own Self, in the scriptures and in the teachings of the spiritual preceptor. It is compund of the higher emotion of faith, reverence and humility.
 
 ### BG 3.32
 
@@ -1163,7 +1163,7 @@ But those who criticize My teaching and do not practice it, deprived of all know
 
 **English Commentary**
 
-The pigheaded people who are obstinate? who find fault with the teachings of the Lord and who do not practise them are certainly doomed to destruction. They are incorrigible and senseless persons indeed.
+The pigheaded people who are obstinate, who find fault with the teachings of the Lord and who do not practise them are certainly doomed to destruction. They are incorrigible and senseless persons indeed.
 
 ### BG 3.33
 
@@ -1198,7 +1198,7 @@ Even a wise man acts in accordance with his own nature; beings will follow their
 
 **English Commentary**
 
-He who reads this verse will come to the conclusion that there is no scope for mans personal exertion. It is not so. Read the following verse. It clearly indicates that man can coner Nature if he rises above the sway of RagaDvesha (love and hatred).The passionate and ignorant man only comes under the sway of his natural propensities? and his lower nature. He cannot have any restraint over the senses and the two currents of likes and dislikes. The seeker after Truth who is endowed with the four means? and who is constantly practising meditation can easily control Nature. (Cf.II.60V.14XVIII.59).
+He who reads this verse will come to the conclusion that there is no scope for mans personal exertion. It is not so. Read the following verse. It clearly indicates that man can coner Nature if he rises above the sway of RagaDvesha (love and hatred). The passionate and ignorant man only comes under the sway of his natural propensities, and his lower nature. He cannot have any restraint over the senses and the two currents of likes and dislikes. The seeker after Truth who is endowed with the four means, and who is constantly practising meditation can easily control Nature. (Cf.II.60V.14XVIII.59).
 
 ### BG 3.34
 
@@ -1235,7 +1235,7 @@ Attachment and aversion for the objects of the senses abide in the senses; let n
 
 **English Commentary**
 
-Each sense has got attraction for a pleasant object and aversion for a disagreeable object. If one can control these two currents? viz.? attachment and aversion? he will not come under the sway of these two currents. Here lies the scope for personal exertion or Purushartha. Nature which contains the sum total of ones Samskaras or the latent selfproductive impressions of the past actions of merit and demerit draws a man to its course through the two currents? attachment and aversion. If one can control these two currents? if he can rise above the sway of love and hate through discrimination and Vichara or right eniry? he can coner Nature and attain immortality and eternal bliss. He willl no longer be subject to his own nature now. One should always exert to free himself from attachment and aversion to the objects of the senses.
+Each sense has got attraction for a pleasant object and aversion for a disagreeable object. If one can control these two currents, viz.? attachment and aversion, he will not come under the sway of these two currents. Here lies the scope for personal exertion or Purushartha. Nature which contains the sum total of ones Samskaras or the latent selfproductive impressions of the past actions of merit and demerit draws a man to its course through the two currents, attachment and aversion. If one can control these two currents, if he can rise above the sway of love and hate through discrimination and Vichara or right eniry, he can coner Nature and attain immortality and eternal bliss. He willl no longer be subject to his own nature now. One should always exert to free himself from attachment and aversion to the objects of the senses.
 
 ### BG 3.35
 
@@ -1268,11 +1268,11 @@ Better is one's own duty, though devoid of merit, than the duty of another well 
 
 अर्जुन युद्ध करनेकी अपेक्षा भिक्षाका अन्न खाकर जीवननिर्वाह करनेको श्रेष्ठ समझते हैं (गीता 2। 5)। परंतु यहाँ भगवान् अर्जुनको मानो यह समझाते हैं कि भिक्षाके अन्नसे जीवननिर्वाह करना भिक्षुकके लिये स्वधर्म होते हुए भी तेरे लिये परधर्म है; क्योंकि तू गृहस्थ क्षत्रिय है, भिक्षुक नहीं। पहले अध्यायमें भी जब अर्जुनने कहा कि युद्ध करनेसे पाप ही लगेगा--'पापमेवाश्रयेत्' (1। 36) तब भी भगवान्ने कहा कि धर्ममय युद्ध न करनेसे तू स्वधर्म और कीर्तिको खोकर पापको प्राप्त होगा (2। 33)। फिर भगवान्ने बताया कि जय-पराजय, लाभ-हानि और सुख-दुःखको समान समझकर युद्ध करनेसे अर्थात् राग-द्वेषसे रहित होकर अपने कर्तव्य-(स्वधर्म-) का पालन करनेसे पाप नहीं लगता। (2। 38) आगे अठारहवें अध्यायमें भी भगवान्ने यही बात कही है कि स्वभावनियत स्वधर्मरूप कर्तव्यको करता हुआ मनुष्य पापको प्राप्त नहीं होता। (18। 47) तात्पर्य यह है कि स्वधर्मके पालनमें राग-द्वेष रहनेसे ही पाप लगता है, अन्यथा नहीं। राग-द्वेषसे रहित होकर स्वधर्मका भलीभाँति आचरण करनेसे 'समता'-(योग-) का अनुभव होता है और समताका अनुभव होनेपर दुःखोंका नाश हो जाता है (गीता 6। 23)। इसलिये भगवान् बार-बार अर्जुनको राग-द्वेषसे रहित होकर युद्धरूप स्वधर्मका पालन करनेपर जोर देते हैं।भगवान् अर्जुनको मानो यह समझाते हैं कि क्षत्रिय-कुलमें जन्म होनेके कारण क्षात्रधर्मके नाते युद्ध करना तुम्हारा स्वधर्म (कर्तव्य) है; अतः युद्धमें जय-पराजय, लाभ-हानि और सुख-दुःखको समान देखना है; और युद्धरूप क्रियाका सम्बन्ध अपने साथ नहीं है-- ऐसा समझकर केवल कर्मोंकी आसक्ति मिटानेके लिये कर्म करना है। शरीर, इन्द्रियाँ, मन, बुद्धि, पदार्थ आदि अपने कर्तव्यका पालन करनेके लिये ही हैं।वर्ण, आश्रम आदिके अनुसार अपने-अपने कर्तव्यका निःस्वार्थभावसे पालन करना ही 'स्वधर्म' है। आस्तिकजन जिसे 'धर्म' कहते हैं, उसीका नाम कर्तव्य' है। स्वधर्मका पालन करना अथवा अपने कर्तव्यका पालन करना एक ही बात है।
 
-कर्तव्य उसे कहते हैं, जिसको सुगमतापूर्वक कर सकते हैं, जो अवश्य करनेयोग्य है और जिसको करनेपर प्राप्तव्यकी प्राप्ति अवश्य होती है। धर्मका पालन करना सुगम होता है; क्योंकि वह कर्तव्य होता है। यह नियम है कि केवल अपने धर्मका ठीक-ठीक पालन करनेसे मनुष्यको वैराग्य हो जाता है--'धर्म तें बिरति' ৷৷.  (मानस 3। 16। 1)। केवल कर्तव्यमात्र समझकर धर्मका पालन करनेसे कर्मोंका प्रवाह प्रकृतिमें चला जाता है और इस तरह अपने साथ कर्मोंका सम्बन्ध नहीं रहता।वर्ण, आश्रम आदिके अनुसार सभी मनुष्योंका अपना-अपना कर्तव्य (स्वधर्म) कल्याणप्रद है। परन्तु दूसरे वर्ण, आश्रम आदिका कर्तव्य देखनेसे अपना कर्तव्य अपेक्षाकृत कम गुणोंवाला दीखता है; जैसे--ब्राह्मणके कर्तव्य--(शम, दम, तप, क्षमा आदि-) की अपेक्षा क्षत्रियके कर्तव्य-(युद्ध करना आदि-) में अहिंसादि गुणोंकी कमी दीखती है। इसलिये यहाँ 'विगुणः' पद देनेका भाव यह है कि दूसरोंके कर्तव्यसे अपने कर्तव्यमें गुणोंकीकमी दीखनेपर भी अपना कर्तव्य ही कल्याण करनेवाला है। अतः किसी भी अवस्थामें अपने कर्तव्यका त्यगा नहीं करना चाहिये।वर्ण, आश्रम आदिके अनुसार बाहरसे तो कर्म अलग-अलग (घोर या सौम्य) प्रतीत होते हैं, पर परमात्मप्राप्तिरूप उद्देश्य एक ही होता है। परमात्मप्राप्तिका उद्देश्य न रहनेसे तथा अन्तःकरणमें प्राकृत पदार्थोंका महत्त्व रहनेसे ही कर्म घोर या सौम्य प्रतीत होते हैं।
+कर्तव्य उसे कहते हैं, जिसको सुगमतापूर्वक कर सकते हैं, जो अवश्य करनेयोग्य है और जिसको करनेपर प्राप्तव्यकी प्राप्ति अवश्य होती है। धर्मका पालन करना सुगम होता है; क्योंकि वह कर्तव्य होता है। यह नियम है कि केवल अपने धर्मका ठीक-ठीक पालन करनेसे मनुष्यको वैराग्य हो जाता है--'धर्म तें बिरति' ।।.  (मानस 3। 16। 1)। केवल कर्तव्यमात्र समझकर धर्मका पालन करनेसे कर्मोंका प्रवाह प्रकृतिमें चला जाता है और इस तरह अपने साथ कर्मोंका सम्बन्ध नहीं रहता।वर्ण, आश्रम आदिके अनुसार सभी मनुष्योंका अपना-अपना कर्तव्य (स्वधर्म) कल्याणप्रद है। परन्तु दूसरे वर्ण, आश्रम आदिका कर्तव्य देखनेसे अपना कर्तव्य अपेक्षाकृत कम गुणोंवाला दीखता है; जैसे--ब्राह्मणके कर्तव्य--(शम, दम, तप, क्षमा आदि-) की अपेक्षा क्षत्रियके कर्तव्य-(युद्ध करना आदि-) में अहिंसादि गुणोंकी कमी दीखती है। इसलिये यहाँ 'विगुणः' पद देनेका भाव यह है कि दूसरोंके कर्तव्यसे अपने कर्तव्यमें गुणोंकीकमी दीखनेपर भी अपना कर्तव्य ही कल्याण करनेवाला है। अतः किसी भी अवस्थामें अपने कर्तव्यका त्यगा नहीं करना चाहिये।वर्ण, आश्रम आदिके अनुसार बाहरसे तो कर्म अलग-अलग (घोर या सौम्य) प्रतीत होते हैं, पर परमात्मप्राप्तिरूप उद्देश्य एक ही होता है। परमात्मप्राप्तिका उद्देश्य न रहनेसे तथा अन्तःकरणमें प्राकृत पदार्थोंका महत्त्व रहनेसे ही कर्म घोर या सौम्य प्रतीत होते हैं।
 
 **English Commentary**
 
-It is indeed better for man to die discharging his own duty though destitute of merit than for him to live doing the duty of another though performed in a perfect manner. For the duty of another has its pitfalls. The duty of a Kshatriya is to fight in a righteous battle. Arjuna must fight. This is his duty. Even if he dies in the discharge of his own duty? it is better for him. He will go to heaven. He should not do the duty of another man. This will bring him peril. He should not stop from fighting and enter the path of renunciation. (Cf.XVIII.47).
+It is indeed better for man to die discharging his own duty though destitute of merit than for him to live doing the duty of another though performed in a perfect manner. For the duty of another has its pitfalls. The duty of a Kshatriya is to fight in a righteous battle. Arjuna must fight. This is his duty. Even if he dies in the discharge of his own duty, it is better for him. He will go to heaven. He should not do the duty of another man. This will bring him peril. He should not stop from fighting and enter the path of renunciation. (Cf.XVIII.47).
 
 ### BG 3.36
 
@@ -1304,11 +1304,11 @@ Arjuna said, "But what compels man to commit sin, even against his wishes, O Var
 
 **Hindi Commentary**
 
-।। व्याख्या--'अथ केन प्रयुक्तोऽयं ৷৷. बलादिव नियोजितः-- यदुकुलमें 'वृष्णि' नामका एक वंश था। उसी वृष्णिवंशमें अवतार लेनेसे भगवान् श्रीकृष्णका एक नाम 'वार्ष्णेय' है। पूर्वश्लोकमें भगवान्ने स्वधर्म-पालनकी प्रशंसा की है। धर्म 'वर्ण' और 'कुल' का होता है; अतः अर्जुन भी कुल-(वंश-) के नामसे भगवान्को सम्बोधित करके प्रश्न करते हैं।विचारवान् पुरुष पाप नहीं करना चाहता; क्योंकि पापका परिणाम दुःख होता है और दुःखको कोई भी प्राणी नहीं चाहता।यहाँ अनिच्छन् पदका तात्पर्य भोग है संग्रहकी इच्छाका त्याग नहीं, प्रत्युत पाप करनेकी इच्छाका त्याग है। कारण कि भोग और संग्रहकी इच्छा ही समस्त पापोंका मूल है, जिसके न रहनेपर पाप होते ही नहीं।विचारशील मनुष्य पाप करना तो नहीं चाहता, पर भीतर सांसारिक भोग और संग्रहकी इच्छा रहनेसे वह करनेयोग्य कर्तव्य कर्म नहीं कर पाता और न करनेयोग्य पाप-कर्म कर बैठता है।अनिच्छन् पदकी प्रबलताको बतानेके लिये अर्जुन बलादिव नियोजितः पदोंको कहते हैं। तात्पर्य यह है कि पापवृत्तिके उत्पन्न होनेपर विचारशील पुरुष उस पापको जानता हुआ उससे सर्वथा दूर रहना चाहता है; फिर भी वह उस पापमें ऐसे लग जाता है, जैसे कोई उसको जबर्दस्ती पापमें लगा रहा हो। इससे ऐसा मालूम होता है कि पापमें लगानेवाला कोई बलवान् कारण है।पापोंमें प्रवृत्तिका मूल कारण है-- 'काम' अर्थात् सांसारिक सुख-भोग और संग्रहकी कामना। परन्तु इस कारणकी ओर दृष्टि न रहनेसे मनुष्यको यह पता नहीं चलता कि पाप करानेवाला कौन है वह यह समझता है कि मैं तो पापको जानता हुआ उससे निवृत्त होना चाहता हूँ पर मेरेको कोई बलपूर्वक पापमें प्रवृत्त करता है; जैसे दुर्योधनने कहा है-- जानामि धर्मं न च मे
+।। व्याख्या--'अथ केन प्रयुक्तोऽयं ।।. बलादिव नियोजितः-- यदुकुलमें 'वृष्णि' नामका एक वंश था। उसी वृष्णिवंशमें अवतार लेनेसे भगवान् श्रीकृष्णका एक नाम 'वार्ष्णेय' है। पूर्वश्लोकमें भगवान्ने स्वधर्म-पालनकी प्रशंसा की है। धर्म 'वर्ण' और 'कुल' का होता है; अतः अर्जुन भी कुल-(वंश-) के नामसे भगवान्को सम्बोधित करके प्रश्न करते हैं।विचारवान् पुरुष पाप नहीं करना चाहता; क्योंकि पापका परिणाम दुःख होता है और दुःखको कोई भी प्राणी नहीं चाहता।यहाँ अनिच्छन् पदका तात्पर्य भोग है संग्रहकी इच्छाका त्याग नहीं, प्रत्युत पाप करनेकी इच्छाका त्याग है। कारण कि भोग और संग्रहकी इच्छा ही समस्त पापोंका मूल है, जिसके न रहनेपर पाप होते ही नहीं।विचारशील मनुष्य पाप करना तो नहीं चाहता, पर भीतर सांसारिक भोग और संग्रहकी इच्छा रहनेसे वह करनेयोग्य कर्तव्य कर्म नहीं कर पाता और न करनेयोग्य पाप-कर्म कर बैठता है।अनिच्छन् पदकी प्रबलताको बतानेके लिये अर्जुन बलादिव नियोजितः पदोंको कहते हैं। तात्पर्य यह है कि पापवृत्तिके उत्पन्न होनेपर विचारशील पुरुष उस पापको जानता हुआ उससे सर्वथा दूर रहना चाहता है; फिर भी वह उस पापमें ऐसे लग जाता है, जैसे कोई उसको जबर्दस्ती पापमें लगा रहा हो। इससे ऐसा मालूम होता है कि पापमें लगानेवाला कोई बलवान् कारण है।पापोंमें प्रवृत्तिका मूल कारण है-- 'काम' अर्थात् सांसारिक सुख-भोग और संग्रहकी कामना। परन्तु इस कारणकी ओर दृष्टि न रहनेसे मनुष्यको यह पता नहीं चलता कि पाप करानेवाला कौन है वह यह समझता है कि मैं तो पापको जानता हुआ उससे निवृत्त होना चाहता हूँ पर मेरेको कोई बलपूर्वक पापमें प्रवृत्त करता है; जैसे दुर्योधनने कहा है-- जानामि धर्मं न च मे
 
 **English Commentary**
 
-Varshneya is one born in the family of the Vrishnis? a name of Krishna.
+Varshneya is one born in the family of the Vrishnis, a name of Krishna.
 
 ### BG 3.37
 
@@ -1349,7 +1349,7 @@ The Blessed Lord said, "It is desire and it is anger, both of the quality of Raj
 
 **English Commentary**
 
-Bhagavan Bhaga means the six attributes? viz.? Jnana (knowledge)? Vairagya (dispassion)? Kirti (fame)? Aishvarya (divine manifestations and excellences)? Sri (wealth)? and Bala (might). He who possesses these six attributes and who has a perfect knowledge of the origin and the end of the universe is Bhagavan or the Lord.The cause of all sin and wrong action in this world is desire. Anger is desire itself. When a desire is not gratified? the man becomes angry against those who stand as obstacles on the path of fulfilment.The desire is born of the ality of Rajas. When desire arises? it generates Rajas and urges the man to work in order to possess the object. Therefore? know that this desire is mans foe on this earth. (Cf.XVI.21).
+Bhagavan Bhaga means the six attributes, viz.? Jnana (knowledge)? Vairagya (dispassion)? Kirti (fame)? Aishvarya (divine manifestations and excellences)? Sri (wealth)? and Bala (might). He who possesses these six attributes and who has a perfect knowledge of the origin and the end of the universe is Bhagavan or the Lord. The cause of all sin and wrong action in this world is desire. Anger is desire itself. When a desire is not gratified, the man becomes angry against those who stand as obstacles on the path of fulfilment. The desire is born of the ality of Rajas. When desire arises, it generates Rajas and urges the man to work in order to possess the object. Therefore, know that this desire is mans foe on this earth. (Cf.XVI.21).
 
 ### BG 3.38
 
@@ -1419,7 +1419,7 @@ O Arjuna, wisdom is enveloped by this constant enemy of the wise, in the form of
 
 **English Commentary**
 
-Manu says? Desire can never be satiated or cooled down by the enjoyment ofobjects. But as fire blazes forth the more when fed with Ghee (melted butter) and wood? so it grows the more it feeds on the objects of enjoyment. If all the foodstuffs of the earth? all the precious metals? all the animals and all the beautiful women were to pass into the possession of one man endowed with desire? they would still fail to give him satisfaction.The ignorant man considers desire as his friend when he craves for objects. He welcomes desire for the gratification of the senses but the wise man knows from experience even before suffering the conseence that desire will bring only troubles and misery for him. So it is a constant enemy of the wise but not of the ignorant.
+Manu says, Desire can never be satiated or cooled down by the enjoyment ofobjects. But as fire blazes forth the more when fed with Ghee (melted butter) and wood, so it grows the more it feeds on the objects of enjoyment. If all the foodstuffs of the earth, all the precious metals, all the animals and all the beautiful women were to pass into the possession of one man endowed with desire, they would still fail to give him satisfaction. The ignorant man considers desire as his friend when he craves for objects. He welcomes desire for the gratification of the senses but the wise man knows from experience even before suffering the conseence that desire will bring only troubles and misery for him. So it is a constant enemy of the wise but not of the ignorant.
 
 ### BG 3.40
 
@@ -1520,7 +1520,7 @@ They say that the senses are superior to the body; the mind is superior to the s
 
 **English Commentary**
 
-When compared with the physical body which is gross? external and limited? the senses are certainly superior as they are more subtle? internal and have a wider range of activity. The mind is superior to the senses? as the senses cannot do anything independently without the help of the mind. The mind can perform the functions of the five senses. The intellect is superior to the mind because it is endowed with the faculty of discrimination. When the mind is in a state of doubt? the intellect comes to its resuce. The Self? the Witness? is superior even to the intellect? as the intellect borrows its light from the Self.
+When compared with the physical body which is gross, external and limited, the senses are certainly superior as they are more subtle, internal and have a wider range of activity. The mind is superior to the senses, as the senses cannot do anything independently without the help of the mind. The mind can perform the functions of the five senses. The intellect is superior to the mind because it is endowed with the faculty of discrimination. When the mind is in a state of doubt, the intellect comes to its resuce. The Self, the Witness, is superior even to the intellect, as the intellect borrows its light from the Self.
 
 ### BG 3.43
 
@@ -1553,4 +1553,4 @@ Thus, knowing Him who is superior to the intellect and restraining the self by t
 
 **English Commentary**
 
-Restrain the lower self by the higher Self. Subdue the lower mind by the higher mind. It is difficult to coner desire because it is of a highly complex and incomprehensible nature. But a man of discrimination and dispassion who does constant and intense Sadhana can coner it ite easily. Desire is the ality of Rajas. If you increase the Sattvic ality in you? you can coner desire. Rajas cannot stand before Sattva.Even though desire is hard to coner? it is not impossible. The simple and direct method is to appeal to the Indwelling Presence (God) through prayer and Japa.Thus in the Upanishads of the glorious Bhagavad Gita? the science of the Eternal? the scripture of Yoga? the dialogue between Sri Krishna and Arjuna? ends the third discourse entitledThe Yoga of Action.
+Restrain the lower self by the higher Self. Subdue the lower mind by the higher mind. It is difficult to coner desire because it is of a highly complex and incomprehensible nature. But a man of discrimination and dispassion who does constant and intense Sadhana can coner it ite easily. Desire is the ality of Rajas. If you increase the Sattvic ality in you, you can coner desire. Rajas cannot stand before Sattva. Even though desire is hard to coner, it is not impossible. The simple and direct method is to appeal to the Indwelling Presence (God) through prayer and Japa. Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the third discourse entitledThe Yoga of Action.
