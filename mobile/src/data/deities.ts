@@ -3,10 +3,12 @@ import type { Deity } from './texts';
 export type DeityIconKey =
   | 'bowArrow'
   | 'bansuriPeacockFeather'
+  | 'chakra'
   | 'trishul'
   | 'gada'
   | 'lotus'
-  | 'modak';
+  | 'modak'
+  | 'surya';
 
 export type DeityMeta = {
   id: Deity;
@@ -23,8 +25,10 @@ export const deities: readonly DeityMeta[] = [
     nameEn: 'Shri Krishna',
     iconKey: 'bansuriPeacockFeather',
   },
+  { id: 'vishnu', nameHi: 'श्री विष्णु', nameEn: 'Shri Vishnu', iconKey: 'chakra' },
   { id: 'shiva', nameHi: 'श्री शिव', nameEn: 'Shri Shiva', iconKey: 'trishul' },
   { id: 'hanuman', nameHi: 'श्री हनुमान', nameEn: 'Shri Hanuman', iconKey: 'gada' },
   { id: 'durga', nameHi: 'माँ दुर्गा', nameEn: 'Maa Durga', iconKey: 'lotus' },
   { id: 'ganesha', nameHi: 'श्री गणेश', nameEn: 'Shri Ganesha', iconKey: 'modak' },
+  { id: 'savitr', nameHi: 'सवितृ देव', nameEn: 'Savitr Deva', iconKey: 'surya' },
 ];

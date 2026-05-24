@@ -26,10 +26,12 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
 const deityBackgrounds: Record<Deity, BackgroundImage> = {
   rama: backgroundImages.deity_rama_darbar,
   krishna: backgroundImages.deity_krishna_bansuri,
+  vishnu: backgroundImages.deity_krishna_bansuri,
   shiva: shivaStrotamImages.shiva,
   hanuman: chalisaImages.hanuman_sea,
   durga: backgroundImages.deity_durga_lion,
   ganesha: backgroundImages.deity_ganesha_modak,
+  savitr: shivaStrotamImages.shiva,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
