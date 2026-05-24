@@ -33,6 +33,7 @@ import {
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import { ShareProvider } from '@/utils/shareVerse';
+import { AnalyticsBootstrapper } from '@/analytics/AnalyticsBootstrapper';
 import RootNavigator from '@/navigation/RootNavigator';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -124,6 +125,7 @@ export default function App() {
                 <ReadingProgressProvider>
                   <JapamCounterProvider>
                     <NotificationPreferencesProvider>
+                      <AnalyticsBootstrapper />
                       <ShareProvider>
                         <NavigationContainer ref={navigationRef}>
                           <StatusBar style="dark" />
