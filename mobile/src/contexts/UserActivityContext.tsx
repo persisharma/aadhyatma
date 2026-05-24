@@ -54,6 +54,10 @@ export type UserActivityContextValue = {
   activeDateKeys: () => DateKey[];
   /** Consecutive-day streak ending today (today inclusive if active, else 0). */
   currentStreak: () => number;
+  /** Longest consecutive-day streak ever recorded. */
+  longestStreak: () => number;
+  /** Number of active days within the last N days, inclusive of today. */
+  activeDaysInLastN: (n: number) => number;
 };
 
 const EMPTY_TOTALS: ActivityTotals = {
@@ -77,6 +81,8 @@ const UserActivityContext = createContext<UserActivityContextValue>({
   monthTotals: () => EMPTY_TOTALS,
   activeDateKeys: () => [],
   currentStreak: () => 0,
+  longestStreak: () => 0,
+  activeDaysInLastN: () => 0,
 });
 
 export function toDateKey(d: Date): DateKey {
@@ -248,6 +254,44 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
     return streak;
   }, [activity]);
 
+  const longestStreak = useCallback(() => {
+    const sortedKeys = Object.keys(activity).sort();
+    if (sortedKeys.length === 0) return 0;
+    let best = 1;
+    let run = 1;
+    for (let i = 1; i < sortedKeys.length; i++) {
+      const prev = new Date(`${sortedKeys[i - 1]}T00:00:00Z`);
+      prev.setUTCDate(prev.getUTCDate() + 1);
+      const expected = toDateKey(
+        new Date(
+          Date.UTC(prev.getUTCFullYear(), prev.getUTCMonth(), prev.getUTCDate())
+        )
+      );
+      if (sortedKeys[i] === expected) {
+        run += 1;
+        if (run > best) best = run;
+      } else {
+        run = 1;
+      }
+    }
+    return best;
+  }, [activity]);
+
+  const activeDaysInLastN = useCallback<UserActivityContextValue['activeDaysInLastN']>(
+    (n) => {
+      if (n <= 0) return 0;
+      const keys = new Set(Object.keys(activity));
+      let count = 0;
+      const cursor = new Date();
+      for (let i = 0; i < n; i++) {
+        if (keys.has(toDateKey(cursor))) count += 1;
+        cursor.setDate(cursor.getDate() - 1);
+      }
+      return count;
+    },
+    [activity]
+  );
+
   const value = useMemo<UserActivityContextValue>(
     () => ({
       activity,
@@ -261,6 +305,8 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
       monthTotals,
       activeDateKeys,
       currentStreak,
+      longestStreak,
+      activeDaysInLastN,
     }),
     [
       activity,
@@ -274,6 +320,8 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
       monthTotals,
       activeDateKeys,
       currentStreak,
+      longestStreak,
+      activeDaysInLastN,
     ]
   );
 
