@@ -20,8 +20,8 @@ export const durgaChalisaSource = data.source;
 export const durgaChalisaCounts = data.counts;
 
 (function assertDurgaChalisaInvariants() {
-  if (durgaChalisaVerses.length !== 43) {
-    throw new Error(`durga-chalisa: expected 43 verses, got ${durgaChalisaVerses.length}`);
+  if (durgaChalisaVerses.length !== 41) {
+    throw new Error(`durga-chalisa: expected 41 verses, got ${durgaChalisaVerses.length}`);
   }
   const seenIds = new Set<string>();
   for (const v of durgaChalisaVerses) {

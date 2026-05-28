@@ -1,0 +1,2 @@
+- [23:39:14] BLOCKED: Phase 4A: Regression Tests (npm test / pytest / go test / etc.) (missing prereqs)
+- [23:44:14] BLOCKED: Phase 5C: Native Simulator QA (/flutter-test) (missing prereqs)

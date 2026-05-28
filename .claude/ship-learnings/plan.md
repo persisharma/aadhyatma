@@ -71,3 +71,17 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Category:** boot-crash
 **Example:** Plan had Task 14 (add LibraryEntry items) but Task 11 (register backgrounds) could easily be done after. The IIFE in backgrounds.ts runs on module import and throws if any active non-hidden library entry lacks a sourceBackgrounds mapping. Adding entries before backgrounds = app crash on boot.
 **Resolution pattern:** When adding new library entries, always register their sourceBackgrounds BEFORE setting status to 'active'. Alternatively, add entries as `hidden: true` first, then flip to visible after backgrounds are wired.
+
+### Single-chapter stotrams should use verse count in `sub` field, not chapter count
+
+**Seen:** 1x — 2026-05-23
+**Category:** data-convention
+**Example:** Plan v1 used `'1 स्तोत्र · अर्थ सहित'` for krishna-stotram. Adversarial review caught it: multi-chapter stotrams (shiva=4, durga=3) show chapter count, but single-chapter ones (hanuman-ashtak, bajrang-baan, ram-stuti) show verse count. Fix: use `${total} श्लोक · अर्थ सहित`.
+**Resolution pattern:** When adding a single-chapter section, check how similar single-chapter sections format their `sub` field in texts.ts. Default to verse count for single-chapter, chapter count for multi-chapter.
+
+### Codex rate limits may require self-adversarial fallback — always attempt the invocation first
+
+**Seen:** 1x — 2026-05-23
+**Category:** tooling
+**Example:** Codex companion hit OpenAI usage limit during adversarial review. Performed thorough manual code-verified adversarial review as fallback, checking 6 specific challenges against actual source files. The manual review caught the same sub-field wording issue that pattern-matching alone would have found.
+**Resolution pattern:** Always attempt the codex invocation first. If it fails with a rate limit or auth error, perform a manual adversarial review verifying each challenge against actual code (not just reasoning about it). Document the failure and the manual findings.

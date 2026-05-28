@@ -76,8 +76,8 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
   - Sections with a subsection listing (Chapters Index, kāṇḍa list, etc.) ALSO surface the toggle on that listing.
   - State is shared across surfaces via the same hook — no per-screen forks.
 - **Categories & Deities.** Every `LibraryEntry` must have a valid `category` (one of the six defined types) and at least one `deity` tag. The Home screen grid and deity section derive their content from these fields — no manual wiring required.
-- **Japam is excluded from deity listings.** Japam mantras live behind their own Home tile (`Japam`) and are intentionally filtered out of `DeityListScreen` and the `DeityIndex` count. Reasons: (a) japam mantras are typically a single line that's already embedded as the opening verse of the matching stotram (e.g. `om-namah-shivaya` is also chapter 1 of `shiva-strotam`), so re-listing them under the deity is redundant; (b) the deity card is a reading-list surface, the Japam tile is a counting-mode surface — different intents. Keep the `'japam'` deity-list filter in place when adding new mantras.
-- **Pill vocabulary.** Verse-type pill is always `<term> · <subtitle or N>`. The **leading term matches the user's selected language** — Hindi mode shows `श्लोक · 1.1` / `चौपाई · 9` / `परिचय · Introduction`; English mode shows `Shloka · 1.1` / `Chaupai · 9` / `Introduction · परिचय`. Never hardcode one language — branch on `lang` (or use lang-paired `labelHi`/`labelEn` from the data, as Sundarkand does). Do not invent new vocabulary without updating `design.md` first.
+- **Japam items appear under their deity.** Japam mantras are shown under their tagged deity's listing (e.g., Gayatri Mantra appears under Maa Gayatri deity card). The deity card shows all content tagged with that deity regardless of category. Tapping a japam item from a deity list navigates to the Japam Counter screen for that mantra.
+- **Pill vocabulary.** Verse-type pill is always `<term> · <subtitle or N>`. The middle dot `·` separator is stored **in the data** (in `labelHi`/`labelEn` fields), not added at render time. Data format: `"labelHi": "चौपाई · १"`, `"labelEn": "Chaupai · 1"`. Use Devanagari numerals in `labelHi` and Arabic numerals in `labelEn`. Sub-numbering uses `·` without spaces: `"चौपाई · ५५·१"`. Single-word labels without numbers (e.g., "टेक", "दोहा", "समापन दोहा") do NOT get a dot. The **leading term matches the user's selected language** — Hindi mode shows `श्लोक · १.१` / `चौपाई · ९`; English mode shows `Shloka · 1.1` / `Chaupai · 9`. Never hardcode one language — branch on `lang`. Do not invent new vocabulary without updating `design.md` first.
 - **Every user-facing string respects `lang`.** If a string is visible to the user (visible Text, pill/badge, button label, top-bar title, modal body, toast, confirmation copy) and it carries semantic content beyond a number/symbol, it must branch on `lang` or come from a lang-paired field (`labelHi`/`labelEn`, `nameHi`/`nameEn`, `meaningHi`/`meaningEn`, …). Hardcoded Devanagari in an otherwise-English flow (or vice versa) is a hard reject. Exceptions, which must be intentional: (a) bilingual stacked labels by design — listing card subtitles (`nameHi · nameEn`), Resume sheet's `जारी रखें · Resume` button — where both languages render simultaneously; (b) numeric/symbolic content (`॥`, `1.9`, `4`). When in doubt, branch on `lang`. (Origin: WishlistScreen verse pill rendered `श्लोक 1.9` in English mode; Gita / Shiva Strotam verse pills had the same bug.)
 - **No emoji, no photos.** Backgrounds are always faded hand-drawn sketches per the Section 6 treatment.
 - **Type safety on verse pages.** A reader screen renders only its own section's `<Pascal>VersePage.tsx`. Cross-section reuse via direct import is forbidden — it silently couples two sections to the same field shape and any drift becomes a runtime crash. The `verse` prop must type-check without escape hatches: `as any`, `as unknown as`, and `// @ts-ignore`/`// @ts-expect-error` on a `*VersePage` prop are a hard reject in review. If `tsc --noEmit` complains when wiring up a reader, the fix is the data shape or a section-specific page, **not** a cast. (Origin: PR #31 Balkand crash — `RamcharitmanasReaderScreen` cast `RamcharitmanasVerse` into `ShivaStrotamVersePage`, whose `verse.sanskrit` access threw on first paint because Ramcharitmanas uses `verse.lines`.)
@@ -210,3 +210,45 @@ These rules exist because PR #31 (the Balkand crash) demonstrated that bulk mult
   - Explicit line: "No `as any` / `@ts-ignore` introduced on verse-page props or route params."
 - **Self-flagged casts are flags, not justifications.** Commit messages that contain "cast", "compatible interface", "type compatibility", or "as any" against a verse-page prop must be challenged in review. The fix is upstream (data shape or new component), not the cast.
 - **Reviewer responsibility.** Approving a new-section PR requires confirming items 1, 9, 10, and 11 of §4 yourself — not trusting the author's checklist. Sign off only after opening the dev client (or the included screenshots) and seeing the reader render.
+
+---
+
+## 10. Content integrity & verification
+
+These rules govern the correctness of religious/devotional content data. They exist because fabricated, incomplete, and misattributed text was shipped and caught only after user reports. Every rule below is a hard gate — violations block merge.
+
+### 10.1 Internet verification is mandatory
+Every religious text (aarti, chalisa, stotram, granth verse) must be verified against **at least 2 independent authoritative internet sources** before shipping. Acceptable sources: Gita Press editions, sanskritdocuments.org, hindunidhi.com, drikpanchang.com, university repositories, and well-established devotional sites with cross-referencing. News/SEO sites (NDTV, Times Now) are acceptable only as a second confirmation, never as sole source.
+
+### 10.2 Source citation in data
+Every content JSON file must have a `source.baseText` field naming the edition or website(s) verified against, and `source.retrievedOn` with the ISO date of verification. Example: `{"baseText": "brandbharat.com, vignanam.org", "retrievedOn": "2026-05-23"}`. A file without source citation is unverified and must not ship as `active`.
+
+### 10.3 No AI-generated liturgical text
+Religious text must come from published traditional sources. Never generate, paraphrase, or "reconstruct" verse text using an LLM. Meanings/commentary may be editorial (clearly labeled), but the prayer text itself (`lines`, `sanskrit`, `linesEn`) must be verbatim from a verified source. Origin: Durga Chalisa was partially AI-generated.
+
+### 10.4 Deity metadata accuracy
+The `deity` field (and `deities` array in `texts.ts`) must match the actual deity addressed in the text, not a loose theological category. Verify by reading the text's opening invocation. Origin: Gayatri Mantra was tagged "durga" (it invokes Savitr/the Sun), Om Jai Jagdish was tagged "krishna" (it's a Vishnu aarti).
+
+### 10.5 Complete texts only — never fabricate
+Ship the full canonical version (all verses) only after internet verification. Missing stanzas are worse than a "coming soon" label. Never add wrong, pre-generated, or unverified text to fill gaps. If the complete verified text isn't available, don't ship the section at all — mark it `status: 'coming'` until verified. Origin: Hanuman Aarti had 6 of 13 verses with a fabricated closing, Jai Ambe Gauri had 5 of 12.
+
+### 10.6 No fabricated content
+Every line in a content file must exist in at least one published source. Fake closing verses, paraphrased refrains, composite mashups from different texts = hard reject. If a line appears in zero internet sources, it is fabricated and must be removed. Origin: "हनुमत बीर सकल दुख भावे" (Hanuman Aarti closing) appeared in zero published sources.
+
+### 10.7 Both platforms per change
+Every content/data change must be verified on both iOS and Android before OTA push. Bundle and test on both platforms — a rendering issue on one platform (especially with Devanagari fonts) may not appear on the other.
+
+### 10.8 Background image per deity
+Every deity in the `Deity` type must have a distinct, thematically correct background image in `backgrounds.ts`. Never use another deity's image as a placeholder (e.g., Krishna's image for Vishnu, or Shiva's image for Gayatri). If no appropriate image exists yet, commission/source one before adding the deity. Origin: Vishnu was using Krishna's bansuri image, Gayatri was using Shiva's trishul image.
+
+### 10.9 Deity display names must be recognizable
+Deity `nameHi`/`nameEn` must use the popularly recognized devotional name that users will identify. Use the name devotees actually use in prayer/temple context (e.g., "माँ गायत्री" not "सवितृ देव", "श्री विष्णु" not "नारायण"). When in doubt, use the name that appears on temple signage. Origin: Users couldn't identify "Savitr Deva" as Gayatri.
+
+### 10.10 Verse count sync is atomic
+`texts.ts` `verseCount` must always equal the JSON `verses.length`. The `sub` field count must match. After any content change that alters verse count, grep for the old count in: (a) `chapters-manifest.json`, (b) `index.ts` invariant assertions, (c) `chapteredTotals.test.ts`. Update all three atomically in the same commit. Origin: Every content fix in this audit caused cascading test failures from stale counts.
+
+### 10.11 No duplicate content across sections
+A text must exist in exactly one location/category. If it's a stotram (like Sankat Mochan Hanumanashtak), it belongs in stotram — not duplicated in aarti. Before adding content, grep the repo for the text's first line to confirm it doesn't already exist elsewhere. Origin: Sankat Mochan existed in both aarti/ and hanuman-ashtak/ with different (both wrong) versions.
+
+### 10.12 Transliteration integrity
+No Devanagari characters (U+0900–U+097F) in `linesEn`/`transliteration` fields. No empty strings (use "(transliteration pending)" if unavailable). Correct romanization scheme per `design.md §3.1`: Sanskrit texts use IAST with Hunterian digraphs; Awadhi/Hindi uses pronunciation-based ASCII. Run `grep -rP '[ऀ-ॿ]'` on transliteration fields before shipping. Origin: 23 Sundarkand lines had raw Devanagari, 19 Gita verses had transliteration spillover between adjacent verses.

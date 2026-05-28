@@ -27,10 +27,12 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
 const deityBackgrounds: Record<Deity, BackgroundImage> = {
   rama: backgroundImages.deity_rama_darbar,
   krishna: backgroundImages.deity_krishna_bansuri,
+  vishnu: backgroundImages.deity_krishna_bansuri,
   shiva: shivaStrotamImages.shiva,
   hanuman: chalisaImages.hanuman_sea,
   durga: backgroundImages.deity_durga_lion,
   ganesha: backgroundImages.deity_ganesha_modak,
+  savitr: shivaStrotamImages.shiva,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
@@ -52,9 +54,9 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,
+  'krishna-stotram': backgroundImages.deity_krishna_bansuri,
   'om-jai-jagdish': backgroundImages.source_vishnu_narayana,
   'hanuman-aarti': chalisaImages.hanuman_lankadahan,
-  'sankat-mochan': chalisaImages.hanuman_sita,
   'jai-ganesh-deva': backgroundImages.deity_ganesha_modak,
   'om-jai-shiv-omkara': shivaStrotamImages.shiva,
   'jai-ambe-gauri': backgroundImages.deity_durga_lion,

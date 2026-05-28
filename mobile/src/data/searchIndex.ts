@@ -62,6 +62,10 @@ import {
   ramStutiChaptersManifest,
 } from './ram-stuti';
 import {
+  getKrishnaStotramChapter,
+  krishnaStotramChaptersManifest,
+} from './krishna-stotram';
+import {
   getRamcharitmanasChapter,
   ramcharitmanasChaptersManifest,
   type RamcharitmanasVerse,
@@ -304,6 +308,16 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
         entry,
         ramStutiChaptersManifest,
         getRamStutiChapter
+      );
+      continue;
+    }
+
+    if (entry.id === 'krishna-stotram') {
+      pushChapteredShivaStrotamShape(
+        verses,
+        entry,
+        krishnaStotramChaptersManifest,
+        getKrishnaStotramChapter
       );
       continue;
     }

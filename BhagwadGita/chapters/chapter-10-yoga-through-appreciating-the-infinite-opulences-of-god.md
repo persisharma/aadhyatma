@@ -53,13 +53,13 @@ The Blessed Lord said, Again, O mighty-armed Arjuna, listen to my supreme word w
 
 'श्रृणु मे परमं वचः' --  भगवान्के मनमें अपनी महिमाकी बात, अपने हृदयकी बात, अपने प्रभावकी बात कहनेकी विशेष आ रही है (टिप्पणी प0 535.2)। इसलिये वे अर्जुनसे कहते हैं कि 'तू फिर मेरे परम वचनको सुन'।
 
-दूसरा भाव यह है कि भगवान् जहाँ-जहाँ अर्जुनको अपनी विशेष महत्ता, प्रभाव, ऐश्वर्य आदि बताते हैं अर्थात् अपने-आपको खोल करके बताते हैं, वहाँ-वहाँ वे परम वचन, रहस्य आदि शब्दोंका प्रयोग करते हैं; जैसे--चौथे अध्यायके तीसरे श्लोकमें ''रहस्यं ह्येतदुत्तमम्' पदोंसे बताते हैं कि जिसने सूर्यको उपदेश दिया था, वही मैं तेरे रथके घोड़े हाँकता हुआ तेरे सामने बैठा हूँ। अठारहवें अध्यायके चौंसठवें श्लोकमें 'श्रृणु मे परमं वचः' पदोंसे यह परम वचन कहते हैं कि तू सम्पूर्ण धर्मोंका निर्णय करनेकी झंझटको छोड़कर एक मेरी शरणमें आ जा मैं तुझे सम्पूर्ण पापोंसे मुक्त कर दूँगा, चिन्ता मत कर (18। 66)। यहाँ ''श्रृणु मे परमं वचः' पदोंसे भगवान्का आशय है कि प्राणियोंके अनेक प्रकारके भाव मेरेसे ही पैदा होते हैं और मेरेमें ही भक्तिभाव रखनेवाले सात महर्षि, चार सनकादि तथा चौदह मनु -- ये सभी मेरे मनसे पैदा होते हैं। तात्पर्य यह है कि सबके मूलमें मैं ही हूँ। जैसे आगे तेरहवें अध्यायमें ज्ञानकी बात कहते हुए भी चौदहवें अध्यायके आरम्भमें भगवान्ने फिर ज्ञानका वर्णन करनेकी प्रतिज्ञा की है, ऐसे ही सातवें और नवें अध्यायमें ज्ञान-विज्ञानकी बात कहते हुए भी दसवें अध्यायके आरम्भमें फिर उसी विषयको कहनेकी प्रतिज्ञा करते हैं। चौदहवें अध्यायके आरम्भमें भगवान्ने,''परं भूयः प्रवक्ष्यामि ज्ञानानां ज्ञानमुत्तमम्' कहा, और यहाँ (दसवें अध्यायके आरम्भमें) 'श्रृणु मे परमं वचः' कहा! इनका तात्पर्य है कि ज्ञानमार्गमें समझकी, विवेक-विचारकी मुख्यता रहती है, अतः साधक वचनोंको सुन करके विचार-पूर्वक तत्त्वको समझ लेता है। इसलिये वहाँ 'ज्ञानानां ज्ञानमुत्तमम्' कहा है। भक्तिमार्गमें श्रद्धाविश्वासकी मुख्यता रहती है; अतः साधक वचनोंको सुन करके श्रद्धा-विश्वासपूर्वक मान लेता है। इसलिये यहाँ 'परमं वचः' कहा गया है।'यत्तेऽहं प्रीयमाणाय वक्ष्यामि हितकाम्यया' --  सुननेवाला वक्तामें श्रद्धा और प्रेम रखनेवाला हो और वक्ताके भीतर सुननेवालेके प्रति कृपापूर्वक हित-भावना हो तो वक्ताके वचन, उसके द्वारा कहा हुआ विषय श्रोताके भीतर अटलरूपसे जम जाता है। इससे श्रोताकी भगवान्में स्वतः रुचि पैदा हो जाती है, भक्ति हो जाती है, प्रेम हो जाता है। यहाँ 'हितकाम्यया' पदसे एक शङ्का हो सकती है कि भगवान्ने गीतामें जगह-जगह कामनाका निषेध किया है, फिर वे स्वयं अपनेमें कामना क्यों रखते हैं? इसका समाधान यह है कि वास्तवमें अपने लिये भोग, सुख, आराम आदि चाहना ही 'कामना' है। दूसरोंके हितकी कामना 'कामना' है ही नहीं। दूसरोंके हितकी कामना तो त्याग है और अपनी कामनाको मिटानेका मुख्य साधन है। इसलिये भगवान् सबको धारण करनेके लिये आदर्शरूपसे कह रहे हैं कि जैसे मैं हितकी कामनासे कहता हूँ, ऐसे ही मनुष्यमात्रको चाहिये कि वह प्राणिमात्रके हितकी कामनासे ही सबके साथ यथायोग्य व्यवहार करे। इससे अपनी कामना मिट जायगी और कामना मिटनेपर मेरी प्राप्ति सुगमतासे हो जायगी। प्राणिमात्रके हितकी कामना रखनेवालेको मेरे सगुण स्वरूपकी प्राप्ति भी हो जाती है -- 'ते प्राप्नुवन्ति मामेव सर्वभूतहिते रताः' (गीता 12। 4)? और निर्गुण स्वरूपकी प्राप्ति भी हो जाती है-- 'लभन्ते ब्रह्मनिर्वाणं ৷৷. सर्वभूतहिते रताः' (गीता 5। 25)।
+दूसरा भाव यह है कि भगवान् जहाँ-जहाँ अर्जुनको अपनी विशेष महत्ता, प्रभाव, ऐश्वर्य आदि बताते हैं अर्थात् अपने-आपको खोल करके बताते हैं, वहाँ-वहाँ वे परम वचन, रहस्य आदि शब्दोंका प्रयोग करते हैं; जैसे--चौथे अध्यायके तीसरे श्लोकमें ''रहस्यं ह्येतदुत्तमम्' पदोंसे बताते हैं कि जिसने सूर्यको उपदेश दिया था, वही मैं तेरे रथके घोड़े हाँकता हुआ तेरे सामने बैठा हूँ। अठारहवें अध्यायके चौंसठवें श्लोकमें 'श्रृणु मे परमं वचः' पदोंसे यह परम वचन कहते हैं कि तू सम्पूर्ण धर्मोंका निर्णय करनेकी झंझटको छोड़कर एक मेरी शरणमें आ जा मैं तुझे सम्पूर्ण पापोंसे मुक्त कर दूँगा, चिन्ता मत कर (18। 66)। यहाँ ''श्रृणु मे परमं वचः' पदोंसे भगवान्का आशय है कि प्राणियोंके अनेक प्रकारके भाव मेरेसे ही पैदा होते हैं और मेरेमें ही भक्तिभाव रखनेवाले सात महर्षि, चार सनकादि तथा चौदह मनु -- ये सभी मेरे मनसे पैदा होते हैं। तात्पर्य यह है कि सबके मूलमें मैं ही हूँ। जैसे आगे तेरहवें अध्यायमें ज्ञानकी बात कहते हुए भी चौदहवें अध्यायके आरम्भमें भगवान्ने फिर ज्ञानका वर्णन करनेकी प्रतिज्ञा की है, ऐसे ही सातवें और नवें अध्यायमें ज्ञान-विज्ञानकी बात कहते हुए भी दसवें अध्यायके आरम्भमें फिर उसी विषयको कहनेकी प्रतिज्ञा करते हैं। चौदहवें अध्यायके आरम्भमें भगवान्ने,''परं भूयः प्रवक्ष्यामि ज्ञानानां ज्ञानमुत्तमम्' कहा, और यहाँ (दसवें अध्यायके आरम्भमें) 'श्रृणु मे परमं वचः' कहा! इनका तात्पर्य है कि ज्ञानमार्गमें समझकी, विवेक-विचारकी मुख्यता रहती है, अतः साधक वचनोंको सुन करके विचार-पूर्वक तत्त्वको समझ लेता है। इसलिये वहाँ 'ज्ञानानां ज्ञानमुत्तमम्' कहा है। भक्तिमार्गमें श्रद्धाविश्वासकी मुख्यता रहती है; अतः साधक वचनोंको सुन करके श्रद्धा-विश्वासपूर्वक मान लेता है। इसलिये यहाँ 'परमं वचः' कहा गया है।'यत्तेऽहं प्रीयमाणाय वक्ष्यामि हितकाम्यया' --  सुननेवाला वक्तामें श्रद्धा और प्रेम रखनेवाला हो और वक्ताके भीतर सुननेवालेके प्रति कृपापूर्वक हित-भावना हो तो वक्ताके वचन, उसके द्वारा कहा हुआ विषय श्रोताके भीतर अटलरूपसे जम जाता है। इससे श्रोताकी भगवान्में स्वतः रुचि पैदा हो जाती है, भक्ति हो जाती है, प्रेम हो जाता है। यहाँ 'हितकाम्यया' पदसे एक शङ्का हो सकती है कि भगवान्ने गीतामें जगह-जगह कामनाका निषेध किया है, फिर वे स्वयं अपनेमें कामना क्यों रखते हैं? इसका समाधान यह है कि वास्तवमें अपने लिये भोग, सुख, आराम आदि चाहना ही 'कामना' है। दूसरोंके हितकी कामना 'कामना' है ही नहीं। दूसरोंके हितकी कामना तो त्याग है और अपनी कामनाको मिटानेका मुख्य साधन है। इसलिये भगवान् सबको धारण करनेके लिये आदर्शरूपसे कह रहे हैं कि जैसे मैं हितकी कामनासे कहता हूँ, ऐसे ही मनुष्यमात्रको चाहिये कि वह प्राणिमात्रके हितकी कामनासे ही सबके साथ यथायोग्य व्यवहार करे। इससे अपनी कामना मिट जायगी और कामना मिटनेपर मेरी प्राप्ति सुगमतासे हो जायगी। प्राणिमात्रके हितकी कामना रखनेवालेको मेरे सगुण स्वरूपकी प्राप्ति भी हो जाती है -- 'ते प्राप्नुवन्ति मामेव सर्वभूतहिते रताः' (गीता 12। 4)? और निर्गुण स्वरूपकी प्राप्ति भी हो जाती है-- 'लभन्ते ब्रह्मनिर्वाणं ।।. सर्वभूतहिते रताः' (गीता 5। 25)।
 
  सम्बन्ध--परम वचनके विषयमें, जिसे मैं आगे कहूँगा, मेरे सिवाय पूरा-पूरा बतानेवाला अन्य कोई नहीं मिल सकता। इसका कारण क्या है इसे भगवान् आगेके श्लोकमें बताते हैं।
 
 **English Commentary**
 
-I shall repeat what I said before (in the seventh and the ninth discourses). My essential nature and My manifestations have already been pointed out. As it is very difficult to understand the divine nature? I shall describe it once more to you? although it has been described already. I shall tell you of the divine glories and point out in which forms of being I should be thought of.I will speak to you as you are delighted to hear Me. Now your heart is taking delight in Me.The Lord wants to encourage Arjuna and cheer him up and so He Himself comes forward to give instructions to Arjuna even without his reest.Paramam Vachah supreme word. Paramam means supreme? revealing the unsurpassed truth (Niratisaya Vastu which is Brahman).O Arjuna You are immensely delighted with My speech? as if you are drinking the immortalising nectar.
+I shall repeat what I said before (in the seventh and the ninth discourses). My essential nature and My manifestations have already been pointed out. As it is very difficult to understand the divine nature, I shall describe it once more to you, although it has been described already. I shall tell you of the divine glories and point out in which forms of being I should be thought of. I will speak to you as you are delighted to hear Me. Now your heart is taking delight in Me. The Lord wants to encourage Arjuna and cheer him up and so He Himself comes forward to give instructions to Arjuna even without his reest.Paramam Vachah supreme word. Paramam means supreme, revealing the unsurpassed truth (Niratisaya Vastu which is Brahman). O Arjuna You are immensely delighted with My speech, as if you are drinking the immortalising nectar.
 
 ### BG 10.2
 
@@ -94,7 +94,7 @@ Neither the hosts of the gods nor the great sages know My origin; for I am the s
 
 **English Commentary**
 
-Prabhavam Origin. It may also mean great lordly power.Maharshis great sages like Bhrigu.As I am the source of all these gods? sages and living beings? it is very difficult for them to know Me.Sarvasah In every way -- not only am I the source of all the gods and the sages but also their efficient cause? their inner ruler and the dispenser or ordainer and the guide of their intellect? etc.
+Prabhavam Origin. It may also mean great lordly power. Maharshis great sages like Bhrigu. As I am the source of all these gods, sages and living beings, it is very difficult for them to know Me. Sarvasah In every way -- not only am I the source of all the gods and the sages but also their efficient cause, their inner ruler and the dispenser or ordainer and the guide of their intellect, etc.
 
 ### BG 10.3
 
@@ -127,7 +127,7 @@ He who knows Me as unborn and beginningless, as the great Lord of the worlds, he
 
 **English Commentary**
 
-As the Supreme Being is the cause of all the worlds? He is beginningless. As He is the source of the gods and the great sages? there is no source for His existence. As He is beginningless He is unborn. He is the great Lord of all the worlds.Asammudhah Undeluded. He who has realised that his own innermost Self is not different from the Supreme Self is an undeluded person. Through the removal of ignorance the delusion which is of the form of mutual superimposition between the Self and the notSelf is also removed. He is freed from all sins done consciously or unconsciously in the three periods of time.The ignorant man removes his sins through the performance of expiatory acts (Prayaschitta) and enjoyment of the results. But he is not completely freed from all sins because he continues to do sinful actions through the force of evil Samskaras or impressions because he has not eradicated ignorance? the root cause of all sins? and its effect? egoism and superimposition or the feeling of I in the physical body. As he dies? swayed by the forces of evil Samskaras? he engages himself in doing sinful actions in the next birth. But the sage of Selfrealisation is completely liberated from,all sins because ignorance? the root cause of all sins? and its effect? viz.? the mistaken notion that the body is the Self on account of mutual superimposition between the Self and the notSelf? is eradicated in toto along with the Samskaras and all the sins. The Samskaras are burnt completely like roasted seeds. Just as burnt seeds cannot germinate? so also the burnt Samskaras cannot generate further actions or future births.For the following reason also? I am the great Lord of the worlds.
+As the Supreme Being is the cause of all the worlds, He is beginningless. As He is the source of the gods and the great sages, there is no source for His existence. As He is beginningless He is unborn. He is the great Lord of all the worlds. Asammudhah Undeluded. He who has realised that his own innermost Self is not different from the Supreme Self is an undeluded person. Through the removal of ignorance the delusion which is of the form of mutual superimposition between the Self and the notSelf is also removed. He is freed from all sins done consciously or unconsciously in the three periods of time. The ignorant man removes his sins through the performance of expiatory acts (Prayaschitta) and enjoyment of the results. But he is not completely freed from all sins because he continues to do sinful actions through the force of evil Samskaras or impressions because he has not eradicated ignorance, the root cause of all sins, and its effect, egoism and superimposition or the feeling of I in the physical body. As he dies, swayed by the forces of evil Samskaras, he engages himself in doing sinful actions in the next birth. But the sage of Selfrealisation is completely liberated from,all sins because ignorance, the root cause of all sins, and its effect, viz.? the mistaken notion that the body is the Self on account of mutual superimposition between the Self and the notSelf, is eradicated in toto along with the Samskaras and all the sins. The Samskaras are burnt completely like roasted seeds. Just as burnt seeds cannot germinate, so also the burnt Samskaras cannot generate further actions or future births. For the following reason also, I am the great Lord of the worlds.
 
 ### BG 10.4
 
@@ -160,7 +160,7 @@ Intellect, wisdom, non-delusion, forgiveness, truth, self-restraint, calmness, h
 
 **English Commentary**
 
-Intellect is the power which the Antahkarana (the fourfold inner instrument -- the mind? the subconscious mind? intellect and egoism) has of understanding subtle objects. Wisdom is knowledge of the Self. Nondelusion is freedom from illusion. It consists in acting with discrimination when anything has to be done or kown at the moment. Patience is the nonagitation of the mind when assaulted or abused. Not thinking of any harm of evil for those who ahve assulted or abused is also patience. Patience is enduring without lamentation the three kinds of pains? Adhyatmika? Adhidaivika and Adhibhautika Taapas. Fever? etc.? is Adhyatmika pain. Pain or discomfort from severe cold? heat? too much rain? thunder? and lightning is Adhidaivika pain. Pain from scorpionsting? snakite? and wild animals is Adhibhautika pain.Satyam or truth is veracity. It is speaking of ones own actual or real experience of things as actually heard or seen. There is not the least twisting or exaggeration or the slightest modification of facts. Dama or selfrestraint is control of the external senses. It is withdrawal of the senses (ear? skin? eyes? tongue and nose) from their respective objects (viz.? sound? touch? form? palatable foods and fragrance). Sama is calmness or tranillity of the mind produced by checking the mind from thinking of external objects of the senses and by disconnecting it from the senses.Sukham Happiness. That which has Dharma or virtue as its chief cause and that which is favourable to all beings? is happiness. Duhkham That which has Adhrama as its cause and that which is unfavourable to all beings? is pain.That which appears is Bhavah. Sat is Bhavah. Asat or unreality is Abhavah.
+Intellect is the power which the Antahkarana (the fourfold inner instrument -- the mind, the subconscious mind, intellect and egoism) has of understanding subtle objects. Wisdom is knowledge of the Self. Nondelusion is freedom from illusion. It consists in acting with discrimination when anything has to be done or kown at the moment. Patience is the nonagitation of the mind when assaulted or abused. Not thinking of any harm of evil for those who ahve assulted or abused is also patience. Patience is enduring without lamentation the three kinds of pains, Adhyatmika, Adhidaivika and Adhibhautika Taapas. Fever, etc.? is Adhyatmika pain. Pain or discomfort from severe cold, heat, too much rain, thunder, and lightning is Adhidaivika pain. Pain from scorpionsting, snakite, and wild animals is Adhibhautika pain. Satyam or truth is veracity. It is speaking of ones own actual or real experience of things as actually heard or seen. There is not the least twisting or exaggeration or the slightest modification of facts. Dama or selfrestraint is control of the external senses. It is withdrawal of the senses (ear, skin, eyes, tongue and nose) from their respective objects (viz.? sound, touch, form, palatable foods and fragrance). Sama is calmness or tranillity of the mind produced by checking the mind from thinking of external objects of the senses and by disconnecting it from the senses. Sukham Happiness. That which has Dharma or virtue as its chief cause and that which is favourable to all beings, is happiness. Duhkham That which has Adhrama as its cause and that which is unfavourable to all beings, is pain. That which appears is Bhavah. Sat is Bhavah. Asat or unreality is Abhavah.
 
 ### BG 10.5
 
@@ -192,7 +192,7 @@ Non-injury, equanimity, contentment, austerity, beneficence, fame, and ill-fame�
 
 **English Commentary**
 
-Ahimsa is noninjury to living beings in thought? word and deed. Samata is that state wherein there is neither Raga (like) nor Dvesha (dislike)? when one gets pleasant or unpleasant objects. There is neither exhilaration when one gets pleasant or favourable objects nor depressions when one gets unpleasant or unfavourable objects. Tushtih is satisfaction or contentment. The man of contentment is satisfied with whatever object he gets through Prarabdha. He is satisfied with his present acisitions. He is free from greed and so he has peace of mind. Contentment makes a man very rich. It annihilates greed. Greed makes even a rich man a beggar of beggars. A greedy man is ever restless. Tapas is restraint of the senses? with bodily mortification through the practice of fasting and slow reduction of food. The strength of the body and the senses is reduced through fasting.Danam is beneficence. It is sharing of ones own things with others according to ones own means? or distribution of rice? gold? cloth? etc.? to a worthy person? in a fit place and time? especially to one who can do nothign in return.Yasas is fame due to Dharma or virtuous actions.Ayasah is illfame or disgrace due to Adharma or sinful actions.All these different kinds of alities of living beings arise from Me alone? the great Lord of the worlds? according to their respective Karmas.
+Ahimsa is noninjury to living beings in thought, word and deed. Samata is that state wherein there is neither Raga (like) nor Dvesha (dislike)? when one gets pleasant or unpleasant objects. There is neither exhilaration when one gets pleasant or favourable objects nor depressions when one gets unpleasant or unfavourable objects. Tushtih is satisfaction or contentment. The man of contentment is satisfied with whatever object he gets through Prarabdha. He is satisfied with his present acisitions. He is free from greed and so he has peace of mind. Contentment makes a man very rich. It annihilates greed. Greed makes even a rich man a beggar of beggars. A greedy man is ever restless. Tapas is restraint of the senses, with bodily mortification through the practice of fasting and slow reduction of food. The strength of the body and the senses is reduced through fasting. Danam is beneficence. It is sharing of ones own things with others according to ones own means, or distribution of rice, gold, cloth, etc.? to a worthy person, in a fit place and time, especially to one who can do nothign in return. Yasas is fame due to Dharma or virtuous actions. Ayasah is illfame or disgrace due to Adharma or sinful actions. All these different kinds of alities of living beings arise from Me alone, the great Lord of the worlds, according to their respective Karmas.
 
 ### BG 10.6
 
@@ -227,7 +227,7 @@ The seven great sages, the ancient four, and the Manus, possessing powers like M
 
 **English Commentary**
 
-In the beginning I was alone and from Me came the mind and from the mind were produced the seven sages (such as Bhrigu? Vasishtha and others)? the ancient four Kumaras (Sanaka? Sanandana? Sanatkumara and Sanatsujata)? as well as the four Manus of the past ages known as Savarnis? all of whom directed their thoughts to Me exclusively and were therefore endowed with divine powers and supreme wisdom.The four Kumaras (chaste? ascetic youths) declined to marry and create offspring. They preferred to remain perpetual celibates and to practise BrahmaVichara or profound meditation on Brahman or the Absolute.They were all created by Me? by mind alone. They were all mindborn sons of Brahma. They were not born from the womb like ordinary mortals. Manavah? men? the present inhabitants of this world? are the sons of Manu. The Manus are the mindborn sons of God. These creatures which consist of the moving and the unmoving beings are born of the seven great sages and the four Manus. The great sages were original teaches of BrahmaVidya or the ancient wisdom of the Upanishads. The Manus were the rulers of men. They framed the code or rules of conduct or the laws of Dharma for the guidance and uplift of humanity.The seven great sages represent the seven planes also. In the macrocosm? Mahat or cosmic Buddhi? Ahamkara or the cosmic egoism and the five Tanmatras or the five rootelements of which the five great elements? viz.? earth? water? fire? air and ether are the gross forms? represent the seven great sages. This gross universe with the moving and the unmoving beings and the subtle inner world have come out of the above seven principles. In mythology or the Puranic terminology these seven principles have been symbolised and give human names. Bhrigu? Marichi? Atri? Pulastya? Pulaha? Kratu and Vasishtha are the seven great sages.In the microcosm? Manas (mind)? Buddhi (intellect)? Chitta (subconsciousness) and Ahamkara (egoism) have been symbolised as the four Manus and given human names. The first group forms the base of the macrocosm. The second group forms the base of the microcosm (individuals). These two groups constitute this vast universe of sentient life.Madbhava with their being in Me? of My nature.
+In the beginning I was alone and from Me came the mind and from the mind were produced the seven sages (such as Bhrigu, Vasishtha and others)? the ancient four Kumaras (Sanaka, Sanandana, Sanatkumara and Sanatsujata)? as well as the four Manus of the past ages known as Savarnis, all of whom directed their thoughts to Me exclusively and were therefore endowed with divine powers and supreme wisdom. The four Kumaras (chaste, ascetic youths) declined to marry and create offspring. They preferred to remain perpetual celibates and to practise BrahmaVichara or profound meditation on Brahman or the Absolute. They were all created by Me, by mind alone. They were all mindborn sons of Brahma. They were not born from the womb like ordinary mortals. Manavah, men, the present inhabitants of this world, are the sons of Manu. The Manus are the mindborn sons of God. These creatures which consist of the moving and the unmoving beings are born of the seven great sages and the four Manus. The great sages were original teaches of BrahmaVidya or the ancient wisdom of the Upanishads. The Manus were the rulers of men. They framed the code or rules of conduct or the laws of Dharma for the guidance and uplift of humanity. The seven great sages represent the seven planes also. In the macrocosm, Mahat or cosmic Buddhi, Ahamkara or the cosmic egoism and the five Tanmatras or the five rootelements of which the five great elements, viz.? earth, water, fire, air and ether are the gross forms, represent the seven great sages. This gross universe with the moving and the unmoving beings and the subtle inner world have come out of the above seven principles. In mythology or the Puranic terminology these seven principles have been symbolised and give human names. Bhrigu, Marichi, Atri, Pulastya, Pulaha, Kratu and Vasishtha are the seven great sages. In the microcosm, Manas (mind)? Buddhi (intellect)? Chitta (subconsciousness) and Ahamkara (egoism) have been symbolised as the four Manus and given human names. The first group forms the base of the macrocosm. The second group forms the base of the microcosm (individuals). These two groups constitute this vast universe of sentient life. Madbhava with their being in Me, of My nature.
 
 ### BG 10.7
 
@@ -260,7 +260,7 @@ He who truly knows these manifold manifestations of My Being and this Yoga-power
 
 **English Commentary**
 
-Knowledge of the glory of the Lord is really conducive to Yoga. He who knows in essence the immanent pervading power of the Lord by which He causes the manifestations? and His diverse manifestations (Vibhutis)? unites with Him in firm unalterable Yoga and attains eternal bliss and perfect harmony. From the ant to the Creator there is nothing except the Lord. He who knows in reality this extensive manifestation of the Lord and His Yoga (Yoga here stands for what is born of Yoga? viz.? infinite Yogic powers as well as omniscience)? is endowed with firm unwavering Yoga. He lives in the Eternal and is endowed with the highest knowledge of the Self. He who has realised this Truth is free from the superiority and inferiority complexes. There i real awakening of wisdom in him. He will behold the Lord in all beings and all beings in the Lord. He will never hate any creature on this earth. This is a rare living cosmic experience. The Yogi realises that the Lord and His manifestations are one. He attains the supreme goal and is absorbed in Him through his wholehearted devotion. He is perfectly aware of his oneness with the Supreme by My divine Yoga.He can keep his balance of mind now in whatever environments and circumstances he is placed and can do any action without losing his consciousness of oneness or identity with the Supreme Self. (Cf.VII.25IX.5XI.8)What is that unshaken Yoga with which they are endowedThe answer follows.
+Knowledge of the glory of the Lord is really conducive to Yoga. He who knows in essence the immanent pervading power of the Lord by which He causes the manifestations, and His diverse manifestations (Vibhutis)? unites with Him in firm unalterable Yoga and attains eternal bliss and perfect harmony. From the ant to the Creator there is nothing except the Lord. He who knows in reality this extensive manifestation of the Lord and His Yoga (Yoga here stands for what is born of Yoga, viz.? infinite Yogic powers as well as omniscience)? is endowed with firm unwavering Yoga. He lives in the Eternal and is endowed with the highest knowledge of the Self. He who has realised this Truth is free from the superiority and inferiority complexes. There i real awakening of wisdom in him. He will behold the Lord in all beings and all beings in the Lord. He will never hate any creature on this earth. This is a rare living cosmic experience. The Yogi realises that the Lord and His manifestations are one. He attains the supreme goal and is absorbed in Him through his wholehearted devotion. He is perfectly aware of his oneness with the Supreme by My divine Yoga. He can keep his balance of mind now in whatever environments and circumstances he is placed and can do any action without losing his consciousness of oneness or identity with the Supreme Self. (Cf.VII.25IX.5XI.8)What is that unshaken Yoga with which they are endowedThe answer follows.
 
 ### BG 10.8
 
@@ -295,7 +295,7 @@ I am the source of all; from me everything evolves; Understanding this, the wise
 
 **English Commentary**
 
-Waves originate in water? depend on water and dissolve in water. The only support for the waves is water. Even so the only support for the whole world is the Lord. Realising this? feeling the omnipresence of the Lord? the wise worship Him with devotion and affection in all places. The Supreme is the same in all countries and at all times. He is the material and the efficient cause.As Mulaprakriti or Avyaktam the Lord is the source of all forms. The Lord is the primum mobile. He gazes at His Sakti (creative power) and the whole world evolves and the forms move. The worldly man who has neither sharp nor subtle intellect beholds the changing forms only through the fleshly eyes. He has no idea of the Indwelling Presence? the substratum? the allpervading intelligence or the blissful consciousness. He is allured by the passing forms. He fixes his hopes and joy on these transitory forms. He lives and exerts for them. He rejoices when he gets a wife and children. If these forms pass away he is drowned in sorrow. But the wise ones constantly dwell in the Supreme? the source and the life of all? and enjoy the eternal bliss of the immortal? inner Self? their own nondual Atman? albeit all these forms around them change and pass away. They are steadfast in Yoga. They are endowed with unshakable Yoga. They are enthroned in Yoga. They worship the Supreme in contemplation and enjoy the indescribable bliss of Nirvikalpa Samadhi.Para Brahman? known as Vaasudeva? is the source of the whole world. From Him alone evolves the whole world with all its changes? viz.? existence (Sthiti)? destruction (Nasa)? action (Kriya)? fruit (Phala) and enjoyment (Bhoga). Understanding thus? the wise adore the Supreme Being and engage themselves in profound meditation on the Absolute. (Cf.IX.10)
+Waves originate in water, depend on water and dissolve in water. The only support for the waves is water. Even so the only support for the whole world is the Lord. Realising this, feeling the omnipresence of the Lord, the wise worship Him with devotion and affection in all places. The Supreme is the same in all countries and at all times. He is the material and the efficient cause. As Mulaprakriti or Avyaktam the Lord is the source of all forms. The Lord is the primum mobile. He gazes at His Sakti (creative power) and the whole world evolves and the forms move. The worldly man who has neither sharp nor subtle intellect beholds the changing forms only through the fleshly eyes. He has no idea of the Indwelling Presence, the substratum, the allpervading intelligence or the blissful consciousness. He is allured by the passing forms. He fixes his hopes and joy on these transitory forms. He lives and exerts for them. He rejoices when he gets a wife and children. If these forms pass away he is drowned in sorrow. But the wise ones constantly dwell in the Supreme, the source and the life of all, and enjoy the eternal bliss of the immortal, inner Self, their own nondual Atman, albeit all these forms around them change and pass away. They are steadfast in Yoga. They are endowed with unshakable Yoga. They are enthroned in Yoga. They worship the Supreme in contemplation and enjoy the indescribable bliss of Nirvikalpa Samadhi. Para Brahman, known as Vaasudeva, is the source of the whole world. From Him alone evolves the whole world with all its changes, viz.? existence (Sthiti)? destruction (Nasa)? action (Kriya)? fruit (Phala) and enjoyment (Bhoga). Understanding thus, the wise adore the Supreme Being and engage themselves in profound meditation on the Absolute. (Cf.IX.10)
 
 ### BG 10.9
 
@@ -328,7 +328,7 @@ With their minds and lives wholly absorbed in Me, they enlighten each other and 
 
 **English Commentary**
 
-The characteristics of a devotee who has attained the realisation of oneness are described in this verse. The devotee constantly thinks of the Lord. His very life is absorbed in Him. He has consecrated his whole life to the Lord. According to another interpretation? all his senses (which function because of the Prana)? such as the eye are absorbed in Him. He takes immense delight in talking about Him? about His supreme wisdom? power? might and other attributes. He has completely dedicated himself to the Lord.He feels intense satisfaction and is delighted as if he is in the company of his Beloved (God). The Purana says? The sum total of the sensual pleasures of this world and also all the great pleasures of the divine regions (heavens) are not worth a sixteenth part of that bliss which proceeds from the eradication of desires and cravings. (Cf.XII.8)
+The characteristics of a devotee who has attained the realisation of oneness are described in this verse. The devotee constantly thinks of the Lord. His very life is absorbed in Him. He has consecrated his whole life to the Lord. According to another interpretation, all his senses (which function because of the Prana)? such as the eye are absorbed in Him. He takes immense delight in talking about Him, about His supreme wisdom, power, might and other attributes. He has completely dedicated himself to the Lord. He feels intense satisfaction and is delighted as if he is in the company of his Beloved (God). The Purana says, The sum total of the sensual pleasures of this world and also all the great pleasures of the divine regions (heavens) are not worth a sixteenth part of that bliss which proceeds from the eradication of desires and cravings. (Cf.XII.8)
 
 ### BG 10.10
 
@@ -361,7 +361,7 @@ To those who are ever steadfast, worshipping me with love, I give the yoga of di
 
 **English Commentary**
 
-The devotees who have dedicated themselves to the Lord? who are ever harmonious and selfabiding? who are ever devout and who adore Him with intense love (not for attaining any selfish purpose)? obtain the divine grace. The Lord gives them wisdom or the Yoga of discrimination or understanding by which they attain the knowledge of the Self. The Lord bestows on these devotees who have fixed their thoughts on Him alone? devotion of right knowledge. (Buddhi Yoga) by which they know Him in essence. They know through the eye of intuition in deep meditaion the Supreme Lord? the One in all? the Self of all? as their own Self? destitue of all limitations. Buddhi here is the inner eye of intuition by which the magnificent experience of oneness is had. Buddhi Yoga is Jnana Yoga. (Cf.IV.39XII.6and7)Why does the Lord impart this Yoga of knowledge to His devotees What obstacles does the Buddhi Yoga remove on the path of the aspirant or devotee The Lord gives the answer in the following verse.
+The devotees who have dedicated themselves to the Lord, who are ever harmonious and selfabiding, who are ever devout and who adore Him with intense love (not for attaining any selfish purpose)? obtain the divine grace. The Lord gives them wisdom or the Yoga of discrimination or understanding by which they attain the knowledge of the Self. The Lord bestows on these devotees who have fixed their thoughts on Him alone, devotion of right knowledge. (Buddhi Yoga) by which they know Him in essence. They know through the eye of intuition in deep meditaion the Supreme Lord, the One in all, the Self of all, as their own Self, destitue of all limitations. Buddhi here is the inner eye of intuition by which the magnificent experience of oneness is had. Buddhi Yoga is Jnana Yoga. (Cf.IV.39XII.6and7)Why does the Lord impart this Yoga of knowledge to His devotees What obstacles does the Buddhi Yoga remove on the path of the aspirant or devotee The Lord gives the answer in the following verse.
 
 ### BG 10.11
 
@@ -394,7 +394,7 @@ Out of mere compassion for them, I, dwelling within their selves, destroy the da
 
 **English Commentary**
 
-Luminous lamp of knowledge The Lord dwells in the heart of the devotees who constantly think of Him and destroys the veil or the darkness born of ignorance due to the absence of discrimination? by the luminous lamp of knowledge fed by the oil of pure devotion? fanned by the wind of profound meditation on Him? provided with the wick of right intuition? generated by the constant cultivation of celibacy? piety and other divine virtues held in the chambers of the heart free from worldliness? placed in the innermost recesses of the mind free from the wind of senseattractions (withdrawn from the objects of the senses) and untainted by likes and dislikes? and shining with the light of knowledge of the Self caused by the constant practice of meditation.The lamp is not in need of an instrument or means or any sort of practice for the removal of darkness. The generation of the light itself is ite sufficient to remove the darkness. As soon as the darkness is removed by the light? the pot? the chair and the other articles are seen. Even so the dawn of knowledge of the Self itself is ite sufficient to remove ignorance. No other Karma or,practice is necessary. After the ignorance is removed by the knowledge of the Self? Brahman alone shines in Its pristine glory.
+Luminous lamp of knowledge The Lord dwells in the heart of the devotees who constantly think of Him and destroys the veil or the darkness born of ignorance due to the absence of discrimination, by the luminous lamp of knowledge fed by the oil of pure devotion, fanned by the wind of profound meditation on Him, provided with the wick of right intuition, generated by the constant cultivation of celibacy, piety and other divine virtues held in the chambers of the heart free from worldliness, placed in the innermost recesses of the mind free from the wind of senseattractions (withdrawn from the objects of the senses) and untainted by likes and dislikes, and shining with the light of knowledge of the Self caused by the constant practice of meditation. The lamp is not in need of an instrument or means or any sort of practice for the removal of darkness. The generation of the light itself is ite sufficient to remove the darkness. As soon as the darkness is removed by the light, the pot, the chair and the other articles are seen. Even so the dawn of knowledge of the Self itself is ite sufficient to remove ignorance. No other Karma or,practice is necessary. After the ignorance is removed by the knowledge of the Self, Brahman alone shines in Its pristine glory.
 
 ### BG 10.12
 
@@ -428,13 +428,13 @@ Arjuna said, "You are the Supreme Brahman, the supreme abode, the supreme purifi
 
 'परं ब्रह्म परं धाम पवित्रं परमं भवान्'--  अपने सामने बैठे हुए भगवान्की स्तुति करते हुए अर्जुन कहते हैं कि मेरे पूछनेपर जिसको आपने परम ब्रह्म (गीता 8। 3) कहा है, वह परम ब्रह्म आप ही हैं। जिसमें सब संसार स्थित रहता है, वह परम धाम अर्थात् परम स्थान आप ही हैं (गीता 9। 18)। जिसको पवित्रोंमें भी पवित्र कहते हैं -- 'पवित्राणां पवित्रं यः' वह महान् पवित्र भी आप ही हैं।
 
-'पुरुषं शाश्वतं दिव्यमादिदेवमजं ৷৷. स्वयं चैव ब्रवीषि मे'--  ग्रन्थोंमें ऋषियोंने, (टिप्पणी प0 549.1) देवर्षि नारदने, (टिप्पणी प0 549.2)? असित और उनके पुत्र देवल ऋषिने (टिप्पणी प0 549.3) तथा महर्षि व्यासजीने (टिप्पणी प0 549.4) आपको शाश्वत, दिव्य पुरुष, आदिदेव, अजन्मा और विभु कहा है।
+'पुरुषं शाश्वतं दिव्यमादिदेवमजं ।।. स्वयं चैव ब्रवीषि मे'--  ग्रन्थोंमें ऋषियोंने, (टिप्पणी प0 549.1) देवर्षि नारदने, (टिप्पणी प0 549.2)? असित और उनके पुत्र देवल ऋषिने (टिप्पणी प0 549.3) तथा महर्षि व्यासजीने (टिप्पणी प0 549.4) आपको शाश्वत, दिव्य पुरुष, आदिदेव, अजन्मा और विभु कहा है।
 
 आत्माके रूपमें 'शाश्वत' (गीता 2। 20), सगुण-निराकारके रूपमें 'दिव्य पुरुष' (गीता 8। 10), देवताओँ और महर्षियों आदिके रूपमें 'आदिदेव' (गीता 10। 2), मूढ़लोग मेरेको अज नहीं जानते (गीता 7। 25) तथा असम्मूढ़लोग मेरेको 'अज' जानते हैं (गीता 10। 3 ) -- इस रूपमें अज और मैं अव्यक्तरूपसे सारे संसारमें व्यापक हूँ (गीता 9। 4) -- इस रूपमें 'विभु' स्वयं आपने मेरे प्रति कहा है।
 
 **English Commentary**
 
-Param Brahma The highest Self. The word Param indicates the pure and attributeless Absolute? free from the limiting adjuncts. It is Satchidananda Brahman. The inferior Brahman is the Brahman with alities (Saguna) or Isvara? Brahman with the limiting adjuncts or the chosen object of meditation by the devotees.Param Dhama means Param Tejah or the supreme light. From the Creator down to the blade of grass the Supreme Being is the support or substratum. Therefore He is known as the supreme abode.Adideva The primeval God or the original God Who existed before all other gods. This God is Para Brahman Itself. It is selfluminous.Pavitram Paramam Supreme purifier. The sacred rivers and holy places of pilgrimage can remove only the sins but Para Brahman can destroy all sins and ignorance? the root cause of all sins. Therefore Para Brahman or the Supreme Self is the supreme purifier.
+Param Brahma The highest Self. The word Param indicates the pure and attributeless Absolute, free from the limiting adjuncts. It is Satchidananda Brahman. The inferior Brahman is the Brahman with alities (Saguna) or Isvara, Brahman with the limiting adjuncts or the chosen object of meditation by the devotees. Param Dhama means Param Tejah or the supreme light. From the Creator down to the blade of grass the Supreme Being is the support or substratum. Therefore He is known as the supreme abode. Adideva The primeval God or the original God Who existed before all other gods. This God is Para Brahman Itself. It is selfluminous. Pavitram Paramam Supreme purifier. The sacred rivers and holy places of pilgrimage can remove only the sins but Para Brahman can destroy all sins and ignorance, the root cause of all sins. Therefore Para Brahman or the Supreme Self is the supreme purifier.
 
 ### BG 10.13
 
@@ -465,11 +465,11 @@ All the sages have thus declared Thee, as also the divine sage Narada; so also A
 
 'परं ब्रह्म परं धाम पवित्रं परमं भवान्'--  अपने सामने बैठे हुए भगवान्की स्तुति करते हुए अर्जुन कहते हैं कि मेरे पूछनेपर जिसको आपने परम ब्रह्म (गीता 8। 3) कहा है, वह परम ब्रह्म आप ही हैं। जिसमें सब संसार स्थित रहता है, वह परम धाम अर्थात् परम स्थान आप ही हैं (गीता 9। 18)। जिसको पवित्रोंमें भी पवित्र कहते हैं -- 'पवित्राणां पवित्रं यः' वह महान् पवित्र भी आप ही हैं।
 
-'पुरुषं शाश्वतं दिव्यमादिदेवमजं ৷৷. स्वयं चैव ब्रवीषि मे'--  ग्रन्थोंमें ऋषियोंने, (टिप्पणी प0 549.1) देवर्षि नारदने (टिप्पणी प0 549.2), असित और उनके पुत्र देवल ऋषिने (टिप्पणी प0 549.3) तथा महर्षि व्यासजीने (टिप्पणी प0 549.4) आपको शाश्वत, दिव्य पुरुष, आदिदेव, अजन्मा और विभु कहा है।आत्माके रूपमें 'शाश्वत' (गीता 2। 20), सगुण-निराकारके रूपमें 'दिव्य पुरुष' (गीता 8। 10), देवताओँ और महर्षियों आदिके रूपमें 'आदिदेव' (गीता 10। 2), मूढ़लोग मेरेको अज नहीं जानते (गीता 7। 25) तथा असम्मूढ़लोग मेरेको अज जानते हैं (गीता 10। 3 ) -- इस रूपमें 'अज' और मैं अव्यक्तरूपसे सारे संसारमें व्यापक हूँ (गीता 9। 4) -- इस रूपमें 'विभु' स्वयं आपने मेरे प्रति कहा है।
+'पुरुषं शाश्वतं दिव्यमादिदेवमजं ।।. स्वयं चैव ब्रवीषि मे'--  ग्रन्थोंमें ऋषियोंने, (टिप्पणी प0 549.1) देवर्षि नारदने (टिप्पणी प0 549.2), असित और उनके पुत्र देवल ऋषिने (टिप्पणी प0 549.3) तथा महर्षि व्यासजीने (टिप्पणी प0 549.4) आपको शाश्वत, दिव्य पुरुष, आदिदेव, अजन्मा और विभु कहा है।आत्माके रूपमें 'शाश्वत' (गीता 2। 20), सगुण-निराकारके रूपमें 'दिव्य पुरुष' (गीता 8। 10), देवताओँ और महर्षियों आदिके रूपमें 'आदिदेव' (गीता 10। 2), मूढ़लोग मेरेको अज नहीं जानते (गीता 7। 25) तथा असम्मूढ़लोग मेरेको अज जानते हैं (गीता 10। 3 ) -- इस रूपमें 'अज' और मैं अव्यक्तरूपसे सारे संसारमें व्यापक हूँ (गीता 9। 4) -- इस रूपमें 'विभु' स्वयं आपने मेरे प्रति कहा है।
 
 **English Commentary**
 
-Rishi is a holy sage of disciplined mind and senses.Devarshi A divine sage more highly evolved than a Rishi.
+Rishi is a holy sage of disciplined mind and senses. Devarshi A divine sage more highly evolved than a Rishi.
 
 ### BG 10.14
 
@@ -502,7 +502,7 @@ I believe all that You have said to me to be true, O Krishna; indeed, O blessed 
 
 **English Commentary**
 
-Bhagavan is He? in whom ever exist the six attributes in their fullness? viz.? Jnana (wisdom)? Vairagya (dispassion)? Aisvarya (lordship)? Dharma (virtue)? Sri (wealth) and Bala (omnipotence). Also? He Who knows the origin? dissolution and the future of all beings and Who is omniscient? is called Bhagavan.Vyakti Origin.Danavah Demons or the Titans.Arjuna addresses the Lord as Keshava (Lord of all) because the Lord knows what is going on in his mind? as He is omniscient. As the Lord is the source of the gods? the demons and others? they cannot comprehend His manifestation or origin. (Cf.IV.6)
+Bhagavan is He, in whom ever exist the six attributes in their fullness, viz.? Jnana (wisdom)? Vairagya (dispassion)? Aisvarya (lordship)? Dharma (virtue)? Sri (wealth) and Bala (omnipotence). Also, He Who knows the origin, dissolution and the future of all beings and Who is omniscient, is called Bhagavan. Vyakti Origin. Danavah Demons or the Titans. Arjuna addresses the Lord as Keshava (Lord of all) because the Lord knows what is going on in his mind, as He is omniscient. As the Lord is the source of the gods, the demons and others, they cannot comprehend His manifestation or origin. (Cf.IV.6)
 
 ### BG 10.15
 
@@ -539,7 +539,7 @@ Verily, Thou Thyself knowest Thyself by Thyself, O Supreme Person, O source and 
 
 **English Commentary**
 
-Purushottama means the best among all Purushas. He assumes the four forms? viz.? the source of beings? the Lord of beings? God of gods and ruler of the world. Hence He is called Purushottama.Devadeva is He who is worshipped even by Indra and other gods.Jagatpati The Lord protects the world and guides the people through the instructions given in the Vedas. Hence the name ruler of the world.
+Purushottama means the best among all Purushas. He assumes the four forms, viz.? the source of beings, the Lord of beings, God of gods and ruler of the world. Hence He is called Purushottama. Devadeva is He who is worshipped even by Indra and other gods. Jagatpati The Lord protects the world and guides the people through the instructions given in the Vedas. Hence the name ruler of the world.
 
 ### BG 10.16
 
@@ -597,7 +597,7 @@ katham—how; vidyām aham—shall I know; yogin—the Supreme Master of Yogmaya
 
 **English Meaning**
 
-How shall I, ever meditating, know you, O Yogin? In what aspects or things, O blessed Lord, should I think of you?
+How shall I, ever meditating, know you, O Yogin, In what aspects or things, O blessed Lord, should I think of you?
 
 **Hindi Commentary**
 
@@ -605,7 +605,7 @@ How shall I, ever meditating, know you, O Yogin? In what aspects or things, O bl
 
 **English Commentary**
 
-Arjuna says O Lord? how may I know Thee by constant meditation In what aspects art Thou to be thought of by me Even when I think of external objects I can meditate on Thee in Thy particular manifestations in them if I have a detailed knowledge of Thy glories. Therefore deign to tell me? without reserve? of Thy own glories. Then only can I behold oneness everywhere.
+Arjuna says O Lord, how may I know Thee by constant meditation In what aspects art Thou to be thought of by me Even when I think of external objects I can meditate on Thee in Thy particular manifestations in them if I have a detailed knowledge of Thy glories. Therefore deign to tell me, without reserve, of Thy own glories. Then only can I behold oneness everywhere.
 
 ### BG 10.18
 
@@ -638,7 +638,7 @@ Tell me again in detail, O Krishna, of your yogic power and glory; for I am not 
 
 **English Commentary**
 
-The Lord is called Janardana because all pray to Him for worldly success? prosperity and also salvation. Arjuna also prays to the Lord to explain His Yogic power and glory? for his salvation.Arjuna says to Lord Krishna Tell me in detail of Thy mysterious power (Yoga) and sovereignty (Aisvarya) and the various things to be meditated upon. Tell me again though You have described earlier in the seventh and the ninth chapters succinctly for there is no satiety in hearing Thy ambrosial speech or nectarlike conversation. However much of it I hear? I am not satisfied surely it is nectar of immortality for me.
+The Lord is called Janardana because all pray to Him for worldly success, prosperity and also salvation. Arjuna also prays to the Lord to explain His Yogic power and glory, for his salvation. Arjuna says to Lord Krishna Tell me in detail of Thy mysterious power (Yoga) and sovereignty (Aisvarya) and the various things to be meditated upon. Tell me again though You have described earlier in the seventh and the ninth chapters succinctly for there is no satiety in hearing Thy ambrosial speech or nectarlike conversation. However much of it I hear, I am not satisfied surely it is nectar of immortality for me.
 
 ### BG 10.19
 
@@ -713,7 +713,7 @@ I am the Self, O Gudakesa, seated in the hearts of all beings; I am the beginnin
 
 **English Commentary**
 
-O Gudakesa I am the soul (Pratyagatma) which exists in the hearts of all beings and I am also the source or origin? the middle or stay? and the end of all created beings. I am the birth? the life and the death of all beings. Meditate on Me as the innermost Self.Gudakesa means either coneror of sleep or thickhaired.He who is able to meditate on the Self with Abheda Bhavana (attitude of nonduality)? is a alified aspirant (Adhikari) of the first class. He who is not able to meditate on the Self should think of the Lord in those things which are mentioned below. This type of meditation is for the aspirants of the middle class.
+O Gudakesa I am the soul (Pratyagatma) which exists in the hearts of all beings and I am also the source or origin, the middle or stay, and the end of all created beings. I am the birth, the life and the death of all beings. Meditate on Me as the innermost Self. Gudakesa means either coneror of sleep or thickhaired. He who is able to meditate on the Self with Abheda Bhavana (attitude of nonduality)? is a alified aspirant (Adhikari) of the first class. He who is not able to meditate on the Self should think of the Lord in those things which are mentioned below. This type of meditation is for the aspirants of the middle class.
 
 ### BG 10.21
 
@@ -746,7 +746,7 @@ Among the twelve Adityas, I am Vishnu; among luminaries, the radiant sun; among 
 
 **English Commentary**
 
-Of the twelve Adityas I am the Aditya known as Vishnu? Dhata? Mitra? Aryama? Rudra? Varuna? Bhaga? Surya? Vivasvan? Pusham? Savita? Tvashta and Vishnu are the twelve Adityas. The twelve months of the year are the Adityas.The Maruts are the gods controlling the winds. Some hold that there are seven of them while others say there are fortynine.The twelve Adityas? the luminaries like Agni? lightning? etc.? the Maruts? the stars? etc.? are the Samanya Vibhutis (ordinary manifestations) of the Lord. Vishnu? the sun? Marichi? and the moon are His Visesha Vibhutis (special manifestations) and hence they have greater splendour in them.You can superimpose the Lord on the sun and the moon? and meditate on them as forms of the Lord. You can practise the same kind of meditation on all forms mentioned in the following verses of this chapter.
+Of the twelve Adityas I am the Aditya known as Vishnu, Dhata, Mitra, Aryama, Rudra, Varuna, Bhaga, Surya, Vivasvan, Pusham, Savita, Tvashta and Vishnu are the twelve Adityas. The twelve months of the year are the Adityas. The Maruts are the gods controlling the winds. Some hold that there are seven of them while others say there are fortynine. The twelve Adityas, the luminaries like Agni, lightning, etc.? the Maruts, the stars, etc.? are the Samanya Vibhutis (ordinary manifestations) of the Lord. Vishnu, the sun, Marichi, and the moon are His Visesha Vibhutis (special manifestations) and hence they have greater splendour in them. You can superimpose the Lord on the sun and the moon, and meditate on them as forms of the Lord. You can practise the same kind of meditation on all forms mentioned in the following verses of this chapter.
 
 ### BG 10.22
 
@@ -779,7 +779,7 @@ Among the Vedas, I am the Sama-Veda; among the gods, I am Vasava; among the sens
 
 **English Commentary**
 
-Vasava is Indra.Gods Such as Rudras? Adityas.Indriyas The five JnanaIndriyas or organs of knowledge? viz.? ear? skin? eye? tongue and nose and the five KarmaIndriyas or organs of action? viz.? speech? hands? feet? genitals and anus. The mind is regarded as the eleventh sense. As the senses cannot function without the help of the mind? the mind is regarded as the chief among the senses.Chetana Intelligence is that state of intellect which is manifest in the aggregate of the body and the senses.That which illumines all? from the intellect down to the grossest object? is called Chetana.
+Vasava is Indra. Gods Such as Rudras, Adityas. Indriyas The five JnanaIndriyas or organs of knowledge, viz.? ear, skin, eye, tongue and nose and the five KarmaIndriyas or organs of action, viz.? speech, hands, feet, genitals and anus. The mind is regarded as the eleventh sense. As the senses cannot function without the help of the mind, the mind is regarded as the chief among the senses. Chetana Intelligence is that state of intellect which is manifest in the aggregate of the body and the senses. That which illumines all, from the intellect down to the grossest object, is called Chetana.
 
 ### BG 10.23
 
@@ -812,7 +812,7 @@ And among the Rudras, I am Sankara; among the Yakshas and Rakshasas, the Lord of
 
 **English Commentary**
 
-Rudras are eleven in number. The ten vital airs (Pranas and the UpaPranas? which are five each) and the mind are the eleven Rudras. They are so called because they produce grief when they depart from the body. They have been symbolised in the Puranas as follows Virabhadra? Sankara? Girisa? Ajaikapati? Bhuvanadhisvara? Aherbhujya? Pinaki? Aparajita? Kapali? Sthanu and Bhaga. Among these Rudras? Sankara is regarded as the chief.Vasus are earth? water? fire? air? ether? sun? moon and stars. They are so called because they comprehend the whole universe within them. They have been symbolised in the Puranas as follows Apah? Dhruva? Soma? Dhara? Anila? Anala? Pratyusa and Prabhasa. Of these Anala or Pavaka (fire) is the chief.
+Rudras are eleven in number. The ten vital airs (Pranas and the UpaPranas, which are five each) and the mind are the eleven Rudras. They are so called because they produce grief when they depart from the body. They have been symbolised in the Puranas as follows Virabhadra, Sankara, Girisa, Ajaikapati, Bhuvanadhisvara, Aherbhujya, Pinaki, Aparajita, Kapali, Sthanu and Bhaga. Among these Rudras, Sankara is regarded as the chief. Vasus are earth, water, fire, air, ether, sun, moon and stars. They are so called because they comprehend the whole universe within them. They have been symbolised in the Puranas as follows Apah, Dhruva, Soma, Dhara, Anila, Anala, Pratyusa and Prabhasa. Of these Anala or Pavaka (fire) is the chief.
 
 ### BG 10.24
 
@@ -845,7 +845,7 @@ And, among the household priests of kings, O Arjuna, know Me to be the chief, Br
 
 **English Commentary**
 
-Brihaspati is the chif priest of the gods. He is the househld priest of Indra.Skanda is Kartikeya or Lord Subramanya. He is the general of the hosts of the gods.Of things holding water -- natural reservoirs or lakes -- I am the ocean.
+Brihaspati is the chif priest of the gods. He is the househld priest of Indra. Skanda is Kartikeya or Lord Subramanya. He is the general of the hosts of the gods. Of things holding water -- natural reservoirs or lakes -- I am the ocean.
 
 ### BG 10.25
 
@@ -880,7 +880,7 @@ Among the great sages, I am Bhrigu; among words, I am the one syllable (Om); amo
 
 **English Commentary**
 
-Manu has said Whatever else the Brahmana may or may not do? he attains salvation by Japa (silent repetition of a Mantra) alone.Bhrigu is one of the mindborn of the Creator.Himalaya The highest mountain range in the world.Japayajna There is neither injury nor loss in this Yajna. Therefore? it is regarded as the best of all Yajnas.
+Manu has said Whatever else the Brahmana may or may not do, he attains salvation by Japa (silent repetition of a Mantra) alone. Bhrigu is one of the mindborn of the Creator. Himalaya The highest mountain range in the world. Japayajna There is neither injury nor loss in this Yajna. Therefore, it is regarded as the best of all Yajnas.
 
 ### BG 10.26
 
@@ -913,7 +913,7 @@ Among all the trees, I am the Peepul; among the divine sages, I am Narada; among
 
 **English Commentary**
 
-Devarshis are gods and at the same time Rishis or seers of Mantras.Siddhas are the perfected ones those who at their very birth attained without any effort Dharma (virtue)? Jnana (knowledge of the Self)? Vairagya (dispassion) and Aisvarya (lordship).Muni is one who does Manana or reflection one who meditates.
+Devarshis are gods and at the same time Rishis or seers of Mantras. Siddhas are the perfected ones those who at their very birth attained without any effort Dharma (virtue)? Jnana (knowledge of the Self)? Vairagya (dispassion) and Aisvarya (lordship). Muni is one who does Manana or reflection one who meditates.
 
 ### BG 10.27
 
@@ -946,7 +946,7 @@ Know Me as Ucchaisravas, born of nectar, among horses; Airavata among lordly ele
 
 **English Commentary**
 
-Nectar was obtained by the gods by churning the ocean of milk. Ucchaisravas is the name of the royal horse which was born in that ocean of milk when it was churned for the nectar.Airavatam The offspring of Iravati? the elephant of Indra born at the time when the ocean of milk was churned.
+Nectar was obtained by the gods by churning the ocean of milk. Ucchaisravas is the name of the royal horse which was born in that ocean of milk when it was churned for the nectar. Airavatam The offspring of Iravati, the elephant of Indra born at the time when the ocean of milk was churned.
 
 ### BG 10.28
 
@@ -979,7 +979,7 @@ Among weapons, I am the thunderbolt; among cows, I am the wish-fulfilling cow ca
 
 **English Commentary**
 
-Vajram the thunderbolt weapon made of the bones of Dadhichi an implement of warfare which can only be handled by Indra who has fininshed a hundred sacrifices.Kamadhuk The cow Kamadhenu of the great sage Vasishtha which yielded all the desired objects? also born of the ocean of milk.Kandarpa Cupid.Vasuki The Lord of hoodless or ordinary serpents.Sarpa (serpent) has only one head. Vasuki is yellowcoloured. Nagas have many heads. Ananta is firecoloured.Sridhara says that the Sarpa is poisonous and the Naga is nonpoisonous. Sri Ramanuja says that Sarpa has only one head and Naga has many heads.
+Vajram the thunderbolt weapon made of the bones of Dadhichi an implement of warfare which can only be handled by Indra who has fininshed a hundred sacrifices. Kamadhuk The cow Kamadhenu of the great sage Vasishtha which yielded all the desired objects, also born of the ocean of milk. Kandarpa Cupid. Vasuki The Lord of hoodless or ordinary serpents. Sarpa (serpent) has only one head. Vasuki is yellowcoloured. Nagas have many heads. Ananta is firecoloured. Sridhara says that the Sarpa is poisonous and the Naga is nonpoisonous. Sri Ramanuja says that Sarpa has only one head and Naga has many heads.
 
 ### BG 10.29
 
@@ -1012,7 +1012,7 @@ I am Ananta among the Nagas; I am Varuna among water-deities; Aryaman among the 
 
 **English Commentary**
 
-Ananta is the king of hooded serpents or cobras. He is firecoloured.Varuna is the king of the watergods.Waterdeities The gods connected with waters.Aryaman is the king of the manes.I am Yama? the witness of the acts of all living beings? who keeps account of the good and bad actions of the people.
+Ananta is the king of hooded serpents or cobras. He is firecoloured. Varuna is the king of the watergods. Waterdeities The gods connected with waters. Aryaman is the king of the manes. I am Yama, the witness of the acts of all living beings, who keeps account of the good and bad actions of the people.
 
 ### BG 10.30
 
@@ -1045,7 +1045,7 @@ And I am Prahlada among the demons, I am Time among reckoners, I am the lion amo
 
 **English Commentary**
 
-Prahlada? though he was the son of a demon (Hiranyakasipu)? was a great devotee of the Lord.
+Prahlada, though he was the son of a demon (Hiranyakasipu)? was a great devotee of the Lord.
 
 ### BG 10.31
 
@@ -1113,7 +1113,7 @@ Among creations I am the beginning, the middle, and the end, O Arjuna; among the
 
 **English Commentary**
 
-I am the metaphysics among all sciences. I am knowledge of the Self among all branches of knowledge. I am the argument of dators. I am the logic of disputants. I am the speech of orators.In verse 20 above the Lord says? I am the beginning? the middle and the end of the whole movable and immovable creation. Here the whole creation in general is referred to.As the knowledge of the Self leads to the attainment of the final beatitude of life or salvation? it is the chief among all branches of knowledge.Pravadatam By the word controversialists? we should here understand the various kinds of people using various kinds of argumentation in logic such as Vada? Jalpa and Vitanda. Yada is a way of arguing by which one gets at the truth of a certain estion. The aspirants who are free from RagaDvesha and jealousy raise amongst themselves estions and answers and enter into discussions on philosophical problems in order to ascertain and understand the nature of the Truth. They do not argue in order to gain victory over one another. This is Vada. Jalpa is wrangling in which one asserts his own opinion and refutes that of his opponent. Vitanda is idle carping at the arguments of ones opponents. No attempt is made to establish the other side of the estion. In Jalpa and Vitanda one tries to defeat another. There is desire for victory.
+I am the metaphysics among all sciences. I am knowledge of the Self among all branches of knowledge. I am the argument of dators. I am the logic of disputants. I am the speech of orators. In verse 20 above the Lord says, I am the beginning, the middle and the end of the whole movable and immovable creation. Here the whole creation in general is referred to. As the knowledge of the Self leads to the attainment of the final beatitude of life or salvation, it is the chief among all branches of knowledge. Pravadatam By the word controversialists, we should here understand the various kinds of people using various kinds of argumentation in logic such as Vada, Jalpa and Vitanda. Yada is a way of arguing by which one gets at the truth of a certain estion. The aspirants who are free from RagaDvesha and jealousy raise amongst themselves estions and answers and enter into discussions on philosophical problems in order to ascertain and understand the nature of the Truth. They do not argue in order to gain victory over one another. This is Vada. Jalpa is wrangling in which one asserts his own opinion and refutes that of his opponent. Vitanda is idle carping at the arguments of ones opponents. No attempt is made to establish the other side of the estion. In Jalpa and Vitanda one tries to defeat another. There is desire for victory.
 
 ### BG 10.33
 
@@ -1148,7 +1148,7 @@ Among the letters of the alphabet, I am the letter 'A' and the dual among compou
 
 **English Commentary**
 
-Among the alphabets I am the letter A. Among the various kinds of compounds used in Sanskrit language I am the Dvandva (union of the two)? the copulative.Time here refers to the moment? the ultimate element of time or to Paramesvara? the Supreme Lord Who is the time of even time? since He is beyond time.As the Supreme Being is allpervading it is said that He has faces in all directions.
+Among the alphabets I am the letter A. Among the various kinds of compounds used in Sanskrit language I am the Dvandva (union of the two)? the copulative. Time here refers to the moment, the ultimate element of time or to Paramesvara, the Supreme Lord Who is the time of even time, since He is beyond time. As the Supreme Being is allpervading it is said that He has faces in all directions.
 
 ### BG 10.34
 
@@ -1181,7 +1181,7 @@ And I am the all-devouring Death, and the source of prosperity for those who are
 
 **English Commentary**
 
-I am also the allsnatching death that destroys everything. Death is of two kinds? viz.? he who seizes wealth and he who seizes life. Of them he who seizes life is the allseizer and,hence he is called Sarvaharah. I am he.Or? there is another interpretation. I am the Supreme Lord Who is the allseizer? because I destroy everything at the time of the cosmic dissolution.I am the origin of all the beings to be born in the future. I am the prosperity and the means of achieving it of those who are fit to attain it.Beauty is Sri. Lustre is Sri. I am fame? the best of the feminine alities. People who have attained slight fame think that they have achieved great success in life and that they have become very big or great men. I am speech which adorns the throne of justice. I am memory which recalls objects and pleasures of the past.The power of the mind which enables one to hold the teachings of the scriptures is Medha. Firmness or Dhriti is the power to keep the body and the senses steady even amidst various kinds of sufferings. The power to keep oneself unattached even while doing actions is Dhriti. It also means courage. Kshama also means endurance.Fame? prosperity? memory? intelligence and firmness are the daughters of Daksha. They had been given in marriage to Dhrama and so they are all called Dharmapatnis.
+I am also the allsnatching death that destroys everything. Death is of two kinds, viz.? he who seizes wealth and he who seizes life. Of them he who seizes life is the allseizer and,hence he is called Sarvaharah. I am he. Or, there is another interpretation. I am the Supreme Lord Who is the allseizer, because I destroy everything at the time of the cosmic dissolution. I am the origin of all the beings to be born in the future. I am the prosperity and the means of achieving it of those who are fit to attain it. Beauty is Sri. Lustre is Sri. I am fame, the best of the feminine alities. People who have attained slight fame think that they have achieved great success in life and that they have become very big or great men. I am speech which adorns the throne of justice. I am memory which recalls objects and pleasures of the past.The power of the mind which enables one to hold the teachings of the scriptures is Medha. Firmness or Dhriti is the power to keep the body and the senses steady even amidst various kinds of sufferings. The power to keep oneself unattached even while doing actions is Dhriti. It also means courage. Kshama also means endurance. Fame, prosperity, memory, intelligence and firmness are the daughters of Daksha. They had been given in marriage to Dhrama and so they are all called Dharmapatnis.
 
 ### BG 10.35
 
@@ -1214,7 +1214,7 @@ Among the hymns, I am the Brihatsaman; among meters, I am Gayatri; among months,
 
 **English Commentary**
 
-Brihatsaman is the chief of the hymns of the SamaVeda. Brihat means big.Margasirsha From the middle of December to the middle of January. This has a temperate climate. In olden days it was usual to start with this month in counting the months of the year. The first place was given to this month.Kusumakara The beautiful flowery season? the spring.
+Brihatsaman is the chief of the hymns of the SamaVeda. Brihat means big. Margasirsha From the middle of December to the middle of January. This has a temperate climate. In olden days it was usual to start with this month in counting the months of the year. The first place was given to this month. Kusumakara The beautiful flowery season, the spring.
 
 ### BG 10.36
 
@@ -1251,7 +1251,7 @@ I am the gambling of the deceitful; I am the splendor of the splendid; I am vict
 
 **English Commentary**
 
-Of the methods of defrauding others I am gambling such as diceplay. Gambling is My manifestation. I am the power of the powerful. I am the victoyr of the victorious. I am the effort of those who make that effort.I am Sattva which assumes the forms of Dharma (virtue)? Jnana (knowledge)? Vairagya (dispassion)? and Aisvarya (wealth or lordship) in Sattvic persons.
+Of the methods of defrauding others I am gambling such as diceplay. Gambling is My manifestation. I am the power of the powerful. I am the victoyr of the victorious. I am the effort of those who make that effort. I am Sattva which assumes the forms of Dharma (virtue)? Jnana (knowledge)? Vairagya (dispassion)? and Aisvarya (wealth or lordship) in Sattvic persons.
 
 ### BG 10.37
 
@@ -1284,7 +1284,7 @@ Among the Vrishnis, I am Vaasudeva; among the Pandavas, I am Arjuna; among the s
 
 **English Commentary**
 
-Vrishnis are Yadavas or the descendants of Yadu. I am the foremost among them.Usanas is Sukracharya? the preceptor of the demons.
+Vrishnis are Yadavas or the descendants of Yadu. I am the foremost among them. Usanas is Sukracharya, the preceptor of the demons.
 
 ### BG 10.38
 
@@ -1317,7 +1317,7 @@ Of those who punish, I am the scepter; among those who seek victory, I am states
 
 **English Commentary**
 
-Niti Diplomacy? polity.Maunam The silence produced by constant meditation on Brahman or the Self.Jnanam Knowledge of the Self.
+Niti Diplomacy, polity. Maunam The silence produced by constant meditation on Brahman or the Self. Jnanam Knowledge of the Self.
 
 ### BG 10.39
 
@@ -1383,7 +1383,7 @@ There is no end to My divine glories, O Arjuna, but this is a brief statement by
 
 **English Commentary**
 
-It is impossible for anyone to describe or know the exact extent of the divine gloreis of the Lord. There is no limit to His powers or glories. What could be expressed of Him is nothing when compared to His infinte glories.Parantapa Scorcher of foes -- he who burns the internal enemies? lust? anger? greed? deluion? etc.
+It is impossible for anyone to describe or know the exact extent of the divine gloreis of the Lord. There is no limit to His powers or glories. What could be expressed of Him is nothing when compared to His infinte glories. Parantapa Scorcher of foes -- he who burns the internal enemies, lust, anger, greed, deluion, etc.
 
 ### BG 10.41
 
@@ -1441,7 +1441,7 @@ athavā—or; bahunā—detailed; etena—by this; kim—what; jñātena tava—
 
 **English Meaning**
 
-But, of what avail is the knowledge of all these details to you, O Arjuna? I exist, supporting this whole world with one part of Myself.
+But, of what avail is the knowledge of all these details to you, O Arjuna, I exist, supporting this whole world with one part of Myself.
 
 **Hindi Commentary**
 
@@ -1449,4 +1449,4 @@ But, of what avail is the knowledge of all these details to you, O Arjuna? I exi
 
 **English Commentary**
 
-The Lord concludes Having established or pervaded this whole world with one fragment of Myself? I remain.This verse is based on the declaration in the Purusha Sukta (RigVeda10.90.3) that One arter of Him is all the cosmos the three arters are the divine transcendent Reality.I exist supporting this whole world by one part? by one limit? or by one foot. One part of Myself constitutes all beings.All beings form His foot (Taittiriya Aranyaka 3.12). The whole world is one Pada or foot of the Lord. Amsa (part) or Pada (foot) is mere Kalpana or imagination or account of our own ignorance,or limiting adjunct. In reality Brahman is without any such parts or limbs and is formless.Arjuna has now a knowledge of the glories of the Lord. He is fit to behold the magnificent cosmic form of the Lord. Lord Krishna prepares Arjuna for this grand vision by giving him a description of His glories.Arjuna says O Lord? I now realise that the whole world is filled by Thee. I now wish to behold the whole universe in Thee with my eye of intuition.Thus in the Upanishads of the glorious Bhagavad Gita? the science of the Eternal? the scripture of Yoga? the dialogue between Sri Krishna and Arjuna? ends the tenth discourse entitledThe Yoga of the Divine Glories.,
+The Lord concludes Having established or pervaded this whole world with one fragment of Myself, I remain. This verse is based on the declaration in the Purusha Sukta (RigVeda10.90.3) that One arter of Him is all the cosmos the three arters are the divine transcendent Reality. I exist supporting this whole world by one part, by one limit, or by one foot. One part of Myself constitutes all beings. All beings form His foot (Taittiriya Aranyaka 3.12). The whole world is one Pada or foot of the Lord. Amsa (part) or Pada (foot) is mere Kalpana or imagination or account of our own ignorance,or limiting adjunct. In reality Brahman is without any such parts or limbs and is formless. Arjuna has now a knowledge of the glories of the Lord. He is fit to behold the magnificent cosmic form of the Lord. Lord Krishna prepares Arjuna for this grand vision by giving him a description of His glories. Arjuna says O Lord, I now realise that the whole world is filled by Thee. I now wish to behold the whole universe in Thee with my eye of intuition. Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the tenth discourse entitledThe Yoga of the Divine Glories.,
