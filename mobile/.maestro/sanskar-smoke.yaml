@@ -51,24 +51,35 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd:
     timeout: 15000
 # If a previous session left reading progress, the ResumeReadingSheet modal
-# appears after a short animation. Wait, then optionally tap "Start over".
+# slides up after a delay (AsyncStorage round-trip + animation). 10s upper
+# bound + double-tap attempt covers the race where the modal renders just
+# after the first optional tap.
 - waitForAnimationToEnd:
-    timeout: 5000
+    timeout: 10000
 - tapOn:
-    text: "Start over from the beginning"
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 3000
+- tapOn:
+    id: "resume-start-over"
     optional: true
 - waitForAnimationToEnd
-- tapOn: "English"
+- tapOn:
+    id: "lang-toggle-en"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Introduction"
+    visible: "Morning Prayers"  # Section titleEn — appears in top-bar when lang=en
     timeout: 15000
 
 # ── Step 5: Swipe to next verse — intro should no longer be visible ──
 - swipe:
     direction: LEFT
 - waitForAnimationToEnd
-- assertNotVisible: "Introduction"
+# Pagination moved past intro page — verse 2's linesEn (no text-transform)
+- extendedWaitUntil:
+    visible: ".*Karaagre vasate Lakshmihi.*"  # Substring match (Maestro uses anchored regex)
+    timeout: 10000
 
 # ── Step 6: Restart and verify Surya Namaskar step indicator ──
 # Reopens fresh because the reader's nav stack is already deep.
@@ -84,19 +95,22 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd:
     timeout: 5000
 - tapOn:
-    text: "Start over from the beginning"
+    id: "resume-start-over"
     optional: true
 - waitForAnimationToEnd
-- tapOn: "English"
+- tapOn:
+    id: "lang-toggle-en"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Introduction"
+    visible: "Surya Namaskar"  # Section titleEn appears in top-bar when lang=en
     timeout: 15000
-# Swipe to first step — pill should now say "Step 1 · <Asana>"
+# Swipe to first step — verse 2's labelEn is "Pranamasana (Prayer Pose)"
 - swipe:
     direction: LEFT
 - waitForAnimationToEnd
-- assertVisible: "Step 1.*"  # SanskarVersePage.tsx:36 — "Step ${n}" prefix
+- extendedWaitUntil:
+    visible: ".*Om Mitraaya Namah.*"  # First-step linesEn — Mitra mantra (substring match)
+    timeout: 10000
 
 # ── Cleanup ──
 - stopApp:

@@ -17,12 +17,12 @@ appId: host.exp.Exponent
 - tapOn: "Aarti. Tap to open."
 - waitForAnimationToEnd
 
-# Verify all 7 sections appear in CategoryList
+# Verify all 6 sections appear in CategoryList
+# (Sankat Mochan Hanumanashtak was migrated to stotram category post-merge with main.)
 - extendedWaitUntil:
     visible: "Om Jai Jagdish Hare\\..*Tap to open\\."
     timeout: 15000
 - assertVisible: "Hanuman Ji Ki Aarti\\..*Tap to open\\."
-- assertVisible: "Sankat Mochan Hanumanashtak\\..*Tap to open\\."
 - assertVisible: "Jai Ganesh Deva\\..*Tap to open\\."
 - assertVisible: "Om Jai Shiv Omkara\\..*Tap to open\\."
 - assertVisible: "Jai Ambe Gauri\\..*Tap to open\\."

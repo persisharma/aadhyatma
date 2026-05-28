@@ -40,6 +40,7 @@ export default function LanguageToggle() {
             accessibilityRole="radio"
             accessibilityState={{ selected }}
             accessibilityLabel={opt.value === 'hi' ? 'Hindi' : 'English'}
+            testID={opt.value === 'hi' ? 'lang-toggle-hi' : 'lang-toggle-en'}
             hitSlop={8}
             style={({ pressed }) => [
               styles.half,

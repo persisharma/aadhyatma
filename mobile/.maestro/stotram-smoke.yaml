@@ -17,16 +17,23 @@ appId: host.exp.Exponent
 - tapOn: "Hymns & Praise. Tap to open."
 - waitForAnimationToEnd
 
-# Verify all 7 sections appear in CategoryList
+# Verify all 8 sections appear in CategoryList (post-merge adds Krishna Stotram).
+# Top half visible immediately; bottom entries require scrolling.
 - extendedWaitUntil:
     visible: "Shiva Stotram\\..*Tap to open\\."
     timeout: 15000
 - assertVisible: "Durga Stotram\\..*Tap to open\\."
 - assertVisible: "Ganesh Stotram\\..*Tap to open\\."
 - assertVisible: "Vishnu Sahasranama\\..*Tap to open\\."
-- assertVisible: "Hanuman Ashtak\\..*Tap to open\\."
+- assertVisible: "Krishna Stotram\\..*Tap to open\\."
+# Scroll to reveal the lower entries
+- scrollUntilVisible:
+    element:
+      text: "Ram Stuti\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Sankat Mochan Hanuman Ashtak\\..*Tap to open\\."
 - assertVisible: "Bajrang Baan\\..*Tap to open\\."
-- assertVisible: "Ram Stuti\\..*Tap to open\\."
 
 # Open Bajrang Baan reader
 - tapOn: "Bajrang Baan\\..*Tap to open\\."
