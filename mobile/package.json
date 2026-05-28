@@ -10,6 +10,8 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "test:readers": "jest --config jest.config.js --runInBand",
+    "test:e2e": "maestro test .maestro/",
+    "test:e2e:flow": "maestro test",
     "typecheck": "tsc --noEmit",
     "doctor": "expo-doctor"
   },
@@ -40,6 +42,7 @@
     "react-native-view-shot": "^4.0.3"
   },
   "devDependencies": {
+    "babel-preset-expo": "~54.0.10",
     "@types/jest": "^29.5.14",
     "@types/react": "~19.1.0",
     "@types/react-test-renderer": "^19.1.0",

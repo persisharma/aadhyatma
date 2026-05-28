@@ -20,7 +20,8 @@ export type ContentCategory =
   | 'stotram'
   | 'chalisa'
   | 'japam'
-  | 'aarti';
+  | 'aarti'
+  | 'sanskar';
 export type Deity = 'rama' | 'krishna' | 'shiva' | 'hanuman' | 'durga' | 'ganesha';
 
 export type LibraryEntry = {
@@ -278,5 +279,82 @@ export const library: readonly LibraryEntry[] = [
     category: 'aarti',
     deities: ['krishna'],
     verseCount: 7,
+  },
+  {
+    id: 'prabhati-shloka',
+    nameHi: 'प्रभाती श्लोक',
+    nameEn: 'Morning Slokas',
+    sub: '४ श्लोक · अर्थ सहित',
+    thumb: 'प्र',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['durga'],
+    verseCount: 4,
+  },
+  {
+    id: 'surya-namaskar',
+    nameHi: 'सूर्य नमस्कार',
+    nameEn: 'Surya Namaskar',
+    sub: '१२ चरण · मंत्र सहित',
+    thumb: 'सू',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['krishna'],
+    verseCount: 13,
+  },
+  {
+    id: 'tulsi-puja',
+    nameHi: 'तुलसी पूजा',
+    nameEn: 'Tulsi Puja',
+    sub: '५ मंत्र · विधि सहित',
+    thumb: 'तु',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['krishna'],
+    verseCount: 5,
+  },
+  {
+    id: 'bhojan-mantra',
+    nameHi: 'भोजन मंत्र',
+    nameEn: 'Meal Prayer',
+    sub: '४ श्लोक · अर्थ सहित',
+    thumb: 'भो',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['krishna'],
+    verseCount: 4,
+  },
+  {
+    id: 'gau-seva',
+    nameHi: 'गौ सेवा',
+    nameEn: 'Serving Cows & Birds',
+    sub: '४ मंत्र · विधि सहित',
+    thumb: 'गौ',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['krishna'],
+    verseCount: 4,
+  },
+  {
+    id: 'sandhya-deepam',
+    nameHi: 'सन्ध्या दीपम्',
+    nameEn: 'Evening Lamp',
+    sub: '४ श्लोक · विधि सहित',
+    thumb: 'दी',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['durga'],
+    verseCount: 4,
+  },
+  {
+    id: 'ratri-shloka',
+    nameHi: 'रात्रि श्लोक',
+    nameEn: 'Bedtime Slokas',
+    sub: '४ श्लोक · अर्थ सहित',
+    thumb: 'रा',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['rama'],
+    verseCount: 4,
   },
 ];

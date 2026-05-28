@@ -30,6 +30,7 @@ export default function HomeScreen({ navigation }: Props) {
     japam: <CategoryIcon iconKey="japam" />,
     deity: <CategoryIcon iconKey="deity" />,
     aarti: <CategoryIcon iconKey="aarti" />,
+    sanskar: <CategoryIcon iconKey="sanskar" />,
   };
 
   type TileItem = {

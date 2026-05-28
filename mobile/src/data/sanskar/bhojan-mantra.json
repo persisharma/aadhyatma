@@ -1,0 +1,64 @@
+{
+  "titleHi": "भोजन मन्त्र",
+  "titleEn": "Bhojan Mantra",
+  "subtitleHi": "भोजन से पूर्व बोले जाने वाले मन्त्र",
+  "subtitleEn": "Mantras to recite before meals",
+  "deity": "krishna",
+  "language": "sa-hi-en",
+  "source": { "baseText": "Sanskrit Documents (sanskritdocuments.org), Gitapress Gorakhpur editions", "retrievedOn": "2026-05-24" },
+  "counts": { "totalVerses": 4 },
+  "verses": [
+    {
+      "id": "bm-intro",
+      "number": 1,
+      "type": "intro",
+      "labelHi": "परिचय",
+      "labelEn": "Introduction",
+      "lines": ["भोजन मन्त्र — अन्न को ब्रह्मार्पण"],
+      "linesEn": ["Bhojan Mantra — Offering food to the Divine"],
+      "meaningHi": "भारतीय परम्परा में भोजन केवल शरीर-पोषण नहीं, बल्कि एक यज्ञ (पवित्र अग्नि-कर्म) है। भगवद्गीता (15.14) में श्रीकृष्ण कहते हैं — 'अहं वैश्वानरो भूत्वा प्राणिनां देहमाश्रितः' — मैं वैश्वानर अग्नि के रूप में प्राणियों के शरीर में रहकर अन्न को पचाता हूँ। इसलिए भोजन से पूर्व मन्त्र बोलकर अन्न को ब्रह्म (परमात्मा) को अर्पित किया जाता है। यह क्रिया भोजन को प्रसाद (ईश्वरीय अनुग्रह) में बदल देती है और खाने वाले का भाव शुद्ध करती है।",
+      "meaningEn": "In Indian tradition, eating is not merely bodily nourishment but a yajna (sacred fire-ritual). In Bhagavad Gita (15.14), Sri Krishna says — 'I am the Vaishvanara fire dwelling in the bodies of living beings, digesting the food they eat.' Therefore, before eating, one recites mantras to offer the food to Brahman (the Supreme). This transforms the meal into prasad (divine grace) and purifies the consciousness of the one eating."
+    },
+    {
+      "id": "bm-01",
+      "number": 2,
+      "type": "mantra",
+      "labelHi": "ब्रह्मार्पण श्लोक (गीता ४.२४)",
+      "labelEn": "Brahmarpanam Sloka (Gita 4.24)",
+      "lines": ["ब्रह्मार्पणं ब्रह्म हविर्ब्रह्माग्नौ ब्रह्मणा हुतम्।", "ब्रह्मैव तेन गन्तव्यं ब्रह्मकर्मसमाधिना॥"],
+      "linesEn": ["Brahmaarpanam Brahma havir Brahmaagnau Brahmanaa hutam.", "Brahmaiva tena gantavyam Brahma-karma-samaadhinaa."],
+      "meaningHi": "अर्पण (चम्मच/हाथ जिससे हवि डाली जाती है) ब्रह्म है, हवि (आहुति — भोजन) ब्रह्म है, अग्नि (जठराग्नि) ब्रह्म है, हवन करने वाला (खाने वाला) भी ब्रह्म है। जो इस प्रकार सब कर्मों में ब्रह्म-दृष्टि रखता है, उसे ब्रह्म की ही प्राप्ति होती है।\n\nयह गीता का अध्याय 4, श्लोक 24 है। इसमें भोजन की सम्पूर्ण क्रिया को ब्रह्म-यज्ञ के रूप में देखा गया है — खाना, खाने वाला, खिलाने वाला, पचाने वाली अग्नि — सब ब्रह्म ही है। यह अद्वैत वेदान्त का सार है।",
+      "meaningEn": "The offering (the act of giving) is Brahman, the oblation (food) is Brahman, the fire (digestive fire) is Brahman, the one who offers (the eater) is Brahman. One who sees Brahman in all actions attains Brahman alone.\n\nThis is Bhagavad Gita Chapter 4, Verse 24. It views the entire act of eating as a sacred yajna — the food, the eater, the one who provides, the digestive fire — all are Brahman. This is the essence of Advaita Vedanta."
+    },
+    {
+      "id": "bm-02",
+      "number": 3,
+      "type": "mantra",
+      "labelHi": "अन्नपति मन्त्र",
+      "labelEn": "Annapati Mantra",
+      "lines": ["अन्नपतेऽन्नस्य नो देह्यनमीवस्य शुष्मिणः।", "प्रप्र दातारं तारिष ऊर्जं नो धेहि द्विपदे चतुष्पदे॥"],
+      "linesEn": ["Annapate'nnasya no dehy-anameevasya shushminah.", "Pra-pra daataaram taarisha oorjam no dhehi dvipade chatushpade."],
+      "meaningHi": "हे अन्नपति (अन्न के स्वामी), हमें रोगरहित (अनमीव) और बलवर्धक (शुष्मिण) अन्न प्रदान करें। अन्नदाता को (जिसने यह अन्न उगाया/दिया) कल्याण प्रदान करें। हमें — दो पैर वालों (मनुष्यों) और चार पैर वालों (पशुओं) — दोनों को ऊर्जा (बल) प्रदान करें।\n\nयह वैदिक मन्त्र (यजुर्वेद) है। इसमें तीन प्रार्थनाएँ हैं: (1) अन्न शुद्ध और बलदायक हो, (2) अन्नदाता का कल्याण हो, (3) मनुष्य और पशु दोनों को पोषण मिले। यह मन्त्र सम्पूर्ण सृष्टि के पोषण की कामना करता है — केवल स्वयं के लिए नहीं।",
+      "meaningEn": "O Lord of Food (Annapati), grant us food that is free from disease (anamiva) and full of vitality (shushmin). Bless the one who provides this food. Grant nourishment and energy to both bipeds (humans) and quadrupeds (animals).\n\nThis is a Vedic mantra (Yajurveda). It contains three prayers: (1) may the food be pure and strengthening, (2) may the food-provider be blessed, (3) may both humans and animals receive nourishment. This mantra prays for the nourishment of all creation — not just oneself."
+    },
+    {
+      "id": "bm-03",
+      "number": 4,
+      "type": "mantra",
+      "labelHi": "सह नाववतु (तैत्तिरीय उपनिषद्)",
+      "labelEn": "Saha Nāvavatu (Taittiriya Upanishad)",
+      "lines": [
+        "ॐ सह नाववतु। सह नौ भुनक्तु। सह वीर्यं करवावहै।",
+        "तेजस्विनावधीतमस्तु मा विद्विषावहै॥",
+        "ॐ शान्तिः शान्तिः शान्तिः॥"
+      ],
+      "linesEn": [
+        "Om Saha Nāvavatu. Saha Nau Bhunaktu. Saha Vīryam Karavāvahai.",
+        "Tejasvināv-adhītam-astu Mā Vidviṣāvahai.",
+        "Om Śāntiḥ Śāntiḥ Śāntiḥ."
+      ],
+      "meaningHi": "हे परमात्मा, हम सब (गुरु-शिष्य, माता-पुत्र, साथ बैठकर भोजन करने वाले सब) की एक साथ रक्षा करें। हमें एक साथ पोषण (अन्न) प्रदान करें। हम एक साथ बल और तेज से युक्त होकर कार्य करें। हमारी विद्या तेजस्वी (प्रकाशमयी) हो। हम एक-दूसरे से द्वेष न करें। तीनों स्तरों पर शान्ति हो — आधिदैविक (दैवीय), आधिभौतिक (भौतिक), आध्यात्मिक।\n\nयह तैत्तिरीय उपनिषद् (कृष्ण यजुर्वेद) का प्रसिद्ध शान्ति-मन्त्र है। 'सह नौ भुनक्तु' का सीधा अर्थ है — 'हम एक साथ भोजन करें / एक साथ पोषित हों' — इसलिए यह मन्त्र भोजन से पूर्व विशेष रूप से बोला जाता है, साथ ही यह अध्ययन-कक्षा में गुरु-शिष्य के द्वारा भी बोला जाता है। यह मन्त्र अकेले भोजन की भावना का निषेध करता है और सहभोजन (मिलकर खाना) की वैदिक परम्परा को स्थापित करता है — परिवार के साथ, अतिथि के साथ, समुदाय के साथ।",
+      "meaningEn": "O Supreme Being, may we all (teacher and student, mother and child, all who eat together) be protected together. May we be nourished (fed) together. May we work together with strength and vigor. May our learning be radiant (illuminating). May we not hate one another. May there be peace at all three levels — adhidaivika (divine/cosmic), adhibhautika (worldly/physical), adhyatmika (spiritual).\n\nThis is the famous shanti mantra from the Taittiriya Upanishad (Krishna Yajurveda). 'Saha nau bhunaktu' literally means 'may we eat together / may we be nourished together' — which is why this mantra is especially recited before meals; it is also recited in classrooms between teacher and student. It rejects the idea of eating alone and establishes the Vedic tradition of sahabhojan (eating together) — with family, guests, and community."
+    }
+  ]
+}

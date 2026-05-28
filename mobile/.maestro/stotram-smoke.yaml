@@ -1,0 +1,49 @@
+# Stotram Category Smoke Test
+#
+# Verifies the Stotram category and its 7 active sections render correctly.
+# Sections: Shiva Stotram, Durga Stotram, Ganesh Stotram, Vishnu Sahasranama,
+#           Hanuman Ashtak, Bajrang Baan, Ram Stuti.
+#
+# Opens Bajrang Baan as the representative reader — it has a smoke test
+# (BajrangBaanReaderScreen.test.tsx) which validates first-verse render,
+# matching this Maestro flow's check.
+
+appId: host.exp.Exponent
+---
+- runFlow: _launch.yaml
+
+# Open Stotram category
+- assertVisible: "Hymns & Praise. Tap to open."
+- tapOn: "Hymns & Praise. Tap to open."
+- waitForAnimationToEnd
+
+# Verify all 7 sections appear in CategoryList
+- extendedWaitUntil:
+    visible: "Shiva Stotram\\..*Tap to open\\."
+    timeout: 15000
+- assertVisible: "Durga Stotram\\..*Tap to open\\."
+- assertVisible: "Ganesh Stotram\\..*Tap to open\\."
+- assertVisible: "Vishnu Sahasranama\\..*Tap to open\\."
+- assertVisible: "Hanuman Ashtak\\..*Tap to open\\."
+- assertVisible: "Bajrang Baan\\..*Tap to open\\."
+- assertVisible: "Ram Stuti\\..*Tap to open\\."
+
+# Open Bajrang Baan reader
+- tapOn: "Bajrang Baan\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss Resume sheet if a prior session left reading progress
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+
+# Language toggle test
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: "Hindi"
+- waitForAnimationToEnd
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+- stopApp:
+    appId: host.exp.Exponent

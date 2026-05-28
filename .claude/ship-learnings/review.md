@@ -36,3 +36,10 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Category:** visual-rhythm
 **Example:** `pill.marginBottom=6` + `chapterEn.marginBottom=18` = 24px combined. If `labelEn` is ever empty and the chapterEn component unmounts, pill→verse gap collapses to 6px — a silent visual regression. Added a module-load assertion that `labelEn.trim() !== ''` so the preview can't ship with an empty value. Alternative: merge the two margins into one or inline the chapter-en label into the pill row so there's a single spacing contract.
 **Resolution pattern:** When two separate components carry shared spacing, either: (a) assert the condition that keeps both mounted, (b) collapse into one component, or (c) duplicate the margin so either can stand alone.
+
+### JSON deity fields must use valid Deity union values — subagents may invent values like 'surya' or 'multi'
+
+**Seen:** 1x — 2026-05-24
+**Category:** type-safety
+**Example:** Subagent created JSON files with deity: surya, multi, lakshmi — none exist in the Deity type union. TypeScript misses this because JSON imports bypass strict checking. DeityListScreen silently drops these entries.
+**Resolution pattern:** After subagent creates JSON data, grep deity fields and verify each value exists in the Deity type union. Add as post-implementation check.

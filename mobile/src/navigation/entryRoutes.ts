@@ -10,6 +10,8 @@ type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
 const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa']);
 
+const sanskarIds = new Set(['prabhati-shloka', 'surya-namaskar', 'tulsi-puja', 'bhojan-mantra', 'gau-seva', 'sandhya-deepam', 'ratri-shloka']);
+
 const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'shiva-strotam': 'ShivaStrotamChapters',
   'durga-stotram': 'DurgaStotramChapters',
@@ -45,6 +47,10 @@ export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
     nav.navigate('ChalisaReader', { initialIndex: 0, chalisaId: entry.id });
     return true;
   }
+  if (sanskarIds.has(entry.id)) {
+    nav.navigate('SanskarReader', { initialIndex: 0, sanskarId: entry.id });
+    return true;
+  }
   const aartiIndex = (aartiIndexById as Record<string, number>)[entry.id];
   if (aartiIndex != null) {
     nav.navigate('AartiReader', { aartiIndex });
@@ -62,6 +68,10 @@ export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean
   const sourceId = canonicalSourceId(progress.sourceId);
   if (chalisaIds.has(sourceId)) {
     nav.navigate('ChalisaReader', { initialIndex: progress.verseIndex, chalisaId: sourceId });
+    return true;
+  }
+  if (sanskarIds.has(sourceId)) {
+    nav.navigate('SanskarReader', { initialIndex: progress.verseIndex, sanskarId: sourceId });
     return true;
   }
   const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];
@@ -114,6 +124,12 @@ export function buildProgressTarget(p: {
       params: { initialIndex: p.verseIndex, chalisaId: sourceId },
     };
   }
+  if (sanskarIds.has(sourceId)) {
+    return {
+      screen: 'SanskarReader',
+      params: { sanskarId: sourceId, initialIndex: p.verseIndex },
+    };
+  }
   const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];
   if (aartiIndex != null) {
     return {
@@ -143,6 +159,12 @@ export function buildBookmarkTarget(bm: BookmarkRef): BookmarkTarget | null {
     return {
       screen: 'ChalisaReader',
       params: { initialIndex: bm.verseIndex, chalisaId: sourceId },
+    };
+  }
+  if (sanskarIds.has(sourceId)) {
+    return {
+      screen: 'SanskarReader',
+      params: { sanskarId: sourceId, initialIndex: bm.verseIndex },
     };
   }
   const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];

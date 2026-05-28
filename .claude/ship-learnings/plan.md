@@ -57,3 +57,17 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Category:** tooling
 **Example:** Skipped `/codex:adversarial-review` across two plan rounds because `codex:adversarial-review` didn't appear in the skills registry at session start. Wrote "self-adversarial pass (no external codex harness in this environment)" — but skills and slash commands live in separate registries; the slash command was wired to `codex-companion.mjs` and callable, I just hadn't checked. User caught the shortcut.
 **Resolution pattern:** If a ship phase references `/codex:*` or any external reviewer, try the invocation rather than inferring absence from a skills-list scan. When a real failure happens, surface the error — never quietly swap a real reviewer for a self-review.
+
+### entryRoutes.ts has 5 routing functions, not 3 — count them before planning
+
+**Seen:** 1x — 2026-05-24
+**Category:** route-coverage
+**Example:** Plan v1 said "register in navigateToEntryStart, buildProgressTarget, buildBookmarkTarget" (3 functions). Codex adversarial review found 5: also navigateToProgress and navigateToBookmark. Missing any one causes dead resume/bookmark links from that path.
+**Resolution pattern:** Before listing registration points in a plan, `grep 'export function' entryRoutes.ts` and enumerate all public functions. Every routing helper that dispatches on entry ID or sourceId needs a new branch.
+
+### backgrounds.ts runtime coverage validator will crash the app if entries are added without backgrounds
+
+**Seen:** 1x — 2026-05-24
+**Category:** boot-crash
+**Example:** Plan had Task 14 (add LibraryEntry items) but Task 11 (register backgrounds) could easily be done after. The IIFE in backgrounds.ts runs on module import and throws if any active non-hidden library entry lacks a sourceBackgrounds mapping. Adding entries before backgrounds = app crash on boot.
+**Resolution pattern:** When adding new library entries, always register their sourceBackgrounds BEFORE setting status to 'active'. Alternatively, add entries as `hidden: true` first, then flip to visible after backgrounds are wired.
