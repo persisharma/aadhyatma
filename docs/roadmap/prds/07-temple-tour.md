@@ -158,9 +158,9 @@ Vertical-scroll screen. Tapping a pin (5.1) or a card (5.2) pushes this.
 
 **No verse pill, no transliteration, no `*VersePage` reuse.** The romanization rules in design.md §3.1 do NOT apply — significance/origin-story `*En` fields are independent English prose, not transliteration of the same source line.
 
-### 5.4 The map technology decision (the central blocker)
+### 5.4 The map technology decision (CONFIRMED)
 
-**Recommendation: a stylised SVG India map, NOT `react-native-maps`.**
+**Decision: a stylised SVG India map. No external map provider, no API keys, no billing. Static view, no live tiles.** Confirmed by product on 2026-05-28.
 
 | Concern | `react-native-maps` (Google/Apple) | Stylised SVG India outline |
 |---|---|---|
@@ -255,7 +255,7 @@ A content sourcing sprint (separate from this PRD) lands all 12 temples' verifie
 
 ## 10. Open questions for the design lead
 
-1. **Map technology — confirm SVG over react-native-maps?** Recommendation strong (parchment fit, no API keys, offline). One-sentence sign-off unblocks Phase 2.
+1. ~~Map technology — confirm SVG over react-native-maps?~~ **Resolved — stylised SVG, no provider, no API cost (see §5.4).**
 2. **Tile slot.** Does `theerth` ship as the 7th category tile (grid becomes 4×2 with one empty), or as `coming` until a cleaner grid lands?
 3. **One entry or multiple in v1?** Option A: a single LibraryEntry "Dvādaśa Jyotirlinga" with 12 temples. Option B: a single LibraryEntry "Tirth Darshan" combining Jyotirlingas + Char Dham + a few showpiece temples (~20 total) on one map. Recommend A for v1 (smaller content surface to verify) — B as v2 if user feedback wants more.
 4. **Default view: map or state list?** Recommend map (it's the headline UX). State list is one toggle-tap away.
