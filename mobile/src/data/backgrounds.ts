@@ -21,6 +21,7 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
   chalisa: backgroundImages.category_chalisa_booklet_mala,
   japam: backgroundImages.category_japam_mala,
   aarti: backgroundImages.category_aarti_diya,
+  sanskar: backgroundImages.source_gayatri_savitri_sun,
 };
 
 const deityBackgrounds: Record<Deity, BackgroundImage> = {
@@ -60,6 +61,13 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'om-jai-shiv-omkara': shivaStrotamImages.shiva,
   'jai-ambe-gauri': backgroundImages.deity_durga_lion,
   'aarti-kunj-bihari': backgroundImages.deity_krishna_bansuri,
+  'prabhati-shloka': backgroundImages.category_stotram_hymn_scroll,
+  'surya-namaskar': backgroundImages.source_gayatri_savitri_sun,
+  'tulsi-puja': backgroundImages.deity_krishna_bansuri,
+  'bhojan-mantra': backgroundImages.category_granth_open_scripture,
+  'gau-seva': backgroundImages.deity_krishna_bansuri,
+  'sandhya-deepam': backgroundImages.category_aarti_diya,
+  'ratri-shloka': backgroundImages.deity_rama_darbar,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {

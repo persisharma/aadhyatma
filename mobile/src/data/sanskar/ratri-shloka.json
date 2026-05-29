@@ -1,0 +1,56 @@
+{
+  "titleHi": "रात्रि श्लोक",
+  "titleEn": "Bedtime Prayers",
+  "subtitleHi": "शयन से पूर्व बोले जाने वाले श्लोक",
+  "subtitleEn": "Slokas to recite before sleep",
+  "deity": "rama",
+  "language": "sa-hi-en",
+  "source": { "baseText": "Sanskrit Documents (sanskritdocuments.org), Gitapress Gorakhpur editions", "retrievedOn": "2026-05-24" },
+  "counts": { "totalVerses": 4 },
+  "verses": [
+    {
+      "id": "rs-intro",
+      "number": 1,
+      "type": "intro",
+      "labelHi": "परिचय",
+      "labelEn": "Introduction",
+      "lines": ["रात्रि श्लोक — शयन पूर्व प्रार्थना"],
+      "linesEn": ["Ratri Shloka — Bedtime prayers"],
+      "meaningHi": "शयन (सोने) से पूर्व श्लोक बोलने की परम्परा अत्यन्त प्राचीन है। इसके तीन उद्देश्य हैं: (1) दुःस्वप्न (बुरे सपने) से रक्षा — वीर देवताओं (राम, हनुमान, भीम) का स्मरण करने से भय दूर होता है; (2) दिनभर में हुई अनजाने गलतियों के लिए ईश्वर से क्षमा-प्रार्थना; (3) शान्ति-मन्त्र से मन को शान्त करके गहरी निद्रा प्राप्त करना। बच्चों के लिए यह विशेष लाभकारी है — सोने से पहले सकारात्मक विचारों से मन भरने पर रात्रि शान्तिपूर्ण होती है।",
+      "meaningEn": "The tradition of reciting slokas before sleep is ancient. It has three purposes: (1) Protection from bad dreams — remembering heroic deities (Rama, Hanuman, Bhima) removes fear; (2) Seeking forgiveness from God for the day's unknowing mistakes; (3) Calming the mind with peace mantras for deep sleep. This is especially beneficial for children — filling the mind with positive thoughts before sleep ensures a peaceful night."
+    },
+    {
+      "id": "rs-01",
+      "number": 2,
+      "type": "mantra",
+      "labelHi": "दुःस्वप्ननाशक श्लोक",
+      "labelEn": "Bad-Dream Removing Sloka",
+      "lines": ["रामस्कन्दं हनूमन्तं वैनतेयं वृकोदरम्।", "शयने यः स्मरेन्नित्यं दुःस्वप्नं तस्य नश्यति॥"],
+      "linesEn": ["Raama-Skandam Hanuumantam Vainateyam Vrikodaram.", "Shayane yah smaren-nityam duhsvapnam tasya nashyati."],
+      "meaningHi": "जो व्यक्ति शयन (सोते समय) करते हुए नित्य राम, स्कन्द (कार्तिकेय — षडानन, देवसेनापति), हनुमान, वैनतेय (गरुड़ — विनता के पुत्र, विष्णु-वाहन) और वृकोदर (भीम — भेड़िये जैसा उदर वाला, अतुल बलशाली) का स्मरण करता है, उसके दुःस्वप्न (बुरे सपने) नष्ट हो जाते हैं।\n\nये पाँच नाम पाँच महावीरों के हैं — प्रत्येक अपराजेय शक्ति का प्रतीक है। इनका स्मरण मन में सुरक्षा और निर्भयता का भाव उत्पन्न करता है, जिससे रात्रि भयमुक्त होती है।",
+      "meaningEn": "One who, while lying in bed, daily remembers Rama, Skanda (Kartikeya — six-faced commander of the gods), Hanuman, Vainateya (Garuda — son of Vinata, Vishnu's mount), and Vrikodara (Bhima — wolf-bellied, of immeasurable strength) — their bad dreams are destroyed.\n\nThese five names represent five invincible warriors — each a symbol of unconquerable power. Remembering them creates a feeling of security and fearlessness, making the night free from fear."
+    },
+    {
+      "id": "rs-02",
+      "number": 3,
+      "type": "mantra",
+      "labelHi": "क्षमा-प्रार्थना श्लोक",
+      "labelEn": "Forgiveness Prayer Sloka",
+      "lines": ["करचरणकृतं वाक्कायजं कर्मजं वा।", "श्रवणनयनजं वा मानसं वापराधम्।", "विहितमविहितं वा सर्वमेतत् क्षमस्व।", "जय जय करुणाब्धे श्रीमहादेव शम्भो॥"],
+      "linesEn": ["Kara-charana-kritam vaak-kaayajam karmajam vaa.", "Shravana-nayanajam vaa maanasam vaaparaadham.", "Vihitam-avihitam vaa sarvam-etat kshamasva.", "Jaya jaya karunaabdhe Shree-Mahaadeva Shambho."],
+      "meaningHi": "हाथों-पैरों से किया हो, वाणी या शरीर से किया हो, कर्म से उत्पन्न हो, कानों-आँखों से हुआ हो, या मन से किया गया अपराध हो — विधि-सम्मत हो या अनुचित हो — यह सब क्षमा करें। हे करुणा के सागर, हे श्री महादेव शम्भो, जय हो जय हो!\n\nयह सर्वाधिक प्रसिद्ध क्षमा-प्रार्थना है। इसमें मनुष्य की सभी इन्द्रियों (हाथ, पैर, वाणी, कान, आँख, मन) से हुए अपराधों की सूची है। 'विहितमविहितं' — जाने-अनजाने दोनों प्रकार के अपराध। 'करुणाब्धे' — करुणा के समुद्र — क्षमा माँगने का आधार ईश्वर की अनन्त करुणा है।",
+      "meaningEn": "Whatever wrong was done by hands or feet, by speech or body, by action, by ears or eyes, or by the mind — whether permitted or forbidden — forgive it all. Victory, victory to the Ocean of Compassion, Shri Mahadeva Shambho!\n\nThis is the most famous forgiveness prayer. It lists offenses committed by all the senses (hands, feet, speech, ears, eyes, mind). 'Vihitam-avihitam' — both intentional and unintentional wrongs. 'Karunabdhe' — Ocean of Compassion — the basis for seeking forgiveness is God's infinite mercy."
+    },
+    {
+      "id": "rs-03",
+      "number": 4,
+      "type": "mantra",
+      "labelHi": "शान्ति मन्त्र",
+      "labelEn": "Shanti Mantra",
+      "lines": ["ॐ सर्वेषां स्वस्तिर्भवतु। सर्वेषां शान्तिर्भवतु।", "सर्वेषां पूर्णं भवतु। सर्वेषां मङ्गलं भवतु।", "ॐ शान्तिः शान्तिः शान्तिः॥"],
+      "linesEn": ["Om sarveshaam svastir-bhavatu. Sarveshaam shaantir-bhavatu.", "Sarveshaam poornam bhavatu. Sarveshaam mangalam bhavatu.", "Om Shaantih Shaantih Shaantih."],
+      "meaningHi": "ॐ — सबका कल्याण हो, सबको शान्ति मिले, सबको पूर्णता प्राप्त हो, सबका मंगल हो। ॐ शान्ति, शान्ति, शान्ति।\n\nतीन बार 'शान्तिः' बोलने का कारण — तीन प्रकार के ताप (कष्ट) की शान्ति के लिए: (1) आधिदैविक — प्राकृतिक आपदाएँ (बाढ़, भूकम्प); (2) आधिभौतिक — अन्य प्राणियों से कष्ट; (3) आध्यात्मिक — शारीरिक-मानसिक रोग। यह मन्त्र केवल स्वयं के लिए नहीं, 'सर्वेषां' (सबके लिए) शान्ति माँगता है — यह वसुधैव कुटुम्बकम् की भावना है।",
+      "meaningEn": "Om — May all be well, may all have peace, may all have fullness, may all have auspiciousness. Om Peace, Peace, Peace.\n\n'Shanti' is said three times for the three types of suffering (taapa): (1) Adhidaivika — natural calamities (floods, earthquakes); (2) Adhibhautika — suffering from other beings; (3) Adhyatmika — bodily and mental ailments. This mantra asks peace not just for oneself but for 'sarvesham' (all beings) — embodying the spirit of Vasudhaiva Kutumbakam (the world is one family)."
+    }
+  ]
+}

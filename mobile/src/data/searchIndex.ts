@@ -70,6 +70,7 @@ import {
   ramcharitmanasChaptersManifest,
   type RamcharitmanasVerse,
 } from './ramcharitmanas';
+import { getSanskar, sanskarIds } from './sanskar';
 import { MatchRank, normalize, rankAny } from './searchNormalize';
 
 const CHALISA_IDS: readonly ChalisaId[] = [
@@ -331,6 +332,11 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.category === 'sanskar') {
+      pushSanskar(verses, entry);
+      continue;
+    }
+
     if (entry.category === 'japam') {
       pushJapam(verses, entry);
       continue;
@@ -497,6 +503,27 @@ function pushAarti(out: SearchVerseEntry[], entry: LibraryEntry) {
   const aarti = aartiCollection[idx];
   if (!aarti) return;
   aarti.verses.forEach((v: AartiVerse, verseIdx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: verseIdx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+function pushSanskar(out: SearchVerseEntry[], entry: LibraryEntry) {
+  if (!(sanskarIds as readonly string[]).includes(entry.id)) return;
+  const sanskar = getSanskar(entry.id);
+  sanskar.verses.forEach((v, verseIdx) => {
     out.push(
       makeVerseEntry({
         sourceId: entry.id,

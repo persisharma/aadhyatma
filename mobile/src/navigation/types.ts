@@ -36,6 +36,7 @@ export type HomeStackParamList = {
   RamcharitmanasChapters: undefined;
   RamcharitmanasReader: { chapter: number; initialIndex?: number };
   AartiReader: { aartiIndex: number; initialIndex?: number };
+  SanskarReader: { sanskarId: string; initialIndex?: number };
   JapamCounter: { mantraId: string };
 };
 

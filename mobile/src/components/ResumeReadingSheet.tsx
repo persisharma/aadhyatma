@@ -37,10 +37,12 @@ export default function ResumeReadingSheet({
       onRequestClose={onDismiss}
     >
       <Pressable
+        accessible={false}
         style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}
         onPress={onDismiss}
       >
         <Pressable
+          accessible={false}
           style={[
             styles.sheet,
             {
@@ -191,6 +193,7 @@ export default function ResumeReadingSheet({
             onPress={onStartOver}
             accessibilityRole="button"
             accessibilityLabel="Start over from the beginning"
+            testID="resume-start-over"
             style={({ pressed }) => [
               styles.secondaryBtn,
               {

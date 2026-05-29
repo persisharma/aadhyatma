@@ -52,6 +52,8 @@ Exact paths, in build order. Each row maps to a Phase-C step in `/add-section`.
 | 11 | `mobile/src/screens/HomeScreen.tsx` | no edit needed | categories and deities are rendered dynamically from data |
 | 12 | `mobile/src/screens/CategoryListScreen.tsx` | no edit needed | items auto-filter by `category` field; routing is delegated to `entryRoutes.ts` (row 10) |
 | 13 | `mobile/src/screens/DeityListScreen.tsx` | no edit needed | items auto-filter by `deities` field; routing is delegated to `entryRoutes.ts` (row 10) |
+| 14 | `mobile/src/screens/__tests__/<Pascal>ReaderScreen.test.tsx` | create | Mirrors `BajrangBaanReaderScreen.test.tsx` — mounts the new reader with chapter-1 fixture and asserts first verse renders. Required gate in CI. |
+| 15 | `mobile/.maestro/<category>-smoke.yaml` | **edit** (existing category) **or create** (new category) | For an existing category, add a new `- assertVisible: "<NameEn>"` line to the `CategoryList block` of `mobile/.maestro/<category>-smoke.yaml` so the new section appears in the E2E flow. For a new category, create a new `<category>-smoke.yaml` based on `mobile/.maestro/sanskar-smoke.yaml` as the template. Both forms must `runFlow: _launch.yaml` and live in `mobile/.maestro/`. |
 
 `<Pascal>` = the `id` converted to PascalCase (e.g. `hanuman-chalisa` → `HanumanChalisa`).
 
@@ -103,6 +105,7 @@ The slash command runs the first three; the human PR author runs the rest.
 12. **Both listings reach the reader.** Open the section from Home → its category tile **and** from Home → By Deity → its deity card. Both paths must land on the same reader. If the section appears as a card but tapping is a no-op, the routing helper (`entryRoutes.ts`) is missing a case.
 13. **Multi-instance readers serve the right content.** For sections that share a screen (chalisas, aartis, future N-of-a-kind), open at least two distinct entries and confirm titles, verses, and `sourceId` (visible via bookmarks) actually differ — a reader hardcoded to one variant will silently render the wrong content for the others.
 14. **Section is reachable from search.** `mobile/src/data/__tests__/searchIndex.test.ts` already enforces that every active `library` entry produces verse entries in the search index — but verify manually: open the global search (top-right magnifier on Home), type a unique word from the section's first verse, confirm the result row tap lands on the correct reader page. See §8 for the per-shape integration paths.
+15. **Maestro E2E flow updated.** `mobile/.maestro/<category>-smoke.yaml` includes the new section's `nameEn` in its `assertVisible` list (for an existing category) or a new flow file exists (for a new category). Run `npm run test:e2e` locally and confirm the flow passes on both iOS Simulator and Android Emulator before merge. See `mobile/.maestro/README.md` for the per-category template.
 
 ---
 
@@ -153,7 +156,49 @@ If a new section uses one of the above shapes **and** its data accessor follows 
 
 ---
 
-## 9. Pull-request hygiene for new sections
+## 9. Cross-platform verification (iOS + Android)
+
+Every implementation must work on **both iOS and Android**. This is non-negotiable.
+
+- **Simulator + Emulator.** Before any section ships, it must be tested on both an iOS Simulator (via Xcode) and an Android Emulator (via Android Studio / `emulator` CLI). A single-platform test does not constitute a passing verification.
+- **Automated verification via Maestro — one flow per category, every section covered.** `mobile/.maestro/` holds YAML flow files that drive the simulator/emulator without manual taps. **Every active category has its own smoke flow** that opens the category tile, lists every section that lives under it, opens a representative reader, verifies the language toggle, and returns home:
+  - `granth-smoke.yaml` · `stotram-smoke.yaml` · `chalisa-smoke.yaml` · `japam-smoke.yaml` · `aarti-smoke.yaml` · `sanskar-smoke.yaml`
+  - All flows share `_launch.yaml` (boot + project select) via `runFlow:` so a change to the launch path ripples to all flows.
+  - `config.yaml` sets `snapshotKeyHonorModalViews: false` so Maestro reads past iOS modal sheets (notably Expo Go's first-launch dev menu).
+  - Run all flows: `npm run test:e2e` (alias for `maestro test .maestro/`). Run a single flow: `maestro test --config .maestro/config.yaml .maestro/<category>-smoke.yaml`.
+- **The Maestro flow is part of the section contract, not an optional follow-up.** When adding a section to an existing category, append an `- assertVisible: "<NameEn>"` to that category's smoke flow's CategoryList block (Section 2 of `mobile/.maestro/README.md` documents this). When adding a brand-new category, copy `sanskar-smoke.yaml` as the template, swap section names, and add a row to `mobile/.maestro/README.md`'s flow table. A PR that adds a section but does not update the matching `<category>-smoke.yaml` is a hard reject — same bar as a missing reader-screen test.
+- **Element selection in Maestro flows.** Prefer visible text (`tapOn: text: "..."`) and `accessibilityLabel` matching. `LibraryCard` uses `${nameEn}. ${sub}. Tap to open.` — match on just the `nameEn` substring. `CategoryCard` uses the shorter `${nameEn}. Tap to open.` — same substring matches both. NEVER use `point: x%, y%` coordinates — they break across device sizes and were the cause of past flaky test runs.
+- **Platform-specific rendering.** Check for platform divergence in: safe area insets, font rendering (Devanagari kerning differences), background image scaling, navigation gestures (swipe-back on iOS vs hardware back on Android), status bar behaviour.
+- **PR screenshots.** PR descriptions for new sections must include screenshots from **both platforms** — not just one. At minimum: reader page 1 on iOS, reader page 1 on Android.
+- **No platform-only code without justification.** `Platform.select()` or `Platform.OS` branching is acceptable only when addressing a verified rendering difference. Do not pre-emptively add platform branches "just in case."
+
+---
+
+## 10. Content accuracy and verification
+
+All content (slokas, mantras, verses, meanings, instructions) must be **verified against authoritative internet sources** before shipping. No discrepancy is acceptable.
+
+- **Authoritative sources.** Use Gitapress (gitapress.org), Gita Supersite (gitasupersite.iitk.ac.in), Sanskrit Documents (sanskritdocuments.org), Arya Samaj publications, or university-hosted Sanskrit databases. YouTube transcriptions and random blogs are NOT authoritative.
+- **Cross-verification.** Each sloka must be verified against at least 2 independent authoritative sources. If sources disagree on a word, use the majority reading and note the variant in a comment in the JSON `source` field.
+- **No AI-generated Sanskrit.** Slokas must be copied from verified sources, never composed or "completed" by an LLM. If a verse is incomplete in one source, find the full text in another — do not guess missing words.
+- **Transliteration accuracy.** IAST transliterations must be checked character-by-character against the Devanagari. Common errors to watch: anusvara (ṃ vs. n/m), visarga (ḥ), retroflex consonants (ṭ/ḍ/ṇ vs t/d/n), long vowels (ā/ī/ū).
+- **Meaning faithfulness.** Hindi and English meanings must faithfully convey the verse's meaning without adding theological interpretation beyond what the verse states. Simplification for readability is fine; invention is not.
+- **Source attribution.** Every JSON data file must include a `source` object with `baseText` (authoritative source name) and `retrievedOn` (ISO date). If multiple sources were used, list them.
+
+---
+
+## 11. Explanation and importance of every sloka and ritual
+
+Every content section — especially the `sanskar` category — must include **explanation (अर्थ) and importance/significance (महत्त्व)** for each sloka, mantra, or ritual. This mirrors the depth provided in stotram sections.
+
+- **`meaningHi` and `meaningEn` are never just translations.** They must explain: (a) the literal meaning of the verse, (b) the context/occasion when it is recited, and (c) the spiritual or practical significance. A bare word-for-word translation is insufficient.
+- **`vidhiHi` / `vidhiEn` for instructional content.** Sections that teach practices (Surya Namaskar, Tulsi Puja, etc.) must include step-by-step instructions in the vidhi fields. Instructions should be clear enough for a child (8-14 years) to follow independently.
+- **Benefits/significance.** Each ritual or sloka must explain WHY it is practiced — the scriptural basis, the spiritual benefit, and (where applicable) the health/wellbeing benefit per Ayurvedic or Yogic tradition.
+- **Scriptural reference.** Where a sloka originates from a specific text (e.g., Gita 4.24 for Brahmarpanam), cite the source in the meaning field.
+
+---
+
+## 12. Pull-request hygiene for new sections
 
 These rules exist because PR #31 (the Balkand crash) demonstrated that bulk multi-section PRs invite pattern-match review, and that `tsc` escape hatches will be approved if the commit message frames them as "compatibility casts." Both failure modes are now closed.
 

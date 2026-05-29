@@ -1,0 +1,56 @@
+{
+  "titleHi": "प्रभाती श्लोक",
+  "titleEn": "Morning Prayers",
+  "subtitleHi": "ब्रह्म मुहूर्त में उठकर बोले जाने वाले श्लोक",
+  "subtitleEn": "Slokas to recite upon waking at Brahma Muhurta",
+  "deity": "durga",
+  "language": "sa-hi-en",
+  "source": { "baseText": "Sanskrit Documents (sanskritdocuments.org), Gitapress Gorakhpur editions", "retrievedOn": "2026-05-24" },
+  "counts": { "totalVerses": 4 },
+  "verses": [
+    {
+      "id": "ps-intro",
+      "number": 1,
+      "type": "intro",
+      "labelHi": "परिचय",
+      "labelEn": "Introduction",
+      "lines": ["प्रभाती श्लोक — प्रातःकाल के पवित्र मन्त्र"],
+      "linesEn": ["Prabhati Shloka — Sacred morning verses"],
+      "meaningHi": "ब्रह्म मुहूर्त (सूर्योदय से लगभग डेढ़ घण्टा पहले) को शास्त्रों में सर्वश्रेष्ठ समय माना गया है। इस समय वातावरण में सत्त्व गुण प्रबल होता है। प्रातःकाल उठते ही सर्वप्रथम अपनी हथेलियों का दर्शन करना चाहिए — हथेली में लक्ष्मी, सरस्वती और गोविन्द का वास माना जाता है। इसके पश्चात् भूमि-स्पर्श से पूर्व पृथ्वी माता से क्षमा माँगनी चाहिए। ये श्लोक दिन की शुभ शुरुआत करते हैं और मन को सकारात्मक दिशा देते हैं।",
+      "meaningEn": "Brahma Muhurta (approximately 1.5 hours before sunrise) is considered the most auspicious time in the scriptures. During this period, Sattva guna (purity) is dominant in the atmosphere. Upon waking, one should first look at one's palms — the palms are said to house Lakshmi, Saraswati, and Govinda. Before touching the ground, one should seek forgiveness from Mother Earth. These slokas begin the day auspiciously and orient the mind toward positivity."
+    },
+    {
+      "id": "ps-01",
+      "number": 2,
+      "type": "mantra",
+      "labelHi": "कर दर्शन श्लोक",
+      "labelEn": "Kara Darshana Sloka",
+      "lines": ["कराग्रे वसते लक्ष्मीः करमध्ये सरस्वती।", "करमूले तु गोविन्दः प्रभाते करदर्शनम्॥"],
+      "linesEn": ["Karaagre vasate Lakshmihi karamadhye Saraswati.", "Karamoole tu Govindah prabhaate karadarshanam."],
+      "meaningHi": "हथेली के अग्रभाग (उँगलियों के सिरे) में लक्ष्मी (धन-ऐश्वर्य की देवी), मध्य भाग में सरस्वती (विद्या की देवी), और मूल (कलाई के पास) में गोविन्द (भगवान विष्णु) का निवास है। प्रातःकाल उठते ही हथेलियों का दर्शन करना चाहिए।\n\nइसका गूढ़ अर्थ यह है कि मनुष्य के हाथों में ही उसकी सम्पदा (कर्म), ज्ञान (विद्या) और ईश्वरीय शक्ति — तीनों विद्यमान हैं। यह श्लोक कर्म की महिमा का स्मरण कराता है।",
+      "meaningEn": "At the tips of the fingers dwells Lakshmi (goddess of wealth), in the middle of the palm dwells Saraswati (goddess of knowledge), and at the base of the palm dwells Govinda (Lord Vishnu). One should look at one's palms upon waking in the morning.\n\nThe deeper meaning is that in one's own hands reside prosperity (through action), knowledge (through learning), and divine power — all three. This sloka reminds us of the glory of righteous action (karma)."
+    },
+    {
+      "id": "ps-02",
+      "number": 3,
+      "type": "mantra",
+      "labelHi": "भूमि प्रार्थना श्लोक",
+      "labelEn": "Bhumi Prarthana Sloka",
+      "lines": ["समुद्रवसने देवि पर्वतस्तनमण्डले।", "विष्णुपत्नि नमस्तुभ्यं पादस्पर्शं क्षमस्व मे॥"],
+      "linesEn": ["Samudravasane devi parvatastanamandale.", "Vishnupatni namastubhyam paadasparsham kshamasva me."],
+      "meaningHi": "हे देवी (पृथ्वी माता), जिनका वस्त्र समुद्र है, जिनके स्तन पर्वत हैं, हे विष्णु-पत्नी, आपको नमस्कार है। मेरे पैरों के स्पर्श को क्षमा करें।\n\nप्रातःकाल बिस्तर से पैर नीचे रखने से पूर्व यह श्लोक बोलकर भूमि माता से क्षमा माँगी जाती है। इसमें पृथ्वी को विष्णु की पत्नी (भूदेवी) के रूप में सम्बोधित किया गया है। यह श्लोक प्रकृति के प्रति कृतज्ञता और सम्मान का भाव जगाता है।",
+      "meaningEn": "O Goddess (Mother Earth), whose garment is the ocean, whose bosom is adorned with mountains, O consort of Vishnu, I bow to you. Please forgive the touch of my feet.\n\nThis sloka is recited before placing one's feet on the ground after waking — seeking forgiveness from Mother Earth. Here, Earth is addressed as Bhudevi, the consort of Vishnu. This verse awakens gratitude and reverence toward nature."
+    },
+    {
+      "id": "ps-03",
+      "number": 4,
+      "type": "mantra",
+      "labelHi": "विघ्ननाशक श्लोक",
+      "labelEn": "Obstacle-Removing Sloka",
+      "lines": ["वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।", "निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥"],
+      "linesEn": ["Vakratunda mahakaaya suryakoti samaprabha.", "Nirvighnam kuru me deva sarvakaaryeshu sarvadaa."],
+      "meaningHi": "हे वक्रतुण्ड (मुड़ी हुई सूँड वाले — गणेश), हे महाकाय (विशाल शरीर वाले), हे करोड़ों सूर्यों के समान तेजस्वी, हे देव, मेरे समस्त कार्यों में सदा विघ्नों का नाश करें।\n\nगणेश जी को 'विघ्नहर्ता' (विघ्नों को हरने वाले) कहा जाता है। किसी भी शुभ कार्य के आरम्भ में गणेश-स्मरण भारतीय परम्परा का अनिवार्य अंग है। प्रातःकाल दिन के सभी कार्यों की निर्विघ्न सिद्धि हेतु यह श्लोक बोला जाता है।",
+      "meaningEn": "O Vakratunda (one with a curved trunk — Ganesha), O Mahakaaya (one with a mighty body), O one who shines with the brilliance of a million suns, O Lord, please remove all obstacles from all my endeavors always.\n\nGanesha is called 'Vighnaharta' (remover of obstacles). Invoking Ganesha before any auspicious undertaking is an essential part of Indian tradition. This sloka is recited in the morning to seek obstacle-free success in all the day's activities."
+    }
+  ]
+}
