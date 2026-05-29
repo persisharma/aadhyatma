@@ -13,12 +13,18 @@ export type DurgaStotramVerse = {
   meaningEn: string;
 };
 
+export type DurgaStotramChapterSource = {
+  baseText: string;
+  retrievedOn: string;
+};
+
 export type DurgaStotramChapter = {
   chapter: number;
   titleHi: string;
   titleEn: string;
   verseCount: number;
   verses: DurgaStotramVerse[];
+  source?: DurgaStotramChapterSource;
 };
 
 export type DurgaStotramChapterSummary = {
@@ -99,7 +105,7 @@ export function getDurgaStotramChapter(chapter: number): DurgaStotramChapter {
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 21) {
-    throw new Error(`durga-stotram: expected 21 total verses, got ${totalVerses}`);
+  if (totalVerses !== 33) {
+    throw new Error(`durga-stotram: expected 33 total verses, got ${totalVerses}`);
   }
 })();
