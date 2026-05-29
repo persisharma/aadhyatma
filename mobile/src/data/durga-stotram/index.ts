@@ -105,7 +105,7 @@ export function getDurgaStotramChapter(chapter: number): DurgaStotramChapter {
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 21) {
-    throw new Error(`durga-stotram: expected 21 total verses, got ${totalVerses}`);
+  if (totalVerses !== 33) {
+    throw new Error(`durga-stotram: expected 33 total verses, got ${totalVerses}`);
   }
 })();

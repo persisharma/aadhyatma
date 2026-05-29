@@ -2,7 +2,7 @@
   "chapter": 2,
   "titleHi": "महिषासुर मर्दिनी स्तोत्रम्",
   "titleEn": "Mahishasura Mardini Stotram",
-  "verseCount": 10,
+  "verseCount": 22,
   "verses": [
     {
       "id": "ds-2-0",
@@ -24,15 +24,19 @@
       "chapter": 2,
       "number": 1,
       "sanskrit": [
-        "अयि गिरिनन्दिनि नन्दितमेदिनि विश्वविनोदिनि नन्दनुते।",
-        "गिरिवरविन्ध्यशिरोऽधिनिवासिनि विष्णुविलासिनि जिष्णुनुते।।"
+        "अयि गिरिनन्दिनि नन्दितमेदिनि विश्वविनोदिनि नन्दिनुते।",
+        "गिरिवरविन्ध्यशिरोऽधिनिवासिनि विष्णुविलासिनि जिष्णुनुते।",
+        "भगवति हे शितिकण्ठकुटुम्बिनि भूरिकुटुम्बिनि भूरिकृते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
       ],
       "linesEn": [
-        "ayi girinandini nanditamedini viśhvavinodini nandanute",
-        "girivara-vindhya-śhiro'dhinivasini viṣṇuvilāsini jiṣṇunute"
+        "ayi girinandini nanditamedini viśhvavinodini nandinute",
+        "girivaravindhyaśhiro'dhinivāsini viṣṇuvilāsini jiṣṇunute",
+        "bhagavati he śhitikaṇṭhakuṭumbini bhūrikuṭumbini bhūrikṛite",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
       ],
-      "meaningHi": "हे गिरिराज हिमालय की पुत्री! आप पृथ्वी को आनन्दित करने वाली, विश्व को विनोद प्रदान करने वाली हैं, नन्द (शिव) द्वारा स्तुत हैं। आप विन्ध्य पर्वत के शिखर पर निवास करती हैं, विष्णु की शक्ति हैं, और इन्द्र (जिष्णु) द्वारा वन्दित हैं।\n\nयह आदि शंकराचार्य द्वारा रचित महिषासुर मर्दिनी स्तोत्र का प्रथम श्लोक है। प्रत्येक श्लोक में देवी के एक युद्ध-रूप का वर्णन है।",
-      "meaningEn": "O daughter of the Mountain King (Himalaya)! You bring joy to the earth, delight to the universe, and are praised by Nanda (Shiva). You dwell atop the Vindhya peaks, are the power of Vishnu, and are worshipped by Indra (Jishnu).\n\nThis is the first verse of the Mahishasura Mardini Stotram composed by Adi Shankaracharya. Each verse describes a battle-form of the Goddess."
+      "meaningHi": "हे गिरिराज हिमालय की पुत्री! पृथ्वी को आनन्दित करने वाली, विश्व को आनन्द देने वाली, नन्दी द्वारा स्तुत। आप विन्ध्य पर्वत के शिखर पर निवास करती हैं, विष्णु की शक्ति हैं, इन्द्र द्वारा वन्दित हैं। हे भगवती! नीलकण्ठ शिव की कुटुम्बिनी, असंख्य कुटुम्ब वाली, अनेक कल्याणकारी कार्य करने वाली। जय हो! हे महिषासुर मर्दिनी, सुन्दर जटाधारी, पर्वतराज की पुत्री!",
+      "meaningEn": "O daughter of the Mountain King (Himalaya)! You delight the earth, bring joy to the universe, and are praised by Nandi. You dwell atop the Vindhya peaks, are the power of Vishnu, and are extolled by Indra. O Goddess, kinswoman of the blue-throated Shiva, mother of countless families, doer of abundant good! Victory, victory to you, O slayer of Mahishasura, beautiful matted-locked one, daughter of the Mountain!"
     },
     {
       "id": "ds-2-2",
@@ -40,14 +44,18 @@
       "number": 2,
       "sanskrit": [
         "सुरवरवर्षिणि दुर्धरधर्षिणि दुर्मुखमर्षिणि हर्षरते।",
-        "त्रिभुवनपोषिणि शङ्करतोषिणि किल्बिषमोषिणि घोषरते।।"
+        "त्रिभुवनपोषिणि शङ्करतोषिणि किल्बिषमोषिणि घोषरते।",
+        "दनुजनिरोषिणि दितिसुतरोषिणि दुर्मदशोषिणि सिन्धुसुते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
       ],
       "linesEn": [
         "suravaravarṣiṇi durdharadharṣiṇi durmukhamarṣiṇi harṣarate",
-        "tribhuvanapoṣiṇi śhaṅkaratoṣiṇi kilbiṣamoṣiṇi ghoṣarate"
+        "tribhuvanapoṣiṇi śhaṅkaratoṣiṇi kilbiṣamoṣiṇi ghoṣarate",
+        "danujaniroṣiṇi ditisutaroṣiṇi durmadaśhoṣiṇi sindhusute",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
       ],
-      "meaningHi": "हे देवी! आप देवताओं पर वरदानों की वर्षा करती हैं, दुर्धर शत्रुओं को पराजित करती हैं, दुर्मुख राक्षसों का दमन करती हैं। आप तीनों लोकों का पोषण करती हैं, शंकर को प्रसन्न करती हैं, पापों का नाश करती हैं और युद्ध-घोष में रमती हैं।",
-      "meaningEn": "O Goddess! You shower blessings upon the gods, vanquish invincible foes, suppress the ugly-faced demons, and delight in joy. You nourish the three worlds, please Lord Shankara, destroy sins, and revel in the battle cry."
+      "meaningHi": "हे देवी! देवताओं पर वरदान बरसाने वाली, दुर्धर शत्रुओं को पराजित करने वाली, दुर्मुख असुरों का दमन करने वाली, आनन्द में रत। तीनों लोकों का पोषण करने वाली, शंकर को प्रसन्न करने वाली, पापों का नाश करने वाली, युद्ध-घोष में रमने वाली। दानवों पर क्रोध करने वाली, दिति-पुत्रों पर रोष करने वाली, दुष्ट मद को सुखाने वाली, हे समुद्र-पुत्री! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! You shower boons on the gods, crush the unassailable, subdue the foul-faced demons, and delight in joy. You nourish the three worlds, please Shankara, wipe away sins, and revel in the battle-cry. You rage against the Danavas and the sons of Diti, dry up wicked arrogance, O daughter of the ocean! Victory, victory, O slayer of Mahishasura!"
     },
     {
       "id": "ds-2-3",
@@ -73,90 +81,346 @@
       "chapter": 2,
       "number": 4,
       "sanskrit": [
-        "अयि निजहुङ्कृतिमात्रनिराकृतधूम्रविलोचनधूम्रशते।",
-        "समरविशोषितशोणितबीजसमुद्भवशोणितबीजलते।।"
+        "अयि शतखण्ड विखण्डितरुण्ड वितुण्डितशुण्द गजाधिपते।",
+        "रिपुगजगण्ड विदारणचण्ड पराक्रमशुण्ड मृगाधिपते।",
+        "निजभुजदण्ड निपातितखण्ड विपातितमुण्ड भटाधिपते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
       ],
       "linesEn": [
-        "ayi nijahūṅkṛitimātranirakṛitadhūmravilochanadhūmraśhate",
-        "samaraviśhoṣitaśhoṇitabījasamudbhavaśhoṇitabījalate"
+        "ayi śhatakhaṇḍa vikhaṇḍitaruṇḍa vituṇḍitaśhuṇda gajādhipate",
+        "ripugajagaṇḍa vidāraṇachaṇḍa parākramaśhuṇḍa mṛigādhipate",
+        "nijabhujadaṇḍa nipātitakhaṇḍa vipātitamuṇḍa bhaṭādhipate",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
       ],
-      "meaningHi": "हे देवी! आपने केवल अपनी हुंकार मात्र से धूम्रलोचन असुर को नष्ट कर दिया। आपने रणभूमि में रक्तबीज के रक्त को सुखाकर उसकी वंश-परम्परा को समाप्त किया।\n\nरक्तबीज वध में देवी ने काली रूप धारण किया — प्रत्येक रक्त-बूँद गिरने से पहले पी लिया।",
-      "meaningEn": "O Goddess! You destroyed demon Dhumralochan merely with your war-cry. In battle, you dried up the blood-seed vine of Raktabeeja — from whose every blood-drop a new demon would sprout.\n\nFor the Raktabeeja battle, the Goddess assumed her Kali form to drink every drop before it touched the ground."
+      "meaningHi": "हे गजराज पर सवार देवी! आपने असुर-योद्धाओं के सैकड़ों टुकड़े कर दिए, उनकी सूँड़ (अहंकार) को छिन्न-भिन्न कर दिया। शत्रु-हाथियों के गण्डस्थल को चीरने में प्रचण्ड, पराक्रम में सिंह-स्वामिनी। अपने भुजदण्ड से शत्रुओं के मुण्ड (सिर) काटकर गिराने वाली, योद्धाओं की अधिपति! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess riding the lordly elephant! You shattered the demon-warriors into hundreds of pieces and severed their trunks (pride). Fierce in tearing the temples of enemy elephants, lioness of valour. With your own mighty arms you struck off the heads of foes — O commander of warriors! Victory, victory, O slayer of Mahishasura!"
     },
     {
       "id": "ds-2-5",
       "chapter": 2,
       "number": 5,
       "sanskrit": [
-        "अयि शरणागतवैरिवधूवरवीरवराभयदायकरे।",
-        "त्रिभुवनमस्तकशूलविरोधिशिरोऽधिकृतामलशूलकरे।।"
+        "अयि रणदुर्मद शत्रुवधोदित दुर्धरनिर्जर शक्तिभृते।",
+        "चतुरविचार धुरीणमहाशिव दूतकृत प्रमथाधिपते।",
+        "दुरितदुरीह दुराशयदुर्मति दानवदुत कृतान्तमते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
       ],
       "linesEn": [
-        "ayi śharaṇāgatavairivadhūvaravīravarābhayadāyakare",
-        "tribhuvanamastkaśhūlavirodhiśhiro'dhikṛitāmalaśhūlakare"
+        "ayi raṇadurmada śhatruvadhodita durdharanirjara śhaktibhṛite",
+        "chaturavichāra dhurīṇamahāśhiva dūtakṛita pramathādhipate",
+        "duritadurīha durāśhayadurmati dānavaduta kṛitāntamate",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
       ],
-      "meaningHi": "हे देवी! आप शरणागतों की रक्षा करती हैं, शत्रुओं की स्त्रियों को भी वर-अभय प्रदान करती हैं (अर्थात् निर्दोषों को नहीं मारतीं)। आपके हाथ में निर्मल त्रिशूल है जो तीनों लोकों के शीर्ष पर विद्रोह करने वालों के सिर पर प्रहार करता है।\n\nदेवी का त्रिशूल शिव-प्रदत्त है — यह तीन गुणों (सत्व, रजस, तमस) पर नियन्त्रण का प्रतीक है।",
-      "meaningEn": "O Goddess! You protect those who seek refuge, granting fearlessness even to the wives of enemies (sparing the innocent). In your hand is the pure trident that strikes at the heads of those who rebel against the three worlds.\n\nThe Goddess's trident was gifted by Shiva — it symbolizes mastery over the three Gunas (Sattva, Rajas, Tamas)."
+      "meaningHi": "हे देवी! युद्ध में उन्मत्त शत्रुओं के वध में उद्यत, अजेय देवताओं की शक्ति को धारण करने वाली। आपने चतुर विचार से महाशिव को दूत बनाकर प्रमथगणों की अधिपति का कार्य किया। पापी, दुष्ट, दुराशय और दुर्बुद्धि दानव-दूत के लिए आप साक्षात् यमराज (कृतान्त) के समान हैं! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess, intent on slaying foes maddened in battle, bearer of the gods' invincible power. With shrewd counsel you made the great Shiva your envoy and command the Pramatha hosts. To the sinful, ill-willed, evil-minded demon emissary you are death itself! Victory, victory, O slayer of Mahishasura!"
     },
     {
       "id": "ds-2-6",
       "chapter": 2,
       "number": 6,
       "sanskrit": [
-        "कमलदलामलकोमलकान्तिकलाकलितामलभाललते।",
-        "सकलविलासकलानिलयक्रमकेलिचलत्कलहंसकुले।।"
+        "अयि शरणागत वैरिवधुवर वीरवराभय दायकरे।",
+        "त्रिभुवनमस्तक शुलविरोधि शिरोऽधिकृतामल शुलकरे।",
+        "दुमिदुमितामर धुन्दुभिनादमहोमुखरीकृत दिङ्मकरे।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
       ],
       "linesEn": [
-        "kamaladalaāmalakōmalakāntikalākalitāmalabhālalate",
-        "sakalavilāsakalānilayakramakelichalatkalahaṁsakule"
+        "ayi śharaṇāgata vairivadhuvara vīravarābhaya dāyakare",
+        "tribhuvanamastaka śhulavirodhi śhiro'dhikṛitāmala śhulakare",
+        "dumidumitāmara dhundubhinādamahomukharīkṛita diṅmakare",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
       ],
-      "meaningHi": "हे देवी! आपका ललाट कमल-दल के समान निर्मल, कोमल और कान्तिमान है। आप समस्त 64 कलाओं की निवास हैं, आपकी गति हंसों के समान सुन्दर है।\n\nयुद्ध-रूप के साथ-साथ देवी का सौम्य-सौन्दर्य रूप भी अद्भुत है — शंकराचार्य दोनों का वर्णन करते हैं।",
-      "meaningEn": "O Goddess! Your forehead is pure, soft, and radiant like a lotus petal. You are the abode of all 64 arts, and your gait is as graceful as that of swans.\n\nAlongside her fierce battle form, the Goddess's gentle beauty is equally magnificent — Shankaracharya describes both aspects."
+      "meaningHi": "हे देवी! शरणागतों की रक्षा करने वाली, शत्रुओं की वधुओं को भी वीर-वर और अभय देने वाली। आपके हाथ में निर्मल त्रिशूल है जो तीनों लोकों के शीर्ष पर विरोध करने वालों के सिर पर प्रहार करता है। देवताओं की 'दुमि-दुमि' दुन्दुभि-ध्वनि से समस्त दिशाएँ गूँज उठती हैं! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess, protector of those who seek refuge, granting even the enemies' widows valour and fearlessness. In your hand gleams the pure trident that strikes the heads of all who oppose the three worlds. The gods' kettledrums resound 'dumi-dumi', filling every direction with their roar! Victory, victory, O slayer of Mahishasura!"
     },
     {
       "id": "ds-2-7",
       "chapter": 2,
       "number": 7,
       "sanskrit": [
-        "विजितसहस्रकरैकसहस्रकरैकसहस्रकरैकनुते।",
-        "कृतसुरतारकसङ्गरतारकसङ्गरतारकसूनुनुते।।"
+        "अयि निजहुङ्कृति मात्रनिराकृत धूम्रविलोचन धूम्रशते।",
+        "समरविशोषित शोणितबीज समुद्भवशोणित बीजलते।",
+        "शिवशिवशुम्भ निशुम्भमहाहव तर्पितभूत पिशाचरते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
       ],
       "linesEn": [
-        "vijitasahasrakaraikasahasrakaraikasahasrakaraikānute",
-        "kṛitasuratārakasaṅgaratārakasaṅgaratārakasūnunute"
+        "ayi nijahuṅkṛiti mātranirākṛita dhūmravilochana dhūmraśhate",
+        "samaraviśhoṣita śhoṇitabīja samudbhavaśhoṇita bījalate",
+        "śhivaśhivaśhumbha niśhumbhamahāhava tarpitabhūta piśhācharate",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
       ],
-      "meaningHi": "आपकी कान्ति सहस्र सूर्यों को पराजित करती है। देवताओं के तारक (रक्षक), तारकासुर-संहारी कार्तिकेय भी आपकी स्तुति करते हैं।\n\nतारकासुर — वह असुर जिसे केवल शिव-पुत्र मार सकता था। इसी कारण देवी पार्वती ने शिव से विवाह किया जिससे कार्तिकेय का जन्म हुआ।",
-      "meaningEn": "Your radiance defeats a thousand suns. You are praised by Kartikeya — the son who slew Tarakasura, the protector of the gods.\n\nTarakasura could only be killed by Shiva's son — this is why Parvati married Shiva, leading to Kartikeya's birth."
+      "meaningHi": "हे देवी! अपनी केवल हुंकार मात्र से आपने सैकड़ों धूम्रलोचन असुरों को नष्ट कर दिया। रणभूमि में रक्तबीज के रक्त को सुखाकर उससे उत्पन्न होने वाली रक्तबीज-लता (वंश) को समाप्त किया। शुम्भ-निशुम्भ के महायुद्ध में भूत-पिशाचों को तृप्त करने वाली (काली रूप)! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! With your war-cry alone you destroyed hundreds of demons like Dhumralochan. In battle you dried up the blood of Raktabeeja and the sprouting vine of demons born from each drop. In the great war with Shumbha and Nishumbha you satisfied the ghosts and spirits in your fierce form! Victory, victory, O slayer of Mahishasura!"
     },
     {
       "id": "ds-2-8",
       "chapter": 2,
       "number": 8,
       "sanskrit": [
-        "सुरललना ततथेइ ततथेइ कृताभिनयोदरनृत्यरते।",
-        "कृतकुकुथः कुकुथो गडदादिकताल कुतूहलगानरते।।"
+        "धनुरनुषङ्ग रणक्षणसङ्ग परिस्फुरदङ्ग नटत्कटके।",
+        "कनकपिशङ्ग पृषत्कनिषङ्ग रसद्भटशृङ्ग हताबटुके।",
+        "कृतचतुरङ्ग बलक्षितिरङ्ग घटद्बहुरङ्ग रटद्बटुके।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
       ],
       "linesEn": [
-        "suralalnā tatathei tatathei kṛitābhinayodaranṛityarate",
-        "kṛitakukuthaḥ kukutho gaḍadādikataāla kutūhalagānarate"
+        "dhanuranuṣaṅga raṇakṣaṇasaṅga parisphuradaṅga naṭatkaṭake",
+        "kanakapiśhaṅga pṛiṣatkaniṣaṅga rasadbhaṭaśhṛiṅga hatābaṭuke",
+        "kṛitachaturaṅga balakṣitiraṅga ghaṭadbahuraṅga raṭadbaṭuke",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
       ],
-      "meaningHi": "देव-ललनाएँ 'ततथेइ ततथेइ' की ताल पर नृत्य कर रही हैं। ढोल-ताल और वाद्यों की संगत में कुतूहलपूर्ण गान हो रहा है — यह देवी की विजय का उत्सव है।\n\nमहिषासुर वध के बाद स्वर्ग में उत्सव — अप्सराओं ने नृत्य किया, गन्धर्वों ने गान किया।",
-      "meaningEn": "Celestial maidens dance with 'tatathei tatathei' rhythm. Drums beat 'kukuthah kukutho' with percussion in joyful song — this is the celebration after the Goddess's victory.\n\nAfter slaying Mahishasura, heaven celebrated — Apsaras danced and Gandharvas sang."
+      "meaningHi": "हे देवी! युद्ध के क्षण में धनुष की प्रत्यञ्चा से जुड़कर आपके अंग थिरकते हैं और कंकण झनकते हैं। स्वर्ण-सी पीली बाणों की तरकश से, गरजते योद्धाओं के बीच शत्रु-सैनिकों का संहार करती हैं। चतुरंगिणी सेना के रणभूमि-रूपी रंगमंच पर अनेक रंग धारण कर गर्जना करती हैं! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! In the instant of battle, joined to the bowstring, your limbs quiver and your bangles jingle. From a quiver of golden arrows, amid roaring warriors you cut down the enemy host. On the battlefield-stage of the four-fold army you take many forms and roar in triumph! Victory, victory, O slayer of Mahishasura!"
     },
     {
       "id": "ds-2-9",
       "chapter": 2,
       "number": 9,
       "sanskrit": [
-        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते।",
-        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते।।"
+        "सुरललना ततथेयि तथेयि कृताभिनयोदर नृत्यरते।",
+        "कृत कुकुथः कुकुथो गडदादिकताल कुतूहल गानरते।",
+        "धुधुकुट धुक्कुट धिंधिमित ध्वनि धीर मृदंग निनादरते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
       ],
       "linesEn": [
-        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute",
+        "suralalanā tatatheyi tatheyi kṛitābhinayodara nṛityarate",
+        "kṛita kukuthaḥ kukutho gaḍadādikatāla kutūhala gānarate",
+        "dhudhukuṭa dhukkuṭa dhindhimita dhvani dhīra mṛidaṁga ninādarate",
         "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
       ],
-      "meaningHi": "जय हो! जय हो! हे महिषासुर मर्दिनी! हे सुन्दर जटाधारी! हे पर्वतराज की पुत्री!\n\nयह स्तोत्र का समापन-श्लोक है। 'रम्यकपर्दिनि' — जटाएँ योद्धा-रूप का प्रतीक। 'शैलसुते' — हिमालय-पुत्री पार्वती जो दुर्गा बनीं।",
-      "meaningEn": "Victory! Victory! O slayer of Mahishasura! O beautiful one with lovely matted locks! O daughter of the Mountain King!\n\nThis is the closing refrain. 'Ramyakapardini' — matted locks symbolize the warrior form. 'Shailasute' — daughter of the Himalayas (Parvati) who became Durga."
+      "meaningHi": "हे देवी! देव-ललनाएँ 'ततथेयि तथेयि' की ताल पर अभिनय-सहित नृत्य करती हैं। 'कुकुथः कुकुथो' की ध्वनि और विविध तालों के साथ कुतूहलपूर्ण गान हो रहा है। 'धुधुकुट धुक्कुट धिंधिमित' — गम्भीर मृदंग की निनाद में आप रमती हैं — यह विजय का उत्सव है! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! Celestial maidens dance with expressive gestures to the beat 'tatatheyi tatheyi'. With the sound 'kukuthah kukutho' and varied rhythms a joyous song rises. To the deep 'dhudhukuṭa dhukkuṭa dhindhimita' beat of the mṛidaṅga drum you delight — this is the festival of victory! Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-10",
+      "chapter": 2,
+      "number": 10,
+      "sanskrit": [
+        "जय जय जप्य जयेजयशब्द परस्तुति तत्परविश्वनुते।",
+        "झणझणझिञ्झिमि झिङ्कृत नूपुरशिञ्जितमोहित भूतपते।",
+        "नटित नटार्ध नटी नट नायक नाटितनाट्य सुगानरते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "jaya jaya japya jayejayaśhabda parastuti tatparaviśhvanute",
+        "jhaṇajhaṇajhiñjhimi jhiṅkṛita nūpuraśhiñjitamohita bhūtapate",
+        "naṭita naṭārdha naṭī naṭa nāyaka nāṭitanāṭya sugānarate",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे देवी! 'जय जय' के जप-योग्य जयघोष से समस्त विश्व आपकी स्तुति में तत्पर है। 'झणझण झिञ्झिमि' नूपुरों की झंकार से भूतपति शिव भी मोहित हो जाते हैं। अर्धनारीश्वर रूप में नट-नटी और नायक के साथ अभिनीत नाट्य तथा सुमधुर गान में आप रमती हैं! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! With the auspicious cry of 'Jaya, jaya', the whole universe is intent on praising you. The jingling 'jhana-jhana jhinjhimi' of your anklets enchants even Shiva, lord of beings. In the dance of the Ardhanarishvara — actor and actress, hero and play — and in sweet song, you delight! Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-11",
+      "chapter": 2,
+      "number": 11,
+      "sanskrit": [
+        "अयि सुमनःसुमनःसुमनः सुमनःसुमनोहरकान्तियुते।",
+        "श्रितरजनी रजनीरजनी रजनीरजनी करवक्त्रवृते।",
+        "सुनयनविभ्रमर भ्रमरभ्रमर भ्रमरभ्रमराधिपते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "ayi sumanaḥsumanaḥsumanaḥ sumanaḥsumanoharakāntiyute",
+        "śhritarajanī rajanīrajanī rajanīrajanī karavaktravṛite",
+        "sunayanavibhramara bhramarabhramara bhramarabhramarādhipate",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे देवी! आप सुमन (पुष्प) के समान कोमल एवं सुन्दर मन वालों की मनोहर कान्ति से युक्त हैं। आपका मुख चन्द्रमा की किरणों से घिरा हुआ है। आपके सुन्दर नेत्र भौंरों के समान चंचल हैं — आप भ्रमर-समूह की भी अधिपति हैं! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess, radiant with the lovely glow of flower-pure, gentle minds! Your face is encircled by the rays of the moon. Your beautiful eyes rove like bees — and you are mistress even of the swarms of bees! Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-12",
+      "chapter": 2,
+      "number": 12,
+      "sanskrit": [
+        "सहितमहाहव मल्लमतल्लिक मल्लितरल्लक मल्लरते।",
+        "विरचितवल्लिक पल्लिकमल्लिक झिल्लिकभिल्लिक वर्गवृते।",
+        "शितकृतफुल्ल समुल्लसितारुण तल्लजपल्लव सल्ललिते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "sahitamahāhava mallamatallika mallitarallaka mallarate",
+        "virachitavallika pallikamallika jhillikabhillika vargavṛite",
+        "śhitakṛitaphulla samullasitāruṇa tallajapallava sallalite",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे देवी! महायुद्ध में आप मल्ल-योद्धाओं के साथ मल्लयुद्ध में रत रहती हैं। लता-कुञ्जों से सजी, पल्ली (वन-ग्राम) की भीलनियों और शबर-वर्ग से घिरी रहती हैं। शीतल, खिले हुए, अरुण-वर्ण के कोमल पल्लवों के समान आप सुशोभित एवं सुललित हैं! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! In the great war you delight in wrestling with mighty champions. Adorned amid creeper-bowers, you are surrounded by forest tribes — the Bhilla women and Shabara folk. Cool, blossoming, lovely as tender crimson shoots, you shine in graceful charm! Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-13",
+      "chapter": 2,
+      "number": 13,
+      "sanskrit": [
+        "अविरलगण्ड गलन्मदमेदुर मत्तमतङ्ग जराजपते।",
+        "त्रिभुवनभुषण भूतकलानिधि रूपपयोनिधि राजसुते।",
+        "अयि सुदतीजन लालसमानस मोहन मन्मथराजसुते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "aviralagaṇḍa galanmadamedura mattamataṅga jarājapate",
+        "tribhuvanabhuṣaṇa bhūtakalānidhi rūpapayonidhi rājasute",
+        "ayi sudatījana lālasamānasa mohana manmatharājasute",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे देवी! जिनके गण्डस्थल से निरन्तर मद बहता है, ऐसे मतवाले गजराज पर सवार होने वाली। तीनों लोकों की भूषण, समस्त कलाओं की निधि, सौन्दर्य के सागर-रूप राजपुत्री। हे सुन्दर दन्त वाली! आप कामदेव के समान मन को मोहित करने वाली राजकन्या हैं! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess, who rides the rut-maddened elephant whose temples stream with ichor! Ornament of the three worlds, treasury of all arts, ocean of beauty, royal daughter. O fair-toothed one, you are the princess who enchants the heart like the god of love himself! Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-14",
+      "chapter": 2,
+      "number": 14,
+      "sanskrit": [
+        "कमलदलामल कोमलकान्ति कलाकलितामल भाललते।",
+        "सकलविलास कलानिलयक्रम केलिचलत्कल हंसकुले।",
+        "अलिकुलसङ्कुल कुवलयमण्डल मौलिमिलद्बकुलालिकुले।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "kamaladalāmala komalakānti kalākalitāmala bhālalate",
+        "sakalavilāsa kalānilayakrama kelichalatkala haṁsakule",
+        "alikulasaṅkula kuvalayamaṇḍala maulimiladbakulālikule",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे देवी! आपका ललाट कमल-दल के समान निर्मल, कोमल और कलापूर्ण कान्ति से सुशोभित है। समस्त विलास और कलाओं की निधि, आपकी गति क्रीड़ा करते हंसों के समान मनोहर है। आपके केशों में गुँथे बकुल-पुष्पों पर भौंरों के झुंड और नील-कमलों का मण्डल मँडराता है! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! Your brow shines pure, soft and full of art like a lotus petal. Abode of all grace and arts, your gait is lovely as that of sporting swans. Around the bakula flowers in your hair hover swarms of bees, and a circle of blue lotuses crowns you! Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-15",
+      "chapter": 2,
+      "number": 15,
+      "sanskrit": [
+        "करमुरलीरव वीजितकूजित लज्जितकोकिल मञ्जुमते।",
+        "मिलितपुलिन्द मनोहरगुञ्जित रञ्जितशैल निकुञ्जगते।",
+        "निजगणभूत महाशबरीगण सद्गुणसम्भृत केलितले।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "karamuralīrava vījitakūjita lajjitakokila mañjumate",
+        "militapulinda manoharaguñjita rañjitaśhaila nikuñjagate",
+        "nijagaṇabhūta mahāśhabarīgaṇa sadguṇasambhṛita kelitale",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे देवी! आपके हाथ की मुरली की मधुर ध्वनि से कोयल भी लज्जित हो जाती है, ऐसी मञ्जुल वाणी वाली। पुलिन्द जनों के साथ मिलकर मनोहर गुञ्जन करती, रंग-बिरंगे पर्वतों के निकुञ्जों में विचरती हैं। अपने गण-स्वरूप महाशबरी-गणों के साथ सद्गुणों से युक्त क्रीड़ास्थल पर रमती हैं! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess of sweet speech, before whose flute-music even the cuckoo grows shy! Joined with the Pulinda folk in lovely humming, you wander the bowers of the colourful hills. With your own hosts — the great Shabara tribes — you sport in the virtue-filled playground! Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-16",
+      "chapter": 2,
+      "number": 16,
+      "sanskrit": [
+        "कटितटपीत दुकूलविचित्र मयुखतिरस्कृत चन्द्ररुचे।",
+        "प्रणतसुरासुर मौलिमणिस्फुर दंशुलसन्नख चन्द्ररुचे।",
+        "जितकनकाचल मौलिमदोर्जित निर्भरकुञ्जर कुम्भकुचे।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "kaṭitaṭapīta dukūlavichitra mayukhatiraskṛita chandraruche",
+        "praṇatasurāsura maulimaṇisphura daṁśhulasannakha chandraruche",
+        "jitakanakāchala maulimadorjita nirbharakuñjara kumbhakuche",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे देवी! आपकी कमर पर लिपटे पीताम्बर की विचित्र किरणें चन्द्रमा की कान्ति को भी तिरस्कृत कर देती हैं। नत देव-दानवों के मुकुट-मणियों की प्रभा से आपके नखों की चन्द्र-सी आभा और बढ़ जाती है। स्वर्ण-पर्वत के शिखर और मद-मत्त गजराज के कुम्भ को भी जीतने वाले आपके वक्ष-कलश हैं! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! The wondrous rays of the golden silk at your waist outshine even the lustre of the moon. The gem-light from the crowns of bowing gods and demons makes your nail-tips glow moon-bright. Your bosom surpasses the peak of the golden mountain and the temples of the rut-proud elephant! Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-17",
+      "chapter": 2,
+      "number": 17,
+      "sanskrit": [
+        "विजितसहस्रकरैक सहस्रकरैक सहस्रकरैकनुते।",
+        "कृतसुरतारक सङ्गरतारक सङ्गरतारक सूनुसुते।",
+        "सुरथसमाधि समानसमाधि समाधिसमाधि सुजातरते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "vijitasahasrakaraika sahasrakaraika sahasrakaraikanute",
+        "kṛitasuratāraka saṅgaratāraka saṅgaratāraka sūnusute",
+        "surathasamādhi samānasamādhi samādhisamādhi sujātarate",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे देवी! आपकी कान्ति सहस्र किरणों वाले सूर्य को भी पराजित करती है, और सहस्रों हाथों वाले अनेक भक्तों द्वारा वन्दित हैं। देवताओं के रक्षक, तारकासुर-संहारी कार्तिकेय द्वारा स्तुत। राजा सुरथ और समाधि वैश्य के समान, समान भाव से समाधि लगाने वालों के प्रति आप प्रसन्न रहती हैं! जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! Your radiance vanquishes the thousand-rayed sun, and you are praised by thousand-handed devotees. You are extolled by Kartikeya, protector of the gods and slayer of Tarakasura. Toward those who meditate with even mind — like King Suratha and the merchant Samadhi — you are well pleased! Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-18",
+      "chapter": 2,
+      "number": 18,
+      "sanskrit": [
+        "पदकमलं करुणानिलये वरिवस्यति योऽनुदिनं सुशिवे।",
+        "अयि कमले कमलानिलये कमलानिलयः स कथं न भवेत्।",
+        "तव पदमेव परम्पदमित्यनुशीलयतो मम किं न शिवे।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "padakamalaṁ karuṇānilaye varivasyati yo'nudinaṁ suśhive",
+        "ayi kamale kamalānilaye kamalānilayaḥ sa kathaṁ na bhavet",
+        "tava padameva parampadamityanuśhīlayato mama kiṁ na śhive",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे करुणा-निधान शुभे! जो प्रतिदिन आपके चरण-कमलों की सेवा करता है — हे कमले! कमल-निवासिनी! वह लक्ष्मीपति क्यों न बने? हे शिवे! जो आपके चरण को ही परमपद मानकर उसका अनुशीलन करता है, उसे क्या प्राप्त नहीं होता? जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O abode of compassion, auspicious one! He who daily serves your lotus feet — O lotus-dweller! — how should he not attain the abode of fortune? O auspicious one, to me who contemplates your feet alone as the supreme goal — what could remain unattained? Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-19",
+      "chapter": 2,
+      "number": 19,
+      "sanskrit": [
+        "कनकलसत्कलसिन्धुजलैरनुषिञ्चति तेगुणरङ्गभुवम्।",
+        "भजति स किं न शचीकुचकुम्भतटीपरिरम्भसुखानुभवम्।",
+        "तव चरणं शरणं करवाणि नतामरवाणि निवासि शिवम्।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "kanakalasatkalasindhujalairanuṣiñchati teguṇaraṅgabhuvam",
+        "bhajati sa kiṁ na śhachīkuchakumbhataṭīparirambhasukhānubhavam",
+        "tava charaṇaṁ śharaṇaṁ karavāṇi natāmaravāṇi nivāsi śhivam",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे देवी! जो स्वर्ण-कलश के पवित्र जल से आपके गुण-रंगभूमि (मन्दिर-प्राङ्गण) का अभिषेक करता है, क्या वह इन्द्राणी के आलिंगन-सुख जैसा आनन्द नहीं पाता? हे नत देवताओं की वाणी से वन्दित, कल्याण-निवासिनी! मैं आपके चरणों की ही शरण ग्रहण करता हूँ। जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! He who sprinkles the courtyard of your glory with water from shining golden vessels — does he not taste joy like the embrace of Indra's queen? O you praised by the speech of bowing gods, dweller in auspiciousness — I take refuge at your feet alone! Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-20",
+      "chapter": 2,
+      "number": 20,
+      "sanskrit": [
+        "तव विमलेन्दुकुलं वदनेन्दुमलं सकलं ननु कूलयते।",
+        "किमु पुरुहूतपुरीन्दु मुखी सुमुखीभिरसौ विमुखीक्रियते।",
+        "मम तु मतं शिवनामधने भवती कृपया किमुत क्रियते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "tava vimalendukulaṁ vadanendumalaṁ sakalaṁ nanu kūlayate",
+        "kimu puruhūtapurīndu mukhī sumukhībhirasau vimukhīkriyate",
+        "mama tu mataṁ śhivanāmadhane bhavatī kṛipayā kimuta kriyate",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे देवी! आपके मुख-चन्द्र की निर्मल कान्ति समस्त चन्द्र-कुल को भी मलिन कर देती है। क्या इन्द्रपुरी की सुन्दर-मुखी अप्सराएँ भी आपके सम्मुख फीकी नहीं पड़ जातीं? मेरा तो मत यही है — हे शिव-नाम रूपी धन वाली! आपकी कृपा से और क्या नहीं हो सकता? जय हो महिषासुर मर्दिनी!",
+      "meaningEn": "O Goddess! The pure radiance of your moon-face dims the entire lineage of moons. Do not even the fair-faced nymphs of Indra's city turn pale before you? My conviction is this — O treasure of Shiva's name — what is there that your grace cannot accomplish? Victory, victory, O slayer of Mahishasura!"
+    },
+    {
+      "id": "ds-2-21",
+      "chapter": 2,
+      "number": 21,
+      "sanskrit": [
+        "अयि मयि दीन दयालुतया कृपयैव त्वया भवितव्यमुमे।",
+        "अयि जगतो जननी कृपयासि यथासि तथानुमितासिरते।",
+        "यदुचितमत्र भवत्युररीकुरुतादुरुतापमपाकुरुते।",
+        "जय जय हे महिषासुरमर्दिनि रम्यकपर्दिनि शैलसुते॥"
+      ],
+      "linesEn": [
+        "ayi mayi dīna dayālutayā kṛipayaiva tvayā bhavitavyamume",
+        "ayi jagato jananī kṛipayāsi yathāsi tathānumitāsirate",
+        "yaduchitamatra bhavatyurarīkurutādurutāpamapākurute",
+        "jaya jaya he mahiṣāsuramardini ramyakapardini śhailasute"
+      ],
+      "meaningHi": "हे उमा! मुझ दीन पर दयालु होकर आपको कृपा अवश्य करनी चाहिए। हे जगत की जननी! आप जैसी कृपामयी हैं, वैसी ही प्रसिद्ध भी हैं। जो उचित हो उसे स्वीकार कीजिए — और मेरे घोर ताप (दुःख) को दूर कर दीजिए! जय हो! हे महिषासुर मर्दिनी, सुन्दर जटाधारी, पर्वतराज की पुत्री!",
+      "meaningEn": "O Uma! Being compassionate to me, the lowly one, you must surely show grace. O Mother of the world! As gracious as you are, so are you known to be. Accept what is fitting here — and take away my grievous suffering! Victory, victory to you, O slayer of Mahishasura, beautiful matted-locked one, daughter of the Mountain!"
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Mahishasura Mardini Stotram (Adi Shankaracharya), 21-verse recension",
+    "retrievedOn": "2026-05-29"
+  }
 }
