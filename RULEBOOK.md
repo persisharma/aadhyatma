@@ -52,6 +52,8 @@ Exact paths, in build order. Each row maps to a Phase-C step in `/add-section`.
 | 11 | `mobile/src/screens/HomeScreen.tsx` | no edit needed | categories and deities are rendered dynamically from data |
 | 12 | `mobile/src/screens/CategoryListScreen.tsx` | no edit needed | items auto-filter by `category` field; routing is delegated to `entryRoutes.ts` (row 10) |
 | 13 | `mobile/src/screens/DeityListScreen.tsx` | no edit needed | items auto-filter by `deities` field; routing is delegated to `entryRoutes.ts` (row 10) |
+| 14 | `mobile/src/screens/__tests__/<Pascal>ReaderScreen.test.tsx` | create | Mirrors `BajrangBaanReaderScreen.test.tsx` — mounts the new reader with chapter-1 fixture and asserts first verse renders. Required gate in CI. |
+| 15 | `mobile/.maestro/<category>-smoke.yaml` | **edit** (existing category) **or create** (new category) | For an existing category, add a new `- assertVisible: "<NameEn>"` line to the `CategoryList block` of `mobile/.maestro/<category>-smoke.yaml` so the new section appears in the E2E flow. For a new category, create a new `<category>-smoke.yaml` based on `mobile/.maestro/sanskar-smoke.yaml` as the template. Both forms must `runFlow: _launch.yaml` and live in `mobile/.maestro/`. |
 
 `<Pascal>` = the `id` converted to PascalCase (e.g. `hanuman-chalisa` → `HanumanChalisa`).
 
@@ -74,8 +76,8 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
   - Sections with a subsection listing (Chapters Index, kāṇḍa list, etc.) ALSO surface the toggle on that listing.
   - State is shared across surfaces via the same hook — no per-screen forks.
 - **Categories & Deities.** Every `LibraryEntry` must have a valid `category` (one of the six defined types) and at least one `deity` tag. The Home screen grid and deity section derive their content from these fields — no manual wiring required.
-- **Japam is excluded from deity listings.** Japam mantras live behind their own Home tile (`Japam`) and are intentionally filtered out of `DeityListScreen` and the `DeityIndex` count. Reasons: (a) japam mantras are typically a single line that's already embedded as the opening verse of the matching stotram (e.g. `om-namah-shivaya` is also chapter 1 of `shiva-strotam`), so re-listing them under the deity is redundant; (b) the deity card is a reading-list surface, the Japam tile is a counting-mode surface — different intents. Keep the `'japam'` deity-list filter in place when adding new mantras.
-- **Pill vocabulary.** Verse-type pill is always `<term> · <subtitle or N>`. The **leading term matches the user's selected language** — Hindi mode shows `श्लोक · 1.1` / `चौपाई · 9` / `परिचय · Introduction`; English mode shows `Shloka · 1.1` / `Chaupai · 9` / `Introduction · परिचय`. Never hardcode one language — branch on `lang` (or use lang-paired `labelHi`/`labelEn` from the data, as Sundarkand does). Do not invent new vocabulary without updating `design.md` first.
+- **Japam items appear under their deity.** Japam mantras are shown under their tagged deity's listing (e.g., Gayatri Mantra appears under Maa Gayatri deity card). The deity card shows all content tagged with that deity regardless of category. Tapping a japam item from a deity list navigates to the Japam Counter screen for that mantra.
+- **Pill vocabulary.** Verse-type pill is always `<term> · <subtitle or N>`. The middle dot `·` separator is stored **in the data** (in `labelHi`/`labelEn` fields), not added at render time. Data format: `"labelHi": "चौपाई · १"`, `"labelEn": "Chaupai · 1"`. Use Devanagari numerals in `labelHi` and Arabic numerals in `labelEn`. Sub-numbering uses `·` without spaces: `"चौपाई · ५५·१"`. Single-word labels without numbers (e.g., "टेक", "दोहा", "समापन दोहा") do NOT get a dot. The **leading term matches the user's selected language** — Hindi mode shows `श्लोक · १.१` / `चौपाई · ९`; English mode shows `Shloka · 1.1` / `Chaupai · 9`. Never hardcode one language — branch on `lang`. Do not invent new vocabulary without updating `design.md` first.
 - **Every user-facing string respects `lang`.** If a string is visible to the user (visible Text, pill/badge, button label, top-bar title, modal body, toast, confirmation copy) and it carries semantic content beyond a number/symbol, it must branch on `lang` or come from a lang-paired field (`labelHi`/`labelEn`, `nameHi`/`nameEn`, `meaningHi`/`meaningEn`, …). Hardcoded Devanagari in an otherwise-English flow (or vice versa) is a hard reject. Exceptions, which must be intentional: (a) bilingual stacked labels by design — listing card subtitles (`nameHi · nameEn`), Resume sheet's `जारी रखें · Resume` button — where both languages render simultaneously; (b) numeric/symbolic content (`॥`, `1.9`, `4`). When in doubt, branch on `lang`. (Origin: WishlistScreen verse pill rendered `श्लोक 1.9` in English mode; Gita / Shiva Strotam verse pills had the same bug.)
 - **No emoji, no photos.** Backgrounds are always faded hand-drawn sketches per the Section 6 treatment.
 - **Type safety on verse pages.** A reader screen renders only its own section's `<Pascal>VersePage.tsx`. Cross-section reuse via direct import is forbidden — it silently couples two sections to the same field shape and any drift becomes a runtime crash. The `verse` prop must type-check without escape hatches: `as any`, `as unknown as`, and `// @ts-ignore`/`// @ts-expect-error` on a `*VersePage` prop are a hard reject in review. If `tsc --noEmit` complains when wiring up a reader, the fix is the data shape or a section-specific page, **not** a cast. (Origin: PR #31 Balkand crash — `RamcharitmanasReaderScreen` cast `RamcharitmanasVerse` into `ShivaStrotamVersePage`, whose `verse.sanskrit` access threw on first paint because Ramcharitmanas uses `verse.lines`.)
@@ -103,6 +105,7 @@ The slash command runs the first three; the human PR author runs the rest.
 12. **Both listings reach the reader.** Open the section from Home → its category tile **and** from Home → By Deity → its deity card. Both paths must land on the same reader. If the section appears as a card but tapping is a no-op, the routing helper (`entryRoutes.ts`) is missing a case.
 13. **Multi-instance readers serve the right content.** For sections that share a screen (chalisas, aartis, future N-of-a-kind), open at least two distinct entries and confirm titles, verses, and `sourceId` (visible via bookmarks) actually differ — a reader hardcoded to one variant will silently render the wrong content for the others.
 14. **Section is reachable from search.** `mobile/src/data/__tests__/searchIndex.test.ts` already enforces that every active `library` entry produces verse entries in the search index — but verify manually: open the global search (top-right magnifier on Home), type a unique word from the section's first verse, confirm the result row tap lands on the correct reader page. See §8 for the per-shape integration paths.
+15. **Maestro E2E flow updated.** `mobile/.maestro/<category>-smoke.yaml` includes the new section's `nameEn` in its `assertVisible` list (for an existing category) or a new flow file exists (for a new category). Run `npm run test:e2e` locally and confirm the flow passes on both iOS Simulator and Android Emulator before merge. See `mobile/.maestro/README.md` for the per-category template.
 
 ---
 
@@ -153,7 +156,49 @@ If a new section uses one of the above shapes **and** its data accessor follows 
 
 ---
 
-## 9. Pull-request hygiene for new sections
+## 9. Cross-platform verification (iOS + Android)
+
+Every implementation must work on **both iOS and Android**. This is non-negotiable.
+
+- **Simulator + Emulator.** Before any section ships, it must be tested on both an iOS Simulator (via Xcode) and an Android Emulator (via Android Studio / `emulator` CLI). A single-platform test does not constitute a passing verification.
+- **Automated verification via Maestro — one flow per category, every section covered.** `mobile/.maestro/` holds YAML flow files that drive the simulator/emulator without manual taps. **Every active category has its own smoke flow** that opens the category tile, lists every section that lives under it, opens a representative reader, verifies the language toggle, and returns home:
+  - `granth-smoke.yaml` · `stotram-smoke.yaml` · `chalisa-smoke.yaml` · `japam-smoke.yaml` · `aarti-smoke.yaml` · `sanskar-smoke.yaml`
+  - All flows share `_launch.yaml` (boot + project select) via `runFlow:` so a change to the launch path ripples to all flows.
+  - `config.yaml` sets `snapshotKeyHonorModalViews: false` so Maestro reads past iOS modal sheets (notably Expo Go's first-launch dev menu).
+  - Run all flows: `npm run test:e2e` (alias for `maestro test .maestro/`). Run a single flow: `maestro test --config .maestro/config.yaml .maestro/<category>-smoke.yaml`.
+- **The Maestro flow is part of the section contract, not an optional follow-up.** When adding a section to an existing category, append an `- assertVisible: "<NameEn>"` to that category's smoke flow's CategoryList block (Section 2 of `mobile/.maestro/README.md` documents this). When adding a brand-new category, copy `sanskar-smoke.yaml` as the template, swap section names, and add a row to `mobile/.maestro/README.md`'s flow table. A PR that adds a section but does not update the matching `<category>-smoke.yaml` is a hard reject — same bar as a missing reader-screen test.
+- **Element selection in Maestro flows.** Prefer visible text (`tapOn: text: "..."`) and `accessibilityLabel` matching. `LibraryCard` uses `${nameEn}. ${sub}. Tap to open.` — match on just the `nameEn` substring. `CategoryCard` uses the shorter `${nameEn}. Tap to open.` — same substring matches both. NEVER use `point: x%, y%` coordinates — they break across device sizes and were the cause of past flaky test runs.
+- **Platform-specific rendering.** Check for platform divergence in: safe area insets, font rendering (Devanagari kerning differences), background image scaling, navigation gestures (swipe-back on iOS vs hardware back on Android), status bar behaviour.
+- **PR screenshots.** PR descriptions for new sections must include screenshots from **both platforms** — not just one. At minimum: reader page 1 on iOS, reader page 1 on Android.
+- **No platform-only code without justification.** `Platform.select()` or `Platform.OS` branching is acceptable only when addressing a verified rendering difference. Do not pre-emptively add platform branches "just in case."
+
+---
+
+## 10. Content accuracy and verification
+
+All content (slokas, mantras, verses, meanings, instructions) must be **verified against authoritative internet sources** before shipping. No discrepancy is acceptable.
+
+- **Authoritative sources.** Use Gitapress (gitapress.org), Gita Supersite (gitasupersite.iitk.ac.in), Sanskrit Documents (sanskritdocuments.org), Arya Samaj publications, or university-hosted Sanskrit databases. YouTube transcriptions and random blogs are NOT authoritative.
+- **Cross-verification.** Each sloka must be verified against at least 2 independent authoritative sources. If sources disagree on a word, use the majority reading and note the variant in a comment in the JSON `source` field.
+- **No AI-generated Sanskrit.** Slokas must be copied from verified sources, never composed or "completed" by an LLM. If a verse is incomplete in one source, find the full text in another — do not guess missing words.
+- **Transliteration accuracy.** IAST transliterations must be checked character-by-character against the Devanagari. Common errors to watch: anusvara (ṃ vs. n/m), visarga (ḥ), retroflex consonants (ṭ/ḍ/ṇ vs t/d/n), long vowels (ā/ī/ū).
+- **Meaning faithfulness.** Hindi and English meanings must faithfully convey the verse's meaning without adding theological interpretation beyond what the verse states. Simplification for readability is fine; invention is not.
+- **Source attribution.** Every JSON data file must include a `source` object with `baseText` (authoritative source name) and `retrievedOn` (ISO date). If multiple sources were used, list them.
+
+---
+
+## 11. Explanation and importance of every sloka and ritual
+
+Every content section — especially the `sanskar` category — must include **explanation (अर्थ) and importance/significance (महत्त्व)** for each sloka, mantra, or ritual. This mirrors the depth provided in stotram sections.
+
+- **`meaningHi` and `meaningEn` are never just translations.** They must explain: (a) the literal meaning of the verse, (b) the context/occasion when it is recited, and (c) the spiritual or practical significance. A bare word-for-word translation is insufficient.
+- **`vidhiHi` / `vidhiEn` for instructional content.** Sections that teach practices (Surya Namaskar, Tulsi Puja, etc.) must include step-by-step instructions in the vidhi fields. Instructions should be clear enough for a child (8-14 years) to follow independently.
+- **Benefits/significance.** Each ritual or sloka must explain WHY it is practiced — the scriptural basis, the spiritual benefit, and (where applicable) the health/wellbeing benefit per Ayurvedic or Yogic tradition.
+- **Scriptural reference.** Where a sloka originates from a specific text (e.g., Gita 4.24 for Brahmarpanam), cite the source in the meaning field.
+
+---
+
+## 12. Pull-request hygiene for new sections
 
 These rules exist because PR #31 (the Balkand crash) demonstrated that bulk multi-section PRs invite pattern-match review, and that `tsc` escape hatches will be approved if the commit message frames them as "compatibility casts." Both failure modes are now closed.
 
@@ -165,3 +210,45 @@ These rules exist because PR #31 (the Balkand crash) demonstrated that bulk mult
   - Explicit line: "No `as any` / `@ts-ignore` introduced on verse-page props or route params."
 - **Self-flagged casts are flags, not justifications.** Commit messages that contain "cast", "compatible interface", "type compatibility", or "as any" against a verse-page prop must be challenged in review. The fix is upstream (data shape or new component), not the cast.
 - **Reviewer responsibility.** Approving a new-section PR requires confirming items 1, 9, 10, and 11 of §4 yourself — not trusting the author's checklist. Sign off only after opening the dev client (or the included screenshots) and seeing the reader render.
+
+---
+
+## 10. Content integrity & verification
+
+These rules govern the correctness of religious/devotional content data. They exist because fabricated, incomplete, and misattributed text was shipped and caught only after user reports. Every rule below is a hard gate — violations block merge.
+
+### 10.1 Internet verification is mandatory
+Every religious text (aarti, chalisa, stotram, granth verse) must be verified against **at least 2 independent authoritative internet sources** before shipping. Acceptable sources: Gita Press editions, sanskritdocuments.org, hindunidhi.com, drikpanchang.com, university repositories, and well-established devotional sites with cross-referencing. News/SEO sites (NDTV, Times Now) are acceptable only as a second confirmation, never as sole source.
+
+### 10.2 Source citation in data
+Every content JSON file must have a `source.baseText` field naming the edition or website(s) verified against, and `source.retrievedOn` with the ISO date of verification. Example: `{"baseText": "brandbharat.com, vignanam.org", "retrievedOn": "2026-05-23"}`. A file without source citation is unverified and must not ship as `active`.
+
+### 10.3 No AI-generated liturgical text
+Religious text must come from published traditional sources. Never generate, paraphrase, or "reconstruct" verse text using an LLM. Meanings/commentary may be editorial (clearly labeled), but the prayer text itself (`lines`, `sanskrit`, `linesEn`) must be verbatim from a verified source. Origin: Durga Chalisa was partially AI-generated.
+
+### 10.4 Deity metadata accuracy
+The `deity` field (and `deities` array in `texts.ts`) must match the actual deity addressed in the text, not a loose theological category. Verify by reading the text's opening invocation. Origin: Gayatri Mantra was tagged "durga" (it invokes Savitr/the Sun), Om Jai Jagdish was tagged "krishna" (it's a Vishnu aarti).
+
+### 10.5 Complete texts only — never fabricate
+Ship the full canonical version (all verses) only after internet verification. Missing stanzas are worse than a "coming soon" label. Never add wrong, pre-generated, or unverified text to fill gaps. If the complete verified text isn't available, don't ship the section at all — mark it `status: 'coming'` until verified. Origin: Hanuman Aarti had 6 of 13 verses with a fabricated closing, Jai Ambe Gauri had 5 of 12.
+
+### 10.6 No fabricated content
+Every line in a content file must exist in at least one published source. Fake closing verses, paraphrased refrains, composite mashups from different texts = hard reject. If a line appears in zero internet sources, it is fabricated and must be removed. Origin: "हनुमत बीर सकल दुख भावे" (Hanuman Aarti closing) appeared in zero published sources.
+
+### 10.7 Both platforms per change
+Every content/data change must be verified on both iOS and Android before OTA push. Bundle and test on both platforms — a rendering issue on one platform (especially with Devanagari fonts) may not appear on the other.
+
+### 10.8 Background image per deity
+Every deity in the `Deity` type must have a distinct, thematically correct background image in `backgrounds.ts`. Never use another deity's image as a placeholder (e.g., Krishna's image for Vishnu, or Shiva's image for Gayatri). If no appropriate image exists yet, commission/source one before adding the deity. Origin: Vishnu was using Krishna's bansuri image, Gayatri was using Shiva's trishul image.
+
+### 10.9 Deity display names must be recognizable
+Deity `nameHi`/`nameEn` must use the popularly recognized devotional name that users will identify. Use the name devotees actually use in prayer/temple context (e.g., "माँ गायत्री" not "सवितृ देव", "श्री विष्णु" not "नारायण"). When in doubt, use the name that appears on temple signage. Origin: Users couldn't identify "Savitr Deva" as Gayatri.
+
+### 10.10 Verse count sync is atomic
+`texts.ts` `verseCount` must always equal the JSON `verses.length`. The `sub` field count must match. After any content change that alters verse count, grep for the old count in: (a) `chapters-manifest.json`, (b) `index.ts` invariant assertions, (c) `chapteredTotals.test.ts`. Update all three atomically in the same commit. Origin: Every content fix in this audit caused cascading test failures from stale counts.
+
+### 10.11 No duplicate content across sections
+A text must exist in exactly one location/category. If it's a stotram (like Sankat Mochan Hanumanashtak), it belongs in stotram — not duplicated in aarti. Before adding content, grep the repo for the text's first line to confirm it doesn't already exist elsewhere. Origin: Sankat Mochan existed in both aarti/ and hanuman-ashtak/ with different (both wrong) versions.
+
+### 10.12 Transliteration integrity
+No Devanagari characters (U+0900–U+097F) in `linesEn`/`transliteration` fields. No empty strings (use "(transliteration pending)" if unavailable). Correct romanization scheme per `design.md §3.1`: Sanskrit texts use IAST with Hunterian digraphs; Awadhi/Hindi uses pronunciation-based ASCII. Run `grep -rP '[ऀ-ॿ]'` on transliteration fields before shipping. Origin: 23 Sundarkand lines had raw Devanagari, 19 Gita verses had transliteration spillover between adjacent verses.

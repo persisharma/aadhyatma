@@ -5,14 +5,260 @@
   "subtitleEn": "Aarti Keejai Hanuman Lala Ki",
   "deity": "hanuman",
   "language": "hi-en",
-  "source": {"baseText": "Traditional Hanuman Aarti", "retrievedOn": "2026-05-08"},
-  "counts": {"totalVerses": 6},
+  "source": {"baseText": "ndtv.in, sanatanvaani.in, hindunidhi.com", "retrievedOn": "2026-05-23"},
+  "counts": {"totalVerses": 14},
   "verses": [
-    {"id": "ha-01", "type": "stanza", "section": "body", "number": 1, "labelHi": "पद १", "labelEn": "Stanza 1", "lines": ["आरती कीजै हनुमान लला की।", "दुष्ट दलन रघुनाथ कला की।।"], "linesEn": ["Aarti keejai Hanuman lala ki.", "Dusht dalan Raghunath kala ki."], "meaningHi": "यह पंक्ति हनुमान को 'रघुनाथ की कला' कहती है — अर्थात् वे राम की शक्ति का प्रकटीकरण हैं। जिस प्रकार चन्द्रमा सूर्य का प्रकाश प्रतिबिम्बित करता है, वैसे ही हनुमान राम की दिव्य शक्ति को व्यक्त करते हैं। 'दुष्ट दलन' — लंका में राक्षसों का विनाश इसी 'कला' का प्रकटीकरण था।", "meaningEn": "This verse calls Hanuman 'the art of Raghunath' — meaning he is the manifestation of Rama's power. Just as the moon reflects sunlight, Hanuman expresses Rama's divine energy. 'Dusht Dalan' (crusher of evil) — the destruction of demons in Lanka was a manifestation of this very 'art.'"},
-    {"id": "ha-02", "type": "stanza", "section": "body", "number": 2, "labelHi": "पद २", "labelEn": "Stanza 2", "lines": ["जाके बल से गिरिवर काँपे।", "रोग दोष जाके निकट न झाँके।।"], "linesEn": ["Jaake bal se girivar kaanpe.", "Rog dosh jaake nikat na jhaanke."], "meaningHi": "हनुमान के बल से पर्वत काँपते हैं — यह संजीवनी पर्वत उठाने और लंका-प्रवेश का संकेत है। द्रोणगिरि को उखाड़ा, लंका की सुवेल पर्वत पर सेना उतारी। 'रोग-दोष निकट न झाँके' — हनुमान-उपासना रोग-निवारक मानी जाती है, विशेषकर शनि-पीड़ा में।", "meaningEn": "Mountains tremble at Hanuman's strength — referencing lifting the Sanjeevani mountain and entering Lanka. He uprooted Dronagiri, landed the army on Suvela mountain. 'Disease and defects dare not approach' — Hanuman worship is considered curative, especially for Saturn afflictions."},
-    {"id": "ha-03", "type": "stanza", "section": "body", "number": 3, "labelHi": "पद ३", "labelEn": "Stanza 3", "lines": ["अंजनि पुत्र महा बलदाई।", "सन्तन के प्रभु सदा सहाई।।"], "linesEn": ["Anjani putra mahaa baldaaee.", "Santan ke Prabhu sada sahaaee."], "meaningHi": "अंजनी माता — वानर-राजकुमारी जो वायुदेव की कृपा से हनुमान की माता बनीं। 'सन्तन के सदा सहाई' — हनुमान चिरंजीवी हैं और भक्तों की रक्षा कलियुग में भी करते हैं। तुलसीदास ने कहा: 'कलियुग केवल नाम अधारा, हनुमत सेइय सदा सुखकारा।'", "meaningEn": "Mother Anjani — a Vanara princess who became Hanuman's mother by the grace of Vayu (wind god). 'Always helping saints' — Hanuman is immortal (Chiranjeevi) and protects devotees even in Kali Yuga. Tulsidas said: 'In Kali Yuga, only the Name is the support; serve Hanuman for eternal happiness.'"},
-    {"id": "ha-04", "type": "stanza", "section": "body", "number": 4, "labelHi": "पद ४", "labelEn": "Stanza 4", "lines": ["दे बीरा रघुनाथ पठाये।", "लंका जारि सिया सुधि लाये।।"], "linesEn": ["De beeraa Raghunath pathaaye.", "Lanka jaari Siya sudhi laaye."], "meaningHi": "'बीरा' — वीर को दिया हुआ कार्य (mission)। रघुनाथ ने भेजा, लंका जलाई, सीता की सुधि (समाचार) लाए। यह सुन्दरकाण्ड का सार है — एक ही पंक्ति में तीन महान कार्य: प्रस्थान, लंका-दहन, सीता से भेंट। हनुमान एकमात्र ऐसे योद्धा हैं जिन्होंने अकेले शत्रु-राज्य में प्रवेश किया।", "meaningEn": "'Beera' — the heroic mission given. Sent by Raghunath, he burned Lanka and brought news of Sita. This is the essence of Sundarkand — three great deeds in one line: departure, burning Lanka, meeting Sita. Hanuman is the only warrior who entered enemy territory alone."},
-    {"id": "ha-05", "type": "stanza", "section": "body", "number": 5, "labelHi": "पद ५", "labelEn": "Stanza 5", "lines": ["लंका सो कोट समुद्र सी खाई।", "जात पवनसुत बार न लाई।।"], "linesEn": ["Lanka so kot samudra see khaaee.", "Jaat Pawansut baar na laaee."], "meaningHi": "लंका का किला (कोट) और समुद्र जैसी खाई (परिखा) — पवनसुत (हनुमान) ने जाने में देर न लगाई। 100 योजन (800 मील) का समुद्र एक छलाँग में पार किया। यह 'वायुपुत्र' होने का प्रताप है — वायु सर्वव्यापी है, उसका पुत्र भी सर्वत्र पहुँच सकता है।", "meaningEn": "Lanka's fortress walls and ocean-like moat — the Son of Wind (Hanuman) reached without delay. He crossed 100 yojanas (800 miles) of ocean in a single leap. This is the glory of being 'Vayuputra' — wind is all-pervading, its son can reach anywhere."},
-    {"id": "ha-06", "type": "stanza", "section": "body", "number": 6, "labelHi": "पद ६", "labelEn": "Stanza 6", "lines": ["मन कर्म वचन ध्यान जो लावे।", "हनुमत बीर सकल दुख भावे।।", "आरती कीजै हनुमान लला की।।"], "linesEn": ["Man karm vachan dhyaan jo laave.", "Hanumat beer sakal dukh bhaave.", "Aarti keejai Hanuman lala ki."], "meaningHi": "समापन: मन, कर्म, वचन — तीनों से जो हनुमान का ध्यान करता है, वीर हनुमान उसके सकल (सभी) दुख हर लेते हैं। 'त्रिकरण शुद्धि' — भारतीय दर्शन में मन-वचन-कर्म की एकता सर्वोच्च साधना है। हनुमान स्वयं इसके आदर्श हैं — उन्होंने मन से राम का ध्यान, वचन से राम-गुणगान, और कर्म से राम-सेवा की।", "meaningEn": "Closing: whoever focuses mind, action, and speech on Hanuman — the brave Hanuman removes all their sorrows. 'Trikarana Shuddhi' (purity of three instruments) — in Indian philosophy, unity of mind-speech-action is the highest practice. Hanuman himself is the ideal — he meditated on Rama in mind, praised Rama in speech, and served Rama in action."}
+    {
+      "id": "ha-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "आरती कीजै हनुमान लला की।",
+        "दुष्ट दलन रघुनाथ कला की॥"
+      ],
+      "linesEn": [
+        "Aarti keejai Hanuman lala ki.",
+        "Dusht dalan Raghunath kala ki."
+      ],
+      "meaningHi": "हनुमान लला (प्रिय बालक) की आरती कीजिए जो रघुनाथ (श्रीराम) की कला (शक्ति का अंश) हैं और दुष्टों का दलन (विनाश) करने वाले हैं।",
+      "meaningEn": "Perform the aarti of beloved Hanuman, who is a manifestation of Lord Rama's divine power and the destroyer of evil forces."
+    },
+    {
+      "id": "ha-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "जाके बल से गिरिवर कांपे।",
+        "रोग दोष जाके निकट न झांके॥"
+      ],
+      "linesEn": [
+        "Jaake bal se girivar kaanpe.",
+        "Rog dosh jaake nikat na jhaanke."
+      ],
+      "meaningHi": "जिनके बल से बड़े-बड़े पर्वत कांपते हैं। जिनके समीप रोग और दोष झांकने की भी हिम्मत नहीं करते — अर्थात् हनुमान के भक्तों को कोई रोग या दोष नहीं सताता।",
+      "meaningEn": "Mountains tremble at their strength. Disease and affliction dare not even glance near them — meaning devotees of Hanuman remain free from illness and defects."
+    },
+    {
+      "id": "ha-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "अंजनि पुत्र महा बलदाई।",
+        "संतन के प्रभु सदा सहाई॥"
+      ],
+      "linesEn": [
+        "Anjani putra mahaa baldaaee.",
+        "Santan ke prabhu sadaa sahaaee."
+      ],
+      "meaningHi": "अंजनी माता के पुत्र जो महान बल देने वाले हैं। संतों और भक्तों के ये प्रभु सदा सहायक बने रहते हैं — हनुमान चिरंजीवी हैं और कलियुग में भी भक्तों की रक्षा करते हैं।",
+      "meaningEn": "Son of Mother Anjani, the great bestower of strength. They are always the helper of saints and devotees — Hanuman is immortal and protects devotees even in the current age."
+    },
+    {
+      "id": "ha-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "दे बीरा रघुनाथ पठाए।",
+        "लंका जारि सिया सुधि लाए॥"
+      ],
+      "linesEn": [
+        "De beeraa Raghunath pathaaye.",
+        "Lanka jaari Siya sudhi laaye."
+      ],
+      "meaningHi": "वीरता का वरदान देकर रघुनाथ (श्रीराम) ने उन्हें भेजा। उन्होंने लंका को जलाया और सीताजी का समाचार लाकर दिया — यह सम्पूर्ण सुन्दरकाण्ड का सार एक पंक्ति में है।",
+      "meaningEn": "Blessed with valor, Lord Rama sent them forth. They burned Lanka and brought back news of Sita — this captures the entire essence of Sundarkand in a single couplet."
+    },
+    {
+      "id": "ha-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "लंका सो कोट समुद्र सी खाई।",
+        "जात पवनसुत बार न लाई॥"
+      ],
+      "linesEn": [
+        "Lanka so kot samudra see khaaee.",
+        "Jaat Pawansut baar na laaee."
+      ],
+      "meaningHi": "लंका का किला और समुद्र जैसी गहरी खाई — पवनपुत्र (हनुमान) ने वहाँ जाने में तनिक भी देर नहीं लगाई। सौ योजन का समुद्र एक ही छलाँग में पार किया।",
+      "meaningEn": "Lanka's fortress walls and ocean-wide moat — the Son of Wind reached there without a moment's delay. He crossed a hundred yojanas of ocean in a single leap."
+    },
+    {
+      "id": "ha-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "लंका जारि असुर संहारे।",
+        "सियारामजी के काज संवारे॥"
+      ],
+      "linesEn": [
+        "Lanka jaari asur sanhaare.",
+        "Siyaraamji ke kaaj sanvaare."
+      ],
+      "meaningHi": "लंका को जलाकर असुरों (राक्षसों) का संहार किया और सीताराम जी के सभी कार्यों को संवारा (सफलतापूर्वक पूर्ण किया)।",
+      "meaningEn": "They burned Lanka and destroyed the demons, accomplishing all the tasks of Lord Rama and Sita with perfection."
+    },
+    {
+      "id": "ha-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · ६",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "लक्ष्मण मूर्छित पड़े सकारे।",
+        "आनि संजीवन प्राण उबारे॥"
+      ],
+      "linesEn": [
+        "Lakshman moorchhit pade sakaare.",
+        "Aani Sanjeewan praan ubaare."
+      ],
+      "meaningHi": "लक्ष्मण मूर्छित (बेहोश) होकर गिर पड़े प्रातःकाल तक। संजीवनी बूटी लाकर उनके प्राणों की रक्षा की — हनुमान ने द्रोणाचल पर्वत ही उठा लाया था।",
+      "meaningEn": "Lakshman fell unconscious by dawn. Bringing the Sanjeevani herb, they saved his life — Hanuman carried the entire Dronagiri mountain to accomplish this."
+    },
+    {
+      "id": "ha-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद · ७",
+      "labelEn": "Stanza · 7",
+      "lines": [
+        "पैठि पाताल तोरि जमकारे।",
+        "अहिरावण की भुजा उखारे॥"
+      ],
+      "linesEn": [
+        "Paithi paataal tori jamkaare.",
+        "Ahiraavan ki bhuja ukhaare."
+      ],
+      "meaningHi": "पाताल में प्रवेश कर यमराज की पुकार (मृत्यु के संकेत) को तोड़ दिया। अहिरावण की भुजाएँ उखाड़ दीं — जब अहिरावण ने राम-लक्ष्मण को पाताल में ले जाकर बलि देना चाहा।",
+      "meaningEn": "Entering the netherworld, they broke the grip of death. They tore apart the arms of Ahiravana — who had taken Rama and Lakshman to the underworld to sacrifice them."
+    },
+    {
+      "id": "ha-09",
+      "type": "stanza",
+      "section": "body",
+      "number": 9,
+      "labelHi": "पद · ८",
+      "labelEn": "Stanza · 8",
+      "lines": [
+        "बाएं भुजा असुर दल मारे।",
+        "दाहिने भुजा संतजन तारे॥"
+      ],
+      "linesEn": [
+        "Baayen bhuja asur dal maare.",
+        "Daahine bhuja santjan taare."
+      ],
+      "meaningHi": "बायें हाथ से असुरों के दल को मारते हैं और दाहिने हाथ से संतजनों (भक्तों) को तारते (उद्धार करते) हैं — एक साथ दुष्टों का विनाश और सज्जनों की रक्षा करने वाले हैं।",
+      "meaningEn": "With the left arm they strike down demon armies, and with the right arm they uplift the saints — simultaneously destroying evil and protecting the righteous."
+    },
+    {
+      "id": "ha-10",
+      "type": "stanza",
+      "section": "body",
+      "number": 10,
+      "labelHi": "पद · ९",
+      "labelEn": "Stanza · 9",
+      "lines": [
+        "सुर नर मुनि जन आरती उतारें।",
+        "जय जय जय हनुमान उचारें॥"
+      ],
+      "linesEn": [
+        "Sur nar muni jan aarti utaarein.",
+        "Jay jay jay Hanuman uchaarein."
+      ],
+      "meaningHi": "देवता (सुर), मनुष्य (नर) और मुनिजन सभी आरती उतारते हैं और जय जय जय हनुमान का उद्घोष करते हैं — तीनों लोकों में हनुमान की वन्दना होती है।",
+      "meaningEn": "Gods, humans, and sages all perform their aarti and proclaim victory to Hanuman — in all three worlds, Hanuman is worshipped and praised."
+    },
+    {
+      "id": "ha-11",
+      "type": "stanza",
+      "section": "body",
+      "number": 11,
+      "labelHi": "पद · १०",
+      "labelEn": "Stanza · 10",
+      "lines": [
+        "कंचन थार कपूर लौ छाई।",
+        "आरती करत अंजना माई॥"
+      ],
+      "linesEn": [
+        "Kanchan thaar kapoor lau chhaaee.",
+        "Aarti karat Anjanaa maaee."
+      ],
+      "meaningHi": "सोने के थाल में कपूर की लौ (ज्योति) छा रही है। माता अंजना (अंजनी) स्वयं अपने पुत्र हनुमान की आरती उतार रही हैं — माता द्वारा पुत्र की आरती वात्सल्य भक्ति का परम दृश्य है।",
+      "meaningEn": "The flame of camphor glows on a golden plate. Mother Anjana herself performs the aarti of her son Hanuman — a mother performing aarti of her son is the supreme expression of maternal devotion."
+    },
+    {
+      "id": "ha-12",
+      "type": "stanza",
+      "section": "body",
+      "number": 12,
+      "labelHi": "पद · ११",
+      "labelEn": "Stanza · 11",
+      "lines": [
+        "जो हनुमानजी की आरती गावै।",
+        "बसि बैकुंठ परम पद पावै॥"
+      ],
+      "linesEn": [
+        "Jo Hanumanji ki aarti gaavai.",
+        "Basi Baikunth param pad paavai."
+      ],
+      "meaningHi": "जो व्यक्ति हनुमानजी की यह आरती गाता है, वह बैकुंठ (विष्णुलोक) में निवास करता है और परम पद (मोक्ष) को प्राप्त करता है — यह आरती गाने का फल है।",
+      "meaningEn": "Whoever sings this aarti of Hanuman attains residence in Vaikuntha (the divine abode) and achieves the supreme state of liberation — this is the fruit of singing this aarti."
+    },
+    {
+      "id": "ha-13",
+      "type": "stanza",
+      "section": "body",
+      "number": 13,
+      "labelHi": "पद · १२",
+      "labelEn": "Stanza · 12",
+      "lines": [
+        "लंक विध्वंस कीन्ह रघुराई।",
+        "तुलसीदास प्रभु कीर्ति गाई॥"
+      ],
+      "linesEn": [
+        "Lank vidhvans keenh Raghuraaee.",
+        "Tulseedaas prabhu keerti gaaee."
+      ],
+      "meaningHi": "रघुराई (श्रीराम) ने लंका का विध्वंस किया और तुलसीदास ने प्रभु की कीर्ति (यश) गाई है — यह तुलसीदास द्वारा रचित होने का संकेत देता है।",
+      "meaningEn": "Lord Rama destroyed Lanka, and Tulsidas has sung the glory of the Lord — this verse indicates the composition is attributed to the poet-saint Tulsidas."
+    },
+    {
+      "id": "ha-14",
+      "type": "refrain",
+      "section": "body",
+      "number": 14,
+      "labelHi": "टेक",
+      "labelEn": "Closing Refrain",
+      "lines": [
+        "आरती कीजै हनुमान लला की।",
+        "दुष्ट दलन रघुनाथ कला की॥"
+      ],
+      "linesEn": [
+        "Aarti keejai Hanuman lala ki.",
+        "Dusht dalan Raghunath kala ki."
+      ],
+      "meaningHi": "आरती का समापन पुनः टेक से — हनुमान लला की आरती कीजिए जो रघुनाथ की कला हैं और दुष्टों का दलन करने वाले हैं। आरती की चक्रीय संरचना पूर्णता का प्रतीक है।",
+      "meaningEn": "The aarti closes by returning to the refrain — perform the aarti of beloved Hanuman, the divine manifestation of Rama's power and the crusher of evil. The circular structure of aarti symbolizes completeness."
+    }
   ]
 }

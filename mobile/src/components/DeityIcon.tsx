@@ -9,8 +9,10 @@ type Props = {
 
 const emojiIcons: Partial<Record<DeityIconKey, string>> = {
   bowArrow: '🏹',
+  chakra: '☸️',
   trishul: '🔱',
   lotus: '🪷',
+  surya: '☀️',
 };
 
 export default function DeityIcon({ iconKey, fallbackText }: Props) {

@@ -8,9 +8,20 @@ import type { GitaChapterSummary } from '@/data/gita';
 type Props = {
   chapter: GitaChapterSummary;
   onPress: () => void;
+  chapterLabelHi?: string;
+  chapterLabelEn?: string;
+  unitLabelHi?: string;
+  unitLabelEn?: string;
 };
 
-export default function GitaChapterCard({ chapter, onPress }: Props) {
+export default function GitaChapterCard({
+  chapter,
+  onPress,
+  chapterLabelHi = 'अध्याय',
+  chapterLabelEn = 'Chapter',
+  unitLabelHi = 'श्लोक',
+  unitLabelEn = 'verses',
+}: Props) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
 
@@ -20,10 +31,10 @@ export default function GitaChapterCard({ chapter, onPress }: Props) {
   const primaryFontSize = lang === 'hi' ? 17 : 16;
   const primaryIsItalic = lang === 'en';
 
-  const chapterTag =
-    lang === 'hi' ? `अध्याय ${chapter.chapter}` : `Chapter ${chapter.chapter}`;
-  const verseMeta =
-    lang === 'hi' ? `${chapter.verseCount} श्लोक` : `${chapter.verseCount} verses`;
+  const chapterLabel = lang === 'hi' ? chapterLabelHi : chapterLabelEn;
+  const unitLabel = lang === 'hi' ? unitLabelHi : unitLabelEn;
+  const chapterTag = `${chapterLabel} ${chapter.chapter}`;
+  const verseMeta = `${chapter.verseCount} ${unitLabel}`;
 
   const a11yLabel = `${chapterTag}. ${primaryTitle}. ${verseMeta}. Tap to open.`;
 

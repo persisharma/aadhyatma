@@ -23,8 +23,8 @@
       "type": "doha",
       "section": "opening",
       "number": 1,
-      "labelHi": "दोहा १",
-      "labelEn": "Doha 1",
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
       "lines": [
         "श्रीगुरु चरन सरोज रज, निज मन मुकुर सुधारि।",
         "बरनउँ रघुबर बिमल जसु, जो दायक फल चारि॥"
@@ -41,8 +41,8 @@
       "type": "doha",
       "section": "opening",
       "number": 2,
-      "labelHi": "दोहा २",
-      "labelEn": "Doha 2",
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
       "lines": [
         "बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार।",
         "बल बुधि विद्या देहु मोहिं, हरहु कलेस विकार॥"
@@ -59,8 +59,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 1,
-      "labelHi": "चौपाई १",
-      "labelEn": "Chaupai 1",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
       "lines": [
         "जय हनुमान ज्ञान गुन सागर।",
         "जय कपीस तिहुँ लोक उजागर॥1॥"
@@ -77,8 +77,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 2,
-      "labelHi": "चौपाई २",
-      "labelEn": "Chaupai 2",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
       "lines": [
         "राम दूत अतुलित बल धामा।",
         "अंजनि-पुत्र पवनसुत नामा॥2॥"
@@ -95,8 +95,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 3,
-      "labelHi": "चौपाई ३",
-      "labelEn": "Chaupai 3",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
       "lines": [
         "महाबीर बिक्रम बजरंगी।",
         "कुमति निवार सुमति के संगी॥3॥"
@@ -113,8 +113,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 4,
-      "labelHi": "चौपाई ४",
-      "labelEn": "Chaupai 4",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
       "lines": [
         "कंचन बरन बिराज सुबेसा।",
         "कानन कुंडल कुंचित केसा॥4॥"
@@ -131,8 +131,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 5,
-      "labelHi": "चौपाई ५",
-      "labelEn": "Chaupai 5",
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
       "lines": [
         "हाथ बज्र औ ध्वजा बिराजै।",
         "काँधे मूँज जनेऊ साजै॥5॥"
@@ -149,8 +149,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 6,
-      "labelHi": "चौपाई ६",
-      "labelEn": "Chaupai 6",
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
       "lines": [
         "शंकर सुवन केसरी नंदन।",
         "तेज प्रताप महा जग वंदन॥6॥"
@@ -167,8 +167,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 7,
-      "labelHi": "चौपाई ७",
-      "labelEn": "Chaupai 7",
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
       "lines": [
         "विद्यावान गुनी अति चातुर।",
         "राम काज करिबे को आतुर॥7॥"
@@ -185,8 +185,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 8,
-      "labelHi": "चौपाई ८",
-      "labelEn": "Chaupai 8",
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
       "lines": [
         "प्रभु चरित्र सुनिबे को रसिया।",
         "राम लखन सीता मन बसिया॥8॥"
@@ -203,8 +203,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 9,
-      "labelHi": "चौपाई ९",
-      "labelEn": "Chaupai 9",
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
       "lines": [
         "सूक्ष्म रूप धरि सियहिं दिखावा।",
         "बिकट रूप धरि लंक जरावा॥9॥"
@@ -221,8 +221,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 10,
-      "labelHi": "चौपाई १०",
-      "labelEn": "Chaupai 10",
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
       "lines": [
         "भीम रूप धरि असुर संहारे।",
         "रामचंद्र के काज सवारे॥10॥"
@@ -239,8 +239,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 11,
-      "labelHi": "चौपाई ११",
-      "labelEn": "Chaupai 11",
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
       "lines": [
         "लाय सजीवन लखन जियाए।",
         "श्रीरघुबीर हरषि उर लाए॥11॥"
@@ -257,8 +257,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 12,
-      "labelHi": "चौपाई १२",
-      "labelEn": "Chaupai 12",
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
       "lines": [
         "रघुपति कीन्ही बहुत बड़ाई।",
         "तुम मम प्रिय भरतहि सम भाई॥12॥"
@@ -275,8 +275,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 13,
-      "labelHi": "चौपाई १३",
-      "labelEn": "Chaupai 13",
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
       "lines": [
         "सहस बदन तुम्हरो जस गावैं।",
         "अस कहि श्रीपति कंठ लगावैं॥13॥"
@@ -293,8 +293,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 14,
-      "labelHi": "चौपाई १४",
-      "labelEn": "Chaupai 14",
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
       "lines": [
         "सनकादिक ब्रह्मादि मुनीसा।",
         "नारद सारद सहित अहीसा॥14॥"
@@ -311,8 +311,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 15,
-      "labelHi": "चौपाई १५",
-      "labelEn": "Chaupai 15",
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
       "lines": [
         "जम कुबेर दिगपाल जहाँ ते।",
         "कवि कोविद कहि सके कहाँ ते॥15॥"
@@ -329,8 +329,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 16,
-      "labelHi": "चौपाई १६",
-      "labelEn": "Chaupai 16",
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
       "lines": [
         "तुम उपकार सुग्रीवहिं कीन्हा।",
         "राम मिलाय राज पद दीन्हा॥16॥"
@@ -347,8 +347,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 17,
-      "labelHi": "चौपाई १७",
-      "labelEn": "Chaupai 17",
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
       "lines": [
         "तुम्हरो मंत्र विभीषण माना।",
         "लंकेश्वर भए सब जग जाना॥17॥"
@@ -365,8 +365,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 18,
-      "labelHi": "चौपाई १८",
-      "labelEn": "Chaupai 18",
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
       "lines": [
         "जुग सहस्र जोजन पर भानू।",
         "लील्यो ताहि मधुर फल जानू॥18॥"
@@ -383,8 +383,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 19,
-      "labelHi": "चौपाई १९",
-      "labelEn": "Chaupai 19",
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
       "lines": [
         "प्रभु मुद्रिका मेलि मुख माहीं।",
         "जलधि लाँघि गए अचरज नाहीं॥19॥"
@@ -401,8 +401,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 20,
-      "labelHi": "चौपाई २०",
-      "labelEn": "Chaupai 20",
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
       "lines": [
         "दुर्गम काज जगत के जेते।",
         "सुगम अनुग्रह तुम्हरे तेते॥20॥"
@@ -419,8 +419,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 21,
-      "labelHi": "चौपाई २१",
-      "labelEn": "Chaupai 21",
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
       "lines": [
         "राम दुआरे तुम रखवारे।",
         "होत न आज्ञा बिनु पैसारे॥21॥"
@@ -437,8 +437,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 22,
-      "labelHi": "चौपाई २२",
-      "labelEn": "Chaupai 22",
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
       "lines": [
         "सब सुख लहै तुम्हारी सरना।",
         "तुम रक्षक काहू को डरना॥22॥"
@@ -455,8 +455,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 23,
-      "labelHi": "चौपाई २३",
-      "labelEn": "Chaupai 23",
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
       "lines": [
         "आपन तेज सम्हारो आपै।",
         "तीनों लोक हाँक तें काँपै॥23॥"
@@ -473,8 +473,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 24,
-      "labelHi": "चौपाई २४",
-      "labelEn": "Chaupai 24",
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
       "lines": [
         "भूत पिशाच निकट नहिं आवै।",
         "महाबीर जब नाम सुनावै॥24॥"
@@ -491,8 +491,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 25,
-      "labelHi": "चौपाई २५",
-      "labelEn": "Chaupai 25",
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
       "lines": [
         "नासै रोग हरै सब पीरा।",
         "जपत निरंतर हनुमत बीरा॥25॥"
@@ -509,8 +509,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 26,
-      "labelHi": "चौपाई २६",
-      "labelEn": "Chaupai 26",
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
       "lines": [
         "संकट तें हनुमान छुड़ावै।",
         "मन क्रम वचन ध्यान जो लावै॥26॥"
@@ -527,8 +527,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 27,
-      "labelHi": "चौपाई २७",
-      "labelEn": "Chaupai 27",
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
       "lines": [
         "सब पर राम तपस्वी राजा।",
         "तिन के काज सकल तुम साजा॥27॥"
@@ -545,8 +545,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 28,
-      "labelHi": "चौपाई २८",
-      "labelEn": "Chaupai 28",
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
       "lines": [
         "और मनोरथ जो कोई लावै।",
         "सोई अमित जीवन फल पावै॥28॥"
@@ -563,8 +563,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 29,
-      "labelHi": "चौपाई २९",
-      "labelEn": "Chaupai 29",
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
       "lines": [
         "चारों जुग परताप तुम्हारा।",
         "है परसिद्ध जगत उजियारा॥29॥"
@@ -581,8 +581,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 30,
-      "labelHi": "चौपाई ३०",
-      "labelEn": "Chaupai 30",
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
       "lines": [
         "साधु संत के तुम रखवारे।",
         "असुर निकंदन राम दुलारे॥30॥"
@@ -599,8 +599,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 31,
-      "labelHi": "चौपाई ३१",
-      "labelEn": "Chaupai 31",
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
       "lines": [
         "अष्ट सिद्धि नौ निधि के दाता।",
         "अस बर दीन जानकी माता॥31॥"
@@ -617,8 +617,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 32,
-      "labelHi": "चौपाई ३२",
-      "labelEn": "Chaupai 32",
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
       "lines": [
         "राम रसायन तुम्हरे पासा।",
         "सदा रहो रघुपति के दासा॥32॥"
@@ -635,8 +635,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 33,
-      "labelHi": "चौपाई ३३",
-      "labelEn": "Chaupai 33",
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
       "lines": [
         "तुम्हरे भजन राम को पावै।",
         "जनम जनम के दुख बिसरावै॥33॥"
@@ -653,8 +653,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 34,
-      "labelHi": "चौपाई ३४",
-      "labelEn": "Chaupai 34",
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
       "lines": [
         "अंत काल रघुबर पुर जाई।",
         "जहाँ जन्म हरि-भक्त कहाई॥34॥"
@@ -671,8 +671,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 35,
-      "labelHi": "चौपाई ३५",
-      "labelEn": "Chaupai 35",
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
       "lines": [
         "और देवता चित्त न धरई।",
         "हनुमत सेइ सर्व सुख करई॥35॥"
@@ -689,8 +689,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 36,
-      "labelHi": "चौपाई ३६",
-      "labelEn": "Chaupai 36",
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
       "lines": [
         "संकट कटै मिटै सब पीरा।",
         "जो सुमिरै हनुमत बलबीरा॥36॥"
@@ -707,8 +707,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 37,
-      "labelHi": "चौपाई ३७",
-      "labelEn": "Chaupai 37",
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
       "lines": [
         "जै जै जै हनुमान गोसाईं।",
         "कृपा करहु गुरुदेव की नाईं॥37॥"
@@ -725,8 +725,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 38,
-      "labelHi": "चौपाई ३८",
-      "labelEn": "Chaupai 38",
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
       "lines": [
         "जो सत बार पाठ कर कोई।",
         "छूटहि बंदि महा सुख होई॥38॥"
@@ -743,8 +743,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 39,
-      "labelHi": "चौपाई ३९",
-      "labelEn": "Chaupai 39",
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
       "lines": [
         "जो यह पढ़ै हनुमान चालीसा।",
         "होय सिद्धि साखी गौरीसा॥39॥"
@@ -761,8 +761,8 @@
       "type": "chaupai",
       "section": "body",
       "number": 40,
-      "labelHi": "चौपाई ४०",
-      "labelEn": "Chaupai 40",
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
       "lines": [
         "तुलसीदास सदा हरि चेरा।",
         "कीजै नाथ हृदय महँ डेरा॥40॥"

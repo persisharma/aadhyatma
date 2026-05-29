@@ -122,7 +122,7 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
             },
           ]}
         >
-          Download on the App Store
+          Now available on iOS & Android
         </Text>
       </View>
     </View>

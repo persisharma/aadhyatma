@@ -108,8 +108,8 @@
       "stanza": 1,
       "numInSection": 1,
       "subSuffix": null,
-      "labelHi": "दोहा १",
-      "labelEn": "Doha 1",
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
       "lines": [
         "हनूमान तेहि परसा कर पुनि कीन्ह प्रनाम।",
         "राम काजु कीन्हें बिनु मोहि कहाँ बिश्राम॥1॥"
@@ -248,8 +248,8 @@
       "stanza": 2,
       "numInSection": 2,
       "subSuffix": null,
-      "labelHi": "दोहा २",
-      "labelEn": "Doha 2",
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
       "lines": [
         "राम काजु सबु करिहहु तुम्ह बल बुद्धि निधान।",
         "आसिष देइ गई सो हरषि चलेउ हनुमान॥2॥"

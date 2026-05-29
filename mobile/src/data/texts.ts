@@ -8,7 +8,9 @@ import { shivChalisaCounts } from './shiv-chalisa';
 import { durgaChalisaCounts } from './durga-chalisa';
 import { ganeshChalisaCounts } from './ganesh-chalisa';
 import { hanumanAshtakTotal } from './hanuman-ashtak';
+import { bajrangBaanTotal } from './bajrang-baan';
 import { ramStutiTotal } from './ram-stuti';
+import { krishnaStotramTotal } from './krishna-stotram';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
@@ -19,8 +21,9 @@ export type ContentCategory =
   | 'stotram'
   | 'chalisa'
   | 'japam'
-  | 'aarti';
-export type Deity = 'rama' | 'krishna' | 'shiva' | 'hanuman' | 'durga' | 'ganesha';
+  | 'aarti'
+  | 'sanskar';
+export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr';
 
 export type LibraryEntry = {
   id: string;
@@ -136,6 +139,17 @@ export const library: readonly LibraryEntry[] = [
     verseCount: vishnuSahasranamaTotal,
   },
   {
+    id: 'krishna-stotram',
+    nameHi: 'कृष्ण स्तोत्रम्',
+    nameEn: 'Krishna Stotram',
+    sub: `${krishnaStotramTotal} श्लोक · अर्थ सहित`,
+    thumb: 'कृ',
+    status: 'active',
+    category: 'stotram',
+    deities: ['krishna'],
+    verseCount: krishnaStotramTotal,
+  },
+  {
     id: 'shiv-chalisa',
     nameHi: 'शिव चालीसा',
     nameEn: 'Shiv Chalisa',
@@ -170,14 +184,25 @@ export const library: readonly LibraryEntry[] = [
   },
   {
     id: 'hanuman-ashtak',
-    nameHi: 'हनुमान अष्टक',
-    nameEn: 'Hanuman Ashtak',
+    nameHi: 'संकटमोचन हनुमानाष्टक',
+    nameEn: 'Sankat Mochan Hanuman Ashtak',
     sub: `${hanumanAshtakTotal} श्लोक · अर्थ सहित`,
     thumb: 'ह',
     status: 'active',
     category: 'stotram',
     deities: ['hanuman'],
     verseCount: hanumanAshtakTotal,
+  },
+  {
+    id: 'bajrang-baan',
+    nameHi: 'बजरंग बाण',
+    nameEn: 'Bajrang Baan',
+    sub: `${bajrangBaanTotal} छन्द · अर्थ सहित`,
+    thumb: 'ब',
+    status: 'active',
+    category: 'stotram',
+    deities: ['hanuman'],
+    verseCount: bajrangBaanTotal,
   },
   {
     id: 'ram-stuti',
@@ -198,30 +223,19 @@ export const library: readonly LibraryEntry[] = [
     thumb: 'ॐ',
     status: 'active',
     category: 'aarti',
-    deities: ['krishna'],
+    deities: ['vishnu'],
     verseCount: 9,
   },
   {
     id: 'hanuman-aarti',
     nameHi: 'हनुमान जी की आरती',
     nameEn: 'Hanuman Ji Ki Aarti',
-    sub: '6 पद · व्याख्या सहित',
+    sub: '14 पद · व्याख्या सहित',
     thumb: 'ह',
     status: 'active',
     category: 'aarti',
     deities: ['hanuman'],
-    verseCount: 6,
-  },
-  {
-    id: 'sankat-mochan',
-    nameHi: 'संकटमोचन हनुमानाष्टक',
-    nameEn: 'Sankat Mochan Hanumanashtak',
-    sub: '8 पद · व्याख्या सहित',
-    thumb: 'सं',
-    status: 'active',
-    category: 'aarti',
-    deities: ['hanuman'],
-    verseCount: 8,
+    verseCount: 14,
   },
   {
     id: 'jai-ganesh-deva',
@@ -238,33 +252,110 @@ export const library: readonly LibraryEntry[] = [
     id: 'om-jai-shiv-omkara',
     nameHi: 'ॐ जय शिव ओमकारा',
     nameEn: 'Om Jai Shiv Omkara',
-    sub: '8 पद · व्याख्या सहित',
+    sub: '9 पद · व्याख्या सहित',
     thumb: 'ॐ',
     status: 'active',
     category: 'aarti',
     deities: ['shiva'],
-    verseCount: 8,
+    verseCount: 9,
   },
   {
     id: 'jai-ambe-gauri',
     nameHi: 'जय अम्बे गौरी',
     nameEn: 'Jai Ambe Gauri',
-    sub: '7 पद · व्याख्या सहित',
+    sub: '14 पद · व्याख्या सहित',
     thumb: 'जय',
     status: 'active',
     category: 'aarti',
     deities: ['durga'],
-    verseCount: 7,
+    verseCount: 14,
   },
   {
     id: 'aarti-kunj-bihari',
     nameHi: 'आरती कुंजबिहारी की',
     nameEn: 'Aarti Kunj Bihari Ki',
-    sub: '7 पद · व्याख्या सहित',
+    sub: '6 पद · व्याख्या सहित',
     thumb: 'कृ',
     status: 'active',
     category: 'aarti',
     deities: ['krishna'],
-    verseCount: 7,
+    verseCount: 6,
+  },
+  {
+    id: 'prabhati-shloka',
+    nameHi: 'प्रभाती श्लोक',
+    nameEn: 'Morning Slokas',
+    sub: '४ श्लोक · अर्थ सहित',
+    thumb: 'प्र',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['durga'],
+    verseCount: 4,
+  },
+  {
+    id: 'surya-namaskar',
+    nameHi: 'सूर्य नमस्कार',
+    nameEn: 'Surya Namaskar',
+    sub: '१२ चरण · मंत्र सहित',
+    thumb: 'सू',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['krishna'],
+    verseCount: 13,
+  },
+  {
+    id: 'tulsi-puja',
+    nameHi: 'तुलसी पूजा',
+    nameEn: 'Tulsi Puja',
+    sub: '५ मंत्र · विधि सहित',
+    thumb: 'तु',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['krishna'],
+    verseCount: 5,
+  },
+  {
+    id: 'bhojan-mantra',
+    nameHi: 'भोजन मंत्र',
+    nameEn: 'Meal Prayer',
+    sub: '४ श्लोक · अर्थ सहित',
+    thumb: 'भो',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['krishna'],
+    verseCount: 4,
+  },
+  {
+    id: 'gau-seva',
+    nameHi: 'गौ सेवा',
+    nameEn: 'Serving Cows & Birds',
+    sub: '४ मंत्र · विधि सहित',
+    thumb: 'गौ',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['krishna'],
+    verseCount: 4,
+  },
+  {
+    id: 'sandhya-deepam',
+    nameHi: 'सन्ध्या दीपम्',
+    nameEn: 'Evening Lamp',
+    sub: '४ श्लोक · विधि सहित',
+    thumb: 'दी',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['durga'],
+    verseCount: 4,
+  },
+  {
+    id: 'ratri-shloka',
+    nameHi: 'रात्रि श्लोक',
+    nameEn: 'Bedtime Slokas',
+    sub: '४ श्लोक · अर्थ सहित',
+    thumb: 'रा',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['rama'],
+    verseCount: 4,
   },
 ];

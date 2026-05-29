@@ -7,14 +7,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { AppState, type AppStateStatus } from 'react-native';
+import { AppState, Platform, type AppStateStatus } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import {
   cancelAllDailyVerseNotifications,
   scheduleDailyVerseRollingWindow,
 } from '@/notifications/scheduler';
-import type { TimeOfDay } from '@/notifications/pure';
+import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
 
 const PREFS_KEY = '@vedansh/notif-prefs';
 const META_KEY = '@vedansh/notif-meta';
@@ -23,9 +23,8 @@ export type PermissionStatus = 'granted' | 'denied' | 'undetermined';
 
 export type NotificationPreferences = {
   dailyVerseEnabled: boolean;
-  time: TimeOfDay;
-  quietStart: TimeOfDay;
-  quietEnd: TimeOfDay;
+  /** One or more daily reminder times, sorted by hour:minute. */
+  times: TimeOfDay[];
 };
 
 type NotificationMeta = {
@@ -35,9 +34,7 @@ type NotificationMeta = {
 
 const DEFAULTS: NotificationPreferences = {
   dailyVerseEnabled: true,
-  time: { hour: 7, minute: 0 },
-  quietStart: { hour: 22, minute: 0 },
-  quietEnd: { hour: 6, minute: 0 },
+  times: [{ hour: 7, minute: 0 }],
 };
 
 const META_DEFAULTS: NotificationMeta = {
@@ -54,8 +51,9 @@ type NotificationPreferencesContextValue = {
   shouldShowOptIn: boolean;
   /** Toggle daily verse on/off. When turning on, also requests permission. */
   setDailyVerseEnabled: (enabled: boolean) => Promise<void>;
-  setTime: (time: TimeOfDay) => Promise<void>;
-  setQuietHours: (start: TimeOfDay, end: TimeOfDay) => Promise<void>;
+  /** Replace the full set of reminder times. The list is normalised (sorted,
+   * deduped, capped at MAX_REMINDER_TIMES) before being persisted. */
+  setTimes: (times: TimeOfDay[]) => Promise<void>;
   /** Record that the user dismissed (or accepted) the first-run opt-in sheet. */
   markOptInPromptShown: () => Promise<void>;
   /** Ask the OS for notification permission. Returns the new status. */
@@ -78,18 +76,46 @@ function isTimeOfDay(v: unknown): v is TimeOfDay {
   );
 }
 
+function normaliseTimes(times: TimeOfDay[]): TimeOfDay[] {
+  const out = times.map((t) => ({ hour: t.hour, minute: t.minute }));
+  out.sort((a, b) => a.hour * 60 + a.minute - (b.hour * 60 + b.minute));
+  return out.slice(0, MAX_REMINDER_TIMES);
+}
+
+function deduplicateTimes(times: TimeOfDay[]): TimeOfDay[] {
+  const seen = new Set<number>();
+  const out: TimeOfDay[] = [];
+  for (const t of times) {
+    const key = t.hour * 60 + t.minute;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(t);
+  }
+  return out;
+}
+
 function parsePrefs(raw: string | null): NotificationPreferences {
   if (!raw) return DEFAULTS;
   try {
-    const parsed = JSON.parse(raw) as Partial<NotificationPreferences>;
+    const parsed = JSON.parse(raw) as Partial<NotificationPreferences> & {
+      time?: unknown;
+    };
+    // Migrate from the previous single-time shape (`time`) — early users had
+    // exactly one reminder configured before this screen supported many.
+    const rawTimes: unknown[] = Array.isArray(parsed.times)
+      ? parsed.times
+      : isTimeOfDay(parsed.time)
+        ? [parsed.time]
+        : [];
+    const validTimes = rawTimes.filter(isTimeOfDay);
+    const times =
+      validTimes.length > 0 ? normaliseTimes(validTimes) : DEFAULTS.times;
     return {
       dailyVerseEnabled:
         typeof parsed.dailyVerseEnabled === 'boolean'
           ? parsed.dailyVerseEnabled
           : DEFAULTS.dailyVerseEnabled,
-      time: isTimeOfDay(parsed.time) ? parsed.time : DEFAULTS.time,
-      quietStart: isTimeOfDay(parsed.quietStart) ? parsed.quietStart : DEFAULTS.quietStart,
-      quietEnd: isTimeOfDay(parsed.quietEnd) ? parsed.quietEnd : DEFAULTS.quietEnd,
+      times,
     };
   } catch {
     return DEFAULTS;
@@ -142,7 +168,7 @@ export function NotificationPreferencesProvider({
   const [foregroundTick, setForegroundTick] = useState(0);
   // Mirror of the latest prefs/meta so updater-style writes don't read stale
   // state from a setter's closure. Without this, two writes in the same tick
-  // (e.g. setTime + setDailyVerseEnabled from the opt-in modal) clobber each
+  // (e.g. setTimes + setDailyVerseEnabled from the opt-in modal) clobber each
   // other and the saved time silently reverts to the previous value.
   const prefsRef = useRef<NotificationPreferences>(DEFAULTS);
   const metaRef = useRef<NotificationMeta>(META_DEFAULTS);
@@ -179,6 +205,30 @@ export function NotificationPreferencesProvider({
             AsyncStorage.setItem(META_KEY, JSON.stringify(updated)).catch(() => undefined);
           }
         }
+
+        // The toggle defaults to ON, but a fresh install starts with
+        // `undetermined` permission, so the reconciliation effect below would
+        // silently cancel everything. Request permission once per cold start
+        // while still undetermined so the default-on behaviour actually fires.
+        // The OS rate-limits the prompt itself once the user has answered.
+        if (loadedPrefs.dailyVerseEnabled && status === 'undetermined') {
+          try {
+            const { status: requested } = await Notifications.requestPermissionsAsync({
+              ios: { allowAlert: true, allowBadge: true, allowSound: true },
+            });
+            if (cancelled) return;
+            const next: PermissionStatus =
+              requested === 'granted'
+                ? 'granted'
+                : requested === 'denied'
+                  ? 'denied'
+                  : 'undetermined';
+            setPermissionStatus((cur) => (cur === next ? cur : next));
+          } catch {
+            // Non-fatal: leave status as-is; the reconciliation effect will
+            // simply continue to cancel until permission is granted.
+          }
+        }
       } catch {
         if (!cancelled) setIsLoading(false);
       }
@@ -199,9 +249,7 @@ export function NotificationPreferencesProvider({
       if (prefs.dailyVerseEnabled && permissionStatus === 'granted') {
         await scheduleDailyVerseRollingWindow({
           enabled: true,
-          time: prefs.time,
-          quietStart: prefs.quietStart,
-          quietEnd: prefs.quietEnd,
+          times: prefs.times,
         }).catch(() => undefined);
       } else {
         await cancelAllDailyVerseNotifications().catch(() => undefined);
@@ -212,6 +260,25 @@ export function NotificationPreferencesProvider({
       cancelled = true;
     };
   }, [isLoading, prefs, permissionStatus, foregroundTick]);
+
+  // Keep the toggle honest: `enabled=true` with a `denied` OS permission is
+  // an inconsistent state — reminders can't fire, so the UI must not claim
+  // they're on. This catches three cases at once:
+  //   (a) launch-time auto-request returned denied,
+  //   (b) the OS rate-limited subsequent prompts into a hard denial,
+  //   (c) the user revoked notifications in system settings and returned
+  //       to the app (foreground re-check picks up the new status).
+  // Once flipped, the user must toggle on again to re-prompt — and on a
+  // hard denial that toggle bounces back, surfacing the OS-side block.
+  useEffect(() => {
+    if (isLoading) return;
+    if (prefs.dailyVerseEnabled && permissionStatus === 'denied') {
+      const next = { ...prefsRef.current, dailyVerseEnabled: false };
+      prefsRef.current = next;
+      setPrefs(next);
+      AsyncStorage.setItem(PREFS_KEY, JSON.stringify(next)).catch(() => undefined);
+    }
+  }, [isLoading, prefs.dailyVerseEnabled, permissionStatus]);
 
   // On app foreground transitions, re-check permission and bump foregroundTick
   // so the reconciliation effect re-runs with fresh dates.
@@ -287,18 +354,13 @@ export function NotificationPreferencesProvider({
     [permissionStatus, persistPrefs, requestPermission]
   );
 
-  const setTime = useCallback<NotificationPreferencesContextValue['setTime']>(
-    async (time) => {
-      await persistPrefs((prev) => ({ ...prev, time }));
-    },
-    [persistPrefs]
-  );
-
-  const setQuietHours = useCallback<
-    NotificationPreferencesContextValue['setQuietHours']
-  >(
-    async (quietStart, quietEnd) => {
-      await persistPrefs((prev) => ({ ...prev, quietStart, quietEnd }));
+  const setTimes = useCallback<NotificationPreferencesContextValue['setTimes']>(
+    async (times) => {
+      const next = normaliseTimes(times);
+      // Always keep at least one reminder — the toggle, not an empty list, is
+      // how users turn reminders off.
+      const safe = next.length > 0 ? next : DEFAULTS.times;
+      await persistPrefs((prev) => ({ ...prev, times: safe }));
     },
     [persistPrefs]
   );
@@ -323,8 +385,7 @@ export function NotificationPreferencesProvider({
       isLoading,
       shouldShowOptIn,
       setDailyVerseEnabled,
-      setTime,
-      setQuietHours,
+      setTimes,
       markOptInPromptShown,
       requestPermission,
     }),
@@ -335,8 +396,7 @@ export function NotificationPreferencesProvider({
       isLoading,
       shouldShowOptIn,
       setDailyVerseEnabled,
-      setTime,
-      setQuietHours,
+      setTimes,
       markOptInPromptShown,
       requestPermission,
     ]
@@ -369,5 +429,17 @@ export function configureForegroundNotificationHandler() {
       shouldSetBadge: false,
     }),
   });
+
+  // Android 8+ drops notifications that aren't bound to a channel. Without
+  // this, scheduled daily-verse reminders can be silently suppressed by the
+  // OS or shown with no heads-up, even when permission is granted.
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'Daily verse reminders',
+      importance: Notifications.AndroidImportance.DEFAULT,
+      sound: 'default',
+      lightColor: '#B8621B',
+    }).catch(() => undefined);
+  }
 }
 

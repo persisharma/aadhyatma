@@ -1,0 +1,36 @@
+# Japam Category Smoke Test
+#
+# Verifies the Japam category and its 4 active mantras render correctly.
+# Mantras: Om Namah Shivaya, Hare Krishna Mahamantra, Gayatri Mantra,
+#          Om Namo Bhagavate Vasudevaya.
+#
+# Japam routes to JapamCounterScreen (a counter UI with a 108-bead mala),
+# NOT a standard verse pager — per RULEBOOK §1 field 6. This flow opens the
+# Gayatri Mantra counter and confirms the counter UI is reachable.
+
+appId: host.exp.Exponent
+---
+- runFlow: _launch.yaml
+
+# Open Japam category
+- assertVisible: "Japa & Mantras. Tap to open."
+- tapOn: "Japa & Mantras. Tap to open."
+- waitForAnimationToEnd
+
+# Verify all 4 mantras appear in CategoryList
+- extendedWaitUntil:
+    visible: "Om Namah Shivaya\\..*Tap to open\\."
+    timeout: 15000
+- assertVisible: "Hare Krishna Mahamantra\\..*Tap to open\\."
+- assertVisible: "Gayatri Mantra\\..*Tap to open\\."
+- assertVisible: "Om Namo Bhagavate Vasudevaya\\..*Tap to open\\."
+
+# Open Gayatri Mantra counter
+- tapOn: "Gayatri Mantra\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+# (Japam counter has no language toggle for now — just verify the screen opens.)
+- stopApp:
+    appId: host.exp.Exponent

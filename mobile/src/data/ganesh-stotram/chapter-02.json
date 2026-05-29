@@ -2,71 +2,91 @@
   "chapter": 2,
   "titleHi": "गणेश अथर्वशीर्ष",
   "titleEn": "Ganesh Atharvashirsha",
-  "verseCount": 7,
+  "verseCount": 15,
   "verses": [
     {
       "id": "gs-2-0",
       "chapter": 2,
       "number": 0,
       "sanskrit": [
-        "॥ गणपति अथर्वशीर्ष ॥",
-        "अथर्ववेद उपनिषद"
+        "॥ श्री गणपत्यथर्वशीर्ष ॥",
+        "॥ शान्ति पाठ ॥",
+        "ॐ भद्रं कर्णेभिः शृणुयाम देवाः। भद्रं पश्येमाक्षभिर्यजत्राः॥",
+        "स्थिरैरङ्गैस्तुष्टुवांसस्तनूभिः। व्यशेम देवहितं यदायुः॥",
+        "ॐ स्वस्ति न इन्द्रो वृद्धश्रवाः। स्वस्ति नः पूषा विश्ववेदाः॥",
+        "स्वस्तिनस्तार्क्ष्यो अरिष्टनेमिः। स्वस्ति नो बृहस्पतिर्दधातु॥",
+        "ॐ शान्तिः शान्तिः शान्तिः॥"
       ],
       "linesEn": [
-        "Ganapati Atharvashirsha",
-        "Atharvaveda Upanishad"
+        "Shri Ganapati Atharvashirsha",
+        "Shanti Paatha",
+        "Om bhadram karnebhih shrunuyaama devaah. Bhadram pashyemaakshabhiryajatraah.",
+        "Sthirarangaistushtuvaamsa-stanubhih. Vyashema devahitam yadaayuh.",
+        "Om svasti na indro vriddhashravah. Svasti nah poosha vishvavedaah.",
+        "Svastinastarkshyo arishtanemih. Svasti no brihaspatirdadhaatu.",
+        "Om Shaantih Shaantih Shaantih."
       ],
-      "meaningHi": "लाभ:\n\nगणपति अथर्वशीर्ष अथर्ववेद का एक उपनिषद है जो गणेश को परब्रह्म के रूप में स्थापित करता है। इसके पाठ से बुद्धि, विवेक और आत्मज्ञान की प्राप्ति होती है। यह गणेश उपासना का सर्वोच्च ग्रन्थ माना जाता है। नियमित पाठ से विघ्न-निवारण, ब्रह्मविद्या की प्राप्ति, और मोक्ष का मार्ग प्रशस्त होता है।\n\nकथा:\n\nयह उपनिषद ऋषियों की सभा में प्रकट हुआ जब देवताओं ने गणेश से पूछा — 'आप कौन हैं?' गणेश ने उत्तर दिया: 'मैं ही एकमात्र कर्ता, धर्ता और हर्ता हूँ।' यहाँ 'तत्त्वमसि' — वेदान्त का महावाक्य — गणेश पर आरोपित है, जो उन्हें परब्रह्म के समकक्ष स्थापित करता है।",
-      "meaningEn": "Benefits:\n\nThe Ganapati Atharvashirsha is an Upanishad from the Atharvaveda that establishes Ganesha as the Supreme Brahman. Its recitation grants intellect, discernment, and self-knowledge. It is considered the highest scripture for Ganesha worship. Regular recitation removes obstacles, bestows Brahma-vidya (knowledge of the Absolute), and opens the path to liberation.\n\nStory:\n\nThis Upanishad was revealed in an assembly of sages when the gods asked Ganesha — 'Who are you?' Ganesha replied: 'I alone am the creator, the sustainer, and the destroyer.' Here 'Tat Tvam Asi' — the great Vedantic statement — is attributed to Ganesha, establishing him as equivalent to the Supreme Brahman."
+      "meaningHi": "शान्ति पाठ: ॐ! हे देवगण, हम कानों से शुभ सुनें, आँखों से शुभ देखें। स्थिर अंगों और स्वस्थ शरीरों से स्तुति करते हुए, हम देवताओं द्वारा निर्धारित आयु को प्राप्त करें। प्रसिद्ध इन्द्र हमारा कल्याण करें, सर्वज्ञ पूषा हमारा कल्याण करें, अरिष्टनेमि (गरुड़) हमारा कल्याण करें, बृहस्पति हमारा कल्याण करें। ॐ शान्ति, शान्ति, शान्ति।",
+      "meaningEn": "Peace Invocation: Om! O Gods, may we hear auspiciousness with our ears, may we see auspiciousness with our eyes. With steady limbs and healthy bodies offering praise, may we attain the full lifespan allotted by the gods. May Indra of great fame bless us, may all-knowing Pusha bless us, may Garuda of unbroken rim bless us, may Brihaspati bless us. Om Peace, Peace, Peace."
     },
     {
       "id": "gs-2-1",
       "chapter": 2,
       "number": 1,
       "sanskrit": [
-        "ॐ नमस्ते गणपतये।",
+        "हरिः ॐ नमस्ते गणपतये॥",
         "त्वमेव प्रत्यक्षं तत्त्वमसि। त्वमेव केवलं कर्ताऽसि।",
-        "त्वमेव केवलं धर्ताऽसि। त्वमेव केवलं हर्ताऽसि।"
+        "त्वमेव केवलं धर्ताऽसि। त्वमेव केवलं हर्ताऽसि।",
+        "त्वमेव सर्वं खल्विदं ब्रह्मासि।",
+        "त्वं साक्षादात्माऽसि नित्यम्॥ १॥"
       ],
       "linesEn": [
-        "oṁ namaste gaṇapataye",
-        "tvameva pratyakṣhaṁ tattvamasi tvameva kevalaṁ kartā'si",
-        "tvameva kevalaṁ dhartā'si tvameva kevalaṁ hartā'si"
+        "Harih Om namaste Ganapataye.",
+        "Tvameva pratyaksham tattvamasi. Tvameva kevalam kartaa'si.",
+        "Tvameva kevalam dhartaa'si. Tvameva kevalam hartaa'si.",
+        "Tvameva sarvam khalvidam brahmaasi.",
+        "Tvam saakshaadaatmaa'si nityam. 1."
       ],
-      "meaningHi": "ॐ! हे गणपति, आपको नमस्कार। आप ही प्रत्यक्ष तत्व (परब्रह्म) हैं। आप ही एकमात्र कर्ता (सृष्टिकर्ता) हैं, आप ही एकमात्र धर्ता (पालनकर्ता) हैं, आप ही एकमात्र हर्ता (संहारकर्ता) हैं।\n\nगणपति अथर्वशीर्ष अथर्ववेद का एक उपनिषद है जो गणेश को परब्रह्म के रूप में स्थापित करता है। यहाँ 'तत्त्वमसि' — वेदान्त का महावाक्य — गणेश पर आरोपित है।",
-      "meaningEn": "Om! Salutations to Lord Ganapati. You are the visible manifestation of the supreme reality (Tat Tvam Asi). You alone are the creator, you alone are the sustainer, you alone are the destroyer.\n\nThe Ganapati Atharvashirsha is an Upanishad from the Atharvaveda that establishes Ganesha as the Supreme Brahman. Here 'Tat Tvam Asi' — the great Vedantic statement — is attributed to Ganesha."
+      "meaningHi": "हरिः ॐ! हे गणपति, आपको नमस्कार। आप ही प्रत्यक्ष तत्व (परब्रह्म) हैं ('तत्त्वमसि' — वेदान्त का महावाक्य)। आप ही एकमात्र कर्ता (सृष्टिकर्ता) हैं, आप ही एकमात्र धर्ता (पालनकर्ता) हैं, आप ही एकमात्र हर्ता (संहारकर्ता) हैं। आप ही यह सम्पूर्ण ब्रह्म हैं। आप ही साक्षात् नित्य आत्मा हैं।",
+      "meaningEn": "Harih Om! Salutations to Lord Ganapati. You are the visible manifestation of the supreme reality (Tat Tvam Asi — the great Vedantic statement). You alone are the creator, you alone are the sustainer, you alone are the destroyer. You are indeed all this — you are Brahman. You are directly the eternal Self."
     },
     {
       "id": "gs-2-2",
       "chapter": 2,
       "number": 2,
       "sanskrit": [
-        "त्वमेव सर्वं खल्विदं ब्रह्मासि।",
-        "त्वं साक्षादात्माऽसि नित्यम्।।"
+        "ऋतं वच्मि। सत्यं वच्मि॥ २॥"
       ],
       "linesEn": [
-        "tvameva sarvaṁ khalvidaṁ brahmāsi",
-        "tvaṁ sākṣhādātmā'si nityam"
+        "Ritam vachmi. Satyam vachmi. 2."
       ],
-      "meaningHi": "आप ही यह सम्पूर्ण ब्रह्म (सृष्टि) हैं। आप ही साक्षात् नित्य आत्मा हैं।\n\n'सर्वं खल्विदं ब्रह्म' — छान्दोग्य उपनिषद का महावाक्य — यहाँ गणेश के सन्दर्भ में प्रयुक्त है। गाणपत्य सम्प्रदाय में गणेश को सगुण और निर्गुण दोनों रूपों में पूजा जाता है।",
-      "meaningEn": "You are indeed all this — you are Brahman. You are directly the eternal Self.\n\n'Sarvam Khalvidam Brahma' (All this is Brahman) from Chandogya Upanishad is applied here to Ganesha. In the Ganapatya sect, Ganesha is worshipped in both saguna (with form) and nirguna (formless) aspects."
+      "meaningHi": "मैं ऋत (ब्रह्माण्डीय सत्य, प्राकृतिक नियम) बोलता हूँ। मैं सत्य (वास्तविक सत्य) बोलता हूँ। यह उपनिषद अध्ययन से पूर्व शिष्य की वैदिक शपथ है।",
+      "meaningEn": "I speak Rta (cosmic truth, natural law). I speak Satya (factual truth). This is the Vedic oath taken by the student before commencing the study of the Upanishad."
     },
     {
       "id": "gs-2-3",
       "chapter": 2,
       "number": 3,
       "sanskrit": [
-        "ऋतं वच्मि। सत्यं वच्मि।",
-        "अव त्वं माम्। अव वक्तारम्।",
-        "अव श्रोतारम्। अव दातारम्।"
+        "अव त्वं माम्। अव वक्तारम्। अव श्रोतारम्।",
+        "अव दातारम्। अव धातारम्।",
+        "अवानूचानमव शिष्यम्।",
+        "अव पश्चात्तात्। अव पुरस्तात्।",
+        "अवोत्तरात्तात्। अव दक्षिणात्तात्।",
+        "अव चोर्ध्वात्तात्। अवाधरात्तात्।",
+        "सर्वतो मां पाहि पाहि समन्तात्॥ ३॥"
       ],
       "linesEn": [
-        "ṛitaṁ vachmi satyaṁ vachmi",
-        "ava tvaṁ mām ava vaktāram",
-        "ava śhrotāram ava dātāram"
+        "Ava tvam maam. Ava vaktaaram. Ava shrotaaram.",
+        "Ava daataaram. Ava dhaataaram.",
+        "Avaanoochaanamaava shishyam.",
+        "Ava pashchaattaat. Ava purastaat.",
+        "Avottaraattaat. Ava dakshinaattaat.",
+        "Ava chordhvaattaat. Avaadharaattaat.",
+        "Sarvato maam paahi paahi samantaat. 3."
       ],
-      "meaningHi": "मैं ऋत (ऋतम् — ब्रह्माण्डीय सत्य) बोलता हूँ, मैं सत्य बोलता हूँ। आप मेरी रक्षा करें, वक्ता (बोलने वाले) की रक्षा करें, श्रोता (सुनने वाले) की रक्षा करें, दाता (देने वाले) की रक्षा करें।\n\nयह वैदिक शपथ (oath) का प्रारूप है — उपनिषद का अध्ययन करने से पहले शिष्य प्रतिज्ञा करता है कि वह सत्य और ऋत का पालन करेगा।",
-      "meaningEn": "I speak Rta (cosmic truth). I speak Satya (factual truth). Protect me. Protect the speaker. Protect the listener. Protect the giver.\n\nThis follows the Vedic oath pattern — before studying an Upanishad, the student pledges adherence to both Rta (cosmic order) and Satya (factual truth)."
+      "meaningHi": "आप मेरी रक्षा करें। वक्ता की रक्षा करें। श्रोता की रक्षा करें। दाता की रक्षा करें। धाता (धारण करने वाले) की रक्षा करें। अनूचान (आचार्य) और शिष्य की रक्षा करें। पश्चिम से रक्षा करें, पूर्व से रक्षा करें, उत्तर से रक्षा करें, दक्षिण से रक्षा करें, ऊपर से रक्षा करें, नीचे से रक्षा करें। सब ओर से, चारों तरफ से मेरी रक्षा करें।",
+      "meaningEn": "Protect me. Protect the speaker. Protect the listener. Protect the giver. Protect the sustainer. Protect the teacher and the student. Protect from the west. Protect from the east. Protect from the north. Protect from the south. Protect from above. Protect from below. Protect me from all sides, guard me completely from every direction."
     },
     {
       "id": "gs-2-4",
@@ -75,47 +95,269 @@
       "sanskrit": [
         "त्वं वाङ्मयस्त्वं चिन्मयः।",
         "त्वमानन्दमयस्त्वं ब्रह्ममयः।",
-        "त्वं सच्चिदानन्दाऽद्वितीयोऽसि।"
+        "त्वं सच्चिदानन्दाद्वितीयोऽसि।",
+        "त्वं प्रत्यक्षं ब्रह्मासि।",
+        "त्वं ज्ञानमयो विज्ञानमयोऽसि॥ ४॥"
       ],
       "linesEn": [
-        "tvaṁ vāṅmayastvaṁ chinmayaḥ",
-        "tvamānandamayastvaṁ brahmamayaḥ",
-        "tvaṁ sachchidānandā'dvitīyo'si"
+        "Tvam vaangmayastvam chinmayah.",
+        "Tvamaanandamayastvam brahmamayah.",
+        "Tvam sachchidaanandaa'dviteeyo'si.",
+        "Tvam pratyaksham brahmaasi.",
+        "Tvam jnaanamayo vijnaanamayo'si. 4."
       ],
-      "meaningHi": "आप वाङ्मय (वाणी-स्वरूप) हैं, आप चिन्मय (चैतन्य-स्वरूप) हैं। आप आनन्दमय हैं, आप ब्रह्ममय हैं। आप सच्चिदानन्द अद्वितीय (बिना दूसरे के — एकमेव) हैं।\n\n'सच्चिदानन्द' — सत् (अस्तित्व), चित् (चेतना), आनन्द (परम सुख) — वेदान्त में ब्रह्म का स्वरूप है। 'अद्वितीय' — अद्वैत (non-dual) दर्शन की मूल अवधारणा।",
-      "meaningEn": "You are speech-embodied, you are consciousness-embodied. You are bliss-embodied, you are Brahman-embodied. You are Sat-Chit-Ananda (existence-consciousness-bliss) without a second.\n\n'Sat-Chit-Ananda' — existence, consciousness, bliss — is the Vedantic description of Brahman. 'Advitiya' (without a second) is the core concept of Advaita (non-dual) philosophy."
+      "meaningHi": "आप वाङ्मय (वाणी-स्वरूप) हैं, आप चिन्मय (चैतन्य-स्वरूप) हैं। आप आनन्दमय हैं, आप ब्रह्ममय हैं। आप सच्चिदानन्द अद्वितीय (सत्-चित्-आनन्द, बिना दूसरे के) हैं। आप प्रत्यक्ष ब्रह्म हैं। आप ज्ञानमय (शास्त्रीय ज्ञान) और विज्ञानमय (अनुभवजन्य ज्ञान) हैं।",
+      "meaningEn": "You are speech-embodied, you are consciousness-embodied. You are bliss-embodied, you are Brahman-embodied. You are Sat-Chit-Ananda (existence-consciousness-bliss) without a second. You are the directly perceivable Brahman. You are made of Jnana (theoretical knowledge) and Vijnana (experiential knowledge)."
     },
     {
       "id": "gs-2-5",
       "chapter": 2,
       "number": 5,
       "sanskrit": [
-        "त्वं प्रत्यक्षं ब्रह्मासि।",
-        "त्वं ज्ञानमयो विज्ञानमयोऽसि।।"
+        "सर्वं जगदिदं त्वत्तो जायते।",
+        "सर्वं जगदिदं त्वत्तस्तिष्ठति।",
+        "सर्वं जगदिदं त्वयि लयमेष्यति।",
+        "सर्वं जगदिदं त्वयि प्रत्येति।",
+        "त्वं भूमिरापोऽनलोऽनिलो नभः।",
+        "त्वं चत्वारि वाक्पदानि॥ ५॥"
       ],
       "linesEn": [
-        "tvaṁ pratyakṣhaṁ brahmāsi",
-        "tvaṁ jñānamayo vijñānamayo'si"
+        "Sarvam jagadidam tvatto jaayate.",
+        "Sarvam jagadidam tvattastishthati.",
+        "Sarvam jagadidam tvayi layameshyati.",
+        "Sarvam jagadidam tvayi pratyeti.",
+        "Tvam bhoomiraapo'nalo'nilo nabhah.",
+        "Tvam chatvaari vaakpadaani. 5."
       ],
-      "meaningHi": "आप प्रत्यक्ष ब्रह्म हैं। आप ज्ञानमय (theoretical knowledge) और विज्ञानमय (experiential knowledge) हैं।\n\nउपनिषद में ज्ञान और विज्ञान का भेद महत्वपूर्ण है — ज्ञान शास्त्रीय बोध है, विज्ञान अनुभवजन्य बोध। गणेश दोनों के स्वरूप हैं।",
-      "meaningEn": "You are the directly perceivable Brahman. You are made of Jnana (theoretical knowledge) and Vijnana (experiential knowledge).\n\nThe distinction between Jnana and Vijnana is important in Upanishadic thought — Jnana is scriptural understanding, Vijnana is experiential realization. Ganesha embodies both."
+      "meaningHi": "यह सम्पूर्ण जगत आपसे उत्पन्न होता है। यह सम्पूर्ण जगत आपमें स्थित रहता है। यह सम्पूर्ण जगत आपमें लय को प्राप्त होगा। यह सम्पूर्ण जगत आपमें ही वापस लौटता है। आप ही भूमि, जल, अग्नि, वायु और आकाश (पंचभूत) हैं। आप ही वाणी के चार पद (परा, पश्यन्ती, मध्यमा, वैखरी) हैं।",
+      "meaningEn": "This entire universe is born from you. This entire universe is sustained in you. This entire universe will dissolve into you. This entire universe returns to you. You are Earth, Water, Fire, Air, and Space (the five elements). You are the four levels of speech (Para, Pashyanti, Madhyama, Vaikhari)."
     },
     {
       "id": "gs-2-6",
       "chapter": 2,
       "number": 6,
       "sanskrit": [
-        "सर्वं जगदिदं त्वत्तो जायते।",
-        "सर्वं जगदिदं त्वत्तस्तिष्ठति।",
-        "सर्वं जगदिदं त्वयि लयमेष्यति।"
+        "त्वं गुणत्रयातीतः। त्वमवस्थात्रयातीतः।",
+        "त्वं देहत्रयातीतः। त्वं कालत्रयातीतः।",
+        "त्वं मूलाधारस्थितोऽसि नित्यम्।",
+        "त्वं शक्तित्रयात्मकः।",
+        "त्वां योगिनो ध्यायन्ति नित्यम्।",
+        "त्वं ब्रह्मा त्वं विष्णुस्त्वं रुद्रस्त्वम्",
+        "इन्द्रस्त्वं अग्निस्त्वं वायुस्त्वं सूर्यस्त्वं चन्द्रमास्त्वं",
+        "ब्रह्मभूर्भुवःस्वरोम्॥ ६॥"
       ],
       "linesEn": [
-        "sarvaṁ jagadidaṁ tvatto jāyate",
-        "sarvaṁ jagadidaṁ tvattas tiṣhṭhati",
-        "sarvaṁ jagadidaṁ tvayi layameṣhyati"
+        "Tvam gunatrayaateetah. Tvamavasthaatrayaateetah.",
+        "Tvam dehatrayaateetah. Tvam kaalatrayaateetah.",
+        "Tvam moolaadhaara-sthito'si nityam.",
+        "Tvam shaktitrayaatmakah.",
+        "Tvaam yogino dhyaayanti nityam.",
+        "Tvam Brahmaa tvam Vishnustvam Rudrastvam",
+        "Indrastvam Agnistvam Vaayustvam Sooryastvam Chandramaastvam",
+        "Brahma-bhoor-bhuvah-svarom. 6."
       ],
-      "meaningHi": "यह सम्पूर्ण जगत आपसे उत्पन्न होता है। यह सम्पूर्ण जगत आपमें स्थित रहता है। यह सम्पूर्ण जगत आपमें ही लय (विलीन) को प्राप्त होगा।\n\nसृष्टि-स्थिति-लय (creation-sustenance-dissolution) — ब्रह्म की तीन मुख्य क्रियाएँ — सभी गणेश में आरोपित हैं। यह श्लोक गणेश को त्रिमूर्ति (ब्रह्मा-विष्णु-शिव) से परे स्थापित करता है।",
-      "meaningEn": "This entire universe is born from you. This entire universe is sustained in you. This entire universe will dissolve into you.\n\nCreation-sustenance-dissolution — the three primary functions of Brahman — are all attributed to Ganesha. This verse establishes Ganesha beyond the Trimuriti (Brahma-Vishnu-Shiva)."
+      "meaningHi": "आप तीनों गुणों (सत्व, रजस, तमस) से परे हैं। आप तीनों अवस्थाओं (जाग्रत, स्वप्न, सुषुप्ति) से परे हैं। आप तीनों देहों (स्थूल, सूक्ष्म, कारण) से परे हैं। आप तीनों कालों (भूत, वर्तमान, भविष्य) से परे हैं। आप नित्य मूलाधार चक्र में स्थित हैं। आप तीन शक्तियों (इच्छा, ज्ञान, क्रिया) के स्वरूप हैं। योगीजन आपका नित्य ध्यान करते हैं। आप ब्रह्मा हैं, विष्णु हैं, रुद्र हैं, इन्द्र हैं, अग्नि हैं, वायु हैं, सूर्य हैं, चन्द्रमा हैं — आप ही ब्रह्म भूः भुवः स्वः ॐ हैं।",
+      "meaningEn": "You transcend the three gunas (sattva, rajas, tamas). You transcend the three states (waking, dreaming, deep sleep). You transcend the three bodies (gross, subtle, causal). You transcend the three times (past, present, future). You eternally reside in the Muladhara chakra. You are the embodiment of the three Shaktis (will, knowledge, action). Yogis meditate upon you always. You are Brahma, Vishnu, Rudra, Indra, Agni, Vayu, Surya, Chandra — you are Brahman, the earth, atmosphere, and heavens, Om."
+    },
+    {
+      "id": "gs-2-7",
+      "chapter": 2,
+      "number": 7,
+      "sanskrit": [
+        "॥ गणेश मन्त्र ॥",
+        "गणादिं पूर्वमुच्चार्य वर्णादिं तदनन्तरम्।",
+        "अनुस्वारः परतरः। अर्धेन्दुलसितम्। तारेण ऋद्धम्।",
+        "एतत्तव मनुस्वरूपम्। गकारः पूर्वरूपम्।",
+        "अकारो मध्यमरूपम्। अनुस्वारश्चान्त्यरूपम्।",
+        "बिन्दुरुत्तररूपम्। नादः सन्धानम्। संहितासन्धिः।",
+        "सैषा गणेशविद्या। गणकऋषिः। निचृद्गायत्रीच्छन्दः।",
+        "गणपतिर्देवता। ॐ गं गणपतये नमः॥ ७॥"
+      ],
+      "linesEn": [
+        "Ganesha Mantra",
+        "Ganaadim poorvamucchaarya varnaadim tadanantaram.",
+        "Anusvaarah paratarah. Ardhendulasitam. Taarena riddham.",
+        "Etattava manusvaroopam. Gakaarah poorvaroopam.",
+        "Akaaro madhyamaroopam. Anusvaara-schaantyaroopam.",
+        "Binduruttararoopam. Naadah sandhaanam. Samhitaa-sandhih.",
+        "Saishaa Ganeshavidyaa. Ganaka-riShiH. Nichridgaayatree-cchandah.",
+        "Ganapatirdevataa. Om Gam Ganapataye Namah. 7."
+      ],
+      "meaningHi": "गणेश मन्त्र: सबसे पहले 'ग' (गणों का आदि अक्षर) उच्चारित करें, फिर वर्णों का आदि 'अ' उच्चारित करें। उसके बाद अनुस्वार (म्) लगाएँ, अर्धचन्द्र (बिन्दु) से सुशोभित करें, ओंकार (तार) से समृद्ध करें। यही आपके मन्त्र का स्वरूप है — 'ग' पूर्व रूप है, 'अ' मध्य रूप है, अनुस्वार अन्त्य रूप है, बिन्दु उत्तर रूप है, नाद सन्धान है। यही गणेश विद्या है। गणक ऋषि हैं, निचृद् गायत्री छन्द है, गणपति देवता हैं। ॐ गं गणपतये नमः।",
+      "meaningEn": "Ganesha Mantra: First pronounce 'Ga' (the initial of Gana), then the initial of the alphabet 'A'. Add the anusvara (nasal 'm') on top, adorn it with the half-moon (bindu), enrich it with the tara (Om). This is the form of your mantra — 'Ga' is the first form, 'A' is the middle form, Anusvara is the final form, Bindu is the upper form, Nada is the conjunction. This is Ganesha Vidya. Ganaka is the Rishi, Nichrid Gayatri is the metre, Ganapati is the deity. Om Gam Ganapataye Namah."
+    },
+    {
+      "id": "gs-2-8",
+      "chapter": 2,
+      "number": 8,
+      "sanskrit": [
+        "॥ गणेश गायत्री ॥",
+        "एकदन्ताय विद्महे। वक्रतुण्डाय धीमहि।",
+        "तन्नो दन्तिः प्रचोदयात्॥ ८॥"
+      ],
+      "linesEn": [
+        "Ganesha Gayatri",
+        "Ekadantaaya vidmahe. Vakratundaaya dheemahi.",
+        "Tanno dantih prachodayaat. 8."
+      ],
+      "meaningHi": "गणेश गायत्री: हम एकदन्त (एक दाँत वाले गणेश) को जानते हैं, वक्रतुण्ड (मुड़ी सूँड वाले) का ध्यान करते हैं। वे दन्ती (गणेश) हमें प्रेरित करें और बुद्धि प्रदान करें।",
+      "meaningEn": "Ganesha Gayatri: We know the single-tusked one (Ekadanta). We meditate upon the curved-trunk one (Vakratunda). May that tusked Lord (Danti) inspire and illuminate us."
+    },
+    {
+      "id": "gs-2-9",
+      "chapter": 2,
+      "number": 9,
+      "sanskrit": [
+        "॥ गणेश रूप (ध्यानम्) ॥",
+        "एकदन्तं चतुर्हस्तं पाशमंकुशधारिणम्।",
+        "रदं च वरदं हस्तैर्बिभ्राणं मूषकध्वजम्।",
+        "रक्तं लम्बोदरं शूर्पकर्णकं रक्तवाससम्।",
+        "रक्तगन्धानुलिप्ताङ्गं रक्तपुष्पैः सुपूजितम्।",
+        "भक्तानुकम्पिनं देवं जगत्कारणमच्युतम्।",
+        "आविर्भूतं च सृष्ट्यादौ प्रकृतेः पुरुषात्परम्।",
+        "एवं ध्यायति यो नित्यं स योगी योगिनां वरः॥ ९॥"
+      ],
+      "linesEn": [
+        "Ganesha Roopa (Dhyanam)",
+        "Ekadantam chaturhastam paashamankushadhaarinam.",
+        "Radam cha varadam hastairbibhraanam mooshaka-dhvajam.",
+        "Raktam lambodaram shoorpakarnakam raktavaasasam.",
+        "Raktagandhaa-nuliptaangam raktapushpaih supoojitam.",
+        "Bhaktaanukampinam devam jagatkaaranamachyutam.",
+        "Aavirbhootam cha srishtyaadau prakriteh purushaatparam.",
+        "Evam dhyaayati yo nityam sa yogee yoginaam varah. 9."
+      ],
+      "meaningHi": "गणेश ध्यान: एक दाँत वाले, चार हाथ वाले, पाश और अंकुश धारण करने वाले, एक हाथ में दंत (टूटा दाँत) और दूसरे से वरदान देते हुए, मूषक (चूहे) ध्वज वाले। लाल रंग के, लम्बे उदर वाले, सूप जैसे कानों वाले, लाल वस्त्र पहने हुए। लाल गन्ध से अनुलिप्त अंगों वाले, लाल पुष्पों से सुपूजित। भक्तों पर अनुकम्पा करने वाले देव, जगत के कारण, अच्युत। सृष्टि के आदि में प्रकट हुए, प्रकृति और पुरुष से परे। जो इस प्रकार नित्य ध्यान करता है, वह योगियों में श्रेष्ठ योगी है।",
+      "meaningEn": "Ganesha Meditation: Single-tusked, four-armed, holding noose and goad, bearing a broken tusk and granting boons with his hands, with a mouse as his banner. Red-complexioned, large-bellied, with winnow-like ears, wearing red garments. Body anointed with red sandalwood, well-worshipped with red flowers. The compassionate Lord of devotees, cause of the universe, imperishable. Manifested at the beginning of creation, beyond Prakriti and Purusha. One who meditates thus daily is the greatest among yogis."
+    },
+    {
+      "id": "gs-2-10",
+      "chapter": 2,
+      "number": 10,
+      "sanskrit": [
+        "॥ अष्ट नाम गणपति ॥",
+        "नमो व्रातपतये। नमो गणपतये। नमः प्रमथपतये।",
+        "नमस्तेऽस्तु लम्बोदरायैकदन्ताय।",
+        "विघ्ननाशिने शिवसुताय। श्रीवरदमूर्तये नमो नमः॥ १०॥"
+      ],
+      "linesEn": [
+        "Ashta Naama Ganapati",
+        "Namo Vraatapataye. Namo Ganapataye. Namah Pramathapataye.",
+        "Namaste'stu Lambodaraaya-ekadantaaya.",
+        "Vighna-naashine Shiva-sutaaya. Shree-varada-moortaye namo namah. 10."
+      ],
+      "meaningHi": "गणेश अष्ट नाम: व्रातपति (समूहों के स्वामी) को नमस्कार। गणपति (गणों के पति) को नमस्कार। प्रमथपति (प्रमथगणों के स्वामी) को नमस्कार। लम्बोदर (विशाल उदर वाले) और एकदन्त (एक दाँत वाले) को नमस्कार। विघ्ननाशी (विघ्नों का नाश करने वाले), शिवसुत (शिव के पुत्र) को। श्री वरदमूर्ति को बारम्बार नमस्कार।",
+      "meaningEn": "Eight Names of Ganapati: Salutations to the Lord of assemblies (Vratapataye). Salutations to the Lord of hosts (Ganapataye). Salutations to the Lord of Pramatha-ganas (Pramathapataye). Salutations to the large-bellied (Lambodara) and single-tusked (Ekadanta). To the destroyer of obstacles (Vighnanashina), son of Shiva. To the auspicious boon-granting form, salutations again and again."
+    },
+    {
+      "id": "gs-2-11",
+      "chapter": 2,
+      "number": 11,
+      "sanskrit": [
+        "॥ फलश्रुति ॥",
+        "एतदथर्वशीर्षं योऽधीते। स ब्रह्मभूयाय कल्पते।",
+        "स सर्वतः सुखमेधते। स सर्वविघ्नैर्न बाध्यते।",
+        "स पञ्चमहापापात्प्रमुच्यते।",
+        "सायमधीयानो दिवसकृतं पापं नाशयति।",
+        "प्रातरधीयानो रात्रिकृतं पापं नाशयति।",
+        "सायंप्रातः प्रयुञ्जानो अपापो भवति।",
+        "सर्वत्राधीयानोऽपविघ्नो भवति।",
+        "धर्मार्थकाममोक्षं च विन्दति।",
+        "इदमथर्वशीर्षमशिष्याय न देयम्।",
+        "यो यदि मोहाद्दास्यति स पापीयान् भवति।",
+        "सहस्रावर्तनात् यं यं काममधीते तं तमनेन साधयेत्॥ ११॥"
+      ],
+      "linesEn": [
+        "Phalashruti",
+        "Etadatharvashirsham yo'dheete. Sa brahmabhooyaaya kalpate.",
+        "Sa sarvatah sukhamedhate. Sa sarva-vighnairna baadhyate.",
+        "Sa panchamahaapaapaatpramuchyate.",
+        "Saayamadhee-yaano divasakritam paapam naashayati.",
+        "Praataradhee-yaano raatrikritam paapam naashayati.",
+        "Saayam-praatah prayun-jaano apaapo bhavati.",
+        "Sarvatradheeyaano'pavighno bhavati.",
+        "Dharmaarthakaamamo-ksham cha vindati.",
+        "Idamatharvashirsham-ashishyaaya na deyam.",
+        "Yo yadi mohaaddaasyati sa paapeeyaan bhavati.",
+        "Sahasraavartanaat yam yam kaamam-adheete tam tamanena saadhayet. 11."
+      ],
+      "meaningHi": "फलश्रुति: जो इस अथर्वशीर्ष को पढ़ता है, वह ब्रह्मभाव को प्राप्त होता है। वह सब ओर से सुख प्राप्त करता है। वह किसी विघ्न से बाधित नहीं होता। वह पाँच महापापों से मुक्त हो जाता है। सायंकाल पढ़ने वाला दिन के पापों को नष्ट करता है। प्रातःकाल पढ़ने वाला रात्रि के पापों को नष्ट करता है। सायं-प्रातः दोनों समय पढ़ने वाला निष्पाप हो जाता है। सर्वत्र पढ़ने वाला विघ्नरहित हो जाता है। वह धर्म, अर्थ, काम और मोक्ष प्राप्त करता है। यह अथर्वशीर्ष अयोग्य शिष्य को नहीं देना चाहिए। जो मोहवश देता है, वह पापी होता है। सहस्र बार आवृत्ति से जो-जो कामना हो, वह सिद्ध होती है।",
+      "meaningEn": "Phalashruti: Whoever studies this Atharvashirsha becomes fit for Brahman-realization. They obtain happiness from all sides. They are not obstructed by any obstacles. They are freed from the five great sins. Reading in the evening destroys sins of the day. Reading in the morning destroys sins of the night. Reading morning and evening, one becomes sinless. Reading it anywhere, one becomes free from obstacles. One attains Dharma, Artha, Kama and Moksha. This should not be given to an unworthy student. Whoever gives it out of delusion becomes a sinner. By reciting it a thousand times, whatever desire one holds is fulfilled."
+    },
+    {
+      "id": "gs-2-12",
+      "chapter": 2,
+      "number": 12,
+      "sanskrit": [
+        "अनेन गणपतिमभिषिञ्चति स वाग्मी भवति।",
+        "चतुर्थ्यामनश्नन् जपति स विद्यावान् भवति।",
+        "स यशोवान् भवति।",
+        "इत्यथर्वणवाक्यम्। ब्रह्माद्यावरणं विद्यात्",
+        "न बिभेति कदाचनेति॥ १२॥"
+      ],
+      "linesEn": [
+        "Anena Ganapatim-abhishinchati sa vaagmee bhavati.",
+        "Chaturthyaam-anashnan japati sa vidyaavaan bhavati.",
+        "Sa yashovaan bhavati.",
+        "Ityatharvana-vaakyam. Brahmaadya-avaranam vidyaat",
+        "Na bibheti kadaachaneti. 12."
+      ],
+      "meaningHi": "जो इससे गणपति का अभिषेक करता है, वह वाग्मी (सुवक्ता) होता है। चतुर्थी को उपवास रखकर जपने वाला विद्यावान और यशस्वी होता है। यह अथर्ववेद का वाक्य है। ब्रह्मा आदि सभी देवताओं की आवरण-शक्ति को जान लेता है — वह कभी किसी से नहीं डरता।",
+      "meaningEn": "One who performs abhisheka of Ganapati with this becomes eloquent. One who chants on Chaturthi while fasting becomes learned and famous. This is the statement of the Atharvaveda. One knows the protective power of Brahma and all gods — such a person never fears anything."
+    },
+    {
+      "id": "gs-2-13",
+      "chapter": 2,
+      "number": 13,
+      "sanskrit": [
+        "यो दूर्वाङ्कुरैर्यजति स वैश्रवणोपमो भवति।",
+        "यो लाजैर्यजति स यशोवान् भवति। स मेधावान् भवति।",
+        "यो मोदकसहस्रेण यजति स वाञ्छितफलमवाप्नोति।",
+        "यः साज्यसमिद्भिर्यजति स सर्वं लभते स सर्वं लभते॥ १३॥"
+      ],
+      "linesEn": [
+        "Yo doorvaankurairyajati sa vaishravanopamo bhavati.",
+        "Yo laajairyajati sa yashovaan bhavati. Sa medhaavaan bhavati.",
+        "Yo modakasahasrena yajati sa vaanchhitaphalam-avaapnoti.",
+        "Yah saajya-samidbhiryajati sa sarvam labhate sa sarvam labhate. 13."
+      ],
+      "meaningHi": "जो दूर्वा (दूब घास) के अंकुरों से पूजा करता है, वह कुबेर के समान धनवान होता है। जो लावा (भुने धान) से पूजा करता है, वह यशस्वी और मेधावान होता है। जो एक हजार मोदकों से पूजा करता है, वह इच्छित फल प्राप्त करता है। जो घी और समिधाओं से हवन करता है, वह सब कुछ प्राप्त करता है, वह सब कुछ प्राप्त करता है।",
+      "meaningEn": "One who worships with durva grass shoots becomes wealthy like Kubera. One who worships with puffed rice becomes famous and intelligent. One who worships with a thousand modakas obtains the desired fruit. One who offers oblations with ghee and sacred wood obtains everything, obtains everything."
+    },
+    {
+      "id": "gs-2-14",
+      "chapter": 2,
+      "number": 14,
+      "sanskrit": [
+        "अष्टौ ब्राह्मणान् सम्यग्ग्राहयित्वा सूर्यवर्चस्वी भवति।",
+        "सूर्यग्रहे महानद्यां प्रतिमासन्निधौ वा जप्त्वा सिद्धमन्त्रो भवति।",
+        "महाविघ्नात्प्रमुच्यते। महादोषात्प्रमुच्यते। महापापात्प्रमुच्यते।",
+        "स सर्वविद्भवति स सर्वविद्भवति।",
+        "य एवं वेद इत्युपनिषत्॥ १४॥",
+        "॥ शान्ति मन्त्र ॥",
+        "ॐ सहनाववतु। सहनौभुनक्तु। सह वीर्यं करवावहै।",
+        "तेजस्विनावधीतमस्तु मा विद्विषावहै।",
+        "ॐ शान्तिः शान्तिः शान्तिः॥",
+        "॥ इति श्रीगणपत्यथर्वशीर्षं समाप्तम् ॥"
+      ],
+      "linesEn": [
+        "Ashtau braahmanaan samyag-graahayitvaa soorya-varchasvee bhavati.",
+        "Soorya-grahe mahanadyaam pratimaa-sannidhau vaa japtvaa siddha-mantro bhavati.",
+        "Mahaa-vighnaatpramuchyate. Mahaa-doshaatpramuchyate. Mahaa-paapaatpramuchyate.",
+        "Sa sarvavidbhavati sa sarvavidbhavati.",
+        "Ya evam veda ityupanishat. 14.",
+        "Shaanti Mantra",
+        "Om sahanaa-vavatu. Sahanau-bhunaktu. Saha veeryam karavaavahai.",
+        "Tejasvi-naavadheetamastu maa vidvishaavahai.",
+        "Om Shaantih Shaantih Shaantih.",
+        "Iti Shri Ganapatyatharvashirsham samaaptam."
+      ],
+      "meaningHi": "जो आठ ब्राह्मणों को समुचित रूप से सिखाता है, वह सूर्य के समान तेजस्वी होता है। सूर्यग्रहण के समय, महानदी के तट पर, या प्रतिमा के समीप जपने से सिद्धमन्त्र प्राप्त होता है। महाविघ्न से, महादोष से, महापाप से मुक्त होता है। वह सर्वज्ञ होता है। जो इस प्रकार जानता है — यही उपनिषद है।\n\nशान्ति मन्त्र: ॐ! वह (ब्रह्म) हम दोनों (गुरु-शिष्य) की रक्षा करे, हम दोनों का पोषण करे, हम दोनों साथ मिलकर सामर्थ्य प्राप्त करें। हमारा अध्ययन तेजस्वी हो। हम परस्पर द्वेष न करें। ॐ शान्ति, शान्ति, शान्ति। इति श्रीगणपत्यथर्वशीर्ष समाप्त।",
+      "meaningEn": "One who properly teaches this to eight Brahmins becomes radiant like the sun. Chanting during a solar eclipse, at a great river, or near a sacred image, one's mantra becomes perfected. One is freed from great obstacles, great faults, and great sins. Such a one becomes all-knowing. One who knows thus — this is the Upanishad.\n\nClosing Peace Mantra: Om! May He protect us both, nourish us both, may we work together with great vigour. May our study be illuminating. May we not hate each other. Om Peace, Peace, Peace. Thus ends the Shri Ganapati Atharvashirsha."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "sanskritdocuments.org/doc_ganesha/atharva.html, vachmi.com",
+    "retrievedOn": "2026-05-24"
+  }
 }

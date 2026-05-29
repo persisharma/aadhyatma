@@ -4,10 +4,12 @@ import type { Deity } from './texts';
 const expectedIcons: Record<Deity, DeityIconKey> = {
   rama: 'bowArrow',
   krishna: 'bansuriPeacockFeather',
+  vishnu: 'chakra',
   shiva: 'trishul',
   hanuman: 'gada',
   durga: 'lotus',
   ganesha: 'modak',
+  savitr: 'surya',
 };
 
 for (const deity of deities) {

@@ -65,3 +65,24 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Example:** `xcrun simctl openurl booted exp://…` triggered an iOS system dialog "Open in Maxify?" because another installed app registered for the `exp://` scheme. Neither tap nor `simctl` dismiss works programmatically — user has to reach for the sim window.
 **Resolution pattern:** Avoid the scheme picker by launching Expo Go directly with the bundle URL: `xcrun simctl launch <udid> host.exp.Exponent -EXKernelLaunchUrlDefaultsKey "exp://…"`. This hands the URL to Expo Go's built-in handler and skips iOS's scheme registry.
 
+### Maestro requires a Java Runtime — install JDK before first run
+
+**Seen:** 1x — 2026-05-28
+**Category:** tooling-setup
+**Example:** Installed Maestro via `curl -Ls "https://get.maestro.mobile.dev" | bash` — installer succeeded and added `~/.maestro/bin` to PATH. First `maestro --version` failed with "Unable to locate a Java Runtime." Maestro's binary is a JVM wrapper that needs JDK 8+ at runtime.
+**Resolution pattern:** Document this prerequisite in `mobile/.maestro/README.md`. Install Java via `brew install --cask temurin` (free, Adoptium) before installing Maestro. Don't suggest Oracle JDK — Temurin is the standard now.
+
+### Maestro flow assertions must match actual rendered strings, including ASCII-vs-Devanagari digits
+
+**Seen:** 1x — 2026-05-28
+**Category:** test-design
+**Example:** Sanskar smoke flow originally asserted `"चरण १"` (Devanagari digit). The rendering component uses a JS template literal `` `चरण ${stepNum}` `` which produces ASCII `"चरण 1"`. Test would fail at runtime. Caught by re-reading the component before running.
+**Resolution pattern:** Before writing Maestro `assertVisible` strings, grep the rendering component for the exact string it produces. JS template literals with numbers always produce ASCII digits unless explicitly converted via `toLocaleString('hi-IN')`.
+
+### Expo Go from `expo start --go` ships only the latest SDK — pinned SDK 54 projects crash at boot
+
+**Seen:** 1x — 2026-05-28
+**Category:** sdk-lifecycle
+**Example:** Project pinned to `expo: ~54.0.33`. `expo start --go` auto-installed Expo Go from the CDN, but Expo serves only the latest binary (SDK 55+/56+). The new Hermes runtime removed legacy globals like `require`. Result: bundle delivers cleanly (731ms, 1319 modules) but crashes at boot with `[runtime not ready]: ReferenceError: Property 'require' doesn't exist`. Maestro flow couldn't execute because the app never reached Home. This is environmental, not a code defect.
+**Resolution pattern:** For Maestro/simulator verification on pinned-SDK projects: (a) build a local dev client via `eas build --profile development --platform ios --local` (5-10 min build, matches your SDK), (b) sideload the SDK-matched Expo Go archive from Expo's release tarballs if still hosted, or (c) bump the project's Expo SDK to current. Don't rely on `expo start --go` for pinned old-SDK projects.
+

@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { Alert, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useBookmarks } from '@/contexts/BookmarksContext';
@@ -10,7 +9,17 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import type { TimeOfDay } from '@/notifications/pure';
 import type { MoreStackParamList } from '@/navigation/types';
+
+function formatReminderTimes(times: TimeOfDay[]): string {
+  if (times.length === 0) return '';
+  return times
+    .map(
+      (t) => `${`${t.hour}`.padStart(2, '0')}:${`${t.minute}`.padStart(2, '0')}`
+    )
+    .join(', ');
+}
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'MoreHome'>;
 
@@ -20,10 +29,6 @@ export default function MoreScreen({ navigation }: Props) {
   const { lang: defaultLang, setLang: setDefaultLang } = useGitaLanguage();
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
-  // Root-tab nav for cross-tab navigation (More → Home tab → Search screen).
-  // Typed loosely because @react-navigation's nested-screen typing through the
-  // tab navigator isn't expressible without threading the tab param list here.
-  const rootNav = useNavigation<{ navigate: (tab: string, params?: object) => void }>();
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
   const hi = helpContent.hi;
   const en = helpContent.en;
@@ -187,39 +192,13 @@ export default function MoreScreen({ navigation }: Props) {
             <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
           </Pressable>
 
-          {/* Search Card */}
-          <Pressable
-            onPress={() => rootNav.navigate('HomeTab', { screen: 'Search' })}
-            accessibilityRole="button"
-            accessibilityLabel="Search verses, sections, and mantras"
-            style={({ pressed }) => [
-              styles.section,
-              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: pressed ? 0.85 : 1 },
-            ]}
-          >
-            <View style={[styles.sectionIcon, { backgroundColor: colors.saffronDeep }]}>
-              <Text style={{ color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily, fontSize: 18, includeFontPadding: false, lineHeight: 20, textAlign: 'center' }}>
-                ⌕
-              </Text>
-            </View>
-            <View style={styles.sectionMeta}>
-              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
-                Search
-              </Text>
-              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-                Find any verse, section, or mantra
-              </Text>
-            </View>
-            <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
-          </Pressable>
-
           {/* Reminders Card */}
           <Pressable
             onPress={() => navigation.navigate('Reminders')}
             accessibilityRole="button"
             accessibilityLabel={
               notifPrefs.dailyVerseEnabled
-                ? `Reminders, daily verse on at ${`${notifPrefs.time.hour}`.padStart(2, '0')}:${`${notifPrefs.time.minute}`.padStart(2, '0')}`
+                ? `Reminders, daily verse on at ${formatReminderTimes(notifPrefs.times)}`
                 : 'Reminders, daily verse off'
             }
             style={({ pressed }) => [
@@ -238,7 +217,7 @@ export default function MoreScreen({ navigation }: Props) {
               </Text>
               <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
                 {notifPrefs.dailyVerseEnabled
-                  ? `Daily verse at ${`${notifPrefs.time.hour}`.padStart(2, '0')}:${`${notifPrefs.time.minute}`.padStart(2, '0')}`
+                  ? `Daily verse at ${formatReminderTimes(notifPrefs.times)}`
                   : 'Daily verse off'}
               </Text>
             </View>
@@ -277,11 +256,8 @@ export default function MoreScreen({ navigation }: Props) {
                 ]}
               >
                 {defaultLang === 'hi' && <Text style={[styles.langCheck, { color: colors.saffron }]}>✓</Text>}
-                <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: defaultLang === 'hi' ? colors.saffronDeep : colors.ink }}>
+                <Text style={[styles.langLabel, { fontFamily: typography.readerTitle.fontFamily, color: defaultLang === 'hi' ? colors.saffronDeep : colors.ink }]}>
                   हिन्दी
-                </Text>
-                <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 9, color: defaultLang === 'hi' ? colors.saffron : colors.inkMuted, marginTop: 3, textTransform: 'uppercase', letterSpacing: 0.1 }}>
-                  Hindi
                 </Text>
               </Pressable>
 
@@ -297,10 +273,7 @@ export default function MoreScreen({ navigation }: Props) {
                 ]}
               >
                 {defaultLang === 'en' && <Text style={[styles.langCheck, { color: colors.saffron }]}>✓</Text>}
-                <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 15, color: defaultLang === 'en' ? colors.saffronDeep : colors.ink }}>
-                  English
-                </Text>
-                <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 9, color: defaultLang === 'en' ? colors.saffron : colors.inkMuted, marginTop: 3, textTransform: 'uppercase', letterSpacing: 0.1 }}>
+                <Text style={[styles.langLabel, { fontFamily: 'CormorantGaramond_500Medium', color: defaultLang === 'en' ? colors.saffronDeep : colors.ink }]}>
                   English
                 </Text>
               </Pressable>
@@ -477,11 +450,18 @@ const styles = StyleSheet.create({
   langRow: { flexDirection: 'row', gap: 12 },
   langOption: {
     flex: 1,
-    padding: 12,
+    height: 52,
+    paddingHorizontal: 12,
     borderRadius: 12,
     borderWidth: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     position: 'relative',
+  },
+  langLabel: {
+    fontSize: 17,
+    includeFontPadding: false,
+    textAlign: 'center',
   },
   langCheck: {
     position: 'absolute',

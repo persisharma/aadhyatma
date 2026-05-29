@@ -9,6 +9,9 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
+    "test:readers": "jest --config jest.config.js --runInBand",
+    "test:e2e": "maestro test .maestro/",
+    "test:e2e:flow": "maestro test",
     "typecheck": "tsc --noEmit",
     "doctor": "expo-doctor"
   },
@@ -40,9 +43,15 @@
     "react-native-view-shot": "^4.0.3"
   },
   "devDependencies": {
+    "babel-preset-expo": "~54.0.10",
+    "@types/jest": "^29.5.14",
     "@types/react": "~19.1.0",
+    "@types/react-test-renderer": "^19.1.0",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~10.0.0",
+    "jest": "^29.7.0",
+    "react-test-renderer": "^19.1.0",
+    "tsx": "^4.22.3",
     "typescript": "~5.9.2"
   }
 }

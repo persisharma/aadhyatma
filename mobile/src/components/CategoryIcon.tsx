@@ -28,6 +28,7 @@ export default function CategoryIcon({ iconKey }: Props) {
       )}
       {iconKey === 'deity' && <TempleIcon {...paint} />}
       {iconKey === 'aarti' && <DiyaIcon {...paint} />}
+      {iconKey === 'sanskar' && <VedaManuscriptIcon {...paint} />}
     </View>
   );
 }
@@ -497,25 +498,25 @@ const styles = StyleSheet.create({
   },
   flameOuter: {
     position: 'absolute',
-    top: 1,
-    width: 12,
-    height: 18,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 2,
-    transform: [{ rotate: '20deg' }],
+    top: 3,
+    width: 11,
+    height: 11,
+    borderTopLeftRadius: 5.5,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 5.5,
+    borderBottomRightRadius: 5.5,
+    transform: [{ rotate: '-45deg' }],
   },
   flameInner: {
     position: 'absolute',
     top: 7,
-    width: 6,
-    height: 9,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 1,
-    transform: [{ rotate: '20deg' }],
+    width: 5,
+    height: 5,
+    borderTopLeftRadius: 2.5,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 2.5,
+    borderBottomRightRadius: 2.5,
+    transform: [{ rotate: '-45deg' }],
   },
   diyaBowl: {
     position: 'absolute',

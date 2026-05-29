@@ -2,23 +2,35 @@
   "chapter": 4,
   "titleHi": "फलश्रुति",
   "titleEn": "Phalashruti",
-  "verseCount": 7,
+  "verseCount": 17,
   "verses": [
     {
       "id": "vs-4-0",
       "chapter": 4,
       "number": 0,
-      "sanskrit": ["॥ विष्णु सहस्रनाम ॥", "फलश्रुति"],
-      "linesEn": ["Vishnu Sahasranama", "Phalashruti (Fruits of Recitation)"],
-      "meaningHi": "लाभ:\n\nफलश्रुति विष्णु सहस्रनाम का समापन भाग है — जिसमें इस स्तोत्र के पाठ से प्राप्त होने वाले फलों (लाभों) का वर्णन है। इसके अनुसार जो मनुष्य नित्य सहस्रनाम का पाठ या श्रवण करता है, उसे इस लोक और परलोक में कोई अशुभ प्राप्त नहीं होता। सभी पाप नष्ट होते हैं, शत्रुओं पर विजय मिलती है, और अन्ततः मोक्ष प्राप्त होता है।\n\nकथा:\n\nभीष्म पितामह ने युधिष्ठिर को सम्पूर्ण सहस्रनाम सुनाकर यह समापन भाग कहा। 'केशव' — क (ब्रह्मा) + ईश (शिव) + व (विष्णु) — अर्थात् तीनों देवों के ईश्वर। भीष्म ने कहा कि इस स्तोत्र का पाठ करने वाला कभी पराजित नहीं होता — न इस संसार में, न परलोक में।",
-      "meaningEn": "Benefits:\n\nThe Phalashruti is the concluding section of Vishnu Sahasranama — describing the fruits (benefits) obtained from reciting this stotram. According to it, the person who daily recites or listens to the Sahasranama shall never encounter any inauspiciousness in this world or the next. All sins are destroyed, victory over enemies is granted, and ultimately moksha is attained.\n\nStory:\n\nBhishma Pitamaha spoke this concluding section after reciting the complete Sahasranama to Yudhishthira. 'Keshava' = Ka (Brahma) + Isha (Shiva) + Va (Vishnu) — lord of all three gods. Bhishma declared that one who recites this stotram is never defeated — neither in this world nor the next."
+      "sanskrit": [
+        "॥ विष्णु सहस्रनाम ॥",
+        "फलश्रुति"
+      ],
+      "linesEn": [
+        "Vishnu Sahasranama",
+        "Phalashruti (Fruits of Recitation)"
+      ],
+      "meaningHi": "लाभ:\n\nफलश्रुति विष्णु सहस्रनाम का समापन भाग है — जिसमें इस स्तोत्र के पाठ से प्राप्त होने वाले फलों (लाभों) का वर्णन है। इसके अनुसार जो मनुष्य नित्य सहस्रनाम का पाठ या श्रवण करता है, उसे इस लोक और परलोक में कोई अशुभ प्राप्त नहीं होता। सभी पाप नष्ट होते हैं, शत्रुओं पर विजय मिलती है, और अन्ततः मोक्ष प्राप्त होता है।\n\nकथा:\n\nभीष्म पितामह ने युधिष्ठिर को सम्पूर्ण सहस्रनाम सुनाकर यह समापन भाग कहा। इसमें अर्जुन, व्यास, शिव-पार्वती और ब्रह्मा के वचन भी सम्मिलित हैं — जो इस स्तोत्र की महिमा और फल बताते हैं।",
+      "meaningEn": "Benefits:\n\nThe Phalashruti is the concluding section of Vishnu Sahasranama — describing the fruits (benefits) obtained from reciting this stotram. According to it, the person who daily recites or listens to the Sahasranama shall never encounter any inauspiciousness in this world or the next. All sins are destroyed, victory over enemies is granted, and ultimately moksha is attained.\n\nStory:\n\nBhishma Pitamaha spoke this concluding section after reciting the complete Sahasranama to Yudhishthira. It includes statements by Arjuna, Vyasa, Shiva-Parvati, and Brahma — all attesting to the glory and fruits of this stotram."
     },
     {
       "id": "vs-4-1",
       "chapter": 4,
       "number": 1,
-      "sanskrit": ["इतीदं कीर्तनीयस्य केशवस्य महात्मनः।", "नाम्नां सहस्रं दिव्यानामशेषेण प्रकीर्तितम्।।"],
-      "linesEn": ["itīdaṁ kīrtanīyasya keśhavasya mahātmanaḥ", "nāmnāṁ sahasraṁ divyānāmaśheṣheṇa prakīrtitam"],
+      "sanskrit": [
+        "इतीदं कीर्तनीयस्य केशवस्य महात्मनः।",
+        "नाम्नां सहस्रं दिव्यानामशेषेण प्रकीर्तितम्।।"
+      ],
+      "linesEn": [
+        "itīdaṁ kīrtanīyasya keśhavasya mahātmanaḥ",
+        "nāmnāṁ sahasraṁ divyānāmaśheṣheṇa prakīrtitam"
+      ],
       "meaningHi": "इस प्रकार कीर्तन करने योग्य, महात्मा केशव के सहस्र दिव्य नामों का सम्पूर्ण रूप से कीर्तन किया गया।\n\nभीष्म ने युधिष्ठिर को सम्पूर्ण सहस्रनाम सुनाकर यह समापन वाक्य कहा। 'केशव' — क (ब्रह्मा) + ईश (शिव) + व (विष्णु) — तीनों के ईश्वर।",
       "meaningEn": "Thus the thousand divine names of the great-souled Keshava, worthy of glorification, have been fully recited.\n\nBhishma concludes after reciting the complete Sahasranama to Yudhishthira. 'Keshava' = Ka (Brahma) + Isha (Shiva) + Va (Vishnu) — lord of all three."
     },
@@ -26,8 +38,14 @@
       "id": "vs-4-2",
       "chapter": 4,
       "number": 2,
-      "sanskrit": ["य इदं शृणुयान्नित्यं यश्चापि परिकीर्तयेत्।", "नाशुभं प्राप्नुयात् किञ्चित् सोऽमुत्रेह च मानवः।।"],
-      "linesEn": ["ya idaṁ śhṛiṇuyānnityaṁ yaśhchāpi parikīrtayet", "nāśhubhaṁ prāpnuyāt kiñchit so'mutreha cha mānavaḥ"],
+      "sanskrit": [
+        "य इदं शृणुयान्नित्यं यश्चापि परिकीर्तयेत्।",
+        "नाशुभं प्राप्नुयात् किञ्चित् सोऽमुत्रेह च मानवः।।"
+      ],
+      "linesEn": [
+        "ya idaṁ śhṛiṇuyānnityaṁ yaśhchāpi parikīrtayet",
+        "nāśhubhaṁ prāpnuyāt kiñchit so'mutreha cha mānavaḥ"
+      ],
       "meaningHi": "जो मनुष्य इसे नित्य सुनता है और जो इसका कीर्तन करता है, उसे इस लोक में और परलोक में कोई अशुभ प्राप्त नहीं होता।\n\nयह फलश्रुति का प्रथम लाभ है — अशुभ-निवृत्ति। 'इह च अमुत्र च' — इस जन्म में भी, अगले जन्म में भी।",
       "meaningEn": "The person who daily listens to this or recites it — no inauspiciousness shall touch them in this world or the next.\n\nThis is the first benefit in the Phalashruti — removal of all inauspiciousness. 'Iha cha amutra cha' — in this life and the hereafter."
     },
@@ -35,17 +53,29 @@
       "id": "vs-4-3",
       "chapter": 4,
       "number": 3,
-      "sanskrit": ["वेदान्तगो ब्राह्मणः स्यात् क्षत्रियो विजयी भवेत्।", "वैश्यो धनसमृद्धः स्याच्छूद्रः सुखमवाप्नुयात्।।"],
-      "linesEn": ["vedāntago brāhmaṇaḥ syāt kṣhatriyo vijayī bhavet", "vaiśhyo dhanasamṛiddhaḥ syāchchhūdraḥ sukhamavāpnuyāt"],
-      "meaningHi": "ब्राह्मण वेदान्त का ज्ञाता हो जाए, क्षत्रिय विजयी हो, वैश्य धन-समृद्ध हो, और शूद्र सुख प्राप्त करे।\n\nप्राचीन वर्ण-व्यवस्था के अनुसार प्रत्येक वर्ण को उसके स्वधर्म की सिद्धि मिलती है। आधुनिक व्याख्या में — प्रत्येक व्यक्ति को उसके क्षेत्र में उत्कृष्टता प्राप्त होती है।",
-      "meaningEn": "A Brahmana attains Vedantic knowledge, a Kshatriya becomes victorious, a Vaishya gains wealth, and a Shudra obtains happiness.\n\nPer the ancient Varna system, each class achieves mastery in their domain. In modern interpretation — every person attains excellence in their field."
+      "sanskrit": [
+        "वेदान्तगो ब्राह्मणः स्यात् क्षत्रियो विजयी भवेत्।",
+        "वैश्यो धनसमृद्धः स्याच्छूद्रः सुखमवाप्नुयात्।।"
+      ],
+      "linesEn": [
+        "vedāntago brāhmaṇaḥ syāt kṣhatriyo vijayī bhavet",
+        "vaiśhyo dhanasamṛiddhaḥ syāchchhūdraḥ sukhamavāpnuyāt"
+      ],
+      "meaningHi": "ब्राह्मण वेदान्त का ज्ञाता हो जाए, क्षत्रिय विजयी हो, वैश्य धन-समृद्ध हो, और शूद्र सुख प्राप्त करे।\n\nप्रत्येक व्यक्ति को उसके क्षेत्र में उत्कृष्टता प्राप्त होती है। आधुनिक अर्थ में — जो भी इसका पाठ करे, उसे अपने कार्यक्षेत्र में सफलता मिलती है।",
+      "meaningEn": "A Brahmana attains Vedantic knowledge, a Kshatriya becomes victorious, a Vaishya gains wealth, and a Shudra obtains happiness.\n\nEvery person attains excellence in their domain. In modern terms — whoever recites this attains success in their field of work."
     },
     {
       "id": "vs-4-4",
       "chapter": 4,
       "number": 4,
-      "sanskrit": ["धर्मार्थी प्राप्नुयाद्धर्ममर्थार्थी चार्थमाप्नुयात्।", "कामानवाप्नुयात्कामी प्रजार्थी चाप्नुयात्प्रजाम्।।"],
-      "linesEn": ["dharmārthī prāpnuyāddharamamarthārthī chārthamāpnuyāt", "kāmānavāpnuyātkāmī prajārthī chāpnuyātprajām"],
+      "sanskrit": [
+        "धर्मार्थी प्राप्नुयाद्धर्ममर्थार्थी चार्थमाप्नुयात्।",
+        "कामानवाप्नुयात्कामी प्रजार्थी प्राप्नुयात्प्रजाम्।।"
+      ],
+      "linesEn": [
+        "dharmārthī prāpnuyāddharamamarthārthī chārthamāpnuyāt",
+        "kāmānavāpnuyātkāmī prajārthī prāpnuyātprajām"
+      ],
       "meaningHi": "धर्म चाहने वाले को धर्म प्राप्त हो, अर्थ चाहने वाले को अर्थ, काम (इच्छा) चाहने वाले को काम-पूर्ति, और सन्तान चाहने वाले को सन्तान प्राप्त हो।\n\nचार पुरुषार्थ — धर्म, अर्थ, काम, मोक्ष — सभी इस पाठ के फल हैं। जो जिसकी कामना करता है, वही प्राप्त करता है।",
       "meaningEn": "One seeking dharma attains dharma, one seeking wealth attains wealth, one seeking desires gets them fulfilled, one seeking progeny obtains children.\n\nThe four Purusharthas — Dharma, Artha, Kama, Moksha — are all fruits of this recitation. Whatever one desires, one obtains."
     },
@@ -53,8 +83,14 @@
       "id": "vs-4-5",
       "chapter": 4,
       "number": 5,
-      "sanskrit": ["भक्तिमान् यः सदोत्थाय शुचिस्तद्गतमानसः।", "सहस्रं वासुदेवस्य नाम्नामेतत् प्रकीर्तयेत्।।"],
-      "linesEn": ["bhaktimān yaḥ sadotthāya śhuchistadgatamānasaḥ", "sahasraṁ vāsudevasya nāmnāmetat prakīrtayet"],
+      "sanskrit": [
+        "भक्तिमान् यः सदोत्थाय शुचिस्तद्गतमानसः।",
+        "सहस्रं वासुदेवस्य नाम्नामेतत् प्रकीर्तयेत्।।"
+      ],
+      "linesEn": [
+        "bhaktimān yaḥ sadotthāya śhuchistadgatamānasaḥ",
+        "sahasraṁ vāsudevasya nāmnāmetat prakīrtayet"
+      ],
       "meaningHi": "जो भक्तिमान मनुष्य सदा उठकर (प्रातःकाल), शुद्ध होकर, मन को वासुदेव में लगाकर इन सहस्र नामों का कीर्तन करता है —\n\nविधि: प्रातःकाल स्नान के बाद, शुद्ध वस्त्र पहनकर, एकाग्र मन से पाठ करना चाहिए। 'तद्गतमानस' — मन पूरी तरह भगवान में।",
       "meaningEn": "The devotee who rises early, is purified, with mind absorbed in Vasudeva, and recites these thousand names —\n\nThe prescribed method: after morning bath, in clean clothes, with concentrated mind. 'Tadgatamānasa' — mind completely absorbed in the Lord."
     },
@@ -62,10 +98,186 @@
       "id": "vs-4-6",
       "chapter": 4,
       "number": 6,
-      "sanskrit": ["वासनाद्वासुदेवस्य वासितं भुवनत्रयम्।", "सर्वभूतनिवासोऽसि वासुदेव नमोऽस्तु ते।।"],
-      "linesEn": ["vāsanādvāsudevasya vāsitaṁ bhuvanatrayam", "sarvabhūtanivāso'si vāsudeva namo'stu te"],
-      "meaningHi": "वासुदेव की वासना (सर्वव्यापकता) से तीनों लोक वासित (परिपूर्ण/सुवासित) हैं। हे वासुदेव! आप सभी प्राणियों के निवास-स्थान हैं — आपको नमस्कार।\n\nयह सहस्रनाम का समापन श्लोक है। 'वासुदेव' शब्द की तीन व्युत्पत्तियाँ एक श्लोक में: वासना (व्याप्ति) से, वासित (सुगन्धित) करने से, और निवास (सबमें रहने) से। वसुदेव के पुत्र होने से भी 'वासुदेव' नाम है।",
-      "meaningEn": "By the pervasion of Vasudeva, the three worlds are pervaded/perfumed. O Vasudeva! You are the dwelling place of all beings — salutations to you.\n\nThis is the closing verse of the Sahasranama. Three etymologies of 'Vasudeva' in one shloka: from vasana (pervasion), vasita (pervading/perfuming), and nivasa (dwelling in all). Also: son of Vasudeva."
+      "sanskrit": [
+        "यशः प्राप्नोति विपुलं ज्ञातिप्राधान्यमेव च।",
+        "अचलां श्रियमाप्नोति श्रेयः प्राप्नोत्यनुत्तमम्।।"
+      ],
+      "linesEn": [
+        "yaśhaḥ prāpnoti vipulaṁ jñātiprādhānyameva cha",
+        "achalāṁ śhriyamāpnoti śhreyaḥ prāpnotyanuttamam"
+      ],
+      "meaningHi": "वह विपुल यश प्राप्त करता है, बन्धु-बान्धवों में प्रधानता पाता है, अचल (स्थायी) लक्ष्मी को प्राप्त करता है, और अनुत्तम (सर्वश्रेष्ठ) कल्याण पाता है।\n\nचार फल: यश (प्रसिद्धि), ज्ञाति-प्राधान्य (परिवार में सम्मान), अचल श्री (स्थायी सम्पत्ति), और अनुत्तम श्रेय (परम कल्याण/मोक्ष)।",
+      "meaningEn": "He attains abundant fame, prominence among kinsmen, unwavering prosperity, and the highest good.\n\nFour fruits: fame (renown), prominence among family (respect), steady wealth (that never diminishes), and the supreme good (moksha)."
+    },
+    {
+      "id": "vs-4-7",
+      "chapter": 4,
+      "number": 7,
+      "sanskrit": [
+        "न भयं क्वचिदाप्नोति वीर्यं तेजश्च विन्दति।",
+        "भवत्यरोगो द्युतिमान्बलरूपगुणान्वितः।।"
+      ],
+      "linesEn": [
+        "na bhayaṁ kvachidāpnoti vīryaṁ tejaśhcha vindati",
+        "bhavatyarogo dyutimānbalarūpaguṇānvitaḥ"
+      ],
+      "meaningHi": "उसे कहीं भी भय प्राप्त नहीं होता, वीर्य और तेज प्राप्त करता है। वह निरोग, तेजस्वी, बल-रूप-गुण से सम्पन्न हो जाता है।\n\nशारीरिक लाभ: भय-मुक्ति, वीर्य (शक्ति), तेज (आभा), आरोग्य, द्युति (कान्ति), बल, सुन्दर रूप, और सद्गुण।",
+      "meaningEn": "He never encounters fear anywhere, and gains valor and radiance. He becomes disease-free, luminous, and endowed with strength, beauty, and good qualities.\n\nPhysical benefits: freedom from fear, valor (virya), radiance (tejas), good health, luminosity, strength, beauty, and virtues."
+    },
+    {
+      "id": "vs-4-8",
+      "chapter": 4,
+      "number": 8,
+      "sanskrit": [
+        "रोगार्तो मुच्यते रोगाद्बद्धो मुच्येत बन्धनात्।",
+        "भयान्मुच्येत भीतस्तु मुच्येतापन्न आपदः।।"
+      ],
+      "linesEn": [
+        "rogārto muchyate rogādbaddho muchyeta bandhanāt",
+        "bhayānmuchyeta bhītastu muchyetāpanna āpadaḥ"
+      ],
+      "meaningHi": "रोगी रोग से मुक्त हो जाता है, बँधा हुआ बन्धन से छूट जाता है, भयभीत भय से मुक्त होता है, और आपदा में फँसा हुआ आपदा से छूटता है।\n\nचार प्रकार की मुक्ति: रोग से, बन्धन से, भय से, और आपत्ति से। यह श्लोक बताता है कि किसी भी कठिन परिस्थिति में सहस्रनाम का पाठ करना चाहिए।",
+      "meaningEn": "The afflicted is freed from disease, the bound is freed from bondage, the fearful is freed from fear, and the distressed is freed from calamity.\n\nFour types of liberation: from disease, from bondage, from fear, and from calamity. This verse states that Sahasranama should be recited in any difficult situation."
+    },
+    {
+      "id": "vs-4-9",
+      "chapter": 4,
+      "number": 9,
+      "sanskrit": [
+        "वासुदेवाश्रयो मर्त्यो वासुदेवपरायणः।",
+        "सर्वपापविशुद्धात्मा याति ब्रह्म सनातनम्।।"
+      ],
+      "linesEn": [
+        "vāsudevāśhrayo martyo vāsudevaparāyaṇaḥ",
+        "sarvapāpaviśhuddhātmā yāti brahma sanātanam"
+      ],
+      "meaningHi": "वासुदेव का आश्रय लेने वाला, वासुदेव-परायण (समर्पित) मनुष्य सभी पापों से शुद्ध आत्मा होकर सनातन ब्रह्म को प्राप्त होता है।\n\nयह मोक्ष-फल है — अन्तिम और सर्वोच्च फल। जो वासुदेव के शरणागत है, वह सभी पापों से मुक्त होकर शाश्वत ब्रह्मपद (मोक्ष) प्राप्त करता है।",
+      "meaningEn": "The mortal who takes refuge in Vasudeva, who is devoted to Vasudeva, becomes purified of all sins and attains the eternal Brahman.\n\nThis is the moksha-phala — the ultimate fruit. One who surrenders to Vasudeva is freed from all sins and attains the eternal state of Brahman (liberation)."
+    },
+    {
+      "id": "vs-4-10",
+      "chapter": 4,
+      "number": 10,
+      "sanskrit": [
+        "न वासुदेवभक्तानामशुभं विद्यते क्वचित्।",
+        "जन्ममृत्युजराव्याधिभयं नैवोपजायते।।"
+      ],
+      "linesEn": [
+        "na vāsudevabhaktānāmaśhubhaṁ vidyate kvachit",
+        "janmamṛityujarāvyādhibhayaṁ naivopajāyate"
+      ],
+      "meaningHi": "वासुदेव के भक्तों को कहीं भी कोई अशुभ नहीं होता। जन्म, मृत्यु, बुढ़ापा और रोग का भय उत्पन्न ही नहीं होता।\n\nयह सबसे प्रसिद्ध फलश्रुति श्लोकों में से एक है। चार भय जिनसे मुक्ति मिलती है: जन्म (पुनर्जन्म), मृत्यु, जरा (वृद्धावस्था), और व्याधि (रोग)।",
+      "meaningEn": "For the devotees of Vasudeva, no inauspiciousness exists anywhere. Fear of birth, death, old age, and disease simply does not arise.\n\nThis is one of the most famous Phalashruti verses. Four fears from which one is freed: birth (rebirth), death, old age (jara), and disease (vyadhi)."
+    },
+    {
+      "id": "vs-4-11",
+      "chapter": 4,
+      "number": 11,
+      "sanskrit": [
+        "अर्जुन उवाच —",
+        "पद्मपत्रविशालाक्ष पद्मनाभ सुरोत्तम।",
+        "भक्तानामनुरक्तानां त्राता भव जनार्दन।।"
+      ],
+      "linesEn": [
+        "arjuna uvācha —",
+        "padmapatraviśhālākṣha padmanābha surottama",
+        "bhaktānāmanuraktānāṁ trātā bhava janārdana"
+      ],
+      "meaningHi": "अर्जुन ने कहा — हे कमल-पत्र जैसे विशाल नेत्रों वाले, हे पद्मनाभ, हे देवताओं में श्रेष्ठ! अपने अनुरक्त भक्तों के रक्षक बनिए, हे जनार्दन!\n\nयह अर्जुन की प्रार्थना है — सहस्रनाम सुनने के बाद अर्जुन विष्णु/कृष्ण से भक्त-रक्षा की याचना करते हैं। 'अनुरक्त' = प्रेमपूर्वक आसक्त।",
+      "meaningEn": "Arjuna said — O lotus-petal-wide-eyed one, O Padmanabha, O best among gods! Be the protector of your loving devotees, O Janardana!\n\nThis is Arjuna's prayer — after hearing the Sahasranama, Arjuna asks Vishnu/Krishna to protect His devotees. 'Anurakta' = lovingly attached."
+    },
+    {
+      "id": "vs-4-12",
+      "chapter": 4,
+      "number": 12,
+      "sanskrit": [
+        "श्रीभगवानुवाच —",
+        "यो मां नामसहस्रेण स्तोतुमिच्छति पाण्डव।",
+        "सोऽहमेकेन श्लोकेन स्तुत एव न संशयः।।"
+      ],
+      "linesEn": [
+        "śhrībhagavānuvācha —",
+        "yo māṁ nāmasahasreṇa stotumichChati pāṇḍava",
+        "so'hamekena śhlokena stuta eva na saṁśhayaḥ"
+      ],
+      "meaningHi": "श्री भगवान ने कहा — हे पाण्डव! जो मुझे सहस्र नामों से स्तुति करना चाहता है, वह एक ही श्लोक से मेरी स्तुति कर चुका — इसमें कोई संशय नहीं।\n\nभगवान कृष्ण कहते हैं कि भक्ति की नीयत ही पर्याप्त है। जो सहस्रनाम पढ़ने की इच्छा मात्र रखता है, वह पहले ही स्तुति कर चुका माना जाता है।",
+      "meaningEn": "The Lord said — O Pandava! He who wishes to praise me with a thousand names — he has already praised me with a single verse, without any doubt.\n\nLord Krishna states that the intention of devotion itself is sufficient. One who merely desires to recite the Sahasranama is already considered to have praised Him."
+    },
+    {
+      "id": "vs-4-13",
+      "chapter": 4,
+      "number": 13,
+      "sanskrit": [
+        "व्यास उवाच —",
+        "वासनाद्वासुदेवस्य वासितं भुवनत्रयम्।",
+        "सर्वभूतनिवासोऽसि वासुदेव नमोऽस्तु ते।।"
+      ],
+      "linesEn": [
+        "vyāsa uvācha —",
+        "vāsanādvāsudevasya vāsitaṁ bhuvanatrayam",
+        "sarvabhūtanivāso'si vāsudeva namo'stu te"
+      ],
+      "meaningHi": "व्यास ने कहा — वासुदेव की वासना (सर्वव्यापकता) से तीनों लोक वासित (परिपूर्ण/सुवासित) हैं। हे वासुदेव! आप सभी प्राणियों के निवास-स्थान हैं — आपको नमस्कार।\n\n'वासुदेव' शब्द की तीन व्युत्पत्तियाँ एक श्लोक में: वासना (व्याप्ति) से, वासित (सुगन्धित) करने से, और निवास (सबमें रहने) से।",
+      "meaningEn": "Vyasa said — By the pervasion of Vasudeva, the three worlds are pervaded/perfumed. O Vasudeva! You are the dwelling place of all beings — salutations to you.\n\nThree etymologies of 'Vasudeva' in one shloka: from vasana (pervasion), vasita (pervading/perfuming), and nivasa (dwelling in all)."
+    },
+    {
+      "id": "vs-4-14",
+      "chapter": 4,
+      "number": 14,
+      "sanskrit": [
+        "पार्वत्युवाच —",
+        "केनोपायेन लघुना विष्णोर्नामसहस्रकम्।",
+        "पठ्यते पण्डितैर्नित्यं श्रोतुमिच्छाम्यहं प्रभो।।"
+      ],
+      "linesEn": [
+        "pārvatyuvācha —",
+        "kenopāyena laghunā viṣhṇornāmasahasrakam",
+        "paṭhyate paṇḍitairnityaṁ śhrotumichChāmyahaṁ prabho"
+      ],
+      "meaningHi": "पार्वती ने कहा — हे प्रभो! किस सरल उपाय से पण्डित लोग विष्णु के सहस्रनाम का नित्य पाठ करते हैं? मैं सुनना चाहती हूँ।\n\nयह शिव-पार्वती संवाद है — पार्वती शिव से पूछती हैं कि सहस्रनाम का सरल विकल्प क्या है?",
+      "meaningEn": "Parvati said — O Lord! By what easy means do the learned daily recite the thousand names of Vishnu? I wish to hear this.\n\nThis is the Shiva-Parvati dialogue — Parvati asks Shiva what is the simple equivalent of the Sahasranama."
+    },
+    {
+      "id": "vs-4-15",
+      "chapter": 4,
+      "number": 15,
+      "sanskrit": [
+        "ईश्वर उवाच —",
+        "श्रीरामरामरामेति रमे रामे मनोरमे।",
+        "सहस्रनामतत्तुल्यं रामनाम वरानने।।"
+      ],
+      "linesEn": [
+        "īśhvara uvācha —",
+        "śhrīrāmarāmarāmeti rame rāme manorame",
+        "sahasranāmatattulyaṁ rāmanāma varānane"
+      ],
+      "meaningHi": "ईश्वर (शिव) ने कहा — 'श्रीराम-राम-राम' — मैं मनोरम राम नाम में रमण करता हूँ। हे सुन्दर मुख वाली (पार्वती)! राम नाम सहस्रनाम के तुल्य (समान) है।\n\nशिव कहते हैं कि 'राम' नाम का एक बार उच्चारण सम्पूर्ण विष्णु सहस्रनाम के समान फल देता है। यह शैव-वैष्णव एकता का प्रसिद्ध श्लोक है।",
+      "meaningEn": "Ishvara (Shiva) said — 'Sri Rama, Rama, Rama' — I delight in the delightful name of Rama. O beautiful-faced one (Parvati)! The name of Rama is equal to the thousand names.\n\nShiva declares that uttering 'Rama' once gives the same fruit as the entire Vishnu Sahasranama. This is a famous verse showing Shaiva-Vaishnava unity."
+    },
+    {
+      "id": "vs-4-16",
+      "chapter": 4,
+      "number": 16,
+      "sanskrit": [
+        "ब्रह्मोवाच —",
+        "नमोऽस्त्वनन्ताय सहस्रमूर्तये",
+        "सहस्रपादाक्षिशिरोरुबाहवे।",
+        "सहस्रनाम्ने पुरुषाय शाश्वते",
+        "सहस्रकोटियुगधारिणे नमः।।"
+      ],
+      "linesEn": [
+        "brahmovācha —",
+        "namo'stvanantāya sahasramūrtaye",
+        "sahasrapādākṣhiśhirorubāhave",
+        "sahasranāmne puruṣhāya śhāśhvate",
+        "sahasrakoṭiyugadhāriṇe namaḥ"
+      ],
+      "meaningHi": "ब्रह्मा ने कहा — अनन्त को नमस्कार, सहस्र मूर्तियों वाले को, सहस्र पैर-नेत्र-सिर-जंघा-भुजाओं वाले को। सहस्र नामों वाले, शाश्वत पुरुष को, सहस्र कोटि युगों को धारण करने वाले को नमस्कार।\n\nब्रह्मा की स्तुति — यह सहस्रनाम का अन्तिम समापन श्लोक है। ब्रह्मा स्वयं विष्णु की महिमा गाते हैं। 'सहस्रकोटियुगधारी' — जो अरबों युगों को धारण करते हैं (अनन्त काल)।",
+      "meaningEn": "Brahma said — Salutations to the infinite one, of thousand forms, with thousand feet, eyes, heads, thighs, and arms. To the one of thousand names, the eternal Purusha, who bears a thousand crore yugas — salutations.\n\nBrahma's hymn — this is the final closing verse of the Sahasranama. Brahma himself sings Vishnu's glory. 'Sahasrakoti-yugadhari' — who sustains billions of ages (infinite time)."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "sanskritdocuments.org/doc_vishhnu/vsahasranew.html, opensadhaka.com",
+    "retrievedOn": "2026-05-24"
+  }
 }
