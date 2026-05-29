@@ -85,3 +85,17 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Category:** tooling
 **Example:** Codex companion hit OpenAI usage limit during adversarial review. Performed thorough manual code-verified adversarial review as fallback, checking 6 specific challenges against actual source files. The manual review caught the same sub-field wording issue that pattern-matching alone would have found.
 **Resolution pattern:** Always attempt the codex invocation first. If it fails with a rate limit or auth error, perform a manual adversarial review verifying each challenge against actual code (not just reasoning about it). Document the failure and the manual findings.
+
+### "New content since last update" must be content-ID-set diffing, NOT app-version comparison, when content ships via OTA
+
+**Seen:** 1x — 2026-05-29
+**Category:** design-mechanism
+**Example:** NEW-chip plan proposed `addedInVersion` vs a stored `lastSeenVersion`. app.json has `runtimeVersion.policy: "appVersion"` → OTA updates CANNOT bump `version`, so version-based detection never fires for OTA content drops (the feature's own stated use case). Also the feature's debut release has no stored version for any user → everyone treated as fresh → nothing shows. Codex flagged both as high severity. Fix: persist a `knownIds` set; "new" = a discoverable library id absent from `knownIds`; `markSeen` adds to the set. Version-agnostic, OTA-safe, persists-until-tapped, no resurrection.
+**Resolution pattern:** For "what's new since you last used the app" on an OTA-capable client, diff the current catalog of IDs against a persisted seen-set. Reserve version numbers only for a one-time debut seed. Verify against the actual update-delivery mechanism (OTA vs store build) before choosing version-based logic.
+
+### Fresh-vs-upgrade detection must key off user-action-only storage keys, never mount-written ones
+
+**Seen:** 1x — 2026-05-29
+**Category:** race-condition
+**Example:** To distinguish a returning user from a fresh install at a feature's debut, the plan scanned `AsyncStorage.getAllKeys()` for any `@vedansh/*` key. But sibling providers (NotificationPreferences writes `@vedansh/notif-meta`, UserActivity) write keys ON MOUNT during the same cold start, racing the detector → a genuine fresh install can be misclassified as an upgrader (and, here, would flip accessibilityLabels and break Maestro's fresh-install selectors). Fix: scan only keys written exclusively by deliberate user action in a prior session (bookmarks, reading-progress, search-recent, japam-counter, language); exclude any key a provider may write on mount.
+**Resolution pattern:** When using "does prior app data exist?" as an install-vs-upgrade signal, enumerate which keys are written on mount vs. only on user action, and gate on the user-action-only subset. Also seed/diff only user-discoverable (active && !hidden) ids so prelanded hidden/coming content isn't silently pre-acknowledged.

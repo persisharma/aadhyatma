@@ -30,6 +30,8 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 | `saffron-deep` | `#8A3E0B` | Strong accent, pager dot, labels |
 | `gold` | `#A67C34` | Secondary accent, crest, section tags |
 | `divider` | `rgba(138, 62, 11, 0.18)` | Borders, card outlines |
+| `newBadgeBg` | `rgba(184, 98, 27, 0.16)` | "NEW" badge fill — saffron tint (recently-added content) |
+| `newBadgeText` | `#8A3E0B` | "NEW" badge text — saffron-deep |
 
 **Home gradient** (top → bottom): `#F6ECD0` → `#F1E3BF`, with a soft radial saffron glow (`rgba(184, 98, 27, 0.14)`) behind the crest.
 
@@ -593,6 +595,10 @@ Two variants: `active` (has content) and `coming` (placeholder).
 - Content at 55% opacity
 - "SOON" pill badge: top-right corner, 4px inset. Inter 9, uppercase, 0.18em tracking, `rgba(166,124,52,0.14)` fill, `gold` text
 - Tap disabled (no navigation)
+
+**New content (active tiles & library cards):**
+
+- Recently-added content (new since the user's last update) shows a `NEW` pill badge: top-right corner, same geometry as `SOON`. `newBadgeBg` fill (saffron tint) + `newBadgeText` (saffron-deep). Saffron — the primary/active accent — marks it as live & fresh, distinct from the muted gold `SOON`. The chip clears once the user opens that content. Carries the "NEW" text cue (never color-only, per §10 accessibility).
 
 ---
 
