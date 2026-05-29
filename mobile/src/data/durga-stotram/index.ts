@@ -13,12 +13,18 @@ export type DurgaStotramVerse = {
   meaningEn: string;
 };
 
+export type DurgaStotramChapterSource = {
+  baseText: string;
+  retrievedOn: string;
+};
+
 export type DurgaStotramChapter = {
   chapter: number;
   titleHi: string;
   titleEn: string;
   verseCount: number;
   verses: DurgaStotramVerse[];
+  source?: DurgaStotramChapterSource;
 };
 
 export type DurgaStotramChapterSummary = {
