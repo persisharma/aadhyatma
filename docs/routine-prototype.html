@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-07 · Daily Routine (Nitya Sadhana) — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#f3e7c9; --parchment-soft:#f8efd6; --parchment-hi:#fff5e0;
+    --gradient-end:#e9d9b1; --gold:#a67c34; --gold-soft:#c9b896;
+    --saffron:#b8621b; --saffron-deep:#8a3e0b; --saffron-tint:rgba(184,98,27,0.10);
+    --ink:#2f1e10; --ink-muted:#8a6a47; --divider:#d9c9a6;
+    --green:#3e7c4f; --green-tint:rgba(62,124,79,0.12);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:26px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:18px}
+  .wrap{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+
+  /* ---- phone frame ---- */
+  .phone{width:360px;height:740px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:34px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:34px;left:0;right:0;bottom:54px;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:18px 18px 30px}
+
+  /* bottom tab bar (context only — routine is NOT a tab) */
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:54px;background:var(--parchment-soft);
+    border-top:1px solid var(--divider);display:flex}
+  .tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:3px;font-size:10px;color:var(--ink-muted);cursor:pointer}
+  .tabbar .tab.active{color:var(--saffron)}
+  .tabbar .tab .ic{font-size:17px}
+
+  /* ---- generic bits ---- */
+  .deva{font-family:var(--deva)}
+  .en-it{font-family:var(--serif);font-style:italic}
+  .hero{text-align:center;padding:14px 0 16px}
+  .hero .om{font-family:var(--deva);font-size:30px;color:var(--saffron)}
+  .hero .t{font-family:var(--deva);font-size:24px;color:var(--ink);margin-top:2px}
+  .hero .s{font-family:var(--serif);font-style:italic;color:var(--ink-muted);font-size:13px;letter-spacing:.3px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+  .tile{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;
+    padding:14px;height:72px;display:flex;flex-direction:column;justify-content:center}
+  .tile .th{font-family:var(--deva);font-size:18px;color:var(--ink)}
+  .tile .ts{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted)}
+
+  .secttitle{font-family:var(--serif);font-style:italic;color:var(--ink-muted);font-size:12px;
+    letter-spacing:.5px;text-transform:uppercase;margin:18px 4px 8px}
+
+  /* ---- routine chip (the hero of this PRD) ---- */
+  .chip{border-radius:16px;padding:14px 15px;margin:14px 0 4px;cursor:pointer;
+    border:1px solid var(--divider);background:var(--parchment-soft);transition:.15s;position:relative;overflow:hidden}
+  .chip:active{transform:scale(.99)}
+  .chip.nudge{border:1px dashed var(--gold);background:linear-gradient(120deg,var(--parchment-hi),var(--parchment-soft))}
+  .chip.progress{border:1px solid var(--gold-soft)}
+  .chip-row{display:flex;align-items:center;gap:13px}
+  .chip .glyph{width:42px;height:42px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+    font-family:var(--deva);font-size:20px;background:var(--saffron-tint);color:var(--saffron-deep)}
+  .chip .ctext{flex:1;min-width:0}
+  .chip .ctitle{font-family:var(--deva);font-size:15px;color:var(--ink);line-height:1.25}
+  .chip .csub{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);margin-top:1px}
+  .chip .cta{font-size:11px;font-weight:600;color:var(--saffron);white-space:nowrap}
+  .chip .x{position:absolute;top:7px;right:10px;color:var(--ink-muted);font-size:13px;opacity:.6}
+  /* progress ring */
+  .ring{width:42px;height:42px;border-radius:50%;flex:none;position:relative}
+  .ring .rnum{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:600;font-size:13px;color:var(--ink)}
+  .pbar{height:6px;border-radius:3px;background:var(--divider);margin-top:10px;overflow:hidden}
+  .pbar > i{display:block;height:100%;background:var(--saffron);transition:width .4s}
+  .streak{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--saffron-deep);
+    background:var(--saffron-tint);padding:2px 8px;border-radius:10px;margin-top:8px;font-weight:600}
+
+  /* ---- verse card (Daily Bhakti) ---- */
+  .vcard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:18px;padding:16px;margin-top:6px}
+  .vpill{display:inline-block;background:var(--saffron-tint);color:var(--saffron-deep);font-size:11px;
+    font-weight:600;padding:3px 9px;border-radius:9px;font-family:var(--deva)}
+  .vlines{font-family:var(--deva);font-size:18px;color:var(--ink);line-height:1.9;margin:14px 0;text-align:center}
+  .vmean{font-family:var(--serif);font-style:italic;color:var(--ink-muted);font-size:13.5px;text-align:center}
+
+  /* ---- sheets / modal screens ---- */
+  .sheet-h{font-family:var(--deva);font-size:20px;color:var(--ink);text-align:center;margin-top:6px}
+  .sheet-s{font-family:var(--serif);font-style:italic;color:var(--ink-muted);font-size:13px;text-align:center;margin-bottom:18px}
+  .field{margin:10px 0}
+  .field label{font-size:11px;color:var(--ink-muted);font-weight:600;letter-spacing:.4px;text-transform:uppercase}
+  .field input{width:100%;margin-top:5px;padding:11px 12px;border-radius:11px;border:1px solid var(--divider);
+    background:var(--parchment-hi);font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .field input:focus{outline:none;border-color:var(--gold)}
+
+  .opt{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:15px;padding:15px;margin:10px 0;cursor:pointer;transition:.15s}
+  .opt:hover{border-color:var(--gold)}
+  .opt.sel{border:1.5px solid var(--saffron);background:var(--parchment-hi)}
+  .opt .ot{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .opt .oe{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted)}
+  .opt .od{font-size:12px;color:var(--ink-muted);margin-top:6px;line-height:1.45}
+
+  .btn{display:block;width:100%;text-align:center;padding:13px;border:none;border-radius:13px;
+    background:var(--saffron);color:#fff5e0;font-family:var(--serif);font-size:16px;font-weight:600;cursor:pointer;margin-top:14px}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btn.ghost{background:transparent;color:var(--saffron);border:1px solid var(--gold-soft)}
+
+  /* top bar for inner screens */
+  .topbar{display:flex;align-items:center;gap:12px;padding:4px 2px 10px}
+  .topbar .back{font-size:20px;color:var(--ink);cursor:pointer;width:24px}
+  .topbar .tt{font-family:var(--deva);font-size:18px;color:var(--ink);flex:1}
+  .topbar .add{font-size:22px;color:var(--saffron);cursor:pointer}
+
+  /* weekday strip */
+  .wdstrip{display:flex;gap:6px;margin:6px 0 14px}
+  .wd{flex:1;border:1px solid var(--divider);border-radius:11px;padding:8px 2px;text-align:center;cursor:pointer;background:var(--parchment-soft)}
+  .wd.on{border:1.5px solid var(--saffron);background:var(--parchment-hi)}
+  .wd .d{font-size:10px;color:var(--ink-muted);font-weight:600}
+  .wd .dg{font-family:var(--deva);font-size:16px;color:var(--saffron-deep);margin-top:3px}
+  .wd .dn{font-size:8.5px;color:var(--ink-muted);margin-top:2px}
+
+  /* routine item rows */
+  .item{display:flex;align-items:center;gap:11px;padding:12px 4px;border-bottom:1px solid var(--divider)}
+  .check{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--gold);flex:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent;transition:.15s}
+  .check.done{background:var(--green);border-color:var(--green);color:#fff}
+  .item .info{flex:1;min-width:0}
+  .item .iname{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .item .iname.done{text-decoration:line-through;color:var(--ink-muted)}
+  .item .imeta{font-size:11px;color:var(--ink-muted);font-style:italic;font-family:var(--serif)}
+  .item .kind{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--saffron-deep);
+    background:var(--saffron-tint);padding:2px 6px;border-radius:7px}
+
+  .libitem{display:flex;align-items:center;gap:11px;padding:11px 4px;border-bottom:1px solid var(--divider)}
+  .libitem .lg{width:34px;height:34px;border-radius:9px;background:var(--saffron-tint);color:var(--saffron-deep);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:16px;flex:none}
+  .libitem .ladd{font-size:20px;color:var(--saffron);cursor:pointer;padding:0 4px}
+  .libitem .ladd.added{color:var(--green)}
+  .note{font-size:10.5px;color:var(--ink-muted);font-style:italic}
+
+  .rcard{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:14px;padding:14px;margin:10px 0;cursor:pointer}
+  .rcard:hover{border-color:var(--gold)}
+  .rcard .rt{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .rcard .rm{font-size:11.5px;color:var(--ink-muted);font-style:italic;font-family:var(--serif);margin-top:3px}
+  .badge{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--saffron-deep);
+    background:var(--saffron-tint);padding:2px 7px;border-radius:7px;margin-left:6px}
+
+  /* toast */
+  .toast{position:absolute;bottom:66px;left:18px;right:18px;background:var(--ink);color:var(--parchment-hi);
+    padding:11px 14px;border-radius:11px;font-size:12.5px;text-align:center;opacity:0;transform:translateY(8px);
+    transition:.25s;pointer-events:none;z-index:9}
+  .toast.show{opacity:1;transform:translateY(0)}
+
+  /* ---- side: state machine + log ---- */
+  .panel{flex:1;min-width:320px;max-width:520px}
+  .card{background:#23190e;border:1px solid #3a2a16;border-radius:14px;padding:16px;margin-bottom:16px}
+  .card h2{font-family:var(--serif);font-size:18px;color:#fff5e0;margin-bottom:4px}
+  .card .ph{font-size:12px;color:var(--gold-soft);margin-bottom:12px;font-style:italic}
+  .nodes{display:flex;flex-wrap:wrap;gap:8px}
+  .node{font-size:11px;padding:6px 10px;border-radius:9px;border:1px solid #3a2a16;background:#2a1d10;color:#c9b896;transition:.2s}
+  .node.active{background:var(--saffron);color:#fff5e0;border-color:var(--saffron);box-shadow:0 0 0 3px var(--saffron-tint)}
+  .legend{font-size:12px;color:#c9b896;line-height:1.7;margin-top:10px}
+  .legend b{color:#fff5e0}
+  .log{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#c9b896;max-height:230px;overflow-y:auto}
+  .log .ln{padding:4px 0;border-bottom:1px solid #2a1d10}
+  .log .ln .arr{color:var(--saffron)}
+  .log .ln .act{color:#fff5e0}
+  .controls{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+  .controls button{font-size:11px;padding:6px 10px;border-radius:8px;border:1px solid #3a2a16;
+    background:#2a1d10;color:#c9b896;cursor:pointer}
+  .controls button:hover{border-color:var(--gold)}
+  .kbd{font-size:10.5px;color:#8a6a47}
+</style>
+</head>
+<body>
+  <h1>Daily Routine · नित्य साधना</h1>
+  <div class="sub">PRD-07 interactive prototype — click inside the phone. Watch the state map &amp; log on the right.</div>
+
+  <div class="wrap">
+    <!-- ============ PHONE ============ -->
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>नित्य साधना</span><span>100%</span></div>
+      <div class="screen" id="screen"><div class="pad" id="pad"></div></div>
+      <div class="toast" id="toast"></div>
+      <div class="tabbar" id="tabbar"></div>
+    </div>
+
+    <!-- ============ PANEL ============ -->
+    <div class="panel">
+      <div class="card">
+        <h2>State machine</h2>
+        <div class="ph">Current screen is highlighted. The chip drives everything — no new tab.</div>
+        <div class="nodes" id="nodes"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div class="card">
+        <h2>Transition log</h2>
+        <div class="ph">action → resulting state</div>
+        <div class="log" id="log"></div>
+      </div>
+      <div class="card">
+        <h2>Jump / reset</h2>
+        <div class="ph">Demo shortcuts to inspect any state.</div>
+        <div class="controls" id="controls"></div>
+        <div class="kbd" style="margin-top:10px">Tip: the chip on <b>Home</b> &amp; <b>Daily Bhakti</b> is the same component — toggle the bottom tabs to see both.</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ----------------------------------------------------------
+   STATE
+   ---------------------------------------------------------- */
+const VAAR = { // weekday -> suggested deity (constrained to catalog tags)
+  0:{g:'सू',hi:'सूर्य',en:'Surya'}, 1:{g:'शि',hi:'शिव',en:'Shiva'},
+  2:{g:'ह+',hi:'हनुमान',en:'Hanuman'}, 3:{g:'ग',hi:'गणेश',en:'Ganesha'},
+  4:{g:'वि',hi:'विष्णु',en:'Vishnu'}, 5:{g:'दु',hi:'दुर्गा',en:'Durga'},
+  6:{g:'हनु',hi:'हनुमान',en:'Hanuman'}
+};
+const DAYNAME=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const TODAY = 1; // pretend today = Monday (Shiva)
+
+// content the user can add (kind: section | verse | japam | granth)
+const LIB = [
+  {id:'hanuman-chalisa', g:'ह', hi:'हनुमान चालीसा', en:'Hanuman Chalisa', kind:'section', meta:'40 चौपाई'},
+  {id:'shiva-strotam',  g:'शि', hi:'शिव स्तोत्रम्', en:'Shiva Stotram', kind:'section', meta:'4 स्तोत्र'},
+  {id:'gayatri',        g:'ॐ', hi:'गायत्री मंत्र', en:'Gayatri Mantra', kind:'japam', meta:'1 माला · 108'},
+  {id:'bhagavad-gita',  g:'भ', hi:'भगवद् गीता', en:'Bhagavad Gītā', kind:'granth', meta:'18 अध्याय — अध्याय चुनें'},
+];
+
+let S = {
+  screen:'home',           // home | daily | createName | createMode | createWeekday | addItems | today | list | detail | addSheet
+  tab:'home',              // home | daily  (which bottom tab)
+  routines:[],             // [{id,nameHi,nameEn,mode,items:[{libId,weekdays}]}]
+  draft:null,              // routine being created
+  detailId:null,
+  addingLibId:null,        // when add-to-routine sheet is open
+  done:{},                 // {itemKey:true}  completion for "today"
+  streak:5,
+  chipDismissed:false,
+};
+const hasRoutine = ()=>S.routines.length>0;
+function todaysItems(){
+  // union of items from all routines scheduled for TODAY
+  const out=[];
+  S.routines.forEach(r=>r.items.forEach(it=>{
+    const sched = r.mode==='daily' || (it.weekdays||[]).includes(TODAY);
+    if(sched){ const lib=LIB.find(l=>l.id===it.libId); if(lib) out.push({...lib,rn:r.nameHi,key:r.id+'·'+it.libId}); }
+  }));
+  return out;
+}
+
+/* ----------------------------------------------------------
+   TRANSITION LOG + STATE MAP
+   ---------------------------------------------------------- */
+const NODE_ORDER=[
+  ['home','Home (chip)'],['daily','Daily Bhakti (chip)'],
+  ['createName','Create · name'],['createMode','Create · daily/weekday'],
+  ['createWeekday','Create · weekday+deity'],['addItems','Add items'],
+  ['today','Today view'],['list','Routine list'],['detail','Routine detail'],['addSheet','Add-to-routine sheet']
+];
+let logLines=[];
+function go(screen, action){
+  if(action){ logLines.unshift({a:action,s:screen}); if(logLines.length>40)logLines.pop(); }
+  S.screen=screen; render();
+}
+function renderPanel(){
+  document.getElementById('nodes').innerHTML = NODE_ORDER.map(([k,l])=>
+    `<span class="node ${S.screen===k?'active':''}">${l}</span>`).join('');
+  document.getElementById('legend').innerHTML =
+    `<b>Chip states:</b> no routine → <b>nudge</b> (dashed); routine set → <b>progress</b> (ring + streak).<br>`+
+    `Routines now: <b>${S.routines.length}</b> · Today's items: <b>${todaysItems().length}</b> · `+
+    `Done today: <b>${Object.values(S.done).filter(Boolean).length}</b> · Streak: <b>${S.streak}🔥</b>`;
+  document.getElementById('log').innerHTML = logLines.length
+    ? logLines.map(l=>`<div class="ln"><span class="act">${l.a}</span> <span class="arr">→</span> ${l.s}</div>`).join('')
+    : '<div class="ln" style="opacity:.5">— interact with the phone —</div>';
+}
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1700); }
+
+/* ----------------------------------------------------------
+   RENDER
+   ---------------------------------------------------------- */
+function ringSVG(done,total){
+  const pct = total? done/total : 0; const r=18, c=2*Math.PI*r, off=c*(1-pct);
+  return `<svg width="42" height="42" viewBox="0 0 42 42"><circle cx="21" cy="21" r="${r}" fill="none" stroke="var(--divider)" stroke-width="4"/>
+    <circle cx="21" cy="21" r="${r}" fill="none" stroke="var(--saffron)" stroke-width="4" stroke-linecap="round"
+    stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 21 21)"/></svg>`;
+}
+
+function chipHTML(){
+  if(!hasRoutine()){
+    if(S.chipDismissed) return '';
+    return `<div class="chip nudge" onclick="startCreate()">
+      <div class="x" onclick="event.stopPropagation();dismissChip()">✕</div>
+      <div class="chip-row">
+        <div class="glyph">✿</div>
+        <div class="ctext">
+          <div class="ctitle deva">अपनी नित्य साधना बनाएँ</div>
+          <div class="csub">Set your daily practice</div>
+        </div>
+        <div class="cta">शुरू करें ›</div>
+      </div></div>`;
+  }
+  const items=todaysItems(); const done=items.filter(i=>S.done[i.key]).length;
+  return `<div class="chip progress" onclick="openToday()">
+    <div class="chip-row">
+      <div class="ring">${ringSVG(done,items.length)}<div class="rnum">${done}/${items.length}</div></div>
+      <div class="ctext">
+        <div class="ctitle deva">नित्य साधना · आज</div>
+        <div class="csub">${done===items.length?'Complete for today 🌸':'Today\'s practice'}</div>
+      </div>
+      <div class="cta">देखें ›</div>
+    </div>
+    <div class="pbar"><i style="width:${items.length?done/items.length*100:0}%"></i></div>
+    <div class="streak">🔥 ${S.streak}-day streak</div>
+  </div>`;
+}
+
+function render(){
+  const pad=document.getElementById('pad'); let h='';
+  const sc=S.screen;
+
+  if(sc==='home'){
+    h=`<div class="hero"><div class="om">ॐ</div><div class="t">वेदांश</div><div class="s">Sacred Texts · Daily Reading</div></div>`;
+    h+=chipHTML();
+    h+=`<div class="secttitle">Library</div><div class="grid">
+      <div class="tile"><div class="th">चालीसा</div><div class="ts">Chalisa</div></div>
+      <div class="tile"><div class="th">स्तोत्रम्</div><div class="ts">Stotram</div></div>
+      <div class="tile"><div class="th">ग्रंथ</div><div class="ts">Granth</div></div>
+      <div class="tile"><div class="th">जप</div><div class="ts">Japam</div></div></div>`;
+  }
+
+  else if(sc==='daily'){
+    h=`<div class="hero" style="padding-bottom:8px"><div class="t">दैनिक भक्ति</div><div class="s">Daily Verse</div></div>`;
+    h+=chipHTML();
+    h+=`<div class="vcard">
+      <span class="vpill">शिव स्तोत्रम् · श्लोक १</span>
+      <div class="vlines">कर्पूरगौरं करुणावतारं<br>संसारसारं भुजगेन्द्रहारम्</div>
+      <div class="vmean">"I bow to Shiva, white as camphor, the very essence of compassion…"</div>
+    </div>
+    <div class="note" style="text-align:center;margin-top:12px">The random daily verse stays here; the chip above is your <i>chosen</i> practice. (Open Q1: merge or keep separate.)</div>`;
+  }
+
+  else if(sc==='createName'){
+    h=`<div class="topbar"><span class="back" onclick="go('${backTo()}','✕ cancel create')">✕</span><span class="tt">नई साधना · New routine</span></div>`;
+    h+=`<div class="sheet-h">साधना का नाम</div><div class="sheet-s">Name your routine</div>
+      <div class="field"><label>Hindi name</label>
+        <input id="nHi" placeholder="प्रातः साधना" value="${S.draft?.nameHi||''}" oninput="draftName()"/></div>
+      <div class="field"><label>English name</label>
+        <input id="nEn" placeholder="Morning Sadhana" value="${S.draft?.nameEn||''}" oninput="draftName()"/></div>
+      <button class="btn" id="nameNext" ${(S.draft?.nameHi||S.draft?.nameEn)?'':'disabled'}
+        onclick="go('createMode','enter name → choose mode')">आगे · Next</button>`;
+  }
+
+  else if(sc==='createMode'){
+    h=`<div class="topbar"><span class="back" onclick="go('createName','‹ back')">‹</span><span class="tt">${S.draft.nameHi||S.draft.nameEn}</span></div>`;
+    h+=`<div class="sheet-h">यह कब चले?</div><div class="sheet-s">Same every day, or change by weekday?</div>
+      <div class="opt ${S.draft.mode==='daily'?'sel':''}" onclick="pickMode('daily')">
+        <div class="ot">दैनिक — हर दिन एक जैसा</div><div class="oe">Daily — same every day</div>
+        <div class="od">Every item shows every day. Simplest. Good for a fixed morning path.</div></div>
+      <div class="opt ${S.draft.mode==='weekday'?'sel':''}" onclick="pickMode('weekday')">
+        <div class="ot">वार अनुसार — दिन के हिसाब से</div><div class="oe">By weekday — changes per day</div>
+        <div class="od">Each day suggests a deity (Mon→Shiva, Sat→Hanuman…) from existing tags. Assign items to days.</div></div>
+      <button class="btn" ${S.draft.mode?'':'disabled'}
+        onclick="go(S.draft.mode==='weekday'?'createWeekday':'addItems', 'choose '+S.draft.mode)">आगे · Next</button>`;
+  }
+
+  else if(sc==='createWeekday'){
+    h=`<div class="topbar"><span class="back" onclick="go('createMode','‹ back')">‹</span><span class="tt">वार · Deity of the day</span></div>`;
+    h+=`<div class="sheet-s" style="margin-top:0">Suggested deities — tap a day to build its list. (All overridable.)</div>`;
+    h+=`<div class="wdstrip">`+ [0,1,2,3,4,5,6].map(d=>`
+        <div class="wd ${d===TODAY?'on':''}"><div class="d">${DAYNAME[d]}</div>
+          <div class="dg deva">${VAAR[d].g}</div><div class="dn">${VAAR[d].en}</div></div>`).join('')+`</div>`;
+    h+=`<div class="note">"Suggested for today" = filter the library by the day's deity tag — zero hand-curation, every text is already deity-tagged.</div>`;
+    h+=`<button class="btn" onclick="go('addItems','confirm weekday deities')">सामग्री जोड़ें · Add content</button>`;
+  }
+
+  else if(sc==='addItems'){
+    const dn = VAAR[TODAY];
+    h=`<div class="topbar"><span class="back" onclick="go(S.draft.mode==='weekday'?'createWeekday':'createMode','‹ back')">‹</span>
+        <span class="tt">सामग्री जोड़ें</span></div>`;
+    if(S.draft.mode==='weekday') h+=`<div class="note" style="display:block;margin-bottom:8px">Adding to <b>${DAYNAME[TODAY]} · ${dn.en}</b> — suggestions first.</div>`;
+    h+= LIB.map(l=>{
+      const added=(S.draft.items||[]).some(i=>i.libId===l.id);
+      const granth=l.kind==='granth';
+      return `<div class="libitem">
+        <div class="lg deva">${l.g}</div>
+        <div style="flex:1;min-width:0">
+          <div class="iname deva" style="font-size:14px">${l.hi}
+            <span class="kind">${l.kind}</span></div>
+          <div class="imeta">${granth?'⚠ pick a chapter (too big whole)':l.meta}</div>
+        </div>
+        <div class="ladd ${added?'added':''}" onclick="addToDraft('${l.id}',${granth})">${added?'✓':'＋'}</div>
+      </div>`;
+    }).join('');
+    h+=`<button class="btn" ${(S.draft.items||[]).length?'':'disabled'} onclick="finishCreate()">
+        साधना बनाएँ · Create (${(S.draft.items||[]).length})</button>`;
+  }
+
+  else if(sc==='today'){
+    const items=todaysItems(); const done=items.filter(i=>S.done[i.key]).length;
+    h=`<div class="topbar"><span class="back" onclick="go(S.tab,'‹ back to '+S.tab)">‹</span>
+        <span class="tt">आज की साधना · Today</span><span class="add" onclick="go('list','open routine list')">≡</span></div>`;
+    h+=`<div class="chip progress" style="cursor:default">
+      <div class="chip-row"><div class="ring">${ringSVG(done,items.length)}<div class="rnum">${done}/${items.length}</div></div>
+      <div class="ctext"><div class="ctitle deva">${DAYNAME[TODAY]} · ${VAAR[TODAY].hi}</div>
+      <div class="csub">${done===items.length?'पूर्ण 🌸 Complete':'Tap circles to check off'}</div></div></div>
+      <div class="pbar"><i style="width:${items.length?done/items.length*100:0}%"></i></div>
+      <div class="streak">🔥 ${S.streak}-day streak</div></div>`;
+    h+= items.map(it=>`<div class="item">
+        <div class="check ${S.done[it.key]?'done':''}" onclick="toggleDone('${it.key}')">✓</div>
+        <div class="info"><div class="iname deva ${S.done[it.key]?'done':''}">${it.hi}</div>
+          <div class="imeta">${it.rn} · ${it.meta}</div></div>
+        <span class="kind">${it.kind}</span></div>`).join('');
+    if(!items.length) h+=`<div class="note" style="text-align:center;margin-top:30px">No items scheduled today.</div>`;
+  }
+
+  else if(sc==='list'){
+    h=`<div class="topbar"><span class="back" onclick="go('today','‹ back')">‹</span>
+        <span class="tt">मेरी साधनाएँ · My routines</span></div>`;
+    h+= S.routines.map(r=>`<div class="rcard" onclick="openDetail('${r.id}')">
+        <div class="rt deva">${r.nameHi||r.nameEn}<span class="badge">${r.mode}</span></div>
+        <div class="rm">${r.items.length} items · ${r.nameEn||''}</div></div>`).join('');
+    h+=`<button class="btn ghost" onclick="startCreate()">＋ नई साधना · New routine</button>`;
+  }
+
+  else if(sc==='detail'){
+    const r=S.routines.find(x=>x.id===S.detailId);
+    h=`<div class="topbar"><span class="back" onclick="go('list','‹ back')">‹</span>
+        <span class="tt">${r.nameHi||r.nameEn}</span><span class="add" onclick="toast('Add-to-routine sheet (＋ from any content)')">＋</span></div>`;
+    if(r.mode==='weekday'){
+      h+=`<div class="wdstrip">`+[0,1,2,3,4,5,6].map(d=>`
+        <div class="wd ${d===TODAY?'on':''}"><div class="d">${DAYNAME[d]}</div>
+          <div class="dg deva">${VAAR[d].g}</div></div>`).join('')+`</div>`;
+      h+=`<div class="note" style="display:block;margin-bottom:6px">Showing <b>${DAYNAME[TODAY]}</b> items. Tap a day to switch.</div>`;
+    }
+    h+= r.items.map(it=>{const l=LIB.find(x=>x.id===it.libId);return `<div class="item">
+        <div class="info"><div class="iname deva">${l.hi}</div><div class="imeta">${l.meta}</div></div>
+        <span class="kind">${l.kind}</span></div>`;}).join('');
+    h+=`<div class="note" style="display:block;margin-top:14px">Reorder · edit schedule · remove live here. Mode (<b>${r.mode}</b>) is locked at creation — Open Q2.</div>`;
+  }
+
+  pad.innerHTML=h;
+  renderTabs(); renderPanel();
+}
+
+function renderTabs(){
+  const onInner = !['home','daily'].includes(S.screen);
+  document.getElementById('tabbar').innerHTML=`
+    <div class="tab ${S.tab==='home'&&!onInner?'active':''}" onclick="switchTab('home')"><span class="ic">☗</span>Home</div>
+    <div class="tab ${S.tab==='daily'&&!onInner?'active':''}" onclick="switchTab('daily')"><span class="ic">☀</span>Daily Bhakti</div>
+    <div class="tab" onclick="toast('Wishlist stays separate from routine')"><span class="ic">♡</span>Wishlist</div>
+    <div class="tab" onclick="toast('Routine is NOT here — it lives as a chip on Home/Daily')"><span class="ic">⋯</span>More</div>`;
+}
+
+/* ----------------------------------------------------------
+   ACTIONS
+   ---------------------------------------------------------- */
+function switchTab(t){ S.tab=t; go(t, 'tap '+t+' tab'); }
+function dismissChip(){ S.chipDismissed=true; go(S.screen,'dismiss nudge (session)'); toast('Hidden for now'); }
+function backTo(){ return S.tab; }
+
+function startCreate(){ S.draft={nameHi:'',nameEn:'',mode:null,items:[]}; go('createName','tap chip / new routine'); }
+function draftName(){ S.draft.nameHi=document.getElementById('nHi').value; S.draft.nameEn=document.getElementById('nEn').value;
+  const b=document.getElementById('nameNext'); if(b) b.disabled=!(S.draft.nameHi||S.draft.nameEn); renderPanel(); }
+function pickMode(m){ S.draft.mode=m; go('createMode','pick mode: '+m); }
+function addToDraft(libId,granth){
+  S.draft.items=S.draft.items||[];
+  const idx=S.draft.items.findIndex(i=>i.libId===libId);
+  if(idx>=0){ S.draft.items.splice(idx,1); go('addItems','remove '+libId); return; }
+  if(granth){ toast('Granth: choose a chapter (whole book disabled)'); }
+  S.draft.items.push({libId, weekdays:S.draft.mode==='weekday'?[TODAY]:undefined});
+  go('addItems','add '+libId);
+}
+function finishCreate(){
+  const r={id:'r'+(S.routines.length+1), ...S.draft, items:[...S.draft.items]};
+  S.routines.push(r); S.draft=null; S.chipDismissed=false;
+  go(S.tab,'create routine → chip flips to PROGRESS'); toast('साधना बनी · Routine created');
+}
+function openToday(){ go('today','tap progress chip'); }
+function openDetail(id){ S.detailId=id; go('detail','open routine'); }
+function toggleDone(key){ S.done[key]=!S.done[key]; go('today',(S.done[key]?'check ':'uncheck ')+'item');
+  const items=todaysItems(); if(items.length && items.every(i=>S.done[i.key])) toast('आज पूर्ण 🌸 logged to streak'); }
+
+/* demo shortcuts */
+const SHORTCUTS=[
+  ['Reset (no routine)', ()=>{S=Object.assign(S,{routines:[],draft:null,done:{},screen:'home',tab:'home',chipDismissed:false}); logLines=[]; go('home','reset');}],
+  ['Seed a weekday routine', ()=>{ S.routines=[{id:'r1',nameHi:'प्रातः साधना',nameEn:'Morning Sadhana',mode:'weekday',
+      items:[{libId:'shiva-strotam',weekdays:[1]},{libId:'gayatri',weekdays:[0,1,2,3,4,5,6]},{libId:'hanuman-chalisa',weekdays:[2,6]}]}];
+      S.done={}; S.chipDismissed=false; go('home','seed weekday routine'); }],
+  ['Go: Home', ()=>{S.tab='home';go('home','jump');}],
+  ['Go: Daily Bhakti', ()=>{S.tab='daily';go('daily','jump');}],
+  ['Go: Today', ()=>go('today','jump')],
+  ['Go: Routine list', ()=>go('list','jump')],
+];
+document.getElementById('controls').innerHTML=SHORTCUTS.map((s,i)=>`<button onclick="SC(${i})">${s[0]}</button>`).join('');
+function SC(i){ SHORTCUTS[i][1](); }
+
+render();
+</script>
+</body>
+</html>
