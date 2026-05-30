@@ -149,6 +149,22 @@
   .badge{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--saffron-deep);
     background:var(--saffron-tint);padding:2px 7px;border-radius:7px;margin-left:6px}
 
+  /* ---- docked mini-banner (pinned just above the tab bar) ---- */
+  .minibanner{position:absolute;left:0;right:0;bottom:54px;z-index:8;cursor:pointer;
+    background:var(--parchment-soft);border-top:1px solid var(--gold-soft);
+    box-shadow:0 -7px 20px rgba(13,8,4,.14);padding:9px 14px;transition:transform .28s ease}
+  .minibanner.hidden{transform:translateY(140%);pointer-events:none}
+  .minibanner.nudge{border-top:1px dashed var(--gold)}
+  .minibanner .mprog{position:absolute;top:0;left:0;height:3px;background:var(--saffron);transition:width .4s}
+  .mb-row{display:flex;align-items:center;gap:11px}
+  .minibanner .mg{width:32px;height:32px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+    background:var(--saffron-tint);color:var(--saffron-deep);font-family:var(--deva);font-size:14px;font-weight:600}
+  .minibanner .mt{flex:1;min-width:0}
+  .minibanner .mtitle{font-family:var(--deva);font-size:13.5px;color:var(--ink);line-height:1.2}
+  .minibanner .msub{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:1px}
+  .minibanner .mcta{font-size:11px;font-weight:600;color:var(--saffron);white-space:nowrap}
+  .minibanner .mx{color:var(--ink-muted);font-size:12px;opacity:.55;padding:0 2px}
+
   /* toast */
   .toast{position:absolute;bottom:66px;left:18px;right:18px;background:var(--ink);color:var(--parchment-hi);
     padding:11px 14px;border-radius:11px;font-size:12.5px;text-align:center;opacity:0;transform:translateY(8px);
@@ -177,6 +193,8 @@
 </style>
 </head>
 <body>
+  <noscript><div style="background:#b8621b;color:#fff5e0;padding:14px;border-radius:10px;margin-bottom:16px">
+    ⚠ This interactive prototype needs JavaScript. Your current viewer has it disabled — download the file and open it in a web browser (Chrome, Safari, Firefox).</div></noscript>
   <h1>Daily Routine · नित्य साधना</h1>
   <div class="sub">PRD-07 interactive prototype — click inside the phone. Watch the state map &amp; log on the right.</div>
 
@@ -184,7 +202,12 @@
     <!-- ============ PHONE ============ -->
     <div class="phone">
       <div class="statusbar"><span>9:41</span><span>नित्य साधना</span><span>100%</span></div>
-      <div class="screen" id="screen"><div class="pad" id="pad"></div></div>
+      <div class="screen" id="screen"><div class="pad" id="pad">
+        <div style="padding:40px 8px;text-align:center;color:#8a6a47;font-style:italic">
+          Loading prototype…<br><br>If this stays blank, your viewer is blocking JavaScript —
+          <b>download the file and open it in Chrome / Safari</b>.
+        </div></div></div>
+      <div class="minibanner hidden" id="minibanner"></div>
       <div class="toast" id="toast"></div>
       <div class="tabbar" id="tabbar"></div>
     </div>
@@ -224,12 +247,14 @@ const VAAR = { // weekday -> suggested deity (constrained to catalog tags)
 const DAYNAME=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const TODAY = 1; // pretend today = Monday (Shiva)
 
-// content the user can add (kind: section | verse | japam | granth)
+// content the user can add. Granularity: whole section, a named subsection
+// (a stotra / a chapter), a whole granth, a granth chapter, or a japam mantra.
+// NOT a single verse-screen for stotrams/chalisas — only granths go finer.
 const LIB = [
-  {id:'hanuman-chalisa', g:'ह', hi:'हनुमान चालीसा', en:'Hanuman Chalisa', kind:'section', meta:'40 चौपाई'},
-  {id:'shiva-strotam',  g:'शि', hi:'शिव स्तोत्रम्', en:'Shiva Stotram', kind:'section', meta:'4 स्तोत्र'},
-  {id:'gayatri',        g:'ॐ', hi:'गायत्री मंत्र', en:'Gayatri Mantra', kind:'japam', meta:'1 माला · 108'},
-  {id:'bhagavad-gita',  g:'भ', hi:'भगवद् गीता', en:'Bhagavad Gītā', kind:'granth', meta:'18 अध्याय — अध्याय चुनें'},
+  {id:'hanuman-chalisa', g:'ह', hi:'हनुमान चालीसा', en:'Hanuman Chalisa', kind:'section', meta:'पूरा पाठ · whole', parts:null},
+  {id:'shiva-strotam',  g:'शि', hi:'शिव स्तोत्रम्', en:'Shiva Stotram', kind:'section', meta:'पूरा या एक स्तोत्र', parts:'स्तोत्र · stotra'},
+  {id:'gayatri',        g:'ॐ', hi:'गायत्री मंत्र', en:'Gayatri Mantra', kind:'japam', meta:'1 माला · 108', parts:null},
+  {id:'bhagavad-gita',  g:'भ', hi:'भगवद् गीता', en:'Bhagavad Gītā', kind:'granth', meta:'पूरा ग्रंथ या अध्याय', parts:'अध्याय · chapter'},
 ];
 
 let S = {
@@ -327,7 +352,6 @@ function render(){
 
   if(sc==='home'){
     h=`<div class="hero"><div class="om">ॐ</div><div class="t">वेदांश</div><div class="s">Sacred Texts · Daily Reading</div></div>`;
-    h+=chipHTML();
     h+=`<div class="secttitle">Library</div><div class="grid">
       <div class="tile"><div class="th">चालीसा</div><div class="ts">Chalisa</div></div>
       <div class="tile"><div class="th">स्तोत्रम्</div><div class="ts">Stotram</div></div>
@@ -337,13 +361,12 @@ function render(){
 
   else if(sc==='daily'){
     h=`<div class="hero" style="padding-bottom:8px"><div class="t">दैनिक भक्ति</div><div class="s">Daily Verse</div></div>`;
-    h+=chipHTML();
     h+=`<div class="vcard">
       <span class="vpill">शिव स्तोत्रम् · श्लोक १</span>
       <div class="vlines">कर्पूरगौरं करुणावतारं<br>संसारसारं भुजगेन्द्रहारम्</div>
       <div class="vmean">"I bow to Shiva, white as camphor, the very essence of compassion…"</div>
     </div>
-    <div class="note" style="text-align:center;margin-top:12px">The random daily verse stays here; the chip above is your <i>chosen</i> practice. (Open Q1: merge or keep separate.)</div>`;
+    <div class="note" style="text-align:center;margin-top:12px">The random daily verse is unchanged. Your <i>chosen</i> practice rides in the docked banner below ↓ (separate concepts).</div>`;
   }
 
   else if(sc==='createName'){
@@ -387,17 +410,17 @@ function render(){
     if(S.draft.mode==='weekday') h+=`<div class="note" style="display:block;margin-bottom:8px">Adding to <b>${DAYNAME[TODAY]} · ${dn.en}</b> — suggestions first.</div>`;
     h+= LIB.map(l=>{
       const added=(S.draft.items||[]).some(i=>i.libId===l.id);
-      const granth=l.kind==='granth';
       return `<div class="libitem">
         <div class="lg deva">${l.g}</div>
         <div style="flex:1;min-width:0">
           <div class="iname deva" style="font-size:14px">${l.hi}
             <span class="kind">${l.kind}</span></div>
-          <div class="imeta">${granth?'⚠ pick a chapter (too big whole)':l.meta}</div>
+          <div class="imeta">${l.meta}${l.parts?` · <span style="color:var(--saffron)" onclick="event.stopPropagation();toast('Sub-picker: choose a ${l.parts}')">▸ भाग चुनें</span>`:''}</div>
         </div>
-        <div class="ladd ${added?'added':''}" onclick="addToDraft('${l.id}',${granth})">${added?'✓':'＋'}</div>
+        <div class="ladd ${added?'added':''}" onclick="addToDraft('${l.id}')">${added?'✓':'＋'}</div>
       </div>`;
     }).join('');
+    h+=`<div class="note" style="display:block;margin-top:6px">Items are <b>whole sections or named subsections</b> (a stotra, a chapter) — never a single verse-screen. Granths add whole <i>or</i> by chapter.</div>`;
     h+=`<button class="btn" ${(S.draft.items||[]).length?'':'disabled'} onclick="finishCreate()">
         साधना बनाएँ · Create (${(S.draft.items||[]).length})</button>`;
   }
@@ -446,7 +469,28 @@ function render(){
   }
 
   pad.innerHTML=h;
-  renderTabs(); renderPanel();
+  renderMiniBanner(); renderTabs(); renderPanel();
+}
+
+function renderMiniBanner(){
+  const mb=document.getElementById('minibanner');
+  const show=(S.screen==='home'||S.screen==='daily');
+  if(!show || (!hasRoutine() && S.chipDismissed)){ mb.className='minibanner hidden'; mb.onclick=null; return; }
+  if(!hasRoutine()){
+    mb.className='minibanner nudge'; mb.onclick=startCreate;
+    mb.innerHTML=`<div class="mb-row"><div class="mg">✿</div>
+      <div class="mt"><div class="mtitle deva">अपनी नित्य साधना बनाएँ</div><div class="msub">Set your daily practice</div></div>
+      <div class="mcta">शुरू ›</div>
+      <div class="mx" onclick="event.stopPropagation();dismissChip()">✕</div></div>`;
+  } else {
+    const items=todaysItems(); const done=items.filter(i=>S.done[i.key]).length;
+    mb.className='minibanner progress'; mb.onclick=openToday;
+    mb.innerHTML=`<div class="mprog" style="width:${items.length?done/items.length*100:0}%"></div>
+      <div class="mb-row"><div class="mg">${done}/${items.length}</div>
+      <div class="mt"><div class="mtitle deva">नित्य साधना · आज</div>
+      <div class="msub">${done===items.length?'पूर्ण 🌸 Complete':'Today’s practice · 🔥 '+S.streak+'-day'}</div></div>
+      <div class="mcta">देखें ›</div></div>`;
+  }
 }
 
 function renderTabs(){

@@ -30,8 +30,9 @@ Let a user **compose one or more named routines** from existing content, optiona
 
 ## 3. Non-goals
 
-- **Replacing or merging Wishlist.** Wishlist stays as verse-level favorites. Routine is the *active practice* surface. They may cross-link ("add wishlisted verse to a routine") but remain distinct concepts and distinct stores.
-- **Arbitrary scroll-position bookmarking.** A routine item points at a *logical unit* — a whole text/section, one verse, or one japam mantra — never "page 3 of the reader."
+- **Merging with — or feeding from — Wishlist.** Wishlist stays as **verse-level** favorites (saved from a card inside a reader). Routine works at **section / subsection / chapter** granularity. Because the two operate at different levels, there is **no "add wishlisted verse to a routine" cross-link** — it would force a verse into a surface that doesn't accept verses. They remain entirely distinct concepts and stores.
+- **Folding the Daily Bhakti verse into the routine.** The random daily verse stays exactly as it is. The routine banner is a separate surface docked below it; a lone verse is the *one* thing the routine deliberately does **not** accept (that's what Daily Bhakti is for).
+- **Arbitrary scroll-position bookmarking.** A routine item points at a *complete reciting unit* — a whole text/section, a named subsection, a whole granth or its chapter, or a japam mantra — never "page 3 of the reader" and never a single stotram verse.
 - **Server sync / multi-device.** Local-only, per the constraint above.
 - **A full festival calendar engine.** Date-anchored entries are Phase 4 and lean on PRD-01's bundled festival JSON rather than reinventing it.
 
@@ -77,15 +78,16 @@ At **creation** the user is asked the single branching question: **"Should this 
 type RoutineItem = {
   id: string;                 // uuid
   routineId: string;
-  kind: 'section' | 'verse' | 'japam';
+  kind: 'section' | 'subsection' | 'granth' | 'granth-chapter' | 'japam';
   sourceId: string;           // library entry id, e.g. 'shiva-strotam', 'gayatri'
-  // 'section': whole text OR one chapter/sarga of a granth (too-big granths
-  //            require a chapter; non-granth sections add as a whole).
-  chapter?: number;           // present for granth-chapter items
-  // 'verse': one specific shloka/chaupai
-  verseIndex?: number;
-  // 'japam':
-  targetRounds?: number;      // e.g. 1 (= 108 beads)
+  // 'section'        : whole text (Hanuman Chalisa) — opens reader at start
+  // 'subsection'     : a named sub-block (one stotra, one kāṇḍa) — needs subId
+  // 'granth'         : whole granth
+  // 'granth-chapter' : one chapter/sarga of a granth — needs chapter
+  // 'japam'          : a mantra with a target
+  subId?: string;             // present for 'subsection' (e.g. stotra id)
+  chapter?: number;           // present for 'granth-chapter'
+  targetRounds?: number;      // present for 'japam', e.g. 1 (= 108 beads)
   // scheduling — only meaningful when the parent routine.mode === 'weekday'
   weekdays?: number[];        // 0=Sun .. 6=Sat
   order: number;
@@ -93,12 +95,12 @@ type RoutineItem = {
 };
 ```
 
-**Granularity rules (from product):**
-- ✅ A **whole section** as one item — e.g. *Hanuman Chalisa*, *Shiva Stotram*. Opens the reader at the start.
-- ✅ A **specific shloka/verse** — reuses the existing `sourceId:chapter:verseIndex` addressing from `BookmarksContext` / `entryRoutes.ts`.
-- ✅ A **japam mantra with a target** — e.g. Gayatri × 1 round; opens `JapamCounterScreen`, counts into `UserActivityContext.logJapaRound`.
-- ⚠️ **Granths are too big to add whole.** For `category: 'granth'` (Gītā, Sundarkand, Ramcharitmanas) the user adds a **chapter/sarga**, not the entire book. The "add to routine" affordance on a granth offers a chapter picker; whole-book add is disabled for granths.
-- ❌ Never "a particular reader screen/scroll page."
+**Granularity rules (from product).** A routine item is always a **complete reciting unit**, never an arbitrary verse-screen:
+- ✅ A **whole section** — e.g. *Hanuman Chalisa*. Opens the reader at the start.
+- ✅ A **named subsection** — e.g. one of the four stotras inside *Shiva Stotram*, or a kāṇḍa. The unit is the named sub-block, not a single verse within it.
+- ✅ A **whole granth** *or* a **chapter of a granth** — `category: 'granth'` (Gītā, Sundarkand, Ramcharitmanas) may be added whole **or** by chapter/sarga (the "add" affordance offers a chapter picker). Granths are the only content allowed to go to chapter level, because they are large enough for a chapter to be a meaningful daily unit.
+- ✅ A **japam mantra with a target** — e.g. Gayatri × 1 round (108); opens `JapamCounterScreen`, counts into `UserActivityContext.logJapaRound`.
+- ❌ **Never a single verse/shloka of a stotram or chalisa, and never "a particular reader screen/scroll page."** A lone verse only makes sense as the *Daily Bhakti* random verse — not as a routine item. (This is also why Wishlist, which is verse-level, does not feed routines — see §3.)
 
 ### 5.3 Completion state
 
@@ -124,18 +126,14 @@ Used only to **pre-suggest** content when building a `weekday` routine; always o
 
 **No dedicated bottom tab and no `More` entry.** A tab is too heavy for a v1, and `More` is a low-traffic graveyard where the feature would never be noticed. Instead the daily driver is an **embedded routine chip** that lives inside the two screens users already open every day — **Home** and **Daily Bhakti** — and the full management screens are reached *through* that chip.
 
-### 6.1 Routine chip (the entry point) — embedded, two states
+### 6.1 Routine banner (the entry point) — docked above the tab bar, two states
 
-A single small `RoutineChip` component dropped into existing screens, with no new navigation chrome:
+A single `RoutineBanner` component **pinned just above the bottom tab bar** (not scrolled inline), rendered on the **Home** and **Daily Bhakti** screens. It rides above the tab bar like a mini now-playing bar, always in view, with no new navigation chrome. **The Daily Bhakti random verse is left completely untouched** — the banner is a separate surface that sits below it.
 
-- **State A — no routine yet (nudge):** a gentle CTA chip — *"अपनी नित्य साधना बनाएँ · Set your daily practice"* — tapping opens routine creation. Dismissible per session so it never nags.
-- **State B — routine(s) set (progress):** shows **today's** progress — *"नित्य साधना · 2 / 5 आज"* with the current streak (read from `UserActivityContext`). Tapping opens the **Today** view.
+- **State A — no routine yet (nudge):** a slim dashed banner — *"अपनी नित्य साधना बनाएँ · Set your daily practice ›"* — tapping opens routine creation. Has a small ✕ to dismiss for the session so it never nags.
+- **State B — routine(s) set (progress):** a slim banner showing **today's** progress — *"नित्य साधना · 2 / 5 आज"* with a thin progress strip and the current streak (read from `UserActivityContext`). Tapping opens the **Today** view.
 
-Placement (grounded in current layout):
-- **`HomeScreen.tsx`** — between the `hero` block and the category `grid` (`src/screens/HomeScreen.tsx:112`→`:130`), as a full-width strip above the library.
-- **`DailyBhaktiScreen.tsx`** — directly above the verse card (after the title area), so the "today's verse" and "today's practice" sit together.
-
-Both placements render the *same* component and state, so progress stays consistent across surfaces.
+Both screens render the *same* component and state, so progress stays consistent. Because it's docked (not inline in the `ScrollView`), it never competes with the hero, library grid, or verse card for scroll position.
 
 ### 6.2 Management screens (reached via the chip)
 
@@ -168,9 +166,10 @@ All screens follow the parchment design system and the bilingual rules in `RULEB
 ## 9. Decisions & open questions
 
 **Decided:**
-- **Placement (§6):** no new tab, no `More` entry. An embedded `RoutineChip` on **Home** and **Daily Bhakti** is the entry point — nudge when no routine is set, today's progress when one is. Management screens are reached through the chip.
+- **Placement (§6):** no new tab, no `More` entry. A `RoutineBanner` **docked above the bottom tab bar** on **Home** and **Daily Bhakti** is the entry point — nudge when no routine is set, today's progress when one is. Management screens are reached through it.
+- **Daily Bhakti stays as-is.** The random daily verse is untouched; the banner is a separate surface below it. No merge.
+- **No Wishlist → Routine link.** Different granularity (verse vs. section); a cross-link would push a verse into a surface that only takes complete units.
+- **Granularity (§5.2):** section · named subsection · whole granth · granth chapter · japam-with-target. No single stotram verse.
 
 **Open:**
-1. **Daily Bhakti relationship:** does the random Daily Bhakti verse become *part of* the Today view, or stay independent above its verse card? (Possible merge: "Today" = your routine + one suggested verse.)
-2. **Editing a routine's mode** after creation (daily ↔ weekday). *Recommend locking at creation for Phase 1* — switching would orphan or wipe per-item `weekdays` tags, and a user can simply create a second routine. Revisit if users ask.
-3. **Cross-link from Wishlist:** offer "add this wishlisted verse to a routine" in Phase 1, or defer?
+1. **Editing a routine's mode** after creation (daily ↔ weekday). *Recommend locking at creation for Phase 1* — switching would orphan or wipe per-item `weekdays` tags, and a user can simply create a second routine. Revisit if users ask.
