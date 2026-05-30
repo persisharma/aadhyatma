@@ -1,0 +1,156 @@
+# PRD-07 — Daily Routine (नित्य साधना) & Weekday Deity Schedule
+
+| | |
+|---|---|
+| **Status** | Draft / Exploration |
+| **Target release** | TBD (post v1.4.0 notifications) |
+| **Window** | TBA |
+| **T-shirt size** | L (multi-PR; phased) |
+| **Owner** | TBA |
+
+---
+
+**Local-first constraint:** routines, schedules, and completion state are stored on-device via `AsyncStorage`, exactly like `BookmarksContext`, `UserActivityContext`, and `NotificationPreferencesContext`. No account, no server. This keeps the feature consistent with the app's no-account stance and lets it ship without backend work.
+
+---
+
+## 1. Problem
+
+The app is a library of devotional texts with a single time-anchored surface — the **Daily Bhakti** tab (`mobile/src/screens/DailyBhaktiScreen.tsx`), which shows one *random* verse from `versePool.ts`. But real practice (sadhana) is **deliberate and repeated**, not random: a devotee reads *their* texts, in *their* order, often **keyed to the day of the week** (Monday → Shiva, Saturday → Hanuman, etc.).
+
+Today there is no way for a user to say "this is what I read every day" or "this is my Monday practice." The closest primitive is the **Wishlist** (`BookmarksContext`), but that is a flat pile of saved *verses* with no ordering, no schedule, and no notion of completion. Wishlist answers "save this for later"; it does not answer "this is my daily practice."
+
+## 2. Goal
+
+Let a user **compose one or more named routines** from existing content, optionally **schedule them by weekday** (with a sensible deity-of-the-day default), **work through them with check-offs**, and (later) **be reminded**. Success looks like:
+
+- A returning user opens the app and sees **today's practice**, pre-filtered to the day, in their chosen order.
+- Adding content to a routine is a one-tap action available anywhere content is listed (`LibraryCard`, reader top-bar, `DeityListScreen`).
+- Completion feeds the existing streak/activity machinery (`UserActivityContext`) so practice is measurable.
+
+## 3. Non-goals
+
+- **Replacing or merging Wishlist.** Wishlist stays as verse-level favorites. Routine is the *active practice* surface. They may cross-link ("add wishlisted verse to a routine") but remain distinct concepts and distinct stores.
+- **Arbitrary scroll-position bookmarking.** A routine item points at a *logical unit* — a whole text/section, one verse, or one japam mantra — never "page 3 of the reader."
+- **Server sync / multi-device.** Local-only, per the constraint above.
+- **A full festival calendar engine.** Date-anchored entries are Phase 4 and lean on PRD-01's bundled festival JSON rather than reinventing it.
+
+## 4. User stories
+
+> As a daily practitioner, I want to create a routine called "प्रातः साधना / Morning Sadhana" and add the Hanuman Chalisa, the Gayatri mantra (1 round), and a favorite Gita shloka to it, so I read the same things each morning.
+
+> As a Shiva devotee, I want a routine that **changes by weekday** — Shiva stotrams on Monday, Hanuman on Saturday — and I want the app to *suggest* the deity for each day so I don't start from a blank page.
+
+> As someone with two practices, I want **separate routines** — a short weekday one and a longer weekend one — not a single list I have to mentally filter.
+
+> As a japa practitioner, I want a routine item to be "Gayatri × 1 round (108)" that opens the counter and counts toward my daily total.
+
+> As a user who reads the whole Bhagavad Gītā over time, I want to add a **specific chapter** to my routine (not the entire 701-verse granth), because adding the whole thing as one item is meaningless.
+
+## 5. Concepts & data model
+
+The central reframing from the initial idea: **a user has many routines**, not one. A *Routine* is a named container with a schedule mode; it holds ordered *items*; each item references existing content.
+
+### 5.1 Routine (container)
+
+```ts
+type RoutineScheduleMode = 'daily' | 'weekday';
+
+type Routine = {
+  id: string;                 // uuid
+  nameHi: string;             // user-entered; both fields optional-but-one-required
+  nameEn: string;
+  mode: RoutineScheduleMode;  // chosen at creation: "daily" or "day-wise"
+  createdAt: number;
+  order: number;              // ordering of routines in the list
+};
+```
+
+At **creation** the user is asked the single branching question: **"Should this routine be the same every day, or change by day of the week?"** → sets `mode`.
+
+- `mode: 'daily'` → every item shows every day.
+- `mode: 'weekday'` → each item carries a `weekdays` set; "today" is filtered to items whose set includes today. This is where the **vaar (deity-of-day)** layer lives.
+
+### 5.2 Routine item
+
+```ts
+type RoutineItem = {
+  id: string;                 // uuid
+  routineId: string;
+  kind: 'section' | 'verse' | 'japam';
+  sourceId: string;           // library entry id, e.g. 'shiva-strotam', 'gayatri'
+  // 'section': whole text OR one chapter/sarga of a granth (too-big granths
+  //            require a chapter; non-granth sections add as a whole).
+  chapter?: number;           // present for granth-chapter items
+  // 'verse': one specific shloka/chaupai
+  verseIndex?: number;
+  // 'japam':
+  targetRounds?: number;      // e.g. 1 (= 108 beads)
+  // scheduling — only meaningful when the parent routine.mode === 'weekday'
+  weekdays?: number[];        // 0=Sun .. 6=Sat
+  order: number;
+  addedAt: number;
+};
+```
+
+**Granularity rules (from product):**
+- ✅ A **whole section** as one item — e.g. *Hanuman Chalisa*, *Shiva Stotram*. Opens the reader at the start.
+- ✅ A **specific shloka/verse** — reuses the existing `sourceId:chapter:verseIndex` addressing from `BookmarksContext` / `entryRoutes.ts`.
+- ✅ A **japam mantra with a target** — e.g. Gayatri × 1 round; opens `JapamCounterScreen`, counts into `UserActivityContext.logJapaRound`.
+- ⚠️ **Granths are too big to add whole.** For `category: 'granth'` (Gītā, Sundarkand, Ramcharitmanas) the user adds a **chapter/sarga**, not the entire book. The "add to routine" affordance on a granth offers a chapter picker; whole-book add is disabled for granths.
+- ❌ Never "a particular reader screen/scroll page."
+
+### 5.3 Completion state
+
+No new store. Completion reuses `UserActivityContext` (already keyed by `YYYY-MM-DD`). Checking off a reading item ≈ `logRead(sourceId)`; a japam item ≈ `logJapaRound`. A small derived selector ("which of today's routine items are done") computes from the day's activity, so streaks and the existing Profile stats light up for free.
+
+### 5.4 Weekday → deity default map (vaar)
+
+Used only to **pre-suggest** content when building a `weekday` routine; always overridable. Constrained to deities the catalog actually has (`mobile/src/data/deities.ts`):
+
+| Day | Suggested deity tag(s) | Rationale |
+|---|---|---|
+| Sunday | `savitr` (Sūrya) | Ravivar — Sun |
+| Monday | `shiva` | Somvar — Shiva |
+| Tuesday | `hanuman` | Mangalvar — Hanuman |
+| Wednesday | `ganesha` | Budhvar — Ganesha |
+| Thursday | `vishnu` | Guruvar — Vishnu |
+| Friday | `durga` | Shukravar — Devi |
+| Saturday | `hanuman` | Shanivar — Hanuman/Shani |
+
+"Suggested for today" is then just: filter `library` by the day's deity tag — no hand-curation, because every entry is already deity-tagged.
+
+## 6. Surfaces
+
+- **`RoutineListScreen`** — entry point (a tab, or a card in `More`). Lists the user's routines; "＋ New routine" → name + the daily-vs-weekday question.
+- **`RoutineDetailScreen`** — one routine. For `weekday` routines, a Sun–Sat strip (with the suggested deity per day); tapping a day shows that day's items. Reorder, edit schedule, remove. Each item taps through to its reader via the existing `entryRoutes.ts` helpers.
+- **"Today" view** — the default landing for the routine surface: union of all routines' items scheduled for today, grouped by routine, with check-offs and a streak header. This is the daily-driver screen.
+- **"Add to routine" action** — a `＋` mirroring `BookmarkButton`'s placement, on `LibraryCard`, reader top-bars, `DeityListScreen`, and the Wishlist row. Opens a sheet: pick routine(s), and for granths pick a chapter.
+
+All screens follow the parchment design system and the bilingual rules in `RULEBOOK.md` §3 (every user-facing string branches on `lang`; reader/title screens swap Hi/En rather than stacking).
+
+## 7. Phasing
+
+1. **Phase 1 — Foundation.** `RoutineContext` (+ AsyncStorage), `RoutineListScreen`, `RoutineDetailScreen`, multiple named routines, the daily-vs-weekday creation choice, "add to routine" (sections, verses, japam, granth-chapter rule), check-off → `UserActivityContext`. Ships value alone.
+2. **Phase 2 — Vaar.** Weekday strip, per-item `weekdays`, deity-of-day suggestions sourced from existing tags. "Suggested for today."
+3. **Phase 3 — Reminders.** Wire routines into the existing notification scheduler (`mobile/src/notifications/scheduler.ts`, `NotificationPreferencesContext`) — per-routine reminder time that deep-links to the Today view.
+4. **Phase 4 — Calendar.** Date-anchored entries / sankalp ("read X for N days"), reusing PRD-01's bundled festival JSON for festival-day routines.
+
+## 8. Reuse map (what we lean on, not rebuild)
+
+| Need | Existing asset |
+|---|---|
+| Local persistence pattern | `BookmarksContext.tsx`, `UserActivityContext.tsx` |
+| Content catalog + deity/category tags | `mobile/src/data/texts.ts`, `deities.ts` |
+| Verse/section addressing & navigation | `mobile/src/navigation/entryRoutes.ts` |
+| Bilingual source/verse labels | `getSourceLabel` / `getVerseLabel` in `WishlistScreen.tsx` |
+| Completion / streaks | `UserActivityContext.tsx` |
+| Reminders (Phase 3) | `NotificationPreferencesContext`, `notifications/scheduler.ts` |
+| Japam counter + targets | `JapamCounterScreen.tsx`, `JapamCounterContext.tsx` |
+
+## 9. Open questions
+
+1. **Placement:** new bottom-tab ("साधना") vs. a card inside `More`? A tab signals it's a primary daily surface; `More` is lower-commitment for a first cut.
+2. **Daily Bhakti relationship:** does the random Daily Bhakti verse become *part of* the Today view, or stay a separate tab? (Possible merge: "Today" = your routine + one suggested verse.)
+3. **Editing a routine's mode** after creation (daily ↔ weekday) — allow, or lock at creation to keep item `weekdays` coherent?
+4. **Cross-link from Wishlist:** offer "add this wishlisted verse to a routine" in Phase 1, or defer?
