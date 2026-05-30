@@ -54,12 +54,8 @@
       "id": "gs-2-2",
       "chapter": 2,
       "number": 2,
-      "sanskrit": [
-        "ऋतं वच्मि। सत्यं वच्मि॥ २॥"
-      ],
-      "linesEn": [
-        "Ritam vachmi. Satyam vachmi. 2."
-      ],
+      "sanskrit": ["ऋतं वच्मि। सत्यं वच्मि॥ २॥"],
+      "linesEn": ["Ritam vachmi. Satyam vachmi. 2."],
       "meaningHi": "मैं ऋत (ब्रह्माण्डीय सत्य, प्राकृतिक नियम) बोलता हूँ। मैं सत्य (वास्तविक सत्य) बोलता हूँ। यह उपनिषद अध्ययन से पूर्व शिष्य की वैदिक शपथ है।",
       "meaningEn": "I speak Rta (cosmic truth, natural law). I speak Satya (factual truth). This is the Vedic oath taken by the student before commencing the study of the Upanishad."
     },
@@ -357,7 +353,12 @@
     }
   ],
   "source": {
-    "baseText": "sanskritdocuments.org/doc_ganesha/atharva.html, vachmi.com",
-    "retrievedOn": "2026-05-24"
+    "baseText": "Shri Ganapati Atharvashirsha, checked against Sanskrit Documents and Vaidika Vignanam.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_ganesha/atharva.html",
+      "https://vignanam.org/devanagari/ganapati-atharva-sheersham.html",
+      "https://sanskritdocuments.org/sanskrit/atharvashirsha/"
+    ],
+    "retrievedOn": "2026-05-30"
   }
 }

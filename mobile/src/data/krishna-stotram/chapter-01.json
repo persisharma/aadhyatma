@@ -4,8 +4,13 @@
   "titleEn": "Krishnashtakam",
   "verseCount": 10,
   "source": {
-    "baseText": "sanskritdocuments.org/doc_vishhnu/krishna8.html, stotranidhi.com",
-    "retrievedOn": "2026-05-24"
+    "baseText": "Krishnashtakam (Bhaje Vrajaika Mandanam) attributed to Adi Shankaracharya, checked against Sanskrit Documents and Stotra Ratnavali.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/krishna8.html",
+      "https://stotra.in/translation/en/sri-krishna/krishnashtakam-bhaje-vrajaika-mandanam",
+      "https://shlokam.org/shloka/krishnashtakam.htm"
+    ],
+    "retrievedOn": "2026-05-30"
   },
   "verses": [
     {

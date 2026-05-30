@@ -34,5 +34,14 @@
       "meaningHi": "जो कर्पूर के समान गौरवर्ण हैं, जो करुणा के साक्षात् अवतार हैं, जो इस संसार के सार हैं, जो सर्पराज (वासुकि) को हार के रूप में धारण करते हैं, जो सदैव भक्तों के हृदय-कमल में निवास करते हैं — उन भव (शिव) को भवानी (पार्वती) सहित मैं नमन करता हूँ।",
       "meaningEn": "He who is as radiant white as camphor, who is the incarnation of compassion, who is the essence of worldly existence, who wears the king of serpents as a garland, who forever dwells in the lotus of the heart — to that Bhava (Shiva) together with Bhavani (Parvati), I bow."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Traditional Shiva mantras and Shiva Tandava Stotram, checked against Vaidika Vignanam, GreenMesg, and Sanskrit Documents references.",
+    "referenceUrls": [
+      "https://vignanam.org/devanagari/shiva-tandava-stotram.html",
+      "https://greenmesg.org/stotras/shiva/shiva_tandava_stotram.php",
+      "https://sanskritdocuments.org/doc_shiva/tANDavastotram1.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

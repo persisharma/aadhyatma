@@ -18,8 +18,9 @@ export type HanumanChalisaVerse = {
 
 export type HanumanChalisaSource = {
   baseText: string;
-  devanagariReference: string;
-  meaningsAttribution: string;
+  referenceUrls?: string[];
+  devanagariReference?: string;
+  meaningsAttribution?: string;
   retrievedOn: string;
 };
 
