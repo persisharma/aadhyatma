@@ -1,0 +1,59 @@
+{
+  "chapter": 59,
+  "titleHi": "श्रीरामचरित सुनने गाने की महिमा",
+  "titleEn": "The Glory of Hearing and Singing Rama's Deeds",
+  "verseCount": 2,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 59: The Glory of Hearing and Singing Rama's Deeds, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/ramcharit-sunane-gane-ki-mahima"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "verses": [
+    {
+      "id": "balkand-59-chhand-361-4",
+      "section": "chhand",
+      "stanza": 361,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "छन्द",
+      "labelEn": "Chhand",
+      "lines": [
+        "निज गिरा पावनि करन कारन राम जसु तुलसीं कह्यो।",
+        "रघुबीर चरित अपार बारिधि पारु कबि कौनें लह्यो॥",
+        "उपबीत ब्याह उछाह मंगल सुनि जे सादर गावहीं।",
+        "बैदेहि राम प्रसाद ते जन सर्बदा सुखु पावहीं॥"
+      ],
+      "linesEn": [
+        "nija girā pāvani karana kārana rāma jasu tulasīṃ kahyo.",
+        "raghubīra carita apāra bāridhi pāru kabi kauneṃ lahyo.",
+        "upabīta byāha uchāha maṅgala suni je sādara gāvahīṃ.",
+        "baidehi rāma prasāda te jana sarbadā sukhu pāvahīṃ."
+      ],
+      "meaningHi": "अपनी वाणी को पवित्र करने के लिये तुलसी ने राम का यश कहा है। [नहीं तो] श्रीरघुनाथजी का चरित्र अपार समुद्र है, किस कवि ने उसका पार पाया है? जो लोग यज्ञोपवीत और विवाह के मंगलमय उत्सव का वर्णन आदर के साथ सुनकर गावेंगे, वे लोग श्रीजानकीजी और श्रीरामजी की कृपा से सदा सुख पावेंगे॥।",
+      "meaningEn": "Tulsidas has spoken the praise of Rama in order to purify his own speech. Otherwise, the deeds of the Lord of Raghu are like an endless ocean—what poet has crossed to the other shore? Those who respectfully hear and sing of the sacred celebrations of the sacred-thread ceremony and marriage will always attain happiness through the grace of Sita and Rama."
+    },
+    {
+      "id": "balkand-59-sortha-361-5",
+      "section": "sortha",
+      "stanza": 361,
+      "numInSection": 361,
+      "subSuffix": "",
+      "labelHi": "सोरठा · ३६१",
+      "labelEn": "Soratha · 361",
+      "lines": [
+        "सिय रघुबीर बिबाहु जे सप्रेम गावहिं सुनहिं।",
+        "तिन्ह कहुँ सदा उछाहु मंगलायतन राम जसु॥"
+      ],
+      "linesEn": [
+        "siya raghubīra bibāhu je saprema gāvahiṃ sunahīṃ.",
+        "tinha kahuṃ sadā uchāhu maṅgalāyatana rāma jasu."
+      ],
+      "meaningHi": "श्रीसीताजी और श्रीरघुनाथजी के विवाह-प्रसंग को जो लोग प्रेमपूर्वक गायें-सुनेंगे, उनके लिये सदा उत्साह (आनन्द)-ही-उत्साह है; क्योंकि श्रीरामचन्द्रजी का यश मंगल का धाम है।",
+      "meaningEn": "For those who lovingly sing and hear the wedding of Sita and the Lord of Raghu, there is always joy upon joy, for Rama’s fame is the abode of all auspiciousness."
+    }
+  ]
+}

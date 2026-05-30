@@ -1,0 +1,169 @@
+{
+  "chapter": 3,
+  "titleHi": "ब्राह्मण संत वन्दना",
+  "titleEn": "Salutation to Brahmins and Saints",
+  "verseCount": 8,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 3: Salutation to Brahmins and Saints, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/brahman-sant-vandana"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "verses": [
+    {
+      "id": "balkand-03-chaupai-3-0",
+      "section": "chaupai",
+      "stanza": 3,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "मज्जन फल पेखिअ ततकाला। काक होहिं पिक बकउ मराला॥",
+        "सुनि आचरज करै जनि कोई। सतसंगति महिमा नहिं गोई॥"
+      ],
+      "linesEn": [
+        "majjana phala pekhia tatakālā. kāka hohiṃ pika bakau marālā.",
+        "suni ācaraja karai jani koī. satasangati mahimā nahiṃ goī."
+      ],
+      "meaningHi": "इस तीर्थराज में स्नान का फल तत्काल ऐसा देखने में आता है कि कौए कोयल बन जाते हैं और बगुले हंस। यह सुनकर कोई आश्चर्य न करे, क्योंकि सत्संग की महिमा छिपी नहीं है।",
+      "meaningEn": "In this king of pilgrimages, the fruit of bathing is seen at once: crows become cuckoos and cranes become swans. Hearing this, let no one be astonished, for the greatness of holy company is no secret."
+    },
+    {
+      "id": "balkand-03-chaupai-3-1",
+      "section": "chaupai",
+      "stanza": 3,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "बालमीक नारद घटजोनी। निज निज मुखनि कही निज होनी॥",
+        "जलचर थलचर नभचर नाना। जे जड़ चेतन जीव जहाना॥"
+      ],
+      "linesEn": [
+        "bālamīka nārada ghaṭajonī. nija nija mukhani kahī nija honī.",
+        "jalacara thalacara nabhacara nānā. je jaḍa cetana jīva jahānā."
+      ],
+      "meaningHi": "वाल्मीकिजी, नारदजी और घटजोनी ने अपने-अपने मुखों से अपनी होनी (जीवन का वृत्तान्त) कही है। जलचर, थलचर, नभचर नाना प्रकार के जड़-चेतन जितने जीव इस जगत् में हैं।",
+      "meaningEn": "Valmiki, Narada, and Agastya (the pot-born sage) have spoken their own destinies through their own mouths. All the countless living beings in the world—those that live in water, on land, and in the sky, whether inert or conscious—"
+    },
+    {
+      "id": "balkand-03-chaupai-3-2",
+      "section": "chaupai",
+      "stanza": 3,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "मति कीरति गति भूति भलाई। जब जेहिं जतन जहाँ जेहिं पाई॥",
+        "सो जानब सतसंग प्रभाऊ। लोकहुँ बेद न आन उपाऊ॥"
+      ],
+      "linesEn": [
+        "mati kīrati gati bhūti bhalāī. jaba jehiṃ jatana jahāṃ jehiṃ pāī.",
+        "so jānaba satasanga prabhāū. lokahuṃ beda na āna upāū."
+      ],
+      "meaningHi": "उनमें से जिसने जिस समय जहाँ कहीं भी किसी भी यत्न से बुद्धि, कीर्ति, सद्गति, विभूति (ऐश्वर्य) और भलाई पाई है, उसे सत्संग का ही प्रभाव समझना चाहिए। वेदों में और लोक में इनकी प्राप्ति का दूसरा कोई उपाय नहीं है।",
+      "meaningEn": "Whichever person, by whatever effort, at whatever time and place, has obtained wisdom, fame, right destination, prosperity, and goodness, should know that all of it is due to the power of holy company. In the world and in the Vedas there is no other way to attain them."
+    },
+    {
+      "id": "balkand-03-chaupai-3-3",
+      "section": "chaupai",
+      "stanza": 3,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "बिनु सतसंग बिबेक न होई। राम कृपा बिनु सुलभ न सोई॥",
+        "सतसंगत मुद मंगल मूला। सोइ फल सिधि सब साधन फूला॥"
+      ],
+      "linesEn": [
+        "binu satasanga bibeka na hoī. rāma kṛpā binu sulabha na soī.",
+        "satasangata muda mangala mūlā. soi phala sidhi saba sādhana phūlā."
+      ],
+      "meaningHi": "सत्संग के बिना विवेक नहीं होता और श्रीरामजी की कृपा के बिना वह सत्संग सहज में मिलता नहीं। सत्संगति आनन्द और कल्याण की जड़ है। सत्संग की सिद्धि (प्राप्ति) ही फल है और सब साधन तो फूल हैं।",
+      "meaningEn": "Without holy company, discrimination does not arise, and without Rama's grace, that holy company is not easily obtained. Holy company is the root of joy and well-being. Its attainment alone is the fruit; all other means are but flowers."
+    },
+    {
+      "id": "balkand-03-chaupai-3-4",
+      "section": "chaupai",
+      "stanza": 3,
+      "numInSection": 5,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "सठ सुधरहिं सतसंगति पाई। पारस परस कुधात सुहाई॥",
+        "बिधि बस सुजन कुसंगत परहीं। फनि मनि सम निज गुन अनुसरहीं॥"
+      ],
+      "linesEn": [
+        "saṭha sudharahiṃ satasangati pāī. pārasa parasa kudhāta suhāī.",
+        "bidhi basa sujana kusangata parahīṃ. phani mani sama nija guna anusarahīṃ."
+      ],
+      "meaningHi": "दुष्ट भी सत्संगति पाकर सुधर जाते हैं, जैसे पारस के स्पर्श से लोहा सुहावना हो जाता है (सुन्दर सोना बन जाता है)। किन्तु दैवयोग से यदि कभी सज्जन कुसंगति में पड़ जाते हैं, तो वे वहाँ भी साँप की मणि के समान अपने गुणों का ही अनुसरण करते हैं (अर्थात् जिस प्रकार साँप का संसर्ग पाकर भी मणि उसके विष को ग्रहण नहीं करती तथा अपने सहज गुण-प्रकाश को नहीं छोड़ती, उसी प्रकार साधु पुरुष दुष्टों के संग में रहकर भी दूसरों को प्रकाश ही देते हैं, दुष्टों का उन पर कोई प्रभाव नहीं पड़ता)।",
+      "meaningEn": "Even the wicked improve upon receiving holy company, just as iron becomes beautiful by the touch of the philosopher's stone. But if, by fate, good people fall into bad company, they still follow their own qualities, like a gem in a snake's hood: a saint in evil company still gives light to others, and the wicked have no effect on him."
+    },
+    {
+      "id": "balkand-03-chaupai-3-5",
+      "section": "chaupai",
+      "stanza": 3,
+      "numInSection": 6,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "बिधि हरि हर कबि कोबिद बानी। कहत साधु महिमा सकुचानी॥",
+        "सो मो सन कहि जात न कैसें। साक बनिक मनि गुन गन जैसें॥"
+      ],
+      "linesEn": [
+        "bidhi hari hara kabi kobida bānī. kahata sādhu mahimā sakucānī.",
+        "so mo sana kahi jāta na kaisēṃ. sāk banika mani guna gana jaisēṃ."
+      ],
+      "meaningHi": "ब्रह्मा, विष्णु, शिव, कवि और पण्डितों की वाणी भी संत-महिमा का वर्णन करने में सकुचाती है; वह मुझसे किस प्रकार नहीं कही जाती, जैसे साग बेचने वाले से मणियों के गुण-समूह नहीं कहे जा सकते।",
+      "meaningEn": "Even the speech of Brahma, Hari, Hara, poets, and scholars shrinks back from describing the greatness of saints. Why should it not be beyond me to speak of it, just as one would not speak of the qualities of gems to a vegetable seller?"
+    },
+    {
+      "id": "balkand-03-doha-3-6",
+      "section": "doha",
+      "stanza": 3,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "दोहा · ३ (क)",
+      "labelEn": "Doha · 3 (a)",
+      "lines": [
+        "बंदउँ संत समान चित हित अनहित नहिं कोइ।",
+        "अंजलि गत सुभ सुमन जिमि सम सुगंध कर दोइ॥"
+      ],
+      "linesEn": [
+        "bandaũ santa samāna cita hita anahita nahiṃ koi.",
+        "añjali gata subha sumana jimi sama sugandha kara doi."
+      ],
+      "meaningHi": "मैं संतों को प्रणाम करता हूँ, जिनके चित्त में समता है, जिनका न कोई मित्र है और न शत्रु। जैसे अंजलि में रखे हुए सुन्दर फूल (जिस हाथ ने फूलों को तोड़ा और जिस हाथ ने उनको रखा, उन) दोनों ही हाथों को समान रूप से सुगन्धित करते हैं, वैसे ही संत शत्रु और मित्र दोनों का ही समान रूप से कल्याण करते हैं।",
+      "meaningEn": "I bow to saints whose minds are equal toward all, for whom there is neither friend nor enemy. Just as fragrant flowers placed in a folded palm scent both the hand that picked them and the hand that holds them, so saints equally bless both friend and foe."
+    },
+    {
+      "id": "balkand-03-doha-3-7",
+      "section": "doha",
+      "stanza": 3,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "दोहा · ३ (ख)",
+      "labelEn": "Doha · 3 (b)",
+      "lines": [
+        "संत सरल चित जगत हित जानि सुभाउ सनेहु।",
+        "बालबिनय सुनि करि कृपा राम चरन रति देहु॥"
+      ],
+      "linesEn": [
+        "santa sarala cita jagata hita jāni subhāu sanehu.",
+        "bālabinaya suni kari kṛpā rāma carana rati dehu."
+      ],
+      "meaningHi": "संत सरल हृदय और जगत् के हितकारी होते हैं; उनके ऐसे स्वभाव और स्नेह को जानकर मैं विनय करता हूँ कि, मेरी इस बाल-विनय को सुनकर कृपा करके श्रीरामजी के चरणों में मुझे प्रीति दें।",
+      "meaningEn": "Saints are simple-hearted and beneficent to the world. Knowing their nature and affection, I make this humble plea: hearing my childlike prayer, kindly grant me devotion to the feet of Rama."
+    }
+  ]
+}

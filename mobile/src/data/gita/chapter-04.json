@@ -937,5 +937,14 @@
         "Doubt causes a great deal of mental torment. It is most sinful. It is born of ignorance. Kill it ruthlessly with the knowledge of the Self. Now stand up and fight, O Arjuna.(This chapter is known by the names Jnana Yoga, Abhyasa Yoga and jnanakarmasannyasa Yoga also.)Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the fourth discourse entitledThe Yoga of the Division of Wisdom. ,"
       ]
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Bhagavad Gita Sanskrit text and translations, checked against chapter-specific Holy Bhagavad Gita and Gita Supersite references; verse count follows the 701-shloka recension with chapter 13 counted as 35 verses.",
+    "referenceUrls": [
+      "https://www.holy-bhagavad-gita.org/chapter/4",
+      "https://www.gitasupersite.iitk.ac.in/srimad?language=dv&field_chapter_value=4",
+      "https://vedabase.io/en/library/bg/4/"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

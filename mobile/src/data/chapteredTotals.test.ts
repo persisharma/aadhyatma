@@ -48,6 +48,17 @@ const cases = [
     },
   },
   {
+    id: 'ramcharitmanas',
+    expectedTotal: 1946,
+    load: async () => {
+      const mod = await import('./ramcharitmanas');
+      return {
+        manifest: mod.ramcharitmanasChaptersManifest,
+        total: mod.ramcharitmanasTotal,
+      };
+    },
+  },
+  {
     id: 'vishnu-sahasranama',
     expectedTotal: 79,
     load: async () => {

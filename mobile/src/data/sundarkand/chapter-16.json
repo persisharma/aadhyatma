@@ -273,7 +273,7 @@
       "labelHi": "चौपाई ६१·१",
       "labelEn": "Chaupai 61·1",
       "lines": [
-        "सभय सिंधु गहि पद प्रभु केरे। छमहु नाथ सब अवगुन मेरे॥।",
+        "सभय सिंधु गहि पद प्रभु केरे। छमहु नाथ सब अवगुन मेरे॥",
         "गगन समीर अनल जल धरनी। इन्ह कइ नाथ सहज जड़ करनी॥1॥"
       ],
       "meaningHi": "-समुद्र ने भयभीत होकर प्रभु के चरण पकड़कर कहा- हे नाथ! मेरे सब अवगुण (दोष) क्षमा कीजिए। हे नाथ! आकाश, वायु, अग्नि, जल और पृथ्वी- इन सबकी करनी स्वभाव से ही जड़ है",
@@ -488,5 +488,14 @@
       ],
       "chapter": 16
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

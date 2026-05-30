@@ -1,7 +1,7 @@
 {
   "chapter": 3,
-  "titleHi": "स्तोत्र मुख्य भाग",
-  "titleEn": "Main Stotram",
+  "titleHi": "स्तोत्र मुख्य भाग (नाम 1-287)",
+  "titleEn": "Main Stotram (Names 1-287)",
   "verseCount": 31,
   "verses": [
     {
@@ -10,14 +10,14 @@
       "number": 0,
       "sanskrit": [
         "॥ विष्णु सहस्रनाम ॥",
-        "स्तोत्र — सहस्र नाम"
+        "स्तोत्र — नाम 1-287"
       ],
       "linesEn": [
         "Vishnu Sahasranama",
-        "Stotram - The Thousand Names"
+        "Stotram - Names 1-287"
       ],
-      "meaningHi": "लाभ:\n\nयह विष्णु सहस्रनाम का मुख्य भाग है — जिसमें भगवान विष्णु के एक सहस्र (1000) दिव्य नामों का पाठ है। प्रत्येक नाम विष्णु के एक विशेष गुण, शक्ति या लीला को प्रकट करता है। इसके नियमित पाठ से सभी पापों का नाश, रोग-निवारण, शत्रु-भय से मुक्ति, और अन्ततः मोक्ष की प्राप्ति होती है। यह हिन्दू धर्म के सर्वाधिक शक्तिशाली स्तोत्रों में से एक है।\n\nकथा:\n\nभीष्म पितामह ने युधिष्ठिर के प्रश्न का उत्तर देते हुए ये सहस्र नाम सुनाए — 'संसार में सर्वश्रेष्ठ देवता कौन है? किसका स्मरण मनुष्य को बन्धनों से मुक्त करता है?' भीष्म ने कहा: 'विष्णु ही सर्वोपरि हैं — उनके सहस्र नामों का पाठ सभी कष्टों का अन्त करता है।'",
-      "meaningEn": "Benefits:\n\nThis is the main section of Vishnu Sahasranama — containing one thousand divine names of Lord Vishnu. Each name reveals a specific quality, power, or divine play of Vishnu. Regular recitation destroys all sins, cures ailments, liberates from fear of enemies, and ultimately grants moksha (liberation). It is one of the most powerful stotrams in Hinduism.\n\nStory:\n\nBhishma Pitamaha recited these thousand names in answer to Yudhishthira's question — 'Who is the greatest deity in the universe? Whose remembrance frees a person from all bondage?' Bhishma replied: 'Vishnu is supreme — reciting his thousand names ends all suffering.'"
+      "meaningHi": "लाभ:\n\nयह अध्याय विष्णु सहस्रनाम के मुख्य स्तोत्र में भगवान विष्णु के नाम 1-287 देता है। प्रत्येक नाम विष्णु के एक विशेष गुण, शक्ति या लीला को प्रकट करता है। परम्परा में सम्पूर्ण सहस्रनाम का पाठ पाप-नाश, रोग-निवारण, भय से मुक्ति और मोक्ष की प्राप्ति के लिए किया जाता है।\n\nकथा:\n\nमहाभारत के अनुशासन पर्व में भीष्म पितामह ने युधिष्ठिर के प्रश्नों का उत्तर देते हुए विष्णु सहस्रनाम सुनाया। इस ऐप में उसी मुख्य स्तोत्र के प्रारम्भिक नाम रखे गए हैं; पूर्ण 1000-नाम पाठ अभी इस अध्याय में नहीं है।",
+      "meaningEn": "Benefits:\n\nThis chapter presents names 1-287 from the main Vishnu Sahasranama stotram. Each name reveals a specific quality, power, or divine play of Vishnu. In the tradition, reciting the complete Sahasranama is associated with destruction of sins, relief from illness and fear, and the attainment of moksha.\n\nStory:\n\nIn the Anushasana Parva of the Mahabharata, Bhishma Pitamaha recited the Vishnu Sahasranama in response to Yudhishthira's questions. This app keeps the opening names from that main stotram; the full 1000-name recitation is not present in this chapter."
     },
     {
       "id": "vs-3-1",
@@ -471,7 +471,12 @@
     }
   ],
   "source": {
-    "baseText": "sanskritdocuments.org/doc_vishhnu/vsahasranew.html, opensadhaka.com",
-    "retrievedOn": "2026-05-24"
+    "baseText": "Vishnu Sahasranama from Mahabharata Anushasana Parva; app currently stores the invocation, dhyana, names 1-287, and phalashruti.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/vsahasranew.html",
+      "https://www.opensadhaka.com/stotras/vishnu-sahasranama",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html"
+    ],
+    "retrievedOn": "2026-05-30"
   }
 }

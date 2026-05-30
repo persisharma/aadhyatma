@@ -1,0 +1,186 @@
+{
+  "chapter": 8,
+  "titleHi": "कवि वन्दना",
+  "titleEn": "Salutation to Poets",
+  "verseCount": 9,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 8: Salutation to Poets, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/kavi-vandana"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "verses": [
+    {
+      "id": "balkand-08-chaupai-14-0",
+      "section": "chaupai",
+      "stanza": 14,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "एहि प्रकार बल मनहि देखाई। करिहउँ रघुपति कथा सुहाई॥",
+        "ब्यास आदि कबि पुंगव नाना। जिन्ह सादर हरि सुजस बखाना॥"
+      ],
+      "linesEn": [
+        "ehi prakāra bala manahi dekhāī. karihaūṃ raghupati kathā suhāī.",
+        "byāsa ādi kabi puṃgava nānā. jinha sādara hari sujasa bakhānā."
+      ],
+      "meaningHi": "इस प्रकार मन को बल दिखलाकर मैं श्रीरघुनाथजी की सुहावनी कथा की रचना करूँगा। व्यास आदि जो अनेकों श्रेष्ठ कवि हो गये हैं, जिन्होंने बड़े आदर से श्रीहरि का सुयश वर्णन किया है।",
+      "meaningEn": "Thus, by encouraging my mind, I shall compose the beautiful story of Lord Raghunath. Many great poets, such as Vyasa and others, have gone before, and with great reverence they have sung the fame of Hari."
+    },
+    {
+      "id": "balkand-08-chaupai-14-1",
+      "section": "chaupai",
+      "stanza": 14,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "चरन कमल बंदउँ तिन्ह केरे। पुरवहुँ सकल मनोरथ मेरे॥",
+        "कलि के कबिन्ह करउँ परनामा। जिन्ह बरने रघुपति गुन ग्रामा॥"
+      ],
+      "linesEn": [
+        "carana kamala bandauṃ tinha kere. puravahuṃ sakala manoratha mere.",
+        "kali ke kabinha karauṃ paranāmā. jinha barane raghupati guna grāmā."
+      ],
+      "meaningHi": "मैं उन सब (श्रेष्ठ कवियों) के चरणकमलों में प्रणाम करता हूँ वे मेरे सब मनोरथों को पूरा करें। कलियुग के भी उन कवियों को मैं प्रणाम करता हूँ, जिन्होंने श्रीरघुनाथजी के गुणसमूहों का वर्णन किया है।",
+      "meaningEn": "I bow to the lotus feet of those noble poets; may they fulfill all my wishes. I also bow to the poets of the age of Kali who have described the many virtues of Lord Raghunath."
+    },
+    {
+      "id": "balkand-08-chaupai-14-2",
+      "section": "chaupai",
+      "stanza": 14,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "जे प्राकृत कबि परम सयाने। भाषाँ जिन्ह हरि चरित बखाने॥",
+        "भए जे अहहिं जे होइहहिं आगें। प्रनवउँ सबहि कपट सब त्यागें॥"
+      ],
+      "linesEn": [
+        "je prākṛta kabi parama sayāne. bhāṣāṃ jinha hari carita bakhāne.",
+        "bhae je ahahiṃ je hoihahiṃ āgeṃ. pranavauṃ sabahi kapaṭa saba tyāgeṃ."
+      ],
+      "meaningHi": "जो बड़े बुद्धिमान् प्राकृत कवि हैं, जिन्होंने भाषा में हरिचरित्रों का वर्णन किया है, जो ऐसे कवि पहले हो चुके हैं, जो इस समय वर्तमान हैं और जो आगे होंगे, उन सबको मैं सारा कपट त्याग कर प्रणाम करता हूँ।",
+      "meaningEn": "I bow, giving up all deceit, to those very wise vernacular poets who have narrated the deeds of Hari in their own language; to those who have been in the past, those who are present now, and those who will come in the future."
+    },
+    {
+      "id": "balkand-08-chaupai-14-3",
+      "section": "chaupai",
+      "stanza": 14,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "होहु प्रसन्न देहु बरदानू। साधु समाज भनिति सनमानू॥",
+        "जो प्रबंध बुध नहिं आदरहीं। सो श्रम बादि बाल कबि करहीं॥"
+      ],
+      "linesEn": [
+        "hohu prasanna dehu baradānū. sādhu samāja bhaniti sanamānū.",
+        "jo prabandha budha nahiṃ ādarahīṃ. so śrama bādi bāla kabi karahīṃ."
+      ],
+      "meaningHi": "आप सब प्रसन्न होकर यह वरदान दीजिये कि साधु-समाज में मेरी कविताका सम्मान हो; क्योंकि बुद्धिमान् लोग जिस कविताका आदर नहीं करते, मूर्ख कवि ही उसकी रचना का व्यर्थ परिश्रम करते हैं।",
+      "meaningEn": "Please be pleased and grant this blessing: let my composition be honored in the society of the holy. For if wise people do not value a composition, then only foolish poets undertake the useless labor of composing it."
+    },
+    {
+      "id": "balkand-08-chaupai-14-4",
+      "section": "chaupai",
+      "stanza": 14,
+      "numInSection": 5,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "कीरति भनिति भूति भलि सोई। सुरसरि सम सब कहँ हित होई॥",
+        "राम सुकीरति भनिति भदेसा। असमंजस अस मोहि अँदेसा॥"
+      ],
+      "linesEn": [
+        "kīrati bhaniti bhūti bhali soī. surasari sama saba kahaṃ hita hoī.",
+        "rāma sukīrati bhaniti bhadesā. asamañjasa asa mohi aṃdesā."
+      ],
+      "meaningHi": "कीर्ति, कविता और सम्पत्ति वही उत्तम है जो गंगा जी की तरह सबका हित करनेवाली हो। श्रीरामचन्द्रजी की कीर्ति तो बड़ी सुन्दर (सबका अनन्त कल्याण करनेवाली ही) है, परन्तु मेरी कविता भद्दी है। यह असमंजस है (अर्थात्‌ इन दोनों का मेल नहीं मिलता), इसी की मुझे चिन्ता है।",
+      "meaningEn": "Fame, poetry, and wealth are truly good only when they are beneficial to all, like the Ganga. Lord Ram's fame is indeed beautiful and wholly auspicious for everyone, but my poetry is crude. There is a mismatch between the two; that is my concern."
+    },
+    {
+      "id": "balkand-08-chaupai-14-5",
+      "section": "chaupai",
+      "stanza": 14,
+      "numInSection": 6,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "तुम्हरी कृपाँ सुलभ सोउ मोरे। सिअनि सुहावनि टाट पटोरे॥"
+      ],
+      "linesEn": [
+        "tumharī kṛpāṃ sulabha sou more. siani suhāvani ṭāṭa paṭore."
+      ],
+      "meaningHi": "परन्तु हे कवियो! आपकी कृपा से यह बात भी मेरे लिये सुलभ हो सकती है। रेशम की सिलाई टाट पर भी सुहावनी लगती है।",
+      "meaningEn": "But O poets, by your grace even this may become easy for me. Silk stitching looks graceful even on coarse sackcloth."
+    },
+    {
+      "id": "balkand-08-doha-14-6",
+      "section": "doha",
+      "stanza": 14,
+      "numInSection": 14,
+      "subSuffix": "",
+      "labelHi": "दोहा · १४ (क)",
+      "labelEn": "Doha · 14 (a)",
+      "lines": [
+        "सरल कबित कीरति बिमल सोइ आदरहिं सुजान।",
+        "सहज बयर बिसराइ रिपु जो सुनि करहिं बखान॥"
+      ],
+      "linesEn": [
+        "sarala kabita kīrati bimala soi ādarahīṃ sujāna.",
+        "sahaja bayara bisarāi ripu jo suni karahiṃ bakhāna."
+      ],
+      "meaningHi": "चतुर पुरुष उसी कविता का आदर करते हैं, जो सरल हो और जिसमें निर्मल चरित्र का वर्णन हो तथा जिसे सुनकर शत्रु भी स्वाभाविक वैर को भूलकर सराहना करने लगें।",
+      "meaningEn": "Wise people honor that poetry which is simple and describes pure glory, and which even enemies, upon hearing it, forget their natural enmity and begin to praise."
+    },
+    {
+      "id": "balkand-08-doha-14-7",
+      "section": "doha",
+      "stanza": 14,
+      "numInSection": 14,
+      "subSuffix": "",
+      "labelHi": "दोहा · १४ (ख)",
+      "labelEn": "Doha · 14 (b)",
+      "lines": [
+        "सो न होइ बिनु बिमल मति मोहि मति बल अति थोर।",
+        "करहु कृपा हरि जस कहउँ पुनि पुनि करउँ निहोर॥"
+      ],
+      "linesEn": [
+        "so na hoi binu bimala mati mohi mati bala ati thora.",
+        "karahu kṛpā hari jasa kahauṃ puni puni karauṃ nihora."
+      ],
+      "meaningHi": "ऐसी कविता बिना निर्मल बुद्धि के होती नहीं और मेरी बुद्धि का बल बहुत ही थोड़ा है। इसलिये बार-बार निहोरा करता हूँ कि हे कवियो! आप कृपा करें, जिससे मैं हरि यश का वर्णन कर सकूँ।",
+      "meaningEn": "Such poetry does not arise without a pure intellect, and the strength of my own understanding is very slight. Therefore I repeatedly entreat you: please show your grace, so that I may be able to describe Hari's glory."
+    },
+    {
+      "id": "balkand-08-doha-14-8",
+      "section": "doha",
+      "stanza": 14,
+      "numInSection": 14,
+      "subSuffix": "",
+      "labelHi": "दोहा · १४ (ग)",
+      "labelEn": "Doha · 14 (c)",
+      "lines": [
+        "कबि कोबिद रघुबर चरित मानस मंजु मराल।",
+        "बालबिनय सुनि सुरुचि लखि मो पर होहु कृपाल॥"
+      ],
+      "linesEn": [
+        "kabi kobida raghubara carita mānasa manju marāla.",
+        "bālabinaya suni suruci lakhi mo para hohu kṛpāla."
+      ],
+      "meaningHi": "कवि और पण्डितगण। आप जो रामचरित्ररूपी मानसरोवर के सुन्दर हंस हैं, मुझ बालक की विनती सुनकर और सुन्दर रुचि देखकर मुझपर कृपा करें।",
+      "meaningEn": "O poets and scholars, you are the graceful swans on the beautiful Manasarovar of Ram's story. Hearing the plea of this child and seeing my sincere taste, please be merciful to me."
+    }
+  ]
+}

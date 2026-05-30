@@ -13,7 +13,7 @@
       "labelHi": "चौपाई ४९·१",
       "labelEn": "Chaupai 49·1",
       "lines": [
-        "सुनु लंकेस सकल गुन तोरें। तातें तुम्ह अतिसय प्रिय मोरें॥।",
+        "सुनु लंकेस सकल गुन तोरें। तातें तुम्ह अतिसय प्रिय मोरें॥",
         "राम बचन सुनि बानर जूथा। सकल कहहिं जय कृपा बरूथा॥1॥"
       ],
       "meaningHi": "-हे लंकापति! सुनो, तुम्हारे अंदर उपर्युक्त सब गुण हैं। इससे तुम मुझे अत्यंत ही प्रिय हो। श्री रामजी के वचन सुनकर सब वानरों के समूह कहने लगे- कृपा के समूह श्री रामजी की जय हो",
@@ -544,5 +544,14 @@
       ],
       "chapter": 14
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

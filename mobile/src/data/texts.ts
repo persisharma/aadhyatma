@@ -3,7 +3,11 @@ import { sundarkandTotal } from './sundarkand';
 import { shivaStrotamTotal } from './shiva-strotam';
 import { durgaStotramTotal } from './durga-stotram';
 import { ganeshStotramTotal } from './ganesh-stotram';
-import { vishnuSahasranamaTotal } from './vishnu-sahasranama';
+import {
+  vishnuSahasranamaTitleEn,
+  vishnuSahasranamaTitleHi,
+  vishnuSahasranamaTotal,
+} from './vishnu-sahasranama';
 import { shivChalisaCounts } from './shiv-chalisa';
 import { durgaChalisaCounts } from './durga-chalisa';
 import { ganeshChalisaCounts } from './ganesh-chalisa';
@@ -11,7 +15,12 @@ import { hanumanAshtakTotal } from './hanuman-ashtak';
 import { bajrangBaanTotal } from './bajrang-baan';
 import { ramStutiTotal } from './ram-stuti';
 import { krishnaStotramTotal } from './krishna-stotram';
-import { ramcharitmanasTotal } from './ramcharitmanas';
+import {
+  ramcharitmanasChaptersManifest,
+  ramcharitmanasTitleEn,
+  ramcharitmanasTitleHi,
+  ramcharitmanasTotal,
+} from './ramcharitmanas';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
 
@@ -44,7 +53,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'hanuman-chalisa',
     nameHi: 'हनुमान चालीसा',
     nameEn: 'Hanuman Chalisa',
-    sub: `${hanumanChalisaTotal} चौपाई · अर्थ सहित`,
+    sub: '40 चौपाई + 3 दोहा · अर्थ सहित',
     thumb: 'ह',
     status: 'active',
     category: 'chalisa',
@@ -55,7 +64,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'bhagavad-gita',
     nameHi: 'भगवद् गीता',
     nameEn: 'Bhagavad Gītā',
-    sub: '18 अध्याय · 701 श्लोक',
+    sub: '18 अध्याय · 701-श्लोक पाठ',
     thumb: 'भ',
     status: 'active',
     category: 'granth',
@@ -66,7 +75,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'sundarkand',
     nameHi: 'सुंदरकाण्ड',
     nameEn: 'Sundarkand',
-    sub: `16 सर्ग · ${sundarkandTotal} पद`,
+    sub: `16 अनुभाग · ${sundarkandTotal} पद`,
     thumb: 'सु',
     status: 'active',
     category: 'granth',
@@ -96,9 +105,9 @@ export const library: readonly LibraryEntry[] = [
   })),
   {
     id: 'ramcharitmanas',
-    nameHi: 'रामचरितमानस',
-    nameEn: 'Ramcharitmanas',
-    sub: `१ काण्ड · ${ramcharitmanasTotal} पद`,
+    nameHi: ramcharitmanasTitleHi,
+    nameEn: ramcharitmanasTitleEn,
+    sub: `${ramcharitmanasChaptersManifest.length} उपखंड · ${ramcharitmanasTotal} पद`,
     thumb: 'रा',
     status: 'active',
     category: 'granth',
@@ -109,7 +118,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'durga-stotram',
     nameHi: 'दुर्गा स्तोत्रम्',
     nameEn: 'Durga Stotram',
-    sub: `3 स्तोत्र · ${durgaStotramTotal} श्लोक`,
+    sub: `3 स्तोत्र · ${durgaStotramTotal} पद`,
     thumb: 'दु',
     status: 'active',
     category: 'stotram',
@@ -129,9 +138,9 @@ export const library: readonly LibraryEntry[] = [
   },
   {
     id: 'vishnu-sahasranama',
-    nameHi: 'विष्णु सहस्रनाम',
-    nameEn: 'Vishnu Sahasranama',
-    sub: `4 अध्याय · ${vishnuSahasranamaTotal} श्लोक`,
+    nameHi: vishnuSahasranamaTitleHi,
+    nameEn: vishnuSahasranamaTitleEn,
+    sub: `4 अनुभाग · ${vishnuSahasranamaTotal} पद`,
     thumb: 'वि',
     status: 'active',
     category: 'stotram',
@@ -153,7 +162,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'shiv-chalisa',
     nameHi: 'शिव चालीसा',
     nameEn: 'Shiv Chalisa',
-    sub: `${shivChalisaCounts.totalVerses} चौपाई · अर्थ सहित`,
+    sub: '40 चौपाई + 3 दोहा · अर्थ सहित',
     thumb: 'शि',
     status: 'active',
     category: 'chalisa',
@@ -164,7 +173,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'durga-chalisa',
     nameHi: 'दुर्गा चालीसा',
     nameEn: 'Durga Chalisa',
-    sub: `${durgaChalisaCounts.totalVerses} चौपाई · अर्थ सहित`,
+    sub: '40 चौपाई + 1 दोहा · अर्थ सहित',
     thumb: 'दु',
     status: 'active',
     category: 'chalisa',
@@ -175,7 +184,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'ganesh-chalisa',
     nameHi: 'गणेश चालीसा',
     nameEn: 'Ganesh Chalisa',
-    sub: `${ganeshChalisaCounts.totalVerses} चौपाई · अर्थ सहित`,
+    sub: '40 चौपाई + 3 दोहा · अर्थ सहित',
     thumb: 'गण',
     status: 'active',
     category: 'chalisa',

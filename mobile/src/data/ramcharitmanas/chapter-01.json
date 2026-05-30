@@ -1,28 +1,253 @@
 {
   "chapter": 1,
   "titleHi": "मंगलाचरण",
-  "titleEn": "Mangalacharan",
-  "verseCount": 19,
-  "source": {"baseText": "sanskritdocuments.org, hi.wikisource.org Ramcharitmanas/Balkand", "retrievedOn": "2026-05-24"},
+  "titleEn": "Invocation and Auspicious Beginning",
+  "verseCount": 12,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 1: Invocation and Auspicious Beginning, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/mangalacharan"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
   "verses": [
-    {"id": "shloka-01", "section": "shloka", "stanza": 1, "numInSection": 1, "subSuffix": "", "labelHi": "श्लोक · १", "labelEn": "Shloka · 1", "lines": ["वर्णानामर्थसंघानां रसानां छन्दसामपि।", "मङ्गलानां च कर्त्तारौ वन्दे वाणीविनायकौ॥"], "linesEn": ["varNAnAmarthasanghAnAM rasAnAM Chandasaamapi |", "ma~NgalAnAM cha karttArau vande vANIvinAyakau ||"], "meaningHi": "अक्षरों, अर्थ-समूहों, रसों, छन्दों और मंगलों के रचयिता — सरस्वती और गणेश को मैं वन्दना करता हूँ।", "meaningEn": "I bow to Saraswati and Ganesha — the creators of letters, groups of meanings, poetic sentiments, metres, and all that is auspicious."},
-    {"id": "shloka-02", "section": "shloka", "stanza": 2, "numInSection": 2, "subSuffix": "", "labelHi": "श्लोक · २", "labelEn": "Shloka · 2", "lines": ["भवानीशङ्करौ वन्दे श्रद्धाविश्वासरूपिणौ।", "याभ्यां विना न पश्यन्ति सिद्धाः स्वान्तःस्थमीश्वरम्॥"], "linesEn": ["bhavAnIsha~Nkarau vande shraddhAvishvAsarUpiNau |", "yAbhyAM vinA na pashyanti siddhAH svAntaHsthamIshvaram ||"], "meaningHi": "श्रद्धा और विश्वास के स्वरूप भवानी-शंकर को वन्दन करता हूँ — जिनके बिना सिद्ध पुरुष भी अपने अन्तःकरण में स्थित ईश्वर को नहीं देख पाते।", "meaningEn": "I bow to Bhavani and Shankara, embodiments of faith and trust — without whom even accomplished souls cannot perceive the Lord dwelling within their hearts."},
-    {"id": "shloka-03", "section": "shloka", "stanza": 3, "numInSection": 3, "subSuffix": "", "labelHi": "श्लोक · ३", "labelEn": "Shloka · 3", "lines": ["वन्दे बोधमयं नित्यं गुरुं शङ्कररूपिणम्।", "यमाश्रितो हि वक्रोऽपि चन्द्रः सर्वत्र वन्द्यते॥"], "linesEn": ["vande bodhamayaM nityaM guruM sha~NkararUpiNam |", "yamAshrito hi vakro.api chandraH sarvatra vandyate ||"], "meaningHi": "ज्ञानमय, नित्य, शंकर-स्वरूप गुरु को वन्दन करता हूँ — जिनका आश्रय पाकर वक्र (टेढ़ा) चन्द्रमा भी सर्वत्र वन्दनीय हो जाता है।", "meaningEn": "I bow to the Guru, embodiment of knowledge, eternal, in Shankara's form — by whose shelter even the crooked moon becomes universally worshipped."},
-    {"id": "shloka-04", "section": "shloka", "stanza": 4, "numInSection": 4, "subSuffix": "", "labelHi": "श्लोक · ४", "labelEn": "Shloka · 4", "lines": ["सीतारामगुणग्रामपुण्यारण्यविहारिणौ।", "वन्दे विशुद्धविज्ञानौ कवीश्वरकपीश्वरौ॥"], "linesEn": ["sItArAmaguNagrAmapuNyAraNyavihAriNau |", "vande vishuddhavij~nAnau kavIshvarakapIshvarau ||"], "meaningHi": "सीता-राम के गुण-समूह रूपी पुण्य-अरण्य (पवित्र वन) में विहार करने वाले, विशुद्ध विज्ञान (ज्ञान) से सम्पन्न — कवीश्वर (वाल्मीकि) और कपीश्वर (हनुमान) को वन्दना करता हूँ।", "meaningEn": "I bow to Kavishvara (Valmiki) and Kapishvara (Hanuman) — who roam in the sacred forest of Sita-Rama's virtues, endowed with pure knowledge."},
-    {"id": "shloka-05", "section": "shloka", "stanza": 5, "numInSection": 5, "subSuffix": "", "labelHi": "श्लोक · ५", "labelEn": "Shloka · 5", "lines": ["उद्भवस्थितिसंहारकारिणीं क्लेशहारिणीम्।", "सर्वश्रेयस्करीं सीतां नतोऽहं रामवल्लभाम्॥"], "linesEn": ["udbhavasthitisa.NhArakAriNIM kleshahAriNIm |", "sarvashreyaskarIM sItAM nato.ahaM rAmavallabhAm ||"], "meaningHi": "उत्पत्ति, स्थिति और संहार करने वाली, क्लेशों (दुखों) को हरने वाली, सर्व-श्रेयस्करी (सबका कल्याण करने वाली), राम की प्रिया सीता को मैं नमन करता हूँ।", "meaningEn": "I bow to Sita, beloved of Rama — who causes creation, sustenance, and dissolution, who removes afflictions, and who brings the highest good to all."},
-    {"id": "shloka-06", "section": "shloka", "stanza": 6, "numInSection": 6, "subSuffix": "", "labelHi": "श्लोक · ६", "labelEn": "Shloka · 6", "lines": ["यन्मायावशवर्ति विश्वमखिलं ब्रह्मादिदेवासुरा", "यत्सत्त्वादमृषैव भाति सकलं रज्जौ यथाहेर्भ्रमः।", "यत्पादप्लवमेकमेव हि भवाम्भोधेस्तितीर्षावतां", "वन्देऽहं तमशेषकारणपरं रामाख्यमीशं हरिम्॥"], "linesEn": ["yanmAyAvashavarti vishvamakhilaM brahmAdidEvAsurA", "yatsattvAdamRRiShaiva bhAti sakalaM rajjau yathAherbhramaH |", "yatpAdaplavamekameva hi bhavAmbhodhestitIrShAvatAM", "vande.ahaM tamasheShakaraNaparaM rAmAkhyamIshaM harim ||"], "meaningHi": "जिनकी माया के वश में समस्त विश्व, ब्रह्मा आदि देवता और असुर भी हैं; जिनकी सत्ता से ही यह सब सत्य प्रतीत होता है — जैसे रस्सी में सर्प का भ्रम। जिनके चरण ही भवसागर से पार जाने की इच्छा रखने वालों के लिए एकमात्र नौका हैं — ऐसे समस्त कारणों से परे, राम नामक ईश्वर हरि को मैं प्रणाम करता हूँ।", "meaningEn": "The entire universe including Brahma and other gods and demons is under the sway of whose Maya; by whose reality alone everything appears true — as the illusion of a snake in a rope. Whose feet alone are the sole raft for those wishing to cross the ocean of worldly existence — I bow to that Hari, the Lord known as Rama, who is beyond all causes."},
-    {"id": "shloka-07", "section": "shloka", "stanza": 7, "numInSection": 7, "subSuffix": "", "labelHi": "श्लोक · ७", "labelEn": "Shloka · 7", "lines": ["नानापुराणनिगमागमसम्मतं यद्", "रामायणे निगदितं क्वचिदन्यतोऽपि।", "स्वान्तःसुखाय तुलसी रघुनाथगाथा-", "भाषानिबन्धमतिमञ्जुलमातनोति॥"], "linesEn": ["nAnApurANanigamAgamasammataM yad", "rAmAyaNe nigaditaM kvachidanyato.api |", "svAntaHsukhAya tulasI raghunAthagAthA-", "bhAShAnibandhamatima~njulamAtanoti ||"], "meaningHi": "नाना पुराण, वेद और शास्त्र की सम्मति के अनुसार तथा जो रामायणों में वर्णित है, और कुछ अन्यत्र से भी — श्रीरघुनाथजी की कथा को तुलसीदास अपने अन्तःकरण के सुख के लिए अत्यन्त मनोहर भाषा-निबन्ध (रचना) से विस्तृत करता है।", "meaningEn": "That which is sanctioned by various Puranas, Vedas, and Shastras, narrated in the Ramayanas and elsewhere too — for the joy of his own heart, Tulasi expands the story of Raghunatha in a most beautiful composition in the vernacular language."},
-    {"id": "sortha-01", "section": "sortha", "stanza": 1, "numInSection": 1, "subSuffix": "", "labelHi": "सोरठा · १", "labelEn": "Sortha · 1", "lines": ["जो सुमिरत सिधि होइ गन नायक करिबर बदन।", "करउ अनुग्रह सोइ बुद्धि रासि सुभ गुन सदन॥"], "linesEn": ["jo sumirata sidhi hoi gana nAyaka karibara badana |", "karau anugraha soi buddhi rAsi subha guna sadana ||"], "meaningHi": "जिनका स्मरण करने मात्र से सिद्धि प्राप्त होती है — ऐसे गजमुख गणनायक (गणेश) मुझ पर अनुग्रह करें — जो बुद्धि की राशि (भण्डार) और शुभ गुणों के सदन (निवास) हैं।", "meaningEn": "By whose mere remembrance accomplishment is attained — may that Gana-Nayaka (Ganesha) with elephant face bestow his grace upon me — he who is the storehouse of wisdom and abode of auspicious qualities."},
-    {"id": "sortha-02", "section": "sortha", "stanza": 2, "numInSection": 2, "subSuffix": "", "labelHi": "सोरठा · २", "labelEn": "Sortha · 2", "lines": ["मूक होइ बाचाल पंगु चढ़इ गिरिबर गहन।", "जासु कृपाँ सो दयाल द्रवउ सकल कलि मल दहन॥"], "linesEn": ["mUka hoi bAchAla pa.Ngu chaRhai giribara gahana |", "jAsu kRRipA.N so dayAla dravau sakala kali mala dahana ||"], "meaningHi": "जिनकी कृपा से गूँगा वाचाल (बोलने वाला) हो जाता है और लंगड़ा दुर्गम पर्वत पर चढ़ जाता है — वे दयालु, कलियुग के समस्त मलों (पापों) को दहन करने वाले मुझ पर कृपा करें।", "meaningEn": "By whose grace the mute becomes eloquent and the lame climbs the most inaccessible mountain — may that merciful one, the burner of all impurities of the Kali age, melt with compassion for me."},
-    {"id": "sortha-03", "section": "sortha", "stanza": 3, "numInSection": 3, "subSuffix": "", "labelHi": "सोरठा · ३", "labelEn": "Sortha · 3", "lines": ["नील सरोरुह स्याम तरुन अरुन बारिज नयन।", "करउ सो मम उर धाम सदा छीरसागर सयन॥"], "linesEn": ["nIla saroruha shyAma taruna aruna bArija nayana |", "karau so mama ura dhAma sadA ChIrasAgara sayana ||"], "meaningHi": "नील कमल के समान श्याम (गहरे वर्ण), तरुण अरुण (लाल) कमल जैसे नयन वाले — जो सदा क्षीरसागर में शयन करते हैं — वे मेरे हृदय में निवास करें।", "meaningEn": "Dark as a blue lotus, with eyes like fresh red lotuses — He who always reclines on the Ocean of Milk — may He make my heart His abode."},
-    {"id": "sortha-04", "section": "sortha", "stanza": 4, "numInSection": 4, "subSuffix": "", "labelHi": "सोरठा · ४", "labelEn": "Sortha · 4", "lines": ["कुंद इंदु सम देह उमा रमन करुना अयन।", "जाहि दीन पर नेह करउ कृपा मर्दन मयन॥"], "linesEn": ["kunda indu sama deha umA ramana karunA ayana |", "jAhi dIna para neha karau kRRipA mardana mayana ||"], "meaningHi": "कुन्द (चमेली) और चन्द्रमा के समान गौर शरीर वाले, उमा (पार्वती) के रमण (पति), करुणा के अयन (निवास), दीनों पर स्नेह रखने वाले, कामदेव को मर्दन (भस्म) करने वाले (शिव) मुझ पर कृपा करें।", "meaningEn": "Whose body is fair as jasmine and moon, the consort of Uma, the abode of compassion, who has love for the meek, the destroyer of Kamadeva (Shiva) — may He shower grace upon me."},
-    {"id": "doha-01", "section": "doha", "stanza": 1, "numInSection": 1, "subSuffix": "", "labelHi": "दोहा", "labelEn": "Doha", "lines": ["बंदउँ गुरु पद कंज कृपा सिंधु नररूप हरि।", "महामोह तम पुंज जासु बचन रबि कर निकर॥"], "linesEn": ["ba.Ndau.N guru pada ka.Nja kRRipA si.Ndhu nararUpa hari |", "mahAmoha tama pu.Nja jAsu bachana rabi kara nikara ||"], "meaningHi": "गुरु के चरण-कमल की वन्दना करता हूँ — जो कृपा-सिन्धु हैं, नर-रूप हरि हैं। महामोह (अज्ञान) के अन्धकार-समूह को जिनके वचन सूर्य-किरणों के समान नष्ट करते हैं।", "meaningEn": "I bow to the lotus feet of the Guru — ocean of mercy, Hari in human form. Whose words, like sunbeams, destroy the dense darkness of great delusion."},
-    {"id": "chaupai-01", "section": "chaupai", "stanza": 1, "numInSection": 1, "subSuffix": "", "labelHi": "चौपाई · १", "labelEn": "Chaupai · 1", "lines": ["बंदउँ गुरु पद पदुम परागा।", "सुरुचि सुबास सरस अनुरागा॥"], "linesEn": ["ba.Ndau.N guru pada paduma parAgA |", "suruchi subAsa sarasa anurAgA ||"], "meaningHi": "गुरु के चरण-कमल की पराग (धूलि) की वन्दना करता हूँ — जो सुरुचि (सुन्दर रुचि), सुवास (सुगन्ध) और सरस अनुराग (रसपूर्ण प्रेम) से परिपूर्ण है।", "meaningEn": "I bow to the pollen (dust) of the Guru's lotus feet — full of beautiful taste, sweet fragrance, and passionate love."},
-    {"id": "chaupai-02", "section": "chaupai", "stanza": 2, "numInSection": 2, "subSuffix": "", "labelHi": "चौपाई · २", "labelEn": "Chaupai · 2", "lines": ["अमिअ मूरिमय चूरन चारू।", "समन सकल भव रुज परिवारू॥"], "linesEn": ["amia mUrimaya chUrana chArU |", "samana sakala bhava ruja parivArU ||"], "meaningHi": "अमृत-मूल (जड़ी-बूटी) का सुन्दर चूर्ण — जो सम्पूर्ण भव-रोग (संसार के रोगों) के परिवार (समूह) को शान्त करता है।", "meaningEn": "A beautiful powder of nectar-root herbs — which cures the entire family of worldly diseases."},
-    {"id": "chaupai-03", "section": "chaupai", "stanza": 3, "numInSection": 3, "subSuffix": "", "labelHi": "चौपाई · ३", "labelEn": "Chaupai · 3", "lines": ["सुकृति संभु तन बिमल बिभूती।", "मंजुल मंगल मोद प्रसूती॥"], "linesEn": ["sukRRiti sa.Nbhu tana bimala bibhUtI |", "ma.Njula ma.Ngala moda prasUtI ||"], "meaningHi": "सुकृति (पुण्यात्मा) शम्भु (शिव) के शरीर की विमल (निर्मल) विभूति (भस्म) — जो मनोहर मंगल और आनन्द की जननी है।", "meaningEn": "The pure sacred ash of Shambhu's (Shiva's) auspicious body — which is the mother of beautiful auspiciousness and joy."},
-    {"id": "chaupai-04", "section": "chaupai", "stanza": 4, "numInSection": 4, "subSuffix": "", "labelHi": "चौपाई · ४", "labelEn": "Chaupai · 4", "lines": ["जन मन मंजु मुकुर मल हरनी।", "किएँ तिलक गुन गन बस करनी॥"], "linesEn": ["jana mana ma.Nju mukura mala haranI |", "kie.N tilaka guna gana basa karanI ||"], "meaningHi": "भक्तों के मन रूपी सुन्दर दर्पण के मल (अशुद्धि) को हरने वाली — जिसका तिलक लगाने से गुण-गण (सद्गुणों का समूह) वश में आते हैं।", "meaningEn": "It removes the impurity from the beautiful mirror of devotees' minds — applying its tilak brings the host of virtues under control."},
-    {"id": "chaupai-05", "section": "chaupai", "stanza": 5, "numInSection": 5, "subSuffix": "", "labelHi": "चौपाई · ५", "labelEn": "Chaupai · 5", "lines": ["श्रीगुरु पद नख मनि गन जोती।", "सुमिरत दिव्य दृष्टि हिय होती॥"], "linesEn": ["shrIguru pada nakha mani gana jotI |", "sumirata divya dRRiShTi hiya hotI ||"], "meaningHi": "श्रीगुरु के पैर के नख (नाखून) मणि-समूह की ज्योति (प्रकाश) — जिसका स्मरण करने से हृदय में दिव्य दृष्टि प्राप्त होती है।", "meaningEn": "The light of the jewel-cluster of the blessed Guru's toenails — by remembering which, divine vision arises in the heart."},
-    {"id": "chaupai-06", "section": "chaupai", "stanza": 6, "numInSection": 6, "subSuffix": "", "labelHi": "चौपाई · ६", "labelEn": "Chaupai · 6", "lines": ["दलन मोह तम सो सप्रकासू।", "बड़े भाग उर आवइ जासू॥"], "linesEn": ["dalana moha tama so saprakAsU |", "baRe bhAga ura Avai jAsU ||"], "meaningHi": "मोह-अन्धकार को दलन (नष्ट) करने वाला वह प्रकाश — बड़े भाग्य से ही हृदय में आता है।", "meaningEn": "That radiance which destroys the darkness of delusion — comes into the heart only by great fortune."},
-    {"id": "doha-02", "section": "doha", "stanza": 2, "numInSection": 2, "subSuffix": "", "labelHi": "दोहा", "labelEn": "Doha", "lines": ["सिय राममय सब जग जानी।", "करउँ प्रनाम जोरि जुग पानी॥"], "linesEn": ["siya rAmamaya saba jaga jAnI |", "karau.N pranAma jori juga pAnI ||"], "meaningHi": "सम्पूर्ण जगत को सीता-राममय जानकर दोनों हाथ जोड़कर प्रणाम करता हूँ।", "meaningEn": "Knowing the entire world to be pervaded by Sita and Rama, I bow with both hands joined."}
+    {
+      "id": "balkand-01-shloka-0-0",
+      "section": "shloka",
+      "stanza": 0,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "वर्णानामर्थसंघानां रसानां छन्दसामपि।",
+        "मङ्गलानां च कर्त्तारौ वन्दे वाणीविनायकौ॥"
+      ],
+      "linesEn": [
+        "varṇānāmarthasaṃghānāṃ rasānāṃ chandasāmapi.",
+        "maṅgalānāṃ ca karttārau vande vāṇīvināyakau."
+      ],
+      "meaningHi": "अक्षरों, अर्थसमूहों, रसों, छन्दों और मंगलोंके करनेवाले वाणी और विनायककी मैं वन्दना करता हूँ।",
+      "meaningEn": "I bow to Vani and Vinayaka, the creators of letters, groups of meanings, poetic flavors, meters, and auspiciousness."
+    },
+    {
+      "id": "balkand-01-shloka-0-1",
+      "section": "shloka",
+      "stanza": 0,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "भवानीशङ्करौ वन्दे श्रद्धाविश्वासरूपिणौ।",
+        "याभ्यां विना न पश्यन्ति सिद्धाः स्वान्तःस्थमीश्वरम्‌॥"
+      ],
+      "linesEn": [
+        "bhavānīśaṅkarau vande śraddhāviśvāsarūpiṇau.",
+        "yābhyāṃ vinā na paśyanti siddhāḥ svāntaḥsthamīśvaram."
+      ],
+      "meaningHi": "श्रद्धा और विश्वासके स्वरूप श्रीपार्वतीजी और श्रीशंकरजीकी मैं वन्दना करता हूँ, जिनके बिना सिद्धजन अपने अन्तःकरणमें स्थित ईश्वरको नहीं देख सकते।",
+      "meaningEn": "I bow to Bhagavati Parvati and Lord Shankar, who are the very forms of faith and trust; without them, the perfected beings cannot behold the Lord dwelling in the heart."
+    },
+    {
+      "id": "balkand-01-shloka-0-2",
+      "section": "shloka",
+      "stanza": 0,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "वन्दे बोधमयं नित्यं गुरुं शङ्कररूपिणम्‌।",
+        "यमाश्रितो हि वक्रोऽपि चन्द्रः सर्वत्र वन्द्यते॥"
+      ],
+      "linesEn": [
+        "vande bodhamayaṃ nityaṃ guruṃ śaṅkararūpiṇam.",
+        "yamāśrito hi vakro’pi candraḥ sarvatra vandyate."
+      ],
+      "meaningHi": "ज्ञानमय, नित्य, शंकररूपी गुरुकी मैं वन्दना करता हूँ, जिनके आश्रित होनेसे ही टेढ़ा चन्द्रमा भी सर्वत्र वन्दित होता है।",
+      "meaningEn": "I bow to the eternal, knowledge-filled Guru, who is in the form of Shiva; by whose grace even the crooked moon becomes worthy of veneration everywhere."
+    },
+    {
+      "id": "balkand-01-shloka-0-3",
+      "section": "shloka",
+      "stanza": 0,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "सीतारामगुणग्रामपुण्यारण्यविहारिणौ।",
+        "वन्दे विशुद्धविज्ञानौ कवीश्वरकपीश्वरौ॥"
+      ],
+      "linesEn": [
+        "sītārāmaguṇagrāmapuṇyāraṇyavihāriṇau.",
+        "vande viśuddha-vijñānau kavīśvara-kapīśvarau."
+      ],
+      "meaningHi": "श्रीसीतारामजीके गुणसमूहरूपी पवित्र वनमें विहार करनेवाले, विशुद्ध विज्ञानसम्पन्न कवीश्वर श्रीवाल्मीकिजी और कपीश्वर श्रीहनुमानजीकी मैं वन्दना करता हूँ।",
+      "meaningEn": "I bow to the two, who roam in the holy forest of the countless virtues of Sita and Rama, endowed with pure wisdom: the poet-lord Valmiki and the lord of the monkeys, Hanuman."
+    },
+    {
+      "id": "balkand-01-shloka-0-4",
+      "section": "shloka",
+      "stanza": 0,
+      "numInSection": 5,
+      "subSuffix": "",
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "उद्भवस्थितिसंहारकारिणीं क्लेशहारिणीम्‌।",
+        "सर्वश्रेयस्करीं सीतां नतोऽहं रामवल्लभाम्‌॥"
+      ],
+      "linesEn": [
+        "udbhavasthitisaṃhārakāriṇīṃ kleśahāriṇīm.",
+        "sarvaśreyaskarīṃ sītāṃ nato’haṃ rāmavallabhām."
+      ],
+      "meaningHi": "उत्पत्ति, स्थिति (पालन) और संहार करनेवाली, क्लेशोंकी हरनेवाली तथा सम्पूर्ण कल्याणोंकी करनेवाली श्रीरामचन्द्रजीकी प्रियतमा श्रीसीताजीको मैं नमस्कार करता हूँ।",
+      "meaningEn": "I bow to Sita, beloved of Rama, who brings forth, sustains, and withdraws creation, removes afflictions, and grants every blessing."
+    },
+    {
+      "id": "balkand-01-shloka-0-5",
+      "section": "shloka",
+      "stanza": 0,
+      "numInSection": 6,
+      "subSuffix": "",
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "यन्मायावशवर्त्ति विश्वमखिलं ब्रह्मादिदेवासुरा",
+        "यत्सत्त्वादमृषैव भाति सकलं रज्जौ यथाहेर्भ्रमः।",
+        "यत्पादप्लवमेकमेव हि भवाम्भोधेस्तितीर्षावतां",
+        "वन्देऽहं तमशेषकारणपरं रामाख्यमीशं हरिम्‌॥"
+      ],
+      "linesEn": [
+        "yanmāyāvaśavartti viśvamakhilaṃ brahmādidevāsurā",
+        "yatsattvādamṛṣaiva bhāti sakalaṃ rajjau yathāherbhramaḥ.",
+        "yatpādaplavamekameva hi bhavāmbhodhestitīrṣāvatāṃ",
+        "vande’haṃ tamaśeṣakāraṇaparaṃ rāmākhyamīśaṃ harim."
+      ],
+      "meaningHi": "जिनकी मायाके वशीभूत सम्पूर्ण विश्व, ब्रह्मादि देवता और असुर हैं, जिनकी सत्तासे रस्सीमें सर्पके भ्रमकी भाँति यह सारा दृश्य-जगत् सत्य ही प्रतीत होता है और जिनके केवल चरण ही भवसागरसे तरनेकी इच्छावालोंके लिये एकमात्र नौका हैं, उन समस्त कारणोंसे पर (सब कारणोंके कारण और सबसे श्रेष्ठ) राम कहानेवाले भगवान् हरिकी मैं वन्दना करता हूँ।",
+      "meaningEn": "I bow to Hari, called Rama, the supreme Lord beyond all causes—whose maya governs the entire universe, including Brahma, the gods, and the demons; by whose existence the whole world appears real, just as a rope is mistaken for a snake; and whose feet alone are the boat for those who wish to cross the ocean of worldly life."
+    },
+    {
+      "id": "balkand-01-shloka-0-6",
+      "section": "shloka",
+      "stanza": 0,
+      "numInSection": 7,
+      "subSuffix": "",
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "नानापुराणनिगमागमसम्मतं यद्",
+        "रामायणे निगदितं क्वचिदन्यतोऽपि।",
+        "स्वान्तःसुखाय तुलसी रघुनाथगाथा-",
+        "भाषानिबन्धमतिमञ्जुलमातनोति॥"
+      ],
+      "linesEn": [
+        "nānāpurāṇanigamāgamasammataṃ yad",
+        "rāmāyaṇe nigaditaṃ kvacidanyato’pi.",
+        "svāntaḥsukhāya tulasī raghunāthagāthā-",
+        "bhāṣānibandhamatimañjulamātanoti."
+      ],
+      "meaningHi": "अनेक पुराण, वेद और [तन्त्र] शास्त्रसे सम्मत तथा जो रामायणमें वर्णित है और कुछ अन्यत्रसे भी उपलब्ध श्रीरघुनाथजीकी कथाको तुलसीदास अपने अन्तःकरणके सुखके लिये अत्यन्त मनोहर भाषारचनामें विस्तृत करता है।",
+      "meaningEn": "For the joy of his own heart, Tulsidas composes an exquisitely charming verse in the vernacular on the tales of Lord Raghunath—what is sanctioned by many Puranas, the Vedas and the Agamas, what is told in the Ramayana, and what is found elsewhere too."
+    },
+    {
+      "id": "balkand-01-sortha-0-7",
+      "section": "sortha",
+      "stanza": 0,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "सोरठा · १",
+      "labelEn": "Soratha · 1",
+      "lines": [
+        "जो सुमिरत सिधि होइ गन नायक करिबर बदन।",
+        "करउ अनुग्रह सोइ बुद्धि रासि सुभ गुन सदन॥"
+      ],
+      "linesEn": [
+        "jo sumirat sidhi hoi gana nāyaka karibara badana.",
+        "karau anugraha soi buddhi rāsi subha guna sadana."
+      ],
+      "meaningHi": "जिन्हें स्मरण करनेसे सब कार्य सिद्ध होते हैं, जो गणोंके स्वामी और सुन्दर हाथीके मुखवाले हैं, वे ही बुद्धिके राशि और शुभ गुणोंके धाम (श्रीगणेशजी) मुझपर कृपा करें।",
+      "meaningEn": "May the Lord with the elephant face, the master of the ganas and the treasure-house of wisdom and noble qualities, grant me grace—He whose remembrance brings all accomplishment."
+    },
+    {
+      "id": "balkand-01-sortha-0-8",
+      "section": "sortha",
+      "stanza": 0,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "सोरठा · २",
+      "labelEn": "Soratha · 2",
+      "lines": [
+        "मूक होइ बाचाल पंगु चढ़इ गिरिबर गहन।",
+        "जासु कृपाँ सो दयाल द्रवउ सकल कलि मल दहन॥"
+      ],
+      "linesEn": [
+        "mūka hoi bācāla paṅgu chaṛhai giribara gahana.",
+        "jāsu kṛpāṃ so dayāla dravau sakala kali mala dahana."
+      ],
+      "meaningHi": "जिनकी कृपासे गूँगा बहुत सुन्दर बोलनेवाला हो जाता है और लँगड़ा-लूला दुर्गम पहाड़पर चढ़ जाता है, वे कलियुगके सब पापोंको जला डालनेवाले दयालु (भगवान्) मुझपर द्रवित हों (दया करें)।",
+      "meaningEn": "By whose grace a mute becomes eloquent and a lame man climbs the steepest mountains, may that compassionate One, who burns away all the sins of Kali Yuga, be merciful to me."
+    },
+    {
+      "id": "balkand-01-sortha-0-9",
+      "section": "sortha",
+      "stanza": 0,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "सोरठा · ३",
+      "labelEn": "Soratha · 3",
+      "lines": [
+        "नील सरोरुह स्याम तरुन अरुन बारिज नयन।",
+        "करउ सो मम उर धाम सदा छीरसागर सयन॥"
+      ],
+      "linesEn": [
+        "nīla saroruha syāma taruna aruna bārija nayana.",
+        "karau so mama ura dhāma sadā chīrasāgara sayana."
+      ],
+      "meaningHi": "जो नील कमलके समान श्यामवर्ण हैं, पूर्ण खिले हुए लाल कमलके समान जिनके नेत्र हैं और जो सदा क्षीरसागरमें शयन करते हैं, वे भगवान् (नारायण) मेरे हृदयमें निवास करें।",
+      "meaningEn": "May that Lord, dark as a blue lotus, with eyes like fully bloomed red lotuses, who ever rests on the Ocean of Milk, dwell in my heart."
+    },
+    {
+      "id": "balkand-01-sortha-0-10",
+      "section": "sortha",
+      "stanza": 0,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "सोरठा · ४",
+      "labelEn": "Soratha · 4",
+      "lines": [
+        "कुंद इंदु सम देह उमा रमन करुना अयन।",
+        "जाहि दीन पर नेह करउ कृपा मर्दन मयन॥"
+      ],
+      "linesEn": [
+        "kunda indu sama deha umā ramana karuṇā ayana.",
+        "jāhi dīna para neha karau kṛpā mardana mayana."
+      ],
+      "meaningHi": "जिनका कुन्दके पुष्प और चन्द्रमाके समान (गौर) शरीर है, जो पार्वतीजीके प्रियतम और दयाके धाम हैं और जिनका दीनोंपर स्नेह है, वे कामदेवका मर्दन करनेवाले (शिवजी) मुझपर कृपा करें।",
+      "meaningEn": "May Shiva, whose body is fair like jasmine and the moon, who is the beloved of Uma and the abode of compassion, and who loves the humble, show mercy to me—the destroyer of Kama."
+    },
+    {
+      "id": "balkand-01-sortha-0-11",
+      "section": "sortha",
+      "stanza": 0,
+      "numInSection": 5,
+      "subSuffix": "",
+      "labelHi": "सोरठा · ५",
+      "labelEn": "Soratha · 5",
+      "lines": [
+        "बंदउँ गुरु पद कंज कृपा सिंधु नररूप हरि।",
+        "महामोह तम पुंज जासु बचन रबि कर निकर॥"
+      ],
+      "linesEn": [
+        "bandauṃ guru pada kanj kṛpā siṃdhu nararūpa hari.",
+        "mahāmoh tama puṃja jāsu bacana rabi kara nikara."
+      ],
+      "meaningHi": "मैं उन गुरु महाराजके चरणकमलकी वन्दना करता हूँ, जो कृपाके समुद्र और नररूपमें श्रीहरि ही हैं और जिनके वचन महामोहरूपी घने अन्धकारके नाश करनेके लिये सूर्यकिरणोंके समूह हैं।",
+      "meaningEn": "I bow to the lotus feet of the Guru, who is an ocean of mercy and none other than Hari in human form; whose words are like a host of sunbeams to dispel the dense darkness of great delusion."
+    }
   ]
 }

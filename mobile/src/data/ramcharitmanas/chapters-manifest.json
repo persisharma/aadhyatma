@@ -2,7 +2,355 @@
   {
     "chapter": 1,
     "titleHi": "मंगलाचरण",
-    "titleEn": "Mangalacharan",
-    "verseCount": 19
+    "titleEn": "Invocation and Auspicious Beginning",
+    "verseCount": 12
+  },
+  {
+    "chapter": 2,
+    "titleHi": "गुरु वन्दना",
+    "titleEn": "Salutation to the Guru",
+    "verseCount": 13
+  },
+  {
+    "chapter": 3,
+    "titleHi": "ब्राह्मण संत वन्दना",
+    "titleEn": "Salutation to Brahmins and Saints",
+    "verseCount": 8
+  },
+  {
+    "chapter": 4,
+    "titleHi": "खल वन्दना",
+    "titleEn": "Salutation to the Wicked",
+    "verseCount": 12
+  },
+  {
+    "chapter": 5,
+    "titleHi": "संत असंत वन्दना",
+    "titleEn": "Saints and the Unsaintly",
+    "verseCount": 12
+  },
+  {
+    "chapter": 6,
+    "titleHi": "रामरूप से जीवमात्र की वन्दना",
+    "titleEn": "Salutation to All Beings as Forms of Rama",
+    "verseCount": 10
+  },
+  {
+    "chapter": 7,
+    "titleHi": "तुलसीदासजी की दीनता और रामभक्तिमयी कविता की महिमा",
+    "titleEn": "Tulsidas’s Humility and the Glory of Devotional Poetry",
+    "verseCount": 34
+  },
+  {
+    "chapter": 8,
+    "titleHi": "कवि वन्दना",
+    "titleEn": "Salutation to Poets",
+    "verseCount": 9
+  },
+  {
+    "chapter": 9,
+    "titleHi": "वाल्मीकि, वेद, ब्रह्मा, देवता, शिव, पार्वती आदि की वन्दना",
+    "titleEn": "Salutations to Valmiki, the Vedas, and the Divine Assembly",
+    "verseCount": 10
+  },
+  {
+    "chapter": 10,
+    "titleHi": "श्रीसीताराम धाम परिकर वन्दना",
+    "titleEn": "Salutation to Sita-Rama, Their Abode, and Retinue",
+    "verseCount": 16
+  },
+  {
+    "chapter": 11,
+    "titleHi": "श्रीनाम वन्दना और नाम महिमा",
+    "titleEn": "Salutation to Rama's Name and Its Glory",
+    "verseCount": 42
+  },
+  {
+    "chapter": 12,
+    "titleHi": "श्रीरामगुण और श्रीरामचरित की महिमा",
+    "titleEn": "Glory of Rama’s Virtues and Deeds",
+    "verseCount": 38
+  },
+  {
+    "chapter": 13,
+    "titleHi": "मानस निर्माण की तिथि",
+    "titleEn": "The Auspicious Date of Composing the Manas",
+    "verseCount": 4
+  },
+  {
+    "chapter": 14,
+    "titleHi": "मानस का रूप और माहात्म्य",
+    "titleEn": "The Form of the Manas and Its Greatness",
+    "verseCount": 62
+  },
+  {
+    "chapter": 15,
+    "titleHi": "याज्ञवल्क्य-भरद्वाज संवाद तथा प्रयाग माहात्म्य",
+    "titleEn": "Yajnavalkya-Bharadvaja Dialogue and the Greatness of Prayag",
+    "verseCount": 31
+  },
+  {
+    "chapter": 16,
+    "titleHi": "सती का भ्रम, श्रीरामजी का ऐश्वर्य और सती का खेद",
+    "titleEn": "Sati’s Doubt, Rama’s Divinity, and Her Remorse",
+    "verseCount": 36
+  },
+  {
+    "chapter": 17,
+    "titleHi": "शिवजी द्वारा सती का त्याग, शिवजी की समाधि",
+    "titleEn": "Shiva Renounces Sati and Enters Samadhi",
+    "verseCount": 31
+  },
+  {
+    "chapter": 18,
+    "titleHi": "सती का दक्ष यज्ञ में जाना",
+    "titleEn": "Sati Goes to Daksha’s Yagya",
+    "verseCount": 5
+  },
+  {
+    "chapter": 19,
+    "titleHi": "पति के अपमान से दुःखी होकर सती का योगाग्नि से जल जाना, दक्ष यज्ञ विध्वंस",
+    "titleEn": "Sati Enters Yogic Fire and Daksha’s Yagya Is Destroyed",
+    "verseCount": 7
+  },
+  {
+    "chapter": 20,
+    "titleHi": "पार्वती का जन्म और तपस्या",
+    "titleEn": "Parvati’s Birth and Penance",
+    "verseCount": 57
+  },
+  {
+    "chapter": 21,
+    "titleHi": "श्रीरामजी का शिवजी से विवाह के लिये अनुरोध",
+    "titleEn": "Rama Urges Shiva to Marry",
+    "verseCount": 6
+  },
+  {
+    "chapter": 22,
+    "titleHi": "सप्तर्षियों की परीक्षा में पार्वतीजी का महत्त्व",
+    "titleEn": "Parvati’s Greatness in the Test of the Seven Sages",
+    "verseCount": 30
+  },
+  {
+    "chapter": 23,
+    "titleHi": "कामदेव का देवकार्य के लिये जाना और भस्म होना",
+    "titleEn": "Kamadeva’s Mission and His Burning to Ashes",
+    "verseCount": 20
+  },
+  {
+    "chapter": 24,
+    "titleHi": "रति को वरदान",
+    "titleEn": "A Boon for Rati",
+    "verseCount": 5
+  },
+  {
+    "chapter": 25,
+    "titleHi": "देवताओं का शिवजी से ब्याह के लिये प्रार्थना करना, सप्तर्षियों का पार्वती के पास जाना",
+    "titleEn": "The Gods Appeal to Shiva, and the Sages Visit Parvati",
+    "verseCount": 26
+  },
+  {
+    "chapter": 26,
+    "titleHi": "शिवजी की विचित्र बारात और विवाह की तैयारी",
+    "titleEn": "Shiva's Wondrous Wedding Procession and Preparations",
+    "verseCount": 45
+  },
+  {
+    "chapter": 27,
+    "titleHi": "शिवजी का विवाह",
+    "titleEn": "The Wedding of Shiva and Parvati",
+    "verseCount": 38
+  },
+  {
+    "chapter": 28,
+    "titleHi": "शिव-पार्वती संवाद",
+    "titleEn": "Shiva-Parvati Dialogue on Rama",
+    "verseCount": 62
+  },
+  {
+    "chapter": 29,
+    "titleHi": "श्रीरामावतार के हेतु",
+    "titleEn": "Causes of Rama's Incarnation",
+    "verseCount": 39
+  },
+  {
+    "chapter": 30,
+    "titleHi": "नारद का अभिमान और माया का प्रभाव",
+    "titleEn": "Narada's Pride and the Power of Maya",
+    "verseCount": 12
+  },
+  {
+    "chapter": 31,
+    "titleHi": "विश्वमोहिनी का स्वयंवर, शिवगणों को तथा भगवान को शाप और नारद का मोहभंग",
+    "titleEn": "Vishvamohini's Swayamvara, Narada's Curse, and the End of Delusion",
+    "verseCount": 61
+  },
+  {
+    "chapter": 32,
+    "titleHi": "मनु-शतरूपा तप एवं वरदान",
+    "titleEn": "Manu and Shatarupa's Penance and Boon",
+    "verseCount": 55
+  },
+  {
+    "chapter": 33,
+    "titleHi": "प्रतापभानु की कथा",
+    "titleEn": "The Story of King Pratapbhanu",
+    "verseCount": 117
+  },
+  {
+    "chapter": 34,
+    "titleHi": "रावणादि का जन्म, तपस्या और उनका ऐश्वर्य तथा अत्याचार",
+    "titleEn": "The Birth, Power, and Tyranny of Ravana and Others",
+    "verseCount": 50
+  },
+  {
+    "chapter": 35,
+    "titleHi": "पृथ्वी और देवतादि की करुण पुकार",
+    "titleEn": "Earth and the Gods Cry for Help",
+    "verseCount": 12
+  },
+  {
+    "chapter": 36,
+    "titleHi": "भगवान का वरदान",
+    "titleEn": "The Lord's Promise to Incarnate",
+    "verseCount": 9
+  },
+  {
+    "chapter": 37,
+    "titleHi": "राजा दशरथ का पुत्रेष्टि यज्ञ, रानियों का गर्भवती होना",
+    "titleEn": "Dasharatha's Putreshti Yagya and the Queens' Conception",
+    "verseCount": 17
+  },
+  {
+    "chapter": 38,
+    "titleHi": "श्रीभगवान का प्राकट्य और बाललीला का आनंद",
+    "titleEn": "The Lord's Manifestation and the Joy of His Childhood",
+    "verseCount": 78
+  },
+  {
+    "chapter": 39,
+    "titleHi": "विश्वामित्र का राजा दशरथ से राम-लक्ष्मण को माँगना",
+    "titleEn": "Vishvamitra Asks Dasharatha for Rama and Lakshmana",
+    "verseCount": 18
+  },
+  {
+    "chapter": 40,
+    "titleHi": "विश्वामित्र के यज्ञ की रक्षा",
+    "titleEn": "Rama Protects Vishvamitra's Sacrifice",
+    "verseCount": 7
+  },
+  {
+    "chapter": 41,
+    "titleHi": "अहल्या उद्धार",
+    "titleEn": "Ahalya's Redemption",
+    "verseCount": 5
+  },
+  {
+    "chapter": 42,
+    "titleHi": "श्रीराम-लक्ष्मण सहित विश्वामित्र का जनकपुर में प्रवेश",
+    "titleEn": "Vishvamitra, Rama, and Lakshmana Enter Janakpur",
+    "verseCount": 15
+  },
+  {
+    "chapter": 43,
+    "titleHi": "श्रीराम-लक्ष्मण को देखकर जनकजी की प्रेममुग्धता",
+    "titleEn": "Janaka's Loving Wonder at Rama and Lakshmana",
+    "verseCount": 20
+  },
+  {
+    "chapter": 44,
+    "titleHi": "श्रीराम-लक्ष्मण का जनकपुर निरीक्षण",
+    "titleEn": "Rama and Lakshmana Tour Janakpur",
+    "verseCount": 40
+  },
+  {
+    "chapter": 45,
+    "titleHi": "पुष्पवाटिका निरीक्षण, सीताजी का प्रथम दर्शन, श्रीसीतारामजी का परस्पर दर्शन",
+    "titleEn": "The Flower Garden and the First Glimpse of Sita and Rama",
+    "verseCount": 40
+  },
+  {
+    "chapter": 46,
+    "titleHi": "श्रीसीताजी का पार्वती पूजन एवं वरदानप्राप्ति तथा राम-लक्ष्मण संवाद",
+    "titleEn": "Sita's Worship of Parvati and the Rama-Lakshmana Dialogue",
+    "verseCount": 32
+  },
+  {
+    "chapter": 47,
+    "titleHi": "श्रीराम-लक्ष्मण सहित विश्वामित्र का यज्ञशाला में प्रवेश",
+    "titleEn": "Vishvamitra Enters the Assembly with Rama and Lakshmana",
+    "verseCount": 35
+  },
+  {
+    "chapter": 48,
+    "titleHi": "श्रीसीताजी का यज्ञशाला में प्रवेश",
+    "titleEn": "Sita Enters the Assembly Hall",
+    "verseCount": 8
+  },
+  {
+    "chapter": 49,
+    "titleHi": "बंदीजनों द्वारा जनकप्रतिज्ञा की घोषणा",
+    "titleEn": "The Proclamation of Janaka's Vow",
+    "verseCount": 4
+  },
+  {
+    "chapter": 50,
+    "titleHi": "राजाओं से धनुष न उठना, जनक की निराशाजनक वाणी",
+    "titleEn": "The Kings Fail to Lift the Bow and Janaka Speaks in Despair",
+    "verseCount": 11
+  },
+  {
+    "chapter": 51,
+    "titleHi": "श्रीलक्ष्मणजी का क्रोध",
+    "titleEn": "Lakshmana's Righteous Anger",
+    "verseCount": 42
+  },
+  {
+    "chapter": 52,
+    "titleHi": "धनुषभंग",
+    "titleEn": "Rama Breaks Shiva's Bow",
+    "verseCount": 16
+  },
+  {
+    "chapter": 53,
+    "titleHi": "जयमाल पहनाना",
+    "titleEn": "Sita Garlands Rama",
+    "verseCount": 35
+  },
+  {
+    "chapter": 54,
+    "titleHi": "श्रीराम-लक्ष्मण और परशुराम संवाद",
+    "titleEn": "Rama, Lakshmana, and Parashurama",
+    "verseCount": 80
+  },
+  {
+    "chapter": 55,
+    "titleHi": "दशरथजी के पास जनकजी का दूत भेजना, अयोध्या से बारात का प्रस्थान",
+    "titleEn": "Janaka Sends Word to Dasharatha; the Wedding Party Leaves Ayodhya",
+    "verseCount": 95
+  },
+  {
+    "chapter": 56,
+    "titleHi": "बारात का जनकपुर में आना और स्वागतादि",
+    "titleEn": "The Wedding Procession Arrives in Janakpur",
+    "verseCount": 100
+  },
+  {
+    "chapter": 57,
+    "titleHi": "श्रीसीता-राम विवाह",
+    "titleEn": "The Wedding of Sita and Rama",
+    "verseCount": 99
+  },
+  {
+    "chapter": 58,
+    "titleHi": "बारात का अयोध्या लौटना और अयोध्या में आनन्द",
+    "titleEn": "The Wedding Party Returns to Ayodhya",
+    "verseCount": 111
+  },
+  {
+    "chapter": 59,
+    "titleHi": "श्रीरामचरित सुनने गाने की महिमा",
+    "titleEn": "The Glory of Hearing and Singing Rama's Deeds",
+    "verseCount": 2
   }
 ]

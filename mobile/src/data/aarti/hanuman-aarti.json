@@ -5,8 +5,20 @@
   "subtitleEn": "Aarti Keejai Hanuman Lala Ki",
   "deity": "hanuman",
   "language": "hi-en",
-  "source": {"baseText": "ndtv.in, sanatanvaani.in, hindunidhi.com", "retrievedOn": "2026-05-23"},
-  "counts": {"totalVerses": 14},
+  "source": {
+    "baseText": "Hanuman Ji Aarti, checked against Drik Panchang, HinduNidhi, Vedadhara, and BhaktiLok variants.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/lord-hanuman/shree-hanuman-aarti.html?ck=1&lang=hi",
+      "https://hindunidhi.com/hanuman-aarti-hindi/",
+      "https://www.vedadhara.com/%E0%A4%86%E0%A4%B0%E0%A4%A4%E0%A5%80-%E0%A4%95%E0%A5%80%E0%A4%9C%E0%A5%88-%E0%A4%B9%E0%A4%A8%E0%A5%81%E0%A4%AE%E0%A4%BE%E0%A4%A8-%E0%A4%B2%E0%A4%B2%E0%A4%BE-%E0%A4%95%E0%A5%80",
+      "https://ramodey.com/aarti/hanuman-aarti/aarti-kije-hanuman-lala-ki/",
+      "https://www.beautifulsonglyrics.com/hanuman-ji-ki-aarti-lyrics/"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
+  "counts": {
+    "totalVerses": 14
+  },
   "verses": [
     {
       "id": "ha-01",
@@ -183,7 +195,7 @@
       ],
       "linesEn": [
         "Sur nar muni jan aarti utaarein.",
-        "Jay jay jay Hanuman uchaarein."
+        "Jai jai jai Hanuman uchaarein."
       ],
       "meaningHi": "देवता (सुर), मनुष्य (नर) और मुनिजन सभी आरती उतारते हैं और जय जय जय हनुमान का उद्घोष करते हैं — तीनों लोकों में हनुमान की वन्दना होती है।",
       "meaningEn": "Gods, humans, and sages all perform their aarti and proclaim victory to Hanuman — in all three worlds, Hanuman is worshipped and praised."
@@ -214,12 +226,12 @@
       "labelHi": "पद · ११",
       "labelEn": "Stanza · 11",
       "lines": [
-        "जो हनुमानजी की आरती गावै।",
-        "बसि बैकुंठ परम पद पावै॥"
+        "जो हनुमानजी की आरती गावे।",
+        "बसि बैकुण्ठ परम पद पावे॥"
       ],
       "linesEn": [
-        "Jo Hanumanji ki aarti gaavai.",
-        "Basi Baikunth param pad paavai."
+        "Jo Hanumanji ki aarti gaave.",
+        "Basi Baikunth param pad paave."
       ],
       "meaningHi": "जो व्यक्ति हनुमानजी की यह आरती गाता है, वह बैकुंठ (विष्णुलोक) में निवास करता है और परम पद (मोक्ष) को प्राप्त करता है — यह आरती गाने का फल है।",
       "meaningEn": "Whoever sings this aarti of Hanuman attains residence in Vaikuntha (the divine abode) and achieves the supreme state of liberation — this is the fruit of singing this aarti."
@@ -232,12 +244,12 @@
       "labelHi": "पद · १२",
       "labelEn": "Stanza · 12",
       "lines": [
-        "लंक विध्वंस कीन्ह रघुराई।",
-        "तुलसीदास प्रभु कीर्ति गाई॥"
+        "लंक विध्वंस किये रघुराई।",
+        "तुलसीदास स्वामी कीर्ति गाई॥"
       ],
       "linesEn": [
-        "Lank vidhvans keenh Raghuraaee.",
-        "Tulseedaas prabhu keerti gaaee."
+        "Lank vidhvans kiye Raghuraaee.",
+        "Tulsidas Swami keerti gaaee."
       ],
       "meaningHi": "रघुराई (श्रीराम) ने लंका का विध्वंस किया और तुलसीदास ने प्रभु की कीर्ति (यश) गाई है — यह तुलसीदास द्वारा रचित होने का संकेत देता है।",
       "meaningEn": "Lord Rama destroyed Lanka, and Tulsidas has sung the glory of the Lord — this verse indicates the composition is attributed to the poet-saint Tulsidas."

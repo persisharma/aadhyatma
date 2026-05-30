@@ -15,6 +15,7 @@ export type DurgaStotramVerse = {
 
 export type DurgaStotramChapterSource = {
   baseText: string;
+  referenceUrls: string[];
   retrievedOn: string;
 };
 

@@ -1,0 +1,777 @@
+{
+  "chapter": 44,
+  "titleHi": "श्रीराम-लक्ष्मण का जनकपुर निरीक्षण",
+  "titleEn": "Rama and Lakshmana Tour Janakpur",
+  "verseCount": 40,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 44: Rama and Lakshmana Tour Janakpur, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/ram-lakshman-janakpur-nirikshan"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "verses": [
+    {
+      "id": "balkand-44-chaupai-219-0",
+      "section": "chaupai",
+      "stanza": 219,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "मुनि पद कमल बंदि दोउ भ्राता। चले लोक लोचन सुख दाता॥",
+        "बालक बृंद देखि अति सोभा। लगे संग लोचन मनु लोभा॥"
+      ],
+      "linesEn": [
+        "muni pada kamala bandi dou bhrātā | cale loka locana sukha dātā ||",
+        "bālaka bṛnda dekhi ati sobhā | lage saṃga locana manu lobhā ||"
+      ],
+      "meaningHi": "सब लोकों के नेत्रों को सुख देने वाले दोनों भाई मुनि के चरणकमलों की वन्दना करके चले। बालकों के झुंड ने इनकी अत्यन्त शोभा देखकर साथ लग गये। उनके नेत्र और मन इनकी माधुरी पर लुभा गये।",
+      "meaningEn": "The two brothers, who give joy to the eyes of all the world, bowed to the sage’s lotus feet and went on. Seeing their extraordinary beauty, a crowd of children joined them, and eyes and mind alike became captivated by their charm."
+    },
+    {
+      "id": "balkand-44-chaupai-219-1",
+      "section": "chaupai",
+      "stanza": 219,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "पीत बसन परिकर कटि भाथा। चारु चाप सर सोहत हाथा॥",
+        "तन अनुहरत सुचंदन खोरी। स्यामल गौर मनोहर जोरी॥"
+      ],
+      "linesEn": [
+        "pīta basana parikara kaṭi bhāthā | cāru cāpa sara sohata hāthā ||",
+        "tana anuharata sucaṃdana khorī | syāmala gaura manohara jorī ||"
+      ],
+      "meaningHi": "दोनों भाइयों के पीले वस्त्र हैं, कमर में तरकस बँधे हैं। हाथों में सुन्दर धनुष-बाण सुशोभित हैं। श्याम और गौर वर्ण के शरीरों पर सुन्दर चन्दन की खोरी लगी है। साँवरे और गोरे रंग की मनोहर जोड़ी है।",
+      "meaningEn": "The two brothers wear yellow garments, with quivers fastened at the waist. In their hands shine beautiful bows and arrows. Their bodies are adorned with sandal paste suited to their complexion—a lovely pairing of dark and fair hues."
+    },
+    {
+      "id": "balkand-44-chaupai-219-2",
+      "section": "chaupai",
+      "stanza": 219,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "केहरि कंधर बाहु बिसाला। उर अति रुचिर नागमनि माला॥",
+        "सुभग सोन सरसीरुह लोचन। बदन मयंक तापत्रय मोचन॥"
+      ],
+      "linesEn": [
+        "kehari kaṃdhara bāhu bisālā | ura ati rucira nāgamani mālā ||",
+        "subhaga sona sarasīruha locana | badana mayaṃka tāpatraya mocana ||"
+      ],
+      "meaningHi": "सिंह के समान गर्दन है; विशाल भुजाएँ हैं। छाती पर अत्यन्त सुन्दर नागमणि की माला है। सुन्दर लाल कमल के समान नेत्र हैं। तीनों तापों से छुड़ाने वाला चन्द्रमा के समान मुख है।",
+      "meaningEn": "Their necks are like a lion’s, and their arms are broad and powerful. Upon their chests rests a most beautiful necklace of serpent-gems. Their eyes are as lovely as red lotuses, and their faces are moonlike, relieving the threefold sufferings."
+    },
+    {
+      "id": "balkand-44-chaupai-219-3",
+      "section": "chaupai",
+      "stanza": 219,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "कानन्हि कनक फूल छबि देहीं। चितवत चितहि चोरि जनु लेहीं॥",
+        "चितवनि चारु भृकुटि बर बाँकी। तिलक रेख सोभा जनु चाँकी॥"
+      ],
+      "linesEn": [
+        "kānanhi kanaka phūla chabi dehīṃ | citavata citahi cori janu lehīṃ ||",
+        "citavani cāru bhṛkuṭi bara bāṃkī | tilaka rekha sobhā janu cāṃkī ||"
+      ],
+      "meaningHi": "कानों में सोने के कर्णफूल अत्यन्त शोभा दे रहे हैं और देखते ही देखने वाले के चित्त को मानो चुरा लेते हैं। उनकी चितवन बड़ी मनोहर है और भौंहें तिरछी एवं सुन्दर हैं। माथे पर तिलक की रेखाएँ ऐसी सुन्दर हैं मानो शोभा पर मुहर लगा दी गयी हो।",
+      "meaningEn": "Their golden ear ornaments shine with great beauty and seem to steal the heart of whoever beholds them. Their glance is lovely, and their eyebrows are gracefully arched. The lines of the tilak on their foreheads are so beautiful that they seem to seal beauty itself."
+    },
+    {
+      "id": "balkand-44-doha-219-4",
+      "section": "doha",
+      "stanza": 219,
+      "numInSection": 219,
+      "subSuffix": "",
+      "labelHi": "दोहा · २१९",
+      "labelEn": "Doha · 219",
+      "lines": [
+        "रुचिर चौतनीं सुभग सिर मेचक कुंचित केस।",
+        "नख सिख सुंदर बंधु दोउ सोभा सकल सुदेस॥"
+      ],
+      "linesEn": [
+        "rucira cautanīṃ subhaga sira mecaka kuṃcita kesa |",
+        "nakha sikha sundara bandhu dou sobhā sakala sudeśa ||"
+      ],
+      "meaningHi": "सिर पर सुन्दर चौतनीं [टोपियाँ] हैं, काले और घुँघराले बाल हैं। दोनों भाई नख से लेकर शिखा तक सुन्दर हैं और सारी शोभा जहाँ जैसी चाहिये वैसी ही है।",
+      "meaningEn": "They wear lovely caps on their heads, and their hair is dark and curly. Both brothers are beautiful from the nails to the crown, and every feature is perfectly adorned."
+    },
+    {
+      "id": "balkand-44-chaupai-220-0",
+      "section": "chaupai",
+      "stanza": 220,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "देखन नगर भूपसुत आए। समाचार पुरबासिन्ह पाए॥",
+        "धाए धाम काम सब त्यागी। मनहुँ रंक निधि लूटन लागी॥"
+      ],
+      "linesEn": [
+        "dekhana nagara bhūpasuta āe | samācāra purabāsinha pāe ||",
+        "dhāe dhāma kāma saba tyāgī | manahuṃ raṃka nidhi lūṭana lāgī ||"
+      ],
+      "meaningHi": "जब पुरवासियों ने यह समाचार पाया कि दोनों राजकुमार नगर देखने के लिये आये हैं, तब वे सब घर-बार और सब काम-काज छोड़कर ऐसे दौड़े मानो दरिद्र [धन का] खजाना लूटने दौड़े हों।",
+      "meaningEn": "When the city-dwellers learned that the two princes had come to see the city, they all rushed out, leaving home and work behind, as if paupers had run to plunder a treasure."
+    },
+    {
+      "id": "balkand-44-chaupai-220-1",
+      "section": "chaupai",
+      "stanza": 220,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "निरखि सहज सुंदर दोउ भाई। होहिं सुखी लोचन फल पाई॥",
+        "जुबतीं भवन झरोखन्हि लागीं। निरखहिं राम रूप अनुरागीं॥"
+      ],
+      "linesEn": [
+        "nirakhi sahaja sundara dou bhāī | hohiṃ sukhī locana phala pāī ||",
+        "jubatīṃ bhavana jharokhanhi lāgīṃ | nirakhahiṃ rāma rūpa anurāgīṃ ||"
+      ],
+      "meaningHi": "स्वभाव ही से सुन्दर दोनों भाइयों को देखकर वे लोग नेत्रों का फल पाकर सुखी हो रहे हैं। युवती स्त्रियाँ घर के झरोखों से लगी हुई प्रेम सहित श्रीरामचन्द्रजी के रूप को देख रही हैं।",
+      "meaningEn": "Seeing the two brothers, beautiful by nature, they feel blessed and joyous as if their eyes have borne fruit. Young women, leaning from the windows of their homes, gaze lovingly at the form of Shri Ramachandra."
+    },
+    {
+      "id": "balkand-44-chaupai-220-2",
+      "section": "chaupai",
+      "stanza": 220,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "कहहिं परसपर बचन सप्रीती। सखि इन्ह कोटि काम छबि जीती॥",
+        "सुर नर असुर नाग मुनि माहीं। सोभा असि कहुँ सुनिअति नाहीं॥"
+      ],
+      "linesEn": [
+        "kahahiṃ paraspara bacana saprīti | sakhi inha koṭi kāma chabi jītī ||",
+        "sura nara asura nāga muni māhīṃ | sobhā asi kahuṃ suniati nāhīṃ ||"
+      ],
+      "meaningHi": "वे आपस में बड़े प्रेम से बातें कर रही हैं—हे सखी! इन्होंने करोड़ों कामदेवों की छबि को जीत लिया है। देवता, मनुष्य, असुर, नाग और मुनियों में ऐसी शोभा तो कहीं सुनने में भी नहीं आती।",
+      "meaningEn": "They speak to one another with affection: “O friend, they have surpassed the beauty of millions of Cupids. Among gods, men, demons, serpents, and sages, such beauty is not even heard of anywhere.”"
+    },
+    {
+      "id": "balkand-44-chaupai-220-3",
+      "section": "chaupai",
+      "stanza": 220,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "बिष्नु चारि भुज बिधि मुख चारी। बिकट बेष मुख पंच पुरारी॥",
+        "अपर देउ अस कोउ न आही। यह छबि सखी पटतरिअ जाही॥"
+      ],
+      "linesEn": [
+        "biṣnu cāri bhuja bidhi mukha cārī | bikaṭa beṣa mukha pañca purārī ||",
+        "apara deu asa kou na āhī | yaha chabi sakhī paṭataria jāhī ||"
+      ],
+      "meaningHi": "भगवान् विष्णु के चार भुजाएँ हैं, ब्रह्माजी के चार मुख हैं, शिवजी का विकट वेष है और उनके पाँच मुख हैं। हे सखी! दूसरा देवता भी कोई ऐसा नहीं है जिसके साथ इस छबि की उपमा दी जाय।",
+      "meaningEn": "Vishnu has four arms, Brahma has four faces, and Shiva, the destroyer of Tripura, has a fierce form and five faces. O friend, there is no other deity to whom this beauty may be compared."
+    },
+    {
+      "id": "balkand-44-doha-220-4",
+      "section": "doha",
+      "stanza": 220,
+      "numInSection": 220,
+      "subSuffix": "",
+      "labelHi": "दोहा · २२०",
+      "labelEn": "Doha · 220",
+      "lines": [
+        "बय किसोर सुषमा सदन स्याम गौर सुख धाम।",
+        "अंग अंग पर वारिअहिं कोटि कोटि सत काम॥"
+      ],
+      "linesEn": [
+        "baya kisora suṣamā sadana syāma gaura sukha dhāma |",
+        "aṃga aṃga para vāriahiṃ koṭi koṭi sata kāma ||"
+      ],
+      "meaningHi": "इनकी किशोर अवस्था है, ये सुन्दरता के घर, साँवले और गोरे रंग के तथा सुख के धाम हैं। इनके अंग-अंग पर करोड़ों-करोड़ों कामदेवों को निछावर कर देना चाहिये।",
+      "meaningEn": "They are in the bloom of youth, abodes of beauty, dark and fair in complexion, and homes of bliss. One should offer up millions upon millions of Cupids to each and every limb of theirs."
+    },
+    {
+      "id": "balkand-44-chaupai-221-0",
+      "section": "chaupai",
+      "stanza": 221,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "कहहु सखी अस को तनुधारी। जो न मोह यह रूप निहारी॥",
+        "कोउ सप्रेम बोली मृदु बानी। जो मैं सुना सो सुनहु सयानी॥"
+      ],
+      "linesEn": [
+        "kahahu sakhī asa ko tanudhārī. jo na moha yaha rūpa nihārī.",
+        "kou saprema bolī mṛdu bānī. jo maiṃ sunā so sunahu sayānī."
+      ],
+      "meaningHi": "हे सखी! [भला] कहो तो ऐसा कौन शरीरधारी होगा जो इस रूप को देखकर मोहित न हो जाय (अर्थात् यह रूप जड़-चेतन सबको मोहित करनेवाला है)। [तब] कोई दूसरी सखी प्रेम सहित कोमल वाणी से बोली—हे सयानी! मैंने जो सुना है उसे सुनो—।",
+      "meaningEn": "O friend, tell me: who, possessing a body, would not be enchanted on seeing such beauty? (That is, this form captivates all beings, sentient and insentient.) Then another friend, speaking lovingly and gently, said, \"O wise one, listen to what I have heard.\""
+    },
+    {
+      "id": "balkand-44-chaupai-221-1",
+      "section": "chaupai",
+      "stanza": 221,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "ए दोऊ दसरथ के ढोटा। बाल मरालन्हि के कल जोटा॥",
+        "मुनि कौसिक मख के रखवारे। जिन्ह रन अजिर निसाचर मारे॥"
+      ],
+      "linesEn": [
+        "e dou dasaratha ke ḍhoṭā. bāla marālanhi ke kala joṭā.",
+        "muni kausika makha ke rakhavāre. jinha rana ajira nisācara māre."
+      ],
+      "meaningHi": "ये दोनों [राजकुमार] महाराज दशरथजी के पुत्र हैं। बाल राजहंसों का-सा सुन्दर जोड़ा है। ये मुनि विश्वामित्र के यज्ञ की रक्षा करनेवाले हैं, इन्होंने युद्ध के मैदान में राक्षसों को मारा है।",
+      "meaningEn": "These two princes are the sons of Maharaja Dasharatha. They are a lovely pair, like young swans. They are the protectors of Sage Vishwamitra's sacrifice, and they have slain the demons on the battlefield."
+    },
+    {
+      "id": "balkand-44-chaupai-221-2",
+      "section": "chaupai",
+      "stanza": 221,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "स्याम गात कल कंज बिलोचन। जो मारीच सुभुज मदु मोचन॥",
+        "कौसल्या सुत सो सुख खानी। नामु रामु धनु सायक पानी॥"
+      ],
+      "linesEn": [
+        "syāma gāta kala kanja bilocana. jo mārīca subhuja madu mocana.",
+        "kausalyā suta so sukha khānī. nāmu rāmu dhanu sāyaka pānī."
+      ],
+      "meaningHi": "जिनका श्याम शरीर और सुन्दर कमल-जैसे नेत्र हैं, जो मारीच और सुबाहु के मद को चूर करनेवाले और सुख की खान हैं और जो हाथ में धनुष-बाण लिये हुए हैं, वे कौसल्याजी के पुत्र हैं; इनका नाम राम है।",
+      "meaningEn": "He whose body is dark and whose eyes are lovely like lotuses, who crushes the pride of Maricha and Subahu and is a mine of bliss, and who holds bow and arrows in His hands—He is the son of Kaushalya; His name is Rama."
+    },
+    {
+      "id": "balkand-44-chaupai-221-3",
+      "section": "chaupai",
+      "stanza": 221,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "गौर किसोर बेषु बर काछें। कर सर चाप राम के पाछें॥",
+        "लछिमनु नामु राम लघु भ्राता। सुनु सखि तासु सुमित्रा माता॥"
+      ],
+      "linesEn": [
+        "gaura kisora beṣu bara kācheṃ. kara sara cāpa rāma ke pācheṃ.",
+        "lachimanu nāmu rāma laghu bhrātā. sunu sakhi tāsu sumitrā mātā."
+      ],
+      "meaningHi": "जिनका रंग गोरा और किशोर अवस्था है और जो सुन्दर वेष बनाये और हाथ में धनुष-बाण लिये श्रीरामजी के पीछे-पीछे चल रहे हैं, वे इनके छोटे भाई हैं; उनका नाम लक्ष्मण है। हे सखी! सुनो, उनकी माता सुमित्रा हैं।",
+      "meaningEn": "He whose complexion is fair and who is in youth, beautifully dressed and carrying bow and arrows in his hand, walking behind Shri Ramji—he is His younger brother. His name is Lakshman. O friend, listen: his mother is Sumitra."
+    },
+    {
+      "id": "balkand-44-doha-221-4",
+      "section": "doha",
+      "stanza": 221,
+      "numInSection": 221,
+      "subSuffix": "",
+      "labelHi": "दोहा · २२१",
+      "labelEn": "Doha · 221",
+      "lines": [
+        "बिप्रकाजु करि बंधु दोउ मग मुनिबधू उधारि।",
+        "आए देखन चापमख सुनि हरषीं सब नारि॥"
+      ],
+      "linesEn": [
+        "biprakāju kari bandhu dou maga munibadhū udhāri.",
+        "āe dekhana cāpamakha suni haraṣīṃ saba nāri."
+      ],
+      "meaningHi": "दोनों भाई ब्राह्मण विश्वामित्र का काम करके और रास्ते में मुनि गौतम की स्त्री अहल्या का उद्धार करके यहाँ धनुषयज्ञ देखने आये हैं। यह सुनकर सब स्त्रियाँ प्रसन्न हुईं।",
+      "meaningEn": "The two brothers, having done the Brahmin's task and having rescued the sage Gautama's wife Ahalya on the way, have come here to see the bow-sacrifice. Hearing this, all the women became delighted."
+    },
+    {
+      "id": "balkand-44-chaupai-222-0",
+      "section": "chaupai",
+      "stanza": 222,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "देखि राम छबि कोउ एक कहई। जोगु जानकिहि यह बरु अहई॥",
+        "जौं सखि इन्हहि देख नरनाहू। पन परिहरि हठि करइ बिबाहू॥"
+      ],
+      "linesEn": [
+        "dekhi rāma chabi kou eka kaheī. jogu jānakihi yaha baru ahaī.",
+        "jaum sakhi inhaha dekha naranāhū. pana parihari haṭhi karai bibāhū."
+      ],
+      "meaningHi": "श्रीरामचन्द्रजी की छबि देखकर कोई एक (दूसरी सखी) कहने लगी—यह वर जानकी के योग्य है। हे सखी! यदि कहीं राजा इन्हें देख ले, तो प्रतिज्ञा छोड़कर हठपूर्वक इन्हीं से विवाह कर देगा।",
+      "meaningEn": "Seeing Rama's beauty, one of them said, \"This bridegroom is fit for Janaki.\" O friend, if the king were to see them, he would abandon his vow and insist on marrying them."
+    },
+    {
+      "id": "balkand-44-chaupai-222-1",
+      "section": "chaupai",
+      "stanza": 222,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "कोउ कह ए भूपति पहिचाने। मुनि समेत सादर सनमाने॥",
+        "सखि परंतु पनु राउ न तजई। बिधि बस हठि अबिबेकहि भजई॥"
+      ],
+      "linesEn": [
+        "kou kaha e bhūpati pahicāne. muni sameta sādara sanamāne.",
+        "sakhi paraṃtu panu rāu na tajaī. bidhi basa haṭhi abibekahi bhajaī."
+      ],
+      "meaningHi": "किसी ने कहा—राजा ने इन्हें पहचान लिया है और मुनि के सहित इनका आदरपूर्वक सम्मान किया है। परन्तु हे सखी! राजा अपना प्रण नहीं छोड़ता। वह होनहार के वशीभूत होकर हठपूर्वक अविवेक का ही आश्रय लिये हुए है।",
+      "meaningEn": "Someone said, \"The king has recognized them and honored them respectfully along with the sage.\" But, O friend, the king does not give up his vow. Under the sway of destiny, he clings stubbornly to folly and refuses wisdom."
+    },
+    {
+      "id": "balkand-44-chaupai-222-2",
+      "section": "chaupai",
+      "stanza": 222,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "कोउ कह जौं भल अहइ बिधाता। सब कहँ सुनिअ उचित फलदाता॥",
+        "तौ जानकिहि मिलिहि बरु एहू। नाहिन आलि इहाँ संदेहू॥"
+      ],
+      "linesEn": [
+        "kou kaha jaum bhal ahai bidhātā. saba kaham sunia ucita phaladātā.",
+        "tau jānakihi milihi baru ehū. nāhina āli ihāṃ sandehū."
+      ],
+      "meaningHi": "कोई कहती है—यदि विधाता भले हैं और सुना जाता है कि वे सब को उचित फल देते हैं, तो जानकीजी को यही वर मिलेगा। हे सखी! इसमें सन्देह नहीं है।",
+      "meaningEn": "Someone said, \"If destiny is gracious, and it is said that it gives each one the proper fruit, then this bridegroom will be obtained by Janaki.\" O friend, there is no doubt about it."
+    },
+    {
+      "id": "balkand-44-chaupai-222-3",
+      "section": "chaupai",
+      "stanza": 222,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "जौं बिधि बस अस बनै सँजोगू। तौ कृतकृत्य होइ सब लोगू॥",
+        "सखि हमरें आरति अति तातें। कबहुँक ए आवहिं एहि नातें॥"
+      ],
+      "linesEn": [
+        "jaum bidhi basa asa banai saṃjogū. tau kṛtakṛtya hoi saba logū.",
+        "sakhi hamareṃ ārati ati tāteṃ. kabahumka e āvahiṃ ehi nāteṃ."
+      ],
+      "meaningHi": "जो दैवयोग से ऐसा संयोग बन जाय, तो हम सब लोग कृतार्थ हो जायँ। हे सखी! हमारे तो इससे इतनी अधिक आतुरता हो रही है कि इसी नाते कभी ये यहाँ आएँगे।",
+      "meaningEn": "If, by the will of destiny, such a union were to come about, then all would be fulfilled. O friend, my heart is so eager because of this that, for that reason, perhaps they will come here someday."
+    },
+    {
+      "id": "balkand-44-doha-222-4",
+      "section": "doha",
+      "stanza": 222,
+      "numInSection": 222,
+      "subSuffix": "",
+      "labelHi": "दोहा · २२२",
+      "labelEn": "Doha · 222",
+      "lines": [
+        "नाहिं त हम कहुँ सुनहु सखि इन्ह कर दरसनु दूरि।",
+        "यह संघटु तब होइ जब पुन्य पुराकृत भूरि॥"
+      ],
+      "linesEn": [
+        "nāhiṃ ta hama kahuṃ sunahu sakhi inha kara darasanu dūri.",
+        "yaha saṃghaṭu taba hoi jaba punya purākṛta bhūri."
+      ],
+      "meaningHi": "नहीं तो, हे सखी! सुनो, हमको इनके दर्शन दुर्लभ हैं। यह संयोग तभी हो सकता है जब हमारे पूर्वजन्मों के बहुत पुण्य हों।",
+      "meaningEn": "Otherwise, O friend, listen: for us their sight is hard to obtain. This union can happen only when there are abundant merits from former births."
+    },
+    {
+      "id": "balkand-44-chaupai-223-0",
+      "section": "chaupai",
+      "stanza": 223,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "बोली अपर कहेहु सखि नीका। एहिं बिआह अति हित सबही का॥",
+        "कोउ कह संकर चाप कठोरा। ए स्यामल मृदु गात किसोरा॥"
+      ],
+      "linesEn": [
+        "bolī apara kahehu sakhi nīkā. ehiṃ biāha ati hita sabahī kā.",
+        "kou kaha saṃkara cāpa kaṭhorā. e syāmala mṛdu gāta kisorā."
+      ],
+      "meaningHi": "दूसरी ने कहा—हे सखी! तुमने बहुत अच्छा कहा। इस विवाह से सभी का परम हित है। किसी ने कहा—शंकरजी का धनुष कठोर है और ये साँवले राजकुमार कोमल शरीर के बालक हैं।",
+      "meaningEn": "Another said, \"O friend, you have spoken well. This marriage is greatly beneficial for everyone.\" Someone said, \"Shankarji's bow is hard and stern, while these dark-complexioned princes are tender-bodied boys.\""
+    },
+    {
+      "id": "balkand-44-chaupai-223-1",
+      "section": "chaupai",
+      "stanza": 223,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "सबु असमंजस अहइ सयानी। यह सुनि अपर कहइ मृदु बानी॥",
+        "सखि इन्ह कहँ कोउ कोउ अस कहहीं। बड़ प्रभाउ देखत लघु अहहीं॥"
+      ],
+      "linesEn": [
+        "sabu asamaṃjasa ahai sayānī. yaha suni apara kahai mṛdu bānī.",
+        "sakhi inha kahaṃ kou kou asa kahahīṃ. baḍa prabhāu dekhata laghu ahahīṃ."
+      ],
+      "meaningHi": "हे सयानी! सब असमंजस ही है। यह सुनकर दूसरी सखी कोमल वाणी से कहने लगी—हे सखी! इनके सम्बन्ध में कोई-कोई ऐसा कहते हैं कि ये देखने में तो छोटे हैं, पर इनका प्रभाव बहुत बड़ा है।",
+      "meaningEn": "O wise one, everything is a puzzle. Hearing this, another friend said in a gentle voice, \"O friend, some people say of them that they appear small, yet their greatness is immense.\""
+    },
+    {
+      "id": "balkand-44-chaupai-223-2",
+      "section": "chaupai",
+      "stanza": 223,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "परसि जासु पद पंकज धूरी। तरी अहल्या कृत अघ भूरी॥",
+        "सो कि रहिहि बिनु सिव धनु तोरें। यह प्रतीति परिहरिअ न भोरें॥"
+      ],
+      "linesEn": [
+        "parasi jāsu pada paṃkaja dhūrī. tarī ahalyā kṛta agha bhūrī.",
+        "so ki rahihi binu siva dhanu toreṃ. yaha pratīti pariharia na bhoreṃ."
+      ],
+      "meaningHi": "जिनके चरणकमलों की धूलि का स्पर्श पाकर अहल्या तर गई, जिसने बड़ा भारी पाप किया था, वे क्या शिवजी का धनुष बिना तोड़े रहेंगे। इस विश्वास को भूलकर भी नहीं छोड़ना चाहिये।",
+      "meaningEn": "She who had committed a grave sin was redeemed by the touch of the dust of His lotus feet. How then could He fail to break Shiva's bow? One should never abandon this conviction, even by mistake."
+    },
+    {
+      "id": "balkand-44-chaupai-223-3",
+      "section": "chaupai",
+      "stanza": 223,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "जेहिं बिरंचि रचि सीय सँवारी। तेहिं स्यामल बरु रचेउ बिचारी॥",
+        "तासु बचन सुनि सब हरषानीं। ऐसेइ होउ कहहिं मृदु बानीं॥"
+      ],
+      "linesEn": [
+        "jehiṃ biraṃci raci sīya saṃvārī. tehiṃ syāmala baru raceu bicārī.",
+        "tāsu bacana suni saba haraṣānīṃ. aisei hou kahahiṃ mṛdu bānīṃ."
+      ],
+      "meaningHi": "जिस ब्रह्मा ने सीता को सँवारकर (बड़ी चतुराई से) रचा है, उसी ने विचारकर साँवला वर भी रच रखा है। उसके ये वचन सुनकर सब हर्षित हुईं और कोमल वाणी से कहने लगीं—ऐसा ही हो।",
+      "meaningEn": "The same Brahma who, with great skill, fashioned and adorned Sita has thoughtfully created the dark-complexioned bridegroom as well. Hearing these words, all were delighted, and they said in gentle voices, \"So be it.\""
+    },
+    {
+      "id": "balkand-44-doha-223-4",
+      "section": "doha",
+      "stanza": 223,
+      "numInSection": 223,
+      "subSuffix": "",
+      "labelHi": "दोहा · २२३",
+      "labelEn": "Doha · 223",
+      "lines": [
+        "हियँ हरषहिं बरषहिं सुमन सुमुखि सुलोचनि बृंद।",
+        "जाहिं जहाँ जहँ बंधु दोउ तहँ तहँ परमानंद॥"
+      ],
+      "linesEn": [
+        "hiyaṃ haraṣahiṃ baraṣahiṃ sumana sumukhi sulochani bṛnda.",
+        "jāhiṃ jahāṃ jahaṃ bandhu dou tahaṃ tahaṃ paramānanda."
+      ],
+      "meaningHi": "सुन्दर मुख और सुन्दर नेत्रोंवाली स्त्रियाँ समूह-समूह हृदय में हर्षित होकर फूल बरसा रही हैं। जहाँ-जहाँ दोनों भाई जाते हैं, वहाँ-वहाँ परम आनन्द छा जाता है।",
+      "meaningEn": "Groups of women with lovely faces and beautiful eyes are rejoicing in their hearts and showering flowers. Wherever the two brothers go, supreme bliss arises there."
+    },
+    {
+      "id": "balkand-44-chaupai-224-0",
+      "section": "chaupai",
+      "stanza": 224,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "पुर पूरब दिसि गे दोउ भाई। जहँ धनुमख हित भूमि बनाई॥",
+        "अति बिस्तार चारु गच ढारी। बिमल बेदिका रुचिर सँवारी॥"
+      ],
+      "linesEn": [
+        "pura pūraba disi ge dou bhāī. jahaṃ dhanumakha hita bhūmi banāī.",
+        "ati bistāra cāru gaca ḍhārī. bimala bedikā rucira saṃvārī."
+      ],
+      "meaningHi": "दोनों भाई नगर के पूरब ओर गये; जहाँ धनुषयज्ञ के लिये [रंग] भूमि बनायी गयी थी। बहुत लंबा-चौड़ा सुन्दर ढला हुआ पक्का आँगन था, जिस पर सुन्दर और निर्मल वेदी सजायी गयी थी।",
+      "meaningEn": "The two brothers went to the eastern side of the city, where the ground for the bow-sacrifice had been prepared. It was very broad and beautiful, with a well-laid platform, and a lovely, spotless altar was arranged there."
+    },
+    {
+      "id": "balkand-44-chaupai-224-1",
+      "section": "chaupai",
+      "stanza": 224,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "चहुँ दिसि कंचन मंच बिसाला। रचे जहाँ बैठहिं महिपाला॥",
+        "तेहि पाछें समीप चहुँ पासा। अपर मंच मंडली बिलासा॥"
+      ],
+      "linesEn": [
+        "cahuṃ disi kaṃcana maṃca bisālā. race jahāṃ baiṭhahiṃ mahipālā.",
+        "tehi pācheṃ samīpa cahuṃ pāsā. apara maṃca maṇḍalī bilāsā."
+      ],
+      "meaningHi": "चारों ओर सोने के बड़े-बड़े मंच बने थे, जिन पर राजा लोग बैठेंगे। उनके पीछे समीप ही चारों ओर दूसरे मचानों का मण्डलाकार घेरा सुशोभित था।",
+      "meaningEn": "On all four sides there were grand golden platforms where the kings were to sit. Behind them, close by on all sides, another circular arrangement of platforms was beautifully displayed."
+    },
+    {
+      "id": "balkand-44-chaupai-224-2",
+      "section": "chaupai",
+      "stanza": 224,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "कछुक ऊँचि सब भाँति सुहाई। बैठहिं नगर लोग जहँ जाई॥",
+        "तिन्ह के निकट बिसाल सुहाए। धवल धाम बहुबरन बनाए॥"
+      ],
+      "linesEn": [
+        "kachuka ūṃci saba bhāṃti suhāī. baiṭhahiṃ nagara loga jahaṃ jāī.",
+        "tinha ke nikaṭa bisāla suhāe. dhavala dhāma bahubarana banāe."
+      ],
+      "meaningHi": "वह कुछ ऊँचा था और सब प्रकार से सुन्दर था, जहाँ जाकर नगर के लोग बैठेंगे। उन्हीं के निकट विशाल एवं सुन्दर सफेद मकान अनेक रंगों के बनाये गये हैं।",
+      "meaningEn": "It was somewhat elevated and beautiful in every way, where the townspeople would go and sit. Nearby were large, lovely white buildings, made in many colors."
+    },
+    {
+      "id": "balkand-44-chaupai-224-3",
+      "section": "chaupai",
+      "stanza": 224,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "जहँ बैठें देखहिं सब नारी। जथाजोगु निज कुल अनुहारी॥",
+        "पुर बालक कहि कहि मृदु बचना। सादर प्रभुहि देखावहिं रचना॥"
+      ],
+      "linesEn": [
+        "jahaṃ baiṭheṃ dekhahiṃ saba nārī. jathājogu nija kula anuhārī.",
+        "pura bālaka kahi kahi mṛdu bacanā. sādara prabhuhi dekhāvahiṃ racanā."
+      ],
+      "meaningHi": "जहाँ अपने-अपने कुल के अनुसार सब स्त्रियाँ यथायोग्य (जिसको जहाँ बैठना उचित है) बैठकर देखेंगी। नगर के बालक कोमल वचन कह-कहकर आदरपूर्वक प्रभु श्रीरामचन्द्रजी को [यज्ञशाला की] रचना दिखला रहे हैं।",
+      "meaningEn": "There, all the women, according to their own families and rank, would sit in proper places and watch. The boys of the city, speaking gently and repeatedly, were respectfully showing Shri Ramchandraji the arrangement of the sacrificial hall."
+    },
+    {
+      "id": "balkand-44-doha-224-4",
+      "section": "doha",
+      "stanza": 224,
+      "numInSection": 224,
+      "subSuffix": "",
+      "labelHi": "दोहा · २२४",
+      "labelEn": "Doha · 224",
+      "lines": [
+        "सब सिसु एहि मिस प्रेमबस परसि मनोहर गात।",
+        "तन पुलकहिं अति हरषु हियँ देखि देखि दोउ भ्रात॥"
+      ],
+      "linesEn": [
+        "saba sisu ehi misa premabasa parasi manohara gāta.",
+        "tana pulakahiṃ ati haraṣu hiyaṃ dekhi dekhi dou bhrāta."
+      ],
+      "meaningHi": "सब बालक इसी बहाने प्रेम के वश होकर श्रीरामजी के मनोहर अंगों को छूकर शरीर से पुलकित हो रहे हैं और दोनों भाइयों को देख-देखकर उनके हृदय में अत्यन्त हर्ष हो रहा है।",
+      "meaningEn": "All the children, under the pretext of this, are moved by love and touching Shri Ramji's lovely limbs; their bodies thrill with joy, and their hearts are filled with great delight as they look again and again at the two brothers."
+    },
+    {
+      "id": "balkand-44-chaupai-225-0",
+      "section": "chaupai",
+      "stanza": 225,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "सिसु सब राम प्रेमबस जाने। प्रीति समेत निकेत बखाने॥",
+        "निज निज रुचि सब लेहिं बोलाई। सहित सनेह जाहिं दोउ भाई॥"
+      ],
+      "linesEn": [
+        "sisu saba rāma premabasa jāne. prīti sameta niketa bakhāne.",
+        "nija nija ruci saba lehiṃ bolāī. sahita saneha jāhiṃ dou bhāī."
+      ],
+      "meaningHi": "श्रीरामचन्द्रजी ने सब बालकों को प्रेम के वश जानकर [यज्ञभूमि के] स्थानों की प्रेमपूर्वक प्रशंसा की। [इससे बालकों का उत्साह, आनन्द और प्रेम और भी बढ़ गया, जिससे] वे सब अपनी-अपनी रुचि के अनुसार उन्हें बुला लेते हैं और [प्रत्येक के बुलाने पर] दोनों भाई प्रेम सहित उनके पास चले जाते हैं।",
+      "meaningEn": "Sri Ramchandraji, understanding that all the boys were under the sway of love, praised the places of the sacrificial ground affectionately. [As a result, their enthusiasm, joy, and love increased even more,] and they each called the brothers over according to their own liking; whenever called, the two brothers would go to them with affection."
+    },
+    {
+      "id": "balkand-44-chaupai-225-1",
+      "section": "chaupai",
+      "stanza": 225,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "राम देखावहिं अनुजहि रचना। कहि मृदु मधुर मनोहर बचना॥",
+        "लव निमेष महुँ भुवन निकाया। रचइ जासु अनुसासन माया॥"
+      ],
+      "linesEn": [
+        "rāma dekhāvahiṃ anujahi racanā. kahi mṛdu madhura manohara bacanā.",
+        "lava nimeṣa mahuṃ bhuvana nikāyā. raca'i jāsu anusāsana māyā."
+      ],
+      "meaningHi": "कोमल, मधुर और मनोहर वचन कहकर श्रीरामजी अपने छोटे भाई लक्ष्मण को [यज्ञभूमि की] रचना दिखलाते हैं। जिनकी आज्ञा पाकर माया लव निमेष (पलक गिरने के चौथाई समय) में ब्रह्माण्डों के समूह रच डालती है।",
+      "meaningEn": "Speaking soft, sweet, and delightful words, Shri Ramji shows His younger brother Lakshman the arrangement of the sacrificial grounds. By whose command Maya creates whole clusters of universes in the time of a lava-nimesha (a quarter of the time it takes an eyelid to fall)."
+    },
+    {
+      "id": "balkand-44-chaupai-225-2",
+      "section": "chaupai",
+      "stanza": 225,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "भगति हेतु सोइ दीनदयाला। चितवत चकित धनुष मखसाला॥",
+        "कौतुक देखि चले गुरु पाहीं। जानि बिलंबु त्रास मन माहीं॥"
+      ],
+      "linesEn": [
+        "bhagati hetu soi dīnadayālā. citavata cakita dhanuṣa makhasālā.",
+        "kautuka dekhi cale guru pāhīṃ. jāni bilaṃbu trāsa mana māhīṃ."
+      ],
+      "meaningHi": "वही दीनों पर दया करनेवाले श्रीरामजी भक्ति के कारण धनुषयज्ञशाला को चकित होकर (आश्चर्य के साथ) देख रहे हैं। इस प्रकार सब कौतुक (विचित्र रचना) देखकर वे गुरु के पास चले। देर हुई जानकर उनके मन में डर है।",
+      "meaningEn": "That very Lord, compassionate to the poor, Shri Ramji, out of devotion, gazes in wonder at the bow-sacrifice hall. Having seen all these marvels, He goes to the guru. Knowing that time has passed, fear arises in His mind."
+    },
+    {
+      "id": "balkand-44-chaupai-225-3",
+      "section": "chaupai",
+      "stanza": 225,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "जासु त्रास डर कहुँ डर होई। भजन प्रभाउ देखावत सोई॥",
+        "कहि बातें मृदु मधुर सुहाईं। किए बिदा बालक बरिआईं॥"
+      ],
+      "linesEn": [
+        "jāsu trāsa ḍara kahuṃ ḍara hoī. bhajana prabhāu dekhāvata soī.",
+        "kahi bātēṃ mṛdu madhura suhāīṃ. kie bidā bālaka bariāīṃ."
+      ],
+      "meaningHi": "जिनके भय से डर को भी डर लगता है, वही प्रभु भजन का प्रभाव [जिसके कारण ऐसे महान् प्रभु भी भय का नाट्य करते हैं] दिखला रहे हैं। उन्होंने कोमल, मधुर और सुन्दर बातें कहकर बालकों को जबरदस्ती विदा किया।",
+      "meaningEn": "He before whom even fear becomes afraid is showing the power of devotion [because of which even such a great Lord acts out fear]. Speaking soft, sweet, and lovely words, He sent the boys away, despite their reluctance."
+    },
+    {
+      "id": "balkand-44-doha-225-4",
+      "section": "doha",
+      "stanza": 225,
+      "numInSection": 225,
+      "subSuffix": "",
+      "labelHi": "दोहा · २२५",
+      "labelEn": "Doha · 225",
+      "lines": [
+        "सभय सप्रेम बिनीत अति सकुच सहित दोउ भाइ।",
+        "गुर पद पंकज नाइ सिर बैठे आयसु पाइ॥"
+      ],
+      "linesEn": [
+        "sabhaya saprema binīta ati sakuca sahita dou bhāi.",
+        "gura pada paṃkaja nāi sira baiṭhe āyasu pāi."
+      ],
+      "meaningHi": "फिर भय, प्रेम, विनय और बड़े संकोच के साथ दोनों भाई गुरु के चरणकमलों में सिर नवाकर आज्ञा पाकर बैठे।",
+      "meaningEn": "Then, with reverence, love, humility, and great modesty, both brothers bowed their heads to the guru's lotus feet and sat down after receiving his command."
+    },
+    {
+      "id": "balkand-44-chaupai-226-0",
+      "section": "chaupai",
+      "stanza": 226,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "निसि प्रबेस मुनि आयसु दीन्हा। सबहीं संध्याबंदनु कीन्हा॥",
+        "कहत कथा इतिहास पुरानी। रुचिर रजनि जुग जाम सिरानी॥"
+      ],
+      "linesEn": [
+        "nisi prabesa muni āyasu dīnhā. sabahīṃ saṃdhyābandanu kīnhā.",
+        "kahat kathā itihāsa purānī. rucira rajani juga jāma sirānī."
+      ],
+      "meaningHi": "रात्रि का प्रवेश होते ही (संध्या के समय) मुनि ने आज्ञा दी, तब सभी ने संध्यावंदन किया। फिर प्राचीन कथाएँ तथा इतिहास कहते-कहते सुन्दर रात्रि दो पहर बीत गयी।",
+      "meaningEn": "When night fell, the sage gave the order; then everyone performed the evening worship. Then, speaking of ancient tales and histories, the lovely night passed in two watches."
+    },
+    {
+      "id": "balkand-44-chaupai-226-1",
+      "section": "chaupai",
+      "stanza": 226,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "मुनिबर सयन कीन्हि तब जाई। लगे चरन चापन दोउ भाई॥",
+        "जिन्ह के चरन सरोरुह लागी। करत बिबिध जप जोग बिरागी॥"
+      ],
+      "linesEn": [
+        "munibara sayana kīnhi taba jāī. lage carana cāpana doū bhāī.",
+        "jinha ke carana saroruha lāgī. karata bibidha japa joga birāgī."
+      ],
+      "meaningHi": "तब श्रेष्ठ मुनि जाकर शयन किए। दोनों भाई उनके चरण दबाने लगे जिनके चरणकमलों के [दर्शन एवं स्पर्श के] लिए वैराग्यवान् पुरुष भी भाँति-भाँति के जप और योग करते हैं।",
+      "meaningEn": "Then the noble sage went to rest. The two brothers began to massage his feet, whose lotus-feet even ascetics seek through various chants and yoga practices."
+    },
+    {
+      "id": "balkand-44-chaupai-226-2",
+      "section": "chaupai",
+      "stanza": 226,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "तेइ दोउ बंधु प्रेम जनु जीते। गुर पद कमल पलोटत प्रीते॥",
+        "बार बार मुनि अग्या दीन्ही। रघुबर जाइ सयन तब कीन्ही॥"
+      ],
+      "linesEn": [
+        "tei doū bandhu prema janu jīte. guru pada kamala paloṭata prīte.",
+        "bāra bāra muni agyā dīnhī. raghubara jāi sayana taba kīnhī."
+      ],
+      "meaningHi": "वे ही दोनों भाई मानो प्रेम से जीते हुए प्रेमपूर्वक गुरु के चरणकमलों को दबा रहे हैं। मुनि ने बार-बार आज्ञा दी, तब श्रीरघुनाथजी ने जाकर शयन किया।",
+      "meaningEn": "Those same two brothers, as though conquered by love, were lovingly massaging the sage's lotus feet. The sage repeatedly gave his order, and then Shri Raghunathji went and lay down to sleep."
+    },
+    {
+      "id": "balkand-44-chaupai-226-3",
+      "section": "chaupai",
+      "stanza": 226,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "चापत चरन लखनु उर लाएँ। सभय सप्रेम परम सचु पाएँ॥",
+        "पुनि पुनि प्रभु कह सोवहु ताता। पौढ़े धरि उर पद जलजाता॥"
+      ],
+      "linesEn": [
+        "cāpata carana lakhanu ura lāeṃ. sabhaya saprema parama sacu pāeṃ.",
+        "puni puni prabhu kaha sovahu tātā. pauṛhe dhari ura pada jalajātā."
+      ],
+      "meaningHi": "श्रीरामजी के चरणों को हृदय से लगाकर भय और प्रेम सहित परम सुख पाकर लक्ष्मणजी उन्हें दबा रहे हैं। प्रभु श्रीरामचन्द्रजी ने बार-बार कहा--हे तात! [अब] सो जाओ। तब वे उन चरणकमलों को हृदय में धरकर लेट रहे।",
+      "meaningEn": "Lakshmana, embracing Rama's feet to his heart and experiencing supreme bliss with reverence and love, was massaging them. Lord Shri Ramchandra repeatedly said, 'O dear one, now go to sleep.' Then he lay down, holding those lotus feet in his heart."
+    },
+    {
+      "id": "balkand-44-doha-226-4",
+      "section": "doha",
+      "stanza": 226,
+      "numInSection": 226,
+      "subSuffix": "",
+      "labelHi": "दोहा · २२६",
+      "labelEn": "Doha · 226",
+      "lines": [
+        "उठे लखनु निसि बिगत सुनि अरुनसिखा धुनि कान।",
+        "गुर तें पहिलेहिं जगतपति जागे रामु सुजान॥"
+      ],
+      "linesEn": [
+        "uṭhe lakhanu nisi bigata suni arunasikhā dhuni kāna.",
+        "gura teṃ pahilehiṃ jagatpati jāge rāmu sujāna."
+      ],
+      "meaningHi": "रात बीतने पर, मुर्गे का शब्द कानों से सुनकर लक्ष्मणजी उठे। जगत् के स्वामी सुजान श्रीरामचन्द्रजी भी गुरु से पहले ही जाग गये।",
+      "meaningEn": "When the night had passed, Lakshmana rose upon hearing the cock's cry in his ears. The all-wise Lord of the world, Rama, also awoke before the guru."
+    }
+  ]
+}

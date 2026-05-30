@@ -1,0 +1,511 @@
+{
+  "chapter": 25,
+  "titleHi": "देवताओं का शिवजी से ब्याह के लिये प्रार्थना करना, सप्तर्षियों का पार्वती के पास जाना",
+  "titleEn": "The Gods Appeal to Shiva, and the Sages Visit Parvati",
+  "verseCount": 26,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 25: The Gods Appeal to Shiva, and the Sages Visit Parvati, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/devta-shivji-byah-prarthana-saptarishi-parvati"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "verses": [
+    {
+      "id": "balkand-25-chaupai-88-2",
+      "section": "chaupai",
+      "stanza": 88,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "सब सुर बिष्नु बिरंचि समेता। गए जहाँ सिव कृपानिकेता॥",
+        "पृथक पृथक तिन्ह कीन्हि प्रसंसा। भए प्रसन्न चंद्र अवतंसा॥"
+      ],
+      "linesEn": [
+        "saba sura biṣnu biraṃci sametā. gae jahāṃ siva kṛpāniketā.",
+        "pṛthaka pṛthaka tinh kīnhi prasaṃsā. bhae prasanna caṃdra avataṃsā."
+      ],
+      "meaningHi": "फिर वहाँसे विष्णु और ब्रह्मासहित सब देवता वहाँ गये जहाँ कृपाके धाम शिवजी थे। उन सबने शिवजीकी अलग-अलग स्तुति की, तब शशिभूषण शिवजी प्रसन्न हो गये।",
+      "meaningEn": "Then all the gods, along with Vishnu and Brahma, went to the place where Shiva, the abode of grace, dwelt. Each of them praised Shiva in turn, and then the moon-crested Lord became pleased."
+    },
+    {
+      "id": "balkand-25-chaupai-88-3",
+      "section": "chaupai",
+      "stanza": 88,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "बोले कृपासिंधु बृषकेतू। कहहु अमर आए केहि हेतू॥",
+        "कह बिधि तुम्ह प्रभु अंतरजामी। तदपि भगति बस बिनवउँ स्वामी॥"
+      ],
+      "linesEn": [
+        "bole kṛpāsiṃdhu bṛṣaketū. kahahu amara āe kehi hetū.",
+        "kaha bidhi tumha prabhu aṃtarajāmī. tadapi bhagati basa binavauṃ svāmī."
+      ],
+      "meaningHi": "कृपाके समुद्र शिवजी बोले--हे देवताओ ! कहिये, आप किसलिये आये हैं ? ब्रह्माजीने कहा-- हे प्रभो! आप अन्तर्यामी हैं, तथापि हे स्वामी! भक्तिवश मैं आपसे विनती करता हूँ।",
+      "meaningEn": "The ocean of compassion, Shiva, said, 'Tell me, O gods, why have you come?' Brahma said, 'Lord, you are the inner-knower; yet still, moved by devotion, I make my plea to you, O Master.'"
+    },
+    {
+      "id": "balkand-25-doha-88-4",
+      "section": "doha",
+      "stanza": 88,
+      "numInSection": 88,
+      "subSuffix": "",
+      "labelHi": "दोहा · ८८",
+      "labelEn": "Doha · 88",
+      "lines": [
+        "सकल सुरन्ह के हृदयँ अस संकर परम उछाहु।",
+        "निज नयनन्हि देखा चहहिं नाथ तुम्हार बिबाहु॥"
+      ],
+      "linesEn": [
+        "sakala suranha ke hṛdayaṃ asa saṃkara parama uchāhu.",
+        "nija nayananhi dekhā cahahiṃ nātha tumhāra bibāhu."
+      ],
+      "meaningHi": "हे शंकर! सब देवताओंके मनमें ऐसा परम उत्साह है कि हे नाथ! वे अपनी आँखोंसे आपका विवाह देखना चाहते हैं।",
+      "meaningEn": "O Shankara, such great joy fills all the gods’ hearts that, O Lord, they wish to behold your wedding with their own eyes."
+    },
+    {
+      "id": "balkand-25-chaupai-89-0",
+      "section": "chaupai",
+      "stanza": 89,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "यह उत्सव देखिअ भरि लोचन। सोइ कछु करहु मदन मद मोचन॥",
+        "कामु जारि रति कहुँ बरु दीन्हा। कृपासिंधु यह अति भल कीन्हा॥"
+      ],
+      "linesEn": [
+        "yaha utsava dekhia bhari locana. soi kachuka karahu madana mada mocana.",
+        "kāmu jāri rati kahuṃ baru dīnhā. kṛpāsiṃdhu yaha ati bhala kīnhā."
+      ],
+      "meaningHi": "हे कामदेवके मदको चूर करनेवाले! आप ऐसा कुछ कीजिये जिससे सब लोग इस उत्सवको नेत्र भरकर देखें। हे कृपाके सागर! कामदेवको भस्म करके आपने रतिको जो वरदान दिया सो बहुत ही अच्छा किया।",
+      "meaningEn": "O destroyer of Cupid’s pride, do something so that all may behold this festival to their heart’s content. O ocean of grace, it was very good that, after burning Cupid, you granted Rati this boon."
+    },
+    {
+      "id": "balkand-25-chaupai-89-1",
+      "section": "chaupai",
+      "stanza": 89,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "सासति करि पुनि करहिं पसाऊ। नाथ प्रभुन्ह कर सहज सुभाऊ॥",
+        "पारबतीं तपु कीन्ह अपारा। करहु तासु अब अंगीकारा॥"
+      ],
+      "linesEn": [
+        "sāsati kari puni karahiṃ pasāū. nātha prabhunha kara sahaja subhāū.",
+        "pārabatīṃ tapu kīnhu apārā. karahu tāsu aba aṃgīkārā."
+      ],
+      "meaningHi": "हे नाथ! श्रेष्ठ स्वामियोंका यह सहज स्वभाव ही है कि वे पहले दण्ड देकर फिर कृपा किया करते हैं। पार्वतीने अपार तप किया है, अब उन्हें अंगीकार कीजिये।",
+      "meaningEn": "O Lord, it is the natural disposition of noble masters to punish first and then show favor. Parvati has performed immense austerity; now accept her."
+    },
+    {
+      "id": "balkand-25-chaupai-89-2",
+      "section": "chaupai",
+      "stanza": 89,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "सुनि बिधि बिनय समुझि प्रभु बानी। ऐसेइ होउ कहा सुखु मानी॥",
+        "तब देवन्ह दुंदुभीं बजाईं। बरषि सुमन जय जय सुर साईं॥"
+      ],
+      "linesEn": [
+        "suni bidhi binaya samujhi prabhu bānī. aisei hou kahā sukhu mānī.",
+        "taba devanhaṃ duṃdubhīṃ bajāīṃ. baraṣi sumana jaya jaya sura sāīṃ."
+      ],
+      "meaningHi": "ब्रह्माजीकी प्रार्थना सुनकर और प्रभु श्रीरामचन्द्रजीके वचनोंको याद करके शिवजीने प्रसन्नतापूर्वक कहा--'ऐसा ही हो।' तब देवताओंने नगाड़े बजाये और फूलोंकी वर्षा करके “जय हो! देवताओंके स्वामीकी जय हो!” ऐसा कहने लगे।",
+      "meaningEn": "Hearing Brahma’s prayer and remembering the Lord’s words, Shiva replied joyfully, 'So be it.' Then the gods beat their drums and showered flowers, saying, 'Victory! Victory to the Lord of the gods!'"
+    },
+    {
+      "id": "balkand-25-chaupai-89-3",
+      "section": "chaupai",
+      "stanza": 89,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "अवसरु जानि सप्तरिषि आए। तुरतहिं बिधि गिरिभवन पठाए॥",
+        "प्रथम गए जहँ रहीं भवानी। बोले मधुर बचन छल सानी॥"
+      ],
+      "linesEn": [
+        "avasaru jāni saptariṣi āe. turatahiṃ bidhi giribhavana paṭhāe.",
+        "prathama gae jahaṃ rahīṃ bhavānī. bole madhura bacana chala sānī."
+      ],
+      "meaningHi": "उचित अवसर जानकर सप्तर्षि आये और ब्रह्माजीने तुरंत ही उन्हें हिमाचलके घर भेज दिया। वे पहले वहाँ गये जहाँ पार्वतीजी थीं और उनसे छलसे भरे मीठे (विनोदयुक्त, आनन्द पहुँचानेवाले) वचन बोले--।",
+      "meaningEn": "Recognizing the proper time, the seven sages came, and Brahma quickly sent them to Himachal’s home. First they went where Parvati was staying and spoke sweet words laced with subtle craft."
+    },
+    {
+      "id": "balkand-25-doha-89-4",
+      "section": "doha",
+      "stanza": 89,
+      "numInSection": 89,
+      "subSuffix": "",
+      "labelHi": "दोहा · ८९",
+      "labelEn": "Doha · 89",
+      "lines": [
+        "कहा हमार न सुनेहु तब नारद कें उपदेस।",
+        "अब भा झूठ तुम्हार पन जारेउ कामु महेस॥"
+      ],
+      "linesEn": [
+        "kahā hamāra na sunehu taba nārada keṃ upadesa.",
+        "aba bhā jhūṭha tumhāra pana jāreu kāmu mahesa."
+      ],
+      "meaningHi": "नारदजीके उपदेशसे तुमने उस समय हमारी बात नहीं सुनी। अब तो तुम्हारा प्रण झूठा हो गया, क्‍योंकि महादेवजीने कामको ही भस्म कर डाला।",
+      "meaningEn": "You did not then listen to us, because of Narada’s counsel. Now your vow has proved false, for Mahadeva has burned Cupid to ashes."
+    },
+    {
+      "id": "balkand-25-chaupai-90-0",
+      "section": "chaupai",
+      "stanza": 90,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "सुनि बोलीं मुसुकाइ भवानी। उचित कहेहु मुनिबर बिग्यानी॥",
+        "तुम्हरें जान कामु अब जारा। अब लगि संभु रहे सबिकारा॥"
+      ],
+      "linesEn": [
+        "suni bolīṃ musukāi bhavānī. ucita kahehu munibara bigyānī.",
+        "tumhareṃ jāna kāmu aba jārā. aba lagi sambhu rahe sabikārā."
+      ],
+      "meaningHi": "यह सुनकर पार्वतीजी मुसकराकर बोलीं--हे विज्ञानी मुनिवरो ! आपने उचित ही कहा। आपकी समझमें शिवजीने कामदेवको अब जलाया है, अबतक तो वे विकार्युक्त (कामी) ही रहे !।",
+      "meaningEn": "Hearing this, Parvati smiled and said, 'You have spoken rightly, O wise sages. In your view, Shiva has only now burned Cupid; until now he remained full of passion!'"
+    },
+    {
+      "id": "balkand-25-chaupai-90-1",
+      "section": "chaupai",
+      "stanza": 90,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "हमरें जान सदा सिव जोगी। अज अनवद्य अकाम अभोगी॥",
+        "जौं मैं सिव सेये अस जानी। प्रीति समेत कर्म मन बानी॥"
+      ],
+      "linesEn": [
+        "hamareṃ jāna sadā siva jogī. aja anavadya akāma abhogī.",
+        "jaũṃ maiṃ siva seye asa jānī. prīti sameta karma mana bānī."
+      ],
+      "meaningHi": "किन्तु हमारी समझसे तो शिवजी सदासे ही योगी, अजन्मा, अनिन्द्य, कामरहित और भोगहीन हैं और यदि मैंने शिवजीको ऐसा समझकर ही मन, वचन और कर्मसे प्रेमसहित उनकी सेवा की है--।",
+      "meaningEn": "But in my understanding, Shiva has always been a yogi—unborn, blameless, without desire, and beyond enjoyment. And if I have served Shiva with mind, speech, and action, knowing him thus, with loving devotion—"
+    },
+    {
+      "id": "balkand-25-chaupai-90-2",
+      "section": "chaupai",
+      "stanza": 90,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "तौ हमार पन सुनहु मुनीसा। करिहहिं सत्य कृपानिधि ईसा॥",
+        "तुम्ह जो कहा हर जारेउ मारा। सोइ अति बड़ अबिबेकु तुम्हारा॥"
+      ],
+      "linesEn": [
+        "tau hamāra pana sunahu munīsā. karihahiṃ satya kṛpānidhi īsā.",
+        "tumha jo kahā hara jāreu mārā. soi ati baṛa abibeku tumhārā."
+      ],
+      "meaningHi": "तो हे मुनीश्वरो! सुनिये, वे कृपानिधान भगवान् मेरी प्रतिज्ञाको सत्य करेंगे। आपने जो यह कहा कि शिवजीने कामदेवको भस्म कर दिया, यही आपका बड़ा भारी अविवेक है।",
+      "meaningEn": "Then listen, O sages: the merciful Lord will surely make my vow true. What you said—that Shiva burned Cupid to ashes—is a great lack of wisdom on your part."
+    },
+    {
+      "id": "balkand-25-chaupai-90-3",
+      "section": "chaupai",
+      "stanza": 90,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "तात अनल कर सहज सुभाऊ। हिम तेहि निकट जाइ नहिं काऊ॥",
+        "गएँ समीप सो अवसि नसाई। असि मन्मथ महेस की नाई॥"
+      ],
+      "linesEn": [
+        "tāta anala kara sahaja subhāū. hima tehi nikaṭa jāi nahiṃ kāū.",
+        "gaeṃ samīpa so avasi nasāī. asi manmatha mahesa kī nāī."
+      ],
+      "meaningHi": "हे तात! अग्रिका तो यह सहज स्वभाव ही है कि पाला उसके समीप कभी जा ही नहीं सकता और जानेपर वह अवश्य नष्ट हो जायगा। महादेवजी और कामदेवके सम्बन्धमें भी यही न्याय (बात) समझना चाहिये।",
+      "meaningEn": "Dear sir, fire has this natural property: frost can never come near it. And if it does come near, it is surely destroyed. The same reasoning should be understood in the case of Mahadeva and Cupid."
+    },
+    {
+      "id": "balkand-25-doha-90-4",
+      "section": "doha",
+      "stanza": 90,
+      "numInSection": 90,
+      "subSuffix": "",
+      "labelHi": "दोहा · ९०",
+      "labelEn": "Doha · 90",
+      "lines": [
+        "हियँ हरषे मुनि बचन सुनि देखि प्रीति बिस्वास।",
+        "चले भवानिहि नाइ सिर गए हिमाचल पास॥"
+      ],
+      "linesEn": [
+        "hiyaṃ haraṣe muni bacana suni dekhi prīti bisvāsa.",
+        "chale bhavānihi nāi sira gae himācala pāsa."
+      ],
+      "meaningHi": "पार्वतीके वचन सुनकर और उनका प्रेम तथा विश्वास देखकर मुनि हृदयमें बड़े प्रसन्न हुए। वे भवानीको सिर नवाकर चल दिये और हिमाचलके पास पहुँचे।",
+      "meaningEn": "Hearing Parvati’s words and seeing her love and trust, the sages were greatly pleased in their hearts. Bowing to Bhavani, they departed and went to Himachal’s side."
+    },
+    {
+      "id": "balkand-25-chaupai-91-0",
+      "section": "chaupai",
+      "stanza": 91,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "सबु प्रसंगु गिरिपतिहि सुनावा। मदन दहन सुनि अति दुखु पावा॥",
+        "बहुरि कहेउ रति कर बरदाना। सुनि हिमवंत बहुत सुखु माना॥"
+      ],
+      "linesEn": [
+        "sabu prasaṃgu giripatihiṃ sunāvā. madana dahana suni ati dukhu pāvā.",
+        "bahuri kaheu rati kara baradānā. suni himavaṃta bahuta sukhu mānā."
+      ],
+      "meaningHi": "उन्होंने पर्वतराज हिमाचल को सब हाल सुनाया। कामदेव का भस्म होना सुनकर हिमाचल बहुत दुखी हुए। फिर मुनियों ने रति के वरदान की बात कही, उसे सुनकर हिमवान् ने बहुत सुख माना।",
+      "meaningEn": "He recounted the whole matter to the Mountain King. Hearing of Kama's burning, he was greatly distressed. Then the boon granted to Rati was mentioned; hearing this, Himavan was filled with great joy."
+    },
+    {
+      "id": "balkand-25-chaupai-91-1",
+      "section": "chaupai",
+      "stanza": 91,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "हृदयँ बिचारि संभु प्रभुताई। सादर मुनिबर लिए बोलाई॥",
+        "सुदिनु सुनखतु सुघरी सोचाई। बेगि बेदबिधि लगन धराई॥"
+      ],
+      "linesEn": [
+        "hr̥dayaṃ bicāri saṃbhu prabhutāī. sādara munibara lie bolāī.",
+        "sudinu sunakhatu sugharī socāī. begi bedabidhi lagana dharāī."
+      ],
+      "meaningHi": "शिवजी के प्रभाव को मन में विचारकर हिमाचल ने श्रेष्ठ मुनियों को आदरपूर्वक बुला लिया और उनसे शुभ दिन, शुभ नक्षत्र और शुभ घड़ी सोचवाकर वेद की विधि के अनुसार शीघ्र ही लग्न धराई।",
+      "meaningEn": "Considering Shiva's power in his heart, Himavan respectfully summoned the best sages. He had them determine an auspicious day, star, and hour, and quickly fixed the wedding date according to Vedic rites."
+    },
+    {
+      "id": "balkand-25-chaupai-91-2",
+      "section": "chaupai",
+      "stanza": 91,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "पत्री सप्तरिषिन्ह सोइ दीन्ही। गहि पद बिनय हिमाचल कीन्ही॥",
+        "जाइ बिधिहि दीन्हि सो पाती। बाचत प्रीति न हृदयँ समाती॥"
+      ],
+      "linesEn": [
+        "patrī saptariṣinha soi dīnhī. gahi pada binaya himācala kīnhī.",
+        "jāi bidhihi dīnhi so pātī. bācata prīti na hr̥dayaṃ samātī."
+      ],
+      "meaningHi": "फिर हिमाचल ने वह लग्नपत्रिका सप्तर्षियों को दे दी और चरण पकड़कर उनकी विनती की। उन्होंने जाकर वह लग्नपत्रिका ब्रह्माजी को दी। उसको पढ़ते समय उनके हृदय में प्रेम समाता न था।",
+      "meaningEn": "Then Himavan gave that marriage letter to the Saptarishis and, clasping their feet, made his request. They went and handed that letter to Brahma. As he read it, love would not fit in his heart."
+    },
+    {
+      "id": "balkand-25-chaupai-91-3",
+      "section": "chaupai",
+      "stanza": 91,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "लगन बाचि अज सबहि सुनाई। हरषे मुनि सब सुर समुदाई॥",
+        "सुमन बृष्टि नभ बाजन बाजे। मंगल कलस दसहुँ दिसि साजे॥"
+      ],
+      "linesEn": [
+        "lagana bāci aja sabahi sunāī. haraṣe muni saba sura samudāī.",
+        "sumana br̥ṣṭi nabha bājana bāje. maṃgala kalasa dasahuṃ disi sājē."
+      ],
+      "meaningHi": "ब्रह्माजी ने लग्न पढ़कर सबको सुनाया, उसे सुनकर सब मुनि और देवताओं का सारा समाज हर्षित हो गया। आकाश से फूलों की वर्षा होने लगी, बाजे बजने लगे और दसों दिशाओं में मंगल कलश सजा दिये गये।",
+      "meaningEn": "Brahma read the auspicious date and announced it to all; hearing it, all the sages and the host of the gods rejoiced. Flowers rained from the sky, musical instruments sounded, and auspicious pots were arranged in all ten directions."
+    },
+    {
+      "id": "balkand-25-doha-91-4",
+      "section": "doha",
+      "stanza": 91,
+      "numInSection": 91,
+      "subSuffix": "",
+      "labelHi": "दोहा · ९१",
+      "labelEn": "Doha · 91",
+      "lines": [
+        "लगे सँवारन सकल सुर बाहन बिबिध बिमान।",
+        "होहिं सगुन मंगल सुभद करहिं अपछरा गान॥"
+      ],
+      "linesEn": [
+        "lage saṃvāran sakala sura vāhana bibidha bimāna.",
+        "hohiṃ saguna maṃgala subhada karahiṃ apacharā gāna."
+      ],
+      "meaningHi": "सब देवता अपने भाँति-भाँति के वाहन और विमान सजाने लगे, कल्याणप्रद मंगल शकुन होने लगे और अप्सराएँ गाने लगीं।",
+      "meaningEn": "All the gods began to adorn their various mounts and celestial cars. Auspicious omens arose, and the apsaras began to sing."
+    },
+    {
+      "id": "balkand-25-chaupai-92-0",
+      "section": "chaupai",
+      "stanza": 92,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "सिवहि संभु गन करहिं सिंगारा। जटा मुकुट अहि मौरु सँवारा॥",
+        "कुंडल कंकन पहिरे ब्याला। तन बिभूति पट केहरि छाला॥"
+      ],
+      "linesEn": [
+        "sivahiṃ saṃbhu gana karahiṃ siṃgārā. jaṭā mukuṭa ahi mauru saṃvārā.",
+        "kuṃḍala kaṃkana pahire byālā. tana bibhūti paṭa kehari chālā."
+      ],
+      "meaningHi": "शिवजी के गण शिवजी का श्रृंगार करने लगे। जटाओं का मुकुट बनाकर उस पर साँपों का मौर सजाया गया। शिवजी ने साँपों के ही कुण्डल और कंकण पहने, शरीर पर विभूति रमायी और वस्त्र की जगह बाघम्बर लपेट लिया।",
+      "meaningEn": "Shiva's attendants began adorning Shiva. They formed a crown from his matted hair and decorated it with a serpent-crested plume. He wore snakes as earrings and bracelets, smeared his body with ashes, and wrapped a tiger skin in place of cloth."
+    },
+    {
+      "id": "balkand-25-chaupai-92-1",
+      "section": "chaupai",
+      "stanza": 92,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "ससि ललाट सुंदर सिर गंगा। नयन तीनि उपबीत भुजंगा॥",
+        "गरल कंठ उर नर सिर माला। असिव बेष सिवधाम कृपाला॥"
+      ],
+      "linesEn": [
+        "sasi lalāṭa suṃdara sira gaṃgā. nayana tīni upabīta bhujāṃgā.",
+        "garala kaṃṭha ura nara sira mālā. asiva beṣa sivadhāma kr̥pālā."
+      ],
+      "meaningHi": "शिवजी के सुन्दर मस्तक पर चन्द्रमा, सिर पर गंगा, तीन नेत्र, साँपों का जनेऊ, गले में विष और छाती पर नरमुंडों की माला थी। इस प्रकार उनका वेष अशुभ होने पर भी वे कल्याण के धाम और कृपालु हैं।",
+      "meaningEn": "The moon shone on his lovely forehead, the Ganges streamed from his head, he had three eyes, serpents as his sacred thread, poison in his throat, and a garland of skulls upon his chest. Though his appearance is fearsome, he is the abode of blessedness and compassion."
+    },
+    {
+      "id": "balkand-25-chaupai-92-2",
+      "section": "chaupai",
+      "stanza": 92,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "कर त्रिसूल अरु डमरु बिराजा। चले बसहँ चढ़ि बाजहिं बाजा॥",
+        "देखि सिवहि सुरत्रिय मुसुकाहीं। बर लायक दुलहिनि जग नाहीं॥"
+      ],
+      "linesEn": [
+        "kara trisūla aru ḍamaru birājā. chale basahaṃ chaḍhi bājahiṃ bājā.",
+        "dekhi sivahi suratriya musukāhīṃ. bara lāyaka dulahini jaga nāhīṃ."
+      ],
+      "meaningHi": "एक हाथ में त्रिशूल और दूसरे में डमरू सुशोभित है। शिवजी बैल पर चढ़कर चले। बाजे बज रहे हैं। शिवजी को देखकर देवाङ्गनाएँ मुसकरा रही हैं [और कहती हैं कि] इस वर के योग्य दुलहिन जग में नहीं मिलेगी।",
+      "meaningEn": "A trident and a drum adorned his hands. Shiva rode forth on the bull while the instruments resounded. Seeing Shiva, the divine maidens smiled, saying, 'There is no bride in the world worthy of this bridegroom.'"
+    },
+    {
+      "id": "balkand-25-chaupai-92-3",
+      "section": "chaupai",
+      "stanza": 92,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "बिष्नु बिरंचि आदि सुरब्राता। चढ़ि चढ़ि बाहन चले बराता॥",
+        "सुर समाज सब भाँति अनूपा। नहिं बरात दूलह अनुरूपा॥"
+      ],
+      "linesEn": [
+        "biṣnu biraṃci ādi surabrotā. chaḍhi chaḍhi bāhana chale barātā.",
+        "sura samāja saba bhāṃti anūpā. nahiṃ barāta dūlaha anurūpā."
+      ],
+      "meaningHi": "विष्णु और ब्रह्मा आदि देवताओं के समूह अपने-अपने वाहनों पर चढ़कर बरात में चले। देवताओं का समाज सब प्रकार से अनुपम था, पर दूल्हे के योग्य बरात न थी।",
+      "meaningEn": "Vishnu, Brahma, and the rest of the host of gods rode forth on their own mounts in the wedding procession. The company of gods was unparalleled in every way, but it was not a procession fitting for the bridegroom."
+    },
+    {
+      "id": "balkand-25-doha-92-4",
+      "section": "doha",
+      "stanza": 92,
+      "numInSection": 92,
+      "subSuffix": "",
+      "labelHi": "दोहा · ९२",
+      "labelEn": "Doha · 92",
+      "lines": [
+        "बिष्नु कहा अस बिहसि तब बोलि सकल दिसिराज।",
+        "बिलग बिलग होइ चलहु सब निज निज सहित समाज॥"
+      ],
+      "linesEn": [
+        "biṣnu kahā asa bihasi taba boli sakala disirāja.",
+        "bilaga bilaga hoi calahu saba nija nija sahita samāja."
+      ],
+      "meaningHi": "तब विष्णुभगवान् ने सब दिक्पालों को बुलाकर हँसकर ऐसा कहा—सब लोग अपने-अपने दल समेत अलग-अलग होकर चलो।",
+      "meaningEn": "Then Vishnu, smiling, called all the guardians of the directions and said, 'All of you, go separately, each with your own company.'"
+    },
+    {
+      "id": "balkand-25-chaupai-93-0",
+      "section": "chaupai",
+      "stanza": 93,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "बर अनुहारि बरात न भाई। हँसी करैहहु पर पुर जाई॥",
+        "बिष्नु बचन सुनि सुर मुसुकाने। निज निज सेन सहित बिलगाने॥"
+      ],
+      "linesEn": [
+        "bara anuhāri barāta na bhāī. haṃsī karaihahu para pura jāī.",
+        "biṣnu bacana suni sura musukāne. nija nija sena sahita bilagāne."
+      ],
+      "meaningHi": "हे भाई! हमारी यह बरात वर के योग्य नहीं है। क्या पराये नगर में जाकर हँसी कराओगे? विष्णु भगवान् की बात सुनकर देवता मुसकराये और वे अपनी-अपनी सेना सहित अलग हो गये।",
+      "meaningEn": "Brothers, this procession is not fit for the bridegroom. Would you go to another city and make yourselves a laughingstock? Hearing Vishnu's words, the gods smiled and separated, each with his own army."
+    },
+    {
+      "id": "balkand-25-chaupai-93-1",
+      "section": "chaupai",
+      "stanza": 93,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "मनहीं मन महेसु मुसुकाहीं। हरि के बिंग्य बचन नहिं जाहीं॥",
+        "अति प्रिय बचन सुनत प्रिय केरे। भृंगिहि प्रेरि सकल गन टेरे॥"
+      ],
+      "linesEn": [
+        "manahīṃ mana mahesu musukāhīṃ. hari ke biṃgya bacana nahiṃ jāhīṃ.",
+        "ati priya bacana sunata priya kere. bhr̥ṃgihi peri sakala gana ṭere."
+      ],
+      "meaningHi": "महादेवजी [यह देखकर] मन-ही-मन मुसकराते हैं कि हरि के व्यंग्य-वचन नहीं जाते। अपने प्रिय के अति प्रिय वचनों को सुनकर शिवजी ने भृंगी को प्रेरित कर अपने सब गणों को बुला लिया।",
+      "meaningEn": "Shiva smiled inwardly, thinking that Hari's taunting words never fail. Hearing those dear and delightful words from his beloved, Shiva sent Bhringi to summon all his attendants."
+    },
+    {
+      "id": "balkand-25-chaupai-93-2",
+      "section": "chaupai",
+      "stanza": 93,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "सिव अनुसासन सुनि सब आए। प्रभु पद जलज सीस तिन्ह नाए॥",
+        "नाना बाहन नाना बेषा। बिहसे सिव समाज निज देखा॥"
+      ],
+      "linesEn": [
+        "siva anusāsana suni saba āe. prabhu pada jalaja sīsa tinh nāe.",
+        "nānā bāhana nānā beṣā. bibhase siva samāja nija dekhā."
+      ],
+      "meaningHi": "शिवजी की आज्ञा सुनते ही सब चले आये और उन्होंने स्वामी के चरणकमलों में सिर नवाया। तरह-तरह की सवारियों और तरह-तरह के वेष वाले अपने समाज को देखकर शिवजी हँसे।",
+      "meaningEn": "As soon as they heard Shiva's command, they all came and bowed their heads at the feet of their lord. Seeing his own retinue with various mounts and various disguises, Shiva laughed."
+    }
+  ]
+}

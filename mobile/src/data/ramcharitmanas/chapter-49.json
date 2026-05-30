@@ -1,0 +1,93 @@
+{
+  "chapter": 49,
+  "titleHi": "बंदीजनों द्वारा जनकप्रतिज्ञा की घोषणा",
+  "titleEn": "The Proclamation of Janaka's Vow",
+  "verseCount": 4,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 49: The Proclamation of Janaka's Vow, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/bandijanon-dvara-janakpratigya-ki-ghoshana"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "verses": [
+    {
+      "id": "balkand-49-chaupai-249-3",
+      "section": "chaupai",
+      "stanza": 249,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "तब बंदीजन जनक बोलाए। बिरिदावली कहत चलि आए॥",
+        "कह नृपु जाइ कहहु पन मोरा। चले भाट हियँ हरषु न थोरा॥"
+      ],
+      "linesEn": [
+        "taba bandījana janaka bolāe. biridāvalī kahata cali āe.",
+        "kaha nr̥pu jāi kahahu pana morā. cale bhāṭa hiyaṃ haraṣu na thorā."
+      ],
+      "meaningHi": "तब राजा जनक ने बंदीजनों (भाटों) को बुलाया। वे विरुदावली (वंश की कीर्ति) गाते हुए चले आये। राजा ने कहा--जाकर मेरा प्रण सबसे कहो। भाट चले, उनके हृदय में कम आनन्द न था।",
+      "meaningEn": "Then King Janaka summoned the bards. They came singing the praise of the dynasty. The king said, Go and proclaim my vow. The bards departed, and their hearts were no less full of joy."
+    },
+    {
+      "id": "balkand-49-doha-249-4",
+      "section": "doha",
+      "stanza": 249,
+      "numInSection": 249,
+      "subSuffix": "",
+      "labelHi": "दोहा · २४९",
+      "labelEn": "Doha · 249",
+      "lines": [
+        "बोले बंदी बचन बर सुनहु सकल महिपाल।",
+        "पन बिदेह कर कहहिं हम भुजा उठाइ बिसाल॥"
+      ],
+      "linesEn": [
+        "bole bandī bacana bara sunahu sakala mahipāla.",
+        "pana bideha kara kahahiṃ hama bhujā uṭhāi bisāla."
+      ],
+      "meaningHi": "भाटों ने श्रेष्ठ वचन कहा- हे पृथ्वी की पालना करनेवाले सब राजागण! सुनिये। हम अपनी भुजा उठाकर जनकजी का विशाल प्रण कहते हैं।",
+      "meaningEn": "The bards spoke excellent words: Listen, all you kings and guardians of the earth. Raising our arms, we proclaim the great vow of Videha."
+    },
+    {
+      "id": "balkand-49-chaupai-250-0",
+      "section": "chaupai",
+      "stanza": 250,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "नृप भुजबल बिधु सिवधनु राहू। गरुअ कठोर बिदित सब काहू॥",
+        "रावनु बानु महाभट भारे। देखि सरासन गवँहिं सिधारे॥"
+      ],
+      "linesEn": [
+        "nṛpa bhujabala bidhu sivadhanu rāhū. garua kaṭhora bidita saba kāhū.",
+        "rāvanu bānu mahābhaṭa bhāre. dekhi sarāsana gavaṃhiṃ sidhāre."
+      ],
+      "meaningHi": "राजाओं के भुजाओं का बल चन्द्रमा है, शिवजी का धनुष राहु है। वह भारी है, कठोर है, यह सबको विदित है। बड़े भारी योद्धा रावण और बाणासुर भी इस धनुष को देखकर भाग खड़े हुए (उसे उठाना तो दूर रहा, छूने तक की हिम्मत न हुई)।",
+      "meaningEn": "The strength of kings' arms is like the moon, and Shiva's bow is like Rahu; it is huge and hard, as all know. Even the great warriors Ravana and Banasura, on seeing that bow, fled away."
+    },
+    {
+      "id": "balkand-49-chaupai-250-1",
+      "section": "chaupai",
+      "stanza": 250,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "सोइ पुरारि कोदंडु कठोरा। राज समाज आजु जोइ तोरा॥",
+        "त्रिभुवन जय समेत बैदेही। बिनहिं बिचार बरइ हठि तेही॥"
+      ],
+      "linesEn": [
+        "soi purāri kodaṃḍu kaṭhorā. rāja samāja āju joi torā.",
+        "tribhuvana jaya sameta baidehī. binahiṃ bicāra barai haṭhi tehī."
+      ],
+      "meaningHi": "उसी पुरारि (शिवजी) के कठोर धनुष को आज राजसमाज में जो भी तोड़ेगा, तीनों लोकों की विजय के साथ बैदेही बिना किसी विचार के हठपूर्वक उसी को वरेगी।",
+      "meaningEn": "Whoever breaks that hard bow of Purari (Shiva) today in this royal assembly, Sita will, together with the victory of the three worlds, choose him without hesitation and with determination."
+    }
+  ]
+}

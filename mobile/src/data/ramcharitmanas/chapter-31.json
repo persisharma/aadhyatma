@@ -1,0 +1,1176 @@
+{
+  "chapter": 31,
+  "titleHi": "विश्वमोहिनी का स्वयंवर, शिवगणों को तथा भगवान को शाप और नारद का मोहभंग",
+  "titleEn": "Vishvamohini's Swayamvara, Narada's Curse, and the End of Delusion",
+  "verseCount": 61,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 31: Vishvamohini's Swayamvara, Narada's Curse, and the End of Delusion, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/vishvamohini-svayamvar-narad-shap-mohbhang"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "verses": [
+    {
+      "id": "balkand-31-doha-129-4",
+      "section": "doha",
+      "stanza": 129,
+      "numInSection": 129,
+      "subSuffix": "",
+      "labelHi": "दोहा · १२९",
+      "labelEn": "Doha · 129",
+      "lines": [
+        "बिरचेउ मग महुँ नगर तेहिं सत जोजन बिस्तार।",
+        "श्रीनिवासपुर तें अधिक रचना बिबिध प्रकार॥"
+      ],
+      "linesEn": [
+        "biraceu maga mahuṃ nagara tehiṃ sata yojana bistāra。",
+        "śrīnivāsa pura teṃ adhika racanā bibidha prakāra."
+      ],
+      "meaningHi": "उस (हरिमाया) ने रास्ते में सौ योजन का एक नगर रचा। उस नगर की भाँति-भाँतिकी रचनाएँ लक्ष्मीनिवास भगवान् विष्णु के नगर (वैकुण्ठ) से भी अधिक सुन्दर थीं।",
+      "meaningEn": "That Maya created a city on the road, spread over a hundred yojanas. Its many kinds of construction were even more beautiful than the city of Shri Nivasa (Vaikuntha)."
+    },
+    {
+      "id": "balkand-31-chaupai-130-0",
+      "section": "chaupai",
+      "stanza": 130,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "बसहिं नगर सुंदर नर नारी। जनु बहु मनसिज रति तनुधारी॥",
+        "तेहिं पुर बसइ सीलनिधि राजा। अगनित हय गय सेन समाजा॥"
+      ],
+      "linesEn": [
+        "basahiṃ nagara sundara nara nārī | janu bahu manasija rati tanudhārī ||",
+        "tehiṃ pura basai sīlanidhi rājā | aganita haya gaya sena samājā ||"
+      ],
+      "meaningHi": "उस नगर में ऐसे सुन्दर नर-नारी बसते थे मानो बहुत-से कामदेव और [उसकी स्त्री] रति ही मनुष्य-शरीर धारण किये हुए हों। उस नगर में शीलनिधि नाम का राजा रहता था, जिसके यहाँ असंख्य घोड़े, हाथी और सेना के समूह (टुकड़ियाँ) थे।",
+      "meaningEn": "In that city lived such handsome men and women as though many Kāmadevas and Rati herself had taken human form. In that city dwelt a king named Śīlanidhi, who had innumerable horses, elephants, and companies of soldiers."
+    },
+    {
+      "id": "balkand-31-chaupai-130-1",
+      "section": "chaupai",
+      "stanza": 130,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "सत सुरेस सम बिभव बिलासा। रूप तेज बल नीति निवासा॥",
+        "बिस्वमोहनी तासु कुमारी। श्री बिमोह जिसु रूपु निहारी॥"
+      ],
+      "linesEn": [
+        "sata suresa sama bibhava bilāsā | rūpa teja bala nīti nivāsā ||",
+        "bisvamohanī tāsu kumārī | śrī bimoha jisu rūpu nihārī ||"
+      ],
+      "meaningHi": "उसका वैभव और विलास सौ इन्द्रों के समान था। वह रूप, तेज, बल और नीति का घर था। उसके विश्वमोहिनी नाम की एक [ऐसी रूपवती] कन्या थी, जिसके रूप को देखकर लक्ष्मीजी भी मोहित हो जायँ।",
+      "meaningEn": "Her splendor and grandeur were equal to those of a hundred Indras. He was an abode of beauty, radiance, strength, and right conduct. He had a daughter named Visvamohinī, whose beauty would enchant even Lakshmī at a glance."
+    },
+    {
+      "id": "balkand-31-chaupai-130-2",
+      "section": "chaupai",
+      "stanza": 130,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "सोइ हरिमाया सब गुन खानी। सोभा तासु कि जाइ बखानी॥",
+        "करइ स्वयंबर सो नृपबाला। आए तहँ अगनित महिपाला॥"
+      ],
+      "linesEn": [
+        "soi harimāyā saba guna khānī | sobhā tāsu ki jāi bakhānī ||",
+        "karai svayaṃbara so nṛpabālā | āe tahaṃ aganita mahipālā ||"
+      ],
+      "meaningHi": "वह सब गुणों की खान भगवान् की माया ही थी। उसकी शोभा का वर्णन कैसे किया जा सकता है। वह राजकुमारी स्वयंवर करना चाहती थी, इससे वहाँ अगणित राजा आये हुए थे।",
+      "meaningEn": "She was, indeed, the Lord's illusory power, the treasury of all virtues. How could her splendor ever be described? That princess wished to hold a svayaṃvara, so countless kings had gathered there."
+    },
+    {
+      "id": "balkand-31-chaupai-130-3",
+      "section": "chaupai",
+      "stanza": 130,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "मुनि कौतुकी नगर तेहिं गयऊ। पुरबासिन्ह सब पूछत भयऊ॥",
+        "सुनि सब चरित भूपगृहँ आए। करि पूजा नृप मुनि बैठाए॥"
+      ],
+      "linesEn": [
+        "muni kautukī nagara tehiṃ gayau | purabāsinha saba pūchata bhayau ||",
+        "suni saba carita bhūpagṛhaṃ āe | kari pūjā nṛpa muni baiṭhāe ||"
+      ],
+      "meaningHi": "खिलवाड़ी मुनि नारदजी उस नगर में गये और नगरवासियों से उन्होंने सब हाल पूछा। सब समाचार सुनकर वे राजा के महल में आये। राजा ने पूजा करके मुनि को [आसन पर] बैठाया।",
+      "meaningEn": "The playful sage Nārada went to that city and asked the townspeople about everything. Hearing all the news, he came to the king's palace. The king worshipped him and had the sage seated."
+    },
+    {
+      "id": "balkand-31-doha-130-4",
+      "section": "doha",
+      "stanza": 130,
+      "numInSection": 130,
+      "subSuffix": "",
+      "labelHi": "दोहा · १३०",
+      "labelEn": "Doha · 130",
+      "lines": [
+        "आनि देखाई नारदहि भूपति राजकुमारि।",
+        "कहहु नाथ गुन दोष सब एहि के हृदयँ बिचारि॥"
+      ],
+      "linesEn": [
+        "āni dekhāī nāradahi bhūpati rājakumāri |",
+        "kahahu nātha guna doṣa saba ehi ke hṛdayaṃ bicāri ||"
+      ],
+      "meaningHi": "[फिर] राजा ने राजकुमारी को लाकर नारदजी को दिखलाया [और पूछा कि--] हे नाथ! आप अपने हृदय में विचारकर इस के सब गुण-दोष कहिये।",
+      "meaningEn": "Then the king brought the princess and showed her to Nārada, saying: \"O lord, please consider in your heart and tell me all her merits and faults.\""
+    },
+    {
+      "id": "balkand-31-chaupai-131-0",
+      "section": "chaupai",
+      "stanza": 131,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "देखि रूप मुनि बिरति बिसारी। बड़ी बार लगि रहे निहारी॥",
+        "लच्छन तासु बिलोकि भुलाने। हृदयँ हरष नहिं प्रगट बखाने॥"
+      ],
+      "linesEn": [
+        "dekhi rūpa muni birati bisārī | baṛī bāra lagi rahe nihārī ||",
+        "lacchana tāsu biloki bhulāne | hṛdayaṃ haraṣa nahiṃ pragaṭa bakhāne ||"
+      ],
+      "meaningHi": "उसके रूप को देखकर मुनि वैराग्य भूल गये और बड़ी देर तक उसकी ओर देखते ही रह गये। उसके लक्षण देखकर मुनि अपने-आप को भी भूल गये और हृदय में हर्षित हुए, पर प्रकट रूप में उन लक्षणों को नहीं कहा।",
+      "meaningEn": "Seeing her beauty, the sage forgot all detachment and kept gazing at her for a long time. Looking at her signs and marks, he was bewildered; his heart rejoiced, though he did not speak those signs aloud."
+    },
+    {
+      "id": "balkand-31-chaupai-131-1",
+      "section": "chaupai",
+      "stanza": 131,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "जो एहि बरइ अमर सोइ होई। समरभूमि तेहि जीत न कोई॥",
+        "सेवहिं सकल चराचर ताही। बरइ सीलनिधि कन्या जाही॥"
+      ],
+      "linesEn": [
+        "jo ehi barai amara soi hoī | samarabhūmi tehiṃ jīta na koī ||",
+        "sevahiṃ sakala carācara tāhī | barai sīlanidhi kanyā jāhī ||"
+      ],
+      "meaningHi": "[लक्षणों को सोचकर वे मन में कहने लगे कि] जो इसे ब्याहेगा, वह अमर हो जायगा और रणभूमि में कोई उसे जीत न सकेगा। यह शीलनिधि की कन्या जिसको वरेगी, सब चर-अचर जीव उसकी सेवा करेंगे।",
+      "meaningEn": "Reflecting on these marks, he thought: whoever marries her will become immortal, and no one will be able to defeat him on the battlefield. Whomever this daughter of Śīlanidhi chooses, all moving and unmoving beings will serve that person."
+    },
+    {
+      "id": "balkand-31-chaupai-131-2",
+      "section": "chaupai",
+      "stanza": 131,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "लच्छन सब बिचारि उर राखे। कछुक बनाइ भूप सन भाषे॥",
+        "सुता सुलच्छन कहि नृप पाहीं। नारद चले सोच मन माहीं॥"
+      ],
+      "linesEn": [
+        "lacchana saba bicāri ura rākhe | kachuka banāi bhūpa sana bhāṣe ||",
+        "sutā sulachchana kahi nṛpa pāhīṃ | nārada cale soca mana māhīṃ ||"
+      ],
+      "meaningHi": "सब लक्षणों को विचारकर मुनि ने अपने हृदय में रख लिया और राजा से कुछ अपनी ओर से बनाकर कह दिया। राजा से लड़की के सुलक्षण कहकर नारदजी चल दिये। पर उनके मन में यह चिन्ता थी कि--।",
+      "meaningEn": "Having considered all the signs, the sage kept them in his heart and said something of his own making to the king. Speaking of the girl's auspicious marks to the king, Nārada departed. Yet a worry remained in his mind:"
+    },
+    {
+      "id": "balkand-31-chaupai-131-3",
+      "section": "chaupai",
+      "stanza": 131,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "करौं जाइ सोइ जतन बिचारी। जेहि प्रकार मोहि बरै कुमारी॥",
+        "जप तप कछु न होइ तेहि काला। हे बिधि मिलइ कवन बिधि बाला॥"
+      ],
+      "linesEn": [
+        "karauṃ jāi soi jatan bicārī | jehi prakāra mohi barai kumārī ||",
+        "japa tapa kachu na hoi tehi kālā | he bidhi milai kavana bidhi bālā ||"
+      ],
+      "meaningHi": "मैं जाकर सोच-विचारकर अब वही उपाय करूँ, जिससे यह कन्या मुझे ही वरे। इस समय जप-तप से तो कुछ हो नहीं सकता। हे विधाता! मुझे यह कन्या किस तरह मिलेगी?",
+      "meaningEn": "\"I shall go and think of the same device by which this maiden may choose me. At this time, no amount of japa or austerity can do anything. O Fate, by what means will I obtain this girl?\""
+    },
+    {
+      "id": "balkand-31-doha-131-4",
+      "section": "doha",
+      "stanza": 131,
+      "numInSection": 131,
+      "subSuffix": "",
+      "labelHi": "दोहा · १३१",
+      "labelEn": "Doha · 131",
+      "lines": [
+        "एहि अवसर चाहिअ परम सोभा रूप बिसाल।",
+        "जो बिलोकि रीझै कुअँरि तब मेलै जयमाल॥"
+      ],
+      "linesEn": [
+        "ehi avasara cāhia parama sobhā rūpa bisāla |",
+        "jo biloki rījhai kuaṃri taba melai jayamāla ||"
+      ],
+      "meaningHi": "इस समय तो बड़ी भारी शोभा और विशाल (सुन्दर) रूप चाहिए, जिसे देखकर राजकुमारी मुझ पर रीझ जाय और तब जयमाल [मेरे गले में] डाल दे।",
+      "meaningEn": "At this moment, what is needed is supreme splendor and a vast, handsome form, so that when the princess sees it, she may be delighted and then place the victory garland around my neck."
+    },
+    {
+      "id": "balkand-31-chaupai-132-0",
+      "section": "chaupai",
+      "stanza": 132,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "हरि सन मागौं सुंदरताई। होइहि जात गहरु अति भाई॥",
+        "मोरें हित हरि सम नहिं कोऊ। एहि अवसर सहाय सोइ होऊ॥"
+      ],
+      "linesEn": [
+        "hari sana māgauṃ sundaratāī | hoihi jāta gaharu ati bhāī ||",
+        "moreṃ hita hari sama nahiṃ koū | ehi avasara sahāya soi hoū ||"
+      ],
+      "meaningHi": "[एक काम करूँ कि] भगवान से सुन्दरता माँगूँ; पर भाई! उनके पास जाने में तो बहुत देर हो जाएगी। किन्तु श्रीहरि के समान मेरा हितू भी कोई नहीं है, इसलिये इस समय वे ही मेरे सहायक हों।",
+      "meaningEn": "[I shall do one thing:] I will ask the Lord for beauty; but, brother, it will take a very long time to go there. Yet there is no one as benevolent to me as Śrī Hari, so let Him be my helper at this time."
+    },
+    {
+      "id": "balkand-31-chaupai-132-1",
+      "section": "chaupai",
+      "stanza": 132,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "बहुबिधि बिनय कीन्हि तेहि काला। प्रगटेउ प्रभु कौतुकी कृपाला॥",
+        "प्रभु बिलोकि मुनि नयन जुड़ाने। होइहि काजु हिएँ हरषाने॥"
+      ],
+      "linesEn": [
+        "bahubidhi binaya kīnhi tehi kālā | pragaṭeu prabhu kautukī kṛpālā ||",
+        "prabhu biloki muni nayana juṛāne | hoihi kāju hiyeṃ haraṣāne ||"
+      ],
+      "meaningHi": "उस समय नारदजी ने भगवान् की बहुत प्रकार से विनती की। तब लीलामय कृपालु प्रभु [वहीं] प्रकट हो गये। स्वामी को देखकर नारदजी के नेत्र शीतल हो गये और वे मन में बड़े ही हर्षित हुए कि अब तो काम बन ही जाएगा।",
+      "meaningEn": "At that time Nārada offered many kinds of prayers to the Lord. Then the playful and compassionate Lord appeared there. Seeing the Lord, Nārada's eyes were gladdened, and he rejoiced in his heart, thinking that now his task would surely be accomplished."
+    },
+    {
+      "id": "balkand-31-chaupai-132-2",
+      "section": "chaupai",
+      "stanza": 132,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "अति आरति कहि कथा सुनाई। करहु कृपा करि होहु सहाई॥",
+        "आपन रूप देहु प्रभु मोही। आन भाँति नहिं पावौं ओही॥"
+      ],
+      "linesEn": [
+        "ati ārati kahi kathā sunāī | karahu kṛpā kari hohu sahāī ||",
+        "āpana rūpa dehu prabhu mohī | āna bhāṃti nahiṃ pāvauṃ ohī ||"
+      ],
+      "meaningHi": "नारदजी ने बहुत आर्त (दीन) होकर सब कथा कह सुनायी [और प्रार्थना की कि] कृपा कीजिये और कृपा करके मेरे सहायक बनिये। हे प्रभो! आप अपना रूप मुझको दीजिये और किसी प्रकार मैं उस (राजकन्या) को नहीं पा सकता।",
+      "meaningEn": "Nārada, deeply distressed, told the whole story and prayed: \"Please be gracious and, out of compassion, be my helper. O Lord, give me your own form; otherwise I shall not be able to obtain that princess.\""
+    },
+    {
+      "id": "balkand-31-chaupai-132-3",
+      "section": "chaupai",
+      "stanza": 132,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "जेहि बिधि नाथ होइ हित मोरा। करहु सो बेगि दास मैं तोरा॥",
+        "निज माया बल देखि बिसाला। हियँ हँसि बोले दीनदयाला॥"
+      ],
+      "linesEn": [
+        "jehi bidhi nātha hoi hita morā | karahu so begi dāsa maiṃ torā ||",
+        "nija māyā bala dekhi bisālā | hiyaṃ haṃsi bole dīnadayālā ||"
+      ],
+      "meaningHi": "हे नाथ! जिस तरह मेरा हित हो, आप वही शीघ्र कीजिये। मैं आपका दास हूँ। अपनी माया का विशाल बल देख दीनदयालु भगवान् मन-ही-मन हँसकर बोले--।",
+      "meaningEn": "\"O Lord, do quickly whatever is for my welfare. I am your servant.\" Seeing the vast power of His own māyā, the compassionate Lord smiled within and spoke:"
+    },
+    {
+      "id": "balkand-31-doha-132-4",
+      "section": "doha",
+      "stanza": 132,
+      "numInSection": 132,
+      "subSuffix": "",
+      "labelHi": "दोहा · १३२",
+      "labelEn": "Doha · 132",
+      "lines": [
+        "जेहि बिधि होइहि परम हित नारद सुनहु तुम्हार।",
+        "सोइ हम करब न आन कछु बचन न मृषा हमार॥"
+      ],
+      "linesEn": [
+        "jehi bidhi hoihī parama hita nārada sunahu tumhāra |",
+        "soi hama karaba na āna kachu bacana na mṛṣā hamāra ||"
+      ],
+      "meaningHi": "हे नारदजी! सुनो, जिस प्रकार आपका परम हित होगा, हम वही करेंगे, दूसरा कुछ नहीं। हमारा वचन असत्य नहीं होता।",
+      "meaningEn": "\"Listen, Nārada: whatever brings about your highest good, that alone we shall do; nothing else. Our word is never false.\""
+    },
+    {
+      "id": "balkand-31-chaupai-133-0",
+      "section": "chaupai",
+      "stanza": 133,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "कुपथ माग रुज ब्याकुल रोगी। बैद न देइ सुनहु मुनि जोगी॥",
+        "एहि बिधि हित तुम्हार मैं ठयऊ। कहि अस अंतरहित प्रभु भयऊ॥"
+      ],
+      "linesEn": [
+        "kupatha māga ruja byākula rogī. baida na dei sunahu muni jogī.",
+        "ehi bidhi hita tumhāra maiṃ ṭhayau. kahi asa antarhita prabhu bhayau."
+      ],
+      "meaningHi": "हे योगी मुनि! सुनिए, रोग से व्याकुल रोगी कुपथ्य माँगे तो वैद्य उसे नहीं देता। इसी प्रकार मैंने भी तुम्हारा हित करने की ठान ली है। ऐसा कहकर भगवान्‌ अन्तर्धान हो गए।",
+      "meaningEn": "O ascetic sage, listen: if a sick man, tormented by illness, asks for what is harmful, the physician does not give it. In this way I too have resolved to do what is for your good. Having said this, the Lord disappeared from sight."
+    },
+    {
+      "id": "balkand-31-chaupai-133-1",
+      "section": "chaupai",
+      "stanza": 133,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "माया बिबस भए मुनि मूढ़ा। समुझी नहिं हरि गिरा निगूढ़ा॥",
+        "गवने तुरत तहाँ रिषिराई। जहाँ स्वयंबर भूमि बनाई॥"
+      ],
+      "linesEn": [
+        "māyā bibasa bhae muni mūḍhā. samujhī nahiṃ hari girā nigūḍhā.",
+        "gavane turata tahāṃ riṣirāī. jahāṃ svayaṃbara bhūmi banāī."
+      ],
+      "meaningHi": "भगवान्‌ की माया के वशीभूत हुए मुनि ऐसे मूढ़ हो गये कि वे भगवान्‌ की निगूढ़ वाणी को भी न समझ सके। ऋषिराज नारदजी तुरंत वहाँ गये जहाँ स्वयंवर की भूमि बनायी गयी थी।",
+      "meaningEn": "Overcome by the Lord's Māyā, the sage became so deluded that he could not understand the Lord's hidden words. Sage-king Narad immediately went to the place where the arena for the svayamvara had been prepared."
+    },
+    {
+      "id": "balkand-31-chaupai-133-2",
+      "section": "chaupai",
+      "stanza": 133,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "निज निज आसन बैठे राजा। बहु बनाव करि सहित समाजा॥",
+        "मुनि मन हरष रूप अति मोरें। मोहि तजि आनहि बरिहि न भोरें॥"
+      ],
+      "linesEn": [
+        "nija nija āsana baiṭhe rājā. bahu banāva kari sahita samājā.",
+        "muni mana haraṣa rūpa ati moreṃ. mohi taji ānahi barihi na bhoreṃ."
+      ],
+      "meaningHi": "राजालोग खूब सज-धजकर समाजसहित अपने-अपने आसन पर बैठे थे। मुनि (नारद) मन-ही-मन प्रसन्न हो रहे थे कि मेरा रूप बड़ा सुन्दर है, मुझे छोड़ कन्या भूलकर भी दूसरे को न बरेगी।",
+      "meaningEn": "The kings sat in their respective seats, fully adorned and with the whole assembly present. Narad was delighted in his heart, thinking, \"My form is most beautiful; leaving me, the maiden will not choose anyone else, not even by mistake.\""
+    },
+    {
+      "id": "balkand-31-chaupai-133-3",
+      "section": "chaupai",
+      "stanza": 133,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "मुनि हित कारन कृपानिधाना। दीन्ह कुरूप न जाइ बखाना॥",
+        "सो चरित्र लखि काहुँ न पावा। नारद जानि सबहिं सिर नावा॥"
+      ],
+      "linesEn": [
+        "muni hita kārana kṛpānidhānā. dīnha kurūpa na jāi bakhānā.",
+        "so caritra lakhi kāhuṃ na pāvā. nārada jāni sabahiṃ sira nāvā."
+      ],
+      "meaningHi": "कृपानिधान भगवान् ने मुनि के कल्याण के लिए उन्हें ऐसा कुरूप बना दिया कि जिसका वर्णन नहीं हो सकता; पर यह चरित कोई भी न जान सका। सबने उन्हें नारद ही जानकर प्रणाम किया।",
+      "meaningEn": "For the sage's welfare, the ocean of mercy, the Lord, made him so ugly that it cannot be described. No one could understand that event; everyone, recognizing him as Narad, bowed their heads."
+    },
+    {
+      "id": "balkand-31-doha-133-4",
+      "section": "doha",
+      "stanza": 133,
+      "numInSection": 133,
+      "subSuffix": "",
+      "labelHi": "दोहा · १३३",
+      "labelEn": "Doha · 133",
+      "lines": [
+        "रहे तहाँ दुइ रुद्र गन ते जानहिं सब भेउ।",
+        "बिप्रबेष देखत फिरहिं परम कौतुकी तेउ॥"
+      ],
+      "linesEn": [
+        "rahe tahāṃ dui rudra gana te jānahiṃ saba bheu.",
+        "bipraveṣa dekhata firahiṃ parama kautukī teu."
+      ],
+      "meaningHi": "वहाँ दो शिवजी के गण भी थे। वे सब भेद जानते थे और ब्राह्मण के वेष में सारी लीला देखते-फिरते थे। वे भी बड़े मौजी थे।",
+      "meaningEn": "There were also two of Shiva's attendants there; they knew all the secrets and, disguised as brahmins, went about watching the whole pastime. They too were full of mischief."
+    },
+    {
+      "id": "balkand-31-chaupai-134-0",
+      "section": "chaupai",
+      "stanza": 134,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जेहिं समाज बैठे मुनि जाई। हृदयँ रूप अहमिति अधिकाई॥",
+        "तहँ बैठे महेस गन दोऊ। बिप्रबेष गति लखइ न कोऊ॥"
+      ],
+      "linesEn": [
+        "jehiṃ samāja baiṭhe muni jāī. hṛdayaṃ rūpa ahamiti adhikāī.",
+        "tahaṃ baiṭhe mahesa gana doū. bipraveṣa gati lakhai na koū."
+      ],
+      "meaningHi": "नारदजी अपने हृदय में रूप का बड़ा अभिमान लेकर जिस समाज में जाकर बैठे थे, शिवजी के दोनों गण भी वहीं बैठ गये। ब्राह्मण के वेष में होने के कारण उनकी इस चाल को कोई न जान सका।",
+      "meaningEn": "Narad sat down in the assembly with great pride in his heart over his beauty. There too sat the two attendants of Mahesh; in the guise of brahmins, no one could perceive their movements."
+    },
+    {
+      "id": "balkand-31-chaupai-134-1",
+      "section": "chaupai",
+      "stanza": 134,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "करहिं कूटि नारदहि सुनाई। नीकि दीन्हि हरि सुंदरताई॥",
+        "रीझिहि राजकुअँरि छबि देखी। इन्हहि बरिहि हरि जानि बिसेषी॥"
+      ],
+      "linesEn": [
+        "karahiṃ kūṭi nāradahi sunāī. nīki dīnhi hari sundaratāī.",
+        "rījhihi rājakuāṃri chabi dekhī. inhahi barihi hari jāni biseṣī."
+      ],
+      "meaningHi": "वे नारदजी को सुना-सुनाकर व्यंग्य वचन कहते थे--भगवान् ने इनको अच्छी 'सुन्दरता' दी है। इनकी शोभा देखकर राजकुमारी रीझ ही जाएगी और 'हरि!' (वानर) जानकर इन्हीं को खास तौर से वरेगी।",
+      "meaningEn": "They kept taunting Narad, saying, \"The Lord has indeed bestowed fine beauty on him! Seeing his splendor, the princess will be charmed and, thinking him to be a monkey, will choose him above all others.\""
+    },
+    {
+      "id": "balkand-31-chaupai-134-2",
+      "section": "chaupai",
+      "stanza": 134,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "मुनिहि मोह मन हाथ पराएँ। हँसहिं संभु गन अति सचु पाएँ॥",
+        "जदपि सुनहिं मुनि अटपटि बानी। समुझि न परइ बुद्धि भ्रम सानी॥"
+      ],
+      "linesEn": [
+        "munihi moha mana hātha parāeṃ. haṃsahiṃ sambhu gana ati sacu pāeṃ.",
+        "jadapi sunahiṃ muni aṭapaṭi bānī. samujhi na parai buddhi bhrama sānī."
+      ],
+      "meaningHi": "नारद मुनि को मोह हो रहा था, क्योंकि उनका मन दूसरे के हाथ में था। शिवजी के गण बहुत प्रसन्न होकर हँस रहे थे। यद्यपि मुनि उनकी अटपटी बातें सुन रहे थे, पर बुद्धि भ्रम में सनी हुई होने के कारण वे बातें उनकी समझ में नहीं आती थीं (उनकी बातों को वे अपनी प्रशंसा समझ रहे थे)।",
+      "meaningEn": "Narad the sage was falling into delusion, because his mind was in another's hands. Shiva's attendants laughed with great delight. Although the sage heard their odd words, his intellect, clouded by confusion, could not make sense of them; he took their words as praise."
+    },
+    {
+      "id": "balkand-31-chaupai-134-3",
+      "section": "chaupai",
+      "stanza": 134,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "काहुँ न लखा सो चरित बिसेषा। सो सरूप नृपकन्याँ देखा॥",
+        "मर्कट बदन भयंकर देही। देखत हृदयँ क्रोध भा तेही॥"
+      ],
+      "linesEn": [
+        "kāhuṃ na lakhā so carita biseṣā. so sarūpa nṛpakanyāṃ dekhā.",
+        "markaṭa badana bhayaṃkara dehī. dekhata hṛdayaṃ krodha bhā tehī."
+      ],
+      "meaningHi": "इस विशेष चरित को और किसी ने नहीं जाना, केवल राजकन्या ने [नारदजी का] वह रूप देखा। उनका बंदर-सा मुँह और भयंकर शरीर देखते ही कन्या के हृदय में क्रोध उत्पन्न हो गया।",
+      "meaningEn": "No one else noticed that special event; only the princess saw that form. The moment she saw the monkey-like face and fearsome body, anger arose in her heart."
+    },
+    {
+      "id": "balkand-31-doha-134-4",
+      "section": "doha",
+      "stanza": 134,
+      "numInSection": 134,
+      "subSuffix": "",
+      "labelHi": "दोहा · १३४",
+      "labelEn": "Doha · 134",
+      "lines": [
+        "सखीं संग लै कुअँरि तब चलि जनु राजमराल।",
+        "देखत फिरइ महीप सब कर सरोज जयमाल॥"
+      ],
+      "linesEn": [
+        "sakhīṃ saṃga lai kūāṃri taba cali janu rājamarāla.",
+        "dekhata phirai mahīpa saba kara saroja jayamāla."
+      ],
+      "meaningHi": "तब राजकुमारी सखियों को साथ लेकर इस तरह चली मानो राजहंसिनी चल रही है। वह अपने कमल-जैसे हाथों में जयमाला लिये सब राजाओं को देखती हुई घूमने लगी।",
+      "meaningEn": "Then the princess, taking her maidens with her, moved along as if a royal swan were gliding. Holding the garland in her lotus-like hands, she went about looking at all the kings."
+    },
+    {
+      "id": "balkand-31-chaupai-135-0",
+      "section": "chaupai",
+      "stanza": 135,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जेहि दिसि बैठे नारद फूली। सो दिसि तेहिं न बिलोकी भूली॥",
+        "पुनि पुनि मुनि उकसहिं अकुलाहीं। देखि दसा हर गन मुसुकाहीं॥"
+      ],
+      "linesEn": [
+        "jehi disi baiṭhe nārada phūlī | so disi tehiṃ na bilokī bhūlī ||",
+        "puni puni muni ukasahiṃ akulāhīṃ | dekhi dasā hara gana musukāhīṃ ||"
+      ],
+      "meaningHi": "जिस ओर नारदजी [रूप के गर्व में ] फूले बैठे थे, उस ओर उसने भूलकर भी नहीं ताका। नारद मुनि बार-बार उचकते और छटपटाते हैं। उनकी दशा देखकर शिवजी के गण मुसकराते हैं।",
+      "meaningEn": "In the direction where Narada sat, puffed up with pride, she did not even look by mistake. Again and again the sage kept rising and fidgeting in agitation. Seeing his condition, Shiva's attendants smiled."
+    },
+    {
+      "id": "balkand-31-chaupai-135-1",
+      "section": "chaupai",
+      "stanza": 135,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "धरि नृपतनु तहँ गयउ कृपाला। कुअँरि हरषि मेलेउ जयमाला॥",
+        "दुलहिनि लै गे लच्छिनिवासा। नृपसमाज सब भयउ निरासा॥"
+      ],
+      "linesEn": [
+        "dhari nṛpatanu tahaṃ gayo kṛpālā | kuāṃri haraṣi meleu jayamālā ||",
+        "dulahini lai ge lacchininivāsā | nṛpasamāja saba bhayo nirāsā ||"
+      ],
+      "meaningHi": "कृपालु भगवान्‌ भी राजा का शरीर धारण कर वहाँ जा पहुँचे। राजकुमारी ने हर्षित होकर उनके गले में जयमाला डाल दी। लक्ष्मीनिवास भगवान् दुलहिन को ले गये। सारा नृपसमाज निराश हो गया।",
+      "meaningEn": "The merciful Lord also took on the body of a king and went there. The princess joyfully placed the victory garland around His neck. The Lord, abode of Lakshmi, took the bride away. The entire royal assembly was left disheartened."
+    },
+    {
+      "id": "balkand-31-chaupai-135-2",
+      "section": "chaupai",
+      "stanza": 135,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "मुनि अति बिकल मोहँ मति नाठी। मनि गिरि गई छूटि जनु गाँठी॥",
+        "तब हर गन बोले मुसुकाई। निज मुख मुकुर बिलोकहु जाई॥"
+      ],
+      "linesEn": [
+        "muni ati bikala mohaṃ mati nāṭhī | mani giri gaī chūṭi janu gāṃṭhī ||",
+        "taba hara gana bole musukāī | nija mukha mukura bilokahu jāī ||"
+      ],
+      "meaningHi": "मोह के कारण मुनि की बुद्धि नष्ट हो गयी थी, इससे वे [राजकुमारी को देख] बहुत ही विकल हो गये। मानो गाँठ से छूटकर मणि गिर गयी हो। तब शिवजी के गणों ने मुसकराकर कहा-- जाकर दर्पण में अपना मुँह तो देखिये!",
+      "meaningEn": "Because of delusion, the sage's understanding had been lost, and he became deeply agitated at seeing the princess. It was as if a jewel had slipped free from a knot and fallen. Then Shiva's attendants smiled and said, 'Go and look at your own face in a mirror!'"
+    },
+    {
+      "id": "balkand-31-chaupai-135-3",
+      "section": "chaupai",
+      "stanza": 135,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "अस कहि दोउ भागे भयँ भारी। बदन दीख मुनि बारि निहारी॥",
+        "बेषु बिलोकि क्रोध अति बाढ़ा। तिन्हहि सराप दीन्ह अति गाढ़ा॥"
+      ],
+      "linesEn": [
+        "asa kahi doū bhāge bhayaṃ bhārī | badana dīkha muni bāri nihārī ||",
+        "beṣu biloki krodha ati bāṛhā | tinhahi sarāpa dīni ati gāṛhā ||"
+      ],
+      "meaningHi": "ऐसा कहकर वे दोनों बहुत भयभीत होकर भागे। मुनि ने जल में झाँककर अपना मुँह देखा। अपना रूप देखकर उनका क्रोध बहुत बढ़ गया। उन्होंने शिवजी के उन गणों को अत्यन्त कठोर शाप दिया।",
+      "meaningEn": "Saying this, the two fled in great fear. The sage looked into the water and saw his own face. Seeing his appearance, his anger greatly increased. He gave those attendants of Shiva a very severe curse."
+    },
+    {
+      "id": "balkand-31-doha-135-4",
+      "section": "doha",
+      "stanza": 135,
+      "numInSection": 135,
+      "subSuffix": "",
+      "labelHi": "दोहा · १३५",
+      "labelEn": "Doha · 135",
+      "lines": [
+        "होहु निसाचर जाइ तुम्ह कपटी पापी दोउ।",
+        "हँसेहु हमहि सो लेहु फल बहुरि हँसेहु मुनि कोउ॥"
+      ],
+      "linesEn": [
+        "hohu nisācara jāi tumha kapaṭī pāpī dou |",
+        "haṃsehu hamahi so lehu phala bahuri haṃsehu muni kou ||"
+      ],
+      "meaningHi": "तुम दोनों कपटी और पापी जाकर राक्षस हो जाओ। तुमने हमारी हँसी की, उसका फल चखो। अब फिर किसी मुनि की हँसी करना।",
+      "meaningEn": "You two, being deceitful and sinful, go and become demons. You mocked us; now bear the fruit of that. After this, go and mock some other sage if you dare."
+    },
+    {
+      "id": "balkand-31-chaupai-136-0",
+      "section": "chaupai",
+      "stanza": 136,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "पुनि जल दीख रूप निज पावा। तदपि हृदयँ संतोष न आवा॥",
+        "फरकत अधर कोप मन माहीं। सपदि चले कमलापति पाहीं॥"
+      ],
+      "linesEn": [
+        "puni jala dīkha rūpa nija pāvā | tadapi hṛdayaṃ saṃtoṣa na āvā ||",
+        "pharakata adhara kopa mana māhīṃ | sapadi cale kamalāpati pāhīṃ ||"
+      ],
+      "meaningHi": "मुनि ने फिर जल में देखा, तो उन्हें अपना (असली) रूप प्राप्त हो गया; तब भी उन्हें सन्तोष नहीं हुआ। उनके ओंठ फड़क रहे थे और मन में क्रोध था। तुरंत ही वे भगवान् कमलापति के पास चले।",
+      "meaningEn": "The sage looked again into the water and recovered his own true form; even then he found no satisfaction. His lips were trembling, and anger was in his heart. At once he went to Lord Kamalapati."
+    },
+    {
+      "id": "balkand-31-chaupai-136-1",
+      "section": "chaupai",
+      "stanza": 136,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "देहउँ श्राप कि मरिहउँ जाई। जगत मोरि उपहास कराई॥",
+        "बीचहिं पंथ मिले दनुजारी। संग रमा सोइ राजकुमारी॥"
+      ],
+      "linesEn": [
+        "dehauṃ śrāpa ki marihauṃ jāī | jagata mori upahāsa karāī ||",
+        "bīcahiṃ pantha mile danujārī | saṃga ramā soī rājakumārī ||"
+      ],
+      "meaningHi": "[मन में सोचते जाते थे--] जाकर या तो शाप दूँगा या प्राण दे दूँगा। उन्होंने जगत् में मेरी हँसी करायी। दैत्यों के शत्रु भगवान् हरि उन्हें बीच रास्ते में ही मिल गये। साथ में लक्ष्मीजी और वही राजकुमारी थीं।",
+      "meaningEn": "[He kept thinking:] 'I will go and either give a curse or give up my life. They have made me a laughingstock in the world.' The enemy of demons, Lord Hari, met him right in the middle of the road. With Him were Lakshmi and that same princess."
+    },
+    {
+      "id": "balkand-31-chaupai-136-2",
+      "section": "chaupai",
+      "stanza": 136,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "बोले मधुर बचन सुरसाईं। मुनि कहँ चले बिकल की नाईं॥",
+        "सुनत बचन उपजा अति क्रोधा। माया बस न रहा मन बोधा॥"
+      ],
+      "linesEn": [
+        "bole madhura bacana surasāīṃ | muni kahaṃ cale bikala kī nāīṃ ||",
+        "sunata bacana upajā ati krodhā | māyā basa na rahā mana bodhā ||"
+      ],
+      "meaningHi": "देवताओं के स्वामी भगवान् ने मीठी वाणी में कहा--हे मुनि! व्याकुल की तरह कहाँ चले? ये शब्द सुनते ही नारद को बड़ा क्रोध आया; माया के वशीभूत होने के कारण मन में चेत नहीं रहा।",
+      "meaningEn": "The Lord, master of the gods, spoke sweetly: 'O sage, where are you going in such agitation?' Hearing these words, Narada became greatly angry; under the sway of illusion, his mind lost all discernment."
+    },
+    {
+      "id": "balkand-31-chaupai-136-3",
+      "section": "chaupai",
+      "stanza": 136,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "पर संपदा सकहु नहिं देखी। तुम्हरें इरिषा कपट बिसेषी॥",
+        "मथत सिंधु रुद्रहि बौरायहु। सुरन्ह प्रेरि बिष पान करायहु॥"
+      ],
+      "linesEn": [
+        "para saṃpadā sakahu nahiṃ dekhī | tumharen̄ iriṣā kapaṭa biśeṣī ||",
+        "mathata siṃdhu rudrahi baurāyahu | suranha preri biṣa pāna karāyahu ||"
+      ],
+      "meaningHi": "दूसरों की सम्पदा नहीं देख सकते, तुम्हारी ईर्ष्या और कपट बहुत है। समुद्र मथते समय तुमने शिवजी को बावला बना दिया और देवताओं को प्रेरित करके उन्हें विषपान कराया।",
+      "meaningEn": "You cannot bear to see others' prosperity; your envy and deceit are extreme. During the churning of the ocean, you drove Shiva to distraction and prompted the gods to make Him drink poison."
+    },
+    {
+      "id": "balkand-31-doha-136-4",
+      "section": "doha",
+      "stanza": 136,
+      "numInSection": 136,
+      "subSuffix": "",
+      "labelHi": "दोहा · १३६",
+      "labelEn": "Doha · 136",
+      "lines": [
+        "असुर सुरा बिष संकरहि आपु रमा मनि चारु।",
+        "स्वारथ साधक कुटिल तुम्ह सदा कपट ब्यवहारु॥"
+      ],
+      "linesEn": [
+        "asura surā biṣa saṃkarahi āpu ramā mani cāru |",
+        "svāratha sādhaka kuṭila tumha sadā kapaṭa byavahāru ||"
+      ],
+      "meaningHi": "असुरों को मदिरा और शिवजी को विष देकर तुमने स्वयं लक्ष्मी और सुन्दर [कौस्तुभ] मणि ले ली। तुम बड़े धोखेबाज और मतलबी हो। सदा कपट का व्यवहार करते हो।",
+      "meaningEn": "You gave the demons liquor and Shiva poison, and took for yourself Lakshmi and the beautiful [Kaustubha] jewel. You are very deceitful and self-serving. You always behave with deceit."
+    },
+    {
+      "id": "balkand-31-chaupai-137-0",
+      "section": "chaupai",
+      "stanza": 137,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "परम स्वतंत्र न सिर पर कोई। भावइ मनहि करहु तुम्ह सोई॥",
+        "भलेहि मंद मंदेहि भल करहू। बिसमय हरष न हियँ कछु धरहू॥"
+      ],
+      "linesEn": [
+        "parama svatantra na sira para koī | bhāvai manahi karahu tumha soī ||",
+        "bhalehi maṃda maṃdehi bhala karahū | bisamaya haraṣa na hiyaṃ kachū dharahū ||"
+      ],
+      "meaningHi": "तुम परम स्वतन्त्र हो, सिर पर तो कोई है नहीं, इससे जब जो मन को भाता है, [स्वच्छन्दता से ] वही करते हो। भले को बुरा और बुरे को भला कर देते हो। हृदय में हर्ष-विषाद कुछ भी नहीं लाते।",
+      "meaningEn": "You are utterly independent; there is no one above you. So you do whatever pleases your mind, in complete freedom. You turn the good into bad and the bad into good. No joy or sorrow ever enters your heart."
+    },
+    {
+      "id": "balkand-31-chaupai-137-1",
+      "section": "chaupai",
+      "stanza": 137,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "डहकि डहकि परिचेहु सब काहू। अति असंक मन सदा उछाहू॥",
+        "करम सुभासुभ तुम्हहि न बाधा। अब लगि तुम्हहि न काहूँ साधा॥"
+      ],
+      "linesEn": [
+        "ḍahaki ḍahaki paricehu saba kāhū | ati asaṃka mana sadā uchāhū ||",
+        "karama subhāsubha tumhahi na bādhā | aba lagi tumhahi na kāhūṃ sādhā ||"
+      ],
+      "meaningHi": "सबको ठग-ठगकर परखे हो और अत्यन्त निडर हो गये हो; इसीसे [ठगने के काम में ] मन में सदा उत्साह रहता है। शुभ-अशुभ कर्म तुम्हें बाधा नहीं देते। अब तक तुमको किसी ने ठीक नहीं किया था।",
+      "meaningEn": "You have tested everyone by deceiving them again and again, and have become utterly fearless; because of this, your mind is always eager for trickery. Good and bad deeds do not hinder you. Until now no one had restrained you."
+    },
+    {
+      "id": "balkand-31-chaupai-137-2",
+      "section": "chaupai",
+      "stanza": 137,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "भले भवन अब बायन दीन्हा। पावहुगे फल आपन कीन्हा॥",
+        "बंचेहु मोहि जवनि धरि देहा। सोइ तनु धरहु श्राप मम एहा॥"
+      ],
+      "linesEn": [
+        "bhale bhavana aba bāyana dīnhā | pāvahuge phala āpana kīnhā ||",
+        "baṃchehu mohi javani dhari dehā | soi tanu dharahu śrāpa mama ehā ||"
+      ],
+      "meaningHi": "अबकी तुमने अच्छे घर बैना दिया है (मेरे-जैसे जबर्दस्त आदमी से छेड़खानी की है)। अतः अपने किये का फल अवश्य पाओगे। जिस शरीर को धारण करके तुमने मुझे ठगा है, तुम भी वही शरीर धारण करो, यह मेरा शाप है।",
+      "meaningEn": "This time you have made a fine offering indeed, by provoking someone as formidable as me. Therefore, you will certainly reap the fruit of your actions. The very body with which you deceived me, you too must take on that same body; this is my curse."
+    },
+    {
+      "id": "balkand-31-chaupai-137-3",
+      "section": "chaupai",
+      "stanza": 137,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "कपि आकृति तुम्ह कीन्हि हमारी। करिहहिं कीस सहाय तुम्हारी॥",
+        "मम अपकार कीन्ह तुम्ह भारी। नारि बिरहँ तुम्ह होब दुखारी॥"
+      ],
+      "linesEn": [
+        "kapi ākṛti tumha kīnhi hamārī | karihahiṃ kīsa sahāya tumhārī ||",
+        "mama apakāra kīnha tumha bhārī | nāri birahaṃ tumha hoba dukhārī ||"
+      ],
+      "meaningHi": "तुमने हमारा रूप बन्दर-सा बना दिया था, इससे बन्दर ही तुम्हारी सहायता करेंगे। [मैं जिस स्त्री को चाहता था, उससे मेरा वियोग कराकर] तुमने मेरा बड़ा अहित किया है, इससे तुम भी स्त्री के वियोग में दुःखी होगे।",
+      "meaningEn": "You made my form that of a monkey, so monkeys will help you. You did me great harm by separating me from the woman I desired; therefore, you too will suffer in the separation from a woman."
+    },
+    {
+      "id": "balkand-31-doha-137-4",
+      "section": "doha",
+      "stanza": 137,
+      "numInSection": 137,
+      "subSuffix": "",
+      "labelHi": "दोहा · १३७",
+      "labelEn": "Doha · 137",
+      "lines": [
+        "श्राप सीस धरि हरषि हियँ प्रभु बहु बिनती कीन्हि।",
+        "निज माया कै प्रबलता करषि कृपानिधि लीन्हि॥"
+      ],
+      "linesEn": [
+        "śrāpa sīsa dhari haraṣi hiyaṃ prabhu bahu binatī kīnhi |",
+        "nija māyā kai prabalatā karaṣi kṛpānidhi līnhi ||"
+      ],
+      "meaningHi": "शाप को सिर पर चढ़ाकर, हृदय में हर्षित होते हुए प्रभु ने बहुत विनती की और कृपानिधान भगवान् ने अपनी माया की प्रबलता खींच ली।",
+      "meaningEn": "Taking the curse upon His head, the Lord joyfully made many entreaties. The treasure of compassion, the Lord, then withdrew the force of His illusion."
+    },
+    {
+      "id": "balkand-31-chaupai-138-0",
+      "section": "chaupai",
+      "stanza": 138,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जब हरि माया दूरि निवारी। नहिं तहँ रमा न राजकुमारी॥",
+        "तब मुनि अति सभीत हरि चरना। गहे पाहि प्रनतारति हरना॥"
+      ],
+      "linesEn": [
+        "jaba hari māyā dūri nivārī | nahiṃ tahaṃ ramā na rājakumārī ||",
+        "taba muni ati sabhīta hari caranā | gahe pāhi pranatārati haranā ||"
+      ],
+      "meaningHi": "जब भगवान्‌ने अपनी माया को हटा लिया, तब वहाँ न लक्ष्मी ही रह गयीं, न राजकुमारी ही। तब मुनि ने अत्यन्त भयभीत होकर श्रीहरि के चरण पकड़ लिये और कहा--हे शरणागत के दुःखों को हरनेवाले! मेरी रक्षा कीजिये।",
+      "meaningEn": "When the Lord removed His illusion, neither Lakshmi nor the princess was there. Then the sage, greatly frightened, grasped the feet of Hari and said, 'O remover of the sufferings of those who seek refuge, protect me.'"
+    },
+    {
+      "id": "balkand-31-chaupai-138-1",
+      "section": "chaupai",
+      "stanza": 138,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "मृषा होउ मम श्राप कृपाला। मम इच्छा कह दीनदयाला॥",
+        "मैं दुर्बचन कहे बहुतेरे। कह मुनि पाप मिटिहिं किमि मेरे॥"
+      ],
+      "linesEn": [
+        "mṛṣā hou mama śrāpa kṛpālā | mama icchā kaha dīnadayālā ||",
+        "maiṃ durbacana kahe bahutere | kaha muni pāpa miṭihim kimi mere ||"
+      ],
+      "meaningHi": "हे कृपालु ! मेरा शाप मिथ्या हो जाय। तब दीनों पर दया करने वाले भगवान् ने कहा कि यह सब मेरी ही इच्छा [से हुआ] है। मुनि ने कहा-मैंने आपको अनेक खोटे वचन कहे हैं। मेरे पाप कैसे मिटेंगे ?",
+      "meaningEn": "O merciful One, let my curse become false. Then the Lord, compassionate to the afflicted, said that all this happened by My own wish. The sage said, 'I have spoken many harsh words to You. How will my sin ever be erased?'"
+    },
+    {
+      "id": "balkand-31-chaupai-138-2",
+      "section": "chaupai",
+      "stanza": 138,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "जपहु जाइ संकर सत नामा। होइहि हृदयँ तुरत बिश्रामा॥",
+        "कोउ नहिं सिव समान प्रिय मोरें। असि परतीति तजहु जनि भोरें॥"
+      ],
+      "linesEn": [
+        "japahu jāi saṃkara sata nāmā | hoihi hṛdayaṃ turata biśrāmā ||",
+        "kou nahiṃ siva samāna priya moreṃ | asi paratīti tajahu jani bhoreṃ ||"
+      ],
+      "meaningHi": "जाकर शंकरजी के शतनाम का जप करो, इससे हृदय में तुरंत शान्ति होगी। शिवजी के समान मुझे कोई प्रिय नहीं है, इस विश्वास को भूलकर भी न छोड़ना।",
+      "meaningEn": "Go and recite the hundred names of Shiva; then peace will arise in your heart at once. No one is as dear to Me as Shiva—do not abandon this conviction even in error."
+    },
+    {
+      "id": "balkand-31-chaupai-138-3",
+      "section": "chaupai",
+      "stanza": 138,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "जेहि पर कृपा न करहिं पुरारी। सो न पाव मुनि भगति हमारी॥",
+        "अस उर धरि महि बिचरहु जाई। अब न तुम्हहि माया निअराई॥"
+      ],
+      "linesEn": [
+        "jehi para kṛpā na karahiṃ purārī | so na pāva muni bhagati hamārī ||",
+        "asa ura dhari mahi bicarahu jāī | aba na tumhahi māyā niarāī ||"
+      ],
+      "meaningHi": "हे मुनि! पुरारि (शिवजी) जिस पर कृपा नहीं करते, वह मेरी भक्ति नहीं पाता। हृदय में ऐसा निश्चय करके जाकर पृथ्वी पर विचरो। अब मेरी माया तुम्हारे निकट नहीं आवेगी।",
+      "meaningEn": "O sage, one upon whom Purari (Shiva) does not show grace cannot attain My devotion. Keep this certainty in your heart and go roam the earth. Now My illusion will not come near you."
+    },
+    {
+      "id": "balkand-31-doha-138-4",
+      "section": "doha",
+      "stanza": 138,
+      "numInSection": 138,
+      "subSuffix": "",
+      "labelHi": "दोहा · १३८",
+      "labelEn": "Doha · 138",
+      "lines": [
+        "बहुबिधि मुनिहि प्रबोधि प्रभु तब भए अंतरधान।",
+        "सत्यलोक नारद चले करत राम गुन गान॥"
+      ],
+      "linesEn": [
+        "bahubidhi munihi prabodhi prabhu taba bhae antaradhāna |",
+        "satyaloka nārada cale karata rāma guna gāna ||"
+      ],
+      "meaningHi": "बहुत प्रकार से मुनि को समझा-बुझाकर (ढाढ़स देकर) तब प्रभु अन्तर्धान हो गये और नारदजी श्रीरामचन्द्रजी के गुणों का गान करते हुए सत्यलोक (ब्रह्मलोक) को चले।",
+      "meaningEn": "After comforting the sage in many ways, the Lord then disappeared. Narada went to Satyaloka (Brahmaloka), singing the praises of Rama."
+    },
+    {
+      "id": "balkand-31-chaupai-139-0",
+      "section": "chaupai",
+      "stanza": 139,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "हर गन मुनिहि जात पथ देखी। बिगत मोह मन हरष बिसेषी॥",
+        "अति सभीत नारद पहिं आए। गहि पद आरत बचन सुनाए॥"
+      ],
+      "linesEn": [
+        "hara gana munihi jāta patha dekhī | bigata moha mana haraṣa biśeṣī ||",
+        "ati sabhīta nārada pahiṃ āe | gahi pada ārata bacana sunāe ||"
+      ],
+      "meaningHi": "शिवजी के गणों ने जब मुनि को मोहरहित और मन में बहुत प्रसन्न होकर मार्ग में जाते हुए देखा तब वे अत्यन्त भयभीत होकर नारदजी के पास आये और उनके चरण पकड़कर दीन वचन बोले--।",
+      "meaningEn": "When Shiva's attendants saw the sage walking along the road, freed from delusion and especially joyful in mind, they were greatly frightened and came to Narada, clasping his feet and speaking in humble words."
+    },
+    {
+      "id": "balkand-31-chaupai-139-1",
+      "section": "chaupai",
+      "stanza": 139,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "हर गन हम न बिप्र मुनिराया। बड़ अपराध कीन्ह फल पाया॥",
+        "श्राप अनुग्रह करहु कृपाला। बोले नारद दीनदयाला॥"
+      ],
+      "linesEn": [
+        "hara gana hama na bipra munirāyā | baṛa aparādha kīnha phala pāyā ||",
+        "śrāpa anugraha karahu kṛpālā | bole nārada dīnadayālā ||"
+      ],
+      "meaningHi": "हे मुनिराज! हम ब्राह्मण नहीं हैं, शिवजी के गण हैं। हमने बड़ा अपराध किया, जिसका फल हमने पा लिया। हे कृपालु ! अब शाप दूर करने की कृपा कीजिये। दीनों पर दया करने वाले नारदजी ने कहा--।",
+      "meaningEn": "'O king among sages, we are not Brahmins; we are Shiva's attendants. We committed a great offense and have received its fruit. O merciful one, now please show grace and remove the curse.' Thus spoke Narada, compassionate to the helpless."
+    },
+    {
+      "id": "balkand-31-chaupai-139-2",
+      "section": "chaupai",
+      "stanza": 139,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "निसिचर जाइ होहु तुम्ह दोऊ। बैभव बिपुल तेज बल होऊ॥",
+        "भुज बल बिस्व जितब तुम्ह जहिआ। धरिहहिं बिष्नु मनुज तनु तहिआ॥"
+      ],
+      "linesEn": [
+        "nisicara jāi hohu tumha dou | baibhava bipula teja bala hou ||",
+        "bhuja bala bisva jitaba tumha jahiyā | dharihahiṃ biṣṇu manuja tanu tahiyā ||"
+      ],
+      "meaningHi": "तुम दोनों जाकर राक्षस होओ; तुम्हें महान् ऐश्वर्य, तेज और बल की प्राप्ति हो। तुम अपनी भुजाओं के बल से जब सारे विश्व को जीत लोगे, तब भगवान् विष्णु मनुष्य का शरीर धारण करेंगे।",
+      "meaningEn": "You two go and become demons; may you obtain great wealth, splendor, and strength. When you conquer the whole world by the might of your arms, then Lord Vishnu will assume a human body."
+    },
+    {
+      "id": "balkand-31-chaupai-139-3",
+      "section": "chaupai",
+      "stanza": 139,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "समर मरन हरि हाथ तुम्हारा। होइहहु मुकुत न पुनि संसारा॥",
+        "चले जुगल मुनि पद सिर नाई। भए निसाचर कालहि पाई॥"
+      ],
+      "linesEn": [
+        "samara marana hari hātha tumhārā | hoihahu mukuta na puni saṃsārā ||",
+        "cale jugala muni pada sira nāī | bhae nisācara kālahi pāī ||"
+      ],
+      "meaningHi": "युद्ध में श्रीहरि के हाथ से तुम्हारी मृत्यु होगी, जिससे तुम मुक्त हो जाओगे और फिर संसार में जन्म नहीं लोगे। वे दोनों मुनि के चरणों में सिर नवाकर चले और समय पाकर राक्षस हुए।",
+      "meaningEn": "In battle, your death will come by the hand of Hari, and thus you will be freed and not return to the world again. The two bowed their heads at the sage's feet and departed; in due time they became demons."
+    },
+    {
+      "id": "balkand-31-doha-139-4",
+      "section": "doha",
+      "stanza": 139,
+      "numInSection": 139,
+      "subSuffix": "",
+      "labelHi": "दोहा · १३९",
+      "labelEn": "Doha · 139",
+      "lines": [
+        "एक कलप एहि हेतु प्रभु लीन्ह मनुज अवतार।",
+        "सुर रंजन सज्जन सुखद हरि भंजन भुबि भार॥"
+      ],
+      "linesEn": [
+        "eka kalapa ehi hetu prabhu līnha manuja avatāra |",
+        "sura rañjana sajjana sukhada hari bhañjana bhubi bhāra ||"
+      ],
+      "meaningHi": "देवताओं को प्रसन्न करने वाले, सज्जनों को सुख देने वाले और पृथ्वी का भार हरण करने वाले भगवान् ने एक कल्प में इसी कारण मनुष्य का अवतार लिया था।",
+      "meaningEn": "To delight the gods, to give joy to the good, and to remove the burden of the earth, the Lord took a human incarnation in that age for this very reason."
+    },
+    {
+      "id": "balkand-31-chaupai-140-0",
+      "section": "chaupai",
+      "stanza": 140,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "एहि बिधि जनम करम हरि केरे। सुंदर सुखद बिचित्र घनेरे॥",
+        "कलप कलप प्रति प्रभु अवतरहीं। चारु चरित नानाबिधि करहीं॥"
+      ],
+      "linesEn": [
+        "ehi bidhi janama karama hari kere. sundara sukhada bicitra ghanere.",
+        "kalapa kalapa prati prabhu avatarahīṃ. cāru carita nānābidhi karahīṃ."
+      ],
+      "meaningHi": "इस प्रकार भगवान् के अनेकों सुन्दर, सुखदायक और अलौकिक जन्म और कर्म हैं। प्रत्येक कल्प में जब-जब भगवान् अवतार लेते हैं और नाना प्रकार की सुन्दर लीलाएँ करते हैं।",
+      "meaningEn": "In this way, the Lord’s births and deeds are many, beautiful, delightful, and wondrous. In each age-cycle, whenever the Lord descends, He performs many kinds of graceful and varied deeds."
+    },
+    {
+      "id": "balkand-31-chaupai-140-1",
+      "section": "chaupai",
+      "stanza": 140,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "तब तब कथा मुनीसन्ह गाई। परम पुनीत प्रबंध बनाई॥",
+        "बिबिध प्रसंग अनूप बखाने। करहिं न सुनि आचरजु सयाने॥"
+      ],
+      "linesEn": [
+        "taba taba kathā munīsanha gāī. parama punīta prabandha banāī.",
+        "bibidha prasaṅga anūpa bakhāne. karahiṃ na suni ācaraju sayāne."
+      ],
+      "meaningHi": "तब-तब मुनीश्वरों ने परम पवित्र काव्यरचना करके उनकी कथाओं का गान किया है और भाँति-भाँति के अनुपम प्रसंगों का वर्णन किया है, जिनको सुनकर समझदार (विवेकी) लोग आश्चर्य नहीं करते।",
+      "meaningEn": "Again and again, the sages composed most sacred works and sang His stories, describing incomparable episodes of many kinds, which the wise, when they hear them, are not amazed by."
+    },
+    {
+      "id": "balkand-31-chaupai-140-2",
+      "section": "chaupai",
+      "stanza": 140,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "हरि अनंत हरिकथा अनंता। कहहिं सुनहिं बहुबिधि सब संता॥",
+        "रामचंद्र के चरित सुहाए। कलप कोटि लगि जाहिं न गाए॥"
+      ],
+      "linesEn": [
+        "hari ananta harikathā anantā. kahahiṃ sunahiṃ bahubidhi saba santā.",
+        "rāmacandra ke carita suhāe. kalapa koṭi lagi jāhiṃ na gāe."
+      ],
+      "meaningHi": "श्रीहरि अनन्त हैं (उनका कोई पार नहीं पा सकता) और उनकी कथा भी अनन्त है; सब संत लोग उसे बहुत प्रकार से कहते-सुनते हैं। श्रीरामचन्द्रजी के सुन्दर चरित्र करोड़ कल्पों में भी गाये नहीं जा सकते।",
+      "meaningEn": "Hari is infinite, and His story is infinite as well. All the saints speak of it and listen to it in many ways. The charming deeds of Rama cannot be sung even in a hundred million ages."
+    },
+    {
+      "id": "balkand-31-chaupai-140-3",
+      "section": "chaupai",
+      "stanza": 140,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "यह प्रसंग मैं कहा भवानी। हरिमायाँ मोहहिं मुनि ग्यानी॥",
+        "प्रभु कौतुकी प्रनत हितकारी। सेवत सुलभ सकल दुखहारी॥"
+      ],
+      "linesEn": [
+        "yaha prasaṅga main kahā bhavānī. harimāyā̃ mohahiṃ muni gyānī.",
+        "prabhu kautukī pranata hitakārī. sevata sulabha sakala dukhahārī."
+      ],
+      "meaningHi": "[शिवजी कहते हैं कि] हे पार्वती! मैंने यह बतलाने के लिये इस प्रसंग को कहा कि ज्ञानी मुनि भी भगवान् की माया से मोहित हो जाते हैं। प्रभु कौतुकी (लीलामय) हैं और शरणागत का हित करनेवाले हैं। वे सेवा करने में बहुत सुलभ और सब दुःखों के हरनेवाले हैं।",
+      "meaningEn": "[Shiva says:] O Parvati, I have told this episode to make this point: even learned sages are deluded by the Lord’s maya. The Lord is playful in His divine sport and benevolent to those who take refuge in Him. He is easily accessible to devotion and removes all sorrow."
+    },
+    {
+      "id": "balkand-31-sortha-140-4",
+      "section": "sortha",
+      "stanza": 140,
+      "numInSection": 140,
+      "subSuffix": "",
+      "labelHi": "सोरठा · १४०",
+      "labelEn": "Soratha · 140",
+      "lines": [
+        "सुर नर मुनि कोउ नाहिं जेहि न मोह माया प्रबल।",
+        "अस बिचारि मन माहिं भजिअ महामाया पतिहि॥"
+      ],
+      "linesEn": [
+        "sura nara muni kou nāhiṃ jehi na moha māyā prabala.",
+        "asa bicāri mana māhiṃ bhajia mahāmāyā patihiṃ."
+      ],
+      "meaningHi": "देवता, मनुष्य और मुनियों में ऐसा कोई नहीं है जिसे भगवान् की महान् बलवती माया मोहित न कर दे। मन में ऐसा विचार कर उस महामाया के स्वामी (प्रेरक) श्रीभगवान् का भजन करना चाहिये।",
+      "meaningEn": "There is no god, human, or sage whom the Lord’s mighty maya does not delude. Thinking thus in the heart, one should worship the Lord, the Master of that great maya."
+    },
+    {
+      "id": "balkand-31-chaupai-141-0",
+      "section": "chaupai",
+      "stanza": 141,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "अपर हेतु सुनु सैलकुमारी। कहउँ बिचित्र कथा बिस्तारी॥",
+        "जेहि कारन अज अगुन अरूपा। ब्रह्म भयउ कोसलपुर भूपा॥"
+      ],
+      "linesEn": [
+        "apara hetu sunu sailakumārī. kahauṃ bicitra kathā bistārī.",
+        "jehi kārana aja aguna arūpā. brahma bhayau kosalapura bhūpā."
+      ],
+      "meaningHi": "हे गिरिराजकुमारी! अब भगवान् के अवतार का वह दूसरा कारण सुनो—मैं उसकी विचित्र कथा विस्तार करके कहता हूँ—जिस कारण से जन्मरहित, निर्गुण और रूपरहित (अव्यक्त सच्चिदानन्दघन) ब्रह्म अयोध्यापुरी के राजा हुए।",
+      "meaningEn": "O daughter of the mountain-king, listen now to the second reason for the Lord’s descent. I shall tell the wondrous story in विस्तार: by that cause, the unborn, attributeless, formless Brahman became the king of Kosala, Ayodhya."
+    },
+    {
+      "id": "balkand-31-chaupai-141-1",
+      "section": "chaupai",
+      "stanza": 141,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "जो प्रभु बिपिन फिरत तुम्ह देखा। बंधु समेत धरें मुनिबेषा॥",
+        "जासु चरित अवलोकि भवानी। सती सरीर रहिहु बौरानी॥"
+      ],
+      "linesEn": [
+        "jo prabhu bipina phirata tumha dekhā. bandhu sameta dhareṃ munibeṣā.",
+        "jāsu carita avaloki bhavānī. satī sarīra rahihu baurānī."
+      ],
+      "meaningHi": "जिन प्रभु श्रीरामचन्द्रजी को तुमने भाई लक्ष्मणजी के साथ मुनियों का-सा वेष धारण किये वन में फिरते देखा था और हे भवानी! जिनके चरित्र देखकर सती के शरीर में तुम बावली हो गयी थीं।",
+      "meaningEn": "The same Lord Rama whom you saw wandering in the forest with His brother Lakshmana, dressed like an ascetic, and whose character, O Bhavani, made you so bewildered in Sati’s body."
+    },
+    {
+      "id": "balkand-31-chaupai-141-2",
+      "section": "chaupai",
+      "stanza": 141,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "अजहुँ न छाया मिटति तुम्हारी। तासु चरित सुनु भ्रम रुज हारी॥",
+        "लीला कीन्हि जो तेहिं अवतारा। सो सब कहिहउँ मति अनुसारा॥"
+      ],
+      "linesEn": [
+        "ajahuṃ na chāyā miṭati tumhārī. tāsu carita sunu bhrama ruja hārī.",
+        "līlā kīnhi jo tehiṃ avatārā. so saba kahihauṃ mati anusārā."
+      ],
+      "meaningHi": "अब भी तुम्हारे उस बावलेपन की छाया नहीं मिटती, उन्हीं के भ्रमरूपी रोग के हरण करनेवाले चरित्र सुनो। उस अवतार में भगवान् ने जो-जो लीला की, वह सब मैं अपनी बुद्धि के अनुसार तुम्हें कहूँगा।",
+      "meaningEn": "Even now, the shadow of that bewilderment has not left you. Listen to the deeds that remove the disease of delusion. All the divine sports the Lord performed in that incarnation I shall tell you according to my understanding."
+    },
+    {
+      "id": "balkand-31-chaupai-141-3",
+      "section": "chaupai",
+      "stanza": 141,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "भरद्वाज सुनि संकर बानी। सकुचि सप्रेम उमा मुसुकानी॥",
+        "लगे बहुरि बरनै बृषकेतू। सो अवतार भयउ जेहि हेतू॥"
+      ],
+      "linesEn": [
+        "bharadvāja suni saṅkara bānī. sakuci saprema umā musukānī.",
+        "lage bahuri baranai bṛṣaketū. so avatāra bhayau jehi hetū."
+      ],
+      "meaningHi": "भरद्वाज! शंकरजी के वचन सुनकर पार्वतीजी सकुचाकर प्रेमसहित मुसकरायीं। फिर वृषकेतु शिवजी जिस कारण से भगवान् का वह अवतार हुआ था, उसका वर्णन करने लगे।",
+      "meaningEn": "Hearing Shiva’s words, Parvati smiled shyly and lovingly. Then Shiva, the Bull-bannered Lord, began to describe the reason for that incarnation of the Lord."
+    },
+    {
+      "id": "balkand-31-doha-141-4",
+      "section": "doha",
+      "stanza": 141,
+      "numInSection": 141,
+      "subSuffix": "",
+      "labelHi": "दोहा · १४१",
+      "labelEn": "Doha · 141",
+      "lines": [
+        "सो मैं तुम्ह सन कहउँ सबु सुनु मुनीस मन लाइ।",
+        "राम कथा कलि मल हरनि मंगल करनि सुहाइ॥"
+      ],
+      "linesEn": [
+        "so main tumha sana kahauṃ sabu sunu munīsa mana lāi.",
+        "rāma kathā kali mala harani maṅgala karani suhāi."
+      ],
+      "meaningHi": "हे मुनीश्वर भरद्वाज! मैं वह सब तुमसे कहता हूँ, मन लगाकर सुनो। श्रीरामचन्द्रजी की कथा कलियुग के पापों को हरनेवाली, कल्याण करनेवाली और बड़ी सुन्दर है।",
+      "meaningEn": "O sage Bharadvaja, I shall tell you all of it; listen with full attention. Rama’s story removes the stains of the Kali Yuga, brings auspiciousness, and is most beautiful."
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "chapter": 9,
+  "titleHi": "वाल्मीकि, वेद, ब्रह्मा, देवता, शिव, पार्वती आदि की वन्दना",
+  "titleEn": "Salutations to Valmiki, the Vedas, and the Divine Assembly",
+  "verseCount": 10,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 9: Salutations to Valmiki, the Vedas, and the Divine Assembly, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/valmiki-ved-brahma-devata-shiv-parvati-vandana"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "verses": [
+    {
+      "id": "balkand-09-sortha-14-9",
+      "section": "sortha",
+      "stanza": 14,
+      "numInSection": 14,
+      "subSuffix": "",
+      "labelHi": "सोरठा · १४ (घ)",
+      "labelEn": "Soratha · 14 (d)",
+      "lines": [
+        "बंदउँ मुनि पद कंजु रामायन जेहिं निरमयउ।",
+        "सखर सुकोमल मंजु दोष रहित दूषन सहित॥"
+      ],
+      "linesEn": [
+        "bandauṃ muni pada kanju rāmāyana jehiṃ niramayau.",
+        "sakhara sukomala manju doṣa rahita dūṣana sahita."
+      ],
+      "meaningHi": "मैं उन वाल्मीकि मुनि के चरणकमलों की वन्दना करता हूँ, जिन्होंने रामायण की रचना की है, जो खर (राक्षस) सहित होने पर भी खर (कठोर) से विपरीत बड़ी कोमल और सुन्दर है तथा जो दूषण (राक्षस) सहित होने पर भी दूषण अर्थात् दोष से रहित है।",
+      "meaningEn": "I bow to the lotus feet of the sage Valmiki, who composed the Ramayana, which, though containing Khara, is the opposite of harshness and is soft and beautiful, and though containing Dushana, is free from दोष."
+    },
+    {
+      "id": "balkand-09-sortha-14-10",
+      "section": "sortha",
+      "stanza": 14,
+      "numInSection": 14,
+      "subSuffix": "",
+      "labelHi": "सोरठा · १४ (ङ)",
+      "labelEn": "Soratha · 14 (ङ)",
+      "lines": [
+        "बंदउँ चारिउ बेद भव बारिधि बोहित सरिस।",
+        "जिन्हहि न सपनेहुँ खेद बरनत रघुबर बिसद जसु॥"
+      ],
+      "linesEn": [
+        "bandauṃ cāriu beda bhava bāridhi bohita sarisa.",
+        "jinhahi na sapanehuṃ kheda baranata raghubara bisada jasa."
+      ],
+      "meaningHi": "मैं चारों वेदों की वन्दना करता हूँ, जो संसारसमुद्र के पार होने के लिये जहाज के समान हैं तथा जिन्हें श्रीरघुनाथजी का निर्मल यश वर्णन करते स्वप्न में भी खेद (थकावट) नहीं होता।",
+      "meaningEn": "I bow to the four Vedas, which are like a ship for crossing the ocean of worldly existence, and who feel no fatigue even in dreams while describing Lord Raghubar's pure fame."
+    },
+    {
+      "id": "balkand-09-sortha-14-11",
+      "section": "sortha",
+      "stanza": 14,
+      "numInSection": 14,
+      "subSuffix": "",
+      "labelHi": "सोरठा · १४ (च)",
+      "labelEn": "Soratha · 14 (च)",
+      "lines": [
+        "बंदउँ बिधि पद रेनु भव सागर जेहिं कीन्ह जहँ।",
+        "संत सुधा ससि धेनु प्रगटे खल बिष बारुनी॥"
+      ],
+      "linesEn": [
+        "bandauṃ bidhi pada renu bhava sāgara jehiṃ kīnha jahaṃ.",
+        "saṃta sudhā sasi dhenu pragaṭe khala biṣa bārunī."
+      ],
+      "meaningHi": "मैं ब्रह्मजी के चरण-रज की वन्दना करता हूँ जिन्होंने भवसागर बनाया है जहाँ से एक ओर संतरूपी अमृत, चन्द्रमा और कामधेनु निकले और दूसरी ओर दुष्ट मनुष्यरूपी विष और मदिरा उत्पन्न हुए।",
+      "meaningEn": "I bow to the dust of Brahma's feet, by whom the ocean of worldly existence was created, from which on one side emerged saint-like nectar, the moon, and Kamadhenu, and on the other side arose poison and wine in the form of wicked beings."
+    },
+    {
+      "id": "balkand-09-doha-14-12",
+      "section": "doha",
+      "stanza": 14,
+      "numInSection": 14,
+      "subSuffix": "",
+      "labelHi": "दोहा · १४ (छ)",
+      "labelEn": "Doha · 14 (छ)",
+      "lines": [
+        "बिबुध बिप्र बुध ग्रह चरन बंदि कहउँ कर जोरि।",
+        "होइ प्रसन्न पुरवहु सकल मंजु मनोरथ मोरि॥"
+      ],
+      "linesEn": [
+        "bibudha bipra budha graha carana bandi kahauṃ kara jori.",
+        "hoi prasanna puravahu sakala manju manoratha mori."
+      ],
+      "meaningHi": "देवता, ब्राह्मण, पण्डित, ग्रह--इन सब के चरणों की वन्दना करके हाथ जोड़कर कहता हूँ कि आप प्रसन्न होकर मेरे सारे सुन्दर मनोरथों को पूरा करें।",
+      "meaningEn": "Having bowed to the feet of the gods, Brahmins, scholars, and the planets, I say with folded hands: be pleased and fulfill all my beautiful wishes."
+    },
+    {
+      "id": "balkand-09-chaupai-15-0",
+      "section": "chaupai",
+      "stanza": 15,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "पुनि बंदउँ सारद सुरसरिता। जुगल पुनीत मनोहर चरिता॥",
+        "मज्जन पान पाप हर एका। कहत सुनत एक हर अबिबेका॥"
+      ],
+      "linesEn": [
+        "puni bandauṃ sārada surasaritā. jugala punīta manohara caritā.",
+        "majjana pāna pāpa hara ekā. kahata sunata eka hara abibekā."
+      ],
+      "meaningHi": "फिर मैं सरस्वतीजी और सरिता (गंगा) की वन्दना करता हूँ। दोनों पवित्र और मनोहर चरित्रवाली हैं। एक (गंगा जी) स्नान करने और जल पीने से पापों को हरती हैं और दूसरी (सरस्वतीजी) गुण और यश कहने और सुनने से अज्ञान का नाश कर देती हैं।",
+      "meaningEn": "Again I bow to Saraswati and the heavenly river. Both are pure and charming in their nature. One removes sins by bathing in and drinking her waters, while the other destroys ignorance through speaking and hearing of virtues and fame."
+    },
+    {
+      "id": "balkand-09-chaupai-15-1",
+      "section": "chaupai",
+      "stanza": 15,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "गुर पितु मातु महेस भवानी। प्रनवउँ दीनबंधु दिन दानी॥",
+        "सेवक स्वामि सखा सिय पी के। हित निरुपधि सब बिधि तुलसी के॥"
+      ],
+      "linesEn": [
+        "gura pitu mātu mahesa bhavānī. pranavauṃ dīnabandhu dina dānī.",
+        "sevaka swāmi sakhā siya pī ke. hita nirupadhi saba bidhi tulasī ke."
+      ],
+      "meaningHi": "श्रीमहेश और पार्वती को मैं प्रणाम करता हूँ, जो मेरे गुरु, पिता और माता हैं, जो दीनबन्धु और नित्य दान करनेवाले हैं, जो सीतापति श्रीरामचन्द्रजी के सेवक, स्वामी और सखा हैं तथा मुझ तुलसीदास का सब प्रकार से कपटरहित (सच्चा) हित करनेवाले हैं।",
+      "meaningEn": "I bow to Mahesh and Bhavani, who are my guru, father, and mother; who are the friend of the lowly and ever-giving; who are servant, master, and friend of Sita's Lord Shri Ramchandra; and who in every way work for the true and unselfish good of me, Tulsidas."
+    },
+    {
+      "id": "balkand-09-chaupai-15-2",
+      "section": "chaupai",
+      "stanza": 15,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "कलि बिलोकि जग हित हर गिरिजा। साबर मंत्र जाल जिन्ह सिरिजा॥",
+        "अनमिल आखर अरथ न जापू। प्रगट प्रभाउ महेस प्रतापू॥"
+      ],
+      "linesEn": [
+        "kali biloki jaga hita hara girijā. sābara mantra jāla jinha sirijā.",
+        "anamila ākhara aratha na jāpū. pragaṭa prabhāu mahesa pratāpū."
+      ],
+      "meaningHi": "जिन शिव-पार्वती ने कलियुग को देखकर, जगत् के हित के लिये, शाबर मन्त्रसमूह की रचना की, जिन मन्त्रों के अक्षर बेमेल हैं, जिनका न कोई ठीक अर्थ होता है और न जप ही होता है, तथापि श्रीशिवजी के प्रताप से जिनका प्रभाव प्रत्यक्ष है।",
+      "meaningEn": "Seeing the age of Kali and for the welfare of the world, Shiva and Girija composed the collections of Shabar mantras. Their letters do not match in an ordinary way, they seem to have no clear meaning and are not used in normal recitation, yet their power is manifest through the glory of Mahesh."
+    },
+    {
+      "id": "balkand-09-chaupai-15-3",
+      "section": "chaupai",
+      "stanza": 15,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "सो उमेस मोहि पर अनुकूला। करिहिं कथा मुद मंगल मूला॥",
+        "सुमिरि सिवा सिव पाइ पसाऊ। बरनउँ रामचरित चित चाऊ॥"
+      ],
+      "linesEn": [
+        "so umesa mohi para anukūlā. karihiṃ kathā muda maṅgala mūlā.",
+        "sumiri sivā siva pāi pasāū. baranauṃ rāmacarita cita cāū."
+      ],
+      "meaningHi": "वे उमापति शिवजी मुझ पर प्रसन्न होकर [श्रीरामजी की] इस कथा को आनन्द और मंगल की मूल बनायेंगे। इस प्रकार पार्वतीजी और शिवजी दोनों का स्मरण करके और उनका प्रसाद पाकर मैं चाव भरे चित्त से श्रीरामचरित्र का वर्णन करता हूँ।",
+      "meaningEn": "Lord Shiva, husband of Uma, will be gracious to me and make this story the source of joy and auspiciousness. Thus, remembering both Parvati and Shiva and receiving their grace, I narrate the story of Ram with a heart full of longing."
+    },
+    {
+      "id": "balkand-09-chaupai-15-4",
+      "section": "chaupai",
+      "stanza": 15,
+      "numInSection": 5,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ५-६",
+      "labelEn": "Chaupai · 5-6",
+      "lines": [
+        "भनिति मोरि सिव कृपाँ बिभाती। ससि समाज मिलि मनहुँ सुराती॥",
+        "जे एहि कथहि सनेह समेता। कहिहहिं सुनिहहिं समुझि सचेता॥",
+        "होइहहिं राम चरन अनुरागी। कलि मल रहित सुमंगल भागी॥"
+      ],
+      "linesEn": [
+        "bhaniti mori siva kṛpāṃ bibhātī. sasi samāja mili manahuṃ surātī.",
+        "je ehi kathahi saneha sametā. kahihahiṃ sunihahiṃ samujhi sacetā.",
+        "hoihahiṃ rāma carana anurāgī. kali mala rahita sumaṃgala bhāgī."
+      ],
+      "meaningHi": "मेरी कविता श्रीशिवजी की कृपा से ऐसी सुशोभित होगी, जैसी तारागणों के सहित चन्द्रमा के साथ रात्रि शोभित होती है। जो इस कथा को प्रेमसहित एवं सावधानी के साथ समझ-बूझकर कहेंगे-सुनेंगे, वे कलियुग के पापों से रहित और सुन्दर कल्याण के भागी होकर श्रीरामचन्द्रजी के चरणों के प्रेमी बन जायेंगे।",
+      "meaningEn": "By Shiva's grace, my composition will be adorned like a night decorated with the moon and its company of stars. Those who, with love and understanding, speak and hear this story carefully will become free from the impurities of Kali and will become blessed with auspiciousness, turning devotees of Lord Ram's feet."
+    },
+    {
+      "id": "balkand-09-doha-15-5",
+      "section": "doha",
+      "stanza": 15,
+      "numInSection": 15,
+      "subSuffix": "",
+      "labelHi": "दोहा · १५",
+      "labelEn": "Doha · 15",
+      "lines": [
+        "सपनेहुँ साचेहुँ मोहि पर जौं हर गौरि पसाउ।",
+        "तौ फुर होउ जो कहेउँ सब भाषा भनिति प्रभाउ॥"
+      ],
+      "linesEn": [
+        "sapanehuṃ sācehuṃ mohi para jauṃ hara gauri pasāu.",
+        "tau phura hou jo kaheuṃ saba bhāṣā bhaniti prabhāu."
+      ],
+      "meaningHi": "यदि मुझ पर श्रीशिवजी और पार्वतीजी की स्वप्न में भी सचमुच प्रसन्नता हो, तो मैंने इस भाषा, कविता का जो प्रभाव कहा है, वह सब सच हो।",
+      "meaningEn": "If Lord Shiva and Parvati are truly gracious toward me, even in dreams, then may all that I have said about the power of this language and composition prove true."
+    }
+  ]
+}

@@ -1,0 +1,606 @@
+{
+  "chapter": 15,
+  "titleHi": "याज्ञवल्क्य-भरद्वाज संवाद तथा प्रयाग माहात्म्य",
+  "titleEn": "Yajnavalkya-Bharadvaja Dialogue and the Greatness of Prayag",
+  "verseCount": 31,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 15: Yajnavalkya-Bharadvaja Dialogue and the Greatness of Prayag, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/yajnavalkya-bharadvaj-samvad-prayag-mahatmya"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "verses": [
+    {
+      "id": "balkand-15-chaupai-44-0",
+      "section": "chaupai",
+      "stanza": 44,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "भरद्वाज मुनि बसहिं प्रयागा। तिन्हहि राम पद अति अनुरागा॥",
+        "तापस सम दम दया निधाना। परमारथ पथ परम सुजाना॥"
+      ],
+      "linesEn": [
+        "bharadvāja muni basahiṃ prayāgā. tinhahi rāma pada ati anurāgā.",
+        "tāpasa sama dama dayā nidhānā. paramāratha patha parama sujānā."
+      ],
+      "meaningHi": "भरद्वाज मुनि प्रयाग में बसते हैं, उनका श्रीरामजी के चरणों में अत्यन्त प्रेम है। वे तपस्वी, निगृहीतचित्त, जितेन्द्रिय, दया के निधान और परमार्थ के मार्ग में बड़े ही चतुर हैं।",
+      "meaningEn": "Sage Bharadwaj resides at Prayag, and he has immense devotion to Lord Rama’s feet. He is an ascetic, self-controlled, a treasure of compassion, and greatly skilled in the path of supreme good."
+    },
+    {
+      "id": "balkand-15-chaupai-44-1",
+      "section": "chaupai",
+      "stanza": 44,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "माघ मकरगत रबि जब होई। तीरथपतिहिं आव सब कोई॥",
+        "देव दनुज किंनर नर श्रेनीं। सादर मज्जहिं सकल त्रिबेनीं॥"
+      ],
+      "linesEn": [
+        "māgha makaragata rabi jaba hoi. tīrathapatihiṃ āva saba koī.",
+        "deva danuja kiṃnara nara śreṇīṃ. sādara majjhahiṃ sakala tribenīṃ."
+      ],
+      "meaningHi": "माघ में जब सूर्य मकर राशि पर जाते हैं तब सब लोग तीर्थराज प्रयाग को आते हैं। देवता, दैत्य, किन्नर और मनुष्यों के समूह सब आदरपूर्वक त्रिवेणी में स्नान करते हैं।",
+      "meaningEn": "When, in the month of Magh, the sun enters Capricorn, everyone comes to the king of holy places, Prayag. Gods, demons, Kinnaras, and groups of human beings all bathe reverently in the Triveni."
+    },
+    {
+      "id": "balkand-15-chaupai-44-2",
+      "section": "chaupai",
+      "stanza": 44,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "पूजहिं माधव पद जलजाता। परसि अखय बटु हरषहिं गाता॥",
+        "भरद्वाज आश्रम अति पावन। परम रम्य मुनिबर मन भावन॥"
+      ],
+      "linesEn": [
+        "pūjhahiṃ mādhava pada jalajātā. parasi akhaya baṭu haraṣahiṃ gātā.",
+        "bharadvāja āśrama ati pāvana. parama ramya munibara mana bhāvana."
+      ],
+      "meaningHi": "श्रीवेणीमाधवजी के चरणकमलों को पूजते हैं और अक्षय बटु का स्पर्श कर उनके शरीर पुलकित होते हैं। भरद्वाजजी का आश्रम बहुत ही पवित्र, परम रमणीय और श्रेष्ठ मुनियों के मन को भानेवाला है।",
+      "meaningEn": "They worship the lotus feet of Madhava, and on touching the Akshay Vat their bodies thrill with joy. Bharadwaj’s hermitage is most sacred, exceedingly beautiful, and pleasing to the minds of the sages."
+    },
+    {
+      "id": "balkand-15-chaupai-44-3",
+      "section": "chaupai",
+      "stanza": 44,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "तहाँ होइ मुनि रिषय समाजा। जाहिं जे मज्जन तीरथराजा॥",
+        "मज्जहिं प्रात समेत उछाहा। कहहिं परसपर हरि गुन गाहा॥"
+      ],
+      "linesEn": [
+        "tahāṃ hoi muni riṣaya samājā. jāhiṃ je majjana tīratharājā.",
+        "majjhahiṃ prāta sameta uchāhā. kahahiṃ paraspara hari guna gāhā."
+      ],
+      "meaningHi": "तीर्थराज प्रयाग में जो स्नान करने जाते हैं, उन ऋषि-मुनियों का समाज वहाँ (भरद्वाज के आश्रम में) जुटता है। प्रातःकाल सब उत्साहपूर्वक स्नान करते हैं और फिर परस्पर हरि के गुणों की कथाएँ कहते हैं।",
+      "meaningEn": "There, the assembly of sages gathers, for those who go to bathe at the king of holy places meet at Bharadwaj’s hermitage. In the morning they bathe with joy and then speak among themselves of the glories of Hari."
+    },
+    {
+      "id": "balkand-15-doha-44-4",
+      "section": "doha",
+      "stanza": 44,
+      "numInSection": 44,
+      "subSuffix": "",
+      "labelHi": "दोहा · ४४",
+      "labelEn": "Doha · 44",
+      "lines": [
+        "ब्रह्म निरूपन धरम बिधि बरनहिं तत्त्व बिभाग।",
+        "कहहिं भगति भगवंत कै संजुत ग्यान बिराग॥"
+      ],
+      "linesEn": [
+        "brahma nirūpana dharama bidhi baranahiṃ tattva bibhāga.",
+        "kahahiṃ bhagati bhagavaṃta kai saṃjuta gyāna birāga."
+      ],
+      "meaningHi": "ब्रह्म का निरूपण, धर्म की विधि और तत्त्वों के विभाग का वर्णन करते हैं तथा ज्ञान-वैराग्य से युक्त भगवान् की भक्ति का कथन करते हैं।",
+      "meaningEn": "They expound Brahman, the rules of dharma, and the divisions of the principles, and they also speak of devotion to God, joined with knowledge and dispassion."
+    },
+    {
+      "id": "balkand-15-chaupai-45-0",
+      "section": "chaupai",
+      "stanza": 45,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "एहि प्रकार भरि माघ नहाहीं। पुनि सब निज निज आश्रम जाहीं॥",
+        "प्रति संबत अति होइ अनंदा। मकर मज्जि गवनहिं मुनिबृंदा॥"
+      ],
+      "linesEn": [
+        "ehi prakāra bhari māgha nahāhīṃ. puni saba nija nija āśrama jāhīṃ.",
+        "prati saṃbat ati hoi anaṃdā. makara majji gavanahiṃ munibṛndā."
+      ],
+      "meaningHi": "इसी प्रकार माघ भर स्नान करते हैं और फिर सब अपने-अपने आश्रमों को चले जाते हैं। हर साल वहाँ इसी तरह बड़ा आनन्द होता है। मकर में स्नान करके मुनिगण चले जाते हैं।",
+      "meaningEn": "In this way they bathe throughout the month of Magh, and then all return to their own hermitages. Each year there is great delight there, and after bathing in Capricorn the hosts of sages depart."
+    },
+    {
+      "id": "balkand-15-chaupai-45-1",
+      "section": "chaupai",
+      "stanza": 45,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "एक बार भरि मकर नहाए। सब मुनीस आश्रमन्ह सिधाए॥",
+        "जागबलिक मुनि परम बिबेकी। भरद्वाज राखे पद टेकी॥"
+      ],
+      "linesEn": [
+        "eka bāra bhari makara nahāe. saba munīsa āśramanha sidhāe.",
+        "jāgabalika muni parama bibekī. bharadvāja rākhae pada ṭekī."
+      ],
+      "meaningHi": "एक बार पूरे मकर भर स्नान करके सब मुनीश्वर अपने-अपने आश्रमों को लौट गये। परम ज्ञानी जागबलिक मुनि को चरण पकड़कर भरद्वाजजी ने रख लिया।",
+      "meaningEn": "Once, after bathing throughout the month of Capricorn, all the great sages returned to their hermitages. Bharadwaj held back the supremely discerning sage Yajnavalkya, clasping his feet."
+    },
+    {
+      "id": "balkand-15-chaupai-45-2",
+      "section": "chaupai",
+      "stanza": 45,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "सादर चरन सरोज पखारे। अति पुनीत आसन बैठारे॥",
+        "करि पूजा मुनि सुजसु बखानी। बोले अति पुनीत मृदु बानी॥"
+      ],
+      "linesEn": [
+        "sādara carana saroja pakhāre. ati punīta āsana baiṭhāre.",
+        "kari pūjā muni sujasu bakhānī. bole ati punīta mṛdu bānī."
+      ],
+      "meaningHi": "आदरपूर्वक उनके चरणकमल धोये और बड़े ही पवित्र आसन पर उन्हें बैठाया। पूजा करके मुनि याज्ञवल्क्यजी के सुयश का वर्णन किया और फिर अत्यन्त पवित्र और कोमल वाणी से बोले--।",
+      "meaningEn": "With reverence he washed his lotus feet and seated him on a most pure seat. After worshipping him and praising the sage’s good fame, he spoke in a voice that was exceedingly pure and gentle."
+    },
+    {
+      "id": "balkand-15-chaupai-45-3",
+      "section": "chaupai",
+      "stanza": 45,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "नाथ एक संसउ बड़ मोरें। करगत बेदतत्त्व सबु तोरें॥",
+        "कहत सो मोहि लागत भय लाजा। जौं न कहउँ बड़ होइ अकाजा॥"
+      ],
+      "linesEn": [
+        "nātha eka saṃsau baḍa morẽ. karagata bedatattva sabu toreṃ.",
+        "kahata so mohi lāgata bhaya lājā. jauṃ na kahauṃ baḍa hoi akājā."
+      ],
+      "meaningHi": "हे नाथ! मेरे मन में एक बड़ा सन्देह है; वेदों का तत्त्व सब आपकी मुट्ठी में है (अर्थात्‌ आप ही वेद का तत्त्व जाननेवाले होने के कारण मेरा सन्देह निवारण कर सकते हैं) पर उस सन्देह को कहते मुझे भय और लाज आती है [ भय इसलिये कि कहीं आप यह न समझें कि मेरी परीक्षा ले रहा है, लाज इसलिये कि इतनी आयु बीत गयी, अब तक ज्ञान न हुआ] और यदि नहीं कहता तो बड़ी हानि होती है [क्योंकि अज्ञानी बना रहता हूँ]।",
+      "meaningEn": "O Lord, I have one great doubt in my mind; the essence of the Vedas is in your grasp, that is, as one who knows the Vedas’ meaning, you can remove my doubt. But to speak of that doubt fills me with fear and shame—fear lest you think I am testing you, and shame that so much of life has passed and I still have not gained knowledge. And if I do not speak, there is great loss, for I remain ignorant."
+    },
+    {
+      "id": "balkand-15-doha-45-4",
+      "section": "doha",
+      "stanza": 45,
+      "numInSection": 45,
+      "subSuffix": "",
+      "labelHi": "दोहा · ४५",
+      "labelEn": "Doha · 45",
+      "lines": [
+        "संत कहहिं असि नीति प्रभु श्रुति पुरान मुनि गाव।",
+        "होइ न बिमल बिबेक उर गुर सन किएँ दुराव॥"
+      ],
+      "linesEn": [
+        "santa kahahiṃ asi nīti prabhu śruti purāna muni gāva.",
+        "hoi na bimala bibeka ura guru sana kieṃ durāva."
+      ],
+      "meaningHi": "हे प्रभो! संतलोग ऐसी नीति कहते हैं और श्रुति, पुराण तथा मुनिजन भी यही बतलाते हैं कि गुरु के साथ छिपाव करने से हृदय में निर्मल विवेक नहीं होता।",
+      "meaningEn": "O Lord, the saints speak thus, and the Vedas, the Puranas, and the sages also say the same: if one hides things from one’s guru, the heart does not become pure in discernment."
+    },
+    {
+      "id": "balkand-15-chaupai-46-0",
+      "section": "chaupai",
+      "stanza": 46,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "अस बिचारि प्रगटउँ निज मोहू। हरहु नाथ करि जन पर छोहू॥",
+        "राम नाम कर अमित प्रभावा। संत पुरान उपनिषद गावा॥"
+      ],
+      "linesEn": [
+        "asa bicāri pragaṭauṃ nija mohū. harahu nātha kari jana para chohū.",
+        "rāma nāma kara amita prabhāvā. saṃta purāna upaniṣada gāvā."
+      ],
+      "meaningHi": "यही सोचकर मैं अपना अज्ञान प्रकट करता हूँ। हे नाथ! सेवक पर कृपा करके इस अज्ञान का नाश कीजिए। राम नाम का असीम प्रभाव संतों, पुराणों और उपनिषदों ने गाया है।",
+      "meaningEn": "Thinking thus, I am revealing my own delusion. O Lord, please show mercy to your servant and destroy this ignorance. The boundless power of Rama's name has been sung by the saints, the Puranas, and the Upanishads."
+    },
+    {
+      "id": "balkand-15-chaupai-46-1",
+      "section": "chaupai",
+      "stanza": 46,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "संतत जपत संभु अबिनासी। सिव भगवान ग्यान गुन रासी॥",
+        "आकर चारि जीव जग अहहीं। कासीं मरत परम पद लहहीं॥"
+      ],
+      "linesEn": [
+        "santata japata saṃbhu abināsī. siva bhagavāna gyāna guna rāsī.",
+        "ākara cāri jīva jaga ahahīṃ. kāsīṃ marata parama pada lahahīṃ."
+      ],
+      "meaningHi": "कल्याणस्वरूप, ज्ञान और गुणों की राशि, अविनाशी भगवान् शम्भु निरन्तर रामनाम का जप करते रहते हैं। संसार में चार जाति के जीव हैं, काशी में मरने से सभी परमपद को प्राप्त करते हैं।",
+      "meaningEn": "The imperishable Lord Shambhu, who is the embodiment of auspiciousness and the treasury of wisdom and virtues, constantly chants Rama's name. There are four kinds of beings in the world; by dying in Kashi, all attain the supreme state."
+    },
+    {
+      "id": "balkand-15-chaupai-46-2",
+      "section": "chaupai",
+      "stanza": 46,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "सोपि राम महिमा मुनिराया। सिव उपदेसु करत करि दाया॥",
+        "रामु कवन प्रभु पूछउँ तोही। कहिअ बुझाइ कृपानिधि मोही॥"
+      ],
+      "linesEn": [
+        "sopi rāma mahimā munirāyā. siva upadesu karata kari dāyā.",
+        "rāmu kavana prabhu pūchauṃ tohī. kahiya bujhāi kṛpānidhi mohī."
+      ],
+      "meaningHi": "हे मुनिराज! वह भी राम [नाम] की ही महिमा है, क्योंकि शिवजी महाराज दया करके [काशी में मरनेवाले जीव को] रामनाम का ही उपदेश करते हैं [इसीसे उनको परमपद मिलता है]। हे प्रभो! मैं आपसे पूछता हूँ कि वे राम कौन हैं? हे कृपानिधान! मुझे समझाकर कहिये।",
+      "meaningEn": "O sage king, that too is the glory of Rama's name, for Lord Shiva, out of compassion, gives the instruction of Rama's name [to the being dying in Kashi], and by that he attains the supreme state. O Lord, I ask you: who is that Rama? O treasure of mercy, please explain it to me."
+    },
+    {
+      "id": "balkand-15-chaupai-46-3",
+      "section": "chaupai",
+      "stanza": 46,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "एक राम अवधेस कुमारा। तिन्ह कर चरित बिदित संसारा॥",
+        "नारि बिरहँ दुखु लहेउ अपारा। भयउ रोषु रन रावनु मारा॥"
+      ],
+      "linesEn": [
+        "eka rāma avadhesa kumārā. tinha kara carita vidita saṃsārā.",
+        "nāri birahaṃ dukhu laheu apārā. bhayaū roṣu rana rāvaṇu mārā."
+      ],
+      "meaningHi": "एक राम तो अवधनरेश दशरथजी के कुमार हैं, उनका चरित्र सारा संसार जानता है। उन्होंने स्त्री के विरह में अपार दुःख उठाया और क्रोध आने पर युद्ध में रावण को मार डाला।",
+      "meaningEn": "One Rama is the prince of King Dasharatha of Ayodhya; His deeds are known throughout the world. He endured immense sorrow in separation from His wife, and when anger arose, He slew Ravana in battle."
+    },
+    {
+      "id": "balkand-15-doha-46-4",
+      "section": "doha",
+      "stanza": 46,
+      "numInSection": 46,
+      "subSuffix": "",
+      "labelHi": "दोहा · ४६",
+      "labelEn": "Doha · 46",
+      "lines": [
+        "प्रभु सोइ राम कि अपर कोउ जाहि जपत त्रिपुरारि।",
+        "सत्यधाम सर्बग्य तुम्ह कहहु बिबेकु बिचारि॥"
+      ],
+      "linesEn": [
+        "prabhu soi rāma ki apara kou jāhi japata tripurāri.",
+        "satyadhāma sarbagya tumha kahahu bibeku bicāri."
+      ],
+      "meaningHi": "हे प्रभो! वही राम हैं या और कोई दूसरे हैं, जिनको शिवजी जपते हैं? आप सत्य के धाम हैं और सब कुछ जानते हैं, ज्ञान विचारकर कहिये।",
+      "meaningEn": "O Lord, is that Rama the same one, or is there some other Rama whom Shiva chants? You are the abode of truth and all-knowing; speak after considering it wisely."
+    },
+    {
+      "id": "balkand-15-chaupai-47-0",
+      "section": "chaupai",
+      "stanza": 47,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जैसें मिटै मोर भ्रम भारी। कहहु सो कथा नाथ बिस्तारी॥",
+        "जागबलिक बोले मुसुकाई। तुम्हहि बिदित रघुपति प्रभुताई॥"
+      ],
+      "linesEn": [
+        "jaisẽ miṭai mora bhrama bhārī. kahahu so kathā nātha bistārī.",
+        "jāgabalika bole musukāī. tumhahi bidita raghupati prabhutāī."
+      ],
+      "meaningHi": "हे नाथ! जिस प्रकार से मेरा यह भारी भ्रम मिट जाए, आप वही कथा विस्तारपूर्वक कहिये। इस पर याज्ञवल्क्यजी मुसकराकर बोले, श्रीरघुनाथजी की प्रभुता को तुम जानते हो।",
+      "meaningEn": "O Lord, please tell me that story in full, by which this heavy delusion of mine may be removed. Then Yajnavalkya smiled and said, \"You know the sovereignty of Raghupati.\""
+    },
+    {
+      "id": "balkand-15-chaupai-47-1",
+      "section": "chaupai",
+      "stanza": 47,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "रामभगत तुम्ह मन क्रम बानी। चतुराई तुम्हारि मैं जानी॥",
+        "चाहहु सुनै राम गुन गूढ़ा। कीन्हिहु प्रस्न मनहुँ अति मूढ़ा॥"
+      ],
+      "linesEn": [
+        "rāma bhagata tumha mana krama bānī. caturāī tumhāri maiṃ jānī.",
+        "cāhahu sunai rāma guna gūḍhā. kīnhiḥu prasna manahuṃ ati mūḍhā."
+      ],
+      "meaningHi": "तुम मन, कर्म और वाणी से श्रीरामजी के भक्त हो। तुम्हारी चतुराई को मैं जान गया। तुम श्रीरामजी के रहस्यमय गुणों को सुनना चाहते हो; इसी से तुमने ऐसा प्रश्न किया है मानो बड़े ही मूढ़ हो।",
+      "meaningEn": "You are a devotee of Shri Rama in mind, deed, and speech. I have understood your cleverness. You wish to hear Rama's profound qualities; therefore you have asked such a question as though you were quite simple-minded."
+    },
+    {
+      "id": "balkand-15-chaupai-47-2",
+      "section": "chaupai",
+      "stanza": 47,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "तात सुनहु सादर मनु लाई। कहउँ राम कै कथा सुहाई॥",
+        "महामोहु महिषेसु बिसाला। रामकथा कालिका कराला॥"
+      ],
+      "linesEn": [
+        "tāta sunahu sādara manu lāī. kahauṃ rāma kai kathā suhāī.",
+        "mahāmohu mahiṣesu bisālā. rāmakathā kālikā karālā."
+      ],
+      "meaningHi": "हे तात! तुम आदरपूर्वक मन लगाकर सुनो; मैं श्रीरामजी की सुन्दर कथा कहता हूँ। बड़ा भारी अज्ञान विशाल महिषासुर है और श्रीरामजी की कथा [उसे नष्ट कर देनेवाली] भयंकर कालीजी हैं।",
+      "meaningEn": "O dear one, listen attentively and with respect; I shall tell the beautiful story of Shri Rama. Great delusion is like the giant demon Mahishasura, and Rama's story is the fierce goddess Kali who destroys it."
+    },
+    {
+      "id": "balkand-15-chaupai-47-3",
+      "section": "chaupai",
+      "stanza": 47,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "रामकथा ससि किरन समाना। संत चकोर करहिं जेहि पाना॥",
+        "ऐसेइ संसय कीन्ह भवानी। महादेव तब कहा बखानी॥"
+      ],
+      "linesEn": [
+        "rāmakathā sasi kirana samānā. saṃta cakor karahiṃ jehi pānā.",
+        "aisei saṃsaya kīnha bhavānī. mahādeva taba kahā bakhānī."
+      ],
+      "meaningHi": "श्रीरामजी की कथा चन्द्रमा की किरणों के समान है, जिसे संतरूपी चकोर सदा पान करते हैं। ऐसा ही सन्देह पार्वतीजी ने किया था, तब महादेवजी ने विस्तार से उसका उत्तर दिया था।",
+      "meaningEn": "Rama's story is like the rays of the moon, which the chakor birds in the form of saints continually drink in. Such a doubt was once raised by Parvati, and then Mahadeva explained it in full."
+    },
+    {
+      "id": "balkand-15-doha-47-4",
+      "section": "doha",
+      "stanza": 47,
+      "numInSection": 47,
+      "subSuffix": "",
+      "labelHi": "दोहा · ४७",
+      "labelEn": "Doha · 47",
+      "lines": [
+        "कहउँ सो मति अनुहारि अब उमा संभु संबाद।",
+        "भयउ समय जेहि हेतु जेहि सुनु मुनि मिटिहि बिषाद॥"
+      ],
+      "linesEn": [
+        "kahauṃ so mati anuhāri aba umā sambhu saṃbāda.",
+        "bhayaū samaya jehi hetu jehi sunu muni miṭihi biṣāda."
+      ],
+      "meaningHi": "अब मैं अपनी बुद्धि के अनुसार वही उमा और शिवजी का संवाद कहता हूँ। वह जिस समय और जिस हेतु से हुआ, उसे हे मुनि! तुम सुनो, तुम्हारा विषाद मिट जायगा।",
+      "meaningEn": "Now I shall relate, according to my understanding, that dialogue between Uma and Shiva. O sage, listen to the time and the reason for it; your grief will be removed."
+    },
+    {
+      "id": "balkand-15-chaupai-48-0",
+      "section": "chaupai",
+      "stanza": 48,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "एक बार त्रेता जुग माहीं। संभु गए कुंभज रिषि पाहीं॥",
+        "संग सती जगजननि भवानी। पूजे रिषि अखिलेस्वर जानी॥"
+      ],
+      "linesEn": [
+        "eka bāra tretā juga māhīṃ. saṃbhu gae kumbhaja rishi pāhīṃ.",
+        "sanga satī jagajanani bhavānī. pūje rishi akhilesvara jānī."
+      ],
+      "meaningHi": "एक बार त्रेतायुग में शिवजी अगस्त्य ऋषि के पास गये। उनके साथ जगज्जननी भवानी सतीजी भी थीं। ऋषि ने सम्पूर्ण जगत् के ईश्वर जानकर उनका पूजन किया।",
+      "meaningEn": "Once in the Treta Yuga, Shiva went to the sage Kumbhaja. With him was Sati, Bhavani, the Mother of the universe. Seeing them as the Lord of all, the sage worshipped them."
+    },
+    {
+      "id": "balkand-15-chaupai-48-1",
+      "section": "chaupai",
+      "stanza": 48,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "रामकथा मुनिबर्ज बखानी। सुनी महेस परम सुखु मानी॥",
+        "रिषि पूछी हरिभगति सुहाई। कही संभु अधिकारी पाई॥"
+      ],
+      "linesEn": [
+        "rāmakathā munibarja bakhānī. sunī mahesa param sukhu mānī.",
+        "rishi pūchī haribhagati suhāī. kahī sambhu adhikārī pāī."
+      ],
+      "meaningHi": "मुनिवर अगस्त्यजी ने रामकथा विस्तार से कही, जिसको महेश्वर ने परम सुख मानकर सुना। फिर ऋषि ने शिवजी से सुन्दर हरिभक्ति पूछी और शिवजी ने उनको अधिकारी पाकर [रहस्यसहित] भक्ति का निरूपण किया।",
+      "meaningEn": "The great sage Agastya narrated the story of Rama in detail, and Mahesha heard it with the greatest delight. Then the sage asked Shiva about the beautiful devotion to Hari, and Shiva, finding him worthy, explained that devotion with its hidden meaning."
+    },
+    {
+      "id": "balkand-15-chaupai-48-2",
+      "section": "chaupai",
+      "stanza": 48,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "कहत सुनत रघुपति गुन गाथा। कछु दिन तहाँ रहे गिरिनाथा॥",
+        "मुनि सन बिदा मागि त्रिपुरारी। चले भवन सँग दच्छकुमारी॥"
+      ],
+      "linesEn": [
+        "kahata sunata raghupati guna gāthā. kachu dina tahāṃ rahe girināthā.",
+        "muni sana bidā māgi tripurārī. cale bhavana sanga dacchakumārī."
+      ],
+      "meaningHi": "श्रीरघुनाथजी के गुणों की कथाएँ कहते-सुनते कुछ दिनों तक शिवजी वहाँ रहे। फिर मुनि से विदा माँगकर शिवजी दक्षकुमारी सतीजी के साथ घर (कैलास) को चले।",
+      "meaningEn": "While speaking and hearing the praises of Raghupati, Shiva stayed there for some days. Then, taking leave of the sage, Tripurari left for home together with Dakshakumari Sati."
+    },
+    {
+      "id": "balkand-15-chaupai-48-3",
+      "section": "chaupai",
+      "stanza": 48,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "तेहि अवसर भंजन महिभारा। हरि रघुबंस लीन्ह अवतारा॥",
+        "पिता बचन तजि राजु उदासी। दंडक बन बिचरत अबिनासी॥"
+      ],
+      "linesEn": [
+        "tehi avasara bhañjana mahibhārā. hari raghubaṃsa līnha avatārā.",
+        "pitā bacana taji rāju udāsī. daṇḍaka bana bicharata abināsī."
+      ],
+      "meaningHi": "उन्हीं दिनों पृथ्वी का भार उतारने के लिए श्रीहरि ने रघुवंश में अवतार लिया था। वे अविनाशी भगवान् उस समय पिता के वचन से राज्य का त्याग करके तपस्वी या साधुवेश में दण्डक वन में विचर रहे थे।",
+      "meaningEn": "At that very time, in order to relieve the burden of the earth, Shri Hari took birth in the Raghu line. The imperishable Lord had then renounced the kingdom at His father's command and was wandering through the Dandaka forest in the attire of an ascetic."
+    },
+    {
+      "id": "balkand-15-doha-48-4",
+      "section": "doha",
+      "stanza": 48,
+      "numInSection": 48,
+      "subSuffix": "",
+      "labelHi": "दोहा · ४८ (क)",
+      "labelEn": "Doha · 48 (a)",
+      "lines": [
+        "हृदयँ बिचारत जात हर केहि बिधि दरसनु होइ।",
+        "गुप्त रूप अवतरेउ प्रभु गएँ जान सबु कोइ॥"
+      ],
+      "linesEn": [
+        "hṛdayaṃ bicārata jāta hara kehi bidhi darasanu hoi.",
+        "gupta rūpa avatareu prabhu gaẽ jāna sabu koi."
+      ],
+      "meaningHi": "शिवजी हृदय में विचारते जा रहे थे कि भगवान् के दर्शन मुझे किस प्रकार हों। प्रभु ने गुप्त रूप से अवतार लिया है, मेरे जाने से सब लोग जान जायँगे।",
+      "meaningEn": "Shiva kept pondering in his heart: by what means can I have the Lord's darshan? The Lord has descended in secret form; if I go there, everyone will come to know."
+    },
+    {
+      "id": "balkand-15-sortha-48-5",
+      "section": "sortha",
+      "stanza": 48,
+      "numInSection": 48,
+      "subSuffix": "",
+      "labelHi": "सोरठा · ४८ (ख)",
+      "labelEn": "Soratha · 48 (b)",
+      "lines": [
+        "संकर उर अति छोभु सती न जानहिं मरमु सोइ।",
+        "तुलसी दरसन लोभु मन डरु लोचन लालची॥"
+      ],
+      "linesEn": [
+        "saṃkara ura ati chobhu satī na jānahiṃ maramu soi.",
+        "tulasī darasana lobhu mana ḍaru locana lālacī."
+      ],
+      "meaningHi": "श्रीशंकरजी के हृदय में इस बात को लेकर बड़ी खलबली उत्पन्न हो गयी, परन्तु सतीजी इस भेद को नहीं जानती थीं। तुलसीदासजी कहते हैं कि शिवजी के मन में [भेद खुलने का] डर था, परन्तु दर्शन के लोभ से उनके नेत्र ललचा रहे थे।",
+      "meaningEn": "Great agitation arose in Lord Shankar's heart over this matter, but Sati did not know this secret. Tulsidas says that there was fear in Shiva's mind [of the secret being exposed], yet his eyes were greedy for the darshan."
+    },
+    {
+      "id": "balkand-15-chaupai-49-0",
+      "section": "chaupai",
+      "stanza": 49,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "रावन मरन मनुज कर जाचा। प्रभु बिधि बचनु कीन्ह चह साचा॥",
+        "जौं नहिं जाउँ रहइ पछितावा। करत बिचारु न बनत बनावा॥"
+      ],
+      "linesEn": [
+        "rāvaṇa marana manuja kara jācā. prabhu bidhi bacanu kīnha caha sācā.",
+        "jaṃu nahīṃ jāṃu rahai pachitāvā. karata bicāru na banata banāvā."
+      ],
+      "meaningHi": "रावण ने [ब्रह्माजी से] अपनी मृत्यु मनुष्य के हाथ से माँगी थी। ब्रह्माजी के वचनों को प्रभु सत्य करना चाहते हैं। मैं जो पास नहीं जाता हूँ तो बड़ा पछतावा रह जायगा। इस प्रकार शिवजी विचार करते थे, परन्तु कोई भी युक्ति ठीक नहीं बैठती थी।",
+      "meaningEn": "Ravana had asked Brahma that he should die at the hands of a human being. The Lord wished to make Brahma's words come true. If I do not go, there will be deep regret. Shiva kept thinking in this way, but no plan seemed possible."
+    },
+    {
+      "id": "balkand-15-chaupai-49-1",
+      "section": "chaupai",
+      "stanza": 49,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "एहि बिधि भए सोचबस ईसा। तेही समय जाइ दससीसा॥",
+        "लीन्ह नीच मारीचहि संगा। भयउ तुरत सोइ कपट कुरंगा॥"
+      ],
+      "linesEn": [
+        "ehi bidhi bhae socabasa īsā. tehī samaya jāi dasasīsā.",
+        "līnha nīca mārīcahi saṃgā. bhayaū turata soi kapaṭa kurangā."
+      ],
+      "meaningHi": "इस प्रकार महादेवजी चिन्ता के वश हो गये। उसी समय नीच रावण ने जाकर मारीच को साथ लिया और वह (मारीच) तुरंत कपटमृग बन गया।",
+      "meaningEn": "In this way, Mahadeva fell under the weight of concern. At that very time, the wicked Ravana went and took Maricha with him, and Maricha at once became the deceitful golden deer."
+    },
+    {
+      "id": "balkand-15-chaupai-49-2",
+      "section": "chaupai",
+      "stanza": 49,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "करि छलु मूढ़ हरी बैदेही। प्रभु प्रभाउ तस बिदित न तेही॥",
+        "मृग बधि बंधु सहित हरि आए। आश्रमु देखि नयन जल छाए॥"
+      ],
+      "linesEn": [
+        "kari chalu mūḍha harī baidehī. prabhu prabhāu tasa bidita na tehī.",
+        "mṛga badhi bandhu sahita hari āe. āśramu dekhi nayana jala chāe."
+      ],
+      "meaningHi": "मूर्ख (रावण) ने छल करके सीताजी को हर लिया। उसे श्रीरामचन्द्रजी के वास्तविक प्रभाव का कुछ भी पता न था। मृग को मारकर भाई लक्ष्मण सहित श्रीहरि आश्रम में आये और उसे खाली देखकर (अर्थात् वहाँ सीताजी को न पाकर) उनके नेत्रों में आँसू भर आये।",
+      "meaningEn": "The fool Ravana, by deceit, carried off Sita. He knew nothing of Shri Ramachandra's true power. After killing the deer, Shri Hari returned with His brother Lakshmana, and seeing the hermitage empty, His eyes filled with tears."
+    },
+    {
+      "id": "balkand-15-chaupai-49-3",
+      "section": "chaupai",
+      "stanza": 49,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "बिरह बिकल नर इव रघुराई। खोजत बिपिन फिरत दोउ भाई॥",
+        "कबहूँ जोग बियोग न जाकें। देखा प्रगट बिरह दुखु ताकें॥"
+      ],
+      "linesEn": [
+        "biraha bikala nara iva raghurāī. hojata bipina firata doū bhāī.",
+        "kabahūṃ joga biyoga na jākeṃ. dekhā pragaṭa biraha dukhu tākeṃ."
+      ],
+      "meaningHi": "श्रीरघुनाथजी मनुष्यों की भाँति विरह से व्याकुल हैं और दोनों भाई वन में सीता को खोजते हुए फिर रहे हैं। जिनके कभी कोई संयोग-वियोग नहीं है, उनमें प्रत्यक्ष विरह का दुःख देखा गया।",
+      "meaningEn": "Raghurai is anguished by separation like an ordinary human being, and both brothers wander in the forest searching for Sita. In one who has never known union or separation, the sorrow of separation has now become plainly visible."
+    },
+    {
+      "id": "balkand-15-doha-49-4",
+      "section": "doha",
+      "stanza": 49,
+      "numInSection": 49,
+      "subSuffix": "",
+      "labelHi": "दोहा · ४९",
+      "labelEn": "Doha · 49",
+      "lines": [
+        "अति बिचित्र रघुपति चरित जानहिं परम सुजान।",
+        "जे मतिमंद बिमोह बस हृदयँ धरहिं कछु आन॥"
+      ],
+      "linesEn": [
+        "ati bicitra raghupati carita jānahiṃ parama sujāna.",
+        "je matimaṃda bimoha basa hṛdayaṃ dharuhiṃ kachu āna."
+      ],
+      "meaningHi": "श्रीरघुनाथजी का चरित्र बड़ा ही विचित्र है, उसको पहुँचे हुए ज्ञानीजन ही जानते हैं। जो मन्दबुद्धि हैं, वे तो विशेषरूप से मोह के वश होकर हृदय में कुछ दूसरी ही बात समझ बैठते हैं।",
+      "meaningEn": "The deeds of Shri Raghupati are most wondrous, and only the truly wise understand them. Those of dull intellect, under the influence of delusion, imagine something quite different in their hearts."
+    }
+  ]
+}

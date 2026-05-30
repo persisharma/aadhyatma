@@ -5,7 +5,15 @@
   "subtitleEn": "Complete Sun Salutation with 12 mantras",
   "deity": "krishna",
   "language": "sa-hi-en",
-  "source": { "baseText": "Sanskrit Documents (sanskritdocuments.org), Gitapress Gorakhpur editions", "retrievedOn": "2026-05-24" },
+  "source": {
+    "baseText": "Surya Namaskar twelve names/mantras, checked against Sanskrit Documents and Art of Living references.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_z_misc_navagraha/sUryanamaskAramantra.html",
+      "https://www.artofliving.org/in-en/yoga/yoga-poses/sun-salutation-mantras",
+      "https://www.sivanandaonline.org/?cmd=displaysection&section_id=1437"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
   "counts": { "totalVerses": 13 },
   "verses": [
     {

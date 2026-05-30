@@ -34,7 +34,7 @@
       "chapter": 13,
       "number": 2,
       "sanskrit": [
-        "श्री भगवानुवाचइदं शरीरं कौन्तेय क्षेत्रमित्यभिधीयते।",
+        "श्री भगवानुवाच इदं शरीरं कौन्तेय क्षेत्रमित्यभिधीयते।",
         "एतद्यो वेत्ति तं प्राहुः क्षेत्रज्ञ इति तद्विदः।।13.2।।"
       ],
       "transliteration": [
@@ -745,5 +745,14 @@
         "They who know through the eye of intuition opened by meditation and the instructions of the spiritual preceptor and the scriptures, that the field is insentient, the doer, changing and finite, and that the knower of the field (the Self) is pure consciousness, the nondoer, unchanging and infinite, and who also perceive the nonexistence of Nature, ignorance, the Unmanifested, the material cause of being -- they attain the Supreme. Through the attainment of Selfrealisation or knowledge of the Self, they are entirely liberated from the clutches or the influence of Maya (delusion) and ignorance. They do not assume any more bodies. They are not born again. They attain Kaivalya Moksha. In accordance with the doctrine of the Sankhyas, bondage and freedom do not pertain to the Self because It is always unattached and it is the nondoer and nonenjoyer and also without limbs or parts. But on account of Its union with Nature, It assumes agency through superimposition. When ignorance is annihilated through the knowledge of the Self, Nature which is conjoined with the Self is liberated. Then She gives up Her play or dance in front of the Spirit. She has discharged all Her duties well for the sake of the enjoyment and the release (Bhoga and Apavarga) of the Purusha (Spirit). Therefore the Sankhyas declare that bondage and freedom are states of Nature only. Some interpret that the Self is emancipated from the shackles of Nature and Her modifications.(This chapter is known by the name PrakritiPurushaVibhagaYoga also.)Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the thirteenth discourse entitledThe Yoga of the Distinction BetweenThe Field and the Knower of the Field. ,"
       ]
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Bhagavad Gita Sanskrit text and translations, checked against chapter-specific Holy Bhagavad Gita and Gita Supersite references; verse count follows the 701-shloka recension with chapter 13 counted as 35 verses.",
+    "referenceUrls": [
+      "https://www.holy-bhagavad-gita.org/chapter/13",
+      "https://www.gitasupersite.iitk.ac.in/srimad?language=dv&field_chapter_value=13",
+      "https://vedabase.io/en/library/bg/13/"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

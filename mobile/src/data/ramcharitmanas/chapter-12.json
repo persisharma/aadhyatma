@@ -1,0 +1,737 @@
+{
+  "chapter": 12,
+  "titleHi": "श्रीरामगुण और श्रीरामचरित की महिमा",
+  "titleEn": "Glory of Rama’s Virtues and Deeds",
+  "verseCount": 38,
+  "source": {
+    "baseText": "Ramcharitmanas Bal Kand subchapter 12: Glory of Rama’s Virtues and Deeds, by Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/रामचरितमानस/बालकाण्ड",
+      "https://www.ramcharitmanas.iitk.ac.in/",
+      "https://ramcharithmanas.com/en/balkand/shriramgun-shriramcharit-mahima"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "verses": [
+    {
+      "id": "balkand-12-chaupai-28-0",
+      "section": "chaupai",
+      "stanza": 28,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "भायँ कुभायँ अनख आलसहूँ। नाम जपत मंगल दिसि दसहूँ॥",
+        "सुमिरि सो नाम राम गुन गाथा। करउँ नाइ रघुनाथहि माथा॥"
+      ],
+      "linesEn": [
+        "bhāyaṃ kubhāyaṃ anakha ālasahūṃ. nāma japata maṃgala disi dasahūṃ.",
+        "sumiri so nāma rāma guna gāthā. karauṃ nāi raghunāthahi māthā."
+      ],
+      "meaningHi": "अच्छे भाव (प्रेम) से, बुरे भाव (वैर) से, क्रोध से या आलस्य से, किसी तरह से भी नाम जपने से दसों दिशाओं में कल्याण होता है। उसी (परम कल्याणकारी) रामनाम का स्मरण करके और श्रीरघुनाथजी को मस्तक नवाकर मैं रामजी के गुणों का वर्णन करता हूँ।",
+      "meaningEn": "Whether with good intent or ill intent, in anger or in laziness, simply chanting the Name brings welfare in all ten directions. Remembering that Name of Rama and bowing my head to Raghunatha, I sing the praises of Rama."
+    },
+    {
+      "id": "balkand-12-chaupai-28-1",
+      "section": "chaupai",
+      "stanza": 28,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "मोरि सुधारिहि सो सब भाँती। जासु कृपा नहिं कृपाँ अघाती॥",
+        "राम सुस्वामि कुसेवकु मोसो। निज दिसि देखि दयानिधि पोसो॥"
+      ],
+      "linesEn": [
+        "mori sudhārihi so saba bhāṃtī. jāsu kṛpā nahiṃ kṛpāṃ aghātī.",
+        "rāma susvāmi kusevaku moso. nija disi dekhi dayānidhi poso."
+      ],
+      "meaningHi": "वे (श्रीरामजी) मेरी [बिगड़ी] सब तरह से सुधार लेंगे; जिनकी कृपा कृपा करने से नहीं अघाती। राम-से उत्तम स्वामी और मुझ-सरीखा बुरा सेवक! इतने पर भी उन दयानिधि ने अपनी ओर देखकर मेरा पालन किया है।",
+      "meaningEn": "He will set right all my faults in every way; His grace never tires of giving grace. Rama is such a noble Lord, and I am a servant as bad as can be; still, that ocean of compassion has looked upon me and sustained me."
+    },
+    {
+      "id": "balkand-12-chaupai-28-2",
+      "section": "chaupai",
+      "stanza": 28,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "लोकहुँ बेद सुसाहिब रीती। बिनय सुनत पहिचानत प्रीती॥",
+        "गनी गरीब ग्राम नर नागर। पंडित मूढ़ मलीन उजागर॥"
+      ],
+      "linesEn": [
+        "lokahuṃ beda susāhiba rītī. binaya sunata pahicānata prītī.",
+        "ganī garība grāma nara nāgara. paṇḍita mūṛha malīna ujāgara."
+      ],
+      "meaningHi": "लोक और वेद में भी अच्छे स्वामी की यही रीति प्रसिद्ध है कि वह विनय सुनते ही प्रेम को पहचान लेता है। अमीर-गरीब, गँवार-नगरनिवासी, पण्डित-मूढ़, मलीन-उजागर,",
+      "meaningEn": "In both the world and the Vedas, this is the conduct of a good master: hearing humility, he immediately recognizes devotion. Rich and poor, villagers and city folk, scholars and fools, the dull and the radiant—"
+    },
+    {
+      "id": "balkand-12-chaupai-28-3",
+      "section": "chaupai",
+      "stanza": 28,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "सुकबि कुकबि निज मति अनुहारी। नृपहि सराहत सब नर नारी॥",
+        "साधु सुजान सुसील नृपाला। ईस अंस भव परम कृपाला॥"
+      ],
+      "linesEn": [
+        "sukabi kukabi nija mati anuhārī. nṛpahi sarāhata saba nara nārī.",
+        "sādhu sujāna susīla nṛpālā. īsa aṃsa bhava parama kṛpālā."
+      ],
+      "meaningHi": "सुकवि-कुकवि, सभी नर-नारी अपनी-अपनी बुद्धि के अनुसार राजा की सराहना करते हैं। और साधु, सुजान, सुशील, ईश्वर के अंश से उत्पन्न परम कृपालु राजा--",
+      "meaningEn": "Poets and bad poets alike, men and women alike, praise the king according to their own understanding. And the saintly, wise, virtuous king—one who is a portion of God, supremely compassionate—"
+    },
+    {
+      "id": "balkand-12-chaupai-28-4",
+      "section": "chaupai",
+      "stanza": 28,
+      "numInSection": 5,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "सुनि सनमानहिं सबहि सुबानी। भनिति भगति नति गति पहिचानी॥",
+        "यह प्राकृत महिपाल सुभाऊ। जान सिरोमनि कोसलराऊ॥"
+      ],
+      "linesEn": [
+        "suni sanamānahiṃ sabahi subānī. bhaniti bhagati nati gati pahicānī.",
+        "yaha prākṛta mahipāla subhāū. jāna siromaṇi kosalarāū."
+      ],
+      "meaningHi": "सब की सुनकर और उनकी वाणी, भक्ति, विनय और चाल को पहचानकर सुन्दर (मीठी) वाणी से सब का यथायोग्य सम्मान करते हैं। यह स्वभाव तो संसारी राजाओं का है, कोसलनाथ श्रीरामचन्द्रजी तो चतुरशिरोमणि हैं।",
+      "meaningEn": "Hearing everyone and recognizing their speech, devotion, humility, and conduct, he honors all with sweet words as is fitting. Such is the nature of worldly kings; but Kosalraja Sri Rama is the crown jewel of the wise."
+    },
+    {
+      "id": "balkand-12-chaupai-28-5",
+      "section": "chaupai",
+      "stanza": 28,
+      "numInSection": 6,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "रीझत राम सनेह निसोतें। को जग मंद मलिनमति मोतें॥"
+      ],
+      "linesEn": [
+        "rījhata rāma saneha nisoteṃ. ko jaga manda malinamati moteṃ."
+      ],
+      "meaningHi": "श्रीरामजी तो विशुद्ध प्रेम से ही रीझते हैं, पर जगत में मुझ से बढ़कर मूर्ख और मलिनबुद्धि और कौन होगा ?",
+      "meaningEn": "Rama is pleased only by pure love; but in the world, who is more foolish and more tainted in mind than I?"
+    },
+    {
+      "id": "balkand-12-doha-28-6",
+      "section": "doha",
+      "stanza": 28,
+      "numInSection": 28,
+      "subSuffix": "",
+      "labelHi": "दोहा · २८ (क)",
+      "labelEn": "Doha · 28 (a)",
+      "lines": [
+        "सठ सेवक की प्रीति रुचि रखिहहिं राम कृपालु।",
+        "उपल किए जलजान जेहिं सचिव सुमति कपि भालु॥"
+      ],
+      "linesEn": [
+        "saṭha sevaka kī prīti ruci rakhihahiṃ rāma kṛpālu.",
+        "upala kie jalajāna jehiṃ saciva sumati kapi bhālu."
+      ],
+      "meaningHi": "तथापि कृपालु श्रीरामचन्द्रजी मुझ दुष्ट सेवक की प्रीति और रुचि को अवश्य रखेंगे, जिन्होंने पत्थरों को जहाज और बन्दर-भालुओं को बुद्धिमान् मन्त्री बना लिया।",
+      "meaningEn": "Yet merciful Rama will surely value the affection and inclination of this wicked servant of His—He who turned stones into boats and made monkeys and bears into wise ministers."
+    },
+    {
+      "id": "balkand-12-doha-28-7",
+      "section": "doha",
+      "stanza": 28,
+      "numInSection": 28,
+      "subSuffix": "",
+      "labelHi": "दोहा · २८ (ख)",
+      "labelEn": "Doha · 28 (b)",
+      "lines": [
+        "हौंहु कहावत सबु कहत राम सहत उपहास।",
+        "साहिब सीतानाथ सो सेवक तुलसीदास॥"
+      ],
+      "linesEn": [
+        "hauṃhu kahāvata sabu kahata rāma sahata upahāsa.",
+        "sāhiba sītānātha so sevaka tulasīdāsa."
+      ],
+      "meaningHi": "सब लोग मुझे श्रीरामजी का सेवक कहते हैं और मैं भी [बिना लज्जा-संकोच के] कहलाता हूँ (कहने वालों का विरोध नहीं करता); कृपालु श्रीरामजी इस निन्दा को सहते हैं कि श्रीसीतानाथजी जैसे स्वामी का तुलसीदास-सा सेवक है।",
+      "meaningEn": "Everyone says I am Rama's servant, and I too accept the name, without shame or hesitation; merciful Rama bears the slur that Tulsi Das should be the servant of such a Lord as Sitanatha."
+    },
+    {
+      "id": "balkand-12-chaupai-29-0",
+      "section": "chaupai",
+      "stanza": 29,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "अति बड़ि मोरि ढिठाई खोरी। सुनि अघ नरकहुँ नाक सकोरी॥",
+        "समुझि सहम मोहि अपडर अपनें। सो सुधि राम कीन्हि नहिं सपनें॥"
+      ],
+      "linesEn": [
+        "ati baṛi mori ḍhiṭhāī khorī. suni agha narakahuṃ nāka sakorī.",
+        "samujhi saham mohi apaḍara apaneṃ. so sudhi rāma kīnhi nahiṃ sapaneṃ."
+      ],
+      "meaningHi": "यह मेरी बहुत बड़ी ढिठाई और दोष है, मेरे पाप को सुनकर नरक ने भी नाक सिकोड़ ली है (अर्थात्‌ नरक में भी मेरे लिये ठौर नहीं है)। यह समझकर मुझे अपने ही कल्पित डर से डर हो रहा है, किंतु भगवान्‌ श्रीरामचन्द्रजी ने तो स्वप्न में भी इस पर (मेरी इस ढिठाई और दोष पर) ध्यान नहीं दिया।",
+      "meaningEn": "This is my very great insolence and fault; hearing of my sin, even hell has wrinkled its nose (that is, there is no place for me even in hell). Realizing this, I am frightened by my own imagined fear, but Lord Shri Ramchandra did not even notice it in a dream."
+    },
+    {
+      "id": "balkand-12-chaupai-29-1",
+      "section": "chaupai",
+      "stanza": 29,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "सुनि अवलोकि सुचित चख चाही। भगति मोरि मति स्वामि सराही॥",
+        "कहत नसाइ होइ हियँ नीकी। रीझत राम जानि जन जी की॥"
+      ],
+      "linesEn": [
+        "suni avaloki sucita chakh chāhī. bhagati mori mati svāmi sarāhī.",
+        "kahat nasāi hoi hiyaṃ nīkī. rījhata rāma jāni jana jī kī."
+      ],
+      "meaningHi": "वर मेरे प्रभु श्रीरामचन्द्रजी ने तो इस बात को सुनकर, देखकर और अपने सुचित्तरूपी चक्षु से निरीक्षण कर मेरी भक्ति और बुद्धि की [उलटे] सराहना की। क्योंकि कहने में चाहे बिगड़ जाए (अर्थात्‌ मैं चाहे अपने को भगवान्‌ का सेवक कहता-कहलाता रहूँ), परंतु हृदय में अच्छापन होना चाहिये। (हृदय में तो अपने को उनका सेवक बनने योग्य नहीं मानकर पापी और दीन ही मानता हूँ, यह अच्छापन है।) श्रीरामचन्द्रजी भी दास के हृदय की [अच्छी] स्थिति जानकर रीझ जाते हैं।",
+      "meaningEn": "Indeed, my Lord Shri Ramchandra heard this, saw it, and examined it with a discerning eye, and praised my devotion and mind—though in the opposite sense. For while what one says may go wrong (that is, I may keep calling myself the Lord's servant), there must be goodness in the heart. (In the heart, I consider myself unworthy to be His servant and regard myself only as sinful and lowly; that is the right disposition.) Shri Ramchandra too is pleased when He knows the servant's condition of heart."
+    },
+    {
+      "id": "balkand-12-chaupai-29-2",
+      "section": "chaupai",
+      "stanza": 29,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "रहति न प्रभु चित चूक किए की। करत सुरति सय बार हिए की॥",
+        "जेहिं अघ बधेउ ब्याध जिमि बाली। फिरि सुकंठ सोइ कीन्हि कुचाली॥"
+      ],
+      "linesEn": [
+        "rahati na prabhu cita cūka kie kī. karata surati saya bāra hiye kī.",
+        "jehiṃ agha badheu byādha jimi bālī. phiri sukaṃṭha soi kīnhi kūcālī."
+      ],
+      "meaningHi": "प्रभु के चित्त में अपने भक्तों की की हुई भूल-चूक याद नहीं रहती (वे उसे भूल जाते हैं) और उनके हृदय की अच्छाई को सौ-सौ बार याद करते रहते हैं। जिस पाप के कारण उन्होंने बाली को व्याध की तरह मारा था, वैसी ही कुचाल फिर सुग्रीव ने चली।",
+      "meaningEn": "The Lord does not keep in His mind the mistakes and faults committed by His devotees; instead, He remembers again and again the goodness of their hearts. By the sin because of which He struck Bali like a hunter, Sugriva later committed the same kind of wrongful deed again."
+    },
+    {
+      "id": "balkand-12-chaupai-29-3",
+      "section": "chaupai",
+      "stanza": 29,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "सोइ करतूति बिभीषन केरी। सपनेहुँ सो न राम हियँ हेरी॥",
+        "ते भरतहि भेंटत सनमाने। राजसभाँ रघुबीर बखाने॥"
+      ],
+      "linesEn": [
+        "soi kartūti bibhīṣana kerī. sapanehuṃ so na rāma hiyaṃ herī.",
+        "te bharatahi bheṃtata sanamāne. rājasabhāṃ raghubīra bakhāne."
+      ],
+      "meaningHi": "वही करनी विभीषण की थी, परन्तु श्रीरामचन्द्रजी ने स्वप्न में भी उसका हृदय में विचार नहीं किया। उलटे भरतजी से मिलते समय श्रीरघुनाथजी ने उनका सम्मान किया और राजसभा में भी उनके गुणों का बखान किया।",
+      "meaningEn": "That very conduct was Vibhishana's, but Shri Ramchandra did not even entertain it in His heart, even in a dream. Instead, when meeting Bharata, Shri Raghunath honored him, and in the royal assembly He also praised his virtues."
+    },
+    {
+      "id": "balkand-12-doha-29-4",
+      "section": "doha",
+      "stanza": 29,
+      "numInSection": 29,
+      "subSuffix": "",
+      "labelHi": "दोहा · २९ (क)",
+      "labelEn": "Doha · 29 (a)",
+      "lines": [
+        "प्रभु तरु तर कपि डार पर ते किए आपु समान।",
+        "तुलसी कहूँ न राम से साहिब सीलनिधान॥"
+      ],
+      "linesEn": [
+        "prabhu taru tar kapi ḍāra para te kie āpu samāna.",
+        "tulasī kahūṃ na rāma se sāhiba sīlanidhāna."
+      ],
+      "meaningHi": "प्रभु (श्रीरामचन्द्रजी) तो वृक्ष के नीचे और बंदर डाली पर (अर्थात्‌ कहाँ मर्यादापुरुषोत्तम सच्चिदानन्दघन परमात्मा श्रीरामजी और कहाँ पेड़ों की शाखाओं पर कूदनेवाले बंदर)। परन्तु ऐसे बंदरों को भी उन्होंने अपने समान बना लिया। तुलसीदासजी कहते हैं कि श्रीरामचन्द्रजी-सरीखे शीलनिधान स्वामी कहीं भी नहीं हैं।",
+      "meaningEn": "The Lord (Shri Ramchandra) was beneath the tree and the monkeys were on its branches—how incomparable the Lord, the supreme and self-existing divine being, and how different the monkeys leaping on the boughs! Yet He made even such monkeys equal to Himself. Tulsi Das says that there is no master anywhere like Shri Ramchandra, the treasure of noble character."
+    },
+    {
+      "id": "balkand-12-doha-29-5",
+      "section": "doha",
+      "stanza": 29,
+      "numInSection": 29,
+      "subSuffix": "",
+      "labelHi": "दोहा · २९ (ख)",
+      "labelEn": "Doha · 29 (b)",
+      "lines": [
+        "राम निकाईं रावरी है सबही को नीक।",
+        "जौं यह साँची है सदा तौ नीको तुलसीक॥"
+      ],
+      "linesEn": [
+        "rāma nikāīṃ rāvarī hai sabahī ko nīka.",
+        "jauṃ yaha sāṃcī hai sadā tau nīko tulasīk."
+      ],
+      "meaningHi": "हे श्रीरामजी! आपकी अच्छाई से सभी का भला है (अर्थात्‌ आपका कल्याणमय स्वभाव सभी का कल्याण करनेवाला है)। यदि यह बात सच है तो तुलसीदास का भी सदा कल्याण ही होगा।",
+      "meaningEn": "O Shri Ram, Your graciousness is good for everyone (that is, Your benevolent nature brings welfare to all). If this is true, then Tulsi Das too will always be благessed with good."
+    },
+    {
+      "id": "balkand-12-doha-29-6",
+      "section": "doha",
+      "stanza": 29,
+      "numInSection": 29,
+      "subSuffix": "",
+      "labelHi": "दोहा · २९ (ग)",
+      "labelEn": "Doha · 29 (c)",
+      "lines": [
+        "एहि बिधि निज गुन दोष कहि सबहि बहुरि सिरु नाइ।",
+        "बरनउँ रघुबर बिसद जसु सुनि कलि कलुष नसाइ॥"
+      ],
+      "linesEn": [
+        "ehi bidhi nija guna doṣa kahi sabahi bahuri siru nāi.",
+        "baranauṃ raghubara bisada jasa suni kali kaluṣa nasāi."
+      ],
+      "meaningHi": "इस प्रकार अपने गुण-दोषों को कहकर और सबको फिर सिर नवाकर मैं श्रीरघुनाथजी का निर्मल यश वर्णन करता हूँ, जिसके सुनने से कलियुग के पाप नष्ट हो जाते हैं।",
+      "meaningEn": "Thus, speaking of my own merits and faults and bowing to everyone again, I shall describe the spotless glory of Shri Raghunath, hearing which the sins of Kali Yuga are destroyed."
+    },
+    {
+      "id": "balkand-12-chaupai-30-0",
+      "section": "chaupai",
+      "stanza": 30,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जागबलिक जो कथा सुहाई। भरद्वाज मुनिबरहि सुनाई॥",
+        "कहिहउँ सोइ संबाद बखानी। सुनहुँ सकल सज्जन सुखु मानी॥"
+      ],
+      "linesEn": [
+        "jāgabalik jo kathā suhāī. bharadvāja munibarahiṃ sunāī.",
+        "kahihauṃ soi saṃbāda bakhānī. sunahuṃ sakala sajjana sukhu mānī."
+      ],
+      "meaningHi": "मुनि याज्ञवल्क्यजी ने जो सुहावनी कथा मुनिश्रेष्ठ भरद्वाजजी को सुनायी थी, उसी संवाद को मैं बखानकर कहूँगा; सब सज्जन सुख का अनुभव करते हुए उसे सुनें।",
+      "meaningEn": "The lovely कथा that the sage Yajnavalkya had told to the great sage Bharadvaja—that very dialogue I shall now recount. Let all noble listeners hear it with joy."
+    },
+    {
+      "id": "balkand-12-chaupai-30-1",
+      "section": "chaupai",
+      "stanza": 30,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "संभु कीन्ह यह चरित सुहावा। बहुरि कृपा करि उमहि सुनावा॥",
+        "सोइ सिव कागभुसुंडिहि दीन्हा। राम भगत अधिकारी चीन्हा॥"
+      ],
+      "linesEn": [
+        "saṃbhu kīnhi yaha carita suhāvā. bahuri kṛpā kari umahiṃ sunāvā.",
+        "soi siva kāgabhusuṃḍihi dīnhā. rāma bhagata adhikārī cīnhā."
+      ],
+      "meaningHi": "शिवजी ने पहले इस सुहावने चरित्र को रचा, फिर कृपा करके पार्वतीजी को सुनाया। वही चरित्र शिवजी ने काकभुशुण्डिजी को रामभक्त और अधिकारी पहचानकर दिया।",
+      "meaningEn": "Shiva first composed this delightful narrative and then, in His grace, recounted it to Uma. The same account Shiva gave to Kakabhushundi, recognizing him as a fit devotee of Rama."
+    },
+    {
+      "id": "balkand-12-chaupai-30-2",
+      "section": "chaupai",
+      "stanza": 30,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "तेहि सन जागबलिक पुनि पावा। तिन्ह पुनि भरद्वाज प्रति गावा॥",
+        "ते श्रोता बकता समसीला। सवँदरसी जानहिं हरिलीला॥"
+      ],
+      "linesEn": [
+        "tehi sana jāgabalik puni pāvā. tinha puni bharadvāja prati gāvā.",
+        "te śrotā baktā samasīlā. savaṃdarasī jānahiṃ harilīlā."
+      ],
+      "meaningHi": "उन काकभुशुण्डिजी से फिर याज्ञवल्क्यजी ने पाया और उन्होंने फिर उसे भरद्वाजजी को गाकर सुनाया। वे दोनों वक्ता और श्रोता (याज्ञवल्क्य और भरद्वाज) समान शीलवाले और समदर्शा हैं और श्रीहरि की लीला को जानते हैं।",
+      "meaningEn": "Yajnavalkya received it from Kakabhushundi, and then he sang and related it again to Bharadvaja. Those two—speaker and listener—are equal in character and know the divine play of Shri Hari."
+    },
+    {
+      "id": "balkand-12-chaupai-30-3",
+      "section": "chaupai",
+      "stanza": 30,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "जानहिं तीनि काल निज ग्याना। करतल गत आमलक समाना॥",
+        "औरउ जे हरिभगत सुजाना। कहहिं सुनहिं समुझहिं बिधि नाना॥"
+      ],
+      "linesEn": [
+        "jānahiṃ tīni kāla nija gyānā. karatala gata āmalaka samānā.",
+        "aura u je haribhagata sujānā. kahahiṃ sunahiṃ samujhahiṃ bidhi nānā."
+      ],
+      "meaningHi": "वे अपने ज्ञान से तीनों कालों की बातों को हथेली पर रखे हुए आँवले के समान (प्रत्यक्ष) जानते हैं। और भी जो सुजान (भगवान्‌ की लीलाओं का रहस्य जाननेवाले) हरिभक्त हैं, वे इस चरित्र को नाना प्रकार से कहते, सुनते और समझते हैं।",
+      "meaningEn": "By their own knowledge they know the events of the three times as clearly as an āmalaka held in the palm of the hand. And other wise devotees of Hari also speak, hear, and understand this narrative in many ways."
+    },
+    {
+      "id": "balkand-12-doha-30-4",
+      "section": "doha",
+      "stanza": 30,
+      "numInSection": 30,
+      "subSuffix": "",
+      "labelHi": "दोहा · ३० (क)",
+      "labelEn": "Doha · 30 (a)",
+      "lines": [
+        "मैं पुनि निज गुर सन सुनी कथा सो सूकरखेत।",
+        "समुझी नहिं तसि बालपन तब अति रहेउँ अचेत॥"
+      ],
+      "linesEn": [
+        "maiṃ puni nija guru sana sunī kathā so sūkarakheta.",
+        "samujhī nahiṃ tasi bālapana taba ati raheuṃ aceta."
+      ],
+      "meaningHi": "फिर वही कथा मैंने वाराह-क्षेत्र में अपने गुरुजी से सुनी; परन्तु उस समय मैं लड़कपन के कारण बहुत बेसमझ था, इससे उसको उस प्रकार (अच्छी तरह) समझा नहीं।",
+      "meaningEn": "I heard that same कथा from my guru at Sūkarakheta; but at that time I was very immature and foolish, so I did not understand it properly."
+    },
+    {
+      "id": "balkand-12-doha-30-5",
+      "section": "doha",
+      "stanza": 30,
+      "numInSection": 30,
+      "subSuffix": "",
+      "labelHi": "दोहा · ३० (ख)",
+      "labelEn": "Doha · 30 (b)",
+      "lines": [
+        "श्रोता बकता ग्याननिधि कथा राम कै गूढ़।",
+        "किमि समुझौं मैं जीव जड़ कलि मल ग्रसित बिमूढ़॥"
+      ],
+      "linesEn": [
+        "śrotā baktā gyānanidhi kathā rāma kai gūḍha.",
+        "kimi samujhauṃ maiṃ jīva jaḍa kali mala grasita bimūḍha."
+      ],
+      "meaningHi": "श्रीरामजी की गूढ़ कथा के वक्ता (कहनेवाले) और श्रोता (सुननेवाले) दोनों ज्ञान के खजाने (पूरे ज्ञानी) होते हैं। मैं कलियुग के पापों से ग्रसा हुआ महामूढ़ जड़ जीव भला उसको कैसे समझ सकता था?",
+      "meaningEn": "Both the speaker and the listener of Shri Ram's profound कथा are treasures of wisdom. How could I, a deluded, inert being consumed by the impurities of Kali Yuga, ever understand it?"
+    },
+    {
+      "id": "balkand-12-chaupai-31-0",
+      "section": "chaupai",
+      "stanza": 31,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "तदपि कही गुर बारहिं बारा। समुझि परी कछु मति अनुसारा॥",
+        "भाषाबद्ध करबि मैं सोई। मोरें मन प्रबोध जेहिं होई॥"
+      ],
+      "linesEn": [
+        "tadapi kahī gura bārahiṃ bārā. samujhi parī kachu mati anusārā.",
+        "bhāṣābaddha karabi maiṃ soī. moreṃ mana prabodha jehiṃ hoī."
+      ],
+      "meaningHi": "तो भी गुरुजी ने जब बार-बार कथा कही, तब बुद्धि के अनुसार कुछ समझ में आयी। वही अब मेरे द्वारा भाषा में रची जायगी, जिससे मेरे मन को प्रबोध हो।",
+      "meaningEn": "Even so, when my guru told the story again and again, I understood a little according to my capacity. I shall now compose it in language, so that my mind may be awakened."
+    },
+    {
+      "id": "balkand-12-chaupai-31-1",
+      "section": "chaupai",
+      "stanza": 31,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "जस कछु बुधि बिबेक बल मेरें। तस कहिहउँ हियँ हरि के प्रेरें॥",
+        "निज संदेह मोह भ्रम हरनी। करउँ कथा भव सरिता तरनी॥"
+      ],
+      "linesEn": [
+        "jasa kachu budhi bibeka bala mereṃ. tasa kahihauṃ hiyaṃ hari ke prerem.",
+        "nija sandeha moha bhrama haranī. karauṃ kathā bhava saritā taranī."
+      ],
+      "meaningHi": "जैसी कुछ मुझमें बुद्धि और विवेक का बल है, मैं हृदय में हरि की प्रेरणा से उसी के अनुसार कहूँगा। मैं अपने सन्देह, अज्ञान और भ्रम को हरनेवाली कथा रचता हूँ, जो संसाररूपी नदी के पार करने के लिये नाव है।",
+      "meaningEn": "Whatever measure of intelligence and discriminating strength I possess, I shall speak accordingly, moved from the heart by Hari. I compose a कथा that removes my doubts, delusion, and confusion, and serves as a boat for crossing the river of worldly existence."
+    },
+    {
+      "id": "balkand-12-chaupai-31-2",
+      "section": "chaupai",
+      "stanza": 31,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "बुध बिश्राम सकल जन रंजनि। रामकथा कलि कलुष बिभंजनि॥",
+        "रामकथा कलि पंनग भरनी। पुनि बिबेक पावक कहुँ अरनी॥"
+      ],
+      "linesEn": [
+        "budha biśrāma sakala jana rañjani. rāmakathā kali kaluṣa bibhajani.",
+        "rāmakathā kali pannaga bharanī. puni bibeka pāvaka kahuṃ aranī."
+      ],
+      "meaningHi": "रामकथा पंडितों को विश्राम देनेवाली, सब मनुष्यों को प्रसन्न करनेवाली और कलियुग के पापों का नाश करनेवाली है। रामकथा कलियुगरूपी साँप के लिये मोरनी है और विवेकरूपी अग्नि के प्रकट करने के लिये अरणि (मंथन की जानेवाली लकड़ी) है, (अर्थात्‌ इस कथा से ज्ञान की प्राप्ति होती है)।",
+      "meaningEn": "The Ramkatha gives rest to the learned, delights all people, and destroys the sins of Kali Yuga. For the serpent of Kali, Ramkatha is a peahen; and for kindling the fire of discrimination, it is the arani wood (that is, from this कथा arises knowledge)."
+    },
+    {
+      "id": "balkand-12-chaupai-31-3",
+      "section": "chaupai",
+      "stanza": 31,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "रामकथा कलि कामद गाई। सुजन सजीवनि मूरि सुहाई॥",
+        "सोइ बसुधातल सुधा तरंगिनि। भय भंजनि भ्रम भेक भुअंगिनि॥"
+      ],
+      "linesEn": [
+        "rāmakathā kali kāmada gāī. sujana sajīvanī mūri suhāī.",
+        "soi vasudhātala sudhā taraṃgini. bhaya bhaṃjani bhrama bheka bhuāṃgini."
+      ],
+      "meaningHi": "यह रामकथा कलियुग में सब मनोरथों को पूर्ण करनेवाली कामधेनु गौ है और सज्जनों के लिये सुन्दर संजीवनी जड़ी है। पृथ्वी पर यही अमृत की नदी है, जन्म-मरणरूपी भय का नाश करनेवाली और भ्रमरूपी मेढकों को खाने के लिये सर्पिणी है।",
+      "meaningEn": "This Ramkatha is the wish-fulfilling cow of Kali Yuga and a beautiful herb of life for the good. On earth it is the river of nectar, destroyer of fear, and a serpent that devours the frogs of delusion."
+    },
+    {
+      "id": "balkand-12-chaupai-31-4",
+      "section": "chaupai",
+      "stanza": 31,
+      "numInSection": 5,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "असुर सेन सम नरक निकंदिनि। साधु बिबुध कुल हित गिरिनंदिनि॥",
+        "संत समाज पयोधि रमा सी। बिस्व भार भर अचल छमा सी॥"
+      ],
+      "linesEn": [
+        "asura sena sama naraka nikandinī. sādhu bibudha kula hita girinandini.",
+        "saṃta samāja payodhi ramā sī. bisva bhāra bhara acala chamā sī."
+      ],
+      "meaningHi": "यह रामकथा असुरों की सेना के समान नरकों का नाश करनेवाली और साधुरूप देवताओं के कुल का हित करनेवाली पार्वती (दुर्गा) है। यह संत-समाजरूपी क्षीरसमुद्र के लिये लक्ष्मीजी के समान है और सम्पूर्ण विश्व का भार उठाने में अचल पृथ्वी के समान है।",
+      "meaningEn": "This Ramkatha is like Parvati: it destroys hells like an army of demons and benefits the line of the saintly and divine. It is like Lakshmi for the ocean of saintly society, and like the steadfast earth in bearing the burden of the whole world."
+    },
+    {
+      "id": "balkand-12-chaupai-31-5",
+      "section": "chaupai",
+      "stanza": 31,
+      "numInSection": 6,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "जम गन मुहँ मसि जग जमुना सी। जीवन मुकुति हेतु जनु कासी॥",
+        "रामहि प्रिय पावनि तुलसी सी। तुलसिदास हित हियँ हुलसी सी॥"
+      ],
+      "linesEn": [
+        "jama gana muhaṃ masi jaga jamunā sī. jīvana mukuti hetu janu kāsī.",
+        "rāmahi priya pāvani tulasī sī. tulasidāsa hita hiyaṃ hulasī sī."
+      ],
+      "meaningHi": "यमदूतों के मुख पर कालिख लगाने के लिये यह जगत् में यमुना जी के समान है और जीवों को मुक्ति देने के लिये मानो काशी ही है। यह श्रीरामजी को पवित्र तुलसी के समान प्रिय है और तुलसीदास के लिये हुलसी (तुलसीदासजी की माता) के समान हृदय से हित करनेवाली है।",
+      "meaningEn": "To blacken the faces of Yama's messengers, it is like the Yamuna in this world; and for granting liberation to beings, it is as though it were Kashi itself. It is dear to Shri Ram like sacred tulsi, and for Tulsi Das it is like Hulasi, his mother, lovingly beneficial to the heart."
+    },
+    {
+      "id": "balkand-12-chaupai-31-6",
+      "section": "chaupai",
+      "stanza": 31,
+      "numInSection": 7,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "सिवप्रिय मेकल सैल सुता सी। सकल सिद्धि सुख संपति रासी॥",
+        "सदगुन सुरगन अंब अदिति सी। रघुबर भगति प्रेम परमिति सी॥"
+      ],
+      "linesEn": [
+        "sivapriya meakala saila sutā sī. sakala siddhi sukha saṃpati rāsī.",
+        "sadaguna suragana aṃba aditi sī. raghubara bhagati prema paramiti sī."
+      ],
+      "meaningHi": "यह रामकथा शिवजी को नर्मदाजी के समान प्यारी है, यह सब सिद्धियों की तथा सुख-सम्पत्ति की राशि है। सद्गुणरूपी देवताओं के उत्पन्न और पालन-पोषण करने के लिये माता अदिति के समान है। श्रीरघुनाथजी की भक्ति और प्रेम की परम सीमा-सी है।",
+      "meaningEn": "This Ramkatha is dear to Shiva like the Narmada; it is a treasury of all powers, happiness, and prosperity. For nurturing the hosts of virtues, it is like Mother Aditi. It is the very highest limit of devotion and love for Shri Raghunath."
+    },
+    {
+      "id": "balkand-12-doha-31-7",
+      "section": "doha",
+      "stanza": 31,
+      "numInSection": 31,
+      "subSuffix": "",
+      "labelHi": "दोहा · ३१",
+      "labelEn": "Doha · 31",
+      "lines": [
+        "रामकथा मंदाकिनी चित्रकूट चित चारु।",
+        "तुलसी सुभग सनेह बन सिय रघुबीर बिहारु॥"
+      ],
+      "linesEn": [
+        "rāmakathā mandākinī citrakūṭa cita cāru.",
+        "tulasī subhaga saneha bana siya raghubīra bihāru."
+      ],
+      "meaningHi": "तुलसीदासजी कहते हैं कि रामकथा मन्दाकिनी नदी है, सुन्दर (निर्मल) चित्त चित्रकूट है, और सुन्दर स्नेह ही वन है, जिसमें श्रीसीतारामजी विहार करते हैं।",
+      "meaningEn": "Tulsi Das says that Ramkatha is the Mandakini River; the beautiful, pure heart is Chitrakut; and loving affection itself is the forest, in which Shri Sita-Rama delight in their sport."
+    },
+    {
+      "id": "balkand-12-chaupai-32-0",
+      "section": "chaupai",
+      "stanza": 32,
+      "numInSection": 1,
+      "subSuffix": "",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "रामचरित चिंतामनि चारू। संत सुमति तिय सुभग सिंगारू॥",
+        "जग मंगल गुनग्राम राम के। दानि मुकुति धन धरम धाम के॥"
+      ],
+      "linesEn": [
+        "rāmacarita cintāmani cārū. santa sumati tiya subhaga siṅgārū.",
+        "jaga maṅgala gunagrāma rāma ke. dāni mukuti dhana dharama dhāma ke."
+      ],
+      "meaningHi": "श्रीरामचन्द्रजी का चरित्र सुन्दर चिन्तामणि है और संतों की सुबुद्धिरूपी स्त्री का सुन्दर श्रृंगार है। श्रीरामचन्द्रजी के गुणसमूह जगत्‌ का कल्याण करनेवाले और मुक्ति, धन, धर्म और परमधाम के देनेवाले हैं।",
+      "meaningEn": "The story of Sri Rama is a beautiful wish-fulfilling gem, and the lovely adornment of the wife-like wisdom of the saints. Rama’s collection of virtues brings auspiciousness to the world and grants liberation, wealth, righteousness, and the supreme abode."
+    },
+    {
+      "id": "balkand-12-chaupai-32-1",
+      "section": "chaupai",
+      "stanza": 32,
+      "numInSection": 2,
+      "subSuffix": "",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "सदगुर ग्यान बिराग जोग के। बिबुध बैद भव भीम रोग के॥",
+        "जननि जनक सिय राम प्रेम के। बीज सकल ब्रत धरम नेम के॥"
+      ],
+      "linesEn": [
+        "sadagura jñāna birāga joga ke. bibudha baida bhava bhīma roga ke.",
+        "janani janaka siya rāma prema ke. bīja sakala brata dharama nema ke."
+      ],
+      "meaningHi": "ज्ञान, वैराग्य और योग के लिए सद्गुरु हैं और संसाररूपी भयंकर रोग का नाश करने के लिए देवताओं के वैद्य (अश्विनीकुमार) के समान हैं। ये श्रीसीतारामजी के प्रेम के उत्पन्न करने के लिए माता-पिता हैं और सम्पूर्ण व्रत, धर्म और नियमों के बीज हैं।",
+      "meaningEn": "For knowledge, detachment, and yoga, He is the true guru; and for destroying the terrible disease of worldly existence, He is like the physician of the gods. He is the mother and father who awaken love for Sita and Rama, and He is the seed of all vows, righteousness, and disciplines."
+    },
+    {
+      "id": "balkand-12-chaupai-32-2",
+      "section": "chaupai",
+      "stanza": 32,
+      "numInSection": 3,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "समन पाप संताप सोक के। प्रिय पालक परलोक लोक के॥",
+        "सचिव सुभट भूपति बिचार के। कुंभज लोभ उदधि अपार के॥"
+      ],
+      "linesEn": [
+        "samana pāpa santāpa soka ke. priya pālaka paraloka loka ke.",
+        "saciva subhaṭa bhūpati bicāra ke. kumbhaja lobha udadhi apāra ke."
+      ],
+      "meaningHi": "पाप, संताप और शोक का नाश करनेवाले तथा इस लोक और परलोक के प्रिय पालन करनेवाले हैं। विचार (ज्ञान) रूपी राजा के शूरवीर मंत्री और लोभरूपी अपार समुद्र के सोखने के लिए अगस्त्य मुनि हैं।",
+      "meaningEn": "He destroys sin, suffering, and sorrow, and lovingly sustains both this world and the next. He is the warrior minister of the king called discernment, and like sage Agastya, He dries up the boundless ocean of greed."
+    },
+    {
+      "id": "balkand-12-chaupai-32-3",
+      "section": "chaupai",
+      "stanza": 32,
+      "numInSection": 4,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "काम कोह कलिमल करिगन के। केहरि सावक जन मन बन के॥",
+        "अतिथि पूज्य प्रियतम पुरारि के। कामद घन दारिद दवारि के॥"
+      ],
+      "linesEn": [
+        "kāma koha kalimala karigana ke. kehari sāvaka jana mana bana ke.",
+        "atithi pūjya priyatama purāri ke. kāmada ghana dārida davāri ke."
+      ],
+      "meaningHi": "भक्तों के मनरूपी वन में बसनेवाले काम, क्रोध और कलियुग के पापरूपी हाथियों के मारने के लिए सिंह के बच्चे हैं। शिवजी के पूज्य और प्रियतम अतिथि हैं और दरिद्रतारूपी दावानल के बुझाने के लिए कामना पूर्ण करनेवाले मेघ हैं।",
+      "meaningEn": "He is like a lion cub, dwelling in the forest of the devotee’s mind and destroying lust, anger, and the elephants of sin in the age of Kali. He is the honored and beloved guest of Shiva, and like a wish-fulfilling cloud that extinguishes the wildfire of poverty."
+    },
+    {
+      "id": "balkand-12-chaupai-32-4",
+      "section": "chaupai",
+      "stanza": 32,
+      "numInSection": 5,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "मंत्र महामनि बिषय ब्याल के। मेटत कठिन कुअंक भाल के॥",
+        "हरन मोह तम दिनकर कर से। सेवक सालि पाल जलधर से॥"
+      ],
+      "linesEn": [
+        "mantra mahāmani biṣaya byāla ke. meṭata kaṭhina kuaṅka bhāla ke.",
+        "harana moha tama dinakara kara se. sevaka sāli pāla jaladhara se."
+      ],
+      "meaningHi": "विषयरूपी साँप का जहर उतारने के लिए मन्त्र और महामणि हैं। ये ललाट पर लिखे हुए कठिनता से मिटने वाले बुरे लेखों (मन्द प्रारब्ध) को मिटा देनेवाले हैं। अज्ञानरूपी अन्धकार के हरण करने के लिए सूर्यकिरणों के समान और सेवकरूपी धान के पालन करने में मेघ के समान हैं।",
+      "meaningEn": "He is a mantra and a great gem for removing the poison of the serpent of sensual desire. He erases the hard-to-erase evil markings on the forehead (ill fate). He removes the darkness of delusion like the sun’s rays, and like a rain cloud, He nourishes the rice-fields of the devotees."
+    },
+    {
+      "id": "balkand-12-chaupai-32-5",
+      "section": "chaupai",
+      "stanza": 32,
+      "numInSection": 6,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "अभिमत दानि देवतरु बर से। सेवत सुलभ सुखद हरि हर से॥",
+        "सुकबि सरद नभ मन उडगन से। रामभगत जन जीवन धन से॥"
+      ],
+      "linesEn": [
+        "abhimata dāni devataru bara se. sevata sulabha sukhada hari hara se.",
+        "sukabi sarada nabha mana uḍagana se. rāmabhagata jana jīvana dhana se."
+      ],
+      "meaningHi": "मनोवांछित वस्तु देने में श्रेष्ठ कल्पवृक्ष के समान हैं और सेवा करने में हरि-हर के समान सुलभ और सुख देनेवाले हैं। सुकवि शरद् ऋतु के मनरूपी आकाश को सुशोभित करने के लिए तारागण के समान और श्रीरामजी के भक्तों का तो जीवनधन ही हैं।",
+      "meaningEn": "He is like the best wish-fulfilling tree, granting desired boons, and is as easily accessible and joy-giving as Hari and Hara to those who serve Him. He is like a cluster of stars in the autumn sky of the poet’s mind, and for the devotees of Rama, He is indeed their very life and wealth."
+    },
+    {
+      "id": "balkand-12-chaupai-32-6",
+      "section": "chaupai",
+      "stanza": 32,
+      "numInSection": 7,
+      "subSuffix": "",
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "सकल सुकृत फल भूरि भोग से। जग हित निरुपधि साधु लोग से॥",
+        "सेवक मन मानस मराल से। पावन गंग तरंग माल से॥"
+      ],
+      "linesEn": [
+        "sakala sukṛta phala bhūri bhoga se. jaga hita nirupadhi sādhu loga se.",
+        "sevaka mana mānasa marāla se. pāvana gaṃga taraṅga māla se."
+      ],
+      "meaningHi": "सम्पूर्ण पुण्यों के फल महान्‌ भोगों के समान हैं। जगत्‌ का छलरहित (यथार्थ) हित करने में साधु-संतों के समान हैं। सेवकों के मनरूपी मानसरोवर के लिए हंस के समान और पवित्र करने में गंगा की तरंगमालाओं के समान हैं।",
+      "meaningEn": "The fruits of all good deeds are like abundant enjoyment. In doing selfless good to the world, He is like the holy saints. For the devotee’s mind, He is like a swan on the Manasarovar lake, and in sanctifying, He is like the garlands of Ganga’s waves."
+    },
+    {
+      "id": "balkand-12-doha-32-7",
+      "section": "doha",
+      "stanza": 32,
+      "numInSection": 32,
+      "subSuffix": "",
+      "labelHi": "दोहा · ३२ (क)",
+      "labelEn": "Doha · 32 (a)",
+      "lines": [
+        "कुपथ कुतरक कुचालि कलि कपट दंभ पाषंड।",
+        "दहन राम गुन ग्राम जिमि इंधन अनल प्रचंड॥"
+      ],
+      "linesEn": [
+        "kupatha kutaraka kuchāli kali kapaṭa daṃbha pāṣaṇḍa.",
+        "dahana rāma guna grāma jimi indhana anala pracaṇḍa."
+      ],
+      "meaningHi": "श्रीरामजी के गुणों के समूह कुमार्ग, कुतर्क, कुचाल और कलियुग के कपट, दम्भ और पाखण्ड के जलाने के लिए वैसे ही हैं जैसे ईंधन के लिए प्रचण्ड अग्नि।",
+      "meaningEn": "Rama’s host of virtues burns away evil paths, sophistry, crooked conduct, and the hypocrisy, pride, and deceit of Kali Yuga, just as a blazing fire consumes fuel."
+    },
+    {
+      "id": "balkand-12-doha-32-8",
+      "section": "doha",
+      "stanza": 32,
+      "numInSection": 32,
+      "subSuffix": "",
+      "labelHi": "दोहा · ३२ (ख)",
+      "labelEn": "Doha · 32 (b)",
+      "lines": [
+        "रामचरित राकेस कर सरिस सुखद सब काहु।",
+        "सज्जन कुमुद चकोर चित हित बिसेषि बड़ लाहु॥"
+      ],
+      "linesEn": [
+        "rāmacarita rākes kara sarisa sukhada saba kāhu.",
+        "sajjana kumuda cakor cita hita biseṣi baḍa lāhu."
+      ],
+      "meaningHi": "रामचरित पूर्णिमाके चन्द्रमा की किरणों के समान सभी को सुख देनेवाले हैं, परन्तु सज्जनरूपी कुमुदिनी और चकोर के चित्त के लिए तो विशेष हितकारी और महान लाभदायक हैं।",
+      "meaningEn": "The life of Rama is like the rays of the full moon, bringing joy to everyone. But for the lotus-like saints and the chakora bird-like devotee, it is especially beneficial and a great gain."
+    }
+  ]
+}

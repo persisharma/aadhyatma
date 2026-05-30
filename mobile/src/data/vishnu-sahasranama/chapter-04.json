@@ -16,8 +16,8 @@
         "Vishnu Sahasranama",
         "Phalashruti (Fruits of Recitation)"
       ],
-      "meaningHi": "लाभ:\n\nफलश्रुति विष्णु सहस्रनाम का समापन भाग है — जिसमें इस स्तोत्र के पाठ से प्राप्त होने वाले फलों (लाभों) का वर्णन है। इसके अनुसार जो मनुष्य नित्य सहस्रनाम का पाठ या श्रवण करता है, उसे इस लोक और परलोक में कोई अशुभ प्राप्त नहीं होता। सभी पाप नष्ट होते हैं, शत्रुओं पर विजय मिलती है, और अन्ततः मोक्ष प्राप्त होता है।\n\nकथा:\n\nभीष्म पितामह ने युधिष्ठिर को सम्पूर्ण सहस्रनाम सुनाकर यह समापन भाग कहा। इसमें अर्जुन, व्यास, शिव-पार्वती और ब्रह्मा के वचन भी सम्मिलित हैं — जो इस स्तोत्र की महिमा और फल बताते हैं।",
-      "meaningEn": "Benefits:\n\nThe Phalashruti is the concluding section of Vishnu Sahasranama — describing the fruits (benefits) obtained from reciting this stotram. According to it, the person who daily recites or listens to the Sahasranama shall never encounter any inauspiciousness in this world or the next. All sins are destroyed, victory over enemies is granted, and ultimately moksha is attained.\n\nStory:\n\nBhishma Pitamaha spoke this concluding section after reciting the complete Sahasranama to Yudhishthira. It includes statements by Arjuna, Vyasa, Shiva-Parvati, and Brahma — all attesting to the glory and fruits of this stotram."
+      "meaningHi": "लाभ:\n\nफलश्रुति विष्णु सहस्रनाम का समापन भाग है — जिसमें सम्पूर्ण स्तोत्र के पाठ से प्राप्त होने वाले फलों का वर्णन है। इसके अनुसार जो मनुष्य नित्य सहस्रनाम का पाठ या श्रवण करता है, उसे इस लोक और परलोक में कोई अशुभ प्राप्त नहीं होता। सभी पाप नष्ट होते हैं, शत्रुओं पर विजय मिलती है, और अन्ततः मोक्ष प्राप्त होता है।\n\nकथा:\n\nभीष्म पितामह ने युधिष्ठिर को सहस्रनाम सुनाकर यह समापन भाग कहा। इस ऐप में यह फलश्रुति परम्परागत संदर्भ के लिए रखी गई है, जबकि मुख्य नामावली अभी नाम 1-287 तक ही उपलब्ध है।",
+      "meaningEn": "Benefits:\n\nThe Phalashruti is the concluding section of Vishnu Sahasranama — describing the fruits of reciting the complete stotram. According to it, the person who daily recites or listens to the Sahasranama shall never encounter any inauspiciousness in this world or the next. All sins are destroyed, victory over enemies is granted, and ultimately moksha is attained.\n\nStory:\n\nBhishma Pitamaha spoke this concluding section after reciting the Sahasranama to Yudhishthira. This app keeps the Phalashruti for traditional context, while the main name-list currently contains only names 1-287."
     },
     {
       "id": "vs-4-1",
@@ -31,8 +31,8 @@
         "itīdaṁ kīrtanīyasya keśhavasya mahātmanaḥ",
         "nāmnāṁ sahasraṁ divyānāmaśheṣheṇa prakīrtitam"
       ],
-      "meaningHi": "इस प्रकार कीर्तन करने योग्य, महात्मा केशव के सहस्र दिव्य नामों का सम्पूर्ण रूप से कीर्तन किया गया।\n\nभीष्म ने युधिष्ठिर को सम्पूर्ण सहस्रनाम सुनाकर यह समापन वाक्य कहा। 'केशव' — क (ब्रह्मा) + ईश (शिव) + व (विष्णु) — तीनों के ईश्वर।",
-      "meaningEn": "Thus the thousand divine names of the great-souled Keshava, worthy of glorification, have been fully recited.\n\nBhishma concludes after reciting the complete Sahasranama to Yudhishthira. 'Keshava' = Ka (Brahma) + Isha (Shiva) + Va (Vishnu) — lord of all three."
+      "meaningHi": "इस प्रकार कीर्तन करने योग्य, महात्मा केशव के सहस्र दिव्य नामों का सम्पूर्ण रूप से कीर्तन किया गया।\n\nयह श्लोक परम्परागत फलश्रुति का आरम्भ है और मूल प्रसंग में सम्पूर्ण सहस्रनाम के बाद आता है। 'केशव' — क (ब्रह्मा) + ईश (शिव) + व (विष्णु) — तीनों के ईश्वर।",
+      "meaningEn": "Thus the thousand divine names of the great-souled Keshava, worthy of glorification, have been fully recited.\n\nThis verse opens the traditional Phalashruti and, in the original setting, follows the complete Sahasranama. 'Keshava' = Ka (Brahma) + Isha (Shiva) + Va (Vishnu) — lord of all three."
     },
     {
       "id": "vs-4-2",
@@ -277,7 +277,12 @@
     }
   ],
   "source": {
-    "baseText": "sanskritdocuments.org/doc_vishhnu/vsahasranew.html, opensadhaka.com",
-    "retrievedOn": "2026-05-24"
+    "baseText": "Vishnu Sahasranama from Mahabharata Anushasana Parva; app currently stores the invocation, dhyana, names 1-287, and phalashruti.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/vsahasranew.html",
+      "https://www.opensadhaka.com/stotras/vishnu-sahasranama",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html"
+    ],
+    "retrievedOn": "2026-05-30"
   }
 }
