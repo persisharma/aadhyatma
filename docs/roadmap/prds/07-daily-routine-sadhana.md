@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Draft / Exploration |
+| **Status** | Approved — Phase 1–2 in implementation |
 | **Target release** | TBD (post v1.4.0 notifications) |
 | **Window** | TBA |
 | **T-shirt size** | L (multi-PR; phased) |
@@ -102,9 +102,14 @@ type RoutineItem = {
 - ✅ A **japam mantra with a target** — e.g. Gayatri × 1 round (108); opens `JapamCounterScreen`, counts into `UserActivityContext.logJapaRound`.
 - ❌ **Never a single verse/shloka of a stotram or chalisa, and never "a particular reader screen/scroll page."** A lone verse only makes sense as the *Daily Bhakti* random verse — not as a routine item. (This is also why Wishlist, which is verse-level, does not feed routines — see §3.)
 
-### 5.3 Completion state
+### 5.3 Completion state — hybrid (auto + manual fallback)
 
-No new store. Completion reuses `UserActivityContext` (already keyed by `YYYY-MM-DD`). Checking off a reading item ≈ `logRead(sourceId)`; a japam item ≈ `logJapaRound`. A small derived selector ("which of today's routine items are done") computes from the day's activity, so streaks and the existing Profile stats light up for free.
+Tapping a routine item in the Today view **opens the content** (reader or japam counter at the start of the unit) — that is the primary action; the point of a routine is to *do* the practice, not tick a box. An item is then marked complete by **either** path:
+
+- **Auto (default, honest).** The item completes when the reader reports the user **reached the last verse-page of the unit** — detected by comparing the live `verseIndex`/`chapter` from `setProgress` (`ReadingProgressContext`) against the unit's known total (`verseCount` / chapter totals in `texts.ts`). For japam, completion fires when `targetRounds` is met in `JapamCounterContext`. *"Reached the final verse-page"* is the agreed proxy for "read it" — the app cannot (and shouldn't) police that every word was read; no dwell timers.
+- **Manual fallback.** A small mark-done affordance on the item (for reciting offline / from memory). The Today row distinguishes the two — *"✓ read to end"* vs *"✓ marked"* — so the user knows which were genuinely completed in-app.
+
+**Storage.** A per-day completion set lives alongside the existing day log; reads/rounds still flow into `UserActivityContext` (`logRead` / `logJapaRound`) so streaks and Profile stats light up for free. Completion is keyed by `routineId·itemId·YYYY-MM-DD` and resets at the day boundary.
 
 ### 5.4 Weekday → deity default map (vaar)
 
@@ -170,6 +175,7 @@ All screens follow the parchment design system and the bilingual rules in `RULEB
 - **Daily Bhakti stays as-is.** The random daily verse is untouched; the banner is a separate surface below it. No merge.
 - **No Wishlist → Routine link.** Different granularity (verse vs. section); a cross-link would push a verse into a surface that only takes complete units.
 - **Granularity (§5.2):** section · named subsection · whole granth · granth chapter · japam-with-target. No single stotram verse.
+- **Completion (§5.3):** hybrid — tap opens content; auto-completes on reaching the **last verse-page** (or target rounds); manual mark-done fallback for offline recitation.
+- **Mode is locked at creation** for Phase 1 — switching daily↔weekday would orphan per-item `weekdays` tags; users can make a second routine instead.
 
-**Open:**
-1. **Editing a routine's mode** after creation (daily ↔ weekday). *Recommend locking at creation for Phase 1* — switching would orphan or wipe per-item `weekdays` tags, and a user can simply create a second routine. Revisit if users ask.
+**Open:** none blocking Phase 1–2. Phase 3 (reminders) and Phase 4 (calendar/sankalp) tracked as follow-ups.
