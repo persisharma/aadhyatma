@@ -11,6 +11,7 @@ import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
 import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
+import RoutineBanner from '@/components/RoutineBanner';
 
 export default function DailyBhaktiScreen() {
   const { colors, typography, spacing } = useTheme();
@@ -211,6 +212,7 @@ export default function DailyBhaktiScreen() {
           </View>
         </ScrollView>
       </SafeAreaView>
+      <RoutineBanner />
     </View>
   );
 }

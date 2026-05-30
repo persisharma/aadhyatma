@@ -25,6 +25,7 @@ import { GitaLanguageProvider } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
+import { RoutineProvider } from '@/contexts/RoutineContext';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
 import {
   NotificationPreferencesProvider,
@@ -123,15 +124,17 @@ export default function App() {
               <UserActivityProvider>
                 <ReadingProgressProvider>
                   <JapamCounterProvider>
-                    <NotificationPreferencesProvider>
-                      <ShareProvider>
-                        <NavigationContainer ref={navigationRef}>
-                          <StatusBar style="dark" />
-                          <RootNavigator />
-                          <ReminderOptInModal />
-                        </NavigationContainer>
-                      </ShareProvider>
-                    </NotificationPreferencesProvider>
+                    <RoutineProvider>
+                      <NotificationPreferencesProvider>
+                        <ShareProvider>
+                          <NavigationContainer ref={navigationRef}>
+                            <StatusBar style="dark" />
+                            <RootNavigator />
+                            <ReminderOptInModal />
+                          </NavigationContainer>
+                        </ShareProvider>
+                      </NotificationPreferencesProvider>
+                    </RoutineProvider>
                   </JapamCounterProvider>
                 </ReadingProgressProvider>
               </UserActivityProvider>

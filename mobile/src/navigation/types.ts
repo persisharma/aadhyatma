@@ -38,6 +38,12 @@ export type HomeStackParamList = {
   AartiReader: { aartiIndex: number; initialIndex?: number };
   SanskarReader: { sanskarId: string; initialIndex?: number };
   JapamCounter: { mantraId: string };
+  // Daily Routine (नित्य साधना) — PRD-07
+  RoutineToday: undefined;
+  RoutineList: undefined;
+  RoutineCreate: undefined;
+  RoutineDetail: { routineId: string };
+  RoutineAddItems: { routineId: string };
 };
 
 export type MoreStackParamList = {

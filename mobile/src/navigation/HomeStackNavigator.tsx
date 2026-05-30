@@ -34,6 +34,11 @@ import RamcharitmanasChaptersScreen from '@/screens/RamcharitmanasChaptersScreen
 import RamcharitmanasReaderScreen from '@/screens/RamcharitmanasReaderScreen';
 import AartiReaderScreen from '@/screens/AartiReaderScreen';
 import SanskarReaderScreen from '@/screens/SanskarReaderScreen';
+import RoutineTodayScreen from '@/screens/RoutineTodayScreen';
+import RoutineListScreen from '@/screens/RoutineListScreen';
+import CreateRoutineScreen from '@/screens/CreateRoutineScreen';
+import RoutineAddItemsScreen from '@/screens/RoutineAddItemsScreen';
+import RoutineDetailScreen from '@/screens/RoutineDetailScreen';
 import type { HomeStackParamList } from './types';
 
 const LazyJapamCounterScreen = lazy(() => import('@/screens/JapamCounterScreen'));
@@ -159,6 +164,11 @@ export default function HomeStackNavigator() {
         component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
+      <Stack.Screen name="RoutineToday" component={RoutineTodayScreen} />
+      <Stack.Screen name="RoutineList" component={RoutineListScreen} />
+      <Stack.Screen name="RoutineCreate" component={CreateRoutineScreen} />
+      <Stack.Screen name="RoutineAddItems" component={RoutineAddItemsScreen} />
+      <Stack.Screen name="RoutineDetail" component={RoutineDetailScreen} />
     </Stack.Navigator>
   );
 }

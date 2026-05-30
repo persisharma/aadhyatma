@@ -156,6 +156,21 @@ All screens follow the parchment design system and the bilingual rules in `RULEB
 3. **Phase 3 — Reminders.** Wire routines into the existing notification scheduler (`mobile/src/notifications/scheduler.ts`, `NotificationPreferencesContext`) — per-routine reminder time that deep-links to the Today view.
 4. **Phase 4 — Calendar.** Date-anchored entries / sankalp ("read X for N days"), reusing PRD-01's bundled festival JSON for festival-day routines.
 
+## 7a. Implementation status (Phase 1 + vaar)
+
+**Shipped in this branch** (`tsc --noEmit` clean; `RoutineCompletion.test.tsx` green in the CI screens gate):
+
+- `src/data/routine/{types,vaar,units,useRoutineToday}.ts` — model, weekday→deity map, completion resolver, today composition.
+- `src/contexts/RoutineContext.tsx` — AsyncStorage persistence, multiple named routines, CRUD, daily-scoped manual completion. Wired into `App.tsx`.
+- `src/components/RoutineBanner.tsx` — docked banner (nudge / progress) on `HomeScreen` + `DailyBhaktiScreen`.
+- Screens: `CreateRoutineScreen` (name → daily/weekday), `RoutineAddItemsScreen` (whole-text + japam, weekday selector + vaar suggestions), `RoutineTodayScreen` (check-off + progress + streak), `RoutineListScreen`, `RoutineDetailScreen`. Registered in `HomeStackNavigator` + `types.ts`.
+- Routing centralised via `navigateToRoutineItem` in `entryRoutes.ts` (RULEBOOK §3).
+- Completion is **derived** (no per-reader edits): manual marks persist (daily); auto = reached last verse-page *today* (`ReadingProgress`) or target japa rounds today (`UserActivity`).
+
+**Kind model simplified** from the §5.2 draft to `section | chapter | japam` (`chapter` covers both a granth chapter and a single stotra; whole = `section`).
+
+**Deferred (follow-ups):** chapter-level *add* UI (model/nav/completion already support `chapter`); auto-complete for a *whole* multi-chapter granth (chapters complete individually today); Phase 3 reminders; Phase 4 calendar/sankalp. Banner/Search-FAB stacking on Home is a known polish item.
+
 ## 8. Reuse map (what we lean on, not rebuild)
 
 | Need | Existing asset |

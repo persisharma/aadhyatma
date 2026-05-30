@@ -15,6 +15,7 @@ import CategoryCard from '@/components/CategoryCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import Crest from '@/components/Crest';
 import SearchFloatingButton from '@/components/SearchFloatingButton';
+import RoutineBanner from '@/components/RoutineBanner';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 
@@ -158,6 +159,7 @@ export default function HomeScreen({ navigation }: Props) {
       </SafeAreaView>
 
       <SearchFloatingButton onPress={() => navigation.navigate('Search')} />
+      <RoutineBanner />
     </View>
   );
 }
