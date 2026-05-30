@@ -122,9 +122,26 @@ Used only to **pre-suggest** content when building a `weekday` routine; always o
 
 ## 6. Surfaces
 
-- **`RoutineListScreen`** — entry point (a tab, or a card in `More`). Lists the user's routines; "＋ New routine" → name + the daily-vs-weekday question.
+**No dedicated bottom tab and no `More` entry.** A tab is too heavy for a v1, and `More` is a low-traffic graveyard where the feature would never be noticed. Instead the daily driver is an **embedded routine chip** that lives inside the two screens users already open every day — **Home** and **Daily Bhakti** — and the full management screens are reached *through* that chip.
+
+### 6.1 Routine chip (the entry point) — embedded, two states
+
+A single small `RoutineChip` component dropped into existing screens, with no new navigation chrome:
+
+- **State A — no routine yet (nudge):** a gentle CTA chip — *"अपनी नित्य साधना बनाएँ · Set your daily practice"* — tapping opens routine creation. Dismissible per session so it never nags.
+- **State B — routine(s) set (progress):** shows **today's** progress — *"नित्य साधना · 2 / 5 आज"* with the current streak (read from `UserActivityContext`). Tapping opens the **Today** view.
+
+Placement (grounded in current layout):
+- **`HomeScreen.tsx`** — between the `hero` block and the category `grid` (`src/screens/HomeScreen.tsx:112`→`:130`), as a full-width strip above the library.
+- **`DailyBhaktiScreen.tsx`** — directly above the verse card (after the title area), so the "today's verse" and "today's practice" sit together.
+
+Both placements render the *same* component and state, so progress stays consistent across surfaces.
+
+### 6.2 Management screens (reached via the chip)
+
+- **`RoutineListScreen`** — lists the user's routines; "＋ New routine" → name + the daily-vs-weekday question. Reached from the Today view / chip overflow, not from a tab.
 - **`RoutineDetailScreen`** — one routine. For `weekday` routines, a Sun–Sat strip (with the suggested deity per day); tapping a day shows that day's items. Reorder, edit schedule, remove. Each item taps through to its reader via the existing `entryRoutes.ts` helpers.
-- **"Today" view** — the default landing for the routine surface: union of all routines' items scheduled for today, grouped by routine, with check-offs and a streak header. This is the daily-driver screen.
+- **"Today" view** — what the chip opens: union of all routines' items scheduled for today, grouped by routine, with check-offs and a streak header. The daily-driver screen.
 - **"Add to routine" action** — a `＋` mirroring `BookmarkButton`'s placement, on `LibraryCard`, reader top-bars, `DeityListScreen`, and the Wishlist row. Opens a sheet: pick routine(s), and for granths pick a chapter.
 
 All screens follow the parchment design system and the bilingual rules in `RULEBOOK.md` §3 (every user-facing string branches on `lang`; reader/title screens swap Hi/En rather than stacking).
@@ -148,9 +165,12 @@ All screens follow the parchment design system and the bilingual rules in `RULEB
 | Reminders (Phase 3) | `NotificationPreferencesContext`, `notifications/scheduler.ts` |
 | Japam counter + targets | `JapamCounterScreen.tsx`, `JapamCounterContext.tsx` |
 
-## 9. Open questions
+## 9. Decisions & open questions
 
-1. **Placement:** new bottom-tab ("साधना") vs. a card inside `More`? A tab signals it's a primary daily surface; `More` is lower-commitment for a first cut.
-2. **Daily Bhakti relationship:** does the random Daily Bhakti verse become *part of* the Today view, or stay a separate tab? (Possible merge: "Today" = your routine + one suggested verse.)
-3. **Editing a routine's mode** after creation (daily ↔ weekday) — allow, or lock at creation to keep item `weekdays` coherent?
-4. **Cross-link from Wishlist:** offer "add this wishlisted verse to a routine" in Phase 1, or defer?
+**Decided:**
+- **Placement (§6):** no new tab, no `More` entry. An embedded `RoutineChip` on **Home** and **Daily Bhakti** is the entry point — nudge when no routine is set, today's progress when one is. Management screens are reached through the chip.
+
+**Open:**
+1. **Daily Bhakti relationship:** does the random Daily Bhakti verse become *part of* the Today view, or stay independent above its verse card? (Possible merge: "Today" = your routine + one suggested verse.)
+2. **Editing a routine's mode** after creation (daily ↔ weekday). *Recommend locking at creation for Phase 1* — switching would orphan or wipe per-item `weekdays` tags, and a user can simply create a second routine. Revisit if users ask.
+3. **Cross-link from Wishlist:** offer "add this wishlisted verse to a routine" in Phase 1, or defer?
