@@ -43,3 +43,17 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Category:** type-safety
 **Example:** Subagent created JSON files with deity: surya, multi, lakshmi — none exist in the Deity type union. TypeScript misses this because JSON imports bypass strict checking. DeityListScreen silently drops these entries.
 **Resolution pattern:** After subagent creates JSON data, grep deity fields and verify each value exists in the Deity type union. Add as post-implementation check.
+
+### Widening jest testMatch can silently pull in non-Jest node:assert scripts and fail the suite
+
+**Seen:** 1x — 2026-05-29
+**Category:** test-config
+**Example:** This repo's jest.config testMatch was deliberately scoped to `src/screens/__tests__/**/*.test.tsx`. To run new util/context tests I broadened it to `src/**/__tests__/**/*.test.{ts,tsx}` — which swept in `src/data/__tests__/*.test.ts` and `src/notifications/__tests__/*.test.ts`, which are node:assert scripts (run via tsx, no Jest `test`/`it` blocks). Jest then failed with "zero tests" suites. Codex caught it by actually running `npx jest`.
+**Resolution pattern:** Before broadening a test glob, `glob` ALL matches and classify each (jest vs other-runner). Prefer an explicit allow-list of jest dirs over a wide `src/**` glob, or add testPathIgnorePatterns for the non-jest dirs.
+
+### "Show if not seen" features: an empty seen-set on storage-read failure inverts the safe fallback (shows everything)
+
+**Seen:** 1x — 2026-05-29
+**Category:** error-handling
+**Example:** NewContentContext's load effect caught AsyncStorage.getItem rejection and left `knownIds=[]` with a comment "nothing is marked new (safe)". But `isNew = discoverableIds.includes(id) && !knownIds.includes(id)` — an empty knownIds marks EVERY entry NEW. The comment lied; the error path flashed NEW on all ~30 entries.
+**Resolution pattern:** For "highlight what's NOT in the seen-set" logic, the safe error fallback is the FULL set (everything seen → nothing highlighted), not the empty set. Write a test that forces the storage rejection and asserts the quiet state.

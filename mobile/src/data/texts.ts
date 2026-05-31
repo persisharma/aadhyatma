@@ -37,6 +37,11 @@ export type LibraryEntry = {
   verseCount?: number;
   /** When true, HomeScreen omits this entry from the library list. */
   hidden?: boolean;
+  /**
+   * Semver the entry's content shipped in (debut marker). Used only to seed the
+   * "NEW" debut state for upgrading users; runtime detection is content-ID-set based.
+   */
+  addedInVersion?: string;
 };
 
 export const library: readonly LibraryEntry[] = [
@@ -148,6 +153,7 @@ export const library: readonly LibraryEntry[] = [
     category: 'stotram',
     deities: ['krishna'],
     verseCount: krishnaStotramTotal,
+    addedInVersion: '1.3.0',
   },
   {
     id: 'shiv-chalisa',
@@ -203,6 +209,7 @@ export const library: readonly LibraryEntry[] = [
     category: 'stotram',
     deities: ['hanuman'],
     verseCount: bajrangBaanTotal,
+    addedInVersion: '1.3.0',
   },
   {
     id: 'ram-stuti',
@@ -214,6 +221,7 @@ export const library: readonly LibraryEntry[] = [
     category: 'stotram',
     deities: ['rama'],
     verseCount: ramStutiTotal,
+    addedInVersion: '1.3.0',
   },
   {
     id: 'om-jai-jagdish',

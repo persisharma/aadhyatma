@@ -1,0 +1,120 @@
+# NEW Content Badge Smoke Test
+#
+# Verifies the "NEW" chip end-to-end. Because Maestro cannot write AsyncStorage
+# directly, and the debut seed runs on first launch, the upgrader state is
+# reached via the __DEV__-only "dev-seed-new-content" control on Home (stripped
+# from production bundles). The control calls devSimulateUpgrade(), which seeds
+# the upgrader state live (and persists it).
+#
+# Covers:
+#   1. Fresh install → no NEW chip on Home (negative correctness)
+#   2. Dev seed → "Hymns & Praise" tile gains its NEW state
+#   3. Stotram list → Krishna / Bajrang Baan / Ram Stuti show NEW; others don't
+#   4. Tap Krishna (markSeen) → restart → Krishna NEW cleared (persisted),
+#      Bajrang/Ram still NEW
+#
+# Selectors mirror sanskar-smoke.yaml: full accessibilityLabel for tiles
+# ("<NameEn>. Tap to open." or "<NameEn>. New. Tap to open."), regex for cards.
+# Requires a booted simulator + Expo Go (see .maestro/README.md). If the app
+# cannot boot in this environment, the integrated path is also covered by the
+# Jest tests (NewContentContext.test.tsx + LibraryCardNewBadge.test.tsx).
+
+appId: host.exp.Exponent
+---
+# ── Step 1: Boot, then force a clean (nothing-new) start regardless of prior runs ──
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element:
+      id: "dev-reset-new-content"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn:
+    id: "dev-reset-new-content"
+- waitForAnimationToEnd
+
+# ── Step 2: Simulate an update via the dev-only seed control ──
+- scrollUntilVisible:
+    element:
+      id: "dev-seed-new-content"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn:
+    id: "dev-seed-new-content"
+- waitForAnimationToEnd
+
+# ── Step 3: Scroll back up — "Hymns & Praise" (stotram) tile is now flagged NEW ──
+- scrollUntilVisible:
+    element:
+      text: "Hymns & Praise. New. Tap to open."
+    direction: UP
+    timeout: 10000
+
+# ── Step 4: Open stotram. Shiva (top, untagged) has no NEW; the 3 tagged cards do.
+#    Tagged entries sit mid/low in the list, so scroll to each (assertVisible doesn't scroll).
+- tapOn: "Hymns & Praise. New. Tap to open."
+- waitForAnimationToEnd
+- assertVisible: "Shiva Stotram\\..*Tap to open\\."
+- assertNotVisible: "Shiva Stotram\\..*New\\..*Tap to open\\."
+- scrollUntilVisible:
+    element:
+      text: "Krishna Stotram\\..*New\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Bajrang Baan\\..*New\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Ram Stuti\\..*New\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
+
+# ── Step 5: Tap a NEW card (Ram Stuti, now scrolled into view) → markSeen + persist; open reader ──
+- tapOn: "Ram Stuti\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss the Resume sheet if a prior run left progress.
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Step 6: Restart → dismissal persisted; re-open stotram ──
+- stopApp:
+    appId: host.exp.Exponent
+- runFlow: _launch.yaml
+- tapOn: "Hymns & Praise. New. Tap to open."
+- waitForAnimationToEnd
+
+# ── Step 7: Ram Stuti NEW is gone (markSeen persisted); Krishna still NEW ──
+- scrollUntilVisible:
+    element:
+      text: "Ram Stuti\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- assertNotVisible: "Ram Stuti\\..*New\\..*Tap to open\\."
+- scrollUntilVisible:
+    element:
+      text: "Krishna Stotram\\..*New\\..*Tap to open\\."
+    direction: UP
+    timeout: 10000
+
+# ── Cleanup: reset NEW state so later flows in `maestro test .maestro/` start clean ──
+- stopApp:
+    appId: host.exp.Exponent
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element:
+      id: "dev-reset-new-content"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn:
+    id: "dev-reset-new-content"
+- waitForAnimationToEnd
+- stopApp:
+    appId: host.exp.Exponent

@@ -10,6 +10,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import type { LibraryEntry } from '@/data/texts';
+import { useNewContent } from '@/contexts/NewContentContext';
 
 type Props = {
   entry: LibraryEntry;
@@ -18,10 +19,12 @@ type Props = {
 
 export default function LibraryCard({ entry, onPress }: Props) {
   const { colors, typography, radii } = useTheme();
+  const { isNew } = useNewContent();
   const isActive = entry.status === 'active';
+  const showNew = isActive && isNew(entry.id);
 
   const accessibilityRole: AccessibilityRole | undefined = isActive ? 'button' : undefined;
-  const accessibilityLabel = `${entry.nameEn}. ${entry.sub}. ${isActive ? 'Tap to open.' : 'Coming soon.'}`;
+  const accessibilityLabel = `${entry.nameEn}. ${entry.sub}.${showNew ? ' New.' : ''} ${isActive ? 'Tap to open.' : 'Coming soon.'}`;
   const accessibilityState: AccessibilityState = { disabled: !isActive };
 
   const body = (
@@ -130,6 +133,16 @@ export default function LibraryCard({ entry, onPress }: Props) {
             ]}
           >
             SOON
+          </Text>
+        </View>
+      )}
+      {showNew && (
+        <View
+          style={[styles.badge, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]}
+          pointerEvents="none"
+        >
+          <Text style={[styles.badgeText, { color: colors.newBadgeText, letterSpacing: 1.6 }]}>
+            NEW
           </Text>
         </View>
       )}

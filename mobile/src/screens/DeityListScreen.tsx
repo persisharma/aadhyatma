@@ -10,6 +10,7 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import LibraryCard from '@/components/LibraryCard';
 import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useNewContent } from '@/contexts/NewContentContext';
 import { navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
 import { formatLocation } from '@/utils/formatLocation';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -20,6 +21,7 @@ export default function DeityListScreen({ navigation, route }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { deityId } = route.params;
   const { getProgress, clearProgress, isLoading } = useReadingProgress();
+  const { markSeen } = useNewContent();
   const [pendingEntry, setPendingEntry] = useState<LibraryEntry | null>(null);
 
   const backgroundImage = useMemo(() => getDeityBackground(deityId), [deityId]);
@@ -30,6 +32,7 @@ export default function DeityListScreen({ navigation, route }: Props) {
 
   const handlePress = (entry: LibraryEntry) => {
     if (isLoading) {
+      markSeen(entry.id);
       navigateToEntryStart(navigation, entry);
       return;
     }
@@ -38,6 +41,7 @@ export default function DeityListScreen({ navigation, route }: Props) {
       setPendingEntry(entry);
       return;
     }
+    markSeen(entry.id);
     navigateToEntryStart(navigation, entry);
   };
 
@@ -107,11 +111,13 @@ export default function DeityListScreen({ navigation, route }: Props) {
           locationEn={location.en}
           onResume={() => {
             const progress = pendingProgress;
+            markSeen(pendingEntry.id);
             setPendingEntry(null);
             navigateToProgress(navigation, progress);
           }}
           onStartOver={() => {
             const entry = pendingEntry;
+            markSeen(entry.id);
             setPendingEntry(null);
             clearProgress(entry.id);
             navigateToEntryStart(navigation, entry);

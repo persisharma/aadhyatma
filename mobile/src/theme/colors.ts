@@ -17,6 +17,11 @@ export const lightColors = {
   saffronTint: 'rgba(184, 98, 27, 0.12)',
   goldTint: 'rgba(166, 124, 52, 0.14)',
 
+  // "NEW" badge — saffron-tinted (primary/active accent → reads as fresh & live),
+  // distinct from the muted gold "SOON" badge while staying in the warm palette.
+  newBadgeBg: 'rgba(184, 98, 27, 0.16)',
+  newBadgeText: '#8A3E0B',
+
   overlayTop: 'rgba(243, 231, 201, 0.85)',
   overlayUpper: 'rgba(243, 231, 201, 0.55)',
   overlayLower: 'rgba(243, 231, 201, 0.75)',

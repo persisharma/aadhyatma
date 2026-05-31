@@ -26,6 +26,7 @@ import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
+import { NewContentProvider } from '@/contexts/NewContentContext';
 import {
   NotificationPreferencesProvider,
   configureForegroundNotificationHandler,
@@ -121,19 +122,21 @@ export default function App() {
           <GitaLanguageProvider>
             <BookmarksProvider>
               <UserActivityProvider>
-                <ReadingProgressProvider>
-                  <JapamCounterProvider>
-                    <NotificationPreferencesProvider>
-                      <ShareProvider>
-                        <NavigationContainer ref={navigationRef}>
-                          <StatusBar style="dark" />
-                          <RootNavigator />
-                          <ReminderOptInModal />
-                        </NavigationContainer>
-                      </ShareProvider>
-                    </NotificationPreferencesProvider>
-                  </JapamCounterProvider>
-                </ReadingProgressProvider>
+                <NewContentProvider>
+                  <ReadingProgressProvider>
+                    <JapamCounterProvider>
+                      <NotificationPreferencesProvider>
+                        <ShareProvider>
+                          <NavigationContainer ref={navigationRef}>
+                            <StatusBar style="dark" />
+                            <RootNavigator />
+                            <ReminderOptInModal />
+                          </NavigationContainer>
+                        </ShareProvider>
+                      </NotificationPreferencesProvider>
+                    </JapamCounterProvider>
+                  </ReadingProgressProvider>
+                </NewContentProvider>
               </UserActivityProvider>
             </BookmarksProvider>
           </GitaLanguageProvider>
