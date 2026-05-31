@@ -76,8 +76,16 @@
         "yā devī sarvabhūteṣu śhānti-rūpeṇa saṁsthitā",
         "namastasyai namastasyai namastasyai namo namaḥ"
       ],
-      "meaningHi": "जो देवी सभी प्राणियों में शान्ति (अन्तर्मन की स्थिरता, अहिंसा, समत्व) के रूप में निवास करती हैं, उन्हें तीन बार नमस्कार है। शान्ति — जो क्रोध के बीच धैर्य देती है, जो विपरीत परिस्थिति में सम भाव रखती है — वह देवी का ही स्वरूप है। यह मंत्र अशान्त मन को शान्ति और स्थिरता प्रदान करता है।",
-      "meaningEn": "Salutations to the Goddess who resides in all beings as Shanti (inner peace, non-violence, equanimity). Peace — that which grants patience amidst anger, that which maintains composure in adversity — is a form of the Goddess herself. This mantra bestows tranquility and stability upon a restless mind."
+      "meaningHi": "जो देवी सभी प्राणियों में शान्ति (अन्तर्मन की स्थिरता, अहिंसा, समत्व) के रूप में निवास करती हैं, उन्हें बारम्बार नमस्कार है। शान्ति — जो क्रोध के बीच धैर्य देती है, जो विपरीत परिस्थिति में सम भाव रखती है — वह देवी का ही स्वरूप है। यह मंत्र अशान्त मन को शान्ति और स्थिरता प्रदान करता है।",
+      "meaningEn": "Salutations again and again to the Goddess who resides in all beings as Shanti (inner peace, non-violence, equanimity). Peace — that which grants patience amidst anger, that which maintains composure in adversity — is a form of the Goddess herself. This mantra bestows tranquility and stability upon a restless mind."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ya Devi Sarvabhuteshu selection from Devi Mahatmya / Durga Saptashati chapter 5.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/chapters/fifth-chapter/durga-saptashati-fifth-chapter.html",
+      "https://sanskritdocuments.org/doc_devii/durga700.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

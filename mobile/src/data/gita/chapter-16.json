@@ -561,5 +561,14 @@
         "He who desires the welfare of the Self should not disregard the ?nds of the scriptures. A man who is anxious to obtain eternal bliss should respect the Vedas and the Smritis which lay down the code of right conduct. He should readily renounce whatever the scriptures teach him to abandon and accept whatever he is directed to accept. He who is thus entirely devoted to the Vedas cannot meet with misfortune, grief or delusion. No mother is more kind than the scriptures for they restrain us from doing evil and bestow on us the greatest good (liberation or Moksha). Therefore treat the scriptures with great respect. Renounce all that the scriptures prohibit. Whatever is worthy of being done, that thou shouldst do thoroughly with all thy heart and all thy strength. Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the sixteenth discourse entitledThe Yoga of the Division BetweenThe Divine and the Demoniacal. ,"
       ]
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Bhagavad Gita Sanskrit text and translations, checked against chapter-specific Holy Bhagavad Gita and Gita Supersite references; verse count follows the 701-shloka recension with chapter 13 counted as 35 verses.",
+    "referenceUrls": [
+      "https://www.holy-bhagavad-gita.org/chapter/16",
+      "https://www.gitasupersite.iitk.ac.in/srimad?language=dv&field_chapter_value=16",
+      "https://vedabase.io/en/library/bg/16/"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

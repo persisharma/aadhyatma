@@ -5,8 +5,18 @@
   "subtitleEn": "Aarti of Lord Krishna",
   "deity": "krishna",
   "language": "hi-en",
-  "source": {"baseText": "bhaktilok.com, timesnowhindi.com", "retrievedOn": "2026-05-23"},
-  "counts": {"totalVerses": 6},
+  "source": {
+    "baseText": "Aarti Kunj Bihari Ki, checked against Sanatan Sanstha, Sanatan Dharm, and Satvik Store editions.",
+    "referenceUrls": [
+      "https://www.sanatan.org/hindi/a/20806.html",
+      "https://sanatan-dharm.com/aarti-kunj-bihari-ki/",
+      "https://www.satvikstore.in/pages/aarti"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "counts": {
+    "totalVerses": 6
+  },
   "verses": [
     {
       "id": "akb-01",

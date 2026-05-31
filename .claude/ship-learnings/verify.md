@@ -86,3 +86,31 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Example:** Project pinned to `expo: ~54.0.33`. `expo start --go` auto-installed Expo Go from the CDN, but Expo serves only the latest binary (SDK 55+/56+). The new Hermes runtime removed legacy globals like `require`. Result: bundle delivers cleanly (731ms, 1319 modules) but crashes at boot with `[runtime not ready]: ReferenceError: Property 'require' doesn't exist`. Maestro flow couldn't execute because the app never reached Home. This is environmental, not a code defect.
 **Resolution pattern:** For Maestro/simulator verification on pinned-SDK projects: (a) build a local dev client via `eas build --profile development --platform ios --local` (5-10 min build, matches your SDK), (b) sideload the SDK-matched Expo Go archive from Expo's release tarballs if still hosted, or (c) bump the project's Expo SDK to current. Don't rely on `expo start --go` for pinned old-SDK projects.
 
+### RN feature verify bar = tsc + expo lint (0 errors) + jest + expo export (clean bundle); export catches bundle-time issues tsc/jest miss
+
+**Seen:** 1x — 2026-05-29
+**Category:** verification
+**Example:** NEW-chip feature added a provider to App.tsx's tree. Verified with `tsc --noEmit` (0), `expo lint` (0 errors), `jest` (27/27), and `npx expo export --platform ios --output-dir .expo-verify-out` → "Exported" with a 9.23 MB iOS hbc bundle, confirming Metro resolves the new provider/context at bundle time. Then `rm -rf` the throwaway dir.
+**Resolution pattern:** For an Expo/RN feature (no web build), run all four. Use `expo export --output-dir <throwaway>` for a non-interactive bundle smoke (never `expo start` in automation), and clean up the output dir after.
+
+### New test files must mirror the repo's existing test lint conventions or they add fresh warnings
+
+**Seen:** 1x — 2026-05-29
+**Category:** lint
+**Example:** New jest test files used `require('react').createElement` in a mock factory and placed module imports after `jest.mock(...)`, producing 8 new warnings (`no-require-imports`, `import/first`). The existing SanskarReaderScreen test was warning-free because it uses `import React, * as mockReact from 'react'` (mock-prefixed namespace) and keeps all imports above the mocks (babel-jest still hoists jest.mock).
+**Resolution pattern:** Copy the test-file header convention from an existing clean test in the repo: namespace-import React as `mockReact` for factory use, put all imports first, jest.mock blocks after. Re-run lint scoped to your new files to confirm zero added warnings.
+
+### SDK-54 Expo Go boot block was environment-transient — re-attempt Phase 5C; Maestro DID run on-device this round
+
+**Seen:** 1x — 2026-05-29
+**Category:** simulator-qa
+**Example:** The 2026-05-28 session documented Expo Go (CDN) crashing SDK-54 at boot (`[runtime not ready] require doesn't exist`), blocking Maestro. This session, the same SDK-54 project booted cleanly in Expo Go on the iPhone 17 sim (bundle delivered, app reached Home), and the full Maestro suite ran. Env conditions (Expo Go version / sim) had changed.
+**Resolution pattern:** Always RE-ATTEMPT Phase 5C even if a prior run logged an env block — re-check `xcrun simctl list devices booted` + boot the bundle and watch for a crash vs Home. Don't assume the prior block persists.
+
+### A bottom-of-screen dev/test control inside a tab navigator taps THROUGH to the tab bar — center it before tapping
+
+**Seen:** 1x — 2026-05-29
+**Category:** maestro
+**Example:** A `__DEV__` seed/reset control at the bottom of HomeScreen (inside a bottom-tab navigator) sat over the center "Bhakti" tab. `scrollUntilVisible` stops with the element at the viewport BOTTOM (right above the tab bar), so `tapOn` fell through to the tab → navigated to Daily Verse, and the next control wasn't found. `marginBottom` alone didn't fix it (scroll still stops at viewport bottom). Fix: `centerElement: true` on the scroll (plus enough bottom spacer for scroll room) so the control lands mid-viewport, clear of the tab bar.
+**Resolution pattern:** For Maestro taps on controls near the bottom of a tabbed screen, use `scrollUntilVisible … centerElement: true`. Also: `assertVisible` does NOT scroll — for list items below the fold use `scrollUntilVisible` to bring each into view before asserting.
+

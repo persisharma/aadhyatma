@@ -7,7 +7,7 @@ import aartiKunjBihari from './aarti-kunj-bihari.json';
 
 export type AartiVerse = {
   id: string;
-  type: 'stanza';
+  type: 'refrain' | 'stanza';
   section: 'body';
   number: number;
   labelHi: string;
@@ -25,7 +25,7 @@ export type AartiData = {
   subtitleEn: string;
   deity: string;
   language: string;
-  source: { baseText: string; retrievedOn: string };
+  source: { baseText: string; referenceUrls?: string[]; retrievedOn: string };
   counts: { totalVerses: number };
   verses: AartiVerse[];
 };

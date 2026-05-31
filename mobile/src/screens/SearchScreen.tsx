@@ -29,6 +29,7 @@ import {
   type SearchVerseEntry,
 } from '@/data/searchIndex';
 import { library } from '@/data/texts';
+import { useNewContent } from '@/contexts/NewContentContext';
 import {
   buildProgressTarget,
   navigateToEntryStart,
@@ -50,6 +51,7 @@ const POPULAR_FALLBACK_IDS = [
 export default function SearchScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const { markSeen } = useNewContent();
   const inputRef = useRef<TextInput>(null);
   const [query, setQuery] = useState('');
   const [recent, setRecent] = useState<string[]>([]);
@@ -126,15 +128,17 @@ export default function SearchScreen({ navigation }: Props) {
     (sourceId: string) => {
       const entry = library.find((e) => e.id === sourceId);
       if (!entry) return;
+      markSeen(sourceId);
       commitRecent(query);
       Keyboard.dismiss();
       navigateToEntryStart(navigation as never, entry);
     },
-    [navigation, query, commitRecent]
+    [navigation, query, commitRecent, markSeen]
   );
 
   const openVerse = useCallback(
     (hit: SearchVerseEntry) => {
+      markSeen(hit.sourceId);
       const target = buildProgressTarget({
         sourceId: hit.sourceId,
         chapter: hit.chapter,
@@ -151,7 +155,7 @@ export default function SearchScreen({ navigation }: Props) {
       const entry = library.find((e) => e.id === hit.sourceId);
       if (entry) navigateToEntryStart(navigation as never, entry);
     },
-    [navigation, query, commitRecent]
+    [navigation, query, commitRecent, markSeen]
   );
 
   const openDeity = useCallback(

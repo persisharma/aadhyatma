@@ -5,7 +5,7 @@ type ChapterSummary = { verseCount: number };
 const cases = [
   {
     id: 'durga-stotram',
-    expectedTotal: 21,
+    expectedTotal: 33,
     load: async () => {
       const mod = await import('./durga-stotram');
       return {

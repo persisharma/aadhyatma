@@ -9,9 +9,11 @@ type Props = {
   status: 'active' | 'coming';
   icon?: React.ReactNode;
   onPress?: () => void;
+  /** When true (and active), shows a green "NEW" badge top-right. */
+  hasNew?: boolean;
 };
 
-export default function CategoryCard({ nameHi, nameEn, status, icon, onPress }: Props) {
+export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, hasNew }: Props) {
   const { colors, typography, radii } = useTheme();
   const isActive = status === 'active';
 
@@ -64,7 +66,7 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress }: 
           pressed && styles.cardPressed,
         ]}
         accessibilityRole="button"
-        accessibilityLabel={`${nameEn}. Tap to open.`}
+        accessibilityLabel={`${nameEn}.${hasNew ? ' New.' : ''} Tap to open.`}
       >
         <LinearGradient
           colors={[colors.cardActiveFrom, colors.cardActiveTo]}
@@ -73,6 +75,16 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress }: 
           style={[styles.cardBg, { borderRadius: 16 }]}
         />
         {content}
+        {hasNew && (
+          <View
+            style={[styles.badge, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]}
+            pointerEvents="none"
+          >
+            <Text style={[styles.badgeText, { color: colors.newBadgeText, letterSpacing: 1.6 }]}>
+              NEW
+            </Text>
+          </View>
+        )}
       </Pressable>
     );
   }

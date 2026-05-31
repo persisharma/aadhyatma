@@ -317,5 +317,14 @@
       "meaningHi": "इस प्रकार श्री रावण द्वारा रचित शिव ताण्डव स्तोत्र सम्पूर्ण हुआ।",
       "meaningEn": "Thus ends the Shiva Tandava Stotram composed by Sri Ravana."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Traditional Shiva mantras and Shiva Tandava Stotram, checked against Vaidika Vignanam, GreenMesg, and Sanskrit Documents references.",
+    "referenceUrls": [
+      "https://vignanam.org/devanagari/shiva-tandava-stotram.html",
+      "https://greenmesg.org/stotras/shiva/shiva_tandava_stotram.php",
+      "https://sanskritdocuments.org/doc_shiva/tANDavastotram1.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

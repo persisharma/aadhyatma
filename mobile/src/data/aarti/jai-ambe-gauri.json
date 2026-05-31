@@ -5,8 +5,18 @@
   "subtitleEn": "Aarti of Maa Durga",
   "deity": "durga",
   "language": "hi-en",
-  "source": {"baseText": "timesnowhindi.com, bhajandhaara.in", "retrievedOn": "2026-05-23"},
-  "counts": {"totalVerses": 14},
+  "source": {
+    "baseText": "Jai Ambe Gauri Aarti, checked against Drik Panchang and HinduNidhi editions.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/ambe-mata/ambe-mata-aarti.html?ck=1&lang=hi",
+      "https://hindunidhi.com/shri-gauri-maa-ki-aarti-hindi/",
+      "https://hindunidhi.com/sri-abmba-ji-ki-aarti-hindi/"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
+  "counts": {
+    "totalVerses": 14
+  },
   "verses": [
     {
       "id": "jag-01",
@@ -160,12 +170,12 @@
       "labelHi": "पद · ८",
       "labelEn": "Stanza · 8",
       "lines": [
-        "चौंसठ योगिनी मंगल गावत, नृत्य करत भैरों।",
-        "बाजत ताल मृदंगा, अरु बाजत डमरू॥"
+        "चौंसठ योगिनी मंगल गावत, नृत्य करत भैरूँ।",
+        "बाजत ताल मृदंगा, अरु बाजत डमरु॥"
       ],
       "linesEn": [
         "Chaunsath yogini mangal gaavat, nritya karat Bhairon.",
-        "Baajat taal mridangaa, aru baajat damroo."
+        "Baajat taal mridangaa, aru baajat damru."
       ],
       "meaningHi": "चौंसठ (64) योगिनियाँ मंगल गान गाती हैं और भैरव नृत्य करते हैं। ताल और मृदंग बज रहे हैं तथा डमरू भी बज रहा है — यह देवी के दरबार का दिव्य वातावरण है।",
       "meaningEn": "Sixty-four Yoginis sing auspicious songs and Bhairava dances. Cymbals and mridanga drums sound, and the damru beats — this is the divine atmosphere of the Goddess's court."
@@ -232,12 +242,12 @@
       "labelHi": "पद · १२",
       "labelEn": "Stanza · 12",
       "lines": [
-        "श्री अंबेजी की आरति, जो कोइ नर गावे।",
-        "कहत शिवानंद स्वामी, सुख-संपति पावे॥"
+        "श्री अम्बेजी की आरती, जो कोई नर गावै।",
+        "कहत शिवानन्द स्वामी, सुख सम्पत्ति पावै॥"
       ],
       "linesEn": [
-        "Shree Ambeji ki aarti, jo koi nar gaave.",
-        "Kahat Shivaanand Swami, sukh-sampati paave."
+        "Shree Ambeji ki aarti, jo koi nar gaavai.",
+        "Kahat Shivaanand Swami, sukh sampatti paavai."
       ],
       "meaningHi": "श्री अम्बेजी की यह आरती जो कोई मनुष्य गाता है — शिवानन्द स्वामी कहते हैं — वह सुख और सम्पत्ति प्राप्त करता है। यह कवि का नाम-उल्लेख और आरती के फल का वर्णन है।",
       "meaningEn": "Whoever sings this aarti of Shri Ambeji — says Shivanand Swami — attains happiness and prosperity. This is the poet's signature and a declaration of the fruit of singing this aarti."
