@@ -10,7 +10,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
-import SundarkandVersePage from '@/components/SundarkandVersePage';
+import RamcharitmanasVersePage from '@/components/RamcharitmanasVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
@@ -135,7 +135,7 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <SundarkandVersePage verse={item as any} sourceId="ramcharitmanas" width={width} />}
+            renderItem={({ item }) => <RamcharitmanasVersePage verse={item} sourceId="ramcharitmanas" width={width} />}
             extraData={lang}
             horizontal
             pagingEnabled

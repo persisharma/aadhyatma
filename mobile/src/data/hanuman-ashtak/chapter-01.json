@@ -171,5 +171,13 @@
       "meaningHi": "आपका लाल शरीर लालिमा से सुशोभित है और लाल पूँछ धारण किए हुए हैं। आपका शरीर वज्र के समान कठोर है और आप दानवों का दलन करने वाले हैं। जय जय जय हे कपि शूर।",
       "meaningEn": "Your red body is radiant with crimson splendor, and you bear a magnificent red tail. Your body is as hard as a thunderbolt, and you are the crusher of demons. Victory, victory, victory to you, O heroic monkey warrior."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Sankat Mochan Hanuman Ashtak attributed to Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://nkbashram.org/ashram-news-and-blog/sankatamochan-hanumanashtaka-8-parts",
+      "https://sanskritdocuments.org/doc_z_otherlang_hindi/sankatamochana.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

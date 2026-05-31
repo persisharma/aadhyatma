@@ -2,13 +2,22 @@ import React, { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import type { SundarkandVerse } from '@/data/sundarkand';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
 
+export type LinesVersePageVerse = {
+  id: string;
+  labelHi: string;
+  labelEn: string;
+  lines: string[];
+  linesEn: string[];
+  meaningHi: string;
+  meaningEn: string;
+};
+
 type Props = {
-  verse: SundarkandVerse;
+  verse: LinesVersePageVerse;
   sourceId: string;
   width: number;
 };

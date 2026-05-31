@@ -32,5 +32,14 @@
       "meaningHi": "ॐ — परमात्मा का प्रतीक, सृष्टि की आदि ध्वनि। नमः — नमन, समर्पण, 'मेरा कुछ नहीं'। शिवाय — शिव को, कल्याणकारी को, परम मंगल स्वरूप को।\n\nसम्पूर्ण अर्थ: मैं उस कल्याणकारी परमात्मा शिव को नमन करता हूँ। मैं अपने अहंकार का त्याग कर शिव में समर्पित होता हूँ।",
       "meaningEn": "Om — the symbol of the Supreme, the primordial sound of creation. Namah — I bow, I surrender, 'nothing is mine'. Shivaya — to Shiva, to the auspicious one, to the embodiment of supreme welfare.\n\nComplete meaning: I bow to that auspicious Supreme Lord Shiva. I surrender my ego and offer myself unto Shiva."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Traditional Shiva mantras and Shiva Tandava Stotram, checked against Vaidika Vignanam, GreenMesg, and Sanskrit Documents references.",
+    "referenceUrls": [
+      "https://vignanam.org/devanagari/shiva-tandava-stotram.html",
+      "https://greenmesg.org/stotras/shiva/shiva_tandava_stotram.php",
+      "https://sanskritdocuments.org/doc_shiva/tANDavastotram1.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

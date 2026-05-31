@@ -335,12 +335,8 @@
       "section": "chhand",
       "labelHi": "छन्द · १८",
       "labelEn": "Chhand · 18",
-      "lines": [
-        "धूप देय जो जपै हमेसा। ताके तन नहिं रहै कलेसा॥"
-      ],
-      "linesEn": [
-        "Dhoop dey jo japai hamesaa. Taake tan nahin rahai kalesaa."
-      ],
+      "lines": ["धूप देय जो जपै हमेसा। ताके तन नहिं रहै कलेसा॥"],
+      "linesEn": ["Dhoop dey jo japai hamesaa. Taake tan nahin rahai kalesaa."],
       "meaningHi": "जो धूप देकर सदा जपता है, उसके शरीर में कोई क्लेश नहीं रहता।",
       "meaningEn": "One who lights incense and recites it always — no affliction remains in their body."
     },
@@ -364,7 +360,12 @@
     }
   ],
   "source": {
-    "baseText": "Gita Press (pavitragranth.com), bhaktvatsal.com, bhaktiraag.com, sanskritdocuments.org",
-    "retrievedOn": "2026-05-24"
+    "baseText": "Bajrang Baan, checked against Gita Press PDF scan, HinduNidhi transliteration, and Saregama traditional lyrics.",
+    "referenceUrls": [
+      "https://bhagavadgitaonline.org/wp-content/uploads/2025/01/Bajrang-Baan-Gita-Press.pdf",
+      "https://hindunidhi.com/bajrang-baan-english/",
+      "https://www.saregama.com/song-lyrics/bajrang-baan_28494"
+    ],
+    "retrievedOn": "2026-05-30"
   }
 }

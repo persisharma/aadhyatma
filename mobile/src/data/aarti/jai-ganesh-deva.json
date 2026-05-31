@@ -5,8 +5,18 @@
   "subtitleEn": "Aarti of Lord Ganesha",
   "deity": "ganesha",
   "language": "hi-en",
-  "source": {"baseText": "pavitragranth.com, dharmsaar.com", "retrievedOn": "2026-05-23"},
-  "counts": {"totalVerses": 7},
+  "source": {
+    "baseText": "Jai Ganesh Deva Aarti, checked against Drik Panchang, Vedadhara, and HinduNidhi.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/shree-ganesh/jay-ganesh-aarti.html?ck=1&lang=hi",
+      "https://www.vedadhara.com/%E0%A4%9C%E0%A4%AF-%E0%A4%97%E0%A4%A3%E0%A5%87%E0%A4%B6-%E0%A4%9C%E0%A4%AF-%E0%A4%97%E0%A4%A3%E0%A5%87%E0%A4%B6-%E0%A4%A6%E0%A5%87%E0%A4%B5%E0%A4%BE",
+      "https://hindunidhi.com/shri-ganesh-aarti-hindi/pdf/"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
+  "counts": {
+    "totalVerses": 7
+  },
   "verses": [
     {
       "id": "jgd-01",
@@ -34,12 +44,12 @@
       "labelHi": "पद · १",
       "labelEn": "Stanza · 1",
       "lines": [
-        "एकदन्त दयावन्त, चार भुजा धारी।",
-        "माथे सिन्दूर सोहे, मूसक की सवारी॥"
+        "एकदन्त दयावन्त, चार भुजाधारी।",
+        "माथे पर तिलक सोहे, मूसे की सवारी॥"
       ],
       "linesEn": [
-        "Ekdant dayaavant, chaar bhuja dhaaree.",
-        "Maathe sindoor sohe, moosak ki savaaree."
+        "Ekdant dayaavant, chaar bhujaadhaari.",
+        "Maathe par tilak sohe, moose ki savaari."
       ],
       "meaningHi": "एक दाँत वाले (एकदन्त), दयावान, चार भुजाएँ धारण करने वाले। माथे पर सिन्दूर शोभित है और मूषक (चूहा) उनकी सवारी है — मूषक अहंकार का प्रतीक है जिसे गणेश ने वश में किया।",
       "meaningEn": "Single-tusked, compassionate, bearing four arms. Sindoor adorns the forehead and a mouse is the vehicle — the mouse symbolizes ego which Ganesha has tamed and rides upon."
@@ -52,12 +62,12 @@
       "labelHi": "पद · २",
       "labelEn": "Stanza · 2",
       "lines": [
-        "पान चढ़े, फूल चढ़े और चढ़े मेवा।",
-        "लड्डुअन का भोग लगे, संत करें सेवा॥"
+        "पान चढ़े फूल चढ़े, और चढ़े मेवा।",
+        "लड्डुअन का भोग लगे, सन्त करें सेवा॥"
       ],
       "linesEn": [
-        "Paan chadhe, phool chadhe aur chadhe mevaa.",
-        "Ladduan ka bhog lage, sant karein sevaa."
+        "Paan chadhe phool chadhe, aur chadhe meva.",
+        "Ladduan ka bhog lage, sant karein seva."
       ],
       "meaningHi": "पान चढ़ता है, फूल चढ़ते हैं और मेवा (सूखे फल) चढ़ता है। लड्डुओं (मोदकों) का भोग लगता है और संत सेवा करते हैं — मोदक गणेश का सबसे प्रिय प्रसाद है।",
       "meaningEn": "Betel leaves are offered, flowers are offered, and dry fruits are offered. Laddoos (modaks) are presented as food offering and saints perform service — modak is Ganesha's most beloved prasad."
@@ -70,12 +80,12 @@
       "labelHi": "पद · ३",
       "labelEn": "Stanza · 3",
       "lines": [
-        "अंधन को आंख देत, कोढ़िन को काया।",
-        "बांझन को पुत्र देत, निर्धन को माया॥"
+        "अँधे को आँख देत, कोढ़िन को काया।",
+        "बाँझन को पुत्र देत, निर्धन को माया॥"
       ],
       "linesEn": [
-        "Andhan ko aankh det, kodhrin ko kaayaa.",
-        "Baanjhan ko putra det, nirdhan ko maayaa."
+        "Andhe ko aankh det, kodhin ko kaaya.",
+        "Baanjhan ko putra det, nirdhan ko maya."
       ],
       "meaningHi": "अंधों को आँखें (दृष्टि/ज्ञान) देते हैं, कोढ़ियों को स्वस्थ काया देते हैं। बाँझ स्त्रियों को पुत्र देते हैं और निर्धनों को धन (माया) देते हैं — चार प्रकार के कष्टों का निवारण करने वाले हैं।",
       "meaningEn": "They give sight to the blind, healthy bodies to the diseased. They grant sons to the childless and wealth to the poor — the remover of four types of suffering."
@@ -106,12 +116,12 @@
       "labelHi": "पद · ५",
       "labelEn": "Stanza · 5",
       "lines": [
-        "दीनन की लाज रखो, शंभु सुतकारी।",
-        "कामना को पूर्ण करो, जाऊं बलिहारी॥"
+        "दीनन की लाज राखो, शम्भु सुतवारी।",
+        "कामना को पूर्ण करो, जग बलिहारी॥"
       ],
       "linesEn": [
-        "Deenan ki laaj rakho, Shambhu sutkaaree.",
-        "Kaamnaa ko poorn karo, jaaoon balihaaree."
+        "Deenan ki laaj rakho, Shambhu sutvaari.",
+        "Kaamnaa ko poorn karo, jag balihaari."
       ],
       "meaningHi": "दीनों (असहायों) की लाज (मर्यादा) रखिए, हे शम्भु (शिव) के पुत्र। हमारी कामनाओं को पूर्ण कीजिए — मैं आप पर बलिहारी (न्योछावर) जाता हूँ।",
       "meaningEn": "Protect the dignity of the meek, O son of Shambhu (Shiva). Fulfill our desires — I sacrifice myself in devotion to you."
