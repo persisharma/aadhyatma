@@ -7,6 +7,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { library } from '../texts';
+import { deities } from '../deities';
 
 const DATA = join(__dirname, '..');
 
@@ -24,6 +25,13 @@ const japam = readJson('japam/japam.json');
 const gayatri = japam.mantras.find((m: any) => m.id === 'gayatri-mantra');
 assert.ok(gayatri, 'Gayatri mantra should exist');
 assert.deepEqual(gayatri.deities, ['savitr'], 'Gayatri deity should be savitr');
+
+// Rule 10.9: deity display names must be the recognizable devotional name.
+// The 'savitr' tag is theologically correct, but users identify this deity as Gayatri.
+const savitrDeity = deities.find((d) => d.id === 'savitr');
+assert.ok(savitrDeity, 'savitr deity should exist in deities array');
+assert.equal(savitrDeity.nameEn, 'Maa Gayatri', 'Rule 10.9: savitr deity must display as "Maa Gayatri", not "Savitr Deva"');
+assert.equal(savitrDeity.nameHi, 'माँ गायत्री', 'Rule 10.9: savitr deity must display as "माँ गायत्री", not "सवितृ देव"');
 
 // ─── 2. Aarti verse counts (verified from internet) ─────────────────────────
 
