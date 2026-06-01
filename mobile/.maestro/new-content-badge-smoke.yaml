@@ -50,6 +50,8 @@ appId: host.exp.Exponent
       text: "Hymns & Praise. New. Tap to open."
     direction: UP
     timeout: 10000
+# Sanskar ("Good Habits") was also newly-added → its tile is flagged NEW too.
+- assertVisible: "Good Habits\\..*New\\..*Tap to open\\."
 
 # ── Step 4: Open stotram. Shiva (top, untagged) has no NEW; the 3 tagged cards do.
 #    Tagged entries sit mid/low in the list, so scroll to each (assertVisible doesn't scroll).
