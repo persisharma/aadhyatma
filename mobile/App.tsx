@@ -33,6 +33,7 @@ import {
 } from '@/contexts/NotificationPreferencesContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
+import UpdateReadyModal from '@/components/UpdateReadyModal';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
@@ -131,6 +132,7 @@ export default function App() {
                             <StatusBar style="dark" />
                             <RootNavigator />
                             <ReminderOptInModal />
+                            <UpdateReadyModal />
                           </NavigationContainer>
                         </ShareProvider>
                       </NotificationPreferencesProvider>
