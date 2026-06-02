@@ -102,11 +102,11 @@ These remain in everyday English. A handful of common Sanskrit terms keep their 
 | Screen title (`सनातन`) | Noto Serif Devanagari | 34 | 600 | Letter-spacing `0.01em` |
 | Reader top-bar title | Noto Serif Devanagari | 16 | 600 | |
 | Verse body (Devanagari) | Noto Serif Devanagari | 23 | 500 | Line-height 1.7 |
-| Transliteration (Latin IAST) | Cormorant Garamond | 17 | 600 non-italic | `ink`, line-height 26. Always visible under Sanskrit lines regardless of the reader's language toggle — roman (not italic) because it reads as primary text, not a flourish. |
+| Transliteration (Latin IAST) | Cormorant Garamond | 20 | 600 non-italic | `ink`, line-height 31. Always visible under Sanskrit lines regardless of the reader's language toggle — roman (not italic) because it reads as primary text, not a flourish. Bumped from 17 → 20: Cormorant's small x-height read too small against the Devanagari verse body. |
 | Meaning body (Hindi) | Noto Serif Devanagari | 15 | 400 | `ink-soft`, line-height 1.7 |
-| Meaning body (English) | Cormorant Garamond | 18 | 500 medium non-italic | `ink`, line-height 30. Italic 400 was previously used and rejected as too thin over the parchment bg; medium-weight roman at 18/30 is the shipping spec. |
+| Meaning body (English) | Cormorant Garamond | 20 | 500 medium non-italic | `ink`, line-height 33. Italic 400 was previously used and rejected as too thin over the parchment bg; medium-weight roman is the shipping spec. Bumped from 18 → 20: Cormorant's small x-height read too small against the Devanagari meaning body. |
 | Commentary body (Hindi) | Noto Serif Devanagari | 15 | 400 | `ink-soft`, line-height 1.7. Paragraph gap `14`. |
-| Commentary body (English) | Cormorant Garamond | 18 | 500 medium non-italic | `ink`, line-height 30. Paragraph gap `14`. |
+| Commentary body (English) | Cormorant Garamond | 20 | 500 medium non-italic | `ink`, line-height 33. Paragraph gap `14`. Bumped from 18 → 20 alongside the English meaning body. |
 | Commentary fallback note | Cormorant Garamond | 14 | 400 italic | `ink-muted`, centred. Shown when the selected language has no commentary for this verse but the other language does (e.g., Gita Chapter 1 has only ~20 % English commentary coverage in the published source). |
 | Card name (Hindi) | Noto Serif Devanagari | 17 | 600 | |
 | Card name (Latin) | Cormorant Garamond | 13 | 400 italic | `ink-muted` |
