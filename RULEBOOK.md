@@ -97,7 +97,7 @@ The slash command runs the first three; the human PR author runs the rest.
 4. App boots in Expo dev client; the new card is visible on Home below the existing active sections; tapping navigates to a working reader; every page shows a background image; every verse has `meaningHi` and `meaningEn` populated.
 5. The new section appears correctly under its category tile (tap the tile on Home → item is listed). If deity tags are set, also verify the item shows under those deity chips.
 6. Hindi/English toggle flips meaning text on **every** page (sample at least page 1, middle, and last). Toggle is visible on every reader page; if a subsection listing exists, also visible there. While toggled to English, confirm **no Devanagari leaks into the verse pill, top-bar title, modals, or any other user-facing string** outside intentional bilingual labels — and the same check in reverse for Hindi. (Origin: Wishlist pill, Gita & Shiva Strotam verse pills shipped Hindi-only `श्लोक · 1.1` in English mode.)
-7. If the section ships an English transliteration field (`transliteration[]` or `linesEn[]`), spot-check the romanization style matches the source language per `design.md §3.1`: Sanskrit verses use IAST diacritics; Awadhi/Hindi verses use pronunciation-based ASCII. Mismatched style (IAST on Awadhi or plain ASCII on a Sanskrit shloka) is a hard reject.
+7. If the section ships an English transliteration field (`transliteration[]` or `linesEn[]`), spot-check the romanization style matches the source language per `design.md §3.1`: Sanskrit verses use IAST diacritics; Awadhi/Hindi verses use pronunciation-based ASCII. Mismatched style (IAST on Awadhi or plain ASCII on a Sanskrit shloka) is a hard reject. **Also run the §10.12 greppable gate**: no raw ITRANS/encoder residue (mid-word capitals, `~n`, `RRi`, `chCh`), no leftover dandas/pipes (`।`, `॥`, `|`) or verse-number markers, and `linesEn.length` == the paired `sanskrit`/`lines` length for every verse.
 8. If subsections exist: chapters list renders; tapping any chapter lands on verse 1 of that chapter; back button returns to chapters list, not Home.
 9. Grep the new screen and component files for `as any`, `as unknown as`, `@ts-ignore`, and `@ts-expect-error`. Any hit on a `*VersePage` `verse=` prop or on a navigation `route.params` access is a hard reject — re-shape the data or add a section-specific component instead.
 10. The new `<Pascal>ReaderScreen.test.tsx` exists and passes locally and in CI. Do not merge a green PR whose test file is missing.
@@ -252,3 +252,43 @@ A text must exist in exactly one location/category. If it's a stotram (like Sank
 
 ### 10.12 Transliteration integrity
 No Devanagari characters (U+0900–U+097F) in `linesEn`/`transliteration` fields. No empty strings (use "(transliteration pending)" if unavailable). Correct romanization scheme per `design.md §3.1`: Sanskrit texts use IAST with Hunterian digraphs; Awadhi/Hindi uses pronunciation-based ASCII. Run `grep -rP '[ऀ-ॿ]'` on transliteration fields before shipping. Origin: 23 Sundarkand lines had raw Devanagari, 19 Gita verses had transliteration spillover between adjacent verses.
+
+**No raw ITRANS / scheme-encoder residue.** `linesEn`/`transliteration` is the *reader-facing* romanization, never the raw encoder source it was derived from. The following are a hard reject anywhere in these fields — they mean an ITRANS/Harvard-Kyoto string was pasted in unconverted (the bug behind Krishna Stotram, Ramcharitmanas Mangalacharan, and three stotrams in the OTA audit):
+- Tilde nasals: `~n`, `~N`, `~m`, or a bare `.N`/`.n`/`.h` anusvara/visarga dot.
+- Vocalic-R as `RR`/`RRi` (use IAST `ṛi`), or any retroflex/sibilant written with a trailing capital (`Sh`, `ShT`, `chCh`, `Ch` mid-word).
+- **Mid-word capital letters** (e.g. `maNDanaM`, `kRRiShNa`). A capital is only ever valid as the *first* letter of a line or a proper noun in the Awadhi ASCII style — never inside a word. This is the single most reliable ITRANS tell.
+
+**No leftover dandas or verse numbers.** Strip `।`, `॥`, the ASCII pipe `|`/`||`, and trailing verse-number markers (`॥1॥`, `||1||`) from the romanization. Sanskrit IAST drops them entirely; Awadhi ASCII joins a couplet's two halves with `. ` (period-space) per the Hanuman Chalisa / Sundarkand convention. A stray `|` in an otherwise-clean ASCII line is the tell (origin: Shiv Chalisa closing doha).
+
+**Line-count parity.** `linesEn.length` must equal the paired `sanskrit.length` / `lines.length` for every verse — the reader renders `linesEn` index-paired, so a mismatch silently drops or misaligns a line. (The Gita's `transliteration[]` is **exempt**: it is intentionally split per pada — e.g. 2 `sanskrit` lines → 4 `transliteration` lines — for the side-by-side layout, so it is *not* index-paired.)
+
+**Automated gate (run before shipping any content).** A plain grep can't isolate field *values* (the literal `linesEn` key trips a mid-word-capital check), so scan the parsed JSON. This is the exact check used in the audit that closed these gaps:
+```python
+python3 - <<'PY'
+import json, glob, re, sys
+TF={"linesEn","transliteration"}
+res=re.compile(r'~[nNm]|RRi?|\.[Nnh]\b|[a-zāīūṛṅñṭḍṇśṣḥṁ][A-Z]|chCh')  # ITRANS residue
+danda=re.compile(r'[।॥|]')                                            # leftover dandas/pipes
+bad=0
+for f in sorted(glob.glob("src/data/**/*.json", recursive=True)):
+    d=json.load(open(f, encoding="utf-8"))
+    def walk(n):
+        global bad
+        if isinstance(n, dict):
+            for k,v in n.items():
+                if k in TF and isinstance(v, list):
+                    for l in v:
+                        if isinstance(l, str) and (res.search(l) or danda.search(l)):
+                            print(f"RESIDUE {f}: {l[:60]}"); bad+=1
+                    if k=="linesEn":                       # transliteration[] (Gita) exempt
+                        p=n.get("sanskrit") or n.get("lines")
+                        if isinstance(p, list) and len(p)!=len(v):
+                            print(f"PARITY {f}: {n.get('id')} {len(p)}!={len(v)}"); bad+=1
+                else: walk(v)
+        elif isinstance(n, list):
+            for v in n: walk(v)
+    walk(d)
+sys.exit(1 if bad else 0)
+PY
+```
+Origin: the same raw-ITRANS paste recurred across Krishna Stotram, Ramcharitmanas ch1 (all 19 verses), Shiva Tandava, Vishnu Sahasranama, Ganesh Atharvashirsha, and 23 garbled Sundarkand chaupai lines — because §10.12 named the *scheme* but never banned the encoder residue, the leftover dandas, or gave a runnable check.
