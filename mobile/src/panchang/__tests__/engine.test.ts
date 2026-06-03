@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { computePanchangForDate } from '../engine';
+import { computePanchangForDate, computeTithiAndMonth } from '../engine';
 
 function assertTimeWithin(actual: Date | null, expectedHour: number, expectedMin: number, toleranceMin: number, label: string) {
   assert.ok(actual, `${label}: expected a Date but got null`);
@@ -108,4 +108,49 @@ test('lunar month has valid index and names', () => {
   assert.ok(p.lunarMonth.index >= 1 && p.lunarMonth.index <= 12, `month 1-12, got ${p.lunarMonth.index}`);
   assert.ok(p.lunarMonth.nameHi.length > 0);
   assert.ok(p.lunarMonth.nameEn.length > 0);
+});
+
+test('Amanta and Purnimant months are identical in Shukla Paksha', () => {
+  const purnimant = computePanchangForDate(new Date(2026, 4, 22), { calendarSystem: 'purnimant' });
+  const amanta = computePanchangForDate(new Date(2026, 4, 22), { calendarSystem: 'amanta' });
+
+  assert.equal(purnimant.tithi.paksha, 'shukla');
+  assert.equal(amanta.lunarMonth.index, purnimant.lunarMonth.index);
+  assert.equal(amanta.lunarMonth.nameEn, purnimant.lunarMonth.nameEn);
+});
+
+test('Amanta month is one month behind Purnimant in Krishna Paksha', () => {
+  const purnimant = computePanchangForDate(new Date(2026, 7, 12), { calendarSystem: 'purnimant' });
+  const amanta = computePanchangForDate(new Date(2026, 7, 12), { calendarSystem: 'amanta' });
+  const expectedAmantaMonth = purnimant.lunarMonth.index === 1 ? 12 : purnimant.lunarMonth.index - 1;
+
+  assert.equal(purnimant.tithi.paksha, 'krishna');
+  assert.equal(amanta.tithi.paksha, 'krishna');
+  assert.equal(amanta.lunarMonth.index, expectedAmantaMonth);
+  assert.notEqual(amanta.lunarMonth.nameEn, purnimant.lunarMonth.nameEn);
+});
+
+test('Karana at sunrise matches source-backed boundary cases', () => {
+  assert.equal(computePanchangForDate(new Date(2026, 7, 15)).karana.nameEn, 'Gara');
+  assert.equal(computePanchangForDate(new Date(2027, 1, 17)).karana.nameEn, 'Vishti');
+});
+
+test('Tithi/month helper uses the corrected lunar month logic', () => {
+  const dates = [
+    new Date(2026, 5, 30),
+    new Date(2026, 6, 30),
+    new Date(2026, 10, 25),
+    new Date(2027, 1, 21),
+  ];
+
+  for (const date of dates) {
+    for (const calendarSystem of ['purnimant', 'amanta'] as const) {
+      const panchang = computePanchangForDate(date, { calendarSystem });
+      const helper = computeTithiAndMonth(date, { calendarSystem });
+
+      assert.equal(helper.tithiIndex, panchang.tithi.index, `${date.toDateString()} ${calendarSystem} tithi`);
+      assert.equal(helper.paksha, panchang.tithi.paksha, `${date.toDateString()} ${calendarSystem} paksha`);
+      assert.equal(helper.lunarMonth, panchang.lunarMonth.index, `${date.toDateString()} ${calendarSystem} month`);
+    }
+  }
 });

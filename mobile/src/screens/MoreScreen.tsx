@@ -297,8 +297,8 @@ export default function MoreScreen({ navigation }: Props) {
             </View>
             <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
               {defaultLang === 'hi'
-                ? 'दृक् पंचांग · उज्जैन, भारत · पूर्णिमांत\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है।'
-                : 'Drik Panchang · Ujjain, India · Purnimant\nTithi follows Surya Siddhanta with modern corrections. Values may vary by minutes for other locations.'}
+                ? 'दृक् पंचांग · उज्जैन, भारत · पूर्णिमांत/अमान्त चयन\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है।'
+                : 'Drik Panchang · Ujjain, India · Purnimant/Amanta selectable\nTithi follows Surya Siddhanta with modern corrections. Values may vary by minutes for other locations.'}
             </Text>
           </View>
 

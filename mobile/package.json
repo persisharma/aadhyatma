@@ -10,6 +10,8 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "test:readers": "jest --config jest.config.js --runInBand",
+    "test:engine": "tsx --test src/panchang/__tests__/*.test.ts",
+    "test:e2e:panchang-year": "tsx --test src/panchang/__tests__/panchangVisibleYear.e2e.test.ts",
     "test:e2e": "maestro test .maestro/",
     "test:e2e:flow": "maestro test",
     "typecheck": "tsc --noEmit",
