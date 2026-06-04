@@ -2,6 +2,8 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
 import type { DeityIconKey } from '@/data/deities';
 import DeityIcon from './DeityIcon';
 
@@ -15,6 +17,16 @@ type Props = {
 
 export default function DeityCard({ nameHi, nameEn, itemCount, iconKey, onPress }: Props) {
   const { colors, typography, radii } = useTheme();
+  const { lang } = useGitaLanguage();
+
+  const { primary, secondary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
+    devPrimary: 16,
+    devSecondary: 13,
+    latPrimary: 15,
+    latSecondary: 12,
+  });
+  const titleFontFamily = (script: TitleScript) =>
+    script === 'devanagari' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily;
 
   return (
     <Pressable
@@ -51,24 +63,26 @@ export default function DeityCard({ nameHi, nameEn, itemCount, iconKey, onPress 
             styles.nameHi,
             {
               color: colors.ink,
-              fontFamily: typography.cardHindi.fontFamily,
-              fontSize: 16,
+              fontFamily: titleFontFamily(primary.script),
+              fontSize: primary.fontSize,
+              fontStyle: primary.script === 'latin' ? 'italic' : 'normal',
             },
           ]}
         >
-          {nameHi}
+          {primary.text}
         </Text>
         <Text
           style={[
             styles.nameEn,
             {
               color: colors.inkMuted,
-              fontFamily: typography.cardLatin.fontFamily,
-              fontSize: 12,
+              fontFamily: titleFontFamily(secondary.script),
+              fontSize: secondary.fontSize,
+              fontStyle: secondary.script === 'latin' ? 'italic' : 'normal',
             },
           ]}
         >
-          {nameEn}
+          {secondary.text}
         </Text>
         <Text
           style={[

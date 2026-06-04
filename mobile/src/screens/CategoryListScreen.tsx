@@ -3,6 +3,8 @@ import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
 import { library, type LibraryEntry } from '@/data/texts';
 import { categories } from '@/data/categories';
 import { getCategoryBackground } from '@/data/backgrounds';
@@ -19,6 +21,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'CategoryList'>;
 
 export default function CategoryListScreen({ navigation, route }: Props) {
   const { colors, typography, spacing } = useTheme();
+  const { lang } = useGitaLanguage();
   const { categoryId } = route.params;
   const { getProgress, clearProgress, isLoading } = useReadingProgress();
   const { markSeen } = useNewContent();
@@ -26,6 +29,14 @@ export default function CategoryListScreen({ navigation, route }: Props) {
 
   const backgroundImage = useMemo(() => getCategoryBackground(categoryId), [categoryId]);
   const categoryMeta = categories.find((c) => c.id === categoryId);
+  const title = orderTitlesByLanguage(lang, categoryMeta?.nameHi ?? '', categoryMeta?.nameEn ?? '', {
+    devPrimary: 16,
+    devSecondary: 13,
+    latPrimary: 16,
+    latSecondary: 13,
+  });
+  const topBarFontFamily = (script: TitleScript) =>
+    script === 'devanagari' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
   const items = library.filter((e) => e.category === categoryId && !e.hidden);
 
   const handlePress = (entry: LibraryEntry) => {
@@ -69,22 +80,24 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           <View style={styles.titleRow}>
             <Text
               style={{
-                fontFamily: typography.readerTitle.fontFamily,
-                fontSize: 16,
+                fontFamily: topBarFontFamily(title.primary.script),
+                fontSize: title.primary.fontSize,
+                fontStyle: title.primary.script === 'latin' ? 'italic' : 'normal',
                 color: colors.ink,
               }}
             >
-              {categoryMeta?.nameHi ?? ''}
+              {title.primary.text}
             </Text>
             <Text
               style={{
-                fontFamily: 'CormorantGaramond_400Regular_Italic',
-                fontSize: 13,
+                fontFamily: topBarFontFamily(title.secondary.script),
+                fontSize: title.secondary.fontSize,
+                fontStyle: title.secondary.script === 'latin' ? 'italic' : 'normal',
                 color: colors.inkMuted,
                 marginLeft: 6,
               }}
             >
-              · {categoryMeta?.nameEn ?? ''}
+              · {title.secondary.text}
             </Text>
           </View>
         </View>

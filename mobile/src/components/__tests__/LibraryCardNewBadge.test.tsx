@@ -2,6 +2,7 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 import { NewContentProvider } from '@/contexts/NewContentContext';
+import { GitaLanguageProvider } from '@/data/gita/language';
 import LibraryCard from '@/components/LibraryCard';
 import { library, type LibraryEntry } from '@/data/texts';
 
@@ -40,9 +41,11 @@ async function renderWithProvider(entry: LibraryEntry): Promise<TestRenderer.Rea
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <NewContentProvider>
-        <LibraryCard entry={entry} onPress={() => undefined} />
-      </NewContentProvider>
+      <GitaLanguageProvider>
+        <NewContentProvider>
+          <LibraryCard entry={entry} onPress={() => undefined} />
+        </NewContentProvider>
+      </GitaLanguageProvider>
     );
   });
   await act(async () => {

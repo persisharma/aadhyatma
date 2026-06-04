@@ -30,6 +30,7 @@ import {
 } from '@/data/searchIndex';
 import { library } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
+import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
 import {
   buildProgressTarget,
   navigateToEntryStart,
@@ -317,6 +318,62 @@ function GroupHeader({
   );
 }
 
+function PopularName({
+  nameHi,
+  nameEn,
+  isHi,
+  colors,
+  typography,
+}: {
+  nameHi: string;
+  nameEn: string;
+  isHi: boolean;
+  colors: Theme['colors'];
+  typography: Theme['typography'];
+}) {
+  const { primary, secondary } = orderTitlesByLanguage(isHi ? 'hi' : 'en', nameHi, nameEn, {
+    devPrimary: 14,
+    devSecondary: 12,
+    latPrimary: 13,
+    latSecondary: 11,
+  });
+  const fontFor = (script: TitleScript) =>
+    script === 'devanagari' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
+
+  return (
+    <View style={styles.popularMeta}>
+      <Text
+        numberOfLines={1}
+        style={[
+          styles.popularNameHi,
+          {
+            color: colors.ink,
+            fontFamily: fontFor(primary.script),
+            fontSize: primary.fontSize,
+            fontStyle: primary.script === 'latin' ? 'italic' : 'normal',
+          },
+        ]}
+      >
+        {primary.text}
+      </Text>
+      <Text
+        numberOfLines={1}
+        style={[
+          styles.popularNameEn,
+          {
+            color: colors.inkMuted,
+            fontFamily: fontFor(secondary.script),
+            fontSize: secondary.fontSize,
+            fontStyle: secondary.script === 'latin' ? 'italic' : 'normal',
+          },
+        ]}
+      >
+        {secondary.text}
+      </Text>
+    </View>
+  );
+}
+
 function EmptyState({
   recent,
   popular,
@@ -446,26 +503,13 @@ function EmptyState({
                 >
                   {p.thumb}
                 </Text>
-                <View style={styles.popularMeta}>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.popularNameHi,
-                      { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
-                    ]}
-                  >
-                    {p.nameHi}
-                  </Text>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.popularNameEn,
-                      { color: colors.inkMuted, fontFamily: 'CormorantGaramond_400Regular_Italic' },
-                    ]}
-                  >
-                    {p.nameEn}
-                  </Text>
-                </View>
+                <PopularName
+                  nameHi={p.nameHi}
+                  nameEn={p.nameEn}
+                  isHi={isHi}
+                  colors={colors}
+                  typography={typography}
+                />
               </Pressable>
             ))}
           </View>

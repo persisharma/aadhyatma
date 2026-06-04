@@ -11,6 +11,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import type { LibraryEntry } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
 
 type Props = {
   entry: LibraryEntry;
@@ -20,6 +22,15 @@ type Props = {
 export default function LibraryCard({ entry, onPress }: Props) {
   const { colors, typography, radii } = useTheme();
   const { isNew } = useNewContent();
+  const { lang } = useGitaLanguage();
+  const { primary, secondary } = orderTitlesByLanguage(lang, entry.nameHi, entry.nameEn, {
+    devPrimary: 17,
+    devSecondary: 14,
+    latPrimary: 16,
+    latSecondary: 13,
+  });
+  const titleFontFamily = (script: TitleScript) =>
+    script === 'devanagari' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily;
   const isActive = entry.status === 'active';
   const showNew = isActive && isNew(entry.id);
 
@@ -83,26 +94,28 @@ export default function LibraryCard({ entry, onPress }: Props) {
             styles.nameHi,
             {
               color: colors.ink,
-              fontFamily: typography.cardHindi.fontFamily,
-              fontSize: typography.cardHindi.fontSize,
+              fontFamily: titleFontFamily(primary.script),
+              fontSize: primary.fontSize,
+              fontStyle: primary.script === 'latin' ? 'italic' : 'normal',
               opacity: isActive ? 1 : 0.55,
             },
           ]}
         >
-          {entry.nameHi}
+          {primary.text}
         </Text>
         <Text
           style={[
             styles.nameEn,
             {
               color: colors.inkSoft,
-              fontFamily: typography.cardLatin.fontFamily,
-              fontSize: typography.cardLatin.fontSize,
+              fontFamily: titleFontFamily(secondary.script),
+              fontSize: secondary.fontSize,
+              fontStyle: secondary.script === 'latin' ? 'italic' : 'normal',
               opacity: isActive ? 1 : 0.55,
             },
           ]}
         >
-          {entry.nameEn}
+          {secondary.text}
         </Text>
         <Text
           style={[

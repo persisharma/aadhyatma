@@ -2,6 +2,8 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
 
 type Props = {
   nameHi: string;
@@ -15,7 +17,17 @@ type Props = {
 
 export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, hasNew }: Props) {
   const { colors, typography, radii } = useTheme();
+  const { lang } = useGitaLanguage();
   const isActive = status === 'active';
+
+  const { primary, secondary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
+    devPrimary: 15,
+    devSecondary: 13,
+    latPrimary: 14,
+    latSecondary: 13,
+  });
+  const titleFontFamily = (script: TitleScript) =>
+    script === 'devanagari' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily;
 
   const content = (
     <>
@@ -25,24 +37,26 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
           styles.nameHi,
           {
             color: colors.ink,
-            fontFamily: typography.cardHindi.fontFamily,
-            fontSize: 15,
+            fontFamily: titleFontFamily(primary.script),
+            fontSize: primary.fontSize,
+            fontStyle: primary.script === 'latin' ? 'italic' : 'normal',
           },
         ]}
       >
-        {nameHi}
+        {primary.text}
       </Text>
       <Text
         style={[
           styles.nameEn,
           {
             color: colors.inkSoft,
-            fontFamily: typography.cardLatin.fontFamily,
-            fontSize: 13,
+            fontFamily: titleFontFamily(secondary.script),
+            fontSize: secondary.fontSize,
+            fontStyle: secondary.script === 'latin' ? 'italic' : 'normal',
           },
         ]}
       >
-        {nameEn}
+        {secondary.text}
       </Text>
     </>
   );

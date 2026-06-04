@@ -3,6 +3,7 @@ import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
 
 type Props = {
   visible: boolean;
@@ -28,6 +29,14 @@ export default function ResumeReadingSheet({
 }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const title = orderTitlesByLanguage(lang, titleHi, titleEn, {
+    devPrimary: 20,
+    devSecondary: 14,
+    latPrimary: 19,
+    latSecondary: 13,
+  });
+  const titleFontFamily = (script: TitleScript) =>
+    script === 'devanagari' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
 
   return (
     <Modal
@@ -67,26 +76,28 @@ export default function ResumeReadingSheet({
                 styles.titleHi,
                 {
                   color: colors.ink,
-                  fontFamily: typography.readerTitle.fontFamily,
-                  fontSize: 20,
+                  fontFamily: titleFontFamily(title.primary.script),
+                  fontSize: title.primary.fontSize,
+                  fontStyle: title.primary.script === 'latin' ? 'italic' : 'normal',
                 },
               ]}
               numberOfLines={1}
             >
-              {titleHi}
+              {title.primary.text}
             </Text>
             <Text
               style={[
                 styles.titleEn,
                 {
                   color: colors.inkMuted,
-                  fontFamily: typography.cardLatin.fontFamily,
-                  fontSize: 13,
+                  fontFamily: titleFontFamily(title.secondary.script),
+                  fontSize: title.secondary.fontSize,
+                  fontStyle: title.secondary.script === 'latin' ? 'italic' : 'normal',
                 },
               ]}
               numberOfLines={1}
             >
-              {titleEn}
+              {title.secondary.text}
             </Text>
           </View>
 
