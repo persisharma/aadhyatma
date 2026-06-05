@@ -97,6 +97,8 @@ These remain in everyday English. A handful of common Sanskrit terms keep their 
 
 ### Type scale
 
+This table is the **single source of truth** for reading-content sizing, implemented in `mobile/src/theme/typography.ts`. Every reader section and every surface that shows verse / transliteration / meaning / commentary consumes these tokens — **no hardcoded `fontSize`/`lineHeight` on reading content**, no per-section scale. Both languages render the meaning at the same size, and the verse sits above the meaning. See `RULEBOOK.md` §3 ("One reading type scale") and `readerTypeScale.test.tsx`.
+
 | Role | Typeface | Size | Weight | Notes |
 | --- | --- | --- | --- | --- |
 | Screen title (`सनातन`) | Noto Serif Devanagari | 34 | 600 | Letter-spacing `0.01em` |
