@@ -102,8 +102,8 @@ These remain in everyday English. A handful of common Sanskrit terms keep their 
 | Screen title (`सनातन`) | Noto Serif Devanagari | 34 | 600 | Letter-spacing `0.01em` |
 | Reader top-bar title | Noto Serif Devanagari | 16 | 600 | |
 | Verse body (Devanagari) | Noto Serif Devanagari | 23 | 500 | Line-height 1.7 |
-| Transliteration (Latin IAST) | Cormorant Garamond | 20 | 600 non-italic | `ink`, line-height 31. Always visible under Sanskrit lines regardless of the reader's language toggle — roman (not italic) because it reads as primary text, not a flourish. Bumped from 17 → 20: Cormorant's small x-height read too small against the Devanagari verse body. |
-| Meaning body (Hindi) | Noto Serif Devanagari | 15 | 400 | `ink-soft`, line-height 1.7 |
+| Transliteration (Latin IAST) | Cormorant Garamond | 24 | 600 | `ink`, line-height 35. Sits one step above the meaning (20) so the verse stays dominant — mirrors the Devanagari verse↔meaning hierarchy. Cormorant's small x-height reads smaller than Devanagari, so it takes a few extra points; bumped 17 → 20 → 24. |
+| Meaning body (Hindi) | Noto Serif Devanagari | 20 | 500 | `ink-soft`, line-height 34 (≈1.7). Bumped 15 → 20 to match the English meaning size, so both languages read at one meaning scale. |
 | Meaning body (English) | Cormorant Garamond | 20 | 500 medium non-italic | `ink`, line-height 33. Italic 400 was previously used and rejected as too thin over the parchment bg; medium-weight roman is the shipping spec. Bumped from 18 → 20: Cormorant's small x-height read too small against the Devanagari meaning body. |
 | Commentary body (Hindi) | Noto Serif Devanagari | 15 | 400 | `ink-soft`, line-height 1.7. Paragraph gap `14`. |
 | Commentary body (English) | Cormorant Garamond | 20 | 500 medium non-italic | `ink`, line-height 33. Paragraph gap `14`. Bumped from 18 → 20 alongside the English meaning body. |
@@ -258,7 +258,7 @@ Applies to both readers — the Hanuman Chalisa reader (linear, single text) and
 3. **Verse area** (flex-1, 28px horizontal padding):
    - Verse-type pill — vocabulary is consistent across modules: `दोहा · Opening` / `चौपाई · N` / `समापन दोहा · Closing` / `श्लोक · N.M` / future `मंत्र` etc. Always uppercase Inter 10 @ 0.3em, saffron-deep on saffron-tint.
    - Verse lines in Devanagari (23 / 1.7, Noto Serif Devanagari 500). Each line on its own row; preserve the original line breaks from the JSON.
-   - Transliteration block (Gita only): Latin IAST lines in Cormorant Garamond 17 / 26, **600 non-italic**, `ink`. Always rendered regardless of the language toggle — transliteration is a phonetic bridge, not a translation.
+   - Transliteration block (Gita only): Latin IAST lines in Cormorant Garamond 24 / 35, **600**, `ink`. Always rendered regardless of the language toggle — transliteration is a phonetic bridge, not a translation.
    - Ornament divider (Section 5).
    - **Meaning** section:
      - Label `अर्थ · Meaning` (Cormorant Garamond 13 600 italic, `saffron-deep`, `0.14em` tracking, centred). Token order flips by selected language: `Meaning · अर्थ` when lang = en.
