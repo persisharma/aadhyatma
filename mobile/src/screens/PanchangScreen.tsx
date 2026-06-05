@@ -344,8 +344,8 @@ export default function PanchangScreen() {
             </Text>
             <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
               {isHindi
-                ? `${p.lunarMonth.nameHi} · ${p.tithi.paksha === 'shukla' ? 'शुक्ल पक्ष' : 'कृष्ण पक्ष'}`
-                : `${p.lunarMonth.nameEn} · ${p.tithi.paksha === 'shukla' ? 'Shukla Paksha' : 'Krishna Paksha'}`}
+                ? `${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} · ${p.tithi.paksha === 'shukla' ? 'शुक्ल पक्ष' : 'कृष्ण पक्ष'}`
+                : `${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} · ${p.tithi.paksha === 'shukla' ? 'Shukla Paksha' : 'Krishna Paksha'}`}
             </Text>
           </View>
 
