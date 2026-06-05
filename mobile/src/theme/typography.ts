@@ -29,13 +29,13 @@ export const typography = {
   },
   verseLatin: {
     fontFamily: fontFamilies.latinSemiBold,
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 20,
+    lineHeight: 31,
   },
   meaningEnglish: {
     fontFamily: fontFamilies.latin,
-    fontSize: 18,
-    lineHeight: 30,
+    fontSize: 20,
+    lineHeight: 33,
   },
   cardHindi: {
     fontFamily: fontFamilies.devanagariBold,

@@ -5,7 +5,12 @@ export const lightColors = {
   parchmentHighlight: '#F6ECD0',
   parchmentGradientEnd: '#F1E3BF',
 
-  ink: '#2F1E10',
+  // Primary reading color (verses + English meaning, both scripts). Deepened from
+  // #2F1E10 — a warm brown that, against the parchment background and Cormorant
+  // Garamond's thin strokes, read as too light for comfortable English reading.
+  // #1A0E03 stays inside the warm manuscript palette while lifting contrast to
+  // ~15.4:1 (well past WCAG AAA). See colors.contrast.test.ts.
+  ink: '#1A0E03',
   inkSoft: '#5A3A1E',
   inkMuted: '#8A6A47',
 
@@ -42,7 +47,7 @@ export const lightColors = {
 
   background: '#F3E7C9',
   surface: '#F8EFD6',
-  text: '#2F1E10',
+  text: '#1A0E03',
   textMuted: '#8A6A47',
   primary: '#B8621B',
   border: 'rgba(138, 62, 11, 0.18)',
