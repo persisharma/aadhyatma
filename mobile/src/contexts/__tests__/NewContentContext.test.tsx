@@ -73,6 +73,8 @@ describe('NewContentContext', () => {
     expect(captured.isNew('ram-stuti')).toBe(true);
     expect(captured.isNew('hanuman-chalisa')).toBe(false);
     expect(captured.hasNewInCategory('stotram')).toBe(true);
+    expect(captured.hasNewInCategory('sanskar')).toBe(true);
+    expect(captured.isNew('prabhati-shloka')).toBe(true);
     expect(captured.hasNewInCategory('granth')).toBe(false);
     expect(captured.hasNewInCategory('deity')).toBe(false);
   });

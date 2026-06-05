@@ -22,7 +22,7 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd:
     timeout: 30000
 - extendedWaitUntil:
-    visible: "Good Habits. Tap to open."
+    visible: "Good Habits\\..*Tap to open\\."
     timeout: 60000
 - swipe:
     direction: DOWN
