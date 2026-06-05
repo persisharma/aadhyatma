@@ -1,8 +1,10 @@
 import { computeTithiAndMonth, getSiderealSunLng } from './engine';
 import { OBSERVANCE_RULES } from './festivals';
+import { PRECOMPUTED_OBSERVANCES } from './precomputedObservances';
 import type { CalendarSystem, ObservanceRule, ResolvedObservance, ResolvedFestival } from './types';
 
 const cache = new Map<string, ResolvedObservance[]>();
+const ruleById = new Map(OBSERVANCE_RULES.map((rule) => [rule.id, rule] as const));
 
 function cacheKey(year: number, calendarSystem: CalendarSystem): string {
   return `${calendarSystem}:${year}`;
@@ -14,6 +16,10 @@ function isSameLocalDate(a: Date, b: Date): boolean {
     && a.getDate() === b.getDate();
 }
 
+// Observance dates are deterministic, so they are precomputed offline
+// (scripts/gen-precomputed-observances.mts) and read instantly here — the live
+// per-day sunrise + lunar-month solves froze the Panchang screen on real devices.
+// Years not in the precomputed table fall back to the live scan.
 export function resolveObservancesForYear(
   year: number,
   calendarSystem: CalendarSystem = 'purnimant'
@@ -22,6 +28,31 @@ export function resolveObservancesForYear(
   const cached = cache.get(key);
   if (cached) return cached;
 
+  const precomputed = PRECOMPUTED_OBSERVANCES[key];
+  const results = precomputed
+    ? reconstructPrecomputed(precomputed)
+    : resolveObservancesForYearLive(year, calendarSystem);
+  cache.set(key, results);
+  return results;
+}
+
+function reconstructPrecomputed(entries: { id: string; date: string }[]): ResolvedObservance[] {
+  const results: ResolvedObservance[] = [];
+  for (const { id, date } of entries) {
+    const rule = ruleById.get(id);
+    if (!rule) continue;
+    const [y, m, d] = date.split('-').map(Number);
+    results.push({ date: new Date(y, m - 1, d), rule });
+  }
+  return results.sort((a, b) => a.date.getTime() - b.date.getTime());
+}
+
+// Live full-year scan. Used to generate the precomputed table and as a fallback for
+// years not present in it. Heavy (per-day astronomy) — never call on a render path.
+export function resolveObservancesForYearLive(
+  year: number,
+  calendarSystem: CalendarSystem = 'purnimant'
+): ResolvedObservance[] {
   const byId = new Map<string, ResolvedObservance>();
   const startDate = new Date(year, 0, 1);
   const endDate = new Date(year, 11, 31);
@@ -37,7 +68,6 @@ export function resolveObservancesForYear(
 
   const results = [...byId.values()];
   results.sort((a, b) => a.date.getTime() - b.date.getTime());
-  cache.set(key, results);
   return results;
 }
 
@@ -45,25 +75,19 @@ export function resolveFestivalsForYear(year: number): ResolvedFestival[] {
   return resolveObservancesForYear(year, 'purnimant');
 }
 
-const MAX_UPCOMING_SCAN_DAYS = 420;
-
 export function getUpcomingObservances(
   fromDate: Date,
   count: number,
   calendarSystem: CalendarSystem = 'purnimant'
 ): ResolvedObservance[] {
-  // Scan forward from the selected day, gathering distinct observances until we have
-  // `count` of them — typically the next couple of months, never the whole year.
-  const byId = new Map<string, ResolvedObservance>();
-  const cursor = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
-  for (let day = 0; day < MAX_UPCOMING_SCAN_DAYS && byId.size < count; day += 1) {
-    for (const observance of observancesOnDate(cursor, calendarSystem)) {
-      if (!byId.has(observance.rule.id)) byId.set(observance.rule.id, observance);
-    }
-    cursor.setDate(cursor.getDate() + 1);
-  }
-  return [...byId.values()]
-    .sort((a, b) => a.date.getTime() - b.date.getTime())
+  const year = fromDate.getFullYear();
+  const all = [
+    ...resolveObservancesForYear(year, calendarSystem),
+    ...resolveObservancesForYear(year + 1, calendarSystem),
+  ];
+  const todayStart = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+  return all
+    .filter((f) => f.date.getTime() >= todayStart.getTime())
     .slice(0, count);
 }
 
@@ -75,8 +99,8 @@ export function getObservancesForDate(
   date: Date,
   calendarSystem: CalendarSystem = 'purnimant'
 ): ResolvedObservance[] {
-  // Match the rules against this single day — no full-year scan needed.
-  return observancesOnDate(date, calendarSystem);
+  return resolveObservancesForYear(date.getFullYear(), calendarSystem)
+    .filter((item) => isSameLocalDate(item.date, date));
 }
 
 export function getObservancesForMonth(
@@ -84,16 +108,8 @@ export function getObservancesForMonth(
   month: number,
   calendarSystem: CalendarSystem = 'purnimant'
 ): ResolvedObservance[] {
-  // Scan only the requested month, not the whole year.
-  const byId = new Map<string, ResolvedObservance>();
-  const cursor = new Date(year, month, 1);
-  while (cursor.getFullYear() === year && cursor.getMonth() === month) {
-    for (const observance of observancesOnDate(cursor, calendarSystem)) {
-      if (!byId.has(observance.rule.id)) byId.set(observance.rule.id, observance);
-    }
-    cursor.setDate(cursor.getDate() + 1);
-  }
-  return [...byId.values()].sort((a, b) => a.date.getTime() - b.date.getTime());
+  return resolveObservancesForYear(year, calendarSystem)
+    .filter((f) => f.date.getFullYear() === year && f.date.getMonth() === month);
 }
 
 export function getFestivalsForMonth(year: number, month: number): ResolvedFestival[] {
@@ -135,21 +151,6 @@ function matchesRuleOnDate(rule: ObservanceRule, date: Date, calendarSystem: Cal
     ? tithiIndex === rule.tithi - 1
     : tithiIndex === rule.tithi + 14;
   return tithiMatch && lunarMonth === matchingMonth;
-}
-
-// All observances that fall on a single day (deduped by rule id).
-function observancesOnDate(date: Date, calendarSystem: CalendarSystem): ResolvedObservance[] {
-  const byId = new Map<string, ResolvedObservance>();
-  for (const rule of OBSERVANCE_RULES) {
-    try {
-      if (matchesRuleOnDate(rule, date, calendarSystem) && !byId.has(rule.id)) {
-        byId.set(rule.id, { date: new Date(date), rule });
-      }
-    } catch {
-      // skip dates that fail computation
-    }
-  }
-  return [...byId.values()];
 }
 
 function monthForRuleInSystem(rule: ObservanceRule, calendarSystem: CalendarSystem): number {
