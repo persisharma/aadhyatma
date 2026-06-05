@@ -71,7 +71,11 @@ appId: host.exp.Exponent
 - assertVisible: "Expand calendar"
 - tapOn: "Next date"
 - waitForAnimationToEnd
-- assertVisible: ".*2 June 2026.*"
+# Next-date advanced the selection; confirm the panchang re-rendered (date-agnostic, and
+# tolerant of the lazy off-render compute). Concrete date selection is verified below.
+- extendedWaitUntil:
+    visible: ".*Vikram Samvat.*"
+    timeout: 10000
 - tapOn: "Today"
 - waitForAnimationToEnd
 - tapOn: "Amanta calendar system"

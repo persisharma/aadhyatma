@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -335,6 +335,8 @@ export default function PanchangScreen() {
             )}
           </View>
 
+          {p ? (
+            <>
           <View style={[styles.dateHeader, { borderBottomColor: colors.divider }]}>
             <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.saffronDeep }}>
               {isHindi ? p.vara.nameHi : p.vara.nameEn}
@@ -366,6 +368,12 @@ export default function PanchangScreen() {
               <TimeCell icon="☽" label={isHindi ? 'ब्रह्म मुहूर्त' : 'Brahma Muhurta'} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} colors={colors} />
             </View>
           </View>
+            </>
+          ) : (
+            <View style={{ paddingVertical: 72, alignItems: 'center', justifyContent: 'center' }}>
+              <ActivityIndicator color={colors.saffron} />
+            </View>
+          )}
 
           <View style={styles.observanceSection}>
             <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 10 }}>

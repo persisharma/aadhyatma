@@ -14,12 +14,17 @@ export type UsePanchangResult = {
 };
 
 export type UsePanchangSelectionResult = {
-  panchang: PanchangData;
+  // null until the day's panchang has been computed off the render path (lazy).
+  panchang: PanchangData | null;
   observances: ResolvedObservance[];
   upcoming: ResolvedObservance[];
 };
 
 const CALENDAR_SYSTEM_STORAGE_KEY = '@vedansh:panchang-calendar-system';
+
+// Upcoming observances are limited to the next month, resolved asynchronously.
+const UPCOMING_WINDOW_DAYS = 30;
+const UPCOMING_MAX = 10;
 
 function isCalendarSystem(value: unknown): value is CalendarSystem {
   return value === 'purnimant' || value === 'amanta';
@@ -66,7 +71,7 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
   useEffect(() => {
     let cancelled = false;
     const handle = setTimeout(() => {
-      const result = getUpcomingObservances(new Date(), 6, calendarSystem);
+      const result = getUpcomingObservances(new Date(), UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS);
       if (!cancelled) setUpcoming(result);
     }, 0);
     return () => {
@@ -85,15 +90,25 @@ export function usePanchangForSelection(
   const dateMs = date.getTime();
   const dateKey = date.toDateString();
 
-  const panchang = useMemo(
-    () => computePanchangForDate(new Date(dateMs), { calendarSystem }),
-    [dateMs, calendarSystem]
-  );
-  // Resolving a day's observances triggers a full-year festival scan (~0.5s on V8,
-  // several times that on Hermes). Running it synchronously here blocked the JS thread
-  // on every Panchang open / date / system change — the screen froze and taps stopped
-  // registering. Defer it past first paint, exactly like `upcoming` below; the panchang
-  // itself renders immediately and the observance cards fill in a moment later.
+  // Compute the day's panchang OFF the render path. The astronomy solves are quick on a
+  // laptop but enough to stutter the tab on a real device, so we never run them
+  // synchronously during render: the screen paints immediately (calendar + skeleton) and
+  // the panchang fills in a frame later.
+  const [panchang, setPanchang] = useState<PanchangData | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    setPanchang(null);
+    const handle = setTimeout(() => {
+      const result = computePanchangForDate(new Date(dateMs), { calendarSystem });
+      if (!cancelled) setPanchang(result);
+    }, 0);
+    return () => {
+      cancelled = true;
+      clearTimeout(handle);
+    };
+  }, [dateMs, calendarSystem]);
+
+  // Observances for the selected day, resolved off the render path as well.
   const [observances, setObservances] = useState<ResolvedObservance[]>([]);
   useEffect(() => {
     let cancelled = false;
@@ -115,7 +130,7 @@ export function usePanchangForSelection(
     const selected = new Date(dateMs);
     setUpcoming([]);
     const handle = setTimeout(() => {
-      const result = getUpcomingObservances(selected, 6, calendarSystem);
+      const result = getUpcomingObservances(selected, UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS);
       if (!cancelled) setUpcoming(result);
     }, 0);
     return () => {

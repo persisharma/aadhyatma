@@ -78,16 +78,21 @@ export function resolveFestivalsForYear(year: number): ResolvedFestival[] {
 export function getUpcomingObservances(
   fromDate: Date,
   count: number,
-  calendarSystem: CalendarSystem = 'purnimant'
+  calendarSystem: CalendarSystem = 'purnimant',
+  withinDays?: number
 ): ResolvedObservance[] {
   const year = fromDate.getFullYear();
   const all = [
     ...resolveObservancesForYear(year, calendarSystem),
     ...resolveObservancesForYear(year + 1, calendarSystem),
   ];
-  const todayStart = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+  const start = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+  // Optional horizon: only observances within `withinDays` of the selected day.
+  const end = withinDays === undefined
+    ? null
+    : new Date(start.getFullYear(), start.getMonth(), start.getDate() + withinDays);
   return all
-    .filter((f) => f.date.getTime() >= todayStart.getTime())
+    .filter((f) => f.date.getTime() >= start.getTime() && (end === null || f.date.getTime() <= end.getTime()))
     .slice(0, count);
 }
 
