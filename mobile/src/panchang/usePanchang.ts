@@ -89,10 +89,25 @@ export function usePanchangForSelection(
     () => computePanchangForDate(new Date(dateMs), { calendarSystem }),
     [dateMs, calendarSystem]
   );
-  const observances = useMemo(
-    () => getObservancesForDate(new Date(dateMs), calendarSystem),
-    [dateMs, calendarSystem]
-  );
+  // Resolving a day's observances triggers a full-year festival scan (~0.5s on V8,
+  // several times that on Hermes). Running it synchronously here blocked the JS thread
+  // on every Panchang open / date / system change — the screen froze and taps stopped
+  // registering. Defer it past first paint, exactly like `upcoming` below; the panchang
+  // itself renders immediately and the observance cards fill in a moment later.
+  const [observances, setObservances] = useState<ResolvedObservance[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    const selected = new Date(dateMs);
+    setObservances([]);
+    const handle = setTimeout(() => {
+      const result = getObservancesForDate(selected, calendarSystem);
+      if (!cancelled) setObservances(result);
+    }, 0);
+    return () => {
+      cancelled = true;
+      clearTimeout(handle);
+    };
+  }, [dateMs, calendarSystem]);
 
   const [upcoming, setUpcoming] = useState<ResolvedObservance[]>([]);
   useEffect(() => {
