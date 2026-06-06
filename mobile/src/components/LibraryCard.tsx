@@ -12,7 +12,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import type { LibraryEntry } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
 type Props = {
   entry: LibraryEntry;
@@ -26,11 +26,9 @@ export default function LibraryCard({ entry, onPress }: Props) {
   const { primary, secondary } = orderTitlesByLanguage(lang, entry.nameHi, entry.nameEn, {
     devPrimary: 17,
     devSecondary: 14,
-    latPrimary: 16,
+    latPrimary: 17,
     latSecondary: 13,
   });
-  const titleFontFamily = (script: TitleScript) =>
-    script === 'devanagari' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily;
   const isActive = entry.status === 'active';
   const showNew = isActive && isNew(entry.id);
 
@@ -94,9 +92,9 @@ export default function LibraryCard({ entry, onPress }: Props) {
             styles.nameHi,
             {
               color: colors.ink,
-              fontFamily: titleFontFamily(primary.script),
+              fontFamily: primary.fontFamily,
               fontSize: primary.fontSize,
-              fontStyle: primary.script === 'latin' ? 'italic' : 'normal',
+              fontStyle: primary.fontStyle,
               opacity: isActive ? 1 : 0.55,
             },
           ]}
@@ -108,9 +106,9 @@ export default function LibraryCard({ entry, onPress }: Props) {
             styles.nameEn,
             {
               color: colors.inkSoft,
-              fontFamily: titleFontFamily(secondary.script),
+              fontFamily: secondary.fontFamily,
               fontSize: secondary.fontSize,
-              fontStyle: secondary.script === 'latin' ? 'italic' : 'normal',
+              fontStyle: secondary.fontStyle,
               opacity: isActive ? 1 : 0.55,
             },
           ]}

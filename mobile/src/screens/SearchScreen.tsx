@@ -30,7 +30,7 @@ import {
 } from '@/data/searchIndex';
 import { library } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
-import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import {
   buildProgressTarget,
   navigateToEntryStart,
@@ -323,22 +323,18 @@ function PopularName({
   nameEn,
   isHi,
   colors,
-  typography,
 }: {
   nameHi: string;
   nameEn: string;
   isHi: boolean;
   colors: Theme['colors'];
-  typography: Theme['typography'];
 }) {
   const { primary, secondary } = orderTitlesByLanguage(isHi ? 'hi' : 'en', nameHi, nameEn, {
     devPrimary: 14,
     devSecondary: 12,
-    latPrimary: 13,
+    latPrimary: 14,
     latSecondary: 11,
   });
-  const fontFor = (script: TitleScript) =>
-    script === 'devanagari' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
 
   return (
     <View style={styles.popularMeta}>
@@ -348,9 +344,9 @@ function PopularName({
           styles.popularNameHi,
           {
             color: colors.ink,
-            fontFamily: fontFor(primary.script),
+            fontFamily: primary.fontFamily,
             fontSize: primary.fontSize,
-            fontStyle: primary.script === 'latin' ? 'italic' : 'normal',
+            fontStyle: primary.fontStyle,
           },
         ]}
       >
@@ -362,9 +358,9 @@ function PopularName({
           styles.popularNameEn,
           {
             color: colors.inkMuted,
-            fontFamily: fontFor(secondary.script),
+            fontFamily: secondary.fontFamily,
             fontSize: secondary.fontSize,
-            fontStyle: secondary.script === 'latin' ? 'italic' : 'normal',
+            fontStyle: secondary.fontStyle,
           },
         ]}
       >
@@ -508,7 +504,6 @@ function EmptyState({
                   nameEn={p.nameEn}
                   isHi={isHi}
                   colors={colors}
-                  typography={typography}
                 />
               </Pressable>
             ))}

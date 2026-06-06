@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
 type Props = {
   nameHi: string;
@@ -16,18 +16,16 @@ type Props = {
 };
 
 export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, hasNew }: Props) {
-  const { colors, typography, radii } = useTheme();
+  const { colors, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const isActive = status === 'active';
 
   const { primary, secondary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
     devPrimary: 15,
     devSecondary: 13,
-    latPrimary: 14,
+    latPrimary: 15,
     latSecondary: 13,
   });
-  const titleFontFamily = (script: TitleScript) =>
-    script === 'devanagari' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily;
 
   const content = (
     <>
@@ -37,9 +35,9 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
           styles.nameHi,
           {
             color: colors.ink,
-            fontFamily: titleFontFamily(primary.script),
+            fontFamily: primary.fontFamily,
             fontSize: primary.fontSize,
-            fontStyle: primary.script === 'latin' ? 'italic' : 'normal',
+            fontStyle: primary.fontStyle,
           },
         ]}
       >
@@ -50,9 +48,9 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
           styles.nameEn,
           {
             color: colors.inkSoft,
-            fontFamily: titleFontFamily(secondary.script),
+            fontFamily: secondary.fontFamily,
             fontSize: secondary.fontSize,
-            fontStyle: secondary.script === 'latin' ? 'italic' : 'normal',
+            fontStyle: secondary.fontStyle,
           },
         ]}
       >

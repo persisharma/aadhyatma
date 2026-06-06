@@ -3,7 +3,7 @@ import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
 type Props = {
   visible: boolean;
@@ -32,11 +32,9 @@ export default function ResumeReadingSheet({
   const title = orderTitlesByLanguage(lang, titleHi, titleEn, {
     devPrimary: 20,
     devSecondary: 14,
-    latPrimary: 19,
+    latPrimary: 20,
     latSecondary: 13,
   });
-  const titleFontFamily = (script: TitleScript) =>
-    script === 'devanagari' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
 
   return (
     <Modal
@@ -76,9 +74,9 @@ export default function ResumeReadingSheet({
                 styles.titleHi,
                 {
                   color: colors.ink,
-                  fontFamily: titleFontFamily(title.primary.script),
+                  fontFamily: title.primary.fontFamily,
                   fontSize: title.primary.fontSize,
-                  fontStyle: title.primary.script === 'latin' ? 'italic' : 'normal',
+                  fontStyle: title.primary.fontStyle,
                 },
               ]}
               numberOfLines={1}
@@ -90,9 +88,9 @@ export default function ResumeReadingSheet({
                 styles.titleEn,
                 {
                   color: colors.inkMuted,
-                  fontFamily: titleFontFamily(title.secondary.script),
+                  fontFamily: title.secondary.fontFamily,
                   fontSize: title.secondary.fontSize,
-                  fontStyle: title.secondary.script === 'latin' ? 'italic' : 'normal',
+                  fontStyle: title.secondary.fontStyle,
                 },
               ]}
               numberOfLines={1}

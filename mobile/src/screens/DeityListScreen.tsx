@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { orderTitlesByLanguage, type TitleScript } from '@/utils/titleByLanguage';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { library, type LibraryEntry } from '@/data/texts';
 import { deities } from '@/data/deities';
 import { getDeityBackground } from '@/data/backgrounds';
@@ -20,7 +20,7 @@ import type { HomeStackParamList } from '@/navigation/types';
 type Props = NativeStackScreenProps<HomeStackParamList, 'DeityList'>;
 
 export default function DeityListScreen({ navigation, route }: Props) {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const { deityId } = route.params;
   const { getProgress, clearProgress, isLoading } = useReadingProgress();
@@ -35,8 +35,6 @@ export default function DeityListScreen({ navigation, route }: Props) {
     latPrimary: 16,
     latSecondary: 13,
   });
-  const topBarFontFamily = (script: TitleScript) =>
-    script === 'devanagari' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
   const items = library.filter(
     (e) => !e.hidden && e.deities.includes(deityId)
   );
@@ -81,9 +79,9 @@ export default function DeityListScreen({ navigation, route }: Props) {
           <View style={styles.titleRow}>
             <Text
               style={{
-                fontFamily: topBarFontFamily(title.primary.script),
+                fontFamily: title.primary.fontFamily,
                 fontSize: title.primary.fontSize,
-                fontStyle: title.primary.script === 'latin' ? 'italic' : 'normal',
+                fontStyle: title.primary.fontStyle,
                 color: colors.ink,
               }}
             >
@@ -91,9 +89,9 @@ export default function DeityListScreen({ navigation, route }: Props) {
             </Text>
             <Text
               style={{
-                fontFamily: topBarFontFamily(title.secondary.script),
+                fontFamily: title.secondary.fontFamily,
                 fontSize: title.secondary.fontSize,
-                fontStyle: title.secondary.script === 'latin' ? 'italic' : 'normal',
+                fontStyle: title.secondary.fontStyle,
                 color: colors.inkMuted,
                 marginLeft: 6,
               }}
