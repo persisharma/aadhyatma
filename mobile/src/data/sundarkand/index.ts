@@ -129,7 +129,7 @@ export function getSundarkandChapter(chapter: number): SundarkandChapter {
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 343) {
-    throw new Error(`sundarkand: expected 343 total verses, got ${totalVerses}`);
+  if (totalVerses !== 349) {
+    throw new Error(`sundarkand: expected 349 total verses, got ${totalVerses}`);
   }
 })();
