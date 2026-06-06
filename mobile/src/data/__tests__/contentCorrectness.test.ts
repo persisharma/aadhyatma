@@ -269,7 +269,7 @@ assert.equal(libraryById.get('hanuman-chalisa')?.sub, '40 चौपाई + 3 �
 assert.equal(libraryById.get('shiv-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('ganesh-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('durga-chalisa')?.sub, '40 चौपाई + 1 दोहा · अर्थ सहित');
-assert.equal(libraryById.get('sundarkand')?.sub, '16 अनुभाग · 349 पद');
+assert.equal(libraryById.get('sundarkand')?.sub, '16 अनुभाग · 354 पद');
 assert.match(libraryById.get('ramcharitmanas')?.nameHi || '', /मंगलाचरण/);
 assert.doesNotMatch(libraryById.get('ramcharitmanas')?.sub || '', /अंश|Excerpt/i);
 assert.match(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);

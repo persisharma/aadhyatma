@@ -2,7 +2,7 @@
   "chapter": 1,
   "titleHi": "मंगलाचरण",
   "titleEn": "Invocation",
-  "verseCount": 9,
+  "verseCount": 14,
   "verses": [
     {
       "id": "kishkindha-sortha",
@@ -33,8 +33,8 @@
       "labelHi": "दोहा · २९",
       "labelEn": "Doha · 29",
       "lines": [
-        "बलि बाँधत प्रभु बाढ़ेउ सो तनु बरनि न जाइ।",
-        "उभय घरी महँ दीन्ही सात प्रदच्छिन धाइ॥"
+        "बलि बाँधत प्रभु बाढ़ेउ सो तनु बरनि न जाई।",
+        "उभय घरी महँ दीन्ही सात प्रदच्छिन धाई॥२९॥"
       ],
       "meaningHi": "(जाम्बवान् अपने पुराने बल का स्मरण करते हुए कहते हैं—) बलि को बाँधते समय प्रभु (वामन भगवान्) का वह शरीर इतना बढ़ गया कि उसका वर्णन नहीं किया जा सकता; फिर भी मैंने दो ही घड़ी में दौड़कर उस विशाल शरीर की सात प्रदक्षिणाएँ कर ली थीं।",
       "meaningEn": "(Jambvant, recalling the strength of his youth, says—) When the Lord, as Vaman, grew while binding King Bali, His body became so vast that it cannot be described; yet even then, within just two gharis, I ran and circled that immense form seven times.",
@@ -73,13 +73,13 @@
       "labelHi": "चौपाई ३०·२",
       "labelEn": "Chaupai 30·2",
       "lines": [
-        "कहइ रीछपति सुनु हनुमाना। का चुप साधि रहेउ बलवाना॥",
+        "कहइ रीछपति सुनु हनुमाना। का चुप साधि रहेहु बलवाना॥",
         "पवन तनय बल पवन समाना। बुधि बिबेक बिग्यान निधाना॥"
       ],
       "meaningHi": "ऋक्षराज जाम्बवान् ने कहा- हे हनुमान्! सुनो, हे बलवान्! तुम चुप साधकर क्यों बैठे हो? हे पवनपुत्र! तुम बल में पवन (अपने पिता वायुदेव) के समान हो और बुद्धि, विवेक तथा विज्ञान के भंडार हो।",
       "meaningEn": "Jambvant, the king of bears, said, \"Listen, O Hanuman! O mighty one, why do you sit silent? O son of the Wind, you are as strong as the wind-god your father, and a storehouse of intelligence, discernment, and wisdom.\"",
       "linesEn": [
-        "Kahai reechhapati sunu hanumaanaa. kaa chup saadhi raheu balavaanaa.",
+        "Kahai reechhapati sunu hanumaanaa. kaa chup saadhi rahehu balavaanaa.",
         "Pavan tanay bal pavan samaanaa. budhi bibek bigyaan nidhaanaa."
       ],
       "chapter": 1
@@ -121,6 +121,110 @@
       "linesEn": [
         "Kanak baran tan tej biraajaa. maanahun apar girinh kar raajaa.",
         "Sinhanaad kari baarahin baaraa. leelahin naaghaun jalanidhi khaaraa."
+      ],
+      "chapter": 1
+    },
+    {
+      "id": "kishkindha-chaupai-5",
+      "section": "chaupai",
+      "stanza": 30,
+      "numInSection": 5,
+      "subSuffix": null,
+      "labelHi": "चौपाई ३०·५",
+      "labelEn": "Chaupai 30·5",
+      "lines": [
+        "सहित सहाय रावनहि मारी। आनउँ इहाँ त्रिकूट उपारी॥",
+        "जामवंत मैं पूँछउँ तोही। उचित सिखावनु दीजहु मोही॥"
+      ],
+      "meaningHi": "(हनुमान्जी ने कहा-) सहायकों सहित रावण को मारकर और त्रिकूट पर्वत को उखाड़कर मैं उसे यहाँ ले आऊँ! (फिर विनम्र होकर बोले-) हे जाम्बवान्! मैं आपसे पूछता हूँ, मुझे उचित शिक्षा (सलाह) दीजिए।",
+      "meaningEn": "(Hanuman ji declared,) \"I could slay Ravan along with all his helpers and uproot the very Trikut mountain and bring it here!\" (Then, humbly,) \"O Jambvant, I ask you — give me proper counsel on what I ought to do.\"",
+      "linesEn": [
+        "Sahit sahaay raavanahi maaree. aanaun ihaan trikoot upaaree.",
+        "Jaamavant main poonchhaun tohee. uchit sikhaavanu deejahu mohee."
+      ],
+      "chapter": 1
+    },
+    {
+      "id": "kishkindha-chaupai-6",
+      "section": "chaupai",
+      "stanza": 30,
+      "numInSection": 6,
+      "subSuffix": null,
+      "labelHi": "चौपाई ३०·६",
+      "labelEn": "Chaupai 30·6",
+      "lines": [
+        "एतना करहु तात तुम्ह जाई। सीतहि देखि कहहु सुधि आई॥",
+        "तब निज भुज बल राजिवनैना। कौतुक लागि संग कपि सेना॥"
+      ],
+      "meaningHi": "(जाम्बवान् ने कहा-) हे तात! तुम बस इतना ही करना कि जाकर सीताजी को देखकर उनकी खबर लेकर आ जाना। तब कमलनयन श्री रामजी अपनी भुजाओं के बल से, खेल (लीला) के लिए ही वानरों की सेना को साथ लेकर (रावण का संहार करेंगे)।",
+      "meaningEn": "(Jambvant replied,) \"Dear son, do only this much — go, behold Sita ji, and bring back news of Her. Then the lotus-eyed Shri Ram, by the might of His own arms, will — as if in sport — march forth with the army of monkeys.\"",
+      "linesEn": [
+        "Etanaa karahu taat tumh jaaee. seetahi dekhi kahahu sudhi aaee.",
+        "Tab nij bhuj bal raajivanainaa. kautuk laagi sang kapi senaa."
+      ],
+      "chapter": 1
+    },
+    {
+      "id": "kishkindha-chhand",
+      "section": "chhand",
+      "stanza": 30,
+      "numInSection": 1,
+      "subSuffix": null,
+      "labelHi": "छंद",
+      "labelEn": "Chhand",
+      "lines": [
+        "कपि सेन संग सँघारि निसिचर रामु सीतहि आनिहैं।",
+        "त्रैलोक पावन सुजसु सुर मुनि नारदादि बखानिहैं॥",
+        "जो सुनत गावत कहत समुझत परम पद नर पावई।",
+        "रघुबीर पद पाथोज मधुकर दास तुलसी गावई॥"
+      ],
+      "meaningHi": "श्री रामजी वानरों की सेना के साथ राक्षसों का संहार करके सीताजी को ले आएँगे। तीनों लोकों को पवित्र करने वाले उनके सुंदर यश को देवता और नारद आदि मुनि गाएँगे। जिसे सुनने, गाने, कहने और समझने से मनुष्य परम पद को पा जाता है। तुलसीदास उन्हीं श्री रघुवीर के चरण-कमलों के भौंरे हैं और उन्हीं का गुणगान करते हैं।",
+      "meaningEn": "Shri Ram, together with the army of monkeys, will destroy the demons and bring Sita ji back. His glorious, world-purifying fame is sung by the gods and by sages like Narad. Whoever hears, sings, recites, or contemplates it attains the supreme state. Tulsidas, a bee at the lotus-feet of that Shri Raghuveer, ever sings His praise.",
+      "linesEn": [
+        "Kapi sen sang sanghaari nisichar raamu seetahi aanihain.",
+        "Trailok paavan sujasu sur muni naaradaadi bakhaanihain.",
+        "Jo sunat gaavat kahat samujhat param pad nar paavaee.",
+        "Raghubeer pad paathoj madhukar daas tulasee gaavaee."
+      ],
+      "chapter": 1
+    },
+    {
+      "id": "kishkindha-doha-30-a",
+      "section": "doha",
+      "stanza": 30,
+      "numInSection": 30,
+      "subSuffix": "क",
+      "labelHi": "दोहा ३०क",
+      "labelEn": "Doha 30a",
+      "lines": [
+        "भव भेषज रघुनाथ जसु सुनहिं जे नर अरु नारि।",
+        "तिन्ह कर सकल मनोरथ सिद्ध करहि त्रिसिरारि॥३०क॥"
+      ],
+      "meaningHi": "श्री रघुनाथजी का यश भव (जन्म-मरण रूपी रोग) की औषधि है। जो स्त्री-पुरुष इसे सुनेंगे, त्रिशिरा के शत्रु श्री रामजी उनके सब मनोरथ सिद्ध करेंगे।",
+      "meaningEn": "The glory of Shri Raghunath is the very medicine for the disease of birth and death. For those men and women who listen to it, Shri Ram — the slayer of the demon Trishira — fulfills all their heart's desires.",
+      "linesEn": [
+        "Bhav bheshaj raghunaath jasu sunahin je nar aru naari.",
+        "Tinh kar sakal manorath siddh karahi trisiraari.30(ka)"
+      ],
+      "chapter": 1
+    },
+    {
+      "id": "kishkindha-sortha-30-b",
+      "section": "sortha",
+      "stanza": 30,
+      "numInSection": 30,
+      "subSuffix": "ख",
+      "labelHi": "सोरठा ३०ख",
+      "labelEn": "Sortha 30b",
+      "lines": [
+        "नीलोत्पल तन स्याम काम कोटि सोभा अधिक।",
+        "सुनिअ तासु गुन ग्राम जासु नाम अघ खग बाधिक॥३०ख॥"
+      ],
+      "meaningHi": "जिनका शरीर नीले कमल के समान श्याम है और जिनकी शोभा करोड़ों कामदेवों से भी अधिक है, तथा जिनका नाम पापरूपी पक्षियों का बाधक (नाश करने वाला बहेलिया) है, उन्हीं श्री रामजी के गुण-समूह को सुनना चाहिए।",
+      "meaningEn": "His body is dark like the blue lotus, His beauty surpasses that of countless gods of love, and His very name is the fowler that destroys the birds of sin — listen, then, to the multitude of virtues of that Lord.",
+      "linesEn": [
+        "Neelotpal tan syaam kaam koti sobhaa adhik.",
+        "Sunia taasu gun graam jaasu naam agh khag baadhik.30(kha)"
       ],
       "chapter": 1
     },
