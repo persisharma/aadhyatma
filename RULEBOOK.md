@@ -241,6 +241,22 @@ Every content/data change must be verified on both iOS and Android before OTA pu
 ### 10.8 Background image per deity
 Every deity in the `Deity` type must have a distinct, thematically correct background image in `backgrounds.ts`. Never use another deity's image as a placeholder (e.g., Krishna's image for Vishnu, or Shiva's image for Gayatri). If no appropriate image exists yet, commission/source one before adding the deity. Origin: Vishnu was using Krishna's bansuri image, Gayatri was using Shiva's trishul image.
 
+When generating a new deity background, use this prompt template and replace the bracketed fields:
+
+```text
+Create a faded, vintage hand-drawn devotional illustration of Hindu deity [DEITY_NAME], in the style of an aged sepia ink-and-pencil sketch on old parchment, like a soft antique lithograph. Understated, low-contrast, not vivid, not saturated, not photorealistic.
+
+Subject: [DEITY_NAME], serene and devotional, shown with the deity's recognizable traditional attributes: [KEY_SYMBOLS_OR_OBJECTS]. Use a graceful sacred pose and culturally appropriate attire. Add a soft halo only if appropriate. Supporting elements may include [SUPPORTING_ELEMENTS], but keep them faint and uncluttered.
+
+Palette: warm monochrome sepia, muted cream and brown tones only. No bright yellows, no strong colors. Soft faded pencil linework, gently fading toward the edges.
+
+Composition: square 1:1 frame. Anchor the deity in the upper-center / top half of the image. The bottom third must remain mostly empty plain parchment negative space for app text overlay. Keep the illustration calm, devotional, readable, and not busy.
+
+Background: plain aged parchment with subtle paper grain and very soft edge wear. No hard border, no decorative frame, no readable text, no lettering, no captions, no watermark, no logo, no UI elements.
+
+Format: 1024 x 1024 PNG.
+```
+
 ### 10.9 Deity display names must be recognizable
 Deity `nameHi`/`nameEn` must use the popularly recognized devotional name that users will identify. Use the name devotees actually use in prayer/temple context (e.g., "माँ गायत्री" not "सवितृ देव", "श्री विष्णु" not "नारायण"). When in doubt, use the name that appears on temple signage. Origin: Users couldn't identify "Savitr Deva" as Gayatri.
 

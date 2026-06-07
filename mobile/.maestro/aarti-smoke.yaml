@@ -13,11 +13,11 @@ appId: host.exp.Exponent
 - runFlow: _launch.yaml
 
 # Open Aarti category
-- assertVisible: "Aarti. Tap to open."
-- tapOn: "Aarti. Tap to open."
+- assertVisible: "Aarti\\..*Tap to open\\."
+- tapOn: "Aarti\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 6 sections appear in CategoryList
+# Verify all 7 sections appear in CategoryList
 # (Sankat Mochan Hanumanashtak was migrated to stotram category post-merge with main.)
 - extendedWaitUntil:
     visible: "Om Jai Jagdish Hare\\..*Tap to open\\."
@@ -27,6 +27,13 @@ appId: host.exp.Exponent
 - assertVisible: "Om Jai Shiv Omkara\\..*Tap to open\\."
 - assertVisible: "Jai Ambe Gauri\\..*Tap to open\\."
 - assertVisible: "Aarti Kunj Bihari Ki\\..*Tap to open\\."
+# Saraswati Mata Ki Aarti is the last card — scroll to it (list now exceeds one screen)
+- scrollUntilVisible:
+    element:
+      text: "Saraswati Mata Ki Aarti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
 
 # Open Om Jai Jagdish Hare reader
 - tapOn: "Om Jai Jagdish Hare\\..*Tap to open\\."

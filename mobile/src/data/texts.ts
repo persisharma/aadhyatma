@@ -2,6 +2,7 @@ import { hanumanChalisaTotal } from './hanuman-chalisa';
 import { sundarkandTotal } from './sundarkand';
 import { shivaStrotamTotal } from './shiva-strotam';
 import { durgaStotramTotal } from './durga-stotram';
+import { saraswatiStotramTotal } from './saraswati-stotram';
 import { ganeshStotramTotal } from './ganesh-stotram';
 import { vishnuSahasranamaTotal } from './vishnu-sahasranama';
 import { shivChalisaCounts } from './shiv-chalisa';
@@ -23,7 +24,7 @@ export type ContentCategory =
   | 'japam'
   | 'aarti'
   | 'sanskar';
-export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr';
+export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr' | 'saraswati';
 
 export type LibraryEntry = {
   id: string;
@@ -120,6 +121,17 @@ export const library: readonly LibraryEntry[] = [
     category: 'stotram',
     deities: ['durga'],
     verseCount: durgaStotramTotal,
+  },
+  {
+    id: 'saraswati-stotram',
+    nameHi: 'सरस्वती स्तोत्रम्',
+    nameEn: 'Saraswati Stotram',
+    sub: '3 प्रार्थनाएँ · अर्थ सहित',
+    thumb: 'सर',
+    status: 'active',
+    category: 'stotram',
+    deities: ['saraswati'],
+    verseCount: saraswatiStotramTotal,
   },
   {
     id: 'ganesh-stotram',
@@ -290,6 +302,17 @@ export const library: readonly LibraryEntry[] = [
     verseCount: 6,
   },
   {
+    id: 'saraswati-aarti',
+    nameHi: 'सरस्वती माता की आरती',
+    nameEn: 'Saraswati Mata Ki Aarti',
+    sub: '8 पद · व्याख्या सहित',
+    thumb: 'जय',
+    status: 'active',
+    category: 'aarti',
+    deities: ['saraswati'],
+    verseCount: 8,
+  },
+  {
     id: 'prabhati-shloka',
     nameHi: 'प्रभाती श्लोक',
     nameEn: 'Morning Slokas',
@@ -372,5 +395,16 @@ export const library: readonly LibraryEntry[] = [
     addedInVersion: '1.3.1',
     deities: ['rama'],
     verseCount: 4,
+  },
+  {
+    id: 'vidyarambha-prarthana',
+    nameHi: 'विद्यारम्भ प्रार्थना',
+    nameEn: 'Vidyarambha Prarthana',
+    sub: '६ श्लोक · विधि सहित',
+    thumb: 'वि',
+    status: 'active',
+    category: 'sanskar',
+    deities: ['saraswati'],
+    verseCount: 6,
   },
 ];

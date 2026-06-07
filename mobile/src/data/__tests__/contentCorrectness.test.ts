@@ -367,6 +367,16 @@ for (const file of collectJsonFiles()) {
   );
 }
 
+const japamSourceUrls = new Set(japam.source.referenceUrls);
+for (const mantra of japam.mantras) {
+  for (const url of mantra.source?.referenceUrls ?? []) {
+    assert.ok(
+      japamSourceUrls.has(url),
+      `japam/japam.json top-level source should include ${mantra.id} reference ${url}`
+    );
+  }
+}
+
 // ─── Done ────────────────────────────────────────────────────────────────────
 
 console.log('All content correctness tests passed');
