@@ -177,7 +177,7 @@ export default function PanchangScreen() {
 
           <View style={[styles.schoolPill, { backgroundColor: colors.saffronTint, borderRadius: radii.sm }]}>
             <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 12, color: colors.saffronDeep }}>
-              {isHindi ? 'दृक् पंचांग' : 'Drik Panchang'}
+              {isHindi ? 'पंचांग' : 'Panchang'}
             </Text>
           </View>
 

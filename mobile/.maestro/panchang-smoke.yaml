@@ -8,7 +8,7 @@
 #   1. The Panchang tab is reachable from the bottom tab bar.
 #   2. The screen renders the real astronomy engine output (the sun/moon time
 #      block: Sunrise, Sunset, Moonrise, Brahma Muhurta).
-#   3. The "Drik Panchang" school + "Ujjain" reference header render.
+#   3. The "Panchang" school + "Ujjain" reference header render.
 #   4. The Purnimant/Amanta toggle renders and changes the reference line.
 #   5. Compact date navigation changes the selected date.
 #   6. The expandable calendar can move months and select a date.
@@ -60,7 +60,7 @@ appId: host.exp.Exponent
 # ── Step 4: Assert the header, toggle, and calendar controls rendered (English) ──
 # First open resolves the lunar calendar for festivals — allow generous time.
 - extendedWaitUntil:
-    visible: "Drik Panchang"   # school pill (English)
+    visible: "Panchang"   # school pill (English)
     timeout: 30000
 - assertVisible: ".*Ujjain.*"      # "Reference: Ujjain, India · Purnimant/Amanta"
 - assertVisible: "Purnimant calendar system"
@@ -117,7 +117,7 @@ appId: host.exp.Exponent
 # ── Step 6: Restore Panchang + language defaults (best-effort) ──
 - scrollUntilVisible:
     element:
-      text: "Drik Panchang"
+      text: "Panchang"
     direction: UP
     centerElement: true
     timeout: 20000
