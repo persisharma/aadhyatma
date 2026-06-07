@@ -96,25 +96,40 @@ function ActiveAudioPlayer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mantraId]);
 
-  // We don't use the player's native `loop` flag — instead we manually
-  // restart on `didJustFinish` so we can count loops reliably across
-  // platforms.
-  const finishedRef = useRef(false);
+  // Use the player's native `loop` flag for the auto-chant repeat. Manually
+  // restarting via `seekTo(0)` + `play()` on `didJustFinish` is unreliable on
+  // iOS: after the track finishes the restart often fails to resume and
+  // `didJustFinish` does not toggle back cleanly, which froze both the
+  // playback and the bead count. Native looping repeats gaplessly on every
+  // platform.
   useEffect(() => {
-    if (status.didJustFinish && !finishedRef.current) {
-      finishedRef.current = true;
-      onIterationRef.current();
-      // Restart for the next iteration.
-      player
-        .seekTo(0)
-        .then(() => {
-          player.play();
-        })
-        .catch(() => undefined);
-    } else if (!status.didJustFinish) {
-      finishedRef.current = false;
+    player.loop = true;
+  }, [player]);
+
+  // Count one bead per completed recitation by detecting the loop wrap: the
+  // reported position jumps backwards toward the start after passing the
+  // midpoint of the track. This does not depend on `didJustFinish` (which is
+  // not emitted while `loop` is enabled, and behaves inconsistently across
+  // platforms), so counting stays reliable on iOS.
+  const prevTimeRef = useRef(0);
+  useEffect(() => {
+    if (!status.isLoaded) return;
+    const duration = status.duration ?? 0;
+    const current = status.currentTime ?? 0;
+    if (duration <= 0) {
+      prevTimeRef.current = current;
+      return;
     }
-  }, [status.didJustFinish, player]);
+    const prev = prevTimeRef.current;
+    const wrapped =
+      status.playing &&
+      prev > duration * 0.5 &&
+      current + duration * 0.4 < prev;
+    if (wrapped) {
+      onIterationRef.current();
+    }
+    prevTimeRef.current = current;
+  }, [status.currentTime, status.duration, status.isLoaded, status.playing]);
 
   useEffect(() => {
     player.shouldCorrectPitch = true;
