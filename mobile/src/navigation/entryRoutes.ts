@@ -42,30 +42,36 @@ const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'bhagavad-gita': 'GitaReader',
 };
 
-export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
+export function buildEntryStartTarget(entry: LibraryEntry): BookmarkTarget | null {
   if (entry.category === 'japam') {
-    nav.navigate('JapamCounter', { mantraId: entry.id });
-    return true;
+    return { screen: 'JapamCounter', params: { mantraId: entry.id } };
   }
   if (chalisaIds.has(entry.id)) {
-    nav.navigate('ChalisaReader', { initialIndex: 0, chalisaId: entry.id });
-    return true;
+    return { screen: 'ChalisaReader', params: { initialIndex: 0, chalisaId: entry.id } };
   }
   if (sanskarIds.has(entry.id)) {
-    nav.navigate('SanskarReader', { initialIndex: 0, sanskarId: entry.id });
-    return true;
+    return { screen: 'SanskarReader', params: { initialIndex: 0, sanskarId: entry.id } };
   }
   const aartiIndex = (aartiIndexById as Record<string, number>)[entry.id];
   if (aartiIndex != null) {
-    nav.navigate('AartiReader', { aartiIndex });
-    return true;
+    return { screen: 'AartiReader', params: { aartiIndex } };
   }
   const chaptersRoute = stotramChaptersRouteById[entry.id];
   if (chaptersRoute) {
-    (nav.navigate as (name: keyof HomeStackParamList) => void)(chaptersRoute);
-    return true;
+    return { screen: chaptersRoute, params: {} };
   }
-  return false;
+  return null;
+}
+
+export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
+  const target = buildEntryStartTarget(entry);
+  if (!target) return false;
+  if (Object.keys(target.params).length === 0) {
+    (nav.navigate as (name: keyof HomeStackParamList) => void)(target.screen);
+  } else {
+    (nav.navigate as (name: keyof HomeStackParamList, params: object) => void)(target.screen, target.params);
+  }
+  return true;
 }
 
 export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean {

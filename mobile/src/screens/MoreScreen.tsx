@@ -280,6 +280,28 @@ export default function MoreScreen({ navigation }: Props) {
             </View>
           </View>
 
+          {/* Panchang Disclosure */}
+          <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, flexDirection: 'column', alignItems: 'stretch' }]}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+              <View style={[styles.sectionIcon, { backgroundColor: colors.gold }]}>
+                <Text style={{ color: '#fff', fontSize: 14 }}>☽</Text>
+              </View>
+              <View>
+                <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
+                  {defaultLang === 'hi' ? 'पंचांग' : 'Panchang'}
+                </Text>
+                <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
+                  {defaultLang === 'hi' ? 'Panchang School' : 'पंचांग पद्धति'}
+                </Text>
+              </View>
+            </View>
+            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+              {defaultLang === 'hi'
+                ? 'पंचांग · उज्जैन, भारत · पूर्णिमांत/अमान्त चयन\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है।'
+                : 'Panchang · Ujjain, India · Purnimant/Amanta selectable\nTithi follows Surya Siddhanta with modern corrections. Values may vary by minutes for other locations.'}
+            </Text>
+          </View>
+
           {/* Links */}
           <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, flexDirection: 'column', alignItems: 'stretch', paddingVertical: 4, paddingHorizontal: 16 }]}>
             <Pressable

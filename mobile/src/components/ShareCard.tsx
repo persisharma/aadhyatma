@@ -75,6 +75,8 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
       {meaning ? (
         <Text
           numberOfLines={5}
+          adjustsFontSizeToFit
+          minimumFontScale={0.5}
           style={[
             styles.meaning,
             {
