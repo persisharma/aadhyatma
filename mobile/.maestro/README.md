@@ -58,6 +58,10 @@ maestro test --debug-output ./maestro-debug .maestro/sanskar-smoke.yaml
 | `japam-smoke.yaml` | Japam: 4 mantras. Opens Gayatri Mantra (`JapamCounterScreen`, no language toggle). |
 | `aarti-smoke.yaml` | Aarti: 7 sections. Opens Om Jai Jagdish Hare (multi-instance dispatch check). |
 | `sanskar-smoke.yaml` | Sanskar: 7 sections. Verifies intro page, step indicator (Surya Namaskar), language toggle. |
+| `panchang-smoke.yaml` | Panchang **tab** (not a Home category). Switches language to English, opens the tab, asserts the astronomy block (Sunrise/Sunset/Moonrise/Brahma Muhurta), Drik Panchang/Ujjain header, Purnimant/Amanta toggle, inline calendar selection, and Vrat/Upcoming observance sections. |
+| `new-content-badge-smoke.yaml` | NEW badge — stotram **CategoryList** path. Dev-seeds the upgrader state, asserts the stotram tile + Krishna/Bajrang/Ram Stuti cards show NEW (Shiva doesn't), then taps one (markSeen) and confirms the badge stays cleared across a restart. |
+| `new-content-badge-home-smoke.yaml` | NEW badge — **Home category tiles**. Asserts `hasNewInCategory` scoping (only the stotram tile lights up; every other category + By Deity renders plain), then marks all three stotram debut-new entries seen and confirms the tile's badge clears. |
+| `new-content-badge-deity-smoke.yaml` | NEW badge — **By-Deity** surface. Opens Shri Krishna, asserts Krishna Stotram shows NEW in the deity list, then taps it (markSeen from `DeityListScreen`) and confirms the badge clears on return. |
 
 Run a single flow: `maestro test --config .maestro/config.yaml .maestro/<category>-smoke.yaml`
 Run all flows: `npm run test:e2e` (which runs `maestro test .maestro/`).

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import {
+  buildEntryStartTarget,
   buildBookmarkTarget,
   buildProgressTarget,
   navigateToBookmark,
@@ -143,6 +144,23 @@ for (const sourceId of [
 }
 
 // buildBookmarkTarget returns a nested-navigator descriptor.
+{
+  const target = buildEntryStartTarget({
+    id: 'vishnu-sahasranama',
+    nameHi: 'विष्णु सहस्रनाम अंश',
+    nameEn: 'Vishnu Sahasranama Excerpt',
+    sub: '',
+    thumb: '',
+    status: 'active',
+    category: 'stotram',
+    deities: ['vishnu'],
+  });
+  assert.deepEqual(target, {
+    screen: 'VishnuSahasranamaChapters',
+    params: {},
+  });
+}
+
 {
   const target = buildBookmarkTarget(bm({
     id: 'shiv-chalisa::3',
