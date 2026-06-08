@@ -165,6 +165,23 @@
   .minibanner .mcta{font-size:11px;font-weight:600;color:var(--saffron);white-space:nowrap}
   .minibanner .mx{color:var(--ink-muted);font-size:12px;opacity:.55;padding:0 2px}
 
+  /* ---- add-to-routine bottom sheet ---- */
+  .addsheet-backdrop{position:absolute;inset:0;z-index:20;background:rgba(47,30,16,.45);
+    display:none;align-items:flex-end}
+  .addsheet-backdrop.show{display:flex}
+  .addsheet{width:100%;background:var(--parchment-hi);border-top-left-radius:22px;border-top-right-radius:22px;
+    padding:18px 18px 26px;box-shadow:0 -10px 30px rgba(13,8,4,.3)}
+  .addsheet h3{font-family:var(--deva);font-size:18px;color:var(--ink);text-align:center}
+  .addsheet .sh-sub{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-bottom:14px}
+  .rt-opt{display:flex;align-items:center;gap:11px;padding:12px 4px;border-bottom:1px solid var(--divider);cursor:pointer}
+  .rt-opt .rcheck{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--gold);flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;transition:.15s}
+  .rt-opt .rcheck.on{background:var(--green);border-color:var(--green)}
+  .rt-opt .rt-name{flex:1;font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .rt-opt .rt-mode{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--saffron-deep);
+    background:var(--saffron-tint);padding:2px 7px;border-radius:7px}
+  .rt-new{display:flex;align-items:center;gap:10px;padding:13px 4px;color:var(--saffron);font-weight:600;font-size:14px;cursor:pointer}
+
   /* toast */
   .toast{position:absolute;bottom:66px;left:18px;right:18px;background:var(--ink);color:var(--parchment-hi);
     padding:11px 14px;border-radius:11px;font-size:12.5px;text-align:center;opacity:0;transform:translateY(8px);
@@ -208,6 +225,7 @@
           <b>download the file and open it in Chrome / Safari</b>.
         </div></div></div>
       <div class="minibanner hidden" id="minibanner"></div>
+      <div class="addsheet-backdrop" id="addsheet"></div>
       <div class="toast" id="toast"></div>
       <div class="tabbar" id="tabbar"></div>
     </div>
@@ -267,6 +285,7 @@ let S = {
   done:{},                 // {itemKey:true}  completion for "today"
   doneMode:{},             // {itemKey:'auto'|'manual'}
   reader:null,             // {key, idx, beads}
+  addSheetFor:null,        // libId when the add-to-routine sheet is open
   streak:5,
   chipDismissed:false,
 };
@@ -286,6 +305,7 @@ function todaysItems(){
    ---------------------------------------------------------- */
 const NODE_ORDER=[
   ['home','Home (chip)'],['daily','Daily Bhakti (chip)'],
+  ['library','Library + touchpoint'],['deity','Deity + touchpoint'],
   ['createName','Create · name'],['createMode','Create · daily/weekday'],
   ['createWeekday','Create · weekday+deity'],['addItems','Add items'],
   ['today','Today view'],['reader','Reader / counter'],['list','Routine list'],['detail','Routine detail'],['addSheet','Add-to-routine sheet']
@@ -296,9 +316,12 @@ function go(screen, action){
   S.screen=screen; render();
 }
 function renderPanel(){
-  document.getElementById('nodes').innerHTML = NODE_ORDER.map(([k,l])=>
-    `<span class="node ${S.screen===k?'active':''}">${l}</span>`).join('');
+  document.getElementById('nodes').innerHTML = NODE_ORDER.map(([k,l])=>{
+    const active = S.addSheetFor ? k==='addSheet' : S.screen===k;
+    return `<span class="node ${active?'active':''}">${l}</span>`;
+  }).join('');
   document.getElementById('legend').innerHTML =
+    `<b>Add touch-points (＋):</b> Library card · Deity list · Reader top-bar — all open the same add-to-routine sheet.<br>`+
     `<b>Chip states:</b> no routine → <b>nudge</b> (dashed); routine set → <b>progress</b> (ring + streak).<br>`+
     `Routines now: <b>${S.routines.length}</b> · Today's items: <b>${todaysItems().length}</b> · `+
     `Done today: <b>${Object.values(S.done).filter(Boolean).length}</b> · Streak: <b>${S.streak}🔥</b>`;
@@ -354,11 +377,11 @@ function render(){
 
   if(sc==='home'){
     h=`<div class="hero"><div class="om">ॐ</div><div class="t">वेदांश</div><div class="s">Sacred Texts · Daily Reading</div></div>`;
-    h+=`<div class="secttitle">Library</div><div class="grid">
-      <div class="tile"><div class="th">चालीसा</div><div class="ts">Chalisa</div></div>
-      <div class="tile"><div class="th">स्तोत्रम्</div><div class="ts">Stotram</div></div>
-      <div class="tile"><div class="th">ग्रंथ</div><div class="ts">Granth</div></div>
-      <div class="tile"><div class="th">जप</div><div class="ts">Japam</div></div></div>`;
+    h+=`<div class="secttitle">Library — tap a tile, then ＋ to add to a routine</div><div class="grid">
+      <div class="tile" onclick="go('library','open Library')"><div class="th">चालीसा</div><div class="ts">Chalisa</div></div>
+      <div class="tile" onclick="go('library','open Library')"><div class="th">स्तोत्रम्</div><div class="ts">Stotram</div></div>
+      <div class="tile" onclick="go('library','open Library')"><div class="th">ग्रंथ</div><div class="ts">Granth</div></div>
+      <div class="tile" onclick="go('deity','open Deity')"><div class="th">देवता</div><div class="ts">By Deity</div></div></div>`;
   }
 
   else if(sc==='daily'){
@@ -454,10 +477,38 @@ function render(){
     else h+=`<div class="note" style="display:block;margin-top:14px">Tap a row → opens the content. It auto-completes only when you reach the <b>last verse-page</b> (or finish the round). The ◯ is a <b>manual fallback</b> for offline recitation.</div>`;
   }
 
+  else if(sc==='library'){
+    h=`<div class="topbar"><span class="back" onclick="go('home','‹ back')">‹</span><span class="tt">पुस्तकालय · Library</span></div>`;
+    h+=`<div class="note" style="display:block;margin-bottom:8px">Every card has a ＋ — the <b>add-to-routine</b> touch-point. Tap the row to read; tap ＋ to add.</div>`;
+    h+= LIB.map(l=>`<div class="libitem">
+        <div class="lg deva">${l.g}</div>
+        <div style="flex:1;min-width:0" onclick="toast('Opens the reader')">
+          <div class="iname deva" style="font-size:14px">${l.hi} <span class="kind">${l.kind}</span></div>
+          <div class="imeta">${l.parts?l.meta+' · ▸ '+l.parts:l.meta}</div>
+        </div>
+        <div class="ladd" onclick="openAddSheet('${l.id}')" title="add to routine">＋</div>
+      </div>`).join('');
+  }
+
+  else if(sc==='deity'){
+    const items=LIB.filter(l=>l.id!=='gayatri'); // pretend deity-filtered
+    h=`<div class="topbar"><span class="back" onclick="go('home','‹ back')">‹</span><span class="tt">श्री शिव · Shiva</span></div>`;
+    h+=`<div class="note" style="display:block;margin-bottom:8px">Deity screen — same ＋ touch-point on each item.</div>`;
+    h+= items.map(l=>`<div class="libitem">
+        <div class="lg deva">${l.g}</div>
+        <div style="flex:1;min-width:0" onclick="toast('Opens the reader')">
+          <div class="iname deva" style="font-size:14px">${l.hi} <span class="kind">${l.kind}</span></div>
+          <div class="imeta">${l.meta}</div>
+        </div>
+        <div class="ladd" onclick="openAddSheet('${l.id}')" title="add to routine">＋</div>
+      </div>`).join('');
+  }
+
   else if(sc==='reader'){
     const it=todaysItems().find(x=>x.key===S.reader.key);
     h=`<div class="topbar"><span class="back" onclick="go('today','‹ leave (no auto-complete)')">‹</span>
-        <span class="tt">${it.hi}</span></div>`;
+        <span class="tt">${it.hi}</span>
+        <span class="add" onclick="openAddSheet('${it.id}')" title="add to routine">＋</span></div>`;
     const done=S.done[it.key];
     if(it.kind==='japam'){
       const need=it.beadsPerRound, b=S.reader.beads, pct=Math.min(1,b/need);
@@ -522,7 +573,30 @@ function render(){
   }
 
   pad.innerHTML=h;
-  renderMiniBanner(); renderTabs(); renderPanel();
+  renderMiniBanner(); renderAddSheet(); renderTabs(); renderPanel();
+}
+
+function renderAddSheet(){
+  const el=document.getElementById('addsheet');
+  if(!S.addSheetFor){ el.className='addsheet-backdrop'; el.innerHTML=''; return; }
+  const lib=LIB.find(l=>l.id===S.addSheetFor);
+  const isGranth=lib.kind==='granth';
+  const rows=S.routines.length ? S.routines.map(r=>{
+    const inIt=r.items.some(i=>i.libId===lib.id);
+    return `<div class="rt-opt" onclick="toggleItemInRoutine('${r.id}','${lib.id}')">
+      <div class="rcheck ${inIt?'on':''}">${inIt?'✓':''}</div>
+      <div class="rt-name deva">${r.nameHi||r.nameEn}</div>
+      <div class="rt-mode">${r.mode==='weekday'?'वार':'दैनिक'}</div></div>`;
+  }).join('') : `<div class="note" style="display:block;text-align:center;padding:10px 0">अभी कोई साधना नहीं · No routines yet</div>`;
+  el.className='addsheet-backdrop show';
+  el.innerHTML=`<div class="addsheet" onclick="event.stopPropagation()">
+      <h3 class="deva">${lib.hi} को जोड़ें</h3>
+      <div class="sh-sub">Add “${lib.en}” to a routine</div>
+      ${isGranth?`<div class="note" style="display:block;margin-bottom:8px">ग्रंथ — पूरा या ▸ अध्याय चुनें (whole or choose chapter)</div>`:''}
+      ${rows}
+      <div class="rt-new" onclick="closeAddSheet();startCreate()">＋ नई साधना बनाएँ · New routine</div>
+    </div>`;
+  el.onclick=closeAddSheet;
 }
 
 function renderMiniBanner(){
@@ -582,6 +656,17 @@ function finishCreate(){
 function openToday(){ go('today','tap progress banner'); }
 function openDetail(id){ S.detailId=id; go('detail','open routine'); }
 
+// --- add-to-routine touch-point (Library card / reader top-bar / deity list) ---
+function openAddSheet(libId){ S.addSheetFor=libId; logLines.unshift({a:'tap ＋ add-to-routine',s:'addSheet'}); render(); }
+function closeAddSheet(){ S.addSheetFor=null; render(); }
+function toggleItemInRoutine(routineId, libId){
+  const r=S.routines.find(x=>x.id===routineId); if(!r) return;
+  const idx=r.items.findIndex(i=>i.libId===libId);
+  if(idx>=0){ r.items.splice(idx,1); toast('हटाया · removed'); }
+  else { r.items.push({libId, weekdays:r.mode==='weekday'?[new Date().getDay()]:undefined}); toast('जोड़ा · added to '+(r.nameHi||r.nameEn)); }
+  render();
+}
+
 // --- completion: hybrid (auto on end-reach + manual fallback) ---
 function manualToggle(key){
   if(S.done[key]){ S.done[key]=false; delete S.doneMode[key]; go('today','manual UNmark'); return; }
@@ -624,6 +709,8 @@ const SHORTCUTS=[
   ['Go: Daily Bhakti', ()=>{S.tab='daily';go('daily','jump');}],
   ['Go: Today', ()=>go('today','jump')],
   ['Go: Routine list', ()=>go('list','jump')],
+  ['Go: Library (＋ touchpoint)', ()=>go('library','jump')],
+  ['Go: Deity (＋ touchpoint)', ()=>go('deity','jump')],
 ];
 document.getElementById('controls').innerHTML=SHORTCUTS.map((s,i)=>`<button onclick="SC(${i})">${s[0]}</button>`).join('');
 function SC(i){ SHORTCUTS[i][1](); }
