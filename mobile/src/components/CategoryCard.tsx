@@ -2,6 +2,8 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
 type Props = {
   nameHi: string;
@@ -14,8 +16,16 @@ type Props = {
 };
 
 export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, hasNew }: Props) {
-  const { colors, typography, radii } = useTheme();
+  const { colors, radii } = useTheme();
+  const { lang } = useGitaLanguage();
   const isActive = status === 'active';
+
+  const { primary, secondary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
+    devPrimary: 15,
+    devSecondary: 13,
+    latPrimary: 15,
+    latSecondary: 13,
+  });
 
   const content = (
     <>
@@ -25,24 +35,26 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
           styles.nameHi,
           {
             color: colors.ink,
-            fontFamily: typography.cardHindi.fontFamily,
-            fontSize: 15,
+            fontFamily: primary.fontFamily,
+            fontSize: primary.fontSize,
+            fontStyle: primary.fontStyle,
           },
         ]}
       >
-        {nameHi}
+        {primary.text}
       </Text>
       <Text
         style={[
           styles.nameEn,
           {
             color: colors.inkSoft,
-            fontFamily: typography.cardLatin.fontFamily,
-            fontSize: 13,
+            fontFamily: secondary.fontFamily,
+            fontSize: secondary.fontSize,
+            fontStyle: secondary.fontStyle,
           },
         ]}
       >
-        {nameEn}
+        {secondary.text}
       </Text>
     </>
   );

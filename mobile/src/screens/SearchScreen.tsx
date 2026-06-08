@@ -30,6 +30,7 @@ import {
 } from '@/data/searchIndex';
 import { library } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import {
   buildProgressTarget,
   navigateToEntryStart,
@@ -317,6 +318,58 @@ function GroupHeader({
   );
 }
 
+function PopularName({
+  nameHi,
+  nameEn,
+  isHi,
+  colors,
+}: {
+  nameHi: string;
+  nameEn: string;
+  isHi: boolean;
+  colors: Theme['colors'];
+}) {
+  const { primary, secondary } = orderTitlesByLanguage(isHi ? 'hi' : 'en', nameHi, nameEn, {
+    devPrimary: 14,
+    devSecondary: 12,
+    latPrimary: 14,
+    latSecondary: 11,
+  });
+
+  return (
+    <View style={styles.popularMeta}>
+      <Text
+        numberOfLines={1}
+        style={[
+          styles.popularNameHi,
+          {
+            color: colors.ink,
+            fontFamily: primary.fontFamily,
+            fontSize: primary.fontSize,
+            fontStyle: primary.fontStyle,
+          },
+        ]}
+      >
+        {primary.text}
+      </Text>
+      <Text
+        numberOfLines={1}
+        style={[
+          styles.popularNameEn,
+          {
+            color: colors.inkMuted,
+            fontFamily: secondary.fontFamily,
+            fontSize: secondary.fontSize,
+            fontStyle: secondary.fontStyle,
+          },
+        ]}
+      >
+        {secondary.text}
+      </Text>
+    </View>
+  );
+}
+
 function EmptyState({
   recent,
   popular,
@@ -446,26 +499,12 @@ function EmptyState({
                 >
                   {p.thumb}
                 </Text>
-                <View style={styles.popularMeta}>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.popularNameHi,
-                      { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
-                    ]}
-                  >
-                    {p.nameHi}
-                  </Text>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.popularNameEn,
-                      { color: colors.inkMuted, fontFamily: 'CormorantGaramond_400Regular_Italic' },
-                    ]}
-                  >
-                    {p.nameEn}
-                  </Text>
-                </View>
+                <PopularName
+                  nameHi={p.nameHi}
+                  nameEn={p.nameEn}
+                  isHi={isHi}
+                  colors={colors}
+                />
               </Pressable>
             ))}
           </View>

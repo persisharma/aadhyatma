@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Language Title Positioning — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Serif+Devanagari:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchmentHighlight:#F6ECD0; --parchmentGradientEnd:#F1E3BF;
+    --parchmentSoft:#F8EFD6;
+    --ink:#2F1E10; --inkSoft:#5A3A1E; --inkMuted:#8A6A47;
+    --saffron:#B8621B; --saffronDeep:#8A3E0B;
+    --divider:rgba(138,62,11,0.18);
+    --cardActiveFrom:#FFF5E0; --cardActiveTo:#F5DEAC;
+    --cardActiveBorder:rgba(184,98,27,0.4);
+    --thumbFrom:#F8D291; --thumbTo:#E0A255;
+    --newBg:rgba(184,98,27,0.16);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:32px 20px 60px;
+    background:#d8c9a4;
+    font-family:'Cormorant Garamond',serif;
+    color:var(--ink);
+  }
+  .dev{font-family:'Noto Serif Devanagari',serif;}
+  .lat{font-family:'Cormorant Garamond',serif;}
+  h1{font-weight:600;text-align:center;font-size:30px;margin:0 0 6px;color:#2F1E10}
+  .lede{text-align:center;max-width:760px;margin:0 auto 28px;font-size:18px;color:#4a3320;font-style:italic}
+  .legend{max-width:980px;margin:0 auto 30px;background:#f3e7c9;border:1px solid var(--divider);border-radius:12px;padding:14px 18px;font-size:15px;color:var(--inkSoft)}
+  .legend b{color:var(--saffronDeep)}
+  .row{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
+  .col-label{text-align:center;font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 12px;color:var(--saffronDeep)}
+  .col-sub{display:block;font-style:italic;letter-spacing:0;text-transform:none;font-weight:400;color:var(--inkMuted);font-size:13px;margin-top:3px}
+
+  /* phone frame */
+  .phone{
+    width:300px;border-radius:30px;padding:14px 12px 22px;
+    background:linear-gradient(160deg,var(--parchmentHighlight),var(--parchmentGradientEnd));
+    border:1px solid var(--divider);
+    box-shadow:0 18px 40px rgba(60,30,10,.28);
+  }
+  .ghost{outline:2px dashed rgba(138,62,11,.32);outline-offset:5px}
+  .after{outline:2px solid var(--saffron);outline-offset:5px}
+
+  /* top bar */
+  .topbar{display:flex;align-items:baseline;gap:6px;padding:6px 8px 14px}
+  .back{width:30px;height:30px;border-radius:50%;border:1px solid var(--divider);background:var(--parchmentSoft);display:flex;align-items:center;justify-content:center;color:var(--inkSoft);font-size:16px;margin-right:4px;align-self:center}
+  .tb-primary{color:var(--ink)}
+  .tb-secondary{color:var(--inkMuted)}
+
+  .section-label{font-family:'Cormorant Garamond';font-weight:600;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--inkMuted);margin:4px 6px 10px}
+
+  /* category grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .cat{
+    position:relative;border-radius:14px;padding:14px 8px;text-align:center;
+    background:linear-gradient(135deg,var(--cardActiveFrom),var(--cardActiveTo));
+    border:1px solid var(--cardActiveBorder);
+    box-shadow:0 3px 10px rgba(60,30,10,.10);
+  }
+  .cat .icon{width:24px;height:24px;border-radius:50%;margin:0 auto 5px;background:radial-gradient(circle at 35% 30%,var(--thumbFrom),var(--thumbTo))}
+  .cat .p{color:var(--ink);line-height:1.15}
+  .cat .s{color:var(--inkSoft);line-height:1.15;margin-top:2px}
+
+  /* catalog (LibraryCard) */
+  .card{
+    position:relative;display:flex;align-items:center;gap:12px;
+    border-radius:16px;padding:14px;margin-bottom:10px;
+    background:linear-gradient(135deg,var(--cardActiveFrom),var(--cardActiveTo));
+    border:1px solid var(--cardActiveBorder);
+    box-shadow:0 4px 12px rgba(60,30,10,.12);
+  }
+  .thumb{width:46px;height:46px;flex:0 0 46px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--thumbFrom),var(--thumbTo));color:var(--parchmentSoft);font-family:'Noto Serif Devanagari';font-weight:600;font-size:21px}
+  .meta{flex:1;min-width:0}
+  .meta .p{color:var(--ink);line-height:1.2}
+  .meta .s{color:var(--inkSoft);line-height:1.2;margin:1px 0 5px}
+  .meta .sub{color:var(--inkMuted);font-family:'Cormorant Garamond';font-size:12px;letter-spacing:.02em}
+  .chev{color:var(--saffron);font-size:24px;margin-left:6px}
+
+  /* deity card */
+  .dcard{display:flex;align-items:center;gap:10px;border-radius:12px;padding:11px;margin-bottom:9px;background:var(--parchmentSoft);border:1px solid var(--divider);box-shadow:0 1px 4px rgba(60,30,10,.06)}
+  .davatar{width:40px;height:40px;border-radius:50%;flex:0 0 40px;background:radial-gradient(circle at 35% 30%,var(--thumbFrom),var(--thumbTo));display:flex;align-items:center;justify-content:center;color:var(--parchmentSoft);font-family:'Noto Serif Devanagari';font-weight:600;font-size:14px}
+  .dcard .p{color:var(--ink);line-height:1.2}
+  .dcard .s{color:var(--inkMuted);line-height:1.2}
+  .dcard .cnt{color:var(--inkMuted);font-family:'Cormorant Garamond';font-size:10px;margin-top:2px}
+
+  /* primary/secondary type roles (match orderTitlesByLanguage output).
+     Weight follows the SLOT, not the script: primary is always semibold/upright,
+     secondary is the lighter supporting line. */
+  .pri-dev{font-family:'Noto Serif Devanagari';font-weight:600;font-style:normal}
+  .sec-dev{font-family:'Noto Serif Devanagari';font-weight:500;font-style:normal}
+  .pri-lat{font-family:'Cormorant Garamond';font-weight:600;font-style:normal}
+  .sec-lat{font-family:'Cormorant Garamond';font-weight:400;font-style:italic}
+
+  .screen-title{text-align:center;font-weight:600;font-size:20px;color:var(--saffronDeep);margin:46px 0 18px}
+</style>
+</head>
+<body>
+
+<h1 class="dev">भाषा शीर्षक स्थिति · Language Title Positioning</h1>
+<p class="lede">How catalog &amp; category titles re-order and re-emphasise to follow the reader's selected language. <b>Hindi mode is unchanged</b>; the change is visible when the language is switched to English.</p>
+
+<div class="legend">
+  <b>What changed:</b> previously every listing showed Hindi on top in the larger, <i>bolder</i> font regardless of the language toggle — and even after the first pass, Hindi stayed semibold while English was a thin italic, so Hindi still dominated. Now <b>weight &amp; emphasis follow the slot, not the language</b>: the primary line (active language) is always semibold/upright at the larger size, and the other language drops to a lighter supporting line beneath. Same data, both languages shown; order, weight &amp; size all follow <code>lang</code>.
+</div>
+
+<!-- =================== HOME : CATEGORY GRID =================== -->
+<div class="screen-title">Home — Categories</div>
+<div class="row">
+
+  <!-- HINDI (unchanged) -->
+  <div>
+    <p class="col-label dev">हिन्दी · Hindi<span class="col-sub">unchanged (default)</span></p>
+    <div class="phone">
+      <div class="section-label">CATEGORIES</div>
+      <div class="grid" id="grid-hi"></div>
+    </div>
+  </div>
+
+  <!-- ENGLISH BEFORE -->
+  <div>
+    <p class="col-label">English — Before<span class="col-sub">Hindi stayed dominant</span></p>
+    <div class="phone ghost">
+      <div class="section-label">CATEGORIES</div>
+      <div class="grid" id="grid-before"></div>
+    </div>
+  </div>
+
+  <!-- ENGLISH AFTER -->
+  <div>
+    <p class="col-label">English — After<span class="col-sub">English now leads</span></p>
+    <div class="phone after">
+      <div class="section-label">CATEGORIES</div>
+      <div class="grid" id="grid-after"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== CATALOG LIST =================== -->
+<div class="screen-title">Catalog — Chalisa list</div>
+<div class="row">
+
+  <div>
+    <p class="col-label dev">हिन्दी · Hindi<span class="col-sub">unchanged (default)</span></p>
+    <div class="phone">
+      <div class="topbar"><div class="back">‹</div><span class="tb tb-hi"></span></div>
+      <div id="cat-hi"></div>
+    </div>
+  </div>
+
+  <div>
+    <p class="col-label">English — Before<span class="col-sub">Hindi stayed dominant</span></p>
+    <div class="phone ghost">
+      <div class="topbar"><div class="back">‹</div><span class="tb tb-before"></span></div>
+      <div id="cat-before"></div>
+    </div>
+  </div>
+
+  <div>
+    <p class="col-label">English — After<span class="col-sub">English now leads</span></p>
+    <div class="phone after">
+      <div class="topbar"><div class="back">‹</div><span class="tb tb-after"></span></div>
+      <div id="cat-after"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== DEITY INDEX =================== -->
+<div class="screen-title">By Deity</div>
+<div class="row">
+  <div>
+    <p class="col-label dev">हिन्दी · Hindi<span class="col-sub">unchanged (default)</span></p>
+    <div class="phone"><div id="dei-hi"></div></div>
+  </div>
+  <div>
+    <p class="col-label">English — Before<span class="col-sub">Hindi stayed dominant</span></p>
+    <div class="phone ghost"><div id="dei-before"></div></div>
+  </div>
+  <div>
+    <p class="col-label">English — After<span class="col-sub">English now leads</span></p>
+    <div class="phone after"><div id="dei-after"></div></div>
+  </div>
+</div>
+
+<script>
+// ---- data ----
+const categories = [
+  {hi:'ग्रन्थ',en:'Sacred Books'},
+  {hi:'स्तोत्रम्',en:'Hymns & Praise'},
+  {hi:'चालीसा',en:'Chalisa'},
+  {hi:'जप',en:'Japa & Mantras'},
+  {hi:'आरती',en:'Aarti'},
+  {hi:'देवता',en:'By Deity'},
+];
+const chalisas = [
+  {thumb:'ह',hi:'हनुमान चालीसा',en:'Hanuman Chalisa',sub:'40 चौपाई · अर्थ सहित'},
+  {thumb:'शि',hi:'शिव चालीसा',en:'Shiv Chalisa',sub:'40 चौपाई · अर्थ सहित'},
+  {thumb:'दु',hi:'दुर्गा चालीसा',en:'Durga Chalisa',sub:'40 चौपाई · अर्थ सहित'},
+  {thumb:'ग',hi:'गणेश चालीसा',en:'Ganesh Chalisa',sub:'40 चौपाई · अर्थ सहित'},
+];
+const deitiesData = [
+  {av:'श्री',hi:'श्री राम',en:'Shri Rama',cnt:'4 texts'},
+  {av:'श्री',hi:'श्री हनुमान',en:'Shri Hanuman',cnt:'5 texts'},
+  {av:'श्री',hi:'श्री शिव',en:'Shri Shiva',cnt:'3 texts'},
+  {av:'माँ',hi:'माँ दुर्गा',en:'Maa Durga',cnt:'2 texts'},
+];
+
+// ---- the helper, mirrored from mobile/src/utils/titleByLanguage.ts ----
+function order(lang,hi,en,s){
+  const dev=(role)=>({text:hi,script:'dev',size:role==='p'?s.devPrimary:s.devSecondary});
+  const lat=(role)=>({text:en,script:'lat',size:role==='p'?s.latPrimary:s.latSecondary});
+  return lang==='en'
+    ? {primary:lat('p'),secondary:dev('s')}
+    : {primary:dev('p'),secondary:lat('s')};
+}
+const cls=(part,role)=> (part.script==='dev' ? (role==='p'?'pri-dev':'sec-dev') : (role==='p'?'pri-lat':'sec-lat'));
+
+// ---- renderers ----
+function renderGrid(elId, lang){
+  const sizes={devPrimary:15,devSecondary:13,latPrimary:15,latSecondary:13};
+  document.getElementById(elId).innerHTML = categories.map(c=>{
+    const o=order(lang,c.hi,c.en,sizes);
+    return `<div class="cat"><div class="icon"></div>
+      <div class="p ${cls(o.primary,'p')}" style="font-size:${o.primary.size}px">${o.primary.text}</div>
+      <div class="s ${cls(o.secondary,'s')}" style="font-size:${o.secondary.size}px">${o.secondary.text}</div></div>`;
+  }).join('');
+}
+function renderCatalog(elId, lang){
+  const sizes={devPrimary:17,devSecondary:14,latPrimary:17,latSecondary:13};
+  document.getElementById(elId).innerHTML = chalisas.map(c=>{
+    const o=order(lang,c.hi,c.en,sizes);
+    return `<div class="card"><div class="thumb">${c.thumb}</div>
+      <div class="meta">
+        <div class="p ${cls(o.primary,'p')}" style="font-size:${o.primary.size}px">${o.primary.text}</div>
+        <div class="s ${cls(o.secondary,'s')}" style="font-size:${o.secondary.size}px">${o.secondary.text}</div>
+        <div class="sub dev">${c.sub}</div>
+      </div><div class="chev">›</div></div>`;
+  }).join('');
+}
+function renderTopbar(cls_, lang){
+  const sizes={devPrimary:16,devSecondary:13,latPrimary:16,latSecondary:13};
+  const o=order(lang,'चालीसा','Chalisa',sizes);
+  document.querySelector('.'+cls_).innerHTML =
+    `<span class="${cls(o.primary,'p')}" style="font-size:${o.primary.size}px;color:var(--ink)">${o.primary.text}</span>`+
+    `<span class="${cls(o.secondary,'s')}" style="font-size:${o.secondary.size}px;color:var(--inkMuted);margin-left:4px">· ${o.secondary.text}</span>`;
+}
+function renderDeity(elId, lang){
+  const sizes={devPrimary:16,devSecondary:13,latPrimary:16,latSecondary:12};
+  document.getElementById(elId).innerHTML = deitiesData.map(d=>{
+    const o=order(lang,d.hi,d.en,sizes);
+    return `<div class="dcard"><div class="davatar">${d.av}</div>
+      <div class="meta">
+        <div class="p ${cls(o.primary,'p')}" style="font-size:${o.primary.size}px">${o.primary.text}</div>
+        <div class="s ${cls(o.secondary,'s')}" style="font-size:${o.secondary.size}px">${o.secondary.text}</div>
+        <div class="cnt">${d.cnt}</div>
+      </div><div class="chev">›</div></div>`;
+  }).join('');
+}
+
+// HINDI = lang 'hi' (unchanged).  BEFORE = old behaviour (always 'hi' order even in English).  AFTER = lang 'en'.
+renderGrid('grid-hi','hi');     renderGrid('grid-before','hi');     renderGrid('grid-after','en');
+renderCatalog('cat-hi','hi');   renderCatalog('cat-before','hi');   renderCatalog('cat-after','en');
+renderTopbar('tb-hi','hi');     renderTopbar('tb-before','hi');     renderTopbar('tb-after','en');
+renderDeity('dei-hi','hi');     renderDeity('dei-before','hi');     renderDeity('dei-after','en');
+</script>
+</body>
+</html>

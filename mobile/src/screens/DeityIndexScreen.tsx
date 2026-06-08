@@ -4,6 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { library } from '@/data/texts';
 import { deities } from '@/data/deities';
 import DeityCard from '@/components/DeityCard';
@@ -12,7 +14,14 @@ import type { HomeStackParamList } from '@/navigation/types';
 type Props = NativeStackScreenProps<HomeStackParamList, 'DeityIndex'>;
 
 export default function DeityIndexScreen({ navigation }: Props) {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, spacing } = useTheme();
+  const { lang } = useGitaLanguage();
+  const title = orderTitlesByLanguage(lang, 'देवता', 'By Deity', {
+    devPrimary: 16,
+    devSecondary: 13,
+    latPrimary: 16,
+    latSecondary: 13,
+  });
 
   const getItemCount = (deityId: string): string => {
     const count = library.filter(
@@ -49,22 +58,24 @@ export default function DeityIndexScreen({ navigation }: Props) {
           <View style={styles.titleRow}>
             <Text
               style={{
-                fontFamily: typography.readerTitle.fontFamily,
-                fontSize: 16,
+                fontFamily: title.primary.fontFamily,
+                fontSize: title.primary.fontSize,
+                fontStyle: title.primary.fontStyle,
                 color: colors.ink,
               }}
             >
-              देवता
+              {title.primary.text}
             </Text>
             <Text
               style={{
-                fontFamily: 'CormorantGaramond_400Regular_Italic',
-                fontSize: 13,
+                fontFamily: title.secondary.fontFamily,
+                fontSize: title.secondary.fontSize,
+                fontStyle: title.secondary.fontStyle,
                 color: colors.inkMuted,
                 marginLeft: 6,
               }}
             >
-              · By Deity
+              · {title.secondary.text}
             </Text>
           </View>
         </View>

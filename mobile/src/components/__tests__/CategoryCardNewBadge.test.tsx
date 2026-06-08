@@ -2,6 +2,12 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 import CategoryCard from '@/components/CategoryCard';
+import { GitaLanguageProvider } from '@/data/gita/language';
+
+jest.mock('@react-native-async-storage/async-storage', () => ({
+  getItem: jest.fn(() => Promise.resolve(null)),
+  setItem: jest.fn(() => Promise.resolve()),
+}));
 
 jest.mock('expo-linear-gradient', () => ({
   LinearGradient: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
@@ -11,7 +17,7 @@ jest.mock('expo-linear-gradient', () => ({
 function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
-    tree = TestRenderer.create(node);
+    tree = TestRenderer.create(<GitaLanguageProvider>{node}</GitaLanguageProvider>);
   });
   return tree;
 }
