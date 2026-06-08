@@ -11,6 +11,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import type { LibraryEntry } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
 type Props = {
   entry: LibraryEntry;
@@ -20,6 +22,13 @@ type Props = {
 export default function LibraryCard({ entry, onPress }: Props) {
   const { colors, typography, radii } = useTheme();
   const { isNew } = useNewContent();
+  const { lang } = useGitaLanguage();
+  const { primary, secondary } = orderTitlesByLanguage(lang, entry.nameHi, entry.nameEn, {
+    devPrimary: 17,
+    devSecondary: 14,
+    latPrimary: 17,
+    latSecondary: 13,
+  });
   const isActive = entry.status === 'active';
   const showNew = isActive && isNew(entry.id);
 
@@ -83,26 +92,28 @@ export default function LibraryCard({ entry, onPress }: Props) {
             styles.nameHi,
             {
               color: colors.ink,
-              fontFamily: typography.cardHindi.fontFamily,
-              fontSize: typography.cardHindi.fontSize,
+              fontFamily: primary.fontFamily,
+              fontSize: primary.fontSize,
+              fontStyle: primary.fontStyle,
               opacity: isActive ? 1 : 0.55,
             },
           ]}
         >
-          {entry.nameHi}
+          {primary.text}
         </Text>
         <Text
           style={[
             styles.nameEn,
             {
               color: colors.inkSoft,
-              fontFamily: typography.cardLatin.fontFamily,
-              fontSize: typography.cardLatin.fontSize,
+              fontFamily: secondary.fontFamily,
+              fontSize: secondary.fontSize,
+              fontStyle: secondary.fontStyle,
               opacity: isActive ? 1 : 0.55,
             },
           ]}
         >
-          {entry.nameEn}
+          {secondary.text}
         </Text>
         <Text
           style={[

@@ -20,6 +20,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
+import JumpToStartButton from '@/components/JumpToStartButton';
 import GitaVersePage from '@/components/GitaVersePage';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
@@ -161,6 +162,11 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
     [width]
   );
 
+  const goToStart = useCallback(() => {
+    listRef.current?.scrollToIndex({ index: offset, animated: true });
+    setCurrentIndex(0);
+  }, [offset]);
+
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
@@ -238,19 +244,21 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           </Text>
 
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
-            <Text
-              style={[
-                styles.counter,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.pageCounter.fontFamily,
-                  fontSize: typography.pageCounter.fontSize,
-                  fontStyle: 'italic',
-                },
-              ]}
-            >
-              {currentIndex + 1} / {verseCount}
-            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <Text
+                style={[
+                  styles.counter,
+                  {
+                    color: colors.inkMuted,
+                    fontFamily: typography.pageCounter.fontFamily,
+                    fontSize: typography.pageCounter.fontSize,
+                    fontStyle: 'italic',
+                  },
+                ]}
+              >
+                {currentIndex + 1} / {verseCount}
+              </Text>
+            </View>
           </View>
         </View>
 
@@ -351,6 +359,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             style={styles.list}
           />
 
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

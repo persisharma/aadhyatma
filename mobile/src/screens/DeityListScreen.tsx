@@ -3,6 +3,8 @@ import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { library, type LibraryEntry } from '@/data/texts';
 import { deities } from '@/data/deities';
 import { getDeityBackground } from '@/data/backgrounds';
@@ -18,7 +20,8 @@ import type { HomeStackParamList } from '@/navigation/types';
 type Props = NativeStackScreenProps<HomeStackParamList, 'DeityList'>;
 
 export default function DeityListScreen({ navigation, route }: Props) {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, spacing } = useTheme();
+  const { lang } = useGitaLanguage();
   const { deityId } = route.params;
   const { getProgress, clearProgress, isLoading } = useReadingProgress();
   const { markSeen } = useNewContent();
@@ -26,6 +29,12 @@ export default function DeityListScreen({ navigation, route }: Props) {
 
   const backgroundImage = useMemo(() => getDeityBackground(deityId), [deityId]);
   const deityMeta = deities.find((d) => d.id === deityId);
+  const title = orderTitlesByLanguage(lang, deityMeta?.nameHi ?? '', deityMeta?.nameEn ?? '', {
+    devPrimary: 16,
+    devSecondary: 13,
+    latPrimary: 16,
+    latSecondary: 13,
+  });
   const items = library.filter(
     (e) => !e.hidden && e.deities.includes(deityId)
   );
@@ -70,22 +79,24 @@ export default function DeityListScreen({ navigation, route }: Props) {
           <View style={styles.titleRow}>
             <Text
               style={{
-                fontFamily: typography.readerTitle.fontFamily,
-                fontSize: 16,
+                fontFamily: title.primary.fontFamily,
+                fontSize: title.primary.fontSize,
+                fontStyle: title.primary.fontStyle,
                 color: colors.ink,
               }}
             >
-              {deityMeta?.nameHi ?? ''}
+              {title.primary.text}
             </Text>
             <Text
               style={{
-                fontFamily: 'CormorantGaramond_400Regular_Italic',
-                fontSize: 13,
+                fontFamily: title.secondary.fontFamily,
+                fontSize: title.secondary.fontSize,
+                fontStyle: title.secondary.fontStyle,
                 color: colors.inkMuted,
                 marginLeft: 6,
               }}
             >
-              · {deityMeta?.nameEn ?? ''}
+              · {title.secondary.text}
             </Text>
           </View>
         </View>
