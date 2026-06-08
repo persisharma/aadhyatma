@@ -30,5 +30,5 @@ export const deities: readonly DeityMeta[] = [
   { id: 'hanuman', nameHi: 'श्री हनुमान', nameEn: 'Shri Hanuman', iconKey: 'gada' },
   { id: 'durga', nameHi: 'माँ दुर्गा', nameEn: 'Maa Durga', iconKey: 'lotus' },
   { id: 'ganesha', nameHi: 'श्री गणेश', nameEn: 'Shri Ganesha', iconKey: 'modak' },
-  { id: 'savitr', nameHi: 'सवितृ देव', nameEn: 'Savitr Deva', iconKey: 'surya' },
+  { id: 'savitr', nameHi: 'माँ गायत्री', nameEn: 'Maa Gayatri', iconKey: 'surya' },
 ];

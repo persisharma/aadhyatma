@@ -27,12 +27,14 @@ import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
 import { RoutineProvider } from '@/contexts/RoutineContext';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
+import { NewContentProvider } from '@/contexts/NewContentContext';
 import {
   NotificationPreferencesProvider,
   configureForegroundNotificationHandler,
 } from '@/contexts/NotificationPreferencesContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
+import UpdateReadyModal from '@/components/UpdateReadyModal';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
@@ -122,21 +124,24 @@ export default function App() {
           <GitaLanguageProvider>
             <BookmarksProvider>
               <UserActivityProvider>
-                <ReadingProgressProvider>
-                  <JapamCounterProvider>
-                    <RoutineProvider>
+                <NewContentProvider>
+                  <ReadingProgressProvider>
+                    <JapamCounterProvider>
+                      <RoutineProvider>
                       <NotificationPreferencesProvider>
                         <ShareProvider>
                           <NavigationContainer ref={navigationRef}>
                             <StatusBar style="dark" />
                             <RootNavigator />
                             <ReminderOptInModal />
+                            <UpdateReadyModal />
                           </NavigationContainer>
                         </ShareProvider>
                       </NotificationPreferencesProvider>
-                    </RoutineProvider>
-                  </JapamCounterProvider>
-                </ReadingProgressProvider>
+                      </RoutineProvider>
+                    </JapamCounterProvider>
+                  </ReadingProgressProvider>
+                </NewContentProvider>
               </UserActivityProvider>
             </BookmarksProvider>
           </GitaLanguageProvider>

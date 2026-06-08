@@ -54,12 +54,8 @@
       "id": "gs-2-2",
       "chapter": 2,
       "number": 2,
-      "sanskrit": [
-        "ऋतं वच्मि। सत्यं वच्मि॥ २॥"
-      ],
-      "linesEn": [
-        "Ritam vachmi. Satyam vachmi. 2."
-      ],
+      "sanskrit": ["ऋतं वच्मि। सत्यं वच्मि॥ २॥"],
+      "linesEn": ["Ritam vachmi. Satyam vachmi. 2."],
       "meaningHi": "मैं ऋत (ब्रह्माण्डीय सत्य, प्राकृतिक नियम) बोलता हूँ। मैं सत्य (वास्तविक सत्य) बोलता हूँ। यह उपनिषद अध्ययन से पूर्व शिष्य की वैदिक शपथ है।",
       "meaningEn": "I speak Rta (cosmic truth, natural law). I speak Satya (factual truth). This is the Vedic oath taken by the student before commencing the study of the Upanishad."
     },
@@ -180,7 +176,7 @@
         "Etattava manusvaroopam. Gakaarah poorvaroopam.",
         "Akaaro madhyamaroopam. Anusvaara-schaantyaroopam.",
         "Binduruttararoopam. Naadah sandhaanam. Samhitaa-sandhih.",
-        "Saishaa Ganeshavidyaa. Ganaka-riShiH. Nichridgaayatree-cchandah.",
+        "Saishaa Ganeshavidyaa. Ganaka-rishih. Nichridgaayatree-cchandah.",
         "Ganapatirdevataa. Om Gam Ganapataye Namah. 7."
       ],
       "meaningHi": "गणेश मन्त्र: सबसे पहले 'ग' (गणों का आदि अक्षर) उच्चारित करें, फिर वर्णों का आदि 'अ' उच्चारित करें। उसके बाद अनुस्वार (म्) लगाएँ, अर्धचन्द्र (बिन्दु) से सुशोभित करें, ओंकार (तार) से समृद्ध करें। यही आपके मन्त्र का स्वरूप है — 'ग' पूर्व रूप है, 'अ' मध्य रूप है, अनुस्वार अन्त्य रूप है, बिन्दु उत्तर रूप है, नाद सन्धान है। यही गणेश विद्या है। गणक ऋषि हैं, निचृद् गायत्री छन्द है, गणपति देवता हैं। ॐ गं गणपतये नमः।",
@@ -357,7 +353,12 @@
     }
   ],
   "source": {
-    "baseText": "sanskritdocuments.org/doc_ganesha/atharva.html, vachmi.com",
-    "retrievedOn": "2026-05-24"
+    "baseText": "Shri Ganapati Atharvashirsha, checked against Sanskrit Documents and Vaidika Vignanam.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_ganesha/atharva.html",
+      "https://vignanam.org/devanagari/ganapati-atharva-sheersham.html",
+      "https://sanskritdocuments.org/sanskrit/atharvashirsha/"
+    ],
+    "retrievedOn": "2026-05-30"
   }
 }

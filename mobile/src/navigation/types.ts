@@ -3,6 +3,7 @@ import type { ContentCategory, Deity } from '@/data/texts';
 export type TabParamList = {
   HomeTab: undefined;
   DailyBhaktiTab: undefined;
+  PanchangTab: undefined;
   MoreTab: undefined;
 };
 

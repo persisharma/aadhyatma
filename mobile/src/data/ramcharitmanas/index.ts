@@ -30,8 +30,8 @@ export type RamcharitmanasChapterSummary = {
   verseCount: number;
 };
 
-export const ramcharitmanasTitleHi = 'रामचरितमानस — बालकाण्ड';
-export const ramcharitmanasTitleEn = 'Ramcharitmanas — Balkand';
+export const ramcharitmanasTitleHi = 'रामचरितमानस मंगलाचरण';
+export const ramcharitmanasTitleEn = 'Ramcharitmanas Mangalacharan';
 
 export const ramcharitmanasChaptersManifest: readonly RamcharitmanasChapterSummary[] =
   manifest as RamcharitmanasChapterSummary[];

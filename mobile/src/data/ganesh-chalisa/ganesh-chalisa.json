@@ -6,10 +6,13 @@
   "language": "hi-en",
   "script": "Devanagari + Latin",
   "source": {
-    "baseText": "Traditional Ganesh Chalisa (Jai Ganpati Sadgun Sadan version)",
-    "devanagariReference": "Standard published editions",
-    "meaningsAttribution": "Generated with scholarly commentary",
-    "retrievedOn": "2026-05-08"
+    "baseText": "Traditional Ganesh Chalisa (Jai Ganpati Sadgun Sadan version), checked against Drik Panchang, HinduNidhi, and Bhakti Bharat.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/chalisa/lord-ganesha/shree-ganesha-chalisa.html?ck=1&lang=hi",
+      "https://hindunidhi.com/shri-ganesh-chalisa-hindi/",
+      "https://www.bhaktibharat.com/chalisa/shri-ganesh-chalisa"
+    ],
+    "retrievedOn": "2026-05-30"
   },
   "counts": {
     "openingDohas": 2,
@@ -18,48 +21,778 @@
     "totalVerses": 43
   },
   "verses": [
-    {"id": "opening-doha-1", "type": "doha", "section": "opening", "number": 1, "labelHi": "दोहा · १", "labelEn": "Doha · 1", "lines": ["जय गणपति सदगुण सदन, कविवर बदन कृपाल।", "विघ्न हरण मंगल करण, जय जय गिरिजालाल।।"], "linesEn": ["Jai Ganpati sadgun sadan, kavivar badan kripaal.", "Vighn haran mangal karan, jai jai Girijalaal."], "meaningHi": "सद्गुणों के धाम, कवियों में श्रेष्ठ मुख वाले, कृपालु गणपति की जय हो! विघ्नों को हरने वाले, मंगल करने वाले, गिरिजा (पार्वती) के लाल (पुत्र) — जय हो, जय हो!", "meaningEn": "Glory to Ganapati, abode of virtues, with the face of the chief poet, the merciful one! Remover of obstacles, creator of auspiciousness, son of Girija (Parvati) — victory, victory!"},
-    {"id": "opening-doha-2", "type": "doha", "section": "opening", "number": 2, "labelHi": "दोहा · २", "labelEn": "Doha · 2", "lines": ["जय जय जय गणपति गणराजू।", "मंगल भरण करण शुभ काजू।।"], "linesEn": ["Jai jai jai Ganpati Ganraajoo.", "Mangal bharan karan shubh kaajoo."], "meaningHi": "जय-जय-जय गणपति, गणों के राजा! मंगल भरने वाले, शुभ कार्य करने वाले!", "meaningEn": "Victory thrice to Ganapati, king of the Ganas! Filler of auspiciousness, doer of good deeds!"},
-    {"id": "chaupai-01", "type": "chaupai", "section": "body", "number": 1, "labelHi": "चौपाई · १", "labelEn": "Chaupai · 1", "lines": ["जय गजबदन सदन सुखदाता।", "विश्व विनायक बुद्धि विधाता।।"], "linesEn": ["Jai gajbadan sadan sukhdaata.", "Vishwa Vinaayak buddhi vidhaata."], "meaningHi": "गज (हाथी) मुख वाले, सुख के धाम, सुखदाता की जय! विश्व के विनायक (नेता), बुद्धि के विधाता!", "meaningEn": "Glory to the elephant-faced one, abode and giver of happiness! Leader of the world, bestower of intellect!"},
-    {"id": "chaupai-02", "type": "chaupai", "section": "body", "number": 2, "labelHi": "चौपाई · २", "labelEn": "Chaupai · 2", "lines": ["वक्रतुण्ड महाकाय सोहे।", "सूर्यकोटि प्रकाश मन मोहे।।"], "linesEn": ["Vakratund mahakaay sohe.", "Suryakoti prakaash man mohe."], "meaningHi": "वक्रतुण्ड (मुड़ी सूँड), महाकाय (विशाल शरीर) शोभित है। करोड़ों सूर्यों के प्रकाश से मन मोहित होता है।", "meaningEn": "The curved trunk and massive body look magnificent. The radiance of a billion suns enchants the mind."},
-    {"id": "chaupai-03", "type": "chaupai", "section": "body", "number": 3, "labelHi": "चौपाई · ३", "labelEn": "Chaupai · 3", "lines": ["राजत मणि मुक्तन उर माला।", "स्वर्ण मुकुट शिर ऊपर बाला।।"], "linesEn": ["Raajat mani muktan ur maala.", "Swarn mukut shir oopar baalaa."], "meaningHi": "वक्ष पर मणियों और मोतियों की माला राजित (शोभित) है। सिर पर स्वर्ण मुकुट शोभित है।", "meaningEn": "A garland of gems and pearls adorns the chest. A golden crown graces the head above."},
-    {"id": "chaupai-04", "type": "chaupai", "section": "body", "number": 4, "labelHi": "चौपाई · ४", "labelEn": "Chaupai · 4", "lines": ["भाल तिलक सोहत है कैसा।", "उदित भान मध्य दिवस भा जैसा।।"], "linesEn": ["Bhaal tilak sohat hai kaisaa.", "Udit bhaan madhya divas bhaa jaisaa."], "meaningHi": "ललाट पर तिलक कैसा शोभित है! जैसे मध्याह्न में उदित सूर्य।", "meaningEn": "How magnificent the tilak on the forehead looks! Like the risen sun at midday."},
-    {"id": "chaupai-05", "type": "chaupai", "section": "body", "number": 5, "labelHi": "चौपाई · ५", "labelEn": "Chaupai · 5", "lines": ["चवी गैरीचन्दन की ऊँचें।", "कुंकुम विलेपन सोहत मूंछें।।"], "linesEn": ["Chavee gaireechandan kee oonchein.", "Kunkum vilepan sohat moonchein."], "meaningHi": "गोरोचन-चन्दन की शोभा ऊँची है। कुंकुम का लेप सोहता है, मूँछें सुशोभित हैं।", "meaningEn": "The splendor of gorochana-sandal paste is elevated. Kumkum anointing looks beautiful, mustache adorned."},
-    {"id": "chaupai-06", "type": "chaupai", "section": "body", "number": 6, "labelHi": "चौपाई · ६", "labelEn": "Chaupai · 6", "lines": ["श्रवण कुण्डल शोभित प्यारे।", "तरुण अरुण सम कान्ति तुम्हारे।।"], "linesEn": ["Shravan kundal shobhit pyaare.", "Tarun arun sam kaanti tumhaare."], "meaningHi": "कानों में कुण्डल सुशोभित और प्यारे हैं। आपकी कान्ति (चमक) तरुण (नवोदित) अरुण (सूर्य) के समान है।", "meaningEn": "Earrings adorn the ears beautifully. Your radiance is like the young rising sun."},
-    {"id": "chaupai-07", "type": "chaupai", "section": "body", "number": 7, "labelHi": "चौपाई · ७", "labelEn": "Chaupai · 7", "lines": ["सूँड सुन्दर टेढ़ी सोहत।", "चाँद सी झलक मूँद मन मोहत।।"], "linesEn": ["Soond sundar tedhee sohat.", "Chaand see jhalak moond man mohat."], "meaningHi": "सुन्दर टेढ़ी सूँड शोभित है। चाँद सी झलक मन को मोहित करती है।", "meaningEn": "The beautiful curved trunk looks magnificent. Its moonlike gleam captivates the mind."},
-    {"id": "chaupai-08", "type": "chaupai", "section": "body", "number": 8, "labelHi": "चौपाई · ८", "labelEn": "Chaupai · 8", "lines": ["कनक समान देह अति शोभा।", "भक्तन मन कमल करत विलोभा।।"], "linesEn": ["Kanak samaan deh ati shobha.", "Bhaktan man kamal karat vilobhaa."], "meaningHi": "स्वर्ण (सोने) के समान शरीर की अत्यन्त शोभा है। भक्तों के मन-कमल को मोहित (विलोभित) करती है।", "meaningEn": "The golden body has extreme splendor. It enchants the lotus-hearts of devotees."},
-    {"id": "chaupai-09", "type": "chaupai", "section": "body", "number": 9, "labelHi": "चौपाई · ९", "labelEn": "Chaupai · 9", "lines": ["मोदक प्रिय मुख चारु सजाई।", "गुड़धानी को भोग लगाई।।"], "linesEn": ["Modak priya mukh chaaru sajaaee.", "Guddhaanee ko bhog lagaaee."], "meaningHi": "मोदक प्रिय हैं, सुन्दर मुख सजा है। गुड़-धानी (गुड़ और चना) का भोग लगाया जाता है।", "meaningEn": "Modak (sweet dumpling) is beloved, the beautiful mouth is adorned. Offerings of jaggery and roasted grain are made."},
-    {"id": "chaupai-10", "type": "chaupai", "section": "body", "number": 10, "labelHi": "चौपाई · १०", "labelEn": "Chaupai · 10", "lines": ["चामर बीजन सोहत कैसे।", "श्वेत छत्र शिर धरे है ऐसे।।"], "linesEn": ["Chaamar beejan sohat kaise.", "Shwet chhatr shir dhare hai aise."], "meaningHi": "चामर और पंखे कैसे शोभित हैं! श्वेत छत्र सिर पर ऐसे धारण किया है।", "meaningEn": "How beautiful the flywhisks and fans look! A white parasol is held over the head thus."},
-    {"id": "chaupai-11", "type": "chaupai", "section": "body", "number": 11, "labelHi": "चौपाई · ११", "labelEn": "Chaupai · 11", "lines": ["महिमा अपरम्पार तुम्हारी।", "जय जय जय त्रिपुरारि दुलारी।।"], "linesEn": ["Mahima aparampaar tumhaaree.", "Jai jai jai Tripuraari dulaaree."], "meaningHi": "आपकी महिमा अपरम्पार (असीम) है। जय-जय-जय, त्रिपुरारि (शिव) के दुलारे!", "meaningEn": "Your glory is infinite. Victory! Victory! Beloved of Tripurari (Shiva)!"},
-    {"id": "chaupai-12", "type": "chaupai", "section": "body", "number": 12, "labelHi": "चौपाई · १२", "labelEn": "Chaupai · 12", "lines": ["सिन्दूरी तनु गजमुख सोहे।", "सब के मन अभिमत फल दोहे।।"], "linesEn": ["Sindooree tanu gajmukh sohe.", "Sab ke man abhimat phal dohe."], "meaningHi": "सिन्दूर-रंग शरीर और गजमुख (हाथी का मुख) शोभित है। सबके मन के अभिमत (इच्छित) फल देते हैं।", "meaningEn": "The vermilion-colored body with elephant face looks splendid. You grant the desired fruits of everyone's heart."},
-    {"id": "chaupai-13", "type": "chaupai", "section": "body", "number": 13, "labelHi": "चौपाई · १३", "labelEn": "Chaupai · 13", "lines": ["ऐरावत सम गज को रूपा।", "तेज प्रताप महा जगभूपा।।"], "linesEn": ["Airaavat sam gaj ko roopaa.", "Tej prataap mahaa jagbhoopaa."], "meaningHi": "ऐरावत (इन्द्र के हाथी) के समान गज (हाथी) का रूप है। तेज और प्रताप — महान जगत के भूप (राजा)!", "meaningEn": "Form like Airavata (Indra's elephant). Brilliance and might — great emperor of the world!"},
-    {"id": "chaupai-14", "type": "chaupai", "section": "body", "number": 14, "labelHi": "चौपाई · १४", "labelEn": "Chaupai · 14", "lines": ["एकदन्त दयाल विलम्बी।", "कर्णिकार कुसुमित दम्बी।।"], "linesEn": ["Ekdant dayaal vilambee.", "Karnikaar kusumit dambee."], "meaningHi": "एकदन्त (एक दाँत वाले), दयालु, विलम्बी (लम्बी सूँड वाले)। कर्णिकार (कनेर) पुष्पों से सुशोभित।", "meaningEn": "Single-tusked, compassionate, with long trunk. Decorated with Karnikara (oleander) blossoms."},
-    {"id": "chaupai-15", "type": "chaupai", "section": "body", "number": 15, "labelHi": "चौपाई · १५", "labelEn": "Chaupai · 15", "lines": ["मूषक वाहन सोहत कैसे।", "लंबोदर बदन जग हित ऐसे।।"], "linesEn": ["Mooshak vaahan sohat kaise.", "Lambodar badan jag hit aise."], "meaningHi": "मूषक (चूहा) वाहन कैसा शोभित है! लम्बोदर (बड़े पेट वाले) — जगत के हित में ऐसे हैं।", "meaningEn": "How the mouse vehicle looks splendid! Large-bellied one — thus existing for the welfare of the world."},
-    {"id": "chaupai-16", "type": "chaupai", "section": "body", "number": 16, "labelHi": "चौपाई · १६", "labelEn": "Chaupai · 16", "lines": ["सब के ऊपर तुम्हरो राजा।", "करो कृपा करो हम काजा।।"], "linesEn": ["Sab ke oopar tumhro raaja.", "Karo kripa karo ham kaajaa."], "meaningHi": "सबके ऊपर आपका राज है। कृपा कीजिए, हमारे कार्य सिद्ध कीजिए।", "meaningEn": "Your sovereignty is over all. Show mercy, accomplish our tasks."},
-    {"id": "chaupai-17", "type": "chaupai", "section": "body", "number": 17, "labelHi": "चौपाई · १७", "labelEn": "Chaupai · 17", "lines": ["पार्वती पुत्र कमल नयनन को।", "शरण तुम्हारी सकल जनन को।।"], "linesEn": ["Paarvatee putra kamal naynan ko.", "Sharan tumhaaree sakal janan ko."], "meaningHi": "पार्वती-पुत्र, कमल-नयन! सकल (सभी) जनों को आपकी शरण है।", "meaningEn": "Son of Parvati, lotus-eyed one! All people take refuge in you."},
-    {"id": "chaupai-18", "type": "chaupai", "section": "body", "number": 18, "labelHi": "चौपाई · १८", "labelEn": "Chaupai · 18", "lines": ["प्रथम पूजे तुम्हें सुर ज्ञानी।", "विद्यारम्भ करें सब प्रानी।।"], "linesEn": ["Pratham pooje tumhein sur gyaanee.", "Vidyaarambh karein sab praanee."], "meaningHi": "देवता और ज्ञानी — सभी पहले आपको पूजते हैं। सभी प्राणी विद्या का आरम्भ (करने से पहले) आपको पूजते हैं।", "meaningEn": "Gods and the wise worship you first. All beings worship you before beginning education."},
-    {"id": "chaupai-19", "type": "chaupai", "section": "body", "number": 19, "labelHi": "चौपाई · १९", "labelEn": "Chaupai · 19", "lines": ["कठिन कुसंगति पाप प्रहारो।", "आशा पूरण तुम कृपाधारो।।"], "linesEn": ["Kathin kusangati paap praharo.", "Aasha pooran tum kripaadhaaro."], "meaningHi": "कठिन कुसंगति (बुरी संगत) और पापों पर प्रहार कीजिए। आशा पूर्ण कीजिए — आप कृपा के धार (स्रोत) हैं।", "meaningEn": "Strike down bad company and sins. Fulfill hopes — you are the stream of mercy."},
-    {"id": "chaupai-20", "type": "chaupai", "section": "body", "number": 20, "labelHi": "चौपाई · २०", "labelEn": "Chaupai · 20", "lines": ["पाठ करें चालीसा यह होई।", "मिटे विकट संकट सब कोई।।"], "linesEn": ["Paath karein chaaleesaa yah hoee.", "Mite vikat sankat sab koee."], "meaningHi": "जो इस चालीसा का पाठ करता है, उसके सभी विकट (भयंकर) संकट मिट जाते हैं।", "meaningEn": "One who recites this Chalisa — all their terrible crises are destroyed."},
-    {"id": "chaupai-21", "type": "chaupai", "section": "body", "number": 21, "labelHi": "चौपाई · २१", "labelEn": "Chaupai · 21", "lines": ["तू ही माता तू ही पिता है।", "तू ही दाता सबका हिता है।।"], "linesEn": ["Too hee maata too hee pitaa hai.", "Too hee daata sabka hitaa hai."], "meaningHi": "आप ही माता हैं, आप ही पिता हैं। आप ही दाता हैं, सबके हितकारी हैं।", "meaningEn": "You alone are mother, you alone are father. You alone are the giver, the well-wisher of all."},
-    {"id": "chaupai-22", "type": "chaupai", "section": "body", "number": 22, "labelHi": "चौपाई · २२", "labelEn": "Chaupai · 22", "lines": ["तू ही रक्षक कहूँ न दूजा।", "आन देव कोऊ मनहिं न पूजा।।"], "linesEn": ["Too hee rakshak kahoon na doojaa.", "Aan dev kooo manaheen na poojaa."], "meaningHi": "आप ही रक्षक हैं, कहीं दूसरा नहीं। मन में अन्य देव की पूजा नहीं (केवल आप)।", "meaningEn": "You alone are the protector, no other. In my mind I worship no other deity (only you)."},
-    {"id": "chaupai-23", "type": "chaupai", "section": "body", "number": 23, "labelHi": "चौपाई · २३", "labelEn": "Chaupai · 23", "lines": ["सिद्धि बुद्धि तव चरणन की दासी।", "अष्ट सिद्धि नव निधि के रासी।।"], "linesEn": ["Siddhi Buddhi tav charanan kee daasee.", "Ashta siddhi nav nidhi ke raasee."], "meaningHi": "सिद्धि और बुद्धि (गणेश की दो पत्नियाँ) आपके चरणों की दासी हैं। आप अष्ट सिद्धियों और नव निधियों के स्वामी हैं।", "meaningEn": "Siddhi and Buddhi (Ganesha's two consorts) are servants at your feet. You are the master of eight Siddhis and nine Nidhis."},
-    {"id": "chaupai-24", "type": "chaupai", "section": "body", "number": 24, "labelHi": "चौपाई · २४", "labelEn": "Chaupai · 24", "lines": ["नित नव मंगल कार्य करो तुम।", "भक्तन के संकट सब हरो तुम।।"], "linesEn": ["Nit nav mangal kaarya karo tum.", "Bhaktan ke sankat sab haro tum."], "meaningHi": "नित्य नए मंगल कार्य कीजिए। भक्तों के सब संकट हरिए।", "meaningEn": "Daily perform new auspicious works. Remove all crises of devotees."},
-    {"id": "chaupai-25", "type": "chaupai", "section": "body", "number": 25, "labelHi": "चौपाई · २५", "labelEn": "Chaupai · 25", "lines": ["विद्या धन दो सुत सम्पत्ती।", "सुख शान्ति रहे जीवन पद्धती।।"], "linesEn": ["Vidya dhan do sut sampatee.", "Sukh shaanti rahe jeevan paddhatee."], "meaningHi": "विद्या, धन, पुत्र, सम्पत्ति दीजिए। सुख-शान्ति जीवन-पद्धति में रहे।", "meaningEn": "Grant knowledge, wealth, sons, prosperity. May happiness and peace remain in the way of life."},
-    {"id": "chaupai-26", "type": "chaupai", "section": "body", "number": 26, "labelHi": "चौपाई · २६", "labelEn": "Chaupai · 26", "lines": ["अंत काल तव शरण जो आवे।", "सो नर अमरपुर मग पावे।।"], "linesEn": ["Ant kaal tav sharan jo aave.", "So nar amarpura mag paave."], "meaningHi": "अन्त काल (मृत्यु समय) में जो आपकी शरण आता है, वह मनुष्य अमरपुर (स्वर्ग/मोक्ष) का मार्ग पाता है।", "meaningEn": "One who takes your refuge at the final hour — that person attains the path to the immortal abode."},
-    {"id": "chaupai-27", "type": "chaupai", "section": "body", "number": 27, "labelHi": "चौपाई · २७", "labelEn": "Chaupai · 27", "lines": ["जो यह पाठ गणेश चालीसा।", "पावे वांछित फल अनुदिन तीसा।।"], "linesEn": ["Jo yah paath Ganesh Chaaleesaa.", "Paave vaanchhit phal anudin teesaa."], "meaningHi": "जो यह गणेश चालीसा का पाठ करता है, वह प्रतिदिन (अनुदिन) वाञ्छित (इच्छित) फल तीस (दिन में / शीघ्र) पाता है।", "meaningEn": "One who recites this Ganesh Chalisa attains desired fruits daily within thirty days."},
-    {"id": "chaupai-28", "type": "chaupai", "section": "body", "number": 28, "labelHi": "चौपाई · २८", "labelEn": "Chaupai · 28", "lines": ["एकादशी व्रत करो विशेषा।", "गणपति पूजे सब दुख लेषा।।"], "linesEn": ["Ekaadashee vrat karo visheshaa.", "Ganpati pooje sab dukh leshaa."], "meaningHi": "एकादशी (ग्यारस) का व्रत विशेष रूप से कीजिए। गणपति पूजने से सब दुख (का लेश भी) दूर होते हैं।", "meaningEn": "Observe Ekadashi fast with special devotion. By worshipping Ganapati, all traces of sorrow vanish."},
-    {"id": "chaupai-29", "type": "chaupai", "section": "body", "number": 29, "labelHi": "चौपाई · २९", "labelEn": "Chaupai · 29", "lines": ["संकट मोचन भये गणेशा।", "ऐसी दया करो गणनेशा।।"], "linesEn": ["Sankat mochan bhaye Ganeshaa.", "Aisee daya karo Ganeshaa."], "meaningHi": "गणेश जी संकटमोचन (संकट से मुक्ति देने वाले) हैं। हे गणनेश! ऐसी ही दया कीजिए।", "meaningEn": "Ganesha is the liberator from crises. O Lord of Ganas! Show such mercy."},
-    {"id": "chaupai-30", "type": "chaupai", "section": "body", "number": 30, "labelHi": "चौपाई · ३०", "labelEn": "Chaupai · 30", "lines": ["लड्डू भोग लगावें नित नवा।", "सन्मुख होत मिले सुख सबा।।"], "linesEn": ["Laddoo bhog lagaavein nit navaa.", "Sanmukh hot mile sukh sabaa."], "meaningHi": "नित्य नये लड्डू का भोग लगाएँ। सम्मुख होने से (गणेश की कृपा से) सब सुख मिलते हैं।", "meaningEn": "Offer fresh laddoos daily. By being in His presence, all happiness is obtained."},
-    {"id": "chaupai-31", "type": "chaupai", "section": "body", "number": 31, "labelHi": "चौपाई · ३१", "labelEn": "Chaupai · 31", "lines": ["ब्रह्मा विष्णु शिव ध्यान लगावे।", "अगणित देव गणपति गुण गावे।।"], "linesEn": ["Brahma Vishnu Shiv dhyaan lagaave.", "Aganit dev Ganpati gun gaave."], "meaningHi": "ब्रह्मा, विष्णु, शिव — सभी गणपति का ध्यान लगाते हैं। अगणित (असंख्य) देवता गणपति के गुण गाते हैं।", "meaningEn": "Brahma, Vishnu, Shiva — all meditate on Ganapati. Countless gods sing the virtues of Ganapati."},
-    {"id": "chaupai-32", "type": "chaupai", "section": "body", "number": 32, "labelHi": "चौपाई · ३२", "labelEn": "Chaupai · 32", "lines": ["सदा रहो तुम हमारे पासा।", "करो कृपा तुम पूरो आसा।।"], "linesEn": ["Sada raho tum hamaare paasaa.", "Karo kripa tum pooro aasaa."], "meaningHi": "सदा हमारे पास रहिए। कृपा करके हमारी आशा पूरी कीजिए।", "meaningEn": "Always remain near us. By your mercy, fulfill our hopes."},
-    {"id": "chaupai-33", "type": "chaupai", "section": "body", "number": 33, "labelHi": "चौपाई · ३३", "labelEn": "Chaupai · 33", "lines": ["जो करत नित गणेश उपासा।", "ताको सदा मिले मन आसा।।"], "linesEn": ["Jo karat nit Ganesh upaasaa.", "Taako sada mile man aasaa."], "meaningHi": "जो नित्य गणेश की उपासना करता है, उसके मन की आशा सदा पूर्ण होती है।", "meaningEn": "One who daily worships Ganesha — their heart's desires are always fulfilled."},
-    {"id": "chaupai-34", "type": "chaupai", "section": "body", "number": 34, "labelHi": "चौपाई · ३४", "labelEn": "Chaupai · 34", "lines": ["विघ्नविनाशन गिरिजानन्दन।", "जय जय ज्ञान प्रदाता चन्दन।।"], "linesEn": ["Vighnavinashan Girijananadan.", "Jai jai gyaan pradaata chandan."], "meaningHi": "विघ्नविनाशक, गिरिजा (पार्वती) के आनन्द (नन्दन — पुत्र)! ज्ञान प्रदाता, चन्दन (सुगन्धित/शीतल) — जय हो, जय हो!", "meaningEn": "Destroyer of obstacles, delight of Girija! Giver of knowledge, cool as sandalwood — victory, victory!"},
-    {"id": "chaupai-35", "type": "chaupai", "section": "body", "number": 35, "labelHi": "चौपाई · ३५", "labelEn": "Chaupai · 35", "lines": ["मोदक प्रिय लड्डू का शौका।", "भुवन चतुर्दश में तव धौंका।।"], "linesEn": ["Modak priya laddoo ka shaukaa.", "Bhuvan chaturdash mein tav dhaunka."], "meaningHi": "मोदक प्रिय, लड्डू के शौकीन! चतुर्दश (चौदह) भुवनों में आपकी धाक (प्रताप) है।", "meaningEn": "Lover of modak, fond of laddoo! Your might resounds across the fourteen worlds."},
-    {"id": "chaupai-36", "type": "chaupai", "section": "body", "number": 36, "labelHi": "चौपाई · ३६", "labelEn": "Chaupai · 36", "lines": ["प्रथम तिलक गणपति को कीजे।", "पीछे और कार्य सब कीजे।।"], "linesEn": ["Pratham tilak Ganpati ko keeje.", "Peechhe aur kaarya sab keeje."], "meaningHi": "पहले गणपति को तिलक (पूजा) कीजिए। उसके बाद अन्य सब कार्य कीजिए।", "meaningEn": "First apply tilak (worship) to Ganapati. Then proceed with all other tasks."},
-    {"id": "chaupai-37", "type": "chaupai", "section": "body", "number": 37, "labelHi": "चौपाई · ३७", "labelEn": "Chaupai · 37", "lines": ["करो कार्य सिद्धि अमित जनन की।", "तब लो राह सीधी परवन की।।"], "linesEn": ["Karo kaarya siddhi amit janan kee.", "Tab lo raah seedhee parvan kee."], "meaningHi": "असंख्य (अमित) जनों के कार्य सिद्ध कीजिए। तब सीधी राह (मार्ग) — परवान (सफलता) मिलती है।", "meaningEn": "Accomplish the tasks of countless people. Then the straight path of success is found."},
-    {"id": "chaupai-38", "type": "chaupai", "section": "body", "number": 38, "labelHi": "चौपाई · ३८", "labelEn": "Chaupai · 38", "lines": ["गणेश भजन रसिक ज्ञान भण्डारा।", "करें सदा गुणगान तुम्हारा।।"], "linesEn": ["Ganesh bhajan rasik gyaan bhandaaraa.", "Karein sada guṇagaan tumhaaraa."], "meaningHi": "गणेश-भजन के रसिक, ज्ञान के भण्डार! सदा आपका गुणगान करते हैं।", "meaningEn": "Those who relish Ganesha's devotion, treasuries of knowledge! They always sing your praises."},
-    {"id": "chaupai-39", "type": "chaupai", "section": "body", "number": 39, "labelHi": "चौपाई · ३९", "labelEn": "Chaupai · 39", "lines": ["गणपति तुमको प्रणाम हमारा।", "अमित करो कृपा तुम सबारा।।"], "linesEn": ["Ganpati tumko pranaam hamaaraa.", "Amit karo kripa tum sabaaraa."], "meaningHi": "हे गणपति! आपको हमारा प्रणाम। अमित (अपार) कृपा कीजिए — आप सबके आरा (सहारे) हैं।", "meaningEn": "O Ganapati! Our salutations to you. Show infinite mercy — you are the support of all."},
-    {"id": "chaupai-40", "type": "chaupai", "section": "body", "number": 40, "labelHi": "चौपाई · ४०", "labelEn": "Chaupai · 40", "lines": ["जय जय श्री गणनायक देवा।", "सदा करें तुम्हारी सब सेवा।।"], "linesEn": ["Jai jai Shree Gananaayak Devaa.", "Sada karein tumhaaree sab sevaa."], "meaningHi": "जय-जय श्री गणनायक देव! सभी सदा आपकी सेवा करते हैं।", "meaningEn": "Victory to Lord Gananayaka! All always serve you."},
-    {"id": "closing-doha", "type": "doha", "section": "closing", "labelHi": "दोहा", "labelEn": "Doha", "lines": ["पाठ करे चालीसा यह, भक्ति सहित जो कोय।", "गणपति सदा प्रसन्न रहें, सुख सम्पत्ति सब होय।।"], "linesEn": ["Paath kare chaaleesaa yah, bhakti sahit jo koy.", "Ganpati sada prasanna rahein, sukh sampatti sab hoy."], "meaningHi": "जो कोई भक्ति सहित इस चालीसा का पाठ करता है, गणपति सदा प्रसन्न रहते हैं — सब सुख-सम्पत्ति प्राप्त होती है।", "meaningEn": "Whoever recites this Chalisa with devotion — Ganapati remains ever pleased, and all happiness and prosperity are obtained."}
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "जय गणपति सदगुण सदन,",
+        "कविवर बदन कृपाल।"
+      ],
+      "linesEn": [
+        "Jaya ganapati sadaguna sadana,",
+        "Kavivara badana kripaala."
+      ],
+      "meaningHi": "हे सद्गुणों के धाम गणपति, आपकी जय हो; आप कृपालु हैं और श्रेष्ठ कविजन आपका गुणगान करते हैं।",
+      "meaningEn": "Victory to Ganapati, abode of all virtues; gracious one, whose glory the greatest of poets sing."
+    },
+    {
+      "id": "opening-doha-2",
+      "type": "doha",
+      "section": "opening",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "विघ्न हरण मंगल करण,",
+        "जय जय गिरिजालाल॥"
+      ],
+      "linesEn": [
+        "Vighna harana mangala karana,",
+        "Jaya jaya girijaalaala."
+      ],
+      "meaningHi": "आप विघ्नों को हरने वाले और मंगल करने वाले हैं; हे गिरिजा (पार्वती) के लाल, आपकी जय हो, जय हो।",
+      "meaningEn": "Remover of obstacles and bringer of auspiciousness — victory, victory to you, beloved son of Girija (Parvati)!"
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जय जय जय गणपति गणराजू।",
+        "मंगल भरण करण शुभः काजू॥"
+      ],
+      "linesEn": [
+        "Jaya jaya jaya ganapati ganaraajoo.",
+        "Mangala bharana karana shubhah kaajoo."
+      ],
+      "meaningHi": "हे गणों के राजा गणपति, आपकी बार-बार जय हो; आप मंगल से परिपूर्ण हैं और शुभ कार्यों को सिद्ध करते हैं।",
+      "meaningEn": "Victory, victory, victory to Ganapati, lord of the ganas; you are full of auspiciousness and bring every good work to fruition."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "जै गजबदन सदन सुखदाता।",
+        "विश्व विनायका बुद्धि विधाता॥"
+      ],
+      "linesEn": [
+        "Jai gajabadana sadana sukhadaataa.",
+        "Vishva vinaayakaa buddhi vidhaataa."
+      ],
+      "meaningHi": "हे गजमुख, आप सुख के धाम और दाता हैं; आप विश्व के विनायक और बुद्धि के विधाता हैं।",
+      "meaningEn": "Hail, elephant-faced one, abode and giver of joy; lord of the universe and bestower of intellect."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "वक्र तुण्ड शुची शुण्ड सुहावना।",
+        "तिलक त्रिपुण्ड भाल मन भावन॥"
+      ],
+      "linesEn": [
+        "Vakra tunda shuchee shunda suhaavanaa.",
+        "Tilaka tripunda bhaala mana bhaavana."
+      ],
+      "meaningHi": "आपकी सूँड टेढ़ी, पवित्र और बड़ी सुहावनी है; मस्तक पर त्रिपुण्ड तिलक मन को भाता है।",
+      "meaningEn": "Your curved trunk is pure and lovely; the three-lined tilak upon your brow delights the heart."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "राजत मणि मुक्तन उर माला।",
+        "स्वर्ण मुकुट शिर नयन विशाला॥"
+      ],
+      "linesEn": [
+        "Raajata mani muktana ura maalaa.",
+        "Svarna mukuta shira nayana vishaalaa."
+      ],
+      "meaningHi": "आपके वक्षस्थल पर मणि-मोतियों की माला सुशोभित है; सिर पर स्वर्ण मुकुट है और नेत्र विशाल हैं।",
+      "meaningEn": "A garland of gems and pearls graces your chest; a golden crown rests upon your head and your eyes are large."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "पुस्तक पाणि कुठार त्रिशूलं।",
+        "मोदक भोग सुगन्धित फूलं॥"
+      ],
+      "linesEn": [
+        "Pustaka paani kuthaara trishoolan.",
+        "Modaka bhoga sugandhita phoolan."
+      ],
+      "meaningHi": "आपके हाथों में पुस्तक, कुठार (फरसा) और त्रिशूल हैं; आपको मोदक का भोग और सुगन्धित पुष्प प्रिय हैं।",
+      "meaningEn": "In your hands you hold a book, an axe and a trident; you delight in offerings of modak and fragrant flowers."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "सुन्दर पीताम्बर तन साजित।",
+        "चरण पादुका मुनि मन राजित॥"
+      ],
+      "linesEn": [
+        "Sundara peetaambara tana saajita.",
+        "Charana paadukaa muni mana raajita."
+      ],
+      "meaningHi": "आपके शरीर पर सुन्दर पीताम्बर सुशोभित है; आपकी चरण-पादुकाएँ मुनियों के मन में बसती हैं।",
+      "meaningEn": "A beautiful yellow garment adorns your body; your sandalled feet reign in the hearts of the sages."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "धनि शिव सुवन षडानन भ्राता।",
+        "गौरी लालन विश्व-विख्याता॥"
+      ],
+      "linesEn": [
+        "Dhani shiva suvana shadaanana bhraataa.",
+        "Gauree laalana vishva-vikhyaataa."
+      ],
+      "meaningHi": "आप धन्य शिवपुत्र और षडानन (कार्तिकेय) के भ्राता हैं; गौरी के दुलारे और विश्वविख्यात हैं।",
+      "meaningEn": "Blessed son of Shiva and brother of the six-faced Kartikeya; darling of Gauri, renowned throughout the world."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "ऋद्धि-सिद्धि तव चंवर सुधारे।",
+        "मुषक वाहन सोहत द्वारे॥"
+      ],
+      "linesEn": [
+        "Riddhi-siddhi tava chanvara sudhaare.",
+        "Mushaka vaahana sohata dvaare."
+      ],
+      "meaningHi": "ऋद्धि और सिद्धि आप पर चँवर डुलाती हैं; आपका मूषक वाहन द्वार पर सुशोभित रहता है।",
+      "meaningEn": "Riddhi and Siddhi wave the fly-whisk over you; your mouse-mount waits gracefully at your door."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "कहौ जन्म शुभ कथा तुम्हारी।",
+        "अति शुची पावन मंगलकारी॥"
+      ],
+      "linesEn": [
+        "Kahau janma shubha kathaa tumhaaree.",
+        "Ati shuchee paavana mangalakaaree."
+      ],
+      "meaningHi": "अब मैं आपके जन्म की शुभ कथा कहता हूँ, जो अत्यन्त पवित्र, पावन और मंगलकारी है।",
+      "meaningEn": "Now I tell the blessed story of your birth, most holy, pure and auspicious."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "एक समय गिरिराज कुमारी।",
+        "पुत्र हेतु तप कीन्हा भारी॥"
+      ],
+      "linesEn": [
+        "Eka samaya giriraaja kumaaree.",
+        "Putr hetu tapa keenhaa bhaaree."
+      ],
+      "meaningHi": "एक बार गिरिराज की कुमारी (पार्वती) ने पुत्र-प्राप्ति के लिए कठोर तप किया।",
+      "meaningEn": "Once Parvati, daughter of the mountain-king, performed great penance for the boon of a son."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "भयो यज्ञ जब पूर्ण अनूपा।",
+        "तब पहुंच्यो तुम धरी द्विज रूपा॥"
+      ],
+      "linesEn": [
+        "Bhayo yagy jaba poorna anoopaa.",
+        "Taba pahunchyo tuma dharee dvija roopaa."
+      ],
+      "meaningHi": "जब वह अनुपम यज्ञ पूर्ण हुआ, तब आप ब्राह्मण का रूप धारण कर वहाँ पधारे।",
+      "meaningEn": "When that matchless sacrifice was complete, you arrived there in the form of a Brahmin."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "अतिथि जानी के गौरी सुखारी।",
+        "बहुविधि सेवा करी तुम्हारी॥"
+      ],
+      "linesEn": [
+        "Atithi jaanee ke gauree sukhaaree.",
+        "Bahuvidhi sevaa karee tumhaaree."
+      ],
+      "meaningHi": "गौरी ने अतिथि जानकर प्रसन्नतापूर्वक अनेक प्रकार से आपकी सेवा की।",
+      "meaningEn": "Recognising you as a guest, Gauri joyfully served you in many ways."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "अति प्रसन्न हवै तुम वर दीन्हा।",
+        "मातु पुत्र हित जो तप कीन्हा॥"
+      ],
+      "linesEn": [
+        "Ati prasanna havai tuma vara deenhaa.",
+        "Maatu putr hita jo tapa keenhaa."
+      ],
+      "meaningHi": "अत्यन्त प्रसन्न होकर आपने उस माता को वर दिया, जिसने पुत्र के लिए तप किया था।",
+      "meaningEn": "Greatly pleased, you granted a boon to the mother who had done penance for a son."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "मिलहि पुत्र तुहि, बुद्धि विशाला।",
+        "बिना गर्भ धारण यहि काला॥"
+      ],
+      "linesEn": [
+        "Milahi putr tuhi, buddhi vishaalaa.",
+        "Binaa garbha dhaarana yahi kaalaa."
+      ],
+      "meaningHi": "(आपने कहा —) तुम्हें विशाल बुद्धि वाला पुत्र मिलेगा, और वह भी बिना गर्भ धारण किए इसी समय।",
+      "meaningEn": "'You shall obtain a son of vast intellect,' you said, 'and that without bearing a womb, at this very time.'"
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "गणनायक गुण ज्ञान निधाना।",
+        "पूजित प्रथम रूप भगवाना॥"
+      ],
+      "linesEn": [
+        "Gananaayaka guna gyaana nidhaanaa.",
+        "Poojita prathama roopa bhagavaanaa."
+      ],
+      "meaningHi": "वह गणों का नायक तथा गुण और ज्ञान का भण्डार होगा, और भगवान रूप में सबसे पहले पूजा जाएगा।",
+      "meaningEn": "He shall be the leader of the ganas, a treasury of virtue and wisdom, worshipped first of all as the Lord."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "अस कही अन्तर्धान रूप हवै।",
+        "पालना पर बालक स्वरूप हवै॥"
+      ],
+      "linesEn": [
+        "Asa kahee antardhaana roopa havai.",
+        "Paalanaa para baalaka svaroopa havai."
+      ],
+      "meaningHi": "ऐसा कहकर आप अन्तर्धान हो गए और पालने में बालक के रूप में प्रकट हो गए।",
+      "meaningEn": "Having said this, you vanished and appeared as a child in the cradle."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "बनि शिशु रुदन जबहिं तुम ठाना।",
+        "लखि मुख सुख नहिं गौरी समाना॥"
+      ],
+      "linesEn": [
+        "Bani shishu rudana jabahin tuma thaanaa.",
+        "Lakhi mukha sukha nahin gauree samaanaa."
+      ],
+      "meaningHi": "जब आपने शिशु बनकर रुदन किया, तब आपका मुख देखकर गौरी का सुख समा नहीं रहा था।",
+      "meaningEn": "When as an infant you began to cry, Gauri's joy at the sight of your face knew no bounds."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "सकल मगन, सुखमंगल गावहिं।",
+        "नाभ ते सुरन, सुमन वर्षावहिं॥"
+      ],
+      "linesEn": [
+        "Sakala magana, sukhamangala gaavahin.",
+        "Naabha te surana, sumana varshaavahin."
+      ],
+      "meaningHi": "सब आनन्द में मग्न होकर मंगलगीत गाने लगे; आकाश से देवता पुष्पों की वर्षा करने लगे।",
+      "meaningEn": "All, immersed in delight, sang songs of joy; from the sky the gods rained down flowers."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "शम्भु, उमा, बहुदान लुटावहिं।",
+        "सुर मुनिजन, सुत देखन आवहिं॥"
+      ],
+      "linesEn": [
+        "Shambhu, umaa, bahudaana lutaavahin.",
+        "Sura munijana, suta dekhana aavahin."
+      ],
+      "meaningHi": "शिव और उमा बहुत दान लुटाने लगे; देवता और मुनिजन पुत्र (गणेश) के दर्शन को आने लगे।",
+      "meaningEn": "Shiva and Uma lavished gifts in abundance; gods and sages came to behold the newborn son."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "लखि अति आनन्द मंगल साजा।",
+        "देखन भी आये शनि राजा॥"
+      ],
+      "linesEn": [
+        "Lakhi ati aananda mangala saajaa.",
+        "Dekhana bhee aaye shani raajaa."
+      ],
+      "meaningHi": "इस अति आनन्दमय मंगल-उत्सव को देखने राजा शनि भी आए।",
+      "meaningEn": "Seeing the great joy and festive splendour, Shani the king (of planets) too came to look."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "निज अवगुण गुनि शनि मन माहीं।",
+        "बालक, देखन चाहत नाहीं॥"
+      ],
+      "linesEn": [
+        "Nija avaguna guni shani mana maaheen.",
+        "Baalaka, dekhana chaahata naaheen."
+      ],
+      "meaningHi": "अपने दृष्टि-दोष को मन में जानते हुए शनि बालक को देखना नहीं चाहते थे।",
+      "meaningEn": "Mindful in his heart of the flaw of his gaze, Shani did not wish to look upon the child."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "गिरिजा कछु मन भेद बढायो।",
+        "उत्सव मोर, न शनि तुही भायो॥"
+      ],
+      "linesEn": [
+        "Girijaa kachhu mana bheda badhaayo.",
+        "Utsava mora, na shani tuhee bhaayo."
+      ],
+      "meaningHi": "इस पर गौरी के मन में कुछ भेद (संदेह) उत्पन्न हो गया — कि मेरे उत्सव में शनि को कुछ अच्छा नहीं लग रहा।",
+      "meaningEn": "At this a misgiving arose in Girija's mind — 'Does my festival not please you, Shani?'"
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "कहत लगे शनि, मन सकुचाई।",
+        "का करिहौ, शिशु मोहि दिखाई॥"
+      ],
+      "linesEn": [
+        "Kahata lage shani, mana sakuchaaee.",
+        "Kaa karihau, shishu mohi dikhaaee."
+      ],
+      "meaningHi": "शनि संकोच करते हुए कहने लगे — मैं क्या करूँ; आप कहती हैं तो शिशु को देख लेता हूँ।",
+      "meaningEn": "Hesitating, Shani said — 'What am I to do? If you bid me, I shall look upon the child.'"
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "नहिं विश्वास, उमा उर भयऊ।",
+        "शनि सों बालक देखन कहयऊ॥"
+      ],
+      "linesEn": [
+        "Nahin vishvaasa, umaa ura bhayaoo.",
+        "Shani son baalaka dekhana kahayaoo."
+      ],
+      "meaningHi": "उमा को (शनि की चेतावनी पर) विश्वास नहीं हुआ और उन्होंने शनि से बालक को देखने के लिए कह दिया।",
+      "meaningEn": "Uma did not believe his warning, and bade Shani look upon the child."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "पदतहिं शनि दृग कोण प्रकाशा।",
+        "बालक सिर उड़ि गयो अकाशा॥"
+      ],
+      "linesEn": [
+        "Padatahin shani driga kona prakaashaa.",
+        "Baalaka sira udi gayo akaashaa."
+      ],
+      "meaningHi": "ज्योंही शनि की दृष्टि का कोना बालक पर पड़ा, बालक का सिर कटकर आकाश में उड़ गया।",
+      "meaningEn": "The moment the corner of Shani's gaze fell upon him, the child's head flew off into the sky."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "गिरिजा गिरी विकल हवै धरणी।",
+        "सो दुःख दशा गयो नहीं वरणी॥"
+      ],
+      "linesEn": [
+        "Girijaa giree vikala havai dharanee.",
+        "So duhkha dashaa gayo naheen varanee."
+      ],
+      "meaningHi": "गौरी व्याकुल होकर धरती पर गिर पड़ीं; उस दुःख की दशा का वर्णन नहीं किया जा सकता।",
+      "meaningEn": "Girija, stricken, fell to the ground; that state of grief is beyond all description."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "हाहाकार मच्यौ कैलाशा।",
+        "शनि कीन्हों लखि सुत को नाशा॥"
+      ],
+      "linesEn": [
+        "Haahaakaara machyau kailaashaa.",
+        "Shani keenhon lakhi suta ko naashaa."
+      ],
+      "meaningHi": "कैलाश पर हाहाकार मच गया, क्योंकि शनि की दृष्टि ने पुत्र का नाश कर दिया था।",
+      "meaningEn": "A great wail arose upon Kailasa, for Shani's gaze had destroyed the son."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "तुरत गरुड़ चढ़ि विष्णु सिधायो।",
+        "काटी चक्र सो गज सिर लाये॥"
+      ],
+      "linesEn": [
+        "Turata garuda chadhi vishnu sidhaayo.",
+        "Kaatee chakra so gaja sira laaye."
+      ],
+      "meaningHi": "तुरन्त विष्णु गरुड़ पर सवार होकर चले और चक्र से एक हाथी का सिर काटकर ले आए।",
+      "meaningEn": "At once Vishnu set off mounted on Garuda, and with his discus severed an elephant's head and brought it."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "बालक के धड़ ऊपर धारयो।",
+        "प्राण मन्त्र पढ़ि शंकर डारयो॥"
+      ],
+      "linesEn": [
+        "Baalaka ke dhada oopara dhaarayo.",
+        "Praana mantr padhi shankara daarayo."
+      ],
+      "meaningHi": "उन्होंने वह सिर बालक के धड़ पर रखा और शंकर ने प्राण-मन्त्र पढ़कर उसमें प्राण डाल दिए।",
+      "meaningEn": "He placed that head upon the child's body, and Shankar, reciting the life-giving mantra, restored him to life."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "नाम गणेश शम्भु तब कीन्हे।",
+        "प्रथम पूज्य बुद्धि निधि, वर दीन्हे॥"
+      ],
+      "linesEn": [
+        "Naama ganesha shambhu taba keenhe.",
+        "Prathama poojya buddhi nidhi, vara deenhe."
+      ],
+      "meaningHi": "तब शिव ने उनका नाम गणेश रखा और उन्हें सर्वप्रथम पूज्य तथा बुद्धि का भण्डार होने का वर दिया।",
+      "meaningEn": "Then Shiva named him Ganesh and granted him the boon of being worshipped first of all and a treasury of wisdom."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "बुद्धि परीक्षा जब शिव कीन्हा।",
+        "पृथ्वी कर प्रदक्षिणा लीन्हा॥"
+      ],
+      "linesEn": [
+        "Buddhi pareekshaa jaba shiva keenhaa.",
+        "Prithvee kara pradakshinaa leenhaa."
+      ],
+      "meaningHi": "जब शिव ने (पुत्रों की) बुद्धि की परीक्षा ली, तो कार्तिकेय ने पृथ्वी की प्रदक्षिणा करने का निश्चय किया।",
+      "meaningEn": "When Shiva tested the wisdom of his sons, Kartikeya set out to circle the whole earth."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "चले षडानन, भरमि भुलाई।",
+        "रचे बैठ तुम बुद्धि उपाई॥"
+      ],
+      "linesEn": [
+        "Chale shadaanana, bharami bhulaaee.",
+        "Rache baitha tuma buddhi upaaee."
+      ],
+      "meaningHi": "षडानन (कार्तिकेय) परिक्रमा में भटकते रहे, जबकि आपने बुद्धि से एक उपाय रच लिया।",
+      "meaningEn": "While the six-faced Kartikeya wandered the earth, you devised a clever plan with your wisdom."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "चरण मातु-पितु के धर लीन्हें।",
+        "तिनके सात प्रदक्षिण कीन्हें॥"
+      ],
+      "linesEn": [
+        "Charana maatu-pitu ke dhara leenhen.",
+        "Tinake saata pradakshina keenhen."
+      ],
+      "meaningHi": "आपने माता-पिता के चरणों को (समस्त जगत के समान मानकर) पकड़ लिया और उनकी सात प्रदक्षिणाएँ कीं।",
+      "meaningEn": "You clasped the feet of your parents — holding them to be the whole world — and circled them seven times."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "धनि गणेश कही शिव हिये हरषे।",
+        "नभ ते सुरन सुमन बहु बरसे॥"
+      ],
+      "linesEn": [
+        "Dhani ganesha kahee shiva hiye harashe.",
+        "Nabha te surana sumana bahu barase."
+      ],
+      "meaningHi": "'धन्य गणेश' कहकर शिव हृदय से हर्षित हुए; आकाश से देवताओं ने बहुत पुष्प बरसाए।",
+      "meaningEn": "'Blessed is Ganesh!' said Shiva, rejoicing in his heart; from the sky the gods showered abundant flowers."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "तुम्हरी महिमा बुद्धि बड़ाई।",
+        "शेष सहसमुख सके न गाई॥"
+      ],
+      "linesEn": [
+        "Tumharee mahimaa buddhi badaaee.",
+        "Shesha sahasamukha sake na gaaee."
+      ],
+      "meaningHi": "आपकी महिमा और बुद्धि की बड़ाई हजार मुख वाले शेषनाग भी नहीं गा सकते।",
+      "meaningEn": "Your glory and the greatness of your wisdom even the thousand-mouthed Shesha cannot sing."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "मैं मतिहीन मलीन दुखारी।",
+        "करहूं कौन विधि विनय तुम्हारी॥"
+      ],
+      "linesEn": [
+        "Main matiheena maleena dukhaaree.",
+        "Karahoon kauna vidhi vinaya tumhaaree."
+      ],
+      "meaningHi": "मैं बुद्धिहीन, मलिन और दुखी हूँ; मैं किस प्रकार आपकी विनती करूँ?",
+      "meaningEn": "I am dull-witted, impure and sorrowful; in what manner can I offer you my prayer?"
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "भजत रामसुन्दर प्रभुदासा।",
+        "जग प्रयाग, ककरा, दुर्वासा॥"
+      ],
+      "linesEn": [
+        "Bhajata raamasundara prabhudaasaa.",
+        "Jaga prayaaga, kakaraa, durvaasaa."
+      ],
+      "meaningHi": "प्रभु के दास रामसुन्दर, जो प्रयाग के समीप ककरा (दुर्वासा) ग्राम के निवासी हैं, आपका भजन करते हैं।",
+      "meaningEn": "Ramsundar, servant of the Lord, of the village Kakra (Durvasa) near Prayag, sings your praise."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "अब प्रभु दया दीना पर कीजै।",
+        "अपनी शक्ति भक्ति कुछ दीजै॥"
+      ],
+      "linesEn": [
+        "Aba prabhu dayaa deenaa para keejai.",
+        "Apanee shakti bhakti kuchha deejai."
+      ],
+      "meaningHi": "हे प्रभु, अब इस दीन पर दया कीजिए और मुझे अपनी कुछ शक्ति तथा भक्ति प्रदान कीजिए।",
+      "meaningEn": "Now, O Lord, show mercy on this humble one, and grant me a measure of your strength and devotion."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "श्री गणेश यह चालीसा,",
+        "पाठ करै कर ध्यान।"
+      ],
+      "linesEn": [
+        "Shree ganesha yaha chaaleesaa,",
+        "Paatha karai kara dhyaana."
+      ],
+      "meaningHi": "जो श्री गणेश की इस चालीसा का ध्यानपूर्वक पाठ करता है,",
+      "meaningEn": "Whoever recites this Chalisa of Shri Ganesh with focused attention —"
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "नित नव मंगल गृह बसै,",
+        "लहे जगत सन्मान॥"
+      ],
+      "linesEn": [
+        "Nita nava mangala griha basai,",
+        "Lahe jagata sanmaana."
+      ],
+      "meaningHi": "उसके घर में नित्य नए मंगल का वास होता है और वह संसार में सम्मान पाता है।",
+      "meaningEn": "in his home ever-new auspiciousness dwells, and he attains honour in the world."
+    },
+    {
+      "id": "closing-doha",
+      "type": "doha",
+      "section": "closing",
+      "labelHi": "दोहा",
+      "labelEn": "Doha",
+      "lines": [
+        "सम्बन्ध अपने सहस्र दश, ऋषि पंचमी दिनेश।",
+        "पूरण चालीसा भयो, मंगल मूर्ती गणेश॥"
+      ],
+      "linesEn": [
+        "Sambandha apane sahasra dasha, rishi panchamee dinesha.",
+        "Poorana chaaleesaa bhayo, mangala moortee ganesha."
+      ],
+      "meaningHi": "सम्वत् और ऋषि पंचमी के दिन यह मंगलमूर्ति गणेश की चालीसा पूर्ण हुई।",
+      "meaningEn": "In the appointed year, on the day of Rishi Panchami, this Chalisa of the auspicious-formed Ganesh was completed."
+    }
   ]
 }

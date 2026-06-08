@@ -5,7 +5,15 @@
   "subtitleEn": "Daily worship of sacred Tulsi with mantras",
   "deity": "krishna",
   "language": "sa-hi-en",
-  "source": { "baseText": "Sanskrit Documents (sanskritdocuments.org), Gitapress Gorakhpur editions", "retrievedOn": "2026-05-24" },
+  "source": {
+    "baseText": "Tulsi Puja prayers, checked against Tulasi stotra/name references from Sanskrit Documents and Drik Panchang.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/tulasI108.html",
+      "https://www.drikpanchang.com/deities-namavali/goddesses/tulasi/108-tulasi-names.html?lang=hi",
+      "https://hindunidhi.com/tulsi-puja-hindi/"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
   "counts": { "totalVerses": 5 },
   "verses": [
     {
@@ -25,8 +33,14 @@
       "type": "mantra",
       "labelHi": "तुलसी नमन मन्त्र",
       "labelEn": "Tulsi Namana Mantra",
-      "lines": ["यन्मूले सर्वतीर्थानि यन्मध्ये सर्वदेवताः।", "यदग्रे सर्ववेदाश्च तुलसी त्वां नमाम्यहम्॥"],
-      "linesEn": ["Yanmoole sarvatirthaani yanmadhye sarvadevataah.", "Yadagre sarvavedaashcha Tulasi tvaam namaamyaham."],
+      "lines": [
+        "यन्मूले सर्वतीर्थानि यन्मध्ये सर्वदेवताः।",
+        "यदग्रे सर्ववेदाश्च तुलसी त्वां नमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "Yanmoole sarvatirthaani yanmadhye sarvadevataah.",
+        "Yadagre sarvavedaashcha Tulasi tvaam namaamyaham."
+      ],
       "meaningHi": "जिसकी जड़ में समस्त तीर्थ (गंगा, यमुना आदि) निवास करते हैं, जिसके मध्य में समस्त देवता विराजते हैं, और जिसके अग्रभाग में समस्त वेद (ऋग्, यजुर्, साम, अथर्व) स्थित हैं — हे तुलसी, मैं आपको नमस्कार करता हूँ।\n\nयह श्लोक तुलसी की सम्पूर्णता बताता है — तीर्थ (पवित्रता), देवता (दिव्यता) और वेद (ज्ञान) — तीनों एक ही पौधे में समाहित हैं। यह भारतीय संस्कृति में प्रकृति-पूजा की गहराई दर्शाता है।",
       "meaningEn": "At whose roots reside all sacred pilgrimage places (Ganga, Yamuna, etc.), in whose middle dwell all deities, and at whose top reside all the Vedas (Rig, Yajur, Sama, Atharva) — O Tulsi, I bow to you.\n\nThis verse reveals the completeness of Tulsi — pilgrimage (purity), deities (divinity), and Vedas (knowledge) — all three contained in one plant. It demonstrates the depth of nature-worship in Indian culture."
     },
@@ -36,8 +50,14 @@
       "type": "mantra",
       "labelHi": "तुलसी स्तुति",
       "labelEn": "Tulsi Stuti",
-      "lines": ["तुलसी श्रीर्महालक्ष्मीर्विद्याविद्या यशस्विनी।", "धर्म्या धर्मानना देवी देवीदेवमनःप्रिया॥"],
-      "linesEn": ["Tulasi Shreer-Mahaa-Lakshmeer-vidyaavidyaa yashasvinee.", "Dharmyaa dharmaananaa devee devee-deva-manah-priyaa."],
+      "lines": [
+        "तुलसी श्रीर्महालक्ष्मीर्विद्याविद्या यशस्विनी।",
+        "धर्म्या धर्मानना देवी देवीदेवमनःप्रिया॥"
+      ],
+      "linesEn": [
+        "Tulasi Shreer-Mahaa-Lakshmeer-vidyaavidyaa yashasvinee.",
+        "Dharmyaa dharmaananaa devee devee-deva-manah-priyaa."
+      ],
       "meaningHi": "तुलसी स्वयं श्री महालक्ष्मी हैं, विद्या और अविद्या (ज्ञान एवं माया) दोनों की अधिष्ठात्री हैं, यशस्विनी (कीर्तिमती) हैं। वे धर्मस्वरूपा हैं, धर्म-मुखी (धर्म की ओर अभिमुख) हैं, देवी हैं, और देवताओं के मन को प्रिय हैं।\n\nइस श्लोक में तुलसी के अनेक स्वरूपों का वर्णन है — वे केवल एक पौधा नहीं, बल्कि लक्ष्मी का साक्षात् स्वरूप हैं। 'विद्याविद्या' का अर्थ है कि वे परा (आध्यात्मिक) और अपरा (सांसारिक) दोनों विद्याओं की स्वामिनी हैं।",
       "meaningEn": "Tulsi is herself Sri Mahalakshmi, presiding over both Vidya and Avidya (knowledge and maya), glorious in fame. She is the embodiment of Dharma, oriented toward righteousness, a goddess, and dear to the hearts of all gods.\n\nThis verse describes Tulsi's multiple forms — she is not merely a plant but the manifest form of Lakshmi. 'Vidyavidya' means she is the mistress of both Para (spiritual) and Apara (worldly) knowledge."
     },
@@ -47,8 +67,14 @@
       "type": "vidhi",
       "labelHi": "जल-अर्पण विधि",
       "labelEn": "Watering Vidhi",
-      "lines": ["महाप्रसाद जननी सर्वसौभाग्यवर्धिनी।", "आधिव्याधिहरा नित्यं तुलसी त्वं नमोऽस्तु ते॥"],
-      "linesEn": ["Mahaaprasaada jananee sarva-saubhaagya-vardhinee.", "Aadhi-vyaadhi-haraa nityam Tulasi tvam namo'stu te."],
+      "lines": [
+        "महाप्रसाद जननी सर्वसौभाग्यवर्धिनी।",
+        "आधिव्याधिहरा नित्यं तुलसी त्वं नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "Mahaaprasaada jananee sarva-saubhaagya-vardhinee.",
+        "Aadhi-vyaadhi-haraa nityam Tulasi tvam namo'stu te."
+      ],
       "meaningHi": "हे महाप्रसाद की जननी (उत्पन्न करने वाली), समस्त सौभाग्य को बढ़ाने वाली, मानसिक (आधि) और शारीरिक (व्याधि) रोगों को नित्य हरने वाली, हे तुलसी, आपको नमस्कार है।\n\n'आधि' = मानसिक कष्ट, 'व्याधि' = शारीरिक रोग। तुलसी दोनों का निवारण करती हैं — यह आयुर्वेद और शास्त्र दोनों से प्रमाणित है।",
       "meaningEn": "O mother of great prasad (divine offering), increaser of all good fortune, daily remover of mental anguish (Aadhi) and physical disease (Vyaadhi), O Tulsi, salutations to you.\n\n'Aadhi' = mental suffering, 'Vyaadhi' = physical illness. Tulsi removes both — proven by both Ayurveda and the scriptures.",
       "vidhiHi": "१. प्रातःकाल स्नान के पश्चात् स्वच्छ जल से तुलसी को सींचें। २. तुलसी की जड़ में कुमकुम (रोली) और हल्दी अर्पित करें। ३. तुलसी के पौधे की चार बार परिक्रमा (प्रदक्षिणा) करें — बायें से दाहिनी ओर। ४. सायंकाल एक दीपक (तिल या सरसों के तेल का) तुलसी के समक्ष जलाएँ।",
@@ -60,8 +86,14 @@
       "type": "mantra",
       "labelHi": "परिक्रमा मन्त्र",
       "labelEn": "Parikrama Mantra",
-      "lines": ["यानि कानि च पापानि ब्रह्महत्यादिकानि च।", "तानि तानि प्रणश्यन्ति प्रदक्षिणपदे पदे॥"],
-      "linesEn": ["Yaani kaani cha paapaani brahmahatyaadikaani cha.", "Taani taani pranashyanti pradakshina-pade pade."],
+      "lines": [
+        "यानि कानि च पापानि ब्रह्महत्यादिकानि च।",
+        "तानि तानि प्रणश्यन्ति प्रदक्षिणपदे पदे॥"
+      ],
+      "linesEn": [
+        "Yaani kaani cha paapaani brahmahatyaadikaani cha.",
+        "Taani taani pranashyanti pradakshina-pade pade."
+      ],
       "meaningHi": "जो कोई भी पाप हों — चाहे ब्रह्महत्या (सबसे गम्भीर पाप) जैसे भी हों — वे सब प्रदक्षिणा के प्रत्येक कदम पर नष्ट हो जाते हैं।\n\nप्रदक्षिणा (परिक्रमा) का अर्थ है किसी पवित्र वस्तु के चारों ओर दक्षिण दिशा (clockwise) में घूमना। यह समर्पण और श्रद्धा का प्रतीक है। तुलसी की प्रदक्षिणा को सम्पूर्ण तीर्थयात्रा के समान फल देने वाला बताया गया है।",
       "meaningEn": "Whatever sins there may be — even as grave as Brahmahatya (the most serious sin) — they are all destroyed with each step of the pradakshina (circumambulation).\n\nPradakshina means walking clockwise around a sacred object. It symbolizes surrender and devotion. Circumambulation of Tulsi is said to yield the same merit as a complete pilgrimage to all sacred places."
     }

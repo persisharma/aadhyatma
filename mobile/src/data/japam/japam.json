@@ -6,9 +6,15 @@
       "nameEn": "Om Namah Shivaya",
       "sub": "पञ्चाक्षर मंत्र · 5-syllable",
       "thumb": "ॐ",
-      "deities": ["shiva"],
-      "lines": ["ॐ नमः शिवाय"],
-      "linesEn": ["Om Namah Shivaya"],
+      "deities": [
+        "shiva"
+      ],
+      "lines": [
+        "ॐ नमः शिवाय"
+      ],
+      "linesEn": [
+        "Om Namah Shivaya"
+      ],
       "meaningHi": "मैं शिव को प्रणाम करता हूँ। यह पाँच अक्षरों का मंत्र शिव के पाँच मुख तथा पाँच तत्त्वों — पृथ्वी, जल, अग्नि, वायु, आकाश — का स्मरण कराता है।",
       "meaningEn": "Salutations to Lord Shiva. This five-syllable mantra evokes Shiva's five faces and the five elements — earth, water, fire, air, and ether."
     },
@@ -18,7 +24,9 @@
       "nameEn": "Hare Krishna Mahamantra",
       "sub": "16 शब्द · Vaishnava",
       "thumb": "ह",
-      "deities": ["krishna"],
+      "deities": [
+        "krishna"
+      ],
       "lines": [
         "हरे कृष्ण हरे कृष्ण",
         "कृष्ण कृष्ण हरे हरे",
@@ -40,7 +48,9 @@
       "nameEn": "Gayatri Mantra",
       "sub": "ऋग्वेद ३.६२.१०",
       "thumb": "गा",
-      "deities": ["savitr"],
+      "deities": [
+        "savitr"
+      ],
       "lines": [
         "ॐ भूर्भुवः स्वः",
         "तत् सवितुर्वरेण्यं",
@@ -62,11 +72,25 @@
       "nameEn": "Om Namo Bhagavate Vasudevaya",
       "sub": "द्वादशाक्षर मंत्र · 12-syllable",
       "thumb": "वा",
-      "deities": ["krishna"],
-      "lines": ["ॐ नमो भगवते वासुदेवाय"],
-      "linesEn": ["Om Namo Bhagavate Vasudevaya"],
+      "deities": [
+        "krishna"
+      ],
+      "lines": [
+        "ॐ नमो भगवते वासुदेवाय"
+      ],
+      "linesEn": [
+        "Om Namo Bhagavate Vasudevaya"
+      ],
       "meaningHi": "उस भगवान् वासुदेव को मेरा प्रणाम — जो वसुदेवपुत्र, सबमें वास करने वाले, समस्त ऐश्वर्य के स्वामी हैं।",
       "meaningEn": "Salutations to the Divine Vasudeva — son of Vasudeva, dweller in all beings, possessor of all auspicious qualities. The twelve-syllable Vaishnava mantra of refuge."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, and Dvadashakshari Vasudeva mantra.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_deities_misc/sArthagAyatrI.html",
+      "https://vedabase.io/en/library/kb/90/"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

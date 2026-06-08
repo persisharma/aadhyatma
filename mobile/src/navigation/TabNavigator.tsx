@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeStackNavigator from './HomeStackNavigator';
 import MoreStackNavigator from './MoreStackNavigator';
 import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
+import PanchangScreen from '@/screens/PanchangScreen';
 import { useTheme } from '@/theme/ThemeContext';
 import type { TabParamList } from './types';
 
@@ -61,6 +62,16 @@ export default function TabNavigator() {
           tabBarLabel: 'Bhakti',
           tabBarIcon: ({ color, size }) => (
             <BhaktiIcon color={color} accentColor={colors.saffron} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="PanchangTab"
+        component={PanchangScreen}
+        options={{
+          tabBarLabel: 'Panchang',
+          tabBarIcon: ({ color, size }) => (
+            <PanchangIcon color={color} size={size} />
           ),
         }}
       />
@@ -197,6 +208,22 @@ function BhaktiIcon({ color, accentColor, size }: BhaktiIconProps) {
           backgroundColor: color,
         }}
       />
+    </View>
+  );
+}
+
+function PanchangIcon({ color, size }: TabIconProps) {
+  const stroke = Math.max(1.5, size * 0.08);
+  const arm = size * 0.28;
+
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ position: 'absolute', width: stroke, height: size * 0.64, backgroundColor: color, borderRadius: stroke / 2 }} />
+      <View style={{ position: 'absolute', width: size * 0.64, height: stroke, backgroundColor: color, borderRadius: stroke / 2 }} />
+      <View style={{ position: 'absolute', top: size * 0.18, left: size * 0.5, width: arm, height: stroke, backgroundColor: color, borderRadius: stroke / 2 }} />
+      <View style={{ position: 'absolute', top: size * 0.5, right: size * 0.18, width: stroke, height: arm, backgroundColor: color, borderRadius: stroke / 2 }} />
+      <View style={{ position: 'absolute', bottom: size * 0.18, right: size * 0.5, width: arm, height: stroke, backgroundColor: color, borderRadius: stroke / 2 }} />
+      <View style={{ position: 'absolute', bottom: size * 0.5, left: size * 0.18, width: stroke, height: arm, backgroundColor: color, borderRadius: stroke / 2 }} />
     </View>
   );
 }

@@ -140,9 +140,9 @@ export default function DailyBhaktiScreen() {
               <Text
                 style={{
                   fontFamily: typography.verse.fontFamily,
-                  fontSize: 19,
+                  fontSize: typography.verse.fontSize,
                   color: colors.ink,
-                  lineHeight: 34,
+                  lineHeight: typography.verse.lineHeight,
                   marginTop: 14,
                 }}
               >
@@ -151,10 +151,10 @@ export default function DailyBhaktiScreen() {
             ) : (
               <Text
                 style={{
-                  fontFamily: 'CormorantGaramond_600SemiBold',
-                  fontSize: 17,
+                  fontFamily: typography.verseLatin.fontFamily,
+                  fontSize: typography.verseLatin.fontSize,
                   color: colors.ink,
-                  lineHeight: 28,
+                  lineHeight: typography.verseLatin.lineHeight,
                   marginTop: 14,
                 }}
               >
@@ -178,10 +178,14 @@ export default function DailyBhaktiScreen() {
             {/* Meaning text — based on language */}
             <Text
               style={{
-                fontFamily: isHindi ? typography.meaning.fontFamily : 'CormorantGaramond_500Medium',
-                fontSize: isHindi ? 14 : 16,
-                color: colors.inkSoft,
-                lineHeight: isHindi ? 24 : 28,
+                fontFamily: isHindi
+                  ? typography.meaning.fontFamily
+                  : typography.meaningEnglish.fontFamily,
+                fontSize: isHindi ? typography.meaning.fontSize : typography.meaningEnglish.fontSize,
+                color: isHindi ? colors.inkSoft : colors.ink,
+                lineHeight: isHindi
+                  ? typography.meaning.lineHeight
+                  : typography.meaningEnglish.lineHeight,
                 marginTop: 6,
               }}
             >

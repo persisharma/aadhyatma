@@ -5,7 +5,12 @@ export const lightColors = {
   parchmentHighlight: '#F6ECD0',
   parchmentGradientEnd: '#F1E3BF',
 
-  ink: '#2F1E10',
+  // Primary reading color (verses + English meaning, both scripts). Deepened from
+  // #2F1E10 — a warm brown that, against the parchment background and Cormorant
+  // Garamond's thin strokes, read as too light for comfortable English reading.
+  // #1A0E03 stays inside the warm manuscript palette while lifting contrast to
+  // ~15.4:1 (well past WCAG AAA). See colors.contrast.test.ts.
+  ink: '#1A0E03',
   inkSoft: '#5A3A1E',
   inkMuted: '#8A6A47',
 
@@ -16,6 +21,11 @@ export const lightColors = {
   divider: 'rgba(138, 62, 11, 0.18)',
   saffronTint: 'rgba(184, 98, 27, 0.12)',
   goldTint: 'rgba(166, 124, 52, 0.14)',
+
+  // "NEW" badge — saffron-tinted (primary/active accent → reads as fresh & live),
+  // distinct from the muted gold "SOON" badge while staying in the warm palette.
+  newBadgeBg: 'rgba(184, 98, 27, 0.16)',
+  newBadgeText: '#8A3E0B',
 
   overlayTop: 'rgba(243, 231, 201, 0.85)',
   overlayUpper: 'rgba(243, 231, 201, 0.55)',
@@ -37,7 +47,7 @@ export const lightColors = {
 
   background: '#F3E7C9',
   surface: '#F8EFD6',
-  text: '#2F1E10',
+  text: '#1A0E03',
   textMuted: '#8A6A47',
   primary: '#B8621B',
   border: 'rgba(138, 62, 11, 0.18)',

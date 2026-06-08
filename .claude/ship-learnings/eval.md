@@ -37,3 +37,10 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Example:** Krishna Stotram (stotram addition) acceptance criteria were: tsc passes, invariant IIFE validates 9 verses with correct fields, backgrounds.ts IIFE asserts source coverage for all active entries, route types compile cleanly. All deterministic — no model-based grader needed. The data-layer invariants serve as built-in evals.
 **Resolution pattern:** When adding a new content section that follows an existing pattern (same verse shape, same screen pattern), the module-load-time invariant checks ARE the eval. tsc + the IIFE assertions cover structure, completeness, and type safety without additional grader code.
 
+### Behavioral evals (jest/maestro) do NOT catch an off-theme color — add a design-token conformance grader
+
+**Seen:** 1x — 2026-05-29
+**Category:** design-conformance
+**Example:** The NEW chip shipped green (`#2E7D32`) and passed ALL 27 jest tests + the on-device Maestro flow (they assert the "NEW" text/label, never the color). The user caught the off-theme green by eye ("not aligned with design.md theme"). Fixed to saffron (`rgba(184,98,27,0.16)` / `#8A3E0B`) — a palette token from design.md §2.
+**Resolution pattern:** When a feature adds color/spacing/typography tokens, add an eval grader that greps the new token values against the design.md palette table (every accent must be saffron/gold/ink family, never a net-new hue). Pair it with a Phase-5 simulator screenshot reviewed against design.md. Tests verify behavior; only a token-vs-palette check verifies theme conformance.
+

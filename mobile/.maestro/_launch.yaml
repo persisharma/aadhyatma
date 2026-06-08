@@ -12,6 +12,8 @@
 #     snapshotKeyHonorModalViews: false).
 #   - The "Good Habits. Tap to open." assertion is the canary that confirms
 #     the bundle finished executing.
+#   - Expo Go can leave a native dev-menu bottom sheet open after project load;
+#     the downward swipe dismisses it when present and is harmless on Home.
 appId: host.exp.Exponent
 ---
 - launchApp:
@@ -20,5 +22,8 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd:
     timeout: 30000
 - extendedWaitUntil:
-    visible: "Good Habits. Tap to open."
+    visible: "Good Habits\\..*Tap to open\\."
     timeout: 60000
+- swipe:
+    direction: DOWN
+- waitForAnimationToEnd

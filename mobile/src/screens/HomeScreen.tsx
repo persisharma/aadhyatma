@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Dimensions,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,11 +19,13 @@ import SearchFloatingButton from '@/components/SearchFloatingButton';
 import RoutineBanner from '@/components/RoutineBanner';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
+import { useNewContent } from '@/contexts/NewContentContext';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
+  const { hasNewInCategory, devSimulateUpgrade, devResetNewState } = useNewContent();
 
   const categoryIcons: Record<CategoryIconKey, React.ReactNode> = {
     granth: <CategoryIcon iconKey="granth" />,
@@ -41,6 +44,7 @@ export default function HomeScreen({ navigation }: Props) {
     status: 'active';
     icon?: React.ReactNode;
     onPress: () => void;
+    hasNew?: boolean;
   };
 
   const tiles: TileItem[] = [
@@ -50,6 +54,7 @@ export default function HomeScreen({ navigation }: Props) {
       nameEn: c.nameEn,
       status: 'active' as const,
       icon: categoryIcons[c.id],
+      hasNew: hasNewInCategory(c.id),
       onPress: () => navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
     })),
     {
@@ -137,6 +142,7 @@ export default function HomeScreen({ navigation }: Props) {
                   status={tile.status}
                   icon={tile.icon}
                   onPress={tile.onPress}
+                  hasNew={tile.hasNew}
                 />
               </View>
             ))}
@@ -155,6 +161,41 @@ export default function HomeScreen({ navigation }: Props) {
           >
             ॥ श्रीरामचन्द्र चरणौ शरणं प्रपद्ये ॥
           </Text>
+
+          {__DEV__ && (
+            <View style={{ marginTop: 24, marginBottom: 160, flexDirection: 'row', gap: 10, alignSelf: 'center' }}>
+              <Pressable
+                testID="dev-seed-new-content"
+                onPress={devSimulateUpgrade}
+                accessibilityLabel="DEV simulate update"
+                style={{
+                  paddingVertical: 6,
+                  paddingHorizontal: 14,
+                  borderRadius: 999,
+                  borderWidth: 1,
+                  borderColor: colors.divider,
+                  opacity: 0.6,
+                }}
+              >
+                <Text style={{ color: colors.inkMuted, fontSize: 11 }}>🔧 seed NEW</Text>
+              </Pressable>
+              <Pressable
+                testID="dev-reset-new-content"
+                onPress={devResetNewState}
+                accessibilityLabel="DEV reset new state"
+                style={{
+                  paddingVertical: 6,
+                  paddingHorizontal: 14,
+                  borderRadius: 999,
+                  borderWidth: 1,
+                  borderColor: colors.divider,
+                  opacity: 0.6,
+                }}
+              >
+                <Text style={{ color: colors.inkMuted, fontSize: 11 }}>🔧 reset</Text>
+              </Pressable>
+            </View>
+          )}
         </ScrollView>
       </SafeAreaView>
 

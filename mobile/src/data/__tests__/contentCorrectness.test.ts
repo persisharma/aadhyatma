@@ -6,6 +6,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { library } from '../texts';
+import { deities } from '../deities';
 
 const DATA = join(__dirname, '..');
 
@@ -17,11 +19,19 @@ function readJson(rel: string) {
 
 const omJaiJagdish = readJson('aarti/om-jai-jagdish.json');
 assert.equal(omJaiJagdish.deity, 'vishnu', 'Om Jai Jagdish deity should be vishnu');
+assert.doesNotMatch(JSON.stringify(omJaiJagdish), /स्वमी/, 'Om Jai Jagdish should spell स्वामी correctly');
 
 const japam = readJson('japam/japam.json');
 const gayatri = japam.mantras.find((m: any) => m.id === 'gayatri-mantra');
 assert.ok(gayatri, 'Gayatri mantra should exist');
 assert.deepEqual(gayatri.deities, ['savitr'], 'Gayatri deity should be savitr');
+
+// Rule 10.9: deity display names must be the recognizable devotional name.
+// The 'savitr' tag is theologically correct, but users identify this deity as Gayatri.
+const savitrDeity = deities.find((d) => d.id === 'savitr');
+assert.ok(savitrDeity, 'savitr deity should exist in deities array');
+assert.equal(savitrDeity.nameEn, 'Maa Gayatri', 'Rule 10.9: savitr deity must display as "Maa Gayatri", not "Savitr Deva"');
+assert.equal(savitrDeity.nameHi, 'माँ गायत्री', 'Rule 10.9: savitr deity must display as "माँ गायत्री", not "सवितृ देव"');
 
 // ─── 2. Aarti verse counts (verified from internet) ─────────────────────────
 
@@ -60,6 +70,10 @@ assert.ok(
   omJaiShivOmkara.verses.length >= 8,
   `Om Jai Shiv Omkara should have >= 8 verses, got ${omJaiShivOmkara.verses.length}`
 );
+for (const v of omJaiShivOmkara.verses) {
+  assert.equal(v.lines.length, 2, `Om Jai Shiv Omkara ${v.id} should stay as 2 display rows`);
+  assert.equal(v.linesEn.length, 2, `Om Jai Shiv Omkara ${v.id} romanization should stay as 2 display rows`);
+}
 
 // ─── 3. Sankat Mochan has correct Tulsidas refrain ───────────────────────────
 
@@ -109,6 +123,54 @@ function checkNoDevanagariInTranslit(dir: string, fieldName: string) {
 
 checkNoDevanagariInTranslit('sundarkand', 'linesEn');
 checkNoDevanagariInTranslit('gita', 'transliteration');
+
+for (const file of collectJsonFiles()) {
+  const data = readJson(file);
+  const verses = data.verses || data.mantras || [];
+  for (const v of verses) {
+    const translitLines: string[] = v.linesEn || v.transliteration || [];
+    for (let i = 0; i < translitLines.length; i++) {
+      assert.ok(
+        !DEVANAGARI_RANGE.test(translitLines[i]),
+        `${file} verse ${v.id || v.number || v.nameEn} transliteration[${i}] contains Devanagari: "${translitLines[i].slice(0, 60)}..."`
+      );
+    }
+  }
+}
+
+// ─── 6. Display romanization style stays readable ───────────────────────────
+
+const READABLE_AARTI_ROMANIZATION_BAD_PATTERNS = [
+  [/\baaratee\b/i, 'aarti'],
+  [/\bhanumaana\b/i, 'Hanuman'],
+  [/\bhanumaanajee\b/i, 'Hanumanji'],
+  [/\basura dala\b/i, 'asur dal'],
+  [/\bsantajana\b/i, 'santjan'],
+  [/\bjagadeeshajee\b/i, 'Jagdishji'],
+  [/\bsvaamee\b/i, 'Swami'],
+  [/\bkoee nara\b/i, 'koi nar'],
+] as const;
+
+for (const file of collectJsonFiles('aarti')) {
+  const data = readJson(file);
+  for (const v of data.verses || []) {
+    for (const line of (v.linesEn || [])) {
+      assert.match(line, /^[\"'‘“]?[A-Z]/, `${file} verse ${v.id || v.number} linesEn should preserve display capitalization: "${line}"`);
+      assert.doesNotMatch(
+        line,
+        /\|$/,
+        `${file} verse ${v.id || v.number} linesEn should not end with generated pipe punctuation: "${line}"`
+      );
+      for (const [pattern, preferred] of READABLE_AARTI_ROMANIZATION_BAD_PATTERNS) {
+        assert.doesNotMatch(
+          line,
+          pattern,
+          `${file} verse ${v.id || v.number} linesEn should use readable "${preferred}" style: "${line}"`
+        );
+      }
+    }
+  }
+}
 
 // ─── 6. Gita commentary corruption checks ───────────────────────────────────
 
@@ -198,6 +260,112 @@ assert.ok(
   shivAllText.includes('दीनदयाला') || shivAllText.includes('दीन दयाला'),
   `Shiv Chalisa doha 2 should have "दीनदयाला" (with long ii), got: "${shivDoha2.lines[0]}"`
 );
+
+// ─── 11. Library labels are precise about excerpts and verse types ───────────
+
+const libraryById = new Map(library.map((entry) => [entry.id, entry]));
+
+assert.equal(libraryById.get('hanuman-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
+assert.equal(libraryById.get('shiv-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
+assert.equal(libraryById.get('ganesh-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
+assert.equal(libraryById.get('durga-chalisa')?.sub, '40 चौपाई + 1 दोहा · अर्थ सहित');
+assert.equal(libraryById.get('sundarkand')?.sub, '16 अनुभाग · 354 पद');
+assert.match(libraryById.get('ramcharitmanas')?.nameHi || '', /मंगलाचरण/);
+assert.doesNotMatch(libraryById.get('ramcharitmanas')?.sub || '', /अंश|Excerpt/i);
+assert.match(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);
+assert.equal(libraryById.get('durga-stotram')?.nameHi, 'दुर्गा स्तोत्रम्');
+assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
+
+const durgaStotramManifest = readJson('durga-stotram/chapters-manifest.json');
+for (const chapter of durgaStotramManifest) {
+  assert.doesNotMatch(chapter.titleHi, /चयनित/, `Durga Stotram chapter ${chapter.chapter} titleHi should not say चयनित`);
+  assert.doesNotMatch(chapter.titleEn, /selected/i, `Durga Stotram chapter ${chapter.chapter} titleEn should not say selected`);
+}
+
+const mahishasuraMardini = readJson('durga-stotram/chapter-02.json');
+const mahishasuraBody = mahishasuraMardini.verses.filter((v: any) => v.number > 0);
+assert.equal(mahishasuraMardini.verseCount, 22, 'Mahishasura Mardini should include intro + 21 verses');
+assert.equal(mahishasuraBody.length, 21, 'Mahishasura Mardini should have 21 body verses');
+assert.doesNotMatch(
+  JSON.stringify(mahishasuraMardini),
+  /Adi Shankar|Shankaracharya|शंकराचार्य/i,
+  'Mahishasura Mardini should not carry unsupported Adi Shankaracharya attribution'
+);
+assert.ok(
+  mahishasuraMardini.source.referenceUrls.some((url: string) => url.includes('sanskritdocuments.org/doc_devii/mahisha')),
+  'Mahishasura Mardini should cite SanskritDocuments source'
+);
+assert.ok(
+  mahishasuraMardini.source.referenceUrls.some((url: string) => url.includes('vignanam.org/veda/sree-mahishaasura-mardini')),
+  'Mahishasura Mardini should cite Vaidika Vignanam source'
+);
+for (const v of mahishasuraBody) {
+  assert.equal(v.sanskrit.length, 4, `Mahishasura Mardini verse ${v.number} should be a complete 4-line verse`);
+  assert.ok(
+    v.sanskrit[3].includes('जय जय हे महिषासुरमर्दिनि'),
+    `Mahishasura Mardini verse ${v.number} should end with canonical refrain`
+  );
+}
+
+for (const v of aartiKunjBihari.verses) {
+  for (const line of v.linesEn || []) {
+    assert.match(line, /^[A-Z]/, `Aarti Kunj Bihari roman line should preserve display capitalization: "${line}"`);
+    assert.doesNotMatch(line, /\|$/, `Aarti Kunj Bihari roman line should use display punctuation, not generated pipe: "${line}"`);
+  }
+}
+
+// ─── 12. Gita speaker prefixes are not glued to verse text ──────────────────
+
+for (let ch = 1; ch <= 18; ch++) {
+  const chStr = String(ch).padStart(2, '0');
+  const data = readJson(`gita/chapter-${chStr}.json`);
+  for (const v of data.verses) {
+    for (const line of (v.sanskrit || [])) {
+      assert.ok(
+        !/उवाच[^\s।॥]/u.test(line),
+        `Gita ${ch}.${v.number} speaker prefix should be separated from verse text: "${line}"`
+      );
+    }
+  }
+}
+
+// ─── 13. Sundarkand punctuation does not contain triple daṇḍa ───────────────
+
+for (let ch = 1; ch <= 16; ch++) {
+  const chStr = String(ch).padStart(2, '0');
+  const data = readJson(`sundarkand/chapter-${chStr}.json`);
+  for (const v of data.verses) {
+    for (const line of (v.lines || [])) {
+      assert.ok(!line.includes('॥।'), `Sundarkand ${v.id} has extra danda: "${line}"`);
+    }
+  }
+}
+
+// ─── 14. Content JSON declares source provenance ────────────────────────────
+
+function collectJsonFiles(dirRel = ''): string[] {
+  const dir = join(DATA, dirRel);
+  const entries = readdirSync(dir, { withFileTypes: true });
+  const files: string[] = [];
+  for (const entry of entries) {
+    const rel = dirRel ? `${dirRel}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) {
+      if (entry.name !== '__tests__') files.push(...collectJsonFiles(rel));
+    } else if (entry.name.endsWith('.json') && entry.name !== 'chapters-manifest.json') {
+      files.push(rel);
+    }
+  }
+  return files;
+}
+
+for (const file of collectJsonFiles()) {
+  const data = readJson(file);
+  assert.ok(data.source, `${file} should declare source provenance`);
+  assert.ok(
+    Array.isArray(data.source.referenceUrls) && data.source.referenceUrls.length >= 2,
+    `${file} should declare at least 2 source referenceUrls`
+  );
+}
 
 // ─── Done ────────────────────────────────────────────────────────────────────
 

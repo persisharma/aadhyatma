@@ -96,7 +96,12 @@
     }
   ],
   "source": {
-    "baseText": "sanskritdocuments.org, stotranidhi.com",
-    "retrievedOn": "2026-05-24"
+    "baseText": "Durga Nama selection from Durga Dvatrimsha Namamala, with closing salutation from Devi Mahatmya / Durga Saptashati chapter 5.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/durga-dwatrimsha-namamala/durga-dwatrimsha-namamala.html",
+      "https://gurumaa.com/lyrics/stotras/shri-durga-dwatrimsha-naamamala-stotra",
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/chapters/fifth-chapter/durga-saptashati-fifth-chapter.html"
+    ],
+    "retrievedOn": "2026-05-30"
   }
 }
