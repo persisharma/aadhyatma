@@ -99,7 +99,6 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
               <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
                 {currentIndex + 1} / {verseCount}
               </Text>
-              {currentIndex > 0 && <JumpToStartButton onPress={goToStart} />}
               <BookmarkButton
                 isBookmarked={isBookmarked(`ram-stuti:${chapter.chapter}:${currentIndex}`)}
                 onToggle={() => {
@@ -161,6 +160,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

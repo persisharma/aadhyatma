@@ -253,7 +253,6 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
               >
                 {currentIndex + 1} / {verseCount}
               </Text>
-              {currentIndex > 0 && <JumpToStartButton onPress={goToStart} />}
               <BookmarkButton
                 isBookmarked={isBookmarked(`shiva-strotam:${chapter.chapter}:${currentIndex}`)}
                 onToggle={() => {
@@ -347,6 +346,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
             style={styles.list}
           />
 
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

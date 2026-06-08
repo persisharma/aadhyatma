@@ -62,10 +62,19 @@
   }
   .abtn.heart{color:var(--inkMuted)}
 
-  /* highlight ring on the new button */
-  .jump{color:var(--inkSoft)}
-  .jump.spot{box-shadow:0 0 0 3px rgba(184,98,27,.55), 0 0 18px rgba(184,98,27,.45);animation:pulse 1.8s ease-in-out infinite}
-  @keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(184,98,27,.5),0 0 14px rgba(184,98,27,.35)}50%{box-shadow:0 0 0 4px rgba(184,98,27,.75),0 0 22px rgba(184,98,27,.6)}}
+  /* floating 'back to start' pill, anchored bottom-right of the pager */
+  .startPill{
+    position:absolute;right:16px;bottom:54px;z-index:4;
+    display:inline-flex;align-items:center;gap:6px;
+    padding:8px 14px;border-radius:999px;
+    background:var(--parchmentSoft);border:1px solid var(--cardBorder);
+    color:var(--saffronDeep);font-weight:600;font-size:14px;
+    box-shadow:0 4px 10px rgba(60,30,10,.18);
+    animation:pulse 1.9s ease-in-out infinite;
+  }
+  .startPill .g{font-size:15px;line-height:1}
+  .startPill .l{font-family:'Noto Serif Devanagari',serif;font-size:13px}
+  @keyframes pulse{0%,100%{box-shadow:0 4px 10px rgba(60,30,10,.18),0 0 0 0 rgba(184,98,27,.0)}50%{box-shadow:0 4px 12px rgba(60,30,10,.22),0 0 0 4px rgba(184,98,27,.28)}}
 
   /* language toggle */
   .toggleRow{display:flex;justify-content:center;padding:8px 0 14px}
@@ -93,8 +102,8 @@
 </style>
 </head>
 <body>
-  <h1>Reader · “Jump to start” control</h1>
-  <p class="sub">A subsection now auto-resumes to your last verse. The new <span class="chip" style="display:inline-flex;width:22px;height:22px;border-radius:50%;border:1px solid #b8621b;background:#f8efd6;color:#5a3a1e;align-items:center;justify-content:center;font-size:14px;vertical-align:middle">⇤</span> button (top bar) takes you back to verse 1 in one tap — no swiping. It only shows once you’re past the first verse.</p>
+  <h1>Reader · “Back to start” control</h1>
+  <p class="sub">A subsection now auto-resumes to your last verse. A small floating <b style="color:#e8d4a8">⇤&nbsp;आरंभ</b> pill sits at the bottom-right of the page (clear of the title and the page dots) and takes you back to verse 1 in one tap — no swiping. It only appears once you’re past the first verse.</p>
 
   <div class="stage">
     <!-- STATE A: verse 1, button hidden -->
@@ -128,9 +137,9 @@
       <p class="note">Opening from verse 1 — nothing extra in the bar.</p>
     </div>
 
-    <!-- STATE B: resumed mid-chapter, button shown -->
+    <!-- STATE B: resumed mid-chapter, floating pill shown -->
     <div class="col">
-      <div class="tag">Resumed at verse 12 · button appears</div>
+      <div class="tag">Resumed at verse 12 · pill appears</div>
       <div class="phone">
         <div class="notch"></div>
         <div class="screen">
@@ -139,11 +148,11 @@
             <div class="title">सुन्दरकाण्ड</div>
             <div class="actions">
               <span class="counter">12 / 24</span>
-              <div class="abtn jump spot" title="Jump to beginning">⇤</div>
               <div class="abtn heart">♡</div>
               <div class="abtn">⤴</div>
             </div>
           </div>
+          <div class="startPill" title="Jump to beginning"><span class="g">⇤</span><span class="l">आरंभ</span></div>
           <div class="toggleRow">
             <div class="toggle"><span class="on">अ हिं</span><span>EN</span></div>
           </div>
@@ -164,8 +173,8 @@
   <div class="legend">
     <b>How it behaves</b><br>
     • Tap a chapter you’ve partly read → it opens right where you left off (here, verse 12).<br>
-    • The <span class="chip">⇤</span> button sits left of the bookmark <b>♡</b> and share <b>⤴</b> icons, matching their round parchment style.<br>
-    • It’s hidden at verse 1 (nothing to jump back to) and fades in for any later verse.<br>
+    • The <span class="chip">⇤</span> <b>आरंभ / Start</b> pill floats at the bottom-right of the pager — away from the title and the centred page dots, so nothing gets cropped.<br>
+    • It’s hidden at verse 1 (nothing to jump back to) and appears for any later verse; the label follows the language toggle (आरंभ / Start).<br>
     • One tap animates the pager back to the first verse — no repeated left-swiping.
   </div>
 </body>

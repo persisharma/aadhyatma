@@ -4,47 +4,78 @@ import { useTheme } from '@/theme/ThemeContext';
 
 type Props = {
   onPress: () => void;
+  lang: 'hi' | 'en';
 };
 
 /**
- * Compact header control that returns the reader to the first verse of the
- * current chapter. Shown only when the reader is past verse 1 (e.g. after a
- * subsection auto-jump) so the user always has a one-tap path back to the
- * start without swiping back through every page.
+ * Floating "back to the first verse" pill for the readers. Anchored to the
+ * bottom-right of the verse pager (clear of the centred page dots and the
+ * top-bar title), it gives a one-tap return to verse 1 after a subsection
+ * auto-jump — without swiping back through every page. Rendered only when the
+ * reader is past the first verse.
  */
-export default function JumpToStartButton({ onPress }: Props) {
-  const { colors } = useTheme();
+export default function JumpToStartButton({ onPress, lang }: Props) {
+  const { colors, typography } = useTheme();
 
   return (
     <Pressable
       onPress={onPress}
-      hitSlop={12}
-      style={[
-        styles.circle,
-        {
-          backgroundColor: colors.parchmentSoft,
-          borderColor: colors.divider,
-        },
-      ]}
+      hitSlop={10}
       accessibilityRole="button"
       accessibilityLabel="Jump to beginning"
+      style={({ pressed }) => [
+        styles.pill,
+        {
+          backgroundColor: colors.parchmentSoft,
+          borderColor: colors.cardActiveBorder,
+        },
+        pressed && { opacity: 0.7 },
+      ]}
     >
-      <Text style={[styles.icon, { color: colors.inkMuted }]}>⇤</Text>
+      <Text style={[styles.glyph, { color: colors.saffronDeep }]}>⇤</Text>
+      <Text
+        style={[
+          styles.label,
+          {
+            color: colors.saffronDeep,
+            fontFamily:
+              lang === 'hi'
+                ? typography.readerTitle.fontFamily
+                : typography.cardLatin.fontFamily,
+            fontStyle: lang === 'en' ? 'italic' : 'normal',
+          },
+        ]}
+      >
+        {lang === 'hi' ? 'आरंभ' : 'Start'}
+      </Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  circle: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    borderWidth: 1,
+  pill: {
+    position: 'absolute',
+    right: 16,
+    bottom: 16,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 999,
+    borderWidth: 1,
+    shadowColor: '#3c1e0a',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.18,
+    shadowRadius: 10,
+    elevation: 4,
   },
-  icon: {
-    fontSize: 16,
+  glyph: {
+    fontSize: 15,
+    includeFontPadding: false,
+  },
+  label: {
+    fontSize: 13,
     includeFontPadding: false,
   },
 });

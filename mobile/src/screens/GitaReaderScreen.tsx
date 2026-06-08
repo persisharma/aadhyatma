@@ -245,7 +245,6 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
 
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              {currentIndex > 0 && <JumpToStartButton onPress={goToStart} />}
               <Text
                 style={[
                   styles.counter,
@@ -360,6 +359,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             style={styles.list}
           />
 
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

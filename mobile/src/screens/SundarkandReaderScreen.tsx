@@ -252,7 +252,6 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
               >
                 {currentIndex + 1} / {verseCount}
               </Text>
-              {currentIndex > 0 && <JumpToStartButton onPress={goToStart} />}
               <BookmarkButton
                 isBookmarked={isBookmarked(`sundarkand:${chapter.chapter}:${currentIndex}`)}
                 onToggle={() => {
@@ -345,6 +344,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
             style={styles.list}
           />
 
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (
