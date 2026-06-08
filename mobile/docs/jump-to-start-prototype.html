@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reader — Jump to Start prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Devanagari:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#F3E7C9; --parchmentSoft:#F8EFD6; --parchmentHi:#F6ECD0; --parchmentEnd:#F1E3BF;
+    --ink:#1A0E03; --inkSoft:#5A3A1E; --inkMuted:#8A6A47;
+    --saffron:#B8621B; --saffronDeep:#8A3E0B; --onPrimary:#fff;
+    --divider:rgba(138,62,11,0.18); --dotRest:rgba(138,62,11,0.25);
+    --cardBorder:rgba(184,98,27,0.4); --cardFrom:#FFF5E0; --cardTo:#F5DEAC;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:#2a1c0d;
+    font-family:'Cormorant Garamond',serif;
+    color:var(--ink);
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;
+    padding:40px 16px 60px;gap:8px;
+  }
+  h1{color:#f3e7c9;font-weight:600;font-size:26px;letter-spacing:.3px}
+  .sub{color:#caa676;font-style:italic;font-size:15px;margin-bottom:24px;text-align:center;max-width:620px;line-height:1.5}
+  .stage{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .col{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .tag{color:#e8d4a8;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;font-weight:600}
+  .tag.muted{color:#9c7b4f}
+
+  /* phone */
+  .phone{
+    width:330px;height:680px;border-radius:42px;background:#0d0905;
+    padding:11px;box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 2px #3a2814;
+    position:relative;
+  }
+  .screen{
+    width:100%;height:100%;border-radius:32px;overflow:hidden;position:relative;
+    background:linear-gradient(160deg,var(--parchmentHi),var(--parchmentEnd));
+    display:flex;flex-direction:column;
+  }
+  .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#0d0905;border-radius:0 0 16px 16px;z-index:5}
+
+  /* top bar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:46px 18px 8px}
+  .circle{
+    width:40px;height:40px;border-radius:50%;border:1px solid var(--divider);
+    background:var(--parchmentSoft);display:flex;align-items:center;justify-content:center;
+    flex:0 0 auto;
+  }
+  .circle .glyph{font-size:22px;color:var(--inkSoft);line-height:1;margin-top:-2px}
+  .title{flex:1;text-align:center;color:var(--ink);font-size:19px;margin:0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+  .counter{color:var(--inkMuted);font-style:italic;font-size:14px;min-width:46px;text-align:right;margin-right:2px}
+  .abtn{
+    width:34px;height:34px;border-radius:50%;border:1px solid var(--divider);
+    background:var(--parchmentSoft);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--inkMuted);
+    position:relative;
+  }
+  .abtn.heart{color:var(--inkMuted)}
+
+  /* highlight ring on the new button */
+  .jump{color:var(--inkSoft)}
+  .jump.spot{box-shadow:0 0 0 3px rgba(184,98,27,.55), 0 0 18px rgba(184,98,27,.45);animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(184,98,27,.5),0 0 14px rgba(184,98,27,.35)}50%{box-shadow:0 0 0 4px rgba(184,98,27,.75),0 0 22px rgba(184,98,27,.6)}}
+
+  /* language toggle */
+  .toggleRow{display:flex;justify-content:center;padding:8px 0 14px}
+  .toggle{display:flex;border:1px solid var(--divider);border-radius:999px;overflow:hidden;background:var(--parchmentSoft)}
+  .toggle span{padding:5px 16px;font-size:13px;font-weight:600;color:var(--inkMuted)}
+  .toggle .on{background:var(--saffron);color:#fff}
+
+  /* verse */
+  .verse{flex:1;display:flex;flex-direction:column;align-items:center;padding:6px 26px;text-align:center;overflow:hidden}
+  .pill{display:inline-block;background:rgba(184,98,27,.1);color:var(--saffronDeep);font-weight:600;font-size:13px;letter-spacing:.3px;padding:4px 13px;border-radius:999px;margin-bottom:18px}
+  .lines{font-family:'Noto Serif Devanagari',serif;font-size:21px;line-height:2.0;color:var(--ink)}
+  .orn{color:var(--saffron);opacity:.6;font-size:18px;margin:18px 0 14px;letter-spacing:6px}
+  .mlabel{color:var(--saffronDeep);font-family:'Noto Serif Devanagari',serif;font-weight:600;font-size:13px;margin-bottom:6px}
+  .meaning{font-family:'Noto Serif Devanagari',serif;font-size:15px;line-height:1.7;color:var(--inkSoft)}
+
+  /* dots */
+  .dots{display:flex;gap:6px;justify-content:center;padding:12px 0 22px}
+  .dot{width:6px;height:6px;border-radius:3px;background:var(--dotRest)}
+  .dot.cur{width:18px;background:var(--saffronDeep)}
+
+  .note{color:#caa676;font-size:13px;font-style:italic;text-align:center;max-width:300px;line-height:1.55}
+  .legend{margin-top:34px;background:rgba(243,231,201,.07);border:1px solid rgba(243,231,201,.15);border-radius:14px;padding:18px 22px;max-width:660px;color:#e8d4a8;font-size:14.5px;line-height:1.7}
+  .legend b{color:#fff}
+  .legend .chip{display:inline-flex;width:24px;height:24px;border-radius:50%;border:1px solid #b8621b;background:#f8efd6;color:#5a3a1e;align-items:center;justify-content:center;font-size:15px;vertical-align:middle;margin:0 2px}
+</style>
+</head>
+<body>
+  <h1>Reader · “Jump to start” control</h1>
+  <p class="sub">A subsection now auto-resumes to your last verse. The new <span class="chip" style="display:inline-flex;width:22px;height:22px;border-radius:50%;border:1px solid #b8621b;background:#f8efd6;color:#5a3a1e;align-items:center;justify-content:center;font-size:14px;vertical-align:middle">⇤</span> button (top bar) takes you back to verse 1 in one tap — no swiping. It only shows once you’re past the first verse.</p>
+
+  <div class="stage">
+    <!-- STATE A: verse 1, button hidden -->
+    <div class="col">
+      <div class="tag muted">At verse 1 · button hidden</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="topbar">
+            <div class="circle"><span class="glyph">‹</span></div>
+            <div class="title">सुन्दरकाण्ड</div>
+            <div class="actions">
+              <span class="counter">1 / 24</span>
+              <div class="abtn heart">♡</div>
+              <div class="abtn">⤴</div>
+            </div>
+          </div>
+          <div class="toggleRow">
+            <div class="toggle"><span class="on">अ हिं</span><span>EN</span></div>
+          </div>
+          <div class="verse">
+            <span class="pill">सुन्दरकाण्ड · दोहा 1</span>
+            <div class="lines">जामवंत के बचन सुहाए।<br>सुनि हनुमंत हृदय अति भाए॥</div>
+            <div class="orn">❀ ✦ ❀</div>
+            <div class="mlabel">अर्थ</div>
+            <div class="meaning">जाम्बवान के सुहावने वचन सुनकर हनुमान जी के हृदय को बहुत अच्छे लगे।</div>
+          </div>
+          <div class="dots"><div class="dot cur"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+      </div>
+      <p class="note">Opening from verse 1 — nothing extra in the bar.</p>
+    </div>
+
+    <!-- STATE B: resumed mid-chapter, button shown -->
+    <div class="col">
+      <div class="tag">Resumed at verse 12 · button appears</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="topbar">
+            <div class="circle"><span class="glyph">‹</span></div>
+            <div class="title">सुन्दरकाण्ड</div>
+            <div class="actions">
+              <span class="counter">12 / 24</span>
+              <div class="abtn jump spot" title="Jump to beginning">⇤</div>
+              <div class="abtn heart">♡</div>
+              <div class="abtn">⤴</div>
+            </div>
+          </div>
+          <div class="toggleRow">
+            <div class="toggle"><span class="on">अ हिं</span><span>EN</span></div>
+          </div>
+          <div class="verse">
+            <span class="pill">सुन्दरकाण्ड · दोहा 12</span>
+            <div class="lines">सिंधु तीर एक भूधर सुंदर।<br>कौतुक कूदि चढ़ेउ ता ऊपर॥</div>
+            <div class="orn">❀ ✦ ❀</div>
+            <div class="mlabel">अर्थ</div>
+            <div class="meaning">समुद्र के तट पर एक सुंदर पर्वत था। हनुमान जी खेल से ही कूदकर उस पर जा चढ़े।</div>
+          </div>
+          <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot cur"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+      </div>
+      <p class="note">Tapping <b style="color:#e8d4a8">⇤</b> slides back to verse 1 instantly.</p>
+    </div>
+  </div>
+
+  <div class="legend">
+    <b>How it behaves</b><br>
+    • Tap a chapter you’ve partly read → it opens right where you left off (here, verse 12).<br>
+    • The <span class="chip">⇤</span> button sits left of the bookmark <b>♡</b> and share <b>⤴</b> icons, matching their round parchment style.<br>
+    • It’s hidden at verse 1 (nothing to jump back to) and fades in for any later verse.<br>
+    • One tap animates the pager back to the first verse — no repeated left-swiping.
+  </div>
+</body>
+</html>
