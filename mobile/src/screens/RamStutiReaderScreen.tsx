@@ -10,6 +10,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
+import JumpToStartButton from '@/components/JumpToStartButton';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import { clampIndex } from '@/utils/clamp';
@@ -53,6 +54,11 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
   }).current;
 
   const getItemLayout = useCallback((_: unknown, index: number) => ({ length: width, offset: width * index, index }), [width]);
+
+  const goToStart = useCallback(() => {
+    listRef.current?.scrollToIndex({ index: 0, animated: true });
+    setCurrentIndex(0);
+  }, []);
 
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
@@ -154,6 +160,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

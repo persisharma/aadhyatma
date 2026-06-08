@@ -15,6 +15,7 @@ import { getSourceBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ShivaStrotamChapters'>;
@@ -22,6 +23,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ShivaStrotamChapters'>;
 export default function ShivaStrotamChaptersScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { getChapterProgress } = useReadingProgress();
 
   const title = lang === 'hi' ? shivaStrotamTitleHi : shivaStrotamTitleEn;
   const titleFontFamily =
@@ -86,9 +88,10 @@ export default function ShivaStrotamChaptersScreen({ navigation }: Props) {
             <GitaChapterCard
               key={chapter.chapter}
               chapter={chapter}
-              onPress={() =>
-                navigation.navigate('ShivaStrotamReader', { chapter: chapter.chapter })
-              }
+              onPress={() => {
+                const resumeIndex = getChapterProgress('shiva-strotam', chapter.chapter)?.verseIndex ?? 0;
+                navigation.navigate('ShivaStrotamReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
+              }}
             />
           ))}
         </ScrollView>
