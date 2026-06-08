@@ -140,7 +140,7 @@ export const library: readonly LibraryEntry[] = [
     thumb: 'वि',
     status: 'active',
     category: 'stotram',
-    deities: ['vishnu', 'krishna', 'rama'],
+    deities: ['vishnu'],
     verseCount: vishnuSahasranamaTotal,
   },
   {
