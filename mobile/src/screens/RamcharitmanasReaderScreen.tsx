@@ -10,6 +10,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
+import JumpToStartButton from '@/components/JumpToStartButton';
 import RamcharitmanasVersePage from '@/components/RamcharitmanasVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import { clampIndex } from '@/utils/clamp';
@@ -54,6 +55,11 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
 
   const getItemLayout = useCallback((_: unknown, index: number) => ({ length: width, offset: width * index, index }), [width]);
 
+  const goToStart = useCallback(() => {
+    listRef.current?.scrollToIndex({ index: 0, animated: true });
+    setCurrentIndex(0);
+  }, []);
+
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
@@ -93,6 +99,7 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
               <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
                 {currentIndex + 1} / {verseCount}
               </Text>
+              {currentIndex > 0 && <JumpToStartButton onPress={goToStart} />}
               <BookmarkButton
                 isBookmarked={isBookmarked(`ramcharitmanas:${chapter.chapter}:${currentIndex}`)}
                 onToggle={() => {

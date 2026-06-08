@@ -24,6 +24,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
+import JumpToStartButton from '@/components/JumpToStartButton';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
@@ -165,6 +166,11 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
     [width]
   );
 
+  const goToStart = useCallback(() => {
+    listRef.current?.scrollToIndex({ index: offset, animated: true });
+    setCurrentIndex(0);
+  }, [offset]);
+
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
@@ -247,6 +253,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
               >
                 {currentIndex + 1} / {verseCount}
               </Text>
+              {currentIndex > 0 && <JumpToStartButton onPress={goToStart} />}
               <BookmarkButton
                 isBookmarked={isBookmarked(`shiva-strotam:${chapter.chapter}:${currentIndex}`)}
                 onToggle={() => {

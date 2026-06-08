@@ -9,6 +9,7 @@ import { getSourceBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'VishnuSahasranamaChapters'>;
@@ -16,6 +17,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'VishnuSahasranamaChapte
 export default function VishnuSahasranamaChaptersScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { getChapterProgress } = useReadingProgress();
 
   const title = lang === 'hi' ? vishnuSahasranamaTitleHi : vishnuSahasranamaTitleEn;
   const titleFontFamily =
@@ -63,7 +65,10 @@ export default function VishnuSahasranamaChaptersScreen({ navigation }: Props) {
             <GitaChapterCard
               key={chapter.chapter}
               chapter={chapter}
-              onPress={() => navigation.navigate('VishnuSahasranamaReader', { chapter: chapter.chapter })}
+              onPress={() => {
+                const resumeIndex = getChapterProgress('vishnu-sahasranama', chapter.chapter)?.verseIndex ?? 0;
+                navigation.navigate('VishnuSahasranamaReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
+              }}
             />
           ))}
         </ScrollView>
