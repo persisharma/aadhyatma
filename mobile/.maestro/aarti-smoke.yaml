@@ -36,6 +36,12 @@ appId: host.exp.Exponent
     timeout: 10000
 
 # Open Om Jai Jagdish Hare reader
+- scrollUntilVisible:
+    element:
+      text: "Om Jai Jagdish Hare\\..*Tap to open\\."
+    direction: UP
+    visibilityPercentage: 60
+    timeout: 10000
 - tapOn: "Om Jai Jagdish Hare\\..*Tap to open\\."
 - waitForAnimationToEnd:
     timeout: 15000

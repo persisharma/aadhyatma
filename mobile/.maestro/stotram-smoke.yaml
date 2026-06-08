@@ -42,12 +42,6 @@ appId: host.exp.Exponent
     timeout: 10000
 - scrollUntilVisible:
     element:
-      text: "Ram Stuti\\..*Tap to open\\."
-    direction: DOWN
-    visibilityPercentage: 60
-    timeout: 10000
-- scrollUntilVisible:
-    element:
       text: "Sankat Mochan Hanuman Ashtak\\..*Tap to open\\."
     direction: DOWN
     visibilityPercentage: 60
@@ -58,8 +52,20 @@ appId: host.exp.Exponent
     direction: DOWN
     visibilityPercentage: 60
     timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Ram Stuti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
 
 # Open Bajrang Baan reader
+- scrollUntilVisible:
+    element:
+      text: "Bajrang Baan\\..*Tap to open\\."
+    direction: UP
+    visibilityPercentage: 60
+    timeout: 10000
 - tapOn: "Bajrang Baan\\..*Tap to open\\."
 - waitForAnimationToEnd:
     timeout: 15000
