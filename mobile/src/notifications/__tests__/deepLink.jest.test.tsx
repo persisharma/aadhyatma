@@ -74,15 +74,20 @@ describe('handleNotificationResponse', () => {
     expect(action).toMatchObject({ type: 'NAVIGATE', payload: { name: 'DailyBhaktiTab' } });
   });
 
-  test('regression guard: never deep-links into a reader (which would overwrite saved progress)', () => {
+  test('forwards the verse identity to the Daily Bhakti tab without opening a reader', () => {
     readySpy.mockReturnValue(true);
 
     handleNotificationResponse(responseWithData(dailyVerse));
 
     const action = dispatchSpy.mock.calls[0][0];
-    // The target is the tab, not the reader for the payload's sourceId — opening
-    // a reader would fire its setProgress effect and clobber the user's bookmark.
+    // Regression guard: the destination stays the Daily Bhakti TAB, not a reader
+    // screen — opening a reader would fire its setProgress effect and clobber the
+    // user's bookmark. The verse identity rides along as tab params so Daily
+    // Bhakti can show the exact (stable) verse the user tapped.
     expect(action.payload?.name).toBe('DailyBhaktiTab');
-    expect(JSON.stringify(action)).not.toContain(dailyVerse.sourceId);
+    expect(action.payload?.params).toMatchObject({
+      sourceId: dailyVerse.sourceId,
+      verseIndex: dailyVerse.verseIndex,
+    });
   });
 });

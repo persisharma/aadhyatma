@@ -33,6 +33,7 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
   durga: backgroundImages.deity_durga_lion,
   ganesha: backgroundImages.deity_ganesha_modak,
   savitr: shivaStrotamImages.shiva,
+  saraswati: backgroundImages.deity_saraswati_veena,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
@@ -68,6 +69,9 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'gau-seva': backgroundImages.deity_krishna_bansuri,
   'sandhya-deepam': backgroundImages.category_aarti_diya,
   'ratri-shloka': backgroundImages.deity_rama_darbar,
+  'saraswati-stotram': backgroundImages.deity_saraswati_veena,
+  'saraswati-aarti': backgroundImages.deity_saraswati_veena,
+  'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {

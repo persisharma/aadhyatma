@@ -23,17 +23,14 @@ appId: host.exp.Exponent
 - runFlow: _launch.yaml
 
 # ── Step 2: Verify all 6 categories visible on Home (full accessibilityLabel match) ──
-# Stotram and Sanskar hold debut-new sections, so their tiles read
-# "<Name>. New. Tap to open." for upgrading users — the `.*` tolerates the
-# optional " New." badge segment (same pattern _launch uses for "Good Habits").
-- assertVisible: "Sacred Books. Tap to open."          # Granth (no debut-new)
-- assertVisible: "Hymns & Praise\\..*Tap to open\\."   # Stotram (may carry NEW)
+- assertVisible: "Sacred Books. Tap to open."      # Granth
+- assertVisible: "Hymns & Praise\\..*Tap to open\\."    # Stotram
 - assertVisible: "Chalisa. Tap to open."
-- assertVisible: "Japa & Mantras. Tap to open."        # Japam
-- assertVisible: "Aarti. Tap to open."
-- assertVisible: "Good Habits\\..*Tap to open\\."      # Sanskar (may carry NEW)
+- assertVisible: "Japa & Mantras. Tap to open."    # Japam
+- assertVisible: "Aarti\\..*Tap to open\\."
+- assertVisible: "Good Habits\\..*Tap to open\\."       # Sanskar
 
-# ── Step 3: Open Sanskar category, verify all 7 sections (regex for LibraryCard) ──
+# ── Step 3: Open Sanskar category, verify all 8 sections (regex for LibraryCard) ──
 - tapOn: "Good Habits\\..*Tap to open\\."
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -45,11 +42,25 @@ appId: host.exp.Exponent
 - assertVisible: "Serving Cows & Birds\\..*Tap to open\\."
 - assertVisible: "Evening Lamp\\..*Tap to open\\."
 - assertVisible: "Bedtime Slokas\\..*Tap to open\\."
+# Vidyarambha Prarthana is the last card — scroll to it (list now exceeds one screen)
+- scrollUntilVisible:
+    element:
+      text: "Vidyarambha Prarthana\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
 
 # ── Step 4: Open Morning Slokas, toggle to English, assert intro pill ──
 # Maestro's iOS accessibility tree doesn't reliably expose standalone
 # Devanagari text nodes — so we toggle to English first and assert the
 # English label "Introduction" instead of "परिचय".
+# Scroll back up first — verifying Vidyarambha Prarthana above scrolled the list down.
+- scrollUntilVisible:
+    element:
+      text: "Morning Slokas\\..*Tap to open\\."
+    direction: UP
+    visibilityPercentage: 60
+    timeout: 10000
 - tapOn: "Morning Slokas\\..*Tap to open\\."
 - waitForAnimationToEnd:
     timeout: 15000

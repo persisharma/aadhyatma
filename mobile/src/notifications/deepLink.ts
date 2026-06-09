@@ -29,6 +29,13 @@ function isDailyVersePayload(data: unknown): data is NotificationPayload {
  * ("bookmark"). Landing on Daily Bhakti keeps the reminder lightweight and
  * leaves the resume position untouched.
  *
+ * The notification's verse identity (`sourceId`/`chapter`/`verseIndex`) is
+ * forwarded as params so the tab shows the exact verse the user tapped. We pass
+ * the identity baked into the notification rather than re-deriving it on-device,
+ * so an OTA pool change between scheduling and tapping can't shift the verse.
+ * This stays on the Daily Bhakti tab (not a reader), so reading progress is
+ * untouched.
+ *
  * Idempotent and side-effect-light: safe to call even if `navigationRef` isn't
  * ready yet (no-ops in that case so the caller can retry on the next tick).
  */
@@ -39,6 +46,15 @@ export function handleNotificationResponse(
   const data = response.notification.request.content.data;
   if (!isDailyVersePayload(data)) return false;
 
-  navigationRef.dispatch(CommonActions.navigate({ name: 'DailyBhaktiTab' }));
+  navigationRef.dispatch(
+    CommonActions.navigate({
+      name: 'DailyBhaktiTab',
+      params: {
+        sourceId: data.sourceId,
+        verseIndex: data.verseIndex,
+        ...(data.chapter != null ? { chapter: data.chapter } : {}),
+      },
+    })
+  );
   return true;
 }
