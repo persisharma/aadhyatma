@@ -5,9 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, type RouteProp } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { getRandomVerse, getVersePool } from '@/data/versePool';
+import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
-import { pickVerseForDateKey } from '@/notifications/seed';
 import type { TabParamList } from '@/navigation/types';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
@@ -16,34 +15,45 @@ import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 
 /**
- * The verse-of-the-day for a given date key. Deterministic: the same date
- * always resolves to the same verse, matching the verse the daily reminder
- * notification was built from. Used to lock the tab to a tapped reminder's
- * verse so it renders stable content instead of re-randomising.
+ * Resolve the verse to show on entry. When a reminder tap forwarded a verse
+ * identity, show that exact verse; if it can no longer be found (e.g. an OTA
+ * update removed it) fall back to a random one. A manual open has no identity,
+ * so it shows a random verse.
  */
-function getDailyVerse(dateKey: string): UniformVerse | null {
-  return pickVerseForDateKey(dateKey, getVersePool());
+function resolveInitialVerse(
+  sourceId?: string,
+  verseIndex?: number,
+  chapter?: number
+): UniformVerse | null {
+  if (sourceId != null && verseIndex != null) {
+    const found = findVerse(sourceId, verseIndex, chapter);
+    if (found) return found;
+  }
+  return getRandomVerse();
 }
 
 export default function DailyBhaktiScreen() {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const route = useRoute<RouteProp<TabParamList, 'DailyBhaktiTab'>>();
-  const dateKey = route.params?.dateKey;
+  const { sourceId, chapter, verseIndex } = route.params ?? {};
   const [verse, setVerse] = useState<UniformVerse | null>(() =>
-    dateKey ? getDailyVerse(dateKey) : getRandomVerse()
+    resolveInitialVerse(sourceId, verseIndex, chapter)
   );
 
   const { share, busy: shareBusy } = useShare();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
 
-  // Manual opens show a random verse. Arriving from a notification tap forwards
-  // that reminder's `dateKey`, which locks the tab to that exact verse-of-the-
-  // day — even if the screen was already mounted (e.g. the user had browsed
-  // away with "next"). Deterministic, so it matches the notification.
+  // Manual opens show a random verse. Arriving from a reminder tap forwards the
+  // exact verse identity baked into that notification, which locks the tab to
+  // that verse — even if the screen was already mounted (e.g. the user had
+  // browsed away with "next"). Looked up by identity, so it always matches the
+  // notification regardless of pool-size drift.
   useEffect(() => {
-    if (dateKey) setVerse(getDailyVerse(dateKey));
-  }, [dateKey]);
+    if (sourceId == null || verseIndex == null) return;
+    const found = findVerse(sourceId, verseIndex, chapter);
+    if (found) setVerse(found);
+  }, [sourceId, chapter, verseIndex]);
 
   const refresh = useCallback(() => {
     setVerse(getRandomVerse());
