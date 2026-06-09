@@ -106,3 +106,26 @@ export function getRandomVerse(): UniformVerse | null {
   const idx = Math.floor(Math.random() * pool.length);
   return pool[idx] ?? null;
 }
+
+/**
+ * Look up a verse by its stable identity — source + chapter + index within the
+ * chapter. Returns null when no active section contains it (e.g. the section
+ * was deactivated, or the pool changed via an OTA update since the id was
+ * captured). Unlike a date-hash lookup, this resolves the exact verse a daily
+ * reminder advertised regardless of pool-size drift.
+ */
+export function findVerse(
+  sourceId: string,
+  verseIndex: number,
+  chapter?: number
+): UniformVerse | null {
+  const pool = getVersePool();
+  return (
+    pool.find(
+      (v) =>
+        v.sourceId === sourceId &&
+        v.verseIndex === verseIndex &&
+        (v.chapter ?? null) === (chapter ?? null)
+    ) ?? null
+  );
+}

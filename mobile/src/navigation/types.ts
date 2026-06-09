@@ -2,7 +2,7 @@ import type { ContentCategory, Deity } from '@/data/texts';
 
 export type TabParamList = {
   HomeTab: undefined;
-  DailyBhaktiTab: undefined;
+  DailyBhaktiTab: { sourceId?: string; chapter?: number; verseIndex?: number } | undefined;
   PanchangTab: undefined;
   MoreTab: undefined;
 };
