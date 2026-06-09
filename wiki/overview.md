@@ -1,0 +1,106 @@
+---
+title: Overview
+type: overview
+sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, RULEBOOK.md, design.md, scripts/, push.sh]
+last_verified_date: 2026-06-09
+confidence: medium
+status: current
+---
+
+## Summary
+
+Aadhyatma is an umbrella repo housing **Vedansh**, an offline-first Hindu devotional-text
+reader built with Expo / React Native. It bundles bilingual (Hindi/English) content — Bhagavad
+Gita, chalisas, Sundarkand, stotrams, aartis, sanskar — and layers on a Panchang (Hindu
+calendar) engine, a japam counter, daily-bhakti notifications, and verse sharing. All content
+ships inside the app bundle; there is no content backend.
+
+## Stack
+- **Language:** TypeScript ~5.9.2 (strict). Path aliases `@/*` → `src/*`, `@assets/*` → `assets/*`.
+- **Framework:** Expo SDK ~54.0.33 · React Native 0.81.5 · React 19.1.0 (New Architecture disabled).
+- **Navigation:** React Navigation 7 — `native-stack` + `bottom-tabs`. **Not** expo-router.
+- **State:** React Context only (no Redux/Zustand). `@react-native-async-storage/async-storage` 2.2.0 for persistence.
+- **OTA:** `expo-updates` ~29.0.17, `runtimeVersion` policy `appVersion`.
+- **Audio:** `expo-audio` (japam playback). **Notifications:** `expo-notifications`. **Calendar math:** `astronomy-engine` ~2.1.19.
+- **Fonts:** Noto Serif Devanagari (Devanagari), Cormorant Garamond (Latin).
+- **App version:** 1.3.2 (`mobile/app.json`).
+- **Entry Point:** `mobile/index.ts` → `registerRootComponent(App)` → `mobile/App.tsx`.
+
+## Request Shape
+
+`App.tsx` wraps the tree in `GestureHandlerRootView` + `SafeAreaProvider`, then nests ~12
+context providers (Theme, GitaLanguage, Bookmarks, UserActivity, NewContent, ReadingProgress,
+JapamCounter, NotificationPreferences, Share) around a `NavigationContainer` →
+`RootNavigator` → a **4-tab bottom navigator**:
+
+1. **Home** → `HomeStackNavigator` (native-stack, 30+ reader screens: Gita, chalisas,
+   Sundarkand, stotrams, sanskar, japam, search).
+2. **DailyBhakti** → `DailyBhaktiScreen`.
+3. **Panchang** → `PanchangScreen`.
+4. **More** → `MoreStackNavigator` (MoreHome, Wishlist, Profile, Reminders).
+
+Deep links and notification taps route through `navigationRef`, exported from
+`mobile/src/notifications/deepLink.ts`; route mapping lives in `mobile/src/navigation/entryRoutes.ts`.
+
+## Module Map
+
+| Module | Purpose | Key Paths |
+|---|---|---|
+| `mobile/src/screens/` | Reader & feature screens (one per text/variant) | `GitaReaderScreen`, `ChalisaReaderScreen`, `DailyBhaktiScreen`, `PanchangScreen` |
+| `mobile/src/components/` | Reusable UI | `GitaVersePage`, `LibraryCard`, `UpdateReadyModal`, `ReminderOptInModal`, `LanguageToggle` |
+| `mobile/src/navigation/` | Nav graph + types | `RootNavigator`, `TabNavigator`, `HomeStackNavigator`, `MoreStackNavigator`, `types.ts`, `entryRoutes.ts` |
+| `mobile/src/contexts/` | App state | `BookmarksContext`, `JapamCounterContext`, `ReadingProgressContext`, `UserActivityContext`, `NewContentContext`, `NotificationPreferencesContext` |
+| `mobile/src/data/` | Bundled content + registries | `texts.ts` (library index), `searchIndex.ts`, `deities.ts`, `categories.ts`, `gita/chapter-01..18.json`, `chalisa/`, `sundarkand/`, stotram dirs, `sourceIdMigration.ts` |
+| `mobile/src/panchang/` | Hindu-calendar engine | `festivals.ts` + astronomy-engine calculations |
+| `mobile/src/theme/` | Design tokens (light-only) | `ThemeContext.tsx`, `colors.ts`, `typography.ts`, `spacing.ts` |
+| `mobile/src/utils/` | Helpers | `shareVerse.tsx`, `semverCompare.ts`, `titleByLanguage.ts` |
+
+## Data Layer
+
+All content is **bundled JSON**, not fetched. The canonical source is markdown at the repo
+root; `scripts/*.mjs` (Node ESM) transform it into per-text JSON under `mobile/src/data/`,
+which the reader screens consume. `texts.ts` is the library index (`LibraryEntry`: id, names,
+category, deities, verseCount, `addedInVersion` for the NEW badge). `searchIndex.ts` is the
+full-text search index. `sourceIdMigration.ts` keeps bookmarks/progress stable across content
+ID changes. User language preference is persisted in AsyncStorage.
+
+## Content Pipeline
+
+1. **Canonical markdown** at repo root: `BhagwadGita/` (18 chapter files), `HanumanChalisa/`,
+   `Sundarkand/`, and the master `bhagavad-gita-complete-hi-en.md`.
+2. **`scripts/*.mjs`** (Node ESM, run manually — **not** a build step): `parse-gita`,
+   `split-sundarkand`, `transliterate-shloka`, and `fix-*` repair tools → write JSON into `mobile/src/data/`.
+3. The app reads only the JSON. `RULEBOOK.md` is the integration contract for adding a new
+   section; `design.md` is the visual-system spec; `push.sh` wraps `eas update` for OTA publishing.
+
+## Testing
+
+- **Jest 29** (react-native preset) for screens/utils/contexts/components/theme — `npm run test:readers` (`--runInBand`).
+- **tsx + `node:assert`** for the Panchang engine — `npm run test:engine`; and for `src/data` /
+  `src/notifications` suites, which are **deliberately excluded from Jest** (see the comment in
+  `mobile/jest.config.js`). Run those via `tsx --test`.
+- **Maestro** E2E flows in `mobile/.maestro/` — `npm run test:e2e`.
+- `contentCorrectness.test.ts` pins RULEBOOK content rules; `readerTypeScale`, `colors.contrast`,
+  `semverCompare`, and `entryRoutes` tests gate the rest.
+
+## Reference Docs (linked in place — not copied into the wiki)
+
+- `RULEBOOK.md` — integration contract for adding a content section (file list, content shape, design rules, verification checklist).
+- `design.md` — visual system spec (color/type tokens, type scale, romanization rules by source language).
+- `docs/roadmap/` — Q3 2026 roadmap and PRDs 01–06.
+- `docs/superpowers/` — deity-icon plan + design spec.
+
+## Gotchas
+
+- **OTA + `runtimeVersion: appVersion`** — an OTA update reaches only users on a matching store
+  build. Publish at the *live store runtime*, not blindly at `app.json`'s version (store builds
+  have historically run ahead of `app.json`).
+- **Light theme only** — `ThemeMode` allows `dark`, but the app is hardcoded to light (`userInterfaceStyle: "light"`).
+- **Not expo-router** — navigation is hand-wired React Navigation stacks; there is no file-based routing.
+- **Content is bundled** — OTA ships the JS bundle, **not** new festival data or audio; those require a store release.
+- **Two test runners** — never add `src/data` tests to Jest; they run via `tsx --test` and Jest's `testMatch` excludes them.
+- **Romanization is by source language, not module** — Sanskrit = IAST; Awadhi/Hindi = pronunciation ASCII (design.md §3.1).
+- **Scripts are manual** — `scripts/*.mjs` are one-time transform/repair tools, not part of the build.
+
+> Personal identifiers (owner email, bundle IDs, EAS project id/URL) live in `mobile/app.json`
+> and `mobile/eas.json` and are intentionally **not** reproduced here — see those files directly.
