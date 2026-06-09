@@ -18,6 +18,8 @@ import ShivaStrotamChaptersScreen from '@/screens/ShivaStrotamChaptersScreen';
 import ShivaStrotamReaderScreen from '@/screens/ShivaStrotamReaderScreen';
 import DurgaStotramChaptersScreen from '@/screens/DurgaStotramChaptersScreen';
 import DurgaStotramReaderScreen from '@/screens/DurgaStotramReaderScreen';
+import SaraswatiStotramChaptersScreen from '@/screens/SaraswatiStotramChaptersScreen';
+import SaraswatiStotramReaderScreen from '@/screens/SaraswatiStotramReaderScreen';
 import GaneshStotramChaptersScreen from '@/screens/GaneshStotramChaptersScreen';
 import GaneshStotramReaderScreen from '@/screens/GaneshStotramReaderScreen';
 import VishnuSahasranamaChaptersScreen from '@/screens/VishnuSahasranamaChaptersScreen';
@@ -105,6 +107,12 @@ export default function HomeStackNavigator() {
       <Stack.Screen
         name="DurgaStotramReader"
         component={DurgaStotramReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="SaraswatiStotramChapters" component={SaraswatiStotramChaptersScreen} />
+      <Stack.Screen
+        name="SaraswatiStotramReader"
+        component={SaraswatiStotramReaderScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
       <Stack.Screen name="GaneshStotramChapters" component={GaneshStotramChaptersScreen} />

@@ -1,0 +1,70 @@
+{
+  "chapter": 2,
+  "titleHi": "सरस्वती वंदना",
+  "titleEn": "Saraswati Vandana",
+  "verseCount": 3,
+  "verses": [
+    {
+      "id": "ss-2-0",
+      "chapter": 2,
+      "number": 0,
+      "sanskrit": [
+        "॥ सरस्वती वंदना ॥",
+        "या कुन्देन्दु — विद्यालय प्रार्थना"
+      ],
+      "linesEn": [
+        "Saraswati Vandana",
+        "Ya Kundendu — the school-assembly prayer"
+      ],
+      "meaningHi": "महत्त्व:\n\n'या कुन्देन्दु...' वह वंदना है जो भारत भर के विद्यालयों की प्रातःकालीन प्रार्थना-सभा में तथा बसन्त पञ्चमी (सरस्वती पूजा) पर गाई जाती है। इसमें देवी सरस्वती के श्वेत एवं सौम्य स्वरूप का वर्णन है — वीणा, पुस्तक तथा श्वेत कमल के साथ — और उनसे 'जड़ता' (मन्दबुद्धि, आलस्य) को दूर कर बुद्धि प्रदान करने की प्रार्थना की जाती है। यह दो श्लोकों की वंदना है; आगे प्रत्येक श्लोक अर्थ सहित दिया गया है।",
+      "meaningEn": "Significance:\n\n'Ya Kundendu...' is the vandana sung at morning school assemblies across India and on Vasant Panchami (Saraswati Puja). It describes the serene, white form of Goddess Saraswati — with veena, book and white lotus — and prays that she remove 'jadya' (dullness and mental inertia) and bestow intellect. It is a two-verse vandana; each verse follows with its meaning."
+    },
+    {
+      "id": "ss-2-1",
+      "chapter": 2,
+      "number": 1,
+      "sanskrit": [
+        "या कुन्देन्दुतुषारहारधवला या शुभ्रवस्त्रावृता",
+        "या वीणावरदण्डमण्डितकरा या श्वेतपद्मासना।",
+        "या ब्रह्माच्युतशंकरप्रभृतिभिर्देवैः सदा वन्दिता",
+        "सा मां पातु सरस्वती भगवती निःशेषजाड्यापहा॥"
+      ],
+      "linesEn": [
+        "yā kundendu-tuṣhāra-hāra-dhavalā yā shubhra-vastrāvṛitā",
+        "yā vīṇā-vara-daṇḍa-maṇḍita-karā yā shveta-padmāsanā",
+        "yā brahmāchyuta-shaṅkara-prabhṛitibhir devaiḥ sadā vanditā",
+        "sā māṃ pātu sarasvatī bhagavatī niḥsheṣha-jāḍyāpahā"
+      ],
+      "meaningHi": "जो कुन्द के फूल, चन्द्रमा, हिम और मोती के हार के समान धवल (श्वेत) वर्ण की हैं, जो श्वेत वस्त्र धारण करती हैं, जिनके हाथ वीणा और वरदण्ड से सुशोभित हैं, जो श्वेत कमल पर विराजमान हैं, और जिन्हें ब्रह्मा, विष्णु, शंकर आदि देव सदा वन्दना करते हैं — वही समस्त जड़ता (अज्ञान) को दूर करने वाली भगवती सरस्वती मेरी रक्षा करें।\n\n'निःशेषजाड्यापहा' का अर्थ है — समस्त जड़ता (मन्दता, आलस्य) को हर लेने वाली; यह विद्यार्थी की प्रार्थना से सीधे जुड़ता है। (यह सम्पूर्ण सरस्वती स्तोत्र का आरम्भिक एवं सर्वाधिक प्रचलित श्लोक है, जिसका श्रेय प्रायः अगस्त्य मुनि को दिया जाता है।)",
+      "meaningEn": "She who is white as the jasmine flower, the moon, snow and a pearl-necklace; who is robed in white; whose hands are graced by the veena and the boon-giving staff; who is seated on a white lotus; and who is ever adored by Brahma, Vishnu, Shankara and the other gods — may that Goddess Saraswati, remover of all dullness and ignorance, protect me.\n\n'Nihshesha-jaadyaapaha' means 'remover of all dullness (mental inertia)' — speaking directly to a student's prayer. (This is the opening and most-recited verse of the larger Saraswati Stotram, widely attributed to Sage Agastya.)"
+    },
+    {
+      "id": "ss-2-2",
+      "chapter": 2,
+      "number": 2,
+      "sanskrit": [
+        "शुक्लां ब्रह्मविचारसारपरमामाद्यां जगद्व्यापिनीं",
+        "वीणापुस्तकधारिणीमभयदां जाड्यान्धकारापहाम्।",
+        "हस्ते स्फटिकमालिकां विदधतीं पद्मासने संस्थिताम्",
+        "वन्दे तां परमेश्वरीं भगवतीं बुद्धिप्रदां शारदाम्॥"
+      ],
+      "linesEn": [
+        "shuklāṃ brahma-vichāra-sāra-paramām ādyāṃ jagad-vyāpinīṃ",
+        "vīṇā-pustaka-dhāriṇīm abhayadāṃ jāḍyāndhakārāpahām",
+        "haste sphaṭika-mālikāṃ vidadhatīṃ padmāsane saṃsthitām",
+        "vande tāṃ parameshvarīṃ bhagavatīṃ buddhi-pradāṃ shāradām"
+      ],
+      "meaningHi": "श्वेतवर्णा, परब्रह्म के चिन्तन की सार-स्वरूपा, आदिशक्ति, सम्पूर्ण जगत् में व्याप्त, वीणा एवं पुस्तक धारण करने वाली, अभय देने वाली, अज्ञान के अन्धकार को मिटाने वाली, हाथ में स्फटिक की माला लिए पद्मासन पर विराजमान, बुद्धि प्रदान करने वाली भगवती शारदा (सरस्वती) की मैं वन्दना करता हूँ।\n\n'बुद्धिप्रदा' (बुद्धि प्रदान करने वाली) — यही शब्द इस श्लोक को विद्यार्थी के लिए विशेष बनाता है। प्रायः यह श्लोक 'या कुन्देन्दु' के साथ ही पढ़ा जाता है।",
+      "meaningEn": "I bow to Goddess Sharada (Saraswati): fair-complexioned, the very essence of contemplation on the Supreme, the primordial power pervading the universe, bearer of veena and book, granter of fearlessness, dispeller of the darkness of ignorance, holding a crystal rosary, seated on a lotus, the bestower of intellect (buddhi).\n\n'Buddhi-pradaa' (bestower of intellect) is what makes this verse special for a student. It is usually recited together with 'Yā Kundendu'."
+    }
+  ],
+  "source": {
+    "baseText": "Saraswati Vandana — opening verse(s) of the traditional Saraswati Stotram (widely attributed to Sage Agastya). Verse 1 line 3 uses the 'सदा वन्दिता' reading (well-attested variant: 'सदा पूजिता'); verse 2 opens 'शुक्लां' (variant: 'शुद्धां'). Verified verbatim against Drik Panchang and shlokam.org.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/vandana/goddesses/saraswati/saraswati-ya-kundendu-vandana.html",
+      "https://shlokam.org/shloka/yaakundhendhu-thushara-hara.htm",
+      "https://nityapanchangam.com/mantras/saraswati-vandana/"
+    ],
+    "retrievedOn": "2026-05-31"
+  }
+}

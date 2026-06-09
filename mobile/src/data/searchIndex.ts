@@ -41,6 +41,10 @@ import {
   durgaStotramChaptersManifest,
 } from './durga-stotram';
 import {
+  getSaraswatiStotramChapter,
+  saraswatiStotramChaptersManifest,
+} from './saraswati-stotram';
+import {
   getGaneshStotramChapter,
   ganeshStotramChaptersManifest,
 } from './ganesh-stotram';
@@ -263,6 +267,16 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
         entry,
         durgaStotramChaptersManifest,
         getDurgaStotramChapter
+      );
+      continue;
+    }
+
+    if (entry.id === 'saraswati-stotram') {
+      pushChapteredShivaStrotamShape(
+        verses,
+        entry,
+        saraswatiStotramChaptersManifest,
+        getSaraswatiStotramChapter
       );
       continue;
     }

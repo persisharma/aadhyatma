@@ -19,6 +19,7 @@ export default function DeityIcon({ iconKey, fallbackText }: Props) {
   if (iconKey === 'bansuriPeacockFeather') return <KrishnaIcon />;
   if (iconKey === 'gada') return <GadaIcon />;
   if (iconKey === 'modak') return <ModakIcon />;
+  if (iconKey === 'veena') return <VeenaIcon />;
 
   const emoji = iconKey ? emojiIcons[iconKey] : undefined;
 
@@ -73,6 +74,18 @@ function ModakIcon() {
       <View style={styles.modakBody} />
       <View style={styles.modakPleatLeft} />
       <View style={styles.modakPleatRight} />
+    </View>
+  );
+}
+
+function VeenaIcon() {
+  return (
+    <View style={styles.veenaWrap} accessible={false}>
+      <View style={styles.veenaUpperGourd} />
+      <View style={styles.veenaNeck} />
+      <View style={[styles.veenaString, styles.veenaStringOne]} />
+      <View style={[styles.veenaString, styles.veenaStringTwo]} />
+      <View style={styles.veenaGourd} />
     </View>
   );
 }
@@ -301,5 +314,58 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4C872',
     opacity: 0.45,
     transform: [{ rotate: '22deg' }],
+  },
+  veenaWrap: {
+    width: 30,
+    height: 34,
+    position: 'relative',
+    transform: [{ rotate: '-16deg' }],
+  },
+  veenaGourd: {
+    position: 'absolute',
+    left: 1,
+    bottom: 0,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: gold,
+    borderWidth: 1.2,
+    borderColor: ink,
+  },
+  veenaNeck: {
+    position: 'absolute',
+    left: 8,
+    bottom: 13,
+    width: 3.5,
+    height: 21,
+    borderRadius: 2,
+    backgroundColor: ink,
+  },
+  veenaUpperGourd: {
+    position: 'absolute',
+    left: 5,
+    top: 0,
+    width: 9,
+    height: 9,
+    borderRadius: 4.5,
+    backgroundColor: gold,
+    borderWidth: 1,
+    borderColor: ink,
+  },
+  veenaString: {
+    position: 'absolute',
+    width: 1,
+    backgroundColor: gold,
+    opacity: 0.85,
+  },
+  veenaStringOne: {
+    left: 9,
+    top: 2,
+    height: 24,
+  },
+  veenaStringTwo: {
+    left: 11,
+    top: 2,
+    height: 24,
   },
 });

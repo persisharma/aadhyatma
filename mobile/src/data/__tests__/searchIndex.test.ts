@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 
+import { deities } from '../deities';
 import { library } from '../texts';
 import {
   _resetSearchIndexForTest,
@@ -50,9 +51,10 @@ const index = getSearchIndex();
   assert.ok(activeCount > 0);
 }
 
-// All eight deities are indexed.
+// Every deity is indexed.
 {
-  assert.equal(index.deities.length, 8);
+  assert.equal(index.deities.length, deities.length);
+  assert.ok(index.deities.some((d) => d.deityId === 'saraswati'));
 }
 
 // Hanuman query returns multiple sections (chalisa, ashtak, aarti, sankat-mochan).

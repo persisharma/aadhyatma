@@ -17,8 +17,8 @@ test('user-facing panchang labels avoid the Drik Panchang trademark phrase', () 
   }
 });
 
-test('panchang smoke flow asserts the generic Panchang school pill', () => {
+test('panchang smoke flow asserts the generic Panchang label', () => {
   const text = readFileSync(fileURLToPath(new NodeURL('../../../.maestro/panchang-smoke.yaml', import.meta.url)), 'utf8');
 
-  assert.match(text, /visible: "Panchang"\s+# school pill \(English\)/);
+  assert.match(text, /visible: "Panchang"\s+# bottom-tab label/);
 });
