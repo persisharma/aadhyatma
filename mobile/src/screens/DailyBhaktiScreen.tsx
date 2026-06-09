@@ -7,7 +7,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getRandomVerse, getVersePool } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
-import { pickVerseForDateKey, toDateKey } from '@/notifications/seed';
+import { pickVerseForDateKey } from '@/notifications/seed';
 import type { TabParamList } from '@/navigation/types';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
@@ -16,14 +16,13 @@ import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 
 /**
- * The verse-of-the-day for a given date key (defaults to today). Deterministic:
- * the same date always resolves to the same verse, and it matches the verse the
- * daily reminder notification was built from. This keeps the tab stable across
- * re-mounts/re-lands instead of re-randomising on every visit.
+ * The verse-of-the-day for a given date key. Deterministic: the same date
+ * always resolves to the same verse, matching the verse the daily reminder
+ * notification was built from. Used to lock the tab to a tapped reminder's
+ * verse so it renders stable content instead of re-randomising.
  */
-function getDailyVerse(dateKey?: string): UniformVerse | null {
-  const pool = getVersePool();
-  return pickVerseForDateKey(dateKey ?? toDateKey(new Date()), pool);
+function getDailyVerse(dateKey: string): UniformVerse | null {
+  return pickVerseForDateKey(dateKey, getVersePool());
 }
 
 export default function DailyBhaktiScreen() {
@@ -31,17 +30,19 @@ export default function DailyBhaktiScreen() {
   const { lang } = useGitaLanguage();
   const route = useRoute<RouteProp<TabParamList, 'DailyBhaktiTab'>>();
   const dateKey = route.params?.dateKey;
-  const [verse, setVerse] = useState<UniformVerse | null>(() => getDailyVerse(dateKey));
+  const [verse, setVerse] = useState<UniformVerse | null>(() =>
+    dateKey ? getDailyVerse(dateKey) : getRandomVerse()
+  );
 
   const { share, busy: shareBusy } = useShare();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
 
-  // When arriving from a notification tap, the forwarded `dateKey` selects that
-  // day's verse — even if the screen was already mounted (e.g. the user had
-  // browsed away with "next"). Deterministic, so re-tapping the same reminder
-  // never shuffles the content.
+  // Manual opens show a random verse. Arriving from a notification tap forwards
+  // that reminder's `dateKey`, which locks the tab to that exact verse-of-the-
+  // day — even if the screen was already mounted (e.g. the user had browsed
+  // away with "next"). Deterministic, so it matches the notification.
   useEffect(() => {
-    setVerse(getDailyVerse(dateKey));
+    if (dateKey) setVerse(getDailyVerse(dateKey));
   }, [dateKey]);
 
   const refresh = useCallback(() => {
