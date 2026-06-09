@@ -1,0 +1,84 @@
+import { orderTitlesByLanguage, type TitleSizeScale } from '../titleByLanguage';
+import { fontFamilies } from '@/theme/typography';
+
+// Distinct sizes per slot so we can assert the right scale lands on the right role.
+const SIZES: TitleSizeScale = {
+  devPrimary: 22,
+  devSecondary: 15,
+  latPrimary: 20,
+  latSecondary: 13,
+};
+
+const NAME_HI = 'हनुमान चालीसा';
+const NAME_EN = 'Hanuman Chalisa';
+
+describe('orderTitlesByLanguage', () => {
+  test("hi: Devanagari is primary (prominent), Latin is the supporting line", () => {
+    const { primary, secondary } = orderTitlesByLanguage('hi', NAME_HI, NAME_EN, SIZES);
+
+    expect(primary).toEqual({
+      text: NAME_HI,
+      script: 'devanagari',
+      fontFamily: fontFamilies.devanagariBold,
+      fontStyle: 'normal',
+      fontSize: SIZES.devPrimary,
+    });
+    expect(secondary).toEqual({
+      text: NAME_EN,
+      script: 'latin',
+      fontFamily: fontFamilies.latinItalic,
+      fontStyle: 'italic',
+      fontSize: SIZES.latSecondary,
+    });
+  });
+
+  test('en: Latin is primary (prominent), Devanagari is the supporting line', () => {
+    const { primary, secondary } = orderTitlesByLanguage('en', NAME_HI, NAME_EN, SIZES);
+
+    expect(primary).toEqual({
+      text: NAME_EN,
+      script: 'latin',
+      fontFamily: fontFamilies.latinSemiBold,
+      fontStyle: 'normal',
+      fontSize: SIZES.latPrimary,
+    });
+    expect(secondary).toEqual({
+      text: NAME_HI,
+      script: 'devanagari',
+      fontFamily: fontFamilies.devanagari,
+      fontStyle: 'normal',
+      fontSize: SIZES.devSecondary,
+    });
+  });
+
+  test('weight/style follow role, not script — the primary slot is always the heavier face', () => {
+    const hi = orderTitlesByLanguage('hi', NAME_HI, NAME_EN, SIZES);
+    const en = orderTitlesByLanguage('en', NAME_HI, NAME_EN, SIZES);
+
+    // Devanagari heavier when primary (hi), lighter when demoted (en).
+    expect(hi.primary.fontFamily).toBe(fontFamilies.devanagariBold);
+    expect(en.secondary.fontFamily).toBe(fontFamilies.devanagari);
+
+    // Latin upright+semibold when primary (en), italic+regular when demoted (hi).
+    expect(en.primary.fontFamily).toBe(fontFamilies.latinSemiBold);
+    expect(en.primary.fontStyle).toBe('normal');
+    expect(hi.secondary.fontFamily).toBe(fontFamilies.latinItalic);
+    expect(hi.secondary.fontStyle).toBe('italic');
+  });
+
+  test('the primary slot always carries the larger point size for its script', () => {
+    const hi = orderTitlesByLanguage('hi', NAME_HI, NAME_EN, SIZES);
+    const en = orderTitlesByLanguage('en', NAME_HI, NAME_EN, SIZES);
+
+    expect(hi.primary.fontSize).toBeGreaterThan(en.secondary.fontSize); // dev primary > dev secondary
+    expect(en.primary.fontSize).toBeGreaterThan(hi.secondary.fontSize); // lat primary > lat secondary
+  });
+
+  test('text content is preserved verbatim in both orderings', () => {
+    const hi = orderTitlesByLanguage('hi', NAME_HI, NAME_EN, SIZES);
+    const en = orderTitlesByLanguage('en', NAME_HI, NAME_EN, SIZES);
+
+    expect([hi.primary.text, hi.secondary.text].sort()).toEqual([NAME_EN, NAME_HI].sort());
+    expect([en.primary.text, en.secondary.text].sort()).toEqual([NAME_EN, NAME_HI].sort());
+  });
+});
