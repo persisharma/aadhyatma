@@ -29,6 +29,10 @@ function isDailyVersePayload(data: unknown): data is NotificationPayload {
  * ("bookmark"). Landing on Daily Bhakti keeps the reminder lightweight and
  * leaves the resume position untouched.
  *
+ * The notification's `dateKey` is forwarded as a param so the tab shows the
+ * exact verse-of-the-day the user tapped — deterministic per date, so the
+ * screen renders stable content instead of re-randomising on every land.
+ *
  * Idempotent and side-effect-light: safe to call even if `navigationRef` isn't
  * ready yet (no-ops in that case so the caller can retry on the next tick).
  */
@@ -39,6 +43,11 @@ export function handleNotificationResponse(
   const data = response.notification.request.content.data;
   if (!isDailyVersePayload(data)) return false;
 
-  navigationRef.dispatch(CommonActions.navigate({ name: 'DailyBhaktiTab' }));
+  navigationRef.dispatch(
+    CommonActions.navigate({
+      name: 'DailyBhaktiTab',
+      params: { dateKey: data.dateKey },
+    })
+  );
   return true;
 }
