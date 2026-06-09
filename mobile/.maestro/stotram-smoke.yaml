@@ -1,8 +1,9 @@
 # Stotram Category Smoke Test
 #
 # Verifies the Stotram category and its 7 active sections render correctly.
-# Sections: Shiva Stotram, Durga Stotram, Ganesh Stotram, Vishnu Sahasranama,
-#           Hanuman Ashtak, Bajrang Baan, Ram Stuti.
+# Sections: Shiva Stotram, Durga Stotram, Ganesh Stotram, Vishnu Sahasranama
+#           Excerpt, Krishna Stotram, Sankat Mochan Hanuman Ashtak, Bajrang Baan,
+#           Ram Stuti.
 #
 # Opens Bajrang Baan as the representative reader — it has a smoke test
 # (BajrangBaanReaderScreen.test.tsx) which validates first-verse render,
@@ -12,9 +13,12 @@ appId: host.exp.Exponent
 ---
 - runFlow: _launch.yaml
 
-# Open Stotram category
-- assertVisible: "Hymns & Praise. Tap to open."
-- tapOn: "Hymns & Praise. Tap to open."
+# Open Stotram category. The tile label is "Hymns & Praise. Tap to open." but
+# becomes "Hymns & Praise. New. Tap to open." for upgrading users (stotram holds
+# debut-new sections). The `.*` tolerates either form — this flow verifies the
+# category opens, not its badge state (that's new-content-badge-*-smoke's job).
+- assertVisible: "Hymns & Praise\\..*Tap to open\\."
+- tapOn: "Hymns & Praise\\..*Tap to open\\."
 - waitForAnimationToEnd
 
 # Verify all 8 sections appear in CategoryList (post-merge adds Krishna Stotram).
@@ -24,7 +28,7 @@ appId: host.exp.Exponent
     timeout: 15000
 - assertVisible: "Durga Stotram\\..*Tap to open\\."
 - assertVisible: "Ganesh Stotram\\..*Tap to open\\."
-- assertVisible: "Vishnu Sahasranama\\..*Tap to open\\."
+- assertVisible: "Vishnu Sahasranama Excerpt\\..*Tap to open\\."
 - assertVisible: "Krishna Stotram\\..*Tap to open\\."
 # Scroll to reveal the lower entries
 - scrollUntilVisible:

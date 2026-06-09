@@ -4,11 +4,14 @@
 # path). This flow exercises the Home-screen CategoryCard badges (hasNewInCategory):
 #
 #   1. SCOPING — after the dev "upgrade" seed, the per-category badge lights up
-#      ONLY for stotram. All three debut-new entries (Krishna Stotram, Bajrang
-#      Baan, Ram Stuti — addedInVersion 1.3.0) live in stotram, so every other
-#      category tile must render WITHOUT the badge.
+#      for exactly the categories that hold debut-new content: stotram (Krishna
+#      Stotram, Bajrang Baan, Ram Stuti — addedInVersion 1.3.0) AND sanskar (its
+#      7 sections — addedInVersion 1.3.1, added in #88). The categories with no
+#      debut-new content (granth, chalisa, japam, aarti) + By Deity must render
+#      WITHOUT the badge.
 #   2. CLEAR — marking all three stotram debut-new entries seen flips
 #      hasNewInCategory('stotram') to false: the tile loses its badge, persisted.
+#      (Sanskar's badge persists — only stotram's clear is asserted here.)
 #
 # CategoryCard's accessibilityLabel is mutually exclusive — "<NameEn>. Tap to
 # open." (no badge) vs "<NameEn>. New. Tap to open." (badge). Maestro's anchored
@@ -70,7 +73,7 @@ appId: host.exp.Exponent
     timeout: 10000
 - scrollUntilVisible:
     element:
-      text: "Good Habits. Tap to open."           # sanskar → plain
+      text: "Good Habits. New. Tap to open."      # sanskar → HAS badge (7 debut-new sections, 1.3.1)
     direction: DOWN
     timeout: 10000
 - scrollUntilVisible:

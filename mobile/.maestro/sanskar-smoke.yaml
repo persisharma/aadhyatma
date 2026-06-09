@@ -23,15 +23,18 @@ appId: host.exp.Exponent
 - runFlow: _launch.yaml
 
 # ── Step 2: Verify all 6 categories visible on Home (full accessibilityLabel match) ──
-- assertVisible: "Sacred Books. Tap to open."      # Granth
-- assertVisible: "Hymns & Praise. Tap to open."    # Stotram
+# Stotram and Sanskar hold debut-new sections, so their tiles read
+# "<Name>. New. Tap to open." for upgrading users — the `.*` tolerates the
+# optional " New." badge segment (same pattern _launch uses for "Good Habits").
+- assertVisible: "Sacred Books. Tap to open."          # Granth (no debut-new)
+- assertVisible: "Hymns & Praise\\..*Tap to open\\."   # Stotram (may carry NEW)
 - assertVisible: "Chalisa. Tap to open."
-- assertVisible: "Japa & Mantras. Tap to open."    # Japam
+- assertVisible: "Japa & Mantras. Tap to open."        # Japam
 - assertVisible: "Aarti. Tap to open."
-- assertVisible: "Good Habits. Tap to open."       # Sanskar
+- assertVisible: "Good Habits\\..*Tap to open\\."      # Sanskar (may carry NEW)
 
 # ── Step 3: Open Sanskar category, verify all 7 sections (regex for LibraryCard) ──
-- tapOn: "Good Habits. Tap to open."
+- tapOn: "Good Habits\\..*Tap to open\\."
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Morning Slokas\\..*Tap to open\\."
@@ -86,7 +89,7 @@ appId: host.exp.Exponent
 - stopApp:
     appId: host.exp.Exponent
 - runFlow: _launch.yaml
-- tapOn: "Good Habits. Tap to open."
+- tapOn: "Good Habits\\..*Tap to open\\."
 - waitForAnimationToEnd
 - tapOn: "Surya Namaskar\\..*Tap to open\\."
 - waitForAnimationToEnd:

@@ -1,7 +1,7 @@
 # Granth Category Smoke Test
 #
 # Verifies the Granth category and its 3 active sections render correctly.
-# Sections: Bhagavad Gītā, Sundarkand, Ramcharitmanas.
+# Sections: Bhagavad Gītā, Sundarkand, Ramcharitmanas Mangalacharan.
 #
 # Bhagavad Gītā has a chapter index (GitaChaptersIndexScreen); other two go
 # straight to a reader. This flow opens Sundarkand to keep the verify path
@@ -19,7 +19,7 @@ appId: host.exp.Exponent
     visible: "Bhagavad Gītā\\..*Tap to open\\."
     timeout: 15000
 - assertVisible: "Sundarkand\\..*Tap to open\\."
-- assertVisible: "Ramcharitmanas\\..*Tap to open\\."
+- assertVisible: "Ramcharitmanas Mangalacharan\\..*Tap to open\\."
 
 # Open Sundarkand reader
 - tapOn: "Sundarkand\\..*Tap to open\\."
