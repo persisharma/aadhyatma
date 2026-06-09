@@ -1,0 +1,91 @@
+# More Tab — Profile, Disclaimer & Settings Cards Smoke Test
+#
+# The More tab (MoreScreen) is the app's settings/profile hub, but every other
+# flow only PASSED THROUGH it to flip the reading language — its contents were
+# never asserted. This flow covers three previously-untested surfaces that all
+# live under More:
+#   • the More cards themselves (Wishlist / Reminders / Language / About) — PR #66
+#   • the Sadhak Profile insights screen, incl. the lifetime/monthly/daily
+#     range toggle — PR #33
+#   • the About & Disclaimer modal (foundational; src/data/help/content.ts)
+#
+# Language is set to English on the More "Language" card so Profile's English
+# stat/range labels are assertable, then restored to Hindi before the modal
+# (the More card titles + disclaimer headings are hardcoded English, so they
+# read the same in either language).
+#
+# Selector notes:
+#   • More card titles are constant English text ("Wishlist", "Reminders",
+#     "Language", "About & Disclaimer"); the Profile card a11y label is
+#     "Open Sadhak profile".
+#   • ProfileScreen's back button is an unlabeled "‹" glyph — the only one on
+#     the screen — so it is tapped directly.
+#   • The disclaimer Modal is presentationStyle pageSheet; config.yaml's
+#     snapshotKeyHonorModalViews:false lets Maestro read its RN content.
+#     "Disclaimer & Fair Use" is helpContent.en.disclaimerHeading.
+
+appId: host.exp.Exponent
+---
+- runFlow: _launch.yaml
+
+# ── Open More, set reading language to English (Language card radio) ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Assert the More cards render (Pressables expose composed a11y labels —
+#    "Wishlist, N verses saved", "Reminders, daily verse …" — so match with .*) ──
+- assertVisible: "Wishlist.*"
+- assertVisible: "Reminders.*"
+
+# ── Sadhak Profile: insights screen + lifetime/monthly/daily range toggle ──
+- tapOn: "Open Sadhak profile"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Sadhak"
+    timeout: 15000
+- assertVisible: "DAY STREAK"
+- assertVisible: "Lifetime"
+# Switch range → Monthly shows the current month caption; Daily shows "Today".
+- tapOn: "Monthly"
+- waitForAnimationToEnd
+- assertVisible: "June.*"
+- tapOn: "Daily"
+- waitForAnimationToEnd
+- assertVisible: "Today"
+# Back to More (unlabeled "‹" glyph — the only one on Profile).
+- tapOn: "‹"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Wishlist.*"
+    timeout: 15000
+
+# ── Restore Hindi (best-effort) while the Language card is still in view ──
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+
+# ── About & Disclaimer modal: opens, shows content, closes ──
+# The link Pressable's a11y label is "About and disclaimer" (the visible text is
+# "About & Disclaimer") — match both with a tolerant pattern.
+- scrollUntilVisible:
+    element:
+      text: "About.*[Dd]isclaimer.*"
+    centerElement: true
+- tapOn: "About.*[Dd]isclaimer.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Disclaimer & Fair Use"
+    timeout: 10000
+- tapOn: "Close"
+- waitForAnimationToEnd
+- assertVisible: "About.*[Dd]isclaimer.*"
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+- stopApp:
+    appId: host.exp.Exponent
