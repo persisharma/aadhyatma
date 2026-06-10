@@ -91,6 +91,13 @@ export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean
   }
   const readerRoute = stotramReaderRouteBySourceId[sourceId];
   if (readerRoute && progress.chapter != null) {
+    // Push the chapter (subsection) index under the reader so pressing back from
+    // the reader lands on the subsection list rather than the section list — lets
+    // the user reach sibling chapters after resuming.
+    const chaptersRoute = stotramChaptersRouteById[sourceId];
+    if (chaptersRoute) {
+      (nav.navigate as (name: keyof HomeStackParamList) => void)(chaptersRoute);
+    }
     (nav.navigate as (name: keyof HomeStackParamList, params: object) => void)(readerRoute, {
       chapter: progress.chapter,
       initialIndex: progress.verseIndex,
@@ -98,6 +105,15 @@ export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean
     return true;
   }
   return false;
+}
+
+/**
+ * True when an entry opens a chapter (subsection) index rather than a single
+ * flat reader — i.e. progress is tracked per `<sourceId>::<chapter>` and the
+ * section-level resume sheet must route through the subsection list.
+ */
+export function isChapteredEntry(entry: LibraryEntry): boolean {
+  return stotramChaptersRouteById[entry.id] != null;
 }
 
 function chapterFromBookmark(bm: BookmarkRef): number | null {

@@ -13,7 +13,7 @@ import LibraryCard from '@/components/LibraryCard';
 import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useNewContent } from '@/contexts/NewContentContext';
-import { navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
+import { isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
 import { formatLocation } from '@/utils/formatLocation';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -23,7 +23,7 @@ export default function DeityListScreen({ navigation, route }: Props) {
   const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const { deityId } = route.params;
-  const { getProgress, clearProgress, isLoading } = useReadingProgress();
+  const { getProgress, clearProgress, clearChapterProgress, isLoading } = useReadingProgress();
   const { markSeen } = useNewContent();
   const [pendingEntry, setPendingEntry] = useState<LibraryEntry | null>(null);
 
@@ -128,10 +128,18 @@ export default function DeityListScreen({ navigation, route }: Props) {
           }}
           onStartOver={() => {
             const entry = pendingEntry;
+            const progress = pendingProgress;
             markSeen(entry.id);
             setPendingEntry(null);
-            clearProgress(entry.id);
-            navigateToEntryStart(navigation, entry);
+            if (isChapteredEntry(entry) && progress?.chapter != null) {
+              // Reset only the chapter being resumed; keep sibling chapters'
+              // bookmarks, and land back on the subsection list via the reader.
+              clearChapterProgress(entry.id, progress.chapter);
+              navigateToProgress(navigation, { ...progress, verseIndex: 0 });
+            } else {
+              clearProgress(entry.id);
+              navigateToEntryStart(navigation, entry);
+            }
           }}
           onDismiss={() => setPendingEntry(null)}
         />

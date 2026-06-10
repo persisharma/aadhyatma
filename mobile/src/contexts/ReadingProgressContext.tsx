@@ -22,7 +22,10 @@ type ReadingProgressContextValue = {
   /** Saved position within a specific subsection/chapter (drives subsection auto-jump). */
   getChapterProgress: (sourceId: string, chapter?: number) => ReadingProgress | undefined;
   setProgress: (entry: ReadingProgress) => void;
+  /** Clear every subsection's saved position for a source. */
   clearProgress: (sourceId: string) => void;
+  /** Clear the saved position for a single subsection/chapter, leaving siblings intact. */
+  clearChapterProgress: (sourceId: string, chapter?: number) => void;
 };
 
 const ReadingProgressContext = createContext<ReadingProgressContextValue>({
@@ -32,6 +35,7 @@ const ReadingProgressContext = createContext<ReadingProgressContextValue>({
   getChapterProgress: () => undefined,
   setProgress: () => {},
   clearProgress: () => {},
+  clearChapterProgress: () => {},
 });
 
 /**
@@ -127,6 +131,17 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
     [progress, persist]
   );
 
+  const clearChapterProgress = useCallback(
+    (sourceId: string, chapter?: number) => {
+      const key = progressKey(canonicalSourceId(sourceId), chapter);
+      if (!(key in progress)) return;
+      const next = { ...progress };
+      delete next[key];
+      persist(next);
+    },
+    [progress, persist]
+  );
+
   const getProgress = useCallback(
     (sourceId: string) => {
       const sid = canonicalSourceId(sourceId);
@@ -148,7 +163,7 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
 
   return (
     <ReadingProgressContext.Provider
-      value={{ progress, isLoading, getProgress, getChapterProgress, setProgress, clearProgress }}
+      value={{ progress, isLoading, getProgress, getChapterProgress, setProgress, clearProgress, clearChapterProgress }}
     >
       {children}
     </ReadingProgressContext.Provider>
