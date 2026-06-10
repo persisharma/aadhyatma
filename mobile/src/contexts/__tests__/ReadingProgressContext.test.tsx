@@ -103,6 +103,21 @@ describe('ReadingProgressContext — per-subsection progress', () => {
     expect(captured.getProgress('sundarkand')).toBeUndefined();
   });
 
+  test('clearChapterProgress removes only the named chapter, leaving siblings intact', async () => {
+    await mountAndHydrate();
+    await act(async () => {
+      captured.setProgress({ sourceId: 'sundarkand', chapter: 1, verseIndex: 4, updatedAt: 100 });
+    });
+    await act(async () => {
+      captured.setProgress({ sourceId: 'sundarkand', chapter: 3, verseIndex: 9, updatedAt: 200 });
+    });
+    await act(async () => {
+      captured.clearChapterProgress('sundarkand', 3);
+    });
+    expect(captured.getChapterProgress('sundarkand', 3)).toBeUndefined();
+    expect(captured.getChapterProgress('sundarkand', 1)?.verseIndex).toBe(4);
+  });
+
   test('migrates a legacy book-keyed entry to the per-chapter key', async () => {
     // Legacy shape: keyed by bare sourceId, one position per book.
     mockStore[STORAGE_KEY] = JSON.stringify({
