@@ -1,0 +1,106 @@
+# Library Search Smoke Test — PRD-03 (#57: on-device global library search)
+#
+# ⚠️ CURRENTLY RED — blocked by an app-layout bug (NOT a flow bug). On Home,
+# SearchFloatingButton is rendered before, and overlapped by, the always-present
+# RoutineBanner (rendered after it → on top). A center-tap on the ⌕ FAB is
+# therefore delivered to the banner and opens RoutineCreate instead of Search,
+# so "Search input" never appears. The search ENGINE is unit-tested meanwhile
+# (src/data/__tests__/searchIndex.test.ts, searchNormalize.test.ts). This flow
+# goes green once the FAB is lifted above the banner (zIndex + larger bottom
+# offset) or the banner leaves room for it; kept here to document the intent.
+#
+# Search is reached from the floating ⌕ button on Home (SearchFloatingButton);
+# the "Search card" was removed from the More screen in #66, so the floating
+# button is now the only entry. SearchScreen lives in HomeStackNavigator and
+# indexes the whole library — sections, deities, and verses — on device.
+#
+# Verifies (PRD-03 agenda):
+#   1. The floating search button opens SearchScreen.
+#   2. The empty state shows the "Popular" shortcuts.
+#   3. Typing a query returns matching results (the "Sections" group + a row).
+#   4. The clear (✕) control empties the query and restores the empty state.
+#   5. A non-matching query shows the zero-results state.
+#   6. Tapping a popular shortcut opens that section's reader.
+#
+# Why English first:
+#   SearchScreen reads the global reading language. The result/section/group
+#   labels and the placeholder switch to English, which Maestro can read; in
+#   Hindi they are Devanagari. We flip the default on the More tab first.
+#
+# Selector notes (verified against SearchScreen.tsx):
+#   - The floating button's accessibilityLabel is the constant English string
+#     "Search verses, sections, and mantras" (language-independent).
+#   - The query TextInput exposes accessibilityLabel "Search input"; it
+#     auto-focuses on mount, but we tapOn it before each inputText to be safe.
+#   - Group headers render "<Label> · <count>" (e.g. "Sections · 3"), so we
+#     match "Sections.*" rather than the bare word.
+#   - Popular cells and result rows expose "Open <nameEn>" labels. The popular
+#     set is fixed (POPULAR_FALLBACK_IDS) and includes Hanuman Chalisa, so
+#     "Open Hanuman Chalisa" is a deterministic anchor.
+#   - The clear button exposes accessibilityLabel "Clear search".
+
+appId: host.exp.Exponent
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Set global reading language to English (More tab) ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+
+# ── Step 3: Open search from the floating button ──
+- tapOn: "Search verses, sections, and mantras"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search input"
+    timeout: 15000
+# Empty state: the fixed "Popular" shortcuts render.
+- assertVisible: "Popular.*"
+- assertVisible: "Open Hanuman Chalisa"
+
+# ── Step 4: Type a query → matching sections appear ──
+- tapOn: "Search input"
+- inputText: "Hanuman"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Sections.*"
+    timeout: 10000
+- assertVisible: "Open Hanuman Chalisa"
+
+# ── Step 5: Clear the query → empty state returns ──
+- tapOn: "Clear search"
+- waitForAnimationToEnd
+- assertVisible: "Popular.*"
+
+# ── Step 6: A non-matching query shows the zero state ──
+- tapOn: "Search input"
+- inputText: "zzzzzz"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "No matches found"
+    timeout: 10000
+- tapOn: "Clear search"
+- waitForAnimationToEnd
+
+# ── Step 7: A popular shortcut opens that section's reader ──
+- tapOn: "Open Hanuman Chalisa"
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss the Resume sheet if a prior session left reading progress.
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+# The reader exposes the language toggle — confirms we landed in a reader.
+- assertVisible: "English"
+
+# ── Cleanup — Expo Go termination resets navigation for the next flow ──
+- stopApp:
+    appId: host.exp.Exponent

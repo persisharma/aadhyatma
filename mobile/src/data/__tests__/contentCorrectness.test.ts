@@ -33,6 +33,17 @@ assert.ok(savitrDeity, 'savitr deity should exist in deities array');
 assert.equal(savitrDeity.nameEn, 'Maa Gayatri', 'Rule 10.9: savitr deity must display as "Maa Gayatri", not "Savitr Deva"');
 assert.equal(savitrDeity.nameHi, 'माँ गायत्री', 'Rule 10.9: savitr deity must display as "माँ गायत्री", not "सवितृ देव"');
 
+// Vishnu Sahasranama is a hymn to Vishnu (the thousand names of Vishnu), so it
+// must surface under the Vishnu deity — not Krishna/Rama (his avatars). Guards
+// the #99 retag from regressing back to ['krishna', 'rama'].
+const vishnuSahasranama = library.find((entry) => entry.id === 'vishnu-sahasranama');
+assert.ok(vishnuSahasranama, 'vishnu-sahasranama should exist in library');
+assert.deepEqual(
+  vishnuSahasranama.deities,
+  ['vishnu'],
+  'Vishnu Sahasranama must be tagged under the Vishnu deity only'
+);
+
 // ─── 2. Aarti verse counts (verified from internet) ─────────────────────────
 
 const hanumanAarti = readJson('aarti/hanuman-aarti.json');
@@ -365,6 +376,61 @@ for (const file of collectJsonFiles()) {
     Array.isArray(data.source.referenceUrls) && data.source.referenceUrls.length >= 2,
     `${file} should declare at least 2 source referenceUrls`
   );
+}
+
+// ─── 15. Chalisa/Aarti meanings are real translations, not placeholders ──────
+// Guards the #98 fix. Two distinct placeholder shapes had shipped:
+//   • Chalisas cloned a label-echoing boilerplate onto every verse, e.g.
+//     "Chaupai · 1 praises Lord Shiva's glory and grace. The devotee asks for
+//     refuge, wisdom, and relief from distress." (same sentence, only N varies).
+//   • An aarti repeated one generic gloss across most verses (few unique values).
+// The combined guard below caught every pre-#98 file and passes all six now.
+const LABEL_ECHO_PLACEHOLDER = /^(Doha|Chaupai|Verse|Stanza)\s*·?\s*\d+\s+praises\b/i;
+const BOILERPLATE_GLOSS = /glory and grace\. The devotee asks for/i;
+for (const file of [
+  'shiv-chalisa/shiv-chalisa.json',
+  'ganesh-chalisa/ganesh-chalisa.json',
+  'durga-chalisa/durga-chalisa.json',
+  'aarti/om-jai-shiv-omkara.json',
+  'aarti/jai-ambe-gauri.json',
+  'aarti/jai-ganesh-deva.json',
+]) {
+  const meaningsEn: string[] = readJson(file)
+    .verses.map((v: any) => v.meaningEn)
+    .filter(Boolean);
+  assert.ok(meaningsEn.length > 0, `${file} should provide per-verse English meanings`);
+
+  for (const m of meaningsEn) {
+    assert.doesNotMatch(
+      m,
+      LABEL_ECHO_PLACEHOLDER,
+      `${file}: meaningEn echoes the verse label instead of translating it: "${m}"`
+    );
+    assert.doesNotMatch(
+      m,
+      BOILERPLATE_GLOSS,
+      `${file}: meaningEn is the #98 placeholder boilerplate, not a real translation: "${m}"`
+    );
+  }
+
+  // Real per-verse translations are overwhelmingly distinct; a cloned template
+  // collapses to a handful of unique strings. Require ≥90% unique.
+  const uniqueEn = new Set(meaningsEn);
+  assert.ok(
+    uniqueEn.size >= Math.ceil(meaningsEn.length * 0.9),
+    `${file}: meaningEn should be per-verse translations, not a repeated template (${uniqueEn.size} unique of ${meaningsEn.length})`
+  );
+}
+
+// ─── 16. japam per-mantra source URLs roll up into the top-level source ──────
+const japamSourceUrls = new Set(japam.source.referenceUrls);
+for (const mantra of japam.mantras) {
+  for (const url of mantra.source?.referenceUrls ?? []) {
+    assert.ok(
+      japamSourceUrls.has(url),
+      `japam/japam.json top-level source should include ${mantra.id} reference ${url}`
+    );
+  }
 }
 
 // ─── Done ────────────────────────────────────────────────────────────────────

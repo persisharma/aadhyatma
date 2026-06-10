@@ -2,7 +2,7 @@ import type { ContentCategory, Deity } from '@/data/texts';
 
 export type TabParamList = {
   HomeTab: undefined;
-  DailyBhaktiTab: undefined;
+  DailyBhaktiTab: { sourceId?: string; chapter?: number; verseIndex?: number } | undefined;
   PanchangTab: undefined;
   MoreTab: undefined;
 };
@@ -22,6 +22,8 @@ export type HomeStackParamList = {
   ShivaStrotamReader: { chapter: number; initialIndex?: number };
   DurgaStotramChapters: undefined;
   DurgaStotramReader: { chapter: number; initialIndex?: number };
+  SaraswatiStotramChapters: undefined;
+  SaraswatiStotramReader: { chapter: number; initialIndex?: number };
   GaneshStotramChapters: undefined;
   GaneshStotramReader: { chapter: number; initialIndex?: number };
   VishnuSahasranamaChapters: undefined;
