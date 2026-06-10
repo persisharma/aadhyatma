@@ -79,7 +79,10 @@ function isTimeOfDay(v: unknown): v is TimeOfDay {
 function normaliseTimes(times: TimeOfDay[]): TimeOfDay[] {
   const out = times.map((t) => ({ hour: t.hour, minute: t.minute }));
   out.sort((a, b) => a.hour * 60 + a.minute - (b.hour * 60 + b.minute));
-  return out.slice(0, MAX_REMINDER_TIMES);
+  // Drop duplicate hour:minute entries before capping so two identical times
+  // can never occupy two of the limited slots, and the visible list always
+  // matches the (already deduped) set of scheduled notifications.
+  return deduplicateTimes(out).slice(0, MAX_REMINDER_TIMES);
 }
 
 function deduplicateTimes(times: TimeOfDay[]): TimeOfDay[] {

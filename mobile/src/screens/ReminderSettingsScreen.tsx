@@ -247,6 +247,13 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 <View key={`${t.hour}-${t.minute}-${index}`} style={styles.timeRow}>
                   <TimeStepper
                     value={t}
+                    taken={
+                      new Set(
+                        prefs.times
+                          .filter((_, i) => i !== index)
+                          .map((o) => o.hour * 60 + o.minute)
+                      )
+                    }
                     onChange={(next) => {
                       updateAt(index, next);
                     }}
