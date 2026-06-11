@@ -182,10 +182,12 @@ export default function PanchangScreen() {
               radii={radii}
               typography={typography}
             />
+            {/* No explicit accessibilityLabel: the label derives from the child text
+                ("Reference: <city>, India · …"), which .maestro/panchang-smoke.yaml
+                asserts on (".*Ujjain.*"). */}
             <Pressable
               onPress={() => setLocationPickerVisible(true)}
               accessibilityRole="button"
-              accessibilityLabel={isHindi ? 'स्थान बदलें' : 'Change location'}
               hitSlop={8}
               style={({ pressed }) => [styles.locationButton, pressed && { opacity: 0.6 }]}
             >

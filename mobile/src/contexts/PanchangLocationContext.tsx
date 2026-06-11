@@ -65,11 +65,20 @@ function warmInBackground(location: PanchangLocation) {
 async function getDevicePosition(): Promise<{ latitude: number; longitude: number } | null> {
   const lastKnown = await Location.getLastKnownPositionAsync().catch(() => null);
   if (lastKnown) return lastKnown.coords;
-  const current = await Promise.race([
-    Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low }),
-    new Promise<null>((resolve) => setTimeout(() => resolve(null), 10000)),
-  ]).catch(() => null);
-  return current ? current.coords : null;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const current = await Promise.race([
+      Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low }),
+      new Promise<null>((resolve) => {
+        timer = setTimeout(() => resolve(null), 10000);
+      }),
+    ]);
+    return current ? current.coords : null;
+  } catch {
+    return null;
+  } finally {
+    if (timer !== undefined) clearTimeout(timer);
+  }
 }
 
 export function PanchangLocationProvider({ children }: { children: React.ReactNode }) {
@@ -81,6 +90,7 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
   // startup path (covers both fresh installs and the December year rollover).
   useEffect(() => {
     let cancelled = false;
+    let warmTimer: ReturnType<typeof setTimeout> | undefined;
     AsyncStorage.getItem(LOCATION_STORAGE_KEY)
       .then((raw) => {
         if (cancelled) return;
@@ -89,7 +99,8 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
         if (!stored || stored.cityId === UJJAIN_CITY_ID) return;
         setLocation(stored);
         InteractionManager.runAfterInteractions(() => {
-          setTimeout(() => {
+          if (cancelled) return;
+          warmTimer = setTimeout(() => {
             if (cancelled) return;
             const currentYear = new Date().getFullYear();
             activeCalendarSystem()
@@ -106,6 +117,7 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
       });
     return () => {
       cancelled = true;
+      if (warmTimer !== undefined) clearTimeout(warmTimer);
     };
   }, []);
 
