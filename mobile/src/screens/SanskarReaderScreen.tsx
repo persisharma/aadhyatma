@@ -21,6 +21,7 @@ import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import SanskarVersePage from '@/components/SanskarVersePage';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
@@ -200,8 +201,9 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <View style={styles.toggleRow}>
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
+          <AddToRoutineButton sourceId={sanskarId} />
         </View>
 
         <View style={styles.listContainer}>

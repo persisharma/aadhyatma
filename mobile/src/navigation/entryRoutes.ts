@@ -1,5 +1,6 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { LibraryEntry } from '@/data/texts';
+import { library, type LibraryEntry } from '@/data/texts';
+import type { RoutineItem } from '@/data/routine/types';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import { aartiIndexById } from '@/data/aarti';
@@ -72,6 +73,30 @@ export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
     (nav.navigate as (name: keyof HomeStackParamList, params: object) => void)(target.screen, target.params);
   }
   return true;
+}
+
+/**
+ * Open the content for a routine item. Whole sections defer to
+ * `navigateToEntryStart`; a `chapter` item opens that chapter's reader; japam
+ * opens the counter. Returns false if the source is unknown / unroutable.
+ */
+export function navigateToRoutineItem(nav: Nav, item: RoutineItem): boolean {
+  if (item.kind === 'japam') {
+    nav.navigate('JapamCounter', { mantraId: item.sourceId });
+    return true;
+  }
+  if (item.kind === 'chapter' && item.chapter != null) {
+    const readerRoute = stotramReaderRouteBySourceId[item.sourceId];
+    if (!readerRoute) return false;
+    (nav.navigate as (name: keyof HomeStackParamList, params: object) => void)(readerRoute, {
+      chapter: item.chapter,
+      initialIndex: 0,
+    });
+    return true;
+  }
+  const entry = library.find((e) => e.id === item.sourceId);
+  if (entry) return navigateToEntryStart(nav, entry);
+  return false;
 }
 
 export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean {

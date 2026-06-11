@@ -15,6 +15,7 @@ import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
@@ -213,7 +214,7 @@ export default function DurgaStotramReaderScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <View style={styles.toggleRow}><LanguageToggle /></View>
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId="durga-stotram" chapter={chapter.chapter} /></View>
 
         <View style={styles.listContainer}>
           <FlatList

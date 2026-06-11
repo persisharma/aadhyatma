@@ -25,6 +25,8 @@ import { GitaLanguageProvider } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
+import { RoutineProvider } from '@/contexts/RoutineContext';
+import { RoutineSheetProvider } from '@/contexts/RoutineSheetProvider';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
 import { NewContentProvider } from '@/contexts/NewContentContext';
 import {
@@ -126,6 +128,8 @@ export default function App() {
                 <NewContentProvider>
                   <ReadingProgressProvider>
                     <JapamCounterProvider>
+                      <RoutineProvider>
+                      <RoutineSheetProvider>
                       <NotificationPreferencesProvider>
                         <ShareProvider>
                           <NavigationContainer ref={navigationRef}>
@@ -136,6 +140,8 @@ export default function App() {
                           </NavigationContainer>
                         </ShareProvider>
                       </NotificationPreferencesProvider>
+                      </RoutineSheetProvider>
+                      </RoutineProvider>
                     </JapamCounterProvider>
                   </ReadingProgressProvider>
                 </NewContentProvider>

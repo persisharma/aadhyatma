@@ -1,0 +1,80 @@
+# Reminder Settings Smoke Test — PRD-01 (#53 daily notifications; #70 multiple
+# reminder times; #75 default-enabled)
+#
+# Reminders settings live in MoreStackNavigator (More tab → Reminders →
+# ReminderSettingsScreen). The screen has two cards: the "Daily verse" on/off
+# toggle and the "Times" picker, which supports multiple reminder times
+# (#70, MAX_REMINDER_TIMES = 4). Fresh installs default to a single 07:00
+# reminder with the daily verse ENABLED (#75).
+#
+# Scope — what this flow covers and deliberately omits:
+#   - COVERS the multi-reminder feature (#70): add a second time, confirm a
+#     remove control appears, remove it, confirm it disappears. The Times card
+#     and its add/remove controls render independent of the on/off toggle and
+#     of notification permission, so this is deterministic on a simulator.
+#   - OMITS the on/off toggle. Enabling daily verse can trigger the native iOS
+#     notification-permission dialog, which is non-deterministic on CI; the
+#     toggle + scheduling logic is unit-tested in src/notifications/__tests__/
+#     (scheduler.test.ts, reminderVerseLookup.test.ts). The notification-TAP
+#     deep link likewise can't be driven by Maestro (see daily-bhakti-smoke).
+#
+# Why English first:
+#   The card titles switch to English with the global reading language
+#   ("Daily verse", "Times"); in Hindi they are Devanagari. The big screen
+#   title renders "Reminders" (Latin) in English mode.
+#
+# Selector notes (verified against ReminderSettingsScreen.tsx):
+#   - The add control exposes accessibilityLabel "Add reminder".
+#   - Each removable row exposes "Remove reminder <n>" (1-indexed). With the
+#     default single time, canRemove is false → NO remove control renders, so
+#     "Remove reminder.*" is absent until a second time is added.
+#
+# PRECONDITION: default reminder prefs (one 07:00 time). The flow adds then
+# removes a time (net zero), so back-to-back runs stay clean.
+
+appId: host.exp.Exponent
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Set global reading language to English (More tab) ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Step 3: Open Reminders from the More screen ──
+# The More card's a11y label is composed ("Reminders, daily verse on at 07:00"),
+# and Maestro matches the full string — so anchor with .* not the bare word.
+- tapOn: "Reminders.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Daily verse"
+    timeout: 15000
+- assertVisible: "Times"
+# Default single reminder → no remove control yet.
+- assertNotVisible: "Remove reminder.*"
+
+# ── Step 4: Add a second reminder time (#70) → a remove control appears ──
+- tapOn: "Add reminder"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Remove reminder 2"
+    timeout: 10000
+
+# ── Step 5: Remove the second time → back to a single reminder ──
+- tapOn: "Remove reminder 2"
+- waitForAnimationToEnd
+- assertNotVisible: "Remove reminder.*"
+
+# ── Step 6: Back to More (round-trip) ──
+- tapOn: "Back"
+- waitForAnimationToEnd
+- assertVisible: "More"
+
+# ── Cleanup — Expo Go termination resets navigation for the next flow ──
+- stopApp:
+    appId: host.exp.Exponent

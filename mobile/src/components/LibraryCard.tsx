@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import type { LibraryEntry } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
+import { useRoutineSheet } from '@/contexts/RoutineSheetContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
@@ -22,6 +23,7 @@ type Props = {
 export default function LibraryCard({ entry, onPress }: Props) {
   const { colors, typography, radii } = useTheme();
   const { isNew } = useNewContent();
+  const { openAddToRoutine } = useRoutineSheet();
   const { lang } = useGitaLanguage();
   const { primary, secondary } = orderTitlesByLanguage(lang, entry.nameHi, entry.nameEn, {
     devPrimary: 17,
@@ -126,7 +128,22 @@ export default function LibraryCard({ entry, onPress }: Props) {
       </View>
 
       {isActive ? (
-        <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
+        <View style={styles.tail}>
+          <Pressable
+            onPress={() => openAddToRoutine(entry.id)}
+            accessibilityRole="button"
+            accessibilityLabel={`Add ${entry.nameEn} to a routine`}
+            hitSlop={12}
+            style={({ pressed }) => [
+              styles.addBtn,
+              { borderColor: colors.gold, borderRadius: radii.pill },
+              pressed && { opacity: 0.6 },
+            ]}
+          >
+            <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 20 }}>＋</Text>
+          </Pressable>
+          <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
+        </View>
       ) : (
         <View
           style={[
@@ -253,9 +270,21 @@ const styles = StyleSheet.create({
   cardSub: {
     opacity: 0.9,
   },
+  tail: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  addBtn: {
+    width: 30,
+    height: 30,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   chev: {
     fontSize: 26,
-    marginLeft: 8,
+    marginLeft: 4,
   },
   badge: {
     paddingHorizontal: 10,

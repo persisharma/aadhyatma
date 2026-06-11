@@ -30,6 +30,7 @@ import JumpToStartButton from '@/components/JumpToStartButton';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import LanguageToggle from '@/components/LanguageToggle';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import SundarkandVersePage from '@/components/SundarkandVersePage';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
@@ -296,8 +297,9 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <View style={styles.toggleRow}>
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
+          <AddToRoutineButton sourceId="sundarkand" chapter={chapter.chapter} />
         </View>
 
         <View style={styles.listContainer}>

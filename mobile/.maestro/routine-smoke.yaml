@@ -1,0 +1,159 @@
+# Daily Routine (Nitya Sadhana) Smoke Test — PRD-07, feat(routine) Phase 1
+#
+# Routine is NOT a Home category nor a bottom tab. It is reached from the
+# docked RoutineBanner pinned above the tab bar on Home (and Daily Bhakti),
+# and lives as a stack of five screens inside HomeStackNavigator:
+#   RoutineBanner → RoutineCreate → RoutineAddItems → RoutineToday
+#                                                    ↘ RoutineList → RoutineDetail
+#
+# This flow exercises the whole Phase-1 lifecycle end to end:
+#   1. Banner (no-routine state) opens routine creation.
+#   2. CreateRoutineScreen — name the routine, pick the "Daily" schedule mode.
+#   3. RoutineAddItemsScreen — add one item from the library.
+#   4. RoutineTodayScreen — the item appears in "Today's Practice"; the check-off
+#      flips progress 0/1 → 1/1 (PRD-07 §2: completion via check-offs).
+#   5. RoutineListScreen — the routine shows with its DAILY schedule pill.
+#   6. RoutineDetailScreen — delete the routine (also resets state for re-runs).
+#
+# Why "Daily" mode (not "Weekday"):
+#   A 'daily' routine shows every item EVERY day, so RoutineToday is
+#   deterministic regardless of the run date. A 'weekday' routine would only
+#   surface its items on the assigned weekday → date-dependent and flaky.
+#
+# Why we switch to English first (mirrors panchang/daily-bhakti smokes):
+#   Every routine screen reads the GLOBAL reading language (useGitaLanguage),
+#   default Hindi → Devanagari, which Maestro's iOS accessibility tree can't
+#   read reliably. We flip the default to English on the More tab, then assert
+#   the real English strings (RoutineShell renders titleEn when lang === 'en').
+#
+# Selector notes (verified against source):
+#   - RoutineBanner no-routine state exposes accessibilityLabel
+#     "Set your daily practice" (RoutineBanner.tsx) → opens RoutineCreate.
+#   - The English-name TextInput has no testID; we focus it via its placeholder
+#     "Morning Sadhana" (CreateRoutineScreen Field) then inputText. Only one
+#     name field is required (nameReady = nameHi || nameEn).
+#   - The add toggle on RoutineAddItems is a Pressable wrapping the glyph "＋"
+#     (U+FF0B). tapOn matches the first row's toggle — enough to add one item.
+#   - "Mark done" is the check-off circle's accessibilityLabel on RoutineToday.
+#   - "All routines" is the ≡ header button's accessibilityLabel on RoutineToday.
+#
+# PRECONDITION: no routine exists yet (fresh install / clean slate). The flow
+# deletes the routine it creates at the end, so back-to-back runs stay clean.
+
+appId: host.exp.Exponent
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Set global reading language to English (More tab) ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+
+# ── Step 3: Open routine creation from the docked banner ──
+# No-routine state: the banner nudges "Set your daily practice".
+- extendedWaitUntil:
+    visible: "Set your daily practice"
+    timeout: 15000
+- tapOn: "Set your daily practice"
+- waitForAnimationToEnd
+
+# ── Step 4: Name the routine ──
+- extendedWaitUntil:
+    visible: "Name your routine"
+    timeout: 15000
+- tapOn: "Morning Sadhana"          # English-name field placeholder
+- inputText: "E2E Smoke Routine"
+# Dismiss the keyboard — it overlaps the "Next" button, so a tap would land on
+# a key instead of the button.
+- hideKeyboard
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# ── Step 5: Choose the Daily schedule mode and create ──
+# NOTE: the heading ends in "?" — a regex quantifier under Maestro's full-string
+# matching — so we anchor with a trailing ".*" instead of the literal "?".
+- extendedWaitUntil:
+    visible: "Same every day, or by weekday.*"
+    timeout: 10000
+# The ModeCard is a button whose child Texts merge into one accessibilityText
+# ("Daily — same every day, Every item shows every day."), so anchor with ".*".
+- tapOn: "Daily — same every day.*"
+- waitForAnimationToEnd
+- tapOn: "Create routine"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Step 6: Add one item from the library, then finish ──
+- extendedWaitUntil:
+    visible: "Add Content"
+    timeout: 15000
+- tapOn: "＋"                        # first row's add toggle (U+FF0B)
+- waitForAnimationToEnd
+# "Done" sits below the full library list (~30 rows; iOS virtualizes the
+# accessibility tree). centerElement keeps its tap-point mid-screen — at the
+# bottom edge the tap would otherwise land on the tab bar below it.
+- scrollUntilVisible:
+    element:
+      text: "Done"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 25000
+- tapOn: "Done"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Step 7: Today's Practice shows the item; the check-off flips progress ──
+- extendedWaitUntil:
+    visible: "Today's Practice"
+    timeout: 15000
+# One item, none done yet → progress reads "0/1 · done".
+- assertVisible: "0/1.*"
+- tapOn: "Mark done"
+- waitForAnimationToEnd
+- assertVisible: "1/1.*"
+
+# ── Step 8: My Routines lists the routine with its DAILY schedule pill ──
+- tapOn: "All routines"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "My Routines"
+    timeout: 10000
+# The routine card is a button; its name, schedule pill, and item count merge
+# into one label ("E2E Smoke Routine, DAILY, 1 items"), so assert with ".*".
+- assertVisible: "E2E Smoke Routine.*DAILY.*"
+
+# ── Step 9: Open the routine's detail and delete it (also resets for re-runs) ──
+- tapOn: "E2E Smoke Routine.*"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Delete this routine"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 15000
+- tapOn: "Delete this routine"
+- waitForAnimationToEnd
+# After delete we land on Today's Practice, now EMPTY — which confirms the
+# routine is gone (no routine → "Nothing scheduled for today"). NOTE: delete
+# lands here, two screens back from My Routines, because RoutineDetailScreen
+# double-pops — its `if (!routine)` guard fires goBack() during the post-delete
+# re-render, on top of the button's explicit goBack() (this also prints the
+# "Cannot update a component during render" warning). The routine IS deleted;
+# see the findings note. If that guard is fixed to land on My Routines, switch
+# this assertion to "No routines yet".
+- extendedWaitUntil:
+    visible: "Nothing scheduled for today"
+    timeout: 10000
+
+# ── Cleanup — Expo Go termination resets navigation for the next flow ──
+- stopApp:
+    appId: host.exp.Exponent

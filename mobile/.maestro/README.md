@@ -53,9 +53,10 @@ maestro test --debug-output ./maestro-debug .maestro/sanskar-smoke.yaml
 |---|---|
 | `_launch.yaml` | **Shared subflow** — boots Expo Go, opens Vedansh, waits for Home. Used by every category smoke via `runFlow: _launch.yaml`. |
 | `granth-smoke.yaml` | Granth: 3 sections (Bhagavad Gītā, Sundarkand, Ramcharitmanas). Opens Sundarkand. |
+| `gita-smoke.yaml` | Bhagavad Gītā **chaptered reader** — the path `granth-smoke` skips. Home → Sacred Books → Bhagavad Gītā → chapter index → Chapter 1 reader; exercises horizontal verse paging and the `JumpToStartButton` "back to verse 1" pill (PR #97). Auto-advance to the next chapter (PR #29) is scroll-velocity driven (~47 swipes), so it's unit-tested in `src/screens/__tests__/gitaAutoAdvance.test.tsx` instead. |
 | `stotram-smoke.yaml` | Stotram: 7 sections. Opens Bajrang Baan (matches the jest smoke test). |
 | `chalisa-smoke.yaml` | Chalisa: 4 sections. Opens Hanuman Chalisa (guards against PR #31 multi-instance regression). |
-| `japam-smoke.yaml` | Japam: 4 mantras. Opens Gayatri Mantra (`JapamCounterScreen`, no language toggle). |
+| `japam-smoke.yaml` | Japam: 4 mantras. Opens the Gayatri Mantra `JapamCounterScreen` and taps the bead area to drive the count 0 → 3 (PR #40/#93). The Reset/Clear confirm modal's accessible backdrop collapses its buttons in the a11y tree, so the reset path isn't driven — the flow expects a clean counter from the suite baseline. |
 | `aarti-smoke.yaml` | Aarti: 7 sections. Opens Om Jai Jagdish Hare (multi-instance dispatch check). |
 | `sanskar-smoke.yaml` | Sanskar: 7 sections. Verifies intro page, step indicator (Surya Namaskar), language toggle. |
 | `panchang-smoke.yaml` | Panchang **tab** (not a Home category). Switches language to English, opens the tab, asserts the astronomy block (Sunrise/Sunset/Moonrise/Brahma Muhurta), Drik Panchang/Ujjain header, Purnimant/Amanta toggle, inline calendar selection, and Vrat/Upcoming observance sections. |
@@ -63,9 +64,30 @@ maestro test --debug-output ./maestro-debug .maestro/sanskar-smoke.yaml
 | `new-content-badge-smoke.yaml` | NEW badge — stotram **CategoryList** path. Dev-seeds the upgrader state, asserts the stotram tile + Krishna/Bajrang/Ram Stuti cards show NEW (Shiva doesn't), then taps one (markSeen) and confirms the badge stays cleared across a restart. |
 | `new-content-badge-home-smoke.yaml` | NEW badge — **Home category tiles**. Asserts `hasNewInCategory` scoping (only the stotram tile lights up; every other category + By Deity renders plain), then marks all three stotram debut-new entries seen and confirms the tile's badge clears. |
 | `new-content-badge-deity-smoke.yaml` | NEW badge — **By-Deity** surface. Opens Shri Krishna, asserts Krishna Stotram shows NEW in the deity list, then taps it (markSeen from `DeityListScreen`) and confirms the badge clears on return. |
+| `deity-browse-smoke.yaml` | **By-Deity** general browse (independent of the NEW badge). Home → By Deity → asserts the deity grid (Rama/Krishna/Vishnu) → opens Shri Vishnu and asserts "Vishnu Sahasranama" is listed (PR #99 deity tagging, verified on-screen) → opens the entry and returns. |
+| `routine-smoke.yaml` | Daily Routine (Nitya Sadhana, PRD-07) — **Daily** mode. Full lifecycle from the docked `RoutineBanner`: create a Daily routine (name + mode), add one library item, see it in "Today's Practice", flip the check-off `0/1 → 1/1`, confirm it lists with the `DAILY` pill, then delete it (also resets state for re-runs). ✅ verified on iOS sim. |
+| `routine-weekday-smoke.yaml` | Daily Routine — **Weekday** mode + deep interactions. Creates a weekday routine, asserts the deity-of-day `SUGGESTED` chip, adds a specific section (Hanuman Chalisa via a `rightOf` selector), marks an item done **and un-marks it** (`0/1 → 1/1 → 0/1`), **opens the item into its reader** and returns, confirms the `WEEKDAY` pill, **removes the item** (→ "No items added yet"), then deletes. ✅ verified on iOS sim. |
+| `search-smoke.yaml` | Library search (PRD-03, #57). Opens search from the floating ⌕ button, asserts the Popular shortcuts, types a query and asserts matching Sections, clears it, checks the zero-results state, and opens a popular shortcut into its reader. **⚠️ CURRENTLY RED** — the ⌕ FAB is overlapped by the always-present `RoutineBanner` (rendered on top), so the tap opens RoutineCreate instead of Search. App-layout bug, not a flow bug; search engine is unit-tested (`searchIndex.test.ts`, `searchNormalize.test.ts`). Goes green once the FAB is lifted above the banner. |
+| `wishlist-smoke.yaml` | Wishlist / bookmarks (#46/#51/#55). Bookmarks a Sundarkand verse in the reader, opens the Wishlist from the More tab, asserts the saved verse appears, exercises the remove-confirm modal (Cancel), taps the card to navigate back to the verse, and un-bookmarks to clean up. |
+| `reminders-smoke.yaml` | Reminder settings (PRD-01 #53; multiple times #70; default-enabled #75). Opens Reminders from the More tab, adds a second reminder time and confirms a remove control appears, then removes it. The on/off toggle is omitted (native permission dialog) — it's unit-tested instead. |
+| `more-smoke.yaml` | **More tab** hub — asserts the Wishlist/Reminders/Language cards, opens the **Sadhak Profile** insights screen and exercises its Lifetime/Monthly/Daily range toggle (PR #33), and opens the **About & Disclaimer** modal (`helpContent`). |
+| `resume-reading-smoke.yaml` | **Resume reading** (PR #97). Reads into Bhagavad Gītā Ch.1 v2, leaves, re-opens the entry → asserts the `ResumeReadingSheet` pops with the saved location ("Chapter 1 · Verse 2") → taps **Resume** → confirms it lands back mid-chapter (the JumpToStart pill is showing). |
 
 Run a single flow: `maestro test --config .maestro/config.yaml .maestro/<category>-smoke.yaml`
 Run all flows: `npm run test:e2e` (which runs `maestro test .maestro/`).
+
+### Covered by unit tests instead of Maestro
+
+Some primary behaviours can't be driven deterministically from Maestro on the iOS
+simulator; they're covered by Jest/tsx suites instead:
+
+| Behaviour | Why not Maestro | Unit test |
+|---|---|---|
+| Auto-advance to next chapter (PR #29) | Scroll-velocity driven; needs ~47 exact page-swipes to reach the chapter end | `src/screens/__tests__/gitaAutoAdvance.test.tsx` |
+| OTA "update ready" popup (PR #92) | `expo-updates` is disabled in Expo Go, so the modal never mounts on the sim | `src/components/__tests__/UpdateReadyModal.test.tsx`, `src/utils/__tests__/semverCompare.test.ts` |
+| Notification-tap deep link (PR #97) | Maestro can't schedule + tap a real OS notification | `src/notifications/__tests__/deepLink.jest.test.tsx` |
+| Share-verse card | Tapping Share opens the OS share sheet, which Maestro can't inspect (and the Gita verse page collapses the share button under its `accessible` ScrollView) | `src/components/__tests__/shareCardFit.test.tsx` |
+| Japam Reset/Clear confirm | The confirm modal's accessible backdrop collapses its buttons in the a11y tree (see `japam-smoke.yaml`) | counter logic exercised via the increment path in `japam-smoke.yaml` |
 
 ## Adding a new section — the per-category smoke MUST be updated
 

@@ -13,6 +13,7 @@ import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
 import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
+import RoutineBanner from '@/components/RoutineBanner';
 
 /**
  * Resolve the verse to show on entry. When a reminder tap forwarded a verse
@@ -250,6 +251,7 @@ export default function DailyBhaktiScreen() {
           </View>
         </ScrollView>
       </SafeAreaView>
+      <RoutineBanner />
     </View>
   );
 }
