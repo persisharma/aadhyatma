@@ -8,6 +8,8 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
+import LocationPickerModal from '@/components/LocationPickerModal';
+import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
 import {
   usePanchangCalendarSystem,
@@ -87,7 +89,9 @@ export default function PanchangScreen() {
   const [calendarExpanded, setCalendarExpanded] = useState(false);
   const calendarSwipeStart = useRef<{ x: number; y: number } | null>(null);
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
-  const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
+  const { location } = usePanchangLocation();
+  const [locationPickerVisible, setLocationPickerVisible] = useState(false);
+  const { panchang: p, observances, upcoming, observancesApproximate } = usePanchangForSelection(selectedDate, calendarSystem);
   const monthObservances = usePanchangMonthObservances(visibleMonth, calendarSystem);
   const monthObservanceTags = useMemo(() => {
     const tags = new Map<string, ObservanceCalendarTag>();
@@ -168,7 +172,7 @@ export default function PanchangScreen() {
         >
           {/* Slim system header — the tab bar already names this screen "पंचांग",
               so the redundant title/subtitle/pill are gone. Only the calendar
-              system control + Ujjain reference remain. */}
+              system control + tappable location reference remain. */}
           <View style={styles.systemHeader}>
             <CalendarSystemToggle
               value={calendarSystem}
@@ -178,11 +182,22 @@ export default function PanchangScreen() {
               radii={radii}
               typography={typography}
             />
-            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, textAlign: 'center', marginTop: 5 }}>
-              {isHindi
-                ? `संदर्भ: उज्जैन, भारत · ${calendarSystemLabel(calendarSystem, true)}`
-                : `Reference: Ujjain, India · ${calendarSystemLabel(calendarSystem, false)}`}
-            </Text>
+            <Pressable
+              onPress={() => setLocationPickerVisible(true)}
+              accessibilityRole="button"
+              accessibilityLabel={isHindi ? 'स्थान बदलें' : 'Change location'}
+              hitSlop={8}
+              style={({ pressed }) => [styles.locationButton, pressed && { opacity: 0.6 }]}
+            >
+              <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, textAlign: 'center' }}>
+                {isHindi
+                  ? `संदर्भ: ${location.labelHi}, भारत · ${calendarSystemLabel(calendarSystem, true)}`
+                  : `Reference: ${location.labelEn}, India · ${calendarSystemLabel(calendarSystem, false)}`}
+                <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 9, color: colors.saffronDeep }}>
+                  {isHindi ? '  बदलें' : '  change'}
+                </Text>
+              </Text>
+            </Pressable>
           </View>
 
           <View
@@ -368,6 +383,16 @@ export default function PanchangScreen() {
             <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 10 }}>
               {isHindi ? 'व्रत और पर्व' : 'Vrat & Observances'}
             </Text>
+            {observancesApproximate && (
+              <View style={styles.approximateRow}>
+                <ActivityIndicator size="small" color={colors.saffron} />
+                <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 11, color: colors.inkMuted, flex: 1 }}>
+                  {isHindi
+                    ? 'इस स्थान के लिए तिथियाँ अपडेट हो रही हैं…'
+                    : 'Updating dates for your location…'}
+                </Text>
+              </View>
+            )}
             {observances.length > 0 ? (
               observances.map((item) => (
                 <ObservanceCard
@@ -407,6 +432,7 @@ export default function PanchangScreen() {
           )}
         </ScrollView>
       </SafeAreaView>
+      <LocationPickerModal visible={locationPickerVisible} onClose={() => setLocationPickerVisible(false)} />
     </View>
   );
 }
@@ -565,6 +591,8 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: { paddingTop: 8, paddingBottom: 24 },
   systemHeader: { alignItems: 'center', marginTop: 2 },
+  locationButton: { marginTop: 5, minHeight: 24, justifyContent: 'center' },
+  approximateRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
   systemToggle: {
     flexDirection: 'row',
     alignSelf: 'center',

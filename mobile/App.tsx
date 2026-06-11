@@ -31,6 +31,7 @@ import {
   NotificationPreferencesProvider,
   configureForegroundNotificationHandler,
 } from '@/contexts/NotificationPreferencesContext';
+import { PanchangLocationProvider } from '@/contexts/PanchangLocationContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
@@ -127,6 +128,7 @@ export default function App() {
                   <ReadingProgressProvider>
                     <JapamCounterProvider>
                       <NotificationPreferencesProvider>
+                        <PanchangLocationProvider>
                         <ShareProvider>
                           <NavigationContainer ref={navigationRef}>
                             <StatusBar style="dark" />
@@ -135,6 +137,7 @@ export default function App() {
                             <UpdateReadyModal />
                           </NavigationContainer>
                         </ShareProvider>
+                        </PanchangLocationProvider>
                       </NotificationPreferencesProvider>
                     </JapamCounterProvider>
                   </ReadingProgressProvider>
