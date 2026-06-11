@@ -7,6 +7,7 @@ import { gitaChaptersManifest } from '@/data/gita';
 import { sundarkandChaptersManifest } from '@/data/sundarkand';
 import { shivaStrotamChaptersManifest } from '@/data/shiva-strotam';
 import { durgaStotramChaptersManifest } from '@/data/durga-stotram';
+import { saraswatiStotramChaptersManifest } from '@/data/saraswati-stotram';
 import { ganeshStotramChaptersManifest } from '@/data/ganesh-stotram';
 import { vishnuSahasranamaChaptersManifest } from '@/data/vishnu-sahasranama';
 import { hanumanAshtakChaptersManifest } from '@/data/hanuman-ashtak';
@@ -24,6 +25,7 @@ const REGISTRY: Record<string, Manifest> = {
   sundarkand: sundarkandChaptersManifest,
   'shiva-strotam': shivaStrotamChaptersManifest,
   'durga-stotram': durgaStotramChaptersManifest,
+  'saraswati-stotram': saraswatiStotramChaptersManifest,
   'ganesh-stotram': ganeshStotramChaptersManifest,
   'vishnu-sahasranama': vishnuSahasranamaChaptersManifest,
   'hanuman-ashtak': hanumanAshtakChaptersManifest,
