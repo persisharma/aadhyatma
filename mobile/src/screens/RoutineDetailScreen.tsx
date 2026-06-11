@@ -5,9 +5,8 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { resolveRoutineItem } from '@/data/routine/units';
-import { WEEKDAY_LABELS, deityForWeekday } from '@/data/routine/vaar';
+import { WEEKDAY_LABELS, deityLabelForWeekday } from '@/data/routine/vaar';
 import { navigateToRoutineItem } from '@/navigation/entryRoutes';
-import { deities as deityMeta } from '@/data/deities';
 import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -52,30 +51,31 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
               {isHi ? 'वार · देव' : 'Weekday · deity'}
             </Text>
             <View style={styles.dayStrip}>
-              {WEEKDAY_LABELS.map((w, i) => {
-                const dMeta = deityMeta.find((d) => d.id === deityForWeekday(i));
-                return (
-                  <View
-                    key={w.short}
-                    style={{
-                      flex: 1,
-                      paddingVertical: 6,
-                      borderRadius: radii.sm,
-                      borderWidth: 1,
-                      borderColor: colors.divider,
-                      backgroundColor: colors.parchmentSoft,
-                      alignItems: 'center',
-                    }}
+              {WEEKDAY_LABELS.map((w, i) => (
+                <View
+                  key={w.short}
+                  style={{
+                    flex: 1,
+                    paddingVertical: 6,
+                    paddingHorizontal: 2,
+                    borderRadius: radii.sm,
+                    borderWidth: 1,
+                    borderColor: colors.divider,
+                    backgroundColor: colors.parchmentSoft,
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 10, color: colors.inkMuted }}>
+                    {w.short}
+                  </Text>
+                  <Text
+                    numberOfLines={2}
+                    style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 10, color: colors.saffronDeep, marginTop: 2, textAlign: 'center' }}
                   >
-                    <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 10, color: colors.inkMuted }}>
-                      {w.short}
-                    </Text>
-                    <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 11, color: colors.saffronDeep, marginTop: 2 }}>
-                      {(isHi ? dMeta?.nameHi : dMeta?.nameEn)?.replace(/^(श्री |माँ |Shri |Maa )/, '').slice(0, 6) ?? ''}
-                    </Text>
-                  </View>
-                );
-              })}
+                    {deityLabelForWeekday(i, lang)}
+                  </Text>
+                </View>
+              ))}
             </View>
           </View>
         )}

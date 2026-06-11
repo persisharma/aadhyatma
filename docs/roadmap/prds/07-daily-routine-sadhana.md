@@ -123,7 +123,7 @@ Used only to **pre-suggest** content when building a `weekday` routine; always o
 | Wednesday | `ganesha` | Budhvar — Ganesha |
 | Thursday | `vishnu` | Guruvar — Vishnu |
 | Friday | `durga` | Shukravar — Devi |
-| Saturday | `hanuman` | Shanivar — Hanuman/Shani |
+| Saturday | `hanuman` (labelled "Shani Dev · Hanuman") | Shanivar — Shani Dev; Hanuman worshipped for relief from Shani. No Shani content yet, so Hanuman is surfaced while the label names the presiding deity. |
 
 "Suggested for today" is then just: filter `library` by the day's deity tag — no hand-curation, because every entry is already deity-tagged.
 
