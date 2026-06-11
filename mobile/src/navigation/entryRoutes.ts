@@ -11,11 +11,12 @@ type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
 const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa']);
 
-const sanskarIds = new Set(['prabhati-shloka', 'surya-namaskar', 'tulsi-puja', 'bhojan-mantra', 'gau-seva', 'sandhya-deepam', 'ratri-shloka']);
+const sanskarIds = new Set(['prabhati-shloka', 'surya-namaskar', 'tulsi-puja', 'bhojan-mantra', 'gau-seva', 'sandhya-deepam', 'ratri-shloka', 'vidyarambha-prarthana']);
 
 const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'shiva-strotam': 'ShivaStrotamChapters',
   'durga-stotram': 'DurgaStotramChapters',
+  'saraswati-stotram': 'SaraswatiStotramChapters',
   'ganesh-stotram': 'GaneshStotramChapters',
   'vishnu-sahasranama': 'VishnuSahasranamaChapters',
   'hanuman-ashtak': 'HanumanAshtakChapters',
@@ -30,6 +31,7 @@ const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
 const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'shiva-strotam': 'ShivaStrotamReader',
   'durga-stotram': 'DurgaStotramReader',
+  'saraswati-stotram': 'SaraswatiStotramReader',
   'ganesh-stotram': 'GaneshStotramReader',
   'vishnu-sahasranama': 'VishnuSahasranamaReader',
   'hanuman-ashtak': 'HanumanAshtakReader',

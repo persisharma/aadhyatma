@@ -166,35 +166,24 @@ export default function PanchangScreen() {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
           showsVerticalScrollIndicator={false}
         >
-            <View style={styles.titleArea}>
-            <Text style={{ fontFamily: typography.screenTitle.fontFamily, fontSize: 20, color: colors.ink, textAlign: 'center' }}>
-              पंचांग
-            </Text>
-            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, textAlign: 'center', marginTop: 2 }}>
-              Panchang
+          {/* Slim system header — the tab bar already names this screen "पंचांग",
+              so the redundant title/subtitle/pill are gone. Only the calendar
+              system control + Ujjain reference remain. */}
+          <View style={styles.systemHeader}>
+            <CalendarSystemToggle
+              value={calendarSystem}
+              onChange={setCalendarSystem}
+              isHindi={isHindi}
+              colors={colors}
+              radii={radii}
+              typography={typography}
+            />
+            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, textAlign: 'center', marginTop: 5 }}>
+              {isHindi
+                ? `संदर्भ: उज्जैन, भारत · ${calendarSystemLabel(calendarSystem, true)}`
+                : `Reference: Ujjain, India · ${calendarSystemLabel(calendarSystem, false)}`}
             </Text>
           </View>
-
-          <View style={[styles.schoolPill, { backgroundColor: colors.saffronTint, borderRadius: radii.sm }]}>
-            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 12, color: colors.saffronDeep }}>
-              {isHindi ? 'पंचांग' : 'Panchang'}
-            </Text>
-          </View>
-
-          <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, textAlign: 'center', marginTop: 6 }}>
-            {isHindi
-              ? `संदर्भ: उज्जैन, भारत · ${calendarSystemLabel(calendarSystem, true)}`
-              : `Reference: Ujjain, India · ${calendarSystemLabel(calendarSystem, false)}`}
-          </Text>
-
-          <CalendarSystemToggle
-            value={calendarSystem}
-            onChange={setCalendarSystem}
-            isHindi={isHindi}
-            colors={colors}
-            radii={radii}
-            typography={typography}
-          />
 
           <View
             style={[styles.calendarCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}
@@ -351,11 +340,11 @@ export default function PanchangScreen() {
             </Text>
           </View>
 
-          <View style={[styles.detailCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}>
-            <PanchangRow label={isHindi ? 'तिथि' : 'Tithi'} element={p.tithi} isHindi={isHindi} colors={colors} typography={typography} />
-            <PanchangRow label={isHindi ? 'नक्षत्र' : 'Nakshatra'} element={p.nakshatra} isHindi={isHindi} colors={colors} typography={typography} />
-            <PanchangRow label={isHindi ? 'योग' : 'Yoga'} element={p.yoga} isHindi={isHindi} colors={colors} typography={typography} />
-            <PanchangRow label={isHindi ? 'करण' : 'Karana'} element={p.karana} isHindi={isHindi} colors={colors} typography={typography} isLast />
+          <View style={styles.angaGrid}>
+            <PanchangTile label={isHindi ? 'तिथि' : 'Tithi'} element={p.tithi} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
+            <PanchangTile label={isHindi ? 'नक्षत्र' : 'Nakshatra'} element={p.nakshatra} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
+            <PanchangTile label={isHindi ? 'योग' : 'Yoga'} element={p.yoga} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
+            <PanchangTile label={isHindi ? 'करण' : 'Karana'} element={p.karana} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
           </View>
 
           <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}>
@@ -477,31 +466,35 @@ function CalendarSystemToggle({ value, onChange, isHindi, colors, radii, typogra
   );
 }
 
-function PanchangRow({ label, element, isHindi, colors, typography, isLast }: {
+function PanchangTile({ label, element, isHindi, colors, typography, radii }: {
   label: string;
   element: PanchangElement;
   isHindi: boolean;
   colors: any;
   typography: any;
-  isLast?: boolean;
+  radii: any;
 }) {
   return (
-    <View style={[styles.pRow, !isLast && { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.divider }]}>
-      <View style={{ flex: 1 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 6 }}>
-          <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink }}>
-            {isHindi ? element.nameHi : element.nameEn}
-          </Text>
-          <Text style={{ fontSize: 9, color: colors.inkMuted, fontFamily: 'CormorantGaramond_500Medium', textTransform: 'uppercase' }}>
-            {label}
-          </Text>
-        </View>
-        <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, marginTop: 1 }}>
-          {isHindi ? element.nameEn : element.nameHi}
-        </Text>
-      </View>
+    <View style={[styles.angaTile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
+      {/* The type label leads in the active language (TITHI / तिथि …) — same
+          source as the old row, kept uppercase so it reads as a quiet tag. */}
+      <Text style={{ fontSize: 9, color: colors.saffronDeep, fontFamily: 'CormorantGaramond_600SemiBold', letterSpacing: 1, textTransform: 'uppercase' }}>
+        {label}
+      </Text>
+      <Text
+        numberOfLines={1}
+        style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.ink, marginTop: 3 }}
+      >
+        {isHindi ? element.nameHi : element.nameEn}
+      </Text>
+      <Text
+        numberOfLines={1}
+        style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, marginTop: 1 }}
+      >
+        {isHindi ? element.nameEn : element.nameHi}
+      </Text>
       {element.endTime && (
-        <Text style={{ fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 11, color: colors.inkSoft }}>
+        <Text style={{ fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 11, color: colors.inkSoft, marginTop: 5 }}>
           {isHindi ? 'तक ' : 'till '}{formatTime12(element.endTime)}
         </Text>
       )}
@@ -570,24 +563,22 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, onOpenLink }
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  scroll: { paddingTop: 12, paddingBottom: 24 },
-  titleArea: { marginBottom: 6, alignItems: 'center' },
-  schoolPill: { alignSelf: 'center', paddingHorizontal: 14, paddingVertical: 6 },
+  scroll: { paddingTop: 8, paddingBottom: 24 },
+  systemHeader: { alignItems: 'center', marginTop: 2 },
   systemToggle: {
     flexDirection: 'row',
     alignSelf: 'center',
-    marginTop: 10,
     padding: 3,
     borderWidth: 1,
   },
   systemOption: {
-    minWidth: 104,
-    minHeight: 38,
+    minWidth: 100,
+    minHeight: 36,
     paddingHorizontal: 14,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  calendarCard: { borderWidth: 1, padding: 10, marginTop: 12 },
+  calendarCard: { borderWidth: 1, padding: 10, marginTop: 10 },
   compactDateNav: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   dateNavButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   selectedDateButton: { flex: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
@@ -614,9 +605,9 @@ const styles = StyleSheet.create({
   dateTagText: { fontFamily: 'Inter_600SemiBold', fontSize: 7, lineHeight: 10 },
   todayButton: { alignSelf: 'center', marginTop: 8, borderWidth: 1, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 },
   compactTodayButton: { marginTop: 0, paddingHorizontal: 14, paddingVertical: 7 },
-  dateHeader: { marginTop: 12, paddingBottom: 8, borderBottomWidth: StyleSheet.hairlineWidth, marginBottom: 8 },
-  detailCard: { borderWidth: 1, padding: 10 },
-  pRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 7 },
+  dateHeader: { marginTop: 10, paddingBottom: 8, borderBottomWidth: StyleSheet.hairlineWidth, marginBottom: 8 },
+  angaGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  angaTile: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 11, paddingHorizontal: 12 },
   timesCard: { borderWidth: 1, padding: 10, marginTop: 8 },
   timesRow: { flexDirection: 'row', justifyContent: 'space-around' },
   timeCell: { flexDirection: 'row', alignItems: 'center', width: '45%' },

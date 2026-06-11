@@ -4,13 +4,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { getVishnuSahasranamaChapter, type VishnuSahasranamaVerse } from '@/data/vishnu-sahasranama';
+import { getVishnuSahasranamaChapter, vishnuSahasranamaChaptersManifest, type VishnuSahasranamaVerse } from '@/data/vishnu-sahasranama';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import JumpToStartButton from '@/components/JumpToStartButton';
+import NextChapterCard from '@/components/NextChapterCard';
+import PrevChapterCard from '@/components/PrevChapterCard';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
@@ -18,6 +20,25 @@ import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import type { HomeStackParamList } from '@/navigation/types';
+
+type NextTransitionItem = {
+  __type: 'transition';
+  id: string;
+  nextChapter: number;
+  nextTitleHi: string;
+  nextTitleEn: string;
+};
+
+type PrevTransitionItem = {
+  __type: 'prev-transition';
+  id: string;
+  prevChapter: number;
+  prevTitleHi: string;
+  prevTitleEn: string;
+  prevVerseCount: number;
+};
+
+type FlatListItem = VishnuSahasranamaVerse | NextTransitionItem | PrevTransitionItem;
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'VishnuSahasranamaReader'>;
 
@@ -32,9 +53,44 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
   const { width } = useWindowDimensions();
 
   const chapter = useSafeChapter(route.params.chapter, getVishnuSahasranamaChapter, navigation, 'VishnuSahasranamaChapters');
-  const listRef = useRef<FlatList<VishnuSahasranamaVerse>>(null);
+  const listRef = useRef<FlatList<FlatListItem>>(null);
   const verseCount = chapter?.verses.length ?? 0;
   const initialIndex = clampIndex(route.params.initialIndex, verseCount);
+  const isLastChapter = chapter == null ? true : chapter.chapter >= vishnuSahasranamaChaptersManifest.length;
+  const isFirstChapter = chapter == null ? true : chapter.chapter <= 1;
+  const data: FlatListItem[] = useMemo(() => {
+    if (chapter == null) return [];
+    const items: FlatListItem[] = [];
+    if (!isFirstChapter) {
+      const prev = vishnuSahasranamaChaptersManifest[chapter.chapter - 2];
+      if (prev) {
+        items.push({
+          __type: 'prev-transition' as const,
+          id: 'transition-prev',
+          prevChapter: chapter.chapter - 1,
+          prevTitleHi: prev.titleHi,
+          prevTitleEn: prev.titleEn,
+          prevVerseCount: prev.verseCount,
+        });
+      }
+    }
+    items.push(...chapter.verses);
+    if (!isLastChapter) {
+      const next = vishnuSahasranamaChaptersManifest[chapter.chapter];
+      if (next) {
+        items.push({
+          __type: 'transition' as const,
+          id: 'transition-next',
+          nextChapter: chapter.chapter + 1,
+          nextTitleHi: next.titleHi,
+          nextTitleEn: next.titleEn,
+        });
+      }
+    }
+    return items;
+  }, [chapter, isFirstChapter, isLastChapter]);
+  const offset = isFirstChapter ? 0 : 1;
+  const hasNavigatedRef = useRef(false);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   useEffect(() => {
@@ -48,18 +104,40 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
     if (viewableItems.length === 0) return;
     const first = viewableItems[0];
     if (first.index == null) return;
+    const item = first.item as FlatListItem;
+    if ('__type' in item && item.__type === 'transition') {
+      if (!hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
+        setTimeout(() => {
+          navigation.replace('VishnuSahasranamaReader', { chapter: item.nextChapter });
+        }, 400);
+      }
+      return;
+    }
+    if ('__type' in item && item.__type === 'prev-transition') {
+      if (!hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
+        setTimeout(() => {
+          navigation.replace('VishnuSahasranamaReader', { chapter: item.prevChapter, initialIndex: item.prevVerseCount - 1 });
+        }, 400);
+      }
+      return;
+    }
+    const verseIdx = first.index - offset;
     setCurrentIndex((prev) => {
-      if (prev !== first.index) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
-      return first.index ?? prev;
+      if (prev !== verseIdx) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
+      return verseIdx >= 0 ? verseIdx : prev;
     });
   }).current;
 
   const getItemLayout = useCallback((_: unknown, index: number) => ({ length: width, offset: width * index, index }), [width]);
 
   const goToStart = useCallback(() => {
-    listRef.current?.scrollToIndex({ index: 0, animated: true });
+    listRef.current?.scrollToIndex({ index: offset, animated: true });
     setCurrentIndex(0);
-  }, []);
+  }, [offset]);
 
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
@@ -71,7 +149,7 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
 
   const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = e.nativeEvent.contentOffset.x;
-    const idx = Math.round(offsetX / width);
+    const idx = Math.round(offsetX / width) - offset;
     setCurrentIndex((prev) => {
       if (prev !== idx && idx >= 0 && idx < verseCount) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
@@ -79,7 +157,7 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
       }
       return prev;
     });
-  }, [width, verseCount]);
+  }, [width, verseCount, offset]);
 
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
@@ -141,9 +219,17 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
         <View style={styles.listContainer}>
           <FlatList
             ref={listRef}
-            data={chapter.verses}
-            keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <ShivaStrotamVersePage verse={item} sourceId="vishnu-sahasranama" width={width} />}
+            data={data}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => {
+              if ('__type' in item && item.__type === 'transition') {
+                return <NextChapterCard width={width} nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn} lang={lang} />;
+              }
+              if ('__type' in item && item.__type === 'prev-transition') {
+                return <PrevChapterCard width={width} prevTitle={lang === 'hi' ? item.prevTitleHi : item.prevTitleEn} lang={lang} />;
+              }
+              return <ShivaStrotamVersePage verse={item} sourceId="vishnu-sahasranama" width={width} />;
+            }}
             extraData={lang}
             horizontal
             pagingEnabled
@@ -157,7 +243,7 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
             onScroll={handleScroll}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}
-            initialScrollIndex={initialIndex}
+            initialScrollIndex={initialIndex + offset}
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />

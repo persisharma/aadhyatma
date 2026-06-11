@@ -1,0 +1,124 @@
+# Bhagavad Gītā Chaptered-Reader Smoke Test
+#
+# The one chaptered reader the category smokes deliberately skip: granth-smoke
+# opens Sundarkand "to keep the verify path simple (no chapter selection)", so
+# the Gita chapter index (GitaChaptersIndexScreen) and its verse reader
+# (GitaReaderScreen) had ZERO Maestro coverage. This flow drives the full path:
+#   Home → Sacred Books → Bhagavad Gītā → chapter index → Chapter 1 reader,
+# and exercises horizontal verse paging + the JumpToStartButton (the "back to
+# verse 1" affordance introduced with PR #97's per-subsection reading-progress).
+#
+# Resume sheet: tapping a chaptered entry with saved progress (verseIndex > 0)
+# pops ResumeReadingSheet (CategoryListScreen.handlePress). Both "Start over"
+# AND the no-progress path call navigateToEntryStart('bhagavad-gita') →
+# GitaChapters index (entryRoutes.ts), so the optional "Start over" tap below
+# lands on the chapter index either way — keeping the flow deterministic.
+#
+# Auto-advance to the next chapter (PR #29) fires only after the reader's
+# horizontal FlatList scrolls PAST the last verse (47 in Ch.1). Driving ~47
+# deterministic page-swipes in Maestro is impractical and flaky, so the
+# scroll→navigation.replace logic is unit-tested in
+# src/screens/__tests__/gitaAutoAdvance.test.tsx instead (see header there).
+#
+# Why English first: GitaChapterCard exposes "Chapter N. <titleEn>. ..." only
+# in English mode (Hindi = "अध्याय N. ..."), and Maestro's iOS a11y tree can't
+# reliably read Devanagari. We flip the global reading language to English on
+# the More tab, then assert. Hindi is restored at the end via the index toggle.
+
+appId: host.exp.Exponent
+---
+# ── Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Set global reading language to English (More tab) ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Home → Sacred Books (Granth) category ──
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+- assertVisible: "Sacred Books\\..*Tap to open\\."
+- tapOn: "Sacred Books\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# ── Open Bhagavad Gītā → chapter index ──
+- extendedWaitUntil:
+    visible: "Bhagavad Gītā\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Bhagavad Gītā\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss the Resume sheet if a prior session left chapter progress (lands on
+# the chapter index either way — see header).
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Chapter index: assert chapters render, open Chapter 1 ──
+- extendedWaitUntil:
+    visible: "Chapter 1\\..*Tap to open\\."
+    timeout: 15000
+- assertVisible: "Chapter 2\\..*Tap to open\\."
+- tapOn: "Chapter 1\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Reader opened at Chapter 1 ──
+- extendedWaitUntil:
+    visible: "Chapter 1.*"
+    timeout: 15000
+# Verse body rendered: GitaVersePage wraps its content in an `accessible`
+# ScrollView whose a11y label starts with the verse id ("Verse 1.1. …"), so the
+# VERSE is what Maestro reads here — the share/bookmark buttons nested inside
+# that ScrollView are collapsed under it and are NOT individually assertable on
+# the Gita reader. (The share-card layout is unit-tested in shareCardFit.test.tsx.)
+- assertVisible: "Verse 1\\.1.*"
+
+# ── JumpToStartButton: the "back to verse 1" pill (PR #97) ──
+# Ensure verse 1 first (a prior session's chapter-1 progress would resume
+# mid-chapter); the pill is rendered OUTSIDE the accessible ScrollView, so it
+# stays assertable. It is hidden at verse 1 (currentIndex 0).
+- tapOn:
+    text: "Jump to beginning"
+    optional: true
+- waitForAnimationToEnd
+- assertNotVisible: "Jump to beginning"
+# Swipe to verse 2 → the pill appears.
+- swipe:
+    direction: LEFT
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Jump to beginning"
+    timeout: 10000
+# Tap it → returns to verse 1, pill hides again.
+- tapOn: "Jump to beginning"
+- waitForAnimationToEnd
+- assertNotVisible: "Jump to beginning"
+
+# ── Reader language toggle round-trips (English → Hindi → English) ──
+- assertVisible: "Hindi"
+- tapOn: "Hindi"
+- waitForAnimationToEnd
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Back to the chapter index ──
+- tapOn: "Back to chapters"
+- waitForAnimationToEnd
+- assertVisible: "Chapter 1\\..*Tap to open\\."
+
+# ── Restore Hindi (best-effort) via the index LanguageToggle ──
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+- stopApp:
+    appId: host.exp.Exponent
