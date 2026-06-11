@@ -8,7 +8,9 @@ import { createContext, useContext } from 'react';
  * actually renders the sheet lives in RoutineSheetProvider.tsx.
  */
 export type RoutineSheetContextValue = {
-  openAddToRoutine: (sourceId: string) => void;
+  /** Open the add-to-routine sheet. Pass `chapter` to pre-select that chapter
+   * for a chaptered source (e.g. from a reader). */
+  openAddToRoutine: (sourceId: string, chapter?: number) => void;
 };
 
 export const RoutineSheetContext = createContext<RoutineSheetContextValue>({

@@ -8,14 +8,21 @@ import { RoutineSheetContext, type RoutineSheetContextValue } from './RoutineShe
  * RoutineProvider so the sheet can read/write routines.
  */
 export function RoutineSheetProvider({ children }: { children: React.ReactNode }) {
-  const [sourceId, setSourceId] = useState<string | null>(null);
-  const openAddToRoutine = useCallback((id: string) => setSourceId(id), []);
+  const [target, setTarget] = useState<{ sourceId: string; chapter?: number } | null>(null);
+  const openAddToRoutine = useCallback(
+    (sourceId: string, chapter?: number) => setTarget({ sourceId, chapter }),
+    []
+  );
   const value = useMemo<RoutineSheetContextValue>(() => ({ openAddToRoutine }), [openAddToRoutine]);
 
   return (
     <RoutineSheetContext.Provider value={value}>
       {children}
-      <AddToRoutineSheet sourceId={sourceId} onClose={() => setSourceId(null)} />
+      <AddToRoutineSheet
+        sourceId={target?.sourceId ?? null}
+        initialChapter={target?.chapter}
+        onClose={() => setTarget(null)}
+      />
     </RoutineSheetContext.Provider>
   );
 }

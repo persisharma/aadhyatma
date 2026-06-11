@@ -167,9 +167,14 @@ All screens follow the parchment design system and the bilingual rules in `RULEB
 - Routing centralised via `navigateToRoutineItem` in `entryRoutes.ts` (RULEBOOK §3).
 - Completion is **derived** (no per-reader edits): manual marks persist (daily); auto = reached last verse-page *today* (`ReadingProgress`) or target japa rounds today (`UserActivity`).
 
+**Add-to-routine — complete touch-points (§6.2a):**
+- `AddToRoutineSheet` — app-level bottom sheet (mounted once via `RoutineSheetProvider`; opened from anywhere through the lightweight `useRoutineSheet()` hook). Toggles a unit in/out of any routine, offers a **whole-vs-chapter selector** for chaptered sources (`chaptersForSource` registry over all 11 chapter manifests), and a "New routine" shortcut.
+- `LibraryCard` gains a `＋` → lights up **CategoryList** and **DeityList** browse surfaces.
+- `AddToRoutineButton` in **every reader top-bar** (all 14 readers), **pre-selecting the chapter being read** for chaptered sources.
+
 **Kind model simplified** from the §5.2 draft to `section | chapter | japam` (`chapter` covers both a granth chapter and a single stotra; whole = `section`).
 
-**Deferred (follow-ups):** chapter-level *add* UI (model/nav/completion already support `chapter`); auto-complete for a *whole* multi-chapter granth (chapters complete individually today); Phase 3 reminders; Phase 4 calendar/sankalp. Banner/Search-FAB stacking on Home is a known polish item.
+**Deferred (follow-ups):** auto-complete for a *whole* multi-chapter granth (chapters complete individually today); Phase 3 reminders; Phase 4 calendar/sankalp. Banner/Search-FAB stacking on Home is a known polish item.
 
 ## 8. Reuse map (what we lean on, not rebuild)
 

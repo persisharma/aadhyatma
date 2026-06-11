@@ -1,28 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { library } from '@/data/texts';
 import { findJapamMantra } from '@/data/japam';
+import { chaptersForSource } from '@/data/routine/chapters';
 import { navigationRef } from '@/notifications/deepLink';
-import type { RoutineItem } from '@/data/routine/types';
+import type { Routine, RoutineItem } from '@/data/routine/types';
 
 type Props = {
   /** Library entry id (or japam mantra id) to add; null hides the sheet. */
   sourceId: string | null;
+  /** Pre-selected chapter for a chaptered source (e.g. opened from a reader). */
+  initialChapter?: number;
   onClose: () => void;
 };
 
-/** A whole-section or japam item already present for this source (chapter items
- * are managed separately and don't count as "the whole thing is added"). */
-function existingWholeItem(items: RoutineItem[], sourceId: string): RoutineItem | undefined {
-  return items.find(
-    (i) => i.sourceId === sourceId && (i.kind === 'section' || i.kind === 'japam')
-  );
+/** The unit currently chosen in the sheet: the whole text or one chapter. */
+type Unit = { kind: 'section' | 'japam' } | { kind: 'chapter'; chapter: number };
+
+function findUnitItem(items: RoutineItem[], sourceId: string, unit: Unit): RoutineItem | undefined {
+  if (unit.kind === 'chapter') {
+    return items.find((i) => i.kind === 'chapter' && i.sourceId === sourceId && i.chapter === unit.chapter);
+  }
+  return items.find((i) => i.sourceId === sourceId && (i.kind === 'section' || i.kind === 'japam'));
 }
 
-export default function AddToRoutineSheet({ sourceId, onClose }: Props) {
+export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const { routines, addItem, removeItem } = useRoutines();
@@ -31,36 +36,55 @@ export default function AddToRoutineSheet({ sourceId, onClose }: Props) {
   const entry = sourceId ? library.find((e) => e.id === sourceId) : undefined;
   const mantra = sourceId ? findJapamMantra(sourceId) : null;
   const isJapam = entry?.category === 'japam' || (!entry && !!mantra);
-  const isGranth = entry?.category === 'granth';
+  const chapters = sourceId ? chaptersForSource(sourceId) : [];
 
   const titleHi = entry?.nameHi ?? mantra?.nameHi ?? sourceId ?? '';
   const titleEn = entry?.nameEn ?? mantra?.nameEn ?? sourceId ?? '';
 
-  const toggle = (routineId: string) => {
+  // Selected unit: 'whole' (null) or a chapter number. Reset when the sheet
+  // re-opens for a new source / chapter.
+  const [chapterSel, setChapterSel] = useState<number | null>(initialChapter ?? null);
+  useEffect(() => {
+    setChapterSel(initialChapter ?? null);
+  }, [sourceId, initialChapter]);
+
+  const unit: Unit =
+    chapterSel != null
+      ? { kind: 'chapter', chapter: chapterSel }
+      : { kind: isJapam ? 'japam' : 'section' };
+
+  const toggle = (routine: Routine) => {
     if (!sourceId) return;
-    const routine = routines.find((r) => r.id === routineId);
-    if (!routine) return;
-    const existing = existingWholeItem(routine.items, sourceId);
+    const existing = findUnitItem(routine.items, sourceId, unit);
     if (existing) {
-      removeItem(routineId, existing.id);
+      removeItem(routine.id, existing.id);
       return;
     }
-    addItem(routineId, {
-      kind: isJapam ? 'japam' : 'section',
-      sourceId,
-      ...(isJapam ? { targetRounds: 1 } : {}),
-      ...(routine.mode === 'weekday' ? { weekdays: [new Date().getDay()] } : {}),
-    });
+    const weekdayPart = routine.mode === 'weekday' ? { weekdays: [new Date().getDay()] } : {};
+    if (unit.kind === 'chapter') {
+      addItem(routine.id, { kind: 'chapter', sourceId, chapter: unit.chapter, ...weekdayPart });
+    } else if (unit.kind === 'japam') {
+      addItem(routine.id, { kind: 'japam', sourceId, targetRounds: 1, ...weekdayPart });
+    } else {
+      addItem(routine.id, { kind: 'section', sourceId, ...weekdayPart });
+    }
   };
 
   const startNewRoutine = () => {
     onClose();
-    // Navigate from outside a navigator via the shared ref (sheet lives above
-    // the NavigationContainer). Cast the call signature, not via `any`.
     (navigationRef.navigate as (name: string, params?: object) => void)('HomeTab', {
       screen: 'RoutineCreate',
     });
   };
+
+  const chip = (selected: boolean) => ({
+    borderWidth: selected ? 1.5 : 1,
+    borderColor: selected ? colors.saffron : colors.divider,
+    backgroundColor: selected ? colors.parchmentHighlight : colors.parchmentSoft,
+    borderRadius: radii.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: 6,
+  });
 
   return (
     <Modal visible={sourceId != null} animationType="slide" transparent onRequestClose={onClose}>
@@ -72,10 +96,7 @@ export default function AddToRoutineSheet({ sourceId, onClose }: Props) {
         <Pressable
           accessible={false}
           onPress={(e) => e.stopPropagation()}
-          style={[
-            styles.sheet,
-            { backgroundColor: colors.parchmentHighlight, paddingHorizontal: spacing.xxl },
-          ]}
+          style={[styles.sheet, { backgroundColor: colors.parchmentHighlight, paddingHorizontal: spacing.xxl }]}
         >
           <View style={[styles.grabber, { backgroundColor: colors.divider }]} />
           <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 18, color: colors.ink, textAlign: 'center' }}>
@@ -94,23 +115,30 @@ export default function AddToRoutineSheet({ sourceId, onClose }: Props) {
             {isHi ? `“${titleEn}” को साधना में जोड़ें` : `Add “${titleHi}” to a routine`}
           </Text>
 
-          {isGranth && (
-            <Text
-              style={{
-                fontFamily: typography.cardLatin.fontFamily,
-                fontSize: 11,
-                color: colors.inkMuted,
-                textAlign: 'center',
-                marginBottom: spacing.sm,
-              }}
-            >
-              {isHi
-                ? 'ग्रंथ — पूरा जोड़ा जा रहा है (अध्याय-स्तर शीघ्र)'
-                : 'Granth — adding the whole text (chapter-level coming soon)'}
-            </Text>
+          {/* Whole vs. chapter selector for chaptered sources */}
+          {chapters.length > 0 && (
+            <View style={{ marginBottom: spacing.md }}>
+              <Text style={{ ...typography.sectionLabel, color: colors.inkMuted, marginBottom: 8 }}>
+                {isHi ? 'क्या जोड़ें' : 'What to add'}
+              </Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
+                <Pressable onPress={() => setChapterSel(null)} style={chip(chapterSel == null)}>
+                  <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 13, color: colors.ink }}>
+                    {isHi ? 'पूरा' : 'Whole'}
+                  </Text>
+                </Pressable>
+                {chapters.map((c) => (
+                  <Pressable key={c.chapter} onPress={() => setChapterSel(c.chapter)} style={chip(chapterSel === c.chapter)}>
+                    <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 13, color: colors.ink }}>
+                      {isHi ? c.titleHi : c.titleEn}
+                    </Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            </View>
           )}
 
-          <ScrollView style={{ maxHeight: 320 }} showsVerticalScrollIndicator={false}>
+          <ScrollView style={{ maxHeight: 300 }} showsVerticalScrollIndicator={false}>
             {routines.length === 0 && (
               <Text
                 style={{
@@ -126,11 +154,11 @@ export default function AddToRoutineSheet({ sourceId, onClose }: Props) {
             )}
 
             {routines.map((r) => {
-              const added = sourceId ? !!existingWholeItem(r.items, sourceId) : false;
+              const added = sourceId ? !!findUnitItem(r.items, sourceId, unit) : false;
               return (
                 <Pressable
                   key={r.id}
-                  onPress={() => toggle(r.id)}
+                  onPress={() => toggle(r)}
                   accessibilityRole="button"
                   style={[styles.row, { borderBottomColor: colors.divider }]}
                 >
@@ -173,12 +201,7 @@ export default function AddToRoutineSheet({ sourceId, onClose }: Props) {
 
 const styles = StyleSheet.create({
   backdrop: { flex: 1, justifyContent: 'flex-end' },
-  sheet: {
-    borderTopLeftRadius: 22,
-    borderTopRightRadius: 22,
-    paddingTop: 10,
-    paddingBottom: 28,
-  },
+  sheet: { borderTopLeftRadius: 22, borderTopRightRadius: 22, paddingTop: 10, paddingBottom: 28 },
   grabber: { width: 40, height: 4, borderRadius: 2, alignSelf: 'center', marginBottom: 12 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 13, borderBottomWidth: 1 },
   check: { width: 22, height: 22, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
