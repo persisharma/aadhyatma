@@ -32,8 +32,9 @@
 #   - The English-name TextInput has no testID; we focus it via its placeholder
 #     "Morning Sadhana" (CreateRoutineScreen Field) then inputText. Only one
 #     name field is required (nameReady = nameHi || nameEn).
-#   - The add toggle on RoutineAddItems is a Pressable wrapping the glyph "＋"
-#     (U+FF0B). tapOn matches the first row's toggle — enough to add one item.
+#   - Each RoutineAddItems row's add toggle is a labelled button
+#     ("Add <NameEn>" / "Remove <NameEn>"); we add Hanuman Chalisa by name so the
+#     item that lands in the routine is deterministic.
 #   - "Mark done" is the check-off circle's accessibilityLabel on RoutineToday.
 #   - "All routines" is the ≡ header button's accessibilityLabel on RoutineToday.
 #
@@ -94,7 +95,16 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: "Add Content"
     timeout: 15000
-- tapOn: "＋"                        # first row's add toggle (U+FF0B)
+# Add Hanuman Chalisa by its labelled toggle so the routine's single item is
+# deterministic (the add button's accessibilityLabel is "Add <NameEn>").
+- scrollUntilVisible:
+    element:
+      text: "Add Hanuman Chalisa"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 25000
+- tapOn: "Add Hanuman Chalisa"
 - waitForAnimationToEnd
 # "Done" sits below the full library list (~30 rows; iOS virtualizes the
 # accessibility tree). centerElement keeps its tap-point mid-screen — at the
@@ -142,16 +152,12 @@ appId: host.exp.Exponent
     timeout: 15000
 - tapOn: "Delete this routine"
 - waitForAnimationToEnd
-# After delete we land on Today's Practice, now EMPTY — which confirms the
-# routine is gone (no routine → "Nothing scheduled for today"). NOTE: delete
-# lands here, two screens back from My Routines, because RoutineDetailScreen
-# double-pops — its `if (!routine)` guard fires goBack() during the post-delete
-# re-render, on top of the button's explicit goBack() (this also prints the
-# "Cannot update a component during render" warning). The routine IS deleted;
-# see the findings note. If that guard is fixed to land on My Routines, switch
-# this assertion to "No routines yet".
+# Delete pops once back to My Routines, now empty. (Previously it double-popped
+# to the empty Today screen — RoutineDetailScreen's missing-routine guard called
+# goBack() during render on top of the button's own goBack(). Now the guard runs
+# from an effect and the button does not goBack(), so it's a single, clean pop.)
 - extendedWaitUntil:
-    visible: "Nothing scheduled for today"
+    visible: "No routines yet"
     timeout: 10000
 
 # ── Cleanup — Expo Go termination resets navigation for the next flow ──
