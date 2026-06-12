@@ -1,9 +1,4 @@
-import {
-  bannerStatus,
-  bannerLine,
-  shouldCelebrate,
-  type BannerStatus,
-} from '@/components/routineBannerView';
+import { bannerStatus, bannerLine, type BannerStatus } from '@/components/routineBannerView';
 
 describe('bannerStatus', () => {
   it('is nudge when there is no routine', () => {
@@ -37,18 +32,5 @@ describe('bannerLine', () => {
   it.each(cases)('%s → one localized line', (status, hi, en) => {
     expect(bannerLine(status, true)).toBe(hi);
     expect(bannerLine(status, false)).toBe(en);
-  });
-});
-
-describe('shouldCelebrate', () => {
-  it('fires once: complete + focused + not yet celebrated', () => {
-    expect(shouldCelebrate('complete', true, false)).toBe(true);
-  });
-
-  it('does not fire when not complete, not focused, or already celebrated', () => {
-    expect(shouldCelebrate('progress', true, false)).toBe(false);
-    expect(shouldCelebrate('nudge', true, false)).toBe(false);
-    expect(shouldCelebrate('complete', false, false)).toBe(false);
-    expect(shouldCelebrate('complete', true, true)).toBe(false);
   });
 });

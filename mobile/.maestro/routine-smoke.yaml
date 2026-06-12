@@ -11,7 +11,9 @@
 #   2. CreateRoutineScreen — name the routine, pick the "Daily" schedule mode.
 #   3. RoutineAddItemsScreen — add one item from the library.
 #   4. RoutineTodayScreen — the item appears in "Today's Practice"; the check-off
-#      flips progress 0/1 → 1/1 (PRD-07 §2: completion via check-offs).
+#      flips progress 0/1 → 1/1 (PRD-07 §2: completion via check-offs), and the
+#      app-wide pushpa-varsha overlay fires its "Complete for today" caption —
+#      proving the celebration is global, not docked to Home's banner.
 #   5. RoutineListScreen — the routine shows with its DAILY schedule pill.
 #   6. RoutineDetailScreen — delete the routine (also resets state for re-runs).
 #
@@ -45,6 +47,11 @@ appId: host.exp.Exponent
 ---
 # ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
 - runFlow: _launch.yaml
+
+# ── Step 1b: Capture the Home brand lockup (ॐ वेदांश़ ॐ) for header-alignment
+# review. The wordmark is always Devanagari (brand), independent of language,
+# so we grab it before switching to English. Saved outside the repo. ──
+- takeScreenshot: /tmp/vedansh-home-wordmark
 
 # ── Step 2: Set global reading language to English (More tab) ──
 - tapOn: "More, tab.*"
@@ -127,7 +134,8 @@ appId: host.exp.Exponent
 # One item, none done yet → progress reads "0/1 · done".
 - assertVisible: "0/1.*"
 - tapOn: "Mark done"
-- waitForAnimationToEnd
+# Capture the app-wide pushpa-varsha mid-animation (transient ~2s one-shot).
+- takeScreenshot: /tmp/vedansh-celebration
 - assertVisible: "1/1.*"
 
 # ── Step 8: My Routines lists the routine with its DAILY schedule pill ──

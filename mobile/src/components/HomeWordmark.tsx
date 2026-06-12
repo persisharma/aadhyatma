@@ -76,7 +76,16 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 27,
+    // A full line box (≥ the glyph's natural height) so वेदांश़'s top matra/nukta
+    // is never clipped; the translateY then drops the otherwise-high Devanagari
+    // glyph (no descenders → it rides high in the box) down to the ॐ discs'
+    // optical center. Tuned against a simulator screenshot.
+    lineHeight: 38,
     includeFontPadding: false,
+    // translateY tuned so वेदांश़'s center lands on the ॐ discs' center — a slight
+    // downward nudge to fit the row, not pushed to the bottom. Measured on an
+    // iOS-sim screenshot: text-center within ~1pt of disc-center at this value.
+    transform: [{ translateY: 10 }],
   },
   subtitle: {
     marginTop: 5,
