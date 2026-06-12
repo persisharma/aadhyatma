@@ -8,13 +8,13 @@ import {
   View,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { categories } from '@/data/categories';
 import CategoryCard from '@/components/CategoryCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
-import Crest from '@/components/Crest';
+import HomeWordmark from '@/components/HomeWordmark';
 import SearchFloatingButton from '@/components/SearchFloatingButton';
 import RoutineBanner from '@/components/RoutineBanner';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -25,13 +25,12 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
-  const insets = useSafeAreaInsets();
   const { hasNewInCategory, devSimulateUpgrade, devResetNewState } = useNewContent();
 
-  // The docked RoutineBanner (rendered below) sits at `insets.bottom + spacing.sm`
-  // and stands ~80px tall in its progress state. Lift the search FAB above it so
-  // it isn't hidden behind / overlapped by the banner.
-  const searchFabBottom = insets.bottom + spacing.sm + 80 + spacing.md;
+  // The docked RoutineBanner (rendered below) sits at `spacing.sm` above the tab
+  // bar and stands ~60px tall at most. Lift the search FAB above it so it isn't
+  // hidden behind / overlapped by the banner.
+  const searchFabBottom = spacing.sm + 60 + spacing.md;
 
   const categoryIcons: Record<CategoryIconKey, React.ReactNode> = {
     granth: <CategoryIcon iconKey="granth" />,
@@ -96,33 +95,7 @@ export default function HomeScreen({ navigation }: Props) {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.hero}>
-            <Crest />
-            <Text
-              style={[
-                styles.title,
-                {
-                  color: colors.ink,
-                  fontFamily: typography.screenTitle.fontFamily,
-                  fontSize: typography.screenTitle.fontSize,
-                  letterSpacing: typography.screenTitle.letterSpacing,
-                },
-              ]}
-            >
-              वेदांश़
-            </Text>
-            <Text
-              style={[
-                styles.subtitle,
-                {
-                  color: colors.inkSoft,
-                  fontFamily: typography.subtitle.fontFamily,
-                  fontSize: typography.subtitle.fontSize,
-                  letterSpacing: typography.subtitle.letterSpacing,
-                },
-              ]}
-            >
-              Sacred Texts · Daily Reading
-            </Text>
+            <HomeWordmark />
           </View>
 
           <Text
@@ -228,15 +201,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 6,
     marginBottom: 12,
-  },
-  title: {
-    textAlign: 'center',
-    includeFontPadding: false,
-  },
-  subtitle: {
-    marginTop: 6,
-    fontStyle: 'italic',
-    includeFontPadding: false,
   },
   sectionLabel: {
     textTransform: 'uppercase',

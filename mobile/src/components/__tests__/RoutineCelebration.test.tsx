@@ -1,0 +1,54 @@
+import React, * as mockReact from 'react';
+import TestRenderer, { act } from 'react-test-renderer';
+import { View as mockView } from 'react-native';
+import RoutineCelebration from '@/components/RoutineCelebration';
+import LotusMark from '@/components/LotusMark';
+
+// react-test-renderer has no native UIManager, so an Animated `useNativeDriver`
+// timing would call findNodeHandle on a missing renderer and crash. Mocking the
+// helper downgrades these animations to the JS driver for the test.
+jest.mock('react-native/src/private/animated/NativeAnimatedHelper');
+
+jest.mock('expo-linear-gradient', () => ({
+  LinearGradient: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
+    mockReact.createElement(mockView, props, children),
+}));
+
+// Count the gradient "petals" by their rendered host View (the mock forwards the
+// `colors` array prop). Restrict to host nodes so the mock's composite wrapper
+// isn't counted twice.
+function gradientCount(tree: TestRenderer.ReactTestRenderer): number {
+  return tree.root.findAll(
+    (n) => typeof n.type === 'string' && Array.isArray(n.props?.colors)
+  ).length;
+}
+
+beforeEach(() => jest.useFakeTimers());
+afterEach(() => {
+  act(() => jest.runOnlyPendingTimers());
+  jest.useRealTimers();
+});
+
+describe('LotusMark', () => {
+  it('renders five fanned petals', () => {
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      tree = TestRenderer.create(<LotusMark size={30} />);
+    });
+    expect(gradientCount(tree)).toBe(5);
+  });
+});
+
+describe('RoutineCelebration', () => {
+  it('mounts a shower of petals and tears down cleanly', () => {
+    const onDone = jest.fn();
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      tree = TestRenderer.create(
+        <RoutineCelebration left={16} right={16} bottom={8} onDone={onDone} />
+      );
+    });
+    expect(gradientCount(tree)).toBe(8);
+    act(() => tree.unmount());
+  });
+});
