@@ -150,7 +150,7 @@ This table is the **single source of truth** for reading-content sizing, impleme
 
 ## 5. Iconography & Ornaments
 
-- **Crest on Home.** Thin horizontal rule · circular outline with `ॐ` · thin horizontal rule. Lines 40px, circle 28px, saffron stroke at `1.5px`.
+- **Home wordmark (crest lockup).** A single compact row: thin rule · `ॐ` circle · `वेदांश़` · `ॐ` circle · thin rule, with the `Sacred Texts · Daily Reading` tagline beneath. ॐ on **both** sides of the wordmark. Rules 22px, circles 30px (ॐ 19px), title 27px, saffron stroke `1.5px`, row gap 11. Implemented in `HomeWordmark.tsx`. This replaced the older stacked crest + 34px title to reclaim ~50dp of hero height while keeping the centered, altar-like essence.
 - **Verse divider.** `॥` centered between two 1px horizontal rules, 80px wide, saffron at 60% opacity. Use between verse and meaning on every reader page.
 - **Back chevron.** `‹` inside a 34px circle with `parchment-soft` fill and `divider` border.
 - **Forward chevron.** Single `›` in saffron on active cards.
@@ -548,7 +548,7 @@ When building new components, pull tokens from the theme — never hard-code a h
 **Structure (top to bottom):**
 
 1. Status bar area (safe region)
-2. Hero block (same as original Section 7): Crest + "वेदांश़" title + "Sacred Texts · Daily Reading" subtitle
+2. Hero block: the **Home wordmark lockup** (Section 5) — `ॐ वेदांश़ ॐ` on one row over the "Sacred Texts · Daily Reading" tagline. (Earlier revisions stacked a crest above a 34px title; the lockup is the compact replacement.)
 3. Section label "CATEGORIES" (Inter 11, uppercase, ink-muted, 0.22em tracking)
 4. **Category grid** (2-column FlatList, numColumns=2):
    - 6 tiles: ग्रन्थ, स्तोत्रम्, चालीसा, आरती, भजन, वेद
@@ -714,3 +714,20 @@ Same as Section 21, but filtered by deity tag instead of category. Title shows d
 - Animation: light scale pulse (1.0 → 1.15 → 1.0, 200ms) on save
 - Haptic: `Haptics.ImpactFeedbackStyle.Light` on toggle
 - Hit slop: 12px all sides
+
+---
+
+## 26. Component: Routine Banner & Completion Celebration
+
+**Purpose.** A docked banner pinned just above the tab bar on Home and Daily Bhakti, surfacing today's नित्य साधना (daily routine). `RoutineBanner.tsx` + `routineBannerView.ts` (pure state logic).
+
+**Docking.** `position: absolute; bottom: spacing.sm` — the tab bar already owns the bottom safe-area inset (`height: 60 + insets.bottom`), so the banner must **not** add `insets.bottom` again (doing so left an ~inset-sized dead gap below it).
+
+**One line, language-aware.** A single line chosen by the active reading language (`useGitaLanguage`), never a stacked Hindi+English pair. 30px disc + tight `spacing.sm` vertical padding keep it compact.
+
+**Three states** (`bannerStatus`):
+- `nudge` (no routine) — dashed `gold` border, `नि` disc, "अपनी नित्य साधना बनाएँ" / "Set your daily practice" → opens RoutineCreate.
+- `progress` (partial, or nothing scheduled today) — `goldTint` border, `doneCount/total` disc, "नित्य साधना · आज" / "Daily Routine · Today", + a saffron progress track → opens RoutineToday.
+- `complete` (all done) — a bloomed **lotus** mark (`LotusMark.tsx`) + "साधना पूर्ण · आज" / "Complete for today". The prominent progress chip is replaced by this compact achievement badge → opens RoutineToday.
+
+**Completion celebration (pushpa-varsha).** The first time the completed banner is seen each day (`shouldCelebrate`: complete + focused + not-yet-celebrated), a gentle one-shot flower shower of saffron/gold petals drifts down over the chip (`RoutineCelebration.tsx`), with a `Haptics.NotificationFeedbackType.Success` tap. Reverent, not confetti (Section 11): a soft fall + fade, no scale pops. Plays once per day, gated by `celebratedToday` persisted in `RoutineContext` (date-keyed, like the done-marks). Vector art is built from `View` + `expo-linear-gradient` (no SVG — same convention as `CategoryIcon`).

@@ -12,6 +12,7 @@ import type { Routine, RoutineItem, RoutineScheduleMode } from '@/data/routine/t
 
 const ROUTINES_KEY = '@vedansh/routines';
 const DONE_KEY = '@vedansh/routine-done';
+const CELEBRATED_KEY = '@vedansh/routine-celebrated';
 
 function newId(): string {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
@@ -30,6 +31,10 @@ type RoutineContextValue = {
   markManualDone: (key: string) => void;
   unmarkManualDone: (key: string) => void;
   isManualDone: (key: string) => boolean;
+  /** True once today's completion celebration (pushpa-varsha) has played. */
+  celebratedToday: boolean;
+  /** Record that today's celebration has played, so it fires only once a day. */
+  markCelebratedToday: () => void;
 };
 
 const RoutineContext = createContext<RoutineContextValue | null>(null);
@@ -41,12 +46,17 @@ function isRoutineArray(v: unknown): v is Routine[] {
 export function RoutineProvider({ children }: { children: React.ReactNode }) {
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [doneKeys, setDoneKeys] = useState<Set<string>>(new Set());
+  const [celebratedDate, setCelebratedDate] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
-    Promise.all([AsyncStorage.getItem(ROUTINES_KEY), AsyncStorage.getItem(DONE_KEY)])
-      .then(([rawR, rawD]) => {
+    Promise.all([
+      AsyncStorage.getItem(ROUTINES_KEY),
+      AsyncStorage.getItem(DONE_KEY),
+      AsyncStorage.getItem(CELEBRATED_KEY),
+    ])
+      .then(([rawR, rawD, rawC]) => {
         if (cancelled) return;
         if (rawR) {
           try {
@@ -67,6 +77,9 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
             /* corrupted — leave empty */
           }
         }
+        // Stored as a plain date key; staleness is handled by comparing to
+        // today at read time (see `celebratedToday`), so no date guard here.
+        if (rawC) setCelebratedDate(rawC);
       })
       .catch(() => undefined)
       .finally(() => {
@@ -152,6 +165,14 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
 
   const isManualDone = useCallback((key: string) => doneKeys.has(key), [doneKeys]);
 
+  const markCelebratedToday = useCallback(() => {
+    const today = toDateKey(new Date());
+    setCelebratedDate(today);
+    AsyncStorage.setItem(CELEBRATED_KEY, today).catch(() => undefined);
+  }, []);
+
+  const celebratedToday = celebratedDate === toDateKey(new Date());
+
   const value = useMemo<RoutineContextValue>(
     () => ({
       routines,
@@ -163,6 +184,8 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
       markManualDone,
       unmarkManualDone,
       isManualDone,
+      celebratedToday,
+      markCelebratedToday,
     }),
     [
       routines,
@@ -174,6 +197,8 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
       markManualDone,
       unmarkManualDone,
       isManualDone,
+      celebratedToday,
+      markCelebratedToday,
     ]
   );
 
