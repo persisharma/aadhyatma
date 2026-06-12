@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -19,8 +20,21 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
   const isHi = lang === 'hi';
 
   const routine = routines.find((r) => r.id === route.params.routineId);
+  const isFocused = useIsFocused();
+
+  // Missing routine — either a stale deep-link or, more commonly, the routine
+  // we just deleted. Pop back exactly once, from an effect, and only while
+  // focused. Calling goBack() during render fired "Cannot update a component
+  // during render" and, stacked on the delete handler's own goBack() plus the
+  // sibling RoutineAddItems guard, double-popped past My Routines to the empty
+  // Today screen. The focus + effect guard makes delete a single, clean pop.
+  useEffect(() => {
+    if (isFocused && !routine) {
+      navigation.goBack();
+    }
+  }, [isFocused, routine, navigation]);
+
   if (!routine) {
-    navigation.goBack();
     return null;
   }
   const isWeekday = routine.mode === 'weekday';
@@ -118,8 +132,10 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
           label={isHi ? 'इस साधना को हटाएँ' : 'Delete this routine'}
           variant="ghost"
           onPress={() => {
+            // Don't goBack() here: deleting drops `routine` to undefined, and the
+            // effect above pops once to My Routines. A goBack() here would pop a
+            // second time, landing on the empty Today screen.
             deleteRoutine(routine.id);
-            navigation.goBack();
           }}
         />
       </ScrollView>

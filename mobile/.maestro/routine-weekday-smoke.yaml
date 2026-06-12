@@ -23,8 +23,10 @@
 #   - Mode/value cards and routine cards are buttons whose child Texts MERGE into
 #     one comma-joined accessibilityText, so they need ".*" wildcards
 #     ("By weekday — changes per day.*", "E2E Weekday Routine.*WEEKDAY.*").
-#   - The add toggle is a Pressable around the glyph "＋" (U+FF0B); we target the
-#     one in Hanuman Chalisa's row with `rightOf`.
+#   - Each RoutineAddItems row's add toggle is a labelled button ("Add <NameEn>");
+#     we tap "Add Hanuman Chalisa" so the item is deterministic regardless of
+#     which deity today suggests. (The old `rightOf "＋"` selector was ambiguous —
+#     it grabbed the suggested row's toggle and added the wrong section.)
 #   - A Today's-Practice row's subtitle carries the routine name, so
 #     ".*E2E Weekday Routine.*" taps that row's open-item Pressable.
 #   - The keyboard overlaps "Next"; hideKeyboard before tapping it.
@@ -78,17 +80,16 @@ appId: host.exp.Exponent
     timeout: 15000
 # The deity-of-day suggestion chip only renders in weekday mode.
 - assertVisible: "SUGGESTED"
-# Add a specific known section (so the opened reader type is deterministic).
+# Add a specific known section by its labelled toggle (so the opened reader type
+# is deterministic — Hanuman Chalisa always opens ChalisaReader).
 - scrollUntilVisible:
     element:
-      text: "Hanuman Chalisa.*"
+      text: "Add Hanuman Chalisa"
     direction: DOWN
-    visibilityPercentage: 50
-    timeout: 15000
-- tapOn:
-    text: "＋"
-    rightOf:
-      text: "Hanuman Chalisa.*"
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 25000
+- tapOn: "Add Hanuman Chalisa"
 - waitForAnimationToEnd
 # "Done" sits below the full list. centerElement keeps its tap-point mid-screen
 # — at the bottom edge the tap would otherwise land on the tab bar below it.
@@ -151,7 +152,8 @@ appId: host.exp.Exponent
 - assertVisible: "No items added yet"
 
 # ── Step 10: Delete the routine (resets state for re-runs) ──
-# Delete double-pops to Today's-Practice-empty (see routine-smoke note).
+# Delete pops once back to My Routines, now empty (single clean pop — see the
+# routine-smoke note; previously this double-popped to the empty Today screen).
 - scrollUntilVisible:
     element:
       text: "Delete this routine"
@@ -162,7 +164,7 @@ appId: host.exp.Exponent
 - tapOn: "Delete this routine"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Nothing scheduled for today"
+    visible: "No routines yet"
     timeout: 10000
 
 # ── Cleanup ──

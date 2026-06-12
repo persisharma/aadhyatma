@@ -1,13 +1,10 @@
 # Library Search Smoke Test — PRD-03 (#57: on-device global library search)
 #
-# ⚠️ CURRENTLY RED — blocked by an app-layout bug (NOT a flow bug). On Home,
-# SearchFloatingButton is rendered before, and overlapped by, the always-present
-# RoutineBanner (rendered after it → on top). A center-tap on the ⌕ FAB is
-# therefore delivered to the banner and opens RoutineCreate instead of Search,
-# so "Search input" never appears. The search ENGINE is unit-tested meanwhile
-# (src/data/__tests__/searchIndex.test.ts, searchNormalize.test.ts). This flow
-# goes green once the FAB is lifted above the banner (zIndex + larger bottom
-# offset) or the banner leaves room for it; kept here to document the intent.
+# History: this was RED while the ⌕ FAB on Home sat behind the always-present
+# RoutineBanner (the banner is rendered after it → on top), so a center-tap on
+# the FAB landed on the banner and opened RoutineCreate instead of Search. Fixed
+# by lifting the FAB above the banner (HomeScreen passes a banner-clearing
+# bottomOffset + SearchFloatingButton sets zIndex). The flow is green again.
 #
 # Search is reached from the floating ⌕ button on Home (SearchFloatingButton);
 # the "Search card" was removed from the More screen in #66, so the floating

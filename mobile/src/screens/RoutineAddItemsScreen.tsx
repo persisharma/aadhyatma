@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -23,9 +24,21 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
   const isWeekday = routine?.mode === 'weekday';
   const [day, setDay] = useState<number>(new Date().getDay());
   const suggestedDeity = deityForWeekday(day);
+  const isFocused = useIsFocused();
+
+  // If the routine vanishes (e.g. deleted from RoutineDetail while this screen is
+  // still mounted underneath in the stack), pop back — but only while focused and
+  // from an effect. Deleting a routine updates context and re-renders every
+  // mounted routine screen; a render-time goBack() here fired "Cannot update a
+  // component during render" and popped an extra screen, stranding the user on the
+  // empty Today screen. The focus + effect guard makes delete a single clean pop.
+  useEffect(() => {
+    if (isFocused && !routine) {
+      navigation.goBack();
+    }
+  }, [isFocused, routine, navigation]);
 
   if (!routine) {
-    navigation.goBack();
     return null;
   }
 
@@ -121,7 +134,12 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
                   {entry.category === 'japam' ? (isHi ? '1 माला · 108' : '1 mala · 108') : isHi ? 'पूरा पाठ' : 'Whole text'}
                 </Text>
               </View>
-              <Pressable onPress={() => toggle(entry)} hitSlop={10} accessibilityRole="button">
+              <Pressable
+                onPress={() => toggle(entry)}
+                hitSlop={10}
+                accessibilityRole="button"
+                accessibilityLabel={`${added ? (isHi ? 'हटाएँ' : 'Remove') : isHi ? 'जोड़ें' : 'Add'} ${isHi ? entry.nameHi : entry.nameEn}`}
+              >
                 <Text style={{ color: added ? colors.gold : colors.saffron, fontSize: 22 }}>{added ? '✓' : '＋'}</Text>
               </Pressable>
             </View>

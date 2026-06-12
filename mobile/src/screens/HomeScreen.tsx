@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { categories } from '@/data/categories';
@@ -25,7 +25,13 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
+  const insets = useSafeAreaInsets();
   const { hasNewInCategory, devSimulateUpgrade, devResetNewState } = useNewContent();
+
+  // The docked RoutineBanner (rendered below) sits at `insets.bottom + spacing.sm`
+  // and stands ~80px tall in its progress state. Lift the search FAB above it so
+  // it isn't hidden behind / overlapped by the banner.
+  const searchFabBottom = insets.bottom + spacing.sm + 80 + spacing.md;
 
   const categoryIcons: Record<CategoryIconKey, React.ReactNode> = {
     granth: <CategoryIcon iconKey="granth" />,
@@ -199,7 +205,10 @@ export default function HomeScreen({ navigation }: Props) {
         </ScrollView>
       </SafeAreaView>
 
-      <SearchFloatingButton onPress={() => navigation.navigate('Search')} />
+      <SearchFloatingButton
+        onPress={() => navigation.navigate('Search')}
+        bottomOffset={searchFabBottom}
+      />
       <RoutineBanner />
     </View>
   );
