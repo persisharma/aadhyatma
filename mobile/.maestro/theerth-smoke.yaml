@@ -1,49 +1,58 @@
 # Theerth Category Smoke Test (PRD-08)
 #
 # Verifies the real-India-map pilgrimage surface end-to-end:
-#   Home → Pilgrimage tile → Famous Theerths → map renders →
-#   tap a pin → detail (with the §10.3 pending-verification placeholder) →
-#   back → By-State view (compact map + state-focus highlight).
+#   Home → Pilgrimage tile → Famous Theerths → real map renders →
+#   tap a pin → temple detail (with the §10.3 pending-verification placeholder) →
+#   back → By-State view (compact map + state-focus hint).
 #
-# Category labels (Home + CategoryList) always use the English nameEn via
-# CategoryCard ("<nameEn>. Tap to open."), regardless of UI language. Pin/row
-# labels follow the active language, so we switch to English first to make the
-# in-screen taps deterministic.
-
+# Loads THIS worktree's bundle directly via openLink (instead of the project-list
+# tap) so the run is deterministic even when several Conductor worktrees each
+# serve a "Vedansh" Expo dev server. Override the port per worktree:
+#   maestro test -e EXPO_URL=exp://127.0.0.1:8083 .maestro/theerth-smoke.yaml
+#
+# Note: Maestro anchors a text selector to an element's FULL text, so labels
+# with a subtitle use `<name>\..*Tap to open\.` and the detail-screen prose
+# uses `.*RULEBOOK.*`.
 appId: host.exp.Exponent
 ---
-- runFlow: _launch.yaml
+- stopApp:
+    appId: host.exp.Exponent
+# Point this at your worktree's Metro dev server (Expo default is 8081; use a
+# distinct port if another Conductor worktree already holds 8081).
+# Verified passing end-to-end against this worktree's Metro on port 8083.
+- openLink:
+    link: "exp://127.0.0.1:8081"
 
-# Open the Theerth (Pilgrimage) category from Home
-- assertVisible: "Pilgrimage. Tap to open."
+# Home → Theerth (Pilgrimage) category
+- extendedWaitUntil:
+    visible: "Pilgrimage. Tap to open."
+    timeout: 120000
 - tapOn: "Pilgrimage. Tap to open."
 - waitForAnimationToEnd
 
-# Open the all-temples map ("Famous Theerths")
+# Open the all-temples map ("Famous Theerths" LibraryCard carries a subtitle)
 - extendedWaitUntil:
-    visible: "Famous Theerths. Tap to open."
+    visible: "Famous Theerths\\..*Tap to open\\."
     timeout: 15000
-- tapOn: "Famous Theerths. Tap to open."
+- tapOn: "Famous Theerths\\..*Tap to open\\."
 - waitForAnimationToEnd:
     timeout: 15000
 
-# Force English so pin/section labels are deterministic, then confirm the
-# TheerthMap surface rendered (view-mode toggle is the stable anchor).
+# Force English so the view-mode labels are deterministic, then confirm the
+# real TheerthMap surface rendered.
 - tapOn: "English"
 - waitForAnimationToEnd
 - assertVisible: "By State"
 - assertVisible: "By Yatra"
 
-# Tap a pin on the real map → temple detail
+# Tap a pin on the real map → temple detail. Dense pin clusters may open a
+# neighbouring temple, so assert the temple-agnostic §10.3 placeholder.
 - tapOn: "Somnath"
 - waitForAnimationToEnd:
     timeout: 15000
-- assertVisible: "Significance"
-- assertVisible: "Origin Story"
-# RULEBOOK §10.3 placeholder is shown until prose is sourced
-- assertVisible:
-    text: ".*pending verification.*"
-    optional: true
+- extendedWaitUntil:
+    visible: ".*RULEBOOK.*"
+    timeout: 15000
 
 # Back to the map, then switch to the By-State view (compact map + highlight)
 - tapOn: "Back"
@@ -52,6 +61,6 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd
 - assertVisible: "Tap a state name to locate it on the map"
 
-# Clean up — Expo Go termination resets the navigation stack for the next flow.
+# Clean up so the next flow starts from a cold launch.
 - stopApp:
     appId: host.exp.Exponent
