@@ -97,7 +97,10 @@ export default function RoutineCelebration({ caption, onDone }: Props) {
               style={{
                 width: p.size,
                 height: Math.round(p.size * 1.6),
-                borderRadius: p.size,
+                borderTopLeftRadius: p.size,
+                borderTopRightRadius: p.size,
+                borderBottomRightRadius: 3,
+                borderBottomLeftRadius: 3,
                 borderWidth: 0.5,
                 borderColor: colors.saffronDeep,
               }}
