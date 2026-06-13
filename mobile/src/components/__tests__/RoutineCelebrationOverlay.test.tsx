@@ -8,6 +8,7 @@ let mockLang: 'hi' | 'en' = 'hi';
 type Today = { hasRoutine: boolean; doneCount: number; total: number; entries: { key: string }[] };
 let mockToday: Today = { hasRoutine: false, doneCount: 0, total: 0, entries: [] };
 let mockCelebratedSig: string | null = null;
+let mockIsLoading = false;
 const mockMarkCelebrated = jest.fn();
 const mockHaptic = jest.fn(() => Promise.resolve());
 
@@ -21,6 +22,7 @@ jest.mock('@/contexts/RoutineContext', () => ({
   useRoutines: () => ({
     celebratedSignatureToday: mockCelebratedSig,
     markCelebrated: mockMarkCelebrated,
+    isLoading: mockIsLoading,
   }),
 }));
 // Keep the petal animation out of the unit test; render a detectable marker that
@@ -62,6 +64,7 @@ beforeEach(() => {
   mockLang = 'hi';
   mockToday = { hasRoutine: false, doneCount: 0, total: 0, entries: [] };
   mockCelebratedSig = null;
+  mockIsLoading = false;
   mockMarkCelebrated.mockClear();
   mockHaptic.mockClear();
 });
@@ -90,6 +93,18 @@ describe('RoutineCelebrationOverlay', () => {
   it('does not replay when this completed set was already celebrated today', () => {
     mockToday = complete([{ key: 'r1:a' }, { key: 'r1:b' }]);
     mockCelebratedSig = 'r1:a|r1:b';
+    const tree = render();
+    expect(textOf(tree)).not.toContain('PETALS');
+    expect(mockMarkCelebrated).not.toHaveBeenCalled();
+  });
+
+  it('does not replay on relaunch while the persisted gate is still loading', () => {
+    // Relaunch of an already-complete day: completion is live from the first
+    // render, but celebratedSignatureToday is a transient null until hydration
+    // finishes. Firing here is the every-launch pushpa-varsha bug.
+    mockToday = complete([{ key: 'r1:a' }, { key: 'r1:b' }]);
+    mockCelebratedSig = null;
+    mockIsLoading = true;
     const tree = render();
     expect(textOf(tree)).not.toContain('PETALS');
     expect(mockMarkCelebrated).not.toHaveBeenCalled();
