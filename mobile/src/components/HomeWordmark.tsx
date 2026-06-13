@@ -11,7 +11,7 @@ import { useTheme } from '@/theme/ThemeContext';
 export default function HomeWordmark() {
   const { colors, typography } = useTheme();
 
-  const mark = (
+  const renderMark = () => (
     <View style={[styles.mark, { borderColor: colors.saffron }]}>
       <Text style={[styles.markText, { color: colors.saffron, fontFamily: typography.thumb.fontFamily }]}>
         ॐ
@@ -23,7 +23,7 @@ export default function HomeWordmark() {
     <View style={styles.wrap}>
       <View style={styles.lockup}>
         <View style={[styles.rule, { backgroundColor: colors.saffron }]} />
-        {mark}
+        {renderMark()}
         <Text
           style={[
             styles.title,
@@ -36,7 +36,7 @@ export default function HomeWordmark() {
         >
           वेदांश़
         </Text>
-        {mark}
+        {renderMark()}
         <View style={[styles.rule, { backgroundColor: colors.saffron }]} />
       </View>
       <Text
@@ -57,7 +57,7 @@ export default function HomeWordmark() {
 
 const styles = StyleSheet.create({
   wrap: { alignItems: 'center' },
-  lockup: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 11 },
+  lockup: { height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 11 },
   rule: { width: 22, height: 1, opacity: 0.6 },
   mark: {
     width: 30,
@@ -76,16 +76,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 27,
-    // A full line box (≥ the glyph's natural height) so वेदांश़'s top matra/nukta
-    // is never clipped; the translateY then drops the otherwise-high Devanagari
-    // glyph (no descenders → it rides high in the box) down to the ॐ discs'
-    // optical center. Tuned against a simulator screenshot.
-    lineHeight: 38,
+    // A full line box keeps the top matra/nukta visible while the lockup row,
+    // then a slight optical nudge centers वेदांश़ against the Om circles.
+    lineHeight: 42,
     includeFontPadding: false,
-    // translateY tuned so वेदांश़'s center lands on the ॐ discs' center — a slight
-    // downward nudge to fit the row, not pushed to the bottom. Measured on an
-    // iOS-sim screenshot: text-center within ~1pt of disc-center at this value.
-    transform: [{ translateY: 10 }],
+    transform: [{ translateY: 4 }],
   },
   subtitle: {
     marginTop: 5,
