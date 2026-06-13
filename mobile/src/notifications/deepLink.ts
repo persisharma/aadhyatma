@@ -19,6 +19,11 @@ function isDailyVersePayload(data: unknown): data is NotificationPayload {
   );
 }
 
+function isOtaReleasePayload(data: unknown): boolean {
+  if (!data || typeof data !== 'object') return false;
+  return (data as Record<string, unknown>).type === 'ota-release';
+}
+
 /**
  * Resolve a notification response into a navigation dispatch. Returns true if
  * we recognised the payload and routed; false otherwise.
@@ -44,6 +49,11 @@ export function handleNotificationResponse(
 ): boolean {
   if (!navigationRef.isReady()) return false;
   const data = response.notification.request.content.data;
+
+  // OTA "new content" taps just bring the app to the foreground on the
+  // current screen — the freshly-applied bundle is what the user wants to see.
+  if (isOtaReleasePayload(data)) return true;
+
   if (!isDailyVersePayload(data)) return false;
 
   navigationRef.dispatch(
