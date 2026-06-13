@@ -17,15 +17,19 @@ import RoutineCelebration from './RoutineCelebration';
  * `useRoutineToday`, so this single watcher covers every completion path. The
  * once-per-completed-set gate lives in RoutineContext (persisted); a session ref
  * guards against a double-trigger in the render before that persist round-trips.
+ *
+ * The gate is held until RoutineContext finishes loading (`!isLoading`): until
+ * then `celebratedSignatureToday` is null even for an already-celebrated day, so
+ * firing on that transient null would replay the shower on every launch.
  */
 export default function RoutineCelebrationOverlay() {
   const { lang } = useGitaLanguage();
   const { entries, doneCount, total, hasRoutine } = useRoutineToday();
-  const { celebratedSignatureToday, markCelebrated } = useRoutines();
+  const { celebratedSignatureToday, markCelebrated, isLoading } = useRoutines();
 
   const status = bannerStatus({ hasRoutine, doneCount, total });
   const sig = completionSignature(entries.map((e) => e.key));
-  const fire = shouldCelebrateCompletion(status, sig, celebratedSignatureToday);
+  const fire = shouldCelebrateCompletion(status, sig, celebratedSignatureToday, !isLoading);
 
   const [shower, setShower] = useState<{ caption: string; sig: string } | null>(null);
   const firedSig = useRef<string | null>(null);
