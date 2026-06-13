@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Theerth Map — prototype preview</title>
 <style>
-  /* Design tokens lifted from mobile/src/theme/colors.ts and design.md */
   :root {
     --parchment: #F3E7C9;
     --parchment-soft: #F8EFD6;
@@ -20,37 +19,28 @@
     --gold: #A67C34;
     --divider: rgba(138, 62, 11, 0.18);
     --saffron-tint: rgba(184, 98, 27, 0.12);
-    --card-active-from: #FFF5E0;
-    --card-active-to: #F5DEAC;
     --card-thumb-from: #F8D291;
     --card-thumb-to: #E0A255;
-    --card-border: rgba(184, 98, 27, 0.4);
   }
-
   * { box-sizing: border-box; }
-
   html, body {
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
     background: #2a1f12;
     font-family: 'Cormorant Garamond', Georgia, serif;
     color: var(--ink);
   }
-
   .stage {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 40px;
-    padding: 40px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+    padding: 32px;
   }
-  @media (max-width: 900px) {
-    .stage { grid-template-columns: 1fr; }
-  }
-
+  @media (max-width: 1280px) { .stage { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 760px)  { .stage { grid-template-columns: 1fr; } }
   .phone {
     width: 100%;
-    max-width: 420px;
+    max-width: 380px;
     margin: 0 auto;
     aspect-ratio: 9 / 19.5;
     border-radius: 36px;
@@ -61,17 +51,12 @@
     flex-direction: column;
     position: relative;
   }
-
-  .status-bar {
-    height: 32px;
-    background: transparent;
-  }
-
+  .status-bar { height: 26px; }
   .top-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 22px 14px;
+    padding: 8px 22px 12px;
   }
   .back-btn {
     width: 34px; height: 34px;
@@ -90,11 +75,10 @@
   }
   .top-spacer { width: 34px; height: 34px; }
 
-  /* Pill toggles */
   .toggle-row {
     display: flex;
     justify-content: center;
-    padding-bottom: 12px;
+    padding-bottom: 8px;
   }
   .toggle-group {
     display: inline-flex;
@@ -104,165 +88,168 @@
     padding: 3px;
   }
   .toggle-half {
-    min-width: 96px;
-    padding: 7px 22px;
+    padding: 6px 14px;
     border-radius: 999px;
     text-align: center;
-    cursor: pointer;
     user-select: none;
+    font-size: 12px;
+    min-width: 70px;
   }
   .toggle-half.active {
     background: var(--saffron-tint);
     color: var(--saffron-deep);
     font-weight: 600;
   }
-  .toggle-half.inactive {
-    color: var(--ink-muted);
-  }
-  .toggle-half .hi {
-    font-family: 'Noto Serif Devanagari', serif;
-    font-size: 14px;
-  }
-  .toggle-half .en {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
-    font-size: 13px;
-  }
+  .toggle-half.inactive { color: var(--ink-muted); }
+  .toggle-half .hi { font-family: 'Noto Serif Devanagari', serif; }
+  .toggle-half .en { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; }
 
-  /* Map area */
+  .chip-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 22px 12px;
+    scrollbar-width: thin;
+  }
+  .chip-row::-webkit-scrollbar { height: 4px; }
+  .chip-row::-webkit-scrollbar-thumb { background: var(--divider); border-radius: 4px; }
+  .chip {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    background: var(--parchment-soft);
+    border: 1px solid var(--divider);
+    border-radius: 999px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .chip.active {
+    background: var(--saffron-tint);
+    border-color: var(--saffron);
+    color: var(--saffron-deep);
+    font-weight: 600;
+  }
+  .chip .hi { font-family: 'Noto Serif Devanagari', serif; }
+  .chip .en { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; }
+
   .body {
     flex: 1;
     overflow-y: auto;
-    padding: 0 24px 24px;
+    padding: 0 22px 22px;
     text-align: center;
   }
   .map-wrap {
     position: relative;
     margin: 0 auto;
     width: 100%;
-    max-width: 300px;
+    max-width: 280px;
   }
-  .map-wrap svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+  .map-wrap svg { width: 100%; height: auto; display: block; }
   .pin {
     position: absolute;
     font-family: 'Noto Serif Devanagari', serif;
     color: var(--saffron-deep);
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1;
     transform: translate(-50%, -50%);
     cursor: pointer;
     text-shadow: 0 1px 0 rgba(243, 231, 201, 0.6);
   }
-  .pin:hover .label,
-  .pin:focus .label {
-    opacity: 1;
-    transform: translate(-50%, calc(-100% - 6px));
-  }
+  .pin:hover .label, .pin:focus .label { opacity: 1; }
   .pin .label {
     position: absolute;
     left: 50%;
-    top: 0;
-    transform: translate(-50%, calc(-100% - 4px));
+    bottom: calc(100% + 4px);
+    transform: translateX(-50%);
     background: var(--parchment-soft);
     border: 1px solid var(--divider);
     border-radius: 8px;
-    padding: 4px 10px;
+    padding: 3px 9px;
     font-family: 'Noto Serif Devanagari', serif;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--ink);
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
     transition: opacity 140ms ease;
+    z-index: 10;
   }
 
-  .hint {
-    margin-top: 18px;
+  .hint, .preview-note {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-style: italic;
     color: var(--ink-muted);
-    font-size: 13px;
   }
-  .preview-note {
-    margin-top: 8px;
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
-    color: var(--ink-muted);
-    font-size: 12px;
-    opacity: 0.7;
-  }
+  .hint { margin-top: 14px; font-size: 12px; }
+  .preview-note { margin-top: 6px; font-size: 11px; opacity: 0.7; }
 
-  /* State list view */
-  .state-group { margin-bottom: 20px; text-align: left; }
-  .state-header {
+  .section { margin-bottom: 18px; text-align: left; }
+  .section-header {
     font-family: 'Inter', system-ui, sans-serif;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.22em;
     color: var(--ink-muted);
     text-transform: uppercase;
-    margin: 12px 0 10px;
+    margin: 10px 0 8px;
   }
+  .section.yatra .section-header { color: var(--saffron-deep); }
   .row-card {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
+    gap: 10px;
+    padding: 10px 12px;
     border-radius: 14px;
     background: var(--parchment-soft);
     border: 1px solid var(--divider);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     text-decoration: none;
     color: inherit;
   }
   .row-thumb {
-    width: 40px; height: 40px;
+    width: 36px; height: 36px;
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     background: linear-gradient(160deg, var(--card-thumb-from), var(--card-thumb-to));
     font-family: 'Noto Serif Devanagari', serif;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--parchment-soft);
     flex-shrink: 0;
   }
   .row-text { flex: 1; min-width: 0; }
-  .row-name-hi {
+  .row-name {
     font-family: 'Noto Serif Devanagari', serif;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15px;
     color: var(--ink);
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
-  .row-city {
-    margin-top: 2px;
+  .row-name.en {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-style: italic;
-    font-size: 12px;
+    font-size: 14px;
+  }
+  .row-city {
+    margin-top: 1px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 11px;
     color: var(--ink-muted);
   }
-  .row-chev {
-    color: var(--saffron);
-    font-size: 22px;
-    margin-left: 8px;
-  }
+  .row-chev { color: var(--saffron); font-size: 20px; margin-left: 6px; }
 
-  /* Labels and frame */
   .frame-label {
-    margin: 0 auto 12px;
+    margin: 0 auto 10px;
     text-align: center;
-    color: rgba(243, 231, 201, 0.7);
+    color: rgba(243, 231, 201, 0.75);
     font-style: italic;
-    font-size: 14px;
-    max-width: 460px;
+    font-size: 13px;
+    max-width: 380px;
   }
   .frame-label strong {
     font-style: normal;
     font-weight: 600;
-    color: var(--card-active-from);
+    color: #FFF5E0;
   }
   .stage-title {
     text-align: center;
@@ -270,12 +257,12 @@
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 22px;
     letter-spacing: 0.04em;
-    margin: 0 0 28px;
+    margin: 0 0 24px;
   }
   .stage-title small {
     display: block;
-    margin-top: 6px;
-    font-size: 13px;
+    margin-top: 4px;
+    font-size: 12px;
     opacity: 0.7;
   }
 </style>
@@ -283,16 +270,17 @@
 <body>
   <div style="padding: 28px 24px 0;">
     <h1 class="stage-title">
-      Theerth — prototype preview
-      <small>Same SVG outline, same pin coordinates, same toggle as the React Native build</small>
+      Theerth — prototype preview (expanded)
+      <small>Same SVG outline, projection, and 29 temples as the React Native build</small>
     </h1>
   </div>
   <div class="stage">
+
     <!-- ============================================== -->
-    <!-- LEFT: MAP VIEW                                 -->
+    <!-- 1. MAP — all temples, "All" chip selected      -->
     <!-- ============================================== -->
     <div>
-      <div class="frame-label"><strong>Map view</strong> — हिन्दी mode</div>
+      <div class="frame-label"><strong>Map · सभी</strong> — all 29 temples</div>
       <div class="phone">
         <div class="status-bar"></div>
         <div class="top-bar">
@@ -300,48 +288,39 @@
           <div class="top-title">तीर्थ</div>
           <div class="top-spacer"></div>
         </div>
-
         <div class="toggle-row">
           <div class="toggle-group">
             <div class="toggle-half active"><span class="hi">हिन्दी</span></div>
             <div class="toggle-half inactive"><span class="en">English</span></div>
           </div>
         </div>
-
         <div class="toggle-row">
           <div class="toggle-group">
             <div class="toggle-half active"><span class="hi">मानचित्र</span></div>
             <div class="toggle-half inactive"><span class="hi">राज्य</span></div>
+            <div class="toggle-half inactive"><span class="hi">यात्रा</span></div>
           </div>
         </div>
-
+        <div class="chip-row">
+          <div class="chip active"><span class="hi">सभी</span></div>
+          <div class="chip"><span class="hi">ज्योतिर्लिङ्ग</span></div>
+          <div class="chip"><span class="hi">चार धाम</span></div>
+          <div class="chip"><span class="hi">छोटा चार धाम</span></div>
+          <div class="chip"><span class="hi">शक्ति पीठ</span></div>
+        </div>
         <div class="body">
-          <div class="map-wrap" id="map-wrap-hi">
-            <svg viewBox="0 0 300 350" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M 52,13 L 103,13 L 114,50 L 145,75 L 207,100 L 290,100 L 269,150 L 248,175 L 217,175 L 197,188 L 186,200 L 135,250 L 124,300 L 93,350 L 83,338 L 62,263 L 52,225 L 31,188 L 0,163 L 21,113 L 62,63 Z"
-                fill="none"
-                stroke="#8A3E0B"
-                stroke-opacity="0.6"
-                stroke-width="1.2"
-                stroke-linejoin="round"
-                stroke-linecap="round"
-              />
-            </svg>
-            <!-- Pins injected by JS so coordinates match the React Native projection exactly -->
-          </div>
-
+          <div class="map-wrap" id="map-all"></div>
           <div class="hint">पिन छूकर मंदिर की कथा पढ़ें</div>
-          <div class="preview-note">झलक — १२ ज्योतिर्लिङ्ग</div>
+          <div class="preview-note">झलक — 29 तीर्थ दिखाए</div>
         </div>
       </div>
     </div>
 
     <!-- ============================================== -->
-    <!-- RIGHT: STATE LIST VIEW                         -->
+    <!-- 2. MAP — filtered to "Shakti Peeth"             -->
     <!-- ============================================== -->
     <div>
-      <div class="frame-label"><strong>By-State view</strong> — English mode</div>
+      <div class="frame-label"><strong>Map · Shakti Peeth</strong> — filter chip example</div>
       <div class="phone">
         <div class="status-bar"></div>
         <div class="top-bar">
@@ -349,52 +328,122 @@
           <div class="top-title" style="font-family:'Cormorant Garamond', Georgia, serif; font-style:italic; font-weight: 600;">Theerth</div>
           <div class="top-spacer"></div>
         </div>
-
         <div class="toggle-row">
           <div class="toggle-group">
             <div class="toggle-half inactive"><span class="hi">हिन्दी</span></div>
             <div class="toggle-half active"><span class="en">English</span></div>
           </div>
         </div>
-
         <div class="toggle-row">
           <div class="toggle-group">
-            <div class="toggle-half inactive"><span class="en">Map</span></div>
-            <div class="toggle-half active"><span class="en">By State</span></div>
+            <div class="toggle-half active"><span class="en">Map</span></div>
+            <div class="toggle-half inactive"><span class="en">By State</span></div>
+            <div class="toggle-half inactive"><span class="en">By Yatra</span></div>
           </div>
         </div>
-
-        <div class="body" id="state-list-body">
-          <!-- Rows injected by JS to keep the data identical to mobile/src/data/theerth/jyotirlingas.ts -->
+        <div class="chip-row">
+          <div class="chip"><span class="en">All</span></div>
+          <div class="chip"><span class="en">Jyotirlinga</span></div>
+          <div class="chip"><span class="en">Char Dham</span></div>
+          <div class="chip"><span class="en">Chota Char Dham</span></div>
+          <div class="chip active"><span class="en">Shakti Peeth</span></div>
+        </div>
+        <div class="body">
+          <div class="map-wrap" id="map-shakti"></div>
+          <div class="hint">Tap a pin to read the temple’s story</div>
+          <div class="preview-note">Preview — 6 temples shown</div>
         </div>
       </div>
     </div>
+
+    <!-- ============================================== -->
+    <!-- 3. YATRA VIEW                                  -->
+    <!-- ============================================== -->
+    <div>
+      <div class="frame-label"><strong>By Yatra</strong> — grouped by pilgrimage tradition</div>
+      <div class="phone">
+        <div class="status-bar"></div>
+        <div class="top-bar">
+          <div class="back-btn">‹</div>
+          <div class="top-title">तीर्थ</div>
+          <div class="top-spacer"></div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-group">
+            <div class="toggle-half active"><span class="hi">हिन्दी</span></div>
+            <div class="toggle-half inactive"><span class="en">English</span></div>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-group">
+            <div class="toggle-half inactive"><span class="hi">मानचित्र</span></div>
+            <div class="toggle-half inactive"><span class="hi">राज्य</span></div>
+            <div class="toggle-half active"><span class="hi">यात्रा</span></div>
+          </div>
+        </div>
+        <div class="body" id="yatra-body"></div>
+      </div>
+    </div>
+
   </div>
 
 <script>
-  // --------------------------------------------------------------
-  // Mirrored from mobile/src/data/theerth/jyotirlingas.ts
-  // Coordinates only — origin-story prose is intentionally absent
-  // per RULEBOOK §10.3.
-  // --------------------------------------------------------------
-  const JYOTIRLINGAS = [
-    { id: 'somnath',           nameHi: 'सोमनाथ',          nameEn: 'Somnath',           cityHi: 'वेरावल',     cityEn: 'Veraval',     stateHi: 'गुजरात',         stateEn: 'Gujarat',         lat: 20.888, lng: 70.402 },
-    { id: 'mallikarjuna',      nameHi: 'मल्लिकार्जुन',     nameEn: 'Mallikarjuna',      cityHi: 'श्रीशैलम',   cityEn: 'Srisailam',   stateHi: 'आंध्र प्रदेश',   stateEn: 'Andhra Pradesh',  lat: 16.074, lng: 78.869 },
-    { id: 'mahakaleshwar',     nameHi: 'महाकालेश्वर',     nameEn: 'Mahakaleshwar',     cityHi: 'उज्जैन',     cityEn: 'Ujjain',      stateHi: 'मध्य प्रदेश',    stateEn: 'Madhya Pradesh',  lat: 23.183, lng: 75.768 },
-    { id: 'omkareshwar',       nameHi: 'ओंकारेश्वर',       nameEn: 'Omkareshwar',       cityHi: 'खंडवा',      cityEn: 'Khandwa',     stateHi: 'मध्य प्रदेश',    stateEn: 'Madhya Pradesh',  lat: 22.243, lng: 76.150 },
-    { id: 'kedarnath',         nameHi: 'केदारनाथ',         nameEn: 'Kedarnath',         cityHi: 'रुद्रप्रयाग', cityEn: 'Rudraprayag', stateHi: 'उत्तराखंड',      stateEn: 'Uttarakhand',     lat: 30.735, lng: 79.067 },
-    { id: 'bhimashankar',      nameHi: 'भीमाशंकर',         nameEn: 'Bhimashankar',      cityHi: 'पुणे',       cityEn: 'Pune',        stateHi: 'महाराष्ट्र',     stateEn: 'Maharashtra',     lat: 19.072, lng: 73.536 },
-    { id: 'kashi-vishwanath',  nameHi: 'काशी विश्वनाथ',    nameEn: 'Kashi Vishwanath',  cityHi: 'वाराणसी',    cityEn: 'Varanasi',    stateHi: 'उत्तर प्रदेश',   stateEn: 'Uttar Pradesh',   lat: 25.311, lng: 83.011 },
-    { id: 'trimbakeshwar',     nameHi: 'त्र्यंबकेश्वर',    nameEn: 'Trimbakeshwar',     cityHi: 'नाशिक',      cityEn: 'Nashik',      stateHi: 'महाराष्ट्र',     stateEn: 'Maharashtra',     lat: 19.933, lng: 73.531 },
-    { id: 'vaidyanath',        nameHi: 'वैद्यनाथ',         nameEn: 'Vaidyanath',        cityHi: 'देवघर',      cityEn: 'Deoghar',     stateHi: 'झारखंड',         stateEn: 'Jharkhand',       lat: 24.492, lng: 86.700 },
-    { id: 'nageshwar',         nameHi: 'नागेश्वर',         nameEn: 'Nageshwar',         cityHi: 'द्वारका',    cityEn: 'Dwarka',      stateHi: 'गुजरात',         stateEn: 'Gujarat',         lat: 22.337, lng: 69.081 },
-    { id: 'rameshwaram',       nameHi: 'रामेश्वरम्',       nameEn: 'Rameshwaram',       cityHi: 'रामेश्वरम्', cityEn: 'Rameshwaram', stateHi: 'तमिलनाडु',       stateEn: 'Tamil Nadu',      lat:  9.288, lng: 79.317 },
-    { id: 'grishneshwar',      nameHi: 'घृष्णेश्वर',       nameEn: 'Grishneshwar',      cityHi: 'औरंगाबाद',   cityEn: 'Aurangabad',  stateHi: 'महाराष्ट्र',     stateEn: 'Maharashtra',     lat: 20.027, lng: 75.180 }
+  // -----------------------------------------------------------------
+  // Mirrored from mobile/src/data/theerth/temples.ts
+  // Coordinates only — origin-story prose is absent per RULEBOOK §10.3.
+  // -----------------------------------------------------------------
+  const TEMPLES = [
+    // 12 Jyotirlingas
+    { id:'somnath',          nameHi:'सोमनाथ',           nameEn:'Somnath',           cityHi:'वेरावल',     cityEn:'Veraval',     stateHi:'गुजरात',         stateEn:'Gujarat',         lat:20.888, lng:70.402, deity:'shiva',   groups:['jyotirlinga'] },
+    { id:'mallikarjuna',     nameHi:'मल्लिकार्जुन',      nameEn:'Mallikarjuna',      cityHi:'श्रीशैलम',   cityEn:'Srisailam',   stateHi:'आंध्र प्रदेश',   stateEn:'Andhra Pradesh',  lat:16.074, lng:78.869, deity:'shiva',   groups:['jyotirlinga'] },
+    { id:'mahakaleshwar',    nameHi:'महाकालेश्वर',      nameEn:'Mahakaleshwar',     cityHi:'उज्जैन',     cityEn:'Ujjain',      stateHi:'मध्य प्रदेश',    stateEn:'Madhya Pradesh', lat:23.183, lng:75.768, deity:'shiva',   groups:['jyotirlinga'] },
+    { id:'omkareshwar',      nameHi:'ओंकारेश्वर',        nameEn:'Omkareshwar',       cityHi:'खंडवा',      cityEn:'Khandwa',     stateHi:'मध्य प्रदेश',    stateEn:'Madhya Pradesh', lat:22.243, lng:76.150, deity:'shiva',   groups:['jyotirlinga'] },
+    { id:'kedarnath',        nameHi:'केदारनाथ',          nameEn:'Kedarnath',         cityHi:'रुद्रप्रयाग', cityEn:'Rudraprayag', stateHi:'उत्तराखंड',      stateEn:'Uttarakhand',     lat:30.735, lng:79.067, deity:'shiva',   groups:['jyotirlinga','chota-char-dham'] },
+    { id:'bhimashankar',     nameHi:'भीमाशंकर',          nameEn:'Bhimashankar',      cityHi:'पुणे',       cityEn:'Pune',        stateHi:'महाराष्ट्र',     stateEn:'Maharashtra',    lat:19.072, lng:73.536, deity:'shiva',   groups:['jyotirlinga'] },
+    { id:'kashi-vishwanath', nameHi:'काशी विश्वनाथ',     nameEn:'Kashi Vishwanath',  cityHi:'वाराणसी',    cityEn:'Varanasi',    stateHi:'उत्तर प्रदेश',   stateEn:'Uttar Pradesh',  lat:25.311, lng:83.011, deity:'shiva',   groups:['jyotirlinga'] },
+    { id:'trimbakeshwar',    nameHi:'त्र्यंबकेश्वर',     nameEn:'Trimbakeshwar',     cityHi:'नाशिक',      cityEn:'Nashik',      stateHi:'महाराष्ट्र',     stateEn:'Maharashtra',    lat:19.933, lng:73.531, deity:'shiva',   groups:['jyotirlinga'] },
+    { id:'vaidyanath',       nameHi:'वैद्यनाथ',          nameEn:'Vaidyanath',        cityHi:'देवघर',      cityEn:'Deoghar',     stateHi:'झारखंड',         stateEn:'Jharkhand',      lat:24.492, lng:86.700, deity:'shiva',   groups:['jyotirlinga'] },
+    { id:'nageshwar',        nameHi:'नागेश्वर',          nameEn:'Nageshwar',         cityHi:'द्वारका',    cityEn:'Dwarka',      stateHi:'गुजरात',         stateEn:'Gujarat',         lat:22.337, lng:69.081, deity:'shiva',   groups:['jyotirlinga'] },
+    { id:'rameshwaram',      nameHi:'रामेश्वरम्',        nameEn:'Rameshwaram',       cityHi:'रामेश्वरम्', cityEn:'Rameshwaram', stateHi:'तमिलनाडु',       stateEn:'Tamil Nadu',     lat: 9.288, lng:79.317, deity:'shiva',   groups:['jyotirlinga','char-dham'] },
+    { id:'grishneshwar',     nameHi:'घृष्णेश्वर',        nameEn:'Grishneshwar',      cityHi:'औरंगाबाद',   cityEn:'Aurangabad',  stateHi:'महाराष्ट्र',     stateEn:'Maharashtra',    lat:20.027, lng:75.180, deity:'shiva',   groups:['jyotirlinga'] },
+
+    // Char Dham
+    { id:'badrinath',        nameHi:'बद्रीनाथ',          nameEn:'Badrinath',         cityHi:'चमोली',      cityEn:'Chamoli',     stateHi:'उत्तराखंड',      stateEn:'Uttarakhand',     lat:30.743, lng:79.493, deity:'vishnu',  groups:['char-dham','chota-char-dham'] },
+    { id:'dwarkadhish',      nameHi:'द्वारकाधीश',        nameEn:'Dwarkadhish',       cityHi:'द्वारका',    cityEn:'Dwarka',      stateHi:'गुजरात',         stateEn:'Gujarat',         lat:22.240, lng:68.968, deity:'krishna', groups:['char-dham'] },
+    { id:'jagannath-puri',   nameHi:'जगन्नाथ पुरी',      nameEn:'Jagannath Puri',    cityHi:'पुरी',       cityEn:'Puri',        stateHi:'ओडिशा',          stateEn:'Odisha',         lat:19.805, lng:85.818, deity:'krishna', groups:['char-dham'] },
+
+    // Chota Char Dham
+    { id:'yamunotri',        nameHi:'यमुनोत्री',         nameEn:'Yamunotri',         cityHi:'उत्तरकाशी',  cityEn:'Uttarkashi',  stateHi:'उत्तराखंड',      stateEn:'Uttarakhand',     lat:31.017, lng:78.452, deity:'durga',   groups:['chota-char-dham'] },
+    { id:'gangotri',         nameHi:'गंगोत्री',          nameEn:'Gangotri',          cityHi:'उत्तरकाशी',  cityEn:'Uttarkashi',  stateHi:'उत्तराखंड',      stateEn:'Uttarakhand',     lat:30.995, lng:78.940, deity:'durga',   groups:['chota-char-dham'] },
+
+    // Shakti Peeth
+    { id:'kamakhya',         nameHi:'कामाख्या',          nameEn:'Kamakhya',          cityHi:'गुवाहाटी',   cityEn:'Guwahati',    stateHi:'असम',            stateEn:'Assam',           lat:26.166, lng:91.705, deity:'durga',   groups:['shakti-peeth'] },
+    { id:'vaishno-devi',     nameHi:'वैष्णो देवी',        nameEn:'Vaishno Devi',      cityHi:'कटरा',       cityEn:'Katra',       stateHi:'जम्मू-कश्मीर',   stateEn:'Jammu & Kashmir', lat:33.031, lng:74.950, deity:'durga',   groups:['shakti-peeth'] },
+    { id:'kalighat',         nameHi:'कालीघाट',           nameEn:'Kalighat',          cityHi:'कोलकाता',    cityEn:'Kolkata',     stateHi:'पश्चिम बंगाल',   stateEn:'West Bengal',    lat:22.518, lng:88.343, deity:'durga',   groups:['shakti-peeth'] },
+    { id:'naina-devi',       nameHi:'नैना देवी',          nameEn:'Naina Devi',        cityHi:'बिलासपुर',   cityEn:'Bilaspur',    stateHi:'हिमाचल प्रदेश',  stateEn:'Himachal Pradesh',lat:31.325, lng:76.536, deity:'durga',   groups:['shakti-peeth'] },
+    { id:'jwala-devi',       nameHi:'ज्वाला देवी',        nameEn:'Jwala Devi',        cityHi:'कांगड़ा',    cityEn:'Kangra',      stateHi:'हिमाचल प्रदेश',  stateEn:'Himachal Pradesh',lat:31.878, lng:76.322, deity:'durga',   groups:['shakti-peeth'] },
+    { id:'chamunda-devi',    nameHi:'चामुंडा देवी',       nameEn:'Chamunda Devi',     cityHi:'धर्मशाला',   cityEn:'Dharamshala', stateHi:'हिमाचल प्रदेश',  stateEn:'Himachal Pradesh',lat:32.212, lng:76.335, deity:'durga',   groups:['shakti-peeth'] },
+
+    // Other Famous
+    { id:'tirupati-balaji',  nameHi:'तिरुपति बालाजी',     nameEn:'Tirupati Balaji',   cityHi:'तिरुमाला',   cityEn:'Tirumala',    stateHi:'आंध्र प्रदेश',   stateEn:'Andhra Pradesh',  lat:13.683, lng:79.348, deity:'vishnu',  groups:[] },
+    { id:'meenakshi',        nameHi:'मीनाक्षी',           nameEn:'Meenakshi',         cityHi:'मदुरै',      cityEn:'Madurai',     stateHi:'तमिलनाडु',       stateEn:'Tamil Nadu',     lat: 9.920, lng:78.119, deity:'durga',   groups:[] },
+    { id:'konark-sun',       nameHi:'कोणार्क सूर्य',      nameEn:'Konark Sun',        cityHi:'कोणार्क',    cityEn:'Konark',      stateHi:'ओडिशा',          stateEn:'Odisha',         lat:19.888, lng:86.094, deity:'savitr',  groups:[] },
+    { id:'brihadeeswarar',   nameHi:'बृहदीश्वर',          nameEn:'Brihadeeswarar',    cityHi:'तंजावुर',    cityEn:'Thanjavur',   stateHi:'तमिलनाडु',       stateEn:'Tamil Nadu',     lat:10.783, lng:79.132, deity:'shiva',   groups:[] },
+    { id:'padmanabhaswamy',  nameHi:'पद्मनाभस्वामी',      nameEn:'Padmanabhaswamy',   cityHi:'तिरुवनंतपुरम', cityEn:'Thiruvananthapuram', stateHi:'केरल',    stateEn:'Kerala',         lat: 8.483, lng:76.941, deity:'vishnu',  groups:[] },
+    { id:'banke-bihari',     nameHi:'बांके बिहारी',       nameEn:'Banke Bihari',      cityHi:'वृंदावन',    cityEn:'Vrindavan',   stateHi:'उत्तर प्रदेश',   stateEn:'Uttar Pradesh',  lat:27.582, lng:77.705, deity:'krishna', groups:[] }
   ];
 
-  // Same projection as IndiaMap.tsx
+  const GROUP_META = {
+    'jyotirlinga':     { hi: 'द्वादश ज्योतिर्लिङ्ग', en: 'Dvādaśa Jyotirlinga' },
+    'char-dham':       { hi: 'चार धाम',             en: 'Char Dham' },
+    'chota-char-dham': { hi: 'छोटा चार धाम',         en: 'Chota Char Dham' },
+    'shakti-peeth':    { hi: 'शक्ति पीठ',            en: 'Shakti Peeth' }
+  };
+  const GROUP_ORDER = ['jyotirlinga', 'char-dham', 'chota-char-dham', 'shakti-peeth'];
+
   const VIEWBOX_W = 300, VIEWBOX_H = 350;
   const LAT_MIN = 8, LAT_MAX = 36, LNG_MIN = 68, LNG_MAX = 97;
+  const INDIA_PATH = 'M 52,13 L 103,13 L 114,50 L 145,75 L 207,100 L 290,100 L 269,150 L 248,175 L 217,175 L 197,188 L 186,200 L 135,250 L 124,300 L 93,350 L 83,338 L 62,263 L 52,225 L 31,188 L 0,163 L 21,113 L 62,63 Z';
   function project(lat, lng) {
     return {
       x: ((lng - LNG_MIN) / (LNG_MAX - LNG_MIN)) * VIEWBOX_W,
@@ -402,51 +451,61 @@
     };
   }
 
-  // Inject pins into the map view
-  (function renderPins() {
-    const wrap = document.getElementById('map-wrap-hi');
-    JYOTIRLINGAS.forEach(t => {
+  function makeSvg() {
+    return (
+      '<svg viewBox="0 0 ' + VIEWBOX_W + ' ' + VIEWBOX_H + '" xmlns="http://www.w3.org/2000/svg">' +
+        '<path d="' + INDIA_PATH + '" fill="none" stroke="#8A3E0B" stroke-opacity="0.6" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" />' +
+      '</svg>'
+    );
+  }
+
+  function renderMap(containerId, temples, langField) {
+    const wrap = document.getElementById(containerId);
+    wrap.innerHTML = makeSvg();
+    temples.forEach(t => {
       const { x, y } = project(t.lat, t.lng);
       const pin = document.createElement('div');
       pin.className = 'pin';
       pin.setAttribute('tabindex', '0');
       pin.style.left = (x / VIEWBOX_W * 100) + '%';
       pin.style.top  = (y / VIEWBOX_H * 100) + '%';
-      pin.innerHTML = '॥<span class="label">' + t.nameHi + '</span>';
+      pin.innerHTML = '॥<span class="label">' + t[langField] + '</span>';
       wrap.appendChild(pin);
     });
-  })();
+  }
 
-  // Inject the state-grouped list (English mode)
-  (function renderStateList() {
-    const body = document.getElementById('state-list-body');
-    const groups = new Map();
-    JYOTIRLINGAS.forEach(t => {
-      if (!groups.has(t.stateEn)) groups.set(t.stateEn, []);
-      groups.get(t.stateEn).push(t);
+  function renderYatraView() {
+    const body = document.getElementById('yatra-body');
+    const sections = [];
+    GROUP_ORDER.forEach(g => {
+      const temples = TEMPLES.filter(t => t.groups.includes(g));
+      sections.push({ key: g, label: GROUP_META[g].hi, temples });
     });
-    const sorted = Array.from(groups.entries()).sort((a, b) => a[0].localeCompare(b[0]));
-    sorted.forEach(([stateEn, temples]) => {
-      const stateHi = temples[0].stateHi;
-      const section = document.createElement('div');
-      section.className = 'state-group';
-      section.innerHTML =
-        '<div class="state-header">' + stateHi + ' &middot; ' + stateEn + '</div>' +
-        temples
-          .sort((a, b) => a.nameEn.localeCompare(b.nameEn))
-          .map(t =>
-            '<a class="row-card" href="#">' +
-              '<div class="row-thumb">ॐ</div>' +
-              '<div class="row-text">' +
-                '<div class="row-name-hi" style="font-family:\'Cormorant Garamond\', Georgia, serif; font-style:italic; font-weight:600;">' + t.nameEn + '</div>' +
-                '<div class="row-city">' + t.cityEn + '</div>' +
-              '</div>' +
-              '<div class="row-chev">›</div>' +
-            '</a>'
-          ).join('');
-      body.appendChild(section);
+    const other = TEMPLES.filter(t => t.groups.length === 0);
+    if (other.length) sections.push({ key: 'other', label: 'अन्य प्रसिद्ध तीर्थ', temples: other });
+
+    sections.forEach(section => {
+      const wrap = document.createElement('div');
+      wrap.className = 'section yatra';
+      wrap.innerHTML =
+        '<div class="section-header">' + section.label + ' &middot; ' + section.temples.length + '</div>' +
+        section.temples.map(t =>
+          '<a class="row-card" href="#">' +
+            '<div class="row-thumb">ॐ</div>' +
+            '<div class="row-text">' +
+              '<div class="row-name">' + t.nameHi + '</div>' +
+              '<div class="row-city">' + t.cityHi + ', ' + t.stateHi + '</div>' +
+            '</div>' +
+            '<div class="row-chev">›</div>' +
+          '</a>'
+        ).join('');
+      body.appendChild(wrap);
     });
-  })();
+  }
+
+  renderMap('map-all', TEMPLES, 'nameHi');
+  renderMap('map-shakti', TEMPLES.filter(t => t.groups.includes('shakti-peeth')), 'nameEn');
+  renderYatraView();
 </script>
 </body>
 </html>

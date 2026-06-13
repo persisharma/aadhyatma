@@ -239,6 +239,12 @@ type Theerth = {
   source: { baseText: string; retrievedOn: string };  // per §10.2
 };
 
+type TheerthGroup =
+  | 'jyotirlinga'
+  | 'char-dham'
+  | 'chota-char-dham'
+  | 'shakti-peeth';
+
 type TheerthTemple = {
   id: string;                     // e.g. "somnath"
   nameHi: string;                 // "सोमनाथ"
@@ -251,6 +257,7 @@ type TheerthTemple = {
   deity: Deity;                   // existing union — MUST match invocation per §10.4
   deityFormHi?: string;
   deityFormEn?: string;
+  groups: TheerthGroup[];         // pilgrimage-tradition tags; may be [] for "other famous"
   significanceHi: string[];       // 1-3 prose paragraphs
   significanceEn: string[];
   originStoryHi: string[];        // 2-5 prose paragraphs — Sthala Purāṇa narrative
@@ -261,6 +268,8 @@ type TheerthTemple = {
 ```
 
 `coordinates` and `stateHi/En` are mandatory: the map can't pin without lat/lng, the state-list view can't group without state labels. Do not derive state from lat/lng via polygon lookup — store it explicitly.
+
+`groups[]` tags each temple with the pilgrimage traditions it belongs to. A temple may belong to multiple groups (e.g., Rameshwaram is `['jyotirlinga', 'char-dham']`; Kedarnath is `['jyotirlinga', 'chota-char-dham']`); a temple with no traditional-yatra membership uses `groups: []` and appears under "Other Famous Temples" in the By-Yatra view. The four group tags are fixed; do not invent new ones without amending this section. New traditional circuits (e.g., Divya Desam, Pancha Bhoota Sthalam) require adding a new tag to the `TheerthGroup` union AND a `groupMeta` entry in the data module before they can be used.
 
 ### 11.2 File set (replaces §2 rows 1–6 for theerth)
 
@@ -297,9 +306,11 @@ All of §10 applies. The high-risk ones for theerth:
 
 1. App boots; the Theerth tile is visible on Home under Categories.
 2. Tapping the Theerth tile lands on `TheerthMapScreen` with the India outline visible and every temple pinned at the right location (eyeball-check against a known map — e.g., Kashi Vishwanath is in UP, not Tamil Nadu).
-3. Segmented toggle flips to the state-list view; temples appear under correctly-labelled state headers.
-4. Language toggle swaps title, intro, segmented control labels, state labels, pin tooltips. No Devanagari leaks in English mode; no English leaks in Hindi mode.
-5. Tapping a pin lands on `TheerthDetailScreen` for that temple; same for tapping a state-list row.
-6. Detail screen shows: hero (temple name + city + state + deity), `महिमा · Significance` block, `उद्भव कथा · Origin Story` block, sources footer. Both languages populated (verified in §10).
-7. Back from detail returns to `TheerthMapScreen` preserving its toggle state (map vs state list).
-8. Per-temple device check on iOS AND Android — Devanagari rendering in pin tooltips can differ between platforms.
+3. Three-way view toggle flips between Map / By State / By Yatra. State view shows temples under correctly-labelled state headers; Yatra view shows them under group sections (Jyotirlinga, Char Dham, Chota Char Dham, Shakti Peeth, Other Famous).
+4. Map-view filter chips (All, plus one per `TheerthGroup`) filter pins to that group. "All" returns to the full set.
+5. Multi-group temples (Rameshwaram, Kedarnath, Badrinath) appear under every group section they belong to in the Yatra view, AND show up when any of their group chips is selected in the Map view.
+6. Language toggle swaps title, intro, view-toggle labels, chip labels, state labels, pin tooltips, yatra section headers. No Devanagari leaks in English mode; no English leaks in Hindi mode.
+7. Tapping a pin lands on `TheerthDetailScreen` for that temple; same for tapping a state-list row or yatra-list row.
+8. Detail screen shows: hero (temple name + city + state + deity), `महिमा · Significance` block, `उद्भव कथा · Origin Story` block, sources footer. Both languages populated (verified in §10).
+9. Back from detail returns to `TheerthMapScreen` preserving its view-mode and filter-chip state.
+10. Per-temple device check on iOS AND Android — Devanagari rendering in pin tooltips can differ between platforms.

@@ -6,17 +6,34 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import LanguageToggle from '@/components/LanguageToggle';
-import { getJyotirlingaById } from '@/data/theerth/jyotirlingas';
+import { getTempleById } from '@/data/theerth/temples';
+import type { Deity } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'TheerthDetail'>;
+
+const DEITY_LABELS: Record<Deity, { hi: string; en: string }> = {
+  rama: { hi: 'राम', en: 'RAMA' },
+  krishna: { hi: 'कृष्ण', en: 'KRISHNA' },
+  vishnu: { hi: 'विष्णु', en: 'VISHNU' },
+  shiva: { hi: 'शिव', en: 'SHIVA' },
+  hanuman: { hi: 'हनुमान', en: 'HANUMAN' },
+  durga: { hi: 'दुर्गा', en: 'DURGA' },
+  ganesha: { hi: 'गणेश', en: 'GANESHA' },
+  savitr: { hi: 'सूर्य', en: 'SURYA' },
+};
+
+function deityLabel(deity: Deity, lang: 'hi' | 'en'): string {
+  const entry = DEITY_LABELS[deity];
+  return lang === 'hi' ? entry.hi : entry.en;
+}
 
 export default function TheerthDetailScreen({ route, navigation }: Props) {
   const { templeId } = route.params;
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
-  const temple = getJyotirlingaById(templeId);
+  const temple = getTempleById(templeId);
 
   if (!temple) {
     return (
@@ -117,7 +134,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
                   color: colors.saffronDeep,
                 }}
               >
-                {lang === 'hi' ? 'शिव' : 'SHIVA'}
+                {deityLabel(temple.deity, lang)}
               </Text>
             </View>
           </View>
