@@ -50,6 +50,8 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
   const [filter, setFilter] = useState<GroupFilter>(() =>
     theerthId ? ENTRY_TO_FILTER[theerthId] ?? 'all' : 'all',
   );
+  // By-State view: which state's region is highlighted on the compact map.
+  const [focusedState, setFocusedState] = useState<string | null>(null);
 
   const screenWidth = Dimensions.get('window').width;
   const mapWidth = Math.min(screenWidth - 2 * spacing.xxl, 320);
@@ -165,33 +167,69 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
             </View>
           ) : mode === 'state' ? (
             <View>
-              {grouped.map((group) => (
-                <View key={group.stateKey} style={{ marginBottom: spacing.lg }}>
-                  <Text
-                    style={[
-                      styles.sectionHeader,
-                      {
-                        color: colors.inkMuted,
-                        fontSize: typography.sectionLabel.fontSize,
-                        letterSpacing: typography.sectionLabel.letterSpacing,
-                      },
-                    ]}
-                  >
-                    {group.label}
-                  </Text>
-                  {group.temples.map((temple) => (
-                    <TempleListRow
-                      key={temple.id}
-                      temple={temple}
-                      lang={lang}
-                      colors={colors}
-                      typography={typography}
-                      radii={radii}
-                      onPress={() => handleTemplePress(temple.id)}
-                    />
-                  ))}
-                </View>
-              ))}
+              <IndiaMap
+                pins={pins}
+                width={Math.round(mapWidth * 0.74)}
+                onPinPress={handleTemplePress}
+                highlightStateEn={focusedState ?? undefined}
+              />
+              <Text
+                style={[
+                  styles.hint,
+                  {
+                    color: colors.inkMuted,
+                    fontFamily: typography.swipeHint.fontFamily,
+                    fontSize: typography.swipeHint.fontSize,
+                    marginTop: spacing.sm,
+                    marginBottom: spacing.lg,
+                  },
+                ]}
+              >
+                {lang === 'hi'
+                  ? 'राज्य का नाम छूकर उसे मानचित्र पर देखें'
+                  : 'Tap a state name to locate it on the map'}
+              </Text>
+              {grouped.map((group) => {
+                const isFocused = focusedState === group.stateKey;
+                return (
+                  <View key={group.stateKey} style={{ marginBottom: spacing.lg }}>
+                    <Pressable
+                      onPress={() =>
+                        setFocusedState(isFocused ? null : group.stateKey)
+                      }
+                      accessibilityRole="button"
+                      accessibilityState={{ selected: isFocused }}
+                      accessibilityLabel={group.label}
+                      hitSlop={8}
+                    >
+                      <Text
+                        style={[
+                          styles.sectionHeader,
+                          {
+                            color: isFocused ? colors.saffronDeep : colors.inkMuted,
+                            fontSize: typography.sectionLabel.fontSize,
+                            letterSpacing: typography.sectionLabel.letterSpacing,
+                          },
+                        ]}
+                      >
+                        {isFocused ? '◆ ' : ''}
+                        {group.label}
+                      </Text>
+                    </Pressable>
+                    {group.temples.map((temple) => (
+                      <TempleListRow
+                        key={temple.id}
+                        temple={temple}
+                        lang={lang}
+                        colors={colors}
+                        typography={typography}
+                        radii={radii}
+                        onPress={() => handleTemplePress(temple.id)}
+                      />
+                    ))}
+                  </View>
+                );
+              })}
             </View>
           ) : (
             <View>
@@ -380,6 +418,8 @@ function TempleListRow({
   return (
     <Pressable
       onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={lang === 'hi' ? temple.nameHi : temple.nameEn}
       style={({ pressed }) => [
         rowStyles.card,
         {
