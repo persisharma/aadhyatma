@@ -3,26 +3,33 @@ import { View, StyleSheet } from 'react-native';
 import Svg, { Path, G } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeContext';
 import TheerthPin from './TheerthPin';
+import {
+  INDIA_PROJECTION,
+  INDIA_OUTLINE,
+  INDIA_STATES,
+} from './indiaMapPaths.generated';
 
-const VIEWBOX_WIDTH = 300;
-const VIEWBOX_HEIGHT = 350;
+const { lngMin, lngMax, latMin, latMax, width: VB_W, height: VB_H } =
+  INDIA_PROJECTION;
 
-const LAT_MIN = 8;
-const LAT_MAX = 36;
-const LNG_MIN = 68;
-const LNG_MAX = 97;
-
-const INDIA_OUTLINE_PATH =
-  'M 52,13 L 103,13 L 114,50 L 145,75 L 207,100 L 290,100 ' +
-  'L 269,150 L 248,175 L 217,175 L 197,188 L 186,200 ' +
-  'L 135,250 L 124,300 L 93,350 L 83,338 L 62,263 ' +
-  'L 52,225 L 31,188 L 0,163 L 21,113 L 62,63 Z';
-
-function projectLatLng(lat: number, lng: number): { x: number; y: number } {
-  const x = ((lng - LNG_MIN) / (LNG_MAX - LNG_MIN)) * VIEWBOX_WIDTH;
-  const y = ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * VIEWBOX_HEIGHT;
+/**
+ * Equirectangular projection (design.md §28). Uses the SAME constants the
+ * committed paths in indiaMapPaths.generated.ts were generated from, so a pin
+ * lands exactly on the real outline. Exported for the alignment test.
+ */
+export function projectLatLng(lat: number, lng: number): { x: number; y: number } {
+  const x = ((lng - lngMin) / (lngMax - lngMin)) * VB_W;
+  const y = ((latMax - lat) / (latMax - latMin)) * VB_H;
   return { x, y };
 }
+
+function normalizeState(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '');
+}
+
+const STATE_BY_NORM = new Map(
+  INDIA_STATES.map((s) => [normalizeState(s.nameEn), s] as const),
+);
 
 export type IndiaMapPin = {
   id: string;
@@ -35,20 +42,33 @@ type Props = {
   pins: IndiaMapPin[];
   width: number;
   onPinPress: (id: string) => void;
+  /** Render thin state-boundary strokes. Default true on the Theerth surface. */
+  showStates?: boolean;
+  /** Fill the matching state (By-State focus). Matched on a normalised name. */
+  highlightStateEn?: string;
 };
 
-export default function IndiaMap({ pins, width, onPinPress }: Props) {
+export default function IndiaMap({
+  pins,
+  width,
+  onPinPress,
+  showStates = true,
+  highlightStateEn,
+}: Props) {
   const { colors } = useTheme();
-  const height = width * (VIEWBOX_HEIGHT / VIEWBOX_WIDTH);
-  const scale = width / VIEWBOX_WIDTH;
+  const height = width * (VB_H / VB_W);
+  const scale = width / VB_W;
+  const highlighted = highlightStateEn
+    ? STATE_BY_NORM.get(normalizeState(highlightStateEn))
+    : undefined;
 
   if (__DEV__) {
     pins.forEach((pin) => {
       if (
-        pin.lat < LAT_MIN ||
-        pin.lat > LAT_MAX ||
-        pin.lng < LNG_MIN ||
-        pin.lng > LNG_MAX
+        pin.lat < latMin ||
+        pin.lat > latMax ||
+        pin.lng < lngMin ||
+        pin.lng > lngMax
       ) {
         console.warn(
           `[IndiaMap] Pin "${pin.id}" coordinates out of bounds: lat=${pin.lat}, lng=${pin.lng}`,
@@ -59,21 +79,40 @@ export default function IndiaMap({ pins, width, onPinPress }: Props) {
 
   return (
     <View style={[styles.container, { width, height }]}>
-      <Svg
-        width={width}
-        height={height}
-        viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
-      >
+      <Svg width={width} height={height} viewBox={`0 0 ${VB_W} ${VB_H}`}>
+        {showStates ? (
+          <G>
+            {INDIA_STATES.map((s) => {
+              const isOn = highlighted?.id === s.id;
+              return (
+                <Path
+                  key={s.id}
+                  d={s.path}
+                  stroke={colors.saffron}
+                  strokeOpacity={0.25}
+                  strokeWidth={0.6}
+                  fill={isOn ? colors.saffron : 'none'}
+                  fillOpacity={isOn ? 0.12 : 0}
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+              );
+            })}
+          </G>
+        ) : null}
         <G>
-          <Path
-            d={INDIA_OUTLINE_PATH}
-            stroke={colors.saffronDeep}
-            strokeOpacity={0.6}
-            strokeWidth={1.2}
-            fill="none"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-          />
+          {INDIA_OUTLINE.map((d, i) => (
+            <Path
+              key={`outline-${i}`}
+              d={d}
+              stroke={colors.saffronDeep}
+              strokeOpacity={0.6}
+              strokeWidth={1.2}
+              fill="none"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
+          ))}
         </G>
       </Svg>
       <View style={[StyleSheet.absoluteFill, styles.pinLayer]} pointerEvents="box-none">
