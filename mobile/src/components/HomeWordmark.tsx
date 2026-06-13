@@ -11,7 +11,7 @@ import { useTheme } from '@/theme/ThemeContext';
 export default function HomeWordmark() {
   const { colors, typography } = useTheme();
 
-  const mark = (
+  const renderMark = () => (
     <View style={[styles.mark, { borderColor: colors.saffron }]}>
       <Text style={[styles.markText, { color: colors.saffron, fontFamily: typography.thumb.fontFamily }]}>
         ॐ
@@ -23,7 +23,7 @@ export default function HomeWordmark() {
     <View style={styles.wrap}>
       <View style={styles.lockup}>
         <View style={[styles.rule, { backgroundColor: colors.saffron }]} />
-        {mark}
+        {renderMark()}
         <Text
           style={[
             styles.title,
@@ -36,7 +36,7 @@ export default function HomeWordmark() {
         >
           वेदांश़
         </Text>
-        {mark}
+        {renderMark()}
         <View style={[styles.rule, { backgroundColor: colors.saffron }]} />
       </View>
       <Text
@@ -57,7 +57,7 @@ export default function HomeWordmark() {
 
 const styles = StyleSheet.create({
   wrap: { alignItems: 'center' },
-  lockup: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 11 },
+  lockup: { height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 11 },
   rule: { width: 22, height: 1, opacity: 0.6 },
   mark: {
     width: 30,
@@ -76,7 +76,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 27,
+    // A full line box keeps the top matra/nukta visible while the lockup row,
+    // then a slight optical nudge centers वेदांश़ against the Om circles.
+    lineHeight: 42,
     includeFontPadding: false,
+    transform: [{ translateY: 4 }],
   },
   subtitle: {
     marginTop: 5,

@@ -31,10 +31,12 @@ type RoutineContextValue = {
   markManualDone: (key: string) => void;
   unmarkManualDone: (key: string) => void;
   isManualDone: (key: string) => boolean;
-  /** True once today's completion celebration (pushpa-varsha) has played. */
-  celebratedToday: boolean;
-  /** Record that today's celebration has played, so it fires only once a day. */
-  markCelebratedToday: () => void;
+  /** Signature of the routine-item set whose completion was celebrated today,
+   * or null if today's completion hasn't played its pushpa-varsha yet. */
+  celebratedSignatureToday: string | null;
+  /** Record that the given completed set has played its pushpa-varsha today, so
+   * it replays only when the set changes (e.g. a new section is added). */
+  markCelebrated: (signature: string) => void;
 };
 
 const RoutineContext = createContext<RoutineContextValue | null>(null);
@@ -46,7 +48,7 @@ function isRoutineArray(v: unknown): v is Routine[] {
 export function RoutineProvider({ children }: { children: React.ReactNode }) {
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [doneKeys, setDoneKeys] = useState<Set<string>>(new Set());
-  const [celebratedDate, setCelebratedDate] = useState<string | null>(null);
+  const [celebrated, setCelebrated] = useState<{ date: string; sig: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -77,9 +79,24 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
             /* corrupted — leave empty */
           }
         }
-        // Stored as a plain date key; staleness is handled by comparing to
-        // today at read time (see `celebratedToday`), so no date guard here.
-        if (rawC) setCelebratedDate(rawC);
+        // Stored as JSON `{ date, sig }`; staleness is handled by comparing the
+        // date to today at read time (see `celebratedSignatureToday`). A legacy
+        // bare-date value (pre-signature builds) fails JSON.parse and is ignored.
+        if (rawC) {
+          try {
+            const parsed = JSON.parse(rawC);
+            if (
+              parsed &&
+              typeof parsed === 'object' &&
+              typeof parsed.date === 'string' &&
+              typeof parsed.sig === 'string'
+            ) {
+              setCelebrated({ date: parsed.date, sig: parsed.sig });
+            }
+          } catch {
+            /* legacy/corrupted — leave unset */
+          }
+        }
       })
       .catch(() => undefined)
       .finally(() => {
@@ -165,13 +182,14 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
 
   const isManualDone = useCallback((key: string) => doneKeys.has(key), [doneKeys]);
 
-  const markCelebratedToday = useCallback(() => {
-    const today = toDateKey(new Date());
-    setCelebratedDate(today);
-    AsyncStorage.setItem(CELEBRATED_KEY, today).catch(() => undefined);
+  const markCelebrated = useCallback((signature: string) => {
+    const record = { date: toDateKey(new Date()), sig: signature };
+    setCelebrated(record);
+    AsyncStorage.setItem(CELEBRATED_KEY, JSON.stringify(record)).catch(() => undefined);
   }, []);
 
-  const celebratedToday = celebratedDate === toDateKey(new Date());
+  const celebratedSignatureToday =
+    celebrated && celebrated.date === toDateKey(new Date()) ? celebrated.sig : null;
 
   const value = useMemo<RoutineContextValue>(
     () => ({
@@ -184,8 +202,8 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
       markManualDone,
       unmarkManualDone,
       isManualDone,
-      celebratedToday,
-      markCelebratedToday,
+      celebratedSignatureToday,
+      markCelebrated,
     }),
     [
       routines,
@@ -197,8 +215,8 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
       markManualDone,
       unmarkManualDone,
       isManualDone,
-      celebratedToday,
-      markCelebratedToday,
+      celebratedSignatureToday,
+      markCelebrated,
     ]
   );
 

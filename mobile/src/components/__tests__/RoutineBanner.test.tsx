@@ -6,11 +6,7 @@ import RoutineBanner from '@/components/RoutineBanner';
 // ---- mutable mock state (reset in beforeEach) ----
 let mockLang: 'hi' | 'en' = 'hi';
 let mockToday = { hasRoutine: false, doneCount: 0, total: 0 };
-let mockFocused = true;
-let mockCelebratedToday = false;
 const mockNavigate = jest.fn();
-const mockMarkCelebrated = jest.fn();
-const mockHaptic = jest.fn(() => Promise.resolve());
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
@@ -20,32 +16,11 @@ jest.mock('expo-linear-gradient', () => ({
   LinearGradient: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
     mockReact.createElement(mockView, props, children),
 }));
-jest.mock('expo-haptics', () => ({
-  notificationAsync: () => mockHaptic(),
-  NotificationFeedbackType: { Success: 'success' },
-}));
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
-  useIsFocused: () => mockFocused,
 }));
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: mockLang }) }));
 jest.mock('@/data/routine/useRoutineToday', () => ({ useRoutineToday: () => mockToday }));
-jest.mock('@/contexts/RoutineContext', () => ({
-  useRoutines: () => ({
-    celebratedToday: mockCelebratedToday,
-    markCelebratedToday: mockMarkCelebrated,
-  }),
-}));
-// Keep the petal animation out of the unit test; render a detectable marker.
-// (factory must not close over out-of-scope vars — require lazily.)
-jest.mock('@/components/RoutineCelebration', () => ({
-  __esModule: true,
-  default: () => {
-    const R = require('react');
-    const RN = require('react-native');
-    return R.createElement(RN.Text, null, 'PETALS');
-  },
-}));
 
 function render(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
@@ -72,11 +47,7 @@ function labels(tree: TestRenderer.ReactTestRenderer): string[] {
 beforeEach(() => {
   mockLang = 'hi';
   mockToday = { hasRoutine: false, doneCount: 0, total: 0 };
-  mockFocused = true;
-  mockCelebratedToday = false;
   mockNavigate.mockClear();
-  mockMarkCelebrated.mockClear();
-  mockHaptic.mockClear();
 });
 
 describe('RoutineBanner — nudge (no routine)', () => {
@@ -113,30 +84,17 @@ describe('RoutineBanner — progress', () => {
 });
 
 describe('RoutineBanner — complete', () => {
-  it('shows the पूर्ण line and plays the pushpa-varsha once', () => {
+  it('shows the पूर्ण line and the lotus achievement badge as a status chip', () => {
     mockToday = { hasRoutine: true, doneCount: 4, total: 4 };
     const tree = render();
     expect(textOf(tree)).toContain('साधना पूर्ण · आज');
     expect(labels(tree)).toContain('आज की साधना पूर्ण');
-    expect(textOf(tree)).toContain('PETALS');
-    expect(mockMarkCelebrated).toHaveBeenCalledTimes(1);
-    expect(mockHaptic).toHaveBeenCalledTimes(1);
   });
 
-  it('does not replay once already celebrated today', () => {
+  it('does not play petals inline — the pushpa-varsha is now an app-level overlay', () => {
     mockToday = { hasRoutine: true, doneCount: 4, total: 4 };
-    mockCelebratedToday = true;
     const tree = render();
-    expect(textOf(tree)).toContain('साधना पूर्ण · आज');
+    // The banner must not pull in the celebration overlay; petals fire globally.
     expect(textOf(tree)).not.toContain('PETALS');
-    expect(mockMarkCelebrated).not.toHaveBeenCalled();
-  });
-
-  it('does not celebrate while the screen is not focused', () => {
-    mockToday = { hasRoutine: true, doneCount: 4, total: 4 };
-    mockFocused = false;
-    const tree = render();
-    expect(textOf(tree)).not.toContain('PETALS');
-    expect(mockMarkCelebrated).not.toHaveBeenCalled();
   });
 });

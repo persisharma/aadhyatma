@@ -36,6 +36,7 @@ import {
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
+import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
@@ -137,6 +138,7 @@ export default function App() {
                             <RootNavigator />
                             <ReminderOptInModal />
                             <UpdateReadyModal />
+                            <RoutineCelebrationOverlay />
                           </NavigationContainer>
                         </ShareProvider>
                       </NotificationPreferencesProvider>

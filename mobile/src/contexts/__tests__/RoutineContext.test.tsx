@@ -37,28 +37,35 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe('RoutineContext — celebration gate', () => {
-  it('is uncelebrated by default, then marks + persists today', async () => {
+describe('RoutineContext — celebration gate (signature-based)', () => {
+  it('has no celebrated signature by default, then marks + persists today', async () => {
     const get = mountProbe();
     await act(async () => undefined); // flush async hydration
-    expect(get().celebratedToday).toBe(false);
+    expect(get().celebratedSignatureToday).toBeNull();
 
-    act(() => get().markCelebratedToday());
-    expect(get().celebratedToday).toBe(true);
-    expect(store[CELEBRATED_KEY]).toBe(today);
+    act(() => get().markCelebrated('r1:a|r1:b'));
+    expect(get().celebratedSignatureToday).toBe('r1:a|r1:b');
+    expect(store[CELEBRATED_KEY]).toBe(JSON.stringify({ date: today, sig: 'r1:a|r1:b' }));
   });
 
-  it('hydrates celebratedToday from a stored key dated today', async () => {
-    store[CELEBRATED_KEY] = today;
+  it('hydrates the signature from a record dated today', async () => {
+    store[CELEBRATED_KEY] = JSON.stringify({ date: today, sig: 'r1:a' });
     const get = mountProbe();
     await act(async () => undefined);
-    expect(get().celebratedToday).toBe(true);
+    expect(get().celebratedSignatureToday).toBe('r1:a');
   });
 
-  it('treats a stale (previous-day) key as not celebrated today', async () => {
-    store[CELEBRATED_KEY] = '2000-01-01';
+  it('treats a stale (previous-day) record as nothing celebrated today', async () => {
+    store[CELEBRATED_KEY] = JSON.stringify({ date: '2000-01-01', sig: 'r1:a' });
     const get = mountProbe();
     await act(async () => undefined);
-    expect(get().celebratedToday).toBe(false);
+    expect(get().celebratedSignatureToday).toBeNull();
+  });
+
+  it('treats a legacy bare-date value (old format) as nothing celebrated today', async () => {
+    store[CELEBRATED_KEY] = today; // pre-signature builds stored a bare date string
+    const get = mountProbe();
+    await act(async () => undefined);
+    expect(get().celebratedSignatureToday).toBeNull();
   });
 });
