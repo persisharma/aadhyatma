@@ -155,3 +155,52 @@ test('By-State view list rows navigate to TheerthDetail', () => {
   assert.equal(lastCall[0], 'TheerthDetail');
   assert.equal(lastCall[1].templeId, 'srinathji');
 });
+
+test('filter chips narrow the pins shown on the map (English)', () => {
+  const { navigation } = makeNavigation();
+  const tree = render(navigation, 'en');
+  assert.match(allText(tree), /By Yatra/); // English view-toggle labels render
+
+  const present = (label: string) =>
+    tree.root.findAll(
+      (n) => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function',
+    ).length;
+
+  assert.ok(present('Somnath') >= 1, 'Somnath pin shown under All');
+
+  const charDham = tree.root.findAll(
+    (n) => n.props.accessibilityLabel === 'filter-char-dham' && typeof n.props.onPress === 'function',
+  )[0];
+  act(() => {
+    charDham.props.onPress();
+  });
+
+  // Somnath is a Jyotirlinga only → filtered out; Badrinath is Char Dham → stays.
+  assert.equal(present('Somnath'), 0, 'Somnath filtered out of Char Dham');
+  assert.ok(present('Badrinath') >= 1, 'Badrinath remains under Char Dham');
+});
+
+test('By-Yatra view lists yatra sections and rows navigate', () => {
+  const { navigation, navigate } = makeNavigation();
+  const tree = render(navigation, 'en');
+  const radios = tree.root.findAll(
+    (n) =>
+      n.props.accessibilityRole === 'radio' &&
+      typeof n.props.onPress === 'function' &&
+      n.props.accessibilityLabel === undefined,
+  );
+  act(() => {
+    radios[2].props.onPress(); // By Yatra
+  });
+  assert.match(allText(tree), /Other Famous Temples/);
+
+  const row = tree.root.findAll(
+    (n) => n.props.accessibilityLabel === 'Tirupati Balaji' && typeof n.props.onPress === 'function',
+  )[0];
+  act(() => {
+    row.props.onPress();
+  });
+  const last = navigate.mock.calls.at(-1) as [string, { templeId: string }];
+  assert.equal(last[0], 'TheerthDetail');
+  assert.equal(last[1].templeId, 'tirupati-balaji');
+});

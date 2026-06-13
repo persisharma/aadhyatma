@@ -374,6 +374,9 @@ function FilterChipRow({
           <Pressable
             key={c.value}
             onPress={() => onChange(c.value)}
+            accessibilityRole="button"
+            accessibilityState={{ selected }}
+            accessibilityLabel={`filter-${c.value}`}
             hitSlop={6}
             style={({ pressed }) => [
               chipStyles.chip,
