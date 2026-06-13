@@ -133,13 +133,15 @@ export default function App() {
                       <RoutineSheetProvider>
                       <NotificationPreferencesProvider>
                         <ShareProvider>
-                          <NavigationContainer ref={navigationRef}>
-                            <StatusBar style="dark" />
-                            <RootNavigator />
-                            <ReminderOptInModal />
-                            <UpdateReadyModal />
+                          <View style={{ flex: 1 }}>
+                            <NavigationContainer ref={navigationRef}>
+                              <StatusBar style="dark" />
+                              <RootNavigator />
+                              <ReminderOptInModal />
+                              <UpdateReadyModal />
+                            </NavigationContainer>
                             <RoutineCelebrationOverlay />
-                          </NavigationContainer>
+                          </View>
                         </ShareProvider>
                       </NotificationPreferencesProvider>
                       </RoutineSheetProvider>

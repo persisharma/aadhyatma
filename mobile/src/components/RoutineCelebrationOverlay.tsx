@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Modal } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
@@ -45,6 +46,8 @@ export default function RoutineCelebrationOverlay() {
 
   if (!shower) return null;
   return (
-    <RoutineCelebration key={shower.sig} caption={shower.caption} onDone={() => setShower(null)} />
+    <Modal visible transparent animationType="none" presentationStyle="overFullScreen" onRequestClose={() => undefined}>
+      <RoutineCelebration key={shower.sig} caption={shower.caption} onDone={() => setShower(null)} />
+    </Modal>
   );
 }
