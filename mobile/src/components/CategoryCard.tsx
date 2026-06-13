@@ -22,9 +22,9 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
 
   const { primary, secondary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
     devPrimary: 15,
-    devSecondary: 13,
-    latPrimary: 15,
-    latSecondary: 13,
+    devSecondary: 12,
+    latPrimary: 17,
+    latSecondary: 12,
   });
 
   const content = (
@@ -38,6 +38,7 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
             fontFamily: primary.fontFamily,
             fontSize: primary.fontSize,
             fontStyle: primary.fontStyle,
+            letterSpacing: primary.letterSpacing,
           },
         ]}
       >
@@ -47,7 +48,7 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
         style={[
           styles.nameEn,
           {
-            color: colors.inkSoft,
+            color: colors.inkMuted,
             fontFamily: secondary.fontFamily,
             fontSize: secondary.fontSize,
             fontStyle: secondary.fontStyle,

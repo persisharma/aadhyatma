@@ -27,9 +27,9 @@ export default function LibraryCard({ entry, onPress }: Props) {
   const { lang } = useGitaLanguage();
   const { primary, secondary } = orderTitlesByLanguage(lang, entry.nameHi, entry.nameEn, {
     devPrimary: 17,
-    devSecondary: 14,
-    latPrimary: 17,
-    latSecondary: 13,
+    devSecondary: 13,
+    latPrimary: 19,
+    latSecondary: 12,
   });
   const isActive = entry.status === 'active';
   const showNew = isActive && isNew(entry.id);
@@ -97,6 +97,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
               fontFamily: primary.fontFamily,
               fontSize: primary.fontSize,
               fontStyle: primary.fontStyle,
+              letterSpacing: primary.letterSpacing,
               opacity: isActive ? 1 : 0.55,
             },
           ]}
@@ -107,7 +108,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
           style={[
             styles.nameEn,
             {
-              color: colors.inkSoft,
+              color: colors.inkMuted,
               fontFamily: secondary.fontFamily,
               fontSize: secondary.fontSize,
               fontStyle: secondary.fontStyle,

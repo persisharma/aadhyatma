@@ -31,9 +31,9 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   const categoryMeta = categories.find((c) => c.id === categoryId);
   const title = orderTitlesByLanguage(lang, categoryMeta?.nameHi ?? '', categoryMeta?.nameEn ?? '', {
     devPrimary: 16,
-    devSecondary: 13,
-    latPrimary: 16,
-    latSecondary: 13,
+    devSecondary: 12,
+    latPrimary: 18,
+    latSecondary: 12,
   });
   const items = library.filter((e) => e.category === categoryId && !e.hidden);
 
@@ -81,6 +81,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
                 fontFamily: title.primary.fontFamily,
                 fontSize: title.primary.fontSize,
                 fontStyle: title.primary.fontStyle,
+                letterSpacing: title.primary.letterSpacing,
                 color: colors.ink,
               }}
             >

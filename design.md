@@ -110,8 +110,8 @@ This table is the **single source of truth** for reading-content sizing, impleme
 | Commentary body (Hindi) | Noto Serif Devanagari | 15 | 400 | `ink-soft`, line-height 1.7. Paragraph gap `14`. |
 | Commentary body (English) | Cormorant Garamond | 20 | 500 medium non-italic | `ink`, line-height 33. Paragraph gap `14`. Bumped from 18 → 20 alongside the English meaning body. |
 | Commentary fallback note | Cormorant Garamond | 14 | 400 italic | `ink-muted`, centred. Shown when the selected language has no commentary for this verse but the other language does (e.g., Gita Chapter 1 has only ~20 % English commentary coverage in the published source). |
-| Card name (primary language) | Noto Serif Devanagari (hi) / Cormorant Garamond (en) | 14–20 | 600 semibold, upright | Prominent top line on catalog, category, deity, and resume-sheet titles. The **active reading language** takes this slot — Devanagari-first by default (`'hi'`), English-first when the toggle is `'en'`. **Weight follows the slot, not the script**: the primary line is always semibold so English-primary is not out-weighed by a demoted Hindi line. Ordering/weight/sizing is centralised in `orderTitlesByLanguage()`. |
-| Card name (secondary language) | Cormorant Garamond italic (en) / Noto Serif Devanagari (hi) | 11–14 | 400 italic (en) / 500 medium (hi) | `ink-muted` lighter supporting line below the primary title — the language *not* selected. |
+| Card name (primary language) | Noto Serif Devanagari (hi) / Cormorant Garamond (en) | 14–22 | 600 semibold upright (hi) / **700 bold** upright + `0.3` tracking (en) | Prominent top line on catalog, category, deity, and resume-sheet titles. The **active reading language** takes this slot — Devanagari-first by default (`'hi'`), English-first when the toggle is `'en'`. **Weight follows the slot, not the script.** The two scripts carry different *optical* weight at the same point size (Devanagari reads dark/dense, Cormorant reads light), so the English primary uses the heavier Bold face **and** is sized a step larger than the Devanagari primary at each call site (e.g. CategoryCard `latPrimary 17` vs `devPrimary 15`; LibraryCard `19` vs `17`) — otherwise an English-primary title reads as a peer of its demoted Hindi line. Ordering/weight/tracking is centralised in `orderTitlesByLanguage()`; per-script optical sizes are passed by each caller. |
+| Card name (secondary language) | Cormorant Garamond italic (en) / Noto Serif Devanagari (hi) | 11–13 | 400 italic (en) / 500 medium (hi) | `ink-muted` lighter supporting line below the primary title — the language *not* selected. Sized ~2–5 pt below the primary and demoted to `ink-muted` (not `ink-soft`) across **all** call sites so it reads as a caption, not a peer. |
 | Chapter card title (Hindi) | Noto Serif Devanagari | 17 | 600 | Gita Chapters Index. |
 | Chapter card title (English) | Cormorant Garamond | 16 | 400 italic | Gita Chapters Index when language toggle = English. |
 | Chapter tag (`अध्याय N` / `CHAPTER N`) | Inter | 10 | 600 | `0.3em` tracking, uppercase, `saffron-deep`. |
@@ -584,8 +584,9 @@ Two variants: `active` (has content) and `coming` (placeholder).
 - Radius: 18
 - Layout (vertical, centered):
   - Glyph: Noto Serif Devanagari 28 600, `saffron-deep`, centered. Represents the category (ग्र, स्तो, चा)
-  - Name Hindi: Noto Serif Devanagari 15 600, `ink`, 6px below glyph
-  - Name English: Cormorant Garamond 12 400 italic, `ink-muted`, 2px below Hindi
+  - Primary / secondary names follow the active reading language via `orderTitlesByLanguage()` (see §3 "Card name"). Defaults shown below are the Hindi-primary case; English-primary swaps the slots and applies the optical compensation (Cormorant 700 @ 17 + tracking on top, demoted Hindi 12 `ink-muted` below).
+  - Name (primary, hi default): Noto Serif Devanagari 15 600, `ink`, 6px below glyph
+  - Name (secondary, en default): Cormorant Garamond 12 400 italic, `ink-muted`, 2px below the primary
 - Padding: 20px vertical, 12px horizontal
 - Tap → pushes CategoryList screen
 
