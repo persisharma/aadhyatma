@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed |
+| **Status** | In progress — v1.5.0 engineering scaffold landed (see §7a); audio asset + device QA pending |
 | **Target release** | v1.5.0 (Hanuman Chalisa pilot) → v1.5.1 (rest of chalisas + aartis) |
 | **Window** | Weeks 28–33 (8 Jul – 21 Aug 2026) |
 | **T-shirt size** | L (~6 dev-weeks; content / licensing parallel) |
@@ -102,6 +102,23 @@ Ship per-verse, gapless audio recitation **bundled inside the app**, starting wi
   - `mobile/src/contexts/__tests__/VerseAudioContext.test.tsx` — boundary advance, manual seek wins, segment manifest invariants (no gaps, no overlaps, monotonically increasing).
   - `mobile/src/screens/__tests__/ChalisaReaderScreen.audio.test.tsx` — mounts with audio mock, simulates `audioVerseChanged`, asserts `FlatList` scrolls.
   - `mobile/src/data/__tests__/audioManifest.invariants.test.ts` — for every section that ships audio, the segments cover `[0, totalDuration]` without gaps or overlaps.
+
+## 7a. Implementation status (this branch)
+
+Bundle-only player **engineering scaffold** for the v1.5.0 Hanuman Chalisa pilot is built, type-checked, linted, and unit-tested. What landed:
+
+- `mobile/src/audio/segments.ts` — pure verse↔time mapping + manifest-invariant validator (no gaps/overlaps, dense, full coverage). Fully unit-tested in `src/audio/__tests__/segments.test.ts`.
+- `mobile/src/data/audio/{types,registry}.ts` + per-section `mobile/src/data/hanuman-chalisa/audio.ts` manifest. `audioManifest.invariants.test.ts` guards every registered manifest (clean stub **or** fully valid).
+- `mobile/src/components/VerseAudioPlayer.tsx` — bottom-anchored play / pause / skip-±1-verse + progress strip, reusing the Japam player's visual treatment and `expo-audio`. Renders nothing for sections without a bundled recitation, so it is inert until audio ships.
+- `mobile/src/screens/ChalisaReaderScreen.tsx` — mounts the player; verse-anchored auto-advance with a programmatic-scroll guard so audio-driven page follows don't re-trigger a seek ("manual seek wins"). Covers all chalisas; Hanuman Chalisa is first.
+- `jest.config.js` — added `src/audio/__tests__` to `testMatch`.
+
+**Deviation from §7 (deliberate):** the player is a self-contained component (mirroring the existing `JapamAudioPlayer`) rather than an app-wide `VerseAudioContext`. An app-level `useAudioPlayerStatus` ticks ~4×/s and would re-render the whole tree; the audio surface is screen-local, so component-scoped ownership is cheaper and matches the codebase's existing pattern. The reader↔player contract (`userVerseIndex` down, `onAudioVerseChange` up) keeps the seek/advance logic isolated and testable.
+
+**Remaining before ship (Content Ops + QA, per §8 / §12):**
+1. Commission + bundle `mobile/assets/audio/hanuman-chalisa/recitation.m4a`, then populate `asset`, `durationMs`, `segments`, and attribution in `hanuman-chalisa/audio.ts` (instructions inline in that file).
+2. Device QA of seek/auto-advance interaction (incl. Bluetooth), the airplane-mode offline test, and `ChalisaReaderScreen.audio.test.tsx` against a mocked asset.
+3. CI bundle-size check (§9).
 
 ## 8. Content & licensing track (runs in parallel)
 

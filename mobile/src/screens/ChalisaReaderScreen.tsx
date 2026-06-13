@@ -22,6 +22,7 @@ import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
 import VersePage from '@/components/VersePage';
+import VerseAudioPlayer from '@/components/VerseAudioPlayer';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import type { RootStackParamList } from '@/navigation/types';
@@ -44,6 +45,26 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const listRef = useRef<FlatList<ChalisaVerse>>(null);
   const initialIndex = clampIndex(route.params?.initialIndex, total);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  // The verse the *user* navigated to. Only user-driven swipes update this, so
+  // the audio player seeks on manual navigation but not when it scrolls the
+  // page itself (which would fight its own playback).
+  const [userVerseIndex, setUserVerseIndex] = useState(initialIndex);
+  const programmaticScrollRef = useRef(false);
+
+  // Audio advanced into a new verse → scroll the page to follow it, without
+  // marking it as a user navigation.
+  const followAudioToVerse = useCallback(
+    (index: number) => {
+      if (index < 0 || index >= total) return;
+      programmaticScrollRef.current = true;
+      listRef.current?.scrollToIndex({ index, animated: true });
+      setCurrentIndex(index);
+      setTimeout(() => {
+        programmaticScrollRef.current = false;
+      }, 450);
+    },
+    [total]
+  );
 
   useEffect(() => {
     setProgress({
@@ -61,14 +82,16 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     if (viewableItems.length === 0) return;
     const first = viewableItems[0];
     if (first.index == null) return;
+    const idx = first.index;
     setCurrentIndex((prev) => {
-      if (prev !== first.index) {
+      if (prev !== idx) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {
           /* haptics unavailable — fine */
         });
       }
-      return first.index ?? prev;
+      return idx;
     });
+    if (!programmaticScrollRef.current) setUserVerseIndex(idx);
   }).current;
 
   const getItemLayout = useCallback(
@@ -90,13 +113,14 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offsetX = e.nativeEvent.contentOffset.x;
       const idx = Math.round(offsetX / width);
+      if (idx < 0 || idx >= total) return;
       setCurrentIndex((prev) => {
-        if (prev !== idx && idx >= 0 && idx < total) {
+        if (prev !== idx) {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
-          return idx;
         }
-        return prev;
+        return idx;
       });
+      if (!programmaticScrollRef.current) setUserVerseIndex(idx);
     },
     [width, total]
   );
@@ -243,6 +267,13 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             </View>
           </View>
         </View>
+
+        <VerseAudioPlayer
+          sourceId={chalisaId}
+          userVerseIndex={userVerseIndex}
+          onAudioVerseChange={followAudioToVerse}
+          lang={lang}
+        />
       </SafeAreaView>
     </View>
   );

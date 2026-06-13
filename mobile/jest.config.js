@@ -8,6 +8,7 @@ module.exports = {
     '<rootDir>/src/utils/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/contexts/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/components/__tests__/**/*.test.{ts,tsx}',
+    '<rootDir>/src/audio/__tests__/**/*.test.{ts,tsx}',
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
