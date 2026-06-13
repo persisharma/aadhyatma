@@ -38,9 +38,10 @@ describe('orderTitlesByLanguage', () => {
     expect(primary).toEqual({
       text: NAME_EN,
       script: 'latin',
-      fontFamily: fontFamilies.latinSemiBold,
+      fontFamily: fontFamilies.latinBold,
       fontStyle: 'normal',
       fontSize: SIZES.latPrimary,
+      letterSpacing: 0.3,
     });
     expect(secondary).toEqual({
       text: NAME_HI,
@@ -59,11 +60,20 @@ describe('orderTitlesByLanguage', () => {
     expect(hi.primary.fontFamily).toBe(fontFamilies.devanagariBold);
     expect(en.secondary.fontFamily).toBe(fontFamilies.devanagari);
 
-    // Latin upright+semibold when primary (en), italic+regular when demoted (hi).
-    expect(en.primary.fontFamily).toBe(fontFamilies.latinSemiBold);
+    // Latin upright+bold when primary (en), italic+regular when demoted (hi).
+    expect(en.primary.fontFamily).toBe(fontFamilies.latinBold);
     expect(en.primary.fontStyle).toBe('normal');
     expect(hi.secondary.fontFamily).toBe(fontFamilies.latinItalic);
     expect(hi.secondary.fontStyle).toBe('italic');
+  });
+
+  test('the Latin primary carries tracking; demoted lines carry none', () => {
+    const en = orderTitlesByLanguage('en', NAME_HI, NAME_EN, SIZES);
+    const hi = orderTitlesByLanguage('hi', NAME_HI, NAME_EN, SIZES);
+
+    expect(en.primary.letterSpacing).toBe(0.3);
+    expect(en.secondary.letterSpacing).toBeUndefined();
+    expect(hi.secondary.letterSpacing).toBeUndefined();
   });
 
   test('the primary slot always carries the larger point size for its script', () => {
