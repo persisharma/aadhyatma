@@ -40,13 +40,13 @@ describe('LotusMark', () => {
 });
 
 describe('RoutineCelebration', () => {
-  it('mounts a full-width shower of petals with the caption, and tears down cleanly', () => {
+  it('mounts a full-width shower of layered flowers with the caption, and tears down cleanly', () => {
     const onDone = jest.fn();
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => {
       tree = TestRenderer.create(<RoutineCelebration caption="साधना पूर्ण · आज" onDone={onDone} />);
     });
-    expect(gradientCount(tree)).toBeGreaterThanOrEqual(8);
+    expect(gradientCount(tree)).toBeGreaterThanOrEqual(48);
     const text = tree.root
       .findAllByType(Text)
       .map((n) => n.props.children)
@@ -56,14 +56,18 @@ describe('RoutineCelebration', () => {
     act(() => tree.unmount());
   });
 
-  it('calls onDone once the shower has fully settled', () => {
+  it('keeps the flower shower slow, then calls onDone once it has fully settled', () => {
     const onDone = jest.fn();
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => {
       tree = TestRenderer.create(<RoutineCelebration caption="साधना पूर्ण · आज" onDone={onDone} />);
     });
     act(() => {
-      jest.advanceTimersByTime(3000); // longer than the staggered fall + caption fade
+      jest.advanceTimersByTime(5000);
+    });
+    expect(onDone).not.toHaveBeenCalled();
+    act(() => {
+      jest.advanceTimersByTime(2400); // longer than the slower staggered fall + caption fade
     });
     expect(onDone).toHaveBeenCalledTimes(1);
     act(() => tree.unmount());
