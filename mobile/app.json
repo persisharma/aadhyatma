@@ -61,7 +61,9 @@
     "extra": {
       "eas": {
         "projectId": "c83547c2-423c-4902-9087-a9ec9879a1f9"
-      }
+      },
+      "supabaseUrl": "",
+      "supabaseAnonKey": ""
     },
     "runtimeVersion": {
       "policy": "appVersion"

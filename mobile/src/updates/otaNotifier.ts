@@ -123,6 +123,26 @@ export async function checkAndNotifyOtaRelease(): Promise<void> {
 }
 
 /**
+ * Install a notification-received listener that records OTA push updateIds
+ * into the same AsyncStorage cursor `checkAndNotifyOtaRelease` reads. This
+ * dedupes the local fallback when a remote push has already informed the
+ * user about a given bundle.
+ *
+ * Returns an unsubscribe function.
+ */
+export function installOtaPushReceivedListener(): () => void {
+  const sub = Notifications.addNotificationReceivedListener((notification) => {
+    const data = notification.request.content.data as Record<string, unknown> | null;
+    if (!data || data.type !== 'ota-release') return;
+    const announcedUpdateId =
+      typeof data.updateId === 'string' && data.updateId ? data.updateId : null;
+    if (!announcedUpdateId) return;
+    AsyncStorage.setItem(LAST_NOTIFIED_KEY, announcedUpdateId).catch(() => undefined);
+  });
+  return () => sub.remove();
+}
+
+/**
  * Pull a pending OTA bundle in the background. If a new update is available
  * and downloads cleanly, it activates on the NEXT cold start (where
  * `checkAndNotifyOtaRelease` will surface it).

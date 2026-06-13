@@ -31,7 +31,12 @@ import {
   configureForegroundNotificationHandler,
 } from '@/contexts/NotificationPreferencesContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
-import { checkAndNotifyOtaRelease, fetchPendingOtaUpdate } from '@/updates/otaNotifier';
+import { registerForRemotePushAsync } from '@/notifications/pushRegistration';
+import {
+  checkAndNotifyOtaRelease,
+  fetchPendingOtaUpdate,
+  installOtaPushReceivedListener,
+} from '@/updates/otaNotifier';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
@@ -116,10 +121,17 @@ export default function App() {
   //      OTA bundle that opted in (via `src/data/otaRelease.json`).
   //   2) Pull any newer pending bundle in the background so it lands on the
   //      next cold start.
+  //   3) Best-effort register this device's Expo Push token with Supabase so
+  //      `scripts/send-push.mjs` can reach it on the next OTA. No-ops on
+  //      Expo Go / simulators / missing permission / unconfigured Supabase.
   useEffect(() => {
-    if (!fontsReady) return;
+    if (!fontsReady) return undefined;
     checkAndNotifyOtaRelease().catch(() => undefined);
     fetchPendingOtaUpdate().catch(() => undefined);
+    registerForRemotePushAsync().catch(() => undefined);
+    // Listen for incoming OTA push notifications and dedupe the local
+    // fallback so the user doesn't see two banners for the same bundle.
+    return installOtaPushReceivedListener();
   }, [fontsReady]);
 
   if (!fontsReady) {

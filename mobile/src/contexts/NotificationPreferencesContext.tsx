@@ -14,6 +14,7 @@ import {
   cancelAllDailyVerseNotifications,
   scheduleDailyVerseRollingWindow,
 } from '@/notifications/scheduler';
+import { registerForRemotePushAsync } from '@/notifications/pushRegistration';
 import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
 
 const PREFS_KEY = '@vedansh/notif-prefs';
@@ -287,6 +288,11 @@ export function NotificationPreferencesProvider({
       const next: PermissionStatus =
         status === 'granted' ? 'granted' : status === 'denied' ? 'denied' : 'undetermined';
       setPermissionStatus(next);
+      if (next === 'granted') {
+        // Fire-and-forget remote push registration as soon as the user opts
+        // in — no reason to wait for the next cold start.
+        registerForRemotePushAsync().catch(() => undefined);
+      }
       return next;
     } catch {
       return 'undetermined';

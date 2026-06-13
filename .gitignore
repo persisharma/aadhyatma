@@ -16,3 +16,8 @@
 
 # macOS
 .DS_Store
+
+# Local secrets — never commit
+.env
+mobile/.env
+
