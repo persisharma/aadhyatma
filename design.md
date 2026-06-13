@@ -803,7 +803,7 @@ Same as Section 21, but filtered by deity tag instead of category. Title shows d
 **Visual treatment:**
 
 - SVG outline of India (mainland + visible major islands), single `saffron-deep @ 0.6 opacity` stroke at 1.2 px, no fill (the parchment shows through).
-- State boundaries (optional in v1) as thinner `saffron @ 0.25 opacity` strokes at 0.6 px.
+- State boundaries (shown by default on the Theerth surface, PRD-08) as thinner `saffron @ 0.25 opacity` strokes at 0.6 px. The focused state in the By-State view is filled `saffron @ 0.12 opacity`.
 - Aspect ratio ~1:1.2 (wider tail south, narrower north — proportional to India's actual extent).
 - No labels on the map itself (state names are surface in the state-list view, not on pins).
 
@@ -811,23 +811,21 @@ Same as Section 21, but filtered by deity tag instead of category. Title shows d
 
 ```ts
 type IndiaMapProps = {
-  pins: Array<{
-    id: string;
-    lat: number;
-    lng: number;
-    label: string;             // language-resolved by parent
-    onPress: (id: string) => void;
-  }>;
+  pins: Array<{ id: string; lat: number; lng: number; label: string }>;
   width: number;               // computed by parent from screen width
-  showStates?: boolean;        // default false in v1
+  onPinPress: (id: string) => void;
+  showStates?: boolean;        // default true on the Theerth surface (PRD-08)
+  highlightStateEn?: string;   // fill the matching state (By-State focus)
 };
 ```
 
-**Projection:** equirectangular, bounded by India's extent: lat ∈ [6, 38] → y ∈ [0, height]; lng ∈ [68, 98] → x ∈ [0, width]. Latitude is flipped (north = top). No distortion correction — at India's latitude band the visual difference vs Mercator is < 5 px and irrelevant for pin placement.
+**Projection:** equirectangular, bounded by India's extent: lat ∈ [6, 38] → y ∈ [0, height]; lng ∈ [68, 98] → x ∈ [0, width]. Latitude is flipped (north = top). No distortion correction — the ~1:1.15 viewport aspect (`width 300 × height 345`) is achieved purely by the viewBox dimensions, a per-axis linear map. The pins are projected with the exact same `INDIA_PROJECTION` constants the paths were generated from, so a pin lands precisely on the real outline.
 
-**Coordinate sanity:** the component should warn (dev mode only) if any pin's lat/lng falls outside the bounding box — catches lat/lng swaps and bad source data before they render off-screen.
+**Coordinate sanity:** the component warns (dev mode only) if any pin's lat/lng falls outside the bounding box — catches lat/lng swaps and bad source data before they render off-screen.
 
-**Performance:** the SVG outline is a static path string committed as a constant. No runtime simplification, no GeoJSON parsing. Render cost is dominated by the pin count (12 in v1, can scale to ~50 before considering canvas).
+**Data provenance (PRD-08).** The outline + 36 state/UT boundaries are **real geography**, generated once from public-domain Natural Earth 50m (`admin_0_countries` + `admin_1_states_provinces`) by `scripts/build-india-map.mjs` and committed as static SVG path constants in `mobile/src/components/indiaMapPaths.generated.ts` (`INDIA_OUTLINE`, `INDIA_STATES`, `INDIA_PROJECTION`). Re-run the script to refresh; do **not** hand-edit the generated file.
+
+**Performance:** paths are static committed constants (~35 KB total). No runtime simplification, no GeoJSON parsing, no map provider, no API key. Render cost is dominated by the pin count (~44 today, scales to ~50 before considering canvas).
 
 ---
 

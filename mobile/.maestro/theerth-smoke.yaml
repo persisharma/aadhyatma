@@ -1,0 +1,57 @@
+# Theerth Category Smoke Test (PRD-08)
+#
+# Verifies the real-India-map pilgrimage surface end-to-end:
+#   Home → Pilgrimage tile → Famous Theerths → map renders →
+#   tap a pin → detail (with the §10.3 pending-verification placeholder) →
+#   back → By-State view (compact map + state-focus highlight).
+#
+# Category labels (Home + CategoryList) always use the English nameEn via
+# CategoryCard ("<nameEn>. Tap to open."), regardless of UI language. Pin/row
+# labels follow the active language, so we switch to English first to make the
+# in-screen taps deterministic.
+
+appId: host.exp.Exponent
+---
+- runFlow: _launch.yaml
+
+# Open the Theerth (Pilgrimage) category from Home
+- assertVisible: "Pilgrimage. Tap to open."
+- tapOn: "Pilgrimage. Tap to open."
+- waitForAnimationToEnd
+
+# Open the all-temples map ("Famous Theerths")
+- extendedWaitUntil:
+    visible: "Famous Theerths. Tap to open."
+    timeout: 15000
+- tapOn: "Famous Theerths. Tap to open."
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# Force English so pin/section labels are deterministic, then confirm the
+# TheerthMap surface rendered (view-mode toggle is the stable anchor).
+- tapOn: "English"
+- waitForAnimationToEnd
+- assertVisible: "By State"
+- assertVisible: "By Yatra"
+
+# Tap a pin on the real map → temple detail
+- tapOn: "Somnath"
+- waitForAnimationToEnd:
+    timeout: 15000
+- assertVisible: "Significance"
+- assertVisible: "Origin Story"
+# RULEBOOK §10.3 placeholder is shown until prose is sourced
+- assertVisible:
+    text: ".*pending verification.*"
+    optional: true
+
+# Back to the map, then switch to the By-State view (compact map + highlight)
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "By State"
+- waitForAnimationToEnd
+- assertVisible: "Tap a state name to locate it on the map"
+
+# Clean up — Expo Go termination resets the navigation stack for the next flow.
+- stopApp:
+    appId: host.exp.Exponent

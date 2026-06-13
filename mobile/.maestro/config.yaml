@@ -1,0 +1,10 @@
+# Maestro workspace config for Vedansh
+#
+# snapshotKeyHonorModalViews: false lets Maestro read elements behind iOS
+# modal sheets (like the Expo Go dev menu that appears on every bundle load).
+# Without this, Maestro can't see the React Native Home screen until the dev
+# menu is manually dismissed — which Maestro can't do because the dev menu is
+# a native SwiftUI sheet outside RN's view hierarchy.
+platform:
+  ios:
+    snapshotKeyHonorModalViews: false

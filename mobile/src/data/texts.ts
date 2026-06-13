@@ -330,7 +330,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'famous-theerth',
     nameHi: 'प्रसिद्ध तीर्थ',
     nameEn: 'Famous Theerths',
-    sub: 'सम्पूर्ण मानचित्र · 29 तीर्थ',
+    sub: 'सम्पूर्ण मानचित्र · 44 तीर्थ',
     thumb: 'प्र',
     status: 'active',
     category: 'theerth',
