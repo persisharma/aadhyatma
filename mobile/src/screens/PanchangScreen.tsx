@@ -382,7 +382,7 @@ export default function PanchangScreen() {
               ))
             ) : (
               <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
-                {isHindi ? 'इस तिथि पर बंडल सूची में कोई प्रमुख व्रत या पर्व नहीं है।' : 'No major vrat or festival in the bundled list for this date.'}
+                {isHindi ? 'इस तिथि पर कोई व्रत या पर्व नहीं है।' : 'No vrat or festival falls on this date.'}
               </Text>
             )}
           </View>
