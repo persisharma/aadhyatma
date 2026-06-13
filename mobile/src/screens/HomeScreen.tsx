@@ -58,6 +58,17 @@ export default function HomeScreen({ navigation }: Props) {
       icon: categoryIcons['deity'],
       onPress: () => navigation.navigate('DeityIndex'),
     },
+    ...(__DEV__
+      ? [
+          {
+            key: 'theerth-preview',
+            nameHi: 'तीर्थ',
+            nameEn: 'Theerth · Preview',
+            status: 'active' as const,
+            onPress: () => navigation.navigate('TheerthMap'),
+          },
+        ]
+      : []),
   ];
 
   const screenWidth = Dimensions.get('window').width;

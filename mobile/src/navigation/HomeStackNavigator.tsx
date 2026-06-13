@@ -33,6 +33,8 @@ import RamStutiReaderScreen from '@/screens/RamStutiReaderScreen';
 import RamcharitmanasChaptersScreen from '@/screens/RamcharitmanasChaptersScreen';
 import RamcharitmanasReaderScreen from '@/screens/RamcharitmanasReaderScreen';
 import AartiReaderScreen from '@/screens/AartiReaderScreen';
+import TheerthMapScreen from '@/screens/TheerthMapScreen';
+import TheerthDetailScreen from '@/screens/TheerthDetailScreen';
 import type { HomeStackParamList } from './types';
 
 const LazyJapamCounterScreen = lazy(() => import('@/screens/JapamCounterScreen'));
@@ -152,6 +154,16 @@ export default function HomeStackNavigator() {
         name="JapamCounter"
         component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="TheerthMap"
+        component={TheerthMapScreen}
+        options={{ animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="TheerthDetail"
+        component={TheerthDetailScreen}
+        options={{ animation: 'slide_from_right' }}
       />
     </Stack.Navigator>
   );

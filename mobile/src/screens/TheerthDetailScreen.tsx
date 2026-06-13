@@ -1,0 +1,299 @@
+import React from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import LanguageToggle from '@/components/LanguageToggle';
+import { getJyotirlingaById } from '@/data/theerth/jyotirlingas';
+import type { HomeStackParamList } from '@/navigation/types';
+
+type Props = NativeStackScreenProps<HomeStackParamList, 'TheerthDetail'>;
+
+export default function TheerthDetailScreen({ route, navigation }: Props) {
+  const { templeId } = route.params;
+  const { colors, typography, spacing } = useTheme();
+  const { lang } = useGitaLanguage();
+
+  const temple = getJyotirlingaById(templeId);
+
+  if (!temple) {
+    return (
+      <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+        <SafeAreaView style={styles.safe} edges={['top']}>
+          <Text style={{ color: colors.ink, padding: 24 }}>
+            Temple not found: {templeId}
+          </Text>
+        </SafeAreaView>
+      </View>
+    );
+  }
+
+  const name = lang === 'hi' ? temple.nameHi : temple.nameEn;
+  const cityState =
+    lang === 'hi'
+      ? `${temple.cityHi}, ${temple.stateHi}`
+      : `${temple.cityEn}, ${temple.stateEn}`;
+
+  return (
+    <View style={styles.root}>
+      <LinearGradient
+        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
+        style={StyleSheet.absoluteFill}
+      />
+      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
+        <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
+          <Pressable
+            onPress={() => navigation.goBack()}
+            accessibilityRole="button"
+            accessibilityLabel="Back"
+            hitSlop={16}
+            style={({ pressed }) => [
+              styles.backBtn,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
+              pressed && { opacity: 0.7 },
+            ]}
+          >
+            <Text style={{ color: colors.inkSoft, fontSize: 18 }}>{'‹'}</Text>
+          </Pressable>
+          <Text
+            numberOfLines={1}
+            style={{
+              fontFamily: typography.readerTitle.fontFamily,
+              fontSize: typography.readerTitle.fontSize,
+              color: colors.ink,
+              maxWidth: 240,
+            }}
+          >
+            {name}
+          </Text>
+          <View style={styles.backBtnSpacer} />
+        </View>
+
+        <ScrollView
+          contentContainerStyle={[
+            styles.scroll,
+            { paddingHorizontal: spacing.xxl, paddingBottom: spacing.xxl * 2 },
+          ]}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.hero}>
+            <Text
+              style={{
+                fontFamily: typography.screenTitle.fontFamily,
+                fontSize: 28,
+                color: colors.ink,
+                textAlign: 'center',
+                includeFontPadding: false,
+              }}
+            >
+              {name}
+            </Text>
+            <Text
+              style={{
+                fontFamily: typography.cardLatin.fontFamily,
+                fontSize: 14,
+                color: colors.inkMuted,
+                textAlign: 'center',
+                marginTop: 6,
+                fontStyle: 'italic',
+                includeFontPadding: false,
+              }}
+            >
+              {cityState}
+            </Text>
+            <View
+              style={[
+                styles.deityPill,
+                { backgroundColor: colors.saffronTint, borderColor: colors.divider },
+              ]}
+            >
+              <Text
+                style={{
+                  fontSize: 10,
+                  letterSpacing: 3,
+                  fontWeight: '600',
+                  color: colors.saffronDeep,
+                }}
+              >
+                {lang === 'hi' ? 'शिव' : 'SHIVA'}
+              </Text>
+            </View>
+          </View>
+
+          <Ornament colors={colors} />
+
+          <SectionBlock
+            labelHi="महिमा"
+            labelEn="Significance"
+            lang={lang}
+            colors={colors}
+            typography={typography}
+          />
+          <PlaceholderProse lang={lang} colors={colors} typography={typography} kind="significance" />
+
+          <Ornament colors={colors} />
+
+          <SectionBlock
+            labelHi="उद्भव कथा"
+            labelEn="Origin Story"
+            lang={lang}
+            colors={colors}
+            typography={typography}
+          />
+          <PlaceholderProse lang={lang} colors={colors} typography={typography} kind="origin" />
+
+          <Text
+            style={{
+              textAlign: 'center',
+              fontFamily: typography.cardLatin.fontFamily,
+              fontSize: 12,
+              color: colors.inkMuted,
+              marginTop: spacing.xl,
+              fontStyle: 'italic',
+              opacity: 0.7,
+            }}
+          >
+            {lang === 'hi'
+              ? 'स्रोत — सत्यापन प्रतीक्षित (RULEBOOK §10.1)'
+              : 'Sources — pending verification per RULEBOOK §10.1'}
+          </Text>
+        </ScrollView>
+
+        <View style={[styles.bottomBar, { borderTopColor: colors.divider }]}>
+          <LanguageToggle />
+        </View>
+      </SafeAreaView>
+    </View>
+  );
+}
+
+function Ornament({ colors }: { colors: ReturnType<typeof useTheme>['colors'] }) {
+  return (
+    <View style={styles.ornamentRow}>
+      <View style={[styles.ornamentLine, { backgroundColor: colors.saffron, opacity: 0.6 }]} />
+      <Text style={{ color: colors.saffronDeep, fontSize: 20, marginHorizontal: 12 }}>
+        {'॥'}
+      </Text>
+      <View style={[styles.ornamentLine, { backgroundColor: colors.saffron, opacity: 0.6 }]} />
+    </View>
+  );
+}
+
+type SectionBlockProps = {
+  labelHi: string;
+  labelEn: string;
+  lang: 'hi' | 'en';
+  colors: ReturnType<typeof useTheme>['colors'];
+  typography: ReturnType<typeof useTheme>['typography'];
+};
+
+function SectionBlock({ labelHi, labelEn, lang, colors, typography }: SectionBlockProps) {
+  const first = lang === 'hi' ? labelHi : labelEn;
+  const second = lang === 'hi' ? labelEn : labelHi;
+  return (
+    <Text
+      style={{
+        textAlign: 'center',
+        fontFamily: typography.meaningLabel.fontFamily,
+        fontSize: typography.meaningLabel.fontSize,
+        letterSpacing: typography.meaningLabel.letterSpacing,
+        color: colors.saffronDeep,
+        textTransform: 'uppercase',
+        marginVertical: 12,
+      }}
+    >
+      {first} · {second}
+    </Text>
+  );
+}
+
+type PlaceholderProseProps = {
+  lang: 'hi' | 'en';
+  colors: ReturnType<typeof useTheme>['colors'];
+  typography: ReturnType<typeof useTheme>['typography'];
+  kind: 'significance' | 'origin';
+};
+
+function PlaceholderProse({ lang, colors, typography, kind }: PlaceholderProseProps) {
+  const text =
+    lang === 'hi'
+      ? kind === 'significance'
+        ? 'इस तीर्थ की महिमा का सत्यापित विवरण शिवपुराण एवं मन्दिर ट्रस्ट के स्रोतों से लिया जाना है। (RULEBOOK §10.3)'
+        : 'इस तीर्थ की उद्भव कथा शिवपुराण के स्थलपुराण खंड से सत्यापित स्रोतों के साथ शामिल की जाएगी। (RULEBOOK §10.3)'
+      : kind === 'significance'
+      ? 'Verified significance content will be sourced from Shiva Purāṇa (Gita Press) and temple-trust publications. Placeholder per RULEBOOK §10.3.'
+      : 'Verified origin-story (Sthala Purāṇa) prose will be sourced from authoritative published editions per RULEBOOK §10.1 and §10.3. Placeholder until sourced.';
+  return (
+    <Text
+      style={{
+        fontFamily:
+          lang === 'hi'
+            ? typography.meaning.fontFamily
+            : typography.meaningEnglish.fontFamily,
+        fontSize: lang === 'hi' ? typography.meaning.fontSize : typography.meaningEnglish.fontSize,
+        lineHeight:
+          lang === 'hi' ? typography.meaning.lineHeight : typography.meaningEnglish.lineHeight,
+        color: colors.inkSoft,
+        textAlign: 'center',
+        fontStyle: 'italic',
+        marginBottom: 14,
+        paddingHorizontal: 8,
+      }}
+    >
+      {text}
+    </Text>
+  );
+}
+
+const styles = StyleSheet.create({
+  root: { flex: 1 },
+  safe: { flex: 1 },
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop: 14,
+    paddingBottom: 14,
+  },
+  backBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backBtnSpacer: { width: 34, height: 34 },
+  scroll: {
+    paddingTop: 4,
+  },
+  hero: {
+    alignItems: 'center',
+    paddingTop: 24,
+    paddingBottom: 16,
+  },
+  deityPill: {
+    marginTop: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  ornamentRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 12,
+  },
+  ornamentLine: {
+    height: 1,
+    width: 60,
+  },
+  bottomBar: {
+    paddingVertical: 12,
+    alignItems: 'center',
+    borderTopWidth: 1,
+  },
+});
