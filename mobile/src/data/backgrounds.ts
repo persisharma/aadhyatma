@@ -21,6 +21,11 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
   chalisa: backgroundImages.category_chalisa_booklet_mala,
   japam: backgroundImages.category_japam_mala,
   aarti: backgroundImages.category_aarti_diya,
+  // Theerth has no faded-sketch background of its own yet — the CategoryList
+  // re-uses the granth scripture image as a neutral parchment plate while
+  // PRD-07 Phase 4 commissions a dedicated kshetra sketch. Replace once
+  // the asset lands.
+  theerth: backgroundImages.category_granth_open_scripture,
 };
 
 const deityBackgrounds: Record<Deity, BackgroundImage> = {
@@ -116,6 +121,10 @@ export function getReaderBackground(
   }
 
   for (const entry of library.filter((item) => item.status === 'active' && !item.hidden)) {
+    // Theerth entries open TheerthMapScreen (per-temple sketches live on the
+    // detail screen), not a verse reader — so they have no source/reader
+    // background by design. Category background is still enforced above.
+    if (entry.category === 'theerth') continue;
     if (!getSourceBackground(entry.id)) {
       throw new Error(`backgrounds: missing source background for ${entry.id}`);
     }

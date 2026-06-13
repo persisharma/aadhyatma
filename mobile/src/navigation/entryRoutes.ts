@@ -10,6 +10,14 @@ type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
 const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa']);
 
+const theerthIds = new Set([
+  'dvadasha-jyotirlinga',
+  'char-dham',
+  'chota-char-dham',
+  'shakti-peeth',
+  'famous-theerth',
+]);
+
 const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'shiva-strotam': 'ShivaStrotamChapters',
   'durga-stotram': 'DurgaStotramChapters',
@@ -41,6 +49,10 @@ const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
 export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
   if (entry.category === 'japam') {
     nav.navigate('JapamCounter', { mantraId: entry.id });
+    return true;
+  }
+  if (entry.category === 'theerth' && theerthIds.has(entry.id)) {
+    nav.navigate('TheerthMap', { theerthId: entry.id });
     return true;
   }
   if (chalisaIds.has(entry.id)) {
@@ -110,6 +122,12 @@ export function buildProgressTarget(p: {
   verseIndex: number;
 }): BookmarkTarget | null {
   const sourceId = canonicalSourceId(p.sourceId);
+  if (theerthIds.has(sourceId)) {
+    return {
+      screen: 'TheerthMap',
+      params: { theerthId: sourceId },
+    };
+  }
   if (chalisaIds.has(sourceId)) {
     return {
       screen: 'ChalisaReader',

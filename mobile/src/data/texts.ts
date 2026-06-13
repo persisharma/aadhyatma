@@ -21,7 +21,8 @@ export type ContentCategory =
   | 'stotram'
   | 'chalisa'
   | 'japam'
-  | 'aarti';
+  | 'aarti'
+  | 'theerth';
 export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr';
 
 export type LibraryEntry = {
@@ -279,5 +280,60 @@ export const library: readonly LibraryEntry[] = [
     category: 'aarti',
     deities: ['krishna'],
     verseCount: 6,
+  },
+  // ─────────── Theerth (तीर्थ) — pilgrimage map archetype ───────────
+  // One LibraryEntry per yatra; each opens TheerthMapScreen with that
+  // group's pins pre-filtered. Per RULEBOOK §11, content is verified
+  // sourced prose per temple (PRD-07 Phase 4). v1 shows pins + a
+  // pending-verification placeholder on the detail screen.
+  {
+    id: 'dvadasha-jyotirlinga',
+    nameHi: 'द्वादश ज्योतिर्लिङ्ग',
+    nameEn: 'Dvādaśa Jyotirlinga',
+    sub: '12 ज्योतिर्लिङ्ग · मानचित्र दर्शन',
+    thumb: 'ज्यो',
+    status: 'active',
+    category: 'theerth',
+    deities: ['shiva'],
+  },
+  {
+    id: 'char-dham',
+    nameHi: 'चार धाम',
+    nameEn: 'Char Dham',
+    sub: '4 धाम · मानचित्र दर्शन',
+    thumb: 'चा',
+    status: 'active',
+    category: 'theerth',
+    deities: ['vishnu', 'krishna', 'shiva'],
+  },
+  {
+    id: 'chota-char-dham',
+    nameHi: 'छोटा चार धाम',
+    nameEn: 'Chota Char Dham',
+    sub: '4 धाम · उत्तराखंड',
+    thumb: 'छो',
+    status: 'active',
+    category: 'theerth',
+    deities: ['shiva', 'vishnu', 'durga'],
+  },
+  {
+    id: 'shakti-peeth',
+    nameHi: 'शक्ति पीठ',
+    nameEn: 'Shakti Peeth',
+    sub: '6 शक्ति पीठ · देवी दर्शन',
+    thumb: 'श',
+    status: 'active',
+    category: 'theerth',
+    deities: ['durga'],
+  },
+  {
+    id: 'famous-theerth',
+    nameHi: 'प्रसिद्ध तीर्थ',
+    nameEn: 'Famous Theerths',
+    sub: 'सम्पूर्ण मानचित्र · 29 तीर्थ',
+    thumb: 'प्र',
+    status: 'active',
+    category: 'theerth',
+    deities: ['shiva', 'vishnu', 'krishna', 'durga', 'savitr'],
   },
 ];

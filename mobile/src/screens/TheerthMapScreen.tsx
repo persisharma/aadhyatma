@@ -23,17 +23,33 @@ import {
   type TempleEntry,
   type TheerthGroup,
 } from '@/data/theerth/temples';
+import { library } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'TheerthMap'>;
 type ViewMode = 'map' | 'state' | 'yatra';
 type GroupFilter = TheerthGroup | 'all';
 
-export default function TheerthMapScreen({ navigation }: Props) {
+const ENTRY_TO_FILTER: Record<string, GroupFilter> = {
+  'dvadasha-jyotirlinga': 'jyotirlinga',
+  'char-dham': 'char-dham',
+  'chota-char-dham': 'chota-char-dham',
+  'shakti-peeth': 'shakti-peeth',
+  'famous-theerth': 'all',
+};
+
+export default function TheerthMapScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const theerthId = route.params?.theerthId;
+  const entry = useMemo(
+    () => (theerthId ? library.find((e) => e.id === theerthId) : undefined),
+    [theerthId],
+  );
   const [mode, setMode] = useState<ViewMode>('map');
-  const [filter, setFilter] = useState<GroupFilter>('all');
+  const [filter, setFilter] = useState<GroupFilter>(() =>
+    theerthId ? ENTRY_TO_FILTER[theerthId] ?? 'all' : 'all',
+  );
 
   const screenWidth = Dimensions.get('window').width;
   const mapWidth = Math.min(screenWidth - 2 * spacing.xxl, 320);
@@ -84,13 +100,15 @@ export default function TheerthMapScreen({ navigation }: Props) {
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>{'‹'}</Text>
           </Pressable>
           <Text
+            numberOfLines={1}
             style={{
               fontFamily: typography.readerTitle.fontFamily,
               fontSize: typography.readerTitle.fontSize,
               color: colors.ink,
+              maxWidth: 220,
             }}
           >
-            {lang === 'hi' ? 'तीर्थ' : 'Theerth'}
+            {entry ? (lang === 'hi' ? entry.nameHi : entry.nameEn) : lang === 'hi' ? 'तीर्थ' : 'Theerth'}
           </Text>
           <View style={styles.backBtnSpacer} />
         </View>
