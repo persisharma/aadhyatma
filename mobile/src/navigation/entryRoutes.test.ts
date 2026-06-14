@@ -150,6 +150,7 @@ for (const sourceId of [
     nameHi: 'विष्णु सहस्रनाम अंश',
     nameEn: 'Vishnu Sahasranama Excerpt',
     sub: '',
+    subEn: '',
     thumb: '',
     status: 'active',
     category: 'stotram',
