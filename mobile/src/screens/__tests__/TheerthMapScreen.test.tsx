@@ -7,17 +7,14 @@ jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light' },
   impactAsync: jest.fn(() => Promise.resolve()),
 }));
-
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
   setItem: jest.fn(() => Promise.resolve()),
 }));
-
 jest.mock('expo-linear-gradient', () => ({
   LinearGradient: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
     mockReact.createElement(require('react-native').View, props, children),
 }));
-
 jest.mock('react-native-safe-area-context', () => {
   const ReactLib = require('react');
   const { View } = require('react-native');
@@ -28,7 +25,6 @@ jest.mock('react-native-safe-area-context', () => {
     useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
   };
 });
-
 jest.mock('react-native-svg', () => {
   const ReactLib = require('react');
   const { View } = require('react-native');
@@ -47,14 +43,15 @@ const TheerthMapScreen = jest.requireActual<typeof import('../TheerthMapScreen')
 
 type Props = React.ComponentProps<typeof TheerthMapScreen>;
 
-function makeNavigation() {
+function makeNav() {
+  const push = jest.fn();
   const navigate = jest.fn();
-  const navigation = { navigate, goBack: jest.fn() } as unknown as Props['navigation'];
-  return { navigation, navigate };
+  const navigation = { push, navigate, goBack: jest.fn() } as unknown as Props['navigation'];
+  return { navigation, push, navigate };
 }
-const route = { key: 'TheerthMap', name: 'TheerthMap', params: {} } as Props['route'];
 
-function render(navigation: Props['navigation'], lang: 'hi' | 'en' = 'hi') {
+function render(navigation: Props['navigation'], params: object | undefined, lang: 'hi' | 'en' = 'hi') {
+  const route = { key: 'TheerthMap', name: 'TheerthMap', params } as Props['route'];
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
@@ -66,110 +63,88 @@ function render(navigation: Props['navigation'], lang: 'hi' | 'en' = 'hi') {
   return tree;
 }
 
-function allText(tree: TestRenderer.ReactTestRenderer): string {
-  return tree.root
-    .findAllByType(Text)
-    .map((n) => n.props.children)
-    .flat(Number.POSITIVE_INFINITY)
-    .join(' ');
-}
+const allText = (tree: TestRenderer.ReactTestRenderer) =>
+  tree.root.findAllByType(Text).map((n) => n.props.children).flat(Number.POSITIVE_INFINITY).join(' ');
 
-// View-mode toggle radios (By State / By Category) carry no accessibilityLabel;
-// the language toggle radios (Hindi/English) do — exclude those.
-function viewRadios(tree: TestRenderer.ReactTestRenderer) {
-  return tree.root.findAll(
+const tappable = (tree: TestRenderer.ReactTestRenderer, label: string) =>
+  tree.root.findAll((n) => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function');
+
+// view-mode radios carry no accessibilityLabel (language radios do)
+const viewRadios = (tree: TestRenderer.ReactTestRenderer) =>
+  tree.root.findAll(
     (n) =>
       n.props.accessibilityRole === 'radio' &&
       typeof n.props.onPress === 'function' &&
       n.props.accessibilityLabel === undefined,
   );
-}
 
-function tappableByLabel(tree: TestRenderer.ReactTestRenderer, label: string) {
-  return tree.root.findAll(
-    (n) => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function',
-  );
-}
+// ─── Listing mode (no params) ─────────────────────────────────────────────────
 
-test('renders the Theerth map screen with the Devanagari title', () => {
-  const { navigation } = makeNavigation();
-  const tree = render(navigation, 'hi');
-  assert.match(allText(tree), /तीर्थ/);
+test('listing shows the title and a By State / By Category toggle', () => {
+  const { navigation } = makeNav();
+  const tree = render(navigation, {}, 'en');
+  assert.match(allText(tree), /Theerth/);
+  assert.equal(viewRadios(tree).length, 2);
+  assert.match(allText(tree), /By State/);
+  assert.match(allText(tree), /By Category/);
 });
 
-test('exposes exactly two view-mode toggles (By State / By Category)', () => {
-  const { navigation } = makeNavigation();
-  const tree = render(navigation, 'en');
-  assert.equal(viewRadios(tree).length, 2, 'expected a 2-option toggle');
-  const text = allText(tree);
-  assert.match(text, /By State/);
-  assert.match(text, /By Category/);
-});
-
-test('no internal filter chips are rendered', () => {
-  const { navigation } = makeNavigation();
-  const tree = render(navigation, 'en');
-  const chips = tree.root.findAll(
+test('listing has no add-to-routine / filter chips', () => {
+  const { navigation } = makeNav();
+  const tree = render(navigation, {}, 'en');
+  const filterish = tree.root.findAll(
     (n) =>
       typeof n.props.accessibilityLabel === 'string' &&
-      n.props.accessibilityLabel.startsWith('filter-'),
+      (n.props.accessibilityLabel.startsWith('filter-') || /add .* to a routine/i.test(n.props.accessibilityLabel)),
   );
-  assert.equal(chips.length, 0, 'filter chips should be gone');
+  assert.equal(filterish.length, 0);
 });
 
-test('tapping a map pin navigates to TheerthDetail with the temple id', () => {
-  const { navigation, navigate } = makeNavigation();
-  const tree = render(navigation, 'hi');
-  // Map is always visible; the pin carries the temple name as its a11y label.
-  const target = tappableByLabel(tree, 'सोमनाथ')[0];
-  act(() => {
-    target.props.onPress();
-  });
+test('listing By-Category card drills into that group', () => {
+  const { navigation, push } = makeNav();
+  const tree = render(navigation, {}, 'hi'); // default mode = category
+  const card = tappable(tree, 'द्वादश ज्योतिर्लिङ्ग')[0];
+  act(() => card.props.onPress());
+  const call = push.mock.calls.at(-1) as [string, { group: string }];
+  assert.equal(call[0], 'TheerthMap');
+  assert.equal(call[1].group, 'jyotirlinga');
+});
+
+test('listing By-State card drills into that state', () => {
+  const { navigation, push } = makeNav();
+  const tree = render(navigation, {}, 'en');
+  act(() => viewRadios(tree)[0].props.onPress()); // By State (first option)
+  const card = tappable(tree, 'Gujarat')[0];
+  act(() => card.props.onPress());
+  const call = push.mock.calls.at(-1) as [string, { stateEn: string }];
+  assert.equal(call[0], 'TheerthMap');
+  assert.equal(call[1].stateEn, 'Gujarat');
+});
+
+// ─── Drill-in mode (group / state) ────────────────────────────────────────────
+
+test('group drill-in lists only that category and a row navigates to detail', () => {
+  const { navigation, navigate } = makeNav();
+  const tree = render(navigation, { group: 'jyotirlinga' }, 'hi');
+  assert.match(allText(tree), /द्वादश ज्योतिर्लिङ्ग/); // title
+  // Char Dham / Chota Char Dham are NOT shown as section headers here (flat list)
+  assert.doesNotMatch(allText(tree), /छोटा चार धाम/);
+  const row = tappable(tree, 'सोमनाथ')[0];
+  act(() => row.props.onPress());
   const call = navigate.mock.calls.at(-1) as [string, { templeId: string }];
   assert.equal(call[0], 'TheerthDetail');
   assert.equal(call[1].templeId, 'somnath');
 });
 
-test('By-State view (default) focuses a state when its header is tapped', () => {
-  const { navigation } = makeNavigation();
-  const tree = render(navigation, 'hi');
-  const header = tree.root.findAll(
-    (n) =>
-      n.props.accessibilityRole === 'button' &&
-      typeof n.props.accessibilityLabel === 'string' &&
-      n.props.accessibilityLabel.includes('Gujarat') &&
-      typeof n.props.onPress === 'function',
-  )[0];
-  act(() => {
-    header.props.onPress();
-  });
-  assert.match(allText(tree), /◆/);
-});
-
-test('By-State list rows navigate to TheerthDetail', () => {
-  const { navigation, navigate } = makeNavigation();
-  const tree = render(navigation, 'hi');
-  const target = tappableByLabel(tree, 'श्रीनाथजी')[0];
-  act(() => {
-    target.props.onPress();
-  });
+test('state drill-in lists temples of that state', () => {
+  const { navigation, navigate } = makeNav();
+  const tree = render(navigation, { stateEn: 'Gujarat' }, 'en');
+  const text = allText(tree);
+  assert.match(text, /Somnath/);
+  assert.match(text, /Dwarkadhish/);
+  const row = tappable(tree, 'Nageshwar')[0];
+  act(() => row.props.onPress());
   const call = navigate.mock.calls.at(-1) as [string, { templeId: string }];
   assert.equal(call[0], 'TheerthDetail');
-  assert.equal(call[1].templeId, 'srinathji');
-});
-
-test('By-Category view lists category sections and rows navigate', () => {
-  const { navigation, navigate } = makeNavigation();
-  const tree = render(navigation, 'en');
-  act(() => {
-    viewRadios(tree)[1].props.onPress(); // By Category
-  });
-  assert.match(allText(tree), /Other Famous Temples/);
-  const row = tappableByLabel(tree, 'Tirupati Balaji')[0];
-  act(() => {
-    row.props.onPress();
-  });
-  const call = navigate.mock.calls.at(-1) as [string, { templeId: string }];
-  assert.equal(call[0], 'TheerthDetail');
-  assert.equal(call[1].templeId, 'tirupati-balaji');
+  assert.equal(call[1].templeId, 'nageshwar');
 });

@@ -61,7 +61,10 @@ export default function HomeScreen({ navigation }: Props) {
       status: 'active' as const,
       icon: categoryIcons[c.id],
       hasNew: hasNewInCategory(c.id),
-      onPress: () => navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
+      onPress: () =>
+        c.id === 'theerth'
+          ? navigation.navigate('TheerthMap', {})
+          : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
     })),
     {
       key: 'deity',

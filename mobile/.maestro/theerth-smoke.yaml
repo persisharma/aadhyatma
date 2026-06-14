@@ -1,60 +1,50 @@
 # Theerth Category Smoke Test (PRD-08)
 #
-# Verifies the real-India-map pilgrimage surface end-to-end:
-#   Home → Pilgrimage tile → Famous Theerths → real map renders (always visible)
-#   → 2-way By State / By Category toggle → tap a map pin → temple detail (with
-#   the §10.3 pending-verification placeholder) → back → By Category view.
+# Verifies the pilgrimage information architecture end-to-end:
+#   Home → Pilgrimage tile → LISTING (By State / By Category toggle, no map,
+#   no ＋ add-to-routine) → drill into a category → real India map + flat
+#   single-category list → tap a temple → detail with sourced "Sources" footer
+#   → back to the listing → switch to By State.
 #
-# Loads THIS worktree's bundle directly via openLink (instead of the project-list
-# tap) so the run is deterministic even when several Conductor worktrees each
-# serve a "Vedansh" Expo dev server. Override the port per worktree:
-#   maestro test -e EXPO_URL=exp://127.0.0.1:8083 .maestro/theerth-smoke.yaml
+# Loads THIS worktree's bundle directly via openLink so the run is deterministic
+# even when several Conductor worktrees each serve a "Vedansh" dev server.
+# Override the port per worktree by editing the openLink line below.
 #
 # Notes:
 #  - Maestro anchors a text selector to an element's FULL text. The Pilgrimage
-#    tile carries a NEW badge so its label isn't exactly "Pilgrimage. Tap to
-#    open." — match ".*Pilgrimage.*Tap to open.*". A LibraryCard carries a
-#    subtitle, so match "Famous Theerths\..*Tap to open\.". Detail prose uses
-#    ".*RULEBOOK.*".
-#  - In By-State (default) a temple appears as both a map pin and a list row, so
-#    the pin tap uses index 0 (the map renders first).
+#    tile carries a NEW badge → ".*Pilgrimage.*Tap to open.*"; detail prose →
+#    ".*Sources.*".
+#  - In a drill-in a temple is both a map pin and a list row → pin tap uses index 0.
 appId: host.exp.Exponent
 ---
 - stopApp:
     appId: host.exp.Exponent
-# Point this at your worktree's Metro dev server (Expo default is 8081; use a
-# distinct port if another Conductor worktree already holds 8081).
-# Verified passing end-to-end against this worktree's Metro on port 8083.
+# Point this at your worktree's Metro dev server (Expo default 8081).
 - openLink:
     link: "exp://127.0.0.1:8081"
 
-# Home → Theerth (Pilgrimage) category. The tile shows a NEW badge → regex.
+# Home → Pilgrimage tile lands directly on the Theerth listing (no intermediate
+# library-entry list anymore). The tile shows a NEW badge → regex.
 - extendedWaitUntil:
     visible: ".*Pilgrimage.*Tap to open.*"
     timeout: 120000
 - tapOn: ".*Pilgrimage.*Tap to open.*"
 - waitForAnimationToEnd
 
-# Open the all-temples map ("Famous Theerths" LibraryCard carries a subtitle)
-- extendedWaitUntil:
-    visible: "Famous Theerths\\..*Tap to open\\."
-    timeout: 15000
-- tapOn: "Famous Theerths\\..*Tap to open\\."
-- waitForAnimationToEnd:
-    timeout: 15000
-
-# Force English so labels are deterministic, then confirm the real map surface
-# rendered with the 2-way grouping toggle.
+# Listing: force English, then confirm the By State / By Category toggle is here.
 - tapOn: "English"
 - waitForAnimationToEnd
 - assertVisible: "By State"
 - assertVisible: "By Category"
 
-# Tap a pin on the real map (index 0 = the map's pin, above the list row) → detail.
-# Every temple now has sourced prose + a "Sources — …" footer (PRD-07 Phase 4),
-# so assert that footer (temple-agnostic — dense pin clusters may open a neighbour).
+# By Category (default) → drill into Char Dham (a flat, single-category list).
+- tapOn: "Char Dham"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# Tap a temple on the real map (index 0 = the map pin) → detail with sourced prose.
 - tapOn:
-    text: "Somnath"
+    text: "Dwarkadhish"
     index: 0
 - waitForAnimationToEnd:
     timeout: 15000
@@ -62,13 +52,14 @@ appId: host.exp.Exponent
     visible: ".*Sources.*"
     timeout: 15000
 
-# Back to the map, switch to By Category grouping
+# Back to the drill-in, back to the listing, then switch to By State.
 - tapOn: "Back"
 - waitForAnimationToEnd
-- tapOn: "By Category"
+- tapOn: "Back"
 - waitForAnimationToEnd
-- assertVisible: "By State"
+- tapOn: "By State"
+- waitForAnimationToEnd
+- assertVisible: "Gujarat"
 
-# Clean up so the next flow starts from a cold launch.
 - stopApp:
     appId: host.exp.Exponent

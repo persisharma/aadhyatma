@@ -130,19 +130,23 @@ export default function LibraryCard({ entry, onPress }: Props) {
 
       {isActive ? (
         <View style={styles.tail}>
-          <Pressable
-            onPress={() => openAddToRoutine(entry.id)}
-            accessibilityRole="button"
-            accessibilityLabel={`Add ${entry.nameEn} to a routine`}
-            hitSlop={12}
-            style={({ pressed }) => [
-              styles.addBtn,
-              { borderColor: colors.gold, borderRadius: radii.pill },
-              pressed && { opacity: 0.6 },
-            ]}
-          >
-            <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 20 }}>＋</Text>
-          </Pressable>
+          {/* Theerth (pilgrimage) entries can't be added to a routine — they open
+              a map + temple detail, not a reader — so no add-to-routine button. */}
+          {entry.category !== 'theerth' ? (
+            <Pressable
+              onPress={() => openAddToRoutine(entry.id)}
+              accessibilityRole="button"
+              accessibilityLabel={`Add ${entry.nameEn} to a routine`}
+              hitSlop={12}
+              style={({ pressed }) => [
+                styles.addBtn,
+                { borderColor: colors.gold, borderRadius: radii.pill },
+                pressed && { opacity: 0.6 },
+              ]}
+            >
+              <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 20 }}>＋</Text>
+            </Pressable>
+          ) : null}
           <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
         </View>
       ) : (

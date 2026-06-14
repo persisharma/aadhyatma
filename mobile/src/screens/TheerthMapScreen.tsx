@@ -16,75 +16,43 @@ import LanguageToggle from '@/components/LanguageToggle';
 import IndiaMap, { type IndiaMapPin } from '@/components/IndiaMap';
 import {
   temples,
+  templesInGroup,
+  otherFamous,
   groupMeta,
   groupOrder,
   type TempleEntry,
   type TheerthGroup,
 } from '@/data/theerth/temples';
-import { library } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'TheerthMap'>;
-type ViewMode = 'state' | 'category';
-type GroupFilter = TheerthGroup | 'all';
+type Lang = 'hi' | 'en';
+type ListMode = 'category' | 'state';
+type CategoryKey = TheerthGroup | 'other';
 
-// The library entry the user came from scopes which temples show. There is no
-// in-screen filter anymore — the Home category / CategoryList already picks the
-// set (PRD-08 refinement), so the only in-screen control is the State/Category
-// grouping toggle.
-const ENTRY_TO_FILTER: Record<string, GroupFilter> = {
-  'dvadasha-jyotirlinga': 'jyotirlinga',
-  'char-dham': 'char-dham',
-  'chota-char-dham': 'chota-char-dham',
-  'shakti-peeth': 'shakti-peeth',
-  'famous-theerth': 'all',
-};
+const CATEGORY_KEYS: readonly CategoryKey[] = [...groupOrder, 'other'];
+
+function categoryTemples(key: CategoryKey): TempleEntry[] {
+  return key === 'other' ? otherFamous() : templesInGroup(key);
+}
+
+function categoryLabel(key: CategoryKey, lang: Lang): string {
+  if (key === 'other') return lang === 'hi' ? 'अन्य प्रसिद्ध तीर्थ' : 'Other Famous Temples';
+  const m = groupMeta[key];
+  return lang === 'hi' ? m.nameHi : m.nameEn;
+}
+
+const stateName = (t: TempleEntry, lang: Lang) => (lang === 'hi' ? t.stateHi : t.stateEn);
+const templeName = (t: TempleEntry, lang: Lang) => (lang === 'hi' ? t.nameHi : t.nameEn);
+const templeCity = (t: TempleEntry, lang: Lang) =>
+  lang === 'hi' ? `${t.cityHi}, ${t.stateHi}` : `${t.cityEn}, ${t.stateEn}`;
 
 export default function TheerthMapScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const theerthId = route.params?.theerthId;
-  const entry = useMemo(
-    () => (theerthId ? library.find((e) => e.id === theerthId) : undefined),
-    [theerthId],
-  );
-  const filter: GroupFilter = theerthId ? ENTRY_TO_FILTER[theerthId] ?? 'all' : 'all';
-
-  const [mode, setMode] = useState<ViewMode>('state');
-  // By-State view: which state's region is highlighted on the map.
-  const [focusedState, setFocusedState] = useState<string | null>(null);
-
-  const screenWidth = Dimensions.get('window').width;
-  const mapWidth = Math.min(screenWidth - 2 * spacing.xxl, 320);
-
-  const filteredTemples = useMemo<readonly TempleEntry[]>(() => {
-    if (filter === 'all') return temples;
-    return temples.filter((t) => t.groups.includes(filter));
-  }, [filter]);
-
-  const pins: IndiaMapPin[] = useMemo(
-    () =>
-      filteredTemples.map((t) => ({
-        id: t.id,
-        lat: t.coordinates.lat,
-        lng: t.coordinates.lng,
-        label: lang === 'hi' ? t.nameHi : t.nameEn,
-      })),
-    [filteredTemples, lang],
-  );
-
-  const stateSections = useMemo(
-    () => groupByState(filteredTemples, lang),
-    [filteredTemples, lang],
-  );
-  const categorySections = useMemo(
-    () => buildCategorySections(filteredTemples, lang),
-    [filteredTemples, lang],
-  );
-
-  const handleTemplePress = (id: string) => {
-    navigation.navigate('TheerthDetail', { templeId: id });
-  };
+  const group = route.params?.group as CategoryKey | undefined;
+  const stateEn = route.params?.stateEn;
+  const isDrill = !!group || !!stateEn;
 
   return (
     <View style={styles.root}>
@@ -93,169 +61,242 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
         style={StyleSheet.absoluteFill}
       />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-        <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
-          <Pressable
-            onPress={() => navigation.goBack()}
-            accessibilityRole="button"
-            accessibilityLabel="Back"
-            hitSlop={16}
-            style={({ pressed }) => [
-              styles.backBtn,
-              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
-              pressed && { opacity: 0.7 },
-            ]}
-          >
-            <Text style={{ color: colors.inkSoft, fontSize: 18 }}>{'‹'}</Text>
-          </Pressable>
-          <Text
-            numberOfLines={1}
-            style={{
-              fontFamily: typography.readerTitle.fontFamily,
-              fontSize: typography.readerTitle.fontSize,
-              color: colors.ink,
-              maxWidth: 220,
-            }}
-          >
-            {entry ? (lang === 'hi' ? entry.nameHi : entry.nameEn) : lang === 'hi' ? 'तीर्थ' : 'Theerth'}
-          </Text>
-          <View style={styles.backBtnSpacer} />
-        </View>
-
-        <View style={styles.toggleRow}>
-          <LanguageToggle />
-        </View>
-
-        <ScrollView
-          contentContainerStyle={[
-            styles.scroll,
-            { paddingHorizontal: spacing.xxl, paddingBottom: spacing.xxl * 2 },
-          ]}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* The real India map is the hero — always visible, above the toggle. */}
-          <IndiaMap
-            pins={pins}
-            width={mapWidth}
-            onPinPress={handleTemplePress}
-            highlightStateEn={mode === 'state' ? focusedState ?? undefined : undefined}
+        <TopBar
+          title={
+            isDrill
+              ? group
+                ? categoryLabel(group, lang)
+                : drillStateTitle(stateEn!, lang)
+              : lang === 'hi'
+                ? 'तीर्थ'
+                : 'Theerth'
+          }
+          onBack={() => navigation.goBack()}
+          colors={colors}
+          typography={typography}
+        />
+        {isDrill ? (
+          <DrillIn
+            group={group}
+            stateEn={stateEn}
+            lang={lang}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            spacing={spacing}
+            onTemplePress={(id) => navigation.navigate('TheerthDetail', { templeId: id })}
           />
-          <Text
-            style={[
-              styles.hint,
-              {
-                color: colors.inkMuted,
-                fontFamily: typography.swipeHint.fontFamily,
-                fontSize: typography.swipeHint.fontSize,
-                marginTop: spacing.lg,
-                marginBottom: spacing.lg,
-              },
-            ]}
-          >
-            {lang === 'hi'
-              ? 'पिन छूकर मंदिर की कथा पढ़ें'
-              : 'Tap a pin to read the temple’s story'}
-          </Text>
-
-          <View style={styles.viewToggleRow}>
-            <ViewToggle
-              mode={mode}
-              onChange={setMode}
-              lang={lang}
-              colors={colors}
-              typography={typography}
-              radii={radii}
-            />
-          </View>
-
-          {mode === 'state' ? (
-            <View>
-              {stateSections.map((group) => {
-                const isFocused = focusedState === group.stateKey;
-                return (
-                  <View key={group.stateKey} style={{ marginBottom: spacing.lg }}>
-                    <Pressable
-                      onPress={() =>
-                        setFocusedState(isFocused ? null : group.stateKey)
-                      }
-                      accessibilityRole="button"
-                      accessibilityState={{ selected: isFocused }}
-                      accessibilityLabel={group.label}
-                      hitSlop={8}
-                    >
-                      <Text
-                        style={[
-                          styles.sectionHeader,
-                          {
-                            color: isFocused ? colors.saffronDeep : colors.inkMuted,
-                            fontSize: typography.sectionLabel.fontSize,
-                            letterSpacing: typography.sectionLabel.letterSpacing,
-                          },
-                        ]}
-                      >
-                        {isFocused ? '◆ ' : ''}
-                        {group.label}
-                      </Text>
-                    </Pressable>
-                    {group.temples.map((temple) => (
-                      <TempleListRow
-                        key={temple.id}
-                        temple={temple}
-                        lang={lang}
-                        colors={colors}
-                        typography={typography}
-                        radii={radii}
-                        onPress={() => handleTemplePress(temple.id)}
-                      />
-                    ))}
-                  </View>
-                );
-              })}
-            </View>
-          ) : (
-            <View>
-              {categorySections.map((section) => (
-                <View key={section.key} style={{ marginBottom: spacing.lg }}>
-                  <Text
-                    style={[
-                      styles.sectionHeader,
-                      {
-                        color: colors.saffronDeep,
-                        fontSize: typography.sectionLabel.fontSize,
-                        letterSpacing: typography.sectionLabel.letterSpacing,
-                      },
-                    ]}
-                  >
-                    {section.label} · {section.temples.length}
-                  </Text>
-                  {section.temples.map((temple) => (
-                    <TempleListRow
-                      key={`${section.key}-${temple.id}`}
-                      temple={temple}
-                      lang={lang}
-                      colors={colors}
-                      typography={typography}
-                      radii={radii}
-                      onPress={() => handleTemplePress(temple.id)}
-                    />
-                  ))}
-                </View>
-              ))}
-            </View>
-          )}
-        </ScrollView>
+        ) : (
+          <Listing
+            lang={lang}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            spacing={spacing}
+            onOpenCategory={(key) => navigation.push('TheerthMap', { group: key })}
+            onOpenState={(s) => navigation.push('TheerthMap', { stateEn: s })}
+          />
+        )}
       </SafeAreaView>
     </View>
   );
 }
 
-type Lang = 'hi' | 'en';
+function drillStateTitle(stateEn: string, lang: Lang): string {
+  const t = temples.find((x) => x.stateEn === stateEn);
+  return t ? stateName(t, lang) : stateEn;
+}
+
 type ThemeBits = {
   colors: ReturnType<typeof useTheme>['colors'];
   typography: ReturnType<typeof useTheme>['typography'];
   radii: ReturnType<typeof useTheme>['radii'];
+  spacing: ReturnType<typeof useTheme>['spacing'];
 };
 
-function ViewToggle({
+function TopBar({
+  title,
+  onBack,
+  colors,
+  typography,
+}: {
+  title: string;
+  onBack: () => void;
+  colors: ThemeBits['colors'];
+  typography: ThemeBits['typography'];
+}) {
+  return (
+    <>
+      <View style={styles.topBar}>
+        <Pressable
+          onPress={onBack}
+          accessibilityRole="button"
+          accessibilityLabel="Back"
+          hitSlop={16}
+          style={({ pressed }) => [
+            styles.backBtn,
+            { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
+            pressed && { opacity: 0.7 },
+          ]}
+        >
+          <Text style={{ color: colors.inkSoft, fontSize: 18 }}>{'‹'}</Text>
+        </Pressable>
+        <Text
+          numberOfLines={1}
+          style={{
+            fontFamily: typography.readerTitle.fontFamily,
+            fontSize: typography.readerTitle.fontSize,
+            color: colors.ink,
+            maxWidth: 220,
+          }}
+        >
+          {title}
+        </Text>
+        <View style={styles.backBtnSpacer} />
+      </View>
+      {/* Language toggle at the top, consistent across every Theerth screen. */}
+      <View style={styles.langRow}>
+        <LanguageToggle />
+      </View>
+    </>
+  );
+}
+
+/** Pilgrimage listing: By Category / By State cards. No map, no add-to-routine. */
+function Listing({
+  lang,
+  colors,
+  typography,
+  radii,
+  spacing,
+  onOpenCategory,
+  onOpenState,
+}: {
+  lang: Lang;
+  onOpenCategory: (key: CategoryKey) => void;
+  onOpenState: (stateEn: string) => void;
+} & ThemeBits) {
+  const [mode, setMode] = useState<ListMode>('category');
+
+  const categoryCards = useMemo(
+    () =>
+      CATEGORY_KEYS.map((key) => ({ key, label: categoryLabel(key, lang), count: categoryTemples(key).length }))
+        .filter((c) => c.count > 0),
+    [lang],
+  );
+
+  const stateCards = useMemo(() => {
+    const map = new Map<string, TempleEntry[]>();
+    temples.forEach((t) => {
+      if (!map.has(t.stateEn)) map.set(t.stateEn, []);
+      map.get(t.stateEn)!.push(t);
+    });
+    return [...map.entries()]
+      .map(([key, list]) => ({ key, label: stateName(list[0], lang), count: list.length }))
+      .sort((a, b) => a.key.localeCompare(b.key));
+  }, [lang]);
+
+  return (
+    <ScrollView
+      contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl, paddingBottom: spacing.xxl * 2 }]}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.viewToggleRow}>
+        <ModeToggle mode={mode} onChange={setMode} lang={lang} colors={colors} typography={typography} radii={radii} />
+      </View>
+      {(mode === 'category' ? categoryCards : stateCards).map((c) => (
+        <BrowseCard
+          key={c.key}
+          glyph={mode === 'category' ? '॥' : 'ॐ'}
+          name={c.label}
+          meta={`${c.count} ${lang === 'hi' ? 'तीर्थ' : 'temples'}`}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          onPress={() => (mode === 'category' ? onOpenCategory(c.key as CategoryKey) : onOpenState(c.key))}
+        />
+      ))}
+    </ScrollView>
+  );
+}
+
+/** Drill-in: real India map (scoped) + a flat list of just this subsection. */
+function DrillIn({
+  group,
+  stateEn,
+  lang,
+  colors,
+  typography,
+  radii,
+  spacing,
+  onTemplePress,
+}: {
+  group?: CategoryKey;
+  stateEn?: string;
+  lang: Lang;
+  onTemplePress: (id: string) => void;
+} & ThemeBits) {
+  const list = useMemo<TempleEntry[]>(() => {
+    const base = group ? categoryTemples(group) : temples.filter((t) => t.stateEn === stateEn);
+    return [...base].sort((a, b) => templeName(a, lang).localeCompare(templeName(b, lang)));
+  }, [group, stateEn, lang]);
+
+  const screenWidth = Dimensions.get('window').width;
+  const mapWidth = Math.min(screenWidth - 2 * spacing.xxl, 320);
+
+  const pins: IndiaMapPin[] = useMemo(
+    () =>
+      list.map((t) => ({
+        id: t.id,
+        lat: t.coordinates.lat,
+        lng: t.coordinates.lng,
+        label: templeName(t, lang),
+      })),
+    [list, lang],
+  );
+
+  return (
+    <ScrollView
+      contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl, paddingBottom: spacing.xxl * 2 }]}
+      showsVerticalScrollIndicator={false}
+    >
+      <IndiaMap
+        pins={pins}
+        width={mapWidth}
+        onPinPress={onTemplePress}
+        highlightStateEn={stateEn}
+      />
+      <Text
+        style={[
+          styles.hint,
+          {
+            color: colors.inkMuted,
+            fontFamily: typography.swipeHint.fontFamily,
+            fontSize: typography.swipeHint.fontSize,
+            marginTop: spacing.lg,
+            marginBottom: spacing.lg,
+          },
+        ]}
+      >
+        {lang === 'hi' ? 'पिन छूकर मंदिर की कथा पढ़ें' : 'Tap a pin to read the temple’s story'}
+      </Text>
+      {list.map((temple) => (
+        <BrowseCard
+          key={temple.id}
+          glyph="ॐ"
+          name={templeName(temple, lang)}
+          meta={templeCity(temple, lang)}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          onPress={() => onTemplePress(temple.id)}
+        />
+      ))}
+    </ScrollView>
+  );
+}
+
+function ModeToggle({
   mode,
   onChange,
   lang,
@@ -263,25 +304,17 @@ function ViewToggle({
   typography,
   radii,
 }: {
-  mode: ViewMode;
-  onChange: (next: ViewMode) => void;
+  mode: ListMode;
+  onChange: (next: ListMode) => void;
   lang: Lang;
-} & ThemeBits) {
-  const options: Array<{ value: ViewMode; hi: string; en: string }> = [
+} & Omit<ThemeBits, 'spacing'>) {
+  const options: { value: ListMode; hi: string; en: string }[] = [
     { value: 'state', hi: 'राज्य', en: 'By State' },
     { value: 'category', hi: 'श्रेणी', en: 'By Category' },
   ];
-
   return (
     <View
-      style={[
-        toggleStyles.group,
-        {
-          backgroundColor: colors.parchmentSoft,
-          borderColor: colors.divider,
-          borderRadius: radii.pill,
-        },
-      ]}
+      style={[toggleStyles.group, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.pill }]}
       accessibilityRole="radiogroup"
     >
       {options.map((opt) => {
@@ -295,17 +328,13 @@ function ViewToggle({
             hitSlop={6}
             style={({ pressed }) => [
               toggleStyles.half,
-              {
-                backgroundColor: selected ? colors.saffronTint : 'transparent',
-                borderRadius: radii.pill,
-              },
+              { backgroundColor: selected ? colors.saffronTint : 'transparent', borderRadius: radii.pill },
               pressed && !selected && { opacity: 0.7 },
             ]}
           >
             <Text
               style={{
-                fontFamily:
-                  lang === 'hi' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily,
+                fontFamily: lang === 'hi' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily,
                 fontSize: 12,
                 fontStyle: lang === 'en' ? 'italic' : 'normal',
                 color: selected ? colors.saffronDeep : colors.inkMuted,
@@ -320,56 +349,46 @@ function ViewToggle({
   );
 }
 
-function TempleListRow({
-  temple,
-  lang,
+function BrowseCard({
+  glyph,
+  name,
+  meta,
   colors,
   typography,
   radii,
   onPress,
 }: {
-  temple: TempleEntry;
-  lang: Lang;
+  glyph: string;
+  name: string;
+  meta: string;
   onPress: () => void;
-} & ThemeBits) {
+} & Omit<ThemeBits, 'spacing'>) {
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel={lang === 'hi' ? temple.nameHi : temple.nameEn}
+      accessibilityLabel={name}
       style={({ pressed }) => [
         rowStyles.card,
-        {
-          backgroundColor: colors.parchmentSoft,
-          borderColor: colors.divider,
-          borderRadius: radii.md,
-        },
+        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md },
         pressed && { opacity: 0.85 },
       ]}
     >
       <View style={[rowStyles.thumb, { backgroundColor: colors.cardThumbActiveFrom, borderRadius: radii.sm }]}>
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 18,
-            color: colors.parchmentSoft,
-          }}
-        >
-          {'ॐ'}
+        <Text style={{ fontFamily: typography.thumb.fontFamily, fontSize: 18, color: colors.parchmentSoft }}>
+          {glyph}
         </Text>
       </View>
       <View style={rowStyles.textColumn}>
         <Text
           numberOfLines={1}
           style={{
-            fontFamily:
-              lang === 'hi' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily,
-            fontSize: lang === 'hi' ? 17 : 16,
-            fontStyle: lang === 'en' ? 'italic' : 'normal',
+            fontFamily: typography.cardHindi.fontFamily,
+            fontSize: 17,
             color: colors.ink,
           }}
         >
-          {lang === 'hi' ? temple.nameHi : temple.nameEn}
+          {name}
         </Text>
         <Text
           numberOfLines={1}
@@ -381,64 +400,12 @@ function TempleListRow({
             fontStyle: 'italic',
           }}
         >
-          {lang === 'hi'
-            ? `${temple.cityHi}, ${temple.stateHi}`
-            : `${temple.cityEn}, ${temple.stateEn}`}
+          {meta}
         </Text>
       </View>
       <Text style={{ color: colors.saffron, fontSize: 22, marginLeft: 8 }}>{'›'}</Text>
     </Pressable>
   );
-}
-
-type StateGroup = { stateKey: string; label: string; temples: TempleEntry[] };
-
-/** Group every temple in the current set by its state (By State view). */
-function groupByState(list: readonly TempleEntry[], lang: Lang): StateGroup[] {
-  const map = new Map<string, TempleEntry[]>();
-  list.forEach((t) => {
-    const key = t.stateEn;
-    if (!map.has(key)) map.set(key, []);
-    map.get(key)!.push(t);
-  });
-  const groups: StateGroup[] = [];
-  map.forEach((temples, stateKey) => {
-    const sample = temples[0];
-    const label = `${sample.stateHi} · ${sample.stateEn}`;
-    const sorted = [...temples].sort((a, b) =>
-      lang === 'hi' ? a.nameHi.localeCompare(b.nameHi) : a.nameEn.localeCompare(b.nameEn),
-    );
-    groups.push({ stateKey, label, temples: sorted });
-  });
-  groups.sort((a, b) => a.stateKey.localeCompare(b.stateKey));
-  return groups;
-}
-
-type CategorySection = { key: string; label: string; temples: TempleEntry[] };
-
-/**
- * Group the current set by pilgrimage category (Jyotirlinga, Char Dham, …),
- * respecting the entry filter. A temple in multiple categories appears under
- * each; ungrouped temples fall under "Other Famous Temples". Empty categories
- * are omitted.
- */
-function buildCategorySections(list: readonly TempleEntry[], lang: Lang): CategorySection[] {
-  const sections: CategorySection[] = groupOrder
-    .map((g) => ({
-      key: g,
-      label: lang === 'hi' ? groupMeta[g].nameHi : groupMeta[g].nameEn,
-      temples: list.filter((t) => t.groups.includes(g)),
-    }))
-    .filter((s) => s.temples.length > 0);
-  const other = list.filter((t) => t.groups.length === 0);
-  if (other.length > 0) {
-    sections.push({
-      key: 'other-famous',
-      label: lang === 'hi' ? 'अन्य प्रसिद्ध तीर्थ' : 'Other Famous Temples',
-      temples: [...other],
-    });
-  }
-  return sections;
 }
 
 const styles = StyleSheet.create({
@@ -448,6 +415,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingHorizontal: 24,
     paddingTop: 14,
     paddingBottom: 14,
   },
@@ -460,50 +428,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backBtnSpacer: { width: 34, height: 34 },
-  toggleRow: { alignItems: 'center', paddingTop: 4, paddingBottom: 8 },
-  viewToggleRow: { alignItems: 'center', paddingBottom: 12 },
+  langRow: { alignItems: 'center', paddingTop: 2, paddingBottom: 10 },
+  viewToggleRow: { alignItems: 'center', paddingBottom: 14, paddingTop: 2 },
   scroll: { paddingTop: 4 },
   hint: { textAlign: 'center', fontStyle: 'italic', includeFontPadding: false },
-  sectionHeader: {
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    marginBottom: 8,
-    marginTop: 8,
-  },
 });
 
 const toggleStyles = StyleSheet.create({
-  group: {
-    flexDirection: 'row',
-    borderWidth: 1,
-    padding: 3,
-    alignSelf: 'center',
-  },
-  half: {
-    minWidth: 100,
-    paddingVertical: 7,
-    paddingHorizontal: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  group: { flexDirection: 'row', borderWidth: 1, padding: 3, alignSelf: 'center' },
+  half: { minWidth: 100, paddingVertical: 7, paddingHorizontal: 16, alignItems: 'center', justifyContent: 'center' },
 });
 
 const rowStyles = StyleSheet.create({
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 14,
-    borderWidth: 1,
-    marginBottom: 10,
-  },
-  thumb: {
-    width: 40,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  textColumn: {
-    flex: 1,
-  },
+  card: { flexDirection: 'row', alignItems: 'center', padding: 14, borderWidth: 1, marginBottom: 10 },
+  thumb: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center', marginRight: 12 },
+  textColumn: { flex: 1 },
 });

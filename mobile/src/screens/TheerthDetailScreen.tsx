@@ -75,17 +75,9 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>{'‹'}</Text>
           </Pressable>
-          <Text
-            numberOfLines={1}
-            style={{
-              fontFamily: typography.readerTitle.fontFamily,
-              fontSize: typography.readerTitle.fontSize,
-              color: colors.ink,
-              maxWidth: 240,
-            }}
-          >
-            {name}
-          </Text>
+          {/* Language toggle at the top (consistent with the map/listing screens);
+              the temple name lives only in the hero below, never duplicated here. */}
+          <LanguageToggle />
           <View style={styles.backBtnSpacer} />
         </View>
 
@@ -188,10 +180,6 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
               : `Sources — ${temple.sources.map((s) => s.label).join(', ')}`}
           </Text>
         </ScrollView>
-
-        <View style={[styles.bottomBar, { borderTopColor: colors.divider }]}>
-          <LanguageToggle />
-        </View>
       </SafeAreaView>
     </View>
   );
@@ -310,10 +298,5 @@ const styles = StyleSheet.create({
   ornamentLine: {
     height: 1,
     width: 60,
-  },
-  bottomBar: {
-    paddingVertical: 12,
-    alignItems: 'center',
-    borderTopWidth: 1,
   },
 });

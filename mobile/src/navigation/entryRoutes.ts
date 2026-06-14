@@ -18,6 +18,19 @@ const theerthIds = new Set([
   'shakti-peeth',
   'famous-theerth',
 ]);
+// A theerth library entry maps to a category drill-in on the map (or the
+// listing for the all-temples "famous-theerth" entry).
+const THEERTH_ENTRY_TO_GROUP: Record<string, string | undefined> = {
+  'dvadasha-jyotirlinga': 'jyotirlinga',
+  'char-dham': 'char-dham',
+  'chota-char-dham': 'chota-char-dham',
+  'shakti-peeth': 'shakti-peeth',
+  'famous-theerth': undefined,
+};
+function theerthEntryParams(id: string): { group?: string } {
+  const group = THEERTH_ENTRY_TO_GROUP[id];
+  return group ? { group } : {};
+}
 const sanskarIds = new Set(['prabhati-shloka', 'surya-namaskar', 'tulsi-puja', 'bhojan-mantra', 'gau-seva', 'sandhya-deepam', 'ratri-shloka', 'vidyarambha-prarthana']);
 
 const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
@@ -55,7 +68,7 @@ export function buildEntryStartTarget(entry: LibraryEntry): BookmarkTarget | nul
     return { screen: 'JapamCounter', params: { mantraId: entry.id } };
   }
   if (entry.category === 'theerth' && theerthIds.has(entry.id)) {
-    return { screen: 'TheerthMap', params: { theerthId: entry.id } };
+    return { screen: 'TheerthMap', params: theerthEntryParams(entry.id) };
   }
   if (chalisaIds.has(entry.id)) {
     return { screen: 'ChalisaReader', params: { initialIndex: 0, chalisaId: entry.id } };
@@ -182,7 +195,7 @@ export function buildProgressTarget(p: {
   if (theerthIds.has(sourceId)) {
     return {
       screen: 'TheerthMap',
-      params: { theerthId: sourceId },
+      params: theerthEntryParams(sourceId),
     };
   }
   if (chalisaIds.has(sourceId)) {
