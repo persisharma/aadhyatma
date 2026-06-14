@@ -198,35 +198,24 @@ export default function PanchangScreen() {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
           showsVerticalScrollIndicator={false}
         >
-            <View style={styles.titleArea}>
-            <Text style={{ fontFamily: typography.screenTitle.fontFamily, fontSize: 20, color: colors.ink, textAlign: 'center' }}>
-              पंचांग
-            </Text>
-            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, textAlign: 'center', marginTop: 2 }}>
-              Panchang
+          {/* Slim system header — the tab bar already names this screen "पंचांग",
+              so the redundant title/subtitle/pill are gone. Only the calendar
+              system control + Ujjain reference remain. */}
+          <View style={styles.titleArea}>
+            <CalendarSystemToggle
+              value={calendarSystem}
+              onChange={setCalendarSystem}
+              isHindi={isHindi}
+              colors={colors}
+              radii={radii}
+              typography={typography}
+            />
+            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, textAlign: 'center', marginTop: 5 }}>
+              {isHindi
+                ? `संदर्भ: उज्जैन, भारत · ${calendarSystemLabel(calendarSystem, true)}`
+                : `Reference: Ujjain, India · ${calendarSystemLabel(calendarSystem, false)}`}
             </Text>
           </View>
-
-          <View style={[styles.schoolPill, { backgroundColor: colors.saffronTint, borderRadius: radii.sm }]}>
-            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 12, color: colors.saffronDeep }}>
-              {isHindi ? 'दृक् पंचांग' : 'Drik Panchang'}
-            </Text>
-          </View>
-
-          <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, textAlign: 'center', marginTop: 6 }}>
-            {isHindi
-              ? `संदर्भ: उज्जैन, भारत · ${calendarSystemLabel(calendarSystem, true)}`
-              : `Reference: Ujjain, India · ${calendarSystemLabel(calendarSystem, false)}`}
-          </Text>
-
-          <CalendarSystemToggle
-            value={calendarSystem}
-            onChange={setCalendarSystem}
-            isHindi={isHindi}
-            colors={colors}
-            radii={radii}
-            typography={typography}
-          />
 
           <View
             style={[styles.calendarCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}
