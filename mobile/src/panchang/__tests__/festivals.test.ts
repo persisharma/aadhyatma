@@ -10,8 +10,8 @@ import {
 
 test('resolveFestivalsForYear returns festivals for 2026', () => {
   const festivals = resolveFestivalsForYear(2026);
-  assert.ok(festivals.length >= 30, `expected major festivals plus Ekadashi vrats, got ${festivals.length}`);
-  assert.ok(festivals.length <= 48, `expected at most one bundled observance per rule, got ${festivals.length}`);
+  assert.ok(festivals.length >= 120, `expected major festivals plus monthly vrats, got ${festivals.length}`);
+  assert.ok(festivals.length <= 320, `expected bounded default observances, got ${festivals.length}`);
 });
 
 test('festivals are sorted chronologically', () => {
@@ -126,8 +126,9 @@ test('upcoming observances are anchored to the selected date and calendar system
 });
 
 test('Krishna Paksha festivals keep their civil date across Purnimant and Amanta', () => {
-  const purnimant = getUpcomingObservances(new Date(2026, 6, 1), 12, 'purnimant');
-  const amanta = getUpcomingObservances(new Date(2026, 6, 1), 12, 'amanta');
+  const janmashtamiDate = new Date(2026, 7, 6);
+  const purnimant = getObservancesForDate(janmashtamiDate, 'purnimant');
+  const amanta = getObservancesForDate(janmashtamiDate, 'amanta');
   const purnimantJanmashtami = purnimant.find((item) => item.rule.id === 'janmashtami');
   const amantaJanmashtami = amanta.find((item) => item.rule.id === 'janmashtami');
 

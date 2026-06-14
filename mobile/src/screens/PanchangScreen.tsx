@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,12 +9,14 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
+import { searchObservances } from '@/panchang/festivalEngine';
+import { KATHA_CATALOG } from '@/panchang/festivals';
 import {
   usePanchangCalendarSystem,
   usePanchangForSelection,
   usePanchangMonthObservances,
 } from '@/panchang/usePanchang';
-import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
+import type { CalendarSystem, ObservanceCategory, ObservanceRule, PanchangElement, ResolvedObservance } from '@/panchang/types';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -23,6 +25,7 @@ const MONTHS_FULL_HI = ['जनवरी', 'फ़रवरी', 'मार्�
 const WEEKDAYS_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const WEEKDAYS_HI = ['रवि', 'सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि'];
 type ObservanceCalendarTag = 'vrat' | 'festival' | 'mixed';
+const KATHA_BY_ID = new Map(KATHA_CATALOG.map((item) => [item.id, item] as const));
 
 function formatTime12(date: Date | null): string {
   if (!date) return '';
@@ -75,6 +78,22 @@ function calendarTagLabel(tag: ObservanceCalendarTag, isHindi: boolean): string 
   return isHindi ? 'व्रत+' : 'Both';
 }
 
+function calendarTagForRule(rule: ResolvedObservance['rule']): ObservanceCalendarTag {
+  return rule.category === 'festival' ? 'festival' : 'vrat';
+}
+
+function categoryLabel(category: ObservanceCategory, isHindi: boolean): string {
+  if (category === 'festival') return isHindi ? 'पर्व' : 'Festival';
+  if (category === 'upavas') return isHindi ? 'उपवास' : 'Upavas';
+  if (category === 'katha') return isHindi ? 'कथा' : 'Katha';
+  if (category === 'regional') return isHindi ? 'क्षेत्रीय' : 'Regional';
+  return isHindi ? 'व्रत' : 'Vrat';
+}
+
+function isVratLike(rule: ObservanceRule): boolean {
+  return rule.category !== 'festival';
+}
+
 export default function PanchangScreen() {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
@@ -85,6 +104,7 @@ export default function PanchangScreen() {
   const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(new Date()));
   const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(new Date()));
   const [calendarExpanded, setCalendarExpanded] = useState(false);
+  const [observanceSearch, setObservanceSearch] = useState('');
   const calendarSwipeStart = useRef<{ x: number; y: number } | null>(null);
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
@@ -93,12 +113,24 @@ export default function PanchangScreen() {
     const tags = new Map<string, ObservanceCalendarTag>();
     monthObservances.forEach((item) => {
       const key = dateKey(item.date);
-      const nextTag: ObservanceCalendarTag = item.rule.category === 'vrat' ? 'vrat' : 'festival';
+      const nextTag = calendarTagForRule(item.rule);
       const currentTag = tags.get(key);
       tags.set(key, currentTag && currentTag !== nextTag ? 'mixed' : nextTag);
     });
     return tags;
   }, [monthObservances]);
+  const upcomingVrats = useMemo(
+    () => upcoming.filter((item) => isVratLike(item.rule)).slice(0, 8),
+    [upcoming]
+  );
+  const monthListing = useMemo(
+    () => monthObservances.slice(0, 24),
+    [monthObservances]
+  );
+  const searchResults = useMemo(() => {
+    if (!observanceSearch.trim()) return [];
+    return searchObservances(observanceSearch, { includeHidden: true }).slice(0, 12);
+  }, [observanceSearch]);
   const calendarCells = useMemo(
     () => buildCalendarMonth({
       visibleMonth,
@@ -398,13 +430,13 @@ export default function PanchangScreen() {
             )}
           </View>
 
-          {upcoming.length > 0 && (
+          {upcomingVrats.length > 0 && (
             <View style={styles.upcomingSection}>
               <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 10 }}>
-                {isHindi ? 'आगामी' : 'Upcoming'}
+                {isHindi ? 'आगामी व्रत' : 'Upcoming Vrats'}
               </Text>
-              {upcoming.map((item, i) => (
-                <View key={item.rule.id} style={[styles.upcomingRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}>
+              {upcomingVrats.map((item, i) => (
+                <View key={`${dateKey(item.date)}:${item.rule.id}`} style={[styles.upcomingRow, { borderBottomColor: i < upcomingVrats.length - 1 ? colors.divider : 'transparent' }]}>
                   <View style={[styles.upcomingDot, { backgroundColor: markerColor(item.rule.marker, colors) }]} />
                   <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkMuted, width: 50 }}>
                     {formatShortDate(item.date, isHindi)}
@@ -416,6 +448,71 @@ export default function PanchangScreen() {
               ))}
             </View>
           )}
+
+          <View style={styles.monthListingSection}>
+            <View style={styles.sectionHeaderRow}>
+              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink }}>
+                {isHindi ? 'माहवार सूची' : 'Month-wise Listing'}
+              </Text>
+              <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkMuted }}>
+                {formatMonthTitle(visibleMonth, isHindi)}
+              </Text>
+            </View>
+            {monthListing.map((item, i) => (
+              <View key={`${dateKey(item.date)}:${item.rule.id}`} style={[styles.monthListRow, { borderBottomColor: i < monthListing.length - 1 ? colors.divider : 'transparent' }]}>
+                <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkMuted, width: 50 }}>
+                  {formatShortDate(item.date, isHindi)}
+                </Text>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.ink }}>
+                    {isHindi ? item.rule.nameHi : item.rule.nameEn}
+                  </Text>
+                  <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 9, color: colors.saffronDeep, marginTop: 2 }}>
+                    {categoryLabel(item.rule.category, isHindi)}
+                    {item.rule.kathaId ? ` · ${isHindi ? 'कथा' : 'Katha'}` : ''}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </View>
+
+          <View style={styles.searchSection}>
+            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 8 }}>
+              {isHindi ? 'व्रत खोज' : 'Vrat Search'}
+            </Text>
+            <TextInput
+              value={observanceSearch}
+              onChangeText={setObservanceSearch}
+              placeholder={isHindi ? 'व्रत, कथा, पर्व' : 'Vrat, katha, festival'}
+              placeholderTextColor={colors.inkMuted}
+              autoCorrect={false}
+              style={[
+                styles.searchInput,
+                {
+                  backgroundColor: colors.parchmentSoft,
+                  borderColor: colors.divider,
+                  borderRadius: radii.md,
+                  color: colors.ink,
+                  fontFamily: typography.meaning.fontFamily,
+                },
+              ]}
+            />
+            {searchResults.length > 0 && (
+              <View style={[styles.searchResults, { borderColor: colors.divider, borderRadius: radii.md }]}>
+                {searchResults.map((rule, i) => (
+                  <CatalogResultRow
+                    key={rule.id}
+                    rule={rule}
+                    isHindi={isHindi}
+                    colors={colors}
+                    typography={typography}
+                    radii={radii}
+                    isLast={i === searchResults.length - 1}
+                  />
+                ))}
+              </View>
+            )}
+          </View>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -532,13 +629,14 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, onOpenLink }
   const linkedEntry = item.rule.linkSectionId
     ? library.find((entry) => entry.id === item.rule.linkSectionId)
     : null;
+  const katha = item.rule.kathaId ? KATHA_BY_ID.get(item.rule.kathaId) : null;
 
   return (
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
       <View style={styles.observanceTop}>
         <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
           <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep }}>
-            {item.rule.category === 'vrat' ? (isHindi ? 'व्रत' : 'Vrat') : (isHindi ? 'पर्व' : 'Festival')}
+            {categoryLabel(item.rule.category, isHindi)}
           </Text>
         </View>
         <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkMuted }}>
@@ -551,6 +649,13 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, onOpenLink }
       <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
         {isHindi ? item.rule.shortDescriptionHi : item.rule.shortDescriptionEn}
       </Text>
+      {katha && (
+        <View style={[styles.kathaPill, { backgroundColor: colors.goldTint, borderRadius: radii.pill }]}>
+          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep }}>
+            {isHindi ? `कथा: ${katha.nameHi}` : `Katha: ${katha.nameEn}`}
+          </Text>
+        </View>
+      )}
       {linkedEntry && (
         <Pressable
           onPress={() => onOpenLink(linkedEntry.id)}
@@ -562,6 +667,38 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, onOpenLink }
             {isHindi ? `पढ़ें: ${linkedEntry.nameHi}` : `Read: ${linkedEntry.nameEn}`}
           </Text>
         </Pressable>
+      )}
+    </View>
+  );
+}
+
+function CatalogResultRow({ rule, isHindi, colors, typography, radii, isLast }: {
+  rule: ObservanceRule;
+  isHindi: boolean;
+  colors: any;
+  typography: any;
+  radii: any;
+  isLast: boolean;
+}) {
+  const katha = rule.kathaId ? KATHA_BY_ID.get(rule.kathaId) : null;
+  const hiddenLabel = rule.visibility === 'default'
+    ? ''
+    : ` · ${rule.visibility === 'regional' ? (isHindi ? 'क्षेत्रीय' : 'Regional') : (isHindi ? 'उन्नत' : 'Advanced')}`;
+
+  return (
+    <View style={[styles.catalogRow, !isLast && { borderBottomColor: colors.divider, borderBottomWidth: StyleSheet.hairlineWidth }]}>
+      <View style={[styles.categoryPill, { backgroundColor: isVratLike(rule) ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill, alignSelf: 'flex-start' }]}>
+        <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 9, color: colors.saffronDeep }}>
+          {categoryLabel(rule.category, isHindi)}{hiddenLabel}
+        </Text>
+      </View>
+      <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.ink, marginTop: 5 }}>
+        {isHindi ? rule.nameHi : rule.nameEn}
+      </Text>
+      {katha && (
+        <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
+          {isHindi ? katha.nameHi : katha.nameEn}
+        </Text>
       )}
     </View>
   );
@@ -624,8 +761,16 @@ const styles = StyleSheet.create({
   observanceCard: { borderWidth: 1, padding: 10, marginBottom: 8 },
   observanceTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 },
   categoryPill: { paddingHorizontal: 9, paddingVertical: 4 },
+  kathaPill: { alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 5, marginTop: 8 },
   linkButton: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
   upcomingSection: { marginTop: 12 },
   upcomingRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, borderBottomWidth: StyleSheet.hairlineWidth, gap: 6 },
   upcomingDot: { width: 5, height: 5, borderRadius: 2.5 },
+  monthListingSection: { marginTop: 14 },
+  sectionHeaderRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, marginBottom: 8 },
+  monthListRow: { flexDirection: 'row', alignItems: 'flex-start', paddingVertical: 7, borderBottomWidth: StyleSheet.hairlineWidth, gap: 8 },
+  searchSection: { marginTop: 14 },
+  searchInput: { borderWidth: 1, minHeight: 42, paddingHorizontal: 12, paddingVertical: 8, fontSize: 13 },
+  searchResults: { borderWidth: 1, marginTop: 8, overflow: 'hidden' },
+  catalogRow: { paddingHorizontal: 10, paddingVertical: 9 },
 });
