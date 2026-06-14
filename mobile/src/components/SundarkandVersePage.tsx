@@ -2,13 +2,22 @@ import React, { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import type { SundarkandVerse } from '@/data/sundarkand';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
 
+export type LinesVersePageVerse = {
+  id: string;
+  labelHi: string;
+  labelEn: string;
+  lines: string[];
+  linesEn: string[];
+  meaningHi: string;
+  meaningEn: string;
+};
+
 type Props = {
-  verse: SundarkandVerse;
+  verse: LinesVersePageVerse;
   sourceId: string;
   width: number;
 };
@@ -35,9 +44,9 @@ export default function SundarkandVersePage({ verse, sourceId, width }: Props) {
 
   const bodyEnStyle = {
     color: colors.ink,
-    fontFamily: 'CormorantGaramond_500Medium' as const,
-    fontSize: 18,
-    lineHeight: 30,
+    fontFamily: typography.meaningEnglish.fontFamily,
+    fontSize: typography.meaningEnglish.fontSize,
+    lineHeight: typography.meaningEnglish.lineHeight,
   };
 
   const bodyStyle = lang === 'hi' ? bodyHiStyle : bodyEnStyle;
@@ -90,9 +99,11 @@ export default function SundarkandVersePage({ verse, sourceId, width }: Props) {
                   fontFamily:
                     lang === 'hi'
                       ? typography.verse.fontFamily
-                      : 'CormorantGaramond_600SemiBold',
-                  fontSize: lang === 'hi' ? typography.verse.fontSize : 18,
-                  lineHeight: lang === 'hi' ? typography.verse.lineHeight : 28,
+                      : typography.verseLatin.fontFamily,
+                  fontSize:
+                    lang === 'hi' ? typography.verse.fontSize : typography.verseLatin.fontSize,
+                  lineHeight:
+                    lang === 'hi' ? typography.verse.lineHeight : typography.verseLatin.lineHeight,
                   fontStyle: lang === 'en' ? 'italic' : 'normal',
                 },
               ]}

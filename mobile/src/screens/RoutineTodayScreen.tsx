@@ -1,0 +1,190 @@
+import React from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { useRoutines } from '@/contexts/RoutineContext';
+import { useUserActivity } from '@/contexts/UserActivityContext';
+import { useRoutineToday } from '@/data/routine/useRoutineToday';
+import { navigateToRoutineItem } from '@/navigation/entryRoutes';
+import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
+import type { HomeStackParamList } from '@/navigation/types';
+
+type Props = NativeStackScreenProps<HomeStackParamList, 'RoutineToday'>;
+
+export default function RoutineTodayScreen({ navigation }: Props) {
+  const { colors, typography, spacing, radii } = useTheme();
+  const { lang } = useGitaLanguage();
+  const { markManualDone, unmarkManualDone } = useRoutines();
+  const { currentStreak } = useUserActivity();
+  const { entries, doneCount, total, hasRoutine } = useRoutineToday();
+  // General-typed nav for the centralized routing helper (this screen has no
+  // route params, which is incompatible with the helper's route-agnostic Nav).
+  const itemNav = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+  const isHi = lang === 'hi';
+  const streak = currentStreak();
+
+  const right = (
+    <Pressable
+      onPress={() => navigation.navigate('RoutineList')}
+      accessibilityRole="button"
+      accessibilityLabel={isHi ? 'सभी साधनाएँ' : 'All routines'}
+      hitSlop={12}
+    >
+      <Text style={{ color: colors.saffron, fontSize: 22 }}>≡</Text>
+    </Pressable>
+  );
+
+  return (
+    <RoutineShell
+      titleHi="आज की साधना"
+      titleEn="Today's Practice"
+      onBack={() => navigation.goBack()}
+      right={right}
+    >
+      <ScrollView
+        contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }}
+        showsVerticalScrollIndicator={false}
+      >
+        {!hasRoutine || total === 0 ? (
+          <View style={{ alignItems: 'center', paddingVertical: 48 }}>
+            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 30, color: colors.inkMuted, opacity: 0.4 }}>
+              ॥
+            </Text>
+            <Text
+              style={{
+                fontFamily: typography.meaning.fontFamily,
+                fontSize: 14,
+                color: colors.inkMuted,
+                textAlign: 'center',
+                marginTop: 12,
+              }}
+            >
+              {isHi ? 'आज के लिए कोई पाठ निर्धारित नहीं' : 'Nothing scheduled for today'}
+            </Text>
+            <RoutineButton
+              label={isHi ? 'साधना जोड़ें' : 'Add a routine'}
+              variant="ghost"
+              onPress={() => navigation.navigate('RoutineList')}
+            />
+          </View>
+        ) : (
+          <>
+            {/* Progress header */}
+            <View
+              style={{
+                backgroundColor: colors.parchmentSoft,
+                borderColor: colors.goldTint,
+                borderWidth: 1,
+                borderRadius: radii.lg,
+                padding: spacing.lg,
+                marginBottom: spacing.lg,
+              }}
+            >
+              <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 16, color: colors.ink }}>
+                {doneCount}/{total} · {isHi ? 'पूर्ण' : 'done'}
+              </Text>
+              <View style={[styles.track, { backgroundColor: colors.divider, borderRadius: radii.pill, marginTop: spacing.sm }]}>
+                <View
+                  style={{
+                    width: `${total > 0 ? Math.round((doneCount / total) * 100) : 0}%`,
+                    height: '100%',
+                    backgroundColor: colors.saffron,
+                    borderRadius: radii.pill,
+                  }}
+                />
+              </View>
+              {streak > 0 && (
+                <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.saffronDeep, marginTop: spacing.sm }}>
+                  {isHi ? `निरंतरता · ${streak} दिन` : `Streak · ${streak} days`}
+                </Text>
+              )}
+            </View>
+
+            {entries.map((e) => {
+              const tail = e.done
+                ? e.doneMode === 'auto'
+                  ? isHi
+                    ? 'अंत तक पढ़ा'
+                    : 'read to end'
+                  : isHi
+                    ? 'चिह्नित'
+                    : 'marked'
+                : isHi
+                  ? e.display.subHi
+                  : e.display.subEn;
+              return (
+                <View
+                  key={e.key}
+                  style={[styles.itemRow, { borderBottomColor: colors.divider }]}
+                >
+                  <Pressable
+                    onPress={() =>
+                      e.done ? (e.doneMode === 'manual' ? unmarkManualDone(e.key) : undefined) : markManualDone(e.key)
+                    }
+                    accessibilityRole="button"
+                    accessibilityLabel={isHi ? 'पूर्ण चिह्नित करें' : 'Mark done'}
+                    hitSlop={10}
+                    style={{
+                      width: 26,
+                      height: 26,
+                      borderRadius: 13,
+                      borderWidth: 1.5,
+                      borderColor: e.done ? colors.saffron : colors.gold,
+                      backgroundColor: e.done ? colors.saffron : 'transparent',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {e.done && <Text style={{ color: colors.onPrimary, fontSize: 14 }}>✓</Text>}
+                  </Pressable>
+
+                  <Pressable style={styles.itemInfo} onPress={() => navigateToRoutineItem(itemNav, e.item)}>
+                    <Text
+                      style={{
+                        fontFamily: typography.cardHindi.fontFamily,
+                        fontSize: 15,
+                        color: e.done ? colors.inkMuted : colors.ink,
+                        textDecorationLine: e.done ? 'line-through' : 'none',
+                      }}
+                    >
+                      {isHi ? e.display.titleHi : e.display.titleEn}
+                    </Text>
+                    <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
+                      {e.routine.nameHi || e.routine.nameEn} · {tail}
+                    </Text>
+                  </Pressable>
+
+                  <Pressable onPress={() => navigateToRoutineItem(itemNav, e.item)} hitSlop={8}>
+                    <Text style={{ color: colors.saffron, fontSize: 18 }}>›</Text>
+                  </Pressable>
+                </View>
+              );
+            })}
+
+            <Text
+              style={{
+                fontFamily: typography.cardLatin.fontFamily,
+                fontSize: 11,
+                color: colors.inkMuted,
+                marginTop: spacing.lg,
+                lineHeight: 16,
+              }}
+            >
+              {isHi
+                ? 'किसी पंक्ति पर टैप कर पाठ खोलें। अंतिम पृष्ठ तक पहुँचने पर स्वतः पूर्ण होगा। ◯ को टैप कर स्वयं चिह्नित करें।'
+                : 'Tap a row to open the text. It auto-completes when you reach the last page. Tap ◯ to mark it yourself.'}
+            </Text>
+          </>
+        )}
+      </ScrollView>
+    </RoutineShell>
+  );
+}
+
+const styles = StyleSheet.create({
+  track: { height: 6, width: '100%', overflow: 'hidden' },
+  itemRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12, borderBottomWidth: 1 },
+  itemInfo: { flex: 1, minWidth: 0 },
+});

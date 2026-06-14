@@ -9,6 +9,7 @@ import { getSourceBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'BajrangBaanChapters'>;
@@ -16,6 +17,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'BajrangBaanChapters'>;
 export default function BajrangBaanChaptersScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { getChapterProgress } = useReadingProgress();
 
   const title = lang === 'hi' ? bajrangBaanTitleHi : bajrangBaanTitleEn;
   const titleFontFamily =
@@ -67,7 +69,10 @@ export default function BajrangBaanChaptersScreen({ navigation }: Props) {
               chapterLabelEn="Section"
               unitLabelHi="दोहा/छन्द"
               unitLabelEn="doha/chhand"
-              onPress={() => navigation.navigate('BajrangBaanReader', { chapter: chapter.chapter })}
+              onPress={() => {
+                const resumeIndex = getChapterProgress('bajrang-baan', chapter.chapter)?.verseIndex ?? 0;
+                navigation.navigate('BajrangBaanReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
+              }}
             />
           ))}
         </ScrollView>

@@ -4,9 +4,15 @@ import { useTheme } from '@/theme/ThemeContext';
 
 type Props = {
   onPress: () => void;
+  /**
+   * Distance from the bottom edge. Defaults to `spacing.xl`. On Home the docked
+   * RoutineBanner occupies the bottom; the caller passes a larger offset so the
+   * FAB clears it (it used to be hidden behind the banner — search-smoke #57).
+   */
+  bottomOffset?: number;
 };
 
-export default function SearchFloatingButton({ onPress }: Props) {
+export default function SearchFloatingButton({ onPress, bottomOffset }: Props) {
   const { colors, typography, spacing } = useTheme();
 
   return (
@@ -19,7 +25,7 @@ export default function SearchFloatingButton({ onPress }: Props) {
         styles.button,
         {
           right: spacing.xl,
-          bottom: spacing.xl,
+          bottom: bottomOffset ?? spacing.xl,
           backgroundColor: colors.parchmentSoft,
           borderColor: colors.divider,
         },
@@ -50,6 +56,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    // Sit above the docked RoutineBanner (a sibling rendered after this on
+    // Home) so taps reach the FAB rather than the banner beneath it.
+    zIndex: 5,
+    elevation: 8,
   },
   glyph: {
     fontSize: 26,

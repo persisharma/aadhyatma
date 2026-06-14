@@ -1,0 +1,172 @@
+# Daily Routine — Weekday mode + deep interactions (PRD-07, feat(routine))
+#
+# Companion to routine-smoke.yaml (which covers the DAILY-mode happy path).
+# This flow exercises the parts routine-smoke does not:
+#   - WEEKDAY schedule mode (the deity-of-the-day branch).
+#   - The "SUGGESTED" deity-of-day chip on the add-content list.
+#   - Adding a SPECIFIC named section (Hanuman Chalisa) via a relative selector.
+#   - Marking an item done AND un-marking it (the manual check-off toggles both ways).
+#   - Opening a routine item into its reader (PRD-07 "tap a row to open the text").
+#   - The WEEKDAY pill on the routine card + the weekday·deity grid on detail.
+#   - Removing an item from a routine (→ empty "No items added yet" state).
+#   - Deleting the routine (resets state for re-runs).
+#
+# Date-independence:
+#   The add-content day strip defaults to TODAY's weekday, so the item is added
+#   for today and reliably appears on Today's Practice whatever day this runs.
+#   Every weekday maps to a deity that ships sections (vaar.ts), so the SUGGESTED
+#   chip is always present. We add Hanuman Chalisa explicitly so the opened
+#   reader is always ChalisaReader (whose back button is "Back to home") — no
+#   dependence on which deity today suggests.
+#
+# Selector notes (verified against source + the live accessibility tree):
+#   - Mode/value cards and routine cards are buttons whose child Texts MERGE into
+#     one comma-joined accessibilityText, so they need ".*" wildcards
+#     ("By weekday — changes per day.*", "E2E Weekday Routine.*WEEKDAY.*").
+#   - Each RoutineAddItems row's add toggle is a labelled button ("Add <NameEn>");
+#     we tap "Add Hanuman Chalisa" so the item is deterministic regardless of
+#     which deity today suggests. (The old `rightOf "＋"` selector was ambiguous —
+#     it grabbed the suggested row's toggle and added the wrong section.)
+#   - A Today's-Practice row's subtitle carries the routine name, so
+#     ".*E2E Weekday Routine.*" taps that row's open-item Pressable.
+#   - The keyboard overlaps "Next"; hideKeyboard before tapping it.
+#
+# PRECONDITION: no routine exists (fresh state). The flow deletes what it creates.
+
+appId: host.exp.Exponent
+---
+# ── Step 1: Boot + switch reading language to English ──
+- runFlow: _launch.yaml
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+
+# ── Step 2: Open routine creation from the docked banner ──
+- extendedWaitUntil:
+    visible: "Set your daily practice"
+    timeout: 15000
+- tapOn: "Set your daily practice"
+- waitForAnimationToEnd
+
+# ── Step 3: Name the routine ──
+- extendedWaitUntil:
+    visible: "Name your routine"
+    timeout: 15000
+- tapOn: "Morning Sadhana"          # English-name field placeholder
+- inputText: "E2E Weekday Routine"
+- hideKeyboard
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# ── Step 4: Choose the WEEKDAY schedule mode and create ──
+- extendedWaitUntil:
+    visible: "Same every day, or by weekday.*"
+    timeout: 10000
+- tapOn: "By weekday — changes per day.*"
+- waitForAnimationToEnd
+- tapOn: "Create routine"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Step 5: Add-content (weekday): SUGGESTED chip + add Hanuman Chalisa ──
+- extendedWaitUntil:
+    visible: "Add Content"
+    timeout: 15000
+# The deity-of-day suggestion chip only renders in weekday mode.
+- assertVisible: "SUGGESTED"
+# Add a specific known section by its labelled toggle (so the opened reader type
+# is deterministic — Hanuman Chalisa always opens ChalisaReader).
+- scrollUntilVisible:
+    element:
+      text: "Add Hanuman Chalisa"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 25000
+- tapOn: "Add Hanuman Chalisa"
+- waitForAnimationToEnd
+# "Done" sits below the full list. centerElement keeps its tap-point mid-screen
+# — at the bottom edge the tap would otherwise land on the tab bar below it.
+- scrollUntilVisible:
+    element:
+      text: "Done"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 25000
+- tapOn: "Done"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Step 6: Today's Practice — the item shows; check-off toggles both ways ──
+- extendedWaitUntil:
+    visible: "Today's Practice"
+    timeout: 15000
+- assertVisible: "0/1.*"
+- tapOn: "Mark done"
+- waitForAnimationToEnd
+- assertVisible: "1/1.*"
+# Tap the same check-off again to UN-mark (manual done is reversible).
+- tapOn: "Mark done"
+- waitForAnimationToEnd
+- assertVisible: "0/1.*"
+
+# ── Step 7: Open the item into its reader, then return ──
+# The row's subtitle carries the routine name, so this taps the open-item Pressable.
+- tapOn: ".*E2E Weekday Routine.*"
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+- assertVisible: "Hindi"             # ChalisaReader language toggle confirms the reader opened
+- tapOn: "Back to home"             # ChalisaReader's back-button accessibilityLabel
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Today's Practice"
+    timeout: 15000
+
+# ── Step 8: My Routines shows the WEEKDAY schedule pill ──
+- tapOn: "All routines"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "My Routines"
+    timeout: 10000
+- assertVisible: "E2E Weekday Routine.*WEEKDAY.*"
+
+# ── Step 9: Detail — remove the item → empty items state ──
+- tapOn: "E2E Weekday Routine.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "E2E Weekday Routine"
+    timeout: 10000
+- tapOn: "Remove"                    # the item row's × control
+- waitForAnimationToEnd
+- assertVisible: "No items added yet"
+
+# ── Step 10: Delete the routine (resets state for re-runs) ──
+# Delete pops once back to My Routines, now empty (single clean pop — see the
+# routine-smoke note; previously this double-popped to the empty Today screen).
+- scrollUntilVisible:
+    element:
+      text: "Delete this routine"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 15000
+- tapOn: "Delete this routine"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "No routines yet"
+    timeout: 10000
+
+# ── Cleanup ──
+- stopApp:
+    appId: host.exp.Exponent

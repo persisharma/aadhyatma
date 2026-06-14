@@ -25,13 +25,18 @@ import { GitaLanguageProvider } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
+import { RoutineProvider } from '@/contexts/RoutineContext';
+import { RoutineSheetProvider } from '@/contexts/RoutineSheetProvider';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
+import { NewContentProvider } from '@/contexts/NewContentContext';
 import {
   NotificationPreferencesProvider,
   configureForegroundNotificationHandler,
 } from '@/contexts/NotificationPreferencesContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
+import UpdateReadyModal from '@/components/UpdateReadyModal';
+import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
@@ -121,19 +126,29 @@ export default function App() {
           <GitaLanguageProvider>
             <BookmarksProvider>
               <UserActivityProvider>
-                <ReadingProgressProvider>
-                  <JapamCounterProvider>
-                    <NotificationPreferencesProvider>
-                      <ShareProvider>
-                        <NavigationContainer ref={navigationRef}>
-                          <StatusBar style="dark" />
-                          <RootNavigator />
-                          <ReminderOptInModal />
-                        </NavigationContainer>
-                      </ShareProvider>
-                    </NotificationPreferencesProvider>
-                  </JapamCounterProvider>
-                </ReadingProgressProvider>
+                <NewContentProvider>
+                  <ReadingProgressProvider>
+                    <JapamCounterProvider>
+                      <RoutineProvider>
+                      <RoutineSheetProvider>
+                      <NotificationPreferencesProvider>
+                        <ShareProvider>
+                          <View style={{ flex: 1 }}>
+                            <NavigationContainer ref={navigationRef}>
+                              <StatusBar style="dark" />
+                              <RootNavigator />
+                              <ReminderOptInModal />
+                              <UpdateReadyModal />
+                            </NavigationContainer>
+                            <RoutineCelebrationOverlay />
+                          </View>
+                        </ShareProvider>
+                      </NotificationPreferencesProvider>
+                      </RoutineSheetProvider>
+                      </RoutineProvider>
+                    </JapamCounterProvider>
+                  </ReadingProgressProvider>
+                </NewContentProvider>
               </UserActivityProvider>
             </BookmarksProvider>
           </GitaLanguageProvider>

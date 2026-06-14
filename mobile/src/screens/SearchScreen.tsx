@@ -29,6 +29,8 @@ import {
   type SearchVerseEntry,
 } from '@/data/searchIndex';
 import { library } from '@/data/texts';
+import { useNewContent } from '@/contexts/NewContentContext';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import {
   buildProgressTarget,
   navigateToEntryStart,
@@ -50,6 +52,7 @@ const POPULAR_FALLBACK_IDS = [
 export default function SearchScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const { markSeen } = useNewContent();
   const inputRef = useRef<TextInput>(null);
   const [query, setQuery] = useState('');
   const [recent, setRecent] = useState<string[]>([]);
@@ -126,15 +129,17 @@ export default function SearchScreen({ navigation }: Props) {
     (sourceId: string) => {
       const entry = library.find((e) => e.id === sourceId);
       if (!entry) return;
+      markSeen(sourceId);
       commitRecent(query);
       Keyboard.dismiss();
       navigateToEntryStart(navigation as never, entry);
     },
-    [navigation, query, commitRecent]
+    [navigation, query, commitRecent, markSeen]
   );
 
   const openVerse = useCallback(
     (hit: SearchVerseEntry) => {
+      markSeen(hit.sourceId);
       const target = buildProgressTarget({
         sourceId: hit.sourceId,
         chapter: hit.chapter,
@@ -151,7 +156,7 @@ export default function SearchScreen({ navigation }: Props) {
       const entry = library.find((e) => e.id === hit.sourceId);
       if (entry) navigateToEntryStart(navigation as never, entry);
     },
-    [navigation, query, commitRecent]
+    [navigation, query, commitRecent, markSeen]
   );
 
   const openDeity = useCallback(
@@ -313,6 +318,58 @@ function GroupHeader({
   );
 }
 
+function PopularName({
+  nameHi,
+  nameEn,
+  isHi,
+  colors,
+}: {
+  nameHi: string;
+  nameEn: string;
+  isHi: boolean;
+  colors: Theme['colors'];
+}) {
+  const { primary, secondary } = orderTitlesByLanguage(isHi ? 'hi' : 'en', nameHi, nameEn, {
+    devPrimary: 14,
+    devSecondary: 12,
+    latPrimary: 14,
+    latSecondary: 11,
+  });
+
+  return (
+    <View style={styles.popularMeta}>
+      <Text
+        numberOfLines={1}
+        style={[
+          styles.popularNameHi,
+          {
+            color: colors.ink,
+            fontFamily: primary.fontFamily,
+            fontSize: primary.fontSize,
+            fontStyle: primary.fontStyle,
+          },
+        ]}
+      >
+        {primary.text}
+      </Text>
+      <Text
+        numberOfLines={1}
+        style={[
+          styles.popularNameEn,
+          {
+            color: colors.inkMuted,
+            fontFamily: secondary.fontFamily,
+            fontSize: secondary.fontSize,
+            fontStyle: secondary.fontStyle,
+          },
+        ]}
+      >
+        {secondary.text}
+      </Text>
+    </View>
+  );
+}
+
 function EmptyState({
   recent,
   popular,
@@ -442,26 +499,12 @@ function EmptyState({
                 >
                   {p.thumb}
                 </Text>
-                <View style={styles.popularMeta}>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.popularNameHi,
-                      { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
-                    ]}
-                  >
-                    {p.nameHi}
-                  </Text>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.popularNameEn,
-                      { color: colors.inkMuted, fontFamily: 'CormorantGaramond_400Regular_Italic' },
-                    ]}
-                  >
-                    {p.nameEn}
-                  </Text>
-                </View>
+                <PopularName
+                  nameHi={p.nameHi}
+                  nameEn={p.nameEn}
+                  isHi={isHi}
+                  colors={colors}
+                />
               </Pressable>
             ))}
           </View>

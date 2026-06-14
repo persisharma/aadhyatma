@@ -1,10 +1,11 @@
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { getDeityBackground } from '@/data/backgrounds';
+import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import { getTempleById } from '@/data/theerth/temples';
 import type { Deity } from '@/data/texts';
@@ -21,6 +22,7 @@ const DEITY_LABELS: Record<Deity, { hi: string; en: string }> = {
   durga: { hi: 'दुर्गा', en: 'DURGA' },
   ganesha: { hi: 'गणेश', en: 'GANESHA' },
   savitr: { hi: 'सूर्य', en: 'SURYA' },
+  saraswati: { hi: 'सरस्वती', en: 'SARASWATI' },
 };
 
 function deityLabel(deity: Deity, lang: 'hi' | 'en'): string {
@@ -54,11 +56,10 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
       : `${temple.cityEn}, ${temple.stateEn}`;
 
   return (
-    <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+    <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+      {/* Each temple sits on its presiding deity's faded background (RULEBOOK
+          §11.4 / §10.8) — a relevant per-temple plate instead of a flat wash. */}
+      <BackgroundLayer source={getDeityBackground(temple.deity)} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable
@@ -74,17 +75,9 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>{'‹'}</Text>
           </Pressable>
-          <Text
-            numberOfLines={1}
-            style={{
-              fontFamily: typography.readerTitle.fontFamily,
-              fontSize: typography.readerTitle.fontSize,
-              color: colors.ink,
-              maxWidth: 240,
-            }}
-          >
-            {name}
-          </Text>
+          {/* Language toggle at the top (consistent with the map/listing screens);
+              the temple name lives only in the hero below, never duplicated here. */}
+          <LanguageToggle />
           <View style={styles.backBtnSpacer} />
         </View>
 
@@ -148,7 +141,12 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             colors={colors}
             typography={typography}
           />
-          <PlaceholderProse lang={lang} colors={colors} typography={typography} kind="significance" />
+          <DetailProse
+            text={lang === 'hi' ? temple.significanceHi : temple.significanceEn}
+            lang={lang}
+            colors={colors}
+            typography={typography}
+          />
 
           <Ornament colors={colors} />
 
@@ -159,7 +157,12 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             colors={colors}
             typography={typography}
           />
-          <PlaceholderProse lang={lang} colors={colors} typography={typography} kind="origin" />
+          <DetailProse
+            text={lang === 'hi' ? temple.originStoryHi : temple.originStoryEn}
+            lang={lang}
+            colors={colors}
+            typography={typography}
+          />
 
           <Text
             style={{
@@ -173,14 +176,10 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             }}
           >
             {lang === 'hi'
-              ? 'स्रोत — सत्यापन प्रतीक्षित (RULEBOOK §10.1)'
-              : 'Sources — pending verification per RULEBOOK §10.1'}
+              ? `स्रोत — ${temple.sources.map((s) => s.label).join(', ')}`
+              : `Sources — ${temple.sources.map((s) => s.label).join(', ')}`}
           </Text>
         </ScrollView>
-
-        <View style={[styles.bottomBar, { borderTopColor: colors.divider }]}>
-          <LanguageToggle />
-        </View>
       </SafeAreaView>
     </View>
   );
@@ -226,22 +225,14 @@ function SectionBlock({ labelHi, labelEn, lang, colors, typography }: SectionBlo
   );
 }
 
-type PlaceholderProseProps = {
+type DetailProseProps = {
+  text: string;
   lang: 'hi' | 'en';
   colors: ReturnType<typeof useTheme>['colors'];
   typography: ReturnType<typeof useTheme>['typography'];
-  kind: 'significance' | 'origin';
 };
 
-function PlaceholderProse({ lang, colors, typography, kind }: PlaceholderProseProps) {
-  const text =
-    lang === 'hi'
-      ? kind === 'significance'
-        ? 'इस तीर्थ की महिमा का सत्यापित विवरण शिवपुराण एवं मन्दिर ट्रस्ट के स्रोतों से लिया जाना है। (RULEBOOK §10.3)'
-        : 'इस तीर्थ की उद्भव कथा शिवपुराण के स्थलपुराण खंड से सत्यापित स्रोतों के साथ शामिल की जाएगी। (RULEBOOK §10.3)'
-      : kind === 'significance'
-      ? 'Verified significance content will be sourced from Shiva Purāṇa (Gita Press) and temple-trust publications. Placeholder per RULEBOOK §10.3.'
-      : 'Verified origin-story (Sthala Purāṇa) prose will be sourced from authoritative published editions per RULEBOOK §10.1 and §10.3. Placeholder until sourced.';
+function DetailProse({ text, lang, colors, typography }: DetailProseProps) {
   return (
     <Text
       style={{
@@ -254,7 +245,7 @@ function PlaceholderProse({ lang, colors, typography, kind }: PlaceholderProsePr
           lang === 'hi' ? typography.meaning.lineHeight : typography.meaningEnglish.lineHeight,
         color: colors.inkSoft,
         textAlign: 'center',
-        fontStyle: 'italic',
+        fontStyle: lang === 'en' ? 'italic' : 'normal',
         marginBottom: 14,
         paddingHorizontal: 8,
       }}
@@ -307,10 +298,5 @@ const styles = StyleSheet.create({
   ornamentLine: {
     height: 1,
     width: 60,
-  },
-  bottomBar: {
-    paddingVertical: 12,
-    alignItems: 'center',
-    borderTopWidth: 1,
   },
 });

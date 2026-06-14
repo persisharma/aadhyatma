@@ -2,6 +2,8 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
 type Props = {
   nameHi: string;
@@ -9,11 +11,21 @@ type Props = {
   status: 'active' | 'coming';
   icon?: React.ReactNode;
   onPress?: () => void;
+  /** When true (and active), shows a green "NEW" badge top-right. */
+  hasNew?: boolean;
 };
 
-export default function CategoryCard({ nameHi, nameEn, status, icon, onPress }: Props) {
-  const { colors, typography, radii } = useTheme();
+export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, hasNew }: Props) {
+  const { colors, radii } = useTheme();
+  const { lang } = useGitaLanguage();
   const isActive = status === 'active';
+
+  const { primary, secondary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
+    devPrimary: 15,
+    devSecondary: 12,
+    latPrimary: 17,
+    latSecondary: 12,
+  });
 
   const content = (
     <>
@@ -23,24 +35,27 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress }: 
           styles.nameHi,
           {
             color: colors.ink,
-            fontFamily: typography.cardHindi.fontFamily,
-            fontSize: 15,
+            fontFamily: primary.fontFamily,
+            fontSize: primary.fontSize,
+            fontStyle: primary.fontStyle,
+            letterSpacing: primary.letterSpacing,
           },
         ]}
       >
-        {nameHi}
+        {primary.text}
       </Text>
       <Text
         style={[
           styles.nameEn,
           {
-            color: colors.inkSoft,
-            fontFamily: typography.cardLatin.fontFamily,
-            fontSize: 13,
+            color: colors.inkMuted,
+            fontFamily: secondary.fontFamily,
+            fontSize: secondary.fontSize,
+            fontStyle: secondary.fontStyle,
           },
         ]}
       >
-        {nameEn}
+        {secondary.text}
       </Text>
     </>
   );
@@ -64,7 +79,7 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress }: 
           pressed && styles.cardPressed,
         ]}
         accessibilityRole="button"
-        accessibilityLabel={`${nameEn}. Tap to open.`}
+        accessibilityLabel={`${nameEn}.${hasNew ? ' New.' : ''} Tap to open.`}
       >
         <LinearGradient
           colors={[colors.cardActiveFrom, colors.cardActiveTo]}
@@ -73,6 +88,16 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress }: 
           style={[styles.cardBg, { borderRadius: 16 }]}
         />
         {content}
+        {hasNew && (
+          <View
+            style={[styles.badge, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]}
+            pointerEvents="none"
+          >
+            <Text style={[styles.badgeText, { color: colors.newBadgeText, letterSpacing: 1.6 }]}>
+              NEW
+            </Text>
+          </View>
+        )}
       </Pressable>
     );
   }

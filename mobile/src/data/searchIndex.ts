@@ -47,6 +47,10 @@ import {
   durgaStotramChaptersManifest,
 } from './durga-stotram';
 import {
+  getSaraswatiStotramChapter,
+  saraswatiStotramChaptersManifest,
+} from './saraswati-stotram';
+import {
   getGaneshStotramChapter,
   ganeshStotramChaptersManifest,
 } from './ganesh-stotram';
@@ -76,6 +80,7 @@ import {
   ramcharitmanasChaptersManifest,
   type RamcharitmanasVerse,
 } from './ramcharitmanas';
+import { getSanskar, sanskarIds } from './sanskar';
 import { MatchRank, normalize, rankAny } from './searchNormalize';
 
 const CHALISA_IDS: readonly ChalisaId[] = [
@@ -272,6 +277,16 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.id === 'saraswati-stotram') {
+      pushChapteredShivaStrotamShape(
+        verses,
+        entry,
+        saraswatiStotramChaptersManifest,
+        getSaraswatiStotramChapter
+      );
+      continue;
+    }
+
     if (entry.id === 'ganesh-stotram') {
       pushChapteredShivaStrotamShape(
         verses,
@@ -334,6 +349,11 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
 
     if (entry.category === 'aarti') {
       pushAarti(verses, entry);
+      continue;
+    }
+
+    if (entry.category === 'sanskar') {
+      pushSanskar(verses, entry);
       continue;
     }
 
@@ -549,8 +569,29 @@ function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
         labelEn: t.nameEn,
         linesHi: [t.nameHi, `${t.cityHi}, ${t.stateHi}`],
         linesEn: [t.nameEn, `${t.cityEn}, ${t.stateEn}`],
-        meaningHi: '',
-        meaningEn: '',
+        meaningHi: `${t.significanceHi}\n${t.originStoryHi}`,
+        meaningEn: `${t.significanceEn}\n${t.originStoryEn}`,
+      })
+    );
+  });
+}
+
+function pushSanskar(out: SearchVerseEntry[], entry: LibraryEntry) {
+  if (!(sanskarIds as readonly string[]).includes(entry.id)) return;
+  const sanskar = getSanskar(entry.id);
+  sanskar.verses.forEach((v, verseIdx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: verseIdx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
       })
     );
   });

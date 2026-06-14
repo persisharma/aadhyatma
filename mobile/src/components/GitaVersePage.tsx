@@ -47,9 +47,9 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
 
   const bodyEnStyle = {
     color: colors.ink,
-    fontFamily: 'CormorantGaramond_500Medium',
-    fontSize: 18,
-    lineHeight: 30,
+    fontFamily: typography.meaningEnglish.fontFamily,
+    fontSize: typography.meaningEnglish.fontSize,
+    lineHeight: typography.meaningEnglish.lineHeight,
   } as const;
 
   const bodyStyle = lang === 'hi' ? bodyHiStyle : bodyEnStyle;
@@ -116,9 +116,9 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
                     }
                   : {
                       color: colors.ink,
-                      fontFamily: 'CormorantGaramond_600SemiBold',
-                      fontSize: 20,
-                      lineHeight: 32,
+                      fontFamily: typography.verseLatin.fontFamily,
+                      fontSize: typography.verseLatin.fontSize,
+                      lineHeight: typography.verseLatin.lineHeight,
                     },
               ]}
             >

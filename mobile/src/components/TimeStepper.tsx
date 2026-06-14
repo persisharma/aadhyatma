@@ -7,30 +7,57 @@ type Props = {
   value: TimeOfDay;
   onChange: (next: TimeOfDay) => void;
   minuteStep?: number;
+  /**
+   * Minute-of-day keys (`hour * 60 + minute`) already taken by other reminders.
+   * Stepping skips over these so a row can never land on a time another row
+   * already holds — keeping the list duplicate-free without a row vanishing
+   * mid-edit. Should exclude this row's own current value.
+   */
+  taken?: ReadonlySet<number>;
 };
 
-export default function TimeStepper({ value, onChange, minuteStep = 15 }: Props) {
+const EMPTY_TAKEN: ReadonlySet<number> = new Set();
+const DAY_MINUTES = 24 * 60;
+
+export default function TimeStepper({
+  value,
+  onChange,
+  minuteStep = 15,
+  taken = EMPTY_TAKEN,
+}: Props) {
   const { colors, radii } = useTheme();
 
   const bumpHour = useCallback(
     (delta: number) => {
-      const hour = (value.hour + delta + 24) % 24;
+      let hour = value.hour;
+      // Advance whole hours in the requested direction, skipping any hour whose
+      // hour:minute is already taken. 24 iterations is a hard stop — with at
+      // most a few reminders a free hour always exists well before that.
+      for (let i = 0; i < 24; i += 1) {
+        hour = (hour + delta + 24) % 24;
+        if (!taken.has(hour * 60 + value.minute)) break;
+      }
       onChange({ hour, minute: value.minute });
     },
-    [value, onChange]
+    [value, onChange, taken]
   );
 
   const bumpMinute = useCallback(
     (delta: number) => {
       const step = minuteStep > 0 ? minuteStep : 15;
-      const totalMinutes = value.hour * 60 + value.minute + delta * step;
-      const normalized = ((totalMinutes % (24 * 60)) + 24 * 60) % (24 * 60);
+      let total = value.hour * 60 + value.minute;
+      const slots = Math.max(1, Math.floor(DAY_MINUTES / step));
+      // Step by `step` minutes (wrapping at midnight), skipping taken slots.
+      for (let i = 0; i < slots; i += 1) {
+        total = ((total + delta * step) % DAY_MINUTES + DAY_MINUTES) % DAY_MINUTES;
+        if (!taken.has(total)) break;
+      }
       onChange({
-        hour: Math.floor(normalized / 60),
-        minute: normalized % 60,
+        hour: Math.floor(total / 60),
+        minute: total % 60,
       });
     },
-    [value, onChange, minuteStep]
+    [value, onChange, minuteStep, taken]
   );
 
   const hh = `${value.hour}`.padStart(2, '0');

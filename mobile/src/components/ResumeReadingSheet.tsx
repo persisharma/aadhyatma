@@ -3,6 +3,7 @@ import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
 type Props = {
   visible: boolean;
@@ -28,6 +29,12 @@ export default function ResumeReadingSheet({
 }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const title = orderTitlesByLanguage(lang, titleHi, titleEn, {
+    devPrimary: 20,
+    devSecondary: 13,
+    latPrimary: 22,
+    latSecondary: 12,
+  });
 
   return (
     <Modal
@@ -37,10 +44,12 @@ export default function ResumeReadingSheet({
       onRequestClose={onDismiss}
     >
       <Pressable
+        accessible={false}
         style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}
         onPress={onDismiss}
       >
         <Pressable
+          accessible={false}
           style={[
             styles.sheet,
             {
@@ -65,26 +74,29 @@ export default function ResumeReadingSheet({
                 styles.titleHi,
                 {
                   color: colors.ink,
-                  fontFamily: typography.readerTitle.fontFamily,
-                  fontSize: 20,
+                  fontFamily: title.primary.fontFamily,
+                  fontSize: title.primary.fontSize,
+                  fontStyle: title.primary.fontStyle,
+                  letterSpacing: title.primary.letterSpacing,
                 },
               ]}
               numberOfLines={1}
             >
-              {titleHi}
+              {title.primary.text}
             </Text>
             <Text
               style={[
                 styles.titleEn,
                 {
                   color: colors.inkMuted,
-                  fontFamily: typography.cardLatin.fontFamily,
-                  fontSize: 13,
+                  fontFamily: title.secondary.fontFamily,
+                  fontSize: title.secondary.fontSize,
+                  fontStyle: title.secondary.fontStyle,
                 },
               ]}
               numberOfLines={1}
             >
-              {titleEn}
+              {title.secondary.text}
             </Text>
           </View>
 
@@ -191,6 +203,7 @@ export default function ResumeReadingSheet({
             onPress={onStartOver}
             accessibilityRole="button"
             accessibilityLabel="Start over from the beginning"
+            testID="resume-start-over"
             style={({ pressed }) => [
               styles.secondaryBtn,
               {

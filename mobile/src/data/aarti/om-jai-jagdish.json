@@ -5,8 +5,18 @@
   "subtitleEn": "Aarti of Lord Vishnu",
   "deity": "vishnu",
   "language": "hi-en",
-  "source": {"baseText": "Pandit Shardha Ram Phillauri (1870)", "retrievedOn": "2026-05-23"},
-  "counts": {"totalVerses": 9},
+  "source": {
+    "baseText": "Om Jai Jagdish Hare Aarti, checked against Drik Panchang, HinduNidhi, and Bhakti Bharat.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/lord-narayan/jai-jagdish-aarti.html?ck=1&lang=hi",
+      "https://hindunidhi.com/om-jai-jagdish-hare-aarti-hindi/",
+      "https://www.bhaktibharat.com/amp/aarti/om-jai-jagdish-hare"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
+  "counts": {
+    "totalVerses": 9
+  },
   "verses": [
     {
       "id": "ojj-01",
@@ -16,14 +26,12 @@
       "labelHi": "टेक",
       "labelEn": "Refrain",
       "lines": [
-        "ॐ जय जगदीश हरे, स्वामी जय जगदीश हरे।",
-        "भक्त जनों के संकट, दास जनों के संकट,",
-        "क्षण में दूर करे॥"
+        "ॐ जय जगदीश हरे, स्वामी ! जय जगदीश हरे।",
+        "भक्त जनों के संकट, क्षण में दूर करे॥"
       ],
       "linesEn": [
-        "Om jai Jagdish hare, Swami jai Jagdish hare.",
-        "Bhakt janon ke sankat, daas janon ke sankat,",
-        "Kshan mein door kare."
+        "Om jai Jagdish hare, Swami! jai Jagdish hare.",
+        "Bhakt janon ke sankat, kshan mein door kare."
       ],
       "meaningHi": "ॐ जय जगदीश (जगत के ईश्वर विष्णु) हरे। भक्तजनों और दासजनों के संकट क्षण में दूर करने वाले। यह 1870 में पंडित श्रद्धाराम फिल्लौरी द्वारा रचित भारत की सर्वाधिक प्रचलित आरती है।",
       "meaningEn": "Om, victory to Lord Jagdish (Vishnu, Lord of the Universe). He who removes the afflictions of devotees and servants in an instant. Composed in 1870 by Pandit Shardha Ram Phillauri, this is the most widely sung aarti in India."
@@ -36,13 +44,13 @@
       "labelHi": "पद · १",
       "labelEn": "Stanza · 1",
       "lines": [
-        "जो ध्यावे फल पावे, दुख बिनसे मन का।",
-        "स्वामी दुख बिनसे मन का।",
+        "जो ध्यावे फल पावे, दुःख विनसे मन का।",
+        "स्वामी दुःख विनसे मन का।",
         "सुख सम्पत्ति घर आवे, कष्ट मिटे तन का॥"
       ],
       "linesEn": [
-        "Jo dhyaave phal paave, dukh binase man ka.",
-        "Swami dukh binase man ka.",
+        "Jo dhyaave phal paave, dukh vinse man ka.",
+        "Swami dukh vinse man ka.",
         "Sukh sampatti ghar aave, kasht mite tan ka."
       ],
       "meaningHi": "जो ध्यान करता है वह फल पाता है, मन का दुख नष्ट होता है। घर में सुख-सम्पत्ति आती है और शरीर का कष्ट मिट जाता है। यह भक्ति-मार्ग का मूल सिद्धान्त है — एकाग्र ध्यान से मानसिक और शारीरिक दोनों कष्ट दूर होते हैं।",
@@ -56,14 +64,14 @@
       "labelHi": "पद · २",
       "labelEn": "Stanza · 2",
       "lines": [
-        "मात पिता तुम मेरे, शरण गहूँ मैं किसकी।",
+        "मात-पिता तुम मेरे, शरण गहूँ मैं किसकी।",
         "स्वामी शरण गहूँ मैं किसकी।",
-        "तुम बिन और न दूजा, आस करूँ मैं जिसकी॥"
+        "तुम बिन और न दूजा, आस करूँ जिसकी॥"
       ],
       "linesEn": [
-        "Maat pitaa tum mere, sharan gahoon main kiski.",
+        "Maat-pita tum mere, sharan gahoon main kiski.",
         "Swami sharan gahoon main kiski.",
-        "Tum bin aur na doojaa, aas karoon main jiski."
+        "Tum bin aur na dooja, aas karoon jiski."
       ],
       "meaningHi": "आप ही मेरे माता-पिता हैं, मैं और किसकी शरण लूँ? आपके बिना कोई दूसरा नहीं जिससे मैं आशा रख सकूँ। यह शरणागति (अनन्य समर्पण) का भाव है — गीता 18.66 का सार।",
       "meaningEn": "You are my mother and father, whose refuge shall I seek? There is no other besides you in whom I can place my hope. This is the sentiment of complete surrender — the essence of Gita 18.66."
@@ -96,14 +104,14 @@
       "labelHi": "पद · ४",
       "labelEn": "Stanza · 4",
       "lines": [
-        "तुम करुणा के सागर, तुम पालनकर्ता।",
-        "स्वामी तुम पालनकर्ता।",
+        "तुम करुणा के सागर, तुम पालन-कर्ता।",
+        "स्वामी तुम पालन-कर्ता।",
         "मैं मूरख खल कामी, कृपा करो भर्ता॥"
       ],
       "linesEn": [
-        "Tum karuna ke saagar, tum paalankartaa.",
-        "Swami tum paalankartaa.",
-        "Main moorakh khal kaamee, kripa karo Bhartaa."
+        "Tum karuna ke saagar, tum paalan-karta.",
+        "Swami tum paalan-karta.",
+        "Main moorakh khal kaami, kripa karo Bharta."
       ],
       "meaningHi": "आप करुणा के सागर हैं, आप पालन करने वाले हैं। मैं मूर्ख, दुष्ट और कामी हूँ — हे भर्ता (स्वामी), कृपा कीजिए। यह दैन्य भाव (आत्म-विनम्रता) भक्ति-मार्ग का अनिवार्य अंग है।",
       "meaningEn": "You are the ocean of compassion, you are the sustainer. I am foolish, wicked, and lustful — O Lord, have mercy. This self-humility (Dainya Bhava) is an essential part of the devotional path."
@@ -136,14 +144,14 @@
       "labelHi": "पद · ६",
       "labelEn": "Stanza · 6",
       "lines": [
-        "दीनबन्धु दुखहर्ता, ठाकुर तुम मेरे।",
-        "स्वामी ठाकुर तुम मेरे।",
-        "अपने हाथ उठाओ, अपने शरण खड़े॥"
+        "दीनबन्धु दुखहर्ता, तुम ठाकुर मेरे।",
+        "स्वामी तुम ठाकुर मेरे।",
+        "अपने हाथ उठाओ, द्वार पड़ा तेरे॥"
       ],
       "linesEn": [
-        "Deenbandhu dukhhartaa, Thaakur tum mere.",
-        "Swami Thaakur tum mere.",
-        "Apne haath uthaao, apne sharan khade."
+        "Deenbandhu dukhaharta, tum Thakur mere.",
+        "Swami tum Thakur mere.",
+        "Apne haath uthaao, dwaar pada tere."
       ],
       "meaningHi": "हे दीनबन्धु (दीनों के मित्र), दुख हरने वाले, आप मेरे ठाकुर (स्वामी) हैं। अपने हाथ उठाइए (कृपा का हस्त), आपकी शरण में खड़ा हूँ। यह करबद्ध प्रार्थना है — भक्त शरण में खड़ा कृपा-हस्त की प्रतीक्षा कर रहा है।",
       "meaningEn": "O friend of the meek, remover of sorrow, you are my Lord. Raise your hand (of grace), I stand in your refuge. This is a prayer with folded hands — the devotee stands in surrender awaiting the hand of mercy."
@@ -156,14 +164,14 @@
       "labelHi": "पद · ७",
       "labelEn": "Stanza · 7",
       "lines": [
-        "विषय विकार मिटाओ, पाप हरो देवा।",
+        "विषय-विकार मिटाओ, पाप हरो देवा।",
         "स्वामी पाप हरो देवा।",
-        "श्रद्धा भक्ति बढ़ाओ, सन्तन की सेवा॥"
+        "श्रद्धा-भक्ति बढ़ाओ, सन्तन की सेवा॥"
       ],
       "linesEn": [
-        "Vishay vikaar mitaao, paap haro Devaa.",
-        "Swami paap haro Devaa.",
-        "Shraddha bhakti badhaao, santan ki sevaa."
+        "Vishay-vikaar mitaao, paap haro Deva.",
+        "Swami paap haro Deva.",
+        "Shraddha-bhakti badhaao, santan ki seva."
       ],
       "meaningHi": "विषय-विकार (इन्द्रिय-दोष) मिटाइए, पाप हरिए हे देवा। श्रद्धा और भक्ति बढ़ाइए तथा संतों की सेवा का भाव दीजिए। चार प्रार्थनाएँ एक पद में: विकार-निवृत्ति, पाप-हरण, श्रद्धा-वृद्धि, और सेवा-भाव।",
       "meaningEn": "Remove sensory distortions, take away our sins O Lord. Increase our faith and devotion, and the spirit of serving saints. Four prayers in one verse: removal of desires, destruction of sin, growth of faith, and spirit of service."
@@ -176,17 +184,17 @@
       "labelHi": "टेक",
       "labelEn": "Closing Refrain",
       "lines": [
-        "ॐ जय जगदीश हरे, स्वामी जय जगदीश हरे।",
-        "भक्त जनों के संकट, दास जनों के संकट,",
-        "क्षण में दूर करे॥"
+        "श्री जगदीशजी की आरती, जो कोई नर गावे।",
+        "स्वामी जो कोई नर गावे।",
+        "कहत शिवानन्द स्वामी, सुख संपत्ति पावे॥"
       ],
       "linesEn": [
-        "Om jai Jagdish hare, Swami jai Jagdish hare.",
-        "Bhakt janon ke sankat, daas janon ke sankat,",
-        "Kshan mein door kare."
+        "Shree Jagdishji ki aarti, jo koi nar gaave.",
+        "Swami jo koi nar gaave.",
+        "Kahat Shivaanand Swami, sukh sampatti paave."
       ],
-      "meaningHi": "समापन में प्रथम पद की पुनरावृत्ति — आरती की चक्रीय संरचना। ईश्वर की शक्ति तत्काल है, काल-बाधित नहीं। आरती कभी समाप्त नहीं होती, केवल एक चक्र पूर्ण होता है।",
-      "meaningEn": "Closing with repetition of the first verse — the circular structure of aarti. God's power is immediate, not bound by time. Aarti never truly ends — only one cycle completes."
+      "meaningHi": "जो कोई श्री जगदीशजी की आरती गाता है — शिवानन्द स्वामी कहते हैं — वह सुख और सम्पत्ति पाता है। यह आरती गाने का फल और कवि का नाम-उल्लेख है।",
+      "meaningEn": "Whoever sings Shri Jagdishji's aarti — says Shivanand Swami — receives happiness and prosperity. This closing states the fruit of singing the aarti and names the poet."
     }
   ]
 }

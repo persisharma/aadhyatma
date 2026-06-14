@@ -3,6 +3,8 @@ import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { library, type LibraryEntry } from '@/data/texts';
 import { deities } from '@/data/deities';
 import { getDeityBackground } from '@/data/backgrounds';
@@ -10,26 +12,36 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import LibraryCard from '@/components/LibraryCard';
 import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
-import { navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
+import { useNewContent } from '@/contexts/NewContentContext';
+import { isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
 import { formatLocation } from '@/utils/formatLocation';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'DeityList'>;
 
 export default function DeityListScreen({ navigation, route }: Props) {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, spacing } = useTheme();
+  const { lang } = useGitaLanguage();
   const { deityId } = route.params;
-  const { getProgress, clearProgress, isLoading } = useReadingProgress();
+  const { getProgress, clearProgress, clearChapterProgress, isLoading } = useReadingProgress();
+  const { markSeen } = useNewContent();
   const [pendingEntry, setPendingEntry] = useState<LibraryEntry | null>(null);
 
   const backgroundImage = useMemo(() => getDeityBackground(deityId), [deityId]);
   const deityMeta = deities.find((d) => d.id === deityId);
+  const title = orderTitlesByLanguage(lang, deityMeta?.nameHi ?? '', deityMeta?.nameEn ?? '', {
+    devPrimary: 16,
+    devSecondary: 13,
+    latPrimary: 16,
+    latSecondary: 13,
+  });
   const items = library.filter(
     (e) => !e.hidden && e.deities.includes(deityId)
   );
 
   const handlePress = (entry: LibraryEntry) => {
     if (isLoading) {
+      markSeen(entry.id);
       navigateToEntryStart(navigation, entry);
       return;
     }
@@ -38,6 +50,7 @@ export default function DeityListScreen({ navigation, route }: Props) {
       setPendingEntry(entry);
       return;
     }
+    markSeen(entry.id);
     navigateToEntryStart(navigation, entry);
   };
 
@@ -66,22 +79,24 @@ export default function DeityListScreen({ navigation, route }: Props) {
           <View style={styles.titleRow}>
             <Text
               style={{
-                fontFamily: typography.readerTitle.fontFamily,
-                fontSize: 16,
+                fontFamily: title.primary.fontFamily,
+                fontSize: title.primary.fontSize,
+                fontStyle: title.primary.fontStyle,
                 color: colors.ink,
               }}
             >
-              {deityMeta?.nameHi ?? ''}
+              {title.primary.text}
             </Text>
             <Text
               style={{
-                fontFamily: 'CormorantGaramond_400Regular_Italic',
-                fontSize: 13,
+                fontFamily: title.secondary.fontFamily,
+                fontSize: title.secondary.fontSize,
+                fontStyle: title.secondary.fontStyle,
                 color: colors.inkMuted,
                 marginLeft: 6,
               }}
             >
-              · {deityMeta?.nameEn ?? ''}
+              · {title.secondary.text}
             </Text>
           </View>
         </View>
@@ -107,14 +122,24 @@ export default function DeityListScreen({ navigation, route }: Props) {
           locationEn={location.en}
           onResume={() => {
             const progress = pendingProgress;
+            markSeen(pendingEntry.id);
             setPendingEntry(null);
             navigateToProgress(navigation, progress);
           }}
           onStartOver={() => {
             const entry = pendingEntry;
+            const progress = pendingProgress;
+            markSeen(entry.id);
             setPendingEntry(null);
-            clearProgress(entry.id);
-            navigateToEntryStart(navigation, entry);
+            if (isChapteredEntry(entry) && progress?.chapter != null) {
+              // Reset only the chapter being resumed; keep sibling chapters'
+              // bookmarks, and land back on the subsection list via the reader.
+              clearChapterProgress(entry.id, progress.chapter);
+              navigateToProgress(navigation, { ...progress, verseIndex: 0 });
+            } else {
+              clearProgress(entry.id);
+              navigateToEntryStart(navigation, entry);
+            }
           }}
           onDismiss={() => setPendingEntry(null)}
         />

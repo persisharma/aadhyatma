@@ -4,8 +4,13 @@
   "titleEn": "Krishnashtakam",
   "verseCount": 10,
   "source": {
-    "baseText": "sanskritdocuments.org/doc_vishhnu/krishna8.html, stotranidhi.com",
-    "retrievedOn": "2026-05-24"
+    "baseText": "Krishnashtakam (Bhaje Vrajaika Mandanam) attributed to Adi Shankaracharya, checked against Sanskrit Documents and Stotra Ratnavali.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/krishna8.html",
+      "https://stotra.in/translation/en/sri-krishna/krishnashtakam-bhaje-vrajaika-mandanam",
+      "https://shlokam.org/shloka/krishnashtakam.htm"
+    ],
+    "retrievedOn": "2026-05-30"
   },
   "verses": [
     {
@@ -34,10 +39,10 @@
         "अनङ्गरङ्गसागरं नमामि कृष्णनागरम् ॥१॥"
       ],
       "linesEn": [
-        "bhaje vrajaikamaNDanaM samastapApakhaNDanaM",
-        "svabhaktachittara~njanaM sadaiva nandanandanam |",
-        "supichChaguchChamastakaM sunAdaveNuhastakaM",
-        "ana~Ngara~NgasAgaraM namAmi kRRiShNanAgaram ||1||"
+        "bhaje vrajaikamaṇḍanaṁ samastapāpakhaṇḍanaṁ",
+        "svabhaktachittarañjanaṁ sadaiva nandanandanam",
+        "supichchhaguchchhamastakaṁ sunādaveṇuhastakaṁ",
+        "anaṅgaraṅgasāgaraṁ namāmi kṛiṣhṇanāgaram"
       ],
       "meaningHi": "मैं व्रज के एकमात्र आभूषण, समस्त पापों का खण्डन करने वाले, अपने भक्तों के चित्त को आनन्दित करने वाले, सदैव नन्द के पुत्र का भजन करता हूँ। जिनके मस्तक पर सुन्दर मोरपंख का गुच्छ है, हाथ में मधुर नाद करने वाली वेणु (बाँसुरी) है — ऐसे अनंग (कामदेव) के रंग (कला) के सागर, नटखट कृष्ण को मैं नमन करता हूँ।",
       "meaningEn": "I worship Krishna, the sole ornament of Vraja, the destroyer of all sins, who delights the minds of His devotees, the eternal son of Nanda. Whose head is adorned with beautiful peacock feathers, who holds a sweet-sounding flute in His hand — I bow to that naughty Krishna, the ocean of the art of love."
@@ -53,10 +58,10 @@
         "महेन्द्रमानदारणं नमामि कृष्णवारणम् ॥२॥"
       ],
       "linesEn": [
-        "manojagarvamochanaM vishAlalolalochanaM",
-        "vidhUtagopashochanaM namAmi padmalochanam |",
-        "karAravindabhUdharaM smitAvalokasundaraM",
-        "mahendramAnadAraNaM namAmi kRRiShNavAraNam ||2||"
+        "manojagarvamochanaṁ viśhālalolalochanaṁ",
+        "vidhūtagopaśhochanaṁ namāmi padmalochanam",
+        "karāravindabhūdharaṁ smitāvalokasundaraṁ",
+        "mahendramānadāraṇaṁ namāmi kṛiṣhṇavāraṇam"
       ],
       "meaningHi": "कामदेव के गर्व को मोचन (दूर) करने वाले, विशाल चंचल नेत्रों वाले, गोपों के शोक को दूर करने वाले, कमल-नेत्र को मैं नमन करता हूँ। करकमल से पर्वत (गोवर्धन) को धारण करने वाले, मुस्कान और दृष्टि से सुन्दर, इन्द्र के मान (अभिमान) को दारण (चूर) करने वाले — ऐसे गजराज-सदृश कृष्ण को मैं नमन करता हूँ।",
       "meaningEn": "I bow to the lotus-eyed Krishna who humbles Kamadeva's pride, whose eyes are large and playful, who removes the sorrows of the cowherds. I bow to Krishna, mighty as an elephant, who lifted the mountain (Govardhana) with His lotus hand, whose smile and glance are supremely beautiful, and who shattered the pride of Indra."
@@ -72,10 +77,10 @@
         "युतं सुखैकदायकं नमामि गोपनायकम् ॥३॥"
       ],
       "linesEn": [
-        "kadambasUnakuNDalaM suchArugaNDamaNDalaM",
-        "vrajA~NganaikalallabhaM namAmi kRRiShNadurlabham |",
-        "yashodayA samodayA sagopayA sanandayA",
-        "yutaM sukhaikadAyakaM namAmi gopanAyakam ||3||"
+        "kadambasūnakuṇḍalaṁ suchārugaṇḍamaṇḍalaṁ",
+        "vrajāṅganaikavallabhaṁ namāmi kṛiṣhṇadurlabham",
+        "yaśhodayā samodayā sagopayā sanandayā",
+        "yutaṁ sukhaikadāyakaṁ namāmi gopanāyakam"
       ],
       "meaningHi": "कदम्ब पुष्पों के कुण्डल पहने, सुन्दर गण्ड-मण्डल (गालों) वाले, व्रज की गोपिकाओं के एकमात्र प्रिय — ऐसे दुर्लभ कृष्ण को मैं नमन करता हूँ। आनन्दमयी यशोदा, गोपियों और नन्द सहित — केवल सुख देने वाले, गोपों के नायक को मैं नमन करता हूँ।",
       "meaningEn": "I bow to Krishna, difficult to attain, who wears earrings of Kadamba flowers, whose cheeks are beautiful, who is the sole beloved of the women of Vraja. I bow to the leader of the cowherds, who bestows only happiness, accompanied by a joyful Yashoda, the Gopis, and Nanda."
@@ -91,10 +96,10 @@
         "समस्तगोपमानसं नमामि नन्दलालसम् ॥४॥"
       ],
       "linesEn": [
-        "sadaiva pAdapa~NkajaM madIya mAnase nijaM",
-        "dadhAnamuktamAlakaM namAmi nandabAlakam |",
-        "samastadoShashoShaNaM samastalokApoShaNaM",
-        "samastagopamAnasaM namAmi nandalAlasam ||4||"
+        "sadaiva pādapaṅkajaṁ madīya mānase nijaṁ",
+        "dadhānamuktamālakaṁ namāmi nandabālakam",
+        "samastadoṣhaśhoṣhaṇaṁ samastalokapoṣhaṇaṁ",
+        "samastagopamānasaṁ namāmi nandalālasam"
       ],
       "meaningHi": "जो सदैव अपने चरण-कमल मेरे मानस में स्थापित किए हुए हैं, मुक्त (खुले) बालों वाले — ऐसे नन्द के बालक को मैं नमन करता हूँ। समस्त दोषों को सुखाने (नष्ट करने) वाले, समस्त लोकों का पोषण करने वाले, समस्त गोपों के मानस (हृदय) में बसने वाले — नन्द के लाडले को मैं नमन करता हूँ।",
       "meaningEn": "I bow to Nanda's child who has placed His lotus feet firmly in my mind, whose hair hangs in beautiful curls. I bow to Nanda's darling who dries up all defects, who nourishes all the worlds, and who dwells in the hearts of all the cowherds."
@@ -110,10 +115,10 @@
         "दिने दिने नवं नवं नमामि नन्दसम्भवम् ॥५॥"
       ],
       "linesEn": [
-        "bhuvo bharAvatArakaM bhavAbdhikarNadhArakaM",
-        "yashomatIkishorakaM namAmi chittachorakam |",
-        "dRRigantakAntabha~NginaM sadA sadAlisa~NginaM",
-        "dine dine navaM navaM namAmi nandasambhavam ||5||"
+        "bhuvo bharāvatārakaṁ bhavābdhikarṇadhārakaṁ",
+        "yaśhomatīkiśhorakaṁ namāmi chittachorakam",
+        "dṛigantakāntabhaṅginaṁ sadā sadālisaṅginaṁ",
+        "dine dine navaṁ navaṁ namāmi nandasambhavam"
       ],
       "meaningHi": "पृथ्वी के भार को उतारने वाले (अवतारक), भवसागर के कर्णधार (पार लगाने वाले नाविक), यशोमती (यशोदा) के किशोर — ऐसे चित्तचोर को मैं नमन करता हूँ। नेत्रों के कोणों से सुन्दर भंगिमा वाले, सदैव सन्त-भक्तों के संगी, दिन-प्रतिदिन नवीन से नवीन (दिखने वाले) — ऐसे नन्द के पुत्र को मैं नमन करता हूँ।",
       "meaningEn": "I bow to the stealer of hearts, who incarnated to relieve the earth's burden, who is the helmsman across the ocean of worldly existence, the youth of Yashoda. I bow to Nanda's son, whose sidelong glances are enchanting, who is always in the company of saintly devotees, and who appears newer and newer day by day."
@@ -129,10 +134,10 @@
         "नमामि मेघसुन्दरं तडित्प्रभालसत्पटम् ॥६॥"
       ],
       "linesEn": [
-        "guNAkaraM sukhAkaraM kRRipAkaraM kRRipAparaM",
-        "suradvIShannikandanaM namAmi gopanandanam |",
-        "navInagopanAgaraM navInakelilampatam",
-        "namAmi meghasundaraM taDitprabhAlasatpatam ||6||"
+        "guṇākaraṁ sukhākaraṁ kṛipākaraṁ kṛipāparaṁ",
+        "suradviṣhannikandanaṁ namāmi gopanandanam",
+        "navīnagopanāgaraṁ navīnakelilampaṭaṁ",
+        "namāmi meghasundaraṁ taḍitprabhālasatpaṭam"
       ],
       "meaningHi": "गुणों की खान, सुख की खान, कृपा की खान, कृपा में परम (सर्वोच्च), देवद्रोहियों (असुरों) का उन्मूलन करने वाले — ऐसे गोपनन्दन को मैं नमन करता हूँ। नित्य-नवीन गोप-नागर (चतुर), नित्य-नवीन क्रीड़ाओं में रत, मेघ के समान सुन्दर (श्यामवर्ण), बिजली की प्रभा जैसे चमकते वस्त्र वाले — उन्हें मैं नमन करता हूँ।",
       "meaningEn": "I bow to the cowherd's son, the mine of virtues, happiness, and mercy, supremely compassionate, the destroyer of the enemies of the gods. I bow to the ever-new gallant cowherd, fond of ever-new sports, beautiful as a dark cloud, whose garment gleams like lightning."
@@ -148,10 +153,10 @@
         "रसालवेणुगायकं नमामि कुञ्जनायकम् ॥७॥"
       ],
       "linesEn": [
-        "samastagopanandanaM hRRidambujaikamOdanaM",
-        "namAmi ku~njamadhyagaM prasannabhAnushobhanam |",
-        "nikAmakAmadAyakaM dRRigantachArusAyakaM",
-        "rasAlaveNugAyakaM namAmi ku~njanAyakam ||7||"
+        "samastagopanandanaṁ hṛidambujaikamodanaṁ",
+        "namāmi kuñjamadhyagaṁ prasannabhānuśhobhanam",
+        "nikāmakāmadāyakaṁ dṛigantachārusāyakaṁ",
+        "rasālaveṇugāyakaṁ namāmi kuñjanāyakam"
       ],
       "meaningHi": "समस्त गोपों को आनन्दित करने वाले, हृदय-कमल को प्रफुल्लित करने वाले, कुञ्ज (लता-वन) के मध्य में विराजमान, प्रसन्न सूर्य के समान शोभायमान — उन्हें मैं नमन करता हूँ। सभी कामनाओं को पूर्ण करने वाले, नेत्रकोणों की सुन्दर दृष्टि जिनके बाण (तीर) हैं, रसीली वेणु (बाँसुरी) बजाने वाले — ऐसे कुञ्जनायक को मैं नमन करता हूँ।",
       "meaningEn": "I bow to Him who delights all the cowherds, who causes the lotus of the heart to blossom with joy, who sits in the midst of the grove, resplendent as the bright sun. I bow to the Lord of the bower, who fulfills all desires, whose beautiful sidelong glances are like arrows, and who plays melodious tunes on the flute."
@@ -167,10 +172,10 @@
         "गजेन्द्रमोक्षकारिणं नमामि श्रीविहारिणम् ॥८॥"
       ],
       "linesEn": [
-        "vidagdhagopikAmanomanoj~natalpaShAyinaM",
-        "namAmi ku~njakAnane pravRRiddhvahnipAyinam |",
-        "kishorakAntiranJitaM dRRiga~njanaM sushobhitaM",
-        "gajendramokShakAriNaM namAmi shrIvihAriNam ||8||"
+        "vidagdhagopikāmanomanojñatalpaśhāyinaṁ",
+        "namāmi kuñjakānane pravṛiddhavahnipāyinam",
+        "kiśhorakāntirañjitaṁ dṛigañjanaṁ suśhobhitaṁ",
+        "gajendramokṣhakāriṇaṁ namāmi śhrīvihāriṇam"
       ],
       "meaningHi": "विदग्ध (चतुर) गोपिकाओं के मनोज्ञ (मनोहर) मन रूपी तल्प (शय्या) पर शयन करने वाले — कुञ्ज-वन में फैली हुई दावाग्नि को पी लेने वाले उन्हें मैं नमन करता हूँ। किशोर-कान्ति (युवा-सुषमा) से रञ्जित, नेत्रों में अंजन (काजल) से सुशोभित, गजेन्द्र (हाथी) को मोक्ष देने वाले — ऐसे श्रीविहारी (लक्ष्मीपति) को मैं नमन करता हूँ।",
       "meaningEn": "I bow to Him who reclines on the bed that is the beautiful minds of the intelligent Gopis, who drank the spreading forest-fire in the groves to protect the cowherds. I bow to Shri-Vihari (consort of Lakshmi), whose eyes are beautified with collyrium and whose youthful radiance is enchanting, who liberated the elephant Gajendra."
@@ -186,10 +191,10 @@
         "भवेत्स नन्दनन्दने भवे भवे सुभक्तिमान् ॥९॥"
       ],
       "linesEn": [
-        "yadA tadA yathA tathA tathaiva kRRiShNasatkathA",
-        "mayA sadaiva gIyatAM tathA kRRipA vidhIyatAm |",
-        "pramANikAShTakadvayaM japatyadhItya yaH pumAn",
-        "bhavetsa nandanandane bhave bhave subhaktimAn ||9||"
+        "yadā tadā yathā tathā tathaiva kṛiṣhṇasatkathā",
+        "mayā sadaiva gīyatāṁ tathā kṛipā vidhīyatām",
+        "pramāṇikāṣhṭakadvayaṁ japatyadhītya yaḥ pumān",
+        "bhavetsa nandanandane bhave bhave subhaktimān"
       ],
       "meaningHi": "हे कृष्ण! जब भी, जहाँ भी, जैसे भी — कृष्ण की सत्कथा मेरे द्वारा सदैव गाई जाए, ऐसी कृपा कीजिए। जो पुरुष इन दो प्रामाणिक अष्टकों का जप और अध्ययन करता है, वह जन्म-जन्मान्तर में नन्दनन्दन (कृष्ण) की सुदृढ़ भक्ति को प्राप्त करता है।\n\n(यह फल-श्रुति है — स्तोत्र-पाठ का फल बताने वाला अन्तिम श्लोक।)",
       "meaningEn": "O Lord Krishna! Whenever, wherever, however — may I always sing Your sacred stories; please bestow such grace. Whoever chants and studies these two authoritative ashtakas shall be blessed with firm devotion to Nanda's son in every birth.\n\n(This is the phala-shruti — the concluding verse describing the fruit of reciting the hymn.)"

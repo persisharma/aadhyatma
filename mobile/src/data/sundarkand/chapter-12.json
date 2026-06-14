@@ -79,7 +79,7 @@
       "meaningHi": "-अब विलंब किस कारण किया जाए। वानरों को तुरंत आज्ञा दो। (भगवान् की) यह लीला (रावणवध की तैयारी) देखकर, बहुत से फूल बरसाकर और हर्षित होकर देवता आकाश से अपने-अपने लोक को चले",
       "meaningEn": "Why should we delay any further? Quickly command the army of monkeys to advance.\" Witnessing the divine play of Lord Ram, the Demigods showered a rain of celestial flowers from the Heavens and joyfully departed for their own abodes.",
       "linesEn": [
-        "aba bailanbau kaeha kārana kaījae| tauranta kapainaha kahan āyasau daījae||",
+        "Ab bilanbu keh kaaran keeje. turant kapinh kahan aayasu deeje",
         "Kautuk dekhi suman bahu barashee. nabh ten bhavan chale sur harashee"
       ],
       "chapter": 12
@@ -1048,5 +1048,14 @@
       ],
       "chapter": 12
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

@@ -184,8 +184,8 @@
       "linesEn": [
         "praphullanīlapaṅkajaprapañchakālimaprabhā-",
         "valambikaṇṭhakandalīruchiprabaddhakandharam",
-        "smarachChidaṁ purachChidaṁ bhavachChidaṁ makhachChidaṁ",
-        "gajachChidānukachChidaṁ tamantakachChidaṁ bhaje"
+        "smarachchhidaṁ purachchhidaṁ bhavachchhidaṁ makhachchhidaṁ",
+        "gajachchhidānukachchhidaṁ tamantakachchhidaṁ bhaje"
       ],
       "meaningHi": "जिनके कण्ठ की शोभा प्रफुल्लित नीलकमल की कालिमा-प्रभा से सुसज्जित है, जो काम (स्मर) को नष्ट करने वाले, त्रिपुर को नष्ट करने वाले, भव (संसार-चक्र) को काटने वाले, दक्ष-यज्ञ को विध्वंस करने वाले, गजासुर को मारने वाले, अन्धकासुर को मारने वाले और यमराज (अन्तक) को भी नष्ट करने वाले हैं — मैं उन शिव को भजता हूँ।",
       "meaningEn": "He whose neck is adorned with the lustre of blooming blue lotuses; the destroyer of Kama, the destroyer of Tripura, the cutter of the cycle of rebirth, the destroyer of Daksha's sacrifice, the slayer of Gajasura, the slayer of Andhaka, and the vanquisher of Yama (Death) — I worship that Shiva."
@@ -317,5 +317,14 @@
       "meaningHi": "इस प्रकार श्री रावण द्वारा रचित शिव ताण्डव स्तोत्र सम्पूर्ण हुआ।",
       "meaningEn": "Thus ends the Shiva Tandava Stotram composed by Sri Ravana."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Traditional Shiva mantras and Shiva Tandava Stotram, checked against Vaidika Vignanam, GreenMesg, and Sanskrit Documents references.",
+    "referenceUrls": [
+      "https://vignanam.org/devanagari/shiva-tandava-stotram.html",
+      "https://greenmesg.org/stotras/shiva/shiva_tandava_stotram.php",
+      "https://sanskritdocuments.org/doc_shiva/tANDavastotram1.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

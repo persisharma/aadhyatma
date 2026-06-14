@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 
+import { deities } from '../deities';
 import { library } from '../texts';
 import {
   _resetSearchIndexForTest,
@@ -50,9 +51,10 @@ const index = getSearchIndex();
   assert.ok(activeCount > 0);
 }
 
-// All eight deities are indexed.
+// Every deity is indexed.
 {
-  assert.equal(index.deities.length, 8);
+  assert.equal(index.deities.length, deities.length);
+  assert.ok(index.deities.some((d) => d.deityId === 'saraswati'));
 }
 
 // Hanuman query returns multiple sections (chalisa, ashtak, aarti, sankat-mochan).
@@ -69,6 +71,14 @@ const index = getSearchIndex();
 {
   const res = runSearch('हनुमान', index);
   assert.ok(res.sections.length > 0);
+}
+
+// Theerth detail prose is searchable, not just temple names/locations.
+{
+  const res = runSearch('Somraj', index);
+  const hit = res.verses.find((v) => v.entry.sourceId === 'famous-theerth');
+  assert.ok(hit, 'expected Somnath origin-story text to be indexed under theerth');
+  assert.equal(hit.entry.labelEn, 'Somnath');
 }
 
 // BG 2.47 query finds the right verse via a partial of the famous line.

@@ -14,4 +14,5 @@ export const categories: readonly CategoryMeta[] = [
   { id: 'japam', nameHi: 'जप', nameEn: 'Japa & Mantras', status: 'active' },
   { id: 'aarti', nameHi: 'आरती', nameEn: 'Aarti', status: 'active' },
   { id: 'theerth', nameHi: 'तीर्थ', nameEn: 'Pilgrimage', status: 'active' },
+  { id: 'sanskar', nameHi: 'संस्कार', nameEn: 'Good Habits', status: 'active' },
 ];

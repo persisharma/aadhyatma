@@ -144,7 +144,12 @@
     }
   ],
   "source": {
-    "baseText": "sanskritdocuments.org/doc_vishhnu/vsahasranew.html, opensadhaka.com",
-    "retrievedOn": "2026-05-24"
+    "baseText": "Vishnu Sahasranama from Mahabharata Anushasana Parva; app stores an excerpt, with main-stotram names 1-287 only.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/vsahasranew.html",
+      "https://www.opensadhaka.com/stotras/vishnu-sahasranama",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html"
+    ],
+    "retrievedOn": "2026-05-30"
   }
 }

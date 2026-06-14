@@ -1,0 +1,47 @@
+{
+  "chapter": 1,
+  "titleHi": "सरस्वती नमस्तुभ्यं",
+  "titleEn": "Saraswati Namastubhyam",
+  "verseCount": 2,
+  "verses": [
+    {
+      "id": "ss-1-0",
+      "chapter": 1,
+      "number": 0,
+      "sanskrit": [
+        "॥ सरस्वती नमस्तुभ्यं ॥",
+        "विद्यारम्भ का श्लोक"
+      ],
+      "linesEn": [
+        "Saraswati Namastubhyam",
+        "The Vidyarambha (start-of-study) Shloka"
+      ],
+      "meaningHi": "महत्त्व:\n\nयह सम्पूर्ण भारत में छात्रों का सर्वाधिक प्रसिद्ध श्लोक है, जो पुस्तक खोलने तथा पढ़ाई, गृहकार्य अथवा परीक्षा आरम्भ करने से ठीक पूर्व बोला जाता है। इसमें विद्यार्थी देवी सरस्वती को नमन कर अध्ययन के शुभारम्भ का संकल्प लेता है और एकाग्रता, स्पष्ट स्मरण तथा सफलता की प्रार्थना करता है। विद्यारम्भ संस्कार (बच्चे की प्रथम शिक्षा) तथा बसन्त पञ्चमी पर इसका विशेष महत्त्व है। अगले पृष्ठ पर श्लोक एवं उसका अर्थ दिया गया है।",
+      "meaningEn": "Significance:\n\nThis is the most widely recited student prayer in India, said just before opening a book or beginning study, homework or an examination. In it the student bows to Goddess Saraswati, resolves to begin learning, and prays for focus, clear recall and success. It holds special place at the Vidyarambha rite (a child's first lesson) and on Vasant Panchami. The next page gives the shloka and its meaning."
+    },
+    {
+      "id": "ss-1-1",
+      "chapter": 1,
+      "number": 1,
+      "sanskrit": [
+        "सरस्वति नमस्तुभ्यं वरदे कामरूपिणि।",
+        "विद्यारम्भं करिष्यामि सिद्धिर्भवतु मे सदा॥"
+      ],
+      "linesEn": [
+        "sarasvati namastubhyaṃ varade kāmarūpiṇi",
+        "vidyārambhaṃ kariṣyāmi siddhir bhavatu me sadā"
+      ],
+      "meaningHi": "हे सरस्वती! आपको नमस्कार है — आप वर देने वाली और (भक्त की) इच्छाओं को पूर्ण करने वाली हैं। मैं विद्या का आरम्भ करने जा रहा/रही हूँ; मुझे सदा सिद्धि (सफलता) प्राप्त हो।\n\n'विद्यारम्भं करिष्यामि' अर्थात् 'मैं अध्ययन का शुभारम्भ करता हूँ' — यह विद्यार्थी के संकल्प एवं विनम्रता को व्यक्त करता है।",
+      "meaningEn": "O Saraswati, salutations to you — bestower of boons, fulfiller of the devotee's wishes. I am about to begin my studies; may success always be mine.\n\n'Vidyaarambham karishyaami' — 'I now begin my study' — voices the student's resolve and humility before learning."
+    }
+  ],
+  "source": {
+    "baseText": "Saraswati Namastubhyam (Vidyarambha shloka), dominant kāmarūpiṇi / siddhir-bhavatu reading. Verified verbatim against shlokam.org and Vedadhara.",
+    "referenceUrls": [
+      "https://shlokam.org/shloka/sarasvati-namasthubyam.htm",
+      "https://www.vedadhara.com/saraswati-namastubhyam-meaning",
+      "https://en.wikipedia.org/wiki/Saraswati_Shloka"
+    ],
+    "retrievedOn": "2026-05-31"
+  }
+}

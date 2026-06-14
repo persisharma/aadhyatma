@@ -16,6 +16,7 @@ import { getSourceBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'GitaChapters'>;
@@ -23,6 +24,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'GitaChapters'>;
 export default function GitaChaptersIndexScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { getChapterProgress } = useReadingProgress();
 
   const title = lang === 'hi' ? gitaTitleHi : gitaTitleEn;
   const titleFontFamily =
@@ -88,9 +90,10 @@ export default function GitaChaptersIndexScreen({ navigation }: Props) {
             <GitaChapterCard
               key={chapter.chapter}
               chapter={chapter}
-              onPress={() =>
-                navigation.navigate('GitaReader', { chapter: chapter.chapter })
-              }
+              onPress={() => {
+                const resumeIndex = getChapterProgress('bhagavad-gita', chapter.chapter)?.verseIndex ?? 0;
+                navigation.navigate('GitaReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
+              }}
             />
           ))}
         </ScrollView>

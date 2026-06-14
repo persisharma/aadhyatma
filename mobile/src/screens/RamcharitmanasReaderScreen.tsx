@@ -10,8 +10,10 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
-import SundarkandVersePage from '@/components/SundarkandVersePage';
+import JumpToStartButton from '@/components/JumpToStartButton';
+import RamcharitmanasVersePage from '@/components/RamcharitmanasVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
@@ -53,6 +55,11 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
   }).current;
 
   const getItemLayout = useCallback((_: unknown, index: number) => ({ length: width, offset: width * index, index }), [width]);
+
+  const goToStart = useCallback(() => {
+    listRef.current?.scrollToIndex({ index: 0, animated: true });
+    setCurrentIndex(0);
+  }, []);
 
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
@@ -128,14 +135,14 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
           </View>
         </View>
 
-        <View style={styles.toggleRow}><LanguageToggle /></View>
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId="ramcharitmanas" chapter={chapter.chapter} /></View>
 
         <View style={styles.listContainer}>
           <FlatList
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <SundarkandVersePage verse={item as any} sourceId="ramcharitmanas" width={width} />}
+            renderItem={({ item }) => <RamcharitmanasVersePage verse={item} sourceId="ramcharitmanas" width={width} />}
             extraData={lang}
             horizontal
             pagingEnabled
@@ -153,6 +160,7 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

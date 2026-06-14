@@ -26,6 +26,7 @@ expo-env.d.ts
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+coverage/
 
 # macOS
 .DS_Store
@@ -44,3 +45,6 @@ credentials.json
 # generated native folders
 /ios
 /android
+
+# Jest coverage output
+coverage/

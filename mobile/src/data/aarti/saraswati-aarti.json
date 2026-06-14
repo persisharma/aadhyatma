@@ -1,0 +1,165 @@
+{
+  "titleHi": "सरस्वती माता की आरती",
+  "titleEn": "Saraswati Mata Ki Aarti",
+  "subtitleHi": "जय सरस्वती माता, मैया जय सरस्वती माता",
+  "subtitleEn": "Jai Saraswati Mata, Maiya Jai Saraswati Mata",
+  "deity": "saraswati",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Maa Saraswati Aarti (Jai Saraswati Mata) — verified line-for-line against Drik Panchang and HinduNidhi. Body opens 'जय सरस्वती माता' (no leading ॐ in these sources); 'द्युति मंगलकारी' and 'मोह अज्ञान और तिमिर का' are the majority readings.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/saraswati-mata/saraswati-mata-aarti.html",
+      "https://hindunidhi.com/maa-saraswati-ji-ki-aarti-hindi/"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "counts": {
+    "totalVerses": 8
+  },
+  "verses": [
+    {
+      "id": "sa-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "जय सरस्वती माता, मैया जय सरस्वती माता।",
+        "सदगुण वैभव शालिनी, त्रिभुवन विख्याता॥"
+      ],
+      "linesEn": [
+        "Jai Saraswati Mata, maiya jai Saraswati Mata.",
+        "Sadgun vaibhav shaalini, tribhuvan vikhyaata."
+      ],
+      "meaningHi": "जय हो सरस्वती माता! हे माँ, आपकी जय हो। आप सद्गुणों एवं वैभव से सुशोभित हैं और तीनों लोकों में विख्यात (प्रसिद्ध) हैं। यह आरती की टेक है, जो प्रत्येक पद के पश्चात् दोहराई जाती है।",
+      "meaningEn": "Victory to you, Mother Saraswati! O Mother, glory to you — adorned with noble virtues and splendour, renowned across all three worlds. This is the refrain, repeated after each stanza."
+    },
+    {
+      "id": "sa-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "चन्द्रवदनि पद्मासिनि, द्युति मंगलकारी।",
+        "सोहे शुभ हंस सवारी, अतुल तेजधारी॥"
+      ],
+      "linesEn": [
+        "Chandravadani padmaasini, dyuti mangalkaari.",
+        "Sohe shubh hans sawaari, atul tejdhaari."
+      ],
+      "meaningHi": "जिनका मुख चन्द्रमा के समान सौम्य है, जो कमल के आसन पर विराजमान हैं और जिनकी कान्ति मंगलकारी है; जिनकी सवारी शुभ हंस है और जो अतुलनीय तेज धारण करती हैं।",
+      "meaningEn": "She whose face is gentle as the moon, who is seated on a lotus, and whose radiance is auspicious; whose mount is the graceful swan, and who bears incomparable splendour."
+    },
+    {
+      "id": "sa-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "बाएं कर में वीणा, दाएं कर माला।",
+        "शीश मुकुट मणि सोहे, गल मोतियन माला॥"
+      ],
+      "linesEn": [
+        "Baayen kar mein veenaa, daayen kar maala.",
+        "Sheesh mukut mani sohe, gal motiyan maala."
+      ],
+      "meaningHi": "बायें हाथ में वीणा और दायें हाथ में जप-माला सुशोभित है; मस्तक पर मणि-जड़ित मुकुट और गले में मोतियों की माला शोभा देती है। ये सरस्वती के विद्या, संगीत एवं साधना के प्रतीक हैं।",
+      "meaningEn": "In her left hand the veena, in her right hand a rosary; a jewelled crown adorns her head and a pearl necklace her throat. These are the emblems of Saraswati's learning, music and contemplation."
+    },
+    {
+      "id": "sa-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "देवी शरण जो आए, उनका उद्धार किया।",
+        "पैठी मंथरा दासी, रावण संहार किया॥"
+      ],
+      "linesEn": [
+        "Devi sharan jo aaye, unka uddhaar kiya.",
+        "Paithi Manthara daasi, Raavan sanhaar kiya."
+      ],
+      "meaningHi": "जो भी आपकी शरण में आता है, आप उसका उद्धार करती हैं। (यह लोक-प्रचलित पद देवी की महिमा का स्मरण कराता है — वाणी एवं बुद्धि की अधिष्ठात्री शक्ति ही संसार की बड़ी घटनाओं के पीछे रहती है, जैसे दासी मन्थरा के वचनों से लेकर रावण के संहार तक की रामायण-कथा।) पद का मूल भाव सरल है — माँ की कृपा से ही भक्त का कल्याण होता है।",
+      "meaningEn": "Whoever takes refuge in you, you uplift them. (This popular folk verse recalls the Goddess's sway over speech and destiny — the power working behind the great events of the Ramayana, from the words spoken through the maid Manthara to the eventual slaying of Ravana.) Its heart is simple: it is by the Mother's grace that the devotee is delivered."
+    },
+    {
+      "id": "sa-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "विद्या ज्ञान प्रदायिनि, ज्ञान प्रकाश भरो।",
+        "मोह अज्ञान और तिमिर का, जग से नाश करो॥"
+      ],
+      "linesEn": [
+        "Vidya gyaan pradaayini, gyaan prakaash bharo.",
+        "Moh agyaan aur timir ka, jag se naash karo."
+      ],
+      "meaningHi": "हे विद्या और ज्ञान प्रदान करने वाली माता, हमारे भीतर ज्ञान का प्रकाश भर दीजिए। संसार से मोह, अज्ञान और अन्धकार (तिमिर) का नाश कर दीजिए। यह पद सीधे विद्यार्थी की प्रार्थना है — अज्ञान मिटे और बुद्धि प्रकाशित हो।",
+      "meaningEn": "O Mother, bestower of learning and knowledge, fill us with the light of wisdom. Destroy delusion, ignorance and darkness from the world. This stanza is the student's very prayer — that ignorance be removed and the intellect illumined."
+    },
+    {
+      "id": "sa-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "धूप दीप फल मेवा, माँ स्वीकार करो।",
+        "ज्ञानचक्षु दे माता, जग निस्तार करो॥"
+      ],
+      "linesEn": [
+        "Dhoop deep phal meva, Maa sweekaar karo.",
+        "Gyaanchakshu de Mata, jag nistaar karo."
+      ],
+      "meaningHi": "हे माँ, धूप, दीप, फल और मेवा का यह भोग स्वीकार कीजिए। माता, हमें ज्ञान-चक्षु (ज्ञान की दृष्टि) प्रदान कीजिए और संसार-सागर से हमारा निस्तार (उद्धार) कीजिए।",
+      "meaningEn": "O Mother, accept this offering of incense, lamp, fruit and dried fruits. Grant us the eye of wisdom (gyaana-chakshu) and carry us across the ocean of worldly existence."
+    },
+    {
+      "id": "sa-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · ६",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "माँ सरस्वती की आरती, जो कोई जन गावे।",
+        "हितकारी सुखकारी, ज्ञान भक्ति पावे॥"
+      ],
+      "linesEn": [
+        "Maa Saraswati ki aarti, jo koi jan gaave.",
+        "Hitkaari sukhkaari, gyaan bhakti paave."
+      ],
+      "meaningHi": "जो कोई भी माँ सरस्वती की यह आरती गाता है, वह हितकारी (कल्याणकारी) और सुखकारी फल पाता है तथा ज्ञान एवं भक्ति को प्राप्त करता है। यह आरती-गान का फल बताने वाला पद है।",
+      "meaningEn": "Whoever sings this aarti of Mother Saraswati receives what is beneficial and joyful, and attains knowledge and devotion. This stanza states the fruit of singing the aarti."
+    },
+    {
+      "id": "sa-08",
+      "type": "refrain",
+      "section": "body",
+      "number": 8,
+      "labelHi": "टेक",
+      "labelEn": "Closing Refrain",
+      "lines": [
+        "जय सरस्वती माता, जय जय सरस्वती माता।",
+        "सदगुण वैभव शालिनी, त्रिभुवन विख्याता॥"
+      ],
+      "linesEn": [
+        "Jai Saraswati Mata, jai jai Saraswati Mata.",
+        "Sadgun vaibhav shaalini, tribhuvan vikhyaata."
+      ],
+      "meaningHi": "आरती का समापन पुनः टेक से होता है — जय सरस्वती माता, जय-जय सरस्वती माता; सद्गुण-वैभव से शालिनी, तीनों लोकों में विख्याता। आरती की यह चक्रीय संरचना पूर्णता का प्रतीक है।",
+      "meaningEn": "The aarti closes by returning to the refrain — glory to Mother Saraswati, adorned with virtue and splendour, renowned in all three worlds. This circular return of the refrain symbolises completeness."
+    }
+  ]
+}
