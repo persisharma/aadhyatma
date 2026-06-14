@@ -52,15 +52,3 @@ export function itemRunsOn(routine: Routine, item: RoutineItem, weekday: number)
   if (routine.mode === 'daily') return true;
   return (item.weekdays ?? []).includes(weekday);
 }
-
-/**
- * Toggle `weekday` (0=Sun … 6=Sat) within a weekday-routine item's `weekdays`,
- * returning a new ascending-sorted list. Lets the Add-Content screen schedule a
- * source on several days; an empty result means the item should be removed.
- */
-export function toggleWeekday(weekdays: number[] | undefined, weekday: number): number[] {
-  const set = new Set(weekdays ?? []);
-  if (set.has(weekday)) set.delete(weekday);
-  else set.add(weekday);
-  return Array.from(set).sort((a, b) => a - b);
-}

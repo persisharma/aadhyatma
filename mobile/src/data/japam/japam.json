@@ -5,6 +5,7 @@
       "nameHi": "ॐ नमः शिवाय",
       "nameEn": "Om Namah Shivaya",
       "sub": "पञ्चाक्षर मंत्र · 5-syllable",
+      "subEn": "Panchakshara mantra · 5-syllable",
       "thumb": "ॐ",
       "deities": [
         "shiva"
@@ -23,6 +24,7 @@
       "nameHi": "हरे कृष्ण महामंत्र",
       "nameEn": "Hare Krishna Mahamantra",
       "sub": "16 शब्द · Vaishnava",
+      "subEn": "16 words · Vaishnava",
       "thumb": "ह",
       "deities": [
         "krishna"
@@ -47,6 +49,7 @@
       "nameHi": "गायत्री मंत्र",
       "nameEn": "Gayatri Mantra",
       "sub": "ऋग्वेद ३.६२.१०",
+      "subEn": "Rigveda 3.62.10",
       "thumb": "गा",
       "deities": [
         "savitr"
@@ -71,6 +74,7 @@
       "nameHi": "ॐ नमो भगवते वासुदेवाय",
       "nameEn": "Om Namo Bhagavate Vasudevaya",
       "sub": "द्वादशाक्षर मंत्र · 12-syllable",
+      "subEn": "Dvadashakshara mantra · 12-syllable",
       "thumb": "वा",
       "deities": [
         "krishna"

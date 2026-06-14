@@ -4,7 +4,7 @@
 import { library } from '@/data/texts';
 import { getVersePool } from '@/data/versePool';
 import { toDateKey } from '@/contexts/UserActivityContext';
-import { itemRunsOn, routineItemKey, toggleWeekday, type Routine, type RoutineItem } from '@/data/routine/types';
+import { itemRunsOn, routineItemKey, type Routine, type RoutineItem } from '@/data/routine/types';
 import { isItemAutoComplete, __resetUnitsCache, type CompletionCtx } from '@/data/routine/units';
 
 // Hoisted by babel-jest above the imports regardless of position here.
@@ -46,23 +46,6 @@ describe('routine item helpers', () => {
 
   it('builds a stable item key', () => {
     expect(routineItemKey('r1', 'i1')).toBe('r1:i1');
-  });
-
-  describe('toggleWeekday (multi-day scheduling)', () => {
-    it('adds a day to an empty / undefined list', () => {
-      expect(toggleWeekday(undefined, 2)).toEqual([2]);
-      expect(toggleWeekday([], 0)).toEqual([0]);
-    });
-
-    it('adds a second day and keeps the list ascending', () => {
-      expect(toggleWeekday([3], 1)).toEqual([1, 3]);
-      expect(toggleWeekday([1, 5], 3)).toEqual([1, 3, 5]);
-    });
-
-    it('removes a day already present (empty result signals item removal)', () => {
-      expect(toggleWeekday([1, 3], 3)).toEqual([1]);
-      expect(toggleWeekday([2], 2)).toEqual([]);
-    });
   });
 });
 

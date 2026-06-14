@@ -6,6 +6,7 @@ export type JapamMantra = {
   nameHi: string;
   nameEn: string;
   sub: string;
+  subEn: string;
   thumb: string;
   deities: Deity[];
   lines: string[];
@@ -35,6 +36,7 @@ function assertMantra(m: unknown, i: number): asserts m is JapamMantra {
     'nameHi',
     'nameEn',
     'sub',
+    'subEn',
     'thumb',
     'meaningHi',
     'meaningEn',

@@ -33,9 +33,10 @@ export default function LibraryCard({ entry, onPress }: Props) {
   });
   const isActive = entry.status === 'active';
   const showNew = isActive && isNew(entry.id);
+  const sub = lang === 'en' ? entry.subEn : entry.sub;
 
   const accessibilityRole: AccessibilityRole | undefined = isActive ? 'button' : undefined;
-  const accessibilityLabel = `${entry.nameEn}. ${entry.sub}.${showNew ? ' New.' : ''} ${isActive ? 'Tap to open.' : 'Coming soon.'}`;
+  const accessibilityLabel = `${entry.nameEn}. ${entry.subEn}.${showNew ? ' New.' : ''} ${isActive ? 'Tap to open.' : 'Coming soon.'}`;
   const accessibilityState: AccessibilityState = { disabled: !isActive };
 
   const body = (
@@ -124,7 +125,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
             { color: colors.inkMuted, fontSize: typography.cardMeta.fontSize },
           ]}
         >
-          {entry.sub}
+          {sub}
         </Text>
       </View>
 

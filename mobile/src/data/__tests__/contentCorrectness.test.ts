@@ -299,6 +299,21 @@ assert.match(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);
 assert.equal(libraryById.get('durga-stotram')?.nameHi, 'दुर्गा स्तोत्रम्');
 assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
 
+// Every library entry must carry an English count-detail string that is free of
+// Devanagari, so the card subtitle matches the selected language. Guards the
+// regression where English-selected cards still showed the Hindi `sub`.
+for (const entry of library) {
+  assert.ok(
+    typeof entry.subEn === 'string' && entry.subEn.trim() !== '',
+    `${entry.id}: subEn must be a non-empty string`
+  );
+  assert.doesNotMatch(
+    entry.subEn,
+    /[ऀ-ॿ]/,
+    `${entry.id}: subEn should not contain Devanagari, got: "${entry.subEn}"`
+  );
+}
+
 const durgaStotramManifest = readJson('durga-stotram/chapters-manifest.json');
 for (const chapter of durgaStotramManifest) {
   assert.doesNotMatch(chapter.titleHi, /चयनित/, `Durga Stotram chapter ${chapter.chapter} titleHi should not say चयनित`);
