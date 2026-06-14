@@ -7,6 +7,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { library, type LibraryEntry } from '@/data/texts';
 import { deityForWeekday, WEEKDAY_LABELS } from '@/data/routine/vaar';
+import { toggleWeekday } from '@/data/routine/types';
 import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -22,7 +23,7 @@ const addable: LibraryEntry[] = library.filter(
 export default function RoutineAddItemsScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const { routines, addItem, removeItem } = useRoutines();
+  const { routines, addItem, removeItem, updateItem } = useRoutines();
   const isHi = lang === 'hi';
 
   const routine = routines.find((r) => r.id === route.params.routineId);
@@ -49,19 +50,40 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
 
   const findItem = (sourceId: string) => routine.items.find((i) => i.sourceId === sourceId);
 
-  const toggle = (entry: LibraryEntry) => {
-    const existing = findItem(entry.id);
-    if (existing) {
-      removeItem(routine.id, existing.id);
-      return;
-    }
+  // In weekday mode a source is "added" for the selected day only if its weekdays
+  // include that day; in daily mode any matching item counts.
+  const isAddedOnDay = (sourceId: string) => {
+    const item = findItem(sourceId);
+    if (!item) return false;
+    return isWeekday ? (item.weekdays ?? []).includes(day) : true;
+  };
+
+  const addSource = (entry: LibraryEntry, weekdays?: number[]) => {
     const isJapam = entry.category === 'japam';
     addItem(routine.id, {
       kind: isJapam ? 'japam' : 'section',
       sourceId: entry.id,
       ...(isJapam ? { targetRounds: 1 } : {}),
-      ...(isWeekday ? { weekdays: [day] } : {}),
+      ...(weekdays ? { weekdays } : {}),
     });
+  };
+
+  const toggle = (entry: LibraryEntry) => {
+    const existing = findItem(entry.id);
+    if (!isWeekday) {
+      if (existing) removeItem(routine.id, existing.id);
+      else addSource(entry);
+      return;
+    }
+    // Weekday mode: add/remove only the selected day so one source can run on
+    // several days; clearing its last day removes the item entirely.
+    if (!existing) {
+      addSource(entry, [day]);
+      return;
+    }
+    const nextDays = toggleWeekday(existing.weekdays, day);
+    if (nextDays.length === 0) removeItem(routine.id, existing.id);
+    else updateItem(routine.id, existing.id, { weekdays: nextDays });
   };
 
   // Suggested (deity-of-day) first when building a weekday routine.
@@ -113,7 +135,7 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
         )}
 
         {ordered.map((entry) => {
-          const added = !!findItem(entry.id);
+          const added = isAddedOnDay(entry.id);
           const suggested = isWeekday && entry.deities.includes(suggestedDeity);
           return (
             <View key={entry.id} style={[styles.row, { borderBottomColor: colors.divider }]}>

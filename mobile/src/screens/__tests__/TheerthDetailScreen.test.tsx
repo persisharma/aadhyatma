@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text } from 'react-native';
+import { ImageBackground, Text } from 'react-native';
+import { getDeityBackground } from '@/data/backgrounds';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
@@ -73,4 +74,23 @@ test('renders sourced statewise temple detail content in English', () => {
 test('shows a not-found message for an unknown temple id', () => {
   const text = render('does-not-exist', 'en');
   assert.match(text, /not found/i);
+});
+
+test('renders the temple deity background (Somnath → Shiva)', () => {
+  const route = { key: 'd', name: 'TheerthDetail', params: { templeId: 'somnath' } } as Props['route'];
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <TheerthDetailScreen navigation={navigation} route={route} />
+      </GitaLanguageProvider>,
+    );
+  });
+  const layers = tree.root.findAllByType(ImageBackground);
+  assert.equal(layers.length, 1, 'detail screen renders one deity background layer');
+  assert.equal(
+    layers[0].props.source,
+    getDeityBackground('shiva'),
+    'Somnath (Shiva temple) uses the Shiva deity background',
+  );
 });

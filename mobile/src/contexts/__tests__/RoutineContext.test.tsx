@@ -69,3 +69,24 @@ describe('RoutineContext — celebration gate (signature-based)', () => {
     expect(get().celebratedSignatureToday).toBeNull();
   });
 });
+
+describe('RoutineContext — item add/update/remove', () => {
+  it('updateItem patches an existing item in place (e.g. its weekdays)', async () => {
+    const get = mountProbe();
+    await act(async () => undefined); // flush async hydration
+
+    let routineId = '';
+    act(() => {
+      routineId = get().createRoutine('रूटीन', 'Routine', 'weekday');
+    });
+    act(() => get().addItem(routineId, { kind: 'section', sourceId: 'hanuman-chalisa', weekdays: [1] }));
+
+    const item = get().routines[0].items[0];
+    act(() => get().updateItem(routineId, item.id, { weekdays: [1, 3] }));
+
+    const updated = get().routines[0].items[0];
+    expect(updated.id).toBe(item.id); // same item, patched in place — not a new id
+    expect(updated.weekdays).toEqual([1, 3]);
+    expect(get().routines[0].items).toHaveLength(1);
+  });
+});

@@ -31,31 +31,38 @@ recurring and no adhik maas detected after 2026-06-15.
 | Karana | OK 131/131 |
 | Sunrise (<=3 min) | OK 131/131 |
 | Sunset (<=3 min) | OK 131/131 |
-| Purnimanta month | WARN 128/131 — month-spike bug |
-| Amanta month | WARN 113/131 — adhik maas + spikes |
-| Adhik Maas flag | FAIL 101/131 — not modelled |
-| Vikram Samvat | WARN 116/131 — new-year ~2 weeks early |
+| Purnimanta month | OK 131/131 (resolved — was WARN 128/131, month-spike bug) |
+| Amanta month | OK 131/131 (resolved — was WARN 113/131, adhik maas + spikes) |
+| Adhik Maas flag | OK 131/131 (resolved — was FAIL 101/131, not modelled) |
+| Vikram Samvat | OK 131/131 (resolved — was WARN 116/131, new-year ~2 weeks early) |
 
 The five core panchang elements (tithi, nakshatra, yoga, karana, vaara), sunrise and
-sunset are **correct**. All defects are in the **lunar-month / samvat labelling**.
+sunset are **correct**. The lunar-month / samvat labelling defects noted below were
+subsequently fixed (see "Defects (resolved)") and are guarded by the e2e cross-check.
 
-## Defects
+## Defects (resolved)
 
-### 1. Adhik Maas (leap month) not modelled — HIGH
-`lunarMonth.isAdhik` is hard-coded `false` (`engine.ts`); `computePurnimantLunarMonth`
-returns `{ isAdhik: false }` unconditionally. drik shows **Adhik (Purushottam) Jyeshtha
+> **Status: resolved.** The three lunar-month / samvat defects below were fixed by the
+> new-moon-anchored month + Adhik-maas + Vikram Samvat logic in `engine.ts`
+> (`amantaMonthAt` / `lunarMonthForSystem` / `computeVikramSamvat`) and are now enforced as
+> strict regression guards in `panchangVsDrikpanchang.e2e.test.ts` (Group B: isAdhik,
+> Vikram Samvat, Purnimanta month and Amanta month each match drik for every day in the
+> window). The descriptions below are retained as the historical record of what was found.
+
+### 1. Adhik Maas (leap month) not modelled — HIGH *(resolved)*
+The original per-day heuristic left `lunarMonth.isAdhik` unconditionally `false`. drik shows **Adhik (Purushottam) Jyeshtha
 = 2026-05-17 -> 2026-06-15** (happening now). During it the engine shows a plain month
 and, in Amanta, the **wrong month** (e.g. 2026-06-01 engine `Vaishakha` vs drik
 `Jyeshtha (Adhik)`). Recurs every ~32-33 months.
 
-### 2. Month-spike bug — MEDIUM
-On the day before some amavasyas, `findNextPurnimaBoundary` / `computePurnimantLunarMonth`
-resolve the wrong full moon, producing a month several positions off for that single day:
+### 2. Month-spike bug — MEDIUM *(resolved)*
+On the day before some amavasyas, the original "moon longitude at next purnima → nearest
+30° slot" heuristic resolved the wrong full moon, producing a month several positions off for that single day:
 `2026-03-04` (`Jyeshtha` vs `Chaitra`), `2026-05-02` (`Shravana` vs `Jyeshtha`),
 `2026-06-30` (`Ashwin` vs `Ashadha`). Roughly one bad day per lunar month.
 
-### 3. Vikram Samvat rolls over ~2 weeks early — MEDIUM
-`computeVikramSamvat` keys the year purely off the (Purnimanta) month index and ignores
+### 3. Vikram Samvat rolls over ~2 weeks early — MEDIUM *(resolved)*
+The original `computeVikramSamvat` keyed the year purely off the (Purnimanta) month index and ignored
 paksha, so it bumps 2082->2083 at the start of Purnimanta Chaitra (which includes the
 preceding Krishna paksha) instead of at **Chaitra Shukla Pratipada**. drik flips on
 **2026-03-19**; the engine flips on **2026-03-04** (wrong for 2026-03-04 .. 03-18).

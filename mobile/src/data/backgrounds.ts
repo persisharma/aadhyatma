@@ -133,9 +133,10 @@ export function getReaderBackground(
   }
 
   for (const entry of library.filter((item) => item.status === 'active' && !item.hidden)) {
-    // Theerth entries open TheerthMapScreen (per-temple sketches live on the
-    // detail screen), not a verse reader — so they have no source/reader
-    // background by design. Category background is still enforced above.
+    // Theerth entries open TheerthMapScreen and a per-temple detail screen that
+    // renders the temple's deity background (see TheerthDetailScreen), not a verse
+    // reader — so they have no source/reader background entry here. Category
+    // background is still enforced above.
     if (entry.category === 'theerth') continue;
     if (!getSourceBackground(entry.id)) {
       throw new Error(`backgrounds: missing source background for ${entry.id}`);

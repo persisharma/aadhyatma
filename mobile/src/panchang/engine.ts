@@ -77,17 +77,6 @@ function computeYogaIndex(sunLng: number, moonLng: number): number {
   return Math.floor(sum / (360 / 27));
 }
 
-function computePhaseAngle(date: Date): number {
-  const year = date.getFullYear();
-  const sunLng = getSiderealSunLng(date, year);
-  const moonLng = getSiderealMoonLng(date, year);
-  return (moonLng - sunLng + 360) % 360;
-}
-
-function angularAdvance(from: number, to: number): number {
-  return (to - from + 360) % 360;
-}
-
 function computeKaranaIndex(tithiIndex: number, sunLng: number, moonLng: number): number {
   const diff = (moonLng - sunLng + 360) % 360;
   const karanaBoundaryTolerance = 0.001;
@@ -144,43 +133,6 @@ function bisectNakshatraEnd(sunrise: Date, currentNakIndex: number): Date | null
   }
 
   return new Date((lo.getTime() + hi.getTime()) / 2);
-}
-
-function findNextPurnimaBoundary(from: Date): Date {
-  const startPhase = computePhaseAngle(from);
-  const targetAdvance = (180 - startPhase + 360) % 360 || 360;
-  let lo = from;
-  let hi = new Date(lo.getTime() + 24 * 60 * 60 * 1000);
-
-  for (let i = 0; i < 35 && angularAdvance(startPhase, computePhaseAngle(hi)) < targetAdvance; i++) {
-    hi = new Date(hi.getTime() + 24 * 60 * 60 * 1000);
-  }
-
-  for (let i = 0; i < 30; i++) {
-    const mid = new Date((lo.getTime() + hi.getTime()) / 2);
-    if (angularAdvance(startPhase, computePhaseAngle(mid)) >= targetAdvance) {
-      hi = mid;
-    } else {
-      lo = mid;
-    }
-  }
-
-  return new Date((lo.getTime() + hi.getTime()) / 2);
-}
-
-function computePurnimantLunarMonth(sunrise: Date): { index: number; isAdhik: boolean } {
-  const purnima = findNextPurnimaBoundary(sunrise);
-  const fullMoonLng = getSiderealMoonLng(purnima, purnima.getFullYear());
-  const fullMoonSlot = Math.round(fullMoonLng / 30) % 12;
-  const lunarMonthIndex = (fullMoonSlot + 6) % 12;
-  return { index: lunarMonthIndex, isAdhik: false };
-}
-
-function resolveCalendarMonthIndex(purnimantMonthIndex: number, paksha: Paksha, calendarSystem: CalendarSystem): number {
-  if (calendarSystem === 'amanta' && paksha === 'krishna') {
-    return (purnimantMonthIndex + 11) % 12;
-  }
-  return purnimantMonthIndex;
 }
 
 // --- Corrected lunar month / Adhik Maas / Vikram Samvat (new-moon anchored, sankranti-based) ---

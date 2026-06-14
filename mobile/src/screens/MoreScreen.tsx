@@ -291,7 +291,7 @@ export default function MoreScreen({ navigation }: Props) {
                   {defaultLang === 'hi' ? 'पंचांग' : 'Panchang'}
                 </Text>
                 <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-                  {defaultLang === 'hi' ? 'Panchang School' : 'पंचांग पद्धति'}
+                  {defaultLang === 'hi' ? 'पंचांग पद्धति' : 'Panchang School'}
                 </Text>
               </View>
             </View>

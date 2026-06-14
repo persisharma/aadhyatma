@@ -27,6 +27,8 @@ type RoutineContextValue = {
   deleteRoutine: (routineId: string) => void;
   addItem: (routineId: string, item: Omit<RoutineItem, 'id'>) => void;
   removeItem: (routineId: string, itemId: string) => void;
+  /** Patch an existing item in place (e.g. change which weekdays it runs). */
+  updateItem: (routineId: string, itemId: string, patch: Partial<Omit<RoutineItem, 'id'>>) => void;
   /** Manually mark an item done for today (offline-recitation fallback). */
   markManualDone: (key: string) => void;
   unmarkManualDone: (key: string) => void;
@@ -162,6 +164,19 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
     [routines, persistRoutines]
   );
 
+  const updateItem = useCallback(
+    (routineId: string, itemId: string, patch: Partial<Omit<RoutineItem, 'id'>>) => {
+      persistRoutines(
+        routines.map((r) =>
+          r.id === routineId
+            ? { ...r, items: r.items.map((i) => (i.id === itemId ? { ...i, ...patch } : i)) }
+            : r
+        )
+      );
+    },
+    [routines, persistRoutines]
+  );
+
   const markManualDone = useCallback(
     (key: string) => {
       const next = new Set(doneKeys);
@@ -199,6 +214,7 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
       deleteRoutine,
       addItem,
       removeItem,
+      updateItem,
       markManualDone,
       unmarkManualDone,
       isManualDone,
@@ -212,6 +228,7 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
       deleteRoutine,
       addItem,
       removeItem,
+      updateItem,
       markManualDone,
       unmarkManualDone,
       isManualDone,

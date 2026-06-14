@@ -6,6 +6,16 @@ The companion command `/add-section` (see [`.claude/commands/add-section.md`](./
 
 ---
 
+## 0. Every change ships with tests — unit **and** e2e
+
+This is a hard, repo-wide gate that applies to **every** change, not just new sections — features, bug fixes, refactors, content edits, and data changes alike.
+
+- **Unit tests (UT).** Every change adds or updates automated unit tests that pin the new or fixed behaviour. Run `npm test` from `mobile/` — it runs `typecheck`, the Jest suites (`test:readers`), the panchang engine tests (`test:engine`), and the data/content tests (`test:data`); all must pass. A bug fix must include a test that fails before the fix and passes after.
+- **E2E verification.** Every change is exercised end-to-end via the Maestro flows in `mobile/.maestro/` (`npm run test:e2e`) on a simulator/emulator, and the flow covering the touched area must pass. If a change adds a user-facing surface no existing flow covers, extend or add the matching `<category>-smoke.yaml` (see §9).
+- **No exceptions.** A PR without both UT and e2e evidence is a hard reject — the same bar as a missing reader-screen test (§2 row 14) or a missing Maestro flow (§9).
+
+---
+
 ## 1. The questions every new section must answer
 
 Every section, regardless of size, must supply these inputs. The slash command will refuse to scaffold until the mandatory ones are present.
@@ -402,7 +412,7 @@ All of §10 applies. The high-risk ones for theerth:
 - **§10.3 No AI-generated liturgical text.** Origin-story prose (Sthala Purāṇa narratives) must come verbatim from published authoritative sources — Shiva Purāṇa (Gita Press), temple trust publications, ASI listings. Never paraphrase or "reconstruct" via LLM.
 - **§10.1 Internet verification.** Each temple's origin story must cite ≥ 2 independent authoritative sources in its `sources[]` array.
 - **§10.4 Deity accuracy.** Each temple's `deity` field must match the invocation in the source narrative — do not guess from the temple name.
-- **§10.8 Background per temple.** Each temple gets its own background sketch. Never reuse another temple's image.
+- **§10.8 Background per temple.** The detail screen renders the temple's presiding **deity** background (every deity ships a verified, thematically-correct sketch per §10.8) via `BackgroundLayer` — this is the shipped default. A bespoke per-temple sketch may be added later to override it, but never fall back to an *unrelated* deity's image.
 - **Coordinate sanity.** Coordinates outside India's bounding box (lat 6–38, lng 68–98) fail the `index.ts` invariant. This catches lat/lng swaps (common copy-paste error from sources that write `lng, lat`).
 
 ### 11.5 Verification for theerth (replaces §4 steps 4–8)
@@ -414,6 +424,6 @@ All of §10 applies. The high-risk ones for theerth:
 5. Multi-group temples (Rameshwaram, Kedarnath, Badrinath) appear under every group section they belong to in the Yatra view, AND show up when any of their group chips is selected in the Map view.
 6. Language toggle swaps title, intro, view-toggle labels, chip labels, state labels, pin tooltips, yatra section headers. No Devanagari leaks in English mode; no English leaks in Hindi mode.
 7. Tapping a pin lands on `TheerthDetailScreen` for that temple; same for tapping a state-list row or yatra-list row.
-8. Detail screen shows: hero (temple name + city + state + deity), `महिमा · Significance` block, `उद्भव कथा · Origin Story` block, sources footer. Both languages populated (verified in §10).
+8. Detail screen shows, over the temple's presiding-deity background (§11.4): hero (temple name + city + state + deity), `महिमा · Significance` block, `उद्भव कथा · Origin Story` block, sources footer. Both languages populated (verified in §10).
 9. Back from detail returns to `TheerthMapScreen` preserving its view-mode and filter-chip state.
 10. Per-temple device check on iOS AND Android — Devanagari rendering in pin tooltips can differ between platforms.
