@@ -48,12 +48,8 @@
       ],
       "meaningHi": "श्रीभगवान् ने कहा — काम्य कर्मों के त्याग को विद्वान् लोग संन्यास कहते हैं, और सब कर्मों के फल के त्याग को बुद्धिमान् लोग त्याग कहते हैं।",
       "meaningEn": "The Blessed Lord said, \"The sages understand sannyasa to be the renunciation of action with desire; the wise declare the abandonment of the fruits of all actions to be tyaga.\"",
-      "commentaryHi": [
-        "Hindi Commentary By Swami Ramsukhdas"
-      ],
-      "commentaryEn": [
-        "By Swami Sivananda"
-      ]
+      "commentaryHi": ["Hindi Commentary By Swami Ramsukhdas"],
+      "commentaryEn": ["By Swami Sivananda"]
     },
     {
       "id": "bg-18-3",
@@ -1638,9 +1634,7 @@
         "तच्च संस्मृत्य ।।. पुनः पुनः-- सञ्जयने पीछेके श्लोकमें भगवान् श्रीकृष्ण और अर्जुनके संवादको तोअद्भुत बताया? पर यहाँ भगवान्के विराट्रूपकोअत्यन्त अद्भुत बताते हैं। इसका तात्पर्य है कि संवादको तो अब भी पढ़ सकते हैं? उसपर विचार कर सकते हैं? पर उस विराट्रूपके दर्शन अब नहीं हो सकते। अतः वह रूप अत्यन्त अद्भुत है।ग्यारहवें अध्यायके नवें श्लोकमें सञ्जयने भगवान्को महायोगेश्वरः कहा था। यहाँ विस्मयो मे महान् पदोंसे कहते हैं कि ऐसे महायोगेश्वर भगवान्के रूपको याद करनेसे महान् विस्मय होगा ही। दूसरी बात? अर्जुनको,तो भगवान्ने कृपासे द्रवित होकर विश्वरूप दिखाया? पर मेरेको तो व्यासजीकी कृपासे देखनेको मिल गयायद्यपि भगवान्ने रामावतारमें कौसल्या अम्बाको विराट्रूप दिखाया और कृष्णावतारमें यशोदा मैयाको तथा कौरवसभामें दुर्योधन आदिको विराट्रूप दिखाया तथापि वह रूप ऐसा अद्भुत नहीं था कि जिसकी दाढ़ोंमें बड़ेबड़े योद्धालोग फँसे हुए हैं और दोनों सेनाओँका महान् संहार हो रहा है। इस प्रकारके अत्यन्त अद्भुत रूपको याद करके सञ्जय कहते हैं कि राजन् यह सब जो व्यासजी महाराजकी कृपासे ही मेरेको देखनेको मिला है। नहीं तो ऐसा रूप मेरेजैसेको कहाँ देखनेको मिलता",
         "सम्बन्ध-- गीताके आरम्भमें धृतराष्ट्रका गूढ़ाभिसन्धिरूप प्रश्न था कि युद्धका परिणआम क्या होगा अर्थात् मेरे पुत्रोंकी विजय होगी या पाण्डुपुत्रोंकी आगेके श्लोकमें सञ्जय धृतराष्ट्रके उसी प्रश्नका उत्तर देते हैं।"
       ],
-      "commentaryEn": [
-        "Form The Cosmic Form. (Cf.XI)"
-      ]
+      "commentaryEn": ["Form The Cosmic Form. (Cf.XI)"]
     },
     {
       "id": "bg-18-78",
@@ -1667,5 +1661,14 @@
         "This verse is called the Ekasloki Gita, i.e.? Bhagavad Gita in one verse. Repetition of even this one verse bestows the benefits of reading the whole of the scripture. Wherever On that side on which.Yogesvarah The Lord of Yoga. Krishna is called the Lord of Yogas as the seed of all Yogas comes forth from Him. Dhanurdharah The wielder of the bow called the Gandiva. There On the side of the Pandavas. Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the eighteenth discourse entitledThe Yoga of Liberation by Renunciation. OM SHANTIH SHANTIH SHANTIH ,,"
       ]
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Bhagavad Gita Sanskrit text and translations, checked against chapter-specific Holy Bhagavad Gita and Gita Supersite references; verse count follows the 701-shloka recension with chapter 13 counted as 35 verses.",
+    "referenceUrls": [
+      "https://www.holy-bhagavad-gita.org/chapter/18",
+      "https://www.gitasupersite.iitk.ac.in/srimad?language=dv&field_chapter_value=18",
+      "https://vedabase.io/en/library/bg/18/"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

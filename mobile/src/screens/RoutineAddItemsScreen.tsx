@@ -1,0 +1,177 @@
+import React, { useEffect, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { useRoutines } from '@/contexts/RoutineContext';
+import { library, type LibraryEntry } from '@/data/texts';
+import { deityForWeekday, WEEKDAY_LABELS } from '@/data/routine/vaar';
+import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
+import type { HomeStackParamList } from '@/navigation/types';
+
+type Props = NativeStackScreenProps<HomeStackParamList, 'RoutineAddItems'>;
+
+const addable: LibraryEntry[] = library.filter((e) => e.status === 'active' && !e.hidden);
+
+export default function RoutineAddItemsScreen({ navigation, route }: Props) {
+  const { colors, typography, spacing, radii } = useTheme();
+  const { lang } = useGitaLanguage();
+  const { routines, addItem, removeItem } = useRoutines();
+  const isHi = lang === 'hi';
+
+  const routine = routines.find((r) => r.id === route.params.routineId);
+  const isWeekday = routine?.mode === 'weekday';
+  const [day, setDay] = useState<number>(new Date().getDay());
+  const suggestedDeity = deityForWeekday(day);
+  const isFocused = useIsFocused();
+
+  // If the routine vanishes (e.g. deleted from RoutineDetail while this screen is
+  // still mounted underneath in the stack), pop back — but only while focused and
+  // from an effect. Deleting a routine updates context and re-renders every
+  // mounted routine screen; a render-time goBack() here fired "Cannot update a
+  // component during render" and popped an extra screen, stranding the user on the
+  // empty Today screen. The focus + effect guard makes delete a single clean pop.
+  useEffect(() => {
+    if (isFocused && !routine) {
+      navigation.goBack();
+    }
+  }, [isFocused, routine, navigation]);
+
+  if (!routine) {
+    return null;
+  }
+
+  const findItem = (sourceId: string) => routine.items.find((i) => i.sourceId === sourceId);
+
+  const toggle = (entry: LibraryEntry) => {
+    const existing = findItem(entry.id);
+    if (existing) {
+      removeItem(routine.id, existing.id);
+      return;
+    }
+    const isJapam = entry.category === 'japam';
+    addItem(routine.id, {
+      kind: isJapam ? 'japam' : 'section',
+      sourceId: entry.id,
+      ...(isJapam ? { targetRounds: 1 } : {}),
+      ...(isWeekday ? { weekdays: [day] } : {}),
+    });
+  };
+
+  // Suggested (deity-of-day) first when building a weekday routine.
+  const ordered = isWeekday
+    ? [...addable].sort((a, b) => {
+        const as = a.deities.includes(suggestedDeity) ? 0 : 1;
+        const bs = b.deities.includes(suggestedDeity) ? 0 : 1;
+        return as - bs;
+      })
+    : addable;
+
+  return (
+    <RoutineShell
+      titleHi="सामग्री जोड़ें"
+      titleEn="Add Content"
+      onBack={() => navigation.goBack()}
+    >
+      <ScrollView
+        contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }}
+        showsVerticalScrollIndicator={false}
+      >
+        {isWeekday && (
+          <View style={{ marginBottom: spacing.md }}>
+            <Text style={{ ...typography.sectionLabel, color: colors.inkMuted, marginBottom: 8 }}>
+              {isHi ? 'किस दिन के लिए' : 'For which day'}
+            </Text>
+            <View style={styles.dayStrip}>
+              {WEEKDAY_LABELS.map((w, i) => (
+                <Pressable
+                  key={w.short}
+                  onPress={() => setDay(i)}
+                  style={{
+                    flex: 1,
+                    paddingVertical: 8,
+                    borderRadius: radii.sm,
+                    borderWidth: i === day ? 1.5 : 1,
+                    borderColor: i === day ? colors.saffron : colors.divider,
+                    backgroundColor: i === day ? colors.parchmentHighlight : colors.parchmentSoft,
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 11, color: colors.inkMuted }}>
+                    {w.short}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {ordered.map((entry) => {
+          const added = !!findItem(entry.id);
+          const suggested = isWeekday && entry.deities.includes(suggestedDeity);
+          return (
+            <View key={entry.id} style={[styles.row, { borderBottomColor: colors.divider }]}>
+              <View style={[styles.thumb, { backgroundColor: colors.saffronTint, borderRadius: radii.sm }]}>
+                <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 16, color: colors.saffronDeep }}>
+                  {entry.thumb}
+                </Text>
+              </View>
+              <View style={styles.info}>
+                <View style={styles.nameRow}>
+                  <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 14, color: colors.ink, flexShrink: 1 }}>
+                    {isHi ? entry.nameHi : entry.nameEn}
+                  </Text>
+                  {suggested && (
+                    <View style={{ backgroundColor: colors.goldTint, borderRadius: radii.pill, paddingHorizontal: 6, paddingVertical: 1 }}>
+                      <Text style={{ ...typography.versePill, color: colors.saffronDeep }}>
+                        {isHi ? 'सुझाव' : 'SUGGESTED'}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+                <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
+                  {entry.category === 'japam' ? (isHi ? '1 माला · 108' : '1 mala · 108') : isHi ? 'पूरा पाठ' : 'Whole text'}
+                </Text>
+              </View>
+              <Pressable
+                onPress={() => toggle(entry)}
+                hitSlop={10}
+                accessibilityRole="button"
+                accessibilityLabel={`${added ? (isHi ? 'हटाएँ' : 'Remove') : isHi ? 'जोड़ें' : 'Add'} ${isHi ? entry.nameHi : entry.nameEn}`}
+              >
+                <Text style={{ color: added ? colors.gold : colors.saffron, fontSize: 22 }}>{added ? '✓' : '＋'}</Text>
+              </Pressable>
+            </View>
+          );
+        })}
+
+        <RoutineButton
+          label={isHi ? 'पूर्ण' : 'Done'}
+          onPress={() => navigation.navigate('RoutineToday')}
+        />
+        <Text
+          style={{
+            fontFamily: typography.cardLatin.fontFamily,
+            fontSize: 11,
+            color: colors.inkMuted,
+            marginTop: spacing.md,
+            lineHeight: 16,
+          }}
+        >
+          {isHi
+            ? 'पूरे पाठ या जप जोड़ें। अध्याय-स्तर पर चयन शीघ्र आ रहा है।'
+            : 'Add whole texts or japa. Chapter-level selection is coming soon.'}
+        </Text>
+      </ScrollView>
+    </RoutineShell>
+  );
+}
+
+const styles = StyleSheet.create({
+  dayStrip: { flexDirection: 'row', gap: 6 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 11, borderBottomWidth: 1 },
+  thumb: { width: 34, height: 34, alignItems: 'center', justifyContent: 'center' },
+  info: { flex: 1, minWidth: 0 },
+  nameRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+});

@@ -12,6 +12,7 @@ import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import VersePage from '@/components/VersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -135,7 +136,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <View style={styles.toggleRow}><LanguageToggle /></View>
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId={sourceId} /></View>
 
         <View style={styles.listContainer}>
           <FlatList

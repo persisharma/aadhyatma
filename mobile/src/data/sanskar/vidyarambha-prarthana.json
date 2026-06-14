@@ -1,0 +1,117 @@
+{
+  "titleHi": "विद्यारम्भ प्रार्थना",
+  "titleEn": "Vidyarambha Prarthana",
+  "subtitleHi": "पढ़ाई आरम्भ करने से पूर्व की प्रार्थना एवं विधि",
+  "subtitleEn": "Prayer and method before beginning study",
+  "deity": "saraswati",
+  "language": "sa-hi-en",
+  "source": {
+    "baseText": "Vidyarambha study practice. Prayer texts are verbatim from verified sources: Vakratunda (Ganesha) as carried in the app's Prabhati Shloka; Saraswati Namastubhyam (shlokam.org, Vedadhara); Guru Vandana — reading 'गुरुरेव परं ब्रह्म' (well-attested variant: 'गुरुः साक्षात् परब्रह्म'); Yā Kundendu Saraswati Vandana (Drik Panchang, shlokam.org); Saraswati beej mantra 'ॐ ऐं सरस्वत्यै नमः'. The introduction, meanings and step-by-step vidhi are editorial guidance for students, not scripture.",
+    "referenceUrls": [
+      "https://shlokam.org/shloka/sarasvati-namasthubyam.htm",
+      "https://shlokam.org/shloka/guru-brahma-guru-vishnu.htm",
+      "https://www.drikpanchang.com/lyrics/vandana/goddesses/saraswati/saraswati-ya-kundendu-vandana.html",
+      "https://shlokam.org/shloka/yaakundhendhu-thushara-hara.htm"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "counts": { "totalVerses": 6 },
+  "verses": [
+    {
+      "id": "vp-intro",
+      "number": 1,
+      "type": "intro",
+      "labelHi": "परिचय",
+      "labelEn": "Introduction",
+      "lines": ["विद्यारम्भ प्रार्थना — पढ़ाई आरम्भ करने से पूर्व"],
+      "linesEn": ["Vidyarambha Prarthana — before beginning study"],
+      "meaningHi": "किसी भी अध्ययन, गृहकार्य अथवा परीक्षा से पूर्व मन को एकाग्र करने तथा गणेश (विघ्नहर्ता), देवी सरस्वती (विद्या की देवी) और गुरु का स्मरण करने की परम्परा भारत में अति प्राचीन है। 'विद्यारम्भ' का अर्थ है 'विद्या का आरम्भ'। ये थोड़े-से श्लोक मन को शान्त करते हैं, विनम्रता जगाते हैं और पढ़ाई में एकाग्रता लाते हैं। बसन्त पञ्चमी (सरस्वती पूजा) के दिन बच्चे अपनी पुस्तकें, कलम एवं वाद्य माँ सरस्वती के समक्ष रखते हैं। नीचे दिए गए श्लोक क्रम से बोलें, फिर तुरन्त एकाग्र होकर पढ़ाई आरम्भ करें।",
+      "meaningEn": "Before any study, homework or examination, India's age-old tradition is to settle the mind and remember Ganesha (remover of obstacles), Goddess Saraswati (of learning) and one's Guru. 'Vidyarambha' means 'the beginning of study'. These few shlokas calm the mind, awaken humility and bring focus to study. On Vasant Panchami (Saraswati Puja) children place their books, pens and instruments before Maa Saraswati. Recite the shlokas below in order, then begin studying at once with full attention."
+    },
+    {
+      "id": "vp-vakratunda",
+      "number": 2,
+      "type": "mantra",
+      "labelHi": "गणेश वंदना",
+      "labelEn": "Ganesha Vandana",
+      "lines": [
+        "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।",
+        "निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥"
+      ],
+      "linesEn": [
+        "Vakratunda mahakaaya suryakoti samaprabha.",
+        "Nirvighnam kuru me deva sarvakaaryeshu sarvadaa."
+      ],
+      "meaningHi": "हे वक्रतुण्ड (घुमावदार सूँड वाले गणेश), हे महाकाय, हे करोड़ों सूर्यों के समान तेजस्वी देव! मेरे समस्त कार्यों को सदा निर्विघ्न (बाधारहित) कीजिए।\n\nकिसी भी शुभ कार्य — और पढ़ाई — के आरम्भ में सर्वप्रथम विघ्नहर्ता गणेश का स्मरण किया जाता है, ताकि कार्य निर्बाध रूप से पूर्ण हो।",
+      "meaningEn": "O Vakratunda (curved-trunk Ganesha), O mighty-bodied one, O Lord radiant as a million suns! Make all my undertakings ever free of obstacles.\n\nAt the start of any auspicious task — and of study — one first remembers Ganesha, the remover of obstacles, so the work proceeds smoothly."
+    },
+    {
+      "id": "vp-namastubhyam",
+      "number": 3,
+      "type": "mantra",
+      "labelHi": "सरस्वती प्रार्थना",
+      "labelEn": "Saraswati Prarthana",
+      "lines": [
+        "सरस्वति नमस्तुभ्यं वरदे कामरूपिणि।",
+        "विद्यारम्भं करिष्यामि सिद्धिर्भवतु मे सदा॥"
+      ],
+      "linesEn": [
+        "Sarasvati namastubhyam varade kaamaroopini,",
+        "vidyaarambham karishyaami siddhir bhavatu me sadaa."
+      ],
+      "meaningHi": "हे सरस्वती! आपको नमस्कार है — आप वर देने वाली और इच्छाओं को पूर्ण करने वाली हैं। मैं विद्या का आरम्भ करता/करती हूँ; मुझे सदा सिद्धि (सफलता) प्राप्त हो।\n\nयह छात्रों का सर्वाधिक प्रसिद्ध श्लोक है, जो पुस्तक खोलने या पढ़ाई आरम्भ करने से ठीक पूर्व बोला जाता है।",
+      "meaningEn": "O Saraswati, salutations to you — bestower of boons and fulfiller of wishes. I now begin my study; may success always be mine.\n\nThis is the most widely recited student shloka, said just before opening one's book or beginning to study."
+    },
+    {
+      "id": "vp-guru-vandana",
+      "number": 4,
+      "type": "mantra",
+      "labelHi": "गुरु वंदना",
+      "labelEn": "Guru Vandana",
+      "lines": [
+        "गुरुर्ब्रह्मा गुरुर्विष्णुः गुरुर्देवो महेश्वरः।",
+        "गुरुरेव परं ब्रह्म तस्मै श्रीगुरवे नमः॥"
+      ],
+      "linesEn": [
+        "Gurur brahmaa gurur vishnuh gurur devo maheshvarah,",
+        "gurur eva param brahma tasmai shree-gurave namah."
+      ],
+      "meaningHi": "गुरु ही ब्रह्मा हैं, गुरु ही विष्णु हैं, गुरु ही देव महेश्वर (शिव) हैं; गुरु ही परब्रह्म हैं — उन श्रीगुरु को मेरा नमस्कार।\n\nविद्यार्थी अपने शिक्षक एवं गुरु के प्रति आदर तथा कृतज्ञता व्यक्त करता है, क्योंकि गुरु ही अज्ञान का अन्धकार दूर कर ज्ञान का प्रकाश देते हैं। (पाठान्तर: 'गुरुः साक्षात् परब्रह्म'।)",
+      "meaningEn": "The Guru is Brahma, the Guru is Vishnu, the Guru is Lord Maheshvara (Shiva); the Guru alone is the Supreme Brahman — salutations to that revered Guru.\n\nThe student expresses respect and gratitude to the teacher, for it is the Guru who dispels the darkness of ignorance and gives the light of knowledge. (Variant reading: 'guruh saakshaat parabrahma'.)"
+    },
+    {
+      "id": "vp-ya-kundendu",
+      "number": 5,
+      "type": "mantra",
+      "labelHi": "सरस्वती वंदना",
+      "labelEn": "Saraswati Vandana",
+      "lines": [
+        "या कुन्देन्दुतुषारहारधवला या शुभ्रवस्त्रावृता",
+        "या वीणावरदण्डमण्डितकरा या श्वेतपद्मासना।",
+        "या ब्रह्माच्युतशंकरप्रभृतिभिर्देवैः सदा वन्दिता",
+        "सा मां पातु सरस्वती भगवती निःशेषजाड्यापहा॥"
+      ],
+      "linesEn": [
+        "Yaa kundendu-tushaara-haara-dhavalaa yaa shubhra-vastraavrita",
+        "yaa veenaa-vara-danda-manditakaraa yaa shveta-padmaasanaa,",
+        "yaa brahmaachyuta-shankara-prabhritibhir devaih sadaa vandita",
+        "saa maam paatu sarasvatee bhagavatee nihshesha-jaadyaapahaa."
+      ],
+      "meaningHi": "जो कुन्द के फूल, चन्द्रमा, हिम और मोती के हार के समान श्वेत वर्ण की हैं, श्वेत वस्त्र धारण करती हैं, जिनके हाथ वीणा और वरदण्ड से सुशोभित हैं, जो श्वेत कमल पर विराजमान हैं, और जिन्हें ब्रह्मा, विष्णु, शंकर आदि देव सदा वन्दना करते हैं — वही समस्त जड़ता (अज्ञान) को दूर करने वाली भगवती सरस्वती मेरी रक्षा करें।\n\nयह वह वंदना है जो भारत भर के विद्यालयों की प्रातःकालीन प्रार्थना-सभा में गाई जाती है।",
+      "meaningEn": "She who is white as the jasmine flower, the moon, snow and a pearl-necklace; who is robed in white; whose hands are graced by the veena and the boon-giving staff; who is seated on a white lotus; and who is ever adored by Brahma, Vishnu, Shankara and the other gods — may that Goddess Saraswati, remover of all dullness and ignorance, protect me.\n\nThis is the vandana sung at morning school assemblies across India."
+    },
+    {
+      "id": "vp-vidhi",
+      "number": 6,
+      "type": "vidhi",
+      "labelHi": "विद्यारम्भ विधि",
+      "labelEn": "Study-Prayer Vidhi",
+      "lines": ["ॐ ऐं सरस्वत्यै नमः"],
+      "linesEn": ["Om Aim Saraswatyai Namah"],
+      "meaningHi": "'ॐ ऐं सरस्वत्यै नमः' — माँ सरस्वती का मूल (बीज) मंत्र है; 'ऐं' सरस्वती का बीजाक्षर है। पढ़ाई आरम्भ करने से पूर्व इसे शान्त मन से कुछ बार दोहराया जाता है।",
+      "meaningEn": "'Om Aim Saraswatyai Namah' is the root (seed) mantra of Maa Saraswati; 'Aim' is her seed-syllable. It is repeated a few times with a calm mind before beginning study.",
+      "vidhiHi": "१. कब — प्रतिदिन पढ़ाई आरम्भ करने से पूर्व तथा प्रातःकाल; बसन्त पञ्चमी पर अपनी पुस्तकें-कलम माँ सरस्वती के समक्ष रखें। २. कैसे बैठें — पूर्व या उत्तर दिशा की ओर मुख करके, रीढ़ सीधी रखकर बैठें; तीन बार गहरी साँस लेकर मन को शान्त करें। ३. क्रम — पहले गणेश वंदना (वक्रतुण्ड), फिर सरस्वती प्रार्थना (नमस्तुभ्यं), फिर गुरु वंदना, फिर सरस्वती वंदना (या कुन्देन्दु) बोलें; अन्त में 'ॐ ऐं सरस्वत्यै नमः' तीन बार दोहराएँ। ४. फिर — हाथ जोड़कर मन-ही-मन एकाग्रता एवं स्पष्ट स्मरण की प्रार्थना करें, और तुरन्त पूरे ध्यान से पढ़ाई आरम्भ करें। ५. भाव — विनम्रता एवं कृतज्ञता रखें; विद्या को सेवा मानें, अहंकार नहीं। परीक्षा के दिन — घर से निकलने से पूर्व तथा प्रश्नपत्र मिलने से पूर्व मन-ही-मन 'सरस्वति नमस्तुभ्यं' शान्ति से बोलें; अंकों की नहीं, स्पष्ट स्मरण एवं एकाग्रता की प्रार्थना करें।",
+      "vidhiEn": "1. When — daily before you begin studying, and in the morning; on Vasant Panchami place your books and pens before Maa Saraswati. 2. How to sit — face east or north, sit with a straight spine; take three slow breaths to settle the mind. 3. Order — recite Ganesha Vandana (Vakratunda) first, then the Saraswati prayer (Namastubhyam), then Guru Vandana, then the Saraswati Vandana (Ya Kundendu); finally repeat 'Om Aim Saraswatyai Namah' three times. 4. Then — with folded hands, silently ask for focus and clear recall, and begin studying at once with full attention. 5. Spirit — keep humility and gratitude; treat learning as service, not as ego. On exam day — before leaving home and before the question paper, calmly recite 'Sarasvati namastubhyam' in your mind; pray for clear recall and focus, not for marks."
+    }
+  ]
+}

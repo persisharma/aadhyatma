@@ -6,10 +6,13 @@
   "language": "hi-en",
   "script": "Devanagari + Latin",
   "source": {
-    "baseText": "हनुमान चालीसा — गोस्वामी तुलसीदास (~16th century, public domain)",
-    "devanagariReference": "https://www.artofliving.org/in-hi/culture/reads/hanuman-chalisa-lyrics-meaning",
-    "meaningsAttribution": "Hindi भावार्थ adapted from Art of Living. English meanings adapted from Neem Karoli Baba Ashram (nkbashram.org/hanuman-chalisa). Romanized transliteration by the Aadhyatma editorial team.",
-    "retrievedOn": "2026-05-05"
+    "baseText": "Hanuman Chalisa by Goswami Tulsidas, checked against HinduNidhi, GreenMesg, and Vaidika Vignanam.",
+    "referenceUrls": [
+      "https://www.hindunidhi.com/hanuman-chalisa/",
+      "https://greenmesg.org/stotras/hanuman/hanuman_chalisa.php",
+      "https://vignanam.org/hindi/hanuman-chalisa.html"
+    ],
+    "retrievedOn": "2026-05-30"
   },
   "counts": {
     "openingDohas": 2,
@@ -61,10 +64,7 @@
       "number": 1,
       "labelHi": "चौपाई · १",
       "labelEn": "Chaupai · 1",
-      "lines": [
-        "जय हनुमान ज्ञान गुन सागर।",
-        "जय कपीस तिहुँ लोक उजागर॥1॥"
-      ],
+      "lines": ["जय हनुमान ज्ञान गुन सागर।", "जय कपीस तिहुँ लोक उजागर॥1॥"],
       "linesEn": [
         "Jai Hanumaan gyaan gun saagar.",
         "Jai Kapees tihu lok ujaagar"
@@ -79,10 +79,7 @@
       "number": 2,
       "labelHi": "चौपाई · २",
       "labelEn": "Chaupai · 2",
-      "lines": [
-        "राम दूत अतुलित बल धामा।",
-        "अंजनि-पुत्र पवनसुत नामा॥2॥"
-      ],
+      "lines": ["राम दूत अतुलित बल धामा।", "अंजनि-पुत्र पवनसुत नामा॥2॥"],
       "linesEn": [
         "Raam doot atulit bal dhaamaa.",
         "Anjani-putra pavanasut naamaa"
@@ -97,10 +94,7 @@
       "number": 3,
       "labelHi": "चौपाई · ३",
       "labelEn": "Chaupai · 3",
-      "lines": [
-        "महाबीर बिक्रम बजरंगी।",
-        "कुमति निवार सुमति के संगी॥3॥"
-      ],
+      "lines": ["महाबीर बिक्रम बजरंगी।", "कुमति निवार सुमति के संगी॥3॥"],
       "linesEn": [
         "Mahaabeer bikram bajarangee.",
         "Kumati nivaar sumati ke sangee"
@@ -115,10 +109,7 @@
       "number": 4,
       "labelHi": "चौपाई · ४",
       "labelEn": "Chaupai · 4",
-      "lines": [
-        "कंचन बरन बिराज सुबेसा।",
-        "कानन कुंडल कुंचित केसा॥4॥"
-      ],
+      "lines": ["कंचन बरन बिराज सुबेसा।", "कानन कुंडल कुंचित केसा॥4॥"],
       "linesEn": [
         "Kanchan baran biraaj subesaa.",
         "Kaanan kundal kunchit kesaa"
@@ -133,10 +124,7 @@
       "number": 5,
       "labelHi": "चौपाई · ५",
       "labelEn": "Chaupai · 5",
-      "lines": [
-        "हाथ बज्र औ ध्वजा बिराजै।",
-        "काँधे मूँज जनेऊ साजै॥5॥"
-      ],
+      "lines": ["हाथ बज्र औ ध्वजा बिराजै।", "काँधे मूँज जनेऊ साजै॥5॥"],
       "linesEn": [
         "Haath bajra au dhvajaa biraajai.",
         "Kaandhe moonj janeu saajai"
@@ -151,10 +139,7 @@
       "number": 6,
       "labelHi": "चौपाई · ६",
       "labelEn": "Chaupai · 6",
-      "lines": [
-        "शंकर सुवन केसरी नंदन।",
-        "तेज प्रताप महा जग वंदन॥6॥"
-      ],
+      "lines": ["शंकर सुवन केसरी नंदन।", "तेज प्रताप महा जग वंदन॥6॥"],
       "linesEn": [
         "Shankar suvan kesari nandan.",
         "Tej prataap mahaa jag vandan"
@@ -169,14 +154,8 @@
       "number": 7,
       "labelHi": "चौपाई · ७",
       "labelEn": "Chaupai · 7",
-      "lines": [
-        "विद्यावान गुनी अति चातुर।",
-        "राम काज करिबे को आतुर॥7॥"
-      ],
-      "linesEn": [
-        "Vidyaavaan gunee ati chaatur.",
-        "Raam kaaj karibe ko aatur"
-      ],
+      "lines": ["विद्यावान गुनी अति चातुर।", "राम काज करिबे को आतुर॥7॥"],
+      "linesEn": ["Vidyaavaan gunee ati chaatur.", "Raam kaaj karibe ko aatur"],
       "meaningHi": "आप विद्वान, गुणवान और अत्यंत कुशल हैं; आप सदा रामकाज के लिए तत्पर रहते हैं।",
       "meaningEn": "Learned, virtuous and supremely skilful, you remain ever eager to accomplish the work of Sri Ram."
     },
@@ -187,10 +166,7 @@
       "number": 8,
       "labelHi": "चौपाई · ८",
       "labelEn": "Chaupai · 8",
-      "lines": [
-        "प्रभु चरित्र सुनिबे को रसिया।",
-        "राम लखन सीता मन बसिया॥8॥"
-      ],
+      "lines": ["प्रभु चरित्र सुनिबे को रसिया।", "राम लखन सीता मन बसिया॥8॥"],
       "linesEn": [
         "Prabhu charitra sunibe ko rasiyaa.",
         "Raam Lakhan Seetaa man basiyaa"
@@ -205,10 +181,7 @@
       "number": 9,
       "labelHi": "चौपाई · ९",
       "labelEn": "Chaupai · 9",
-      "lines": [
-        "सूक्ष्म रूप धरि सियहिं दिखावा।",
-        "बिकट रूप धरि लंक जरावा॥9॥"
-      ],
+      "lines": ["सूक्ष्म रूप धरि सियहिं दिखावा।", "बिकट रूप धरि लंक जरावा॥9॥"],
       "linesEn": [
         "Sookshm roop dhari siyahi dikhaavaa.",
         "Bikat roop dhari lank jaraavaa"
@@ -223,10 +196,7 @@
       "number": 10,
       "labelHi": "चौपाई · १०",
       "labelEn": "Chaupai · 10",
-      "lines": [
-        "भीम रूप धरि असुर संहारे।",
-        "रामचंद्र के काज सवारे॥10॥"
-      ],
+      "lines": ["भीम रूप धरि असुर संहारे।", "रामचंद्र के काज सवारे॥10॥"],
       "linesEn": [
         "Bheem roop dhari asur sanhaare.",
         "Raamchandra ke kaaj savaare"
@@ -241,10 +211,7 @@
       "number": 11,
       "labelHi": "चौपाई · ११",
       "labelEn": "Chaupai · 11",
-      "lines": [
-        "लाय सजीवन लखन जियाए।",
-        "श्रीरघुबीर हरषि उर लाए॥11॥"
-      ],
+      "lines": ["लाय सजीवन लखन जियाए।", "श्रीरघुबीर हरषि उर लाए॥11॥"],
       "linesEn": [
         "Laay sajeevan Lakhan jiyaae.",
         "Shri Raghubeer harashi ur laae"
@@ -259,10 +226,7 @@
       "number": 12,
       "labelHi": "चौपाई · १२",
       "labelEn": "Chaupai · 12",
-      "lines": [
-        "रघुपति कीन्ही बहुत बड़ाई।",
-        "तुम मम प्रिय भरतहि सम भाई॥12॥"
-      ],
+      "lines": ["रघुपति कीन्ही बहुत बड़ाई।", "तुम मम प्रिय भरतहि सम भाई॥12॥"],
       "linesEn": [
         "Raghupati keenhee bahut badaai.",
         "Tum mam priya Bharatahi sam bhaai"
@@ -277,10 +241,7 @@
       "number": 13,
       "labelHi": "चौपाई · १३",
       "labelEn": "Chaupai · 13",
-      "lines": [
-        "सहस बदन तुम्हरो जस गावैं।",
-        "अस कहि श्रीपति कंठ लगावैं॥13॥"
-      ],
+      "lines": ["सहस बदन तुम्हरो जस गावैं।", "अस कहि श्रीपति कंठ लगावैं॥13॥"],
       "linesEn": [
         "Sahas badan tumharo jas gaavai.",
         "As kahi Shripati kanth lagaavai"
@@ -295,10 +256,7 @@
       "number": 14,
       "labelHi": "चौपाई · १४",
       "labelEn": "Chaupai · 14",
-      "lines": [
-        "सनकादिक ब्रह्मादि मुनीसा।",
-        "नारद सारद सहित अहीसा॥14॥"
-      ],
+      "lines": ["सनकादिक ब्रह्मादि मुनीसा।", "नारद सारद सहित अहीसा॥14॥"],
       "linesEn": [
         "Sanakaadik Brahmaadi muneesaa.",
         "Naarad Saarad sahit Aheesaa"
@@ -313,10 +271,7 @@
       "number": 15,
       "labelHi": "चौपाई · १५",
       "labelEn": "Chaupai · 15",
-      "lines": [
-        "जम कुबेर दिगपाल जहाँ ते।",
-        "कवि कोविद कहि सके कहाँ ते॥15॥"
-      ],
+      "lines": ["जम कुबेर दिगपाल जहाँ ते।", "कवि कोविद कहि सके कहाँ ते॥15॥"],
       "linesEn": [
         "Jam Kuber Digpaal jahaan te.",
         "Kavi Kovid kahi sake kahaan te"
@@ -331,10 +286,7 @@
       "number": 16,
       "labelHi": "चौपाई · १६",
       "labelEn": "Chaupai · 16",
-      "lines": [
-        "तुम उपकार सुग्रीवहिं कीन्हा।",
-        "राम मिलाय राज पद दीन्हा॥16॥"
-      ],
+      "lines": ["तुम उपकार सुग्रीवहिं कीन्हा।", "राम मिलाय राज पद दीन्हा॥16॥"],
       "linesEn": [
         "Tum upakaar Sugreevahi keenhaa.",
         "Raam milaay raaj pad deenhaa"
@@ -349,10 +301,7 @@
       "number": 17,
       "labelHi": "चौपाई · १७",
       "labelEn": "Chaupai · 17",
-      "lines": [
-        "तुम्हरो मंत्र विभीषण माना।",
-        "लंकेश्वर भए सब जग जाना॥17॥"
-      ],
+      "lines": ["तुम्हरो मंत्र विभीषण माना।", "लंकेश्वर भए सब जग जाना॥17॥"],
       "linesEn": [
         "Tumharo mantra Vibheeshan maanaa.",
         "Lankeshvar bhae sab jag jaanaa"
@@ -367,10 +316,7 @@
       "number": 18,
       "labelHi": "चौपाई · १८",
       "labelEn": "Chaupai · 18",
-      "lines": [
-        "जुग सहस्र जोजन पर भानू।",
-        "लील्यो ताहि मधुर फल जानू॥18॥"
-      ],
+      "lines": ["जुग सहस्र जोजन पर भानू।", "लील्यो ताहि मधुर फल जानू॥18॥"],
       "linesEn": [
         "Jug sahasra jojan par Bhaanoo.",
         "Leelyo taahi madhur phal jaanoo"
@@ -403,14 +349,8 @@
       "number": 20,
       "labelHi": "चौपाई · २०",
       "labelEn": "Chaupai · 20",
-      "lines": [
-        "दुर्गम काज जगत के जेते।",
-        "सुगम अनुग्रह तुम्हरे तेते॥20॥"
-      ],
-      "linesEn": [
-        "Durgam kaaj jagat ke jete.",
-        "Sugam anugrah tumhare tete"
-      ],
+      "lines": ["दुर्गम काज जगत के जेते।", "सुगम अनुग्रह तुम्हरे तेते॥20॥"],
+      "linesEn": ["Durgam kaaj jagat ke jete.", "Sugam anugrah tumhare tete"],
       "meaningHi": "आपकी कृपा से संसार के कठिन काम भी आसान हो जाते हैं।",
       "meaningEn": "Every difficult task in the world becomes easy through your grace."
     },
@@ -421,14 +361,8 @@
       "number": 21,
       "labelHi": "चौपाई · २१",
       "labelEn": "Chaupai · 21",
-      "lines": [
-        "राम दुआरे तुम रखवारे।",
-        "होत न आज्ञा बिनु पैसारे॥21॥"
-      ],
-      "linesEn": [
-        "Raam duaare tum rakhavaare.",
-        "Hot na aagyaa binu paisaare"
-      ],
+      "lines": ["राम दुआरे तुम रखवारे।", "होत न आज्ञा बिनु पैसारे॥21॥"],
+      "linesEn": ["Raam duaare tum rakhavaare.", "Hot na aagyaa binu paisaare"],
       "meaningHi": "आप रामद्वार के रक्षक हैं; आपकी अनुमति और कृपा के बिना वहाँ प्रवेश नहीं होता।",
       "meaningEn": "You are the gatekeeper at Sri Ram's door; none may enter there without your leave."
     },
@@ -439,10 +373,7 @@
       "number": 22,
       "labelHi": "चौपाई · २२",
       "labelEn": "Chaupai · 22",
-      "lines": [
-        "सब सुख लहै तुम्हारी सरना।",
-        "तुम रक्षक काहू को डरना॥22॥"
-      ],
+      "lines": ["सब सुख लहै तुम्हारी सरना।", "तुम रक्षक काहू को डरना॥22॥"],
       "linesEn": [
         "Sab sukh lahai tumhaaree saranaa.",
         "Tum rakshak kaahoo ko daranaa"
@@ -457,14 +388,8 @@
       "number": 23,
       "labelHi": "चौपाई · २३",
       "labelEn": "Chaupai · 23",
-      "lines": [
-        "आपन तेज सम्हारो आपै।",
-        "तीनों लोक हाँक तें काँपै॥23॥"
-      ],
-      "linesEn": [
-        "Aapan tej samhaaro aapai.",
-        "Teeno lok haank te kaanpai"
-      ],
+      "lines": ["आपन तेज सम्हारो आपै।", "तीनों लोक हाँक तें काँपै॥23॥"],
+      "linesEn": ["Aapan tej samhaaro aapai.", "Teeno lok haank te kaanpai"],
       "meaningHi": "आपके तेज को आप ही संभाल सकते हैं; आपकी हुंकार से तीनों लोक काँप उठते हैं।",
       "meaningEn": "Only you can contain your own splendour; the three worlds tremble at your mighty roar."
     },
@@ -475,10 +400,7 @@
       "number": 24,
       "labelHi": "चौपाई · २४",
       "labelEn": "Chaupai · 24",
-      "lines": [
-        "भूत पिशाच निकट नहिं आवै।",
-        "महाबीर जब नाम सुनावै॥24॥"
-      ],
+      "lines": ["भूत पिशाच निकट नहिं आवै।", "महाबीर जब नाम सुनावै॥24॥"],
       "linesEn": [
         "Bhoot pishaach nikat nahin aavai.",
         "Mahaabeer jab naam sunaavai"
@@ -493,10 +415,7 @@
       "number": 25,
       "labelHi": "चौपाई · २५",
       "labelEn": "Chaupai · 25",
-      "lines": [
-        "नासै रोग हरै सब पीरा।",
-        "जपत निरंतर हनुमत बीरा॥25॥"
-      ],
+      "lines": ["नासै रोग हरै सब पीरा।", "जपत निरंतर हनुमत बीरा॥25॥"],
       "linesEn": [
         "Naasai rog harai sab peeraa.",
         "Japat nirantar Hanumat beeraa"
@@ -511,10 +430,7 @@
       "number": 26,
       "labelHi": "चौपाई · २६",
       "labelEn": "Chaupai · 26",
-      "lines": [
-        "संकट तें हनुमान छुड़ावै।",
-        "मन क्रम वचन ध्यान जो लावै॥26॥"
-      ],
+      "lines": ["संकट तें हनुमान छुड़ावै।", "मन क्रम वचन ध्यान जो लावै॥26॥"],
       "linesEn": [
         "Sankat te Hanumaan chhudaavai.",
         "Man kram vachan dhyaan jo laavai"
@@ -529,10 +445,7 @@
       "number": 27,
       "labelHi": "चौपाई · २७",
       "labelEn": "Chaupai · 27",
-      "lines": [
-        "सब पर राम तपस्वी राजा।",
-        "तिन के काज सकल तुम साजा॥27॥"
-      ],
+      "lines": ["सब पर राम तपस्वी राजा।", "तिन के काज सकल तुम साजा॥27॥"],
       "linesEn": [
         "Sab par Raam tapasvee raajaa.",
         "Tin ke kaaj sakal tum saajaa"
@@ -547,10 +460,7 @@
       "number": 28,
       "labelHi": "चौपाई · २८",
       "labelEn": "Chaupai · 28",
-      "lines": [
-        "और मनोरथ जो कोई लावै।",
-        "सोई अमित जीवन फल पावै॥28॥"
-      ],
+      "lines": ["और मनोरथ जो कोई लावै।", "सोई अमित जीवन फल पावै॥28॥"],
       "linesEn": [
         "Aur manorath jo koee laavai.",
         "Soee amit jeevan phal paavai"
@@ -565,10 +475,7 @@
       "number": 29,
       "labelHi": "चौपाई · २९",
       "labelEn": "Chaupai · 29",
-      "lines": [
-        "चारों जुग परताप तुम्हारा।",
-        "है परसिद्ध जगत उजियारा॥29॥"
-      ],
+      "lines": ["चारों जुग परताप तुम्हारा।", "है परसिद्ध जगत उजियारा॥29॥"],
       "linesEn": [
         "Chaaro jug parataap tumhaaraa.",
         "Hai parasiddh jagat ujiyaaraa"
@@ -583,10 +490,7 @@
       "number": 30,
       "labelHi": "चौपाई · ३०",
       "labelEn": "Chaupai · 30",
-      "lines": [
-        "साधु संत के तुम रखवारे।",
-        "असुर निकंदन राम दुलारे॥30॥"
-      ],
+      "lines": ["साधु संत के तुम रखवारे।", "असुर निकंदन राम दुलारे॥30॥"],
       "linesEn": [
         "Saadhu sant ke tum rakhavaare.",
         "Asur nikandan Raam dulaare"
@@ -601,10 +505,7 @@
       "number": 31,
       "labelHi": "चौपाई · ३१",
       "labelEn": "Chaupai · 31",
-      "lines": [
-        "अष्ट सिद्धि नौ निधि के दाता।",
-        "अस बर दीन जानकी माता॥31॥"
-      ],
+      "lines": ["अष्ट सिद्धि नौ निधि के दाता।", "अस बर दीन जानकी माता॥31॥"],
       "linesEn": [
         "Asht siddhi nau nidhi ke daataa.",
         "As bar deen Jaanakee maataa"
@@ -619,10 +520,7 @@
       "number": 32,
       "labelHi": "चौपाई · ३२",
       "labelEn": "Chaupai · 32",
-      "lines": [
-        "राम रसायन तुम्हरे पासा।",
-        "सदा रहो रघुपति के दासा॥32॥"
-      ],
+      "lines": ["राम रसायन तुम्हरे पासा।", "सदा रहो रघुपति के दासा॥32॥"],
       "linesEn": [
         "Raam rasaayan tumhare paasaa.",
         "Sadaa raho Raghupati ke daasaa"
@@ -637,10 +535,7 @@
       "number": 33,
       "labelHi": "चौपाई · ३३",
       "labelEn": "Chaupai · 33",
-      "lines": [
-        "तुम्हरे भजन राम को पावै।",
-        "जनम जनम के दुख बिसरावै॥33॥"
-      ],
+      "lines": ["तुम्हरे भजन राम को पावै।", "जनम जनम के दुख बिसरावै॥33॥"],
       "linesEn": [
         "Tumhare bhajan Raam ko paavai.",
         "Janam janam ke dukh bisaraavai"
@@ -655,10 +550,7 @@
       "number": 34,
       "labelHi": "चौपाई · ३४",
       "labelEn": "Chaupai · 34",
-      "lines": [
-        "अंत काल रघुबर पुर जाई।",
-        "जहाँ जन्म हरि-भक्त कहाई॥34॥"
-      ],
+      "lines": ["अंत काल रघुबर पुर जाई।", "जहाँ जन्म हरि-भक्त कहाई॥34॥"],
       "linesEn": [
         "Ant kaal Raghubar pur jaaee.",
         "Jahaan janma Hari-bhakt kahaaee"
@@ -673,10 +565,7 @@
       "number": 35,
       "labelHi": "चौपाई · ३५",
       "labelEn": "Chaupai · 35",
-      "lines": [
-        "और देवता चित्त न धरई।",
-        "हनुमत सेइ सर्व सुख करई॥35॥"
-      ],
+      "lines": ["और देवता चित्त न धरई।", "हनुमत सेइ सर्व सुख करई॥35॥"],
       "linesEn": [
         "Aur devataa chitta na dharaee.",
         "Hanumat sei sarva sukh karaee"
@@ -691,10 +580,7 @@
       "number": 36,
       "labelHi": "चौपाई · ३६",
       "labelEn": "Chaupai · 36",
-      "lines": [
-        "संकट कटै मिटै सब पीरा।",
-        "जो सुमिरै हनुमत बलबीरा॥36॥"
-      ],
+      "lines": ["संकट कटै मिटै सब पीरा।", "जो सुमिरै हनुमत बलबीरा॥36॥"],
       "linesEn": [
         "Sankat katai mitai sab peeraa.",
         "Jo sumirai Hanumat balabeeraa"
@@ -709,10 +595,7 @@
       "number": 37,
       "labelHi": "चौपाई · ३७",
       "labelEn": "Chaupai · 37",
-      "lines": [
-        "जै जै जै हनुमान गोसाईं।",
-        "कृपा करहु गुरुदेव की नाईं॥37॥"
-      ],
+      "lines": ["जै जै जै हनुमान गोसाईं।", "कृपा करहु गुरुदेव की नाईं॥37॥"],
       "linesEn": [
         "Jai jai jai Hanumaan Gosaaee.",
         "Kripaa karahu Gurudev kee naaee"
@@ -727,10 +610,7 @@
       "number": 38,
       "labelHi": "चौपाई · ३८",
       "labelEn": "Chaupai · 38",
-      "lines": [
-        "जो सत बार पाठ कर कोई।",
-        "छूटहि बंदि महा सुख होई॥38॥"
-      ],
+      "lines": ["जो सत बार पाठ कर कोई।", "छूटहि बंदि महा सुख होई॥38॥"],
       "linesEn": [
         "Jo sat baar paath kar koee.",
         "Chhootahi bandi mahaa sukh hoee"
@@ -745,10 +625,7 @@
       "number": 39,
       "labelHi": "चौपाई · ३९",
       "labelEn": "Chaupai · 39",
-      "lines": [
-        "जो यह पढ़ै हनुमान चालीसा।",
-        "होय सिद्धि साखी गौरीसा॥39॥"
-      ],
+      "lines": ["जो यह पढ़ै हनुमान चालीसा।", "होय सिद्धि साखी गौरीसा॥39॥"],
       "linesEn": [
         "Jo yah padhai Hanumaan Chaaleesaa.",
         "Hoy siddhi saakhee Gaureesaa"
@@ -763,10 +640,7 @@
       "number": 40,
       "labelHi": "चौपाई · ४०",
       "labelEn": "Chaupai · 40",
-      "lines": [
-        "तुलसीदास सदा हरि चेरा।",
-        "कीजै नाथ हृदय महँ डेरा॥40॥"
-      ],
+      "lines": ["तुलसीदास सदा हरि चेरा।", "कीजै नाथ हृदय महँ डेरा॥40॥"],
       "linesEn": [
         "Tulaseedaas sadaa Hari cheraa.",
         "Keejai naath hriday maha deraa"

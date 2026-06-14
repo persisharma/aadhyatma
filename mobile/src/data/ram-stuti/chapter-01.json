@@ -3,68 +3,142 @@
   "titleHi": "राम स्तुति",
   "titleEn": "Ram Stuti",
   "verseCount": 9,
-  "source": {"baseText": "Vinaya Patrika, Pad 45; Ramcharitmanas Balkand", "retrievedOn": "2026-05-24"},
+  "source": {
+    "baseText": "Shri Ramchandra Kripalu from Vinaya Patrika/Ramcharitmanas tradition, checked against Bhakti Bharat and Ramcharitmanas references.",
+    "referenceUrls": [
+      "https://www.bhaktibharat.com/aarti/shri-ram-stuti",
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.ramcharitmanas.iitk.ac.in/"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
   "verses": [
     {
-      "id": "rs-1-0", "chapter": 1, "number": 0,
+      "id": "rs-1-0",
+      "chapter": 1,
+      "number": 0,
       "sanskrit": ["॥ राम स्तुति ॥", "तुलसीदास कृत"],
       "linesEn": ["Ram Stuti", "Composed by Tulsidas"],
       "meaningHi": "लाभ:\n\nराम स्तुति गोस्वामी तुलसीदास द्वारा रचित श्रीराम की सर्वाधिक लोकप्रिय स्तुति है। इसके पाठ से मन को शान्ति, भवभय (संसार के भय) से मुक्ति, और भगवान राम की कृपा प्राप्त होती है। यह प्रातःकालीन भजन के रूप में अत्यन्त लोकप्रिय है। प्रतिदिन पाठ से जीवन में सुख-शान्ति और धर्म-मार्ग पर स्थिरता आती है।\n\nकथा:\n\nयह स्तुति रामचरितमानस के बालकाण्ड से है — सीता जी गौरी पूजन के लिए मन्दिर जाती हैं। वहाँ गौरी माता सीता को आशीर्वाद देती हैं कि जिस सुन्दर साँवरे वर (राम) में तुम्हारा मन लगा है, वह तुम्हें अवश्य मिलेंगे। यह सुनकर सीता और सखियाँ प्रसन्न होकर मन्दिर से लौटती हैं।",
       "meaningEn": "Benefits:\n\nRam Stuti is the most popular hymn to Lord Rama, composed by Goswami Tulsidas. Its recitation brings peace of mind, liberation from worldly fears, and the grace of Lord Rama. It is extremely popular as a morning devotional hymn. Daily recitation brings happiness, peace, and steadfastness on the path of dharma.\n\nStory:\n\nThis stuti is from the Balkand of Ramcharitmanas — Sita goes to the temple for Gauri puja. There, Goddess Gauri blesses Sita that the beautiful dark bridegroom (Rama) in whom her mind is absorbed will surely be hers. Hearing this, Sita and her friends return joyfully from the temple."
     },
     {
-      "id": "rs-1-1", "chapter": 1, "number": 1,
-      "sanskrit": ["श्रीरामचन्द्र कृपालु भजु मन हरण भवभय दारुणम्।", "नवकञ्ज लोचन कञ्ज मुख कर कञ्ज पद कञ्जारुणम्॥"],
-      "linesEn": ["Shreeramchandra kripalu bhaju man haran bhavbhay daarunam.", "Navkanj lochan kanj mukh kar kanj pad kanjarunam."],
+      "id": "rs-1-1",
+      "chapter": 1,
+      "number": 1,
+      "sanskrit": [
+        "श्रीरामचन्द्र कृपालु भजु मन हरण भवभय दारुणम्।",
+        "नवकञ्ज लोचन कञ्ज मुख कर कञ्ज पद कञ्जारुणम्॥"
+      ],
+      "linesEn": [
+        "Shreeramchandra kripalu bhaju man haran bhavbhay daarunam.",
+        "Navkanj lochan kanj mukh kar kanj pad kanjarunam."
+      ],
       "meaningHi": "हे मन! श्रीरामचन्द्र का भजन कर — जो कृपालु हैं, संसार के दारुण (भयंकर) भय को हरने वाले हैं। जिनके नेत्र नवीन कमल सदृश, मुख कमल समान, हाथ कमल सदृश और चरण लाल कमल के समान हैं।",
       "meaningEn": "O mind! Worship Lord Ramachandra, the compassionate one who destroys the dreadful fear of worldly existence — whose eyes are like fresh lotuses, face like a lotus, hands like lotuses, and feet rosy like red lotuses."
     },
     {
-      "id": "rs-1-2", "chapter": 1, "number": 2,
-      "sanskrit": ["कन्दर्प अगणित अमित छवि नव नील नीरद सुन्दरम्।", "पट पीत मानहुँ तड़ित रुचि शुचि नौमि जनक सुतावरम्॥"],
-      "linesEn": ["Kandarpa aganit amit chhavi nav neel neerad sundaram.", "Pat peet maanahu tadit ruchi shuchi naumi Janak sutaavaram."],
+      "id": "rs-1-2",
+      "chapter": 1,
+      "number": 2,
+      "sanskrit": [
+        "कन्दर्प अगणित अमित छवि नव नील नीरद सुन्दरम्।",
+        "पट पीत मानहुँ तड़ित रुचि शुचि नौमि जनक सुतावरम्॥"
+      ],
+      "linesEn": [
+        "Kandarpa aganit amit chhavi nav neel neerad sundaram.",
+        "Pat peet maanahu tadit ruchi shuchi naumi Janak sutaavaram."
+      ],
       "meaningHi": "अगणित (अनगिनत) कामदेवों की शोभा से भी अधिक, नवीन नीले मेघ के समान सुन्दर। पीला वस्त्र मानो बिजली की चमक हो — ऐसे पवित्र, जनक-सुता (सीता) के वर (पति) को मैं नमन करता हूँ।",
       "meaningEn": "Whose beauty surpasses countless Cupids, beautiful as a fresh dark rain-cloud. Yellow garments shine like lightning's gleam — I bow to the pure one, the bridegroom of Janaka's daughter (Sita)."
     },
     {
-      "id": "rs-1-3", "chapter": 1, "number": 3,
-      "sanskrit": ["भजु दीनबन्धु दिनेश दानव दैत्यवंश निकन्दनम्।", "रघुनन्द आनन्दकन्द कोशल चन्द दशरथ नन्दनम्॥"],
-      "linesEn": ["Bhaju deenbandhu dinesh daanav daityavansh nikandanam.", "Raghunand aanandkand Koshal chand Dashrath nandanam."],
+      "id": "rs-1-3",
+      "chapter": 1,
+      "number": 3,
+      "sanskrit": [
+        "भजु दीनबन्धु दिनेश दानव दैत्यवंश निकन्दनम्।",
+        "रघुनन्द आनन्दकन्द कोशल चन्द दशरथ नन्दनम्॥"
+      ],
+      "linesEn": [
+        "Bhaju deenbandhu dinesh daanav daityavansh nikandanam.",
+        "Raghunand aanandkand Koshal chand Dashrath nandanam."
+      ],
       "meaningHi": "दीनबन्धु (दीनों के मित्र), दिनेश (दिन के ईश्वर — सूर्यवंशी), दानव-दैत्यवंश का उन्मूलन करने वाले — उनका भजन करो। रघुनन्द (रघुकुल के आनन्द), आनन्दकन्द (आनन्द के कन्द — मूल), कोशल (अयोध्या) के चन्द्र (चाँद), दशरथ नन्दन (दशरथ के पुत्र)!",
       "meaningEn": "Worship the friend of the helpless, lord of day (Solar dynasty), destroyer of demon lineages. Joy of Raghu's clan, root of bliss, moon of Koshala (Ayodhya), son of Dasharatha!"
     },
     {
-      "id": "rs-1-4", "chapter": 1, "number": 4,
-      "sanskrit": ["शिर मुकुट कुण्डल तिलक चारु उदारु अंग विभूषणम्।", "आजानुभुज शर चापधर संग्राम जित खरदूषणम्॥"],
-      "linesEn": ["Shir mukut kundal tilak chaaru udaaru ang vibhooshanam.", "Aajaanubhuj shar chaap-dhar sangraam jit Khar-Dooshanam."],
+      "id": "rs-1-4",
+      "chapter": 1,
+      "number": 4,
+      "sanskrit": [
+        "शिर मुकुट कुण्डल तिलक चारु उदारु अंग विभूषणम्।",
+        "आजानुभुज शर चापधर संग्राम जित खरदूषणम्॥"
+      ],
+      "linesEn": [
+        "Shir mukut kundal tilak chaaru udaaru ang vibhooshanam.",
+        "Aajaanubhuj shar chaap-dhar sangraam jit Khar-Dooshanam."
+      ],
       "meaningHi": "सिर पर मुकुट, कुण्डल, तिलक — सुन्दर और उदार अंगों के विभूषण (आभूषण)। आजानुबाहु (घुटनों तक भुजाएँ), शर-चाप (बाण-धनुष) धारी, संग्राम (युद्ध) में खर-दूषण को जीतने वाले।",
       "meaningEn": "Crown on head, earrings, tilak — ornaments on beautiful, generous limbs. Arms reaching the knees, bearing arrow and bow, conqueror of Khara-Dushana in battle."
     },
     {
-      "id": "rs-1-5", "chapter": 1, "number": 5,
-      "sanskrit": ["इति वदति तुलसीदास शंकर शेष मुनि मन रंजनम्।", "मम हृदय कुंज निवास करु कामादि खल दल गंजनम्॥"],
-      "linesEn": ["Iti vadati Tulaseedaas Shankar Shesh muni man ranjanam.", "Mam hriday kunj nivaas karu kaamaadi khal dal ganjanam."],
+      "id": "rs-1-5",
+      "chapter": 1,
+      "number": 5,
+      "sanskrit": [
+        "इति वदति तुलसीदास शंकर शेष मुनि मन रंजनम्।",
+        "मम हृदय कुंज निवास करु कामादि खल दल गंजनम्॥"
+      ],
+      "linesEn": [
+        "Iti vadati Tulaseedaas Shankar Shesh muni man ranjanam.",
+        "Mam hriday kunj nivaas karu kaamaadi khal dal ganjanam."
+      ],
       "meaningHi": "ऐसा तुलसीदास कहते हैं — शंकर, शेष और मुनियों के मन को प्रसन्न करने वाले! मेरे हृदय-कुञ्ज में निवास कीजिए — काम आदि दुष्ट-दल को गञ्जन (पराजित) करने वाले।",
       "meaningEn": "Thus says Tulsidas — O one who delights the minds of Shankara, Shesha, and sages! Dwell in the bower of my heart — O vanquisher of the army of lust and other vices."
     },
     {
-      "id": "rs-1-6", "chapter": 1, "number": 6,
-      "sanskrit": ["मनु जाहि राचेउ मिलहि सो बरु सहज सुन्दर साँवरो।", "करुणा निधान सुजान शीलु स्नेह जानत रावरो॥"],
-      "linesEn": ["Manu jaahi raacheu milahi so baru sahaj sundar saanvaro.", "Karunaa nidhaan sujaan sheelu sneh jaanat raavaro."],
+      "id": "rs-1-6",
+      "chapter": 1,
+      "number": 6,
+      "sanskrit": [
+        "मनु जाहि राचेउ मिलहि सो बरु सहज सुन्दर साँवरो।",
+        "करुणा निधान सुजान शीलु स्नेह जानत रावरो॥"
+      ],
+      "linesEn": [
+        "Manu jaahi raacheu milahi so baru sahaj sundar saanvaro.",
+        "Karunaa nidhaan sujaan sheelu sneh jaanat raavaro."
+      ],
       "meaningHi": "हे सीता! जिस (राम) में तुम्हारा मन रम गया है, वह सहज सुन्दर साँवला वर तुम्हें अवश्य मिलेगा। वे करुणा-निधान, सुजान (सर्वज्ञ), शीलवान हैं — वे तुम्हारे स्नेह (प्रेम) को जानते हैं।\n\n(यह गौरी माता का सीता को आशीर्वाद है।)",
       "meaningEn": "O Sita! The naturally beautiful, dark bridegroom (Rama) in whom your mind is absorbed — you shall surely attain Him. He is a treasury of compassion, all-knowing, virtuous — He knows your love.\n\n(This is Goddess Gauri's blessing to Sita.)"
     },
     {
-      "id": "rs-1-7", "chapter": 1, "number": 7,
-      "sanskrit": ["एहि भाँति गौरी असीस सुनि सिय सहित हिय हरषित अली।", "तुलसी भवानिहि पूजी पुनि पुनि मुदित मन मन्दिर चली॥"],
-      "linesEn": ["Ehi bhaanti Gauri aseesa suni Siya sahit hiy harshit alee.", "Tulasee Bhavaanihi poojee puni puni mudit man mandir chalee."],
+      "id": "rs-1-7",
+      "chapter": 1,
+      "number": 7,
+      "sanskrit": [
+        "एहि भाँति गौरी असीस सुनि सिय सहित हिय हरषित अली।",
+        "तुलसी भवानिहि पूजी पुनि पुनि मुदित मन मन्दिर चली॥"
+      ],
+      "linesEn": [
+        "Ehi bhaanti Gauri aseesa suni Siya sahit hiy harshit alee.",
+        "Tulasee Bhavaanihi poojee puni puni mudit man mandir chalee."
+      ],
       "meaningHi": "इस प्रकार गौरी माता का आशीर्वाद सुनकर सीता जी समेत सभी सखियाँ हृदय में हर्षित हुईं। तुलसीदास कहते हैं — भवानी जी को बार-बार पूजकर सीता जी प्रसन्न मन से राजमहल को लौट चलीं।",
       "meaningEn": "Hearing Gauri's blessings in this manner, all the friends including Sita were delighted in their hearts. Tulsidas says — after worshipping Bhavani again and again, Sita returned to the palace with a joyful heart."
     },
     {
-      "id": "rs-1-8", "chapter": 1, "number": 8,
-      "sanskrit": ["जानी गौरी अनुकूल सिय हिय हरषु न जाइ कहि।", "मंजुल मंगल मूल वाम अंग फरकन लगे॥"],
-      "linesEn": ["Jaanee Gauri anukool Siya hiy harshu na jaay kahi.", "Manjul mangal mool vaam ang pharkan lage."],
+      "id": "rs-1-8",
+      "chapter": 1,
+      "number": 8,
+      "sanskrit": [
+        "जानी गौरी अनुकूल सिय हिय हरषु न जाइ कहि।",
+        "मंजुल मंगल मूल वाम अंग फरकन लगे॥"
+      ],
+      "linesEn": [
+        "Jaanee Gauri anukool Siya hiy harshu na jaay kahi.",
+        "Manjul mangal mool vaam ang pharkan lage."
+      ],
       "meaningHi": "गौरी जी को अनुकूल (प्रसन्न) जानकर सीता जी के हृदय में जो हर्ष हुआ वह कहा नहीं जा सकता। सुन्दर मंगलों के मूल (शुभ शकुन के रूप में) उनके बाएँ अंग फड़कने लगे।\n\n(यह समापन सोरठा है — बाएँ अंग का फड़कना स्त्रियों के लिए शुभ शकुन माना जाता है।)",
       "meaningEn": "Knowing Gauri to be favorable, the joy in Sita's heart was beyond description. As the root of beautiful auspiciousness, her left limbs began to throb (an auspicious omen).\n\n(This is the closing Sortha — throbbing of left limbs is considered an auspicious sign for women.)"
     }

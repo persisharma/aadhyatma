@@ -49,5 +49,13 @@
       "meaningHi": "एक दाँत वाले, विशाल शरीर वाले, तपे हुए स्वर्ण के समान कान्तिमान, लम्बे उदर वाले, विशाल नेत्रों वाले गणनायक (गणों के नेता) को मैं प्रणाम करता हूँ।\n\n'एकदन्त' — गणेश जी का एक दाँत टूटा है। पुराणों में इसकी अनेक कथाएँ हैं — एक कथा के अनुसार उन्होंने महाभारत लिखते समय अपना दाँत तोड़कर लेखनी बनाई। 'लम्बोदर' — उनका विशाल उदर सम्पूर्ण ब्रह्माण्ड को समाहित करने का प्रतीक है।",
       "meaningEn": "I bow to the leader of the Ganas — the single-tusked one with a massive body radiant like molten gold, with a large belly and wide eyes.\n\n'Ekadanta' — Ganesha's broken tusk has many mythological explanations. One story says he broke it to use as a pen while writing the Mahabharata. 'Lambodara' — his large belly symbolizes containing the entire universe within."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Traditional Ganesha vandana verses, checked against public devotional shloka references.",
+    "referenceUrls": [
+      "https://greenmesg.org/stotras/ganesha/vakratunda_mahakaya.php",
+      "https://shlokam.org/shloka/vakrathunda-mahakaya.htm"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

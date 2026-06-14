@@ -1,0 +1,138 @@
+# Panchang Tab Smoke Test (PRD-07)
+#
+# Panchang is a BOTTOM-TAB screen (TabNavigator.tsx, tabBarLabel "Panchang"),
+# NOT a Home category like the other smokes — so this flow taps the tab bar,
+# not a CategoryCard.
+#
+# Verifies:
+#   1. The Panchang tab is reachable from the bottom tab bar.
+#   2. The screen renders the real astronomy engine output (the sun/moon time
+#      block: Sunrise, Sunset, Moonrise, Brahma Muhurta).
+#   3. The "Ujjain" reference header renders (the redundant on-screen "Panchang"
+#      title/subtitle/pill were removed in the layout redesign — the bottom-tab
+#      label "Panchang" is now the only on-screen occurrence).
+#   4. The Purnimant/Amanta toggle renders and changes the reference line.
+#   5. Compact date navigation changes the selected date.
+#   6. The expandable calendar can move months and select a date.
+#   7. The "Vrat & Observances" and "Upcoming" sections render.
+#   8. Global reading-language switching (useGitaLanguage) reflects on the screen.
+#
+# Why we switch to English first:
+#   The screen reads the GLOBAL reading language (useGitaLanguage); the default
+#   is Hindi, so most on-screen text is Devanagari, which Maestro's iOS
+#   accessibility tree can't reliably read (see README "Element selection
+#   rules"). We flip the default to English on the More tab, then assert the
+#   real content in English. We restore Hindi at the end (best-effort).
+#
+# Selector notes (verified against the live iOS accessibility tree):
+#   - Bottom tabs expose accessibilityText "<Label>, tab, N of 4", so we match
+#     "Panchang, tab.*" / "More, tab.*". Bare "Panchang" does NOT match (the
+#     regex is anchored). Bonus: "Panchang, tab.*" targets ONLY the tab, never
+#     the "Panchang" disclosure card on the More screen — no ambiguity.
+#   - "Sunrise"/"Sunset"/"Moonrise"/"Brahma Muhurta"/"Vrat & Observances"/
+#     "Upcoming" are plain <Text> and appear ONLY on the Panchang screen → reliable.
+#   - Calendar controls expose accessibility labels: "Next month",
+#     "Previous month", and "Select <date>".
+#   - The anga *names* (Shashthi, Ashwini, …) change with the run date and the
+#     row labels (Tithi/Nakshatra/…) use textTransform:'uppercase' (exposed
+#     value unreliable across RN versions), so we do NOT assert on those.
+#
+# No pixel coordinates — the shared launch flow dismisses Expo Go's native
+# dev-menu sheet after config.yaml exposes the RN tree behind it.
+
+appId: host.exp.Exponent
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Set global reading language to English (More tab) ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Step 3: Open the Panchang tab ──
+# "Panchang, tab.*" matches only the tab button, not the More "Panchang" card.
+- tapOn: "Panchang, tab.*"
+- waitForAnimationToEnd
+
+# ── Step 4: Assert the header, toggle, and calendar controls rendered (English) ──
+# First open resolves the lunar calendar for festivals — allow generous time.
+- extendedWaitUntil:
+    visible: "Panchang"   # bottom-tab label (generic almanac term, no vendor trademark)
+    timeout: 30000
+- assertVisible: ".*Ujjain.*"      # "Reference: Ujjain, India · Purnimant/Amanta"
+- assertVisible: "Purnimant calendar system"
+- assertVisible: "Amanta calendar system"
+- assertVisible: "Today"
+- assertVisible: "TITHI"
+- assertVisible: "NAKSHATRA"
+- assertVisible: "Expand calendar"
+- tapOn: "Next date"
+- waitForAnimationToEnd
+# Next-date advanced the selection; confirm the panchang re-rendered (date-agnostic, and
+# tolerant of the lazy off-render compute). Concrete date selection is verified below.
+- extendedWaitUntil:
+    visible: ".*Vikram Samvat.*"
+    timeout: 10000
+- tapOn: "Today"
+- waitForAnimationToEnd
+- tapOn: "Amanta calendar system"
+- waitForAnimationToEnd
+- assertVisible: ".*Ujjain, India · Amanta.*"
+- tapOn: "Expand calendar"
+- waitForAnimationToEnd
+- tapOn: "Next month"
+- waitForAnimationToEnd
+- tapOn: "Select 15 .*"
+- waitForAnimationToEnd
+
+# ── Step 5: Assert the engine time block and observances render ──
+# The time block is below the inline calendar on compact iPhone viewports.
+- scrollUntilVisible:
+    element:
+      text: "Sunrise"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- assertVisible: "Sunset"
+- assertVisible: "Moonrise"
+- assertVisible: "Brahma Muhurta"
+# Upcoming observances are resolved off the render path (just after first paint),
+# so wait for the section to populate rather than asserting immediately.
+- scrollUntilVisible:
+    element:
+      text: "Vrat & Observances"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Upcoming"              # observances section heading
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+
+# ── Step 6: Restore Panchang + language defaults (best-effort) ──
+- scrollUntilVisible:
+    element:
+      text: "Ujjain"
+    direction: UP
+    centerElement: true
+    timeout: 20000
+- tapOn: "Purnimant calendar system"
+- waitForAnimationToEnd
+- assertVisible: ".*Ujjain, India · Purnimant.*"
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Cleanup — Expo Go termination resets navigation for the next flow ──
+- stopApp:
+    appId: host.exp.Exponent

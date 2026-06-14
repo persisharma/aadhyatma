@@ -3,6 +3,7 @@ export const fontFamilies = {
   devanagariBold: 'NotoSerifDevanagari_600SemiBold',
   latinItalic: 'CormorantGaramond_400Regular_Italic',
   latinSemiBold: 'CormorantGaramond_600SemiBold',
+  latinBold: 'CormorantGaramond_700Bold',
   latinSemiBoldItalic: 'CormorantGaramond_600SemiBold_Italic',
   latin: 'CormorantGaramond_500Medium',
 } as const;
@@ -24,18 +25,24 @@ export const typography = {
   },
   meaning: {
     fontFamily: fontFamilies.devanagari,
-    fontSize: 15,
-    lineHeight: 26,
+    // Hindi meaning matches the English meaning size (meaningEnglish) so the two
+    // languages read at the same scale; Devanagari's larger x-height needs a touch
+    // more leading.
+    fontSize: 20,
+    lineHeight: 34,
   },
   verseLatin: {
     fontFamily: fontFamilies.latinSemiBold,
-    fontSize: 18,
-    lineHeight: 28,
+    // English transliteration sits above the meaning (20) to mirror the Hindi
+    // verse↔meaning hierarchy. Cormorant's small x-height reads smaller than
+    // Devanagari, so it takes a few extra points to feel dominant.
+    fontSize: 24,
+    lineHeight: 35,
   },
   meaningEnglish: {
     fontFamily: fontFamilies.latin,
-    fontSize: 18,
-    lineHeight: 30,
+    fontSize: 20,
+    lineHeight: 33,
   },
   cardHindi: {
     fontFamily: fontFamilies.devanagariBold,

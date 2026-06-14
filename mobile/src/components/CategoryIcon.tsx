@@ -29,6 +29,7 @@ export default function CategoryIcon({ iconKey }: Props) {
       {iconKey === 'deity' && <TempleIcon {...paint} />}
       {iconKey === 'aarti' && <DiyaIcon {...paint} />}
       {iconKey === 'theerth' && <ShikharaIcon {...paint} />}
+      {iconKey === 'sanskar' && <VedaManuscriptIcon {...paint} />}
     </View>
   );
 }

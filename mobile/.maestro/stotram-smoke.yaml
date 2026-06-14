@@ -1,0 +1,86 @@
+# Stotram Category Smoke Test
+#
+# Verifies the Stotram category and its 9 active sections render correctly.
+# Sections: Shiva, Durga, Saraswati, Ganesh, Vishnu Sahasranama,
+#           Krishna, Sankat Mochan Hanuman Ashtak, Bajrang Baan, Ram Stuti.
+#
+# Opens Bajrang Baan as the representative reader — it has a smoke test
+# (BajrangBaanReaderScreen.test.tsx) which validates first-verse render,
+# matching this Maestro flow's check.
+
+appId: host.exp.Exponent
+---
+- runFlow: _launch.yaml
+
+# Open Stotram category
+- assertVisible: "Hymns & Praise\\..*Tap to open\\."
+- tapOn: "Hymns & Praise\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# Verify all 9 sections appear in CategoryList. Maestro `text` is a FULL-string
+# regex, so we match the whole LibraryCard label `<nameEn>. <sub>. [New.] Tap
+# to open.` via `\\..*Tap to open\\.`. NOTE: use the EXACT nameEn — e.g.
+# "Vishnu Sahasranama Excerpt", not "Vishnu Sahasranama". The list is taller
+# than one screen, so scroll to each lower entry.
+- extendedWaitUntil:
+    visible: "Shiva Stotram\\..*Tap to open\\."
+    timeout: 15000
+- assertVisible: "Durga Stotram\\..*Tap to open\\."
+- assertVisible: "Saraswati Stotram\\..*Tap to open\\."
+- assertVisible: "Ganesh Stotram\\..*Tap to open\\."
+- scrollUntilVisible:
+    element:
+      text: "Vishnu Sahasranama Excerpt\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Krishna Stotram\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Sankat Mochan Hanuman Ashtak\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Bajrang Baan\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Ram Stuti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+
+# Open Bajrang Baan reader
+- scrollUntilVisible:
+    element:
+      text: "Bajrang Baan\\..*Tap to open\\."
+    direction: UP
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Bajrang Baan\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss Resume sheet if a prior session left reading progress
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+
+# Language toggle test
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: "Hindi"
+- waitForAnimationToEnd
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+- stopApp:
+    appId: host.exp.Exponent

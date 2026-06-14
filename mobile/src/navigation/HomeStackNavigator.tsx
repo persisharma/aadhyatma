@@ -18,6 +18,8 @@ import ShivaStrotamChaptersScreen from '@/screens/ShivaStrotamChaptersScreen';
 import ShivaStrotamReaderScreen from '@/screens/ShivaStrotamReaderScreen';
 import DurgaStotramChaptersScreen from '@/screens/DurgaStotramChaptersScreen';
 import DurgaStotramReaderScreen from '@/screens/DurgaStotramReaderScreen';
+import SaraswatiStotramChaptersScreen from '@/screens/SaraswatiStotramChaptersScreen';
+import SaraswatiStotramReaderScreen from '@/screens/SaraswatiStotramReaderScreen';
 import GaneshStotramChaptersScreen from '@/screens/GaneshStotramChaptersScreen';
 import GaneshStotramReaderScreen from '@/screens/GaneshStotramReaderScreen';
 import VishnuSahasranamaChaptersScreen from '@/screens/VishnuSahasranamaChaptersScreen';
@@ -35,6 +37,12 @@ import RamcharitmanasReaderScreen from '@/screens/RamcharitmanasReaderScreen';
 import AartiReaderScreen from '@/screens/AartiReaderScreen';
 import TheerthMapScreen from '@/screens/TheerthMapScreen';
 import TheerthDetailScreen from '@/screens/TheerthDetailScreen';
+import SanskarReaderScreen from '@/screens/SanskarReaderScreen';
+import RoutineTodayScreen from '@/screens/RoutineTodayScreen';
+import RoutineListScreen from '@/screens/RoutineListScreen';
+import CreateRoutineScreen from '@/screens/CreateRoutineScreen';
+import RoutineAddItemsScreen from '@/screens/RoutineAddItemsScreen';
+import RoutineDetailScreen from '@/screens/RoutineDetailScreen';
 import type { HomeStackParamList } from './types';
 
 const LazyJapamCounterScreen = lazy(() => import('@/screens/JapamCounterScreen'));
@@ -103,6 +111,12 @@ export default function HomeStackNavigator() {
         component={DurgaStotramReaderScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
+      <Stack.Screen name="SaraswatiStotramChapters" component={SaraswatiStotramChaptersScreen} />
+      <Stack.Screen
+        name="SaraswatiStotramReader"
+        component={SaraswatiStotramReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
       <Stack.Screen name="GaneshStotramChapters" component={GaneshStotramChaptersScreen} />
       <Stack.Screen
         name="GaneshStotramReader"
@@ -151,6 +165,11 @@ export default function HomeStackNavigator() {
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
       <Stack.Screen
+        name="SanskarReader"
+        component={SanskarReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
         name="JapamCounter"
         component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
@@ -165,6 +184,11 @@ export default function HomeStackNavigator() {
         component={TheerthDetailScreen}
         options={{ animation: 'slide_from_right' }}
       />
+      <Stack.Screen name="RoutineToday" component={RoutineTodayScreen} />
+      <Stack.Screen name="RoutineList" component={RoutineListScreen} />
+      <Stack.Screen name="RoutineCreate" component={CreateRoutineScreen} />
+      <Stack.Screen name="RoutineAddItems" component={RoutineAddItemsScreen} />
+      <Stack.Screen name="RoutineDetail" component={RoutineDetailScreen} />
     </Stack.Navigator>
   );
 }

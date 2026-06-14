@@ -642,9 +642,7 @@
         "यहाँ भीष्म, द्रोण और कर्णका नाम लेनेका तात्पर्य है कि ये तीनों ही अपने कर्तव्यका पालन करनेके लिये युद्धमें आये थे (टिप्पणी प0 591)।",
         "'अमी च त्वां धृतराष्ट्रस्य पुत्राः सर्वे सहैवावनिपालसङ्घैः'-- दुर्योधनके पक्षमें जितने राजालोग हैं, जो युद्धमें दुर्योधनका प्रिय करना चाहते हैं (गीता 1। 23) अर्थात् दुर्योधनको हितकी सलाह नहीं दे रहे हैं, उन सभी,राजाओंके समूहोंके साथ धृतराष्ट्रके दुर्योधन, दुःशासन आदि सौ पुत्र विकराल दाढ़ोंके कारण अत्यन्त भयानक आपके मुखोंमें बड़ी तेजीसे प्रवेश कर रहे हैं --"
       ],
-      "commentaryEn": [
-        "How do they enter into the mouth Arjuna continues"
-      ]
+      "commentaryEn": ["How do they enter into the mouth Arjuna continues"]
     },
     {
       "id": "bg-11-28",
@@ -717,9 +715,7 @@
         "'लेलिह्यसे ग्रसमानः समन्ताल्लोकान् समग्रान्वदनैर्ज्वलद्भिः'--आप सम्पूर्ण प्राणियोंका संहार कर रहे हैं और कोई इधर-उधर न चला जाय, इसलिये बार-बार जीभके लपेटेसे अपने प्रज्वलित मुखोंमें लेते हुए उनका ग्रसन कर रहे हैं। तात्पर्य है कि कालरूप भगवान्की जीभके लपेटसे कोई भी प्राणी बच नहीं सकता।'तेजोभिरापूर्य जगत्समग्रं भासस्तवोग्राः प्रतपन्ति विष्णो'--विराट्रूप भगवान्का तेज बड़ा उग्र है। वह उग्र तेज सम्पूर्ण जगत्में परिपूर्ण होकर सबको संतप्त कर रहा है, व्यथित कर रहा है।",
         "सम्बन्ध--विराट्रूप भगवान् अपने विलक्षणविलक्षण रूपोंका दर्शन कराते ही चले गये। उनके भयंकर और अत्यन्त उग्ररूपके मुखोंमें सम्पूर्ण प्राणी और दोनों पक्षोंके योद्धा जाते देखकर अर्जुन बहुत घबरा गये। अतः अत्यन्त उग्ररूपधारी भगवान्का वास्तविक परिचय जाननेके लिये अर्जुन प्रश्न करते हैं।"
       ],
-      "commentaryEn": [
-        "Vishnu means allpervading, Vyapanasila."
-      ]
+      "commentaryEn": ["Vishnu means allpervading, Vyapanasila."]
     },
     {
       "id": "bg-11-31",
@@ -1235,9 +1231,7 @@
       "commentaryHi": [
         "'इत्यर्जुनं वासुदेवस्तथोक्त्वा स्वकं रूपं दर्शयामास भूयः'--अर्जुनने जब भगवान्से चतुर्भुजरूप होनेके लिये प्रार्थना की, तब भगवान्ने कहा कि मेरे इस विश्वरूपको देखकर तू व्यथित और भयभीत मत हो। तू प्रसन्न मनवाला होकर मेरे इस रूपको देख (11। 49)। भगवान्के इसी कथनको सञ्जयने यहाँ 'इत्यर्जुनं वासुदेवस्तथोक्त्वा' पदोंसे कहा है।"
       ],
-      "commentaryEn": [
-        "His own form His form as the son of Vasudeva."
-      ]
+      "commentaryEn": ["His own form His form as the son of Vasudeva."]
     },
     {
       "id": "bg-11-51",
@@ -1350,5 +1344,14 @@
         "This is the essence of the whole teaching of the Gita. He who practises this teaching will attain Supreme Bliss and Immortality. This verse contains the summary of the entire philosophy of the Gita. He who performs actions (duties) for the sake of the Lord, who consecrates all his actions to Him, who serves the Lord with his heart and soul, who regards the Lord as his supreme goal, who lives for Him alone, who works for Him alone, who sees the Lord in everything, who sees the whole world as the Cosmic Form of the Lord and therefore cherishes no feeling of hatred or enmity towards any creature even when great injury has been done by others to him, who has no attachment or love to wealth, children, wife, friends and relatives, and who seeks nothing else but the Lord, realises Him and enters into His Being. He becomes one with Him. Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the eleventh discourse entitledThe Yoga of the Vision of the Cosmic Form.,"
       ]
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Bhagavad Gita Sanskrit text and translations, checked against chapter-specific Holy Bhagavad Gita and Gita Supersite references; verse count follows the 701-shloka recension with chapter 13 counted as 35 verses.",
+    "referenceUrls": [
+      "https://www.holy-bhagavad-gita.org/chapter/11",
+      "https://www.gitasupersite.iitk.ac.in/srimad?language=dv&field_chapter_value=11",
+      "https://vedabase.io/en/library/bg/11/"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

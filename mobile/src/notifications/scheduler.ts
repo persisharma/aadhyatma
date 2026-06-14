@@ -9,7 +9,7 @@
 
 import * as Notifications from 'expo-notifications';
 import { getVersePool } from '@/data/versePool';
-import { pickVerseForDateKey, toDateKey } from './seed';
+import { assignSlotVerseIndices, toDateKey, type ReminderSlot } from './seed';
 import {
   computeFireDatesMulti,
   formatNotificationContent,
@@ -69,12 +69,21 @@ export async function scheduleDailyVerseRollingWindow(
   // has multiple reminder times, this caps total notifications across all of
   // them — the nearest fire instants win.
   const limit = Math.min(dates.length, IOS_PENDING_CAP);
+  const fires = dates.slice(0, limit);
+
+  // One verse per slot (day + time). Same-day reminders get distinct verses so
+  // multiple daily reminders deliver different content, not the same verse.
+  const slots: ReminderSlot[] = fires.map((fire) => ({
+    dateKey: toDateKey(fire),
+    hhmm: `${`${fire.getHours()}`.padStart(2, '0')}${`${fire.getMinutes()}`.padStart(2, '0')}`,
+  }));
+  const verseIndices = assignSlotVerseIndices(slots, pool.length);
 
   let scheduled = 0;
-  for (let i = 0; i < limit; i += 1) {
-    const fire = dates[i];
-    const dateKey = toDateKey(fire);
-    const verse = pickVerseForDateKey(dateKey, pool);
+  for (let i = 0; i < fires.length; i += 1) {
+    const fire = fires[i];
+    const { dateKey, hhmm } = slots[i];
+    const verse = pool[verseIndices[i]];
     if (!verse) continue;
 
     const { title, body } = formatNotificationContent(verse);
@@ -86,12 +95,9 @@ export async function scheduleDailyVerseRollingWindow(
       ...(verse.chapter != null ? { chapter: verse.chapter } : {}),
     };
 
-    const hh = `${fire.getHours()}`.padStart(2, '0');
-    const mm = `${fire.getMinutes()}`.padStart(2, '0');
-
     try {
       await Notifications.scheduleNotificationAsync({
-        identifier: `${NOTIF_IDENTIFIER_PREFIX}:${dateKey}:${hh}${mm}`,
+        identifier: `${NOTIF_IDENTIFIER_PREFIX}:${dateKey}:${hhmm}`,
         content: {
           title,
           body,

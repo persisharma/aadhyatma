@@ -47,3 +47,40 @@ export function pickVerseForDateKey(dateKey: string, pool: UniformVerse[]): Unif
   const idx = hashDateKey(dateKey) % pool.length;
   return pool[idx] ?? null;
 }
+
+/** A single reminder firing: a calendar day plus a `HHMM` time-of-day. */
+export type ReminderSlot = { dateKey: string; hhmm: string };
+
+/**
+ * Assign a verse-pool index to each reminder slot (a date + time-of-day).
+ *
+ * The whole point of multiple daily reminders is variety: distinct times on the
+ * same day must surface *different* verses, not the same verse repeated. We
+ * scatter by hashing the full `dateKey + hhmm` slot key (so each time-of-day and
+ * each day lands somewhere different in the pool), then forward-probe within the
+ * day to resolve the rare hash collision — guaranteeing every reminder on a
+ * given day is a distinct verse (up to the pool size).
+ *
+ * Pure and deterministic: the same ordered slots + pool length always yield the
+ * same indices, so rescheduling within a day never reshuffles content. Returns
+ * `-1` for every slot when the pool is empty (caller skips those).
+ */
+export function assignSlotVerseIndices(slots: ReminderSlot[], poolLength: number): number[] {
+  if (poolLength === 0) return slots.map(() => -1);
+  const usedByDay = new Map<string, Set<number>>();
+  return slots.map(({ dateKey, hhmm }) => {
+    let used = usedByDay.get(dateKey);
+    if (!used) {
+      used = new Set<number>();
+      usedByDay.set(dateKey, used);
+    }
+    let idx = hashDateKey(`${dateKey}T${hhmm}`) % poolLength;
+    let guard = 0;
+    while (used.has(idx) && guard < poolLength) {
+      idx = (idx + 1) % poolLength;
+      guard += 1;
+    }
+    used.add(idx);
+    return idx;
+  });
+}

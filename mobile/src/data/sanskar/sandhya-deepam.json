@@ -1,0 +1,84 @@
+{
+  "titleHi": "सन्ध्या दीपम्",
+  "titleEn": "Sandhya Deepam",
+  "subtitleHi": "सायंकाल दीप प्रज्वलन के श्लोक एवं विधि",
+  "subtitleEn": "Evening lamp-lighting slokas and method",
+  "deity": "durga",
+  "language": "sa-hi-en",
+  "source": {
+    "baseText": "Evening lamp prayers, checked against Deepa Jyoti and Shubham Karoti references.",
+    "referenceUrls": [
+      "https://greenmesg.org/stotras/devi/shubham_karoti_kalyanam.php",
+      "https://stotranidhi.com/en/deepa-jyothi-mantra-in-english/",
+      "https://sanskritdocuments.org/doc_z_misc_general/dipajyoti.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
+  "counts": { "totalVerses": 4 },
+  "verses": [
+    {
+      "id": "sd-intro",
+      "number": 1,
+      "type": "intro",
+      "labelHi": "परिचय",
+      "labelEn": "Introduction",
+      "lines": ["सन्ध्या दीपम् — सायंकालीन दीप-प्रज्वलन"],
+      "linesEn": ["Sandhya Deepam — Evening lamp lighting"],
+      "meaningHi": "सन्ध्या-काल (सूर्यास्त का समय) में दीपक जलाना भारतीय गृहस्थ-धर्म का अनिवार्य अंग है। 'सन्ध्या' का अर्थ है दो कालों का मिलन — दिन और रात्रि का सन्धि-काल। इस समय दीप जलाने से अन्धकार (अज्ञान) दूर होता है और लक्ष्मी (समृद्धि) का आगमन होता है। स्कन्दपुराण के अनुसार जो घर में सन्ध्या-दीप नहीं जलाता, उसके घर में दरिद्रता आती है। दीपक अग्नि का प्रतीक है — अग्नि वेदों में सर्वप्रथम देवता है (अग्निमीळे पुरोहितम् — ऋग्वेद 1.1.1)।",
+      "meaningEn": "Lighting a lamp at Sandhya-kala (sunset time) is an essential duty in the Indian householder's life. 'Sandhya' means the junction of two periods — the meeting point of day and night. Lighting a lamp at this time removes darkness (ignorance) and invites Lakshmi (prosperity). According to Skanda Purana, poverty enters a home where the evening lamp is not lit. The lamp symbolizes Agni (fire) — Agni is the first deity in the Vedas (Agnimeele Purohitam — Rigveda 1.1.1)."
+    },
+    {
+      "id": "sd-01",
+      "number": 2,
+      "type": "mantra",
+      "labelHi": "दीप श्लोक",
+      "labelEn": "Deepa Sloka",
+      "lines": [
+        "शुभं करोति कल्याणमारोग्यं धनसम्पदा।",
+        "शत्रुबुद्धिविनाशाय दीपज्योतिर्नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "Shubham karoti kalyaanam-aarogyam dhana-sampadaa.",
+        "Shatru-buddhi-vinaashaaya deepa-jyotir-namo'stu te."
+      ],
+      "meaningHi": "जो शुभ (मंगल) करता है, कल्याण देता है, आरोग्य (स्वास्थ्य) और धन-सम्पदा प्रदान करता है, शत्रु-बुद्धि (शत्रुता का विचार) को नष्ट करता है — उस दीप-ज्योति को नमस्कार है।\n\nयह सर्वाधिक प्रचलित दीप-श्लोक है। 'शत्रुबुद्धिविनाशाय' का गहरा अर्थ है — दीपक बाहरी शत्रुओं को नहीं, बल्कि मन में उत्पन्न शत्रुता के भाव को नष्ट करता है। प्रकाश के समक्ष नकारात्मक विचार टिक नहीं पाते।",
+      "meaningEn": "That which brings auspiciousness, grants welfare, bestows health and wealth, and destroys the intellect of enmity — to that lamp-flame, I offer salutations.\n\nThis is the most widely recited lamp-verse. The deeper meaning of 'Shatru-buddhi-vinashaya' — the lamp destroys not external enemies, but the feeling of enmity within the mind. Negative thoughts cannot persist in the presence of light."
+    },
+    {
+      "id": "sd-02",
+      "number": 3,
+      "type": "mantra",
+      "labelHi": "दीप ब्रह्म श्लोक",
+      "labelEn": "Deepa Brahma Sloka",
+      "lines": [
+        "दीपज्योतिः परब्रह्म दीपज्योतिर्जनार्दनः।",
+        "दीपो हरतु मे पापं दीपज्योतिर्नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "Deepa-jyotih Parabrahma deepa-jyotir-Janardanah.",
+        "Deepo haratu me paapam deepa-jyotir-namo'stu te."
+      ],
+      "meaningHi": "दीप की ज्योति ही परब्रह्म (परमात्मा) है, दीप की ज्योति ही जनार्दन (विष्णु — जनों को प्रेरित करने वाले) है। दीपक मेरे पापों को हरे (दूर करे) — उस दीप-ज्योति को नमस्कार है।\n\nइस श्लोक में दीपक की लौ को साक्षात् ब्रह्म (परमात्मा) कहा गया है। जैसे एक छोटा दीपक अन्धकार-भरे कमरे को प्रकाशित कर देता है, वैसे ही आत्मज्ञान का एक अंश भी अज्ञान के अन्धकार को दूर कर देता है। 'जनार्दन' — जो जनों (प्राणियों) को अर्दन (प्रेरणा/गति) देता है।",
+      "meaningEn": "The lamp-flame is Parabrahman (the Supreme), the lamp-flame is Janardana (Vishnu — inspirer of beings). May the lamp remove my sins — to that lamp-flame, I offer salutations.\n\nThis verse equates the lamp's flame with Brahman (the Supreme Reality). Just as a small lamp illuminates a dark room, even a spark of self-knowledge dispels the darkness of ignorance. 'Janardana' — one who inspires and sets beings in motion."
+    },
+    {
+      "id": "sd-03",
+      "number": 4,
+      "type": "vidhi",
+      "labelHi": "दीप-प्रज्वलन विधि",
+      "labelEn": "Lamp-Lighting Vidhi",
+      "lines": [
+        "दीपमूले स्थितो ब्रह्मा दीपमध्ये जनार्दनः।",
+        "दीपाग्रे शङ्करः प्रोक्तस्तस्माद्दीपं नमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "Deepamoole sthito Brahmaa deepamadhye Janardanah.",
+        "Deepaagre Shankarah proktas-tasmaad-deepam namaamyaham."
+      ],
+      "meaningHi": "दीपक के मूल (तले) में ब्रह्मा स्थित हैं, मध्य में जनार्दन (विष्णु) हैं, और अग्रभाग (शिखा) में शङ्कर (शिव) हैं — इसलिए मैं दीपक को नमस्कार करता हूँ।\n\nइस श्लोक में दीपक के तीन भागों में त्रिमूर्ति (ब्रह्मा-विष्णु-शिव) का वास बताया गया है — सृष्टि, स्थिति और संहार की शक्तियाँ एक दीपक में समाहित हैं। इसी कारण दीपक स्वयं पूजनीय है।",
+      "meaningEn": "At the base of the lamp resides Brahma, in the middle resides Janardana (Vishnu), and at the tip resides Shankara (Shiva) — therefore I bow to the lamp.\n\nThis verse places the Trimurti (Brahma-Vishnu-Shiva) in three parts of the lamp — the powers of creation, preservation, and transformation are all contained within one lamp. For this reason the lamp itself is worthy of worship.",
+      "vidhiHi": "१. सूर्यास्त के समय (सन्ध्या-काल में) घी या तिल के तेल का दीपक जलाएँ — कपास की बत्ती प्रयोग करें। २. दीपक को पूर्व दिशा या उत्तर दिशा की ओर मुख करके रखें। ३. उपरोक्त तीनों श्लोक बोलें — प्रत्येक श्लोक तीन बार दोहराएँ। ४. दीपक तुलसी के समीप या देव-स्थान (मन्दिर/पूजा-कक्ष) में रखें। ५. दीपक को फूँक मारकर न बुझाएँ — स्वयं बुझने दें या हाथ से हवा देकर बुझाएँ।",
+      "vidhiEn": "1. At sunset (Sandhya time), light a ghee or sesame oil lamp — use a cotton wick. 2. Place the lamp facing east or north direction. 3. Recite the above three slokas — repeat each sloka three times. 4. Place the lamp near Tulsi or in the prayer room (mandir/puja area). 5. Never blow out the lamp — let it extinguish on its own or wave it out gently with the hand."
+    }
+  ]
+}
