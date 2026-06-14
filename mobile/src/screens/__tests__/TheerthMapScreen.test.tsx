@@ -74,46 +74,65 @@ function allText(tree: TestRenderer.ReactTestRenderer): string {
     .join(' ');
 }
 
+// View-mode toggle radios (By State / By Category) carry no accessibilityLabel;
+// the language toggle radios (Hindi/English) do — exclude those.
+function viewRadios(tree: TestRenderer.ReactTestRenderer) {
+  return tree.root.findAll(
+    (n) =>
+      n.props.accessibilityRole === 'radio' &&
+      typeof n.props.onPress === 'function' &&
+      n.props.accessibilityLabel === undefined,
+  );
+}
+
+function tappableByLabel(tree: TestRenderer.ReactTestRenderer, label: string) {
+  return tree.root.findAll(
+    (n) => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function',
+  );
+}
+
 test('renders the Theerth map screen with the Devanagari title', () => {
   const { navigation } = makeNavigation();
   const tree = render(navigation, 'hi');
   assert.match(allText(tree), /तीर्थ/);
 });
 
-test('tapping a pin navigates to TheerthDetail with the temple id', () => {
-  const { navigation, navigate } = makeNavigation();
-  const tree = render(navigation, 'hi');
-  const pin = tree.root.find(
-    (n) => n.props.accessibilityLabel === 'सोमनाथ' && typeof n.props.onPress === 'function',
-  );
-  act(() => {
-    pin.props.onPress();
-  });
-  assert.equal(navigate.mock.calls.length, 1);
-  const [screen, params] = navigate.mock.calls[0] as [string, { templeId: string }];
-  assert.equal(screen, 'TheerthDetail');
-  assert.equal(params.templeId, 'somnath');
+test('exposes exactly two view-mode toggles (By State / By Category)', () => {
+  const { navigation } = makeNavigation();
+  const tree = render(navigation, 'en');
+  assert.equal(viewRadios(tree).length, 2, 'expected a 2-option toggle');
+  const text = allText(tree);
+  assert.match(text, /By State/);
+  assert.match(text, /By Category/);
 });
 
-test('By-State view focuses a state when its header is tapped', () => {
+test('no internal filter chips are rendered', () => {
+  const { navigation } = makeNavigation();
+  const tree = render(navigation, 'en');
+  const chips = tree.root.findAll(
+    (n) =>
+      typeof n.props.accessibilityLabel === 'string' &&
+      n.props.accessibilityLabel.startsWith('filter-'),
+  );
+  assert.equal(chips.length, 0, 'filter chips should be gone');
+});
+
+test('tapping a map pin navigates to TheerthDetail with the temple id', () => {
+  const { navigation, navigate } = makeNavigation();
+  const tree = render(navigation, 'hi');
+  // Map is always visible; the pin carries the temple name as its a11y label.
+  const target = tappableByLabel(tree, 'सोमनाथ')[0];
+  act(() => {
+    target.props.onPress();
+  });
+  const call = navigate.mock.calls.at(-1) as [string, { templeId: string }];
+  assert.equal(call[0], 'TheerthDetail');
+  assert.equal(call[1].templeId, 'somnath');
+});
+
+test('By-State view (default) focuses a state when its header is tapped', () => {
   const { navigation } = makeNavigation();
   const tree = render(navigation, 'hi');
-
-  // Switch to the "By State" view (second of map/state/yatra radios).
-  // The view-mode toggle radios (map/state/yatra) carry no accessibilityLabel;
-  // the language toggle radios (Hindi/English) do — exclude those.
-  const radios = tree.root.findAll(
-    (n) =>
-      n.props.accessibilityRole === 'radio' &&
-      typeof n.props.onPress === 'function' &&
-      n.props.accessibilityLabel === undefined,
-  );
-  assert.ok(radios.length >= 2, 'expected the view-mode toggle');
-  act(() => {
-    radios[1].props.onPress();
-  });
-
-  // Tap the Gujarat state header.
   const header = tree.root.findAll(
     (n) =>
       n.props.accessibilityRole === 'button' &&
@@ -124,83 +143,33 @@ test('By-State view focuses a state when its header is tapped', () => {
   act(() => {
     header.props.onPress();
   });
-
-  // The focused header shows the ◆ marker.
   assert.match(allText(tree), /◆/);
 });
 
-test('By-State view list rows navigate to TheerthDetail', () => {
+test('By-State list rows navigate to TheerthDetail', () => {
   const { navigation, navigate } = makeNavigation();
   const tree = render(navigation, 'hi');
-  // The view-mode toggle radios (map/state/yatra) carry no accessibilityLabel;
-  // the language toggle radios (Hindi/English) do — exclude those.
-  const radios = tree.root.findAll(
-    (n) =>
-      n.props.accessibilityRole === 'radio' &&
-      typeof n.props.onPress === 'function' &&
-      n.props.accessibilityLabel === undefined,
-  );
-  act(() => {
-    radios[1].props.onPress();
-  });
-  // Tap a temple by its accessibility label (matches both the list row and the
-  // compact-map pin — both route to the same detail screen).
-  const target = tree.root.findAll(
-    (n) => n.props.accessibilityLabel === 'श्रीनाथजी' && typeof n.props.onPress === 'function',
-  )[0];
+  const target = tappableByLabel(tree, 'श्रीनाथजी')[0];
   act(() => {
     target.props.onPress();
   });
-  const lastCall = navigate.mock.calls.at(-1) as [string, { templeId: string }];
-  assert.equal(lastCall[0], 'TheerthDetail');
-  assert.equal(lastCall[1].templeId, 'srinathji');
+  const call = navigate.mock.calls.at(-1) as [string, { templeId: string }];
+  assert.equal(call[0], 'TheerthDetail');
+  assert.equal(call[1].templeId, 'srinathji');
 });
 
-test('filter chips narrow the pins shown on the map (English)', () => {
-  const { navigation } = makeNavigation();
-  const tree = render(navigation, 'en');
-  assert.match(allText(tree), /By Yatra/); // English view-toggle labels render
-
-  const present = (label: string) =>
-    tree.root.findAll(
-      (n) => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function',
-    ).length;
-
-  assert.ok(present('Somnath') >= 1, 'Somnath pin shown under All');
-
-  const charDham = tree.root.findAll(
-    (n) => n.props.accessibilityLabel === 'filter-char-dham' && typeof n.props.onPress === 'function',
-  )[0];
-  act(() => {
-    charDham.props.onPress();
-  });
-
-  // Somnath is a Jyotirlinga only → filtered out; Badrinath is Char Dham → stays.
-  assert.equal(present('Somnath'), 0, 'Somnath filtered out of Char Dham');
-  assert.ok(present('Badrinath') >= 1, 'Badrinath remains under Char Dham');
-});
-
-test('By-Yatra view lists yatra sections and rows navigate', () => {
+test('By-Category view lists category sections and rows navigate', () => {
   const { navigation, navigate } = makeNavigation();
   const tree = render(navigation, 'en');
-  const radios = tree.root.findAll(
-    (n) =>
-      n.props.accessibilityRole === 'radio' &&
-      typeof n.props.onPress === 'function' &&
-      n.props.accessibilityLabel === undefined,
-  );
   act(() => {
-    radios[2].props.onPress(); // By Yatra
+    viewRadios(tree)[1].props.onPress(); // By Category
   });
   assert.match(allText(tree), /Other Famous Temples/);
-
-  const row = tree.root.findAll(
-    (n) => n.props.accessibilityLabel === 'Tirupati Balaji' && typeof n.props.onPress === 'function',
-  )[0];
+  const row = tappableByLabel(tree, 'Tirupati Balaji')[0];
   act(() => {
     row.props.onPress();
   });
-  const last = navigate.mock.calls.at(-1) as [string, { templeId: string }];
-  assert.equal(last[0], 'TheerthDetail');
-  assert.equal(last[1].templeId, 'tirupati-balaji');
+  const call = navigate.mock.calls.at(-1) as [string, { templeId: string }];
+  assert.equal(call[0], 'TheerthDetail');
+  assert.equal(call[1].templeId, 'tirupati-balaji');
 });

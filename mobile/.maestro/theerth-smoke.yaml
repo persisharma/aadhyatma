@@ -1,18 +1,23 @@
 # Theerth Category Smoke Test (PRD-08)
 #
 # Verifies the real-India-map pilgrimage surface end-to-end:
-#   Home → Pilgrimage tile → Famous Theerths → real map renders →
-#   tap a pin → temple detail (with the §10.3 pending-verification placeholder) →
-#   back → By-State view (compact map + state-focus hint).
+#   Home → Pilgrimage tile → Famous Theerths → real map renders (always visible)
+#   → 2-way By State / By Category toggle → tap a map pin → temple detail (with
+#   the §10.3 pending-verification placeholder) → back → By Category view.
 #
 # Loads THIS worktree's bundle directly via openLink (instead of the project-list
 # tap) so the run is deterministic even when several Conductor worktrees each
 # serve a "Vedansh" Expo dev server. Override the port per worktree:
 #   maestro test -e EXPO_URL=exp://127.0.0.1:8083 .maestro/theerth-smoke.yaml
 #
-# Note: Maestro anchors a text selector to an element's FULL text, so labels
-# with a subtitle use `<name>\..*Tap to open\.` and the detail-screen prose
-# uses `.*RULEBOOK.*`.
+# Notes:
+#  - Maestro anchors a text selector to an element's FULL text. The Pilgrimage
+#    tile carries a NEW badge so its label isn't exactly "Pilgrimage. Tap to
+#    open." — match ".*Pilgrimage.*Tap to open.*". A LibraryCard carries a
+#    subtitle, so match "Famous Theerths\..*Tap to open\.". Detail prose uses
+#    ".*RULEBOOK.*".
+#  - In By-State (default) a temple appears as both a map pin and a list row, so
+#    the pin tap uses index 0 (the map renders first).
 appId: host.exp.Exponent
 ---
 - stopApp:
@@ -23,11 +28,11 @@ appId: host.exp.Exponent
 - openLink:
     link: "exp://127.0.0.1:8081"
 
-# Home → Theerth (Pilgrimage) category
+# Home → Theerth (Pilgrimage) category. The tile shows a NEW badge → regex.
 - extendedWaitUntil:
-    visible: "Pilgrimage. Tap to open."
+    visible: ".*Pilgrimage.*Tap to open.*"
     timeout: 120000
-- tapOn: "Pilgrimage. Tap to open."
+- tapOn: ".*Pilgrimage.*Tap to open.*"
 - waitForAnimationToEnd
 
 # Open the all-temples map ("Famous Theerths" LibraryCard carries a subtitle)
@@ -38,28 +43,31 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd:
     timeout: 15000
 
-# Force English so the view-mode labels are deterministic, then confirm the
-# real TheerthMap surface rendered.
+# Force English so labels are deterministic, then confirm the real map surface
+# rendered with the 2-way grouping toggle.
 - tapOn: "English"
 - waitForAnimationToEnd
 - assertVisible: "By State"
-- assertVisible: "By Yatra"
+- assertVisible: "By Category"
 
-# Tap a pin on the real map → temple detail. Dense pin clusters may open a
-# neighbouring temple, so assert the temple-agnostic §10.3 placeholder.
-- tapOn: "Somnath"
+# Tap a pin on the real map (index 0 = the map's pin, above the list row) → detail.
+# Every temple now has sourced prose + a "Sources — …" footer (PRD-07 Phase 4),
+# so assert that footer (temple-agnostic — dense pin clusters may open a neighbour).
+- tapOn:
+    text: "Somnath"
+    index: 0
 - waitForAnimationToEnd:
     timeout: 15000
 - extendedWaitUntil:
-    visible: ".*RULEBOOK.*"
+    visible: ".*Sources.*"
     timeout: 15000
 
-# Back to the map, then switch to the By-State view (compact map + highlight)
+# Back to the map, switch to By Category grouping
 - tapOn: "Back"
 - waitForAnimationToEnd
-- tapOn: "By State"
+- tapOn: "By Category"
 - waitForAnimationToEnd
-- assertVisible: "Tap a state name to locate it on the map"
+- assertVisible: "By State"
 
 # Clean up so the next flow starts from a cold launch.
 - stopApp:

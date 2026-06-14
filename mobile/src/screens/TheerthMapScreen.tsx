@@ -16,8 +16,6 @@ import LanguageToggle from '@/components/LanguageToggle';
 import IndiaMap, { type IndiaMapPin } from '@/components/IndiaMap';
 import {
   temples,
-  templesInGroup,
-  otherFamous,
   groupMeta,
   groupOrder,
   type TempleEntry,
@@ -27,9 +25,13 @@ import { library } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'TheerthMap'>;
-type ViewMode = 'map' | 'state' | 'yatra';
+type ViewMode = 'state' | 'category';
 type GroupFilter = TheerthGroup | 'all';
 
+// The library entry the user came from scopes which temples show. There is no
+// in-screen filter anymore — the Home category / CategoryList already picks the
+// set (PRD-08 refinement), so the only in-screen control is the State/Category
+// grouping toggle.
 const ENTRY_TO_FILTER: Record<string, GroupFilter> = {
   'dvadasha-jyotirlinga': 'jyotirlinga',
   'char-dham': 'char-dham',
@@ -46,11 +48,10 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
     () => (theerthId ? library.find((e) => e.id === theerthId) : undefined),
     [theerthId],
   );
-  const [mode, setMode] = useState<ViewMode>('map');
-  const [filter, setFilter] = useState<GroupFilter>(() =>
-    theerthId ? ENTRY_TO_FILTER[theerthId] ?? 'all' : 'all',
-  );
-  // By-State view: which state's region is highlighted on the compact map.
+  const filter: GroupFilter = theerthId ? ENTRY_TO_FILTER[theerthId] ?? 'all' : 'all';
+
+  const [mode, setMode] = useState<ViewMode>('state');
+  // By-State view: which state's region is highlighted on the map.
   const [focusedState, setFocusedState] = useState<string | null>(null);
 
   const screenWidth = Dimensions.get('window').width;
@@ -72,9 +73,14 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
     [filteredTemples, lang],
   );
 
-  const grouped = useMemo(() => groupByState(filteredTemples, lang), [filteredTemples, lang]);
-
-  const yatras = useMemo(() => buildYatraSections(lang), [lang]);
+  const stateSections = useMemo(
+    () => groupByState(filteredTemples, lang),
+    [filteredTemples, lang],
+  );
+  const categorySections = useMemo(
+    () => buildCategorySections(filteredTemples, lang),
+    [filteredTemples, lang],
+  );
 
   const handleTemplePress = (id: string) => {
     navigation.navigate('TheerthDetail', { templeId: id });
@@ -119,10 +125,6 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
           <LanguageToggle />
         </View>
 
-        <View style={styles.viewToggleRow}>
-          <ViewToggle mode={mode} onChange={setMode} lang={lang} colors={colors} typography={typography} radii={radii} />
-        </View>
-
         <ScrollView
           contentContainerStyle={[
             styles.scroll,
@@ -130,66 +132,44 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
           ]}
           showsVerticalScrollIndicator={false}
         >
-          {mode === 'map' ? (
+          {/* The real India map is the hero — always visible, above the toggle. */}
+          <IndiaMap
+            pins={pins}
+            width={mapWidth}
+            onPinPress={handleTemplePress}
+            highlightStateEn={mode === 'state' ? focusedState ?? undefined : undefined}
+          />
+          <Text
+            style={[
+              styles.hint,
+              {
+                color: colors.inkMuted,
+                fontFamily: typography.swipeHint.fontFamily,
+                fontSize: typography.swipeHint.fontSize,
+                marginTop: spacing.lg,
+                marginBottom: spacing.lg,
+              },
+            ]}
+          >
+            {lang === 'hi'
+              ? 'पिन छूकर मंदिर की कथा पढ़ें'
+              : 'Tap a pin to read the temple’s story'}
+          </Text>
+
+          <View style={styles.viewToggleRow}>
+            <ViewToggle
+              mode={mode}
+              onChange={setMode}
+              lang={lang}
+              colors={colors}
+              typography={typography}
+              radii={radii}
+            />
+          </View>
+
+          {mode === 'state' ? (
             <View>
-              <FilterChipRow filter={filter} onChange={setFilter} lang={lang} colors={colors} typography={typography} radii={radii} />
-              <IndiaMap pins={pins} width={mapWidth} onPinPress={handleTemplePress} />
-              <Text
-                style={[
-                  styles.hint,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.swipeHint.fontFamily,
-                    fontSize: typography.swipeHint.fontSize,
-                    marginTop: spacing.lg,
-                  },
-                ]}
-              >
-                {lang === 'hi'
-                  ? 'पिन छूकर मंदिर की कथा पढ़ें'
-                  : 'Tap a pin to read the temple’s story'}
-              </Text>
-              <Text
-                style={[
-                  styles.previewNotice,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.cardLatin.fontFamily,
-                    fontSize: 12,
-                    marginTop: spacing.sm,
-                  },
-                ]}
-              >
-                {lang === 'hi'
-                  ? `झलक — ${filteredTemples.length} तीर्थ दिखाए`
-                  : `Preview — ${filteredTemples.length} temples shown`}
-              </Text>
-            </View>
-          ) : mode === 'state' ? (
-            <View>
-              <IndiaMap
-                pins={pins}
-                width={Math.round(mapWidth * 0.74)}
-                onPinPress={handleTemplePress}
-                highlightStateEn={focusedState ?? undefined}
-              />
-              <Text
-                style={[
-                  styles.hint,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.swipeHint.fontFamily,
-                    fontSize: typography.swipeHint.fontSize,
-                    marginTop: spacing.sm,
-                    marginBottom: spacing.lg,
-                  },
-                ]}
-              >
-                {lang === 'hi'
-                  ? 'राज्य का नाम छूकर उसे मानचित्र पर देखें'
-                  : 'Tap a state name to locate it on the map'}
-              </Text>
-              {grouped.map((group) => {
+              {stateSections.map((group) => {
                 const isFocused = focusedState === group.stateKey;
                 return (
                   <View key={group.stateKey} style={{ marginBottom: spacing.lg }}>
@@ -233,7 +213,7 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
             </View>
           ) : (
             <View>
-              {yatras.map((section) => (
+              {categorySections.map((section) => (
                 <View key={section.key} style={{ marginBottom: spacing.lg }}>
                   <Text
                     style={[
@@ -288,9 +268,8 @@ function ViewToggle({
   lang: Lang;
 } & ThemeBits) {
   const options: Array<{ value: ViewMode; hi: string; en: string }> = [
-    { value: 'map', hi: 'मानचित्र', en: 'Map' },
     { value: 'state', hi: 'राज्य', en: 'By State' },
-    { value: 'yatra', hi: 'यात्रा', en: 'By Yatra' },
+    { value: 'category', hi: 'श्रेणी', en: 'By Category' },
   ];
 
   return (
@@ -338,71 +317,6 @@ function ViewToggle({
         );
       })}
     </View>
-  );
-}
-
-function FilterChipRow({
-  filter,
-  onChange,
-  lang,
-  colors,
-  typography,
-  radii,
-}: {
-  filter: GroupFilter;
-  onChange: (next: GroupFilter) => void;
-  lang: Lang;
-} & ThemeBits) {
-  const chips: Array<{ value: GroupFilter; hi: string; en: string }> = [
-    { value: 'all', hi: 'सभी', en: 'All' },
-    { value: 'jyotirlinga', hi: 'ज्योतिर्लिङ्ग', en: 'Jyotirlinga' },
-    { value: 'char-dham', hi: 'चार धाम', en: 'Char Dham' },
-    { value: 'chota-char-dham', hi: 'छोटा चार धाम', en: 'Chota Char Dham' },
-    { value: 'shakti-peeth', hi: 'शक्ति पीठ', en: 'Shakti Peeth' },
-  ];
-
-  return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      style={chipStyles.scroll}
-      contentContainerStyle={chipStyles.scrollContent}
-    >
-      {chips.map((c) => {
-        const selected = filter === c.value;
-        return (
-          <Pressable
-            key={c.value}
-            onPress={() => onChange(c.value)}
-            accessibilityRole="button"
-            accessibilityState={{ selected }}
-            accessibilityLabel={`filter-${c.value}`}
-            hitSlop={6}
-            style={({ pressed }) => [
-              chipStyles.chip,
-              {
-                backgroundColor: selected ? colors.saffronTint : colors.parchmentSoft,
-                borderColor: selected ? colors.saffron : colors.divider,
-                borderRadius: radii.pill,
-              },
-              pressed && !selected && { opacity: 0.7 },
-            ]}
-          >
-            <Text
-              style={{
-                fontFamily:
-                  lang === 'hi' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily,
-                fontSize: 12,
-                fontStyle: lang === 'en' ? 'italic' : 'normal',
-                color: selected ? colors.saffronDeep : colors.inkSoft,
-              }}
-            >
-              {lang === 'hi' ? c.hi : c.en}
-            </Text>
-          </Pressable>
-        );
-      })}
-    </ScrollView>
   );
 }
 
@@ -479,6 +393,7 @@ function TempleListRow({
 
 type StateGroup = { stateKey: string; label: string; temples: TempleEntry[] };
 
+/** Group every temple in the current set by its state (By State view). */
 function groupByState(list: readonly TempleEntry[], lang: Lang): StateGroup[] {
   const map = new Map<string, TempleEntry[]>();
   list.forEach((t) => {
@@ -499,23 +414,28 @@ function groupByState(list: readonly TempleEntry[], lang: Lang): StateGroup[] {
   return groups;
 }
 
-type YatraSection = { key: string; label: string; temples: TempleEntry[] };
+type CategorySection = { key: string; label: string; temples: TempleEntry[] };
 
-function buildYatraSections(lang: Lang): YatraSection[] {
-  const sections: YatraSection[] = groupOrder.map((g) => {
-    const meta = groupMeta[g];
-    return {
+/**
+ * Group the current set by pilgrimage category (Jyotirlinga, Char Dham, …),
+ * respecting the entry filter. A temple in multiple categories appears under
+ * each; ungrouped temples fall under "Other Famous Temples". Empty categories
+ * are omitted.
+ */
+function buildCategorySections(list: readonly TempleEntry[], lang: Lang): CategorySection[] {
+  const sections: CategorySection[] = groupOrder
+    .map((g) => ({
       key: g,
-      label: lang === 'hi' ? meta.nameHi : meta.nameEn,
-      temples: templesInGroup(g),
-    };
-  });
-  const other = otherFamous();
+      label: lang === 'hi' ? groupMeta[g].nameHi : groupMeta[g].nameEn,
+      temples: list.filter((t) => t.groups.includes(g)),
+    }))
+    .filter((s) => s.temples.length > 0);
+  const other = list.filter((t) => t.groups.length === 0);
   if (other.length > 0) {
     sections.push({
       key: 'other-famous',
       label: lang === 'hi' ? 'अन्य प्रसिद्ध तीर्थ' : 'Other Famous Temples',
-      temples: other,
+      temples: [...other],
     });
   }
   return sections;
@@ -544,12 +464,6 @@ const styles = StyleSheet.create({
   viewToggleRow: { alignItems: 'center', paddingBottom: 12 },
   scroll: { paddingTop: 4 },
   hint: { textAlign: 'center', fontStyle: 'italic', includeFontPadding: false },
-  previewNotice: {
-    textAlign: 'center',
-    fontStyle: 'italic',
-    opacity: 0.7,
-    includeFontPadding: false,
-  },
   sectionHeader: {
     fontWeight: '600',
     textTransform: 'uppercase',
@@ -566,22 +480,11 @@ const toggleStyles = StyleSheet.create({
     alignSelf: 'center',
   },
   half: {
-    minWidth: 80,
+    minWidth: 100,
     paddingVertical: 7,
     paddingHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-});
-
-const chipStyles = StyleSheet.create({
-  scroll: { marginBottom: 12, marginHorizontal: -4 },
-  scrollContent: { paddingHorizontal: 4, gap: 8 },
-  chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 7,
-    borderWidth: 1,
-    marginRight: 8,
   },
 });
 

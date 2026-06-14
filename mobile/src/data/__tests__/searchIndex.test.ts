@@ -73,6 +73,14 @@ const index = getSearchIndex();
   assert.ok(res.sections.length > 0);
 }
 
+// Theerth detail prose is searchable, not just temple names/locations.
+{
+  const res = runSearch('Somraj', index);
+  const hit = res.verses.find((v) => v.entry.sourceId === 'famous-theerth');
+  assert.ok(hit, 'expected Somnath origin-story text to be indexed under theerth');
+  assert.equal(hit.entry.labelEn, 'Somnath');
+}
+
 // BG 2.47 query finds the right verse via a partial of the famous line.
 {
   const res = runSearch('कर्मण्ये', index);

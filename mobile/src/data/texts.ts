@@ -304,9 +304,8 @@ export const library: readonly LibraryEntry[] = [
   },
   // ─────────── Theerth (तीर्थ) — pilgrimage map archetype ───────────
   // One LibraryEntry per yatra; each opens TheerthMapScreen with that
-  // group's pins pre-filtered. Per RULEBOOK §11, content is verified
-  // sourced prose per temple (PRD-07 Phase 4). v1 shows pins + a
-  // pending-verification placeholder on the detail screen.
+  // group's pins pre-filtered. Per RULEBOOK §11, each temple carries
+  // concise source-linked prose for the detail screen.
   {
     id: 'dvadasha-jyotirlinga',
     nameHi: 'द्वादश ज्योतिर्लिङ्ग',
@@ -341,7 +340,7 @@ export const library: readonly LibraryEntry[] = [
     id: 'shakti-peeth',
     nameHi: 'शक्ति पीठ',
     nameEn: 'Shakti Peeth',
-    sub: '6 शक्ति पीठ · देवी दर्शन',
+    sub: '7 शक्ति पीठ · देवी दर्शन',
     thumb: 'श',
     status: 'active',
     category: 'theerth',

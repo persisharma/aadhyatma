@@ -569,8 +569,8 @@ function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
         labelEn: t.nameEn,
         linesHi: [t.nameHi, `${t.cityHi}, ${t.stateHi}`],
         linesEn: [t.nameEn, `${t.cityEn}, ${t.stateEn}`],
-        meaningHi: '',
-        meaningEn: '',
+        meaningHi: `${t.significanceHi}\n${t.originStoryHi}`,
+        meaningEn: `${t.significanceEn}\n${t.originStoryEn}`,
       })
     );
   });

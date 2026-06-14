@@ -1,11 +1,11 @@
 /**
  * Theerth data-contract tests.
  * Verifies the temple dataset + the generated India map agree, that pins land
- * on real geography, and that RULEBOOK §10.3 (no fabricated prose) holds.
+ * on real geography, and that every temple has sourced detail prose.
  * Run: npx tsx src/data/__tests__/theerth.test.ts
  */
 import assert from 'node:assert/strict';
-import { temples, getTempleById, otherFamous } from '../theerth/temples';
+import { temples, getTempleById, otherFamous, templesInGroup } from '../theerth/temples';
 import {
   INDIA_PROJECTION,
   INDIA_STATES,
@@ -94,21 +94,38 @@ for (const t of temples) {
   );
 }
 
-// ─── 6. RULEBOOK §10.3 — no fabricated liturgical/origin prose on any temple ──
-const FORBIDDEN_PROSE_KEYS = [
-  'significanceHi',
-  'significanceEn',
-  'originStoryHi',
-  'originStoryEn',
-];
+// ─── 6. Sourced detail prose exists for every temple ──────────────────────────
 for (const t of temples) {
-  for (const k of FORBIDDEN_PROSE_KEYS) {
-    assert.ok(
-      !(k in (t as Record<string, unknown>)),
-      `${t.id}: must not carry "${k}" until sourced per RULEBOOK §10.3`,
-    );
+  for (const [key, value] of Object.entries({
+    significanceHi: t.significanceHi,
+    significanceEn: t.significanceEn,
+    originStoryHi: t.originStoryHi,
+    originStoryEn: t.originStoryEn,
+  })) {
+    assert.ok(value.trim().length >= 24, `${t.id}: missing ${key}`);
+    assert.ok(!/RULEBOOK|placeholder|pending/i.test(value), `${t.id}: ${key} is still placeholder prose`);
+  }
+  assert.ok(t.sources.length > 0, `${t.id}: must list at least one source`);
+  for (const source of t.sources) {
+    assert.ok(source.label.trim().length > 0, `${t.id}: source label is empty`);
+    assert.match(source.url, /^https:\/\//, `${t.id}: source URL must be https`);
   }
 }
+
+// ─── 6b. Shakti Peeth membership is the curated map's actual peeth subset ─────
+assert.deepEqual(
+  templesInGroup('shakti-peeth').map((t) => t.id).sort(),
+  [
+    'danteshwari',
+    'jwala-devi',
+    'kalighat',
+    'kamakhya',
+    'naina-devi',
+    'nartiang-durga',
+    'tripura-sundari',
+  ].sort(),
+  'Shakti Peeth group should include only recognised peeths present in this map',
+);
 
 // ─── 7. Statewise coverage — these states must each have ≥1 temple ────────────
 const EXPECTED_STATES = [
@@ -135,5 +152,5 @@ assert.ok(
 );
 
 console.log(
-  `✓ theerth data-contract: ${temples.length} temples, ${EXPECTED_STATES.length} states covered, projection aligned, no fabricated prose`,
+  `✓ theerth data-contract: ${temples.length} temples, ${EXPECTED_STATES.length} states covered, projection aligned, sourced prose present`,
 );
