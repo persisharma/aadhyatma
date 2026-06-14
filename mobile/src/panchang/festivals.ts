@@ -115,6 +115,10 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'satyanarayana-vrat-katha', nameHi: 'श्री सत्यनारायण व्रत कथा', nameEn: 'Shri Satyanarayana Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/satyanarayana/satyanarayana-vrat-katha.html', relatedRuleIds: ['shree-satyanarayan-vrat', 'purnima-vrat'] }),
   katha({ id: 'ekadashi-vrat-katha', nameHi: 'एकादशी व्रत कथा', nameEn: 'Ekadashi Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/legends/ekadashi/ekadashi-vrat-katha.html', relatedRuleIds: EkadashiKathaRuleIds }),
   katha({ id: 'utpanna-ekadashi-katha', nameHi: 'उत्पन्ना एकादशी कथा', nameEn: 'Utpanna Ekadashi Katha', sourceUrl: 'https://www.drikpanchang.com/ekadashis/utpanna/legends/utpanna-ekadashi-vrat-katha.html', relatedRuleIds: ['utpanna-ekadashi'] }),
+  katha({ id: 'kamada-ekadashi-katha', nameHi: 'कामदा एकादशी व्रत कथा', nameEn: 'Kamada Ekadashi Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/ekadashi/kamada-ekadashi-vrat-katha.html', relatedRuleIds: ['kamada-ekadashi'] }),
+  katha({ id: 'varuthini-ekadashi-katha', nameHi: 'वरूथिनी एकादशी व्रत कथा', nameEn: 'Varuthini Ekadashi Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/ekadashi/varuthini-ekadashi-vrat-katha.html', relatedRuleIds: ['varuthini-ekadashi'] }),
+  katha({ id: 'mohini-ekadashi-katha', nameHi: 'मोहिनी एकादशी व्रत कथा', nameEn: 'Mohini Ekadashi Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/ekadashi/mohini-ekadashi-vrat-katha.html', relatedRuleIds: ['mohini-ekadashi'] }),
+  katha({ id: 'apara-ekadashi-katha', nameHi: 'अपरा एकादशी व्रत कथा', nameEn: 'Apara Ekadashi Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/ekadashi/apara-ekadashi-vrat-katha.html', relatedRuleIds: ['apara-ekadashi'] }),
   katha({ id: 'dwadashi-vrat-katha', nameHi: 'द्वादशी व्रत कथा', nameEn: 'Dwadashi Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/dwadashi/dwadashi-vrat-katha-collection.html', relatedRuleIds: ['dwadashi-vrat-shukla', 'dwadashi-vrat-krishna'] }),
   katha({ id: 'sankashti-chaturthi-vrat-katha', nameHi: 'संकष्टी चतुर्थी व्रत कथा', nameEn: 'Sankashti Chaturthi Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/sankashti/sankashti-chaturthi-vrat-katha.html', relatedRuleIds: ['sankashti-chaturthi-vrat'] }),
   katha({ id: 'sakat-chauth-vrat-katha', nameHi: 'सकट चौथ व्रत कथा', nameEn: 'Sakat Chauth Vrat Katha', sourceUrl: VratKathaUrl, relatedRuleIds: ['sakat-chauth'] }),
@@ -259,6 +263,16 @@ function slugify(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
+// Individual Ekadashi kathas, added incrementally. Names not listed here fall
+// back to the shared generic `ekadashi-vrat-katha` until their own katha exists.
+const EKADASHI_KATHA_BY_NAME: Record<string, string> = {
+  'Utpanna Ekadashi': 'utpanna-ekadashi-katha',
+  'Kamada Ekadashi': 'kamada-ekadashi-katha',
+  'Varuthini Ekadashi': 'varuthini-ekadashi-katha',
+  'Mohini Ekadashi': 'mohini-ekadashi-katha',
+  'Apara Ekadashi': 'apara-ekadashi-katha',
+};
+
 export const EKADASHI_RULES: ObservanceRule[] = EKADASHI_NAMES.map((item) => vrat({
   id: slugify(item.nameEn),
   nameHi: item.nameHi,
@@ -272,7 +286,7 @@ export const EKADASHI_RULES: ObservanceRule[] = EKADASHI_NAMES.map((item) => vra
   shortDescriptionHi: `${item.nameHi} विष्णु उपासना और एकादशी व्रत का दिन है।`,
   shortDescriptionEn: `${item.nameEn} is observed for Vishnu worship and Ekadashi vrat.`,
   linkSectionId: 'vishnu-sahasranama',
-  kathaId: item.nameEn === 'Utpanna Ekadashi' ? 'utpanna-ekadashi-katha' : 'ekadashi-vrat-katha',
+  kathaId: EKADASHI_KATHA_BY_NAME[item.nameEn] ?? 'ekadashi-vrat-katha',
   searchTerms: ['ekadashi', 'upavas', 'vishnu'],
 }));
 
