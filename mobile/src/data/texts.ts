@@ -144,7 +144,6 @@ export const library: readonly LibraryEntry[] = [
     category: 'stotram',
     deities: ['saraswati'],
     verseCount: saraswatiStotramTotal,
-    addedInVersion: '1.3.1',
   },
   {
     id: 'ganesh-stotram',
@@ -399,7 +398,6 @@ export const library: readonly LibraryEntry[] = [
     category: 'aarti',
     deities: ['saraswati'],
     verseCount: 8,
-    addedInVersion: '1.3.1',
   },
   {
     id: 'prabhati-shloka',
@@ -503,6 +501,5 @@ export const library: readonly LibraryEntry[] = [
     category: 'sanskar',
     deities: ['saraswati'],
     verseCount: 6,
-    addedInVersion: '1.3.1',
   },
 ];

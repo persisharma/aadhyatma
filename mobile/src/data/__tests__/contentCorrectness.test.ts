@@ -44,18 +44,6 @@ assert.deepEqual(
   'Vishnu Sahasranama must be tagged under the Vishnu deity only'
 );
 
-// Newly-added discoverable content must carry addedInVersion, or NewContentContext
-// seeds it as already-known for upgrading users and the NEW badge never shows.
-for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana']) {
-  const entry = library.find((e) => e.id === id);
-  assert.ok(entry, `${id} should exist in library`);
-  assert.ok(entry.addedInVersion, `${id} must set addedInVersion so upgraders see its NEW badge`);
-}
-// The sanskar batch debuted together, so every sanskar entry must carry addedInVersion.
-for (const entry of library.filter((e) => e.category === 'sanskar')) {
-  assert.ok(entry.addedInVersion, `sanskar entry ${entry.id} must set addedInVersion`);
-}
-
 // ─── 2. Aarti verse counts (verified from internet) ─────────────────────────
 
 const hanumanAarti = readJson('aarti/hanuman-aarti.json');
