@@ -23,6 +23,7 @@ export type ContentCategory =
   | 'chalisa'
   | 'japam'
   | 'aarti'
+  | 'theerth'
   | 'sanskar';
 export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr' | 'saraswati';
 
@@ -143,6 +144,7 @@ export const library: readonly LibraryEntry[] = [
     category: 'stotram',
     deities: ['saraswati'],
     verseCount: saraswatiStotramTotal,
+    addedInVersion: '1.3.1',
   },
   {
     id: 'ganesh-stotram',
@@ -327,6 +329,65 @@ export const library: readonly LibraryEntry[] = [
     deities: ['krishna'],
     verseCount: 6,
   },
+  // ─────────── Theerth (तीर्थ) — pilgrimage map archetype ───────────
+  // One LibraryEntry per yatra; each opens TheerthMapScreen with that
+  // group's pins pre-filtered. Per RULEBOOK §11, each temple carries
+  // concise source-linked prose for the detail screen.
+  {
+    id: 'dvadasha-jyotirlinga',
+    nameHi: 'द्वादश ज्योतिर्लिङ्ग',
+    nameEn: 'Dvādaśa Jyotirlinga',
+    sub: '12 ज्योतिर्लिङ्ग · मानचित्र दर्शन',
+    subEn: '12 Jyotirlinga · map view',
+    thumb: 'ज्यो',
+    status: 'active',
+    category: 'theerth',
+    deities: ['shiva'],
+  },
+  {
+    id: 'char-dham',
+    nameHi: 'चार धाम',
+    nameEn: 'Char Dham',
+    sub: '4 धाम · मानचित्र दर्शन',
+    subEn: '4 Dham · map view',
+    thumb: 'चा',
+    status: 'active',
+    category: 'theerth',
+    deities: ['vishnu', 'krishna', 'shiva'],
+  },
+  {
+    id: 'chota-char-dham',
+    nameHi: 'छोटा चार धाम',
+    nameEn: 'Chota Char Dham',
+    sub: '4 धाम · उत्तराखंड',
+    subEn: '4 Dham · Uttarakhand',
+    thumb: 'छो',
+    status: 'active',
+    category: 'theerth',
+    deities: ['shiva', 'vishnu', 'durga'],
+  },
+  {
+    id: 'shakti-peeth',
+    nameHi: 'शक्ति पीठ',
+    nameEn: 'Shakti Peeth',
+    sub: '7 शक्ति पीठ · देवी दर्शन',
+    subEn: '7 Shakti Peeth · Devi darshan',
+    thumb: 'श',
+    status: 'active',
+    category: 'theerth',
+    deities: ['durga'],
+  },
+  {
+    id: 'famous-theerth',
+    nameHi: 'प्रसिद्ध तीर्थ',
+    nameEn: 'Famous Theerths',
+    sub: 'सम्पूर्ण मानचित्र · 44 तीर्थ',
+    subEn: 'Complete map · 44 Theerths',
+    thumb: 'प्र',
+    status: 'active',
+    category: 'theerth',
+    deities: ['shiva', 'vishnu', 'krishna', 'durga', 'savitr'],
+  },
   {
     id: 'saraswati-aarti',
     nameHi: 'सरस्वती माता की आरती',
@@ -338,6 +399,7 @@ export const library: readonly LibraryEntry[] = [
     category: 'aarti',
     deities: ['saraswati'],
     verseCount: 8,
+    addedInVersion: '1.3.1',
   },
   {
     id: 'prabhati-shloka',
@@ -441,5 +503,6 @@ export const library: readonly LibraryEntry[] = [
     category: 'sanskar',
     deities: ['saraswati'],
     verseCount: 6,
+    addedInVersion: '1.3.1',
   },
 ];

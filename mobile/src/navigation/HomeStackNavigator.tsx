@@ -35,6 +35,8 @@ import RamStutiReaderScreen from '@/screens/RamStutiReaderScreen';
 import RamcharitmanasChaptersScreen from '@/screens/RamcharitmanasChaptersScreen';
 import RamcharitmanasReaderScreen from '@/screens/RamcharitmanasReaderScreen';
 import AartiReaderScreen from '@/screens/AartiReaderScreen';
+import TheerthMapScreen from '@/screens/TheerthMapScreen';
+import TheerthDetailScreen from '@/screens/TheerthDetailScreen';
 import SanskarReaderScreen from '@/screens/SanskarReaderScreen';
 import RoutineTodayScreen from '@/screens/RoutineTodayScreen';
 import RoutineListScreen from '@/screens/RoutineListScreen';
@@ -171,6 +173,16 @@ export default function HomeStackNavigator() {
         name="JapamCounter"
         component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="TheerthMap"
+        component={TheerthMapScreen}
+        options={{ animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="TheerthDetail"
+        component={TheerthDetailScreen}
+        options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen name="RoutineToday" component={RoutineTodayScreen} />
       <Stack.Screen name="RoutineList" component={RoutineListScreen} />

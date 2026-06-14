@@ -87,6 +87,7 @@ This applies to Sundarkand's chaupais, dohas, sorthas, and chhands, and to all o
 - Verse-pill subtitles (e.g., `Chapter 1`, `Opening`, `Closing`)
 - Library-card English names (e.g., `Hanuman Chalisa`, `Sundarkand`)
 - UI chrome — counts (`47 verses`), hints (`← swipe →`), labels (`Meaning`, `Commentary`)
+- **Theerth prose.** `significanceHi/En` and `originStoryHi/En` on each `TheerthTemple` are independent prose translations, not romanizations of the same verse line. Temple names (`Somnath`, `Kashi Vishwanath`) use popular English spellings, not IAST.
 
 These remain in everyday English. A handful of common Sanskrit terms keep their conventional spelling outside verse-lines (`Gītā`, `kāṇḍa`) — the diacritic-or-not call belongs to the editorial team, not this rule.
 
@@ -172,6 +173,8 @@ Three faded vintage sketches live in `/images/`:
 - Each reader page picks **one** of the three backgrounds.
 - Selection is **deterministic per verse id**, not re-rolled on every render. Use a simple hash (e.g., `verse.number % 3`) so a given verse always shows the same image — this keeps the feeling stable as the user swipes back and forth.
 - Apply the image as a `cover`-sized background. Then stack the parchment overlay (Section 2) on top. Then the content.
+
+**Exception — Theerth.** Theerth detail screens **pin one background per temple** (see §26). The temple's identity is the image; backgrounds are not interchangeable across temples. The map screen itself uses no background image — only the parchment base with the stylised India SVG outline.
 
 ### Adding more modules
 
@@ -718,7 +721,141 @@ Same as Section 21, but filtered by deity tag instead of category. Title shows d
 
 ---
 
-## 26. Component: Routine Banner & Completion Celebration
+## 26. Screen: Theerth Map (तीर्थ)
+
+**Purpose.** Map-driven entry surface for the Theerth (pilgrimage) category. Tapping the Theerth category tile on Home pushes this screen. Full proposal in `docs/roadmap/prds/07-temple-tour.md`.
+
+**Layer stack:**
+
+1. Parchment base colour (no faded sketch background — the map IS the visual).
+2. `<IndiaMap>` SVG (Section 28) occupying the upper ~60 % of the screen.
+3. Temple pins (Section 29) overlaid on the map, positioned by lat/lng → x/y projection.
+4. Below the map: segmented toggle (`मानचित्र · Map` / `राज्य · By State`), then either the intro paragraph (map view) or the grouped state list (state view).
+
+**Structure (top to bottom):**
+
+1. Status bar.
+2. **Top bar** (14/22 padding):
+   - Back button (returns to Home).
+   - Title centred: `तीर्थ` (Hindi mode) / `Theerth` (English mode), reader-title style. Title swaps on language — never stacks per RULEBOOK §3.
+   - Right-side spacer to keep title centred.
+3. **Language toggle row** (8 top / 16 bottom padding, centred). Same `LanguageToggle` component as §16. State shared via `useGitaLanguage()` — do not fork.
+4. **View toggle** (segmented control, parchment-soft fill, divider border, pill radius):
+   - Two halves: `मानचित्र · Map` (active by default) and `राज्य · By State`.
+   - Hindi half: Noto Serif Devanagari 13 600. English half: Cormorant Garamond 13 400 italic.
+   - Active half tinted `saffron-tint` with `saffron-deep` text; inactive transparent with `ink-muted`.
+5. **Map view** (when toggle = Map):
+   - `<IndiaMap>` SVG, fixed aspect ratio ~1:1.2 (India is roughly square-ish with a tail), centred horizontally.
+   - Pins overlaid via the `pins` prop.
+   - Below the map: `Theerth.introHi/En` prose (Noto Serif 15 400 `ink-soft` for Hindi; Cormorant Garamond 18 500 `ink` for English), 24 px side padding, 12 px paragraph gap.
+   - Below the intro: a single italic line — `Tap a pin to read the temple's story` / `पिन छूकर मंदिर की कथा पढ़ें` — Cormorant Garamond 12 italic, `ink-muted`, centred.
+6. **State view** (when toggle = By State):
+   - Vertical scroll list grouped by state.
+   - State header: `गुजरात · Gujarat` — Inter 11 600 `0.22em` uppercase, `ink-muted`, 16 px top padding, 8 px bottom.
+   - Temple card under each header: `[ thumb (deity glyph) ]  [ temple-name (lang-swapped) · city ]  [ › ]`. Same dimensions as `LibraryCard` (§8) but the meta line is `city, state` instead of `verse count`.
+   - State ordering: alphabetic by Devanagari sort key. Within a state, temples alphabetic by `nameHi`.
+
+**Interactions:**
+
+- Tap pin → push `TheerthDetail` for that temple.
+- Long-press pin → small label tooltip with temple name (Devanagari/English by language toggle). Auto-dismisses on release.
+- Tap state-list row → push `TheerthDetail` for that temple.
+- View toggle persists in component state (NOT navigation state) so back from detail returns to the same view.
+
+**Gradient background:** same as Home (§2 Home gradient).
+
+---
+
+## 27. Screen: Theerth Detail
+
+**Purpose.** Per-temple narrative screen. Reached by tapping a pin on the Map view (§26) or a row in the State list view.
+
+**Layer stack:**
+
+1. Parchment base.
+2. Per-temple faded sketch background (`TheerthTemple.background`), pinned 1:1 to this temple — not interchangeable per §6 exception.
+3. Parchment gradient overlay (§2).
+4. Vertical-scroll content column.
+
+**Structure (top to bottom):**
+
+1. Status bar.
+2. **Top bar** (14/22 padding):
+   - Back button — returns to `TheerthMapScreen` preserving its toggle state.
+   - Title centred: temple name, lang-swapped (`सोमनाथ` / `Somnath`).
+   - Spacer.
+3. **Hero block** (28 px side padding, 24 px top, 16 px bottom):
+   - Temple name in large title type: Noto Serif Devanagari 28 600 `ink` (Hindi) / Cormorant Garamond 24 600 italic `ink` (English). Centred.
+   - Subtitle line: `<city>, <state>` (lang-swapped), Cormorant Garamond 14 400 italic `ink-muted`, centred, 4 px below name.
+   - Deity badge: a small pill (`saffron-tint` fill, `pill` radius, `saffron-deep` text, Inter 10 600 uppercase `0.3em`) reading e.g. `शिव · SHIVA` or the form name from `deityFormHi/En` if present.
+4. Ornament divider (`॥`, §5).
+5. **Significance section:**
+   - Label: `महिमा · Significance` (`Significance · महिमा` when lang = en) — Cormorant Garamond 13 600 italic, `saffron-deep`, `0.14em` tracking, uppercase, centred. Same treatment as the `अर्थ · Meaning` label.
+   - Body: array of paragraphs from `significanceHi[]` or `significanceEn[]`, 14 px paragraph gap. Hindi 15/26 Noto Serif `ink-soft`; English 18/30 Cormorant Garamond 500 medium non-italic `ink`.
+6. Ornament divider.
+7. **Origin Story section:**
+   - Label: `उद्भव कथा · Origin Story` (`Origin Story · उद्भव कथा` when lang = en). Same style as Significance label.
+   - Body: array of paragraphs from `originStoryHi[]` or `originStoryEn[]`, same typography rules.
+8. **Sources footer** (24 px top padding):
+   - One-line attribution: `Sources: <title 1>; <title 2>` — Cormorant Garamond 12 400 italic, `ink-muted`, centred.
+   - URLs are NOT links in v1 (rendered as plain text). v2 may make them tappable.
+9. **Bottom bar:** language toggle (per RULEBOOK §3 — every reader/detail page renders it).
+
+**Romanization:** §3.1 carve-out — temple-name spelling uses popular English (`Kashi Vishwanath`, not `Kāśī Viśvanātha`); origin-story `*En` fields are independent prose, not transliteration.
+
+---
+
+## 28. Component: India Map
+
+**Purpose.** Reusable stylised SVG India outline used by `TheerthMapScreen` and (potentially in v2) by Profile / search "by state". Rendered with `react-native-svg`. Do **not** add `react-native-maps` or any tile provider.
+
+**Visual treatment:**
+
+- SVG outline of India (mainland + visible major islands), single `saffron-deep @ 0.6 opacity` stroke at 1.2 px, no fill (the parchment shows through).
+- State boundaries (shown by default on the Theerth surface, PRD-08) as thinner `saffron @ 0.25 opacity` strokes at 0.6 px. The focused state in the By-State view is filled `saffron @ 0.12 opacity`.
+- Aspect ratio ~1:1.2 (wider tail south, narrower north — proportional to India's actual extent).
+- No labels on the map itself (state names are surface in the state-list view, not on pins).
+
+**Props (API):**
+
+```ts
+type IndiaMapProps = {
+  pins: Array<{ id: string; lat: number; lng: number; label: string }>;
+  width: number;               // computed by parent from screen width
+  onPinPress: (id: string) => void;
+  showStates?: boolean;        // default true on the Theerth surface (PRD-08)
+  highlightStateEn?: string;   // fill the matching state (By-State focus)
+};
+```
+
+**Projection:** equirectangular, bounded by India's extent: lat ∈ [6, 38] → y ∈ [0, height]; lng ∈ [68, 98] → x ∈ [0, width]. Latitude is flipped (north = top). No distortion correction — the ~1:1.15 viewport aspect (`width 300 × height 345`) is achieved purely by the viewBox dimensions, a per-axis linear map. The pins are projected with the exact same `INDIA_PROJECTION` constants the paths were generated from, so a pin lands precisely on the real outline.
+
+**Coordinate sanity:** the component warns (dev mode only) if any pin's lat/lng falls outside the bounding box — catches lat/lng swaps and bad source data before they render off-screen.
+
+**Data provenance (PRD-08).** The outline + 36 state/UT boundaries are **real geography**, generated once from public-domain Natural Earth 50m (`admin_0_countries` + `admin_1_states_provinces`) by `scripts/build-india-map.mjs` and committed as static SVG path constants in `mobile/src/components/indiaMapPaths.generated.ts` (`INDIA_OUTLINE`, `INDIA_STATES`, `INDIA_PROJECTION`). Re-run the script to refresh; do **not** hand-edit the generated file.
+
+**Performance:** paths are static committed constants (~35 KB total). No runtime simplification, no GeoJSON parsing, no map provider, no API key. Render cost is dominated by the pin count (~44 today, scales to ~50 before considering canvas).
+
+---
+
+## 29. Component: Theerth Pin
+
+**Purpose.** The individual pin glyph rendered on `<IndiaMap>`.
+
+**Visual:**
+
+- Glyph: `॥` in `saffron-deep`, Noto Serif Devanagari, 18 px (slightly larger than ornament dividers to read as an interactive element).
+- No background circle / no shape underlay — the glyph itself is the pin. This keeps the map quiet.
+- Tap-hold tooltip: small parchment-soft rectangle, `divider` border, 8 px padding, label in Noto Serif Devanagari 13 600 / Cormorant Garamond 13 400 italic (lang-swapped). Tooltip appears above the pin (or below if too close to top edge).
+
+**Interaction:**
+
+- Tap target: 44×44 invisible hit area via `hitSlop`, even though the visible glyph is ~18 px.
+- Tap → calls `onPress(id)`.
+- Long-press (300 ms threshold) → shows tooltip; tooltip auto-dismisses on release.
+- Haptic on tap: `Haptics.ImpactFeedbackStyle.Light`.
+
+## 30. Component: Routine Banner & Completion Celebration
 
 **Purpose.** A docked banner pinned just above the tab bar on Home and Daily Bhakti, surfacing today's नित्य साधना (daily routine). `RoutineBanner.tsx` + `routineBannerView.ts` (pure state logic).
 

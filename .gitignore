@@ -16,3 +16,6 @@
 
 # macOS
 .DS_Store
+
+# Natural Earth download cache for build-india-map.mjs
+scripts/.cache/

@@ -22,6 +22,12 @@ import {
 } from './aarti';
 import { japamMantras, type JapamMantra } from './japam';
 import {
+  temples,
+  templesInGroup,
+  type TempleEntry,
+  type TheerthGroup,
+} from './theerth/temples';
+import {
   getGitaChapter,
   gitaChaptersManifest,
   type GitaVerse,
@@ -356,6 +362,11 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.category === 'theerth') {
+      pushTheerth(verses, entry);
+      continue;
+    }
+
     // Unknown section shape — silently skip rather than crash. Caught by the
     // section-coverage test in __tests__/searchIndex.test.ts.
   }
@@ -529,6 +540,37 @@ function pushAarti(out: SearchVerseEntry[], entry: LibraryEntry) {
         linesEn: v.linesEn,
         meaningHi: v.meaningHi,
         meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+const THEERTH_ENTRY_TO_GROUP: Record<string, TheerthGroup | 'all'> = {
+  'dvadasha-jyotirlinga': 'jyotirlinga',
+  'char-dham': 'char-dham',
+  'chota-char-dham': 'chota-char-dham',
+  'shakti-peeth': 'shakti-peeth',
+  'famous-theerth': 'all',
+};
+
+function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const filter = THEERTH_ENTRY_TO_GROUP[entry.id];
+  if (!filter) return;
+  const list: readonly TempleEntry[] =
+    filter === 'all' ? temples : templesInGroup(filter);
+  list.forEach((t, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: t.nameHi,
+        labelEn: t.nameEn,
+        linesHi: [t.nameHi, `${t.cityHi}, ${t.stateHi}`],
+        linesEn: [t.nameEn, `${t.cityEn}, ${t.stateEn}`],
+        meaningHi: `${t.significanceHi}\n${t.originStoryHi}`,
+        meaningEn: `${t.significanceEn}\n${t.originStoryEn}`,
       })
     );
   });

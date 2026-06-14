@@ -53,7 +53,7 @@ export const getSanskarById: Readonly<Record<string, SanskarData>> = Object.free
 // ─── Module-level invariant assertions ───────────────────────────────────────
 
 (function assertSanskarInvariants() {
-  // Exactly 7 sections
+  // Exactly 8 sections
   if (sanskarCollection.length !== 8) {
     throw new Error(
       `sanskar: expected 8 sections, got ${sanskarCollection.length}`

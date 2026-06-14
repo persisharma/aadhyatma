@@ -39,6 +39,7 @@ export default function HomeScreen({ navigation }: Props) {
     japam: <CategoryIcon iconKey="japam" />,
     deity: <CategoryIcon iconKey="deity" />,
     aarti: <CategoryIcon iconKey="aarti" />,
+    theerth: <CategoryIcon iconKey="theerth" />,
     sanskar: <CategoryIcon iconKey="sanskar" />,
   };
 
@@ -60,7 +61,10 @@ export default function HomeScreen({ navigation }: Props) {
       status: 'active' as const,
       icon: categoryIcons[c.id],
       hasNew: hasNewInCategory(c.id),
-      onPress: () => navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
+      onPress: () =>
+        c.id === 'theerth'
+          ? navigation.navigate('TheerthMap', {})
+          : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
     })),
     {
       key: 'deity',
