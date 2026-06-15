@@ -30,6 +30,7 @@ import BajrangBaanChaptersScreen from '@/screens/BajrangBaanChaptersScreen';
 import BajrangBaanReaderScreen from '@/screens/BajrangBaanReaderScreen';
 import KrishnaStotramChaptersScreen from '@/screens/KrishnaStotramChaptersScreen';
 import KrishnaStotramReaderScreen from '@/screens/KrishnaStotramReaderScreen';
+import VratKathaReaderScreen from '@/screens/VratKathaReaderScreen';
 import RamStutiChaptersScreen from '@/screens/RamStutiChaptersScreen';
 import RamStutiReaderScreen from '@/screens/RamStutiReaderScreen';
 import RamcharitmanasChaptersScreen from '@/screens/RamcharitmanasChaptersScreen';
@@ -173,6 +174,11 @@ export default function HomeStackNavigator() {
         name="JapamCounter"
         component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="VratKathaReader"
+        component={VratKathaReaderScreen}
+        options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen
         name="TheerthMap"

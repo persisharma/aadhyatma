@@ -15,6 +15,7 @@ import {
   usePanchangMonthObservances,
 } from '@/panchang/usePanchang';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
+import { getKathaContent } from '@/panchang/kathaContent';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -153,6 +154,10 @@ export default function PanchangScreen() {
     const entry = library.find((item) => item.id === sectionId);
     const target = entry ? buildEntryStartTarget(entry) : null;
     if (target) rootNav.navigate('HomeTab', target);
+  };
+
+  const openKatha = (kathaId: string) => {
+    rootNav.navigate('HomeTab', { screen: 'VratKathaReader', params: { kathaId } });
   };
 
   return (
@@ -378,6 +383,7 @@ export default function PanchangScreen() {
                   typography={typography}
                   radii={radii}
                   onOpenLink={openLinkedSection}
+                  onOpenKatha={openKatha}
                 />
               ))
             ) : (
@@ -514,17 +520,19 @@ function TimeCell({ icon, label, value, colors }: { icon: string; label: string;
   );
 }
 
-function ObservanceCard({ item, isHindi, colors, typography, radii, onOpenLink }: {
+function ObservanceCard({ item, isHindi, colors, typography, radii, onOpenLink, onOpenKatha }: {
   item: ResolvedObservance;
   isHindi: boolean;
   colors: any;
   typography: any;
   radii: any;
   onOpenLink: (sectionId: string) => void;
+  onOpenKatha: (kathaId: string) => void;
 }) {
   const linkedEntry = item.rule.linkSectionId
     ? library.find((entry) => entry.id === item.rule.linkSectionId)
     : null;
+  const katha = item.rule.kathaId ? getKathaContent(item.rule.kathaId) : null;
 
   return (
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
@@ -544,18 +552,32 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, onOpenLink }
       <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
         {isHindi ? item.rule.shortDescriptionHi : item.rule.shortDescriptionEn}
       </Text>
-      {linkedEntry && (
-        <Pressable
-          onPress={() => onOpenLink(linkedEntry.id)}
-          accessibilityRole="button"
-          accessibilityLabel={`Open ${linkedEntry.nameEn}`}
-          style={({ pressed }) => [styles.linkButton, { borderColor: colors.divider }, pressed && { opacity: 0.7 }]}
-        >
-          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
-            {isHindi ? `पढ़ें: ${linkedEntry.nameHi}` : `Read: ${linkedEntry.nameEn}`}
-          </Text>
-        </Pressable>
-      )}
+      <View style={styles.linkRow}>
+        {katha && item.rule.kathaId && (
+          <Pressable
+            onPress={() => onOpenKatha(item.rule.kathaId as string)}
+            accessibilityRole="button"
+            accessibilityLabel={`Read katha ${katha.titleEn}`}
+            style={({ pressed }) => [styles.kathaButton, { backgroundColor: colors.goldTint, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
+          >
+            <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
+              {isHindi ? 'कथा पढ़ें' : 'Read Katha'}
+            </Text>
+          </Pressable>
+        )}
+        {linkedEntry && (
+          <Pressable
+            onPress={() => onOpenLink(linkedEntry.id)}
+            accessibilityRole="button"
+            accessibilityLabel={`Open ${linkedEntry.nameEn}`}
+            style={({ pressed }) => [styles.linkButton, { borderColor: colors.divider }, pressed && { opacity: 0.7 }]}
+          >
+            <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
+              {isHindi ? `पढ़ें: ${linkedEntry.nameHi}` : `Read: ${linkedEntry.nameEn}`}
+            </Text>
+          </Pressable>
+        )}
+      </View>
     </View>
   );
 }
@@ -616,6 +638,8 @@ const styles = StyleSheet.create({
   observanceTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 },
   categoryPill: { paddingHorizontal: 9, paddingVertical: 4 },
   linkButton: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
+  linkRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
+  kathaButton: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
   upcomingSection: { marginTop: 12 },
   upcomingRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, borderBottomWidth: StyleSheet.hairlineWidth, gap: 6 },
   upcomingDot: { width: 5, height: 5, borderRadius: 2.5 },
