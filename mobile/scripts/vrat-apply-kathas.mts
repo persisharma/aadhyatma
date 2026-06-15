@@ -1,22 +1,25 @@
-// Deterministic assembler for the vrat-katha build loop.
+// Deterministic assembler for the vrat-katha build loop (per-file layout).
 //
-// Reads authored katha JSON files from .context/vrat-content/generated/<id>.json
-// and splices them into src/panchang/kathaContent.ts (replace if the id already
-// exists, else insert at the top of KATHA_CONTENT). For ekadashi/new tasks it
-// also wires src/panchang/festivals.ts (KATHA_CATALOG entry, rule.kathaId,
+// Reads authored katha JSON from .context/vrat-content/generated/<id>.json and
+// writes one TypeScript module per katha to
+// src/panchang/kathaContent/entries/<id>.ts, then regenerates the barrel
+// src/panchang/kathaContent/index.ts. For ekadashi/new tasks it also wires
+// src/panchang/festivals.ts (KATHA_CATALOG entry, rule.kathaId,
 // EKADASHI_KATHA_BY_NAME). All operations are idempotent.
 //
 // Apply-time validation mirrors the gate test, so bad content is rejected
 // (reported, not applied) and the build stays green.
 //
 // Usage (from mobile/):
-//   npx tsx scripts/vrat-apply-kathas.mts --list        # parse + list ids, no writes
-//   npx tsx scripts/vrat-apply-kathas.mts [id ...]      # apply all generated, or only the given ids
+//   npx tsx scripts/vrat-apply-kathas.mts --list        # list entry ids
+//   npx tsx scripts/vrat-apply-kathas.mts --reindex     # just regenerate index.ts
+//   npx tsx scripts/vrat-apply-kathas.mts [id ...]      # apply all generated, or only given ids
 
-import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 
-const KATHA_FILE = 'src/panchang/kathaContent.ts';
 const FEST_FILE = 'src/panchang/festivals.ts';
+const KATHA_DIR = 'src/panchang/kathaContent';
+const ENTRIES_DIR = `${KATHA_DIR}/entries`;
 const ROOT = '../.context/vrat-content';
 const GEN = `${ROOT}/generated`;
 
@@ -27,32 +30,23 @@ const PINNED_IDS: Record<string, string[]> = {
   'pradosha-vrat-katha': ['ravi', 'soma', 'bhauma', 'budha', 'brihaspati', 'shukra', 'shani', 'pradosha-message'],
 };
 
-// ---- string-aware scanner: split top-level entries of an array literal ----
+// ---- string-aware bracket matching (used for festivals KATHA_CATALOG) ----
 function skipToken(src: string, i: number): number {
   const c = src[i];
   if (c === "'" || c === '"' || c === '`') {
     i++;
-    while (i < src.length) {
-      if (src[i] === '\\') { i += 2; continue; }
-      if (src[i] === c) return i + 1;
-      i++;
-    }
+    while (i < src.length) { if (src[i] === '\\') { i += 2; continue; } if (src[i] === c) return i + 1; i++; }
     return i;
   }
   if (c === '/' && src[i + 1] === '/') { const n = src.indexOf('\n', i); return n < 0 ? src.length : n; }
   if (c === '/' && src[i + 1] === '*') { const n = src.indexOf('*/', i); return n < 0 ? src.length : n + 2; }
   return i + 1;
 }
-
-// Find char index just after the `[` that opens `export const <NAME> ... = [`.
 function arrayOpen(src: string, name: string): number {
-  const re = new RegExp(`export const ${name}\\b[^=]*=\\s*\\[`);
-  const m = re.exec(src);
+  const m = new RegExp(`export const ${name}\\b[^=]*=\\s*\\[`).exec(src);
   if (!m) throw new Error(`array ${name} not found`);
   return m.index + m[0].length;
 }
-
-// Given index just inside `[`, return index of the matching top-level `]`.
 function matchArrayClose(src: string, openInside: number): number {
   let depth = 1, i = openInside;
   while (i < src.length) {
@@ -65,36 +59,6 @@ function matchArrayClose(src: string, openInside: number): number {
   throw new Error('unbalanced array');
 }
 
-// Parse top-level `fullContent(...)` / `summaryContent(...)` entries of KATHA_CONTENT.
-function scanEntries(src: string): { id: string; start: number; end: number }[] {
-  const open = arrayOpen(src, 'KATHA_CONTENT');
-  const close = matchArrayClose(src, open);
-  const out: { id: string; start: number; end: number }[] = [];
-  let i = open;
-  while (i < close) {
-    const c = src[i];
-    if (c === ' ' || c === '\n' || c === '\r' || c === '\t' || c === ',') { i++; continue; }
-    if (c === "'" || c === '"' || c === '`' || (c === '/' && (src[i + 1] === '/' || src[i + 1] === '*'))) { i = skipToken(src, i); continue; }
-    const m = /^(fullContent|summaryContent)\s*\(/.exec(src.slice(i, i + 24));
-    if (!m) { i++; continue; }
-    const callStart = i;
-    let j = i + m[0].length - 1; // at '('
-    let depth = 0;
-    while (j < close) {
-      const cc = src[j];
-      if (cc === "'" || cc === '"' || cc === '`' || (cc === '/' && (src[j + 1] === '/' || src[j + 1] === '*'))) { j = skipToken(src, j); continue; }
-      if (cc === '(' || cc === '[' || cc === '{') depth++;
-      else if (cc === ')' || cc === ']' || cc === '}') { depth--; if (depth === 0) { j++; break; } }
-      j++;
-    }
-    const text = src.slice(callStart, j);
-    const idm = /\bid:\s*'((?:[^'\\]|\\.)*)'/.exec(text);
-    out.push({ id: idm ? idm[1] : `?@${callStart}`, start: callStart, end: j });
-    i = j;
-  }
-  return out;
-}
-
 // ---- rendering ----
 const esc = (s: string) => "'" + String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '') + "'";
 const inlineArr = (a: string[]) => '[' + a.map(esc).join(', ') + ']';
@@ -102,27 +66,39 @@ const inlineArr = (a: string[]) => '[' + a.map(esc).join(', ') + ']';
 function renderEntry(k: any): string {
   const L: string[] = [];
   L.push('fullContent({');
-  L.push(`    id: ${esc(k.id)},`);
-  L.push(`    titleHi: ${esc(k.titleHi)},`);
-  L.push(`    titleEn: ${esc(k.titleEn)},`);
-  if (k.sourceUrls && k.sourceUrls.length) L.push(`    sourceUrls: ${inlineArr(k.sourceUrls)},`);
-  L.push('    sections: [');
+  L.push(`  id: ${esc(k.id)},`);
+  L.push(`  titleHi: ${esc(k.titleHi)},`);
+  L.push(`  titleEn: ${esc(k.titleEn)},`);
+  if (k.sourceUrls && k.sourceUrls.length) L.push(`  sourceUrls: ${inlineArr(k.sourceUrls)},`);
+  L.push('  sections: [');
   for (const s of k.sections) {
-    L.push('      {');
-    L.push(`        id: ${esc(s.id)},`);
-    L.push(`        titleHi: ${esc(s.titleHi)},`);
-    L.push(`        titleEn: ${esc(s.titleEn)},`);
-    L.push('        bodyHi: [');
-    for (const p of s.bodyHi) L.push(`          ${esc(p)},`);
-    L.push('        ],');
-    L.push('        bodyEn: [');
-    for (const p of s.bodyEn) L.push(`          ${esc(p)},`);
-    L.push('        ],');
-    L.push('      },');
+    L.push('    {');
+    L.push(`      id: ${esc(s.id)},`);
+    L.push(`      titleHi: ${esc(s.titleHi)},`);
+    L.push(`      titleEn: ${esc(s.titleEn)},`);
+    L.push('      bodyHi: [');
+    for (const p of s.bodyHi) L.push(`        ${esc(p)},`);
+    L.push('      ],');
+    L.push('      bodyEn: [');
+    for (const p of s.bodyEn) L.push(`        ${esc(p)},`);
+    L.push('      ],');
+    L.push('    },');
   }
-  L.push('    ],');
-  L.push('  })');
+  L.push('  ],');
+  L.push('})');
   return L.join('\n');
+}
+
+function entryModule(k: any): string {
+  return `import { fullContent } from '../_helpers';\n\nexport default ${renderEntry(k)};\n`;
+}
+
+function regenIndex(): number {
+  const ids = readdirSync(ENTRIES_DIR).filter((f) => f.endsWith('.ts')).map((f) => f.replace(/\.ts$/, '')).sort();
+  const imports = ids.map((id, i) => `import e${i} from './entries/${id}';`).join('\n');
+  const arr = ids.map((_, i) => `  e${i},`).join('\n');
+  writeFileSync(`${KATHA_DIR}/index.ts`, `import type { KathaContentEntry } from '../types';\n${imports}\n\nexport const KATHA_CONTENT: readonly KathaContentEntry[] = [\n${arr}\n];\n`);
+  return ids.length;
 }
 
 // ---- validation (mirror gate test) ----
@@ -159,7 +135,6 @@ function wireFestivals(spec: any): string[] {
   const notes: string[] = [];
   const w = spec.wire;
   if (!w) return notes;
-  // 1) KATHA_CATALOG entry
   if (w.catalog && !new RegExp(`id: '${spec.targetKathaId}'`).test(src)) {
     const open = arrayOpen(src, 'KATHA_CATALOG');
     const close = matchArrayClose(src, open);
@@ -170,7 +145,6 @@ function wireFestivals(spec: any): string[] {
     src = src.slice(0, close).replace(/\s*$/, '\n') + line + src.slice(close);
     notes.push('catalog+');
   }
-  // 2) rule.kathaId for 'new'
   if (w.setRuleKathaId) {
     const rid = w.setRuleKathaId;
     const lines = src.split('\n');
@@ -184,7 +158,6 @@ function wireFestivals(spec: any): string[] {
     }
     src = lines.join('\n');
   }
-  // 3) EKADASHI_KATHA_BY_NAME
   if (w.ekadashiName && !new RegExp(`'${w.ekadashiName}':`).test(src)) {
     src = src.replace(/(const EKADASHI_KATHA_BY_NAME[^{]*\{[\s\S]*?)(\n\};)/, `$1\n  '${w.ekadashiName}': '${spec.targetKathaId}',$2`);
     notes.push('ekadashi-map+');
@@ -195,11 +168,16 @@ function wireFestivals(spec: any): string[] {
 
 // ---- main ----
 const arg = process.argv.slice(2);
+mkdirSync(ENTRIES_DIR, { recursive: true });
+
 if (arg[0] === '--list') {
-  const src = readFileSync(KATHA_FILE, 'utf8');
-  const e = scanEntries(src);
-  console.log(`KATHA_CONTENT entries: ${e.length}`);
-  console.log(e.map((x) => x.id).join('\n'));
+  const ids = readdirSync(ENTRIES_DIR).filter((f) => f.endsWith('.ts')).map((f) => f.replace(/\.ts$/, '')).sort();
+  console.log(`katha entry files: ${ids.length}`);
+  console.log(ids.join('\n'));
+  process.exit(0);
+}
+if (arg[0] === '--reindex') {
+  console.log(`reindexed: ${regenIndex()} entries`);
   process.exit(0);
 }
 
@@ -208,7 +186,7 @@ const specs: any[] = existsSync(`${ROOT}/remaining.json`) ? JSON.parse(readFileS
 const specById = new Map(specs.map((s) => [s.targetKathaId, s]));
 
 const files = existsSync(GEN) ? readdirSync(GEN).filter((f) => f.endsWith('.json')) : [];
-let applied = 0; const skipped: string[] = []; const failed: Record<string, string[]> = {};
+let applied = 0; const failed: Record<string, string[]> = {};
 
 for (const f of files) {
   const id = f.replace(/\.json$/, '');
@@ -219,29 +197,18 @@ for (const f of files) {
   const errs = validate(k);
   if (errs.length) { failed[id] = errs; continue; }
 
-  // splice into kathaContent.ts
-  let src = readFileSync(KATHA_FILE, 'utf8');
-  const entries = scanEntries(src);
-  const existing = entries.find((e) => e.id === k.id);
-  const rendered = renderEntry(k);
-  if (existing) {
-    src = src.slice(0, existing.start) + rendered + src.slice(existing.end);
-  } else {
-    const open = arrayOpen(src, 'KATHA_CONTENT');
-    const nl = src.indexOf('\n', open) + 1;
-    src = src.slice(0, nl) + '  ' + rendered + ',\n' + src.slice(nl);
-  }
-  writeFileSync(KATHA_FILE, src);
-
-  const spec = specById.get(id);
-  const notes = spec ? wireFestivals(spec) : [];
+  const isNew = !existsSync(`${ENTRIES_DIR}/${id}.ts`);
+  writeFileSync(`${ENTRIES_DIR}/${id}.ts`, entryModule(k));
+  const notes = specById.get(id) ? wireFestivals(specById.get(id)) : [];
   applied++;
-  console.log(`applied ${id}${existing ? ' (replace)' : ' (insert)'}${notes.length ? ' [' + notes.join(',') + ']' : ''}`);
+  console.log(`applied ${id}${isNew ? ' (new)' : ' (replace)'}${notes.length ? ' [' + notes.join(',') + ']' : ''}`);
 }
+
+const count = regenIndex();
 
 if (Object.keys(failed).length) {
   console.log('--- FAILED (not applied) ---');
   for (const [id, errs] of Object.entries(failed)) console.log(`  ${id}: ${errs.join('; ')}`);
 }
-console.log(`\nsummary: applied=${applied} failed=${Object.keys(failed).length} scanned=${files.length}`);
+console.log(`\nsummary: applied=${applied} failed=${Object.keys(failed).length} index=${count}`);
 if (Object.keys(failed).length) process.exit(1);
