@@ -9,6 +9,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import type { TimeOfDay } from '@/notifications/pure';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
@@ -28,6 +29,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { bookmarks } = useBookmarks();
   const { lang: defaultLang, setLang: setDefaultLang } = useGitaLanguage();
+  const { location: panchangLocation } = usePanchangLocation();
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
@@ -312,8 +314,8 @@ export default function MoreScreen({ navigation }: Props) {
             </View>
             <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
               {defaultLang === 'hi'
-                ? 'पंचांग · उज्जैन, भारत · पूर्णिमांत/अमान्त चयन\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है।'
-                : 'Panchang · Ujjain, India · Purnimant/Amanta selectable\nTithi follows Surya Siddhanta with modern corrections. Values may vary by minutes for other locations.'}
+                ? `पंचांग · ${panchangLocation.labelHi}, भारत · पूर्णिमांत/अमान्त चयन\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है। स्थान पंचांग टैब से बदलें।`
+                : `Panchang · ${panchangLocation.labelEn}, India · Purnimant/Amanta selectable\nTithi follows Surya Siddhanta with modern corrections. Change the location from the Panchang tab.`}
             </Text>
           </View>
 

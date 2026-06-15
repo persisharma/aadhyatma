@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vedansh · Location-Aware Panchang — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Noto+Serif+Devanagari:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --parchment: #F3E7C9;
+    --parchmentSoft: #F8EFD6;
+    --parchmentHighlight: #F6ECD0;
+    --parchmentGradientEnd: #F1E3BF;
+    --ink: #1A0E03;
+    --inkSoft: #5A3A1E;
+    --inkMuted: #8A6A47;
+    --saffron: #B8621B;
+    --saffronDeep: #8A3E0B;
+    --gold: #A67C34;
+    --divider: rgba(138, 62, 11, 0.18);
+    --saffronTint: rgba(184, 98, 27, 0.12);
+    --goldTint: rgba(166, 124, 52, 0.14);
+    --onPrimary: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #2a2118;
+    color: #e8dcc4;
+    padding: 32px 20px 80px;
+    line-height: 1.5;
+  }
+  .page-head { max-width: 1180px; margin: 0 auto 28px; }
+  .page-head h1 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 30px; color: #f3e7c9; }
+  .page-head p { font-size: 14px; color: #b9a988; margin-top: 6px; max-width: 760px; }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 16px; font-size: 12.5px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .dot { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+  .dot.loc { background: #4Fa3c4; }
+  .dot.eng { background: #c4824f; }
+  .dot.cache { background: #9c7fc4; }
+
+  .stage {
+    display: flex; gap: 30px; justify-content: center; align-items: flex-start;
+    flex-wrap: wrap; max-width: 1180px; margin: 0 auto;
+  }
+  .col { width: 340px; }
+  .step-label {
+    text-align: center; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #b9a988; margin-bottom: 12px; font-weight: 600;
+  }
+  .step-label b { color: var(--saffron); }
+  .arrow {
+    align-self: center; font-size: 30px; color: #6d5c44; margin-top: 280px;
+  }
+
+  /* ---- phone frame ---- */
+  .phone {
+    width: 340px; border-radius: 36px; padding: 12px;
+    background: #0d0a06; box-shadow: 0 18px 50px rgba(0,0,0,.5);
+    position: relative;
+  }
+  .screen {
+    border-radius: 26px; overflow: hidden; height: 700px; position: relative;
+    background: linear-gradient(160deg, var(--parchmentHighlight), var(--parchmentGradientEnd));
+    display: flex; flex-direction: column;
+  }
+  .notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 22px; background: #0d0a06; border-radius: 0 0 14px 14px; z-index: 30; }
+  .scroll { flex: 1; overflow: hidden; padding: 30px 22px 16px; }
+
+  /* ---- system header ---- */
+  .sys-header { display: flex; flex-direction: column; align-items: center; }
+  .toggle {
+    display: flex; background: var(--parchmentSoft); border: 1px solid var(--divider);
+    border-radius: 999px; padding: 3px;
+  }
+  .toggle .opt {
+    min-width: 96px; min-height: 34px; display: flex; align-items: center; justify-content: center;
+    border-radius: 999px; font-family: 'Noto Serif Devanagari', serif; font-size: 12px; color: var(--inkMuted);
+  }
+  .toggle .opt.sel { background: var(--saffronTint); color: var(--saffronDeep); }
+
+  .ref-line {
+    margin-top: 6px; font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 11px; color: var(--inkMuted); text-align: center;
+    padding: 4px 8px; border-radius: 8px;
+  }
+  .ref-line .change { font-family: 'Inter', sans-serif; font-style: normal; font-weight: 600; font-size: 9px; color: var(--saffronDeep); }
+  .ref-line.tappable { cursor: pointer; outline: 2px dashed #4Fa3c4; outline-offset: 2px; background: rgba(79,163,196,.08); }
+
+  /* ---- calendar card ---- */
+  .card { background: var(--parchmentSoft); border: 1px solid var(--divider); border-radius: 16px; padding: 10px; margin-top: 12px; }
+  .date-nav { display: flex; align-items: center; gap: 8px; }
+  .nav-btn { width: 34px; height: 34px; border: 1px solid var(--divider); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--inkSoft); font-size: 17px; }
+  .date-mid { flex: 1; text-align: center; }
+  .date-mid .d { font-family: 'Noto Serif Devanagari', serif; font-size: 15px; color: var(--ink); }
+  .date-mid .m { font-family: 'Inter'; font-weight: 600; font-size: 10px; color: var(--saffronDeep); margin-top: 2px; }
+
+  /* ---- date header ---- */
+  .date-header { margin-top: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--divider); }
+  .date-header .vara { font-family: 'Noto Serif Devanagari', serif; font-size: 15px; color: var(--saffronDeep); }
+  .date-header .vara span { font-family: 'Cormorant Garamond', serif; font-size: 12px; color: var(--inkSoft); }
+  .date-header .sub { font-family: 'Cormorant Garamond', serif; font-size: 11px; color: var(--inkMuted); margin-top: 2px; }
+
+  /* ---- anga grid ---- */
+  .anga-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .anga { flex: 1 1 46%; background: var(--parchmentSoft); border: 1px solid var(--divider); border-radius: 12px; padding: 10px 12px; }
+  .anga .lbl { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 9px; color: var(--saffronDeep); letter-spacing: 1px; text-transform: uppercase; }
+  .anga .nm { font-family: 'Noto Serif Devanagari', serif; font-size: 17px; color: var(--ink); margin-top: 3px; }
+  .anga .en { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 10px; color: var(--inkMuted); }
+
+  /* ---- times card ---- */
+  .times { background: var(--parchmentSoft); border: 1px solid var(--divider); border-radius: 16px; padding: 12px 10px; margin-top: 10px; }
+  .times.eng-hl { outline: 2px dashed #c4824f; outline-offset: 2px; }
+  .times-row { display: flex; justify-content: space-around; }
+  .times-row + .times-row { margin-top: 10px; }
+  .time-cell { display: flex; align-items: center; width: 45%; gap: 6px; }
+  .time-cell .ic { font-size: 14px; }
+  .time-cell .tl { font-family: 'Cormorant Garamond', serif; font-size: 10px; color: var(--inkMuted); }
+  .time-cell .tv { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 13px; color: var(--ink); }
+
+  /* ---- observances ---- */
+  .obs { margin-top: 14px; }
+  .obs h3 { font-family: 'Noto Serif Devanagari', serif; font-size: 14px; color: var(--ink); margin-bottom: 10px; }
+  .obs .empty { font-family: 'Cormorant Garamond', serif; font-size: 12px; color: var(--inkMuted); }
+  .updating { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .updating .sp { width: 14px; height: 14px; border: 2px solid var(--saffronTint); border-top-color: var(--saffron); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  .updating .tx { font-family: 'Cormorant Garamond', serif; font-size: 11px; color: var(--inkMuted); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .obs-card { background: var(--parchmentSoft); border: 1px solid var(--divider); border-radius: 12px; padding: 10px; }
+  .obs-card .pill { display: inline-block; background: var(--goldTint); color: var(--saffronDeep); border-radius: 999px; font-size: 10px; font-weight: 600; padding: 3px 9px; }
+  .obs-card .nm { font-family: 'Noto Serif Devanagari', serif; font-size: 15px; color: var(--ink); margin-top: 6px; }
+
+  /* ---- tab bar ---- */
+  .tabbar { display: flex; border-top: 1px solid var(--divider); background: var(--parchmentSoft); }
+  .tab { flex: 1; text-align: center; padding: 9px 0 14px; font-size: 10px; color: var(--inkMuted); }
+  .tab.active { color: var(--saffron); }
+  .tab .ic { font-size: 18px; display: block; }
+
+  /* ---- modal ---- */
+  .modal-overlay { position: absolute; inset: 0; background: rgba(47,30,16,.35); display: flex; align-items: flex-end; z-index: 20; }
+  .modal { width: 100%; height: 78%; background: var(--parchment); border-radius: 22px 22px 26px 26px; display: flex; flex-direction: column; }
+  .modal-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 22px; border-bottom: 1px solid var(--divider); }
+  .modal-head h2 { font-family: 'Noto Serif Devanagari', serif; font-size: 18px; color: var(--ink); }
+  .modal-head .x { color: var(--saffron); font-size: 20px; font-weight: 600; }
+  .modal-top { padding: 14px 22px 0; display: flex; flex-direction: column; gap: 10px; }
+  .gps-row { display: flex; align-items: center; gap: 8px; border: 1px solid var(--divider); background: var(--parchmentSoft); border-radius: 12px; padding: 0 14px; min-height: 48px; }
+  .gps-row.hl { outline: 2px dashed #4Fa3c4; outline-offset: 2px; }
+  .gps-row .pin { font-size: 14px; }
+  .gps-row .tx { font-family: 'Noto Serif Devanagari', serif; font-size: 15px; color: var(--saffronDeep); }
+  .search { border: 1px solid var(--divider); background: var(--parchmentSoft); border-radius: 12px; min-height: 44px; padding: 0 14px; display: flex; align-items: center; font-size: 14px; color: var(--inkMuted); }
+  .hint { font-family: 'Cormorant Garamond', serif; font-size: 11px; color: var(--inkMuted); }
+  .city-list { flex: 1; overflow-y: auto; padding: 8px 22px 18px; }
+  .city { display: flex; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--divider); }
+  .city .nm { flex: 1; }
+  .city .nm .h { font-family: 'Noto Serif Devanagari', serif; font-size: 15px; color: var(--ink); }
+  .city .nm .e { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 11px; color: var(--inkMuted); }
+  .city .ck { color: var(--saffronDeep); font-size: 15px; }
+  .city.sel { background: rgba(184,98,27,.05); margin: 0 -10px; padding-left: 10px; padding-right: 10px; border-radius: 8px; }
+
+  /* ---- annotation callouts ---- */
+  .annot {
+    margin-top: 16px; border-radius: 12px; padding: 13px 15px; font-size: 12px;
+    background: #1f1810; border: 1px solid #3a2f20;
+  }
+  .annot h4 { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 7px; }
+  .annot.loc h4 { color: #6fbfe0; }
+  .annot.eng h4 { color: #e0a16f; }
+  .annot.cache h4 { color: #b89fe0; }
+  .annot p { color: #c9bba0; margin-bottom: 5px; }
+  .annot code { font-family: ui-monospace, monospace; font-size: 11px; color: #f0e4c8; background: #2c2418; padding: 1px 5px; border-radius: 4px; }
+  .annot .file { display: block; margin-top: 4px; color: #8fa9b8; font-family: ui-monospace, monospace; font-size: 10.5px; }
+</style>
+</head>
+<body>
+  <div class="page-head">
+    <h1>Vedansh — Location-Aware Panchang</h1>
+    <p>A faithful HTML mock of the real app screens (same colors, fonts &amp; layout as <code style="background:#2c2418;padding:1px 5px;border-radius:4px;color:#f0e4c8">mobile/src/theme</code> and <code style="background:#2c2418;padding:1px 5px;border-radius:4px;color:#f0e4c8">PanchangScreen.tsx</code>). Dashed outlines mark every place location enters the UI, and the callouts under each frame name the exact source. Panchang values are real engine output for <b style="color:#f3e7c9">Mon 15 Jun 2026</b>.</p>
+    <div class="legend">
+      <span><i class="dot loc"></i> Location entry point (UI)</span>
+      <span><i class="dot eng"></i> Engine output that shifts with location</span>
+      <span><i class="dot cache"></i> Festival cache (lazy, per-city)</span>
+    </div>
+  </div>
+
+  <div class="stage">
+
+    <!-- ============ FRAME 1: DEFAULT (UJJAIN) ============ -->
+    <div class="col">
+      <div class="step-label"><b>1.</b> Default &middot; Ujjain</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="scroll">
+            <div class="sys-header">
+              <div class="toggle">
+                <div class="opt sel">पूर्णिमांत</div>
+                <div class="opt">अमान्त</div>
+              </div>
+              <div class="ref-line tappable">
+                संदर्भ: उज्जैन, भारत · पूर्णिमांत&nbsp;&nbsp;<span class="change">बदलें</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="date-nav">
+                <div class="nav-btn">‹</div>
+                <div class="date-mid">
+                  <div class="d">15 जून 2026</div>
+                  <div class="m">माह देखें</div>
+                </div>
+                <div class="nav-btn">›</div>
+              </div>
+            </div>
+
+            <div class="date-header">
+              <div class="vara">सोमवार <span>&nbsp;&nbsp;15 जून 2026 · विक्रम संवत् 2083</span></div>
+              <div class="sub">ज्येष्ठ · कृष्ण पक्ष</div>
+            </div>
+
+            <div class="anga-grid">
+              <div class="anga"><div class="lbl">तिथि</div><div class="nm">अमावस्या</div><div class="en">Amavasya</div></div>
+              <div class="anga"><div class="lbl">नक्षत्र</div><div class="nm">मृगशिरा</div><div class="en">Mrigashira</div></div>
+              <div class="anga"><div class="lbl">योग</div><div class="nm">शूल</div><div class="en">Shula</div></div>
+              <div class="anga"><div class="lbl">करण</div><div class="nm">नाग</div><div class="en">Naga</div></div>
+            </div>
+
+            <div class="times eng-hl">
+              <div class="times-row">
+                <div class="time-cell"><span class="ic">☀</span><div><div class="tl">सूर्योदय</div><div class="tv">5:40 AM</div></div></div>
+                <div class="time-cell"><span class="ic">☀</span><div><div class="tl">सूर्यास्त</div><div class="tv">7:13 PM</div></div></div>
+              </div>
+              <div class="times-row">
+                <div class="time-cell"><span class="ic">☽</span><div><div class="tl">चंद्रोदय</div><div class="tv">5:26 AM</div></div></div>
+                <div class="time-cell"><span class="ic">☽</span><div><div class="tl">ब्रह्म मुहूर्त</div><div class="tv">4:04–4:52 AM</div></div></div>
+              </div>
+            </div>
+
+            <div class="obs">
+              <h3>व्रत और पर्व</h3>
+              <div class="obs-card">
+                <span class="pill">व्रत</span>
+                <div class="nm">वट सावित्री व्रत</div>
+              </div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <div class="tab"><span class="ic">🏠</span>मुख</div>
+            <div class="tab"><span class="ic">🪔</span>भक्ति</div>
+            <div class="tab active"><span class="ic">☽</span>पंचांग</div>
+            <div class="tab"><span class="ic">⋯</span>और</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="annot loc">
+        <h4>Where the location label comes from</h4>
+        <p>The reference line reads <code>location.labelHi</code> from the context — default is <code>DEFAULT_LOCATION</code> (Ujjain, <code>source: 'default'</code>). Tapping it opens the picker.</p>
+        <span class="file">PanchangScreen.tsx → usePanchangLocation()</span>
+        <span class="file">contexts/PanchangLocationContext.tsx</span>
+        <span class="file">panchang/locations.ts → DEFAULT_LOCATION</span>
+      </div>
+      <div class="annot eng">
+        <h4>What the location feeds (orange box)</h4>
+        <p>Sunrise/Sunset/Moonrise/Brahma&nbsp;Muhurta are solved for the location's lat/lng/elevation via an <code>Observer</code>.</p>
+        <span class="file">panchang/engine.ts → observerFor(location)</span>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <!-- ============ FRAME 2: PICKER MODAL ============ -->
+    <div class="col">
+      <div class="step-label"><b>2.</b> Tap reference → Picker</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <!-- dimmed screen behind -->
+          <div class="scroll" style="filter: blur(1px) brightness(.96);">
+            <div class="sys-header">
+              <div class="toggle"><div class="opt sel">पूर्णिमांत</div><div class="opt">अमान्त</div></div>
+              <div class="ref-line">संदर्भ: उज्जैन, भारत · पूर्णिमांत&nbsp;&nbsp;<span class="change">बदलें</span></div>
+            </div>
+            <div class="card"><div class="date-nav"><div class="nav-btn">‹</div><div class="date-mid"><div class="d">15 जून 2026</div></div><div class="nav-btn">›</div></div></div>
+          </div>
+
+          <div class="modal-overlay">
+            <div class="modal">
+              <div class="modal-head">
+                <h2>स्थान चुनें</h2>
+                <span class="x">✕</span>
+              </div>
+              <div class="modal-top">
+                <div class="gps-row hl">
+                  <span class="pin">📍</span>
+                  <span class="tx">मेरा स्थान उपयोग करें</span>
+                </div>
+                <div class="search">शहर खोजें…</div>
+                <div class="hint">भारत के प्रमुख शहर — सूर्योदय व तिथि की गणना इसी स्थान के लिए होगी।</div>
+              </div>
+              <div class="city-list">
+                <div class="city sel"><div class="nm"><div class="h">उज्जैन</div><div class="e">Ujjain</div></div><span class="ck">✓</span></div>
+                <div class="city"><div class="nm"><div class="h">आगरा</div><div class="e">Agra</div></div></div>
+                <div class="city"><div class="nm"><div class="h">दिल्ली</div><div class="e">Delhi</div></div></div>
+                <div class="city"><div class="nm"><div class="h">मुंबई</div><div class="e">Mumbai</div></div></div>
+                <div class="city"><div class="nm"><div class="h">वाराणसी</div><div class="e">Varanasi</div></div></div>
+                <div class="city"><div class="nm"><div class="h">हरिद्वार</div><div class="e">Haridwar</div></div></div>
+                <div class="city"><div class="nm"><div class="h">कोलकाता</div><div class="e">Kolkata</div></div></div>
+                <div class="city"><div class="nm"><div class="h">चेन्नई</div><div class="e">Chennai</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="annot loc">
+        <h4>The two ways location is set</h4>
+        <p><b style="color:#9fd4ea">📍 GPS</b> → <code>requestDeviceLocation()</code>: permission prompt, then the fix is snapped to the nearest of ~50 bundled cities (<code>source: 'gps'</code>). Denied/timeout keeps the current city and shows a hint.</p>
+        <p><b style="color:#9fd4ea">Tap a city</b> → <code>selectCity(id)</code> (<code>source: 'city'</code>).</p>
+        <p>Either way: state updates, persists to AsyncStorage, and kicks off the festival warm-up.</p>
+        <span class="file">components/LocationPickerModal.tsx</span>
+        <span class="file">contexts/PanchangLocationContext.tsx → requestDeviceLocation / selectCity</span>
+        <span class="file">panchang/locations.ts → CITIES, nearestCity()</span>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <!-- ============ FRAME 3: AFTER SELECTION (DELHI) ============ -->
+    <div class="col">
+      <div class="step-label"><b>3.</b> Picked Delhi → recomputed</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="scroll">
+            <div class="sys-header">
+              <div class="toggle"><div class="opt sel">पूर्णिमांत</div><div class="opt">अमान्त</div></div>
+              <div class="ref-line tappable">
+                संदर्भ: दिल्ली, भारत · पूर्णिमांत&nbsp;&nbsp;<span class="change">बदलें</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="date-nav">
+                <div class="nav-btn">‹</div>
+                <div class="date-mid"><div class="d">15 जून 2026</div><div class="m">माह देखें</div></div>
+                <div class="nav-btn">›</div>
+              </div>
+            </div>
+
+            <div class="date-header">
+              <div class="vara">सोमवार <span>&nbsp;&nbsp;15 जून 2026 · विक्रम संवत् 2083</span></div>
+              <div class="sub">ज्येष्ठ · कृष्ण पक्ष</div>
+            </div>
+
+            <div class="anga-grid">
+              <div class="anga"><div class="lbl">तिथि</div><div class="nm">अमावस्या</div><div class="en">Amavasya</div></div>
+              <div class="anga"><div class="lbl">नक्षत्र</div><div class="nm">मृगशिरा</div><div class="en">Mrigashira</div></div>
+              <div class="anga"><div class="lbl">योग</div><div class="nm">शूल</div><div class="en">Shula</div></div>
+              <div class="anga"><div class="lbl">करण</div><div class="nm">नाग</div><div class="en">Naga</div></div>
+            </div>
+
+            <div class="times eng-hl">
+              <div class="times-row">
+                <div class="time-cell"><span class="ic">☀</span><div><div class="tl">सूर्योदय</div><div class="tv" style="color:var(--saffronDeep)">5:23 AM</div></div></div>
+                <div class="time-cell"><span class="ic">☀</span><div><div class="tl">सूर्यास्त</div><div class="tv" style="color:var(--saffronDeep)">7:20 PM</div></div></div>
+              </div>
+              <div class="times-row">
+                <div class="time-cell"><span class="ic">☽</span><div><div class="tl">चंद्रोदय</div><div class="tv" style="color:var(--saffronDeep)">5:05 AM</div></div></div>
+                <div class="time-cell"><span class="ic">☽</span><div><div class="tl">ब्रह्म मुहूर्त</div><div class="tv" style="color:var(--saffronDeep)">3:47–4:35 AM</div></div></div>
+              </div>
+            </div>
+
+            <div class="obs">
+              <h3>व्रत और पर्व</h3>
+              <div class="updating">
+                <span class="sp"></span>
+                <span class="tx">इस स्थान के लिए तिथियाँ अपडेट हो रही हैं…</span>
+              </div>
+              <div class="obs-card">
+                <span class="pill">व्रत</span>
+                <div class="nm">वट सावित्री व्रत</div>
+              </div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <div class="tab"><span class="ic">🏠</span>मुख</div>
+            <div class="tab"><span class="ic">🪔</span>भक्ति</div>
+            <div class="tab active"><span class="ic">☽</span>पंचांग</div>
+            <div class="tab"><span class="ic">⋯</span>और</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="annot eng">
+        <h4>Times changed instantly</h4>
+        <p>Sunrise <b style="color:#e0a16f">5:40 → 5:23 AM</b>, sunset <b style="color:#e0a16f">7:13 → 7:20 PM</b> — Delhi is east of Ujjain. Tithi/nakshatra are the same here (the boundary didn't fall between the two sunrises). Recomputed on the spot, off the render path.</p>
+        <span class="file">panchang/usePanchang.ts → usePanchangForSelection</span>
+      </div>
+      <div class="annot cache">
+        <h4>Festivals: shown approximate, then upgraded</h4>
+        <p>The spinner shows while the Ujjain dates stand in (<code>observancesApproximate</code>). A chunked background scan computes Delhi's dates, persists them per-city, and the list silently upgrades — next launch it's an instant cache hit.</p>
+        <span class="file">panchang/festivalEngine.ts → resolveObservancesForYearLiveChunked</span>
+        <span class="file">panchang/observanceCache.ts → warmObservanceCache (AsyncStorage)</span>
+        <span class="file">panchang/observanceStore.ts → subscribe/notify</span>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
