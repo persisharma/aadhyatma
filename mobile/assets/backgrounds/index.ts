@@ -10,7 +10,8 @@ export type BackgroundImageKey =
   | 'deity_ganesha_modak'
   | 'source_vishnu_narayana'
   | 'source_gayatri_savitri_sun'
-  | 'deity_saraswati_veena';
+  | 'deity_saraswati_veena'
+  | 'panchang_celestial_almanac';
 
 export const backgroundImages: Record<BackgroundImageKey, number> = {
   category_granth_open_scripture: require('./category-granth-open-scripture.png'),
@@ -25,4 +26,5 @@ export const backgroundImages: Record<BackgroundImageKey, number> = {
   source_vishnu_narayana: require('./source-vishnu-narayana.png'),
   source_gayatri_savitri_sun: require('./source-gayatri-savitri-sun.png'),
   deity_saraswati_veena: require('./deity-saraswati-veena.png'),
+  panchang_celestial_almanac: require('./panchang-celestial-almanac.png'),
 };

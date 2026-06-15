@@ -2,8 +2,9 @@ import React, { useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { backgroundImages } from '@assets/backgrounds';
+import BackgroundLayer from '@/components/BackgroundLayer';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { library } from '@/data/texts';
@@ -161,10 +162,7 @@ export default function PanchangScreen() {
 
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ScrollView
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
