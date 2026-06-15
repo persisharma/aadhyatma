@@ -11,6 +11,7 @@ import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
+import { endsAfterDay } from '@/panchang/endTimeLabel';
 import {
   usePanchangCalendarSystem,
   usePanchangForSelection,
@@ -358,10 +359,10 @@ export default function PanchangScreen() {
           </View>
 
           <View style={styles.angaGrid}>
-            <PanchangTile label={isHindi ? 'तिथि' : 'Tithi'} element={p.tithi} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
-            <PanchangTile label={isHindi ? 'नक्षत्र' : 'Nakshatra'} element={p.nakshatra} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
-            <PanchangTile label={isHindi ? 'योग' : 'Yoga'} element={p.yoga} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
-            <PanchangTile label={isHindi ? 'करण' : 'Karana'} element={p.karana} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
+            <PanchangTile label={isHindi ? 'तिथि' : 'Tithi'} element={p.tithi} baseDate={p.date} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
+            <PanchangTile label={isHindi ? 'नक्षत्र' : 'Nakshatra'} element={p.nakshatra} baseDate={p.date} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
+            <PanchangTile label={isHindi ? 'योग' : 'Yoga'} element={p.yoga} baseDate={p.date} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
+            <PanchangTile label={isHindi ? 'करण' : 'Karana'} element={p.karana} baseDate={p.date} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
           </View>
 
           <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}>
@@ -494,14 +495,18 @@ function CalendarSystemToggle({ value, onChange, isHindi, colors, radii, typogra
   );
 }
 
-function PanchangTile({ label, element, isHindi, colors, typography, radii }: {
+function PanchangTile({ label, element, baseDate, isHindi, colors, typography, radii }: {
   label: string;
   element: PanchangElement;
+  baseDate: Date;
   isHindi: boolean;
   colors: any;
   typography: any;
   radii: any;
 }) {
+  // When the anga is "vriddhi" (spans two sunrises), its end time lands on the next
+  // day; flag that so "till 7:38 AM" isn't misread as today. See endTimeLabel.ts.
+  const endsNextDay = endsAfterDay(element.endTime, baseDate);
   return (
     <View style={[styles.angaTile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
       {/* The type label leads in the active language (TITHI / तिथि …) — same
@@ -524,6 +529,7 @@ function PanchangTile({ label, element, isHindi, colors, typography, radii }: {
       {element.endTime && (
         <Text style={{ fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 11, color: colors.inkSoft, marginTop: 5 }}>
           {isHindi ? 'तक ' : 'till '}{formatTime12(element.endTime)}
+          {endsNextDay ? (isHindi ? ' (अगले दिन)' : ' (next day)') : ''}
         </Text>
       )}
     </View>
