@@ -79,6 +79,506 @@ function summaryContent(draft: SummaryKathaDraft): KathaContentEntry {
 
 export const KATHA_CONTENT: readonly KathaContentEntry[] = [
   fullContent({
+    id: 'rama-ekadashi-katha',
+    titleHi: 'रमा एकादशी व्रत कथा',
+    titleEn: 'Rama Ekadashi Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/ekadashi/rama-ekadashi-vrat-katha.html'],
+    sections: [
+      {
+        id: 'muchukunda-and-chandrabhaga',
+        titleHi: 'राजा मुचुकुन्द और चन्द्रभागा',
+        titleEn: 'King Muchukunda and Chandrabhaga',
+        bodyHi: [
+          'पुराने समय में मुचुकुन्द नाम के एक प्रतापी राजा राज्य करते थे, जिनकी मित्रता स्वयं देवराज इन्द्र, यम, वरुण और कुबेर जैसे लोकपालों से थी। वे सत्यवादी, विष्णुभक्त और धर्म पर अटल रहने वाले शासक थे, और उनके राज्य में किसी ने कभी एकादशी के पवित्र नियम का उल्लंघन नहीं किया। राजा ने अपनी प्रजा को आदेश दे रखा था कि उनके राज्य में सब लोग, स्त्री और पुरुष, एकादशी का व्रत श्रद्धापूर्वक रखें।',
+          'उसी राजा की एक पुत्री थी, जिसका नाम चन्द्रभागा था — वही नाम जो आगे चलकर एक पवित्र नदी को मिला। वह बचपन से ही पिता के समान विष्णु में अनुरक्त थी और एकादशी के व्रत को प्राणों से अधिक प्रिय मानती थी। जब वह विवाह योग्य हुई, तो राजा ने उसका विवाह राजा चन्द्रसेन के पुत्र शोभन के साथ कर दिया।',
+          'शोभन गुणवान, सुन्दर और सद्वृत्ति वाला राजकुमार था, परन्तु उसका शरीर अत्यन्त दुर्बल था। थोड़ी-सी भूख भी वह सह नहीं पाता था, और एक दिन का उपवास भी उसके लिए कठिन परीक्षा बन जाता था। विवाह के बाद जब वह कुछ समय अपने श्वशुर मुचुकुन्द के नगर में रहने आया, तब उसके मन में एक भारी चिन्ता बैठ गई।',
+        ],
+        bodyEn: [
+          'In ancient times there reigned a mighty king named Muchukunda, who counted among his friends the very guardians of the worlds — Indra the lord of the gods, along with Yama, Varuna and Kubera. He was truthful, a devotee of Vishnu, and unshakeable in dharma, and in his realm no one ever broke the sacred discipline of Ekadashi. The king had decreed that throughout his kingdom all his people, women and men alike, should keep the Ekadashi fast with devotion.',
+          'That king had a daughter named Chandrabhaga — the very name that a holy river would later bear. From childhood she was, like her father, devoted to Vishnu, and she held the vow of Ekadashi dearer than her own life. When she came of age, the king gave her in marriage to Shobhana, the son of King Chandrasena.',
+          'Shobhana was a virtuous, handsome prince of gentle nature, yet his body was exceedingly frail. He could not endure even a little hunger, and a single day\'s fasting became a severe trial for him. After the wedding, when he came to stay for a time in the city of his father-in-law Muchukunda, a heavy worry settled into his heart.',
+        ],
+      },
+      {
+        id: 'the-coming-of-rama-ekadashi',
+        titleHi: 'रमा एकादशी का आगमन',
+        titleEn: 'The Coming of Rama Ekadashi',
+        bodyHi: [
+          'कार्तिक मास के कृष्ण पक्ष में जब रमा एकादशी निकट आई, तो सारे नगर में घोषणा करा दी गई कि इस दिन कोई भी अन्न ग्रहण न करे। यह सुनकर शोभन का हृदय काँप उठा, क्योंकि वह जानता था कि एक दिन की भूख भी उसके दुर्बल शरीर के लिए असह्य है। वह चन्द्रभागा के पास गया और बोला, ‘प्रिये, अब मैं क्या करूँ? यदि मैं भोजन करता हूँ तो तुम्हारे पिता की मर्यादा टूटेगी, और यदि उपवास करता हूँ तो मेरे प्राण ही संकट में पड़ जाएँगे। मुझे ऐसा उपाय बताओ जिससे दोनों की रक्षा हो।’',
+          'चन्द्रभागा ने स्नेह और दृढ़ता से उत्तर दिया, ‘हे स्वामी! मेरे पिता के राज्य में तो हाथी, घोड़े और पशु तक इस दिन अन्न नहीं खाते — फिर मनुष्य कैसे खाए? यदि आपको अपने श्वशुर के घर में बैठकर भोजन करना ही है, तो उससे अच्छा है कि आप अपने नगर लौट जाएँ। निर्णय आपके हाथ में है, परन्तु इस पवित्र व्रत को त्यागना उचित नहीं।’',
+          'पत्नी के वचन सुनकर शोभन ने मन में संकल्प कर लिया कि चाहे जो हो, वह रमा एकादशी का व्रत अवश्य रखेगा। उसने कहा, ‘तुम ठीक कहती हो। मैं उपवास करूँगा और जो विधाता के मन में होगा, वही होगा।’ इस प्रकार उस दुर्बल राजकुमार ने भगवान विष्णु का स्मरण करते हुए दृढ़ता से व्रत आरम्भ कर दिया।',
+        ],
+        bodyEn: [
+          'When Rama Ekadashi, falling in the dark fortnight of the month of Kartika, drew near, a proclamation went out through the whole city that on this day no one was to partake of any grain. Hearing this, Shobhana\'s heart trembled, for he knew that even one day\'s hunger was unbearable for his weak frame. He went to Chandrabhaga and said, ‘Beloved, what am I to do now? If I eat, the honour of your father will be broken; and if I fast, my very life will be in peril. Show me some path by which both may be preserved.’',
+          'With affection and firmness Chandrabhaga answered, ‘O my lord, in my father\'s realm even the elephants, the horses and the beasts take no grain on this day — how then shall a man eat? If you must sit in your father-in-law\'s house and take food, it would be better that you return to your own city. The choice is yours, yet it is not right to abandon this sacred vow.’',
+          'Hearing his wife\'s words, Shobhana resolved within himself that, come what may, he would surely keep the vow of Rama Ekadashi. He said, ‘You speak truly. I shall fast, and whatever lies in the will of the Creator, that alone shall come to pass.’ And so, remembering Lord Vishnu, that frail prince began the vow with firm resolve.',
+        ],
+      },
+      {
+        id: 'the-fast-and-the-passing',
+        titleHi: 'व्रत और शोभन का देहान्त',
+        titleEn: 'The Fast and Shobhana\'s Passing',
+        bodyHi: [
+          'सूर्य के उदय होने से लेकर अस्त होने तक, और फिर रात्रि के जागरण में भी, शोभन ने अन्न और जल का स्पर्श नहीं किया। उसने भगवान विष्णु का नाम जपते हुए सम्पूर्ण दिन और रात बिताई, परन्तु उसका कोमल शरीर इस कठोर तप को सहन न कर सका। ज्यों-ज्यों रात गहराती गई, उसकी देह क्षीण होती गई।',
+          'द्वादशी का सूर्य उदय हुआ, पर शोभन उसे देखने के लिए जीवित न रहा। व्रत के पारण से पहले ही, भगवान का स्मरण करते-करते उसके प्राण देह छोड़ गए। चन्द्रभागा शोक में डूब गई, परन्तु उसने धैर्य नहीं खोया — उसने अपने पति का विधिपूर्वक दाह-संस्कार किया और पिता के घर ही रहकर अपने एकादशी व्रत के नियम पर अटल रही।',
+          'किन्तु जिस व्रत ने उसके दुर्बल शरीर से प्राण ले लिए थे, उसी रमा एकादशी के अक्षय पुण्य ने शोभन के लिए एक अद्भुत द्वार खोल दिया। उस एक दिन के निष्ठापूर्ण उपवास का फल इतना महान था कि मृत्यु उसके लिए अन्त नहीं, बल्कि एक दिव्य आरम्भ बन गई।',
+        ],
+        bodyEn: [
+          'From the rising of the sun to its setting, and through the vigil of the night as well, Shobhana touched neither food nor water. He passed the whole day and night chanting the name of Lord Vishnu, yet his tender body could not endure so harsh an austerity. As the night deepened, his frame grew ever weaker.',
+          'The sun of Dvadashi rose, but Shobhana did not live to see it. Even before the breaking of the fast, while still remembering the Lord, the life left his body. Chandrabhaga sank into grief, yet she did not lose her composure — she performed her husband\'s last rites according to custom and, remaining in her father\'s house, held unshaken to her own discipline of the Ekadashi vow.',
+          'But the very fast that had drawn the life from his frail body — that same Rama Ekadashi, by its imperishable merit, opened a wondrous door for Shobhana. So great was the fruit of that one day of faithful fasting that death became for him not an ending, but a divine beginning.',
+        ],
+      },
+      {
+        id: 'the-city-on-mount-mandara',
+        titleHi: 'मन्दराचल पर दिव्य नगरी',
+        titleEn: 'The City on Mount Mandara',
+        bodyHi: [
+          'रमा एकादशी के पुण्य-प्रभाव से शोभन को मन्दराचल पर्वत के शिखर पर एक अलौकिक नगरी प्राप्त हुई। वह नगरी सोने और रत्नों से जगमगाती थी, उसके स्तम्भ मणि-माणिक्य के थे, और उसमें कल्पवृक्षों की छाया तथा अप्सराओं का संगीत भरा था। शोभन वहाँ एक देव-राजकुमार के समान सिंहासन पर विराजमान था, और देवता भी उसके वैभव को देखकर चकित रह जाते थे।',
+          'कुछ समय बाद मुचुकुन्द के नगर का सोमशर्मा नाम का एक ब्राह्मण तीर्थयात्रा करता हुआ मन्दराचल के मार्ग से जा रहा था। वहाँ उसने उस तेजोमय नगरी और उसके स्वामी को देखा, और पहचान लिया कि यह तो राजा मुचुकुन्द का जामाता शोभन है, जिसका देहान्त हो चुका था। आश्चर्य में पड़कर वह शोभन के पास पहुँचा।',
+          'शोभन ने ब्राह्मण को आदर से बिठाया और कहा, ‘हे विप्र! यह सम्पूर्ण वैभव मुझे रमा एकादशी के उस एक व्रत के फल से मिला है, जिसे मैंने श्रद्धा से रखा था। परन्तु एक दुःख है — मैंने वह व्रत बिना दृढ़ श्रद्धा के, केवल विवशता में रखा था, इसलिए यह नगरी अस्थिर है और किसी भी क्षण विलीन हो सकती है। कृपया मेरी पत्नी चन्द्रभागा को यह सब कह सुनाइए।’',
+        ],
+        bodyEn: [
+          'By the meritorious power of Rama Ekadashi, Shobhana obtained an unearthly city upon the summit of Mount Mandara. That city glittered with gold and jewels, its pillars were of gems and rubies, and it was filled with the shade of wish-granting trees and the music of celestial nymphs. There Shobhana sat enthroned like a prince among the gods, and even the deities marvelled to behold his splendour.',
+          'Some time afterward, a brahmin named Somasharma from Muchukunda\'s city, while journeying to the holy places, happened to pass by the path of Mount Mandara. There he beheld that luminous city and its lord, and recognised that this was none other than Shobhana, the son-in-law of King Muchukunda, who had died. Filled with wonder, he approached him.',
+          'Shobhana seated the brahmin with honour and said, ‘O brahmin, all this splendour has come to me from the fruit of that single vow of Rama Ekadashi which I kept with faith. Yet one sorrow remains — I observed that vow without firm devotion, only out of constraint, and so this city is unstable and may dissolve at any moment. I beg you, recount all of this to my wife Chandrabhaga.’',
+        ],
+      },
+      {
+        id: 'chandrabhaga-makes-it-enduring',
+        titleHi: 'चन्द्रभागा से नगरी का स्थायित्व',
+        titleEn: 'Chandrabhaga Makes the City Enduring',
+        bodyHi: [
+          'तीर्थयात्रा से लौटकर सोमशर्मा ने मुचुकुन्द के नगर में जाकर चन्द्रभागा को सारा वृत्तान्त कह सुनाया — मन्दराचल की दिव्य नगरी, उसका डगमगाता वैभव, और शोभन की वह विनती। यह सुनकर चन्द्रभागा का मुख प्रसन्नता और प्रेम से खिल उठा। उसने कहा, ‘हे विप्र! जो आपने कहा वह मुझे स्वप्न नहीं, सत्य प्रतीत होता है। मुझे शीघ्र अपने पति के पास ले चलिए, मैं उस नगरी को अक्षय बना दूँगी।’',
+          'ब्राह्मण उसे मन्दराचल की तलहटी में स्थित वामदेव ऋषि के आश्रम तक ले गया। ऋषि के मन्त्र-जल के स्पर्श और चन्द्रभागा के आजन्म एकादशी-व्रत के पुण्य-प्रभाव से उसका शरीर दिव्य हो गया, और वह सहज ही पर्वत-शिखर पर पहुँच गई। शोभन ने अपनी प्रिया को आते देखा तो हर्ष से उसका स्वागत किया और अपने अर्ध-सिंहासन पर बिठाया।',
+          'तब चन्द्रभागा ने प्रेम से कहा, ‘स्वामी! आठ वर्ष की आयु से लेकर आज तक मैंने जो एकादशी-व्रत किए हैं, उन सबका पुण्य मैं आपको अर्पित करती हूँ। इस पुण्य के बल से यह नगरी सदा अचल और अक्षय रहे।’ उसके इतना कहते ही वह डगमगाती नगरी अटल हो गई, और दोनों दम्पति दिव्य भोगों का उपभोग करते हुए दीर्घकाल तक वहाँ आनन्द से रहे।',
+          'इसीलिए कहा जाता है कि कार्तिक कृष्ण पक्ष की यह रमा एकादशी समस्त पापों को हर लेने वाली और मनोवांछित फल देने वाली है। जो भक्त श्रद्धापूर्वक इसका व्रत करता है, उसके पाप चिन्तामणि के समान दूर हो जाते हैं, उसे इस लोक में सुख और अन्त में भगवान विष्णु का परम धाम प्राप्त होता है — यही इस व्रत का अक्षय फल है।',
+        ],
+        bodyEn: [
+          'Returning from his pilgrimage, Somasharma went into Muchukunda\'s city and recounted the whole tale to Chandrabhaga — the divine city upon Mount Mandara, its trembling splendour, and Shobhana\'s plea. Hearing this, Chandrabhaga\'s face blossomed with joy and love. She said, ‘O brahmin, what you have told me seems not a dream but the truth. Take me swiftly to my husband, and I shall make that city imperishable.’',
+          'The brahmin led her to the hermitage of the sage Vamadeva at the foot of Mount Mandara. By the touch of the sage\'s consecrated water and by the meritorious power of Chandrabhaga\'s lifelong Ekadashi vows, her body became divine, and she rose easily to the mountain\'s summit. When Shobhana saw his beloved approaching, he welcomed her with delight and seated her upon half of his own throne.',
+          'Then Chandrabhaga said lovingly, ‘My lord, all the merit of the Ekadashi vows that I have kept from the age of eight until this very day, I offer to you. By the strength of this merit, may this city remain forever steadfast and imperishable.’ The moment she spoke these words, that swaying city became fixed and firm, and the couple, enjoying divine delights, dwelt there together in bliss for a long age.',
+          'For this reason it is said that this Rama Ekadashi of the dark fortnight of Kartika carries away all sins and grants the heart\'s desired fruit. The devotee who keeps its vow with faith finds his sins fall away like a wish-fulfilling gem driving off want; he gains happiness in this world and, in the end, the supreme abode of Lord Vishnu — and this is the imperishable fruit of the vow.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'parivartini-ekadashi-katha',
+    titleHi: 'परिवर्तिनी एकादशी व्रत कथा',
+    titleEn: 'Parivartini Ekadashi Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/ekadashi/parivartini-ekadashi-vrat-katha.html'],
+    sections: [
+      {
+        id: 'yudhishthiras-question',
+        titleHi: 'युधिष्ठिर का प्रश्न',
+        titleEn: 'Yudhishthira\'s Question',
+        bodyHi: [
+          'द्वापर युग की एक सन्ध्या में, धर्मराज युधिष्ठिर भगवान श्रीकृष्ण के समीप हाथ जोड़कर बैठे थे और उनके मुख की ओर श्रद्धा से निहार रहे थे। ‘हे जनार्दन!’ उन्होंने विनम्र स्वर में पूछा, ‘भाद्रपद मास के शुक्ल पक्ष में जो एकादशी आती है, उसका क्या नाम है, उसका विधान क्या है, और उसके व्रत से कौन-सा फल मिलता है? कृपा करके मुझे विस्तार से सुनाइए।’',
+          'श्रीकृष्ण मन्द-मन्द मुस्कुराए और बोले, ‘हे राजन्! जो प्रश्न तुमने पूछा है, वही प्रश्न एक बार स्वयं ब्रह्मा जी ने देवर्षि नारद से सुना था। यह एकादशी अत्यन्त पुण्यदायिनी है, और इसी दिन चातुर्मास की योगनिद्रा में शयन करते हुए मैं अपनी करवट बदलता हूँ — इसी कारण इसे परिवर्तिनी एकादशी कहते हैं। इसे जयन्ती और वामन एकादशी के नाम से भी जाना जाता है।’',
+          '‘इस व्रत के पुण्य से मनुष्य के समस्त पाप नष्ट हो जाते हैं और अन्त में वह वैकुण्ठ धाम को प्राप्त होता है। इसकी महिमा समझाने के लिए मैं तुम्हें वही पावन कथा सुनाता हूँ, जो वामन अवतार और दानवराज बलि से सम्बन्धित है। ध्यान से सुनो।’',
+        ],
+        bodyEn: [
+          'On an evening of the Dvapara age, the righteous king Yudhishthira sat beside Lord Shri Krishna with folded hands, gazing reverently upon his face. ‘O Janardana!’ he asked in a humble voice, ‘What is the name of the Ekadashi that falls in the bright fortnight of the month of Bhadrapada, what is its observance, and what fruit is gained by its vow? Be gracious and tell me in full.’',
+          'Shri Krishna smiled gently and said, ‘O king! The very question you ask was once put by Brahma himself to the divine sage Narada. This Ekadashi is supremely meritorious, and on this day, while I sleep in the yogic slumber of Chaturmasa, I turn from one side to the other — and for this reason it is called Parivartini, the Turning One. It is also known as Jayanti and as Vamana Ekadashi.’',
+          '‘By the merit of this vow all the sins of a person are destroyed, and in the end he attains the abode of Vaikuntha. To make its glory clear to you, I shall tell you that very sacred tale, which concerns the Vamana incarnation and Bali, the king of the demons. Listen with care.’',
+        ],
+      },
+      {
+        id: 'king-bali-conquers-the-worlds',
+        titleHi: 'दानवराज बलि का त्रिलोक-विजय',
+        titleEn: 'King Bali Conquers the Three Worlds',
+        bodyHi: [
+          'श्रीकृष्ण ने कथा आरम्भ करते हुए कहा — प्राचीन काल में बलि नाम का एक दानवराज हुआ, जो प्रह्लाद का पौत्र था। वह असुर-कुल में जन्मा अवश्य था, पर परम दानी, सत्यनिष्ठ और मेरा अनन्य भक्त था। उसने अनेक यज्ञ किए, ब्राह्मणों को मुक्त हस्त से दान दिया, और अपने तप तथा पराक्रम से ऐसी शक्ति अर्जित कर ली कि उसके सामने कोई टिक न सका।',
+          'अपने बाहुबल और बढ़ते अहंकार के बल पर बलि ने स्वर्ग पर चढ़ाई कर दी। उसने देवराज इन्द्र को परास्त कर दिया और तीनों लोकों — स्वर्ग, पृथ्वी और पाताल — पर अपना अधिकार जमा लिया। पराजित देवता अपना वैभव खोकर इधर-उधर भटकने लगे और अन्त में वे अपने स्वामी की शरण में पहुँचे।',
+          'देवताओं ने हाथ जोड़कर मुझसे प्रार्थना की, ‘हे प्रभो! बलि ने हमारा सर्वस्व छीन लिया है और हम अपने ही धाम से बहिष्कृत हो गए हैं। आप ही हमारे रक्षक हैं — कृपा करके इस संकट से हमारा उद्धार कीजिए।’ देवताओं की दीन पुकार सुनकर मैंने उनकी रक्षा करने का निश्चय किया।',
+        ],
+        bodyEn: [
+          'Shri Krishna began the tale, saying — In ancient times there was a demon-king named Bali, the grandson of Prahlada. Though born indeed into the line of the asuras, he was supremely charitable, steadfast in truth, and a devotee wholly devoted to me. He performed many sacrifices, gave alms to the brahmins with an open hand, and through his austerity and valour acquired such power that none could stand against him.',
+          'On the strength of his mighty arms and his swelling pride, Bali launched an assault upon heaven. He vanquished Indra, the king of the gods, and seized dominion over all three worlds — heaven, earth, and the netherworld. The defeated gods, stripped of their splendour, wandered here and there, and at last came to take refuge with their lord.',
+          'Folding their hands, the gods prayed to me, ‘O Lord! Bali has snatched away all that was ours, and we have been cast out of our own realm. You alone are our protector — be gracious and deliver us from this calamity.’ Hearing the gods\' piteous cry, I resolved to protect them.',
+        ],
+      },
+      {
+        id: 'the-dwarf-comes-to-the-sacrifice',
+        titleHi: 'वामन रूप में यज्ञशाला में आगमन',
+        titleEn: 'The Dwarf Comes to the Sacrifice',
+        bodyHi: [
+          'देवताओं की रक्षा के लिए मैंने वामन का रूप धारण किया — एक छोटे, ब्रह्मचारी बटु का रूप, जिसके हाथ में दण्ड और कमण्डल था और मुख पर अपूर्व तेज। उन्हीं दिनों दानवराज बलि नर्मदा के तट पर एक महान अश्वमेध यज्ञ कर रहा था, और उसने घोषणा कर रखी थी कि जो भी याचक आएगा, वह उसे खाली हाथ न लौटाएगा।',
+          'वामन रूप धारी मैं धीरे-धीरे चलता हुआ उस यज्ञशाला में जा पहुँचा। मेरे छोटे-से रूप में छिपे दिव्य तेज को देखकर बलि अपने सिंहासन से उठा, उसने आदरपूर्वक मेरे चरण पखारे और हाथ जोड़कर कहा, ‘हे ब्राह्मण-कुमार! आपका आगमन मेरे लिए परम सौभाग्य है। आप जो माँगेंगे, वही मैं आपको दूँगा — चाहे वह स्वर्ण हो, गाएँ हों, गाँव हों या समस्त पृथ्वी।’',
+          'बलि के गुरु शुक्राचार्य ने अपने दिव्य ज्ञान से पहचान लिया कि यह बटु साधारण नहीं, स्वयं विष्णु हैं। उन्होंने बलि को सचेत किया, ‘हे राजन्! यह कोई याचक नहीं, ये साक्षात् भगवान हैं जो तुझसे सब कुछ छीनने आए हैं। इन्हें वचन मत दे।’ परन्तु दानवीर बलि ने हाथ जोड़कर कहा, ‘गुरुदेव! यदि स्वयं भगवान मेरे द्वार पर याचक बनकर आए हैं, तो इससे बड़ा सौभाग्य मेरे लिए और क्या होगा? वचन देकर पीछे हटना मेरे कुल की रीति नहीं।’',
+        ],
+        bodyEn: [
+          'To protect the gods, I took on the form of Vamana — the form of a small celibate boy, a staff and water-pot in his hands and an unearthly radiance upon his face. In those very days King Bali was performing a great horse-sacrifice on the bank of the Narmada, and he had proclaimed that no supplicant who came to him would be turned away empty-handed.',
+          'In my dwarf form I walked slowly up to that sacrificial hall. Beholding the divine splendour hidden within my tiny shape, Bali rose from his throne, reverently washed my feet, and said with folded hands, ‘O young brahmin! Your coming is the highest fortune for me. Whatever you ask, that I shall give you — be it gold, or cattle, or villages, or the whole earth.’',
+          'Bali\'s preceptor Shukracharya, with his divine sight, recognized that this boy was no ordinary one but Vishnu himself. He warned Bali, ‘O king! This is no supplicant — this is the Lord in person, who has come to take everything from you. Do not give him your word.’ But the generous Bali said with folded hands, ‘Master! If the Lord himself has come to my door as a beggar, what greater fortune could there be for me? To give my word and then draw back is not the way of my house.’',
+        ],
+      },
+      {
+        id: 'the-three-strides',
+        titleHi: 'तीन पग भूमि का दान',
+        titleEn: 'The Gift of Three Strides',
+        bodyHi: [
+          'तब मैंने मुस्कुराते हुए कहा, ‘हे राजन्! मुझे न स्वर्ण चाहिए, न गाँव, न राज्य। मैं तो केवल अपने पैरों से नापी हुई तीन पग भूमि चाहता हूँ — इतनी ही मेरे लिए पर्याप्त है।’ बलि को यह माँग बहुत छोटी लगी, और उसने हँसकर संकल्प का जल मेरे हाथ पर छोड़ दिया, ‘जैसी आपकी इच्छा, बटुक! तीन पग भूमि आपकी हुई।’',
+          'जैसे ही संकल्प पूर्ण हुआ, मेरा वह छोटा-सा वामन रूप विराट हो उठा। एक पग में मैंने सम्पूर्ण पृथ्वी को नाप लिया, दूसरे पग में समस्त स्वर्गलोक और अन्तरिक्ष को ढक लिया — और अब तीसरे पग के लिए कहीं स्थान शेष न रहा। मेरा त्रिविक्रम रूप देखकर सम्पूर्ण ब्रह्माण्ड स्तब्ध रह गया।',
+          'मैंने पूछा, ‘हे बलि! दो पगों में ही तेरा सब कुछ नप गया। अब मेरा तीसरा पग कहाँ रखूँ?’ धर्मनिष्ठ बलि ने तनिक भी विचलित हुए बिना, श्रद्धा से सिर झुकाकर कहा, ‘हे प्रभो! जब दोनों लोक आपने ले लिए, तब तीसरा पग रखने को इससे उत्तम कोई स्थान नहीं — आप अपना यह पग मेरे मस्तक पर रखिए।’ बलि की अपूर्व भक्ति और सत्यनिष्ठा देखकर मैं अत्यन्त प्रसन्न हुआ।',
+        ],
+        bodyEn: [
+          'Then, smiling, I said, ‘O king! I wish for no gold, no village, no kingdom. I ask only for three strides of land measured by my own feet — that alone is enough for me.’ The request seemed very small to Bali, and laughing, he poured the water of the vow over my hand, saying, ‘As you wish, little one! Three strides of land are yours.’',
+          'The moment the vow was sealed, that tiny dwarf form of mine swelled into the colossal. With one stride I measured the entire earth, with the second I covered all the heavens and the sky — and now no place remained for the third stride. Seeing my form as Trivikrama, the strider of three worlds, the whole universe stood astonished.',
+          'I asked, ‘O Bali! In two strides alone everything of yours has been measured. Where now shall I set my third stride?’ Without the slightest wavering, the righteous Bali bowed his head in reverence and said, ‘O Lord! When you have taken both worlds, there is no place better for your third stride than this — set this foot upon my head.’ Seeing Bali\'s matchless devotion and steadfast truth, I was greatly pleased.',
+        ],
+      },
+      {
+        id: 'the-lord-turns-in-sleep',
+        titleHi: 'पाताल में निवास और करवट का बदलना',
+        titleEn: 'The Lord\'s Dwelling in Patala and the Turning in Sleep',
+        bodyHi: [
+          'मैंने अपना तीसरा पग बलि के मस्तक पर रखकर उसे पाताल लोक में स्थापित कर दिया। फिर भी उसकी दानशीलता और भक्ति से प्रसन्न होकर मैंने उसे पाताल का स्वामी बना दिया और वचन दिया, ‘हे बलि! तेरी भक्ति से बँधकर मैं स्वयं तेरे द्वार पर तेरा रक्षक बनकर निवास करूँगा।’ इस प्रकार देवताओं को उनका स्वर्ग पुनः प्राप्त हो गया और तीनों लोकों में पुनः धर्म की स्थापना हुई।',
+          'श्रीकृष्ण ने आगे कहा — ‘हे युधिष्ठिर! चातुर्मास के इन्हीं चार मासों में मैं क्षीरसागर में शेषशय्या पर योगनिद्रा में शयन करता हूँ। भाद्रपद शुक्ल एकादशी के दिन शयन करते-करते मैं अपनी एक करवट से दूसरी करवट बदलता हूँ — इसी परिवर्तन के कारण इस तिथि का नाम परिवर्तिनी एकादशी पड़ा है।’',
+          '‘जो भक्त इस दिन निराहार रहकर, श्रद्धापूर्वक मेरे वामन स्वरूप की पूजा करता है, रात्रि में जागरण कर मेरे नाम का स्मरण करता है, और द्वादशी को ब्राह्मणों को भोजन एवं दान देकर व्रत का पारण करता है, उसके सहस्रों जन्मों के पाप क्षीण हो जाते हैं।’',
+          '‘ऐसा भक्त इस लोक में सुख, यश और समृद्धि भोगकर अन्त में मेरे परम धाम वैकुण्ठ को प्राप्त होता है। हे राजन्! जैसे राजा बलि ने अपनी अटल भक्ति और सत्य से मुझे प्रसन्न किया, वैसे ही जो इस परिवर्तिनी एकादशी का व्रत करता है, उस पर मेरी कृपा सदैव बनी रहती है — यही इस व्रत का अक्षय फल है।’ श्रीकृष्ण के मुख से यह पावन कथा सुनकर युधिष्ठिर का हृदय परम सन्तोष से भर गया।',
+        ],
+        bodyEn: [
+          'Setting my third stride upon Bali\'s head, I established him in the netherworld, Patala. Yet, pleased by his charity and devotion, I made him the lord of Patala and gave him my word, ‘O Bali! Bound by your devotion, I myself shall dwell at your door as your guardian.’ Thus the gods regained their heaven, and righteousness was once more established throughout the three worlds.',
+          'Shri Krishna continued — ‘O Yudhishthira! During these four months of Chaturmasa I sleep in yogic slumber upon the serpent-couch in the Ocean of Milk. On the day of the bright Ekadashi of Bhadrapada, as I sleep, I turn from one side to the other — and on account of this very turning this day has been given the name Parivartini Ekadashi.’',
+          '‘The devotee who on this day remains without food, worships my Vamana form with devotion, keeps vigil through the night remembering my name, and on Dvadashi breaks the fast after feeding and giving gifts to the brahmins — the sins of his thousands of births are diminished.’',
+          '‘Such a devotee, having enjoyed happiness, fame, and prosperity in this world, attains in the end my supreme abode of Vaikuntha. O king! Just as King Bali pleased me by his unshakable devotion and truth, so too upon whoever observes this Parivartini Ekadashi my grace ever rests — this is the imperishable fruit of the vow.’ Hearing this sacred tale from the mouth of Shri Krishna, the heart of Yudhishthira was filled with the deepest contentment.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'papankusha-ekadashi-katha',
+    titleHi: 'पापांकुशा एकादशी व्रत कथा',
+    titleEn: 'Papankusha Ekadashi Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/ekadashi/papankusha-ekadashi-vrat-katha.html'],
+    sections: [
+      {
+        id: 'krodhana-the-hunter-of-the-vindhyas',
+        titleHi: 'विन्ध्य का क्रूर बहेलिया क्रोधन',
+        titleEn: 'Krodhana, the Cruel Hunter of the Vindhyas',
+        bodyHi: [
+          'विन्ध्याचल की घनी अँधेरी घाटियों में, जहाँ दिन में भी सूरज की किरणें पत्तों के बीच से छनकर बमुश्किल पहुँचती थीं, क्रोधन नाम का एक बहेलिया रहता था। नाम के अनुरूप ही उसका स्वभाव था — क्रोध, हिंसा और निर्दयता उसके रोम-रोम में बसी थी। प्रातः होते ही वह धनुष-बाण उठाता और वन के मूक प्राणियों के पीछे निकल पड़ता।',
+          'हिरन, पक्षी, खरगोश — जो भी उसकी दृष्टि में आता, वह उसका वध कर डालता। न उसे किसी प्राणी की पीड़ा का बोध था, न मारने से पहले कोई संकोच। इतना ही नहीं, वह राहगीरों को लूटता, झूठ बोलता, मदिरा पीता और परस्त्री तथा पराये धन पर बुरी दृष्टि रखता। पाप मानो उसके जीवन का एकमात्र व्यवसाय बन गया था।',
+          'इसी निष्ठुरता और दुराचार में उसका सारा यौवन बीत गया। न उसने कभी किसी देवता को नमन किया, न किसी तीर्थ का जल छुआ, न किसी साधु के चरणों में बैठा। उसके पाप पर्वत के समान ऊँचे होते चले गए, और काल चुपचाप उसके द्वार की ओर बढ़ता रहा।',
+        ],
+        bodyEn: [
+          'In the dense, shadowy valleys of the Vindhya range — where even by day the rays of the sun could scarcely reach, straining through the leaves — there lived a hunter named Krodhana. His nature matched his name: anger, violence and cruelty dwelt in his very being. At first light he would take up his bow and arrows and set out after the silent creatures of the forest.',
+          'Deer, birds, hares — whatever came within his sight, he would slay. He felt neither the pain of any living thing nor the slightest hesitation before he struck. More than this, he robbed travellers, spoke falsehoods, drank liquor, and cast a wicked eye upon the wives and the wealth of others. Sin had become, as it were, the sole occupation of his life.',
+          'In this very ruthlessness and wrongdoing his whole youth passed away. He never bowed to a single deity, never touched the water of any holy place, never sat at the feet of any sage. His sins rose high as a mountain, and Death, all the while, drew silently toward his door.',
+        ],
+      },
+      {
+        id: 'the-shadow-of-yama',
+        titleHi: 'यमदूतों की छाया और भय',
+        titleEn: 'The Shadow of Yama\'s Messengers',
+        bodyHi: [
+          'वर्ष बीतते गए और क्रोधन का शरीर जर्जर हो चला। एक दिन, जब उसकी साँसें उखड़ने को थीं, उसे आभास हुआ कि उसके चारों ओर भयानक आकृतियाँ मँडरा रही हैं। ये यमराज के दूत थे — लाल नेत्रों वाले, हाथों में पाश और दण्ड लिए, उसके पापों का लेखा लेकर उसे लेने आए थे।',
+          'उन्हें देखकर वह कठोर बहेलिया, जो जीवन भर किसी से नहीं डरा था, थर-थर काँप उठा। ‘अरे, अब तो मेरे जीवन का एक-एक पाप मेरे सामने आकर खड़ा हो गया है,’ उसने मन ही मन सोचा, ‘इन भयंकर दूतों के हाथों मुझे कैसी-कैसी यातनाएँ भोगनी पड़ेंगी! क्या मेरे उद्धार का कोई मार्ग शेष नहीं रहा?’',
+          'मृत्यु के उस क्षण में, पहली बार उसके भीतर पश्चात्ताप की एक चिनगारी जागी। प्राण-रक्षा की व्याकुलता में, काँपते हुए चरणों से वह उठा और उसी वन में स्थित एक तपोवन की ओर दौड़ पड़ा, जहाँ महर्षि अंगिरा का पवित्र आश्रम था।',
+        ],
+        bodyEn: [
+          'The years rolled by and Krodhana\'s body grew frail and worn. One day, as his breath was about to fail, he sensed that terrible figures were hovering all around him. These were the messengers of Yama — red-eyed, bearing nooses and rods in their hands, come to take him away with the full reckoning of his sins.',
+          'Seeing them, that hardened hunter, who had feared no one his whole life, began to tremble from head to foot. ‘Alas, now every single sin of my life has risen up and stands before me,’ he thought within himself. ‘What torments shall I have to suffer at the hands of these dreadful messengers! Is there no path of deliverance left for me at all?’',
+          'In that moment of death, for the very first time a spark of repentance kindled within him. Frantic to save his life, he rose on trembling feet and ran toward a grove of penance set within that same forest, where stood the holy hermitage of the great sage Angira.',
+        ],
+      },
+      {
+        id: 'at-the-feet-of-angira',
+        titleHi: 'महर्षि अंगिरा के चरणों में',
+        titleEn: 'At the Feet of the Sage Angira',
+        bodyHi: [
+          'आश्रम के द्वार पर पहुँचकर क्रोधन महर्षि अंगिरा के चरणों में गिर पड़ा। उसकी आँखों से आँसू बह निकले और कण्ठ रुँध गया। ‘हे दयानिधि मुनिवर!’ उसने गिड़गिड़ाते हुए कहा, ‘मैंने जीवन भर केवल पाप ही किए हैं — असंख्य निरीह प्राणियों का वध किया, चोरी की, झूठ बोला, और किसी का भला कभी न सोचा।’',
+          '‘अब यमराज के दूत मुझे लेने आ खड़े हुए हैं और मेरा हृदय भय से फटा जा रहा है। मेरे पाप इतने हैं कि गिने नहीं जा सकते। हे करुणामय! क्या कोई ऐसा उपाय है जिससे मेरे ये अनगिनत पाप क्षण भर में नष्ट हो जाएँ और मैं इस घोर यातना से बच जाऊँ? मुझ शरणागत की रक्षा कीजिए।’',
+          'उस पापी के मुख पर सच्चे पश्चात्ताप और शरणागति के भाव देखकर दयालु मुनि का हृदय द्रवित हो उठा। वे क्षण भर मौन रहे, फिर स्नेहपूर्वक बोले, ‘हे बहेलिया, तेरे भीतर अब भी प्रायश्चित का भाव शेष है — यही तेरे उद्धार का बीज है। शोक मत कर; मैं तुझे वह व्रत बताता हूँ जो बड़े-बड़े पापों के पर्वत को भी भस्म कर देता है।’',
+        ],
+        bodyEn: [
+          'Reaching the gate of the hermitage, Krodhana fell at the feet of the great sage Angira. Tears streamed from his eyes and his throat choked with sobs. ‘O ocean of compassion, great sage!’ he pleaded. ‘All my life I have done nothing but sin — I have slain countless helpless creatures, I have stolen, I have lied, and I have never once thought of another\'s good.’',
+          '‘Now the messengers of Yama have come and stand ready to take me away, and my heart is bursting with terror. My sins are so many they cannot be counted. O compassionate one! Is there any means by which these countless sins of mine might be destroyed in an instant, so that I may escape this dreadful torment? Protect me, for I have taken refuge with you.’',
+          'Beholding upon that sinner\'s face the marks of true repentance and surrender, the merciful sage\'s heart melted. For a moment he remained silent, and then spoke with affection. ‘O hunter, even now a feeling of atonement remains within you — this is the very seed of your deliverance. Do not grieve; I shall tell you of a vow that burns to ashes even a mountain of the greatest sins.’',
+        ],
+      },
+      {
+        id: 'the-vow-that-conquers-sin',
+        titleHi: 'पापांकुशा एकादशी का विधान',
+        titleEn: 'The Vow That Conquers Sin',
+        bodyHi: [
+          'महर्षि अंगिरा ने कहा, ‘आश्विन मास के शुक्ल पक्ष में जो एकादशी आती है, वह भगवान विष्णु को अत्यन्त प्रिय है। यही पापांकुशा एकादशी कहलाती है — जैसे अंकुश हाथी को वश में कर लेता है, वैसे ही यह व्रत पापों को वश में करके नष्ट कर देता है। श्रद्धा और पवित्रता के साथ इसका पालन कर।’',
+          '‘इस दिन प्रातः स्नान करके शुद्ध हृदय से भगवान विष्णु का पूजन कर, उनके नाम का स्मरण कर, और दिन-रात निराहार रहकर जागरण कर। द्वादशी को ब्राह्मणों को भोजन एवं यथाशक्ति दान देकर व्रत का पारण कर। जो मनुष्य इस व्रत को करता है, उसके सहस्रों जन्मों के पाप विष्णु की कृपा से तत्काल विलीन हो जाते हैं।’',
+          '‘इस एकादशी का व्रत करने वाला न केवल स्वयं तरता है, बल्कि अपने माता-पिता और पूर्वजों को भी ऊँची गति प्रदान करता है। यमराज के दूत ऐसे भक्त के पास फटक भी नहीं सकते, और अन्त में उसे भगवान विष्णु का परम धाम प्राप्त होता है। हे क्रोधन, तू अपने शेष जीवन-काल में यही व्रत कर।’',
+        ],
+        bodyEn: [
+          'The great sage Angira said, ‘The Ekadashi that falls in the bright fortnight of the month of Ashwin is exceedingly dear to Lord Vishnu. It is called Papankusha Ekadashi — just as the goad subdues an elephant, so this vow subdues sins and destroys them. Observe it with faith and purity.’',
+          '‘On this day bathe at dawn, worship Lord Vishnu with a pure heart, remember his holy name, and keep vigil through day and night without taking food. On the Dvadashi break the fast after feeding the brahmins and giving alms according to your means. For the one who keeps this vow, the sins of a thousand births dissolve at once by the grace of Vishnu.’',
+          '‘The one who observes this Ekadashi not only crosses over himself, but also bestows a high destiny upon his mother, his father and his forefathers. The messengers of Yama dare not even approach such a devotee, and in the end he attains the supreme abode of Lord Vishnu. O Krodhana, keep this very vow for the remainder of your days.’',
+        ],
+      },
+      {
+        id: 'deliverance-from-yamas-bonds',
+        titleHi: 'पापों का नाश और मुक्ति',
+        titleEn: 'Deliverance from Yama\'s Bonds',
+        bodyHi: [
+          'मुनि के वचन क्रोधन के मर्म को छू गए। उसने उसी क्षण संकल्प लिया और पूरे विश्वास के साथ पापांकुशा एकादशी का व्रत किया — आँसुओं से भीगे नेत्रों से भगवान विष्णु का स्मरण करते हुए, अपने सारे दुष्कर्मों का पश्चात्ताप करते हुए, निराहार रहकर रात्रि भर जागरण किया।',
+          'व्रत के पुण्य-प्रभाव से एक अद्भुत बात हुई — जो यमदूत पाश लेकर खड़े थे, वे अपना मुँह नहीं उठा सके। पापों का वह पर्वत, जो क्षण भर पहले अटल लगता था, विष्णु के नाम के तेज से भस्म होकर बिखर गया। हाथी को रोकने वाले अंकुश की भाँति इस व्रत ने उसके समस्त पापों को रोककर निर्मूल कर दिया।',
+          'अन्त-समय में क्रोधन का मलिन हृदय निर्मल हो उठा। यमदूत लज्जित होकर लौट गए, और उनके स्थान पर भगवान विष्णु के पार्षद दिव्य विमान लेकर उसे लिवाने आए। जो जीवन भर हिंसा में डूबा रहा था, वह बहेलिया भी इस एक व्रत के प्रभाव से उत्तम गति को प्राप्त हुआ।',
+          'तभी से कहा जाता है कि जो भी श्रद्धालु आश्विन शुक्ल की इस पापांकुशा एकादशी का व्रत भक्तिपूर्वक करता है, उसके अगणित पाप अंकुश से वश में हुए मतवाले हाथी की भाँति शान्त होकर नष्ट हो जाते हैं; यमलोक की यातना उससे दूर रहती है, और भगवान विष्णु की कृपा से अन्त में उसे परम धाम की प्राप्ति होती है — यही इस व्रत का अक्षय फल कहा गया है।',
+        ],
+        bodyEn: [
+          'The sage\'s words pierced Krodhana to the core. In that very moment he made the resolve and, with complete faith, observed the Papankusha Ekadashi — remembering Lord Vishnu with eyes wet with tears, repenting of all his evil deeds, and keeping vigil through the whole night without food.',
+          'By the meritorious power of the vow, a wondrous thing came to pass — the messengers of Yama who had stood ready with their nooses could not so much as lift their faces. That mountain of sins, which a moment before had seemed immovable, was burned to ashes and scattered by the radiance of Vishnu\'s name. Like the goad that halts the elephant, this vow halted his every sin and tore it up by the root.',
+          'At the final hour, Krodhana\'s defiled heart became pure and clear. The messengers of Yama withdrew in shame, and in their place the attendants of Lord Vishnu came in a divine chariot to bear him away. Even that hunter, who had spent his whole life sunk in violence, attained the highest destiny through the power of this single vow.',
+          'From that time on it is said that whoever observes this Papankusha Ekadashi of the bright fortnight of Ashwin with devotion finds his countless sins grow still and perish — like a maddened elephant subdued by the goad; the torment of Yama\'s realm stays far from him, and in the end, by the grace of Lord Vishnu, he attains the supreme abode — this is declared to be the imperishable fruit of the vow.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'mokshada-ekadashi-katha',
+    titleHi: 'मोक्षदा एकादशी व्रत कथा',
+    titleEn: 'Mokshada Ekadashi Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/ekadashi/mokshada-ekadashi-vrat-katha.html'],
+    sections: [
+      {
+        id: 'king-of-champaka',
+        titleHi: 'चम्पक नगरी का राजा वैखानस',
+        titleEn: 'Vaikhanasa, the King of Champaka',
+        bodyHi: [
+          'गोकुल जैसी सुन्दर चम्पक नगरी में राजा वैखानस राज्य करते थे। वे धर्म को जानने वाले, सत्यवादी और प्रजा के प्रति वैसे ही वत्सल थे जैसे पिता अपने पुत्रों के प्रति होता है। उनके राज्य में चारों वर्ण अपने-अपने धर्म का पालन करते, वेदों की ध्वनि से नगर गूँजता रहता, और कहीं किसी को भय या अभाव न था।',
+          'उसी नगरी में अनेक विद्वान ब्राह्मण निवास करते थे, जो वेद-वेदान्त के पारगामी थे और राजा को नित्य सत्संग और सलाह देते रहते थे। वैखानस उनका आदर करते और स्वयं को प्रजा का सेवक मानकर शासन चलाते थे। ऐसा प्रतीत होता था मानो उस राज्य पर सुख की कोई कमी ही न हो।',
+        ],
+        bodyEn: [
+          'In the beautiful city of Champaka, fair as Gokula, there ruled a king named Vaikhanasa. He was a knower of dharma, truthful in speech, and as tender toward his subjects as a father is toward his own sons. In his realm the four orders each followed their own duty, the chanting of the Vedas resounded through the city, and nowhere did anyone know fear or want.',
+          'In that same city dwelt many learned brahmins, masters of the Vedas and the Vedanta, who gave the king holy company and counsel each day. Vaikhanasa honoured them and ruled while regarding himself as the servant of his people. It seemed as though that kingdom suffered no lack of happiness at all.',
+        ],
+      },
+      {
+        id: 'the-dream-of-the-father',
+        titleHi: 'स्वप्न में पिता की पीड़ा',
+        titleEn: 'The Father\'s Anguish in a Dream',
+        bodyHi: [
+          'एक रात्रि, जब राजा अपने शयनकक्ष में सोए हुए थे, उन्होंने एक भयानक स्वप्न देखा। उन्होंने अपने स्वर्गीय पिता को नरक की यातना में पड़ा देखा — तप्त, क्षीण और दीन। पिता ने हाथ जोड़कर पुकारा, ‘हे पुत्र! मैं अपने पूर्वकर्मों के फल से इस नरक में कष्ट भोग रहा हूँ। यदि तुझमें मेरे प्रति कुछ भी स्नेह है, तो मुझे इस यातना से छुड़ा। तू ही मेरा उद्धार कर सकता है।’',
+          'स्वप्न टूटा तो राजा का सारा शरीर पसीने से भीग गया और हृदय काँप उठा। प्रातःकाल होते ही उनकी आँखों से नींद उड़ गई और मन से सुख-शान्ति। ‘धन-वैभव, राज्य और यह सिंहासन सब व्यर्थ है,’ वे सोचने लगे, ‘जब मेरे ही पिता घोर नरक में तड़प रहे हैं। पुत्र होकर भी मैं उनकी रक्षा न कर सका, तो ऐसा जीवन किस काम का?’',
+          'उस स्वप्न का स्मरण उन्हें भीतर ही भीतर खाए जा रहा था। न राजसभा में मन लगता, न भोजन में रुचि रहती। अन्ततः उन्होंने निश्चय किया कि वे विद्वान ब्राह्मणों के पास जाकर इस स्वप्न का रहस्य पूछेंगे और पिता के उद्धार का उपाय जानेंगे।',
+        ],
+        bodyEn: [
+          'One night, while the king lay asleep in his chamber, he beheld a terrible dream. He saw his departed father fallen into the torments of hell — scorched, wasted and wretched. Folding his hands, the father cried out, ‘O my son! By the fruit of my former deeds I suffer in this hell. If you bear any love at all toward me, deliver me from this torment. You alone can be my redemption.’',
+          'When the dream broke, the king\'s whole body was drenched in sweat and his heart trembled. As morning came, sleep fled from his eyes and peace from his mind. ‘Wealth, splendour, kingdom and this throne are all worthless,’ he began to think, ‘when my own father writhes in dreadful hell. If, even as his son, I could not protect him, of what use is such a life?’',
+          'The memory of that dream gnawed at him from within. He found no pleasure in the royal court nor any taste for food. At last he resolved to go to the learned brahmins, to ask the meaning of the dream and to learn the means of his father\'s deliverance.',
+        ],
+      },
+      {
+        id: 'counsel-of-sage-parvata',
+        titleHi: 'पर्वत मुनि की मन्त्रणा',
+        titleEn: 'The Counsel of the Sage Parvata',
+        bodyHi: [
+          'राजा वैखानस ब्राह्मणों की सभा में पहुँचे और हाथ जोड़कर अपना स्वप्न कह सुनाया। ‘हे विप्रवरो!’ उन्होंने कहा, ‘मैंने अपने पिता को नरक में पड़ा देखा है। वे मुझसे उद्धार की भीख माँगते हैं। मुझे कोई ऐसा उपाय बताइए जिससे मेरे पिता इस यातना से मुक्त हो जाएँ। यदि आवश्यक हो तो मैं अपना समस्त पुण्य भी अर्पित करने को तैयार हूँ।’',
+          'उस सभा में पर्वत नामक एक त्रिकालदर्शी मुनि उपस्थित थे, जो भूत, वर्तमान और भविष्य के ज्ञाता थे। उन्होंने क्षण भर अपने दिव्य ज्ञान से राजा के पिता के पूर्वजन्म को देखा और फिर बोले, ‘हे राजन्! तुम्हारे पिता ने पूर्व में एक ऐसा कर्म किया था जिसके कारण वे आज नरक में दण्ड भोग रहे हैं। परन्तु तुम शोक मत करो, क्योंकि उनके उद्धार का एक श्रेष्ठ उपाय है।’',
+          '‘मार्गशीर्ष मास के शुक्ल पक्ष की एकादशी,’ मुनि ने कहा, ‘मोक्षदा एकादशी कहलाती है, क्योंकि वह मोक्ष देने वाली है। तुम इस तिथि का व्रत श्रद्धा और विधि से करो, और उससे उपजे समस्त पुण्य को अपने पिता के निमित्त संकल्प करके अर्पित कर दो। उस पुण्य के प्रभाव से तुम्हारे पिता निश्चय ही नरक से मुक्त होकर उत्तम गति को प्राप्त करेंगे।’',
+        ],
+        bodyEn: [
+          'King Vaikhanasa came before the assembly of brahmins and, folding his hands, recounted his dream. ‘O best among the wise!’ he said. ‘I have seen my father fallen into hell. He begs me for deliverance. Tell me some means by which my father may be freed from this torment. If it be needed, I am ready to offer up even all my merit.’',
+          'In that assembly was present a sage named Parvata, a seer of the three times, knower of past, present and future. For a moment he gazed with his divine sight into the past birth of the king\'s father, and then he spoke. ‘O king! Your father once committed a deed for which he now undergoes punishment in hell. But do not grieve, for there exists an excellent means of his deliverance.’',
+          '‘The Ekadashi of the bright fortnight of the month of Margashirsha,’ said the sage, ‘is called Mokshada Ekadashi, for it bestows liberation. Observe the vow of this day with devotion and according to the rites, and all the merit that arises from it offer up, by solemn resolve, for the sake of your father. By the power of that merit your father shall surely be freed from hell and attain the highest course.’',
+        ],
+      },
+      {
+        id: 'the-vow-and-the-gita',
+        titleHi: 'व्रत, जागरण और गीता का स्मरण',
+        titleEn: 'The Vow, the Vigil, and the Remembrance of the Gita',
+        bodyHi: [
+          'मुनि के वचन सुनकर राजा का मुख आशा से खिल उठा। वे नगर लौटे और मार्गशीर्ष शुक्ल एकादशी की प्रतीक्षा करने लगे। उस तिथि के आने पर राजा वैखानस ने रानी, पुत्रों और समस्त परिजनों सहित प्रातःकाल स्नान कर शुद्ध वस्त्र धारण किए और भगवान विष्णु की भक्तिपूर्वक पूजा की।',
+          'दिनभर उन्होंने अन्न-जल त्यागकर उपवास रखा, भगवान के नाम का जप किया और रात्रि में जागरण करते हुए हरि-कीर्तन में लीन रहे। यह वही पवित्र तिथि थी जिस दिन कुरुक्षेत्र के रणक्षेत्र में भगवान श्रीकृष्ण ने मोहग्रस्त अर्जुन को श्रीमद्भगवद्गीता का अमर उपदेश दिया था — इसीलिए यह दिन गीता जयन्ती के रूप में भी पूजनीय है।',
+          'द्वादशी के दिन राजा ने ब्राह्मणों को भोजन कराया, यथाशक्ति दान दिया और फिर व्रत का पारण किया। पारण के पश्चात् उन्होंने मुनि के कथनानुसार अपने इस व्रत से अर्जित समस्त पुण्य हाथ में जल लेकर संकल्पपूर्वक अपने पिता के उद्धार के निमित्त अर्पित कर दिया।',
+        ],
+        bodyEn: [
+          'Hearing the sage\'s words, the king\'s face blossomed with hope. He returned to his city and waited for the bright Ekadashi of Margashirsha. When that day arrived, King Vaikhanasa, together with the queen, his sons and all his household, bathed in the early morning, put on clean garments, and worshipped Lord Vishnu with devotion.',
+          'Through the whole day he kept the fast, forsaking food and water, chanted the names of the Lord, and through the night, keeping vigil, remained absorbed in the singing of Hari\'s praises. This was the very same sacred day on which, on the battlefield of Kurukshetra, Lord Krishna had given the deluded Arjuna the immortal teaching of the Bhagavad Gita — and for this reason the day is revered also as Gita Jayanti.',
+          'On the day of Dvadashi the king fed the brahmins, gave alms to the best of his power, and then broke his fast. After breaking it, just as the sage had said, he took water into his hand and, with a solemn resolve, offered up all the merit earned by this vow for the sake of his father\'s deliverance.',
+        ],
+      },
+      {
+        id: 'the-ancestor-liberated',
+        titleHi: 'पिता का उद्धार और व्रत का फल',
+        titleEn: 'The Ancestor Liberated and the Fruit of the Vow',
+        bodyHi: [
+          'ज्यों ही राजा ने अपना पुण्य अर्पित किया, आकाश से पुष्पों की वर्षा होने लगी और दिव्य वाद्य बज उठे। उसी क्षण राजा के पिता नरक के बन्धन से मुक्त होकर दिव्य रूप धारण कर ऊपर उठे। उन्होंने पुत्र को आशीर्वाद देते हुए कहा, ‘हे पुत्र! तेरे इस व्रत के पुण्य से मैं नरक की यातना से छूटकर अब स्वर्गलोक को जा रहा हूँ। तू धन्य है, और धन्य है तेरा यह मोक्षदा एकादशी का व्रत।’',
+          'इतना कहकर पिता स्वर्ग की ओर प्रस्थान कर गए, और राजा वैखानस का हृदय अपार सन्तोष और आनन्द से भर गया। जिस शोक ने उनका सुख छीन लिया था, वह अब हर्ष में बदल चुका था, क्योंकि उन्होंने पुत्र होने का सबसे बड़ा धर्म निभा दिया था।',
+          'तब से जो भी श्रद्धालु मार्गशीर्ष शुक्ल की इस मोक्षदा एकादशी का व्रत भक्तिपूर्वक करता है, उसके समस्त पाप नष्ट होते हैं, उसके पितर तृप्त होकर सद्गति पाते हैं, और स्वयं वह भी अन्त में मोक्ष को प्राप्त होता है — चिन्तामणि के समान सब कामनाएँ पूर्ण करने वाला यही इस व्रत का परम फल कहा गया है।',
+        ],
+        bodyEn: [
+          'The moment the king offered up his merit, a rain of flowers fell from the sky and divine instruments sounded. In that very instant the king\'s father, freed from the bonds of hell, rose upward in a radiant form. Blessing his son, he said, ‘O my son! By the merit of this vow of yours I am released from the torments of hell and now go to the realm of heaven. Blessed are you, and blessed is this vow of Mokshada Ekadashi.’',
+          'Saying this, the father set forth toward heaven, and the heart of King Vaikhanasa was filled with boundless contentment and joy. The sorrow that had stolen his happiness had now turned to delight, for he had fulfilled the highest duty of being a son.',
+          'From that time on, whoever observes this Mokshada Ekadashi of the bright fortnight of Margashirsha with devotion has all his sins destroyed; his ancestors, made content, attain a good course; and he himself in the end attains liberation — fulfilling every desire like the wish-granting jewel, this is declared to be the supreme fruit of the vow.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'indira-ekadashi-katha',
+    titleHi: 'इन्दिरा एकादशी व्रत कथा',
+    titleEn: 'Indira Ekadashi Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/ekadashi/indira-ekadashi-vrat-katha.html'],
+    sections: [
+      {
+        id: 'king-indrasena-of-mahishmati',
+        titleHi: 'महिष्मती के राजा इन्द्रसेन',
+        titleEn: 'King Indrasena of Mahishmati',
+        bodyHi: [
+          'सतयुग की बात है। महिष्मती नामक सुन्दर नगरी में इन्द्रसेन नाम के एक धर्मात्मा राजा राज्य करते थे। उनका कोष धन-धान्य से भरा था, उनके पास हाथी-घोड़े और सेना थी, पुत्र-पौत्रों से उनका कुल सम्पन्न था, और प्रजा उन्हें पिता के समान मानती थी। फिर भी राजा का मन सांसारिक भोगों में नहीं उलझा था — वे प्रतिदिन भगवान विष्णु की आराधना करते और ‘गोविन्द-गोविन्द’ का स्मरण करते हुए अपना समय बिताते थे।',
+          'एक दिन राजा अपने राजमहल की सभा में बैठे थे कि आकाश-मार्ग से देवर्षि नारद वीणा बजाते और हरि का गुणगान करते हुए वहाँ उतर आए। मुनि को आते देख राजा सिंहासन से उठ खड़े हुए, उन्हें श्रेष्ठ आसन पर बिठाया, अर्घ्य और पाद्य से उनका पूजन किया और हाथ जोड़कर पूछा, ‘हे देवर्षि! आपका यहाँ पधारना मेरे लिए परम सौभाग्य है। कहिए, किस कारण आपका शुभागमन हुआ?’',
+        ],
+        bodyEn: [
+          'In the age of Satya, in a fair city named Mahishmati, there reigned a righteous king called Indrasena. His treasury overflowed with wealth and grain, he commanded elephants, horses and armies, his line was blessed with sons and grandsons, and his people loved him as a father. Yet the king\'s heart was not tangled in worldly pleasures — each day he worshipped Lord Vishnu and passed his hours remembering the name ‘Govinda, Govinda.’',
+          'One day, as the king sat in the assembly of his palace, the divine sage Narada descended through the path of the sky, playing his vina and singing the praises of Hari. Seeing the sage approach, the king rose from his throne, seated him upon a place of honour, worshipped him with offerings of water for his feet and hands, and with folded palms asked, ‘O divine sage! Your coming here is the highest good fortune for me. Tell me, for what reason has your auspicious visit come about?’',
+        ],
+      },
+      {
+        id: 'naradas-tidings-from-yamas-realm',
+        titleHi: 'नारद का यमलोक का संदेश',
+        titleEn: 'Narada\'s Tidings from Yama\'s Realm',
+        bodyHi: [
+          'नारद मुस्कुराकर बोले, ‘हे राजन्! मेरी बात बड़ी अद्भुत है, सुनो। ब्रह्मलोक से चलकर मैं यमलोक होता हुआ यहाँ आया हूँ। वहाँ मैंने धर्मराज यम को सिंहासन पर विराजमान देखा और उनके पास ही तुम्हारे पिता को भी बैठे पाया। वे धर्मात्मा होते हुए भी पूर्वजन्म के किसी व्रत-भंग के दोष से इस समय यमलोक में रहकर कष्ट भोग रहे हैं।’',
+          '‘उन्होंने मुझे पहचानकर बड़े स्नेह से एक संदेश दिया है, और कहा है कि मैं उसे तुम तक पहुँचा दूँ।’ यह सुनते ही राजा इन्द्रसेन का हृदय काँप उठा। हाथ जोड़कर, आँखों में आँसू भरकर उन्होंने कहा, ‘हे मुनिवर! मेरे पिता ने क्या कहा है, शीघ्र बताइए। अपने पिता को संकट में जानकर मैं एक क्षण भी चैन से नहीं बैठ सकता।’',
+          'नारद ने कहा, ‘तुम्हारे पिता ने कहलवाया है — हे पुत्र! आश्विन मास के कृष्ण पक्ष में जो इन्दिरा एकादशी आती है, उसका व्रत तुम मेरे निमित्त श्रद्धापूर्वक करो। उस व्रत के पुण्य के प्रभाव से मैं इस यमलोक के कष्ट से मुक्त होकर स्वर्ग को प्राप्त कर सकूँगा। यही मेरी अन्तिम अभिलाषा है।’',
+        ],
+        bodyEn: [
+          'Narada smiled and said, ‘O king! My news is most wondrous, so listen. Setting out from the realm of Brahma, I came here by way of the realm of Yama. There I saw Dharmaraja Yama seated upon his throne, and beside him I found your own father seated too. Though he was a righteous man, on account of some breaking of a vow in a former life, he now dwells in Yama\'s realm and suffers there.’',
+          '‘Recognising me, he gave me a message with great affection, and asked that I carry it to you.’ The moment he heard this, the heart of King Indrasena trembled. With folded hands and eyes filling with tears, he said, ‘O great sage! Quickly, tell me what my father has said. Knowing my father to be in distress, I cannot sit in peace for even a single moment.’',
+          'Narada said, ‘Your father has sent word — O son! In the dark fortnight of the month of Ashwina there comes the Ekadashi called Indira. Observe its vow with devotion on my behalf. By the power of that vow\'s merit, I shall be freed from the torment of this realm of Yama and may attain heaven. This is my final longing.’',
+        ],
+      },
+      {
+        id: 'the-king-asks-the-rite',
+        titleHi: 'राजा ने व्रत की विधि पूछी',
+        titleEn: 'The King Asks for the Manner of the Vow',
+        bodyHi: [
+          'पिता का संदेश सुनकर राजा इन्द्रसेन का शोक और भी गहरा हो गया, परन्तु साथ ही उनके मन में एक दृढ़ संकल्प जाग उठा। उन्होंने नारद के चरणों में मस्तक नवाकर कहा, ‘हे दयालु मुनि! आपने मुझ पर बड़ी कृपा की जो यह संदेश यहाँ तक पहुँचाया। अब आप ही मुझे इस इन्दिरा एकादशी के व्रत की पूरी विधि बताइए, जिससे मैं उसमें कोई त्रुटि न करूँ और मेरे पिता का उद्धार हो जाए।’',
+          'नारद ने स्नेहपूर्वक कहा, ‘सुनो राजन्! आश्विन कृष्ण पक्ष की दशमी के दिन प्रातः स्नान करके, श्रद्धा और संयम के साथ तुम पितरों का श्राद्ध और तर्पण करना। उस दिन एक बार भोजन करके मन, वचन और कर्म से शुद्ध रहना, और किसी भी प्रकार के विकार को पास न आने देना।’',
+          '‘फिर एकादशी के दिन प्रातः उठकर, संकल्प लेकर पूरे दिन निराहार रहना। भगवान विष्णु की प्रतिमा के समक्ष धूप, दीप, गन्ध, पुष्प और नैवेद्य से विधिपूर्वक पूजा करना, श्राद्ध में ब्राह्मणों को भोजन कराना, गायों को ग्रास देना, और सामर्थ्य के अनुसार दान देना। रात्रि में हरि का कीर्तन करते हुए जागरण करना। द्वादशी के दिन ब्राह्मणों को भोजन कराकर तब स्वयं पारण करना। ऐसा करने से तुम्हारे पिता निश्चय ही उद्धार पाएँगे।’',
+        ],
+        bodyEn: [
+          'Hearing his father\'s message, King Indrasena\'s grief deepened further, yet at the same time a firm resolve awoke within him. Bowing his head at Narada\'s feet, he said, ‘O merciful sage! You have shown me great kindness in carrying this message all the way here. Now tell me yourself the full manner of this Indira Ekadashi vow, so that I may make no error in it and my father may be delivered.’',
+          'Narada said with affection, ‘Listen, O king! On the tenth day of the dark fortnight of Ashwina, bathe in the morning, and with devotion and self-restraint perform the shraddha and tarpana for your ancestors. On that day take food only once, remain pure in thought, word and deed, and let no manner of impurity come near you.’',
+          '‘Then, rising at dawn on the day of Ekadashi, make your resolve and remain without food through the whole day. Before the image of Lord Vishnu, worship him duly with incense, lamp, fragrance, flowers and offerings of food; in the shraddha, feed brahmins, give a morsel to the cows, and offer charity according to your means. Through the night keep vigil, singing the praises of Hari. On the day of Dvadashi, feed the brahmins first, and only then break your own fast. Doing thus, your father shall surely find deliverance.’',
+        ],
+      },
+      {
+        id: 'indrasena-observes-the-vow',
+        titleHi: 'इन्द्रसेन का व्रत-पालन',
+        titleEn: 'Indrasena Observes the Vow',
+        bodyHi: [
+          'इतना कहकर देवर्षि नारद अन्तर्धान हो गए और अपने लोक को लौट गए। राजा इन्द्रसेन ने मुनि के बताए वचनों को अपने हृदय में धारण कर लिया और निश्चय किया कि वे पूरी निष्ठा से यह व्रत करेंगे। उन्होंने अपने पुत्रों, बन्धुओं, सेवकों और रनिवास की स्त्रियों — सबको बुलाकर सारी बात कह सुनाई, और सबने मिलकर इस व्रत में सम्मिलित होने का संकल्प लिया।',
+          'आश्विन कृष्ण पक्ष की दशमी आने पर राजा ने प्रातः स्नान कर पितरों का श्राद्ध और तर्पण किया, एक समय भोजन किया और संयम से रहे। एकादशी के दिन उन्होंने भगवान विष्णु के समक्ष व्रत का संकल्प लिया, दिनभर निर्जल-निराहार रहकर भक्तिपूर्वक पूजा की, धूप-दीप अर्पित किए, ब्राह्मणों को भोजन कराया, गौओं को ग्रास दिया और श्रद्धा से दान बाँटा।',
+          'उस रात्रि महिष्मती का सारा राजमहल हरि के नाम से गूँज उठा। दीपों की पंक्तियों के बीच राजा, रानी और प्रजा एक साथ बैठकर भगवान का कीर्तन करते रहे और सारी रात जागरण किया। द्वादशी के दिन प्रातः ब्राह्मणों को भोजन तथा दक्षिणा देकर, उनका आशीर्वाद लेकर राजा ने अन्त में स्वयं पारण किया। उनके मन में एक ही भावना थी — ‘हे प्रभो! इस व्रत का सम्पूर्ण फल मेरे पिता को प्राप्त हो।’',
+        ],
+        bodyEn: [
+          'Having said this, the divine sage Narada vanished and returned to his own realm. King Indrasena held the words the sage had spoken close in his heart and resolved that he would keep this vow with complete devotion. He summoned his sons, his kinsmen, his servants and the women of his household — all of them — and told them the whole matter, and together they all resolved to join in this vow.',
+          'When the tenth day of the dark fortnight of Ashwina arrived, the king bathed at dawn and performed the shraddha and tarpana for his ancestors, ate but once, and lived in restraint. On the day of Ekadashi he made his resolve before Lord Vishnu, remained the whole day without water or food, worshipped with devotion, offered incense and lamps, fed the brahmins, gave a morsel to the cows and distributed charity with faith.',
+          'That night the whole palace of Mahishmati rang with the name of Hari. Amid rows of lamps the king, the queen and the people sat together singing the Lord\'s praises and kept vigil through the entire night. On the morning of Dvadashi, after feeding the brahmins and giving them gifts and receiving their blessing, the king at last broke his own fast. One feeling alone filled his mind — ‘O Lord! Let the entire fruit of this vow reach my father.’',
+        ],
+      },
+      {
+        id: 'the-father-attains-heaven',
+        titleHi: 'पिता को स्वर्ग की प्राप्ति',
+        titleEn: 'The Father Attains Heaven',
+        bodyHi: [
+          'व्रत के पुण्य का प्रभाव तत्काल प्रकट हुआ। उसी समय आकाश में दिव्य पुष्पों की वर्षा होने लगी, और राजा इन्द्रसेन के पिता गरुड़ पर आरूढ़ होकर, दिव्य वस्त्र और आभूषणों से सुशोभित होते हुए दिखाई दिए। यमलोक के सारे कष्ट उनसे दूर हट गए थे और उनका मुख प्रसन्नता से दमक रहा था।',
+          'अपने पुत्र के व्रत-पुण्य के बल पर वे स्वर्गलोक की ओर जाते हुए बोले, ‘हे पुत्र! तेरा कल्याण हो। तेरी इस भक्ति और निष्ठा से मैं यमलोक के बन्धन से मुक्त होकर अब उत्तम लोक को जा रहा हूँ। तूने पुत्र का धर्म सच्चे अर्थों में निभाया।’ यह कहकर वे भगवान विष्णु के धाम को सिधार गए, और राजा का हृदय कृतज्ञता और आनन्द से भर उठा।',
+          'तब से कहा जाता है कि जो भी मनुष्य आश्विन कृष्ण पक्ष की इस इन्दिरा एकादशी का व्रत श्रद्धा और विधिपूर्वक करता है, उसके पितर सद्गति को प्राप्त होते हैं, उसके अपने पाप क्षीण होते हैं, और इस लोक में सुख-समृद्धि भोगकर अन्त में वह स्वयं भी भगवान विष्णु के परमधाम को प्राप्त करता है — यही इस व्रत का अक्षय फल कहा गया है।',
+        ],
+        bodyEn: [
+          'The power of the vow\'s merit revealed itself at once. In that very moment a shower of divine flowers began to fall from the sky, and the father of King Indrasena appeared, mounted upon Garuda, adorned with celestial garments and ornaments. All the torments of Yama\'s realm had fallen away from him, and his face glowed with joy.',
+          'Borne toward the realm of the gods upon the strength of his son\'s meritorious vow, he said, ‘O son! May it be well with you. By this devotion and faith of yours, I am freed from the bondage of Yama\'s realm and now go to the highest world. You have fulfilled the duty of a son in its truest sense.’ Saying this, he departed for the abode of Lord Vishnu, and the king\'s heart brimmed with gratitude and joy.',
+          'From that time it is said that whoever observes this Indira Ekadashi of the dark fortnight of Ashwina with devotion and in the proper manner, his ancestors attain a blessed destiny, his own sins are diminished, and after enjoying happiness and prosperity in this world he too attains in the end the supreme abode of Lord Vishnu — this is declared to be the imperishable fruit of the vow.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'aja-ekadashi-katha',
+    titleHi: 'अजा एकादशी व्रत कथा',
+    titleEn: 'Aja Ekadashi Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/ekadashi/aja-ekadashi-vrat-katha.html'],
+    sections: [
+      {
+        id: 'the-fallen-king',
+        titleHi: 'सत्यवादी राजा हरिश्चन्द्र का पतन',
+        titleEn: 'The Fall of the Truthful King Harishchandra',
+        bodyHi: [
+          'सूर्यवंश में हरिश्चन्द्र नाम के एक चक्रवर्ती राजा हुए, जिनके सत्य की कीर्ति तीनों लोकों में फैली हुई थी। कहा जाता था कि चाहे प्राण चले जाएँ, पर हरिश्चन्द्र के मुख से कभी असत्य नहीं निकलता। उनके राज्य में न कोई दुःखी था, न कोई भूखा, और प्रजा उन्हें पिता के समान मानती थी।',
+          'एक बार एक प्रतिज्ञा की रक्षा के लिए राजा को अपना सम्पूर्ण राज्य, कोष और वैभव विश्वामित्र मुनि को दान में दे देना पड़ा। दान देने के पश्चात भी जब दक्षिणा की माँग शेष रह गई, तो उसे चुकाने के लिए सत्य के उस पुजारी ने वह कर डाला जो किसी राजा ने न किया होगा — उसने स्वयं को, अपनी पत्नी शैव्या को और अपने नन्हे पुत्र रोहिताश्व को बेच डाला।',
+          'रानी और राजकुमार एक ब्राह्मण के यहाँ दास बने, और राजा हरिश्चन्द्र काशी में एक चाण्डाल के हाथ बिक गए। जो कभी स्वर्णमय सिंहासन पर विराजते थे, वे अब श्मशान-घाट पर मुर्दों के दाह का कर वसूलने वाले सेवक बन गए। फिर भी सत्य से उनका मुख नहीं फिरा।',
+        ],
+        bodyEn: [
+          'In the solar dynasty there reigned a sovereign emperor named Harishchandra, whose fame for truthfulness had spread through all the three worlds. It was said that though his very life should depart, never would a falsehood pass from Harishchandra’s lips. In his realm none was sorrowful and none went hungry, and his subjects regarded him as a father.',
+          'Once, to safeguard a pledge, the king was obliged to give away his entire kingdom, his treasury and all his splendour as a gift to the sage Vishvamitra. Even after that gift, when a further offering remained to be paid, this devotee of truth did what no king before him would have done — he sold himself, his wife Shaivya and his little son Rohitashva to settle the debt.',
+          'The queen and the young prince became servants in the house of a brahmin, while King Harishchandra was sold in Kashi to a keeper of the cremation grounds. He who had once sat upon a golden throne now became a servant collecting the tax for burning the dead upon the funeral ghat. And yet his face never turned away from the truth.',
+        ],
+      },
+      {
+        id: 'servitude-at-the-burning-ground',
+        titleHi: 'श्मशान में राजा का दुःख',
+        titleEn: 'The King\'s Sorrow at the Cremation Ground',
+        bodyHi: [
+          'चाण्डाल की सेवा में रहते हुए राजा हरिश्चन्द्र के बारह-बारह वर्ष बीत गए। दिन-रात वे श्मशान के द्वार पर खड़े रहते, मुर्दों के साथ आने वालों से कफ़न और दाह का कर माँगते, और मन ही मन अपने भाग्य पर सोचते रहते।',
+          '‘हाय! किस पाप का यह फल मैं भोग रहा हूँ?’ राजा विलाप करते, ‘कहाँ वह राज्य, कहाँ वह रानी, कहाँ मेरा प्यारा पुत्र — और कहाँ यह जलती चिताओं की राख से भरा घाट! क्या मैं सचमुच वही हरिश्चन्द्र हूँ, अथवा यह कोई भयानक स्वप्न है?’ इस चिन्ता में उनका शरीर सूख गया था और नेत्रों से आँसू बहते रहते थे।',
+          'फिर भी, इतनी विपत्ति में पड़कर भी, राजा ने न तो अपना धर्म छोड़ा और न ही सत्य का मार्ग। वे अपने स्वामी की सेवा निष्ठापूर्वक करते रहे और प्रभु की इच्छा को नतमस्तक होकर स्वीकार करते रहे, इस आशा में कि कभी तो यह अन्धकार की रात बीतेगी।',
+        ],
+        bodyEn: [
+          'While serving the keeper of the cremation grounds, twelve long years passed over King Harishchandra. Day and night he stood at the gateway of the burning ground, demanding from those who came with their dead the tax for the shroud and the fire, and brooding within himself upon his fate.',
+          '‘Alas! For what sin am I suffering this fruit?’ the king would lament. ‘Where is that kingdom, where that queen, where my beloved son — and where this ghat heaped with the ash of blazing pyres! Am I truly that same Harishchandra, or is this some dreadful dream?’ With such grief his body had withered, and tears flowed ceaselessly from his eyes.',
+          'And yet, fallen into such calamity, the king abandoned neither his duty nor the path of truth. He served his master faithfully and, bowing his head, accepted the will of the Lord, hoping that this night of darkness would one day pass.',
+        ],
+      },
+      {
+        id: 'the-sage-gautama-arrives',
+        titleHi: 'गौतम ऋषि का आगमन और उपदेश',
+        titleEn: 'The Arrival and Counsel of Sage Gautama',
+        bodyHi: [
+          'एक दिन, जब राजा अपनी दशा पर अत्यन्त दुःखी होकर बैठे थे, उसी मार्ग से महर्षि गौतम वहाँ आ पहुँचे। राजा ने उन तेजस्वी मुनि को देखा तो उनके चरणों में गिर पड़े और हाथ जोड़कर अपनी सारी विपत्ति का वृत्तान्त कह सुनाया।',
+          'राजा की करुण कथा सुनकर गौतम मुनि का हृदय द्रवित हो उठा। उन्होंने कहा, ‘हे राजन्, सौभाग्य से इस समय भाद्रपद मास के कृष्ण पक्ष की एकादशी निकट है, जिसे अजा एकादशी कहते हैं। यह व्रत समस्त पापों का नाश करने वाला और परम पुण्यदायी है।’',
+          '‘तुम श्रद्धा और नियम के साथ इस अजा एकादशी का व्रत करो,’ मुनि ने आगे कहा, ‘दिनभर उपवास रखकर भगवान विष्णु का पूजन और रात्रि-जागरण करो। इस व्रत के प्रभाव से तुम्हारे सब पाप भस्म हो जाएँगे और तुम्हारी समस्त विपत्तियाँ दूर हो जाएँगी।’ इतना कहकर ऋषि गौतम राजा को आशीर्वाद देकर अन्तर्धान हो गए।',
+        ],
+        bodyEn: [
+          'One day, while the king sat utterly grief-stricken over his condition, along that very road came the great sage Gautama. When the king beheld that radiant sage, he fell at his feet and, with folded hands, recounted to him the whole tale of his misfortune.',
+          'Hearing the king’s piteous story, the heart of the sage Gautama melted with compassion. He said, ‘O king, by good fortune the Ekadashi of the dark fortnight of the month of Bhadrapada is now at hand, which is called Aja Ekadashi. This vow destroys all sins and bestows the highest merit.’',
+          '‘Observe this Aja Ekadashi with faith and discipline,’ the sage continued. ‘Keep a fast throughout the day, worship Lord Vishnu and keep vigil through the night. By the power of this vow all your sins shall be burned to ashes, and every one of your calamities shall be dispelled.’ Having spoken thus, the sage Gautama blessed the king and vanished from sight.',
+        ],
+      },
+      {
+        id: 'the-vow-observed',
+        titleHi: 'राजा का व्रत-पालन',
+        titleEn: 'The King Observes the Vow',
+        bodyHi: [
+          'ऋषि के वचनों ने राजा के बुझते हृदय में आशा का दीपक जला दिया। जब अजा एकादशी का दिन आया, तो हरिश्चन्द्र ने श्मशान के समस्त कर्तव्य निभाते हुए भी पूर्ण नियम से उपवास का संकल्प लिया।',
+          'उन्होंने स्नान कर शुद्ध भाव से भगवान विष्णु का स्मरण किया, दिनभर अन्न-जल त्यागकर प्रभु के नाम का जप करते रहे, और रात्रि में निद्रा त्यागकर जागरण किया। दीन और निर्धन होकर भी उनके पास जो श्रद्धा थी, वही उनका सबसे बड़ा अर्घ्य बन गई।',
+          'इस प्रकार राजा ने मन, वचन और कर्म से अजा एकादशी का व्रत सम्पन्न किया। उनके अटल सत्य और इस पवित्र व्रत के संयुक्त पुण्य ने ऊपर देवलोक तक हलचल मचा दी, और जो दुःख वर्षों से उनका पीछा कर रहा था, उसका अन्त निकट आ गया।',
+        ],
+        bodyEn: [
+          'The sage’s words kindled a lamp of hope in the king’s flickering heart. When the day of Aja Ekadashi arrived, Harishchandra, even while carrying out all his duties at the cremation ground, took the resolve to fast with complete discipline.',
+          'He bathed, and with a pure heart remembered Lord Vishnu; abandoning food and water throughout the day, he kept repeating the name of the Lord, and in the night he gave up sleep and kept vigil. Though poor and wretched, the faith he held became his greatest offering.',
+          'Thus did the king complete the vow of Aja Ekadashi in thought, word and deed. The combined merit of his unshakeable truth and this sacred vow stirred even the realm of the gods above, and the end drew near of the sorrow that had pursued him for years.',
+        ],
+      },
+      {
+        id: 'the-restoration',
+        titleHi: 'राज्य, परिवार और पुण्यलोक की प्राप्ति',
+        titleEn: 'The Restoration of Kingdom, Family and the Holy Realm',
+        bodyHi: [
+          'व्रत के पूर्ण होते ही आकाश में देव-दुन्दुभियाँ बज उठीं और पुष्पों की वर्षा होने लगी। देवता स्वयं उपस्थित हुए, और राजा ने देखा कि उसका पुत्र रोहिताश्व, जो सर्पदंश से मृत हो चुका था, फिर से जीवित होकर उसके सम्मुख खड़ा है।',
+          'उसी क्षण रानी शैव्या भी अपने पूर्व रूप और गौरव में लौट आईं, और जिस ब्राह्मण तथा चाण्डाल के रूप में स्वयं देवता और धर्म राजा की परीक्षा ले रहे थे, उन्होंने प्रकट होकर हरिश्चन्द्र की सत्यनिष्ठा की प्रशंसा की। अजा एकादशी के पुण्य-प्रताप से राजा का खोया हुआ राज्य, उसका कोष और उसका सारा वैभव उसे फिर से प्राप्त हो गया।',
+          'अन्त में हरिश्चन्द्र अपने परिवार और प्रजा सहित दीर्घकाल तक धर्मपूर्वक राज्य कर, अपने सम्पूर्ण कुल के साथ उत्तम पुण्यलोक को सिधारे। तभी से कहा जाता है कि जो भी मनुष्य श्रद्धा और भक्ति से भाद्रपद कृष्ण पक्ष की इस अजा एकादशी का व्रत करता है, उसके समस्त पाप नष्ट हो जाते हैं, उसकी विपत्तियाँ दूर होती हैं, और भगवान विष्णु की कृपा से वह इस लोक में सुख तथा अन्त में मोक्ष को प्राप्त करता है।',
+        ],
+        bodyEn: [
+          'The very moment the vow was completed, the celestial kettledrums sounded in the sky and a rain of flowers began to fall. The gods themselves appeared, and the king saw that his son Rohitashva, who had died of a snakebite, now stood living once more before him.',
+          'In that same instant Queen Shaivya too returned to her former form and dignity; and the beings who, in the guise of the brahmin and the keeper of the cremation grounds, were the gods and Dharma themselves testing the king, revealed their true selves and praised Harishchandra’s devotion to truth. By the meritorious power of Aja Ekadashi, the king regained his lost kingdom, his treasury and all his splendour.',
+          'In the end Harishchandra, together with his family and his subjects, ruled righteously for a long age and then departed, with all his lineage, to the highest holy realm. From that time it is said that whoever observes this Aja Ekadashi of the dark fortnight of Bhadrapada with faith and devotion has all his sins destroyed and his calamities dispelled, and by the grace of Lord Vishnu attains happiness in this world and, in the end, liberation.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
     id: 'putrada-ekadashi-katha',
     titleHi: 'पुत्रदा एकादशी व्रत कथा',
     titleEn: 'Putrada Ekadashi Katha',
