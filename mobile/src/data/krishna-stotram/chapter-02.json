@@ -1,0 +1,44 @@
+{
+  "chapter": 2,
+  "titleHi": "कृष्ण प्रणाम मन्त्र",
+  "titleEn": "Krishna Pranama Mantra",
+  "verseCount": 2,
+  "source": {
+    "baseText": "Traditional Krishna pranama shloka 'Krishnaya Vasudevaya' (Vishnu Purana tradition), widely recited as an obeisance to Shri Krishna.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/",
+      "https://shlokam.org/"
+    ],
+    "retrievedOn": "2026-06-15"
+  },
+  "verses": [
+    {
+      "id": "ks-2-0",
+      "chapter": 2,
+      "number": 0,
+      "sanskrit": [
+        "॥ कृष्ण प्रणाम मन्त्र ॥"
+      ],
+      "linesEn": [
+        "Shri Krishna Pranama Mantra"
+      ],
+      "meaningHi": "लाभ:\n\nयह एक प्रसिद्ध प्रणाम मन्त्र है जिसके द्वारा भक्त भगवान श्रीकृष्ण को साष्टांग नमस्कार करते हैं। इसका नित्य जप अहंकार का शमन कर मन में विनम्रता और शरणागति का भाव जगाता है। प्रातः-सायं, पूजा के आरम्भ-समापन में अथवा किसी भी समय इसे श्रद्धापूर्वक दोहराया जा सकता है।\n\nकथा:\n\nइस श्लोक में भगवान कृष्ण को चार नामों से पुकारा गया है — कृष्ण (आकर्षण करने वाले), वासुदेव (वसुदेव-पुत्र तथा सबमें वास करने वाले), हरि (पापों को हरने वाले) और परमात्मा (सर्वव्यापी परम तत्त्व)। फिर उन्हें 'गोविन्द' कहकर प्रणाम किया जाता है, जो शरण में आए हुए भक्तों के समस्त क्लेशों का नाश करते हैं।",
+      "meaningEn": "Benefits:\n\nThis is a celebrated pranama (obeisance) mantra by which devotees offer their salutations to Lord Shri Krishna. Its daily repetition dissolves the ego and awakens humility and surrender in the heart. It may be recited with devotion at dawn and dusk, at the beginning and end of worship, or at any time.\n\nStory:\n\nIn this shloka the Lord is invoked by four names — Krishna (the all-attractive), Vasudeva (son of Vasudeva and the one who dwells in all), Hari (remover of sins), and Paramatma (the all-pervading Supreme Self). He is then saluted as Govinda, who destroys every sorrow of the devotees who bow to Him."
+    },
+    {
+      "id": "ks-2-1",
+      "chapter": 2,
+      "number": 1,
+      "sanskrit": [
+        "ॐ कृष्णाय वासुदेवाय हरये परमात्मने ।",
+        "प्रणतक्लेशनाशाय गोविन्दाय नमो नमः ॥"
+      ],
+      "linesEn": [
+        "oṁ kṛiṣhṇāya vāsudevāya haraye paramātmane",
+        "praṇatakleśanāśāya govindāya namo namaḥ"
+      ],
+      "meaningHi": "ॐ — हे कृष्ण! हे वासुदेव! हे हरि! हे परमात्मा! शरण में आए हुए जनों के क्लेश का नाश करने वाले हे गोविन्द! आपको बार-बार नमस्कार है, नमस्कार है।",
+      "meaningEn": "Om. O Krishna, O Vasudeva, O Hari, O Supreme Soul (Paramatma)! O Govinda, destroyer of the sorrows of those who bow before You — salutations unto You again and again."
+    }
+  ]
+}
