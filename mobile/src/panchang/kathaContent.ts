@@ -79,6 +79,490 @@ function summaryContent(draft: SummaryKathaDraft): KathaContentEntry {
 
 export const KATHA_CONTENT: readonly KathaContentEntry[] = [
   fullContent({
+    id: 'vasant-panchami-katha',
+    titleHi: 'वसंत पंचमी कथा',
+    titleEn: 'Vasant Panchami Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'silent-creation',
+        titleHi: 'मौन सृष्टि का दुःख',
+        titleEn: 'The sorrow of a silent creation',
+        bodyHi: [
+          'सृष्टि के आदि में ब्रह्मा जी ने अपने संकल्प से लोक, पर्वत, नदियाँ और असंख्य जीव रचे। पृथ्वी पर वृक्ष खड़े थे, समुद्र भरे थे और आकाश में सूर्य-चंद्र अपने मार्ग पर चलते थे; फिर भी जब उन्होंने अपनी रचना की ओर दृष्टि घुमाई, तो उनका मन एक अनोखी उदासी से भर उठा।',
+          'चारों ओर एक भारी सन्नाटा पसरा था। न कहीं किसी की वाणी थी, न कोई गीत, न हँसी, न किसी मन का भाव दूसरे तक पहुँचाने का कोई साधन। जीव चलते-फिरते अवश्य थे, पर मूक थे, मानो कोई सुंदर चित्र रंगों से भरा हो किंतु उसमें प्राण न फूँका गया हो। यह नीरवता देखकर स्वयं रचयिता का हृदय अधूरेपन से व्याकुल हो गया।',
+        ],
+        bodyEn: [
+          'At the dawn of creation, Brahma shaped the worlds, the mountains, the rivers and countless living beings out of his own will. Trees stood upon the earth, the oceans were brimming, and in the sky the sun and the moon moved along their appointed paths; yet when he turned his gaze upon all that he had made, his heart filled with a strange sadness.',
+          'A heavy stillness lay over everything. There was no voice anywhere, no song, no laughter, and no way for the feeling of one heart to reach another. The creatures walked and stirred, but they were mute, as though a beautiful picture had been filled with colour and never breathed into life. Seeing this silence, the very heart of the creator grew restless with a sense of incompleteness.',
+        ],
+      },
+      {
+        id: 'vishnu-counsel',
+        titleHi: 'विष्णु का परामर्श',
+        titleEn: 'The counsel of Vishnu',
+        bodyHi: [
+          'अपने मन की इस वेदना के साथ ब्रह्मा जी क्षीरसागर में शयन करने वाले भगवान विष्णु के समीप पहुँचे और हाथ जोड़कर बोले, ‘मैंने सब कुछ रच दिया, फिर भी मेरी सृष्टि गूँगी और रसहीन है। इसमें न ज्ञान का प्रकाश है, न वाणी की मधुरता। मैं क्या करूँ कि यह जगत सजीव हो उठे?’',
+          'करुणामय विष्णु मुस्कराए और बोले, ‘हे विधाता, तुम्हारी रचना अधूरी इसलिए नहीं कि उसमें रूप का अभाव है, बल्कि इसलिए कि अभी उसमें वाणी, ज्ञान और संगीत का संचार नहीं हुआ। एक ऐसी शक्ति का आवाहन करो जो हर मुख को स्वर दे, हर बुद्धि को विवेक दे और हर हृदय को सुर से भर दे। उसी के स्पर्श से तुम्हारी सृष्टि सार्थक होगी।’',
+        ],
+        bodyEn: [
+          'Carrying this ache in his heart, Brahma went to Lord Vishnu, who reclines upon the ocean of milk, and folding his hands he said, ‘I have fashioned everything, yet my creation remains mute and without savour. It holds neither the light of knowledge nor the sweetness of speech. What must I do so that this world may come alive?’',
+          'The compassionate Vishnu smiled and replied, ‘O maker of worlds, your creation is incomplete not because it lacks form, but because the flow of speech, of wisdom and of music has not yet entered it. Call forth a power who will give a voice to every mouth, discernment to every mind, and melody to every heart. By her touch alone will your creation find its meaning.’',
+        ],
+      },
+      {
+        id: 'saraswati-appears',
+        titleHi: 'देवी सरस्वती का प्राकट्य',
+        titleEn: 'The appearance of Devi Saraswati',
+        bodyHi: [
+          'विष्णु के वचनों से ब्रह्मा जी का मुख प्रसन्नता से दीप्त हो उठा। उन्होंने ध्यान में लीन होकर अपने कमंडलु से पवित्र जल छिड़का, और उसी क्षण एक अद्भुत तेजपुंज प्रकट हुआ। उस ज्योति में से श्वेत वस्त्र धारण किए एक देवी प्रकट हुईं — शुभ्र कमल पर विराजमान, चार भुजाओं वाली, एक हाथ में वीणा, दूसरे में पुस्तक और तीसरे में स्फटिक की माला लिए।',
+          'ब्रह्मा जी ने आदरपूर्वक उनसे प्रार्थना की कि वे इस मूक जगत को स्वर प्रदान करें। देवी ने मंद स्मित के साथ अपनी वीणा के तारों को छेड़ा। ज्यों ही पहला नाद उठा, चारों दिशाओं में एक मधुर कंपन दौड़ गया; वही दिव्य स्वर वाणी, संगीत और सुर का मूल बन गया। तब से वे ‘वाग्देवी’ कहलाईं — वाणी, विद्या और कला की अधिष्ठात्री, माँ सरस्वती।',
+        ],
+        bodyEn: [
+          'At Vishnu’s words, Brahma’s face shone with joy. Sinking into deep meditation, he sprinkled the sacred water from his kamandalu, and in that very instant a wondrous radiance appeared. Out of that light emerged a goddess robed in white — seated upon a spotless lotus, four-armed, holding a veena in one hand, a book in another, and a crystal rosary in the third.',
+          'With reverence Brahma prayed that she would grant a voice to this voiceless world. The goddess, with a gentle smile, drew her fingers across the strings of her veena. The moment the first note rose, a sweet trembling ran through all the directions; that very divine sound became the source of speech, of music and of melody. From then on she was called Vagdevi — the presiding mother of voice, learning and the arts, Maa Saraswati.',
+        ],
+      },
+      {
+        id: 'voice-to-the-world',
+        titleHi: 'जगत को वाणी का वरदान',
+        titleEn: 'The gift of voice to the world',
+        bodyHi: [
+          'वीणा का वह नाद जैसे-जैसे फैलता गया, समस्त सृष्टि जाग उठी। नदियाँ कल-कल बहकर गीत गाने लगीं, पवन वृक्षों के पत्तों में सरसराहट भरने लगा, पक्षी कूजने लगे और मनुष्यों के कंठ से पहली बार शब्द फूटे। मूक प्राणियों को वाणी मिली, और जो भाव अब तक मन में बंद थे, वे स्वर बनकर बहने लगे।',
+          'देवी सरस्वती की कृपा से ही ज्ञान, अक्षर, छंद, राग और समस्त विद्याएँ जगत में प्रकट हुईं। उनके हाथ की पुस्तक शास्त्रों का, वीणा संगीत का, माला साधना का और श्वेत वस्त्र निर्मल बुद्धि का प्रतीक बना। ब्रह्मा जी की सृष्टि, जो अब तक एक नीरव चित्र थी, उनकी ही कृपा से सजीव, सुरमय और सार्थक हो उठी।',
+        ],
+        bodyEn: [
+          'As that note of the veena spread further and further, the whole of creation awoke. The rivers began to sing as they flowed murmuring along, the wind set the leaves of the trees rustling, the birds began to call, and from the throats of human beings words burst forth for the first time. The mute creatures received speech, and the feelings that had until then been locked within their hearts now flowed out as sound.',
+          'It was by the grace of Devi Saraswati that knowledge, letters, metre, melody and all the branches of learning appeared in the world. The book in her hand became the emblem of the scriptures, her veena of music, her rosary of disciplined practice, and her white robe of a pure and untroubled mind. Brahma’s creation, which until then had been a silent picture, was through her grace made living, full of melody, and meaningful.',
+        ],
+      },
+      {
+        id: 'vasant-panchami-day',
+        titleHi: 'वसंत पंचमी का पावन दिन',
+        titleEn: 'The sacred day of Vasant Panchami',
+        bodyHi: [
+          'जिस तिथि को देवी सरस्वती प्रकट हुई थीं, वह माघ शुक्ल पंचमी थी — ठीक वही दिन जब प्रकृति शीत की जड़ता त्यागकर वसंत का स्वागत करती है। खेत पीले सरसों के फूलों से लहलहा उठते हैं, कोयल कूकने लगती है और हर ओर नवजीवन का उल्लास छा जाता है। इसी कारण यह दिन ‘वसंत पंचमी’ कहलाया और माँ सरस्वती के प्राकट्य-पर्व के रूप में पूजा जाने लगा।',
+          'आज भी इस दिन घर, विद्यालय और मंदिर सरस्वती की प्रतिमा से सज उठते हैं। पीले वस्त्र पहनकर भक्त उन्हें पीले पुष्प, पुस्तकें और वीणा अर्पित करते हैं; छोटे बालक इसी शुभ दिन पहली बार अक्षर लिखना आरंभ करते हैं। कहा जाता है कि जो श्रद्धा से वाग्देवी का पूजन करता है, उसकी बुद्धि निर्मल होती है, वाणी में मधुरता आती है और विद्या तथा कला में उसे सिद्धि प्राप्त होती है। इस प्रकार मौन से उपजी वह दिव्य वीणा-ध्वनि आज भी हर साधक के हृदय में ज्ञान का दीप जलाती रहती है।',
+        ],
+        bodyEn: [
+          'The day on which Devi Saraswati appeared was the fifth bright day of the month of Magha — the very day when nature casts off the dullness of winter and welcomes the spring. The fields ripple with golden mustard blossoms, the cuckoo begins to sing, and a joy of new life spreads in every direction. For this reason the day came to be called Vasant Panchami and is honoured as the festival of Maa Saraswati’s appearance.',
+          'Even today, on this day homes, schools and temples are adorned with the image of Saraswati. Clad in yellow, devotees offer her yellow flowers, books and the veena; little children write their first letters upon this auspicious day. It is said that whoever worships Vagdevi with devotion gains a clear mind, sweetness in speech, and mastery in learning and the arts. So the divine note of that veena, born out of silence, still kindles the lamp of knowledge in the heart of every seeker.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'janmashtami-katha',
+    titleHi: 'जन्माष्टमी कथा',
+    titleEn: 'Janmashtami Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'kamsa-tyranny',
+        titleHi: 'मथुरा पर कंस का अत्याचार',
+        titleEn: 'Kamsa’s tyranny over Mathura',
+        bodyHi: [
+          'यमुना के तट पर बसी मथुरा कभी यदुवंश की सुख-समृद्धि से भरी नगरी थी, पर अब उसके राजमहल में भय की छाया मँडराती थी। उग्रसेन को उसके अपने ही पुत्र कंस ने बंदी बनाकर सिंहासन हड़प लिया था। कंस बलवान था, क्रूर था, और अपने अहंकार में डूबा हुआ था; उसके राज्य में संत-महात्मा सहमे रहते और प्रजा हर रात किसी अनहोनी की प्रतीक्षा में आँखें मूँदती।',
+          'कंस को अपनी बहन देवकी से अत्यंत स्नेह था। जब देवकी का विवाह यादव वसुदेव से हुआ, तो कंस स्वयं उल्लास में भरकर उनका रथ हाँकने लगा। फूलों से सजे उस रथ पर बैठे नवदंपती को नगरवासी आशीर्वाद दे रहे थे, और एक क्षण के लिए मथुरा का भय भूलकर हर्ष में डूब गई थी।',
+          'किंतु जिस क्षण कंस सबसे प्रसन्न था, उसी क्षण आकाश से एक गंभीर वाणी गूँज उठी। उस अदृश्य आकाशवाणी ने जो कहा, उसने रथ की डोर थामे कंस के हाथ काँपते छोड़ दिए।',
+        ],
+        bodyEn: [
+          'Mathura, settled on the banks of the Yamuna, had once been a city brimming with the prosperity of the Yadava clan, but now a shadow of fear hung over its royal halls. King Ugrasena had been thrown into prison by his own son Kamsa, who had seized the throne. Kamsa was mighty, he was cruel, and he was drowned in his own arrogance; in his kingdom the saints and sages shrank back in dread, and every night the people closed their eyes awaiting some calamity.',
+          'Kamsa held a deep affection for his sister Devaki. When Devaki was married to the Yadava noble Vasudeva, Kamsa himself, brimming with joy, took up the reins of their chariot to drive it. The newlyweds sat upon that flower-decked chariot as the townsfolk showered blessings upon them, and for a single moment Mathura forgot its fear and sank into delight.',
+          'Yet at the very instant Kamsa was happiest, a grave voice resounded from the sky. What that unseen heavenly proclamation declared made the reins tremble in the hands of Kamsa who held them.',
+        ],
+      },
+      {
+        id: 'prophecy-and-prison',
+        titleHi: 'आकाशवाणी और बंदीगृह',
+        titleEn: 'The prophecy and the prison',
+        bodyHi: [
+          '‘हे कंस,’ आकाशवाणी बोली, ‘जिस बहन को तू इतने प्रेम से ले जा रहा है, उसी का आठवाँ पुत्र तेरा काल बनेगा और तेरे हाथों तेरा वध होगा।’ इतना सुनते ही कंस का स्नेह क्रोध में बदल गया। उसने तलवार खींच ली और देवकी के बाल पकड़कर उसे मार डालने को उद्यत हो गया।',
+          'वसुदेव ने हाथ जोड़कर कंस को रोका और कहा, ‘हे राजन, स्त्री का वध तुम्हारी कीर्ति पर कलंक होगा। तुझे भय देवकी से नहीं, उसकी संतान से है। मैं वचन देता हूँ — इसके गर्भ से जो भी शिशु जन्मेगा, उसे मैं स्वयं तेरे हाथों में सौंप दूँगा।’ वसुदेव के सत्यवचन पर विश्वास कर कंस ने उस क्षण तो तलवार रोक ली।',
+          'किंतु कंस का संदेह कभी शांत न हुआ। उसने देवकी और वसुदेव दोनों को लोहे की बेड़ियों में जकड़कर कारागार में डाल दिया। एक-एक करके देवकी के छह शिशु जन्मे, और निष्ठुर कंस ने हर एक को मार डाला। प्रजा सिसकती रही, और बंदीगृह की दीवारों के भीतर एक माँ का हृदय बार-बार टूटता रहा।',
+        ],
+        bodyEn: [
+          '‘O Kamsa,’ the heavenly voice declared, ‘this very sister whom you carry away with such love—her eighth son shall become your death, and by his hand you shall be slain.’ The moment he heard this, Kamsa’s affection turned to rage. He drew his sword, seized Devaki by her hair, and made ready to kill her then and there.',
+          'Folding his hands, Vasudeva stopped Kamsa and said, ‘O king, the killing of a woman would be a stain upon your fame. Your danger is not from Devaki but from her children. I give you my word—whatever child is born of her womb, I myself shall place into your hands.’ Trusting in Vasudeva’s truthful vow, Kamsa stayed his sword for that moment.',
+          'But Kamsa’s suspicion was never stilled. He bound both Devaki and Vasudeva in iron chains and cast them into prison. One after another, six infants were born to Devaki, and the merciless Kamsa slew each of them. The people wept on, and within the walls of that dungeon a mother’s heart broke again and again.',
+        ],
+      },
+      {
+        id: 'midnight-birth',
+        titleHi: 'अर्धरात्रि में श्रीकृष्ण का अवतरण',
+        titleEn: 'The midnight descent of Shri Krishna',
+        bodyHi: [
+          'समय बीतता गया और भाद्रपद मास के कृष्ण पक्ष की अष्टमी आ पहुँची। रोहिणी नक्षत्र आकाश में उदित था और घनघोर बादल वर्षा कर रहे थे। उसी अर्धरात्रि में, कारागार की उस अंधेरी कोठरी में, देवकी के गर्भ से स्वयं भगवान विष्णु ने आठवें पुत्र के रूप में अवतार लिया।',
+          'जिस क्षण शिशु प्रकट हुआ, कोठरी एक दिव्य प्रकाश से भर उठी। उस तेज में देवकी और वसुदेव ने शंख, चक्र, गदा और पद्म धारण किए चतुर्भुज नारायण के दर्शन किए। दोनों ने हाथ जोड़कर उस अद्भुत बालक को प्रणाम किया, और भगवान ने उन्हें अपने पूर्वजन्मों की स्मृति कराकर अपना संकल्प बताया।',
+          '‘मुझे शीघ्र गोकुल में नंद के घर पहुँचा दो,’ बालरूप नारायण ने वसुदेव से कहा, ‘वहाँ यशोदा ने अभी-अभी एक कन्या को जन्म दिया है। उस कन्या को यहाँ ले आओ।’ इतना कहते ही चमत्कार हुआ — वसुदेव की बेड़ियाँ अपने आप खुल गईं, कारागार के पहरेदार गहरी नींद में डूब गए, और लोहे के विशाल द्वार स्वयं खुलते चले गए।',
+        ],
+        bodyEn: [
+          'Time passed on, and the eighth night—the Ashtami of the dark fortnight of the month of Bhadrapada—arrived. The Rohini constellation had risen in the sky, and thick clouds were pouring down rain. In that very midnight, within that dark cell of the prison, Lord Vishnu himself descended as the eighth son from the womb of Devaki.',
+          'The instant the child appeared, the cell filled with a divine radiance. Within that glow Devaki and Vasudeva beheld the four-armed Narayana, bearing the conch, the discus, the mace, and the lotus. Folding their hands, the two bowed to that wondrous child, and the Lord, awakening in them the memory of their former births, revealed his purpose.',
+          '‘Carry me at once to Gokul, to the house of Nanda,’ the infant Narayana said to Vasudeva, ‘for there Yashoda has just this moment given birth to a daughter. Bring that girl here.’ No sooner had he spoken than a marvel unfolded—Vasudeva’s chains fell open of their own accord, the prison guards sank into deep slumber, and the great iron gates swung open by themselves.',
+        ],
+      },
+      {
+        id: 'crossing-yamuna',
+        titleHi: 'उफनती यमुना पार गोकुल की यात्रा',
+        titleEn: 'Crossing the flooded Yamuna to Gokul',
+        bodyHi: [
+          'वसुदेव ने नवजात शिशु को एक टोकरी में रखा और उसे सिर पर उठाकर वर्षा की उस काली रात में बाहर निकल पड़े। मूसलाधार बारिश से बचाने के लिए शेषनाग ने अपने सहस्र फणों का छत्र बालक के ऊपर तान दिया, और वसुदेव बिना रुके आगे बढ़ते रहे।',
+          'मार्ग में यमुना नदी उफान पर थी, उसकी लहरें गरजकर ऊपर उठ रही थीं। वसुदेव ठिठके, पर ज्यों ही उन्होंने जल में पाँव रखा, नदी ने शिशु के चरण-स्पर्श की अभिलाषा से अपना जल घटा दिया और मार्ग दे दिया। वसुदेव सकुशल दूसरे तट पर गोकुल पहुँच गए।',
+          'नंद के घर में सब योगमाया की निद्रा में सो रहे थे। वसुदेव ने चुपचाप अपने पुत्र को सोई हुई यशोदा के पास लिटा दिया और उनकी नवजात कन्या को गोद में उठा लिया। फिर वे उसी पथ से लौट पड़े, और यमुना ने फिर उन्हें मार्ग दिया।',
+        ],
+        bodyEn: [
+          'Vasudeva placed the newborn in a basket, lifted it upon his head, and set out into that black, rain-lashed night. To shield the child from the torrential downpour, the serpent Sheshanaga spread the canopy of his thousand hoods above the infant, and Vasudeva pressed forward without pause.',
+          'On the way the river Yamuna was in flood, her waves rising and roaring high. Vasudeva hesitated, but the moment he set foot in the water, the river—longing to touch the feet of the child—lowered her waters and gave him passage. Vasudeva crossed safely to the far bank and reached Gokul.',
+          'In Nanda’s house all lay sleeping under the slumber of Yogamaya. Quietly Vasudeva laid his son beside the sleeping Yashoda and lifted her newborn daughter into his arms. Then he turned back along the same path, and once more the Yamuna parted to give him way.',
+        ],
+      },
+      {
+        id: 'yogamaya-and-kamsa',
+        titleHi: 'योगमाया की चेतावनी और कंस की विफलता',
+        titleEn: 'Yogamaya’s warning and Kamsa’s failure',
+        bodyHi: [
+          'वसुदेव कारागार लौटे ही थे कि बेड़ियाँ फिर ज्यों की त्यों जुड़ गईं और द्वार बंद हो गए। नवजात कन्या के रुदन से पहरेदार जाग पड़े और दौड़कर कंस को समाचार दिया कि देवकी का आठवाँ संतान जन्म ले चुका है।',
+          'कंस भागता हुआ बंदीगृह आया और देवकी की गोद से उस कन्या को छीनकर शिला पर पटकने को उठाया। पर वह कन्या साधारण न थी — वह योगमाया थी। कंस के हाथ से छूटते ही वह आकाश में अष्टभुजा देवी के रूप में प्रकट हो गई और गरजकर बोली, ‘रे मूर्ख! तेरा वध करने वाला तो जन्म ले चुका है और सुरक्षित स्थान पर पल रहा है। मुझे मारने से तेरा कुछ भला न होगा।’ इतना कहकर वह अंतर्धान हो गई।',
+          'कंस के लाख प्रयत्न उसके भाग्य को न मोड़ सके; नियति की वही वाणी सत्य निकली, और समय आने पर वही बालक कृष्ण उसके अंत का कारण बना। तभी से भाद्रपद कृष्ण अष्टमी की उस पावन अर्धरात्रि को भक्तजन उपवास रखते, झूले सजाते और ‘नंद के आनंद भयो, जय कन्हैया लाल की’ के जयघोष से जागरण करते हैं। जो श्रद्धा से यह जन्माष्टमी व्रत रखता और कृष्ण-जन्म की यह कथा सुनता है, उसके पाप कट जाते हैं, घर में सुख-संतान और समृद्धि का वास होता है, और उस पर सदा भगवान श्रीकृष्ण की कृपा बनी रहती है।',
+        ],
+        bodyEn: [
+          'No sooner had Vasudeva returned to the prison than the chains rejoined exactly as before and the gates closed shut. The cry of the newborn girl woke the guards, who ran to bring Kamsa the news that Devaki’s eighth child had been born.',
+          'Kamsa came running to the dungeon, snatched the girl from Devaki’s lap, and raised her to dash her upon a rock. But that girl was no ordinary child—she was Yogamaya. The instant she slipped from Kamsa’s hands, she rose into the sky in the form of the eight-armed Goddess and thundered, ‘O fool! The one destined to slay you is already born and is being raised in a safe place. Killing me will do you no good.’ With these words she vanished.',
+          'Kamsa’s countless efforts could not turn aside his fate; the words of destiny proved true, and in time that very boy Krishna became the cause of his end. Ever since, on that holy midnight of the eighth day of the dark fortnight of Bhadrapada, devotees keep a fast, adorn cradles, and stay awake through the night with cries of ‘Nanda’s joy has arrived—victory to dear Kanhaiya!’ Whoever keeps this Janmashtami vow with faith and hears this tale of Krishna’s birth has their sins washed away, sees happiness, children, and prosperity dwell in their home, and remains forever under the grace of Lord Shri Krishna.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'guru-purnima-katha',
+    titleHi: 'गुरु पूर्णिमा कथा',
+    titleEn: 'Guru Purnima Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'yamuna-tat-par-janm',
+        titleHi: 'यमुना तट पर व्यास का जन्म',
+        titleEn: 'The Birth of Vyasa on the Yamuna’s Bank',
+        bodyHi: [
+          'यमुना के नीले जल पर सांध्य धुंध तैर रही थी, और एक छोटी-सी नौका धीरे-धीरे एक द्वीप की ओर बढ़ रही थी। उस नौका को खेने वाली थीं धीवरकन्या सत्यवती, और उनके साथ बैठे थे महातपस्वी पराशर ऋषि, जो वसिष्ठ के पौत्र और शक्ति मुनि के पुत्र थे। ऋषि की दृष्टि उस तेजस्विनी कन्या पर पड़ी और उन्होंने उसके भीतर एक ऐसे महापुरुष की माता होने का योग देखा, जो आने वाले युगों तक धर्म का दीप जलाए रखेगा।',
+          'उसी एकांत द्वीप पर, मुनि के तप और संकल्प से सत्यवती को एक अलौकिक पुत्र की प्राप्ति हुई। शिशु का वर्ण श्याम था, इसलिए वह ‘कृष्ण’ कहलाया, और यमुना के उसी द्वीप (द्वैपायन) में जन्म लेने के कारण उसका नाम ‘कृष्ण द्वैपायन’ पड़ा। जन्म लेते ही वह बालक तपस्वी रूप धारण कर उठ खड़ा हुआ और माता-पिता को प्रणाम करके बोला, ‘जब-जब आप मुझे स्मरण करेंगी, मैं उसी क्षण उपस्थित हो जाऊँगा।’',
+          'ऐसा कहकर वह तेजोमय बालक तपस्या के लिए वन की ओर चल पड़ा। आगे चलकर यही बालक वेदों के विशाल ज्ञान-राशि का संपादन करने के कारण ‘वेद व्यास’ के नाम से तीनों लोकों में विख्यात हुआ, और समस्त गुरु-परंपरा का आदि स्रोत बनकर पूजित हुआ।',
+        ],
+        bodyEn: [
+          'Evening mist drifted over the blue waters of the Yamuna, and a small boat moved slowly toward an island. The one who plied the oars was Satyavati, daughter of a fisherman, and seated beside her was the great ascetic Parashara, grandson of Vasishtha and son of the sage Shakti. The sage’s gaze fell upon that radiant maiden, and within her he saw the destiny of becoming mother to such a great soul as would keep the lamp of dharma burning through the ages to come.',
+          'Upon that lonely island, by the austerity and resolve of the sage, Satyavati was granted an extraordinary son. The infant was dark of complexion, and so he was called ‘Krishna,’ and because he was born upon that island (dvaipa) in the Yamuna, he received the name ‘Krishna Dvaipayana.’ No sooner was he born than the boy rose up in the form of an ascetic, bowed to his parents, and said, ‘Whenever you remember me, in that very moment I shall appear before you.’',
+          'Saying this, that luminous boy set out toward the forest for penance. In time this same boy, because he edited and arranged the vast treasury of Vedic knowledge, became renowned throughout the three worlds by the name ‘Veda Vyasa,’ and was worshipped as the original fountainhead of the whole tradition of gurus.',
+        ],
+      },
+      {
+        id: 'ek-ved-ke-char-bhag',
+        titleHi: 'एक वेद के चार विभाग',
+        titleEn: 'The One Veda Divided into Four',
+        bodyHi: [
+          'वेद व्यास ने अपने दिव्य ज्ञान-नेत्रों से देखा कि आने वाले कलियुग में मनुष्य की आयु क्षीण, बुद्धि मंद और स्मरण-शक्ति दुर्बल हो जाएगी। तब तक वेद एक ही अखंड राशि के रूप में था—इतना विशाल कि कोई साधारण मनुष्य उसे कंठस्थ करके धारण नहीं कर सकता था। मुनि के हृदय में करुणा उमड़ी कि यह अमूल्य ज्ञान कहीं लुप्त न हो जाए।',
+          'इसी कल्याण-भावना से उन्होंने उस एक वेद को चार भागों में विभक्त किया—ऋग्वेद, यजुर्वेद, सामवेद और अथर्ववेद। फिर उन्होंने अपने चार प्रमुख शिष्यों को यह भार सौंपा: पैल को ऋग्वेद, वैशम्पायन को यजुर्वेद, जैमिनि को सामवेद, और सुमन्तु को अथर्ववेद। एक से चार होकर वेद सुगम हो गए, और गुरु से शिष्य तक प्रवाहित होने वाली ज्ञान की धारा अविच्छिन्न बनी रही।',
+          'यहीं नहीं रुके वेद व्यास। उन्होंने अठारह महापुराणों की रचना की, ब्रह्मसूत्रों का गुम्फन किया, और लाखों श्लोकों वाले ‘महाभारत’ महाकाव्य को रचा, जिसके भीतर उन्होंने श्रीमद्भगवद्गीता का अमृत भर दिया। कहा जाता है कि उस विशाल ग्रंथ को लिपिबद्ध करने के लिए स्वयं गणपति लेखक बने और व्यास उसे अविराम बोलते चले गए।',
+        ],
+        bodyEn: [
+          'With his divine eyes of wisdom, Veda Vyasa foresaw that in the coming age of Kali, the lifespan of human beings would shrink, their intellect grow dull, and their power of memory weaken. Until then the Veda existed as a single undivided mass—so immense that no ordinary person could commit it to memory and hold it whole. Compassion welled up in the sage’s heart, lest this priceless knowledge be lost.',
+          'Out of this very wish for the welfare of all, he divided that one Veda into four parts—the Rigveda, the Yajurveda, the Samaveda, and the Atharvaveda. Then he entrusted this charge to his four chief disciples: the Rigveda to Paila, the Yajurveda to Vaishampayana, the Samaveda to Jaimini, and the Atharvaveda to Sumantu. Made one into four, the Vedas became approachable, and the stream of knowledge flowing from teacher to disciple remained unbroken.',
+          'Nor did Veda Vyasa stop there. He composed the eighteen great Puranas, wove together the Brahma Sutras, and shaped the epic ‘Mahabharata’ of countless verses, within which he poured the nectar of the Shrimad Bhagavad Gita. It is said that to set down that vast work in writing, Ganapati himself became the scribe, while Vyasa spoke it forth without pause.',
+        ],
+      },
+      {
+        id: 'vyasa-purnima-ka-mahima',
+        titleHi: 'व्यास पूर्णिमा का माहात्म्य',
+        titleEn: 'The Glory of Vyasa Purnima',
+        bodyHi: [
+          'आषाढ़ मास की पूर्णिमा के दिन, जब आकाश में चंद्रमा अपनी सम्पूर्ण कलाओं से दीप्त होता है, वही तिथि वेद व्यास के आविर्भाव की तिथि मानी गई। शिष्यों ने अनुभव किया कि जैसे पूर्ण चंद्र अंधकार को हर लेता है, वैसे ही गुरु का ज्ञान अंतःकरण के अज्ञान-तम को मिटा देता है। इसी कारण इस पूर्णिमा को ‘व्यास पूर्णिमा’ और ‘गुरु पूर्णिमा’ कहकर पूजने की परंपरा चल पड़ी।',
+          'उस पावन दिन सनातन परंपरा के संत, साधु और गृहस्थ अपने-अपने गुरुओं के चरणों में जाकर श्रद्धा से सिर झुकाते हैं। वे गुरु के आसन का पूजन करते, उन्हें पुष्प, फल और वस्त्र अर्पित करते, और ‘गुरुर्ब्रह्मा गुरुर्विष्णुः’ के मंगल स्वरों से वातावरण भर देते हैं। जिसके पास गुरु प्रत्यक्ष न हों, वे वेद व्यास को आदि गुरु मानकर उनका स्मरण करते हैं।',
+          'पूरे वर्ष भर भ्रमण करते रहने वाले संन्यासी इसी दिन से चातुर्मास का व्रत आरंभ कर एक स्थान पर रुककर शास्त्रों का चिंतन और शिष्यों को उपदेश करते हैं। इस प्रकार गुरु पूर्णिमा केवल एक तिथि नहीं, बल्कि गुरु-शिष्य के उस पवित्र बंधन का उत्सव बन गई, जिसके सहारे ज्ञान पीढ़ी-दर-पीढ़ी जीवित रहता है।',
+        ],
+        bodyEn: [
+          'On the full-moon day of the month of Ashadha, when the moon shines in the sky with all its phases complete, that very date came to be honoured as the day of Veda Vyasa’s appearance. Disciples felt that just as the full moon dispels the darkness, so too the knowledge of the guru wipes away the gloom of ignorance from the inner being. For this reason the tradition arose of revering this full moon as ‘Vyasa Purnima’ and ‘Guru Purnima.’',
+          'On that sacred day, the saints, ascetics, and householders of the eternal tradition go to the feet of their own gurus and bow their heads in reverence. They worship the seat of the guru, offer flowers, fruit, and cloth, and fill the air with the auspicious notes of ‘Gurur Brahma, Gurur Vishnu.’ Those who have no living guru before them remember Veda Vyasa, holding him as the first of all gurus.',
+          'The renunciants who wander through all the seasons of the year begin from this day the vow of Chaturmasa, halting in one place to contemplate the scriptures and instruct their disciples. Thus Guru Purnima became not a mere date, but a festival of that holy bond between guru and disciple, upon which knowledge stays alive from one generation to the next.',
+        ],
+      },
+      {
+        id: 'aaruni-ki-bhakti',
+        titleHi: 'आरुणि की गुरुभक्ति',
+        titleEn: 'The Devotion of Aaruni',
+        bodyHi: [
+          'गुरु-शिष्य की महिमा कितनी गहन है, इसका उदाहरण आचार्य धौम्य के आश्रम में देखने को मिला। उनके शिष्यों में आरुणि नाम का एक सरल और श्रद्धालु बालक था। एक रात्रि घनघोर वर्षा हुई, और गुरु को चिंता हुई कि खेत के मेड़ की कोई दरार से कहीं सारा जल बह न जाए, जिससे फसल नष्ट हो जाए। उन्होंने आरुणि को उस टूटे बंध को सँभालने भेजा।',
+          'आरुणि अंधेरे और मूसलधार वर्षा में खेत पर पहुँचा, पर मेड़ की दरार इतनी चौड़ी थी कि मिट्टी डालते ही बह जाती। बहुत प्रयत्न के बाद भी जब जल न रुका, तो उस भक्त शिष्य ने अपने ही शरीर को उस दरार पर लिटा दिया, ताकि गुरु का खेत सुरक्षित रहे। सारी रात वह कीचड़ और ठंडे जल में पड़ा बंध की रक्षा करता रहा, बिना एक क्षण भी अपनी पीड़ा का विचार किए।',
+          'प्रातः जब आरुणि लौटकर न आया, तो आचार्य धौम्य स्वयं शिष्यों के साथ खेत पर गए और पुकारा। तब कीचड़ में लेटा हुआ आरुणि उठ खड़ा हुआ और गुरु के चरणों में गिर पड़ा। उसकी निष्ठा देखकर गुरु का हृदय द्रवित हो उठा; उन्होंने उसे हृदय से लगाकर आशीर्वाद दिया कि बिना पढ़े ही समस्त वेद और शास्त्र उसके अंतःकरण में स्वतः प्रकाशित हो जाएँ। तभी से वह ‘उद्दालक आरुणि’ के नाम से महान ऋषि के रूप में प्रसिद्ध हुआ।',
+        ],
+        bodyEn: [
+          'How profound is the glory of guru and disciple was once seen in the hermitage of the teacher Dhaumya. Among his pupils was a simple and devoted boy named Aaruni. One night there was a fierce downpour, and the guru grew anxious that through some breach in the bank of the field all the water might drain away and the crop be ruined. He sent Aaruni to mend that broken embankment.',
+          'Aaruni reached the field in the darkness and the lashing rain, but the breach in the bank was so wide that the moment he packed earth into it, the earth was washed away. When, despite great effort, the water would not be stopped, that devoted disciple laid his own body down across the breach, so that his guru’s field might be kept safe. All night long he lay in the mud and the cold water, guarding the bank, without giving a single moment’s thought to his own suffering.',
+          'In the morning, when Aaruni had not returned, the teacher Dhaumya himself went to the field with his pupils and called out to him. Then Aaruni, lying in the mud, rose up and fell at the guru’s feet. Seeing his steadfastness, the teacher’s heart melted; embracing him close, he blessed him that, without ever having studied, all the Vedas and scriptures should shine forth of themselves within his inner being. From that time onward he became famed as the great sage ‘Uddalaka Aaruni.’',
+        ],
+      },
+      {
+        id: 'guru-charanon-ka-prakash',
+        titleHi: 'गुरु चरणों का प्रकाश',
+        titleEn: 'The Light at the Guru’s Feet',
+        bodyHi: [
+          'इसी भाव को हृदय में धारण कर भक्तजन गुरु पूर्णिमा के दिन प्रातः स्नान कर शुद्ध आसन पर बैठते हैं, अपने गुरु अथवा आदि गुरु वेद व्यास का ध्यान करते हैं, और ‘व्यासाय विष्णुरूपाय’ का स्मरण करके उनकी पूजा करते हैं। जो उपवास रखकर इस तिथि को व्यतीत करते हैं, वे दिन भर मौन और मनन में डूबे रहते हैं और संध्या को गुरु-स्तुति के पश्चात ही फलाहार ग्रहण करते हैं।',
+          'ऐसा कहा जाता है कि जो मनुष्य इस पूर्ण चंद्र की रात्रि में सच्ची श्रद्धा से गुरु का पूजन करता है, उसके अंतःकरण का अंधकार उसी प्रकार छँट जाता है जैसे चंद्रमा के उदय से रात्रि का तम। उसकी बुद्धि निर्मल होती है, विद्या स्थिर होती है, और जीवन में सन्मार्ग की ज्योति स्वयं प्रकट हो उठती है—क्योंकि जहाँ गुरु के चरणों में सिर झुकता है, वहीं ज्ञान का अक्षय दीप जलता रहता है।',
+        ],
+        bodyEn: [
+          'Holding this very spirit in the heart, devotees on the day of Guru Purnima bathe at dawn, sit upon a clean seat, meditate upon their guru or upon the first guru Veda Vyasa, and worship him with the remembrance of ‘Vyasaya Vishnurupaya.’ Those who keep a fast through this day remain immersed in silence and reflection, and only in the evening, after the praise of the guru, do they take their light meal of fruit.',
+          'It is said that whoever, on the night of this full moon, worships the guru with true faith finds the darkness of his inner being lifted away, just as the rising moon lifts the gloom of night. His intellect becomes clear, his learning grows steady, and the light of the right path appears of itself within his life—for wherever the head bows at the guru’s feet, there the inexhaustible lamp of knowledge stays alight.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'govardhan-puja-katha',
+    titleHi: 'गोवर्धन पूजा कथा',
+    titleEn: 'Govardhan Puja Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'vraj-ki-taiyari',
+        titleHi: 'इंद्र-यज्ञ की तैयारी और कृष्ण का प्रश्न',
+        titleEn: 'Preparations for Indra\'s Yajna and Krishna\'s Question',
+        bodyHi: [
+          'शरद ऋतु बीत रही थी और व्रज के घर-घर में एक विशेष चहल-पहल थी। नंद बाबा के आँगन में गोप-गोपियाँ घी, दूध, दही और अन्न के ढेर सजा रहे थे, क्योंकि प्रति वर्ष की भाँति इस बार भी देवराज इंद्र की पूजा का महायज्ञ होने वाला था। बालक कृष्ण ने यह सारा आयोजन देखकर अपने पिता नंद के पास जाकर मधुर स्वर में पूछा, ‘हे पिताजी, यह इतनी सामग्री किस उत्सव के लिए एकत्र की जा रही है? यह यज्ञ किसके निमित्त है और इससे हमें क्या फल मिलता है?’',
+          'नंद बाबा ने स्नेह से पुत्र के मस्तक पर हाथ फेरते हुए कहा, ‘वत्स, मेघों के स्वामी देवराज इंद्र ही वर्षा करते हैं। उन्हीं के जल से हमारे खेत हरे होते हैं, घास उगती है और हमारी गायें पुष्ट होती हैं। इसी कृतज्ञता में हम प्रतिवर्ष इंद्र का यज्ञ करते हैं, ताकि वे प्रसन्न रहें और समय पर वर्षा करते रहें।’',
+          'कृष्ण मुस्कुराए और बोले, ‘पिताजी, वर्षा तो प्रकृति के नियम से होती है, और जो सचमुच हमारा भरण-पोषण करता है, वह तो यह गोवर्धन पर्वत है। इसी की हरी-भरी ढलानों पर हमारी गायें चरती हैं, इसी की औषधियाँ और वृक्ष हमें फल-फूल देते हैं, इसी के झरनों से हमारा जीवन चलता है। हम तो वनवासी गोप हैं; हमारा धर्म है कि हम अपनी गायों और इस गोवर्धन की पूजा करें, जो प्रत्यक्ष हमारा पालन करते हैं।’',
+        ],
+        bodyEn: [
+          'The autumn season was drawing to its close, and an unusual stir filled every home in Vraj. In the courtyard of Nanda Baba, the cowherd men and women were arranging heaps of ghee, milk, curd, and grain, for, as every year, a great yajna in honour of Indra, king of the gods, was about to be held. The boy Krishna, watching all these preparations, went to his father Nanda and asked in a sweet voice, ‘O father, for what festival is all this abundance being gathered? In whose honour is this sacrifice, and what is the reward we gain from it?’',
+          'Nanda Baba, lovingly running his hand over his son\'s head, replied, ‘Dear child, it is Indra, lord of the clouds and king of the gods, who sends the rains. By his waters our fields grow green, the grass springs up, and our cows grow strong. In gratitude for this we perform the yajna of Indra every year, so that he may remain pleased and continue to send rain in season.’',
+          'Krishna smiled and said, ‘Father, the rains fall by the law of nature, and the one who truly sustains us is this Govardhan hill. Upon its green slopes our cows graze, its herbs and trees give us fruit and flower, and from its springs our life flows on. We are forest-dwelling cowherds; it is our dharma to worship our cows and this Govardhan, who nourish us before our very eyes.’',
+        ],
+      },
+      {
+        id: 'govardhan-puja',
+        titleHi: 'गोवर्धन और गौओं का पूजन',
+        titleEn: 'The Worship of Govardhan and the Cows',
+        bodyHi: [
+          'बालक के इन विवेकपूर्ण वचनों ने व्रजवासियों के हृदय को छू लिया। नंद बाबा और वृद्ध गोपों ने आपस में विचार किया और अंततः सहमत हो गए कि इस वर्ष वे इंद्र के स्थान पर गोवर्धन पर्वत और अपनी गौओं की पूजा करेंगे। समस्त व्रज में यह संदेश फैल गया, और सब ने हर्ष से अपनी सामग्री गोवर्धन की ओर मोड़ दी।',
+          'नियत दिन गोप-गोपियाँ अपने सुंदर वस्त्र और आभूषण धारण कर, अन्न के पर्वत-समान ढेर, छप्पन प्रकार के व्यंजन, खीर, हलवा और अनेक मिष्ठान्न लेकर गोवर्धन के पास आ पहुँचे। उन्होंने पर्वत को चंदन, पुष्प और दीपों से सजाया, गायों के सींगों पर रंग चढ़ाए और बछड़ों को फूलों की मालाएँ पहनाईं। ढोल-मँजीरे बजने लगे और सारा वातावरण भक्ति-संगीत से गूँज उठा।',
+          'तब कृष्ण ने अपनी लीला से एक विशाल दिव्य रूप धारण किया और गोवर्धन पर्वत पर स्वयं प्रकट होकर ‘मैं ही गिरिराज हूँ’ कहते हुए सारा अन्न-भोग स्वीकार किया, जबकि दूसरे रूप में वे व्रजवासियों के साथ खड़े होकर पर्वत की परिक्रमा करते रहे। यह अन्नकूट का प्रथम भोग था; गोवर्धन ने मानो प्रत्यक्ष होकर सब का अन्न ग्रहण किया, और व्रजवासियों के मन श्रद्धा और आनंद से भर उठे।',
+        ],
+        bodyEn: [
+          'These wise words of the boy touched the hearts of the people of Vraj. Nanda Baba and the elder cowherds took counsel among themselves and at last agreed that this year, in place of Indra, they would worship the Govardhan hill and their own cows. The message spread through all of Vraj, and joyfully everyone turned their offerings toward Govardhan.',
+          'On the appointed day the cowherd men and women, clad in their finest garments and ornaments, came to Govardhan bearing mountain-like heaps of grain, fifty-six kinds of delicacies, kheer, halwa, and many sweets. They adorned the hill with sandal paste, flowers, and lamps, painted the horns of their cows with colour, and hung garlands of flowers upon the calves. Drums and cymbals began to sound, and the whole air rang with the music of devotion.',
+          'Then Krishna, through his divine play, assumed a vast resplendent form and, manifesting upon the Govardhan hill itself, declared, ‘I am Giriraj,’ and accepted all the offerings of food, while in another form he stood among the people of Vraj and circled the hill in reverence with them. This was the first feast of Annakut; it was as though Govardhan had become present before them and partaken of everyone\'s food, and the hearts of the Vraj folk overflowed with faith and delight.',
+        ],
+      },
+      {
+        id: 'indra-ka-prakop',
+        titleHi: 'इंद्र का क्रोध और प्रलयंकारी वर्षा',
+        titleEn: 'Indra\'s Wrath and the Devastating Rain',
+        bodyHi: [
+          'जब देवराज इंद्र को ज्ञात हुआ कि इस वर्ष व्रज में उनका यज्ञ नहीं हुआ और एक ग्वालबाल के कहने पर एक पर्वत और गौओं की पूजा कर दी गई, तो उनका अहंकार आहत हो उठा। क्रोध से भरकर उन्होंने अपने प्रलयकारी सांवर्तक मेघों को आदेश दिया, ‘जाओ और उस गर्वीले व्रज को जल में डुबो दो, ताकि वे जान सकें कि देवों के राजा का अपमान करने का परिणाम क्या होता है।’',
+          'क्षण भर में आकाश काले मेघों से ढक गया। बिजली कड़कने लगी, भयंकर गर्जना से धरती काँप उठी, और मूसलाधार वर्षा टूट पड़ी—मानो आकाश ही फट पड़ा हो। दिन और रात का भेद मिट गया; जल की धाराएँ नदियों की तरह बहने लगीं और व्रज की गलियाँ, घर और खेत डूबने लगे।',
+          'भयभीत गोप-गोपियाँ अपने बालकों, गायों और बछड़ों को लेकर कृष्ण के पास दौड़े आए और विलाप करने लगे, ‘हे कन्हैया! यह कैसा प्रलय आ पड़ा है? हमारी गायें ठिठुर रही हैं, बछड़े काँप रहे हैं, और हमारे पास छिपने को कोई स्थान नहीं। तुम्हीं ने हमें गोवर्धन की शरण लेने को कहा था; अब तुम्हीं हमारी रक्षा करो।’',
+        ],
+        bodyEn: [
+          'When Indra, king of the gods, learned that this year his yajna had not been held in Vraj, and that at the word of a mere cowherd boy a hill and the cows had been worshipped instead, his pride was wounded. Filled with fury, he commanded his world-ending Samvartaka clouds, ‘Go and drown that proud Vraj in water, so that they may learn what comes of insulting the king of the gods.’',
+          'In an instant the sky was shrouded in black clouds. Lightning cracked, the earth trembled with terrible thunder, and a torrential rain broke loose, as though the very heavens had split apart. The difference between day and night was erased; streams of water flowed like rivers, and the lanes, houses, and fields of Vraj began to drown.',
+          'Terrified, the cowherd men and women ran to Krishna with their children, cows, and calves, and cried out in lament, ‘O Kanhaiya! What deluge has fallen upon us? Our cows are shivering, the calves are trembling, and we have no place to take shelter. It was you who told us to take refuge in Govardhan; now it is you who must protect us.’',
+        ],
+      },
+      {
+        id: 'girdhari-ka-utthaan',
+        titleHi: 'कृष्ण द्वारा गोवर्धन को उठाना',
+        titleEn: 'Krishna Lifts the Govardhan Hill',
+        bodyHi: [
+          'व्रजवासियों की पुकार सुनकर बालक कृष्ण तनिक भी विचलित न हुए। मंद मुस्कान के साथ वे गोवर्धन पर्वत के निकट गए और लीलापूर्वक अपने बाएँ हाथ की कनिष्ठा अँगुली पर उस विशाल पर्वत को ऐसे उठा लिया, जैसे कोई बालक छाते को उठा लेता हो। पर्वत आकाश में एक विराट छत्र की भाँति स्थिर हो गया।',
+          '‘आओ, सब अपनी गायों और सामग्री सहित इस पर्वत के नीचे आ जाओ,’ कृष्ण ने सस्नेह कहा। समस्त व्रज—गोप, गोपियाँ, बालक, वृद्ध, गौएँ और बछड़े—गोवर्धन की उस विशाल छाया के नीचे सुरक्षित आ बैठे। बाहर प्रलय की वर्षा गरजती रही, परंतु भीतर एक बूँद भी न टपकी।',
+          'पूरे सात दिन और सात रात तक कन्हैया अपनी उसी कोमल अँगुली पर गोवर्धन को थामे, अविचल खड़े रहे। न उन्हें भूख-प्यास व्यापी, न थकान। व्रजवासी मंत्रमुग्ध होकर अपने नन्हे गिरधारी की ओर निहारते रहे, और उनके हृदय में यह विश्वास दृढ़ हो गया कि जिसकी शरण में वे हैं, वह कोई साधारण बालक नहीं, अपितु स्वयं भगवान है।',
+        ],
+        bodyEn: [
+          'Hearing the cry of the people of Vraj, the boy Krishna was not in the least disturbed. With a gentle smile he went up to the Govardhan hill and, in playful ease, lifted that vast mountain upon the little finger of his left hand, as a child might raise an umbrella. The hill held steady in the sky like a colossal canopy.',
+          '‘Come, all of you, take shelter beneath this hill with your cows and your goods,’ Krishna said tenderly. The whole of Vraj—cowherds, women, children, the aged, the cows and the calves—came and sat safely beneath that vast shadow of Govardhan. Outside, the deluge raged and thundered, yet within, not a single drop fell.',
+          'For seven full days and seven nights Kanhaiya held Govardhan upon that same delicate finger, standing unmoved. Neither hunger nor thirst touched him, nor weariness. The people of Vraj gazed spellbound at their little Girdhari, and the conviction grew firm within their hearts that the one in whose refuge they sat was no ordinary boy, but the Lord himself.',
+        ],
+      },
+      {
+        id: 'indra-ka-maan-bhang-aur-annakut',
+        titleHi: 'इंद्र का मान-भंग और अन्नकूट की परंपरा',
+        titleEn: 'Indra\'s Humbling and the Tradition of Annakut',
+        bodyHi: [
+          'सात दिनों तक अपनी समस्त शक्ति लगाकर भी जब इंद्र व्रज का कुछ बिगाड़ न सके, तो उनका अहंकार चूर-चूर हो गया। उन्होंने अपनी दिव्य दृष्टि से जाना कि जिस बालक को वे साधारण ग्वाला समझ रहे थे, वह तो स्वयं सृष्टि के पालनहार भगवान विष्णु ही धराधाम पर अवतरित हुए हैं। लज्जा और पश्चाताप से भरकर उन्होंने तुरंत वर्षा रोक दी।',
+          'मेघ छँट गए और सूर्य की कोमल किरणें फिर से व्रज पर बिखर गईं। कृष्ण ने गोवर्धन को धीरे से उसके स्थान पर रख दिया, और सब व्रजवासी हर्ष से जयघोष करते हुए बाहर निकल आए। तभी देवराज इंद्र अपने ऐरावत हाथी पर सवार होकर वहाँ उतरे और कृष्ण के चरणों में नतमस्तक होकर बोले, ‘हे प्रभु, अपने ऐश्वर्य के मद में मैंने आपको पहचाना नहीं और अपराध कर बैठा। मुझे क्षमा कर दीजिए।’ कामधेनु ने आकर अपने दूध से उनका अभिषेक किया, और देवों ने पुष्प-वर्षा की।',
+          'कृष्ण ने करुणा से इंद्र को क्षमा कर दिया और सिखाया कि अहंकार ही सबसे बड़ा शत्रु है, तथा जो प्रकृति, गौ और भूमि का पोषण करता है, उसी की कृतज्ञतापूर्वक पूजा करनी चाहिए। उसी दिन से कार्तिक शुक्ल प्रतिपदा को व्रजमंडल और समस्त भारतवर्ष में गोवर्धन पूजा का यह उत्सव मनाया जाने लगा। भक्तजन गोबर से गोवर्धन की प्रतिमा बनाकर उसका पूजन करते हैं, गौओं को सजाते हैं, और छप्पन भोग का अन्नकूट सजाकर भगवान को अर्पित करते हैं। ऐसा कहा जाता है कि जो श्रद्धा से इस पर्व को मनाता है, उसके घर में अन्न-धन की कभी कमी नहीं रहती, उसके दुख-संकट दूर होते हैं, और गिरधारी की कृपा से उसका जीवन सुख-समृद्धि से भर जाता है।',
+        ],
+        bodyEn: [
+          'When, even after pouring forth all his power for seven days, Indra could do no harm to Vraj, his pride was shattered to pieces. With his divine sight he perceived that the boy he had taken for an ordinary cowherd was none other than Lord Vishnu himself, the sustainer of creation, descended upon the earth. Filled with shame and remorse, he at once stayed the rain.',
+          'The clouds parted, and the soft rays of the sun spread once more over Vraj. Krishna gently set Govardhan back in its place, and all the people of Vraj came out raising shouts of joy. Then Indra, king of the gods, descended upon his elephant Airavata, bowed his head at Krishna\'s feet, and said, ‘O Lord, drunk on the pride of my sovereignty I failed to recognise you and committed an offence. Forgive me.’ The wish-fulfilling cow Kamadhenu came and bathed him with her milk, and the gods rained down flowers.',
+          'Krishna compassionately forgave Indra and taught that pride is the greatest enemy, and that one should worship with gratitude that which nourishes us—nature, the cow, and the earth. From that very day, on the first day of the bright fortnight of Kartik, this festival of Govardhan Puja came to be celebrated throughout the land of Vraj and all of Bharat. Devotees fashion an image of Govardhan from cow-dung and worship it, adorn their cows, and arrange the Annakut of fifty-six offerings to present to the Lord. It is said that whoever celebrates this festival with faith never wants for grain or wealth in their home, their sorrows and troubles are driven away, and by the grace of Girdhari their life is filled with joy and prosperity.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'dussehra-katha',
+    titleHi: 'दशहरा कथा',
+    titleEn: 'Dussehra Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'abduction-of-sita',
+        titleHi: 'पंचवटी से सीता का हरण',
+        titleEn: 'Sita is carried away from Panchavati',
+        bodyHi: [
+          'दण्डक वन में पंचवटी की कुटिया के सामने एक स्वर्णमृग कूद-कूदकर घूम रहा था। उसका रोम-रोम सोने-सा दमक रहा था और खुरों पर मणियां जड़ी प्रतीत होती थीं। सीता उसे देखकर मोहित हो उठीं और श्रीराम से बोलीं, ‘हे आर्यपुत्र, यह मृग मुझे अति प्रिय है। इसे जीवित पकड़ लाइए, यह हमारी कुटिया की शोभा बढ़ाएगा।’ राम जानते थे कि वन में ऐसा मृग अनहोना है, फिर भी प्रिया की इच्छा पूरी करने वे धनुष उठाकर उसके पीछे चल पड़े, और लक्ष्मण को सीता की रक्षा का भार सौंप गए।',
+          'वह मृग वस्तुतः मारीच नामक राक्षस था, जिसे रावण ने छल रचने भेजा था। बहुत दूर ले जाकर जब राम के बाण से वह बिंधा, तो मरते समय उसने राम के ही स्वर में पुकारा, ‘हा लक्ष्मण! हा सीता!’ वह करुण पुकार सुनकर सीता का हृदय कांप उठा। उन्होंने लक्ष्मण को विवश कर दिया कि वे राम की सहायता को दौड़ें। लक्ष्मण ने कुटिया के चारों ओर एक रेखा खींची और प्रार्थना की कि सीता उसे न लांघें।',
+          'उसी क्षण रावण संन्यासी का वेश धरकर भिक्षा मांगता हुआ कुटिया पर आया। सीता ने श्रद्धा से रेखा के भीतर से अन्न देना चाहा, पर कपटी संन्यासी ने हठ किया कि भिक्षा हाथ में लेकर बाहर आकर दी जाए। ज्यों ही सीता ने रेखा पार की, रावण अपने भयंकर रूप में प्रकट हुआ और उन्हें बलपूर्वक अपने पुष्पक विमान में बैठाकर आकाश-मार्ग से लंका की ओर उड़ चला। गीधराज जटायु ने मार्ग में उसे रोका और घोर युद्ध किया, पर रावण ने उसके पंख काट दिए, और वह घायल पक्षी राम को संदेश देने के लिए प्राण रोके धरती पर पड़ा रहा।',
+        ],
+        bodyEn: [
+          'In the Dandaka forest, before the hermitage at Panchavati, a golden deer went leaping and circling. Every hair of its body shimmered like gold, and gems seemed set upon its hooves. Sita was enchanted at the sight and said to Shri Rama, ‘O noble one, this deer delights me beyond measure. Catch it alive and bring it to me; it will grace our little hermitage.’ Rama knew that such a creature in the wild was unnatural, yet to fulfil his beloved wish he took up his bow and went after it, leaving Lakshmana to guard Sita.',
+          'That deer was in truth a demon named Maricha, sent by Ravana to weave a trap. Drawn far away, when Rama arrow at last pierced him, in dying he cried out in Rama own voice, ‘Alas Lakshmana! Alas Sita!’ Hearing that piteous call, Sita heart trembled. She pressed Lakshmana until he ran to help his brother. Before he went, Lakshmana drew a line around the hermitage and prayed that Sita would not step beyond it.',
+          'In that very moment Ravana came to the hermitage disguised as a mendicant, begging for alms. Sita, in reverence, wished to offer grain from within the line, but the deceitful ascetic insisted that the alms be placed in his hand outside. The instant Sita crossed the line, Ravana revealed his terrible form, seized her by force, set her upon his Pushpaka chariot, and flew through the sky toward Lanka. The vulture king Jatayu barred his path and fought a fierce battle, but Ravana cut away his wings, and the wounded bird lay upon the earth, holding back his life to give Rama the news.',
+        ],
+      },
+      {
+        id: 'alliance-with-vanaras',
+        titleHi: 'वानरों से मित्रता और लंका की खोज',
+        titleEn: 'Friendship with the vanaras and the search for Lanka',
+        bodyHi: [
+          'सीता को न पाकर राम और लक्ष्मण वन-वन भटकते, विलाप करते आगे बढ़े। मार्ग में मरणासन्न जटायु ने रावण द्वारा सीता-हरण की बात बताई और राम की गोद में प्राण त्याग दिए। राम ने उस गीध का अंतिम संस्कार पुत्र के समान किया। आगे ऋष्यमूक पर्वत पर उनकी भेंट वानर हनुमान से हुई, जो उन्हें सुग्रीव के पास ले गए। राम और सुग्रीव ने अग्नि को साक्षी मानकर मित्रता की प्रतिज्ञा की — राम सुग्रीव को उसका छीना हुआ राज्य लौटाएंगे और सुग्रीव सीता की खोज में राम की सहायता करेंगे।',
+          'राम ने बाली का वध कर किष्किंधा का राज्य सुग्रीव को सौंपा। तब सुग्रीव ने चारों दिशाओं में वानरों के दल भेजे। दक्षिण दिशा में गए दल को जटायु के भाई संपाति से ज्ञात हुआ कि सीता सौ योजन दूर समुद्र के पार लंका में अशोक वाटिका में बंदिनी हैं। यह सुनकर सभी वानर समुद्र की विशालता देख ठिठक गए, पर जाम्बवान ने हनुमान को उनके भूले हुए बल का स्मरण कराया।',
+          'हनुमान पर्वत के समान विशाल रूप धारण कर समुद्र लांघ गए। लंका में प्रवेश कर उन्होंने अशोक वाटिका में शोकमग्न सीता को खोज निकाला, राम की मुद्रिका उन्हें सौंपी और सांत्वना दी। लौटते समय उन्होंने रावण की स्वर्णनगरी को आग के हवाले कर अपनी शक्ति का परिचय दिया और राम को सीता का कुशल-समाचार तथा चूड़ामणि लाकर दी। अब राम का हृदय आश्वस्त हुआ कि सीता जीवित हैं और उन्हें लाने का समय आ गया है।',
+        ],
+        bodyEn: [
+          'Unable to find Sita, Rama and Lakshmana wandered from grove to grove, lamenting as they searched. On the way the dying Jatayu told them of Sita abduction by Ravana and gave up his life in Rama lap. Rama performed the vulture last rites as for a son. Farther on, at Rishyamukha hill, they met the vanara Hanuman, who led them to Sugriva. With fire as their witness, Rama and Sugriva swore a vow of friendship — Rama would win back Sugriva stolen kingdom, and Sugriva would aid Rama in the search for Sita.',
+          'Rama slew Bali and gave the kingdom of Kishkindha to Sugriva. Then Sugriva sent bands of vanaras to the four directions. The band that went south learned from Sampati, brother of Jatayu, that Sita was held captive a hundred yojanas away, across the sea, in the Ashoka grove of Lanka. Hearing this, all the vanaras halted before the vastness of the ocean, but Jambavan reminded Hanuman of the strength he had forgotten.',
+          'Hanuman took a form vast as a mountain and leaped across the sea. Entering Lanka, he found grief-stricken Sita in the Ashoka grove, gave her Rama signet ring, and consoled her. Returning, he set Ravana golden city ablaze to show his power, and brought back to Rama the news of Sita welfare along with her crest-jewel. Now Rama heart was assured that Sita lived, and that the time had come to bring her home.',
+        ],
+      },
+      {
+        id: 'bridge-and-war',
+        titleHi: 'सेतुबंध और लंका का महायुद्ध',
+        titleEn: 'The bridge and the great war at Lanka',
+        bodyHi: [
+          'राम वानर-भालू की विशाल सेना के साथ समुद्र-तट पर पहुंचे। उन्होंने तीन दिन समुद्र से मार्ग मांगा, पर वह न माना। तब क्रोधित राम ने धनुष उठाया, और भयभीत समुद्र-देव प्रकट होकर बोले कि नल और नील के हाथों रचे सेतु को वे थाम लेंगे। वानरों ने राम का नाम लिखकर पत्थर तैराए, और सौ योजन लंबा सेतु बनकर तैयार हो गया, जिस पर चढ़कर सारी सेना लंका में उतर गई। उधर रावण के धर्मात्मा भाई विभीषण ने अधर्म का साथ छोड़कर राम की शरण ली, और राम ने उसे अभय देकर लंका का भावी राजा घोषित किया।',
+          'घोर युद्ध छिड़ गया। राक्षसों और वानरों में दिन-रात संग्राम होता रहा। रावण का महाबली पुत्र इंद्रजीत मेघनाद माया से युद्ध करता और नागपाश तथा शक्ति-बाण से राम-लक्ष्मण को मूर्च्छित कर देता। जब लक्ष्मण शक्ति-बाण से गिरे और प्राण संकट में पड़े, तब हनुमान संजीवनी बूटी के लिए हिमालय उड़ चले और पूरा द्रोणगिरि पर्वत उठा लाए, जिससे लक्ष्मण और मूर्च्छित वानर पुनः जी उठे। अंततः लक्ष्मण ने मेघनाद का वध कर राक्षस-सेना की कमर तोड़ दी।',
+          'क्रमशः कुम्भकर्ण जैसे महाकाय योद्धा और रावण के अनेक पुत्र युद्ध में मारे गए। पर रावण अब भी अपने वरदानों और दस मस्तकों के बल पर अजेय-सा खड़ा था। उसके मस्तक काटे जाते तो तत्काल नए उग आते, और कोई बाण उसका अंत न कर पाता। युद्ध लंबा खिंचता देख राम ने उस शक्ति का स्मरण किया जो समस्त विजय की मूल है — आदिशक्ति भगवती दुर्गा।',
+        ],
+        bodyEn: [
+          'Rama reached the seashore with his vast army of vanaras and bears. For three days he begged the ocean for a passage, but it would not yield. Then, in anger, Rama lifted his bow, and the terrified ocean god appeared and said he would hold firm a bridge built by the hands of Nala and Nila. The vanaras floated stones inscribed with Rama name, and a bridge a hundred yojanas long was made ready, upon which the whole army crossed into Lanka. Meanwhile Ravana righteous brother Vibhishana abandoned the path of adharma and took refuge with Rama, who granted him safety and declared him the future king of Lanka.',
+          'A terrible war broke out. Day and night the battle raged between the demons and the vanaras. Ravana mighty son Indrajit, Meghanada, fought by illusion and struck Rama and Lakshmana senseless with serpent nooses and his shakti weapon. When Lakshmana fell to the shakti dart and his life hung in danger, Hanuman flew to the Himalaya for the Sanjivani herb and carried back the whole Dronagiri mountain, by which Lakshmana and the swooning vanaras rose to life again. At last Lakshmana slew Meghanada and broke the back of the demon army.',
+          'One by one, giant warriors like Kumbhakarna and many of Ravana sons fell in battle. Yet Ravana still stood seemingly unconquerable on the strength of his boons and his ten heads. When his heads were cut, new ones at once sprang up, and no arrow could bring about his end. Seeing the war stretch on, Rama called to mind that Power which is the root of all victory — the primordial Shakti, Bhagavati Durga.',
+        ],
+      },
+      {
+        id: 'worship-of-aparajita',
+        titleHi: 'अपराजिता शक्ति की आराधना',
+        titleEn: 'The worship of Aparajita, the unconquerable Shakti',
+        bodyHi: [
+          'कहा जाता है कि विजय की कामना से राम ने रणभूमि के निकट देवी की आराधना का संकल्प लिया। आश्विन शुक्ल पक्ष में नौ दिनों तक उन्होंने नवदुर्गा का व्रत और पूजन किया, मन-वचन-कर्म से उस शक्ति को नमन किया जिसने सृष्टि के आदि में महिषासुर जैसे दुर्धर्ष दैत्य का संहार किया था। देवताओं की विनती पर प्रकट हुई उस महामाया ने अठारह भुजाओं में दिव्य अस्त्र धारण कर, सिंह पर सवार होकर, पूरे नौ दिन-रात के संग्राम के बाद दशमी को महिषासुर का वध किया था — इसीलिए वह ‘अपराजिता’ अर्थात् जो कभी पराजित न हो, कहलाईं।',
+          'राम की निष्ठा से प्रसन्न होकर भगवती ने उन्हें विजय का आशीर्वाद दिया। दशमी के प्रभात में राम ने ‘अपराजिता’ देवी की पूजा कर, शमी वृक्ष और अपने शस्त्रों को नमन कर, युद्ध के लिए प्रस्थान किया। उनके भीतर अब केवल बाहुबल नहीं, उस आदिशक्ति का बल भी था, जिसके सम्मुख कोई अधर्म टिक नहीं सकता।',
+          'यही कारण है कि शक्ति के नौ रूपों की नवरात्रि के तुरंत बाद आने वाली दशमी ‘विजयादशमी’ कहलाती है — वह तिथि जिस पर शक्ति ने महिषासुर पर और राम ने रावण पर विजय पाई। साधक इस दिन शस्त्र, वाहन, बही-खाते और विद्या के उपकरणों का पूजन करते हैं और शमी-पत्र बांटकर परस्पर विजय और मंगल की कामना करते हैं।',
+        ],
+        bodyEn: [
+          'It is said that, longing for victory, Rama resolved to worship the Goddess near the battlefield. Through nine days of the bright fortnight of Ashvina he kept the vow and worship of the Nine Durgas, bowing in thought, word, and deed to that Power which at the dawn of creation had destroyed an indomitable demon, Mahishasura. Appearing at the prayer of the gods, that great Maya had borne divine weapons in her eighteen arms, ridden upon a lion, and after a full nine days and nights of battle had slain Mahishasura on the tenth day — and so she was called ‘Aparajita,’ the one who is never defeated.',
+          'Pleased by Rama devotion, Bhagavati gave him the blessing of victory. At the dawn of the tenth day Rama worshipped the Goddess Aparajita, bowed to the shami tree and to his own weapons, and set out for war. Within him now lay not the strength of arms alone, but the strength of that primordial Shakti before whom no adharma can stand.',
+          'This is why the tenth day, falling just after the Navaratri of the nine forms of Shakti, is called ‘Vijayadashami’ — the day on which Shakti triumphed over Mahishasura and Rama triumphed over Ravana. On this day seekers worship their weapons, their vehicles, their ledgers, and the tools of learning, and share shami leaves with one another, wishing each other victory and well-being.',
+        ],
+      },
+      {
+        id: 'fall-of-ravana',
+        titleHi: 'रावण का अंत और धर्म की विजय',
+        titleEn: 'The fall of Ravana and the triumph of dharma',
+        bodyHi: [
+          'विभीषण ने राम को रावण का गुप्त रहस्य बताया — रावण का जीवन उसके मस्तकों में नहीं, बल्कि उसकी नाभि में रखे अमृत-कुंड में बसता है। यह जानकर राम ने अगस्त्य मुनि के दिए ‘आदित्य हृदय’ स्तोत्र से सूर्य का स्मरण किया, धैर्य धारण किया, और ब्रह्मा के दिए दिव्य अस्त्र को अभिमंत्रित कर अपने धनुष पर चढ़ाया।',
+          'वह तेजोमय बाण आकाश को चीरता हुआ रावण की नाभि में जा लगा और वहां छिपे अमृत को सोख गया। दशानन रावण, जिसके बल से देवता तक कांपते थे, मस्तकों समेत धराशायी हो गया। उसके गिरते ही लंका में हाहाकार और स्वर्ग में देव-दुंदुभियों का घोष एक साथ गूंज उठा; देवताओं ने राम पर पुष्प-वर्षा की। आश्विन शुक्ल दशमी का वह दिन अधर्म पर धर्म, अहंकार पर विनय और अंधकार पर प्रकाश की विजय का दिन बन गया।',
+          'राम ने सीता को मुक्त कराया, विभीषण को लंका के सिंहासन पर बैठाया, और चौदह वर्ष का वनवास पूर्ण होने पर पुष्पक विमान से अयोध्या लौटे, जहां दीपों से उनका स्वागत हुआ। तभी से प्रति वर्ष विजयादशमी को रावण, कुम्भकर्ण और मेघनाद के विशाल पुतले जलाकर यह स्मरण किया जाता है कि अहंकार और अधर्म कितने भी प्रबल क्यों न हों, सत्य और धर्म के सम्मुख उन्हें अंततः भस्म होना ही है। जो श्रद्धालु इस पर्व पर शक्ति और श्रीराम का पूजन कर अपने भीतर के दस दोषों — काम, क्रोध, लोभ, मोह, मद, मात्सर्य आदि — को त्यागने का संकल्प लेते हैं, उनके जीवन में विजय, यश और मंगल की वर्षा होती है।',
+        ],
+        bodyEn: [
+          'Vibhishana told Rama the secret of Ravana — that his life lay not in his heads but in a pool of nectar held within his navel. Knowing this, Rama remembered the Sun through the ‘Aditya Hridaya’ hymn given by the sage Agastya, steadied his heart, and laid upon his bow a divine weapon given by Brahma, consecrated with mantras.',
+          'That radiant arrow tore through the sky, struck Ravana navel, and drank away the nectar hidden there. The ten-headed Ravana, at whose strength even the gods had trembled, fell to the ground with all his heads. As he fell, a cry of grief rose through Lanka and the drums of the gods sounded in heaven at once; the devas rained flowers upon Rama. That day of the tenth of the bright fortnight of Ashvina became the day of dharma triumph over adharma, of humility over arrogance, and of light over darkness.',
+          'Rama set Sita free, placed Vibhishana upon the throne of Lanka, and, his fourteen years of exile complete, returned to Ayodhya upon the Pushpaka chariot, where he was welcomed with rows of lamps. From that time, every year on Vijayadashami, great effigies of Ravana, Kumbhakarna, and Meghanada are burned, recalling that however mighty arrogance and adharma may grow, before truth and dharma they must in the end be reduced to ash. Those devotees who, on this festival, worship Shakti and Shri Rama and resolve to cast off the ten faults within — desire, anger, greed, delusion, pride, envy, and the rest — find victory, honour, and well-being rain down upon their lives.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'bhai-dooj-katha',
+    titleHi: 'भाई दूज कथा',
+    titleEn: 'Bhai Dooj Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'surya-children',
+        titleHi: 'सूर्य की संतान — यम और यमी',
+        titleEn: 'The children of Surya — Yama and Yami',
+        bodyHi: [
+          'बहुत पुराने युग की बात है। सूर्यदेव और उनकी पत्नी संज्ञा के दो संतानें थीं — एक पुत्र यम और एक पुत्री यमुना, जिन्हें यमी भी कहा जाता था। दोनों जुड़वाँ भाई-बहन एक साथ बड़े हुए थे और उनके बीच का स्नेह असीम था। यमुना अपने भाई से अत्यंत प्रेम करती थी, और जब भी वह उसे देखती, उसका मुख प्रसन्नता से खिल उठता।',
+          'समय बीतता गया और दोनों का जीवन अलग-अलग दिशाओं में मुड़ गया। यम पर सृष्टि का एक गुरुतर भार आ पड़ा — उन्हें मृत्यु के देवता, यमराज के पद पर बैठाया गया, और प्राणियों के कर्मों के अनुसार न्याय करना उनका कर्तव्य बन गया। यमुना धरती पर एक पवित्र नदी के रूप में प्रवाहित हुई, जिसके तट पर असंख्य लोग शांति पाने आते थे।',
+          'अपने कठोर कर्तव्य में डूबे यमराज को बहन से मिलने का अवसर ही न मिलता। दिन, मास और वर्ष बीतते गए, पर वे यमुना के पास नहीं जा पाए। उधर यमुना अपने भाई की प्रतीक्षा में व्याकुल रहती। बार-बार वह संदेश भेजती — ‘भैया, एक बार मेरे घर पधारो, मैं तुम्हें भोजन कराना चाहती हूँ।’ किंतु यमराज का आसन उन्हें कहीं जाने न देता।',
+        ],
+        bodyEn: [
+          'In an age long past, the Sun-god Surya and his wife Sanjna had two children — a son named Yama and a daughter named Yamuna, who was also called Yami. The twins grew up side by side, and the affection between them knew no bounds. Yamuna loved her brother dearly, and whenever she set eyes upon him her face would bloom with joy.',
+          'As the years passed, the lives of the two turned in different directions. A grave burden of creation fell upon Yama — he was seated upon the throne of Yamaraja, the lord of death, and it became his duty to render judgement over beings according to their deeds. Yamuna flowed upon the earth as a sacred river, to whose banks countless people came in search of peace.',
+          'Immersed in his stern duty, Yamaraja could find no occasion to visit his sister. Days, months and years rolled by, yet he was never able to go to Yamuna. She, for her part, remained restless in waiting for her brother. Again and again she sent word — ‘Dear brother, come to my home just once; I long to feed you with my own hands.’ But Yamaraja’s seat of office would not let him leave.',
+        ],
+      },
+      {
+        id: 'longing-invitation',
+        titleHi: 'बहन का बुलावा और भाई का आना',
+        titleEn: 'A sister\'s call and a brother\'s coming',
+        bodyHi: [
+          'कार्तिक मास के शुक्ल पक्ष की द्वितीया तिथि आई। उस दिन यमुना का हृदय फिर भाई की याद से भर उठा। उसने एक बार और स्नेहभरा निमंत्रण भेजा — ‘भैया, इतने बरस बीत गए, तुमने मेरे घर पैर तक नहीं रखा। आज तो अवश्य आओ, मेरी इस विनती को ठुकराना मत।’ इस बार बहन के प्रेम ने यमराज के मन को छू लिया।',
+          'यमराज ने सोचा कि वे तो स्वयं मृत्यु के स्वामी हैं, जिनसे सारा संसार भयभीत रहता है; पर उनकी अपनी बहन उन्हें इतने प्रेम से बुला रही है। उन्होंने अपने दूतों और गणों को विदा किया और यमुना के घर की ओर चल पड़े। मार्ग में जो भी प्राणी बंधन और दण्ड में पड़े थे, उस शुभ अवसर पर यमराज ने उन्हें मुक्त कर दिया, और चारों ओर हर्ष की लहर दौड़ गई।',
+          'जब यमुना ने सुना कि उसका भाई सचमुच चला आ रहा है, तो उसकी प्रसन्नता का कोई पार न रहा। उसने अपना घर सजाया, द्वार पर बंदनवार बाँधे, और भाँति-भाँति के पकवान बनाने में जुट गई। उसका मन यही गा रहा था कि आज वर्षों की प्रतीक्षा का फल मिलने वाला है।',
+        ],
+        bodyEn: [
+          'On Dwitiya in the bright fortnight of the month of Kartika, Yamuna’s heart once more filled with longing for her brother. She sent one more loving invitation — ‘Brother, so many years have gone by, and you have not so much as set foot in my home. Today you must surely come; do not turn away this plea of mine.’ This time a sister’s love touched the heart of Yamaraja.',
+          'Yamaraja reflected that he was himself the master of death, whom the whole world dreaded; and yet his own sister was calling him with such tenderness. He dismissed his messengers and attendants and set out toward Yamuna’s home. Along the way, on that auspicious occasion, he released the beings who lay bound in fetters and punishment, and a wave of gladness ran through all directions.',
+          'When Yamuna heard that her brother was truly on his way, there was no limit to her delight. She adorned her house, hung festive garlands at the door, and busied herself preparing dishes of every kind. Her heart kept singing that the fruit of years of waiting was about to be hers at last.',
+        ],
+      },
+      {
+        id: 'welcome-and-feast',
+        titleHi: 'तिलक, आरती और प्रेम का भोज',
+        titleEn: 'The tilak, the aarti, and the feast of love',
+        bodyHi: [
+          'जैसे ही यमराज द्वार पर पहुँचे, यमुना दौड़ती हुई आगे आई और भाई का अभिनंदन किया। उसने प्रेमपूर्वक उनके चरण धुलाए, उन्हें ऊँचे आसन पर बैठाया, और हाथ में आरती की थाली लेकर उनकी आरती उतारी। फिर उसने चंदन और रोली से अपने भाई के मस्तक पर मंगल-तिलक लगाया और उनकी दीर्घायु तथा कल्याण की कामना की।',
+          'इसके बाद यमुना ने अपने हाथों से बनाए छप्पन प्रकार के व्यंजन भाई के सामने परोसे। मिठाइयाँ, फल और स्वादिष्ट पकवान देखकर यमराज का हृदय गद्गद हो उठा। बहन के इस निश्छल प्रेम और सत्कार से वे इतने प्रसन्न हुए कि उन्हें ऐसा अनुभव हुआ मानो उन्होंने आज तक ऐसा स्नेह कभी न पाया हो।',
+          'भोजन के बाद संतुष्ट होकर यमराज ने यमुना से कहा — ‘बहन, तुम्हारे इस प्रेम ने मुझे विभोर कर दिया है। तुम जो चाहो, वर माँग लो।’ यमुना ने हाथ जोड़कर विनम्रता से उत्तर दिया कि उसे धन या वैभव नहीं चाहिए; उसकी तो बस एक ही अभिलाषा है।',
+        ],
+        bodyEn: [
+          'The moment Yamaraja reached the doorway, Yamuna came running forward to welcome her brother. With love she washed his feet, seated him upon a high seat, and taking a tray of lamps in her hands she performed his aarti. Then with sandal paste and vermilion she applied an auspicious tilak upon her brother’s forehead, praying for his long life and wellbeing.',
+          'After this, Yamuna served before her brother fifty-six kinds of delicacies prepared with her own hands. Seeing the sweets, the fruits and the savoury dishes, Yamaraja’s heart overflowed with feeling. He was so pleased by this guileless love and hospitality of his sister that it seemed to him as though never until that day had he received such affection.',
+          'When the meal was over and he was content, Yamaraja said to Yamuna — ‘Sister, this love of yours has overwhelmed me. Ask of me whatever you wish, and take it as a boon.’ Folding her hands, Yamuna answered humbly that she did not desire wealth or splendour; she had only a single wish.',
+        ],
+      },
+      {
+        id: 'yamas-boon',
+        titleHi: 'यमराज का वरदान',
+        titleEn: 'The boon of Yamaraja',
+        bodyHi: [
+          'यमुना ने कहा — ‘भैया, मेरी कामना केवल इतनी है कि आप प्रति वर्ष इसी कार्तिक शुक्ल द्वितीया के दिन मेरे घर भोजन करने आते रहें। और जो कोई बहन आज के दिन अपने भाई का इसी प्रकार आदर-सत्कार करे, उसके भाई को आपका भय कभी न सताए।’ बहन की यह निःस्वार्थ प्रार्थना सुनकर यमराज और भी प्रसन्न हो गए।',
+          'यमराज ने ‘तथास्तु’ कहकर वर दिया — ‘ऐसा ही हो, बहन। आज से जो भाई इस द्वितीया के दिन अपनी बहन के घर जाकर उसके हाथ का तिलक ग्रहण करेगा, उसका सत्कार पाएगा, और इस दिन यमुना के पवित्र जल में स्नान करेगा, उसे अकाल मृत्यु का भय नहीं रहेगा। मेरे दण्ड और यातना से वह सदा सुरक्षित रहेगा।’',
+          'यह कहकर यमराज ने बहन को बहुमूल्य वस्त्र और आभूषण भेंट किए और हर्षित होकर अपने धाम लौट गए। यमुना भी भाई के स्नेह और इस अनुपम वरदान को पाकर धन्य हो गई। उसी दिन से यह तिथि भाई-बहन के अटूट प्रेम का पर्व बन गई।',
+        ],
+        bodyEn: [
+          'Yamuna said — ‘Brother, my only wish is this: that every year on this very second day of the bright fortnight of Kartika you keep coming to dine at my home. And whichever sister honours and serves her brother in this same way on this day, may her brother never be troubled by fear of you.’ Hearing this selfless prayer of his sister, Yamaraja was pleased all the more.',
+          'Saying ‘So be it,’ Yamaraja granted the boon — ‘Let it be thus, sister. From this day, any brother who on this second lunar day goes to his sister’s home and receives the tilak from her hand, who accepts her welcome, and who on this day bathes in the sacred waters of the Yamuna, shall have no fear of untimely death. He shall forever be safe from my rod of punishment and my torments.’',
+          'Having spoken thus, Yamaraja presented his sister with precious garments and ornaments, and returned joyfully to his own abode. Yamuna too was blessed, having received her brother’s affection and this matchless boon. From that very day this lunar date became a festival of the unbreakable love between brother and sister.',
+        ],
+      },
+      {
+        id: 'yama-dwitiya-observance',
+        titleHi: 'यम द्वितीया का पर्व आज भी',
+        titleEn: 'The festival of Yama Dwitiya, even today',
+        bodyHi: [
+          'तभी से कार्तिक शुक्ल द्वितीया ‘यम द्वितीया’ अथवा ‘भाई दूज’ के नाम से मनाई जाने लगी। इस दिन बहनें अपने भाइयों को घर बुलाती हैं, उन्हें आसन पर बैठाकर माथे पर तिलक लगाती हैं, आरती उतारती हैं और मनपसंद भोजन कराती हैं; और भाई बदले में बहन को स्नेहपूर्वक भेंट देते हैं तथा उसकी रक्षा का संकल्प दोहराते हैं।',
+          'कहते हैं कि जो भाई इस दिन अपनी बहन के यहाँ जाकर उसका सत्कार ग्रहण करता है और यमुना में स्नान करता है, उसे यमराज के उसी वरदान के अनुसार अकाल मृत्यु का भय नहीं रहता, और उसका जीवन यम के अनुग्रह से सुरक्षित रहता है। यमुना और यम के उसी मिलन की स्मृति प्रत्येक भाई-बहन के स्नेह में आज भी जीवित है, और यही इस पावन पर्व का सच्चा वरदान है।',
+        ],
+        bodyEn: [
+          'From then on, Dwitiya in the bright fortnight of Kartika came to be celebrated under the names ‘Yama Dwitiya’ and ‘Bhai Dooj.’ On this day sisters invite their brothers home, seat them upon a place of honour, apply the tilak upon their foreheads, perform their aarti and feed them their favourite dishes; and the brothers, in return, lovingly give gifts to their sisters and renew their vow to protect them.',
+          'It is said that the brother who on this day goes to his sister, accepts her hospitality and bathes in the Yamuna is freed, by that very boon of Yamaraja, from the fear of untimely death, and his life remains guarded by the grace of Yama. The memory of that meeting of Yamuna and Yama lives on even today in the affection of every brother and sister, and this is the true blessing of this sacred festival.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
     id: 'vijaya-ekadashi-katha',
     titleHi: 'विजया एकादशी व्रत कथा',
     titleEn: 'Vijaya Ekadashi Katha',

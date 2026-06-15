@@ -177,7 +177,7 @@ function wireFestivals(spec: any): string[] {
     for (let i = 0; i < lines.length; i++) {
       const ln = lines[i];
       if (new RegExp(`id: '${rid}'`).test(ln) && /\b(festival|createRule|vrat|upavas|ekadashi)\(/.test(ln) && !/kathaId:/.test(ln)) {
-        lines[i] = ln.replace(/\s*\}\)(,?)\s*$/, ` , kathaId: '${spec.targetKathaId}' })$1`);
+        lines[i] = ln.replace(/\s*\}\)(,?)\s*$/, `, kathaId: '${spec.targetKathaId}' })$1`);
         notes.push('rule.kathaId+');
         break;
       }
