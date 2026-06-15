@@ -16,6 +16,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
 import TimeStepper from '@/components/TimeStepper';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Reminders'>;
@@ -34,6 +35,12 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
   } = useNotificationPreferences();
 
   const isHi = lang === 'hi';
+  const screenTitle = orderTitlesByLanguage(lang, 'स्मरण', 'Reminders', {
+    devPrimary: 22,
+    devSecondary: 14,
+    latPrimary: 22,
+    latSecondary: 14,
+  });
 
   const onToggle = useCallback(
     async (next: boolean) => {
@@ -107,21 +114,28 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
             <Text
               style={[
                 styles.titleHi,
-                { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                {
+                  color: colors.ink,
+                  fontFamily: screenTitle.primary.fontFamily,
+                  fontSize: screenTitle.primary.fontSize,
+                  fontStyle: screenTitle.primary.fontStyle,
+                },
               ]}
             >
-              {isHi ? 'स्मरण' : 'Reminders'}
+              {screenTitle.primary.text}
             </Text>
             <Text
               style={[
                 styles.titleEn,
                 {
                   color: colors.inkMuted,
-                  fontFamily: 'CormorantGaramond_400Regular_Italic',
+                  fontFamily: screenTitle.secondary.fontFamily,
+                  fontSize: screenTitle.secondary.fontSize,
+                  fontStyle: screenTitle.secondary.fontStyle,
                 },
               ]}
             >
-              {isHi ? 'Reminders' : 'स्मरण'}
+              {screenTitle.secondary.text}
             </Text>
           </View>
           <View style={styles.backSpacer} />

@@ -14,6 +14,7 @@ import BookmarkButton from '@/components/BookmarkButton';
 import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import RoutineBanner from '@/components/RoutineBanner';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
 /**
  * Resolve the verse to show on entry. When a reminder tap forwarded a verse
@@ -36,6 +37,12 @@ function resolveInitialVerse(
 export default function DailyBhaktiScreen() {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const screenTitle = orderTitlesByLanguage(lang, 'दैनिक भक्ति', 'Daily Verse', {
+    devPrimary: 22,
+    devSecondary: 14,
+    latPrimary: 22,
+    latSecondary: 14,
+  });
   const route = useRoute<RouteProp<TabParamList, 'DailyBhaktiTab'>>();
   const { sourceId, chapter, verseIndex } = route.params ?? {};
   const [verse, setVerse] = useState<UniformVerse | null>(() =>
@@ -99,24 +106,26 @@ export default function DailyBhaktiScreen() {
           <View style={styles.titleArea}>
             <Text
               style={{
-                fontFamily: typography.screenTitle.fontFamily,
-                fontSize: 22,
+                fontFamily: screenTitle.primary.fontFamily,
+                fontSize: screenTitle.primary.fontSize,
+                fontStyle: screenTitle.primary.fontStyle,
                 color: colors.ink,
                 textAlign: 'center',
               }}
             >
-              दैनिक भक्ति
+              {screenTitle.primary.text}
             </Text>
             <Text
               style={{
-                fontFamily: 'CormorantGaramond_400Regular_Italic',
-                fontSize: 14,
+                fontFamily: screenTitle.secondary.fontFamily,
+                fontSize: screenTitle.secondary.fontSize,
+                fontStyle: screenTitle.secondary.fontStyle,
                 color: colors.inkMuted,
                 textAlign: 'center',
                 marginTop: 4,
               }}
             >
-              Daily Verse
+              {screenTitle.secondary.text}
             </Text>
           </View>
 
