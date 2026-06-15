@@ -3,6 +3,11 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 
+jest.mock('expo-haptics', () => ({
+  ImpactFeedbackStyle: { Light: 'Light' },
+  impactAsync: jest.fn(() => Promise.resolve()),
+}));
+
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
   setItem: jest.fn(() => Promise.resolve()),

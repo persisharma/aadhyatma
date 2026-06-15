@@ -1,46 +1,92 @@
-import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useRef, useState } from 'react';
+import {
+  FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
+import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import LanguageToggle from '@/components/LanguageToggle';
+import KathaSectionPage from '@/components/KathaSectionPage';
 import { getKathaContent } from '@/panchang/kathaContent';
+import type { KathaContentSection } from '@/panchang/types';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'VratKathaReader'>;
 
 export default function VratKathaReaderScreen({ navigation, route }: Props) {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const isHindi = lang === 'hi';
+  const { width } = useWindowDimensions();
+
   const katha = getKathaContent(route.params.kathaId);
+  const sections = katha?.sections ?? [];
+  const total = sections.length;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const listRef = useRef<FlatList<KathaContentSection>>(null);
+
+  const getItemLayout = useCallback(
+    (_: unknown, index: number) => ({ length: width, offset: width * index, index }),
+    [width]
+  );
+
+  const handleScroll = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const idx = Math.round(e.nativeEvent.contentOffset.x / width);
+      setCurrentIndex((prev) => {
+        if (prev !== idx && idx >= 0 && idx < total) {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
+          return idx;
+        }
+        return prev;
+      });
+    },
+    [width, total]
+  );
+
+  const title = katha ? (isHindi ? katha.titleHi : katha.titleEn) : isHindi ? 'कथा' : 'Katha';
 
   return (
-    <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
-      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-        <View style={styles.header}>
-          <Pressable
-            onPress={() => navigation.goBack()}
-            hitSlop={14}
-            accessibilityRole="button"
-            accessibilityLabel="Back"
-            style={styles.back}
-          >
-            <Text style={{ fontSize: 28, lineHeight: 28, color: colors.saffronDeep }}>‹</Text>
-          </Pressable>
+    <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
+        <View style={styles.topBar}>
+          <View style={styles.topSide}>
+            <Pressable
+              onPress={() => navigation.goBack()}
+              accessibilityRole="button"
+              accessibilityLabel="Back"
+              hitSlop={16}
+              style={({ pressed }) => [
+                styles.back,
+                { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
+                pressed && { opacity: 0.7 },
+              ]}
+            >
+              <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
+            </Pressable>
+          </View>
           <Text
             numberOfLines={1}
-            style={[styles.headerTitle, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
+            style={[styles.title, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
           >
-            {katha ? (isHindi ? katha.titleHi : katha.titleEn) : (isHindi ? 'कथा' : 'Katha')}
+            {title}
           </Text>
-          <LanguageToggle />
+          <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
+            {total > 0 && (
+              <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily }]}>
+                {currentIndex + 1} / {total}
+              </Text>
+            )}
+          </View>
         </View>
 
         {!katha ? (
@@ -50,32 +96,49 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
             </Text>
           </View>
         ) : (
-          <ScrollView
-            contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
-            showsVerticalScrollIndicator={false}
-          >
-            {katha.sections.map((section) => {
-              const body = isHindi ? section.bodyHi : section.bodyEn;
-              return (
-                <View key={section.id} style={styles.section}>
-                  <Text style={[styles.sectionTitle, { color: colors.saffronDeep }]}>
-                    {isHindi ? section.titleHi : section.titleEn}
-                  </Text>
-                  {body.map((paragraph, index) => (
-                    <Text
-                      key={index}
-                      style={[styles.para, { color: colors.ink, fontFamily: typography.meaning.fontFamily }]}
-                    >
-                      {paragraph}
-                    </Text>
-                  ))}
+          <>
+            <View style={styles.toggleRow}>
+              <LanguageToggle />
+            </View>
+            <View style={styles.listContainer}>
+              <FlatList
+                ref={listRef}
+                data={sections}
+                keyExtractor={(s) => s.id}
+                renderItem={({ item, index }) => (
+                  <KathaSectionPage section={item} index={index} total={total} width={width} />
+                )}
+                extraData={lang}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                initialNumToRender={1}
+                windowSize={3}
+                maxToRenderPerBatch={2}
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
+                getItemLayout={getItemLayout}
+                onScrollToIndexFailed={() => undefined}
+                style={styles.list}
+              />
+              {total > 1 && (
+                <View style={styles.dotsOverlay}>
+                  <View style={styles.dots}>
+                    {sections.map((s, i) => (
+                      <View
+                        key={s.id}
+                        style={
+                          i === currentIndex
+                            ? [styles.dotCurrent, { backgroundColor: colors.saffronDeep }]
+                            : [styles.dot, { backgroundColor: colors.dotRest }]
+                        }
+                      />
+                    ))}
+                  </View>
                 </View>
-              );
-            })}
-            <Text style={[styles.source, { color: colors.inkMuted }]}>
-              {isHindi ? katha.sourceNoteHi : katha.sourceNoteEn}
-            </Text>
-          </ScrollView>
+              )}
+            </View>
+          </>
         )}
       </SafeAreaView>
     </View>
@@ -85,19 +148,18 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  back: { width: 30, alignItems: 'flex-start' },
-  headerTitle: { flex: 1, fontSize: 18 },
-  scroll: { paddingTop: 6, paddingBottom: 36 },
-  section: { marginBottom: 22 },
-  sectionTitle: { fontFamily: 'Inter_600SemiBold', fontSize: 14, marginBottom: 10 },
-  para: { fontSize: 16, lineHeight: 27, marginBottom: 12 },
-  source: { fontSize: 11, lineHeight: 16, marginTop: 4, fontStyle: 'italic' },
+  topBar: { paddingHorizontal: 16, paddingTop: 8, paddingBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  topSide: { width: 80, flexDirection: 'row', alignItems: 'center' },
+  back: { width: 40, height: 40, borderRadius: 20, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  backGlyph: { fontSize: 22, lineHeight: 24, marginTop: -2, includeFontPadding: false },
+  title: { flex: 1, textAlign: 'center', fontSize: 18, includeFontPadding: false, marginHorizontal: 4 },
+  counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
+  toggleRow: { paddingVertical: 6, paddingBottom: 10, alignItems: 'center' },
+  listContainer: { flex: 1 },
+  list: { flex: 1 },
   empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
+  dotsOverlay: { position: 'absolute', bottom: 6, left: 0, right: 0, alignItems: 'center' },
+  dots: { flexDirection: 'row', gap: 6, flexWrap: 'wrap', justifyContent: 'center', maxWidth: '80%' },
+  dot: { width: 6, height: 6, borderRadius: 3 },
+  dotCurrent: { width: 18, height: 6, borderRadius: 999 },
 });
