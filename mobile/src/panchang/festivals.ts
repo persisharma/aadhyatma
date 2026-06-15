@@ -182,6 +182,12 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'guru-purnima-katha', nameHi: 'गुरु पूर्णिमा कथा', nameEn: 'Guru Purnima Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['guru-purnima'] }),
   katha({ id: 'janmashtami-katha', nameHi: 'जन्माष्टमी कथा', nameEn: 'Janmashtami Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['janmashtami'] }),
   katha({ id: 'vasant-panchami-katha', nameHi: 'वसंत पंचमी कथा', nameEn: 'Vasant Panchami Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['vasant-panchami'] }),
+  katha({ id: 'akshaya-navami-katha', nameHi: 'अक्षय नवमी कथा', nameEn: 'Akshaya Navami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['akshaya-navami'] }),
+  katha({ id: 'chhath-puja-katha', nameHi: 'छठ पूजा कथा', nameEn: 'Chhath Puja Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['chhath-puja'] }),
+  katha({ id: 'ganga-dussehra-katha', nameHi: 'गंगा दशहरा कथा', nameEn: 'Ganga Dussehra Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['ganga-dussehra'] }),
+  katha({ id: 'gita-jayanti-katha', nameHi: 'गीता जयंती कथा', nameEn: 'Gita Jayanti Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['gita-jayanti'] }),
+  katha({ id: 'navratri-start-katha', nameHi: 'नवरात्रि प्रारंभ कथा', nameEn: 'Navratri Begins Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['navratri-start'] }),
+  katha({ id: 'vivah-panchami-katha', nameHi: 'विवाह पंचमी कथा', nameEn: 'Vivah Panchami Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['vivah-panchami'] }),
 ];
 
 const SANKRANTI_RULES: ObservanceRule[] = [
@@ -227,7 +233,7 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'narasimha-jayanti', nameHi: 'नरसिंह जयंती', nameEn: 'Narasimha Jayanti', lunarMonth: 2, paksha: 'shukla', tithi: 14, marker: 'dot', deityHi: 'भगवान नरसिंह', deityEn: 'Lord Narasimha', kathaId: 'narasimha-jayanti-vrat-katha' }),
   festival({ id: 'buddha-purnima', nameHi: 'बुद्ध पूर्णिमा', nameEn: 'Buddha Purnima', lunarMonth: 2, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'भगवान बुद्ध', deityEn: 'Lord Buddha', kathaId: 'buddha-purnima-vrat-katha' }),
   festival({ id: 'narada-jayanti', nameHi: 'नारद जयंती', nameEn: 'Narada Jayanti', lunarMonth: 2, paksha: 'krishna', tithi: 1, marker: 'dot', deityHi: 'देवर्षि नारद', deityEn: 'Devarshi Narada', kathaId: 'narada-jayanti-vrat-katha' }),
-  festival({ id: 'ganga-dussehra', nameHi: 'गंगा दशहरा', nameEn: 'Ganga Dussehra', lunarMonth: 3, paksha: 'shukla', tithi: 10, marker: 'dot', deityHi: 'मां गंगा', deityEn: 'Maa Ganga' }),
+  festival({ id: 'ganga-dussehra', nameHi: 'गंगा दशहरा', nameEn: 'Ganga Dussehra', lunarMonth: 3, paksha: 'shukla', tithi: 10, marker: 'dot', deityHi: 'मां गंगा', deityEn: 'Maa Ganga', kathaId: 'ganga-dussehra-katha' }),
   festival({ id: 'guru-purnima', nameHi: 'गुरु पूर्णिमा', nameEn: 'Guru Purnima', lunarMonth: 4, paksha: 'shukla', tithi: 15, marker: 'star', deityHi: 'गुरु परंपरा', deityEn: 'Guru Parampara', kathaId: 'guru-purnima-katha' }),
   festival({ id: 'nag-panchami', nameHi: 'नाग पंचमी', nameEn: 'Nag Panchami', lunarMonth: 5, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'नाग देवता', deityEn: 'Naga Devata', kathaId: 'nag-panchami-vrat-katha' }),
   festival({ id: 'raksha-bandhan', nameHi: 'रक्षा बंधन', nameEn: 'Raksha Bandhan', lunarMonth: 5, paksha: 'shukla', tithi: 15, marker: 'star', kathaId: 'raksha-bandhan-legends' }),
@@ -237,7 +243,7 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'rishi-panchami', nameHi: 'ऋषि पंचमी', nameEn: 'Rishi Panchami', lunarMonth: 6, paksha: 'shukla', tithi: 5, marker: 'dot', category: 'vrat', deityHi: 'ऋषि परंपरा', deityEn: 'Rishi Parampara', kathaId: 'rishi-panchami-vrat-katha' }),
   festival({ id: 'durva-ashtami', nameHi: 'दूर्वा अष्टमी', nameEn: 'Durva Ashtami', lunarMonth: 6, paksha: 'shukla', tithi: 8, marker: 'dot', category: 'vrat', deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', kathaId: 'durva-ashtami-vrat-katha' }),
   festival({ id: 'anant-chaturdashi', nameHi: 'अनंत चतुर्दशी', nameEn: 'Anant Chaturdashi', lunarMonth: 6, paksha: 'shukla', tithi: 14, marker: 'dot', category: 'vrat', deityHi: 'भगवान विष्णु', deityEn: 'Lord Vishnu', kathaId: 'anant-chaturdashi-vrat-katha' }),
-  festival({ id: 'navratri-start', nameHi: 'नवरात्रि प्रारंभ', nameEn: 'Navratri Begins', lunarMonth: 7, paksha: 'shukla', tithi: 1, marker: 'star', deityHi: 'मां दुर्गा', deityEn: 'Maa Durga', linkSectionId: 'durga-stotram' }),
+  festival({ id: 'navratri-start', nameHi: 'नवरात्रि प्रारंभ', nameEn: 'Navratri Begins', lunarMonth: 7, paksha: 'shukla', tithi: 1, marker: 'star', deityHi: 'मां दुर्गा', deityEn: 'Maa Durga', linkSectionId: 'durga-stotram', kathaId: 'navratri-start-katha' }),
   festival({ id: 'dussehra', nameHi: 'दशहरा', nameEn: 'Dussehra', lunarMonth: 7, paksha: 'shukla', tithi: 10, marker: 'star', deityHi: 'श्री राम', deityEn: 'Shri Ram', linkSectionId: 'ram-stuti', kathaId: 'dussehra-katha' }),
   festival({ id: 'sharad-purnima', nameHi: 'शरद पूर्णिमा', nameEn: 'Sharad Purnima', lunarMonth: 7, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'चंद्र देव', deityEn: 'Chandra Deva', kathaId: 'sharad-purnima-vrat-katha' }),
   festival({ id: 'kojagara-puja', nameHi: 'कोजागरा पूजा', nameEn: 'Kojagara Puja', lunarMonth: 7, paksha: 'shukla', tithi: 15, marker: 'dot', category: 'vrat', deityHi: 'मां लक्ष्मी', deityEn: 'Maa Lakshmi', kathaId: 'sharad-purnima-vrat-katha' }),
@@ -247,12 +253,12 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'diwali', nameHi: 'दीपावली', nameEn: 'Diwali', lunarMonth: 8, paksha: 'krishna', tithi: 15, marker: 'star', deityHi: 'मां लक्ष्मी', deityEn: 'Maa Lakshmi', kathaId: 'diwali-legends' }),
   festival({ id: 'govardhan-puja', nameHi: 'गोवर्धन पूजा', nameEn: 'Govardhan Puja', lunarMonth: 8, paksha: 'shukla', tithi: 1, marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', kathaId: 'govardhan-puja-katha' }),
   festival({ id: 'bhai-dooj', nameHi: 'भाई दूज', nameEn: 'Bhai Dooj', lunarMonth: 8, paksha: 'shukla', tithi: 2, marker: 'star', kathaId: 'bhai-dooj-katha' }),
-  festival({ id: 'chhath-puja', nameHi: 'छठ पूजा', nameEn: 'Chhath Puja', lunarMonth: 8, paksha: 'shukla', tithi: 6, marker: 'dot', category: 'upavas', deityHi: 'सूर्य देव', deityEn: 'Surya Deva' }),
+  festival({ id: 'chhath-puja', nameHi: 'छठ पूजा', nameEn: 'Chhath Puja', lunarMonth: 8, paksha: 'shukla', tithi: 6, marker: 'dot', category: 'upavas', deityHi: 'सूर्य देव', deityEn: 'Surya Deva', kathaId: 'chhath-puja-katha' }),
   festival({ id: 'dev-uthani-ekadashi', nameHi: 'देव उठनी एकादशी', nameEn: 'Dev Uthani Ekadashi', lunarMonth: 8, paksha: 'shukla', tithi: 11, marker: 'dot', category: 'vrat', deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', linkSectionId: 'vishnu-sahasranama', kathaId: 'kartika-mahatmya' }),
   festival({ id: 'tulasi-vivah', nameHi: 'तुलसी विवाह', nameEn: 'Tulasi Vivah', lunarMonth: 8, paksha: 'shukla', tithi: 12, marker: 'dot', deityHi: 'तुलसी माता', deityEn: 'Tulasi Mata', kathaId: 'kartika-mahatmya' }),
-  festival({ id: 'akshaya-navami', nameHi: 'अक्षय नवमी', nameEn: 'Akshaya Navami', lunarMonth: 8, paksha: 'shukla', tithi: 9, marker: 'dot', category: 'vrat' }),
-  festival({ id: 'vivah-panchami', nameHi: 'विवाह पंचमी', nameEn: 'Vivah Panchami', lunarMonth: 9, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'सीता राम', deityEn: 'Sita Ram' }),
-  festival({ id: 'gita-jayanti', nameHi: 'गीता जयंती', nameEn: 'Gita Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 11, marker: 'dot', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita' }),
+  festival({ id: 'akshaya-navami', nameHi: 'अक्षय नवमी', nameEn: 'Akshaya Navami', lunarMonth: 8, paksha: 'shukla', tithi: 9, marker: 'dot', category: 'vrat', kathaId: 'akshaya-navami-katha' }),
+  festival({ id: 'vivah-panchami', nameHi: 'विवाह पंचमी', nameEn: 'Vivah Panchami', lunarMonth: 9, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'सीता राम', deityEn: 'Sita Ram', kathaId: 'vivah-panchami-katha' }),
+  festival({ id: 'gita-jayanti', nameHi: 'गीता जयंती', nameEn: 'Gita Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 11, marker: 'dot', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'gita-jayanti-katha' }),
   festival({ id: 'dattatreya-jayanti', nameHi: 'दत्तात्रेय जयंती', nameEn: 'Dattatreya Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'भगवान दत्तात्रेय', deityEn: 'Lord Dattatreya' }),
 ];
 

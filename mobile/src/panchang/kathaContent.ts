@@ -79,6 +79,489 @@ function summaryContent(draft: SummaryKathaDraft): KathaContentEntry {
 
 export const KATHA_CONTENT: readonly KathaContentEntry[] = [
   fullContent({
+    id: 'vivah-panchami-katha',
+    titleHi: 'विवाह पंचमी कथा',
+    titleEn: 'Vivah Panchami Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'furrow-and-the-child',
+        titleHi: 'हल की रेखा में मिली कन्या',
+        titleEn: 'The child found in the furrow',
+        bodyHi: [
+          'मिथिला की भूमि वर्षों से सूखी पड़ी थी, और राजा जनक चिंतित थे। ऋषियों ने उन्हें परामर्श दिया कि वे स्वयं अपने हाथों से यज्ञभूमि को हल से जोतें, तभी मेघ बरसेंगे और धरती फिर से हरी होगी। सोने का हल लेकर राजा जनक ने अपने राज्य की मिट्टी में पहली रेखा खींची।',
+          'हल की नोक जैसे ही एक स्थान पर पहुंची, धरती से एक मधुर ध्वनि उठी और मिट्टी स्वयं हट गई। वहां एक स्वर्णमयी मंजूषा में लेटी हुई एक नन्ही कन्या दिखाई दी, जिसका मुख प्रातःकाल के सूर्य-सा दीप्त था। राजा जनक का हृदय वात्सल्य से भर उठा, मानो उन्हें वर्षों की प्रतीक्षा का फल मिल गया हो।',
+          'राजा जनक की रानी सुनयना ने उस कन्या को गोद में उठाया और छाती से लगा लिया। चूंकि वह भूमि की रेखा अर्थात् ‘सीता’ से प्रकट हुई थी, इसलिए उसका नाम सीता रखा गया। जनक उसे ‘जानकी’ कहकर पुकारते और मिथिला की होने के कारण वह ‘मैथिली’ कहलाई। वह साक्षात् भूमि की पुत्री थी और राजमहल की प्रिय राजकुमारी बन गई।',
+        ],
+        bodyEn: [
+          'The land of Mithila had lain dry for years, and King Janaka was troubled. The sages counselled him to plough the sacrificial ground with his own hands, for only then would the clouds gather, the rains fall, and the earth turn green once more. Taking a golden plough, King Janaka drew the first furrow through the soil of his kingdom.',
+          'The moment the tip of the plough reached a certain spot, a sweet sound rose from the ground and the earth parted of its own accord. There, lying within a golden casket, was a tiny infant girl whose face shone like the morning sun. King Janaka heart filled with tenderness, as though the fruit of years of waiting had been placed before him.',
+          'Queen Sunayana, the wife of King Janaka, lifted the child into her arms and held her to her breast. Because she had appeared from the furrow line of the earth, which is called ‘Sita,’ she was given the name Sita. Janaka called her ‘Janaki,’ and being of Mithila she came to be known as ‘Maithili.’ She was the very daughter of the earth, and she became the beloved princess of the royal house.',
+        ],
+      },
+      {
+        id: 'shiva-dhanush-and-the-vow',
+        titleHi: 'शिव-धनुष और स्वयंवर का प्रण',
+        titleEn: 'The bow of Shiva and the vow of the swayamvara',
+        bodyHi: [
+          'जनक के राजकुल में एक अत्यंत विशाल और तेजोमय धनुष पूजा जाता था। यह वही पिनाक था जिसे स्वयं भगवान शिव ने जनक के पूर्वजों को सौंपा था। इतना भारी था वह धनुष कि सहस्रों वीर मिलकर भी उसे हिला तक नहीं पाते थे, और मिथिला के राजमहल में वह श्रद्धा से प्रतिष्ठित था।',
+          'एक दिन बालिका सीता ने खेल-खेल में उस धनुष-मंजूषा को एक हाथ से उठाकर सहज ही दूसरी ओर रख दिया, जिससे वह स्थान स्वच्छ हो सके। यह देखकर राजा जनक विस्मित रह गए। उन्होंने जान लिया कि यह कोई साधारण कन्या नहीं; इसका वर भी कोई असाधारण पुरुष ही हो सकता है, जो इस शिव-धनुष को धारण करने का सामर्थ्य रखता हो।',
+          'जब सीता विवाह योग्य हुईं, तब राजा जनक ने प्रण किया, ‘‘जो वीर इस पिनाक धनुष को उठाकर उसकी प्रत्यंचा चढ़ा देगा, मैं अपनी पुत्री जानकी का विवाह उसी के साथ करूंगा।’’ यह घोषणा सुनकर पृथ्वी भर के अनेक राजा और राजकुमार मिथिला में स्वयंवर के लिए एकत्र हुए।',
+        ],
+        bodyEn: [
+          'In the royal house of Janaka, a bow of vast size and blazing power was worshipped. It was the very Pinaka that Lord Shiva himself had entrusted to the ancestors of Janaka. So heavy was that bow that thousands of warriors together could not so much as stir it, and it stood enshrined with reverence in the palace of Mithila.',
+          'One day, in the course of her play, the little girl Sita lifted the casket holding the bow with one hand and set it aside with ease, so that the place might be swept clean. Seeing this, King Janaka was astonished. He understood that this was no ordinary child, and that her husband too must be some extraordinary man, one with the strength to wield this bow of Shiva.',
+          'When Sita came of age to be married, King Janaka made a vow: ‘‘Whichever hero lifts this Pinaka bow and strings its cord, to him alone shall I give my daughter Janaki in marriage.’’ Hearing this proclamation, many kings and princes from across the earth gathered in Mithila for the swayamvara.',
+        ],
+      },
+      {
+        id: 'rama-arrives-in-mithila',
+        titleHi: 'मिथिला में राम का आगमन',
+        titleEn: 'Rama arrives in Mithila',
+        bodyHi: [
+          'उन्हीं दिनों अयोध्या के राजकुमार श्रीराम और उनके अनुज लक्ष्मण, महर्षि विश्वामित्र के साथ यज्ञ की रक्षा करते हुए मिथिला की ओर आ निकले। नगर के मार्गों पर जब उन दोनों भाइयों के दर्शन हुए, तो मिथिलावासियों के नेत्र उन पर से हटते ही न थे; श्रीराम का श्याम-सुंदर रूप सबके हृदय में बस गया।',
+          'पुष्पवाटिका में पूजा के लिए जाती हुई सीता की दृष्टि अनायास ही श्रीराम पर पड़ी, और दोनों के मन एक-दूसरे की ओर खिंच गए। सीता ने मन ही मन माता गौरी से प्रार्थना की कि यही नीलमेघ-समान राजकुमार उनके जीवनसाथी बनें। माता गौरी ने प्रसन्न होकर उन्हें मनोवांछित वर का आशीर्वाद दिया।',
+          'अगले दिन स्वयंवर की सभा सजी। देश-देश के बलशाली राजा बारी-बारी से उस शिव-धनुष को उठाने आगे आए, किंतु कोई उसे तनिक भी न हिला सका। कई तो उसके भार के नीचे लज्जित होकर लौट गए। सारी सभा में निराशा छा गई, और राजा जनक का मन व्याकुल हो उठा कि कहीं उनका प्रण अधूरा न रह जाए।',
+        ],
+        bodyEn: [
+          'In those very days, Prince Rama of Ayodhya and his younger brother Lakshmana, guarding a sacrifice in the company of the great sage Vishvamitra, came near to Mithila. When the two brothers were seen upon the streets of the city, the eyes of the people of Mithila could not turn away from them; the dark and beautiful form of Rama settled into every heart.',
+          'As Sita was going to the flower garden for her worship, her gaze fell upon Rama unawares, and the hearts of the two were drawn toward each other. In the silence of her mind Sita prayed to Mother Gauri that this prince, dark as a rain cloud, might become the companion of her life. Mother Gauri, well pleased, blessed her that she would obtain the husband her heart desired.',
+          'The next day the assembly of the swayamvara was arrayed. Mighty kings from land after land came forward in turn to lift the bow of Shiva, yet not one could stir it in the least. Many turned back, shamed beneath its weight. Disappointment spread through the whole gathering, and the heart of King Janaka grew anxious lest his vow remain unfulfilled.',
+        ],
+      },
+      {
+        id: 'breaking-of-the-bow',
+        titleHi: 'शिव-धनुष का टूटना',
+        titleEn: 'The breaking of the bow',
+        bodyHi: [
+          'जब कोई वीर उस धनुष को न उठा सका, तब राजा जनक ने व्यथित होकर कहा कि क्या यह पृथ्वी वीरों से सूनी हो गई है। यह सुनकर लक्ष्मण को क्रोध आया, किंतु महर्षि विश्वामित्र ने स्नेह से श्रीराम की ओर देखकर कहा, ‘‘हे राम, उठो और इस धनुष को देखो।’’ गुरु की आज्ञा शिरोधार्य कर श्रीराम शांत भाव से उठे।',
+          'श्रीराम ने धनुष को प्रणाम किया, फिर उसे एक हाथ से सहज ही उठा लिया। सारी सभा अवाक् रह गई। जैसे ही उन्होंने उस पर प्रत्यंचा चढ़ाने के लिए उसे झुकाया, वह विशाल पिनाक धनुष बीच से ‘कड़’ की भीषण ध्वनि के साथ टूट गया। वह गर्जना तीनों लोकों में गूंज उठी, और देवताओं ने आकाश से पुष्प बरसाए।',
+          'धनुष टूटते ही सीता का मुख आनंद से खिल उठा। वे मंगल माला लेकर श्रीराम के समीप आईं और श्रद्धा से उनके कंठ में वरमाला पहना दी। राजा जनक का प्रण पूर्ण हुआ और उनका हृदय हर्ष से भर गया। उन्होंने तत्काल अयोध्या के महाराज दशरथ को संदेश भेजा कि वे अपने पुत्रों के विवाह के लिए मिथिला पधारें।',
+        ],
+        bodyEn: [
+          'When no hero could lift the bow, King Janaka said in his grief that perhaps the earth had been emptied of brave men. Hearing this, Lakshmana grew angry, but the great sage Vishvamitra looked with affection toward Rama and said, ‘‘O Rama, rise and behold this bow.’’ Bowing to the command of his guru, Rama rose calmly to his feet.',
+          'Rama bowed to the bow, then lifted it with a single hand as though it were nothing. The whole assembly was struck silent. The instant he bent it to draw the string upon it, that vast Pinaka bow snapped through the middle with a fearful crack. The thunder of it echoed through the three worlds, and the gods rained down flowers from the sky.',
+          'As the bow broke, Sita face blossomed with joy. Carrying the auspicious garland, she came near to Rama and reverently placed the bridal wreath about his neck. The vow of King Janaka was fulfilled, and his heart was filled with delight. At once he sent word to Maharaja Dasharatha of Ayodhya, asking him to come to Mithila for the marriage of his sons.',
+        ],
+      },
+      {
+        id: 'wedding-at-janakpur',
+        titleHi: 'जनकपुर में विवाह और पंचमी का पुण्य',
+        titleEn: 'The wedding at Janakpur and the merit of Panchami',
+        bodyHi: [
+          'महाराज दशरथ अपने परिवार, गुरु वसिष्ठ और बारात के साथ बड़े उल्लास से जनकपुर पहुंचे। मिथिला नगरी तोरणों, दीपों और मंगल-कलशों से सजाई गई। मार्गशीर्ष मास के शुक्ल पक्ष की पंचमी तिथि को, शुभ मुहूर्त में, वेदमंत्रों की ध्वनि के बीच श्रीराम और सीता का विवाह संपन्न हुआ।',
+          'उसी मंगल वेला में चारों भाइयों के विवाह एक साथ हुए—श्रीराम के साथ सीता, लक्ष्मण के साथ उर्मिला, तथा भरत और शत्रुघ्न के साथ माण्डवी और श्रुतकीर्ति। राजा जनक ने अपनी पुत्रियों को आशीर्वाद और दान देकर विदा किया, और दोनों कुलों में अपार आनंद की वर्षा हुई।',
+          'इसी पावन तिथि की स्मृति में प्रतिवर्ष मार्गशीर्ष शुक्ल पंचमी को विवाह पंचमी का पर्व मनाया जाता है, और भक्त सीता-राम के विवाह का उत्सव श्रद्धा से रचते हैं। कहते हैं कि जो दंपति इस दिन सीता-राम की पूजा करते और इस मंगल-कथा का श्रवण करते हैं, उनका दांपत्य जीवन प्रेम, धर्म और स्थिरता से भर जाता है। जैसे सीता और राम का बंधन मर्यादा और भक्ति का आदर्श बना, वैसे ही इस व्रत को धारण करने वाले के घर में सुख, सौभाग्य और कल्याण सदा निवास करते हैं।',
+        ],
+        bodyEn: [
+          'Maharaja Dasharatha, with his family, his guru Vasishtha, and the wedding party, reached Janakpur in great joy. The city of Mithila was adorned with festive arches, lamps, and auspicious pots. On the fifth day of the bright half of the month of Margashirsha, at the blessed hour and amid the sound of Vedic chants, the marriage of Rama and Sita was solemnised.',
+          'In that same auspicious moment the four brothers were wed together, Sita with Rama, Urmila with Lakshmana, and Mandavi and Shrutakirti with Bharata and Shatrughna. King Janaka sent his daughters away with blessings and gifts, and a boundless joy rained over both houses.',
+          'In memory of this holy day, the festival of Vivah Panchami is kept every year on the fifth bright day of Margashirsha, and devotees lovingly celebrate the wedding of Sita and Rama. It is said that the couple who worship Sita and Rama on this day and listen to this auspicious tale find their married life filled with love, dharma, and steadiness. As the bond of Sita and Rama became the ideal of honour and devotion, so too in the home of one who keeps this vow do happiness, good fortune, and welfare forever abide.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'navratri-start-katha',
+    titleHi: 'नवरात्रि प्रारंभ कथा',
+    titleEn: 'Navratri Begins Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'mahishasura-rises',
+        titleHi: 'महिषासुर का अभ्युदय',
+        titleEn: 'The rise of Mahishasura',
+        bodyHi: [
+          'बहुत पहले की बात है, असुरों के राजा रंभ की तपस्या से एक ऐसा पुत्र उत्पन्न हुआ जो आधा भैंसे और आधा दानव के रूप में जन्मा। महिष अर्थात भैंसे का यह स्वरूप पाकर वह ‘महिषासुर’ कहलाया। वह जन्म से ही प्रचंड बलशाली था, और जैसे-जैसे बड़ा होता गया, उसके मन में तीनों लोकों पर अधिकार पाने की लालसा गहराती चली गई।',
+          'अपनी इच्छा पूरी करने के लिए महिषासुर वन में चला गया और वहाँ उसने ब्रह्मा जी को प्रसन्न करने के लिए कठोर तप आरंभ किया। वर्षों तक उसने अन्न-जल त्यागकर, एक पाँव पर खड़े होकर, अपने भीतर की समस्त शक्ति को एक ही संकल्प में बाँध लिया। उसकी तपस्या की प्रचंड अग्नि से व्याकुल होकर अंततः सृष्टि के रचयिता ब्रह्मा उसके सम्मुख प्रकट हुए।',
+          '‘तेरी तपस्या से मैं प्रसन्न हूँ,’ ब्रह्मा बोले, ‘माँग, क्या वर चाहता है?’ महिषासुर ने हाथ जोड़कर कहा, ‘हे प्रभु, मुझे अमरता दीजिए, ऐसा वर दीजिए कि मेरी मृत्यु कभी न हो।’ ब्रह्मा ने मंद स्वर में उत्तर दिया, ‘जो जन्मा है, उसकी मृत्यु निश्चित है; अमरता का वर देना सृष्टि के नियम के विरुद्ध है। तू कोई और वर माँग ले।’',
+        ],
+        bodyEn: [
+          'Long, long ago, from the penance of Rambha, the king of the asuras, was born a son who came into the world half buffalo and half demon. Having taken the form of a mahisha, a buffalo, he came to be called Mahishasura. He was tremendously strong from birth, and as he grew, the longing to seize dominion over all three worlds deepened steadily within his heart.',
+          'To win what he desired, Mahishasura went away into the forest and there began a severe penance to please Lord Brahma. For years he gave up food and water, stood upon a single foot, and bound all the strength within him to one single resolve. Tormented at last by the fierce fire of his austerity, Brahma, the creator of the worlds, appeared before him.',
+          '‘I am pleased with your penance,’ Brahma said. ‘Ask — what boon do you desire?’ Folding his hands, Mahishasura replied, ‘O Lord, grant me immortality; give me such a boon that my death may never come.’ Brahma answered in a gentle voice, ‘Whatever is born must surely die; to grant the boon of deathlessness is against the very law of creation. Ask for some other boon instead.’',
+        ],
+      },
+      {
+        id: 'the-boon-and-conquest',
+        titleHi: 'वरदान और तीनों लोकों पर विजय',
+        titleEn: 'The boon and the conquest of the three worlds',
+        bodyHi: [
+          'महिषासुर कुछ क्षण सोचता रहा। फिर उसके मन में एक धूर्ततापूर्ण विचार कौंधा, और उसने कहा, ‘तो हे विधाता, मुझे यह वर दीजिए कि किसी देवता, किसी दानव या किसी पुरुष के हाथों मेरी मृत्यु न हो। केवल कोई स्त्री ही मेरा वध कर सके।’ अपने अहंकार में वह यह सोच रहा था कि भला कोई कोमल नारी उस जैसे महाबली का संहार कैसे करेगी।',
+          'ब्रह्मा ‘एवमस्तु’ कहकर अंतर्धान हो गए। उस वर से दर्प में भरकर महिषासुर ने स्वयं को अजेय मान लिया। उसने असुरों की विशाल सेना एकत्र की और स्वर्ग पर आक्रमण कर दिया। देवराज इंद्र और समस्त देवगण उससे युद्ध करते रहे, पर उसके अपार बल के आगे एक-एक करके पराजित होते गए।',
+          'महिषासुर ने इंद्र को सिंहासन से उतार दिया, सूर्य, वायु, अग्नि और यम के अधिकार छीन लिए, और स्वयं तीनों लोकों का स्वामी बन बैठा। पराजित देवता अपना वैभव खोकर, मनुष्यों की भाँति पृथ्वी पर भटकने लगे। अंत में निराश होकर वे सहायता की आशा में ब्रह्मा, विष्णु और शिव के समीप पहुँचे।',
+        ],
+        bodyEn: [
+          'Mahishasura pondered for a few moments. Then a cunning thought flashed in his mind, and he said, ‘Then, O maker of worlds, grant me this boon — that my death may not come at the hands of any god, any demon, or any man. Let only a woman be able to slay me.’ In his arrogance he was thinking that no gentle woman could ever destroy a mighty one such as himself.',
+          'Saying ‘So be it,’ Brahma vanished. Swollen with pride at that boon, Mahishasura believed himself to be invincible. He gathered a vast army of asuras and launched an assault upon the heavens. Indra, the king of the gods, and all the host of devas fought against him, but before his immense strength they were defeated one by one.',
+          'Mahishasura cast Indra down from his throne, wrested away the offices of the Sun, the Wind, Fire and Yama, and seated himself as the master of all three worlds. The vanquished gods, stripped of their splendour, began to wander upon the earth like ordinary men. At last, in despair, they went in hope of help to Brahma, Vishnu and Shiva.',
+        ],
+      },
+      {
+        id: 'radiance-of-the-gods',
+        titleHi: 'देवताओं के तेज से देवी का प्राकट्य',
+        titleEn: 'The Goddess born of the radiance of the gods',
+        bodyHi: [
+          'देवताओं की करुण पुकार सुनकर विष्णु और शिव अत्यंत क्रोधित हुए। उनके भीतर का तेज दहक उठा और उनके मुख से एक प्रचंड ज्योति प्रकट हुई। उसी क्षण ब्रह्मा, इंद्र तथा अन्य समस्त देवताओं के शरीर से भी तेजपुंज निकलकर उस ज्योति में मिलने लगा। सहस्र सूर्यों के समान दीप्तिमान वह संयुक्त तेज एक ही स्थान पर सिमटता गया।',
+          'उस दिव्य तेज से धीरे-धीरे एक अनुपम नारी का स्वरूप साकार हुआ — अठारह भुजाओं वाली, अपूर्व कांति से दमकती, मुख पर मंद स्मित किंतु नेत्रों में अदम्य पराक्रम लिए। शिव के तेज से उसका मुख बना, यम के तेज से केश, विष्णु के तेज से भुजाएँ, और चंद्रमा के तेज से उसके वक्षस्थल का सौंदर्य। इस प्रकार समस्त देवताओं की शक्ति एक होकर महाशक्ति दुर्गा के रूप में प्रकट हुई।',
+          'देवी का यह स्वरूप देखकर देवताओं का हृदय हर्ष से भर उठा। उन्होंने अपने-अपने दिव्य अस्त्र उन्हें भेंट किए — शिव ने त्रिशूल, विष्णु ने चक्र, वरुण ने शंख, अग्नि ने शक्ति, वायु ने धनुष-बाण, और इंद्र ने वज्र। हिमालय ने उन्हें सवारी के लिए एक विशाल सिंह अर्पित किया। समस्त आयुधों से सुसज्जित होकर देवी का अट्टहास तीनों लोकों में गूँज उठा।',
+        ],
+        bodyEn: [
+          'Hearing the piteous cry of the gods, Vishnu and Shiva were filled with great anger. The radiance within them blazed up, and from their faces a fierce light burst forth. In that very moment, a stream of brilliance issued also from the bodies of Brahma, Indra and all the other gods, and began to merge into that light. Dazzling like a thousand suns, the combined radiance gathered together into one single place.',
+          'Out of that divine radiance, the form of a peerless woman slowly took shape — eighteen-armed, glowing with an extraordinary lustre, a gentle smile upon her face yet an unconquerable valour in her eyes. From Shiva’s radiance her face was formed, from Yama’s her hair, from Vishnu’s her many arms, and from the radiance of the Moon the beauty of her breast. Thus did the power of all the gods become one and appear in the form of the great Shakti, Durga.',
+          'Seeing this form of the Goddess, the hearts of the gods filled with joy. Each offered her his own divine weapon — Shiva gave the trident, Vishnu the discus, Varuna the conch, Agni a flaming spear, Vayu the bow and arrows, and Indra the thunderbolt. Himalaya offered her a mighty lion to ride upon. Adorned with every weapon, the Goddess gave a great roar of laughter that echoed through all three worlds.',
+        ],
+      },
+      {
+        id: 'nine-nights-of-battle',
+        titleHi: 'नौ रातों और नौ दिनों का संग्राम',
+        titleEn: 'Nine nights and nine days of battle',
+        bodyHi: [
+          'देवी दुर्गा का वह सिंहनाद सुनकर महिषासुर चौंक उठा। उसने अपने दूतों और फिर अपने महावीर सेनापतियों — चिक्षुर, चामर, उदग्र, महाहनु आदि — को सेना सहित देवी से युद्ध करने भेजा। किंतु देवी ने अपने अस्त्रों से एक-एक कर उन सबका संहार कर डाला; उनके सिंह ने भी असुरों को अपने पंजों से चीर दिया।',
+          'अपनी सेना का नाश होते देख महिषासुर स्वयं युद्धभूमि में उतरा। वह बार-बार अपना रूप बदलता — कभी विकराल भैंसा बनकर सींगों से पर्वत उछालता, कभी सिंह, कभी हाथी, तो कभी सहस्र भुजाओं वाला योद्धा बन जाता। नौ रातों और नौ दिनों तक यह घोर संग्राम चलता रहा; उसकी माया के आगे एक क्षण को सृष्टि भी काँप उठती, पर देवी अविचल खड़ी रहीं।',
+          'हर बार जब असुर कोई नया रूप धरकर देवी को छलना चाहता, देवी अपने किसी नवीन स्वरूप में प्रकट होकर उसका सामना करतीं। नौ रातों के इस युद्ध में उनके नौ रूप क्रमशः प्रकट हुए, और यही नौ रातें आगे चलकर ‘नवरात्रि’ कहलाईं — माँ की शक्ति के नौ रूपों के पूजन की पावन रातें।',
+        ],
+        bodyEn: [
+          'Hearing that lion’s roar of Devi Durga, Mahishasura was startled. He sent first his messengers and then his mighty generals — Chikshura, Chamara, Udagra, Mahahanu and others — with their armies to do battle with the Goddess. But with her weapons the Goddess slew them all one by one; her lion too tore the asuras apart with its claws.',
+          'Seeing his army destroyed, Mahishasura himself came down onto the field of battle. Again and again he changed his form — now becoming a fearsome buffalo, tossing mountains with his horns; now a lion, now an elephant, now a warrior with a thousand arms. For nine nights and nine days this terrible struggle raged on; before his illusions the very creation trembled for a moment, yet the Goddess stood unmoved.',
+          'Each time the demon took on a new form to deceive her, the Goddess appeared in one of her own new forms to confront him. Through this battle of nine nights, her nine forms manifested one after another, and these very nine nights came afterwards to be called ‘Navratri’ — the sacred nights for the worship of the nine forms of the Mother’s power.',
+        ],
+      },
+      {
+        id: 'slaying-on-the-tenth',
+        titleHi: 'दसवें दिन महिषासुर का वध',
+        titleEn: 'The slaying of Mahishasura on the tenth day',
+        bodyHi: [
+          'जैसे ही दसवाँ दिन आया, देवी ने अपनी समस्त शक्ति समेट ली। जिस क्षण महिषासुर पुनः अपने मूल भैंसे के रूप में उन पर झपटा, देवी ने तत्क्षण उछलकर अपने चरण उसके मस्तक पर रख दिए और उसे भूमि पर दबा दिया। अपने त्रिशूल से उन्होंने उसके कंठ को बेध डाला।',
+          'त्रिशूल की चोट से जब असुर भैंसे के रूप से बाहर निकलने लगा, तभी देवी ने अपने तीक्ष्ण खड्ग से उसका मस्तक धड़ से अलग कर दिया। जिस अहंकारी दानव ने स्वयं को अजेय माना था, वह एक नारी की शक्ति के सम्मुख ढेर हो गया। उसी क्षण से देवी ‘महिषासुरमर्दिनी’ कहलाईं — महिषासुर का संहार करने वाली देवी।',
+          'अधर्म के नाश और धर्म की विजय का वह दिन ‘विजयादशमी’ कहलाया। देवताओं ने पुष्पवर्षा की, स्वर्ग को अपना खोया हुआ राज्य पुनः मिल गया, और तीनों लोकों में आनंद की लहर दौड़ गई। नौ रातों की साधना के बाद दसवें दिन की वह विजय सदा के लिए बुराई पर भलाई के विजय का प्रतीक बन गई।',
+        ],
+        bodyEn: [
+          'As soon as the tenth day arrived, the Goddess gathered up all her power. The instant Mahishasura sprang at her once more in his original buffalo form, the Goddess at once leapt up, set her feet upon his head and pressed him down to the ground. With her trident she pierced through his throat.',
+          'When, struck by the trident, the demon began to emerge out of the buffalo shape, the Goddess with her keen sword struck his head from his body. The arrogant demon who had believed himself invincible was laid low before the power of a woman. From that very moment the Goddess came to be called ‘Mahishasuramardini’ — the Goddess who slew Mahishasura.',
+          'That day of the destruction of unrighteousness and the triumph of dharma came to be called ‘Vijayadashami.’ The gods rained down flowers, the heavens regained their lost kingdom, and a wave of joy ran through all three worlds. After nine nights of devotion, that victory upon the tenth day became forever the emblem of the triumph of good over evil.',
+        ],
+      },
+      {
+        id: 'the-nine-forms',
+        titleHi: 'नवरात्रि और देवी के नौ रूप',
+        titleEn: 'Navratri and the nine forms of the Goddess',
+        bodyHi: [
+          'तभी से प्रत्येक वर्ष आश्विन मास के शुक्ल पक्ष में वह पावन पर्व मनाया जाता है, जब घर-घर में नौ रातों तक माँ की शक्ति का पूजन होता है। प्रथम रात्रि को शैलपुत्री, द्वितीया को ब्रह्मचारिणी, तृतीया को चंद्रघंटा, चतुर्थी को कूष्मांडा, पंचमी को स्कंदमाता, षष्ठी को कात्यायनी, सप्तमी को कालरात्रि, अष्टमी को महागौरी और नवमी को सिद्धिदात्री के रूप में देवी की आराधना की जाती है।',
+          'भक्तजन इन नौ दिनों में उपवास रखते हैं, कलश की स्थापना करते हैं और दीप जलाकर माँ की स्तुति करते हैं। कुछ श्रद्धालु अखंड ज्योति प्रज्वलित कर नौ रातों तक उसकी रक्षा करते हैं, तो कोई जौ बोकर हरियाली के रूप में देवी के मांगलिक आशीर्वाद का स्वागत करता है। प्रत्येक रात्रि का अपना रंग, अपना भोग और अपना भाव होता है।',
+          'कहा जाता है कि जो श्रद्धा और संयम से नवरात्रि का व्रत रखकर माँ दुर्गा की उपासना करता है, उसके भीतर के भय, आलस्य और अहंकाररूपी असुर उसी प्रकार पराजित हो जाते हैं जैसे महिषासुर हुआ था। माँ की कृपा से साधक को शक्ति, बुद्धि, समृद्धि और निर्भयता का वरदान मिलता है, और उसका जीवन धर्म के मार्ग पर दीप की भाँति प्रकाशमान हो उठता है।',
+        ],
+        bodyEn: [
+          'Ever since then, every year in the bright fortnight of the month of Ashwin, that sacred festival is celebrated, when in home after home the power of the Mother is worshipped for nine nights. On the first night she is adored as Shailaputri, on the second as Brahmacharini, on the third as Chandraghanta, on the fourth as Kushmanda, on the fifth as Skandamata, on the sixth as Katyayani, on the seventh as Kalaratri, on the eighth as Mahagauri, and on the ninth as Siddhidatri.',
+          'During these nine days, devotees keep fasts, install the sacred kalasha, and light lamps to sing the praises of the Mother. Some keep an unbroken flame burning and guard it through all nine nights, while others sow barley and welcome, in its fresh green shoots, the auspicious blessing of the Goddess. Each night has its own colour, its own offering, and its own mood.',
+          'It is said that whoever keeps the Navratri vow with devotion and self-restraint and worships Maa Durga finds the demons of fear, sloth and pride within himself defeated, just as Mahishasura was. By the grace of the Mother the seeker is granted strength, wisdom, prosperity and fearlessness, and his life shines upon the path of dharma like a steady lamp.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'gita-jayanti-katha',
+    titleHi: 'गीता जयंती कथा',
+    titleEn: 'Gita Jayanti Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'kurukshetra-arrayed',
+        titleHi: 'कुरुक्षेत्र की रणभूमि और दो सेनाएँ',
+        titleEn: 'The field of Kurukshetra and the two armies',
+        bodyHi: [
+          'मार्गशीर्ष मास की उस शुक्ल एकादशी की भोर में कुरुक्षेत्र की विशाल समभूमि शंखों की गर्जना से थर्रा उठी। एक ओर धृतराष्ट्र के पुत्रों की कौरव सेना अपने अनगिनत रथों, हाथियों और ध्वजाओं के साथ खड़ी थी, और दूसरी ओर पाण्डवों की सेना धर्म के संकल्प से अटल होकर डटी हुई थी। दोनों दलों के बीच केवल एक संकरी पट्टी भर का अंतर था, और वायु में युद्ध की आहट तैर रही थी।',
+          'उसी क्षण अर्जुन का दिव्य रथ, जिस पर हनुमान अंकित ध्वजा फहरा रही थी और जिसकी रास स्वयं भगवान श्रीकृष्ण ने थाम रखी थी, सेनाओं के मध्य में आगे बढ़ा। अर्जुन ने अपने सारथि माधव से कहा, ‘हे अच्युत, मेरे रथ को दोनों सेनाओं के ठीक बीच में ले चलिए, ताकि मैं देख सकूँ कि इस घोर संग्राम में किन-किन वीरों से मुझे जूझना है।’',
+          'श्रीकृष्ण ने रथ को आगे बढ़ाकर ठीक भीष्म, द्रोण और समस्त राजाओं के सम्मुख खड़ा कर दिया और बोले, ‘हे पार्थ, इन एकत्र हुए कुरुवंशियों को देख।’ अर्जुन ने दृष्टि घुमाई तो उसने दोनों ओर अपने ही पितामह, गुरु, मामा, भाई, पुत्र, पौत्र और प्रिय मित्रों को शस्त्र उठाए खड़ा पाया।',
+        ],
+        bodyEn: [
+          'At the dawn of that bright eleventh day of the month of Margashirsha, the vast level field of Kurukshetra trembled with the roar of conch shells. On one side stood the Kaurava army of the sons of Dhritarashtra, with its countless chariots, elephants, and banners, and on the other the army of the Pandavas, unshaken in its resolve for dharma. Between the two hosts lay only a narrow strip of ground, and the breath of war drifted upon the air.',
+          'In that very moment the divine chariot of Arjuna, upon which flew the banner marked with Hanuman and whose reins were held by Lord Krishna himself, moved forward into the midst of the armies. Arjuna said to his charioteer Madhava, ‘O Achyuta, draw my chariot to the very centre between the two hosts, so that I may behold the warriors with whom I must contend in this terrible battle.’',
+          'Krishna drew the chariot ahead and brought it to a halt directly before Bhishma, Drona, and all the assembled kings, and said, ‘O Partha, behold these gathered sons of Kuru.’ When Arjuna turned his gaze, he saw on both sides his own grandsires, teachers, uncles, brothers, sons, grandsons, and dear friends standing with weapons raised.',
+        ],
+      },
+      {
+        id: 'arjuna-vishada',
+        titleHi: 'अर्जुन का विषाद और धनुष का गिरना',
+        titleEn: 'Arjuna\'s despondency and the falling of the bow',
+        bodyHi: [
+          'अपने ही स्वजनों को रणभूमि में आमने-सामने देखकर अर्जुन का हृदय करुणा और शोक से भर उठा। उसके अंग शिथिल पड़ गए, मुख सूख गया, शरीर काँपने लगा और रोम-रोम सिहर उठा। उसका प्रसिद्ध गाण्डीव धनुष हाथ से फिसलकर गिरने लगा और वह खड़े रहने तक की शक्ति न पा सका।',
+          'व्याकुल होकर अर्जुन ने कहा, ‘हे केशव, अपने ही बन्धुओं को मारकर मैं किस सुख की कामना करूँ? मुझे न विजय चाहिए, न राज्य, न भोग। जिन गुरुजनों और प्रियजनों के लिए यह सब वांछनीय था, वही तो प्राण और धन छोड़कर मेरे सम्मुख युद्ध में खड़े हैं। ऐसा रक्तरंजित राज्य पाकर मैं क्या करूँगा?’',
+          'यह कहकर शोक से उद्विग्न अर्जुन अपने बाण और धनुष को त्यागकर रथ के पिछले भाग में बैठ गया। उसका मन कर्तव्य और मोह के बीच में फँसकर दिशाहीन हो गया, और उसने हाथ जोड़कर श्रीकृष्ण से प्रार्थना की, ‘मैं आपका शिष्य हूँ और आपकी शरण में आया हूँ; मुझे वही उपदेश दीजिए जो निश्चय ही मेरे कल्याण का हो।’',
+        ],
+        bodyEn: [
+          'Beholding his own kinsmen arrayed face to face on the battlefield, Arjuna\'s heart was overwhelmed with compassion and grief. His limbs grew slack, his mouth went dry, his body trembled, and every hair stood on end. His famed bow, the Gandiva, began to slip from his hand, and he could not even find the strength to stand.',
+          'In his distress Arjuna said, ‘O Keshava, what happiness can I desire by slaying my own kindred? I wish neither for victory, nor kingdom, nor pleasures. The very teachers and loved ones for whose sake all this was worth having are the ones standing before me in battle, casting away their lives and wealth. What shall I do with a kingdom won in such bloodshed?’',
+          'Having spoken thus, Arjuna, shaken by sorrow, cast aside his arrows and bow and sank down upon the seat of the chariot. His mind, caught between duty and delusion, lost all direction, and with folded hands he prayed to Krishna, ‘I am your disciple and have taken refuge in you; instruct me in that which is surely for my highest good.’',
+        ],
+      },
+      {
+        id: 'imperishable-soul-and-karma',
+        titleHi: 'अविनाशी आत्मा और निष्काम कर्म का उपदेश',
+        titleEn: 'The imperishable soul and the teaching of selfless action',
+        bodyHi: [
+          'अर्जुन के शोक को देखकर श्रीकृष्ण मन्द मुस्कुराए और बोले, ‘हे अर्जुन, तू उनके लिए शोक करता है जिनके लिए शोक करना उचित नहीं। जो आत्मा देह में निवास करती है, वह न कभी जन्म लेती है, न मरती है; शस्त्र उसे काट नहीं सकते, अग्नि उसे जला नहीं सकती, जल उसे भिगो नहीं सकता और वायु उसे सुखा नहीं सकती। जैसे मनुष्य पुराने वस्त्र त्यागकर नए धारण करता है, वैसे ही आत्मा जीर्ण देह छोड़कर नई देह में प्रवेश करती है।’',
+          '‘इसलिए हे पार्थ, तू अपने स्वधर्म को पहचान। तू क्षत्रिय है, और धर्म की रक्षा के लिए युद्ध करना ही तेरा कर्तव्य है। पर कर्म करते हुए तू फल की आसक्ति त्याग दे। कर्म करने में ही तेरा अधिकार है, उसके फलों में कभी नहीं। न तू फल का हेतु बन, और न ही कर्म छोड़ने में तेरी प्रीति हो—यही निष्काम कर्मयोग है, जो मनुष्य को बंधन से मुक्त करता है।’',
+          'श्रीकृष्ण ने आगे कहा, ‘जो मनुष्य सुख-दुःख, लाभ-हानि और जय-पराजय को समान भाव से देखता हुआ अपना कर्तव्य करता है, वह पाप से लिप्त नहीं होता। स्थिर बुद्धि से, मन को मुझमें स्थिर करके, फल की कामना छोड़कर युद्ध कर—तब यह संग्राम तेरे लिए बंधन नहीं, मुक्ति का मार्ग बन जाएगा।’',
+        ],
+        bodyEn: [
+          'Seeing Arjuna\'s grief, Krishna smiled gently and said, ‘O Arjuna, you grieve for those who are not worthy of grief. The soul that dwells within the body is never born and never dies; weapons cannot cut it, fire cannot burn it, water cannot wet it, and wind cannot dry it. As a person casts off worn-out garments and puts on new ones, so the soul lays aside the worn-out body and enters a new one.’',
+          '‘Therefore, O Partha, recognise your own dharma. You are a kshatriya, and to fight in defence of righteousness is your very duty. But while performing action, abandon all attachment to its fruit. Your right is to action alone, never to its fruits. Be neither the cause of the fruit, nor attached to inaction—this is the yoga of selfless action, which frees a person from bondage.’',
+          'Krishna continued, ‘The one who performs his duty regarding pleasure and pain, gain and loss, victory and defeat as the same, is not tainted by sin. With steady understanding, fixing your mind upon me and renouncing desire for the fruit, fight—then this battle will become for you not a bondage but a path to liberation.’',
+        ],
+      },
+      {
+        id: 'bhakti-and-refuge',
+        titleHi: 'भक्ति और शरणागति का मर्म',
+        titleEn: 'The heart of devotion and surrender',
+        bodyHi: [
+          'ज्ञान और कर्म का रहस्य खोलने के पश्चात् श्रीकृष्ण ने भक्ति का मधुर मार्ग प्रकट किया। उन्होंने कहा, ‘हे अर्जुन, जो भक्त अनन्य भाव से मेरा स्मरण करता है, अपना सारा कर्म मुझे अर्पित कर देता है, और प्रेमपूर्वक मेरी शरण में आता है, उसका योग-क्षेम मैं स्वयं वहन करता हूँ। जो जन्म-मरण के सागर में डूब रहे होते हैं, उन्हें मैं शीघ्र ही उद्धार देता हूँ।’',
+          '‘पत्र, पुष्प, फल अथवा जल—जो कुछ भी कोई भक्त प्रेम और श्रद्धा से मुझे अर्पित करता है, उस शुद्ध हृदय की भेंट को मैं प्रसन्नता से स्वीकार करता हूँ। न जाति, न धन, न विद्या मुझे प्रिय है; मुझे केवल भक्त का निश्छल प्रेम प्रिय है। जो मुझमें मन लगाता है, वह मुझे ही प्राप्त होता है।’',
+          'अन्त में करुणामय भगवान ने सबसे गोपनीय वचन कहा, ‘हे अर्जुन, समस्त धर्मों को छोड़कर तू केवल मेरी शरण में आ जा। मैं तुझे समस्त पापों से मुक्त कर दूँगा; तू शोक मत कर।’ इन वचनों ने अर्जुन के अंतःकरण में आशा और स्थिरता का संचार कर दिया।',
+        ],
+        bodyEn: [
+          'Having unveiled the mystery of knowledge and action, Krishna revealed the sweet path of devotion. He said, ‘O Arjuna, the devotee who remembers me with single-minded love, who offers all his deeds to me, and who comes to me in loving refuge—his welfare and protection I myself bear. Those who are sinking in the ocean of birth and death, I swiftly lift up and deliver.’',
+          '‘A leaf, a flower, a fruit, or water—whatever a devotee offers me with love and faith, that gift from a pure heart I accept with gladness. Neither birth, nor wealth, nor learning is dear to me; dear to me is only the sincere love of the devotee. The one who fixes his mind upon me attains me alone.’',
+          'At last the compassionate Lord spoke the most secret of all words: ‘O Arjuna, abandoning all duties, take refuge in me alone. I shall free you from all sins; do not grieve.’ These words sent through Arjuna\'s inmost being a current of hope and steadiness.',
+        ],
+      },
+      {
+        id: 'vishvarupa-and-observance',
+        titleHi: 'विश्वरूप दर्शन और गीता जयंती का व्रत',
+        titleEn: 'The vision of the universal form and the observance of Gita Jayanti',
+        bodyHi: [
+          'अर्जुन की प्रार्थना पर भगवान श्रीकृष्ण ने उसे दिव्य दृष्टि प्रदान की और अपना विराट विश्वरूप प्रकट किया। उस अनंत रूप में अर्जुन ने असंख्य मुख, असंख्य नेत्र, सहस्रों सूर्यों के समान तेज, और समस्त लोकों, देवताओं तथा प्राणियों को एक ही देह में समाया हुआ देखा। उस महान दर्शन से रोमांचित और भयविह्वल होकर अर्जुन ने हाथ जोड़कर प्रणाम किया।',
+          'उस अलौकिक रूप को देखकर अर्जुन का सारा मोह और संशय छिन्न हो गया। उसने कृतज्ञ होकर कहा, ‘हे अच्युत, आपकी कृपा से मेरा मोह नष्ट हो गया है और मुझे अपनी स्मृति प्राप्त हो गई है। अब मैं संशयरहित होकर खड़ा हूँ और आपके वचन का पालन करूँगा।’ फिर उसने अपना गाण्डीव उठाया और धर्मयुद्ध के लिए तत्पर हो गया।',
+          'मार्गशीर्ष शुक्ल एकादशी का वही पावन दिन था जब साक्षात् भगवान के मुख से यह अमृतमय श्रीमद्भगवद्गीता प्रकट हुई थी, इसीलिए वह तिथि ‘गीता जयंती’ के रूप में पूजी जाती है। कहा जाता है कि जो श्रद्धालु इस दिन उपवास रखकर गीता का पाठ, श्रवण और मनन करता है, उसके हृदय का मोह वैसे ही दूर होता है जैसे अर्जुन का हुआ था। उसके पाप क्षीण होते हैं, बुद्धि निर्मल होती है, और अन्त में वह भगवान के उसी दिव्य धाम को प्राप्त करता है—यही गीता जयंती के व्रत का अक्षय फल है, जो आज भी हर साधक के अंतःकरण में प्रकाश भरता है।',
+        ],
+        bodyEn: [
+          'At Arjuna\'s prayer, Lord Krishna granted him divine sight and revealed his vast universal form. In that boundless form Arjuna beheld countless faces, countless eyes, a radiance like that of a thousand suns, and all the worlds, gods, and beings contained within a single body. Thrilled and overcome with awe at that great vision, Arjuna folded his hands and bowed low.',
+          'Beholding that supernatural form, all of Arjuna\'s delusion and doubt were torn away. Filled with gratitude, he said, ‘O Achyuta, by your grace my delusion is destroyed and my memory has returned to me. Now I stand free of doubt, and I shall act according to your word.’ Then he lifted up his Gandiva and stood ready for the righteous war.',
+          'It was that very holy day, the bright eleventh of Margashirsha, when from the lips of the Lord himself this nectar-like Shrimad Bhagavad Gita came forth, and so that day is honoured as ‘Gita Jayanti.’ It is said that the devotee who keeps a fast on this day and reads, hears, and reflects upon the Gita finds the delusion of the heart dissolved just as Arjuna\'s was. His sins wear away, his understanding grows pure, and at the last he attains that same divine abode of the Lord—this is the imperishable fruit of the Gita Jayanti observance, which to this day fills the inner being of every seeker with light.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'ganga-dussehra-katha',
+    titleHi: 'गंगा दशहरा कथा',
+    titleEn: 'Ganga Dussehra Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'sagara-sons-ashes',
+        titleHi: 'सगर के साठ हज़ार पुत्रों की राख',
+        titleEn: 'The ashes of Sagara\'s sixty thousand sons',
+        bodyHi: [
+          'अयोध्या के सूर्यवंशी सम्राट सगर ने एक बार अश्वमेध यज्ञ का संकल्प लिया। यज्ञ का घोड़ा पृथ्वी पर स्वच्छंद घूमने के लिए छोड़ा गया, और सगर के साठ हज़ार पुत्र उसकी रक्षा करते हुए पीछे-पीछे चले। देवराज इंद्र को आशंका हुई कि यह यज्ञ पूर्ण हुआ तो सगर उनसे भी बड़े हो जाएँगे, इसलिए उन्होंने छिपकर वह घोड़ा चुरा लिया और पाताल में तपस्या कर रहे कपिल मुनि के आश्रम के पास बाँध दिया।',
+          'घोड़े को खोजते-खोजते सगर के पुत्र समस्त पृथ्वी खोद डालने पर उतर आए और अंत में पाताल पहुँचे। वहाँ ध्यानमग्न कपिल मुनि के निकट बँधा घोड़ा देखकर उन्होंने मुनि को ही चोर समझ लिया और कठोर वचन कहते हुए उन पर टूट पड़े। ध्यान भंग होने पर मुनि की आँखें क्रोध से खुलीं, और उनके तेज की एक ही दृष्टि से वे साठ हज़ार राजकुमार वहीं भस्म होकर राख के ढेर बन गए।',
+          'बहुत समय बीतने पर सगर के पौत्र अंशुमान घोड़े की खोज में उसी मार्ग से पाताल पहुँचे। कपिल मुनि ने प्रसन्न होकर घोड़ा तो लौटा दिया, पर बताया कि जब तक स्वर्ग की गंगा इस धरती पर उतरकर इन भस्म हुए पुरखों की राख को स्पर्श न करेंगी, तब तक उनकी मुक्ति संभव नहीं। अंशुमान और उनके पुत्र दिलीप जीवनभर यही तप करते रहे, पर गंगा को उतार न सके।',
+        ],
+        bodyEn: [
+          'Sagara, the Suryavanshi emperor of Ayodhya, once resolved to perform the Ashvamedha sacrifice. The sacrificial horse was loosed to roam the earth freely, and Sagara’s sixty thousand sons followed behind to guard it. Indra, king of the gods, grew afraid that if this rite were completed Sagara would rise above even him, so he secretly stole the horse and tethered it beside the hermitage of the sage Kapila, who sat deep in penance in the netherworld.',
+          'Searching everywhere, Sagara’s sons dug up the whole earth and at last descended into the netherworld. Seeing the horse tied near the meditating Kapila, they mistook the sage for the thief and fell upon him with harsh words. His meditation broken, the sage opened his eyes in anger, and by a single glance of his accumulated fire all sixty thousand princes were burned to ash where they stood, becoming mere heaps of cinders.',
+          'After a long age, Sagara’s grandson Anshuman followed the same path into the netherworld in search of the horse. Pleased with him, Kapila returned the horse but warned that until the Ganga of heaven came down upon the earth and touched the ashes of these burned forefathers, their liberation was impossible. Anshuman and his son Dilipa performed this penance all their lives, yet neither could bring the Ganga down.',
+        ],
+      },
+      {
+        id: 'bhagiratha-penance',
+        titleHi: 'भगीरथ की कठोर तपस्या',
+        titleEn: 'The unyielding penance of Bhagiratha',
+        bodyHi: [
+          'दिलीप के पुत्र राजा भगीरथ ने अपने पुरखों की यह अधूरी कामना अपने हृदय में धारण कर ली। राजपाट का भार मंत्रियों को सौंपकर वे हिमालय की कन्दराओं में चले गए और वहाँ अन्न-जल त्यागकर, पंचाग्नि के बीच खड़े होकर, अपने अंगूठे के बल पर वर्षों तक घोर तप करते रहे। उनके मन में एक ही प्रार्थना थी—‘देवी गंगा धरती पर उतरें और मेरे पूर्वजों की राख को पवित्र करें।’',
+          'भगीरथ की अटल साधना से प्रसन्न होकर ब्रह्मा जी प्रकट हुए और बोले कि गंगा अवश्य पृथ्वी पर आएँगी। किंतु उन्होंने चेतावनी भी दी—स्वर्ग से गिरती गंगा का प्रचंड वेग इतना भयंकर होगा कि धरती उसे सह नहीं पाएगी और टुकड़े-टुकड़े हो जाएगी। उस अपार धारा को थामने की शक्ति केवल भगवान शिव में है; अतः पहले उन्हें प्रसन्न करो।',
+          'भगीरथ ने फिर शिव की आराधना आरंभ कर दी। केवल एक पैर पर खड़े होकर, उपवास और मौन के साथ उन्होंने महादेव का स्मरण किया। उनकी भक्ति से द्रवित होकर भोलेनाथ प्रकट हुए और वचन दिया कि वे स्वर्ग से उतरती गंगा को अपने सिर पर धारण कर लेंगे, ताकि उनका वेग सध जाए और धरती सुरक्षित रहे।',
+        ],
+        bodyEn: [
+          'King Bhagiratha, the son of Dilipa, took this unfulfilled longing of his ancestors into his own heart. Handing the burden of the kingdom to his ministers, he withdrew into the caverns of the Himalaya, and there, forsaking food and water, standing amid the five fires and balanced on his great toe, he performed fierce penance for years. In his mind there was a single prayer: ‘May Devi Ganga descend to the earth and sanctify the ashes of my forefathers.’',
+          'Pleased by Bhagiratha’s unshakeable austerity, Brahma appeared and declared that Ganga would indeed come to the earth. But he gave a warning as well: the force of Ganga falling from heaven would be so terrible that the earth could not endure it and would be shattered to pieces. Only Lord Shiva had the power to hold that boundless torrent; therefore he must first win Shiva’s favour.',
+          'Bhagiratha then began to worship Shiva. Standing on a single foot, keeping fast and silence, he held the great god in his thoughts. Moved by his devotion, Bholenath appeared and gave his word that he would receive the descending Ganga upon his own head, so that her force might be tamed and the earth kept safe.',
+        ],
+      },
+      {
+        id: 'shiva-matted-locks',
+        titleHi: 'शिव की जटाओं में गंगा का अवतरण',
+        titleEn: 'Ganga\'s descent into Shiva\'s matted locks',
+        bodyHi: [
+          'गंगा को अपने वैभव पर गर्व था। उन्होंने सोचा—‘मैं इतने प्रबल वेग से गिरूँगी कि शिव को भी अपने साथ बहाकर पाताल में ले जाऊँगी।’ इसी अहंकार के साथ वे आकाश से एक विशाल, गर्जना करती धारा बनकर नीचे झपटीं। पर शिव ने उनके मन की बात भाँप ली और हँसते हुए अपनी जटाएँ फैला दीं।',
+          'गंगा की समूची धारा शिव की घनी, अनंत जटाओं के विशाल जाल में आकर लुप्त हो गई। जितना वे बहतीं, उतनी ही जटाओं में भटकती रहीं; कहीं कोई मार्ग न मिला। वर्षों तक वे उन्हीं उलझी लटों में घूमती रहीं और उनका सारा घमंड चूर हो गया। तब उन्होंने विनम्र होकर महादेव से बाहर निकलने का मार्ग माँगा।',
+          'भगीरथ ने पुनः शिव से प्रार्थना की कि वे गंगा को मुक्त करें। दयालु शिव ने अपनी एक जटा खोल दी, और उससे गंगा की एक शांत, संयमित धारा बहकर हिमालय की भूमि पर उतर आई। अब वह प्रलयंकारी वेग नहीं, बल्कि करुणा से भरी, कल-कल बहती पावन नदी थी, जो धरती को सींचने के लिए तैयार थी।',
+        ],
+        bodyEn: [
+          'Ganga was proud of her own majesty. She thought, ‘I shall fall with such overpowering force that I will sweep even Shiva away and carry him down into the netherworld.’ With this arrogance she rushed down from the sky as a vast, thundering torrent. But Shiva read the thought in her mind, and smiling, he spread out his matted locks.',
+          'The entire flood of Ganga vanished into the immense web of Shiva’s dense, endless locks. The more she flowed, the more she wandered through those tangled strands; nowhere could she find a way out. For years she circled within those knotted coils until all her pride was ground away. Then, grown humble, she begged the great god to show her the path out.',
+          'Bhagiratha once more prayed to Shiva to release her. The compassionate Shiva loosened a single lock, and from it a calm, restrained stream of Ganga flowed down onto the soil of the Himalaya. No longer a destroying force, she was now a sacred river full of mercy, murmuring as she ran, ready to nourish the earth.',
+        ],
+      },
+      {
+        id: 'ganga-follows-to-sea',
+        titleHi: 'भगीरथ के पीछे सागर तक',
+        titleEn: 'Following Bhagiratha to the sea',
+        bodyHi: [
+          'अब भगीरथ अपने दिव्य रथ पर सवार होकर आगे-आगे चले, और गंगा उनके पीछे-पीछे बहती हुई पर्वतों, वनों और घाटियों को पार करने लगीं। जहाँ-जहाँ भगीरथ का रथ गया, वहाँ-वहाँ गंगा का जल भी पहुँचा, और सूखी धरती हरी-भरी हो उठी, अनेक तीर्थ पवित्र हो गए।',
+          'मार्ग में गंगा का प्रवाह जह्नु ऋषि की यज्ञभूमि से होकर निकला और उनकी सारी सामग्री बहा ले गया। क्रुद्ध मुनि ने आचमन में ही समूची गंगा को पी लिया। भगीरथ फिर रुक गए और हाथ जोड़कर प्रार्थना की। प्रसन्न होकर ऋषि ने गंगा को अपने कान से बाहर निकाल दिया—इसीलिए वे ‘जाह्नवी’ कहलाईं—और धारा फिर भगीरथ के पीछे चल पड़ी।',
+          'अंत में गंगा पाताल पहुँचीं और वहाँ पड़ी सगर के साठ हज़ार पुत्रों की राख को अपने पवित्र जल से स्पर्श किया। उसी क्षण वे सब पाप-मुक्त होकर दिव्य रूप में स्वर्ग सिधार गए। पुरखों की यह तृप्ति देखकर भगीरथ का जन्मों पुराना संकल्प पूरा हुआ, और उन्हीं के नाम पर गंगा ‘भागीरथी’ कहलाईं।',
+        ],
+        bodyEn: [
+          'Now Bhagiratha rode ahead on his divine chariot, and Ganga, flowing behind him, began to cross mountains, forests, and valleys. Wherever Bhagiratha’s chariot went, there too the waters of Ganga arrived, and the parched land grew green and fertile, while many holy fords were made sacred along the way.',
+          'On the way her current passed through the sacrificial grounds of the sage Jahnu and washed away all his materials. The angered sage drank the whole of Ganga in a single sip of water. Bhagiratha halted again and prayed with folded hands. Pleased, the sage released Ganga from his ear, and for this she was called ‘Jahnavi’; then the stream set off once more behind Bhagiratha.',
+          'At last Ganga reached the netherworld and touched with her sacred waters the ashes of Sagara’s sixty thousand sons that lay there. In that very moment all of them, freed of their sins, rose in radiant form to heaven. Seeing his ancestors thus contented, Bhagiratha’s vow, carried across many lifetimes, was fulfilled; and after his name Ganga came to be called ‘Bhagirathi’.',
+        ],
+      },
+      {
+        id: 'jyeshtha-dashami-descent',
+        titleHi: 'ज्येष्ठ शुक्ल दशमी का पुण्य',
+        titleEn: 'The merit of Jyeshtha Shukla Dashami',
+        bodyHi: [
+          'जिस तिथि पर गंगा स्वर्ग से उतरकर इस मृत्युलोक में प्रकट हुईं, वह ज्येष्ठ मास के शुक्ल पक्ष की दशमी थी। तभी से यह दिन ‘गंगा दशहरा’ कहलाता है। इस दिन भक्तगण भोर से ही गंगा के घाटों पर एकत्र होकर ‘हर-हर गंगे’ का जयघोष करते हैं और श्रद्धा से डुबकी लगाते हैं।',
+          'कहते हैं कि इस पावन तिथि पर जो श्रद्धालु गंगा या किसी पवित्र नदी में स्नान करता है, उसके मन, वाणी और शरीर से जुड़े दस प्रकार के पाप धुल जाते हैं—इसी से इसका नाम ‘दशहरा’ पड़ा। दान, जप और दीपदान का इस दिन अनंत फल माना जाता है।',
+          'जिनके पास गंगातट तक जाने का साधन नहीं, वे घर पर ही जल में थोड़ी गंगाजल मिलाकर स्नान करते हैं और देवी गंगा का स्मरण करते हुए भगीरथ के अथक संकल्प को याद करते हैं। श्रद्धा से इस कथा का श्रवण करने वाले के कुल की अनेक पीढ़ियाँ तृप्त होती हैं, उसके रोग-शोक मिटते हैं, और गंगा माँ की कृपा से जीवन निर्मल एवं मंगलमय हो जाता है।',
+        ],
+        bodyEn: [
+          'The day on which Ganga descended from heaven and appeared in this mortal world was the tenth lunar day of the bright fortnight of the month of Jyeshtha. From that time this day has been called ‘Ganga Dussehra.’ On it devotees gather at Ganga’s bathing steps from before dawn, raise the cry of ‘Har-Har Gange,’ and immerse themselves with reverence.',
+          'It is said that whoever bathes in the Ganga or any holy river on this sacred day is cleansed of ten kinds of sin attached to mind, speech, and body, and from this its name ‘Dussehra,’ the remover of ten, is drawn. Charity, the chanting of holy names, and the offering of lamps are believed to bear boundless fruit on this day.',
+          'Those who have no means to reach the banks of Ganga bathe at home with a little Ganga water mixed into their own, and remembering Devi Ganga they call to mind the tireless resolve of Bhagiratha. For one who hears this story with faith, many generations of the family are contented, sickness and sorrow fall away, and by the grace of Mother Ganga life becomes pure and full of blessing.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'chhath-puja-katha',
+    titleHi: 'छठ पूजा कथा',
+    titleEn: 'Chhath Puja Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'rajya-ki-haar',
+        titleHi: 'हस्तिनापुर खोने के बाद वन में पांडव',
+        titleEn: 'The Pandavas in the forest after losing their kingdom',
+        bodyHi: [
+          'द्यूत की उस अभागी रात के बाद, जब छल भरे पासों ने हस्तिनापुर का राज्य पांडवों के हाथ से छीन लिया, तो पाँचों भाई अपनी पत्नी द्रौपदी के साथ वन की ओर निकल पड़े। राजमहल के रेशमी वस्त्र अब वल्कल बन गए थे, और सोने के थाल की जगह कंद-मूल थे। काम्यक वन की छाया में बैठी द्रौपदी का मन भीतर ही भीतर रोता था—न इसलिए कि उसे सुख छिन गया, बल्कि इसलिए कि धर्म पर चलने वाले उसके स्वामी आज दर-दर भटक रहे थे।',
+          'एक संध्या, जब आकाश में डूबता सूर्य अपनी अंतिम लाल किरणें वन की पगडंडियों पर बिखेर रहा था, द्रौपदी ने कुलगुरु महर्षि धौम्य के चरणों में सिर झुकाया और पूछी, ‘हे गुरुदेव! ऐसा कौन-सा व्रत है जिसके आचरण से बिछड़ा राज्य फिर लौट आए, और मेरे पतियों का दुःख दूर हो?’ धौम्य की आँखों में करुणा झलकी, और उन्होंने धीरे से कहा कि एक ऐसा तप है जो सूर्यदेव और उनकी कृपामयी बहन छठी मैया को समर्पित है।',
+          'महर्षि बोले, ‘पुत्री, जो जगत को प्रकाश और प्राण देते हैं, वही सूर्यनारायण हैं। उनकी आराधना से रोग मिटते हैं, संतान सुखी होती है, और खोया वैभव लौट आता है। कार्तिक मास के शुक्ल पक्ष में, छठ का यह व्रत श्रद्धा और संयम से करो—फिर देखना, धर्म तुम्हारा साथ कैसे देता है।’ धौम्य के वचन सुनकर द्रौपदी के थके मन में एक नई आशा की किरण जाग उठी।',
+        ],
+        bodyEn: [
+          'After that ill-fated night of dice, when loaded throws snatched the kingdom of Hastinapura from the Pandavas\' hands, the five brothers set out for the forest with their queen, Draupadi. The silken robes of the palace had become bark garments now, and roots and tubers replaced golden platters. Seated in the shade of the Kamyaka forest, Draupadi wept within—not because comfort had been lost, but because her husbands, who walked the path of dharma, were now wandering from place to place.',
+          'One evening, as the setting sun scattered its last red rays across the forest trails, Draupadi bowed at the feet of the family preceptor, the great sage Dhaumya, and asked, ‘O revered teacher! Which vow, if observed, can return the lost kingdom and lift the sorrow of my husbands?’ Compassion shone in Dhaumya\'s eyes, and he gently said that there was one austerity dedicated to Surya Deva and his merciful sister, Chhathi Maiya.',
+          'The sage spoke, ‘Daughter, the one who gives light and life to the world is Suryanarayana himself. By worshipping him, illnesses dissolve, children prosper, and lost glory returns. In the bright fortnight of the month of Kartika, observe this vow of Chhath with faith and restraint—then see how dharma stands beside you.’ Hearing Dhaumya\'s words, a fresh ray of hope awoke in Draupadi\'s weary heart.',
+        ],
+      },
+      {
+        id: 'draupadi-ka-arghya',
+        titleHi: 'द्रौपदी का व्रत और नदी तट पर अर्घ्य',
+        titleEn: 'Draupadi\'s vow and the arghya at the riverbank',
+        bodyHi: [
+          'गुरु की आज्ञा शिरोधार्य कर द्रौपदी ने कठोर संयम का संकल्प लिया। नहाय-खाय के दिन उसने पवित्र होकर सात्त्विक भोजन ग्रहण किया; खरना की संध्या को गुड़ और दूध की खीर का प्रसाद बनाकर उसे ग्रहण किया, और फिर छत्तीस घंटे का निर्जल उपवास आरंभ हुआ—न जल, न अन्न, केवल सूर्य पर टिका हुआ मन।',
+          'षष्ठी की संध्या को द्रौपदी और पांचों पांडव नदी के तट पर पहुँचे। कमर तक शीतल जल में खड़े होकर, बाँस की टोकरी में ठेकुआ, फल और गन्ना सजाकर, उसने पश्चिम की ओर ढलते सूर्य को अर्घ्य अर्पित किया। डूबते सूर्य को अर्घ्य देना मानो उसने कहा—जो अस्त होता है वही फिर उदित भी होता है, और जो आज पराजित हैं, वे फिर विजयी होंगे।',
+          'अगले प्रातः, अरुणोदय से पहले ही वे फिर जल में जा खड़े हुए। पूर्व दिशा में जब उषा की लालिमा फूटी और सूर्यदेव अपने रथ पर उदित हुए, तब द्रौपदी ने उगते सूर्य को अर्घ्य देकर व्रत पूर्ण किया। छठी मैया उसकी अटूट श्रद्धा से प्रसन्न हुईं, और उसी क्षण से पांडवों के दिन फिरने लगे—वन का कष्ट घटा, और कालांतर में उन्होंने अपना खोया हुआ राज्य पुनः प्राप्त कर लिया।',
+        ],
+        bodyEn: [
+          'Taking her teacher\'s command upon her head, Draupadi resolved upon a stern discipline. On the day of Nahay-Khay she bathed pure and ate simple, sattvic food; on the evening of Kharna she prepared and partook of the prasada of kheer made with jaggery and milk, and then began the thirty-six-hour waterless fast—no water, no grain, only a mind fixed upon the sun.',
+          'On the evening of Shashthi, Draupadi and the five Pandavas reached the bank of the river. Standing waist-deep in the cool water, with a bamboo basket arranged with thekua, fruit, and sugarcane, she offered arghya to the sun as it sank toward the west. To offer arghya to the setting sun was as if she said—that which sets also rises again, and those who are defeated today shall be victorious once more.',
+          'The next morning, before the first blush of dawn, they stood in the water again. When the redness of Usha broke in the east and Surya Deva rose upon his chariot, Draupadi completed her vow by offering arghya to the rising sun. Chhathi Maiya was pleased by her unbroken faith, and from that very moment the fortunes of the Pandavas began to turn—the hardship of the forest eased, and in time they regained their lost kingdom.',
+        ],
+      },
+      {
+        id: 'priyavrat-malini',
+        titleHi: 'निःसंतान राजा प्रियव्रत और रानी मालिनी',
+        titleEn: 'The childless king Priyavrat and queen Malini',
+        bodyHi: [
+          'बहुत पुरातन काल की बात है। प्रियव्रत नाम के एक धर्मनिष्ठ राजा थे, और उनकी पत्नी थीं सुशीला रानी मालिनी। राज्य में धन-धान्य की कोई कमी न थी, पर राजमहल की एक ही पीड़ा थी—उनकी कोई संतान न थी। वंश के सूने आँगन को देख राजा-रानी का हृदय भीतर ही भीतर मुरझाया रहता था।',
+          'महर्षि कश्यप के परामर्श से राजा ने पुत्र-प्राप्ति के लिए यज्ञ कराया। यज्ञ के प्रसाद से रानी मालिनी गर्भवती हुईं, पर समय पूरा होने पर जो पुत्र जन्मा, वह मृत था। शोक से व्याकुल राजा उस मृत शिशु को लेकर श्मशान पहुँचे और उसे गोद में रखकर अपने प्राण त्यागने को तत्पर हो गए। उनका विलाप सुनकर सारा वन सिहर उठा।',
+          'उसी क्षण आकाश से एक दिव्य विमान उतरा, जिसमें ब्रह्मा की मानस-पुत्री, सृष्टि की षष्ठांश-अधिष्ठात्री देवी षष्ठी विराजमान थीं—वही जिन्हें लोग प्रेम से छठी मैया कहते हैं। उनके मुख पर ममता की आभा थी और हाथ में जीवन देने वाली शक्ति।',
+        ],
+        bodyEn: [
+          'It was a matter of very ancient times. There lived a righteous king named Priyavrat, and his wife was the gentle queen Malini. The kingdom lacked nothing in wealth or grain, yet the palace carried a single grief—they had no child. Seeing the empty courtyard of their lineage, the hearts of the king and queen withered quietly within.',
+          'On the counsel of the great sage Kashyapa, the king performed a sacrifice for the gift of a son. By the blessing of that sacrifice queen Malini conceived, but when her term was complete, the son who was born came lifeless into the world. Maddened with grief, the king carried the dead infant to the cremation ground, and laying it in his lap, made ready to give up his own life. Hearing his lament, the whole forest shuddered.',
+          'In that very moment a divine craft descended from the sky, bearing the mind-born daughter of Brahma, the goddess Shashthi who presides over the sixth part of creation—she whom people lovingly call Chhathi Maiya. Upon her face was the radiance of a mother\'s love, and in her hand the power that gives life.',
+        ],
+      },
+      {
+        id: 'shashthi-ka-vardan',
+        titleHi: 'छठी मैया का वरदान और व्रत का प्रचलन',
+        titleEn: 'Chhathi Maiya\'s boon and the spread of the vow',
+        bodyHi: [
+          'देवी षष्ठी ने राजा प्रियव्रत से उनके शोक का कारण पूछा, और फिर अपना परिचय देते हुए बोलीं, ‘मैं ही समस्त शिशुओं की रक्षिका हूँ और निःसंतानों को संतान का वरदान देने वाली हूँ।’ इतना कहकर उन्होंने उस मृत बालक पर अपना करुणामय हाथ फेरा, और देखते ही देखते शिशु में प्राण लौट आए—वह किलकारी मारने लगा।',
+          'राजा का शोक हर्ष में बदल गया। उन्होंने हाथ जोड़कर देवी की स्तुति की और पूछा कि उनकी आराधना किस विधि से की जाए। देवी ने कहा, ‘कार्तिक शुक्ल षष्ठी को जो स्त्री-पुरुष श्रद्धा और शुद्धता से मेरा तथा भगवान सूर्य का व्रत करेंगे, निर्जल रहकर नदी-तट पर अस्त और उदित होते सूर्य को अर्घ्य देंगे, उन्हें संतान, आरोग्य और सौभाग्य की प्राप्ति होगी।’',
+          'राजा प्रियव्रत ने राज्य भर में यह व्रत प्रचलित किया, और तभी से कार्तिक मास में छठ का यह महापर्व पीढ़ी-दर-पीढ़ी चला आ रहा है। तब से आज तक, जब कार्तिक की छठ आती है, तो श्रद्धालु जन घाटों पर एकत्र होते हैं—डूबते सूर्य को सांध्य-अर्घ्य और उगते सूर्य को प्रातः-अर्घ्य अर्पित करते, ठेकुआ और गन्ने का प्रसाद चढ़ाते, और मन ही मन छठी मैया से अपने बच्चों के दीर्घ जीवन और घर की समृद्धि का वरदान माँगते हैं। जो भी सच्ची श्रद्धा से यह व्रत करता है, सूर्यदेव और छठी मैया की कृपा से उसका जीवन प्रकाश से भर उठता है।',
+        ],
+        bodyEn: [
+          'The goddess Shashthi asked king Priyavrat the cause of his grief, and then, revealing her identity, she said, ‘I am the protectress of all children and the one who grants offspring to the childless.’ Saying this, she passed her compassionate hand over the lifeless child, and in an instant life returned to the infant—it began to coo and stir.',
+          'The king\'s grief turned to joy. With folded hands he praised the goddess and asked by what rite she should be worshipped. The goddess said, ‘Those men and women who, on the sixth day of the bright fortnight of Kartika, observe the vow of myself and Lord Surya with faith and purity—keeping a waterless fast and offering arghya at the riverbank to the setting and the rising sun—shall be granted children, health, and good fortune.’',
+          'King Priyavrat spread this vow throughout his realm, and from that time the great festival of Chhath in the month of Kartika has continued from generation to generation. From then until today, when the Chhath of Kartika arrives, devotees gather at the river ghats—offering the evening arghya to the setting sun and the dawn arghya to the rising sun, presenting the prasada of thekua and sugarcane, and silently begging Chhathi Maiya for the long life of their children and the prosperity of their homes. Whoever observes this vow with true faith finds, by the grace of Surya Deva and Chhathi Maiya, that life fills with light.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'akshaya-navami-katha',
+    titleHi: 'अक्षय नवमी कथा',
+    titleEn: 'Akshaya Navami Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'amalaka-shade',
+        titleHi: 'आँवले के पेड़ की छाँव',
+        titleEn: 'Under the shade of the amalaka tree',
+        bodyHi: [
+          'कार्तिक मास के शुक्ल पक्ष की नवमी का सूरज जब काशी की एक छोटी बस्ती पर चढ़ा, तो आँगन के कोने में लगे आँवले के पेड़ की पत्तियाँ ओस से चमक रही थीं। उसी पेड़ के नीचे बैठी थी एक वृद्ध ब्राह्मणी, जिसका नाम था सुमना। पति वर्षों पहले गोलोक सिधार चुके थे, संतान कोई नहीं थी, और घर में जो थोड़ा-बहुत अन्न रहता वह भी पड़ोसियों की दया से आता था। फिर भी उसके चेहरे पर एक अटल शांति थी।',
+          'बचपन में उसने अपनी माता से एक बात सुनी थी, जो मन में दीपक की तरह जलती रहती थी — ‘कार्तिक की शुक्ल नवमी को जो आँवले के वृक्ष को सींचता, उसकी पूजा करता और उसी की छाया में बैठकर भोजन कराता है, उसका किया हुआ हर पुण्य अक्षय हो जाता है। उस दिन वृक्ष की जड़ में स्वयं श्रीहरि का वास होता है।’ सुमना के पास देने को बहुत कुछ नहीं था, पर इस एक तिथि को वह कभी खाली नहीं जाने देती थी।',
+          'भोर होते ही उसने पेड़ की जड़ में जल चढ़ाया, हल्दी और अक्षत से उसका पूजन किया, और घी का एक छोटा दीपक तने के पास रख दिया। फिर उसने अपने भंडार के अंतिम मुट्ठी भर चावल को पकाया, उसमें घर के पीछे उगी कुछ सब्ज़ियाँ मिलाईं, और सब कुछ केले के पत्ते पर सजाकर आँवले की शीतल छाया में रख दिया — इस आशा से कि कोई अतिथि, कोई भूखा, कोई साधु आकर इसे ग्रहण करे।',
+        ],
+        bodyEn: [
+          'When the sun of the ninth bright day of Kartika month climbed over a small quarter of Kashi, the leaves of the amalaka tree in the corner of one courtyard glittered with dew. Beneath that very tree sat an aged Brahmin woman named Sumana. Her husband had departed for Goloka years ago, she had no children, and the little grain her house held came only through the kindness of neighbours. Even so, an unshakable calm rested upon her face.',
+          'In her childhood she had heard one saying from her mother that burned in her heart like a lamp — ‘Whoever, on the bright ninth of Kartika, waters the amalaka tree, worships it, and serves a meal in its shade, finds that every merit they earn becomes inexhaustible; on that day Shrihari himself dwells at the root of the tree.’ Sumana had little to give, but this one day she never let pass empty-handed.',
+          'At first light she poured water at the tree’s root, worshipped it with turmeric and unbroken rice, and set a small lamp of ghee beside the trunk. Then she cooked the last handful of rice from her store, mixed in a few vegetables grown behind the house, arranged it all on a banana leaf, and placed it in the cool shade of the amalaka — hoping that some guest, some hungry one, some wandering ascetic might come and accept it.',
+        ],
+      },
+      {
+        id: 'the-unknown-guest',
+        titleHi: 'अनजान अतिथि और कभी न घटने वाला अन्न',
+        titleEn: 'The unknown guest and the food that never lessened',
+        bodyHi: [
+          'दोपहर ढलने को थी कि एक थका हुआ यात्री, फटे वस्त्रों में, उस गली से गुज़रा। भूख से उसके पाँव डगमगा रहे थे। सुमना ने उसे पुकारकर आँवले की छाया में बिठाया, चरण धुलाए, और वही केले के पत्ते वाला भोजन उसके आगे रख दिया। यात्री ने भरपेट खाया, तृप्त होकर आशीर्वाद दिया और चला गया।',
+          'सुमना ने जब पत्ते की ओर देखा, तो उसकी आँखें विस्मय से भर गईं — अन्न उतना ही था जितना उसने रखा था, मानो किसी ने उसमें से कुछ लिया ही न हो। उसी दिन एक संन्यासी आया, फिर एक विधवा अपने दो बालकों के साथ, फिर पड़ोस का एक अनाथ ग्वाला। एक-एक करके सब ने उसी पत्ते से खाया, और हर बार भोजन घटने के बजाय जस का तस बना रहा।',
+          'गाँव में बात फैल गई। लोग दौड़े आए और आँवले के पेड़ के नीचे बैठकर भोजन करने लगे — कोई धनी, कोई निर्धन, सब एक ही छाया में, एक ही पंक्ति में। सुमना का छोटा-सा भंडार उस सारी बस्ती का पेट भरता रहा, और शाम तक भी पत्ते पर अन्न शेष था। तब वृद्धा समझ गई कि उसकी माता की बात अक्षरशः सत्य थी — कार्तिक नवमी को आँवले के नीचे दिया गया दान सचमुच अक्षय हो जाता है।',
+        ],
+        bodyEn: [
+          'The afternoon was waning when a weary traveller in torn clothes passed through the lane, his feet faltering from hunger. Sumana called him over, seated him in the amalaka’s shade, washed his feet, and set that same banana-leaf meal before him. The traveller ate his fill, blessed her with a satisfied heart, and went on his way.',
+          'When Sumana looked at the leaf, her eyes filled with wonder — the food was exactly as much as she had laid out, as if no one had taken anything from it at all. That same day a sannyasi arrived, then a widow with her two small children, then an orphaned cowherd boy from the neighbourhood. One by one they all ate from that single leaf, and each time, instead of dwindling, the food remained just as it was.',
+          'Word spread through the village. People came running and sat down to eat beneath the amalaka tree — some rich, some poor, all in one shade, all in one row. Sumana’s tiny store kept filling the bellies of the whole quarter, and even by evening food still remained upon the leaf. Then the old woman understood that her mother’s words had been true to the letter — a gift given beneath the amalaka on the Kartika ninth truly becomes inexhaustible.',
+        ],
+      },
+      {
+        id: 'king-who-tested',
+        titleHi: 'राजा की परीक्षा और श्रीहरि का वास',
+        titleEn: 'The king who tested it and the dwelling of Shrihari',
+        bodyHi: [
+          'जब यह वृत्तांत राजधानी तक पहुँचा, तो वहाँ का राजा, जो धन में किसी से कम न था पर मन से बेचैन रहता था, उसने सोचा कि वह स्वयं इस तिथि का प्रभाव देखेगा। अगली अक्षय नवमी पर उसने नगर के बाहर एक विशाल आँवले के उपवन में पूजा का आयोजन किया, और घोषणा करवाई कि उस दिन वृक्षों की छाया में जो भी आएगा, वह राजकोष से भोजन पाएगा।',
+          'राजा ने पहले इसे केवल अपनी कीर्ति का साधन समझा था, पर जब उसने स्वयं हाथों से सींचे हुए वृक्ष के नीचे बैठकर ब्राह्मणों, अनाथों और भूखों को भोजन कराया, तो उसके भीतर का अहंकार धीरे-धीरे पिघल गया। उसने अनुभव किया कि आँवले के पत्ते की महक में, उसकी शीतल छाया में, कोई अदृश्य उपस्थिति है जो हर ग्रास को पवित्र कर देती है।',
+          'उस रात राजा को स्वप्न में श्रीहरि के दर्शन हुए। नारायण ने कहा — ‘हे राजन, आँवला मुझे अति प्रिय है, क्योंकि इसी वृक्ष में मेरा और ब्रह्मा का अंश साथ-साथ वास करता है। कार्तिक की इस नवमी को जो श्रद्धा से आँवले का पूजन कर उसकी छाया में दान और भोजन कराता है, उसका पुण्य कभी क्षय नहीं होता।’ राजा जाग उठा और उसने समझ लिया कि सच्ची समृद्धि कोष में नहीं, बाँटने में बसती है।',
+        ],
+        bodyEn: [
+          'When this account reached the capital, the king there — second to none in wealth, yet restless in mind — resolved to witness the power of this day for himself. On the next Akshaya Navami he arranged worship in a vast grove of amalaka trees outside the city, and had it proclaimed that whoever came into the shade of those trees that day would be fed from the royal treasury.',
+          'At first the king had thought of it merely as an instrument of his own fame, but when he sat with his own hands beneath a tree he had watered and served food to Brahmins, orphans, and the hungry, the pride within him slowly melted away. He felt that in the fragrance of the amalaka leaves, in their cool shade, there was an unseen presence that made every morsel sacred.',
+          'That night the king beheld Shrihari in a dream. Narayana spoke — ‘O king, the amalaka is most dear to me, for in this very tree a portion of myself and of Brahma dwells together. Whoever, on this ninth of Kartika, worships the amalaka with faith and serves charity and food in its shade, finds that their merit is never destroyed.’ The king awoke and understood that true prosperity dwells not in the treasury, but in the giving.',
+        ],
+      },
+      {
+        id: 'satya-yuga-dawn',
+        titleHi: 'सत्ययुग का प्रभात और अक्षय का संकल्प',
+        titleEn: 'The dawn of Satya Yuga and the resolve of the inexhaustible',
+        bodyHi: [
+          'विद्वान कहते हैं कि यही वह पावन तिथि है जिससे सत्ययुग का आरंभ माना जाता है — वह युग जिसमें धर्म अपने चारों चरणों पर अडिग खड़ा था और मनुष्य का मन निर्मल था। इसीलिए इस दिन किया गया कोई भी शुभ कर्म युग के आरंभ जैसा शुद्ध और अक्षय फल देने वाला माना गया, मानो सृष्टि का पहला पुण्य उसमें फिर से जीवित हो उठता हो।',
+          'इसी कारण भक्त इस नवमी को प्रातः स्नान कर आँवले के वृक्ष की पूजा करते हैं, उसकी जड़ में जल और दूध अर्पित करते हैं, और उसी छाया में परिवार सहित बैठकर भोजन करते हैं। कोई आँवले का फल दान करता है, कोई उसके नीचे ब्राह्मणों और निर्धनों को भोजन कराता है, और श्रीहरि व माता लक्ष्मी का स्मरण करता है, जिनका वास उस वृक्ष में माना जाता है।',
+          'सुमना और उस राजा की भाँति, जो भी इस अक्षय नवमी को श्रद्धा और निःस्वार्थ भाव से आँवले की छाया में दान और भोजन कराता है, उसका धन, उसका धर्म और उसका पुण्य कभी घटता नहीं — वृक्ष की उस शीतल छाया की तरह जो हर आने वाले को बिना भेद के अपनी गोद में समेट लेती है, और देती ही चली जाती है।',
+        ],
+        bodyEn: [
+          'The learned say that this is the very sacred day from which the Satya Yuga is held to have begun — the age in which dharma stood firm upon all four of its feet and the mind of humankind was unsullied. For this reason any auspicious act performed on this day is held to yield a fruit as pure and as inexhaustible as the dawn of an age, as though the first merit of creation comes alive within it once more.',
+          'And so on this ninth the devout bathe at dawn and worship the amalaka tree, offer water and milk at its root, and sit down with their families to eat in its very shade. Some give amalaka fruit in charity, some feed Brahmins and the poor beneath it, and all remember Shrihari and Mother Lakshmi, who are believed to dwell within that tree.',
+          'Like Sumana and that king, whoever on this Akshaya Navami serves charity and food in the amalaka’s shade with faith and a selfless heart finds that their wealth, their dharma, and their merit never diminish — like the cool shade of that tree which gathers every comer into its lap without distinction, and goes on giving and giving still.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
     id: 'vasant-panchami-katha',
     titleHi: 'वसंत पंचमी कथा',
     titleEn: 'Vasant Panchami Katha',
