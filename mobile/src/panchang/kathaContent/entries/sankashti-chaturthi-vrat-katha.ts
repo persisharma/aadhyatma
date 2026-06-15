@@ -1,107 +1,112 @@
 import { fullContent } from '../_helpers';
 
 export default fullContent({
-    id: 'sankashti-chaturthi-vrat-katha',
-    titleHi: 'संकष्टी चतुर्थी व्रत कथा',
-    titleEn: 'Sankashti Chaturthi Vrat Katha',
-    sourceUrls: [
-      'https://www.drikpanchang.com/vrat-katha/sankashti/sankashti-chaturthi-vrat-katha.html',
-      'https://www.drikpanchang.com/vrat-katha/sankashti/bhalachandra/bhalachandra-sankashti-vrat-katha.html',
-      'https://www.drikpanchang.com/vrat-katha/sankashti/vikata/vikata-sankashti-vrat-katha.html',
-      'https://www.drikpanchang.com/vrat-katha/sankashti/ganadhipa/ganadhipa-sankashti-vrat-katha.html',
-      'https://www.drikpanchang.com/vrat-katha/sankashti/lambodara/lambodara-sankashti-vrat-katha.html',
-      'https://www.drikpanchang.com/vrat-katha/sankashti/heramba/heramba-sankashti-vrat-katha.html',
-    ],
-    sections: [
-      {
-        id: 'monthly-cycle',
-        titleHi: 'मासिक संकष्टी कथा-संग्रह का आरंभ',
-        titleEn: 'Opening the monthly Sankashti story cycle',
-        bodyHi: [
-          'संकष्टी चतुर्थी एक अकेली कथा तक सीमित नहीं है। परंपरा में माता पार्वती भगवान गणेश से अलग-अलग महीनों की कृष्ण पक्ष चतुर्थी के नाम, विधि, भोग और कथा पूछती हैं। गणेश जी बताते हैं कि प्रत्येक मास में उनका एक रूप स्मरण किया जाता है और संकट के स्वरूप के अनुसार कथा भी अलग रंग लेती है।',
-          'इस व्रत का सामान्य भाव है दिनभर संयम, गणेश पूजन, कथा-श्रवण, चंद्र-दर्शन के बाद अर्घ्य और फिर प्रसाद। चतुर्थी का चंद्र मन की चंचलता को याद दिलाता है, और गणेश पूजा उस मन को विवेक, धैर्य और सही आरंभ में स्थिर करती है। इसलिए संकष्टी का अर्थ केवल दुःख से मुक्ति नहीं, संकट को समझने की बुद्धि भी है।',
-          'ऐप में यह प्रविष्टि कथा-संग्रह के रूप में रखी गई है, क्योंकि स्रोतों में संकष्टी के अनेक मासिक प्रसंग मिलते हैं। नीचे दिए गए प्रसंग भालचन्द्र, विकट, गणाधिप, लम्बोदर और हेरम्ब रूपों से जुड़े हैं। ये सभी मिलकर बताते हैं कि गणेश-कृपा परिवार, राज्य, संतति, यात्रा, पुनर्मिलन और आत्म-परिवर्तन तक फैली हुई है।',
-        ],
-        bodyEn: [
-          'Sankashti Chaturthi is not held by one single story alone. In the traditional cycle, Mother Parvati asks Lord Ganesha about the names, procedure, offerings, and stories connected with Krishna Paksha Chaturthi in different lunar months. Ganesha explains that each month remembers a distinct form and each story addresses a different kind of trouble.',
-          'The common rhythm of the vow is restraint through the day, Ganesha worship, listening to the katha, moon sighting followed by arghya, and then receiving prasada. The Chaturthi moon reminds the devotee of the restless mind, while Ganesha worship brings that mind toward discernment, steadiness, and a right beginning. Sankashti therefore means not only relief from distress, but wisdom in the middle of distress.',
-          'This app entry is shaped as a story collection because the source tradition preserves multiple monthly Sankashti episodes. The episodes below draw from Bhalachandra, Vikata, Ganadhipa, Lambodara, and Heramba forms. Together they show Ganesha grace moving through family conflict, lost kingdoms, children, journeys, reunion, and inner transformation.',
-        ],
-      },
-      {
-        id: 'bhalachandra',
-        titleHi: 'भालचन्द्र संकष्टी: धर्मपाल की बहू और राजकुमार',
-        titleEn: 'Bhalachandra Sankashti: Dharampala daughter-in-law and the prince',
-        bodyHi: [
-          'भालचन्द्र संकष्टी में गणेश जी माता पार्वती को चैत्र कृष्ण चतुर्थी का विधान बताते हैं। कथा राजा मयूरध्वज से जुड़ती है, जिनके राज्य में धर्मपाल नामक मंत्री को शासन का भार मिला। धर्मपाल के परिवार में सबसे छोटी बहू गणेश-भक्त थी और चतुर्थी के दिन भालचन्द्र गणेश का व्रत विधिपूर्वक करती थी।',
-          'सास ने उसकी पूजा को तांत्रिक संदेह से देखा और पुत्र को भी उसके विरुद्ध भड़काया। बहू ने शांत भाव से कहा कि यह पूजा परिवार की रक्षा और मंगल के लिए है, पर अपमान और रोक-टोक के बीच भी उसने व्रत अधूरा नहीं छोड़ा। उसने गणेश जी से प्रार्थना की कि जिनका मन भ्रमित है, उनमें भी आपकी महिमा का विश्वास जागे।',
-          'गणेश जी ने लीला की। राजा का राजकुमार अदृश्य हुआ और उसके वस्त्र-आभूषण धर्मपाल के भवन में मिले। राजा ने मंत्री को दंड की चेतावनी दी। तब बहू ने कहा कि गणेश का अपमान हुआ है; राजा और नगरवासी श्रद्धा से संकष्टी व्रत करें। व्रत पूर्ण होते ही राजकुमार सुरक्षित मिल गया, और परिवार ने समझा कि भक्त की पूजा छिपी नहीं रहती - वह संकट में सबकी रक्षा बनती है।',
-        ],
-        bodyEn: [
-          'In the Bhalachandra Sankashti story, Ganesha explains to Parvati the observance of Chaitra Krishna Chaturthi. The narrative moves to King Mayurdhwaj and his minister Dharampala. In Dharampala household, the youngest daughter-in-law is devoted to Ganesha and observes the Bhalachandra vow with full attention.',
-          'Her mother-in-law misunderstands the worship and suspects it to be harmful ritual. She turns her son against his wife. The young woman quietly explains that the vow is for family protection and welfare, yet even under insult and pressure she does not abandon the worship. She prays that Ganesha reveal his greatness to those whose minds are confused.',
-          'Ganesha creates a lesson. The king prince disappears, and his clothes and ornaments are found in Dharampala house. The king threatens punishment if the child is not found. The daughter-in-law then says that Ganesha has been dishonored and that the king and people should observe Sankashti with devotion. When the vow is completed, the prince returns safely. The family learns that the worship of a sincere devotee becomes protection for everyone in crisis.',
-        ],
-      },
-      {
-        id: 'vikata',
-        titleHi: 'विकट संकष्टी: सुशीला और चंचला',
-        titleEn: 'Vikata Sankashti: Sushila and Chanchala',
-        bodyHi: [
-          'विकट संकष्टी की कथा में राजा रन्तिदेव के राज्य में धर्मकेतु नामक ब्राह्मण रहता था। उसकी दो पत्नियाँ थीं - सुशीला और चंचला। सुशीला व्रत-पूजन में लगी रहती थी और चंचला भोग में, इसलिए घर में तुलना और कटु वचन का वातावरण बन गया।',
-          'सुशीला को पुत्री हुई और चंचला को पुत्र। चंचला ने सुशीला का उपहास किया कि इतने व्रत करके भी उसे केवल कमजोर बेटी मिली। अपमान से दुखी सुशीला ने गणेश जी की शरण ली। गणेश जी प्रसन्न हुए, पुत्र का वर दिया और कृपा से उसकी पुत्री के मुख से मणि-मोती गिरने लगे। बाद में सुशीला को पुत्र भी हुआ, पर धर्मकेतु की मृत्यु के बाद चंचला धन लेकर अलग हो गई।',
-          'ईर्ष्या में चंचला ने एक दिन सुशीला की बेटी को कुएँ में धकेल दिया, पर गणेश जी की कृपा से बालिका सुरक्षित लौट आई। यह देखकर चंचला का मन बदल गया। उसने अपराध स्वीकार किया, सुशीला से क्षमा माँगी और स्वयं भी गणेश व्रत करने लगी। कथा का फल केवल धन या संतान नहीं है; वह शत्रुता को पश्चाताप और परिवार को फिर से सौहार्द में बदलता है।',
-        ],
-        bodyEn: [
-          'The Vikata Sankashti story takes place in the kingdom of King Rantideva, where a Brahmin named Dharmaketu lives with two wives, Sushila and Chanchala. Sushila is devoted to vows and worship, while Chanchala lives without such discipline. Their difference slowly becomes a source of comparison and harsh words in the household.',
-          'Sushila gives birth to a daughter, while Chanchala gives birth to a son. Chanchala mocks Sushila, saying that all her fasts have only brought her a fragile daughter. Hurt by this insult, Sushila turns to Ganesha with full devotion. Ganesha blesses her with a learned son, and by his grace jewels begin to fall from the mouth of her daughter. Later Sushila also has a son, but after Dharmaketu dies, Chanchala takes the family wealth and leaves.',
-          'In jealousy, Chanchala pushes Sushila daughter into a well, but Ganesha protects the child and she returns unharmed. Seeing this, Chanchala conscience awakens. She confesses, asks Sushila for forgiveness, and begins observing the Ganesha vow herself. The fruit of the katha is not only wealth or children; it is the transformation of rivalry into repentance and family harmony.',
-        ],
-      },
-      {
-        id: 'ganadhipa',
-        titleHi: 'गणाधिप संकष्टी: दशरथ, श्रवण और हनुमान का समुद्र-लांघन',
-        titleEn: 'Ganadhipa Sankashti: Dasharatha, Shravana, and Hanuman crossing the sea',
-        bodyHi: [
-          'गणाधिप संकष्टी में कथा त्रेता युग की ओर जाती है। राजा दशरथ शिकार में शब्दभेदी बाण चलाते हैं और भूल से श्रवण कुमार को मार देते हैं, जो अपने अंधे माता-पिता को तीर्थयात्रा करा रहा था। श्रवण के माता-पिता पुत्र-वियोग में दशरथ को भी पुत्र-वियोग से मृत्यु का शाप देते हैं।',
-          'इसी कर्म-श्रृंखला से आगे राम जन्म, वनवास और सीता-हरण का प्रसंग आता है। वन में राम और लक्ष्मण सुग्रीव से मिलते हैं, वानर-सेना सीता की खोज करती है और जटायु के भाई सम्पाती से पता चलता है कि सीता समुद्र पार लंका में हैं। पर समुद्र इतना विशाल है कि सबके मन में प्रश्न उठता है - इसे कौन पार करेगा।',
-          'सम्पाती हनुमान से कहते हैं कि संकट-नाशन गणेश चतुर्थी का व्रत करो; इस व्रत की शक्ति से मार्ग खुलेगा। हनुमान गणेश स्मरण और व्रत से बल-संकल्प प्राप्त करते हैं और समुद्र लाँघते हैं। कथा में संकष्टी केवल व्यक्तिगत संकट नहीं हटाती, वह धर्मकार्य की असंभव लगती दूरी को भी पार कराने वाली बुद्धि और साहस देती है।',
-        ],
-        bodyEn: [
-          'The Ganadhipa Sankashti story moves into Treta Yuga. King Dasharatha, while hunting, shoots by sound and mistakenly kills Shravana Kumara, who was carrying his blind parents on pilgrimage. Grieving for their son, Shravana parents curse Dasharatha that he too will die from separation from his son.',
-          'From that chain of karma come the birth of Rama, the exile, and the abduction of Sita. In the forest, Rama and Lakshmana meet Sugriva, the vanara search begins, and Sampati, the brother of Jatayu, reveals that Sita is across the ocean in Lanka. The question before everyone is whether such a vast ocean can be crossed.',
-          'Sampati tells Hanuman to observe the Sankata Nashana Ganesha Chaturthi vow, through which the path will open. With remembrance of Ganesha and firm resolve, Hanuman receives the courage to cross the ocean. The story shows Sankashti not merely as relief from private trouble, but as the wisdom and strength needed to cross an impossible distance in the work of dharma.',
-        ],
-      },
-      {
-        id: 'lambodara',
-        titleHi: 'लम्बोदर संकष्टी: ऋषि शर्मा की विधवा और अग्निकुण्ड',
-        titleEn: 'Lambodara Sankashti: Rishi Sharma widow and the kiln',
-        bodyHi: [
-          'लम्बोदर संकष्टी कथा सत्यवादी राजा हरिश्चंद्र के राज्य में घटती है। वहाँ ऋषि शर्मा नामक ब्राह्मण के निधन के बाद उसकी पत्नी छोटे पुत्र को भिक्षा से पालती थी। वह माघ कृष्ण चतुर्थी पर गोबर से गणेश मूर्ति बनाकर पूजा करती, तिल के लड्डू अर्पित करती और संकटनाशक व्रत श्रद्धा से निभाती थी।',
-          'एक दिन बालक खेलते-खेलते बाहर गया। एक कुम्हार अपने कच्चे घड़ों को पकाने में असफल हो रहा था और किसी तांत्रिक की गलत सलाह से उसने बालक को भट्ठी में डाल दिया। माँ ने घर लौटकर पुत्र को न पाया तो रातभर गणेश जी से करुण प्रार्थना करती रही। भोर में कुम्हार ने भट्ठी खोली तो वहाँ आग के स्थान पर जल था और बालक खेलता हुआ सुरक्षित बैठा था।',
-          'कुम्हार भयभीत होकर राजा हरिश्चंद्र के पास गया और अपराध स्वीकार किया। राजा ने बालक की माँ से पूछा कि यह रक्षा किस तप या विद्या से हुई। ब्राह्मणी ने कहा कि उसके पास कोई विशेष शक्ति नहीं; वह केवल संकष्टी गणेश व्रत करती है। राजा ने उसे धन्य कहा और प्रजा को भी यह व्रत करने की आज्ञा दी। कथा में गणेश-कृपा असहाय माँ की पुकार को अग्नि से भी बलवान बना देती है।',
-        ],
-        bodyEn: [
-          'The Lambodara Sankashti story is set in the kingdom of truthful King Harishchandra. After the death of a Brahmin named Rishi Sharma, his widow raises their young son through alms. On Magha Krishna Chaturthi, she makes a Ganesha image from cow dung, offers sesame laddus, and observes the Sankata Nashaka vow with devotion.',
-          'One day the child goes out to play. A potter, unable to fire his clay pots successfully, follows harmful advice from a ritualist and places the boy inside the kiln. When the mother cannot find her son, she spends the night praying to Ganesha with a broken heart. At dawn, the potter opens the kiln and finds water where fire should have been, with the child sitting safely and playing.',
-          'Terrified, the potter goes to King Harishchandra and confesses. The king asks the mother what austerity or power protected the child. The Brahmani says she possesses no special knowledge; she simply observes the Sankashti Ganesha vow. The king honors her and instructs the people to observe the vow as well. In this katha, Ganesha grace makes the helpless prayer of a mother stronger than fire.',
-        ],
-      },
-      {
-        id: 'heramba',
-        titleHi: 'हेरम्ब संकष्टी: नल-दमयंती का पुनर्मिलन',
-        titleEn: 'Heramba Sankashti: Nala and Damayanti are reunited',
-        bodyHi: [
-          'हेरम्ब संकष्टी कथा राजा नल और रानी दमयंती के दुःख से जुड़ी है। नल को राज्य, धन, पशु, कोष और सम्मान से वंचित होना पड़ा। विपत्ति इतनी बढ़ी कि वह वन में भटकने लगे, दमयंती उनसे बिछुड़ गई और परिवार के लोग अलग-अलग कष्ट सहने लगे।',
-          'दमयंती वन में महर्षि शरभंग से मिली और पूछा कि पति से पुनर्मिलन, राज्य की प्राप्ति और सौभाग्य का जागरण कैसे होगा। ऋषि ने भाद्रपद कृष्ण चतुर्थी पर हेरम्ब गणपति की पूजा और संकटनाशिनी चतुर्थी व्रत का निर्देश दिया। उन्होंने आश्वासन दिया कि श्रद्धा से व्रत करने पर बिछड़ा परिवार और खोया राज्य फिर प्राप्त होगा।',
-          'दमयंती ने व्रत आरंभ किया और गणेश जी की पूजा मास-दर-मास विधिपूर्वक की। तीन महीनों में उसे पति और पुत्र से पुनर्मिलन मिला और राज्य-समृद्धि लौट आई। यह कथा बताती है कि संकष्टी केवल तत्काल संकट के लिए नहीं; जब जीवन कई दिशाओं में टूट गया हो, तब भी नियमित श्रद्धा बिखरे हुए सूत्रों को फिर जोड़ सकती है।',
-        ],
-        bodyEn: [
-          'The Heramba Sankashti story is connected with the sorrow of King Nala and Queen Damayanti. Nala loses kingdom, wealth, animals, treasury, and honor. The calamity grows so severe that he wanders in the forest, Damayanti is separated from him, and the family suffers in different places.',
-          'Damayanti meets Maharshi Sharabhanga in the forest and asks how she can reunite with her husband, regain the kingdom, and awaken good fortune again. The sage instructs her to worship Heramba Ganapati on Bhadrapada Krishna Chaturthi and observe the Sankatnashini Chaturthi vow. He assures her that sincere observance can bring back the separated family and lost prosperity.',
-          'Damayanti begins the vow and worships Ganesha month after month with discipline. Within three months she is reunited with her husband and son, and the kingdom returns. This katha teaches that Sankashti is not only for a sudden difficulty; when life has broken in many directions, steady devotion can gather the scattered threads again.',
-        ],
-      },
-    ],
-  });
+  id: 'sankashti-chaturthi-vrat-katha',
+  titleHi: 'संकष्टी चतुर्थी व्रत कथा',
+  titleEn: 'Sankashti Chaturthi Vrat Katha',
+  sourceUrls: ['https://www.drikpanchang.com/vrat-katha/sankashti/sankashti-chaturthi-vrat-katha.html', 'https://www.drikpanchang.com/vrat-katha/sankashti/bhalachandra/bhalachandra-sankashti-vrat-katha.html', 'https://www.drikpanchang.com/vrat-katha/sankashti/vikata/vikata-sankashti-vrat-katha.html', 'https://www.drikpanchang.com/vrat-katha/sankashti/ganadhipa/ganadhipa-sankashti-vrat-katha.html', 'https://www.drikpanchang.com/vrat-katha/sankashti/lambodara/lambodara-sankashti-vrat-katha.html', 'https://www.drikpanchang.com/vrat-katha/sankashti/heramba/heramba-sankashti-vrat-katha.html'],
+  sections: [
+    {
+      id: 'monthly-cycle',
+      titleHi: 'मासिक संकष्टी कथा-संग्रह का आरंभ',
+      titleEn: 'Opening the monthly Sankashti story cycle',
+      bodyHi: [
+        'हर महीने जब कृष्ण पक्ष आता है और चन्द्रमा घटते-घटते चौथी रात तक पहुँचता है, तब सायंकाल की वेला में किसी गाँव के आँगन में दीप जल उठते हैं। एक स्त्री देहरी बुहारकर उस पर गोबर से चौक पूरती है, बीच में लाल रोली का स्वस्तिक खींचती है, और मिट्टी की एक प्रतिमा के सामने दूर्वा की कोमल पत्तियाँ सजा देती है। यही संकष्टी चतुर्थी है — संकटों को हरने वाले गणेश की रात, जब घर-घर में दिनभर का निराहार व्रत उस घड़ी की प्रतीक्षा में टिका रहता है जब आकाश में चन्द्रमा उगेगा।',
+        'बूढ़ी दादी अपने पोते-पोतियों को अपने पास खींच लेती है और कहती है, ‘बेटा, गणपति विघ्नहर्ता हैं, संकटनाशन हैं। जो भी सच्चे मन से कृष्ण पक्ष की इस चौथ का व्रत रखता है, उसके सारे संकट इस घटते चन्द्रमा के साथ ही घटते चले जाते हैं।’ बच्चे थाली में रखे तिल के लड्डू और मोदक की ओर ललचाई आँखों से देखते हैं, पर जानते हैं कि भोग पहले गजानन को लगेगा, फिर चन्द्र को अर्घ्य दिया जाएगा, और तभी प्रसाद उनके हाथ आएगा।',
+        'रात गहराती है, और पूरब के कोने पर चाँदी-सी एक रेखा फूटती है। ‘उग आया, उग आया!’ का स्वर आँगन में गूँज उठता है। स्त्री ताम्र-पात्र में जल भरकर, उसमें दूध, अक्षत और चन्दन मिलाकर ऊपर उठते चन्द्रमा को अर्घ्य चढ़ाती है, और गणेश को प्रणाम करके कहती है, ‘हे लम्बोदर, जैसे तुमने युगों-युगों से अपने भक्तों के संकट हरे हैं, वैसे ही मेरे भी हरना।’ फिर वह दीपक की लौ के पास बैठकर वही पुरानी कथाएँ सुनाने लगती है — हर मास के गणेश के एक-एक नाम से जुड़ी, हर नाम के पीछे किसी संकटग्रस्त भक्त के उद्धार की कहानी।',
+        '‘सुनो,’ दादी कहती है, ‘गणेश के बारह नाम हैं और बारह मास हैं। हर मास की संकष्टी पर उनका एक रूप पूजा जाता है — कभी भालचन्द्र, कभी विकट, कभी गणाधिप, कभी लम्बोदर, तो कभी हेरम्ब। और हर रूप के साथ किसी न किसी दुखियारे की वह कथा जुड़ी है जिसे इसी चौथ के व्रत ने डूबते से उबार लिया। आज की रात मैं तुम्हें वही कथाएँ एक-एक करके सुनाऊँगी।’ बच्चे दीपक के उजाले में सिमटकर बैठ जाते हैं, और कथा का सूत्र पहले रूप — भालचन्द्र — से खुलता है।',
+      ],
+      bodyEn: [
+        'Every month, when the dark fortnight comes and the waning moon thins down to its fourth night, lamps flicker to life in some village courtyard at dusk. A woman sweeps the threshold, smooths a square of cow-dung plaster over it, draws a swastika of red vermilion at its centre, and lays tender blades of durva grass before a little clay image. This is Sankashti Chaturthi — the night of Ganesha, remover of obstacles, when household after household holds a day-long fast that hangs upon one moment: the hour the moon will rise in the sky.',
+        'The old grandmother draws her grandchildren close and says, ‘Children, Ganapati is Vighnaharta, the destroyer of distress. Whoever keeps the fast of this fourth night of the dark fortnight with a true heart sees every trouble wane away just as this moon is waning.’ The little ones gaze longingly at the sesame sweets and the modaks heaped on the plate, yet they know the offering must first go to Gajanana, then water must be poured to the moon, and only then will the blessed food reach their hands.',
+        'The night deepens, and a silvery line breaks at the eastern corner. ‘It has risen, it has risen!’ the cry rings through the courtyard. The woman fills a copper vessel with water, mixes in milk, unbroken rice, and sandal paste, offers it to the climbing moon, and bowing to Ganesha says, ‘O Lambodara, as you have lifted away your devotees’ troubles age after age, so lift away mine.’ Then she settles beside the lamp-flame and begins the old stories — each tied to one of Ganesha’s monthly names, and behind each name the rescue of some devotee caught in distress.',
+        '‘Listen,’ the grandmother says, ‘Ganesha has twelve names and there are twelve months. On each month’s Sankashti one of his forms is worshipped — now Bhalachandra, now Vikata, now Ganadhipa, now Lambodara, and now Heramba. And to each form clings the story of some grieving soul whom the fast of this very fourth night drew up from drowning. Tonight I will tell you those stories, one by one.’ The children huddle into the lamplight, and the thread of the tale opens with Bhalachandra, the form worshipped on Magha\'s fourth night.',
+      ],
+    },
+    {
+      id: 'bhalachandra',
+      titleHi: 'भालचन्द्र संकष्टी: धर्मपाल की बहू और राजकुमार',
+      titleEn: 'Bhalachandra Sankashti: Dharampala\'s daughter-in-law and the prince',
+      bodyHi: [
+        'बहुत पुराने समय की बात है, किसी समृद्ध नगर में धर्मपाल नाम का एक धनी व्यापारी रहता था। उसके घर में सब कुछ था — धन, धान्य, सेवक — पर उसकी पुत्रवधू का मन हर समय इसी चिन्ता से जलता रहता था कि उसकी कोई सन्तान नहीं। एक संध्या वह नगर के बाहर सरोवर-तट पर बैठी रो रही थी कि उधर से कुछ व्रती स्त्रियाँ गुजरीं, जिनके मस्तक पर चन्द्र की भाँति तिलक चमक रहा था। ‘यह कौन-सा व्रत है?’ उसने पूछा। ‘यह माघ की संकष्टी है, बहन,’ वे बोलीं, ‘आज भालचन्द्र गणेश की पूजा होती है — वही गणेश जिनके माथे पर शिव ने चन्द्रमा सजाया था। निराहार रहकर चन्द्रोदय पर अर्घ्य दो, संकट टल जाएँगे।’',
+        'उस रात बहू ने श्रद्धा से व्रत रखा, गणेश की मिट्टी-मूर्ति के मस्तक पर चन्दन से चन्द्र-रेखा खींची, और चन्द्रमा को अर्घ्य देकर प्रार्थना की, ‘हे भालचन्द्र, जिसके माथे पर शीतल चन्द्र विराजता है, मेरे जीवन का यह सूनापन हर लो।’ वर्ष भर वह प्रत्येक मास की चौथ पर यही व्रत करती रही, और समय आने पर उसकी गोद एक सुन्दर पुत्र से भर गई। किन्तु संकट यहीं समाप्त नहीं हुआ — बालक ज्यों-ज्यों बढ़ा, उस पर एक अनजाना ग्रह-दोष मँडराने लगा, और एक दिन वह राजकुमारों के साथ शिकार पर गया तो लौटकर न आया; समाचार आया कि वह वन में मूर्च्छित पड़ा है, प्राण साँसत में हैं।',
+        'माँ दौड़कर उस घटाटोप वन में पहुँची और मूर्च्छित पुत्र को छाती से लगाकर भालचन्द्र गणेश को पुकारने लगी, ‘हे विघ्नहर्ता, जिस गणेश ने इसे मुझे दिया, वही अब इसे लौटा दे!’ उसी क्षण उसे स्मरण हुआ कि वह दिन तो माघ की संकष्टी ही है। उसने वहीं तट के जल से आचमन किया, उपवास का संकल्प लिया, और रात्रि में जब चन्द्रमा भालचन्द्र के मस्तक-सा उज्ज्वल होकर उगा, उसने अर्घ्य दिया। अर्घ्य के जल की बूँदें ज्यों ही पुत्र के मुख पर पड़ीं, बालक की आँखें खुल गईं, मानो गहरी नींद से जाग उठा हो।',
+        'उस माँ ने पुत्र को छाती से लगाकर अश्रुपूरित नेत्रों से कहा, ‘जिसने तुझे दिया, उसी ने तुझे लौटाया।’ नगर लौटकर उसने सबको यही कहा कि भालचन्द्र संकष्टी का व्रत निःसन्तान को सन्तान और संकटग्रस्त को जीवन-दान देता है, और तभी से उस नगर में माघ की संकष्टी हर घर में मनाई जाने लगी।',
+      ],
+      bodyEn: [
+        'Long ago, in a prosperous city, there lived a wealthy merchant named Dharampala. His household had everything — riches, grain, servants — yet his daughter-in-law\'s heart burned always with one sorrow: she had no child. One evening, as she sat weeping on the bank of a tank outside the town, some fasting women passed by, on each of their brows a mark glowing like the moon. ‘What vow is this?’ she asked. ‘It is the Sankashti of Magha, sister,’ they said. ‘Today we worship Bhalachandra Ganesha — the very Ganesha on whose forehead Shiva set the moon. Fast without food, offer water at moonrise, and your troubles will pass.’',
+        'That night the daughter-in-law kept the fast with devotion, drew a crescent of sandal paste on the brow of Ganesha\'s clay image, offered water to the moon, and prayed, ‘O Bhalachandra, on whose forehead the cool moon rests, lift this emptiness from my life.’ Through the whole year she kept this vow on the fourth night of every month, and in time her lap was filled with a beautiful son. Yet her trouble did not end there — as the boy grew, an unseen affliction began to circle him, and one day he rode out hunting with the princes and did not return; word came that he lay senseless in the forest, his life hanging by a thread.',
+        'The mother ran into that shadowed forest, clasped her senseless son to her breast, and cried out to Bhalachandra Ganesha, ‘O Vighnaharta, the Ganesha who gave him to me, give him back to me now!’ In that instant she remembered that the day was none other than the Sankashti of Magha. There by the water she sipped the ritual sip, resolved upon the fast, and at night, when the moon rose as bright as the crescent on Bhalachandra\'s brow, she offered the water. The very moment the drops of that offering fell upon her son\'s face, the boy\'s eyes opened, as though he had woken from a deep sleep.',
+        'Holding her son to her heart, her eyes brimming, the mother said, ‘He who gave you has given you back.’ Returning to the city she told everyone that the fast of Bhalachandra Sankashti grants a child to the childless and the gift of life to those caught in distress, and from that day the Sankashti of Magha came to be kept in every home of that city.',
+      ],
+    },
+    {
+      id: 'vikata',
+      titleHi: 'विकट संकष्टी: सुशीला और चंचला',
+      titleEn: 'Vikata Sankashti: Sushila and Chanchala',
+      bodyHi: [
+        'एक गाँव में दो पड़ोसिनें रहती थीं — सुशीला और चंचला। सुशीला निर्धन थी पर श्रद्धालु; उसके पास देने को केवल दूर्वा, तिल और सच्चा मन था। चंचला धनी थी, पर व्रत-पूजा को दिखावा मानती और सुशीला की भक्ति पर हँसती, ‘मिट्टी के हाथी-मुँह वाले देवता को लड्डू चढ़ाने से क्या भूख मिटेगी?’ एक वर्ष गाँव में अकाल पड़ा, खेत सूख गए, और दोनों के घर का अन्न चुक गया। चंचला अपने भरे भण्डार के बल पर निश्चिन्त थी, पर सुशीला के घर में चूल्हा ठंडा पड़ा था।',
+        'वैशाख की संकष्टी की रात, भूख से व्याकुल होने पर भी सुशीला ने व्रत नहीं तोड़ा। उसने आँगन में दीप जलाया, गणेश के विकट रूप का ध्यान किया — वही उग्र, संकट को विकट करके चूर कर देने वाला रूप — और थोड़े-से तिल अर्पित करके प्रार्थना की, ‘हे विकट गणेश, यह अकाल का संकट मेरे घर से दूर करो; जो रूखा-सूखा है, उसी में सन्तोष है, पर मेरे बच्चों की भूख तुम्हारे हाथ है।’ चन्द्रोदय पर उसने जल और दूर्वा से अर्घ्य दिया और भूखी ही सो गई।',
+        'प्रातः जब उसने अपनी अनाज की खाली कोठी खोली, तो वह ऊपर तक स्वर्ण-सरीखे धान से भरी थी, और बगल में मोदक का एक थाल रखा था जिसकी सुगन्ध सारे घर में फैल रही थी। यह देख चंचला दौड़ी आई और लोभ से बोली, ‘मुझे भी यही व्रत बता दे!’ सुशीला ने सरल मन से सब विधि बता दी, पर चंचला ने व्रत तो रखा किन्तु मन में केवल धन की लालसा, और गणेश के प्रति न श्रद्धा, न दूसरों के लिए करुणा। उसका भण्डार उस रात चूहों ने कुतर-कुतरकर खाली कर दिया।',
+        'रोती हुई चंचला सुशीला के पाँव पकड़कर बैठ गई। सुशीला ने उसे उठाकर अपने धान में से आधा बाँट दिया और कहा, ‘बहन, विकट गणेश छल नहीं, श्रद्धा और बाँटना देखते हैं।’ इस बार चंचला ने सच्चे मन से, ज़रूरतमंदों को खिलाते हुए विकट संकष्टी का व्रत किया, और उसका घर भी फिर से भर गया। तभी से कहा जाता है कि विकट गणेश का व्रत अभाव के संकट को हर लेता है — पर केवल उसी का, जिसका मन निर्मल और हाथ उदार हो।',
+      ],
+      bodyEn: [
+        'In one village lived two neighbours — Sushila and Chanchala. Sushila was poor but devout; all she had to offer were durva grass, sesame, and a true heart. Chanchala was wealthy, but thought vows and worship mere show, and laughed at Sushila\'s devotion: ‘What hunger is stilled by offering sweets to a clay god with an elephant\'s face?’ One year famine fell on the village, the fields dried up, and the grain in both their homes ran out. Chanchala felt secure upon her full stores, but in Sushila\'s house the hearth had gone cold.',
+        'On the night of the Sankashti of Vaishakha, racked with hunger though she was, Sushila did not break her fast. She lit a lamp in the courtyard, meditated on the Vikata form of Ganesha — that fierce form that magnifies a trouble only to grind it to dust — offered a few grains of sesame, and prayed, ‘O Vikata Ganesha, drive this famine\'s distress from my house; in coarse and meagre fare there is contentment, but my children\'s hunger is in your hands.’ At moonrise she offered water and durva, and lay down still hungry.',
+        'In the morning, when she opened her empty grain-bin, it was filled to the brim with paddy like gold, and beside it stood a platter of modaks whose fragrance spread through the whole house. Seeing this, Chanchala came running and said greedily, ‘Teach me that very vow!’ Sushila simply told her the whole rite, but Chanchala kept the fast with her mind only on wealth, and held neither reverence for Ganesha nor compassion for others. That night rats gnawed her stores away to nothing.',
+        'Weeping, Chanchala fell at Sushila\'s feet. Sushila raised her up, shared half of her own paddy, and said, ‘Sister, Vikata Ganesha looks not for trickery but for faith and for sharing.’ This time Chanchala kept the Vikata Sankashti vow with a true heart, feeding the needy, and her house too was filled again. From then it is said that the vow of Vikata Ganesha lifts away the distress of want — but only for the one whose heart is clean and whose hand is open.',
+      ],
+    },
+    {
+      id: 'ganadhipa',
+      titleHi: 'गणाधिप संकष्टी: दशरथ, श्रवण और हनुमान का समुद्र-लांघन',
+      titleEn: 'Ganadhipa Sankashti: Dasharatha, Shravana, and Hanuman crossing the sea',
+      bodyHi: [
+        'त्रेता युग की बात है। महाराज दशरथ शिकार खेलते हुए सरयू-तट पर पहुँचे, और अँधेरे में जल भरते श्रवण के घड़े की आवाज़ को हिरन समझकर शब्दभेदी बाण चला बैठे। बाण लगते ही ‘हाय’ का स्वर उठा — वह तो श्रवण था, जो अपने अन्धे माता-पिता के लिए जल लेने आया था। मरते हुए श्रवण ने कहा, ‘राजन, मेरे प्यासे माता-पिता को यह जल पहुँचा दो।’ दशरथ पर मानो संकटों का पहाड़ टूट पड़ा — पुत्र-वियोग का शाप उन्हें मिला, और मन ग्लानि से भर गया।',
+        'व्यथित दशरथ को किसी मुनि ने परामर्श दिया, ‘हे राजन, माघ-मास की गणाधिप संकष्टी का व्रत करो; गणाधिप गणों के स्वामी, समस्त संकटों के नायक हैं। उनका स्मरण करके निराहार रहो और चन्द्र को अर्घ्य दो — मन का यह भार और संकट का यह अन्धकार दोनों कटेंगे।’ दशरथ ने श्रद्धा से व्रत किया, गणाधिप गणेश का ध्यान किया, और उनके मन को धीरे-धीरे शान्ति मिली; आगे चलकर उन्हीं के घर राम जैसे पुत्र ने जन्म लिया, जिनसे उनका कुल तर गया।',
+        'उसी राम की सेना जब लंका पर चढ़ी, तब वानरों के सामने अथाह समुद्र संकट बनकर खड़ा था। हनुमान को सीता की खोज में सौ योजन सागर लाँघना था, पर मन में संशय का घटाटोप था। तब उन्होंने भी गणों के अधिपति गणाधिप का स्मरण किया, विघ्नहर्ता को प्रणाम करके छलाँग भरी, और जो सागर असम्भव-सा संकट लगता था, वह उनके चरणों के नीचे सिमट गया। हर बड़े कार्य के आरम्भ में गणाधिप का यही स्मरण विघ्नों को पहले ही हर लेता है।',
+        'बूढ़ी दादी कहती है, ‘देखो बेटा, दशरथ का पुत्र-शोक हो या हनुमान का समुद्र — गणाधिप गणेश के स्मरण और संकष्टी के व्रत ने दोनों को पार लगाया।’ जो माघ की इस चौथ को निराहार रहकर गणाधिप को अर्घ्य देता है, उसके सामने खड़े असम्भव-से संकट भी उस लाँघे हुए सागर की भाँति सिमट जाते हैं, और कार्य निर्विघ्न सिद्ध होता है।',
+      ],
+      bodyEn: [
+        'It happened in the Treta age. King Dasharatha, out hunting, came to the bank of the Sarayu, and in the dark mistook the gurgle of Shravana\'s water-pot for a deer and loosed a sound-piercing arrow. The arrow struck, and a cry of pain rose — it was Shravana, who had come to fetch water for his blind mother and father. Dying, Shravana said, ‘King, carry this water to my thirsting parents.’ Upon Dasharatha a mountain of troubles seemed to fall — he earned a curse of separation from his own son, and his heart filled with anguish.',
+        'A sage counselled the grieving Dasharatha, ‘O King, keep the vow of Ganadhipa Sankashti in the month of Magha; Ganadhipa is the lord of the hosts, the chief over all distress. Remember him, fast without food, and offer water to the moon — both this weight of heart and this darkness of trouble will be cut away.’ Dasharatha kept the fast with devotion, meditated on Ganadhipa Ganesha, and slowly peace returned to his mind; in time a son like Rama was born in his house, by whom his whole line was carried across.',
+        'When the army of that same Rama marched upon Lanka, a fathomless ocean stood before the monkeys like an obstacle itself. Hanuman had to leap a hundred yojanas of sea in search of Sita, yet a thick cloud of doubt hung over his mind. Then he too remembered Ganadhipa, lord of the hosts, bowed to the remover of obstacles, and sprang — and the sea that had seemed an impossible trouble shrank away beneath his feet. At the start of every great undertaking, this remembrance of Ganadhipa lifts the obstacles away before they can rise.',
+        'The old grandmother says, ‘See, child — whether it was Dasharatha\'s grief for a son or Hanuman\'s ocean, the remembrance of Ganadhipa Ganesha and the Sankashti vow carried both across.’ Whoever fasts on this fourth night of Magha and offers water to Ganadhipa finds the impossible-seeming troubles before him shrink away like that leapt-over sea, and the task is accomplished without hindrance.',
+      ],
+    },
+    {
+      id: 'lambodara',
+      titleHi: 'लम्बोदर संकष्टी: ऋषि शर्मा की विधवा और अग्निकुण्ड',
+      titleEn: 'Lambodara Sankashti: Rishi Sharma\'s widow and the kiln',
+      bodyHi: [
+        'किसी नगर के छोर पर ऋषि शर्मा नामक एक ब्राह्मण की विधवा अपने इकलौते पुत्र के साथ रहती थी। पति के जाने के बाद घर में दरिद्रता ने डेरा डाल दिया था, पर वह स्त्री हर मास की संकष्टी पर लम्बोदर गणेश का व्रत कभी न भूलती — वही लम्बोदर, जिनके विशाल उदर में सारा ब्रह्माण्ड समाया है, जो सबका भार वहन करते हैं। उसका पुत्र युवा होकर समीप के एक कुम्हार के यहाँ ईंट पकाने के विशाल अग्निकुण्ड पर मजदूरी करने लगा, ताकि घर का चूल्हा जलता रहे।',
+        'एक दिन वह राजा का कोप झेल बैठा — किसी की झूठी शिकायत पर राजा ने आदेश दिया कि अपराधी को धधकते अग्निकुण्ड में डाल दिया जाए। संयोग से वह दिन श्रावण की संकष्टी था। माँ ने सुना तो काँप उठी, पर उसने हार नहीं मानी; उसने उसी दिन कठोर व्रत का संकल्प लिया, निराहार रहकर दिन-भर लम्बोदर का स्मरण करती रही और रोती हुई बोली, ‘हे लम्बोदर, जिसके उदर में तीनों लोक सुरक्षित रहते हैं, मेरे पुत्र को उस अग्नि से सुरक्षित रखो।’',
+        'सन्ध्या को सिपाही उसके पुत्र को घसीटकर धधकते कुण्ड के पास ले गए और उसमें ढकेल दिया। पर जैसे ही चन्द्रमा उगा और माँ ने दूर खड़े होकर लम्बोदर को अर्घ्य चढ़ाया, अग्निकुण्ड की लपटें मानो शीतल जल में बदल गईं; आग ने युवक का स्पर्श तक न किया, और वह कुण्ड के बीच सकुशल बैठा रह गया। यह अद्भुत दृश्य देख राजा भौंचक्का रह गया, अपनी भूल समझ गया, और युवक को ससम्मान मुक्त कर उसकी माँ को धन-धान्य से भर दिया।',
+        'घर लौटकर पुत्र ने माँ के चरण पकड़ लिए, और माँ ने उसे उठाकर कहा, ‘यह मेरा बल नहीं, लम्बोदर की कृपा है; जिसके उदर में सृष्टि का सारा भार समाता है, उसके लिए तेरा संकट कौन-सा बड़ा था!’ तभी से उस नगर में प्रसिद्ध हुआ कि लम्बोदर संकष्टी का व्रत बड़े से बड़े संकट को — मृत्यु के मुख तक खींच ले जाने वाले संकट को भी — हर लेता है, और भक्त को अग्नि-सी विपत्ति के बीच भी अछूता निकाल लाता है।',
+      ],
+      bodyEn: [
+        'At the edge of a certain town lived the widow of a Brahmin named Rishi Sharma, with her only son. After her husband\'s passing, poverty had settled into the house, yet that woman never once forgot the vow of Lambodara Ganesha on each month\'s Sankashti — that same Lambodara, in whose vast belly the whole universe is held, who bears the burden of all. Grown to a youth, her son took work at a nearby potter\'s great kiln where bricks were fired, so that the hearth at home might keep burning.',
+        'One day he fell under the king\'s wrath — on someone\'s false complaint the king ordered that the offender be cast into the blazing kiln. By chance that day was the Sankashti of Shravana. When the mother heard, she trembled, but she did not give up; that very day she resolved upon a severe fast, kept without food, remembered Lambodara through the whole day, and wept, ‘O Lambodara, in whose belly the three worlds rest safe, keep my son safe from that fire.’',
+        'At dusk the soldiers dragged her son to the blazing kiln and pushed him in. But the moment the moon rose and the mother, standing far off, offered water to Lambodara, the flames of the kiln seemed to turn to cool water; the fire did not so much as touch the youth, and he sat unharmed in the midst of the pit. Seeing this wondrous sight, the king was struck dumb, understood his error, freed the youth with honour, and filled his mother\'s house with wealth and grain.',
+        'Returning home, the son clasped his mother\'s feet, and she raised him and said, ‘This was not my strength but the grace of Lambodara; for him in whose belly the whole burden of creation is held, what trouble of yours was too great?’ From then it became famous in that town that the vow of Lambodara Sankashti lifts away the greatest of troubles — even the trouble that drags one to the very mouth of death — and draws the devotee out untouched from the midst of fire-like calamity.',
+      ],
+    },
+    {
+      id: 'heramba',
+      titleHi: 'हेरम्ब संकष्टी: नल-दमयंती का पुनर्मिलन',
+      titleEn: 'Heramba Sankashti: Nala and Damayanti are reunited',
+      bodyHi: [
+        'निषध देश के राजा नल और विदर्भ की राजकुमारी दमयंती का प्रेम तीनों लोकों में विख्यात था, पर कलि की छाया पड़ते ही उन पर संकटों की झड़ी लग गई। नल जुए में अपना राज्य हार बैठे, वन-वन भटकने को विवश हुए, और एक रात भ्रम में आकर सोई हुई दमयंती को घने वन में अकेली छोड़कर चले गए। दोनों एक-दूसरे से बिछुड़ गए — एक राजा भिक्षुक-सा भटकता रहा, और एक रानी फटे वस्त्रों में पिता के घर शरण लेकर पति की बाट जोहती रही।',
+        'दुखों से टूटी दमयंती को एक वृद्धा तपस्विनी ने कहा, ‘बेटी, कलि-काल का यह विकराल संकट साधारण उपाय से नहीं टलेगा; तू हेरम्ब गणेश का व्रत कर। हेरम्ब वही रूप है जो निर्बल और अनाथ का रक्षक है, असुरों के बीच भी जो भयहीन रहता है। हर मास की संकष्टी पर निराहार रहकर हेरम्ब का स्मरण कर और चन्द्र को अर्घ्य दे; जो बिछुड़ा है वह अवश्य मिलेगा।’ दमयंती ने श्रद्धा से, मास-दर-मास, यह व्रत निभाना आरम्भ किया।',
+        'उधर भटकते नल ने भी, साँपों और शापों से जर्जर होकर, किसी सिद्ध पुरुष के कहने पर हेरम्ब गणेश का यही व्रत थाम लिया; निराहार रहकर वे विघ्नहर्ता का स्मरण करते और मन में दमयंती की मंगल-कामना करते। दोनों के व्रत मानो एक ही सूत्र में बँधकर गणेश के चरणों तक पहुँचे। फिर एक दिन, दमयंती की चतुराई से रचे स्वयंवर के बहाने, बहुरूप में छिपे नल विदर्भ की राजसभा में आ पहुँचे, और एक-दूसरे को पहचानते ही वर्षों का वियोग आँसुओं में बह गया।',
+        'पुनर्मिलन की उस घड़ी में नल और दमयंती ने साथ बैठकर हेरम्ब गणेश को अर्घ्य दिया और कहा, ‘हे हेरम्ब, अनाथों के नाथ, तुमने बिछुड़ों को मिलाया, खोया राज्य लौटाया, और हमारे जीवन का सबसे बड़ा संकट हर लिया।’ तभी से कहा जाता है कि संकष्टी चतुर्थी का व्रत — चाहे भालचन्द्र हो या विकट, गणाधिप हो, लम्बोदर हो या हेरम्ब — सच्चे भक्त की सन्तान, सम्पदा, प्राण और प्रिय-मिलन की रक्षा करता है; जो इसे श्रद्धा से करता है, उसके सारे संकट घटते चन्द्रमा के साथ क्षीण होकर मिट जाते हैं, और गणपति की कृपा से उसका घर सुख, सन्तोष और मंगल से सदा भरा रहता है।',
+      ],
+      bodyEn: [
+        'The love of Nala, king of the Nishadha country, and Damayanti, princess of Vidarbha, was famed in all three worlds; yet the moment Kali\'s shadow fell upon them, a downpour of troubles began. Nala lost his kingdom at dice, was forced to wander forest after forest, and one night, deluded, left the sleeping Damayanti alone in a dense wood and went away. The two were parted — a king roaming like a beggar, and a queen in torn garments taking shelter in her father\'s house, watching the road for her husband.',
+        'To Damayanti, broken by sorrow, an old ascetic woman said, ‘Daughter, this fearsome trouble of the age of Kali will not pass by ordinary means; keep the vow of Heramba Ganesha. Heramba is that form which is the protector of the weak and the orphaned, fearless even among demons. On each month\'s Sankashti fast without food, remember Heramba, and offer water to the moon; the one who is parted will surely be found.’ Damayanti began to keep this vow with devotion, month after month.',
+        'Far away, the wandering Nala too — worn down by serpents and curses — took up this same vow of Heramba Ganesha on the word of an accomplished sage; fasting, he would remember the remover of obstacles and in his heart wish Damayanti well. The vows of the two seemed bound on a single thread that reached the feet of Ganesha. Then one day, through a second bridal-choice cleverly contrived by Damayanti, Nala, hidden in an altered form, arrived in the royal court of Vidarbha, and the moment the two recognised each other, years of separation flowed away in tears.',
+        'In that hour of reunion Nala and Damayanti sat together and offered water to Heramba Ganesha, saying, ‘O Heramba, lord of the orphaned, you have reunited the parted, returned the lost kingdom, and lifted away the greatest trouble of our lives.’ From then it is said that the vow of Sankashti Chaturthi — whether of Bhalachandra or Vikata, of Ganadhipa, of Lambodara or of Heramba — guards the true devotee\'s children, wealth, life, and reunion with loved ones; whoever keeps it with faith sees all troubles thin away with the waning moon and vanish, and by the grace of Ganapati his home stays ever full of joy, contentment, and well-being.',
+      ],
+    },
+  ],
+});
