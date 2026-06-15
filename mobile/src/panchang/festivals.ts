@@ -188,6 +188,12 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'gita-jayanti-katha', nameHi: 'गीता जयंती कथा', nameEn: 'Gita Jayanti Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['gita-jayanti'] }),
   katha({ id: 'navratri-start-katha', nameHi: 'नवरात्रि प्रारंभ कथा', nameEn: 'Navratri Begins Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['navratri-start'] }),
   katha({ id: 'vivah-panchami-katha', nameHi: 'विवाह पंचमी कथा', nameEn: 'Vivah Panchami Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['vivah-panchami'] }),
+  katha({ id: 'amavasya-vrat-katha', nameHi: 'अमावस्या व्रत कथा', nameEn: 'Amavasya Vrat Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['amavasya-vrat'] }),
+  katha({ id: 'dattatreya-jayanti-katha', nameHi: 'दत्तात्रेय जयंती कथा', nameEn: 'Dattatreya Jayanti Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['dattatreya-jayanti'] }),
+  katha({ id: 'masik-durgashtami-katha', nameHi: 'मासिक दुर्गाष्टमी कथा', nameEn: 'Masik Durgashtami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['masik-durgashtami'] }),
+  katha({ id: 'masik-kalashtami-katha', nameHi: 'मासिक कालाष्टमी कथा', nameEn: 'Masik Kalashtami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['masik-kalashtami'] }),
+  katha({ id: 'masik-krishna-janmashtami-katha', nameHi: 'मासिक कृष्ण जन्माष्टमी कथा', nameEn: 'Masik Krishna Janmashtami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['masik-krishna-janmashtami'] }),
+  katha({ id: 'skanda-sashti-katha', nameHi: 'स्कंद षष्ठी कथा', nameEn: 'Skanda Sashti Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['skanda-sashti'] }),
 ];
 
 const SANKRANTI_RULES: ObservanceRule[] = [
@@ -259,7 +265,7 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'akshaya-navami', nameHi: 'अक्षय नवमी', nameEn: 'Akshaya Navami', lunarMonth: 8, paksha: 'shukla', tithi: 9, marker: 'dot', category: 'vrat', kathaId: 'akshaya-navami-katha' }),
   festival({ id: 'vivah-panchami', nameHi: 'विवाह पंचमी', nameEn: 'Vivah Panchami', lunarMonth: 9, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'सीता राम', deityEn: 'Sita Ram', kathaId: 'vivah-panchami-katha' }),
   festival({ id: 'gita-jayanti', nameHi: 'गीता जयंती', nameEn: 'Gita Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 11, marker: 'dot', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'gita-jayanti-katha' }),
-  festival({ id: 'dattatreya-jayanti', nameHi: 'दत्तात्रेय जयंती', nameEn: 'Dattatreya Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'भगवान दत्तात्रेय', deityEn: 'Lord Dattatreya' }),
+  festival({ id: 'dattatreya-jayanti', nameHi: 'दत्तात्रेय जयंती', nameEn: 'Dattatreya Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'भगवान दत्तात्रेय', deityEn: 'Lord Dattatreya', kathaId: 'dattatreya-jayanti-katha' }),
 ];
 
 export const EKADASHI_NAMES: { lunarMonth: number; paksha: Paksha; nameHi: string; nameEn: string }[] = [
@@ -348,11 +354,11 @@ export const MONTHLY_VRAT_RULES: ObservanceRule[] = [
   vrat({ id: 'masik-shivaratri', nameHi: 'मासिक शिवरात्रि', nameEn: 'Masik Shivaratri', recurrence: 'monthly', paksha: 'krishna', tithi: 14, deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'maha-shivaratri-vrat-katha' }),
   upavas({ id: 'purnima-vrat', nameHi: 'पूर्णिमा व्रत', nameEn: 'Purnima Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 15, deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', kathaId: 'satyanarayana-vrat-katha' }),
   vrat({ id: 'shree-satyanarayan-vrat', nameHi: 'श्री सत्यनारायण व्रत', nameEn: 'Shree Satyanarayan Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 15, deityHi: 'श्री सत्यनारायण', deityEn: 'Shree Satyanarayan', linkSectionId: 'vishnu-sahasranama', kathaId: 'satyanarayana-vrat-katha' }),
-  upavas({ id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat', recurrence: 'monthly', paksha: 'krishna', tithi: 15, deityHi: 'पितृ तर्पण', deityEn: 'Pitru Tarpana' }),
-  vrat({ id: 'skanda-sashti', nameHi: 'स्कंद षष्ठी', nameEn: 'Skanda Sashti', recurrence: 'monthly', paksha: 'shukla', tithi: 6, deityHi: 'भगवान कार्तिकेय', deityEn: 'Lord Kartikeya' }),
-  vrat({ id: 'masik-durgashtami', nameHi: 'मासिक दुर्गाष्टमी', nameEn: 'Masik Durgashtami', recurrence: 'monthly', paksha: 'shukla', tithi: 8, deityHi: 'मां दुर्गा', deityEn: 'Maa Durga', linkSectionId: 'durga-stotram' }),
-  vrat({ id: 'masik-kalashtami', nameHi: 'मासिक कालाष्टमी', nameEn: 'Masik Kalashtami', recurrence: 'monthly', paksha: 'krishna', tithi: 8, deityHi: 'काल भैरव', deityEn: 'Kala Bhairava' }),
-  vrat({ id: 'masik-krishna-janmashtami', nameHi: 'मासिक कृष्ण जन्माष्टमी', nameEn: 'Masik Krishna Janmashtami', recurrence: 'monthly', paksha: 'krishna', tithi: 8, deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita' }),
+  upavas({ id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat', recurrence: 'monthly', paksha: 'krishna', tithi: 15, deityHi: 'पितृ तर्पण', deityEn: 'Pitru Tarpana', kathaId: 'amavasya-vrat-katha' }),
+  vrat({ id: 'skanda-sashti', nameHi: 'स्कंद षष्ठी', nameEn: 'Skanda Sashti', recurrence: 'monthly', paksha: 'shukla', tithi: 6, deityHi: 'भगवान कार्तिकेय', deityEn: 'Lord Kartikeya', kathaId: 'skanda-sashti-katha' }),
+  vrat({ id: 'masik-durgashtami', nameHi: 'मासिक दुर्गाष्टमी', nameEn: 'Masik Durgashtami', recurrence: 'monthly', paksha: 'shukla', tithi: 8, deityHi: 'मां दुर्गा', deityEn: 'Maa Durga', linkSectionId: 'durga-stotram', kathaId: 'masik-durgashtami-katha' }),
+  vrat({ id: 'masik-kalashtami', nameHi: 'मासिक कालाष्टमी', nameEn: 'Masik Kalashtami', recurrence: 'monthly', paksha: 'krishna', tithi: 8, deityHi: 'काल भैरव', deityEn: 'Kala Bhairava', kathaId: 'masik-kalashtami-katha' }),
+  vrat({ id: 'masik-krishna-janmashtami', nameHi: 'मासिक कृष्ण जन्माष्टमी', nameEn: 'Masik Krishna Janmashtami', recurrence: 'monthly', paksha: 'krishna', tithi: 8, deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'masik-krishna-janmashtami-katha' }),
   vrat({ id: 'sawan-somwar-vrat', nameHi: 'सावन सोमवार व्रत', nameEn: 'Sawan Somwar Vrat', recurrence: 'seasonal', ruleType: 'weekday-in-lunar-month', lunarMonth: 5, weekday: 1, deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'shravana-mahatmya' }),
   vrat({ id: 'mangala-gauri-vrat', nameHi: 'मंगला गौरी व्रत', nameEn: 'Mangala Gauri Vrat', recurrence: 'seasonal', ruleType: 'weekday-in-lunar-month', lunarMonth: 5, weekday: 2, deityHi: 'मां गौरी', deityEn: 'Maa Gauri', kathaId: 'mangala-gauri-vrat-katha' }),
   vrat({ id: 'varalakshmi-vrat', nameHi: 'वरलक्ष्मी व्रत', nameEn: 'Varalakshmi Vrat', recurrence: 'annual', ruleType: 'relative-to-lunar', lunarMonth: 5, paksha: 'shukla', tithi: 15, weekday: 5, relativeRule: 'friday-before-purnima', deityHi: 'मां लक्ष्मी', deityEn: 'Maa Lakshmi', kathaId: 'varalakshmi-vrat-katha' }),

@@ -79,6 +79,521 @@ function summaryContent(draft: SummaryKathaDraft): KathaContentEntry {
 
 export const KATHA_CONTENT: readonly KathaContentEntry[] = [
   fullContent({
+    id: 'skanda-sashti-katha',
+    titleHi: 'स्कंद षष्ठी कथा',
+    titleEn: 'Skanda Sashti Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'surapadman-boon',
+        titleHi: 'वरदान के बल पर सूरपद्मन का अत्याचार',
+        titleEn: 'Surapadman\'s terror, won on the strength of a boon',
+        bodyHi: [
+          'त्रिलोक के एक छोर पर, समुद्र के बीचों-बीच बसे वीरमहेन्द्र नगर में सूरपद्मन नामक असुर ने वर्षों तक घोर तपस्या की। भूख-प्यास और ऋतुओं की मार सहते हुए उसने अपने शरीर को सुखा डाला, और अंततः भगवान शिव प्रकट हुए। ‘मांग, जो चाहे,’ शिव ने कहा। असुर ने हाथ जोड़कर वर मांगा कि न कोई देव, न दानव, न मनुष्य उसका वध कर सके — केवल शिव के अपने अंश से जन्मा कोई बालक ही, यदि चाहे तो, उसका अंत करे; और तब तक तीनों लोक उसके अधीन रहें। शिव ‘तथास्तु’ कहकर अंतर्धान हो गए, और सूरपद्मन ने इसी वरदान को अपनी अमरता समझ लिया।',
+          'वर पाते ही असुर का अहंकार आकाश छूने लगा। उसने अपने भाइयों तारकासुर और सिंहमुख के साथ मिलकर देवलोक पर चढ़ाई कर दी। इन्द्र का सिंहासन छीन लिया गया, देवता बंदी बना लिए गए, यज्ञ की अग्नियाँ बुझा दी गईं और ऋषियों के आश्रम उजाड़ दिए गए। तारकासुर के आतंक से तो धरती भी काँप उठी; जहाँ-जहाँ धर्म की ध्वजा फहराती थी, वहाँ-वहाँ असुरों के डंके बजने लगे। देवता मुख छिपाकर वनों और गुफाओं में भटकने लगे, और उनके मन में बस एक ही प्रश्न गूँजता रहा — इस अन्याय का अंत कौन करेगा।',
+          'हारे हुए देवता ब्रह्मा जी की शरण में पहुँचे। ब्रह्मा ने उनकी व्यथा सुनकर वरदान का रहस्य खोला — ‘सूरपद्मन और तारकासुर का वध केवल शिव के तेज से उत्पन्न कोई वीर ही कर सकता है। तुम्हारी मुक्ति उसी शिशु-सेनापति के जन्म में छिपी है।’ देवताओं की आँखों में आशा की एक किरण जागी, और वे यह जानने के लिए व्याकुल हो उठे कि वह दिव्य बालक कैसे, कहाँ और कब इस संसार में आएगा।',
+        ],
+        bodyEn: [
+          'At the far edge of the three worlds, in the island-city of Veeramahendra set in the midst of the ocean, an asura named Surapadman performed a fierce penance for many years. Enduring hunger, thirst, and the lash of every season, he dried his body to a husk, until at last Lord Shiva appeared before him. ‘Ask,’ said Shiva, ‘whatever you desire.’ With folded hands the asura begged that no god, demon, or man might ever slay him — only a child born of Shiva\'s own essence could, if it so chose, bring his end; and until then the three worlds would lie beneath his feet. Shiva said ‘so be it’ and vanished, and Surapadman took this boon to be his immortality.',
+          'The moment the boon was his, the asura\'s pride rose to touch the sky. Together with his brothers Tarakasura and Simhamukha he stormed the realm of the devas. Indra\'s throne was seized, the gods were taken captive, the fires of sacrifice were smothered, and the hermitages of the sages were laid waste. Tarakasura\'s terror made the very earth tremble; wherever the banner of dharma had once flown, now the war-drums of the asuras thundered. The devas wandered hiding their faces in forests and caves, and one question alone echoed in their hearts — who would put an end to this injustice?',
+          'The defeated gods took refuge with Brahma. Hearing their grief, Brahma unveiled the secret of the boon: ‘Only a hero born of Shiva\'s own radiance can slay Surapadman and Tarakasura. Your deliverance lies hidden in the birth of that infant commander.’ A single ray of hope kindled in the eyes of the devas, and they grew desperate to learn how, where, and when that divine child would come into the world.',
+        ],
+      },
+      {
+        id: 'fiery-seed',
+        titleHi: 'शिव का अग्नि-तेज और छह चिंगारियाँ',
+        titleEn: 'Shiva\'s fiery seed and the six sparks',
+        bodyHi: [
+          'कैलास पर शिव गहन समाधि में लीन थे, और पार्वती उनके समीप बैठी प्रतीक्षा कर रही थीं। देवताओं ने सोचा कि यदि शिव और पार्वती का तेज एक हो जाए तो उसी से वह वीर जन्मेगा जो असुरों का संहार करेगा। पर शिव की समाधि भंग करना सरल न था। बहुत प्रार्थना के पश्चात जब उनका तीसरा नेत्र खुला, तो उसमें से छह दिव्य अग्नि-चिंगारियाँ फूट पड़ीं — इतनी प्रचंड कि उन्हें कोई धारण न कर सका।',
+          'अग्निदेव और वायुदेव ने उन छह तेज-कणों को सावधानी से उठाया और पवित्र गंगा को सौंप दिया। गंगा भी उस ताप को सह न सकीं और उन्होंने उन चिंगारियों को सरकंडों से भरे शरवण नामक सरोवर के तट पर रख दिया, जहाँ शीतल जल और कोमल कांस उनके आश्रय बने। वहाँ वे छह तेज-कण छह तेजस्वी शिशुओं के रूप में प्रकट हुए, और सम्पूर्ण शरवण-वन एक साथ छह सूर्यों के समान दमक उठा।',
+          'उसी समय आकाश में कृत्तिका नक्षत्र की छह माताएँ — कृत्तिकाएँ — विचरण कर रही थीं। उन तेजस्वी शिशुओं को देखकर उनका हृदय वात्सल्य से भर आया, और छहों ने एक-एक शिशु को गोद में लेकर अपना दूध पिलाया। तभी उन छहों शिशुओं को एक साथ अपनी बाँहों में भर लेने के लिए शिशु ने अपना रूप एक कर लिया — छह मुख, बारह नेत्र और बारह भुजाओं वाला एक ही अद्भुत बालक। कृत्तिकाओं के पालन के कारण वह ‘कार्तिकेय’ कहलाया, शरवण में जन्म के कारण ‘शरवणभव’, और छह मुखों के कारण ‘षण्मुख’। पार्वती ने उसे अपनी गोद में उठाकर ‘स्कंद’ नाम दिया, और कैलास हर्ष से गूँज उठा।',
+        ],
+        bodyEn: [
+          'On Kailasa, Shiva was absorbed in deep meditation, and Parvati sat beside him, waiting. The devas reasoned that if the radiance of Shiva and Parvati could be joined, from it would be born the hero who would destroy the asuras. But to break Shiva\'s trance was no easy thing. After much prayer, when his third eye opened, from it burst six divine sparks of fire — so fierce that none could hold them.',
+          'Agni, the fire-god, and Vayu, the wind-god, carefully bore those six points of light and gave them to the sacred Ganga. Even Ganga could not endure their heat, and she laid the sparks upon the bank of a reed-filled pool called Sharavana, where cool water and soft rushes became their cradle. There the six points of light appeared as six radiant infants, and the whole reed-forest blazed at once like six rising suns.',
+          'At that very hour, the six mothers of the Krittika constellation — the Krittikas — were moving across the sky. Seeing those luminous infants, their hearts overflowed with motherly love, and each of the six took an infant into her lap and nursed it at her breast. Then, to gather all six children at once into a single embrace, the child drew his forms into one — a single wondrous boy with six faces, twelve eyes, and twelve arms. Because the Krittikas reared him he was called ‘Kartikeya’; because of his birth in Sharavana, ‘Sharavanabhava’; and because of his six faces, ‘Shanmukha.’ Parvati lifted him into her lap and named him ‘Skanda,’ and Kailasa rang with joy.',
+        ],
+      },
+      {
+        id: 'commander-of-devas',
+        titleHi: 'देवसेनापति का अभिषेक',
+        titleEn: 'The anointing of the commander of the gods',
+        bodyHi: [
+          'बालक स्कंद पल-पल में बढ़ता गया, और उसके मुखमंडल का तेज देखकर देवताओं को ब्रह्मा का वचन स्मरण हो आया। वे सब इन्द्र के साथ कैलास पहुँचे और शिव-पार्वती के समक्ष नतमस्तक होकर बोले, ‘हे प्रभु! इसी वीर के जन्म की हम युगों से प्रतीक्षा कर रहे थे। असुरों के अत्याचार से त्रिलोक त्राहि-त्राहि कर रहा है। इस तेजस्वी पुत्र को हमारी सेना का सेनापति बनाइए।’',
+          'शिव और पार्वती ने प्रसन्न होकर अनुमति दी। देवताओं ने पवित्र नदियों के जल से, ऋषियों के मंत्रोच्चार के बीच, स्कंद का देवसेनापति-पद पर अभिषेक किया। इन्द्र ने अपनी पुत्री देवसेना का हाथ उन्हें सौंपा, इसीलिए वे ‘देवसेनापति’ और ‘कुमार’ कहलाए। विश्वकर्मा ने उनके लिए तेज से जगमगाता एक वज्र-शक्ति नामक भाला गढ़ा, जो कभी निशाना न चूकता था।',
+          'उस दिव्य वेल — शक्ति-शूल — को हाथ में धारण कर जब स्कंद देवताओं की विशाल सेना के आगे खड़े हुए, तो उनका मयूर-समान तेज देखकर देवताओं के मुरझाए मुख खिल उठे। मोर उनका वाहन बना और मुर्गा उनके ध्वज पर आकर बैठा। बंदी देवताओं की शृंखलाएँ टूटने का समय निकट आ चुका था, और स्कंद ने प्रतिज्ञा की कि वे असुरों के नगर तक स्वयं जाकर अधर्म का अंत करेंगे।',
+        ],
+        bodyEn: [
+          'The boy Skanda grew with every passing moment, and seeing the splendour of his face the devas remembered Brahma\'s words. With Indra at their head they came to Kailasa, bowed before Shiva and Parvati, and said, ‘O Lord! It is for the birth of this very hero that we have waited through the ages. The three worlds cry out under the tyranny of the asuras. Make this radiant son the commander of our army.’',
+          'Pleased, Shiva and Parvati gave their consent. With the waters of the sacred rivers and amid the chanting of the sages, the devas anointed Skanda to the rank of commander of the gods. Indra gave him the hand of his daughter Devasena, and so he came to be called ‘Devasenapati’ and ‘Kumara.’ Vishwakarma forged for him a blazing spear named the Vajra-Shakti, a lance that never missed its mark.',
+          'When Skanda stood before the vast army of the gods, that divine vel — the Shakti-spear — in his hand, the withered faces of the devas bloomed at the sight of his peacock-bright glory. A peacock became his mount, and a rooster came to perch upon his banner. The hour was drawing near for the chains of the captive gods to be broken, and Skanda vowed that he himself would march to the city of the asuras and make an end of unrighteousness.',
+        ],
+      },
+      {
+        id: 'soorasamharam',
+        titleHi: 'षष्ठी का छह-दिवसीय संग्राम और सूरसंहार',
+        titleEn: 'The six-day war of Sashti and the slaying of Soora',
+        bodyHi: [
+          'देवसेना के अगुआ बनकर स्कंद समुद्र पार वीरमहेन्द्र नगर की ओर बढ़े। सूरपद्मन ने अपने सहस्रों असुर-योद्धा, अपने पुत्र बाणुकोप और भाई सिंहमुख तथा तारकासुर को रणभूमि में उतार दिया। संग्राम छह दिनों तक चला — आकाश बाणों से ढक गया, समुद्र की लहरें रक्तरंजित हो उठीं, और प्रत्येक दिन स्कंद के वेल ने एक-एक महावीर असुर को धराशायी किया। पहले सिंहमुख गिरा, फिर तारकासुर, और एक-एक कर असुरों के दुर्ग ढहते चले गए।',
+          'अंतिम दिन — षष्ठी तिथि — स्वयं सूरपद्मन रणभूमि में उतरा। उसने माया का सहारा लिया; कभी पर्वत बना, कभी सागर, कभी प्रचंड आँधी। पर स्कंद का तेज अडिग रहा। जब असुर ने एक विशाल आम्रवृक्ष का रूप धरकर छिपना चाहा, तो स्कंद ने अपना दिव्य वेल चलाया और वृक्ष को ठीक बीच से चीर डाला। चिरते ही सूरपद्मन का अहंकार टूटा और उसके भीतर का भक्त जाग उठा — उसने स्कंद को अपना स्वामी मानकर शरण माँगी।',
+          'स्कंद ने उस पर करुणा बरसाई। उन्होंने सूरपद्मन के दो रूप कर दिए — एक मयूर, जो उनका वाहन बनकर उन्हें सदा साथ रहने का सौभाग्य पाता, और एक मुर्गा, जो उनके ध्वज पर बैठकर उनकी विजय की घोषणा करता। इस प्रकार जो असुर अहंकार में डूबकर शत्रु बना था, वही शरणागत होकर भगवान का चिर-सेवक बन गया। षष्ठी के इसी दिन हुए इस संहार को ‘सूरसंहारम्’ कहा जाता है।',
+        ],
+        bodyEn: [
+          'Leading the army of the gods, Skanda advanced across the ocean toward the city of Veeramahendra. Surapadman sent his thousands of asura warriors, his son Banukopa, and his brothers Simhamukha and Tarakasura onto the battlefield. The war raged for six days — the sky was darkened with arrows, the waves of the ocean turned crimson, and each day Skanda\'s vel laid low one mighty asura after another. First Simhamukha fell, then Tarakasura, and one by one the strongholds of the asuras crumbled.',
+          'On the final day — the sixth lunar day, Sashti — Surapadman himself came down to the field. He took to sorcery; now becoming a mountain, now an ocean, now a furious storm. But Skanda\'s radiance stood unshaken. When the asura tried to hide by taking the form of a great mango tree, Skanda hurled his divine vel and split the tree clean down the middle. The instant it was cleaved, Surapadman\'s pride broke and the devotee within him awoke — he accepted Skanda as his master and begged for refuge.',
+          'Skanda poured his compassion upon him. He made of Surapadman two forms — one a peacock, which became his mount and won the fortune of being ever at his side, and one a rooster, which sat upon his banner to proclaim his victory. Thus the asura who had become an enemy, drowned in pride, became the Lord\'s eternal servant once he surrendered. This destruction wrought on the day of Sashti is remembered as the ‘Soorasamharam.’',
+        ],
+      },
+      {
+        id: 'sashti-vow',
+        titleHi: 'षष्ठी व्रत और कुमार का आशीर्वाद',
+        titleEn: 'The vow of Sashti and the blessing of Kumara',
+        bodyHi: [
+          'विजय के पश्चात स्कंद बंदी देवताओं को मुक्त कराकर देवलोक लौटे। इन्द्र को उसका सिंहासन फिर मिला, यज्ञ की अग्नियाँ पुनः प्रज्वलित हुईं, और ऋषियों के आश्रम मंत्रों से गूँज उठे। देवता और मनुष्य दोनों ने उस तिथि को स्मरण में रखा जिस दिन छह दिनों के संयम और प्रार्थना के बाद अधर्म का नाश हुआ था।',
+          'तभी से शुक्ल पक्ष की षष्ठी को स्कंद षष्ठी का व्रत प्रचलित हुआ। भक्त छह दिनों तक उपवास और संयम रखते हैं, मुरुगन का स्मरण करते हैं, और षष्ठी के दिन कार्तिकेय का पूजन कर पारण करते हैं। कहा जाता है कि जो श्रद्धा से यह व्रत करता है, उसके भीतर के क्रोध, अहंकार और भय रूपी असुर उसी प्रकार पराजित होते हैं, जैसे स्कंद के वेल से सूरपद्मन।',
+          'जो माता-पिता संतान की कामना से यह व्रत करते हैं, उन्हें तेजस्वी और दीर्घायु संतान का सुख मिलता है; रोगी निरोग होते हैं और शत्रुओं के भय से रक्षा होती है। षण्मुख कुमार, जो मोर पर सवार होकर हाथ में वेल धारण किए हुए हैं, अपने भक्तों पर वैसी ही करुणा बरसाते हैं जैसी उन्होंने शरणागत सूरपद्मन पर बरसाई थी — और इसी आशीर्वाद के स्मरण में स्कंद षष्ठी की कथा युग-युग तक सुनी और कही जाती रही।',
+        ],
+        bodyEn: [
+          'After his victory, Skanda freed the captive gods and returned to the realm of the devas. Indra received his throne once more, the fires of sacrifice were rekindled, and the hermitages of the sages echoed again with mantras. Both gods and mortals held in memory the day on which, after six days of restraint and prayer, unrighteousness had been undone.',
+          'From that time the vow of Skanda Sashti, observed on the sixth lunar day of the bright fortnight, came into practice. Devotees keep fast and discipline for six days, remembering Murugan, and on the day of Sashti they worship Kartikeya and break their fast. It is said that for one who observes this vow with faith, the asuras of anger, pride, and fear within are vanquished just as Surapadman was by Skanda\'s vel.',
+          'Parents who keep this vow longing for children are blessed with radiant and long-lived offspring; the sick are made well, and the fearful are shielded from their enemies. Shanmukha Kumara, mounted upon his peacock with the vel in his hand, pours upon his devotees the same compassion he poured upon the surrendered Surapadman — and in remembrance of that very blessing the story of Skanda Sashti has been heard and told from age to age.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'masik-krishna-janmashtami-katha',
+    titleHi: 'मासिक कृष्ण जन्माष्टमी कथा',
+    titleEn: 'Masik Krishna Janmashtami Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'monthly-remembrance',
+        titleHi: 'हर मास लौटती वह अष्टमी',
+        titleEn: 'The Ashtami that returns each month',
+        bodyHi: [
+          'हर मास जब कृष्ण पक्ष की अष्टमी की रात उतरती है, तो व्रती दीपक की मंद लौ के सामने बैठकर उसी आधी रात को फिर से जी उठता है, जब मथुरा के कारागार में हथकड़ियों के बीच भगवान ने जन्म लिया था। यह कोई एक बार की स्मृति नहीं, यह तो प्रति मास लौटने वाला निमंत्रण है — मानो हर महीने स्वयं प्रभु फिर से पृथ्वी पर उतर आते हों, और भक्त उन्हें अपने हृदय के गोकुल में पुकारता हो।',
+          'उस रात वसुदेव नवजात शिशु को टोकरी में रखकर उमड़ती यमुना पार ले गए थे, और गोकुल में नंद-यशोदा के आँगन में रख आए थे। पर व्रती जानता है कि कथा यहीं समाप्त नहीं होती; असली लीला तो अब आरंभ होती है — उस नन्हे बालक के रूप में, जो माखन की मटकियों के बीच, गायों की धूल में, और माँ की गोद में अपनी दिव्यता क्षण-क्षण प्रकट करता जाता है।',
+          'इसी कारण मासिक कृष्ण जन्माष्टमी का व्रती मथुरा के बंदीगृह से आगे बढ़कर गोकुल और वृन्दावन के उन आँगनों में प्रवेश करता है, जहाँ शिशु कृष्ण की बाल-लीलाएँ बार-बार यह स्मरण कराती हैं कि जो गोद में खेल रहा है, वही समस्त ब्रह्मांड का आधार है।',
+        ],
+        bodyEn: [
+          'Each month, when the Ashtami of the dark fortnight settles into night, the observer sits before the soft flame of a lamp and relives that same midnight when, amid chains in a Mathura prison, the Lord took birth. This is no one-time memory but an invitation that returns every month — as though the Lord descends to earth again and again, and the devotee calls Him into the Gokul of the heart.',
+          'On that night Vasudeva carried the newborn in a basket across the swollen Yamuna and laid Him in the courtyard of Nanda and Yashoda in Gokul. Yet the observer knows the tale does not end there; the true play begins now — in the form of that small child who, among the pots of butter, in the dust raised by cows, and in His mother’s lap, reveals His divinity moment by moment.',
+          'For this reason the keeper of the monthly Krishna Janmashtami moves past the prison of Mathura and steps into those courtyards of Gokul and Vrindavan where the infant Krishna’s childhood plays remind us again and again that the One playing in a mother’s lap is the very support of the whole universe.',
+        ],
+      },
+      {
+        id: 'putana-slain',
+        titleHi: 'पूतना के विष में छिपी मुक्ति',
+        titleEn: 'Liberation hidden within Putana’s poison',
+        bodyHi: [
+          'कंस ने जब सुना कि उसका काल गोकुल में पल रहा है, तो उसने राक्षसी पूतना को भेजा, जिसने अपने स्तनों पर हलाहल विष लगा रखा था। मनोहर स्त्री का रूप धरकर वह नंद के घर पहुँची और यशोदा का विश्वास जीतकर शिशु कृष्ण को गोद में उठा लिया, यह सोचकर कि स्तनपान कराते ही बालक का प्राणांत हो जाएगा।',
+          'किन्तु जिसकी गोद में सारे लोक टिके हैं, वह भला उस छल को न पहचानता? कृष्ण ने उसके स्तन से दूध के साथ-साथ उसके प्राण भी खींच लिए। पूतना चीख उठी, उसका मायावी रूप गिर पड़ा और वह विशाल राक्षसी देह में परिवर्तित होकर भूमि पर ढह गई, पर उसका वध करते हुए भी प्रभु ने उसे माता का भाव देने के कारण मुक्ति प्रदान कर दी।',
+          'व्रती इस लीला पर ठहरकर समझता है कि भगवान के पास जो भी आता है — चाहे छल के साथ ही क्यों न आए — वह कोरा लौटता नहीं; और जो विष लेकर आई थी, वही उस स्पर्श से तर गई। यही करुणा हर मास उस नन्हे रूप का स्मरण करने वाले को भीतर तक छू जाती है।',
+        ],
+        bodyEn: [
+          'When Kamsa heard that his death was being nurtured in Gokul, he sent the demoness Putana, who had smeared deadly poison upon her breasts. Taking the form of a lovely woman, she came to Nanda’s house, won Yashoda’s trust, and lifted the infant Krishna into her lap, thinking the child would perish the moment He suckled.',
+          'But would the One in whose lap all the worlds rest fail to know that deceit? Krishna drew out, along with the milk, the very life from her breast. Putana shrieked, her illusory form fell away, and she crashed to the ground in her vast demonic body — yet even while slaying her, the Lord granted her liberation, for she had come, however falsely, in the guise of a mother.',
+          'Pausing over this play, the observer understands that whoever comes to the Lord — even if they come with cunning — never returns empty; and she who arrived bearing poison was herself ferried across by that touch. This very compassion reaches deep into the one who recalls that little form each month.',
+        ],
+      },
+      {
+        id: 'cart-and-twins',
+        titleHi: 'शकटासुर और उलटी हुई गाड़ी',
+        titleEn: 'Shakatasura and the overturned cart',
+        bodyHi: [
+          'कुछ ही समय बीता था कि एक दिन यशोदा ने शिशु कृष्ण को एक बड़ी छकड़ा-गाड़ी की छाया में पालने में सुला दिया और स्वयं उत्सव की तैयारी में लग गईं। कंस का भेजा एक और असुर, शकटासुर, उसी गाड़ी में प्रवेश कर बैठा था, इस घात में कि वह उसे बालक पर गिराकर कुचल देगा।',
+          'जागते ही भूख से व्याकुल नन्हे कृष्ण ने रोते हुए अपने कोमल चरण ऊपर उठाकर गाड़ी को एक हलकी-सी ठोकर मारी। उस छोटे-से पाँव के स्पर्श से लदी हुई भारी गाड़ी उलट कर चूर-चूर हो गई, उसके पहिए और बर्तन दूर जा गिरे, और भीतर बैठा असुर वहीं नष्ट हो गया।',
+          'गोप-गोपियाँ दौड़कर आए और चकित रह गए कि इतनी भारी गाड़ी आप ही कैसे पलट गई; केवल वहाँ खेल रहे बालकों ने कहा कि इसे तो नन्हे कान्हा ने पैर मारकर गिराया है। व्रती इस दृश्य को मन में बसाकर अनुभव करता है कि जिस चरण को माँ दुलारती है, वही चरण संसार के समस्त संकटों को पलट देने में समर्थ है।',
+        ],
+        bodyEn: [
+          'Only a little time had passed when, one day, Yashoda laid the infant Krishna to sleep in a cradle beneath the shade of a great bullock cart and turned to the preparations of a festival. Another demon dispatched by Kamsa, Shakatasura, had entered and lurked within that very cart, scheming to topple it upon the child and crush Him.',
+          'Waking and restless with hunger, the little Krishna cried and raised His tender feet, giving the cart the faintest kick. At the touch of that small foot, the heavily laden cart overturned and shattered to pieces, its wheels and vessels flung far apart, and the demon hidden within was destroyed on the spot.',
+          'The cowherd men and women came running and stood amazed that so heavy a cart could overturn of itself; only the children playing there said that little Kanha had knocked it down with His foot. Holding this scene in the heart, the observer feels that the very feet a mother caresses are able to overturn every calamity of the world.',
+        ],
+      },
+      {
+        id: 'universe-in-the-mouth',
+        titleHi: 'खुले मुख में दिखा समूचा ब्रह्मांड',
+        titleEn: 'The whole universe seen in an open mouth',
+        bodyHi: [
+          'एक दिन कृष्ण घुटनों के बल आँगन में खेल रहे थे कि बलराम सहित खेलते बालकों ने यशोदा से शिकायत की कि कान्हा ने मिट्टी खा ली है। माँ ने व्याकुल होकर डाँटते हुए कहा — मुख खोलो, दिखाओ क्या खाया है। बालक ने भोलेपन से अपना नन्हा मुख खोल दिया।',
+          'उस खुले मुख में यशोदा ने जो देखा, उससे उनकी साँस रुक गई — सम्पूर्ण आकाश, पर्वत, द्वीप, समुद्र, चन्द्र-सूर्य और सारे तारे, समस्त चराचर ब्रह्मांड, और उसी के बीच गोकुल और स्वयं अपने को भी उन्होंने उस शिशु के मुख के भीतर देखा। एक क्षण को वे समझ गईं कि यह कोई साधारण बालक नहीं, स्वयं परब्रह्म उनकी गोद में लीला कर रहा है।',
+          'किन्तु प्रभु ने तत्क्षण अपनी योगमाया फैला दी और यशोदा का वह बोध मातृ-स्नेह में घुल गया; उन्हें फिर अपना प्यारा लाला ही दिखाई देने लगा और वे उसे छाती से लगाकर पुचकारने लगीं। व्रती इस लीला को स्मरण करते हुए नतमस्तक होता है कि जिसमें सम्पूर्ण सृष्टि समाई है, वही प्रेमवश माँ की गोद में बँधकर रहना स्वीकार करता है।',
+        ],
+        bodyEn: [
+          'One day Krishna was crawling about the courtyard on His knees when the playing children, along with Balarama, complained to Yashoda that Kanha had eaten mud. Alarmed and scolding Him, the mother said, ‘Open your mouth, show me what you have eaten.’ Innocently the child opened His little mouth.',
+          'What Yashoda saw within that open mouth stopped her breath — the entire sky, the mountains, islands and oceans, the moon, the sun and all the stars, the whole moving and unmoving universe, and within it Gokul itself and even her own self, she beheld inside that infant’s mouth. For a single moment she understood that this was no ordinary child but the Supreme Absolute playing in her lap.',
+          'Yet at once the Lord spread His Yogamaya, and Yashoda’s realization dissolved into a mother’s affection; she saw only her beloved darling once more and drew Him to her breast, soothing Him. Recalling this play, the observer bows low that the One who contains all creation consents, out of love, to be bound within a mother’s lap.',
+        ],
+      },
+      {
+        id: 'butter-thief',
+        titleHi: 'माखनचोर की मीठी चोरी और व्रत का फल',
+        titleEn: 'The sweet thefts of the butter-thief and the fruit of the vow',
+        bodyHi: [
+          'ज्यों-ज्यों कृष्ण बड़े होते गए, गोकुल के घर-घर में उनकी माखन-चोरी की मीठी शिकायतें गूँजने लगीं। ऊँचे टँगे छींके तक पहुँचने के लिए वे ग्वालबालों की मटकियाँ जोड़कर सीढ़ी बना लेते, माखन-दही लूटकर आपस में बाँटते, और थोड़ा बंदरों को भी खिला देते। पकड़े जाने पर वे ऐसा निर्दोष मुख बनाते कि रोष से आई गोपियाँ हँसकर पिघल जातीं।',
+          'एक दिन रूठकर यशोदा ने उन्हें ओखली से बाँध दिया, पर वही रस्सी सदा दो अंगुल छोटी पड़ती रही — मानो जिसे कोई बंधन बाँध नहीं सकता, वह केवल भक्त के प्रेम से ही बँधता हो। इसी से उनका एक नाम ’दामोदर’ पड़ा, और गोकुल की हर माता ने अनुभव किया कि उनकी चोरी वस्तुतः हृदय की चोरी थी — वे माखन नहीं, भक्तों का मन चुरा ले जाते थे।',
+          'इन्हीं बाल-लीलाओं का स्मरण करते हुए मासिक कृष्ण जन्माष्टमी का व्रती दिनभर उपवास और हरि-नाम में रहकर आधी रात को प्रभु के प्राकट्य की आरती करता है। कहते हैं कि जो श्रद्धा से यह व्रत हर मास धारण करता है, उसके घर से बाधाएँ वैसे ही दूर हट जाती हैं जैसे पूतना और शकटासुर हटे थे, संतान पर प्रभु की छाया बनी रहती है, और मन में वही शीतल आनंद उतर आता है जो माखन-चोर के नटखट मुख को निहारकर गोकुल के हृदय में उतरा करता था।',
+        ],
+        bodyEn: [
+          'As Krishna grew, sweet complaints of His butter-thieving echoed through every home in Gokul. To reach the hanging pots slung high above, He would stack the cowherd boys into a ladder, plunder the butter and curd to share among them, and even feed a little to the monkeys. Caught in the act, He would put on so guiltless a face that the gopis, who had come in anger, melted into laughter.',
+          'One day, vexed, Yashoda bound Him to a grinding mortar, yet the rope fell ever two fingers short — as though the One whom no bond can bind is bound only by a devotee’s love. From this He earned one of His names, ‘Damodara,’ and every mother of Gokul felt that His thieving was truly a theft of the heart — He stole not butter but the minds of His devotees.',
+          'Recalling these very childhood plays, the keeper of the monthly Krishna Janmashtami spends the day in fasting and the chanting of Hari’s name, and at midnight performs the arati of the Lord’s appearance. It is said that whoever holds this vow each month with faith finds obstacles withdrawing from the home just as Putana and Shakatasura withdrew, the Lord’s shade resting upon one’s children, and that same cool bliss descending into the mind which once entered the heart of Gokul at the sight of the mischievous face of the butter-thief.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'masik-kalashtami-katha',
+    titleHi: 'मासिक कालाष्टमी कथा',
+    titleEn: 'Masik Kalashtami Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'trideva-vivad',
+        titleHi: 'त्रिदेवों का श्रेष्ठता-विवाद',
+        titleEn: 'The dispute of the three lords over supremacy',
+        bodyHi: [
+          'सृष्टि के आदि में, जब काल अभी अपनी पहली करवट ले रहा था, ब्रह्मा और विष्णु एक दिन आमने-सामने आ खड़े हुए और दोनों के बीच यह प्रश्न उठ खड़ा हुआ कि इस समस्त जगत में सर्वश्रेष्ठ कौन है। ब्रह्मा ने अपनी छाती ठोककर कहा, \'मैं ही समस्त लोकों का रचयिता हूँ, मुझसे ही यह सृष्टि उपजी है, अतः सबका स्वामी मैं ही हूँ।\' विष्णु ने मृदु स्वर में उत्तर दिया कि पालनकर्ता वही हैं, जिनके बिना रची हुई सृष्टि एक पल भी न ठहरे।',
+          'दोनों का यह वाद-विवाद बढ़ते-बढ़ते ऐसा प्रचंड हो उठा कि देवता भी सहम गए। तभी उन दोनों के मध्य एक अनंत ज्योति का स्तंभ प्रकट हुआ, जो न आदि रखता था और न अंत—ऊपर आकाश को बेधता और नीचे पाताल में डूबता हुआ वह तेजःपुंज जगमगा उठा। आकाशवाणी हुई कि जो इस स्तंभ का छोर खोज लाएगा, वही श्रेष्ठ माना जाएगा।',
+          'विष्णु वराह रूप धारण कर पाताल की ओर उतर गए और ब्रह्मा हंस का रूप धरकर ऊपर आकाश की ओर उड़ चले, ताकि उस ज्योतिर्लिंग का अंत-छोर ढूँढ़ सकें। युगों तक खोजने पर भी न विष्णु को नीचे का अंत मिला, न ब्रह्मा को ऊपर का सिरा। थककर विष्णु लौट आए और सिर झुकाकर बोले कि इस स्तंभ का कोई छोर उन्हें नहीं मिला।',
+        ],
+        bodyEn: [
+          'In the very dawn of creation, when time itself was only beginning to stir, Brahma and Vishnu once stood face to face, and between them rose the question of who, in all this universe, was the greatest. Striking his own breast, Brahma declared, \'I am the maker of all the worlds, this creation has sprung from me, and so it is I who am the lord of all.\' Vishnu answered in a gentle voice that it was the preserver alone, without whom no created world could stand even for a moment.',
+          'This contention swelled between them until it grew so fierce that even the gods were dismayed. Then, in the very midst of the two, there appeared an endless pillar of light that had neither beginning nor end—piercing the heavens above and plunging into the netherworlds below, the shaft of radiance blazed forth. A voice from the sky declared that whoever could find the limit of this pillar would be deemed the greater.',
+          'Vishnu took the form of a boar and descended toward the netherworld, while Brahma assumed the form of a swan and flew upward toward the sky, each seeking the far end of that pillar of light. Though they searched for ages, neither did Vishnu find the lower end nor Brahma the upper tip. Wearied, Vishnu returned and, bowing his head, said that he had not found any limit to the pillar.',
+        ],
+      },
+      {
+        id: 'brahma-ka-ahankar',
+        titleHi: 'ब्रह्मा का अहंकार और पाँचवाँ मुख',
+        titleEn: 'Brahma\'s arrogance and the fifth head',
+        bodyHi: [
+          'किंतु ब्रह्मा सत्य कहने को सिद्ध न थे। ऊपर उड़ते-उड़ते उन्हें मार्ग में एक केतकी का पुष्प मिला, जो उस ज्योतिर्लिंग से न जाने कब से नीचे गिरता आ रहा था। ब्रह्मा ने उस पुष्प को साक्षी बनाने का छल रचा और लौटकर गर्व से घोषणा की, \'मैंने इस स्तंभ का ऊपरी छोर पा लिया है, और यह केतकी पुष्प इसका प्रमाण है।\'',
+          'अपने इस मिथ्या विजय के मद में ब्रह्मा के मुख से अहंकार ही अहंकार झलकने लगा। उनके पाँच मुख थे, और उनमें से पाँचवाँ मुख, जो सबसे ऊपर था, उस घमंड में ऐसा उद्धत हो उठा कि उसने स्वयं उस दिव्य ज्योति की, उस परम तत्त्व की भी अवहेलना और उपहास करना आरंभ कर दिया। उस मुख के शब्द कठोर, गर्वीले और अनादरपूर्ण थे।',
+          'उसी ज्योतिर्लिंग के भीतर से साक्षात महादेव प्रकट हुए। उन्होंने देखा कि सृष्टिकर्ता असत्य का सहारा ले रहे हैं और उनका पाँचवाँ मुख परम सत्य का तिरस्कार कर रहा है। झूठी साक्षी देने के कारण उन्होंने केतकी पुष्प को शाप दिया कि अब वह पूजा में कभी न चढ़ेगा, और ब्रह्मा के असत्य व अहंकार पर महादेव का ललाट क्रोध से तप उठा।',
+        ],
+        bodyEn: [
+          'But Brahma was not resolved to speak the truth. As he flew upward, he found along the way a ketaki flower that had been drifting down from that pillar of light since none knew when. Brahma devised the deceit of making the flower his witness, and returning, he proudly proclaimed, \'I have reached the upper end of this pillar, and this ketaki flower is the proof of it.\'',
+          'Intoxicated by this false victory, nothing but arrogance shone forth from Brahma\'s faces. He had five heads, and of these the fifth, which rose highest of all, grew so insolent in that pride that it began to scorn and mock even the divine light itself, that supreme reality. The words of that head were harsh, haughty, and full of disrespect.',
+          'From within that very pillar of light, Mahadeva himself appeared. He saw that the creator was leaning upon falsehood and that his fifth head was deriding the supreme truth. For bearing false witness, he cursed the ketaki flower never again to be offered in worship, and at Brahma\'s untruth and pride the brow of Mahadeva grew hot with wrath.',
+        ],
+      },
+      {
+        id: 'bhairav-ka-pragatya',
+        titleHi: 'काल भैरव का प्राकट्य और पाँचवें मुख का छेदन',
+        titleEn: 'The rising of Kala Bhairava and the severing of the fifth head',
+        bodyHi: [
+          'महादेव के उस प्रचंड क्रोध से एक भयंकर तेज प्रकट हुआ—श्याम वर्ण की एक उग्र मूर्ति, जिसके नेत्र अंगारों समान दहक रहे थे, गले में नागों का हार और हाथों में दंड शोभायमान था। यह काल का भी काल था, इसी से उसे काल भैरव कहा गया; उसकी एक ही दृष्टि से दिशाएँ काँप उठीं और देवता नतमस्तक हो गए।',
+          'शिव की आज्ञा पाकर वह उग्र भैरव ब्रह्मा की ओर बढ़ा। उसने अपने तीक्ष्ण नख से ब्रह्मा के उसी पाँचवें मुख को, जिसने अहंकार में सत्य का उपहास किया था, एक ही क्षण में काट गिराया। उस मुख के कटते ही ब्रह्मा का गर्व चूर-चूर हो गया, और वे काँपते हुए महादेव के चरणों में गिर पड़े।',
+          'कटा हुआ वह कपाल भैरव के हाथ में आ टिका। ब्रह्मा सृष्टिकर्ता थे, अतः उनके शीश का छेदन एक घोर पाप—ब्रह्महत्या—बन गया। भैरव यद्यपि शिव के अंश थे और दंड न्यायपूर्ण था, फिर भी सृष्टि के नियम के अनुसार वह कपाल उनके हाथ से चिपक गया, और ब्रह्महत्या का भार उनके साथ चल पड़ा।',
+        ],
+        bodyEn: [
+          'From that terrible wrath of Mahadeva there burst forth a fearsome radiance—a fierce, dark-hued form whose eyes blazed like live coals, a garland of serpents about his neck and a staff gleaming in his hands. He was the death even of Death, and for this he was called Kala Bhairava; at a single glance from him the quarters trembled and the gods bowed their heads.',
+          'Receiving the command of Shiva, that fierce Bhairava advanced upon Brahma. With his sharp nail he struck off, in a single instant, that very fifth head of Brahma which had mocked the truth in its arrogance. The moment that head fell, Brahma\'s pride was shattered to dust, and trembling he fell at the feet of Mahadeva.',
+          'The severed skull came to rest in Bhairava\'s hand. Brahma was the creator, and so the cutting of his head became a grievous sin—the slaying of a Brahmin, Brahmahatya. Though Bhairava was a portion of Shiva himself and the punishment was just, yet by the law of creation that skull clung fast to his hand, and the burden of Brahmahatya set out to walk with him.',
+        ],
+      },
+      {
+        id: 'bhikshatana-aur-kapalamochan',
+        titleHi: 'भिक्षाटन और काशी में कपालमोचन',
+        titleEn: 'The wandering as Bhikshatana and release at Kashi',
+        bodyHi: [
+          'अपने हाथ से चिपके उस कपाल को लिए भैरव दिगंबर वेश में लोक-लोकांतर में भटकने लगे। वही भिक्षाटन रूप कहलाए—एक तपस्वी, जो उस कपाल को ही भिक्षापात्र बनाकर द्वार-द्वार भिक्षा माँगते थे, पर जो कुछ उसमें पड़ता वह सब उस अतल कपाल में लुप्त हो जाता और कभी भरता न था। वर्षों तक यह कठोर प्रायश्चित चलता रहा, फिर भी ब्रह्महत्या का कलंक उनका पीछा न छोड़ता।',
+          'अनेक तीर्थों को लाँघते हुए अंततः भैरव काशी की पवित्र भूमि में जा पहुँचे, उस नगरी में जो स्वयं शिव को अत्यंत प्रिय है। ज्यों ही उन्होंने उस क्षेत्र में चरण रखे, हाथ से चिपका वह कपाल स्वयं ही छूटकर भूमि पर गिर पड़ा। जिस स्थान पर वह गिरा, वह \'कपालमोचन\' तीर्थ के नाम से प्रसिद्ध हुआ, क्योंकि वहीं भैरव कपाल और कलंक दोनों से मुक्त हुए।',
+          'उस क्षण ब्रह्महत्या का घोर पाप भैरव से सदा के लिए विलीन हो गया, और उनका मुख प्रशांत तेज से दीप्त हो उठा। काशी की उस भूमि ने वह भार हर लिया जिसे युगों की भटकन न हर पाई थी; और तभी से यह जाना गया कि सच्चा पश्चात्ताप और पवित्र क्षेत्र की शरण बड़े से बड़े पाप को भी धो डालते हैं।',
+        ],
+        bodyEn: [
+          'Bearing that skull clinging to his hand, Bhairava wandered through world after world in the garb of a naked ascetic. This very form became known as Bhikshatana—a mendicant who made that skull itself his begging bowl and asked for alms door to door, yet whatever fell into it vanished into that bottomless skull and never filled it. For years this harsh penance continued, and still the stain of Brahmahatya would not leave him.',
+          'Crossing many holy places, Bhairava at last reached the sacred ground of Kashi, that city most beloved of Shiva himself. The moment he set foot in that domain, the skull that had clung to his hand of its own accord broke free and fell to the earth. The place where it fell became renowned as the sacred ford of \'Kapalamochana,\' for it was there that Bhairava was freed from both the skull and the stain.',
+          'In that instant the grievous sin of Brahmahatya dissolved from Bhairava forever, and his face shone with a calm radiance. The ground of Kashi bore away the burden that ages of wandering had been unable to lift; and from that time it was known that true repentance and refuge in a holy place wash clean even the very greatest of sins.',
+        ],
+      },
+      {
+        id: 'kashi-ke-kotwal',
+        titleHi: 'काशी के कोतवाल और कालाष्टमी का व्रत',
+        titleEn: 'The guardian of Kashi and the vow of Kalashtami',
+        bodyHi: [
+          'जिस काशी ने भैरव को इतना बड़ा वरदान दिया, उसी नगरी का रक्षण भार महादेव ने उन्हें सौंप दिया। तभी से काल भैरव \'काशी के कोतवाल\' कहलाए—वे ही उस पुण्यभूमि के द्वारपाल और दंडनायक हैं, और कहा जाता है कि काशी में निवास या तीर्थ करने वाले को पहले भैरव की अनुमति और कृपा प्राप्त करनी होती है।',
+          'इसी कारण प्रत्येक मास के कृष्ण पक्ष की अष्टमी तिथि को काल भैरव की आराधना का पावन दिन—कालाष्टमी—माना गया। उस रात्रि भक्त उपवास रखते हैं, जागरण करते हैं, भैरव के नाम का स्मरण और दीपदान करते हैं, और उनके वाहन श्वान को भोजन कराकर सेवा का भाव प्रकट करते हैं।',
+          'जो श्रद्धालु इस व्रत को निष्ठा से धारण करता है, उसके भय, रोग, शत्रुबाधा और संचित पाप काल भैरव की कृपा से उसी प्रकार दूर हो जाते हैं जैसे काशी की भूमि ने स्वयं भैरव का कपाल हर लिया था। मृत्यु और काल का जो स्वामी है, वही अपने भक्त को अकाल भय से उबारता और निर्भयता का वरदान देता है—यही कालाष्टमी के व्रत का अक्षय फल है।',
+        ],
+        bodyEn: [
+          'The very Kashi that had granted Bhairava so great a boon—Mahadeva entrusted to him the charge of guarding that city. From that time Kala Bhairava came to be called the \'Kotwal of Kashi,\' the gatekeeper and lord of justice of that holy ground, and it is said that one who would dwell in Kashi or make pilgrimage there must first obtain the leave and grace of Bhairava.',
+          'For this reason the eighth lunar day of the dark fortnight of every month came to be held as the sacred day for the worship of Kala Bhairava—Kalashtami. On that night devotees keep the fast, hold a vigil, remember the name of Bhairava and offer lamps, and feed his mount, the dog, expressing their spirit of service.',
+          'Whoever takes up this vow with faith finds that his fears, his ailments, the troubles of enemies, and his gathered sins are carried away by the grace of Kala Bhairava, just as the soil of Kashi itself bore away the skull from Bhairava\'s hand. He who is the master of death and time lifts his devotee out of untimely fear and grants the boon of fearlessness—and this is the inexhaustible fruit of the vow of Kalashtami.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'masik-durgashtami-katha',
+    titleHi: 'मासिक दुर्गाष्टमी कथा',
+    titleEn: 'Masik Durgashtami Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'demon-durgama-rises',
+        titleHi: 'दुर्गम दैत्य का अभ्युदय',
+        titleEn: 'The rise of the demon Durgama',
+        bodyHi: [
+          'बहुत पुरातन काल की बात है, रुरु नामक दैत्य के कुल में दुर्गम नाम का एक असुर उत्पन्न हुआ। बचपन से ही उसका मन देवताओं के प्रति द्वेष से भरा रहता था, और जैसे-जैसे वह बड़ा होता गया, उसके भीतर तीनों लोकों को अपने वश में करने की लालसा गहराती चली गई। उसने मन में ठान लिया कि वह उस मूल को ही सुखा देगा जिससे देवताओं का सारा बल पनपता है।',
+          'इसी संकल्प को लेकर दुर्गम हिमालय की एक एकांत कंदरा में चला गया और वहाँ उसने पितामह ब्रह्मा को प्रसन्न करने के लिए घोर तप आरंभ किया। वर्षों तक अन्न-जल त्यागकर, अपने प्राणों को एक ही ध्येय में बाँधकर वह अविचल बैठा रहा। उसकी तपस्या की प्रचंड ज्वाला से लोक तपने लगे, और अंततः सृष्टि के रचयिता ब्रह्मा उसके सम्मुख प्रकट हुए।',
+          '‘तेरी तपस्या से मैं प्रसन्न हूँ,’ ब्रह्मा बोले, ‘माँग, क्या वर चाहता है?’ दुर्गम ने हाथ जोड़कर कहा, ‘हे पितामह, समस्त वेद मुझे प्रदान कर दीजिए। चारों वेद, उनके मंत्र और उनका समस्त ज्ञान मेरे अधिकार में आ जाए, और मेरे सिवा किसी के पास उनका बल न रहे।’ ब्रह्मा ‘एवमस्तु’ कहकर अंतर्धान हो गए, और उसी क्षण चारों वेद ब्राह्मणों के कंठ और स्मृति से लुप्त होकर दुर्गम के पास चले गए।',
+        ],
+        bodyEn: [
+          'In a very ancient age, in the lineage of a demon named Ruru, there was born an asura called Durgama. From his childhood his mind was filled with hatred for the gods, and as he grew, the longing to bring all three worlds under his sway deepened steadily within him. He resolved in his heart that he would dry up the very root from which all the strength of the gods drew its nourishment.',
+          'With this resolve, Durgama went away to a lonely cave in the Himalaya, and there he began a severe penance to please the grandsire Brahma. For years he gave up food and water, bound his life-breath to a single aim, and sat unmoving. The fierce flame of his austerity began to scorch the worlds, and at last Brahma, the creator, appeared before him.',
+          '‘I am pleased with your penance,’ Brahma said. ‘Ask — what boon do you desire?’ Folding his hands, Durgama replied, ‘O grandsire, grant me all the Vedas. Let the four Vedas, their mantras and all their knowledge pass into my keeping, and let none but me hold their power.’ Saying ‘So be it,’ Brahma vanished, and in that very moment the four Vedas slipped away from the lips and memory of the brahmins and went over to Durgama.',
+        ],
+      },
+      {
+        id: 'the-world-withers',
+        titleHi: 'वेदों का लोप और सूखती हुई धरती',
+        titleEn: 'The Vedas are lost and the earth withers',
+        bodyHi: [
+          'वेदों के लुप्त होते ही पृथ्वी पर अनर्थ का तांडव छा गया। ब्राह्मण संध्या, हवन और मंत्रों को भूल बैठे; यज्ञ की अग्नि बुझ गई और देवताओं तक आहुति पहुँचनी बंद हो गई। जिन यज्ञों के बल पर मेघ जल बरसाते थे, वे ही ठप पड़ गए, और आकाश से वर्षा की एक बूँद भी गिरनी बंद हो गई।',
+          'धीरे-धीरे सौ वर्ष बीत गए और एक बूँद भी जल न बरसा। नदियाँ सूख गईं, सरोवर धूल बन गए, और हरी-भरी धरती फटकर सूखी मिट्टी का विस्तार रह गई। अन्न का एक दाना भी न उपजा। भूख और प्यास से व्याकुल प्राणी तड़प-तड़पकर मरने लगे, और चारों ओर हाहाकार मच गया। देवताओं का बल भी हीन पड़ता गया, क्योंकि उनकी शक्ति का आधार वही वेद और वही यज्ञ थे।',
+          'हताश और भयभीत ब्राह्मणगण और शेष बचे प्राणी एक स्वर में पुकार उठे। उन्हें स्मरण हो आया कि सृष्टि की सारी रक्षा जिस आदिशक्ति के हाथ में है, संकट की इस घड़ी में वही जगज्जननी ही उनका उद्धार कर सकती हैं। वे हिमालय की ओर मुख कर, करुण हृदय से, उस माँ की आराधना में लीन हो गए जो सबकी पालनहार है।',
+        ],
+        bodyEn: [
+          'The moment the Vedas vanished, a storm of ruin spread over the earth. The brahmins forgot their twilight prayers, their fire-offerings and their mantras; the flame of sacrifice died out, and oblations ceased to reach the gods. The very sacrifices whose power once made the clouds pour down their rain fell silent, and not a single drop fell any longer from the sky.',
+          'Slowly a hundred years passed, and not a drop of water rained down. The rivers dried up, the lakes turned to dust, and the once-green earth split open into a waste of parched soil. Not a single grain of corn would grow. Tormented by hunger and thirst, living creatures writhed and perished, and on every side rose a great cry of anguish. Even the strength of the gods grew faint, for the foundation of their power had been those very Vedas and those very sacrifices.',
+          'In despair and dread the brahmins and the creatures that yet survived cried out with one voice. They remembered that the protection of all creation rests in the hands of the primordial Power, and that in this hour of calamity it was that Mother of the worlds alone who could deliver them. Turning towards the Himalaya, with grieving hearts, they sank into worship of that Mother who is the nourisher of all.',
+        ],
+      },
+      {
+        id: 'the-mother-appears',
+        titleHi: 'करुणामयी माँ का प्राकट्य',
+        titleEn: 'The compassionate Mother appears',
+        bodyHi: [
+          'उनकी अविरल प्रार्थना सुनकर देवी का करुणामय हृदय द्रवित हो उठा। तभी एक अपूर्व दिव्य ज्योति प्रकट हुई, और उस तेज में से असंख्य नेत्रों वाली एक मंगलमयी देवी का स्वरूप साकार हुआ। उनके नेत्रों से अनवरत अश्रुधारा बह रही थी, क्योंकि अपने भूखे-प्यासे संतानों की पीड़ा देखकर माँ का अंतःकरण भर आया था। इसी कारण वे ‘शताक्षी’ कहलाईं — सौ नेत्रों वाली देवी।',
+          'अपने व्याकुल भक्तों की दशा देखकर देवी ने अपने ही शरीर से समस्त जीवन-रस प्रकट कर दिया। उनके स्वरूप से नाना प्रकार के शाक, फल, मूल, कंद और अन्न उत्पन्न होने लगे, जिनसे प्राणियों की क्षुधा शांत हुई। अपने ही अंगों से शाक उपजाकर सृष्टि का पालन करने के कारण वे ‘शाकंभरी’ नाम से प्रसिद्ध हुईं। उनकी कृपा से सूखी धरती फिर हरियाली से भर उठी।',
+          '‘अब डरो मत, मेरे पुत्रों,’ माँ ने स्नेह से कहा, ‘तुम्हारी रक्षा का भार मुझ पर है।’ अपने नेत्रों से उन्होंने जल की अविरल धारा बहाई, और सूखी हुई नदियाँ और सरोवर पुनः जल से भर गए। किंतु जिस दुष्ट दुर्गम ने वेदों का हरण कर यह विपत्ति लाई थी, उसका अंत किए बिना यह संकट सदा के लिए टल नहीं सकता था।',
+        ],
+        bodyEn: [
+          'Hearing their unceasing prayer, the compassionate heart of the Goddess melted. Then a wondrous divine light appeared, and out of that radiance took shape the form of an auspicious Goddess with countless eyes. From her eyes flowed an endless stream of tears, for the heart of the Mother had overflowed at the sight of the suffering of her hungry, thirsting children. For this reason she came to be called ‘Shatakshi’ — the Goddess of a hundred eyes.',
+          'Beholding the plight of her anguished devotees, the Goddess brought forth from her own body all the sap of life. From her form there sprang up vegetables and fruits, roots and tubers and grain of many kinds, with which the hunger of all creatures was stilled. Because she nourished creation by growing greens out of her own limbs, she became renowned by the name ‘Shakambhari.’ By her grace the parched earth was clothed once more in green.',
+          '‘Fear no more, my children,’ the Mother said tenderly, ‘the burden of your protection rests upon me.’ From her eyes she let flow an unbroken stream of water, and the dried-up rivers and lakes were filled with water again. Yet so long as the wicked Durgama, who had stolen the Vedas and brought down this calamity, was not destroyed, the danger could never be turned away for good.',
+        ],
+      },
+      {
+        id: 'the-great-battle',
+        titleHi: 'दुर्गम के साथ देवी का संग्राम',
+        titleEn: 'The Goddess does battle with Durgama',
+        bodyHi: [
+          'जब दुर्गम को ज्ञात हुआ कि देवी ने धरती पर जल और अन्न लौटा दिया है, तो वह क्रोध से भर उठा और अपनी विशाल असुर सेना लेकर देवी पर चढ़ आया। उसकी सेना का कोलाहल सुनकर देवी ने अपने चारों ओर एक दिव्य प्रकाश का घेरा रच दिया, और उस तेज से अनेक शक्तियाँ प्रकट होकर असुरों से जूझने लगीं।',
+          'देवी ने अपने धनुष पर बाण चढ़ाए और उनकी प्रत्यंचा की टंकार से दिशाएँ काँप उठीं। उनके बाणों और शूल से असुरों की सेना तृण की भाँति कटने लगी; जो भी सम्मुख आया, वह माँ की प्रचंड शक्ति के आगे ढेर हो गया। दस दिनों तक यह घोर संग्राम चलता रहा, और अंततः दुर्गम स्वयं अपने रथ पर सवार होकर देवी के सम्मुख आ खड़ा हुआ।',
+          'अहंकार में भरा दुर्गम जैसे ही देवी पर अस्त्रों की वर्षा करने लगा, माँ ने एक ही प्रचंड बाण से उसके रथ, ध्वज और धनुष को छिन्न-भिन्न कर दिया। फिर अपने तीक्ष्ण शूल से उन्होंने उस दैत्य के वक्ष को बेध डाला, और वह महाबली असुर धरती पर गिरकर सदा के लिए शांत हो गया। जिस दुर्गम का संहार कर देवी ने सृष्टि को उबारा, उसी के नाम से वे ‘दुर्गा’ कहलाईं।',
+        ],
+        bodyEn: [
+          'When Durgama learned that the Goddess had restored water and grain to the earth, he was filled with rage and marched against her with his vast army of asuras. Hearing the tumult of his host, the Goddess raised about herself a ring of divine light, and out of that radiance many Shaktis appeared and grappled with the demons.',
+          'The Goddess set arrows to her bow, and at the twang of her bowstring the quarters of the sky trembled. Before her arrows and her spear the army of asuras was mown down like blades of grass; whoever came before her was laid low by the fierce power of the Mother. For ten days this terrible struggle raged on, and at last Durgama himself, mounted upon his chariot, came and stood before the Goddess.',
+          'The moment the arrogant Durgama began to rain weapons upon the Goddess, the Mother with a single mighty arrow shattered his chariot, his banner and his bow. Then with her keen spear she pierced through the demon’s breast, and that mighty asura fell to the earth and was stilled forever. By slaying that Durgama and so rescuing creation, the Goddess herself came to be called ‘Durga.’',
+        ],
+      },
+      {
+        id: 'vedas-restored',
+        titleHi: 'वेदों की वापसी और लोक का कल्याण',
+        titleEn: 'The Vedas are restored and the world is blessed',
+        bodyHi: [
+          'दुर्गम के वध के साथ ही चारों वेद उसके बंधन से मुक्त होकर देवी के चरणों में लौट आए। माँ ने उन्हें फिर से ब्राह्मणों और ऋषियों को सौंप दिया, और देखते ही देखते मंत्र, यज्ञ और संध्या-वंदन का पावन क्रम पुनः लोक में स्थापित हो गया। यज्ञ की बुझी हुई अग्नि फिर से प्रज्वलित हो उठी और देवताओं तक आहुतियाँ पहुँचने लगीं।',
+          'देवताओं और ऋषियों ने हर्षित होकर देवी की स्तुति की और उनके अनेक मंगलमय नामों का गान किया — दुर्गा, शाकंभरी, शताक्षी और दुर्गतिनाशिनी। माँ ने आशीर्वाद देते हुए कहा, ‘जो भी श्रद्धा से मेरा स्मरण करेगा और भक्तिपूर्वक मेरा पूजन करेगा, मैं उसके जीवन के समस्त दुर्गम संकटों को इसी प्रकार दूर कर दूँगी।’ इतना कहकर देवी अपने दिव्य धाम को लौट गईं।',
+          'तभी से प्रत्येक मास के शुक्ल पक्ष की अष्टमी तिथि उस आदिशक्ति की आराधना के लिए विशेष रूप से पवित्र मानी गई, और यही तिथि ‘मासिक दुर्गाष्टमी’ कहलाई — माँ दुर्गा के उस स्वरूप के स्मरण का दिन जिसने वेदों की रक्षा कर धरती को फिर से जीवन दिया।',
+        ],
+        bodyEn: [
+          'With the slaying of Durgama, the four Vedas were freed from his captivity and returned to the feet of the Goddess. The Mother gave them back once more to the brahmins and the sages, and in no time the sacred order of mantra, sacrifice and twilight worship was re-established in the world. The extinguished flame of sacrifice blazed up again, and oblations once more reached the gods.',
+          'The gods and the sages, rejoicing, sang the praises of the Goddess and chanted her many auspicious names — Durga, Shakambhari, Shatakshi, and Durgatinashini, the remover of misfortune. Bestowing her blessing, the Mother said, ‘Whoever remembers me with faith and worships me with devotion, for that one I shall in this same way drive away every impassable danger of life.’ Having spoken thus, the Goddess returned to her divine abode.',
+          'Ever since then, the eighth lunar day, the Ashtami of the bright fortnight of every month, has been held especially sacred for the worship of that primordial Power, and this very day came to be called ‘Masik Durgashtami’ — the day of remembering that form of Maa Durga who guarded the Vedas and gave life back to the earth.',
+        ],
+      },
+      {
+        id: 'devotee-delivered',
+        titleHi: 'भक्त की रक्षा और व्रत का फल',
+        titleEn: 'A devotee is delivered and the fruit of the vow',
+        bodyHi: [
+          'उसी नगरी में सुमति नाम का एक निर्धन किंतु श्रद्धालु व्यापारी रहता था, जिस पर एक के बाद एक विपत्तियाँ टूट पड़ी थीं। व्यापार में हानि, कर्ज का बोझ और रोग से घिरकर वह चारों ओर से निराश हो चुका था। एक संत ने उसे समझाया, ‘हर मास की शुक्ल अष्टमी को माँ दुर्गा का व्रत और पूजन करो; जिसने दुर्गम जैसे महादैत्य का संहार किया, वह तुम्हारे संकटों को भी दूर कर देंगी।’',
+          'सुमति ने श्रद्धापूर्वक प्रत्येक मासिक दुर्गाष्टमी का व्रत आरंभ किया। उस दिन वह उपवास रखता, माँ की प्रतिमा का लाल पुष्पों से शृंगार करता, दीप जलाकर दुर्गा सप्तशती के मंत्रों का पाठ करता, और कुमारी कन्याओं को भोजन कराता। माँ के चरणों में बैठकर वह अपने मन के समस्त भय और शोक समर्पित कर देता।',
+          'कुछ ही मासों में सुमति का जीवन बदलने लगा — उसका व्यापार फिर से फलने-फूलने लगा, कर्ज चुक गया, रोग जाता रहा, और उसके घर में सुख-शांति का निवास हो गया। कहा जाता है कि जो भी भक्त श्रद्धा और संयम से प्रत्येक मास की दुर्गाष्टमी का व्रत रखकर माँ दुर्गा का पूजन करता है, उसके जीवन के दुर्गम-से-दुर्गम संकट माँ की कृपा से उसी प्रकार दूर हो जाते हैं, और उसका जीवन अन्न, आरोग्य, साहस और शांति से दीप की भाँति प्रकाशमान हो उठता है।',
+        ],
+        bodyEn: [
+          'In that same city there lived a poor but devout merchant named Sumati, upon whom one misfortune after another had fallen. Hemmed in by losses in trade, the weight of debt, and illness, he had grown disheartened on every side. A holy man counselled him, ‘On the bright Ashtami of every month keep the vow and worship of Maa Durga; she who slew so great a demon as Durgama will drive away your troubles as well.’',
+          'With faith, Sumati began to keep the vow of every Masik Durgashtami. On that day he would fast, adorn the image of the Mother with red flowers, light a lamp and recite the verses of the Durga Saptashati, and feed young maidens. Seated at the feet of the Mother, he would surrender to her all the fear and grief of his heart.',
+          'In only a few months, Sumati’s life began to change — his trade flourished once more, his debt was cleared, his illness departed, and peace and contentment came to dwell in his home. It is said that for any devotee who keeps the vow of Durgashtami every month with faith and self-restraint and worships Maa Durga, the most impassable troubles of life are driven away by the grace of the Mother just so, and his life shines like a steady lamp with food, health, courage and peace.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'dattatreya-jayanti-katha',
+    titleHi: 'दत्तात्रेय जयंती कथा',
+    titleEn: 'Dattatreya Jayanti Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'atri-anasuya-ashram',
+        titleHi: 'अत्रि और अनसूया का तप',
+        titleEn: 'The penance of Atri and Anasuya',
+        bodyHi: [
+          'सतयुग की बात है। चित्रकूट के निकट घने वनों में महर्षि अत्रि का आश्रम था। वहाँ पंछियों का कलरव था, शीतल जलधाराएँ बहती थीं, और हवन की सुगंध दिन-रात फैली रहती थी। महर्षि अत्रि ब्रह्मा के मानस-पुत्रों में से एक थे और उनकी पत्नी थीं अनसूया, जो कर्दम ऋषि और देवहूति की कन्या थीं। दोनों ने वर्षों तक कठोर तप किया था, और उस तप की आभा से समूचा वन तेजोमय हो उठा था।',
+          'अनसूया का अर्थ ही था ‘जिसमें असूया अर्थात् ईर्ष्या लेशमात्र भी न हो।’ वे संसार की सबसे पवित्र पतिव्रता मानी जाती थीं। वे प्रतिदिन सूर्योदय से पूर्व उठतीं, पति की सेवा करतीं, अतिथियों का सत्कार करतीं और किसी प्राणी के प्रति मन में कटुता न रखतीं। उनके सतीत्व का तेज ऐसा था कि कहा जाता है कि उनकी एक दृष्टि से तपती धूप शीतल छाया बन जाती और सूखी नदियाँ जल से भर जातीं।',
+          'उनके पातिव्रत्य की चर्चा भूलोक से उठकर स्वर्गलोक तक पहुँच गई। देवता और ऋषि कहने लगे कि अनसूया जैसी सती तीनों लोकों में दूसरी नहीं। यह कीर्ति इतनी बढ़ी कि एक दिन उसकी गूँज त्रिदेव की पत्नियों — सरस्वती, लक्ष्मी और पार्वती — के कानों तक भी जा पहुँची, और तीनों के मन में एक सूक्ष्म-सी हलचल जाग उठी।',
+        ],
+        bodyEn: [
+          'It was the age of Satya Yuga. In the dense forests near Chitrakuta stood the hermitage of the great sage Atri. Birdsong filled its groves, cool streams ran through it, and the fragrance of the sacred fire drifted there day and night. Atri was one of the mind-born sons of Brahma, and his wife was Anasuya, the daughter of the sage Kardama and Devahuti. Together they had practised severe penance for years, and the radiance of that penance made the whole forest glow.',
+          'The very name Anasuya meant ‘one in whom there is not the slightest trace of asuya — of envy.’ She was held to be the most chaste and pure of wives in all the world. Each day she rose before sunrise, served her husband, welcomed every guest with warmth, and kept no bitterness in her heart toward any living being. So great was the power of her faithfulness that, it was said, a single glance of hers could turn the scorching sun into cool shade and fill dried rivers with water.',
+          'The fame of her devotion rose from the earth and reached even the worlds of the gods. Devas and sages began to say that there was no chaste woman like Anasuya in all the three worlds. This praise grew so loud that one day its echo reached the ears of the consorts of the three great gods — Saraswati, Lakshmi and Parvati — and a subtle restlessness stirred in the hearts of all three.',
+        ],
+      },
+      {
+        id: 'narada-and-the-consorts',
+        titleHi: 'नारद की वीणा और देवियों की चिंता',
+        titleEn: 'Narada\'s vina and the worry of the goddesses',
+        bodyHi: [
+          'इन्हीं दिनों देवर्षि नारद अपनी वीणा बजाते हुए स्वर्गलोक में भ्रमण कर रहे थे। ‘नारायण-नारायण’ का गान करते हुए वे एक-एक करके तीनों देवियों के पास पहुँचे और बड़े विनम्र स्वर में अनसूया के सतीत्व का गुणगान करने लगे। ‘हे देवियो,’ उन्होंने कहा, ‘मैंने तीनों लोक देख डाले, पर अनसूया जैसी पतिव्रता कहीं नहीं पाई। उसके चरणों की धूलि के आगे तो आप तीनों का पातिव्रत्य भी फीका जान पड़ता है।’',
+          'नारद की मधुर वाणी में छिपा संकेत देवियों के मन को बेध गया। सरस्वती, लक्ष्मी और पार्वती के हृदय में पहली बार एक प्रश्न उठा — क्या सचमुच कोई मर्त्य स्त्री हमसे भी श्रेष्ठ पतिव्रता हो सकती है? उन्होंने अपने-अपने स्वामी — ब्रह्मा, विष्णु और महेश — के पास जाकर हठ किया कि अनसूया के पातिव्रत्य की परीक्षा अवश्य ली जाए, ताकि सत्य प्रकट हो सके।',
+          'देवियों के आग्रह को त्रिदेव टाल न सके। ब्रह्मा, विष्णु और शिव — तीनों ने मुस्कुराते हुए वह कार्य स्वीकार किया। उन्होंने सोचा कि अनसूया की निष्ठा की एक लीला रच दी जाए, जिससे संसार भी जान ले कि सच्चे पातिव्रत्य की शक्ति कितनी अपार होती है। और इस प्रकार तीनों देव साधु-वेश धारण कर पृथ्वी की ओर चल पड़े।',
+        ],
+        bodyEn: [
+          'In those very days the celestial sage Narada was wandering through the heavens, playing upon his vina. Singing ‘Narayana, Narayana,’ he came one by one to each of the three goddesses and, in a most humble voice, began to praise the chastity of Anasuya. ‘O goddesses,’ he said, ‘I have searched all three worlds, yet nowhere have I found a faithful wife like Anasuya. Beside the dust of her feet, even the devotion of you three seems to grow pale.’',
+          'The hint hidden in Narada\'s sweet words pierced the minds of the goddesses. For the first time a question rose in the hearts of Saraswati, Lakshmi and Parvati — could a mortal woman truly be a greater pativrata than we? Each went to her own lord — Brahma, Vishnu and Mahesha — and insisted that the faithfulness of Anasuya must be tested, so that the truth could be revealed.',
+          'The three great gods could not turn aside the urging of their consorts. Brahma, Vishnu and Shiva — all three accepted the task with a smile. They thought to weave a single divine play around Anasuya\'s devotion, so that the world too might learn how boundless the power of true faithfulness can be. And so the three gods took on the guise of wandering ascetics and set out toward the earth.',
+        ],
+      },
+      {
+        id: 'the-test-of-the-meal',
+        titleHi: 'अतिथियों की अनोखी माँग',
+        titleEn: 'The strange demand of the guests',
+        bodyHi: [
+          'एक दोपहर, जब महर्षि अत्रि वन में स्नान और संध्या के लिए गए हुए थे, तीन तेजस्वी संन्यासी आश्रम के द्वार पर आ खड़े हुए और भिक्षा माँगने लगे। अनसूया ने उन्हें श्रद्धापूर्वक प्रणाम किया, आसन दिया और कहा, ‘हे अतिथिदेव, आप मेरे पूज्य हैं। बैठिए, अभी भोजन प्रस्तुत करती हूँ।’ अतिथि साक्षात् नारायण माने जाते हैं — यही भाव उनके मन में था।',
+          'किन्तु तीनों संन्यासियों ने एक विचित्र शर्त रख दी। उन्होंने कहा, ‘हे देवी, हमने व्रत लिया है कि भोजन तभी ग्रहण करेंगे जब परोसने वाली स्त्री बिना किसी वस्त्र के, निर्वस्त्र होकर हमें भोजन कराए। यदि तुम ऐसा न कर सको तो हम भूखे ही लौट जाएँगे।’ यह सुनकर अनसूया एक क्षण के लिए स्तब्ध रह गईं, क्योंकि माँग धर्म और लज्जा दोनों की कसौटी थी।',
+          'पर अनसूया विचलित न हुईं। उन्होंने मन-ही-मन सोचा — ‘यदि मेरा पातिव्रत्य सच्चा है, यदि मेरे मन में कभी कोई विकार नहीं आया, तो यह तेज मेरी रक्षा करेगा। अतिथि को भूखा लौटाना सबसे बड़ा अधर्म है।’ उन्होंने अपने पति के चरणों का स्मरण किया और दृढ़ निश्चय कर लिया कि वे अपने सतीत्व के बल से ही इस संकट को मंगल में बदल देंगी।',
+        ],
+        bodyEn: [
+          'One afternoon, while the sage Atri had gone into the forest for his bath and evening prayers, three radiant ascetics came and stood at the hermitage gate, asking for alms. Anasuya bowed to them with reverence, offered them seats, and said, ‘O honoured guests, you are worthy of my worship. Be seated; I shall bring food at once.’ A guest is regarded as Narayana himself — this was the feeling in her heart.',
+          'But the three ascetics laid down a strange condition. They said, ‘O lady, we have taken a vow to accept food only if the woman who serves us does so without any garment, serving us unclothed. If you cannot do this, we shall return hungry as we came.’ Hearing this, Anasuya was struck silent for a moment, for the demand was a test of both dharma and modesty at once.',
+          'Yet Anasuya was not shaken. Within her heart she thought, ‘If my faithfulness is true, if no impure thought has ever risen in my mind, then that power will protect me. To send a guest away hungry is the gravest of wrongs.’ She remembered the feet of her husband and resolved firmly that, by the strength of her chastity alone, she would turn this peril into a blessing.',
+        ],
+      },
+      {
+        id: 'three-infants',
+        titleHi: 'जल का छींटा और तीन शिशु',
+        titleEn: 'A sprinkle of water and three infants',
+        bodyHi: [
+          'अनसूया भीतर गईं और उन्होंने अपने पति के चरण-कमलों के स्पर्श से पवित्र हुआ जल एक पात्र में भरा। फिर मन में संकल्प लेकर बोलीं — ‘यदि मैं तन-मन-वचन से सच्ची पतिव्रता हूँ, तो ये तीनों अतिथि मेरे लिए नवजात शिशुओं के समान हो जाएँ।’ इतना कहकर उन्होंने वह पवित्र जल तीनों संन्यासियों पर छिड़क दिया।',
+          'जल का स्पर्श होते ही एक अद्भुत लीला घटी। ब्रह्मा, विष्णु और महेश — तीनों देव छोटे-छोटे रोते हुए शिशुओं में बदल गए। उनका सारा तेज, सारी प्रभुता उस मातृ-वात्सल्य के सामने पिघल गई। अनसूया के हृदय में तत्क्षण माँ का अपार स्नेह उमड़ पड़ा। उन्होंने तीनों शिशुओं को गोद में उठाया, झूले में सुलाया और निर्द्वंद्व होकर उन्हें अपना दूध पिलाया, जैसे कोई माता अपने ही बालकों का पालन करती है।',
+          'जब महर्षि अत्रि वन से लौटे तो उन्होंने योगदृष्टि से सारा रहस्य जान लिया। अनसूया ने उन्हें सब वृत्तान्त कह सुनाया। अत्रि मुस्कुराए और बोले, ‘धन्य है तुम्हारा पातिव्रत्य, जिसने त्रिदेव को शिशु बना दिया।’ उन्होंने स्नेह से तीनों शिशुओं को देखा, और आश्रम का वह झूला तीन लोकों के स्वामियों की किलकारियों से गूँज उठा।',
+        ],
+        bodyEn: [
+          'Anasuya went within and filled a vessel with water sanctified by the touch of her husband\'s lotus feet. Then, taking a vow in her heart, she said, ‘If in body, mind and speech I am a true and faithful wife, may these three guests become for me as newborn infants.’ Saying this, she sprinkled that holy water upon the three ascetics.',
+          'The moment the water touched them, a wondrous play unfolded. Brahma, Vishnu and Mahesha — all three gods were transformed into small, crying infants. All their splendour, all their lordship melted away before that motherly tenderness. At once a boundless maternal love welled up in Anasuya\'s heart. She gathered the three infants into her lap, laid them in a cradle, and without the least hesitation nursed them at her breast, as any mother nourishes her own children.',
+          'When the sage Atri returned from the forest, he perceived the whole secret through his inner vision. Anasuya told him all that had passed. Atri smiled and said, ‘Blessed is your faithfulness, which has turned the three great gods into infants.’ He gazed lovingly upon the three babes, and the cradle of that hermitage rang out with the gurgling laughter of the lords of the three worlds.',
+        ],
+      },
+      {
+        id: 'birth-of-dattatreya',
+        titleHi: 'दत्तात्रेय का अवतरण',
+        titleEn: 'The descent of Dattatreya',
+        bodyHi: [
+          'उधर स्वर्ग में जब बहुत समय तक त्रिदेव लौटकर न आए, तो सरस्वती, लक्ष्मी और पार्वती व्याकुल हो उठीं। नारद ने उन्हें सारी लीला सुनाई कि किस प्रकार उनके स्वामी अनसूया के सतीत्व से शिशु बन गए हैं। अब तीनों देवियाँ अपने अहंकार पर लज्जित हुईं और दौड़ी हुई अत्रि के आश्रम पहुँचीं। उन्होंने अनसूया के चरण पकड़कर क्षमा माँगी और प्रार्थना की कि उनके स्वामियों को पूर्व रूप में लौटा दें।',
+          'अनसूया का हृदय करुणा से भर गया। उन्होंने हाथ जोड़कर त्रिदेव की स्तुति की और प्रार्थना की कि वे अपने वास्तविक स्वरूप में प्रकट हों। उनकी पवित्र वाणी सुनते ही तीनों शिशु एक हो गए और ब्रह्मा, विष्णु तथा महेश अपने दिव्य रूप में प्रकट हो उठे। प्रसन्न होकर उन्होंने कहा, ‘हे सती अनसूया, तुम्हारी निष्ठा अतुलनीय है। माँगो, जो वर चाहो।’',
+          'अनसूया ने नतमस्तक होकर कहा — ‘हे देवो, यदि आप प्रसन्न हैं तो मेरी एक ही कामना है कि आप तीनों मेरे पुत्र रूप में जन्म लें।’ त्रिदेव ‘तथास्तु’ कहकर अन्तर्धान हो गए। समय आने पर मार्गशीर्ष मास की पूर्णिमा को अनसूया के गर्भ से एक तेजस्वी बालक का जन्म हुआ, जिसमें तीनों देवों का अंश समाहित था। उसका नाम पड़ा दत्तात्रेय — ‘दत्त’ अर्थात् जो दिया गया, और ‘आत्रेय’ अर्थात् अत्रि का पुत्र; क्योंकि स्वयं त्रिदेव ने अपने को इस माता-पिता को सौंप दिया था।',
+          'जो भक्त इस मार्गशीर्ष पूर्णिमा को श्रद्धापूर्वक व्रत रखता है, दत्तात्रेय का स्मरण करता है और सच्चे आचरण से जीवन बिताता है, उसके मन की मलिनता धुल जाती है, घर में सुख-शान्ति का वास होता है और भगवान दत्तात्रेय की कृपा से उसे गुरु-तत्त्व का बोध प्राप्त होता है। इसी पुण्य तिथि की स्मृति में आज भी दत्तात्रेय जयंती मनाई जाती है, और सती अनसूया के अडिग पातिव्रत्य की यह कथा युग-युग तक श्रद्धालुओं के हृदय को पवित्र करती रहती है।',
+        ],
+        bodyEn: [
+          'In the heavens, when the three gods did not return for a long while, Saraswati, Lakshmi and Parvati grew anxious. Narada told them the whole play — how their lords had been turned into infants by the chastity of Anasuya. Now the three goddesses felt shame for their pride and hurried to the hermitage of Atri. Clasping Anasuya\'s feet, they begged forgiveness and prayed that she restore their husbands to their former forms.',
+          'Anasuya\'s heart filled with compassion. With folded hands she praised the three gods and prayed that they appear in their true forms. The moment her pure words were spoken, the three infants became one, and Brahma, Vishnu and Mahesha stood revealed in their divine splendour. Pleased, they said, ‘O chaste Anasuya, your devotion is beyond compare. Ask of us any boon you wish.’',
+          'Bowing her head, Anasuya said, ‘O gods, if you are pleased with me, I have but one desire — that you three take birth as my son.’ Saying ‘So be it,’ the three gods vanished. When the time came, on the full-moon day of the month of Margashirsha, a radiant child was born from the womb of Anasuya, holding within him the essence of all three gods. He was named Dattatreya — ‘Datta,’ meaning the one who was given, and ‘Atreya,’ meaning the son of Atri; for the three great gods had given themselves over to this mother and father.',
+          'Whoever keeps this Margashirsha Purnima as a vow with reverence, remembers Dattatreya, and lives a life of true conduct, finds the impurity of the mind washed away, sees peace and contentment dwell in the home, and through the grace of Lord Dattatreya attains the knowledge of the guru-principle. In memory of this holy day, Dattatreya Jayanti is celebrated even now, and this tale of the unshakable faithfulness of the chaste Anasuya goes on purifying the hearts of the devoted, age after age.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
+    id: 'amavasya-vrat-katha',
+    titleHi: 'अमावस्या व्रत कथा',
+    titleEn: 'Amavasya Vrat Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/vrat-katha.html'],
+    sections: [
+      {
+        id: 'brahmin-family-and-the-omen',
+        titleHi: 'निर्धन ब्राह्मण और कन्या के भाग्य की चेतावनी',
+        titleEn: 'The poor Brahmin and the warning over the daughter\'s fate',
+        bodyHi: [
+          'किसी समय एक छोटे-से गाँव में एक निर्धन ब्राह्मण अपनी पत्नी और सात पुत्रों के साथ रहता था। घर में धन का अभाव था, पर श्रद्धा और सदाचार की कोई कमी न थी। प्रत्येक प्रातः ब्राह्मण गंगा-स्नान कर पीपल के वृक्ष की परिक्रमा करता, और अमावस्या के दिन अपने पितरों को जल देकर उनका स्मरण करता। उसकी एक सुशील कन्या भी थी, जो धर्म और सेवा के संस्कारों में पली थी।',
+          'जब कन्या विवाह योग्य हुई, तब माता-पिता ने एक तपस्वी पंडित को बुलाकर उसका भविष्य पूछा। पंडित ने कन्या की हस्तरेखा और जन्म-कुंडली देखकर कुछ क्षण मौन रहे, फिर गंभीर स्वर में बोले, ‘‘यह कन्या गुणवती और भाग्यशालिनी तो है, किंतु इसके ललाट पर एक दुर्योग लिखा है। विवाह होते ही इसका वैधव्य निश्चित है; इसका पति अल्पायु है।’’',
+          'यह सुनते ही माता का हृदय फट पड़ा और पिता की आँखें भर आईं। उन्होंने विनती की, ‘‘हे विद्वन्, कोई उपाय अवश्य होगा। आप ही मार्ग बताइए, जिससे हमारी पुत्री का सुहाग सदा अक्षय रहे।’’ पंडित ने कुछ देर ध्यान किया और फिर एक मार्ग सुझाया, जो कठिन था पर असंभव नहीं।',
+        ],
+        bodyEn: [
+          'Once, in a small village, there lived a poor Brahmin together with his wife and seven sons. There was no wealth in the house, yet there was no want of faith or right conduct. Every morning the Brahmin bathed in the Ganga, circled the peepal tree, and on the day of the new moon he offered water to his ancestors and remembered them. He had also a gentle daughter, raised in the disciplines of dharma and of service.',
+          'When the daughter came of age to be married, her parents called a learned, austere pandit and asked him about her future. The pandit studied the lines of her hand and the chart of her birth, was silent for a few moments, and then said in a grave voice, ‘‘This girl is virtuous and fortunate, yet upon her brow a hard fate is written. The moment she is wed, her widowhood is certain; her husband is destined to a short life.’’',
+          'Hearing this, the mother\'s heart broke and the father\'s eyes filled with tears. They pleaded, ‘‘O wise one, surely there must be some remedy. Show us the way by which our daughter\'s married fortune may remain forever unbroken.’’ The pandit meditated a while, and then suggested a path that was hard, yet not impossible.',
+        ],
+      },
+      {
+        id: 'the-sage-counsel',
+        titleHi: 'ऋषि का परामर्श और धोबिन सोना का नाम',
+        titleEn: 'The sage counsel and the name of Sona the washerwoman',
+        bodyHi: [
+          'पंडित ने कहा, ‘‘समुद्र पार सिंहल देश में एक धोबिन रहती है, जिसका नाम सोना है। वह ऐसी पतिव्रता और सदाचारिणी है कि उसके पुण्य के तेज से तीनों लोक प्रकाशित हैं। यदि तुम्हारी पुत्री उस सोना धोबिन की सेवा करे और वह प्रसन्न होकर अपने हाथों से इसकी माँग में सिंदूर भर दे, तो इसका सौभाग्य अक्षय हो जाएगा और इसका दुर्योग टल जाएगा।’’',
+          'पर वह सोना धोबिन तो समुद्र के उस पार रहती थी, और उसके पास पहुँचने का कोई सहज मार्ग न था। यह सुनकर कन्या का छोटा भाई आगे आया और बोला, ‘‘माँ, मैं अपनी बहन के सुहाग की रक्षा के लिए समुद्र पार जाऊँगा और सोना धोबिन को यहाँ ले आऊँगा, चाहे कितना भी कष्ट क्यों न उठाना पड़े।’’ बहन-भाई का यह स्नेह देखकर सबकी आँखें छलक उठीं।',
+          'इधर पंडित के परामर्श से कन्या का विवाह एक सुशील ब्राह्मण-युवक से कर दिया गया, और भाई सोना धोबिन की खोज में निकल पड़ा। जिस दिन भाई समुद्र-तट पर पहुँचा, उसने वहाँ एक विशाल पीपल का वृक्ष देखा। थककर वह उसी की छाया में बैठ गया और मन ही मन भगवान से अपनी बहन के सौभाग्य की रक्षा की प्रार्थना करने लगा।',
+        ],
+        bodyEn: [
+          'The pandit said, ‘‘Across the sea, in the land of Sinhala, there lives a washerwoman whose name is Sona. So devoted a wife and so righteous a woman is she that by the radiance of her merit the three worlds are lit. If your daughter serves this Sona the washerwoman, and Sona, well pleased, fills the parting of her hair with vermilion by her own hand, then her good fortune shall become inexhaustible and the evil destiny shall pass away.’’',
+          'But this Sona the washerwoman dwelt beyond the sea, and there was no easy road by which to reach her. Hearing this, the youngest brother of the girl stepped forward and said, ‘‘Mother, to guard my sister\'s married fortune I shall cross the sea and bring Sona the washerwoman here, however much hardship I must bear.’’ Seeing such love between sister and brother, the eyes of all overflowed.',
+          'Meanwhile, upon the pandit\'s counsel, the daughter was married to a gentle young Brahmin, and the brother set out in search of Sona the washerwoman. On the day the brother reached the shore of the sea, he saw there a vast peepal tree. Wearied, he sat down in its shade and silently began to pray to God for the protection of his sister\'s good fortune.',
+        ],
+      },
+      {
+        id: 'service-of-the-washerwoman',
+        titleHi: 'धोबिन की गुप्त सेवा और प्रसन्नता',
+        titleEn: 'The secret service of the washerwoman and her delight',
+        bodyHi: [
+          'उसी पीपल पर एक गिद्ध-दंपति का घोंसला था। प्रतिदिन वह गिद्ध-जोड़ा सोना धोबिन के घर के पास से उड़कर आता था। भाई ने उन पक्षियों की बातें सुनीं और जान लिया कि वे प्रातः ही सिंहल देश को लौटेंगे। वह चुपचाप उन गिद्धों के पंखों के बीच छिपकर बैठ गया, और इस प्रकार समुद्र पार कर सोना धोबिन के नगर पहुँच गया।',
+          'सोना धोबिन के घर एक विचित्र बात होने लगी। प्रतिदिन प्रातः, सोना के जागने से पहले ही, उसके घर का सारा काम पूरा मिलता—आँगन लीपा हुआ, बर्तन माँजे हुए, चूल्हा जलाने को तैयार। सोना अचंभित थी कि यह सब कौन करता है। एक रात उसने जागकर देखा तो पाया कि एक ब्राह्मण-कन्या के रूप वाली देवी-सी आकृति श्रद्धापूर्वक उसकी सेवा कर रही है। वस्तुतः वह कन्या प्रतिदिन अपने व्रत और संकल्प के बल से वहाँ पहुँचकर सेवा करती और लौट जाती थी।',
+          'सोना ने स्नेह से उसका हाथ पकड़कर पूछा, ‘‘बेटी, तू कौन है और मेरी इतनी सेवा क्यों करती है?’’ कन्या ने हाथ जोड़कर अपनी सारी व्यथा कह सुनाई—पंडित की भविष्यवाणी, अपने अल्पायु पति की चिंता और सोना के पुण्य की महिमा। सुनकर सोना का हृदय करुणा और वात्सल्य से भर गया।',
+        ],
+        bodyEn: [
+          'Upon that same peepal there was the nest of a pair of vultures. Each day this pair of birds flew in from near the house of Sona the washerwoman. The brother overheard the speech of those birds and learned that at dawn they would return to the land of Sinhala. Quietly he hid himself among the feathers of those vultures, and thus, crossing the sea, he reached the city of Sona the washerwoman.',
+          'In the house of Sona the washerwoman a strange thing began to happen. Every morning, even before Sona awoke, all the work of her house was found completed — the courtyard freshly plastered, the vessels scoured clean, the hearth made ready to be lit. Sona was amazed as to who could be doing all this. One night she kept awake and saw that a figure like a goddess, in the form of a Brahmin girl, was reverently serving her. In truth that girl, by the power of her vow and her resolve, reached there each day, did the service, and returned.',
+          'Sona took her hand affectionately and asked, ‘‘Daughter, who are you, and why do you serve me so?’’ Folding her hands, the girl poured out all her sorrow — the pandit\'s prophecy, her anxiety for her short-lived husband, and the glory of Sona\'s merit. Hearing it, Sona\'s heart filled with compassion and tender love.',
+        ],
+      },
+      {
+        id: 'saubhagya-restored',
+        titleHi: 'सौभाग्य का दान और पति का पुनर्जीवन',
+        titleEn: 'The gift of married fortune and the husband\'s return to life',
+        bodyHi: [
+          'सोना धोबिन का व्रत ऐसा अटल था कि वह बिना अपने पति को भोजन कराए स्वयं अन्न-जल ग्रहण नहीं करती थी। इसी पतिव्रता-धर्म के तेज से उसके पुण्य का ऐसा बल था कि यदि वह संकल्प कर ले तो मृत्यु भी लौट जाए। सोना ने उस कन्या के मस्तक पर हाथ रखकर कहा, ‘‘बेटी, तेरी सेवा और श्रद्धा से मैं प्रसन्न हूँ। मैं अपने तप का समस्त पुण्य तुझे अर्पित करती हूँ—तेरा सुहाग अक्षय रहे।’’',
+          'उसी समय कन्या के घर एक भयानक घटना घट चुकी थी—उसका पति अकस्मात् काल के वश होकर प्राणहीन हो गया था। पर जैसे ही सोना ने अपने हाथों से कन्या की माँग में सिंदूर भरा और अपना सौभाग्य-पुण्य उसे दान किया, सुदूर उस ब्राह्मण-युवक के शरीर में पुनः प्राण लौट आए। वह ऐसे उठ बैठा मानो गहरी निद्रा से जागा हो, और सारे घर में हर्ष की लहर दौड़ गई।',
+          'सोना ने कन्या को सीख दी, ‘‘बेटी, अमावस्या के पावन दिन पीपल के वृक्ष की एक सौ आठ बार परिक्रमा करना और हर परिक्रमा पर एक सूत का धागा लपेटते हुए मंगल-कामना करना। पीपल में स्वयं भगवान का वास है और अमावस्या पितरों के स्मरण की तिथि है। इस व्रत से तेरा सुहाग सदा सुरक्षित रहेगा।’’ कन्या ने श्रद्धापूर्वक यह संकल्प ग्रहण किया।',
+        ],
+        bodyEn: [
+          'So unwavering was the vow of Sona the washerwoman that she would not take food or water herself without first feeding her husband. By the radiance of this faithful-wife\'s dharma, the power of her merit was such that, were she to make a resolve, even death would turn back. Sona laid her hand upon the girl\'s head and said, ‘‘Daughter, your service and your devotion have pleased me. I offer you all the merit of my austerity — may your married fortune be inexhaustible.’’',
+          'At that very moment a dreadful thing had come to pass in the girl\'s home — her husband had suddenly fallen into the grip of death and become lifeless. But the instant Sona filled the parting of the girl\'s hair with vermilion by her own hand and bestowed upon her the merit of her good fortune, in that distant place the life-breath returned into the body of the young Brahmin. He sat up as though waking from deep sleep, and a wave of joy ran through the whole house.',
+          'Sona gave the girl her teaching: ‘‘Daughter, on the holy day of the new moon, circle the peepal tree one hundred and eight times, and at each circling wind a thread of cotton about it, making an auspicious wish. In the peepal God himself abides, and the new moon is the day for the remembrance of the ancestors. By this vow your married fortune shall remain forever guarded.’’ Reverently the girl took up this resolve.',
+        ],
+      },
+      {
+        id: 'amavasya-peepal-and-pitru',
+        titleHi: 'अमावस्या का व्रत, पीपल पूजन और पितृ स्मरण',
+        titleEn: 'The Amavasya vow, peepal worship and remembrance of the ancestors',
+        bodyHi: [
+          'अपने भाई के साथ कन्या हर्ष से अपने नगर लौटी और सोना धोबिन की कही हुई विधि से अमावस्या व्रत का पालन करने लगी। प्रत्येक अमावस्या को वह प्रातः स्नान कर पीपल के मूल में जल चढ़ाती, दीप जलाती, और एक सौ आठ बार परिक्रमा करते हुए श्रद्धा के सूत का धागा वृक्ष के चारों ओर लपेटती। उसका लौटा हुआ पति दीर्घायु और सुखी हुआ, और दोनों का दांपत्य प्रेम और धर्म से भर उठा।',
+          'उसी दिन वह अपने पितरों को भी न भूलती। अमावस्या की वेला में वह तिल और जल से तर्पण कर अपने पूर्वजों का स्मरण करती और निर्धनों को अन्न-वस्त्र का दान देती। जैसे पीपल की छाया पथिक को विश्राम देती है, वैसे ही उसके इस व्रत की छाया में उसके कुल के पितर तृप्त होकर आशीर्वाद बरसाते।',
+          'तभी से यह प्रथा चली कि अमावस्या के दिन, विशेषकर सोमवती अमावस्या को, सुहागिनें पीपल की एक सौ आठ परिक्रमा कर उसमें सूत लपेटती हैं और अपने सुहाग की रक्षा माँगती हैं। कहते हैं, जो स्त्री इस कथा को श्रद्धा से सुनती और अमावस्या का यह व्रत धारण करती है, उसका सौभाग्य सोना धोबिन के पुण्य-सा अक्षय रहता है, उसके पितर प्रसन्न होते हैं, और उसके घर में सुख, सौभाग्य तथा कल्याण सदा निवास करते हैं।',
+        ],
+        bodyEn: [
+          'With her brother, the girl returned joyfully to her own city and began to keep the Amavasya vow in the manner that Sona the washerwoman had told her. On every new-moon day she bathed at dawn, offered water at the root of the peepal, lit a lamp, and as she circled the tree one hundred and eight times she wound a thread of devotion about it. Her husband, restored to life, grew long-lived and content, and the married life of the two filled with love and with dharma.',
+          'On that same day she did not forget her ancestors either. In the hour of the new moon she offered libations of sesame and water in remembrance of her forebears, and gave gifts of food and clothing to the poor. As the shade of the peepal grants rest to a wayfarer, so in the shade of this vow of hers the ancestors of her line were satisfied and showered down their blessings.',
+          'From that time the custom arose that on the day of the new moon, and especially on Somvati Amavasya, married women circle the peepal one hundred and eight times, wind cotton thread about it, and ask for the protection of their married fortune. It is said that the woman who listens to this tale with faith and keeps this vow of the new moon finds her good fortune as inexhaustible as the merit of Sona the washerwoman; her ancestors are well pleased, and in her home happiness, good fortune, and welfare forever abide.',
+        ],
+      },
+    ],
+  }),
+  fullContent({
     id: 'vivah-panchami-katha',
     titleHi: 'विवाह पंचमी कथा',
     titleEn: 'Vivah Panchami Katha',
