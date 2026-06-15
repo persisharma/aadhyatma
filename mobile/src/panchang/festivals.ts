@@ -162,6 +162,7 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'narada-jayanti-vrat-katha', nameHi: 'नारद जयंती व्रत कथा', nameEn: 'Narada Jayanti Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/narada-jayanti/narada-jayanti-vrat-katha.html', relatedRuleIds: ['narada-jayanti'] }),
   katha({ id: 'shravana-mahatmya', nameHi: 'श्रावण माहात्म्य', nameEn: 'Shravana Mahatmya', kind: 'mahatmya', sourceUrl: VratKathaUrl, relatedRuleIds: ['sawan-somwar-vrat', 'mangala-gauri-vrat'] }),
   katha({ id: 'kartika-mahatmya', nameHi: 'कार्तिक माहात्म्य', nameEn: 'Kartika Mahatmya', kind: 'mahatmya', sourceUrl: VratKathaUrl, relatedRuleIds: ['dev-uthani-ekadashi', 'tulasi-vivah'] }),
+  katha({ id: 'putrada-ekadashi-katha', nameHi: 'पुत्रदा एकादशी व्रत कथा', nameEn: 'Putrada Ekadashi Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/ekadashi/putrada-ekadashi-vrat-katha.html', relatedRuleIds: ['putrada-ekadashi'] }),
 ];
 
 const SANKRANTI_RULES: ObservanceRule[] = [
@@ -279,6 +280,7 @@ const EKADASHI_KATHA_BY_NAME: Record<string, string> = {
   'Yogini Ekadashi': 'yogini-ekadashi-katha',
   'Devshayani Ekadashi': 'devshayani-ekadashi-katha',
   'Kamika Ekadashi': 'kamika-ekadashi-katha',
+  'Putrada Ekadashi': 'putrada-ekadashi-katha',
 };
 
 export const EKADASHI_RULES: ObservanceRule[] = EKADASHI_NAMES.map((item) => vrat({
