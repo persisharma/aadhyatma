@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import LanguageToggle from '@/components/LanguageToggle';
 import IndiaMap, { type IndiaMapPin } from '@/components/IndiaMap';
@@ -210,6 +211,7 @@ function Listing({
           glyph={mode === 'category' ? '॥' : 'ॐ'}
           name={c.label}
           meta={`${c.count} ${lang === 'hi' ? 'तीर्थ' : 'temples'}`}
+          lang={lang}
           colors={colors}
           typography={typography}
           radii={radii}
@@ -286,6 +288,7 @@ function DrillIn({
           glyph="ॐ"
           name={templeName(temple, lang)}
           meta={templeCity(temple, lang)}
+          lang={lang}
           colors={colors}
           typography={typography}
           radii={radii}
@@ -335,7 +338,7 @@ function ModeToggle({
             <Text
               style={{
                 fontFamily: lang === 'hi' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily,
-                fontSize: 12,
+                fontSize: lang === 'hi' ? 15 : 14,
                 fontStyle: lang === 'en' ? 'italic' : 'normal',
                 color: selected ? colors.saffronDeep : colors.inkMuted,
               }}
@@ -353,6 +356,7 @@ function BrowseCard({
   glyph,
   name,
   meta,
+  lang,
   colors,
   typography,
   radii,
@@ -361,6 +365,7 @@ function BrowseCard({
   glyph: string;
   name: string;
   meta: string;
+  lang: Lang;
   onPress: () => void;
 } & Omit<ThemeBits, 'spacing'>) {
   return (
@@ -383,8 +388,12 @@ function BrowseCard({
         <Text
           numberOfLines={1}
           style={{
-            fontFamily: typography.cardHindi.fontFamily,
-            fontSize: 17,
+            // Card titles follow the active language's face (design.md §type-scale):
+            // Devanagari for hi; Cormorant Bold for en, sized a step up + 0.3 tracking
+            // so the lighter Latin face reads at parity with the denser Devanagari.
+            fontFamily: lang === 'hi' ? typography.cardHindi.fontFamily : fontFamilies.latinBold,
+            fontSize: lang === 'hi' ? 17 : 19,
+            letterSpacing: lang === 'en' ? 0.3 : undefined,
             color: colors.ink,
           }}
         >
@@ -394,10 +403,10 @@ function BrowseCard({
           numberOfLines={1}
           style={{
             color: colors.inkMuted,
-            fontFamily: typography.cardLatin.fontFamily,
-            fontSize: 12,
-            marginTop: 2,
-            fontStyle: 'italic',
+            fontSize: typography.cardMeta.fontSize,
+            letterSpacing: typography.cardMeta.letterSpacing,
+            opacity: 0.9,
+            marginTop: 3,
           }}
         >
           {meta}
@@ -436,7 +445,7 @@ const styles = StyleSheet.create({
 
 const toggleStyles = StyleSheet.create({
   group: { flexDirection: 'row', borderWidth: 1, padding: 3, alignSelf: 'center' },
-  half: { minWidth: 100, paddingVertical: 7, paddingHorizontal: 16, alignItems: 'center', justifyContent: 'center' },
+  half: { minWidth: 100, minHeight: 44, paddingVertical: 11, paddingHorizontal: 18, alignItems: 'center', justifyContent: 'center' },
 });
 
 const rowStyles = StyleSheet.create({
