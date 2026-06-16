@@ -346,7 +346,7 @@ export const EKADASHI_RULES: ObservanceRule[] = EKADASHI_NAMES.map((item) => vra
 
 export const MONTHLY_VRAT_RULES: ObservanceRule[] = [
   vrat({ id: 'sankashti-chaturthi-vrat', nameHi: 'संकष्टी चतुर्थी व्रत', nameEn: 'Sankashti Chaturthi Vrat', recurrence: 'monthly', paksha: 'krishna', tithi: 4, deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', linkSectionId: 'ganesh-chalisa', kathaId: 'sankashti-chaturthi-vrat-katha' }),
-  vrat({ id: 'vinayaka-chaturthi-vrat', nameHi: 'विनायक चतुर्थी व्रत', nameEn: 'Vinayaka Chaturthi Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 4, deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', linkSectionId: 'ganesh-chalisa', kathaId: 'ganesha-chaturthi-vrat-katha' }),
+  vrat({ id: 'vinayaka-chaturthi-vrat', nameHi: 'शुक्ल चतुर्थी व्रत', nameEn: 'Shukla Chaturthi Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 4, deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', linkSectionId: 'ganesh-chalisa', kathaId: 'ganesha-chaturthi-vrat-katha' }),
   vrat({ id: 'pradosh-vrat-shukla', nameHi: 'शुक्ल प्रदोष व्रत', nameEn: 'Shukla Pradosh Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 13, deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'pradosha-vrat-katha' }),
   vrat({ id: 'pradosh-vrat-krishna', nameHi: 'कृष्ण प्रदोष व्रत', nameEn: 'Krishna Pradosh Vrat', recurrence: 'monthly', paksha: 'krishna', tithi: 13, deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'pradosha-vrat-katha' }),
   vrat({ id: 'dwadashi-vrat-shukla', nameHi: 'शुक्ल द्वादशी व्रत', nameEn: 'Shukla Dwadashi Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 12, deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', linkSectionId: 'vishnu-sahasranama', kathaId: 'dwadashi-vrat-katha' }),

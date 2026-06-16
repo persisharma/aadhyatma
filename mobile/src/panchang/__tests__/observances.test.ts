@@ -37,6 +37,15 @@ test('source catalog captures default and advanced Drik Vrat list entries', () =
   assert.ok(allRules.length > defaultRules.length);
 });
 
+test('monthly shukla Chaturthi is labelled distinctly from the Ganesh Chaturthi festival', () => {
+  const defaultRules = getObservanceCatalog();
+  const shuklaChaturthi = defaultRules.find((rule) => rule.id === 'vinayaka-chaturthi-vrat');
+  assert.ok(shuklaChaturthi, 'shukla chaturthi rule exists');
+  // The monthly shukla Chaturthi must not read as the annual Ganesh Chaturthi festival.
+  assert.equal(shuklaChaturthi.nameEn, 'Shukla Chaturthi Vrat');
+  assert.equal(shuklaChaturthi.nameHi, 'शुक्ल चतुर्थी व्रत');
+});
+
 test('all surfaced observance rules have source metadata and stable rule types', () => {
   for (const rule of OBSERVANCE_RULES) {
     assert.ok(rule.sourceUrl?.startsWith('https://www.drikpanchang.com/'), `${rule.id} missing sourceUrl`);
