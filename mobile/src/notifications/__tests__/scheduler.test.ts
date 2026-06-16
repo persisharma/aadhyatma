@@ -9,6 +9,7 @@ import {
   ROLLING_WINDOW_DAYS,
 } from '../pure';
 import { hashDateKey, pickVerseForDateKey, toDateKey } from '../seed';
+import { toGujarati, toKannada } from '@/utils/transliterate';
 import type { UniformVerse } from '@/data/versePool';
 
 // Rolling window is well under the iOS pending-notification cap.
@@ -142,7 +143,8 @@ import type { UniformVerse } from '@/data/versePool';
   assert.equal(pickVerseForDateKey('2026-07-01', []), null);
 }
 
-// formatNotificationContent produces Hindi-led title + verse + source label body.
+// formatNotificationContent renders the verse, source, label, and title entirely
+// in the selected reading language (gu/kn re-script the Devanagari).
 {
   const verse: UniformVerse = {
     sourceId: 'bhagavad-gita',
@@ -157,9 +159,32 @@ import type { UniformVerse } from '@/data/versePool';
     labelHi: 'श्लोक 2.47',
     labelEn: 'Shloka 2.47',
   };
-  const { title, body } = formatNotificationContent(verse);
-  assert.equal(title, 'दैनिक भक्ति');
-  assert.ok(body.includes('कर्मण्येवाधिकारस्ते'));
-  assert.ok(body.includes('Bhagavad Gītā'));
-  assert.ok(body.includes('Shloka 2.47'));
+
+  // hi (default): Devanagari throughout — verse, source name, label, title.
+  const hiC = formatNotificationContent(verse);
+  assert.equal(hiC.title, 'दैनिक भक्ति');
+  assert.ok(hiC.body.includes('कर्मण्येवाधिकारस्ते'));
+  assert.ok(hiC.body.includes('भगवद् गीता'));
+  assert.ok(hiC.body.includes('श्लोक 2.47'));
+
+  // en: romanized verse + English source/label/title.
+  const enC = formatNotificationContent(verse, 'en');
+  assert.equal(enC.title, 'Daily Verse');
+  assert.ok(enC.body.includes('karmaṇy evādhikāras'));
+  assert.ok(enC.body.includes('Bhagavad Gītā'));
+  assert.ok(enC.body.includes('Shloka 2.47'));
+
+  // gu: the entire body+title re-scripted to Gujarati, no Devanagari residue.
+  const guC = formatNotificationContent(verse, 'gu');
+  assert.equal(guC.title, toGujarati('दैनिक भक्ति'));
+  assert.ok(guC.body.includes(toGujarati('भगवद् गीता')));
+  assert.ok(guC.body.includes(toGujarati('श्लोक 2.47')));
+  assert.ok(!/[ऀ-ॣ०-ॿ]/.test(guC.body), 'gu notification has no Devanagari');
+
+  // kn: same, in Kannada.
+  const knC = formatNotificationContent(verse, 'kn');
+  assert.equal(knC.title, toKannada('दैनिक भक्ति'));
+  assert.ok(knC.body.includes(toKannada('भगवद् गीता')));
+  assert.ok(knC.body.includes(toKannada('श्लोक 2.47')));
+  assert.ok(!/[ऀ-ॣ०-ॿ]/.test(knC.body), 'kn notification has no Devanagari');
 }

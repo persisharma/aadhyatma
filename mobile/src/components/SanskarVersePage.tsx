@@ -2,6 +2,14 @@ import React, { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import {
+  verseLinesByLang,
+  meaningByLang,
+  meaningSourceLang,
+  contentByLang,
+  pick,
+} from '@/utils/localize';
+import { verseToken, meaningToken } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
@@ -25,62 +33,53 @@ export default function SanskarVersePage({ verse, sourceId, width }: Props) {
 
   const pillText = useMemo(() => {
     if (isIntro) {
-      return lang === 'hi' ? 'परिचय' : 'Introduction';
+      return pick(lang, { hi: 'परिचय', en: 'Introduction', gu: 'પરિચય', kn: 'ಪರಿಚಯ' });
     }
     if (isVidhi) {
-      return lang === 'hi' ? 'विधि' : 'Method';
+      return pick(lang, { hi: 'विधि', en: 'Method', gu: 'વિધિ', kn: 'ವಿಧಿ' });
     }
     if (isStep) {
-      const label = lang === 'hi' ? verse.labelHi : verse.labelEn;
+      const label = contentByLang(lang, verse.labelHi, verse.labelEn);
       const stepNum = verse.number - 1; // subtract 1 because intro is verse 1
-      const prefix = lang === 'hi' ? `चरण ${stepNum}` : `Step ${stepNum}`;
+      const prefix = contentByLang(lang, `चरण ${stepNum}`, `Step ${stepNum}`);
       return `${prefix} · ${label}`;
     }
-    return lang === 'hi' ? verse.labelHi : verse.labelEn;
+    return contentByLang(lang, verse.labelHi, verse.labelEn);
   }, [isIntro, isStep, isVidhi, lang, verse.labelHi, verse.labelEn, verse.number]);
 
-  const verseLines = lang === 'hi' ? verse.lines : verse.linesEn;
-  const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
-  const meaningLabel = lang === 'hi' ? 'भावार्थ' : 'Meaning';
+  const verseLines = verseLinesByLang(lang, verse.lines, verse.linesEn);
+  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn);
+  const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ' });
   const hasVidhi = !!(verse.vidhiHi || verse.vidhiEn);
-  const vidhiContent = lang === 'hi' ? verse.vidhiHi : verse.vidhiEn;
-  const vidhiLabel = lang === 'hi' ? 'कैसे करें' : 'How to';
+  const vidhiContent = meaningByLang(lang, verse.vidhiHi ?? '', verse.vidhiEn ?? '');
+  const vidhiLabel = pick(lang, {
+    hi: 'कैसे करें',
+    en: 'How to',
+    gu: 'કેવી રીતે કરવું',
+    kn: 'ಹೇಗೆ ಮಾಡಬೇಕು',
+  });
 
+  const verseTok = verseToken(lang, typography);
   const verseLineStyle = useMemo(
-    () =>
-      lang === 'hi'
-        ? {
-            color: colors.ink,
-            fontFamily: typography.verse.fontFamily,
-            fontSize: typography.verse.fontSize,
-            lineHeight: typography.verse.lineHeight,
-          }
-        : {
-            color: colors.ink,
-            fontFamily: typography.verseLatin.fontFamily,
-            fontSize: typography.verseLatin.fontSize,
-            lineHeight: typography.verseLatin.lineHeight,
-            fontStyle: 'italic' as const,
-          },
-    [lang, colors.ink, typography.verse, typography.verseLatin]
+    () => ({
+      color: colors.ink,
+      fontFamily: verseTok.fontFamily,
+      fontSize: verseTok.fontSize,
+      lineHeight: verseTok.lineHeight,
+      fontStyle: (lang === 'en' ? 'italic' : 'normal') as 'italic' | 'normal',
+    }),
+    [lang, colors.ink, verseTok]
   );
 
+  const meaningTok = meaningToken(meaningSourceLang(lang), typography);
   const bodyStyle = useMemo(
-    () =>
-      lang === 'hi'
-        ? {
-            color: colors.inkSoft,
-            fontFamily: typography.meaning.fontFamily,
-            fontSize: typography.meaning.fontSize,
-            lineHeight: typography.meaning.lineHeight,
-          }
-        : {
-            color: colors.ink,
-            fontFamily: typography.meaningEnglish.fontFamily,
-            fontSize: typography.meaningEnglish.fontSize,
-            lineHeight: typography.meaningEnglish.lineHeight,
-          },
-    [lang, colors.ink, colors.inkSoft, typography.meaning, typography.meaningEnglish]
+    () => ({
+      color: meaningSourceLang(lang) === 'en' ? colors.ink : colors.inkSoft,
+      fontFamily: meaningTok.fontFamily,
+      fontSize: meaningTok.fontSize,
+      lineHeight: meaningTok.lineHeight,
+    }),
+    [lang, colors.ink, colors.inkSoft, meaningTok]
   );
 
   const a11yLabel = [pillText, ...verseLines, meaningLabel, meaning].join('. ');

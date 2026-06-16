@@ -1,10 +1,13 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import type { Lang } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
+import { titleFontByLang } from '@/utils/langType';
 
 type Props = {
   onPress: () => void;
-  lang: 'hi' | 'en';
+  lang: Lang;
 };
 
 /**
@@ -15,7 +18,7 @@ type Props = {
  * reader is past the first verse.
  */
 export default function JumpToStartButton({ onPress, lang }: Props) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
 
   return (
     <Pressable
@@ -38,15 +41,12 @@ export default function JumpToStartButton({ onPress, lang }: Props) {
           styles.label,
           {
             color: colors.saffronDeep,
-            fontFamily:
-              lang === 'hi'
-                ? typography.readerTitle.fontFamily
-                : typography.cardLatin.fontFamily,
+            fontFamily: titleFontByLang(lang),
             fontStyle: lang === 'en' ? 'italic' : 'normal',
           },
         ]}
       >
-        {lang === 'hi' ? 'आरंभ' : 'Start'}
+        {pick(lang, { hi: 'आरंभ', en: 'Start', gu: 'આરંભ', kn: 'ಆರಂಭ' })}
       </Text>
     </Pressable>
   );

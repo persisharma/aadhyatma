@@ -16,6 +16,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { getChalisa, type ChalisaVerse } from '@/data/chalisaRegistry';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
+import { titleFontByLang } from '@/utils/langType';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -130,17 +132,14 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
               styles.title,
               {
                 color: colors.ink,
-                fontFamily:
-                  lang === 'hi'
-                    ? typography.readerTitle.fontFamily
-                    : typography.cardLatin.fontFamily,
+                fontFamily: titleFontByLang(lang),
                 fontSize: typography.readerTitle.fontSize,
                 fontStyle: lang === 'en' ? 'italic' : 'normal',
               },
             ]}
             numberOfLines={1}
           >
-            {lang === 'hi' ? chalisa.titleHi : chalisa.titleEn}
+            {contentByLang(lang, chalisa.titleHi, chalisa.titleEn)}
           </Text>
 
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>

@@ -12,6 +12,9 @@ import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { fontFamilies } from '@/theme/typography';
+import { contentByLang, pick, verseLinesByLang } from '@/utils/localize';
+import { isLatinLang } from '@/utils/langType';
 import { getSourceBackground } from '@/data/backgrounds';
 import {
   findJapamMantra,
@@ -85,11 +88,14 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const titleEn = mantra.nameEn;
 
   const beadProgress = entry.count / JAPAM_BEADS_PER_ROUND;
-  const beadsLabel = lang === 'hi' ? 'बीज' : 'Beads';
-  const roundsLabel = lang === 'hi' ? 'आवृत्ति' : 'Rounds';
-  const tapHint = lang === 'hi' ? 'जप के लिए स्पर्श करें' : 'Tap to chant';
-  const resetBeadsLabel = lang === 'hi' ? 'बीज पुनः ०' : 'Reset Beads';
-  const clearAllLabel = lang === 'hi' ? 'सब साफ़' : 'Clear All';
+  const beadsLabel = pick(lang, { hi: 'बीज', en: 'Beads', gu: 'મણકા', kn: 'ಮಣಿ' });
+  const roundsLabel = pick(lang, { hi: 'आवृत्ति', en: 'Rounds', gu: 'આવૃત્તિ', kn: 'ಆವೃತ್ತಿ' });
+  const tapHint = pick(lang, { hi: 'जप के लिए स्पर्श करें', en: 'Tap to chant', gu: 'જપ માટે સ્પર્શ કરો', kn: 'ಜಪಕ್ಕಾಗಿ ಸ್ಪರ್ಶಿಸಿ' });
+  const resetBeadsLabel = pick(lang, { hi: 'बीज पुनः ०', en: 'Reset Beads', gu: 'મણકા ફરી ૦', kn: 'ಮಣಿ ಮರು ೦' });
+  const clearAllLabel = pick(lang, { hi: 'सब साफ़', en: 'Clear All', gu: 'બધું સાફ', kn: 'ಎಲ್ಲ ತೆರವು' });
+  // Script serif for gu/kn (constrained surface keeps its own sizes); null for hi/en.
+  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
+  const scriptSerifBold = lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
 
 
   return (
@@ -117,22 +123,22 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <View style={styles.titleBlock}>
             <Text
               style={[
-                lang === 'hi' ? styles.titleHi : styles.titleEn,
-                lang === 'hi'
+                isLatinLang(lang) ? styles.titleEn : styles.titleHi,
+                isLatinLang(lang)
                   ? {
-                      color: colors.ink,
-                      fontFamily: typography.readerTitle.fontFamily,
-                      fontSize: typography.readerTitle.fontSize,
-                    }
-                  : {
                       color: colors.ink,
                       fontFamily: typography.cardLatin.fontFamily,
                       fontSize: 16,
+                    }
+                  : {
+                      color: colors.ink,
+                      fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily,
+                      fontSize: typography.readerTitle.fontSize,
                     },
               ]}
               numberOfLines={1}
             >
-              {lang === 'hi' ? titleHi : titleEn}
+              {contentByLang(lang, titleHi, titleEn)}
             </Text>
           </View>
 
@@ -174,23 +180,23 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         >
           <View style={[styles.tapContent, { paddingHorizontal: spacing.xxl }]}>
             <View style={styles.mantraBlock}>
-              {(lang === 'hi' ? mantra.lines : mantra.linesEn).map((line, i) => (
+              {verseLinesByLang(lang, mantra.lines, mantra.linesEn).map((line, i) => (
                 <Text
                   key={`${lang}-${i}`}
                   style={[
-                    lang === 'hi' ? styles.mantraLine : styles.mantraLineEn,
-                    lang === 'hi'
+                    isLatinLang(lang) ? styles.mantraLineEn : styles.mantraLine,
+                    isLatinLang(lang)
                       ? {
-                          color: colors.ink,
-                          fontFamily: typography.verse.fontFamily,
-                          fontSize: verseFontSize,
-                          lineHeight: verseLineHeight,
-                        }
-                      : {
                           color: colors.ink,
                           fontFamily: typography.cardLatin.fontFamily,
                           fontSize: verseFontSizeEn,
                           lineHeight: verseLineHeightEn,
+                        }
+                      : {
+                          color: colors.ink,
+                          fontFamily: scriptSerif ?? typography.verse.fontFamily,
+                          fontSize: verseFontSize,
+                          lineHeight: verseLineHeight,
                         },
                   ]}
                 >
@@ -378,34 +384,36 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 styles.confirmTitle,
                 {
                   color: colors.ink,
-                  fontFamily: typography.readerTitle.fontFamily,
+                  fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily,
                 },
               ]}
             >
               {confirmKind === 'beads'
-                ? lang === 'hi'
-                  ? 'बीज पुनः शून्य करें?'
-                  : 'Reset bead count?'
-                : lang === 'hi'
-                  ? 'सब हटायें?'
-                  : 'Clear everything?'}
+                ? pick(lang, { hi: 'बीज पुनः शून्य करें?', en: 'Reset bead count?', gu: 'મણકા ફરી શૂન્ય કરવા?', kn: 'ಮಣಿ ಎಣಿಕೆ ಮರುಹೊಂದಿಸಬೇಕೆ?' })
+                : pick(lang, { hi: 'सब हटायें?', en: 'Clear everything?', gu: 'બધું હટાવવું?', kn: 'ಎಲ್ಲವನ್ನು ತೆರವುಗೊಳಿಸಬೇಕೆ?' })}
             </Text>
             <Text
               style={[
                 styles.confirmBody,
                 {
                   color: colors.inkSoft,
-                  fontFamily: typography.cardLatin.fontFamily,
+                  fontFamily: scriptSerif ?? typography.cardLatin.fontFamily,
                 },
               ]}
             >
               {confirmKind === 'beads'
-                ? lang === 'hi'
-                  ? 'चालू आवृत्ति की गिनती शून्य हो जायेगी। पूर्ण आवृत्तियाँ सुरक्षित रहेंगी।'
-                  : 'The current bead count will reset to 0. Completed rounds are kept.'
-                : lang === 'hi'
-                  ? 'बीज तथा सभी आवृत्तियाँ मिट जायेंगी। यह क्रिया पूर्ववत् नहीं की जा सकती।'
-                  : 'Beads and all rounds will be erased. This cannot be undone.'}
+                ? pick(lang, {
+                    hi: 'चालू आवृत्ति की गिनती शून्य हो जायेगी। पूर्ण आवृत्तियाँ सुरक्षित रहेंगी।',
+                    en: 'The current bead count will reset to 0. Completed rounds are kept.',
+                    gu: 'ચાલુ આવૃત્તિની ગણતરી શૂન્ય થઈ જશે. પૂર્ણ આવૃત્તિઓ સચવાશે.',
+                    kn: 'ಪ್ರಸ್ತುತ ಮಣಿ ಎಣಿಕೆ ೦ ಗೆ ಮರುಹೊಂದಿಸಲಾಗುತ್ತದೆ. ಪೂರ್ಣ ಆವೃತ್ತಿಗಳು ಉಳಿಯುತ್ತವೆ.',
+                  })
+                : pick(lang, {
+                    hi: 'बीज तथा सभी आवृत्तियाँ मिट जायेंगी। यह क्रिया पूर्ववत् नहीं की जा सकती।',
+                    en: 'Beads and all rounds will be erased. This cannot be undone.',
+                    gu: 'મણકા તથા બધી આવૃત્તિઓ ભૂંસાઈ જશે. આ ક્રિયા પાછી લઈ શકાતી નથી.',
+                    kn: 'ಮಣಿ ಮತ್ತು ಎಲ್ಲಾ ಆವೃತ್ತಿಗಳು ಅಳಿಸಲ್ಪಡುತ್ತವೆ. ಇದನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗದು.',
+                  })}
             </Text>
 
             <Pressable
@@ -432,7 +440,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                   styles.confirmPrimaryText,
                   {
                     color: colors.onPrimary,
-                    fontFamily: typography.readerTitle.fontFamily,
+                    fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily,
                   },
                 ]}
               >
@@ -450,11 +458,11 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                   styles.confirmCancelText,
                   {
                     color: colors.inkMuted,
-                    fontFamily: typography.cardLatin.fontFamily,
+                    fontFamily: scriptSerif ?? typography.cardLatin.fontFamily,
                   },
                 ]}
               >
-                {lang === 'hi' ? 'रद्द करें' : 'Cancel'}
+                {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' })}
               </Text>
             </Pressable>
           </Pressable>

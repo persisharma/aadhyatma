@@ -6,11 +6,14 @@ import {
   useAudioPlayerStatus,
 } from 'expo-audio';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { getJapamAudioSource } from '@assets/japam-audio';
+import type { Lang } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
 
 type Props = {
   mantraId: string;
-  lang: 'hi' | 'en';
+  lang: Lang;
   /** Called once per completed audio loop (= one bead). */
   onIteration: () => void;
 };
@@ -165,9 +168,23 @@ function ActiveAudioPlayer({
     setRate((r) => Math.min(MAX_RATE, +(r + RATE_STEP).toFixed(2)));
   }, []);
 
-  const playLabel = lang === 'hi' ? (isPlaying ? 'विराम' : 'चलाएँ') : isPlaying ? 'Pause' : 'Play';
-  const tempoLabel = lang === 'hi' ? 'गति' : 'Tempo';
+  const playLabel = isPlaying
+    ? pick(lang, { hi: 'विराम', en: 'Pause', gu: 'વિરામ', kn: 'ವಿರಾಮ' })
+    : pick(lang, { hi: 'चलाएँ', en: 'Play', gu: 'ચલાવો', kn: 'ಚಲಾಯಿಸಿ' });
+  const tempoLabel = pick(lang, { hi: 'गति', en: 'Tempo', gu: 'ગતિ', kn: 'ಗತಿ' });
   const a11yPlay = isPlaying ? 'Pause auto-chant' : 'Play auto-chant';
+  const labelHeadFont =
+    lang === 'gu'
+      ? fontFamilies.gujaratiBold
+      : lang === 'kn'
+        ? fontFamilies.kannadaBold
+        : typography.readerTitle.fontFamily;
+  const labelSubFont =
+    lang === 'gu'
+      ? fontFamilies.gujarati
+      : lang === 'kn'
+        ? fontFamilies.kannada
+        : typography.cardLatin.fontFamily;
 
   return (
     <View style={styles.wrap}>
@@ -204,7 +221,7 @@ function ActiveAudioPlayer({
             styles.playLabel,
             {
               color: isPlaying ? colors.onPrimary : colors.saffronDeep,
-              fontFamily: typography.readerTitle.fontFamily,
+              fontFamily: labelHeadFont,
             },
           ]}
         >
@@ -218,7 +235,7 @@ function ActiveAudioPlayer({
             styles.tempoLabel,
             {
               color: colors.inkMuted,
-              fontFamily: typography.cardLatin.fontFamily,
+              fontFamily: labelSubFont,
             },
           ]}
         >
@@ -282,12 +299,20 @@ function ActiveAudioPlayer({
   );
 }
 
-function UnavailableNotice({ lang }: { lang: 'hi' | 'en' }) {
+function UnavailableNotice({ lang }: { lang: Lang }) {
   const { colors, typography } = useTheme();
-  const text =
-    lang === 'hi'
-      ? 'इस मंत्र की ध्वनि उपलब्ध नहीं है'
-      : 'Audio not available';
+  const text = pick(lang, {
+    hi: 'इस मंत्र की ध्वनि उपलब्ध नहीं है',
+    en: 'Audio not available',
+    gu: 'આ મંત્રનો ધ્વનિ ઉપલબ્ધ નથી',
+    kn: 'ಈ ಮಂತ್ರದ ಧ್ವನಿ ಲಭ್ಯವಿಲ್ಲ',
+  });
+  const noticeFont =
+    lang === 'gu'
+      ? fontFamilies.gujarati
+      : lang === 'kn'
+        ? fontFamilies.kannada
+        : typography.swipeHint.fontFamily;
   return (
     <View style={styles.wrap}>
       <Text
@@ -295,7 +320,7 @@ function UnavailableNotice({ lang }: { lang: 'hi' | 'en' }) {
           styles.unavailable,
           {
             color: colors.inkMuted,
-            fontFamily: typography.swipeHint.fontFamily,
+            fontFamily: noticeFont,
             fontSize: typography.swipeHint.fontSize,
           },
         ]}

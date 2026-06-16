@@ -27,6 +27,8 @@ import PrevChapterCard from '@/components/PrevChapterCard';
 import LanguageToggle from '@/components/LanguageToggle';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
+import { contentByLang } from '@/utils/localize';
+import { titleFontByLang } from '@/utils/langType';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import type { RootStackParamList } from '@/navigation/types';
@@ -175,9 +177,11 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   }, [verseCount, currentIndex]);
 
   const topTitle = chapter
-    ? lang === 'hi'
-      ? `अध्याय ${chapter.chapter} · ${chapter.titleHi}`
-      : `Chapter ${chapter.chapter} · ${chapter.titleEn}`
+    ? contentByLang(
+        lang,
+        `अध्याय ${chapter.chapter} · ${chapter.titleHi}`,
+        `Chapter ${chapter.chapter} · ${chapter.titleEn}`
+      )
     : '';
 
   const listExtraData = useMemo(
@@ -231,10 +235,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
               styles.title,
               {
                 color: colors.ink,
-                fontFamily:
-                  lang === 'hi'
-                    ? typography.readerTitle.fontFamily
-                    : typography.cardLatin.fontFamily,
+                fontFamily: titleFontByLang(lang),
                 fontSize: typography.readerTitle.fontSize,
                 fontStyle: lang === 'en' ? 'italic' : 'normal',
               },
@@ -278,7 +279,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                 return (
                   <NextChapterCard
                     width={width}
-                    nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn}
+                    nextTitle={contentByLang(lang, item.nextTitleHi, item.nextTitleEn)}
                     lang={lang}
                   />
                 );
@@ -287,7 +288,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                 return (
                   <PrevChapterCard
                     width={width}
-                    prevTitle={lang === 'hi' ? item.prevTitleHi : item.prevTitleEn}
+                    prevTitle={contentByLang(lang, item.prevTitleHi, item.prevTitleEn)}
                     lang={lang}
                   />
                 );

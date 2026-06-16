@@ -22,6 +22,8 @@ import {
   type SundarkandVerse,
 } from '@/data/sundarkand';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -177,9 +179,9 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
   }, [currentIndex, verseCount]);
 
-  const title = lang === 'hi' ? sundarkandTitleHi : sundarkandTitleEn;
+  const title = contentByLang(lang, sundarkandTitleHi, sundarkandTitleEn);
   const titleFontFamily =
-    lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
+    titleFontByLang(lang);
   const titleItalic = lang === 'en';
 
   const handleScroll = useCallback(
@@ -312,7 +314,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
                 return (
                   <NextChapterCard
                     width={width}
-                    nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn}
+                    nextTitle={contentByLang(lang, item.nextTitleHi, item.nextTitleEn)}
                     lang={lang}
                   />
                 );
@@ -321,7 +323,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
                 return (
                   <PrevChapterCard
                     width={width}
-                    prevTitle={lang === 'hi' ? item.prevTitleHi : item.prevTitleEn}
+                    prevTitle={contentByLang(lang, item.prevTitleHi, item.prevTitleEn)}
                     lang={lang}
                   />
                 );

@@ -3,6 +3,8 @@ import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Updates from 'expo-updates';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
+import { fontFamilies } from '@/theme/typography';
 
 /**
  * "A fresh update is ready" prompt.
@@ -28,7 +30,9 @@ import { useGitaLanguage } from '@/data/gita/language';
 export default function UpdateReadyModal() {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHi = lang === 'hi';
+  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
+  const scriptSerifBold =
+    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
 
   const { isUpdatePending } = Updates.useUpdates();
   const [dismissed, setDismissed] = useState(false);
@@ -73,26 +77,34 @@ export default function UpdateReadyModal() {
           <Text
             style={[
               styles.title,
-              { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+              { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
             ]}
           >
-            {isHi ? 'नया अपडेट तैयार है' : 'A fresh update is ready'}
+            {pick(lang, {
+              hi: 'नया अपडेट तैयार है',
+              en: 'A fresh update is ready',
+              gu: 'નવું અપડેટ તૈયાર છે',
+              kn: 'ಹೊಸ ಅಪ್‌ಡೇಟ್ ಸಿದ್ಧವಾಗಿದೆ',
+            })}
           </Text>
           <Text
             style={[
               styles.body,
-              { color: colors.inkSoft, fontFamily: typography.meaning.fontFamily },
+              { color: colors.inkSoft, fontFamily: scriptSerif ?? typography.meaning.fontFamily },
             ]}
           >
-            {isHi
-              ? 'नई सामग्री और सुधार डाउनलोड हो चुके हैं। अभी लागू करें, या ऐप दोबारा खोलने पर अपने आप लागू हो जाएँगे।'
-              : 'New content and improvements have been downloaded. Apply them now, or they’ll apply automatically next time you open the app.'}
+            {pick(lang, {
+              hi: 'नई सामग्री और सुधार डाउनलोड हो चुके हैं। अभी लागू करें, या ऐप दोबारा खोलने पर अपने आप लागू हो जाएँगे।',
+              en: 'New content and improvements have been downloaded. Apply them now, or they’ll apply automatically next time you open the app.',
+              gu: 'નવી સામગ્રી અને સુધારા ડાઉનલોડ થઈ ગયા છે. હમણાં લાગુ કરો, અથવા ઍપ ફરી ખોલતાં આપમેળે લાગુ થશે.',
+              kn: 'ಹೊಸ ವಿಷಯ ಮತ್ತು ಸುಧಾರಣೆಗಳು ಡೌನ್‌ಲೋಡ್ ಆಗಿವೆ. ಈಗ ಅನ್ವಯಿಸಿ, ಅಥವಾ ಆ್ಯಪ್ ಮತ್ತೆ ತೆರೆದಾಗ ತಾನಾಗಿಯೇ ಅನ್ವಯವಾಗುತ್ತದೆ.',
+            })}
           </Text>
 
           <Pressable
             onPress={onUpdate}
             accessibilityRole="button"
-            accessibilityLabel={isHi ? 'अभी अपडेट करें' : 'Update now'}
+            accessibilityLabel={pick(lang, { hi: 'अभी अपडेट करें', en: 'Update now', gu: 'હમણાં અપડેટ કરો', kn: 'ಈಗ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ' })}
             disabled={busy}
             style={({ pressed }) => [
               styles.primary,
@@ -106,27 +118,27 @@ export default function UpdateReadyModal() {
             <Text
               style={[
                 styles.primaryText,
-                { color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily },
+                { color: colors.onPrimary, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
               ]}
             >
-              {isHi ? 'अभी अपडेट करें' : 'Update now'}
+              {pick(lang, { hi: 'अभी अपडेट करें', en: 'Update now', gu: 'હમણાં અપડેટ કરો', kn: 'ಈಗ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ' })}
             </Text>
           </Pressable>
 
           <Pressable
             onPress={onLater}
             accessibilityRole="button"
-            accessibilityLabel={isHi ? 'बाद में' : 'Later'}
+            accessibilityLabel={pick(lang, { hi: 'बाद में', en: 'Later', gu: 'પછી', kn: 'ನಂತರ' })}
             disabled={busy}
             style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.6 : 1 }]}
           >
             <Text
               style={[
                 styles.secondaryText,
-                { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                { color: colors.inkMuted, fontFamily: scriptSerif ?? typography.cardLatin.fontFamily },
               ]}
             >
-              {isHi ? 'बाद में' : 'Later'}
+              {pick(lang, { hi: 'बाद में', en: 'Later', gu: 'પછી', kn: 'ನಂತರ' })}
             </Text>
           </Pressable>
         </View>

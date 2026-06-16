@@ -4,6 +4,7 @@ import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang, pick } from '@/utils/localize';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { library, type LibraryEntry } from '@/data/texts';
 import { deityForWeekday, WEEKDAY_LABELS } from '@/data/routine/vaar';
@@ -18,7 +19,6 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { routines, addItem, removeItem } = useRoutines();
-  const isHi = lang === 'hi';
 
   const routine = routines.find((r) => r.id === route.params.routineId);
   const isWeekday = routine?.mode === 'weekday';
@@ -81,7 +81,7 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
         {isWeekday && (
           <View style={{ marginBottom: spacing.md }}>
             <Text style={{ ...typography.sectionLabel, color: colors.inkMuted, marginBottom: 8 }}>
-              {isHi ? 'किस दिन के लिए' : 'For which day'}
+              {pick(lang, { hi: 'किस दिन के लिए', en: 'For which day', gu: 'કયા દિવસ માટે', kn: 'ಯಾವ ದಿನಕ್ಕಾಗಿ' })}
             </Text>
             <View style={styles.dayStrip}>
               {WEEKDAY_LABELS.map((w, i) => (
@@ -120,25 +120,27 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
               <View style={styles.info}>
                 <View style={styles.nameRow}>
                   <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 14, color: colors.ink, flexShrink: 1 }}>
-                    {isHi ? entry.nameHi : entry.nameEn}
+                    {contentByLang(lang, entry.nameHi, entry.nameEn)}
                   </Text>
                   {suggested && (
                     <View style={{ backgroundColor: colors.goldTint, borderRadius: radii.pill, paddingHorizontal: 6, paddingVertical: 1 }}>
                       <Text style={{ ...typography.versePill, color: colors.saffronDeep }}>
-                        {isHi ? 'सुझाव' : 'SUGGESTED'}
+                        {pick(lang, { hi: 'सुझाव', en: 'SUGGESTED', gu: 'સૂચન', kn: 'ಸೂಚನೆ' })}
                       </Text>
                     </View>
                   )}
                 </View>
                 <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-                  {entry.category === 'japam' ? (isHi ? '1 माला · 108' : '1 mala · 108') : isHi ? 'पूरा पाठ' : 'Whole text'}
+                  {entry.category === 'japam'
+                    ? pick(lang, { hi: '1 माला · 108', en: '1 mala · 108', gu: '1 માળા · 108', kn: '1 ಮಾಲಾ · 108' })
+                    : pick(lang, { hi: 'पूरा पाठ', en: 'Whole text', gu: 'આખો પાઠ', kn: 'ಸಂಪೂರ್ಣ ಪಠ್ಯ' })}
                 </Text>
               </View>
               <Pressable
                 onPress={() => toggle(entry)}
                 hitSlop={10}
                 accessibilityRole="button"
-                accessibilityLabel={`${added ? (isHi ? 'हटाएँ' : 'Remove') : isHi ? 'जोड़ें' : 'Add'} ${isHi ? entry.nameHi : entry.nameEn}`}
+                accessibilityLabel={`${added ? pick(lang, { hi: 'हटाएँ', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ' }) : pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ' })} ${contentByLang(lang, entry.nameHi, entry.nameEn)}`}
               >
                 <Text style={{ color: added ? colors.gold : colors.saffron, fontSize: 22 }}>{added ? '✓' : '＋'}</Text>
               </Pressable>
@@ -147,7 +149,7 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
         })}
 
         <RoutineButton
-          label={isHi ? 'पूर्ण' : 'Done'}
+          label={pick(lang, { hi: 'पूर्ण', en: 'Done', gu: 'પૂર્ણ', kn: 'ಮುಗಿದಿದೆ' })}
           onPress={() => navigation.navigate('RoutineToday')}
         />
         <Text
@@ -159,9 +161,12 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
             lineHeight: 16,
           }}
         >
-          {isHi
-            ? 'पूरे पाठ या जप जोड़ें। अध्याय-स्तर पर चयन शीघ्र आ रहा है।'
-            : 'Add whole texts or japa. Chapter-level selection is coming soon.'}
+          {pick(lang, {
+            hi: 'पूरे पाठ या जप जोड़ें। अध्याय-स्तर पर चयन शीघ्र आ रहा है।',
+            en: 'Add whole texts or japa. Chapter-level selection is coming soon.',
+            gu: 'આખા પાઠ કે જપ ઉમેરો. અધ્યાય-સ્તરની પસંદગી ટૂંક સમયમાં આવી રહી છે.',
+            kn: 'ಸಂಪೂರ್ಣ ಪಠ್ಯ ಅಥವಾ ಜಪ ಸೇರಿಸಿ. ಅಧ್ಯಾಯ-ಮಟ್ಟದ ಆಯ್ಕೆ ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ.',
+          })}
         </Text>
       </ScrollView>
     </RoutineShell>

@@ -19,6 +19,16 @@ import {
   CormorantGaramond_600SemiBold_Italic,
   CormorantGaramond_700Bold,
 } from '@expo-google-fonts/cormorant-garamond';
+import {
+  useFonts as useGujaratiFonts,
+  NotoSerifGujarati_500Medium,
+  NotoSerifGujarati_600SemiBold,
+} from '@expo-google-fonts/noto-serif-gujarati';
+import {
+  useFonts as useKannadaFonts,
+  NotoSerifKannada_500Medium,
+  NotoSerifKannada_600SemiBold,
+} from '@expo-google-fonts/noto-serif-kannada';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { lightColors } from '@/theme/colors';
 import { GitaLanguageProvider } from '@/data/gita/language';
@@ -58,8 +68,16 @@ export default function App() {
     CormorantGaramond_600SemiBold_Italic,
     CormorantGaramond_700Bold,
   });
+  const [gujaratiLoaded] = useGujaratiFonts({
+    NotoSerifGujarati_500Medium,
+    NotoSerifGujarati_600SemiBold,
+  });
+  const [kannadaLoaded] = useKannadaFonts({
+    NotoSerifKannada_500Medium,
+    NotoSerifKannada_600SemiBold,
+  });
 
-  const fontsReady = notoLoaded && cormorantLoaded;
+  const fontsReady = notoLoaded && cormorantLoaded && gujaratiLoaded && kannadaLoaded;
 
   const onLayout = useCallback(async () => {
     if (fontsReady) {

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang, pick } from '@/utils/localize';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
@@ -22,14 +23,13 @@ export default function RoutineTodayScreen({ navigation }: Props) {
   // General-typed nav for the centralized routing helper (this screen has no
   // route params, which is incompatible with the helper's route-agnostic Nav).
   const itemNav = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
-  const isHi = lang === 'hi';
   const streak = currentStreak();
 
   const right = (
     <Pressable
       onPress={() => navigation.navigate('RoutineList')}
       accessibilityRole="button"
-      accessibilityLabel={isHi ? 'सभी साधनाएँ' : 'All routines'}
+      accessibilityLabel={pick(lang, { hi: 'सभी साधनाएँ', en: 'All routines', gu: 'બધી સાધનાઓ', kn: 'ಎಲ್ಲಾ ಸಾಧನೆಗಳು' })}
       hitSlop={12}
     >
       <Text style={{ color: colors.saffron, fontSize: 22 }}>≡</Text>
@@ -61,10 +61,10 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                 marginTop: 12,
               }}
             >
-              {isHi ? 'आज के लिए कोई पाठ निर्धारित नहीं' : 'Nothing scheduled for today'}
+              {pick(lang, { hi: 'आज के लिए कोई पाठ निर्धारित नहीं', en: 'Nothing scheduled for today', gu: 'આજ માટે કંઈ નિર્ધારિત નથી', kn: 'ಇಂದಿಗೆ ಏನೂ ನಿಗದಿಯಾಗಿಲ್ಲ' })}
             </Text>
             <RoutineButton
-              label={isHi ? 'साधना जोड़ें' : 'Add a routine'}
+              label={pick(lang, { hi: 'साधना जोड़ें', en: 'Add a routine', gu: 'સાધના ઉમેરો', kn: 'ಸಾಧನೆ ಸೇರಿಸಿ' })}
               variant="ghost"
               onPress={() => navigation.navigate('RoutineList')}
             />
@@ -83,7 +83,7 @@ export default function RoutineTodayScreen({ navigation }: Props) {
               }}
             >
               <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 16, color: colors.ink }}>
-                {doneCount}/{total} · {isHi ? 'पूर्ण' : 'done'}
+                {doneCount}/{total} · {pick(lang, { hi: 'पूर्ण', en: 'done', gu: 'પૂર્ણ', kn: 'ಪೂರ್ಣ' })}
               </Text>
               <View style={[styles.track, { backgroundColor: colors.divider, borderRadius: radii.pill, marginTop: spacing.sm }]}>
                 <View
@@ -97,7 +97,12 @@ export default function RoutineTodayScreen({ navigation }: Props) {
               </View>
               {streak > 0 && (
                 <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.saffronDeep, marginTop: spacing.sm }}>
-                  {isHi ? `निरंतरता · ${streak} दिन` : `Streak · ${streak} days`}
+                  {pick(lang, {
+                    hi: `निरंतरता · ${streak} दिन`,
+                    en: `Streak · ${streak} days`,
+                    gu: `સાતત્ય · ${streak} દિવસ`,
+                    kn: `ಸತತತೆ · ${streak} ದಿನ`,
+                  })}
                 </Text>
               )}
             </View>
@@ -105,15 +110,9 @@ export default function RoutineTodayScreen({ navigation }: Props) {
             {entries.map((e) => {
               const tail = e.done
                 ? e.doneMode === 'auto'
-                  ? isHi
-                    ? 'अंत तक पढ़ा'
-                    : 'read to end'
-                  : isHi
-                    ? 'चिह्नित'
-                    : 'marked'
-                : isHi
-                  ? e.display.subHi
-                  : e.display.subEn;
+                  ? pick(lang, { hi: 'अंत तक पढ़ा', en: 'read to end', gu: 'અંત સુધી વાંચ્યું', kn: 'ಕೊನೆಯವರೆಗೆ ಓದಲಾಗಿದೆ' })
+                  : pick(lang, { hi: 'चिह्नित', en: 'marked', gu: 'ચિહ્નિત', kn: 'ಗುರುತಿಸಲಾಗಿದೆ' })
+                : contentByLang(lang, e.display.subHi, e.display.subEn);
               return (
                 <View
                   key={e.key}
@@ -124,7 +123,7 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                       e.done ? (e.doneMode === 'manual' ? unmarkManualDone(e.key) : undefined) : markManualDone(e.key)
                     }
                     accessibilityRole="button"
-                    accessibilityLabel={isHi ? 'पूर्ण चिह्नित करें' : 'Mark done'}
+                    accessibilityLabel={pick(lang, { hi: 'पूर्ण चिह्नित करें', en: 'Mark done', gu: 'પૂર્ણ ચિહ્નિત કરો', kn: 'ಪೂರ್ಣ ಎಂದು ಗುರುತಿಸಿ' })}
                     hitSlop={10}
                     style={{
                       width: 26,
@@ -149,10 +148,10 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                         textDecorationLine: e.done ? 'line-through' : 'none',
                       }}
                     >
-                      {isHi ? e.display.titleHi : e.display.titleEn}
+                      {contentByLang(lang, e.display.titleHi, e.display.titleEn)}
                     </Text>
                     <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
-                      {e.routine.nameHi || e.routine.nameEn} · {tail}
+                      {contentByLang(lang, e.routine.nameHi || e.routine.nameEn, e.routine.nameEn || e.routine.nameHi)} · {tail}
                     </Text>
                   </Pressable>
 
@@ -172,9 +171,12 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                 lineHeight: 16,
               }}
             >
-              {isHi
-                ? 'किसी पंक्ति पर टैप कर पाठ खोलें। अंतिम पृष्ठ तक पहुँचने पर स्वतः पूर्ण होगा। ◯ को टैप कर स्वयं चिह्नित करें।'
-                : 'Tap a row to open the text. It auto-completes when you reach the last page. Tap ◯ to mark it yourself.'}
+              {pick(lang, {
+                hi: 'किसी पंक्ति पर टैप कर पाठ खोलें। अंतिम पृष्ठ तक पहुँचने पर स्वतः पूर्ण होगा। ◯ को टैप कर स्वयं चिह्नित करें।',
+                en: 'Tap a row to open the text. It auto-completes when you reach the last page. Tap ◯ to mark it yourself.',
+                gu: 'કોઈ પંક્તિ પર ટૅપ કરી પાઠ ખોલો. છેલ્લા પૃષ્ઠ સુધી પહોંચતાં આપમેળે પૂર્ણ થશે. ◯ પર ટૅપ કરી જાતે ચિહ્નિત કરો.',
+                kn: 'ಪಠ್ಯ ತೆರೆಯಲು ಸಾಲನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ. ಕೊನೆಯ ಪುಟ ತಲುಪಿದಾಗ ಸ್ವಯಂ ಪೂರ್ಣಗೊಳ್ಳುತ್ತದೆ. ನೀವೇ ಗುರುತಿಸಲು ◯ ಟ್ಯಾಪ್ ಮಾಡಿ.',
+              })}
             </Text>
           </>
         )}
