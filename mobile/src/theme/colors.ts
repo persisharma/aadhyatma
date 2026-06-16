@@ -12,7 +12,13 @@ export const lightColors = {
   // ~15.4:1 (well past WCAG AAA). See colors.contrast.test.ts.
   ink: '#1A0E03',
   inkSoft: '#5A3A1E',
-  inkMuted: '#8A6A47',
+  // Secondary / tertiary text: captions, metadata, and the demoted secondary-
+  // language line on cards. Deepened from #8A6A47 — that tan only reached ~4.0:1
+  // on the parchment background (below WCAG AA 4.5), so every subtitle read as
+  // dull/half-visible. #6E5230 lifts it to ~5.9:1 while staying clearly lighter
+  // than inkSoft (8.3:1), so it still reads as a caption, not a peer. See
+  // colors.contrast.test.ts.
+  inkMuted: '#6E5230',
 
   saffron: '#B8621B',
   saffronDeep: '#8A3E0B',
@@ -21,12 +27,6 @@ export const lightColors = {
   divider: 'rgba(138, 62, 11, 0.18)',
   saffronTint: 'rgba(184, 98, 27, 0.12)',
   goldTint: 'rgba(166, 124, 52, 0.14)',
-
-  // Personal / "My Vrat" accent — the v2 prototype tints the My Vrat door green
-  // to read as a personal list. The only green in an otherwise warm palette
-  // (see design.md); kept low-saturation so it sits quietly on parchment.
-  green: '#3F7D4F',
-  greenTint: 'rgba(63, 125, 79, 0.08)',
 
   // "NEW" badge — saffron-tinted (primary/active accent → reads as fresh & live),
   // distinct from the muted gold "SOON" badge while staying in the warm palette.
@@ -54,7 +54,7 @@ export const lightColors = {
   background: '#F3E7C9',
   surface: '#F8EFD6',
   text: '#1A0E03',
-  textMuted: '#8A6A47',
+  textMuted: '#6E5230', // semantic alias of inkMuted — keep in sync
   primary: '#B8621B',
   border: 'rgba(138, 62, 11, 0.18)',
 } as const;

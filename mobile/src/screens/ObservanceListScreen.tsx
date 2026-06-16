@@ -7,8 +7,10 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRulesForCategory, type BrowseCategory } from '@/panchang/vratCatalog';
+import { useVratFollows } from '@/contexts/VratFollowContext';
 import type { ObservanceRule } from '@/panchang/types';
 import type { PanchangStackParamList } from '@/navigation/types';
+import { captionFont } from '@/utils/scriptFont';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'ObservanceList'>;
 
@@ -43,11 +45,13 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   const isHindi = lang === 'hi';
   const [calendarSystem] = usePanchangCalendarSystem();
   const [query, setQuery] = useState('');
+  const { isFollowing, follow, unfollow } = useVratFollows();
 
   const category = route.params.category;
   const today = useMemo(() => startOfLocalDay(new Date()), []);
 
   const rows = useMemo(() => {
+    // getRulesForCategory dedupes by id, so keys here are unique.
     const withDates = getRulesForCategory(category).map((rule) => ({
       rule,
       next: getNextOccurrence(rule.id, today, calendarSystem),
@@ -92,7 +96,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
             <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}>
               {isHindi ? title.hi : title.en}
             </Text>
-            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted }}>
+            <Text style={{ ...captionFont(isHindi ? title.en : title.hi), fontSize: 12, color: colors.inkMuted }}>
               {isHindi ? title.en : title.hi} · {rows.length}
             </Text>
           </View>
@@ -112,18 +116,23 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
             style={[styles.search, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, color: colors.ink }]}
           />
 
-          {filtered.map(({ rule, next }) => (
-            <ObservanceRow
-              key={rule.id}
-              rule={rule}
-              nextDate={next?.date ?? null}
-              today={today}
-              isHindi={isHindi}
-              colors={colors}
-              typography={typography}
-              onPress={() => navigation.navigate('ObservanceDetail', { ruleId: rule.id })}
-            />
-          ))}
+          {filtered.map(({ rule, next }) => {
+            const following = isFollowing(rule.id);
+            return (
+              <ObservanceRow
+                key={rule.id}
+                rule={rule}
+                nextDate={next?.date ?? null}
+                today={today}
+                isHindi={isHindi}
+                colors={colors}
+                typography={typography}
+                following={following}
+                onToggleFollow={() => (following ? unfollow(rule.id) : follow(rule.id))}
+                onPress={() => navigation.navigate('ObservanceDetail', { ruleId: rule.id })}
+              />
+            );
+          })}
           {filtered.length === 0 && (
             <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.inkMuted, marginTop: 24, textAlign: 'center' }}>
               {isHindi ? 'कोई परिणाम नहीं।' : 'No matches.'}
@@ -135,41 +144,59 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   );
 }
 
-function ObservanceRow({ rule, nextDate, today, isHindi, colors, typography, onPress }: {
+function ObservanceRow({ rule, nextDate, today, isHindi, colors, typography, following, onToggleFollow, onPress }: {
   rule: ObservanceRule;
   nextDate: Date | null;
   today: Date;
   isHindi: boolean;
   colors: any;
   typography: any;
+  following: boolean;
+  onToggleFollow: () => void;
   onPress: () => void;
 }) {
   return (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={isHindi ? rule.nameHi : rule.nameEn}
-      style={({ pressed }) => [styles.row, { borderBottomColor: colors.divider }, pressed && { opacity: 0.6 }]}
-    >
-      <View style={{ flex: 1, paddingRight: 10 }}>
-        <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-          {isHindi ? rule.nameHi : rule.nameEn}
+    <View style={[styles.row, { borderBottomColor: colors.divider }]}>
+      {/* Leading star — tap to follow/unfollow without opening the detail; a
+          filled gold ★ marks an already-followed vrat, an outline ☆ an un-followed one. */}
+      <Pressable
+        onPress={onToggleFollow}
+        accessibilityRole="button"
+        accessibilityState={{ selected: following }}
+        accessibilityLabel={`${following ? 'Unfollow' : 'Follow'} ${rule.nameEn}`}
+        hitSlop={8}
+        style={({ pressed }) => [styles.starBtn, pressed && { opacity: 0.5 }]}
+      >
+        <Text style={{ fontSize: 20, color: following ? colors.gold : colors.inkMuted }}>
+          {following ? '★' : '☆'}
         </Text>
-        <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
-          {isHindi ? rule.nameEn : rule.nameHi}
-        </Text>
-      </View>
-      {nextDate && (
-        <View style={{ alignItems: 'flex-end' }}>
-          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep }}>
-            {shortDate(nextDate, isHindi)}
+      </Pressable>
+      <Pressable
+        onPress={onPress}
+        accessibilityRole="button"
+        accessibilityLabel={isHindi ? rule.nameHi : rule.nameEn}
+        style={({ pressed }) => [styles.rowMain, pressed && { opacity: 0.6 }]}
+      >
+        <View style={{ flex: 1, paddingRight: 10 }}>
+          <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
+            {isHindi ? rule.nameHi : rule.nameEn}
           </Text>
-          <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-            {relativeLabel(nextDate, today, isHindi)}
+          <Text style={{ ...captionFont(isHindi ? rule.nameEn : rule.nameHi), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
+            {isHindi ? rule.nameEn : rule.nameHi}
           </Text>
         </View>
-      )}
-    </Pressable>
+        {nextDate && (
+          <View style={{ alignItems: 'flex-end' }}>
+            <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 13, color: colors.inkSoft }}>
+              {shortDate(nextDate, isHindi)}
+            </Text>
+            <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 13, color: colors.inkSoft, marginTop: 1 }}>
+              {relativeLabel(nextDate, today, isHindi)}
+            </Text>
+          </View>
+        )}
+      </Pressable>
+    </View>
   );
 }
 
@@ -180,5 +207,7 @@ const styles = StyleSheet.create({
   backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 8, paddingBottom: 32 },
   search: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: 'CormorantGaramond_500Medium', fontSize: 15, marginBottom: 8 },
-  row: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
+  row: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: StyleSheet.hairlineWidth },
+  starBtn: { width: 36, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', marginRight: 4 },
+  rowMain: { flex: 1, flexDirection: 'row', alignItems: 'center', paddingVertical: 13 },
 });

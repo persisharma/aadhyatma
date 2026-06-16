@@ -21,7 +21,7 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 | Token | Hex | Role |
 | --- | --- | --- |
 | `parchment` | `#F3E7C9` | Primary background for reader surfaces |
-| `parchment-soft` | `#F8EFD6` | Lighter parchment for inner cards |
+| `parchment-soft` | `#F8EFD6` | Lighter parchment for inner cards (with a soft `sm` shadow for lift) and flat controls |
 | `parchment-deep` | `#E9D9B1` | Bottom-edge gradient, elevated surfaces |
 | `ink` | `#2F1E10` | Primary Devanagari body text |
 | `ink-soft` | `#5A3A1E` | Secondary text / meaning body |

@@ -15,8 +15,8 @@
 # src/contexts/__tests__/PanchangLocationContext.test.tsx.
 #
 # Selector notes:
-#   - The reference line is a Pressable whose accessibility label derives from
-#     its child text: "Reference: <city>, India · <system>  change".
+#   - The location chip is a Pressable whose accessibility label derives from
+#     its child text: "Location: <city>" (a bordered chip + ⌄ chevron).
 #   - City rows expose accessibilityLabel "<NameEn>" ("<NameEn>, selected" for
 #     the active one); the search field exposes "Search city".
 #   - SELECTOR COLLISION: the search TextInput's *value* is matchable text too,
@@ -50,7 +50,7 @@ appId: host.exp.Exponent
     timeout: 30000
 
 # ── Step 4: Open the location picker from the reference line ──
-- tapOn: "Reference: .*"
+- tapOn: "Location: .*"
 - waitForAnimationToEnd
 - assertVisible: "Choose location"
 - assertVisible: "Use my location"
@@ -65,7 +65,7 @@ appId: host.exp.Exponent
 
 # ── Step 6: Reference line reflects Delhi; engine output re-renders ──
 - extendedWaitUntil:
-    visible: ".*Delhi, India.*"
+    visible: ".*Delhi.*"
     timeout: 15000
 - scrollUntilVisible:
     element:
@@ -81,17 +81,17 @@ appId: host.exp.Exponent
 - tapOn: "Panchang, tab.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: ".*Delhi, India.*"
+    visible: ".*Delhi.*"
     timeout: 15000
 
 # ── Step 8: Restore the Ujjain default (best-effort cleanup) ──
 - scrollUntilVisible:
     element:
-      text: "Reference: .*"
+      text: "Location: .*"
     direction: UP
     centerElement: true
     timeout: 20000
-- tapOn: "Reference: .*"
+- tapOn: "Location: .*"
 - waitForAnimationToEnd
 - tapOn: "Search city"
 - inputText: "Ujjai"
@@ -99,7 +99,7 @@ appId: host.exp.Exponent
 - tapOn: "Ujjain"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: ".*Ujjain, India.*"
+    visible: ".*Ujjain.*"
     timeout: 15000
 - tapOn: "More, tab.*"
 - waitForAnimationToEnd

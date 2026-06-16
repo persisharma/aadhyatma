@@ -6,7 +6,7 @@
 #   3. The Katha tile opens the Katha library.
 #   4. A category tile drills into the per-type observance list.
 #   5. Search returns observance results that open a dedicated detail page.
-#   6. The detail page shows About + the phased "How to observe" placeholder.
+#   6. The detail page shows About + the Follow CTA, with no "coming soon" placeholder.
 #
 # Language note (same as panchang-smoke): the screen reads the global reading
 # language; default Hindi is Devanagari which Maestro's iOS tree can't read, so
@@ -85,8 +85,11 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: "About"
     timeout: 15000
-- assertVisible: "How to observe"
-- assertVisible: "COMING SOON"
+# The "How to observe" placeholder was removed (hidden until real vidhi content
+# exists), so the detail must NOT show a coming-soon stub. Confirm the Follow CTA
+# renders and the placeholder is gone.
+- assertVisible: "Follow"
+- assertNotVisible: "COMING SOON"
 - tapOn: "Back"
 - waitForAnimationToEnd
 

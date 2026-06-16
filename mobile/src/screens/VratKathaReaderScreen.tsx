@@ -97,6 +97,18 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
           </View>
         ) : (
           <>
+            {/* Thin reading-progress bar — the continuous form of the "n / total"
+                counter, so a reader can see how far into the katha they are. */}
+            {total > 0 && (
+              <View style={[styles.progressTrack, { backgroundColor: colors.divider }]}>
+                <View
+                  style={[
+                    styles.progressFill,
+                    { backgroundColor: colors.saffron, width: `${((currentIndex + 1) / total) * 100}%` },
+                  ]}
+                />
+              </View>
+            )}
             <View style={styles.toggleRow}>
               <LanguageToggle />
             </View>
@@ -154,7 +166,9 @@ const styles = StyleSheet.create({
   backGlyph: { fontSize: 22, lineHeight: 24, marginTop: -2, includeFontPadding: false },
   title: { flex: 1, textAlign: 'center', fontSize: 18, includeFontPadding: false, marginHorizontal: 4 },
   counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
-  toggleRow: { paddingTop: 2, paddingBottom: 6, alignItems: 'center' },
+  progressTrack: { height: 3, width: '100%', overflow: 'hidden' },
+  progressFill: { height: 3, borderRadius: 999 },
+  toggleRow: { paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
