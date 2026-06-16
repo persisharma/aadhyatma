@@ -22,6 +22,7 @@ import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
+import { captionFont } from '@/utils/scriptFont';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -71,11 +72,6 @@ function formatMonthTitle(date: Date, isHindi: boolean): string {
   return `${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-function calendarSystemLabel(calendarSystem: CalendarSystem, isHindi: boolean): string {
-  if (calendarSystem === 'amanta') return isHindi ? 'अमान्त' : 'Amanta';
-  return isHindi ? 'पूर्णिमांत' : 'Purnimant';
-}
-
 function calendarTagLabel(tag: ObservanceCalendarTag, isHindi: boolean): string {
   if (tag === 'vrat') return isHindi ? 'व्रत' : 'Vrat';
   if (tag === 'festival') return isHindi ? 'पर्व' : 'Fest';
@@ -83,7 +79,7 @@ function calendarTagLabel(tag: ObservanceCalendarTag, isHindi: boolean): string 
 }
 
 export default function PanchangScreen() {
-  const { colors, typography, spacing, radii } = useTheme();
+  const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const isHindi = lang === 'hi';
   const rootNav = useNavigation<any>();
@@ -184,24 +180,41 @@ export default function PanchangScreen() {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
           showsVerticalScrollIndicator={false}
         >
-          {/* Slim system header — the tab bar already names this screen "पंचांग",
-              so the redundant title/subtitle/pill are gone. Only the calendar
-              system control + tappable location reference remain. */}
+          {/* Slim system header — one compact row. The calendar-system toggle and
+              the tappable location reference share a line (the toggle already names
+              the system, so it is dropped from the location text), with the My Vrat
+              star at the trailing edge. This reclaims the vertical space the old
+              stacked toggle-over-location header took. */}
           <View style={styles.systemHeader}>
-            <Pressable
-              onPress={openMyVrat}
-              accessibilityRole="button"
-              accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
-              hitSlop={10}
-              style={({ pressed }) => [styles.myVratStar, pressed && { opacity: 0.6 }]}
-            >
-              <Text style={{ fontSize: 19, color: colors.gold }}>★</Text>
-              {followCount > 0 && (
-                <View style={[styles.starBadge, { backgroundColor: colors.saffron, borderColor: colors.parchment }]}>
-                  <Text style={[styles.starBadgeText, { color: colors.parchment }]}>{followCount}</Text>
+            {/* Equal-width flex sides keep the calendar-system toggle centred on
+                screen regardless of how wide the location chip / star are. */}
+            <View style={styles.headerSide}>
+              {/* Location selector — a drawn pin + city name in a bordered chip.
+                  Explicit accessibilityLabel "Location: <city>" keeps it readable
+                  for screen readers and stable for .maestro/panchang*-smoke. */}
+              <Pressable
+                onPress={() => setLocationPickerVisible(true)}
+                accessibilityRole="button"
+                accessibilityLabel={isHindi ? `स्थान: ${location.labelHi}` : `Location: ${location.labelEn}`}
+                hitSlop={8}
+                style={({ pressed }) => [
+                  styles.locationChip,
+                  { borderColor: colors.divider, backgroundColor: colors.parchmentSoft, borderRadius: radii.pill },
+                  pressed && { opacity: 0.6 },
+                ]}
+              >
+                <View style={[styles.pin, { backgroundColor: colors.saffron }]}>
+                  <View style={[styles.pinHole, { backgroundColor: colors.parchmentSoft }]} />
                 </View>
-              )}
-            </Pressable>
+                <Text
+                  numberOfLines={1}
+                  style={{ flexShrink: 1, fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkSoft }}
+                >
+                  {isHindi ? location.labelHi : location.labelEn}
+                </Text>
+              </Pressable>
+            </View>
+            {/* Calendar system (centre) */}
             <CalendarSystemToggle
               value={calendarSystem}
               onChange={setCalendarSystem}
@@ -210,24 +223,28 @@ export default function PanchangScreen() {
               radii={radii}
               typography={typography}
             />
-            {/* No explicit accessibilityLabel: the label derives from the child text
-                ("Reference: <city>, India · …"), which .maestro/panchang-smoke.yaml
-                asserts on (".*Ujjain.*"). */}
-            <Pressable
-              onPress={() => setLocationPickerVisible(true)}
-              accessibilityRole="button"
-              hitSlop={8}
-              style={({ pressed }) => [styles.locationButton, pressed && { opacity: 0.6 }]}
-            >
-              <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, textAlign: 'center' }}>
-                {isHindi
-                  ? `संदर्भ: ${location.labelHi}, भारत · ${calendarSystemLabel(calendarSystem, true)}`
-                  : `Reference: ${location.labelEn}, India · ${calendarSystemLabel(calendarSystem, false)}`}
-                <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 9, color: colors.saffronDeep }}>
-                  {isHindi ? '  बदलें' : '  change'}
-                </Text>
-              </Text>
-            </Pressable>
+            {/* My Vrat (right) — a circular icon button so the star reads as
+                tappable and distinct from the location chip. */}
+            <View style={[styles.headerSide, styles.headerSideRight]}>
+              <Pressable
+                onPress={openMyVrat}
+                accessibilityRole="button"
+                accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
+                hitSlop={10}
+                style={({ pressed }) => [
+                  styles.myVratButton,
+                  { borderColor: colors.divider, backgroundColor: colors.parchmentSoft, borderRadius: radii.pill },
+                  pressed && { opacity: 0.6 },
+                ]}
+              >
+                <Text style={{ fontSize: 16, color: colors.gold }}>★</Text>
+                {followCount > 0 && (
+                  <View style={[styles.starBadge, { backgroundColor: colors.saffron, borderColor: colors.parchment }]}>
+                    <Text style={[styles.starBadgeText, { color: colors.parchment }]}>{followCount}</Text>
+                  </View>
+                )}
+              </Pressable>
+            </View>
           </View>
 
           <View style={[styles.segmented, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.pill }]}>
@@ -258,7 +275,7 @@ export default function PanchangScreen() {
           {panchangTab === 'calendar' ? (
             <>
           <View
-            style={[styles.calendarCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}
+            style={[styles.calendarCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}
             onTouchStart={handleCalendarTouchStart}
             onTouchEnd={handleCalendarTouchEnd}
           >
@@ -412,19 +429,24 @@ export default function PanchangScreen() {
             </Text>
           </View>
 
+          {/* Two-tier anga grid: Tithi + Nakshatra lead (the two anchors users read
+              first) on elevated off-white cards; Yoga + Karana sit as a quieter,
+              flatter secondary row. */}
           <View style={styles.angaGrid}>
-            <PanchangTile label={isHindi ? 'तिथि' : 'Tithi'} element={p.tithi} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
-            <PanchangTile label={isHindi ? 'नक्षत्र' : 'Nakshatra'} element={p.nakshatra} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
-            <PanchangTile label={isHindi ? 'योग' : 'Yoga'} element={p.yoga} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
-            <PanchangTile label={isHindi ? 'करण' : 'Karana'} element={p.karana} isHindi={isHindi} colors={colors} typography={typography} radii={radii} />
+            <PanchangTile prominent label={isHindi ? 'तिथि' : 'Tithi'} element={p.tithi} isHindi={isHindi} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile prominent label={isHindi ? 'नक्षत्र' : 'Nakshatra'} element={p.nakshatra} isHindi={isHindi} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+          </View>
+          <View style={styles.angaGridSecondary}>
+            <PanchangTile label={isHindi ? 'योग' : 'Yoga'} element={p.yoga} isHindi={isHindi} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={isHindi ? 'करण' : 'Karana'} element={p.karana} isHindi={isHindi} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
 
-          <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}>
+          <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
             <View style={styles.timesRow}>
               <TimeCell icon="☀" label={isHindi ? 'सूर्योदय' : 'Sunrise'} value={formatTime12(p.sunrise)} colors={colors} />
               <TimeCell icon="☀" label={isHindi ? 'सूर्यास्त' : 'Sunset'} value={formatTime12(p.sunset)} colors={colors} />
             </View>
-            <View style={[styles.timesRow, { marginTop: 8 }]}>
+            <View style={[styles.timesRow, { marginTop: 12 }]}>
               <TimeCell icon="☽" label={isHindi ? 'चंद्रोदय' : 'Moonrise'} value={formatTime12(p.moonrise)} colors={colors} />
               <TimeCell icon="☽" label={isHindi ? 'ब्रह्म मुहूर्त' : 'Brahma Muhurta'} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} colors={colors} />
             </View>
@@ -459,6 +481,7 @@ export default function PanchangScreen() {
                   colors={colors}
                   typography={typography}
                   radii={radii}
+                  elevation={elevation}
                   onOpenLink={openLinkedSection}
                   onOpenKatha={openKatha}
                 />
@@ -499,6 +522,7 @@ export default function PanchangScreen() {
               colors={colors}
               typography={typography}
               radii={radii}
+              elevation={elevation}
               onOpenDetail={openObservanceDetail}
               onOpenCategory={openCategory}
               onOpenKathaLibrary={openKathaLibrary}
@@ -569,16 +593,25 @@ function CalendarSystemToggle({ value, onChange, isHindi, colors, radii, typogra
   );
 }
 
-function PanchangTile({ label, element, isHindi, colors, typography, radii }: {
+function PanchangTile({ label, element, isHindi, colors, typography, radii, elevation, prominent }: {
   label: string;
   element: PanchangElement;
   isHindi: boolean;
   colors: any;
   typography: any;
   radii: any;
+  elevation: any;
+  prominent?: boolean;
 }) {
   return (
-    <View style={[styles.angaTile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
+    <View
+      style={[
+        prominent ? styles.angaTile : styles.angaTileSecondary,
+        prominent
+          ? { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, ...elevation.card }
+          : { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md },
+      ]}
+    >
       {/* The type label leads in the active language (TITHI / तिथि …) — same
           source as the old row, kept uppercase so it reads as a quiet tag. */}
       <Text style={{ fontSize: 9, color: colors.saffronDeep, fontFamily: 'CormorantGaramond_600SemiBold', letterSpacing: 1, textTransform: 'uppercase' }}>
@@ -586,13 +619,13 @@ function PanchangTile({ label, element, isHindi, colors, typography, radii }: {
       </Text>
       <Text
         numberOfLines={1}
-        style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.ink, marginTop: 3 }}
+        style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: prominent ? 20 : 15, color: colors.ink, marginTop: prominent ? 4 : 3 }}
       >
         {isHindi ? element.nameHi : element.nameEn}
       </Text>
       <Text
         numberOfLines={1}
-        style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 10, color: colors.inkMuted, marginTop: 1 }}
+        style={{ ...captionFont(isHindi ? element.nameEn : element.nameHi), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}
       >
         {isHindi ? element.nameEn : element.nameHi}
       </Text>
@@ -608,8 +641,11 @@ function PanchangTile({ label, element, isHindi, colors, typography, radii }: {
 function TimeCell({ icon, label, value, colors }: { icon: string; label: string; value: string; colors: any }) {
   return (
     <View style={styles.timeCell}>
-      <Text style={{ fontSize: 14 }}>{icon}</Text>
-      <View style={{ marginLeft: 6 }}>
+      {/* ︎ forces text (monochrome) presentation so ☀ doesn't render as a
+          colour emoji on iOS while ☽ stays a plain glyph — design.md is "no emoji".
+          All four metrics now share one filled-with-accent (gold) glyph style. */}
+      <Text style={{ fontSize: 17, color: colors.gold, width: 22, textAlign: 'center' }}>{`${icon}︎`}</Text>
+      <View style={{ marginLeft: 9, flex: 1 }}>
         <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 10, color: colors.inkMuted }}>{label}</Text>
         <Text style={{ fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 13, color: colors.ink }}>{value}</Text>
       </View>
@@ -617,12 +653,13 @@ function TimeCell({ icon, label, value, colors }: { icon: string; label: string;
   );
 }
 
-function ObservanceCard({ item, isHindi, colors, typography, radii, onOpenLink, onOpenKatha }: {
+function ObservanceCard({ item, isHindi, colors, typography, radii, elevation, onOpenLink, onOpenKatha }: {
   item: ResolvedObservance;
   isHindi: boolean;
   colors: any;
   typography: any;
   radii: any;
+  elevation: any;
   onOpenLink: (sectionId: string) => void;
   onOpenKatha: (kathaId: string) => void;
 }) {
@@ -632,7 +669,7 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, onOpenLink, 
   const katha = item.rule.kathaId ? getKathaContent(item.rule.kathaId) : null;
 
   return (
-    <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
+    <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
       <View style={styles.observanceTop}>
         <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
           <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep }}>
@@ -681,7 +718,7 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, onOpenLink, 
 
 function CatalogLanding({
   isHindi, today, calendarSystem, query, onChangeQuery,
-  colors, typography, radii,
+  colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenMyVrat, followCount, reminderCount,
 }: {
   isHindi: boolean;
@@ -692,6 +729,7 @@ function CatalogLanding({
   colors: any;
   typography: any;
   radii: any;
+  elevation: any;
   onOpenDetail: (ruleId: string) => void;
   onOpenCategory: (category: BrowseCategory) => void;
   onOpenKathaLibrary: () => void;
@@ -714,6 +752,10 @@ function CatalogLanding({
     category === 'vrat' ? (isHindi ? 'व्रत' : 'Vrat')
       : category === 'upavas' ? (isHindi ? 'उपवास' : 'Upvas')
         : (isHindi ? 'पर्व' : 'Festival');
+  // Same glyph vocabulary as the "Browse by type" tiles (ॐ / ☾ / ✺), reused on the
+  // upcoming cards so they read as devotional, not as a plain list of text.
+  const categoryGlyph = (category: string): string =>
+    category === 'vrat' ? 'ॐ' : category === 'upavas' ? '☾' : '✺';
 
   return (
     <View style={{ marginTop: 12 }}>
@@ -740,7 +782,7 @@ function CatalogLanding({
                   <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
                     {isHindi ? rule.nameHi : rule.nameEn}
                   </Text>
-                  <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
+                  <Text style={{ ...captionFont(isHindi ? rule.nameEn : rule.nameHi), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
                     {isHindi ? rule.nameEn : rule.nameHi}
                   </Text>
                 </View>
@@ -755,6 +797,30 @@ function CatalogLanding({
         )
       ) : (
         <>
+          {/* My Vrat — pinned at the top of the catalog as the personal entry point. */}
+          <Pressable
+            onPress={onOpenMyVrat}
+            accessibilityRole="button"
+            accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
+            style={({ pressed }) => [styles.myVratRow, { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
+          >
+            <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>★</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
+                {isHindi ? 'मेरा व्रत' : 'My Vrat'}
+              </Text>
+              <Text style={{ fontFamily: isHindi ? 'NotoSerifDevanagari_500Medium' : 'CormorantGaramond_400Regular_Italic', fontStyle: isHindi ? 'normal' : 'italic', fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+                {followCount > 0
+                  ? isHindi
+                    ? `${followCount} फ़ॉलो किए · ${reminderCount} अनुस्मारक`
+                    : `${followCount} following · ${reminderCount} reminders on`
+                  : isHindi
+                    ? 'अपने व्रत यहाँ रखें'
+                    : 'Keep your vrats here'}
+              </Text>
+            </View>
+            <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
+          </Pressable>
           {upcoming.length > 0 && (
             <View style={{ marginTop: 14 }}>
               <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 8 }}>
@@ -767,15 +833,20 @@ function CatalogLanding({
                     onPress={() => onOpenDetail(item.rule.id)}
                     accessibilityRole="button"
                     accessibilityLabel={isHindi ? item.rule.nameHi : item.rule.nameEn}
-                    style={({ pressed }) => [styles.upCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, pressed && { opacity: 0.75 }]}
+                    style={({ pressed }) => [styles.upCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.75 }]}
                   >
-                    <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4 }}>
-                      {formatShortDate(item.date, isHindi).toUpperCase()}
-                    </Text>
-                    <Text numberOfLines={2} style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginTop: 6 }}>
+                    <View style={styles.upCardTop}>
+                      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 20, color: colors.saffron }}>
+                        {categoryGlyph(item.rule.category)}
+                      </Text>
+                      <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4 }}>
+                        {formatShortDate(item.date, isHindi).toUpperCase()}
+                      </Text>
+                    </View>
+                    <Text numberOfLines={2} style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginTop: 8 }}>
                       {isHindi ? item.rule.nameHi : item.rule.nameEn}
                     </Text>
-                    <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
+                    <Text style={{ ...captionFont(categoryShort(item.rule.category)), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
                       {categoryShort(item.rule.category)}
                     </Text>
                   </Pressable>
@@ -797,13 +868,15 @@ function CatalogLanding({
                     onPress={() => onOpenCategory(category)}
                     accessibilityRole="button"
                     accessibilityLabel={`${meta.en}, ${count}`}
-                    style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, pressed && { opacity: 0.8 }]}
+                    style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
                   >
-                    <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>{meta.glyph}</Text>
+                    <View style={styles.tileGlyph}>
+                      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>{meta.glyph}</Text>
+                    </View>
                     <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink, marginTop: 8 }}>
                       {isHindi ? meta.hi : meta.en}
                     </Text>
-                    <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted }}>
+                    <Text style={{ ...captionFont(isHindi ? meta.en : meta.hi), fontSize: 12, color: colors.inkMuted }}>
                       {isHindi ? meta.en : meta.hi}
                     </Text>
                     <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
@@ -816,13 +889,15 @@ function CatalogLanding({
                 onPress={onOpenKathaLibrary}
                 accessibilityRole="button"
                 accessibilityLabel={`Katha library, ${kathaCount}`}
-                style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, pressed && { opacity: 0.8 }]}
+                style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
               >
-                <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>॥</Text>
+                <View style={styles.tileGlyph}>
+                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>॥</Text>
+                </View>
                 <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink, marginTop: 8 }}>
                   {isHindi ? 'कथा' : 'Katha'}
                 </Text>
-                <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted }}>
+                <Text style={{ ...captionFont(isHindi ? 'Katha library' : 'कथा संग्रह'), fontSize: 12, color: colors.inkMuted }}>
                   {isHindi ? 'Katha library' : 'कथा संग्रह'}
                 </Text>
                 <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
@@ -831,30 +906,6 @@ function CatalogLanding({
               </Pressable>
             </View>
           </View>
-
-          <Pressable
-            onPress={onOpenMyVrat}
-            accessibilityRole="button"
-            accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
-            style={({ pressed }) => [styles.myVratRow, { backgroundColor: colors.greenTint, borderColor: colors.green, borderRadius: radii.lg }, pressed && { opacity: 0.8 }]}
-          >
-            <Text style={{ fontSize: 18, color: colors.green, marginRight: 10 }}>★</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-                {isHindi ? 'मेरा व्रत' : 'My Vrat'}
-              </Text>
-              <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
-                {followCount > 0
-                  ? isHindi
-                    ? `${followCount} फ़ॉलो किए · ${reminderCount} अनुस्मारक`
-                    : `${followCount} following · ${reminderCount} reminders on`
-                  : isHindi
-                    ? 'अपने व्रत यहाँ रखें'
-                    : 'Keep your vrats here'}
-              </Text>
-            </View>
-            <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
-          </Pressable>
         </>
       )}
     </View>
@@ -865,19 +916,47 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   scroll: { paddingTop: 8, paddingBottom: 24 },
-  systemHeader: { alignItems: 'center', marginTop: 2 },
-  myVratStar: { position: 'absolute', right: 0, top: 0, padding: 4, alignItems: 'center', justifyContent: 'center', zIndex: 2 },
+  systemHeader: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 2 },
+  // Equal-width sides → the centre toggle is screen-centred. alignItems keeps the
+  // chip hugging the left edge and the star the right.
+  headerSide: { flex: 1, alignItems: 'flex-start' },
+  headerSideRight: { alignItems: 'flex-end' },
+  locationChip: { flexDirection: 'row', alignItems: 'center', flexShrink: 1, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 6, minHeight: 34 },
+  // Drawn map pin (no emoji, per design.md): a teardrop — a square with three
+  // rounded corners and one sharp (bottom-left), rotated -45° so the sharp point
+  // swings straight DOWN (the canonical CSS map-pin recipe). +45° would lay it on
+  // its side. A chip-coloured dot punches the hole in the round head.
+  pin: {
+    width: 11,
+    height: 11,
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
+    borderBottomRightRadius: 6,
+    borderBottomLeftRadius: 0,
+    transform: [{ rotate: '-45deg' }],
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 6,
+  },
+  // Counter-rotate the hole so it stays visually upright inside the tilted head.
+  pinHole: { width: 4, height: 4, borderRadius: 2, transform: [{ rotate: '45deg' }] },
+  myVratButton: { width: 34, height: 34, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 15, height: 15, borderRadius: 7.5, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
   starBadgeText: { fontFamily: 'Inter_600SemiBold', fontSize: 9, lineHeight: 13 },
-  myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, padding: 12, marginTop: 12 },
+  myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   catalogSearch: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: 'CormorantGaramond_500Medium', fontSize: 15 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
-  upCard: { width: 150, borderWidth: 1, padding: 11 },
+  upCard: { width: 150, borderWidth: 1, padding: 12 },
+  upCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   tileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   tile: { flexGrow: 1, flexBasis: '45%', borderWidth: 1, padding: 14, minHeight: 104 },
-  locationButton: { marginTop: 5, minHeight: 24, justifyContent: 'center' },
+  // Fixed-height glyph box: the category glyphs (ॐ ✺ ☾ ॥) come from different
+  // fonts with different line metrics; pinning the box height keeps the title and
+  // caption rows aligned across every tile. The glyph renders at its natural line
+  // height (no tight lineHeight, which clipped the tall ॐ) centred in this box.
+  tileGlyph: { height: 34, justifyContent: 'center', alignItems: 'flex-start' },
   approximateRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
   systemToggle: {
     flexDirection: 'row',
@@ -886,9 +965,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   systemOption: {
-    minWidth: 100,
-    minHeight: 36,
-    paddingHorizontal: 14,
+    minWidth: 54,
+    minHeight: 34,
+    paddingHorizontal: 9,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -920,11 +999,13 @@ const styles = StyleSheet.create({
   todayButton: { alignSelf: 'center', marginTop: 8, borderWidth: 1, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 },
   compactTodayButton: { marginTop: 0, paddingHorizontal: 14, paddingVertical: 7 },
   dateHeader: { marginTop: 10, paddingBottom: 8, borderBottomWidth: StyleSheet.hairlineWidth, marginBottom: 8 },
-  angaGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  angaTile: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 11, paddingHorizontal: 12 },
-  timesCard: { borderWidth: 1, padding: 10, marginTop: 8 },
-  timesRow: { flexDirection: 'row', justifyContent: 'space-around' },
-  timeCell: { flexDirection: 'row', alignItems: 'center', width: '45%' },
+  angaGrid: { flexDirection: 'row', gap: 8 },
+  angaGridSecondary: { flexDirection: 'row', gap: 8, marginTop: 8 },
+  angaTile: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 14, paddingHorizontal: 14 },
+  angaTileSecondary: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 9, paddingHorizontal: 12 },
+  timesCard: { borderWidth: 1, padding: 14, marginTop: 10 },
+  timesRow: { flexDirection: 'row', justifyContent: 'space-between' },
+  timeCell: { flexDirection: 'row', alignItems: 'center', width: '47%', paddingVertical: 4 },
   observanceSection: { marginTop: 12 },
   observanceCard: { borderWidth: 1, padding: 10, marginBottom: 8 },
   observanceTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 },

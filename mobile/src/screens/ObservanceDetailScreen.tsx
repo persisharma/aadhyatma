@@ -11,6 +11,7 @@ import { getKathaContent } from '@/panchang/kathaContent';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import type { PanchangStackParamList } from '@/navigation/types';
+import { captionFont } from '@/utils/scriptFont';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'ObservanceDetail'>;
 
@@ -40,7 +41,7 @@ function categoryLabel(category: string, isHindi: boolean): string {
 }
 
 export default function ObservanceDetailScreen({ route, navigation }: Props) {
-  const { colors, typography, spacing, radii } = useTheme();
+  const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const isHindi = lang === 'hi';
   const rootNav = useNavigation<any>();
@@ -131,7 +132,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
               <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 24, color: colors.ink, textAlign: 'center', marginTop: 8 }}>
                 {isHindi ? rule.nameHi : rule.nameEn}
               </Text>
-              <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 14, color: colors.inkMuted, textAlign: 'center', marginTop: 3 }}>
+              <Text style={{ ...captionFont(isHindi ? rule.nameEn : rule.nameHi), fontSize: 15, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
                 {isHindi ? rule.nameEn : rule.nameHi}
               </Text>
               {next && (
@@ -217,14 +218,14 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                   onPress={openKatha}
                   accessibilityRole="button"
                   accessibilityLabel={`Read katha ${katha.titleEn}`}
-                  style={({ pressed }) => [styles.kathaCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, pressed && { opacity: 0.8 }]}
+                  style={({ pressed }) => [styles.kathaCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
                 >
                   <Text style={{ fontSize: 22, color: colors.saffron, marginRight: 12 }}>॥</Text>
                   <View style={{ flex: 1 }}>
                     <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
                       {isHindi ? katha.titleHi : katha.titleEn}
                     </Text>
-                    <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+                    <Text style={{ ...captionFont(isHindi ? katha.titleEn : katha.titleHi), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
                       {isHindi ? katha.titleEn : katha.titleHi} · {katha.sections.length} {isHindi ? 'खंड' : 'sections'}
                     </Text>
                   </View>
@@ -232,27 +233,10 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 </Pressable>
               </View>
             )}
-
-            {/* How to observe — phased placeholder (PRD-09 P4) */}
-            <View style={styles.block}>
-              <View style={styles.howRow}>
-                <Text style={[styles.blockHeading, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily, marginBottom: 0 }]}>
-                  {isHindi ? 'उपवास विधि' : 'How to observe'}
-                </Text>
-                <View style={[styles.soonBadge, { borderColor: colors.divider, borderRadius: radii.pill }]}>
-                  <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 9, color: colors.inkMuted, letterSpacing: 0.5 }}>
-                    {isHindi ? 'जल्द' : 'COMING SOON'}
-                  </Text>
-                </View>
-              </View>
-              <View style={[styles.soonCard, { borderColor: colors.gold, borderRadius: radii.lg }]}>
-                <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, lineHeight: 20, color: colors.inkSoft }}>
-                  {isHindi
-                    ? 'उपवास का प्रकार, पारण समय और नियम जल्द ही यहाँ जोड़े जाएँगे।'
-                    : 'Fasting guidance — fast type, parana window, and rules — will be added here soon.'}
-                </Text>
-              </View>
-            </View>
+            {/* "How to observe" (उपवास विधि) is intentionally omitted until real
+                vidhi content exists — an empty "coming soon" placeholder made this
+                primary screen read as under-construction. Re-add the section gated
+                on a populated vidhi field once content lands (PRD-09 P4). */}
           </ScrollView>
         )}
       </SafeAreaView>
@@ -272,12 +256,9 @@ const styles = StyleSheet.create({
   pill: { paddingHorizontal: 10, paddingVertical: 4 },
   nextPill: { marginTop: 8, paddingHorizontal: 14, paddingVertical: 6 },
   actionRow: { flexDirection: 'row', gap: 8, marginTop: 4, marginBottom: 4 },
-  actionBtn: { flex: 1, minHeight: 40, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14, borderWidth: 1 },
+  actionBtn: { flex: 1, minHeight: 40, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14, borderWidth: 1.5 },
   confirmBar: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, paddingHorizontal: 12, paddingVertical: 9, marginTop: 8 },
   block: { marginTop: 18 },
   blockHeading: { fontSize: 15, marginBottom: 8 },
   kathaCard: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, padding: 13 },
-  howRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 },
-  soonBadge: { borderWidth: 1, paddingHorizontal: 8, paddingVertical: 2 },
-  soonCard: { borderWidth: 1, borderStyle: 'dashed', padding: 12 },
 });

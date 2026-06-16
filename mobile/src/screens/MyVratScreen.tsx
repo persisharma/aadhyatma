@@ -9,6 +9,7 @@ import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { useVratFollows, type VratFollow, type VratReminderPref } from '@/contexts/VratFollowContext';
 import VratReminderSheet from '@/components/VratReminderSheet';
+import { captionFont } from '@/utils/scriptFont';
 import type { ObservanceRule } from '@/panchang/types';
 import type { PanchangStackParamList } from '@/navigation/types';
 
@@ -40,7 +41,7 @@ type FollowItem = {
 };
 
 export default function MyVratScreen({ navigation }: Props) {
-  const { colors, typography, spacing, radii } = useTheme();
+  const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const isHindi = lang === 'hi';
   const [calendarSystem] = usePanchangCalendarSystem();
@@ -110,7 +111,7 @@ export default function MyVratScreen({ navigation }: Props) {
             <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}>
               {isHindi ? 'मेरा व्रत' : 'My Vrat'}
             </Text>
-            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted }}>
+            <Text style={{ ...captionFont(isHindi ? 'My Vrat' : 'मेरा व्रत'), fontSize: 12, color: colors.inkMuted }}>
               {isHindi ? 'My Vrat' : 'मेरा व्रत'}
             </Text>
           </View>
@@ -159,7 +160,7 @@ export default function MyVratScreen({ navigation }: Props) {
             showsVerticalScrollIndicator={false}
           >
             {/* Metric band */}
-            <View style={[styles.metricBand, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}>
+            <View style={[styles.metricBand, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
               <Metric value={followCount} label={isHindi ? 'फ़ॉलो' : 'Following'} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
               <Metric value={reminderCount} label={isHindi ? 'अनुस्मारक' : 'Reminders on'} colors={colors} />
@@ -225,7 +226,7 @@ export default function MyVratScreen({ navigation }: Props) {
                     <Text style={{ flex: 1, fontFamily: typography.meaning.fontFamily, fontSize: 14, color: colors.inkSoft }}>
                       {isHindi ? it.rule.nameHi : it.rule.nameEn}
                     </Text>
-                    <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep }}>
+                    <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.inkSoft }}>
                       {shortDate(it.next.date, isHindi)} · {relativeLabel(it.next.date, today, isHindi)}
                     </Text>
                   </View>
@@ -326,16 +327,16 @@ function PriorityRow({
         <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
           {isHindi ? rule.nameHi : rule.nameEn}
         </Text>
-        <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
+        <Text style={{ ...captionFont(isHindi ? rule.nameEn : rule.nameHi), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
           {isHindi ? rule.nameEn : rule.nameHi}
         </Text>
       </Pressable>
       {nextDate && (
         <View style={{ alignItems: 'flex-end' }}>
-          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep }}>
+          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.inkSoft }}>
             {shortDate(nextDate, isHindi)}
           </Text>
-          <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
+          <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
             {relativeLabel(nextDate, today, isHindi)}
           </Text>
         </View>

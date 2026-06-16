@@ -28,7 +28,17 @@ export function getRuleById(id: string): ObservanceRule | null {
 
 /** Default-visible rules of a single browsable category. */
 export function getRulesForCategory(category: BrowseCategory): ObservanceRule[] {
-  return getObservanceCatalog().filter((rule) => rule.category === category);
+  // Dedupe by id: the catalog can surface the same rule id twice, which both
+  // shows a duplicate row and (with key={rule.id}) triggers React's "two children
+  // with the same key" warning. Deduping here keeps the list and the category
+  // counts consistent. (The underlying duplicate ids are a data issue worth
+  // cleaning up at source in festivals.ts.)
+  const seen = new Set<string>();
+  return getObservanceCatalog().filter((rule) => {
+    if (rule.category !== category || seen.has(rule.id)) return false;
+    seen.add(rule.id);
+    return true;
+  });
 }
 
 /** Live counts per browsable category, for the landing tiles. */

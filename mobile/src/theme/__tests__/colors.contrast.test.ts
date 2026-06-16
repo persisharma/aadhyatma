@@ -50,3 +50,26 @@ describe('reading color readability', () => {
     expect(contrastRatio('#000000', '#FFFFFF')).toBeCloseTo(21, 1);
   });
 });
+
+describe('secondary text readability', () => {
+  // inkMuted carries every subtitle, caption, and demoted secondary-language line
+  // app-wide. The original #8A6A47 only reached ~4.0:1 on parchment — under the
+  // WCAG AA 4.5 floor — so secondary text read as dull/half-visible. This pins the
+  // deepened value so it can't silently drift light again.
+  test('inkMuted clears WCAG AA against both the background and cards', () => {
+    expect(contrastRatio(lightColors.inkMuted, lightColors.parchment)).toBeGreaterThanOrEqual(5.5);
+    expect(contrastRatio(lightColors.inkMuted, lightColors.parchmentSoft)).toBeGreaterThanOrEqual(5.5);
+  });
+
+  test('textMuted stays in sync with inkMuted', () => {
+    expect(lightColors.textMuted).toBe(lightColors.inkMuted);
+  });
+
+  // Hierarchy must hold: muted is a caption, not a peer of the body text — so it
+  // must stay clearly LOWER-contrast (lighter) than inkSoft.
+  test('inkMuted reads lighter than inkSoft (caption < body)', () => {
+    const muted = contrastRatio(lightColors.inkMuted, lightColors.parchment);
+    const soft = contrastRatio(lightColors.inkSoft, lightColors.parchment);
+    expect(muted).toBeLessThan(soft);
+  });
+});

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeStackNavigator from './HomeStackNavigator';
 import MoreStackNavigator from './MoreStackNavigator';
@@ -20,22 +21,29 @@ type BhaktiIconProps = TabIconProps & {
   accentColor: string;
 };
 
+// Full-screen reader routes that should hide the bottom tab bar so it doesn't
+// compete with immersive reading. Lives at the tab level (rather than per-screen
+// setOptions) so the bar animates out cleanly and restores itself on blur.
+const IMMERSIVE_HOME_ROUTES = ['VratKathaReader'];
+
 export default function TabNavigator() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
+
+  const tabBarStyle = {
+    backgroundColor: colors.parchmentSoft,
+    borderTopWidth: 1,
+    borderTopColor: colors.divider,
+    height: 60 + insets.bottom,
+    paddingBottom: insets.bottom,
+    paddingTop: 6,
+  };
 
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {
-          backgroundColor: colors.parchmentSoft,
-          borderTopWidth: 1,
-          borderTopColor: colors.divider,
-          height: 60 + insets.bottom,
-          paddingBottom: insets.bottom,
-          paddingTop: 6,
-        },
+        tabBarStyle,
         tabBarActiveTintColor: colors.saffron,
         tabBarInactiveTintColor: colors.inkMuted,
         tabBarLabelStyle: {
@@ -48,11 +56,17 @@ export default function TabNavigator() {
       <Tab.Screen
         name="HomeTab"
         component={HomeStackNavigator}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <HomeIcon color={color} size={size} />
-          ),
+        options={({ route }) => {
+          const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
+          return {
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }: TabIconProps) => (
+              <HomeIcon color={color} size={size} />
+            ),
+            tabBarStyle: IMMERSIVE_HOME_ROUTES.includes(focused)
+              ? { display: 'none' as const }
+              : tabBarStyle,
+          };
         }}
       />
       <Tab.Screen
