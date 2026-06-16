@@ -17,8 +17,11 @@ test('user-facing panchang labels avoid the Drik Panchang trademark phrase', () 
   }
 });
 
-test('panchang smoke flow asserts the generic Panchang label', () => {
+test('panchang smoke flow drives the generic Panchang tab label', () => {
   const text = readFileSync(fileURLToPath(new NodeURL('../../../.maestro/panchang-smoke.yaml', import.meta.url)), 'utf8');
 
-  assert.match(text, /visible: "Panchang"\s+# bottom-tab label/);
+  // The smoke taps the bottom tab by its generic "Panchang" label. Maestro
+  // exposes it as "Panchang, tab, N of 4", so the flow matches "Panchang, tab.*"
+  // rather than a bare full-string "Panchang" (see the yaml's selector notes).
+  assert.match(text, /tapOn: "Panchang, tab/);
 });

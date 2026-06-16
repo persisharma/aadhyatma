@@ -50,18 +50,41 @@ export type PanchangData = {
 
 export type FestivalMarker = 'star' | 'dot' | 'halfmoon';
 
-export type ObservanceCategory = 'festival' | 'vrat';
+export type ObservanceCategory = 'festival' | 'vrat' | 'upavas' | 'katha' | 'regional';
+
+export type ObservanceVisibility = 'default' | 'advanced' | 'regional';
+
+export type ObservanceRuleType =
+  | 'lunar-tithi'
+  | 'solar-sankranti'
+  | 'weekday-in-lunar-month'
+  | 'relative-to-lunar'
+  | 'nakshatra'
+  | 'range'
+  | 'catalog-only';
+
+export type ObservanceRecurrence = 'annual' | 'monthly' | 'seasonal' | 'catalog';
+
+export type ObservanceRelativeRule = 'friday-before-purnima';
 
 export type ObservanceRule = {
   id: string;
   nameHi: string;
   nameEn: string;
   category: ObservanceCategory;
+  visibility: ObservanceVisibility;
+  ruleType: ObservanceRuleType;
+  recurrence: ObservanceRecurrence;
   type?: 'lunar' | 'solar';
-  lunarMonth: number;
-  paksha: Paksha;
-  tithi: number;
+  lunarMonth?: number;
+  monthSystem?: CalendarSystem | 'both';
+  paksha?: Paksha;
+  tithi?: number;
+  weekday?: number;
+  nakshatra?: number;
   solarLongitude?: number;
+  solarIngress?: number;
+  relativeRule?: ObservanceRelativeRule;
   marker: FestivalMarker;
   deityHi: string;
   deityEn: string;
@@ -70,11 +93,58 @@ export type ObservanceRule = {
   linkSectionId?: string;
   articleId?: string;
   detailRoute?: string;
+  sourceUrl: string;
+  kathaId?: string;
+  searchTerms?: string[];
 };
 
 export type ResolvedObservance = {
   date: Date;
   rule: ObservanceRule;
+};
+
+export type KathaKind = 'vrat-katha' | 'festival-legend' | 'mahatmya';
+
+export type KathaContentStatus =
+  | 'source-link-only'
+  | 'needs-original-content'
+  | 'original-content-ready'
+  | 'licensed-content-ready';
+
+export type KathaLanguageAvailability = 'metadata-only' | 'hindi' | 'english' | 'bilingual';
+
+export type KathaCatalogEntry = {
+  id: string;
+  nameHi: string;
+  nameEn: string;
+  kind: KathaKind;
+  contentStatus: KathaContentStatus;
+  languageAvailability: KathaLanguageAvailability;
+  summaryHi: string;
+  summaryEn: string;
+  sourceUrl: string;
+  sourceAttribution: string;
+  relatedRuleIds: string[];
+};
+
+export type KathaContentSection = {
+  id: string;
+  titleHi: string;
+  titleEn: string;
+  bodyHi: string[];
+  bodyEn: string[];
+};
+
+export type KathaContentEntry = {
+  id: string;
+  titleHi: string;
+  titleEn: string;
+  contentStatus: KathaContentStatus;
+  languageAvailability: KathaLanguageAvailability;
+  sourceUrls?: string[];
+  sourceNoteHi: string;
+  sourceNoteEn: string;
+  sections: KathaContentSection[];
 };
 
 export type FestivalRule = ObservanceRule;

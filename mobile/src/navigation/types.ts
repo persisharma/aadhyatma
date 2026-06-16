@@ -41,6 +41,7 @@ export type HomeStackParamList = {
   AartiReader: { aartiIndex: number; initialIndex?: number };
   SanskarReader: { sanskarId: string; initialIndex?: number };
   JapamCounter: { mantraId: string };
+  VratKathaReader: { kathaId: string };
   // No params → Pilgrimage listing (By Category / By State). `group` or
   // `stateEn` → drilled-in map + flat single-subsection list (PRD-08).
   TheerthMap: { group?: string; stateEn?: string } | undefined;
@@ -58,6 +59,16 @@ export type MoreStackParamList = {
   Wishlist: undefined;
   Profile: undefined;
   Reminders: undefined;
+};
+
+// Panchang tab stack — the date-first calendar plus the "Vrat & Parv" (व्रत-पर्व)
+// catalog journey (PRD-09). PanchangHome hosts the [Calendar | Vrat & Parv] segment.
+export type PanchangStackParamList = {
+  PanchangHome: undefined;
+  ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
+  ObservanceDetail: { ruleId: string };
+  KathaLibrary: undefined;
+  MyVrat: undefined;
 };
 
 /** @deprecated Use HomeStackParamList instead */

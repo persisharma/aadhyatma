@@ -90,4 +90,28 @@ describe('handleNotificationResponse', () => {
       verseIndex: dailyVerse.verseIndex,
     });
   });
+
+  test('a vrat-reminder tap opens the observance detail inside the Panchang tab', () => {
+    readySpy.mockReturnValue(true);
+
+    const vrat = { type: 'vrat-reminder', ruleId: 'nirjala-ekadashi', occurrenceDateKey: '2026-06-20', kind: 'dayOf' };
+    expect(handleNotificationResponse(responseWithData(vrat))).toBe(true);
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+
+    const action = dispatchSpy.mock.calls[0][0];
+    expect(action).toMatchObject({
+      type: 'NAVIGATE',
+      payload: {
+        name: 'PanchangTab',
+        params: { screen: 'ObservanceDetail', params: { ruleId: 'nirjala-ekadashi' } },
+      },
+    });
+  });
+
+  test('ignores a vrat-reminder payload missing ruleId', () => {
+    readySpy.mockReturnValue(true);
+
+    expect(handleNotificationResponse(responseWithData({ type: 'vrat-reminder' }))).toBe(false);
+    expect(dispatchSpy).not.toHaveBeenCalled();
+  });
 });

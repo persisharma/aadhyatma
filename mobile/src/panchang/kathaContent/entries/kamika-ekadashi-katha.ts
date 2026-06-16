@@ -1,0 +1,92 @@
+import { fullContent } from '../_helpers';
+
+export default fullContent({
+    id: 'kamika-ekadashi-katha',
+    titleHi: 'कामिका एकादशी व्रत कथा',
+    titleEn: 'Kamika Ekadashi Katha',
+    sourceUrls: ['https://www.drikpanchang.com/vrat-katha/ekadashi/kamika-ekadashi-vrat-katha.html'],
+    sections: [
+      {
+        id: 'krishna-ki-vani',
+        titleHi: 'श्रीकृष्ण की वाणी',
+        titleEn: 'The Words of Krishna',
+        bodyHi: [
+          'हे जनार्दन, श्रावण मास के कृष्ण पक्ष में आने वाली एकादशी का क्या नाम है, और उसका व्रत करने से जीव को कौन सा फल प्राप्त होता है, धर्मराज युधिष्ठिर ने हाथ जोड़कर पूछा, यह कृपा करके मुझे विस्तार से बताइए।',
+          'भगवान श्रीकृष्ण मुस्कुराकर बोले, हे राजन, इस परम पवित्र एकादशी का नाम कामिका एकादशी है। प्राचीन काल में यही माहात्म्य ब्रह्मा जी ने देवर्षि नारद को सुनाया था, और आज वही गुप्त रहस्य मैं तुम्हें कहता हूँ, ध्यान देकर सुनो।',
+          'जो मनुष्य श्रद्धा और भक्ति के साथ इस व्रत को धारण करता है, उसके भीतर बसे हुए घोर से घोर पाप भी जलकर भस्म हो जाते हैं। यह एकादशी भगवान विष्णु को अति प्रिय है, और इसका एक प्रभाव तुलसी की पूजा में छिपा है।',
+          'श्रीकृष्ण ने कहा, हे युधिष्ठिर, भगवान श्रीधर सोने और रत्नों के ढेर से उतने प्रसन्न नहीं होते, जितने वे श्रद्धा से अर्पित एक छोटे से तुलसीदल से प्रसन्न होते हैं। इसी सत्य को समझाने के लिए एक प्राचीन कथा है, जिसे सुनकर मनुष्य भयमुक्त हो जाता है।',
+        ],
+        bodyEn: [
+          'O Janardana, what is the name of the Ekadashi that falls in the dark fortnight of the month of Shravana, and what fruit does a soul obtain by observing its fast? So asked Dharmaraja Yudhishthira with folded hands, please be kind enough to tell me in full.',
+          'Lord Krishna smiled and said, O King, this most sacred Ekadashi is named Kamika Ekadashi. In ancient times this very glory was told by Brahma to the divine sage Narada, and today I reveal that same hidden secret to you, listen with attention.',
+          'Whoever holds this vow with faith and devotion has even the gravest of sins dwelling within him burned to ashes. This Ekadashi is exceedingly dear to Lord Vishnu, and one of its powers lies hidden in the worship offered with Tulsi.',
+          'Krishna said, O Yudhishthira, Lord Sridhara is not so pleased by heaps of gold and jewels as he is pleased by a single small leaf of Tulsi offered with devotion. To explain this very truth there is an ancient tale which, once heard, makes a person free of fear.',
+        ],
+      },
+      {
+        id: 'kshatriya-ka-paap',
+        titleHi: 'क्षत्रिय का पाप',
+        titleEn: 'The Sin of the Kshatriya',
+        bodyHi: [
+          'किसी गाँव में एक अभिमानी और उग्र स्वभाव वाला क्षत्रिय भूस्वामी रहता था, श्रीकृष्ण ने कहा। बल और सम्पत्ति के मद में वह सदा क्रोध से भरा रहता, और छोटी सी बात पर भी आपे से बाहर हो जाता था।',
+          'एक दिन किसी विषय को लेकर उसका एक ब्राह्मण से कठोर विवाद छिड़ गया। क्रोध की ज्वाला में अंधा होकर वह ब्राह्मण से भिड़ पड़ा, और उस हाथापाई में वह ब्राह्मण मारा गया।',
+          'जब उसका क्रोध शांत हुआ तो उसे अपने किए का भान हुआ, और ब्रह्महत्या के उस घोर पाप का भार उसके हृदय पर पर्वत के समान आ गिरा। उसकी आत्मा भीतर ही भीतर काँपने लगी।',
+          'पश्चात्ताप से व्याकुल होकर उसने मृत ब्राह्मण की अंत्येष्टि और श्राद्ध-कर्म करना चाहा, किन्तु गाँव के अन्य ब्राह्मणों ने उसके पाप के कारण न उसे स्वीकार किया, न उसका दिया हुआ अन्न या दान ही ग्रहण किया।',
+          'सब उससे दूर हटने लगे, मानो वह कोई अछूत हो। न कोई उसके साथ बैठता, न कोई उससे बात करता; ब्रह्महत्या के कलंक ने उसे समाज से बहिष्कृत कर दिया, और वह अपने ही गाँव में अकेला और तिरस्कृत खड़ा रह गया।',
+          'दिन-रात ग्लानि की आग उसे भीतर से जलाती रही। वह सोचता, मैंने जो किया है, क्या उसका कोई प्रायश्चित है? क्या इतना भयानक पाप कभी धुल भी सकता है? इसी पीड़ा में डूबा हुआ वह एक उपाय की खोज में निकल पड़ा।',
+        ],
+        bodyEn: [
+          'In a certain village there dwelt a proud and hot-tempered Kshatriya landlord, said Krishna. Intoxicated by his strength and wealth, he was forever filled with anger, and over even the smallest matter he would lose all control of himself.',
+          'One day, over some dispute, a bitter quarrel broke out between him and a Brahmin. Blinded by the flame of his rage he grappled with the Brahmin, and in that struggle the Brahmin was killed.',
+          'When his anger cooled he became aware of what he had done, and the weight of that terrible sin of brahmahatya, the slaying of a Brahmin, fell upon his heart like a mountain. His soul began to tremble within him.',
+          'Distraught with remorse, he wished to perform the funeral rites and the shraddha offerings for the slain Brahmin, yet the other Brahmins of the village, because of his sin, neither accepted him nor would they receive the food or charity he offered.',
+          'All began to draw away from him as though he were an untouchable. None would sit with him, none would speak with him; the stain of brahmahatya had cast him out of society, and he stood alone and scorned in his own village.',
+          'Day and night the fire of guilt burned him from within. He thought, is there any atonement for what I have done? Can so terrible a sin ever be washed away? Drowned in this anguish, he set out in search of some remedy.',
+        ],
+      },
+      {
+        id: 'muni-ka-upadesh',
+        titleHi: 'मुनि का उपदेश',
+        titleEn: 'The Sage Counsel',
+        bodyHi: [
+          'भटकते-भटकते वह एक करुणामय मुनि के आश्रम में जा पहुँचा। उनके चरणों में सिर रखकर उसने अपना सारा पाप और सारी व्यथा कह सुनाई और गिड़गिड़ाकर पूछा, हे मुनिवर, इतने घोर पाप को धोने का क्या कोई मार्ग है?',
+          'मुनि ने उसकी ओर करुणा से देखा और कहा, हे पुत्र, निराश मत हो। श्रावण मास के कृष्ण पक्ष की कामिका एकादशी समीप है। तू पूर्ण श्रद्धा और निष्ठा से इस व्रत का पालन कर, तो यह तेरे ब्रह्महत्या जैसे पाप को भी नष्ट कर देगी।',
+          'मुनि बोले, इस दिन तू भगवान श्रीधर अर्थात गदाधर विष्णु का पूजन कर, और उन्हें श्रद्धा से तुलसीदल अर्पित कर। स्मरण रख, भगवान को सोने और मणि-माणिक्य के ढेर से इतनी प्रसन्नता नहीं होती, जितनी भक्ति से चढ़ाए गए एक तुलसीपत्र से होती है।',
+          'उन्होंने कहा, इस एकादशी को तू उपवास रखकर, इंद्रियों को संयमित कर, और रात्रि भर जागरण करते हुए हरि के नाम और गुणों का स्मरण करते हुए बिता। दीप जलाकर भगवान के सम्मुख बैठ, और अपने हृदय का सारा पश्चात्ताप उनके चरणों में अर्पित कर दे।',
+          'मुनि के वचन सुनकर उस पापी के सूखे हृदय में आशा की एक किरण फूट पड़ी। उसने हाथ जोड़कर संकल्प किया कि वह इस व्रत को अपने प्राण लगाकर, पूर्ण विश्वास के साथ करेगा, और किसी भी नियम में तनिक भी प्रमाद नहीं होने देगा।',
+          'मुनि को बारंबार प्रणाम करके वह लौट आया, और उसका मन अब पहली बार पश्चात्ताप के बोझ के नीचे भी एक शांत भरोसे से भर उठा कि भगवान विष्णु की शरण उसके इस असह्य कलंक को अवश्य हर लेगी।',
+        ],
+        bodyEn: [
+          'Wandering on, he came at last to the hermitage of a compassionate sage. Laying his head at the sage feet, he poured out all his sin and all his grief, and pleaded, O great sage, is there any path by which so terrible a sin may be washed away?',
+          'The sage looked upon him with compassion and said, O son, do not despair. The Kamika Ekadashi of the dark fortnight of the month of Shravana draws near. If you observe this vow with complete faith and devotion, it will destroy even a sin such as your brahmahatya.',
+          'The sage said, on this day worship Lord Sridhara, that is Gadadhara Vishnu, and offer him leaves of Tulsi with devotion. Remember, the Lord is not so pleased by heaps of gold and gems as he is pleased by a single leaf of Tulsi offered with devotion.',
+          'He said, keep the fast on this Ekadashi, restrain your senses, and pass the whole night in vigil, remembering the name and the qualities of Hari. Light a lamp and sit before the Lord, and lay all the remorse of your heart at his feet.',
+          'Hearing the sage words, a single ray of hope broke into the parched heart of that sinner. With folded hands he resolved that he would keep this vow with his very life, with complete faith, and that he would not allow the slightest negligence in any of its rules.',
+          'Bowing again and again to the sage, he returned, and his mind, for the first time even beneath the burden of remorse, was filled with a quiet trust that the shelter of Lord Vishnu would surely take away this unbearable stain.',
+        ],
+      },
+      {
+        id: 'tulsi-aur-mukti',
+        titleHi: 'तुलसी और मुक्ति',
+        titleEn: 'Tulsi and Liberation',
+        bodyHi: [
+          'कामिका एकादशी के पवित्र दिन उस क्षत्रिय ने नियमपूर्वक व्रत धारण किया। प्रातः स्नान कर, शुद्ध हृदय से उसने भगवान श्रीधर का पूजन किया, और उनके चरणों में कोमल तुलसीदल अर्पित किए। दिनभर उसने अन्न-जल का त्याग कर पूर्ण उपवास रखा।',
+          'सायंकाल उसने भगवान के सम्मुख दीप जलाया और रात्रि भर जागरण किया। उसके नेत्रों से पश्चात्ताप के अश्रु बहते रहे, और वह बारंबार पुकारता रहा, हे श्रीधर, हे गदाधर, मैं महापापी आपकी शरण में हूँ, आप ही मेरे इस कलंक को धो सकते हैं।',
+          'उसका मन न भूख की ओर गया, न थकान की ओर; वह तो केवल हरि के नाम और उस एक तुलसीदल की भक्ति में लीन रहा, जिसे उसने अपने काँपते हाथों से प्रेमपूर्वक भगवान को अर्पित किया था।',
+          'उसी रात्रि, जब वह थककर क्षण भर को निद्रा में डूबा, तो स्वप्न में स्वयं भगवान विष्णु प्रकट हुए। उनका मुख करुणा से दीप्त था, और उन्होंने स्नेह से कहा, हे भक्त, तेरी श्रद्धा से मैं प्रसन्न हूँ; तेरा ब्रह्महत्या का पाप अब धुल गया, तू निष्पाप हो गया।',
+          'भगवान के वचन सुनते ही उसके हृदय का वह पर्वत समान भार सहसा उतर गया। उसकी आत्मा निर्मल हो उठी, और जो कलंक उसे जीवित ही नरक की भाँति जला रहा था, वह कामिका एकादशी के प्रभाव से सदा के लिए मिट गया।',
+          'अंत में वह क्षत्रिय अपने शेष जीवन को भगवान की भक्ति में बिताकर एक उच्च गति को प्राप्त हुआ। श्रीकृष्ण ने कहा, हे युधिष्ठिर, यही कामिका एकादशी का माहात्म्य है, जो ब्रह्महत्या जैसे घोरतम पापों को भी हर लेती है।',
+          'जो मनुष्य श्रद्धा से इस व्रत का पालन करता है और तुलसी से भगवान का पूजन करता है, वह विष्णु को परम प्रिय हो जाता है, उसके समस्त पाप नष्ट हो जाते हैं, और अंत में वह मुक्ति को प्राप्त कर भगवान के परमधाम को जाता है। यही इस पवित्र कथा का सार और सत्य है।',
+        ],
+        bodyEn: [
+          'On the holy day of Kamika Ekadashi, that Kshatriya undertook the vow according to the rules. Bathing at dawn, with a pure heart he worshipped Lord Sridhara and offered tender leaves of Tulsi at his feet. Through the whole day he renounced food and water and kept a complete fast.',
+          'In the evening he lit a lamp before the Lord and kept vigil through the whole night. Tears of remorse flowed from his eyes, and again and again he cried out, O Sridhara, O Gadadhara, I, a great sinner, am in your shelter; you alone can wash away this stain of mine.',
+          'His mind turned neither toward hunger nor toward weariness; it remained absorbed only in the name of Hari and in the devotion of that single Tulsi leaf which he had offered to the Lord with lovingly trembling hands.',
+          'That very night, when worn out he sank for a moment into sleep, Lord Vishnu himself appeared in his dream. His face was radiant with compassion, and he said with affection, O devotee, I am pleased with your faith; your sin of brahmahatya is now washed away, you have become free of sin.',
+          'The moment he heard the Lord words, that mountain-like weight upon his heart was suddenly lifted. His soul grew pure, and the stain that had been burning him alive like a living hell was, by the power of Kamika Ekadashi, erased forever.',
+          'In the end that Kshatriya passed the remainder of his life in devotion to the Lord and attained a high state. Krishna said, O Yudhishthira, this is the glory of Kamika Ekadashi, which removes even the gravest of sins, such as brahmahatya.',
+          'Whoever observes this vow with faith and worships the Lord with Tulsi becomes most dear to Vishnu; all his sins are destroyed, and in the end he attains liberation and goes to the supreme abode of the Lord. This is the essence and the truth of this sacred tale.',
+        ],
+      },
+    ],
+  });

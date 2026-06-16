@@ -62,8 +62,9 @@ appId: host.exp.Exponent
 # ── Step 4: Assert the header, toggle, and calendar controls rendered (English) ──
 # First open resolves the lunar calendar for festivals — allow generous time.
 - extendedWaitUntil:
-    visible: "Panchang"   # bottom-tab label (generic almanac term, no vendor trademark)
-    timeout: 30000
+    visible: ".*Ujjain.*"   # Ujjain reference line = screen-loaded canary. (The bare
+    timeout: 30000          #  "Panchang" tab label is exposed as "Panchang, tab, N of 4",
+                            #  which never full-string-matches "Panchang" — drifted assertion.)
 - assertVisible: ".*Ujjain.*"      # "Reference: Ujjain, India · Purnimant/Amanta"
 - assertVisible: "Purnimant calendar system"
 - assertVisible: "Amanta calendar system"
@@ -119,7 +120,7 @@ appId: host.exp.Exponent
 # ── Step 6: Restore Panchang + language defaults (best-effort) ──
 - scrollUntilVisible:
     element:
-      text: "Ujjain"
+      text: ".*Ujjain.*"   # full element is "Reference: Ujjain, India · …" (full-string match)
     direction: UP
     centerElement: true
     timeout: 20000

@@ -19,6 +19,12 @@
 #     its child text: "Reference: <city>, India · <system>  change".
 #   - City rows expose accessibilityLabel "<NameEn>" ("<NameEn>, selected" for
 #     the active one); the search field exposes "Search city".
+#   - SELECTOR COLLISION: the search TextInput's *value* is matchable text too,
+#     so typing the full "Delhi" makes `tapOn: "Delhi"` ambiguous — it resolves
+#     to the field (rendered above the list) and pops the iOS edit menu instead
+#     of selecting the row. We type a PARTIAL query ("Delh"/"Ujjai") that still
+#     filters the list to the one city but never equals the row label, so the
+#     tap lands on the row unambiguously.
 #   - English is set first for the same Devanagari/accessibility-tree reasons
 #     as panchang-smoke.yaml.
 
@@ -50,9 +56,9 @@ appId: host.exp.Exponent
 - assertVisible: "Use my location"
 - assertVisible: "Search city"
 
-# ── Step 5: Search for Delhi and pick it ──
+# ── Step 5: Search for Delhi and pick it (partial query — see selector notes) ──
 - tapOn: "Search city"
-- inputText: "Delhi"
+- inputText: "Delh"
 - waitForAnimationToEnd
 - tapOn: "Delhi"
 - waitForAnimationToEnd
@@ -88,7 +94,7 @@ appId: host.exp.Exponent
 - tapOn: "Reference: .*"
 - waitForAnimationToEnd
 - tapOn: "Search city"
-- inputText: "Ujjain"
+- inputText: "Ujjai"
 - waitForAnimationToEnd
 - tapOn: "Ujjain"
 - waitForAnimationToEnd

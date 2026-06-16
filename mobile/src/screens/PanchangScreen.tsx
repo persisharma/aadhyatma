@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,6 +21,10 @@ import {
   usePanchangMonthObservances,
 } from '@/panchang/usePanchang';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
+import { getKathaContent } from '@/panchang/kathaContent';
+import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
+import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
+import { useVratFollows } from '@/contexts/VratFollowContext';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -98,11 +102,14 @@ export default function PanchangScreen() {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
+  const { followCount, reminderCount } = useVratFollows();
   const todayKey = new Date().toDateString();
   const today = useMemo(() => startOfLocalDay(new Date(todayKey)), [todayKey]);
   const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(new Date()));
   const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(new Date()));
   const [calendarExpanded, setCalendarExpanded] = useState(false);
+  const [panchangTab, setPanchangTab] = useState<'calendar' | 'catalog'>('calendar');
+  const [catalogQuery, setCatalogQuery] = useState('');
   const calendarSwipeStart = useRef<{ x: number; y: number } | null>(null);
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
   const { location } = usePanchangLocation();
@@ -175,6 +182,15 @@ export default function PanchangScreen() {
     if (target) rootNav.navigate('HomeTab', target);
   };
 
+  const openKatha = (kathaId: string) => {
+    rootNav.navigate('HomeTab', { screen: 'VratKathaReader', params: { kathaId } });
+  };
+
+  const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId });
+  const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
+  const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
+  const openMyVrat = () => rootNav.navigate('MyVrat');
+
   return (
     <View style={styles.root}>
       <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />
@@ -187,6 +203,20 @@ export default function PanchangScreen() {
               so the redundant title/subtitle/pill are gone. Only the calendar
               system control + tappable location reference remain. */}
           <View style={styles.systemHeader}>
+            <Pressable
+              onPress={openMyVrat}
+              accessibilityRole="button"
+              accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
+              hitSlop={10}
+              style={({ pressed }) => [styles.myVratStar, pressed && { opacity: 0.6 }]}
+            >
+              <Text style={{ fontSize: 19, color: colors.gold }}>★</Text>
+              {followCount > 0 && (
+                <View style={[styles.starBadge, { backgroundColor: colors.saffron, borderColor: colors.parchment }]}>
+                  <Text style={[styles.starBadgeText, { color: colors.parchment }]}>{followCount}</Text>
+                </View>
+              )}
+            </Pressable>
             <CalendarSystemToggle
               value={calendarSystem}
               onChange={setCalendarSystem}
@@ -218,6 +248,33 @@ export default function PanchangScreen() {
             </Pressable>
           </View>
 
+          <View style={[styles.segmented, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.pill }]}>
+            {(['calendar', 'catalog'] as const).map((tab) => {
+              const selected = panchangTab === tab;
+              return (
+                <Pressable
+                  key={tab}
+                  onPress={() => setPanchangTab(tab)}
+                  accessibilityRole="tab"
+                  accessibilityState={{ selected }}
+                  accessibilityLabel={tab === 'calendar' ? 'Calendar' : 'Vrat and Parv'}
+                  style={({ pressed }) => [
+                    styles.segmentOption,
+                    { borderRadius: radii.pill },
+                    selected && { backgroundColor: colors.saffronTint },
+                    pressed && !selected && { opacity: 0.7 },
+                  ]}
+                >
+                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 13, color: selected ? colors.saffronDeep : colors.inkMuted }}>
+                    {tab === 'calendar' ? (contentByLang(lang, 'पंचांग', 'Calendar')) : (contentByLang(lang, 'व्रत-पर्व', 'Vrat & Parv'))}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+
+          {panchangTab === 'calendar' ? (
+            <>
           <View
             style={[styles.calendarCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}
             onTouchStart={handleCalendarTouchStart}
@@ -413,15 +470,16 @@ export default function PanchangScreen() {
               </View>
             )}
             {observances.length > 0 ? (
-              observances.map((item) => (
+              observances.map((item, i) => (
                 <ObservanceCard
-                  key={item.rule.id}
+                  key={`${item.rule.id}-${i}`}
                   item={item}
                   lang={lang}
                   colors={colors}
                   typography={typography}
                   radii={radii}
                   onOpenLink={openLinkedSection}
+                  onOpenKatha={openKatha}
                 />
               ))
             ) : (
@@ -437,7 +495,7 @@ export default function PanchangScreen() {
                 {pick(lang, { hi: 'आगामी', en: 'Upcoming', gu: 'આગામી', kn: 'ಮುಂಬರುವ' })}
               </Text>
               {upcoming.map((item, i) => (
-                <View key={item.rule.id} style={[styles.upcomingRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}>
+                <View key={`${item.rule.id}-${item.date.toDateString()}`} style={[styles.upcomingRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}>
                   <View style={[styles.upcomingDot, { backgroundColor: markerColor(item.rule.marker, colors) }]} />
                   <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkMuted, width: 50 }}>
                     {formatShortDate(item.date, lang)}
@@ -448,6 +506,25 @@ export default function PanchangScreen() {
                 </View>
               ))}
             </View>
+          )}
+            </>
+          ) : (
+            <CatalogLanding
+              lang={lang}
+              today={today}
+              calendarSystem={calendarSystem}
+              query={catalogQuery}
+              onChangeQuery={setCatalogQuery}
+              colors={colors}
+              typography={typography}
+              radii={radii}
+              onOpenDetail={openObservanceDetail}
+              onOpenCategory={openCategory}
+              onOpenKathaLibrary={openKathaLibrary}
+              onOpenMyVrat={openMyVrat}
+              followCount={followCount}
+              reminderCount={reminderCount}
+            />
           )}
         </ScrollView>
       </SafeAreaView>
@@ -559,17 +636,19 @@ function TimeCell({ icon, label, value, colors }: { icon: string; label: string;
   );
 }
 
-function ObservanceCard({ item, lang, colors, typography, radii, onOpenLink }: {
+function ObservanceCard({ item, lang, colors, typography, radii, onOpenLink, onOpenKatha }: {
   item: ResolvedObservance;
   lang: Lang;
   colors: any;
   typography: any;
   radii: any;
   onOpenLink: (sectionId: string) => void;
+  onOpenKatha: (kathaId: string) => void;
 }) {
   const linkedEntry = item.rule.linkSectionId
     ? library.find((entry) => entry.id === item.rule.linkSectionId)
     : null;
+  const katha = item.rule.kathaId ? getKathaContent(item.rule.kathaId) : null;
 
   return (
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
@@ -589,17 +668,209 @@ function ObservanceCard({ item, lang, colors, typography, radii, onOpenLink }: {
       <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
         {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
       </Text>
-      {linkedEntry && (
-        <Pressable
-          onPress={() => onOpenLink(linkedEntry.id)}
-          accessibilityRole="button"
-          accessibilityLabel={`Open ${linkedEntry.nameEn}`}
-          style={({ pressed }) => [styles.linkButton, { borderColor: colors.divider }, pressed && { opacity: 0.7 }]}
-        >
-          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
-            {`${pick(lang, { hi: 'पढ़ें', en: 'Read', gu: 'વાંચો', kn: 'ಓದಿ' })}: ${contentByLang(lang, linkedEntry.nameHi, linkedEntry.nameEn)}`}
+      <View style={styles.linkRow}>
+        {katha && item.rule.kathaId && (
+          <Pressable
+            onPress={() => onOpenKatha(item.rule.kathaId as string)}
+            accessibilityRole="button"
+            accessibilityLabel={`Read katha ${katha.titleEn}`}
+            style={({ pressed }) => [styles.kathaButton, { backgroundColor: colors.goldTint, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
+          >
+            <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
+              {contentByLang(lang, 'कथा पढ़ें', 'Read Katha')}
+            </Text>
+          </Pressable>
+        )}
+        {linkedEntry && (
+          <Pressable
+            onPress={() => onOpenLink(linkedEntry.id)}
+            accessibilityRole="button"
+            accessibilityLabel={`Open ${linkedEntry.nameEn}`}
+            style={({ pressed }) => [styles.linkButton, { borderColor: colors.divider }, pressed && { opacity: 0.7 }]}
+          >
+            <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
+              {contentByLang(lang, `पढ़ें: ${linkedEntry.nameHi}`, `Read: ${linkedEntry.nameEn}`)}
+            </Text>
+          </Pressable>
+        )}
+      </View>
+    </View>
+  );
+}
+
+function CatalogLanding({
+  lang, today, calendarSystem, query, onChangeQuery,
+  colors, typography, radii,
+  onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenMyVrat, followCount, reminderCount,
+}: {
+  lang: Lang;
+  today: Date;
+  calendarSystem: CalendarSystem;
+  query: string;
+  onChangeQuery: (q: string) => void;
+  colors: any;
+  typography: any;
+  radii: any;
+  onOpenDetail: (ruleId: string) => void;
+  onOpenCategory: (category: BrowseCategory) => void;
+  onOpenKathaLibrary: () => void;
+  onOpenMyVrat: () => void;
+  followCount: number;
+  reminderCount: number;
+}) {
+  const trimmed = query.trim();
+  const results = useMemo(() => (trimmed ? searchObservances(trimmed) : []), [trimmed]);
+  const upcoming = useMemo(() => getUpcomingObservances(today, 6, calendarSystem, 150), [today, calendarSystem]);
+  const counts = useMemo(() => getCategoryCounts(), []);
+  const kathaCount = getKathaCount();
+
+  const tileMeta: Record<BrowseCategory, { glyph: string; hi: string; en: string }> = {
+    vrat: { glyph: 'ॐ', hi: 'व्रत', en: 'Vrat' },
+    festival: { glyph: '✺', hi: 'पर्व', en: 'Festivals' },
+    upavas: { glyph: '☾', hi: 'उपवास', en: 'Upvas' },
+  };
+  const categoryShort = (category: string): string =>
+    category === 'vrat' ? (contentByLang(lang, 'व्रत', 'Vrat'))
+      : category === 'upavas' ? (contentByLang(lang, 'उपवास', 'Upvas'))
+        : (contentByLang(lang, 'पर्व', 'Festival'));
+
+  return (
+    <View style={{ marginTop: 12 }}>
+      <TextInput
+        value={query}
+        onChangeText={onChangeQuery}
+        placeholder={contentByLang(lang, 'व्रत, पर्व, उपवास, कथा खोजें…', 'Search vrat, festival, upvas, katha…')}
+        placeholderTextColor={colors.inkMuted}
+        style={[styles.catalogSearch, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, color: colors.ink }]}
+      />
+
+      {trimmed ? (
+        results.length > 0 ? (
+          <View style={{ marginTop: 4 }}>
+            {results.map((rule) => (
+              <Pressable
+                key={rule.id}
+                onPress={() => onOpenDetail(rule.id)}
+                accessibilityRole="button"
+                accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
+                style={({ pressed }) => [styles.resultRow, { borderBottomColor: colors.divider }, pressed && { opacity: 0.6 }]}
+              >
+                <View style={{ flex: 1, paddingRight: 10 }}>
+                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
+                    {contentByLang(lang, rule.nameHi, rule.nameEn)}
+                  </Text>
+                  <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
+                    {lang === 'en' ? rule.nameHi : rule.nameEn}
+                  </Text>
+                </View>
+                <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
+              </Pressable>
+            ))}
+          </View>
+        ) : (
+          <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.inkMuted, marginTop: 24, textAlign: 'center' }}>
+            {contentByLang(lang, 'कोई परिणाम नहीं।', 'No matches.')}
           </Text>
-        </Pressable>
+        )
+      ) : (
+        <>
+          {upcoming.length > 0 && (
+            <View style={{ marginTop: 14 }}>
+              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 8 }}>
+                {contentByLang(lang, 'आगामी', 'Upcoming')}
+              </Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10, paddingRight: 8 }}>
+                {upcoming.map((item) => (
+                  <Pressable
+                    key={`${item.rule.id}-${item.date.toDateString()}`}
+                    onPress={() => onOpenDetail(item.rule.id)}
+                    accessibilityRole="button"
+                    accessibilityLabel={contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
+                    style={({ pressed }) => [styles.upCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, pressed && { opacity: 0.75 }]}
+                  >
+                    <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4 }}>
+                      {formatShortDate(item.date, lang).toUpperCase()}
+                    </Text>
+                    <Text numberOfLines={2} style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginTop: 6 }}>
+                      {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
+                    </Text>
+                    <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
+                      {categoryShort(item.rule.category)}
+                    </Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            </View>
+          )}
+
+          <View style={{ marginTop: 18 }}>
+            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 10 }}>
+              {contentByLang(lang, 'श्रेणी से देखें', 'Browse by type')}
+            </Text>
+            <View style={styles.tileGrid}>
+              {counts.map(({ category, count }) => {
+                const meta = tileMeta[category];
+                return (
+                  <Pressable
+                    key={category}
+                    onPress={() => onOpenCategory(category)}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${meta.en}, ${count}`}
+                    style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, pressed && { opacity: 0.8 }]}
+                  >
+                    <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>{meta.glyph}</Text>
+                    <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink, marginTop: 8 }}>
+                      {contentByLang(lang, meta.hi, meta.en)}
+                    </Text>
+                    <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted }}>
+                      {lang === 'en' ? meta.hi : meta.en}
+                    </Text>
+                    <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
+                      {count} {contentByLang(lang, 'व्रत-पर्व', 'observances')}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+              <Pressable
+                onPress={onOpenKathaLibrary}
+                accessibilityRole="button"
+                accessibilityLabel={`Katha library, ${kathaCount}`}
+                style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, pressed && { opacity: 0.8 }]}
+              >
+                <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>॥</Text>
+                <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink, marginTop: 8 }}>
+                  {contentByLang(lang, 'कथा', 'Katha')}
+                </Text>
+                <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted }}>
+                  {lang === 'en' ? 'कथा संग्रह' : 'Katha library'}
+                </Text>
+                <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
+                  {kathaCount} {contentByLang(lang, 'कथाएँ', 'stories')}
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+
+          <Pressable
+            onPress={onOpenMyVrat}
+            accessibilityRole="button"
+            accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
+            style={({ pressed }) => [styles.myVratRow, { backgroundColor: colors.greenTint, borderColor: colors.green, borderRadius: radii.lg }, pressed && { opacity: 0.8 }]}
+          >
+            <Text style={{ fontSize: 18, color: colors.green, marginRight: 10 }}>★</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
+                {contentByLang(lang, 'मेरा व्रत', 'My Vrat')}
+              </Text>
+              <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
+                {followCount > 0
+                  ? contentByLang(lang, `${followCount} फ़ॉलो किए · ${reminderCount} अनुस्मारक`, `${followCount} following · ${reminderCount} reminders on`)
+                  : contentByLang(lang, 'अपने व्रत यहाँ रखें', 'Keep your vrats here')}
+              </Text>
+            </View>
+            <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
+          </Pressable>
+        </>
       )}
     </View>
   );
@@ -610,6 +881,17 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: { paddingTop: 8, paddingBottom: 24 },
   systemHeader: { alignItems: 'center', marginTop: 2 },
+  myVratStar: { position: 'absolute', right: 0, top: 0, padding: 4, alignItems: 'center', justifyContent: 'center', zIndex: 2 },
+  starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 15, height: 15, borderRadius: 7.5, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
+  starBadgeText: { fontFamily: 'Inter_600SemiBold', fontSize: 9, lineHeight: 13 },
+  myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, padding: 12, marginTop: 12 },
+  segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
+  segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
+  catalogSearch: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: 'CormorantGaramond_500Medium', fontSize: 15 },
+  resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
+  upCard: { width: 150, borderWidth: 1, padding: 11 },
+  tileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  tile: { flexGrow: 1, flexBasis: '45%', borderWidth: 1, padding: 14, minHeight: 104 },
   locationButton: { marginTop: 5, minHeight: 24, justifyContent: 'center' },
   approximateRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
   systemToggle: {
@@ -663,6 +945,8 @@ const styles = StyleSheet.create({
   observanceTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 },
   categoryPill: { paddingHorizontal: 9, paddingVertical: 4 },
   linkButton: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
+  linkRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
+  kathaButton: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
   upcomingSection: { marginTop: 12 },
   upcomingRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, borderBottomWidth: StyleSheet.hairlineWidth, gap: 6 },
   upcomingDot: { width: 5, height: 5, borderRadius: 2.5 },

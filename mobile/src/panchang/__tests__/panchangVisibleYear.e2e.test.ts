@@ -134,8 +134,6 @@ function commonVisibleData(snapshot: VisibleSnapshot) {
     paksha: snapshot.paksha,
     elements: snapshot.elements,
     timeCards: snapshot.timeCards,
-    observanceCards: snapshot.observanceCards,
-    upcomingRows: snapshot.upcomingRows,
   };
 }
 
