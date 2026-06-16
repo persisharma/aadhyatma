@@ -1,6 +1,6 @@
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { View as mockView } from 'react-native';
+import { Text, View as mockView } from 'react-native';
 import RoutineCelebration from '@/components/RoutineCelebration';
 import LotusMark from '@/components/LotusMark';
 
@@ -40,15 +40,36 @@ describe('LotusMark', () => {
 });
 
 describe('RoutineCelebration', () => {
-  it('mounts a shower of petals and tears down cleanly', () => {
+  it('mounts a full-width shower of layered flowers with the caption, and tears down cleanly', () => {
     const onDone = jest.fn();
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => {
-      tree = TestRenderer.create(
-        <RoutineCelebration left={16} right={16} bottom={8} onDone={onDone} />
-      );
+      tree = TestRenderer.create(<RoutineCelebration caption="साधना पूर्ण · आज" onDone={onDone} />);
     });
-    expect(gradientCount(tree)).toBe(8);
+    expect(gradientCount(tree)).toBeGreaterThanOrEqual(48);
+    const text = tree.root
+      .findAllByType(Text)
+      .map((n) => n.props.children)
+      .flat(Number.POSITIVE_INFINITY)
+      .join(' ');
+    expect(text).toContain('साधना पूर्ण · आज');
+    act(() => tree.unmount());
+  });
+
+  it('keeps the flower shower slow, then calls onDone once it has fully settled', () => {
+    const onDone = jest.fn();
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      tree = TestRenderer.create(<RoutineCelebration caption="साधना पूर्ण · आज" onDone={onDone} />);
+    });
+    act(() => {
+      jest.advanceTimersByTime(5000);
+    });
+    expect(onDone).not.toHaveBeenCalled();
+    act(() => {
+      jest.advanceTimersByTime(2400); // longer than the slower staggered fall + caption fade
+    });
+    expect(onDone).toHaveBeenCalledTimes(1);
     act(() => tree.unmount());
   });
 });

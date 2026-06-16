@@ -6,6 +6,16 @@ The companion command `/add-section` (see [`.claude/commands/add-section.md`](./
 
 ---
 
+## 0. Every change ships with tests — unit **and** e2e
+
+This is a hard, repo-wide gate that applies to **every** change, not just new sections — features, bug fixes, refactors, content edits, and data changes alike.
+
+- **Unit tests (UT).** Every change adds or updates automated unit tests that pin the new or fixed behaviour. Run `npm test` from `mobile/` — it runs `typecheck`, the Jest suites (`test:readers`), the panchang engine tests (`test:engine`), and the data/content tests (`test:data`); all must pass. A bug fix must include a test that fails before the fix and passes after.
+- **E2E verification.** Every change is exercised end-to-end via the Maestro flows in `mobile/.maestro/` (`npm run test:e2e`) on a simulator/emulator, and the flow covering the touched area must pass. If a change adds a user-facing surface no existing flow covers, extend or add the matching `<category>-smoke.yaml` (see §9).
+- **No exceptions.** A PR without both UT and e2e evidence is a hard reject — the same bar as a missing reader-screen test (§2 row 14) or a missing Maestro flow (§9).
+
+---
+
 ## 1. The questions every new section must answer
 
 Every section, regardless of size, must supply these inputs. The slash command will refuse to scaffold until the mandatory ones are present.
@@ -17,7 +27,7 @@ Every section, regardless of size, must supply these inputs. The slash command w
 | 3 | `nameEn` | **yes** | `Hanuman Chalisa` | listing card title (italic English row) |
 | 4 | `sub` | **yes** | `40 चौपाई · अर्थ सहित` | listing subtitle. Devanagari, follows the `<count> <unit> · अर्थ सहित` pattern of existing sections |
 | 5 | `thumb` | **yes** | `ह` / `भ` / `सु` / `ॐ` | single Devanagari glyph rendered inside `LibraryCard` |
-| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `bhajan`, `veda`. Determines which grid tile this section appears under on Home. The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. |
+| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `bhajan`, `veda`, `theerth`. Determines which grid tile this section appears under on Home. The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. The `theerth` tile routes to `TheerthMapScreen` (map-of-India with pinned temples) — see §11. |
 | 7 | `deities` | **yes** | `['hanuman', 'rama']` | Array of deity tags from: `rama`, `krishna`, `shiva`, `hanuman`, `durga`, `ganesha`. The section appears under each tagged deity's cross-reference on Home. At least one required. |
 | 8 | Subsection structure | optional | 18 chapters / 7 kāṇḍas / none | if present, supply count + per-subsection `titleHi`/`titleEn` (mirrors Gita's `chapters-manifest.json`) |
 | 9 | **Background image(s)** for content page | **yes** | `mobile/assets/<id>/*.png` | at least one bundled local PNG/WebP. Faded vintage sketch per `design.md` §6 (≈50 % opacity after sepia, subject top-anchored, bottom third clean) |
@@ -30,6 +40,8 @@ Every section, regardless of size, must supply these inputs. The slash command w
 **Both languages required.** Even sections without commentary must ship `meaningHi` and `meaningEn` so the language toggle (§3 below) works on every page.
 
 **Author Hindi + English only — Gujarati and Kannada are derived at runtime.** The app supports four reading languages (`hi` · `en` · `gu` · `kn`). You do **not** author `*Gu`/`*Kn` content fields: Gujarati and Kannada renderings are produced from the Devanagari (`lines`/`sanskrit`/`titleHi`/`labelHi`/`meaningHi`) by `mobile/src/utils/transliterate.ts` (sister-script conversion) via the selection helpers in `mobile/src/utils/localize.ts`. Meaning policy: **everything renders in the selected script** — Gujarati and Kannada both show the Hindi meaning/commentary re-scripted into their script (Hindi wording in the regional script, since no native gu/kn translations are authored yet); English shows English. The verse text itself is always the Devanagari re-scripted. A new section that supplies correct `…Hi`/`…En` fields gets gu/kn for free. (When native `meaningGu`/`meaningKn` are authored later, `meaningByLang`/`commentaryByLang` in `localize.ts` is the single place to prefer them.)
+
+**Theerth carve-out.** Rows 10–14 (`lines`, `meaningHi`, `meaningEn`, `commentaryHi`, `commentaryEn`) describe the **verse archetype** and are mandatory for verse-based sections only. Sections with `category === 'theerth'` have a different shape — prose `significanceHi/En` + `originStoryHi/En` per temple, plus `coordinates` and `stateHi/En` — defined in §11. They do not produce a `*VersePage` component.
 
 **Coming-soon entries** are fine: set `status: 'coming'` and `hidden: true` in the `library` entry; you may skip 7–12 until the section is ready to flip live. The rulebook still applies the day the section flips to `active`.
 
@@ -59,6 +71,8 @@ Exact paths, in build order. Each row maps to a Phase-C step in `/add-section`.
 
 `<Pascal>` = the `id` converted to PascalCase (e.g. `hanuman-chalisa` → `HanumanChalisa`).
 
+**Verse-based archetypes only.** Rows 1, 2, 4, 5, 6 of this table describe the verse-pager pipeline (Chalisa / Gita / Sundarkand / Stotram / Chalisa shapes). For `category === 'theerth'`, the file set is different — see §11.
+
 **Row 4 is mandatory even when an existing `*VersePage.tsx` *appears* to fit.** If the shapes are genuinely identical and you want to share rendering, the new file must re-export the existing component (`export { default } from './SundarkandVersePage';`) so the dependency is explicit and survives future shape changes. A reader screen must import only its own section's verse page — never another section's directly. (See §3 *Type safety on verse pages*.)
 
 ---
@@ -84,6 +98,7 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
 - **Pill vocabulary.** Verse-type pill is always `<term> · <subtitle or N>`. The middle dot `·` separator is stored **in the data** (in `labelHi`/`labelEn` fields), not added at render time. Data format: `"labelHi": "चौपाई · १"`, `"labelEn": "Chaupai · 1"`. Use Devanagari numerals in `labelHi` and Arabic numerals in `labelEn`. Sub-numbering uses `·` without spaces: `"चौपाई · ५५·१"`. Single-word labels without numbers (e.g., "टेक", "दोहा", "समापन दोहा") do NOT get a dot. The **leading term matches the user's selected language** — Hindi mode shows `श्लोक · १.१` / `चौपाई · ९`; English mode shows `Shloka · 1.1` / `Chaupai · 9`. Never hardcode one language — branch on `lang`. Do not invent new vocabulary without updating `design.md` first.
 - **Every user-facing string respects `lang` — across all four languages.** If a string is visible to the user (visible Text, pill/badge, button label, top-bar title, modal body, toast, confirmation copy) and it carries semantic content beyond a number/symbol, it must resolve through the `localize.ts` helpers, never a two-way `lang === 'hi' ? … : …` ternary (which silently falls to English for gu/kn). Use: `pick(lang, { hi, en, gu, kn })` for hand-authored UI prose; `contentByLang(lang, hi, en)` for content/titles/labels (gu/kn re-script the Hindi); `meaningByLang(lang, hi, en)` for meaning prose (gu → re-scripted Hindi, kn → English); `verseLinesByLang` for recitation lines. Pick fonts with `verseToken`/`meaningToken`/`titleFontByLang` (`langType.ts`) so gu/kn render in their Noto serif, not tofu. Lang-paired data fields (`labelHi`/`labelEn`, `nameHi`/`nameEn`, `meaningHi`/`meaningEn`, …) feed those helpers. Hardcoded Devanagari in an otherwise-English flow (or vice versa) is a hard reject. Exceptions, which must be intentional: (a) bilingual stacked labels by design — listing card titles (both `nameHi` and `nameEn` render simultaneously, ordered/emphasised by the active language via `orderTitlesByLanguage()`), Resume sheet's `जारी रखें · Resume` button — where both languages render simultaneously; (b) numeric/symbolic content (`॥`, `1.9`, `4`). When in doubt, branch on `lang`. (Origin: WishlistScreen verse pill rendered `श्लोक 1.9` in English mode; Gita / Shiva Strotam verse pills had the same bug.)
 - **No emoji, no photos.** Backgrounds are always faded hand-drawn sketches per the Section 6 treatment.
+- **Type safety on detail screens (theerth).** `TheerthDetailScreen` is the theerth equivalent of a `*VersePage`. The `temple: TheerthTemple` prop and `route.params.templeId` must type-check without `as any`, `as unknown as`, `@ts-ignore`, or `@ts-expect-error`. Same hard-reject rule as the verse-page clause below applies.
 - **Type safety on verse pages.** A reader screen renders only its own section's `<Pascal>VersePage.tsx`. Cross-section reuse via direct import is forbidden — it silently couples two sections to the same field shape and any drift becomes a runtime crash. The `verse` prop must type-check without escape hatches: `as any`, `as unknown as`, and `// @ts-ignore`/`// @ts-expect-error` on a `*VersePage` prop are a hard reject in review. If `tsc --noEmit` complains when wiring up a reader, the fix is the data shape or a section-specific page, **not** a cast. (Origin: PR #31 Balkand crash — `RamcharitmanasReaderScreen` cast `RamcharitmanasVerse` into `ShivaStrotamVersePage`, whose `verse.sanskrit` access threw on first paint because Ramcharitmanas uses `verse.lines`.)
 - **Reader smoke test.** Every new `<Pascal>ReaderScreen.tsx` ships with `mobile/src/screens/__tests__/<Pascal>ReaderScreen.test.tsx` that mounts the screen with the chapter-1 fixture and asserts the first verse renders without throwing. The test runs in CI and gates the merge — `tsc` alone does not catch field-shape mismatches that have been cast away.
 - **Routing is centralised.** All section-from-listing navigation goes through `mobile/src/navigation/entryRoutes.ts` (`navigateToEntryStart` and `navigateToProgress`). Listing screens (`CategoryList`, `DeityList`) must not contain inline `if (entryId === 'foo') navigation.navigate(...)` ladders — those drift independently and a section appears in one listing but is a dead tile in another. (Origin: PR #31 — `DeityListScreen` only routed the original four sections, so all 14 new sections were silent no-ops under every deity until this rule.) When adding a section, register it in `entryRoutes.ts`; both listing screens then route it for free.
@@ -146,6 +161,11 @@ Every new section must also be reachable from global search (`SearchScreen`). Th
 | `sanskrit` + `transliteration` | `sanskrit` | `transliteration` | bhagavad-gita |
 
 If a new section uses one of the above shapes **and** its data accessor follows the established pattern (`get<Section>Chapter(chapter)` returning `{ verses: V[], titleHi, titleEn }`, plus a `<section>ChaptersManifest` array), it is integrated by adding one branch to `buildVerseEntries()` in `searchIndex.ts` that selects the right accessor. No new normalization, no new ranking. The accessor branch is ~10 lines.
+
+**Path C — theerth (no verses).** Sections with `category === 'theerth'` have no verses; they have temples. The integration:
+1. Add a branch to `buildSearchEntries()` (rename of `buildVerseEntries()` once theerth lands) that produces one search entry per `TheerthTemple`, with `nameHi/En`, `cityHi/En`, `stateHi/En`, `significanceHi/En`, and `originStoryHi/En` appended to the searchable `fields` array.
+2. The search-result row carries `templeId`; tap routes via `entryRoutes.ts` → `navigateToTheerthDetail(templeId)`.
+3. Add a test case in `searchIndex.test.ts` asserting a temple-name query returns the right detail target.
 
 **Path B — novel verse shape.** If the section invents a new field shape (e.g. multi-script transliteration, multiple-language meanings beyond Hi/En), the integration is bigger:
 1. Extend the `makeVerseEntry` call site in `searchIndex.ts` with the new fields appended to the searchable `fields` array.
@@ -312,3 +332,100 @@ sys.exit(1 if bad else 0)
 PY
 ```
 Origin: the same raw-ITRANS paste recurred across Krishna Stotram, Ramcharitmanas ch1 (all 19 verses), Shiva Tandava, Vishnu Sahasranama, Ganesh Atharvashirsha, and 23 garbled Sundarkand chaupai lines — because §10.12 named the *scheme* but never banned the encoder residue, the leftover dandas, or gave a runnable check.
+
+---
+
+## 11. Theerth archetype (तीर्थ — map-driven pilgrimage tours)
+
+Theerth is a fundamentally different content shape from the verse archetypes in §§1–2. The unit is a **temple**, the entry surface is a **map of India** (stylised SVG, not a tile provider), and the destination is a **vertical-scroll detail screen** with prose narrative — no swipe-paginated verse reader.
+
+Full proposal lives in [`docs/roadmap/prds/07-temple-tour.md`](./docs/roadmap/prds/07-temple-tour.md). This section captures the contract; the PRD captures the rationale.
+
+### 11.1 Section data shape
+
+```ts
+type Theerth = {
+  id: string;                     // e.g. "dvadasha-jyotirlinga"
+  nameHi: string;                 // "द्वादश ज्योतिर्लिङ्ग"
+  nameEn: string;                 // "Twelve Jyotirlingas"
+  introHi: string;                // 1-2 paragraphs of context (shown above the map)
+  introEn: string;
+  temples: TheerthTemple[];
+  source: { baseText: string; retrievedOn: string };  // per §10.2
+};
+
+type TheerthGroup =
+  | 'jyotirlinga'
+  | 'char-dham'
+  | 'chota-char-dham'
+  | 'shakti-peeth';
+
+type TheerthTemple = {
+  id: string;                     // e.g. "somnath"
+  nameHi: string;                 // "सोमनाथ"
+  nameEn: string;                 // "Somnath"
+  stateHi: string;                // "गुजरात"   ← mandatory for grouping
+  stateEn: string;                // "Gujarat"
+  cityHi: string;
+  cityEn: string;
+  coordinates: { lat: number; lng: number };  // mandatory — pin position on map
+  deity: Deity;                   // existing union — MUST match invocation per §10.4
+  deityFormHi?: string;
+  deityFormEn?: string;
+  groups: TheerthGroup[];         // pilgrimage-tradition tags; may be [] for "other famous"
+  significanceHi: string[];       // 1-3 prose paragraphs
+  significanceEn: string[];
+  originStoryHi: string[];        // 2-5 prose paragraphs — Sthala Purāṇa narrative
+  originStoryEn: string[];
+  background: string;             // image key from mobile/assets/<id>/index.ts
+  sources: Array<{ url: string; title: string; retrievedOn: string }>;  // ≥ 2 per §10.1
+};
+```
+
+`coordinates` and `stateHi/En` are mandatory: the map can't pin without lat/lng, the state-list view can't group without state labels. Do not derive state from lat/lng via polygon lookup — store it explicitly.
+
+`groups[]` tags each temple with the pilgrimage traditions it belongs to. A temple may belong to multiple groups (e.g., Rameshwaram is `['jyotirlinga', 'char-dham']`; Kedarnath is `['jyotirlinga', 'chota-char-dham']`); a temple with no traditional-yatra membership uses `groups: []` and appears under "Other Famous Temples" in the By-Yatra view. The four group tags are fixed; do not invent new ones without amending this section. New traditional circuits (e.g., Divya Desam, Pancha Bhoota Sthalam) require adding a new tag to the `TheerthGroup` union AND a `groupMeta` entry in the data module before they can be used.
+
+### 11.2 File set (replaces §2 rows 1–6 for theerth)
+
+| # | Path | Action | Template |
+|---|------|--------|----------|
+| 1 | `mobile/src/data/<id>/<id>.json` | create | follow `TheerthTemple[]` shape above |
+| 2 | `mobile/src/data/<id>/index.ts` | create | typed loader + invariant checks (every temple has lat in [6, 38], lng in [68, 98], non-empty significance + origin arrays, ≥2 sources) |
+| 3 | `mobile/assets/<id>/` + `index.ts` | create | one sketch per temple — same parchment treatment per design.md §6 |
+| 4 | `mobile/src/components/IndiaMap.tsx` | reuse | shared SVG component — do not fork per section |
+| 5 | `mobile/src/screens/TheerthMapScreen.tsx` | reuse | shared screen — accepts `theerthId` in route params, looks up data via a registry |
+| 6 | `mobile/src/screens/TheerthDetailScreen.tsx` | reuse | shared screen — accepts `templeId` in route params |
+| 7 | `mobile/src/navigation/types.ts` | edit | add `TheerthMap: { theerthId: string }` + `TheerthDetail: { templeId: string }` route params (one-time, not per-section) |
+| 8 | `mobile/src/navigation/HomeStackNavigator.tsx` | edit | register `TheerthMap` + `TheerthDetail` (one-time, not per-section) |
+| 9 | `mobile/src/data/texts.ts` | edit | append `LibraryEntry` with `category: 'theerth'`, deities derived from the temples' deity field |
+| 10 | `mobile/src/navigation/entryRoutes.ts` | edit | route theerth entries to `TheerthMapScreen` |
+
+Note rows 4–6 are **shared infrastructure** — built once when the first theerth section ships, reused for every subsequent theerth section (Char Dham, Shakti Peetha, etc.). Adding a second theerth tour is just rows 1–3 + 9–10.
+
+### 11.3 Map technology
+
+Stylised SVG India outline rendered via `react-native-svg`. **Do not** install `react-native-maps` or any tile-provider SDK. No API keys, no billing, no network. The map is a fixed-aspect static rendering with pins overlaid via lat/lng → x/y linear projection within India's bounding box (lat 6–38, lng 68–98).
+
+### 11.4 Content integrity (theerth-specific)
+
+All of §10 applies. The high-risk ones for theerth:
+
+- **§10.3 No AI-generated liturgical text.** Origin-story prose (Sthala Purāṇa narratives) must come verbatim from published authoritative sources — Shiva Purāṇa (Gita Press), temple trust publications, ASI listings. Never paraphrase or "reconstruct" via LLM.
+- **§10.1 Internet verification.** Each temple's origin story must cite ≥ 2 independent authoritative sources in its `sources[]` array.
+- **§10.4 Deity accuracy.** Each temple's `deity` field must match the invocation in the source narrative — do not guess from the temple name.
+- **§10.8 Background per temple.** The detail screen renders the temple's presiding **deity** background (every deity ships a verified, thematically-correct sketch per §10.8) via `BackgroundLayer` — this is the shipped default. A bespoke per-temple sketch may be added later to override it, but never fall back to an *unrelated* deity's image.
+- **Coordinate sanity.** Coordinates outside India's bounding box (lat 6–38, lng 68–98) fail the `index.ts` invariant. This catches lat/lng swaps (common copy-paste error from sources that write `lng, lat`).
+
+### 11.5 Verification for theerth (replaces §4 steps 4–8)
+
+1. App boots; the Theerth tile is visible on Home under Categories.
+2. Tapping the Theerth tile lands on `TheerthMapScreen` with the India outline visible and every temple pinned at the right location (eyeball-check against a known map — e.g., Kashi Vishwanath is in UP, not Tamil Nadu).
+3. Three-way view toggle flips between Map / By State / By Yatra. State view shows temples under correctly-labelled state headers; Yatra view shows them under group sections (Jyotirlinga, Char Dham, Chota Char Dham, Shakti Peeth, Other Famous).
+4. Map-view filter chips (All, plus one per `TheerthGroup`) filter pins to that group. "All" returns to the full set.
+5. Multi-group temples (Rameshwaram, Kedarnath, Badrinath) appear under every group section they belong to in the Yatra view, AND show up when any of their group chips is selected in the Map view.
+6. Language toggle swaps title, intro, view-toggle labels, chip labels, state labels, pin tooltips, yatra section headers. No Devanagari leaks in English mode; no English leaks in Hindi mode.
+7. Tapping a pin lands on `TheerthDetailScreen` for that temple; same for tapping a state-list row or yatra-list row.
+8. Detail screen shows, over the temple's presiding-deity background (§11.4): hero (temple name + city + state + deity), `महिमा · Significance` block, `उद्भव कथा · Origin Story` block, sources footer. Both languages populated (verified in §10).
+9. Back from detail returns to `TheerthMapScreen` preserving its view-mode and filter-chip state.
+10. Per-temple device check on iOS AND Android — Devanagari rendering in pin tooltips can differ between platforms.

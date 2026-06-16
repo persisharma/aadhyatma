@@ -60,12 +60,16 @@ paksha, so it bumps 2082->2083 at the start of Purnimanta Chaitra (which include
 preceding Krishna paksha) instead of at **Chaitra Shukla Pratipada**. drik flips on
 **2026-03-19**; the engine flips on **2026-03-04** (wrong for 2026-03-04 .. 03-18).
 
-## Location note (engine is always Ujjain)
-The engine ignores device location and always computes for Ujjain. Tithi/nakshatra/yoga/
-karana/masa are effectively location-independent, but **sunrise, sunset, moonrise and the
-derived muhurta windows (Brahma Muhurta, Rahu Kala, etc.) are location-specific** and will
-be off for users far from Ujjain (e.g. ~13 min in Vadodara). `computePanchangForDate`
-already builds an `Observer`; parameterising lat/long would enable accurate local timings.
+## Location note (location-aware, Ujjain default)
+`computePanchangForDate`/`computeTithiAndMonth` accept `options.location` (lat/lng/
+elevation + `cityId`); omitted ⇒ Ujjain, so every fixture in this document and the
+precomputed observance tables remain Ujjain-referenced. The app threads the user's
+location (GPS snapped to the nearest bundled city in `locations.ts`, or a manual pick)
+through `PanchangLocationContext`. Sunrise/sunset/moonrise/Brahma Muhurta shift fully
+with location; tithi/nakshatra day values shift only where the local sunrise crosses a
+boundary. Non-Ujjain festival dates are scanned once on-device (chunked) and persisted
+via `observanceCache.ts`; until that lands the UI shows the Ujjain dates with an
+"updating…" hint. Location tests: `__tests__/location.test.ts` (Delhi/Guwahati vs drik).
 
 ## Reproduce
 ```

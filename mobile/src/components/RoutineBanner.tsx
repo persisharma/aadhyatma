@@ -1,48 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import * as Haptics from 'expo-haptics';
+import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
-import { useRoutines } from '@/contexts/RoutineContext';
-import { bannerStatus, bannerLine, shouldCelebrate } from './routineBannerView';
-import RoutineCelebration from './RoutineCelebration';
+import { bannerStatus, bannerLine } from './routineBannerView';
 import LotusMark from './LotusMark';
 
 /**
  * Docked routine banner (PRD-07 §6.1). Pinned just above the tab bar on Home
  * and Daily Bhakti. Single language-aware line. Three states: nudge (no
  * routine), progress (partial), and complete — which shows a lotus "पूर्ण"
- * achievement badge and plays a one-shot pushpa-varsha the first time it's
- * seen completed each day. Renders nothing while loading so it never flashes
- * the wrong state.
+ * achievement badge as a persistent status chip. The completion pushpa-varsha
+ * itself fires app-wide from RoutineCelebrationOverlay (mounted at the nav
+ * root), so it plays on whatever screen completion happens — not just here.
  */
 export default function RoutineBanner() {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const navigation = useNavigation<any>();
-  const isFocused = useIsFocused();
   const { hasRoutine, doneCount, total } = useRoutineToday();
-  const { celebratedToday, markCelebratedToday } = useRoutines();
 
   const status = bannerStatus({ hasRoutine, doneCount, total });
   const line = bannerLine(status, lang);
   const open = (screen: 'RoutineToday' | 'RoutineCreate') =>
     navigation.navigate('HomeTab', { screen });
-
-  // Play the pushpa-varsha once per day, only while the completed chip is on
-  // screen. `markCelebratedToday` flips the gate immediately; local `showPetals`
-  // keeps the overlay mounted until the animation finishes.
-  const [showPetals, setShowPetals] = useState(false);
-  const celebrate = shouldCelebrate(status, isFocused, celebratedToday);
-  useEffect(() => {
-    if (!celebrate) return;
-    setShowPetals(true);
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
-    markCelebratedToday();
-  }, [celebrate, markCelebratedToday]);
 
   // Docked just above the tab bar. The tab bar already owns the bottom
   // safe-area inset (height: 60 + insets.bottom), so adding it here too
@@ -100,35 +83,25 @@ export default function RoutineBanner() {
 
   if (status === 'complete') {
     return (
-      <>
-        <Pressable
-          onPress={() => open('RoutineToday')}
-          accessibilityRole="button"
-          accessibilityLabel={pick(lang, { hi: 'आज की साधना पूर्ण', en: "Today's practice complete", gu: 'આજની સાધના પૂર્ણ', kn: 'ಇಂದಿನ ಸಾಧನೆ ಪೂರ್ಣ' })}
-          style={({ pressed }) => [
-            base,
-            styles.row,
-            { borderWidth: 1, borderColor: colors.goldTint },
-            pressed && { opacity: 0.85 },
-          ]}
-        >
-          <View style={styles.lotusSlot}>
-            <LotusMark size={30} />
-          </View>
-          <Text numberOfLines={1} style={lineStyle}>
-            {line}
-          </Text>
-          {chevron}
-        </Pressable>
-        {showPetals && (
-          <RoutineCelebration
-            left={spacing.lg}
-            right={spacing.lg}
-            bottom={spacing.sm}
-            onDone={() => setShowPetals(false)}
-          />
-        )}
-      </>
+      <Pressable
+        onPress={() => open('RoutineToday')}
+        accessibilityRole="button"
+        accessibilityLabel={pick(lang, { hi: 'आज की साधना पूर्ण', en: "Today's practice complete", gu: 'આજની સાધના પૂર્ણ', kn: 'ಇಂದಿನ ಸಾಧನೆ ಪೂರ್ಣ' })}
+        style={({ pressed }) => [
+          base,
+          styles.row,
+          { borderWidth: 1, borderColor: colors.goldTint },
+          pressed && { opacity: 0.85 },
+        ]}
+      >
+        <View style={styles.lotusSlot}>
+          <LotusMark size={30} />
+        </View>
+        <Text numberOfLines={1} style={lineStyle}>
+          {line}
+        </Text>
+        {chevron}
+      </Pressable>
     );
   }
 

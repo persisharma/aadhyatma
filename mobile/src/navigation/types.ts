@@ -41,6 +41,10 @@ export type HomeStackParamList = {
   AartiReader: { aartiIndex: number; initialIndex?: number };
   SanskarReader: { sanskarId: string; initialIndex?: number };
   JapamCounter: { mantraId: string };
+  // No params → Pilgrimage listing (By Category / By State). `group` or
+  // `stateEn` → drilled-in map + flat single-subsection list (PRD-08).
+  TheerthMap: { group?: string; stateEn?: string } | undefined;
+  TheerthDetail: { templeId: string };
   // Daily Routine (नित्य साधना) — PRD-07
   RoutineToday: undefined;
   RoutineList: undefined;

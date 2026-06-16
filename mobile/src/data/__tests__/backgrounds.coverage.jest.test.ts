@@ -34,7 +34,12 @@ describe('background coverage', () => {
   });
 
   test('every active, non-hidden library source has a source + reader background', () => {
-    for (const entry of library.filter((item) => item.status === 'active' && !item.hidden)) {
+    // Theerth entries open a map + per-temple detail, not a verse reader, so they
+    // are exempt from the source/reader background contract (mirrors the
+    // exemption in backgrounds.ts assertBackgroundCoverage).
+    for (const entry of library.filter(
+      (item) => item.status === 'active' && !item.hidden && item.category !== 'theerth',
+    )) {
       expect(getSourceBackground(entry.id)).toBeTruthy();
       expect(getReaderBackground(entry.id, { id: 'coverage', stanza: 1 })).toBeTruthy();
     }

@@ -27,15 +27,16 @@ export default function LibraryCard({ entry, onPress }: Props) {
   const { lang } = useGitaLanguage();
   const { primary, secondary } = orderTitlesByLanguage(lang, entry.nameHi, entry.nameEn, {
     devPrimary: 17,
-    devSecondary: 14,
-    latPrimary: 17,
-    latSecondary: 13,
+    devSecondary: 13,
+    latPrimary: 19,
+    latSecondary: 12,
   });
   const isActive = entry.status === 'active';
   const showNew = isActive && isNew(entry.id);
+  const sub = lang === 'en' ? entry.subEn : entry.sub;
 
   const accessibilityRole: AccessibilityRole | undefined = isActive ? 'button' : undefined;
-  const accessibilityLabel = `${entry.nameEn}. ${entry.sub}.${showNew ? ' New.' : ''} ${isActive ? 'Tap to open.' : 'Coming soon.'}`;
+  const accessibilityLabel = `${entry.nameEn}. ${entry.subEn}.${showNew ? ' New.' : ''} ${isActive ? 'Tap to open.' : 'Coming soon.'}`;
   const accessibilityState: AccessibilityState = { disabled: !isActive };
 
   const body = (
@@ -97,6 +98,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
               fontFamily: primary.fontFamily,
               fontSize: primary.fontSize,
               fontStyle: primary.fontStyle,
+              letterSpacing: primary.letterSpacing,
               opacity: isActive ? 1 : 0.55,
             },
           ]}
@@ -107,7 +109,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
           style={[
             styles.nameEn,
             {
-              color: colors.inkSoft,
+              color: colors.inkMuted,
               fontFamily: secondary.fontFamily,
               fontSize: secondary.fontSize,
               fontStyle: secondary.fontStyle,
@@ -123,25 +125,29 @@ export default function LibraryCard({ entry, onPress }: Props) {
             { color: colors.inkMuted, fontSize: typography.cardMeta.fontSize },
           ]}
         >
-          {entry.sub}
+          {sub}
         </Text>
       </View>
 
       {isActive ? (
         <View style={styles.tail}>
-          <Pressable
-            onPress={() => openAddToRoutine(entry.id)}
-            accessibilityRole="button"
-            accessibilityLabel={`Add ${entry.nameEn} to a routine`}
-            hitSlop={12}
-            style={({ pressed }) => [
-              styles.addBtn,
-              { borderColor: colors.gold, borderRadius: radii.pill },
-              pressed && { opacity: 0.6 },
-            ]}
-          >
-            <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 20 }}>＋</Text>
-          </Pressable>
+          {/* Theerth (pilgrimage) entries can't be added to a routine — they open
+              a map + temple detail, not a reader — so no add-to-routine button. */}
+          {entry.category !== 'theerth' ? (
+            <Pressable
+              onPress={() => openAddToRoutine(entry.id)}
+              accessibilityRole="button"
+              accessibilityLabel={`Add ${entry.nameEn} to a routine`}
+              hitSlop={12}
+              style={({ pressed }) => [
+                styles.addBtn,
+                { borderColor: colors.gold, borderRadius: radii.pill },
+                pressed && { opacity: 0.6 },
+              ]}
+            >
+              <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 20 }}>＋</Text>
+            </Pressable>
+          ) : null}
           <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
         </View>
       ) : (

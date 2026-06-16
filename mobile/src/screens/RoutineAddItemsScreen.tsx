@@ -13,7 +13,12 @@ import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'RoutineAddItems'>;
 
-const addable: LibraryEntry[] = library.filter((e) => e.status === 'active' && !e.hidden);
+// Theerth (pilgrimage) entries open a map + per-temple detail, not a verse
+// reader — they can't be practised as a daily-routine item, so they're excluded
+// from the "Add Content" list (no Add button for theerth).
+const addable: LibraryEntry[] = library.filter(
+  (e) => e.status === 'active' && !e.hidden && e.category !== 'theerth',
+);
 
 export default function RoutineAddItemsScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();

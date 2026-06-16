@@ -16,6 +16,7 @@ import {
 } from '@/contexts/UserActivityContext';
 import { library } from '@/data/texts';
 import { japamMantras } from '@/data/japam';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Profile'>;
@@ -82,6 +83,13 @@ export default function ProfileScreen({ navigation }: Props) {
 
   const [mode, setMode] = useState<RangeMode>('lifetime');
   const today = useMemo(() => new Date(), []);
+
+  const identityName = orderTitlesByLanguage(lang, 'साधक', 'Sadhak', {
+    devPrimary: 22,
+    devSecondary: 13,
+    latPrimary: 20,
+    latSecondary: 13,
+  });
 
   const totals: ActivityTotals = useMemo(() => {
     if (mode === 'lifetime') return lifetimeTotals();
@@ -201,23 +209,25 @@ export default function ProfileScreen({ navigation }: Props) {
             </View>
             <Text
               style={{
-                fontFamily: typography.readerTitle.fontFamily,
-                fontSize: 22,
+                fontFamily: identityName.primary.fontFamily,
+                fontSize: identityName.primary.fontSize,
+                fontStyle: identityName.primary.fontStyle,
                 color: colors.ink,
                 marginTop: 12,
               }}
             >
-              साधक
+              {identityName.primary.text}
             </Text>
             <Text
               style={{
-                fontFamily: typography.cardLatin.fontFamily,
-                fontSize: 13,
+                fontFamily: identityName.secondary.fontFamily,
+                fontSize: identityName.secondary.fontSize,
+                fontStyle: identityName.secondary.fontStyle,
                 color: colors.inkMuted,
                 marginTop: 2,
               }}
             >
-              Sadhak
+              {identityName.secondary.text}
             </Text>
             <View
               style={[styles.identityDivider, { backgroundColor: colors.divider }]}

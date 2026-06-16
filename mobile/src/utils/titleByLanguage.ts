@@ -10,11 +10,18 @@ import { transliterateDevanagari } from './transliterate';
  * slot and the other language follows as a lighter supporting line.
  *
  * Crucially, weight and style follow the **role (primary vs. secondary)**, not
- * the script — so a primary English title is semibold upright (a real focus
- * title) and a demoted Hindi title drops to medium weight, instead of Hindi
- * always staying bold and English always staying a thin italic. Font families
- * come from the theme `fontFamilies` tokens (no literals). Default `'hi'`
- * preserves the historic Devanagari-first layout.
+ * the script — so a primary English title is bold upright (a real focus title)
+ * and a demoted Hindi title drops to medium weight, instead of Hindi always
+ * staying bold and English always staying a thin italic. Font families come
+ * from the theme `fontFamilies` tokens (no literals). Default `'hi'` preserves
+ * the historic Devanagari-first layout.
+ *
+ * The two scripts also carry different *optical* weight at the same point size:
+ * Noto Serif Devanagari reads dark/dense while Cormorant Garamond reads light.
+ * So the Latin primary uses the **Bold (700)** face with a touch of tracking to
+ * hold its own as a heading — without it, an English-primary title reads as a
+ * peer of its demoted Devanagari line instead of dominating it. Callers further
+ * compensate by sizing `latPrimary` a step above `devPrimary` (see call sites).
  */
 
 export type TitleScript = 'devanagari' | 'latin' | 'gujarati' | 'kannada';
@@ -34,6 +41,8 @@ export type OrderedTitlePart = {
   fontFamily: string;
   fontStyle: 'normal' | 'italic';
   fontSize: number;
+  /** Optional tracking — set on the Latin primary so the bold heading breathes; omitted elsewhere. */
+  letterSpacing?: number;
 };
 
 export type OrderedTitles = {
@@ -59,9 +68,10 @@ export function orderTitlesByLanguage(
   const latin = (role: 'primary' | 'secondary'): OrderedTitlePart => ({
     text: nameEn,
     script: 'latin',
-    fontFamily: role === 'primary' ? fontFamilies.latinSemiBold : fontFamilies.latinItalic,
+    fontFamily: role === 'primary' ? fontFamilies.latinBold : fontFamilies.latinItalic,
     fontStyle: role === 'primary' ? 'normal' : 'italic',
     fontSize: role === 'primary' ? sizes.latPrimary : sizes.latSecondary,
+    ...(role === 'primary' ? { letterSpacing: 0.3 } : null),
   });
   // gu/kn titles are the Devanagari name re-scripted; they take the Devanagari size
   // class (same x-height) and the script's own serif cuts.

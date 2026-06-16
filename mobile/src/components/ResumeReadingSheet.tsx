@@ -33,9 +33,9 @@ export default function ResumeReadingSheet({
   const { lang } = useGitaLanguage();
   const title = orderTitlesByLanguage(lang, titleHi, titleEn, {
     devPrimary: 20,
-    devSecondary: 14,
-    latPrimary: 20,
-    latSecondary: 13,
+    devSecondary: 13,
+    latPrimary: 22,
+    latSecondary: 12,
   });
 
   return (
@@ -79,6 +79,7 @@ export default function ResumeReadingSheet({
                   fontFamily: title.primary.fontFamily,
                   fontSize: title.primary.fontSize,
                   fontStyle: title.primary.fontStyle,
+                  letterSpacing: title.primary.letterSpacing,
                 },
               ]}
               numberOfLines={1}

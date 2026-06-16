@@ -54,15 +54,3 @@ export function bannerLine(status: BannerStatus, lang: Lang): string {
       });
   }
 }
-
-/**
- * The pushpa-varsha plays once, only when the completed banner is actually on
- * screen (focused) and we haven't already celebrated today.
- */
-export function shouldCelebrate(
-  status: BannerStatus,
-  isFocused: boolean,
-  celebratedToday: boolean
-): boolean {
-  return status === 'complete' && isFocused && !celebratedToday;
-}

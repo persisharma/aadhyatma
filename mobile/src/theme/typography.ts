@@ -3,6 +3,7 @@ export const fontFamilies = {
   devanagariBold: 'NotoSerifDevanagari_600SemiBold',
   latinItalic: 'CormorantGaramond_400Regular_Italic',
   latinSemiBold: 'CormorantGaramond_600SemiBold',
+  latinBold: 'CormorantGaramond_700Bold',
   latinSemiBoldItalic: 'CormorantGaramond_600SemiBold_Italic',
   latin: 'CormorantGaramond_500Medium',
   // Sister-script serifs for the gu/kn reading languages — same Noto Serif family,

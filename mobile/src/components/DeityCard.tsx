@@ -21,9 +21,9 @@ export default function DeityCard({ nameHi, nameEn, itemCount, iconKey, onPress 
 
   const { primary, secondary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
     devPrimary: 16,
-    devSecondary: 13,
-    latPrimary: 16,
-    latSecondary: 12,
+    devSecondary: 12,
+    latPrimary: 18,
+    latSecondary: 11,
   });
 
   return (
@@ -64,6 +64,7 @@ export default function DeityCard({ nameHi, nameEn, itemCount, iconKey, onPress 
               fontFamily: primary.fontFamily,
               fontSize: primary.fontSize,
               fontStyle: primary.fontStyle,
+              letterSpacing: primary.letterSpacing,
             },
           ]}
         >

@@ -44,6 +44,18 @@ assert.deepEqual(
   'Vishnu Sahasranama must be tagged under the Vishnu deity only'
 );
 
+// Newly-added discoverable content must carry addedInVersion, or NewContentContext
+// seeds it as already-known for upgrading users and the NEW badge never shows.
+for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana']) {
+  const entry = library.find((e) => e.id === id);
+  assert.ok(entry, `${id} should exist in library`);
+  assert.ok(entry.addedInVersion, `${id} must set addedInVersion so upgraders see its NEW badge`);
+}
+// The sanskar batch debuted together, so every sanskar entry must carry addedInVersion.
+for (const entry of library.filter((e) => e.category === 'sanskar')) {
+  assert.ok(entry.addedInVersion, `sanskar entry ${entry.id} must set addedInVersion`);
+}
+
 // ─── 2. Aarti verse counts (verified from internet) ─────────────────────────
 
 const hanumanAarti = readJson('aarti/hanuman-aarti.json');
@@ -286,6 +298,21 @@ assert.doesNotMatch(libraryById.get('ramcharitmanas')?.sub || '', /अंश|Exc
 assert.match(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);
 assert.equal(libraryById.get('durga-stotram')?.nameHi, 'दुर्गा स्तोत्रम्');
 assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
+
+// Every library entry must carry an English count-detail string that is free of
+// Devanagari, so the card subtitle matches the selected language. Guards the
+// regression where English-selected cards still showed the Hindi `sub`.
+for (const entry of library) {
+  assert.ok(
+    typeof entry.subEn === 'string' && entry.subEn.trim() !== '',
+    `${entry.id}: subEn must be a non-empty string`
+  );
+  assert.doesNotMatch(
+    entry.subEn,
+    /[ऀ-ॿ]/,
+    `${entry.id}: subEn should not contain Devanagari, got: "${entry.subEn}"`
+  );
+}
 
 const durgaStotramManifest = readJson('durga-stotram/chapters-manifest.json');
 for (const chapter of durgaStotramManifest) {
