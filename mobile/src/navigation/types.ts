@@ -61,5 +61,15 @@ export type MoreStackParamList = {
   Reminders: undefined;
 };
 
+// Panchang tab stack — the date-first calendar plus the "Vrat & Parv" (व्रत-पर्व)
+// catalog journey (PRD-09). PanchangHome hosts the [Calendar | Vrat & Parv] segment.
+export type PanchangStackParamList = {
+  PanchangHome: undefined;
+  ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
+  ObservanceDetail: { ruleId: string };
+  KathaLibrary: undefined;
+  MyVrat: undefined;
+};
+
 /** @deprecated Use HomeStackParamList instead */
 export type RootStackParamList = HomeStackParamList;

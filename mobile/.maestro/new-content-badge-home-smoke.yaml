@@ -68,7 +68,7 @@ appId: host.exp.Exponent
     timeout: 10000
 - scrollUntilVisible:
     element:
-      text: "Aarti. Tap to open."                 # aarti → plain
+      text: "Aarti. New. Tap to open."            # aarti → HAS badge (saraswati-aarti, 1.3.1)
     direction: DOWN
     timeout: 10000
 - scrollUntilVisible:

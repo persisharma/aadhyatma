@@ -23,6 +23,7 @@ import { ThemeProvider } from '@/theme/ThemeContext';
 import { lightColors } from '@/theme/colors';
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
+import { VratFollowProvider } from '@/contexts/VratFollowContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
 import { RoutineProvider } from '@/contexts/RoutineContext';
@@ -37,6 +38,7 @@ import { handleNotificationResponse, navigationRef } from '@/notifications/deepL
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
+import VratReminderScheduler from '@/components/VratReminderScheduler';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
@@ -125,6 +127,7 @@ export default function App() {
         <ThemeProvider>
           <GitaLanguageProvider>
             <BookmarksProvider>
+              <VratFollowProvider>
               <UserActivityProvider>
                 <NewContentProvider>
                   <ReadingProgressProvider>
@@ -141,6 +144,7 @@ export default function App() {
                               <UpdateReadyModal />
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
+                            <VratReminderScheduler />
                           </View>
                         </ShareProvider>
                       </NotificationPreferencesProvider>
@@ -150,6 +154,7 @@ export default function App() {
                   </ReadingProgressProvider>
                 </NewContentProvider>
               </UserActivityProvider>
+              </VratFollowProvider>
             </BookmarksProvider>
           </GitaLanguageProvider>
         </ThemeProvider>

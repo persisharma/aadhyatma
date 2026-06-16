@@ -12,8 +12,10 @@ type Props = {
   width: number;
 };
 
-// One katha section rendered as a swipeable reader card (mirrors the stotram/
-// gita verse-page card pattern: pill label, heading, ornament, scrollable body).
+// One katha section as a swipeable reader card (pill, heading, ornament, body).
+// Body text stays at its normal reading size; the card scrolls vertically when a
+// section is longer than the screen, and you swipe right to the next section.
+// Top chrome is kept tight so content sits high and most sections fit without scrolling.
 export default function KathaSectionPage({ section, index, total, width }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
@@ -66,7 +68,11 @@ export default function KathaSectionPage({ section, index, total, width }: Props
           {title}
         </Text>
 
-        <Ornament />
+        {/* Compress the shared Ornament's large vertical margin within the katha
+            card so the body has more room to fit on one screen. */}
+        <View style={styles.ornamentWrap}>
+          <Ornament />
+        </View>
 
         {body.map((paragraph, i) => (
           <Text key={i} style={[styles.para, bodyStyle]}>
@@ -81,9 +87,10 @@ export default function KathaSectionPage({ section, index, total, width }: Props
 const styles = StyleSheet.create({
   page: { flex: 1, overflow: 'hidden' },
   scroll: { flex: 1 },
-  scrollContent: { paddingTop: 16, paddingBottom: 48 },
-  pill: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 4, marginBottom: 16 },
+  scrollContent: { paddingTop: 4, paddingBottom: 40 },
+  pill: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 4, marginBottom: 10 },
   pillText: { textTransform: 'uppercase', includeFontPadding: false },
   title: { fontSize: 20, marginBottom: 4, includeFontPadding: false },
+  ornamentWrap: { marginVertical: -14 },
   para: { marginTop: 14, includeFontPadding: false },
 });

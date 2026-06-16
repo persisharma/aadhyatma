@@ -22,6 +22,12 @@ export const lightColors = {
   saffronTint: 'rgba(184, 98, 27, 0.12)',
   goldTint: 'rgba(166, 124, 52, 0.14)',
 
+  // Personal / "My Vrat" accent — the v2 prototype tints the My Vrat door green
+  // to read as a personal list. The only green in an otherwise warm palette
+  // (see design.md); kept low-saturation so it sits quietly on parchment.
+  green: '#3F7D4F',
+  greenTint: 'rgba(63, 125, 79, 0.08)',
+
   // "NEW" badge — saffron-tinted (primary/active accent → reads as fresh & live),
   // distinct from the muted gold "SOON" badge while staying in the warm palette.
   newBadgeBg: 'rgba(184, 98, 27, 0.16)',

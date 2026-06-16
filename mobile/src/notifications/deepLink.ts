@@ -19,6 +19,12 @@ function isDailyVersePayload(data: unknown): data is NotificationPayload {
   );
 }
 
+function isVratReminderPayload(data: unknown): data is { type: 'vrat-reminder'; ruleId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return d.type === 'vrat-reminder' && typeof d.ruleId === 'string';
+}
+
 /**
  * Resolve a notification response into a navigation dispatch. Returns true if
  * we recognised the payload and routed; false otherwise.
@@ -44,17 +50,32 @@ export function handleNotificationResponse(
 ): boolean {
   if (!navigationRef.isReady()) return false;
   const data = response.notification.request.content.data;
-  if (!isDailyVersePayload(data)) return false;
 
-  navigationRef.dispatch(
-    CommonActions.navigate({
-      name: 'DailyBhaktiTab',
-      params: {
-        sourceId: data.sourceId,
-        verseIndex: data.verseIndex,
-        ...(data.chapter != null ? { chapter: data.chapter } : {}),
-      },
-    })
-  );
-  return true;
+  if (isDailyVersePayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'DailyBhaktiTab',
+        params: {
+          sourceId: data.sourceId,
+          verseIndex: data.verseIndex,
+          ...(data.chapter != null ? { chapter: data.chapter } : {}),
+        },
+      })
+    );
+    return true;
+  }
+
+  // A vrat-reminder tap (PRD-09) deep-links into the observance's detail page,
+  // nested inside the Panchang tab's stack.
+  if (isVratReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'PanchangTab',
+        params: { screen: 'ObservanceDetail', params: { ruleId: data.ruleId } },
+      })
+    );
+    return true;
+  }
+
+  return false;
 }

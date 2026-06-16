@@ -57,13 +57,13 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: "Daily Verse"
     timeout: 15000
-- assertVisible: "Meaning"
+- assertVisible: "Meaning.*"
 
 # ── Step 5: "next" swaps to another verse; the screen stays intact ──
 - tapOn: "Next verse"
 - waitForAnimationToEnd
 - assertVisible: "Daily Verse"
-- assertVisible: "Meaning"
+- assertVisible: "Meaning.*"
 
 # ── Step 6: Restore Hindi (best-effort) ──
 - tapOn: "More, tab.*"

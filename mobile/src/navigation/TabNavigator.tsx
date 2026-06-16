@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeStackNavigator from './HomeStackNavigator';
 import MoreStackNavigator from './MoreStackNavigator';
+import PanchangStackNavigator from './PanchangStackNavigator';
 import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
-import PanchangScreen from '@/screens/PanchangScreen';
 import { useTheme } from '@/theme/ThemeContext';
 import type { TabParamList } from './types';
 
@@ -67,7 +67,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="PanchangTab"
-        component={PanchangScreen}
+        component={PanchangStackNavigator}
         options={{
           tabBarLabel: 'Panchang',
           tabBarIcon: ({ color, size }) => (
