@@ -320,6 +320,20 @@ for (const chapter of durgaStotramManifest) {
   assert.doesNotMatch(chapter.titleEn, /selected/i, `Durga Stotram chapter ${chapter.chapter} titleEn should not say selected`);
 }
 
+// Krishna Stotram must include the Krishna Pranama mantra ('Krishnaya Vasudevaya')
+// added next to Krishnashtakam.
+const krishnaStotramManifest = readJson('krishna-stotram/chapters-manifest.json');
+const krishnaPranama = krishnaStotramManifest.find((c: any) => c.titleEn === 'Krishna Pranama Mantra');
+assert.ok(krishnaPranama, 'krishna-stotram should list the Krishna Pranama Mantra chapter');
+assert.equal(krishnaPranama.titleHi, 'कृष्ण प्रणाम मन्त्र');
+const krishnaPranamaCh = readJson('krishna-stotram/chapter-02.json');
+const krishnaPranamaText = krishnaPranamaCh.verses.flatMap((v: any) => v.sanskrit).join(' ');
+assert.match(krishnaPranamaText, /कृष्णाय वासुदेवाय हरये परमात्मने/, 'Krishna Pranama should contain the opening line');
+assert.match(krishnaPranamaText, /गोविन्दाय नमो नमः/, 'Krishna Pranama should contain the closing line');
+for (const v of krishnaPranamaCh.verses) {
+  assert.ok(v.meaningHi.trim() && v.meaningEn.trim(), `krishna-stotram ch2 ${v.id} must be bilingual`);
+}
+
 const mahishasuraMardini = readJson('durga-stotram/chapter-02.json');
 const mahishasuraBody = mahishasuraMardini.verses.filter((v: any) => v.number > 0);
 assert.equal(mahishasuraMardini.verseCount, 22, 'Mahishasura Mardini should include intro + 21 verses');

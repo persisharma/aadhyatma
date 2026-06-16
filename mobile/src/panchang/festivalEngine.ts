@@ -1,5 +1,5 @@
 import { computeTithiAndMonth, getSiderealSunLng, locationKey, UJJAIN_CITY_ID } from './engine';
-import { OBSERVANCE_RULES } from './festivals';
+import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
 import { PRECOMPUTED_OBSERVANCES } from './precomputedObservances';
 import type { CalendarSystem, GeoLocation, ObservanceRule, ResolvedObservance, ResolvedFestival } from './types';
@@ -9,6 +9,7 @@ export type ObservanceLocation = GeoLocation & { cityId?: string };
 
 const cache = new Map<string, ResolvedObservance[]>();
 const ruleById = new Map(OBSERVANCE_RULES.map((rule) => [rule.id, rule] as const));
+const defaultRules = getObservanceCatalog();
 
 function cacheKey(year: number, calendarSystem: CalendarSystem, location?: ObservanceLocation): string {
   return `${calendarSystem}:${locationKey(location)}:${year}`;
@@ -92,12 +93,10 @@ export function resolveObservancesForYearLive(
   const startDate = new Date(year, 0, 1);
   const endDate = new Date(year, 11, 31);
 
-  for (const rule of OBSERVANCE_RULES) {
-    const resolved = rule.type === 'solar'
-      ? findSolarFestivalDate(rule, year)
-      : findObservanceDate(rule, startDate, endDate, calendarSystem, location);
-    if (resolved && !byId.has(rule.id)) {
-      byId.set(rule.id, resolved);
+  for (const rule of defaultRules) {
+    const resolved = resolveRuleDates(rule, year, startDate, endDate, calendarSystem, location);
+    for (const item of resolved) {
+      byId.set(`${rule.id}:${dateKey(item.date)}`, item);
     }
   }
 
@@ -124,7 +123,7 @@ export async function resolveObservancesForYearLiveChunked(
       try {
         computeTithiAndMonth(date, { calendarSystem: system, location });
       } catch {
-        // skip dates that fail computation, same as findObservanceDate
+        // skip dates that fail computation, same as findObservanceDates
       }
     }
     if (d % yieldEveryDays === yieldEveryDays - 1) {
@@ -187,44 +186,112 @@ export function getFestivalsForMonth(year: number, month: number): ResolvedFesti
   return getObservancesForMonth(year, month, 'purnimant');
 }
 
+export function searchObservances(
+  query: string,
+  options: { includeHidden?: boolean } = {}
+): ObservanceRule[] {
+  const normalized = normalizeSearch(query);
+  if (!normalized) return [];
+  return getObservanceCatalog(options)
+    .filter((rule) => searchableText(rule).includes(normalized));
+}
+
 const solarDateCache = new Map<string, ResolvedObservance | null>();
 
 function findSolarFestivalDate(rule: ObservanceRule, year: number): ResolvedObservance | null {
-  if (!rule.solarLongitude) return null;
+  if (rule.solarLongitude === undefined) return null;
   const key = `${rule.id}:${year}`;
   const cached = solarDateCache.get(key);
   if (cached !== undefined) return cached;
   const target = rule.solarLongitude;
   let result: ResolvedObservance | null = null;
-  for (let d = 0; d < 30; d++) {
-    const date = new Date(year, 0, 1 + d);
-    const lng = getSiderealSunLng(date, year);
-    if (lng >= target && lng < target + 2) {
+  const previousYearDate = new Date(year, 0, 0);
+  let previousLongitude = getSiderealSunLng(previousYearDate, previousYearDate.getFullYear());
+  for (let d = 1; d <= 366; d++) {
+    const date = new Date(year, 0, d);
+    if (date.getFullYear() !== year) break;
+    const longitude = getSiderealSunLng(date, year);
+    if (crossedSolarLongitude(previousLongitude, longitude, target)) {
       result = { date, rule };
       break;
     }
+    previousLongitude = longitude;
   }
   solarDateCache.set(key, result);
   return result;
 }
 
+function crossedSolarLongitude(previous: number, current: number, target: number): boolean {
+  if (current < previous) {
+    return target >= previous || target <= current;
+  }
+  return target >= previous && target <= current;
+}
+
+function resolveRuleDates(
+  rule: ObservanceRule,
+  year: number,
+  startDate: Date,
+  endDate: Date,
+  calendarSystem: CalendarSystem,
+  location?: ObservanceLocation
+): ResolvedObservance[] {
+  if (rule.ruleType === 'catalog-only' || rule.recurrence === 'catalog') return [];
+  if (rule.ruleType === 'solar-sankranti' || rule.type === 'solar') {
+    const resolved = findSolarFestivalDate(rule, year);
+    return resolved ? [resolved] : [];
+  }
+  if (rule.ruleType === 'relative-to-lunar') {
+    return findRelativeRuleDates(rule, startDate, endDate, calendarSystem, location);
+  }
+  return findObservanceDates(rule, startDate, endDate, calendarSystem, location);
+}
+
 // Does `rule` fall on this exact day? Shared by the year resolver and the bounded
 // per-day / per-month / upcoming lookups so they always agree.
-function matchesRuleOnDate(rule: ObservanceRule, date: Date, calendarSystem: CalendarSystem, location?: ObservanceLocation): boolean {
-  if (rule.type === 'solar') {
+function matchesRuleOnDate(
+  rule: ObservanceRule,
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location?: ObservanceLocation
+): boolean {
+  if (rule.ruleType === 'catalog-only' || rule.recurrence === 'catalog') return false;
+  if (rule.ruleType === 'solar-sankranti' || rule.type === 'solar') {
     const resolved = findSolarFestivalDate(rule, date.getFullYear());
     return resolved !== null && isSameLocalDate(resolved.date, date);
   }
+  if (rule.ruleType === 'relative-to-lunar') {
+    return findRelativeRuleDates(rule, startOfYear(date), endOfYear(date), calendarSystem, location)
+      .some((item) => isSameLocalDate(item.date, date));
+  }
+  if (rule.ruleType === 'weekday-in-lunar-month') {
+    if (rule.weekday === undefined || rule.lunarMonth === undefined) return false;
+    if (date.getDay() !== rule.weekday) return false;
+    const { lunarMonth } = computeTithiAndMonth(date, { calendarSystem, location });
+    return lunarMonth === monthForRuleInSystem(rule, calendarSystem);
+  }
+  return matchesLunarTithiRuleOnDate(rule, date, calendarSystem, location);
+}
+
+function matchesLunarTithiRuleOnDate(
+  rule: ObservanceRule,
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location?: ObservanceLocation
+): boolean {
+  if (!rule.paksha || rule.tithi === undefined) return false;
   const matchingMonth = monthForRuleInSystem(rule, calendarSystem);
   const computationSystem = computationSystemForRule(rule, calendarSystem);
   const { tithiIndex, lunarMonth } = computeTithiAndMonth(date, { calendarSystem: computationSystem, location });
   const tithiMatch = rule.paksha === 'shukla'
     ? tithiIndex === rule.tithi - 1
     : tithiIndex === rule.tithi + 14;
-  return tithiMatch && lunarMonth === matchingMonth;
+  const monthMatch = matchingMonth === null || lunarMonth === matchingMonth;
+  return tithiMatch && monthMatch;
 }
 
-function monthForRuleInSystem(rule: ObservanceRule, calendarSystem: CalendarSystem): number {
+function monthForRuleInSystem(rule: ObservanceRule, calendarSystem: CalendarSystem): number | null {
+  if (rule.lunarMonth === undefined) return null;
   if (isEkadashiNameRule(rule)) return rule.lunarMonth;
   if (calendarSystem === 'amanta' && rule.paksha === 'krishna') {
     return rule.lunarMonth === 1 ? 12 : rule.lunarMonth - 1;
@@ -240,26 +307,82 @@ function computationSystemForRule(rule: ObservanceRule, calendarSystem: Calendar
 }
 
 function isEkadashiNameRule(rule: ObservanceRule): boolean {
-  return rule.tithi === 11 && rule.marker === 'halfmoon' && rule.category === 'vrat';
+  return rule.tithi === 11 && rule.marker === 'halfmoon' && rule.category === 'vrat' && rule.lunarMonth !== undefined;
 }
 
-function findObservanceDate(
+function findObservanceDates(
   rule: ObservanceRule,
   start: Date,
   end: Date,
   calendarSystem: CalendarSystem,
   location?: ObservanceLocation
-): ResolvedObservance | null {
+): ResolvedObservance[] {
+  const results: ResolvedObservance[] = [];
   const current = new Date(start);
   while (current <= end) {
     try {
       if (matchesRuleOnDate(rule, current, calendarSystem, location)) {
-        return { date: new Date(current), rule };
+        results.push({ date: new Date(current), rule });
+        if (rule.recurrence === 'annual') break;
       }
     } catch {
       // skip dates that fail computation
     }
     current.setDate(current.getDate() + 1);
   }
-  return null;
+  return results;
+}
+
+function findRelativeRuleDates(
+  rule: ObservanceRule,
+  start: Date,
+  end: Date,
+  calendarSystem: CalendarSystem,
+  location?: ObservanceLocation
+): ResolvedObservance[] {
+  if (rule.relativeRule !== 'friday-before-purnima') return [];
+  if (rule.weekday === undefined || !rule.paksha || rule.tithi === undefined) return [];
+
+  const anchorRule: ObservanceRule = {
+    ...rule,
+    ruleType: 'lunar-tithi',
+    recurrence: 'annual',
+    relativeRule: undefined,
+  };
+  const anchors = findObservanceDates(anchorRule, start, end, calendarSystem, location);
+  return anchors.map((anchor) => {
+    const date = new Date(anchor.date);
+    while (date.getDay() !== rule.weekday) {
+      date.setDate(date.getDate() - 1);
+    }
+    return { date, rule };
+  }).filter((item) => item.date >= start && item.date <= end);
+}
+
+function dateKey(date: Date): string {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}
+
+function startOfYear(date: Date): Date {
+  return new Date(date.getFullYear(), 0, 1);
+}
+
+function endOfYear(date: Date): Date {
+  return new Date(date.getFullYear(), 11, 31);
+}
+
+function normalizeSearch(value: string): string {
+  return value.trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+function searchableText(rule: ObservanceRule): string {
+  return normalizeSearch([
+    rule.id,
+    rule.nameEn,
+    rule.nameHi,
+    rule.deityEn,
+    rule.deityHi,
+    rule.kathaId ?? '',
+    ...(rule.searchTerms ?? []),
+  ].join(' '));
 }
