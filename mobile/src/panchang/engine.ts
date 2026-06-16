@@ -7,7 +7,7 @@ import {
   Observer,
 } from 'astronomy-engine';
 
-import type { CalendarSystem, PanchangComputationOptions, PanchangData, Paksha } from './types';
+import type { CalendarSystem, GeoLocation, PanchangComputationOptions, PanchangData, Paksha } from './types';
 import {
   TITHI_NAMES_HI, TITHI_NAMES_EN,
   NAKSHATRA_NAMES_HI, NAKSHATRA_NAMES_EN,
@@ -21,7 +21,28 @@ const UJJAIN_LAT = 23.1765;
 const UJJAIN_LNG = 75.7885;
 const UJJAIN_ELEV = 494;
 
-const observer = new Observer(UJJAIN_LAT, UJJAIN_LNG, UJJAIN_ELEV);
+export const UJJAIN_CITY_ID = 'ujjain';
+export const UJJAIN_GEO: GeoLocation = { latitude: UJJAIN_LAT, longitude: UJJAIN_LNG, elevation: UJJAIN_ELEV };
+
+// Stable cache-key fragment for a location. Used by every location-sensitive cache
+// (tithi/month memo here, festival year cache, persisted observance cache) so keys
+// can never drift apart. Undefined ⇒ the Ujjain default.
+export function locationKey(loc?: { cityId?: string; latitude: number; longitude: number }): string {
+  if (!loc) return UJJAIN_CITY_ID;
+  return loc.cityId ?? `${loc.latitude.toFixed(2)},${loc.longitude.toFixed(2)}`;
+}
+
+const observerCache = new Map<string, Observer>();
+
+function observerFor(loc: GeoLocation & { cityId?: string }): Observer {
+  const key = locationKey(loc);
+  let cached = observerCache.get(key);
+  if (!cached) {
+    cached = new Observer(loc.latitude, loc.longitude, loc.elevation);
+    observerCache.set(key, cached);
+  }
+  return cached;
+}
 
 function getAyanamsa(year: number): number {
   return 23.853 + 0.01396 * (year - 2000);
@@ -39,7 +60,7 @@ function getSiderealMoonLng(date: Date, year: number): number {
   return (tropical - getAyanamsa(year) + 360) % 360;
 }
 
-function computeSunrise(localDate: Date): Date {
+function computeSunrise(localDate: Date, observer: Observer): Date {
   const startOfDay = new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), 0, 0, 0);
   const astroTime = MakeTime(startOfDay);
   const result = SearchRiseSet(Body.Sun, observer, +1, astroTime, 1);
@@ -47,7 +68,7 @@ function computeSunrise(localDate: Date): Date {
   return result.date;
 }
 
-function computeSunset(localDate: Date): Date {
+function computeSunset(localDate: Date, observer: Observer): Date {
   const startOfDay = new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), 0, 0, 0);
   const astroTime = MakeTime(startOfDay);
   const result = SearchRiseSet(Body.Sun, observer, -1, astroTime, 1);
@@ -55,7 +76,7 @@ function computeSunset(localDate: Date): Date {
   return result.date;
 }
 
-function computeMoonrise(localDate: Date): Date | null {
+function computeMoonrise(localDate: Date, observer: Observer): Date | null {
   const startOfDay = new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), 0, 0, 0);
   const astroTime = MakeTime(startOfDay);
   const result = SearchRiseSet(Body.Moon, observer, +1, astroTime, 1);
@@ -290,12 +311,12 @@ export function computeTithiAndMonth(
   options: PanchangComputationOptions = {}
 ): { tithiIndex: number; lunarMonth: number; paksha: Paksha } {
   const calendarSystem = options.calendarSystem ?? 'purnimant';
-  const cacheKey = `${calendarSystem}:${getLocalDateKey(localDate)}`;
+  const cacheKey = `${calendarSystem}:${locationKey(options.location)}:${getLocalDateKey(localDate)}`;
   const cached = tithiMonthCache.get(cacheKey);
   if (cached) return cached;
 
   const year = localDate.getFullYear();
-  const sunrise = computeSunrise(localDate);
+  const sunrise = computeSunrise(localDate, observerFor(options.location ?? UJJAIN_GEO));
   const sunLng = getSiderealSunLng(sunrise, year);
   const moonLng = getSiderealMoonLng(sunrise, year);
   const tithiIndex = computeTithiIndex(sunLng, moonLng);
@@ -308,8 +329,9 @@ export function computeTithiAndMonth(
 
 export function computePanchangForDate(localDate: Date, options: PanchangComputationOptions = {}): PanchangData {
   const calendarSystem = options.calendarSystem ?? 'purnimant';
+  const observer = observerFor(options.location ?? UJJAIN_GEO);
   const year = localDate.getFullYear();
-  const sunrise = computeSunrise(localDate);
+  const sunrise = computeSunrise(localDate, observer);
 
   const sunLng = getSiderealSunLng(sunrise, year);
   const moonLng = getSiderealMoonLng(sunrise, year);
@@ -325,8 +347,8 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
   const tithiEndTime = bisectTithiEnd(sunrise, tithiIndex);
   const nakshatraEndTime = bisectNakshatraEnd(sunrise, nakshatraIndex);
 
-  const sunset = computeSunset(localDate);
-  const moonrise = computeMoonrise(localDate);
+  const sunset = computeSunset(localDate, observer);
+  const moonrise = computeMoonrise(localDate, observer);
 
   const brahmaMuhurtaEnd = new Date(sunrise.getTime() - 48 * 60 * 1000);
   const brahmaMuhurtaStart = new Date(sunrise.getTime() - 96 * 60 * 1000);

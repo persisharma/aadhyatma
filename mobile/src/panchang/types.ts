@@ -2,8 +2,27 @@ export type Paksha = 'shukla' | 'krishna';
 
 export type CalendarSystem = 'purnimant' | 'amanta';
 
+export type GeoLocation = {
+  latitude: number;
+  longitude: number;
+  elevation: number;
+};
+
+export type LocationSource = 'default' | 'city' | 'gps';
+
+export type PanchangLocation = GeoLocation & {
+  // Always the id of a bundled city (see locations.ts) — GPS fixes are snapped
+  // to the nearest bundled city so cache keys stay finite and labels work offline.
+  cityId: string;
+  labelHi: string;
+  labelEn: string;
+  source: LocationSource;
+};
+
 export type PanchangComputationOptions = {
   calendarSystem?: CalendarSystem;
+  // Omitted ⇒ Ujjain (the historical default; precomputed observance tables assume it).
+  location?: GeoLocation & { cityId?: string };
 };
 
 export type PanchangElement = {

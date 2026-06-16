@@ -9,7 +9,9 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import type { TimeOfDay } from '@/notifications/pure';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
 
 function formatReminderTimes(times: TimeOfDay[]): string {
@@ -27,6 +29,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { bookmarks } = useBookmarks();
   const { lang: defaultLang, setLang: setDefaultLang } = useGitaLanguage();
+  const { location: panchangLocation } = usePanchangLocation();
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
@@ -34,6 +37,18 @@ export default function MoreScreen({ navigation }: Props) {
   const en = helpContent.en;
   const profileTotals = lifetimeTotals();
   const streak = currentStreak();
+  const screenTitle = orderTitlesByLanguage(defaultLang, 'अन्य', 'More', {
+    devPrimary: 22,
+    devSecondary: 14,
+    latPrimary: 22,
+    latSecondary: 14,
+  });
+  const profileCardTitle = orderTitlesByLanguage(
+    defaultLang,
+    'साधक प्रोफ़ाइल',
+    'Sadhak Profile · Insights',
+    { devPrimary: 18, devSecondary: 13, latPrimary: 18, latSecondary: 13 }
+  );
 
   return (
     <View style={styles.root}>
@@ -48,11 +63,11 @@ export default function MoreScreen({ navigation }: Props) {
         >
           {/* Title */}
           <View style={styles.titleArea}>
-            <Text style={{ fontFamily: typography.screenTitle.fontFamily, fontSize: 22, color: colors.ink, textAlign: 'center' }}>
-              अन्य
+            <Text style={{ fontFamily: screenTitle.primary.fontFamily, fontSize: screenTitle.primary.fontSize, fontStyle: screenTitle.primary.fontStyle, color: colors.ink, textAlign: 'center' }}>
+              {screenTitle.primary.text}
             </Text>
-            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 14, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
-              More
+            <Text style={{ fontFamily: screenTitle.secondary.fontFamily, fontSize: screenTitle.secondary.fontSize, fontStyle: screenTitle.secondary.fontStyle, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
+              {screenTitle.secondary.text}
             </Text>
           </View>
 
@@ -91,22 +106,24 @@ export default function MoreScreen({ navigation }: Props) {
               <View style={styles.profileTitleBlock}>
                 <Text
                   style={{
-                    fontFamily: typography.readerTitle.fontFamily,
-                    fontSize: 18,
+                    fontFamily: profileCardTitle.primary.fontFamily,
+                    fontSize: profileCardTitle.primary.fontSize,
+                    fontStyle: profileCardTitle.primary.fontStyle,
                     color: colors.ink,
                   }}
                 >
-                  साधक प्रोफ़ाइल
+                  {profileCardTitle.primary.text}
                 </Text>
                 <Text
                   style={{
-                    fontFamily: 'CormorantGaramond_400Regular_Italic',
-                    fontSize: 13,
+                    fontFamily: profileCardTitle.secondary.fontFamily,
+                    fontSize: profileCardTitle.secondary.fontSize,
+                    fontStyle: profileCardTitle.secondary.fontStyle,
                     color: colors.inkMuted,
                     marginTop: 2,
                   }}
                 >
-                  Sadhak Profile · Insights
+                  {profileCardTitle.secondary.text}
                 </Text>
               </View>
               <Text style={{ color: colors.saffron, fontSize: 22 }}>›</Text>
@@ -297,8 +314,8 @@ export default function MoreScreen({ navigation }: Props) {
             </View>
             <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
               {defaultLang === 'hi'
-                ? 'पंचांग · उज्जैन, भारत · पूर्णिमांत/अमान्त चयन\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है।'
-                : 'Panchang · Ujjain, India · Purnimant/Amanta selectable\nTithi follows Surya Siddhanta with modern corrections. Values may vary by minutes for other locations.'}
+                ? `पंचांग · ${panchangLocation.labelHi}, भारत · पूर्णिमांत/अमान्त चयन\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है। स्थान पंचांग टैब से बदलें।`
+                : `Panchang · ${panchangLocation.labelEn}, India · Purnimant/Amanta selectable\nTithi follows Surya Siddhanta with modern corrections. Change the location from the Panchang tab.`}
             </Text>
           </View>
 

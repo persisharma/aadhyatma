@@ -34,6 +34,7 @@ import {
   NotificationPreferencesProvider,
   configureForegroundNotificationHandler,
 } from '@/contexts/NotificationPreferencesContext';
+import { PanchangLocationProvider } from '@/contexts/PanchangLocationContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
@@ -135,6 +136,7 @@ export default function App() {
                       <RoutineProvider>
                       <RoutineSheetProvider>
                       <NotificationPreferencesProvider>
+                        <PanchangLocationProvider>
                         <ShareProvider>
                           <View style={{ flex: 1 }}>
                             <NavigationContainer ref={navigationRef}>
@@ -147,6 +149,7 @@ export default function App() {
                             <VratReminderScheduler />
                           </View>
                         </ShareProvider>
+                        </PanchangLocationProvider>
                       </NotificationPreferencesProvider>
                       </RoutineSheetProvider>
                       </RoutineProvider>

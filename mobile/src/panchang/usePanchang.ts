@@ -5,7 +5,10 @@ import {
   getObservancesForDate,
   getObservancesForMonth,
   getUpcomingObservances,
+  isObservanceDataReady,
 } from './festivalEngine';
+import { subscribeObservanceStore } from './observanceStore';
+import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import type { CalendarSystem, PanchangData, ResolvedFestival, ResolvedObservance } from './types';
 
 export type UsePanchangResult = {
@@ -18,6 +21,9 @@ export type UsePanchangSelectionResult = {
   panchang: PanchangData | null;
   observances: ResolvedObservance[];
   upcoming: ResolvedObservance[];
+  // True while a non-Ujjain location is still showing the Ujjain fallback dates
+  // (its background scan hasn't landed yet).
+  observancesApproximate: boolean;
 };
 
 const CALENDAR_SYSTEM_STORAGE_KEY = '@vedansh:panchang-calendar-system';
@@ -28,6 +34,14 @@ const UPCOMING_MAX = 10;
 
 function isCalendarSystem(value: unknown): value is CalendarSystem {
   return value === 'purnimant' || value === 'amanta';
+}
+
+// Bumps whenever a location's observance year lands in the in-memory store, so
+// hooks re-resolve and Ujjain-fallback results upgrade to location-accurate ones.
+function useObservanceStoreVersion(): number {
+  const [version, setVersion] = useState(0);
+  useEffect(() => subscribeObservanceStore(() => setVersion((v) => v + 1)), []);
+  return version;
 }
 
 export function usePanchangCalendarSystem(): [CalendarSystem, (next: CalendarSystem) => void] {
@@ -57,10 +71,15 @@ export function usePanchangCalendarSystem(): [CalendarSystem, (next: CalendarSys
 
 export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): UsePanchangResult {
   const todayKey = new Date().toDateString();
+  const { location } = usePanchangLocation();
+  const storeVersion = useObservanceStoreVersion();
 
   // Today's panchang is cheap (~4ms — a handful of astronomy solves), so it is
   // safe to compute on the render path. Memoised per calendar day.
-  const today = useMemo(() => computePanchangForDate(new Date(todayKey), { calendarSystem }), [todayKey, calendarSystem]);
+  const today = useMemo(
+    () => computePanchangForDate(new Date(todayKey), { calendarSystem, location }),
+    [todayKey, calendarSystem, location]
+  );
 
   // Festival resolution scans two years of the lunar calendar (~1.7s on V8,
   // several times that on Hermes). Doing it synchronously during render blocks
@@ -71,14 +90,14 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
   useEffect(() => {
     let cancelled = false;
     const handle = setTimeout(() => {
-      const result = getUpcomingObservances(new Date(), UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS);
+      const result = getUpcomingObservances(new Date(), UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location);
       if (!cancelled) setUpcoming(result);
     }, 0);
     return () => {
       cancelled = true;
       clearTimeout(handle);
     };
-  }, [todayKey, calendarSystem]);
+  }, [todayKey, calendarSystem, location, storeVersion]);
 
   return { today, upcoming };
 }
@@ -89,6 +108,9 @@ export function usePanchangForSelection(
 ): UsePanchangSelectionResult {
   const dateMs = date.getTime();
   const dateKey = date.toDateString();
+  const { location } = usePanchangLocation();
+  const cityId = location.cityId;
+  const storeVersion = useObservanceStoreVersion();
 
   // Compute the day's panchang OFF the render path. The astronomy solves are quick on a
   // laptop but enough to stutter the tab on a real device, so we never run them
@@ -99,14 +121,15 @@ export function usePanchangForSelection(
     let cancelled = false;
     setPanchang(null);
     const handle = setTimeout(() => {
-      const result = computePanchangForDate(new Date(dateMs), { calendarSystem });
+      const result = computePanchangForDate(new Date(dateMs), { calendarSystem, location });
       if (!cancelled) setPanchang(result);
     }, 0);
     return () => {
       cancelled = true;
       clearTimeout(handle);
     };
-  }, [dateMs, calendarSystem]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateMs, calendarSystem, cityId]);
 
   // Observances for the selected day, resolved off the render path as well.
   const [observances, setObservances] = useState<ResolvedObservance[]>([]);
@@ -115,14 +138,15 @@ export function usePanchangForSelection(
     const selected = new Date(dateMs);
     setObservances([]);
     const handle = setTimeout(() => {
-      const result = getObservancesForDate(selected, calendarSystem);
+      const result = getObservancesForDate(selected, calendarSystem, location);
       if (!cancelled) setObservances(result);
     }, 0);
     return () => {
       cancelled = true;
       clearTimeout(handle);
     };
-  }, [dateMs, calendarSystem]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateMs, calendarSystem, cityId, storeVersion]);
 
   const [upcoming, setUpcoming] = useState<ResolvedObservance[]>([]);
   useEffect(() => {
@@ -130,23 +154,34 @@ export function usePanchangForSelection(
     const selected = new Date(dateMs);
     setUpcoming([]);
     const handle = setTimeout(() => {
-      const result = getUpcomingObservances(selected, UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS);
+      const result = getUpcomingObservances(selected, UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location);
       if (!cancelled) setUpcoming(result);
     }, 0);
     return () => {
       cancelled = true;
       clearTimeout(handle);
     };
-  }, [dateMs, dateKey, calendarSystem]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateMs, dateKey, calendarSystem, cityId, storeVersion]);
 
-  return { panchang, observances, upcoming };
+  const observancesApproximate = useMemo(() => {
+    const year = new Date(dateMs).getFullYear();
+    return !isObservanceDataReady(year, calendarSystem, location)
+      || !isObservanceDataReady(year + 1, calendarSystem, location);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateMs, calendarSystem, cityId, storeVersion]);
+
+  return { panchang, observances, upcoming, observancesApproximate };
 }
 
 export function usePanchangMonthObservances(
   visibleMonth: Date,
   calendarSystem: CalendarSystem
 ): ResolvedObservance[] {
-  const monthKey = `${visibleMonth.getFullYear()}-${visibleMonth.getMonth()}-${calendarSystem}`;
+  const { location } = usePanchangLocation();
+  const cityId = location.cityId;
+  const storeVersion = useObservanceStoreVersion();
+  const monthKey = `${visibleMonth.getFullYear()}-${visibleMonth.getMonth()}-${calendarSystem}-${cityId}`;
   const [observances, setObservances] = useState<ResolvedObservance[]>([]);
 
   useEffect(() => {
@@ -155,19 +190,24 @@ export function usePanchangMonthObservances(
     const year = visibleMonth.getFullYear();
     const month = visibleMonth.getMonth();
     const handle = setTimeout(() => {
-      const result = getObservancesForMonth(year, month, calendarSystem);
+      const result = getObservancesForMonth(year, month, calendarSystem, location);
       if (!cancelled) setObservances(result);
     }, 0);
     return () => {
       cancelled = true;
       clearTimeout(handle);
     };
-  }, [monthKey, visibleMonth, calendarSystem]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monthKey, visibleMonth, calendarSystem, storeVersion]);
 
   return observances;
 }
 
 export function usePanchangForDate(date: Date, calendarSystem: CalendarSystem = 'purnimant'): PanchangData {
   const dateMs = date.getTime();
-  return useMemo(() => computePanchangForDate(new Date(dateMs), { calendarSystem }), [dateMs, calendarSystem]);
+  const { location } = usePanchangLocation();
+  return useMemo(
+    () => computePanchangForDate(new Date(dateMs), { calendarSystem, location }),
+    [dateMs, calendarSystem, location]
+  );
 }
