@@ -15,6 +15,7 @@ import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
@@ -213,6 +214,8 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
             </View>
           </View>
         </View>
+
+        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId="vishnu-sahasranama" chapter={chapter.chapter} /></View>
 
