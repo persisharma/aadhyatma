@@ -30,12 +30,12 @@ afterEach(() => {
 });
 
 describe('LotusMark', () => {
-  it('renders five fanned petals', () => {
+  it('renders a full-bloom ring of twelve petals', () => {
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => {
       tree = TestRenderer.create(<LotusMark size={30} />);
     });
-    expect(gradientCount(tree)).toBe(5);
+    expect(gradientCount(tree)).toBe(12);
   });
 });
 
