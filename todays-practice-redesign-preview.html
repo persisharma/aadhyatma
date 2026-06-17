@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's Practice — redesign preview (app tokens)</title>
+<!--
+  Static preview of the redesigned RoutineTodayScreen (PRD-10), rendered with the
+  app's REAL theme tokens (theme/colors.ts + the bundled fonts) — NOT the
+  mockup's stand-in Tiro/Spectral/copper. Use this to eyeball the implementation
+  against vedansh-practice-mockup.html. Two states: partial (left) and complete
+  (right). Same convention as panchang-redesign-preview.html.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Serif+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* from mobile/src/theme/colors.ts (lightColors) */
+    --parchment:#F3E7C9; --parchmentSoft:#F8EFD6; --parchmentDeep:#E9D9B1;
+    --parchmentHighlight:#F6ECD0; --parchmentGradientEnd:#F1E3BF;
+    --ink:#1A0E03; --inkSoft:#5A3A1E; --inkMuted:#6E5230;
+    --saffron:#B8621B; --saffronDeep:#8A3E0B; --gold:#A67C34;
+    --divider:rgba(138,62,11,.18); --goldTint:rgba(166,124,52,.14);
+    --onPrimary:#fff;
+    --thumbFrom:#F8D291; --thumbTo:#E0A255;
+    --latin:"Cormorant Garamond",serif;
+    --deva:"Noto Serif Devanagari",serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#cabfa6;font-family:var(--latin);display:flex;gap:26px;flex-wrap:wrap;
+    justify-content:center;padding:30px 14px;min-height:100vh;-webkit-font-smoothing:antialiased}
+  .stage{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .caption{font-family:var(--latin);font-style:italic;color:#5A3A1E;font-size:15px}
+  .phone{width:390px;border-radius:42px;overflow:hidden;
+    background:linear-gradient(180deg,var(--parchmentHighlight),var(--parchmentGradientEnd));
+    box-shadow:0 24px 60px rgba(60,40,20,.35);position:relative;padding-bottom:30px}
+  .status{display:flex;justify-content:space-between;align-items:center;
+    padding:14px 28px 4px;color:var(--ink);font-size:14px;font-weight:600}
+  .batt{border:1.5px solid var(--ink);border-radius:4px;padding:1px 4px;font-size:10px;font-weight:700}
+
+  /* top bar (RoutineShell) */
+  .topbar{display:flex;align-items:center;gap:12px;padding:12px 24px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);
+    background:var(--parchmentSoft);display:flex;align-items:center;justify-content:center;color:var(--inkSoft);font-size:18px;flex:none}
+  .topbar h1{flex:1;font-family:var(--deva);font-weight:600;font-size:16px;color:var(--ink)}
+  .menu{color:var(--saffron);font-size:22px}
+  .wrap{padding:0 24px}
+
+  /* summary card */
+  .summary{border:1px solid var(--goldTint);background:var(--parchmentSoft);border-radius:18px;
+    padding:20px;text-align:center;box-shadow:0 2px 6px rgba(60,30,10,.10);
+    display:flex;flex-direction:column;align-items:center}
+  .big{font-size:26px;color:var(--ink);line-height:1.1}
+  .big.latin{font-family:var(--latin);font-weight:600}
+  .sub{font-size:14px;color:var(--inkSoft);margin-top:3px;font-family:var(--latin);font-style:italic}
+  .track{height:7px;width:100%;border-radius:999px;background:var(--parchmentDeep);overflow:hidden;margin-top:16px}
+  .track > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--saffron))}
+
+  /* lotus seal (approximates components/LotusMark.tsx — 5 gradient petals + calyx) */
+  .seal{width:60px;height:42px;position:relative;margin-bottom:8px}
+  .petal{position:absolute;left:50%;bottom:6px;width:12px;border-radius:12px;
+    border:.5px solid var(--saffronDeep);transform-origin:50% 100%;
+    background:linear-gradient(180deg,var(--thumbFrom),var(--thumbTo))}
+  .calyx{position:absolute;left:50%;transform:translateX(-50%);bottom:2px;width:17px;height:12px;
+    border-radius:60px;background:var(--saffronDeep)}
+
+  /* mala */
+  .mala{display:flex;align-items:center;justify-content:center;margin-top:16px}
+  .beads{display:flex;align-items:center}
+  .bead{width:11px;height:11px;border-radius:50%}
+  .bead.off{background:var(--parchmentDeep);border:1px solid var(--gold)}
+  .bead.on{background:radial-gradient(circle at 32% 28%,var(--saffron),var(--saffronDeep));border:1px solid var(--saffronDeep)}
+  .bead.today{box-shadow:0 0 0 4px rgba(184,98,27,.18)}
+  .thread{width:5px;height:1.5px;background:var(--gold);opacity:.5}
+  .meru{width:14px;height:14px;border-radius:50%;border:1px solid var(--gold);
+    background:radial-gradient(circle at 32% 28%,var(--thumbFrom),var(--gold))}
+  .mlabel{font-family:var(--latin);font-size:14px;color:var(--inkSoft);margin-left:10px}
+
+  /* item rows */
+  .list{margin-top:16px}
+  .item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--divider)}
+  .item:last-child{border-bottom:none}
+  .mark{width:28px;height:28px;border-radius:50%;border:2px solid var(--saffron);flex:none;
+    display:flex;align-items:center;justify-content:center}
+  .mark.done{background:var(--saffron);color:var(--onPrimary)}
+  .mark.done::after{content:"✓";font-family:var(--latin);font-size:14px}
+  .ibody{flex:1;min-width:0}
+  .ititle{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .item.done .ititle{color:var(--inkMuted)}            /* muted, NEVER struck */
+  .imeta{font-family:var(--latin);font-size:12px;color:var(--saffronDeep);margin-top:2px}
+  .item.done .imeta{color:var(--inkMuted)}
+  .chev{color:var(--saffron);font-size:18px;flex:none}
+  .hint{font-family:var(--latin);font-size:12px;color:var(--inkMuted);line-height:1.45;margin-top:16px}
+</style>
+</head>
+<body>
+<script>
+  const PETALS=[-52,-26,0,26,52];
+  function seal(){
+    return `<div class="seal">${PETALS.map(d=>{
+      const h=Math.abs(d)>30?17:21;
+      return `<span class="petal" style="height:${h}px;transform:translateX(-50%) rotate(${d}deg)"></span>`;
+    }).join('')}<span class="calyx"></span></div>`;
+  }
+  function mala(streak,cap=7){
+    let h='<div class="beads">';
+    for(let i=0;i<cap;i++){
+      const on=i<streak, today=i===streak-1&&on;
+      h+=`<span class="bead ${on?'on':'off'} ${today?'today':''}"></span><span class="thread"></span>`;
+    }
+    h+='<span class="meru"></span></div>';
+    const label = streak>0?`${streak} day mala`:'Start your mala today';
+    return `<div class="mala">${h}<span class="mlabel">${label}</span></div>`;
+  }
+  function row(it){
+    const meta = it.done ? (it.time?`offered ${it.time}`:'offered') : 'Tap to read';
+    return `<div class="item ${it.done?'done':''}">
+      <span class="mark ${it.done?'done':''}"></span>
+      <div class="ibody"><div class="ititle">${it.hi}</div>
+        <div class="imeta">${it.en} · ${meta}</div></div>
+      <span class="chev">›</span></div>`;
+  }
+  function shell(title, inner){
+    return `<div class="phone">
+      <div class="status"><span>5:58</span><span>·ıll &nbsp;🛜&nbsp; <span class="batt">98</span></span></div>
+      <div class="topbar"><div class="back">‹</div><h1>${title}</h1><span class="menu">≡</span></div>
+      <div class="wrap">${inner}</div></div>`;
+  }
+
+  // Partial state: 4 of 6 offered
+  const partialItems=[
+    {hi:'हनुमान चालीसा', en:'Hanuman Chalisa', done:true,  time:'7:12 AM'},
+    {hi:'शिव स्तोत्रम्',  en:'Shiva Stotram',   done:true,  time:'7:01 AM'},
+    {hi:'गायत्री मंत्र',   en:'Gayatri Mantra',  done:true,  time:'6:40 AM'},
+    {hi:'ॐ नमः शिवाय',  en:'Om Namah Shivaya',done:true,  time:''}, /* auto-japam → no time */
+    {hi:'सुन्दरकाण्ड',    en:'Sundarkand',      done:false},
+    {hi:'श्री सूक्त',      en:'Shri Sukta',      done:false},
+  ];
+  const partial = `
+    <div class="summary">
+      <div class="big latin">4 of 6</div>
+      <div class="sub">2 readings remaining</div>
+      <div class="track"><i style="width:67%"></i></div>
+      ${mala(4)}
+    </div>
+    <div class="list">${partialItems.map(row).join('')}</div>
+    <p class="hint">Open a reading to begin — it completes on its own when you reach the last page. Or tap the circle to mark it offered.</p>`;
+
+  // Complete state: 6 of 6 offered + seal
+  const doneItems=partialItems.map((x,i)=>({...x,done:true,time:x.time|| (i===4?'6:05 AM':i===5?'5:58 AM':x.time)}));
+  const complete = `
+    <div class="summary">
+      ${seal()}
+      <div class="big latin">6 of 6 offered</div>
+      <div class="sub">Today's practice is complete</div>
+      ${mala(6)}
+    </div>
+    <div class="list">${doneItems.map(row).join('')}</div>
+    <p class="hint">Open a reading to begin — it completes on its own when you reach the last page. Or tap the circle to mark it offered.</p>`;
+
+  document.body.innerHTML = `
+    <div class="stage"><div class="caption">Partial — 4 of 6</div>${shell("Today's Practice", partial)}</div>
+    <div class="stage"><div class="caption">Complete — seal + full mala</div>${shell("Today's Practice", complete)}</div>`;
+</script>
+</body>
+</html>

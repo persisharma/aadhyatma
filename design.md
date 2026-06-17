@@ -23,9 +23,9 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 | `parchment` | `#F3E7C9` | Primary background for reader surfaces |
 | `parchment-soft` | `#F8EFD6` | Lighter parchment for inner cards (with a soft `sm` shadow for lift) and flat controls |
 | `parchment-deep` | `#E9D9B1` | Bottom-edge gradient, elevated surfaces |
-| `ink` | `#2F1E10` | Primary Devanagari body text |
-| `ink-soft` | `#5A3A1E` | Secondary text / meaning body |
-| `ink-muted` | `#8A6A47` | Tertiary / metadata / placeholders |
+| `ink` | `#1A0E03` | Primary Devanagari body text. Deepened from `#2F1E10` for contrast — ~15.4:1 on parchment (WCAG AAA). See `colors.ts` / `colors.contrast.test.ts`. |
+| `ink-soft` | `#5A3A1E` | Secondary text / meaning body (~8.3:1) |
+| `ink-muted` | `#6E5230` | Tertiary / metadata / placeholders / demoted secondary-language line. Deepened from `#8A6A47` (which only reached ~4.0:1) to ~5.9:1 (WCAG AA). |
 | `saffron` | `#B8621B` | Primary accent, active states, arrows |
 | `saffron-deep` | `#8A3E0B` | Strong accent, pager dot, labels |
 | `gold` | `#A67C34` | Secondary accent, crest, section tags |
@@ -146,6 +146,8 @@ This table is the **single source of truth** for reading-content sizing, impleme
 | `sm` | `0 1px 2px rgba(60, 30, 10, 0.06)` — default card |
 | `md` | `0 8px 24px rgba(60, 30, 10, 0.14)` — active card |
 | `lg` | `0 30px 60px rgba(60, 30, 10, 0.22)` — phone frame in preview only |
+
+> **Runtime tokens (source of truth: `mobile/src/theme/elevation.ts`).** React Native exposes two named card elevations rather than the `sm/md/lg` scale above: `elevation.card` (shadow `#3C1E0A`, offset `0,2`, opacity `0.10`, radius `6`, Android `elevation: 2`) for default cards, and `elevation.raised` (offset `0,6`, opacity `0.16`, radius `14`, Android `5`) for the one focal element on a screen. The cream palette has very low figure-ground contrast, so card surfaces must be opaque for the Android shadow to render. New cards (e.g. the Today's Practice summary card, §30) consume `elevation.card`.
 
 ---
 
@@ -370,6 +372,8 @@ The Gita section carries a single in-memory language preference (`'hi' | 'en'`) 
 - Page transitions: native horizontal swipe, default spring. No custom easing in v1.
 - On page change: a light haptic tap (`Haptics.ImpactFeedbackStyle.Light`) if running on device.
 - Avoid crossfades or scale effects in v1 — they fight the manuscript metaphor.
+- The one sanctioned animated moment is the routine-completion pushpa-varsha (§30): a soft fall + fade, **no scale pops**.
+- The Today's Practice completion **seal** (`PracticeSeal`, §30) appears with a brief **opacity fade only** — no scale or rotate — riding that completion-moment exception; it honors reduce-motion (`useReducedMotion`) by appearing instantly. The **mala** streak (`MalaStreak`) is fully **static**: the today-bead is marked with a static ring, never a pulse.
 
 ---
 
@@ -380,6 +384,8 @@ The Gita section carries a single in-memory language preference (`'hi' | 'en'`) 
 - Support Dynamic Type: scale verse body from 23 up to ~30 while keeping line-height 1.7. Meaning scales accordingly.
 - Devanagari must use the system's user-chosen font-scale, not a fixed point size.
 - All accent-only information (saffron pill, saffron chevron) must also carry a text or shape cue — never color alone.
+- **Honor "reduce motion".** `useReducedMotion` (`mobile/src/utils/useReducedMotion.ts`) reads `AccessibilityInfo.isReduceMotionEnabled()` and stays in sync via `reduceMotionChanged`; animated entrances (e.g. `PracticeSeal`) collapse to their final frame when it is on. Prefer static designs (e.g. `MalaStreak`) so nothing needs disabling.
+- **Decorative vector art is hidden from assistive tech.** Bead/seal art sets `importantForAccessibility="no-hide-descendants"` / `accessibilityElementsHidden`; the mala exposes a single text label (e.g. "7 day mala") via `accessibilityLabel`, and completion marks carry an `accessibilityState={{ checked }}` plus a text label, never color alone.
 
 ---
 
@@ -868,4 +874,33 @@ type IndiaMapProps = {
 - `progress` (partial, or nothing scheduled today) — `goldTint` border, `doneCount/total` disc, "नित्य साधना · आज" / "Daily Routine · Today", + a saffron progress track → opens RoutineToday.
 - `complete` (all done) — a bloomed **lotus** mark (`LotusMark.tsx`) + "साधना पूर्ण · आज" / "Complete for today". The prominent progress chip is replaced by this compact achievement badge → opens RoutineToday.
 
-**Completion celebration (pushpa-varsha).** The first time the completed banner is seen each day (`shouldCelebrate`: complete + focused + not-yet-celebrated), a gentle one-shot flower shower of saffron/gold petals drifts down over the chip (`RoutineCelebration.tsx`), with a `Haptics.NotificationFeedbackType.Success` tap. Reverent, not confetti (Section 11): a soft fall + fade, no scale pops. Plays once per day, gated by `celebratedToday` persisted in `RoutineContext` (date-keyed, like the done-marks). Vector art is built from `View` + `expo-linear-gradient` (no SVG — same convention as `CategoryIcon`).
+**Completion celebration (pushpa-varsha).** The first time the completed banner is seen each day (`shouldCelebrate`: complete + focused + not-yet-celebrated), a gentle one-shot flower shower of saffron/gold petals drifts down over the chip (`RoutineCelebration.tsx`), with a `Haptics.NotificationFeedbackType.Success` tap. Reverent, not confetti (Section 11): a soft fall + fade, no scale pops. Plays once per day, gated by `celebratedToday` persisted in `RoutineContext` (date-keyed, like the done-marks — see §31). Vector art is built from `View` + `expo-linear-gradient` (no SVG — same convention as `CategoryIcon`). This pushpa-varsha is the **only** sanctioned exception to §11's no-animation stance; the Today's Practice seal (§31) reuses its fade, not a new effect.
+
+---
+
+## 31. Screen: Today's Practice (आज की साधना)
+
+**Purpose.** The daily-driver screen the routine banner (§30) opens — today's scheduled items across all routines, presented as a devotional ledger rather than a utility checklist (PRD-10). `RoutineTodayScreen.tsx`, inside the parchment `RoutineShell`.
+
+**Components & where they live** (all pull tokens from the theme; no hard-coded hexes):
+- `mobile/src/components/MalaStreak.tsx` — the streak drawn as a bead string.
+- `mobile/src/components/PracticeSeal.tsx` — the completion seal (wraps `LotusMark`).
+- `mobile/src/data/routine/practiceView.ts` — pure view-model (summary lines, offered-time formatting, mala math), unit-tested like `routineBannerView.ts`.
+- `mobile/src/utils/useReducedMotion.ts` — shared reduce-motion hook (§12).
+
+**Completion summary card.** One centered `parchment-soft` card (`goldTint` border, `radii.lg`, `elevation.card`, `spacing.lg` padding) at the top:
+- Headline: partial → `{done} of {total}`; complete → `{total} of {total} offered`. Latin headline uses Cormorant 600 upright; Hindi uses the Devanagari screen-title face.
+- Italic sub-line (Cormorant italic / Devanagari `meaning` in Hindi): partial → `{n} reading(s) remaining`; complete → `Today's practice is complete` / `आज की साधना पूर्ण`.
+- Progress strip: a gold→saffron `expo-linear-gradient` fill on a `parchment-deep` track. **Hidden when complete.**
+- `MalaStreak` row + label.
+- `PracticeSeal` — **absent while partial; fades in (opacity only, no scale pop) when complete**, riding the §30 completion-fade exception; instant under reduce-motion.
+
+**Mala bead semantics (`MalaStreak`).** A horizontal string of beads filling toward a larger gold **meru** bead — the product's streak metaphor, never a fitness flame. `lit = min(streak, capacity)` (default capacity 7; the numeric label stays authoritative for longer streaks). Lit beads use a saffron gradient; unlit beads are `parchment-deep` with a `gold` hairline. The most-recent lit ("today") bead carries a **static** saffron ring — no pulse (§11). Streak 0 → all beads unlit with a "Start your mala today" / "आज से माला आरम्भ करें" label, never a hidden component. Built from `View` + gradient (no SVG, per §30).
+
+**Devotional language — "offered" (अर्पित).** On this screen, completing an item is framed as *offering* it, not ticking a box. An offered row reads `offered {time}` / `{time} · अर्पित`; a pending row reads `Tap to read` / `पढ़ने के लिए टैप करें`. Completion **semantics** are unchanged from §30/PRD-07 (auto on reaching the last verse-page or target japa rounds; manual mark as fallback). (The banner and Profile keep their existing "पूर्ण / complete" copy for now; the "offered" register is scoped to this screen.)
+
+**Offered-at timestamp format.** 12-hour clock with meridiem — `7:12 AM` / `7:12 पूर्वाह्न` (पूर्वाह्न before noon, अपराह्न after), via `formatOfferedTime`. A missing/sentinel time (auto-japam, which carries no per-round timestamp, or a migrated legacy mark) shows a plain `offered` / `अर्पित` with no time.
+
+**No strikethrough.** A completed item's title is **muted (`ink-muted`), never struck through** — striking a sacred text reads as "cancelled," the opposite of "offered." The completion mark is a `saffron` ring that fills with a `✓` when offered; tapping it toggles the manual mark.
+
+**Data (PRD-10, additive).** Manual completion now stores a timestamp: `@vedansh/routine-done` persists `{ date, marks: Record<key, epochMs> }` (was `{ date, keys: string[] }`; legacy values migrate to `marks` with timestamp `0` = "offered, time unknown"). `RoutineContext` exposes `manualDoneAt(key)`; `useRoutineToday` surfaces `doneAt` per item (manual mark time, or the reader's last-progress `updatedAt` for an auto-complete). Still date-scoped and reset at the day boundary.
