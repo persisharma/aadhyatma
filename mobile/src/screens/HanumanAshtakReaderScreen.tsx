@@ -13,6 +13,7 @@ import ShareButton from '@/components/ShareButton';
 import JumpToStartButton from '@/components/JumpToStartButton';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
@@ -135,6 +136,8 @@ export default function HanumanAshtakReaderScreen({ navigation, route }: Props) 
             </View>
           </View>
         </View>
+
+        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId="hanuman-ashtak" chapter={chapter.chapter} /></View>
 

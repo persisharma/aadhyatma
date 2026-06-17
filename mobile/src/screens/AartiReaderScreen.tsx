@@ -12,6 +12,7 @@ import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import VersePage from '@/components/VersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
@@ -135,6 +136,8 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
             </View>
           </View>
         </View>
+
+        <ReadingProgressBar current={currentIndex + 1} total={aarti.verses.length} />
 
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId={sourceId} /></View>
 
