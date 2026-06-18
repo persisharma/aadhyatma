@@ -18,7 +18,11 @@ function newId(): string {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-type DoneState = { date: string; keys: string[] };
+/** Persisted shape. `marks` maps an item key → epoch-ms of when it was offered
+ * today. Legacy builds stored `keys: string[]` (no time); those migrate to
+ * `marks` with timestamp 0 (= "offered, time unknown"). */
+type DoneState = { date: string; marks: Record<string, number> };
+type LegacyDoneState = { date: string; keys: string[] };
 
 type RoutineContextValue = {
   routines: Routine[];
@@ -31,6 +35,8 @@ type RoutineContextValue = {
   markManualDone: (key: string) => void;
   unmarkManualDone: (key: string) => void;
   isManualDone: (key: string) => boolean;
+  /** Epoch-ms when the item was manually marked offered today, or undefined. */
+  manualDoneAt: (key: string) => number | undefined;
   /** Signature of the routine-item set whose completion was celebrated today,
    * or null if today's completion hasn't played its pushpa-varsha yet. */
   celebratedSignatureToday: string | null;
@@ -47,7 +53,7 @@ function isRoutineArray(v: unknown): v is Routine[] {
 
 export function RoutineProvider({ children }: { children: React.ReactNode }) {
   const [routines, setRoutines] = useState<Routine[]>([]);
-  const [doneKeys, setDoneKeys] = useState<Set<string>>(new Set());
+  const [doneMarks, setDoneMarks] = useState<Record<string, number>>({});
   const [celebrated, setCelebrated] = useState<{ date: string; sig: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -70,10 +76,18 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
         }
         if (rawD) {
           try {
-            const parsed = JSON.parse(rawD) as DoneState;
+            const parsed = JSON.parse(rawD) as Partial<DoneState & LegacyDoneState>;
             // Completion is daily — discard yesterday's marks.
-            if (parsed?.date === toDateKey(new Date()) && Array.isArray(parsed.keys)) {
-              setDoneKeys(new Set(parsed.keys));
+            if (parsed?.date === toDateKey(new Date())) {
+              if (parsed.marks && typeof parsed.marks === 'object') {
+                setDoneMarks({ ...parsed.marks });
+              } else if (Array.isArray(parsed.keys)) {
+                // Legacy `{ date, keys }` — migrate to timestamped marks. The
+                // original time is unknown, so 0 = "offered, time unknown".
+                const migrated: Record<string, number> = {};
+                for (const k of parsed.keys) migrated[k] = 0;
+                setDoneMarks(migrated);
+              }
             }
           } catch {
             /* corrupted — leave empty */
@@ -112,9 +126,9 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
     AsyncStorage.setItem(ROUTINES_KEY, JSON.stringify(next)).catch(() => undefined);
   }, []);
 
-  const persistDone = useCallback((next: Set<string>) => {
-    setDoneKeys(next);
-    const payload: DoneState = { date: toDateKey(new Date()), keys: Array.from(next) };
+  const persistDone = useCallback((next: Record<string, number>) => {
+    setDoneMarks(next);
+    const payload: DoneState = { date: toDateKey(new Date()), marks: next };
     AsyncStorage.setItem(DONE_KEY, JSON.stringify(payload)).catch(() => undefined);
   }, []);
 
@@ -164,23 +178,27 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
 
   const markManualDone = useCallback(
     (key: string) => {
-      const next = new Set(doneKeys);
-      next.add(key);
-      persistDone(next);
+      // Record the moment it was offered, so the Today row can show "offered 7:12 AM".
+      persistDone({ ...doneMarks, [key]: Date.now() });
     },
-    [doneKeys, persistDone]
+    [doneMarks, persistDone]
   );
 
   const unmarkManualDone = useCallback(
     (key: string) => {
-      const next = new Set(doneKeys);
-      next.delete(key);
+      const next = { ...doneMarks };
+      delete next[key];
       persistDone(next);
     },
-    [doneKeys, persistDone]
+    [doneMarks, persistDone]
   );
 
-  const isManualDone = useCallback((key: string) => doneKeys.has(key), [doneKeys]);
+  const isManualDone = useCallback(
+    (key: string) => Object.prototype.hasOwnProperty.call(doneMarks, key),
+    [doneMarks]
+  );
+
+  const manualDoneAt = useCallback((key: string) => doneMarks[key], [doneMarks]);
 
   const markCelebrated = useCallback((signature: string) => {
     const record = { date: toDateKey(new Date()), sig: signature };
@@ -202,6 +220,7 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
       markManualDone,
       unmarkManualDone,
       isManualDone,
+      manualDoneAt,
       celebratedSignatureToday,
       markCelebrated,
     }),
@@ -215,6 +234,7 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
       markManualDone,
       unmarkManualDone,
       isManualDone,
+      manualDoneAt,
       celebratedSignatureToday,
       markCelebrated,
     ]

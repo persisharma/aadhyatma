@@ -17,6 +17,10 @@ export type TodayEntry = {
   display: RoutineItemDisplay;
   done: boolean;
   doneMode: 'auto' | 'manual' | null;
+  /** Epoch-ms the item was offered today (manual mark time, or the reader's
+   * last-progress time for an auto-complete). Undefined for auto-japam (no
+   * per-round timestamp) and migrated legacy marks → row shows "offered" sans time. */
+  doneAt?: number;
 };
 
 export type RoutineTodaySummary = {
@@ -27,7 +31,7 @@ export type RoutineTodaySummary = {
 };
 
 export function useRoutineToday(): RoutineTodaySummary {
-  const { routines, isManualDone } = useRoutines();
+  const { routines, isManualDone, manualDoneAt } = useRoutines();
   const { getProgress } = useReadingProgress();
   const { dayTotals } = useUserActivity();
 
@@ -51,6 +55,9 @@ export function useRoutineToday(): RoutineTodaySummary {
         const key = routineItemKey(routine.id, item.id);
         const manual = isManualDone(key);
         const auto = !manual && isItemAutoComplete(item, ctx);
+        let doneAt: number | undefined;
+        if (manual) doneAt = manualDoneAt(key);
+        else if (auto && item.kind !== 'japam') doneAt = getProgress(item.sourceId)?.updatedAt;
         entries.push({
           routine,
           item,
@@ -58,6 +65,7 @@ export function useRoutineToday(): RoutineTodaySummary {
           display: resolveRoutineItem(item),
           done: manual || auto,
           doneMode: manual ? 'manual' : auto ? 'auto' : null,
+          doneAt,
         });
       }
     }
@@ -68,5 +76,5 @@ export function useRoutineToday(): RoutineTodaySummary {
       total: entries.length,
       hasRoutine: routines.length > 0,
     };
-  }, [routines, isManualDone, getProgress, dayTotals]);
+  }, [routines, isManualDone, manualDoneAt, getProgress, dayTotals]);
 }
