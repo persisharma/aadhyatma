@@ -81,12 +81,16 @@ export async function hydrateObservanceCache(
   }
 }
 
-// Serialize warm-ups so rapid location switches can't start parallel multi-second scans.
+// Serialize warm-ups so rapid location switches can't start parallel multi-second
+// scans, and tag each call so a newer switch supersedes older queued scans instead of
+// stacking them — otherwise tapping through several cities backs up minutes of work.
 let warmChain: Promise<void> = Promise.resolve();
+let warmSeq = 0;
+let latestWarmSeq = 0;
 
 // Ensure the given years exist for this location: hydrate from disk if persisted,
 // otherwise run the chunked live scan once and persist the result. Resolves when
-// every requested year is available in the in-memory store.
+// every requested year is available in the in-memory store (or the call is superseded).
 export function warmObservanceCache(
   location: ObservanceLocation,
   calendarSystem: CalendarSystem,
@@ -96,10 +100,15 @@ export function warmObservanceCache(
   if (cityId === UJJAIN_CITY_ID) return Promise.resolve();
   const currentYear = new Date().getFullYear();
   const targetYears = years ?? [currentYear, currentYear + 1];
+  const mySeq = ++warmSeq;
+  latestWarmSeq = mySeq;
 
   warmChain = warmChain.then(async () => {
     await hydrateObservanceCache(cityId, [calendarSystem], targetYears);
     for (const year of targetYears) {
+      // A newer location switch has superseded this scan — stop spending CPU on a
+      // city the user has already navigated away from.
+      if (mySeq !== latestWarmSeq) return;
       if (getStoredObservanceYear(cityId, calendarSystem, year)) continue;
       const results = await resolveObservancesForYearLiveChunked(year, calendarSystem, location);
       const entries = serialize(results);
