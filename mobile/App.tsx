@@ -40,6 +40,8 @@ import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
+import FeatureTourModal from '@/components/FeatureTourModal';
+import { FeatureTourProvider } from '@/contexts/FeatureTourContext';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
@@ -137,11 +139,13 @@ export default function App() {
                       <RoutineSheetProvider>
                       <NotificationPreferencesProvider>
                         <PanchangLocationProvider>
+                        <FeatureTourProvider>
                         <ShareProvider>
                           <View style={{ flex: 1 }}>
                             <NavigationContainer ref={navigationRef}>
                               <StatusBar style="dark" />
                               <RootNavigator />
+                              <FeatureTourModal />
                               <ReminderOptInModal />
                               <UpdateReadyModal />
                             </NavigationContainer>
@@ -149,6 +153,7 @@ export default function App() {
                             <VratReminderScheduler />
                           </View>
                         </ShareProvider>
+                        </FeatureTourProvider>
                         </PanchangLocationProvider>
                       </NotificationPreferencesProvider>
                       </RoutineSheetProvider>

@@ -10,6 +10,7 @@ import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
+import { useFeatureTour } from '@/contexts/FeatureTourContext';
 import type { TimeOfDay } from '@/notifications/pure';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
@@ -32,6 +33,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { location: panchangLocation } = usePanchangLocation();
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
+  const { startTour } = useFeatureTour();
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
   const hi = helpContent.hi;
   const en = helpContent.en;
@@ -321,6 +323,17 @@ export default function MoreScreen({ navigation }: Props) {
 
           {/* Links */}
           <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, flexDirection: 'column', alignItems: 'stretch', paddingVertical: 4, paddingHorizontal: 16 }]}>
+            <Pressable
+              onPress={startTour}
+              accessibilityRole="button"
+              accessibilityLabel={defaultLang === 'hi' ? 'फ़ीचर भ्रमण पुनः देखें' : 'Replay feature tour'}
+              style={[styles.linkRow, { borderBottomColor: colors.divider }]}
+            >
+              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 13, color: colors.ink }}>
+                {defaultLang === 'hi' ? 'फ़ीचर भ्रमण' : 'Replay Feature Tour'}
+              </Text>
+              <Text style={{ color: colors.inkMuted, fontSize: 16 }}>›</Text>
+            </Pressable>
             <Pressable
               onPress={() => setDisclaimerVisible(true)}
               accessibilityRole="button"
