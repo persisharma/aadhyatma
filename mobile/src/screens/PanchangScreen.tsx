@@ -95,7 +95,7 @@ export default function PanchangScreen() {
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
   const { location } = usePanchangLocation();
   const [locationPickerVisible, setLocationPickerVisible] = useState(false);
-  const { panchang: p, observances, upcoming, observancesApproximate } = usePanchangForSelection(selectedDate, calendarSystem);
+  const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
   const monthObservances = usePanchangMonthObservances(visibleMonth, calendarSystem);
   const monthObservanceTags = useMemo(() => {
     const tags = new Map<string, ObservanceCalendarTag>();
@@ -462,16 +462,6 @@ export default function PanchangScreen() {
             <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 10 }}>
               {isHindi ? 'व्रत और पर्व' : 'Vrat & Observances'}
             </Text>
-            {observancesApproximate && (
-              <View style={styles.approximateRow}>
-                <ActivityIndicator size="small" color={colors.saffron} />
-                <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 11, color: colors.inkMuted, flex: 1 }}>
-                  {isHindi
-                    ? 'इस स्थान के लिए तिथियाँ अपडेट हो रही हैं…'
-                    : 'Updating dates for your location…'}
-                </Text>
-              </View>
-            )}
             {observances.length > 0 ? (
               observances.map((item, i) => (
                 <ObservanceCard
@@ -957,7 +947,6 @@ const styles = StyleSheet.create({
   // caption rows aligned across every tile. The glyph renders at its natural line
   // height (no tight lineHeight, which clipped the tall ॐ) centred in this box.
   tileGlyph: { height: 34, justifyContent: 'center', alignItems: 'flex-start' },
-  approximateRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
   systemToggle: {
     flexDirection: 'row',
     alignSelf: 'center',
