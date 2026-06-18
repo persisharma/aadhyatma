@@ -68,8 +68,11 @@ export default function DailyBhaktiScreen() {
   }, []);
 
   const isHindi = lang === 'hi';
+  // Mirror each reader's bookmark-id convention: chaptered sources use
+  // `id:chapter:idx`; chapterless ones (sanskar, japam) use `id::idx`, so an
+  // empty chapter segment keeps Daily Bhakti bookmarks in sync with the reader.
   const bookmarkId = verse
-    ? `${verse.sourceId}:${verse.chapter ?? 0}:${verse.verseIndex}`
+    ? `${verse.sourceId}:${verse.chapter ?? ''}:${verse.verseIndex}`
     : '';
 
   if (!verse) {
