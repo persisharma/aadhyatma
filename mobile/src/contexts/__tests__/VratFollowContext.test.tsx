@@ -85,7 +85,7 @@ describe('VratFollowContext', () => {
     expect(captured.followCount).toBe(1);
   });
 
-  test('follow appends in priority order (0,1,2 by follow time)', async () => {
+  test('follow appends in follow order (0,1,2 by follow time)', async () => {
     await mountAndHydrate();
     await actSync(() => captured.follow('a'));
     await actSync(() => captured.follow('b'));
@@ -104,26 +104,6 @@ describe('VratFollowContext', () => {
     expect(captured.follows.map((f) => f.order)).toEqual([0, 1]);
     const persisted = JSON.parse(mockStore[STORAGE_KEY]);
     expect(persisted.map((f: { ruleId: string }) => f.ruleId)).toEqual(['a', 'c']);
-  });
-
-  test('reorder up/down swaps priority with the neighbour; no-op at the ends', async () => {
-    await mountAndHydrate();
-    await actSync(() => captured.follow('a'));
-    await actSync(() => captured.follow('b'));
-    await actSync(() => captured.follow('c'));
-
-    await actSync(() => captured.reorder('c', 'up'));
-    expect(captured.follows.map((f) => f.ruleId)).toEqual(['a', 'c', 'b']);
-
-    await actSync(() => captured.reorder('a', 'up')); // already first → no-op
-    expect(captured.follows.map((f) => f.ruleId)).toEqual(['a', 'c', 'b']);
-
-    await actSync(() => captured.reorder('a', 'down'));
-    expect(captured.follows.map((f) => f.ruleId)).toEqual(['c', 'a', 'b']);
-    expect(captured.follows.map((f) => f.order)).toEqual([0, 1, 2]);
-
-    await actSync(() => captured.reorder('b', 'down')); // already last → no-op
-    expect(captured.follows.map((f) => f.ruleId)).toEqual(['c', 'a', 'b']);
   });
 
   test('load: sorts by order, dedups ruleId, drops invalid, re-indexes, re-persists', async () => {
