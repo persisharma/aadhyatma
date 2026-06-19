@@ -23,13 +23,14 @@ export const DEFAULT_REMINDER: VratReminderPref = {
 
 export type VratFollow = {
   ruleId: string; // -> ObservanceRule.id in festivals.ts
+  order: number; // follow order (lower = followed earlier); used as the reminder
+  // scheduling priority fallback when over the iOS cap (see vratReminderPure.ts)
   addedAt: number;
-  order: number; // user priority; lower = higher in My Vrat
   reminder?: VratReminderPref; // undefined => use global default (P3)
 };
 
 type VratFollowContextValue = {
-  follows: VratFollow[]; // always in priority order (order === index)
+  follows: VratFollow[]; // always in follow order (order === index)
   isLoading: boolean;
   followCount: number;
   reminderCount: number; // follows whose resolved reminder still fires
@@ -37,7 +38,6 @@ type VratFollowContextValue = {
   isFollowing: (ruleId: string) => boolean;
   follow: (ruleId: string) => void;
   unfollow: (ruleId: string) => void;
-  reorder: (ruleId: string, direction: 'up' | 'down') => void;
   setReminder: (ruleId: string, pref: VratReminderPref | undefined) => void;
   setReminderDefault: (pref: VratReminderPref) => void;
 };
@@ -51,7 +51,6 @@ const VratFollowContext = createContext<VratFollowContextValue>({
   isFollowing: () => false,
   follow: () => {},
   unfollow: () => {},
-  reorder: () => {},
   setReminder: () => {},
   setReminderDefault: () => {},
 });
@@ -181,20 +180,6 @@ export function VratFollowProvider({ children }: { children: React.ReactNode }) 
     [isLoading, follows, persist]
   );
 
-  const reorder = useCallback(
-    (ruleId: string, direction: 'up' | 'down') => {
-      if (isLoading) return;
-      const idx = follows.findIndex((f) => f.ruleId === ruleId);
-      if (idx < 0) return;
-      const swapWith = direction === 'up' ? idx - 1 : idx + 1;
-      if (swapWith < 0 || swapWith >= follows.length) return; // no-op at the ends
-      const next = [...follows];
-      [next[idx], next[swapWith]] = [next[swapWith], next[idx]];
-      persist(reindex(next));
-    },
-    [isLoading, follows, persist]
-  );
-
   const isFollowing = useCallback(
     (ruleId: string) => follows.some((f) => f.ruleId === ruleId),
     [follows]
@@ -241,7 +226,6 @@ export function VratFollowProvider({ children }: { children: React.ReactNode }) 
         isFollowing,
         follow,
         unfollow,
-        reorder,
         setReminder,
         setReminderDefault,
       }}
