@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1080" width="1000" height="1080" role="img" aria-label="Vedansh manuscript-crest emblem">
+  <title>Vedansh — Manuscript Crest</title>
+  <desc>A reverent altar-like crest: an Om within a saffron-and-gold medallion, the वेदांश़ wordmark, and the footer mantra. Print master, cream colorway (dark inks for a natural/parchment tee).</desc>
+
+  <defs>
+    <style type="text/css"><![CDATA[
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Noto+Serif+Devanagari:wght@400;500;600;700&display=swap');
+      .dev   { font-family: 'Noto Serif Devanagari', serif; }
+      .lat   { font-family: 'Cormorant Garamond', serif; }
+      .ink     { fill: #1A0E03; }
+      .inksoft { fill: #5A3A1E; }
+      .saffron { fill: #B8621B; }
+      .saffrond{ fill: #8A3E0B; }
+      .gold    { fill: #A67C34; }
+    ]]></style>
+    <radialGradient id="glow" cx="50%" cy="42%" r="46%">
+      <stop offset="0%"  stop-color="#B8621B" stop-opacity="0.16"/>
+      <stop offset="60%" stop-color="#B8621B" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#B8621B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- soft saffron glow behind the crest -->
+  <circle cx="500" cy="470" r="420" fill="url(#glow)"/>
+
+  <!-- medallion rings -->
+  <circle cx="500" cy="470" r="380" fill="none" stroke="#8A3E0B" stroke-width="3"/>
+  <circle cx="500" cy="470" r="366" fill="none" stroke="#A67C34" stroke-width="1.4" stroke-opacity="0.6"/>
+
+  <!-- top-arc invocation -->
+  <path id="topArc" d="M 224.6 311 A 318 318 0 0 1 775.4 311" fill="none"/>
+  <text class="dev saffrond" font-size="46" font-weight="600" letter-spacing="3" text-anchor="middle">
+    <textPath href="#topArc" startOffset="50%">ॐ श्री गणेशाय नमः</textPath>
+  </text>
+
+  <!-- bottom ornament: three diamonds -->
+  <g class="saffron">
+    <rect x="494" y="794" width="12" height="12" transform="rotate(45 500 800)"/>
+    <rect x="448" y="791" width="9"  height="9"  transform="rotate(45 452.5 795.5)" fill-opacity="0.8"/>
+    <rect x="543" y="791" width="9"  height="9"  transform="rotate(45 547.5 795.5)" fill-opacity="0.8"/>
+  </g>
+
+  <!-- center stack -->
+  <text class="dev ink" x="500" y="410" font-size="240" font-weight="500" text-anchor="middle">ॐ</text>
+
+  <!-- ornament divider: ॥ between two rules -->
+  <line x1="360" y1="500" x2="455" y2="500" stroke="#B8621B" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="545" y1="500" x2="640" y2="500" stroke="#B8621B" stroke-width="2" stroke-opacity="0.6"/>
+  <text class="dev saffrond" x="500" y="514" font-size="40" text-anchor="middle">॥</text>
+
+  <text class="dev ink" x="500" y="620" font-size="150" font-weight="600" letter-spacing="2" text-anchor="middle">वेदांश़</text>
+
+  <text class="lat inksoft" x="500" y="692" font-size="34" font-style="italic" font-weight="500" letter-spacing="2" text-anchor="middle">Sacred Texts &#183; Daily Reading</text>
+
+  <!-- footer mantra (the app's Home footer) -->
+  <line x1="250" y1="952" x2="750" y2="952" stroke="#A67C34" stroke-width="1.2" stroke-opacity="0.5"/>
+  <text class="dev inksoft" x="500" y="1010" font-size="38" font-weight="500" text-anchor="middle" fill-opacity="0.92">॥ श्रीरामचन्द्र चरणौ शरणं प्रपद्ये ॥</text>
+</svg>
