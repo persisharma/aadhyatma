@@ -8,6 +8,10 @@ to wear the app's own identity — so every element is lifted straight from
 > **Open [`preview.html`](./preview.html) in a browser** to see it on shirts
 > (the Devanagari renders via the brand's Google Fonts). The print-ready artwork
 > is [`vedansh-emblem.svg`](./vedansh-emblem.svg).
+>
+> Rendered prototypes (Chromium + brand fonts): [`emblem.png`](./emblem.png)
+> (the crest, isolated) and [`preview.png`](./preview.png) (full mockup —
+> 2 colorways + 3 placements). Regenerate from the HTML/SVG at any time.
 
 ## The concept
 
