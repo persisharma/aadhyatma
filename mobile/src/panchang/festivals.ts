@@ -194,6 +194,8 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'masik-kalashtami-katha', nameHi: 'मासिक कालाष्टमी कथा', nameEn: 'Masik Kalashtami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['masik-kalashtami'] }),
   katha({ id: 'masik-krishna-janmashtami-katha', nameHi: 'मासिक कृष्ण जन्माष्टमी कथा', nameEn: 'Masik Krishna Janmashtami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['masik-krishna-janmashtami'] }),
   katha({ id: 'skanda-sashti-katha', nameHi: 'स्कंद षष्ठी कथा', nameEn: 'Skanda Sashti Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['skanda-sashti'] }),
+  katha({ id: 'shani-jayanti-vrat-katha', nameHi: 'शनि जयंती व्रत कथा', nameEn: 'Shani Jayanti Vrat Katha', kind: 'vrat-katha', sourceUrl: VratKathaUrl, relatedRuleIds: ['shani-jayanti'] }),
+  katha({ id: 'santoshi-mata-vrat-katha', nameHi: 'संतोषी माता व्रत कथा', nameEn: 'Santoshi Mata Vrat Katha', kind: 'vrat-katha', sourceUrl: VratKathaUrl, relatedRuleIds: ['santoshi-mata-vrat'] }),
 ];
 
 const SANKRANTI_RULES: ObservanceRule[] = [
@@ -240,6 +242,7 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'buddha-purnima', nameHi: 'बुद्ध पूर्णिमा', nameEn: 'Buddha Purnima', lunarMonth: 2, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'भगवान बुद्ध', deityEn: 'Lord Buddha', kathaId: 'buddha-purnima-vrat-katha' }),
   festival({ id: 'narada-jayanti', nameHi: 'नारद जयंती', nameEn: 'Narada Jayanti', lunarMonth: 2, paksha: 'krishna', tithi: 1, marker: 'dot', deityHi: 'देवर्षि नारद', deityEn: 'Devarshi Narada', kathaId: 'narada-jayanti-vrat-katha' }),
   festival({ id: 'ganga-dussehra', nameHi: 'गंगा दशहरा', nameEn: 'Ganga Dussehra', lunarMonth: 3, paksha: 'shukla', tithi: 10, marker: 'dot', deityHi: 'मां गंगा', deityEn: 'Maa Ganga', kathaId: 'ganga-dussehra-katha' }),
+  festival({ id: 'shani-jayanti', nameHi: 'शनि जयंती', nameEn: 'Shani Jayanti', lunarMonth: 3, paksha: 'krishna', tithi: 15, marker: 'dot', deityHi: 'शनि देव', deityEn: 'Shani Dev', shortDescriptionHi: 'शनि जयंती ज्येष्ठ अमावस्या को शनिदेव के अवतरण दिवस के रूप में मनाई जाती है; इस दिन तेल अभिषेक, दान और शनि स्तोत्र पाठ का विशेष महत्व माना जाता है।', shortDescriptionEn: 'Shani Jayanti, on Jyeshtha Amavasya, marks the appearance day of Lord Shani — observed with oil abhishekam, charity, and recitation of Shani stotras.', kathaId: 'shani-jayanti-vrat-katha', searchTerms: ['shani', 'jayanti', 'saturn', 'shanidev'] }),
   festival({ id: 'guru-purnima', nameHi: 'गुरु पूर्णिमा', nameEn: 'Guru Purnima', lunarMonth: 4, paksha: 'shukla', tithi: 15, marker: 'star', deityHi: 'गुरु परंपरा', deityEn: 'Guru Parampara', kathaId: 'guru-purnima-katha' }),
   festival({ id: 'nag-panchami', nameHi: 'नाग पंचमी', nameEn: 'Nag Panchami', lunarMonth: 5, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'नाग देवता', deityEn: 'Naga Devata', kathaId: 'nag-panchami-vrat-katha' }),
   festival({ id: 'raksha-bandhan', nameHi: 'रक्षा बंधन', nameEn: 'Raksha Bandhan', lunarMonth: 5, paksha: 'shukla', tithi: 15, marker: 'star', kathaId: 'raksha-bandhan-legends' }),
@@ -365,6 +368,9 @@ export const MONTHLY_VRAT_RULES: ObservanceRule[] = [
   vrat({ id: 'vat-savitri-vrat', nameHi: 'वट सावित्री व्रत', nameEn: 'Vat Savitri Vrat', recurrence: 'annual', lunarMonth: 3, paksha: 'krishna', tithi: 15, deityHi: 'सावित्री माता', deityEn: 'Maa Savitri', kathaId: 'vat-savitri-vrat-katha' }),
   vrat({ id: 'jivitputrika-vrat', nameHi: 'जीवित्पुत्रिका व्रत', nameEn: 'Jivitputrika Vrat', recurrence: 'annual', lunarMonth: 7, paksha: 'krishna', tithi: 8, deityHi: 'जीवित्पुत्रिका माता', deityEn: 'Jivitputrika Mata', kathaId: 'jivitputrika-vrat-katha' }),
   vrat({ id: 'mahalakshmi-vrat', nameHi: 'महालक्ष्मी व्रत', nameEn: 'Mahalakshmi Vrat', recurrence: 'annual', lunarMonth: 6, paksha: 'shukla', tithi: 8, deityHi: 'मां लक्ष्मी', deityEn: 'Maa Lakshmi', kathaId: 'mahalakshmi-vrat-katha' }),
+  // Observed on Fridays (devotees often keep sixteen consecutive Shukravar), not on a
+  // single lunar tithi — so it browses as a catalog entry with no calendar date.
+  vrat({ id: 'santoshi-mata-vrat', nameHi: 'संतोषी माता व्रत', nameEn: 'Santoshi Mata Vrat', recurrence: 'catalog', ruleType: 'catalog-only', marker: 'dot', deityHi: 'संतोषी माता', deityEn: 'Santoshi Mata', shortDescriptionHi: 'संतोषी माता व्रत शुक्रवार को रखा जाता है — भक्त प्रायः सोलह शुक्रवार तक यह व्रत करते हैं, गुड़-चने का प्रसाद अर्पित करते हैं और इस दिन खटाई वर्जित मानी जाती है।', shortDescriptionEn: 'The Santoshi Mata Vrat is kept on Fridays — devotees often observe sixteen consecutive Fridays, offer jaggery and roasted gram, and avoid sour foods that day.', kathaId: 'santoshi-mata-vrat-katha', searchTerms: ['santoshi', 'friday', 'shukravar', 'vrat'] }),
 ];
 
 export const ADVANCED_OBSERVANCE_RULES: ObservanceRule[] = [

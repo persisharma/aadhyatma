@@ -67,6 +67,8 @@ import e64 from './entries/sakat-chauth-vrat-katha';
 import e65 from './entries/sankashti-chaturthi-vrat-katha';
 import e66 from './entries/saphala-ekadashi-katha';
 import e67 from './entries/satyanarayana-vrat-katha';
+import e82 from './entries/santoshi-mata-vrat-katha';
+import e83 from './entries/shani-jayanti-vrat-katha';
 import e68 from './entries/sharad-purnima-vrat-katha';
 import e69 from './entries/shattila-ekadashi-katha';
 import e70 from './entries/shravana-mahatmya';
@@ -165,4 +167,6 @@ export const KATHA_CONTENT: readonly KathaContentEntry[] = [
   e79,
   e80,
   e81,
+  e82,
+  e83,
 ];
