@@ -838,7 +838,7 @@ type IndiaMapProps = {
 
 **Coordinate sanity:** the component warns (dev mode only) if any pin's lat/lng falls outside the bounding box — catches lat/lng swaps and bad source data before they render off-screen.
 
-**Data provenance (PRD-08).** The outline + 36 state/UT boundaries are **real geography**, generated once from public-domain Natural Earth 50m (`admin_0_countries` + `admin_1_states_provinces`) by `scripts/build-india-map.mjs` and committed as static SVG path constants in `mobile/src/components/indiaMapPaths.generated.ts` (`INDIA_OUTLINE`, `INDIA_STATES`, `INDIA_PROJECTION`). Re-run the script to refresh; do **not** hand-edit the generated file.
+**Data provenance (PRD-08).** The outline + 36 state/UT boundaries are **real geography**, generated once by `scripts/build-india-map.mjs` and committed as static SVG path constants in `mobile/src/components/indiaMapPaths.generated.ts` (`INDIA_OUTLINE`, `INDIA_STATES`, `INDIA_PROJECTION`). Re-run the script to refresh; do **not** hand-edit the generated file. Sources: the **national outline** is DataMeet `india-composite` (© DataMeet, **CC-BY** — https://github.com/datameet/maps), which depicts India's official boundary including the full Jammu & Kashmir / Ladakh extent — Natural Earth's de-facto boundary truncates the northern Kashmir crown, so it is no longer used for the outline. The **state/UT boundaries** are public-domain Natural Earth 50m `admin_1_states_provinces` (their post-2019 state names match `TheerthTemple.stateEn`).
 
 **Performance:** paths are static committed constants (~35 KB total). No runtime simplification, no GeoJSON parsing, no map provider, no API key. Render cost is dominated by the pin count (~44 today, scales to ~50 before considering canvas).
 

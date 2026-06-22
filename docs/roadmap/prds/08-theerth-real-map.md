@@ -36,10 +36,14 @@ The walkthrough is approved; this PRD productionises it:
 
 ## 3. Real-map generation
 
-**Source.** Natural Earth (public domain — no attribution required):
-- `admin_0_countries` (50m) → India polygon → **national outline**.
-- `admin_1_states_provinces` (50m) → India states → **internal state borders** and the
-  fillable regions used for the By-State highlight.
+**Source.**
+- **National outline** → DataMeet `india-composite` (CC-BY — https://github.com/datameet/maps),
+  which depicts India's **official boundary including the full Jammu & Kashmir / Ladakh
+  extent**. (Natural Earth's `admin_0_countries` draws the de-facto boundary, which truncates
+  the northern Kashmir crown — it was the original source here and is no longer used for the
+  outline.)
+- **Internal state borders** + By-State fill regions → Natural Earth `admin_1_states_provinces`
+  (50m, public domain), whose post-2019 state names match `TheerthTemple.stateEn`.
 
 **Build script** `scripts/build-india-map.mjs` (re-runnable, records source URL + license
 + retrieval date in the generated header):
