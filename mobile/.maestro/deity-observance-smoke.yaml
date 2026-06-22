@@ -1,0 +1,114 @@
+# Deity Observance Smoke Test (deity-backgrounds)
+#
+# Verifies the two newly-added Panchang observances reach a working detail page —
+# the screens that give the new deity sketches a home:
+#   1. Shani Jayanti (a dated Jyeshtha-Amavasya festival, deity "Shani Dev").
+#   2. Santoshi Mata Vrat (a catalog-only Friday vrat, deity "Santoshi Mata").
+# Each detail renders its faded deity backdrop (Shani crow / Santoshi lotus) behind
+# the hero; Maestro can't read the image, so we assert the deity label + About +
+# Follow CTA that render on top of it.
+#
+# Language note (same as vrat-catalog-smoke): the screen reads the global reading
+# language; default Hindi is Devanagari which Maestro's iOS tree can't read, so we
+# flip to English on More first, then assert English content.
+#
+# Selector notes:
+#   - The segment Pressable exposes "Vrat and Parv"; category tiles expose
+#     "<NameEn>, <count>" (match "Festivals,.*" / "Vrat,.*").
+#   - Each per-type list has its own "Search within this list…" field (a fresh,
+#     empty field — so the two searches don't have to share/clear one input).
+#   - Detail rows + hero use English names/labels; Back buttons expose "Back".
+
+appId: host.exp.Exponent
+---
+# ── Boot Vedansh (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Global reading language → English ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Open Panchang tab, switch to the Vrat & Parv segment ──
+- tapOn: "Panchang, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Vrat and Parv"
+    timeout: 30000
+- tapOn: "Vrat and Parv"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+
+# ── Festivals → Shani Jayanti detail (new "Shani Dev" deity art) ──
+- tapOn: "Festivals,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search within this list…"
+    timeout: 15000
+- tapOn: "Search within this list…"
+- inputText: "Shani"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Shani Jayanti"
+    timeout: 15000
+- tapOn: "Shani Jayanti"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "About"
+    timeout: 15000
+- assertVisible: "Shani Dev"
+- assertVisible: "Follow"
+# Katha now wired — the Story block + "Read Katha" CTA render (the katha reader
+# opens on the Home stack, so it's screenshot-verified separately, not opened
+# inline here where it would break Panchang back-navigation).
+- assertVisible: "Story"
+- assertVisible: "Read katha Shani Jayanti Vrat Katha"
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Vrat → Santoshi Mata Vrat detail (new "Santoshi Mata" deity art) ──
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+- tapOn: "Vrat,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search within this list…"
+    timeout: 15000
+- tapOn: "Search within this list…"
+- inputText: "Santoshi"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Santoshi Mata Vrat"
+    timeout: 15000
+- tapOn: "Santoshi Mata Vrat"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "About"
+    timeout: 15000
+- assertVisible: "Santoshi Mata"
+- assertVisible: "Follow"
+# Katha wired for the catalog-only vrat too — the Story block renders.
+- assertVisible: "Story"
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Restore Hindi default (best-effort) + cleanup ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+- stopApp:
+    appId: host.exp.Exponent

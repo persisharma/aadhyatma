@@ -8,10 +8,12 @@
 // background image — getSourceBackground returns null when a source id is
 // unmapped, so a missing mapping fails the assertion. Guards new content shipping
 // without its background art.
+import { backgroundImages } from '@assets/backgrounds';
 import { aartiIdByIndex } from '@/data/aarti';
 import {
   getCategoryBackground,
   getDeityBackground,
+  getObservanceBackground,
   getReaderBackground,
   getSourceBackground,
 } from '@/data/backgrounds';
@@ -19,6 +21,7 @@ import { categories } from '@/data/categories';
 import { deities } from '@/data/deities';
 import { japamMantras } from '@/data/japam';
 import { library } from '@/data/texts';
+import { getRuleById } from '@/panchang/vratCatalog';
 
 describe('background coverage', () => {
   test('every active category tile has a background', () => {
@@ -55,5 +58,38 @@ describe('background coverage', () => {
     for (const mantra of japamMantras) {
       expect(getSourceBackground(mantra.id)).toBeTruthy();
     }
+  });
+
+  test('Surya & Tulsi sanskar readers use their dedicated deity art', () => {
+    expect(getSourceBackground('surya-namaskar')).toBe(backgroundImages.deity_surya_chariot);
+    expect(getSourceBackground('tulsi-puja')).toBe(backgroundImages.deity_tulsi_vrindavan);
+  });
+});
+
+describe('observance deity backgrounds', () => {
+  // End-to-end: the real observance rule resolves to the new deity sketch. Keyed on
+  // the rule's English deity label, so this also guards a rename of deityEn silently
+  // dropping the art.
+  const cases: ReadonlyArray<readonly [ruleId: string, image: number]> = [
+    ['diwali', backgroundImages.deity_lakshmi_lotus_coins],
+    ['mahalakshmi-vrat', backgroundImages.deity_lakshmi_lotus_coins],
+    ['chhath-puja', backgroundImages.deity_surya_chariot],
+    ['makar-sankranti', backgroundImages.deity_surya_chariot],
+    ['ganga-saptami', backgroundImages.deity_ganga_makara],
+    ['ganga-dussehra', backgroundImages.deity_ganga_makara],
+    ['tulasi-vivah', backgroundImages.deity_tulsi_vrindavan],
+    ['shani-jayanti', backgroundImages.deity_shani_crow],
+    ['santoshi-mata-vrat', backgroundImages.deity_santoshi_mata_lotus],
+  ];
+
+  test.each(cases)('%s resolves to its deity sketch', (ruleId, image) => {
+    const rule = getRuleById(ruleId);
+    expect(rule).toBeTruthy();
+    expect(getObservanceBackground(rule!)).toBe(image);
+  });
+
+  test('observances without dedicated deity art fall back to null', () => {
+    expect(getObservanceBackground({ deityEn: 'Lord Shiva' })).toBeNull();
+    expect(getObservanceBackground({ deityEn: 'Shri Ganesh' })).toBeNull();
   });
 });

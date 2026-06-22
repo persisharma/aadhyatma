@@ -68,8 +68,8 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'jai-ambe-gauri': backgroundImages.deity_durga_lion,
   'aarti-kunj-bihari': backgroundImages.deity_krishna_bansuri,
   'prabhati-shloka': backgroundImages.category_stotram_hymn_scroll,
-  'surya-namaskar': backgroundImages.source_gayatri_savitri_sun,
-  'tulsi-puja': backgroundImages.deity_krishna_bansuri,
+  'surya-namaskar': backgroundImages.deity_surya_chariot,
+  'tulsi-puja': backgroundImages.deity_tulsi_vrindavan,
   'bhojan-mantra': backgroundImages.category_granth_open_scripture,
   'gau-seva': backgroundImages.deity_krishna_bansuri,
   'sandhya-deepam': backgroundImages.category_aarti_diya,
@@ -87,6 +87,25 @@ const hanumanChalisaOverrides: Record<string, BackgroundImage> = {
   'chaupai-19': chalisaImages.hanuman_sea,
   'chaupai-31': chalisaImages.hanuman_sita,
 };
+
+// Faded deity sketches for the Panchang observance detail screen, keyed by the
+// rule's English deity label (`ObservanceRule.deityEn`). The same label covers
+// every observance of that deity — e.g. all Lakshmi festivals (Diwali,
+// Mahalakshmi, Kojagara…) and both Ganga festivals share one backdrop — so this
+// resolver lights up the deity art "wherever applicable" without per-rule wiring.
+// Unmapped deities (most observances) fall back to the parchment gradient.
+const observanceDeityBackgrounds: Record<string, BackgroundImage> = {
+  'Maa Lakshmi': backgroundImages.deity_lakshmi_lotus_coins,
+  'Surya Deva': backgroundImages.deity_surya_chariot,
+  'Maa Ganga': backgroundImages.deity_ganga_makara,
+  'Tulasi Mata': backgroundImages.deity_tulsi_vrindavan,
+  'Shani Dev': backgroundImages.deity_shani_crow,
+  'Santoshi Mata': backgroundImages.deity_santoshi_mata_lotus,
+};
+
+export function getObservanceBackground(observance: { deityEn: string }): BackgroundImage | null {
+  return observanceDeityBackgrounds[observance.deityEn] ?? null;
+}
 
 export function getCategoryBackground(categoryId: ContentCategory): BackgroundImage {
   return categoryBackgrounds[categoryId];

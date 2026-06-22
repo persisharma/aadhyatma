@@ -2,8 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { getObservanceBackground } from '@/data/backgrounds';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
@@ -85,10 +86,10 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
 
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      {/* Faded deity sketch behind the observance — Lakshmi, Surya, Ganga, Tulsi,
+          Shani, Santoshi. BackgroundLayer falls back to the parchment gradient for
+          observances whose deity has no art, so non-deity screens are unchanged. */}
+      <BackgroundLayer source={rule ? getObservanceBackground(rule) : null} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={styles.topBar}>
           <Pressable
