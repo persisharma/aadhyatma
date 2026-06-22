@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Modal } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { bannerStatus } from './routineBannerView';
@@ -38,7 +39,7 @@ export default function RoutineCelebrationOverlay() {
   useEffect(() => {
     if (!fire || firedSig.current === sig) return;
     firedSig.current = sig;
-    const caption = lang === 'hi' ? 'साधना पूर्ण · आज' : 'Complete for today';
+    const caption = contentByLang(lang, 'साधना पूर्ण · आज', 'Complete for today');
     setShower({ caption, sig });
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
     markCelebrated(sig);

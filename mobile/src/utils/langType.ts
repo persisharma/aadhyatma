@@ -69,3 +69,23 @@ export function titleFontByLang(lang: Lang): string {
 export function cardFontByLang(lang: Lang): string {
   return titleFontByLang(lang);
 }
+
+/**
+ * Override a heading/title fontFamily for gu/kn only, leaving the hi/en `fallback`
+ * untouched. Use at call sites that hard-code a Devanagari token (e.g.
+ * `typography.readerTitle.fontFamily`) for a name/title that becomes Gujarati or
+ * Kannada under runtime transliteration — those would otherwise render in the
+ * Devanagari face. hi/en behaviour is unchanged.
+ */
+export function scriptTitleFont(lang: Lang, fallback: string): string {
+  if (lang === 'gu') return fontFamilies.gujaratiBold;
+  if (lang === 'kn') return fontFamilies.kannadaBold;
+  return fallback;
+}
+
+/** Body/medium-weight counterpart of {@link scriptTitleFont} (gu/kn → their serif; else fallback). */
+export function scriptBodyFont(lang: Lang, fallback: string): string {
+  if (lang === 'gu') return fontFamilies.gujarati;
+  if (lang === 'kn') return fontFamilies.kannada;
+  return fallback;
+}

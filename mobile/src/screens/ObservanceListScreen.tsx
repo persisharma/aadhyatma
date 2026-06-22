@@ -4,13 +4,16 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRulesForCategory, type BrowseCategory } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import type { ObservanceRule } from '@/panchang/types';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { captionFont } from '@/utils/scriptFont';
+import { contentByLang } from '@/utils/localize';
+import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { transliterateDevanagari } from '@/utils/transliterate';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'ObservanceList'>;
 
@@ -21,16 +24,17 @@ function startOfLocalDay(d: Date): Date {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 }
 
-function shortDate(date: Date, isHindi: boolean): string {
-  const months = isHindi ? MONTHS_HI : MONTHS_EN;
+function shortDate(date: Date, lang: Lang): string {
+  const months =
+    lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]}`;
 }
 
-function relativeLabel(date: Date, from: Date, isHindi: boolean): string {
+function relativeLabel(date: Date, from: Date, lang: Lang): string {
   const days = Math.round((startOfLocalDay(date).getTime() - startOfLocalDay(from).getTime()) / 86400000);
-  if (days <= 0) return isHindi ? 'आज' : 'today';
-  if (days === 1) return isHindi ? 'कल' : '1d';
-  return isHindi ? `${days}द` : `${days}d`;
+  if (days <= 0) return contentByLang(lang, 'आज', 'today');
+  if (days === 1) return contentByLang(lang, 'कल', '1d');
+  return contentByLang(lang, `${days}द`, `${days}d`);
 }
 
 const TITLES: Record<BrowseCategory, { hi: string; en: string }> = {
@@ -42,7 +46,6 @@ const TITLES: Record<BrowseCategory, { hi: string; en: string }> = {
 export default function ObservanceListScreen({ route, navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHindi = lang === 'hi';
   const [calendarSystem] = usePanchangCalendarSystem();
   const [query, setQuery] = useState('');
   const { isFollowing, follow, unfollow } = useVratFollows();
@@ -86,18 +89,18 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel={isHindi ? 'वापस' : 'Back'}
+            accessibilityLabel={contentByLang(lang, 'वापस', 'Back')}
             hitSlop={12}
             style={({ pressed }) => [styles.backButton, { borderColor: colors.divider }, pressed && { opacity: 0.6 }]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 20 }}>‹</Text>
           </Pressable>
           <View style={{ alignItems: 'center' }}>
-            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}>
-              {isHindi ? title.hi : title.en}
+            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink }}>
+              {contentByLang(lang, title.hi, title.en)}
             </Text>
-            <Text style={{ ...captionFont(isHindi ? title.en : title.hi), fontSize: 12, color: colors.inkMuted }}>
-              {isHindi ? title.en : title.hi} · {rows.length}
+            <Text style={{ ...captionFont(lang === 'en' ? title.hi : title.en), fontSize: 12, color: colors.inkMuted }}>
+              {lang === 'en' ? title.hi : title.en} · {rows.length}
             </Text>
           </View>
           <View style={{ width: 36 }} />
@@ -111,7 +114,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
           <TextInput
             value={query}
             onChangeText={setQuery}
-            placeholder={isHindi ? 'इस सूची में खोजें…' : 'Search within this list…'}
+            placeholder={contentByLang(lang, 'इस सूची में खोजें…', 'Search within this list…')}
             placeholderTextColor={colors.inkMuted}
             style={[styles.search, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, color: colors.ink }]}
           />
@@ -124,7 +127,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
                 rule={rule}
                 nextDate={next?.date ?? null}
                 today={today}
-                isHindi={isHindi}
+                lang={lang}
                 colors={colors}
                 typography={typography}
                 following={following}
@@ -134,8 +137,8 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
             );
           })}
           {filtered.length === 0 && (
-            <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.inkMuted, marginTop: 24, textAlign: 'center' }}>
-              {isHindi ? 'कोई परिणाम नहीं।' : 'No matches.'}
+            <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkMuted, marginTop: 24, textAlign: 'center' }}>
+              {contentByLang(lang, 'कोई परिणाम नहीं।', 'No matches.')}
             </Text>
           )}
         </ScrollView>
@@ -144,11 +147,11 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   );
 }
 
-function ObservanceRow({ rule, nextDate, today, isHindi, colors, typography, following, onToggleFollow, onPress }: {
+function ObservanceRow({ rule, nextDate, today, lang, colors, typography, following, onToggleFollow, onPress }: {
   rule: ObservanceRule;
   nextDate: Date | null;
   today: Date;
-  isHindi: boolean;
+  lang: Lang;
   colors: any;
   typography: any;
   following: boolean;
@@ -174,24 +177,24 @@ function ObservanceRow({ rule, nextDate, today, isHindi, colors, typography, fol
       <Pressable
         onPress={onPress}
         accessibilityRole="button"
-        accessibilityLabel={isHindi ? rule.nameHi : rule.nameEn}
+        accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
         style={({ pressed }) => [styles.rowMain, pressed && { opacity: 0.6 }]}
       >
         <View style={{ flex: 1, paddingRight: 10 }}>
-          <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-            {isHindi ? rule.nameHi : rule.nameEn}
+          <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+            {contentByLang(lang, rule.nameHi, rule.nameEn)}
           </Text>
-          <Text style={{ ...captionFont(isHindi ? rule.nameEn : rule.nameHi), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
-            {isHindi ? rule.nameEn : rule.nameHi}
+          <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
+            {lang === 'en' ? rule.nameHi : rule.nameEn}
           </Text>
         </View>
         {nextDate && (
           <View style={{ alignItems: 'flex-end' }}>
             <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 13, color: colors.inkSoft }}>
-              {shortDate(nextDate, isHindi)}
+              {shortDate(nextDate, lang)}
             </Text>
             <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 13, color: colors.inkSoft, marginTop: 1 }}>
-              {relativeLabel(nextDate, today, isHindi)}
+              {relativeLabel(nextDate, today, lang)}
             </Text>
           </View>
         )}
