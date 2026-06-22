@@ -57,9 +57,14 @@ async function activeCalendarSystem(): Promise<CalendarSystem> {
 
 function warmInBackground(location: PanchangLocation) {
   if (location.cityId === UJJAIN_CITY_ID) return;
-  activeCalendarSystem()
-    .then((system) => warmObservanceCache(location, system))
-    .catch(() => undefined);
+  // Defer off the interaction path so the picker can dismiss and the new location's
+  // sunrise/tithi can repaint first — the (now frame-budgeted, but still heavy)
+  // observance scan must never compete with the city-switch transition.
+  InteractionManager.runAfterInteractions(() => {
+    activeCalendarSystem()
+      .then((system) => warmObservanceCache(location, system))
+      .catch(() => undefined);
+  });
 }
 
 async function getDevicePosition(): Promise<{ latitude: number; longitude: number } | null> {

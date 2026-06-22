@@ -65,7 +65,7 @@ appId: host.exp.Exponent
     visible: ".*Ujjain.*"   # Ujjain reference line = screen-loaded canary. (The bare
     timeout: 30000          #  "Panchang" tab label is exposed as "Panchang, tab, N of 4",
                             #  which never full-string-matches "Panchang" — drifted assertion.)
-- assertVisible: ".*Ujjain.*"      # "Reference: Ujjain, India · Purnimant/Amanta"
+- assertVisible: ".*Ujjain.*"      # location chip label "Location: Ujjain"
 - assertVisible: "Purnimant calendar system"
 - assertVisible: "Amanta calendar system"
 - assertVisible: "Today"

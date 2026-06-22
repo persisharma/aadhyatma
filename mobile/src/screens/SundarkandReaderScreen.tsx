@@ -32,6 +32,7 @@ import JumpToStartButton from '@/components/JumpToStartButton';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import SundarkandVersePage from '@/components/SundarkandVersePage';
 import { clampIndex } from '@/utils/clamp';
@@ -298,6 +299,8 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
             </View>
           </View>
         </View>
+
+        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />

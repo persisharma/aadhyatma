@@ -5,7 +5,6 @@ import {
   getObservancesForDate,
   getObservancesForMonth,
   getUpcomingObservances,
-  isObservanceDataReady,
 } from './festivalEngine';
 import { subscribeObservanceStore } from './observanceStore';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -21,9 +20,6 @@ export type UsePanchangSelectionResult = {
   panchang: PanchangData | null;
   observances: ResolvedObservance[];
   upcoming: ResolvedObservance[];
-  // True while a non-Ujjain location is still showing the Ujjain fallback dates
-  // (its background scan hasn't landed yet).
-  observancesApproximate: boolean;
 };
 
 const CALENDAR_SYSTEM_STORAGE_KEY = '@vedansh:panchang-calendar-system';
@@ -164,14 +160,13 @@ export function usePanchangForSelection(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateMs, dateKey, calendarSystem, cityId, storeVersion]);
 
-  const observancesApproximate = useMemo(() => {
-    const year = new Date(dateMs).getFullYear();
-    return !isObservanceDataReady(year, calendarSystem, location)
-      || !isObservanceDataReady(year + 1, calendarSystem, location);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateMs, calendarSystem, cityId, storeVersion]);
-
-  return { panchang, observances, upcoming, observancesApproximate };
+  // While a non-Ujjain location's background scan is still running, observances stand
+  // in on the India-wide (Ujjain/IST) dates, which are correct for the bundled cities
+  // in all but rare tithi-boundary edge cases. When the per-city scan lands and a date
+  // genuinely differs, storeVersion bumps and the list silently upgrades — so we no
+  // longer show a speculative "updating…" spinner that, across Indian cities, almost
+  // always resolved to no visible change.
+  return { panchang, observances, upcoming };
 }
 
 export function usePanchangMonthObservances(

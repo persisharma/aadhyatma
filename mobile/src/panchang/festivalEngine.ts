@@ -105,18 +105,33 @@ export function resolveObservancesForYearLive(
   return results;
 }
 
+// One animation frame is ~16 ms; keep each synchronous burst comfortably under that
+// so the background warm scan can never drop a frame on Hermes. We budget by elapsed
+// time rather than a fixed day-stride because a single day's sunrise + lunar-month
+// solve is itself variable-cost — a fixed stride either yields too rarely (jank) or
+// too often (slow). Re-checked after every unit of heavy work.
+const FRAME_BUDGET_MS = 8;
+
 // Chunked flavor of the live scan for on-device background use: warms the per-day
-// tithi/month cache in small slices, yielding to the event loop between slices so
-// Hermes never blocks long enough to drop frames, then runs the sync resolver
-// entirely on cache hits. Krishna-paksha ekadashis always compute under amanta
-// (computationSystemForRule), so purnimant also warms the amanta day cache.
+// tithi/month cache, then resolves every rule against that warm cache — yielding to
+// the event loop whenever a slice has run past one frame's budget so the UI stays
+// responsive throughout. Krishna-paksha ekadashis always compute under amanta
+// (computationSystemForRule), so purnimant also warms the amanta day cache. Produces
+// results identical to resolveObservancesForYearLive (asserted in location.test).
 export async function resolveObservancesForYearLiveChunked(
   year: number,
   calendarSystem: CalendarSystem,
-  location: ObservanceLocation,
-  yieldEveryDays = 7
+  location: ObservanceLocation
 ): Promise<ResolvedObservance[]> {
   const systems: CalendarSystem[] = calendarSystem === 'purnimant' ? ['purnimant', 'amanta'] : ['amanta'];
+  let sliceStart = Date.now();
+  const breathe = async () => {
+    if (Date.now() - sliceStart < FRAME_BUDGET_MS) return;
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    sliceStart = Date.now();
+  };
+
+  // 1) Warm the per-day tithi/month cache — the heavy astronomy lives here.
   for (let d = 0; d < 366; d++) {
     const date = new Date(year, 0, 1 + d);
     for (const system of systems) {
@@ -125,12 +140,26 @@ export async function resolveObservancesForYearLiveChunked(
       } catch {
         // skip dates that fail computation, same as findObservanceDates
       }
-    }
-    if (d % yieldEveryDays === yieldEveryDays - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 0));
+      await breathe();
     }
   }
-  return resolveObservancesForYearLive(year, calendarSystem, location);
+
+  // 2) Resolve every rule against the now-warm cache. Cheap per call, but ~18k
+  //    iterations across all rules — still chunked so it can't block a frame either.
+  const byId = new Map<string, ResolvedObservance>();
+  const startDate = new Date(year, 0, 1);
+  const endDate = new Date(year, 11, 31);
+  for (const rule of defaultRules) {
+    const resolved = resolveRuleDates(rule, year, startDate, endDate, calendarSystem, location);
+    for (const item of resolved) {
+      byId.set(`${rule.id}:${dateKey(item.date)}`, item);
+    }
+    await breathe();
+  }
+
+  const results = [...byId.values()];
+  results.sort((a, b) => a.date.getTime() - b.date.getTime());
+  return results;
 }
 
 export function resolveFestivalsForYear(year: number): ResolvedFestival[] {

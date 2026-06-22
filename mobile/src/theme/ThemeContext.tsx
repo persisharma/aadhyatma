@@ -2,6 +2,7 @@ import React, { createContext, useContext, useMemo } from 'react';
 import { lightColors, type ColorPalette } from './colors';
 import { typography, type TypographyScale } from './typography';
 import { spacing, radii, type SpacingScale, type RadiiScale } from './spacing';
+import { elevation, type ElevationScale } from './elevation';
 
 export type ThemeMode = 'light' | 'dark';
 
@@ -11,6 +12,7 @@ export type Theme = {
   typography: TypographyScale;
   spacing: SpacingScale;
   radii: RadiiScale;
+  elevation: ElevationScale;
 };
 
 const defaultTheme: Theme = {
@@ -19,6 +21,7 @@ const defaultTheme: Theme = {
   typography,
   spacing,
   radii,
+  elevation,
 };
 
 const ThemeContext = createContext<Theme>(defaultTheme);

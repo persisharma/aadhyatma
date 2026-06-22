@@ -23,6 +23,7 @@ import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import SanskarVersePage from '@/components/SanskarVersePage';
 import { clampIndex } from '@/utils/clamp';
@@ -199,6 +200,8 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
             </View>
           </View>
         </View>
+
+        <ReadingProgressBar current={currentIndex + 1} total={total} />
 
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />

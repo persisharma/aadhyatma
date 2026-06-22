@@ -25,6 +25,7 @@ import GitaVersePage from '@/components/GitaVersePage';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { contentByLang } from '@/utils/localize';
@@ -263,6 +264,8 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             </View>
           </View>
         </View>
+
+        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />

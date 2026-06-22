@@ -15,6 +15,7 @@ import ShareButton from '@/components/ShareButton';
 import JumpToStartButton from '@/components/JumpToStartButton';
 import BajrangBaanVersePage from '@/components/BajrangBaanVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
@@ -136,6 +137,8 @@ export default function BajrangBaanReaderScreen({ navigation, route }: Props) {
             </View>
           </View>
         </View>
+
+        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId="bajrang-baan" chapter={chapter.chapter} /></View>
 

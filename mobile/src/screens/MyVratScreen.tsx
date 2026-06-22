@@ -9,6 +9,7 @@ import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { useVratFollows, type VratFollow, type VratReminderPref } from '@/contexts/VratFollowContext';
 import VratReminderSheet from '@/components/VratReminderSheet';
+import { captionFont } from '@/utils/scriptFont';
 import type { ObservanceRule } from '@/panchang/types';
 import type { PanchangStackParamList } from '@/navigation/types';
 
@@ -40,16 +41,18 @@ type FollowItem = {
 };
 
 export default function MyVratScreen({ navigation }: Props) {
-  const { colors, typography, spacing, radii } = useTheme();
+  const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const isHindi = lang === 'hi';
   const [calendarSystem] = usePanchangCalendarSystem();
-  const { follows, followCount, reminderCount, reminderDefault, reorder, setReminder, setReminderDefault } =
+  const { follows, followCount, reminderCount, reminderDefault, setReminder, setReminderDefault } =
     useVratFollows();
 
   const today = useMemo(() => startOfLocalDay(new Date()), []);
 
-  // Followed rules, in stored priority order, paired with their next occurrence.
+  // Followed rules paired with their next occurrence, sorted soonest-first so a
+  // vrat whose date has just passed (and rolled to its next occurrence) sinks to
+  // its correct chronological slot. Rules with no upcoming date sort to the end.
   const items = useMemo<FollowItem[]>(() => {
     const out: FollowItem[] = [];
     for (const follow of follows) {
@@ -57,6 +60,11 @@ export default function MyVratScreen({ navigation }: Props) {
       if (!rule) continue; // a renamed/removed rule id — skip defensively
       out.push({ follow, rule, next: getNextOccurrence(rule.id, today, calendarSystem) });
     }
+    out.sort((a, b) => {
+      if (!a.next) return b.next ? 1 : 0;
+      if (!b.next) return -1;
+      return a.next.date.getTime() - b.next.date.getTime();
+    });
     return out;
   }, [follows, today, calendarSystem]);
 
@@ -71,12 +79,13 @@ export default function MyVratScreen({ navigation }: Props) {
     [items, today]
   );
 
-  // Upcoming-among-followed, chronological.
+  // Upcoming-among-followed, chronological. `items` is already date-sorted, so
+  // this is just the followed rules that have an upcoming occurrence.
   const upcoming = useMemo(
     () =>
-      items
-        .filter((it): it is FollowItem & { next: NonNullable<FollowItem['next']> } => it.next != null)
-        .sort((a, b) => a.next.date.getTime() - b.next.date.getTime()),
+      items.filter(
+        (it): it is FollowItem & { next: NonNullable<FollowItem['next']> } => it.next != null
+      ),
     [items]
   );
 
@@ -110,7 +119,7 @@ export default function MyVratScreen({ navigation }: Props) {
             <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}>
               {isHindi ? 'मेरा व्रत' : 'My Vrat'}
             </Text>
-            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted }}>
+            <Text style={{ ...captionFont(isHindi ? 'My Vrat' : 'मेरा व्रत'), fontSize: 12, color: colors.inkMuted }}>
               {isHindi ? 'My Vrat' : 'मेरा व्रत'}
             </Text>
           </View>
@@ -135,8 +144,8 @@ export default function MyVratScreen({ navigation }: Props) {
               }}
             >
               {isHindi
-                ? 'जिन व्रतों का आप पालन करते हैं उन्हें फ़ॉलो करें — वे यहाँ आपकी प्राथमिकता क्रम में दिखेंगे।'
-                : 'Follow the vrats you observe — they show up here in your own priority order.'}
+                ? 'जिन व्रतों का आप पालन करते हैं उन्हें फ़ॉलो करें — वे यहाँ अगली तिथि के अनुसार दिखेंगे।'
+                : 'Follow the vrats you observe — they show up here, sorted by which comes next.'}
             </Text>
             <Pressable
               onPress={() => navigation.goBack()}
@@ -159,7 +168,7 @@ export default function MyVratScreen({ navigation }: Props) {
             showsVerticalScrollIndicator={false}
           >
             {/* Metric band */}
-            <View style={[styles.metricBand, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}>
+            <View style={[styles.metricBand, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
               <Metric value={followCount} label={isHindi ? 'फ़ॉलो' : 'Following'} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
               <Metric value={reminderCount} label={isHindi ? 'अनुस्मारक' : 'Reminders on'} colors={colors} />
@@ -183,22 +192,18 @@ export default function MyVratScreen({ navigation }: Props) {
             <Text style={[styles.sectionHeading, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}>
               {isHindi ? 'मेरी प्राथमिकता' : 'My priority'}
             </Text>
-            {items.map((it, idx) => (
+            {items.map((it) => (
               <PriorityRow
                 key={it.rule.id}
                 rule={it.rule}
                 nextDate={it.next?.date ?? null}
                 today={today}
-                idx={idx}
-                total={items.length}
                 isHindi={isHindi}
                 colors={colors}
                 typography={typography}
                 radii={radii}
                 reminderOn={reminderOnFor(it.follow)}
                 onOpen={() => navigation.navigate('ObservanceDetail', { ruleId: it.rule.id })}
-                onUp={() => reorder(it.rule.id, 'up')}
-                onDown={() => reorder(it.rule.id, 'down')}
                 onBell={() =>
                   setSheet({
                     mode: 'vrat',
@@ -225,7 +230,7 @@ export default function MyVratScreen({ navigation }: Props) {
                     <Text style={{ flex: 1, fontFamily: typography.meaning.fontFamily, fontSize: 14, color: colors.inkSoft }}>
                       {isHindi ? it.rule.nameHi : it.rule.nameEn}
                     </Text>
-                    <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep }}>
+                    <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.inkSoft }}>
                       {shortDate(it.next.date, isHindi)} · {relativeLabel(it.next.date, today, isHindi)}
                     </Text>
                   </View>
@@ -266,57 +271,27 @@ function PriorityRow({
   rule,
   nextDate,
   today,
-  idx,
-  total,
   isHindi,
   colors,
   typography,
   radii,
   reminderOn,
   onOpen,
-  onUp,
-  onDown,
   onBell,
 }: {
   rule: ObservanceRule;
   nextDate: Date | null;
   today: Date;
-  idx: number;
-  total: number;
   isHindi: boolean;
   colors: any;
   typography: any;
   radii: any;
   reminderOn: boolean;
   onOpen: () => void;
-  onUp: () => void;
-  onDown: () => void;
   onBell: () => void;
 }) {
-  const atTop = idx === 0;
-  const atBottom = idx === total - 1;
   return (
     <View style={[styles.prow, { borderBottomColor: colors.divider }]}>
-      <View style={styles.reorder}>
-        <Pressable
-          onPress={onUp}
-          disabled={atTop}
-          accessibilityRole="button"
-          accessibilityLabel={`Move ${rule.nameEn} up`}
-          hitSlop={8}
-        >
-          <Text style={{ fontSize: 13, color: atTop ? colors.divider : colors.inkSoft }}>▲</Text>
-        </Pressable>
-        <Pressable
-          onPress={onDown}
-          disabled={atBottom}
-          accessibilityRole="button"
-          accessibilityLabel={`Move ${rule.nameEn} down`}
-          hitSlop={8}
-        >
-          <Text style={{ fontSize: 13, color: atBottom ? colors.divider : colors.inkSoft }}>▼</Text>
-        </Pressable>
-      </View>
       <Pressable
         onPress={onOpen}
         accessibilityRole="button"
@@ -326,16 +301,16 @@ function PriorityRow({
         <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
           {isHindi ? rule.nameHi : rule.nameEn}
         </Text>
-        <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
+        <Text style={{ ...captionFont(isHindi ? rule.nameEn : rule.nameHi), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
           {isHindi ? rule.nameEn : rule.nameHi}
         </Text>
       </Pressable>
       {nextDate && (
         <View style={{ alignItems: 'flex-end' }}>
-          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep }}>
+          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.inkSoft }}>
             {shortDate(nextDate, isHindi)}
           </Text>
-          <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
+          <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
             {relativeLabel(nextDate, today, isHindi)}
           </Text>
         </View>
@@ -374,7 +349,6 @@ const styles = StyleSheet.create({
   metricDivider: { width: StyleSheet.hairlineWidth, alignSelf: 'stretch', marginVertical: 6 },
   sectionHeading: { fontSize: 15, marginTop: 18, marginBottom: 6 },
   prow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 11, borderBottomWidth: StyleSheet.hairlineWidth },
-  reorder: { width: 30, alignItems: 'center', justifyContent: 'center', gap: 6, marginRight: 6 },
   upRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 9, borderBottomWidth: StyleSheet.hairlineWidth, gap: 8 },
   upDot: { width: 6, height: 6, borderRadius: 3 },
   defaultsRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 8, marginTop: 2 },

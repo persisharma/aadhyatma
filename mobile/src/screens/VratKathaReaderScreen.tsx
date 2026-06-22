@@ -15,6 +15,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
 import KathaSectionPage from '@/components/KathaSectionPage';
 import { getKathaContent } from '@/panchang/kathaContent';
 import type { KathaContentSection } from '@/panchang/types';
@@ -97,6 +98,7 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
           </View>
         ) : (
           <>
+            <ReadingProgressBar current={currentIndex + 1} total={total} />
             <View style={styles.toggleRow}>
               <LanguageToggle />
             </View>
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
   backGlyph: { fontSize: 22, lineHeight: 24, marginTop: -2, includeFontPadding: false },
   title: { flex: 1, textAlign: 'center', fontSize: 18, includeFontPadding: false, marginHorizontal: 4 },
   counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
-  toggleRow: { paddingTop: 2, paddingBottom: 6, alignItems: 'center' },
+  toggleRow: { paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
