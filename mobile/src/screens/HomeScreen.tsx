@@ -9,11 +9,14 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { categories } from '@/data/categories';
 import CategoryCard from '@/components/CategoryCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
+import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
+import LotusMark from '@/components/LotusMark';
 import HomeWordmark from '@/components/HomeWordmark';
 import SearchFloatingButton from '@/components/SearchFloatingButton';
 import RoutineBanner from '@/components/RoutineBanner';
@@ -26,6 +29,10 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 export default function HomeScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { hasNewInCategory, devSimulateUpgrade, devResetNewState } = useNewContent();
+  // Sibling tabs (Daily Bhakti, Panchang) live on the root tab navigator, not in
+  // the Home stack — navigate via the parent so the action bubbles up. Same
+  // pattern as RoutineBanner / PanchangScreen.
+  const rootNav = useNavigation<any>();
 
   // The docked RoutineBanner (rendered below) sits at `spacing.sm` above the tab
   // bar and stands ~60px tall at most. Lift the search FAB above it so it isn't
@@ -81,6 +88,67 @@ export default function HomeScreen({ navigation }: Props) {
   const gridGap = 10;
   const tileWidth = (screenWidth - 2 * gridPadding - gridGap) / 2;
 
+  // Discover carousel — wide cards that peek the next one. Width is the viewport
+  // minus the side gutter and a sliver of the following card; snap by card+gap.
+  const featureGap = spacing.md;
+  const featureWidth = Math.min(320, screenWidth - gridPadding - 56);
+  const featureSnap = featureWidth + featureGap;
+
+  // Spotlight content. One flexible card shell (FeatureCard) carries every
+  // section so awareness of each surface is raised from a single carousel.
+  const spotlights: (FeatureSpotlight & { onPress: () => void })[] = [
+    {
+      key: 'routine',
+      eyebrowHi: 'नित्य', eyebrowEn: 'Practice',
+      titleHi: 'नित्य साधना', titleEn: 'Daily Practice',
+      descHi: 'अपनी दैनिक साधना चुनें और निरंतरता बनाए रखें।',
+      descEn: 'Pick your daily rituals and keep the streak alive.',
+      ctaHi: 'शुरू करें', ctaEn: 'Begin',
+      icon: <LotusMark size={28} />,
+      onPress: () => navigation.navigate('RoutineToday'),
+    },
+    {
+      key: 'daily-bhakti',
+      eyebrowHi: 'आज', eyebrowEn: 'Today',
+      titleHi: 'दैनिक भक्ति', titleEn: 'Daily Verse',
+      descHi: 'हर दिन एक नया श्लोक चिंतन और भक्ति के लिए।',
+      descEn: 'A fresh shloka to reflect on every single day.',
+      ctaHi: 'पढ़ें', ctaEn: 'Read',
+      icon: <CategoryIcon iconKey="stotram" />,
+      onPress: () => rootNav.navigate('DailyBhaktiTab'),
+    },
+    {
+      key: 'panchang',
+      eyebrowHi: 'पंचांग', eyebrowEn: 'Calendar',
+      titleHi: 'आज का पंचांग', titleEn: "Today's Panchang",
+      descHi: 'तिथि, नक्षत्र और व्रत-पर्व एक ही नज़र में।',
+      descEn: 'Tithi, nakshatra and festivals at a glance.',
+      ctaHi: 'देखें', ctaEn: 'View',
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.saffronDeep,
+          }}
+        >
+          पं
+        </Text>
+      ),
+      onPress: () => rootNav.navigate('PanchangTab'),
+    },
+    {
+      key: 'theerth',
+      eyebrowHi: 'तीर्थ', eyebrowEn: 'Journeys',
+      titleHi: 'तीर्थ यात्रा', titleEn: 'Sacred Journeys',
+      descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
+      descEn: 'Explore sacred temples and dhams across Bharat.',
+      ctaHi: 'खोजें', ctaEn: 'Explore',
+      icon: <CategoryIcon iconKey="theerth" />,
+      onPress: () => navigation.navigate('TheerthMap', {}),
+    },
+  ];
+
   return (
     <View style={styles.root}>
       <LinearGradient
@@ -105,6 +173,42 @@ export default function HomeScreen({ navigation }: Props) {
           <Text
             style={[
               styles.sectionLabel,
+              {
+                color: colors.inkMuted,
+                fontSize: typography.sectionLabel.fontSize,
+                fontWeight: typography.sectionLabel.fontWeight,
+                letterSpacing: typography.sectionLabel.letterSpacing,
+              },
+            ]}
+          >
+            DISCOVER
+          </Text>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            decelerationRate="fast"
+            snapToInterval={featureSnap}
+            snapToAlignment="start"
+            // Full-bleed: cancel the page gutter so cards run edge-to-edge and the
+            // next card peeks, then re-pad the content so the first card aligns
+            // with the rest of the page.
+            style={{ marginHorizontal: -gridPadding }}
+            contentContainerStyle={{
+              paddingHorizontal: gridPadding,
+              gap: featureGap,
+              paddingBottom: 4,
+            }}
+          >
+            {spotlights.map(({ onPress, ...item }) => (
+              <FeatureCard key={item.key} item={item} width={featureWidth} onPress={onPress} />
+            ))}
+          </ScrollView>
+
+          <Text
+            style={[
+              styles.sectionLabel,
+              styles.sectionLabelSpaced,
               {
                 color: colors.inkMuted,
                 fontSize: typography.sectionLabel.fontSize,
@@ -210,6 +314,9 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 12,
     paddingHorizontal: 4,
+  },
+  sectionLabelSpaced: {
+    marginTop: 24,
   },
   grid: {
     flexDirection: 'row',
