@@ -64,6 +64,26 @@ describe('background coverage', () => {
     expect(getSourceBackground('surya-namaskar')).toBe(backgroundImages.deity_surya_chariot);
     expect(getSourceBackground('tulsi-puja')).toBe(backgroundImages.deity_tulsi_vrindavan);
   });
+
+  test('Vishnu & Gayatri use their own dedicated art, not a borrowed deity image (Rule 10.8)', () => {
+    expect(getDeityBackground('vishnu')).toBe(backgroundImages.source_vishnu_narayana);
+    expect(getDeityBackground('vishnu')).not.toBe(getDeityBackground('krishna'));
+    expect(getDeityBackground('savitr')).toBe(backgroundImages.source_gayatri_savitri_sun);
+    expect(getDeityBackground('savitr')).not.toBe(getDeityBackground('shiva'));
+  });
+
+  // Rule 10.8 general guard: no deity may borrow another deity's art. This is the
+  // enforcement the rule lacked — Vishnu→Krishna and Gayatri→Shiva survived in this
+  // map across releases because §10.8 was documented but never tested.
+  test('every deity tile resolves to a distinct image (Rule 10.8)', () => {
+    const owners = new Map<number, string[]>();
+    for (const deity of deities) {
+      const image = getDeityBackground(deity.id);
+      owners.set(image, [...(owners.get(image) ?? []), deity.id]);
+    }
+    const shared = [...owners.values()].filter((ids) => ids.length > 1);
+    expect(shared).toEqual([]);
+  });
 });
 
 describe('observance deity backgrounds', () => {

@@ -56,6 +56,25 @@ for (const entry of library.filter((e) => e.category === 'sanskar')) {
   assert.ok(entry.addedInVersion, `sanskar entry ${entry.id} must set addedInVersion`);
 }
 
+// Om Gam Ganapataye Namah — Ganesha seed (bija) mantra, added in the Phase-1 japam
+// expansion. Pins the deity tag (Rule 10.4) and the canonical text (Rules 10.3/10.6).
+const ganapatiMantra = japam.mantras.find((m: any) => m.id === 'om-gam-ganapataye-namah');
+assert.ok(ganapatiMantra, 'Om Gam Ganapataye Namah japam should exist');
+assert.deepEqual(
+  ganapatiMantra.deities,
+  ['ganesha'],
+  'Om Gam Ganapataye Namah must be tagged under the Ganesha deity (Rule 10.4)'
+);
+assert.ok(
+  ganapatiMantra.lines[0].includes('गं गणपतये नमः'),
+  `Om Gam Ganapataye Namah Devanagari should be the canonical text, got: "${ganapatiMantra.lines[0]}"`
+);
+assert.equal(
+  ganapatiMantra.linesEn[0],
+  'Om Gam Ganapataye Namah',
+  'Om Gam Ganapataye Namah romanization should match the canonical readable form'
+);
+
 // ─── 2. Aarti verse counts (verified from internet) ─────────────────────────
 
 const hanumanAarti = readJson('aarti/hanuman-aarti.json');

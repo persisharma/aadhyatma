@@ -263,6 +263,8 @@ Every content/data change must be verified on both iOS and Android before OTA pu
 ### 10.8 Background image per deity
 Every deity in the `Deity` type must have a distinct, thematically correct background image in `backgrounds.ts`. Never use another deity's image as a placeholder (e.g., Krishna's image for Vishnu, or Shiva's image for Gayatri). If no appropriate image exists yet, commission/source one before adding the deity. Origin: Vishnu was using Krishna's bansuri image, Gayatri was using Shiva's trishul image.
 
+**Enforced, not just documented.** `mobile/src/data/__tests__/backgrounds.coverage.jest.test.ts` asserts every `deityBackgrounds` entry resolves to a **distinct** image — a deity pointing at another deity's art (or two deities sharing one sketch) fails CI. This guard exists because the rule above, written but never tested, did not stop the reuse: the Vishnu→Krishna and Gayatri→Shiva mappings survived in the By-Deity card map (`deityBackgrounds`) across releases even after the *reader/source* backgrounds were corrected — a reviewer had to spot them by eye. A §10 invariant without a backing test is not a gate; ship the enforcing test alongside any new §10 rule (see also §0).
+
 When generating a new deity background, use this prompt template and replace the bracketed fields:
 
 ```text
