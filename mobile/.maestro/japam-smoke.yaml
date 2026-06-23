@@ -1,8 +1,8 @@
 # Japam Category Smoke Test
 #
-# Verifies the Japam category and its 4 active mantras render correctly.
+# Verifies the Japam category and its 5 active mantras render correctly.
 # Mantras: Om Namah Shivaya, Hare Krishna Mahamantra, Gayatri Mantra,
-#          Om Namo Bhagavate Vasudevaya.
+#          Om Namo Bhagavate Vasudevaya, Om Gam Ganapataye Namah.
 #
 # Japam routes to JapamCounterScreen (a counter UI with a 108-bead mala),
 # NOT a standard verse pager — per RULEBOOK §1 field 6. This flow opens the
@@ -34,6 +34,7 @@ appId: host.exp.Exponent
 - assertVisible: "Hare Krishna Mahamantra\\..*Tap to open\\."
 - assertVisible: "Gayatri Mantra\\..*Tap to open\\."
 - assertVisible: "Om Namo Bhagavate Vasudevaya\\..*Tap to open\\."
+- assertVisible: "Om Gam Ganapataye Namah\\..*Tap to open\\."
 
 # Open Gayatri Mantra counter
 - tapOn: "Gayatri Mantra\\..*Tap to open\\."

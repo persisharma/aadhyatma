@@ -87,14 +87,35 @@
       ],
       "meaningHi": "उस भगवान् वासुदेव को मेरा प्रणाम — जो वसुदेवपुत्र, सबमें वास करने वाले, समस्त ऐश्वर्य के स्वामी हैं।",
       "meaningEn": "Salutations to the Divine Vasudeva — son of Vasudeva, dweller in all beings, possessor of all auspicious qualities. The twelve-syllable Vaishnava mantra of refuge."
+    },
+    {
+      "id": "om-gam-ganapataye-namah",
+      "nameHi": "ॐ गं गणपतये नमः",
+      "nameEn": "Om Gam Ganapataye Namah",
+      "sub": "गणेश बीज मंत्र",
+      "subEn": "Ganesha seed mantra",
+      "thumb": "गं",
+      "deities": [
+        "ganesha"
+      ],
+      "lines": [
+        "ॐ गं गणपतये नमः"
+      ],
+      "linesEn": [
+        "Om Gam Ganapataye Namah"
+      ],
+      "meaningHi": "गं — श्रीगणेश का बीजाक्षर। 'हे गणपति, आपको नमस्कार।' विघ्नहर्ता गणेश का यह मूल मंत्र किसी भी शुभ कार्य, पूजा अथवा जप के आरम्भ में विघ्नों के नाश तथा बुद्धि, सिद्धि और मंगल आरम्भ की कामना से जपा जाता है।",
+      "meaningEn": "'Gam' is the seed syllable (bija) of Ganesha. 'Salutations to Lord Ganapati.' This root mantra of the remover of obstacles is chanted at the start of any auspicious task, worship, or japa — to clear hindrances and invoke wisdom, accomplishment, and an auspicious beginning."
     }
   ],
   "source": {
-    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, and Dvadashakshari Vasudeva mantra.",
+    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and the Ganapati bija (mula) mantra.",
     "referenceUrls": [
       "https://sanskritdocuments.org/doc_deities_misc/sArthagAyatrI.html",
-      "https://vedabase.io/en/library/kb/90/"
+      "https://vedabase.io/en/library/kb/90/",
+      "https://en.wikipedia.org/wiki/Ganesha",
+      "https://sanskritdocuments.org/doc_ganesha/"
     ],
-    "retrievedOn": "2026-05-30"
+    "retrievedOn": "2026-06-23"
   }
 }
