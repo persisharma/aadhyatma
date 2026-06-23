@@ -32,12 +32,12 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
 const deityBackgrounds: Record<Deity, BackgroundImage> = {
   rama: backgroundImages.deity_rama_darbar,
   krishna: backgroundImages.deity_krishna_bansuri,
-  vishnu: backgroundImages.deity_krishna_bansuri,
+  vishnu: backgroundImages.source_vishnu_narayana, // §10.8: dedicated Narayana sketch, not Krishna's bansuri
   shiva: shivaStrotamImages.shiva,
   hanuman: chalisaImages.hanuman_sea,
   durga: backgroundImages.deity_durga_lion,
   ganesha: backgroundImages.deity_ganesha_modak,
-  savitr: shivaStrotamImages.shiva,
+  savitr: backgroundImages.source_gayatri_savitri_sun, // §10.8: dedicated Gayatri/Savitr sun art, not Shiva's
   saraswati: backgroundImages.deity_saraswati_veena,
 };
 
@@ -50,6 +50,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'hare-krishna-mahamantra': backgroundImages.deity_krishna_bansuri,
   'gayatri-mantra': backgroundImages.source_gayatri_savitri_sun,
   'om-namo-bhagavate-vasudevaya': backgroundImages.source_vishnu_narayana,
+  'om-gam-ganapataye-namah': backgroundImages.deity_ganesha_modak,
   ramcharitmanas: backgroundImages.deity_rama_darbar,
   'durga-stotram': backgroundImages.deity_durga_lion,
   'ganesh-stotram': backgroundImages.deity_ganesha_modak,
