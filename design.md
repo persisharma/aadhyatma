@@ -916,7 +916,7 @@ type IndiaMapProps = {
 
 **Card width.** `min(320, screenWidth − gutter − 56)` so a sliver of the following card always shows (a peek cue that the row scrolls). Gap `spacing.md`.
 
-**Lead rotation.** All cards always render — awareness is about *coverage*, so no section is ever hidden — but the card that **leads** the row rotates once per day (`rotateLeadByDay(spotlights, dayOfYear(new Date()))`, `utils/rotateByDay.ts`). Home feels fresh on a new day while every section stays one swipe away. The rotation is pure and seeded by day-of-year (not `Math.random()`/`Date.now()`), so it is unit-tested and stable across renders within a day. This is deliberately *not* a "show one random card" pattern — that would surface some sections rarely and undercut the awareness goal; novelty-per-visit is Daily Bhakti's job (§23), not this carousel's.
+**Order shuffle.** All cards always render — awareness is about *coverage*, so no section is ever hidden — but their order is **shuffled once per app open** so a different section leads each visit and the row never reads as a static, ignored banner (`shuffleBySeed(spotlights, seed)`, `utils/shuffleBySeed.ts`). The seed is captured at screen mount (`useMemo([])`), so the order is fresh on each open yet **stable across re-renders** while the user is on Home — it never reshuffles mid-interaction. The shuffle is a pure seeded Fisher–Yates (mulberry32 PRNG), not a raw `Math.random()` call, so it is unit-tested (same seed → same permutation). This is deliberately *not* a "show one random card" pattern — that would surface some sections rarely and undercut the awareness goal; novelty-per-visit is Daily Bhakti's job (§23), not this carousel's.
 
 ### Component: Feature Card (`FeatureCard.tsx`)
 

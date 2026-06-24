@@ -23,7 +23,7 @@ import RoutineBanner from '@/components/RoutineBanner';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
-import { rotateLeadByDay, dayOfYear } from '@/utils/rotateByDay';
+import { shuffleBySeed } from '@/utils/shuffleBySeed';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
@@ -150,10 +150,12 @@ export default function HomeScreen({ navigation }: Props) {
     },
   ];
 
-  // All cards always render (awareness = coverage); only the lead rotates, once
-  // per day, so Home feels fresh without ever hiding a section. Seed is the
-  // day-of-year — stable across renders within a day. See utils/rotateByDay.
-  const orderedSpotlights = rotateLeadByDay(spotlights, dayOfYear(new Date()));
+  // All cards always render (awareness = coverage); their order is shuffled once
+  // per app open so a different section leads each visit. The seed is captured
+  // at mount (useMemo []), so the order is fresh on each open yet stable across
+  // re-renders while the user is on Home. See utils/shuffleBySeed.
+  const shuffleSeed = React.useMemo(() => Date.now(), []);
+  const orderedSpotlights = shuffleBySeed(spotlights, shuffleSeed);
 
   return (
     <View style={styles.root}>
