@@ -296,6 +296,27 @@ test('recurring tithi vrats resolve month by month for future years', () => {
   assert.ok(pradosh.every((item) => item.rule.kathaId === 'pradosha-vrat-katha'));
 });
 
+test('annual lunar festivals fall in the nija month, skipping the adhik maas', () => {
+  // 2026 has Adhik (leap) Jyeshtha, 2026-05-17 .. 2026-06-15. Vrats tied to a named
+  // lunar month are observed in the nija (true) Jyeshtha, never the adhik repeat —
+  // so Nirjala Ekadashi (Jyeshtha Shukla Ekadashi) is 2026-06-25, not the adhik-maas
+  // Shukla Ekadashi on 2026-05-26. Regression guard for the Adhik Maas fix.
+  for (const system of ['purnimant', 'amanta'] as const) {
+    const nirjala = resolveObservancesForYearLive(2026, system)
+      .filter((item) => item.rule.id === 'nirjala-ekadashi');
+    assert.equal(nirjala.length, 1, `${system}: expected exactly one Nirjala Ekadashi in 2026`);
+    const date = nirjala[0].date;
+    assert.equal(
+      `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+      '2026-6-25',
+      `${system}: Nirjala Ekadashi 2026 should fall in nija Jyeshtha (2026-06-25)`
+    );
+  }
+
+  // The adhik-maas Shukla Ekadashi (2026-05-26) must carry no named-festival label.
+  assert.equal(idsFor(new Date(2026, 4, 26)).includes('nirjala-ekadashi'), false);
+});
+
 test('non-January Sankranti dates are generated from solar ingress rules', () => {
   const ids = idsFor(new Date(2026, 1, 14));
 

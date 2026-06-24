@@ -297,7 +297,7 @@ function vikramSamvatFor(sunrise: Date): number {
   return localKey(sunrise) >= localKey(nmC) ? gregYear + 57 : gregYear + 56;
 }
 
-const tithiMonthCache = new Map<string, { tithiIndex: number; lunarMonth: number; paksha: Paksha }>();
+const tithiMonthCache = new Map<string, { tithiIndex: number; lunarMonth: number; paksha: Paksha; isAdhik: boolean }>();
 
 function getLocalDateKey(date: Date): string {
   return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
@@ -309,7 +309,7 @@ function getLocalDateKey(date: Date): string {
 export function computeTithiAndMonth(
   localDate: Date,
   options: PanchangComputationOptions = {}
-): { tithiIndex: number; lunarMonth: number; paksha: Paksha } {
+): { tithiIndex: number; lunarMonth: number; paksha: Paksha; isAdhik: boolean } {
   const calendarSystem = options.calendarSystem ?? 'purnimant';
   const cacheKey = `${calendarSystem}:${locationKey(options.location)}:${getLocalDateKey(localDate)}`;
   const cached = tithiMonthCache.get(cacheKey);
@@ -321,8 +321,8 @@ export function computeTithiAndMonth(
   const moonLng = getSiderealMoonLng(sunrise, year);
   const tithiIndex = computeTithiIndex(sunLng, moonLng);
   const paksha: Paksha = tithiIndex < 15 ? 'shukla' : 'krishna';
-  const { index: lunarMonthIndex } = lunarMonthForSystem(sunrise, calendarSystem);
-  const result = { tithiIndex, lunarMonth: lunarMonthIndex + 1, paksha };
+  const { index: lunarMonthIndex, isAdhik } = lunarMonthForSystem(sunrise, calendarSystem);
+  const result = { tithiIndex, lunarMonth: lunarMonthIndex + 1, paksha, isAdhik };
   tithiMonthCache.set(cacheKey, result);
   return result;
 }
