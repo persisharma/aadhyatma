@@ -23,6 +23,7 @@ import RoutineBanner from '@/components/RoutineBanner';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
+import { rotateLeadByDay, dayOfYear } from '@/utils/rotateByDay';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
@@ -149,6 +150,11 @@ export default function HomeScreen({ navigation }: Props) {
     },
   ];
 
+  // All cards always render (awareness = coverage); only the lead rotates, once
+  // per day, so Home feels fresh without ever hiding a section. Seed is the
+  // day-of-year — stable across renders within a day. See utils/rotateByDay.
+  const orderedSpotlights = rotateLeadByDay(spotlights, dayOfYear(new Date()));
+
   return (
     <View style={styles.root}>
       <LinearGradient
@@ -200,7 +206,7 @@ export default function HomeScreen({ navigation }: Props) {
               paddingBottom: 4,
             }}
           >
-            {spotlights.map(({ onPress, ...item }) => (
+            {orderedSpotlights.map(({ onPress, ...item }) => (
               <FeatureCard key={item.key} item={item} width={featureWidth} onPress={onPress} />
             ))}
           </ScrollView>

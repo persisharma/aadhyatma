@@ -916,6 +916,8 @@ type IndiaMapProps = {
 
 **Card width.** `min(320, screenWidth − gutter − 56)` so a sliver of the following card always shows (a peek cue that the row scrolls). Gap `spacing.md`.
 
+**Lead rotation.** All cards always render — awareness is about *coverage*, so no section is ever hidden — but the card that **leads** the row rotates once per day (`rotateLeadByDay(spotlights, dayOfYear(new Date()))`, `utils/rotateByDay.ts`). Home feels fresh on a new day while every section stays one swipe away. The rotation is pure and seeded by day-of-year (not `Math.random()`/`Date.now()`), so it is unit-tested and stable across renders within a day. This is deliberately *not* a "show one random card" pattern — that would surface some sections rarely and undercut the awareness goal; novelty-per-visit is Daily Bhakti's job (§23), not this carousel's.
+
 ### Component: Feature Card (`FeatureCard.tsx`)
 
 A content-agnostic spotlight card. Every text field is **bilingual**; the card renders the slot matching the active reading language (`useGitaLanguage` + `orderTitlesByLanguage`) and demotes the other — same contract as the catalog cards (§8/§19). The shell:
