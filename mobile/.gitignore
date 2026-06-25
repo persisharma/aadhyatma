@@ -38,6 +38,7 @@ coverage/
 
 # EAS credentials (paths + passwords for cert/provisioning profile)
 credentials.json
+credentials/
 
 # typescript
 *.tsbuildinfo
