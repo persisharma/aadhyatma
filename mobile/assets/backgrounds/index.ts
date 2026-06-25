@@ -19,7 +19,10 @@ export type BackgroundImageKey =
   | 'theerth_tejaji_kharnal'
   | 'theerth_khandoba_jejuri'
   | 'theerth_mahasu_devta_hanol'
-  | 'theerth_ramdevra';
+  | 'theerth_ramdevra'
+  | 'theerth_salasar_balaji'
+  | 'theerth_karni_mata'
+  | 'theerth_jeen_mata';
 
 export const backgroundImages: Record<BackgroundImageKey, number> = {
   category_granth_open_scripture: require('./category-granth-open-scripture.png'),
@@ -43,4 +46,7 @@ export const backgroundImages: Record<BackgroundImageKey, number> = {
   theerth_khandoba_jejuri: require('./theerth-khandoba-jejuri.png'),
   theerth_mahasu_devta_hanol: require('./theerth-mahasu-devta-hanol.png'),
   theerth_ramdevra: require('./theerth-ramdevra.png'),
+  theerth_salasar_balaji: require('./theerth-salasar-balaji.png'),
+  theerth_karni_mata: require('./theerth-karni-mata.png'),
+  theerth_jeen_mata: require('./theerth-jeen-mata.png'),
 };

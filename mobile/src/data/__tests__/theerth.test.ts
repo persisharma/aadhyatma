@@ -186,7 +186,7 @@ assert.ok(
 );
 
 // ─── 9. Total temple count is pinned (guards accidental drops on enrichment) ──
-assert.equal(temples.length, 68, `expected 68 temples, got ${temples.length}`);
+assert.equal(temples.length, 71, `expected 71 temples, got ${temples.length}`);
 
 console.log(
   `✓ theerth data-contract: ${temples.length} temples, ${EXPECTED_STATES.length} states covered, projection aligned, sourced prose present`,

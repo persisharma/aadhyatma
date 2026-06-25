@@ -109,6 +109,9 @@ const theerthBackgroundOverrides: Record<string, BackgroundImage> = {
   'khandoba-jejuri': backgroundImages.theerth_khandoba_jejuri,
   'mahasu-devta-hanol': backgroundImages.theerth_mahasu_devta_hanol,
   ramdevra: backgroundImages.theerth_ramdevra,
+  'salasar-balaji': backgroundImages.theerth_salasar_balaji,
+  'karni-mata': backgroundImages.theerth_karni_mata,
+  'jeen-mata': backgroundImages.theerth_jeen_mata,
 };
 
 export function getTheerthBackground(templeId: string, deityId: Deity): BackgroundImage {

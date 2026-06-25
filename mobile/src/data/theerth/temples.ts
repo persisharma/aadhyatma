@@ -133,6 +133,9 @@ const baseTemples = [
 
   // ---------- Lokdevta (folk deities), tagged with the nearest of the 8 deities ----------
   { id: 'khatu-shyam',        nameHi: 'खाटू श्याम जी',        nameEn: 'Khatu Shyam Ji',     cityHi: 'खाटू',       cityEn: 'Khatu',       stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 27.365, lng: 75.403 }, deity: 'krishna', groups: [] },
+  { id: 'salasar-balaji',     nameHi: 'सालासर बालाजी',       nameEn: 'Salasar Balaji',     cityHi: 'सालासर',     cityEn: 'Salasar',     stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 27.721, lng: 74.727 }, deity: 'hanuman', groups: [] },
+  { id: 'karni-mata',         nameHi: 'करणी माता, देशनोक',    nameEn: 'Karni Mata, Deshnoke', cityHi: 'देशनोक',   cityEn: 'Deshnoke',    stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 27.790, lng: 73.342 }, deity: 'durga',   groups: [] },
+  { id: 'jeen-mata',          nameHi: 'जीण माता',             nameEn: 'Jeen Mata',          cityHi: 'सीकर',       cityEn: 'Sikar',       stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 27.224, lng: 75.189 }, deity: 'durga',   groups: [] },
   { id: 'khandoba-jejuri',    nameHi: 'खंडोबा, जेजुरी',       nameEn: 'Khandoba, Jejuri',   cityHi: 'जेजुरी',     cityEn: 'Jejuri',      stateHi: 'महाराष्ट्र',       stateEn: 'Maharashtra',                 coordinates: { lat: 18.272, lng: 74.160 }, deity: 'shiva',   groups: [] },
   { id: 'gogaji-gogamedi',    nameHi: 'गोगाजी, गोगामेड़ी',     nameEn: 'Gogaji, Gogamedi',   cityHi: 'गोगामेड़ी',   cityEn: 'Gogamedi',    stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 29.160, lng: 75.023 }, deity: 'shiva',   groups: [] },
   { id: 'sabarimala',         nameHi: 'सबरीमला अय्यप्पन',     nameEn: 'Sabarimala Ayyappan', cityHi: 'पथनमथिट्टा', cityEn: 'Pathanamthitta', stateHi: 'केरल',           stateEn: 'Kerala',                      coordinates: { lat:  9.435, lng: 77.081 }, deity: 'shiva',   groups: [] },
@@ -501,6 +504,30 @@ const templeDetails: Record<TempleId, TempleDetail> = {
     originStoryHi: 'कथा में भीम के पौत्र बर्बरीक ने महाभारत-युद्ध से पूर्व अपना शीश दान किया; प्रसन्न होकर कृष्ण ने वर दिया कि वे कलियुग में “श्याम” रूप में पूजे जाएँगे।',
     originStoryEn: 'In the legend, Barbarika — grandson of Bhima — offered his head before the Mahabharata war; pleased, Krishna blessed him to be worshipped as “Shyam” in the Kali Yuga.',
     sources: [source('Rajasthan Devasthan - Khatushyamji', 'https://devasthan.rajasthan.gov.in/images/Sikar/khatushyamji.htm')],
+  },
+  'salasar-balaji': {
+    significanceHi: 'चूरू ज़िले के सालासर धाम में बालाजी को हनुमान-भक्ति के सिद्धपीठ रूप में पूजा जाता है; यहाँ दाढ़ी-मूँछ वाले बालाजी की विशिष्ट प्रतिमा भक्तों को आकर्षित करती है।',
+    significanceEn: 'At Salasar Dham in Churu district, Balaji is worshipped as a powerful Hanuman shrine; its distinctive bearded and moustached form of Balaji draws devotees through the year.',
+    originStoryHi: 'लोककथा में आसोटा गाँव के खेत में हल चलाते समय बालाजी की प्रतिमा प्रकट हुई; बालाजी ने स्वप्न में उसे सालासर ले जाने का आदेश दिया और वहाँ मंदिर प्रतिष्ठित हुआ।',
+    originStoryEn: 'The local legend says a Balaji idol emerged while a farmer was ploughing at Asota; Balaji then appeared in dreams directing that the idol be brought to Salasar and enshrined there.',
+    sources: [
+      source('Shree Salasar Balaji Mandir', 'https://shreesalasarbalajimandir.com/'),
+      source('Rajasthan Tourism - Salasar Balaji Temple', 'https://www.tourism.rajasthan.gov.in/salasar-balaji-temple.html'),
+    ],
+  },
+  'karni-mata': {
+    significanceHi: 'बीकानेर के पास देशनोक का करणी माता मंदिर देवी-उपासना और काबा कहलाने वाले पवित्र चूहों की अनोखी परंपरा के कारण प्रसिद्ध है।',
+    significanceEn: 'Karni Mata Temple at Deshnoke near Bikaner is known for Devi worship and the unusual tradition of sacred kabbas, the rats that live freely in the temple complex.',
+    originStoryHi: 'कथा में करणी माता ने यम से अपने पुत्र लक्ष्मण को लौटाने की प्रार्थना की; अंततः उनके कुल के बालक काबा रूप में पुनर्जन्म लेकर देवी की छाया में रहने लगे।',
+    originStoryEn: 'In the temple legend, Karni Mata pleaded with Yama after her son Laxman died; her lineage’s children came to be reborn as kabbas and to live under the goddess’s protection.',
+    sources: [source('Rajasthan Tourism - Karni Mata Temple', 'https://www.tourism.rajasthan.gov.in/karni-mata-temple.html')],
+  },
+  'jeen-mata': {
+    significanceHi: 'सीकर की अरावली पहाड़ियों में स्थित जीण माता धाम सिद्ध शक्ति पीठ माना जाता है, जहाँ माँ जीण/जयन्ती को दुर्गा-शक्ति के रूप में पूजा जाता है।',
+    significanceEn: 'Jeen Mata Dham in the Aravalli hills of Sikar is revered as a Siddh Shakti Peeth, where Maa Jeen or Jayanti is worshipped as a form of Durga Shakti.',
+    originStoryHi: 'स्थानीय परंपरा में जीण माता ने काजल शिखर क्षेत्र में तप किया और देवी-शक्ति रूप में प्रतिष्ठित हुईं; नवरात्रि में यहाँ विशेष मेला और कुलदेवी-दर्शन होते हैं।',
+    originStoryEn: 'Local tradition remembers Jeen Mata’s austerity at Kajal Shikhar and her manifestation as Devi Shakti; Navratri brings major worship and kuldevi darshan to the shrine.',
+    sources: [source('Shree Jeen Mata Mandir', 'https://shrijeenmata.org/')],
   },
   'khandoba-jejuri': {
     significanceHi: 'पुणे के पास जेजुरी का खंडोबा मंदिर महाराष्ट्र का प्रमुख लोकदेव तीर्थ है; खंडोबा शिव के अवतार माने जाते हैं और गर्भगृह में शिवलिङ्ग भी विराजित है।',

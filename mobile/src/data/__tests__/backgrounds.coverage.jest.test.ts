@@ -31,6 +31,9 @@ const dedicatedTheerthBackgroundIds = [
   'khandoba-jejuri',
   'mahasu-devta-hanol',
   'ramdevra',
+  'salasar-balaji',
+  'karni-mata',
+  'jeen-mata',
 ] as const;
 
 describe('background coverage', () => {
