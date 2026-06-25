@@ -1,7 +1,8 @@
 # Chalisa Category Smoke Test
 #
-# Verifies the Chalisa category and its 4 active sections render correctly.
-# Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa.
+# Verifies the Chalisa category and its 9 active sections render correctly.
+# Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa, Lakshmi Chalisa,
+#           Saraswati Chalisa, Vishnu Chalisa, Krishna Chalisa, Ram Chalisa.
 #
 # Chalisas share ChalisaReaderScreen (multi-instance pattern, dispatched by
 # route.params.chalisaId). Opening Hanuman Chalisa verifies the dispatch
@@ -24,8 +25,45 @@ appId: host.exp.Exponent
 - assertVisible: "Shiv Chalisa\\..*Tap to open\\."
 - assertVisible: "Durga Chalisa\\..*Tap to open\\."
 - assertVisible: "Ganesh Chalisa\\..*Tap to open\\."
+# Lakshmi + Saraswati Chalisa are the newest cards (added 1.4.0)
+- scrollUntilVisible:
+    element:
+      text: "Lakshmi Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Saraswati Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Vishnu Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Krishna Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Ram Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
 
-# Open Hanuman Chalisa reader
+# Scroll back up and open Hanuman Chalisa reader
+- scrollUntilVisible:
+    element:
+      text: "Hanuman Chalisa\\..*Tap to open\\."
+    direction: UP
+    visibilityPercentage: 60
+    timeout: 10000
 - tapOn: "Hanuman Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd:
     timeout: 15000

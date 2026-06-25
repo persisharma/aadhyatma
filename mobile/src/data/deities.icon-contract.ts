@@ -11,6 +11,7 @@ const expectedIcons: Record<Deity, DeityIconKey> = {
   ganesha: 'modak',
   savitr: 'surya',
   saraswati: 'veena',
+  lakshmi: 'lotus',
 };
 
 for (const deity of deities) {

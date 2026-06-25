@@ -1,0 +1,903 @@
+{
+  "titleHi": "श्री राम चालीसा",
+  "titleEn": "Shri Ram Chalisa",
+  "subtitleHi": "श्री रघुबीर भक्त हितकारी",
+  "subtitleEn": "Shri Raghubir Bhakt Hitkari",
+  "language": "hi-en",
+  "script": "Devanagari + Latin",
+  "source": {
+    "baseText": "Traditional Shri Ram Chalisa (the 40-chaupai 'Shri Raghubir Bhakt Hitkari' recension attributed to Haridas), cross-verified line by line against five independent sources: HinduNidhi, Bhakti Bharat, Drik Panchang, PrabhuPuja and SriMandir. The opening doha is the Sanskrit dhyana-shloka 'Aadau Ram tapovanadi...' that prefaces this chalisa in all consulted sources; it is the invocatory couplet of the chalisa, not the separate standalone Rama Stuti. The body comprises the 40 chaupais explicitly numbered to 40 in the sources (Drik Panchang, HinduNidhi and PrabhuPuja all place the '40' marker at 'Yako path kare jo koi'); five further chaupai-metre couplets of phala-stuti and two dohas follow as the closing. Majority readings used where sources differ: 'रघुबीर' / 'सुनि लीजै' (HinduNidhi, Bhakti Bharat, Drik Panchang, PrabhuPuja, SriMandir over the 'रघुवीर'/'सुन लीजै' minority); 'शत्रुहन' (correct, = Shatrughna) over the 'शक्षुहन' corruption; 'लषन' (archaic spelling of Lakhan, in the HinduNidhi/Bhakti Bharat/PrabhuPuja majority); 'जगपति भूपा' (clear reading, SriMandir + others) noted against the 'जापति' variant.",
+    "referenceUrls": [
+      "https://hindunidhi.com/shri-ram-chalisa-hindi/",
+      "https://www.bhaktibharat.com/chalisa/shri-ram-chalisa",
+      "https://www.drikpanchang.com/lyrics/chalisa/lord-rama/shree-rama-chalisa.html?ck=1&lang=hi",
+      "https://prabhupuja.com/shree-ram-chalisa-lyrics-benefits/",
+      "https://www.srimandir.com/articles/chalisa/sri-ram-chalisa"
+    ],
+    "retrievedOn": "2026-06-23"
+  },
+  "counts": {
+    "openingDohas": 2,
+    "chaupais": 40,
+    "closingChaupais": 5,
+    "closingDohas": 2,
+    "totalVerses": 49
+  },
+  "verses": [
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "आदौ राम तपोवनादि गमनं हत्वाह् मृगा काञ्चनं।",
+        "वैदेही हरणं जटायु मरणं सुग्रीव संभाषणं॥"
+      ],
+      "linesEn": [
+        "Aadau Ram tapovanaadi gamanam hatvaah mrigaa kaanchanam.",
+        "Vaidehee haranam jataayu maranam sugreeva sambhaashanam."
+      ],
+      "meaningHi": "पहले राम का तपोवन आदि को गमन, फिर स्वर्ण मृग (मारीच) का वध, वैदेही (सीता) का हरण, जटायु का मरण और सुग्रीव से संभाषण हुआ।",
+      "meaningEn": "First came Ram's going to the forest of penance, then the slaying of the golden deer (Maricha), the abduction of Vaidehi (Sita), the death of Jatayu, and the meeting with Sugriva."
+    },
+    {
+      "id": "opening-doha-2",
+      "type": "doha",
+      "section": "opening",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "बाली निर्दलं समुद्र तरणं लङ्कापुरी दाहनम्।",
+        "पश्चद्रावनं कुम्भकर्णं हननं एतद्धि रामायणं॥"
+      ],
+      "linesEn": [
+        "Baalee nirdalam samudra taranam lankaapuree daahanam.",
+        "Pashchadraavanam kumbhakarnam hananam etaddhi raamaayanam."
+      ],
+      "meaningHi": "बालि का संहार, समुद्र को पार करना, लङ्कापुरी का दहन, फिर रावण और कुम्भकर्ण का वध — यही तो रामायण है।",
+      "meaningEn": "The destruction of Bali, the crossing of the ocean, the burning of the city of Lanka, and thereafter the killing of Ravana and Kumbhakarna — this indeed is the Ramayana."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "श्री रघुबीर भक्त हितकारी।",
+        "सुनि लीजै प्रभु अरज हमारी॥"
+      ],
+      "linesEn": [
+        "Shri Raghubir bhakt hitkaaree.",
+        "Suni leejai prabhu araj hamaaree."
+      ],
+      "meaningHi": "हे श्री रघुवीर (राम), भक्तों का हित करने वाले, हे प्रभु, हमारी विनती सुन लीजिए।",
+      "meaningEn": "O Shri Raghuvir (Ram), benefactor of your devotees, O Lord, hear our humble plea."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "निशि दिन ध्यान धरै जो कोई।",
+        "ता सम भक्त और नहिं होई॥"
+      ],
+      "linesEn": [
+        "Nishi din dhyaan dharai jo koee.",
+        "Taa sam bhakt aur nahin hoee."
+      ],
+      "meaningHi": "जो कोई रात-दिन आपका ध्यान धरता है, उसके समान दूसरा कोई भक्त नहीं है।",
+      "meaningEn": "Whoever holds you in meditation night and day — there is no other devotee equal to him."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "ध्यान धरे शिवजी मन माहीं।",
+        "ब्रह्मा इन्द्र पार नहिं पाहीं॥"
+      ],
+      "linesEn": [
+        "Dhyaan dhare shivajee man maaheen.",
+        "Brahmaa indra paar nahin paaheen."
+      ],
+      "meaningHi": "शिवजी अपने मन में आपका ध्यान धरते हैं; ब्रह्मा और इन्द्र भी आपका पार नहीं पाते।",
+      "meaningEn": "Shiva holds you in meditation within his heart; even Brahma and Indra cannot reach your bounds."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "जय जय जय रघुनाथ कृपाला।",
+        "सदा करो सन्तन प्रतिपाला॥"
+      ],
+      "linesEn": [
+        "Jay jay jay raghunaath kripaalaa.",
+        "Sadaa karo santan pratipaalaa."
+      ],
+      "meaningHi": "हे कृपालु रघुनाथ, आपकी जय-जय-जय हो; आप सदा संतों का पालन करते हैं।",
+      "meaningEn": "Victory, victory, victory to you, merciful Raghunath; ever you protect the saints."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "दूत तुम्हार वीर हनुमाना।",
+        "जासु प्रभाव तिहूँ पुर जाना॥"
+      ],
+      "linesEn": [
+        "Doot tumhaar veer hanumaanaa.",
+        "Jaasu prabhaav tihoon pur jaanaa."
+      ],
+      "meaningHi": "आपके दूत वीर हनुमान हैं, जिनका प्रभाव तीनों लोकों में जाना जाता है।",
+      "meaningEn": "Your messenger is the mighty Hanuman, whose power is known throughout the three worlds."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "तुव भुजदण्ड प्रचण्ड कृपाला।",
+        "रावण मारि सुरन प्रतिपाला॥"
+      ],
+      "linesEn": [
+        "Tuv bhujdand prachand kripaalaa.",
+        "Raavan maari suran pratipaalaa."
+      ],
+      "meaningHi": "हे कृपालु, आपकी भुजाएँ प्रचण्ड हैं; आपने रावण को मारकर देवताओं की रक्षा की।",
+      "meaningEn": "O merciful one, your arms are mighty; slaying Ravana, you protected the gods."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "तुम अनाथ के नाथ गोसाईं।",
+        "दीनन के हो सदा सहाई॥"
+      ],
+      "linesEn": [
+        "Tum anaath ke naath gosaaeen.",
+        "Deenan ke ho sadaa sahaaee."
+      ],
+      "meaningHi": "हे गोसाईं, आप अनाथों के नाथ हैं और दीनों के सदा सहायक हैं।",
+      "meaningEn": "O Lord, you are the protector of the forlorn and ever the helper of the humble."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "ब्रह्मादिक तव पार न पावैं।",
+        "सदा ईश तुम्हरो यश गावैं॥"
+      ],
+      "linesEn": [
+        "Brahmaadik tav paar na paavain.",
+        "Sadaa eesh tumharo yash gaavain."
+      ],
+      "meaningHi": "ब्रह्मा आदि देव भी आपका पार नहीं पाते; हे ईश, वे सदा आपका यश गाते हैं।",
+      "meaningEn": "Even Brahma and the gods cannot reach your limit; O Lord, they ever sing your glory."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "चारिउ वेद भरत हैं साखी।",
+        "तुम भक्तन की लज्जा राखी॥"
+      ],
+      "linesEn": [
+        "Chaariu ved bharat hain saakhee.",
+        "Tum bhaktan kee lajjaa raakhee."
+      ],
+      "meaningHi": "चारों वेद और भरत इसके साक्षी हैं कि आपने भक्तों की लाज रखी है।",
+      "meaningEn": "The four Vedas and Bharata are witness that you have kept your devotees' honour."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "गुण गावत शारद मन माहीं।",
+        "सुरपति ताको पार न पाहीं॥"
+      ],
+      "linesEn": [
+        "Gun gaavat shaarad man maaheen.",
+        "Surpati taako paar na paaheen."
+      ],
+      "meaningHi": "सरस्वती मन ही मन आपके गुण गाती हैं; इन्द्र भी उनका (आपके गुणों का) पार नहीं पाते।",
+      "meaningEn": "Saraswati sings your virtues within her heart; even Indra cannot reach the end of them."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "नाम तुम्हार लेत जो कोई।",
+        "ता सम धन्य और नहिं होई॥"
+      ],
+      "linesEn": [
+        "Naam tumhaar let jo koee.",
+        "Taa sam dhanya aur nahin hoee."
+      ],
+      "meaningHi": "जो कोई आपका नाम लेता है, उसके समान धन्य और कोई नहीं होता।",
+      "meaningEn": "Whoever utters your name — none other is so blessed as he."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "राम नाम है अपरम्पारा।",
+        "चारिहु वेदन जाहि पुकारा॥"
+      ],
+      "linesEn": [
+        "Raam naam hai aparampaaraa.",
+        "Chaarihu vedan jaahi pukaaraa."
+      ],
+      "meaningHi": "राम नाम अपरम्पार है, जिसे चारों वेद पुकारते हैं।",
+      "meaningEn": "The name of Ram is boundless, the name the four Vedas proclaim."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "गणपति नाम तुम्हारो लीन्हों।",
+        "तिनको प्रथम पूज्य तुम कीन्हों॥"
+      ],
+      "linesEn": [
+        "Ganpati naam tumhaaro leenhon.",
+        "Tinko pratham poojya tum keenhon."
+      ],
+      "meaningHi": "गणपति ने आपका नाम लिया, इसी से आपने उन्हें प्रथम पूज्य बना दिया।",
+      "meaningEn": "Ganpati took your name, and so you made him the first to be worshipped."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "शेष रटत नित नाम तुम्हारा।",
+        "महि को भार शीश पर धारा॥"
+      ],
+      "linesEn": [
+        "Shesh ratat nit naam tumhaaraa.",
+        "Mahi ko bhaar sheesh par dhaaraa."
+      ],
+      "meaningHi": "शेषनाग नित्य आपका नाम रटते हैं और पृथ्वी का भार अपने शीश पर धारण करते हैं।",
+      "meaningEn": "Shesha ever chants your name and bears the weight of the earth upon his head."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "फूल समान रहत सो भारा।",
+        "पावत कोउ न तुम्हरो पारा॥"
+      ],
+      "linesEn": [
+        "Phool samaan rahat so bhaaraa.",
+        "Paavat kou na tumharo paaraa."
+      ],
+      "meaningHi": "वह (पृथ्वी का) भार उन्हें फूल के समान हल्का लगता है; कोई भी आपका पार नहीं पाता।",
+      "meaningEn": "That burden rests as light as a flower upon him; none can reach your bounds."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "भरत नाम तुम्हरो उर धारो।",
+        "तासों कबहुँ न रण में हारो॥"
+      ],
+      "linesEn": [
+        "Bharat naam tumharo ur dhaaro.",
+        "Taason kabahun na ran mein haaro."
+      ],
+      "meaningHi": "भरत ने आपका नाम हृदय में धारण किया, इसी से वे कभी रण में नहीं हारे।",
+      "meaningEn": "Bharata held your name in his heart, and so he never met defeat in battle."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "नाम शत्रुहन हृदय प्रकाशा।",
+        "सुमिरत होत शत्रु कर नाशा॥"
+      ],
+      "linesEn": [
+        "Naam shatruhan hriday prakaashaa.",
+        "Sumirat hot shatru kar naashaa."
+      ],
+      "meaningHi": "शत्रुघ्न के हृदय में आपका नाम प्रकाशित है; उसका स्मरण करते ही शत्रुओं का नाश हो जाता है।",
+      "meaningEn": "Your name shines in Shatrughna's heart; at its remembrance the enemy is destroyed."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "लषन तुम्हारे आज्ञाकारी।",
+        "सदा करत सन्तन रखवारी॥"
+      ],
+      "linesEn": [
+        "Lakhan tumhaare aagyaakaaree.",
+        "Sadaa karat santan rakhvaaree."
+      ],
+      "meaningHi": "लक्ष्मण आपके आज्ञाकारी हैं और सदा संतों की रखवाली करते हैं।",
+      "meaningEn": "Lakshman is obedient to you and ever stands guard over the saints."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "ताते रण जीते नहिं कोई।",
+        "युद्ध जुरे यमहूँ किन होई॥"
+      ],
+      "linesEn": [
+        "Taate ran jeete nahin koee.",
+        "Yuddh jure yamahoon kin hoee."
+      ],
+      "meaningHi": "इसी से रण में उन्हें कोई नहीं जीत सकता, चाहे युद्ध में यमराज ही क्यों न आ जुटें।",
+      "meaningEn": "Thus none can defeat them in battle, even were Yama himself to join the fray."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "महा लक्ष्मी धर अवतारा।",
+        "सब विधि करत पाप को छारा॥"
+      ],
+      "linesEn": [
+        "Mahaa lakshmee dhar avataaraa.",
+        "Sab vidhi karat paap ko chhaaraa."
+      ],
+      "meaningHi": "महालक्ष्मी ने (सीता रूप में) अवतार धारण किया और सब प्रकार से पाप का नाश करती हैं।",
+      "meaningEn": "Mahalakshmi took avatar (as Sita) and in every way reduces sin to ashes."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "सीता राम पुनीता गायो।",
+        "भुवनेश्वरी प्रभाव दिखायो॥"
+      ],
+      "linesEn": [
+        "Seetaa raam puneetaa gaayo.",
+        "Bhuvaneshwaree prabhaav dikhaayo."
+      ],
+      "meaningHi": "सीता-राम का पुनीत (पवित्र) यश गाया गया; भुवनेश्वरी (सीता) ने अपना प्रभाव दिखाया।",
+      "meaningEn": "The sacred glory of Sita-Ram is sung; Bhuvaneshwari (Sita) revealed her power."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "घट सों प्रकट भई सो आई।",
+        "जाको देखत चन्द्र लजाई॥"
+      ],
+      "linesEn": [
+        "Ghat son prakat bhaee so aaee.",
+        "Jaako dekhat chandra lajaaee."
+      ],
+      "meaningHi": "वे (सीता) घट से प्रकट होकर आईं, जिन्हें देखकर चन्द्रमा भी लजा जाता है।",
+      "meaningEn": "She (Sita) appeared, arisen from the earthen vessel, at whose sight even the moon is shamed."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "सो तुमरे नित पांव पलोटत।",
+        "नवो निद्धि चरणन में लोटत॥"
+      ],
+      "linesEn": [
+        "So tumare nit paanv palotat.",
+        "Navo niddhi charanan mein lotat."
+      ],
+      "meaningHi": "वे (लक्ष्मी रूप सीता) नित्य आपके पाँव दबाती हैं; नौ निधियाँ आपके चरणों में लोटती हैं।",
+      "meaningEn": "She daily presses your feet; the nine treasures roll at your feet."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "सिद्धि अठारह मंगल कारी।",
+        "सो तुम पर जावै बलिहारी॥"
+      ],
+      "linesEn": [
+        "Siddhi atharah mangal kaaree.",
+        "So tum par jaavai balihaaree."
+      ],
+      "meaningHi": "अठारह मंगलकारी सिद्धियाँ आप पर बलिहारी जाती हैं (न्योछावर होती हैं)।",
+      "meaningEn": "The eighteen auspicious powers offer themselves up in devotion to you."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "औरहु जो अनेक प्रभुताई।",
+        "सो सीतापति तुमहिं बनाई॥"
+      ],
+      "linesEn": [
+        "Aurahu jo anek prabhutaaee.",
+        "So seetaapati tumahin banaaee."
+      ],
+      "meaningHi": "और भी जो अनेक प्रभुताएँ (ऐश्वर्य) हैं, हे सीतापति, वे सब आपकी ही रची हुई हैं।",
+      "meaningEn": "And whatever other manifold majesties there are — O Lord of Sita, they are all of your making."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "इच्छा ते कोटिन संसारा।",
+        "रचत न लागत पल की बारा॥"
+      ],
+      "linesEn": [
+        "Ichchhaa te kotin sansaaraa.",
+        "Rachat na laagat pal kee baaraa."
+      ],
+      "meaningHi": "इच्छा मात्र से करोड़ों संसार रचने में आपको पल भर भी नहीं लगता।",
+      "meaningEn": "By mere will you create millions of worlds, and it takes you not even a moment."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "जो तुम्हरे चरनन चित लावै।",
+        "ताको मुक्ति अवसि हो जावै॥"
+      ],
+      "linesEn": [
+        "Jo tumhare charanan chit laavai.",
+        "Taako mukti avasi ho jaavai."
+      ],
+      "meaningHi": "जो आपके चरणों में चित्त लगाता है, उसकी मुक्ति अवश्य हो जाती है।",
+      "meaningEn": "Whoever fixes his mind on your feet surely attains liberation."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "सुनहु राम तुम तात हमारे।",
+        "तुमहिं भरत कुल पूज्य प्रचारे॥"
+      ],
+      "linesEn": [
+        "Sunahu raam tum taat hamaare.",
+        "Tumahin bharat kul poojya prachaare."
+      ],
+      "meaningHi": "हे राम, सुनिए, आप हमारे पिता-तुल्य हैं; आप भरत-कुल में पूज्य रूप में प्रसिद्ध हैं।",
+      "meaningEn": "Hear, O Ram, you are as a father to us; in the line of Bharata you are proclaimed worthy of worship."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "तुमहिं देव कुल देव हमारे।",
+        "तुम गुरु देव प्राण के प्यारे॥"
+      ],
+      "linesEn": [
+        "Tumahin dev kul dev hamaare.",
+        "Tum guru dev praan ke pyaare."
+      ],
+      "meaningHi": "आप ही हमारे कुलदेव और इष्टदेव हैं; आप गुरुदेव और प्राणों से प्यारे हैं।",
+      "meaningEn": "You are our family deity and our chosen god; you are our divine guru, dearer than life."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "जो कुछ हो सो तुमहीं राजा।",
+        "जय जय जय प्रभु राखो लाजा॥"
+      ],
+      "linesEn": [
+        "Jo kuchh ho so tumaheen raajaa.",
+        "Jay jay jay prabhu raakho laajaa."
+      ],
+      "meaningHi": "जो कुछ है, सब आप ही हैं, हे राजा; हे प्रभु, आपकी जय हो — हमारी लाज रखिए।",
+      "meaningEn": "Whatever there is, you alone are it, O King; victory to you, O Lord — keep our honour."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "रामा आत्मा पोषण हारे।",
+        "जय जय जय दशरथ के प्यारे॥"
+      ],
+      "linesEn": [
+        "Raamaa aatmaa poshan haare.",
+        "Jay jay jay dashrath ke pyaare."
+      ],
+      "meaningHi": "हे राम, आप आत्मा का पोषण करने वाले हैं; हे दशरथ के प्यारे, आपकी जय-जय-जय हो।",
+      "meaningEn": "O Ram, you are the nourisher of the soul; victory, victory, victory to you, beloved of Dashratha."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "जय जय जय प्रभु ज्योति स्वरूपा।",
+        "निगुण ब्रह्म अखण्ड अनूपा॥"
+      ],
+      "linesEn": [
+        "Jay jay jay prabhu jyoti swaroopaa.",
+        "Nigun brahma akhand anoopaa."
+      ],
+      "meaningHi": "हे ज्योतिस्वरूप प्रभु, आपकी जय-जय-जय हो; आप निर्गुण, अखण्ड और अनुपम ब्रह्म हैं।",
+      "meaningEn": "Victory to you, O Lord of the form of light; you are the formless, undivided, peerless Brahman."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "सत्य सत्य जय सत्यव्रत स्वामी।",
+        "सत्य सनातन अन्तर्यामी॥"
+      ],
+      "linesEn": [
+        "Satya satya jay satyavrat swaamee.",
+        "Satya sanaatan antaryaamee."
+      ],
+      "meaningHi": "हे सत्यव्रत स्वामी, आप सत्य हैं — सत्य की जय हो; आप सनातन सत्य और अन्तर्यामी हैं।",
+      "meaningEn": "Truth, truth, victory to you, Lord of the vow of truth; you are the eternal Truth, the inner ruler of all."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "सत्य भजन तुम्हरो जो गावै।",
+        "सो निश्चय चारों फल पावै॥"
+      ],
+      "linesEn": [
+        "Satya bhajan tumharo jo gaavai.",
+        "So nishchay chaaron phal paavai."
+      ],
+      "meaningHi": "जो सच्चे मन से आपका भजन गाता है, वह निश्चय ही चारों फल (धर्म, अर्थ, काम, मोक्ष) पाता है।",
+      "meaningEn": "Whoever sings your praise in truth surely obtains the four fruits (dharma, wealth, desire, liberation)."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "सत्य शपथ गौरीपति कीन्हीं।",
+        "तुमने भक्तहिं सब सिद्धि दीन्हीं॥"
+      ],
+      "linesEn": [
+        "Satya shapath gauripati keenheen.",
+        "Tumne bhaktahin sab siddhi deenheen."
+      ],
+      "meaningHi": "गौरीपति (शिव) ने सत्य की शपथ ली है कि आपने भक्तों को सब सिद्धियाँ दी हैं।",
+      "meaningEn": "Gauripati (Shiva) has taken a true oath that you have granted your devotees every attainment."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "ज्ञान हृदय दो ज्ञान स्वरूपा।",
+        "नमो नमो जय जगपति भूपा॥"
+      ],
+      "linesEn": [
+        "Gyaan hriday do gyaan swaroopaa.",
+        "Namo namo jay jagpati bhoopaa."
+      ],
+      "meaningHi": "हे ज्ञानस्वरूप, मेरे हृदय में ज्ञान दीजिए; हे जगत्पति राजा, आपको बार-बार नमस्कार — आपकी जय हो।",
+      "meaningEn": "O embodiment of knowledge, grant knowledge to my heart; salutations again and again, victory to you, sovereign Lord of the world."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "धन्य धन्य तुम धन्य प्रतापा।",
+        "नाम तुम्हार हरत संतापा॥"
+      ],
+      "linesEn": [
+        "Dhanya dhanya tum dhanya prataapaa.",
+        "Naam tumhaar harat santaapaa."
+      ],
+      "meaningHi": "आप धन्य हैं, धन्य हैं, आपका प्रताप धन्य है; आपका नाम सब संतापों को हर लेता है।",
+      "meaningEn": "Blessed, blessed are you, blessed is your majesty; your name takes away all suffering."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "सत्य शुद्ध देवन मुख गाया।",
+        "बजी दुन्दुभी शंख बजाया॥"
+      ],
+      "linesEn": [
+        "Satya shuddh devan mukh gaayaa.",
+        "Bajee dundubhee shankh bajaayaa."
+      ],
+      "meaningHi": "देवताओं ने अपने मुख से आपका सत्य और शुद्ध यश गाया; दुन्दुभियाँ बजीं और शंख बजाए गए।",
+      "meaningEn": "The gods with their own lips sang your true and pure glory; kettledrums sounded and conches were blown."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "सत्य सत्य तुम सत्य सनातन।",
+        "तुमहीं हो हमरे तन मन धन॥"
+      ],
+      "linesEn": [
+        "Satya satya tum satya sanaatan.",
+        "Tumaheen ho hamare tan man dhan."
+      ],
+      "meaningHi": "आप सत्य हैं, सत्य हैं, सनातन सत्य हैं; आप ही हमारे तन, मन और धन हैं।",
+      "meaningEn": "Truth, truth are you, the eternal Truth; you alone are our body, mind and wealth."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "याको पाठ करे जो कोई।",
+        "ज्ञान प्रकट ताके उर होई॥"
+      ],
+      "linesEn": [
+        "Yaako paath kare jo koee.",
+        "Gyaan prakat taake ur hoee."
+      ],
+      "meaningHi": "जो कोई इस (चालीसा) का पाठ करता है, उसके हृदय में ज्ञान प्रकट हो जाता है।",
+      "meaningEn": "Whoever recites this (Chalisa) — within his heart knowledge is revealed."
+    },
+    {
+      "id": "closing-chaupai-1",
+      "type": "chaupai",
+      "section": "closing",
+      "labelHi": "चौपाई",
+      "labelEn": "Chaupai",
+      "lines": [
+        "आवागमन मिटै तिहि केरा।",
+        "सत्य वचन माने शिव मेरा॥"
+      ],
+      "linesEn": [
+        "Aavaagaman mitai tihi keraa.",
+        "Satya vachan maane shiv meraa."
+      ],
+      "meaningHi": "उसका आवागमन (जन्म-मरण का चक्र) मिट जाता है — इस सत्य वचन को मेरे शिव भी मानते हैं।",
+      "meaningEn": "His cycle of birth and death is ended — this true word even my Shiva affirms."
+    },
+    {
+      "id": "closing-chaupai-2",
+      "type": "chaupai",
+      "section": "closing",
+      "labelHi": "चौपाई",
+      "labelEn": "Chaupai",
+      "lines": [
+        "और आस मन में जो ल्यावै।",
+        "तुलसी दल अरु फूल चढ़ावै॥"
+      ],
+      "linesEn": [
+        "Aur aas man mein jo lyaavai.",
+        "Tulsee dal aru phool chadhaavai."
+      ],
+      "meaningHi": "और जो मन में आशा लाकर तुलसीदल तथा फूल चढ़ाता है,",
+      "meaningEn": "And whoever brings hope into his heart and offers tulsi leaves and flowers,"
+    },
+    {
+      "id": "closing-chaupai-3",
+      "type": "chaupai",
+      "section": "closing",
+      "labelHi": "चौपाई",
+      "labelEn": "Chaupai",
+      "lines": [
+        "साग पत्र सो भोग लगावै।",
+        "सो नर सकल सिद्धता पावै॥"
+      ],
+      "linesEn": [
+        "Saag patra so bhog lagaavai.",
+        "So nar sakal siddhataa paavai."
+      ],
+      "meaningHi": "और साग-पत्र का भोग लगाता है, वह मनुष्य समस्त सिद्धियाँ पा लेता है।",
+      "meaningEn": "and offers a simple meal of greens and leaves — that person attains all perfection."
+    },
+    {
+      "id": "closing-chaupai-4",
+      "type": "chaupai",
+      "section": "closing",
+      "labelHi": "चौपाई",
+      "labelEn": "Chaupai",
+      "lines": [
+        "अन्त समय रघुबर पुर जाई।",
+        "जहाँ जन्म हरि भक्त कहाई॥"
+      ],
+      "linesEn": [
+        "Ant samay raghubar pur jaaee.",
+        "Jahaan janma hari bhakt kahaaee."
+      ],
+      "meaningHi": "वह अन्त समय में रघुवर के धाम (साकेत) को जाता है, जहाँ जन्म लेकर वह हरि-भक्त कहलाता है।",
+      "meaningEn": "At his end he goes to the abode of Raghuvar, where, taking birth, he is called a devotee of Hari."
+    },
+    {
+      "id": "closing-chaupai-5",
+      "type": "chaupai",
+      "section": "closing",
+      "labelHi": "चौपाई",
+      "labelEn": "Chaupai",
+      "lines": [
+        "श्री हरि दास कहै अरु गावै।",
+        "सो वैकुण्ठ धाम को पावै॥"
+      ],
+      "linesEn": [
+        "Shri hari daas kahai aru gaavai.",
+        "So vaikunth dhaam ko paavai."
+      ],
+      "meaningHi": "श्री हरिदास कहते हैं — जो इसे कहता और गाता है, वह वैकुण्ठ धाम को पाता है।",
+      "meaningEn": "Shri Haridas says — whoever recites and sings this attains the abode of Vaikuntha."
+    },
+    {
+      "id": "closing-doha-1",
+      "type": "doha",
+      "section": "closing",
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "सात दिवस जो नेम कर, पाठ करे चित लाय।",
+        "हरिदास हरि कृपा से, अवसि भक्ति को पाय॥"
+      ],
+      "linesEn": [
+        "Saat divas jo nem kar, paath kare chit laay.",
+        "Haridaas hari kripaa se, avasi bhakti ko paay."
+      ],
+      "meaningHi": "जो सात दिन तक नियमपूर्वक मन लगाकर पाठ करता है, वह हरिदास कहते हैं, हरि की कृपा से अवश्य भक्ति पा लेता है।",
+      "meaningEn": "Whoever for seven days recites this with discipline and a fixed mind, says Haridas, surely attains devotion by the grace of Hari."
+    },
+    {
+      "id": "closing-doha-2",
+      "type": "doha",
+      "section": "closing",
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "राम चालीसा जो पढ़े, राम चरण चित लाय।",
+        "जो इच्छा मन में करै, सकल सिद्ध हो जाय॥"
+      ],
+      "linesEn": [
+        "Raam chaaleesaa jo padhe, raam charan chit laay.",
+        "Jo ichchhaa man mein karai, sakal siddh ho jaay."
+      ],
+      "meaningHi": "जो राम चालीसा पढ़ता है और राम के चरणों में चित्त लगाता है, वह मन में जो भी इच्छा करता है, वह सब सिद्ध हो जाती है।",
+      "meaningEn": "Whoever reads the Ram Chalisa and fixes his mind on Ram's feet — every wish he holds in his heart is fulfilled."
+    }
+  ]
+}
