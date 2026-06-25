@@ -14,11 +14,24 @@ import {
   getDeityBackground,
   getReaderBackground,
   getSourceBackground,
+  getTheerthBackground,
 } from '@/data/backgrounds';
 import { categories } from '@/data/categories';
 import { deities } from '@/data/deities';
 import { japamMantras } from '@/data/japam';
 import { library } from '@/data/texts';
+import { getTempleById } from '@/data/theerth/temples';
+
+const dedicatedTheerthBackgroundIds = [
+  'khatu-shyam',
+  'vetrimalai-murugan',
+  'sabarimala',
+  'gogaji-gogamedi',
+  'tejaji-kharnal',
+  'khandoba-jejuri',
+  'mahasu-devta-hanol',
+  'ramdevra',
+] as const;
 
 describe('background coverage', () => {
   test('every active category tile has a background', () => {
@@ -54,6 +67,15 @@ describe('background coverage', () => {
   test('every japa mantra has a source background', () => {
     for (const mantra of japamMantras) {
       expect(getSourceBackground(mantra.id)).toBeTruthy();
+    }
+  });
+
+  test('dedicated Theerth backgrounds are wired for commissioned shrine plates', () => {
+    for (const templeId of dedicatedTheerthBackgroundIds) {
+      const temple = getTempleById(templeId);
+      expect(temple).toBeTruthy();
+      expect(getTheerthBackground(templeId, temple!.deity)).toBeTruthy();
+      expect(getTheerthBackground(templeId, temple!.deity)).not.toBe(getDeityBackground(temple!.deity));
     }
   });
 });

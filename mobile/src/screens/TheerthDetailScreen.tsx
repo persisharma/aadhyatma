@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { getDeityBackground } from '@/data/backgrounds';
+import { getTheerthBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import { getTempleById } from '@/data/theerth/temples';
@@ -59,7 +59,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       {/* Each temple sits on its presiding deity's faded background (RULEBOOK
           §11.4 / §10.8) — a relevant per-temple plate instead of a flat wash. */}
-      <BackgroundLayer source={getDeityBackground(temple.deity)} />
+      <BackgroundLayer source={getTheerthBackground(temple.id, temple.deity)} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable

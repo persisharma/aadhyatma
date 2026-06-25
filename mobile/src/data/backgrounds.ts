@@ -96,6 +96,25 @@ export function getDeityBackground(deityId: Deity): BackgroundImage {
   return deityBackgrounds[deityId];
 }
 
+/**
+ * Per-temple Theerth background overrides, keyed by temple id. Used for
+ * shrines whose presiding-deity plate is too generic for the temple detail.
+ */
+const theerthBackgroundOverrides: Record<string, BackgroundImage> = {
+  'khatu-shyam': backgroundImages.theerth_khatu_shyam,
+  'vetrimalai-murugan': backgroundImages.theerth_vetrimalai_murugan,
+  sabarimala: backgroundImages.theerth_sabarimala,
+  'gogaji-gogamedi': backgroundImages.theerth_gogaji_gogamedi,
+  'tejaji-kharnal': backgroundImages.theerth_tejaji_kharnal,
+  'khandoba-jejuri': backgroundImages.theerth_khandoba_jejuri,
+  'mahasu-devta-hanol': backgroundImages.theerth_mahasu_devta_hanol,
+  ramdevra: backgroundImages.theerth_ramdevra,
+};
+
+export function getTheerthBackground(templeId: string, deityId: Deity): BackgroundImage {
+  return theerthBackgroundOverrides[templeId] ?? getDeityBackground(deityId);
+}
+
 export function getSourceBackground(sourceId: string): BackgroundImage | null {
   return sourceBackgrounds[sourceId] ?? null;
 }

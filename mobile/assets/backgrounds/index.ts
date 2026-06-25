@@ -11,7 +11,15 @@ export type BackgroundImageKey =
   | 'source_vishnu_narayana'
   | 'source_gayatri_savitri_sun'
   | 'deity_saraswati_veena'
-  | 'panchang_celestial_almanac';
+  | 'panchang_celestial_almanac'
+  | 'theerth_khatu_shyam'
+  | 'theerth_vetrimalai_murugan'
+  | 'theerth_sabarimala'
+  | 'theerth_gogaji_gogamedi'
+  | 'theerth_tejaji_kharnal'
+  | 'theerth_khandoba_jejuri'
+  | 'theerth_mahasu_devta_hanol'
+  | 'theerth_ramdevra';
 
 export const backgroundImages: Record<BackgroundImageKey, number> = {
   category_granth_open_scripture: require('./category-granth-open-scripture.png'),
@@ -27,4 +35,12 @@ export const backgroundImages: Record<BackgroundImageKey, number> = {
   source_gayatri_savitri_sun: require('./source-gayatri-savitri-sun.png'),
   deity_saraswati_veena: require('./deity-saraswati-veena.png'),
   panchang_celestial_almanac: require('./panchang-celestial-almanac.png'),
+  theerth_khatu_shyam: require('./theerth-khatu-shyam.png'),
+  theerth_vetrimalai_murugan: require('./theerth-vetrimalai-murugan.png'),
+  theerth_sabarimala: require('./theerth-sabarimala.png'),
+  theerth_gogaji_gogamedi: require('./theerth-gogaji-gogamedi.png'),
+  theerth_tejaji_kharnal: require('./theerth-tejaji-kharnal.png'),
+  theerth_khandoba_jejuri: require('./theerth-khandoba-jejuri.png'),
+  theerth_mahasu_devta_hanol: require('./theerth-mahasu-devta-hanol.png'),
+  theerth_ramdevra: require('./theerth-ramdevra.png'),
 };
