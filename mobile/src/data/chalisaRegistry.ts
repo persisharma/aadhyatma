@@ -22,14 +22,49 @@ import {
   ganeshChalisaVerses,
   type GaneshChalisaVerse,
 } from './ganesh-chalisa';
+import {
+  lakshmiChalisaTitleEn,
+  lakshmiChalisaTitleHi,
+  lakshmiChalisaVerses,
+  type LakshmiChalisaVerse,
+} from './lakshmi-chalisa';
+import {
+  saraswatiChalisaTitleEn,
+  saraswatiChalisaTitleHi,
+  saraswatiChalisaVerses,
+  type SaraswatiChalisaVerse,
+} from './saraswati-chalisa';
+import {
+  vishnuChalisaTitleEn,
+  vishnuChalisaTitleHi,
+  vishnuChalisaVerses,
+  type VishnuChalisaVerse,
+} from './vishnu-chalisa';
+import {
+  krishnaChalisaTitleEn,
+  krishnaChalisaTitleHi,
+  krishnaChalisaVerses,
+  type KrishnaChalisaVerse,
+} from './krishna-chalisa';
+import {
+  ramChalisaTitleEn,
+  ramChalisaTitleHi,
+  ramChalisaVerses,
+  type RamChalisaVerse,
+} from './ram-chalisa';
 
-export type ChalisaId = 'hanuman-chalisa' | 'shiv-chalisa' | 'durga-chalisa' | 'ganesh-chalisa';
+export type ChalisaId = 'hanuman-chalisa' | 'shiv-chalisa' | 'durga-chalisa' | 'ganesh-chalisa' | 'lakshmi-chalisa' | 'saraswati-chalisa' | 'vishnu-chalisa' | 'krishna-chalisa' | 'ram-chalisa';
 
 export type ChalisaVerse =
   | HanumanChalisaVerse
   | ShivChalisaVerse
   | DurgaChalisaVerse
-  | GaneshChalisaVerse;
+  | GaneshChalisaVerse
+  | LakshmiChalisaVerse
+  | SaraswatiChalisaVerse
+  | VishnuChalisaVerse
+  | KrishnaChalisaVerse
+  | RamChalisaVerse;
 
 export type ChalisaPayload = {
   id: ChalisaId;
@@ -62,6 +97,36 @@ const registry: Record<ChalisaId, ChalisaPayload> = {
     titleHi: ganeshChalisaTitleHi,
     titleEn: ganeshChalisaTitleEn,
     verses: ganeshChalisaVerses,
+  },
+  'lakshmi-chalisa': {
+    id: 'lakshmi-chalisa',
+    titleHi: lakshmiChalisaTitleHi,
+    titleEn: lakshmiChalisaTitleEn,
+    verses: lakshmiChalisaVerses,
+  },
+  'saraswati-chalisa': {
+    id: 'saraswati-chalisa',
+    titleHi: saraswatiChalisaTitleHi,
+    titleEn: saraswatiChalisaTitleEn,
+    verses: saraswatiChalisaVerses,
+  },
+  'vishnu-chalisa': {
+    id: 'vishnu-chalisa',
+    titleHi: vishnuChalisaTitleHi,
+    titleEn: vishnuChalisaTitleEn,
+    verses: vishnuChalisaVerses,
+  },
+  'krishna-chalisa': {
+    id: 'krishna-chalisa',
+    titleHi: krishnaChalisaTitleHi,
+    titleEn: krishnaChalisaTitleEn,
+    verses: krishnaChalisaVerses,
+  },
+  'ram-chalisa': {
+    id: 'ram-chalisa',
+    titleHi: ramChalisaTitleHi,
+    titleEn: ramChalisaTitleEn,
+    verses: ramChalisaVerses,
   },
 };
 

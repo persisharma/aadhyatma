@@ -9,7 +9,7 @@ import type { HomeStackParamList } from './types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
-const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa']);
+const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa', 'lakshmi-chalisa', 'saraswati-chalisa', 'vishnu-chalisa', 'krishna-chalisa', 'ram-chalisa']);
 
 const theerthIds = new Set([
   'dvadasha-jyotirlinga',

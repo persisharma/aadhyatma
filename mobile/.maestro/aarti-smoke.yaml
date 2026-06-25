@@ -1,9 +1,9 @@
 # Aarti Category Smoke Test
 #
-# Verifies the Aarti category and its 7 active sections render correctly.
-# Sections: Om Jai Jagdish Hare, Hanuman Ji Ki Aarti, Sankat Mochan
-#           Hanumanashtak, Jai Ganesh Deva, Om Jai Shiv Omkara, Jai Ambe
-#           Gauri, Aarti Kunj Bihari Ki.
+# Verifies the Aarti category and its 9 active sections render correctly.
+# Sections: Om Jai Jagdish Hare, Hanuman Ji Ki Aarti, Jai Ganesh Deva,
+#           Om Jai Shiv Omkara, Jai Ambe Gauri, Aarti Kunj Bihari Ki,
+#           Saraswati Mata Ki Aarti, Om Jai Lakshmi Mata, Shri Ramchandra Kripalu.
 #
 # Aartis share AartiReaderScreen (multi-instance, dispatched by route param).
 # Opens Om Jai Jagdish to verify the dispatch resolves correctly.
@@ -31,6 +31,19 @@ appId: host.exp.Exponent
 - scrollUntilVisible:
     element:
       text: "Saraswati Mata Ki Aarti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+# Om Jai Lakshmi Mata + Shri Ramchandra Kripalu are the new last cards (added 1.4.0)
+- scrollUntilVisible:
+    element:
+      text: "Om Jai Lakshmi Mata\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Shri Ramchandra Kripalu\\..*Tap to open\\."
     direction: DOWN
     visibilityPercentage: 60
     timeout: 10000
