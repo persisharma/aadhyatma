@@ -20,7 +20,6 @@ unshipped slice of the highest-priority feature unless `$ARGUMENTS` or the user 
 - [ ] Deep-link from notification tap → verse via `entryRoutes`
 
 ### PRD-06 — Foundation hardening (Reliability · continuous · priority 1)
-- [ ] Add `ShivaStrotamReaderScreen.test.tsx` smoke test (next untested reader)
 - [ ] Add smoke tests for remaining untested readers (Aarti, DurgaStotram, GaneshStotram, HanumanAshtak, RamStuti, Ramcharitmanas, Sundarkand, VishnuSahasranama)
 - [ ] Wire `npm run test:readers` into CI (block merge on red for PRs touching `mobile/src`)
 - [ ] Buffered on-device crash log (no Sentry; user-initiated share-sheet send)
@@ -53,6 +52,7 @@ unshipped slice of the highest-priority feature unless `$ARGUMENTS` or the user 
 
 Delivered enrichments. Append newest at top: `date · feature · enrichment · commit/PR`.
 
+- 2026-06-25 · PRD-06 Foundation hardening · ShivaStrotamReaderScreen smoke test (`ShivaStrotamReaderScreen.test.tsx`, mounts ch.1, asserts title + first verse render) · run 2 · autorun
 - 2026-06-25 · PRD-06 Foundation hardening · ChalisaReaderScreen smoke test (`ChalisaReaderScreen.test.tsx`, mounts hanuman-chalisa ch.1, asserts title + first verse line render) · run 1
 
 ---
