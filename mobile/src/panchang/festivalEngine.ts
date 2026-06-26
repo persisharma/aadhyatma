@@ -311,7 +311,12 @@ function matchesLunarTithiRuleOnDate(
   if (!rule.paksha || rule.tithi === undefined) return false;
   const matchingMonth = monthForRuleInSystem(rule, calendarSystem);
   const computationSystem = computationSystemForRule(rule, calendarSystem);
-  const { tithiIndex, lunarMonth } = computeTithiAndMonth(date, { calendarSystem: computationSystem, location });
+  const { tithiIndex, lunarMonth, isAdhik } = computeTithiAndMonth(date, { calendarSystem: computationSystem, location });
+  // Festivals tied to a specific named lunar month (e.g. Nirjala Ekadashi in
+  // Jyeshtha) are observed in the nija (true) month, never the adhik (leap)
+  // month that repeats it. Monthly vrats have no fixed month (matchingMonth ===
+  // null) and still recur inside the adhik maas, so only guard the named ones.
+  if (matchingMonth !== null && isAdhik) return false;
   const tithiMatch = rule.paksha === 'shukla'
     ? tithiIndex === rule.tithi - 1
     : tithiIndex === rule.tithi + 14;

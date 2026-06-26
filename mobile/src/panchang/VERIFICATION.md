@@ -71,6 +71,25 @@ boundary. Non-Ujjain festival dates are scanned once on-device (chunked) and per
 via `observanceCache.ts`; until that lands the UI shows the Ujjain dates with an
 "updating…" hint. Location tests: `__tests__/location.test.ts` (Delhi/Guwahati vs drik).
 
+## Observance resolution & Adhik Maas
+
+Annual festivals/vrats tied to a **named** lunar month (e.g. Nirjala Ekadashi in
+Jyeshtha Shukla) are observed in the **nija (true)** month and skip the **adhik
+(leap)** month that repeats it — `matchesLunarTithiRuleOnDate` rejects days whose
+lunation `isAdhik` for month-specific rules (`festivalEngine.ts`). Monthly vrats
+(Pradosh, Sankashti, Purnima, etc.) have no fixed month and still recur inside the
+adhik maas. Worked example: 2026 has Adhik Jyeshtha (05-17 → 06-15), so Nirjala
+Ekadashi is **2026-06-25** (nija), not the adhik Shukla Ekadashi on 2026-05-26.
+Regenerate `precomputedObservances.ts` after any rule/engine change:
+`TZ=Asia/Kolkata npx tsx scripts/gen-precomputed-observances.mts`.
+
+**Known gap — kshaya (lost) Ekadashi:** the matcher pins a tithi to the day it is
+current *at sunrise*. When an Ekadashi tithi is skipped at sunrise (kshaya) it is
+not surfaced — e.g. Yogini Ekadashi 2026 (nija Jyeshtha Krishna Ekadashi, kshaya
+on 2026-07-10/11) is currently dropped rather than assigned to its observance day.
+This is a pre-existing sunrise-matching limitation (several years already surface
+<24 Ekadashis), independent of the Adhik Maas handling above.
+
 ## Reproduce
 ```
 cd mobile

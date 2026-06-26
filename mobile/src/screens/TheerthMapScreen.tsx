@@ -15,6 +15,9 @@ import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { cardFontByLang, isLatinLang } from '@/utils/langType';
+import { getCategoryBackground } from '@/data/backgrounds';
+import { useNewContent, templeNewKey } from '@/contexts/NewContentContext';
+import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import IndiaMap, { type IndiaMapPin } from '@/components/IndiaMap';
 import {
@@ -58,16 +61,26 @@ const templeCity = (t: TempleEntry, lang: Lang) =>
 export default function TheerthMapScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const { isNew, markSeen } = useNewContent();
   const group = route.params?.group as CategoryKey | undefined;
   const stateEn = route.params?.stateEn;
   const isDrill = !!group || !!stateEn;
 
+  // Theerth wears the same image backdrop treatment as every other section
+  // (its category plate), instead of the flat parchment gradient it used before.
+  const backgroundImage = getCategoryBackground('theerth');
+
+  // Opening a temple acknowledges its NEW chip, mirroring how opening a text
+  // markSeen()s a LibraryCard before navigating.
+  const handleTemplePress = (id: string) => {
+    markSeen(templeNewKey(id));
+    navigation.navigate('TheerthDetail', { templeId: id });
+  };
+  const isTempleNew = (id: string) => isNew(templeNewKey(id));
+
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <BackgroundLayer source={backgroundImage} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <TopBar
           title={
@@ -90,7 +103,8 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
             typography={typography}
             radii={radii}
             spacing={spacing}
-            onTemplePress={(id) => navigation.navigate('TheerthDetail', { templeId: id })}
+            isTempleNew={isTempleNew}
+            onTemplePress={handleTemplePress}
           />
         ) : (
           <Listing
@@ -99,6 +113,7 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
             typography={typography}
             radii={radii}
             spacing={spacing}
+            isTempleNew={isTempleNew}
             onOpenCategory={(key) => navigation.push('TheerthMap', { group: key })}
             onOpenState={(s) => navigation.push('TheerthMap', { stateEn: s })}
           />
@@ -175,20 +190,26 @@ function Listing({
   typography,
   radii,
   spacing,
+  isTempleNew,
   onOpenCategory,
   onOpenState,
 }: {
   lang: Lang;
+  isTempleNew: (id: string) => boolean;
   onOpenCategory: (key: CategoryKey) => void;
   onOpenState: (stateEn: string) => void;
 } & ThemeBits) {
   const [mode, setMode] = useState<ListMode>('category');
 
+  // A browse card flags NEW when any temple it leads to is still unseen — the
+  // group/state equivalent of LibraryCard's per-text chip.
   const categoryCards = useMemo(
     () =>
-      CATEGORY_KEYS.map((key) => ({ key, label: categoryLabel(key, lang), count: categoryTemples(key).length }))
-        .filter((c) => c.count > 0),
-    [lang],
+      CATEGORY_KEYS.map((key) => {
+        const list = categoryTemples(key);
+        return { key, label: categoryLabel(key, lang), count: list.length, hasNew: list.some((t) => isTempleNew(t.id)) };
+      }).filter((c) => c.count > 0),
+    [lang, isTempleNew],
   );
 
   const stateCards = useMemo(() => {
@@ -198,9 +219,14 @@ function Listing({
       map.get(t.stateEn)!.push(t);
     });
     return [...map.entries()]
-      .map(([key, list]) => ({ key, label: stateName(list[0], lang), count: list.length }))
+      .map(([key, list]) => ({
+        key,
+        label: stateName(list[0], lang),
+        count: list.length,
+        hasNew: list.some((t) => isTempleNew(t.id)),
+      }))
       .sort((a, b) => a.key.localeCompare(b.key));
-  }, [lang]);
+  }, [lang, isTempleNew]);
 
   return (
     <ScrollView
@@ -216,6 +242,7 @@ function Listing({
           glyph={mode === 'category' ? '॥' : 'ॐ'}
           name={c.label}
           meta={`${c.count} ${pick(lang, { hi: 'तीर्थ', en: 'temples', gu: 'તીર્થ', kn: 'ತೀರ್ಥ' })}`}
+          hasNew={c.hasNew}
           lang={lang}
           colors={colors}
           typography={typography}
@@ -236,11 +263,13 @@ function DrillIn({
   typography,
   radii,
   spacing,
+  isTempleNew,
   onTemplePress,
 }: {
   group?: CategoryKey;
   stateEn?: string;
   lang: Lang;
+  isTempleNew: (id: string) => boolean;
   onTemplePress: (id: string) => void;
 } & ThemeBits) {
   const list = useMemo<TempleEntry[]>(() => {
@@ -298,6 +327,7 @@ function DrillIn({
           glyph="ॐ"
           name={templeName(temple, lang)}
           meta={templeCity(temple, lang)}
+          hasNew={isTempleNew(temple.id)}
           lang={lang}
           colors={colors}
           typography={typography}
@@ -366,6 +396,7 @@ function BrowseCard({
   glyph,
   name,
   meta,
+  hasNew,
   lang,
   colors,
   typography,
@@ -375,6 +406,7 @@ function BrowseCard({
   glyph: string;
   name: string;
   meta: string;
+  hasNew?: boolean;
   lang: Lang;
   onPress: () => void;
 } & Omit<ThemeBits, 'spacing'>) {
@@ -382,18 +414,39 @@ function BrowseCard({
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel={name}
+      accessibilityLabel={hasNew ? `${name}. New.` : name}
       style={({ pressed }) => [
         rowStyles.card,
-        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md },
+        {
+          // Match the active LibraryCard treatment used across other sections:
+          // warm gradient fill (below), saffron-tinted border, lifted shadow.
+          borderColor: colors.cardActiveBorder,
+          borderRadius: radii.lg,
+          shadowColor: '#3C1E0A',
+          shadowOpacity: 0.14,
+          shadowRadius: 16,
+          shadowOffset: { width: 0, height: 6 },
+          elevation: 4,
+        },
         pressed && { opacity: 0.85 },
       ]}
     >
-      <View style={[rowStyles.thumb, { backgroundColor: colors.cardThumbActiveFrom, borderRadius: radii.sm }]}>
+      <LinearGradient
+        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[rowStyles.cardBg, { borderRadius: radii.lg }]}
+      />
+      <LinearGradient
+        colors={[colors.cardThumbActiveFrom, colors.cardThumbActiveTo]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[rowStyles.thumb, { borderRadius: radii.sm }]}
+      >
         <Text style={{ fontFamily: typography.thumb.fontFamily, fontSize: 18, color: colors.parchmentSoft }}>
           {glyph}
         </Text>
-      </View>
+      </LinearGradient>
       <View style={rowStyles.textColumn}>
         <Text
           numberOfLines={1}
@@ -430,6 +483,16 @@ function BrowseCard({
         </Text>
       </View>
       <Text style={{ color: colors.saffron, fontSize: 22, marginLeft: 8 }}>{'›'}</Text>
+      {hasNew ? (
+        <View
+          style={[rowStyles.badge, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]}
+          pointerEvents="none"
+        >
+          <Text style={[rowStyles.badgeText, { color: colors.newBadgeText, letterSpacing: 1.6 }]}>
+            NEW
+          </Text>
+        </View>
+      ) : null}
     </Pressable>
   );
 }
@@ -466,7 +529,28 @@ const toggleStyles = StyleSheet.create({
 });
 
 const rowStyles = StyleSheet.create({
-  card: { flexDirection: 'row', alignItems: 'center', padding: 14, borderWidth: 1, marginBottom: 10 },
+  card: {
+    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 14,
+    borderWidth: 1,
+    marginBottom: 10,
+    overflow: 'hidden',
+  },
+  cardBg: { ...StyleSheet.absoluteFillObject },
   thumb: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center', marginRight: 12 },
   textColumn: { flex: 1 },
+  badge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  badgeText: {
+    fontSize: 9,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+  },
 });
