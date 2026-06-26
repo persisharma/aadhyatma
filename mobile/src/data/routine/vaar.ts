@@ -10,6 +10,8 @@
  * content, the only one available.
  */
 import type { Deity } from '@/data/texts';
+import type { Lang } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
 
 /** 0 = Sunday … 6 = Saturday. Content-filter tag (must exist in the catalog). */
 export const VAAR_DEITY: Readonly<Record<number, Deity>> = {
@@ -37,9 +39,9 @@ export const WEEKDAY_DEITY_LABEL: Readonly<Record<number, { hi: string; en: stri
   6: { hi: 'शनि देव · हनुमान', en: 'Shani Dev · Hanuman' },
 };
 
-export function deityLabelForWeekday(weekday: number, lang: 'hi' | 'en'): string {
+export function deityLabelForWeekday(weekday: number, lang: Lang): string {
   const l = WEEKDAY_DEITY_LABEL[weekday];
-  return lang === 'hi' ? l.hi : l.en;
+  return contentByLang(lang, l.hi, l.en);
 }
 
 export type WeekdayLabel = { hi: string; en: string; short: string };

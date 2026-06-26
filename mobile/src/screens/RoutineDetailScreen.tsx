@@ -4,6 +4,7 @@ import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang, pick } from '@/utils/localize';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { resolveRoutineItem } from '@/data/routine/units';
 import { WEEKDAY_LABELS, deityLabelForWeekday } from '@/data/routine/vaar';
@@ -17,7 +18,6 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { routines, removeItem, deleteRoutine } = useRoutines();
-  const isHi = lang === 'hi';
 
   const routine = routines.find((r) => r.id === route.params.routineId);
   const isFocused = useIsFocused();
@@ -48,7 +48,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
         <Pressable
           onPress={() => navigation.navigate('RoutineAddItems', { routineId: routine.id })}
           accessibilityRole="button"
-          accessibilityLabel={isHi ? 'जोड़ें' : 'Add'}
+          accessibilityLabel={pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ' })}
           hitSlop={12}
         >
           <Text style={{ color: colors.saffron, fontSize: 24 }}>＋</Text>
@@ -62,7 +62,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
         {isWeekday && (
           <View style={{ marginBottom: spacing.md }}>
             <Text style={{ ...typography.sectionLabel, color: colors.inkMuted, marginBottom: 8 }}>
-              {isHi ? 'वार · देव' : 'Weekday · deity'}
+              {pick(lang, { hi: 'वार · देव', en: 'Weekday · deity', gu: 'વાર · દેવ', kn: 'ವಾರ · ದೇವ' })}
             </Text>
             <View style={styles.dayStrip}>
               {WEEKDAY_LABELS.map((w, i) => (
@@ -96,7 +96,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
 
         {routine.items.length === 0 && (
           <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 14, color: colors.inkMuted, textAlign: 'center', marginVertical: 32 }}>
-            {isHi ? 'कोई वस्तु नहीं जोड़ी गई' : 'No items added yet'}
+            {pick(lang, { hi: 'कोई वस्तु नहीं जोड़ी गई', en: 'No items added yet', gu: 'કોઈ વસ્તુ ઉમેરી નથી', kn: 'ಯಾವುದೇ ವಸ್ತು ಸೇರಿಸಿಲ್ಲ' })}
           </Text>
         )}
 
@@ -109,17 +109,17 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
             <View key={item.id} style={[styles.row, { borderBottomColor: colors.divider }]}>
               <Pressable style={styles.info} onPress={() => navigateToRoutineItem(navigation, item)}>
                 <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 15, color: colors.ink }}>
-                  {isHi ? d.titleHi : d.titleEn}
+                  {contentByLang(lang, d.titleHi, d.titleEn)}
                 </Text>
                 <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
-                  {isHi ? d.subHi : d.subEn}
+                  {contentByLang(lang, d.subHi, d.subEn)}
                   {days ? ` · ${days}` : ''}
                 </Text>
               </Pressable>
               <Pressable
                 onPress={() => removeItem(routine.id, item.id)}
                 accessibilityRole="button"
-                accessibilityLabel={isHi ? 'हटाएँ' : 'Remove'}
+                accessibilityLabel={pick(lang, { hi: 'हटाएँ', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ' })}
                 hitSlop={10}
               >
                 <Text style={{ color: colors.inkMuted, fontSize: 20 }}>×</Text>
@@ -129,7 +129,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
         })}
 
         <RoutineButton
-          label={isHi ? 'इस साधना को हटाएँ' : 'Delete this routine'}
+          label={pick(lang, { hi: 'इस साधना को हटाएँ', en: 'Delete this routine', gu: 'આ સાધના કાઢી નાખો', kn: 'ಈ ಸಾಧನೆ ಅಳಿಸಿ' })}
           variant="ghost"
           onPress={() => {
             // Don't goBack() here: deleting drops `routine` to undefined, and the

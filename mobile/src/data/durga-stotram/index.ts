@@ -11,6 +11,8 @@ export type DurgaStotramVerse = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 export type DurgaStotramChapterSource = {

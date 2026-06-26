@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, Easing, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { titleScriptFont } from '@/utils/scriptFont';
 
 type Props = {
   /** Centered caption that gently fades in and out, e.g. "साधना पूर्ण · आज". */
@@ -119,7 +120,7 @@ export default function RoutineCelebration({ caption, onDone }: Props) {
         ]}
       >
         <View style={[styles.captionPill, { backgroundColor: colors.parchmentSoft, borderColor: colors.goldTint, shadowColor: colors.ink }]}>
-          <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 18, color: colors.saffronDeep }}>
+          <Text style={{ fontFamily: titleScriptFont(caption, typography.cardHindi.fontFamily), fontSize: 18, color: colors.saffronDeep }}>
             {caption}
           </Text>
         </View>

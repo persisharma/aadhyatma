@@ -15,6 +15,7 @@ import {
   scheduleDailyVerseRollingWindow,
 } from '@/notifications/scheduler';
 import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
+import { useGitaLanguage } from '@/data/gita/language';
 
 const PREFS_KEY = '@vedansh/notif-prefs';
 const META_KEY = '@vedansh/notif-meta';
@@ -160,6 +161,7 @@ export function NotificationPreferencesProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const { lang } = useGitaLanguage();
   const [prefs, setPrefs] = useState<NotificationPreferences>(DEFAULTS);
   const [meta, setMeta] = useState<NotificationMeta>(META_DEFAULTS);
   const [permissionStatus, setPermissionStatus] =
@@ -250,10 +252,11 @@ export function NotificationPreferencesProvider({
     let cancelled = false;
     (async () => {
       if (prefs.dailyVerseEnabled && permissionStatus === 'granted') {
-        await scheduleDailyVerseRollingWindow({
-          enabled: true,
-          times: prefs.times,
-        }).catch(() => undefined);
+        await scheduleDailyVerseRollingWindow(
+          { enabled: true, times: prefs.times },
+          new Date(),
+          lang
+        ).catch(() => undefined);
       } else {
         await cancelAllDailyVerseNotifications().catch(() => undefined);
       }
@@ -262,7 +265,9 @@ export function NotificationPreferencesProvider({
     return () => {
       cancelled = true;
     };
-  }, [isLoading, prefs, permissionStatus, foregroundTick]);
+    // `lang` is included so changing the reading language reschedules the queued
+    // notifications into the new language (they're built ahead of time).
+  }, [isLoading, prefs, permissionStatus, foregroundTick, lang]);
 
   // Keep the toggle honest: `enabled=true` with a `denied` OS permission is
   // an inconsistent state — reminders can't fire, so the UI must not claim

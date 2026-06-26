@@ -4,6 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import { contentByLang } from '@/utils/localize';
+import { titleFontByLang } from '@/utils/langType';
 
 type Props = {
   visible: boolean;
@@ -153,23 +155,20 @@ export default function ResumeReadingSheet({
                 },
               ]}
             >
-              {lang === 'hi' ? 'अंतिम पठित' : 'LAST READ'}
+              {contentByLang(lang, 'अंतिम पठित', 'LAST READ')}
             </Text>
             <Text
               style={[
                 styles.locationValue,
                 {
                   color: colors.ink,
-                  fontFamily:
-                    lang === 'hi'
-                      ? typography.readerTitle.fontFamily
-                      : typography.cardLatin.fontFamily,
+                  fontFamily: titleFontByLang(lang),
                   fontSize: 16,
                   fontStyle: lang === 'en' ? 'italic' : 'normal',
                 },
               ]}
             >
-              {lang === 'hi' ? locationHi : locationEn}
+              {contentByLang(lang, locationHi, locationEn)}
             </Text>
           </View>
 

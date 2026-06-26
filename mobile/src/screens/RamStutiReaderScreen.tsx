@@ -6,6 +6,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { getRamStutiChapter, type RamStutiVerse } from '@/data/ram-stuti';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -68,7 +70,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
   }, [verseCount, currentIndex]);
 
-  const topTitle = chapter ? (lang === 'hi' ? chapter.titleHi : chapter.titleEn) : '';
+  const topTitle = chapter ? (contentByLang(lang, chapter.titleHi, chapter.titleEn)) : '';
 
   const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = e.nativeEvent.contentOffset.x;
@@ -93,7 +95,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
               <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
             </Pressable>
           </View>
-          <Text style={[styles.title, { color: colors.ink, fontFamily: lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily, fontSize: typography.readerTitle.fontSize, fontStyle: lang === 'en' ? 'italic' : 'normal' }]} numberOfLines={1}>
+          <Text style={[styles.title, { color: colors.ink, fontFamily: titleFontByLang(lang), fontSize: typography.readerTitle.fontSize, fontStyle: lang === 'en' ? 'italic' : 'normal' }]} numberOfLines={1}>
             {topTitle}
           </Text>
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>

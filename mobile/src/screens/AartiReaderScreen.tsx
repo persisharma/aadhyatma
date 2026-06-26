@@ -6,6 +6,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { aartiIdByIndex, getAarti, type AartiVerse } from '@/data/aarti';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -71,7 +73,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
   }, [aarti.verses.length, currentIndex]);
 
-  const topTitle = lang === 'hi' ? aarti.titleHi : aarti.titleEn;
+  const topTitle = contentByLang(lang, aarti.titleHi, aarti.titleEn);
 
   const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = e.nativeEvent.contentOffset.x;
@@ -94,7 +96,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
               <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
             </Pressable>
           </View>
-          <Text style={[styles.title, { color: colors.ink, fontFamily: lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily, fontSize: typography.readerTitle.fontSize, fontStyle: lang === 'en' ? 'italic' : 'normal' }]} numberOfLines={1}>
+          <Text style={[styles.title, { color: colors.ink, fontFamily: titleFontByLang(lang), fontSize: typography.readerTitle.fontSize, fontStyle: lang === 'en' ? 'italic' : 'normal' }]} numberOfLines={1}>
             {topTitle}
           </Text>
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>

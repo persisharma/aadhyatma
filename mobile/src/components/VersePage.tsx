@@ -2,6 +2,14 @@ import React, { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import {
+  verseLinesByLang,
+  meaningByLang,
+  meaningSourceLang,
+  contentByLang,
+  pick,
+} from '@/utils/localize';
+import { verseToken, meaningToken } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
@@ -14,6 +22,9 @@ export type VersePageVerse = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  /** Authored native meaning translations (native-only; absent → transliteration fallback). */
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 type Props = {
@@ -28,26 +39,22 @@ export default function VersePage({ verse, sourceId, width }: Props) {
 
   const bg = useMemo(() => getReaderBackground(sourceId, verse), [sourceId, verse]);
 
-  const verseLines = lang === 'hi' ? verse.lines : verse.linesEn;
-  const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
-  const meaningLabel = lang === 'hi' ? 'भावार्थ' : 'Meaning';
-  const pillText = lang === 'hi' ? verse.labelHi : verse.labelEn;
+  const verseLines = verseLinesByLang(lang, verse.lines, verse.linesEn);
+  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, {
+    gu: verse.meaningGu,
+    kn: verse.meaningKn,
+  });
+  const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ' });
+  const pillText = contentByLang(lang, verse.labelHi, verse.labelEn);
+  const verseTok = verseToken(lang, typography);
 
-  const bodyHiStyle = {
-    color: colors.inkSoft,
-    fontFamily: typography.meaning.fontFamily,
-    fontSize: typography.meaning.fontSize,
-    lineHeight: typography.meaning.lineHeight,
+  const meaningTok = meaningToken(meaningSourceLang(lang), typography);
+  const bodyStyle = {
+    color: meaningSourceLang(lang) === 'en' ? colors.ink : colors.inkSoft,
+    fontFamily: meaningTok.fontFamily,
+    fontSize: meaningTok.fontSize,
+    lineHeight: meaningTok.lineHeight,
   } as const;
-
-  const bodyEnStyle = {
-    color: colors.ink,
-    fontFamily: typography.meaningEnglish.fontFamily,
-    fontSize: typography.meaningEnglish.fontSize,
-    lineHeight: typography.meaningEnglish.lineHeight,
-  };
-
-  const bodyStyle = lang === 'hi' ? bodyHiStyle : bodyEnStyle;
 
   const a11yLabel = [pillText, ...verseLines, meaningLabel, meaning].join('. ');
 
@@ -94,14 +101,9 @@ export default function VersePage({ verse, sourceId, width }: Props) {
                 styles.verseLine,
                 {
                   color: colors.ink,
-                  fontFamily:
-                    lang === 'hi'
-                      ? typography.verse.fontFamily
-                      : typography.verseLatin.fontFamily,
-                  fontSize:
-                    lang === 'hi' ? typography.verse.fontSize : typography.verseLatin.fontSize,
-                  lineHeight:
-                    lang === 'hi' ? typography.verse.lineHeight : typography.verseLatin.lineHeight,
+                  fontFamily: verseTok.fontFamily,
+                  fontSize: verseTok.fontSize,
+                  lineHeight: verseTok.lineHeight,
                   fontStyle: lang === 'en' ? 'italic' : 'normal',
                 },
               ]}

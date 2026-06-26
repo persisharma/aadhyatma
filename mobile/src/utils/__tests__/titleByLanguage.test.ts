@@ -91,4 +91,37 @@ describe('orderTitlesByLanguage', () => {
     expect([hi.primary.text, hi.secondary.text].sort()).toEqual([NAME_EN, NAME_HI].sort());
     expect([en.primary.text, en.secondary.text].sort()).toEqual([NAME_EN, NAME_HI].sort());
   });
+
+  test('gu: re-scripted Devanagari name is primary in the Gujarati serif, English supports', () => {
+    const { primary, secondary } = orderTitlesByLanguage('gu', NAME_HI, NAME_EN, SIZES);
+
+    expect(primary).toEqual({
+      text: 'હનુમાન ચાલીસા',
+      script: 'gujarati',
+      fontFamily: fontFamilies.gujaratiBold,
+      fontStyle: 'normal',
+      fontSize: SIZES.devPrimary, // Devanagari size class — same x-height family
+    });
+    expect(secondary).toEqual({
+      text: NAME_EN,
+      script: 'latin',
+      fontFamily: fontFamilies.latinItalic,
+      fontStyle: 'italic',
+      fontSize: SIZES.latSecondary,
+    });
+  });
+
+  test('kn: re-scripted Devanagari name is primary in the Kannada serif, English supports', () => {
+    const { primary, secondary } = orderTitlesByLanguage('kn', NAME_HI, NAME_EN, SIZES);
+
+    expect(primary).toEqual({
+      text: 'ಹನುಮಾನ ಚಾಲೀಸಾ',
+      script: 'kannada',
+      fontFamily: fontFamilies.kannadaBold,
+      fontStyle: 'normal',
+      fontSize: SIZES.devPrimary,
+    });
+    expect(secondary.text).toBe(NAME_EN);
+    expect(secondary.fontStyle).toBe('italic');
+  });
 });

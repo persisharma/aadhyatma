@@ -4,7 +4,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
+import { titleFontByLang } from '@/utils/langType';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import {
   toDateKey,
@@ -54,15 +56,15 @@ const EN_MONTHS = [
 const HI_WEEKDAYS = ['र', 'सो', 'मं', 'बु', 'गु', 'शु', 'श'];
 const EN_WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
-function sourceLabel(sourceId: string, lang: 'hi' | 'en'): string {
+function sourceLabel(sourceId: string, lang: Lang): string {
   const fromLibrary = library.find((e) => e.id === sourceId);
-  if (fromLibrary) return lang === 'hi' ? fromLibrary.nameHi : fromLibrary.nameEn;
+  if (fromLibrary) return contentByLang(lang, fromLibrary.nameHi, fromLibrary.nameEn);
   return sourceId;
 }
 
-function mantraLabel(mantraId: string, lang: 'hi' | 'en'): string {
+function mantraLabel(mantraId: string, lang: Lang): string {
   const m = japamMantras.find((j) => j.id === mantraId);
-  if (m) return lang === 'hi' ? m.nameHi : m.nameEn;
+  if (m) return contentByLang(lang, m.nameHi, m.nameEn);
   return mantraId;
 }
 
@@ -106,24 +108,18 @@ export default function ProfileScreen({ navigation }: Props) {
       out.push({
         key,
         value: sum,
-        label: (lang === 'hi' ? HI_WEEKDAYS : EN_WEEKDAYS)[d.getDay()],
+        label: contentByLang(lang, HI_WEEKDAYS[d.getDay()], EN_WEEKDAYS[d.getDay()]),
       });
     }
     return out;
   }, [today, lang, dayTotals]);
 
-  const rangeLabelHi =
+  const rangeLabel =
     mode === 'lifetime'
-      ? 'सर्वकालिक'
+      ? pick(lang, { hi: 'सर्वकालिक', en: 'Lifetime', gu: 'સર્વકાલિક', kn: 'ಸಾರ್ವಕಾಲಿಕ' })
       : mode === 'monthly'
-        ? `${HI_MONTHS[today.getMonth()]} ${today.getFullYear()}`
-        : 'आज';
-  const rangeLabelEn =
-    mode === 'lifetime'
-      ? 'Lifetime'
-      : mode === 'monthly'
-        ? `${EN_MONTHS[today.getMonth()]} ${today.getFullYear()}`
-        : 'Today';
+        ? `${contentByLang(lang, HI_MONTHS[today.getMonth()], EN_MONTHS[today.getMonth()])} ${today.getFullYear()}`
+        : pick(lang, { hi: 'आज', en: 'Today', gu: 'આજ', kn: 'ಇಂದು' });
 
   const streak = currentStreak();
   const lifetimeDayCount = activeDateKeys().length;
@@ -173,7 +169,7 @@ export default function ProfileScreen({ navigation }: Props) {
                 color: colors.ink,
               }}
             >
-              {lang === 'hi' ? 'साधक प्रोफ़ाइल' : 'Sadhak Profile'}
+              {pick(lang, { hi: 'साधक प्रोफ़ाइल', en: 'Sadhak Profile', gu: 'સાધક પ્રોફાઇલ', kn: 'ಸಾಧಕ ಪ್ರೊಫೈಲ್' })}
             </Text>
           </View>
           <View style={{ width: 44 }} />
@@ -250,7 +246,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   {streak}
                 </Text>
                 <Text style={[styles.identityFooterLabel, { color: colors.inkMuted }]}>
-                  {lang === 'hi' ? 'दिवस श्रृंखला' : 'DAY STREAK'}
+                  {pick(lang, { hi: 'दिवस श्रृंखला', en: 'DAY STREAK', gu: 'દિવસ શ્રેણી', kn: 'ದಿನ ಸರಣಿ' })}
                 </Text>
               </View>
               <View
@@ -269,7 +265,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   {lifetimeDayCount}
                 </Text>
                 <Text style={[styles.identityFooterLabel, { color: colors.inkMuted }]}>
-                  {lang === 'hi' ? 'सक्रिय दिन' : 'ACTIVE DAYS'}
+                  {pick(lang, { hi: 'सक्रिय दिन', en: 'ACTIVE DAYS', gu: 'સક્રિય દિવસો', kn: 'ಸಕ್ರಿಯ ದಿನಗಳು' })}
                 </Text>
               </View>
               <View
@@ -288,7 +284,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   {bookmarks.length}
                 </Text>
                 <Text style={[styles.identityFooterLabel, { color: colors.inkMuted }]}>
-                  {lang === 'hi' ? 'सहेजे श्लोक' : 'SAVED VERSES'}
+                  {pick(lang, { hi: 'सहेजे श्लोक', en: 'SAVED VERSES', gu: 'સાચવેલા શ્લોક', kn: 'ಉಳಿಸಿದ ಶ್ಲೋಕಗಳು' })}
                 </Text>
               </View>
             </View>
@@ -307,8 +303,12 @@ export default function ProfileScreen({ navigation }: Props) {
           >
             {(['lifetime', 'monthly', 'daily'] as RangeMode[]).map((m) => {
               const active = mode === m;
-              const labelHi = m === 'lifetime' ? 'सर्वकालिक' : m === 'monthly' ? 'मासिक' : 'दैनिक';
-              const labelEn = m === 'lifetime' ? 'Lifetime' : m === 'monthly' ? 'Monthly' : 'Daily';
+              const tabLabel =
+                m === 'lifetime'
+                  ? pick(lang, { hi: 'सर्वकालिक', en: 'Lifetime', gu: 'સર્વકાલિક', kn: 'ಸಾರ್ವಕಾಲಿಕ' })
+                  : m === 'monthly'
+                    ? pick(lang, { hi: 'मासिक', en: 'Monthly', gu: 'માસિક', kn: 'ಮಾಸಿಕ' })
+                    : pick(lang, { hi: 'दैनिक', en: 'Daily', gu: 'દૈનિક', kn: 'ದೈನಿಕ' });
               return (
                 <Pressable
                   key={m}
@@ -326,7 +326,7 @@ export default function ProfileScreen({ navigation }: Props) {
                       color: active ? colors.onPrimary : colors.ink,
                     }}
                   >
-                    {lang === 'hi' ? labelHi : labelEn}
+                    {tabLabel}
                   </Text>
                 </Pressable>
               );
@@ -342,15 +342,14 @@ export default function ProfileScreen({ navigation }: Props) {
               },
             ]}
           >
-            {lang === 'hi' ? rangeLabelHi : rangeLabelEn}
+            {rangeLabel}
           </Text>
 
           {/* Stat tiles */}
           <View style={styles.statGrid}>
             <StatTile
               valueLabel={String(totals.totalReads)}
-              hi="श्लोक पढ़े"
-              en="Verses Read"
+              label={{ hi: 'श्लोक पढ़े', en: 'Verses Read', gu: 'વાંચેલા શ્લોક', kn: 'ಓದಿದ ಶ್ಲೋಕಗಳು' }}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -358,8 +357,7 @@ export default function ProfileScreen({ navigation }: Props) {
             />
             <StatTile
               valueLabel={String(totals.totalBeads)}
-              hi="बीज जपे"
-              en="Beads Chanted"
+              label={{ hi: 'बीज जपे', en: 'Beads Chanted', gu: 'જપેલા મણકા', kn: 'ಜಪಿಸಿದ ಮಣಿಗಳು' }}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -367,8 +365,7 @@ export default function ProfileScreen({ navigation }: Props) {
             />
             <StatTile
               valueLabel={String(totals.totalRounds)}
-              hi="आवृत्तियाँ"
-              en="Rounds (Mala)"
+              label={{ hi: 'आवृत्तियाँ', en: 'Rounds (Mala)', gu: 'આવૃત્તિ (માળા)', kn: 'ಆವೃತ್ತಿ (ಮಾಲಾ)' }}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -376,8 +373,7 @@ export default function ProfileScreen({ navigation }: Props) {
             />
             <StatTile
               valueLabel={String(totals.activeDays)}
-              hi="दिन"
-              en="Days Active"
+              label={{ hi: 'दिन', en: 'Days Active', gu: 'દિવસો', kn: 'ಸಕ್ರಿಯ ದಿನಗಳು' }}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -404,7 +400,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   color: colors.ink,
                 }}
               >
-                {lang === 'hi' ? 'पिछले ७ दिन' : 'Last 7 Days'}
+                {pick(lang, { hi: 'पिछले ७ दिन', en: 'Last 7 Days', gu: 'છેલ્લા ૭ દિવસ', kn: 'ಕಳೆದ ೭ ದಿನ' })}
               </Text>
               <Text
                 style={{
@@ -414,7 +410,7 @@ export default function ProfileScreen({ navigation }: Props) {
                 }}
               >
                 {sevenDayWindow.totalReads + sevenDayWindow.totalBeads}{' '}
-                {lang === 'hi' ? 'क्रियाएँ' : 'actions'}
+                {pick(lang, { hi: 'क्रियाएँ', en: 'actions', gu: 'ક્રિયાઓ', kn: 'ಕ್ರಿಯೆಗಳು' })}
               </Text>
             </View>
             <View style={styles.chartRow}>
@@ -485,9 +481,12 @@ export default function ProfileScreen({ navigation }: Props) {
                   marginTop: 10,
                 }}
               >
-                {lang === 'hi'
-                  ? 'इस अवधि में अभी कोई गतिविधि नहीं'
-                  : 'No activity recorded for this period'}
+                {pick(lang, {
+                  hi: 'इस अवधि में अभी कोई गतिविधि नहीं',
+                  en: 'No activity recorded for this period',
+                  gu: 'આ સમયગાળામાં હજી કોઈ પ્રવૃત્તિ નથી',
+                  kn: 'ಈ ಅವಧಿಯಲ್ಲಿ ಇನ್ನೂ ಯಾವುದೇ ಚಟುವಟಿಕೆ ಇಲ್ಲ',
+                })}
               </Text>
               <Text
                 style={{
@@ -499,9 +498,12 @@ export default function ProfileScreen({ navigation }: Props) {
                   opacity: 0.7,
                 }}
               >
-                {lang === 'hi'
-                  ? 'पढ़ना या जप आरम्भ करें — आपकी साधना यहाँ अंकित होगी'
-                  : 'Begin reading or chanting — your practice will appear here'}
+                {pick(lang, {
+                  hi: 'पढ़ना या जप आरम्भ करें — आपकी साधना यहाँ अंकित होगी',
+                  en: 'Begin reading or chanting — your practice will appear here',
+                  gu: 'વાંચન કે જપ શરૂ કરો — તમારી સાધના અહીં દેખાશે',
+                  kn: 'ಓದು ಅಥವಾ ಜಪ ಆರಂಭಿಸಿ — ನಿಮ್ಮ ಸಾಧನೆ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ',
+                })}
               </Text>
             </View>
           ) : null}
@@ -527,7 +529,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   },
                 ]}
               >
-                {lang === 'hi' ? 'पाठ-अनुसार' : 'By Text'}
+                {pick(lang, { hi: 'पाठ-अनुसार', en: 'By Text', gu: 'પાઠ અનુસાર', kn: 'ಪಠ್ಯದ ಪ್ರಕಾರ' })}
               </Text>
               {perSourceList.map(([src, count], i) => (
                 <View
@@ -543,10 +545,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   <Text
                     style={{
                       flex: 1,
-                      fontFamily:
-                        lang === 'hi'
-                          ? typography.readerTitle.fontFamily
-                          : typography.cardLatin.fontFamily,
+                      fontFamily: titleFontByLang(lang),
                       fontSize: 14,
                       color: colors.ink,
                       fontStyle: lang === 'en' ? 'italic' : 'normal',
@@ -573,7 +572,7 @@ export default function ProfileScreen({ navigation }: Props) {
                       marginLeft: 6,
                     }}
                   >
-                    {lang === 'hi' ? 'श्लोक' : 'verses'}
+                    {pick(lang, { hi: 'श्लोक', en: 'verses', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ' })}
                   </Text>
                 </View>
               ))}
@@ -601,7 +600,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   },
                 ]}
               >
-                {lang === 'hi' ? 'जप-अनुसार' : 'By Japa'}
+                {pick(lang, { hi: 'जप-अनुसार', en: 'By Japa', gu: 'જપ અનુસાર', kn: 'ಜಪದ ಪ್ರಕಾರ' })}
               </Text>
               {perMantraList.map(([mid, jr], i) => (
                 <View
@@ -617,10 +616,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   <Text
                     style={{
                       flex: 1,
-                      fontFamily:
-                        lang === 'hi'
-                          ? typography.readerTitle.fontFamily
-                          : typography.cardLatin.fontFamily,
+                      fontFamily: titleFontByLang(lang),
                       fontSize: 14,
                       color: colors.ink,
                       fontStyle: lang === 'en' ? 'italic' : 'normal',
@@ -645,7 +641,7 @@ export default function ProfileScreen({ navigation }: Props) {
                           color: colors.inkMuted,
                         }}
                       >
-                        {lang === 'hi' ? 'आवृत्ति' : 'rounds'}
+                        {pick(lang, { hi: 'आवृत्ति', en: 'rounds', gu: 'આવૃત્તિ', kn: 'ಆವೃತ್ತಿ' })}
                       </Text>
                     </Text>
                     <Text
@@ -657,7 +653,7 @@ export default function ProfileScreen({ navigation }: Props) {
                       }}
                     >
                       {jr.rounds * 108 + jr.beads}{' '}
-                      {lang === 'hi' ? 'बीज' : 'beads'}
+                      {pick(lang, { hi: 'बीज', en: 'beads', gu: 'મણકા', kn: 'ಮಣಿ' })}
                     </Text>
                   </View>
                 </View>
@@ -672,20 +668,18 @@ export default function ProfileScreen({ navigation }: Props) {
 
 function StatTile({
   valueLabel,
-  hi,
-  en,
+  label,
   colors,
   typography,
   radii,
   lang,
 }: {
   valueLabel: string;
-  hi: string;
-  en: string;
+  label: LocalizedStrings;
   colors: ReturnType<typeof useTheme>['colors'];
   typography: ReturnType<typeof useTheme>['typography'];
   radii: ReturnType<typeof useTheme>['radii'];
-  lang: 'hi' | 'en';
+  lang: Lang;
 }) {
   return (
     <View
@@ -715,7 +709,7 @@ function StatTile({
           },
         ]}
       >
-        {lang === 'hi' ? hi : en}
+        {pick(lang, label)}
       </Text>
     </View>
   );

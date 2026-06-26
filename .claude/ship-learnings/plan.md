@@ -99,3 +99,16 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Category:** race-condition
 **Example:** To distinguish a returning user from a fresh install at a feature's debut, the plan scanned `AsyncStorage.getAllKeys()` for any `@vedansh/*` key. But sibling providers (NotificationPreferences writes `@vedansh/notif-meta`, UserActivity) write keys ON MOUNT during the same cold start, racing the detector → a genuine fresh install can be misclassified as an upgrader (and, here, would flip accessibilityLabels and break Maestro's fresh-install selectors). Fix: scan only keys written exclusively by deliberate user action in a prior session (bookmarks, reading-progress, search-recent, japam-counter, language); exclude any key a provider may write on mount.
 **Resolution pattern:** When using "does prior app data exist?" as an install-vs-upgrade signal, enumerate which keys are written on mount vs. only on user action, and gate on the user-action-only subset. Also seed/diff only user-discoverable (active && !hidden) ids so prelanded hidden/coming content isn't silently pre-acknowledged.
+### Derive content-batch/pilot sizes from actual data ids, never a grep/substring count
+
+**Seen:** 1x — 2026-06-23
+**Category:** plan-assumption
+**Example:** Plan sized the Hanuman Chalisa translation pilot at "45 meanings" from a `meaningHi` substring grep; codex adversarial review found the section has 43 verses and `index.ts` enforces `counts.totalVerses`. The grep over-counted.
+**Resolution pattern:** Before sizing a content batch, enumerate the section's actual verse ids from its data module/JSON; cross-check against any `counts.totalVerses` invariant. Never hand-enter or grep-estimate the total.
+
+### Model-fusion agreement is an advisory confidence signal, NOT a quality gate for sensitive-domain translation
+
+**Seen:** 1x — 2026-06-23
+**Category:** design-mechanism
+**Example:** Plan treated Claude+Codex agreement + self-rated confidence as sufficient to ship native scripture meanings. Codex flagged that two models can agree on the same Hindi-calque or theological error — agreement proves consistency, not correctness.
+**Resolution pattern:** For devotional/legal/medical MT, use inter-model agreement only as an advisory confidence score feeding a reviewer queue. Never auto-ship the agreed output as authoritative; gate live shipping on human/gold-sample review (or ship only a clearly-labelled high-confidence band with transliteration fallback for the rest).

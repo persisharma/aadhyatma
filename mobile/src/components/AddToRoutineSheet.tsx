@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang, pick } from '@/utils/localize';
+import { scriptTitleFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { library } from '@/data/texts';
 import { findJapamMantra } from '@/data/japam';
@@ -31,7 +33,6 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const { routines, addItem, removeItem } = useRoutines();
-  const isHi = lang === 'hi';
 
   const entry = sourceId ? library.find((e) => e.id === sourceId) : undefined;
   const mantra = sourceId ? findJapamMantra(sourceId) : null;
@@ -40,6 +41,7 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
 
   const titleHi = entry?.nameHi ?? mantra?.nameHi ?? sourceId ?? '';
   const titleEn = entry?.nameEn ?? mantra?.nameEn ?? sourceId ?? '';
+  const tName = contentByLang(lang, titleHi, titleEn);
 
   // Selected unit: 'whole' (null) or a chapter number. Reset when the sheet
   // re-opens for a new source / chapter.
@@ -100,7 +102,7 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
         >
           <View style={[styles.grabber, { backgroundColor: colors.divider }]} />
           <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 18, color: colors.ink, textAlign: 'center' }}>
-            {isHi ? `${titleHi} जोड़ें` : `Add ${titleEn}`}
+            {pick(lang, { hi: `${tName} जोड़ें`, en: `Add ${tName}`, gu: `${tName} ઉમેરો`, kn: `${tName} ಸೇರಿಸಿ` })}
           </Text>
           <Text
             style={{
@@ -112,25 +114,30 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
               marginBottom: spacing.md,
             }}
           >
-            {isHi ? `“${titleEn}” को साधना में जोड़ें` : `Add “${titleHi}” to a routine`}
+            {pick(lang, {
+              hi: `“${titleEn}” को साधना में जोड़ें`,
+              en: `Add “${titleHi}” to a routine`,
+              gu: `“${titleEn}” ને સાધનામાં ઉમેરો`,
+              kn: `“${titleEn}” ಅನ್ನು ಸಾಧನೆಗೆ ಸೇರಿಸಿ`,
+            })}
           </Text>
 
           {/* Whole vs. chapter selector for chaptered sources */}
           {chapters.length > 0 && (
             <View style={{ marginBottom: spacing.md }}>
               <Text style={{ ...typography.sectionLabel, color: colors.inkMuted, marginBottom: 8 }}>
-                {isHi ? 'क्या जोड़ें' : 'What to add'}
+                {pick(lang, { hi: 'क्या जोड़ें', en: 'What to add', gu: 'શું ઉમેરવું', kn: 'ಏನು ಸೇರಿಸಬೇಕು' })}
               </Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
                 <Pressable onPress={() => setChapterSel(null)} style={chip(chapterSel == null)}>
                   <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 13, color: colors.ink }}>
-                    {isHi ? 'पूरा' : 'Whole'}
+                    {pick(lang, { hi: 'पूरा', en: 'Whole', gu: 'આખું', kn: 'ಸಂಪೂರ್ಣ' })}
                   </Text>
                 </Pressable>
                 {chapters.map((c) => (
                   <Pressable key={c.chapter} onPress={() => setChapterSel(c.chapter)} style={chip(chapterSel === c.chapter)}>
                     <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 13, color: colors.ink }}>
-                      {isHi ? c.titleHi : c.titleEn}
+                      {contentByLang(lang, c.titleHi, c.titleEn)}
                     </Text>
                   </Pressable>
                 ))}
@@ -149,7 +156,7 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
                   paddingVertical: spacing.md,
                 }}
               >
-                {isHi ? 'अभी कोई साधना नहीं' : 'No routines yet'}
+                {pick(lang, { hi: 'अभी कोई साधना नहीं', en: 'No routines yet', gu: 'હજી કોઈ સાધના નથી', kn: 'ಇನ್ನೂ ಯಾವುದೇ ಸಾಧನೆ ಇಲ್ಲ' })}
               </Text>
             )}
 
@@ -175,11 +182,13 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
                     {added && <Text style={{ color: colors.onPrimary, fontSize: 13 }}>✓</Text>}
                   </View>
                   <Text style={{ flex: 1, fontFamily: typography.cardHindi.fontFamily, fontSize: 15, color: colors.ink }}>
-                    {r.nameHi || r.nameEn}
+                    {contentByLang(lang, r.nameHi || r.nameEn, r.nameEn || r.nameHi)}
                   </Text>
                   <View style={{ backgroundColor: colors.saffronTint, borderRadius: radii.pill, paddingHorizontal: 8, paddingVertical: 2 }}>
                     <Text style={{ ...typography.versePill, color: colors.saffronDeep }}>
-                      {r.mode === 'weekday' ? (isHi ? 'वार' : 'WEEKDAY') : isHi ? 'दैनिक' : 'DAILY'}
+                      {r.mode === 'weekday'
+                        ? pick(lang, { hi: 'वार', en: 'WEEKDAY', gu: 'વાર', kn: 'ವಾರ' })
+                        : pick(lang, { hi: 'दैनिक', en: 'DAILY', gu: 'દૈનિક', kn: 'ದೈನಿಕ' })}
                     </Text>
                   </View>
                 </Pressable>
@@ -190,13 +199,16 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
               <Text style={{ color: colors.saffron, fontSize: 20, marginRight: 10 }}>＋</Text>
               <Text
                 style={{
-                  fontFamily: isHi ? typography.cardHindi.fontFamily : typography.verseLatin.fontFamily,
+                  fontFamily:
+                    lang === 'en'
+                      ? typography.verseLatin.fontFamily
+                      : scriptTitleFont(lang, typography.cardHindi.fontFamily),
                   fontSize: 15,
                   lineHeight: 19,
                   color: colors.saffron,
                 }}
               >
-                {isHi ? 'नई साधना बनाएँ' : 'New routine'}
+                {pick(lang, { hi: 'नई साधना बनाएँ', en: 'New routine', gu: 'નવી સાધના બનાવો', kn: 'ಹೊಸ ಸಾಧನೆ ರಚಿಸಿ' })}
               </Text>
             </Pressable>
           </ScrollView>

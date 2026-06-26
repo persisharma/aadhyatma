@@ -19,3 +19,10 @@
 
 # Natural Earth download cache for build-india-map.mjs
 scripts/.cache/
+
+# Marketing reel pipeline — regenerable outputs (keep the tooling, ignore the artifacts)
+marketing/linkedin/shots/
+marketing/linkedin/frames/
+marketing/linkedin/slides/
+marketing/linkedin/*.mp4
+marketing/linkedin/.metro.log

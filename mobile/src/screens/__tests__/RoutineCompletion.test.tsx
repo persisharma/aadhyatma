@@ -84,6 +84,26 @@ describe('whole-section (non-chaptered) completion via verseCount', () => {
   });
 });
 
+describe('whole-section completion for a pooled non-chaptered source (sanskar)', () => {
+  // Sanskar sources live in the pool but their reader (SanskarReaderScreen)
+  // saves progress without a `chapter`. The last verse-page is the max pooled
+  // verseIndex (the leading `intro` is excluded from the pool).
+  const pooled = getVersePool().filter((v) => v.sourceId === 'prabhati-shloka');
+  const lastIdx = pooled.reduce((m, v) => Math.max(m, v.verseIndex), 0);
+  const item: RoutineItem = { id: 'i', kind: 'section', sourceId: 'prabhati-shloka' };
+
+  it('completes at the last verse-page even though progress carries no chapter', () => {
+    expect(pooled.length).toBeGreaterThan(0);
+    const atEnd = { sourceId: 'prabhati-shloka', verseIndex: lastIdx, updatedAt: todayMs };
+    expect(isItemAutoComplete(item, ctx({ getProgress: () => atEnd }))).toBe(true);
+  });
+
+  it('is incomplete partway through', () => {
+    const mid = { sourceId: 'prabhati-shloka', verseIndex: 0, updatedAt: todayMs };
+    expect(isItemAutoComplete(item, ctx({ getProgress: () => mid }))).toBe(false);
+  });
+});
+
 describe('chapter completion for a pooled chaptered source', () => {
   // Shiva Stotram is chaptered (each stotra is a chapter) and lives in the pool.
   const pooled = getVersePool().filter((v) => v.sourceId === 'shiva-strotam' && v.chapter === 1);

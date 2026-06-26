@@ -5,13 +5,16 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { captionFont } from '@/utils/scriptFont';
+import { contentByLang, meaningByLang } from '@/utils/localize';
+import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { transliterateDevanagari } from '@/utils/transliterate';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'ObservanceDetail'>;
 
@@ -22,28 +25,28 @@ function startOfLocalDay(d: Date): Date {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 }
 
-function formatDate(date: Date, isHindi: boolean): string {
-  const months = isHindi ? MONTHS_HI : MONTHS_EN;
+function formatDate(date: Date, lang: Lang): string {
+  const months =
+    lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-function relativeLabel(date: Date, from: Date, isHindi: boolean): string {
+function relativeLabel(date: Date, from: Date, lang: Lang): string {
   const days = Math.round((startOfLocalDay(date).getTime() - startOfLocalDay(from).getTime()) / 86400000);
-  if (days <= 0) return isHindi ? 'आज' : 'Today';
-  if (days === 1) return isHindi ? 'कल' : 'Tomorrow';
-  return isHindi ? `${days} दिन में` : `in ${days} days`;
+  if (days <= 0) return contentByLang(lang, 'आज', 'Today');
+  if (days === 1) return contentByLang(lang, 'कल', 'Tomorrow');
+  return contentByLang(lang, `${days} दिन में`, `in ${days} days`);
 }
 
-function categoryLabel(category: string, isHindi: boolean): string {
-  if (category === 'vrat') return isHindi ? 'व्रत' : 'Vrat';
-  if (category === 'upavas') return isHindi ? 'उपवास' : 'Upvas';
-  return isHindi ? 'पर्व' : 'Festival';
+function categoryLabel(category: string, lang: Lang): string {
+  if (category === 'vrat') return contentByLang(lang, 'व्रत', 'Vrat');
+  if (category === 'upavas') return contentByLang(lang, 'उपवास', 'Upvas');
+  return contentByLang(lang, 'पर्व', 'Festival');
 }
 
 export default function ObservanceDetailScreen({ route, navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHindi = lang === 'hi';
   const rootNav = useNavigation<any>();
   const [calendarSystem] = usePanchangCalendarSystem();
 
@@ -94,22 +97,22 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel={isHindi ? 'वापस' : 'Back'}
+            accessibilityLabel={contentByLang(lang, 'वापस', 'Back')}
             hitSlop={12}
             style={({ pressed }) => [styles.backButton, { borderColor: colors.divider }, pressed && { opacity: 0.6 }]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 20 }}>‹</Text>
           </Pressable>
-          <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-            {isHindi ? 'व्रत विवरण' : 'Observance'}
+          <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+            {contentByLang(lang, 'व्रत विवरण', 'Observance')}
           </Text>
           <View style={{ width: 36 }} />
         </View>
 
         {!rule ? (
           <View style={styles.centered}>
-            <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 14, color: colors.inkMuted }}>
-              {isHindi ? 'यह व्रत नहीं मिला।' : 'Observance not found.'}
+            <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 14, color: colors.inkMuted }}>
+              {contentByLang(lang, 'यह व्रत नहीं मिला।', 'Observance not found.')}
             </Text>
           </View>
         ) : (
@@ -122,23 +125,23 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
               <View style={styles.heroTags}>
                 <View style={[styles.pill, { backgroundColor: rule.category === 'festival' ? colors.saffronTint : colors.goldTint, borderRadius: radii.pill }]}>
                   <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep }}>
-                    {categoryLabel(rule.category, isHindi)}
+                    {categoryLabel(rule.category, lang)}
                   </Text>
                 </View>
                 <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 13, color: colors.inkMuted }}>
-                  {isHindi ? rule.deityHi : rule.deityEn}
+                  {contentByLang(lang, rule.deityHi, rule.deityEn)}
                 </Text>
               </View>
-              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 24, color: colors.ink, textAlign: 'center', marginTop: 8 }}>
-                {isHindi ? rule.nameHi : rule.nameEn}
+              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 24, color: colors.ink, textAlign: 'center', marginTop: 8 }}>
+                {contentByLang(lang, rule.nameHi, rule.nameEn)}
               </Text>
-              <Text style={{ ...captionFont(isHindi ? rule.nameEn : rule.nameHi), fontSize: 15, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
-                {isHindi ? rule.nameEn : rule.nameHi}
+              <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 15, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
+                {lang === 'en' ? rule.nameHi : rule.nameEn}
               </Text>
               {next && (
                 <View style={[styles.nextPill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
                   <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
-                    {isHindi ? 'अगला' : 'Next'} · {formatDate(next.date, isHindi)} · {relativeLabel(next.date, today, isHindi)}
+                    {contentByLang(lang, 'अगला', 'Next')} · {formatDate(next.date, lang)} · {relativeLabel(next.date, today, lang)}
                   </Text>
                 </View>
               )}
@@ -162,7 +165,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 ]}
               >
                 <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 13, color: following ? colors.parchment : colors.saffronDeep }}>
-                  {following ? (isHindi ? '✓ फ़ॉलो किया' : '✓ Following') : isHindi ? '★ फ़ॉलो करें' : '★ Follow'}
+                  {following ? (contentByLang(lang, '✓ फ़ॉलो किया', '✓ Following')) : contentByLang(lang, '★ फ़ॉलो करें', '★ Follow')}
                 </Text>
               </Pressable>
               {katha && (
@@ -177,7 +180,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                   ]}
                 >
                   <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 13, color: colors.parchment }}>
-                    {isHindi ? '॥ कथा पढ़ें' : '॥ Read Katha'}
+                    {contentByLang(lang, '॥ कथा पढ़ें', '॥ Read Katha')}
                   </Text>
                 </Pressable>
               )}
@@ -189,30 +192,30 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 accessibilityLabel="Added — View in My Vrat"
                 style={[styles.confirmBar, { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.md }]}
               >
-                <Text style={{ flex: 1, fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.inkSoft }}>
-                  {isHindi ? 'मेरा व्रत में जोड़ा' : 'Added to My Vrat'}
+                <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
+                  {contentByLang(lang, 'मेरा व्रत में जोड़ा', 'Added to My Vrat')}
                 </Text>
                 <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
-                  {isHindi ? 'देखें →' : 'View →'}
+                  {contentByLang(lang, 'देखें →', 'View →')}
                 </Text>
               </Pressable>
             )}
 
             {/* About */}
             <View style={styles.block}>
-              <Text style={[styles.blockHeading, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}>
-                {isHindi ? 'महत्व' : 'About'}
+              <Text style={[styles.blockHeading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
+                {contentByLang(lang, 'महत्व', 'About')}
               </Text>
-              <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 14, lineHeight: 22, color: colors.inkSoft }}>
-                {isHindi ? rule.shortDescriptionHi : rule.shortDescriptionEn}
+              <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 14, lineHeight: 22, color: colors.inkSoft }}>
+                {meaningByLang(lang, rule.shortDescriptionHi, rule.shortDescriptionEn)}
               </Text>
             </View>
 
             {/* Story / Katha */}
             {katha && (
               <View style={styles.block}>
-                <Text style={[styles.blockHeading, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}>
-                  {isHindi ? 'कथा' : 'Story'}
+                <Text style={[styles.blockHeading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
+                  {contentByLang(lang, 'कथा', 'Story')}
                 </Text>
                 <Pressable
                   onPress={openKatha}
@@ -222,11 +225,11 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 >
                   <Text style={{ fontSize: 22, color: colors.saffron, marginRight: 12 }}>॥</Text>
                   <View style={{ flex: 1 }}>
-                    <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-                      {isHindi ? katha.titleHi : katha.titleEn}
+                    <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                      {contentByLang(lang, katha.titleHi, katha.titleEn)}
                     </Text>
-                    <Text style={{ ...captionFont(isHindi ? katha.titleEn : katha.titleHi), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
-                      {isHindi ? katha.titleEn : katha.titleHi} · {katha.sections.length} {isHindi ? 'खंड' : 'sections'}
+                    <Text style={{ ...captionFont(lang === 'en' ? katha.titleHi : katha.titleEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
+                      {lang === 'en' ? katha.titleHi : katha.titleEn} · {katha.sections.length} {contentByLang(lang, 'खंड', 'sections')}
                     </Text>
                   </View>
                   <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>

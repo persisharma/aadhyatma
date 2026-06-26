@@ -2,6 +2,15 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import {
+  verseLinesByLang,
+  meaningByLang,
+  commentaryByLang,
+  meaningSourceLang,
+  contentByLang,
+  pick,
+} from '@/utils/localize';
+import { verseToken, meaningToken } from '@/utils/langType';
 import type { GitaVerse } from '@/data/gita';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
@@ -19,40 +28,53 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
   const { lang } = useGitaLanguage();
   const bg = getReaderBackground(sourceId, verse);
 
-  const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
-  const commentary = lang === 'hi' ? verse.commentaryHi : verse.commentaryEn;
-  const otherCommentary = lang === 'hi' ? verse.commentaryEn : verse.commentaryHi;
+  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, { gu: verse.meaningGu, kn: verse.meaningKn });
+  const commentary = commentaryByLang(lang, verse.commentaryHi, verse.commentaryEn);
+  // The fallback source is the language the meaning is NOT drawn from: hi/gu read the
+  // Devanagari source, so their fallback is English; en/kn read English, fallback is Hindi.
+  const otherCommentary =
+    meaningSourceLang(lang) === 'en' ? verse.commentaryHi : verse.commentaryEn;
   const hasCommentary = commentary.length > 0;
   const commentaryFallbackNote =
     !hasCommentary && otherCommentary.length > 0
-      ? lang === 'hi'
-        ? 'इस श्लोक की विस्तृत व्याख्या केवल अंग्रेज़ी में उपलब्ध है।'
-        : 'Extended commentary is available in Hindi only for this verse.'
+      ? pick(lang, {
+          hi: 'इस श्लोक की विस्तृत व्याख्या केवल अंग्रेज़ी में उपलब्ध है।',
+          en: 'Extended commentary is available in Hindi only for this verse.',
+          gu: 'આ શ્લોકની વિગતવાર વ્યાખ્યા ફક્ત અંગ્રેજીમાં ઉપલબ્ધ છે.',
+          kn: 'ಈ ಶ್ಲೋಕದ ವಿವರವಾದ ವ್ಯಾಖ್ಯಾನ ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ಮಾತ್ರ ಲಭ್ಯವಿದೆ.',
+        })
       : null;
 
-  const meaningLabel = lang === 'hi' ? 'अर्थ · Meaning' : 'Meaning · अर्थ';
-  const commentaryLabel = lang === 'hi' ? 'व्याख्या · Commentary' : 'Commentary · व्याख्या';
+  // Bilingual section labels (both scripts shown, order flips by language) — design.md §3 table.
+  const meaningLabel = pick(lang, {
+    hi: 'अर्थ · Meaning',
+    en: 'Meaning · अर्थ',
+    gu: 'અર્થ · Meaning',
+    kn: 'ಅರ್ಥ · Meaning',
+  });
+  const commentaryLabel = pick(lang, {
+    hi: 'व्याख्या · Commentary',
+    en: 'Commentary · व्याख्या',
+    gu: 'વ્યાખ્યા · Commentary',
+    kn: 'ವ್ಯಾಖ್ಯಾನ · Commentary',
+  });
 
-  const pillText =
-    lang === 'hi'
-      ? `श्लोक · ${verse.chapter}.${verse.number}`
-      : `Shloka · ${verse.chapter}.${verse.number}`;
+  const pillText = contentByLang(
+    lang,
+    `श्लोक · ${verse.chapter}.${verse.number}`,
+    `Shloka · ${verse.chapter}.${verse.number}`
+  );
 
-  const bodyHiStyle = {
-    color: colors.inkSoft,
-    fontFamily: typography.meaning.fontFamily,
-    fontSize: typography.meaning.fontSize,
-    lineHeight: typography.meaning.lineHeight,
+  // Meaning body styling follows the meaning's SOURCE language (kn meaning is English),
+  // while verse lines below follow the display script. inkSoft for Devanagari-origin
+  // prose (hi/gu), ink for Latin (en/kn) — preserving the original hi/en split exactly.
+  const meaningTok = meaningToken(meaningSourceLang(lang), typography);
+  const bodyStyle = {
+    color: meaningSourceLang(lang) === 'en' ? colors.ink : colors.inkSoft,
+    fontFamily: meaningTok.fontFamily,
+    fontSize: meaningTok.fontSize,
+    lineHeight: meaningTok.lineHeight,
   } as const;
-
-  const bodyEnStyle = {
-    color: colors.ink,
-    fontFamily: typography.meaningEnglish.fontFamily,
-    fontSize: typography.meaningEnglish.fontSize,
-    lineHeight: typography.meaningEnglish.lineHeight,
-  } as const;
-
-  const bodyStyle = lang === 'hi' ? bodyHiStyle : bodyEnStyle;
 
   const a11yLabel = [
     `Verse ${verse.chapter}.${verse.number}`,
@@ -102,29 +124,25 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
         </View>
 
         <View style={styles.verseBlock}>
-          {(lang === 'hi' ? verse.sanskrit : verse.transliteration).map((line, idx) => (
-            <Text
-              key={`v-${idx}`}
-              style={[
-                styles.verseLine,
-                lang === 'hi'
-                  ? {
-                      color: colors.ink,
-                      fontFamily: typography.verse.fontFamily,
-                      fontSize: typography.verse.fontSize,
-                      lineHeight: typography.verse.lineHeight,
-                    }
-                  : {
-                      color: colors.ink,
-                      fontFamily: typography.verseLatin.fontFamily,
-                      fontSize: typography.verseLatin.fontSize,
-                      lineHeight: typography.verseLatin.lineHeight,
-                    },
-              ]}
-            >
-              {line}
-            </Text>
-          ))}
+          {verseLinesByLang(lang, verse.sanskrit, verse.transliteration).map((line, idx) => {
+            const tok = verseToken(lang, typography);
+            return (
+              <Text
+                key={`v-${idx}`}
+                style={[
+                  styles.verseLine,
+                  {
+                    color: colors.ink,
+                    fontFamily: tok.fontFamily,
+                    fontSize: tok.fontSize,
+                    lineHeight: tok.lineHeight,
+                  },
+                ]}
+              >
+                {line}
+              </Text>
+            );
+          })}
         </View>
 
         <Ornament />

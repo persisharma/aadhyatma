@@ -6,6 +6,7 @@
  */
 import assert from 'node:assert/strict';
 import { temples, getTempleById, otherFamous, templesInGroup } from '../theerth/temples';
+import { library } from '../texts';
 import {
   INDIA_PROJECTION,
   INDIA_STATES,
@@ -112,20 +113,52 @@ for (const t of temples) {
   }
 }
 
-// ─── 6b. Shakti Peeth membership is the curated map's actual peeth subset ─────
+// ─── 6b. Shakti Peeth membership = every recognised peeth plotted on this map ─
+// The pre-existing 7 peeths plus the 14 India-located Ashtadasha additions (= 21).
 assert.deepEqual(
   templesInGroup('shakti-peeth').map((t) => t.id).sort(),
   [
+    'bhramaramba',
+    'biraja',
+    'chamundeshwari',
     'danteshwari',
+    'ekaveerika-mahur',
+    'harsiddhi-ujjain',
+    'jogulamba',
     'jwala-devi',
     'kalighat',
     'kamakhya',
+    'kamakshi',
+    'madhaveswari',
+    'mahalakshmi-kolhapur',
+    'mangala-gauri',
+    'manikyamba',
     'naina-devi',
     'nartiang-durga',
+    'puruhutika',
+    'shrinkhala',
     'tripura-sundari',
+    'vishalakshi',
   ].sort(),
-  'Shakti Peeth group should include only recognised peeths present in this map',
+  'Shakti Peeth group should include every recognised peeth plotted on this map',
 );
+
+// ─── 6c. All 16 India-located Ashtadasha Maha Shakti Peeths are present + tagged ─
+// Adi Shankara's Ashtadasha stotram lists 18; 16 lie in modern India (these +
+// Kamakhya/Kamarupa & Jwala/Vaishnavi). The 2 abroad (Shankari/Sri Lanka,
+// Sharada/PoK) fall outside the India map and are catalog-documented, not pinned.
+const ASHTADASHA_INDIA = [
+  'kamakshi', 'shrinkhala', 'chamundeshwari', 'jogulamba', 'bhramaramba',
+  'mahalakshmi-kolhapur', 'ekaveerika-mahur', 'harsiddhi-ujjain', 'puruhutika',
+  'biraja', 'manikyamba', 'madhaveswari', 'mangala-gauri', 'vishalakshi',
+  'kamakhya', 'jwala-devi',
+];
+assert.equal(ASHTADASHA_INDIA.length, 16, 'expected 16 India-located Ashtadasha peeths');
+const shaktiIds = new Set(templesInGroup('shakti-peeth').map((t) => t.id));
+for (const id of ASHTADASHA_INDIA) {
+  assert.ok(getTempleById(id), `Ashtadasha shrine missing from dataset: ${id}`);
+  assert.ok(shaktiIds.has(id), `Ashtadasha shrine not tagged shakti-peeth: ${id}`);
+}
 
 // ─── 7. Statewise coverage — these states must each have ≥1 temple ────────────
 const EXPECTED_STATES = [
@@ -137,6 +170,8 @@ const EXPECTED_STATES = [
   'Rajasthan', 'Karnataka', 'Bihar', 'Telangana', 'Chhattisgarh', 'Goa',
   'Delhi', 'Punjab', 'Haryana', 'Manipur', 'Tripura', 'Puducherry',
   'Arunachal Pradesh', 'Meghalaya', 'Sikkim',
+  // gap-state gap-fill (marquee shrine added for each)
+  'Andaman and Nicobar Islands', 'Chandigarh', 'Nagaland',
 ];
 const presentStates = new Set(temples.map((t) => norm(t.stateEn)));
 for (const s of EXPECTED_STATES) {
@@ -150,6 +185,15 @@ assert.ok(
   otherFamous().every((t) => t.groups.length === 0),
   'otherFamous must only return ungrouped temples',
 );
+
+// ─── 9. Total temple count is pinned (guards accidental drops on enrichment) ──
+assert.equal(temples.length, 71, `expected 71 temples, got ${temples.length}`);
+
+// ─── 10. User-facing library counts stay in sync with the live data ──────────
+const famousTheerth = library.find((entry) => entry.id === 'famous-theerth');
+assert.ok(famousTheerth, 'famous-theerth library entry should exist');
+assert.match(famousTheerth.sub, /71 तीर्थ/, 'Hindi famous-theerth subtitle should match temple count');
+assert.match(famousTheerth.subEn, /71 Theerths/, 'English famous-theerth subtitle should match temple count');
 
 console.log(
   `✓ theerth data-contract: ${temples.length} temples, ${EXPECTED_STATES.length} states covered, projection aligned, sourced prose present`,

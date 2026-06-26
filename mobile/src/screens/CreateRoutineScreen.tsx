@@ -4,7 +4,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { pick, type LocalizedStrings } from '@/utils/localize';
+import { scriptTitleFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import type { RoutineScheduleMode } from '@/data/routine/types';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -15,7 +17,6 @@ export default function CreateRoutineScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { createRoutine } = useRoutines();
-  const isHi = lang === 'hi';
 
   const [step, setStep] = useState<'name' | 'mode'>('name');
   const [nameHi, setNameHi] = useState('');
@@ -41,14 +42,14 @@ export default function CreateRoutineScreen({ navigation }: Props) {
           <Pressable
             onPress={() => (step === 'mode' ? setStep('name') : navigation.goBack())}
             accessibilityRole="button"
-            accessibilityLabel={isHi ? 'वापस' : 'Back'}
+            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ' })}
             hitSlop={16}
             style={[styles.backBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
           </Pressable>
           <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}>
-            {isHi ? 'नई साधना' : 'New routine'}
+            {pick(lang, { hi: 'नई साधना', en: 'New routine', gu: 'નવી સાધના', kn: 'ಹೊಸ ಸಾಧನೆ' })}
           </Text>
         </View>
 
@@ -58,9 +59,14 @@ export default function CreateRoutineScreen({ navigation }: Props) {
         >
           {step === 'name' ? (
             <>
-              <Heading hi="साधना का नाम" en="Name your routine" isHi={isHi} colors={colors} typography={typography} />
+              <Heading
+                msg={{ hi: 'साधना का नाम', en: 'Name your routine', gu: 'સાધનાનું નામ', kn: 'ನಿಮ್ಮ ಸಾಧನೆಗೆ ಹೆಸರಿಡಿ' }}
+                lang={lang}
+                colors={colors}
+                typography={typography}
+              />
               <Field
-                label={isHi ? 'हिंदी नाम' : 'Hindi name'}
+                label={pick(lang, { hi: 'हिंदी नाम', en: 'Hindi name', gu: 'હિન્દી નામ', kn: 'ಹಿಂದಿ ಹೆಸರು' })}
                 placeholder="प्रातः साधना"
                 value={nameHi}
                 onChangeText={setNameHi}
@@ -70,7 +76,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
                 spacing={spacing}
               />
               <Field
-                label={isHi ? 'अंग्रेज़ी नाम' : 'English name'}
+                label={pick(lang, { hi: 'अंग्रेज़ी नाम', en: 'English name', gu: 'અંગ્રેજી નામ', kn: 'ಇಂಗ್ಲಿಷ್ ಹೆಸರು' })}
                 placeholder="Morning Sadhana"
                 value={nameEn}
                 onChangeText={setNameEn}
@@ -80,8 +86,8 @@ export default function CreateRoutineScreen({ navigation }: Props) {
                 spacing={spacing}
               />
               <PrimaryButton
-                label={isHi ? 'आगे' : 'Next'}
-                isHi={isHi}
+                label={pick(lang, { hi: 'आगे', en: 'Next', gu: 'આગળ', kn: 'ಮುಂದೆ' })}
+                lang={lang}
                 disabled={!nameReady}
                 onPress={() => setStep('mode')}
                 colors={colors}
@@ -93,20 +99,17 @@ export default function CreateRoutineScreen({ navigation }: Props) {
           ) : (
             <>
               <Heading
-                hi="यह कब चले?"
-                en="Same every day, or by weekday?"
-                isHi={isHi}
+                msg={{ hi: 'यह कब चले?', en: 'Same every day, or by weekday?', gu: 'આ ક્યારે ચાલે?', kn: 'ಇದು ಯಾವಾಗ ನಡೆಯಬೇಕು?' }}
+                lang={lang}
                 colors={colors}
                 typography={typography}
               />
               <ModeCard
                 selected={mode === 'daily'}
                 onPress={() => setMode('daily')}
-                titleHi="दैनिक — हर दिन एक जैसा"
-                titleEn="Daily — same every day"
-                descHi="हर वस्तु प्रतिदिन दिखती है।"
-                descEn="Every item shows every day."
-                isHi={isHi}
+                title={{ hi: 'दैनिक — हर दिन एक जैसा', en: 'Daily — same every day', gu: 'દૈનિક — દરરોજ એકસરખું', kn: 'ದೈನಿಕ — ಪ್ರತಿದಿನ ಒಂದೇ' }}
+                desc={{ hi: 'हर वस्तु प्रतिदिन दिखती है।', en: 'Every item shows every day.', gu: 'દરેક વસ્તુ રોજ દેખાય છે.', kn: 'ಪ್ರತಿ ವಸ್ತುವೂ ಪ್ರತಿದಿನ ಕಾಣಿಸುತ್ತದೆ.' }}
+                lang={lang}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -115,19 +118,17 @@ export default function CreateRoutineScreen({ navigation }: Props) {
               <ModeCard
                 selected={mode === 'weekday'}
                 onPress={() => setMode('weekday')}
-                titleHi="वार अनुसार — दिन के हिसाब से"
-                titleEn="By weekday — changes per day"
-                descHi="हर दिन का अपना देव व पाठ।"
-                descEn="Each day has its own deity and texts."
-                isHi={isHi}
+                title={{ hi: 'वार अनुसार — दिन के हिसाब से', en: 'By weekday — changes per day', gu: 'વાર પ્રમાણે — દિવસ મુજબ', kn: 'ವಾರದ ಪ್ರಕಾರ — ದಿನಕ್ಕೆ ತಕ್ಕಂತೆ' }}
+                desc={{ hi: 'हर दिन का अपना देव व पाठ।', en: 'Each day has its own deity and texts.', gu: 'દરેક દિવસનો પોતાનો દેવ અને પાઠ.', kn: 'ಪ್ರತಿ ದಿನಕ್ಕೂ ತನ್ನದೇ ದೇವ ಮತ್ತು ಪಠ್ಯ.' }}
+                lang={lang}
                 colors={colors}
                 typography={typography}
                 radii={radii}
                 spacing={spacing}
               />
               <PrimaryButton
-                label={isHi ? 'साधना बनाएँ' : 'Create routine'}
-                isHi={isHi}
+                label={pick(lang, { hi: 'साधना बनाएँ', en: 'Create routine', gu: 'સાધના બનાવો', kn: 'ಸಾಧನೆ ರಚಿಸಿ' })}
+                lang={lang}
                 disabled={!mode}
                 onPress={create}
                 colors={colors}
@@ -150,16 +151,19 @@ type ThemeBits = {
   spacing?: ReturnType<typeof useTheme>['spacing'];
 };
 
-function Heading({ hi, en, isHi, colors, typography }: { hi: string; en: string; isHi: boolean } & ThemeBits) {
+function Heading({ msg, lang, colors, typography }: { msg: LocalizedStrings; lang: Lang } & ThemeBits) {
+  // Primary line in the reading language; secondary stays English (Hindi when reading English),
+  // matching the listing-card bilingual pattern.
+  const secondary = lang === 'en' ? msg.hi : msg.en;
   return (
     <View style={{ alignItems: 'center', marginBottom: 18 }}>
       <Text style={{ fontFamily: typography.screenTitle.fontFamily, fontSize: 22, color: colors.ink }}>
-        {isHi ? hi : en}
+        {pick(lang, msg)}
       </Text>
       <Text
         style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 14, color: colors.inkMuted, marginTop: 4 }}
       >
-        {isHi ? en : hi}
+        {secondary}
       </Text>
     </View>
   );
@@ -215,11 +219,9 @@ function Field({
 function ModeCard({
   selected,
   onPress,
-  titleHi,
-  titleEn,
-  descHi,
-  descEn,
-  isHi,
+  title,
+  desc,
+  lang,
   colors,
   typography,
   radii,
@@ -227,11 +229,9 @@ function ModeCard({
 }: {
   selected: boolean;
   onPress: () => void;
-  titleHi: string;
-  titleEn: string;
-  descHi: string;
-  descEn: string;
-  isHi: boolean;
+  title: LocalizedStrings;
+  desc: LocalizedStrings;
+  lang: Lang;
 } & Required<ThemeBits>) {
   return (
     <Pressable
@@ -247,10 +247,10 @@ function ModeCard({
       }}
     >
       <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 16, color: colors.ink }}>
-        {isHi ? titleHi : titleEn}
+        {pick(lang, title)}
       </Text>
       <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.inkMuted, marginTop: 6 }}>
-        {isHi ? descHi : descEn}
+        {pick(lang, desc)}
       </Text>
     </Pressable>
   );
@@ -258,7 +258,7 @@ function ModeCard({
 
 function PrimaryButton({
   label,
-  isHi,
+  lang,
   disabled,
   onPress,
   colors,
@@ -267,7 +267,7 @@ function PrimaryButton({
   spacing,
 }: {
   label: string;
-  isHi: boolean;
+  lang: Lang;
   disabled?: boolean;
   onPress: () => void;
 } & Required<ThemeBits>) {
@@ -287,7 +287,10 @@ function PrimaryButton({
     >
       <Text
         style={{
-          fontFamily: isHi ? typography.cardHindi.fontFamily : typography.verseLatin.fontFamily,
+          fontFamily:
+            lang === 'en'
+              ? typography.verseLatin.fontFamily
+              : scriptTitleFont(lang, typography.cardHindi.fontFamily),
           fontSize: 16,
           lineHeight: 22,
           color: colors.onPrimary,

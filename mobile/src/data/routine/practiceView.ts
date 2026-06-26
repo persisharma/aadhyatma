@@ -4,9 +4,14 @@
  * makes them unit-testable without a provider tree (same convention as
  * `components/routineBannerView.ts`). No React, no theme — strings only.
  *
- * Numerals stay Western in both languages, matching the existing screen
- * (`{done}/{total}`); only the surrounding words branch on language.
+ * Numerals stay Western in every language, matching the existing screen
+ * (`{done}/{total}`); only the surrounding words vary. Each helper takes the
+ * reading `lang` and routes through `contentByLang`, so Gujarati/Kannada show the
+ * Hindi wording re-scripted (the app-wide gu/kn policy), not English.
  */
+
+import type { Lang } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
 
 export type PracticeSummary = {
   /** Headline, e.g. "4 of 6" or "6 of 6 offered". */
@@ -18,22 +23,24 @@ export type PracticeSummary = {
 };
 
 /** Headline + sub-line for the completion summary card. */
-export function practiceSummary(doneCount: number, total: number, isHi: boolean): PracticeSummary {
+export function practiceSummary(doneCount: number, total: number, lang: Lang): PracticeSummary {
   const allDone = total > 0 && doneCount >= total;
   if (allDone) {
     return {
       allDone: true,
-      big: isHi ? `${total} में से ${total} अर्पित` : `${total} of ${total} offered`,
-      sub: isHi ? 'आज की साधना पूर्ण' : "Today's practice is complete",
+      big: contentByLang(lang, `${total} में से ${total} अर्पित`, `${total} of ${total} offered`),
+      sub: contentByLang(lang, 'आज की साधना पूर्ण', "Today's practice is complete"),
     };
   }
   const remaining = Math.max(0, total - doneCount);
   return {
     allDone: false,
-    big: isHi ? `${total} में से ${doneCount}` : `${doneCount} of ${total}`,
-    sub: isHi
-      ? `${remaining} पाठ शेष`
-      : `${remaining} reading${remaining === 1 ? '' : 's'} remaining`,
+    big: contentByLang(lang, `${total} में से ${doneCount}`, `${doneCount} of ${total}`),
+    sub: contentByLang(
+      lang,
+      `${remaining} पाठ शेष`,
+      `${remaining} reading${remaining === 1 ? '' : 's'} remaining`
+    ),
   };
 }
 
@@ -43,7 +50,7 @@ export function practiceSummary(doneCount: number, total: number, isHi: boolean)
  * migrated legacy mark or an auto-japam completion that carries no timestamp),
  * so callers fall back to a plain "offered".
  */
-export function formatOfferedTime(ms: number | undefined, isHi: boolean): string | null {
+export function formatOfferedTime(ms: number | undefined, lang: Lang): string | null {
   if (ms == null || ms <= 0 || !Number.isFinite(ms)) return null;
   const d = new Date(ms);
   let h = d.getHours();
@@ -52,16 +59,16 @@ export function formatOfferedTime(ms: number | undefined, isHi: boolean): string
   h %= 12;
   if (h === 0) h = 12;
   const mm = String(m).padStart(2, '0');
-  if (isHi) return `${h}:${mm} ${isPm ? 'अपराह्न' : 'पूर्वाह्न'}`;
-  return `${h}:${mm} ${isPm ? 'PM' : 'AM'}`;
+  const meridiem = contentByLang(lang, isPm ? 'अपराह्न' : 'पूर्वाह्न', isPm ? 'PM' : 'AM');
+  return `${h}:${mm} ${meridiem}`;
 }
 
 /** The state tail shown on an item row: "offered 7:12 AM" / "offered" / "Tap to read". */
-export function offeredTail(done: boolean, doneAt: number | undefined, isHi: boolean): string {
-  if (!done) return isHi ? 'पढ़ने के लिए टैप करें' : 'Tap to read';
-  const t = formatOfferedTime(doneAt, isHi);
-  if (t) return isHi ? `${t} · अर्पित` : `offered ${t}`;
-  return isHi ? 'अर्पित' : 'offered';
+export function offeredTail(done: boolean, doneAt: number | undefined, lang: Lang): string {
+  if (!done) return contentByLang(lang, 'पढ़ने के लिए टैप करें', 'Tap to read');
+  const t = formatOfferedTime(doneAt, lang);
+  if (t) return contentByLang(lang, `${t} · अर्पित`, `offered ${t}`);
+  return contentByLang(lang, 'अर्पित', 'offered');
 }
 
 export type MalaBeads = {
@@ -86,8 +93,7 @@ export function malaBeads(streak: number, capacity = 7): MalaBeads {
 }
 
 /** Label beside the mala, e.g. "7 day mala" / "start your mala today". */
-export function malaLabel(streak: number, isHi: boolean): string {
-  if (streak <= 0) return isHi ? 'आज से माला आरम्भ करें' : 'Start your mala today';
-  if (isHi) return `${streak} दिन की माला`;
-  return `${streak} day mala`;
+export function malaLabel(streak: number, lang: Lang): string {
+  if (streak <= 0) return contentByLang(lang, 'आज से माला आरम्भ करें', 'Start your mala today');
+  return contentByLang(lang, `${streak} दिन की माला`, `${streak} day mala`);
 }

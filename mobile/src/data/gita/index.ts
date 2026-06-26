@@ -29,6 +29,8 @@ export type GitaVerse = {
   transliteration: string[];
   meaningHi: string;
   meaningEn: string;
+  meaningGu?: string;
+  meaningKn?: string;
   commentaryHi: string[];
   commentaryEn: string[];
 };

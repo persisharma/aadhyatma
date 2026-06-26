@@ -5,6 +5,9 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { CITIES, type City } from '@/panchang/locations';
+import { captionFont } from '@/utils/scriptFont';
+import { contentByLang, meaningByLang } from '@/utils/localize';
+import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 
 /**
  * City/GPS picker for the panchang reference location. GPS fixes are snapped to
@@ -17,7 +20,6 @@ export default function LocationPickerModal({ visible, onClose }: {
 }) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHi = lang === 'hi';
   const { location, gpsStatus, selectCity, requestDeviceLocation } = usePanchangLocation();
   const [query, setQuery] = useState('');
 
@@ -44,13 +46,13 @@ export default function LocationPickerModal({ visible, onClose }: {
       <View style={[styles.root, { backgroundColor: colors.parchment }]}>
         <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
           <View style={[styles.header, { borderBottomColor: colors.divider }]}>
-            <Text style={[styles.title, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}>
-              {isHi ? 'स्थान चुनें' : 'Choose location'}
+            <Text style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
+              {contentByLang(lang, 'स्थान चुनें', 'Choose location')}
             </Text>
             <Pressable
               onPress={onClose}
               accessibilityRole="button"
-              accessibilityLabel={isHi ? 'बंद करें' : 'Close'}
+              accessibilityLabel={contentByLang(lang, 'बंद करें', 'Close')}
               hitSlop={16}
               style={({ pressed }) => [styles.close, pressed && { opacity: 0.7 }]}
             >
@@ -63,7 +65,7 @@ export default function LocationPickerModal({ visible, onClose }: {
               onPress={onUseMyLocation}
               disabled={gpsStatus === 'locating'}
               accessibilityRole="button"
-              accessibilityLabel={isHi ? 'मेरा स्थान उपयोग करें' : 'Use my location'}
+              accessibilityLabel={contentByLang(lang, 'मेरा स्थान उपयोग करें', 'Use my location')}
               style={({ pressed }) => [
                 styles.gpsRow,
                 { borderColor: colors.divider, backgroundColor: colors.parchmentSoft, borderRadius: radii.md },
@@ -73,30 +75,34 @@ export default function LocationPickerModal({ visible, onClose }: {
               {gpsStatus === 'locating'
                 ? <ActivityIndicator size="small" color={colors.saffron} />
                 : <Text style={{ fontSize: 14 }}>📍</Text>}
-              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.saffronDeep }}>
-                {isHi ? 'मेरा स्थान उपयोग करें' : 'Use my location'}
+              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.saffronDeep }}>
+                {contentByLang(lang, 'मेरा स्थान उपयोग करें', 'Use my location')}
               </Text>
             </Pressable>
             {gpsStatus === 'denied' && (
-              <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
-                {isHi
-                  ? 'स्थान की अनुमति नहीं मिली — नीचे सूची से अपना शहर चुनें।'
-                  : 'Location permission was denied — pick your city from the list below.'}
+              <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+                {meaningByLang(
+                  lang,
+                  'स्थान की अनुमति नहीं मिली — नीचे सूची से अपना शहर चुनें।',
+                  'Location permission was denied — pick your city from the list below.'
+                )}
               </Text>
             )}
             {gpsStatus === 'error' && (
-              <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
-                {isHi
-                  ? 'स्थान प्राप्त नहीं हो सका — नीचे सूची से अपना शहर चुनें।'
-                  : 'Could not get your location — pick your city from the list below.'}
+              <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+                {meaningByLang(
+                  lang,
+                  'स्थान प्राप्त नहीं हो सका — नीचे सूची से अपना शहर चुनें।',
+                  'Could not get your location — pick your city from the list below.'
+                )}
               </Text>
             )}
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder={isHi ? 'शहर खोजें…' : 'Search city…'}
+              placeholder={contentByLang(lang, 'शहर खोजें…', 'Search city…')}
               placeholderTextColor={colors.inkMuted}
-              accessibilityLabel={isHi ? 'शहर खोजें' : 'Search city'}
+              accessibilityLabel={contentByLang(lang, 'शहर खोजें', 'Search city')}
               style={[
                 styles.search,
                 {
@@ -104,14 +110,16 @@ export default function LocationPickerModal({ visible, onClose }: {
                   backgroundColor: colors.parchmentSoft,
                   borderRadius: radii.md,
                   color: colors.ink,
-                  fontFamily: typography.meaning.fontFamily,
+                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
                 },
               ]}
             />
-            <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 11, color: colors.inkMuted }}>
-              {isHi
-                ? 'भारत के प्रमुख शहर — सूर्योदय व तिथि की गणना इसी स्थान के लिए होगी।'
-                : 'Major cities of India — sunrise and tithi are computed for this place.'}
+            <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted }}>
+              {meaningByLang(
+                lang,
+                'भारत के प्रमुख शहर — सूर्योदय व तिथि की गणना इसी स्थान के लिए होगी।',
+                'Major cities of India — sunrise and tithi are computed for this place.'
+              )}
             </Text>
           </View>
 
@@ -135,11 +143,11 @@ export default function LocationPickerModal({ visible, onClose }: {
                   ]}
                 >
                   <View style={{ flex: 1 }}>
-                    <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-                      {isHi ? city.nameHi : city.nameEn}
+                    <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                      {contentByLang(lang, city.nameHi, city.nameEn)}
                     </Text>
-                    <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted }}>
-                      {isHi ? city.nameEn : city.nameHi}
+                    <Text style={{ ...captionFont(lang === 'en' ? city.nameHi : city.nameEn), fontSize: 11, color: colors.inkMuted }}>
+                      {lang === 'en' ? city.nameHi : city.nameEn}
                     </Text>
                   </View>
                   {selected && (

@@ -5,6 +5,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { saraswatiStotramChaptersManifest, saraswatiStotramTitleHi, saraswatiStotramTitleEn } from '@/data/saraswati-stotram';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang, isLatinLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { getSourceBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -17,10 +19,10 @@ export default function SaraswatiStotramChaptersScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
-  const title = lang === 'hi' ? saraswatiStotramTitleHi : saraswatiStotramTitleEn;
+  const title = contentByLang(lang, saraswatiStotramTitleHi, saraswatiStotramTitleEn);
   const titleFontFamily =
-    lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
-  const titleFontSize = lang === 'hi' ? 22 : 20;
+    titleFontByLang(lang);
+  const titleFontSize = isLatinLang(lang) ? 20 : 22;
   const titleItalic = lang === 'en';
 
   return (

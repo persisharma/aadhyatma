@@ -121,9 +121,11 @@ const baseTemples = [
   { id: 'banke-bihari',     nameHi: 'बांके बिहारी',       nameEn: 'Banke Bihari',      cityHi: 'वृंदावन',    cityEn: 'Vrindavan',   stateHi: 'उत्तर प्रदेश',   stateEn: 'Uttar Pradesh',   coordinates: { lat: 27.582, lng: 77.705 }, deity: 'krishna', groups: [] },
 
   // ---------- Statewise marquee temples (one per otherwise-uncovered state/UT) ----------
-  // States/UTs with no marquee Hindu pilgrimage temple are intentionally omitted
-  // (Nagaland, Mizoram, Ladakh, Chandigarh, Andaman & Nicobar, Lakshadweep,
-  // Dadra & Nagar Haveli and Daman & Diu) rather than inventing one.
+  // A few states/UTs stay intentionally uncovered rather than inventing a shrine:
+  // Mizoram and Lakshadweep have no marquee Hindu temple, and Ladakh is
+  // Buddhist/Muslim with no Hindu marquee shrine. Diu's famous Gangeshwar
+  // Mahadev exists but sits on Diu island, which the current map outline omits,
+  // so it cannot be pinned (documented in the per-state catalog instead).
   { id: 'srinathji',          nameHi: 'श्रीनाथजी',          nameEn: 'Srinathji',          cityHi: 'नाथद्वारा',  cityEn: 'Nathdwara',   stateHi: 'राजस्थान',       stateEn: 'Rajasthan',         coordinates: { lat: 24.937, lng: 73.823 }, deity: 'krishna', groups: [] },
   { id: 'udupi-krishna',      nameHi: 'उडुपी श्रीकृष्ण',     nameEn: 'Udupi Sri Krishna',  cityHi: 'उडुपी',      cityEn: 'Udupi',       stateHi: 'कर्नाटक',        stateEn: 'Karnataka',         coordinates: { lat: 13.341, lng: 74.752 }, deity: 'krishna', groups: [] },
   { id: 'vishnupad-gaya',     nameHi: 'विष्णुपद',           nameEn: 'Vishnupad',          cityHi: 'गया',        cityEn: 'Gaya',        stateHi: 'बिहार',          stateEn: 'Bihar',             coordinates: { lat: 24.747, lng: 85.010 }, deity: 'vishnu',  groups: [] },
@@ -139,6 +141,43 @@ const baseTemples = [
   { id: 'parashuram-kund',    nameHi: 'परशुराम कुंड',       nameEn: 'Parashuram Kund',    cityHi: 'तेजू',       cityEn: 'Tezu',        stateHi: 'अरुणाचल प्रदेश', stateEn: 'Arunachal Pradesh', coordinates: { lat: 27.885, lng: 96.288 }, deity: 'vishnu',  groups: [] },
   { id: 'nartiang-durga',     nameHi: 'नारतियांग दुर्गा',    nameEn: 'Nartiang Durga',     cityHi: 'नारतियांग',  cityEn: 'Nartiang',    stateHi: 'मेघालय',         stateEn: 'Meghalaya',         coordinates: { lat: 25.580, lng: 92.210 }, deity: 'durga',   groups: ['shakti-peeth'] },
   { id: 'kirateshwar',        nameHi: 'किरातेश्वर महादेव',   nameEn: 'Kirateshwar Mahadev', cityHi: 'लेगशिप',    cityEn: 'Legship',     stateHi: 'सिक्किम',        stateEn: 'Sikkim',            coordinates: { lat: 27.299, lng: 88.460 }, deity: 'shiva',   groups: [] },
+
+  // ---------- Statewise gap-fill: marquee shrines for newly-covered states/UTs ----------
+  { id: 'vetrimalai-murugan', nameHi: 'वेत्रिमलै मुरुगन',     nameEn: 'Vetrimalai Murugan', cityHi: 'पोर्ट ब्लेयर', cityEn: 'Port Blair',  stateHi: 'अंडमान और निकोबार', stateEn: 'Andaman and Nicobar Islands', coordinates: { lat: 11.663, lng: 92.746 }, deity: 'shiva',   groups: [] },
+  { id: 'iskcon-chandigarh',  nameHi: 'इस्कॉन चंडीगढ़',      nameEn: 'ISKCON Chandigarh',  cityHi: 'चंडीगढ़',    cityEn: 'Chandigarh',  stateHi: 'चंडीगढ़',          stateEn: 'Chandigarh',                  coordinates: { lat: 30.734, lng: 76.761 }, deity: 'krishna', groups: [] },
+  { id: 'dimapur-kalibari',   nameHi: 'दीमापुर कालीबाड़ी',    nameEn: 'Dimapur Kalibari',   cityHi: 'दीमापुर',    cityEn: 'Dimapur',     stateHi: 'नागालैंड',         stateEn: 'Nagaland',                    coordinates: { lat: 25.904, lng: 93.725 }, deity: 'durga',   groups: [] },
+
+  // ---------- Lokdevta (folk deities), tagged with the nearest of the 8 deities ----------
+  { id: 'khatu-shyam',        nameHi: 'खाटू श्याम जी',        nameEn: 'Khatu Shyam Ji',     cityHi: 'खाटू',       cityEn: 'Khatu',       stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 27.365, lng: 75.403 }, deity: 'krishna', groups: [] },
+  { id: 'salasar-balaji',     nameHi: 'सालासर बालाजी',       nameEn: 'Salasar Balaji',     cityHi: 'सालासर',     cityEn: 'Salasar',     stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 27.721, lng: 74.727 }, deity: 'hanuman', groups: [] },
+  { id: 'karni-mata',         nameHi: 'करणी माता, देशनोक',    nameEn: 'Karni Mata, Deshnoke', cityHi: 'देशनोक',   cityEn: 'Deshnoke',    stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 27.790, lng: 73.342 }, deity: 'durga',   groups: [] },
+  { id: 'jeen-mata',          nameHi: 'जीण माता',             nameEn: 'Jeen Mata',          cityHi: 'सीकर',       cityEn: 'Sikar',       stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 27.224, lng: 75.189 }, deity: 'durga',   groups: [] },
+  { id: 'khandoba-jejuri',    nameHi: 'खंडोबा, जेजुरी',       nameEn: 'Khandoba, Jejuri',   cityHi: 'जेजुरी',     cityEn: 'Jejuri',      stateHi: 'महाराष्ट्र',       stateEn: 'Maharashtra',                 coordinates: { lat: 18.272, lng: 74.160 }, deity: 'shiva',   groups: [] },
+  { id: 'gogaji-gogamedi',    nameHi: 'गोगाजी, गोगामेड़ी',     nameEn: 'Gogaji, Gogamedi',   cityHi: 'गोगामेड़ी',   cityEn: 'Gogamedi',    stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 29.160, lng: 75.023 }, deity: 'shiva',   groups: [] },
+  { id: 'sabarimala',         nameHi: 'सबरीमला अय्यप्पन',     nameEn: 'Sabarimala Ayyappan', cityHi: 'पथनमथिट्टा', cityEn: 'Pathanamthitta', stateHi: 'केरल',           stateEn: 'Kerala',                      coordinates: { lat:  9.435, lng: 77.081 }, deity: 'shiva',   groups: [] },
+  { id: 'mahasu-devta-hanol', nameHi: 'महासू देवता, हणोल',    nameEn: 'Mahasu Devta, Hanol', cityHi: 'हणोल',       cityEn: 'Hanol',       stateHi: 'उत्तराखंड',        stateEn: 'Uttarakhand',                 coordinates: { lat: 30.971, lng: 77.928 }, deity: 'shiva',   groups: [] },
+  { id: 'tejaji-kharnal',     nameHi: 'वीर तेजाजी, खरनाल',     nameEn: 'Veer Tejaji, Kharnal', cityHi: 'खरनाल',     cityEn: 'Kharnal',     stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 27.086, lng: 73.645 }, deity: 'shiva',   groups: [] },
+  { id: 'ramdevra',           nameHi: 'बाबा रामदेव, रामदेवरा', nameEn: 'Baba Ramdev, Ramdevra', cityHi: 'रामदेवरा',  cityEn: 'Ramdevra',    stateHi: 'राजस्थान',         stateEn: 'Rajasthan',                   coordinates: { lat: 27.010, lng: 71.920 }, deity: 'krishna', groups: [] },
+
+  // ---------- Ashtadasha Maha Shakti Peeth additions (Adi Shankara's stotram) ----------
+  // The 18 Maha Shakti Peeths; the 16 in modern India are plotted (these 14 plus
+  // Kamakhya and Jwala/Jwalamukhi above). The 2 abroad — Shankari (Trincomalee,
+  // Sri Lanka) and Sharada/Saraswati (Sharada Peeth, PoK) — fall outside the India
+  // map outline and are documented in the per-state catalog rather than pinned.
+  { id: 'kamakshi',           nameHi: 'कामाक्षी अम्मन',       nameEn: 'Kamakshi Amman',      cityHi: 'कांचीपुरम',  cityEn: 'Kanchipuram', stateHi: 'तमिलनाडु',       stateEn: 'Tamil Nadu',      coordinates: { lat: 12.841, lng: 79.703 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'shrinkhala',         nameHi: 'श्रृंखला देवी',         nameEn: 'Shrinkhala Devi',     cityHi: 'पांडुआ',     cityEn: 'Pandua',      stateHi: 'पश्चिम बंगाल',   stateEn: 'West Bengal',     coordinates: { lat: 23.070, lng: 88.290 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'chamundeshwari',     nameHi: 'चामुंडेश्वरी',         nameEn: 'Chamundeshwari',      cityHi: 'मैसूरु',     cityEn: 'Mysuru',      stateHi: 'कर्नाटक',        stateEn: 'Karnataka',       coordinates: { lat: 12.272, lng: 76.671 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'jogulamba',          nameHi: 'जोगुलांबा',            nameEn: 'Jogulamba',           cityHi: 'आलमपुर',     cityEn: 'Alampur',     stateHi: 'तेलंगाना',       stateEn: 'Telangana',       coordinates: { lat: 15.877, lng: 78.132 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'bhramaramba',        nameHi: 'भ्रमरांबा',            nameEn: 'Bhramaramba',         cityHi: 'श्रीशैलम',   cityEn: 'Srisailam',   stateHi: 'आंध्र प्रदेश',   stateEn: 'Andhra Pradesh',  coordinates: { lat: 16.074, lng: 78.868 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'mahalakshmi-kolhapur', nameHi: 'महालक्ष्मी (अंबाबाई)', nameEn: 'Mahalakshmi Kolhapur', cityHi: 'कोल्हापुर', cityEn: 'Kolhapur', stateHi: 'महाराष्ट्र',  stateEn: 'Maharashtra',     coordinates: { lat: 16.700, lng: 74.233 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'ekaveerika-mahur',   nameHi: 'रेणुका (एकवीरा)',       nameEn: 'Renuka Mahur',        cityHi: 'माहूर',      cityEn: 'Mahur',       stateHi: 'महाराष्ट्र',     stateEn: 'Maharashtra',     coordinates: { lat: 19.848, lng: 77.924 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'harsiddhi-ujjain',   nameHi: 'हरसिद्धि (महाकाली)',    nameEn: 'Harsiddhi',           cityHi: 'उज्जैन',     cityEn: 'Ujjain',      stateHi: 'मध्य प्रदेश',    stateEn: 'Madhya Pradesh',  coordinates: { lat: 23.182, lng: 75.767 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'puruhutika',         nameHi: 'पुरुहूतिका देवी',       nameEn: 'Puruhutika Devi',     cityHi: 'पिठापुरम',   cityEn: 'Pithapuram',  stateHi: 'आंध्र प्रदेश',   stateEn: 'Andhra Pradesh',  coordinates: { lat: 17.107, lng: 82.243 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'biraja',             nameHi: 'बिरजा (गिरिजा)',        nameEn: 'Biraja',              cityHi: 'जाजपुर',     cityEn: 'Jajpur',      stateHi: 'ओडिशा',          stateEn: 'Odisha',          coordinates: { lat: 20.834, lng: 86.338 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'manikyamba',         nameHi: 'माणिक्यांबा',           nameEn: 'Manikyamba',          cityHi: 'द्राक्षारामम', cityEn: 'Draksharama', stateHi: 'आंध्र प्रदेश',  stateEn: 'Andhra Pradesh',  coordinates: { lat: 16.792, lng: 82.063 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'madhaveswari',       nameHi: 'माधवेश्वरी (अलोपी)',    nameEn: 'Madhaveswari',        cityHi: 'प्रयागराज',  cityEn: 'Prayagraj',   stateHi: 'उत्तर प्रदेश',   stateEn: 'Uttar Pradesh',   coordinates: { lat: 25.444, lng: 81.871 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'mangala-gauri',      nameHi: 'मंगला गौरी',           nameEn: 'Mangala Gauri',       cityHi: 'गया',        cityEn: 'Gaya',        stateHi: 'बिहार',          stateEn: 'Bihar',           coordinates: { lat: 24.775, lng: 85.002 }, deity: 'durga', groups: ['shakti-peeth'] },
+  { id: 'vishalakshi',        nameHi: 'विशालाक्षी',            nameEn: 'Vishalakshi',         cityHi: 'वाराणसी',    cityEn: 'Varanasi',    stateHi: 'उत्तर प्रदेश',   stateEn: 'Uttar Pradesh',   coordinates: { lat: 25.309, lng: 83.011 }, deity: 'durga', groups: ['shakti-peeth'] },
 ] as const satisfies readonly BaseTempleEntry[];
 
 type TempleId = (typeof baseTemples)[number]['id'];
@@ -453,6 +492,204 @@ const templeDetails: Record<TempleId, TempleDetail> = {
     originStoryHi: 'कथा में शिव किरात शिकारी रूप में अर्जुन के सामने प्रकट हुए और उसकी तपस्या से प्रसन्न होकर उसे विजय का वरदान दिया।',
     originStoryEn: 'The legend says Shiva appeared before Arjuna as the hunter Kirata and blessed him after testing his devotion and martial resolve.',
     sources: [source('Kirateshwar Mahadev Temple - Reference', 'https://en.wikipedia.org/wiki/Kirateshwar_Mahadev_Temple')],
+  },
+  'vetrimalai-murugan': {
+    significanceHi: 'पोर्ट ब्लेयर का वेत्रिमलै मुरुगन मंदिर अंडमान का सबसे प्रमुख हिन्दू तीर्थ है, जहाँ शिव-पुत्र मुरुगन (कार्तिकेय) की उपासना होती है।',
+    significanceEn: 'In Port Blair, the Vetrimalai Murugan Temple is the islands’ foremost Hindu pilgrimage site, dedicated to Murugan (Kartikeya), the son of Shiva.',
+    originStoryHi: 'मूलतः यहाँ विनायक की छोटी पूजा-स्थली थी; 1926 के आसपास मुरुगन मंदिर की स्थापना हुई और यह द्वीपवासियों की आस्था का बड़ा केन्द्र बन गया।',
+    originStoryEn: 'Originally a small Vinayaka shrine, the Murugan temple was established around 1926 and grew into the main centre of devotion for the islanders.',
+    sources: [source('Sri Vetrimalai Murugan Temple - Reference', 'https://en.wikipedia.org/wiki/Sri_Vetrimalai_Murugan_Temple')],
+  },
+  'iskcon-chandigarh': {
+    significanceHi: 'सेक्टर-36 का इस्कॉन मंदिर (हरे कृष्ण धाम) चंडीगढ़ का प्रमुख सक्रिय कृष्ण मंदिर है, जहाँ नित्य आरती, दर्शन और भागवत-सत्संग होते हैं।',
+    significanceEn: 'The ISKCON temple (Hare Krishna Dham) in Sector 36 is Chandigarh’s leading active Krishna temple, with daily aarti, darshan, and Bhagavata satsang.',
+    originStoryHi: 'यह मंदिर अंतरराष्ट्रीय कृष्णभावनामृत संघ (इस्कॉन) की परंपरा में राधा-कृष्ण की सेवा-पूजा के लिए स्थापित है और नगर का बड़ा भक्ति-केन्द्र बन गया है।',
+    originStoryEn: 'Established in the ISKCON tradition for the worship of Radha and Krishna, it has become a major devotional centre for the city.',
+    sources: [source('ISKCON Chandigarh - Official', 'https://iskconchandigarh.com/')],
+  },
+  'dimapur-kalibari': {
+    significanceHi: 'दीमापुर कालीबाड़ी नागालैंड का प्रमुख हिन्दू मंदिर है, जो माँ काली को समर्पित है और दुर्गा पूजा तथा काली पूजा का बड़ा केन्द्र है।',
+    significanceEn: 'Dimapur Kalibari is Nagaland’s principal Hindu temple, dedicated to Goddess Kali and a major centre for Durga Puja and Kali Puja.',
+    originStoryHi: '1956 में स्थापित यह मंदिर पूर्वोत्तर भारत के प्रसिद्ध देवी-स्थलों में गिना जाता है और क्षेत्र के अनेक भक्तों की आस्था का केन्द्र है।',
+    originStoryEn: 'Built in 1956, it is counted among the well-known Devi shrines of Northeast India and anchors the faith of many devotees in the region.',
+    sources: [source('Dimapur Kalibari - Reference', 'https://en.wikipedia.org/wiki/Dimapur_Kalibari')],
+  },
+  'khatu-shyam': {
+    significanceHi: 'सीकर ज़िले के खाटू में स्थित खाटू श्याम जी राजस्थान का अत्यंत लोकप्रिय लोकदेव तीर्थ है, जहाँ श्याम बाबा को कलियुग में कृष्ण-स्वरूप माना जाता है।',
+    significanceEn: 'At Khatu in Sikar district, Khatu Shyam Ji is one of Rajasthan’s most beloved lokdevta shrines, where Shyam Baba is revered as Krishna himself in the Kali Yuga.',
+    originStoryHi: 'कथा में भीम के पौत्र बर्बरीक ने महाभारत-युद्ध से पूर्व अपना शीश दान किया; प्रसन्न होकर कृष्ण ने वर दिया कि वे कलियुग में “श्याम” रूप में पूजे जाएँगे।',
+    originStoryEn: 'In the legend, Barbarika — grandson of Bhima — offered his head before the Mahabharata war; pleased, Krishna blessed him to be worshipped as “Shyam” in the Kali Yuga.',
+    sources: [source('Rajasthan Devasthan - Khatushyamji', 'https://devasthan.rajasthan.gov.in/images/Sikar/khatushyamji.htm')],
+  },
+  'salasar-balaji': {
+    significanceHi: 'चूरू ज़िले के सालासर धाम में बालाजी को हनुमान-भक्ति के सिद्धपीठ रूप में पूजा जाता है; यहाँ दाढ़ी-मूँछ वाले बालाजी की विशिष्ट प्रतिमा भक्तों को आकर्षित करती है।',
+    significanceEn: 'At Salasar Dham in Churu district, Balaji is worshipped as a powerful Hanuman shrine; its distinctive bearded and moustached form of Balaji draws devotees through the year.',
+    originStoryHi: 'लोककथा में आसोटा गाँव के खेत में हल चलाते समय बालाजी की प्रतिमा प्रकट हुई; बालाजी ने स्वप्न में उसे सालासर ले जाने का आदेश दिया और वहाँ मंदिर प्रतिष्ठित हुआ।',
+    originStoryEn: 'The local legend says a Balaji idol emerged while a farmer was ploughing at Asota; Balaji then appeared in dreams directing that the idol be brought to Salasar and enshrined there.',
+    sources: [
+      source('Shree Salasar Balaji Mandir', 'https://shreesalasarbalajimandir.com/'),
+      source('Rajasthan Tourism - Salasar Balaji Temple', 'https://www.tourism.rajasthan.gov.in/salasar-balaji-temple.html'),
+    ],
+  },
+  'karni-mata': {
+    significanceHi: 'बीकानेर के पास देशनोक का करणी माता मंदिर देवी-उपासना और काबा कहलाने वाले पवित्र चूहों की अनोखी परंपरा के कारण प्रसिद्ध है।',
+    significanceEn: 'Karni Mata Temple at Deshnoke near Bikaner is known for Devi worship and the unusual tradition of sacred kabbas, the rats that live freely in the temple complex.',
+    originStoryHi: 'कथा में करणी माता ने यम से अपने पुत्र लक्ष्मण को लौटाने की प्रार्थना की; अंततः उनके कुल के बालक काबा रूप में पुनर्जन्म लेकर देवी की छाया में रहने लगे।',
+    originStoryEn: 'In the temple legend, Karni Mata pleaded with Yama after her son Laxman died; her lineage’s children came to be reborn as kabbas and to live under the goddess’s protection.',
+    sources: [source('Rajasthan Tourism - Karni Mata Temple', 'https://www.tourism.rajasthan.gov.in/karni-mata-temple.html')],
+  },
+  'jeen-mata': {
+    significanceHi: 'सीकर की अरावली पहाड़ियों में स्थित जीण माता धाम सिद्ध शक्ति पीठ माना जाता है, जहाँ माँ जीण/जयन्ती को दुर्गा-शक्ति के रूप में पूजा जाता है।',
+    significanceEn: 'Jeen Mata Dham in the Aravalli hills of Sikar is revered as a Siddh Shakti Peeth, where Maa Jeen or Jayanti is worshipped as a form of Durga Shakti.',
+    originStoryHi: 'स्थानीय परंपरा में जीण माता ने काजल शिखर क्षेत्र में तप किया और देवी-शक्ति रूप में प्रतिष्ठित हुईं; नवरात्रि में यहाँ विशेष मेला और कुलदेवी-दर्शन होते हैं।',
+    originStoryEn: 'Local tradition remembers Jeen Mata’s austerity at Kajal Shikhar and her manifestation as Devi Shakti; Navratri brings major worship and kuldevi darshan to the shrine.',
+    sources: [source('Shree Jeen Mata Mandir', 'https://shrijeenmata.org/')],
+  },
+  'khandoba-jejuri': {
+    significanceHi: 'पुणे के पास जेजुरी का खंडोबा मंदिर महाराष्ट्र का प्रमुख लोकदेव तीर्थ है; खंडोबा शिव के अवतार माने जाते हैं और गर्भगृह में शिवलिङ्ग भी विराजित है।',
+    significanceEn: 'The Khandoba Temple at Jejuri near Pune is a major Maharashtra lokdevta pilgrimage; Khandoba is revered as an avatar of Shiva, and the sanctum also enshrines a Shiva linga.',
+    originStoryHi: 'लोक-परंपरा में खंडोबा (मल्हारी मार्तण्ड) ने मणि-मल्ल असुरों का संहार किया; भक्त उन्हें भण्डार (हल्दी) चढ़ाकर “येळकोट” जयघोष से पूजते हैं।',
+    originStoryEn: 'In folk tradition Khandoba (Malhari Martand) slew the demons Mani and Malla; devotees worship him by showering bhandar (turmeric) with the cry of “Yelkot.”',
+    sources: [source('Khandoba Temple, Jejuri - Reference', 'https://en.wikipedia.org/wiki/Khandoba_Temple,_Jejuri')],
+  },
+  'gogaji-gogamedi': {
+    significanceHi: 'हनुमानगढ़ के गोगामेड़ी में स्थित गोगाजी राजस्थान के सर्प-रक्षक वीर लोकदेव हैं, जिन्हें हिन्दू और मुस्लिम दोनों समान श्रद्धा से पूजते हैं।',
+    significanceEn: 'At Gogamedi in Hanumangarh, Gogaji is Rajasthan’s revered serpent-protector and warrior lokdevta, venerated alike by Hindus and Muslims.',
+    originStoryHi: 'लोक-परंपरा में गोगाजी सर्पदंश से रक्षा करने वाले देव माने जाते हैं और नाथ-परंपरा से जुड़े हैं; उनकी स्मृति में गोगामेड़ी का विशाल मेला लगता है।',
+    originStoryEn: 'Folk tradition reveres Gogaji as a protector against snakebite, linked to the Nath order; the great Gogamedi fair is held in his memory.',
+    sources: [source('Rajasthan Devasthan - Gogaji', 'https://devasthan.rajasthan.gov.in/images/hanumangarh/gogaji.htm')],
+  },
+  sabarimala: {
+    significanceHi: 'पथनमथिट्टा की पहाड़ियों पर स्थित सबरीमला भगवान अय्यप्पन का विश्वप्रसिद्ध तीर्थ है, जहाँ हर वर्ष करोड़ों श्रद्धालु कठोर व्रत के साथ दर्शन को आते हैं।',
+    significanceEn: 'High in the hills of Pathanamthitta, Sabarimala is the world-renowned shrine of Lord Ayyappan, drawing millions of devotees each year after a strict vratam.',
+    originStoryHi: 'अय्यप्पन हरि-हर-पुत्र अर्थात शिव और मोहिनी (विष्णु) के पुत्र रूप में पूजे जाते हैं; मण्डल–मकरविलक्कु काल में ही मुख्य दर्शन होता है।',
+    originStoryEn: 'Ayyappan is worshipped as Hariharaputra, the son of Shiva and Mohini (Vishnu); the main darshan falls in the Mandala–Makaravilakku season.',
+    sources: [source('Sabarimala Temple - Reference', 'https://en.wikipedia.org/wiki/Sabarimala_Temple')],
+  },
+  'mahasu-devta-hanol': {
+    significanceHi: 'टौंस नदी तट पर जौनसार क्षेत्र के हणोल में स्थित महासू देवता मंदिर शिव को समर्पित है, जिन्हें स्थानीय रूप से “महासू” कहा जाता है।',
+    significanceEn: 'On the banks of the Tons in the Jaunsar region at Hanol, the Mahasu Devta Temple is dedicated to Shiva, known locally as “Mahasu.”',
+    originStoryHi: 'मंदिर का मूल गर्भगृह 9वीं–10वीं शताब्दी का माना जाता है और काठ-कुनी शैली में बना है; महासू देवता क्षेत्र के न्याय-देवता रूप में पूजे जाते हैं।',
+    originStoryEn: 'The original sanctum is dated to the 9th–10th century and built in the Kath-Kuni style; Mahasu Devta is revered as the region’s presiding deity of justice.',
+    sources: [source('Mahasu Devta Temple - Reference', 'https://en.wikipedia.org/wiki/Mahasu_Devta_Temple')],
+  },
+  'tejaji-kharnal': {
+    significanceHi: 'नागौर के खरनाल में स्थित वीर तेजाजी मंदिर राजस्थान के लोकदेव तेजाजी को समर्पित है, जिन्हें सर्पदंश-निवारक और शिव का अवतार माना जाता है।',
+    significanceEn: 'At Kharnal in Nagaur, the Veer Tejaji Temple honours the Rajasthani lokdevta Tejaji, revered as a healer of snakebite and an incarnation of Shiva.',
+    originStoryHi: 'कथा में तेजाजी ने वचन-पालन करते हुए घायल अवस्था में भी सर्प के पास लौटकर अपना वचन निभाया; उनकी वीरता और सत्यनिष्ठा से वे लोकदेव रूप में पूजित हुए।',
+    originStoryEn: 'In the legend, the wounded Tejaji kept his promise by returning to a serpent he had vowed to meet; his valour and truth made him a venerated lokdevta.',
+    sources: [source('Veer Teja - Reference', 'https://en.wikipedia.org/wiki/Veer_Teja')],
+  },
+  ramdevra: {
+    significanceHi: 'जैसलमेर के पोखरण के पास रामदेवरा का बाबा रामदेव मंदिर राजस्थान का बड़ा लोकदेव तीर्थ है; रामदेव जी को कृष्ण का अवतार माना जाता है।',
+    significanceEn: 'Near Pokhran in Jaisalmer, the Baba Ramdev Temple at Ramdevra is a major Rajasthani lokdevta pilgrimage; Ramdev ji is revered as an avatar of Krishna.',
+    originStoryHi: 'परंपरा में रामदेव जी ने रामदेवरा में समाधि ली; 1931 में बीकानेर के महाराजा गंगासिंह ने उनकी समाधि पर मंदिर बनवाया, जहाँ हिन्दू-मुस्लिम दोनों आते हैं।',
+    originStoryEn: 'Tradition holds that Ramdev ji took samadhi at Ramdevra; in 1931 Maharaja Ganga Singh of Bikaner built the temple over his grave, drawing both Hindus and Muslims.',
+    sources: [source('Rajasthan Devasthan - Ramdevji', 'https://devasthan.rajasthan.gov.in/images/Jaisalmer/ramdevji.htm')],
+  },
+  kamakshi: {
+    significanceHi: 'कांचीपुरम की कामाक्षी अम्मन देवी पार्वती के सौम्य स्वरूप की उपासना का प्रमुख केन्द्र है और अष्टादश महाशक्ति पीठों में गिनी जाती है।',
+    significanceEn: 'Kamakshi Amman of Kanchipuram is a major centre of worship for Devi as a gentle form of Parvati, counted among the eighteen Maha Shakti Peethas.',
+    originStoryHi: 'शक्ति-पीठ परंपरा में सती के मध्यभाग (नाभि-क्षेत्र) का अंश यहाँ गिरा माना जाता है; देवी कामाक्षी श्रीचक्र-उपासना की अधिष्ठात्री के रूप में पूजित हैं।',
+    originStoryEn: 'In the Shakti Peeth tradition a part of Sati’s midriff is held to have fallen here; Devi Kamakshi is revered as the presiding goddess of Srichakra worship.',
+    sources: [source('Kamakshi Amman Temple - Reference', 'https://en.wikipedia.org/wiki/Kamakshi_Amman_Temple')],
+  },
+  shrinkhala: {
+    significanceHi: 'हुगली के पांडुआ की श्रृंखला देवी अष्टादश महाशक्ति पीठों में पूजित बंगाल का प्राचीन शक्ति-तीर्थ है।',
+    significanceEn: 'Shrinkhala Devi at Pandua in Hooghly is an ancient Bengal Shakti shrine, revered among the eighteen Maha Shakti Peethas.',
+    originStoryHi: 'शक्ति-पीठ कथा में सती के उदर का अंश यहाँ गिरा माना जाता है; देवी को “भवतारिणी” रूप में स्मरण किया जाता है।',
+    originStoryEn: 'The Shakti Peeth legend holds that part of Sati’s stomach fell here; the goddess is remembered in her form as Bhavatarini.',
+    sources: [
+      source('Shakta Pithas - Reference', 'https://en.wikipedia.org/wiki/Shakta_pithas'),
+      source('Pandua, Hooghly - Reference', 'https://en.wikipedia.org/wiki/Pandua,_Hooghly'),
+    ],
+  },
+  chamundeshwari: {
+    significanceHi: 'मैसूरु की चामुंडी पहाड़ी पर स्थित चामुंडेश्वरी देवी के उग्र स्वरूप की उपासना का केन्द्र है और अष्टादश महाशक्ति पीठों में गिनी जाती है।',
+    significanceEn: 'Chamundeshwari on Chamundi Hill in Mysuru is a centre of worship for the fierce form of Devi, counted among the eighteen Maha Shakti Peethas.',
+    originStoryHi: 'शक्ति-पीठ परंपरा में सती के केश यहाँ गिरे माने जाते हैं; देवी ने महिषासुर का संहार कर चामुंडेश्वरी (महिषासुरमर्दिनी) रूप पाया।',
+    originStoryEn: 'In the Shakti Peeth tradition Sati’s hair is held to have fallen here; the goddess slew Mahishasura and is revered as Chamundeshwari, the demon-slayer.',
+    sources: [source('Chamundeshwari Temple - Reference', 'https://en.wikipedia.org/wiki/Chamundeshwari_Temple')],
+  },
+  jogulamba: {
+    significanceHi: 'तुंगभद्रा तट पर आलमपुर की जोगुलांबा देवी शक्ति के योगिनी स्वरूप की उपासना का केन्द्र है और अष्टादश महाशक्ति पीठों में आती है।',
+    significanceEn: 'Jogulamba at Alampur on the Tungabhadra is a centre of worship for the Yogini form of Shakti and is one of the eighteen Maha Shakti Peethas.',
+    originStoryHi: 'शक्ति-पीठ परंपरा में सती के दाँत यहाँ गिरे माने जाते हैं; देवी जोगुलांबा उग्र-योगिनी रूप में पूजित हैं।',
+    originStoryEn: 'The Shakti Peeth tradition holds that Sati’s teeth fell here; Devi Jogulamba is worshipped in her fierce Yogini form.',
+    sources: [source('Jogulamba Temple, Alampur - Reference', 'https://en.wikipedia.org/wiki/Jogulamba_Temple,_Alampur')],
+  },
+  bhramaramba: {
+    significanceHi: 'श्रीशैलम में मल्लिकार्जुन के साथ विराजित भ्रमरांबा देवी शैव और शाक्त उपासना का संगम है और अष्टादश महाशक्ति पीठों में गिनी जाती है।',
+    significanceEn: 'Bhramaramba at Srisailam, enshrined with Mallikarjuna, joins Shaiva and Shakta worship and is counted among the eighteen Maha Shakti Peethas.',
+    originStoryHi: 'शक्ति-पीठ परंपरा में सती के ऊर्ध्व-दन्त यहाँ गिरे माने जाते हैं; देवी भ्रमरांबा (भ्रमर-रूपा) के रूप में पूजित हैं।',
+    originStoryEn: 'In the Shakti Peeth tradition Sati’s upper teeth are held to have fallen here; the goddess is worshipped as Bhramaramba, she of the bees.',
+    sources: [source('Mallikarjuna Temple, Srisailam - Reference', 'https://en.wikipedia.org/wiki/Mallikarjuna_Temple,_Srisailam')],
+  },
+  'mahalakshmi-kolhapur': {
+    significanceHi: 'कोल्हापुर की महालक्ष्मी (अंबाबाई) महाराष्ट्र की प्रमुख देवी हैं; यह अष्टादश महाशक्ति पीठों और क्षेत्र के साढ़े-तीन शक्ति-स्थलों में पूजित है।',
+    significanceEn: 'Mahalakshmi (Ambabai) of Kolhapur is a principal goddess of Maharashtra, revered among the eighteen Maha Shakti Peethas and the region’s “three and a half” Shakti seats.',
+    originStoryHi: 'करवीर-क्षेत्र की परंपरा में महालक्ष्मी को स्वयंभू और निवास-रूप शक्ति माना जाता है, जहाँ देवी सदैव वास करती हैं।',
+    originStoryEn: 'In the Karvir tradition Mahalakshmi is revered as a self-manifest, ever-resident form of Shakti who never leaves the shrine.',
+    sources: [source('Mahalakshmi Temple, Kolhapur - Reference', 'https://en.wikipedia.org/wiki/Mahalakshmi_Temple,_Kolhapur')],
+  },
+  'ekaveerika-mahur': {
+    significanceHi: 'माहूरगड की रेणुका देवी (एकवीरा) महाराष्ट्र के साढ़े-तीन शक्ति-स्थलों में से एक हैं और अष्टादश महाशक्ति पीठों में “पद्माक्षी रेणुका” रूप में गिनी जाती हैं।',
+    significanceEn: 'Renuka Devi (Ekvira) of Mahurgad is one of Maharashtra’s “three and a half” Shakti seats and is counted in the eighteen Maha Shakti Peethas as Padmakshi Renuka.',
+    originStoryHi: 'परंपरा में रेणुका को परशुराम की माता और मातृ-शक्ति का स्वरूप माना जाता है; माहूर की पहाड़ी उनका प्रमुख निवास-तीर्थ है।',
+    originStoryEn: 'Tradition reveres Renuka as the mother of Parashurama and a form of the Mother Goddess; the Mahur hill is her principal shrine.',
+    sources: [source('Renuka - Reference', 'https://en.wikipedia.org/wiki/Renuka')],
+  },
+  'harsiddhi-ujjain': {
+    significanceHi: 'उज्जैन की हरसिद्धि देवी (महाकाली) अवंतिका की प्रमुख शक्ति हैं और अष्टादश महाशक्ति पीठों में गिनी जाती हैं।',
+    significanceEn: 'Harsiddhi (Mahakali) of Ujjain is the principal Shakti of Avantika and is counted among the eighteen Maha Shakti Peethas.',
+    originStoryHi: 'शिव पुराण की कथा में सती के शव को ले जाते समय उनकी कुहनी यहाँ गिरी; देवी चण्डी ने “हरसिद्धि” नाम पाया।',
+    originStoryEn: 'In the Shiva Purana legend, Sati’s elbow fell here as Shiva carried her body, and the goddess Chandi came to be known as Harsiddhi.',
+    sources: [source('Ujjain District - Harsiddhi Temple', 'https://ujjain.nic.in/en/tourist-place/harsiddhi/')],
+  },
+  puruhutika: {
+    significanceHi: 'पिठापुरम के कुक्कुटेश्वर मंदिर परिसर में विराजित पुरुहूतिका देवी अष्टादश महाशक्ति पीठों में पूजित आंध्र का प्रमुख शक्ति-तीर्थ है।',
+    significanceEn: 'Puruhutika Devi, enshrined within the Kukkuteswara temple complex at Pithapuram, is a major Andhra Shakti shrine among the eighteen Maha Shakti Peethas.',
+    originStoryHi: 'शक्ति-पीठ परंपरा में सती के वक्ष का अंश यहाँ गिरा माना जाता है; देवी पुरुहूतिका रूप में पूजित हैं।',
+    originStoryEn: 'The Shakti Peeth tradition holds that part of Sati’s breast fell here; the goddess is worshipped as Puruhutika.',
+    sources: [source('Kukkuteswara Temple - Reference', 'https://en.wikipedia.org/wiki/Kukkuteswara_Temple')],
+  },
+  biraja: {
+    significanceHi: 'जाजपुर की बिरजा (गिरिजा) देवी दुर्गा के महिषमर्दिनी स्वरूप में पूजित हैं और अष्टादश महाशक्ति पीठों में गिनी जाती हैं।',
+    significanceEn: 'Biraja (Girija) of Jajpur is worshipped as Durga slaying Mahishasura and is counted among the eighteen Maha Shakti Peethas.',
+    originStoryHi: 'तंत्र-चूड़ामणि की कथा में सती की नाभि यहाँ गिरी, इसलिए यह क्षेत्र “विरजा क्षेत्र” कहलाया; देवी द्विभुजा महिषमर्दिनी रूप में विराजित हैं।',
+    originStoryEn: 'In the Tantra Chudamani, Sati’s navel fell here, giving the region the name Viraja Kshetra; the goddess stands as the two-armed slayer of Mahishasura.',
+    sources: [source('Biraja Temple - Reference', 'https://en.wikipedia.org/wiki/Biraja_Temple')],
+  },
+  manikyamba: {
+    significanceHi: 'द्राक्षारामम के भीमेश्वर मंदिर परिसर में विराजित माणिक्यांबा देवी अष्टादश महाशक्ति पीठों में बारहवीं मानी जाती हैं।',
+    significanceEn: 'Manikyamba, enshrined within the Bhimeswara temple complex at Draksharama, is regarded as the twelfth of the eighteen Maha Shakti Peethas.',
+    originStoryHi: 'शक्ति-पीठ परंपरा में सती का एक अंग यहाँ गिरा माना जाता है; देवी माणिक्यांबा आत्मलिङ्ग धारण किए आसन-मुद्रा में पूजित हैं।',
+    originStoryEn: 'The Shakti Peeth tradition holds that a part of Sati fell here; Devi Manikyamba is worshipped seated, holding the atma-linga.',
+    sources: [source('Daksharamam - Reference', 'https://en.wikipedia.org/wiki/Daksharamam')],
+  },
+  madhaveswari: {
+    significanceHi: 'प्रयागराज की माधवेश्वरी (अलोपी देवी) अष्टादश महाशक्ति पीठों में पूजित हैं, जहाँ प्रतिमा के स्थान पर काष्ठ-डोली की उपासना होती है।',
+    significanceEn: 'Madhaveswari (Alopi Devi) of Prayagraj is revered among the eighteen Maha Shakti Peethas, where a wooden doli rather than an image is worshipped.',
+    originStoryHi: 'संगम-नगरी की परंपरा में देवी “अलोपी” अर्थात अंतर्धान होने वाली शक्ति के रूप में पूजित हैं; यह स्थान त्रिवेणी की शक्ति-साधना से जुड़ा है।',
+    originStoryEn: 'In the Sangam city’s tradition the goddess is worshipped as Alopi, the Shakti who vanished from sight; the shrine is tied to the Shakta devotion of the Triveni confluence.',
+    sources: [source('Alopi Devi Mandir - Reference', 'https://en.wikipedia.org/wiki/Alopi_Devi_Mandir')],
+  },
+  'mangala-gauri': {
+    significanceHi: 'गया की मंगला गौरी देवी अष्टादश महाशक्ति पीठों में पूजित हैं और मातृ-शक्ति “सर्वमंगला” रूप में स्मरण की जाती हैं।',
+    significanceEn: 'Mangala Gauri of Gaya is revered among the eighteen Maha Shakti Peethas and remembered as the Mother Goddess in her “Sarvamangala” form.',
+    originStoryHi: 'परंपरा में सती के वक्ष का अंश यहाँ गिरा माना जाता है; देवी मंगला गौरी मंगल-दायिनी शक्ति के रूप में पूजित हैं।',
+    originStoryEn: 'Tradition holds that part of Sati’s breast fell here; Devi Mangala Gauri is worshipped as the auspicious, boon-granting Shakti.',
+    sources: [
+      source('Mangla Gauri Temple - Reference', 'https://en.wikipedia.org/wiki/Mangla_Gauri_Temple'),
+      source('Bihar Tourism - Mangala Gauri', 'https://tourism.bihar.gov.in/en/destinations/gaya/mangala-gauri'),
+    ],
+  },
+  vishalakshi: {
+    significanceHi: 'काशी की विशालाक्षी देवी गंगा तट की प्रमुख शक्ति हैं और अष्टादश महाशक्ति पीठों में पूजित हैं; नाम का अर्थ है “विशाल नेत्रों वाली”।',
+    significanceEn: 'Vishalakshi of Kashi is a principal Shakti of the Ganga ghats, revered among the eighteen Maha Shakti Peethas; her name means “she of the large eyes.”',
+    originStoryHi: 'शक्ति-पीठ परंपरा में सती का कुण्डल (कर्ण-आभूषण) यहाँ गिरा माना जाता है; देवी विशालाक्षी पार्वती के स्वरूप में पूजित हैं।',
+    originStoryEn: 'In the Shakti Peeth tradition Sati’s earring is held to have fallen here; Devi Vishalakshi is worshipped as a form of Parvati.',
+    sources: [source('Vishalakshi Temple - Reference', 'https://en.wikipedia.org/wiki/Vishalakshi_Temple')],
   },
 };
 
