@@ -1,0 +1,170 @@
+# Marketing capture — Vrat / Fasting companion reel.
+# Captures (relative to cwd, set by capture.sh): shots/vrat/01,03,04,08,05,06,07.
+# Features recognisable vrats: Satyanarayan katha, Karwa Chauth (hero), + visible monthly vrats.
+# Run via capture.sh (which cd's into marketing/linkedin and starts production Metro).
+# Reading language is switched to English so Maestro can match the accessibility tree.
+appId: host.exp.Exponent
+---
+# ── Boot Vedansh in Expo Go ──
+- launchApp:
+    appId: host.exp.Exponent
+- tapOn: "Vedansh"
+- waitForAnimationToEnd:
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
+- swipe:
+    direction: DOWN
+- waitForAnimationToEnd
+
+# ── English ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Panchang (01) ──
+- tapOn: "Panchang, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*Ujjain.*"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: shots/vrat/01-panchang-calendar
+
+# ── Vrat & Parv browse tiles (03) ──
+- scrollUntilVisible:
+    element:
+      text: "Vrat and Parv"
+    direction: UP
+    centerElement: true
+    timeout: 15000
+- tapOn: "Vrat and Parv"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: shots/vrat/03-vrat-browse
+
+# ── Katha library (04) + Satyanarayan katha reader (08) ──
+- tapOn: "Katha library,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search stories…"
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: shots/vrat/04-katha-library
+- tapOn: "Search stories…"
+- inputText: "Satyanarayan"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Read katha.*Satyanarayan.*"
+    timeout: 15000
+- tapOn: "Read katha.*Satyanarayan.*"
+- waitForAnimationToEnd:
+    timeout: 15000
+- takeScreenshot: shots/vrat/08-katha-reader
+- tapOn: "Back"
+- waitForAnimationToEnd
+# reader-back may land on the library OR jump straight to the landing — second Back is optional
+- tapOn:
+    text: "Back"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+
+# ── Vrat list → follow recognisable vrats, open Karwa Chauth (05) → My Vrat (06) → reminder (07) ──
+- tapOn: "Vrat,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search within this list…"
+    timeout: 15000
+# near-term monthly vrats visible on the initial list (optional: depends on run date)
+- tapOn:
+    text: "Follow Shree Satyanarayan Vrat"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Follow Sankashti Chaturthi Vrat"
+    optional: true
+- waitForAnimationToEnd
+# Karwa Chauth via the within-list search (date-independent)
+- tapOn: "Search within this list…"
+- inputText: "Karwa"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Karwa Chauth"
+    timeout: 15000
+- tapOn: "Karwa Chauth"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "About"
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: shots/vrat/05-observance-detail
+- tapOn: "Follow"
+- waitForAnimationToEnd
+- assertVisible: "Following"
+- extendedWaitUntil:
+    visible: "Added — View in My Vrat"
+    timeout: 8000
+- tapOn: "Added — View in My Vrat"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "My priority"
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: shots/vrat/06-my-vrat
+- tapOn: "Reminders for Karwa Chauth"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Advance notice"
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: shots/vrat/07-reminder-sheet
+- tapOn: "2 days"
+- tapOn: "Save reminders"
+- waitForAnimationToEnd
+
+# ── Best-effort state reset: unfollow what this flow created (screenshots already saved) ──
+- tapOn:
+    text: "Karwa Chauth"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Following"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Back"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Shree Satyanarayan Vrat"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Following"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Back"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Sankashti Chaturthi Vrat"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Following"
+    optional: true
+- waitForAnimationToEnd
+- stopApp:
+    appId: host.exp.Exponent
