@@ -1,7 +1,8 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NewContentProvider, useNewContent } from '../NewContentContext';
+import { NewContentProvider, useNewContent, templeNewKey } from '../NewContentContext';
+import { temples } from '@/data/theerth/temples';
 
 // Stateful in-memory AsyncStorage mock (jest requires the `mock` prefix to
 // reference the closure variable from the hoisted factory; jest.mock is hoisted
@@ -148,6 +149,36 @@ describe('NewContentContext', () => {
     });
     expect(captured.isNew('krishna-stotram')).toBe(true);
     expect(captured.hasNewInCategory('stotram')).toBe(true);
+  });
+
+  test('temples participate in NEW tracking (upgrader sees them new, fresh install does not)', async () => {
+    const sampleTemple = temples[0];
+    const key = templeNewKey(sampleTemple.id);
+
+    mockStore['@vedansh/reading-progress'] = JSON.stringify({}); // upgrader
+    const tree = await mountAndHydrate();
+    // Temples shipped at 1.3.2 (> baseline) → new for upgraders, and the
+    // Theerth category therefore reports new content.
+    expect(captured.isNew(key)).toBe(true);
+    expect(captured.hasNewInCategory('theerth')).toBe(true);
+
+    // Acknowledging a temple clears just that temple's NEW.
+    await act(async () => {
+      captured.markSeen(key);
+      await Promise.resolve();
+    });
+    expect(captured.isNew(key)).toBe(false);
+    expect(JSON.parse(mockStore[STORAGE_KEY]).knownIds).toContain(key);
+
+    await act(async () => {
+      tree.unmount();
+    });
+
+    // Fresh install: temples seeded as known → not new.
+    mockStore = {};
+    await mountAndHydrate();
+    expect(captured.isNew(templeNewKey(temples[1].id))).toBe(false);
+    expect(captured.hasNewInCategory('theerth')).toBe(false);
   });
 
   test('devResetNewState clears NEW back to the nothing-new state (and persists)', async () => {

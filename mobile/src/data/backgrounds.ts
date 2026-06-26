@@ -118,6 +118,18 @@ export function getTheerthBackground(templeId: string, deityId: Deity): Backgrou
   return theerthBackgroundOverrides[templeId] ?? getDeityBackground(deityId);
 }
 
+const deityBackgroundList: BackgroundImage[] = Object.values(deityBackgrounds);
+
+/**
+ * A random deity backdrop, for the "By Deity" index which isn't tied to a single
+ * deity. Callers memoize per mount (useMemo []) so the pick is stable while the
+ * screen is open but varies between visits — same spirit as the Home spotlight
+ * shuffle.
+ */
+export function getRandomDeityBackground(): BackgroundImage {
+  return deityBackgroundList[Math.floor(Math.random() * deityBackgroundList.length)];
+}
+
 export function getSourceBackground(sourceId: string): BackgroundImage | null {
   return sourceBackgrounds[sourceId] ?? null;
 }

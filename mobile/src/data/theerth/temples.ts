@@ -60,9 +60,25 @@ export type BaseTempleEntry = {
   coordinates: { lat: number; lng: number };
   deity: Deity;
   groups: TheerthGroup[];
+  /**
+   * App version a temple first shipped in — mirrors LibraryEntry.addedInVersion
+   * so temples flow through the same NEW-content tracking as texts (see
+   * NewContentContext). Omit on existing temples to inherit THEERTH_LAUNCH_VERSION;
+   * set explicitly (e.g. '1.5.0') on temples added in a later release so they flag
+   * NEW for upgraders.
+   */
+  addedInVersion?: string;
 };
 
-export type TempleEntry = BaseTempleEntry & TempleDetail;
+export type TempleEntry = BaseTempleEntry & TempleDetail & { addedInVersion: string };
+
+/**
+ * Version the whole pilgrimage map debuted in (commit #118, app 1.3.2). It is the
+ * default `addedInVersion` for every temple that doesn't override it, so the
+ * Theerth section behaves like any other content debut: NEW for users upgrading
+ * from before the feature existed, silent for fresh installs.
+ */
+export const THEERTH_LAUNCH_VERSION = '1.3.2';
 
 const baseTemples = [
   // ---------- 12 Jyotirlingas ----------
@@ -678,6 +694,7 @@ const templeDetails: Record<TempleId, TempleDetail> = {
 };
 
 export const temples: readonly TempleEntry[] = baseTemples.map((temple) => ({
+  addedInVersion: THEERTH_LAUNCH_VERSION,
   ...temple,
   ...templeDetails[temple.id],
 }));
