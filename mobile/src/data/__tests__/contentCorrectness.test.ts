@@ -33,6 +33,60 @@ assert.ok(savitrDeity, 'savitr deity should exist in deities array');
 assert.equal(savitrDeity.nameEn, 'Maa Gayatri', 'Rule 10.9: savitr deity must display as "Maa Gayatri", not "Savitr Deva"');
 assert.equal(savitrDeity.nameHi, 'माँ गायत्री', 'Rule 10.9: savitr deity must display as "माँ गायत्री", not "सवितृ देव"');
 
+const suryaDeity = deities.find((d) => d.id === 'surya');
+assert.ok(suryaDeity, 'surya deity should exist in deities array');
+assert.equal(suryaDeity.nameEn, 'Surya Deva', 'Rule 10.9: surya deity must display as "Surya Deva"');
+assert.equal(suryaDeity.nameHi, 'सूर्य देव', 'Rule 10.9: surya deity must display as "सूर्य देव"');
+
+// Lakshmi deity + Om Jai Lakshmi Mata aarti (Phase-1). Pins the recognizable
+// deity name (Rule 10.9) and the aarti's deity tag (Rule 10.4).
+const lakshmiDeity = deities.find((d) => d.id === 'lakshmi');
+assert.ok(lakshmiDeity, 'lakshmi deity should exist in deities array');
+assert.equal(lakshmiDeity.nameEn, 'Maa Lakshmi', 'Rule 10.9: lakshmi deity must display as "Maa Lakshmi"');
+const omJaiLakshmiMata = readJson('aarti/om-jai-lakshmi-mata.json');
+assert.equal(omJaiLakshmiMata.deity, 'lakshmi', 'Om Jai Lakshmi Mata aarti deity should be lakshmi (Rule 10.4)');
+assert.equal(omJaiLakshmiMata.verses.length, 8, 'Om Jai Lakshmi Mata should ship 8 verses');
+const lakshmiAartiEntry = library.find((e) => e.id === 'om-jai-lakshmi-mata');
+assert.ok(lakshmiAartiEntry, 'om-jai-lakshmi-mata should be in library');
+assert.deepEqual(lakshmiAartiEntry.deities, ['lakshmi'], 'om-jai-lakshmi-mata must be tagged under the Lakshmi deity (Rule 10.4)');
+
+// Lakshmi Chalisa (Phase-1) — pins deity, verse count, and canonical opening line.
+const lakshmiChalisa = readJson('lakshmi-chalisa/lakshmi-chalisa.json');
+const lakshmiChalisaEntry = library.find((e) => e.id === 'lakshmi-chalisa');
+assert.ok(lakshmiChalisaEntry, 'lakshmi-chalisa should be in library');
+assert.deepEqual(lakshmiChalisaEntry.deities, ['lakshmi'], 'lakshmi-chalisa must be tagged under the Lakshmi deity (Rule 10.4)');
+assert.equal(lakshmiChalisa.verses.length, 43, 'Lakshmi Chalisa should have 43 verses (2 opening + 39 chaupai + 2 closing)');
+assert.ok(lakshmiChalisa.verses[0].lines[0].includes('मातु लक्ष्मी करि कृपा'), 'Lakshmi Chalisa should open with its canonical doha');
+
+// Saraswati Chalisa (Phase-1) — pins deity, verse count, and canonical opening doha.
+const saraswatiChalisa = readJson('saraswati-chalisa/saraswati-chalisa.json');
+const saraswatiChalisaEntry = library.find((e) => e.id === 'saraswati-chalisa');
+assert.ok(saraswatiChalisaEntry, 'saraswati-chalisa should be in library');
+assert.deepEqual(saraswatiChalisaEntry.deities, ['saraswati'], 'saraswati-chalisa must be tagged under the Saraswati deity (Rule 10.4)');
+assert.equal(saraswatiChalisa.verses.length, 43, 'Saraswati Chalisa should have 43 verses (2 opening + 39 chaupai + 2 closing)');
+assert.ok(saraswatiChalisa.verses[0].lines[0].includes('जनक जननि'), 'Saraswati Chalisa should open with its canonical doha');
+
+// Vishnu Chalisa (Phase-1) — pins deity + verse count.
+const vishnuChalisa = readJson('vishnu-chalisa/vishnu-chalisa.json');
+const vishnuChalisaEntry = library.find((e) => e.id === 'vishnu-chalisa');
+assert.ok(vishnuChalisaEntry, 'vishnu-chalisa should be in library');
+assert.deepEqual(vishnuChalisaEntry.deities, ['vishnu'], 'vishnu-chalisa must be tagged under the Vishnu deity (Rule 10.4)');
+assert.equal(vishnuChalisa.verses.length, 42, 'Vishnu Chalisa should have 42 verses (1 opening + 40 chaupai + 1 closing)');
+
+// Krishna Chalisa (Phase-1) — pins deity + verse count.
+const krishnaChalisa = readJson('krishna-chalisa/krishna-chalisa.json');
+const krishnaChalisaEntry = library.find((e) => e.id === 'krishna-chalisa');
+assert.ok(krishnaChalisaEntry, 'krishna-chalisa should be in library');
+assert.deepEqual(krishnaChalisaEntry.deities, ['krishna'], 'krishna-chalisa must be tagged under the Krishna deity (Rule 10.4)');
+assert.equal(krishnaChalisa.verses.length, 43, 'Krishna Chalisa should have 43 verses (2 opening + 40 chaupai + 1 closing)');
+
+// Ram Chalisa (Phase-1) — pins deity + verse count.
+const ramChalisa = readJson('ram-chalisa/ram-chalisa.json');
+const ramChalisaEntry = library.find((e) => e.id === 'ram-chalisa');
+assert.ok(ramChalisaEntry, 'ram-chalisa should be in library');
+assert.deepEqual(ramChalisaEntry.deities, ['rama'], 'ram-chalisa must be tagged under the Rama deity (Rule 10.4)');
+assert.equal(ramChalisa.verses.length, 49, 'Ram Chalisa should have 49 verses (2 opening doha + 40 chaupai + 5 closing chaupai + 2 closing doha)');
+
 // Vishnu Sahasranama is a hymn to Vishnu (the thousand names of Vishnu), so it
 // must surface under the Vishnu deity — not Krishna/Rama (his avatars). Guards
 // the #99 retag from regressing back to ['krishna', 'rama'].
@@ -74,6 +128,29 @@ assert.equal(
   'Om Gam Ganapataye Namah',
   'Om Gam Ganapataye Namah romanization should match the canonical readable form'
 );
+
+// Remaining Phase-1 stotrams — pinned to the verified published-text counts.
+const shivaStotramManifest = readJson('shiva-strotam/chapters-manifest.json');
+assert.equal(shivaStotramManifest.length, 6, 'Shiva Stotram should contain 6 stotras after adding Rudrashtakam + Lingashtakam');
+assert.equal(shivaStotramManifest[4].titleEn, 'Rudrashtakam', 'Shiva Stotram chapter 5 should be Rudrashtakam');
+assert.equal(shivaStotramManifest[5].titleEn, 'Lingashtakam', 'Shiva Stotram chapter 6 should be Lingashtakam');
+assert.equal(shivaStotramManifest[5].verseCount, 10, 'Lingashtakam should declare all 10 shipped verse units');
+
+const ramraksha = readJson('ramraksha-stotram/chapter-01.json');
+const ramrakshaEntry = library.find((e) => e.id === 'ramraksha-stotram');
+assert.ok(ramrakshaEntry, 'ramraksha-stotram should be in library');
+assert.deepEqual(ramrakshaEntry.deities, ['rama'], 'Ramraksha Stotram must be tagged under Rama');
+assert.equal(ramraksha.verses.length, 39, 'Ramraksha Stotram should have 39 verse units (dhyana + 38 numbered verses)');
+assert.ok(ramraksha.verses[0].sanskrit[0].includes('श्रीरामरक्षास्तोत्रम्'), 'Ramraksha should open with its title/invocation unit');
+assert.ok(ramraksha.source.referenceUrls.length >= 2, 'Ramraksha Stotram should cite at least 2 source URLs');
+
+const adityaHridayam = readJson('aditya-hridayam/chapter-01.json');
+const adityaEntry = library.find((e) => e.id === 'aditya-hridayam');
+assert.ok(adityaEntry, 'aditya-hridayam should be in library');
+assert.deepEqual(adityaEntry.deities, ['surya'], 'Aditya Hridayam must be tagged under Surya');
+assert.equal(adityaHridayam.verses.length, 32, 'Aditya Hridayam should have 32 verse units (dhyana + 31 numbered verses)');
+assert.ok(adityaHridayam.verses[1].sanskrit[0].includes('ततो युद्धपरिश्रान्तं'), 'Aditya Hridayam verse 1 should open with the battlefield setting');
+assert.ok(adityaHridayam.source.referenceUrls.length >= 2, 'Aditya Hridayam should cite at least 2 source URLs');
 
 // ─── 2. Aarti verse counts (verified from internet) ─────────────────────────
 

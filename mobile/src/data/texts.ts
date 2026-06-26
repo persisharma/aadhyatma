@@ -8,10 +8,17 @@ import { vishnuSahasranamaTotal } from './vishnu-sahasranama';
 import { shivChalisaCounts } from './shiv-chalisa';
 import { durgaChalisaCounts } from './durga-chalisa';
 import { ganeshChalisaCounts } from './ganesh-chalisa';
+import { lakshmiChalisaCounts } from './lakshmi-chalisa';
+import { saraswatiChalisaCounts } from './saraswati-chalisa';
+import { vishnuChalisaCounts } from './vishnu-chalisa';
+import { krishnaChalisaCounts } from './krishna-chalisa';
+import { ramChalisaCounts } from './ram-chalisa';
 import { hanumanAshtakTotal } from './hanuman-ashtak';
 import { bajrangBaanTotal } from './bajrang-baan';
 import { ramStutiTotal } from './ram-stuti';
 import { krishnaStotramTotal } from './krishna-stotram';
+import { ramrakshaStotramTotal } from './ramraksha-stotram';
+import { adityaHridayamTotal } from './aditya-hridayam';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
@@ -25,7 +32,7 @@ export type ContentCategory =
   | 'aarti'
   | 'theerth'
   | 'sanskar';
-export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr' | 'saraswati';
+export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr' | 'saraswati' | 'lakshmi' | 'surya';
 
 export type LibraryEntry = {
   id: string;
@@ -90,8 +97,8 @@ export const library: readonly LibraryEntry[] = [
     id: 'shiva-strotam',
     nameHi: 'शिव स्तोत्रम्',
     nameEn: 'Shiva Stotram',
-    sub: `4 स्तोत्र · अर्थ सहित`,
-    subEn: `4 stotras · with meaning`,
+    sub: `6 स्तोत्र · अर्थ सहित`,
+    subEn: `6 stotras · with meaning`,
     thumb: 'श',
     status: 'active',
     category: 'stotram',
@@ -220,6 +227,71 @@ export const library: readonly LibraryEntry[] = [
     verseCount: ganeshChalisaCounts.totalVerses,
   },
   {
+    id: 'lakshmi-chalisa',
+    nameHi: 'श्री लक्ष्मी चालीसा',
+    nameEn: 'Lakshmi Chalisa',
+    sub: '39 चौपाई + दोहा · अर्थ सहित',
+    subEn: '39 Chaupai + Doha · with meaning',
+    thumb: 'श्री',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['lakshmi'],
+    verseCount: lakshmiChalisaCounts.totalVerses,
+    addedInVersion: '1.4.0',
+  },
+  {
+    id: 'saraswati-chalisa',
+    nameHi: 'श्री सरस्वती चालीसा',
+    nameEn: 'Saraswati Chalisa',
+    sub: '39 चौपाई + 4 दोहा · अर्थ सहित',
+    subEn: '39 Chaupai + 4 Doha · with meaning',
+    thumb: 'सर',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['saraswati'],
+    verseCount: saraswatiChalisaCounts.totalVerses,
+    addedInVersion: '1.4.0',
+  },
+  {
+    id: 'vishnu-chalisa',
+    nameHi: 'श्री विष्णु चालीसा',
+    nameEn: 'Vishnu Chalisa',
+    sub: '40 चौपाई + 2 दोहा · अर्थ सहित',
+    subEn: '40 Chaupai + 2 Doha · with meaning',
+    thumb: 'वि',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['vishnu'],
+    verseCount: vishnuChalisaCounts.totalVerses,
+    addedInVersion: '1.4.0',
+  },
+  {
+    id: 'krishna-chalisa',
+    nameHi: 'श्री कृष्ण चालीसा',
+    nameEn: 'Krishna Chalisa',
+    sub: '40 चौपाई + 3 दोहा · अर्थ सहित',
+    subEn: '40 Chaupai + 3 Doha · with meaning',
+    thumb: 'कृ',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['krishna'],
+    verseCount: krishnaChalisaCounts.totalVerses,
+    addedInVersion: '1.4.0',
+  },
+  {
+    id: 'ram-chalisa',
+    nameHi: 'श्री राम चालीसा',
+    nameEn: 'Ram Chalisa',
+    sub: '45 चौपाई + 4 दोहा · अर्थ सहित',
+    subEn: '45 Chaupai + 4 Doha · with meaning',
+    thumb: 'राम',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['rama'],
+    verseCount: ramChalisaCounts.totalVerses,
+    addedInVersion: '1.4.0',
+  },
+  {
     id: 'hanuman-ashtak',
     nameHi: 'संकटमोचन हनुमानाष्टक',
     nameEn: 'Sankat Mochan Hanuman Ashtak',
@@ -256,6 +328,32 @@ export const library: readonly LibraryEntry[] = [
     deities: ['rama'],
     verseCount: ramStutiTotal,
     addedInVersion: '1.3.0',
+  },
+  {
+    id: 'ramraksha-stotram',
+    nameHi: 'श्रीरामरक्षा स्तोत्रम्',
+    nameEn: 'Ramraksha Stotram',
+    sub: `${ramrakshaStotramTotal} श्लोक · अर्थ सहित`,
+    subEn: `${ramrakshaStotramTotal} shlokas · with meaning`,
+    thumb: 'राम',
+    status: 'active',
+    category: 'stotram',
+    deities: ['rama'],
+    verseCount: ramrakshaStotramTotal,
+    addedInVersion: '1.4.0',
+  },
+  {
+    id: 'aditya-hridayam',
+    nameHi: 'आदित्य हृदयम्',
+    nameEn: 'Aditya Hridayam',
+    sub: `${adityaHridayamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${adityaHridayamTotal} shlokas · with meaning`,
+    thumb: 'सू',
+    status: 'active',
+    category: 'stotram',
+    deities: ['surya'],
+    verseCount: adityaHridayamTotal,
+    addedInVersion: '1.4.0',
   },
   {
     id: 'om-jai-jagdish',
@@ -402,6 +500,19 @@ export const library: readonly LibraryEntry[] = [
     addedInVersion: '1.3.1',
   },
   {
+    id: 'om-jai-lakshmi-mata',
+    nameHi: 'लक्ष्मी माता की आरती',
+    nameEn: 'Om Jai Lakshmi Mata',
+    sub: '8 पद · अर्थ सहित',
+    subEn: '8 verses · with meaning',
+    thumb: 'श्री',
+    status: 'active',
+    category: 'aarti',
+    deities: ['lakshmi'],
+    verseCount: 8,
+    addedInVersion: '1.4.0',
+  },
+  {
     id: 'prabhati-shloka',
     nameHi: 'प्रभाती श्लोक',
     nameEn: 'Morning Slokas',
@@ -424,7 +535,7 @@ export const library: readonly LibraryEntry[] = [
     status: 'active',
     category: 'sanskar',
     addedInVersion: '1.3.1',
-    deities: ['krishna'],
+    deities: ['surya'],
     verseCount: 13,
   },
   {

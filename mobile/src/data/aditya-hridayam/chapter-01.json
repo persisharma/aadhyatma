@@ -1,0 +1,305 @@
+{
+  "chapter": 1,
+  "titleHi": "आदित्य हृदयम्",
+  "titleEn": "Aditya Hridayam",
+  "verseCount": 32,
+  "verses": [
+    {
+      "id": "ah-1-0",
+      "chapter": 1,
+      "number": 0,
+      "sanskrit": ["॥ आदित्य हृदयम् ॥", "ध्यानम्"],
+      "linesEn": ["Aditya Hridayam", "Dhyanam"],
+      "meaningHi": "यह ध्यान श्लोक सूर्य को जगत का एक नेत्र, सृष्टि-स्थिति-लय के हेतु और त्रयीमय तेजस्वरूप मानकर प्रणाम करता है।",
+      "meaningEn": "This dhyana bows to Surya as the single eye of the world, the cause of creation, preservation, and dissolution, and the radiant essence of the Vedas."
+    },
+    {
+      "id": "ah-1-1",
+      "chapter": 1,
+      "number": 1,
+      "sanskrit": ["ततो युद्धपरिश्रान्तं समरे चिन्तया स्थितम्।", "रावणं चाग्रतो दृष्ट्वा युद्धाय समुपस्थितम्॥१॥"],
+      "linesEn": ["tato yuddha parishrantam samare chintaya sthitam", "ravanam chagrato drishtva yuddhaya samupasthitam"],
+      "meaningHi": "युद्ध से थके और चिंतामग्न राम रावण को सामने युद्ध के लिए खड़ा देखते हैं।",
+      "meaningEn": "Rama, weary from battle and absorbed in thought, sees Ravana standing before him ready for war."
+    },
+    {
+      "id": "ah-1-2",
+      "chapter": 1,
+      "number": 2,
+      "sanskrit": ["दैवतैश्च समागम्य द्रष्टुमभ्यागतो रणम्।", "उपागम्याब्रवीद्रामम् अगस्त्यो भगवान् ऋषिः॥२॥"],
+      "linesEn": ["daivataishcha samagamya drashtumabhyagato ranam", "upagamyabravid ramam agastyo bhagavan rishih"],
+      "meaningHi": "देवताओं के साथ युद्ध देखने आए ऋषि अगस्त्य राम के समीप जाकर उपदेश देते हैं।",
+      "meaningEn": "The sage Agastya, who has come with the gods to witness the battle, approaches Rama and speaks."
+    },
+    {
+      "id": "ah-1-3",
+      "chapter": 1,
+      "number": 3,
+      "sanskrit": ["राम राम महाबाहो शृणु गुह्यं सनातनम्।", "येन सर्वानरीन् वत्स समरे विजयिष्यसि॥३॥"],
+      "linesEn": ["rama rama mahabaho shrinu guhyam sanatanam", "yena sarvan arin vatsa samare vijayishyasi"],
+      "meaningHi": "अगस्त्य कहते हैं कि हे महाबाहु राम, इस सनातन रहस्य को सुनो, जिससे युद्ध में शत्रुओं पर विजय मिलेगी।",
+      "meaningEn": "Agastya says: O mighty-armed Rama, hear this eternal secret by which you will conquer all enemies in battle."
+    },
+    {
+      "id": "ah-1-4",
+      "chapter": 1,
+      "number": 4,
+      "sanskrit": ["आदित्यहृदयं पुण्यं सर्वशत्रुविनाशनम्।", "जयावहं जपेन्नित्यम् अक्षय्यं परमं शिवम्॥४॥"],
+      "linesEn": ["aditya hridayam punyam sarva shatru vinashanam", "jayavaham japennityam akshayy am paramam shivam"],
+      "meaningHi": "आदित्य हृदय पुण्य, विजय देने वाला, शत्रुनाशक और परम कल्याणकारी जप बताया गया है।",
+      "meaningEn": "Aditya Hridayam is described as holy, victory-giving, destroyer of enemies, inexhaustible, and supremely auspicious."
+    },
+    {
+      "id": "ah-1-5",
+      "chapter": 1,
+      "number": 5,
+      "sanskrit": ["सर्वमङ्गलमाङ्गल्यं सर्वपापप्रणाशनम्।", "चिन्ताशोकप्रशमनम् आयुर्वर्धनमुत्तमम्॥५॥"],
+      "linesEn": ["sarva mangala mangalyam sarva papa pranashanam", "chinta shoka prashamanam ayur vardhanam uttamam"],
+      "meaningHi": "यह स्तोत्र मंगलों में श्रेष्ठ, पापों का नाशक, चिंता-शोक शांत करने वाला और आयु बढ़ाने वाला है।",
+      "meaningEn": "The hymn is the most auspicious among auspicious things, removing sin, calming anxiety and grief, and increasing life."
+    },
+    {
+      "id": "ah-1-6",
+      "chapter": 1,
+      "number": 6,
+      "sanskrit": ["रश्मिमन्तं समुद्यन्तं देवासुरनमस्कृतम्।", "पूजयस्व विवस्वन्तं भास्करं भुवनेश्वरम्॥६॥"],
+      "linesEn": ["rashmimantam samudyantam devasura namaskritam", "pujayasva vivasvantam bhaskaram bhuvaneshvaram"],
+      "meaningHi": "किरणमय, उदित होते, देव-असुरों से नमस्कृत भास्कर भुवनेश्वर की पूजा करने का निर्देश है।",
+      "meaningEn": "Rama is instructed to worship the radiant rising Sun, Vivasvan, Bhaskara, the Lord of the worlds, honored by gods and asuras."
+    },
+    {
+      "id": "ah-1-7",
+      "chapter": 1,
+      "number": 7,
+      "sanskrit": ["सर्वदेवात्मको ह्येष तेजस्वी रश्मिभावनः।", "एष देवासुरगणान् लोकान् पाति गभस्तिभिः॥७॥"],
+      "linesEn": ["sarva devatmako hyesha tejasvi rashmi bhavanah", "esha devasura ganan lokan pati gabhastibhih"],
+      "meaningHi": "सूर्य सर्वदेवात्मा और तेजस्वी हैं; उनकी किरणें देव, असुर और लोकों का पालन करती हैं।",
+      "meaningEn": "Surya embodies all the gods; by his rays he sustains gods, asuras, and the worlds."
+    },
+    {
+      "id": "ah-1-8",
+      "chapter": 1,
+      "number": 8,
+      "sanskrit": ["एष ब्रह्मा च विष्णुश्च शिवः स्कन्दः प्रजापतिः।", "महेन्द्रो धनदः कालो यमः सोमो ह्यपां पतिः॥८॥"],
+      "linesEn": ["esha brahma cha vishnushcha shivah skandah prajapatih", "mahendro dhanadah kalo yamah somo hyapam patih"],
+      "meaningHi": "सूर्य में ब्रह्मा, विष्णु, शिव, स्कन्द, प्रजापति, इन्द्र, कुबेर, काल, यम, सोम और वरुण का तेज समाहित है।",
+      "meaningEn": "Surya is praised as containing the powers of Brahma, Vishnu, Shiva, Skanda, Prajapati, Indra, Kubera, Time, Yama, Soma, and Varuna."
+    },
+    {
+      "id": "ah-1-9",
+      "chapter": 1,
+      "number": 9,
+      "sanskrit": ["पितरो वसवः साध्या ह्यश्विनौ मरुतो मनुः।", "वायुर्वह्निः प्रजाप्राण ऋतुकर्ता प्रभाकरः॥९॥"],
+      "linesEn": ["pitaro vasavah sadhya hyashvinau maruto manuh", "vayur vahnih praja pranah ritukarta prabhakarah"],
+      "meaningHi": "सूर्य पितरों, वसुओं, साध्यों, अश्विनीकुमारों, मरुतों, मनु, वायु, अग्नि, प्राण और ऋतुओं के कर्ता हैं।",
+      "meaningEn": "Surya is identified with the ancestors, Vasus, Sadhyas, Ashvins, Maruts, Manu, wind, fire, the life of beings, and the maker of seasons."
+    },
+    {
+      "id": "ah-1-10",
+      "chapter": 1,
+      "number": 10,
+      "sanskrit": ["आदित्यः सविता सूर्यः खगः पूषा गभस्तिमान्।", "सुवर्णसदृशो भानुः हिरण्यरेता दिवाकरः॥१०॥"],
+      "linesEn": ["adityah savita suryah khagah pusha gabhastiman", "suvarna sadrisho bhanuh hiranyareta divakarah"],
+      "meaningHi": "सूर्य के आदित्य, सविता, खग, पूषा, गभस्तिमान, भानु और दिवाकर जैसे नामों का स्मरण होता है।",
+      "meaningEn": "The verse invokes Surya through names such as Aditya, Savita, Khaga, Pusha, Gabhastiman, Bhanu, and Divakara."
+    },
+    {
+      "id": "ah-1-11",
+      "chapter": 1,
+      "number": 11,
+      "sanskrit": ["हरिदश्वः सहस्रार्चिः सप्तसप्तिर्मरीचिमान्।", "तिमिरोन्मथनः शम्भुः त्वष्टा मार्ताण्डकोंऽशुमान्॥११॥"],
+      "linesEn": ["haridashvah sahasrarchih saptasaptir marichiman", "timironmathanah shambhuh tvashta martandako amshuman"],
+      "meaningHi": "हरित अश्वों वाले, सहस्र किरणों वाले, अंधकार नाशक और अंशुमान मार्तण्ड सूर्य को प्रणाम है।",
+      "meaningEn": "Surya is praised as green-horsed, thousand-rayed, radiant, destroyer of darkness, auspicious, and Martanda."
+    },
+    {
+      "id": "ah-1-12",
+      "chapter": 1,
+      "number": 12,
+      "sanskrit": ["हिरण्यगर्भः शिशिरः तपनो भास्करो रविः।", "अग्निगर्भोऽदितेः पुत्रः शङ्खः शिशिरनाशनः॥१२॥"],
+      "linesEn": ["hiranyagarbhah shishirah tapano bhaskaro ravih", "agnigarbho aditeh putrah shankhah shishira nashanah"],
+      "meaningHi": "सूर्य हिरण्यगर्भ, तपन, भास्कर, रवि, अदिति-पुत्र और शीत का नाश करने वाले हैं।",
+      "meaningEn": "Surya is Hiranyagarbha, the heater, Bhaskara, Ravi, son of Aditi, fire-bearing, and dispeller of cold."
+    },
+    {
+      "id": "ah-1-13",
+      "chapter": 1,
+      "number": 13,
+      "sanskrit": ["व्योमनाथस्तमोभेदी ऋग्यजुःसामपारगः।", "घनावृष्टिरपां मित्रो विन्ध्यवीथीप्लवङ्गमः॥१३॥"],
+      "linesEn": ["vyomanathas tamobhedi rig yajuh sama paragah", "ghanavrishtir apam mitro vindhya vithi plavangamah"],
+      "meaningHi": "सूर्य आकाश के स्वामी, अंधकार भेदने वाले, वेदस्वरूप, वर्षा देने वाले और जल के मित्र हैं।",
+      "meaningEn": "Surya is lord of the sky, piercer of darkness, knower of the Vedas, giver of rain, friend of waters, and traverser of the heavens."
+    },
+    {
+      "id": "ah-1-14",
+      "chapter": 1,
+      "number": 14,
+      "sanskrit": ["आतपी मण्डली मृत्युः पिङ्गलः सर्वतापनः।", "कविर्विश्वो महातेजा रक्तः सर्वभवोद्भवः॥१४॥"],
+      "linesEn": ["atapi mandali mrityuh pingalah sarva tapanah", "kavir vishvo mahateja raktah sarva bhavodbhavah"],
+      "meaningHi": "सूर्य ताप देने वाले, मंडलस्वरूप, कालरूप, महातेजस्वी और सब भूतों की उत्पत्ति के आधार हैं।",
+      "meaningEn": "Surya is heat-giving, orb-like, death-like as Time, tawny, all-scorching, wise, universal, and source of beings."
+    },
+    {
+      "id": "ah-1-15",
+      "chapter": 1,
+      "number": 15,
+      "sanskrit": ["नक्षत्रग्रहताराणामधिपो विश्वभावनः।", "तेजसामपि तेजस्वी द्वादशात्मन्नमोऽस्तु ते॥१५॥"],
+      "linesEn": ["nakshatra graha taranam adhipo vishva bhavanah", "tejasam api tejasvi dvadashatman namo astu te"],
+      "meaningHi": "नक्षत्र, ग्रह और तारों के अधिपति, विश्वपालक और तेजों में भी श्रेष्ठ तेजस्वी सूर्य को नमस्कार है।",
+      "meaningEn": "Obeisance to the twelve-formed Sun, lord of stars and planets, sustainer of the universe, and radiance beyond all radiance."
+    },
+    {
+      "id": "ah-1-16",
+      "chapter": 1,
+      "number": 16,
+      "sanskrit": ["नमः पूर्वाय गिरये पश्चिमायाद्रये नमः।", "ज्योतिर्गणानां पतये दिनाधिपतये नमः॥१६॥"],
+      "linesEn": ["namah purvaya giraye pashchimayadraye namah", "jyotirgananam pataye dinadhipataye namah"],
+      "meaningHi": "पूर्व-पश्चिम पर्वतों से उदय-अस्त होने वाले, ज्योतिगणों और दिन के अधिपति सूर्य को नमस्कार है।",
+      "meaningEn": "Salutations to the Sun who rises and sets across the eastern and western mountains, lord of lights and ruler of the day."
+    },
+    {
+      "id": "ah-1-17",
+      "chapter": 1,
+      "number": 17,
+      "sanskrit": ["जयाय जयभद्राय हर्यश्वाय नमो नमः।", "नमो नमः सहस्रांशो आदित्याय नमो नमः॥१७॥"],
+      "linesEn": ["jayaya jaya bhadraya haryashvaya namo namah", "namo namah sahasramsho adityaya namo namah"],
+      "meaningHi": "जयस्वरूप, मंगलमय, हरित अश्वों वाले, सहस्र किरणों वाले आदित्य को बार-बार नमस्कार है।",
+      "meaningEn": "Repeated salutations to Aditya, giver of victory, auspicious one, green-horsed, and thousand-rayed."
+    },
+    {
+      "id": "ah-1-18",
+      "chapter": 1,
+      "number": 18,
+      "sanskrit": ["नम उग्राय वीराय सारङ्गाय नमो नमः।", "नमः पद्मप्रबोधाय मार्ताण्डाय नमो नमः॥१८॥"],
+      "linesEn": ["nama ugraya viraya sarangaya namo namah", "namah padma prabodhaya martandaya namo namah"],
+      "meaningHi": "उग्र, वीर, सारंग, कमलों को खिलाने वाले मार्तण्ड सूर्य को प्रणाम है।",
+      "meaningEn": "Salutations to the fierce and heroic Martanda, who awakens the lotuses."
+    },
+    {
+      "id": "ah-1-19",
+      "chapter": 1,
+      "number": 19,
+      "sanskrit": ["ब्रह्मेशानाच्युतेशाय सूर्यायादित्यवर्चसे।", "भास्वते सर्वभक्षाय रौद्राय वपुषे नमः॥१९॥"],
+      "linesEn": ["brahmeshana achyuteshaya suryayaditya varchase", "bhasvate sarva bhakshaya raudraya vapushe namah"],
+      "meaningHi": "ब्रह्मा, ईशान और अच्युत के तेज से युक्त, भास्वर और रौद्र रूप सूर्य को प्रणाम है।",
+      "meaningEn": "Salutations to the Sun who bears the splendor of Brahma, Ishana, and Achyuta, shining and formidable."
+    },
+    {
+      "id": "ah-1-20",
+      "chapter": 1,
+      "number": 20,
+      "sanskrit": ["तमोघ्नाय हिमघ्नाय शत्रुघ्नायामितात्मने।", "कृतघ्नघ्नाय देवाय ज्योतिषां पतये नमः॥२०॥"],
+      "linesEn": ["tamoghnaya himaghnaya shatrughnayamitatmane", "kritaghnaghnaya devaya jyotisham pataye namah"],
+      "meaningHi": "अंधकार, शीत, शत्रु और कृतघ्नता का नाश करने वाले ज्योतियों के स्वामी देव को नमस्कार है।",
+      "meaningEn": "Salutations to the lord of lights who destroys darkness, cold, enemies, and ingratitude."
+    },
+    {
+      "id": "ah-1-21",
+      "chapter": 1,
+      "number": 21,
+      "sanskrit": ["तप्तचामीकराभाय वह्नये विश्वकर्मणे।", "नमस्तमोऽभिनिघ्नाय रवये लोकसाक्षिणे॥२१॥"],
+      "linesEn": ["tapta chamikara abhaya vahnaye vishvakarmane", "namas tamo abhinighnaya ravaye loka sakshine"],
+      "meaningHi": "तप्त स्वर्ण के समान प्रकाशमान, अग्निरूप, विश्वकर्ता और लोकसाक्षी रवि को नमस्कार है।",
+      "meaningEn": "Salutations to Ravi, glowing like molten gold, fire-like, maker of the world, destroyer of darkness, and witness of all."
+    },
+    {
+      "id": "ah-1-22",
+      "chapter": 1,
+      "number": 22,
+      "sanskrit": ["नाशयत्येष वै भूतं तदेव सृजति प्रभुः।", "पायत्येष तपत्येष वर्षत्येष गभस्तिभिः॥२२॥"],
+      "linesEn": ["nashayaty esha vai bhutam tadeva srijati prabhuh", "payaty esha tapaty esha varshaty esha gabhastibhih"],
+      "meaningHi": "सूर्य ही भूतों का संहार और सृजन करते हैं; वही किरणों से पालन, ताप और वर्षा कराते हैं।",
+      "meaningEn": "The Sun dissolves and creates beings; through his rays he sustains, heats, and brings rain."
+    },
+    {
+      "id": "ah-1-23",
+      "chapter": 1,
+      "number": 23,
+      "sanskrit": ["एष सुप्तेषु जागर्ति भूतेषु परिनिष्ठितः।", "एष एवाग्निहोत्रं च फलं चैवाग्निहोत्रिणाम्॥२३॥"],
+      "linesEn": ["esha supteshu jagarti bhuteshu parinishthitah", "esha evagnihotram cha phalam chaivagnihotrinam"],
+      "meaningHi": "सभी प्राणियों में स्थित सूर्य सबके सोने पर भी जागते हैं और अग्निहोत्र तथा उसके फलस्वरूप हैं।",
+      "meaningEn": "Established in all beings, the Sun remains awake even when they sleep; he is the fire-offering and its fruit."
+    },
+    {
+      "id": "ah-1-24",
+      "chapter": 1,
+      "number": 24,
+      "sanskrit": ["वेदाश्च क्रतवश्चैव क्रतूनां फलमेव च।", "यानि कृत्यानि लोकेषु सर्व एष रविः प्रभुः॥२४॥"],
+      "linesEn": ["vedashcha kratavashchaiva kratunam phalameva cha", "yani krityani lokeshu sarva esha ravih prabhuh"],
+      "meaningHi": "वेद, यज्ञ, यज्ञफल और लोकों के सारे कर्तव्य रवि प्रभु में ही प्रतिष्ठित हैं।",
+      "meaningEn": "The Vedas, sacrifices, their fruits, and all duties in the worlds are upheld by Lord Ravi."
+    },
+    {
+      "id": "ah-1-25",
+      "chapter": 1,
+      "number": 25,
+      "sanskrit": ["एनमापत्सु कृच्छ्रेषु कान्तारेषु भयेषु च।", "कीर्तयन् पुरुषः कश्चिन्नावसीदति राघव॥२५॥"],
+      "linesEn": ["enam apatsu krichchhreshu kantareshu bhayeshu cha", "kirtayan purushah kashchin navasidati raghava"],
+      "meaningHi": "हे राघव, संकट, कठिनाई, वन और भय में इस स्तोत्र का कीर्तन करने वाला मनुष्य डूबता नहीं।",
+      "meaningEn": "O Raghava, whoever praises him in danger, hardship, wilderness, or fear does not sink into despair."
+    },
+    {
+      "id": "ah-1-26",
+      "chapter": 1,
+      "number": 26,
+      "sanskrit": ["पूजयस्वैनमेकाग्रो देवदेवं जगत्पतिम्।", "एतत्त्रिगुणितं जप्त्वा युद्धेषु विजयिष्यसि॥२६॥"],
+      "linesEn": ["pujayasvainam ekagro devadevam jagatpatim", "etat trigunitam japtva yuddheshu vijayishyasi"],
+      "meaningHi": "एकाग्र होकर देवदेव जगत्पति सूर्य की पूजा करो; इसे तीन बार जपकर युद्धों में विजय मिलेगी।",
+      "meaningEn": "Worship the lord of gods and world with one-pointed mind; reciting this thrice brings victory in battle."
+    },
+    {
+      "id": "ah-1-27",
+      "chapter": 1,
+      "number": 27,
+      "sanskrit": ["अस्मिन् क्षणे महाबाहो रावणं त्वं वधिष्यसि।", "एवमुक्त्वा तदाऽगस्त्यो जगाम च यथागतम्॥२७॥"],
+      "linesEn": ["asmin kshane mahabaho ravanam tvam vadhishyasi", "evam uktva tada agastyo jagama cha yathagatam"],
+      "meaningHi": "अगस्त्य आश्वासन देते हैं कि हे महाबाहु, इसी क्षण तुम रावण का वध करोगे, और फिर लौट जाते हैं।",
+      "meaningEn": "Agastya assures Rama that he will slay Ravana at that very moment, then returns as he came."
+    },
+    {
+      "id": "ah-1-28",
+      "chapter": 1,
+      "number": 28,
+      "sanskrit": ["एतच्छ्रुत्वा महातेजा नष्टशोकोऽभवत्तदा।", "धारयामास सुप्रीतो राघवः प्रयतात्मवान्॥२८॥"],
+      "linesEn": ["etachchhrutva mahateja nashta shoko abhavat tada", "dharayamasa suprito raghavah prayatatmavan"],
+      "meaningHi": "यह सुनकर महातेजस्वी राम का शोक नष्ट होता है और वे प्रसन्न, संयत चित्त से स्तोत्र धारण करते हैं।",
+      "meaningEn": "Hearing this, radiant Rama becomes free from sorrow and holds the hymn in his purified, delighted heart."
+    },
+    {
+      "id": "ah-1-29",
+      "chapter": 1,
+      "number": 29,
+      "sanskrit": ["आदित्यं प्रेक्ष्य जप्त्वा तु परं हर्षमवाप्तवान्।", "त्रिराचम्य शुचिर्भूत्वा धनुरादाय वीर्यवान्॥२९॥"],
+      "linesEn": ["adityam prekshya japtva tu param harsham avaptavan", "trir achamya shuchir bhutva dhanur adaya viryavan"],
+      "meaningHi": "आदित्य को देखकर जप करने के बाद राम परम हर्ष पाते हैं, आचमन कर शुद्ध होकर धनुष उठाते हैं।",
+      "meaningEn": "After beholding Aditya and reciting the hymn, Rama is filled with joy, purifies himself, and takes up his bow."
+    },
+    {
+      "id": "ah-1-30",
+      "chapter": 1,
+      "number": 30,
+      "sanskrit": ["रावणं प्रेक्ष्य हृष्टात्मा युद्धाय समुपागमत्।", "सर्वयत्नेन महता वधे तस्य धृतोऽभवत्॥३०॥"],
+      "linesEn": ["ravanam prekshya hrishtatma yuddhaya samupagamat", "sarva yatnena mahata vadhe tasya dhrito abhavat"],
+      "meaningHi": "राम हर्षित मन से रावण की ओर युद्ध के लिए बढ़ते हैं और उसके वध का दृढ़ संकल्प करते हैं।",
+      "meaningEn": "With a joyful heart, Rama advances toward Ravana for battle and becomes firmly resolved to slay him."
+    },
+    {
+      "id": "ah-1-31",
+      "chapter": 1,
+      "number": 31,
+      "sanskrit": ["अथ रविरवदन्निरीक्ष्य रामं मुदितमनाः परमं प्रहृष्यमाणः।", "निशिचरपतिसंक्षयं विदित्वा सुरगणमध्यगतो वचस्त्वरेति॥३१॥"],
+      "linesEn": ["atha ravir avadan nirikshya ramam mudita manah paramam prahrishyamanah", "nishicharapati sankshayam viditva suragana madhyagato vachas tvareti"],
+      "meaningHi": "देवगणों के बीच स्थित सूर्य रावण के संहार को जानकर प्रसन्न मन से राम से शीघ्र आगे बढ़ने को कहते हैं।",
+      "meaningEn": "Standing among the gods, the Sun, delighted and knowing Ravana's end is near, urges Rama to hasten."
+    }
+  ],
+  "source": {
+    "baseText": "Aditya Hridayam from Valmiki Ramayana Yuddha Kanda, cross-verified against Vaidika Vignanam, Sanskrit Documents, and Prapatti/Sunder Kidambi editions. The app keeps the common dhyanam as the introduction unit and the 31 numbered verses as the main text.",
+    "referenceUrls": [
+      "https://vignanam.org/english/aditya-hrudayam.html",
+      "https://sanskritdocuments.org/doc_z_misc_navagraha/adityahriday.pdf",
+      "https://www.prapatti.com/slokas/sanskrit/aadityahrudayam.pdf"
+    ],
+    "retrievedOn": "2026-06-25"
+  }
+}

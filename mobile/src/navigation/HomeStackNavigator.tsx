@@ -33,6 +33,10 @@ import KrishnaStotramReaderScreen from '@/screens/KrishnaStotramReaderScreen';
 import VratKathaReaderScreen from '@/screens/VratKathaReaderScreen';
 import RamStutiChaptersScreen from '@/screens/RamStutiChaptersScreen';
 import RamStutiReaderScreen from '@/screens/RamStutiReaderScreen';
+import RamrakshaStotramChaptersScreen from '@/screens/RamrakshaStotramChaptersScreen';
+import RamrakshaStotramReaderScreen from '@/screens/RamrakshaStotramReaderScreen';
+import AdityaHridayamChaptersScreen from '@/screens/AdityaHridayamChaptersScreen';
+import AdityaHridayamReaderScreen from '@/screens/AdityaHridayamReaderScreen';
 import RamcharitmanasChaptersScreen from '@/screens/RamcharitmanasChaptersScreen';
 import RamcharitmanasReaderScreen from '@/screens/RamcharitmanasReaderScreen';
 import AartiReaderScreen from '@/screens/AartiReaderScreen';
@@ -152,6 +156,18 @@ export default function HomeStackNavigator() {
       <Stack.Screen
         name="RamStutiReader"
         component={RamStutiReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="RamrakshaStotramChapters" component={RamrakshaStotramChaptersScreen} />
+      <Stack.Screen
+        name="RamrakshaStotramReader"
+        component={RamrakshaStotramReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="AdityaHridayamChapters" component={AdityaHridayamChaptersScreen} />
+      <Stack.Screen
+        name="AdityaHridayamReader"
+        component={AdityaHridayamReaderScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
       <Stack.Screen name="RamcharitmanasChapters" component={RamcharitmanasChaptersScreen} />

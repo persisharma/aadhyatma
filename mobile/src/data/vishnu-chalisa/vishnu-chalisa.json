@@ -1,0 +1,781 @@
+{
+  "titleHi": "विष्णु चालीसा",
+  "titleEn": "Vishnu Chalisa",
+  "subtitleHi": "नमो विष्णु भगवान खरारी",
+  "subtitleEn": "Namo Vishnu Bhagwan Kharari",
+  "language": "hi-en",
+  "script": "Devanagari + Latin",
+  "source": {
+    "baseText": "Traditional Shri Vishnu Chalisa (Namo Vishnu Bhagwan Kharari version): opening doha + 40 chaupais + closing doha, cross-verified line by line across Drik Panchang, Sri Mandir, 99Pandit, Aaj Tak, Sanatan Dharm and Aarti Sandhya, with verse numbering anchored to Dharmsutra/Sanatan Dharm (which mark चौपाई 4, 8, 12, 15, 16, 20). Where sources differed, the majority reading was kept: मूरत (not मूर्त, v3); वाराह + हिरण्याक्ष (v13); छबि (v16); ध्रुव (not धुरू, v27); सिरजन (v29); सेवकाई (v36); सुत सम्पति (not सुख संपत्ति, v39). The closing doha 'भक्त हृदय में वास करें...' is present in Aaj Tak, Aarti Sandhya, Sanatan Journey, Aarti Chalisa, RitiRiwaz and others; a minority of pages stop after chaupai 40 and omit it.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/chalisa/lord-vishnu/shri-vishnu-chalisa.html",
+      "https://www.srimandir.com/articles/chalisa/shree-vishnu-chalisa",
+      "https://99pandit.com/blog/vishnu-chalisa/",
+      "https://www.aajtak.in/religion/chalisa/vishnu-chalisa-2443230"
+    ],
+    "retrievedOn": "2026-06-23"
+  },
+  "counts": {
+    "openingDohas": 1,
+    "chaupais": 40,
+    "closingDohas": 1,
+    "totalVerses": 42
+  },
+  "verses": [
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा",
+      "labelEn": "Doha",
+      "lines": [
+        "विष्णु सुनिए विनय, सेवक की चितलाय।",
+        "कीरत कुछ वर्णन करूँ, दीजै ज्ञान बताय॥"
+      ],
+      "linesEn": [
+        "Vishnu suniye vinaya, sevaka kee chitalaaya.",
+        "Keerata kuchha varnana karoon, deejai gyaana bataaya."
+      ],
+      "meaningHi": "हे विष्णु, अपने सेवक की विनती मन लगाकर सुनिए; मैं आपकी कुछ कीर्ति का वर्णन करूँ — मुझे वैसा ज्ञान बताकर दीजिए।",
+      "meaningEn": "O Vishnu, hear with attention the plea of your servant; that I may sing some of your glory, bestow upon me such understanding."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "नमो विष्णु भगवान खरारी।",
+        "कष्ट नशावन अखिल बिहारी॥"
+      ],
+      "linesEn": [
+        "Namo vishnu bhagavaana kharaaree.",
+        "Kashta nashaavana akhila bihaaree."
+      ],
+      "meaningHi": "हे खर असुर का नाश करने वाले भगवान विष्णु, आपको नमस्कार; आप समस्त कष्टों का नाश करने वाले और सर्वत्र विचरने वाले हैं।",
+      "meaningEn": "Salutations to Lord Vishnu, slayer of the demon Khara; you destroy all suffering and pervade everywhere."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "प्रबल जगत में शक्ति तुम्हारी।",
+        "त्रिभुवन फैल रही उजियारी॥"
+      ],
+      "linesEn": [
+        "Prabala jagata men shakti tumhaaree.",
+        "Tribhuvana phaila rahee ujiyaaree."
+      ],
+      "meaningHi": "संसार में आपकी शक्ति प्रबल है; आपकी ज्योति तीनों लोकों में फैल रही है।",
+      "meaningEn": "Mighty is your power in the world; your radiance spreads across all three realms."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "सुन्दर रूप मनोहर सूरत।",
+        "सरल स्वभाव मोहनी मूरत॥"
+      ],
+      "linesEn": [
+        "Sundara roopa manohara soorata.",
+        "Sarala svabhaava mohanee moorata."
+      ],
+      "meaningHi": "आपका रूप सुन्दर और मुख मनोहर है; आपका स्वभाव सरल और मूर्ति मन को मोहने वाली है।",
+      "meaningEn": "Your form is lovely and your face enchanting; gentle is your nature and captivating your image."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "तन पर पीताम्बर अति सोहत।",
+        "बैजन्ती माला मन मोहत॥"
+      ],
+      "linesEn": [
+        "Tana para peetaambara ati sohata.",
+        "Baijantee maalaa mana mohata."
+      ],
+      "meaningHi": "आपके शरीर पर पीताम्बर अत्यन्त शोभा देता है; वैजयन्ती माला मन को मोह लेती है।",
+      "meaningEn": "The yellow silken robe shines splendidly upon your body; the Vaijayanti garland captivates the heart."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "शंख चक्र कर गदा बिराजे।",
+        "देखत दैत्य असुर दल भाजे॥"
+      ],
+      "linesEn": [
+        "Shankha chakra kara gadaa biraaje.",
+        "Dekhata daitya asura dala bhaaje."
+      ],
+      "meaningHi": "आपके हाथों में शंख, चक्र और गदा सुशोभित हैं; इन्हें देखकर दैत्यों और असुरों के दल भाग खड़े होते हैं।",
+      "meaningEn": "The conch, discus and mace adorn your hands; beholding them, the hosts of demons and asuras flee."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "सत्य धर्म मद लोभ न गाजे।",
+        "काम क्रोध मद लोभ न छाजे॥"
+      ],
+      "linesEn": [
+        "Satya dharma mada lobha na gaaje.",
+        "Kaama krodha mada lobha na chhaaje."
+      ],
+      "meaningHi": "जहाँ सत्य और धर्म हो वहाँ मद और लोभ नहीं गरजते; काम, क्रोध, मद और लोभ वहाँ टिक नहीं पाते।",
+      "meaningEn": "Where truth and righteousness reign, pride and greed do not thunder; lust, anger, pride and greed cannot abide there."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "सन्तभक्त सज्जन मनरंजन।",
+        "दनुज असुर दुष्टन दल गंजन॥"
+      ],
+      "linesEn": [
+        "Santabhakta sajjana manaranjana.",
+        "Danuja asura dushtana dala ganjana."
+      ],
+      "meaningHi": "आप संतों, भक्तों और सज्जनों के मन को आनन्द देते हैं; और दानवों, असुरों तथा दुष्टों के दल का संहार करते हैं।",
+      "meaningEn": "You delight the hearts of saints, devotees and the virtuous; and you crush the ranks of danavas, asuras and the wicked."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "सुख उपजाय कष्ट सब भंजन।",
+        "दोष मिटाय करत जन सज्जन॥"
+      ],
+      "linesEn": [
+        "Sukha upajaaya kashta saba bhanjana.",
+        "Dosha mitaaya karata jana sajjana."
+      ],
+      "meaningHi": "आप सुख उत्पन्न करते और सब कष्टों को मिटा देते हैं; मनुष्य के दोष दूर कर उसे सज्जन बना देते हैं।",
+      "meaningEn": "You bring forth joy and break apart all suffering; removing his faults, you make a person virtuous."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "पाप काट भव सिन्धु उतारण।",
+        "कष्ट नाशकर भक्त उबारण॥"
+      ],
+      "linesEn": [
+        "Paapa kaata bhava sindhu utaarana.",
+        "Kashta naashakara bhakta ubaarana."
+      ],
+      "meaningHi": "आप पापों को काटकर भवसागर से पार उतारते हैं; कष्टों का नाश कर भक्तों का उद्धार करते हैं।",
+      "meaningEn": "Severing sins, you carry souls across the ocean of worldly existence; destroying distress, you deliver your devotees."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "करत अनेक रूप प्रभु धारण।",
+        "केवल आप भक्ति के कारण॥"
+      ],
+      "linesEn": [
+        "Karata aneka roopa prabhu dhaarana.",
+        "Kevala aapa bhakti ke kaarana."
+      ],
+      "meaningHi": "हे प्रभु, आप अनेक रूप धारण करते हैं — केवल अपने भक्तों की भक्ति के कारण।",
+      "meaningEn": "O Lord, you take on many forms — solely for the sake of your devotees' devotion."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "धरणि धेनु बन तुमहिं पुकारा।",
+        "तब तुम रूप राम का धारा॥"
+      ],
+      "linesEn": [
+        "Dharani dhenu bana tumahin pukaaraa.",
+        "Taba tuma roopa raama kaa dhaaraa."
+      ],
+      "meaningHi": "जब पृथ्वी ने गाय का रूप धारण कर आपको पुकारा, तब आपने राम का रूप धारण किया।",
+      "meaningEn": "When the earth took the form of a cow and called out to you, then you assumed the form of Ram."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "भार उतार असुर दल मारा।",
+        "रावण आदिक को संहारा॥"
+      ],
+      "linesEn": [
+        "Bhaara utaara asura dala maaraa.",
+        "Raavana aadika ko sanhaaraa."
+      ],
+      "meaningHi": "आपने (धरती का) भार उतारकर असुरों के दल को मारा और रावण आदि का संहार किया।",
+      "meaningEn": "Lifting the earth's burden, you slew the demon hosts and destroyed Ravana and his kind."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "आप वाराह रूप बनाया।",
+        "हिरण्याक्ष को मार गिराया॥"
+      ],
+      "linesEn": [
+        "Aapa vaaraaha roopa banaayaa.",
+        "Hiranyaaksha ko maara giraayaa."
+      ],
+      "meaningHi": "आपने वराह का रूप धारण किया और हिरण्याक्ष को मारकर गिरा दिया।",
+      "meaningEn": "You took the form of the Boar and struck down the demon Hiranyaksha."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "धर मत्स्य तन सिन्धु बनाया।",
+        "चौदह रतनन को निकलाया॥"
+      ],
+      "linesEn": [
+        "Dhara matsya tana sindhu banaayaa.",
+        "Chaudaha ratanana ko nikalaayaa."
+      ],
+      "meaningHi": "मत्स्य का शरीर धारण कर आपने समुद्र को आधार बनाया, और (समुद्र-मंथन में) चौदह रत्नों को निकलवाया।",
+      "meaningEn": "Taking the body of the Fish you made the ocean your domain, and brought forth the fourteen jewels from the churning."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "अमिलख असुरन द्वन्द मचाया।",
+        "रूप मोहनी आप दिखाया॥"
+      ],
+      "linesEn": [
+        "Amilakha asurana dvanda machaayaa.",
+        "Roopa mohanee aapa dikhaayaa."
+      ],
+      "meaningHi": "जब अमृत के लिए असुरों ने द्वन्द्व मचाया, तब आपने मोहिनी रूप दिखाया।",
+      "meaningEn": "When the asuras raised a quarrel over the nectar, you revealed your enchanting Mohini form."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "देवन को अमृत पान कराया।",
+        "असुरन को छबि से बहलाया॥"
+      ],
+      "linesEn": [
+        "Devana ko amrita paana karaayaa.",
+        "Asurana ko chhabi se bahalaayaa."
+      ],
+      "meaningHi": "आपने देवताओं को अमृत पान कराया और असुरों को अपनी छवि (मोहिनी रूप) से बहला दिया।",
+      "meaningEn": "You gave the gods the nectar to drink and beguiled the asuras with your beauty."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "कूर्म रूप धर सिन्धु मझाया।",
+        "मन्द्राचल गिरि तुरत उठाया॥"
+      ],
+      "linesEn": [
+        "Koorma roopa dhara sindhu majhaayaa.",
+        "Mandraachala giri turata uthaayaa."
+      ],
+      "meaningHi": "कूर्म (कछुए) का रूप धारण कर आप समुद्र के मध्य में रहे, और मन्दराचल पर्वत को तुरन्त (अपनी पीठ पर) उठा लिया।",
+      "meaningEn": "Taking the form of the Tortoise you stayed amid the ocean, and at once bore up the Mandara mountain."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "शंकर का तुम फन्द छुड़ाया।",
+        "भस्मासुर को रूप दिखाया॥"
+      ],
+      "linesEn": [
+        "Shankara kaa tuma phanda chhudaayaa.",
+        "Bhasmaasura ko roopa dikhaayaa."
+      ],
+      "meaningHi": "आपने शंकर को (भस्मासुर के) फंदे से छुड़ाया और भस्मासुर को (मोहिनी) रूप दिखाया।",
+      "meaningEn": "You freed Shankar from the snare of Bhasmasura and showed the demon your beguiling form."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "वेदन को जब असुर डुबाया।",
+        "कर प्रबन्ध उन्हें ढुँढवाया॥"
+      ],
+      "linesEn": [
+        "Vedana ko jaba asura dubaayaa.",
+        "Kara prabandha unhen dhundhavaayaa."
+      ],
+      "meaningHi": "जब असुर ने वेदों को (जल में) डुबा दिया, तब आपने प्रबन्ध कर उन्हें ढुँढवाया।",
+      "meaningEn": "When a demon sank the Vedas in the waters, you made arrangements and had them sought out."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "मोहित बनकर खलहि नचाया।",
+        "उसही कर से भस्म कराया॥"
+      ],
+      "linesEn": [
+        "Mohita banakara khalahi nachaayaa.",
+        "Usahee kara se bhasma karaayaa."
+      ],
+      "meaningHi": "मोहिनी रूप से दुष्ट को मोहित कर नचाया, और उसी के हाथ से उसे भस्म करा दिया।",
+      "meaningEn": "Charming the wicked one as Mohini, you set him dancing, and by his own hand had him reduced to ashes."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "असुर जलंधर अति बलदाई।",
+        "शंकर से उन कीन्ह लड़ाई॥"
+      ],
+      "linesEn": [
+        "Asura jalandhara ati baladaaee.",
+        "Shankara se una keenha ladaaee."
+      ],
+      "meaningHi": "जलंधर असुर अत्यन्त बलवान था; उसने शंकर से युद्ध किया।",
+      "meaningEn": "The demon Jalandhar was exceedingly mighty; he waged war upon Shankar."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "हार पार शिव सकल बनाई।",
+        "कीन सती से छल खल जाई॥"
+      ],
+      "linesEn": [
+        "Haara paara shiva sakala banaaee.",
+        "Keena satee se chhala khala jaaee."
+      ],
+      "meaningHi": "जब शिव की सारी युक्तियाँ हारने-सी लगीं, तब उस दुष्ट ने (जलंधर ने) सती (वृन्दा) से छल किया।",
+      "meaningEn": "When all Shiva's stratagems seemed to fail, that villain wrought deceit upon the chaste Vrinda."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "सुमिरन कीन तुम्हें शिवरानी।",
+        "बतलाई सब विपत कहानी॥"
+      ],
+      "linesEn": [
+        "Sumirana keena tumhen shivaraanee.",
+        "Batalaaee saba vipata kahaanee."
+      ],
+      "meaningHi": "तब शिवरानी (पार्वती) ने आपका स्मरण किया और सारी विपत्ति की कहानी आपको बताई।",
+      "meaningEn": "Then Shiva's queen (Parvati) called you to mind and told you the whole tale of her distress."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "तब तुम बने मुनीश्वर ज्ञानी।",
+        "वृन्दा की सब सुरति भुलानी॥"
+      ],
+      "linesEn": [
+        "Taba tuma bane muneeshvara gyaanee.",
+        "Vrindaa kee saba surati bhulaanee."
+      ],
+      "meaningHi": "तब आपने ज्ञानी मुनीश्वर का रूप धारण किया और वृन्दा की सारी सुध-बुध भुला दी।",
+      "meaningEn": "Then you took on the guise of a wise sage and caused Vrinda to lose all her awareness."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "देखत तीन दनुज शैतानी।",
+        "वृन्दा आय तुम्हें लपटानी॥"
+      ],
+      "linesEn": [
+        "Dekhata teena danuja shaitaanee.",
+        "Vrindaa aaya tumhen lapataanee."
+      ],
+      "meaningHi": "तीन दानवों की शैतानी (उत्पात) देखकर, वृन्दा आकर आपसे लिपट गई।",
+      "meaningEn": "Seeing the mischief of the three demons, Vrinda came and clung to you."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "हो स्पर्श धर्म क्षति मानी।",
+        "हना असुर उर शिव शैतानी॥"
+      ],
+      "linesEn": [
+        "Ho sparsha dharma kshati maanee.",
+        "Hanaa asura ura shiva shaitaanee."
+      ],
+      "meaningHi": "स्पर्श हो जाने से जब (वृन्दा के) धर्म की क्षति मानी गई, तब शिव ने उस दुष्ट असुर के हृदय पर प्रहार कर उसका वध किया।",
+      "meaningEn": "When by that touch her virtue was deemed broken, Shiva struck the wicked demon in the heart and slew him."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "तुमने ध्रुव प्रहलाद उबारे।",
+        "हिरणाकुश आदिक खल मारे॥"
+      ],
+      "linesEn": [
+        "Tumane dhruva prahalaada ubaare.",
+        "Hiranaakusha aadika khala maare."
+      ],
+      "meaningHi": "आपने ध्रुव और प्रह्लाद का उद्धार किया और हिरण्यकशिपु आदि दुष्टों का संहार किया।",
+      "meaningEn": "You delivered Dhruva and Prahlada and slew the wicked Hiranyakashipu and his kind."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "गणिका और अजामिल तारे।",
+        "बहुत भक्त भव सिन्धु उतारे॥"
+      ],
+      "linesEn": [
+        "Ganikaa aura ajaamila taare.",
+        "Bahuta bhakta bhava sindhu utaare."
+      ],
+      "meaningHi": "आपने गणिका और अजामिल का उद्धार किया, और अनेक भक्तों को भवसागर से पार उतारा।",
+      "meaningEn": "You redeemed the courtesan and Ajamila, and carried many devotees across the ocean of existence."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "हरहु सकल संताप हमारे।",
+        "कृपा करहु हरि सिरजन हारे॥"
+      ],
+      "linesEn": [
+        "Harahu sakala santaapa hamaare.",
+        "Kripaa karahu hari sirajana haare."
+      ],
+      "meaningHi": "हे सृष्टि के रचयिता हरि, हमारे समस्त संतापों को हर लीजिए और हम पर कृपा कीजिए।",
+      "meaningEn": "O Hari, creator of all, take away all our sorrows and bestow your grace upon us."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "देखहुँ मैं निज दरश तुम्हारे।",
+        "दीन बन्धु भक्तन हितकारे॥"
+      ],
+      "linesEn": [
+        "Dekhahun main nija darasha tumhaare.",
+        "Deena bandhu bhaktana hitakaare."
+      ],
+      "meaningHi": "हे दीनों के बन्धु और भक्तों का हित करने वाले, मैं आपके दर्शन करूँ — यही मेरी अभिलाषा है।",
+      "meaningEn": "O friend of the lowly and benefactor of devotees, may I behold your own vision — this is my longing."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "चहत आपका सेवक दर्शन।",
+        "करहु दया अपनी मधुसूदन॥"
+      ],
+      "linesEn": [
+        "Chahata aapakaa sevaka darshana.",
+        "Karahu dayaa apanee madhusoodana."
+      ],
+      "meaningHi": "आपका सेवक आपके दर्शन चाहता है; हे मधुसूदन, अपनी दया कीजिए।",
+      "meaningEn": "Your servant longs for your vision; O Madhusudana, show your mercy."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "जानूं नहीं योग्य जप पूजन।",
+        "होय यज्ञ स्तुति अनुमोदन॥"
+      ],
+      "linesEn": [
+        "Jaanoon naheen yogya japa poojana.",
+        "Hoya yagya stuti anumodana."
+      ],
+      "meaningHi": "मैं योग्य जप और पूजन नहीं जानता; फिर भी मेरी यज्ञ-स्तुति को स्वीकृति मिल जाए।",
+      "meaningEn": "I know not the worthy ways of chanting and worship; yet may my offering of praise meet your approval."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "शीलदया सन्तोष सुलक्षण।",
+        "विदित नहीं व्रतबोध विलक्षण॥"
+      ],
+      "linesEn": [
+        "Sheeladayaa santosha sulakshana.",
+        "Vidita naheen vratabodha vilakshana."
+      ],
+      "meaningHi": "शील, दया, संतोष और सुलक्षण — तथा व्रत का विलक्षण ज्ञान — मुझे विदित नहीं है।",
+      "meaningEn": "Good conduct, compassion, contentment and noble virtues — and the rare understanding of holy vows — are unknown to me."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "करहुँ आपका किस विधि पूजन।",
+        "कुमति विलोक होत दुख भीषण॥"
+      ],
+      "linesEn": [
+        "Karahun aapakaa kisa vidhi poojana.",
+        "Kumati viloka hota dukha bheeshana."
+      ],
+      "meaningHi": "मैं किस विधि से आपका पूजन करूँ? अपनी कुबुद्धि को देखकर मुझे भीषण दुःख होता है।",
+      "meaningEn": "By what manner shall I worship you? Beholding my own dull wit, I am seized with grievous sorrow."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "करहुँ प्रणाम कौन विधि सुमिरण।",
+        "कौन भाँति मैं करहुँ समर्पण॥"
+      ],
+      "linesEn": [
+        "Karahun pranaama kauna vidhi sumirana.",
+        "Kauna bhaanti main karahun samarpana."
+      ],
+      "meaningHi": "मैं किस विधि से प्रणाम और स्मरण करूँ, और किस प्रकार स्वयं को आपको समर्पित करूँ?",
+      "meaningEn": "In what manner shall I bow and remember you, and in what way offer myself to you?"
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "सुर मुनि करत सदा सेवकाई।",
+        "हर्षित रहत परम गति पाई॥"
+      ],
+      "linesEn": [
+        "Sura muni karata sadaa sevakaaee.",
+        "Harshita rahata parama gati paaee."
+      ],
+      "meaningHi": "देवता और मुनि सदा आपकी सेवा करते हैं, और परम गति पाकर सदा हर्षित रहते हैं।",
+      "meaningEn": "Gods and sages ever render you service, and having attained the highest state, remain ever joyful."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "दीन दुखिन पर सदा सहाई।",
+        "निज जन जान लेव अपनाई॥"
+      ],
+      "linesEn": [
+        "Deena dukhina para sadaa sahaaee.",
+        "Nija jana jaana leva apanaaee."
+      ],
+      "meaningHi": "आप दीन और दुखियों पर सदा सहायक रहते हैं; मुझे अपना जन जानकर अपना लीजिए।",
+      "meaningEn": "You are ever a helper to the lowly and the suffering; knowing me as your own, take me as yours."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "पाप दोष संताप नशाओ।",
+        "भव बन्धन से मुक्त कराओ॥"
+      ],
+      "linesEn": [
+        "Paapa dosha santaapa nashaao.",
+        "Bhava bandhana se mukta karaao."
+      ],
+      "meaningHi": "मेरे पाप, दोष और संतापों का नाश कीजिए, और मुझे संसार के बन्धन से मुक्त कराइए।",
+      "meaningEn": "Destroy my sins, faults and sorrows, and free me from the bondage of worldly existence."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "सुत सम्पति दे सुख उपजाओ।",
+        "निज चरनन का दास बनाओ॥"
+      ],
+      "linesEn": [
+        "Suta sampati de sukha upajaao.",
+        "Nija charanana kaa daasa banaao."
+      ],
+      "meaningHi": "मुझे संतान और सम्पत्ति देकर सुख उपजाइए, और अपने चरणों का दास बना लीजिए।",
+      "meaningEn": "Granting me children and prosperity, bring forth happiness, and make me the servant of your own feet."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "निगम सदा ये विनय सुनावै।",
+        "पढ़ै सुनै सो जन सुख पावै॥"
+      ],
+      "linesEn": [
+        "Nigama sadaa ye vinaya sunaavai.",
+        "Padhai sunai so jana sukha paavai."
+      ],
+      "meaningHi": "वेद सदा यही विनती सुनाते हैं — जो जन इसे पढ़ता और सुनता है, वह सुख पाता है।",
+      "meaningEn": "The Vedas ever proclaim this plea — whoever reads or hears it attains happiness."
+    },
+    {
+      "id": "closing-doha",
+      "type": "doha",
+      "section": "closing",
+      "labelHi": "दोहा",
+      "labelEn": "Doha",
+      "lines": [
+        "भक्त हृदय में वास करें, पूर्ण कीजिये काज।",
+        "शंख चक्र और गदा पद्म, हे विष्णु महाराज॥"
+      ],
+      "linesEn": [
+        "Bhakta hridaya men vaasa karen, poorna keejiye kaaja.",
+        "Shankha chakra aura gadaa padma, he vishnu mahaaraaja."
+      ],
+      "meaningHi": "हे शंख, चक्र, गदा और पद्म धारण करने वाले विष्णु महाराज, मेरे हृदय में निवास कीजिए और मेरे सब कार्य पूर्ण कीजिए।",
+      "meaningEn": "O Vishnu, great king bearing the conch, discus, mace and lotus, dwell within my heart and fulfil all my tasks."
+    }
+  ]
+}

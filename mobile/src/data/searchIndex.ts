@@ -72,6 +72,14 @@ import {
   ramStutiChaptersManifest,
 } from './ram-stuti';
 import {
+  getRamrakshaStotramChapter,
+  ramrakshaStotramChaptersManifest,
+} from './ramraksha-stotram';
+import {
+  getAdityaHridayamChapter,
+  adityaHridayamChaptersManifest,
+} from './aditya-hridayam';
+import {
   getKrishnaStotramChapter,
   krishnaStotramChaptersManifest,
 } from './krishna-stotram';
@@ -88,6 +96,11 @@ const CHALISA_IDS: readonly ChalisaId[] = [
   'shiv-chalisa',
   'durga-chalisa',
   'ganesh-chalisa',
+  'lakshmi-chalisa',
+  'saraswati-chalisa',
+  'vishnu-chalisa',
+  'krishna-chalisa',
+  'ram-chalisa',
 ];
 
 /** Cap how many verses can come back from a single query (UX + perf). */
@@ -328,6 +341,26 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
         entry,
         ramStutiChaptersManifest,
         getRamStutiChapter
+      );
+      continue;
+    }
+
+    if (entry.id === 'ramraksha-stotram') {
+      pushChapteredShivaStrotamShape(
+        verses,
+        entry,
+        ramrakshaStotramChaptersManifest,
+        getRamrakshaStotramChapter
+      );
+      continue;
+    }
+
+    if (entry.id === 'aditya-hridayam') {
+      pushChapteredShivaStrotamShape(
+        verses,
+        entry,
+        adityaHridayamChaptersManifest,
+        getAdityaHridayamChapter
       );
       continue;
     }

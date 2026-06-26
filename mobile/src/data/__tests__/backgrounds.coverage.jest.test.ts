@@ -65,6 +65,14 @@ describe('background coverage', () => {
     expect(getSourceBackground('tulsi-puja')).toBe(backgroundImages.deity_tulsi_vrindavan);
   });
 
+  test('Aditya Hridayam uses Surya deity art', () => {
+    expect(getDeityBackground('surya')).toBe(backgroundImages.deity_surya_chariot);
+    expect(getSourceBackground('aditya-hridayam')).toBe(backgroundImages.deity_surya_chariot);
+    expect(getReaderBackground('aditya-hridayam', { id: 'coverage', stanza: 1 })).toBe(
+      backgroundImages.deity_surya_chariot
+    );
+  });
+
   test('Vishnu & Gayatri use their own dedicated art, not a borrowed deity image (Rule 10.8)', () => {
     expect(getDeityBackground('vishnu')).toBe(backgroundImages.source_vishnu_narayana);
     expect(getDeityBackground('vishnu')).not.toBe(getDeityBackground('krishna'));

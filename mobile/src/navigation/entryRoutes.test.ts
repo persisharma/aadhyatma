@@ -105,6 +105,8 @@ for (const sourceId of [
   'durga-stotram',
   'ganesh-stotram',
   'shiva-strotam',
+  'ramraksha-stotram',
+  'aditya-hridayam',
   'bhagavad-gita',
 ] as const) {
   const { nav, calls } = makeNav();
@@ -236,6 +238,36 @@ for (const sourceId of [
   assert.deepEqual(target, {
     screen: 'GitaReader',
     params: { chapter: 2, initialIndex: 46 },
+  });
+}
+
+{
+  const target = buildEntryStartTarget({
+    id: 'aditya-hridayam',
+    nameHi: 'आदित्य हृदयम्',
+    nameEn: 'Aditya Hridayam',
+    sub: '',
+    subEn: '',
+    thumb: '',
+    status: 'active',
+    category: 'stotram',
+    deities: ['surya'],
+  });
+  assert.deepEqual(target, {
+    screen: 'AdityaHridayamChapters',
+    params: {},
+  });
+}
+
+{
+  const target = buildProgressTarget({
+    sourceId: 'ramraksha-stotram',
+    chapter: 1,
+    verseIndex: 10,
+  });
+  assert.deepEqual(target, {
+    screen: 'RamrakshaStotramReader',
+    params: { chapter: 1, initialIndex: 10 },
   });
 }
 

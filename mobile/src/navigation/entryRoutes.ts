@@ -9,7 +9,7 @@ import type { HomeStackParamList } from './types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
-const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa']);
+const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa', 'lakshmi-chalisa', 'saraswati-chalisa', 'vishnu-chalisa', 'krishna-chalisa', 'ram-chalisa']);
 
 const theerthIds = new Set([
   'dvadasha-jyotirlinga',
@@ -43,6 +43,8 @@ const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'krishna-stotram': 'KrishnaStotramChapters',
   'bajrang-baan': 'BajrangBaanChapters',
   'ram-stuti': 'RamStutiChapters',
+  'ramraksha-stotram': 'RamrakshaStotramChapters',
+  'aditya-hridayam': 'AdityaHridayamChapters',
   'ramcharitmanas': 'RamcharitmanasChapters',
   'sundarkand': 'SundarkandChapters',
   'bhagavad-gita': 'GitaChapters',
@@ -58,6 +60,8 @@ const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'krishna-stotram': 'KrishnaStotramReader',
   'bajrang-baan': 'BajrangBaanReader',
   'ram-stuti': 'RamStutiReader',
+  'ramraksha-stotram': 'RamrakshaStotramReader',
+  'aditya-hridayam': 'AdityaHridayamReader',
   'ramcharitmanas': 'RamcharitmanasReader',
   'sundarkand': 'SundarkandReader',
   'bhagavad-gita': 'GitaReader',
