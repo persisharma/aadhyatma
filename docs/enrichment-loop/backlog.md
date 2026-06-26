@@ -1,65 +1,64 @@
-# Enrichment Loop — Ledger
+# Enrichment Loop — Backlog (value-ranked queue)
 
-State for the `/enrich` loop. Each run reads this, picks one pending enrichment,
-and (after approval) moves it to the Shipped log. **Never re-propose a shipped item.**
+The prioritized queue for `/enrich` and `/enrich-auto`. Each run picks the
+**topmost ready item** (highest value), classifies its tier, and routes per
+`scope.md`. Tiers: **T0** harden · **T1** enhance · **T2** feature slice · **T3** new feature.
 
-Priority follows `docs/roadmap/2026-Q3-roadmap.md` §4–6. All items obey the
-bundle-only constraint (no backend / CDN / cloud sync / streaming / server analytics).
+> Verify against source before building — the Q3 roadmap (May) is partly stale.
+> **Current focus: quick wins first** (low-effort, high-visibility T1/T2).
 
 ---
 
-## Candidate registry (pending)
+## Queue (top = next)
 
-Each feature lists pending enrichments as thin, one-PR slices. Pick the topmost
-unshipped slice of the highest-priority feature unless `$ARGUMENTS` or the user steers otherwise.
+### 🥇 Quick wins — lead here
 
-### PRD-01 — Daily notifications (Habit · Wave: Jul · priority 1)
-- [ ] Local daily-verse notification scheduler (on-device, one verse/day)
-- [ ] Notification opt-in modal + persisted opt-in flag
-- [ ] Festival reminder scheduling off the bundled Panchang calendar
-- [ ] Deep-link from notification tap → verse via `entryRoutes`
+1. **[T1] Font-size control.** Persisted reader text-scale (S/M/L/XL) applied as a
+   multiplier over `theme/typography`. Surfaced in More → a small control.
+   *Files:* new `FontScaleContext`, `App.tsx` provider, a settings control, reader type consumes it.
+   *Slice 1 (ship first):* the context + persistence + a pure `scaleTypography(scale)` util with tests. UI wiring is slice 2.
+2. **[T2] Dark-mode toggle.** `ThemeMode` type already exists but only a light
+   palette is wired. *Slice 1:* author a `darkColors` palette + contrast test
+   (additive, no screen changes). *Slice 2:* make `ThemeProvider` stateful +
+   persisted setting, default "system". Ship behind a setting; light stays default.
+3. **[T1] Sleep timer** for japam/audio playback (stop after N minutes).
+   *Slice 1:* a pure `useSleepTimer` hook + tests. *Slice 2:* control in the japam UI.
 
-### PRD-06 — Foundation hardening (Reliability · continuous · priority 1)
-- [ ] Add smoke tests for remaining untested readers (Aarti, DurgaStotram, GaneshStotram, HanumanAshtak, RamStuti, Ramcharitmanas, Sundarkand, VishnuSahasranama)
-- [ ] Wire `npm run test:readers` into CI (block merge on red for PRs touching `mobile/src`)
-- [ ] Buffered on-device crash log (no Sentry; user-initiated share-sheet send)
-- [ ] On-device backup export (bookmarks + progress → JSON via share sheet)
-- [ ] On-device backup import (verified by uninstall → reinstall → import)
+### 🥈 Discovery & habit (heavier — T2/T3)
 
-### PRD-02 — Verse audio (Habit · Wave: Jul–Aug · priority 2)
-- [ ] Per-verse audio playback control on the chalisa reader (Hanuman pilot)
-- [ ] Audio asset registry + per-verse mapping in `src/data`
-- [ ] Playthrough local counter
+4. **[T3] Global search** (net-new). → write a plan first (`plans/global-search.plan.md`):
+   runtime-built memoized index over bundled data, search screen, deep-link results.
+5. **[T3] Verse audio** for chalisas/aartis (Hanuman pilot). → plan first; gated on
+   the audio-licensing open decision (roadmap §7) — a human call.
 
-### PRD-03 — Global search (Discovery · Wave: Aug · priority 3)
-- [ ] Search screen shell + route registration
-- [ ] Runtime-built, memoized search index over bundled data (build on first search)
-- [ ] Result rows with deep-link into the right reader page
+### 🥉 Reliability floor (T0 — fallback when nothing above is ready)
 
-### PRD-04 — Reading comfort (Habit · Wave: Aug–Sep · priority 3)
-- [ ] Font-scale control persisted in AsyncStorage
-- [ ] Dark-mode token audit of `theme/colors.ts` (gate before any screen change)
-- [ ] Dark mode behind a setting, default "system"
-- [ ] Sleep timer
+6. **[T0] Reader smoke-test coverage** for remaining untested readers
+   (Aarti, DurgaStotram, GaneshStotram, HanumanAshtak, RamStuti, Ramcharitmanas,
+   Sundarkand, VishnuSahasranama).
+7. **[T0] Wire `npm run test:readers` into CI** (block merge on red for PRs touching `mobile/src`).
 
-### PRD-05 — Share verse card (Growth · Wave: Sep · priority 4)
-- [ ] Parchment share-card render of a verse (image)
-- [ ] Share affordance reachable from any reader page
+---
+
+## Already shipped upstream (do NOT re-queue — verified in source)
+
+- Daily notifications + festival reminders — `NotificationPreferencesContext`, `ReminderSettingsScreen` (PRD-01).
+- Verse share card — `ShareCard.tsx`, `ShareButton`, `shareVerse` (PRD-05).
 
 ---
 
 ## Shipped log
 
-Delivered enrichments. Append newest at top: `date · feature · enrichment · commit/PR`.
+Delivered by the loop. Newest at top: `date · tier · feature · enrichment · run · [autorun]`.
 
-- 2026-06-25 · PRD-06 Foundation hardening · ShivaStrotamReaderScreen smoke test (`ShivaStrotamReaderScreen.test.tsx`, mounts ch.1, asserts title + first verse render) · run 2 · autorun
-- 2026-06-25 · PRD-06 Foundation hardening · ChalisaReaderScreen smoke test (`ChalisaReaderScreen.test.tsx`, mounts hanuman-chalisa ch.1, asserts title + first verse line render) · run 1
+- 2026-06-25 · T0 · PRD-06 Foundation · ShivaStrotamReaderScreen smoke test (`ShivaStrotamReaderScreen.test.tsx`) · run 2 · autorun
+- 2026-06-25 · T0 · PRD-06 Foundation · ChalisaReaderScreen smoke test (`ChalisaReaderScreen.test.tsx`) · run 1
 
 ---
 
 ## Autorun log
 
-Notes from autonomous (`/enrich-auto`) runs that deferred or reverted instead of
-shipping. Newest at top: `date · reason`.
+Notes from autonomous runs that deferred, planned, or reverted instead of shipping.
+Newest at top: `date · reason`.
 
 _(none yet)_

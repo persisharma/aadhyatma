@@ -33,27 +33,36 @@ squash-merge noise):
 
 The actual push (with `--force-with-lease` when history diverged) happens in Phase 4.
 
-## Phase 1 — Select ONE (same as /enrich)
+## Phase 1 — Select ONE (per scope.md)
 
-Pick the single highest-value pair by roadmap priority. Never re-propose a
-Shipped-log item. Honor `$ARGUMENTS` bias if present.
+Read `docs/enrichment-loop/scope.md`. Pick the **topmost ready item** from
+`docs/enrichment-loop/backlog.md` by the value rubric, honoring the current focus
+(**quick wins first**). Classify its tier. Aim for **T1/T2** real product work;
+T0 is the fallback. Never re-pick a Shipped-log item. Honor `$ARGUMENTS` bias.
+Verify against source (the May roadmap is partly stale).
 
-## Phase 2 — Auto-gate (REPLACES the approval prompt)
+## Phase 2 — Tier routing + auto-gate (REPLACES the approval prompt)
 
-No `AskUserQuestion`. Instead, the selected slice must pass ALL of these to
-proceed. If any fails, **do nothing this run** and write a one-line note to the
-ledger's "Autorun log" explaining why (then go to Phase 4 record-only):
+No `AskUserQuestion`. Route by tier (per scope.md "plan big, build small"):
 
-- **Size is S or M.** Anything that reads L is too big for an unattended run.
-- **Low-risk surface.** Prefer additive work (a new test file, a new pure util,
-  a new isolated component) over edits to shared/critical paths
-  (navigation graph, App.tsx provider tree, context internals, data migrations).
-  If the only available slice touches a critical path, defer it and log.
-- **No product decision required.** If the slice needs a choice from the roadmap's
-  "Open decisions" (app name, audio licensing, Android scope, size ceiling) or any
-  ambiguous design call, defer it and log — those are for a human.
-- **Honors all hard constraints** (bundle-only, no new content sections, light
-  default, +60 MB budget).
+- **T3 (net-new feature):** do NOT build. Write an implementation plan to
+  `docs/enrichment-loop/plans/<slug>.plan.md` (problem · slices · files · risks ·
+  open product decisions), commit just that plan, and stop. Log "planned: <slug>"
+  to the Autorun log. A human approves; a later `/enrich` run builds slice 1.
+- **T0–T2:** build directly **only if** the slice passes ALL gates below.
+  If any fails, do nothing this run and write a one-line "deferred: …" note to the
+  Autorun log (then Phase 4 record-only):
+  - **Size is S or M.** Anything L is too big for an unattended run — re-slice
+    thinner or defer.
+  - **Low-risk / additive-leaning.** A new context/util/component/test, or a
+    contained edit, is fine (T1/T2 enhancements are expected to touch existing
+    code). But defer edits that rewrite a critical shared path wholesale
+    (navigation graph rewrite, App.tsx provider reorder, data migrations).
+  - **No product decision required.** If it needs a roadmap "Open decision"
+    (app name, audio licensing, Android scope, size ceiling) or an ambiguous
+    design call, defer + log — those are for a human.
+  - **Honors all hard constraints** (bundle-only, no new content sections, light
+    default, +60 MB budget).
 
 ## Phase 3 — Build & verify (same as /enrich, with a strict gate)
 

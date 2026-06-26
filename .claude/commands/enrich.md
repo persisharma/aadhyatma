@@ -35,15 +35,24 @@ Never re-propose anything already in the **Shipped log**.
 
 ## Phase 1 — Select ONE (feature, enrichment) pair
 
-Pick the single highest-value pair using, in order:
+Read `docs/enrichment-loop/scope.md` (the tier ladder + value rubric) and pick
+the **topmost ready item** from `docs/enrichment-loop/backlog.md`. Classify its
+tier (T0 harden · T1 enhance · T2 feature slice · T3 new feature).
 
-1. **Roadmap priority** — wave/sequencing in `2026-Q3-roadmap.md` §4–6. Habit
-   theme (PRD-01/02/04) and the parallel reliability track (PRD-06) lead.
-2. **Unblocks the most downstream work** (e.g. notifications before audio deep-links).
-3. **Smallest shippable increment** — an enrichment must fit in **one run, one PR**.
-   If a PRD is large, slice off the next thin vertical (one screen, one toggle,
-   one test file), not the whole PRD.
-4. `$ARGUMENTS` bias if present and not already shipped.
+Aim for **T1/T2 real product work** — the loop exists to move the product
+forward, not to grind T0 chores. T0 is the fallback when nothing higher is ready.
+Because this is the **approval-gated** command, you MAY propose any tier including
+**T3** net-new features — the user approves the slice at Phase 2.
+
+Rank by the rubric in `scope.md` (user impact → leverage → readiness → effort),
+honoring the **current focus: quick wins first**. Then:
+
+1. **Smallest shippable increment** — fits in **one run, one PR**. Slice a big
+   feature into the next thin vertical (one screen, one toggle, one util), not the whole PRD.
+2. `$ARGUMENTS` bias if present and not already in the Shipped log.
+
+Verify the item against source before building — the May roadmap is partly stale
+(notifications + share card already shipped; see backlog "Already shipped upstream").
 
 Hard constraints (from the roadmap — do not violate):
 - **Bundle-only.** No backend, CDN, cloud sync, streaming, server analytics, or
