@@ -17,6 +17,8 @@ import { hanumanAshtakTotal } from './hanuman-ashtak';
 import { bajrangBaanTotal } from './bajrang-baan';
 import { ramStutiTotal } from './ram-stuti';
 import { krishnaStotramTotal } from './krishna-stotram';
+import { ramrakshaStotramTotal } from './ramraksha-stotram';
+import { adityaHridayamTotal } from './aditya-hridayam';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
@@ -30,7 +32,7 @@ export type ContentCategory =
   | 'aarti'
   | 'theerth'
   | 'sanskar';
-export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr' | 'saraswati' | 'lakshmi';
+export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr' | 'saraswati' | 'lakshmi' | 'surya';
 
 export type LibraryEntry = {
   id: string;
@@ -95,8 +97,8 @@ export const library: readonly LibraryEntry[] = [
     id: 'shiva-strotam',
     nameHi: 'शिव स्तोत्रम्',
     nameEn: 'Shiva Stotram',
-    sub: `4 स्तोत्र · अर्थ सहित`,
-    subEn: `4 stotras · with meaning`,
+    sub: `6 स्तोत्र · अर्थ सहित`,
+    subEn: `6 stotras · with meaning`,
     thumb: 'श',
     status: 'active',
     category: 'stotram',
@@ -328,6 +330,32 @@ export const library: readonly LibraryEntry[] = [
     addedInVersion: '1.3.0',
   },
   {
+    id: 'ramraksha-stotram',
+    nameHi: 'श्रीरामरक्षा स्तोत्रम्',
+    nameEn: 'Ramraksha Stotram',
+    sub: `${ramrakshaStotramTotal} श्लोक · अर्थ सहित`,
+    subEn: `${ramrakshaStotramTotal} shlokas · with meaning`,
+    thumb: 'राम',
+    status: 'active',
+    category: 'stotram',
+    deities: ['rama'],
+    verseCount: ramrakshaStotramTotal,
+    addedInVersion: '1.4.0',
+  },
+  {
+    id: 'aditya-hridayam',
+    nameHi: 'आदित्य हृदयम्',
+    nameEn: 'Aditya Hridayam',
+    sub: `${adityaHridayamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${adityaHridayamTotal} shlokas · with meaning`,
+    thumb: 'सू',
+    status: 'active',
+    category: 'stotram',
+    deities: ['surya'],
+    verseCount: adityaHridayamTotal,
+    addedInVersion: '1.4.0',
+  },
+  {
     id: 'om-jai-jagdish',
     nameHi: 'ॐ जय जगदीश हरे',
     nameEn: 'Om Jai Jagdish Hare',
@@ -520,7 +548,7 @@ export const library: readonly LibraryEntry[] = [
     status: 'active',
     category: 'sanskar',
     addedInVersion: '1.3.1',
-    deities: ['krishna'],
+    deities: ['surya'],
     verseCount: 13,
   },
   {

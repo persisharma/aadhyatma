@@ -53,8 +53,9 @@ const index = getSearchIndex();
 
 // Every deity is indexed.
 {
-  assert.equal(index.deities.length, deities.length);
-  assert.ok(index.deities.some((d) => d.deityId === 'saraswati'));
+assert.equal(index.deities.length, deities.length);
+assert.ok(index.deities.some((d) => d.deityId === 'saraswati'));
+assert.ok(index.deities.some((d) => d.deityId === 'surya'));
 }
 
 // Hanuman query returns multiple sections (chalisa, ashtak, aarti, sankat-mochan).
@@ -139,6 +140,28 @@ const index = getSearchIndex();
   const top = res.sections[0];
   assert.ok(top, 'expected at least one section hit');
   assert.equal(top.entry.sourceId, 'hanuman-chalisa');
+}
+
+// Newly added Phase-1 stotrams are searchable by section title and body text.
+{
+  const ramraksha = runSearch('ramraksha', index);
+  assert.ok(
+    ramraksha.sections.some((h) => h.entry.sourceId === 'ramraksha-stotram'),
+    'expected Ramraksha Stotram section hit'
+  );
+  const aditya = runSearch('aditya hridayam', index);
+  assert.ok(
+    aditya.sections.some((h) => h.entry.sourceId === 'aditya-hridayam'),
+    'expected Aditya Hridayam section hit'
+  );
+  assert.ok(
+    runSearch('ततो युद्धपरिश्रान्तं', index).verses.some((h) => h.entry.sourceId === 'aditya-hridayam'),
+    'expected Aditya Hridayam verse hit'
+  );
+  assert.ok(
+    runSearch('वज्रपञ्जरनामेदं', index).verses.some((h) => h.entry.sourceId === 'ramraksha-stotram'),
+    'expected Ramraksha Stotram verse hit'
+  );
 }
 
 // Rebuild is idempotent — second call returns the same instance.

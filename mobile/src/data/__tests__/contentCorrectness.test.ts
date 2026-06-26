@@ -33,6 +33,11 @@ assert.ok(savitrDeity, 'savitr deity should exist in deities array');
 assert.equal(savitrDeity.nameEn, 'Maa Gayatri', 'Rule 10.9: savitr deity must display as "Maa Gayatri", not "Savitr Deva"');
 assert.equal(savitrDeity.nameHi, 'माँ गायत्री', 'Rule 10.9: savitr deity must display as "माँ गायत्री", not "सवितृ देव"');
 
+const suryaDeity = deities.find((d) => d.id === 'surya');
+assert.ok(suryaDeity, 'surya deity should exist in deities array');
+assert.equal(suryaDeity.nameEn, 'Surya Deva', 'Rule 10.9: surya deity must display as "Surya Deva"');
+assert.equal(suryaDeity.nameHi, 'सूर्य देव', 'Rule 10.9: surya deity must display as "सूर्य देव"');
+
 // Lakshmi deity + Om Jai Lakshmi Mata aarti (Phase-1). Pins the recognizable
 // deity name (Rule 10.9) and the aarti's deity tag (Rule 10.4).
 const lakshmiDeity = deities.find((d) => d.id === 'lakshmi');
@@ -131,6 +136,29 @@ assert.equal(
   'Om Gam Ganapataye Namah',
   'Om Gam Ganapataye Namah romanization should match the canonical readable form'
 );
+
+// Remaining Phase-1 stotrams — pinned to the verified published-text counts.
+const shivaStotramManifest = readJson('shiva-strotam/chapters-manifest.json');
+assert.equal(shivaStotramManifest.length, 6, 'Shiva Stotram should contain 6 stotras after adding Rudrashtakam + Lingashtakam');
+assert.equal(shivaStotramManifest[4].titleEn, 'Rudrashtakam', 'Shiva Stotram chapter 5 should be Rudrashtakam');
+assert.equal(shivaStotramManifest[5].titleEn, 'Lingashtakam', 'Shiva Stotram chapter 6 should be Lingashtakam');
+assert.equal(shivaStotramManifest[5].verseCount, 10, 'Lingashtakam should declare all 10 shipped verse units');
+
+const ramraksha = readJson('ramraksha-stotram/chapter-01.json');
+const ramrakshaEntry = library.find((e) => e.id === 'ramraksha-stotram');
+assert.ok(ramrakshaEntry, 'ramraksha-stotram should be in library');
+assert.deepEqual(ramrakshaEntry.deities, ['rama'], 'Ramraksha Stotram must be tagged under Rama');
+assert.equal(ramraksha.verses.length, 39, 'Ramraksha Stotram should have 39 verse units (dhyana + 38 numbered verses)');
+assert.ok(ramraksha.verses[0].sanskrit[0].includes('श्रीरामरक्षास्तोत्रम्'), 'Ramraksha should open with its title/invocation unit');
+assert.ok(ramraksha.source.referenceUrls.length >= 2, 'Ramraksha Stotram should cite at least 2 source URLs');
+
+const adityaHridayam = readJson('aditya-hridayam/chapter-01.json');
+const adityaEntry = library.find((e) => e.id === 'aditya-hridayam');
+assert.ok(adityaEntry, 'aditya-hridayam should be in library');
+assert.deepEqual(adityaEntry.deities, ['surya'], 'Aditya Hridayam must be tagged under Surya');
+assert.equal(adityaHridayam.verses.length, 32, 'Aditya Hridayam should have 32 verse units (dhyana + 31 numbered verses)');
+assert.ok(adityaHridayam.verses[1].sanskrit[0].includes('ततो युद्धपरिश्रान्तं'), 'Aditya Hridayam verse 1 should open with the battlefield setting');
+assert.ok(adityaHridayam.source.referenceUrls.length >= 2, 'Aditya Hridayam should cite at least 2 source URLs');
 
 // ─── 2. Aarti verse counts (verified from internet) ─────────────────────────
 

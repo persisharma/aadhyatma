@@ -60,12 +60,34 @@ const cases = [
   },
   {
     id: 'shiva-strotam',
-    expectedTotal: 23,
+    expectedTotal: 44,
     load: async () => {
       const mod = await import('./shiva-strotam');
       return {
         manifest: mod.shivaStrotamChaptersManifest,
         total: mod.shivaStrotamTotal,
+      };
+    },
+  },
+  {
+    id: 'ramraksha-stotram',
+    expectedTotal: 39,
+    load: async () => {
+      const mod = await import('./ramraksha-stotram');
+      return {
+        manifest: mod.ramrakshaStotramChaptersManifest,
+        total: mod.ramrakshaStotramTotal,
+      };
+    },
+  },
+  {
+    id: 'aditya-hridayam',
+    expectedTotal: 32,
+    load: async () => {
+      const mod = await import('./aditya-hridayam');
+      return {
+        manifest: mod.adityaHridayamChaptersManifest,
+        total: mod.adityaHridayamTotal,
       };
     },
   },

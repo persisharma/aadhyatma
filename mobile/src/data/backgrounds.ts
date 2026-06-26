@@ -40,6 +40,7 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
   savitr: backgroundImages.source_gayatri_savitri_sun, // §10.8: dedicated Gayatri/Savitr sun art, not Shiva's
   saraswati: backgroundImages.deity_saraswati_veena,
   lakshmi: backgroundImages.deity_lakshmi_lotus_coins,
+  surya: backgroundImages.deity_surya_chariot,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
@@ -67,6 +68,8 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,
+  'ramraksha-stotram': backgroundImages.deity_rama_darbar,
+  'aditya-hridayam': backgroundImages.deity_surya_chariot,
   'krishna-stotram': backgroundImages.deity_krishna_bansuri,
   'om-jai-jagdish': backgroundImages.source_vishnu_narayana,
   'hanuman-aarti': chalisaImages.hanuman_lankadahan,

@@ -1,8 +1,9 @@
 # Stotram Category Smoke Test
 #
-# Verifies the Stotram category and its 9 active sections render correctly.
+# Verifies the Stotram category and its 11 active sections render correctly.
 # Sections: Shiva, Durga, Saraswati, Ganesh, Vishnu Sahasranama,
-#           Krishna, Sankat Mochan Hanuman Ashtak, Bajrang Baan, Ram Stuti.
+#           Krishna, Sankat Mochan Hanuman Ashtak, Bajrang Baan, Ram Stuti,
+#           Ramraksha Stotram, Aditya Hridayam.
 #
 # Opens Bajrang Baan as the representative reader — it has a smoke test
 # (BajrangBaanReaderScreen.test.tsx) which validates first-verse render,
@@ -17,7 +18,7 @@ appId: host.exp.Exponent
 - tapOn: "Hymns & Praise\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 9 sections appear in CategoryList. Maestro `text` is a FULL-string
+# Verify all 11 sections appear in CategoryList. Maestro `text` is a FULL-string
 # regex, so we match the whole LibraryCard label `<nameEn>. <sub>. [New.] Tap
 # to open.` via `\\..*Tap to open\\.`. NOTE: use the EXACT nameEn — e.g.
 # "Vishnu Sahasranama Excerpt", not "Vishnu Sahasranama". The list is taller
@@ -58,6 +59,43 @@ appId: host.exp.Exponent
     direction: DOWN
     visibilityPercentage: 60
     timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Ramraksha Stotram\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Aditya Hridayam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+
+# Shiva Stotram now contains Rudrashtakam + Lingashtakam.
+- scrollUntilVisible:
+    element:
+      text: "Shiva Stotram\\..*Tap to open\\."
+    direction: UP
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Shiva Stotram\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Rudrashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Lingashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Back"
+- waitForAnimationToEnd
 
 # Open Bajrang Baan reader
 - scrollUntilVisible:
