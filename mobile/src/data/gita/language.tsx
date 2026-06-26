@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * utils/transliterate.ts). One shared context for every section — RULEBOOK §3.
  */
 export type Lang = 'hi' | 'en' | 'gu' | 'kn';
+/** The user's chosen regional script — never 'en'. */
+export type RegionalLang = 'hi' | 'gu' | 'kn';
 
 /** Historic alias — the hook predates the multi-language model. */
 export type GitaLang = Lang;
@@ -42,12 +44,19 @@ function isLang(v: unknown): v is Lang {
 
 type GitaLanguageContextValue = {
   lang: Lang;
+  /** User's chosen regional language (hi/gu/kn). Used by the 2-segment reader toggle. */
+  regionalLang: RegionalLang;
   setLang: (next: Lang) => void;
 };
 
 const GitaLanguageContext = createContext<GitaLanguageContextValue | null>(null);
 
 const LANG_STORAGE_KEY = '@vedansh/language';
+const REGIONAL_LANG_STORAGE_KEY = '@vedansh/regionalLanguage';
+
+function isRegionalLang(v: unknown): v is RegionalLang {
+  return v === 'hi' || v === 'gu' || v === 'kn';
+}
 
 type ProviderProps = {
   initialLang?: Lang;
@@ -56,11 +65,18 @@ type ProviderProps = {
 
 export function GitaLanguageProvider({ initialLang = 'hi', children }: ProviderProps) {
   const [lang, setLangState] = useState<Lang>(initialLang);
+  const [regionalLang, setRegionalLangState] = useState<RegionalLang>(
+    initialLang !== 'en' ? initialLang : 'hi'
+  );
 
   useEffect(() => {
-    AsyncStorage.getItem(LANG_STORAGE_KEY)
-      .then((stored) => {
-        if (isLang(stored)) setLangState(stored);
+    Promise.all([
+      AsyncStorage.getItem(LANG_STORAGE_KEY),
+      AsyncStorage.getItem(REGIONAL_LANG_STORAGE_KEY),
+    ])
+      .then(([storedLang, storedRegional]) => {
+        if (isLang(storedLang)) setLangState(storedLang);
+        if (isRegionalLang(storedRegional)) setRegionalLangState(storedRegional);
       })
       .catch(() => undefined);
   }, []);
@@ -68,9 +84,16 @@ export function GitaLanguageProvider({ initialLang = 'hi', children }: ProviderP
   const setLang = (next: Lang) => {
     setLangState(next);
     AsyncStorage.setItem(LANG_STORAGE_KEY, next);
+    if (next !== 'en') {
+      setRegionalLangState(next);
+      AsyncStorage.setItem(REGIONAL_LANG_STORAGE_KEY, next);
+    }
   };
 
-  const value = useMemo<GitaLanguageContextValue>(() => ({ lang, setLang }), [lang]);
+  const value = useMemo<GitaLanguageContextValue>(
+    () => ({ lang, regionalLang, setLang }),
+    [lang, regionalLang]
+  );
   return <GitaLanguageContext.Provider value={value}>{children}</GitaLanguageContext.Provider>;
 }
 
