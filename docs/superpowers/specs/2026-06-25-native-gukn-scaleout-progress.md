@@ -43,3 +43,24 @@ shape remains compatible with a later Claude/native-scholar review pass.
 | Japam | ~6 | | | | |
 
 Execution order: Phase 0 plumbing → chalisas → aartis → stotram family → sanskar → Sundarkand/Ramcharitmanas → Gita → Japam.
+
+## Full remaining source sweep — 2026-06-26
+
+This pass tried every previously untried bucket at the source-discovery level. No additional
+`meaningGu`/`meaningKn` fields were written in this pass because none of the remaining buckets has
+yet completed row-by-row native semantic verification. Buckets marked "candidate" have enough leads
+to justify a dedicated ingestion/alignment pass next.
+
+| Section | Tried now? | Source-gate result | Notes / leads |
+|---|:--:|---|---|
+| Shiva Stotram | ✅ | Partial candidate only | Shiva Tandav has the best lead set: Gujarati Wikisource + Sivohm; Kannada Archive.org/Isha-style leads. Other Shiva rows include mantra/labh-katha explainer rows, not pure verse meanings, so they need a separate row policy. |
+| Ganesh Stotram | ✅ | Partial candidate only | Ganapati Atharvashirsha has Gujarati Sivohm and Kannada Vaidika Vignanam/Stotra-style script leads, but the available Kannada lead is mostly verse text, not native prose meaning. Vakratunda-style rows have English/Hindi meaning sources but weak native gu/kn prose coverage. |
+| Durga Stotram | ✅ | Blocked for now | Mahishasura Mardini has gu/kn script pages, but native Gujarati/Kannada prose meanings were not enough for the 2+2 source gate. |
+| Krishna Stotram | ✅ | Blocked for now | Krishnashtakam has Gujarati/Kannada script and video meaning leads, but not two credible native prose meaning sources per language. |
+| Saraswati Stotram | ✅ | Partial candidate only | Saraswati Vandana / Saraswati Namastubhyam have some Gujarati/Kannada meaning leads, but this section mixes multiple short school-prayer rows and needs per-row source matching before fields can ship. |
+| Vishnu Sahasranama | ✅ | Candidate for next pass | Strongest newly found large-section candidate. Gujarati leads: Sivohm Gujarati translation, Lakshmi Narayan Gujarati PDF, DLI/Archive Gujarati bhashantar. Kannada leads: Archive Bannanje Govindacharya PDF, Kannada Vishnu Sahasranama blog, Madhwa/Tattvavada blog. Needs alignment from full Sahasranama sources to app's 79 grouped meaning rows. |
+| Sanskar (8) | ✅ | Blocked for now | Individual mantra-level meanings exist for some rows (Gayatri, Saraswati Namastubhyam, Vakratunda, Mahamrityunjaya), but not enough consistent gu/kn coverage for all 44 section rows. |
+| Sundarkand | ✅ | Partial candidate only | Gujarati translation leads exist (Sivohm, Gujarati blog/PDF sources). Kannada leads are mostly summaries, Valmiki/Sanskrit script pages, or book/PDF references; not enough for direct app row coverage yet. |
+| Ramcharitmanas | ✅ | Blocked for now | Gujarati Manas/translation leads exist, but Kannada verse-by-verse Manas meaning coverage was not found at the required level. |
+| Gita (18 ch — meaning only) | ✅ | Candidate for next pass | Strong source leads exist in both languages: Vedapath gu/kn, Holy Bhagavad Gita Gujarati, Gujarati PDF, Kannada Wikisource/PDF/blog sources. This is viable but large: 701 verse rows require a dedicated batch with exact row alignment and no commentary translation. |
+| Japam | ✅ | Partial candidate only | Core mantra meanings are widely available, but native Gujarati/Kannada source coverage is uneven across the app's current mantra set, so no fields shipped. |
