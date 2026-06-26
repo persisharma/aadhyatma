@@ -12,6 +12,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { gitaChaptersManifest, gitaTitleEn, gitaTitleHi } from '@/data/gita';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang, isLatinLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { getSourceBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -26,10 +28,10 @@ export default function GitaChaptersIndexScreen({ navigation }: Props) {
   const { lang } = useGitaLanguage();
   const { getChapterProgress } = useReadingProgress();
 
-  const title = lang === 'hi' ? gitaTitleHi : gitaTitleEn;
+  const title = contentByLang(lang, gitaTitleHi, gitaTitleEn);
   const titleFontFamily =
-    lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
-  const titleFontSize = lang === 'hi' ? 22 : 20;
+    titleFontByLang(lang);
+  const titleFontSize = isLatinLang(lang) ? 20 : 22;
   const titleItalic = lang === 'en';
 
   return (

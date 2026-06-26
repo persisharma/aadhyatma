@@ -1,8 +1,8 @@
 ---
 title: Overview
 type: overview
-sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, RULEBOOK.md, design.md, scripts/, push.sh]
-last_verified_date: 2026-06-09
+sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/routine/, RULEBOOK.md, design.md, scripts/, push.sh]
+last_verified_date: 2026-06-13
 confidence: medium
 status: current
 ---
@@ -12,8 +12,9 @@ status: current
 Aadhyatma is an umbrella repo housing **Vedansh**, an offline-first Hindu devotional-text
 reader built with Expo / React Native. It bundles bilingual (Hindi/English) content — Bhagavad
 Gita, chalisas, Sundarkand, stotrams, aartis, sanskar — and layers on a Panchang (Hindu
-calendar) engine, a japam counter, daily-bhakti notifications, and verse sharing. All content
-ships inside the app bundle; there is no content backend.
+calendar) engine, a japam counter, daily-bhakti notifications, verse sharing, and a Daily
+Routine (नित्य साधना) planner. All content ships inside the app bundle; there is no content
+backend.
 
 ## Stack
 - **Language:** TypeScript ~5.9.2 (strict). Path aliases `@/*` → `src/*`, `@assets/*` → `assets/*`.
@@ -22,19 +23,22 @@ ships inside the app bundle; there is no content backend.
 - **State:** React Context only (no Redux/Zustand). `@react-native-async-storage/async-storage` 2.2.0 for persistence.
 - **OTA:** `expo-updates` ~29.0.17, `runtimeVersion` policy `appVersion`.
 - **Audio:** `expo-audio` (japam playback). **Notifications:** `expo-notifications`. **Calendar math:** `astronomy-engine` ~2.1.19.
-- **Fonts:** Noto Serif Devanagari (Devanagari), Cormorant Garamond (Latin).
+- **Fonts:** Noto Serif Devanagari (Devanagari), Cormorant Garamond (Latin), Noto Serif Gujarati + Noto Serif Kannada (the gu/kn reading languages).
+- **Reading languages:** `hi · en · gu · kn` (one shared `useGitaLanguage()` pref). gu/kn carry no authored content — derived at runtime by transliterating the Devanagari. See [[languages]].
 - **App version:** 1.3.2 (`mobile/app.json`).
 - **Entry Point:** `mobile/index.ts` → `registerRootComponent(App)` → `mobile/App.tsx`.
 
 ## Request Shape
 
-`App.tsx` wraps the tree in `GestureHandlerRootView` + `SafeAreaProvider`, then nests ~12
+`App.tsx` wraps the tree in `GestureHandlerRootView` + `SafeAreaProvider`, then nests ~14
 context providers (Theme, GitaLanguage, Bookmarks, UserActivity, NewContent, ReadingProgress,
-JapamCounter, NotificationPreferences, Share) around a `NavigationContainer` →
-`RootNavigator` → a **4-tab bottom navigator**:
+JapamCounter, Routine, RoutineSheet, NotificationPreferences, Share) around a
+`NavigationContainer` → `RootNavigator` → a **4-tab bottom navigator**:
 
 1. **Home** → `HomeStackNavigator` (native-stack, 30+ reader screens: Gita, chalisas,
-   Sundarkand, stotrams, sanskar, japam, search).
+   Sundarkand, stotrams, sanskar, japam, search — plus 5 Daily-Routine screens:
+   RoutineToday/List/Create/Detail/AddItems). HomeScreen shows the ॐ वेदांश़ ॐ `HomeWordmark`
+   (replaced `Crest`, #110) and a docked `RoutineBanner` above the tab bar.
 2. **DailyBhakti** → `DailyBhaktiScreen`.
 3. **Panchang** → `PanchangScreen`.
 4. **More** → `MoreStackNavigator` (MoreHome, Wishlist, Profile, Reminders).
@@ -47,10 +51,10 @@ Deep links and notification taps route through `navigationRef`, exported from
 | Module | Purpose | Key Paths |
 |---|---|---|
 | `mobile/src/screens/` | Reader & feature screens (one per text/variant) | `GitaReaderScreen`, `ChalisaReaderScreen`, `DailyBhaktiScreen`, `PanchangScreen` |
-| `mobile/src/components/` | Reusable UI | `GitaVersePage`, `LibraryCard`, `UpdateReadyModal`, `ReminderOptInModal`, `LanguageToggle` |
+| `mobile/src/components/` | Reusable UI | `GitaVersePage`, `LibraryCard`, `UpdateReadyModal`, `ReminderOptInModal`, `LanguageToggle`, `RoutineBanner`, `AddToRoutineButton`, `HomeWordmark` |
 | `mobile/src/navigation/` | Nav graph + types | `RootNavigator`, `TabNavigator`, `HomeStackNavigator`, `MoreStackNavigator`, `types.ts`, `entryRoutes.ts` |
-| `mobile/src/contexts/` | App state | `BookmarksContext`, `JapamCounterContext`, `ReadingProgressContext`, `UserActivityContext`, `NewContentContext`, `NotificationPreferencesContext` |
-| `mobile/src/data/` | Bundled content + registries | `texts.ts` (library index), `searchIndex.ts`, `deities.ts`, `categories.ts`, `gita/chapter-01..18.json`, `chalisa/`, `sundarkand/`, stotram dirs, `sourceIdMigration.ts` |
+| `mobile/src/contexts/` | App state | `BookmarksContext`, `JapamCounterContext`, `ReadingProgressContext`, `UserActivityContext`, `NewContentContext`, `NotificationPreferencesContext`, `RoutineContext`, `RoutineSheetProvider` |
+| `mobile/src/data/` | Bundled content + registries | `texts.ts` (library index), `searchIndex.ts`, `deities.ts`, `categories.ts`, `gita/chapter-01..18.json`, `chalisa/`, `sundarkand/`, stotram dirs, `sourceIdMigration.ts`, `routine/` (types, units, vaar, useRoutineToday — see [[routine]]) |
 | `mobile/src/panchang/` | Hindu-calendar engine | `festivals.ts` + astronomy-engine calculations |
 | `mobile/src/theme/` | Design tokens (light-only) | `ThemeContext.tsx`, `colors.ts`, `typography.ts`, `spacing.ts` |
 | `mobile/src/utils/` | Helpers | `shareVerse.tsx`, `semverCompare.ts`, `titleByLanguage.ts` |
@@ -62,7 +66,8 @@ root; `scripts/*.mjs` (Node ESM) transform it into per-text JSON under `mobile/s
 which the reader screens consume. `texts.ts` is the library index (`LibraryEntry`: id, names,
 category, deities, verseCount, `addedInVersion` for the NEW badge). `searchIndex.ts` is the
 full-text search index. `sourceIdMigration.ts` keeps bookmarks/progress stable across content
-ID changes. User language preference is persisted in AsyncStorage.
+ID changes. User language preference, routines (`@vedansh/routines`) and daily done-marks
+(`@vedansh/routine-done`) are persisted in AsyncStorage.
 
 ## Content Pipeline
 
@@ -79,7 +84,10 @@ ID changes. User language preference is persisted in AsyncStorage.
 - **tsx + `node:assert`** for the Panchang engine — `npm run test:engine`; and for `src/data` /
   `src/notifications` suites, which are **deliberately excluded from Jest** (see the comment in
   `mobile/jest.config.js`). Run those via `tsx --test`.
-- **Maestro** E2E flows in `mobile/.maestro/` — `npm run test:e2e`.
+- **Maestro** E2E — 16+ flows in `mobile/.maestro/` (`npm run test:e2e`): per-category smokes,
+  NEW-badge ×3, routine ×2, search, wishlist, reminders, more-hub, resume-reading, deity-browse,
+  gita-reader. The README table lists behaviours **deliberately covered by unit tests instead**
+  (chapter auto-advance, OTA modal, notification deep-link, share card, japam reset).
 - `contentCorrectness.test.ts` pins RULEBOOK content rules; `readerTypeScale`, `colors.contrast`,
   `semverCompare`, and `entryRoutes` tests gate the rest.
 
@@ -87,7 +95,7 @@ ID changes. User language preference is persisted in AsyncStorage.
 
 - `RULEBOOK.md` — integration contract for adding a content section (file list, content shape, design rules, verification checklist).
 - `design.md` — visual system spec (color/type tokens, type scale, romanization rules by source language).
-- `docs/roadmap/` — Q3 2026 roadmap and PRDs 01–06.
+- `docs/roadmap/` — Q3 2026 roadmap and PRDs 01–07 (07 = Daily Routine).
 - `docs/superpowers/` — deity-icon plan + design spec.
 
 ## Gotchas

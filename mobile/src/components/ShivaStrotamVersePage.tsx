@@ -2,6 +2,14 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import {
+  verseLinesByLang,
+  meaningByLang,
+  meaningSourceLang,
+  contentByLang,
+  pick,
+} from '@/utils/localize';
+import { verseToken, meaningToken } from '@/utils/langType';
 import type { ShivaStrotamVerse } from '@/data/shiva-strotam';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
@@ -18,31 +26,36 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props)
   const { lang } = useGitaLanguage();
   const bg = getReaderBackground(sourceId, verse);
 
-  const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
-  const meaningLabel = lang === 'hi' ? 'अर्थ · Meaning' : 'Meaning · अर्थ';
-  const verseLines = lang === 'hi' ? verse.sanskrit : verse.linesEn;
+  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, { gu: verse.meaningGu, kn: verse.meaningKn });
+  const meaningLabel = pick(lang, {
+    hi: 'अर्थ · Meaning',
+    en: 'Meaning · अर्थ',
+    gu: 'અર્થ · Meaning',
+    kn: 'ಅರ್ಥ · Meaning',
+  });
+  const verseLines = verseLinesByLang(lang, verse.sanskrit, verse.linesEn);
+  const verseTok = verseToken(lang, typography);
   const isIntro = verse.number === 0;
   const pillText = isIntro
-    ? (lang === 'hi' ? 'परिचय · Introduction' : 'Introduction · परिचय')
-    : lang === 'hi'
-      ? `श्लोक · ${verse.chapter}.${verse.number}`
-      : `Shloka · ${verse.chapter}.${verse.number}`;
+    ? pick(lang, {
+        hi: 'परिचय · Introduction',
+        en: 'Introduction · परिचय',
+        gu: 'પરિચય · Introduction',
+        kn: 'ಪರಿಚಯ · Introduction',
+      })
+    : contentByLang(
+        lang,
+        `श्लोक · ${verse.chapter}.${verse.number}`,
+        `Shloka · ${verse.chapter}.${verse.number}`
+      );
 
-  const bodyHiStyle = {
-    color: colors.inkSoft,
-    fontFamily: typography.meaning.fontFamily,
-    fontSize: typography.meaning.fontSize,
-    lineHeight: typography.meaning.lineHeight,
+  const meaningTok = meaningToken(meaningSourceLang(lang), typography);
+  const bodyStyle = {
+    color: meaningSourceLang(lang) === 'en' ? colors.ink : colors.inkSoft,
+    fontFamily: meaningTok.fontFamily,
+    fontSize: meaningTok.fontSize,
+    lineHeight: meaningTok.lineHeight,
   } as const;
-
-  const bodyEnStyle = {
-    color: colors.ink,
-    fontFamily: typography.meaningEnglish.fontFamily,
-    fontSize: typography.meaningEnglish.fontSize,
-    lineHeight: typography.meaningEnglish.lineHeight,
-  } as const;
-
-  const bodyStyle = lang === 'hi' ? bodyHiStyle : bodyEnStyle;
 
   const a11yLabel = [
     `Verse ${verse.chapter}.${verse.number}`,
@@ -94,14 +107,9 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props)
                 styles.verseLine,
                 {
                   color: colors.ink,
-                  fontFamily:
-                    lang === 'hi'
-                      ? typography.verse.fontFamily
-                      : typography.verseLatin.fontFamily,
-                  fontSize:
-                    lang === 'hi' ? typography.verse.fontSize : typography.verseLatin.fontSize,
-                  lineHeight:
-                    lang === 'hi' ? typography.verse.lineHeight : typography.verseLatin.lineHeight,
+                  fontFamily: verseTok.fontFamily,
+                  fontSize: verseTok.fontSize,
+                  lineHeight: verseTok.lineHeight,
                   fontStyle: lang === 'en' ? 'italic' : 'normal',
                 },
               ]}

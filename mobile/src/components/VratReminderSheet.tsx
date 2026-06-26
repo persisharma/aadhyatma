@@ -3,6 +3,8 @@ import { Pressable, StyleSheet, Switch, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import type { VratReminderPref } from '@/contexts/VratFollowContext';
+import { contentByLang, meaningByLang } from '@/utils/localize';
+import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 
 // PRD-09 §6.5 reminder sheet. Per-vrat (titleName set) or the global default
 // (titleName null). Mirrors the v2 prototype: advance-notice pills, an
@@ -52,7 +54,6 @@ export default function VratReminderSheet({
 }) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHindi = lang === 'hi';
 
   const [advanceDays, setAdvanceDays] = useState<AdvanceValue>(initial.advanceDays);
   const [dayOf, setDayOf] = useState<boolean>(initial.dayOf);
@@ -89,7 +90,7 @@ export default function VratReminderSheet({
     fontSize: 12,
     color: selected ? colors.parchment : colors.saffronDeep,
   });
-  const optLabel = { fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink };
+  const optLabel = { fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink };
   const optHint = { fontFamily: 'CormorantGaramond_400Regular_Italic' as const, fontSize: 11, color: colors.inkMuted, marginTop: 1 };
 
   return (
@@ -107,24 +108,28 @@ export default function VratReminderSheet({
         ]}
       >
         <View style={[styles.handle, { backgroundColor: colors.divider }]} />
-        <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.ink }}>
-          {isHindi ? 'अनुस्मारक' : 'Reminders'}
+        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 17, color: colors.ink }}>
+          {contentByLang(lang, 'अनुस्मारक', 'Reminders')}
         </Text>
-        <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 12, color: colors.inkMuted, marginTop: 2, marginBottom: 14 }}>
+        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, marginTop: 2, marginBottom: 14 }}>
           {titleName
-            ? isHindi
-              ? `${titleName} के लिए · केवल ऑन-डिवाइस सूचनाएँ`
-              : `For ${titleName}. Local notifications only — scheduled on-device.`
-            : isHindi
-              ? 'सभी फ़ॉलो किए व्रतों के लिए डिफ़ॉल्ट · ऑन-डिवाइस'
-              : 'Default for all followed vrats. Local notifications only — on-device.'}
+            ? meaningByLang(
+                lang,
+                `${titleName} के लिए · केवल ऑन-डिवाइस सूचनाएँ`,
+                `For ${titleName}. Local notifications only — scheduled on-device.`
+              )
+            : meaningByLang(
+                lang,
+                'सभी फ़ॉलो किए व्रतों के लिए डिफ़ॉल्ट · ऑन-डिवाइस',
+                'Default for all followed vrats. Local notifications only — on-device.'
+              )}
         </Text>
 
         {/* Advance notice */}
         <View style={[styles.optRow, { borderBottomColor: colors.divider }]}>
           <View style={{ marginBottom: 8 }}>
-            <Text style={optLabel}>{isHindi ? 'पहले से सूचना' : 'Advance notice'}</Text>
-            <Text style={optHint}>{isHindi ? 'दिन पहले, शाम को' : 'day(s) before, evening'}</Text>
+            <Text style={optLabel}>{contentByLang(lang, 'पहले से सूचना', 'Advance notice')}</Text>
+            <Text style={optHint}>{contentByLang(lang, 'दिन पहले, शाम को', 'day(s) before, evening')}</Text>
           </View>
           <View style={styles.pillRow}>
             {ADVANCE_OPTIONS.map((o) => {
@@ -138,7 +143,7 @@ export default function VratReminderSheet({
                   accessibilityLabel={o.en}
                   style={pillStyle(sel)}
                 >
-                  <Text style={pillText(sel)}>{isHindi ? o.hi : o.en}</Text>
+                  <Text style={pillText(sel)}>{contentByLang(lang, o.hi, o.en)}</Text>
                 </Pressable>
               );
             })}
@@ -148,23 +153,23 @@ export default function VratReminderSheet({
         {/* On the day */}
         <View style={[styles.optRowInline, { borderBottomColor: colors.divider }]}>
           <View>
-            <Text style={optLabel}>{isHindi ? 'व्रत के दिन' : 'On the day'}</Text>
-            <Text style={optHint}>{isHindi ? 'सुबह का स्मरण' : 'morning reminder'}</Text>
+            <Text style={optLabel}>{contentByLang(lang, 'व्रत के दिन', 'On the day')}</Text>
+            <Text style={optHint}>{contentByLang(lang, 'सुबह का स्मरण', 'morning reminder')}</Text>
           </View>
           <Switch
             value={dayOf}
             onValueChange={setDayOf}
             trackColor={{ true: colors.saffron, false: colors.divider }}
             thumbColor={colors.parchment}
-            accessibilityLabel={isHindi ? 'व्रत के दिन' : 'On the day'}
+            accessibilityLabel={contentByLang(lang, 'व्रत के दिन', 'On the day')}
           />
         </View>
 
         {/* Day-of time */}
         <View style={styles.optRowLast}>
           <View style={{ marginBottom: 8 }}>
-            <Text style={optLabel}>{isHindi ? 'दिन का समय' : 'Day-of time'}</Text>
-            <Text style={optHint}>{isHindi ? 'स्थानीय' : 'local'}</Text>
+            <Text style={optLabel}>{contentByLang(lang, 'दिन का समय', 'Day-of time')}</Text>
+            <Text style={optHint}>{contentByLang(lang, 'स्थानीय', 'local')}</Text>
           </View>
           <View style={styles.pillRow}>
             {TIME_OPTIONS.map((o) => {
@@ -179,7 +184,7 @@ export default function VratReminderSheet({
                   accessibilityLabel={o.en}
                   style={pillStyle(sel, !dayOf)}
                 >
-                  <Text style={pillText(sel)}>{isHindi ? o.hi : o.en}</Text>
+                  <Text style={pillText(sel)}>{contentByLang(lang, o.hi, o.en)}</Text>
                 </Pressable>
               );
             })}
@@ -193,7 +198,7 @@ export default function VratReminderSheet({
           style={({ pressed }) => [styles.saveBtn, { backgroundColor: colors.saffron, borderRadius: radii.pill }, pressed && { opacity: 0.85 }]}
         >
           <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.parchment }}>
-            {isHindi ? 'सहेजें' : 'Save reminders'}
+            {contentByLang(lang, 'सहेजें', 'Save reminders')}
           </Text>
         </Pressable>
       </View>

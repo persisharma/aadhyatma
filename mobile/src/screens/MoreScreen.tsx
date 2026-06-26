@@ -5,7 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useBookmarks } from '@/contexts/BookmarksContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, LANGUAGES } from '@/data/gita/language';
+import { fontFamilies } from '@/theme/typography';
+import { pick, contentByLang } from '@/utils/localize';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
@@ -145,7 +147,7 @@ export default function MoreScreen({ navigation }: Props) {
                   {profileTotals.totalReads}
                 </Text>
                 <Text style={[styles.profileStatLabel, { color: colors.inkMuted }]}>
-                  {defaultLang === 'hi' ? 'श्लोक' : 'VERSES'}
+                  {pick(defaultLang, { hi: 'श्लोक', en: 'VERSES', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ' })}
                 </Text>
               </View>
               <View style={[styles.profileStatRule, { backgroundColor: colors.divider }]} />
@@ -162,7 +164,7 @@ export default function MoreScreen({ navigation }: Props) {
                   {profileTotals.totalRounds}
                 </Text>
                 <Text style={[styles.profileStatLabel, { color: colors.inkMuted }]}>
-                  {defaultLang === 'hi' ? 'आवृत्ति' : 'ROUNDS'}
+                  {pick(defaultLang, { hi: 'आवृत्ति', en: 'ROUNDS', gu: 'આવૃત્તિ', kn: 'ಆವೃತ್ತಿ' })}
                 </Text>
               </View>
               <View style={[styles.profileStatRule, { backgroundColor: colors.divider }]} />
@@ -179,7 +181,7 @@ export default function MoreScreen({ navigation }: Props) {
                   {streak}
                 </Text>
                 <Text style={[styles.profileStatLabel, { color: colors.inkMuted }]}>
-                  {defaultLang === 'hi' ? 'श्रृंखला' : 'STREAK'}
+                  {pick(defaultLang, { hi: 'श्रृंखला', en: 'STREAK', gu: 'શ્રેણી', kn: 'ಸರಣಿ' })}
                 </Text>
               </View>
             </View>
@@ -261,39 +263,36 @@ export default function MoreScreen({ navigation }: Props) {
             </View>
 
             <View style={styles.langRow} accessibilityRole="radiogroup" accessibilityLabel="Default reading language">
-              <Pressable
-                onPress={() => setDefaultLang('hi')}
-                accessibilityRole="radio"
-                accessibilityState={{ selected: defaultLang === 'hi' }}
-                accessibilityLabel="Hindi"
-                style={[
-                  styles.langOption,
-                  { borderColor: defaultLang === 'hi' ? colors.saffron : colors.divider },
-                  defaultLang === 'hi' && { backgroundColor: 'rgba(184, 98, 27, 0.1)' },
-                ]}
-              >
-                {defaultLang === 'hi' && <Text style={[styles.langCheck, { color: colors.saffron }]}>✓</Text>}
-                <Text style={[styles.langLabel, { fontFamily: typography.readerTitle.fontFamily, color: defaultLang === 'hi' ? colors.saffronDeep : colors.ink }]}>
-                  हिन्दी
-                </Text>
-              </Pressable>
-
-              <Pressable
-                onPress={() => setDefaultLang('en')}
-                accessibilityRole="radio"
-                accessibilityState={{ selected: defaultLang === 'en' }}
-                accessibilityLabel="English"
-                style={[
-                  styles.langOption,
-                  { borderColor: defaultLang === 'en' ? colors.saffron : colors.divider },
-                  defaultLang === 'en' && { backgroundColor: 'rgba(184, 98, 27, 0.1)' },
-                ]}
-              >
-                {defaultLang === 'en' && <Text style={[styles.langCheck, { color: colors.saffron }]}>✓</Text>}
-                <Text style={[styles.langLabel, { fontFamily: 'CormorantGaramond_500Medium', color: defaultLang === 'en' ? colors.saffronDeep : colors.ink }]}>
-                  English
-                </Text>
-              </Pressable>
+              {LANGUAGES.map((opt) => {
+                const selected = defaultLang === opt.value;
+                const family =
+                  opt.script === 'devanagari'
+                    ? typography.readerTitle.fontFamily
+                    : opt.script === 'latin'
+                      ? fontFamilies.latin
+                      : opt.script === 'gujarati'
+                        ? fontFamilies.gujaratiBold
+                        : fontFamilies.kannadaBold;
+                return (
+                  <Pressable
+                    key={opt.value}
+                    onPress={() => setDefaultLang(opt.value)}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected }}
+                    accessibilityLabel={opt.a11yLabel}
+                    style={[
+                      styles.langOption,
+                      { borderColor: selected ? colors.saffron : colors.divider },
+                      selected && { backgroundColor: 'rgba(184, 98, 27, 0.1)' },
+                    ]}
+                  >
+                    {selected && <Text style={[styles.langCheck, { color: colors.saffron }]}>✓</Text>}
+                    <Text style={[styles.langLabel, { fontFamily: family, color: selected ? colors.saffronDeep : colors.ink }]}>
+                      {opt.nativeLabel}
+                    </Text>
+                  </Pressable>
+                );
+              })}
             </View>
           </View>
 
@@ -305,17 +304,20 @@ export default function MoreScreen({ navigation }: Props) {
               </View>
               <View>
                 <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
-                  {defaultLang === 'hi' ? 'पंचांग' : 'Panchang'}
+                  {pick(defaultLang, { hi: 'पंचांग', en: 'Panchang', gu: 'પંચાંગ', kn: 'ಪಂಚಾಂಗ' })}
                 </Text>
                 <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-                  {defaultLang === 'hi' ? 'Panchang School' : 'पंचांग पद्धति'}
+                  {defaultLang === 'en' ? 'पंचांग पद्धति' : 'Panchang School'}
                 </Text>
               </View>
             </View>
             <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
-              {defaultLang === 'hi'
-                ? `पंचांग · ${panchangLocation.labelHi}, भारत · पूर्णिमांत/अमान्त चयन\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है। स्थान पंचांग टैब से बदलें।`
-                : `Panchang · ${panchangLocation.labelEn}, India · Purnimant/Amanta selectable\nTithi follows Surya Siddhanta with modern corrections. Change the location from the Panchang tab.`}
+              {pick(defaultLang, {
+                hi: `पंचांग · ${panchangLocation.labelHi}, भारत · पूर्णिमांत/अमान्त चयन\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है। स्थान पंचांग टैब से बदलें।`,
+                en: `Panchang · ${panchangLocation.labelEn}, India · Purnimant/Amanta selectable\nTithi follows Surya Siddhanta with modern corrections. Change the location from the Panchang tab.`,
+                gu: `પંચાંગ · ${contentByLang(defaultLang, panchangLocation.labelHi, panchangLocation.labelEn)}, ભારત · પૂર્ણિમાંત/અમાન્ત પસંદગી\nતિથિની ગણતરી સૂર્ય સિદ્ધાંત + આધુનિક ખગોળીય સુધારા મુજબ થાય છે. સ્થાન પંચાંગ ટૅબમાંથી બદલો.`,
+                kn: `ಪಂಚಾಂಗ · ${contentByLang(defaultLang, panchangLocation.labelHi, panchangLocation.labelEn)}, ಭಾರತ · ಪೂರ್ಣಿಮಾಂತ/ಅಮಾಂತ ಆಯ್ಕೆ\nತಿಥಿ ಲೆಕ್ಕಾಚಾರ ಸೂರ್ಯ ಸಿದ್ಧಾಂತ + ಆಧುನಿಕ ಖಗೋಳ ಸುಧಾರಣೆ ಪ್ರಕಾರ. ಸ್ಥಳವನ್ನು ಪಂಚಾಂಗ ಟ್ಯಾಬ್‌ನಿಂದ ಬದಲಿಸಿ.`,
+              })}
             </Text>
           </View>
 
@@ -464,9 +466,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   sectionMeta: { flex: 1 },
-  langRow: { flexDirection: 'row', gap: 12 },
+  langRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   langOption: {
-    flex: 1,
+    flexGrow: 1,
+    flexBasis: '46%',
     height: 52,
     paddingHorizontal: 12,
     borderRadius: 12,

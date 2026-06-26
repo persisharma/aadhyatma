@@ -8,6 +8,7 @@
  */
 
 import * as Notifications from 'expo-notifications';
+import type { Lang } from '@/data/gita/language';
 import { getVersePool } from '@/data/versePool';
 import { assignSlotVerseIndices, toDateKey, type ReminderSlot } from './seed';
 import {
@@ -53,7 +54,8 @@ export async function cancelAllDailyVerseNotifications(): Promise<void> {
  */
 export async function scheduleDailyVerseRollingWindow(
   config: DailyReminderConfig,
-  now: Date = new Date()
+  now: Date = new Date(),
+  lang: Lang = 'hi'
 ): Promise<number> {
   await cancelAllDailyVerseNotifications();
 
@@ -86,7 +88,7 @@ export async function scheduleDailyVerseRollingWindow(
     const verse = pool[verseIndices[i]];
     if (!verse) continue;
 
-    const { title, body } = formatNotificationContent(verse);
+    const { title, body } = formatNotificationContent(verse, lang);
     const payload: NotificationPayload = {
       type: 'daily-verse',
       dateKey,

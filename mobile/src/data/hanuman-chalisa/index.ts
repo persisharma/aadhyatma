@@ -14,6 +14,9 @@ export type HanumanChalisaVerse = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  /** Authored native meaning translations (native-only; absent/empty → runtime transliteration fallback). */
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 export type HanumanChalisaSource = {

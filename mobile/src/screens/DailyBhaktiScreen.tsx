@@ -5,6 +5,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, type RouteProp } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import {
+  verseLinesByLang,
+  meaningByLang,
+  meaningSourceLang,
+  contentByLang,
+  pick,
+} from '@/utils/localize';
+import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
@@ -67,7 +75,6 @@ export default function DailyBhaktiScreen() {
     setVerse(getRandomVerse());
   }, []);
 
-  const isHindi = lang === 'hi';
   // Mirror each reader's bookmark-id convention: chaptered sources use
   // `id:chapter:idx`; chapterless ones (sanskar, japam) use `id::idx`, so an
   // empty chapter segment keeps Daily Bhakti bookmarks in sync with the reader.
@@ -86,7 +93,12 @@ export default function DailyBhaktiScreen() {
           <View style={[styles.empty, { paddingHorizontal: spacing.xxl }]}>
             <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 32, color: colors.inkMuted, opacity: 0.4 }}>॥</Text>
             <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 15, color: colors.inkMuted, textAlign: 'center', marginTop: 12 }}>
-              {isHindi ? 'दैनिक श्लोक उपलब्ध नहीं' : 'No verses available'}
+              {pick(lang, {
+                hi: 'दैनिक श्लोक उपलब्ध नहीं',
+                en: 'No verses available',
+                gu: 'દૈનિક શ્લોક ઉપલબ્ધ નથી',
+                kn: 'ದೈನಿಕ ಶ್ಲೋಕ ಲಭ್ಯವಿಲ್ಲ',
+              })}
             </Text>
           </View>
         </SafeAreaView>
@@ -138,7 +150,7 @@ export default function DailyBhaktiScreen() {
             <View style={styles.cardHeader}>
               <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
                 <Text style={[styles.pillText, { color: colors.saffronDeep }]}>
-                  {isHindi ? verse.sourceNameHi : verse.sourceNameEn} · {isHindi ? verse.labelHi : verse.labelEn}
+                  {contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn)} · {contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')}
                 </Text>
               </View>
               <View style={styles.headerActions}>
@@ -182,32 +194,22 @@ export default function DailyBhaktiScreen() {
               </View>
             </View>
 
-            {/* Verse text — swap based on language */}
-            {isHindi ? (
-              <Text
-                style={{
-                  fontFamily: typography.verse.fontFamily,
-                  fontSize: typography.verse.fontSize,
-                  color: colors.ink,
-                  lineHeight: typography.verse.lineHeight,
-                  marginTop: 14,
-                }}
-              >
-                {verse.textHi.join('\n')}
-              </Text>
-            ) : (
-              <Text
-                style={{
-                  fontFamily: typography.verseLatin.fontFamily,
-                  fontSize: typography.verseLatin.fontSize,
-                  color: colors.ink,
-                  lineHeight: typography.verseLatin.lineHeight,
-                  marginTop: 14,
-                }}
-              >
-                {verse.textEn.length > 0 ? verse.textEn.join('\n') : verse.textHi.join('\n')}
-              </Text>
-            )}
+            {/* Verse text — script follows the reading language (gu/kn re-script the Devanagari) */}
+            <Text
+              style={{
+                fontFamily: verseToken(lang, typography).fontFamily,
+                fontSize: verseToken(lang, typography).fontSize,
+                color: colors.ink,
+                lineHeight: verseToken(lang, typography).lineHeight,
+                marginTop: 14,
+              }}
+            >
+              {verseLinesByLang(
+                lang,
+                verse.textHi,
+                verse.textEn.length > 0 ? verse.textEn : verse.textHi
+              ).join('\n')}
+            </Text>
 
             {/* Ornament divider */}
             <View style={styles.ornamentWrap}>
@@ -216,27 +218,23 @@ export default function DailyBhaktiScreen() {
 
             {/* Meaning section */}
             <Text style={[styles.meaningLabel, { color: colors.saffronDeep }]}>
-              {isHindi ? 'अर्थ' : 'Meaning'}{' '}
+              {contentByLang(lang, 'अर्थ', 'Meaning')}{' '}
               <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', color: colors.inkMuted }}>
-                · {isHindi ? 'Meaning' : 'अर्थ'}
+                · {contentByLang(lang, 'Meaning', 'अर्थ')}
               </Text>
             </Text>
 
-            {/* Meaning text — based on language */}
+            {/* Meaning text — styled by the meaning's source language (kn meaning is English) */}
             <Text
               style={{
-                fontFamily: isHindi
-                  ? typography.meaning.fontFamily
-                  : typography.meaningEnglish.fontFamily,
-                fontSize: isHindi ? typography.meaning.fontSize : typography.meaningEnglish.fontSize,
-                color: isHindi ? colors.inkSoft : colors.ink,
-                lineHeight: isHindi
-                  ? typography.meaning.lineHeight
-                  : typography.meaningEnglish.lineHeight,
+                fontFamily: meaningToken(meaningSourceLang(lang), typography).fontFamily,
+                fontSize: meaningToken(meaningSourceLang(lang), typography).fontSize,
+                color: meaningSourceLang(lang) === 'en' ? colors.ink : colors.inkSoft,
+                lineHeight: meaningToken(meaningSourceLang(lang), typography).lineHeight,
                 marginTop: 6,
               }}
             >
-              {isHindi ? verse.meaningHi : verse.meaningEn}
+              {meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
             </Text>
 
             {/* Card footer: source label | next */}
@@ -248,12 +246,12 @@ export default function DailyBhaktiScreen() {
                   color: colors.inkMuted,
                 }}
               >
-                {isHindi ? verse.sourceNameHi : verse.sourceNameEn}
+                {contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn)}
               </Text>
               <Pressable
                 onPress={refresh}
                 accessibilityRole="button"
-                accessibilityLabel={isHindi ? 'अगला श्लोक' : 'Next verse'}
+                accessibilityLabel={pick(lang, { hi: 'अगला श्लोक', en: 'Next verse', gu: 'આગળનો શ્લોક', kn: 'ಮುಂದಿನ ಶ್ಲೋಕ' })}
                 hitSlop={16}
                 style={({ pressed }) => [styles.nextBtn, pressed && { opacity: 0.7 }]}
               >

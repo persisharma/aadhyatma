@@ -3,6 +3,8 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
+import { cardFontByLang, isLatinLang } from '@/utils/langType';
 import type { GitaChapterSummary } from '@/data/gita';
 
 type Props = {
@@ -25,14 +27,13 @@ export default function GitaChapterCard({
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
 
-  const primaryTitle = lang === 'hi' ? chapter.titleHi : chapter.titleEn;
-  const primaryFontFamily =
-    lang === 'hi' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily;
-  const primaryFontSize = lang === 'hi' ? 17 : 16;
+  const primaryTitle = contentByLang(lang, chapter.titleHi, chapter.titleEn);
+  const primaryFontFamily = cardFontByLang(lang);
+  const primaryFontSize = isLatinLang(lang) ? 16 : 17;
   const primaryIsItalic = lang === 'en';
 
-  const chapterLabel = lang === 'hi' ? chapterLabelHi : chapterLabelEn;
-  const unitLabel = lang === 'hi' ? unitLabelHi : unitLabelEn;
+  const chapterLabel = contentByLang(lang, chapterLabelHi, chapterLabelEn);
+  const unitLabel = contentByLang(lang, unitLabelHi, unitLabelEn);
   const chapterTag = `${chapterLabel} ${chapter.chapter}`;
   const verseMeta = `${chapter.verseCount} ${unitLabel}`;
 

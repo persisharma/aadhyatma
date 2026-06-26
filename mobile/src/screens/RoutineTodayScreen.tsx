@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang, meaningByLang } from '@/utils/localize';
+import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
@@ -26,16 +28,15 @@ export default function RoutineTodayScreen({ navigation }: Props) {
   // General-typed nav for the centralized routing helper (this screen has no
   // route params, which is incompatible with the helper's route-agnostic Nav).
   const itemNav = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
-  const isHi = lang === 'hi';
   const streak = currentStreak();
-  const summary = practiceSummary(doneCount, total, isHi);
+  const summary = practiceSummary(doneCount, total, lang);
   const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
 
   const right = (
     <Pressable
       onPress={() => navigation.navigate('RoutineList')}
       accessibilityRole="button"
-      accessibilityLabel={isHi ? 'सभी साधनाएँ' : 'All routines'}
+      accessibilityLabel={contentByLang(lang, 'सभी साधनाएँ', 'All routines')}
       hitSlop={12}
     >
       <Text style={{ color: colors.saffron, fontSize: 22 }}>≡</Text>
@@ -70,17 +71,17 @@ export default function RoutineTodayScreen({ navigation }: Props) {
             </Text>
             <Text
               style={{
-                fontFamily: typography.meaning.fontFamily,
+                fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
                 fontSize: 14,
                 color: colors.inkMuted,
                 textAlign: 'center',
                 marginTop: 12,
               }}
             >
-              {isHi ? 'आज के लिए कोई पाठ निर्धारित नहीं' : 'Nothing scheduled for today'}
+              {meaningByLang(lang, 'आज के लिए कोई पाठ निर्धारित नहीं', 'Nothing scheduled for today')}
             </Text>
             <RoutineButton
-              label={isHi ? 'साधना जोड़ें' : 'Add a routine'}
+              label={contentByLang(lang, 'साधना जोड़ें', 'Add a routine')}
               variant="ghost"
               onPress={() => navigation.navigate('RoutineList')}
             />
@@ -108,7 +109,10 @@ export default function RoutineTodayScreen({ navigation }: Props) {
 
               <Text
                 style={{
-                  fontFamily: isHi ? typography.screenTitle.fontFamily : typography.verseLatin.fontFamily,
+                  fontFamily:
+                    lang === 'en'
+                      ? typography.verseLatin.fontFamily
+                      : scriptTitleFont(lang, typography.screenTitle.fontFamily),
                   fontSize: 26,
                   color: colors.ink,
                   textAlign: 'center',
@@ -118,7 +122,10 @@ export default function RoutineTodayScreen({ navigation }: Props) {
               </Text>
               <Text
                 style={{
-                  fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily,
+                  fontFamily:
+                    lang === 'en'
+                      ? typography.cardLatin.fontFamily
+                      : scriptBodyFont(lang, typography.meaning.fontFamily),
                   fontSize: 14,
                   color: colors.inkSoft,
                   textAlign: 'center',
@@ -152,9 +159,9 @@ export default function RoutineTodayScreen({ navigation }: Props) {
             {/* Today's items */}
             <View style={{ marginTop: spacing.lg }}>
               {entries.map((e, i) => {
-                const tail = offeredTail(e.done, e.doneAt, isHi);
-                const titleMain = isHi ? e.display.titleHi : e.display.titleEn;
-                const titleAlt = isHi ? e.display.titleEn : e.display.titleHi;
+                const tail = offeredTail(e.done, e.doneAt, lang);
+                const titleMain = contentByLang(lang, e.display.titleHi, e.display.titleEn);
+                const titleAlt = lang === 'en' ? e.display.titleHi : e.display.titleEn;
                 const last = i === entries.length - 1;
                 return (
                   <View
@@ -172,12 +179,8 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                       accessibilityState={{ checked: e.done }}
                       accessibilityLabel={
                         e.done
-                          ? isHi
-                            ? 'अर्पित — चिह्न हटाएँ'
-                            : 'Offered — tap to undo'
-                          : isHi
-                            ? 'अर्पित चिह्नित करें'
-                            : 'Mark offered'
+                          ? contentByLang(lang, 'अर्पित — चिह्न हटाएँ', 'Offered — tap to undo')
+                          : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
                       }
                       hitSlop={10}
                       style={{
@@ -197,7 +200,7 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                     <Pressable style={styles.itemInfo} onPress={() => navigateToRoutineItem(itemNav, e.item)}>
                       <Text
                         style={{
-                          fontFamily: typography.cardHindi.fontFamily,
+                          fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
                           fontSize: 16,
                           color: e.done ? colors.inkMuted : colors.ink,
                         }}
@@ -226,16 +229,18 @@ export default function RoutineTodayScreen({ navigation }: Props) {
 
             <Text
               style={{
-                fontFamily: typography.cardLatin.fontFamily,
+                fontFamily: scriptBodyFont(lang, typography.cardLatin.fontFamily),
                 fontSize: 12,
                 color: colors.inkMuted,
                 marginTop: spacing.lg,
                 lineHeight: 17,
               }}
             >
-              {isHi
-                ? 'पाठ खोलने के लिए पंक्ति पर टैप करें — अंतिम पृष्ठ तक पहुँचने पर स्वतः अर्पित होगा। या ◯ को टैप कर स्वयं अर्पित चिह्नित करें।'
-                : 'Open a reading to begin — it completes on its own when you reach the last page. Or tap the circle to mark it offered.'}
+              {meaningByLang(
+                lang,
+                'पाठ खोलने के लिए पंक्ति पर टैप करें — अंतिम पृष्ठ तक पहुँचने पर स्वतः अर्पित होगा। या ◯ को टैप कर स्वयं अर्पित चिह्नित करें।',
+                'Open a reading to begin — it completes on its own when you reach the last page. Or tap the circle to mark it offered.'
+              )}
             </Text>
           </>
         )}

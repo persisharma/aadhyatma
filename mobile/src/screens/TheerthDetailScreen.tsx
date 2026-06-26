@@ -3,7 +3,9 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { contentByLang, pick } from '@/utils/localize';
+import { meaningToken } from '@/utils/langType';
 import { getTheerthBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -25,9 +27,9 @@ const DEITY_LABELS: Record<Deity, { hi: string; en: string }> = {
   saraswati: { hi: 'सरस्वती', en: 'SARASWATI' },
 };
 
-function deityLabel(deity: Deity, lang: 'hi' | 'en'): string {
+function deityLabel(deity: Deity, lang: Lang): string {
   const entry = DEITY_LABELS[deity];
-  return lang === 'hi' ? entry.hi : entry.en;
+  return contentByLang(lang, entry.hi, entry.en);
 }
 
 export default function TheerthDetailScreen({ route, navigation }: Props) {
@@ -49,11 +51,8 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
     );
   }
 
-  const name = lang === 'hi' ? temple.nameHi : temple.nameEn;
-  const cityState =
-    lang === 'hi'
-      ? `${temple.cityHi}, ${temple.stateHi}`
-      : `${temple.cityEn}, ${temple.stateEn}`;
+  const name = contentByLang(lang, temple.nameHi, temple.nameEn);
+  const cityState = `${contentByLang(lang, temple.cityHi, temple.cityEn)}, ${contentByLang(lang, temple.stateHi, temple.stateEn)}`;
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -142,7 +141,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             typography={typography}
           />
           <DetailProse
-            text={lang === 'hi' ? temple.significanceHi : temple.significanceEn}
+            text={contentByLang(lang, temple.significanceHi, temple.significanceEn)}
             lang={lang}
             colors={colors}
             typography={typography}
@@ -158,7 +157,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             typography={typography}
           />
           <DetailProse
-            text={lang === 'hi' ? temple.originStoryHi : temple.originStoryEn}
+            text={contentByLang(lang, temple.originStoryHi, temple.originStoryEn)}
             lang={lang}
             colors={colors}
             typography={typography}
@@ -175,9 +174,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
               opacity: 0.7,
             }}
           >
-            {lang === 'hi'
-              ? `स्रोत — ${temple.sources.map((s) => s.label).join(', ')}`
-              : `Sources — ${temple.sources.map((s) => s.label).join(', ')}`}
+            {`${pick(lang, { hi: 'स्रोत', en: 'Sources', gu: 'સ્રોત', kn: 'ಮೂಲಗಳು' })} — ${temple.sources.map((s) => s.label).join(', ')}`}
           </Text>
         </ScrollView>
       </SafeAreaView>
@@ -200,14 +197,15 @@ function Ornament({ colors }: { colors: ReturnType<typeof useTheme>['colors'] })
 type SectionBlockProps = {
   labelHi: string;
   labelEn: string;
-  lang: 'hi' | 'en';
+  lang: Lang;
   colors: ReturnType<typeof useTheme>['colors'];
   typography: ReturnType<typeof useTheme>['typography'];
 };
 
 function SectionBlock({ labelHi, labelEn, lang, colors, typography }: SectionBlockProps) {
-  const first = lang === 'hi' ? labelHi : labelEn;
-  const second = lang === 'hi' ? labelEn : labelHi;
+  // Bilingual stacked label: reading-language form leads, English supports.
+  const first = contentByLang(lang, labelHi, labelEn);
+  const second = lang === 'en' ? labelHi : labelEn;
   return (
     <Text
       style={{
@@ -227,22 +225,19 @@ function SectionBlock({ labelHi, labelEn, lang, colors, typography }: SectionBlo
 
 type DetailProseProps = {
   text: string;
-  lang: 'hi' | 'en';
+  lang: Lang;
   colors: ReturnType<typeof useTheme>['colors'];
   typography: ReturnType<typeof useTheme>['typography'];
 };
 
 function DetailProse({ text, lang, colors, typography }: DetailProseProps) {
+  const tok = meaningToken(lang, typography); // per-script body token (gu/kn → their serif)
   return (
     <Text
       style={{
-        fontFamily:
-          lang === 'hi'
-            ? typography.meaning.fontFamily
-            : typography.meaningEnglish.fontFamily,
-        fontSize: lang === 'hi' ? typography.meaning.fontSize : typography.meaningEnglish.fontSize,
-        lineHeight:
-          lang === 'hi' ? typography.meaning.lineHeight : typography.meaningEnglish.lineHeight,
+        fontFamily: tok.fontFamily,
+        fontSize: tok.fontSize,
+        lineHeight: tok.lineHeight,
         color: colors.inkSoft,
         textAlign: 'center',
         fontStyle: lang === 'en' ? 'italic' : 'normal',
