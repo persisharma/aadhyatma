@@ -6,6 +6,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { pick, type LocalizedStrings } from '@/utils/localize';
+import { scriptTitleFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import type { RoutineScheduleMode } from '@/data/routine/types';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -86,6 +87,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
               />
               <PrimaryButton
                 label={pick(lang, { hi: 'आगे', en: 'Next', gu: 'આગળ', kn: 'ಮುಂದೆ' })}
+                lang={lang}
                 disabled={!nameReady}
                 onPress={() => setStep('mode')}
                 colors={colors}
@@ -126,6 +128,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
               />
               <PrimaryButton
                 label={pick(lang, { hi: 'साधना बनाएँ', en: 'Create routine', gu: 'સાધના બનાવો', kn: 'ಸಾಧನೆ ರಚಿಸಿ' })}
+                lang={lang}
                 disabled={!mode}
                 onPress={create}
                 colors={colors}
@@ -255,6 +258,7 @@ function ModeCard({
 
 function PrimaryButton({
   label,
+  lang,
   disabled,
   onPress,
   colors,
@@ -263,6 +267,7 @@ function PrimaryButton({
   spacing,
 }: {
   label: string;
+  lang: Lang;
   disabled?: boolean;
   onPress: () => void;
 } & Required<ThemeBits>) {
@@ -280,7 +285,17 @@ function PrimaryButton({
         opacity: disabled ? 0.4 : 1,
       }}
     >
-      <Text style={{ fontFamily: typography.verseLatin.fontFamily, fontSize: 16, color: colors.onPrimary }}>
+      <Text
+        style={{
+          fontFamily:
+            lang === 'en'
+              ? typography.verseLatin.fontFamily
+              : scriptTitleFont(lang, typography.cardHindi.fontFamily),
+          fontSize: 16,
+          lineHeight: 22,
+          color: colors.onPrimary,
+        }}
+      >
         {label}
       </Text>
     </Pressable>

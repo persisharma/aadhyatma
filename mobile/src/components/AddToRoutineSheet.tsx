@@ -3,6 +3,7 @@ import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
+import { scriptTitleFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { library } from '@/data/texts';
 import { findJapamMantra } from '@/data/japam';
@@ -196,7 +197,17 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
 
             <Pressable onPress={startNewRoutine} accessibilityRole="button" style={styles.newRow}>
               <Text style={{ color: colors.saffron, fontSize: 20, marginRight: 10 }}>＋</Text>
-              <Text style={{ fontFamily: typography.verseLatin.fontFamily, fontSize: 15, color: colors.saffron }}>
+              <Text
+                style={{
+                  fontFamily:
+                    lang === 'en'
+                      ? typography.verseLatin.fontFamily
+                      : scriptTitleFont(lang, typography.cardHindi.fontFamily),
+                  fontSize: 15,
+                  lineHeight: 19,
+                  color: colors.saffron,
+                }}
+              >
                 {pick(lang, { hi: 'नई साधना बनाएँ', en: 'New routine', gu: 'નવી સાધના બનાવો', kn: 'ಹೊಸ ಸಾಧನೆ ರಚಿಸಿ' })}
               </Text>
             </Pressable>

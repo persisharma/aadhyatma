@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import { titleFontByLang } from '@/utils/langType';
+import { titleFontByLang, scriptTitleFont } from '@/utils/langType';
 
 /** Parchment-gradient screen shell with a back top-bar. Title swaps per
  * the language toggle (RULEBOOK §3 top-bar rule). */
@@ -66,6 +66,7 @@ export function RoutineButton({
   disabled?: boolean;
 }) {
   const { colors, spacing, radii, typography } = useTheme();
+  const { lang } = useGitaLanguage();
   const ghost = variant === 'ghost';
   return (
     <Pressable
@@ -85,8 +86,12 @@ export function RoutineButton({
     >
       <Text
         style={{
-          fontFamily: typography.verseLatin.fontFamily,
+          fontFamily:
+            lang === 'en'
+              ? typography.verseLatin.fontFamily
+              : scriptTitleFont(lang, typography.cardHindi.fontFamily),
           fontSize: 16,
+          lineHeight: 22,
           color: ghost ? colors.saffron : colors.onPrimary,
         }}
       >
