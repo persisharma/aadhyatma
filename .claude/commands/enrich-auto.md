@@ -13,11 +13,25 @@ only ship a small, low-risk, fully-verified slice, or it does nothing.
 Read `.claude/commands/enrich.md` Phases 0, 1, 3, 4 — they apply verbatim except
 where overridden below. Read `docs/enrichment-loop/README.md` for context.
 
-## Phase 0 — Load state (same as /enrich)
+## Phase 0 — Load state + sync with main (same as /enrich, plus sync)
 
 Load the ledger, wiki, roadmap/PRDs. Confirm the working branch is the
 designated feature branch, NOT `main`. **If on `main`, abort and log — never
 auto-commit to main.**
+
+**Sync with main BEFORE doing any work** (so future PRs stay clean after you've
+merged earlier loop commits — see `.claude/ship-learnings/deliver.md` on
+squash-merge noise):
+
+1. `git fetch origin main`
+2. `git rebase origin/main` — replays loop commits onto latest main. Commits
+   whose content is already in main (merged/squashed) apply empty and are
+   auto-dropped, leaving only unmerged work.
+3. If the rebase hits a conflict (rare — the loop only adds isolated files),
+   **abort it** (`git rebase --abort`), do NOT build this run, and log
+   "deferred: rebase conflict with main, needs human" to the Autorun log.
+
+The actual push (with `--force-with-lease` when history diverged) happens in Phase 4.
 
 ## Phase 1 — Select ONE (same as /enrich)
 
@@ -54,7 +68,10 @@ log the failure to the Autorun log. Never push red. Never leave the tree dirty.
 If a slice shipped green:
 1. Move it to the ledger Shipped log (date · feature · enrichment · "autorun").
 2. Commit on the feature branch with a clear message.
-3. Push with `git push -u origin <branch>` (retry on network error, backoff 2/4/8/16s).
+3. Push: try `git push -u origin <branch>` first; if it's rejected as non-fast-forward
+   (because Phase 0 rebased over a squash/rebase merge), push with
+   `git push --force-with-lease origin <branch>` (safe — refuses to clobber other pushes).
+   Retry on network error, backoff 2/4/8/16s.
 4. **Do NOT open a PR.**
 
 If nothing shipped (auto-gate deferred, or build failed and was reverted):
