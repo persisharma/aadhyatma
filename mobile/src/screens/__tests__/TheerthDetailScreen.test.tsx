@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { ImageBackground, Text } from 'react-native';
-import { getDeityBackground } from '@/data/backgrounds';
+import { backgroundImages } from '@assets/backgrounds';
+import { getDeityBackground, getTheerthBackground } from '@/data/backgrounds';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
@@ -74,6 +75,39 @@ test('renders sourced statewise temple detail content in English', () => {
 test('shows a not-found message for an unknown temple id', () => {
   const text = render('does-not-exist', 'en');
   assert.match(text, /not found/i);
+});
+
+test('renders Khatu Shyam as a Krishna lokdevta with sourced prose', () => {
+  const text = render('khatu-shyam', 'en');
+  assert.match(text, /Khatu Shyam/, 'temple name');
+  assert.match(text, /KRISHNA/, 'deity badge maps the lokdevta to Krishna');
+  assert.match(text, /Barbarika|Krishna|Shyam/, 'Khatu Shyam origin story');
+  assert.match(text, /Sources/, 'sourced prose footer');
+  assert.doesNotMatch(text, /RULEBOOK/, 'placeholder should not render');
+});
+
+test('Khatu Shyam uses its dedicated Theerth background plate', () => {
+  const route = { key: 'd', name: 'TheerthDetail', params: { templeId: 'khatu-shyam' } } as Props['route'];
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <TheerthDetailScreen navigation={navigation} route={route} />
+      </GitaLanguageProvider>,
+    );
+  });
+  const layers = tree.root.findAllByType(ImageBackground);
+  assert.equal(layers.length, 1, 'detail screen renders one background layer');
+  assert.equal(
+    layers[0].props.source,
+    getTheerthBackground('khatu-shyam', 'krishna'),
+    'Khatu Shyam routes through the Theerth background override',
+  );
+  assert.equal(
+    getTheerthBackground('khatu-shyam', 'krishna'),
+    backgroundImages.theerth_khatu_shyam,
+    'Khatu Shyam resolves to its dedicated Theerth background',
+  );
 });
 
 test('renders the temple deity background (Somnath → Shiva)', () => {
