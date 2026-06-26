@@ -150,6 +150,10 @@ export default function FeatureCard({ item, width, onPress }: Props) {
               fontFamily: isHi ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily,
               fontSize: isHi ? 13 : 14,
               fontStyle: isHi ? 'normal' : 'italic',
+              // Devanagari needs ~1.7 leading (design.md type scale); the Latin
+              // default of 19 is too tight for Hindi and clips the upper matras of
+              // the first line. Cormorant italic stays at 19.
+              lineHeight: isHi ? 22 : 19,
               marginTop: spacing.sm,
             },
           ]}
@@ -221,7 +225,7 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   desc: {
-    lineHeight: 19,
+    // lineHeight is set inline per language (Hindi needs more leading than Latin).
   },
   spacer: {
     flex: 1,
