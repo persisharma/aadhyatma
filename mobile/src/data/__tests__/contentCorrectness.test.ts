@@ -50,14 +50,6 @@ const lakshmiAartiEntry = library.find((e) => e.id === 'om-jai-lakshmi-mata');
 assert.ok(lakshmiAartiEntry, 'om-jai-lakshmi-mata should be in library');
 assert.deepEqual(lakshmiAartiEntry.deities, ['lakshmi'], 'om-jai-lakshmi-mata must be tagged under the Lakshmi deity (Rule 10.4)');
 
-// Shri Ramchandra Kripalu (Tulsidas Ram Stuti, Phase-1) — pins deity + verse count.
-const ramKripalu = readJson('aarti/shri-ramchandra-kripalu.json');
-assert.equal(ramKripalu.deity, 'rama', 'Shri Ramchandra Kripalu aarti deity should be rama (Rule 10.4)');
-assert.equal(ramKripalu.verses.length, 5, 'Shri Ramchandra Kripalu should ship 5 stanzas');
-const ramKripaluEntry = library.find((e) => e.id === 'shri-ramchandra-kripalu');
-assert.ok(ramKripaluEntry, 'shri-ramchandra-kripalu should be in library');
-assert.deepEqual(ramKripaluEntry.deities, ['rama'], 'shri-ramchandra-kripalu must be tagged under the Rama deity (Rule 10.4)');
-
 // Lakshmi Chalisa (Phase-1) — pins deity, verse count, and canonical opening line.
 const lakshmiChalisa = readJson('lakshmi-chalisa/lakshmi-chalisa.json');
 const lakshmiChalisaEntry = library.find((e) => e.id === 'lakshmi-chalisa');
