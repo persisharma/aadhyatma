@@ -5,10 +5,13 @@ import { useGitaLanguage, LANGUAGES, type LanguageMeta } from '@/data/gita/langu
 import { fontFamilies } from '@/theme/typography';
 
 /**
- * Segmented reading-language pill (design.md §16). One segment per entry in
- * LANGUAGES, each labelled in its own script. Full native names are load-bearing:
- * the Maestro flows tap the visible "English" / "हिन्दी" text.
+ * Two-segment reading-language pill (design.md §16).
+ * Left segment: user's chosen regional language (hi/gu/kn — set in More).
+ * Right segment: always English.
+ * Tapping updates the global lang context.
  */
+
+const EN_META = LANGUAGES.find((l) => l.value === 'en') as LanguageMeta;
 
 function segmentFont(meta: LanguageMeta): { fontFamily: string; fontSize: number } {
   switch (meta.script) {
@@ -25,7 +28,10 @@ function segmentFont(meta: LanguageMeta): { fontFamily: string; fontSize: number
 
 export default function LanguageToggle() {
   const { colors, radii } = useTheme();
-  const { lang, setLang } = useGitaLanguage();
+  const { lang, regionalLang, setLang } = useGitaLanguage();
+
+  const regionalMeta = LANGUAGES.find((l) => l.value === regionalLang) as LanguageMeta;
+  const segments: [LanguageMeta, LanguageMeta] = [regionalMeta, EN_META];
 
   return (
     <View
@@ -40,7 +46,7 @@ export default function LanguageToggle() {
       accessibilityRole="radiogroup"
       accessibilityLabel="Reading language"
     >
-      {LANGUAGES.map((opt) => {
+      {segments.map((opt) => {
         const selected = lang === opt.value;
         const font = segmentFont(opt);
         return (
