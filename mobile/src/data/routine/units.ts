@@ -100,8 +100,12 @@ export function isItemAutoComplete(item: RoutineItem, ctx: CompletionCtx): boole
   }
   // Whole section.
   if (pos) {
-    // Chaptered source: complete when at the last verse-page of the last chapter.
-    return p.chapter === pos.lastChapter && p.verseIndex >= pos.chapters[pos.lastChapter];
+    // Complete when at the last verse-page of the last chapter. Non-chaptered
+    // pooled sources (sanskar) carry no `chapter` on their reading progress, so
+    // normalise to `1` to match the fabricated chapter `lastPositionsBySource`
+    // assigns them (`v.chapter ?? 1`) — otherwise `undefined === 1` would make
+    // them never auto-complete.
+    return (p.chapter ?? 1) === pos.lastChapter && p.verseIndex >= pos.chapters[pos.lastChapter];
   }
   const entry = library.find((e) => e.id === item.sourceId);
   if (entry?.verseCount) return p.verseIndex + 1 >= entry.verseCount;
