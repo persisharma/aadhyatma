@@ -22,6 +22,9 @@ export type VersePageVerse = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  /** Authored native meaning translations (native-only; absent → transliteration fallback). */
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 type Props = {
@@ -37,7 +40,10 @@ export default function VersePage({ verse, sourceId, width }: Props) {
   const bg = useMemo(() => getReaderBackground(sourceId, verse), [sourceId, verse]);
 
   const verseLines = verseLinesByLang(lang, verse.lines, verse.linesEn);
-  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn);
+  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, {
+    gu: verse.meaningGu,
+    kn: verse.meaningKn,
+  });
   const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ' });
   const pillText = contentByLang(lang, verse.labelHi, verse.labelEn);
   const verseTok = verseToken(lang, typography);

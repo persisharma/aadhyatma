@@ -1,8 +1,8 @@
 ---
 title: Reading Languages (hi/en/gu/kn)
 type: concept
-sources: [mobile/src/data/gita/language.tsx, mobile/src/utils/transliterate.ts, mobile/src/utils/localize.ts, mobile/src/utils/langType.ts, mobile/src/utils/titleByLanguage.ts, mobile/src/components/LanguageToggle.tsx, mobile/src/theme/typography.ts, docs/superpowers/specs/2026-06-13-gujarati-kannada-language-support-design.md]
-last_verified_date: 2026-06-13
+sources: [mobile/src/data/gita/language.tsx, mobile/src/utils/transliterate.ts, mobile/src/utils/localize.ts, mobile/src/utils/langType.ts, mobile/src/utils/titleByLanguage.ts, mobile/src/components/LanguageToggle.tsx, mobile/src/theme/typography.ts, mobile/src/data/__tests__/contentCorrectness.test.ts, mobile/.translations/, docs/superpowers/specs/2026-06-13-gujarati-kannada-language-support-design.md, docs/superpowers/specs/2026-06-25-native-gukn-scaleout-progress.md]
+last_verified_date: 2026-06-26
 confidence: high
 status: current
 ---
@@ -11,9 +11,10 @@ status: current
 
 The app has one shared reading-language preference, `Lang = 'hi' | 'en' | 'gu' | 'kn'`
 (`useGitaLanguage()`, persisted at AsyncStorage `@vedansh/language`, default `'hi'`). Hindi and
-English render the authored bilingual content fields; **Gujarati and Kannada carry no stored
-content** — their script is derived at runtime by transliterating the Devanagari. Added
-2026-06-13 (gu/kn support); `GitaLang` is kept as an alias of `Lang`.
+English render the authored bilingual content fields. Gujarati and Kannada use verified native
+`meaningGu`/`meaningKn` fields where a content section has passed the source gate, and otherwise
+fall back to runtime Devanagari transliteration. Added 2026-06-13 (gu/kn support);
+`GitaLang` is kept as an alias of `Lang`.
 
 ## Details
 
@@ -39,11 +40,19 @@ confirming Noto Serif Kannada renders U+0C81/U+0CBC.
 `lang === 'hi' ? … : …`):
 - `pick(lang, {hi,en,gu,kn})` — hand-authored UI prose (all four required).
 - `contentByLang(lang, hi, en)` — titles/labels/Sanskrit terms; gu/kn re-script `hi`.
-- `meaningByLang(lang, hi, en)` / `commentaryByLang` — **meaning policy**: everything in the
-  selected script — gu AND kn re-script the Hindi meaning/commentary into their script (Hindi
-  wording in the regional script; no native translations authored yet); en stays English.
+- `meaningByLang(lang, hi, en, native?)` — **meaning policy**: English stays English, Hindi stays
+  Hindi, and gu/kn first use verified native `native.gu` / `native.kn` fields when present. If a
+  native field is absent or empty, gu/kn re-script the Hindi meaning into the selected script.
   `meaningSourceLang` is identity (each language styles in its own script).
+- `commentaryByLang` still only follows the fallback policy: en stays English; gu/kn re-script
+  Hindi commentary. Gita commentary is explicitly out of native gu/kn meaning scale-out scope.
 - `verseLinesByLang(lang, deva, latin)` — recitation lines; gu/kn re-script the Devanagari.
+
+**Native meaning override gate** (2026-06-26): Completed sections carry optional `meaningGu` and
+`meaningKn` in content JSON, with provenance in `mobile/.translations/<section>.fusion.json`.
+`contentCorrectness.test.ts` pins the completed native set so every row has both native fields and
+the fusion artifact cites at least two Gujarati and two Kannada verification sources. Incomplete
+sections deliberately omit native fields and continue to fall back to transliteration.
 
 **Typography** (`utils/langType.ts` + `theme/typography.ts`): `verseToken`/`meaningToken`/
 `titleFontByLang`/`cardFontByLang`/`isLatinLang` select tokens per language. gu/kn use bundled
@@ -52,11 +61,11 @@ confirming Noto Serif Kannada renders U+0C81/U+0CBC.
 `titleByLanguage.orderTitlesByLanguage` returns gu/kn primary = re-scripted `nameHi` in the
 script serif, secondary = English (listing cards stay bilingual; RULEBOOK §3).
 
-**Why transliteration, not authored fields or i18n:** Gujarati/Kannada are sister Brahmi
-scripts with ~1:1 Devanagari correspondence; devotional text is printed that way regionally, so
-script conversion is orthography-preserving (correct where romanization would not be — design.md
-§3.1). Adds zero stored content, keeps RULEBOOK §10 content gates untouched, and every future
-section gets gu/kn for free. See [[overview]] and the design spec.
+**Why fallback transliteration still exists:** Gujarati/Kannada are sister Brahmi scripts with
+~1:1 Devanagari correspondence; devotional verse text is printed that way regionally, so script
+conversion is orthography-preserving for recitation lines. Meaning prose now upgrades
+section-by-section only when native-source verification passes; otherwise the app keeps the honest
+fallback rather than treating generated prose as verified native translation.
 
 ## Gotchas
 
@@ -75,7 +84,6 @@ section gets gu/kn for free. See [[overview]] and the design spec.
   NotificationPreferences provider thread the persisted `@vedansh/language` and reschedule the
   rolling window when the language changes (notifications are built ahead of time). gu/kn-script
   search-query *input* remains a noted follow-up (display works; typing queries in gu/kn doesn't).
-- **Meaning/commentary text is transliterated Hindi, not native translation** — gu/kn show the
-  Hindi meaning in their script. Genuine native gu/kn translations would be authored `meaningGu`/
-  `meaningKn` content fields (a §10-gated content effort); `meaningByLang` is the single seam to
-  prefer them when they exist.
+- **Native meaning coverage is partial by design** — completed chalisas/aartis can render
+  `meaningGu`/`meaningKn`; every other section stays on fallback until its source gate passes.
+  Commentary remains fallback-only.

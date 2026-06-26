@@ -26,7 +26,7 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props)
   const { lang } = useGitaLanguage();
   const bg = getReaderBackground(sourceId, verse);
 
-  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn);
+  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, { gu: verse.meaningGu, kn: verse.meaningKn });
   const meaningLabel = pick(lang, {
     hi: 'अर्थ · Meaning',
     en: 'Meaning · अर्थ',

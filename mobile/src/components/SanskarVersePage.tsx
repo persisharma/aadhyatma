@@ -48,7 +48,7 @@ export default function SanskarVersePage({ verse, sourceId, width }: Props) {
   }, [isIntro, isStep, isVidhi, lang, verse.labelHi, verse.labelEn, verse.number]);
 
   const verseLines = verseLinesByLang(lang, verse.lines, verse.linesEn);
-  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn);
+  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, { gu: verse.meaningGu, kn: verse.meaningKn });
   const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ' });
   const hasVidhi = !!(verse.vidhiHi || verse.vidhiEn);
   const vidhiContent = meaningByLang(lang, verse.vidhiHi ?? '', verse.vidhiEn ?? '');

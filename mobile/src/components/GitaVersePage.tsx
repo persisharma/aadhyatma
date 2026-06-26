@@ -28,7 +28,7 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
   const { lang } = useGitaLanguage();
   const bg = getReaderBackground(sourceId, verse);
 
-  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn);
+  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, { gu: verse.meaningGu, kn: verse.meaningKn });
   const commentary = commentaryByLang(lang, verse.commentaryHi, verse.commentaryEn);
   // The fallback source is the language the meaning is NOT drawn from: hi/gu read the
   // Devanagari source, so their fallback is English; en/kn read English, fallback is Hindi.

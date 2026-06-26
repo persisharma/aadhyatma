@@ -60,6 +60,31 @@ describe('meaning policy (gu/kn render in their own script; en stays English)', 
   });
 });
 
+describe('meaningByLang native overrides (prefer authored gu/kn translation, else transliterate)', () => {
+  const hi = 'धृतराष्ट्र ने कहा';
+  const en = 'Dhritarashtra said';
+  // Authored native renderings — intentionally distinct from the transliteration
+  // ('ધૃતરાષ્ટ્ર ને કહા' / 'ಧೃತರಾಷ್ಟ್ರ ನೇ ಕಹಾ') so the preference is observable.
+  const guNative = 'ધૃતરાષ્ટ્રએ કહ્યું';
+  const knNative = 'ಧೃತರಾಷ್ಟ್ರನು ಹೇಳಿದನು';
+
+  test('prefers the authored native field when present', () => {
+    expect(meaningByLang('gu', hi, en, { gu: guNative })).toBe(guNative);
+    expect(meaningByLang('kn', hi, en, { kn: knNative })).toBe(knNative);
+  });
+
+  test('falls back to transliteration when the native field is absent or empty', () => {
+    expect(meaningByLang('gu', hi, en)).toBe('ધૃતરાષ્ટ્ર ને કહા');
+    expect(meaningByLang('gu', hi, en, {})).toBe('ધૃતરાષ્ટ્ર ને કહા');
+    expect(meaningByLang('kn', hi, en, { kn: '' })).toBe('ಧೃತರಾಷ್ಟ್ರ ನೇ ಕಹಾ');
+  });
+
+  test('hi and en ignore native gu/kn overrides', () => {
+    expect(meaningByLang('hi', hi, en, { gu: guNative, kn: knNative })).toBe(hi);
+    expect(meaningByLang('en', hi, en, { gu: guNative, kn: knNative })).toBe(en);
+  });
+});
+
 describe('verseLinesByLang (recitation text — gu/kn always from the Devanagari)', () => {
   const deva = ['धर्मक्षेत्रे कुरुक्षेत्रे', 'मामकाः पाण्डवाश्चैव'];
   const latin = ['dharma-kṣhetre kuru-kṣhetre', 'māmakāḥ pāṇḍavāśhchaiva'];

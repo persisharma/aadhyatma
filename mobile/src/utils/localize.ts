@@ -48,10 +48,25 @@ export function meaningSourceLang(lang: Lang): Lang {
   return lang;
 }
 
-/** Meaning prose: gu/kn re-script the Hindi meaning into their script; en stays English. */
-export function meaningByLang(lang: Lang, meaningHi: string, meaningEn: string): string {
+/** Authored native meaning translations, when they exist. Native-only: omit/empty → fall back. */
+export type NativeMeaning = { gu?: string; kn?: string };
+
+/**
+ * Meaning prose. en stays English; hi stays Hindi. For gu/kn, prefer an authored
+ * native translation (`native.gu`/`native.kn`) when present; otherwise fall back to
+ * re-scripting the Hindi meaning into that script (transliteration). The native
+ * fields are native-only — an absent or empty string falls back, so the app never
+ * mistakes a transliterated Hindi meaning for an authored translation.
+ */
+export function meaningByLang(
+  lang: Lang,
+  meaningHi: string,
+  meaningEn: string,
+  native?: NativeMeaning
+): string {
   if (lang === 'en') return meaningEn;
-  if (lang === 'gu' || lang === 'kn') return transliterateDevanagari(meaningHi, lang);
+  if (lang === 'gu') return native?.gu || transliterateDevanagari(meaningHi, 'gu');
+  if (lang === 'kn') return native?.kn || transliterateDevanagari(meaningHi, 'kn');
   return meaningHi; // 'hi'
 }
 
