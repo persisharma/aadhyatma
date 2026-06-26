@@ -4,16 +4,57 @@
  * Run: npx tsx src/data/__tests__/contentCorrectness.test.ts
  */
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { library } from '../texts';
 import { deities } from '../deities';
 
 const DATA = join(__dirname, '..');
+const TRANSLATIONS = join(DATA, '..', '..', '.translations');
 
 function readJson(rel: string) {
   return JSON.parse(readFileSync(join(DATA, rel), 'utf8'));
 }
+
+function readTranslationJson(rel: string) {
+  return JSON.parse(readFileSync(join(TRANSLATIONS, rel), 'utf8'));
+}
+
+const VERIFIED_NATIVE_MEANING_SECTIONS = [
+  {
+    id: 'hanuman-chalisa',
+    fusionFile: 'hanuman-chalisa.fusion.json',
+    dataFiles: ['hanuman-chalisa/hanuman-chalisa.json'],
+  },
+  {
+    id: 'shiv-chalisa',
+    fusionFile: 'shiv-chalisa.fusion.json',
+    dataFiles: ['shiv-chalisa/shiv-chalisa.json'],
+  },
+  {
+    id: 'ganesh-chalisa',
+    fusionFile: 'ganesh-chalisa.fusion.json',
+    dataFiles: ['ganesh-chalisa/ganesh-chalisa.json'],
+  },
+  {
+    id: 'durga-chalisa',
+    fusionFile: 'durga-chalisa.fusion.json',
+    dataFiles: ['durga-chalisa/durga-chalisa.json'],
+  },
+  {
+    id: 'aartis',
+    fusionFile: 'aartis.fusion.json',
+    dataFiles: [
+      'aarti/aarti-kunj-bihari.json',
+      'aarti/hanuman-aarti.json',
+      'aarti/jai-ambe-gauri.json',
+      'aarti/jai-ganesh-deva.json',
+      'aarti/om-jai-jagdish.json',
+      'aarti/om-jai-shiv-omkara.json',
+      'aarti/saraswati-aarti.json',
+    ],
+  },
+] as const;
 
 // ─── 1. Deity type correctness ───────────────────────────────────────────────
 
@@ -463,7 +504,53 @@ for (const file of [
   );
 }
 
-// ─── 16. japam per-mantra source URLs roll up into the top-level source ──────
+// ─── 16. Verified native gu/kn meaning sections stay complete ───────────────
+// Native Gujarati/Kannada meanings are shipped only after source verification.
+// Once a section is marked verified, every meaning row must carry both native
+// fields and a matching fusion provenance artifact. Incomplete sections are not
+// listed here so they continue to use the runtime transliteration fallback.
+for (const section of VERIFIED_NATIVE_MEANING_SECTIONS) {
+  const fusionPath = join(TRANSLATIONS, section.fusionFile);
+  assert.ok(existsSync(fusionPath), `${section.id} should have ${section.fusionFile}`);
+
+  const fusion = readTranslationJson(section.fusionFile);
+  assert.equal(fusion.section, section.id, `${section.fusionFile} should identify ${section.id}`);
+  assert.ok(fusion.source_verification, `${section.fusionFile} should record source_verification`);
+  assert.ok(
+    Array.isArray(fusion.source_verification.gu_sources) &&
+      fusion.source_verification.gu_sources.length >= 2,
+    `${section.fusionFile} should cite at least 2 Gujarati verification sources`
+  );
+  assert.ok(
+    Array.isArray(fusion.source_verification.kn_sources) &&
+      fusion.source_verification.kn_sources.length >= 2,
+    `${section.fusionFile} should cite at least 2 Kannada verification sources`
+  );
+  assert.ok(
+    typeof fusion.source_verification.result === 'string' &&
+      fusion.source_verification.result.includes('/'),
+    `${section.fusionFile} should summarize verified row counts`
+  );
+
+  let checkedRows = 0;
+  for (const file of section.dataFiles) {
+    const data = readJson(file);
+    const rows = (data.verses || data.mantras || []).filter(
+      (row: any) => row.meaningHi || row.meaningEn
+    );
+    assert.ok(rows.length > 0, `${file} should have meaning rows`);
+
+    for (const row of rows) {
+      const label = `${file} ${row.id || row.number || row.nameEn}`;
+      assert.ok(row.meaningGu?.trim(), `${label} should carry verified meaningGu`);
+      assert.ok(row.meaningKn?.trim(), `${label} should carry verified meaningKn`);
+      checkedRows += 1;
+    }
+  }
+  assert.ok(checkedRows > 0, `${section.id} should check at least one native meaning row`);
+}
+
+// ─── 17. japam per-mantra source URLs roll up into the top-level source ──────
 const japamSourceUrls = new Set(japam.source.referenceUrls);
 for (const mantra of japam.mantras) {
   for (const url of mantra.source?.referenceUrls ?? []) {

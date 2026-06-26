@@ -4,8 +4,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang, pick } from '@/utils/localize';
+import { titleFontByLang } from '@/utils/langType';
 
-/** Parchment-gradient screen shell with a back top-bar. Title swaps Hi/En per
+/** Parchment-gradient screen shell with a back top-bar. Title swaps per
  * the language toggle (RULEBOOK §3 top-bar rule). */
 export function RoutineShell({
   titleHi,
@@ -33,16 +35,16 @@ export function RoutineShell({
           <Pressable
             onPress={onBack}
             accessibilityRole="button"
-            accessibilityLabel={lang === 'hi' ? 'वापस' : 'Back'}
+            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ' })}
             hitSlop={16}
             style={[styles.backBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
           </Pressable>
           <Text
-            style={{ flex: 1, fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}
+            style={{ flex: 1, fontFamily: titleFontByLang(lang), fontSize: 16, color: colors.ink }}
           >
-            {lang === 'hi' ? titleHi : titleEn}
+            {contentByLang(lang, titleHi, titleEn)}
           </Text>
           {right}
         </View>

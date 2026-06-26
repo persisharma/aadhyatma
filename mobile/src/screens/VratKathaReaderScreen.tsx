@@ -20,13 +20,14 @@ import KathaSectionPage from '@/components/KathaSectionPage';
 import { getKathaContent } from '@/panchang/kathaContent';
 import type { KathaContentSection } from '@/panchang/types';
 import type { HomeStackParamList } from '@/navigation/types';
+import { contentByLang } from '@/utils/localize';
+import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'VratKathaReader'>;
 
 export default function VratKathaReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHindi = lang === 'hi';
   const { width } = useWindowDimensions();
 
   const katha = getKathaContent(route.params.kathaId);
@@ -54,7 +55,9 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
     [width, total]
   );
 
-  const title = katha ? (isHindi ? katha.titleHi : katha.titleEn) : isHindi ? 'कथा' : 'Katha';
+  const title = katha
+    ? contentByLang(lang, katha.titleHi, katha.titleEn)
+    : contentByLang(lang, 'कथा', 'Katha');
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -77,7 +80,7 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
           </View>
           <Text
             numberOfLines={1}
-            style={[styles.title, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
+            style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}
           >
             {title}
           </Text>
@@ -92,8 +95,8 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
 
         {!katha ? (
           <View style={styles.empty}>
-            <Text style={{ color: colors.inkMuted, fontFamily: typography.meaning.fontFamily, fontSize: 14 }}>
-              {isHindi ? 'यह कथा अभी उपलब्ध नहीं है।' : 'This katha is not available yet.'}
+            <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 14 }}>
+              {contentByLang(lang, 'यह कथा अभी उपलब्ध नहीं है।', 'This katha is not available yet.')}
             </Text>
           </View>
         ) : (

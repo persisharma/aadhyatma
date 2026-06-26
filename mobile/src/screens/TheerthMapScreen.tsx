@@ -12,7 +12,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { contentByLang, pick } from '@/utils/localize';
+import { cardFontByLang, isLatinLang } from '@/utils/langType';
 import { getCategoryBackground } from '@/data/backgrounds';
 import { useNewContent, templeNewKey } from '@/contexts/NewContentContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
@@ -30,7 +32,6 @@ import {
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'TheerthMap'>;
-type Lang = 'hi' | 'en';
 type ListMode = 'category' | 'state';
 type CategoryKey = TheerthGroup | 'other';
 
@@ -41,15 +42,21 @@ function categoryTemples(key: CategoryKey): TempleEntry[] {
 }
 
 function categoryLabel(key: CategoryKey, lang: Lang): string {
-  if (key === 'other') return lang === 'hi' ? 'अन्य प्रसिद्ध तीर्थ' : 'Other Famous Temples';
+  if (key === 'other')
+    return pick(lang, {
+      hi: 'अन्य प्रसिद्ध तीर्थ',
+      en: 'Other Famous Temples',
+      gu: 'અન્ય પ્રસિદ્ધ તીર્થ',
+      kn: 'ಇತರ ಪ್ರಸಿದ್ಧ ತೀರ್ಥ',
+    });
   const m = groupMeta[key];
-  return lang === 'hi' ? m.nameHi : m.nameEn;
+  return contentByLang(lang, m.nameHi, m.nameEn);
 }
 
-const stateName = (t: TempleEntry, lang: Lang) => (lang === 'hi' ? t.stateHi : t.stateEn);
-const templeName = (t: TempleEntry, lang: Lang) => (lang === 'hi' ? t.nameHi : t.nameEn);
+const stateName = (t: TempleEntry, lang: Lang) => contentByLang(lang, t.stateHi, t.stateEn);
+const templeName = (t: TempleEntry, lang: Lang) => contentByLang(lang, t.nameHi, t.nameEn);
 const templeCity = (t: TempleEntry, lang: Lang) =>
-  lang === 'hi' ? `${t.cityHi}, ${t.stateHi}` : `${t.cityEn}, ${t.stateEn}`;
+  `${contentByLang(lang, t.cityHi, t.cityEn)}, ${contentByLang(lang, t.stateHi, t.stateEn)}`;
 
 export default function TheerthMapScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
@@ -81,9 +88,7 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
               ? group
                 ? categoryLabel(group, lang)
                 : drillStateTitle(stateEn!, lang)
-              : lang === 'hi'
-                ? 'तीर्थ'
-                : 'Theerth'
+              : pick(lang, { hi: 'तीर्थ', en: 'Theerth', gu: 'તીર્થ', kn: 'ತೀರ್ಥ' })
           }
           onBack={() => navigation.goBack()}
           colors={colors}
@@ -236,7 +241,7 @@ function Listing({
           key={c.key}
           glyph={mode === 'category' ? '॥' : 'ॐ'}
           name={c.label}
-          meta={`${c.count} ${lang === 'hi' ? 'तीर्थ' : 'temples'}`}
+          meta={`${c.count} ${pick(lang, { hi: 'तीर्थ', en: 'temples', gu: 'તીર્થ', kn: 'ತೀರ್ಥ' })}`}
           hasNew={c.hasNew}
           lang={lang}
           colors={colors}
@@ -309,7 +314,12 @@ function DrillIn({
           },
         ]}
       >
-        {lang === 'hi' ? 'पिन छूकर मंदिर की कथा पढ़ें' : 'Tap a pin to read the temple’s story'}
+        {pick(lang, {
+          hi: 'पिन छूकर मंदिर की कथा पढ़ें',
+          en: 'Tap a pin to read the temple’s story',
+          gu: 'પિન સ્પર્શ કરી મંદિરની કથા વાંચો',
+          kn: 'ಪಿನ್ ಸ್ಪರ್ಶಿಸಿ ದೇವಸ್ಥಾನದ ಕಥೆ ಓದಿ',
+        })}
       </Text>
       {list.map((temple) => (
         <BrowseCard
@@ -367,13 +377,13 @@ function ModeToggle({
           >
             <Text
               style={{
-                fontFamily: lang === 'hi' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily,
-                fontSize: lang === 'hi' ? 15 : 14,
+                fontFamily: cardFontByLang(lang),
+                fontSize: isLatinLang(lang) ? 14 : 15,
                 fontStyle: lang === 'en' ? 'italic' : 'normal',
                 color: selected ? colors.saffronDeep : colors.inkMuted,
               }}
             >
-              {lang === 'hi' ? opt.hi : opt.en}
+              {contentByLang(lang, opt.hi, opt.en)}
             </Text>
           </Pressable>
         );
@@ -444,8 +454,15 @@ function BrowseCard({
             // Card titles follow the active language's face (design.md §type-scale):
             // Devanagari for hi; Cormorant Bold for en, sized a step up + 0.3 tracking
             // so the lighter Latin face reads at parity with the denser Devanagari.
-            fontFamily: lang === 'hi' ? typography.cardHindi.fontFamily : fontFamilies.latinBold,
-            fontSize: lang === 'hi' ? 17 : 19,
+            fontFamily:
+              lang === 'gu'
+                ? fontFamilies.gujaratiBold
+                : lang === 'kn'
+                  ? fontFamilies.kannadaBold
+                  : lang === 'hi'
+                    ? typography.cardHindi.fontFamily
+                    : fontFamilies.latinBold,
+            fontSize: isLatinLang(lang) ? 19 : 17,
             letterSpacing: lang === 'en' ? 0.3 : undefined,
             color: colors.ink,
           }}

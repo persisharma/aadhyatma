@@ -6,6 +6,12 @@ export const fontFamilies = {
   latinBold: 'CormorantGaramond_700Bold',
   latinSemiBoldItalic: 'CormorantGaramond_600SemiBold_Italic',
   latin: 'CormorantGaramond_500Medium',
+  // Sister-script serifs for the gu/kn reading languages — same Noto Serif family,
+  // same weights as the Devanagari cuts so the reading scale carries over unchanged.
+  gujarati: 'NotoSerifGujarati_500Medium',
+  gujaratiBold: 'NotoSerifGujarati_600SemiBold',
+  kannada: 'NotoSerifKannada_500Medium',
+  kannadaBold: 'NotoSerifKannada_600SemiBold',
 } as const;
 
 export const typography = {
@@ -39,10 +45,32 @@ export const typography = {
     fontSize: 24,
     lineHeight: 35,
   },
+  // gu/kn verse bodies share the Devanagari metrics — same x-height class, so the
+  // verse↔meaning hierarchy carries over without per-script tuning.
+  verseGujarati: {
+    fontFamily: fontFamilies.gujarati,
+    fontSize: 23,
+    lineHeight: 39,
+  },
+  verseKannada: {
+    fontFamily: fontFamilies.kannada,
+    fontSize: 23,
+    lineHeight: 39,
+  },
   meaningEnglish: {
     fontFamily: fontFamilies.latin,
     fontSize: 20,
     lineHeight: 33,
+  },
+  meaningGujarati: {
+    fontFamily: fontFamilies.gujarati,
+    fontSize: 20,
+    lineHeight: 34,
+  },
+  meaningKannada: {
+    fontFamily: fontFamilies.kannada,
+    fontSize: 20,
+    lineHeight: 34,
   },
   cardHindi: {
     fontFamily: fontFamilies.devanagariBold,

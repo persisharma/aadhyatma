@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, RULEBOOK.md]
-last_verified_date: 2026-06-09
+sources: [mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, RULEBOOK.md]
+last_verified_date: 2026-06-13
 confidence: high
 status: current
 ---
@@ -25,6 +25,8 @@ not by a base component. Content is bundled JSON loaded per chapter via `get<Sec
   reuse `ShivaStrotamVersePage` (Durga/Ganesh/Saraswati/Vishnu) — allowed only because their
   verse shapes match (see RULEBOOK §3 *Type safety on verse pages*; PR #31 Balkand crash origin).
 - Current page tracked via `onViewableItemsChanged` (60% threshold) + `handleScroll`.
+- The toggle row hosts `LanguageToggle` **and** (since #87) an `AddToRoutineButton` — every
+  reader has one; chaptered readers pass the current `chapter` (see [[routine]]).
 
 **Chapter auto-advance (the cross-subsection navigation contract).** A reader whose text has
 > 1 subsection must let the user swipe across chapter/kāṇḍa boundaries. The mechanism:
@@ -50,7 +52,9 @@ data at the top of the file (RULEBOOK §3).
 **Tests:** `readerAutoAdvance.test.tsx` enforces the auto-advance contract for every
 multi-chapter reader (transition injected at chapter 1's tail, prev-transition at chapter 2's
 head, no trailing transition on the final chapter, and `navigation.replace` fires on the
-transition page). Each reader also has a chapter-1 smoke test (RULEBOOK §3 *Reader smoke test*).
+transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro can't drive
+(velocity-scrolled, ~47 swipes). Each reader also has a chapter-1 smoke test (RULEBOOK §3
+*Reader smoke test*).
 
 ## Dependencies
 

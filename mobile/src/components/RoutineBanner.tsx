@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
 import { bannerStatus, bannerLine } from './routineBannerView';
 import LotusMark from './LotusMark';
@@ -21,9 +22,8 @@ export default function RoutineBanner() {
   const navigation = useNavigation<any>();
   const { hasRoutine, doneCount, total } = useRoutineToday();
 
-  const isHi = lang === 'hi';
   const status = bannerStatus({ hasRoutine, doneCount, total });
-  const line = bannerLine(status, isHi);
+  const line = bannerLine(status, lang);
   const open = (screen: 'RoutineToday' | 'RoutineCreate') =>
     navigation.navigate('HomeTab', { screen });
 
@@ -60,7 +60,7 @@ export default function RoutineBanner() {
       <Pressable
         onPress={() => open('RoutineCreate')}
         accessibilityRole="button"
-        accessibilityLabel={isHi ? 'अपनी नित्य साधना बनाएँ' : 'Set your daily practice'}
+        accessibilityLabel={pick(lang, { hi: 'अपनी नित्य साधना बनाएँ', en: 'Set your daily practice', gu: 'તમારી નિત્ય સાધના સેટ કરો', kn: 'ನಿಮ್ಮ ನಿತ್ಯ ಸಾಧನೆ ಹೊಂದಿಸಿ' })}
         style={({ pressed }) => [
           base,
           styles.row,
@@ -86,7 +86,7 @@ export default function RoutineBanner() {
       <Pressable
         onPress={() => open('RoutineToday')}
         accessibilityRole="button"
-        accessibilityLabel={isHi ? 'आज की साधना पूर्ण' : "Today's practice complete"}
+        accessibilityLabel={pick(lang, { hi: 'आज की साधना पूर्ण', en: "Today's practice complete", gu: 'આજની સાધના પૂર્ણ', kn: 'ಇಂದಿನ ಸಾಧನೆ ಪೂರ್ಣ' })}
         style={({ pressed }) => [
           base,
           styles.row,
@@ -111,7 +111,7 @@ export default function RoutineBanner() {
     <Pressable
       onPress={() => open('RoutineToday')}
       accessibilityRole="button"
-      accessibilityLabel={isHi ? 'आज की साधना' : "Today's practice"}
+      accessibilityLabel={pick(lang, { hi: 'आज की साधना', en: "Today's practice", gu: 'આજની સાધના', kn: 'ಇಂದಿನ ಸಾಧನೆ' })}
       style={({ pressed }) => [
         base,
         { borderWidth: 1, borderColor: colors.goldTint },

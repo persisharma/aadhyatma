@@ -31,10 +31,9 @@ export default function MalaStreak({
 }) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHi = lang === 'hi';
 
   const { lit, capacity: cap, todayIndex, empty } = malaBeads(streak, capacity);
-  const label = malaLabel(streak, isHi);
+  const label = malaLabel(streak, lang);
   const meruSize = Math.round(beadSize * 1.3);
 
   return (

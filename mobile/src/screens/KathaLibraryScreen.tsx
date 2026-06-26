@@ -8,13 +8,14 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getKathaLibrary } from '@/panchang/vratCatalog';
 import type { PanchangStackParamList } from '@/navigation/types';
+import { contentByLang, meaningByLang } from '@/utils/localize';
+import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'KathaLibrary'>;
 
 export default function KathaLibraryScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHindi = lang === 'hi';
   const rootNav = useNavigation<any>();
   const [query, setQuery] = useState('');
 
@@ -40,18 +41,18 @@ export default function KathaLibraryScreen({ navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel={isHindi ? 'वापस' : 'Back'}
+            accessibilityLabel={contentByLang(lang, 'वापस', 'Back')}
             hitSlop={12}
             style={({ pressed }) => [styles.backButton, { borderColor: colors.divider }, pressed && { opacity: 0.6 }]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 20 }}>‹</Text>
           </Pressable>
           <View style={{ alignItems: 'center' }}>
-            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}>
-              {isHindi ? 'कथा संग्रह' : 'Katha Library'}
+            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink }}>
+              {contentByLang(lang, 'कथा संग्रह', 'Katha Library')}
             </Text>
             <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted }}>
-              {isHindi ? 'Katha Library' : 'कथा संग्रह'} · {library.length}
+              {lang === 'en' ? 'कथा संग्रह' : 'Katha Library'} · {library.length}
             </Text>
           </View>
           <View style={{ width: 36 }} />
@@ -65,7 +66,7 @@ export default function KathaLibraryScreen({ navigation }: Props) {
           <TextInput
             value={query}
             onChangeText={setQuery}
-            placeholder={isHindi ? 'कथाएँ खोजें…' : 'Search stories…'}
+            placeholder={contentByLang(lang, 'कथाएँ खोजें…', 'Search stories…')}
             placeholderTextColor={colors.inkMuted}
             style={[styles.search, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, color: colors.ink }]}
           />
@@ -80,21 +81,21 @@ export default function KathaLibraryScreen({ navigation }: Props) {
             >
               <Text style={{ fontSize: 18, color: colors.saffron, marginRight: 12 }}>॥</Text>
               <View style={{ flex: 1, paddingRight: 10 }}>
-                <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-                  {isHindi ? katha.titleHi : katha.titleEn}
+                <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                  {contentByLang(lang, katha.titleHi, katha.titleEn)}
                 </Text>
                 <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
-                  {isHindi ? katha.titleEn : katha.titleHi} · {katha.sections.length} {isHindi ? 'खंड' : 'sections'}
+                  {lang === 'en' ? katha.titleHi : katha.titleEn} · {katha.sections.length} {contentByLang(lang, 'खंड', 'sections')}
                 </Text>
               </View>
               <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep }}>
-                {isHindi ? 'पढ़ें' : 'Read'}
+                {contentByLang(lang, 'पढ़ें', 'Read')}
               </Text>
             </Pressable>
           ))}
           {filtered.length === 0 && (
-            <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.inkMuted, marginTop: 24, textAlign: 'center' }}>
-              {isHindi ? 'कोई कथा नहीं मिली।' : 'No stories found.'}
+            <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkMuted, marginTop: 24, textAlign: 'center' }}>
+              {meaningByLang(lang, 'कोई कथा नहीं मिली।', 'No stories found.')}
             </Text>
           )}
         </ScrollView>

@@ -6,6 +6,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { getVishnuSahasranamaChapter, vishnuSahasranamaChaptersManifest, type VishnuSahasranamaVerse } from '@/data/vishnu-sahasranama';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -146,7 +148,7 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
   }, [verseCount, currentIndex]);
 
-  const topTitle = chapter ? (lang === 'hi' ? chapter.titleHi : chapter.titleEn) : '';
+  const topTitle = chapter ? (contentByLang(lang, chapter.titleHi, chapter.titleEn)) : '';
 
   const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = e.nativeEvent.contentOffset.x;
@@ -171,7 +173,7 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
               <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
             </Pressable>
           </View>
-          <Text style={[styles.title, { color: colors.ink, fontFamily: lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily, fontSize: typography.readerTitle.fontSize, fontStyle: lang === 'en' ? 'italic' : 'normal' }]} numberOfLines={1}>
+          <Text style={[styles.title, { color: colors.ink, fontFamily: titleFontByLang(lang), fontSize: typography.readerTitle.fontSize, fontStyle: lang === 'en' ? 'italic' : 'normal' }]} numberOfLines={1}>
             {topTitle}
           </Text>
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
@@ -226,10 +228,10 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
               if ('__type' in item && item.__type === 'transition') {
-                return <NextChapterCard width={width} nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn} lang={lang} />;
+                return <NextChapterCard width={width} nextTitle={contentByLang(lang, item.nextTitleHi, item.nextTitleEn)} lang={lang} />;
               }
               if ('__type' in item && item.__type === 'prev-transition') {
-                return <PrevChapterCard width={width} prevTitle={lang === 'hi' ? item.prevTitleHi : item.prevTitleEn} lang={lang} />;
+                return <PrevChapterCard width={width} prevTitle={contentByLang(lang, item.prevTitleHi, item.prevTitleEn)} lang={lang} />;
               }
               return <ShivaStrotamVersePage verse={item} sourceId="vishnu-sahasranama" width={width} />;
             }}

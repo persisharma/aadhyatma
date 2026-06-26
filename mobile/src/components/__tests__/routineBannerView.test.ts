@@ -23,14 +23,16 @@ describe('bannerStatus', () => {
 });
 
 describe('bannerLine', () => {
-  const cases: Array<[BannerStatus, string, string]> = [
-    ['nudge', 'अपनी नित्य साधना बनाएँ', 'Set your daily practice'],
-    ['progress', 'नित्य साधना · आज', 'Daily Routine · Today'],
-    ['complete', 'साधना पूर्ण · आज', 'Complete for today'],
+  const cases: Array<[BannerStatus, string, string, string, string]> = [
+    ['nudge', 'अपनी नित्य साधना बनाएँ', 'Set your daily practice', 'તમારી નિત્ય સાધના સેટ કરો', 'ನಿಮ್ಮ ನಿತ್ಯ ಸಾಧನೆ ಹೊಂದಿಸಿ'],
+    ['progress', 'नित्य साधना · आज', 'Daily Routine · Today', 'નિત્ય સાધના · આજ', 'ನಿತ್ಯ ಸಾಧನೆ · ಇಂದು'],
+    ['complete', 'साधना पूर्ण · आज', 'Complete for today', 'સાધના પૂર્ણ · આજ', 'ಸಾಧನೆ ಪೂರ್ಣ · ಇಂದು'],
   ];
 
-  it.each(cases)('%s → one localized line', (status, hi, en) => {
-    expect(bannerLine(status, true)).toBe(hi);
-    expect(bannerLine(status, false)).toBe(en);
+  it.each(cases)('%s → one localized line per language', (status, hi, en, gu, kn) => {
+    expect(bannerLine(status, 'hi')).toBe(hi);
+    expect(bannerLine(status, 'en')).toBe(en);
+    expect(bannerLine(status, 'gu')).toBe(gu);
+    expect(bannerLine(status, 'kn')).toBe(kn);
   });
 });

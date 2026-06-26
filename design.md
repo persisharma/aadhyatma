@@ -50,6 +50,8 @@ Two typefaces, four roles.
 | --- | --- |
 | **Noto Serif Devanagari** | All Devanagari: titles, verses, meaning body, card names. Weights 400/500/600/700. |
 | **Cormorant Garamond** | Latin subtitles, page counters, swipe hints, italic labels. Weights 400/500 for body prose, **600 non-italic** for transliteration and Latin chapter numbers, 600 italic for section labels. Italic is reserved for labels and short flourishes; long prose is always roman (non-italic) to keep English paragraphs readable over the faded parchment bg. |
+| **Noto Serif Gujarati** | All Gujarati (`gu` reading language): titles, verses, meaning body, card names. Weights 500/600. Same family/weights as the Devanagari cut so the reading type scale carries over unchanged. |
+| **Noto Serif Kannada** | All Kannada (`kn` reading language): titles, verses, card names (Kannada meaning prose follows English). Weights 500/600. |
 | **Inter** | Only for tiny UI chrome (uppercase section labels, status bar) where Devanagari is not used. 500/600. |
 
 ### 3.1 Romanization Style by Source Language
@@ -80,6 +82,8 @@ This applies to Sundarkand's chaupais, dohas, sorthas, and chhands, and to all o
 | ✓ Awadhi doha | `Buddhiheen tanu jaanike, sumirau pavan-kumaar.` |
 | ✗ | `dhritarashtra uvacha` for a Sanskrit verse (diacritics dropped) |
 | ✗ | `mahābīra bikrama bajaraṁgī` for an Awadhi chaupai (IAST imposed where it doesn't fit) |
+
+**Gujarati / Kannada (`gu` / `kn`) are script conversion, not romanization.** This §3.1 governs only the *Latin* `linesEn`/`transliteration` field, where schwa-deletion and recitation nuance matter. The Gujarati and Kannada reading languages instead render the Devanagari re-scripted to the sister Brahmi script (`mobile/src/utils/transliterate.ts`) — an orthography-preserving 1:1 codepoint mapping, which is exactly how this content is printed regionally. Mechanical conversion is correct there precisely because it is *not* romanization. (gu/kn carry no authored content fields; see RULEBOOK §1.)
 
 **This whole section does NOT apply to:**
 
@@ -363,7 +367,7 @@ Keep the verse-pill vocabulary consistent across modules — each pill pairs a D
 
 ### Language state (Gita)
 
-The Gita section carries a single in-memory language preference (`'hi' | 'en'`) exposed via a React context (`useGitaLanguage()`). Default `'hi'`. The same hook is also reused by Sundarkand and Hanuman Chalisa — there is no per-section context — so the language preference is shared across modules within a session. The toggle is rendered both on subsection listings (Chapters Index, Section 15) and on every reader page (Section 9). Preference is **session-only** in v1 — no `AsyncStorage` persistence. For Gita, Sanskrit and transliteration always render regardless of the current language; only meaning + commentary honour the toggle. For Sundarkand and Hanuman Chalisa, the toggle swaps the verse lines between Devanagari (`lines[]`) and IAST (`linesEn[]`).
+The app carries a single reading-language preference (`Lang = 'hi' | 'en' | 'gu' | 'kn'`) exposed via a React context (`useGitaLanguage()`). Default `'hi'`, **persisted** in `AsyncStorage` at `@vedansh/language`. The same hook is shared across every section — there is no per-section context. The toggle is rendered both on subsection listings (Chapters Index, Section 15) and on every reader page (Section 9). For Gita, Sanskrit and transliteration always render regardless of the current language; only meaning + commentary honour the toggle. For Sundarkand and Hanuman Chalisa, the toggle swaps the verse lines between Devanagari (`lines[]`) and IAST (`linesEn[]`). For `gu`/`kn` **everything renders in the selected script** at runtime (§3.1): verse lines, titles, meaning, and commentary are all the Devanagari re-scripted to Gujarati / Kannada (the meaning/commentary carry the Hindi wording in the regional script until native translations are authored — see RULEBOOK §1). The daily-verse notification is localized the same way.
 
 ---
 
@@ -504,20 +508,19 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 ## 16. Component: Language Toggle
 
-**Purpose.** Single source of truth for the Gita module's bilingual read mode. Used on the Chapters Index (Section 15). Reader (Section 9) consumes its value but does not render the control inline in v1.
+**Purpose.** Single source of truth for the app-wide reading language. Used on the Chapters Index (Section 15) and rendered on every reader page (Section 9).
 
-**Shape.** Segmented pill with two halves. The active half tinted with `saffron-tint` and typed in `saffron-deep`; the inactive half transparent and typed in `ink-muted`. Pressed (inactive side) drops opacity to 0.7.
+**Shape.** Segmented pill, **one segment per reading language**, data-driven over the `LANGUAGES` metadata array (`hi · en · gu · kn`) — never a hardcoded 2-position pill. The active segment is tinted with `saffron-tint` and typed in `saffron-deep`; inactive segments are transparent and typed in `ink-muted`. Pressed (inactive) drops opacity to 0.7.
 
 ```
-┌─────────────── pill radius ───────────────┐
-│ [ हिन्दी ]  │  [ English ]                │
-└──────────────────────────────────────────┘
+┌──────────────── pill radius ────────────────┐
+│ [ हिं ] │ [ En ] │ [ ગુ ] │ [ ಕನ ]          │
+└─────────────────────────────────────────────┘
 ```
 
 - Container: `parchment-soft` background, `divider` border 1 px, `pill` radius, 3 px inner padding.
-- Each half: `minWidth 96`, `paddingVertical 7`, `paddingHorizontal 22`, centered.
-- Hindi half label: Noto Serif Devanagari 15 600.
-- English half label: Cormorant Garamond 14 400 italic.
+- Each segment: `minWidth 56`, `minHeight 44`, centered (the four segments tighten the per-segment padding vs. the old two-half pill so all four fit).
+- Each segment labels itself in its own script (`हिं` Devanagari · `En` Cormorant italic · `ગુ` Gujarati serif · `ಕನ` Kannada serif); full native names (`हिन्दी`/`English`/`ગુજરાતી`/`ಕನ್ನಡ`) are the accessibility labels and the More-tab radio labels.
 
 **Behaviour.**
 

@@ -4,6 +4,9 @@
  * the "celebrate once per day" gate unit-testable without a provider tree.
  */
 
+import type { Lang } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
+
 export type BannerStatus = 'nudge' | 'progress' | 'complete';
 
 export type BannerSummary = {
@@ -25,14 +28,29 @@ export function bannerStatus({ hasRoutine, doneCount, total }: BannerSummary): B
 }
 
 /** Single line, chosen by the active reading language (Hindi-led by default). */
-export function bannerLine(status: BannerStatus, isHi: boolean): string {
+export function bannerLine(status: BannerStatus, lang: Lang): string {
   switch (status) {
     case 'nudge':
-      return isHi ? 'अपनी नित्य साधना बनाएँ' : 'Set your daily practice';
+      return pick(lang, {
+        hi: 'अपनी नित्य साधना बनाएँ',
+        en: 'Set your daily practice',
+        gu: 'તમારી નિત્ય સાધના સેટ કરો',
+        kn: 'ನಿಮ್ಮ ನಿತ್ಯ ಸಾಧನೆ ಹೊಂದಿಸಿ',
+      });
     case 'complete':
-      return isHi ? 'साधना पूर्ण · आज' : 'Complete for today';
+      return pick(lang, {
+        hi: 'साधना पूर्ण · आज',
+        en: 'Complete for today',
+        gu: 'સાધના પૂર્ણ · આજ',
+        kn: 'ಸಾಧನೆ ಪೂರ್ಣ · ಇಂದು',
+      });
     case 'progress':
     default:
-      return isHi ? 'नित्य साधना · आज' : 'Daily Routine · Today';
+      return pick(lang, {
+        hi: 'नित्य साधना · आज',
+        en: 'Daily Routine · Today',
+        gu: 'નિત્ય સાધના · આજ',
+        kn: 'ನಿತ್ಯ ಸಾಧನೆ · ಇಂದು',
+      });
   }
 }

@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { backgroundImages } from '@assets/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
@@ -23,6 +23,9 @@ import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEn
 import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import { captionFont } from '@/utils/scriptFont';
+import { contentByLang, meaningByLang } from '@/utils/localize';
+import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { transliterateDevanagari } from '@/utils/transliterate';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -57,31 +60,41 @@ function addDays(date: Date, days: number): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
 }
 
-function formatShortDate(date: Date, isHindi: boolean): string {
-  const months = isHindi ? MONTHS_HI : MONTHS_EN;
+function formatShortDate(date: Date, lang: Lang): string {
+  const months =
+    lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]}`;
 }
 
-function formatFullDate(date: Date, isHindi: boolean): string {
-  const months = isHindi ? MONTHS_FULL_HI : MONTHS_FULL_EN;
+function formatFullDate(date: Date, lang: Lang): string {
+  const months =
+    lang === 'en'
+      ? MONTHS_FULL_EN
+      : lang === 'hi'
+        ? MONTHS_FULL_HI
+        : MONTHS_FULL_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-function formatMonthTitle(date: Date, isHindi: boolean): string {
-  const months = isHindi ? MONTHS_FULL_HI : MONTHS_FULL_EN;
+function formatMonthTitle(date: Date, lang: Lang): string {
+  const months =
+    lang === 'en'
+      ? MONTHS_FULL_EN
+      : lang === 'hi'
+        ? MONTHS_FULL_HI
+        : MONTHS_FULL_HI.map((m) => transliterateDevanagari(m, lang));
   return `${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-function calendarTagLabel(tag: ObservanceCalendarTag, isHindi: boolean): string {
-  if (tag === 'vrat') return isHindi ? 'व्रत' : 'Vrat';
-  if (tag === 'festival') return isHindi ? 'पर्व' : 'Fest';
-  return isHindi ? 'व्रत+' : 'Both';
+function calendarTagLabel(tag: ObservanceCalendarTag, lang: Lang): string {
+  if (tag === 'vrat') return contentByLang(lang, 'व्रत', 'Vrat');
+  if (tag === 'festival') return contentByLang(lang, 'पर्व', 'Fest');
+  return contentByLang(lang, 'व्रत+', 'Both');
 }
 
 export default function PanchangScreen() {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHindi = lang === 'hi';
   const rootNav = useNavigation<any>();
   const { followCount, reminderCount } = useVratFollows();
   const todayKey = new Date().toDateString();
@@ -195,7 +208,7 @@ export default function PanchangScreen() {
               <Pressable
                 onPress={() => setLocationPickerVisible(true)}
                 accessibilityRole="button"
-                accessibilityLabel={isHindi ? `स्थान: ${location.labelHi}` : `Location: ${location.labelEn}`}
+                accessibilityLabel={contentByLang(lang, `स्थान: ${location.labelHi}`, `Location: ${location.labelEn}`)}
                 hitSlop={8}
                 style={({ pressed }) => [
                   styles.locationChip,
@@ -210,7 +223,7 @@ export default function PanchangScreen() {
                   numberOfLines={1}
                   style={{ flexShrink: 1, fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkSoft }}
                 >
-                  {isHindi ? location.labelHi : location.labelEn}
+                  {contentByLang(lang, location.labelHi, location.labelEn)}
                 </Text>
               </Pressable>
             </View>
@@ -218,7 +231,7 @@ export default function PanchangScreen() {
             <CalendarSystemToggle
               value={calendarSystem}
               onChange={setCalendarSystem}
-              isHindi={isHindi}
+              lang={lang}
               colors={colors}
               radii={radii}
               typography={typography}
@@ -264,8 +277,8 @@ export default function PanchangScreen() {
                     pressed && !selected && { opacity: 0.7 },
                   ]}
                 >
-                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 13, color: selected ? colors.saffronDeep : colors.inkMuted }}>
-                    {tab === 'calendar' ? (isHindi ? 'पंचांग' : 'Calendar') : (isHindi ? 'व्रत-पर्व' : 'Vrat & Parv')}
+                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 13, color: selected ? colors.saffronDeep : colors.inkMuted }}>
+                    {tab === 'calendar' ? contentByLang(lang, 'पंचांग', 'Calendar') : contentByLang(lang, 'व्रत-पर्व', 'Vrat & Parv')}
                   </Text>
                 </Pressable>
               );
@@ -299,13 +312,13 @@ export default function PanchangScreen() {
                   accessibilityLabel={calendarExpanded ? 'Collapse calendar' : 'Expand calendar'}
                   style={({ pressed }) => [styles.datePagerPage, pressed && { opacity: 0.7 }]}
                 >
-                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink, textAlign: 'center' }}>
-                    {formatFullDate(selectedDate, isHindi)}
+                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink, textAlign: 'center' }}>
+                    {formatFullDate(selectedDate, lang)}
                   </Text>
                   <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep, marginTop: 2 }}>
                     {calendarExpanded
-                      ? (isHindi ? 'माह छिपाएँ' : 'Hide month')
-                      : (isHindi ? 'माह देखें' : 'Month view')}
+                      ? contentByLang(lang, 'माह छिपाएँ', 'Hide month')
+                      : contentByLang(lang, 'माह देखें', 'Month view')}
                   </Text>
                 </Pressable>
               </View>
@@ -320,8 +333,8 @@ export default function PanchangScreen() {
               </Pressable>
             </View>
             <View style={styles.compactActions}>
-              <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 11, color: colors.inkMuted, flex: 1 }}>
-                {formatMonthTitle(selectedDate, isHindi)}
+              <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, flex: 1 }}>
+                {formatMonthTitle(selectedDate, lang)}
               </Text>
               <Pressable
                 onPress={handleToday}
@@ -330,7 +343,7 @@ export default function PanchangScreen() {
                 style={({ pressed }) => [styles.todayButton, styles.compactTodayButton, { borderColor: colors.divider }, pressed && { opacity: 0.7 }]}
               >
                 <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
-                  {isHindi ? 'आज' : 'Today'}
+                  {contentByLang(lang, 'आज', 'Today')}
                 </Text>
               </Pressable>
             </View>
@@ -347,8 +360,8 @@ export default function PanchangScreen() {
                   >
                     <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
                   </Pressable>
-                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-                    {formatMonthTitle(visibleMonth, isHindi)}
+                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                    {formatMonthTitle(visibleMonth, lang)}
                   </Text>
                   <Pressable
                     onPress={() => setVisibleMonth((current) => addMonths(current, 1))}
@@ -361,7 +374,7 @@ export default function PanchangScreen() {
                   </Pressable>
                 </View>
                 <View style={styles.weekdayRow}>
-                  {(isHindi ? WEEKDAYS_HI : WEEKDAYS_EN).map((day) => (
+                  {(lang === 'en' ? WEEKDAYS_EN : lang === 'hi' ? WEEKDAYS_HI : WEEKDAYS_HI.map((d) => transliterateDevanagari(d, lang))).map((day) => (
                     <Text key={day} style={[styles.weekdayText, { color: colors.inkMuted }]}>
                       {day}
                     </Text>
@@ -375,7 +388,7 @@ export default function PanchangScreen() {
                         key={cell.key}
                         onPress={() => handleSelectDate(cell.date)}
                         accessibilityRole="button"
-                        accessibilityLabel={`Select ${formatFullDate(cell.date, false)}${observanceTag ? ` ${calendarTagLabel(observanceTag, false)}` : ''}`}
+                        accessibilityLabel={`Select ${formatFullDate(cell.date, 'en')}${observanceTag ? ` ${calendarTagLabel(observanceTag, 'en')}` : ''}`}
                         style={({ pressed }) => [
                           styles.dateCell,
                           cell.isSelected && { backgroundColor: colors.saffronTint, borderColor: colors.saffron },
@@ -401,7 +414,7 @@ export default function PanchangScreen() {
                             ]}
                           >
                             <Text style={[styles.dateTagText, { color: colors.saffronDeep }]}>
-                              {calendarTagLabel(observanceTag, isHindi)}
+                              {calendarTagLabel(observanceTag, lang)}
                             </Text>
                           </View>
                         )}
@@ -416,16 +429,18 @@ export default function PanchangScreen() {
           {p ? (
             <>
           <View style={[styles.dateHeader, { borderBottomColor: colors.divider }]}>
-            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.saffronDeep }}>
-              {isHindi ? p.vara.nameHi : p.vara.nameEn}
+            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.saffronDeep }}>
+              {contentByLang(lang, p.vara.nameHi, p.vara.nameEn)}
               <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkSoft }}>
-                {'  '}{formatFullDate(p.date, isHindi)} · {isHindi ? `विक्रम संवत् ${p.vikramSamvat}` : `Vikram Samvat ${p.vikramSamvat}`}
+                {'  '}{formatFullDate(p.date, lang)} · {contentByLang(lang, `विक्रम संवत् ${p.vikramSamvat}`, `Vikram Samvat ${p.vikramSamvat}`)}
               </Text>
             </Text>
-            <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
-              {isHindi
-                ? `${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} · ${p.tithi.paksha === 'shukla' ? 'शुक्ल पक्ष' : 'कृष्ण पक्ष'}`
-                : `${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} · ${p.tithi.paksha === 'shukla' ? 'Shukla Paksha' : 'Krishna Paksha'}`}
+            <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
+              {contentByLang(
+                lang,
+                `${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} · ${p.tithi.paksha === 'shukla' ? 'शुक्ल पक्ष' : 'कृष्ण पक्ष'}`,
+                `${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} · ${p.tithi.paksha === 'shukla' ? 'Shukla Paksha' : 'Krishna Paksha'}`
+              )}
             </Text>
           </View>
 
@@ -433,22 +448,22 @@ export default function PanchangScreen() {
               first) on elevated off-white cards; Yoga + Karana sit as a quieter,
               flatter secondary row. */}
           <View style={styles.angaGrid}>
-            <PanchangTile prominent label={isHindi ? 'तिथि' : 'Tithi'} element={p.tithi} isHindi={isHindi} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            <PanchangTile prominent label={isHindi ? 'नक्षत्र' : 'Nakshatra'} element={p.nakshatra} isHindi={isHindi} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile prominent label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile prominent label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
           <View style={styles.angaGridSecondary}>
-            <PanchangTile label={isHindi ? 'योग' : 'Yoga'} element={p.yoga} isHindi={isHindi} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            <PanchangTile label={isHindi ? 'करण' : 'Karana'} element={p.karana} isHindi={isHindi} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'योग', 'Yoga')} element={p.yoga} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
 
           <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
             <View style={styles.timesRow}>
-              <TimeCell icon="☀" label={isHindi ? 'सूर्योदय' : 'Sunrise'} value={formatTime12(p.sunrise)} colors={colors} />
-              <TimeCell icon="☀" label={isHindi ? 'सूर्यास्त' : 'Sunset'} value={formatTime12(p.sunset)} colors={colors} />
+              <TimeCell icon="☀" label={contentByLang(lang, 'सूर्योदय', 'Sunrise')} value={formatTime12(p.sunrise)} colors={colors} />
+              <TimeCell icon="☀" label={contentByLang(lang, 'सूर्यास्त', 'Sunset')} value={formatTime12(p.sunset)} colors={colors} />
             </View>
             <View style={[styles.timesRow, { marginTop: 12 }]}>
-              <TimeCell icon="☽" label={isHindi ? 'चंद्रोदय' : 'Moonrise'} value={formatTime12(p.moonrise)} colors={colors} />
-              <TimeCell icon="☽" label={isHindi ? 'ब्रह्म मुहूर्त' : 'Brahma Muhurta'} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} colors={colors} />
+              <TimeCell icon="☽" label={contentByLang(lang, 'चंद्रोदय', 'Moonrise')} value={formatTime12(p.moonrise)} colors={colors} />
+              <TimeCell icon="☽" label={contentByLang(lang, 'ब्रह्म मुहूर्त', 'Brahma Muhurta')} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} colors={colors} />
             </View>
           </View>
             </>
@@ -459,15 +474,15 @@ export default function PanchangScreen() {
           )}
 
           <View style={styles.observanceSection}>
-            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 10 }}>
-              {isHindi ? 'व्रत और पर्व' : 'Vrat & Observances'}
+            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 10 }}>
+              {contentByLang(lang, 'व्रत और पर्व', 'Vrat & Observances')}
             </Text>
             {observances.length > 0 ? (
               observances.map((item, i) => (
                 <ObservanceCard
                   key={`${item.rule.id}-${i}`}
                   item={item}
-                  isHindi={isHindi}
+                  lang={lang}
                   colors={colors}
                   typography={typography}
                   radii={radii}
@@ -477,25 +492,25 @@ export default function PanchangScreen() {
                 />
               ))
             ) : (
-              <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
-                {isHindi ? 'इस तिथि पर कोई व्रत या पर्व नहीं है।' : 'No vrat or festival falls on this date.'}
+              <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+                {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
               </Text>
             )}
           </View>
 
           {upcoming.length > 0 && (
             <View style={styles.upcomingSection}>
-              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 10 }}>
-                {isHindi ? 'आगामी' : 'Upcoming'}
+              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 10 }}>
+                {contentByLang(lang, 'आगामी', 'Upcoming')}
               </Text>
               {upcoming.map((item, i) => (
                 <View key={`${item.rule.id}-${item.date.toDateString()}`} style={[styles.upcomingRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}>
                   <View style={[styles.upcomingDot, { backgroundColor: markerColor(item.rule.marker, colors) }]} />
                   <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkMuted, width: 50 }}>
-                    {formatShortDate(item.date, isHindi)}
+                    {formatShortDate(item.date, lang)}
                   </Text>
-                  <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.ink, flex: 1 }}>
-                    {isHindi ? item.rule.nameHi : item.rule.nameEn}
+                  <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.ink, flex: 1 }}>
+                    {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
                   </Text>
                 </View>
               ))}
@@ -504,7 +519,7 @@ export default function PanchangScreen() {
             </>
           ) : (
             <CatalogLanding
-              isHindi={isHindi}
+              lang={lang}
               today={today}
               calendarSystem={calendarSystem}
               query={catalogQuery}
@@ -534,10 +549,10 @@ function markerColor(marker: ResolvedObservance['rule']['marker'], colors: any):
   return colors.gold;
 }
 
-function CalendarSystemToggle({ value, onChange, isHindi, colors, radii, typography }: {
+function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography }: {
   value: CalendarSystem;
   onChange: (next: CalendarSystem) => void;
-  isHindi: boolean;
+  lang: Lang;
   colors: any;
   radii: any;
   typography: any;
@@ -570,11 +585,11 @@ function CalendarSystemToggle({ value, onChange, isHindi, colors, radii, typogra
             ]}
           >
             <Text style={{
-              fontFamily: typography.readerTitle.fontFamily,
+              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
               fontSize: 12,
               color: selected ? colors.saffronDeep : colors.inkMuted,
             }}>
-              {isHindi ? option.labelHi : option.labelEn}
+              {contentByLang(lang, option.labelHi, option.labelEn)}
             </Text>
           </Pressable>
         );
@@ -583,10 +598,10 @@ function CalendarSystemToggle({ value, onChange, isHindi, colors, radii, typogra
   );
 }
 
-function PanchangTile({ label, element, isHindi, colors, typography, radii, elevation, prominent }: {
+function PanchangTile({ label, element, lang, colors, typography, radii, elevation, prominent }: {
   label: string;
   element: PanchangElement;
-  isHindi: boolean;
+  lang: Lang;
   colors: any;
   typography: any;
   radii: any;
@@ -609,19 +624,19 @@ function PanchangTile({ label, element, isHindi, colors, typography, radii, elev
       </Text>
       <Text
         numberOfLines={1}
-        style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: prominent ? 20 : 15, color: colors.ink, marginTop: prominent ? 4 : 3 }}
+        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: prominent ? 20 : 15, color: colors.ink, marginTop: prominent ? 4 : 3 }}
       >
-        {isHindi ? element.nameHi : element.nameEn}
+        {contentByLang(lang, element.nameHi, element.nameEn)}
       </Text>
       <Text
         numberOfLines={1}
-        style={{ ...captionFont(isHindi ? element.nameEn : element.nameHi), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}
+        style={{ ...captionFont(lang === 'en' ? element.nameHi : element.nameEn), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}
       >
-        {isHindi ? element.nameEn : element.nameHi}
+        {lang === 'en' ? element.nameHi : element.nameEn}
       </Text>
       {element.endTime && (
         <Text style={{ fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 11, color: colors.inkSoft, marginTop: 5 }}>
-          {isHindi ? 'तक ' : 'till '}{formatTime12(element.endTime)}
+          {contentByLang(lang, 'तक ', 'till ')}{formatTime12(element.endTime)}
         </Text>
       )}
     </View>
@@ -643,9 +658,9 @@ function TimeCell({ icon, label, value, colors }: { icon: string; label: string;
   );
 }
 
-function ObservanceCard({ item, isHindi, colors, typography, radii, elevation, onOpenLink, onOpenKatha }: {
+function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha }: {
   item: ResolvedObservance;
-  isHindi: boolean;
+  lang: Lang;
   colors: any;
   typography: any;
   radii: any;
@@ -663,18 +678,18 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, elevation, o
       <View style={styles.observanceTop}>
         <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
           <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep }}>
-            {item.rule.category === 'vrat' ? (isHindi ? 'व्रत' : 'Vrat') : (isHindi ? 'पर्व' : 'Festival')}
+            {item.rule.category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat') : contentByLang(lang, 'पर्व', 'Festival')}
           </Text>
         </View>
         <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkMuted }}>
-          {isHindi ? item.rule.deityHi : item.rule.deityEn}
+          {contentByLang(lang, item.rule.deityHi, item.rule.deityEn)}
         </Text>
       </View>
-      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-        {isHindi ? item.rule.nameHi : item.rule.nameEn}
+      <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+        {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
       </Text>
-      <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
-        {isHindi ? item.rule.shortDescriptionHi : item.rule.shortDescriptionEn}
+      <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
+        {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
       </Text>
       <View style={styles.linkRow}>
         {katha && item.rule.kathaId && (
@@ -685,7 +700,7 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, elevation, o
             style={({ pressed }) => [styles.kathaButton, { backgroundColor: colors.goldTint, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
           >
             <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
-              {isHindi ? 'कथा पढ़ें' : 'Read Katha'}
+              {contentByLang(lang, 'कथा पढ़ें', 'Read Katha')}
             </Text>
           </Pressable>
         )}
@@ -697,7 +712,7 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, elevation, o
             style={({ pressed }) => [styles.linkButton, { borderColor: colors.divider }, pressed && { opacity: 0.7 }]}
           >
             <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
-              {isHindi ? `पढ़ें: ${linkedEntry.nameHi}` : `Read: ${linkedEntry.nameEn}`}
+              {contentByLang(lang, `पढ़ें: ${linkedEntry.nameHi}`, `Read: ${linkedEntry.nameEn}`)}
             </Text>
           </Pressable>
         )}
@@ -707,11 +722,11 @@ function ObservanceCard({ item, isHindi, colors, typography, radii, elevation, o
 }
 
 function CatalogLanding({
-  isHindi, today, calendarSystem, query, onChangeQuery,
+  lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenMyVrat, followCount, reminderCount,
 }: {
-  isHindi: boolean;
+  lang: Lang;
   today: Date;
   calendarSystem: CalendarSystem;
   query: string;
@@ -739,9 +754,9 @@ function CatalogLanding({
     upavas: { glyph: '☾', hi: 'उपवास', en: 'Upvas' },
   };
   const categoryShort = (category: string): string =>
-    category === 'vrat' ? (isHindi ? 'व्रत' : 'Vrat')
-      : category === 'upavas' ? (isHindi ? 'उपवास' : 'Upvas')
-        : (isHindi ? 'पर्व' : 'Festival');
+    category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat')
+      : category === 'upavas' ? contentByLang(lang, 'उपवास', 'Upvas')
+        : contentByLang(lang, 'पर्व', 'Festival');
   // Same glyph vocabulary as the "Browse by type" tiles (ॐ / ☾ / ✺), reused on the
   // upcoming cards so they read as devotional, not as a plain list of text.
   const categoryGlyph = (category: string): string =>
@@ -752,7 +767,7 @@ function CatalogLanding({
       <TextInput
         value={query}
         onChangeText={onChangeQuery}
-        placeholder={isHindi ? 'व्रत, पर्व, उपवास, कथा खोजें…' : 'Search vrat, festival, upvas, katha…'}
+        placeholder={contentByLang(lang, 'व्रत, पर्व, उपवास, कथा खोजें…', 'Search vrat, festival, upvas, katha…')}
         placeholderTextColor={colors.inkMuted}
         style={[styles.catalogSearch, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, color: colors.ink }]}
       />
@@ -765,15 +780,15 @@ function CatalogLanding({
                 key={rule.id}
                 onPress={() => onOpenDetail(rule.id)}
                 accessibilityRole="button"
-                accessibilityLabel={isHindi ? rule.nameHi : rule.nameEn}
+                accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
                 style={({ pressed }) => [styles.resultRow, { borderBottomColor: colors.divider }, pressed && { opacity: 0.6 }]}
               >
                 <View style={{ flex: 1, paddingRight: 10 }}>
-                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-                    {isHindi ? rule.nameHi : rule.nameEn}
+                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                    {contentByLang(lang, rule.nameHi, rule.nameEn)}
                   </Text>
-                  <Text style={{ ...captionFont(isHindi ? rule.nameEn : rule.nameHi), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
-                    {isHindi ? rule.nameEn : rule.nameHi}
+                  <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
+                    {lang === 'en' ? rule.nameHi : rule.nameEn}
                   </Text>
                 </View>
                 <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
@@ -781,8 +796,8 @@ function CatalogLanding({
             ))}
           </View>
         ) : (
-          <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.inkMuted, marginTop: 24, textAlign: 'center' }}>
-            {isHindi ? 'कोई परिणाम नहीं।' : 'No matches.'}
+          <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkMuted, marginTop: 24, textAlign: 'center' }}>
+            {meaningByLang(lang, 'कोई परिणाम नहीं।', 'No matches.')}
           </Text>
         )
       ) : (
@@ -796,25 +811,31 @@ function CatalogLanding({
           >
             <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>★</Text>
             <View style={{ flex: 1 }}>
-              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-                {isHindi ? 'मेरा व्रत' : 'My Vrat'}
+              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                {contentByLang(lang, 'मेरा व्रत', 'My Vrat')}
               </Text>
-              <Text style={{ fontFamily: isHindi ? 'NotoSerifDevanagari_500Medium' : 'CormorantGaramond_400Regular_Italic', fontStyle: isHindi ? 'normal' : 'italic', fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
-                {followCount > 0
-                  ? isHindi
-                    ? `${followCount} फ़ॉलो किए · ${reminderCount} अनुस्मारक`
-                    : `${followCount} following · ${reminderCount} reminders on`
-                  : isHindi
-                    ? 'अपने व्रत यहाँ रखें'
-                    : 'Keep your vrats here'}
-              </Text>
+              {(() => {
+                const subtitle =
+                  followCount > 0
+                    ? contentByLang(
+                        lang,
+                        `${followCount} फ़ॉलो किए · ${reminderCount} अनुस्मारक`,
+                        `${followCount} following · ${reminderCount} reminders on`
+                      )
+                    : contentByLang(lang, 'अपने व्रत यहाँ रखें', 'Keep your vrats here');
+                return (
+                  <Text style={{ ...captionFont(subtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+                    {subtitle}
+                  </Text>
+                );
+              })()}
             </View>
             <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
           </Pressable>
           {upcoming.length > 0 && (
             <View style={{ marginTop: 14 }}>
-              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 8 }}>
-                {isHindi ? 'आगामी' : 'Upcoming'}
+              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 8 }}>
+                {contentByLang(lang, 'आगामी', 'Upcoming')}
               </Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10, paddingRight: 8 }}>
                 {upcoming.map((item) => (
@@ -822,7 +843,7 @@ function CatalogLanding({
                     key={`${item.rule.id}-${item.date.toDateString()}`}
                     onPress={() => onOpenDetail(item.rule.id)}
                     accessibilityRole="button"
-                    accessibilityLabel={isHindi ? item.rule.nameHi : item.rule.nameEn}
+                    accessibilityLabel={contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
                     style={({ pressed }) => [styles.upCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.75 }]}
                   >
                     <View style={styles.upCardTop}>
@@ -830,11 +851,11 @@ function CatalogLanding({
                         {categoryGlyph(item.rule.category)}
                       </Text>
                       <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4 }}>
-                        {formatShortDate(item.date, isHindi).toUpperCase()}
+                        {formatShortDate(item.date, lang).toUpperCase()}
                       </Text>
                     </View>
-                    <Text numberOfLines={2} style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginTop: 8 }}>
-                      {isHindi ? item.rule.nameHi : item.rule.nameEn}
+                    <Text numberOfLines={2} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 8 }}>
+                      {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
                     </Text>
                     <Text style={{ ...captionFont(categoryShort(item.rule.category)), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
                       {categoryShort(item.rule.category)}
@@ -846,8 +867,8 @@ function CatalogLanding({
           )}
 
           <View style={{ marginTop: 18 }}>
-            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.ink, marginBottom: 10 }}>
-              {isHindi ? 'श्रेणी से देखें' : 'Browse by type'}
+            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 10 }}>
+              {contentByLang(lang, 'श्रेणी से देखें', 'Browse by type')}
             </Text>
             <View style={styles.tileGrid}>
               {counts.map(({ category, count }) => {
@@ -863,14 +884,14 @@ function CatalogLanding({
                     <View style={styles.tileGlyph}>
                       <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>{meta.glyph}</Text>
                     </View>
-                    <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink, marginTop: 8 }}>
-                      {isHindi ? meta.hi : meta.en}
+                    <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink, marginTop: 8 }}>
+                      {contentByLang(lang, meta.hi, meta.en)}
                     </Text>
-                    <Text style={{ ...captionFont(isHindi ? meta.en : meta.hi), fontSize: 12, color: colors.inkMuted }}>
-                      {isHindi ? meta.en : meta.hi}
+                    <Text style={{ ...captionFont(lang === 'en' ? meta.hi : meta.en), fontSize: 12, color: colors.inkMuted }}>
+                      {lang === 'en' ? meta.hi : meta.en}
                     </Text>
                     <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
-                      {count} {isHindi ? 'व्रत-पर्व' : 'observances'}
+                      {count} {contentByLang(lang, 'व्रत-पर्व', 'observances')}
                     </Text>
                   </Pressable>
                 );
@@ -884,14 +905,14 @@ function CatalogLanding({
                 <View style={styles.tileGlyph}>
                   <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>॥</Text>
                 </View>
-                <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink, marginTop: 8 }}>
-                  {isHindi ? 'कथा' : 'Katha'}
+                <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink, marginTop: 8 }}>
+                  {contentByLang(lang, 'कथा', 'Katha')}
                 </Text>
-                <Text style={{ ...captionFont(isHindi ? 'Katha library' : 'कथा संग्रह'), fontSize: 12, color: colors.inkMuted }}>
-                  {isHindi ? 'Katha library' : 'कथा संग्रह'}
+                <Text style={{ ...captionFont(lang === 'en' ? 'कथा संग्रह' : 'Katha library'), fontSize: 12, color: colors.inkMuted }}>
+                  {lang === 'en' ? 'कथा संग्रह' : 'Katha library'}
                 </Text>
                 <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
-                  {kathaCount} {isHindi ? 'कथाएँ' : 'stories'}
+                  {kathaCount} {contentByLang(lang, 'कथाएँ', 'stories')}
                 </Text>
               </Pressable>
             </View>
