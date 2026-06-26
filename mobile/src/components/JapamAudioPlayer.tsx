@@ -16,6 +16,10 @@ type Props = {
   lang: Lang;
   /** Called once per completed audio loop (= one bead). */
   onIteration: () => void;
+  /** Start playing as soon as the audio is loaded. Used by the alarm
+   *  deep-link flow so a tap on the notification drops the user into
+   *  chanting without a second press. */
+  autoPlay?: boolean;
 };
 
 const MIN_RATE = 0.5;
@@ -38,7 +42,12 @@ async function ensureBackgroundAudioMode() {
   }
 }
 
-export default function JapamAudioPlayer({ mantraId, lang, onIteration }: Props) {
+export default function JapamAudioPlayer({
+  mantraId,
+  lang,
+  onIteration,
+  autoPlay,
+}: Props) {
   const { colors, typography, radii } = useTheme();
   const source = useMemo(() => getJapamAudioSource(mantraId), [mantraId]);
 
@@ -52,6 +61,7 @@ export default function JapamAudioPlayer({ mantraId, lang, onIteration }: Props)
       mantraId={mantraId}
       lang={lang}
       onIteration={onIteration}
+      autoPlay={autoPlay}
       colors={colors}
       typography={typography}
       radii={radii}
@@ -71,6 +81,7 @@ function ActiveAudioPlayer({
   mantraId,
   lang,
   onIteration,
+  autoPlay,
   colors,
   typography,
   radii,
@@ -78,6 +89,7 @@ function ActiveAudioPlayer({
   const player = useAudioPlayer(source, { updateInterval: 250 });
   const status = useAudioPlayerStatus(player);
   const [rate, setRate] = useState(1.0);
+  const autoPlayedRef = useRef(false);
 
   const onIterationRef = useRef(onIteration);
   useEffect(() => {
@@ -92,12 +104,27 @@ function ActiveAudioPlayer({
   // Reset playback when the mantra changes.
   useEffect(() => {
     setRate(1.0);
+    autoPlayedRef.current = false;
     if (player.isLoaded) {
       player.pause();
       player.seekTo(0).catch(() => undefined);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mantraId]);
+
+  // Honour an `autoPlay` request once the file is ready. Gated on
+  // `status.isLoaded` because `play()` is a no-op before the player has
+  // loaded; gated on a ref so we don't re-trigger on every status update.
+  useEffect(() => {
+    if (!autoPlay || autoPlayedRef.current) return;
+    if (!status.isLoaded) return;
+    autoPlayedRef.current = true;
+    try {
+      player.play();
+    } catch {
+      /* next render will retry via the gate above */
+    }
+  }, [autoPlay, status.isLoaded, player]);
 
   // Use the player's native `loop` flag for the auto-chant repeat. Manually
   // restarting via `seekTo(0)` + `play()` on `didJustFinish` is unreliable on

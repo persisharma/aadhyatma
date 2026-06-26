@@ -11,6 +11,7 @@ import { pick, contentByLang } from '@/utils/localize';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import type { TimeOfDay } from '@/notifications/pure';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
@@ -34,6 +35,8 @@ export default function MoreScreen({ navigation }: Props) {
   const { location: panchangLocation } = usePanchangLocation();
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
+  const { alarms: japamAlarms } = useJapamAlarms();
+  const activeJapamAlarms = japamAlarms.filter((a) => a.enabled);
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
   const hi = helpContent.hi;
   const en = helpContent.en;
@@ -238,6 +241,36 @@ export default function MoreScreen({ navigation }: Props) {
                 {notifPrefs.dailyVerseEnabled
                   ? `Daily verse at ${formatReminderTimes(notifPrefs.times)}`
                   : 'Daily verse off'}
+              </Text>
+            </View>
+            <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
+          </Pressable>
+
+          {/* Japam Alarms Card */}
+          <Pressable
+            onPress={() => navigation.navigate('JapamAlarms')}
+            accessibilityRole="button"
+            accessibilityLabel={
+              activeJapamAlarms.length > 0
+                ? `Japam alarms, ${activeJapamAlarms.length} active`
+                : 'Japam alarms, none set'
+            }
+            style={({ pressed }) => [
+              styles.section,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: pressed ? 0.85 : 1 },
+            ]}
+          >
+            <View style={[styles.sectionIcon, { backgroundColor: colors.saffronDeep }]}>
+              <Text style={{ color: colors.onPrimary, fontSize: 18 }}>⏰</Text>
+            </View>
+            <View style={styles.sectionMeta}>
+              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
+                Japam Alarms
+              </Text>
+              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
+                {activeJapamAlarms.length > 0
+                  ? `${activeJapamAlarms.length} alarm${activeJapamAlarms.length !== 1 ? 's' : ''} at ${formatReminderTimes(activeJapamAlarms.map((a) => a.time))}`
+                  : 'Wake to a mantra you love'}
               </Text>
             </View>
             <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>

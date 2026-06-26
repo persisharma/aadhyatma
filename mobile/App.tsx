@@ -35,6 +35,8 @@ import { GitaLanguageProvider } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { VratFollowProvider } from '@/contexts/VratFollowContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
+import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
+import { registerNativeAlarmForegroundHandler } from '@/notifications/japamAlarmNative';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
 import { RoutineProvider } from '@/contexts/RoutineContext';
 import { RoutineSheetProvider } from '@/contexts/RoutineSheetProvider';
@@ -129,10 +131,13 @@ export default function App() {
       handleNotificationResponse(response);
     });
 
+    const unregisterNotifee = registerNativeAlarmForegroundHandler();
+
     return () => {
       cancelled = true;
       if (timeoutId !== undefined) clearTimeout(timeoutId);
       sub.remove();
+      unregisterNotifee();
     };
   }, [fontsReady]);
 
@@ -154,6 +159,7 @@ export default function App() {
                       <RoutineProvider>
                       <RoutineSheetProvider>
                       <NotificationPreferencesProvider>
+                        <JapamAlarmsProvider>
                         <PanchangLocationProvider>
                         <ShareProvider>
                           <View style={{ flex: 1 }}>
@@ -168,6 +174,7 @@ export default function App() {
                           </View>
                         </ShareProvider>
                         </PanchangLocationProvider>
+                        </JapamAlarmsProvider>
                       </NotificationPreferencesProvider>
                       </RoutineSheetProvider>
                       </RoutineProvider>

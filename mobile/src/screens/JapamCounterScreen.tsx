@@ -22,11 +22,13 @@ import {
   type JapamMantra,
 } from '@/data/japam';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
+import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
+import { AlarmEditorSheet } from '@/screens/JapamAlarmsScreen';
 import { useShare } from '@/utils/shareVerse';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -36,6 +38,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { getEntry, increment, resetBeads, clear } = useJapamCounter();
+  const { addAlarm, updateAlarm, removeAlarm } = useJapamAlarms();
   const { share, busy: shareBusy } = useShare();
   const { height: windowHeight } = useWindowDimensions();
   const isShortScreen = windowHeight < 720;
@@ -63,6 +66,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
   const entry = getEntry(mantra?.id ?? '__none__');
   const [confirmKind, setConfirmKind] = useState<'beads' | 'all' | null>(null);
+  const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
 
   const registerBead = useCallback(() => {
@@ -142,7 +146,27 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             </Text>
           </View>
 
-          <View style={styles.backSpacer}>
+          <View style={styles.topRightCluster}>
+            <Pressable
+              onPress={() => setAlarmEditorOpen(true)}
+              accessibilityRole="button"
+              accessibilityLabel={
+                lang === 'hi'
+                  ? 'इस मंत्र के लिए स्मरण बनाएँ'
+                  : 'Set an alarm for this mantra'
+              }
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.alarmBtn,
+                {
+                  backgroundColor: colors.parchmentSoft,
+                  borderColor: colors.divider,
+                },
+                pressed && { opacity: 0.7 },
+              ]}
+            >
+              <Text style={[styles.alarmGlyph, { color: colors.saffronDeep }]}>⏰</Text>
+            </Pressable>
             <ShareButton
               busy={shareBusy}
               onPress={() => {
@@ -287,6 +311,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             mantraId={mantra.id}
             lang={lang}
             onIteration={registerBead}
+            autoPlay={route.params.autoPlay === true}
           />
         </View>
 
@@ -468,6 +493,24 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </Pressable>
         </Pressable>
       </Modal>
+
+      <AlarmEditorSheet
+        state={alarmEditorOpen ? { kind: 'new' } : null}
+        presetMantraId={mantra.id}
+        onClose={() => setAlarmEditorOpen(false)}
+        onCreate={async (draft) => {
+          await addAlarm(draft);
+          setAlarmEditorOpen(false);
+        }}
+        onSave={async (id, patch) => {
+          await updateAlarm(id, patch);
+          setAlarmEditorOpen(false);
+        }}
+        onDelete={async (id) => {
+          await removeAlarm(id);
+          setAlarmEditorOpen(false);
+        }}
+      />
     </View>
   );
 }
@@ -496,6 +539,23 @@ const styles = StyleSheet.create({
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  topRightCluster: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  alarmBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  alarmGlyph: {
+    fontSize: 15,
+    includeFontPadding: false,
   },
   backGlyph: {
     fontSize: 22,

@@ -40,7 +40,7 @@ export type HomeStackParamList = {
   RamcharitmanasReader: { chapter: number; initialIndex?: number };
   AartiReader: { aartiIndex: number; initialIndex?: number };
   SanskarReader: { sanskarId: string; initialIndex?: number };
-  JapamCounter: { mantraId: string };
+  JapamCounter: { mantraId: string; autoPlay?: boolean };
   VratKathaReader: { kathaId: string };
   // No params → Pilgrimage listing (By Category / By State). `group` or
   // `stateEn` → drilled-in map + flat single-subsection list (PRD-08).
@@ -59,6 +59,7 @@ export type MoreStackParamList = {
   Wishlist: undefined;
   Profile: undefined;
   Reminders: undefined;
+  JapamAlarms: undefined;
 };
 
 // Panchang tab stack — the date-first calendar plus the "Vrat & Parv" (व्रत-पर्व)
