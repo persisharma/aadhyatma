@@ -6,6 +6,7 @@
  */
 import assert from 'node:assert/strict';
 import { temples, getTempleById, otherFamous, templesInGroup } from '../theerth/temples';
+import { library } from '../texts';
 import {
   INDIA_PROJECTION,
   INDIA_STATES,
@@ -187,6 +188,12 @@ assert.ok(
 
 // ─── 9. Total temple count is pinned (guards accidental drops on enrichment) ──
 assert.equal(temples.length, 71, `expected 71 temples, got ${temples.length}`);
+
+// ─── 10. User-facing library counts stay in sync with the live data ──────────
+const famousTheerth = library.find((entry) => entry.id === 'famous-theerth');
+assert.ok(famousTheerth, 'famous-theerth library entry should exist');
+assert.match(famousTheerth.sub, /71 तीर्थ/, 'Hindi famous-theerth subtitle should match temple count');
+assert.match(famousTheerth.subEn, /71 Theerths/, 'English famous-theerth subtitle should match temple count');
 
 console.log(
   `✓ theerth data-contract: ${temples.length} temples, ${EXPECTED_STATES.length} states covered, projection aligned, sourced prose present`,
