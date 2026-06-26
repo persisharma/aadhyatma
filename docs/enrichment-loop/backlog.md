@@ -54,3 +54,12 @@ unshipped slice of the highest-priority feature unless `$ARGUMENTS` or the user 
 Delivered enrichments. Append newest at top: `date · feature · enrichment · commit/PR`.
 
 - 2026-06-25 · PRD-06 Foundation hardening · ChalisaReaderScreen smoke test (`ChalisaReaderScreen.test.tsx`, mounts hanuman-chalisa ch.1, asserts title + first verse line render) · run 1
+
+---
+
+## Autorun log
+
+Notes from autonomous (`/enrich-auto`) runs that deferred or reverted instead of
+shipping. Newest at top: `date · reason`.
+
+_(none yet)_
