@@ -31,12 +31,24 @@ The prioritized queue for `/enrich` and `/enrich-auto`. Each run picks the
 5. **[T3] Verse audio** for chalisas/aartis (Hanuman pilot). → plan first; gated on
    the audio-licensing open decision (roadmap §7) — a human call.
 
-### 🥉 Reliability floor (T0 — fallback when nothing above is ready)
+### 🥇 Next up (T0 — reliability)
 
-6. **[T0] Reader smoke-test coverage** for remaining untested readers
-   (Aarti, DurgaStotram, GaneshStotram, HanumanAshtak, RamStuti, Ramcharitmanas,
-   Sundarkand, VishnuSahasranama).
-7. **[T0] Wire `npm run test:readers` into CI** (block merge on red for PRs touching `mobile/src`).
+1. **[T0] Wire `npm run test:readers` into CI** (block merge on red for PRs
+   touching `mobile/src`). Now that every reader has a smoke test, lock it in.
+
+### 🥈 Quick wins — have open design decisions, treat as plan-first
+
+> User flagged these "have challenges" — each needs a design call, so route them
+> through a plan (`plans/<slug>.plan.md`) for review before building.
+
+2. **[T1→plan] Font-size control** — scale strategy (multiplier vs discrete steps), persistence, which surfaces it appears on.
+3. **[T2→plan] Dark-mode toggle** — needs the `darkColors` palette + contrast audit; default "system".
+4. **[T1→plan] Sleep timer** — japam/audio stop-after-N-minutes; UX placement.
+
+### 🥉 Heavier features (T3 — plan first)
+
+5. **[T3] Global search** (net-new) → `plans/global-search.plan.md`.
+6. **[T3] Verse audio** for chalisas/aartis → plan; gated on audio-licensing decision.
 
 ---
 
@@ -51,6 +63,7 @@ The prioritized queue for `/enrich` and `/enrich-auto`. Each run picks the
 
 Delivered by the loop. Newest at top: `date · tier · feature · enrichment · run · [autorun]`.
 
+- 2026-06-25 · T0 · PRD-06 Foundation · **Reader smoke-test coverage COMPLETE** — added 9 tests (Aarti, DurgaStotram, GaneshStotram, HanumanAshtak, RamStuti, Ramcharitmanas, Sundarkand, VishnuSahasranama, Gita); every `*ReaderScreen` now has a co-located smoke test (RULEBOOK §4.10). 254 tests green. · run 3
 - 2026-06-25 · T0 · PRD-06 Foundation · ShivaStrotamReaderScreen smoke test (`ShivaStrotamReaderScreen.test.tsx`) · run 2 · autorun
 - 2026-06-25 · T0 · PRD-06 Foundation · ChalisaReaderScreen smoke test (`ChalisaReaderScreen.test.tsx`) · run 1
 
