@@ -81,6 +81,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
               />
               <PrimaryButton
                 label={isHi ? 'आगे' : 'Next'}
+                isHi={isHi}
                 disabled={!nameReady}
                 onPress={() => setStep('mode')}
                 colors={colors}
@@ -126,6 +127,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
               />
               <PrimaryButton
                 label={isHi ? 'साधना बनाएँ' : 'Create routine'}
+                isHi={isHi}
                 disabled={!mode}
                 onPress={create}
                 colors={colors}
@@ -256,6 +258,7 @@ function ModeCard({
 
 function PrimaryButton({
   label,
+  isHi,
   disabled,
   onPress,
   colors,
@@ -264,6 +267,7 @@ function PrimaryButton({
   spacing,
 }: {
   label: string;
+  isHi: boolean;
   disabled?: boolean;
   onPress: () => void;
 } & Required<ThemeBits>) {
@@ -281,7 +285,14 @@ function PrimaryButton({
         opacity: disabled ? 0.4 : 1,
       }}
     >
-      <Text style={{ fontFamily: typography.verseLatin.fontFamily, fontSize: 16, color: colors.onPrimary }}>
+      <Text
+        style={{
+          fontFamily: isHi ? typography.cardHindi.fontFamily : typography.verseLatin.fontFamily,
+          fontSize: 16,
+          lineHeight: 22,
+          color: colors.onPrimary,
+        }}
+      >
         {label}
       </Text>
     </Pressable>

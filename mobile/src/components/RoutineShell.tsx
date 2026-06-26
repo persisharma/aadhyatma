@@ -64,6 +64,8 @@ export function RoutineButton({
   disabled?: boolean;
 }) {
   const { colors, spacing, radii, typography } = useTheme();
+  const { lang } = useGitaLanguage();
+  const isHi = lang === 'hi';
   const ghost = variant === 'ghost';
   return (
     <Pressable
@@ -83,8 +85,9 @@ export function RoutineButton({
     >
       <Text
         style={{
-          fontFamily: typography.verseLatin.fontFamily,
+          fontFamily: isHi ? typography.cardHindi.fontFamily : typography.verseLatin.fontFamily,
           fontSize: 16,
+          lineHeight: 22,
           color: ghost ? colors.saffron : colors.onPrimary,
         }}
       >

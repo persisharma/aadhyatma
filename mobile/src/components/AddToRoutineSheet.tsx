@@ -188,7 +188,14 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
 
             <Pressable onPress={startNewRoutine} accessibilityRole="button" style={styles.newRow}>
               <Text style={{ color: colors.saffron, fontSize: 20, marginRight: 10 }}>＋</Text>
-              <Text style={{ fontFamily: typography.verseLatin.fontFamily, fontSize: 15, color: colors.saffron }}>
+              <Text
+                style={{
+                  fontFamily: isHi ? typography.cardHindi.fontFamily : typography.verseLatin.fontFamily,
+                  fontSize: 15,
+                  lineHeight: 19,
+                  color: colors.saffron,
+                }}
+              >
                 {isHi ? 'नई साधना बनाएँ' : 'New routine'}
               </Text>
             </Pressable>
