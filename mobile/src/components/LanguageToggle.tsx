@@ -1,21 +1,30 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage, type GitaLang } from '@/data/gita/language';
+import { useGitaLanguage, LANGUAGES, type LanguageMeta } from '@/data/gita/language';
+import { fontFamilies } from '@/theme/typography';
 
-type Option = {
-  value: GitaLang;
-  labelDevanagari?: string;
-  labelLatin?: string;
-};
+/**
+ * Segmented reading-language pill (design.md §16). One segment per entry in
+ * LANGUAGES, each labelled in its own script. Full native names are load-bearing:
+ * the Maestro flows tap the visible "English" / "हिन्दी" text.
+ */
 
-const OPTIONS: readonly Option[] = [
-  { value: 'hi', labelDevanagari: 'हिन्दी' },
-  { value: 'en', labelLatin: 'English' },
-];
+function segmentFont(meta: LanguageMeta): { fontFamily: string; fontSize: number } {
+  switch (meta.script) {
+    case 'devanagari':
+      return { fontFamily: fontFamilies.devanagariBold, fontSize: 15 };
+    case 'latin':
+      return { fontFamily: fontFamilies.latinItalic, fontSize: 14 };
+    case 'gujarati':
+      return { fontFamily: fontFamilies.gujaratiBold, fontSize: 14 };
+    case 'kannada':
+      return { fontFamily: fontFamilies.kannadaBold, fontSize: 13 };
+  }
+}
 
 export default function LanguageToggle() {
-  const { colors, typography, radii } = useTheme();
+  const { colors, radii } = useTheme();
   const { lang, setLang } = useGitaLanguage();
 
   return (
@@ -31,53 +40,38 @@ export default function LanguageToggle() {
       accessibilityRole="radiogroup"
       accessibilityLabel="Reading language"
     >
-      {OPTIONS.map((opt) => {
+      {LANGUAGES.map((opt) => {
         const selected = lang === opt.value;
+        const font = segmentFont(opt);
         return (
           <Pressable
             key={opt.value}
             onPress={() => setLang(opt.value)}
             accessibilityRole="radio"
             accessibilityState={{ selected }}
-            accessibilityLabel={opt.value === 'hi' ? 'Hindi' : 'English'}
-            testID={opt.value === 'hi' ? 'lang-toggle-hi' : 'lang-toggle-en'}
+            accessibilityLabel={opt.a11yLabel}
+            testID={`lang-toggle-${opt.value}`}
             hitSlop={8}
             style={({ pressed }) => [
-              styles.half,
+              styles.segment,
               { borderRadius: radii.pill },
               selected && { backgroundColor: colors.saffronTint },
               pressed && !selected && { opacity: 0.7 },
             ]}
           >
-            {opt.labelDevanagari ? (
-              <Text
-                style={[
-                  styles.labelDevanagari,
-                  {
-                    color: selected ? colors.saffronDeep : colors.inkMuted,
-                    fontFamily: typography.cardHindi.fontFamily,
-                    fontSize: 15,
-                  },
-                ]}
-              >
-                {opt.labelDevanagari}
-              </Text>
-            ) : null}
-            {opt.labelLatin ? (
-              <Text
-                style={[
-                  styles.labelLatin,
-                  {
-                    color: selected ? colors.saffronDeep : colors.inkMuted,
-                    fontFamily: typography.cardLatin.fontFamily,
-                    fontSize: 14,
-                    fontStyle: 'italic',
-                  },
-                ]}
-              >
-                {opt.labelLatin}
-              </Text>
-            ) : null}
+            <Text
+              style={[
+                styles.label,
+                {
+                  color: selected ? colors.saffronDeep : colors.inkMuted,
+                  fontFamily: font.fontFamily,
+                  fontSize: font.fontSize,
+                  fontStyle: opt.script === 'latin' ? 'italic' : 'normal',
+                },
+              ]}
+            >
+              {opt.nativeLabel}
+            </Text>
           </Pressable>
         );
       })}
@@ -92,18 +86,15 @@ const styles = StyleSheet.create({
     padding: 3,
     borderWidth: 1,
   },
-  half: {
+  segment: {
     paddingVertical: 11,
-    paddingHorizontal: 22,
-    minWidth: 96,
+    paddingHorizontal: 10,
+    minWidth: 56,
     minHeight: 44,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  labelDevanagari: {
-    includeFontPadding: false,
-  },
-  labelLatin: {
+  label: {
     includeFontPadding: false,
   },
 });

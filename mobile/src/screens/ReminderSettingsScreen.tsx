@@ -13,6 +13,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
+import { fontFamilies } from '@/theme/typography';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
 import TimeStepper from '@/components/TimeStepper';
@@ -34,7 +36,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
     setTimes,
   } = useNotificationPreferences();
 
-  const isHi = lang === 'hi';
+  const scriptSerifBold =
+    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
   const screenTitle = orderTitlesByLanguage(lang, 'स्मरण', 'Reminders', {
     devPrimary: 22,
     devSecondary: 14,
@@ -164,10 +167,10 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 <Text
                   style={[
                     styles.cardTitle,
-                    { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                    { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
                   ]}
                 >
-                  {isHi ? 'दैनिक श्लोक' : 'Daily verse'}
+                  {pick(lang, { hi: 'दैनिक श्लोक', en: 'Daily verse', gu: 'દૈનિક શ્લોક', kn: 'ದೈನಿಕ ಶ್ಲೋಕ' })}
                 </Text>
                 <Text
                   style={[
@@ -178,9 +181,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     },
                   ]}
                 >
-                  {isHi
-                    ? 'चुने हुए समयों पर श्लोक स्क्रीन पर आएँगे।'
-                    : 'A verse at every time you choose.'}
+                  {pick(lang, { hi: 'चुने हुए समयों पर श्लोक स्क्रीन पर आएँगे।', en: 'A verse at every time you choose.', gu: 'પસંદ કરેલા સમયે શ્લોક સ્ક્રીન પર આવશે.', kn: 'ಆಯ್ಕೆಮಾಡಿದ ಸಮಯಗಳಲ್ಲಿ ಶ್ಲೋಕ ಪರದೆಯಲ್ಲಿ ಬರುತ್ತದೆ.' })}
                 </Text>
               </View>
               <Switch
@@ -190,7 +191,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 trackColor={{ false: colors.divider, true: colors.saffron }}
                 thumbColor={colors.parchment}
                 ios_backgroundColor={colors.divider}
-                accessibilityLabel={isHi ? 'दैनिक श्लोक चालू / बंद' : 'Toggle daily verse'}
+                accessibilityLabel={pick(lang, { hi: 'दैनिक श्लोक चालू / बंद', en: 'Toggle daily verse', gu: 'દૈનિક શ્લોક ચાલુ / બંધ', kn: 'ದೈನಿಕ ಶ್ಲೋಕ ಆನ್ / ಆಫ್' })}
               />
             </View>
 
@@ -218,9 +219,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     },
                   ]}
                 >
-                  {isHi
-                    ? 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।'
-                    : 'Notifications are disabled. Tap to open Settings.'}
+                  {pick(lang, { hi: 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।', en: 'Notifications are disabled. Tap to open Settings.', gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ખોલો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })}
                 </Text>
               </Pressable>
             )}
@@ -240,10 +239,10 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
             <Text
               style={[
                 styles.cardTitle,
-                { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
               ]}
             >
-              {isHi ? 'समय' : 'Times'}
+              {pick(lang, { hi: 'समय', en: 'Times', gu: 'સમય', kn: 'ಸಮಯ' })}
             </Text>
             <Text
               style={[
@@ -251,9 +250,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
               ]}
             >
-              {isHi
-                ? `जब आप रोज़ श्लोक प्राप्त करना चाहें। अधिकतम ${MAX_REMINDER_TIMES} समय जोड़ सकते हैं।`
-                : `When the daily verse arrives. Add up to ${MAX_REMINDER_TIMES}.`}
+              {pick(lang, { hi: `जब आप रोज़ श्लोक प्राप्त करना चाहें। अधिकतम ${MAX_REMINDER_TIMES} समय जोड़ सकते हैं।`, en: `When the daily verse arrives. Add up to ${MAX_REMINDER_TIMES}.`, gu: `તમે રોજ શ્લોક મેળવવા માગો ત્યારે. વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકો.`, kn: `ನೀವು ಪ್ರತಿದಿನ ಶ್ಲೋಕ ಪಡೆಯಲು ಬಯಸಿದಾಗ. ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}
             </Text>
 
             <View style={styles.timesList}>
@@ -277,9 +274,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                       onPress={() => removeAt(index)}
                       accessibilityRole="button"
                       accessibilityLabel={
-                        isHi
-                          ? `समय हटाएँ ${index + 1}`
-                          : `Remove reminder ${index + 1}`
+                        pick(lang, { hi: `समय हटाएँ ${index + 1}`, en: `Remove reminder ${index + 1}`, gu: `સમય દૂર કરો ${index + 1}`, kn: `ಸಮಯ ತೆಗೆದುಹಾಕಿ ${index + 1}` })
                       }
                       hitSlop={10}
                       style={({ pressed }) => [
@@ -310,7 +305,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
               <Pressable
                 onPress={addTime}
                 accessibilityRole="button"
-                accessibilityLabel={isHi ? 'समय जोड़ें' : 'Add reminder'}
+                accessibilityLabel={pick(lang, { hi: 'समय जोड़ें', en: 'Add reminder', gu: 'સમય ઉમેરો', kn: 'ಸಮಯ ಸೇರಿಸಿ' })}
                 style={({ pressed }) => [
                   styles.addBtn,
                   {
@@ -329,7 +324,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     },
                   ]}
                 >
-                  {isHi ? '+ समय जोड़ें' : '+ Add reminder'}
+                  {pick(lang, { hi: '+ समय जोड़ें', en: '+ Add reminder', gu: '+ સમય ઉમેરો', kn: '+ ಸಮಯ ಸೇರಿಸಿ' })}
                 </Text>
               </Pressable>
             )}
@@ -340,9 +335,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                   { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
                 ]}
               >
-                {isHi
-                  ? `अधिकतम ${MAX_REMINDER_TIMES} समय जोड़े जा सकते हैं।`
-                  : `Up to ${MAX_REMINDER_TIMES} reminders.`}
+                {pick(lang, { hi: `अधिकतम ${MAX_REMINDER_TIMES} समय जोड़े जा सकते हैं।`, en: `Up to ${MAX_REMINDER_TIMES} reminders.`, gu: `વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકાય.`, kn: `ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}
               </Text>
             )}
           </View>
@@ -353,9 +346,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
               { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
             ]}
           >
-            {isHi
-              ? 'सूचनाएँ इस उपकरण पर ही बनती हैं — सर्वर पर कुछ नहीं जाता।'
-              : 'Notifications are scheduled on this device. Nothing leaves your phone.'}
+            {pick(lang, { hi: 'सूचनाएँ इस उपकरण पर ही बनती हैं — सर्वर पर कुछ नहीं जाता।', en: 'Notifications are scheduled on this device. Nothing leaves your phone.', gu: 'સૂચનાઓ આ ઉપકરણ પર જ બને છે — સર્વર પર કંઈ જતું નથી.', kn: 'ಅಧಿಸೂಚನೆಗಳು ಈ ಸಾಧನದಲ್ಲೇ ರಚಿಸಲ್ಪಡುತ್ತವೆ — ಸರ್ವರ್‌ಗೆ ಏನೂ ಹೋಗುವುದಿಲ್ಲ.' })}
           </Text>
         </ScrollView>
       </SafeAreaView>

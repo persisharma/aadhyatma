@@ -1,0 +1,80 @@
+# Language Smoke Test — Gujarati & Kannada reading languages (PR: gu/kn support)
+#
+# Vedansh's reading language was Hindi/English only. This flow proves the two
+# new languages work end to end: selected on the More "Language" card, persisted
+# across navigation, and actually rendering devotional content in the regional
+# SCRIPT — which is derived at runtime by transliterating the bundled Devanagari
+# (utils/transliterate.ts), not from any new content data.
+#
+# What it asserts:
+#   • The Language card exposes Gujarati + Kannada radios (a11y labels
+#     "Gujarati" / "Kannada" from LANGUAGES metadata).
+#   • Selecting Gujarati re-scripts the More screen chrome — the Panchang card
+#     title renders "પંચાંગ" (toGujarati('पंचांग')).
+#   • Opening Hanuman Chalisa shows its title in Gujarati script
+#     "હનુમાન ચાલીસા" (toGujarati('हनुमान चालीसा')) — proving the reader title +
+#     the bundled Noto Serif Gujarati font render.
+#   • The in-reader 4-way LanguageToggle switches to Kannada and the same title
+#     re-renders as "ಹನುಮಾನ ಚಾಲೀಸಾ" (toKannada(...)).
+#   • Hindi is restored so back-to-back suite runs start from the baseline.
+#
+# Selector notes:
+#   • LibraryCard / CategoryCard a11y labels are always English ("${nameEn}.
+#     … Tap to open.") regardless of reading language, so the tile taps are
+#     language-independent — only the asserted SCRIPT strings change.
+#   • The LanguageToggle segments and the More radios share a11y labels
+#     ("Gujarati" / "Kannada" / "Hindi"), so the same tapOn text works on both.
+#   • The transliterated strings are deterministic and pinned by
+#     src/utils/__tests__/transliterate.test.ts.
+
+appId: host.exp.Exponent
+---
+- runFlow: _launch.yaml
+
+# ── Open More, select Gujarati on the Language card ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Gujarati"
+    timeout: 15000
+- tapOn: "Gujarati"
+- waitForAnimationToEnd
+# More-screen chrome is now Gujarati (Panchang card title transliterated).
+- assertVisible: "પંચાંગ"
+
+# ── Open a reader to confirm verse-script rendering ──
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Chalisa. Tap to open."
+    timeout: 15000
+- tapOn: "Chalisa. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Hanuman Chalisa\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Hanuman Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss the Resume sheet if a prior session left progress.
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+# Reader title in Gujarati script. (Meaning/commentary also render in-script — proven
+# deterministically by the unit tests src/utils/__tests__/localize.test.ts; the in-reader
+# meaning body sits below the fold so it's not asserted from this flow.)
+- assertVisible: "હનુમાન ચાલીસા"
+
+# ── Switch to Kannada via the in-reader toggle; the title re-renders ──
+- tapOn: "Kannada"
+- waitForAnimationToEnd
+- assertVisible: "ಹನುಮಾನ ಚಾಲೀಸಾ"
+
+# ── Restore Hindi so the next flow starts from the suite baseline ──
+- tapOn: "Hindi"
+- waitForAnimationToEnd
+- assertVisible: "हनुमान चालीसा"
+
+- stopApp:
+    appId: host.exp.Exponent

@@ -11,6 +11,8 @@ export type ShivChalisaVerse = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 export const shivChalisaVerses: readonly ShivChalisaVerse[] = data.verses as ShivChalisaVerse[];

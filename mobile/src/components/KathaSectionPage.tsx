@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import type { KathaContentSection } from '@/panchang/types';
+import { contentByLang, commentaryByLang } from '@/utils/localize';
+import { scriptTitleFont, meaningToken } from '@/utils/langType';
 import Ornament from './Ornament';
 
 type Props = {
@@ -19,25 +21,18 @@ type Props = {
 export default function KathaSectionPage({ section, index, total, width }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHindi = lang === 'hi';
 
-  const title = isHindi ? section.titleHi : section.titleEn;
-  const body = isHindi ? section.bodyHi : section.bodyEn;
-  const pillText = isHindi ? `प्रसंग · ${index + 1}/${total}` : `Part · ${index + 1}/${total}`;
+  const title = contentByLang(lang, section.titleHi, section.titleEn);
+  const body = commentaryByLang(lang, section.bodyHi, section.bodyEn);
+  const pillText = contentByLang(lang, `प्रसंग · ${index + 1}/${total}`, `Part · ${index + 1}/${total}`);
 
-  const bodyStyle = isHindi
-    ? {
-        color: colors.inkSoft,
-        fontFamily: typography.meaning.fontFamily,
-        fontSize: typography.meaning.fontSize,
-        lineHeight: typography.meaning.lineHeight,
-      }
-    : {
-        color: colors.ink,
-        fontFamily: typography.meaningEnglish.fontFamily,
-        fontSize: typography.meaningEnglish.fontSize,
-        lineHeight: typography.meaningEnglish.lineHeight,
-      };
+  const meaning = meaningToken(lang, typography);
+  const bodyStyle = {
+    color: lang === 'en' ? colors.ink : colors.inkSoft,
+    fontFamily: meaning.fontFamily,
+    fontSize: meaning.fontSize,
+    lineHeight: meaning.lineHeight,
+  };
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
@@ -64,7 +59,7 @@ export default function KathaSectionPage({ section, index, total, width }: Props
           </Text>
         </View>
 
-        <Text style={[styles.title, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}>
+        <Text style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
           {title}
         </Text>
 

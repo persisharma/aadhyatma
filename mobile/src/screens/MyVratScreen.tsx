@@ -4,12 +4,15 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { useVratFollows, type VratFollow, type VratReminderPref } from '@/contexts/VratFollowContext';
 import VratReminderSheet from '@/components/VratReminderSheet';
 import { captionFont } from '@/utils/scriptFont';
+import { contentByLang, meaningByLang } from '@/utils/localize';
+import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { transliterateDevanagari } from '@/utils/transliterate';
 import type { ObservanceRule } from '@/panchang/types';
 import type { PanchangStackParamList } from '@/navigation/types';
 
@@ -22,16 +25,17 @@ function startOfLocalDay(d: Date): Date {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 }
 
-function shortDate(date: Date, isHindi: boolean): string {
-  const months = isHindi ? MONTHS_HI : MONTHS_EN;
+function shortDate(date: Date, lang: Lang): string {
+  const months =
+    lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]}`;
 }
 
-function relativeLabel(date: Date, from: Date, isHindi: boolean): string {
+function relativeLabel(date: Date, from: Date, lang: Lang): string {
   const days = Math.round((startOfLocalDay(date).getTime() - startOfLocalDay(from).getTime()) / 86400000);
-  if (days <= 0) return isHindi ? 'आज' : 'today';
-  if (days === 1) return isHindi ? 'कल' : '1d';
-  return isHindi ? `${days}द` : `${days}d`;
+  if (days <= 0) return contentByLang(lang, 'आज', 'today');
+  if (days === 1) return contentByLang(lang, 'कल', '1d');
+  return contentByLang(lang, `${days}द`, `${days}d`);
 }
 
 type FollowItem = {
@@ -43,7 +47,6 @@ type FollowItem = {
 export default function MyVratScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHindi = lang === 'hi';
   const [calendarSystem] = usePanchangCalendarSystem();
   const { follows, followCount, reminderCount, reminderDefault, setReminder, setReminderDefault } =
     useVratFollows();
@@ -109,18 +112,18 @@ export default function MyVratScreen({ navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel={isHindi ? 'वापस' : 'Back'}
+            accessibilityLabel={contentByLang(lang, 'वापस', 'Back')}
             hitSlop={12}
             style={({ pressed }) => [styles.backButton, { borderColor: colors.divider }, pressed && { opacity: 0.6 }]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 20 }}>‹</Text>
           </Pressable>
           <View style={{ alignItems: 'center' }}>
-            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}>
-              {isHindi ? 'मेरा व्रत' : 'My Vrat'}
+            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink }}>
+              {contentByLang(lang, 'मेरा व्रत', 'My Vrat')}
             </Text>
-            <Text style={{ ...captionFont(isHindi ? 'My Vrat' : 'मेरा व्रत'), fontSize: 12, color: colors.inkMuted }}>
-              {isHindi ? 'My Vrat' : 'मेरा व्रत'}
+            <Text style={{ ...captionFont(lang === 'en' ? 'मेरा व्रत' : 'My Vrat'), fontSize: 12, color: colors.inkMuted }}>
+              {lang === 'en' ? 'मेरा व्रत' : 'My Vrat'}
             </Text>
           </View>
           <View style={{ width: 36 }} />
@@ -129,12 +132,12 @@ export default function MyVratScreen({ navigation }: Props) {
         {followCount === 0 ? (
           <View style={styles.empty}>
             <Text style={{ fontSize: 36, color: colors.gold, marginBottom: 10 }}>★</Text>
-            <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 18, color: colors.ink, textAlign: 'center' }}>
-              {isHindi ? 'अभी कोई व्रत नहीं' : 'No vrats yet'}
+            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18, color: colors.ink, textAlign: 'center' }}>
+              {contentByLang(lang, 'अभी कोई व्रत नहीं', 'No vrats yet')}
             </Text>
             <Text
               style={{
-                fontFamily: typography.meaning.fontFamily,
+                fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
                 fontSize: 14,
                 lineHeight: 21,
                 color: colors.inkMuted,
@@ -143,9 +146,11 @@ export default function MyVratScreen({ navigation }: Props) {
                 paddingHorizontal: 12,
               }}
             >
-              {isHindi
-                ? 'जिन व्रतों का आप पालन करते हैं उन्हें फ़ॉलो करें — वे यहाँ अगली तिथि के अनुसार दिखेंगे।'
-                : 'Follow the vrats you observe — they show up here, sorted by which comes next.'}
+              {meaningByLang(
+                lang,
+                'जिन व्रतों का आप पालन करते हैं उन्हें फ़ॉलो करें — वे यहाँ अगली तिथि के अनुसार दिखेंगे।',
+                'Follow the vrats you observe — they show up here, sorted by which comes next.'
+              )}
             </Text>
             <Pressable
               onPress={() => navigation.goBack()}
@@ -158,7 +163,7 @@ export default function MyVratScreen({ navigation }: Props) {
               ]}
             >
               <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.parchment }}>
-                {isHindi ? 'व्रत-पर्व देखें →' : 'Browse व्रत-पर्व →'}
+                {contentByLang(lang, 'व्रत-पर्व देखें →', 'Browse व्रत-पर्व →')}
               </Text>
             </Pressable>
           </View>
@@ -169,11 +174,11 @@ export default function MyVratScreen({ navigation }: Props) {
           >
             {/* Metric band */}
             <View style={[styles.metricBand, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
-              <Metric value={followCount} label={isHindi ? 'फ़ॉलो' : 'Following'} colors={colors} />
+              <Metric value={followCount} label={contentByLang(lang, 'फ़ॉलो', 'Following')} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
-              <Metric value={reminderCount} label={isHindi ? 'अनुस्मारक' : 'Reminders on'} colors={colors} />
+              <Metric value={reminderCount} label={contentByLang(lang, 'अनुस्मारक', 'Reminders on')} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
-              <Metric value={thisMonthCount} label={isHindi ? 'इस माह' : 'This month'} colors={colors} />
+              <Metric value={thisMonthCount} label={contentByLang(lang, 'इस माह', 'This month')} colors={colors} />
             </View>
 
             <Pressable
@@ -182,15 +187,15 @@ export default function MyVratScreen({ navigation }: Props) {
               accessibilityLabel="Reminder defaults"
               style={({ pressed }) => [styles.defaultsRow, pressed && { opacity: 0.6 }]}
             >
-              <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.saffronDeep }}>
-                {isHindi ? '🔔 डिफ़ॉल्ट अनुस्मारक' : '🔔 Reminder defaults'}
+              <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.saffronDeep }}>
+                {contentByLang(lang, '🔔 डिफ़ॉल्ट अनुस्मारक', '🔔 Reminder defaults')}
               </Text>
               <Text style={{ fontSize: 16, color: colors.inkMuted }}>›</Text>
             </Pressable>
 
             {/* Priority list */}
-            <Text style={[styles.sectionHeading, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}>
-              {isHindi ? 'मेरी प्राथमिकता' : 'My priority'}
+            <Text style={[styles.sectionHeading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
+              {contentByLang(lang, 'मेरी प्राथमिकता', 'My priority')}
             </Text>
             {items.map((it) => (
               <PriorityRow
@@ -198,7 +203,7 @@ export default function MyVratScreen({ navigation }: Props) {
                 rule={it.rule}
                 nextDate={it.next?.date ?? null}
                 today={today}
-                isHindi={isHindi}
+                lang={lang}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -208,7 +213,7 @@ export default function MyVratScreen({ navigation }: Props) {
                   setSheet({
                     mode: 'vrat',
                     ruleId: it.rule.id,
-                    name: isHindi ? it.rule.nameHi : it.rule.nameEn,
+                    name: contentByLang(lang, it.rule.nameHi, it.rule.nameEn),
                     initial: it.follow.reminder ?? reminderDefault,
                   })
                 }
@@ -218,8 +223,8 @@ export default function MyVratScreen({ navigation }: Props) {
             {/* Upcoming timeline (among followed) */}
             {upcoming.length > 0 && (
               <>
-                <Text style={[styles.sectionHeading, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily, marginTop: 22 }]}>
-                  {isHindi ? 'आगामी' : 'Upcoming'}
+                <Text style={[styles.sectionHeading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), marginTop: 22 }]}>
+                  {contentByLang(lang, 'आगामी', 'Upcoming')}
                 </Text>
                 {upcoming.map((it, i) => (
                   <View
@@ -227,11 +232,11 @@ export default function MyVratScreen({ navigation }: Props) {
                     style={[styles.upRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}
                   >
                     <View style={[styles.upDot, { backgroundColor: colors.saffron }]} />
-                    <Text style={{ flex: 1, fontFamily: typography.meaning.fontFamily, fontSize: 14, color: colors.inkSoft }}>
-                      {isHindi ? it.rule.nameHi : it.rule.nameEn}
+                    <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 14, color: colors.inkSoft }}>
+                      {contentByLang(lang, it.rule.nameHi, it.rule.nameEn)}
                     </Text>
                     <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.inkSoft }}>
-                      {shortDate(it.next.date, isHindi)} · {relativeLabel(it.next.date, today, isHindi)}
+                      {shortDate(it.next.date, lang)} · {relativeLabel(it.next.date, today, lang)}
                     </Text>
                   </View>
                 ))}
@@ -271,7 +276,7 @@ function PriorityRow({
   rule,
   nextDate,
   today,
-  isHindi,
+  lang,
   colors,
   typography,
   radii,
@@ -282,7 +287,7 @@ function PriorityRow({
   rule: ObservanceRule;
   nextDate: Date | null;
   today: Date;
-  isHindi: boolean;
+  lang: Lang;
   colors: any;
   typography: any;
   radii: any;
@@ -295,23 +300,23 @@ function PriorityRow({
       <Pressable
         onPress={onOpen}
         accessibilityRole="button"
-        accessibilityLabel={isHindi ? rule.nameHi : rule.nameEn}
+        accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
         style={({ pressed }) => [{ flex: 1, paddingRight: 10 }, pressed && { opacity: 0.6 }]}
       >
-        <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}>
-          {isHindi ? rule.nameHi : rule.nameEn}
+        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+          {contentByLang(lang, rule.nameHi, rule.nameEn)}
         </Text>
-        <Text style={{ ...captionFont(isHindi ? rule.nameEn : rule.nameHi), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
-          {isHindi ? rule.nameEn : rule.nameHi}
+        <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
+          {lang === 'en' ? rule.nameHi : rule.nameEn}
         </Text>
       </Pressable>
       {nextDate && (
         <View style={{ alignItems: 'flex-end' }}>
           <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.inkSoft }}>
-            {shortDate(nextDate, isHindi)}
+            {shortDate(nextDate, lang)}
           </Text>
           <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
-            {relativeLabel(nextDate, today, isHindi)}
+            {relativeLabel(nextDate, today, lang)}
           </Text>
         </View>
       )}

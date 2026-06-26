@@ -12,6 +12,8 @@ export type ShivaStrotamVerse = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 export type ShivaStrotamChapter = {

@@ -7,6 +7,8 @@
  */
 
 import type { UniformVerse } from '@/data/versePool';
+import type { Lang } from '@/data/gita/language';
+import { contentByLang, verseLinesByLang } from '@/utils/localize';
 
 /** Identifier prefix for all PRD-01 notifications. Lets us cancel just ours. */
 export const NOTIF_IDENTIFIER_PREFIX = 'daily-verse';
@@ -96,12 +98,21 @@ export function computeFireDatesMulti(times: TimeOfDay[], now: Date): Date[] {
  * Hindi-led per `design.md`; the section name in the body stays in English so
  * the OS truncation doesn't strip the script that carries the verse.
  */
-export function formatNotificationContent(verse: UniformVerse): {
+export function formatNotificationContent(
+  verse: UniformVerse,
+  lang: Lang = 'hi'
+): {
   title: string;
   body: string;
 } {
-  const firstLine = verse.textHi[0] ?? verse.textEn[0] ?? '';
-  const label = verse.labelEn ?? verse.labelHi ?? `verse ${verse.verseIndex + 1}`;
-  const body = `${firstLine}\n${verse.sourceNameEn} · ${label}`;
-  return { title: 'दैनिक भक्ति', body };
+  // Everything renders in the reader's language: verse line, source name, label,
+  // and title. gu/kn re-script the Devanagari; en uses the romanization/English.
+  const firstLine =
+    verseLinesByLang(lang, verse.textHi, verse.textEn)[0] ?? verse.textHi[0] ?? '';
+  const sourceName = contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn);
+  const label =
+    contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '') ||
+    `verse ${verse.verseIndex + 1}`;
+  const title = contentByLang(lang, 'दैनिक भक्ति', 'Daily Verse');
+  return { title, body: `${firstLine}\n${sourceName} · ${label}` };
 }

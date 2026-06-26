@@ -6,14 +6,15 @@
 ## Reference Docs (in place — not copied into the wiki)
 - [`RULEBOOK.md`](../RULEBOOK.md) — integration contract for adding a content section.
 - [`design.md`](../design.md) — visual system spec (tokens, type scale, romanization rules).
-- [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap + PRDs 01–06.
+- [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap + PRDs 01–07.
 - [`docs/superpowers/`](../docs/superpowers/) — deity-icon plan + design spec.
 
 ## Subsystems
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.
+- [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, home banner + celebration.
 
 ## Concepts
-_(none yet — add when cross-cutting patterns are documented)_
+- [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
 
 ## Entities
 _(none yet — add per-model pages as they warrant)_

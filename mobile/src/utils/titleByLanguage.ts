@@ -1,5 +1,6 @@
 import { fontFamilies } from '@/theme/typography';
 import type { GitaLang } from '@/data/gita/language';
+import { transliterateDevanagari } from './transliterate';
 
 /**
  * Bilingual listing/catalog titles (`nameHi · nameEn`) historically rendered
@@ -23,7 +24,7 @@ import type { GitaLang } from '@/data/gita/language';
  * compensate by sizing `latPrimary` a step above `devPrimary` (see call sites).
  */
 
-export type TitleScript = 'devanagari' | 'latin';
+export type TitleScript = 'devanagari' | 'latin' | 'gujarati' | 'kannada';
 
 /** Point sizes for each script in the prominent vs. supporting slot. */
 export type TitleSizeScale = {
@@ -72,8 +73,19 @@ export function orderTitlesByLanguage(
     fontSize: role === 'primary' ? sizes.latPrimary : sizes.latSecondary,
     ...(role === 'primary' ? { letterSpacing: 0.3 } : null),
   });
+  // gu/kn titles are the Devanagari name re-scripted; they take the Devanagari size
+  // class (same x-height) and the script's own serif cuts.
+  const indic = (script: 'gujarati' | 'kannada'): OrderedTitlePart => ({
+    text: transliterateDevanagari(nameHi, script === 'gujarati' ? 'gu' : 'kn'),
+    script,
+    fontFamily:
+      script === 'gujarati' ? fontFamilies.gujaratiBold : fontFamilies.kannadaBold,
+    fontStyle: 'normal',
+    fontSize: sizes.devPrimary,
+  });
 
-  return lang === 'en'
-    ? { primary: latin('primary'), secondary: devanagari('secondary') }
-    : { primary: devanagari('primary'), secondary: latin('secondary') };
+  if (lang === 'en') return { primary: latin('primary'), secondary: devanagari('secondary') };
+  if (lang === 'gu') return { primary: indic('gujarati'), secondary: latin('secondary') };
+  if (lang === 'kn') return { primary: indic('kannada'), secondary: latin('secondary') };
+  return { primary: devanagari('primary'), secondary: latin('secondary') };
 }
