@@ -8,9 +8,22 @@ Stateful: it never repeats what it already shipped.
 
 | File | Role |
 |---|---|
-| `.claude/commands/enrich.md` | The `/enrich` slash command — one full cycle per invocation. |
-| `docs/enrichment-loop/backlog.md` | The ledger: pending candidates + shipped log. Read & written each run. |
+| `.claude/commands/enrich.md` | The `/enrich` command — approval-gated, can build any tier. |
+| `.claude/commands/enrich-auto.md` | The `/enrich-auto` command — autonomous (cron), builds T0–T2, plans T3. |
+| `docs/enrichment-loop/scope.md` | **What each run may do** — the tier ladder, routing, value rubric. |
+| `docs/enrichment-loop/backlog.md` | The value-ranked queue + shipped log + autorun log. |
+| `docs/enrichment-loop/plans/` | T3 feature plans written by autonomous runs for human approval. |
 | `docs/enrichment-loop/README.md` | This guide. |
+
+## What a run does (scope)
+
+The loop moves the product forward — closing competitive gaps and shipping/
+enhancing features — not just hardening. Each run picks the highest-value item and
+routes it by tier (**T0** harden · **T1** enhance · **T2** feature slice · **T3**
+new feature). See `scope.md` for the full ladder and the **"plan big, build
+small"** rule: autonomous runs ship T0–T2 directly and write a review-first plan
+for T3; the approval-gated `/enrich` can build any tier. Current focus: **quick
+wins first**.
 
 ## One cycle (`/enrich`)
 
