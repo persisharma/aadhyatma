@@ -9,7 +9,7 @@ import {
   contentByLang,
   pick,
 } from '@/utils/localize';
-import { verseToken, meaningToken } from '@/utils/langType';
+import { verseToken, meaningToken, scriptTitleFont } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
@@ -120,9 +120,9 @@ export default function VersePage({ verse, sourceId, width }: Props) {
             styles.sectionLabel,
             {
               color: colors.saffronDeep,
-              fontFamily: typography.meaningLabel.fontFamily,
+              fontFamily: lang === 'en' ? typography.meaningLabel.fontFamily : scriptTitleFont(lang, typography.readerTitle.fontFamily),
               fontSize: typography.meaningLabel.fontSize,
-              letterSpacing: typography.meaningLabel.letterSpacing,
+              letterSpacing: lang === 'en' ? typography.meaningLabel.letterSpacing : 0,
             },
           ]}
         >
@@ -166,7 +166,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 12,
     alignSelf: 'center',
-    includeFontPadding: false,
   },
   body: {
     // Devanagari meaning prose — keep Android's font padding (no matra clip).
