@@ -38,6 +38,7 @@ const KOTLIN_PACKAGE_SUBDIR = 'japamalarm';
 const KOTLIN_FILES = [
   'JapamAlarmModule.kt',
   'JapamAlarmReceiver.kt',
+  'JapamAlarmActionReceiver.kt',
   'JapamBootReceiver.kt',
   'JapamAlarmPackage.kt',
 ];
@@ -75,6 +76,11 @@ const withManifestReceivers = (config) =>
     cfg.modResults = addReceiver(
       cfg.modResults,
       `${cfg.android.package}.japamalarm.JapamAlarmReceiver`,
+      null
+    );
+    cfg.modResults = addReceiver(
+      cfg.modResults,
+      `${cfg.android.package}.japamalarm.JapamAlarmActionReceiver`,
       null
     );
     cfg.modResults = addReceiver(
@@ -128,34 +134,62 @@ const withKotlinSources = (config) =>
   ]);
 
 /** Insert `add(JapamAlarmPackage())` into `MainApplication.kt`'s
- *  `getPackages()` override. Idempotent — bails if already present. */
+ *  `getPackages()` override. Idempotent — bails if already present.
+ *
+ *  Handles the two templates Expo 54 emits:
+ *    a) expression body — `PackageList(this).packages.apply { ... }`
+ *    b) block body      — `val packages = PackageList(this).packages` then
+ *                          `return packages`
+ *  Both are seen in the wild depending on the Expo Modules version. */
 const withMainApplicationWiring = (config) =>
   withMainApplication(config, (cfg) => {
     let body = cfg.modResults.contents;
     const pkg = cfg.android.package;
     const importLine = `import ${pkg}.${KOTLIN_PACKAGE_SUBDIR}.JapamAlarmPackage`;
+    const addCall = 'add(JapamAlarmPackage())';
 
-    if (body.includes(importLine)) return cfg;
+    if (body.includes(addCall)) {
+      cfg.modResults.contents = body;
+      return cfg;
+    }
 
-    // 1. Add the import after the package declaration.
+    if (!body.includes(importLine)) {
+      body = body.replace(
+        /(package [^\n]+\n)/,
+        `$1\n${importLine}\n`
+      );
+    }
+
+    let injected = false;
+
+    // (a) `.apply { ... }` form — inject as the first statement inside the
+    //     existing apply block so we don't rewrite the user's other adds.
     body = body.replace(
-      /(package [^\n]+\n)/,
-      `$1\n${importLine}\n`
+      /PackageList\(this\)\.packages\.apply\s*\{/,
+      (match) => {
+        injected = true;
+        return `${match}\n          ${addCall}`;
+      }
     );
 
-    // 2. Add the registration inside getPackages() — Expo's MainApplication.kt
-    //    template builds the list via PackageList(this).packages, then
-    //    .apply { add(...) }. We insert into that apply block.
-    if (
-      !body.includes('add(JapamAlarmPackage())') &&
-      body.includes('PackageList(this).packages')
-    ) {
+    // (b) `val packages = PackageList(this).packages` form — inject right
+    //     after the assignment so subsequent `packages.add(...)` lines
+    //     compile naturally.
+    if (!injected) {
       body = body.replace(
-        /PackageList\(this\)\.packages([\s\S]*?)\}/,
-        (match, tail) => {
-          if (tail.includes('add(JapamAlarmPackage())')) return match;
-          return `PackageList(this).packages.apply {\n              add(JapamAlarmPackage())\n            }${tail}}`;
+        /(\bval\s+packages\s*=\s*PackageList\(this\)\.packages[^\n]*\n)/,
+        (match) => {
+          injected = true;
+          return `${match}            packages.${addCall}\n`;
         }
+      );
+    }
+
+    if (!injected) {
+      throw new Error(
+        'withJapamAlarmNative: could not find PackageList(this).packages in ' +
+          'MainApplication.kt — Expo template shape may have changed. Update ' +
+          'plugins/withJapamAlarmNative.js to match the new template.'
       );
     }
 
