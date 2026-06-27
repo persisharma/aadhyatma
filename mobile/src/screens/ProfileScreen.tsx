@@ -6,7 +6,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
-import { titleFontByLang } from '@/utils/langType';
+import { titleFontByLang, scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import {
   toDateKey,
@@ -395,7 +395,7 @@ export default function ProfileScreen({ navigation }: Props) {
             <View style={styles.sectionHeader}>
               <Text
                 style={{
-                  fontFamily: typography.readerTitle.fontFamily,
+                  fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
                   fontSize: 15,
                   color: colors.ink,
                 }}
@@ -404,7 +404,7 @@ export default function ProfileScreen({ navigation }: Props) {
               </Text>
               <Text
                 style={{
-                  fontFamily: typography.cardLatin.fontFamily,
+                  fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
                   fontSize: 12,
                   color: colors.inkMuted,
                 }}

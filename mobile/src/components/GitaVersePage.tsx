@@ -10,7 +10,7 @@ import {
   contentByLang,
   pick,
 } from '@/utils/localize';
-import { verseToken, meaningToken } from '@/utils/langType';
+import { verseToken, meaningToken, scriptBodyFont } from '@/utils/langType';
 import type { GitaVerse } from '@/data/gita';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
@@ -193,7 +193,7 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
                   styles.fallbackNote,
                   {
                     color: colors.inkMuted,
-                    fontFamily: 'CormorantGaramond_400Regular_Italic',
+                    fontFamily: lang === 'en' ? 'CormorantGaramond_400Regular_Italic' : scriptBodyFont(lang, typography.meaning.fontFamily),
                     fontSize: 14,
                     lineHeight: 22,
                   },
@@ -244,13 +244,15 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   verseLine: {
-    includeFontPadding: false,
+    // Devanagari verse body — keep Android's font padding so the first line's
+    // top matras/shirorekha aren't clipped (the reported Japam-style clip).
   },
   translitBlock: {
     marginTop: 14,
     gap: 2,
   },
   translitLine: {
+    // Latin romanization — includeFontPadding:false is safe (no matras).
     includeFontPadding: false,
   },
   sectionLabel: {
@@ -260,7 +262,7 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   body: {
-    includeFontPadding: false,
+    // Devanagari meaning prose — keep Android's font padding (no matra clip).
   },
   paragraphs: {
     gap: 14,
@@ -268,7 +270,6 @@ const styles = StyleSheet.create({
   fallbackNote: {
     textAlign: 'center',
     fontStyle: 'italic',
-    includeFontPadding: false,
     opacity: 0.8,
   },
 });

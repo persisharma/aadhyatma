@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import { pillTextStyle } from '@/utils/langType';
 
 /**
  * Content for a single Home "Discover" spotlight (§ design.md Home hero feature
@@ -102,13 +103,11 @@ export default function FeatureCard({ item, width, onPress }: Props) {
         ) : (
           <Text
             style={[
-              styles.eyebrow,
-              {
-                color: colors.saffronDeep,
-                fontSize: typography.versePill.fontSize,
-                fontWeight: typography.versePill.fontWeight,
-                letterSpacing: typography.versePill.letterSpacing,
-              },
+              // Eyebrow is Devanagari only when reading Hindi (English otherwise);
+              // base the pill treatment on the actual script so Hindi keeps its
+              // shirorekha (no Latin tracking → no "नि त्य" gaps) — see pillTextStyle.
+              pillTextStyle(isHi ? 'hi' : 'en', typography.versePill),
+              { color: colors.saffronDeep },
             ]}
             numberOfLines={1}
           >
@@ -216,9 +215,6 @@ const styles = StyleSheet.create({
   tagText: {
     fontSize: 9,
     fontWeight: '600',
-    textTransform: 'uppercase',
-  },
-  eyebrow: {
     textTransform: 'uppercase',
   },
   body: {

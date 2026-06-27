@@ -4,6 +4,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
+import { pillTextStyle } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -58,7 +59,7 @@ export default function RoutineListScreen({ navigation }: Props) {
                 {contentByLang(lang, r.nameHi || r.nameEn, r.nameEn || r.nameHi)}
               </Text>
               <View style={{ backgroundColor: colors.saffronTint, borderRadius: radii.pill, paddingHorizontal: 8, paddingVertical: 2 }}>
-                <Text style={{ ...typography.versePill, color: colors.saffronDeep }}>
+                <Text style={{ ...pillTextStyle(lang, typography.versePill), color: colors.saffronDeep }}>
                   {r.mode === 'weekday'
                     ? pick(lang, { hi: 'वार', en: 'WEEKDAY', gu: 'વાર', kn: 'ವಾರ' })
                     : pick(lang, { hi: 'दैनिक', en: 'DAILY', gu: 'દૈનિક', kn: 'ದೈನಿಕ' })}

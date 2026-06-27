@@ -5,6 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
+import { pillTextStyle } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { library, type LibraryEntry } from '@/data/texts';
 import { deityForWeekday, WEEKDAY_LABELS } from '@/data/routine/vaar';
@@ -85,7 +86,7 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
       >
         {isWeekday && (
           <View style={{ marginBottom: spacing.md }}>
-            <Text style={{ ...typography.sectionLabel, color: colors.inkMuted, marginBottom: 8 }}>
+            <Text style={{ ...pillTextStyle(lang, typography.sectionLabel), color: colors.inkMuted, marginBottom: 8 }}>
               {pick(lang, { hi: 'किस दिन के लिए', en: 'For which day', gu: 'કયા દિવસ માટે', kn: 'ಯಾವ ದಿನಕ್ಕಾಗಿ' })}
             </Text>
             <View style={styles.dayStrip}>
@@ -129,7 +130,7 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
                   </Text>
                   {suggested && (
                     <View style={{ backgroundColor: colors.goldTint, borderRadius: radii.pill, paddingHorizontal: 6, paddingVertical: 1 }}>
-                      <Text style={{ ...typography.versePill, color: colors.saffronDeep }}>
+                      <Text style={{ ...pillTextStyle(lang, typography.versePill), color: colors.saffronDeep }}>
                         {pick(lang, { hi: 'सुझाव', en: 'SUGGESTED', gu: 'સૂચન', kn: 'ಸೂಚನೆ' })}
                       </Text>
                     </View>

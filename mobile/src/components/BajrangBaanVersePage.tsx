@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   verseLine: {
-    includeFontPadding: false,
+    // Devanagari verse body — keep Android's font padding (no top-matra clip).
   },
   sectionLabel: {
     textTransform: 'uppercase',
@@ -159,6 +159,6 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   body: {
-    includeFontPadding: false,
+    // Devanagari meaning prose — keep Android's font padding (no matra clip).
   },
 });

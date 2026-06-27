@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   topSide: { width: 120, flexDirection: 'row', alignItems: 'center' },
   back: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   backGlyph: { fontSize: 22, lineHeight: 24, marginTop: -2, includeFontPadding: false },
-  title: { flex: 1, textAlign: 'center', includeFontPadding: false, marginHorizontal: 4 },
+  title: { flex: 1, textAlign: 'center', marginHorizontal: 4 },
   counter: { includeFontPadding: false, minWidth: 48, textAlign: 'right' },
   toggleRow: { paddingVertical: 6, paddingBottom: 12, alignItems: 'center' },
   listContainer: { flex: 1 },

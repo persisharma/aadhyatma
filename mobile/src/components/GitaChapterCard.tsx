@@ -162,10 +162,10 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   title: {
-    includeFontPadding: false,
+    // Devanagari title — leave Android's includeFontPadding on so top matras of
+    // the chapter name aren't clipped (iOS is unaffected either way).
   },
   sub: {
-    includeFontPadding: false,
     opacity: 0.9,
   },
   chev: {

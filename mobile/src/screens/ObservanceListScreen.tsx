@@ -190,10 +190,10 @@ function ObservanceRow({ rule, nextDate, today, lang, colors, typography, follow
         </View>
         {nextDate && (
           <View style={{ alignItems: 'flex-end' }}>
-            <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 13, color: colors.inkSoft }}>
+            <Text style={{ fontFamily: lang === 'en' ? 'Inter_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
               {shortDate(nextDate, lang)}
             </Text>
-            <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 13, color: colors.inkSoft, marginTop: 1 }}>
+            <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft, marginTop: 1 }}>
               {relativeLabel(nextDate, today, lang)}
             </Text>
           </View>
