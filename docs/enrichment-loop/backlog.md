@@ -75,4 +75,4 @@ Delivered by the loop. Newest at top: `date · tier · feature · enrichment · 
 Notes from autonomous runs that deferred, planned, or reverted instead of shipping.
 Newest at top: `date · reason`.
 
-_(none yet)_
+- 2026-06-27 · planned: font-size control (`plans/font-scale.plan.md`) — top quick win is plan-first (design decision), so wrote a plan instead of building. Awaiting approval to build slice 1. · run 5
