@@ -5,7 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import { meaningToken } from '@/utils/langType';
+import { meaningToken, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getTheerthBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -101,13 +101,12 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             </Text>
             <Text
               style={{
-                fontFamily: typography.cardLatin.fontFamily,
+                fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
                 fontSize: 14,
                 color: colors.inkMuted,
                 textAlign: 'center',
                 marginTop: 6,
-                fontStyle: 'italic',
-                includeFontPadding: false,
+                fontStyle: lang === 'en' ? 'italic' : 'normal',
               }}
             >
               {cityState}
@@ -166,11 +165,11 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           <Text
             style={{
               textAlign: 'center',
-              fontFamily: typography.cardLatin.fontFamily,
+              fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
               fontSize: 12,
               color: colors.inkMuted,
               marginTop: spacing.xl,
-              fontStyle: 'italic',
+              fontStyle: lang === 'en' ? 'italic' : 'normal',
               opacity: 0.7,
             }}
           >
@@ -210,9 +209,12 @@ function SectionBlock({ labelHi, labelEn, lang, colors, typography }: SectionBlo
     <Text
       style={{
         textAlign: 'center',
-        fontFamily: typography.meaningLabel.fontFamily,
+        // The label is always mixed-script (reading-language word · the other),
+        // so a Latin face would clip the Devanagari half on Android. Use the
+        // script serif (it carries Latin glyphs too) and drop the tracking,
+        // which would split the Devanagari shirorekha.
+        fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
         fontSize: typography.meaningLabel.fontSize,
-        letterSpacing: typography.meaningLabel.letterSpacing,
         color: colors.saffronDeep,
         textTransform: 'uppercase',
         marginVertical: 12,

@@ -12,6 +12,7 @@ import VratReminderSheet from '@/components/VratReminderSheet';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { ObservanceRule } from '@/panchang/types';
 import type { PanchangStackParamList } from '@/navigation/types';
@@ -174,11 +175,11 @@ export default function MyVratScreen({ navigation }: Props) {
           >
             {/* Metric band */}
             <View style={[styles.metricBand, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
-              <Metric value={followCount} label={contentByLang(lang, 'फ़ॉलो', 'Following')} colors={colors} />
+              <Metric value={followCount} label={contentByLang(lang, 'फ़ॉलो', 'Following')} lang={lang} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
-              <Metric value={reminderCount} label={contentByLang(lang, 'अनुस्मारक', 'Reminders on')} colors={colors} />
+              <Metric value={reminderCount} label={contentByLang(lang, 'अनुस्मारक', 'Reminders on')} lang={lang} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
-              <Metric value={thisMonthCount} label={contentByLang(lang, 'इस माह', 'This month')} colors={colors} />
+              <Metric value={thisMonthCount} label={contentByLang(lang, 'इस माह', 'This month')} lang={lang} colors={colors} />
             </View>
 
             <Pressable
@@ -235,7 +236,7 @@ export default function MyVratScreen({ navigation }: Props) {
                     <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 14, color: colors.inkSoft }}>
                       {contentByLang(lang, it.rule.nameHi, it.rule.nameEn)}
                     </Text>
-                    <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.inkSoft }}>
+                    <Text style={{ fontFamily: lang === 'en' ? 'Inter_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
                       {shortDate(it.next.date, lang)} · {relativeLabel(it.next.date, today, lang)}
                     </Text>
                   </View>
@@ -261,11 +262,11 @@ export default function MyVratScreen({ navigation }: Props) {
   );
 }
 
-function Metric({ value, label, colors }: { value: number; label: string; colors: any }) {
+function Metric({ value, label, lang, colors }: { value: number; label: string; lang: Lang; colors: any }) {
   return (
     <View style={styles.metric}>
       <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 22, color: colors.saffronDeep }}>{value}</Text>
-      <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+      <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
         {label}
       </Text>
     </View>
@@ -312,10 +313,10 @@ function PriorityRow({
       </Pressable>
       {nextDate && (
         <View style={{ alignItems: 'flex-end' }}>
-          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.inkSoft }}>
+          <Text style={{ fontFamily: lang === 'en' ? 'Inter_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
             {shortDate(nextDate, lang)}
           </Text>
-          <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
+          <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
             {relativeLabel(nextDate, today, lang)}
           </Text>
         </View>

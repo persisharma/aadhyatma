@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
   scrollContent: { paddingTop: 4, paddingBottom: 40 },
   pill: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 4, marginBottom: 10 },
   pillText: { textTransform: 'uppercase', includeFontPadding: false },
-  title: { fontSize: 20, marginBottom: 4, includeFontPadding: false },
+  // Devanagari title + prose — keep Android's font padding (no matra clip).
+  title: { fontSize: 20, marginBottom: 4 },
   ornamentWrap: { marginVertical: -14 },
-  para: { marginTop: 14, includeFontPadding: false },
+  para: { marginTop: 14 },
 });

@@ -15,6 +15,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import { fontFamilies } from '@/theme/typography';
+import { scriptBodyFont } from '@/utils/langType';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
 import TimeStepper from '@/components/TimeStepper';
@@ -320,7 +321,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     styles.addBtnText,
                     {
                       color: colors.saffronDeep,
-                      fontFamily: typography.cardLatin.fontFamily,
+                      fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
                     },
                   ]}
                 >
@@ -332,7 +333,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
               <Text
                 style={[
                   styles.note,
-                  { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                  { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily) },
                 ]}
               >
                 {pick(lang, { hi: `अधिकतम ${MAX_REMINDER_TIMES} समय जोड़े जा सकते हैं।`, en: `Up to ${MAX_REMINDER_TIMES} reminders.`, gu: `વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકાય.`, kn: `ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}
@@ -343,7 +344,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
           <Text
             style={[
               styles.footnote,
-              { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+              { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily) },
             ]}
           >
             {pick(lang, { hi: 'सूचनाएँ इस उपकरण पर ही बनती हैं — सर्वर पर कुछ नहीं जाता।', en: 'Notifications are scheduled on this device. Nothing leaves your phone.', gu: 'સૂચનાઓ આ ઉપકરણ પર જ બને છે — સર્વર પર કંઈ જતું નથી.', kn: 'ಅಧಿಸೂಚನೆಗಳು ಈ ಸಾಧನದಲ್ಲೇ ರಚಿಸಲ್ಪಡುತ್ತವೆ — ಸರ್ವರ್‌ಗೆ ಏನೂ ಹೋಗುವುದಿಲ್ಲ.' })}
