@@ -70,6 +70,23 @@ anytime by telling Claude to stop the loop (or end the session).
 > change the Phase 2 gate in `enrich.md` to auto-approve — but that removes the
 > "take approval" guarantee you asked for, so it's off by default.
 
+## Run it timely (durable scheduler — recommended)
+
+Session-based loops (the `/loop` skill or in-session crons) only fire while a
+Claude session stays alive, so they're unreliable for "run every few hours."
+The durable driver is **GitHub Actions**:
+
+- **`.github/workflows/enrich-loop.yml`** runs `/enrich-auto` **every 3 hours**
+  (cron `13 */3 * * *`, UTC) independent of any session, builds one T0–T2 slice
+  (or writes a T3 plan), pushes to `claude/enrich-loop-auto`, and opens/updates a PR.
+- **`.github/workflows/ci.yml`** is the test gate (typecheck + reader/engine/data
+  suites) that runs on every PR — so each loop PR gets a real red/green signal.
+
+**One-time setup:** add an `ANTHROPIC_API_KEY` repo secret
+(Settings → Secrets and variables → Actions). Without it the loop job is a
+graceful no-op. Test on demand via the workflow's **Run workflow** button.
+Change the cadence by editing the `cron:` line.
+
 ## Adding / reprioritizing candidates
 
 Edit `docs/enrichment-loop/backlog.md`:

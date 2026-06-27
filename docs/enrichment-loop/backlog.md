@@ -31,10 +31,10 @@ The prioritized queue for `/enrich` and `/enrich-auto`. Each run picks the
 5. **[T3] Verse audio** for chalisas/aartis (Hanuman pilot). → plan first; gated on
    the audio-licensing open decision (roadmap §7) — a human call.
 
-### 🥇 Next up (T0 — reliability)
+### 🥇 Next up
 
-1. **[T0] Wire `npm run test:readers` into CI** (block merge on red for PRs
-   touching `mobile/src`). Now that every reader has a smoke test, lock it in.
+1. **[T1→plan]** Pick up the top quick win — start with a `plans/` write-up since
+   each carries a design decision (see below).
 
 ### 🥈 Quick wins — have open design decisions, treat as plan-first
 
@@ -63,6 +63,7 @@ The prioritized queue for `/enrich` and `/enrich-auto`. Each run picks the
 
 Delivered by the loop. Newest at top: `date · tier · feature · enrichment · run · [autorun]`.
 
+- 2026-06-27 · T0 · Infra · **CI test gate + durable scheduler** — `.github/workflows/ci.yml` (typecheck + reader/engine/data suites on PRs) and `.github/workflows/enrich-loop.yml` (runs `/enrich-auto` every 3h via GitHub Actions, independent of any session). Closes the "wire test:readers into CI" item. · run 4
 - 2026-06-25 · T0 · PRD-06 Foundation · **Reader smoke-test coverage COMPLETE** — added 9 tests (Aarti, DurgaStotram, GaneshStotram, HanumanAshtak, RamStuti, Ramcharitmanas, Sundarkand, VishnuSahasranama, Gita); every `*ReaderScreen` now has a co-located smoke test (RULEBOOK §4.10). 254 tests green. · run 3
 - 2026-06-25 · T0 · PRD-06 Foundation · ShivaStrotamReaderScreen smoke test (`ShivaStrotamReaderScreen.test.tsx`) · run 2 · autorun
 - 2026-06-25 · T0 · PRD-06 Foundation · ChalisaReaderScreen smoke test (`ChalisaReaderScreen.test.tsx`) · run 1
