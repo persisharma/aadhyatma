@@ -94,8 +94,14 @@ plus what the next run will likely attempt.
 
 If a loop PR is open (see `scope.md` "PR follow-through"), the loop owns it to
 merge: watch CI + reviews, fix red builds (re-run `test:readers` + `tsc`, push),
-address unambiguous review comments, surface anything needing a human decision,
-keep it rebased on `main`. Follow until merged/closed, then unsubscribe.
+address unambiguous review comments, surface anything needing a human decision.
+
+**Auto-check merge conflicts** (webhooks never deliver these): on each PR check,
+read `mergeable_state`. If `dirty`/`behind`, `git fetch origin main`, rebase onto
+`origin/main`, and `git push --force-with-lease`. If a real content conflict
+can't be resolved unambiguously, abort the rebase and surface it to a human.
+Arm a periodic (~hourly) self-check to re-read CI + `mergeable_state` since those
+transitions aren't pushed. Follow until merged/closed, then unsubscribe.
 
 ## Autorun safety summary
 

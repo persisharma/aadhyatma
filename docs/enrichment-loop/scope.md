@@ -64,11 +64,22 @@ green and mergeable. The loop owns its PRs end to end:
   patch, re-run `test:readers` + `tsc`, push. Never leave a loop PR red.
 - **Review comments** → address unambiguous ones directly; for anything that
   needs a product/design call, surface it to a human instead of guessing.
-- Keep the PR rebased on `main` (the Phase 0 sync) so it stays mergeable.
+- **Merge conflicts → auto-check and resolve.** GitHub webhooks do NOT deliver
+  conflict transitions, so the loop must poll: on every PR check, read the PR's
+  `mergeable_state`. If it's `dirty` (or `behind`), the base moved — `git fetch
+  origin main` then **rebase the branch onto `origin/main`** and `git push
+  --force-with-lease`. The loop's commits are small/additive, so rebases are
+  usually conflict-free or auto-drop already-merged commits. If a rebase hits a
+  **real content conflict** the loop can't resolve unambiguously, **abort and
+  surface it to a human** — never guess a merge resolution.
 - A loop PR is "done" only when **merged or closed** — keep following until then,
   then unsubscribe.
 
-This makes the loop responsible for the whole path to merge, not just the push.
+Because CI success, new pushes, and conflict transitions are never pushed as
+webhooks, the loop also arms a **periodic self-check** (~hourly) that re-reads CI
+status + `mergeable_state` for open loop PRs and acts on anything actionable,
+then re-arms silently. This makes the loop responsible for the whole path to
+merge — including conflicts — not just the push.
 
 ## Hard constraints (unchanged, never violated)
 
