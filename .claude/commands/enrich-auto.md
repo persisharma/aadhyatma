@@ -90,6 +90,13 @@ If nothing shipped (auto-gate deferred, or build failed and was reverted):
 Always end with a short status line: shipped / deferred / failed-and-reverted,
 plus what the next run will likely attempt.
 
+## PR follow-through
+
+If a loop PR is open (see `scope.md` "PR follow-through"), the loop owns it to
+merge: watch CI + reviews, fix red builds (re-run `test:readers` + `tsc`, push),
+address unambiguous review comments, surface anything needing a human decision,
+keep it rebased on `main`. Follow until merged/closed, then unsubscribe.
+
 ## Autorun safety summary
 
 - One enrichment max per run. Small, additive, verified, or nothing.

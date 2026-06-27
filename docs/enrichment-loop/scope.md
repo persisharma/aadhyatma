@@ -54,6 +54,22 @@ Score candidates; highest wins. Ties break toward smaller.
 low-effort, high-visibility T1/T2 enhancements (font scale, dark-mode toggle,
 sleep timer) before the heavy T3 features (audio, net-new search).
 
+## PR follow-through (part of the loop's job)
+
+Shipping a slice isn't done when the commit lands — it's done when the PR is
+green and mergeable. The loop owns its PRs end to end:
+
+- When a loop PR is open, **watch it** (subscribe to its CI + review activity).
+- **CI red → re-diagnose and fix** the same way the slice was built: reproduce,
+  patch, re-run `test:readers` + `tsc`, push. Never leave a loop PR red.
+- **Review comments** → address unambiguous ones directly; for anything that
+  needs a product/design call, surface it to a human instead of guessing.
+- Keep the PR rebased on `main` (the Phase 0 sync) so it stays mergeable.
+- A loop PR is "done" only when **merged or closed** — keep following until then,
+  then unsubscribe.
+
+This makes the loop responsible for the whole path to merge, not just the push.
+
 ## Hard constraints (unchanged, never violated)
 
 - **Bundle-only**: no backend, CDN, cloud sync, streaming, server analytics, remote flags.
