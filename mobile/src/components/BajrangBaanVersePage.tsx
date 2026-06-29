@@ -9,7 +9,7 @@ import {
   contentByLang,
   pick,
 } from '@/utils/localize';
-import { verseToken, meaningToken } from '@/utils/langType';
+import { verseToken, meaningToken, scriptTitleFont } from '@/utils/langType';
 import type { BajrangBaanVerse } from '@/data/bajrang-baan';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
@@ -110,9 +110,9 @@ export default function BajrangBaanVersePage({ verse, sourceId, width }: Props) 
             styles.sectionLabel,
             {
               color: colors.saffronDeep,
-              fontFamily: typography.meaningLabel.fontFamily,
+              fontFamily: lang === 'en' ? typography.meaningLabel.fontFamily : scriptTitleFont(lang, typography.readerTitle.fontFamily),
               fontSize: typography.meaningLabel.fontSize,
-              letterSpacing: typography.meaningLabel.letterSpacing,
+              letterSpacing: lang === 'en' ? typography.meaningLabel.letterSpacing : 0,
             },
           ]}
         >
@@ -150,15 +150,14 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   verseLine: {
-    includeFontPadding: false,
+    // Devanagari verse body — keep Android's font padding (no top-matra clip).
   },
   sectionLabel: {
     textTransform: 'uppercase',
     marginBottom: 12,
     alignSelf: 'center',
-    includeFontPadding: false,
   },
   body: {
-    includeFontPadding: false,
+    // Devanagari meaning prose — keep Android's font padding (no matra clip).
   },
 });

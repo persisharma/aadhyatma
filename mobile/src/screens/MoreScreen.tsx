@@ -7,6 +7,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useGitaLanguage, LANGUAGES } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
+import { scriptBodyFont } from '@/utils/langType';
 import { pick, contentByLang } from '@/utils/localize';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
@@ -336,15 +337,15 @@ export default function MoreScreen({ navigation }: Props) {
                 <Text style={{ color: '#fff', fontSize: 14 }}>☽</Text>
               </View>
               <View>
-                <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
+                <Text style={{ fontFamily: defaultLang === 'en' ? 'Inter_600SemiBold' : scriptBodyFont(defaultLang, fontFamilies.devanagari), fontSize: 14, color: colors.ink }}>
                   {pick(defaultLang, { hi: 'पंचांग', en: 'Panchang', gu: 'પંચાંગ', kn: 'ಪಂಚಾಂಗ' })}
                 </Text>
-                <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
+                <Text style={{ fontFamily: defaultLang === 'en' ? fontFamilies.devanagari : 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
                   {defaultLang === 'en' ? 'पंचांग पद्धति' : 'Panchang School'}
                 </Text>
               </View>
             </View>
-            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+            <Text style={{ fontFamily: defaultLang === 'en' ? 'CormorantGaramond_400Regular_Italic' : scriptBodyFont(defaultLang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
               {pick(defaultLang, {
                 hi: `पंचांग · ${panchangLocation.labelHi}, भारत · पूर्णिमांत/अमान्त चयन\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है। स्थान पंचांग टैब से बदलें।`,
                 en: `Panchang · ${panchangLocation.labelEn}, India · Purnimant/Amanta selectable\nTithi follows Surya Siddhanta with modern corrections. Change the location from the Panchang tab.`,

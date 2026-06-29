@@ -9,7 +9,7 @@ import {
   contentByLang,
   pick,
 } from '@/utils/localize';
-import { verseToken, meaningToken } from '@/utils/langType';
+import { verseToken, meaningToken, scriptTitleFont, pillTextStyle } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
@@ -138,9 +138,9 @@ export default function SanskarVersePage({ verse, sourceId, width }: Props) {
             styles.sectionLabel,
             {
               color: colors.saffronDeep,
-              fontFamily: typography.meaningLabel.fontFamily,
+              fontFamily: lang === 'en' ? typography.meaningLabel.fontFamily : scriptTitleFont(lang, typography.readerTitle.fontFamily),
               fontSize: typography.meaningLabel.fontSize,
-              letterSpacing: typography.meaningLabel.letterSpacing,
+              letterSpacing: lang === 'en' ? typography.meaningLabel.letterSpacing : 0,
             },
           ]}
         >
@@ -158,9 +158,7 @@ export default function SanskarVersePage({ verse, sourceId, width }: Props) {
                 styles.sectionLabel,
                 {
                   color: colors.saffronDeep,
-                  fontSize: typography.sectionLabel.fontSize,
-                  fontWeight: typography.sectionLabel.fontWeight,
-                  letterSpacing: typography.sectionLabel.letterSpacing,
+                  ...pillTextStyle(lang, typography.sectionLabel),
                 },
               ]}
             >
@@ -200,16 +198,15 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   verseLine: {
-    includeFontPadding: false,
+    // Devanagari verse body — keep Android's font padding (no top-matra clip).
   },
   sectionLabel: {
     textTransform: 'uppercase',
     marginBottom: 12,
     alignSelf: 'center',
-    includeFontPadding: false,
   },
   body: {
-    includeFontPadding: false,
+    // Devanagari meaning prose — keep Android's font padding (no matra clip).
   },
   vidhiSection: {
     marginTop: 28,

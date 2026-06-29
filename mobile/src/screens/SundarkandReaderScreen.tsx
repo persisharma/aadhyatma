@@ -409,7 +409,6 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     textAlign: 'center',
-    includeFontPadding: false,
     marginHorizontal: 4,
   },
   counter: {

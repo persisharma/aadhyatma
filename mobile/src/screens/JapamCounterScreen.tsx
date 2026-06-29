@@ -600,7 +600,9 @@ const styles = StyleSheet.create({
   },
   mantraLine: {
     textAlign: 'center',
-    includeFontPadding: false,
+    // No includeFontPadding:false here — this line is Devanagari, and on Android
+    // that prop strips the padding reserved for the shirorekha/top-matras and
+    // clips them (iOS ignores the prop, so it only shows on Android).
   },
   mantraLineEn: {
     textAlign: 'center',

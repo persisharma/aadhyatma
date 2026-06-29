@@ -231,7 +231,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    includeFontPadding: false,
   },
   close: {
     width: 44,
@@ -247,12 +246,8 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 18,
   },
-  lead: {
-    includeFontPadding: false,
-  },
-  lede: {
-    includeFontPadding: false,
-  },
+  lead: {},
+  lede: {},
   timeBlock: {
     marginTop: 8,
     gap: 10,
@@ -261,7 +256,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     letterSpacing: 2.4,
     textTransform: 'uppercase',
-    includeFontPadding: false,
   },
   primary: {
     marginTop: 12,
@@ -272,7 +266,6 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     fontSize: 16,
-    includeFontPadding: false,
   },
   secondary: {
     paddingVertical: 14,
@@ -283,6 +276,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     letterSpacing: 1.4,
     textTransform: 'uppercase',
-    includeFontPadding: false,
   },
 });
