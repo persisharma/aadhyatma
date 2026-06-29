@@ -14,14 +14,29 @@ import { setStoredObservanceYear, subscribeObservanceStore } from '../observance
 const DELHI = { latitude: 28.6139, longitude: 77.209, elevation: 216, cityId: 'delhi' };
 const GUWAHATI = { latitude: 26.1445, longitude: 91.7362, elevation: 55, cityId: 'guwahati' };
 
+// Engine sunrise/sunset are true UTC instants; expected times are Indian wall-clock
+// (IST). Read the instant in Asia/Kolkata so assertions are independent of the test
+// runner's timezone (CI runs in UTC).
+const IST_HM = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false,
+});
+function istHourMin(d: Date): { h: number; m: number } {
+  const parts = IST_HM.formatToParts(d);
+  return {
+    h: Number(parts.find((p) => p.type === 'hour')!.value),
+    m: Number(parts.find((p) => p.type === 'minute')!.value),
+  };
+}
+
 function assertTimeWithin(actual: Date | null, expectedHour: number, expectedMin: number, toleranceMin: number, label: string) {
   assert.ok(actual, `${label}: expected a Date but got null`);
-  const actualMin = actual.getHours() * 60 + actual.getMinutes();
+  const { h, m } = istHourMin(actual);
+  const actualMin = h * 60 + m;
   const expectedTotalMin = expectedHour * 60 + expectedMin;
   const diff = Math.abs(actualMin - expectedTotalMin);
   assert.ok(
     diff <= toleranceMin || diff >= (1440 - toleranceMin),
-    `${label}: expected ~${expectedHour}:${String(expectedMin).padStart(2, '0')}, got ${actual.getHours()}:${String(actual.getMinutes()).padStart(2, '0')} (diff ${diff} min, tolerance ${toleranceMin})`
+    `${label}: expected ~${expectedHour}:${String(expectedMin).padStart(2, '0')}, got ${h}:${String(m).padStart(2, '0')} (diff ${diff} min, tolerance ${toleranceMin})`
   );
 }
 
