@@ -30,6 +30,18 @@ const DAYS = fixture.days as Row[];
 
 function parseDate(s: string): Date { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); }
 function toMin(hhmm: string): number { const [h, m] = hhmm.split(':').map(Number); return h * 60 + m; }
+// The engine returns sunrise/sunset as true UTC instants; the drikpanchang fixture
+// lists them as Ujjain wall-clock (IST). Read the instant in Asia/Kolkata so the
+// comparison is independent of the test runner's timezone (CI runs in UTC).
+const IST_HM = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false,
+});
+function istMin(d: Date): number {
+  const parts = IST_HM.formatToParts(d);
+  const h = Number(parts.find((p) => p.type === 'hour')!.value);
+  const m = Number(parts.find((p) => p.type === 'minute')!.value);
+  return h * 60 + m;
+}
 const purnimant = (r: Row) => computePanchangForDate(parseDate(r.date), { calendarSystem: 'purnimant' });
 const amanta = (r: Row) => computePanchangForDate(parseDate(r.date), { calendarSystem: 'amanta' });
 const divergingDates = (predicate: (r: Row) => boolean) => DAYS.filter(predicate).map((r) => r.date);
@@ -52,8 +64,8 @@ test('drik cross-check: vara / paksha / tithi / nakshatra / yoga / karana match 
 test('drik cross-check: sunrise & sunset within 3 minutes for all 131 days', () => {
   for (const r of DAYS) {
     const p = purnimant(r);
-    const sr = p.sunrise.getHours() * 60 + p.sunrise.getMinutes();
-    const ss = p.sunset.getHours() * 60 + p.sunset.getMinutes();
+    const sr = istMin(p.sunrise);
+    const ss = istMin(p.sunset);
     assert.ok(Math.abs(sr - toMin(r.sunrise)) <= 3, `${r.date} sunrise: engine ${sr} vs drik ${r.sunrise}`);
     assert.ok(Math.abs(ss - toMin(r.sunset)) <= 3, `${r.date} sunset: engine ${ss} vs drik ${r.sunset}`);
   }
