@@ -65,6 +65,7 @@
         }
       ],
       "./plugins/withJapamAlarmNative.js",
+      "./plugins/withJapamAlarmIos.js",
       [
         "expo-location",
         {

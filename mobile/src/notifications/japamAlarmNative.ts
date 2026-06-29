@@ -19,6 +19,7 @@
  */
 
 import { NativeModules, Platform, Linking } from 'react-native';
+import { requireOptionalNativeModule } from 'expo-modules-core';
 import { CommonActions } from '@react-navigation/native';
 import { findJapamMantra } from '@/data/japam';
 import { navigationRef } from './deepLink';
@@ -28,7 +29,7 @@ import {
   type JapamAlarm,
 } from './japamAlarms';
 
-type NativeModuleShape = {
+type AndroidNativeModuleShape = {
   scheduleAlarm: (args: {
     alarmId: string;
     mantraId: string;
@@ -40,15 +41,49 @@ type NativeModuleShape = {
   getCapability: () => Promise<{ supported: boolean; canScheduleExact: boolean }>;
 };
 
-function getNativeModule(): NativeModuleShape | null {
+/** Mirror of the Android-side shape; the iOS Expo module exposes the same
+ *  surface so the scheduler can call either through one bridge function. */
+type IosNativeModuleShape = {
+  scheduleAlarm: (args: {
+    alarmId: string;
+    mantraId: string;
+    fireAt: number;
+    label?: string | null;
+  }) => Promise<{ alarmId: string; fireAt: number; exact: boolean }>;
+  cancelAlarm: (alarmId: string) => Promise<void>;
+  cancelAll: () => Promise<void>;
+  getCapability: () => Promise<{ supported: boolean; canScheduleExact: boolean }>;
+  requestPermission: () => Promise<boolean>;
+};
+
+function getAndroidModule(): AndroidNativeModuleShape | null {
   if (Platform.OS !== 'android') return null;
   const mod = (NativeModules as Record<string, unknown>).JapamAlarmNative;
   if (!mod || typeof mod !== 'object') return null;
-  return mod as NativeModuleShape;
+  return mod as AndroidNativeModuleShape;
+}
+
+/** iOS major version, or null when not on iOS. */
+function iosMajorVersion(): number | null {
+  if (Platform.OS !== 'ios') return null;
+  // Platform.Version on iOS is a string like "26.0".
+  const raw = Platform.Version;
+  const num = typeof raw === 'string' ? parseInt(raw, 10) : Number(raw);
+  return Number.isFinite(num) ? num : null;
+}
+
+function getIosModule(): IosNativeModuleShape | null {
+  if (Platform.OS !== 'ios') return null;
+  const major = iosMajorVersion();
+  if (major == null || major < 26) return null;
+  // Local Expo modules are exposed via requireOptionalNativeModule — returns
+  // null on devices without the native binding (Expo Go, old prebuild).
+  const mod = requireOptionalNativeModule<IosNativeModuleShape>('JapamAlarmIos');
+  return mod ?? null;
 }
 
 export function isNativeAlarmSupported(): boolean {
-  return getNativeModule() !== null;
+  return getAndroidModule() !== null || getIosModule() !== null;
 }
 
 export type NativeAlarmCapability = {
@@ -57,7 +92,7 @@ export type NativeAlarmCapability = {
 };
 
 export async function getNativeAlarmCapability(): Promise<NativeAlarmCapability> {
-  const mod = getNativeModule();
+  const mod = getAndroidModule() ?? getIosModule();
   if (!mod) return { supported: false, canScheduleExact: false };
   try {
     return await mod.getCapability();
@@ -66,12 +101,24 @@ export async function getNativeAlarmCapability(): Promise<NativeAlarmCapability>
   }
 }
 
+/** iOS-only: open the system prompt for AlarmKit alarm authorisation.
+ *  Returns true if the user granted, false otherwise (or non-iOS-26). */
+export async function requestIosAlarmPermission(): Promise<boolean> {
+  const mod = getIosModule();
+  if (!mod) return false;
+  try {
+    return await mod.requestPermission();
+  } catch {
+    return false;
+  }
+}
+
 /** Schedule every enabled alarm. Cancels all native-managed slots first so
  *  the on-device state matches the input list exactly. */
 export async function scheduleNativeAlarmsForDay(
   alarms: JapamAlarm[]
 ): Promise<number> {
-  const mod = getNativeModule();
+  const mod = getAndroidModule() ?? getIosModule();
   if (!mod) return 0;
   try {
     await mod.cancelAll();
@@ -98,7 +145,7 @@ export async function scheduleNativeAlarmsForDay(
 }
 
 export async function cancelAllNativeAlarms(): Promise<void> {
-  const mod = getNativeModule();
+  const mod = getAndroidModule() ?? getIosModule();
   if (!mod) return;
   try {
     await mod.cancelAll();

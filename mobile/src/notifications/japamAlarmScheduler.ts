@@ -167,10 +167,15 @@ export async function scheduleJapamAlarms(
 ): Promise<number> {
   await cancelAllJapamAlarmNotifications();
 
+  // Both platforms try the real-alarm-tier native module first
+  // (AlarmManager.setAlarmClock on Android, AlarmKit on iOS 26+). The
+  // module is only available where the build includes it AND the OS
+  // supports it; otherwise we fall through to the expo-notifications
+  // path. `scheduleNativeAlarmsForDay` no-ops when no module is bound.
+  if (isNativeAlarmSupported()) {
+    return scheduleNativeAlarmsForDay(alarms.filter((a) => a.enabled));
+  }
   if (Platform.OS === 'android') {
-    if (isNativeAlarmSupported()) {
-      return scheduleNativeAlarmsForDay(alarms.filter((a) => a.enabled));
-    }
     return scheduleAndroidViaExpoFallback(alarms);
   }
   return scheduleIosAlarms(alarms);
