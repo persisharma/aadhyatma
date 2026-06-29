@@ -41,7 +41,10 @@ The prioritized queue for `/enrich` and `/enrich-auto`. Each run picks the
 > User flagged these "have challenges" — each needs a design call, so route them
 > through a plan (`plans/<slug>.plan.md`) for review before building.
 
-2. **[T1→plan] Font-size control** — scale strategy (multiplier vs discrete steps), persistence, which surfaces it appears on.
+2. **[T1] Font-size control — slice 2 (UI wiring)** — apply the active scale via
+   `ThemeProvider`/`useTheme()`, add the M/L toggle in More, decide OS
+   `allowFontScaling` interplay + visual XL/overflow pass. (Touches provider + a
+   screen → `/enrich` approval.) Slice 1 (util + context) shipped.
 3. **[T2→plan] Dark-mode toggle** — needs the `darkColors` palette + contrast audit; default "system".
 4. **[T1→plan] Sleep timer** — japam/audio stop-after-N-minutes; UX placement.
 
@@ -63,6 +66,7 @@ The prioritized queue for `/enrich` and `/enrich-auto`. Each run picks the
 
 Delivered by the loop. Newest at top: `date · tier · feature · enrichment · run · [autorun]`.
 
+- 2026-06-27 · T1 · PRD-04 Reading comfort · **Font-size control slice 1** — `theme/fontScale.ts` (M/L presets + pure `scaleTypography` over reading styles only) + `FontScaleContext` (persisted) + 6 unit tests. Additive, no UI yet. 311 tests green. · run 5
 - 2026-06-27 · T0 · Infra · **CI test gate + durable scheduler** — `.github/workflows/ci.yml` (typecheck + reader/engine/data suites on PRs) and `.github/workflows/enrich-loop.yml` (runs `/enrich-auto` every 3h via GitHub Actions, independent of any session). Closes the "wire test:readers into CI" item. · run 4
 - 2026-06-25 · T0 · PRD-06 Foundation · **Reader smoke-test coverage COMPLETE** — added 9 tests (Aarti, DurgaStotram, GaneshStotram, HanumanAshtak, RamStuti, Ramcharitmanas, Sundarkand, VishnuSahasranama, Gita); every `*ReaderScreen` now has a co-located smoke test (RULEBOOK §4.10). 254 tests green. · run 3
 - 2026-06-25 · T0 · PRD-06 Foundation · ShivaStrotamReaderScreen smoke test (`ShivaStrotamReaderScreen.test.tsx`) · run 2 · autorun

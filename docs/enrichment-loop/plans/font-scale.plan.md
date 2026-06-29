@@ -11,10 +11,8 @@ low-vision users is the gap (PRD-04).
 
 ## Design decisions (the reason this is plan-first)
 
-1. **Scale model — discrete steps, not a free multiplier.** Offer 4 presets:
-   `S = 0.9`, `M = 1.0` (default), `L = 1.15`, `XL = 1.3`. Discrete steps keep the
-   parchment layout predictable (line-height stays proportional) and the control
-   trivial. _Recommended over a continuous slider._
+1. **Scale model — two presets only (user decision):** `M = 1.0` (default) and
+   `L = 1.15`. No S, no XL. A simple two-way toggle; line-height stays proportional.
 2. **What scales — reading text only, not chrome.** Scale the verse/meaning
    families (`verse`, `meaning`, `verseLatin`, `meaningEnglish`, the gu/kn verse
    styles, etc.). Do **not** scale `screenTitle`, counters, tab labels, or buttons
@@ -55,9 +53,9 @@ Acceptance criteria, gated in CI where possible:
 2. **Proportional** — `fontSize` AND `lineHeight` scale by the same factor for every
    reading style; chrome styles unchanged. Unit-tested per style key.
 3. **Cross-script / cross-screen render matrix** — extend the reader smoke tests to
-   mount **each of the 16 readers × {S, M, L, XL}** (~64 cases) and assert the first
-   verse renders without throwing, in `hi` and a `latin` pass. Covers Devanagari,
-   Gujarati, Kannada, and Latin transliteration. Runs in `ci.yml`.
+   mount **each reader × {M, L}** and assert the first verse renders without throwing,
+   in `hi` and a `latin` pass. Covers Devanagari, Gujarati, Kannada, and Latin
+   transliteration. Runs in `ci.yml`.
 4. **Worst-case overflow (visual)** — at XL, eyeball the longest content (a long Gita
    shloka, a Sundarkand doha) in the running app: text must wrap/scroll within the
    paged `VersePage`, never clip. Screenshot S vs XL.
