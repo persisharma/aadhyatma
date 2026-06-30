@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeStackNavigator from './HomeStackNavigator';
 import MoreStackNavigator from './MoreStackNavigator';
 import PanchangStackNavigator from './PanchangStackNavigator';
+import AudioStackNavigator from './AudioStackNavigator';
 import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
 import { useTheme } from '@/theme/ThemeContext';
 import type { TabParamList } from './types';
@@ -86,6 +87,16 @@ export default function TabNavigator() {
           tabBarLabel: 'Panchang',
           tabBarIcon: ({ color, size }) => (
             <PanchangIcon color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="AudioTab"
+        component={AudioStackNavigator}
+        options={{
+          tabBarLabel: 'Audio',
+          tabBarIcon: ({ color, size }) => (
+            <MusicIcon color={color} size={size} />
           ),
         }}
       />
@@ -273,6 +284,55 @@ function MoreIcon({ color, size }: TabIconProps) {
           />
         ))}
       </View>
+    </View>
+  );
+}
+
+function MusicIcon({ color, size }: TabIconProps) {
+  const stroke = Math.max(1.5, size * 0.085);
+  const head = size * 0.3;
+  const stemLeft = size * 0.24 + head - stroke;
+
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      {/* notehead */}
+      <View
+        style={{
+          position: 'absolute',
+          left: size * 0.24,
+          bottom: size * 0.22,
+          width: head,
+          height: head * 0.78,
+          borderRadius: head / 2,
+          backgroundColor: color,
+          transform: [{ rotate: '-20deg' }],
+        }}
+      />
+      {/* stem */}
+      <View
+        style={{
+          position: 'absolute',
+          left: stemLeft,
+          bottom: size * 0.3,
+          width: stroke,
+          height: size * 0.44,
+          borderRadius: stroke / 2,
+          backgroundColor: color,
+        }}
+      />
+      {/* flag */}
+      <View
+        style={{
+          position: 'absolute',
+          left: stemLeft,
+          top: size * 0.2,
+          width: size * 0.24,
+          height: stroke,
+          borderRadius: stroke / 2,
+          backgroundColor: color,
+          transform: [{ rotate: '34deg' }],
+        }}
+      />
     </View>
   );
 }

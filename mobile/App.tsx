@@ -48,11 +48,14 @@ import {
   configureForegroundNotificationHandler,
 } from '@/contexts/NotificationPreferencesContext';
 import { PanchangLocationProvider } from '@/contexts/PanchangLocationContext';
+import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
+import MiniPlayer from '@/components/audio/MiniPlayer';
+import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
@@ -152,6 +155,7 @@ export default function App() {
         <FontScaleProvider>
         <ThemeProvider>
           <GitaLanguageProvider>
+            <AudioPlayerProvider>
             <BookmarksProvider>
               <VratFollowProvider>
               <UserActivityProvider>
@@ -173,6 +177,8 @@ export default function App() {
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
                             <VratReminderScheduler />
+                            <MiniPlayer />
+                            <NowPlayingScreen />
                           </View>
                         </ShareProvider>
                         </PanchangLocationProvider>
@@ -186,6 +192,7 @@ export default function App() {
               </UserActivityProvider>
               </VratFollowProvider>
             </BookmarksProvider>
+            </AudioPlayerProvider>
           </GitaLanguageProvider>
         </ThemeProvider>
         </FontScaleProvider>

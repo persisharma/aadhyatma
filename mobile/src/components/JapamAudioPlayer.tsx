@@ -1,12 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import {
-  setAudioModeAsync,
-  useAudioPlayer,
-  useAudioPlayerStatus,
-} from 'expo-audio';
+import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
+import { ensureBackgroundAudioMode } from '@/audio/audioSession';
 import { getJapamAudioSource } from '@assets/japam-audio';
 import type { Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
@@ -25,22 +22,6 @@ type Props = {
 const MIN_RATE = 0.5;
 const MAX_RATE = 1.5;
 const RATE_STEP = 0.1;
-
-let audioModeConfigured = false;
-async function ensureBackgroundAudioMode() {
-  if (audioModeConfigured) return;
-  audioModeConfigured = true;
-  try {
-    await setAudioModeAsync({
-      playsInSilentMode: true,
-      shouldPlayInBackground: true,
-      interruptionMode: 'mixWithOthers',
-      interruptionModeAndroid: 'duckOthers',
-    });
-  } catch {
-    audioModeConfigured = false;
-  }
-}
 
 export default function JapamAudioPlayer({
   mantraId,
