@@ -8,6 +8,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useGitaLanguage, LANGUAGES } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
 import { scriptBodyFont } from '@/utils/langType';
+import ReadingSizeCard from '@/components/ReadingSizeCard';
 import { pick, contentByLang } from '@/utils/localize';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
 import { useUserActivity } from '@/contexts/UserActivityContext';
@@ -329,6 +330,9 @@ export default function MoreScreen({ navigation }: Props) {
               })}
             </View>
           </View>
+
+          {/* Reading size (PRD-04 slice 2) */}
+          <ReadingSizeCard />
 
           {/* Panchang Disclosure */}
           <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, flexDirection: 'column', alignItems: 'stretch' }]}>

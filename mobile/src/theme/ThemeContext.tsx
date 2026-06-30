@@ -3,6 +3,8 @@ import { lightColors, type ColorPalette } from './colors';
 import { typography, type TypographyScale } from './typography';
 import { spacing, radii, type SpacingScale, type RadiiScale } from './spacing';
 import { elevation, type ElevationScale } from './elevation';
+import { scaleTypography } from './fontScale';
+import { useFontScale } from '@/contexts/FontScaleContext';
 
 export type ThemeMode = 'light' | 'dark';
 
@@ -31,7 +33,11 @@ type ThemeProviderProps = {
 };
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const value = useMemo<Theme>(() => defaultTheme, []);
+  const { factor } = useFontScale();
+  const value = useMemo<Theme>(
+    () => ({ ...defaultTheme, typography: scaleTypography(typography, factor) }),
+    [factor]
+  );
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 

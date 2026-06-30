@@ -30,6 +30,7 @@ import {
   NotoSerifKannada_600SemiBold,
 } from '@expo-google-fonts/noto-serif-kannada';
 import { ThemeProvider } from '@/theme/ThemeContext';
+import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { lightColors } from '@/theme/colors';
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
@@ -148,6 +149,7 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayout}>
       <SafeAreaProvider>
+        <FontScaleProvider>
         <ThemeProvider>
           <GitaLanguageProvider>
             <BookmarksProvider>
@@ -186,6 +188,7 @@ export default function App() {
             </BookmarksProvider>
           </GitaLanguageProvider>
         </ThemeProvider>
+        </FontScaleProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
