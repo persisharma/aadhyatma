@@ -39,5 +39,8 @@ jobs:
       - name: Engine tests
         run: npm run test:engine
 
+      - name: Observance date verification (festival dates vs muhurta-based astronomy)
+        run: npm run verify:observances
+
       - name: Data tests
         run: npm run test:data

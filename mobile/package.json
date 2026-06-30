@@ -14,6 +14,7 @@
     "test:engine": "tsx --test src/panchang/__tests__/*.test.ts",
     "test:data": "tsx --test src/data/__tests__/searchNormalize.test.ts src/data/__tests__/contentCorrectness.test.ts src/data/__tests__/searchIndex.test.ts src/data/__tests__/theerth.test.ts src/data/chapteredTotals.test.ts src/data/sourceIdMigration.test.ts src/navigation/entryRoutes.test.ts src/notifications/__tests__/scheduler.test.ts src/notifications/__tests__/vratReminderPure.test.ts src/notifications/__tests__/japamAlarms.test.ts",
     "test:e2e:panchang-year": "tsx --test src/panchang/__tests__/panchangVisibleYear.e2e.test.ts",
+    "verify:observances": "TZ=Asia/Kolkata tsx scripts/verify-observances.mts",
     "test:e2e": "maestro test .maestro/",
     "test:e2e:flow": "maestro test",
     "typecheck": "tsc --noEmit",
