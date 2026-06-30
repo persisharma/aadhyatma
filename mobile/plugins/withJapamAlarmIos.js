@@ -16,6 +16,12 @@
  *     default deployment target (15.1+); JS branches on `Platform.Version`
  *     before invoking the module, so older devices never reach the
  *     AlarmKit branch.
+ *   - The AlarmKit entitlement. AlarmKit needs a special Apple-granted
+ *     entitlement plus the matching capability in Signing & Capabilities;
+ *     without it, scheduling fails at runtime on iOS 26. Request it through
+ *     the Apple Developer portal and add it to the app's entitlements (e.g.
+ *     via EAS managed credentials) — the exact key is NOT injected here to
+ *     avoid breaking code-signing with a guessed value.
  */
 
 const { withInfoPlist } = require('@expo/config-plugins');

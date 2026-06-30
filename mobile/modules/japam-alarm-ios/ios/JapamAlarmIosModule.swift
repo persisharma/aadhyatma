@@ -8,6 +8,13 @@
 //   cancelAll()
 //   getCapability() -> { supported, canScheduleExact }
 //   requestPermission() -> bool
+//   getAuthorizationStatus() -> "granted" | "denied" | "undetermined"
+//
+// Alarms are scheduled as a DAILY recurring AlarmKit alarm (a relative
+// schedule repeating every weekday), so the alarm re-arms itself with no app
+// involvement and adjusts for timezone changes — AlarmKit owns the recurrence.
+// `fireAt` (epoch ms) carries the time-of-day; the module extracts hour/minute
+// from it.
 //
 // IDs in our app are strings; AlarmKit identifies alarms by `UUID`. The
 // module persists a string→UUID mapping in UserDefaults so cancel-by-id
@@ -17,11 +24,16 @@
 // compiles cleanly on Expo's default iOS deployment target (15.1); JS
 // guards on Platform.Version before calling, so older devices never reach
 // these branches.
+//
+// NOTE: AlarmKit requires the AlarmKit entitlement (requested from Apple) +
+// the `NSAlarmKitUsageDescription` Info.plist key (injected by
+// withJapamAlarmIos.js). Without the entitlement, scheduling fails at runtime.
 
 import ExpoModulesCore
 import Foundation
 #if canImport(AlarmKit)
 import AlarmKit
+import SwiftUI
 #endif
 
 private let kMappingDefaultsKey = "japam-alarm.id-map.v1"
@@ -69,6 +81,13 @@ public class JapamAlarmIosModule: Module {
       return false
     }
 
+    AsyncFunction("getAuthorizationStatus") { () -> String in
+      if #available(iOS 26.0, *) {
+        return JapamAlarmIosService.authorizationStatus()
+      }
+      return "undetermined"
+    }
+
     AsyncFunction("scheduleAlarm") {
       (args: [String: Any]) -> [String: Any] in
       guard let alarmId = args["alarmId"] as? String,
@@ -81,14 +100,16 @@ public class JapamAlarmIosModule: Module {
         )
       }
       let title = (args["label"] as? String) ?? "Japam time"
-      let soundName = args["mantraId"] as? String
 
       if #available(iOS 26.0, *) {
+        // The alarm repeats daily, so only the wall-clock time-of-day matters.
+        let fireDate = Date(timeIntervalSince1970: fireAtMs / 1000.0)
+        let comps = Calendar.current.dateComponents([.hour, .minute], from: fireDate)
         try await JapamAlarmIosService.schedule(
           alarmId: alarmId,
-          fireAt: Date(timeIntervalSince1970: fireAtMs / 1000.0),
-          title: title,
-          soundName: soundName.map { $0.replacingOccurrences(of: "-", with: "_") }
+          hour: comps.hour ?? 0,
+          minute: comps.minute ?? 0,
+          title: title
         )
         return ["alarmId": alarmId, "fireAt": fireAtMs, "exact": true]
       }
@@ -117,11 +138,20 @@ public class JapamAlarmIosModule: Module {
 
 #if canImport(AlarmKit)
 
+/// Empty metadata — AlarmKit requires a concrete `AlarmMetadata` type for the
+/// alarm's attributes even when we render no custom Live Activity content.
+@available(iOS 26.0, *)
+struct JapamAlarmMetadata: AlarmMetadata {}
+
 /// Thin wrapper around AlarmKit's `AlarmManager`. Lives in its own
 /// availability-guarded type so the rest of the module doesn't have to
 /// branch every call site.
 @available(iOS 26.0, *)
 enum JapamAlarmIosService {
+
+  /// Saffron accent (matches the app's #B8621B) so the system associates these
+  /// alarms with Vedansh and tells them apart from other apps' alarms.
+  private static let tint = Color(red: 0.72, green: 0.38, blue: 0.11)
 
   static func requestPermission() async -> Bool {
     do {
@@ -132,11 +162,21 @@ enum JapamAlarmIosService {
     }
   }
 
+  /// Current authorisation without prompting, mapped to the JS tri-state.
+  static func authorizationStatus() -> String {
+    switch AlarmManager.shared.authorizationState {
+    case .authorized: return "granted"
+    case .denied: return "denied"
+    case .notDetermined: return "undetermined"
+    @unknown default: return "undetermined"
+    }
+  }
+
   static func schedule(
     alarmId: String,
-    fireAt: Date,
-    title: String,
-    soundName: String?
+    hour: Int,
+    minute: Int,
+    title: String
   ) async throws {
     // Cancel any prior alarm registered under the same JS id so the new
     // schedule replaces it cleanly (same semantics as Android's
@@ -144,18 +184,41 @@ enum JapamAlarmIosService {
     try? await cancel(alarmId: alarmId)
 
     let uuid = uuidFor(alarmId: alarmId)
-    let presentation = AlarmPresentation(
-      alert: AlarmPresentation.Alert(
-        title: LocalizedStringResource(stringLiteral: title),
-        sound: soundName.flatMap { AlarmSound(named: $0) } ?? .default
+
+    let stopButton = AlarmButton(
+      text: "Stop",
+      textColor: .white,
+      systemImageName: "stop.circle"
+    )
+    let alert = AlarmPresentation.Alert(
+      title: LocalizedStringResource(stringLiteral: title),
+      stopButton: stopButton
+    )
+    let attributes = AlarmAttributes(
+      presentation: AlarmPresentation(alert: alert),
+      metadata: JapamAlarmMetadata(),
+      tintColor: tint
+    )
+
+    // Daily recurrence: a relative schedule repeating on every weekday. The
+    // system re-fires it each day and accounts for timezone changes, so we
+    // never re-arm from JS (unlike Android's one-shot + boot receiver).
+    // TODO(ios-sound): ring the bundled mantra clip once the AlarmKit custom
+    // sound API is confirmed on a device build; defaults to the system alarm
+    // sound for now so scheduling stays reliable.
+    let schedule = Alarm.Schedule.relative(
+      Alarm.Schedule.Relative(
+        time: Alarm.Schedule.Relative.Time(hour: hour, minute: minute),
+        repeats: .weekly([
+          .sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday,
+        ])
       )
     )
-    let alarm = Alarm(
-      id: uuid,
-      schedule: .fixed(fireAt),
-      presentation: presentation
+    let config = AlarmManager.AlarmConfiguration(
+      schedule: schedule,
+      attributes: attributes
     )
-    try await AlarmManager.shared.schedule(alarm)
+    _ = try await AlarmManager.shared.schedule(id: uuid, configuration: config)
   }
 
   static func cancel(alarmId: String) async throws {
@@ -185,8 +248,9 @@ enum JapamAlarmIosService {
 @available(iOS 26.0, *)
 enum JapamAlarmIosService {
   static func requestPermission() async -> Bool { false }
+  static func authorizationStatus() -> String { "undetermined" }
   static func schedule(
-    alarmId: String, fireAt: Date, title: String, soundName: String?
+    alarmId: String, hour: Int, minute: Int, title: String
   ) async throws {
     throw NSError(
       domain: "JapamAlarmIos",

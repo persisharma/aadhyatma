@@ -5,9 +5,11 @@
  * `AlarmManager.setAlarmClock` + Notifee for the lock-screen UI and looping
  * mantra sound. Survives Doze; survives reboot (boot receiver re-arms).
  *
- * iOS (notification tier): uses `expo-notifications` DAILY trigger with the
- * bundled mantra clip as the notification sound. AlarmKit (iOS 26+) is a
- * future module — until then the iOS path is a normal scheduled notification.
+ * iOS 26+ (real-alarm tier): delegates to the AlarmKit native module — a
+ * daily recurring system alarm that overrides silent mode and Focus, like the
+ * Clock app. iOS < 26 (or Expo Go, where the module isn't bound) falls back to
+ * an `expo-notifications` DAILY trigger with the bundled mantra clip as the
+ * notification sound.
  *
  * `scheduleJapamAlarms(alarms)` is idempotent: it cancels every Japam-alarm
  * slot it owns first, then schedules enabled alarms. Safe to call on any

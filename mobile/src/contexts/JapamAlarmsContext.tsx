@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { AppState, type AppStateStatus } from 'react-native';
+import { AppState, Platform, type AppStateStatus } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import {
@@ -21,6 +21,11 @@ import {
   cancelAllJapamAlarmNotifications,
   scheduleJapamAlarms,
 } from '@/notifications/japamAlarmScheduler';
+import {
+  isIosNativeAlarmSupported,
+  requestIosAlarmPermission,
+  getIosAlarmAuthorizationStatus,
+} from '@/notifications/japamAlarmNative';
 import type { TimeOfDay } from '@/notifications/pure';
 
 const STORAGE_KEY = '@vedansh/japam-alarms';
@@ -49,6 +54,13 @@ const JapamAlarmsContext = createContext<JapamAlarmsContextValue | null>(null);
 
 async function readPermissionStatus(): Promise<PermissionStatus> {
   try {
+    // On iOS the scheduler routes alarms through AlarmKit, so the meaningful
+    // authorisation is AlarmKit's — not expo-notifications'. Reading the wrong
+    // signal here would make the reconcile effect cancel every alarm on the
+    // next launch (notifications stays 'undetermined' since we never ask it).
+    if (Platform.OS === 'ios' && isIosNativeAlarmSupported()) {
+      return await getIosAlarmAuthorizationStatus();
+    }
     const { status } = await Notifications.getPermissionsAsync();
     if (status === 'granted') return 'granted';
     if (status === 'denied') return 'denied';
@@ -143,6 +155,14 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
   const requestPermission = useCallback<JapamAlarmsContextValue['requestPermission']>(
     async () => {
       try {
+        // iOS native-alarm path: prompt for AlarmKit authorisation, which is
+        // what actually gates whether the scheduled alarms fire.
+        if (Platform.OS === 'ios' && isIosNativeAlarmSupported()) {
+          const granted = await requestIosAlarmPermission();
+          const next: PermissionStatus = granted ? 'granted' : 'denied';
+          setPermissionStatus(next);
+          return next;
+        }
         const { status } = await Notifications.requestPermissionsAsync({
           ios: { allowAlert: true, allowBadge: false, allowSound: true },
         });

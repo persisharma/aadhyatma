@@ -14,8 +14,10 @@ import android.os.Build
  * overnight. JapamAlarmModule persists the alarm list to SharedPreferences
  * on every schedule call; this receiver replays them.
  *
- * Skips already-passed fireAt values — those will be re-armed by the JS
- * layer on next app foreground when the JapamAlarmsContext reconciler runs.
+ * When a reboot happens AFTER the stored fireAt (the alarm already fired, or
+ * the device was off when it should have), it re-arms the next daily
+ * occurrence rather than dropping the alarm; the JS reconciler still corrects
+ * everything on the next app foreground.
  */
 class JapamBootReceiver : BroadcastReceiver() {
 
@@ -38,12 +40,16 @@ class JapamBootReceiver : BroadcastReceiver() {
             val a = alarms.optJSONObject(i) ?: continue
             val alarmId = a.optString("alarmId", null) ?: continue
             val mantraId = a.optString("mantraId", null) ?: continue
-            val fireAt = a.optLong("fireAt", 0L)
+            val storedFireAt = a.optLong("fireAt", 0L)
+            if (storedFireAt <= 0L) continue
             val label = if (a.has("label")) a.optString("label", null) else null
-            if (fireAt <= now) {
-                // Past — leave for JS reconciler on next foreground.
-                continue
-            }
+            // A reboot after the stored fire time leaves storedFireAt in the
+            // past. Re-arm the next daily occurrence (preserving its wall-clock
+            // time) instead of skipping, so a 6 AM alarm survives an 8 AM
+            // reboot without waiting for the next app foreground.
+            val fireAt =
+                if (storedFireAt > now) storedFireAt
+                else nextDailyOccurrence(storedFireAt, now)
             try {
                 val pi = JapamAlarmModule.buildPendingIntent(
                     context, alarmId, mantraId, fireAt, label
@@ -65,5 +71,23 @@ class JapamBootReceiver : BroadcastReceiver() {
                 // One alarm's failure shouldn't block the others.
             }
         }
+    }
+
+    /**
+     * Next epoch-ms occurrence of the wall-clock time encoded in [pastFireAt],
+     * at or after [now] (rolls to tomorrow when today's time has already
+     * passed). Mirrors the JS `nextFireTimestamp` so reboot re-arm matches what
+     * the app schedules on foreground.
+     */
+    private fun nextDailyOccurrence(pastFireAt: Long, now: Long): Long {
+        val src = java.util.Calendar.getInstance().apply { timeInMillis = pastFireAt }
+        return java.util.Calendar.getInstance().apply {
+            timeInMillis = now
+            set(java.util.Calendar.HOUR_OF_DAY, src.get(java.util.Calendar.HOUR_OF_DAY))
+            set(java.util.Calendar.MINUTE, src.get(java.util.Calendar.MINUTE))
+            set(java.util.Calendar.SECOND, 0)
+            set(java.util.Calendar.MILLISECOND, 0)
+            if (timeInMillis <= now) add(java.util.Calendar.DAY_OF_YEAR, 1)
+        }.timeInMillis
     }
 }

@@ -54,6 +54,9 @@ type IosNativeModuleShape = {
   cancelAll: () => Promise<void>;
   getCapability: () => Promise<{ supported: boolean; canScheduleExact: boolean }>;
   requestPermission: () => Promise<boolean>;
+  /** Current AlarmKit authorisation without prompting:
+   *  'granted' | 'denied' | 'undetermined'. */
+  getAuthorizationStatus: () => Promise<string>;
 };
 
 function getAndroidModule(): AndroidNativeModuleShape | null {
@@ -101,6 +104,14 @@ export async function getNativeAlarmCapability(): Promise<NativeAlarmCapability>
   }
 }
 
+/** iOS-only: true when the AlarmKit native module is bound (an iOS 26+ build
+ *  that includes it). Lets the context tell the iOS native-alarm path apart
+ *  from Android's — Android posts via NotificationManager and needs
+ *  notification permission, whereas iOS needs AlarmKit authorisation. */
+export function isIosNativeAlarmSupported(): boolean {
+  return getIosModule() !== null;
+}
+
 /** iOS-only: open the system prompt for AlarmKit alarm authorisation.
  *  Returns true if the user granted, false otherwise (or non-iOS-26). */
 export async function requestIosAlarmPermission(): Promise<boolean> {
@@ -110,6 +121,23 @@ export async function requestIosAlarmPermission(): Promise<boolean> {
     return await mod.requestPermission();
   } catch {
     return false;
+  }
+}
+
+/** iOS-only: current AlarmKit authorisation without prompting. Maps to the
+ *  context's permission tri-state; 'undetermined' when no module / on error. */
+export async function getIosAlarmAuthorizationStatus(): Promise<
+  'granted' | 'denied' | 'undetermined'
+> {
+  const mod = getIosModule();
+  if (!mod) return 'undetermined';
+  try {
+    const status = await mod.getAuthorizationStatus();
+    if (status === 'granted') return 'granted';
+    if (status === 'denied') return 'denied';
+    return 'undetermined';
+  } catch {
+    return 'undetermined';
   }
 }
 
