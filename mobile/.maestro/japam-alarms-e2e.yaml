@@ -1,0 +1,61 @@
+# Ad-hoc verification flow for PR #152 Japam Alarms UI (iOS / Expo Go).
+# Drives the new feature end-to-end at the JS/UI layer: More card -> screen ->
+# add (persist) -> toggle -> edit -> delete. Native alarm firing is NOT covered
+# (no native module in Expo Go) — that's expected.
+appId: host.exp.Exponent
+---
+- runFlow: _launch.yaml
+
+# Set reading language to English for stable assertions
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# (1) Japam Alarms card on the More screen (#152 entry point).
+# The card is a Pressable with an explicit accessibilityLabel, which collapses
+# its child Text — so match the a11y label, not the inner "Japam Alarms" text.
+- assertVisible: "Japam alarms, none set"
+- takeScreenshot: jalarms-1-more-card
+
+# (2) Open the new Japam Alarms screen — empty state
+- tapOn: "Japam alarms, none set"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "No alarms yet"
+    timeout: 10000
+- assertVisible: "Add your first Japam alarm to begin."
+- takeScreenshot: jalarms-2-empty
+
+# (3) Open the new-alarm editor (transparent Modal — Maestro can't read its
+# tree, so the editor is verified by screenshot and driven by coordinate taps).
+- tapOn: "Add alarm"
+- waitForAnimationToEnd
+- takeScreenshot: jalarms-3-editor
+
+# (4) Confirm add (defaults: 06:00, first mantra). Coordinate tap on "Add".
+# Self-validating: if the row appears, add+persist worked; if the tap missed
+# onto "Cancel", the row never appears and the next step fails.
+- tapOn:
+    point: 50%,64%
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Edit alarm at 06:00"
+    timeout: 10000
+- takeScreenshot: jalarms-4-after-add
+
+# (5) Toggle the alarm switch off
+- tapOn: "Toggle alarm"
+- waitForAnimationToEnd
+- takeScreenshot: jalarms-5-toggled
+
+# (6) Reopen editor in EDIT mode (proves edit entry-point + persistence read)
+- tapOn: "Edit alarm at 06:00"
+- waitForAnimationToEnd
+- takeScreenshot: jalarms-6-editor-edit
+
+- stopApp:
+    appId: host.exp.Exponent
