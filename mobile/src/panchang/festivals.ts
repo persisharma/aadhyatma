@@ -228,7 +228,8 @@ const SANKRANTI_RULES: ObservanceRule[] = [
 export const FESTIVAL_RULES: ObservanceRule[] = [
   ...SANKRANTI_RULES,
   festival({ id: 'vasant-panchami', nameHi: 'वसंत पंचमी', nameEn: 'Vasant Panchami', lunarMonth: 11, paksha: 'shukla', tithi: 5, marker: 'star', deityHi: 'मां सरस्वती', deityEn: 'Maa Saraswati', kathaId: 'vasant-panchami-katha' }),
-  festival({ id: 'maha-shivaratri', nameHi: 'महा शिवरात्रि', nameEn: 'Maha Shivaratri', lunarMonth: 11, paksha: 'krishna', tithi: 14, marker: 'star', deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'maha-shivaratri-vrat-katha' }),
+  // Krishna-paksha lunarMonth is the PURNIMANT (North-Indian) month — Maha Shivaratri is Phalguna (12), not Magha (11, its amanta name). See monthForRuleInSystem.
+  festival({ id: 'maha-shivaratri', nameHi: 'महा शिवरात्रि', nameEn: 'Maha Shivaratri', lunarMonth: 12, paksha: 'krishna', tithi: 14, marker: 'star', deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'maha-shivaratri-vrat-katha' }),
   festival({ id: 'holi', nameHi: 'होली', nameEn: 'Holi', lunarMonth: 12, paksha: 'shukla', tithi: 15, marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', kathaId: 'holi-legends' }),
   festival({ id: 'ram-navami', nameHi: 'राम नवमी', nameEn: 'Ram Navami', lunarMonth: 1, paksha: 'shukla', tithi: 9, marker: 'star', deityHi: 'श्री राम', deityEn: 'Shri Ram', linkSectionId: 'ram-stuti', kathaId: 'rama-navami-vrat-katha' }),
   festival({ id: 'hanuman-jayanti', nameHi: 'हनुमान जयंती', nameEn: 'Hanuman Jayanti', lunarMonth: 1, paksha: 'shukla', tithi: 15, marker: 'star', deityHi: 'हनुमान जी', deityEn: 'Hanuman Ji', linkSectionId: 'hanuman-chalisa', kathaId: 'hanuman-jayanti-vrat-katha' }),
@@ -238,12 +239,14 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'sita-navami', nameHi: 'सीता नवमी', nameEn: 'Sita Navami', lunarMonth: 2, paksha: 'shukla', tithi: 9, marker: 'dot', deityHi: 'मां सीता', deityEn: 'Maa Sita', kathaId: 'sita-navami-vrat-katha' }),
   festival({ id: 'narasimha-jayanti', nameHi: 'नरसिंह जयंती', nameEn: 'Narasimha Jayanti', lunarMonth: 2, paksha: 'shukla', tithi: 14, marker: 'dot', deityHi: 'भगवान नरसिंह', deityEn: 'Lord Narasimha', kathaId: 'narasimha-jayanti-vrat-katha' }),
   festival({ id: 'buddha-purnima', nameHi: 'बुद्ध पूर्णिमा', nameEn: 'Buddha Purnima', lunarMonth: 2, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'भगवान बुद्ध', deityEn: 'Lord Buddha', kathaId: 'buddha-purnima-vrat-katha' }),
-  festival({ id: 'narada-jayanti', nameHi: 'नारद जयंती', nameEn: 'Narada Jayanti', lunarMonth: 2, paksha: 'krishna', tithi: 1, marker: 'dot', deityHi: 'देवर्षि नारद', deityEn: 'Devarshi Narada', kathaId: 'narada-jayanti-vrat-katha' }),
+  // Purnimant month: Narada Jayanti is Jyeshtha (3) Krishna Pratipada, not Vaishakha (2, amanta name).
+  festival({ id: 'narada-jayanti', nameHi: 'नारद जयंती', nameEn: 'Narada Jayanti', lunarMonth: 3, paksha: 'krishna', tithi: 1, marker: 'dot', deityHi: 'देवर्षि नारद', deityEn: 'Devarshi Narada', kathaId: 'narada-jayanti-vrat-katha' }),
   festival({ id: 'ganga-dussehra', nameHi: 'गंगा दशहरा', nameEn: 'Ganga Dussehra', lunarMonth: 3, paksha: 'shukla', tithi: 10, marker: 'dot', deityHi: 'मां गंगा', deityEn: 'Maa Ganga', kathaId: 'ganga-dussehra-katha' }),
   festival({ id: 'guru-purnima', nameHi: 'गुरु पूर्णिमा', nameEn: 'Guru Purnima', lunarMonth: 4, paksha: 'shukla', tithi: 15, marker: 'star', deityHi: 'गुरु परंपरा', deityEn: 'Guru Parampara', kathaId: 'guru-purnima-katha' }),
   festival({ id: 'nag-panchami', nameHi: 'नाग पंचमी', nameEn: 'Nag Panchami', lunarMonth: 5, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'नाग देवता', deityEn: 'Naga Devata', kathaId: 'nag-panchami-vrat-katha' }),
   festival({ id: 'raksha-bandhan', nameHi: 'रक्षा बंधन', nameEn: 'Raksha Bandhan', lunarMonth: 5, paksha: 'shukla', tithi: 15, marker: 'star', kathaId: 'raksha-bandhan-legends' }),
-  festival({ id: 'janmashtami', nameHi: 'जन्माष्टमी', nameEn: 'Janmashtami', lunarMonth: 5, paksha: 'krishna', tithi: 8, marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'janmashtami-katha' }),
+  // Purnimant month: Janmashtami is Bhadrapada (6) Krishna Ashtami, not Shravana (5, its amanta name).
+  festival({ id: 'janmashtami', nameHi: 'जन्माष्टमी', nameEn: 'Janmashtami', lunarMonth: 6, paksha: 'krishna', tithi: 8, marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'janmashtami-katha' }),
   festival({ id: 'hartalika-teej', nameHi: 'हरतालिका तीज', nameEn: 'Hartalika Teej', lunarMonth: 6, paksha: 'shukla', tithi: 3, marker: 'dot', category: 'vrat', deityHi: 'मां पार्वती', deityEn: 'Maa Parvati', kathaId: 'hartalika-teej-katha' }),
   festival({ id: 'ganesh-chaturthi', nameHi: 'गणेश चतुर्थी', nameEn: 'Ganesh Chaturthi', lunarMonth: 6, paksha: 'shukla', tithi: 4, marker: 'star', deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', linkSectionId: 'ganesh-chalisa', kathaId: 'ganesha-chaturthi-vrat-katha' }),
   festival({ id: 'rishi-panchami', nameHi: 'ऋषि पंचमी', nameEn: 'Rishi Panchami', lunarMonth: 6, paksha: 'shukla', tithi: 5, marker: 'dot', category: 'vrat', deityHi: 'ऋषि परंपरा', deityEn: 'Rishi Parampara', kathaId: 'rishi-panchami-vrat-katha' }),

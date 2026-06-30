@@ -126,7 +126,7 @@ test('upcoming observances are anchored to the selected date and calendar system
 });
 
 test('Krishna Paksha festivals keep their civil date across Purnimant and Amanta', () => {
-  const janmashtamiDate = new Date(2026, 7, 6);
+  const janmashtamiDate = new Date(2026, 8, 4);
   const purnimant = getObservancesForDate(janmashtamiDate, 'purnimant');
   const amanta = getObservancesForDate(janmashtamiDate, 'amanta');
   const purnimantJanmashtami = purnimant.find((item) => item.rule.id === 'janmashtami');
@@ -140,6 +140,44 @@ test('Krishna Paksha festivals keep their civil date across Purnimant and Amanta
   assert.ok(
     sameDayAmanta.some((item) => item.rule.id === 'janmashtami'),
     'Amanta same-day observances should include Janmashtami on the canonical date'
+  );
+});
+
+// REAL published civil dates (drikpanchang, Ujjain/IST) — the source of truth, NOT
+// engine output. These guard the krishna-paksha month-name convention: a rule's
+// lunarMonth must be the PURNIMANT (North-Indian) month. Janmashtami = Bhadrapada (6)
+// not Shravana (5); Maha Shivaratri = Phalguna (12) not Magha (11); Narada Jayanti =
+// Jyeshtha (3) not Vaishakha (2). Storing the amanta month shifts the festival one
+// lunar month early (the "Janmashtami showing wrong" bug).
+test('Janmashtami resolves to its real civil date, not one lunar month early', () => {
+  for (const system of ['purnimant', 'amanta'] as const) {
+    assert.ok(
+      getObservancesForDate(new Date(2025, 7, 16), system).some((o) => o.rule.id === 'janmashtami'),
+      `${system}: Janmashtami 2025 must be 16 Aug (Bhadrapada Krishna Ashtami)`
+    );
+    assert.ok(
+      getObservancesForDate(new Date(2026, 8, 4), system).some((o) => o.rule.id === 'janmashtami'),
+      `${system}: Janmashtami 2026 must be 4 Sep`
+    );
+    assert.ok(
+      !getObservancesForDate(new Date(2025, 6, 18), system).some((o) => o.rule.id === 'janmashtami'),
+      `${system}: Janmashtami must NOT resolve on 18 Jul 2025 (one lunar month early)`
+    );
+  }
+});
+
+test('Maha Shivaratri and Narada Jayanti use the Purnimant month (real dates)', () => {
+  const shivaratri2025 = resolveFestivalsForYear(2025).find((f) => f.rule.id === 'maha-shivaratri');
+  const shivaratri2026 = resolveFestivalsForYear(2026).find((f) => f.rule.id === 'maha-shivaratri');
+  assert.ok(shivaratri2025 && shivaratri2026, 'Maha Shivaratri must resolve');
+  // Maha Shivaratri is Phalguna Krishna Chaturdashi — always February, never January.
+  assert.equal(shivaratri2025!.date.getMonth(), 1, 'Maha Shivaratri 2025 must be in February');
+  assert.equal(shivaratri2026!.date.getMonth(), 1, 'Maha Shivaratri 2026 must be in February');
+
+  // Narada Jayanti 2025 = 13 May (Jyeshtha Krishna Pratipada), not 13 Apr.
+  assert.ok(
+    getObservancesForDate(new Date(2025, 4, 13), 'purnimant').some((o) => o.rule.id === 'narada-jayanti'),
+    'Narada Jayanti 2025 must be 13 May'
   );
 });
 
