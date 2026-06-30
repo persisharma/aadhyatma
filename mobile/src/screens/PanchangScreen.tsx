@@ -25,6 +25,7 @@ import { useVratFollows } from '@/contexts/VratFollowContext';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -221,7 +222,7 @@ export default function PanchangScreen() {
                 </View>
                 <Text
                   numberOfLines={1}
-                  style={{ flexShrink: 1, fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkSoft }}
+                  style={{ flexShrink: 1, fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}
                 >
                   {contentByLang(lang, location.labelHi, location.labelEn)}
                 </Text>
@@ -431,7 +432,7 @@ export default function PanchangScreen() {
           <View style={[styles.dateHeader, { borderBottomColor: colors.divider }]}>
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.saffronDeep }}>
               {contentByLang(lang, p.vara.nameHi, p.vara.nameEn)}
-              <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkSoft }}>
+              <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
                 {'  '}{formatFullDate(p.date, lang)} · {contentByLang(lang, `विक्रम संवत् ${p.vikramSamvat}`, `Vikram Samvat ${p.vikramSamvat}`)}
               </Text>
             </Text>
@@ -458,12 +459,12 @@ export default function PanchangScreen() {
 
           <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
             <View style={styles.timesRow}>
-              <TimeCell icon="☀" label={contentByLang(lang, 'सूर्योदय', 'Sunrise')} value={formatTime12(p.sunrise)} colors={colors} />
-              <TimeCell icon="☀" label={contentByLang(lang, 'सूर्यास्त', 'Sunset')} value={formatTime12(p.sunset)} colors={colors} />
+              <TimeCell icon="☀" label={contentByLang(lang, 'सूर्योदय', 'Sunrise')} value={formatTime12(p.sunrise)} lang={lang} colors={colors} />
+              <TimeCell icon="☀" label={contentByLang(lang, 'सूर्यास्त', 'Sunset')} value={formatTime12(p.sunset)} lang={lang} colors={colors} />
             </View>
             <View style={[styles.timesRow, { marginTop: 12 }]}>
-              <TimeCell icon="☽" label={contentByLang(lang, 'चंद्रोदय', 'Moonrise')} value={formatTime12(p.moonrise)} colors={colors} />
-              <TimeCell icon="☽" label={contentByLang(lang, 'ब्रह्म मुहूर्त', 'Brahma Muhurta')} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} colors={colors} />
+              <TimeCell icon="☽" label={contentByLang(lang, 'चंद्रोदय', 'Moonrise')} value={formatTime12(p.moonrise)} lang={lang} colors={colors} />
+              <TimeCell icon="☽" label={contentByLang(lang, 'ब्रह्म मुहूर्त', 'Brahma Muhurta')} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} lang={lang} colors={colors} />
             </View>
           </View>
             </>
@@ -506,7 +507,7 @@ export default function PanchangScreen() {
               {upcoming.map((item, i) => (
                 <View key={`${item.rule.id}-${item.date.toDateString()}`} style={[styles.upcomingRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}>
                   <View style={[styles.upcomingDot, { backgroundColor: markerColor(item.rule.marker, colors) }]} />
-                  <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkMuted, width: 50 }}>
+                  <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, width: 50 }}>
                     {formatShortDate(item.date, lang)}
                   </Text>
                   <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.ink, flex: 1 }}>
@@ -619,7 +620,17 @@ function PanchangTile({ label, element, lang, colors, typography, radii, elevati
     >
       {/* The type label leads in the active language (TITHI / तिथि …) — same
           source as the old row, kept uppercase so it reads as a quiet tag. */}
-      <Text style={{ fontSize: 9, color: colors.saffronDeep, fontFamily: 'CormorantGaramond_600SemiBold', letterSpacing: 1, textTransform: 'uppercase' }}>
+      <Text
+        style={{
+          fontSize: 9,
+          color: colors.saffronDeep,
+          // English keeps the tracked uppercase Cormorant tag; Indic uses its own
+          // script serif with no tracking (letterSpacing splits the shirorekha).
+          fontFamily: lang === 'en' ? 'CormorantGaramond_600SemiBold' : scriptTitleFont(lang, typography.cardHindi.fontFamily),
+          letterSpacing: lang === 'en' ? 1 : 0,
+          textTransform: lang === 'en' ? 'uppercase' : 'none',
+        }}
+      >
         {label}
       </Text>
       <Text
@@ -635,7 +646,7 @@ function PanchangTile({ label, element, lang, colors, typography, radii, elevati
         {lang === 'en' ? element.nameHi : element.nameEn}
       </Text>
       {element.endTime && (
-        <Text style={{ fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 11, color: colors.inkSoft, marginTop: 5 }}>
+        <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft, marginTop: 5 }}>
           {contentByLang(lang, 'तक ', 'till ')}{formatTime12(element.endTime)}
         </Text>
       )}
@@ -643,7 +654,7 @@ function PanchangTile({ label, element, lang, colors, typography, radii, elevati
   );
 }
 
-function TimeCell({ icon, label, value, colors }: { icon: string; label: string; value: string; colors: any }) {
+function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: string; value: string; lang: Lang; colors: any }) {
   return (
     <View style={styles.timeCell}>
       {/* ︎ forces text (monochrome) presentation so ☀ doesn't render as a
@@ -651,7 +662,7 @@ function TimeCell({ icon, label, value, colors }: { icon: string; label: string;
           All four metrics now share one filled-with-accent (gold) glyph style. */}
       <Text style={{ fontSize: 17, color: colors.gold, width: 22, textAlign: 'center' }}>{`${icon}︎`}</Text>
       <View style={{ marginLeft: 9, flex: 1 }}>
-        <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 10, color: colors.inkMuted }}>{label}</Text>
+        <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 10, color: colors.inkMuted }}>{label}</Text>
         <Text style={{ fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 13, color: colors.ink }}>{value}</Text>
       </View>
     </View>
@@ -677,11 +688,11 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
       <View style={styles.observanceTop}>
         <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
-          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep }}>
+          <Text style={{ fontFamily: lang === 'en' ? 'Inter_600SemiBold' : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
             {item.rule.category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat') : contentByLang(lang, 'पर्व', 'Festival')}
           </Text>
         </View>
-        <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 12, color: colors.inkMuted }}>
+        <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted }}>
           {contentByLang(lang, item.rule.deityHi, item.rule.deityEn)}
         </Text>
       </View>

@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Modal,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -22,11 +23,14 @@ import {
   type JapamMantra,
 } from '@/data/japam';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
+import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
+import { useFontScale } from '@/contexts/FontScaleContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
+import { AlarmEditorSheet } from '@/screens/JapamAlarmsScreen';
 import { useShare } from '@/utils/shareVerse';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -36,15 +40,22 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { getEntry, increment, resetBeads, clear } = useJapamCounter();
+  const { addAlarm, updateAlarm, removeAlarm } = useJapamAlarms();
   const { share, busy: shareBusy } = useShare();
+  const { factor } = useFontScale();
   const { height: windowHeight } = useWindowDimensions();
   const isShortScreen = windowHeight < 720;
   const isVeryShortScreen = windowHeight < 640;
 
-  const verseFontSize = isVeryShortScreen ? 19 : isShortScreen ? 21 : typography.verse.fontSize;
-  const verseLineHeight = isVeryShortScreen ? 32 : isShortScreen ? 35 : typography.verse.lineHeight;
-  const verseFontSizeEn = isVeryShortScreen ? 17 : isShortScreen ? 18 : 20;
-  const verseLineHeightEn = isVeryShortScreen ? 28 : isShortScreen ? 30 : 34;
+  // Mantra is reading text → it scales with the global M/L size on EVERY device
+  // (no per-device hardcoding, so M/L always takes effect). The tap surface
+  // scrolls, so a larger mantra never clips — including the long 4-line mantras
+  // (gayatri, hare-krishna). Non-Latin uses the themed (already-scaled) verse
+  // token; the Latin transliteration scales its own smaller base by the factor.
+  const verseFontSize = typography.verse.fontSize;
+  const verseLineHeight = typography.verse.lineHeight;
+  const verseFontSizeEn = Math.round(20 * factor);
+  const verseLineHeightEn = Math.round(34 * factor);
   const countFontSize = isVeryShortScreen ? 64 : isShortScreen ? 76 : 88;
   const countLineHeight = isVeryShortScreen ? 70 : isShortScreen ? 82 : 94;
 
@@ -63,6 +74,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
   const entry = getEntry(mantra?.id ?? '__none__');
   const [confirmKind, setConfirmKind] = useState<'beads' | 'all' | null>(null);
+  const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
 
   const registerBead = useCallback(() => {
@@ -142,7 +154,27 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             </Text>
           </View>
 
-          <View style={styles.backSpacer}>
+          <View style={styles.topRightCluster}>
+            <Pressable
+              onPress={() => setAlarmEditorOpen(true)}
+              accessibilityRole="button"
+              accessibilityLabel={
+                lang === 'hi'
+                  ? 'इस मंत्र के लिए स्मरण बनाएँ'
+                  : 'Set an alarm for this mantra'
+              }
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.alarmBtn,
+                {
+                  backgroundColor: colors.parchmentSoft,
+                  borderColor: colors.divider,
+                },
+                pressed && { opacity: 0.7 },
+              ]}
+            >
+              <Text style={[styles.alarmGlyph, { color: colors.saffronDeep }]}>⏰</Text>
+            </Pressable>
             <ShareButton
               busy={shareBusy}
               onPress={() => {
@@ -169,16 +201,21 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <LanguageToggle />
         </View>
 
-        <Pressable
-          onPress={handleTap}
-          accessibilityRole="button"
-          accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this round, ${entry.rounds} rounds completed.`}
-          style={({ pressed }) => [
-            styles.tapArea,
-            pressed && styles.tapAreaPressed,
-          ]}
+        <ScrollView
+          style={styles.tapArea}
+          contentContainerStyle={styles.tapScroll}
+          showsVerticalScrollIndicator={false}
         >
-          <View style={[styles.tapContent, { paddingHorizontal: spacing.xxl }]}>
+          <Pressable
+            onPress={handleTap}
+            accessibilityRole="button"
+            accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this round, ${entry.rounds} rounds completed.`}
+            style={({ pressed }) => [
+              styles.tapContent,
+              { paddingHorizontal: spacing.xxl },
+              pressed && styles.tapAreaPressed,
+            ]}
+          >
             <View style={styles.mantraBlock}>
               {verseLinesByLang(lang, mantra.lines, mantra.linesEn).map((line, i) => (
                 <Text
@@ -274,8 +311,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             >
               {tapHint}
             </Text>
-          </View>
-        </Pressable>
+          </Pressable>
+        </ScrollView>
 
         <View
           style={[
@@ -287,6 +324,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             mantraId={mantra.id}
             lang={lang}
             onIteration={registerBead}
+            autoPlay={route.params.autoPlay === true}
           />
         </View>
 
@@ -468,6 +506,24 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </Pressable>
         </Pressable>
       </Modal>
+
+      <AlarmEditorSheet
+        state={alarmEditorOpen ? { kind: 'new' } : null}
+        presetMantraId={mantra.id}
+        onClose={() => setAlarmEditorOpen(false)}
+        onCreate={async (draft) => {
+          await addAlarm(draft);
+          setAlarmEditorOpen(false);
+        }}
+        onSave={async (id, patch) => {
+          await updateAlarm(id, patch);
+          setAlarmEditorOpen(false);
+        }}
+        onDelete={async (id) => {
+          await removeAlarm(id);
+          setAlarmEditorOpen(false);
+        }}
+      />
     </View>
   );
 }
@@ -497,6 +553,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  topRightCluster: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  alarmBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  alarmGlyph: {
+    fontSize: 15,
+    includeFontPadding: false,
+  },
   backGlyph: {
     fontSize: 22,
     lineHeight: 24,
@@ -524,13 +597,17 @@ const styles = StyleSheet.create({
   },
   tapArea: {
     flex: 1,
-    overflow: 'hidden',
+  },
+  tapScroll: {
+    // flexGrow lets the tap surface fill the viewport (tappable everywhere) yet
+    // grow past it so a long/large mantra scrolls instead of clipping.
+    flexGrow: 1,
   },
   tapAreaPressed: {
     opacity: 0.92,
   },
   tapContent: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 8,
@@ -540,7 +617,9 @@ const styles = StyleSheet.create({
   },
   mantraLine: {
     textAlign: 'center',
-    includeFontPadding: false,
+    // No includeFontPadding:false here — this line is Devanagari, and on Android
+    // that prop strips the padding reserved for the shirorekha/top-matras and
+    // clips them (iOS ignores the prop, so it only shows on Android).
   },
   mantraLineEn: {
     textAlign: 'center',

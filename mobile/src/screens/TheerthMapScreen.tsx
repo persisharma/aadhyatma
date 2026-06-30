@@ -15,7 +15,6 @@ import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { cardFontByLang, isLatinLang } from '@/utils/langType';
-import { getCategoryBackground } from '@/data/backgrounds';
 import { useNewContent, templeNewKey } from '@/contexts/NewContentContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -66,10 +65,6 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
   const stateEn = route.params?.stateEn;
   const isDrill = !!group || !!stateEn;
 
-  // Theerth wears the same image backdrop treatment as every other section
-  // (its category plate), instead of the flat parchment gradient it used before.
-  const backgroundImage = getCategoryBackground('theerth');
-
   // Opening a temple acknowledges its NEW chip, mirroring how opening a text
   // markSeen()s a LibraryCard before navigating.
   const handleTemplePress = (id: string) => {
@@ -80,7 +75,10 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.root}>
-      <BackgroundLayer source={backgroundImage} />
+      {/* No decorative image backdrop on Theerth: the busy books/japa-mala sketch
+          showed through behind the transparent India map and camouflaged the
+          saffron outline + pins. A flat parchment gradient keeps the map legible. */}
+      <BackgroundLayer source={null} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <TopBar
           title={

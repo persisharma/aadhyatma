@@ -261,7 +261,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   thumbText: {
-    includeFontPadding: false,
+    // Devanagari letter avatar (ग / ॐ …) — keep Android's font padding so the
+    // glyph's top (chandrabindu/matra) isn't clipped.
   },
   meta: {
     flex: 1,

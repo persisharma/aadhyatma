@@ -36,7 +36,12 @@
       "permissions": [
         "FOREGROUND_SERVICE",
         "FOREGROUND_SERVICE_MEDIA_PLAYBACK",
-        "WAKE_LOCK"
+        "WAKE_LOCK",
+        "SCHEDULE_EXACT_ALARM",
+        "USE_EXACT_ALARM",
+        "POST_NOTIFICATIONS",
+        "USE_FULL_SCREEN_INTENT",
+        "RECEIVE_BOOT_COMPLETED"
       ]
     },
     "web": {
@@ -53,9 +58,14 @@
       [
         "expo-notifications",
         {
-          "color": "#B8621B"
+          "color": "#B8621B",
+          "sounds": [
+            "./assets/japam-alarm-sounds/om-namah-shivaya.wav"
+          ]
         }
       ],
+      "./plugins/withJapamAlarmNative.js",
+      "./plugins/withJapamAlarmIos.js",
       [
         "expo-location",
         {

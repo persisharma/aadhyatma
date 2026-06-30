@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import type { Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
-import { titleFontByLang } from '@/utils/langType';
+import { titleFontByLang, scriptBodyFont } from '@/utils/langType';
 
 type Props = {
   width: number;
@@ -22,7 +22,10 @@ export default function PrevChapterCard({ width, prevTitle, lang }: Props) {
             styles.label,
             {
               color: colors.inkMuted,
-              fontFamily: typography.pageCounter.fontFamily,
+              fontFamily:
+                lang === 'en'
+                  ? typography.pageCounter.fontFamily
+                  : scriptBodyFont(lang, typography.meaning.fontFamily),
               fontSize: 14,
             },
           ]}
@@ -59,10 +62,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   label: {
-    includeFontPadding: false,
+    // Indic label — keep Android's font padding so matras aren't clipped.
   },
   title: {
-    includeFontPadding: false,
     textAlign: 'center',
     paddingHorizontal: 32,
   },

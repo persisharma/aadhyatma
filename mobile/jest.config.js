@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'react-native',
+  setupFiles: ['<rootDir>/jest.setup.js'],
   // Scoped to the dirs holding Jest-style suites. src/data/__tests__ and the
   // plain `*.test.ts` files in src/notifications/__tests__ are node:assert
   // scripts (run via tsx), NOT Jest tests — including them here makes Jest fail

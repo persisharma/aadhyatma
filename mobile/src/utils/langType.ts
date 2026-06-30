@@ -7,12 +7,39 @@
  * the helpers only select among them (RULEBOOK §3: tokens, not literals).
  */
 
+import type { TextStyle } from 'react-native';
 import { fontFamilies, type TypographyScale } from '@/theme/typography';
 import type { Lang } from '@/data/gita/language';
 
 /** True only for English — drives italic/size ternaries that are script-class based. */
 export function isLatinLang(lang: Lang): boolean {
   return lang === 'en';
+}
+
+/**
+ * Script-safe style for micro-labels / pills / eyebrows whose token carries Latin
+ * tracking + uppercase (e.g. `versePill`, `sectionLabel`, `meaningLabel`). Those
+ * tokens were designed for Latin labels and define no `fontFamily`; spread onto
+ * Indic text the `letterSpacing` splits the connecting shirorekha ("सु झा व") and
+ * the missing face leans on an inconsistent system fallback. For `en` we keep the
+ * original tracking + uppercase + system face; for hi/gu/kn we use the script
+ * serif and drop tracking/uppercase (which are meaningless and harmful for Indic).
+ * Use this INSTEAD of spreading the raw token at any pill rendering Indic content.
+ */
+export function pillTextStyle(
+  lang: Lang,
+  token: { fontSize?: number; fontWeight?: TextStyle['fontWeight']; letterSpacing?: number },
+): TextStyle {
+  const latin = isLatinLang(lang);
+  return {
+    fontSize: token.fontSize,
+    fontWeight: token.fontWeight,
+    letterSpacing: latin ? token.letterSpacing : 0,
+    textTransform: latin ? 'uppercase' : 'none',
+    // scriptTitleFont gives the *bold* script cut (gu/kn → SemiBold), matching the
+    // pill's semibold weight; scriptBodyFont would drop gu/kn to Medium.
+    fontFamily: latin ? undefined : scriptTitleFont(lang, fontFamilies.devanagariBold),
+  };
 }
 
 type ReadingToken = { fontFamily: string; fontSize: number; lineHeight: number };

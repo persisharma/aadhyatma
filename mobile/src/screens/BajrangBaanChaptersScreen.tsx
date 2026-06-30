@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   back: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   backSpacer: { width: 44, height: 44 },
   backGlyph: { fontSize: 22, lineHeight: 24, marginTop: -2, includeFontPadding: false },
-  title: { flex: 1, textAlign: 'center', includeFontPadding: false },
+  title: { flex: 1, textAlign: 'center' },
   toggleRow: { paddingVertical: 8, paddingBottom: 16, alignItems: 'center' },
   scroll: { flex: 1 },
   scrollContent: { paddingBottom: 40 },

@@ -3,7 +3,7 @@ import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import { scriptTitleFont } from '@/utils/langType';
+import { scriptTitleFont, cardFontByLang, pillTextStyle } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { library } from '@/data/texts';
 import { findJapamMantra } from '@/data/japam';
@@ -101,7 +101,7 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
           style={[styles.sheet, { backgroundColor: colors.parchmentHighlight, paddingHorizontal: spacing.xxl }]}
         >
           <View style={[styles.grabber, { backgroundColor: colors.divider }]} />
-          <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 18, color: colors.ink, textAlign: 'center' }}>
+          <Text style={{ fontFamily: cardFontByLang(lang), fontSize: 18, color: colors.ink, textAlign: 'center' }}>
             {pick(lang, { hi: `${tName} जोड़ें`, en: `Add ${tName}`, gu: `${tName} ઉમેરો`, kn: `${tName} ಸೇರಿಸಿ` })}
           </Text>
           <Text
@@ -130,13 +130,13 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
               </Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
                 <Pressable onPress={() => setChapterSel(null)} style={chip(chapterSel == null)}>
-                  <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 13, color: colors.ink }}>
+                  <Text style={{ fontFamily: cardFontByLang(lang), fontSize: 13, color: colors.ink }}>
                     {pick(lang, { hi: 'पूरा', en: 'Whole', gu: 'આખું', kn: 'ಸಂಪೂರ್ಣ' })}
                   </Text>
                 </Pressable>
                 {chapters.map((c) => (
                   <Pressable key={c.chapter} onPress={() => setChapterSel(c.chapter)} style={chip(chapterSel === c.chapter)}>
-                    <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 13, color: colors.ink }}>
+                    <Text style={{ fontFamily: cardFontByLang(lang), fontSize: 13, color: colors.ink }}>
                       {contentByLang(lang, c.titleHi, c.titleEn)}
                     </Text>
                   </Pressable>
@@ -181,11 +181,11 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
                   >
                     {added && <Text style={{ color: colors.onPrimary, fontSize: 13 }}>✓</Text>}
                   </View>
-                  <Text style={{ flex: 1, fontFamily: typography.cardHindi.fontFamily, fontSize: 15, color: colors.ink }}>
+                  <Text style={{ flex: 1, fontFamily: cardFontByLang(lang), fontSize: 15, color: colors.ink }}>
                     {contentByLang(lang, r.nameHi || r.nameEn, r.nameEn || r.nameHi)}
                   </Text>
                   <View style={{ backgroundColor: colors.saffronTint, borderRadius: radii.pill, paddingHorizontal: 8, paddingVertical: 2 }}>
-                    <Text style={{ ...typography.versePill, color: colors.saffronDeep }}>
+                    <Text style={{ ...pillTextStyle(lang, typography.versePill), color: colors.saffronDeep }}>
                       {r.mode === 'weekday'
                         ? pick(lang, { hi: 'वार', en: 'WEEKDAY', gu: 'વાર', kn: 'ವಾರ' })
                         : pick(lang, { hi: 'दैनिक', en: 'DAILY', gu: 'દૈનિક', kn: 'ದೈನಿಕ' })}

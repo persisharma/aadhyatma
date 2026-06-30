@@ -1,5 +1,7 @@
 import { CommonActions, createNavigationContainerRef } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
+import { findJapamMantra } from '@/data/japam';
+import { isJapamAlarmPayload } from './japamAlarms';
 import type { TabParamList } from '@/navigation/types';
 import type { NotificationPayload } from './pure';
 
@@ -75,6 +77,30 @@ export function handleNotificationResponse(
       })
     );
     return true;
+  }
+
+  // A Japam-alarm tap opens the counter with the mantra preselected and the
+  // audio loop auto-started — so a tap on the lock-screen alarm drops the
+  // user directly into chanting. The mantraId is validated against the
+  // catalogue to survive content revisions (a stale alarm shouldn't crash
+  // the screen).
+  if (isJapamAlarmPayload(data)) {
+    if (findJapamMantra(data.mantraId)) {
+      navigationRef.dispatch(
+        CommonActions.navigate({
+          name: 'HomeTab',
+          params: {
+            screen: 'JapamCounter',
+            params: { mantraId: data.mantraId, autoPlay: true },
+          },
+        } as never)
+      );
+      return true;
+    }
+    navigationRef.dispatch(
+      CommonActions.navigate({ name: 'HomeTab' } as never)
+    );
+    return false;
   }
 
   return false;

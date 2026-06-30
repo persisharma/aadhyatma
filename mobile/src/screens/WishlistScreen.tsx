@@ -194,7 +194,7 @@ export default function WishlistScreen({ navigation }: Props) {
                 kn: 'ವಿಶ್‌ಲಿಸ್ಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಬೇಕೆ?',
               })}
             </Text>
-            <Text style={[styles.confirmBody, { color: colors.inkSoft, fontFamily: scriptSerif ?? typography.cardLatin.fontFamily }]}>
+            <Text style={[styles.confirmBody, { color: colors.inkSoft, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : (scriptSerif ?? typography.meaning.fontFamily) }]}>
               {pick(lang, {
                 hi: 'यह श्लोक विशलिस्ट से हटा दिया जायेगा।',
                 en: 'This verse will be removed from your wishlist.',
@@ -223,7 +223,7 @@ export default function WishlistScreen({ navigation }: Props) {
               style={({ pressed }) => [styles.confirmCancel, pressed && { opacity: 0.6 }]}
               hitSlop={8}
             >
-              <Text style={[styles.confirmCancelText, { color: colors.inkMuted, fontFamily: scriptSerif ?? typography.cardLatin.fontFamily }]}>
+              <Text style={[styles.confirmCancelText, { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : (scriptSerif ?? typography.meaning.fontFamily) }]}>
                 {cancelLabel}
               </Text>
             </Pressable>
@@ -249,10 +249,10 @@ const styles = StyleSheet.create({
   removeBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   backdrop: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24 },
   confirmCard: { width: '100%', maxWidth: 360, borderWidth: 1, paddingVertical: 22, paddingHorizontal: 22 },
-  confirmTitle: { fontSize: 18, textAlign: 'center', includeFontPadding: false },
-  confirmBody: { marginTop: 10, fontSize: 13, fontStyle: 'italic', textAlign: 'center', includeFontPadding: false },
+  confirmTitle: { fontSize: 18, textAlign: 'center' },
+  confirmBody: { marginTop: 10, fontSize: 13, fontStyle: 'italic', textAlign: 'center' },
   confirmPrimary: { marginTop: 18, paddingVertical: 13, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
-  confirmPrimaryText: { fontSize: 15, includeFontPadding: false },
+  confirmPrimaryText: { fontSize: 15 },
   confirmCancel: { marginTop: 10, paddingVertical: 12, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   confirmCancelText: { fontSize: 13, fontStyle: 'italic', opacity: 0.85 },
 });

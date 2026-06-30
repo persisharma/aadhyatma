@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text } from 'react-native';
+import { ImageBackground, Text } from 'react-native';
 
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light' },
@@ -147,4 +147,14 @@ test('state drill-in lists temples of that state', () => {
   const call = navigate.mock.calls.at(-1) as [string, { templeId: string }];
   assert.equal(call[0], 'TheerthDetail');
   assert.equal(call[1].templeId, 'nageshwar');
+});
+
+// ─── Backdrop ─────────────────────────────────────────────────────────────────
+
+test('renders no decorative image backdrop (flat parchment only) in either mode', () => {
+  const { navigation } = makeNav();
+  const listing = render(navigation, {}, 'en');
+  assert.equal(listing.root.findAllByType(ImageBackground).length, 0, 'listing has no image backdrop');
+  const drill = render(navigation, { stateEn: 'Gujarat' }, 'en');
+  assert.equal(drill.root.findAllByType(ImageBackground).length, 0, 'drill-in has no image backdrop');
 });
