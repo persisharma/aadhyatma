@@ -1,17 +1,16 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { typography as baseType } from '@/theme/typography';
 
 /**
- * JapamCounter renders the mantra inside a FIXED, non-scrolling tap-to-count
- * surface (`tapArea`: flex:1, overflow:'hidden'). If the mantra text inflated
- * with the global reading-size scale, the longest mantras (gayatri,
- * hare-krishna — 4 lines) overflow and get CLIPPED — and the smallest devices
- * clip first. So this constrained surface must keep its own device-adaptive
- * size, INDEPENDENT of M/L. This guards that contract on every device.
+ * JapamCounter's mantra is reading text, so it scales with the global M/L size
+ * on EVERY device (no per-device hardcoding that would make M/L a no-op on small
+ * screens). To keep the long 4-line mantras (gayatri, hare-krishna) from clipping
+ * at the larger size, the tap surface is a ScrollView — it scrolls instead of
+ * clipping. These tests guard both halves: the mantra scales, and it's scrollable.
  */
 
 const mockGetItem = jest.fn((_key: string) => Promise.resolve<string | null>(null));
@@ -58,7 +57,7 @@ const nav: any = { goBack() {}, navigate() {}, replace() {} };
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const route: any = { params: { mantraId: 'gayatri-mantra' } };
 
-async function mantraLineSize(persistedScale: string | null): Promise<number | undefined> {
+async function renderJapam(persistedScale: string | null): Promise<TestRenderer.ReactTestRenderer> {
   mockGetItem.mockResolvedValue(persistedScale);
   let tree: TestRenderer.ReactTestRenderer;
   await act(async () => {
@@ -74,20 +73,27 @@ async function mantraLineSize(persistedScale: string | null): Promise<number | u
       </FontScaleProvider>
     );
   });
-  const node = tree!.root.findAllByType(Text).find((n) => n.props.children === FIRST_LINE);
+  return tree!;
+}
+
+function mantraLineSize(tree: TestRenderer.ReactTestRenderer): number | undefined {
+  const node = tree.root.findAllByType(Text).find((n) => n.props.children === FIRST_LINE);
   return node ? StyleSheet.flatten(node.props.style).fontSize : undefined;
 }
 
-describe('JapamCounter mantra size is decoupled from reading-size (fixed tap surface)', () => {
+describe('JapamCounter scales the mantra with reading-size, on a scrollable surface', () => {
   beforeEach(() => mockGetItem.mockReset());
 
-  test('mantra does NOT inflate at Large (would clip the overflow:hidden surface)', async () => {
-    const atM = await mantraLineSize(null);
-    const atL = await mantraLineSize('L');
-    expect(atM).toBeDefined();
-    // Same size regardless of scale → can't overflow the fixed surface on any device.
-    expect(atL).toBe(atM);
-    // And it's the surface's own (unscaled) size, not the inflated reading size.
-    expect(atL).toBe(baseType.verse.fontSize);
+  test('mantra scales with M/L so the control takes effect on every device', async () => {
+    const atM = mantraLineSize(await renderJapam(null));
+    const atL = mantraLineSize(await renderJapam('L'));
+    expect(atM).toBe(baseType.verse.fontSize); // 23 at M
+    expect(atL).toBe(Math.round(baseType.verse.fontSize * 1.15)); // 26 at L
+    expect(atL!).toBeGreaterThan(atM!);
+  });
+
+  test('the tap surface is a ScrollView, so a larger mantra scrolls instead of clipping', async () => {
+    const tree = await renderJapam('L');
+    expect(tree.root.findAllByType(ScrollView).length).toBeGreaterThan(0);
   });
 });

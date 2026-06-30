@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Modal,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -12,7 +13,7 @@ import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { fontFamilies, typography as baseType } from '@/theme/typography';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, pick, verseLinesByLang } from '@/utils/localize';
 import { isLatinLang } from '@/utils/langType';
 import { getSourceBackground } from '@/data/backgrounds';
@@ -23,6 +24,7 @@ import {
 } from '@/data/japam';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
+import { useFontScale } from '@/contexts/FontScaleContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -40,19 +42,20 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { getEntry, increment, resetBeads, clear } = useJapamCounter();
   const { addAlarm, updateAlarm, removeAlarm } = useJapamAlarms();
   const { share, busy: shareBusy } = useShare();
+  const { factor } = useFontScale();
   const { height: windowHeight } = useWindowDimensions();
   const isShortScreen = windowHeight < 720;
   const isVeryShortScreen = windowHeight < 640;
 
-  // Mantra size is a CONSTRAINED-SURFACE concern: the tap area is fixed
-  // (overflow:'hidden', non-scrolling), so the mantra keeps its own device-adaptive
-  // size from `baseType` and does NOT follow the global M/L reading scale —
-  // otherwise the 4-line mantras (gayatri, hare-krishna) inflate and clip on
-  // smaller devices. M/L still applies in the paged readers, which scroll.
-  const verseFontSize = isVeryShortScreen ? 19 : isShortScreen ? 21 : baseType.verse.fontSize;
-  const verseLineHeight = isVeryShortScreen ? 32 : isShortScreen ? 35 : baseType.verse.lineHeight;
-  const verseFontSizeEn = isVeryShortScreen ? 17 : isShortScreen ? 18 : 20;
-  const verseLineHeightEn = isVeryShortScreen ? 28 : isShortScreen ? 30 : 34;
+  // Mantra is reading text → it scales with the global M/L size on EVERY device
+  // (no per-device hardcoding, so M/L always takes effect). The tap surface
+  // scrolls, so a larger mantra never clips — including the long 4-line mantras
+  // (gayatri, hare-krishna). Non-Latin uses the themed (already-scaled) verse
+  // token; the Latin transliteration scales its own smaller base by the factor.
+  const verseFontSize = typography.verse.fontSize;
+  const verseLineHeight = typography.verse.lineHeight;
+  const verseFontSizeEn = Math.round(20 * factor);
+  const verseLineHeightEn = Math.round(34 * factor);
   const countFontSize = isVeryShortScreen ? 64 : isShortScreen ? 76 : 88;
   const countLineHeight = isVeryShortScreen ? 70 : isShortScreen ? 82 : 94;
 
@@ -198,16 +201,21 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <LanguageToggle />
         </View>
 
-        <Pressable
-          onPress={handleTap}
-          accessibilityRole="button"
-          accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this round, ${entry.rounds} rounds completed.`}
-          style={({ pressed }) => [
-            styles.tapArea,
-            pressed && styles.tapAreaPressed,
-          ]}
+        <ScrollView
+          style={styles.tapArea}
+          contentContainerStyle={styles.tapScroll}
+          showsVerticalScrollIndicator={false}
         >
-          <View style={[styles.tapContent, { paddingHorizontal: spacing.xxl }]}>
+          <Pressable
+            onPress={handleTap}
+            accessibilityRole="button"
+            accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this round, ${entry.rounds} rounds completed.`}
+            style={({ pressed }) => [
+              styles.tapContent,
+              { paddingHorizontal: spacing.xxl },
+              pressed && styles.tapAreaPressed,
+            ]}
+          >
             <View style={styles.mantraBlock}>
               {verseLinesByLang(lang, mantra.lines, mantra.linesEn).map((line, i) => (
                 <Text
@@ -303,8 +311,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             >
               {tapHint}
             </Text>
-          </View>
-        </Pressable>
+          </Pressable>
+        </ScrollView>
 
         <View
           style={[
@@ -589,13 +597,17 @@ const styles = StyleSheet.create({
   },
   tapArea: {
     flex: 1,
-    overflow: 'hidden',
+  },
+  tapScroll: {
+    // flexGrow lets the tap surface fill the viewport (tappable everywhere) yet
+    // grow past it so a long/large mantra scrolls instead of clipping.
+    flexGrow: 1,
   },
   tapAreaPressed: {
     opacity: 0.92,
   },
   tapContent: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 8,
