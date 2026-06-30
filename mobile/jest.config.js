@@ -17,6 +17,9 @@ module.exports = {
     '<rootDir>/src/data/__tests__/**/*.jest.test.{ts,tsx}',
   ],
   moduleNameMapper: {
+    // Audio assets aren't transformed by the RN preset — stub them so a
+    // require('*.mp3') resolves to an asset handle instead of failing to parse.
+    '\\.(mp3|wav|m4a)$': '<rootDir>/jest/audioAssetStub.js',
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@assets/(.*)$': '<rootDir>/assets/$1',
   },
