@@ -12,7 +12,7 @@ import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { fontFamilies } from '@/theme/typography';
+import { fontFamilies, typography as baseType } from '@/theme/typography';
 import { contentByLang, pick, verseLinesByLang } from '@/utils/localize';
 import { isLatinLang } from '@/utils/langType';
 import { getSourceBackground } from '@/data/backgrounds';
@@ -44,8 +44,13 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const isShortScreen = windowHeight < 720;
   const isVeryShortScreen = windowHeight < 640;
 
-  const verseFontSize = isVeryShortScreen ? 19 : isShortScreen ? 21 : typography.verse.fontSize;
-  const verseLineHeight = isVeryShortScreen ? 32 : isShortScreen ? 35 : typography.verse.lineHeight;
+  // Mantra size is a CONSTRAINED-SURFACE concern: the tap area is fixed
+  // (overflow:'hidden', non-scrolling), so the mantra keeps its own device-adaptive
+  // size from `baseType` and does NOT follow the global M/L reading scale —
+  // otherwise the 4-line mantras (gayatri, hare-krishna) inflate and clip on
+  // smaller devices. M/L still applies in the paged readers, which scroll.
+  const verseFontSize = isVeryShortScreen ? 19 : isShortScreen ? 21 : baseType.verse.fontSize;
+  const verseLineHeight = isVeryShortScreen ? 32 : isShortScreen ? 35 : baseType.verse.lineHeight;
   const verseFontSizeEn = isVeryShortScreen ? 17 : isShortScreen ? 18 : 20;
   const verseLineHeightEn = isVeryShortScreen ? 28 : isShortScreen ? 30 : 34;
   const countFontSize = isVeryShortScreen ? 64 : isShortScreen ? 76 : 88;
