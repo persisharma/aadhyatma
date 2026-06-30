@@ -90,10 +90,37 @@ on 2026-07-10/11) is currently dropped rather than assigned to its observance da
 This is a pre-existing sunrise-matching limitation (several years already surface
 <24 Ekadashis), independent of the Adhik Maas handling above.
 
+## Observance (festival/vrat) date verification
+
+The panchang *fields* above were verified against drik, but festival *dates* were not — a
+gap that hid a **one-lunar-month** error: three krishna-paksha festivals stored their
+*amanta* month instead of the **purnimant** month the resolver expects, resolving a month
+early. Fixed (`festivals.ts`): Janmashtami Shravana(5)→**Bhadrapada(6)**, Maha Shivaratri
+Magha(11)→**Phalguna(12)**, Narada Jayanti Vaishakha(2)→**Jyeshtha(3)**. Janmashtami 2026
+is now correctly **Fri 4 Sep 2026**.
+
+`scripts/verify-observances.mts` (`npm run verify:observances`, also a CI step) re-derives
+each major festival's correct civil day **independently** from astronomy-engine using its
+proper muhurta rule (udaya/madhyahna/nishita/pradosh), anchors known drik dates, and fails
+on any **wrong-month** regression. `__tests__/observanceDates.test.ts` is the fast anchor
+guard inside `test:engine`.
+
+Two **pre-existing** issues it surfaces (NOT the month bug, not yet fixed) — both downstream
+of the sunrise-only matcher:
+- **±1-day muhurta shift (Class B):** festivals fixed by a non-sunrise muhurta resolve one
+  day late when their tithi starts after sunrise — Maha Shivaratri (Nishita), Ganesh
+  Chaturthi & Ram Navami (Madhyahna), Diwali/Dhanteras/Karwa Chauth (Pradosh). e.g. Diwali
+  2025 engine 21 Oct vs real 20 Oct; Maha Shivaratri 2026 engine 16 Feb vs real 15 Feb.
+- **kshaya-tithi drop:** a festival whose tithi is skipped at sunrise is dropped entirely —
+  e.g. Vasant Panchami 2025, Dev Uthani Ekadashi 2026, **Navratri start 2027**.
+
+Fixing either requires muhurta-aware / kshaya-aware day selection in the matcher.
+
 ## Reproduce
 ```
 cd mobile
-npm run test:engine          # includes panchangVsDrikpanchang.e2e.test.ts
+npm run verify:observances   # festival-date check (independent muhurta re-derivation)
+npm run test:engine          # includes panchangVsDrikpanchang.e2e.test.ts + observanceDates
 # regenerate / extend the fixture (throttle to avoid drik's reCAPTCHA):
 EMIT_FIXTURE=1 START=2026-03-01 END=2027-06-15 POOL=1 DELAY=3000 \
   npx tsx scripts/verify-panchang-vs-drik.mts
