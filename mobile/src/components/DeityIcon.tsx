@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import Svg, { Circle, Ellipse, Line, Path } from 'react-native-svg';
 import type { DeityIconKey } from '@/data/deities';
 
 type Props = {
@@ -7,365 +8,233 @@ type Props = {
   fallbackText: string;
 };
 
-const emojiIcons: Partial<Record<DeityIconKey, string>> = {
-  bowArrow: '🏹',
-  chakra: '☸️',
-  trishul: '🔱',
-  lotus: '🪷',
-  surya: '☀️',
-};
-
 export default function DeityIcon({ iconKey, fallbackText }: Props) {
-  if (iconKey === 'bansuriPeacockFeather') return <KrishnaIcon />;
-  if (iconKey === 'gada') return <GadaIcon />;
-  if (iconKey === 'modak') return <ModakIcon />;
-  if (iconKey === 'veena') return <VeenaIcon />;
+  switch (iconKey) {
+    case 'bowArrow':
+      return <RamaIcon />;
+    case 'bansuriPeacockFeather':
+      return <KrishnaIcon />;
+    case 'chakra':
+      return <ChakraIcon />;
+    case 'trishul':
+      return <TrishulIcon />;
+    case 'gada':
+      return <GadaIcon />;
+    case 'lotus':
+      return <LotusIcon />;
+    case 'modak':
+      return <ModakIcon />;
+    case 'surya':
+      return <SuryaIcon />;
+    case 'veena':
+      return <VeenaIcon />;
+    default:
+      return <Text style={styles.fallback}>{fallbackText}</Text>;
+  }
+}
 
-  const emoji = iconKey ? emojiIcons[iconKey] : undefined;
+const ink = '#733207';
+const gold = '#D49A35';
+const paleGold = '#F4C872';
+const green = '#3F7B46';
+const teal = '#0B6F73';
 
+const iconProps = {
+  width: 36,
+  height: 36,
+  viewBox: '0 0 44 44',
+} as const;
+
+function RamaIcon() {
   return (
-    <Text style={emoji ? styles.emoji : styles.fallback}>
-      {emoji ?? fallbackText}
-    </Text>
+    <Svg {...iconProps} accessible={false}>
+      <Path
+        d="M13 8C25 12 26 32 13 36"
+        fill="none"
+        stroke={ink}
+        strokeWidth={2.7}
+        strokeLinecap="round"
+      />
+      <Path
+        d="M14 9C19 17 19 27 14 35"
+        fill="none"
+        stroke={paleGold}
+        strokeWidth={1.3}
+        strokeLinecap="round"
+        opacity={0.85}
+      />
+      <Line x1={13.5} y1={8.5} x2={13.5} y2={35.5} stroke={ink} strokeWidth={1.4} />
+      <Line x1={8} y1={27} x2={35} y2={17} stroke={ink} strokeWidth={2.3} strokeLinecap="round" />
+      <Path d="M35 17L29.5 14.5L31.5 20.5Z" fill={gold} stroke={ink} strokeWidth={1} />
+      <Path d="M8 27L12.5 22.5M8 27L14 29.5" stroke={paleGold} strokeWidth={1.4} strokeLinecap="round" />
+    </Svg>
   );
 }
 
 function KrishnaIcon() {
   return (
-    <View style={styles.krishnaWrap} accessible={false}>
-      <View style={styles.bansuri}>
-        <View style={styles.bansuriBody} />
-        <View style={[styles.bansuriHole, styles.bansuriHoleOne]} />
-        <View style={[styles.bansuriHole, styles.bansuriHoleTwo]} />
-        <View style={[styles.bansuriHole, styles.bansuriHoleThree]} />
-      </View>
-      <View style={styles.peacockFeather}>
-        <View style={styles.featherStem} />
-        <View style={[styles.featherStrand, styles.featherStrandOne]} />
-        <View style={[styles.featherStrand, styles.featherStrandTwo]} />
-        <View style={[styles.featherStrand, styles.featherStrandThree]} />
-        <View style={[styles.featherStrand, styles.featherStrandFour]} />
-        <View style={[styles.featherStrand, styles.featherStrandFive]} />
-        <View style={styles.featherEyeOuter}>
-          <View style={styles.featherEyeMid}>
-            <View style={styles.featherEyeInner} />
-          </View>
-        </View>
-      </View>
-    </View>
+    <Svg {...iconProps} accessible={false}>
+      <Path
+        d="M6 29L31 20"
+        stroke={ink}
+        strokeWidth={4.2}
+        strokeLinecap="round"
+      />
+      <Path
+        d="M7 28.5L31 20"
+        stroke={gold}
+        strokeWidth={2.1}
+        strokeLinecap="round"
+      />
+      {[13, 19, 25].map((x) => (
+        <Circle key={x} cx={x} cy={25.5 - (x - 13) * 0.35} r={1.1} fill={ink} />
+      ))}
+      <Line x1={28} y1={33} x2={33} y2={7} stroke={green} strokeWidth={1.8} strokeLinecap="round" />
+      <Path d="M31 12C23 15 23 25 30 30" fill="none" stroke={teal} strokeWidth={1.2} strokeLinecap="round" />
+      <Path d="M34 12C40 17 38 26 31 30" fill="none" stroke={teal} strokeWidth={1.2} strokeLinecap="round" />
+      <Ellipse cx={33} cy={14} rx={6.2} ry={7.6} fill={paleGold} stroke={green} strokeWidth={1.2} />
+      <Ellipse cx={33} cy={14} rx={3.4} ry={4} fill={teal} />
+      <Circle cx={33} cy={14} r={2} fill={ink} />
+    </Svg>
+  );
+}
+
+function ChakraIcon() {
+  const spokes = [
+    [22, 9, 22, 35],
+    [9, 22, 35, 22],
+    [12.8, 12.8, 31.2, 31.2],
+    [31.2, 12.8, 12.8, 31.2],
+  ];
+
+  return (
+    <Svg {...iconProps} accessible={false}>
+      <Circle cx={22} cy={22} r={14} fill="none" stroke={ink} strokeWidth={2.6} />
+      <Circle cx={22} cy={22} r={8.2} fill="none" stroke={paleGold} strokeWidth={1.8} />
+      {spokes.map(([x1, y1, x2, y2]) => (
+        <Line
+          key={`${x1}-${y1}`}
+          x1={x1}
+          y1={y1}
+          x2={x2}
+          y2={y2}
+          stroke={ink}
+          strokeWidth={1.8}
+          strokeLinecap="round"
+        />
+      ))}
+      <Circle cx={22} cy={22} r={3.2} fill={ink} />
+    </Svg>
+  );
+}
+
+function TrishulIcon() {
+  return (
+    <Svg {...iconProps} accessible={false}>
+      <Line x1={22} y1={9} x2={22} y2={37} stroke={ink} strokeWidth={3} strokeLinecap="round" />
+      <Path d="M22 8C19 13 19 17 22 21C25 17 25 13 22 8Z" fill={gold} stroke={ink} strokeWidth={1.2} />
+      <Path
+        d="M13 13C13 21 16 25 22 25C28 25 31 21 31 13"
+        fill="none"
+        stroke={ink}
+        strokeWidth={2.5}
+        strokeLinecap="round"
+      />
+      <Path d="M13 13L10 18M31 13L34 18" stroke={gold} strokeWidth={2.2} strokeLinecap="round" />
+      <Line x1={16} y1={31} x2={28} y2={31} stroke={paleGold} strokeWidth={2.2} strokeLinecap="round" />
+    </Svg>
   );
 }
 
 function GadaIcon() {
   return (
-    <View style={styles.gadaWrap} accessible={false}>
-      <View style={styles.gadaHead} />
-      <View style={styles.gadaNeck} />
-      <View style={styles.gadaHandle} />
-      <View style={styles.gadaPommel} />
-    </View>
+    <Svg {...iconProps} accessible={false}>
+      <Path d="M16 7C22 4 29 8 29 15C29 21 24 25 18 23C13 21 11 15 13 11C13.7 9.3 14.7 8 16 7Z" fill={ink} />
+      <Path d="M16 7C19 8 23 8 27 6" stroke={paleGold} strokeWidth={1.5} strokeLinecap="round" opacity={0.75} />
+      <Path d="M19 22L25 37" stroke={ink} strokeWidth={4.4} strokeLinecap="round" />
+      <Path d="M18 25L25 22" stroke={paleGold} strokeWidth={2} strokeLinecap="round" />
+      <Line x1={21} y1={38} x2={30} y2={35} stroke={ink} strokeWidth={3.8} strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+function LotusIcon() {
+  return (
+    <Svg {...iconProps} accessible={false}>
+      <Path d="M22 10C17 15 16 23 22 29C28 23 27 15 22 10Z" fill={paleGold} stroke={ink} strokeWidth={1.4} />
+      <Path d="M13 15C12 23 15 29 22 31C22 23 18 18 13 15Z" fill={gold} stroke={ink} strokeWidth={1.3} />
+      <Path d="M31 15C32 23 29 29 22 31C22 23 26 18 31 15Z" fill={gold} stroke={ink} strokeWidth={1.3} />
+      <Path d="M8 24C12 31 17 34 22 31C18 26 13 24 8 24Z" fill={paleGold} stroke={ink} strokeWidth={1.2} />
+      <Path d="M36 24C32 31 27 34 22 31C26 26 31 24 36 24Z" fill={paleGold} stroke={ink} strokeWidth={1.2} />
+      <Path d="M10 34C17 37 27 37 34 34" stroke={green} strokeWidth={2.3} strokeLinecap="round" />
+    </Svg>
   );
 }
 
 function ModakIcon() {
   return (
-    <View style={styles.modakWrap} accessible={false}>
-      <View style={styles.modakPeak} />
-      <View style={styles.modakBody} />
-      <View style={styles.modakPleatLeft} />
-      <View style={styles.modakPleatRight} />
-    </View>
+    <Svg {...iconProps} accessible={false}>
+      <Path d="M22 7L15 20H29L22 7Z" fill={ink} />
+      <Path
+        d="M12 21C12 31 16 37 22 37C28 37 32 31 32 21C28 24 16 24 12 21Z"
+        fill={ink}
+      />
+      <Path d="M17 15C18 22 18 30 16 35M27 15C26 22 26 30 28 35" stroke={paleGold} strokeWidth={1.5} strokeLinecap="round" opacity={0.5} />
+      <Path d="M14 22C18 25 26 25 30 22" stroke={paleGold} strokeWidth={1.6} strokeLinecap="round" opacity={0.75} />
+    </Svg>
+  );
+}
+
+function SuryaIcon() {
+  const rays = [
+    [22, 4, 22, 9],
+    [22, 35, 22, 40],
+    [4, 22, 9, 22],
+    [35, 22, 40, 22],
+    [9.3, 9.3, 12.8, 12.8],
+    [31.2, 31.2, 34.7, 34.7],
+    [34.7, 9.3, 31.2, 12.8],
+    [12.8, 31.2, 9.3, 34.7],
+  ];
+
+  return (
+    <Svg {...iconProps} accessible={false}>
+      {rays.map(([x1, y1, x2, y2]) => (
+        <Line
+          key={`${x1}-${y1}`}
+          x1={x1}
+          y1={y1}
+          x2={x2}
+          y2={y2}
+          stroke={ink}
+          strokeWidth={2.2}
+          strokeLinecap="round"
+        />
+      ))}
+      <Circle cx={22} cy={22} r={10.5} fill={gold} stroke={ink} strokeWidth={2} />
+      <Path d="M16 22C18 25 21 26.5 25 25.5C27 25 28.5 23.8 30 22" stroke={paleGold} strokeWidth={1.6} strokeLinecap="round" fill="none" />
+    </Svg>
   );
 }
 
 function VeenaIcon() {
   return (
-    <View style={styles.veenaWrap} accessible={false}>
-      <View style={styles.veenaUpperGourd} />
-      <View style={styles.veenaNeck} />
-      <View style={[styles.veenaString, styles.veenaStringOne]} />
-      <View style={[styles.veenaString, styles.veenaStringTwo]} />
-      <View style={styles.veenaGourd} />
-    </View>
+    <Svg {...iconProps} accessible={false}>
+      <Circle cx={14} cy={31} r={8.4} fill={gold} stroke={ink} strokeWidth={1.8} />
+      <Circle cx={23} cy={10} r={4.8} fill={gold} stroke={ink} strokeWidth={1.4} />
+      <Path d="M17 28L29 8" stroke={ink} strokeWidth={4} strokeLinecap="round" />
+      <Path d="M20 29L32 10" stroke={paleGold} strokeWidth={1.3} strokeLinecap="round" />
+      <Path d="M13 31C19 28 25 20 31 9" stroke={paleGold} strokeWidth={1} strokeLinecap="round" fill="none" opacity={0.85} />
+      <Path d="M11 26C17 25 26 17 32 6" stroke={ink} strokeWidth={1.2} strokeLinecap="round" fill="none" />
+    </Svg>
   );
 }
 
-const ink = '#733207';
-const gold = '#D49A35';
-const featherGreen = '#17715D';
-const featherTeal = '#0B7D82';
-const featherYellow = '#E5BE2E';
-const featherBlue = '#064D5E';
-
 const styles = StyleSheet.create({
-  emoji: {
-    fontSize: 22,
-    lineHeight: 28,
-    includeFontPadding: false,
-    textAlign: 'center',
-  },
   fallback: {
     color: '#FFF7E7',
     fontSize: 16,
     includeFontPadding: false,
     textAlign: 'center',
-  },
-  krishnaWrap: {
-    width: 36,
-    height: 34,
-    position: 'relative',
-  },
-  bansuri: {
-    position: 'absolute',
-    left: 1,
-    bottom: 7,
-    width: 30,
-    height: 12,
-    transform: [{ rotate: '-19deg' }],
-  },
-  bansuriBody: {
-    position: 'absolute',
-    left: 0,
-    top: 5,
-    width: 30,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: gold,
-    borderWidth: 1,
-    borderColor: ink,
-  },
-  bansuriHole: {
-    position: 'absolute',
-    top: 6,
-    width: 2,
-    height: 2,
-    borderRadius: 1,
-    backgroundColor: ink,
-  },
-  bansuriHoleOne: {
-    left: 8,
-  },
-  bansuriHoleTwo: {
-    left: 15,
-  },
-  bansuriHoleThree: {
-    left: 22,
-  },
-  peacockFeather: {
-    position: 'absolute',
-    right: 1,
-    top: 0,
-    width: 21,
-    height: 30,
-    transform: [{ rotate: '23deg' }],
-  },
-  featherStem: {
-    position: 'absolute',
-    left: 10,
-    top: 2,
-    width: 1.4,
-    height: 27,
-    borderRadius: 1,
-    backgroundColor: featherGreen,
-  },
-  featherStrand: {
-    position: 'absolute',
-    height: 1,
-    borderRadius: 1,
-    backgroundColor: featherTeal,
-  },
-  featherStrandOne: {
-    left: 3,
-    top: 7,
-    width: 12,
-    transform: [{ rotate: '-41deg' }],
-  },
-  featherStrandTwo: {
-    left: 5,
-    top: 13,
-    width: 15,
-    transform: [{ rotate: '-25deg' }],
-  },
-  featherStrandThree: {
-    left: 2,
-    top: 19,
-    width: 14,
-    transform: [{ rotate: '-15deg' }],
-  },
-  featherStrandFour: {
-    right: 0,
-    top: 15,
-    width: 13,
-    transform: [{ rotate: '28deg' }],
-  },
-  featherStrandFive: {
-    right: 2,
-    top: 21,
-    width: 12,
-    transform: [{ rotate: '18deg' }],
-  },
-  featherEyeOuter: {
-    position: 'absolute',
-    left: 4,
-    top: 3,
-    width: 15,
-    height: 17,
-    borderRadius: 9,
-    backgroundColor: featherYellow,
-    borderWidth: 1,
-    borderColor: '#6DAF29',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  featherEyeMid: {
-    width: 9,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: featherTeal,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  featherEyeInner: {
-    width: 5,
-    height: 5,
-    borderRadius: 3,
-    backgroundColor: featherBlue,
-  },
-  gadaWrap: {
-    width: 22,
-    height: 30,
-    alignItems: 'center',
-    transform: [{ rotate: '-12deg' }],
-  },
-  gadaHead: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    backgroundColor: ink,
-    borderWidth: 1.2,
-    borderColor: '#F4C872',
-  },
-  gadaNeck: {
-    width: 5,
-    height: 2,
-    backgroundColor: '#F4C872',
-    marginTop: -1,
-    opacity: 0.85,
-  },
-  gadaHandle: {
-    width: 3.5,
-    height: 9,
-    borderRadius: 1,
-    backgroundColor: ink,
-  },
-  gadaPommel: {
-    width: 9,
-    height: 3,
-    borderRadius: 1.5,
-    backgroundColor: ink,
-    marginTop: -1,
-  },
-  modakWrap: {
-    width: 30,
-    height: 32,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    position: 'relative',
-  },
-  modakPeak: {
-    width: 0,
-    height: 0,
-    borderStyle: 'solid',
-    borderLeftWidth: 5,
-    borderRightWidth: 5,
-    borderBottomWidth: 13,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderBottomColor: ink,
-    marginBottom: -3,
-  },
-  modakBody: {
-    width: 22,
-    height: 19,
-    borderTopLeftRadius: 9,
-    borderTopRightRadius: 9,
-    borderBottomLeftRadius: 11,
-    borderBottomRightRadius: 11,
-    backgroundColor: ink,
-  },
-  modakPleatLeft: {
-    position: 'absolute',
-    top: 4,
-    left: 7,
-    width: 1.5,
-    height: 14,
-    borderRadius: 1,
-    backgroundColor: '#F4C872',
-    opacity: 0.45,
-    transform: [{ rotate: '-22deg' }],
-  },
-  modakPleatRight: {
-    position: 'absolute',
-    top: 4,
-    right: 7,
-    width: 1.5,
-    height: 14,
-    borderRadius: 1,
-    backgroundColor: '#F4C872',
-    opacity: 0.45,
-    transform: [{ rotate: '22deg' }],
-  },
-  veenaWrap: {
-    width: 30,
-    height: 34,
-    position: 'relative',
-    transform: [{ rotate: '-16deg' }],
-  },
-  veenaGourd: {
-    position: 'absolute',
-    left: 1,
-    bottom: 0,
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    backgroundColor: gold,
-    borderWidth: 1.2,
-    borderColor: ink,
-  },
-  veenaNeck: {
-    position: 'absolute',
-    left: 8,
-    bottom: 13,
-    width: 3.5,
-    height: 21,
-    borderRadius: 2,
-    backgroundColor: ink,
-  },
-  veenaUpperGourd: {
-    position: 'absolute',
-    left: 5,
-    top: 0,
-    width: 9,
-    height: 9,
-    borderRadius: 4.5,
-    backgroundColor: gold,
-    borderWidth: 1,
-    borderColor: ink,
-  },
-  veenaString: {
-    position: 'absolute',
-    width: 1,
-    backgroundColor: gold,
-    opacity: 0.85,
-  },
-  veenaStringOne: {
-    left: 9,
-    top: 2,
-    height: 24,
-  },
-  veenaStringTwo: {
-    left: 11,
-    top: 2,
-    height: 24,
   },
 });
