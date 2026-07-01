@@ -15,6 +15,8 @@ export type ShareCardProps = {
   linesEn: string[];
   meaningHi?: string;
   meaningEn?: string;
+  meaningGu?: string;
+  meaningKn?: string;
   lang: Lang;
   width: number;
   height: number;
@@ -24,7 +26,10 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
   const { colors, typography } = useTheme();
   const sectionName = contentByLang(props.lang, props.sectionNameHi, props.sectionNameEn);
   const verseLabel = contentByLang(props.lang, props.verseLabelHi, props.verseLabelEn);
-  const meaning = meaningByLang(props.lang, props.meaningHi ?? '', props.meaningEn ?? '');
+  const meaning = meaningByLang(props.lang, props.meaningHi ?? '', props.meaningEn ?? '', {
+    gu: props.meaningGu,
+    kn: props.meaningKn,
+  });
   const lines = verseLinesByLang(props.lang, props.linesHi, props.linesEn);
   // Constrained surface (design.md §13 sanctioned): keeps its own tuned sizes, but the
   // font family must follow the script or gu/kn render as tofu. hi/en unchanged — en

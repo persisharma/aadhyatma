@@ -47,3 +47,48 @@ describe('ShareCard meaning fit', () => {
     expect(node.props.minimumFontScale).toBeLessThan(1);
   });
 });
+
+describe('ShareCard native meaning override', () => {
+  // Guard: for sections with a verified native meaningGu/meaningKn, the shared
+  // card must render that native translation — not the Hindi meaning re-scripted
+  // into the target script (the transliteration fallback). Regression for the
+  // report that shared cards showed transliterated Hindi for natively-available
+  // content while the in-app reader showed the native translation.
+  const meaningHi =
+    'गुरुचरणों की कृपा से मन को निर्मल करके मैं श्रीराम के पवित्र यश का वर्णन करता हूँ।';
+  const nativeGu =
+    'ગુરુના ચરણોની કૃપાથી મનને નિર્મળ કરીને હું શ્રીરામના પવિત્ર યશનું વર્ણન કરું છું.';
+
+  function renderCard(props: ShareCardProps) {
+    let tree: TestRenderer.ReactTestRenderer | undefined;
+    act(() => {
+      tree = TestRenderer.create(<ShareCard {...props} />);
+    });
+    return tree!;
+  }
+
+  const guProps: ShareCardProps = {
+    ...baseProps,
+    lang: 'gu',
+    meaningHi,
+    meaningEn: 'By the grace of the Guru...',
+    meaningGu: nativeGu,
+  };
+
+  test('renders verified meaningGu, not transliterated Hindi', () => {
+    const tree = renderCard(guProps);
+    const rendered = tree.root
+      .findAllByType(Text)
+      .some((n) => n.props.children === nativeGu);
+    expect(rendered).toBe(true);
+  });
+
+  test('falls back to transliteration when meaningGu is absent', () => {
+    const tree = renderCard({ ...guProps, meaningGu: undefined });
+    // Fallback re-scripts the Hindi wording, so the native translation must NOT appear.
+    const nativeShown = tree.root
+      .findAllByType(Text)
+      .some((n) => n.props.children === nativeGu);
+    expect(nativeShown).toBe(false);
+  });
+});

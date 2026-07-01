@@ -23,6 +23,9 @@ export type ShareableVerse = {
   linesEn: string[];
   meaningHi?: string;
   meaningEn?: string;
+  /** Verified native meaning overrides; when present, gu/kn use these instead of transliterating meaningHi. */
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 type ShareMode = 'card' | 'screenshot';
@@ -165,6 +168,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               linesEn={pending.verse.linesEn}
               meaningHi={pending.verse.meaningHi}
               meaningEn={pending.verse.meaningEn}
+              meaningGu={pending.verse.meaningGu}
+              meaningKn={pending.verse.meaningKn}
               lang={pending.lang}
               width={CARD_WIDTH}
               height={CARD_HEIGHT}
