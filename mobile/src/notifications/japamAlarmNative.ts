@@ -22,6 +22,7 @@ import { NativeModules, Platform, Linking } from 'react-native';
 import { requireOptionalNativeModule } from 'expo-modules-core';
 import { CommonActions } from '@react-navigation/native';
 import { findJapamMantra } from '@/data/japam';
+import { getJapamAlarmSoundName } from '@assets/japam-alarm-sounds';
 import { navigationRef } from './deepLink';
 import {
   nextFireTimestamp,
@@ -35,6 +36,10 @@ type AndroidNativeModuleShape = {
     mantraId: string;
     fireAt: number;
     label?: string | null;
+    /** Bundled alarm-clip filename (e.g. 'om-namah-shivaya.wav'), or null when
+     *  the mantra has no clip. Android derives sound from mantraId and ignores
+     *  this; iOS (AlarmKit) rings it via `.named(sound)`. */
+    sound?: string | null;
   }) => Promise<{ alarmId: string; fireAt: number; exact: boolean }>;
   cancelAlarm: (alarmId: string) => Promise<null>;
   cancelAll: () => Promise<null>;
@@ -49,6 +54,9 @@ type IosNativeModuleShape = {
     mantraId: string;
     fireAt: number;
     label?: string | null;
+    /** Bundled alarm-clip filename passed to AlarmKit's `.named(sound)`; null
+     *  falls back to the system alarm tone. */
+    sound?: string | null;
   }) => Promise<{ alarmId: string; fireAt: number; exact: boolean }>;
   cancelAlarm: (alarmId: string) => Promise<void>;
   cancelAll: () => Promise<void>;
@@ -163,6 +171,7 @@ export async function scheduleNativeAlarmsForDay(
         mantraId: alarm.mantraId,
         fireAt: nextFireTimestamp(alarm.time, now),
         label: alarm.label ?? null,
+        sound: getJapamAlarmSoundName(alarm.mantraId),
       });
       scheduled += 1;
     } catch {

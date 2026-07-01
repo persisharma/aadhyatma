@@ -33,6 +33,7 @@ import ExpoModulesCore
 import Foundation
 #if canImport(AlarmKit)
 import AlarmKit
+import ActivityKit
 import SwiftUI
 #endif
 
@@ -100,6 +101,9 @@ public class JapamAlarmIosModule: Module {
         )
       }
       let title = (args["label"] as? String) ?? "Japam time"
+      // Bundled mantra-clip filename resolved in JS (getJapamAlarmSoundName);
+      // nil when the mantra has no clip → falls back to the system alarm tone.
+      let soundName = args["sound"] as? String
 
       if #available(iOS 26.0, *) {
         // The alarm repeats daily, so only the wall-clock time-of-day matters.
@@ -109,7 +113,8 @@ public class JapamAlarmIosModule: Module {
           alarmId: alarmId,
           hour: comps.hour ?? 0,
           minute: comps.minute ?? 0,
-          title: title
+          title: title,
+          soundName: soundName
         )
         return ["alarmId": alarmId, "fireAt": fireAtMs, "exact": true]
       }
@@ -176,7 +181,8 @@ enum JapamAlarmIosService {
     alarmId: String,
     hour: Int,
     minute: Int,
-    title: String
+    title: String,
+    soundName: String?
   ) async throws {
     // Cancel any prior alarm registered under the same JS id so the new
     // schedule replaces it cleanly (same semantics as Android's
@@ -203,9 +209,6 @@ enum JapamAlarmIosService {
     // Daily recurrence: a relative schedule repeating on every weekday. The
     // system re-fires it each day and accounts for timezone changes, so we
     // never re-arm from JS (unlike Android's one-shot + boot receiver).
-    // TODO(ios-sound): ring the bundled mantra clip once the AlarmKit custom
-    // sound API is confirmed on a device build; defaults to the system alarm
-    // sound for now so scheduling stays reliable.
     let schedule = Alarm.Schedule.relative(
       Alarm.Schedule.Relative(
         time: Alarm.Schedule.Relative.Time(hour: hour, minute: minute),
@@ -214,9 +217,16 @@ enum JapamAlarmIosService {
         ])
       )
     )
+    // Ring the bundled mantra clip via AlarmKit's custom-sound API. `.named`
+    // resolves a file bundled into the app (the clip ships via the
+    // expo-notifications `sounds` array); a nil name falls back to the system
+    // alarm tone so mantras without a clip still ring.
+    let alertSound: AlertConfiguration.AlertSound =
+      soundName.map { AlertConfiguration.AlertSound.named($0) } ?? .default
     let config = AlarmManager.AlarmConfiguration(
       schedule: schedule,
-      attributes: attributes
+      attributes: attributes,
+      sound: alertSound
     )
     _ = try await AlarmManager.shared.schedule(id: uuid, configuration: config)
   }
@@ -250,7 +260,7 @@ enum JapamAlarmIosService {
   static func requestPermission() async -> Bool { false }
   static func authorizationStatus() -> String { "undetermined" }
   static func schedule(
-    alarmId: String, hour: Int, minute: Int, title: String
+    alarmId: String, hour: Int, minute: Int, title: String, soundName: String?
   ) async throws {
     throw NSError(
       domain: "JapamAlarmIos",
