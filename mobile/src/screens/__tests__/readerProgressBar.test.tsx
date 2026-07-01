@@ -32,6 +32,12 @@ jest.mock('expo-linear-gradient', () => {
   };
 });
 
+// ChalisaReader (in the table below) pulls the app-wide media player via
+// context; stub it so the screen renders without the provider.
+jest.mock('@/contexts/AudioPlayerContext', () => ({
+  useAudioPlayerContext: () => ({ playTrack: jest.fn(), openNowPlaying: jest.fn() }),
+}));
+
 const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/language')>(
   '@/data/gita/language'
 );

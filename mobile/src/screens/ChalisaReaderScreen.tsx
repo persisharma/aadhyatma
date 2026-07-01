@@ -28,6 +28,9 @@ import AddToRoutineButton from '@/components/AddToRoutineButton';
 import VersePage from '@/components/VersePage';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
+import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
+import { getTrackForText } from '@/data/audio/tracks';
+import { hasRealAudio } from '@assets/audio-library';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
@@ -40,8 +43,13 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
+  const { playTrack, openNowPlaying } = useAudioPlayerContext();
   const { width } = useWindowDimensions();
   const chalisaId = route.params?.chalisaId ?? 'hanuman-chalisa';
+  const audioTrack = useMemo(() => {
+    const t = getTrackForText(chalisaId);
+    return t && hasRealAudio(t.id) ? t : undefined;
+  }, [chalisaId]);
   const chalisa = useMemo(() => getChalisa(chalisaId), [chalisaId]);
   const verses = chalisa.verses;
   const total = verses.length;
@@ -158,6 +166,25 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
               >
                 {currentIndex + 1} / {total}
               </Text>
+              {audioTrack && (
+                <Pressable
+                  onPress={() => {
+                    playTrack(audioTrack);
+                    openNowPlaying();
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Play ${audioTrack.titleEn} audio`}
+                  hitSlop={10}
+                  style={({ pressed }) => [
+                    { paddingHorizontal: 4, paddingVertical: 2 },
+                    pressed && { opacity: 0.6 },
+                  ]}
+                >
+                  <Text style={{ color: colors.saffronDeep, fontSize: 16, includeFontPadding: false }}>
+                    ▶
+                  </Text>
+                </Pressable>
+              )}
               <BookmarkButton
                 isBookmarked={isBookmarked(`${chalisaId}::${currentIndex}`)}
                 onToggle={() => {

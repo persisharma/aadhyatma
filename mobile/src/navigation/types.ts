@@ -4,6 +4,8 @@ export type TabParamList = {
   HomeTab: undefined;
   DailyBhaktiTab: { sourceId?: string; chapter?: number; verseIndex?: number } | undefined;
   PanchangTab: undefined;
+  // Dedicated audio library + media player.
+  AudioTab: undefined;
   MoreTab: undefined;
 };
 
@@ -70,6 +72,12 @@ export type PanchangStackParamList = {
   ObservanceDetail: { ruleId: string };
   KathaLibrary: undefined;
   MyVrat: undefined;
+};
+
+// Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing
+// surface is a root overlay, not a route, so the stack only hosts the library.
+export type AudioStackParamList = {
+  AudioLibrary: undefined;
 };
 
 /** @deprecated Use HomeStackParamList instead */
