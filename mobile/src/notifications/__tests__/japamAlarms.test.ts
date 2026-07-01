@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 
+import { getJapamAlarmSoundName } from '../../../assets/japam-alarm-sounds';
 import {
   MAX_JAPAM_ALARMS,
   JAPAM_ALARM_IDENTIFIER_PREFIX,
@@ -86,6 +87,16 @@ import {
   const c: JapamAlarm = { id: 'q', mantraId: 'm', time: { hour: 5, minute: 0 }, enabled: true };
   const sorted = sortAlarms([a, b, c]);
   assert.deepEqual(sorted.map((s) => s.id), ['q', 'a', 'z']);
+}
+
+// getJapamAlarmSoundName maps a mantra to its bundled alarm-clip filename
+// (WITH extension — what AlarmKit's `.named()` and expo-notifications expect),
+// and null when no clip exists so callers fall back to the system alarm tone.
+{
+  assert.equal(getJapamAlarmSoundName('om-namah-shivaya'), 'om-namah-shivaya.wav');
+  // Mantras without a bundled clip (commented-out entries / unknown ids).
+  assert.equal(getJapamAlarmSoundName('gayatri-mantra'), null);
+  assert.equal(getJapamAlarmSoundName('does-not-exist'), null);
 }
 
 // nextFireTimestamp: future-of-today returns today; past-of-today rolls to tomorrow.
