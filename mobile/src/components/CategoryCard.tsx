@@ -20,8 +20,12 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
   const { lang } = useGitaLanguage();
   const isActive = status === 'active';
 
-  const { primary, secondary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
-    devPrimary: 15,
+  // Home tiles show a single language line (the reader's primary). The demoted
+  // second-language line is dropped here to tighten the grid; catalog/detail
+  // screens keep the bilingual pairing. The English accessibilityLabel below is
+  // left intact, so screen readers still announce the English name.
+  const { primary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
+    devPrimary: 16,
     devSecondary: 12,
     latPrimary: 17,
     latSecondary: 12,
@@ -43,19 +47,6 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
         ]}
       >
         {primary.text}
-      </Text>
-      <Text
-        style={[
-          styles.nameEn,
-          {
-            color: colors.inkMuted,
-            fontFamily: secondary.fontFamily,
-            fontSize: secondary.fontSize,
-            fontStyle: secondary.fontStyle,
-          },
-        ]}
-      >
-        {secondary.text}
       </Text>
     </>
   );
@@ -146,7 +137,7 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
 const styles = StyleSheet.create({
   card: {
     position: 'relative',
-    paddingVertical: 16,
+    paddingVertical: 12,
     paddingHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -159,15 +150,10 @@ const styles = StyleSheet.create({
     opacity: 0.85,
   },
   iconWrap: {
-    marginBottom: 4,
+    marginBottom: 6,
   },
   nameHi: {
     textAlign: 'center',
-    marginBottom: 2,
-  },
-  nameEn: {
-    textAlign: 'center',
-    fontStyle: 'italic',
   },
   badge: {
     position: 'absolute',

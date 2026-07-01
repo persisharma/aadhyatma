@@ -4,26 +4,25 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
-import { pillTextStyle } from '@/utils/langType';
 
 /**
  * Content for a single Home "Discover" spotlight (§ design.md Home hero feature
  * section). One flexible shell carries every app section — readers, the daily
  * verse, the Panchang, pilgrimage, the daily routine — so awareness of each
- * surface can be raised from one carousel. Every text field is bilingual; the
- * card renders the slot that matches the active reading language and demotes the
- * other, exactly like the catalog cards (`orderTitlesByLanguage`).
+ * surface can be raised from one carousel.
+ *
+ * Compact layout: the reader's primary-language title sits inline next to the
+ * icon (one row), a one-line blurb follows, then a CTA pill. The demoted second
+ * language and the old context eyebrow chip were dropped — the title conveys the
+ * section on its own — to keep the card short.
  */
 export type FeatureSpotlight = {
   /** Stable key for the carousel list. */
   key: string;
-  /** Small uppercase context tag shown top-right (e.g. "TODAY", "CALENDAR"). */
-  eyebrowHi: string;
-  eyebrowEn: string;
-  /** Section name — the prominent title. */
+  /** Section name — the prominent title, shown next to the icon. */
   titleHi: string;
   titleEn: string;
-  /** One- to two-line supporting blurb explaining the section. */
+  /** One-line supporting blurb explaining the section. */
   descHi: string;
   descEn: string;
   /** Call-to-action label rendered in the bottom pill. */
@@ -31,7 +30,7 @@ export type FeatureSpotlight = {
   ctaEn: string;
   /** Icon glyph/vector — wrapped in the icon tile by the card. */
   icon: React.ReactNode;
-  /** When true, the eyebrow slot shows a saffron "NEW" badge instead. */
+  /** When true, a saffron "NEW" badge shows at the end of the title row. */
   hasNew?: boolean;
 };
 
@@ -47,14 +46,16 @@ export default function FeatureCard({ item, width, onPress }: Props) {
   const { lang } = useGitaLanguage();
   const isHi = lang === 'hi';
 
-  const { primary, secondary } = orderTitlesByLanguage(lang, item.titleHi, item.titleEn, {
+  // Home spotlight shows a single language line (the reader's primary); the
+  // demoted second-language title is dropped to shorten the card. Catalog/detail
+  // screens keep the pairing. The English accessibilityLabel below is unchanged.
+  const { primary } = orderTitlesByLanguage(lang, item.titleHi, item.titleEn, {
     devPrimary: 19,
     devSecondary: 13,
     latPrimary: 21,
     latSecondary: 13,
   });
 
-  const eyebrow = isHi ? item.eyebrowHi : item.eyebrowEn;
   const desc = isHi ? item.descHi : item.descEn;
   const cta = isHi ? item.ctaHi : item.ctaEn;
 
@@ -85,40 +86,16 @@ export default function FeatureCard({ item, width, onPress }: Props) {
         style={[StyleSheet.absoluteFill, { borderRadius: radii.lg }]}
       />
 
+      {/* Icon and title share one line to keep the card compact. */}
       <View style={styles.header}>
         <View
           style={[styles.iconTile, { backgroundColor: colors.saffronTint, borderRadius: radii.md }]}
         >
           {item.icon}
         </View>
-        {item.hasNew ? (
-          <View
-            style={[styles.tag, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]}
-            pointerEvents="none"
-          >
-            <Text style={[styles.tagText, { color: colors.newBadgeText, letterSpacing: 1.6 }]}>
-              NEW
-            </Text>
-          </View>
-        ) : (
-          <Text
-            style={[
-              // Eyebrow is Devanagari only when reading Hindi (English otherwise);
-              // base the pill treatment on the actual script so Hindi keeps its
-              // shirorekha (no Latin tracking → no "नि त्य" gaps) — see pillTextStyle.
-              pillTextStyle(isHi ? 'hi' : 'en', typography.versePill),
-              { color: colors.saffronDeep },
-            ]}
-            numberOfLines={1}
-          >
-            {eyebrow}
-          </Text>
-        )}
-      </View>
-
-      <View style={[styles.body, { marginTop: spacing.md }]}>
         <Text
           style={{
+            flex: 1,
             color: colors.ink,
             fontFamily: primary.fontFamily,
             fontSize: primary.fontSize,
@@ -129,47 +106,40 @@ export default function FeatureCard({ item, width, onPress }: Props) {
         >
           {primary.text}
         </Text>
-        <Text
-          style={{
-            color: colors.inkMuted,
-            fontFamily: secondary.fontFamily,
-            fontSize: secondary.fontSize,
-            fontStyle: secondary.fontStyle,
-            marginTop: 1,
-          }}
-          numberOfLines={1}
-        >
-          {secondary.text}
-        </Text>
-        <Text
-          style={[
-            styles.desc,
-            {
-              color: colors.inkSoft,
-              fontFamily: isHi ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily,
-              fontSize: isHi ? 13 : 14,
-              fontStyle: isHi ? 'normal' : 'italic',
-              // Devanagari needs ~1.7 leading (design.md type scale); the Latin
-              // default of 19 is too tight for Hindi and clips the upper matras of
-              // the first line. Cormorant italic stays at 19.
-              lineHeight: isHi ? 22 : 19,
-              marginTop: spacing.sm,
-            },
-          ]}
-          numberOfLines={2}
-        >
-          {desc}
-        </Text>
+        {item.hasNew && (
+          <View
+            style={[styles.tag, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]}
+            pointerEvents="none"
+          >
+            <Text style={[styles.tagText, { color: colors.newBadgeText, letterSpacing: 1.6 }]}>
+              NEW
+            </Text>
+          </View>
+        )}
       </View>
+
+      <Text
+        style={[
+          styles.desc,
+          {
+            color: colors.inkSoft,
+            fontFamily: isHi ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily,
+            fontSize: isHi ? 13 : 14,
+            fontStyle: isHi ? 'normal' : 'italic',
+            // Devanagari needs ~1.7 leading (design.md type scale); the Latin
+            // default of 19 is too tight for Hindi and clips the upper matras.
+            lineHeight: isHi ? 22 : 19,
+            marginTop: spacing.sm,
+          },
+        ]}
+        numberOfLines={1}
+      >
+        {desc}
+      </Text>
 
       <View style={styles.spacer} />
 
-      <View
-        style={[
-          styles.cta,
-          { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
-        ]}
-      >
+      <View style={[styles.cta, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
         <Text
           style={{
             color: colors.saffronDeep,
@@ -189,8 +159,8 @@ export default function FeatureCard({ item, width, onPress }: Props) {
 const styles = StyleSheet.create({
   card: {
     position: 'relative',
-    minHeight: 186,
-    padding: 16,
+    minHeight: 112,
+    padding: 14,
     borderWidth: 1,
     overflow: 'hidden',
   },
@@ -200,11 +170,11 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: 10,
   },
   iconTile: {
-    width: 46,
-    height: 46,
+    width: 36,
+    height: 36,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -217,15 +187,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textTransform: 'uppercase',
   },
-  body: {
-    minWidth: 0,
-  },
   desc: {
     // lineHeight is set inline per language (Hindi needs more leading than Latin).
   },
   spacer: {
     flex: 1,
-    minHeight: 12,
+    minHeight: 6,
   },
   cta: {
     flexDirection: 'row',
@@ -233,7 +200,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     gap: 6,
     paddingHorizontal: 14,
-    paddingVertical: 7,
+    paddingVertical: 6,
   },
   ctaChevron: {
     fontSize: 16,

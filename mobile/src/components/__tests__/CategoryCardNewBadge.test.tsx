@@ -65,3 +65,14 @@ describe('CategoryCard NEW badge', () => {
     expect(text).not.toMatch(/NEW/);
   });
 });
+
+describe('CategoryCard single-language label', () => {
+  test('default (hi) tile shows the primary Devanagari label but not the English secondary', () => {
+    const tree = render(
+      <CategoryCard nameHi="स्तोत्रम्" nameEn="Hymns & Praise" status="active" onPress={() => undefined} />
+    );
+    const text = textOf(tree);
+    expect(text).toMatch(/स्तोत्रम्/); // primary (hi) line renders
+    expect(text).not.toMatch(/Hymns & Praise/); // second-language line dropped on Home cards
+  });
+});
