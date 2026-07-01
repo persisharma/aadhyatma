@@ -14,9 +14,17 @@
 // Exit: non-zero if any annual festival is off by a whole lunar MONTH or MISSING (severe),
 //       or if a self-check anchor fails. ±1-day muhurta shifts are reported as warnings.
 
-import { SunPosition, EclipticGeoMoon, MakeTime } from 'astronomy-engine';
+import { createRequire } from 'node:module';
 import { computePanchangForDate } from '../src/panchang/engine';
 import { resolveObservancesForYear } from '../src/panchang/festivalEngine';
+
+// CI runs this .mts verifier directly through tsx on Linux. In that path,
+// astronomy-engine can resolve through its CommonJS entrypoint, where strict ESM
+// named imports are not always synthesized. Load the package via createRequire so
+// the verifier uses the same stable CJS exports that astronomy-engine publishes.
+const require = createRequire(import.meta.url);
+const { SunPosition, EclipticGeoMoon, MakeTime } =
+  require('astronomy-engine') as typeof import('astronomy-engine');
 
 type Muhurta = 'udaya' | 'madhyahna' | 'nishita' | 'pradosh';
 export interface AnnualFestival {
