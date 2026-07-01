@@ -219,6 +219,8 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
                       linesEn: [...v.linesEn],
                       meaningHi: v.meaningHi,
                       meaningEn: v.meaningEn,
+                      meaningGu: v.meaningGu,
+                      meaningKn: v.meaningKn,
                     },
                     lang
                   );
