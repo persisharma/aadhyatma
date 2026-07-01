@@ -46,7 +46,7 @@ export default function AudioLibraryScreen() {
   const recitations = available.filter((t) => t.kind === 'recitation' && matches(t));
   const standalone = available.filter((t) => t.kind === 'standalone' && matches(t));
 
-  const titleLabel = pick(lang, { hi: 'ध्वनि संग्रह', en: 'Audio Library', gu: 'ઑડિયો સંગ્રહ', kn: 'ಆಡಿಯೋ ಗ್ರಂಥಾಲಯ' });
+  const titleLabel = pick(lang, { hi: 'भजन', en: 'Bhajan', gu: 'ભજન', kn: 'ಭಜನೆ' });
   const allLabel = pick(lang, { hi: 'सभी', en: 'All', gu: 'બધા', kn: 'ಎಲ್ಲಾ' });
 
   const play = (t: AudioTrack) => {

@@ -16,8 +16,6 @@ jest.mock('expo-linear-gradient', () => ({
 
 const item: FeatureSpotlight = {
   key: 'daily-bhakti',
-  eyebrowHi: 'आज',
-  eyebrowEn: 'Today',
   titleHi: 'दैनिक भक्ति',
   titleEn: 'Daily Verse',
   descHi: 'हर दिन एक नया श्लोक।',
@@ -44,23 +42,22 @@ function textOf(tree: TestRenderer.ReactTestRenderer): string {
 }
 
 describe('FeatureCard', () => {
-  test('renders eyebrow, both title scripts, description and CTA', () => {
+  test('renders primary title, description and CTA (primary only, no eyebrow chip)', () => {
     const tree = render(<FeatureCard item={item} width={300} onPress={() => undefined} />);
     const text = textOf(tree);
-    expect(text).toMatch(/आज/); // eyebrow (hi default)
-    expect(text).toMatch(/दैनिक भक्ति/); // primary title
-    expect(text).toMatch(/Daily Verse/); // demoted secondary title
+    expect(text).toMatch(/दैनिक भक्ति/); // primary title (inline with the icon)
+    expect(text).not.toMatch(/Daily Verse/); // second-language line dropped on Home cards
     expect(text).toMatch(/श्लोक/); // description
     expect(text).toMatch(/पढ़ें/); // CTA
   });
 
-  test('hasNew swaps the eyebrow tag for a NEW badge', () => {
+  test('hasNew shows a NEW badge alongside the title', () => {
     const tree = render(
       <FeatureCard item={{ ...item, hasNew: true }} width={300} onPress={() => undefined} />
     );
     const text = textOf(tree);
     expect(text).toMatch(/NEW/);
-    expect(text).not.toMatch(/आज/); // eyebrow replaced by the badge
+    expect(text).toMatch(/दैनिक भक्ति/); // title still shown
   });
 
   test('fires onPress and carries an English accessibility label', () => {

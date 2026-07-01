@@ -100,7 +100,6 @@ export default function HomeScreen({ navigation }: Props) {
   const spotlights: (FeatureSpotlight & { onPress: () => void })[] = [
     {
       key: 'routine',
-      eyebrowHi: 'नित्य', eyebrowEn: 'Practice',
       titleHi: 'नित्य साधना', titleEn: 'Daily Practice',
       descHi: 'अपनी दैनिक साधना चुनें और निरंतरता बनाए रखें।',
       descEn: 'Pick your daily rituals and keep the streak alive.',
@@ -110,7 +109,6 @@ export default function HomeScreen({ navigation }: Props) {
     },
     {
       key: 'daily-bhakti',
-      eyebrowHi: 'आज', eyebrowEn: 'Today',
       titleHi: 'दैनिक भक्ति', titleEn: 'Daily Verse',
       descHi: 'हर दिन एक नया श्लोक चिंतन और भक्ति के लिए।',
       descEn: 'A fresh shloka to reflect on every single day.',
@@ -120,7 +118,6 @@ export default function HomeScreen({ navigation }: Props) {
     },
     {
       key: 'panchang',
-      eyebrowHi: 'पंचांग', eyebrowEn: 'Calendar',
       titleHi: 'आज का पंचांग', titleEn: "Today's Panchang",
       descHi: 'तिथि, नक्षत्र और व्रत-पर्व एक ही नज़र में।',
       descEn: 'Tithi, nakshatra and festivals at a glance.',
@@ -140,7 +137,6 @@ export default function HomeScreen({ navigation }: Props) {
     },
     {
       key: 'theerth',
-      eyebrowHi: 'तीर्थ', eyebrowEn: 'Journeys',
       titleHi: 'तीर्थ यात्रा', titleEn: 'Sacred Journeys',
       descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
       descEn: 'Explore sacred temples and dhams across Bharat.',
@@ -316,15 +312,15 @@ const styles = StyleSheet.create({
   hero: {
     alignItems: 'center',
     marginTop: 6,
-    marginBottom: 12,
+    marginBottom: 8,
   },
   sectionLabel: {
     textTransform: 'uppercase',
-    marginBottom: 12,
+    marginBottom: 8,
     paddingHorizontal: 4,
   },
   sectionLabelSpaced: {
-    marginTop: 24,
+    marginTop: 16,
   },
   grid: {
     flexDirection: 'row',
@@ -333,7 +329,7 @@ const styles = StyleSheet.create({
   footer: {
     textAlign: 'center',
     opacity: 0.55,
-    marginTop: 36,
+    marginTop: 20,
     includeFontPadding: false,
   },
 });
