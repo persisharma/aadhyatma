@@ -34,3 +34,17 @@ export const deities: readonly DeityMeta[] = [
   { id: 'savitr', nameHi: 'माँ गायत्री', nameEn: 'Maa Gayatri', iconKey: 'surya' },
   { id: 'saraswati', nameHi: 'माँ सरस्वती', nameEn: 'Maa Saraswati', iconKey: 'veena' },
 ];
+
+const deityById: Record<Deity, DeityMeta> = Object.fromEntries(
+  deities.map((d) => [d.id, d])
+) as Record<Deity, DeityMeta>;
+
+/** Full metadata for a deity id. */
+export function getDeityMeta(id: Deity): DeityMeta {
+  return deityById[id];
+}
+
+/** The glyph icon key for a deity id — feed straight to `<DeityIcon />`. */
+export function deityIconKey(id: Deity): DeityIconKey {
+  return deityById[id].iconKey;
+}

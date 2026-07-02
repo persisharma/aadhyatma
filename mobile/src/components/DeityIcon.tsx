@@ -6,30 +6,34 @@ import type { DeityIconKey } from '@/data/deities';
 type Props = {
   iconKey?: DeityIconKey;
   fallbackText: string;
+  /** Rendered glyph size in dp. Defaults to 36 (the catalog-card avatar size). */
+  size?: number;
 };
 
-export default function DeityIcon({ iconKey, fallbackText }: Props) {
+type IconProps = { size: number };
+
+export default function DeityIcon({ iconKey, fallbackText, size = 36 }: Props) {
   switch (iconKey) {
     case 'bowArrow':
-      return <RamaIcon />;
+      return <RamaIcon size={size} />;
     case 'bansuriPeacockFeather':
-      return <KrishnaIcon />;
+      return <KrishnaIcon size={size} />;
     case 'chakra':
-      return <ChakraIcon />;
+      return <ChakraIcon size={size} />;
     case 'trishul':
-      return <TrishulIcon />;
+      return <TrishulIcon size={size} />;
     case 'gada':
-      return <GadaIcon />;
+      return <GadaIcon size={size} />;
     case 'lotus':
-      return <LotusIcon />;
+      return <LotusIcon size={size} />;
     case 'modak':
-      return <ModakIcon />;
+      return <ModakIcon size={size} />;
     case 'surya':
-      return <SuryaIcon />;
+      return <SuryaIcon size={size} />;
     case 'veena':
-      return <VeenaIcon />;
+      return <VeenaIcon size={size} />;
     default:
-      return <Text style={styles.fallback}>{fallbackText}</Text>;
+      return <Text style={[styles.fallback, { fontSize: size * 0.44 }]}>{fallbackText}</Text>;
   }
 }
 
@@ -39,15 +43,11 @@ const paleGold = '#F4C872';
 const green = '#3F7B46';
 const teal = '#0B6F73';
 
-const iconProps = {
-  width: 36,
-  height: 36,
-  viewBox: '0 0 44 44',
-} as const;
+const VIEW_BOX = '0 0 44 44';
 
-function RamaIcon() {
+function RamaIcon({ size }: IconProps) {
   return (
-    <Svg {...iconProps} accessible={false}>
+    <Svg width={size} height={size} viewBox={VIEW_BOX} accessible={false}>
       <Path
         d="M13 8C25 12 26 32 13 36"
         fill="none"
@@ -71,9 +71,9 @@ function RamaIcon() {
   );
 }
 
-function KrishnaIcon() {
+function KrishnaIcon({ size }: IconProps) {
   return (
-    <Svg {...iconProps} accessible={false}>
+    <Svg width={size} height={size} viewBox={VIEW_BOX} accessible={false}>
       <Path
         d="M6 29L31 20"
         stroke={ink}
@@ -99,7 +99,7 @@ function KrishnaIcon() {
   );
 }
 
-function ChakraIcon() {
+function ChakraIcon({ size }: IconProps) {
   const spokes = [
     [22, 9, 22, 35],
     [9, 22, 35, 22],
@@ -108,7 +108,7 @@ function ChakraIcon() {
   ];
 
   return (
-    <Svg {...iconProps} accessible={false}>
+    <Svg width={size} height={size} viewBox={VIEW_BOX} accessible={false}>
       <Circle cx={22} cy={22} r={14} fill="none" stroke={ink} strokeWidth={2.6} />
       <Circle cx={22} cy={22} r={8.2} fill="none" stroke={paleGold} strokeWidth={1.8} />
       {spokes.map(([x1, y1, x2, y2]) => (
@@ -128,9 +128,9 @@ function ChakraIcon() {
   );
 }
 
-function TrishulIcon() {
+function TrishulIcon({ size }: IconProps) {
   return (
-    <Svg {...iconProps} accessible={false}>
+    <Svg width={size} height={size} viewBox={VIEW_BOX} accessible={false}>
       <Line x1={22} y1={9} x2={22} y2={37} stroke={ink} strokeWidth={3} strokeLinecap="round" />
       <Path d="M22 8C19 13 19 17 22 21C25 17 25 13 22 8Z" fill={gold} stroke={ink} strokeWidth={1.2} />
       <Path
@@ -146,9 +146,9 @@ function TrishulIcon() {
   );
 }
 
-function GadaIcon() {
+function GadaIcon({ size }: IconProps) {
   return (
-    <Svg {...iconProps} accessible={false}>
+    <Svg width={size} height={size} viewBox={VIEW_BOX} accessible={false}>
       <Path d="M16 7C22 4 29 8 29 15C29 21 24 25 18 23C13 21 11 15 13 11C13.7 9.3 14.7 8 16 7Z" fill={ink} />
       <Path d="M16 7C19 8 23 8 27 6" stroke={paleGold} strokeWidth={1.5} strokeLinecap="round" opacity={0.75} />
       <Path d="M19 22L25 37" stroke={ink} strokeWidth={4.4} strokeLinecap="round" />
@@ -158,9 +158,9 @@ function GadaIcon() {
   );
 }
 
-function LotusIcon() {
+function LotusIcon({ size }: IconProps) {
   return (
-    <Svg {...iconProps} accessible={false}>
+    <Svg width={size} height={size} viewBox={VIEW_BOX} accessible={false}>
       <Path d="M22 10C17 15 16 23 22 29C28 23 27 15 22 10Z" fill={paleGold} stroke={ink} strokeWidth={1.4} />
       <Path d="M13 15C12 23 15 29 22 31C22 23 18 18 13 15Z" fill={gold} stroke={ink} strokeWidth={1.3} />
       <Path d="M31 15C32 23 29 29 22 31C22 23 26 18 31 15Z" fill={gold} stroke={ink} strokeWidth={1.3} />
@@ -171,9 +171,9 @@ function LotusIcon() {
   );
 }
 
-function ModakIcon() {
+function ModakIcon({ size }: IconProps) {
   return (
-    <Svg {...iconProps} accessible={false}>
+    <Svg width={size} height={size} viewBox={VIEW_BOX} accessible={false}>
       <Path d="M22 7L15 20H29L22 7Z" fill={ink} />
       <Path
         d="M12 21C12 31 16 37 22 37C28 37 32 31 32 21C28 24 16 24 12 21Z"
@@ -185,7 +185,7 @@ function ModakIcon() {
   );
 }
 
-function SuryaIcon() {
+function SuryaIcon({ size }: IconProps) {
   const rays = [
     [22, 4, 22, 9],
     [22, 35, 22, 40],
@@ -198,7 +198,7 @@ function SuryaIcon() {
   ];
 
   return (
-    <Svg {...iconProps} accessible={false}>
+    <Svg width={size} height={size} viewBox={VIEW_BOX} accessible={false}>
       {rays.map(([x1, y1, x2, y2]) => (
         <Line
           key={`${x1}-${y1}`}
@@ -217,9 +217,9 @@ function SuryaIcon() {
   );
 }
 
-function VeenaIcon() {
+function VeenaIcon({ size }: IconProps) {
   return (
-    <Svg {...iconProps} accessible={false}>
+    <Svg width={size} height={size} viewBox={VIEW_BOX} accessible={false}>
       <Circle cx={14} cy={31} r={8.4} fill={gold} stroke={ink} strokeWidth={1.8} />
       <Circle cx={23} cy={10} r={4.8} fill={gold} stroke={ink} strokeWidth={1.4} />
       <Path d="M17 28L29 8" stroke={ink} strokeWidth={4} strokeLinecap="round" />
@@ -233,7 +233,6 @@ function VeenaIcon() {
 const styles = StyleSheet.create({
   fallback: {
     color: '#FFF7E7',
-    fontSize: 16,
     includeFontPadding: false,
     textAlign: 'center',
   },

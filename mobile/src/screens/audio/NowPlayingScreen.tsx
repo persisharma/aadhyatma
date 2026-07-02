@@ -2,16 +2,12 @@ import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import {
-  MAX_RATE,
-  MIN_RATE,
-  SKIP_SECONDS,
-  useAudioPlayerContext,
-} from '@/contexts/AudioPlayerContext';
-
-const RATE_STEP = 0.1;
+import { getDeityMeta } from '@/data/deities';
+import DeityIcon from '@/components/DeityIcon';
+import { SKIP_SECONDS, useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 
 function fmt(sec: number): string {
   const s = Math.max(0, Math.floor(sec));
@@ -34,14 +30,12 @@ export default function NowPlayingScreen() {
     isPlaying,
     positionSec,
     durationSec,
-    rate,
     isLooping,
     togglePlay,
     seekTo,
     skipBy,
     skipToNext,
     skipToPrevious,
-    setRate,
     toggleLoop,
     closeNowPlaying,
   } = useAudioPlayerContext();
@@ -50,17 +44,12 @@ export default function NowPlayingScreen() {
 
   if (!nowPlayingOpen || !currentTrack) return null;
 
+  const deity = currentTrack.deity ? getDeityMeta(currentTrack.deity) : undefined;
   const title = contentByLang(lang, currentTrack.titleHi, currentTrack.titleEn);
-  const subtitle = currentTrack.artistEn ?? (currentTrack.kind === 'recitation' ? 'Recitation' : 'Bhajan');
+  const label = currentTrack.artistEn ?? (currentTrack.kind === 'recitation' ? 'Recitation' : 'Bhajan');
+  const subtitle = deity ? `${label} · ${deity.nameEn}` : label;
   const progress = durationSec > 0 ? Math.min(1, positionSec / durationSec) : 0;
 
-  const tempoLabel = pick(lang, { hi: 'गति', en: 'Tempo', gu: 'ગતિ', kn: 'ಗತಿ' });
-  const downloadLabel = pick(lang, {
-    hi: 'ऑफ़लाइन सहेजें',
-    en: 'Save offline',
-    gu: 'ઑફલાઇન સાચવો',
-    kn: 'ಆಫ್‌ಲೈನ್ ಉಳಿಸಿ',
-  });
   const headerLabel = pick(lang, { hi: 'अभी बज रहा है', en: 'Now Playing', gu: 'હમણાં વાગે છે', kn: 'ಈಗ ಪ್ಲೇ ಆಗುತ್ತಿದೆ' });
 
   return (
@@ -95,7 +84,11 @@ export default function NowPlayingScreen() {
               { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
             ]}
           >
-            <Text style={[styles.artworkGlyph, { color: colors.saffron }]}>ॐ</Text>
+            {deity ? (
+              <DeityIcon iconKey={deity.iconKey} fallbackText="ॐ" size={120} />
+            ) : (
+              <Text style={[styles.artworkGlyph, { color: colors.saffron }]}>ॐ</Text>
+            )}
           </View>
         </View>
 
@@ -125,10 +118,10 @@ export default function NowPlayingScreen() {
             </View>
           </Pressable>
           <View style={styles.timeRow}>
-            <Text style={[styles.time, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily }]}>
+            <Text style={[styles.time, { color: colors.inkSoft, fontFamily: fontFamilies.latinSemiBold }]}>
               {fmt(positionSec)}
             </Text>
-            <Text style={[styles.time, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily }]}>
+            <Text style={[styles.time, { color: colors.inkSoft, fontFamily: fontFamilies.latinSemiBold }]}>
               {fmt(durationSec)}
             </Text>
           </View>
@@ -154,7 +147,7 @@ export default function NowPlayingScreen() {
           <ControlButton label={`+${SKIP_SECONDS}`} small onPress={() => skipBy(SKIP_SECONDS)} color={colors.inkSoft} a11y="Forward 15 seconds" />
         </View>
 
-        {/* Secondary row: loop + tempo + download */}
+        {/* Secondary row: loop (kept for mantra japa) */}
         <View style={styles.secondaryRow}>
           <Pressable
             onPress={toggleLoop}
@@ -173,63 +166,6 @@ export default function NowPlayingScreen() {
             ]}
           >
             <Text style={[styles.loopGlyph, { color: isLooping ? colors.onPrimary : colors.inkSoft }]}>⟳</Text>
-          </Pressable>
-
-          <View style={styles.tempoBlock}>
-            <Text style={[styles.tempoLabel, { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily }]}>
-              {tempoLabel}
-            </Text>
-            <View style={styles.tempoRow}>
-              <Pressable
-                onPress={() => setRate(rate - RATE_STEP)}
-                accessibilityRole="button"
-                accessibilityLabel="Slower"
-                accessibilityState={{ disabled: rate <= MIN_RATE + 1e-3 }}
-                disabled={rate <= MIN_RATE + 1e-3}
-                hitSlop={8}
-                style={({ pressed }) => [
-                  styles.tempoBtn,
-                  { borderColor: colors.divider, borderRadius: radii.md },
-                  pressed && { opacity: 0.7 },
-                  rate <= MIN_RATE + 1e-3 && { opacity: 0.4 },
-                ]}
-              >
-                <Text style={[styles.tempoGlyph, { color: colors.inkSoft }]}>−</Text>
-              </Pressable>
-              <Text style={[styles.tempoValue, { color: colors.ink, fontFamily: typography.pageCounter.fontFamily }]}>
-                {rate.toFixed(1)}×
-              </Text>
-              <Pressable
-                onPress={() => setRate(rate + RATE_STEP)}
-                accessibilityRole="button"
-                accessibilityLabel="Faster"
-                accessibilityState={{ disabled: rate >= MAX_RATE - 1e-3 }}
-                disabled={rate >= MAX_RATE - 1e-3}
-                hitSlop={8}
-                style={({ pressed }) => [
-                  styles.tempoBtn,
-                  { borderColor: colors.divider, borderRadius: radii.md },
-                  pressed && { opacity: 0.7 },
-                  rate >= MAX_RATE - 1e-3 && { opacity: 0.4 },
-                ]}
-              >
-                <Text style={[styles.tempoGlyph, { color: colors.inkSoft }]}>+</Text>
-              </Pressable>
-            </View>
-          </View>
-
-          <Pressable
-            onPress={() => undefined}
-            accessibilityRole="button"
-            accessibilityLabel={downloadLabel}
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.loopBtn,
-              { borderColor: colors.divider, borderRadius: radii.md },
-              pressed && { opacity: 0.7 },
-            ]}
-          >
-            <Text style={[styles.loopGlyph, { color: colors.inkSoft }]}>↓</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -279,21 +215,15 @@ const styles = StyleSheet.create({
   seekHit: { paddingVertical: 8 },
   seekTrack: { height: 4, borderRadius: 2, overflow: 'hidden' },
   seekFill: { height: 4, borderRadius: 2 },
-  timeRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 4 },
-  time: { fontSize: 12, includeFontPadding: false },
+  timeRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
+  time: { fontSize: 15, includeFontPadding: false },
   controls: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 28, paddingHorizontal: 4 },
   ctrl: { minWidth: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   ctrlGlyph: { fontSize: 22, includeFontPadding: false },
   ctrlGlyphSmall: { fontSize: 13, includeFontPadding: false },
   playBtn: { width: 72, height: 72, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   playGlyph: { fontSize: 24, includeFontPadding: false },
-  secondaryRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 32 },
+  secondaryRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 32 },
   loopBtn: { width: 44, height: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   loopGlyph: { fontSize: 20, includeFontPadding: false },
-  tempoBlock: { alignItems: 'center' },
-  tempoLabel: { fontSize: 11, fontStyle: 'italic', includeFontPadding: false, marginBottom: 4 },
-  tempoRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  tempoBtn: { width: 32, height: 32, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  tempoGlyph: { fontSize: 18, lineHeight: 20, includeFontPadding: false },
-  tempoValue: { fontSize: 14, minWidth: 38, textAlign: 'center', includeFontPadding: false },
 });
