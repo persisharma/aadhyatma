@@ -16,6 +16,8 @@ import type { SadhanaEnrollment } from './types';
 
 const HANUMAN = getProgram('hanuman-41')!;
 const GITA = getProgram('gita-18')!;
+const NAVRATRI = getProgram('navratri-durga-9')!;
+const SHRAVAN = getProgram('shravan-somvar')!;
 
 function enrollment(over: Partial<SadhanaEnrollment> = {}): SadhanaEnrollment {
   return { programId: 'hanuman-41', startedOn: '2026-07-01', status: 'active', completedDays: {}, ...over };
@@ -85,6 +87,66 @@ test('completing the final day → completed (पूर्णाहुति)', 
   const s = resolveSadhanaToday(e, GITA, '2026-07-20');
   assert.equal(s.kind, 'completed');
   if (s.kind === 'completed') assert.equal(s.completedOn, '2026-07-19');
+});
+
+// ── Phase 4 cadences ────────────────────────────────────────────────────────
+
+test('day counts for weekday + festival cadences', () => {
+  assert.equal(programDayCount(NAVRATRI), 9);
+  assert.equal(programDayCount(SHRAVAN), 4);
+});
+
+test('navratri: unique completion key per day, chapter rotation', () => {
+  // Distinct item ids per day so completion keys never collide across the window.
+  const ids = Array.from({ length: 9 }, (_, i) => dayItemsFor(NAVRATRI, i + 1)[0].id);
+  assert.equal(new Set(ids).size, 9);
+  assert.equal(dayItemsFor(NAVRATRI, 1)[0].sourceId, 'durga-chalisa');
+});
+
+test('festival-window: waiting when no window today, active inside the window', () => {
+  const e = enrollment({ programId: 'navratri-durga-9' });
+  // No window fact → upcoming.
+  const up = resolveSadhanaToday(e, NAVRATRI, '2026-10-01', { windowStartKey: '2026-10-03' });
+  assert.equal(up.kind, 'waiting');
+  if (up.kind === 'waiting') {
+    assert.equal(up.reason, 'window-upcoming');
+    assert.equal(up.whenKey, '2026-10-03');
+  }
+  // Inside the window on day 3.
+  const inW = resolveSadhanaToday(e, NAVRATRI, '2026-10-05', { windowDayIndex: 3 });
+  assert.equal(inW.kind, 'active');
+  if (inW.kind === 'active') assert.equal(inW.dayIndex, 3);
+});
+
+test('festival-window: a completed calendar day shows done-today', () => {
+  const e = enrollment({ programId: 'navratri-durga-9', completedDays: { 3: { at: '2026-10-05', via: 'read-to-end' } } });
+  const s = resolveSadhanaToday(e, NAVRATRI, '2026-10-05', { windowDayIndex: 3 });
+  assert.equal(s.kind, 'done-today');
+  if (s.kind === 'done-today') assert.equal(s.dayIndex, 3);
+});
+
+test('weekday: resting on an off-day, active on an eligible day', () => {
+  const e = enrollment({ programId: 'shravan-somvar' });
+  const off = resolveSadhanaToday(e, SHRAVAN, '2026-07-02', { todayEligible: false, nextEligibleKey: '2026-07-06' });
+  assert.equal(off.kind, 'waiting');
+  if (off.kind === 'waiting') {
+    assert.equal(off.reason, 'weekday-off');
+    assert.equal(off.whenKey, '2026-07-06');
+  }
+  const on = resolveSadhanaToday(e, SHRAVAN, '2026-07-06', { todayEligible: true });
+  assert.equal(on.kind, 'active');
+  if (on.kind === 'active') {
+    assert.equal(on.dayIndex, 1);
+    assert.equal(on.items[0].sourceId, 'shiv-chalisa');
+  }
+});
+
+test('weekday: grace — a missed eligible day does not advance the vow', () => {
+  // One Monday done; the next eligible day resumes at day 2, not skipped ahead.
+  const e = enrollment({ programId: 'shravan-somvar', completedDays: { 1: { at: '2026-07-06', via: 'read-to-end' } } });
+  const on = resolveSadhanaToday(e, SHRAVAN, '2026-07-20', { todayEligible: true });
+  assert.equal(on.kind, 'active');
+  if (on.kind === 'active') assert.equal(on.dayIndex, 2);
 });
 
 test('withDayCommitted appends the day immutably', () => {

@@ -122,4 +122,15 @@ describe('SadhanaContext — enrollment lifecycle', () => {
     act(() => get().markCelebrated('gita-18'));
     expect(get().wasCelebrated('gita-18')).toBe(true);
   });
+
+  it('reminder toggle persists per program', async () => {
+    const get = mountProbe();
+    await act(async () => undefined);
+    expect(get().isReminderEnabled('hanuman-41')).toBe(false);
+    act(() => get().setReminderEnabled('hanuman-41', true));
+    expect(get().isReminderEnabled('hanuman-41')).toBe(true);
+    expect(get().reminderProgramIds).toEqual(['hanuman-41']);
+    act(() => get().setReminderEnabled('hanuman-41', false));
+    expect(get().isReminderEnabled('hanuman-41')).toBe(false);
+  });
 });

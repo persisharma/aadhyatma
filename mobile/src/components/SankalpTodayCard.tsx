@@ -42,14 +42,22 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
   }, [isCompleted, program.id, wasCelebrated, markCelebrated]);
 
   const title = contentByLang(lang, program.titleHi, program.titleEn);
-  const dayLabel =
-    status.kind === 'completed'
-      ? contentByLang(lang, 'पूर्णाहुति', 'Sankalp complete')
-      : contentByLang(
-          lang,
-          `संकल्प · दिन ${status.dayIndex} / ${status.totalDays}`,
-          `Sankalp · Day ${status.dayIndex} / ${status.totalDays}`
-        );
+  let dayLabel: string;
+  if (status.kind === 'completed') {
+    dayLabel = contentByLang(lang, 'पूर्णाहुति', 'Sankalp complete');
+  } else if (status.kind === 'waiting') {
+    dayLabel = contentByLang(
+      lang,
+      `संकल्प · ${status.doneCount} / ${status.totalDays}`,
+      `Sankalp · ${status.doneCount} / ${status.totalDays}`
+    );
+  } else {
+    dayLabel = contentByLang(
+      lang,
+      `संकल्प · दिन ${status.dayIndex} / ${status.totalDays}`,
+      `Sankalp · Day ${status.dayIndex} / ${status.totalDays}`
+    );
+  }
 
   return (
     <View
@@ -108,6 +116,38 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
             'आज का पाठ पूर्ण। कल पुनः पधारें 🌅',
             "Today's reading is done. Come back tomorrow 🌅"
           )}
+        </Text>
+      )}
+
+      {status.kind === 'waiting' && (
+        <Text
+          style={{
+            fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+            fontSize: 14,
+            color: colors.inkSoft,
+            marginTop: spacing.sm,
+            lineHeight: 21,
+          }}
+        >
+          {status.reason === 'window-upcoming'
+            ? meaningByLang(
+                lang,
+                status.whenKey
+                  ? `संकल्प ${formatShortDate(status.whenKey, lang)} से आरम्भ। 🪔`
+                  : 'संकल्प उत्सव आरम्भ होते ही जागृत होगा। 🪔',
+                status.whenKey
+                  ? `Your sankalp begins ${formatShortDate(status.whenKey, lang)}. 🪔`
+                  : 'Your sankalp awakens when the festival begins. 🪔'
+              )
+            : meaningByLang(
+                lang,
+                status.whenKey
+                  ? `आज विश्राम — अगला पाठ ${formatShortDate(status.whenKey, lang)}। 🌙`
+                  : 'आज विश्राम — अगले नियत दिन पर। 🌙',
+                status.whenKey
+                  ? `Resting today — your next practice is ${formatShortDate(status.whenKey, lang)}. 🌙`
+                  : 'Resting today — until the next eligible day. 🌙'
+              )}
         </Text>
       )}
 
@@ -171,6 +211,17 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
       )}
     </View>
   );
+}
+
+const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTHS_HI = ['जन', 'फ़र', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुल', 'अग', 'सित', 'अक्तू', 'नव', 'दिस'];
+
+/** 'YYYY-MM-DD' → a short readable date like "14 Jul" / "14 जुल". */
+function formatShortDate(key: string, lang: string): string {
+  const [, m, d] = key.split('-').map((n) => parseInt(n, 10));
+  if (!m || !d) return key;
+  const months = lang === 'en' ? MONTHS_EN : MONTHS_HI;
+  return `${d} ${months[m - 1] ?? ''}`.trim();
 }
 
 const styles = StyleSheet.create({

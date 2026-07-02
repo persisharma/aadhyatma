@@ -55,6 +55,7 @@ import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
+import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
@@ -179,6 +180,7 @@ export default function App() {
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
                             <VratReminderScheduler />
+                            <SadhanaReminderScheduler />
                             <MiniPlayer />
                             <NowPlayingScreen />
                           </View>

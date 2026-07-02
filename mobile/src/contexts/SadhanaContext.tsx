@@ -14,6 +14,7 @@ import type { DayCompletion, SadhanaEnrollment } from '@/data/sadhana/types';
 
 const ENROLLMENTS_KEY = '@vedansh/sadhana';
 const CELEBRATED_KEY = '@vedansh/sadhana-celebrated';
+const REMINDERS_KEY = '@vedansh/sadhana-reminders';
 
 type SadhanaContextValue = {
   enrollments: SadhanaEnrollment[];
@@ -30,6 +31,10 @@ type SadhanaContextValue = {
   /** Whether a completed program has already played its पूर्णाहुति celebration. */
   wasCelebrated: (programId: string) => boolean;
   markCelebrated: (programId: string) => void;
+  /** Program ids with a daily reminder enabled (PRD-11 P3). */
+  reminderProgramIds: string[];
+  isReminderEnabled: (programId: string) => boolean;
+  setReminderEnabled: (programId: string, enabled: boolean) => void;
 };
 
 const SadhanaContext = createContext<SadhanaContextValue | null>(null);
@@ -44,12 +49,17 @@ function isEnrollmentArray(v: unknown): v is SadhanaEnrollment[] {
 export function SadhanaProvider({ children }: { children: React.ReactNode }) {
   const [enrollments, setEnrollments] = useState<SadhanaEnrollment[]>([]);
   const [celebrated, setCelebrated] = useState<string[]>([]);
+  const [reminderProgramIds, setReminderProgramIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
-    Promise.all([AsyncStorage.getItem(ENROLLMENTS_KEY), AsyncStorage.getItem(CELEBRATED_KEY)])
-      .then(([rawE, rawC]) => {
+    Promise.all([
+      AsyncStorage.getItem(ENROLLMENTS_KEY),
+      AsyncStorage.getItem(CELEBRATED_KEY),
+      AsyncStorage.getItem(REMINDERS_KEY),
+    ])
+      .then(([rawE, rawC, rawR]) => {
         if (cancelled) return;
         if (rawE) {
           try {
@@ -64,6 +74,16 @@ export function SadhanaProvider({ children }: { children: React.ReactNode }) {
             const parsed = JSON.parse(rawC);
             if (Array.isArray(parsed) && parsed.every((x) => typeof x === 'string')) {
               setCelebrated(parsed);
+            }
+          } catch {
+            /* corrupted — leave empty */
+          }
+        }
+        if (rawR) {
+          try {
+            const parsed = JSON.parse(rawR);
+            if (Array.isArray(parsed) && parsed.every((x) => typeof x === 'string')) {
+              setReminderProgramIds(parsed);
             }
           } catch {
             /* corrupted — leave empty */
@@ -158,6 +178,25 @@ export function SadhanaProvider({ children }: { children: React.ReactNode }) {
     [celebrated, persistCelebrated]
   );
 
+  const persistReminders = useCallback((next: string[]) => {
+    setReminderProgramIds(next);
+    AsyncStorage.setItem(REMINDERS_KEY, JSON.stringify(next)).catch(() => undefined);
+  }, []);
+
+  const isReminderEnabled = useCallback(
+    (programId: string) => reminderProgramIds.includes(programId),
+    [reminderProgramIds]
+  );
+
+  const setReminderEnabled = useCallback(
+    (programId: string, enabled: boolean) => {
+      const has = reminderProgramIds.includes(programId);
+      if (enabled && !has) persistReminders([...reminderProgramIds, programId]);
+      else if (!enabled && has) persistReminders(reminderProgramIds.filter((id) => id !== programId));
+    },
+    [reminderProgramIds, persistReminders]
+  );
+
   const activeEnrollments = useMemo(
     () => enrollments.filter((e) => e.status === 'active' || e.status === 'completed'),
     [enrollments]
@@ -174,6 +213,9 @@ export function SadhanaProvider({ children }: { children: React.ReactNode }) {
       commitDay,
       wasCelebrated,
       markCelebrated,
+      reminderProgramIds,
+      isReminderEnabled,
+      setReminderEnabled,
     }),
     [
       enrollments,
@@ -185,6 +227,9 @@ export function SadhanaProvider({ children }: { children: React.ReactNode }) {
       commitDay,
       wasCelebrated,
       markCelebrated,
+      reminderProgramIds,
+      isReminderEnabled,
+      setReminderEnabled,
     ]
   );
 

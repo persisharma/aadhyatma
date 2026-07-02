@@ -16,12 +16,20 @@ import type { RoutineItem } from '@/data/routine/types';
 import type { Deity } from '@/data/texts';
 
 /**
- * How a program's days are laid out over time. Phase 1 ships `consecutive`
- * only; `weekday` (Shravan Somvar) and `festival-window` (Navratri) are Phase 4
- * and slot into this union without touching the resolver's day-count contract.
+ * How a program's days are laid out over time.
+ * - `consecutive`  — N days from the start date (completion-based; grace applies).
+ * - `weekday`      — the vow is "count occurrences of a weekday", gated to an
+ *                    actual eligible day (e.g. every Shravan Monday). `anchorRuleId`
+ *                    points at a panchang vrat rule so eligibility uses the real
+ *                    lunar calendar, not just any Monday.
+ * - `festival-window` — `days` calendar-anchored days inside a festival window
+ *                    (e.g. Navratri Pratipadā→Navamī). `anchorRuleId` gives the
+ *                    festival's start occurrence.
  */
 export type SadhanaCadence =
-  | { kind: 'consecutive'; days: number };
+  | { kind: 'consecutive'; days: number }
+  | { kind: 'weekday'; weekday: number; count: number; anchorRuleId: string }
+  | { kind: 'festival-window'; days: number; anchorRuleId: string };
 
 /** One day of a program: an ordered set of reciting units. */
 export type SadhanaDay = { items: RoutineItem[] };

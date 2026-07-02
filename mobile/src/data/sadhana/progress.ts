@@ -4,9 +4,15 @@
  * progress.test.ts) and shared by SadhanaContext + useSadhanaToday.
  *
  * Grace model (PRD-11 §5.3): the vow is "N days DONE", not "N consecutive
- * calendar days". `dayIndex` = completed-days + 1, so a missed calendar day
- * pauses the sankalp instead of breaking it. A day is committed at most once
- * per calendar day, so finishing today's day unlocks the next day tomorrow.
+ * calendar days". For `consecutive`/`weekday`, `dayIndex` = completed-days + 1,
+ * so a missed day pauses the sankalp instead of breaking it. A day is committed
+ * at most once per calendar day, so finishing today's day unlocks the next
+ * tomorrow.
+ *
+ * Calendar-anchored cadences (`weekday`, `festival-window`) additionally need
+ * "is today an eligible practice day?" — a calendar fact. To stay pure, the
+ * caller (useSadhanaToday) computes those facts from the panchang engine and
+ * passes them in as `SadhanaSchedule`.
  */
 import type { RoutineItem } from '@/data/routine/types';
 import type { DayCompletion, SadhanaEnrollment, SadhanaProgram } from './types';
@@ -14,7 +20,14 @@ import type { DayCompletion, SadhanaEnrollment, SadhanaProgram } from './types';
 /** Total days in the program. */
 export function programDayCount(p: SadhanaProgram): number {
   if (p.days) return p.days.length;
-  return p.cadence.kind === 'consecutive' ? p.cadence.days : 0;
+  switch (p.cadence.kind) {
+    case 'consecutive':
+      return p.cadence.days;
+    case 'weekday':
+      return p.cadence.count;
+    case 'festival-window':
+      return p.cadence.days;
+  }
 }
 
 /** The reciting units for a given 1-based dayIndex, or [] if out of range. */
@@ -24,39 +37,82 @@ export function dayItemsFor(p: SadhanaProgram, dayIndex: number): RoutineItem[] 
   return p.day?.items ?? [];
 }
 
-/** How many days of the vow are done. Keys are contiguous 1…count by construction. */
+/** How many days of the vow are done. */
 export function completedDayCount(e: SadhanaEnrollment): number {
   return Object.keys(e.completedDays).length;
 }
+
+/**
+ * Calendar facts for the eligibility-gated cadences, resolved by the caller from
+ * the panchang engine. Ignored for `consecutive`.
+ */
+export type SadhanaSchedule = {
+  /** `weekday`: is today an actual eligible day (e.g. a Shravan Monday)? */
+  todayEligible?: boolean;
+  /** `weekday`: 'YYYY-MM-DD' of the next eligible day (for "resting" copy). */
+  nextEligibleKey?: string;
+  /** `festival-window`: 1..days if today falls inside the window, else undefined. */
+  windowDayIndex?: number;
+  /** `festival-window`: 'YYYY-MM-DD' the window (next) starts, for upcoming copy. */
+  windowStartKey?: string;
+};
+
+export type WaitingReason = 'weekday-off' | 'window-upcoming';
 
 export type SadhanaTodayStatus =
   /** Today's day is open to practice. */
   | { kind: 'active'; dayIndex: number; totalDays: number; items: RoutineItem[] }
   /** Today's day was already completed today — come back tomorrow. */
   | { kind: 'done-today'; dayIndex: number; totalDays: number }
+  /** Not practicable today (off-day / window not open) — a gentle resting state. */
+  | { kind: 'waiting'; totalDays: number; doneCount: number; reason: WaitingReason; whenKey?: string }
   /** The whole sankalp is complete (पूर्णाहुति). */
   | { kind: 'completed'; totalDays: number; completedOn?: string };
 
 /**
  * What to show for an enrolled program *today*. `todayKey` is the caller's
  * 'YYYY-MM-DD' (from UserActivityContext.toDateKey) so the resolver stays pure.
+ * `schedule` supplies calendar eligibility for the gated cadences.
  */
 export function resolveSadhanaToday(
   e: SadhanaEnrollment,
   p: SadhanaProgram,
-  todayKey: string
+  todayKey: string,
+  schedule?: SadhanaSchedule
 ): SadhanaTodayStatus {
   const total = programDayCount(p);
   const done = completedDayCount(e);
   if (e.status === 'completed' || done >= total) {
     return { kind: 'completed', totalDays: total, completedOn: e.completedOn };
   }
-  // If the most-recently completed day was completed *today*, the vow is done
-  // for today; the next day unlocks tomorrow.
-  const lastAt = done > 0 ? e.completedDays[done]?.at : undefined;
-  if (lastAt === todayKey) {
-    return { kind: 'done-today', dayIndex: done, totalDays: total };
+
+  if (p.cadence.kind === 'festival-window') {
+    const windowDayIndex = schedule?.windowDayIndex;
+    if (windowDayIndex == null) {
+      return { kind: 'waiting', totalDays: total, doneCount: done, reason: 'window-upcoming', whenKey: schedule?.windowStartKey };
+    }
+    // Festival days are calendar-anchored: the day index comes from the window,
+    // not the completed count.
+    if (e.completedDays[windowDayIndex]?.at === todayKey) {
+      return { kind: 'done-today', dayIndex: windowDayIndex, totalDays: total };
+    }
+    return { kind: 'active', dayIndex: windowDayIndex, totalDays: total, items: dayItemsFor(p, windowDayIndex) };
   }
+
+  if (p.cadence.kind === 'weekday') {
+    // Completion-based day index (grace): the vow is "count eligible days done".
+    const lastAt = done > 0 ? e.completedDays[done]?.at : undefined;
+    if (lastAt === todayKey) return { kind: 'done-today', dayIndex: done, totalDays: total };
+    if (!schedule?.todayEligible) {
+      return { kind: 'waiting', totalDays: total, doneCount: done, reason: 'weekday-off', whenKey: schedule?.nextEligibleKey };
+    }
+    const dayIndex = done + 1;
+    return { kind: 'active', dayIndex, totalDays: total, items: dayItemsFor(p, dayIndex) };
+  }
+
+  // consecutive
+  const lastAt = done > 0 ? e.completedDays[done]?.at : undefined;
+  if (lastAt === todayKey) return { kind: 'done-today', dayIndex: done, totalDays: total };
   const dayIndex = done + 1;
   return { kind: 'active', dayIndex, totalDays: total, items: dayItemsFor(p, dayIndex) };
 }

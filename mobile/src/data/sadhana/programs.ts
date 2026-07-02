@@ -49,7 +49,59 @@ const GITA_18: SadhanaProgram = {
   })),
 };
 
-export const SADHANA_PROGRAMS: readonly SadhanaProgram[] = [HANUMAN_41, GITA_18];
+/**
+ * Navratri — nine days of Durga worship, calendar-anchored to the festival.
+ * Each day rotates through the existing Durga content (Chalisa + the three
+ * stotras) so the nine nights carry variety without new content.
+ */
+const NAVRATRI_ROTATION: RoutineItem[] = [
+  { id: 'durga-chalisa', kind: 'section', sourceId: 'durga-chalisa' },
+  { id: 'durga-stotram-1', kind: 'chapter', sourceId: 'durga-stotram', chapter: 1 },
+  { id: 'durga-stotram-2', kind: 'chapter', sourceId: 'durga-stotram', chapter: 2 },
+  { id: 'durga-stotram-3', kind: 'chapter', sourceId: 'durga-stotram', chapter: 3 },
+];
+
+const NAVRATRI_9: SadhanaProgram = {
+  id: 'navratri-durga-9',
+  titleHi: 'नवरात्रि — नौ दिन दुर्गा आराधना',
+  titleEn: 'Navratri — Nine Days of Durga',
+  subtitleHi: 'नवरात्रि से जुड़ा संकल्प',
+  subtitleEn: 'A sankalp anchored to Navratri',
+  deity: 'durga',
+  introHi:
+    'नवरात्रि के नौ दिन मां दुर्गा की आराधना का संकल्प। प्रत्येक दिन एक दुर्गा पाठ — संकल्प नवरात्रि आरम्भ होते ही जागृत होता है।',
+  introEn:
+    'A vow to worship Maa Durga through the nine nights of Navratri — one Durga reading each day. The sankalp awakens when Navratri begins.',
+  cadence: { kind: 'festival-window', days: 9, anchorRuleId: 'navratri-start' },
+  days: Array.from({ length: 9 }, (_, i): { items: RoutineItem[] } => {
+    const base = NAVRATRI_ROTATION[i % NAVRATRI_ROTATION.length];
+    // Unique item id per day so completion keys don't collide across the window.
+    return { items: [{ ...base, id: `navratri-${i + 1}` }] };
+  }),
+};
+
+/** Shravan Somvar — a Monday vow through the month of Shravan. */
+const SHRAVAN_SOMVAR: SadhanaProgram = {
+  id: 'shravan-somvar',
+  titleHi: 'सावन सोमवार — शिव संकल्प',
+  titleEn: 'Shravan Somvar — Shiva Vow',
+  subtitleHi: 'श्रावण के हर सोमवार',
+  subtitleEn: 'Every Monday of Shravan',
+  deity: 'shiva',
+  introHi:
+    'श्रावण मास के प्रत्येक सोमवार शिव चालीसा का पाठ करने का संकल्प। पाठ केवल सोमवार को खुलता है — शेष दिन विश्राम।',
+  introEn:
+    'A vow to recite the Shiv Chalisa each Monday of the month of Shravan. The reading opens only on Somvar — other days rest.',
+  cadence: { kind: 'weekday', weekday: 1, count: 4, anchorRuleId: 'sawan-somwar-vrat' },
+  day: { items: [{ id: 'shiv-chalisa', kind: 'section', sourceId: 'shiv-chalisa' }] },
+};
+
+export const SADHANA_PROGRAMS: readonly SadhanaProgram[] = [
+  HANUMAN_41,
+  GITA_18,
+  NAVRATRI_9,
+  SHRAVAN_SOMVAR,
+];
 
 export function getProgram(id: string): SadhanaProgram | undefined {
   return SADHANA_PROGRAMS.find((p) => p.id === id);

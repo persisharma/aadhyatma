@@ -44,69 +44,108 @@ export default function SadhanaProgramListScreen({ navigation }: Props) {
           )}
         </Text>
 
-        {SADHANA_PROGRAMS.map((p) => {
-          const enrollment = enrollmentFor(p.id);
-          const total = programDayCount(p);
-          const done = enrollment ? completedDayCount(enrollment) : 0;
-          const active = enrollment?.status === 'active';
-          const completed = enrollment?.status === 'completed';
-          const badge = completed
-            ? contentByLang(lang, 'पूर्ण', 'Complete')
-            : active
-              ? contentByLang(lang, `दिन ${done} / ${total}`, `Day ${done} / ${total}`)
-              : contentByLang(lang, `${total} दिन`, `${total} days`);
-          return (
-            <Pressable
-              key={p.id}
-              onPress={() => navigation.navigate('SadhanaProgramDetail', { programId: p.id })}
-              accessibilityRole="button"
-              style={[
-                styles.card,
-                {
-                  backgroundColor: colors.parchmentSoft,
-                  borderColor: active || completed ? colors.saffron : colors.goldTint,
-                  borderRadius: radii.lg,
-                  padding: spacing.lg,
-                  marginBottom: spacing.md,
-                },
-                elevation.card,
-              ]}
-            >
-              <View style={styles.cardTop}>
+        {(() => {
+          const withStatus = SADHANA_PROGRAMS.map((p) => ({ p, e: enrollmentFor(p.id) }));
+          const inProgress = withStatus.filter((x) => x.e?.status === 'active');
+          const completed = withStatus.filter((x) => x.e?.status === 'completed');
+          const available = withStatus.filter(
+            (x) => x.e?.status !== 'active' && x.e?.status !== 'completed'
+          );
+
+          const Section = ({ titleHi, titleEn, rows }: { titleHi: string; titleEn: string; rows: typeof withStatus }) =>
+            rows.length === 0 ? null : (
+              <>
                 <Text
                   style={{
-                    flex: 1,
-                    fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
-                    fontSize: 18,
-                    color: colors.ink,
+                    fontFamily: typography.cardLatin.fontFamily,
+                    fontSize: 12,
+                    letterSpacing: 0.5,
+                    color: colors.inkMuted,
+                    textTransform: 'uppercase',
+                    marginTop: spacing.md,
+                    marginBottom: spacing.sm,
                   }}
                 >
-                  {contentByLang(lang, p.titleHi, p.titleEn)}
+                  {contentByLang(lang, titleHi, titleEn)}
                 </Text>
-                <View
-                  style={[
-                    styles.badge,
-                    { backgroundColor: colors.parchmentHighlight, borderColor: colors.goldTint, borderRadius: radii.pill },
-                  ]}
-                >
-                  <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 11, color: colors.saffronDeep }}>
-                    {badge}
-                  </Text>
-                </View>
-              </View>
-              <Text
-                style={{
-                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                  fontSize: 13,
-                  color: colors.inkMuted,
-                  marginTop: 6,
-                }}
-              >
-                {contentByLang(lang, p.subtitleHi, p.subtitleEn)}
-              </Text>
-            </Pressable>
+                {rows.map(({ p, e }) => {
+                  const total = programDayCount(p);
+                  const done = e ? completedDayCount(e) : 0;
+                  const active = e?.status === 'active';
+                  const isDone = e?.status === 'completed';
+                  const badge = isDone
+                    ? contentByLang(lang, '✓ पूर्ण', '✓ Complete')
+                    : active
+                      ? contentByLang(lang, `दिन ${done} / ${total}`, `Day ${done} / ${total}`)
+                      : contentByLang(lang, `${total} दिन`, `${total} days`);
+                  return (
+                    <Pressable
+                      key={p.id}
+                      onPress={() => navigation.navigate('SadhanaProgramDetail', { programId: p.id })}
+                      accessibilityRole="button"
+                      style={[
+                        styles.card,
+                        {
+                          backgroundColor: colors.parchmentSoft,
+                          borderColor: active || isDone ? colors.saffron : colors.goldTint,
+                          borderRadius: radii.lg,
+                          padding: spacing.lg,
+                          marginBottom: spacing.md,
+                          opacity: isDone ? 0.9 : 1,
+                        },
+                        elevation.card,
+                      ]}
+                    >
+                      <View style={styles.cardTop}>
+                        <Text
+                          style={{
+                            flex: 1,
+                            fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
+                            fontSize: 18,
+                            color: colors.ink,
+                          }}
+                        >
+                          {contentByLang(lang, p.titleHi, p.titleEn)}
+                        </Text>
+                        <View
+                          style={[
+                            styles.badge,
+                            {
+                              backgroundColor: colors.parchmentHighlight,
+                              borderColor: colors.goldTint,
+                              borderRadius: radii.pill,
+                            },
+                          ]}
+                        >
+                          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 11, color: colors.saffronDeep }}>
+                            {badge}
+                          </Text>
+                        </View>
+                      </View>
+                      <Text
+                        style={{
+                          fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                          fontSize: 13,
+                          color: colors.inkMuted,
+                          marginTop: 6,
+                        }}
+                      >
+                        {contentByLang(lang, p.subtitleHi, p.subtitleEn)}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </>
+            );
+
+          return (
+            <>
+              <Section titleHi="चल रहा है" titleEn="In progress" rows={inProgress} />
+              <Section titleHi="उपलब्ध" titleEn="Available" rows={available} />
+              <Section titleHi="पूर्ण संकल्प" titleEn="Completed sankalps" rows={completed} />
+            </>
           );
-        })}
+        })()}
       </ScrollView>
     </RoutineShell>
   );
