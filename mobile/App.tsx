@@ -40,6 +40,7 @@ import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
 import { registerNativeAlarmForegroundHandler } from '@/notifications/japamAlarmNative';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
 import { RoutineProvider } from '@/contexts/RoutineContext';
+import { SadhanaProvider } from '@/contexts/SadhanaContext';
 import { RoutineSheetProvider } from '@/contexts/RoutineSheetProvider';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
 import { NewContentProvider } from '@/contexts/NewContentContext';
@@ -163,6 +164,7 @@ export default function App() {
                   <ReadingProgressProvider>
                     <JapamCounterProvider>
                       <RoutineProvider>
+                      <SadhanaProvider>
                       <RoutineSheetProvider>
                       <NotificationPreferencesProvider>
                         <JapamAlarmsProvider>
@@ -185,6 +187,7 @@ export default function App() {
                         </JapamAlarmsProvider>
                       </NotificationPreferencesProvider>
                       </RoutineSheetProvider>
+                      </SadhanaProvider>
                       </RoutineProvider>
                     </JapamCounterProvider>
                   </ReadingProgressProvider>

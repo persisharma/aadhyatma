@@ -18,7 +18,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
   const { lang } = useGitaLanguage();
   const { createRoutine } = useRoutines();
 
-  const [step, setStep] = useState<'name' | 'mode'>('name');
+  const [step, setStep] = useState<'choose' | 'name' | 'mode'>('choose');
   const [nameHi, setNameHi] = useState('');
   const [nameEn, setNameEn] = useState('');
   const [mode, setMode] = useState<RoutineScheduleMode | null>(null);
@@ -40,7 +40,13 @@ export default function CreateRoutineScreen({ navigation }: Props) {
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable
-            onPress={() => (step === 'mode' ? setStep('name') : navigation.goBack())}
+            onPress={() =>
+              step === 'mode'
+                ? setStep('name')
+                : step === 'name'
+                  ? setStep('choose')
+                  : navigation.goBack()
+            }
             accessibilityRole="button"
             accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ' })}
             hitSlop={16}
@@ -57,7 +63,38 @@ export default function CreateRoutineScreen({ navigation }: Props) {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
           showsVerticalScrollIndicator={false}
         >
-          {step === 'name' ? (
+          {step === 'choose' ? (
+            <>
+              <Heading
+                msg={{ hi: 'कैसे आरम्भ करें?', en: 'How would you like to begin?', gu: 'કેવી રીતે શરૂ કરવું?', kn: 'ಹೇಗೆ ಆರಂಭಿಸಬೇಕು?' }}
+                lang={lang}
+                colors={colors}
+                typography={typography}
+              />
+              <ModeCard
+                selected={false}
+                onPress={() => setStep('name')}
+                title={{ hi: 'अपनी साधना बनाएँ', en: 'Build your own', gu: 'તમારી સાધના બનાવો', kn: 'ನಿಮ್ಮ ಸಾಧನೆ ರಚಿಸಿ' }}
+                desc={{ hi: 'नाम दें, पाठ चुनें, अपनी दिनचर्या बनाएँ।', en: 'Name it, add texts, compose your daily practice.', gu: 'નામ આપો, પાઠ પસંદ કરો, તમારી દિનચર્યા બનાવો.', kn: 'ಹೆಸರಿಡಿ, ಪಠ್ಯ ಆರಿಸಿ, ನಿಮ್ಮ ದಿನಚರಿ ರಚಿಸಿ.' }}
+                lang={lang}
+                colors={colors}
+                typography={typography}
+                radii={radii}
+                spacing={spacing}
+              />
+              <ModeCard
+                selected={false}
+                onPress={() => navigation.navigate('SadhanaPrograms')}
+                title={{ hi: 'तैयार संकल्प चुनें', en: 'Choose a prebuilt sankalp', gu: 'તૈયાર સંકલ્પ પસંદ કરો', kn: 'ಸಿದ್ಧ ಸಂಕಲ್ಪ ಆರಿಸಿ' }}
+                desc={{ hi: 'जैसे ४१-दिन हनुमान चालीसा या १८ दिनों में गीता।', en: 'Like a 41-day Hanuman Chalisa or the Gītā in 18 days.', gu: 'જેમ કે ૪૧-દિવસ હનુમાન ચાલીસા અથવા ૧૮ દિવસમાં ગીતા.', kn: 'ಉದಾ. ೪೧-ದಿನ ಹನುಮಾನ್ ಚಾಲೀಸಾ ಅಥವಾ ೧೮ ದಿನಗಳಲ್ಲಿ ಗೀತಾ.' }}
+                lang={lang}
+                colors={colors}
+                typography={typography}
+                radii={radii}
+                spacing={spacing}
+              />
+            </>
+          ) : step === 'name' ? (
             <>
               <Heading
                 msg={{ hi: 'साधना का नाम', en: 'Name your routine', gu: 'સાધનાનું નામ', kn: 'ನಿಮ್ಮ ಸಾಧನೆಗೆ ಹೆಸರಿಡಿ' }}

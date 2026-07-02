@@ -10,9 +10,11 @@ import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
+import { useSadhanaToday } from '@/data/sadhana/useSadhanaToday';
 import { practiceSummary, offeredTail } from '@/data/routine/practiceView';
 import { navigateToRoutineItem } from '@/navigation/entryRoutes';
 import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
+import SankalpTodayCard from '@/components/SankalpTodayCard';
 import MalaStreak from '@/components/MalaStreak';
 import PracticeSeal from '@/components/PracticeSeal';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -25,6 +27,7 @@ export default function RoutineTodayScreen({ navigation }: Props) {
   const { markManualDone, unmarkManualDone } = useRoutines();
   const { currentStreak } = useUserActivity();
   const { entries, doneCount, total, hasRoutine } = useRoutineToday();
+  const sadhanaCards = useSadhanaToday();
   // General-typed nav for the centralized routing helper (this screen has no
   // route params, which is incompatible with the helper's route-agnostic Nav).
   const itemNav = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
@@ -54,7 +57,12 @@ export default function RoutineTodayScreen({ navigation }: Props) {
         contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
-        {!hasRoutine || total === 0 ? (
+        {sadhanaCards.map((c) => (
+          <SankalpTodayCard key={c.program.id} card={c} />
+        ))}
+
+        {total === 0 ? (
+          sadhanaCards.length === 0 ? (
           <View
             style={[
               styles.emptyCard,
@@ -86,6 +94,7 @@ export default function RoutineTodayScreen({ navigation }: Props) {
               onPress={() => navigation.navigate('RoutineList')}
             />
           </View>
+          ) : null
         ) : (
           <>
             {/* Completion summary card */}
