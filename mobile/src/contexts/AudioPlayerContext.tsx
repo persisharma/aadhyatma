@@ -70,6 +70,12 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     rateRef.current = rate;
   }, [rate]);
 
+  // Set when a freshly-replaced source should start playing. `play()` is a
+  // no-op before the player has loaded (see JapamAudioPlayer), so a new track's
+  // playback is armed here and fired by the loaded-gate effect below — without
+  // this, longer files that load slowly stay paused.
+  const wantPlayRef = useRef(false);
+
   useEffect(() => {
     ensureBackgroundAudioMode();
   }, []);
@@ -79,6 +85,15 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     const sub = player.addListener('playbackStatusUpdate', (s) => setStatus(s));
     return () => sub.remove();
   }, [player]);
+
+  // Start a newly-loaded track once the source is ready. Guarded by a ref so it
+  // fires exactly once per playTrack and never fights a user pause.
+  useEffect(() => {
+    if (wantPlayRef.current && status?.isLoaded) {
+      wantPlayRef.current = false;
+      player.play();
+    }
+  }, [status, player]);
 
   // Tear down the player when the app tree unmounts (app exit).
   useEffect(() => {
@@ -108,7 +123,8 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       player.replace(source);
       player.shouldCorrectPitch = true;
       player.setPlaybackRate(rateRef.current, 'high');
-      player.play();
+      // Defer play() to the loaded-gate effect — the source isn't ready yet.
+      wantPlayRef.current = true;
       setCurrentTrack(track);
       try {
         player.setActiveForLockScreen(true, {

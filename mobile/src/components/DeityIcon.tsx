@@ -5,7 +5,12 @@ import type { DeityIconKey } from '@/data/deities';
 type Props = {
   iconKey?: DeityIconKey;
   fallbackText: string;
+  /** Rendered glyph size in dp. Defaults to 36 (the catalog-card avatar size). */
+  size?: number;
 };
+
+/** The size the View-based glyphs below are drawn at; larger sizes scale up. */
+const BASE_SIZE = 36;
 
 const emojiIcons: Partial<Record<DeityIconKey, string>> = {
   bowArrow: '🏹',
@@ -15,19 +20,26 @@ const emojiIcons: Partial<Record<DeityIconKey, string>> = {
   surya: '☀️',
 };
 
-export default function DeityIcon({ iconKey, fallbackText }: Props) {
-  if (iconKey === 'bansuriPeacockFeather') return <KrishnaIcon />;
-  if (iconKey === 'gada') return <GadaIcon />;
-  if (iconKey === 'modak') return <ModakIcon />;
-  if (iconKey === 'veena') return <VeenaIcon />;
+export default function DeityIcon({ iconKey, fallbackText, size = BASE_SIZE }: Props) {
+  const scale = size / BASE_SIZE;
+  if (iconKey === 'bansuriPeacockFeather') return <Scaled scale={scale}><KrishnaIcon /></Scaled>;
+  if (iconKey === 'gada') return <Scaled scale={scale}><GadaIcon /></Scaled>;
+  if (iconKey === 'modak') return <Scaled scale={scale}><ModakIcon /></Scaled>;
+  if (iconKey === 'veena') return <Scaled scale={scale}><VeenaIcon /></Scaled>;
 
   const emoji = iconKey ? emojiIcons[iconKey] : undefined;
+  if (emoji) {
+    return <Text style={[styles.emoji, { fontSize: size * 0.61, lineHeight: size * 0.78 }]}>{emoji}</Text>;
+  }
 
-  return (
-    <Text style={emoji ? styles.emoji : styles.fallback}>
-      {emoji ?? fallbackText}
-    </Text>
-  );
+  return <Text style={[styles.fallback, { fontSize: size * 0.44 }]}>{fallbackText}</Text>;
+}
+
+/** Scales the fixed-size View glyphs. Renders children directly at 1× so the
+ *  common catalog-card case keeps its exact layout. */
+function Scaled({ scale, children }: { scale: number; children: React.ReactNode }) {
+  if (scale === 1) return <>{children}</>;
+  return <View style={{ transform: [{ scale }] }} accessible={false}>{children}</View>;
 }
 
 function KrishnaIcon() {
