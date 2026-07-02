@@ -1,9 +1,12 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
+import { deityIconKey } from '@/data/deities';
+import DeityIcon from '@/components/DeityIcon';
 import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 
 // Matches the bottom tab bar height in TabNavigator (60 + safe-area inset).
@@ -57,16 +60,30 @@ export default function MiniPlayer() {
           accessibilityLabel={`Now playing: ${currentTrack.titleEn}. Open player.`}
           style={styles.body}
         >
-          <Text
-            numberOfLines={1}
-            style={[styles.title, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
+          <LinearGradient
+            colors={[colors.cardThumbActiveFrom, colors.cardThumbActiveTo]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={[styles.thumb, { borderRadius: radii.md }]}
           >
-            {title}
-          </Text>
-          <View style={[styles.progressTrack, { backgroundColor: colors.divider }]}>
-            <View
-              style={[styles.progressFill, { backgroundColor: colors.saffron, width: `${progress * 100}%` }]}
+            <DeityIcon
+              iconKey={currentTrack.deity ? deityIconKey(currentTrack.deity) : undefined}
+              fallbackText={currentTrack.thumb}
+              size={26}
             />
+          </LinearGradient>
+          <View style={styles.bodyText}>
+            <Text
+              numberOfLines={1}
+              style={[styles.title, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
+            >
+              {title}
+            </Text>
+            <View style={[styles.progressTrack, { backgroundColor: colors.divider }]}>
+              <View
+                style={[styles.progressFill, { backgroundColor: colors.saffron, width: `${progress * 100}%` }]}
+              />
+            </View>
           </View>
         </Pressable>
 
@@ -112,6 +129,18 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -4 },
   },
   body: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  thumb: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bodyText: {
     flex: 1,
     gap: 6,
   },

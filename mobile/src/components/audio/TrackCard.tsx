@@ -5,6 +5,8 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { pick } from '@/utils/localize';
+import { deityIconKey } from '@/data/deities';
+import DeityIcon from '@/components/DeityIcon';
 import type { AudioTrack } from '@/data/audio/tracks';
 
 /**
@@ -77,15 +79,10 @@ export default function TrackCard({ track, onPress, playing }: Props) {
         end={{ x: 1, y: 1 }}
         style={[styles.thumb, { borderRadius: radii.md }]}
       >
-        <Text
-          style={{
-            color: colors.parchmentSoft,
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: typography.thumb.fontSize,
-          }}
-        >
-          {track.thumb}
-        </Text>
+        <DeityIcon
+          iconKey={track.deity ? deityIconKey(track.deity) : undefined}
+          fallbackText={track.thumb}
+        />
       </LinearGradient>
 
       <View style={styles.meta}>
