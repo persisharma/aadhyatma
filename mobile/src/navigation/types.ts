@@ -54,6 +54,9 @@ export type HomeStackParamList = {
   RoutineCreate: undefined;
   RoutineDetail: { routineId: string };
   RoutineAddItems: { routineId: string };
+  // Sadhana Programs (संकल्प) — PRD-11. Reached via the create-routine fork.
+  SadhanaPrograms: undefined;
+  SadhanaProgramDetail: { programId: string };
 };
 
 export type MoreStackParamList = {

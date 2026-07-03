@@ -27,6 +27,12 @@ function isVratReminderPayload(data: unknown): data is { type: 'vrat-reminder'; 
   return d.type === 'vrat-reminder' && typeof d.ruleId === 'string';
 }
 
+function isSadhanaReminderPayload(data: unknown): data is { type: 'sadhana-reminder'; programId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return d.type === 'sadhana-reminder' && typeof d.programId === 'string';
+}
+
 /**
  * Resolve a notification response into a navigation dispatch. Returns true if
  * we recognised the payload and routed; false otherwise.
@@ -75,6 +81,19 @@ export function handleNotificationResponse(
         name: 'PanchangTab',
         params: { screen: 'ObservanceDetail', params: { ruleId: data.ruleId } },
       })
+    );
+    return true;
+  }
+
+  // A sadhana-reminder tap (PRD-11) opens Today's Practice, where the active
+  // sankalp's day is shown. Lands on the Home tab's RoutineToday screen; reading
+  // progress is untouched (the user chooses to open the day's reading there).
+  if (isSadhanaReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'HomeTab',
+        params: { screen: 'RoutineToday' },
+      } as never)
     );
     return true;
   }

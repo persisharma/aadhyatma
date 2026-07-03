@@ -44,6 +44,8 @@ import RoutineListScreen from '@/screens/RoutineListScreen';
 import CreateRoutineScreen from '@/screens/CreateRoutineScreen';
 import RoutineAddItemsScreen from '@/screens/RoutineAddItemsScreen';
 import RoutineDetailScreen from '@/screens/RoutineDetailScreen';
+import SadhanaProgramListScreen from '@/screens/SadhanaProgramListScreen';
+import SadhanaProgramDetailScreen from '@/screens/SadhanaProgramDetailScreen';
 import type { HomeStackParamList } from './types';
 
 const LazyJapamCounterScreen = lazy(() => import('@/screens/JapamCounterScreen'));
@@ -195,6 +197,8 @@ export default function HomeStackNavigator() {
       <Stack.Screen name="RoutineCreate" component={CreateRoutineScreen} />
       <Stack.Screen name="RoutineAddItems" component={RoutineAddItemsScreen} />
       <Stack.Screen name="RoutineDetail" component={RoutineDetailScreen} />
+      <Stack.Screen name="SadhanaPrograms" component={SadhanaProgramListScreen} />
+      <Stack.Screen name="SadhanaProgramDetail" component={SadhanaProgramDetailScreen} />
     </Stack.Navigator>
   );
 }

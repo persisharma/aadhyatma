@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-11 · Sadhana Programs (Sankalp) — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#f3e7c9; --parchment-soft:#f8efd6; --parchment-hi:#fff5e0;
+    --gradient-end:#e9d9b1; --gold:#a67c34; --gold-soft:#c9b896; --gold-tint:#d8c393;
+    --saffron:#b8621b; --saffron-deep:#8a3e0b; --saffron-tint:rgba(184,98,27,0.10);
+    --ink:#2f1e10; --ink-soft:#5c4326; --ink-muted:#8a6a47; --divider:#d9c9a6;
+    --green:#3e7c4f; --green-tint:rgba(62,124,79,0.12);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:900px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:900px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:900px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:center}
+  .cap b{color:#e9d9b1}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:38px;height:38px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .menu{color:var(--saffron);font-size:20px}
+
+  .deva{font-family:var(--deva)}
+  .en-it{font-family:var(--serif);font-style:italic}
+
+  /* fork / choose cards */
+  .heading{text-align:center;margin:6px 0 18px}
+  .heading .h{font-family:var(--deva);font-size:21px;color:var(--ink)}
+  .heading .hs{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted);margin-top:3px}
+  .choosecard{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:16px;margin-bottom:12px;cursor:pointer}
+  .choosecard.hot{border:1.5px solid var(--saffron);background:linear-gradient(120deg,var(--parchment-hi),var(--parchment-soft))}
+  .choosecard .ct{font-family:var(--deva);font-size:16px;color:var(--ink);display:flex;align-items:center;gap:8px}
+  .choosecard .cs{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);margin-top:6px}
+  .tag{font-size:10px;font-weight:600;color:var(--saffron-deep);background:var(--saffron-tint);padding:2px 7px;border-radius:8px;font-family:var(--sans)}
+
+  /* program list rows */
+  .secttitle{font-family:var(--serif);font-style:italic;color:var(--ink-muted);font-size:12px;
+    letter-spacing:.5px;text-transform:uppercase;margin:16px 4px 8px}
+  .prog{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:14px;padding:14px;margin-bottom:11px;cursor:pointer}
+  .prog.active{border:1.4px solid var(--saffron)}
+  .prog.done{opacity:.85;border:1px solid var(--gold-soft)}
+  .prog-top{display:flex;align-items:flex-start;gap:10px}
+  .prog .pt{flex:1;font-family:var(--deva);font-size:17px;color:var(--ink);line-height:1.3}
+  .badge{font-size:10.5px;font-family:var(--sans);color:var(--saffron-deep);background:var(--parchment-hi);
+    border:1px solid var(--gold-tint);padding:3px 9px;border-radius:20px;white-space:nowrap}
+  .badge.green{color:var(--green);background:var(--green-tint);border-color:transparent}
+  .prog .ps{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);margin-top:6px}
+  .seal-sm{color:var(--green);font-size:12px}
+
+  /* detail */
+  .dtitle{font-family:var(--deva);font-size:23px;color:var(--ink);text-align:center}
+  .dsub{font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--saffron-deep);text-align:center;margin-top:3px}
+  .intro{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:16px;margin-top:16px;
+    font-family:var(--deva);font-size:14.5px;color:var(--ink-soft);line-height:1.9}
+  .btn{display:block;width:100%;text-align:center;background:var(--saffron);color:#fff8ec;border:none;
+    border-radius:12px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:14px;cursor:pointer}
+  .btn.ghost{background:transparent;border:1px solid var(--gold-tint);color:var(--saffron)}
+  .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:14px;line-height:1.6}
+
+  /* sankalp today card */
+  .scard{border:1.4px solid var(--saffron);background:var(--parchment-soft);border-radius:16px;padding:16px;margin-bottom:16px;
+    box-shadow:0 4px 14px rgba(138,62,11,.08)}
+  .scard .kicker{font-size:11px;font-weight:600;letter-spacing:.6px;color:var(--saffron-deep);text-transform:uppercase;font-family:var(--sans)}
+  .scard .stitle{font-family:var(--deva);font-size:20px;color:var(--ink);margin-top:2px}
+  .daybar{height:7px;border-radius:4px;background:var(--divider);margin:12px 0;overflow:hidden}
+  .daybar>i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--saffron))}
+  .item{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--divider)}
+  .item:first-of-type{border-top:none}
+  .circ{width:26px;height:26px;border-radius:50%;border:2px solid var(--saffron);flex:none;display:flex;align-items:center;justify-content:center}
+  .circ.on{background:var(--saffron);color:#fff8ec;font-size:13px}
+  .item .it{flex:1}
+  .item .itt{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .item .its{font-family:var(--sans);font-size:11.5px;color:var(--saffron-deep);margin-top:2px}
+  .item .chev{color:var(--saffron);font-size:18px}
+  .restnote{font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--ink-soft);margin-top:8px;line-height:1.6}
+  .seal{width:70px;height:70px;border-radius:50%;margin:6px auto 8px;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 50% 40%,var(--parchment-hi),var(--gold-tint));border:2px solid var(--gold);
+    font-family:var(--deva);font-size:30px;color:var(--saffron-deep)}
+  .center{text-align:center}
+
+  /* reminders */
+  .rrow{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--divider)}
+  .rrow .ri{flex:1}
+  .rrow .rit{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .rrow .ris{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:2px}
+  .toggle{width:44px;height:26px;border-radius:14px;background:var(--saffron);position:relative;flex:none}
+  .toggle.off{background:var(--divider)}
+  .toggle>i{position:absolute;top:3px;width:20px;height:20px;border-radius:50%;background:#fff8ec;transition:.2s;left:21px}
+  .toggle.off>i{left:3px}
+  .push{border:1px dashed var(--gold);border-radius:12px;padding:12px;margin-top:14px;display:flex;gap:10px;align-items:flex-start}
+  .push .pi{font-size:20px}
+  .push .pt{font-family:var(--deva);font-size:13.5px;color:var(--ink);line-height:1.4}
+  .push .ps{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted)}
+
+  .tabbar{position:sticky;bottom:0;height:52px;background:var(--parchment-soft);border-top:1px solid var(--divider);display:flex}
+  .tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;color:var(--ink-muted)}
+  .tabbar .tab.active{color:var(--saffron)}
+  .tabbar .tab .ic{font-size:16px}
+</style>
+</head>
+<body>
+  <h1>Sadhana Programs — संकल्प</h1>
+  <div class="sub">PRD-11 · Interactive UI prototype across all four phases. Static mockups in the app's parchment system — not the live build.</div>
+  <div class="legend">Reuses the Daily Routine surfaces: the sankalp enters through the <b>create-routine fork</b>, and an active vow shows as a distinct block inside <b>Today's Practice</b>. Grace-over-gamification throughout — a missed day pauses, never breaks.</div>
+
+  <!-- ============ PHASE 1 ============ -->
+  <div class="phaselabel">Phase 1 · Foundation</div>
+  <div class="phasedesc">The clubbed entry, the catalog, taking a sankalp, and the active day inside Today's Practice.</div>
+  <div class="wrap">
+
+    <!-- 1. Fork -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">नई साधना · New routine</div></div>
+        <div class="heading"><div class="h">कैसे आरम्भ करें?</div><div class="hs">How would you like to begin?</div></div>
+        <div class="choosecard">
+          <div class="ct">🪔 अपनी साधना बनाएँ</div>
+          <div class="cs">Build your own — name it, add texts, compose your daily practice.</div>
+        </div>
+        <div class="choosecard hot">
+          <div class="ct">📿 तैयार संकल्प चुनें <span class="tag">NEW</span></div>
+          <div class="cs">Choose a prebuilt sankalp — like a 41-day Hanuman Chalisa or the Gītā in 18 days.</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>The clubbed entry.</b> The create-routine screen forks: build your own, or pick a ready sankalp — no separate discovery surface.</div>
+    </div>
+
+    <!-- 2. Program list -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">संकल्प · Sadhana Programs</div></div>
+        <div class="ps" style="font-family:var(--serif);font-style:italic;color:var(--ink-muted);font-size:13px;margin:0 2px 12px">Choose a ready sankalp — a daily reading for a set number of days, all the way to completion.</div>
+        <div class="prog active">
+          <div class="prog-top"><div class="pt">हनुमान चालीसा — ४१ दिन</div><div class="badge">Day 7 / 41</div></div>
+          <div class="ps">इकतालीस दिन का संकल्प · in progress</div>
+        </div>
+        <div class="prog">
+          <div class="prog-top"><div class="pt">श्रीमद्भगवद्गीता — १८ दिनों में</div><div class="badge">18 days</div></div>
+          <div class="ps">One chapter each day</div>
+        </div>
+        <div class="prog">
+          <div class="prog-top"><div class="pt">नवरात्रि — नौ दिन दुर्गा आराधना</div><div class="badge">9 days</div></div>
+          <div class="ps">Anchored to the festival · Phase 4</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>The catalog.</b> Each card shows length or live progress. An enrolled program is bordered + badged.</div>
+    </div>
+
+    <!-- 3. Detail / begin -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">संकल्प · Sankalp</div></div>
+        <div class="dtitle">हनुमान चालीसा — ४१ दिन</div>
+        <div class="dsub">इकतालीस दिन का संकल्प</div>
+        <div class="intro">इकतालीस दिन तक प्रतिदिन हनुमान चालीसा का पाठ करने का संकल्प लें। कोई दिन छूट जाए तो साधना रुकती है, टूटती नहीं — अगले दिन वहीं से आगे बढ़ें।</div>
+        <button class="btn deva">संकल्प लें · Begin this sankalp</button>
+        <div class="note">कोई दिन छूटे तो संकल्प रुकता है, टूटता नहीं — अगले दिन वहीं से आगे।</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Taking the vow.</b> The intro framing + one deliberate CTA. Enrolling lands the user on Today.</div>
+    </div>
+
+    <!-- 4. Today active -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">आज की साधना · Today's Practice</div><div class="menu">≡</div></div>
+        <div class="scard">
+          <div class="kicker">संकल्प · Day 7 / 41</div>
+          <div class="stitle">हनुमान चालीसा — ४१ दिन</div>
+          <div class="daybar"><i style="width:17%"></i></div>
+          <div class="item">
+            <div class="circ"></div>
+            <div class="it"><div class="itt">हनुमान चालीसा</div><div class="its">पूरा पाठ · Tap to read</div></div>
+            <div class="chev">›</div>
+          </div>
+          <button class="btn ghost deva" style="margin-top:12px">आज का पाठ अर्पित करें · Mark today's practice done</button>
+        </div>
+        <div class="secttitle">Also today</div>
+        <div class="prog"><div class="prog-top"><div class="pt" style="font-size:15px">प्रातः साधना</div><div class="badge">2 / 3</div></div></div>
+      </div></div>
+      <div class="tabbar"><div class="tab active"><span class="ic">॥</span>Home</div><div class="tab"><span class="ic">🌸</span>Bhakti</div><div class="tab"><span class="ic">☾</span>Panchang</div><div class="tab"><span class="ic">☰</span>More</div></div>
+    </div>
+    <div class="cap"><b>The active day.</b> A distinct sankalp block above ordinary routines. Auto-completes when read to the end; a manual "mark done" covers offline recitation.</div>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 2 ============ -->
+  <div class="phaselabel">Phase 2 · पूर्णाहुति &amp; grace</div>
+  <div class="phasedesc">The "done for today" resting state, the completion seal, and a shelf of kept vows.</div>
+  <div class="wrap">
+
+    <!-- 5. done today -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">आज की साधना · Today's Practice</div><div class="menu">≡</div></div>
+        <div class="scard">
+          <div class="kicker">संकल्प · Day 7 / 41</div>
+          <div class="stitle">हनुमान चालीसा — ४१ दिन</div>
+          <div class="daybar"><i style="width:17%"></i></div>
+          <div class="restnote">आज का पाठ पूर्ण। कल पुनः पधारें 🌅<br><span style="font-size:12px">Today's reading is done. Come back tomorrow.</span></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Done for today.</b> One day per calendar day — finishing unlocks tomorrow, not an instant next day.</div>
+    </div>
+
+    <!-- 6. purnahuti -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">आज की साधना · Today's Practice</div><div class="menu">≡</div></div>
+        <div class="scard center">
+          <div class="kicker">पूर्णाहुति · Sankalp complete</div>
+          <div class="stitle">हनुमान चालीसा — ४१ दिन</div>
+          <div class="seal">॥</div>
+          <div class="restnote center" style="font-style:normal">४१ दिनों का संकल्प पूर्ण हुआ। 🙏<br><span style="font-family:var(--serif);font-style:italic;font-size:12.5px">Your 41-day sankalp is complete.</span></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>पूर्णाहुति.</b> The completion seal (reusing the PRD-10 pushpa-varsha pattern) marks a vow fulfilled.</div>
+    </div>
+
+    <!-- 7. completed shelf -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">संकल्प · Sadhana Programs</div></div>
+        <div class="secttitle">Available</div>
+        <div class="prog"><div class="prog-top"><div class="pt">श्रीमद्भगवद्गीता — १८ दिनों में</div><div class="badge">18 days</div></div><div class="ps">One chapter each day</div></div>
+        <div class="secttitle">पूर्ण संकल्प · Completed sankalps</div>
+        <div class="prog done"><div class="prog-top"><div class="pt">हनुमान चालीसा — ४१ दिन</div><div class="badge green">✓ पूर्ण</div></div><div class="ps seal-sm">Completed · begin again anytime</div></div>
+        <div class="prog done"><div class="prog-top"><div class="pt">नवरात्रि — नौ दिन</div><div class="badge green">✓ पूर्ण</div></div><div class="ps seal-sm">Completed</div></div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Kept vows.</b> A quiet shelf of completed sankalps — a record, re-startable anytime.</div>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 3 ============ -->
+  <div class="phaselabel">Phase 3 · Reminders</div>
+  <div class="phasedesc">A per-program daily nudge wired into the existing on-device scheduler, deep-linking to today's day.</div>
+  <div class="wrap">
+
+    <!-- 8. reminders -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">संकल्प स्मरण · Sankalp reminders</div></div>
+        <div class="rrow"><div class="ri"><div class="rit">हनुमान चालीसा — ४१ दिन</div><div class="ris">Daily at 7:00 AM · Day 7 / 41</div></div><div class="toggle"><i></i></div></div>
+        <div class="rrow"><div class="ri"><div class="rit">श्रीमद्भगवद्गीता — १८ दिनों में</div><div class="ris">Reminder off</div></div><div class="toggle off"><i></i></div></div>
+        <div class="push">
+          <div class="pi">🔔</div>
+          <div><div class="pt">आज दिन ७ — हनुमान चालीसा</div><div class="ps">Day 7 of your sankalp · tap to open today's practice</div></div>
+        </div>
+        <div class="note">Reminders are scheduled on-device (no server). They share the reminder time you set for Daily Bhakti.</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Per-program nudge.</b> A toggle per active sankalp; the notification deep-links straight to Today's day.</div>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 4 ============ -->
+  <div class="phaselabel">Phase 4 · Festival &amp; weekday cadences</div>
+  <div class="phasedesc">Calendar-anchored sankalps: Navratri's 9-day window and Shravan's Mondays — each gated to its eligible day.</div>
+  <div class="wrap">
+
+    <!-- 9. navratri upcoming -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">संकल्प · Sankalp</div></div>
+        <div class="dtitle">नवरात्रि — नौ दिन</div>
+        <div class="dsub">Anchored to Navratri · starts Oct 3</div>
+        <div class="scard center" style="margin-top:16px">
+          <div class="kicker">आगामी · Upcoming</div>
+          <div class="stitle">दुर्गा आराधना</div>
+          <div class="restnote center">नवरात्रि ३ अक्टूबर से आरम्भ।<br><span style="font-family:var(--serif);font-style:italic;font-size:12.5px">Your 9 days begin when Navratri does. Each day opens its own Durga path.</span></div>
+        </div>
+        <button class="btn deva">संकल्प लें · Take this sankalp</button>
+      </div></div>
+    </div>
+    <div class="cap"><b>festival-window.</b> Days are calendar-anchored to Navratri (Pratipada → Navami); the vow waits for the window to open.</div>
+    </div>
+
+    <!-- 10. shravan resting -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">आज की साधना · Today's Practice</div><div class="menu">≡</div></div>
+        <div class="scard">
+          <div class="kicker">संकल्प · सावन सोमवार · 2 / 4 Mondays</div>
+          <div class="stitle">सावन सोमवार व्रत</div>
+          <div class="daybar"><i style="width:50%"></i></div>
+          <div class="restnote">आज विश्राम — अगला सोमवार।<br><span style="font-family:var(--serif);font-style:italic;font-size:12.5px">Resting today — your next Somvar is Jul 14. Shiv Chalisa opens that morning.</span></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>weekday.</b> Shravan Somvar runs only on Mondays; other days show a gentle "resting — next Monday" state. The vow is "4 Mondays done."</div>
+    </div>
+
+    <!-- 11. navratri active day -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">आज की साधना · Today's Practice</div><div class="menu">≡</div></div>
+        <div class="scard">
+          <div class="kicker">संकल्प · नवरात्रि · Day 3 / 9</div>
+          <div class="stitle">दुर्गा आराधना</div>
+          <div class="daybar"><i style="width:33%"></i></div>
+          <div class="item">
+            <div class="circ on">✓</div>
+            <div class="it"><div class="itt">दुर्गा स्तोत्रम् — तृतीय</div><div class="its">Chapter 3 · offered 6:40 AM</div></div>
+            <div class="chev">›</div>
+          </div>
+        </div>
+        <div class="restnote" style="margin:0 4px">तृतीया — मां चन्द्रघण्टा। <span style="font-family:var(--serif);font-style:italic;font-size:12px">Today is the 3rd of the nine nights.</span></div>
+      </div></div>
+    </div>
+    <div class="cap"><b>festival-window, in progress.</b> Each of the nine days maps to its own Durga unit, anchored to the calendar day of Navratri.</div>
+    </div>
+  </div>
+
+  <!-- ============ ADDITIONAL STATES ============ -->
+  <div class="phaselabel">Supporting states</div>
+  <div class="phasedesc">The enrolled-detail screen (with the gentle set-aside), and a chapter-unit day (Gītā).</div>
+  <div class="wrap">
+
+    <!-- 12. detail enrolled + abandon -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">संकल्प · Sankalp</div></div>
+        <div class="dtitle">हनुमान चालीसा — ४१ दिन</div>
+        <div class="dsub">चल रहा है · Day 7 / 41</div>
+        <div class="intro">इकतालीस दिन तक प्रतिदिन हनुमान चालीसा का पाठ करने का संकल्प लें। कोई दिन छूट जाए तो साधना रुकती है, टूटती नहीं।</div>
+        <button class="btn deva">आज की साधना · Today's practice</button>
+        <button class="btn ghost deva">संकल्प स्थगित करें · Set this sankalp aside</button>
+        <div class="note">Setting aside is gentle — nothing is lost; your kept days remain, and you can begin again anytime.</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Enrolled detail.</b> While active, the detail offers a jump to Today plus a guilt-free "set aside" (abandon) — no auto-fail, ever.</div>
+    </div>
+
+    <!-- 13. gita chapter-unit day -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">आज की साधना · Today's Practice</div><div class="menu">≡</div></div>
+        <div class="scard">
+          <div class="kicker">संकल्प · Day 3 / 18</div>
+          <div class="stitle">श्रीमद्भगवद्गीता — १८ दिनों में</div>
+          <div class="daybar"><i style="width:17%"></i></div>
+          <div class="item">
+            <div class="circ"></div>
+            <div class="it"><div class="itt">भगवद् गीता</div><div class="its">अध्याय 3 · Chapter 3 · Tap to read</div></div>
+            <div class="chev">›</div>
+          </div>
+          <button class="btn ghost deva" style="margin-top:12px">आज का पाठ अर्पित करें · Mark today's practice done</button>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Chapter-unit day.</b> A per-day program maps the day index to the day's chapter (Gītā day 3 → Chapter 3), reusing the routine <code>chapter</code> item.</div>
+    </div>
+  </div>
+
+</body>
+</html>

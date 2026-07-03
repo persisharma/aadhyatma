@@ -40,6 +40,7 @@ import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
 import { registerNativeAlarmForegroundHandler } from '@/notifications/japamAlarmNative';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
 import { RoutineProvider } from '@/contexts/RoutineContext';
+import { SadhanaProvider } from '@/contexts/SadhanaContext';
 import { RoutineSheetProvider } from '@/contexts/RoutineSheetProvider';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
 import { NewContentProvider } from '@/contexts/NewContentContext';
@@ -54,6 +55,7 @@ import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
+import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
@@ -163,6 +165,7 @@ export default function App() {
                   <ReadingProgressProvider>
                     <JapamCounterProvider>
                       <RoutineProvider>
+                      <SadhanaProvider>
                       <RoutineSheetProvider>
                       <NotificationPreferencesProvider>
                         <JapamAlarmsProvider>
@@ -177,6 +180,7 @@ export default function App() {
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
                             <VratReminderScheduler />
+                            <SadhanaReminderScheduler />
                             <MiniPlayer />
                             <NowPlayingScreen />
                           </View>
@@ -185,6 +189,7 @@ export default function App() {
                         </JapamAlarmsProvider>
                       </NotificationPreferencesProvider>
                       </RoutineSheetProvider>
+                      </SadhanaProvider>
                       </RoutineProvider>
                     </JapamCounterProvider>
                   </ReadingProgressProvider>
