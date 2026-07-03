@@ -97,8 +97,7 @@ These remain in everyday English. A handful of common Sanskrit terms keep their 
 
 **Rendering layout** is module-specific:
 
-- **Gita pattern (always-show-both):** Devanagari and IAST render side-by-side on every reader page; the language toggle only flips meaning/commentary. See §9.
-- **Sundarkand / Hanuman Chalisa pattern (swap-on-toggle):** the toggle swaps Devanagari ↔ romanization in place, so only one script is visible at a time. See §9 / §10. Sanskrit shlokas inside these texts swap to IAST; Awadhi chaupais swap to pronunciation-based ASCII.
+- **Swap-on-toggle (all modules, Gita included):** the toggle swaps Devanagari ↔ romanization in place, so only one script is visible at a time (`verseLinesByLang`). See §9 / §10. Sanskrit shlokas swap to IAST (the Gita's `transliteration[]`, Sundarkand's opening shlokas); Awadhi chaupais swap to pronunciation-based ASCII. (An earlier Gita revision rendered both scripts side-by-side; the shipped readers use one script at a time everywhere.)
 
 ### Type scale
 
@@ -256,7 +255,7 @@ Applies to both readers — the Hanuman Chalisa reader (linear, single text) and
 
 1. Status bar.
 2. **Top bar** (14/22 padding):
-   - Back button — returns to the previous surface (Home for Chalisa; Chapters Index for Gita — one level up in the stack, not always Home).
+   - Back button — returns to the previous surface (the Category List for Chalisa; Chapters Index for Gita — one level up in the stack, not always Home).
    - Title. Chalisa: `हनुमान चालीसा`. Gita: `अध्याय N · <titleHi>` (Hindi mode) or `Chapter N · <titleEn>` (English mode).
    - Progress counter (`1 / 47`, Cormorant Garamond italic). Counter is **chapter-scoped** for Gita (resets per chapter), **document-scoped** for Chalisa.
 3. **Reading progress bar** (`ReadingProgressBar.tsx`) — a thin saffron track directly under the top bar showing position within the chapter/document.
@@ -417,7 +416,7 @@ When a new text is added, pick the pattern that fits the source:
 2. Generate per-chapter JSONs via a build-time Node script and commit the output to `mobile/src/data/<module>/chapter-NN.json` + `chapters-manifest.json`.
 3. Define the module's content types (shape mirrors Gita's `GitaVerse` / `GitaChapter`) in `mobile/src/data/<module>/index.ts` with module-load invariants (chapter count, verse count per chapter, no duplicate ids, at least one language populated for optional sections).
 4. Reuse the existing `useGitaLanguage()` context (`mobile/src/data/gita/language.tsx`) — do not create a parallel per-module context. The hook is already shared across Gita, Sundarkand, and Hanuman Chalisa.
-5. Add a Chapters Index screen (Section 15) with a Language Toggle (Section 16) and a list of chapter cards. Render the same Language Toggle on every reader page too — same control, two surfaces, shared state.
+5. Add a Chapters Index screen (Section 15) with a Language Toggle (Section 16) and a list of chapter cards. Render the same Language Toggle once in the reader's persistent toggle row too — same control, two surfaces, shared state.
 6. Build a Reader screen that scopes the pager to a single chapter (one verse per page, chapter-scoped counter).
 7. Add 1–3 faded sketches to `mobile/assets/<module>/` — for v1 a single image covering all verses is acceptable if sourcing more is a separate ticket.
 8. Flip the Home card from `coming` to `active`. Active modules sort above `coming` ones in the library list.
@@ -427,9 +426,9 @@ When a new text is added, pick the pattern that fits the source:
 - Keep the pill vocabulary consistent: `दोहा`, `चौपाई`, `श्लोक`, `मंत्र`, etc., always paired with a Latin subtitle or chapter.verse number.
 - Never hard-code colours, spacings, or font names in a component — always pull from the theme.
 - If a token is missing, add it to `colors.ts` / `typography.ts` / `spacing.ts` first, then update this doc, then use it.
-- For bilingual prose (meaning, commentary): Cormorant Garamond 18 / 30 500 medium **non-italic** `ink` is the English body standard. Italic is reserved for labels, fallback notes, and short flourishes.
+- For bilingual prose (meaning, commentary): Cormorant Garamond 20 / 33 500 medium **non-italic** `ink` (the `meaningEnglish` token) is the English body standard. Italic is reserved for labels, fallback notes, and short flourishes.
 - **Romanization.** Pick the style that matches the source language per §3.1: IAST + Hunterian digraphs for Sanskrit verses (Gita, embedded shlokas); pronunciation-based ASCII for Awadhi/Hindi verses (Tulsidas chaupais and dohas). Don't impose IAST on Awadhi — the diacritics misrepresent recitation.
-- **Language toggle.** Reuse `useGitaLanguage()`. Render the toggle on every reader page; for sections with a subsection listing (e.g., Gita's Chapters Index), render it there too. State is shared.
+- **Language toggle.** Reuse `useGitaLanguage()`. Render the toggle once per reader in the persistent toggle row; for sections with a subsection listing (e.g., Gita's Chapters Index), render it there too. State is shared.
 
 ---
 
@@ -480,9 +479,9 @@ When a new text is added, pick the pattern that fits the source:
 **Components:**
 - `mobile/src/components/LibraryCard.tsx` — Home library entry (Section 8).
 - `mobile/src/components/GitaChapterCard.tsx` — Chapters Index entry (Section 15).
-- `mobile/src/components/LanguageToggle.tsx` — the hi/en segmented pill (Section 16).
+- `mobile/src/components/LanguageToggle.tsx` — the two-segment regional-language/English pill (Section 16).
 - `mobile/src/components/VersePage.tsx` — Hanuman Chalisa reader page body.
-- `mobile/src/components/GitaVersePage.tsx` — Gita reader page body (always-show-both layout).
+- `mobile/src/components/GitaVersePage.tsx` — Gita reader page body (swap-on-toggle verse lines + meaning/commentary).
 - `mobile/src/components/SundarkandVersePage.tsx` — Sundarkand reader page body.
 - `mobile/src/components/Ornament.tsx` — the `॥` verse divider (Section 5).
 
@@ -588,23 +587,18 @@ When building new components, pull tokens from the theme — never hard-code a h
 2. Hero block: the **Home wordmark lockup** (Section 5) — `ॐ वेदांश़ ॐ` on one row over the "Sacred Texts · Daily Reading" tagline. (Earlier revisions stacked a crest above a 34px title; the lockup is the compact replacement.)
 2a. Section label "DISCOVER" + **Feature Spotlight carousel** (§32) — a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Panchang, Pilgrimage).
 3. Section label "CATEGORIES" (Inter 11, uppercase, ink-muted, 0.22em tracking)
-4. **Category grid** (2-column FlatList, numColumns=2):
-   - 6 tiles: ग्रन्थ, स्तोत्रम्, चालीसा, आरती, भजन, वेद
-   - Gap: 12px between tiles, 28px side padding
-   - Active tiles: gradient `#FFF5E0 → #F5DEAC`, saffron border (0.4 opacity), shadow md, radius 18
-   - Coming-soon tiles: flat `rgba(255, 250, 235, 0.72)`, divider border, shadow sm, 55% opacity, "SOON" badge
-   - Tile content: large centered Devanagari glyph (Noto Serif 28 600, saffron-deep), Hindi name below (Noto Serif 15 600, ink), English name (Cormorant 12 400 italic, ink-muted)
-   - Tile height: auto-sized to content, minimum 110px
-5. Section heading "देवता · By Deity" (Noto Serif 14 600 `ink` + Cormorant 13 400 italic `ink-muted`, left-aligned with side padding)
-6. **Deity scroll row** (horizontal ScrollView, 12px gap, 28px side padding):
-   - 6 deity chips: श्री राम, श्री कृष्ण, श्री शिव, श्री हनुमान, माँ दुर्गा, श्री गणेश
-   - Each chip: 48px circle (gradient `#F8D291 → #E0A255`) with white Devanagari glyph (Noto Serif 18 600), deity name below (Noto Serif 11 500, ink-soft), 8px gap between circle and label
-   - Tapping → pushes DeityList screen (filtered items)
-7. Footer mantra (same as Section 7)
+4. **Category grid** (2-column wrap layout):
+   - **8 active tiles**: the 7 registry categories from `categories.ts` — ग्रन्थ, स्तोत्रम्, चालीसा, जप, आरती, तीर्थ, संस्कार — plus an appended **देवता · By Deity** tile that opens `DeityIndexScreen`
+   - Gap: **10px** between tiles, 28px side padding; tile width = half the remaining row
+   - Tap → CategoryList for that category (तीर्थ opens the Theerth browse surface, §26; देवता opens the Deity Index)
+   - Tile spec: see Section 19
+5. Footer mantra (Section 7 — token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
+6. **Floating search button** (`SearchFloatingButton`) docked bottom-right, lifted above the routine banner → opens the Search screen. (The old Help floating button/modal never shipped.)
+7. **Routine banner** (§30) docked above the tab bar
+
+There is **no deity chip row on Home** — deity browsing lives in the Deity Index screen (§20).
 
 **Gradient background:** same as Section 2 Home gradient.
-
-Note: The Help floating button and modal remain as before.
 
 ---
 
@@ -616,25 +610,23 @@ Two variants: `active` (has content) and `coming` (placeholder).
 
 **Active:**
 
-- Background: linear-gradient `#FFF5E0 → #F5DEAC` (same gradient as library card)
-- Border: 1px `rgba(184, 98, 27, 0.4)`
-- Shadow: `md`
-- Radius: 18
+- Background: linear-gradient `cardActiveFrom → cardActiveTo` (`#FFF5E0 → #F5DEAC`, same gradient as library card)
+- Border: 1px `cardActiveBorder` (`rgba(184, 98, 27, 0.4)`)
+- Shadow: lifted (offset `0,4`, opacity `0.12`, radius 12; Android elevation 3)
+- Radius: **16**
 - Layout (vertical, centered):
-  - Glyph: Noto Serif Devanagari 28 600, `saffron-deep`, centered. Represents the category (ग्र, स्तो, चा)
-  - Primary / secondary names follow the active reading language via `orderTitlesByLanguage()` (see §3 "Card name"). Defaults shown below are the Hindi-primary case; English-primary swaps the slots and applies the optical compensation (Cormorant 700 @ 17 + tracking on top, demoted Hindi 12 `ink-muted` below).
-  - Name (primary, hi default): Noto Serif Devanagari 15 600, `ink`, 6px below glyph
-  - Name (secondary, en default): Cormorant Garamond 12 400 italic, `ink-muted`, 2px below the primary
-- Padding: 20px vertical, 12px horizontal
+  - Icon: a `CategoryIcon` stroke vector (saffron-deep), centered above the name
+  - **One name line only** — the active reading language's primary via `orderTitlesByLanguage()` (`devPrimary 16` / `latPrimary 17`, `ink`), 6px below the icon. The demoted second-language line is **deliberately dropped** on Home tiles to tighten the grid (see the comment in `CategoryCard.tsx`); catalog/detail screens keep the bilingual pairing. The English `accessibilityLabel` stays intact so screen readers still announce the English name.
+- Padding: 12px vertical, 10px horizontal
 - Tap → pushes CategoryList screen
 
 **Coming:**
 
-- Background: `rgba(255, 250, 235, 0.72)` flat
+- Background: `cardSurface` flat
 - Border: 1px `divider`
 - Shadow: `sm`
-- Content at 55% opacity
-- "SOON" pill badge: top-right corner, 4px inset. Inter 9, uppercase, 0.18em tracking, `rgba(166,124,52,0.14)` fill, `gold` text
+- Card at 55% opacity
+- "SOON" pill badge: top-right corner, 8px inset. 9px, 600, uppercase, 0.18em tracking, `goldTint` fill, `ink-muted` text
 - Tap disabled (no navigation)
 
 **New content (active tiles & library cards):**
@@ -645,13 +637,7 @@ Two variants: `active` (has content) and `coming` (placeholder).
 
 ## 20. Component: Deity Chip
 
-**Purpose.** Circular avatar + label representing a deity for cross-reference navigation.
-
-- Circle: 48×48, gradient `#F8D291 → #E0A255`
-- Glyph inside circle: Noto Serif Devanagari 18 600, `parchment-soft` (white-ish)
-- Label below: Noto Serif Devanagari 11 500, `ink-soft`, centered, max 2 lines, 8px below circle
-- Tap → pushes DeityList screen filtered by this deity
-- Hit slop: 8px all sides
+> **Superseded.** The circular deity chip row never survived past the Home redesign. Deity browsing now lives in the **Deity Index screen** (`DeityIndexScreen.tsx`, reached from the देवता tile in the Home grid): all 9 deities from `deities.ts` render as full-width `DeityCard` rows, each carrying a `DeityIcon` attribute vector (bow-and-arrow for Rama, bansuri for Krishna, trishul for Shiva, …), over a randomly-picked deity background plate (`getRandomDeityBackground`, stable per mount). Tapping a row pushes the DeityList (§22). See the Deity Index section for the full spec.
 
 ---
 
@@ -662,11 +648,12 @@ Two variants: `active` (has content) and `coming` (placeholder).
 **Structure:**
 
 1. Status bar
-2. Top bar: back button (‹ in 34px circle) + title "ग्रन्थ · Sacred Books" (Noto Serif 16 600 for Hindi + Cormorant 14 400 italic for English, separated by `·`)
+2. Top bar: back button (‹ in 44px circle) + title "ग्रन्थ · Sacred Books" — primary/secondary ordered by the reading language via `orderTitlesByLanguage()` (primary `ink`, demoted secondary `ink-muted`, separated by `·`)
 3. Item list: renders `LibraryCard` (Section 8) for each item in the category, 12px gap, 28px side padding
-4. Items sorted: active first, then coming-soon
+4. Items render in **registry order** — the ordering is curated in the `library` array (`mobile/src/data/texts.ts`), not sorted at render time (every shipped entry is `active` today; `hidden` entries are filtered out)
+5. Tapping an item with prior reading progress opens a `ResumeReadingSheet` (resume at the saved verse / start over) before navigating; items with no progress navigate straight to their start
 
-Same parchment gradient background as Home.
+Background: the category's faded sketch plate (`getCategoryBackground`, §6) under the parchment overlay.
 
 ---
 
@@ -691,51 +678,48 @@ Same as Section 21, but filtered by deity tag instead of category. Title shows d
    - Radius: 18
    - Padding: 24px
    - Content (top to bottom):
-     - Source pill: Inter 10 600, 0.3em tracking, saffron-deep on `rgba(184, 98, 27, 0.08)` bg, radius 999. Shows "भगवद् गीता · 2.47" format.
-     - Verse text: Noto Serif 21 500, `ink`, line-height 1.7. 16px below pill.
-     - Ornament divider (Section 5 `॥` style). 16px vertical margin.
-     - Meaning label: "अर्थ · Meaning" (same style as Section 9)
-     - Meaning body: Noto Serif 14 400, `ink-soft`, line-height 1.7
-4. Refresh button (centered, 20px below card):
-   - Circle: 40px, `saffron` background, `parchment-soft` "↻" glyph (16px)
-   - Shadow: sm
-   - Tap picks a new random verse
-5. Source attribution (centered, 8px below button): Cormorant 12 400 italic, ink-muted. "From भगवद् गीता"
+     - **Header row**: source pill on the left (Inter 10 600, 0.3em tracking, saffron-deep on saffron-tint bg, radius 999 — "भगवद् गीता · श्लोक 2.47" format, language-aware) · **BookmarkButton + ShareButton** on the right, matching the reader's in-page actions (§25)
+     - Verse text: verse token for the reading language, `ink`. 16px below the header row
+     - Ornament divider (Section 5 `॥` style). 16px vertical margin
+     - Meaning label: single-language `भावार्थ` / `Meaning` (same treatment as Section 9)
+     - Meaning body: meaning token for the reading language, `ink-soft`
+     - **Card footer row**: source name on the left (Cormorant 12 400 italic / script serif, `ink-muted` — no "From" prefix) · an inline **`↻ next`** text pressable on the right (14px, `saffron`) that picks a new random verse. There is no separate 40px refresh circle or attribution line below the card
+4. **Routine banner** (§30) docked above the tab bar, same as Home
 
 **Gradient background:** same as Home.
 
-**Verse pool:** configurable source categories (default: `['granth', 'stotram']`). Pool is a flat index of all verses from active items in those categories. Selection: `Math.random()` on each tab visit.
+**Verse pool:** an explicit registry — `mobile/src/data/versePool.ts` — mapping each participating section (Gita, Sundarkand, the stotrams, chalisas, Ramcharitmanas, japam mantras, sanskar verses, …) into a `UniformVerse` shape. Membership is **registered per section**, not inferred from categories, so the pool only surfaces content with a well-formed verse + meaning mapping. Selection: `Math.random()` over the flat pool on each visit / `↻ next` tap.
+
+**Deep-linking:** a daily-verse reminder tap can pin the tab to a specific verse via route params (`sourceId` / `chapter` / `verseIndex`); the pinned verse is resolved from the pool by identity and shown instead of a random pick.
 
 ---
 
-## 24. Screen: Bookmarks
+## 24. Screen: Wishlist (saved verses)
 
-**Purpose.** Displays user-saved verses for quick re-access. Persisted locally via AsyncStorage.
+**Purpose.** Displays user-saved verses for quick re-access. Persisted locally via AsyncStorage (`BookmarksContext`). There is **no Bookmarks tab** — the screen is reached via **More → Wishlist** (`MoreStackNavigator` → `WishlistScreen.tsx`).
 
 **Structure:**
 
 1. Status bar
-2. Title area (centered): "संग्रह" (Noto Serif 20 600, ink) + "Saved Verses" (Cormorant 14 400 italic, ink-muted)
-3. **Bookmark list** (28px side padding, 12px gap):
+2. **Top bar**: back button (44px circle) + bilingual title block — primary "संग्रह" / "Saved Verses" swaps with the reading language (title face 16), the other language demoted to an 11px `ink-muted` caption beneath
+3. **Bookmark list** (28px side padding, 10px gap):
    - Each card:
      - Background: `parchment-soft`
      - Border: 1px `divider`
-     - Shadow: sm
      - Radius: 14
-     - Padding: 16px
-     - Layout (horizontal): verse info (flex-1) + bookmark icon + chevron
-     - Verse-type pill (same style as reader pills): e.g. "चौपाई · 9"
-     - Preview text: first line of verse, Noto Serif 15 500, `ink`, numberOfLines=1
-     - Source: Cormorant 12 400 italic, `ink-muted`, e.g. "हनुमान चालीसा"
-     - Bookmark icon: filled, `saffron`, 16px
-     - Chevron: `›`, `saffron`, right-aligned
-   - Tap → navigates to that verse in its reader
+     - Padding: 14px
+     - Layout (horizontal): verse info (flex-1) + ♥ remove button + chevron
+     - Preview text: **first 2 lines** of the verse (numberOfLines=2), 14/22, `ink`, in the reading language's serif
+     - Meta row below the preview: verse pill (`श्लोक N` / `Shloka N.M`, Cormorant SemiBold 10 on saffron-tint, radius 999) + source line (Cormorant 12 400 italic, `ink-muted`, e.g. "हनुमान चालीसा")
+     - **♥ remove button**: `saffron`, 18px glyph inside a 44×44 tap target — opens a **confirm modal** ("Remove from wishlist?" with Remove / Cancel, both ≥44px tall) rather than deleting immediately
+     - Chevron: `›`, `saffron`, right-aligned (decorative — hidden from a11y)
+   - Row tap → navigates to that verse in its reader via `buildBookmarkTarget` (`mobile/src/navigation/entryRoutes.ts`), bubbling up to the Home tab stack
 4. **Empty state** (when no bookmarks):
-   - Centered vertically
-   - `॥` ornament (32px, ink-muted, 40% opacity)
-   - Text: "अभी तक कोई श्लोक सहेजा नहीं" (Noto Serif 15 500, ink-muted, centered)
+   - Centered
+   - `॥` ornament (24px, ink-muted, 40% opacity)
+   - Text: "अभी तक कोई श्लोक सहेजा नहीं" (15, ink-muted, centered — script serif for gu/kn)
    - Subtext: "No verses saved yet" (Cormorant 14 400 italic, ink-muted)
-   - Hint: "Tap the bookmark icon while reading" (Cormorant 12 400 italic, ink-muted, 40% opacity)
+   - Hint: "Tap the ♡ icon while reading to save verses" (Cormorant 12 400 italic, ink-muted, 60% opacity)
 
 **Gradient background:** same as Home.
 
@@ -743,61 +727,54 @@ Same as Section 21, but filtered by deity tag instead of category. Title shows d
 
 ## 25. Component: Bookmark Button
 
-**Purpose.** Toggle button on reader screens allowing users to save/unsave the current verse.
+**Purpose.** Toggle button allowing users to save/unsave the current verse (`BookmarkButton.tsx`).
 
-- Position: top bar area of reader screens, right-aligned (after the page counter)
+- Position: **in-page**, in each verse page's header row (verse pill left, actions right — the `topActions` slot, §9), next to the Share button. Not in the reader top bar.
 - Shape: 34×34 circle, `parchment-soft` fill, `divider` border
-- Icon: bookmark outline (unfilled) when not saved; filled `saffron` when saved
-- Icon rendered as text: "◇" (outline) / "◆" (filled) in saffron, 16px. Or use a simple flag/ribbon shape via SVG path.
+- Icon rendered as text: **"♡"** (unsaved, `ink-muted`) / **"♥"** (saved, `saffron`), 16px
 - Tap: toggles bookmark state via BookmarksContext
-- Animation: light scale pulse (1.0 → 1.15 → 1.0, 200ms) on save
-- Haptic: `Haptics.ImpactFeedbackStyle.Light` on toggle
-- Hit slop: 12px all sides
+- Animation: light scale pulse (1.0 → 1.15 → 1.0, 200ms) **on save only** — removal stays quiet; the pulse collapses to the final frame under reduce-motion (§12)
+- Haptic: `Haptics.ImpactFeedbackStyle.Light` on every toggle
+- Hit slop: 12px all sides (lifts the 34px visual past the 44×44 target)
+- Accessibility: `accessibilityRole="button"`, label "Add bookmark" / "Remove bookmark", `accessibilityState={{ selected }}`
 
 ---
 
-## 26. Screen: Theerth Map (तीर्थ)
+## 26. Screen: Theerth Browse (तीर्थ)
 
-**Purpose.** Map-driven entry surface for the Theerth (pilgrimage) category. Tapping the Theerth category tile on Home pushes this screen. Full proposal in `docs/roadmap/prds/07-temple-tour.md`.
+**Purpose.** Entry surface for the Theerth (pilgrimage) category — a browse **list**, not a map. Tapping the Theerth category tile on Home pushes this screen (`TheerthMapScreen.tsx` — the file keeps its historical name, but the landing view renders no map). The `<IndiaMap>` appears in the **drill-in** view after picking a state or category. Full proposal in `docs/roadmap/prds/07-temple-tour.md`.
 
 **Layer stack:**
 
-1. Parchment base colour (no faded sketch background — the map IS the visual).
-2. `<IndiaMap>` SVG (Section 28) occupying the upper ~60 % of the screen.
-3. Temple pins (Section 29) overlaid on the map, positioned by lat/lng → x/y projection.
-4. Below the map: segmented toggle (`मानचित्र · Map` / `राज्य · By State`), then either the intro paragraph (map view) or the grouped state list (state view).
+1. Flat parchment gradient only (`BackgroundLayer` with `source={null}`) — deliberately no faded sketch: a busy plate camouflaged the saffron map outline and pins in the drill-in view.
+2. Content column.
 
-**Structure (top to bottom):**
+**Structure — landing (top to bottom):**
 
 1. Status bar.
-2. **Top bar** (14/22 padding):
-   - Back button (returns to Home).
-   - Title centred: `तीर्थ` (Hindi mode) / `Theerth` (English mode), reader-title style. Title swaps on language — never stacks per RULEBOOK §3.
-   - Right-side spacer to keep title centred.
-3. **Language toggle row** (8 top / 16 bottom padding, centred). Same `LanguageToggle` component as §16. State shared via `useGitaLanguage()` — do not fork.
+2. **Top bar**: back button · title centred `तीर्थ` (Hindi mode) / `Theerth` (English mode), reader-title style — title swaps on language, never stacks · right-side spacer to keep the title centred.
+3. **Language toggle row** (centred). Same `LanguageToggle` component as §16, consistent across every Theerth screen. State shared via `useGitaLanguage()` — do not fork.
 4. **View toggle** (segmented control, parchment-soft fill, divider border, pill radius):
-   - Two halves: `मानचित्र · Map` (active by default) and `राज्य · By State`.
-   - Hindi half: Noto Serif Devanagari 13 600. English half: Cormorant Garamond 13 400 italic.
-   - Active half tinted `saffron-tint` with `saffron-deep` text; inactive transparent with `ink-muted`.
-5. **Map view** (when toggle = Map):
-   - `<IndiaMap>` SVG, fixed aspect ratio ~1:1.2 (India is roughly square-ish with a tail), centred horizontally.
-   - Pins overlaid via the `pins` prop.
-   - Below the map: `Theerth.introHi/En` prose (Noto Serif 15 400 `ink-soft` for Hindi; Cormorant Garamond 18 500 `ink` for English), 24 px side padding, 12 px paragraph gap.
-   - Below the intro: a single italic line — `Tap a pin to read the temple's story` / `पिन छूकर मंदिर की कथा पढ़ें` — Cormorant Garamond 12 italic, `ink-muted`, centred.
-6. **State view** (when toggle = By State):
-   - Vertical scroll list grouped by state.
-   - State header: `गुजरात · Gujarat` — Inter 11 600 `0.22em` uppercase, `ink-muted`, 16 px top padding, 8 px bottom.
-   - Temple card under each header: `[ thumb (deity glyph) ]  [ temple-name (lang-swapped) · city ]  [ › ]`. Same dimensions as `LibraryCard` (§8) but the meta line is `city, state` instead of `verse count`.
-   - State ordering: alphabetic by Devanagari sort key. Within a state, temples alphabetic by `nameHi`.
+   - Two halves: `राज्य · By State` and `श्रेणी · By Category` (lang-swapped labels; category is the default).
+   - Active half tinted `saffron-tint` with `saffron-deep` text; inactive transparent with `ink-muted`. Halves are minWidth 100 × minHeight 44, `radiogroup`/`radio` roles.
+5. **Browse card list** — one gradient LibraryCard-style row per **category** or **state**: `[ thumb glyph ॥ (category) / ॐ (state) ]  [ name · meta "N तीर्थ / N temples" ]  [ › ]`, with a NEW badge when any temple inside is still unseen. Category rows follow the curated `groupOrder` — the `TheerthGroup` buckets द्वादश ज्योतिर्लिङ्ग, चार धाम, छोटा चार धाम, शक्ति पीठ, plus an "अन्य प्रसिद्ध तीर्थ · Other Famous Temples" bucket for ungrouped temples; state rows sort alphabetically by `stateEn`.
+
+**Structure — drill-in** (the same screen pushed again with a `group` or `stateEn` param):
+
+1. Top bar title becomes the category/state name; the language toggle row persists.
+2. `<IndiaMap>` (Section 28), centred, scoped to the subsection — pins render only for the drilled-in temples; the By-State drill-in fills the focused state.
+3. A single italic hint line below the map: `पिन छूकर मंदिर की कथा पढ़ें` / `Tap a pin to read the temple's story` — Cormorant Garamond 12 italic, `ink-muted`, centred. (There is **no** `introHi/En` prose field on the model — this hint is the only copy.)
+4. Flat temple list (same browse-card rows; meta line = `city, state`), alphabetical by the localized temple name.
+
+**Data:** **71 temples** in `mobile/src/data/theerth/temples.ts`, each tagged with zero or more `groups` — a temple may appear under multiple yatras (Kedarnath is both Jyotirlinga and Chota Char Dham); `groups: []` lands it under Other Famous Temples.
 
 **Interactions:**
 
-- Tap pin → push `TheerthDetail` for that temple.
-- Long-press pin → small label tooltip with temple name (Devanagari/English by language toggle). Auto-dismisses on release.
-- Tap state-list row → push `TheerthDetail` for that temple.
-- View toggle persists in component state (NOT navigation state) so back from detail returns to the same view.
+- Tap pin or list row → push `TheerthDetail` for that temple (and mark its NEW chip seen).
+- Long-press pin → small label tooltip with temple name (lang-swapped). Auto-dismisses on release (Section 29).
+- The By State / By Category choice is component state on the landing screen; drill-ins are separate pushes, so back from a detail returns to the same view.
 
-**Gradient background:** same as Home (§2 Home gradient).
+**Gradient background:** flat parchment gradient (no sketch).
 
 ---
 
@@ -808,33 +785,32 @@ Same as Section 21, but filtered by deity tag instead of category. Title shows d
 **Layer stack:**
 
 1. Parchment base.
-2. Per-temple faded sketch background (`TheerthTemple.background`), pinned 1:1 to this temple — not interchangeable per §6 exception.
+2. Faded sketch background resolved by the temple's **presiding deity**, with per-temple id overrides for shrines whose deity plate is too generic (`getTheerthBackground(temple.id, temple.deity)`, `mobile/src/data/backgrounds.ts`). There is no per-temple `background` field on the model.
 3. Parchment gradient overlay (§2).
 4. Vertical-scroll content column.
 
 **Structure (top to bottom):**
 
 1. Status bar.
-2. **Top bar** (14/22 padding):
-   - Back button — returns to `TheerthMapScreen` preserving its toggle state.
-   - Title centred: temple name, lang-swapped (`सोमनाथ` / `Somnath`).
+2. **Top bar**:
+   - Back button — returns to the Theerth browse surface preserving its view state.
+   - **Language toggle** centred (§16) — the temple name lives only in the hero below, never duplicated in the bar.
    - Spacer.
-3. **Hero block** (28 px side padding, 24 px top, 16 px bottom):
-   - Temple name in large title type: Noto Serif Devanagari 28 600 `ink` (Hindi) / Cormorant Garamond 24 600 italic `ink` (English). Centred.
-   - Subtitle line: `<city>, <state>` (lang-swapped), Cormorant Garamond 14 400 italic `ink-muted`, centred, 4 px below name.
-   - Deity badge: a small pill (`saffron-tint` fill, `pill` radius, `saffron-deep` text, Inter 10 600 uppercase `0.3em`) reading e.g. `शिव · SHIVA` or the form name from `deityFormHi/En` if present.
+3. **Hero block** (centred):
+   - Temple name in large title type: screen-title face at 28, `ink`, centred.
+   - Subtitle line: `<city>, <state>` (lang-swapped), 14, `ink-muted`, centred (Cormorant italic for en; script serif for Indic).
+   - Deity badge: a small pill (`saffron-tint` fill, `divider` border, `pill` radius, `saffron-deep` text, 10 600 with wide tracking) reading the presiding deity's name.
 4. Ornament divider (`॥`, §5).
 5. **Significance section:**
-   - Label: `महिमा · Significance` (`Significance · महिमा` when lang = en) — Cormorant Garamond 13 600 italic, `saffron-deep`, `0.14em` tracking, uppercase, centred. Same treatment as the `अर्थ · Meaning` label.
-   - Body: array of paragraphs from `significanceHi[]` or `significanceEn[]`, 14 px paragraph gap. Hindi 15/26 Noto Serif `ink-soft`; English 18/30 Cormorant Garamond 500 medium non-italic `ink`.
+   - Label: `महिमा · Significance` (`Significance · महिमा` when lang = en) — reading-language form leads, the other supports. Rendered in the **script serif bold** at the `meaningLabel` size (13), `saffron-deep`, uppercase, **no tracking** — the label is always mixed-script, so a Latin face would clip the Devanagari half and tracking would split the shirorekha.
+   - Body: **a single prose string** — `significanceHi` / `significanceEn` (not a paragraph array). Typography follows the meaning token for the reading language (Hindi 20/34 Noto Serif `ink-soft`; English 20/33 Cormorant 500 italic here, `ink-soft`), centred.
 6. Ornament divider.
 7. **Origin Story section:**
    - Label: `उद्भव कथा · Origin Story` (`Origin Story · उद्भव कथा` when lang = en). Same style as Significance label.
-   - Body: array of paragraphs from `originStoryHi[]` or `originStoryEn[]`, same typography rules.
-8. **Sources footer** (24 px top padding):
-   - One-line attribution: `Sources: <title 1>; <title 2>` — Cormorant Garamond 12 400 italic, `ink-muted`, centred.
+   - Body: a single prose string — `originStoryHi` / `originStoryEn`, same typography rules.
+8. **Sources footer**:
+   - One-line attribution: `स्रोत — <label 1>, <label 2>` (`Sources — …` in en) — 12 italic, `ink-muted`, centred, 70% opacity.
    - URLs are NOT links in v1 (rendered as plain text). v2 may make them tappable.
-9. **Bottom bar:** language toggle (per RULEBOOK §3 — every reader/detail page renders it).
 
 **Romanization:** §3.1 carve-out — temple-name spelling uses popular English (`Kashi Vishwanath`, not `Kāśī Viśvanātha`); origin-story `*En` fields are independent prose, not transliteration.
 
@@ -869,7 +845,7 @@ type IndiaMapProps = {
 
 **Data provenance (PRD-08).** The outline + 36 state/UT boundaries are **real geography**, generated once by `scripts/build-india-map.mjs` and committed as static SVG path constants in `mobile/src/components/indiaMapPaths.generated.ts` (`INDIA_OUTLINE`, `INDIA_STATES`, `INDIA_PROJECTION`). Re-run the script to refresh; do **not** hand-edit the generated file. Sources: the **national outline** is DataMeet `india-composite` (© DataMeet, **CC-BY** — https://github.com/datameet/maps), which depicts India's official boundary including the full Jammu & Kashmir / Ladakh extent — Natural Earth's de-facto boundary truncates the northern Kashmir crown, so it is no longer used for the outline. The **state/UT boundaries** are public-domain Natural Earth 50m `admin_1_states_provinces` (their post-2019 state names match `TheerthTemple.stateEn`).
 
-**Performance:** paths are static committed constants (~35 KB total). No runtime simplification, no GeoJSON parsing, no map provider, no API key. Render cost is dominated by the pin count (~44 today, scales to ~50 before considering canvas).
+**Performance:** paths are static committed constants (~35 KB total). No runtime simplification, no GeoJSON parsing, no map provider, no API key. Render cost is dominated by the pin count — bounded in practice because the map only renders in drill-in views with the subsection's pins (a state or yatra group), never all 71 temples at once.
 
 ---
 
@@ -885,9 +861,9 @@ type IndiaMapProps = {
 
 **Interaction:**
 
-- Tap target: 44×44 invisible hit area via `hitSlop`, even though the visible glyph is ~18 px.
+- Tap target: 44×44+ invisible hit area via `hitSlop` (16 px each side), even though the visible glyph is ~18 px.
 - Tap → calls `onPress(id)`.
-- Long-press (300 ms threshold) → shows tooltip; tooltip auto-dismisses on release.
+- Long-press (**250 ms** threshold, `delayLongPress`) → shows tooltip; tooltip auto-dismisses on release.
 - Haptic on tap: `Haptics.ImpactFeedbackStyle.Light`.
 
 ## 30. Component: Routine Banner & Completion Celebration
@@ -903,7 +879,7 @@ type IndiaMapProps = {
 - `progress` (partial, or nothing scheduled today) — `goldTint` border, `doneCount/total` disc, "नित्य साधना · आज" / "Daily Routine · Today", + a saffron progress track → opens RoutineToday.
 - `complete` (all done) — a bloomed **lotus** mark (`LotusMark.tsx`) + "साधना पूर्ण · आज" / "Complete for today". The prominent progress chip is replaced by this compact achievement badge → opens RoutineToday.
 
-**Completion celebration (pushpa-varsha).** The first time the completed banner is seen each day (`shouldCelebrate`: complete + focused + not-yet-celebrated), a gentle one-shot flower shower of saffron/gold petals drifts down over the chip (`RoutineCelebration.tsx`), with a `Haptics.NotificationFeedbackType.Success` tap. Reverent, not confetti (Section 11): a soft fall + fade, no scale pops. Plays once per day, gated by `celebratedToday` persisted in `RoutineContext` (date-keyed, like the done-marks — see §31). Vector art is built from `View` + `expo-linear-gradient` (no SVG — same convention as `CategoryIcon`). This pushpa-varsha is the **only** sanctioned exception to §11's no-animation stance; the Today's Practice seal (§31) reuses its fade, not a new effect.
+**Completion celebration (pushpa-varsha).** The moment today's routine becomes complete, a gentle one-shot flower shower of saffron/gold petals drifts down (`RoutineCelebration.tsx`), with a `Haptics.NotificationFeedbackType.Success` tap. Reverent, not confetti (Section 11): a soft fall + fade, no scale pops. The shower does **not** render from the banner — it fires app-wide from `RoutineCelebrationOverlay`, mounted once at the navigation root, so it plays on whatever screen completion happens (reading to the last page, finishing japa, or a manual mark). The once-per-day gate is `celebratedSignatureToday` persisted in `RoutineContext`: a record of today's **date + an order-independent signature of the scheduled item set** — so completing the same set celebrates once, while adding an item and completing again can celebrate anew; the gate is held until the context finishes loading to avoid a replay on launch. Vector art is built from `View` + `expo-linear-gradient` (no SVG — same convention as `CategoryIcon`). This pushpa-varsha is the **only** sanctioned exception to §11's no-animation stance; the Today's Practice seal (§31) reuses its fade, not a new effect.
 
 ---
 
@@ -963,7 +939,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 └──────────────────────────────┘
 ```
 
-- **Surface.** `cardActiveFrom → cardActiveTo` gradient, `cardActiveBorder` 1px, `radii.lg`, `elevation.raised` (this is a focal hero element). `minHeight: 186` + the flex spacer keep the CTA pinned to a common baseline across cards of differing copy length.
+- **Surface.** `cardActiveFrom → cardActiveTo` gradient, `cardActiveBorder` 1px, `radii.lg`, `elevation.raised` (this is a focal hero element). `minHeight: 112` + the flex spacer keep the CTA pinned to a common baseline across cards of differing copy length.
 - **Icon tile.** 46×46, `saffronTint` fill, `radii.md`. Wraps any glyph: a `CategoryIcon` vector, the `LotusMark`, or a plain Devanagari `Text` glyph (e.g. `पं` for Panchang) — the tile makes them all read as one family. Saffron-tint (light) keeps the `saffronDeep` vectors high-contrast.
 - **Eyebrow.** Short uppercase context tag (`versePill` tokens, `saffronDeep`). When `hasNew`, the eyebrow slot is **replaced** by the saffron `NEW` badge (same geometry/colour as §19) — carries the text cue, never colour-only (§12).
 - **Title.** `orderTitlesByLanguage`, primary `numberOfLines 1`, secondary demoted to `ink-muted`.
@@ -976,3 +952,469 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 **Spotlight set (current).** Defined in `HomeScreen.tsx` with navigation wired per item: नित्य साधना → `RoutineToday`; दैनिक भक्ति → `DailyBhaktiTab`; आज का पंचांग → `PanchangTab`; तीर्थ यात्रा → `TheerthMap`. Sibling-tab targets navigate via the **parent** (`useNavigation()` → bubble up), not the Home stack — same pattern as `RoutineBanner`/`PanchangScreen`.
 
 **Adding a spotlight.** Append a `FeatureSpotlight` to the `spotlights` array in `HomeScreen.tsx` with both-language copy, an icon node, and an `onPress`. No new tokens are needed — the shell reuses existing card/elevation/typography tokens.
+
+---
+
+## 33. Panchang Tab (पंचांग)
+
+**Purpose.** A daily Hindu almanac plus a vrat/festival companion, living in its own bottom tab (`PanchangTab` → `PanchangStackNavigator`: `PanchangHome` → `ObservanceList` / `ObservanceDetail` / `KathaLibrary` / `MyVrat`). Everything is computed **on-device and offline**: the engine (`mobile/src/panchang/engine.ts`) derives tithi / nakshatra / yoga / karana / vara / lunar month from `astronomy-engine` sun–moon ephemerides with a linear Lahiri-style ayanamsa, so no network, no API, no panchang service. Observance dates come from bundled rules (`festivals.ts` / `festivalEngine.ts`) with a persisted per-city cache warmed off the interaction path.
+
+**Layer stack.** Parchment base · faded sketch background (`panchang_celestial_almanac` via `BackgroundLayer` — the §6 exception pattern: this surface pins its own celestial sketch) · content ScrollView at `spacing.xxl` gutters.
+
+**Structure (top to bottom):**
+
+1. **System header** — one compact row, equal-width flex sides so the centre toggle stays screen-centred:
+   - *Location chip* (left): a drawn teardrop pin (11 px, `saffron`, counter-rotated `parchment-soft` hole — no emoji per §5) + city name at 12 pt, in a `parchment-soft` pill with `divider` border. Tap → Location Picker (below).
+   - *Calendar-system toggle* (centre): segmented pill `पूर्णिमांत / अमान्त` (Purnimant default), active half `saffron-tint` + `saffron-deep`, inactive `ink-muted`. Persisted at `@vedansh:panchang-calendar-system`.
+   - *My Vrat button* (right): 34 px circle, `gold` ★, with a `saffron` count badge when the user follows any vrat. → MyVrat.
+2. **Surface tabs** — segmented pill `पंचांग · Calendar` / `व्रत-पर्व · Vrat & Parv` (13 pt, active `saffron-tint`/`saffron-deep`).
+3. **Calendar card** (`parchment-soft`, `divider` border, `radii.lg`, `elevation.card`): `‹ [full date + "Month view" affordance] ›` day stepper; the date expands an inline month grid — weekday row (Inter 9), 7-column cells (min-height 38, radius 8), selected day `saffron-tint` + `saffron` border, today `gold` border, and tiny 7 pt Inter observance tags per day (`पर्व` on `saffron-tint`, `व्रत` on `gold-tint`, `व्रत+` when mixed). A horizontal swipe anywhere on the card (dx > 54, mostly-horizontal) steps one day. An `आज · Today` pill resets.
+4. **Day panel** (the panchang proper, once computed — an `ActivityIndicator` in `saffron` while the day is derived off the render path):
+   - *Date header*: vara name (reader-title face 15, `saffron-deep`) · full date · `विक्रम संवत् N`, then lunar month (+ अधिक flag) · shukla/krishna paksha (11 pt `ink-muted`), over a hairline `divider`.
+   - *Anga grid, two tiers*: Tithi + Nakshatra lead on prominent tiles (`parchment-soft`, `radii.md`, `elevation.card`, value at 20 pt `ink`); Yoga + Karana sit below as a flatter, shorter secondary row (value 15 pt). Each tile: a 9 pt `saffron-deep` type label (tracked uppercase Cormorant in English; plain script serif otherwise), the value in the active reading language, the other-language caption at 12 pt `ink-muted`, and `till H:MM AM/PM` when the anga ends that day.
+   - *Times card*: 2×2 grid — Sunrise, Sunset, Moonrise, Brahma Muhurta — each a `gold` ☀/☽ text-presentation glyph (variation selector forces monochrome; "no emoji") + 10 pt label + Cormorant SemiBold 13 value.
+5. **व्रत और पर्व** for the selected date: `ObservanceCard`s (`parchment-soft`, `radii.md`, `elevation.card`) with a category pill (`व्रत` on `gold-tint` / `पर्व` on `saffron-tint`), deity, name, short description, and action pills — `कथा पढ़ें · Read Katha` (gold-tint pill → katha reader) and `पढ़ें: <section>` (outline pill → the linked text via `buildEntryStartTarget`, §38).
+6. **आगामी · Upcoming** rows: coloured marker dot (`saffron` star-tier / `ink` halfmoon / `gold` default), short date, name.
+
+**Catalog view** (`व्रत-पर्व` tab): a search field (44 high, `radii.md`) over `searchObservances`; a pinned **My Vrat** row (`gold-tint` fill, 1.5 px `gold` border); an **Upcoming** horizontal card rail (150 pt cards, category glyph ॐ/☾/✺ + uppercase date tag); and a 2-up **Browse by type** tile grid (व्रत / पर्व / उपवास, live counts) plus a **कथा · Katha** tile (॥ glyph, `getKathaCount()` stories) → Katha Library.
+
+**Observance List** (`ObservanceListScreen`) — category drill-in over the Home gradient, sorted soonest-first by next occurrence. Each row: a leading follow star (`gold` ★ filled / `ink-muted` ☆ outline, toggles without opening the detail), name + other-language caption, and right-aligned next date + relative label (`today` / `1d` / `Nd`). In-list search field on top.
+
+**Observance Detail** (`ObservanceDetailScreen`) — hero (category pill + deity, name at 24 pt centred, other-language caption, and a `saffron-tint` "अगला · Next · date · in N days" pill), then an action row: **Follow** (outline `saffron` pill; fills `saffron` with `parchment` text when following — following also feeds vrat reminders, §38) and **॥ Read Katha** (filled `saffron`). Following shows a transient (3.5 s) `gold-tint` "Added to My Vrat — View →" bar. Below: **महत्व · About** prose and a katha card. [A "How to observe / vidhi" section is deliberately omitted until real vidhi content exists.]
+
+**My Vrat** (`MyVratScreen`) — the personal ledger: a three-cell metric band (`Following · Reminders on · This month`, Inter 22 `saffron-deep` values), a "🔔 Reminder defaults" row, the **My priority** list (rows in follow order with next date and a bell button per vrat), and an **Upcoming** timeline among followed vrats. Empty state: large `gold` ★, "अभी कोई व्रत नहीं / No vrats yet", and a filled `saffron` "Browse व्रत-पर्व →" pill.
+
+**Vrat Reminder Sheet** (`VratReminderSheet.tsx`) — bottom sheet for per-vrat or global-default reminder prefs. Implemented as an **in-tree absolute overlay** (not a transparent RN `Modal`) over `modal-backdrop`, so VoiceOver and the Maestro e2e snapshot can read it. Grab handle (40×5, `divider`), then three option rows: *Advance notice* pills (`Off / 1 / 2 / 3 days` — evening before), *On the day* Switch (`saffron` track), *Day-of time* pills (`07:00 / 08:00 / Sunrise` — Sunrise is a labelled 06:00 proxy in v1). Selected pills fill `saffron` with `parchment` text; a filled `saffron` **Save reminders** pill commits. State lives in `VratFollowContext` (`@vedansh/vrat-follows` + `@vedansh/vrat-reminder-default`; built-in default = 1-day advance + 07:00 day-of).
+
+**Katha Library** (`KathaLibraryScreen`) — searchable list of every bundled bilingual katha: ॥ glyph, title, `<n> sections` caption, `पढ़ें · Read` affordance.
+
+**Vrat Katha Reader** (`VratKathaReaderScreen` + `KathaSectionPage`) — lives in the **Home stack** (`VratKathaReader` route; Panchang surfaces navigate cross-tab to it) and is currently the **only route in `IMMERSIVE_HOME_ROUTES`** (`TabNavigator.tsx`), so the bottom tab bar hides for immersive reading. Plain `parchment` (no sketch). Top bar: 40 px back circle · katha title · `n / m` counter; then `ReadingProgressBar` and the Language Toggle (§16). Body: a horizontal paged `FlatList` of section cards — each page carries a `प्रसंग · n/m` / `Part · n/m` pill (`versePill` tokens on `saffron-tint`), section title at 20 pt, a vertically-compressed `॥` Ornament, and body paragraphs at the shared `meaning` token (14 pt paragraph gap); long sections scroll vertically inside the page. §5 pager dots overlay the bottom; light haptic per page.
+
+**Location Picker** (`LocationPickerModal.tsx`) — a `pageSheet` modal on plain `parchment`: title `स्थान चुनें · Choose location` + ✕; a "📍 Use my location" row (GPS fixes **snap to the nearest bundled city** — offline labels, finite cache keys — with denied/error fallback copy); a city search field; and the full 51-city list with a `saffron-deep` ✓ on the selection. Location state (`PanchangLocationContext`, `@vedansh:panchang-location`, default **Ujjain**) is the single reference for every location-sensitive computation; changing city warms that city's observance cache after interactions settle.
+
+---
+
+## 34. Audio Tab (भजन) & Now Playing
+
+**Purpose.** A small devotional audio library — recitations of existing texts plus standalone bhajans/aartis — with playback that persists across the whole app. The tab (`AudioTab` → `AudioStackNavigator`) holds a single `AudioLibrary` screen; the mini-player and the full Now Playing surface are **root overlays** mounted once in `App.tsx`, driven by `AudioPlayerContext`, not navigation screens.
+
+**Data.** `data/audio/tracks.ts` is a pure catalog (`AudioTrack`: bilingual title, thumb grapheme, deity, `kind: 'recitation' | 'standalone'`, `linkedTextId`, nominal duration). Audio bytes resolve separately via `assets/audio-library/index.ts` — a track surfaces **only** when `hasRealAudio(id)` is true, so nothing appears without a recording behind it. [The catalog is a labelled prototype: 10 tracks defined, 2 bundled recordings today (`gayatri-mantra`, `hare-rama`); Phase 2 curates the real set.]
+
+**Library screen** (`screens/audio/AudioLibraryScreen.tsx`), over the Home gradient:
+
+1. Centred screen title `भजन` (reader-title face at 22, language-aware).
+2. **Deity filter rail** — horizontal row of circular chips (§20 family): 54 px disc on the `cardThumbActiveFrom → cardThumbActiveTo` gradient with a `parchment-soft` Devanagari glyph, 11 pt label below; the selected chip gains a 2 px `saffron` ring on a `saffron-tint` pad. A leading `ॐ · सभी/All` chip clears the filter. Only deities that actually have an available track appear.
+3. Sections with bilingual headings (`जारी रखें · Continue listening` when a track is loaded, `पाठ · Recitations`, `भजन व आरती · Bhajans & Aartis`), each a stack of `TrackCard`s.
+
+**Track card** (`components/audio/TrackCard.tsx`) — the §8 catalog-card language on an audio row: `cardActiveFrom → cardActiveTo` gradient, `cardActiveBorder`, `radii.lg`, 18 padding; a 52 px deity-icon thumb on the thumb gradient; bilingual title via `orderTitlesByLanguage` (dev 17 / lat 19 primary); sub meta `पाठ · 8:14`-style (`cardMeta` size). The tail swaps the navigate chevron for a 38 px **play disc**: `saffron-tint` + `saffron-deep` ▶ at rest, filled `saffron` + `on-primary` ❚❚ for the currently playing track. Tapping a card plays the track and opens Now Playing.
+
+**Playback state** (`AudioPlayerContext`) — one imperative `expo-audio` player for the whole session (unlike the component-scoped `JapamAudioPlayer`), so playback survives navigation. The session is configured for background audio (`playsInSilentMode`, mix-with-others / duck on Android via `audio/audioSession.ts`). Exposes position/duration, ±15 s skip (`SKIP_SECONDS`), next/previous across the playable set, loop, rate 0.5–1.5×, and `nowPlayingOpen`.
+
+**MiniPlayer** (`components/audio/MiniPlayer.tsx`) — rendered once at the app root; appears whenever a track is loaded and floats over every tab/stack. Docks just above the tab bar (bottom = 60 + safe-area inset + `spacing.xs`; inset `spacing.lg` each side) — mirroring the RoutineBanner's docking (§30). Card: `parchment-soft`, `divider` border, `radii.lg`, upward shadow; 40 px deity thumb on the thumb gradient; title (reader-title face at 15) over a 3 px progress strip (`saffron` fill on `divider` track); then ▶/❚❚ (`saffron-deep`) and ✕ (stop & dismiss) buttons at 36 px. Tapping the body expands Now Playing.
+
+**Now Playing** (`screens/audio/NowPlayingScreen.tsx`) — a full-screen `parchment` overlay (absolute-fill, mounted app-wide in `App.tsx`; no navigation plumbing), shown when `nowPlayingOpen`:
+
+- Header: ⌄ minimise circle · uppercase `Now Playing` label (swipe-hint face) · spacer.
+- Artwork: a 220 px `parchment-soft` framed square with the deity vector at 150 (or a 96 pt `saffron` ॐ fallback).
+- Title at 26 centred (reader-title face), subtitle `<artist/kind> · <deity>` in Cormorant italic `ink-muted`.
+- Seek bar: 4 px `saffron` fill on `divider` track, tap-to-seek; lining time labels either side (Cormorant SemiBold 15).
+- Transport row: `−15 · ◀◀ · [▶/❚❚] · ▶▶ · +15`; the play button is a 72 px `saffron` disc with `saffron-deep` rim and `on-primary` glyph.
+- Secondary row: a 44 px ⟳ loop toggle (kept for mantra japa) — outline at rest, filled `saffron` when looping.
+
+**Reader entry point.** Readers whose text has a linked recitation with real audio (via `getTrackForText` + `hasRealAudio`) show a small `saffron-deep` **▶** in the top bar after the page counter (`ChalisaReaderScreen.tsx`); tapping plays the recitation and opens Now Playing — the structural "audio hook" §9 reserved.
+
+---
+
+## 35. Japam (जप)
+
+**Purpose.** A mantra-counting practice surface: tap (or let the audio loop count for you) through 108-bead rounds of a chosen mantra. Mantras are first-class library entries (`category: 'japam'` in `texts.ts`, sourced from `data/japam/japam.json` — 4 mantras today: ॐ नमः शिवाय, हरे कृष्ण महामंत्र, गायत्री मंत्र, ॐ नमो भगवते वासुदेवाय), so they surface through the normal catalog/deity/search flows; `buildEntryStartTarget` routes a japam entry straight to `JapamCounter` (Home stack, lazy-loaded).
+
+**Counter screen** (`JapamCounterScreen.tsx`). Layer stack: parchment · per-mantra sketch (`getSourceBackground`) · content.
+
+1. **Top bar**: 44 px back circle · mantra title (language-aware) · a 34 px ⏰ alarm button (opens the shared `AlarmEditorSheet` pre-locked to this mantra) · Share button.
+2. Language Toggle row (§16).
+3. **Tap surface** — the whole remaining column is one large Pressable (inside a ScrollView so a large-type mantra scrolls rather than clips; pressed state dims to 0.92):
+   - Mantra lines, centred, at the shared `verse` token (23/39; Latin languages use Cormorant italic scaled by the reading-size factor, §44).
+   - `॥` Ornament.
+   - **Count block**: the current bead count as a huge `saffron-deep` numeral — 88 pt (76 on screens under 720 px tall, 64 under 640) — over `/ 108 बीज` in the page-counter face; a 6 px round progress track (`saffron` fill on `dot-rest`) showing progress through the round; `N आवृत्ति` rounds line (reader-title face at 16).
+   - Italic hint `जप के लिए स्पर्श करें · Tap to chant` (swipe-hint token).
+   - Each tap = one bead with a light haptic; completing a round (bead 108 rolls the counter) fires a success haptic. Counts persist per mantra in `JapamCounterContext` (`@vedansh/japam-counter`). `JAPAM_BEADS_PER_ROUND = 108` (`data/japam/index.ts`).
+4. **Audio row** (`components/JapamAudioPlayer.tsx`, above a `divider` hairline): an auto-chant loop of the mantra recording (`assets/japam-audio`). A `▶ चलाएँ / Play` pill (fills `saffron` while playing) and a **Tempo** stepper (− / 1.0× / +, range 0.5–1.5× in 0.1 steps, pitch-corrected). The clip loops natively and **each completed loop registers one bead** (loop-wrap detection on the reported position — reliable where `didJustFinish` isn't). `autoPlay` starts the loop immediately when arriving from an alarm tap (§38). Mantras without a bundled clip show an italic "Audio not available" notice instead.
+5. **Actions row**: two outline buttons — `बीज पुनः ० · Reset Beads` (`cardActiveBorder`, `saffron-deep` text; zeroes the current round, keeps completed rounds) and `सब साफ़ · Clear All` (`divider`, `ink-muted`). Both confirm via a centred modal card over `modal-backdrop` (title + italic body + filled `saffron` confirm + cancel). Disabled at 0.4 opacity when there is nothing to reset.
+
+**Mantra selection.** There is no dedicated picker screen — the japam category tile / deity lists / search / routine items open the counter for a specific mantra; the alarm editor's mantra picker (below) is the one in-flow chooser.
+
+**Alarms** (`JapamAlarmsScreen.tsx` in the More stack, `JapamAlarmsContext`, cap `MAX_JAPAM_ALARMS = 8`, persisted at `@vedansh/japam-alarms`):
+
+- List screen over the Home gradient: intro line ("Wake to the mantra you chose, at the time you chose."), a permission banner when notifications are denied (tap → system settings), alarm rows (`parchment-soft`, `radii.lg`: HH:MM in the reader-title face, mantra name, optional label, and a `saffron` Switch), an outline `+ Add alarm` button, and the privacy footnote "Alarms ring on this device. Nothing leaves your phone."
+- **AlarmEditorSheet** (exported and reused by the counter's ⏰): time stepper + mantra picker (locked when opened from a counter) in a fade modal.
+- Scheduling (`notifications/japamAlarmScheduler.ts`) is tiered: Android uses the native module (`AlarmManager.setAlarmClock` + Notifee lock-screen UI with the looping mantra sound — survives Doze and reboot); iOS 26+ uses AlarmKit (overrides silent/Focus like the Clock app); older iOS / Expo Go falls back to an `expo-notifications` daily trigger with the mantra clip as notification sound (per-mantra Android channels pin the custom sound). `scheduleJapamAlarms` is idempotent — cancel-then-reschedule on any change. Tapping the alarm deep-links into the counter with `autoPlay` (§38).
+
+---
+
+## 36. Search
+
+**Purpose.** On-device search across the entire library — sections, deities, and every verse — built from the same bundled data the readers load. No network, no service, no query logging; the index builds lazily on first open (`data/searchIndex.ts`).
+
+**Entry point — floating button** (`components/SearchFloatingButton.tsx`). A 48 px circle, `parchment-soft` fill, 1 px `divider` border, holding a `saffron` ⌕ glyph at 26 (reader-title face). Anchored absolute at `right: spacing.xl`; default `bottom: spacing.xl`, but Home passes `spacing.sm + 60 + spacing.md` so it clears the docked RoutineBanner (§30) — and it z-indexes above the banner so taps land. Currently rendered on Home only; tap → `Search` (Home stack).
+
+**Search screen** (`SearchScreen.tsx`), over the Home gradient:
+
+1. **Top bar**: 44 px back circle + a pill-shaped input row (`parchment-soft`, `divider`, `radii.md`, 44 high): `saffron` ⌕, the `TextInput` (Inter 500 at 15, language-aware placeholder "श्लोक, पाठ, मंत्र खोजें…"), and a ✕ clear button while typing. The input auto-focuses ~200 ms after mount.
+2. **Empty state** (no query): *Recent* chips (last 6 queries, `@vedansh/search-recent`; pill chips with per-chip ✕ and a `Clear All` action) and a *Popular* 2-up grid of four fallback sections (Hanuman Chalisa, Gita, Sundarkand, Shiva Stotram) as thumb-glyph cells.
+3. **Results** — grouped rows under `sectionLabel`-style headers with counts (`पाठ · Sections`, `देवता · Deities`, `श्लोक · Verses`):
+   - *Section row*: Devanagari thumb glyph (`saffron-deep`), name in the active language, Hindi subtitle, `saffron` ›. Tap → the section's start via `navigateToEntryStart` (§38) — chalisa readers, chapters indexes, aarti/sanskar readers, the japam counter, or the Theerth map as appropriate.
+   - *Deity row*: `gold` ॐ thumb; tap → `DeityList` filtered by that deity.
+   - *Verse row*: the matched verse's first line in the verse face at 17, source · label meta in Cormorant italic; tap → **that verse in its reader** via `buildProgressTarget` (chapter + verse index), falling back to the section start.
+   - Verse hits are capped at `VERSE_RESULT_CAP = 50`, with an italic "More results — type a more specific query" note when clipped.
+4. **Zero state**: dimmed `॥`, "कोई परिणाम नहीं / No matches found", and a hint to try a Devanagari word or section name.
+
+**Index coverage.** Sections (every active library entry), deities, and verses from every text module — the four chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §8).
+
+**Normalization** (`data/searchNormalize.ts`) — one pure fold applied to both index and query, so Devanagari and Latin queries meet in the middle: Unicode NFD with the combining nukta stripped (क़ ⇄ क), lowercase, IAST diacritics folded to ASCII (`kṛṣṇa` → `krsna`, so a plain-ASCII query matches the romanized corpus), punctuation dropped **including daṇḍa `।`/`॥`**, whitespace collapsed. Ranking is exact > prefix > substring per field (`MatchRank`), idempotent and unit-tested.
+
+---
+
+## 37. More Hub & Profile
+
+**Purpose.** The settings-and-self tab (`MoreTab` → `MoreStackNavigator`: `MoreHome` → `Profile` / `Wishlist` / `Reminders` / `JapamAlarms`). One scroll of cards over the Home gradient, 14 gap, `spacing.xxl` gutters.
+
+**Hub** (`MoreScreen.tsx`), top to bottom:
+
+1. Centred title `अन्य · More` (language-aware primary/secondary via `orderTitlesByLanguage`, 22/14).
+2. **Sadhak Profile card** — the one gradient card on the screen (`cardActiveFrom → cardActiveTo`, `cardActiveBorder`, `radii.lg`): a 44 px `saffron` ॐ crest, `साधक प्रोफ़ाइल · Sadhak Profile · Insights` title, `saffron` ›, then a hairline and a three-cell stat strip — lifetime **verses / rounds / streak** (`saffron-deep` values at 20, tracked-uppercase 10 pt labels). → Profile.
+3. **Wishlist card** — flat `parchment-soft` row: 36 px `saffron` icon tile with ♥, "Wishlist" + "`N` verses saved" meta. → the saved-verse list (§24; rows re-open their exact verse via `buildBookmarkTarget`, §38).
+4. **Reminders card** — `gold` ॐ icon tile; meta shows the live state ("Daily verse at 07:00" / "Daily verse off"). → Reminder Settings (§38).
+5. **Japam Alarms card** — `saffron-deep` ⏰ icon tile; meta lists active alarm times or invites "Wake to a mantra you love". → §35 alarms.
+6. **Language card** — the app-wide default reading language as a 2×2 radio grid over the `LANGUAGES` metadata (हिन्दी / English / ગુજરાતી / ಕನ್ನಡ, each labelled in its own script at 17); the selection gets a `saffron` border, `saffron-tint`-strength fill, and a corner ✓. Same state as every Language Toggle (§16) — `useGitaLanguage`, persisted.
+7. **Reading size card** (`ReadingSizeCard`) — the global M/L type-scale control; see the Reading Size section (§44).
+8. **Panchang disclosure card** — ☽ icon tile + a small-print methodology note ("Tithi follows Surya Siddhanta with modern corrections…", localized), naming the current panchang city and pointing location changes at the Panchang tab (§33).
+9. **Links card** — `About & Disclaimer` (opens a pageSheet modal with the bilingual disclaimer + "Report an Error" CTA) and `Report an Error` (mailto).
+
+**Profile** (`ProfileScreen.tsx`) — the साधक insights surface, fed by `UserActivityContext` (reads, japam beads/rounds, per-source and per-mantra tallies, all local):
+
+1. **Identity card** (gradient, `radii.lg`): `saffron` ॐ crest, `साधक · Sadhak` name pair, hairline, and a three-cell footer — **day streak · active days · saved verses**.
+2. **Range tabs** — a segmented pill `Lifetime / Monthly / Daily`; the active tab fills solid `saffron` with `on-primary` text. An italic range caption below.
+3. **Stat tile grid** — four tiles: Verses Read, Beads Chanted, Rounds (Mala), Days Active.
+4. **7-day trend** — a mini bar chart (`saffron` bars on `parchment-deep`-style tracks) of daily activity (reads + beads + rounds×108), weekday labels localized.
+5. Per-source and per-mantra breakdown lists for the selected range, sorted by volume, with an empty state when the range has no activity.
+
+---
+
+## 38. Notifications & Deep Links
+
+**Purpose.** All notifications are **local and on-device** — scheduled with `expo-notifications` (plus the native alarm tiers of §35); no server push. Three families, each owning an identifier prefix so cancel/re-arm cycles never touch each other's slots: daily verse (`daily-verse`), vrat reminders (`vrat-…`, PRD-09), and japam alarms.
+
+**Daily verse** (`notifications/scheduler.ts` + pure helpers in `pure.ts` / `seed.ts`; state in `NotificationPreferencesContext`, `@…/prefs` + meta in AsyncStorage):
+
+- **Default on at 07:00.** Up to `MAX_REMINDER_TIMES = 4` times per day, edited in Reminder Settings (`ReminderSettingsScreen`: master Switch, per-time `TimeStepper` rows, add/remove up to the cap).
+- A rolling **30-day window** (`ROLLING_WINDOW_DAYS`) is scheduled ahead, hard-capped at iOS's 64 pending-notification budget (`IOS_PENDING_CAP`, shared fairly across configured times). Idempotent cancel-then-reschedule on every relevant change and app foreground.
+- **Deterministic verse per slot**: the local `YYYY-MM-DD` key is FNV-1a-hashed into the verse pool (`seed.ts`), so rescheduling never changes today's verse; multiple same-day times get distinct verses.
+- **Localized by reading language** (§10): title `दैनिक भक्ति` / `Daily Verse`, body = first verse line + `source · label`, all rendered through the same language helpers the readers use — gu/kn arrive re-scripted, en romanized.
+- **Opt-in modal** (`ReminderOptInModal.tsx`, mounted app-wide): a `pageSheet` shown once, gated on the **third app open** with the reminder off and the prompt not yet shown ("earn the ask, never ambush") — lede, a `TimeStepper`, a filled `saffron` **Enable**, and a quiet uppercase *Not now*. Because the toggle defaults on, the provider also requests OS permission once per cold start while still undetermined.
+
+**Vrat reminders** (`vratScheduler.ts` / `vratReminderPure.ts`, armed by the headless `<VratReminderScheduler>` in `App.tsx`): derived from the user's **followed vrats** (§33) and their per-vrat / global reminder prefs. Each upcoming occurrence can produce an *advance* notice (evening before at `ADVANCE_HOUR = 18:00` local, 1–3 days ahead) and/or a *day-of* notice at the chosen morning time. Planned under a dedicated `VRAT_REMINDER_CAP = 24` pending budget — when over, **follow order is the priority tiebreak**. Re-arms on follow/pref/permission changes and on every app foreground; never prompts for permission itself (shares the daily-verse grant).
+
+**Japam alarms** — see §35 for the scheduling tiers; they participate in deep-linking below.
+
+**Notification tap → deep link** (`notifications/deepLink.ts`). A module-level `navigationRef` (attached to the `NavigationContainer` in `App.tsx`) lets `handleNotificationResponse` dispatch from outside the React tree; `App.tsx` wires both the cold-start response and the live `addNotificationResponseReceivedListener`. Routing by payload type:
+
+- `daily-verse` → the **Daily Bhakti tab** carrying the exact verse identity (`sourceId`/`chapter`/`verseIndex`) baked into the notification — deliberately *not* a reader, because opening a reader would run its `setProgress` effect and clobber the user's resume position; the baked identity also survives OTA pool changes.
+- `vrat-reminder` → `PanchangTab → ObservanceDetail` for that rule.
+- japam alarm → `HomeTab → JapamCounter` with `autoPlay: true`, so a lock-screen tap drops straight into chanting (mantra id validated against the catalog first; a stale alarm falls back to Home rather than crashing).
+
+**Route mapping — `navigation/entryRoutes.ts`.** The single source of truth for "open this content": `buildEntryStartTarget(entry)` maps any library entry to its start route (japam → `JapamCounter`; theerth entries → `TheerthMap` with a group filter; the four chalisas → `ChalisaReader`; sanskar → `SanskarReader`; aartis → `AartiReader`; every chaptered text → its Chapters screen), with `navigateToRoutineItem`, `buildProgressTarget` (resume / search verse hits), and `buildBookmarkTarget` (Wishlist rows, §24) layered on top. Panchang's "Read: <section>" links, search results, routine items, wishlist, and the Home spotlight all route through this one module, so adding a section's route once wires every surface.
+
+---
+
+## 39. Share Verse Cards
+
+**Purpose.** Let a reader send any verse out of the app as a branded parchment image — composed off-screen, captured as a PNG, and handed to the native share sheet with a caption + install link (PRD-05). `ShareProvider` / `useShare()` in `mobile/src/utils/shareVerse.tsx`; card in `ShareCard.tsx`; links in `mobile/src/data/shareLinks.ts`.
+
+### Component: Share Button (`ShareButton.tsx`)
+
+- Same family as the Bookmark button (§25): 34×34 circle, `parchment-soft` fill, 1 px `divider` border, `↗` glyph in `saffron` (18, weight 600). 12 px `hitSlop`.
+- Placement: in the verse page's **header row**, right of the verse-type pill, alongside the Bookmark button (readers pass both via the verse page's `topActions` slot). Every reader carries one — all 15 reader screens plus Daily Bhakti and the Japam counter.
+- While a capture/share is in flight (`busy` from `useShare()`), the button disables and drops to 50 % opacity — this debounces double-taps.
+- Accessibility: `accessibilityRole="button"`, label "Share verse", hint "Long-press to share a screenshot of this reader instead". [The provider supports a `mode: 'screenshot'` capture of a caller-supplied ref, and the button accepts `onLongPress` — but no shipping reader currently wires `onLongPress`, so only the card path is live today.]
+
+### Component: Share Card (`ShareCard.tsx`)
+
+A fixed-size 540×675 dp card (4:5 portrait), rendered **off-screen** and captured at 1080×1350 px PNG — the WhatsApp-friendly output size. Surface: `parchment` fill, 1 px `divider` border, padding 28 top / 28 horizontal / 22 bottom.
+
+**Structure (top to bottom):**
+
+1. **Header band** (centred, 18 below): `<SECTION NAME> · <VERSE LABEL>` uppercased — `cardLatin` face at 13, `saffron-deep`, 2.4 letter-spacing. Both parts are content, so they follow the active reading language (`contentByLang`): Devanagari for `hi`, English for `en`, re-scripted for `gu`/`kn`.
+2. **Verse block** (flex-grow, centred): the verse lines at 24/40, centred, `ink`. Line source follows the language: `linesHi` for `hi`, `linesEn` (romanization) for `en`, re-scripted Devanagari for `gu`/`kn` (`verseLinesByLang`). Font family follows the script — Gujarati/Kannada serif cuts for `gu`/`kn`, otherwise the `verse` token's Devanagari face (which also carries the Latin romanization glyphs). This card is a §13-sanctioned constrained surface: it keeps its own tuned sizes rather than the reader type scale.
+3. **`॥` Ornament divider** (§5).
+4. **Meaning** (optional): italic 14/24, centred, `ink-soft`, `numberOfLines={5}` with `adjustsFontSizeToFit` down to 50 % so long meanings shrink instead of clipping. Language-selected via `meaningByLang`, honouring verified native `meaningGu`/`meaningKn` overrides when the verse carries them.
+5. **Branding footer** (1 px `divider` top rule, 14 above): `वेदांश़` wordmark (reader-title face, 18, `ink`) · `Vedansh — Sacred Texts, Daily Reading` (italic 12, `saffron-deep`) · `NOW AVAILABLE ON IOS & ANDROID` (uppercase 10, `ink-muted`, 2.0 tracking).
+
+### Share flow (`ShareProvider` / `useShare()`)
+
+1. `share(verse, lang)` mounts the card **off-screen** (absolute-positioned at −10000,−10000, `pointerEvents="none"`) inside the provider, waits one animation frame + 60 ms for layout/fonts, then captures it with `react-native-view-shot`'s `captureRef` (PNG, quality 1, tmpfile, scaled to 1080×1350).
+2. A **text caption** is always built via `buildShareCaption` (`shareLinks.ts`): section · verse label header, the quoted first verse line, then a language-localised CTA ("Read on Vedansh:" / "Vedansh ऐप पर पढ़ें:" / gu / kn equivalents) followed by the public smart link (`SMART_LINK`, a GitHub Pages redirect page; `APP_STORE_URL` / `PLAY_STORE_URL` constants live alongside it). Bundle-only — no runtime fetch.
+3. **Platform split:** iOS shares image + caption together through RN `Share.share({ message, url })` (UIActivityViewController fills WhatsApp's caption field automatically). Android's RN Share drops file URIs, so the image goes through `expo-sharing`'s `shareAsync` (mimeType `image/png`) and the caption is left to the user — the branding footer on the card itself carries the fallback.
+4. **Fallbacks:** capture failure → text-only `Share.share(caption)`; sheet dismissal / any error is swallowed. An in-flight ref guarantees one share at a time; `busy` drives the button's disabled state.
+
+**Files:** `mobile/src/components/ShareButton.tsx`, `ShareCard.tsx`, `mobile/src/utils/shareVerse.tsx`, `mobile/src/data/shareLinks.ts`. `ShareProvider` mounts once in `App.tsx`.
+
+---
+
+## 40. Reading Progress & Resume
+
+**Purpose.** Remember where the reader stopped in every text — and every chapter of every text — so a returning reader lands back mid-verse instead of at page 1. Powers the thin progress bar in readers, the resume sheet on the listing screens, silent per-chapter auto-jump, and the routine engine's auto-completion (§31). `mobile/src/contexts/ReadingProgressContext.tsx`.
+
+### What's persisted
+
+One AsyncStorage blob at `@vedansh/reading-progress`: a map of entries `{ sourceId, chapter?, verseIndex, updatedAt }` keyed by `<sourceId>` for linear texts and `<sourceId>::<chapter>` for chaptered ones — **each chapter keeps its own resume position**. On hydrate, legacy stores are migrated in place: bare-`sourceId` keys are re-keyed to the composite form, `sourceId`s are canonicalised (§44 migration), and colliding entries keep the most recent `updatedAt`. Two read paths:
+
+- `getProgress(sourceId)` — the **latest** position across all subsections (drives the book-level resume sheet).
+- `getChapterProgress(sourceId, chapter)` — the saved position within one subsection (drives chapter auto-jump).
+
+Readers write on every page change (`setProgress` from the pager's current index); writes are deduped when the verseIndex hasn't changed, and each write also logs a read into `UserActivityContext` (feeding streaks and routine auto-completion).
+
+### Component: Reading Progress Bar (`ReadingProgressBar.tsx`)
+
+The continuous form of the `n / total` page counter. A 3 px full-width track in `divider` with a `saffron` fill at `current/total` % (pill-radius fill). Sits directly under the reader top bar, above the toggle row, on every reader. Renders nothing when `total ≤ 0`.
+
+### Component: Resume Reading Sheet (`ResumeReadingSheet.tsx`)
+
+**When it appears.** On `CategoryListScreen` and `DeityListScreen`: tapping an entry whose saved book-level progress has `verseIndex > 0` opens this sheet instead of navigating. (Entries with no progress, progress at verse 1, or while storage is still hydrating navigate straight to the start.) The Chapters Index screens do **not** show it — tapping a chapter card silently resumes at `getChapterProgress(...).verseIndex` (subsection auto-jump).
+
+**Spec.** A centred modal over `modalBackdrop` — max width 420, `radii.lg`, `cardActiveBorder` 1 px, `parchment` base under a `cardActiveFrom → cardActiveTo` gradient (the active-card treatment, §8):
+
+1. Text title via `orderTitlesByLanguage` (dev primary 20 / secondary 13; lat primary 22 / secondary 12), then a 1 px `divider` rule.
+2. Prompt: `जहाँ छोड़ा था, वहीं से जारी रखें?` (reader-title face, 17, `ink`) over `Resume where you left off?` (italic 13, `ink-soft`).
+3. **Last-read card**: `parchment-soft`, `divider` border, `radii.md`; `अंतिम पठित` / `LAST READ` in the `sectionLabel` token over the pre-formatted location at 16 in the active script (via `formatLocation`, which speaks each source's vocabulary — `अध्याय N · श्लोक M` for Gita, `सर्ग` for Sundarkand, `स्तोत्र` for stotrams, `काण्ड` for Ramcharitmanas, plain `पद N` for chalisas/aartis).
+4. Primary button: solid `saffron`, `radii.md`, `जारी रखें · Resume` in `onPrimary`.
+5. Secondary button: outlined `cardActiveBorder`, `आरंभ से पढ़ें · Start Over` in `saffron-deep`.
+6. `Cancel` — italic 13 `ink-muted`, 44 pt min-height text button.
+
+**Behaviour.** Resume → navigate to the saved position (`navigateToProgress`). Start Over on a **chaptered** entry clears only the chapter being resumed (`clearChapterProgress`) and reopens that chapter at verse 1 — sibling chapters keep their positions; on a linear entry it clears the whole source and opens at the start. Every exit path also `markSeen`s the entry (clears its NEW badge, §44). Backdrop tap dismisses.
+
+### Chapter auto-advance (transition cards)
+
+Multi-chapter readers must let the reader swipe **across** chapter boundaries (the RULEBOOK §3 auto-advance contract). The pager data is `[PrevChapterCard?] + verses + [NextChapterCard?]` — the prev card omitted on the first chapter, the next card on the last. Each transition card (`NextChapterCard.tsx` / `PrevChapterCard.tsx`) is a full-width page, content centred with 12 gap: a language-aware `अगला / Next` (or `पिछला / Previous`) label at 14 `ink-muted`, the neighbouring chapter's title at 20 `saffron-deep` (italic when lang = en), and a 32 pt `›` / `‹` chevron in `saffron-deep`. When the transition page becomes ≥ 60 % visible, the reader fires a **Medium** haptic and, after a 400 ms beat, `navigation.replace`s itself with the neighbouring chapter — replace, not push, so back always returns to the chapter list. The prev path lands on the previous chapter's **last** verse (`initialIndex: prevVerseCount − 1`). A `hasNavigatedRef` latch prevents double-fire; the prepended prev card shifts all indices by one (`offset = isFirstChapter ? 0 : 1`).
+
+### Component: Jump-to-Start (`JumpToStartButton.tsx`)
+
+A floating pill anchored bottom-right of the verse pager (16/16 inset, clear of the centred pager dots) rendered only when the reader is past verse 1 — a one-tap return after a subsection auto-jump, without swiping back through every page. `parchment-soft` fill, `cardActiveBorder` 1 px, `pill` radius, raised shadow; `⇤` glyph (15) + language-aware label `आरंभ` / `Start` (13, italic for en) in `saffron-deep`. Tap scrolls (animated) to index 0 of the current chapter.
+
+**Files:** `mobile/src/contexts/ReadingProgressContext.tsx`, `mobile/src/components/ReadingProgressBar.tsx`, `ResumeReadingSheet.tsx`, `JumpToStartButton.tsx`, `NextChapterCard.tsx`, `PrevChapterCard.tsx`, `mobile/src/utils/formatLocation.ts`; consumers `GitaReaderScreen.tsx` (canonical), `CategoryListScreen.tsx`, `DeityListScreen.tsx`, `GitaChaptersIndexScreen.tsx`.
+
+---
+
+## 41. Content Module Catalog & Registry
+
+**Purpose.** One data registry — the `library` array in `mobile/src/data/texts.ts` — is the single source of truth for everything the catalog surfaces show: Home's category tiles, `CategoryListScreen`, `DeityIndexScreen` / `DeityListScreen`, the routine Add-Content list, the Daily Bhakti verse pool, and NEW-badge tracking. Screens never hand-list content; they filter this array (RULEBOOK §2 rows 11–13: "no edit needed" — adding a section means appending one `LibraryEntry`).
+
+> **Supersedes §10's two-module framing.** §10 documents the original Chalisa + Gita content shapes and remains authoritative for those shapes and for the per-module-type discipline ("shapes stay separate"). The catalog has since grown to ~40 entries across 7 categories; this section documents the registry and shape *families* that grew out of §10's pattern.
+
+### `LibraryEntry` (the registry row)
+
+```ts
+type LibraryEntry = {
+  id: string;                  // route slug + asset folder + progress/bookmark sourceId
+  nameHi: string; nameEn: string;
+  sub: string; subEn: string;  // listing subtitle per language ("40 चौपाई + 3 दोहा · अर्थ सहित")
+  thumb: string;               // single Devanagari glyph for the card thumb
+  status: 'active' | 'coming';
+  category: ContentCategory;   // which Home tile it lives under
+  deities: Deity[];            // cross-reference tags (≥ 1)
+  verseCount?: number;         // imported from the module's data, never hand-typed
+  hidden?: boolean;            // omit from all listings
+  addedInVersion?: string;     // semver debut marker → seeds the NEW badge (§44)
+};
+```
+
+`verseCount` and counted subtitles are computed from the module's own exported totals (`sundarkandTotal`, `shivChalisaCounts.totalVerses`, …) so the card can never drift from the data (RULEBOOK §10.10). Japam entries are spread into the array from `japamMantras`, so a new mantra automatically becomes a catalog row.
+
+### Category set (`mobile/src/data/categories.ts`)
+
+Seven categories, all `active`: `granth` (ग्रन्थ · Sacred Books) · `stotram` (स्तोत्रम् · Hymns & Praise) · `chalisa` (चालीसा) · `japam` (जप · Japa & Mantras) · `aarti` (आरती) · `theerth` (तीर्थ · Pilgrimage) · `sanskar` (संस्कार · Good Habits). `HomeScreen` renders these seven tiles from data and appends an **eighth, hand-wired देवता · By Deity tile** that opens `DeityIndexScreen` (§42) instead of a category list. (This supersedes §18's "6 tiles" list.) `japam` tiles route to the counter UI, `theerth` to the map (§26); everything else goes through `CategoryListScreen` → `entryRoutes.ts`.
+
+### Deity set (`mobile/src/data/deities.ts`)
+
+Nine deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · krishna (bansuriPeacockFeather) · vishnu (chakra) · shiva (trishul) · hanuman (gada) · durga (lotus) · ganesha (modak) · savitr / माँ गायत्री (surya) · saraswati (veena). `getDeityMeta` / `deityIconKey` are the lookup helpers; the icon system is §42.
+
+### Data-shape families (one directory per module under `mobile/src/data/`)
+
+- **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh chalisa dirs), **aartis** (`aarti/index.ts` `aartiCollection`, 7 aartis, `refrain`/`stanza` verse types), **sanskar** (8 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
+- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants.
+- **Japam** (`japam/japam.json`) — mantras with round targets; routes to the counter, not a verse pager.
+- **Theerth** (`theerth/temples.ts`) — the prose-per-temple shape of §26–27 / RULEBOOK §11; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (§44).
+
+**RULEBOOK §1 is the intake contract** for every row above: mandatory `id`/names/`sub`/`thumb`/`category`/`deities`, per-verse `lines` + `meaningHi` + `meaningEn` (both languages — the toggle must work on every page), optional commentary, background sketches per §6. Gujarati/Kannada are never authored — derived at runtime (§3.1).
+
+### NEW badges
+
+`addedInVersion` marks the semver in which an entry's content shipped. It is used **only to seed** the debut state for upgrading users (entries newer than the `1.2.0` feature baseline light up NEW); ongoing detection is content-ID-set based, so any id later added to the registry is automatically NEW for existing users. Full lifecycle in §44; badge visual in §19.
+
+**Files:** `mobile/src/data/texts.ts`, `categories.ts`, `deities.ts`, `chalisaRegistry.ts`, per-module dirs under `mobile/src/data/`, `mobile/src/navigation/entryRoutes.ts`; contract in `RULEBOOK.md` §1–2.
+
+---
+
+## 42. Deity Index
+
+**Purpose.** The "browse by deity" front door. Tapping the देवता · By Deity tile on Home (the eighth category tile, §41) pushes this screen: one card per deity, each opening the deity-filtered listing (§22). `mobile/src/screens/DeityIndexScreen.tsx`.
+
+**Structure (top to bottom):**
+
+1. Status bar (safe area).
+2. **Top bar** (`spacing.xxl` gutter): 44 px circular back button (`parchment-soft` fill, `divider` border, `‹` in `ink-soft`) + title `देवता · By Deity` via `orderTitlesByLanguage` (primary 16 `ink`, secondary 13 `ink-muted`, dot-separated on one baseline).
+3. **Deity card list** — vertical `ScrollView`, `spacing.xxl` side padding, `spacing.md` gap. All nine deities from `deities.ts`, in registry order.
+
+**Background.** A `BackgroundLayer` with a **random deity sketch** — the index isn't tied to one deity, so it draws from the deity background pool (`getRandomDeityBackground`), chosen once per visit (`useMemo([])`) so it's stable while open and fresh on the next visit. This is a sanctioned variation on §6's deterministic rule, matching the image backdrop every other listing screen carries.
+
+**Per-card data.** Item count line = the number of active, non-hidden library entries tagged with the deity ("5 texts", English-only meta). `hasNew` = any of those entries is still NEW (§44) — the deity card inherits the badge until its texts are acknowledged, mirroring the per-text chips inside its list.
+
+### Component: Deity Card (`DeityCard.tsx`)
+
+Wears the active LibraryCard treatment (§8): `cardActiveFrom → cardActiveTo` gradient fill, 1 px `cardActiveBorder`, `radii.lg`, raised shadow, 14 padding, horizontal layout with 12 gap:
+
+- **Avatar**: 44×44 circle in the `cardThumbActiveFrom → cardThumbActiveTo` gradient, containing a `DeityIcon` (below); falls back to the deity's first two Devanagari characters.
+- **Names** via `orderTitlesByLanguage` (dev 16/12, lat 18/11): primary in `ink`, secondary italic `ink-muted`, then the count line at 10 `ink-muted`.
+- Right `›` chevron in `saffron`.
+- **NEW pill** top-right when `hasNew`: `newBadgeBg` fill, `newBadgeText` text, `pill` radius, 9 pt uppercase — same geometry as §19.
+- Whole card is the press target; a11y label reads name + count + "New." when badged.
+
+### Deity Icon system (`DeityIcon.tsx`)
+
+Each deity's avatar glyph is a compact **symbolic attribute**, not a portrait (design spec: `docs/superpowers/specs/2026-05-08-deity-icons-design.md`). Two render paths:
+
+- **Hand-built vector glyphs** (pure `View` compositions — no SVG, per the §30 convention): Krishna's bansuri + peacock-feather plume, Hanuman's gada, Ganesha's modak, Saraswati's veena. Drawn at a 36 dp base size and transform-scaled for other sizes. These carry their own small fixed palette (a warm ink-brown + gold, plus peacock green/teal/yellow for the feather eye) — deliberate illustration colors baked into the art, not theme tokens.
+- **Emoji glyphs** for the remaining keys: bow-and-arrow (rama), chakra (vishnu), trishul (shiva), lotus (durga), sun (savitr). [A pragmatic, spec-approved exception to §5's "no emoji" rule — scoped to these avatar glyphs only; the fallback for any missing/poor glyph is the deity's Devanagari initials, never a blank avatar.]
+
+**Interactions.** Tap a card → push `DeityListScreen` for that deity (§22) — same `LibraryCard` rows, resume-sheet behaviour (§40), and NEW clearing (§44) as a category list.
+
+**Files:** `mobile/src/screens/DeityIndexScreen.tsx`, `mobile/src/components/DeityCard.tsx`, `DeityIcon.tsx`, `mobile/src/data/deities.ts`; spec `docs/superpowers/specs/2026-05-08-deity-icons-design.md`.
+
+---
+
+## 43. Reading Size Setting
+
+**Purpose.** A two-preset reading-text size control (PRD-04, slice 2) — comfort sizing for verse and meaning text without letting UI chrome reflow or clip. `mobile/src/theme/fontScale.ts` + `mobile/src/contexts/FontScaleContext.tsx` + `mobile/src/components/ReadingSizeCard.tsx`.
+
+### Presets
+
+Exactly two (product decision), in `FONT_SCALES`:
+
+| Preset | Label | Factor |
+| --- | --- | --- |
+| `M` (default) | मानक · Standard | 1.0 |
+| `L` | बड़ा · Large | 1.15 |
+
+### What scales
+
+Only the reading-content tokens listed in `READING_STYLE_KEYS`: `verse`, `meaning`, `verseLatin`, `verseGujarati`, `verseKannada`, `meaningEnglish`, `meaningGujarati`, `meaningKannada` — i.e. verse + meaning across every script. `scaleTypography` multiplies each token's `fontSize` **and** `lineHeight` by the factor (rounded) so leading stays proportional; factor 1 returns the input untouched. Everything else — `screenTitle`, `readerTitle`, `pageCounter`, pills, labels, card titles — is chrome and **never scales**, so top bars, toggles, and cards cannot clip.
+
+### Plumbing
+
+`FontScaleProvider` mounts in `App.tsx` **above** `ThemeProvider`; `ThemeProvider` reads `useFontScale()` and serves `scaleTypography(typography, factor)` as `theme.typography`. Because every reader already pulls its type from the theme (§3 "no hardcoded fontSize on reading content"), the entire app scales with **zero per-screen work** — this is the payoff of the one-reading-type-scale rule. Persisted at `@vedansh/font-scale` (the raw `'M'`/`'L'` string); unknown/corrupt values fall back to `M`.
+
+### Component: Reading Size Card (`ReadingSizeCard.tsx`)
+
+Lives on the **More tab**, directly below the Language card, and mirrors its shell: `parchment-soft` section card, 1 px `divider` border, radius 16, padding 16.
+
+1. **Header row**: a 32 px `gold` rounded square with a white "Aa" glyph; title "पढ़ने का आकार / Reading size" (Inter 14 semibold `ink`) over the sub "श्लोक व अर्थ के अक्षरों का आकार / Verse & meaning text size" (Inter 11 `ink-muted`). All four reading languages have native copy.
+2. **Preset pills** (`radiogroup`; each pill a `radio` with `selected` state): Standard / Large, labelled in the active language. Selected: `saffron` border + a light saffron tint fill + `saffron` ✓ prefix, label in `saffron-deep`; unselected: `divider` border, `ink`. Pill labels are chrome — fixed size by design (the code comments this explicitly).
+3. **Live sample line** — "श्री राम जय राम" (per-script variants incl. IAST for en) rendered with the *same* verse token the readers consume, so it grows/shrinks the instant a pill is tapped. This is the preview; there is no separate preview machinery.
+
+### Interplay with OS font scaling (§12)
+
+The preset multiplies the app's own type tokens; it does not replace platform accessibility. No component sets `allowFontScaling={false}` (there are zero overrides in `src/`), so the OS-level font multiplier still applies on top of the preset per React Native's default — §12's "use the system's user-chosen font-scale" holds.
+
+**Files:** `mobile/src/theme/fontScale.ts`, `mobile/src/contexts/FontScaleContext.tsx`, `mobile/src/theme/ThemeContext.tsx`, `mobile/src/components/ReadingSizeCard.tsx`, `mobile/src/screens/MoreScreen.tsx`; design note `docs/superpowers/specs/2026-06-30-font-scale-ui-design.md`.
+
+---
+
+## 44. NEW-Content & Update Surfaces
+
+**Purpose.** Two complementary "something new" mechanisms: the saffron **NEW badge** that marks content a user hasn't opened yet (`NewContentContext.tsx`), and the **OTA update-ready modal** that offers a one-tap reload when a fresh bundle has been downloaded in the background (`UpdateReadyModal.tsx`). Plus the `sourceId` migration layer that keeps a user's bookmarks and progress stable while content ids evolve.
+
+### NEW badge lifecycle (`mobile/src/contexts/NewContentContext.tsx`)
+
+**Model.** One AsyncStorage blob (`@vedansh/new-content-state`) holds `knownIds` — the set of acknowledged content. The *discoverable* universe is every active, non-hidden `LibraryEntry` **plus every theerth temple** (temple keys namespaced `theerth-temple:<id>` so they can never collide with a text id). An id is NEW iff it is discoverable and **not** in `knownIds` — so any content added to the registry after the user's state was written is automatically NEW, with no version bookkeeping at runtime.
+
+**Debut seeding (first run of the feature).** With no stored state, the provider classifies the user:
+
+- **Upgrader** — any of five deliberate-action keys exists in storage (bookmarks, reading progress, recent searches, japam counter, saved language). Seeded with everything known **except** entries whose `addedInVersion` compares above the `1.2.0` pre-feature baseline (`compareSemver`, `mobile/src/utils/semverCompare.ts` — a dependency-free numeric segment compare) — those debut as NEW.
+- **Fresh install** — everything seeded as known; a brand-new user sees no badges (nothing is "new to them").
+- Storage failure → treat everything as known; the safe fallback is *no* badges, never all badges.
+
+**Clearing.** `markSeen(id)` persists the acknowledgment the moment the user **opens** the content — the category/deity list press handler and both resume-sheet exits call it (§40) — matching §19's "the chip clears once the user opens that content".
+
+**Surfaces.** `isNew(id)` → the NEW pill on `LibraryCard` (§8) and `DeityCard` (§42), and temple pins/rows. `hasNewInCategory(categoryId)` → the badge on Home's category tiles (§19) and the FeatureCard eyebrow swap (§32); the DeityIndex derives a per-deity badge from its texts. Badge visual: `newBadgeBg` fill + `newBadgeText` text (saffron family = live & fresh, vs the muted gold `SOON`), always carrying the "NEW" text cue (§12). Dev-only `devSimulateUpgrade` / `devResetNewState` hooks exist for the Maestro badge flows.
+
+### OTA update prompt (`mobile/src/components/UpdateReadyModal.tsx`)
+
+`expo-updates` keeps its default flow: check + background-download on launch, apply on next cold start. The modal closes the "next cold start" gap without blocking startup: `Updates.useUpdates().isUpdatePending` flips true once a bundle is staged, and the modal appears — only when `Updates.isEnabled` (never in dev clients / Expo Go, where `reloadAsync` throws). Mounted once in `App.tsx` inside the provider stack.
+
+**Spec.** Centred card over `modalBackdrop`: `parchment` fill, `radii.lg`, `spacing.xxl` padding, max width 360.
+
+- Title "नया अपडेट तैयार है / A fresh update is ready" — 20, reader-title face (script serif for gu/kn), `ink`.
+- Body — 15/23 `ink-soft`, meaning face: "New content and improvements have been downloaded. Apply them now, or they'll apply automatically next time you open the app." (all four languages authored).
+- Primary: solid `saffron`, `radii.md`, "अभी अपडेट करें / Update now" in `onPrimary` → `Updates.reloadAsync()` (busy-guarded; on a native failure it dismisses and lets the default next-launch path apply the update).
+- Secondary: "Later" — uppercase 13, `ink-muted` text button.
+
+**Dismissal is per-staged-update:** "Later" latches for the session, but the latch resets when a *newer* update is staged, so a fresh download re-prompts.
+
+### sourceId migration (`mobile/src/data/sourceIdMigration.ts`)
+
+Content ids have changed shape over time (aartis were once addressed positionally as `aarti-N` / bookmark ids `aarti:N:M`; canonical form is the library id, e.g. `om-jai-jagdish`). `canonicalSourceId` and `canonicalBookmarkId` normalise legacy values, and are applied **on hydrate** by `BookmarksContext` and `ReadingProgressContext` (and defensively by Wishlist reads) — so an upgrade never strands a user's saved verses or resume positions. The reading-progress migration additionally re-keys legacy per-book entries to the per-chapter composite keys (§40). Unknown ids pass through unchanged.
+
+**Files:** `mobile/src/contexts/NewContentContext.tsx`, `mobile/src/components/UpdateReadyModal.tsx`, `mobile/src/data/sourceIdMigration.ts`, `mobile/src/utils/semverCompare.ts`; registry field `addedInVersion` in §41.
+
+---
+
+## 45. Daily Routine Suite (beyond §30/§31)
+
+**Purpose.** The management surfaces around नित्य साधना: browsing routines, creating one, filling it with content, and editing it — plus the in-reader affordance that adds the current text to a routine. Complements §30 (the Home banner + celebration) and §31 (the Today's Practice ledger those open into). Data model per PRD-07: routines of complete reciting units (whole section / one chapter / a japam round-target), scheduled `daily` or per-weekday.
+
+### Component: RoutineShell (`mobile/src/components/RoutineShell.tsx`)
+
+The shared chrome for the routine management screens: a full-screen `parchmentHighlight → parchmentGradientEnd` gradient (the §2 Home gradient tokens — no sketch background; these are utility surfaces), safe-area top, and a top bar (`spacing.xxl` gutter): 44 px circular back button (`parchment-soft` / `divider`), a 16 pt title that **swaps** by reading language (RULEBOOK §3 — never stacked), and an optional right-slot action. The file also exports `RoutineButton` — the suite's standard button: solid `saffron` with `onPrimary` label, or `ghost` (transparent, 1 px `goldTint` border, `saffron` label); `radii.md`, `spacing.md` vertical padding, 16 pt script-aware label.
+
+### Screen: My Routines (`RoutineListScreen.tsx`)
+
+`RoutineShell` titled `मेरी साधनाएँ · My Routines`. Reached from Today's Practice (§31) — one routine card per `Routine`:
+
+- Card: `parchment-soft`, 1 px `divider`, `radii.lg`, `spacing.lg` padding, `spacing.md` gap between cards.
+- Row: routine name (card-title face, 16, `ink`) + a mode pill (`saffronTint` fill, `pill` radius, `versePill` type in `saffron-deep`): `दैनिक / DAILY` or `वार / WEEKDAY`.
+- Meta line: "N items" (italic 12, `ink-muted`).
+- Tap → `RoutineDetail`. Below the list, a ghost `RoutineButton` "नई साधना बनाएँ / New routine" → `RoutineCreate`. Empty state: a centred "No routines yet" line (14, `ink-muted`).
+
+### Screen: Create Routine (`CreateRoutineScreen.tsx`)
+
+A two-step wizard on the same gradient (its own top bar: the back button steps `mode → name` before popping). Each step leads with a centred bilingual heading (screen-title face at 22 over an italic secondary in the *other* language — the listing-card bilingual pattern).
+
+1. **Name** — two labelled `TextInput`s (Hindi name / English name; `sectionLabel` labels, `parchmentHighlight` fill, `divider` border, `radii.md`). Either language suffices — the blank one falls back to the filled one on create. Primary button "आगे / Next" (disabled until non-empty).
+2. **Mode** — two selectable cards: `दैनिक — हर दिन एक जैसा / Daily — same every day` and `वार अनुसार / By weekday — changes per day` ("each day has its own deity and texts"). Selected card: 1.5 px `saffron` border + `parchmentHighlight` fill; unselected: `divider` + `parchment-soft`. Primary "साधना बनाएँ / Create routine" → `createRoutine(...)` then **`navigation.replace`** into `RoutineAddItems` (back from add-items skips the wizard).
+
+### Screen: Add Content (`RoutineAddItemsScreen.tsx`)
+
+`RoutineShell` titled `सामग्री जोड़ें · Add Content`. Lists every active, non-hidden library entry **except theerth** (a map tour can't be practised as a daily item). For **weekday** routines, a 7-day strip sits on top (Sun–Sat chips, defaulting to today; selected chip gets the 1.5 px `saffron` border) — every add below is tagged to the selected day.
+
+- Row: 34 px thumb (`saffronTint`, `radii.sm`, the entry's Devanagari `thumb` glyph in `saffron-deep`) · name (14) with an optional `सुझाव / SUGGESTED` pill (`goldTint` fill, `versePill` in `saffron-deep`) · unit meta ("पूरा पाठ / Whole text", or "1 माला · 108" for japam) · a `＋` toggle in `saffron` that flips to a `gold` ✓ when added. Rows are separated by 1 px `divider` hairlines.
+- **Vaar deity suggestions:** for weekday routines the list is *sorted* suggested-first — entries whose `deities` include `deityForWeekday(day)` (see scheduling below) float to the top and wear the SUGGESTED pill. Always a suggestion, never a constraint.
+- Adds are whole-unit here: `section` items (or `japam` with `targetRounds: 1`); the footnote says chapter-level selection is "coming soon" **on this screen** — chapter granularity already exists via the reader sheet (below).
+- "पूर्ण / Done" → `RoutineToday` (§31).
+
+### Screen: Routine Detail (`RoutineDetailScreen.tsx`)
+
+`RoutineShell` titled with the routine's name; right slot is a `saffron` `＋` → Add Content. For weekday routines, a read-only 7-column vaar grid tops the screen: each day chip shows its short label over the presiding-deity label (`deityLabelForWeekday`) in `saffron-deep`. Item rows: resolved title + sub (`resolveRoutineItem` — "अध्याय 1 / Chapter 1", "पूरा पाठ / Whole text", "N माला / N mala") plus the item's scheduled day shorts; tapping the row opens the item's reader (`navigateToRoutineItem`); a `×` removes it. Bottom: ghost "इस साधना को हटाएँ / Delete this routine" — deletion drops the routine from context and a focused-effect guard pops back exactly once (goBack in the handler double-popped; the comments document the bug).
+
+### Component: Add-to-Routine button & sheet
+
+- **`AddToRoutineButton.tsx`** — the `＋` (22 pt, `saffron`, 12 hitSlop) sitting beside the `LanguageToggle` in **every reader's toggle row** (chaptered readers pass the current `chapter`). Tap → `openAddToRoutine(sourceId, chapter)`.
+- **`RoutineSheetProvider.tsx`** mounts a single app-level `AddToRoutineSheet` and exposes that opener via context — one sheet instance, any reader.
+- **`AddToRoutineSheet.tsx`** — a bottom sheet (slide-up `Modal` over `modalBackdrop`): `parchmentHighlight` panel, 22 px top radii, `divider` grabber bar. Header: "Add ‹name›" (18, language-aware) over an italic secondary carrying the *other* language. For chaptered sources a **"क्या जोड़ें / What to add"** chip row offers `पूरा / Whole` plus one chip per chapter (from `chaptersForSource`), pre-selected to the chapter being read. Below, every routine as a checklist row — a 22 px `radii.sm` checkbox (`gold` outline → filled `saffron` with `onPrimary` ✓ when this unit is in the routine) + name + mode pill; tapping toggles add/remove. Adding to a weekday routine schedules the item for **today's** weekday. Footer: "＋ New routine" closes the sheet and deep-navigates to `RoutineCreate` via the navigation ref.
+
+### Scheduling data (`mobile/src/data/routine/`)
+
+- `types.ts` — `Routine { id, nameHi, nameEn, mode: 'daily' | 'weekday', items, createdAt }`; `RoutineItem { kind: 'section' | 'chapter' | 'japam', sourceId, chapter?, targetRounds?, weekdays? }` (weekdays 0 = Sun … 6 = Sat); `itemRunsOn` (daily = always); `routineItemKey` for completion tracking. Item granularity is a complete reciting unit, never a single verse — that's Daily Bhakti's job (§23).
+- `vaar.ts` — the weekday → deity maps. `VAAR_DEITY` is the **content-filter** tag and must exist in the catalog: Sun savitr (Surya) · Mon shiva · Tue hanuman · Wed ganesha · Thu vishnu · Fri durga · Sat hanuman. `WEEKDAY_DEITY_LABEL` is the **display** name and may honour tradition beyond the catalog — Saturday reads "शनि देव · हनुमान / Shani Dev · Hanuman" while surfacing Hanuman content.
+- `units.ts` + `useRoutineToday.ts` — completion is **derived, not stored**: an item is auto-complete when persisted reading progress reached the unit's last verse-page *today* (last positions memoised from the verse pool) or japa rounds ≥ target from today's UserActivity totals; a manual mark (§31's offered-marks store) wins over auto. `useRoutineToday()` composes routines + progress + activity into `{ entries, doneCount, total, hasRoutine }` with per-entry `doneMode` and `doneAt` — the single view-model behind the banner (§30), Today's Practice (§31), and the celebration gate.
+
+**Files:** `mobile/src/screens/RoutineListScreen.tsx`, `CreateRoutineScreen.tsx`, `RoutineAddItemsScreen.tsx`, `RoutineDetailScreen.tsx`; `mobile/src/components/RoutineShell.tsx`, `AddToRoutineButton.tsx`, `AddToRoutineSheet.tsx`; `mobile/src/contexts/RoutineContext.tsx`, `RoutineSheetProvider.tsx`; `mobile/src/data/routine/{types,vaar,units,useRoutineToday,chapters}.ts`. PRD: `docs/roadmap/prds/07-daily-routine-sadhana.md`.
