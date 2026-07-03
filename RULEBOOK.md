@@ -14,6 +14,16 @@ This is a hard, repo-wide gate that applies to **every** change, not just new se
 - **E2E verification.** Every change is exercised end-to-end via the Maestro flows in `mobile/.maestro/` (`npm run test:e2e`) on a simulator/emulator, and the flow covering the touched area must pass. If a change adds a user-facing surface no existing flow covers, extend or add the matching `<category>-smoke.yaml` (see §9).
 - **No exceptions.** A PR without both UT and e2e evidence is a hard reject — the same bar as a missing reader-screen test (§2 row 14) or a missing Maestro flow (§9).
 
+## 0.1 Docs ship in the same PR — design.md / RULEBOOK sync is a merge gate
+
+Code is canonical, but the docs may never lag it by more than the PR that changed it:
+
+- **Any change to a user-facing surface** (screen structure, component spec, navigation, tokens, type scale, labels, interaction/motion/a11y behaviour) **must update the matching `design.md` section in the same PR.** If no section covers the surface, add one (continue the § numbering). Deleting a behaviour deletes/updates its spec.
+- **Any change to the integration contract** (content shapes, file sets, category/deity/registry sets, verification steps, test gates) **must update the matching RULEBOOK section in the same PR.**
+- **Enumerations live in code; docs point at the source.** Where a list is bound to drift (categories, deities, theerth groups), the doc states the source-of-truth file (`categories.ts`, `deities.ts`, `theerth/temples.ts`) and mirrors the current values — update the mirror when the source changes.
+- **Reviewer gate.** A PR that changes UI or contract with an untouched `design.md`/`RULEBOOK.md` is a hard reject, same bar as missing tests. Ask "which doc section describes what this PR just changed?" — if the answer is "none", the PR isn't done.
+- (Origin: a full design↔code audit in July 2026 found ~35 drifted sections — 3-tab bar vs shipped 5, phantom Bookmarks tab, 4-segment toggle vs shipped 2, Theerth map-first vs shipped list-first — because nothing forced doc updates alongside code.)
+
 ---
 
 ## 1. The questions every new section must answer
@@ -27,8 +37,8 @@ Every section, regardless of size, must supply these inputs. The slash command w
 | 3 | `nameEn` | **yes** | `Hanuman Chalisa` | listing card title (italic English row) |
 | 4 | `sub` | **yes** | `40 चौपाई · अर्थ सहित` | listing subtitle. Devanagari, follows the `<count> <unit> · अर्थ सहित` pattern of existing sections |
 | 5 | `thumb` | **yes** | `ह` / `भ` / `सु` / `ॐ` | single Devanagari glyph rendered inside `LibraryCard` |
-| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `bhajan`, `veda`, `theerth`. Determines which grid tile this section appears under on Home. The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. The `theerth` tile routes to `TheerthMapScreen` (map-of-India with pinned temples) — see §11. |
-| 7 | `deities` | **yes** | `['hanuman', 'rama']` | Array of deity tags from: `rama`, `krishna`, `shiva`, `hanuman`, `durga`, `ganesha`. The section appears under each tagged deity's cross-reference on Home. At least one required. |
+| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `theerth`, `sanskar` (source of truth: `mobile/src/data/categories.ts`). Determines which grid tile this section appears under on Home. The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. The `theerth` tile routes to the Theerth browse screen (state/category list; map in the drill-in view) — see §11. |
+| 7 | `deities` | **yes** | `['hanuman', 'rama']` | Array of deity tags from: `rama`, `krishna`, `vishnu`, `shiva`, `hanuman`, `durga`, `ganesha`, `savitr` (Maa Gayatri), `saraswati` (source of truth: `mobile/src/data/deities.ts`). The section appears under each tagged deity in the Deity Index. At least one required. |
 | 8 | Subsection structure | optional | 18 chapters / 7 kāṇḍas / none | if present, supply count + per-subsection `titleHi`/`titleEn` (mirrors Gita's `chapters-manifest.json`) |
 | 9 | **Background image(s)** for content page | **yes** | `mobile/assets/<id>/*.png` | at least one bundled local PNG/WebP. Faded vintage sketch per `design.md` §6 (≈50 % opacity after sepia, subject top-anchored, bottom third clean) |
 | 10 | Per-verse `lines` (Devanagari) | **yes** | `["जय हनुमान ज्ञान गुण सागर", …]` | array of strings; preserve original line breaks |
@@ -53,7 +63,7 @@ Exact paths, in build order. Each row maps to a Phase-C step in `/add-section`.
 
 | # | Path | Action | Template |
 |---|------|--------|----------|
-| 1 | `mobile/src/data/<id>/<id>.json` | create | `mobile/src/data/sundarkand/sundarkand.json` (no commentary) or per-chapter Gita JSON (with commentary) |
+| 1 | `mobile/src/data/<id>/<id>.json` | create | `mobile/src/data/sundarkand/chapter-01.json` (chaptered, no commentary) or per-chapter Gita JSON (with commentary) |
 | 2 | `mobile/src/data/<id>/index.ts` | create | `mobile/src/data/gita/index.ts` (typed loader + invariant checks) |
 | 3 | `mobile/assets/<id>/` + `index.ts` | create | `mobile/assets/gita/index.ts` |
 | 4 | `mobile/src/components/<Pascal>VersePage.tsx` | create | `GitaVersePage.tsx` (with commentary) or `SundarkandVersePage.tsx` (without) |
@@ -89,8 +99,8 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
 - **Chaptered readers auto-advance across subsection boundaries.** A reader whose text has more than one subsection (`<section>ChaptersManifest.length > 1`) must let the user cross chapter/kāṇḍa boundaries **by swiping** — it must never dead-end on the last page of a subsection. Match `GitaReaderScreen.tsx` / `ShivaStrotamReaderScreen.tsx`: inject a `NextChapterCard` after the last verse (unless it is the last chapter) and a `PrevChapterCard` before the first verse (unless it is the first chapter) into the `FlatList` `data`; detect those `__type: 'transition' | 'prev-transition'` items in `onViewableItemsChanged` and `navigation.replace(<thisRoute>, { chapter })` (the prev case lands on the previous chapter's last verse via `initialIndex`). The prepended prev card shifts indices by one, so carry an `offset` through `initialScrollIndex`, `handleScroll`, and the viewable-index math. `mobile/src/screens/__tests__/readerAutoAdvance.test.tsx` enforces this for every multi-chapter reader — add a new chaptered reader to its table when you create one. (Origin: Durga / Ganesh / Saraswati / Vishnu Sahasranama readers rendered only `chapter.verses`, so swiping past a chapter's last verse dead-ended instead of advancing to the next subsection.)
 - **Top-bar title rule.** Reader screens, counter screens, and chapter index screens must **swap** the title to the active reading language — never render both stacked. Use `contentByLang(lang, titleHi, titleEn)` (gu/kn re-script `titleHi`); pick the font with `titleFontByLang(lang)`. Do **not** hand-write `lang === 'hi' ? titleHi : titleEn` — that silently shows English for gu/kn. Listing screens (Home, CategoryList, DeityList) still show **both** languages, but the active reading language now decides **order and focus**: the primary language leads in the prominent slot (top line on cards, first on the `·`-joined top bar) with the larger/heavier font, and the other language follows as a supporting line. This is computed by the shared `orderTitlesByLanguage()` helper (`mobile/src/utils/titleByLanguage.ts`) so category names and catalog/deity titles flip together everywhere; do not re-derive the order inline or hardcode Devanagari-first. Default `'hi'` preserves the historic Devanagari-first layout. (`design.md` §9, §15)
 - **Romanization.** Per `design.md §3.1`, the romanization style is chosen by the source language of the verse, not by the module: Sanskrit verses (Gita, embedded shlokas) use IAST + Hunterian digraphs; Awadhi/Hindi verses (Tulsidas chaupais, dohas, sorthas, chhands) use hand-curated pronunciation-based ASCII. Do not impose IAST on Awadhi — the diacritics misrepresent recitation.
-- **Language toggle.** Reuse the existing context: `import { useGitaLanguage } from 'mobile/src/data/gita/language.tsx'` (type `Lang = 'hi' | 'en' | 'gu' | 'kn'`). Default `'hi'`, persisted at `@vedansh/language`. The `LanguageToggle` is **four-way** and data-driven over the `LANGUAGES` metadata array — do not hardcode a 2-position pill. **Do not** create a parallel context per section. (Renaming the hook to `useReadingLanguage` is a follow-up tracked outside this rulebook.)
-  - The toggle is rendered on **every reader page** for all bilingual sections.
+- **Language toggle.** Reuse the existing context: `import { useGitaLanguage } from 'mobile/src/data/gita/language.tsx'` (type `Lang = 'hi' | 'en' | 'gu' | 'kn'`). Default `'hi'`, persisted at `@vedansh/language`. The `LanguageToggle` is a **2-segment** pill — [the chosen regional language] · [English] — where the regional segment is `hi` by default and switches to `gu`/`kn` via the More-tab language setting (persisted at `@vedansh/regionalLanguage`, exposed as `regionalLang` on the context). Do not add per-section toggles or extra segments; the four-way choice lives in More. **Do not** create a parallel context per section. (design.md §16; renaming the hook to `useReadingLanguage` is a follow-up tracked outside this rulebook.)
+  - Every reader screen renders the toggle once, in the persistent toggle row above the pager (beside `AddToRoutineButton`) — it governs all pages of that reader.
   - Sections with a subsection listing (Chapters Index, kāṇḍa list, etc.) ALSO surface the toggle on that listing.
   - State is shared across surfaces via the same hook — no per-screen forks.
 - **Categories & Deities.** Every `LibraryEntry` must have a valid `category` (one of the six defined types) and at least one `deity` tag. The Home screen grid and deity section derive their content from these fields — no manual wiring required.
@@ -125,6 +135,7 @@ The slash command runs the first three; the human PR author runs the rest.
 13. **Multi-instance readers serve the right content.** For sections that share a screen (chalisas, aartis, future N-of-a-kind), open at least two distinct entries and confirm titles, verses, and `sourceId` (visible via bookmarks) actually differ — a reader hardcoded to one variant will silently render the wrong content for the others.
 14. **Section is reachable from search.** `mobile/src/data/__tests__/searchIndex.test.ts` already enforces that every active `library` entry produces verse entries in the search index — but verify manually: open the global search (top-right magnifier on Home), type a unique word from the section's first verse, confirm the result row tap lands on the correct reader page. See §8 for the per-shape integration paths.
 15. **Maestro E2E flow updated.** `mobile/.maestro/<category>-smoke.yaml` includes the new section's `nameEn` in its `assertVisible` list (for an existing category) or a new flow file exists (for a new category). Run `npm run test:e2e` locally and confirm the flow passes on both iOS Simulator and Android Emulator before merge. See `mobile/.maestro/README.md` for the per-category template.
+16. **Docs updated in the same PR (§0.1).** If the change touched any user-facing surface, the matching `design.md` section is updated (or added); if it changed the integration contract, the matching RULEBOOK section is updated. Name the touched doc sections in the PR description. An untouched doc alongside a UI/contract diff is a hard reject.
 
 ---
 
@@ -138,7 +149,7 @@ The slash command runs the first three; the human PR author runs the rest.
 
 ## 6. Navigation architecture
 
-The app uses a bottom tab bar with three tabs: Home (गृह), Daily Bhakti (भक्ति), and Bookmarks (संग्रह). Reader screens hide the tab bar for immersive reading.
+The app uses a bottom tab bar with **five tabs** (`mobile/src/navigation/TabNavigator.tsx`): Home, Bhakti (Daily Bhakti), Panchang, Bhajan (Audio), and More. There is no Bookmarks tab — saved verses live at More → Wishlist (design.md §24). The tab bar **stays visible inside readers**; only the routes listed in `IMMERSIVE_HOME_ROUTES` (currently `VratKathaReader`) hide it. See design.md §17 for the full bar spec.
 
 New sections are registered in `mobile/src/navigation/HomeStackNavigator.tsx` (not the old `RootNavigator.tsx`). The Home screen dynamically renders categories from `mobile/src/data/categories.ts` and deities from `mobile/src/data/deities.ts` — adding a new section only requires:
 1. Adding the `LibraryEntry` to `texts.ts` (with `category` and `deities` fields)
@@ -343,44 +354,41 @@ Full proposal lives in [`docs/roadmap/prds/07-temple-tour.md`](./docs/roadmap/pr
 
 ### 11.1 Section data shape
 
-```ts
-type Theerth = {
-  id: string;                     // e.g. "dvadasha-jyotirlinga"
-  nameHi: string;                 // "द्वादश ज्योतिर्लिङ्ग"
-  nameEn: string;                 // "Twelve Jyotirlingas"
-  introHi: string;                // 1-2 paragraphs of context (shown above the map)
-  introEn: string;
-  temples: TheerthTemple[];
-  source: { baseText: string; retrievedOn: string };  // per §10.2
-};
+Source of truth: `mobile/src/data/theerth/temples.ts`. The shipped shape (71 temples):
 
+```ts
 type TheerthGroup =
   | 'jyotirlinga'
   | 'char-dham'
   | 'chota-char-dham'
-  | 'shakti-peeth';
+  | 'shakti-peeth';               // fixed set + groupMeta/groupOrder in temples.ts
 
-type TheerthTemple = {
+type BaseTempleEntry = {
   id: string;                     // e.g. "somnath"
   nameHi: string;                 // "सोमनाथ"
   nameEn: string;                 // "Somnath"
-  stateHi: string;                // "गुजरात"   ← mandatory for grouping
-  stateEn: string;                // "Gujarat"
   cityHi: string;
   cityEn: string;
+  stateHi: string;                // "गुजरात"   ← mandatory for grouping
+  stateEn: string;                // "Gujarat"
   coordinates: { lat: number; lng: number };  // mandatory — pin position on map
   deity: Deity;                   // existing union — MUST match invocation per §10.4
-  deityFormHi?: string;
-  deityFormEn?: string;
   groups: TheerthGroup[];         // pilgrimage-tradition tags; may be [] for "other famous"
-  significanceHi: string[];       // 1-3 prose paragraphs
-  significanceEn: string[];
-  originStoryHi: string[];        // 2-5 prose paragraphs — Sthala Purāṇa narrative
-  originStoryEn: string[];
-  background: string;             // image key from mobile/assets/<id>/index.ts
-  sources: Array<{ url: string; title: string; retrievedOn: string }>;  // ≥ 2 per §10.1
+  addedInVersion?: string;        // NEW-badge tracking, mirrors LibraryEntry
 };
+
+type TempleDetail = {
+  significanceHi: string;         // single prose block (NOT a paragraph array)
+  significanceEn: string;
+  originStoryHi: string;          // Sthala Purāṇa narrative — single prose block
+  originStoryEn: string;
+  sources: readonly { label: string; url: string }[];  // ≥ 2 per §10.1
+};
+
+type TempleEntry = BaseTempleEntry & TempleDetail & { addedInVersion: string };
 ```
+
+There is no per-temple `background` field — the detail screen resolves its sketch by presiding deity (with per-temple id overrides) via `getTheerthBackground()` in `mobile/src/data/backgrounds.ts` (§11.4). There are no `introHi/introEn` fields — the browse surface has no intro prose, only the tap-a-pin hint line on the map view.
 
 `coordinates` and `stateHi/En` are mandatory: the map can't pin without lat/lng, the state-list view can't group without state labels. Do not derive state from lat/lng via polygon lookup — store it explicitly.
 
@@ -420,12 +428,11 @@ All of §10 applies. The high-risk ones for theerth:
 ### 11.5 Verification for theerth (replaces §4 steps 4–8)
 
 1. App boots; the Theerth tile is visible on Home under Categories.
-2. Tapping the Theerth tile lands on `TheerthMapScreen` with the India outline visible and every temple pinned at the right location (eyeball-check against a known map — e.g., Kashi Vishwanath is in UP, not Tamil Nadu).
-3. Three-way view toggle flips between Map / By State / By Yatra. State view shows temples under correctly-labelled state headers; Yatra view shows them under group sections (Jyotirlinga, Char Dham, Chota Char Dham, Shakti Peeth, Other Famous).
-4. Map-view filter chips (All, plus one per `TheerthGroup`) filter pins to that group. "All" returns to the full set.
-5. Multi-group temples (Rameshwaram, Kedarnath, Badrinath) appear under every group section they belong to in the Yatra view, AND show up when any of their group chips is selected in the Map view.
-6. Language toggle swaps title, intro, view-toggle labels, chip labels, state labels, pin tooltips, yatra section headers. No Devanagari leaks in English mode; no English leaks in Hindi mode.
-7. Tapping a pin lands on `TheerthDetailScreen` for that temple; same for tapping a state-list row or yatra-list row.
-8. Detail screen shows, over the temple's presiding-deity background (§11.4): hero (temple name + city + state + deity), `महिमा · Significance` block, `उद्भव कथा · Origin Story` block, sources footer. Both languages populated (verified in §10).
-9. Back from detail returns to `TheerthMapScreen` preserving its view-mode and filter-chip state.
-10. Per-temple device check on iOS AND Android — Devanagari rendering in pin tooltips can differ between platforms.
+2. Tapping the Theerth tile lands on the Theerth **browse listing** (no map on the landing surface): a two-way segmented toggle `राज्य · By State` / `श्रेणी · By Category` (By Category is the default) over grouped cards with counts. (design.md §26)
+3. Drilling into a state or category re-pushes the screen with `stateEn`/`group` params and shows the `<IndiaMap>` for that subset, with every temple pinned at the right location (eyeball-check against a known map — e.g., Kashi Vishwanath is in UP, not Tamil Nadu).
+4. Multi-group temples (Rameshwaram, Kedarnath, Badrinath) appear under every category they belong to in the By-Category view.
+5. Language toggle swaps title, view-toggle labels, group/state labels, pin tooltips, and the tap-a-pin hint. No Devanagari leaks in English mode; no English leaks in Hindi mode.
+6. Tapping a pin lands on `TheerthDetailScreen` for that temple; same for tapping a list row.
+7. Detail screen shows, over the temple's presiding-deity background (§11.4): hero (temple name + city + state + deity badge), `महिमा · Significance` block, `उद्भव कथा · Origin Story` block, sources footer. Both languages populated (verified in §10).
+8. Back from detail returns to the browse/drill-in screen preserving its view-mode state.
+9. Per-temple device check on iOS AND Android — Devanagari rendering in pin tooltips can differ between platforms.
