@@ -27,7 +27,7 @@ const DOT_COUNT = 5;
 export default function AartiReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
@@ -87,6 +87,10 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
     });
   }, [width, aarti.verses.length]);
 
+  // Re-render visible pages when the language flips, a bookmark toggles, or a
+  // share is in flight — the in-page header actions depend on all three.
+  const listExtraData = useMemo(() => ({ lang, bookmarks, shareBusy }), [lang, bookmarks, shareBusy]);
+
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
@@ -104,39 +108,6 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
               <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
                 {currentIndex + 1} / {aarti.verses.length}
               </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`${sourceId}:${currentIndex}`)}
-                onToggle={() => {
-                  const id = `${sourceId}:${currentIndex}`;
-                  if (isBookmarked(id)) { removeBookmark(id); }
-                  else {
-                    const v = aarti.verses[currentIndex];
-                    addBookmark({ id, sourceId, verseIndex: currentIndex, savedAt: Date.now(), previewHi: v.lines[0] ?? '', previewEn: v.linesEn[0] ?? '' });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = aarti.verses[currentIndex];
-                  share(
-                    {
-                      sourceId,
-                      sectionNameHi: aarti.titleHi,
-                      sectionNameEn: aarti.titleEn,
-                      verseLabelHi: v.labelHi,
-                      verseLabelEn: v.labelEn,
-                      linesHi: [...v.lines],
-                      linesEn: [...v.linesEn],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                      meaningGu: v.meaningGu,
-                      meaningKn: v.meaningKn,
-                    },
-                    lang
-                  );
-                }}
-              />
             </View>
           </View>
         </View>
@@ -150,8 +121,49 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
             ref={listRef}
             data={aarti.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <VersePage verse={item} sourceId={sourceId} width={width} />}
-            extraData={lang}
+            renderItem={({ item, index }) => (
+              <VersePage
+                verse={item}
+                sourceId={sourceId}
+                width={width}
+                topActions={
+                  <>
+                    <BookmarkButton
+                      isBookmarked={isBookmarked(`${sourceId}:${index}`)}
+                      onToggle={() => {
+                        const id = `${sourceId}:${index}`;
+                        if (isBookmarked(id)) { removeBookmark(id); }
+                        else {
+                          addBookmark({ id, sourceId, verseIndex: index, savedAt: Date.now(), previewHi: item.lines[0] ?? '', previewEn: item.linesEn[0] ?? '' });
+                        }
+                      }}
+                    />
+                    <ShareButton
+                      busy={shareBusy}
+                      onPress={() => {
+                        share(
+                          {
+                            sourceId,
+                            sectionNameHi: aarti.titleHi,
+                            sectionNameEn: aarti.titleEn,
+                            verseLabelHi: item.labelHi,
+                            verseLabelEn: item.labelEn,
+                            linesHi: [...item.lines],
+                            linesEn: [...item.linesEn],
+                            meaningHi: item.meaningHi,
+                            meaningEn: item.meaningEn,
+                            meaningGu: item.meaningGu,
+                            meaningKn: item.meaningKn,
+                          },
+                          lang
+                        );
+                      }}
+                    />
+                  </>
+                }
+              />
+            )}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}

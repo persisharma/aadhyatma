@@ -37,7 +37,7 @@ const DOT_COUNT = 5;
 export default function SanskarReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
@@ -105,6 +105,13 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
     [width, total]
   );
 
+  // Re-render visible pages when the language flips, a bookmark toggles, or a
+  // share is in flight — the in-page header actions depend on all three.
+  const listExtraData = useMemo(
+    () => ({ lang, bookmarks, shareBusy }),
+    [lang, bookmarks, shareBusy]
+  );
+
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
@@ -158,45 +165,6 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
               >
                 {currentIndex + 1} / {total}
               </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`${sanskarId}::${currentIndex}`)}
-                onToggle={() => {
-                  const id = `${sanskarId}::${currentIndex}`;
-                  if (isBookmarked(id)) {
-                    removeBookmark(id);
-                  } else {
-                    const v = verses[currentIndex];
-                    addBookmark({
-                      id,
-                      sourceId: sanskarId,
-                      verseIndex: currentIndex,
-                      savedAt: Date.now(),
-                      previewHi: v.lines[0] ?? '',
-                      previewEn: v.linesEn[0] ?? '',
-                    });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = verses[currentIndex];
-                  share(
-                    {
-                      sourceId: sanskarId,
-                      sectionNameHi: sanskarData.titleHi,
-                      sectionNameEn: sanskarData.titleEn,
-                      verseLabelHi: v.labelHi,
-                      verseLabelEn: v.labelEn,
-                      linesHi: [...v.lines],
-                      linesEn: [...v.linesEn],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                    },
-                    lang
-                  );
-                }}
-              />
             </View>
           </View>
         </View>
@@ -213,10 +181,55 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
             ref={listRef}
             data={verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => (
-              <SanskarVersePage verse={item} sourceId={sanskarId} width={width} />
+            renderItem={({ item, index }) => (
+              <SanskarVersePage
+                verse={item}
+                sourceId={sanskarId}
+                width={width}
+                topActions={
+                  <>
+                    <BookmarkButton
+                      isBookmarked={isBookmarked(`${sanskarId}::${index}`)}
+                      onToggle={() => {
+                        const id = `${sanskarId}::${index}`;
+                        if (isBookmarked(id)) {
+                          removeBookmark(id);
+                        } else {
+                          addBookmark({
+                            id,
+                            sourceId: sanskarId,
+                            verseIndex: index,
+                            savedAt: Date.now(),
+                            previewHi: item.lines[0] ?? '',
+                            previewEn: item.linesEn[0] ?? '',
+                          });
+                        }
+                      }}
+                    />
+                    <ShareButton
+                      busy={shareBusy}
+                      onPress={() => {
+                        share(
+                          {
+                            sourceId: sanskarId,
+                            sectionNameHi: sanskarData.titleHi,
+                            sectionNameEn: sanskarData.titleEn,
+                            verseLabelHi: item.labelHi,
+                            verseLabelEn: item.labelEn,
+                            linesHi: [...item.lines],
+                            linesEn: [...item.linesEn],
+                            meaningHi: item.meaningHi,
+                            meaningEn: item.meaningEn,
+                          },
+                          lang
+                        );
+                      }}
+                    />
+                  </>
+                }
+              />
             )}
-            extraData={lang}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}

@@ -29,7 +29,7 @@ const DOT_COUNT = 5;
 export default function RamcharitmanasReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
@@ -84,6 +84,13 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
     });
   }, [width, verseCount]);
 
+  // Re-render visible pages when the language flips, a bookmark toggles, or a
+  // share is in flight — the in-page header actions depend on all three.
+  const listExtraData = useMemo(
+    () => ({ lang, bookmarks, shareBusy }),
+    [lang, bookmarks, shareBusy]
+  );
+
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
@@ -103,37 +110,6 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
               <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
                 {currentIndex + 1} / {verseCount}
               </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`ramcharitmanas:${chapter.chapter}:${currentIndex}`)}
-                onToggle={() => {
-                  const id = `ramcharitmanas:${chapter.chapter}:${currentIndex}`;
-                  if (isBookmarked(id)) { removeBookmark(id); }
-                  else {
-                    const v = chapter.verses[currentIndex];
-                    addBookmark({ id, sourceId: 'ramcharitmanas', chapter: chapter.chapter, verseIndex: currentIndex, savedAt: Date.now(), previewHi: v.lines[0] ?? '', previewEn: v.linesEn[0] ?? '' });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = chapter.verses[currentIndex];
-                  share(
-                    {
-                      sourceId: 'ramcharitmanas',
-                      sectionNameHi: chapter.titleHi,
-                      sectionNameEn: chapter.titleEn,
-                      verseLabelHi: v.labelHi,
-                      verseLabelEn: v.labelEn,
-                      linesHi: [...v.lines],
-                      linesEn: [...v.linesEn],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                    },
-                    lang
-                  );
-                }}
-              />
             </View>
           </View>
         </View>
@@ -147,8 +123,47 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <RamcharitmanasVersePage verse={item} sourceId="ramcharitmanas" width={width} />}
-            extraData={lang}
+            renderItem={({ item, index }) => (
+              <RamcharitmanasVersePage
+                verse={item}
+                sourceId="ramcharitmanas"
+                width={width}
+                topActions={
+                  <>
+                    <BookmarkButton
+                      isBookmarked={isBookmarked(`ramcharitmanas:${chapter.chapter}:${index}`)}
+                      onToggle={() => {
+                        const id = `ramcharitmanas:${chapter.chapter}:${index}`;
+                        if (isBookmarked(id)) { removeBookmark(id); }
+                        else {
+                          addBookmark({ id, sourceId: 'ramcharitmanas', chapter: chapter.chapter, verseIndex: index, savedAt: Date.now(), previewHi: item.lines[0] ?? '', previewEn: item.linesEn[0] ?? '' });
+                        }
+                      }}
+                    />
+                    <ShareButton
+                      busy={shareBusy}
+                      onPress={() => {
+                        share(
+                          {
+                            sourceId: 'ramcharitmanas',
+                            sectionNameHi: chapter.titleHi,
+                            sectionNameEn: chapter.titleEn,
+                            verseLabelHi: item.labelHi,
+                            verseLabelEn: item.labelEn,
+                            linesHi: [...item.lines],
+                            linesEn: [...item.linesEn],
+                            meaningHi: item.meaningHi,
+                            meaningEn: item.meaningEn,
+                          },
+                          lang
+                        );
+                      }}
+                    />
+                  </>
+                }
+              />
+            )}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}

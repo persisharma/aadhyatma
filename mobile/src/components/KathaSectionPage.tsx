@@ -4,7 +4,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import type { KathaContentSection } from '@/panchang/types';
 import { contentByLang, commentaryByLang } from '@/utils/localize';
-import { scriptTitleFont, meaningToken } from '@/utils/langType';
+import { scriptTitleFont, meaningToken, pillTextStyle } from '@/utils/langType';
 import Ornament from './Ornament';
 
 type Props = {
@@ -47,12 +47,8 @@ export default function KathaSectionPage({ section, index, total, width }: Props
           <Text
             style={[
               styles.pillText,
-              {
-                color: colors.saffronDeep,
-                fontSize: typography.versePill.fontSize,
-                fontWeight: typography.versePill.fontWeight,
-                letterSpacing: typography.versePill.letterSpacing,
-              },
+              pillTextStyle(lang, typography.versePill),
+              { color: colors.saffronDeep },
             ]}
           >
             {pillText}

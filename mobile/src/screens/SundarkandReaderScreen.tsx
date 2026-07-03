@@ -66,7 +66,7 @@ const DOT_COUNT = 5;
 export default function SundarkandReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
@@ -201,6 +201,13 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
     [width, verseCount, offset]
   );
 
+  // Re-render visible pages when the language flips, a bookmark toggles, or a
+  // share is in flight — the in-page header actions depend on all three.
+  const listExtraData = useMemo(
+    () => ({ lang, bookmarks, shareBusy }),
+    [lang, bookmarks, shareBusy]
+  );
+
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
@@ -256,46 +263,6 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
               >
                 {currentIndex + 1} / {verseCount}
               </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`sundarkand:${chapter.chapter}:${currentIndex}`)}
-                onToggle={() => {
-                  const id = `sundarkand:${chapter.chapter}:${currentIndex}`;
-                  if (isBookmarked(id)) {
-                    removeBookmark(id);
-                  } else {
-                    const v = verses[currentIndex];
-                    addBookmark({
-                      id,
-                      sourceId: 'sundarkand',
-                      chapter: chapter.chapter,
-                      verseIndex: currentIndex,
-                      savedAt: Date.now(),
-                      previewHi: v.lines[0] ?? '',
-                      previewEn: v.linesEn[0] ?? '',
-                    });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = verses[currentIndex];
-                  share(
-                    {
-                      sourceId: 'sundarkand',
-                      sectionNameHi: chapter.titleHi,
-                      sectionNameEn: chapter.titleEn,
-                      verseLabelHi: v.labelHi,
-                      verseLabelEn: v.labelEn,
-                      linesHi: [...v.lines],
-                      linesEn: [...v.linesEn],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                    },
-                    lang
-                  );
-                }}
-              />
             </View>
           </View>
         </View>
@@ -312,7 +279,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => {
+            renderItem={({ item, index }) => {
               if ('__type' in item && item.__type === 'transition') {
                 return (
                   <NextChapterCard
@@ -331,9 +298,58 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
                   />
                 );
               }
-              return <SundarkandVersePage verse={item} sourceId="sundarkand" width={width} />;
+              const verseIdx = index - offset;
+              return (
+                <SundarkandVersePage
+                  verse={item}
+                  sourceId="sundarkand"
+                  width={width}
+                  topActions={
+                    <>
+                      <BookmarkButton
+                        isBookmarked={isBookmarked(`sundarkand:${chapter.chapter}:${verseIdx}`)}
+                        onToggle={() => {
+                          const id = `sundarkand:${chapter.chapter}:${verseIdx}`;
+                          if (isBookmarked(id)) {
+                            removeBookmark(id);
+                          } else {
+                            addBookmark({
+                              id,
+                              sourceId: 'sundarkand',
+                              chapter: chapter.chapter,
+                              verseIndex: verseIdx,
+                              savedAt: Date.now(),
+                              previewHi: item.lines[0] ?? '',
+                              previewEn: item.linesEn[0] ?? '',
+                            });
+                          }
+                        }}
+                      />
+                      <ShareButton
+                        busy={shareBusy}
+                        onPress={() => {
+                          share(
+                            {
+                              sourceId: 'sundarkand',
+                              sectionNameHi: chapter.titleHi,
+                              sectionNameEn: chapter.titleEn,
+                              verseLabelHi: item.labelHi,
+                              verseLabelEn: item.labelEn,
+                              linesHi: [...item.lines],
+                              linesEn: [...item.linesEn],
+                              meaningHi: item.meaningHi,
+                              meaningEn: item.meaningEn,
+                            },
+                            lang
+                          );
+                        }}
+                      />
+                    </>
+                  }
+                />
+              );
             }}
-            extraData={lang}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}

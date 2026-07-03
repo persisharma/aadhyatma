@@ -13,6 +13,7 @@ import { library } from '@/data/texts';
 import { aartiCollection, aartiIndexById } from '@/data/aarti';
 import { findJapamMantra } from '@/data/japam';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
+import { titleFontByLang } from '@/utils/langType';
 import { buildBookmarkTarget } from '@/navigation/entryRoutes';
 import type { MoreStackParamList } from '@/navigation/types';
 
@@ -97,9 +98,29 @@ export default function WishlistScreen({ navigation }: Props) {
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
           </Pressable>
-          <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}>
-            Wishlist
-          </Text>
+          <View>
+            <Text
+              style={{
+                fontFamily: titleFontByLang(lang),
+                fontSize: 16,
+                fontStyle: lang === 'en' ? 'italic' : 'normal',
+                color: colors.ink,
+              }}
+            >
+              {pick(lang, { hi: 'संग्रह', en: 'Saved Verses', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ' })}
+            </Text>
+            <Text
+              style={{
+                fontFamily:
+                  lang === 'en' ? typography.meaning.fontFamily : 'CormorantGaramond_400Regular_Italic',
+                fontStyle: lang === 'en' ? 'normal' : 'italic',
+                fontSize: 11,
+                color: colors.inkMuted,
+              }}
+            >
+              {lang === 'en' ? 'संग्रह' : 'Saved Verses'}
+            </Text>
+          </View>
         </View>
 
         <ScrollView
@@ -163,6 +184,13 @@ export default function WishlistScreen({ navigation }: Props) {
                 >
                   <Text style={{ color: colors.saffron, fontSize: 18 }}>♥</Text>
                 </Pressable>
+                <Text
+                  accessible={false}
+                  importantForAccessibility="no"
+                  style={{ color: colors.saffron, fontSize: 18, includeFontPadding: false }}
+                >
+                  ›
+                </Text>
               </Pressable>
             ))
           )}

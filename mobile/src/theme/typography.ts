@@ -12,6 +12,10 @@ export const fontFamilies = {
   gujaratiBold: 'NotoSerifGujarati_600SemiBold',
   kannada: 'NotoSerifKannada_500Medium',
   kannadaBold: 'NotoSerifKannada_600SemiBold',
+  // Inter carries the tiny UI chrome (section labels, verse pills, card meta,
+  // tab labels) per design.md §3 — never used for reading content.
+  inter: 'Inter_500Medium',
+  interSemiBold: 'Inter_600SemiBold',
 } as const;
 
 export const typography = {
@@ -85,12 +89,14 @@ export const typography = {
     fontSize: 14,
   },
   sectionLabel: {
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 11,
     fontWeight: '600' as const,
     letterSpacing: 2.4,
     textTransform: 'uppercase' as const,
   },
   versePill: {
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 10,
     fontWeight: '600' as const,
     letterSpacing: 3,
@@ -112,6 +118,7 @@ export const typography = {
     letterSpacing: 0.6,
   },
   cardMeta: {
+    fontFamily: fontFamilies.inter,
     fontSize: 11,
     letterSpacing: 0.4,
   },
