@@ -33,15 +33,16 @@ backend.
 `App.tsx` wraps the tree in `GestureHandlerRootView` + `SafeAreaProvider`, then nests ~14
 context providers (Theme, GitaLanguage, Bookmarks, UserActivity, NewContent, ReadingProgress,
 JapamCounter, Routine, RoutineSheet, NotificationPreferences, Share) around a
-`NavigationContainer` → `RootNavigator` → a **4-tab bottom navigator**:
+`NavigationContainer` → `RootNavigator` → a **5-tab bottom navigator**:
 
 1. **Home** → `HomeStackNavigator` (native-stack, 30+ reader screens: Gita, chalisas,
    Sundarkand, stotrams, sanskar, japam, search — plus 5 Daily-Routine screens:
    RoutineToday/List/Create/Detail/AddItems). HomeScreen shows the ॐ वेदांश़ ॐ `HomeWordmark`
    (replaced `Crest`, #110) and a docked `RoutineBanner` above the tab bar.
 2. **DailyBhakti** → `DailyBhaktiScreen`.
-3. **Panchang** → `PanchangScreen`.
-4. **More** → `MoreStackNavigator` (MoreHome, Wishlist, Profile, Reminders).
+3. **Panchang** → `PanchangStackNavigator` (PanchangScreen, observances, katha library, vrat).
+4. **Audio ("Bhajan")** → `AudioStackNavigator` (audio library, Now Playing).
+5. **More** → `MoreStackNavigator` (MoreHome, Wishlist, Profile, Reminders).
 
 Deep links and notification taps route through `navigationRef`, exported from
 `mobile/src/notifications/deepLink.ts`; route mapping lives in `mobile/src/navigation/entryRoutes.ts`.

@@ -29,6 +29,11 @@ import {
   NotoSerifKannada_500Medium,
   NotoSerifKannada_600SemiBold,
 } from '@expo-google-fonts/noto-serif-kannada';
+import {
+  useFonts as useInterFonts,
+  Inter_500Medium,
+  Inter_600SemiBold,
+} from '@expo-google-fonts/inter';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { lightColors } from '@/theme/colors';
@@ -86,8 +91,13 @@ export default function App() {
     NotoSerifKannada_500Medium,
     NotoSerifKannada_600SemiBold,
   });
+  const [interLoaded] = useInterFonts({
+    Inter_500Medium,
+    Inter_600SemiBold,
+  });
 
-  const fontsReady = notoLoaded && cormorantLoaded && gujaratiLoaded && kannadaLoaded;
+  const fontsReady =
+    notoLoaded && cormorantLoaded && gujaratiLoaded && kannadaLoaded && interLoaded;
 
   const onLayout = useCallback(async () => {
     if (fontsReady) {
