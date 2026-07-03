@@ -180,7 +180,7 @@ export default function HomeScreen({ navigation }: Props) {
               {
                 color: colors.inkMuted,
                 fontSize: typography.sectionLabel.fontSize,
-                fontWeight: typography.sectionLabel.fontWeight,
+                fontFamily: typography.sectionLabel.fontFamily,
                 letterSpacing: typography.sectionLabel.letterSpacing,
               },
             ]}
@@ -216,7 +216,7 @@ export default function HomeScreen({ navigation }: Props) {
               {
                 color: colors.inkMuted,
                 fontSize: typography.sectionLabel.fontSize,
-                fontWeight: typography.sectionLabel.fontWeight,
+                fontFamily: typography.sectionLabel.fontFamily,
                 letterSpacing: typography.sectionLabel.letterSpacing,
               },
             ]}

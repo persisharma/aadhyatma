@@ -5,7 +5,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { contentByLang } from '@/utils/localize';
-import { titleFontByLang } from '@/utils/langType';
+import { pillTextStyle, titleFontByLang } from '@/utils/langType';
 
 type Props = {
   visible: boolean;
@@ -147,12 +147,8 @@ export default function ResumeReadingSheet({
             <Text
               style={[
                 styles.locationLabel,
-                {
-                  color: colors.inkMuted,
-                  fontSize: typography.sectionLabel.fontSize,
-                  fontWeight: typography.sectionLabel.fontWeight,
-                  letterSpacing: typography.sectionLabel.letterSpacing,
-                },
+                pillTextStyle(lang, typography.sectionLabel),
+                { color: colors.inkMuted },
               ]}
             >
               {contentByLang(lang, 'अंतिम पठित', 'LAST READ')}

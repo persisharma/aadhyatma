@@ -9,7 +9,7 @@ import {
   contentByLang,
   pick,
 } from '@/utils/localize';
-import { verseToken, meaningToken, scriptTitleFont } from '@/utils/langType';
+import { verseToken, meaningToken, scriptTitleFont, pillTextStyle } from '@/utils/langType';
 import type { ShivaStrotamVerse } from '@/data/shiva-strotam';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
@@ -19,19 +19,23 @@ type Props = {
   verse: ShivaStrotamVerse;
   sourceId: string;
   width: number;
+  /** Per-verse actions (bookmark/share) rendered in the page header beside the pill. */
+  topActions?: React.ReactNode;
 };
 
-export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props) {
+export default function ShivaStrotamVersePage({ verse, sourceId, width, topActions }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const bg = getReaderBackground(sourceId, verse);
 
   const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, { gu: verse.meaningGu, kn: verse.meaningKn });
+  // Single-language section labels — unified with VersePage's भावार्थ pattern
+  // across all readers (design.md §9).
   const meaningLabel = pick(lang, {
-    hi: 'अर्थ · Meaning',
-    en: 'Meaning · अर्थ',
-    gu: 'અર્થ · Meaning',
-    kn: 'ಅರ್ಥ · Meaning',
+    hi: 'भावार्थ',
+    en: 'Meaning',
+    gu: 'ભાવાર્થ',
+    kn: 'ಭಾವಾರ್ಥ',
   });
   const verseLines = verseLinesByLang(lang, verse.sanskrit, verse.linesEn);
   const verseTok = verseToken(lang, typography);
@@ -78,25 +82,24 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props)
         accessible
         accessibilityLabel={a11yLabel}
       >
-        <View
-          style={[
-            styles.pill,
-            { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
-          ]}
-        >
-          <Text
+        <View style={styles.headerRow}>
+          <View
             style={[
-              styles.pillText,
-              {
-                color: colors.saffronDeep,
-                fontSize: typography.versePill.fontSize,
-                fontWeight: typography.versePill.fontWeight,
-                letterSpacing: typography.versePill.letterSpacing,
-              },
+              styles.pill,
+              { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
             ]}
           >
-            {pillText}
-          </Text>
+            <Text
+              style={[
+                styles.pillText,
+                pillTextStyle(lang, typography.versePill),
+                { color: colors.saffronDeep },
+              ]}
+            >
+              {pillText}
+            </Text>
+          </View>
+          {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
         </View>
 
         <View style={styles.verseBlock}>
@@ -152,13 +155,25 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingTop: 16,
-    paddingBottom: 40,
+    // Clears the pager-dots overlay and the screen/tab-bar seam so the last
+    // meaning line never reads as tucked under the bar (design.md B2).
+    paddingBottom: 64,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 18,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   pill: {
     alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 4,
-    marginBottom: 18,
   },
   pillText: {
     textTransform: 'uppercase',
