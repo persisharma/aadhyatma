@@ -50,7 +50,7 @@ const DOT_COUNT = 5;
 export default function GaneshStotramReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
@@ -162,6 +162,10 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
     });
   }, [width, verseCount, offset]);
 
+  // Re-render visible pages when the language flips, a bookmark toggles, or a
+  // share is in flight — the in-page header actions depend on all three.
+  const listExtraData = useMemo(() => ({ lang, bookmarks, shareBusy }), [lang, bookmarks, shareBusy]);
+
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
@@ -181,38 +185,6 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
               <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
                 {currentIndex + 1} / {verseCount}
               </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`ganesh-stotram:${chapter.chapter}:${currentIndex}`)}
-                onToggle={() => {
-                  const id = `ganesh-stotram:${chapter.chapter}:${currentIndex}`;
-                  if (isBookmarked(id)) { removeBookmark(id); }
-                  else {
-                    const v = chapter.verses[currentIndex];
-                    addBookmark({ id, sourceId: 'ganesh-stotram', chapter: chapter.chapter, verseIndex: currentIndex, savedAt: Date.now(), previewHi: v.sanskrit[0] ?? '', previewEn: v.linesEn[0] ?? '' });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = chapter.verses[currentIndex];
-                  const isIntro = v.number === 0;
-                  share(
-                    {
-                      sourceId: 'ganesh-stotram',
-                      sectionNameHi: chapter.titleHi,
-                      sectionNameEn: chapter.titleEn,
-                      verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${v.chapter}.${v.number}`,
-                      verseLabelEn: isIntro ? 'Introduction' : `Verse ${v.chapter}.${v.number}`,
-                      linesHi: [...v.sanskrit],
-                      linesEn: [...v.linesEn],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                    },
-                    lang
-                  );
-                }}
-              />
             </View>
           </View>
         </View>
@@ -226,16 +198,57 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => {
+            renderItem={({ item, index }) => {
               if ('__type' in item && item.__type === 'transition') {
                 return <NextChapterCard width={width} nextTitle={contentByLang(lang, item.nextTitleHi, item.nextTitleEn)} lang={lang} />;
               }
               if ('__type' in item && item.__type === 'prev-transition') {
                 return <PrevChapterCard width={width} prevTitle={contentByLang(lang, item.prevTitleHi, item.prevTitleEn)} lang={lang} />;
               }
-              return <ShivaStrotamVersePage verse={item} sourceId="ganesh-stotram" width={width} />;
+              const verseIdx = index - offset;
+              return (
+                <ShivaStrotamVersePage
+                  verse={item}
+                  sourceId="ganesh-stotram"
+                  width={width}
+                  topActions={
+                    <>
+                      <BookmarkButton
+                        isBookmarked={isBookmarked(`ganesh-stotram:${chapter.chapter}:${verseIdx}`)}
+                        onToggle={() => {
+                          const id = `ganesh-stotram:${chapter.chapter}:${verseIdx}`;
+                          if (isBookmarked(id)) { removeBookmark(id); }
+                          else {
+                            addBookmark({ id, sourceId: 'ganesh-stotram', chapter: chapter.chapter, verseIndex: verseIdx, savedAt: Date.now(), previewHi: item.sanskrit[0] ?? '', previewEn: item.linesEn[0] ?? '' });
+                          }
+                        }}
+                      />
+                      <ShareButton
+                        busy={shareBusy}
+                        onPress={() => {
+                          const isIntro = item.number === 0;
+                          share(
+                            {
+                              sourceId: 'ganesh-stotram',
+                              sectionNameHi: chapter.titleHi,
+                              sectionNameEn: chapter.titleEn,
+                              verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,
+                              verseLabelEn: isIntro ? 'Introduction' : `Verse ${item.chapter}.${item.number}`,
+                              linesHi: [...item.sanskrit],
+                              linesEn: [...item.linesEn],
+                              meaningHi: item.meaningHi,
+                              meaningEn: item.meaningEn,
+                            },
+                            lang
+                          );
+                        }}
+                      />
+                    </>
+                  }
+                />
+              );
             }}
-            extraData={lang}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
