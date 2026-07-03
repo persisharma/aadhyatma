@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
-import { cardFontByLang, isLatinLang } from '@/utils/langType';
+import { cardFontByLang, isLatinLang, pillTextStyle } from '@/utils/langType';
 import type { GitaChapterSummary } from '@/data/gita';
 
 type Props = {
@@ -83,12 +83,8 @@ export default function GitaChapterCard({
         <Text
           style={[
             styles.tag,
-            {
-              color: colors.saffronDeep,
-              fontSize: typography.versePill.fontSize,
-              letterSpacing: typography.versePill.letterSpacing,
-              fontWeight: typography.versePill.fontWeight,
-            },
+            pillTextStyle(lang, typography.versePill),
+            { color: colors.saffronDeep },
           ]}
         >
           {chapterTag.toUpperCase()}

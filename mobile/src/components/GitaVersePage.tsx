@@ -10,7 +10,7 @@ import {
   contentByLang,
   pick,
 } from '@/utils/localize';
-import { verseToken, meaningToken, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { verseToken, meaningToken, scriptBodyFont, scriptTitleFont, pillTextStyle } from '@/utils/langType';
 import type { GitaVerse } from '@/data/gita';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
@@ -45,18 +45,19 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
         })
       : null;
 
-  // Bilingual section labels (both scripts shown, order flips by language) — design.md §3 table.
+  // Single-language section labels — unified with VersePage's भावार्थ pattern
+  // across all readers (design.md §9).
   const meaningLabel = pick(lang, {
-    hi: 'अर्थ · Meaning',
-    en: 'Meaning · अर्थ',
-    gu: 'અર્થ · Meaning',
-    kn: 'ಅರ್ಥ · Meaning',
+    hi: 'भावार्थ',
+    en: 'Meaning',
+    gu: 'ભાવાર્થ',
+    kn: 'ಭಾವಾರ್ಥ',
   });
   const commentaryLabel = pick(lang, {
-    hi: 'व्याख्या · Commentary',
-    en: 'Commentary · व्याख्या',
-    gu: 'વ્યાખ્યા · Commentary',
-    kn: 'ವ್ಯಾಖ್ಯಾನ · Commentary',
+    hi: 'व्याख्या',
+    en: 'Commentary',
+    gu: 'વ્યાખ્યા',
+    kn: 'ವ್ಯಾಖ್ಯಾನ',
   });
 
   const pillText = contentByLang(
@@ -109,12 +110,8 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
             <Text
               style={[
                 styles.pillText,
-                {
-                  color: colors.saffronDeep,
-                  fontSize: typography.versePill.fontSize,
-                  fontWeight: typography.versePill.fontWeight,
-                  letterSpacing: typography.versePill.letterSpacing,
-                },
+                pillTextStyle(lang, typography.versePill),
+                { color: colors.saffronDeep },
               ]}
             >
               {pillText}
@@ -219,7 +216,9 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingTop: 16,
-    paddingBottom: 40,
+    // Clears the pager-dots overlay and the screen/tab-bar seam so the last
+    // meaning line never reads as tucked under the bar (design.md B2).
+    paddingBottom: 64,
   },
   headerRow: {
     flexDirection: 'row',

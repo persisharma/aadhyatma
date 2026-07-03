@@ -308,7 +308,7 @@ function GroupHeader({
         {
           color: colors.inkMuted,
           fontSize: typography.sectionLabel.fontSize,
-          fontWeight: typography.sectionLabel.fontWeight,
+          fontFamily: typography.sectionLabel.fontFamily,
           letterSpacing: typography.sectionLabel.letterSpacing,
         },
       ]}
