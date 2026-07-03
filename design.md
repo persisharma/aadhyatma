@@ -33,12 +33,12 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 | `newBadgeBg` | `rgba(184, 98, 27, 0.16)` | "NEW" badge fill — saffron tint (recently-added content) |
 | `newBadgeText` | `#8A3E0B` | "NEW" badge text — saffron-deep |
 
-**Home gradient** (top → bottom): `#F6ECD0` → `#F1E3BF`, with a soft radial saffron glow (`rgba(184, 98, 27, 0.14)`) behind the crest.
+**Home gradient** (top → bottom): `#F6ECD0` → `#F1E3BF` (`parchmentHighlight` → `parchmentGradientEnd` in `colors.ts`).
 
 **Reader overlay** (on top of background image): vertical gradient
 `rgba(243,231,201,0.85)` → `rgba(243,231,201,0.55)` → `rgba(243,231,201,0.75)` → `rgba(233,217,177,0.95)`.
 
-**Background image filters:** `opacity: 0.52`, `sepia(0.35) saturate(0.85) brightness(1.02)`.
+**Background image filters:** the CSS filter stack (`opacity: 0.52`, `sepia(0.35) saturate(0.85) brightness(1.02)`) applies only to `design-preview.html`. In React Native the sketch renders unfiltered — `BackgroundLayer.tsx` sets no `imageStyle` opacity or tint — and the fade comes solely from the parchment overlay gradient stacked above it.
 
 ---
 
@@ -52,7 +52,7 @@ Two typefaces, four roles.
 | **Cormorant Garamond** | Latin subtitles, page counters, swipe hints, italic labels. Weights 400/500 for body prose, **600 non-italic** for transliteration and Latin chapter numbers, 600 italic for section labels. Italic is reserved for labels and short flourishes; long prose is always roman (non-italic) to keep English paragraphs readable over the faded parchment bg. |
 | **Noto Serif Gujarati** | All Gujarati (`gu` reading language): titles, verses, meaning body, card names. Weights 500/600. Same family/weights as the Devanagari cut so the reading type scale carries over unchanged. |
 | **Noto Serif Kannada** | All Kannada (`kn` reading language): titles, verses, card names (Kannada meaning prose follows English). Weights 500/600. |
-| **Inter** | Only for tiny UI chrome (uppercase section labels, status bar) where Devanagari is not used. 500/600. |
+| **Inter** | Only for tiny UI chrome where reading content is not involved. Loaded via `@expo-google-fonts/inter` in `App.tsx` (500/600) and carried by the `sectionLabel` / `versePill` / `cardMeta` tokens (`typography.ts`), plus the tab-bar labels. Indic-script pill/label text swaps off Inter to the script serif via `pillTextStyle()` (`utils/langType.ts`) — Inter has no Indic glyphs and Latin tracking splits the shirorekha. |
 
 ### 3.1 Romanization Style by Source Language
 
@@ -102,7 +102,7 @@ These remain in everyday English. A handful of common Sanskrit terms keep their 
 
 ### Type scale
 
-This table is the **single source of truth** for reading-content sizing, implemented in `mobile/src/theme/typography.ts`. Every reader section and every surface that shows verse / transliteration / meaning / commentary consumes these tokens — **no hardcoded `fontSize`/`lineHeight` on reading content**, no per-section scale. Both languages render the meaning at the same size, and the verse sits above the meaning. See `RULEBOOK.md` §3 ("One reading type scale") and `readerTypeScale.test.tsx`.
+This table is the **single source of truth** for reading-content sizing, implemented in `mobile/src/theme/typography.ts`. Every reader section and every surface that shows verse / transliteration / meaning / commentary consumes these tokens — **no hardcoded `fontSize`/`lineHeight` on reading content**, no per-section scale. Both languages render the meaning at the same size, and the verse sits above the meaning. See `RULEBOOK.md` §3 ("One reading type scale") and the guard test at `mobile/src/components/__tests__/readerTypeScale.test.tsx`.
 
 | Role | Typeface | Size | Weight | Notes |
 | --- | --- | --- | --- | --- |
@@ -112,10 +112,10 @@ This table is the **single source of truth** for reading-content sizing, impleme
 | Transliteration (Latin IAST) | Cormorant Garamond | 24 | 600 | `ink`, line-height 35. Sits one step above the meaning (20) so the verse stays dominant — mirrors the Devanagari verse↔meaning hierarchy. Cormorant's small x-height reads smaller than Devanagari, so it takes a few extra points; bumped 17 → 20 → 24. |
 | Meaning body (Hindi) | Noto Serif Devanagari | 20 | 500 | `ink-soft`, line-height 34 (≈1.7). Bumped 15 → 20 to match the English meaning size, so both languages read at one meaning scale. |
 | Meaning body (English) | Cormorant Garamond | 20 | 500 medium non-italic | `ink`, line-height 33. Italic 400 was previously used and rejected as too thin over the parchment bg; medium-weight roman is the shipping spec. Bumped from 18 → 20: Cormorant's small x-height read too small against the Devanagari meaning body. |
-| Commentary body (Hindi) | Noto Serif Devanagari | 15 | 400 | `ink-soft`, line-height 1.7. Paragraph gap `14`. |
-| Commentary body (English) | Cormorant Garamond | 20 | 500 medium non-italic | `ink`, line-height 33. Paragraph gap `14`. Bumped from 18 → 20 alongside the English meaning body. |
+| Commentary body (Hindi) | Noto Serif Devanagari | 20 | 500 | `ink-soft`, line-height 34. Paragraph gap `14`. Commentary reuses the `meaning` token — one reading scale, no smaller commentary tier (see `bodyStyle` in `GitaVersePage.tsx`). |
+| Commentary body (English) | Cormorant Garamond | 20 | 500 medium non-italic | `ink`, line-height 33. Paragraph gap `14`. Same `meaningEnglish` token as the English meaning body. |
 | Commentary fallback note | Cormorant Garamond | 14 | 400 italic | `ink-muted`, centred. Shown when the selected language has no commentary for this verse but the other language does (e.g., Gita Chapter 1 has only ~20 % English commentary coverage in the published source). |
-| Card name (primary language) | Noto Serif Devanagari (hi) / Cormorant Garamond (en) | 14–22 | 600 semibold upright (hi) / **700 bold** upright + `0.3` tracking (en) | Prominent top line on catalog, category, deity, and resume-sheet titles. The **active reading language** takes this slot — Devanagari-first by default (`'hi'`), English-first when the toggle is `'en'`. **Weight follows the slot, not the script.** The two scripts carry different *optical* weight at the same point size (Devanagari reads dark/dense, Cormorant reads light), so the English primary uses the heavier Bold face **and** is sized a step larger than the Devanagari primary at each call site (e.g. CategoryCard `latPrimary 17` vs `devPrimary 15`; LibraryCard `19` vs `17`) — otherwise an English-primary title reads as a peer of its demoted Hindi line. Ordering/weight/tracking is centralised in `orderTitlesByLanguage()`; per-script optical sizes are passed by each caller. |
+| Card name (primary language) | Noto Serif Devanagari (hi) / Cormorant Garamond (en) | 14–22 | 600 semibold upright (hi) / **700 bold** upright + `0.3` tracking (en) | Prominent top line on catalog, category, deity, and resume-sheet titles. The **active reading language** takes this slot — Devanagari-first by default (`'hi'`), English-first when the toggle is `'en'`. **Weight follows the slot, not the script.** The two scripts carry different *optical* weight at the same point size (Devanagari reads dark/dense, Cormorant reads light), so the English primary uses the heavier Bold face **and** is sized a step larger than the Devanagari primary at each call site (e.g. CategoryCard `latPrimary 17` vs `devPrimary 16`; LibraryCard `19` vs `17`) — otherwise an English-primary title reads as a peer of its demoted Hindi line. Ordering/weight/tracking is centralised in `orderTitlesByLanguage()`; per-script optical sizes are passed by each caller. |
 | Card name (secondary language) | Cormorant Garamond italic (en) / Noto Serif Devanagari (hi) | 11–13 | 400 italic (en) / 500 medium (hi) | `ink-muted` lighter supporting line below the primary title — the language *not* selected. Sized ~2–5 pt below the primary and demoted to `ink-muted` (not `ink-soft`) across **all** call sites so it reads as a caption, not a peer. |
 | Chapter card title (Hindi) | Noto Serif Devanagari | 17 | 600 | Gita Chapters Index. |
 | Chapter card title (English) | Cormorant Garamond | 16 | 400 italic | Gita Chapters Index when language toggle = English. |
@@ -124,8 +124,8 @@ This table is the **single source of truth** for reading-content sizing, impleme
 | Language toggle (English half) | Cormorant Garamond | 14 | 400 italic | Active: `saffron-deep`; inactive: `ink-muted`. |
 | Page counter (e.g., `1 / 47`) | Cormorant Garamond | 14 | 400 italic | Lining figures |
 | Section label (`LIBRARY`) | Inter | 11 | 600 | `0.22em` tracking, uppercase |
-| Verse-type pill (`दोहा`, `चौपाई · 9`, `श्लोक · 1.1`) | Inter | 10 | 600 | `0.3em` tracking, uppercase, saffron on tinted bg. |
-| Meaning / Commentary label (`अर्थ · Meaning`, `व्याख्या · Commentary`) | Cormorant Garamond | 13 | 600 italic | `0.14em` tracking, uppercase, `saffron-deep`. The two tokens flip order with the language toggle: `अर्थ · Meaning` when lang = hi, `Meaning · अर्थ` when lang = en. |
+| Verse-type pill (`दोहा`, `चौपाई · 9`, `श्लोक · 1.1`) | Inter (en) / script serif bold (hi·gu·kn) | 10 | 600 | Saffron-deep on tinted bg. English pills keep Inter + `0.3em` tracking + uppercase; Indic-script pills render in the script serif bold with **no** tracking or case transform via `pillTextStyle()` (`utils/langType.ts`). |
+| Meaning / Commentary label (`भावार्थ` / `Meaning`, `व्याख्या` / `Commentary`) | Cormorant Garamond (en) / script serif bold (hi·gu·kn) | 13 | 600 italic (en) / semibold (Indic) | **Single-language**: the label renders only in the reading language — `भावार्थ` (hi) / `Meaning` (en) / `ભાવાર્થ` (gu) / `ಭಾವಾರ್ಥ` (kn), and `व्याख्या` / `Commentary` etc. No bilingual dot-pair, no order flipping. English keeps `0.14em` tracking + italic + uppercase; Indic scripts use the script serif bold with no tracking. `saffron-deep`, centred. See the label styling in `GitaVersePage.tsx` / `VersePage.tsx`. |
 | Sub tagline / swipe hint | Cormorant Garamond | 12–15 | 400 italic | |
 
 ---
@@ -159,7 +159,7 @@ This table is the **single source of truth** for reading-content sizing, impleme
 
 - **Home wordmark (crest lockup).** A single compact row: thin rule · `ॐ` circle · `वेदांश़` · `ॐ` circle · thin rule, with the `Sacred Texts · Daily Reading` tagline beneath. ॐ on **both** sides of the wordmark. Rules 22px, circles 30px (ॐ 19px), title 27px, saffron stroke `1.5px`, row gap 11. Implemented in `HomeWordmark.tsx`. This replaced the older stacked crest + 34px title to reclaim ~50dp of hero height while keeping the centered, altar-like essence.
 - **Verse divider.** `॥` centered between two 1px horizontal rules, 80px wide, saffron at 60% opacity. Use between verse and meaning on every reader page.
-- **Back chevron.** `‹` inside a 34px circle with `parchment-soft` fill and `divider` border.
+- **Back chevron.** `‹` inside a **44px** circle with `parchment-soft` fill and `divider` border — the circle itself meets the 44×44 a11y target (`ChalisaReaderScreen.tsx` `styles.back`). Browse screens that keep a smaller 34px visual top it up with `hitSlop` 16.
 - **Forward chevron.** Single `›` in saffron on active cards.
 - **Pager dots.** 6px circles, `rgba(138,62,11,0.25)` resting. Current page dot: saffron-deep, width 18, radius 999 (pill).
 - **No emoji. No photos.** Only hand-drawn faded sketches as backgrounds.
@@ -168,19 +168,23 @@ This table is the **single source of truth** for reading-content sizing, impleme
 
 ## 6. Background Image System
 
-Three faded vintage sketches live in `/images/`:
+Four faded vintage sketches serve the Hanuman texts, bundled at `mobile/assets/chalisa/` (source art in `/images/`):
 
 1. `Hanuman_sita.png`
 2. `Ram_hanuman.png`
 3. `hanuman_lankadahan.png`
+4. `Hanuman_sea.png`
 
 ### Rotation rule
 
-- Each reader page picks **one** of the three backgrounds.
-- Selection is **deterministic per verse id**, not re-rolled on every render. Use a simple hash (e.g., `verse.number % 3`) so a given verse always shows the same image — this keeps the feeling stable as the user swipes back and forth.
+- Selection is **deterministic per verse**, resolved by a curated registry — `mobile/src/data/backgrounds.ts` (`getReaderBackground(sourceId, verse)`) — **not** a `% 3` hash:
+  - **Hanuman Chalisa:** a hand-picked per-verse override map (`hanumanChalisaOverrides`, keyed by verse id — e.g. `chaupai-18`/`chaupai-19` → the sea-crossing sketch), with `Ram_hanuman.png` as the default for every other verse.
+  - **Sundarkand:** stanza-range buckets — stanzas 1–4 sea, 5–11 Sita, 12–18 Lanka-dahan, remainder Ram-Hanuman.
+  - **Every other source:** one pinned image per source id (`sourceBackgrounds`), plus category/deity fallback maps for browse screens.
+- A given verse therefore always shows the same image — stable as the user swipes back and forth — but the mapping is curated to match the verse's story beat, never re-rolled per render.
 - Apply the image as a `cover`-sized background. Then stack the parchment overlay (Section 2) on top. Then the content.
 
-**Exception — Theerth.** Theerth detail screens **pin one background per temple** (see §26). The temple's identity is the image; backgrounds are not interchangeable across temples. The map screen itself uses no background image — only the parchment base with the stylised India SVG outline.
+**Exception — Theerth.** Theerth detail screens resolve their background by **presiding deity**, with per-temple overrides for shrines whose deity plate is too generic (`getTheerthBackground(templeId, deityId)` in `backgrounds.ts`). The browse/map surface uses no background image — only the flat parchment gradient behind the stylised India SVG outline.
 
 ### Adding more modules
 
@@ -190,20 +194,9 @@ When Ramcharitmanas / Gita modules are added, new faded sketches should follow t
 
 ## 7. Screen: Home / Index
 
-**Purpose.** Surface the available sacred texts. One scroll, no tabs.
+> **Superseded.** The v1 one-scroll, tab-less Home (hero title + flat LIBRARY card list) has been replaced by the tabbed Home in **Section 18** — wordmark hero, DISCOVER carousel, and category grid. This heading is kept so section numbering holds; the flat library list now lives inside the Category List screens (§21).
 
-**Structure (top to bottom):**
-
-1. Status bar area (44px safe region).
-2. Hero block (28px top padding):
-   - Crest (Section 5)
-   - Title `सनातन` (34 / Noto Serif Devanagari 600)
-   - Subtitle `Sacred Texts · Daily Reading` (Cormorant Garamond italic 15, `ink-muted`)
-3. Section label `LIBRARY` (Inter 11, uppercase, `ink-muted`, 0.22em tracking).
-4. Library list of **cards**. See Section 8 for card spec. **Active modules come before `coming` modules** so the reader sees what they can read right now first; within each group the order is curated (currently Hanuman Chalisa → Bhagavad Gītā → Ramcharitmanas → Sundarkand).
-5. Footer mantra, absolute-positioned 28px from bottom: `॥ श्रीरामचन्द्र चरणौ शरणं प्रपद्ये ॥` — Noto Serif Devanagari 28, 55% opacity.
-
-**Gradient background.** See Section 2.
+The one element that carries over is the **footer mantra**: `॥ श्रीरामचन्द्र चरणौ शरणं प्रपद्ये ॥` — Noto Serif Devanagari **18** (token `footerMantra`, `typography.ts`), `ink-muted` at 55% opacity, centred at the end of the Home scroll content.
 
 ---
 
@@ -257,7 +250,7 @@ Applies to both readers — the Hanuman Chalisa reader (linear, single text) and
 1. Parchment base color.
 2. Background image (Section 6), `cover`, sepia-tinted.
 3. Parchment gradient overlay (Section 2).
-4. Content column (scrollable for Gita — verses may exceed screen height — fixed for Chalisa).
+4. Content column — every verse page is a vertical `ScrollView` (verses + commentary may exceed screen height), with **64px bottom padding** so the last line clears the pager-dot overlay (`GitaVersePage.tsx` / `VersePage.tsx` `scrollContent`).
 
 **Structure (top to bottom):**
 
@@ -266,27 +259,31 @@ Applies to both readers — the Hanuman Chalisa reader (linear, single text) and
    - Back button — returns to the previous surface (Home for Chalisa; Chapters Index for Gita — one level up in the stack, not always Home).
    - Title. Chalisa: `हनुमान चालीसा`. Gita: `अध्याय N · <titleHi>` (Hindi mode) or `Chapter N · <titleEn>` (English mode).
    - Progress counter (`1 / 47`, Cormorant Garamond italic). Counter is **chapter-scoped** for Gita (resets per chapter), **document-scoped** for Chalisa.
-3. **Verse area** (flex-1, 28px horizontal padding):
-   - Verse-type pill — vocabulary is consistent across modules: `दोहा · Opening` / `चौपाई · N` / `समापन दोहा · Closing` / `श्लोक · N.M` / future `मंत्र` etc. Always uppercase Inter 10 @ 0.3em, saffron-deep on saffron-tint.
-   - Verse lines in Devanagari (23 / 1.7, Noto Serif Devanagari 500). Each line on its own row; preserve the original line breaks from the JSON.
-   - Transliteration block (Gita only): Latin IAST lines in Cormorant Garamond 24 / 35, **600**, `ink`. Always rendered regardless of the language toggle — transliteration is a phonetic bridge, not a translation.
+3. **Reading progress bar** (`ReadingProgressBar.tsx`) — a thin saffron track directly under the top bar showing position within the chapter/document.
+4. **Toggle row** — rendered **once per reader**, in a persistent row above the pager (not on every verse page): `LanguageToggle` (Section 16) + `AddToRoutineButton`, centred.
+5. **Verse area** (flex-1, 28px horizontal padding; each page scrolls vertically with 64px bottom padding so the last line clears the dots):
+   - **Header row** (in-page): verse-type pill on the left, **Bookmark + Share buttons on the right** — the actions render on every verse page via the page's `topActions` prop (`GitaVersePage.tsx` / `VersePage.tsx`), not in the top bar.
+   - Verse-type pill — vocabulary is consistent across modules: `दोहा · Opening` / `चौपाई · N` / `समापन दोहा · Closing` / `श्लोक · N.M` / future `मंत्र` etc. Uppercase Inter 10 @ 0.3em for English; script serif bold, no tracking, for Indic scripts (`pillTextStyle()`); saffron-deep on saffron-tint.
+   - Verse lines — rendered in the reading language's script, **swapped in place by the toggle** on every reader, Gita included (`verseLinesByLang` + `verseToken`): Devanagari 23/39 for `hi`, the Latin romanization (Cormorant Garamond 24/35 600) for `en`, re-scripted Gujarati/Kannada 23/39 for `gu`/`kn`. Each line on its own row; preserve the original line breaks from the JSON. Only one script is visible at a time.
    - Ornament divider (Section 5).
    - **Meaning** section:
-     - Label `अर्थ · Meaning` (Cormorant Garamond 13 600 italic, `saffron-deep`, `0.14em` tracking, centred). Token order flips by selected language: `Meaning · अर्थ` when lang = en.
-     - Body: Hindi at 15 / 1.7 Noto Serif Devanagari 400 `ink-soft`; English at 18 / 30 Cormorant Garamond 500 medium non-italic `ink`. Only one language renders at a time based on the Gita language toggle (Section 16); Chalisa renders Hindi only.
+     - Label — **single-language**, in the reading language only: `भावार्थ` (hi) / `Meaning` (en) / `ભાવાર્થ` (gu) / `ಭಾವಾರ್ಥ` (kn). Cormorant Garamond 13 600 italic + `0.14em` tracking for English; script serif bold, no tracking, for Indic. `saffron-deep`, centred. No bilingual dot-pair, no order flipping.
+     - Body: Hindi at 20/34 Noto Serif Devanagari 500 `ink-soft`; English at 20/33 Cormorant Garamond 500 medium non-italic `ink` — one meaning scale across languages. Only one language renders at a time based on the language toggle (Section 16).
    - Ornament divider (Gita only — separates Meaning from Commentary).
    - **Commentary** section (Gita only):
-     - Label `व्याख्या · Commentary` (same style as Meaning label).
-     - Body: array of paragraphs, 14 px gap between paragraphs. Typography matches Meaning body for the selected language.
+     - Label `व्याख्या` (hi) / `Commentary` (en) — same single-language treatment as the Meaning label.
+     - Body: array of paragraphs, 14 px gap between paragraphs. Typography matches the Meaning body for the selected language (same tokens — no smaller commentary tier).
      - **Empty-commentary fallback.** If the selected language has no commentary for this verse but the other language does, hide the paragraph body and render a single italic line instead: `Extended commentary is available in Hindi only for this verse.` (or Hindi analogue) — Cormorant Garamond 14 italic, `ink-muted`, centred. This is how the reader handles the sparse English-commentary coverage in Chapter 1 of the Gita source.
      - If **both** languages are empty the whole Commentary block (including ornament + label) is hidden entirely.
-4. **Bottom bar** (16/28 padding): pager dots on the left · swipe hint (`← swipe →`, italic 12, `ink-muted`) on the right. Dots bucket the chapter into 5 segments for Gita (so a 78-verse chapter still fits one dot track); Chalisa uses its document-scoped bucketing.
+6. **Bottom bar**: **centred pager dots only**, overlaid near the bottom edge — there is no `← swipe →` hint. Dots bucket the chapter into 5 segments for Gita (so a 78-verse chapter still fits one dot track); Chalisa uses its document-scoped bucketing.
 
 **Interaction.**
 
 - Horizontal swipe (pager). Left-edge swipe from first page or right-edge from last page should bounce, not dismiss.
-- Language toggle: rendered on **every reader page** (Section 16) for all bilingual modules — Gita, Sundarkand, Hanuman Chalisa. Sections that have a subsection listing (e.g., Gita's Chapters Index, Section 15) ALSO surface the toggle there. Both surfaces share state via `useGitaLanguage()` — same control, two screens, one source of truth.
-- Tap-hold on the verse (future): audio playback hook — leave structural space now, don't ship until audio lands.
+- Language toggle: rendered **once per reader** in the persistent toggle row (Section 16) for all bilingual modules — Gita, Sundarkand, Hanuman Chalisa, and the rest. Sections that have a subsection listing (e.g., Gita's Chapters Index, Section 15) ALSO surface the toggle there. Both surfaces share state via `useGitaLanguage()` — same control, two screens, one source of truth.
+- Chapter auto-advance (chaptered readers): the pager appends/prepends chapter-transition cards (`NextChapterCard.tsx` / `PrevChapterCard.tsx`) so swiping past a chapter edge advances to the neighbouring chapter.
+- The Gita reader additionally shows a `JumpToStartButton` (floating, once the reader is past the first verse) to return to verse 1.
+- Tap-hold on the verse (future): audio playback hook — leave structural space now, don't ship until audio lands. (Texts with recorded audio surface a `▶` play affordance in the top bar instead.)
 - Back button or gesture returns one level up.
 
 **Progress counter.**
@@ -302,17 +299,22 @@ Each module normalises its source into a typed, module-specific shape. Shapes st
 
 ### Chalisa (linear, single-text)
 
-Source: `HanumanChalisa/hanuman-chalisa.hi.json`. Hand-curated.
+Source: `HanumanChalisa/hanuman-chalisa-hi-en.md` (hand-curated bilingual markdown) → generated, committed `mobile/src/data/hanuman-chalisa/hanuman-chalisa.json`, typed and invariant-checked in `mobile/src/data/hanuman-chalisa/index.ts`:
 
 ```ts
-type Verse = {
+type HanumanChalisaVerse = {
   id: string;              // e.g. "opening-doha-1", "chaupai-09", "closing-doha"
   type: 'doha' | 'chaupai';
-  label: string;           // e.g. "दोहा 1", "चौपाई 9", "समापन दोहा"
   section: 'opening' | 'body' | 'closing';
   number?: number;         // present for numbered verses
+  labelHi: string;         // e.g. "दोहा 1", "चौपाई 9", "समापन दोहा"
+  labelEn: string;         // e.g. "Doha 1", "Chaupai 9", "Closing Doha"
   lines: string[];         // raw Devanagari lines, in order
-  meaning: string;         // Hindi prose
+  linesEn: string[];       // pronunciation-based romanization, 1:1 with lines
+  meaningHi: string;       // Hindi prose
+  meaningEn: string;       // English prose
+  meaningGu?: string;      // verified native Gujarati meaning (absent → transliteration fallback)
+  meaningKn?: string;      // verified native Kannada meaning (absent → transliteration fallback)
 };
 ```
 
@@ -333,6 +335,8 @@ type GitaVerse = {
   meaningEn: string;       // English paraphrase (non-empty)
   commentaryHi: string[];  // Hindi paragraphs — may be [] when source lacks it
   commentaryEn: string[];  // English paragraphs — may be [] when source lacks it
+  meaningGu?: string;      // verified native Gujarati meaning (absent → transliteration fallback)
+  meaningKn?: string;      // verified native Kannada meaning (absent → transliteration fallback)
 };
 
 type GitaChapter = {
@@ -347,6 +351,8 @@ type GitaChapter = {
 ```
 
 **Totals (committed data):** 18 chapters · 701 verses. Chapter verse counts vary 20–78.
+
+**Sundarkand follows the same chapter-scoped shape**, not the linear Chalisa one: 16 chapters · 354 verses, committed as `mobile/src/data/sundarkand/chapter-01..16.json` + `chapters-manifest.json` with its own verse vocabulary (shloka, doha, chaupai, sortha, chhand).
 
 **Source-data rules the parser enforces:**
 
@@ -367,7 +373,7 @@ Keep the verse-pill vocabulary consistent across modules — each pill pairs a D
 
 ### Language state (Gita)
 
-The app carries a single reading-language preference (`Lang = 'hi' | 'en' | 'gu' | 'kn'`) exposed via a React context (`useGitaLanguage()`). Default `'hi'`, **persisted** in `AsyncStorage` at `@vedansh/language`. The same hook is shared across every section — there is no per-section context. The toggle is rendered both on subsection listings (Chapters Index, Section 15) and on every reader page (Section 9). For Gita, Sanskrit and transliteration always render regardless of the current language; only meaning + commentary honour the toggle. For Sundarkand and Hanuman Chalisa, the toggle swaps the verse lines between Devanagari (`lines[]`) and IAST (`linesEn[]`). For `gu`/`kn` **everything renders in the selected script** at runtime (§3.1): verse lines, titles, meaning, and commentary are all the Devanagari re-scripted to Gujarati / Kannada (the meaning/commentary carry the Hindi wording in the regional script until native translations are authored — see RULEBOOK §1). The daily-verse notification is localized the same way.
+The app carries a single reading-language preference (`Lang = 'hi' | 'en' | 'gu' | 'kn'`) exposed via a React context (`useGitaLanguage()`). Default `'hi'`, **persisted** in `AsyncStorage` at `@vedansh/language`. The context also carries `regionalLang` (`'hi' | 'gu' | 'kn'` — never `'en'`), the user's chosen regional script, persisted separately at `@vedansh/regionalLanguage`; it feeds the 2-segment reader toggle (Section 16) and is updated whenever a non-English language is selected (`mobile/src/data/gita/language.tsx`). The same hook is shared across every section — there is no per-section context. The toggle is rendered both on subsection listings (Chapters Index, Section 15) and once per reader in the persistent toggle row (Section 9). On **every** reader — Gita included — the toggle swaps the verse lines in place between Devanagari (`lines[]`/`sanskrit[]`) and the romanization (`linesEn[]`/`transliteration[]`); meaning + commentary follow the same selection. For `gu`/`kn` **everything renders in the selected script** at runtime (§3.1): verse lines, titles, meaning, and commentary are the Devanagari re-scripted to Gujarati / Kannada, except where verified native `meaningGu`/`meaningKn` fields exist (see RULEBOOK §1). The daily-verse notification is localized the same way.
 
 ---
 
@@ -385,8 +391,8 @@ The app carries a single reading-language preference (`Lang = 'hi' | 'en' | 'gu'
 
 - Minimum tap target: 44×44 for back button, card tap, and pager dots.
 - Ensure contrast on text over the parchment overlay. The overlay specified in Section 2 keeps `ink` at > 7:1 on the lightest area of every supplied background.
-- Support Dynamic Type: scale verse body from 23 up to ~30 while keeping line-height 1.7. Meaning scales accordingly.
-- Devanagari must use the system's user-chosen font-scale, not a fixed point size.
+- Support Dynamic Type: the in-app reading-size setting offers **two presets — M (×1.0, default) and L (×1.15)** (`mobile/src/theme/fontScale.ts`), multiplying `fontSize` and `lineHeight` of the reading tokens only (verse/meaning across all scripts), so the verse body tops out around **26** in-app while UI chrome (titles, counters, labels) never scales and nothing clips.
+- The OS-level font scale still multiplies on top — `allowFontScaling` is not disabled anywhere — so Devanagari also honours the system's user-chosen scale, not a fixed point size.
 - All accent-only information (saffron pill, saffron chevron) must also carry a text or shape cue — never color alone.
 - **Honor "reduce motion".** `useReducedMotion` (`mobile/src/utils/useReducedMotion.ts`) reads `AccessibilityInfo.isReduceMotionEnabled()` and stays in sync via `reduceMotionChanged`; animated entrances (e.g. `PracticeSeal`) collapse to their final frame when it is on. Prefer static designs (e.g. `MalaStreak`) so nothing needs disabling.
 - **Decorative vector art is hidden from assistive tech.** Bead/seal art sets `importantForAccessibility="no-hide-descendants"` / `accessibilityElementsHidden`; the mala exposes a single text label (e.g. "7 day mala") via `accessibilityLabel`, and completion marks carry an `accessibilityState={{ checked }}` plus a text label, never color alone.
@@ -442,8 +448,17 @@ When a new text is added, pick the pattern that fits the source:
 **Generated / committed data consumed by Metro:**
 - `mobile/src/data/gita/chapter-NN.json` — one per chapter, imported statically.
 - `mobile/src/data/gita/chapters-manifest.json` — lightweight list of `{ chapter, titleHi, titleEn, verseCount }` used by the Chapters Index.
-- `mobile/src/data/sundarkand/sundarkand.json` — 343 verses across 5 verse types (shloka, doha, chaupai, sortha, chhand).
+- `mobile/src/data/sundarkand/chapter-01..16.json` + `chapters-manifest.json` — 354 verses across 5 verse types (shloka, doha, chaupai, sortha, chhand), chapter-scoped like the Gita.
 - `mobile/src/data/hanuman-chalisa/hanuman-chalisa.json` — 43 verses (2 opening dohas + 40 chaupais + 1 closing doha).
+- Further content-module dirs under `mobile/src/data/` follow the same committed-JSON pattern: `aarti/`, `sanskar/`, `japam/`, `ramcharitmanas/`, the chalisa dirs (`shiv-chalisa`, `durga-chalisa`, `ganesh-chalisa`, `bajrang-baan`, `hanuman-ashtak`), and the stotram dirs (`shiva-strotam`, `durga-stotram`, `ganesh-stotram`, `saraswati-stotram`, `krishna-stotram`, `vishnu-sahasranama`, `ram-stuti`), plus `theerth/temples.ts`.
+
+**Registries & cross-cutting data (`mobile/src/data/`):**
+- `texts.ts` — the library registry (`library`): every content entry with category, deities, counts, status. Ordering is curated here (§21).
+- `categories.ts` — the Home category tiles (§18).
+- `deities.ts` — deity metadata + icon keys for the Deity Index.
+- `backgrounds.ts` — background-selection registry (§6).
+- `searchIndex.ts` — flat verse index behind the Search screen.
+- `versePool.ts` — the Daily Bhakti verse pool (§23).
 
 **Assets:**
 - `images/*.png` — Hanuman parchment sketches (consumed in `mobile/assets/chalisa/`).
@@ -451,9 +466,16 @@ When a new text is added, pick the pattern that fits the source:
 - `mobile/assets/gita/*` — Gita backgrounds (v1: `krishna_arjuna_vishvarupa.png` is the single sketch covering all verses) + typed `index.ts` export.
 
 **Theme + state:**
-- `mobile/src/theme/colors.ts` / `typography.ts` / `spacing.ts` — source of tokens in Section 2–4.
+- `mobile/src/theme/colors.ts` / `typography.ts` / `spacing.ts` / `elevation.ts` / `fontScale.ts` — source of tokens in Sections 2–4 plus the reading-size presets (§12).
 - `mobile/src/theme/ThemeContext.tsx` — single source of runtime tokens.
-- `mobile/src/data/gita/language.tsx` — Gita language context + `useGitaLanguage()` hook.
+- `mobile/src/data/gita/language.tsx` — shared reading-language context + `useGitaLanguage()` hook (§10, §16).
+- `mobile/src/contexts/` — app state providers: bookmarks, reading progress, routine, notification preferences, audio player, font scale, panchang location, new-content tracking, etc.
+
+**Navigation & subsystems:**
+- `mobile/src/navigation/` — `TabNavigator` (§17) + per-tab stacks (`HomeStackNavigator`, `MoreStackNavigator`, `PanchangStackNavigator`, `AudioStackNavigator`), `entryRoutes.ts` (bookmark / entry navigation targets).
+- `mobile/src/panchang/` — panchang engine, festival data, katha content.
+- `mobile/src/notifications/` — daily-verse scheduler, japam alarms, vrat reminders.
+- `mobile/src/audio/` — audio session setup (the player context lives in `contexts/`).
 
 **Components:**
 - `mobile/src/components/LibraryCard.tsx` — Home library entry (Section 8).
@@ -470,6 +492,7 @@ When a new text is added, pick the pattern that fits the source:
 - `mobile/src/screens/SundarkandReaderScreen.tsx` — Sundarkand Reader.
 - `mobile/src/screens/GitaChaptersIndexScreen.tsx` — Gita Chapters Index (Section 15).
 - `mobile/src/screens/GitaReaderScreen.tsx` — Gita Reader (chapter-scoped pager).
+- …plus one `<Section>ReaderScreen` (and, for chaptered texts, `<Section>ChaptersScreen`) per content section, and the Category/Deity list, Theerth (§26–27), Daily Bhakti (§23), Wishlist (§24), Routine (§30–31), Panchang, and Search screens.
 
 When building new components, pull tokens from the theme — never hard-code a hex. If a token is missing, add it to `colors.ts` first, update this doc, then use it.
 
@@ -500,7 +523,7 @@ When building new components, pull tokens from the theme — never hard-code a h
   - Title: rendered in the selected language — Hindi (Noto Serif Devanagari 17 600 `ink`) or English (Cormorant Garamond 16 400 italic `ink`). `numberOfLines={2}`.
   - Sub: `47 श्लोक` (Hindi) or `47 verses` (English), `cardMeta` size, `ink-muted`.
   - Right: saffron `›` chevron.
-- Tap → Reader at verse 1 of that chapter.
+- Tap → Reader **resumes at the chapter's last-read verse** (`getChapterProgress` from the reading-progress context, `GitaChaptersIndexScreen.tsx`); a chapter with no prior progress opens at verse 1.
 
 **Ordering.** Chapters appear in numerical order 1–18. No sorting.
 
@@ -508,48 +531,50 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 ## 16. Component: Language Toggle
 
-**Purpose.** Single source of truth for the app-wide reading language. Used on the Chapters Index (Section 15) and rendered on every reader page (Section 9).
+**Purpose.** Single source of truth for the app-wide reading language. Used on the Chapters Index (Section 15) and in every reader's persistent toggle row (Section 9).
 
-**Shape.** Segmented pill, **one segment per reading language**, data-driven over the `LANGUAGES` metadata array (`hi · en · gu · kn`) — never a hardcoded 2-position pill. The active segment is tinted with `saffron-tint` and typed in `saffron-deep`; inactive segments are transparent and typed in `ink-muted`. Pressed (inactive) drops opacity to 0.7.
+**Shape.** A deliberate **two-segment** pill (`LanguageToggle.tsx`): the left segment is the user's **chosen regional language** — Hindi by default, or Gujarati/Kannada if picked in the More-tab language settings (`regionalLang`) — the right segment is always **English**. The segments come from `[regionalMeta, EN_META]` over the `LANGUAGES` metadata array; all four languages never render at once in the reader — gu/kn are chosen in More and then occupy the regional slot. The active segment is tinted with `saffron-tint` and typed in `saffron-deep`; the inactive segment is transparent and typed in `ink-muted`. Pressed (inactive) drops opacity to 0.7.
 
 ```
-┌──────────────── pill radius ────────────────┐
-│ [ हिं ] │ [ En ] │ [ ગુ ] │ [ ಕನ ]          │
-└─────────────────────────────────────────────┘
+┌────── pill radius ──────┐
+│ [ हिन्दी ] │ [ English ]  │      (or [ ગુજરાતી ] / [ ಕನ್ನಡ ] in the left slot)
+└─────────────────────────┘
 ```
 
 - Container: `parchment-soft` background, `divider` border 1 px, `pill` radius, 3 px inner padding.
-- Each segment: `minWidth 56`, `minHeight 44`, centered (the four segments tighten the per-segment padding vs. the old two-half pill so all four fit).
-- Each segment labels itself in its own script (`हिं` Devanagari · `En` Cormorant italic · `ગુ` Gujarati serif · `ಕನ` Kannada serif); full native names (`हिन्दी`/`English`/`ગુજરાતી`/`ಕನ್ನಡ`) are the accessibility labels and the More-tab radio labels.
+- Each segment: `minWidth 56`, `minHeight 44`, centered.
+- Each segment shows its **full native name** in its own script/face: `हिन्दी` Noto Serif Devanagari 15 600 · `English` Cormorant italic 14 · `ગુજરાતી` Gujarati serif 14 600 · `ಕನ್ನಡ` Kannada serif 13 600. The English names (`Hindi`/`English`/…) are the accessibility labels; the full four-way choice lives in the More-tab radios.
 
 **Behaviour.**
 
-- Tapping either half sets `lang` to that value via the `useGitaLanguage()` hook.
-- Accessibility: `accessibilityRole="radiogroup"` on the container, `accessibilityRole="radio"` + `accessibilityState={{ selected }}` on each half.
-- 8 px `hitSlop` on each half so the tap target meets the 44×44 minimum even though the visual hits ~36 px.
+- Tapping a segment sets `lang` to that value via the `useGitaLanguage()` hook; selecting a non-English language also updates the persisted `regionalLang`.
+- Accessibility: `accessibilityRole="radiogroup"` on the container, `accessibilityRole="radio"` + `accessibilityState={{ selected }}` on each segment.
+- 8 px `hitSlop` on each segment so the tap target meets the 44×44 minimum.
 
-**State scope.** In-memory, per-session. No persistence in v1 — document on-boarding flows may re-nudge the user's language on first launch in a later iteration.
+**State scope.** Global and **persisted** — `@vedansh/language` for the reading language, `@vedansh/regionalLanguage` for the regional pick (§10). The choice survives restarts and is shared by every section.
 
 ---
 
 ## 17. Bottom Tab Bar
 
-**Purpose.** Persistent navigation chrome providing access to Home (catalog), Daily Bhakti (random verse), and Bookmarks (saved verses). Replaces the previous one-scroll-no-tabs Home.
+**Purpose.** Persistent navigation chrome across the app's five top-level surfaces (`TabNavigator.tsx`). Replaces the previous one-scroll-no-tabs Home.
 
 **Spec:**
 
 - Position: fixed bottom, above safe area inset
 - Background: `parchment-soft` with 1px `divider` border on top edge
-- Height: 56px (content) + safe area bottom inset
-- 3 tabs, equally distributed:
-  - गृह (Home) — active: `saffron` text + 4px dot above label; inactive: `ink-muted`
-  - भक्ति (Daily Bhakti) — same active/inactive pattern
-  - संग्रह (Bookmarks) — same active/inactive pattern
-- Tab labels: Noto Serif Devanagari 11 500
-- Active indicator: 4px circle, `saffron`, centered 4px above label
-- No icons — Devanagari labels only (consistent with the app's glyph-based aesthetic)
+- Height: 60px (content) + safe area bottom inset (`height: 60 + insets.bottom`, `paddingTop: 6`)
+- **5 tabs**, equally distributed:
+  - **Home** — the Home stack (catalog, readers, routine, theerth, search)
+  - **Bhakti** — Daily Bhakti verse of the day (§23)
+  - **Panchang** — panchang / festivals stack
+  - **Bhajan** — audio stack
+  - **More** — profile, wishlist (§24), reminders, settings
+- Tab labels: English, Inter_500Medium 10 @ `0.02` tracking
+- Each tab carries a custom stroke-style icon in the tint colour (hand-built `View` strokes for Home/Bhakti/Panchang/More, an SVG note glyph for Bhajan)
+- Active tint: `saffron`; inactive: `ink-muted`. No active dot indicator — the tinted icon+label is the cue
 - Tap targets: full tab width × full bar height (well above 44×44 minimum)
-- The tab bar is hidden when inside reader screens (full-screen immersive reading)
+- The tab bar **stays visible inside readers**. The only exception is the immersive Vrat Katha reader (`IMMERSIVE_HOME_ROUTES = ['VratKathaReader']`), which hides the bar while focused
 
 ---
 
