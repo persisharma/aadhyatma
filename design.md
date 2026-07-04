@@ -169,15 +169,15 @@ This table is the **single source of truth** for reading-content sizing, impleme
 
 Four faded vintage sketches serve the Hanuman texts, bundled at `mobile/assets/chalisa/` (source art in `/images/`):
 
-1. `Hanuman_sita.png`
-2. `Ram_hanuman.png`
-3. `hanuman_lankadahan.png`
-4. `Hanuman_sea.png`
+1. `Hanuman_sita.webp`
+2. `Ram_hanuman.webp`
+3. `hanuman_lankadahan.webp`
+4. `Hanuman_sea.webp`
 
 ### Rotation rule
 
 - Selection is **deterministic per verse**, resolved by a curated registry — `mobile/src/data/backgrounds.ts` (`getReaderBackground(sourceId, verse)`) — **not** a `% 3` hash:
-  - **Hanuman Chalisa:** a hand-picked per-verse override map (`hanumanChalisaOverrides`, keyed by verse id — e.g. `chaupai-18`/`chaupai-19` → the sea-crossing sketch), with `Ram_hanuman.png` as the default for every other verse.
+  - **Hanuman Chalisa:** a hand-picked per-verse override map (`hanumanChalisaOverrides`, keyed by verse id — e.g. `chaupai-18`/`chaupai-19` → the sea-crossing sketch), with `Ram_hanuman.webp` as the default for every other verse.
   - **Sundarkand:** stanza-range buckets — stanzas 1–4 sea, 5–11 Sita, 12–18 Lanka-dahan, remainder Ram-Hanuman.
   - **Every other source:** one pinned image per source id (`sourceBackgrounds`), plus category/deity fallback maps for browse screens.
 - A given verse therefore always shows the same image — stable as the user swipes back and forth — but the mapping is curated to match the verse's story beat, never re-rolled per render.
@@ -462,7 +462,7 @@ When a new text is added, pick the pattern that fits the source:
 **Assets:**
 - `images/*.png` — Hanuman parchment sketches (consumed in `mobile/assets/chalisa/`).
 - `mobile/assets/chalisa/*` — Chalisa backgrounds + typed `index.ts` export.
-- `mobile/assets/gita/*` — Gita backgrounds (v1: `krishna_arjuna_vishvarupa.png` is the single sketch covering all verses) + typed `index.ts` export.
+- `mobile/assets/gita/*` — Gita backgrounds (v1: `krishna_arjuna_vishvarupa.webp` is the single sketch covering all verses) + typed `index.ts` export.
 
 **Theme + state:**
 - `mobile/src/theme/colors.ts` / `typography.ts` / `spacing.ts` / `elevation.ts` / `fontScale.ts` — source of tokens in Sections 2–4 plus the reading-size presets (§12).
