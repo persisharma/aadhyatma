@@ -29,6 +29,9 @@ test('catalog is well-formed', () => {
     // Exactly one of day / days is present.
     assert.notEqual(Boolean(p.day), Boolean(p.days), `${p.id} must have day XOR days`);
     assert.ok(programDayCount(p) > 0);
+    // Every program carries a Devanagari thumb glyph for its listing card
+    // (design.md §8 — LibraryCard-style thumb).
+    assert.ok(p.thumb && p.thumb.trim().length > 0, `${p.id} must have a thumb glyph`);
   }
 });
 
@@ -111,6 +114,7 @@ test('festival-window: waiting when no window today, active inside the window', 
   if (up.kind === 'waiting') {
     assert.equal(up.reason, 'window-upcoming');
     assert.equal(up.whenKey, '2026-10-03');
+    assert.equal(up.items[0].sourceId, 'durga-chalisa');
   }
   // Inside the window on day 3.
   const inW = resolveSadhanaToday(e, NAVRATRI, '2026-10-05', { windowDayIndex: 3 });
@@ -132,6 +136,7 @@ test('weekday: resting on an off-day, active on an eligible day', () => {
   if (off.kind === 'waiting') {
     assert.equal(off.reason, 'weekday-off');
     assert.equal(off.whenKey, '2026-07-06');
+    assert.equal(off.items[0].sourceId, 'shiv-chalisa');
   }
   const on = resolveSadhanaToday(e, SHRAVAN, '2026-07-06', { todayEligible: true });
   assert.equal(on.kind, 'active');

@@ -1374,7 +1374,7 @@ Content ids have changed shape over time (aartis were once addressed positionall
 
 ### Component: RoutineShell (`mobile/src/components/RoutineShell.tsx`)
 
-The shared chrome for the routine management screens: a full-screen `parchmentHighlight → parchmentGradientEnd` gradient (the §2 Home gradient tokens — no sketch background; these are utility surfaces), safe-area top, and a top bar (`spacing.xxl` gutter): 44 px circular back button (`parchment-soft` / `divider`), a 16 pt title that **swaps** by reading language (RULEBOOK §3 — never stacked), and an optional right-slot action. The file also exports `RoutineButton` — the suite's standard button: solid `saffron` with `onPrimary` label, or `ghost` (transparent, 1 px `goldTint` border, `saffron` label); `radii.md`, `spacing.md` vertical padding, 16 pt script-aware label.
+The shared chrome for the routine management screens: by default a full-screen `parchmentHighlight → parchmentGradientEnd` gradient (the §2 Home gradient tokens — flat, for the utility/ledger surfaces), safe-area top, and a top bar (`spacing.xxl` gutter): 44 px circular back button (`parchment-soft` / `divider`), a 16 pt title that **swaps** by reading language (RULEBOOK §3 — never stacked), and an optional right-slot action. It also accepts an optional `background` image source: passed one, it renders the shared `BackgroundLayer` (sepia sketch + §2 overlay) instead of the flat gradient, so **content** surfaces (the Sadhana catalog + detail, §46) sit on the same sketch backdrop as the rest of the catalog while management/ledger screens stay flat. `BackgroundLayer`'s no-source fallback is that exact parchment gradient, so unpassed callers are unchanged. The file also exports `RoutineButton` — the suite's standard button: solid `saffron` with `onPrimary` label, or `ghost` (transparent, 1 px `goldTint` border, `saffron` label); `radii.md`, `spacing.md` vertical padding, 16 pt script-aware label.
 
 ### Screen: My Routines (`RoutineListScreen.tsx`)
 
@@ -1418,3 +1418,34 @@ A two-step wizard on the same gradient (its own top bar: the back button steps `
 - `units.ts` + `useRoutineToday.ts` — completion is **derived, not stored**: an item is auto-complete when persisted reading progress reached the unit's last verse-page *today* (last positions memoised from the verse pool) or japa rounds ≥ target from today's UserActivity totals; a manual mark (§31's offered-marks store) wins over auto. `useRoutineToday()` composes routines + progress + activity into `{ entries, doneCount, total, hasRoutine }` with per-entry `doneMode` and `doneAt` — the single view-model behind the banner (§30), Today's Practice (§31), and the celebration gate.
 
 **Files:** `mobile/src/screens/RoutineListScreen.tsx`, `CreateRoutineScreen.tsx`, `RoutineAddItemsScreen.tsx`, `RoutineDetailScreen.tsx`; `mobile/src/components/RoutineShell.tsx`, `AddToRoutineButton.tsx`, `AddToRoutineSheet.tsx`; `mobile/src/contexts/RoutineContext.tsx`, `RoutineSheetProvider.tsx`; `mobile/src/data/routine/{types,vaar,units,useRoutineToday,chapters}.ts`. PRD: `docs/roadmap/prds/07-daily-routine-sadhana.md`.
+
+---
+
+## 46. Sadhana Programs (संकल्प)
+
+**Purpose.** Prebuilt, multi-day devotional vows (a *sankalp*) — a 41-day Hanuman Chalisa anushthan, the Gītā in 18 days, Navratri's nine Durga nights, Shravan Somvar. Each program references EXISTING library content by id (no new content); a user's enrollment + per-day progress persist on-device (`SadhanaContext`, like `RoutineContext`). Reached by clubbing into routine creation: the `CreateRoutineScreen` **'choose'** step forks "Build your own" vs **"Choose a prebuilt sankalp"** → the catalog. PRD-11.
+
+### Screen: Sadhana catalog (`SadhanaProgramListScreen.tsx`)
+
+`RoutineShell` titled `संकल्प · Sadhana Programs`, **on a sketch background** — a multi-deity index, so it passes `getRandomDeityBackground()` (memoised per mount, same convention as the By-Deity index §42), not the flat gradient. Intro line in `meaning` prose. Programs group under `sectionLabel` eyebrows — **In progress**, **Available**, **Completed sankalps** — rendered via `pillTextStyle` (Inter uppercase for `en`; script serif, no tracking, for hi/gu/kn).
+
+Cards follow the **active Library Card** language (§8): every program is startable, so there is **no** dormant/"coming" (flat) variant — all cards carry the warm `cardActiveFrom → cardActiveTo` gradient, `cardActiveBorder`, and the raised shadow, with a `cardThumbActiveFrom → cardThumbActiveTo` gradient thumb bearing the program's Devanagari `thumb` glyph (`ह` / `भ` / `दु` / `शि`, reused from the underlying text). Titles show **both** reading languages ordered by the active one via `orderTitlesByLanguage()` (dev 17/13, lat 19/12); no subtitle line (kept terse — the pill carries the state). Tail: a status pill (`parchmentHighlight` fill, `goldTint` border, `cardMeta` type in `saffron-deep` via `pillTextStyle`) reading `Day n / N` (active), `N days` (available), or `✓ Complete` (done), then the saffron `›` chevron (26). Completed cards dim to 0.9 opacity. Each card is a `Pressable` with an explicit English a11y label `<titleEn>. <subtitleEn>. Tap to open.` → `SadhanaProgramDetail`.
+
+### Screen: Sankalp detail (`SadhanaProgramDetailScreen.tsx`)
+
+`RoutineShell` titled `संकल्प · Sankalp`, on the program's **deity** sketch background (`getDeityBackground(program.deity)`). Centred title (script-aware) + subtitle; an intro card (`parchment-soft`, `goldTint`, `elevation.card`) with the sankalp framing. Before enrolling: primary `RoutineButton` **"संकल्प लें / Begin this sankalp"** (or "फिर से संकल्प लें / Begin again" if completed) → `enroll()` then navigates straight to Today's Practice. While active: a "दैनिक स्मरण / Daily reminder" toggle row, "आज की साधना / Today's practice", and a ghost **"संकल्प स्थगित करें / Set this sankalp aside"** (`abandon()` → back). Footer note: the grace rule ("miss a day and the sankalp pauses, it never breaks"). All type is token-sourced; status/reminder lines use `scriptBodyFont` + `cardMeta` (never Cormorant on Devanagari).
+
+### Component: SankalpTodayCard (`SankalpTodayCard.tsx`)
+
+One enrolled sankalp's card on the Today's Practice ledger (§31) — flat `parchment-soft` + `elevation.card`, `saffron` border, matching the ledger aesthetic (not the catalog's gradient). Eyebrow (`sectionLabel` via `pillTextStyle`, `saffron-deep`): `Sankalp · Day n / N` (active), `Sankalp · n / N` (waiting), or `पूर्णाहुति / Sankalp complete`. Then the program title (`cardHindi + 3`). States:
+
+- **active** — one tappable unit row per item (26 px check circle → filled `saffron` ✓ when done today; resolved title `cardHindi` + a `cardMeta` sub "Whole text · Tap to read"; `›` 26). Auto-commits the day once every unit is genuinely done today (`isItemAutoComplete`); else a ghost "आज का पाठ अर्पित करें / Mark today's practice done" commits manually. Completing the vow plays the §31 `PracticeSeal` (पूर्णाहुति) once.
+- **done-today** — a calm "Today's reading is done. Come back tomorrow" line.
+- **waiting** (calendar-gated: weekday off-day / festival window not open) — the resting copy ("Your sankalp begins 11 Oct." / "Resting today — …") **plus the next selected unit as a tap-to-read preview**, so an upcoming sankalp never opens onto an empty dead end (the day is not committable until the gate opens).
+- **completed** — the seal + a "Your N-day sankalp is complete 🙏" line.
+
+### Data & resolver (`mobile/src/data/sadhana/`)
+
+`types.ts` — `SadhanaProgram { id, titleHi/En, thumb, subtitleHi/En, deity?, introHi/En, cadence, day? | days? }` (uniform `day` vs per-day `days`); `SadhanaCadence` = `consecutive` | `weekday` | `festival-window`; `SadhanaEnrollment { programId, startedOn, status: 'active'|'completed'|'abandoned', completedDays, completedOn? }`. `progress.ts` `resolveSadhanaToday()` returns the `active | done-today | waiting | completed` view-status (grace-by-default: a day is "spent" only when completed; the `waiting` status carries `items` for the preview). `useSadhanaToday.ts` composes enrollment + program + panchang schedule + reading/japa progress into the per-card view-model. Backing tests: `progress.test.ts` (resolver + catalog well-formedness incl. thumb), `SankalpTodayCard.test.tsx` (waiting-preview). e2e: `.maestro/sadhana-sankalp-smoke.yaml` (consecutive) + `sadhana-calendar-preview-smoke.yaml` (calendar-gated preview).
+
+**Files:** `mobile/src/screens/SadhanaProgramListScreen.tsx`, `SadhanaProgramDetailScreen.tsx`; `mobile/src/components/SankalpTodayCard.tsx`; `mobile/src/contexts/SadhanaContext.tsx`; `mobile/src/data/sadhana/{types,programs,progress,useSadhanaToday}.ts`. PRD: `docs/roadmap/prds/11-sadhana-programs.md`.

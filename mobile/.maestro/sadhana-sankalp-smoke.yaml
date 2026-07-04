@@ -103,8 +103,9 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: "Today's Practice"
     timeout: 15000
-# Day label is uppercased in the card ("SANKALP · DAY 1 / 41").
-- assertVisible: "SANKALP.*DAY 1 / 41"
+# Eyebrow day label reads "Sankalp · Day 1 / 41" (the sectionLabel token
+# uppercases visually via textTransform; the accessibility text is the raw casing).
+- assertVisible: "Sankalp · Day 1 / 41"
 - assertVisible: "Hanuman Chalisa — 41 Days"
 - takeScreenshot: /tmp/vedansh-sankalp-day1
 # Commit today's practice via the explicit control (reading isn't auto-done, so
@@ -132,13 +133,14 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd
 
 # ── Step 9: Back on the list, the program returns to the Available shelf ──
-# 'abandoned' status ⇒ no longer "In progress"; the card badge reverts to its
-# "41 days" duration (active/completed badges would read "Day x / 41" / "✓").
+# 'abandoned' status ⇒ the program drops out of "In progress" and back under the
+# "Available" section header (the card carries an explicit English a11y label
+# "<titleEn>. <subtitleEn>. Tap to open.", so we match on the title substring).
 - extendedWaitUntil:
     visible: "Sadhana Programs"
     timeout: 10000
 - assertVisible: "Available"
-- assertVisible: "Hanuman Chalisa — 41 Days.*41 days.*"
+- assertVisible: "Hanuman Chalisa — 41 Days.*"
 
 # ── Cleanup — Expo Go termination resets navigation for the next flow ──
 - stopApp:

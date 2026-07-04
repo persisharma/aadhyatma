@@ -38,6 +38,8 @@ export type SadhanaProgram = {
   id: string;
   titleHi: string;
   titleEn: string;
+  /** Single Devanagari glyph avatar shown in the listing card thumb (design.md §8). */
+  thumb: string;
   /** Short framing under the title, e.g. "इकतालीस दिन का संकल्प". */
   subtitleHi: string;
   subtitleEn: string;

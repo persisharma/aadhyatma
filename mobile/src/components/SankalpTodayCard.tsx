@@ -5,7 +5,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import { RoutineButton } from '@/components/RoutineShell';
 import PracticeSeal from '@/components/PracticeSeal';
 import { useSadhana } from '@/contexts/SadhanaContext';
@@ -67,13 +67,13 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         elevation.card,
       ]}
     >
-      <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.saffronDeep, letterSpacing: 0.5 }}>
-        {dayLabel.toUpperCase()}
+      <Text style={[pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep }]}>
+        {dayLabel}
       </Text>
       <Text
         style={{
           fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
-          fontSize: 20,
+          fontSize: typography.cardHindi.fontSize + 3,
           color: colors.ink,
           marginTop: 2,
         }}
@@ -87,7 +87,7 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
           <Text
             style={{
               fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 14,
+              fontSize: typography.meaning.fontSize,
               color: colors.inkSoft,
               textAlign: 'center',
               marginTop: spacing.sm,
@@ -106,7 +106,7 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         <Text
           style={{
             fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-            fontSize: 14,
+            fontSize: typography.meaning.fontSize,
             color: colors.inkSoft,
             marginTop: spacing.sm,
           }}
@@ -123,10 +123,10 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         <Text
           style={{
             fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-            fontSize: 14,
+            fontSize: typography.meaning.fontSize,
             color: colors.inkSoft,
             marginTop: spacing.sm,
-            lineHeight: 21,
+            lineHeight: typography.meaning.lineHeight,
           }}
         >
           {status.reason === 'window-upcoming'
@@ -151,7 +151,7 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         </Text>
       )}
 
-      {status.kind === 'active' && (
+      {(status.kind === 'active' || (status.kind === 'waiting' && items.length > 0)) && (
         <>
           <View style={{ marginTop: spacing.md }}>
             {items.map((it, i) => {
@@ -184,23 +184,30 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
                     <Text
                       style={{
                         fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
-                        fontSize: 16,
+                        fontSize: typography.cardHindi.fontSize,
                         color: it.done ? colors.inkMuted : colors.ink,
                       }}
                     >
                       {titleMain}
                     </Text>
-                    <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.saffronDeep, marginTop: 2 }}>
+                    <Text
+                      style={{
+                        fontFamily: scriptBodyFont(lang, typography.cardMeta.fontFamily),
+                        fontSize: typography.cardMeta.fontSize,
+                        color: colors.saffronDeep,
+                        marginTop: 2,
+                      }}
+                    >
                       {contentByLang(lang, it.display.subHi, it.display.subEn)} · {tail}
                     </Text>
                   </View>
-                  <Text style={{ color: colors.saffron, fontSize: 18 }}>›</Text>
+                  <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
                 </Pressable>
               );
             })}
           </View>
 
-          {!allItemsDoneToday && (
+          {status.kind === 'active' && !allItemsDoneToday && (
             <RoutineButton
               label={contentByLang(lang, 'आज का पाठ अर्पित करें', "Mark today's practice done")}
               variant="ghost"
@@ -227,4 +234,5 @@ function formatShortDate(key: string, lang: string): string {
 const styles = StyleSheet.create({
   card: { borderWidth: 1, marginBottom: 16 },
   itemRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12 },
+  chev: { fontSize: 26 },
 });
