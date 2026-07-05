@@ -230,17 +230,6 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                 : `Up to ${MAX_JAPAM_ALARMS} alarms.`}
             </Text>
           )}
-
-          <Text
-            style={[
-              styles.footnote,
-              { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
-            ]}
-          >
-            {isHi
-              ? 'स्मरण इस उपकरण पर बनता है — सर्वर पर कुछ नहीं जाता।'
-              : 'Alarms ring on this device. Nothing leaves your phone.'}
-          </Text>
         </ScrollView>
       </SafeAreaView>
 
@@ -688,13 +677,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     letterSpacing: 1.4,
     marginTop: 6,
-    includeFontPadding: false,
-  },
-  footnote: {
-    fontSize: 11,
-    letterSpacing: 1.4,
-    textAlign: 'center',
-    marginTop: 18,
     includeFontPadding: false,
   },
   backdrop: {

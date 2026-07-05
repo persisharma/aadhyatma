@@ -340,15 +340,6 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
               </Text>
             )}
           </View>
-
-          <Text
-            style={[
-              styles.footnote,
-              { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily) },
-            ]}
-          >
-            {pick(lang, { hi: 'सूचनाएँ इस उपकरण पर ही बनती हैं — सर्वर पर कुछ नहीं जाता।', en: 'Notifications are scheduled on this device. Nothing leaves your phone.', gu: 'સૂચનાઓ આ ઉપકરણ પર જ બને છે — સર્વર પર કંઈ જતું નથી.', kn: 'ಅಧಿಸೂಚನೆಗಳು ಈ ಸಾಧನದಲ್ಲೇ ರಚಿಸಲ್ಪಡುತ್ತವೆ — ಸರ್ವರ್‌ಗೆ ಏನೂ ಹೋಗುವುದಿಲ್ಲ.' })}
-          </Text>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -476,13 +467,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     letterSpacing: 1.4,
     marginTop: 6,
-    includeFontPadding: false,
-  },
-  footnote: {
-    fontSize: 11,
-    letterSpacing: 1.4,
-    textAlign: 'center',
-    marginTop: 18,
     includeFontPadding: false,
   },
 });
