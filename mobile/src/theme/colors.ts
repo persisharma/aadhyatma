@@ -28,6 +28,13 @@ export const lightColors = {
   saffronTint: 'rgba(184, 98, 27, 0.12)',
   goldTint: 'rgba(166, 124, 52, 0.14)',
 
+  // Auspicious/avoid signalling for the Muhurat surface (PRD-14 / design.md §2).
+  // Kept in the WARM manuscript palette — never green/red. Auspicious reuses the
+  // gold tint; `avoid` is a muted terracotta. Both always carry a text label too
+  // (design.md §12 — never colour alone).
+  avoid: '#9E4A2E',
+  avoidTint: 'rgba(158, 74, 46, 0.12)',
+
   // "NEW" badge — saffron-tinted (primary/active accent → reads as fresh & live),
   // distinct from the muted gold "SOON" badge while staying in the warm palette.
   newBadgeBg: 'rgba(184, 98, 27, 0.16)',

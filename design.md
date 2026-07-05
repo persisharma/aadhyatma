@@ -32,6 +32,8 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 | `divider` | `rgba(138, 62, 11, 0.18)` | Borders, card outlines |
 | `newBadgeBg` | `rgba(184, 98, 27, 0.16)` | "NEW" badge fill — saffron tint (recently-added content) |
 | `newBadgeText` | `#8A3E0B` | "NEW" badge text — saffron-deep |
+| `avoid` | `#9E4A2E` | Muted terracotta — inauspicious/त्याज्य timings (Rahu/Gulika/Yamaganda, avoid choghadiya). Warm palette, **never red**; PRD-14. |
+| `avoidTint` | `rgba(158, 74, 46, 0.12)` | Fill behind an `avoid` row. Auspicious rows reuse `goldTint`; quality is always labelled in text too (§12). |
 
 **Home gradient** (top → bottom): `#F6ECD0` → `#F1E3BF` (`parchmentHighlight` → `parchmentGradientEnd` in `colors.ts`).
 
