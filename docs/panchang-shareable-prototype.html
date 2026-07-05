@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Panchang full view (C) + shareable card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-deep:#E9D9B1;
+    --parchment-hi:#F6ECD0; --gradient-end:#F1E3BF;
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34;
+    --divider:rgba(138,62,11,0.18); --saffron-tint:rgba(184,98,27,0.12); --gold-tint:rgba(166,124,52,0.14);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4); --on-primary:#fff;
+    --shubh:#8A3E0B; --shubh-bg:rgba(166,124,52,0.18);
+    --avoid:#9E4A2E; --avoid-bg:rgba(158,74,46,0.12);
+    --sans:'Inter',system-ui,sans-serif; --serif:'Cormorant Garamond',serif; --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:#c9b896;font-size:14px;margin-bottom:20px;max-width:900px}
+  .wrap{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;align-items:center}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:center}
+  .cap b{color:#e9d9b1}
+  .arrow{align-self:center;font-size:28px;color:#c9b896;margin-top:340px}
+
+  .phone{width:340px;height:730px;background:var(--parchment);border-radius:38px;border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:14px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:2px 0 10px}
+  .back{width:34px;height:34px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .shareBtn{display:flex;align-items:center;gap:6px;background:var(--saffron);color:var(--on-primary);border-radius:999px;padding:7px 13px;font-family:var(--deva);font-size:13px}
+  .shareBtn .ic{font-size:14px}
+
+  /* ---- Reverent C card (used both in-app AND as the share card body) ---- */
+  .om{font-family:var(--deva);text-align:center;color:var(--saffron);font-size:22px}
+  .titleHd{font-family:var(--deva);text-align:center;font-size:20px;color:var(--ink);margin-top:2px}
+  .dateline{font-family:var(--serif);font-style:italic;text-align:center;font-size:13px;color:var(--ink-muted);margin:3px 0 12px}
+  .frame{border:1px solid var(--gold);border-radius:14px;padding:16px 16px 14px;background:var(--parchment-soft);position:relative}
+  .frame::before,.frame::after{content:"॥";position:absolute;top:9px;color:var(--saffron);opacity:.55;font-family:var(--deva);font-size:14px}
+  .frame::before{left:13px}.frame::after{right:13px}
+  .grplab{font-family:var(--sans);font-size:9px;letter-spacing:.6px;text-transform:uppercase;color:var(--saffron-deep);text-align:center;margin:6px 0 8px}
+  .kv{display:flex;justify-content:space-between;font-family:var(--deva);font-size:15px;color:var(--ink);padding:4px 2px}
+  .kv .kk{color:var(--ink-soft)}
+  .kv .vv{font-variant-numeric:tabular-nums;font-weight:500}
+  .rule{height:1px;background:var(--divider);margin:10px 0}
+  .muh{display:flex;justify-content:space-between;padding:8px 11px;border-radius:9px;font-family:var(--deva);font-size:14px;margin-bottom:5px;color:var(--ink)}
+  .muh .tm{font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+  .muh.shubh{background:var(--shubh-bg)} /* dark ink text stays — tint only signals quality */
+  .muh.avoid{background:var(--avoid-bg);color:var(--avoid)}
+  .muh.avoid .tm{color:var(--avoid)}
+  .muh.now{box-shadow:0 0 0 1.5px var(--saffron) inset}
+  .nowchip{font-size:8px;font-weight:700;color:var(--on-primary);background:var(--saffron);padding:1px 5px;border-radius:5px;margin-left:6px;font-family:var(--sans)}
+  .special{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);text-align:center;margin-top:11px;line-height:1.5}
+
+  /* ---- share card standalone ---- */
+  .sheetlabel{font-family:var(--sans);font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:#b7a377;text-align:center;margin-bottom:10px}
+  .sharecard{width:320px;background:linear-gradient(var(--parchment-hi),var(--parchment));border:1px solid var(--card-border);border-radius:20px;padding:20px 18px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .brandfoot{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--divider)}
+  .brandfoot .wm{font-family:var(--deva);font-size:13px;color:var(--saffron-deep)}
+  .brandfoot .om{font-size:14px}
+  .brandfoot .tag{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted)}
+  .sharebar{display:flex;gap:10px;margin-top:16px;justify-content:center}
+  .sbtn{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10px;color:#c9b896;font-family:var(--sans)}
+  .sbtn .circ{width:46px;height:46px;border-radius:50%;background:var(--parchment-soft);border:1px solid var(--divider);display:flex;align-items:center;justify-content:center;color:var(--saffron-deep);font-family:var(--deva);font-size:16px}
+</style>
+</head>
+<body>
+  <h1>Full view = Variant C · now shareable</h1>
+  <div class="sub">Left: the full Muhurat view rebuilt as the reverent C card (legible dark ink, with a Share action). Right: the exported <b>share card</b> people forward — the same card, branded, no app chrome. Reuses the app's existing verse-share-card mechanism (react-native-view-shot → OS share sheet).</div>
+
+  <div class="wrap">
+
+    <!-- FRAME 1 — full detail = Variant C, with Share -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>11:30</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar">
+          <div class="back">‹</div>
+          <div class="toptitle">आज का पंचांग</div>
+          <div class="shareBtn"><span class="ic">⤴</span>साझा</div>
+        </div>
+
+        <div class="om">ॐ</div>
+        <div class="titleHd">आज का पंचांग</div>
+        <div class="dateline">रविवार, 5 जुलाई 2026 · संवत 2083</div>
+
+        <div class="frame">
+          <div class="grplab">पंचांग</div>
+          <div class="kv"><span class="kk">तिथि</span><span class="vv">पंचमी · 13:30</span></div>
+          <div class="kv"><span class="kk">नक्षत्र</span><span class="vv">शतभिषा · 15:11</span></div>
+          <div class="kv"><span class="kk">योग</span><span class="vv">आयुष्मान · 16:38</span></div>
+          <div class="kv"><span class="kk">करण</span><span class="vv">तैतिल · 13:30</span></div>
+          <div class="rule"></div>
+          <div class="grplab">सूर्य</div>
+          <div class="kv"><span class="kk">सूर्योदय</span><span class="vv">05:42</span></div>
+          <div class="kv"><span class="kk">सूर्यास्त</span><span class="vv">19:30</span></div>
+          <div class="rule"></div>
+          <div class="grplab">शुभ मुहूर्त · चौघड़िया</div>
+          <div class="muh shubh"><span>चर</span><span class="tm">07:26–09:10</span></div>
+          <div class="muh shubh"><span>लाभ</span><span class="tm">09:10–10:53</span></div>
+          <div class="muh shubh now"><span>अमृत <span class="nowchip">अभी</span></span><span class="tm">10:53–12:37</span></div>
+          <div class="muh shubh"><span>शुभ</span><span class="tm">14:20–16:04</span></div>
+          <div class="rule"></div>
+          <div class="grplab">विशेष</div>
+          <div class="muh shubh"><span>अभिजीत</span><span class="tm">12:09–12:57</span></div>
+          <div class="muh"><span>प्रदोष वेला</span><span class="tm">19:30–20:42</span></div>
+          <div class="muh avoid"><span>राहु काल</span><span class="tm">17:47–19:31</span></div>
+          <div class="special">पंचक — शुक्र 03 जुलाई रात्रि से बुध 08 जुलाई तक।<br>सभी समय सुजानगढ़ के अनुसार।</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Full view — now the C design</b> (legible dark ink; the शुभ tint signals quality without graying the text). The <b>साझा · Share</b> button top-right exports the card.</div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <!-- FRAME 2 — the shareable card (OS share sheet) -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>11:30</span><span>●●● ▓</span></div>
+      <div class="screen" style="background:#0d0804;display:flex;flex-direction:column;justify-content:flex-end;padding:16px"><div>
+        <div class="sheetlabel">Share today's panchang</div>
+        <div class="sharecard">
+          <div class="om">ॐ</div>
+          <div class="titleHd" style="font-size:19px">आज का पंचांग</div>
+          <div class="dateline" style="margin-bottom:10px">रविवार, 5 जुलाई 2026 · संवत 2083</div>
+          <div class="frame" style="padding:14px">
+            <div class="grplab">पंचांग</div>
+            <div class="kv" style="font-size:13.5px"><span class="kk">तिथि</span><span class="vv">पंचमी · 13:30</span></div>
+            <div class="kv" style="font-size:13.5px"><span class="kk">नक्षत्र</span><span class="vv">शतभिषा · 15:11</span></div>
+            <div class="rule"></div>
+            <div class="grplab">सूर्य</div>
+            <div class="kv" style="font-size:13.5px"><span class="kk">सूर्योदय / सूर्यास्त</span><span class="vv">05:42 / 19:30</span></div>
+            <div class="rule"></div>
+            <div class="grplab">शुभ मुहूर्त · चौघड़िया</div>
+            <div class="muh shubh" style="font-size:13px;padding:6px 10px"><span>चर · लाभ · अमृत</span><span class="tm">07:26–12:37</span></div>
+            <div class="muh shubh" style="font-size:13px;padding:6px 10px"><span>शुभ</span><span class="tm">14:20–16:04</span></div>
+            <div class="muh shubh" style="font-size:13px;padding:6px 10px"><span>अभिजीत</span><span class="tm">12:09–12:57</span></div>
+            <div class="muh avoid" style="font-size:13px;padding:6px 10px"><span>राहु काल</span><span class="tm">17:47–19:31</span></div>
+          </div>
+          <div class="brandfoot"><span class="om" style="color:var(--saffron)">ॐ</span><span class="wm">वेदांश़</span><span class="tag">· सुजानगढ़</span></div>
+        </div>
+        <div class="sharebar">
+          <div class="sbtn"><div class="circ">W</div>WhatsApp</div>
+          <div class="sbtn"><div class="circ">↓</div>Save</div>
+          <div class="sbtn"><div class="circ">⤴</div>More</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>The forward-able card.</b> A branded portrait image (ॐ वेदांश़ footer) rendered off-screen and handed to the OS share sheet — same pipeline as the verse ShareCard. Every forward is organic reach.</div>
+    </div>
+
+  </div>
+</body>
+</html>
