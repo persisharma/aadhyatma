@@ -2,10 +2,13 @@
 
 | | |
 |---|---|
-| **Status** | Draft — prototype for visualization |
-| **T-shirt size** | S–M (compute is pure; UI is one card + one detail screen) |
-| **Prototype** | [`docs/muhurat-prototype.html`](../../muhurat-prototype.html) |
+| **Status** | Approved — prototype-validated; surfaces locked |
+| **T-shirt size** | S–M (compute is pure; UI is one card + one detail screen + a share card) |
+| **TRD** | [`docs/roadmap/trds/14-daily-muhurat.trd.md`](../trds/14-daily-muhurat.trd.md) |
+| **Prototypes** | [screen-after](../../panchang-screen-after-prototype.html) (A card in place) · [shareable](../../panchang-shareable-prototype.html) (C detail + share card) · [3 options](../../panchang-today-variants-prototype.html) |
 | **Feasibility** | ✅ Confirmed — `PanchangData` already exposes `sunrise`/`sunset` (location-aware, DrikPanchang-validated). No new deps/backend. |
+
+> **Locked design decisions (do not drift):** surface = **Glance card "A"** on Panchang→Calendar + **Full detail "C"** (reverent framed) on View-all + a **shareable branded card** reusing the verse ShareCard pipeline. Naming pinned to **DrikPanchang**. Palette = **warm auspicious/avoid** (gold-saffron for śubh, muted terracotta for avoid — never green/red). All visuals per **`design.md`** (see §9).
 
 ---
 
@@ -19,26 +22,28 @@ The Panchang tab today answers *"what tithi / nakshatra / festival is it?"* — 
 
 Surface today's **auspicious/inauspicious timings** — Choghadiya (day + night), Rahu Kaal, Gulika Kaal, Yamaganda, and Abhijit Muhurat — with a clear **"right now"** read, on the tab users already open daily. Success = Panchang shifts from a festival-lookup into a **daily utility people check before acting**, lifting D7/D30 return.
 
-## 3. Where it lands in the app (surfaces)
+## 3. Where it lands in the app (surfaces — locked)
 
-Two surfaces, both on the existing **Panchang tab → Calendar view** (no new tab):
+Three surfaces, all on the existing **Panchang tab → Calendar view** (no new tab). Visuals validated in the prototypes above.
 
-### 3.1 "Today's Timings" card — the daily glance
-A card docked **directly below the Tithi/Nakshatra anga grid** on the Calendar view (`PanchangScreen`, right after the two-tier anga grid at line ~452). It shows the **now-relevant** state at a glance:
-- The **current Choghadiya** period + its quality (शुभ / लाभ / अमृत = good; रोग / काल / उद्वेग = avoid), with a live "ends in 42 min".
-- **Rahu Kaal today** (start–end) with an "avoid" tone, and whether it's active now.
-- **Abhijit Muhurat** (the day's most auspicious window) with its time.
-- A **"View all timings ›"** row → the detail screen.
+### 3.1 "Today's Timings" glance card (Variant A) — the daily answer
+A card docked **directly below the Tithi/Nakshatra anga grid** on the Calendar view (`PanchangScreen`, right after the two-tier anga grid), above the upcoming-observances list. It answers *"is now good?"* at a glance:
+- The **current Choghadiya** period + quality (शुभ/लाभ/अमृत/चर = auspicious; रोग/काल/उद्वेग = avoid) with a live "till 12:37 PM".
+- **Rahu Kaal** (avoid tone) and **Abhijit Muhurat** (auspicious) as two tiles.
+- A **"सभी मुहूर्त व चौघड़िया ›"** row → the detail screen.
 
-Because it reads the *selected* day in the calendar, tapping any date shows that day's card (not just today).
+It reads the **selected** calendar day, so tapping any date shows that day's card. Uses `cardActive*` gradient + `elevation.raised` per design.md §4/§8.
 
-### 3.2 Muhurat detail screen — the full table
-A new `MuhuratDetail` screen in the Panchang stack, reached from the card:
-- **Day Choghadiya** — 8 periods (sunrise→sunset), each labelled + colour-coded good/neutral/avoid, the current one highlighted.
-- **Night Choghadiya** — 8 periods (sunset→next sunrise).
-- **Kaal windows** — Rahu Kaal, Gulika Kaal, Yamaganda (the three inauspicious daytime bands).
-- **Abhijit Muhurat** — the noon auspicious window.
-- A sunrise/sunset header for context.
+### 3.2 Muhurat detail — the full reverent readout (Variant C)
+The View-all target: a **reverent, gold-`॥`-framed almanac card** (design.md §5 ornament), grouped **पंचांग → सूर्य → शुभ मुहूर्त·चौघड़िया → विशेष**, in **legible dark `ink`** with the śubh tint signalling quality behind the text (never graying it). Contents:
+- **Day Choghadiya** ×8 (sunrise→sunset), current one flagged **अभी**.
+- **Night Choghadiya** ×8 (sunset→next sunrise).
+- **त्याज्य काल** — Rahu, Gulika, Yamaganda.
+- **विशेष** — Abhijit, Pradosh.
+- Sunrise/sunset header + the Panchak note + "समय <city> के अनुसार".
+
+### 3.3 Shareable card — the forward-able artifact
+A **साझा · Share** action on the detail screen renders the C card off-screen as a **branded portrait image** (an `ॐ वेदांश़ · <city>` footer) and hands it to the OS share sheet. This **reuses the existing verse ShareCard pipeline** (`react-native-view-shot` → `expo-sharing`; PRD-05 / `ShareCard.tsx` / `shareVerse.tsx`) — no new mechanism. The panchang forward is the category's most viral daily artifact; every share is organic, on-brand reach.
 
 ## 4. What it computes (all from existing data)
 
@@ -64,7 +69,19 @@ Naming/sequence pinned to the **DrikPanchang** convention, with a fixture test m
 ## 7. Why it fits the moat
 100% on-device, deterministic, ad-free. The incumbents bury choghadiya under astrology upsells and banner ads; Vedansh surfaces it clean and calm — the same differentiation that carries the rest of the app.
 
-## 8. Open questions
-1. **Choghadiya naming convention** — pin to DrikPanchang (recommended) vs. a regional variant.
-2. **Card placement** — below the anga grid (recommended) vs. its own segment in the Calendar/Vrat toggle.
-3. **Colour language** — reuse the festival marker palette, or a dedicated good/neutral/avoid triad within the parchment system.
+## 8. Decisions (locked — do not drift)
+1. **Naming/sequence** → **DrikPanchang** convention, gated by a fixture test.
+2. **Placement** → glance card **below the anga grid** on the Calendar view (not a new segment/tab).
+3. **Palette** → **warm auspicious/avoid** within the parchment system — gold-saffron tint for śubh, muted terracotta for avoid. **No green/red.** (No `success`/green token exists in `colors.ts`; if the terracotta `avoid` is adopted it must be **added to `colors.ts` first**, per design.md §13.)
+4. **Full view** → the reverent **Variant C** framed card (legible dark ink), not a plain list.
+5. **Sharing** → reuse the verse ShareCard pipeline; branded footer.
+
+## 9. Design compliance (design.md is authoritative)
+
+Every visual choice follows `design.md`; this feature adds **no** new visual language beyond one warm `avoid` token:
+- **Colour** — only `parchment*`, `ink`/`ink-soft`/`ink-muted` (the deepened AAA/AA values, §2), `saffron`/`saffron-deep`/`gold`, `divider`, `card*` gradients. Pull from `colors.ts`; never hard-code a hex (§13). The `avoid` terracotta is the sole proposed addition → add to `colors.ts` + document here before use.
+- **Type** — Noto Serif Devanagari for all Devanagari; Cormorant Garamond for Latin labels/times; Inter only for tiny uppercase chrome (§3). No hard-coded font sizes on any reading content.
+- **Iconography** — **no emoji** (§5). Use `॥`/`ॐ` glyphs, the `‹`/`›` chevrons, and the existing star. Share uses a glyph, not 📤.
+- **Layout/elevation** — card radius **18**, padding **18**, section gap **20**; `elevation.card` for the detail rows, `elevation.raised` for the glance card (§4).
+- **Accessibility** — auspicious/avoid never conveyed by colour alone; each carries a text label (शुभ / avoid) and the "now" state a text chip (§12).
+- **Bilingual, Hindi-led** — Devanagari primary, Latin/times secondary (§1, §3).
