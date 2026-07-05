@@ -65,8 +65,10 @@ class JapamAlarmActionReceiver : BroadcastReceiver() {
         // Distinct PendingIntent request code so the snooze doesn't displace
         // the standard daily PendingIntent that's already armed.
         val snoozeAlarmId = baseAlarmId + SNOOZE_SUFFIX
+        // Empty repeat-days: a snooze is inherently one-shot (the `:snooze`
+        // suffix already blocks re-arm in the receiver; this makes it doubly so).
         val pi = JapamAlarmModule.buildPendingIntent(
-            context, snoozeAlarmId, mantraId, fireAt, label
+            context, snoozeAlarmId, mantraId, fireAt, label, ""
         )
         val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val canExact = Build.VERSION.SDK_INT < Build.VERSION_CODES.S || am.canScheduleExactAlarms()

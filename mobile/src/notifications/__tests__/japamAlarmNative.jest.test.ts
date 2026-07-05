@@ -45,11 +45,16 @@ beforeEach(() => {
   mockRequire.mockReturnValue({ scheduleAlarm, cancelAll });
 });
 
-const alarm = (id: string, mantraId: string): JapamAlarm => ({
+const alarm = (
+  id: string,
+  mantraId: string,
+  extra: Partial<JapamAlarm> = {}
+): JapamAlarm => ({
   id,
   mantraId,
   time: { hour: 6, minute: 0 },
   enabled: true,
+  ...extra,
 });
 
 describe('scheduleNativeAlarmsForDay — mantra sound passthrough', () => {
@@ -68,5 +73,80 @@ describe('scheduleNativeAlarmsForDay — mantra sound passthrough', () => {
     expect(scheduleAlarm).toHaveBeenCalledWith(
       expect.objectContaining({ mantraId: 'gayatri-mantra', sound: null })
     );
+  });
+});
+
+describe('scheduleNativeAlarmsForDay — recurrence passthrough', () => {
+  test('daily alarm: repeatDays null, not fixed', async () => {
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
+    expect(scheduleAlarm).toHaveBeenCalledTimes(1);
+    expect(scheduleAlarm).toHaveBeenCalledWith(
+      expect.objectContaining({ repeatDays: null, fixed: false })
+    );
+  });
+
+  test('weekly subset flows through as-is', async () => {
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya', { repeatDays: [1, 3, 5] }),
+    ]);
+    expect(scheduleAlarm).toHaveBeenCalledWith(
+      expect.objectContaining({ repeatDays: [1, 3, 5], fixed: false })
+    );
+  });
+
+  test('one-time alarm schedules as fixed', async () => {
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya', { repeatDays: [] }),
+    ]);
+    expect(scheduleAlarm).toHaveBeenCalledWith(
+      expect.objectContaining({ repeatDays: [], fixed: true })
+    );
+  });
+
+  test('pending skip-next on the AlarmKit tier arms discrete fixed one-shots', async () => {
+    // Skip set for the next occurrence relative to "now" — always pending.
+    const skipKey = (() => {
+      const d = new Date();
+      d.setDate(d.getDate() + 1);
+      const mm = `${d.getMonth() + 1}`.padStart(2, '0');
+      const dd = `${d.getDate()}`.padStart(2, '0');
+      return `${d.getFullYear()}-${mm}-${dd}`;
+    })();
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya', { skipNextDate: skipKey }),
+    ]);
+    // 3 discrete fires, all fixed, ids disambiguated after the first.
+    expect(scheduleAlarm).toHaveBeenCalledTimes(3);
+    const calls = scheduleAlarm.mock.calls.map((c) => c[0]);
+    expect(calls.every((c) => c.fixed === true)).toBe(true);
+    expect(calls[0].alarmId).toBe('japam-alarm:a1');
+    expect(calls[1].alarmId).toBe('japam-alarm:a1:occ1');
+    expect(calls[2].alarmId).toBe('japam-alarm:a1:occ2');
+    // Strictly increasing fire times, none on the skipped date.
+    expect(calls[0].fireAt).toBeLessThan(calls[1].fireAt);
+    expect(calls[1].fireAt).toBeLessThan(calls[2].fireAt);
+    for (const c of calls) {
+      const d = new Date(c.fireAt);
+      const mm = `${d.getMonth() + 1}`.padStart(2, '0');
+      const dd = `${d.getDate()}`.padStart(2, '0');
+      expect(`${d.getFullYear()}-${mm}-${dd}`).not.toBe(skipKey);
+    }
+  });
+
+  test('a past skip-next is ignored — plain recurrence is armed', async () => {
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya', { skipNextDate: '2020-01-01' }),
+    ]);
+    expect(scheduleAlarm).toHaveBeenCalledTimes(1);
+    expect(scheduleAlarm).toHaveBeenCalledWith(
+      expect.objectContaining({ repeatDays: null, fixed: false })
+    );
+  });
+
+  test('disabled alarms are not scheduled', async () => {
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya', { enabled: false }),
+    ]);
+    expect(scheduleAlarm).not.toHaveBeenCalled();
   });
 });

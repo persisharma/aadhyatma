@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import type { TimeOfDay } from '@/notifications/pure';
@@ -105,29 +105,79 @@ type ColumnProps = {
   chevronColor: string;
 };
 
+const HOLD_DELAY_MS = 350;
+const HOLD_INTERVAL_MS = 90;
+
+/**
+ * Chevron that fires once on press and auto-repeats while held — makes
+ * 1-minute stepping usable without demanding 59 taps. The action fires on
+ * press-in (not press-up) so the repeat is a seamless continuation of the
+ * first step.
+ */
+function RepeatChevron({
+  onStep,
+  accessibilityLabel,
+  glyph,
+  color,
+}: {
+  onStep: () => void;
+  accessibilityLabel: string;
+  glyph: string;
+  color: string;
+}) {
+  const stepRef = useRef(onStep);
+  stepRef.current = onStep;
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const stop = useCallback(() => {
+    if (timerRef.current !== null) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const start = useCallback(() => {
+    stepRef.current();
+    const tick = () => {
+      stepRef.current();
+      timerRef.current = setTimeout(tick, HOLD_INTERVAL_MS);
+    };
+    timerRef.current = setTimeout(tick, HOLD_DELAY_MS);
+  }, []);
+
+  useEffect(() => stop, [stop]);
+
+  return (
+    <Pressable
+      onPressIn={start}
+      onPressOut={stop}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      hitSlop={10}
+      style={({ pressed }) => [styles.chevron, pressed && { opacity: 0.5 }]}
+    >
+      <Text style={[styles.chevronText, { color }]}>{glyph}</Text>
+    </Pressable>
+  );
+}
+
 function Column({ label, valueText, onUp, onDown, accentColor, chevronColor }: ColumnProps) {
   const { colors } = useTheme();
   return (
     <View style={styles.col}>
-      <Pressable
-        onPress={onUp}
-        accessibilityRole="button"
+      <RepeatChevron
+        onStep={onUp}
         accessibilityLabel={`Increase ${label}`}
-        hitSlop={10}
-        style={({ pressed }) => [styles.chevron, pressed && { opacity: 0.5 }]}
-      >
-        <Text style={[styles.chevronText, { color: chevronColor }]}>▵</Text>
-      </Pressable>
+        glyph="▵"
+        color={chevronColor}
+      />
       <Text style={[styles.value, { color: accentColor }]}>{valueText}</Text>
-      <Pressable
-        onPress={onDown}
-        accessibilityRole="button"
+      <RepeatChevron
+        onStep={onDown}
         accessibilityLabel={`Decrease ${label}`}
-        hitSlop={10}
-        style={({ pressed }) => [styles.chevron, pressed && { opacity: 0.5 }]}
-      >
-        <Text style={[styles.chevronText, { color: chevronColor }]}>▿</Text>
-      </Pressable>
+        glyph="▿"
+        color={chevronColor}
+      />
       <Text style={[styles.label, { color: colors.inkMuted }]}>{label}</Text>
     </View>
   );

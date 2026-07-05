@@ -3,18 +3,20 @@
 // iOS 26+ AlarmKit-backed Japam alarms.
 //
 // Mirrors the JS contract used by the Android Kotlin module:
-//   scheduleAlarm({ alarmId, mantraId, fireAt, label? })
+//   scheduleAlarm({ alarmId, mantraId, fireAt, label?, sound?, repeatDays?, fixed? })
 //   cancelAlarm(alarmId)
 //   cancelAll()
 //   getCapability() -> { supported, canScheduleExact }
 //   requestPermission() -> bool
 //   getAuthorizationStatus() -> "granted" | "denied" | "undetermined"
 //
-// Alarms are scheduled as a DAILY recurring AlarmKit alarm (a relative
-// schedule repeating every weekday), so the alarm re-arms itself with no app
-// involvement and adjusts for timezone changes — AlarmKit owns the recurrence.
-// `fireAt` (epoch ms) carries the time-of-day; the module extracts hour/minute
-// from it.
+// Recurrence: `repeatDays` (JS getDay() indices, 0=Sun…6=Sat) selects the
+// weekdays of a relative recurring AlarmKit schedule; absent/null means every
+// day. `fixed: true` (one-time alarms, and each discrete occurrence while a
+// skip-next is pending) schedules a non-recurring fixed alarm at `fireAt`
+// instead. For recurring alarms `fireAt` (epoch ms) carries the time-of-day;
+// the module extracts hour/minute from it. AlarmKit owns the recurrence and
+// adjusts for timezone changes, so the app never re-arms from JS.
 //
 // IDs in our app are strings; AlarmKit identifies alarms by `UUID`. The
 // module persists a string→UUID mapping in UserDefaults so cancel-by-id
@@ -104,9 +106,13 @@ public class JapamAlarmIosModule: Module {
       // Bundled mantra-clip filename resolved in JS (getJapamAlarmSoundName);
       // nil when the mantra has no clip → falls back to the system alarm tone.
       let soundName = args["sound"] as? String
+      let fixed = (args["fixed"] as? Bool) ?? false
+      // JS getDay() weekday indices; nil = every day. (NSNumber-bridged.)
+      let repeatDays = (args["repeatDays"] as? [Any])?.compactMap {
+        ($0 as? NSNumber)?.intValue
+      }
 
       if #available(iOS 26.0, *) {
-        // The alarm repeats daily, so only the wall-clock time-of-day matters.
         let fireDate = Date(timeIntervalSince1970: fireAtMs / 1000.0)
         let comps = Calendar.current.dateComponents([.hour, .minute], from: fireDate)
         try await JapamAlarmIosService.schedule(
@@ -114,7 +120,9 @@ public class JapamAlarmIosModule: Module {
           hour: comps.hour ?? 0,
           minute: comps.minute ?? 0,
           title: title,
-          soundName: soundName
+          soundName: soundName,
+          repeatDays: repeatDays,
+          fixedDate: fixed ? fireDate : nil
         )
         return ["alarmId": alarmId, "fireAt": fireAtMs, "exact": true]
       }
@@ -177,12 +185,22 @@ enum JapamAlarmIosService {
     }
   }
 
+  /// Snooze length, mirroring the Android tier's 5-minute snooze.
+  private static let snoozeSeconds: TimeInterval = 5 * 60
+
+  /// JS `getDay()` index → AlarmKit weekday.
+  private static let weekdayByJsDay: [Locale.Weekday] = [
+    .sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday,
+  ]
+
   static func schedule(
     alarmId: String,
     hour: Int,
     minute: Int,
     title: String,
-    soundName: String?
+    soundName: String?,
+    repeatDays: [Int]?,
+    fixedDate: Date?
   ) async throws {
     // Cancel any prior alarm registered under the same JS id so the new
     // schedule replaces it cleanly (same semantics as Android's
@@ -196,27 +214,50 @@ enum JapamAlarmIosService {
       textColor: .white,
       systemImageName: "stop.circle"
     )
+    // Secondary "Snooze" button with countdown behaviour: tapping it silences
+    // the alert and re-fires after `snoozeSeconds` — AlarmKit's native snooze.
+    let snoozeButton = AlarmButton(
+      text: "Snooze",
+      textColor: .white,
+      systemImageName: "zzz"
+    )
     let alert = AlarmPresentation.Alert(
       title: LocalizedStringResource(stringLiteral: title),
-      stopButton: stopButton
+      stopButton: stopButton,
+      secondaryButton: snoozeButton,
+      secondaryButtonBehavior: .countdown
+    )
+    // The countdown presentation is what the system shows while a snooze is
+    // running (Live Activity with the remaining time + a Stop button).
+    let countdown = AlarmPresentation.Countdown(
+      title: LocalizedStringResource(stringLiteral: title),
+      pauseButton: nil
     )
     let attributes = AlarmAttributes(
-      presentation: AlarmPresentation(alert: alert),
+      presentation: AlarmPresentation(alert: alert, countdown: countdown),
       metadata: JapamAlarmMetadata(),
       tintColor: tint
     )
 
-    // Daily recurrence: a relative schedule repeating on every weekday. The
-    // system re-fires it each day and accounts for timezone changes, so we
+    // Recurrence: one-time alarms get a fixed date; repeating alarms get a
+    // relative schedule on the selected weekdays (all seven when JS sends
+    // none). The system re-fires it and accounts for timezone changes, so we
     // never re-arm from JS (unlike Android's one-shot + boot receiver).
-    let schedule = Alarm.Schedule.relative(
-      Alarm.Schedule.Relative(
-        time: Alarm.Schedule.Relative.Time(hour: hour, minute: minute),
-        repeats: .weekly([
-          .sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday,
-        ])
+    let schedule: Alarm.Schedule
+    if let fixedDate {
+      schedule = .fixed(fixedDate)
+    } else {
+      let days: [Locale.Weekday] =
+        (repeatDays?.isEmpty == false)
+          ? repeatDays!.compactMap { $0 >= 0 && $0 <= 6 ? weekdayByJsDay[$0] : nil }
+          : Array(weekdayByJsDay)
+      schedule = .relative(
+        Alarm.Schedule.Relative(
+          time: Alarm.Schedule.Relative.Time(hour: hour, minute: minute),
+          repeats: .weekly(days)
+        )
       )
-    )
+    }
     // Ring the bundled mantra clip via AlarmKit's custom-sound API. `.named`
     // resolves a file bundled into the app (the clip ships via the
     // expo-notifications `sounds` array); a nil name falls back to the system
@@ -224,6 +265,7 @@ enum JapamAlarmIosService {
     let alertSound: AlertConfiguration.AlertSound =
       soundName.map { AlertConfiguration.AlertSound.named($0) } ?? .default
     let config = AlarmManager.AlarmConfiguration(
+      countdownDuration: Alarm.CountdownDuration(preAlert: nil, postAlert: snoozeSeconds),
       schedule: schedule,
       attributes: attributes,
       sound: alertSound
@@ -260,7 +302,8 @@ enum JapamAlarmIosService {
   static func requestPermission() async -> Bool { false }
   static func authorizationStatus() -> String { "undetermined" }
   static func schedule(
-    alarmId: String, hour: Int, minute: Int, title: String, soundName: String?
+    alarmId: String, hour: Int, minute: Int, title: String, soundName: String?,
+    repeatDays: [Int]?, fixedDate: Date?
   ) async throws {
     throw NSError(
       domain: "JapamAlarmIos",

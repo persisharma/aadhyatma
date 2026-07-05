@@ -43,6 +43,15 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
         const val INTENT_EXTRA_MANTRA_ID = "mantraId"
         const val INTENT_EXTRA_FIRE_AT = "fireAt"
         const val INTENT_EXTRA_LABEL = "label"
+        /**
+         * Weekday recurrence carried through the PendingIntent so the receiver
+         * can re-arm the right day. Encoded as a comma-joined list of JS
+         * `getDay()` indices (0=Sun…6=Sat):
+         *   - absent extra → daily,
+         *   - "" (empty)   → one-shot: no re-arm after firing,
+         *   - "1,3,5"      → weekly on those days.
+         */
+        const val INTENT_EXTRA_REPEAT_DAYS = "repeatDays"
 
         fun buildPendingIntent(
             context: Context,
@@ -50,6 +59,7 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
             mantraId: String,
             fireAt: Long,
             label: String?,
+            repeatDays: String?,
             flags: Int = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         ): PendingIntent {
             val intent = Intent(context, JapamAlarmReceiver::class.java).apply {
@@ -58,6 +68,7 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
                 putExtra(INTENT_EXTRA_MANTRA_ID, mantraId)
                 putExtra(INTENT_EXTRA_FIRE_AT, fireAt)
                 if (label != null) putExtra(INTENT_EXTRA_LABEL, label)
+                if (repeatDays != null) putExtra(INTENT_EXTRA_REPEAT_DAYS, repeatDays)
             }
             return PendingIntent.getBroadcast(
                 context,
@@ -65,6 +76,37 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
                 intent,
                 flags
             )
+        }
+
+        /**
+         * Next epoch-ms occurrence strictly after [afterMs] whose weekday is
+         * allowed, preserving [afterMs]'s wall-clock time (Calendar-based, so
+         * DST transitions keep the alarm at the same local time).
+         *
+         * [repeatDays]: null = daily; empty = none (returns 0 → caller must
+         * not re-arm); else JS `getDay()` indices (0=Sun…6=Sat).
+         */
+        fun nextOccurrenceAfter(afterMs: Long, repeatDays: Set<Int>?): Long {
+            if (repeatDays != null && repeatDays.isEmpty()) return 0L
+            val cal = java.util.Calendar.getInstance().apply { timeInMillis = afterMs }
+            for (i in 0 until 7) {
+                cal.add(java.util.Calendar.DAY_OF_YEAR, 1)
+                // Calendar.DAY_OF_WEEK is 1=Sunday…7=Saturday → JS getDay() + 1.
+                val jsDay = cal.get(java.util.Calendar.DAY_OF_WEEK) - 1
+                if (repeatDays == null || repeatDays.contains(jsDay)) {
+                    return cal.timeInMillis
+                }
+            }
+            return cal.timeInMillis
+        }
+
+        /** Parse the comma-joined extra back into the tri-state set (see
+         *  [INTENT_EXTRA_REPEAT_DAYS]): null = daily, empty = one-shot. */
+        fun parseRepeatDays(encoded: String?): Set<Int>? {
+            if (encoded == null) return null
+            if (encoded.isEmpty()) return emptySet()
+            return encoded.split(',').mapNotNull { it.trim().toIntOrNull() }
+                .filter { it in 0..6 }.toSet()
         }
 
         fun persistAlarms(context: Context, alarms: JSONArray) {
@@ -97,6 +139,8 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
      *   - mantraId: string
      *   - fireAt: number (epoch ms)
      *   - label?: string
+     *   - repeatDays?: number[] | null  (null/absent = daily; [] = one-shot)
+     *   - fixed?: boolean               (true = one-shot regardless of days)
      */
     @ReactMethod
     fun scheduleAlarm(args: com.facebook.react.bridge.ReadableMap, promise: Promise) {
@@ -110,6 +154,23 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
             }
             val fireAt = args.getDouble("fireAt").toLong()
             val label = if (args.hasKey("label") && !args.isNull("label")) args.getString("label") else null
+            val fixed = args.hasKey("fixed") && !args.isNull("fixed") && args.getBoolean("fixed")
+            // Tri-state recurrence, normalised to the intent-extra encoding.
+            val repeatDaysEncoded: String? = when {
+                fixed -> ""
+                args.hasKey("repeatDays") && !args.isNull("repeatDays") -> {
+                    val arr = args.getArray("repeatDays")
+                    val days = mutableListOf<Int>()
+                    if (arr != null) {
+                        for (i in 0 until arr.size()) {
+                            val d = arr.getInt(i)
+                            if (d in 0..6) days.add(d)
+                        }
+                    }
+                    days.sorted().joinToString(",")
+                }
+                else -> null
+            }
 
             val ctx = reactApplicationContext
             val am = ctx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -119,7 +180,7 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
             // — still Doze-tolerant, just not the "alarm icon" tier.
             val canExact = Build.VERSION.SDK_INT < Build.VERSION_CODES.S || am.canScheduleExactAlarms()
 
-            val pi = buildPendingIntent(ctx, alarmId, mantraId, fireAt, label)
+            val pi = buildPendingIntent(ctx, alarmId, mantraId, fireAt, label, repeatDaysEncoded)
             val showPi = makeShowIntent(ctx)
 
             if (canExact) {
@@ -129,7 +190,7 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
                 am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, fireAt, pi)
             }
 
-            updatePersistedAlarm(ctx, alarmId, mantraId, fireAt, label)
+            updatePersistedAlarm(ctx, alarmId, mantraId, fireAt, label, repeatDaysEncoded)
 
             val result: WritableMap = Arguments.createMap()
             result.putString("alarmId", alarmId)
@@ -230,7 +291,8 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
         alarmId: String,
         mantraId: String,
         fireAt: Long,
-        label: String?
+        label: String?,
+        repeatDays: String?
     ) {
         val existing = readPersistedAlarms(context)
         val out = JSONArray()
@@ -238,13 +300,13 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
         for (i in 0 until existing.length()) {
             val a = existing.optJSONObject(i) ?: continue
             if (a.optString("alarmId") == alarmId) {
-                out.put(jsonAlarm(alarmId, mantraId, fireAt, label))
+                out.put(jsonAlarm(alarmId, mantraId, fireAt, label, repeatDays))
                 inserted = true
             } else {
                 out.put(a)
             }
         }
-        if (!inserted) out.put(jsonAlarm(alarmId, mantraId, fireAt, label))
+        if (!inserted) out.put(jsonAlarm(alarmId, mantraId, fireAt, label, repeatDays))
         persistAlarms(context, out)
     }
 
@@ -262,13 +324,16 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
         alarmId: String,
         mantraId: String,
         fireAt: Long,
-        label: String?
+        label: String?,
+        repeatDays: String?
     ): JSONObject {
         val o = JSONObject()
         o.put("alarmId", alarmId)
         o.put("mantraId", mantraId)
         o.put("fireAt", fireAt)
         if (label != null) o.put("label", label)
+        // Absent key = daily (matches the intent-extra encoding).
+        if (repeatDays != null) o.put("repeatDays", repeatDays)
         return o
     }
 
