@@ -13,9 +13,19 @@ import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import MuhuratCardBody from '@/components/MuhuratCardBody';
+import ShareButton from '@/components/ShareButton';
 import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratDetail'>;
+
+// One frame + a short beat so the off-screen share card is committed and its
+// fonts are resolved before capture. Without this, the New Architecture returns
+// a blank snapshot for a view that has never been on-screen (matches the reader
+// share path in shareVerse.tsx).
+async function waitForLayout() {
+  await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+  await new Promise<void>((resolve) => setTimeout(resolve, 60));
+}
 
 export default function MuhuratDetailScreen({ navigation, route }: Props) {
   const { colors, typography, spacing } = useTheme();
@@ -38,6 +48,7 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
     if (busy || !ready) return;
     setBusy(true);
     try {
+      await waitForLayout();
       const uri = await captureRef(shotRef, { format: 'png', quality: 1, result: 'tmpfile' });
       if (await Sharing.isAvailableAsync()) {
         await Sharing.shareAsync(uri, {
@@ -69,18 +80,12 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
           <Text style={{ flex: 1, fontFamily: titleFontByLang(lang), fontSize: 16, color: colors.ink }}>
             {contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
           </Text>
-          <Pressable
+          <ShareButton
             onPress={onShare}
-            disabled={busy || !ready}
-            accessibilityRole="button"
-            accessibilityLabel={pick(lang, { hi: 'साझा करें', en: 'Share', gu: 'શેર કરો', kn: 'ಹಂಚಿ' })}
-            hitSlop={12}
-            style={[styles.shareBtn, { backgroundColor: colors.saffron, opacity: busy || !ready ? 0.5 : 1 }]}
-          >
-            <Text style={{ color: colors.onPrimary, fontSize: 13, fontFamily: titleFontByLang(lang) }}>
-              {contentByLang(lang, 'साझा', 'Share')}
-            </Text>
-          </Pressable>
+            busy={busy || !ready}
+            accessibilityLabel={pick(lang, { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ' })}
+            accessibilityHint={undefined}
+          />
         </View>
 
         <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
@@ -111,6 +116,5 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   topBar: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, gap: 12 },
   backBtn: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  shareBtn: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 999 },
   offscreen: { position: 'absolute', left: -10000, top: 0 },
 });
