@@ -416,7 +416,9 @@ export default function MoreScreen({ navigation }: Props) {
                 pressed && { opacity: 0.6 },
               ]}
             >
-              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 13, color: colors.ink }}>Show Tour Again</Text>
+              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 13, color: colors.ink }}>
+                {pick(defaultLang, { hi: 'ऐप भ्रमण फिर देखें', en: 'Show App Tour', gu: 'ઍપ પરિચય ફરી જુઓ', kn: 'ಆ್ಯಪ್ ಪ್ರವಾಸ ಮತ್ತೆ ನೋಡಿ' })}
+              </Text>
               <Text style={{ color: colors.inkMuted, fontSize: 16 }}>›</Text>
             </Pressable>
             <Pressable

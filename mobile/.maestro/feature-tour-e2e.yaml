@@ -1,0 +1,100 @@
+# Feature Tour — first-launch walkthrough e2e
+#
+# The tour auto-shows once per install and then never again, which is not
+# deterministic to assert from a shared simulator whose AsyncStorage persists
+# between flows. Instead we drive it through the **replay** affordance
+# (More → "Show feature tour again"), which calls resetTour() and re-opens the
+# same overlay from step 1 — identical UI to the first-launch path, but on
+# demand.
+#
+# What this covers:
+#   • replay entry point on the More hub
+#   • the overlay renders step 1 with Skip + Next controls
+#   • Next drives the walk-through forward AND navigates the live app to each
+#     surface (Home → Panchang → Today's Practice → Bhajan → Bhakti → Japa →
+#     Wishlist → Reminder → Share)
+#   • Back steps returns to the previous step
+#   • Done on the final step dismisses the tour
+#
+# Selector notes:
+#   • The replay row's a11y label is the constant English "Show feature tour
+#     again" (language-independent), so this flow works whatever reading
+#     language is persisted.
+#   • Tour controls expose constant a11y labels: "Skip tour", "Next step",
+#     "Previous step", "Done" — matched directly rather than the bilingual
+#     visible captions ("Next · आगे" etc.).
+#   • Each step's English subtitle ("Home", "Panchang", …) renders regardless
+#     of language (the tour is intentionally bilingual), so it is a stable
+#     per-step anchor.
+
+appId: host.exp.Exponent
+---
+- runFlow: _launch.yaml
+
+# ── Open More and replay the tour ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Show feature tour again"
+    centerElement: true
+- tapOn: "Show feature tour again"
+- waitForAnimationToEnd
+
+# ── Step 1: Home ──
+- extendedWaitUntil:
+    visible: "Home"
+    timeout: 10000
+- assertVisible: "Skip"
+
+# ── Walk forward through every step, asserting each surface's subtitle ──
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Panchang"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Today.s Practice"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Bhajan"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Bhakti"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Japa.*Alarms"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Wishlist.*Resume"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Daily Reminder"
+
+# ── Back returns to the previous step ──
+- tapOn: "Previous step"
+- waitForAnimationToEnd
+- assertVisible: "Wishlist.*Resume"
+
+# ── Forward again to the final step, then finish ──
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Daily Reminder"
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Share"
+- tapOn: "Done"
+- waitForAnimationToEnd
+
+# ── Tour dismissed: its controls are gone ──
+- assertNotVisible: "Skip tour"
+- assertNotVisible: "Next step"
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+- stopApp:
+    appId: host.exp.Exponent

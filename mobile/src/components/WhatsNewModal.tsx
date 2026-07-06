@@ -3,6 +3,8 @@ import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { pick, contentByLang } from '@/utils/localize';
+import { titleFontByLang, meaningToken } from '@/utils/langType';
 import { useTour } from '@/contexts/TourContext';
 
 /**
@@ -11,6 +13,12 @@ import { useTour } from '@/contexts/TourContext';
  * see this after an update; brand-new users never see it because the
  * first-launch tour marks the current version as "what's new seen" on
  * completion.
+ *
+ * Language: this fires for returning users who already have a reading
+ * language set, so it must honour all four (hi/en/gu/kn) — never a bare
+ * hi/en ternary (see wiki concepts/languages Gotchas). Text routes through
+ * `contentByLang` (gu/kn re-script the Hindi) and fonts through the
+ * `langType` helpers so gu/kn don't render as tofu in a Devanagari face.
  */
 export default function WhatsNewModal() {
   const { colors, typography, spacing, radii } = useTheme();
@@ -28,7 +36,20 @@ export default function WhatsNewModal() {
   }, [markWhatsNewSeen]);
 
   if (!whatsNewEntry) return null;
-  const isHi = lang === 'hi';
+
+  const headerTitle = pick(lang, {
+    hi: 'नई सुविधाएँ',
+    en: "What's New",
+    gu: 'નવી સુવિધાઓ',
+    kn: 'ಹೊಸ ವೈಶಿಷ್ಟ್ಯಗಳು',
+  });
+  const gotIt = pick(lang, {
+    hi: 'समझ गया',
+    en: 'Got it',
+    gu: 'સમજાયું',
+    kn: 'ಅರ್ಥವಾಯಿತು',
+  });
+  const bodyFont = meaningToken(lang, typography).fontFamily;
 
   return (
     <Modal
@@ -43,12 +64,9 @@ export default function WhatsNewModal() {
             <View>
               <Text
                 accessibilityRole="header"
-                style={[
-                  styles.title,
-                  { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
-                ]}
+                style={[styles.title, { color: colors.ink, fontFamily: titleFontByLang(lang) }]}
               >
-                {isHi ? 'नई सुविधाएँ' : "What's New"}
+                {headerTitle}
               </Text>
               <Text
                 style={[
@@ -80,35 +98,18 @@ export default function WhatsNewModal() {
             {whatsNewEntry.items.map((item, i) => (
               <View key={i} style={styles.item}>
                 <View
-                  style={[
-                    styles.bullet,
-                    { backgroundColor: colors.saffron },
-                  ]}
+                  style={[styles.bullet, { backgroundColor: colors.saffron }]}
                   accessibilityElementsHidden
                   importantForAccessibility="no"
                 />
                 <View style={styles.itemContent}>
                   <Text
-                    style={[
-                      styles.itemTitle,
-                      {
-                        color: colors.ink,
-                        fontFamily: typography.readerTitle.fontFamily,
-                      },
-                    ]}
+                    style={[styles.itemTitle, { color: colors.ink, fontFamily: titleFontByLang(lang) }]}
                   >
-                    {isHi ? item.titleHi : item.titleEn}
+                    {contentByLang(lang, item.titleHi, item.titleEn)}
                   </Text>
-                  <Text
-                    style={[
-                      styles.itemBody,
-                      {
-                        color: colors.inkSoft,
-                        fontFamily: typography.meaning.fontFamily,
-                      },
-                    ]}
-                  >
-                    {isHi ? item.bodyHi : item.bodyEn}
+                  <Text style={[styles.itemBody, { color: colors.inkSoft, fontFamily: bodyFont }]}>
+                    {contentByLang(lang, item.bodyHi, item.bodyEn)}
                   </Text>
                 </View>
               </View>
@@ -119,7 +120,7 @@ export default function WhatsNewModal() {
             <Pressable
               onPress={close}
               accessibilityRole="button"
-              accessibilityLabel={isHi ? 'समझ गया' : 'Got it'}
+              accessibilityLabel={gotIt}
               style={({ pressed }) => [
                 styles.primary,
                 {
@@ -130,15 +131,9 @@ export default function WhatsNewModal() {
               ]}
             >
               <Text
-                style={[
-                  styles.primaryLabel,
-                  {
-                    color: colors.onPrimary,
-                    fontFamily: typography.readerTitle.fontFamily,
-                  },
-                ]}
+                style={[styles.primaryLabel, { color: colors.onPrimary, fontFamily: titleFontByLang(lang) }]}
               >
-                {isHi ? 'समझ गया' : 'Got it'}
+                {gotIt}
               </Text>
             </Pressable>
           </View>

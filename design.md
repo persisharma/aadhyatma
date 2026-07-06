@@ -1093,7 +1093,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 7. **Language card** — the app-wide default reading language as a 2×2 radio grid over the `LANGUAGES` metadata (हिन्दी / English / ગુજરાતી / ಕನ್ನಡ, each labelled in its own script at 17); the selection gets a `saffron` border, `saffron-tint`-strength fill, and a corner ✓. Same state as every Language Toggle (§16) — `useGitaLanguage`, persisted.
 8. **Reading size card** (`ReadingSizeCard`) — the global M/L type-scale control; see the Reading Size section (§44).
 9. **Panchang disclosure card** — ☽ icon tile + a small-print methodology note ("Tithi follows Surya Siddhanta with modern corrections…", localized), naming the current panchang city and pointing location changes at the Panchang tab (§33).
-10. **Links card** — `About & Disclaimer` (opens a pageSheet modal with the bilingual disclaimer + "Report an Error" CTA) and `Report an Error` (mailto).
+10. **Links card** — `Show App Tour` (localized; a11y label constant "Show feature tour again") which calls `resetTour()` to replay the first-launch feature tour on demand (§47), `About & Disclaimer` (opens a pageSheet modal with the bilingual disclaimer + "Report an Error" CTA), and `Report an Error` (mailto).
 
 **Profile** (`ProfileScreen.tsx`) — the साधक insights surface, fed by `UserActivityContext` (reads, japam beads/rounds, per-source and per-mantra tallies, all local):
 
@@ -1453,3 +1453,38 @@ One enrolled sankalp's card on the Today's Practice ledger (§31) — flat `parc
 `types.ts` — `SadhanaProgram { id, titleHi/En, thumb, subtitleHi/En, deity?, introHi/En, cadence, day? | days? }` (uniform `day` vs per-day `days`); `SadhanaCadence` = `consecutive` | `weekday` | `festival-window`; `SadhanaEnrollment { programId, startedOn, status: 'active'|'completed'|'abandoned', completedDays, completedOn? }`. `progress.ts` `resolveSadhanaToday()` returns the `active | done-today | waiting | completed` view-status (grace-by-default: a day is "spent" only when completed; the `waiting` status carries `items` for the preview). `useSadhanaToday.ts` composes enrollment + program + panchang schedule + reading/japa progress into the per-card view-model. Backing tests: `progress.test.ts` (resolver + catalog well-formedness incl. thumb), `SankalpTodayCard.test.tsx` (waiting-preview). e2e: `.maestro/sadhana-sankalp-smoke.yaml` (consecutive) + `sadhana-calendar-preview-smoke.yaml` (calendar-gated preview).
 
 **Files:** `mobile/src/screens/SadhanaProgramListScreen.tsx`, `SadhanaProgramDetailScreen.tsx`; `mobile/src/components/SankalpTodayCard.tsx`; `mobile/src/contexts/SadhanaContext.tsx`; `mobile/src/data/sadhana/{types,programs,progress,useSadhanaToday}.ts`. PRD: `docs/roadmap/prds/11-sadhana-programs.md`.
+
+---
+
+## 47. Feature Tour & What's New
+
+**Purpose.** Two onboarding surfaces that answer "what's in this app?" without a manual. The **first-launch feature tour** (`FeatureTour.tsx`) is an in-context, 9-step walkthrough that navigates the user through the real app and pins a tooltip to each surface. The **What's New sheet** (`WhatsNewModal.tsx`) fires once after an update and lists only that release's new features. Both are gated by `TourContext.tsx` and mounted once in `App.tsx` inside the provider stack (after `PanchangLocationProvider`, wrapping `ShareProvider`). Complements §44 (NEW badge / OTA prompt) — those mark *content*; this orients the *app*.
+
+### First-launch tour (`mobile/src/components/FeatureTour.tsx`)
+
+**In-context, not a slideshow.** A translucent `Modal` (`transparent`, `presentationStyle="overFullScreen"`, `statusBarTranslucent`, `fade`) sits above the live navigator over a `rgba(15,10,5,0.55)` ink scrim — the real screen reads through behind it. On every step change the tour dispatches `navigationRef.dispatch(CommonActions.navigate(...))` (deferred through `InteractionManager.runAfterInteractions` so it doesn't fight the overlay's fade), so the user actually lands on the surface the copy describes. The modal captures touches, so only its own controls advance the tour — it stays linear.
+
+**Anchored tooltip.** Each step declares an `anchor` (`top` | `center` | `bottom`) and a `pointer` (`up` | `down` | `none`); the card sits at the anchor with a `parchment-soft` pointer triangle nudging the eye toward the relevant region. Deliberately no per-element spotlight measurement — anchor + arrow is robust across screen sizes and content changes.
+
+**Card spec.** `parchment-soft` fill, `divider` border, `radii.lg`, 20 padding, elevated shadow. Contents: step counter `n / N` (top-left, `cardLatin` italic, `parchment`, tracked-uppercase) + `Skip` (top-right, same face); the card holds a `readerTitle`-face Hindi title (22, `ink`, centred) over an italic `subtitle`-face English title (13, `ink-muted`); a `divider` hairline; then a bilingual body (`meaning` face — Hindi 15/26 `ink`, English 13/22 `ink-soft` at 0.85). Footer: a `dotRest`/`saffron` progress-dot row, then **Back** (secondary outline, `divider` border, disabled + 0.3 opacity on step 1) and **Next · आगे** / on the last step **Done · पूर्ण** (primary solid `saffron`, `onPrimary`, `radii.md`). a11y labels are constant English — `Skip tour`, `Previous step`, `Next step`, `Done` — so e2e is language-independent.
+
+**Bilingual, always.** The tour renders Hindi (primary) **and** English (secondary) on every card and never branches on `lang`. It is a first-run welcome shown before any reading language is chosen (default `hi`), and the app's identity is Hindi-led-bilingual (§1); showing both is the welcome, not a localization bug (contrast the What's New sheet below, which *does* honour the reading language because it fires for returning users). Because it never picks hi-or-en by `lang`, it doesn't trip the gu/kn ternary hazard (wiki `concepts/languages`).
+
+**Steps (9), in order** (`mobile/src/data/tour/steps.ts` — each: `id`, `navigateTo`, `anchor`, `pointer`, bilingual title/body): Home (`HomeTab/Home`, categories + Discover), Panchang (`PanchangTab`), Today's Practice (`HomeTab/RoutineToday`, Sankalp), Bhajan (`AudioTab`, persistent mini-player), Bhakti (`DailyBhaktiTab`), Japa & Alarms (`HomeTab/Home`, points at the Japa tile), Wishlist & Resume (`MoreTab/Wishlist`), Daily Reminder (`MoreTab/Reminders`), Share (`DailyBhaktiTab`, points at the share button). A compile-time check pins every `navigateTo.name` to a real `TabParamList` tab.
+
+### What's New sheet (`mobile/src/components/WhatsNewModal.tsx`)
+
+`pageSheet` Modal, `parchment` fill. Header: title (`pick`-localized "What's New / नई सुविधाएँ / …", `titleFontByLang`, 20, `ink`) over a `vX.Y.Z` version line (`cardLatin` italic, tracked-uppercase, `ink-muted`); a `saffron` ✕ close. Body: a scroll of items, each a `saffron` bullet dot + title (17) + body (14/24, `ink-soft`). Footer: a solid-`saffron` "Got it" (localized). **Language-correct for all four:** text routes through `contentByLang(lang, hi, en)` (gu/kn re-script the Hindi) and fonts through `titleFontByLang` / `meaningToken` so gu/kn never render as tofu in a Devanagari face — this sheet fires for returning users who already have a reading language set, so it must not use a bare hi/en ternary (wiki `concepts/languages` Gotchas).
+
+### Gating & persistence (`mobile/src/contexts/TourContext.tsx`)
+
+Two AsyncStorage keys hold the last-seen **version string**: `@vedansh/tour-completed-v` and `@vedansh/whats-new-seen-v`.
+
+- **Fresh install** → `shouldShowFirstLaunchTour` (tour key absent). Completing or skipping (`markTourCompleted`) writes **both** keys to `APP_TOUR_VERSION`, so a brand-new user is never immediately double-prompted with the What's New sheet.
+- **Update launch** → `shouldShowWhatsNew` = tour not pending **and** a `whatsNew` entry exists for `APP_TOUR_VERSION` **and** the what's-new key ≠ `APP_TOUR_VERSION`. `markWhatsNewSeen` advances only the what's-new key (never retroactively completes the tour).
+- **Replay** → `resetTour()` clears both keys and re-arms the first-launch tour (More → "Show App Tour", §37).
+- Storage-read failure defaults to "never seen" (friendlier to over-show onboarding than to swallow it); write failures still flip in-memory state so the surface doesn't loop within a session.
+
+**Content lives in `mobile/src/data/tour/whatsNew.ts`:** `APP_TOUR_VERSION` (must equal `app.json` `expo.version`), a per-version `whatsNew` map of bilingual `items`, and `getWhatsNewForVersion()` (returns null for unknown or empty entries → sheet suppressed).
+
+**Files:** `mobile/src/components/FeatureTour.tsx`, `WhatsNewModal.tsx`; `mobile/src/contexts/TourContext.tsx`; `mobile/src/data/tour/{steps,whatsNew}.ts`; wired in `mobile/App.tsx`, replay row in `MoreScreen.tsx` (§37). Tests: `src/contexts/__tests__/TourContext.test.tsx`, `src/components/__tests__/FeatureTour.test.tsx`, `src/data/__tests__/tourContent.jest.test.ts`; e2e `.maestro/feature-tour-e2e.yaml` (+ `_launch.yaml` dismisses the auto-tour for every other flow).

@@ -14,6 +14,11 @@
 #     the bundle finished executing.
 #   - Expo Go can leave a native dev-menu bottom sheet open after project load;
 #     the downward swipe dismisses it when present and is harmless on Home.
+#   - On a FRESH install (e.g. a clean CI simulator) the first-launch feature
+#     tour auto-appears over Home. It stays "pending" until dismissed, so every
+#     downstream flow would be blocked by its overlay. The optional "Skip" tap
+#     dismisses it and persists tour-completed; it is a harmless no-op on every
+#     later run where the tour has already been seen.
 appId: host.exp.Exponent
 ---
 - launchApp:
@@ -24,6 +29,11 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: "Good Habits\\..*Tap to open\\."
     timeout: 60000
+# Dismiss the first-launch feature tour if it auto-appeared (fresh install / CI).
+- tapOn:
+    text: "Skip"
+    optional: true
+- waitForAnimationToEnd
 - swipe:
     direction: DOWN
 - waitForAnimationToEnd
