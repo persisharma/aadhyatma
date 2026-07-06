@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -7,7 +7,6 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import PracticeSeal from '@/components/PracticeSeal';
-import { useSadhana } from '@/contexts/SadhanaContext';
 import { offeredTail } from '@/data/routine/practiceView';
 import { navigateToRoutineItem } from '@/navigation/entryRoutes';
 import type { SadhanaTodayCard as CardData } from '@/data/sadhana/useSadhanaToday';
@@ -15,30 +14,15 @@ import type { HomeStackParamList } from '@/navigation/types';
 
 /**
  * One enrolled sankalp's card in the Today's Practice screen. Shows the current
- * day's unit when open, auto-commits the day when its reading/japa is done
- * today, and plays a पूर्णाहुति seal when the whole vow completes.
+ * day's unit when open. The root-mounted SadhanaCompletionOverlay owns
+ * auto-commit and पूर्णाहुति celebration so completion works from any screen.
  */
 export default function SankalpTodayCard({ card }: { card: CardData }) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const { commitDay, markCelebrated, wasCelebrated } = useSadhana();
   const nav = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
-  const { program, status, items, allItemsDoneToday, autoVia } = card;
-
-  // Auto-commit: once every item of today's open day is genuinely done today,
-  // record the day so the vow advances (and unlocks the next day tomorrow).
-  useEffect(() => {
-    if (status.kind === 'active' && allItemsDoneToday) {
-      commitDay(program.id, status.dayIndex, autoVia);
-    }
-  }, [status, allItemsDoneToday, autoVia, program.id, commitDay]);
-
-  // पूर्णाहुति celebration guard — play the seal once per completed program.
-  const isCompleted = status.kind === 'completed';
-  useEffect(() => {
-    if (isCompleted && !wasCelebrated(program.id)) markCelebrated(program.id);
-  }, [isCompleted, program.id, wasCelebrated, markCelebrated]);
+  const { program, status, items } = card;
 
   const title = contentByLang(lang, program.titleHi, program.titleEn);
   let dayLabel: string;

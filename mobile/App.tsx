@@ -59,6 +59,7 @@ import { handleNotificationResponse, navigationRef } from '@/notifications/deepL
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
+import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import MiniPlayer from '@/components/audio/MiniPlayer';
@@ -189,6 +190,7 @@ export default function App() {
                               <UpdateReadyModal />
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
+                            <SadhanaCompletionOverlay />
                             <VratReminderScheduler />
                             <SadhanaReminderScheduler />
                             <MiniPlayer />
