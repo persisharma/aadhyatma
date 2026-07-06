@@ -72,7 +72,7 @@ Mapped against the existing gap inventory in `docs/roadmap/2026-Q3-roadmap.md`:
 
 **Raise priority (MoM makes these more urgent):**
 1. **Android (currently deferred to Q4).** MoM's reach shows where the devotional-habit audience actually is. Every quarter iOS-only is a quarter competitors own the default platform of the Indian market.
-2. **Audio expansion + follow-along (roadmap PRDs, partially open).** MoM proves the daily spiritual slot is won by *audio*, not reading, for a large segment. Per-verse recitation with karaoke-style follow-along converts Vedansh's depth into MoM-grade ease.
+2. **Audio expansion + follow-along (roadmap PRDs, partially open).** MoM proves the daily spiritual slot is won by *audio*, not reading, for a large segment. Per-verse recitation with karaoke-style follow-along converts Vedansh's depth into MoM-grade ease. Additionally, MoM's single-short-practice mechanic is worth adopting in devotional form — see [PRD-15 — Dhyāna guided meditation audio](roadmap/prds/15-dhyana-meditation-audio.md).
 3. **Streak-repair mechanic.** MoM's shields show streak *insurance* retains users past the first missed day. A dharmic equivalent (e.g., a "kshama" day earned by completed sankalps) fits Vedansh's derived-completion system without importing coin-shop mechanics.
 4. **Native Gujarati/Kannada meaning text.** MoM's 11-language breadth highlights that transliterated Hindi meaning is a second-class experience for gu/kn users.
 
