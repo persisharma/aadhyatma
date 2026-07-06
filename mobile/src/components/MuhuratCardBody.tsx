@@ -4,15 +4,18 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { transliterateDevanagari } from '@/utils/transliterate';
 import { formatClock, formatRange } from '@/panchang/muhuratFormat';
 import type { PanchangData, PanchangElement } from '@/panchang/types';
-import type { ChoghadiyaKey, ChoghadiyaPeriod, KaalWindow, MuhuratDay } from '@/panchang/muhurat';
+import type { ChoghadiyaPeriod, KaalWindow, MuhuratDay } from '@/panchang/muhurat';
 
 const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const MONTHS_HI = ['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्तूबर','नवंबर','दिसंबर'];
 
 function fmtDate(d: Date, lang: Lang): string {
-  const months = lang === 'en' ? MONTHS_EN : MONTHS_HI;
+  // gu/kn re-script the Devanagari month, matching the other Panchang screens.
+  const months =
+    lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 function elementLine(e: PanchangElement, lang: Lang): string {
@@ -30,18 +33,20 @@ export default function MuhuratCardBody({
   p,
   md,
   variant,
-  nowKey,
+  nowStartMs,
   cityLabel,
   brand = false,
 }: {
   p: PanchangData;
   md: MuhuratDay;
   variant: 'full' | 'share';
-  nowKey?: ChoghadiyaKey | null;
+  /** Epoch-ms start of the choghadiya running now, to flag the exact period
+   * (never the repeated key). Null/undefined when not today. */
+  nowStartMs?: number | null;
   cityLabel: string;
   brand?: boolean;
 }) {
-  const { colors, typography, spacing, radii } = useTheme();
+  const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
 
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
@@ -63,10 +68,15 @@ export default function MuhuratCardBody({
   const Muh = ({ name, time, quality, now }: { name: string; time: string; quality: 'auspicious' | 'avoid'; now?: boolean }) => {
     const bg = quality === 'avoid' ? colors.avoidTint : colors.goldTint;
     const tone = quality === 'avoid' ? colors.avoid : colors.ink;
+    // §12 — quality carries a text cue, never colour alone.
+    const qualityLabel = quality === 'avoid' ? contentByLang(lang, 'त्याज्य', 'avoid') : contentByLang(lang, 'शुभ', 'auspicious');
     return (
       <View style={[styles.muh, { backgroundColor: bg, borderRadius: radii.md }, now && { borderWidth: 1.5, borderColor: colors.saffron }]}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, flex: 1, minWidth: 0 }}>
           <Text style={{ fontFamily: titleFont, fontSize: 14, color: tone }}>{name}</Text>
+          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 9, color: quality === 'avoid' ? colors.avoid : colors.saffronDeep }}>
+            · {qualityLabel}
+          </Text>
           {now && (
             <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 8, fontWeight: '700', color: colors.onPrimary, backgroundColor: colors.saffron, paddingHorizontal: 5, paddingVertical: 1, borderRadius: 5, overflow: 'hidden' }}>
               अभी
@@ -112,7 +122,7 @@ export default function MuhuratCardBody({
 
         <GroupLabel hi="शुभ मुहूर्त · चौघड़िया" en="Auspicious · Choghadiya" />
         {(variant === 'share' ? auspicious : md.dayChoghadiya).map((c, i) => (
-          <Muh key={`d${i}`} name={chogName(c)} time={formatRange(c.start, c.end)} quality={c.quality} now={c.key === nowKey && c.phase === 'day'} />
+          <Muh key={`d${i}`} name={chogName(c)} time={formatRange(c.start, c.end)} quality={c.quality} now={c.start.getTime() === nowStartMs} />
         ))}
 
         {variant === 'full' && (
@@ -120,7 +130,7 @@ export default function MuhuratCardBody({
             <Rule />
             <GroupLabel hi="रात्रि चौघड़िया" en="Night Choghadiya" />
             {md.nightChoghadiya.map((c, i) => (
-              <Muh key={`n${i}`} name={chogName(c)} time={formatRange(c.start, c.end)} quality={c.quality} now={c.key === nowKey && c.phase === 'night'} />
+              <Muh key={`n${i}`} name={chogName(c)} time={formatRange(c.start, c.end)} quality={c.quality} now={c.start.getTime() === nowStartMs} />
             ))}
           </>
         )}

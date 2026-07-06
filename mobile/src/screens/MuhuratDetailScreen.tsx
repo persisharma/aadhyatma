@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { captureRef } from 'react-native-view-shot';
@@ -25,14 +25,17 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
 
   const date = new Date(route.params.dateMs);
   const muhurat = useMuhurat(date, calendarSystem);
+  const md = muhurat.muhurat;
+  const p = muhurat.panchang;
+  const ready = md != null && p != null;
   const cityLabel = contentByLang(lang, location.labelHi, location.labelEn);
-  const nowKey = muhurat.isToday ? muhurat.nowChoghadiya?.key ?? null : null;
+  const nowStartMs = muhurat.isToday ? muhurat.nowChoghadiya?.start.getTime() ?? null : null;
 
   const shotRef = useRef<View>(null);
   const [busy, setBusy] = useState(false);
 
   const onShare = useCallback(async () => {
-    if (busy) return;
+    if (busy || !ready) return;
     setBusy(true);
     try {
       const uri = await captureRef(shotRef, { format: 'png', quality: 1, result: 'tmpfile' });
@@ -47,7 +50,7 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
     } finally {
       setBusy(false);
     }
-  }, [busy, lang]);
+  }, [busy, ready, lang]);
 
   return (
     <View style={styles.root}>
@@ -68,11 +71,11 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
           </Text>
           <Pressable
             onPress={onShare}
-            disabled={busy}
+            disabled={busy || !ready}
             accessibilityRole="button"
             accessibilityLabel={pick(lang, { hi: 'साझा करें', en: 'Share', gu: 'શેર કરો', kn: 'ಹಂಚಿ' })}
             hitSlop={12}
-            style={[styles.shareBtn, { backgroundColor: colors.saffron, opacity: busy ? 0.5 : 1 }]}
+            style={[styles.shareBtn, { backgroundColor: colors.saffron, opacity: busy || !ready ? 0.5 : 1 }]}
           >
             <Text style={{ color: colors.onPrimary, fontSize: 13, fontFamily: titleFontByLang(lang) }}>
               {contentByLang(lang, 'साझा', 'Share')}
@@ -81,16 +84,24 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
         </View>
 
         <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
-          <MuhuratCardBody p={muhurat.panchang} md={muhurat} variant="full" nowKey={nowKey} cityLabel={cityLabel} />
+          {ready ? (
+            <MuhuratCardBody p={p} md={md} variant="full" nowStartMs={nowStartMs} cityLabel={cityLabel} />
+          ) : (
+            <View style={{ paddingVertical: 72, alignItems: 'center' }}>
+              <ActivityIndicator color={colors.saffron} />
+            </View>
+          )}
         </ScrollView>
       </SafeAreaView>
 
       {/* Off-screen share card — captured to a PNG for the OS share sheet. */}
-      <View collapsable={false} style={styles.offscreen} pointerEvents="none">
-        <View ref={shotRef} style={{ width: 340, backgroundColor: colors.parchment, padding: 18 }}>
-          <MuhuratCardBody p={muhurat.panchang} md={muhurat} variant="share" cityLabel={cityLabel} brand />
+      {ready && (
+        <View collapsable={false} style={styles.offscreen} pointerEvents="none">
+          <View ref={shotRef} style={{ width: 340, backgroundColor: colors.parchment, padding: 18 }}>
+            <MuhuratCardBody p={p} md={md} variant="share" cityLabel={cityLabel} brand />
+          </View>
         </View>
-      </View>
+      )}
     </View>
   );
 }

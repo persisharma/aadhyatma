@@ -25,8 +25,13 @@ export default function MuhuratGlanceCard({
 }) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const { isToday, nowChoghadiya, abhijit, rahu } = useMuhurat(date, calendarSystem);
+  const { isToday, nowChoghadiya, muhurat } = useMuhurat(date, calendarSystem);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
+
+  // Solve runs off the render path; render nothing until it lands (matches the
+  // Panchang tab's skeleton behaviour).
+  if (!muhurat) return null;
+  const { abhijit, rahu } = muhurat;
 
   const showNow = isToday && nowChoghadiya != null;
   const nowAvoid = nowChoghadiya?.quality === 'avoid';
