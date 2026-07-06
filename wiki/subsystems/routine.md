@@ -1,8 +1,8 @@
 ---
 title: Daily Routine (Nitya Sadhana)
 type: subsystem
-sources: [mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/data/routine/useRoutineToday.ts, mobile/src/data/routine/vaar.ts, mobile/src/contexts/RoutineContext.tsx, mobile/src/contexts/RoutineSheetProvider.tsx, mobile/src/components/RoutineBanner.tsx, mobile/src/components/routineBannerView.ts, mobile/src/components/AddToRoutineButton.tsx, mobile/src/components/RoutineCelebration.tsx, docs/roadmap/prds/07-daily-routine-sadhana.md]
-last_verified_date: 2026-06-13
+sources: [mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/data/routine/useRoutineToday.ts, mobile/src/data/routine/vaar.ts, mobile/src/data/sadhana/progress.ts, mobile/src/data/sadhana/useSadhanaToday.ts, mobile/src/contexts/RoutineContext.tsx, mobile/src/contexts/RoutineSheetProvider.tsx, mobile/src/components/RoutineBanner.tsx, mobile/src/components/SankalpTodayCard.tsx, mobile/src/components/routineBannerView.ts, mobile/src/components/AddToRoutineButton.tsx, mobile/src/components/RoutineCelebration.tsx, docs/roadmap/prds/07-daily-routine-sadhana.md, docs/roadmap/prds/11-sadhana-programs.md]
+last_verified_date: 2026-07-03
 confidence: high
 status: current
 ---
@@ -48,6 +48,17 @@ plays once per day when everything is done; five native-stack routes — `Routin
 hosts an `AddToRoutineButton` (chaptered readers pass the current chapter) which opens
 `AddToRoutineSheet` via `RoutineSheetProvider`.
 
+**Sadhana Programs / prebuilt sankalps** (`data/sadhana/*`, `SankalpTodayCard.tsx`):
+prebuilt programs share the Today's Practice surface. Active program days show their selected
+unit and can auto/manual-complete. Calendar-gated programs (`weekday`, `festival-window`) keep
+their waiting/resting copy when the gate is closed, but still expose the next selected unit as a
+tap-to-read preview so enrolling in an upcoming sankalp does not land on an empty dead end.
+The catalog (`SadhanaProgramListScreen`) + detail follow the app card language (design.md §46):
+`RoutineShell` gained an optional `background` prop → the catalog sits on `getRandomDeityBackground()`
+(By-Deity convention) and the detail on `getDeityBackground(program.deity)`; cards are warm
+`LibraryCard`-style (gradient thumb from `program.thumb`, both languages via `orderTitlesByLanguage`,
+status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Practice ledger.
+
 ## Dependencies
 
 - [[overview]] — provider nesting: `RoutineProvider` + `RoutineSheetProvider` sit between
@@ -65,6 +76,9 @@ hosts an `AddToRoutineButton` (chaptered readers pass the current chapter) which
   `{hi, en}` label maps) — the app-wide pattern; any new-language work must touch these.
 - **Search FAB vs banner z-order** — the search ⌕ FAB had to be lifted above the docked
   banner (it was swallowing the tap; caught by `search-smoke.yaml`).
+- **Waiting sankalps are previews, not completions** — `waiting.items` powers the visible
+  preselected content row, but `useSadhanaToday()` only computes completion and `SankalpTodayCard`
+  only shows the manual completion CTA for `active` days.
 - Tests: `contexts/__tests__/RoutineContext.test.tsx`, `screens/__tests__/RoutineCompletion.test.tsx`,
   `components/__tests__/routineBannerView.test.ts` + `RoutineBanner`/`RoutineCelebration` tests;
   Maestro `routine-smoke.yaml` (daily lifecycle) and `routine-weekday-smoke.yaml`

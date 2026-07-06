@@ -1,0 +1,147 @@
+# Sadhana Programs (संकल्प) Smoke Test — PRD-11, feat(sadhana) #167
+#
+# Sadhana Programs are prebuilt, multi-day devotional vows that reuse the Daily
+# Routine infrastructure. They are NOT a Home category nor a tab: the entry is
+# CLUBBED into routine creation. From the docked RoutineBanner:
+#   RoutineBanner → RoutineCreate ("choose" fork) → SadhanaPrograms (list)
+#                                                  → SadhanaProgramDetail
+#                                                  → RoutineToday (SankalpTodayCard)
+#
+# This flow exercises the whole enroll → practise → set-aside lifecycle:
+#   1. Banner (no-routine state) opens routine creation.
+#   2. CreateRoutineScreen 'choose' step forks — pick "Choose a prebuilt sankalp".
+#   3. SadhanaProgramListScreen — open the "Hanuman Chalisa — 41 Days" sankalp.
+#   4. SadhanaProgramDetailScreen — "Begin this sankalp" enrolls and lands on Today.
+#   5. RoutineToday — the SankalpTodayCard shows "SANKALP · DAY 1 / 41" + the day's
+#      Hanuman Chalisa item + a "Mark today's practice done" button; tapping it
+#      commits the day → the card flips to the "done today" resting state
+#      ("Today's reading is done. Come back tomorrow").
+#   6. Cleanup — Back returns to the (now active) Detail; "Set this sankalp aside"
+#      abandons the vow (SadhanaContext.abandon → status 'abandoned'), returning
+#      the program to the "Available" shelf so back-to-back runs stay clean.
+#
+# Why "Hanuman Chalisa — 41 Days" (hanuman-41):
+#   Its cadence is `consecutive` (days: 41), so Day 1 is always available on the
+#   run date regardless of the calendar. Navratri (festival-window) and Shravan
+#   Somvar (weekday) sankalps are date-anchored → they'd surface a `waiting`
+#   state on most days and make the flow flaky. Gītā-in-18 is also consecutive
+#   but paginates one chapter per day; the single-item Hanuman vow is the
+#   simplest deterministic pick.
+#
+# Why we switch to English first (mirrors routine/panchang/daily-bhakti smokes):
+#   Every sadhana screen reads the GLOBAL reading language (useGitaLanguage),
+#   default Hindi → Devanagari, which Maestro's iOS accessibility tree can't read
+#   reliably. We flip to English on the More tab, then assert the English strings
+#   (contentByLang renders the *En variants when lang === 'en').
+#
+# Selector notes (verified against source):
+#   - RoutineBanner no-routine state exposes accessibilityLabel
+#     "Set your daily practice" (RoutineBanner.tsx) → opens RoutineCreate.
+#   - CreateRoutineScreen 'choose' step: the second ModeCard's Texts merge into
+#     one accessibilityText ("Choose a prebuilt sankalp, Like a 41-day..."), so
+#     we anchor with ".*". The banner's hasRoutine is routine-only, so it still
+#     says "Set your daily practice" even while a sankalp is active.
+#   - SadhanaProgramListScreen title is "Sadhana Programs" (RoutineShell titleEn).
+#     Each program card is a button; its title, day badge, and subtitle merge
+#     ("Hanuman Chalisa — 41 Days, 41 days, A 41-day sankalp"), anchored with ".*".
+#   - SadhanaProgramDetailScreen title is "Sankalp"; the primary button reads
+#     "Begin this sankalp" for a fresh/abandoned enrolment (never-completed).
+#   - SankalpTodayCard's day label is uppercased ("SANKALP · DAY 1 / 41"); the
+#     commit control is "Mark today's practice done" (ghost RoutineButton).
+#   - "Back" is the RoutineShell back-chevron accessibilityLabel.
+#
+# PRECONDITION: the Hanuman-41 sankalp is not currently active (fresh install, or
+# a prior run of THIS flow, which sets it aside at the end). Re-enrolling replaces
+# any prior enrolment, so an interrupted run self-heals on the next pass.
+
+appId: host.exp.Exponent
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Set global reading language to English (More tab) ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+
+# ── Step 3: Open routine creation from the docked banner ──
+- extendedWaitUntil:
+    visible: "Set your daily practice"
+    timeout: 15000
+- tapOn: "Set your daily practice"
+- waitForAnimationToEnd
+
+# ── Step 4: Fork into the prebuilt-sankalp path ──
+- extendedWaitUntil:
+    visible: "How would you like to begin.*"
+    timeout: 15000
+- tapOn: "Choose a prebuilt sankalp.*"
+- waitForAnimationToEnd
+
+# ── Step 5: Open the 41-day Hanuman Chalisa sankalp ──
+- extendedWaitUntil:
+    visible: "Sadhana Programs"
+    timeout: 15000
+- tapOn: "Hanuman Chalisa — 41 Days.*"
+- waitForAnimationToEnd
+
+# ── Step 6: Begin the sankalp (enrols + lands on Today's Practice) ──
+- extendedWaitUntil:
+    visible: "Begin this sankalp"
+    timeout: 15000
+- tapOn: "Begin this sankalp"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Step 7: Today's Practice shows the sankalp on its first day ──
+- extendedWaitUntil:
+    visible: "Today's Practice"
+    timeout: 15000
+# Eyebrow day label reads "Sankalp · Day 1 / 41" (the sectionLabel token
+# uppercases visually via textTransform; the accessibility text is the raw casing).
+- assertVisible: "Sankalp · Day 1 / 41"
+- assertVisible: "Hanuman Chalisa — 41 Days"
+- takeScreenshot: /tmp/vedansh-sankalp-day1
+# Commit today's practice via the explicit control (reading isn't auto-done, so
+# the ghost "Mark today's practice done" button is present).
+- tapOn: "Mark today's practice done"
+- waitForAnimationToEnd
+# The day is recorded → the card flips to its resting "done today" state.
+- assertVisible: "Today's reading is done.*"
+
+# ── Step 8: Cleanup — Back to Detail, then set the sankalp aside ──
+# Back pops RoutineToday → the now-active SadhanaProgramDetail.
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "In progress · Day 1 / 41"
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Set this sankalp aside"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 15000
+- tapOn: "Set this sankalp aside"
+- waitForAnimationToEnd
+
+# ── Step 9: Back on the list, the program returns to the Available shelf ──
+# 'abandoned' status ⇒ the program drops out of "In progress" and back under the
+# "Available" section header (the card carries an explicit English a11y label
+# "<titleEn>. <subtitleEn>. Tap to open.", so we match on the title substring).
+- extendedWaitUntil:
+    visible: "Sadhana Programs"
+    timeout: 10000
+- assertVisible: "Available"
+- assertVisible: "Hanuman Chalisa — 41 Days.*"
+
+# ── Cleanup — Expo Go termination resets navigation for the next flow ──
+- stopApp:
+    appId: host.exp.Exponent

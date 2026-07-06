@@ -1,35 +1,36 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { titleFontByLang, scriptTitleFont } from '@/utils/langType';
+import BackgroundLayer from '@/components/BackgroundLayer';
 
-/** Parchment-gradient screen shell with a back top-bar. Title swaps per
- * the language toggle (RULEBOOK §3 top-bar rule). */
+/** Screen shell with a back top-bar. Title swaps per the language toggle
+ * (RULEBOOK §3 top-bar rule). Defaults to the flat parchment gradient; pass a
+ * `background` image source for content surfaces that should sit on the sepia
+ * sketch backdrop like the rest of the catalog (design.md §6). */
 export function RoutineShell({
   titleHi,
   titleEn,
   onBack,
   right,
+  background,
   children,
 }: {
   titleHi: string;
   titleEn: string;
   onBack: () => void;
   right?: React.ReactNode;
+  background?: number | null;
   children: React.ReactNode;
 }) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <BackgroundLayer source={background} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable

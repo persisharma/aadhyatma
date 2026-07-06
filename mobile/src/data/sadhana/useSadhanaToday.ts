@@ -31,7 +31,7 @@ export type SadhanaTodayCard = {
   enrollment: SadhanaEnrollment;
   program: SadhanaProgram;
   status: SadhanaTodayStatus;
-  /** Populated only when `status.kind === 'active'`. */
+  /** Populated when the day is active, or as the selected upcoming unit while waiting. */
   items: SadhanaTodayItem[];
   /** True when the active day has items and every one is complete today. */
   allItemsDoneToday: boolean;
@@ -106,12 +106,12 @@ export function useSadhanaToday(): SadhanaTodayCard[] {
       const status = resolveSadhanaToday(enrollment, program, todayKey, schedule);
 
       let items: SadhanaTodayItem[] = [];
-      if (status.kind === 'active') {
+      if (status.kind === 'active' || status.kind === 'waiting') {
         items = status.items.map((item) => {
-          const done = isItemAutoComplete(item, ctx);
+          const done = status.kind === 'active' && isItemAutoComplete(item, ctx);
           return {
             item,
-            key: `${program.id}:${status.dayIndex}:${item.id}`,
+            key: `${program.id}:${status.kind === 'active' ? status.dayIndex : `waiting-${item.id}`}:${item.id}`,
             display: resolveRoutineItem(item),
             done,
             doneAt: done && item.kind !== 'japam' ? getProgress(item.sourceId)?.updatedAt : undefined,

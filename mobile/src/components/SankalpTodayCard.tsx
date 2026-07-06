@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
-import { RoutineButton } from '@/components/RoutineShell';
+import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import PracticeSeal from '@/components/PracticeSeal';
 import { useSadhana } from '@/contexts/SadhanaContext';
 import { offeredTail } from '@/data/routine/practiceView';
@@ -16,30 +15,16 @@ import type { HomeStackParamList } from '@/navigation/types';
 
 /**
  * One enrolled sankalp's card in the Today's Practice screen. Shows the current
- * day's unit when open, auto-commits the day when its reading/japa is done
- * today, and plays a पूर्णाहुति seal when the whole vow completes.
+ * day's unit when open. The root-mounted SadhanaCompletionOverlay owns
+ * auto-commit and पूर्णाहुति celebration so completion works from any screen.
  */
 export default function SankalpTodayCard({ card }: { card: CardData }) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const { commitDay, markCelebrated, wasCelebrated } = useSadhana();
+  const { commitDay } = useSadhana();
   const nav = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
-  const { program, status, items, allItemsDoneToday, autoVia } = card;
-
-  // Auto-commit: once every item of today's open day is genuinely done today,
-  // record the day so the vow advances (and unlocks the next day tomorrow).
-  useEffect(() => {
-    if (status.kind === 'active' && allItemsDoneToday) {
-      commitDay(program.id, status.dayIndex, autoVia);
-    }
-  }, [status, allItemsDoneToday, autoVia, program.id, commitDay]);
-
-  // पूर्णाहुति celebration guard — play the seal once per completed program.
-  const isCompleted = status.kind === 'completed';
-  useEffect(() => {
-    if (isCompleted && !wasCelebrated(program.id)) markCelebrated(program.id);
-  }, [isCompleted, program.id, wasCelebrated, markCelebrated]);
+  const { program, status, items } = card;
 
   const title = contentByLang(lang, program.titleHi, program.titleEn);
   let dayLabel: string;
@@ -67,13 +52,13 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         elevation.card,
       ]}
     >
-      <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.saffronDeep, letterSpacing: 0.5 }}>
-        {dayLabel.toUpperCase()}
+      <Text style={[pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep }]}>
+        {dayLabel}
       </Text>
       <Text
         style={{
           fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
-          fontSize: 20,
+          fontSize: typography.cardHindi.fontSize + 3,
           color: colors.ink,
           marginTop: 2,
         }}
@@ -87,7 +72,7 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
           <Text
             style={{
               fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 14,
+              fontSize: typography.meaning.fontSize,
               color: colors.inkSoft,
               textAlign: 'center',
               marginTop: spacing.sm,
@@ -106,7 +91,7 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         <Text
           style={{
             fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-            fontSize: 14,
+            fontSize: typography.meaning.fontSize,
             color: colors.inkSoft,
             marginTop: spacing.sm,
           }}
@@ -123,10 +108,10 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         <Text
           style={{
             fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-            fontSize: 14,
+            fontSize: typography.meaning.fontSize,
             color: colors.inkSoft,
             marginTop: spacing.sm,
-            lineHeight: 21,
+            lineHeight: typography.meaning.lineHeight,
           }}
         >
           {status.reason === 'window-upcoming'
@@ -151,22 +136,31 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         </Text>
       )}
 
-      {status.kind === 'active' && (
+      {(status.kind === 'active' || (status.kind === 'waiting' && items.length > 0)) && (
         <>
           <View style={{ marginTop: spacing.md }}>
             {items.map((it, i) => {
               const tail = offeredTail(it.done, it.doneAt, lang);
               const titleMain = contentByLang(lang, it.display.titleHi, it.display.titleEn);
+              const canMark = status.kind === 'active' && !it.done;
               return (
-                <Pressable
+                <View
                   key={it.key}
-                  onPress={() => navigateToRoutineItem(nav, it.item)}
                   style={[
                     styles.itemRow,
                     { borderTopColor: colors.divider, borderTopWidth: i === 0 ? 0 : 1 },
                   ]}
                 >
-                  <View
+                  <Pressable
+                    onPress={canMark ? () => commitDay(program.id, status.dayIndex, 'marked') : undefined}
+                    accessibilityRole="button"
+                    accessibilityState={{ checked: it.done }}
+                    accessibilityLabel={
+                      it.done
+                        ? contentByLang(lang, 'अर्पित', 'Offered')
+                        : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
+                    }
+                    hitSlop={10}
                     style={{
                       width: 26,
                       height: 26,
@@ -179,34 +173,36 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
                     }}
                   >
                     {it.done && <Text style={{ color: colors.onPrimary, fontSize: 13 }}>✓</Text>}
-                  </View>
-                  <View style={{ flex: 1, minWidth: 0 }}>
+                  </Pressable>
+                  <Pressable style={{ flex: 1, minWidth: 0 }} onPress={() => navigateToRoutineItem(nav, it.item)}>
                     <Text
                       style={{
                         fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
-                        fontSize: 16,
+                        fontSize: typography.cardHindi.fontSize,
                         color: it.done ? colors.inkMuted : colors.ink,
                       }}
                     >
                       {titleMain}
                     </Text>
-                    <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.saffronDeep, marginTop: 2 }}>
+                    <Text
+                      style={{
+                        fontFamily: scriptBodyFont(lang, typography.cardMeta.fontFamily),
+                        fontSize: typography.cardMeta.fontSize,
+                        color: colors.saffronDeep,
+                        marginTop: 2,
+                      }}
+                    >
                       {contentByLang(lang, it.display.subHi, it.display.subEn)} · {tail}
                     </Text>
-                  </View>
-                  <Text style={{ color: colors.saffron, fontSize: 18 }}>›</Text>
-                </Pressable>
+                  </Pressable>
+                  <Pressable onPress={() => navigateToRoutineItem(nav, it.item)} hitSlop={8}>
+                    <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
+                  </Pressable>
+                </View>
               );
             })}
           </View>
 
-          {!allItemsDoneToday && (
-            <RoutineButton
-              label={contentByLang(lang, 'आज का पाठ अर्पित करें', "Mark today's practice done")}
-              variant="ghost"
-              onPress={() => commitDay(program.id, status.dayIndex, 'marked')}
-            />
-          )}
         </>
       )}
     </View>
@@ -227,4 +223,5 @@ function formatShortDate(key: string, lang: string): string {
 const styles = StyleSheet.create({
   card: { borderWidth: 1, marginBottom: 16 },
   itemRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12 },
+  chev: { fontSize: 26 },
 });

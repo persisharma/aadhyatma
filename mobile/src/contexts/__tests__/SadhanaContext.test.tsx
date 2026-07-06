@@ -123,6 +123,15 @@ describe('SadhanaContext — enrollment lifecycle', () => {
     expect(get().wasCelebrated('gita-18')).toBe(true);
   });
 
+  it('day celebration gate marks one sankalp day only for today', async () => {
+    const get = mountProbe();
+    await act(async () => undefined);
+    expect(get().wasDayCelebrated('gita-18', 2)).toBe(false);
+    act(() => get().markDayCelebrated('gita-18', 2));
+    expect(get().wasDayCelebrated('gita-18', 2)).toBe(true);
+    expect(get().wasDayCelebrated('gita-18', 3)).toBe(false);
+  });
+
   it('reminder toggle persists per program', async () => {
     const get = mountProbe();
     await act(async () => undefined);

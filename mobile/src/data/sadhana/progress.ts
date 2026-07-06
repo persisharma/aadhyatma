@@ -64,8 +64,8 @@ export type SadhanaTodayStatus =
   | { kind: 'active'; dayIndex: number; totalDays: number; items: RoutineItem[] }
   /** Today's day was already completed today — come back tomorrow. */
   | { kind: 'done-today'; dayIndex: number; totalDays: number }
-  /** Not practicable today (off-day / window not open) — a gentle resting state. */
-  | { kind: 'waiting'; totalDays: number; doneCount: number; reason: WaitingReason; whenKey?: string }
+  /** Not practicable today (off-day / window not open) — a gentle resting state with the next selected unit visible. */
+  | { kind: 'waiting'; totalDays: number; doneCount: number; reason: WaitingReason; whenKey?: string; items: RoutineItem[] }
   /** The whole sankalp is complete (पूर्णाहुति). */
   | { kind: 'completed'; totalDays: number; completedOn?: string };
 
@@ -89,7 +89,15 @@ export function resolveSadhanaToday(
   if (p.cadence.kind === 'festival-window') {
     const windowDayIndex = schedule?.windowDayIndex;
     if (windowDayIndex == null) {
-      return { kind: 'waiting', totalDays: total, doneCount: done, reason: 'window-upcoming', whenKey: schedule?.windowStartKey };
+      const nextDayIndex = Math.min(done + 1, total);
+      return {
+        kind: 'waiting',
+        totalDays: total,
+        doneCount: done,
+        reason: 'window-upcoming',
+        whenKey: schedule?.windowStartKey,
+        items: dayItemsFor(p, nextDayIndex),
+      };
     }
     // Festival days are calendar-anchored: the day index comes from the window,
     // not the completed count.
@@ -104,7 +112,15 @@ export function resolveSadhanaToday(
     const lastAt = done > 0 ? e.completedDays[done]?.at : undefined;
     if (lastAt === todayKey) return { kind: 'done-today', dayIndex: done, totalDays: total };
     if (!schedule?.todayEligible) {
-      return { kind: 'waiting', totalDays: total, doneCount: done, reason: 'weekday-off', whenKey: schedule?.nextEligibleKey };
+      const nextDayIndex = Math.min(done + 1, total);
+      return {
+        kind: 'waiting',
+        totalDays: total,
+        doneCount: done,
+        reason: 'weekday-off',
+        whenKey: schedule?.nextEligibleKey,
+        items: dayItemsFor(p, nextDayIndex),
+      };
     }
     const dayIndex = done + 1;
     return { kind: 'active', dayIndex, totalDays: total, items: dayItemsFor(p, dayIndex) };

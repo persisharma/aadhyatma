@@ -6,6 +6,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
+import { getDeityBackground } from '@/data/backgrounds';
 import { useSadhana } from '@/contexts/SadhanaContext';
 import { getProgram } from '@/data/sadhana/programs';
 import { completedDayCount, programDayCount } from '@/data/sadhana/progress';
@@ -37,7 +38,12 @@ export default function SadhanaProgramDetailScreen({ navigation, route }: Props)
   };
 
   return (
-    <RoutineShell titleHi="संकल्प" titleEn="Sankalp" onBack={() => navigation.goBack()}>
+    <RoutineShell
+      titleHi="संकल्प"
+      titleEn="Sankalp"
+      background={program.deity ? getDeityBackground(program.deity) : undefined}
+      onBack={() => navigation.goBack()}
+    >
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
@@ -92,8 +98,8 @@ export default function SadhanaProgramDetailScreen({ navigation, route }: Props)
         {(active || completed) && (
           <Text
             style={{
-              fontFamily: typography.cardLatin.fontFamily,
-              fontSize: 13,
+              fontFamily: scriptBodyFont(lang, typography.cardMeta.fontFamily),
+              fontSize: typography.cardMeta.fontSize,
               color: colors.inkMuted,
               textAlign: 'center',
               marginTop: spacing.lg,
@@ -114,10 +120,10 @@ export default function SadhanaProgramDetailScreen({ navigation, route }: Props)
               ]}
             >
               <View style={{ flex: 1, paddingRight: spacing.md }}>
-                <Text style={{ fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: 15, color: colors.ink }}>
+                <Text style={{ fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: typography.cardHindi.fontSize, color: colors.ink }}>
                   {contentByLang(lang, 'दैनिक स्मरण', 'Daily reminder')}
                 </Text>
-                <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+                <Text style={{ fontFamily: scriptBodyFont(lang, typography.cardMeta.fontFamily), fontSize: typography.cardMeta.fontSize, color: colors.inkMuted, marginTop: 2 }}>
                   {contentByLang(lang, 'आपके नित्य स्मरण समय पर', 'At your daily reminder time')}
                 </Text>
               </View>
