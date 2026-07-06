@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -11,6 +11,7 @@ import { scriptBodyFont } from '@/utils/langType';
 import ReadingSizeCard from '@/components/ReadingSizeCard';
 import { pick, contentByLang } from '@/utils/localize';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
+import { buildAppShareMessage } from '@/data/shareLinks';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
@@ -50,6 +51,14 @@ export default function MoreScreen({ navigation }: Props) {
     latPrimary: 22,
     latSecondary: 14,
   });
+  const shareApp = () => {
+    Share.share(
+      { message: buildAppShareMessage(defaultLang) },
+      { dialogTitle: pick(defaultLang, { hi: 'Vedansh साझा करें', en: 'Share Vedansh', gu: 'Vedansh શેર કરો', kn: 'Vedansh ಹಂಚಿಕೊಳ್ಳಿ' }) }
+    ).catch(() => {
+      // Share sheet dismissed or unavailable — nothing to recover.
+    });
+  };
   const profileCardTitle = orderTitlesByLanguage(
     defaultLang,
     'साधक प्रोफ़ाइल',
@@ -273,6 +282,40 @@ export default function MoreScreen({ navigation }: Props) {
                 {activeJapamAlarms.length > 0
                   ? `${activeJapamAlarms.length} alarm${activeJapamAlarms.length !== 1 ? 's' : ''} at ${formatReminderTimes(activeJapamAlarms.map((a) => a.time))}`
                   : 'Wake to a mantra you love'}
+              </Text>
+            </View>
+            <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
+          </Pressable>
+
+          {/* Share App Card */}
+          <Pressable
+            onPress={shareApp}
+            accessibilityRole="button"
+            accessibilityLabel={pick(defaultLang, {
+              hi: 'Vedansh ऐप साझा करें',
+              en: 'Share Vedansh app',
+              gu: 'Vedansh ઍપ શેર કરો',
+              kn: 'Vedansh ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ',
+            })}
+            style={({ pressed }) => [
+              styles.section,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: pressed ? 0.85 : 1 },
+            ]}
+          >
+            <View style={[styles.sectionIcon, { backgroundColor: colors.saffron }]}>
+              <Text style={{ color: '#fff', fontSize: 18, fontWeight: '600', marginTop: -1 }}>↗</Text>
+            </View>
+            <View style={styles.sectionMeta}>
+              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
+                {pick(defaultLang, { hi: 'ऐप साझा करें', en: 'Share the App', gu: 'ઍપ શેર કરો', kn: 'ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ' })}
+              </Text>
+              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
+                {pick(defaultLang, {
+                  hi: 'किसी प्रियजन को Vedansh भेजें',
+                  en: 'Send Vedansh to someone you love',
+                  gu: 'કોઈ પ્રિયજનને Vedansh મોકલો',
+                  kn: 'ಪ್ರೀತಿಪಾತ್ರರಿಗೆ Vedansh ಕಳುಹಿಸಿ',
+                })}
               </Text>
             </View>
             <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
