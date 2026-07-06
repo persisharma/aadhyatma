@@ -6,7 +6,6 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
-import { RoutineButton } from '@/components/RoutineShell';
 import PracticeSeal from '@/components/PracticeSeal';
 import { useSadhana } from '@/contexts/SadhanaContext';
 import { offeredTail } from '@/data/routine/practiceView';
@@ -207,13 +206,6 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
             })}
           </View>
 
-          {status.kind === 'active' && !allItemsDoneToday && (
-            <RoutineButton
-              label={contentByLang(lang, 'आज का पाठ अर्पित करें', "Mark today's practice done")}
-              variant="ghost"
-              onPress={() => commitDay(program.id, status.dayIndex, 'marked')}
-            />
-          )}
         </>
       )}
     </View>

@@ -102,8 +102,11 @@ test('day counts for weekday + festival cadences', () => {
 test('navratri: unique completion key per day, chapter rotation', () => {
   // Distinct item ids per day so completion keys never collide across the window.
   const ids = Array.from({ length: 9 }, (_, i) => dayItemsFor(NAVRATRI, i + 1)[0].id);
+  const sources = Array.from({ length: 9 }, (_, i) => dayItemsFor(NAVRATRI, i + 1)[0].sourceId);
   assert.equal(new Set(ids).size, 9);
   assert.equal(dayItemsFor(NAVRATRI, 1)[0].sourceId, 'durga-chalisa');
+  assert.ok(sources.includes('jai-ambe-gauri'));
+  assert.ok(sources.includes('durga-stotram'));
 });
 
 test('festival-window: waiting when no window today, active inside the window', () => {

@@ -53,14 +53,19 @@ const GITA_18: SadhanaProgram = {
 
 /**
  * Navratri — nine days of Durga worship, calendar-anchored to the festival.
- * Each day rotates through the existing Durga content (Chalisa + the three
- * stotras) so the nine nights carry variety without new content.
+ * Each day rotates through existing Durga content (Chalisa, aarti, and stotras)
+ * so the nine nights carry variety without new content.
  */
-const NAVRATRI_ROTATION: RoutineItem[] = [
+const NAVRATRI_DAYS: RoutineItem[] = [
   { id: 'durga-chalisa', kind: 'section', sourceId: 'durga-chalisa' },
+  { id: 'jai-ambe-gauri', kind: 'section', sourceId: 'jai-ambe-gauri' },
   { id: 'durga-stotram-1', kind: 'chapter', sourceId: 'durga-stotram', chapter: 1 },
   { id: 'durga-stotram-2', kind: 'chapter', sourceId: 'durga-stotram', chapter: 2 },
   { id: 'durga-stotram-3', kind: 'chapter', sourceId: 'durga-stotram', chapter: 3 },
+  { id: 'durga-chalisa-repeat', kind: 'section', sourceId: 'durga-chalisa' },
+  { id: 'jai-ambe-gauri-repeat', kind: 'section', sourceId: 'jai-ambe-gauri' },
+  { id: 'durga-stotram-2-repeat', kind: 'chapter', sourceId: 'durga-stotram', chapter: 2 },
+  { id: 'durga-stotram-3-repeat', kind: 'chapter', sourceId: 'durga-stotram', chapter: 3 },
 ];
 
 const NAVRATRI_9: SadhanaProgram = {
@@ -72,12 +77,11 @@ const NAVRATRI_9: SadhanaProgram = {
   subtitleEn: 'A sankalp anchored to Navratri',
   deity: 'durga',
   introHi:
-    'नवरात्रि के नौ दिन मां दुर्गा की आराधना का संकल्प। प्रत्येक दिन एक दुर्गा पाठ — संकल्प नवरात्रि आरम्भ होते ही जागृत होता है।',
+    'नवरात्रि के नौ दिन मां दुर्गा की आराधना का संकल्प। चालीसा, आरती और स्तोत्रों से प्रत्येक दिन का पाठ खुलता है — संकल्प नवरात्रि आरम्भ होते ही जागृत होता है।',
   introEn:
-    'A vow to worship Maa Durga through the nine nights of Navratri — one Durga reading each day. The sankalp awakens when Navratri begins.',
+    'A vow to worship Maa Durga through the nine nights of Navratri — each day opens a Chalisa, aarti, or stotram reading. The sankalp awakens when Navratri begins.',
   cadence: { kind: 'festival-window', days: 9, anchorRuleId: 'navratri-start' },
-  days: Array.from({ length: 9 }, (_, i): { items: RoutineItem[] } => {
-    const base = NAVRATRI_ROTATION[i % NAVRATRI_ROTATION.length];
+  days: NAVRATRI_DAYS.map((base, i): { items: RoutineItem[] } => {
     // Unique item id per day so completion keys don't collide across the window.
     return { items: [{ ...base, id: `navratri-${i + 1}` }] };
   }),

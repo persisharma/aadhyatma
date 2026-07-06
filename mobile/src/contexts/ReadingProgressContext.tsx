@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
-import { useUserActivity } from '@/contexts/UserActivityContext';
+import { toDateKey, useUserActivity } from '@/contexts/UserActivityContext';
 
 const STORAGE_KEY = '@vedansh/reading-progress';
 
@@ -111,7 +111,9 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
       const key = progressKey(entry.sourceId, entry.chapter);
       const current = progress[key];
       if (current && current.verseIndex === entry.verseIndex) {
-        return;
+        if (toDateKey(new Date(current.updatedAt)) === toDateKey(new Date(entry.updatedAt))) {
+          return;
+        }
       }
       persist({ ...progress, [key]: entry });
       logRead(entry.sourceId);

@@ -1,6 +1,7 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { ReadingProgressProvider, useReadingProgress } from '../ReadingProgressContext';
+import { toDateKey } from '@/contexts/UserActivityContext';
 
 // Stateful in-memory AsyncStorage mock.
 let mockStore: Record<string, string> = {};
@@ -14,6 +15,7 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 
 // ReadingProgressProvider depends on useUserActivity().logRead — stub it.
 jest.mock('@/contexts/UserActivityContext', () => ({
+  ...jest.requireActual('@/contexts/UserActivityContext'),
   useUserActivity: () => ({ logRead: jest.fn() }),
 }));
 
@@ -133,5 +135,30 @@ describe('ReadingProgressContext — per-subsection progress', () => {
     const persisted = JSON.parse(mockStore[STORAGE_KEY]);
     expect(persisted['sundarkand::2']).toBeTruthy();
     expect(persisted.sundarkand).toBeUndefined();
+  });
+
+  test('refreshes same-page progress when the saved timestamp is from an earlier day', async () => {
+    const stale = new Date();
+    stale.setDate(stale.getDate() - 1);
+    mockStore[STORAGE_KEY] = JSON.stringify({
+      'durga-chalisa': {
+        sourceId: 'durga-chalisa',
+        verseIndex: 40,
+        updatedAt: stale.getTime(),
+      },
+    });
+    await mountAndHydrate();
+
+    await act(async () => {
+      captured.setProgress({
+        sourceId: 'durga-chalisa',
+        verseIndex: 40,
+        updatedAt: Date.now(),
+      });
+    });
+
+    const refreshed = captured.getProgress('durga-chalisa');
+    expect(refreshed?.verseIndex).toBe(40);
+    expect(toDateKey(new Date(refreshed!.updatedAt))).toBe(toDateKey(new Date()));
   });
 });

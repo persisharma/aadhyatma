@@ -87,4 +87,35 @@ describe('SankalpTodayCard', () => {
     expect(text).not.toContain("Mark today's practice done");
     expect(mockCommitDay).not.toHaveBeenCalled();
   });
+
+  it('does not allow an active sankalp day to be marked done before content is complete', () => {
+    const program = getProgram('navratri-durga-9')!;
+    const item = program.days![0].items[0];
+    const card: SadhanaTodayCard = {
+      enrollment: { programId: program.id, startedOn: '2026-07-03', status: 'active', completedDays: {} },
+      program,
+      status: {
+        kind: 'active',
+        dayIndex: 1,
+        totalDays: 9,
+        items: [item],
+      },
+      items: [
+        {
+          item,
+          key: `${program.id}:1:${item.id}`,
+          display: resolveRoutineItem(item),
+          done: false,
+        },
+      ],
+      allItemsDoneToday: false,
+      autoVia: 'read-to-end',
+    };
+
+    const text = textOf(render(card));
+
+    expect(text).toContain('Durga Chalisa');
+    expect(text).not.toContain("Mark today's practice done");
+    expect(mockCommitDay).not.toHaveBeenCalled();
+  });
 });
