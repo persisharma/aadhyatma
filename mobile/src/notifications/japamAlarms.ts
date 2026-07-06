@@ -13,10 +13,18 @@ import type { TimeOfDay } from './pure';
  *  cancel just our own slots without touching daily-verse reminders. */
 export const JAPAM_ALARM_IDENTIFIER_PREFIX = 'japam-alarm';
 
-/** Hard cap on simultaneously-scheduled Japam alarms. Each daily-repeating
- *  alarm consumes one slot of the iOS 64-pending budget; this cap leaves room
- *  for the daily-verse rolling window to co-exist. */
+/** Hard cap on simultaneously-configured Japam alarms. On the expo fallback
+ *  tier an alarm can consume several pending-notification slots (one WEEKLY
+ *  trigger per repeat day), so the scheduler additionally enforces
+ *  `JAPAM_EXPO_SLOT_CAP` to leave room for the daily-verse rolling window
+ *  inside iOS's 64-pending budget. */
 export const MAX_JAPAM_ALARMS = 8;
+
+/** Ceiling on pending-notification slots the expo fallback tier may occupy.
+ *  Mirrors the vrat reminders' dedicated-budget approach (VRAT_REMINDER_CAP)
+ *  so japam alarms can never crowd the daily-verse window out of iOS's
+ *  64-pending cap. */
+export const JAPAM_EXPO_SLOT_CAP = 24;
 
 /** Weekday indices follow JS `Date#getDay()`: 0 = Sunday … 6 = Saturday. */
 export const ALL_WEEKDAYS: readonly number[] = [0, 1, 2, 3, 4, 5, 6];
@@ -263,6 +271,50 @@ export function nextAlarmFireTimestamps(
     cursor = new Date(ts);
   }
   return out;
+}
+
+/**
+ * How many discrete one-shots to arm while a skip-next is pending on a tier
+ * whose recurrence can't express a one-day gap. Renewal depends on an app
+ * foreground, so the window length is the safety margin before a standing
+ * alarm goes quiet:
+ *  - AlarmKit one-shots are cheap (no pending-notification budget) → a full
+ *    week of cover.
+ *  - expo one-shots spend the shared iOS 64-pending budget → a smaller
+ *    window (still more than the skip itself needs).
+ */
+export const ALARMKIT_SKIP_ONESHOT_COUNT = 7;
+export const EXPO_SKIP_ONESHOT_COUNT = 4;
+
+/** True while an alarm's skip-next refers to today or a future date — the
+ *  window during which recurrence-owning tiers must fall back to discrete
+ *  one-shots. One-time alarms never skip. */
+export function isSkipPending(
+  alarm: Pick<JapamAlarm, 'repeatDays' | 'skipNextDate'>,
+  now: Date
+): boolean {
+  return (
+    !isOnceAlarm(alarm) &&
+    alarm.skipNextDate !== undefined &&
+    alarm.skipNextDate >= localDateKey(now)
+  );
+}
+
+/**
+ * The discrete one-shot fires covering a pending skip, with the identifier
+ * suffix each slot must use ('' for the first so it keeps the alarm's base
+ * identifier). Shared by the AlarmKit and expo tiers so the count, the
+ * pendency predicate, and the `:occN` id scheme can never drift apart.
+ */
+export function skipOneshotPlan(
+  alarm: FireSpec,
+  count: number,
+  now: Date = new Date()
+): { suffix: string; fireAt: number }[] {
+  return nextAlarmFireTimestamps(alarm, count, now).map((fireAt, i) => ({
+    suffix: i === 0 ? '' : `:occ${i}`,
+    fireAt,
+  }));
 }
 
 const DAY_NAMES_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

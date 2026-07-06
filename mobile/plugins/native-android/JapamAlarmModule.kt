@@ -43,6 +43,10 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
         const val INTENT_EXTRA_MANTRA_ID = "mantraId"
         const val INTENT_EXTRA_FIRE_AT = "fireAt"
         const val INTENT_EXTRA_LABEL = "label"
+        /** The id the ringing notification was posted under (may be the
+         *  `:snooze`-suffixed alarmId). Action buttons must cancel THIS id —
+         *  cancelling the base alarmId would leave a snoozed ring visible. */
+        const val INTENT_EXTRA_NOTIFICATION_KEY = "notificationKey"
         /**
          * Weekday recurrence carried through the PendingIntent so the receiver
          * can re-arm the right day. Encoded as a comma-joined list of JS
@@ -202,23 +206,45 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
         }
     }
 
+    /** Cancel the AlarmManager PendingIntent registered under [alarmId] (a
+     *  NO_CREATE miss is a successful no-op). [includeSnooze] also cancels
+     *  the alarm's in-flight `alarmId:snooze` slot — used by the targeted
+     *  per-alarm cancel, but NOT by cancelAll: reconcile calls cancelAll on
+     *  every app foreground, and killing active snoozes there would lose a
+     *  snoozed re-ring whenever the user opens the app mid-countdown.
+     *  Orphaned snoozes (base alarm deleted/disabled) are instead suppressed
+     *  at fire time by JapamAlarmReceiver. */
+    private fun cancelPendingIntentsFor(
+        ctx: Context,
+        am: AlarmManager,
+        alarmId: String,
+        includeSnooze: Boolean
+    ) {
+        val ids = if (includeSnooze) {
+            listOf(alarmId, alarmId + JapamAlarmActionReceiver.SNOOZE_SUFFIX)
+        } else {
+            listOf(alarmId)
+        }
+        for (id in ids) {
+            val intent = Intent(ctx, JapamAlarmReceiver::class.java)
+                .setAction("com.vedansh.japam.ALARM_FIRE")
+                .putExtra(INTENT_EXTRA_ALARM_ID, id)
+            val pi = PendingIntent.getBroadcast(
+                ctx,
+                id.hashCode(),
+                intent,
+                PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+            )
+            pi?.let { am.cancel(it); it.cancel() }
+        }
+    }
+
     @ReactMethod
     fun cancelAlarm(alarmId: String, promise: Promise) {
         try {
             val ctx = reactApplicationContext
             val am = ctx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            // Build a matching PendingIntent with NO_CREATE; null means none
-            // exists, which is still a successful no-op cancel.
-            val intent = Intent(ctx, JapamAlarmReceiver::class.java)
-                .setAction("com.vedansh.japam.ALARM_FIRE")
-                .putExtra(INTENT_EXTRA_ALARM_ID, alarmId)
-            val pi = PendingIntent.getBroadcast(
-                ctx,
-                alarmId.hashCode(),
-                intent,
-                PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
-            )
-            pi?.let { am.cancel(it); it.cancel() }
+            cancelPendingIntentsFor(ctx, am, alarmId, includeSnooze = true)
             removePersistedAlarm(ctx, alarmId)
             promise.resolve(null)
         } catch (t: Throwable) {
@@ -237,16 +263,7 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
             for (i in 0 until alarms.length()) {
                 val a = alarms.optJSONObject(i) ?: continue
                 val alarmId = a.optString("alarmId", null) ?: continue
-                val intent = Intent(ctx, JapamAlarmReceiver::class.java)
-                    .setAction("com.vedansh.japam.ALARM_FIRE")
-                    .putExtra(INTENT_EXTRA_ALARM_ID, alarmId)
-                val pi = PendingIntent.getBroadcast(
-                    ctx,
-                    alarmId.hashCode(),
-                    intent,
-                    PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
-                )
-                pi?.let { am.cancel(it); it.cancel() }
+                cancelPendingIntentsFor(ctx, am, alarmId, includeSnooze = false)
             }
             persistAlarms(ctx, JSONArray())
             promise.resolve(null)

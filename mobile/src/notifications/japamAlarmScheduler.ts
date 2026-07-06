@@ -34,18 +34,20 @@ import * as Notifications from 'expo-notifications';
 import { findJapamMantra } from '@/data/japam';
 import { getJapamAlarmSoundName } from '@assets/japam-alarm-sounds';
 import {
+  EXPO_SKIP_ONESHOT_COUNT,
   JAPAM_ALARM_CATEGORY,
   JAPAM_ALARM_IDENTIFIER_PREFIX,
+  JAPAM_EXPO_SLOT_CAP,
   JAPAM_SNOOZE_ACTION_ID,
   SNOOZE_MINUTES,
   isJapamAlarmPayload,
   isOnceAlarm,
+  isSkipPending,
   isSnoozeIdentifier,
-  localDateKey,
   nextAlarmFireTimestamp,
-  nextAlarmFireTimestamps,
   notificationIdentifierFor,
   repeatsDaily,
+  skipOneshotPlan,
   type JapamAlarm,
   type JapamAlarmPayload,
 } from './japamAlarms';
@@ -57,12 +59,6 @@ import {
 
 /** Fallback channel for mantras without a custom alarm clip. */
 const FALLBACK_CHANNEL_ID = 'japam-alarms';
-
-/** How many discrete one-shots to arm while a skip-next is pending on a
- *  tier without gap-capable recurrence. Kept small to respect iOS's 64
- *  pending-notification budget; the every-foreground reconcile re-arms, so
- *  coverage only thins if the app stays closed this many fires in a row. */
-const SKIP_ONESHOT_COUNT = 3;
 
 /** AsyncStorage key for the one-time-alarm bookkeeping: `{ [alarmId]: fireAtMs }`
  *  recording what each enabled one-time alarm was armed for. The context
@@ -186,15 +182,13 @@ function expoTriggerPlan(
   const base = notificationIdentifierFor(alarm.id);
   const channel = channelId !== undefined ? { channelId } : {};
 
-  const skipPending =
-    alarm.skipNextDate !== undefined && alarm.skipNextDate >= localDateKey(now);
-  if (isOnceAlarm(alarm) || skipPending) {
-    const count = isOnceAlarm(alarm) ? 1 : SKIP_ONESHOT_COUNT;
-    return nextAlarmFireTimestamps(alarm, count, now).map((ts, i) => ({
-      identifier: i === 0 ? base : `${base}:occ${i}`,
+  if (isOnceAlarm(alarm) || isSkipPending(alarm, now)) {
+    const count = isOnceAlarm(alarm) ? 1 : EXPO_SKIP_ONESHOT_COUNT;
+    return skipOneshotPlan(alarm, count, now).map(({ suffix, fireAt }) => ({
+      identifier: `${base}${suffix}`,
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
-        date: ts,
+        date: fireAt,
         ...channel,
       } as ExpoTrigger,
     }));
@@ -232,6 +226,7 @@ async function scheduleViaExpo(
 ): Promise<number> {
   await ensureSnoozeCategory();
   let scheduled = 0;
+  let slotsUsed = 0;
   for (const alarm of alarms) {
     if (!alarm.enabled) continue;
     const customSound = getJapamAlarmSoundName(alarm.mantraId);
@@ -240,9 +235,19 @@ async function scheduleViaExpo(
       channelId = channelIdFor(alarm.mantraId, customSound);
       await ensureAndroidChannel(channelId, customSound);
     }
+    const plans = expoTriggerPlan(alarm, channelId, now);
+    // Slot budget: weekly alarms cost one slot per repeat day, so 8 alarms
+    // can otherwise claim 48+ of iOS's 64 pending-notification slots and
+    // crowd out the daily-verse window (iOS silently drops overflow). Skip
+    // whole alarms past the cap — the list is time-sorted, so the soonest
+    // alarms win; a partially-armed alarm (some days missing) would be a
+    // subtler failure than a skipped one.
+    if (slotsUsed + plans.length > JAPAM_EXPO_SLOT_CAP && slotsUsed > 0) {
+      continue;
+    }
     const content = buildContent(alarm, customSound);
     let ok = false;
-    for (const plan of expoTriggerPlan(alarm, channelId, now)) {
+    for (const plan of plans) {
       try {
         await Notifications.scheduleNotificationAsync({
           identifier: plan.identifier,
@@ -250,6 +255,7 @@ async function scheduleViaExpo(
           trigger: plan.trigger,
         });
         ok = true;
+        slotsUsed += 1;
       } catch {
         /* Per-slot failure non-fatal */
       }
@@ -259,20 +265,43 @@ async function scheduleViaExpo(
   return scheduled;
 }
 
-/** Persist which one-time alarms are armed and for when. Replaced wholesale
- *  on every reconcile so it always mirrors the current schedule. */
-async function recordOnceArmed(
+/**
+ * Reconcile the one-time-alarm bookkeeping and report which alarms have
+ * FIRED (recorded moment is in the past). Merge semantics, not wholesale
+ * replace: a past timestamp is evidence the alarm rang and MUST survive
+ * until the context's housekeeping disables the alarm — recomputing it
+ * would re-arm a "once" alarm for tomorrow (it would ring daily). A future
+ * timestamp is safe to recompute (covers time/day edits before the fire).
+ * Entries for alarms that are gone, disabled, or no longer one-time are
+ * dropped, so a disable→re-enable cycle arms fresh.
+ */
+async function reconcileOnceArmed(
   alarms: JapamAlarm[],
   now: Date
-): Promise<void> {
+): Promise<Set<string>> {
+  let existing: Record<string, unknown> = {};
+  try {
+    const raw = await AsyncStorage.getItem(ONCE_ARMED_KEY);
+    if (raw) existing = JSON.parse(raw) as Record<string, unknown>;
+  } catch {
+    existing = {};
+  }
   const map: Record<string, number> = {};
+  const fired = new Set<string>();
   for (const alarm of alarms) {
     if (!alarm.enabled || !isOnceAlarm(alarm)) continue;
-    map[alarm.id] = nextAlarmFireTimestamp(alarm, now);
+    const prev = existing[alarm.id];
+    if (typeof prev === 'number' && prev <= now.getTime()) {
+      map[alarm.id] = prev;
+      fired.add(alarm.id);
+    } else {
+      map[alarm.id] = nextAlarmFireTimestamp(alarm, now);
+    }
   }
   await AsyncStorage.setItem(ONCE_ARMED_KEY, JSON.stringify(map)).catch(
     () => undefined
   );
+  return fired;
 }
 
 /** Ids of one-time alarms whose armed fire time has passed — i.e. they rang
@@ -352,18 +381,61 @@ export function maybeHandleJapamSnoozeResponse(
   return true;
 }
 
+/** Cancel expo-tier snooze one-shots whose owning alarm is no longer in the
+ *  active list — reconcile spares in-flight snoozes for live alarms, but a
+ *  deleted/disabled alarm's snooze must not ring 5 minutes after removal. */
+async function cancelOrphanedSnoozes(activeAlarmIds: Set<string>): Promise<void> {
+  try {
+    const pending = await Notifications.getAllScheduledNotificationsAsync();
+    await Promise.all(
+      pending
+        .filter((n) => isSnoozeIdentifier(n.identifier))
+        .filter((n) => {
+          // 'japam-alarm:<id>:snooze' → '<id>'
+          const base = n.identifier
+            .slice(JAPAM_ALARM_IDENTIFIER_PREFIX.length + 1)
+            .replace(/:snooze$/, '');
+          return !activeAlarmIds.has(base);
+        })
+        .map((n) =>
+          Notifications.cancelScheduledNotificationAsync(n.identifier).catch(
+            () => undefined
+          )
+        )
+    );
+  } catch {
+    /* best-effort */
+  }
+}
+
+/** Serialization chain: reconciles are cancel-then-schedule sequences with
+ *  many awaits; two overlapping runs can interleave so a stale run's
+ *  schedule pass lands after a fresh run's cancel pass, re-arming a
+ *  just-disabled alarm. Chaining runs start-to-finish makes the last caller
+ *  win deterministically. */
+let reconcileChain: Promise<unknown> = Promise.resolve();
+
 /**
  * Reconcile the OS-scheduled Japam alarms with the given list. Cancels every
- * existing Japam-alarm slot first, then schedules enabled ones. Idempotent.
+ * existing Japam-alarm slot first, then schedules enabled ones. Idempotent,
+ * and serialized against concurrent invocations.
  *
  * Returns the count of alarms actually scheduled.
  */
-export async function scheduleJapamAlarms(
-  alarms: JapamAlarm[]
-): Promise<number> {
+export function scheduleJapamAlarms(alarms: JapamAlarm[]): Promise<number> {
+  const run = reconcileChain.then(() => doScheduleJapamAlarms(alarms));
+  reconcileChain = run.catch(() => undefined);
+  return run;
+}
+
+async function doScheduleJapamAlarms(alarms: JapamAlarm[]): Promise<number> {
   await cancelAllJapamAlarmNotifications();
   const now = new Date();
-  await recordOnceArmed(alarms, now);
+  // One-time alarms whose recorded moment has passed already rang — never
+  // re-arm them; the context's housekeeping will flip them to disabled.
+  const firedOnce = await reconcileOnceArmed(alarms, now);
+  const armable = alarms.filter((a) => a.enabled && !firedOnce.has(a.id));
+  await cancelOrphanedSnoozes(new Set(armable.map((a) => a.id)));
 
   // Both platforms try the real-alarm-tier native module first
   // (AlarmManager.setAlarmClock on Android, AlarmKit on iOS 26+). The
@@ -371,7 +443,7 @@ export async function scheduleJapamAlarms(
   // supports it; otherwise we fall through to the expo-notifications
   // path. `scheduleNativeAlarmsForDay` no-ops when no module is bound.
   if (isNativeAlarmSupported()) {
-    return scheduleNativeAlarmsForDay(alarms.filter((a) => a.enabled));
+    return scheduleNativeAlarmsForDay(armable);
   }
-  return scheduleViaExpo(alarms, now);
+  return scheduleViaExpo(armable, now);
 }

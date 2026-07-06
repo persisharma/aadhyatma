@@ -106,11 +106,15 @@ public class JapamAlarmIosModule: Module {
       // Bundled mantra-clip filename resolved in JS (getJapamAlarmSoundName);
       // nil when the mantra has no clip → falls back to the system alarm tone.
       let soundName = args["sound"] as? String
-      let fixed = (args["fixed"] as? Bool) ?? false
       // JS getDay() weekday indices; nil = every day. (NSNumber-bridged.)
       let repeatDays = (args["repeatDays"] as? [Any])?.compactMap {
         ($0 as? NSNumber)?.intValue
       }
+      // One-shot when `fixed` is set OR repeatDays is an explicit empty array
+      // — the wire contract (matching Android's Kotlin module) is that an
+      // empty day set means "ring once"; falling through to a daily
+      // recurrence here would fork the platforms.
+      let fixed = ((args["fixed"] as? Bool) ?? false) || (repeatDays?.isEmpty == true)
 
       if #available(iOS 26.0, *) {
         let fireDate = Date(timeIntervalSince1970: fireAtMs / 1000.0)
@@ -193,6 +197,18 @@ enum JapamAlarmIosService {
     .sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday,
   ]
 
+  /// True when the alarm registered under [uuid] is currently in its snooze
+  /// countdown. Reconcile must leave such alarms alone — cancelling and
+  /// re-scheduling would silently drop the T+5min re-ring the user asked for.
+  private static func isCountingDown(_ uuid: UUID) -> Bool {
+    let alarms = (try? AlarmManager.shared.alarms) ?? []
+    return alarms.contains { alarm in
+      guard alarm.id == uuid else { return false }
+      if case .countdown = alarm.state { return true }
+      return false
+    }
+  }
+
   static func schedule(
     alarmId: String,
     hour: Int,
@@ -202,6 +218,15 @@ enum JapamAlarmIosService {
     repeatDays: [Int]?,
     fixedDate: Date?
   ) async throws {
+    // An alarm mid-snooze keeps its countdown: skip the cancel+replace and
+    // let the snoozed re-ring fire. The next reconcile (post-ring) applies
+    // any pending edits.
+    if let existing = storedMapping()[alarmId],
+       let uuid = UUID(uuidString: existing),
+       isCountingDown(uuid) {
+      return
+    }
+
     // Cancel any prior alarm registered under the same JS id so the new
     // schedule replaces it cleanly (same semantics as Android's
     // FLAG_UPDATE_CURRENT on the PendingIntent).
@@ -285,6 +310,10 @@ enum JapamAlarmIosService {
     let map = storedMapping()
     for (jsId, uuidString) in map {
       if let uuid = UUID(uuidString: uuidString) {
+        // Spare alarms mid-snooze-countdown (and keep their mapping) so a
+        // foreground reconcile can't swallow the snoozed re-ring; the
+        // follow-up schedule() call skips them symmetrically.
+        if isCountingDown(uuid) { continue }
         try? await AlarmManager.shared.cancel(id: uuid)
       }
       forgetMapping(alarmId: jsId)

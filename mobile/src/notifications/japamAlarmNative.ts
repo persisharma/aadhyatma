@@ -25,11 +25,12 @@ import { findJapamMantra } from '@/data/japam';
 import { getJapamAlarmSoundName } from '@assets/japam-alarm-sounds';
 import { navigationRef } from './deepLink';
 import {
+  ALARMKIT_SKIP_ONESHOT_COUNT,
   isOnceAlarm,
-  localDateKey,
+  isSkipPending,
   nextAlarmFireTimestamp,
-  nextAlarmFireTimestamps,
   notificationIdentifierFor,
+  skipOneshotPlan,
   type JapamAlarm,
 } from './japamAlarms';
 
@@ -158,11 +159,6 @@ export async function getIosAlarmAuthorizationStatus(): Promise<
   }
 }
 
-/** How many discrete one-shots to arm while an AlarmKit alarm has a pending
- *  skip-next (AlarmKit's weekly recurrence can't express a one-day gap).
- *  The every-foreground reconcile restores the recurrence once it passes. */
-const IOS_SKIP_ONESHOT_COUNT = 3;
-
 /** Schedule every enabled alarm. Cancels all native-managed slots first so
  *  the on-device state matches the input list exactly. */
 export async function scheduleNativeAlarmsForDay(
@@ -187,22 +183,21 @@ export async function scheduleNativeAlarmsForDay(
     };
     try {
       // AlarmKit owns its recurrence, so a pending skip-next has to be armed
-      // as discrete fixed fires. Android's re-arm happens per-fire in Kotlin
-      // from a JS-computed fireAt that already lands after the skip, so it
-      // takes the plain path below.
-      const skipPending =
-        androidMod === null &&
-        !isOnceAlarm(alarm) &&
-        alarm.skipNextDate !== undefined &&
-        alarm.skipNextDate >= localDateKey(now);
-      if (skipPending) {
-        const fires = nextAlarmFireTimestamps(alarm, IOS_SKIP_ONESHOT_COUNT, now);
-        for (let i = 0; i < fires.length; i += 1) {
-          const id = notificationIdentifierFor(alarm.id);
+      // as discrete fixed fires (a week of cover — renewal needs an app
+      // foreground). Android's re-arm happens per-fire in Kotlin from a
+      // JS-computed fireAt that already lands after the skip, so it takes
+      // the plain path below.
+      if (androidMod === null && isSkipPending(alarm, now)) {
+        const id = notificationIdentifierFor(alarm.id);
+        for (const { suffix, fireAt } of skipOneshotPlan(
+          alarm,
+          ALARMKIT_SKIP_ONESHOT_COUNT,
+          now
+        )) {
           await mod.scheduleAlarm({
             ...base,
-            alarmId: i === 0 ? id : `${id}:occ${i}`,
-            fireAt: fires[i],
+            alarmId: `${id}${suffix}`,
+            fireAt,
             fixed: true,
           });
         }

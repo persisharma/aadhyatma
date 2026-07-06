@@ -48,11 +48,27 @@ class JapamAlarmReceiver : BroadcastReceiver() {
             alarmId.removeSuffix(JapamAlarmActionReceiver.SNOOZE_SUFFIX)
         } else alarmId
 
+        // Orphaned snooze: the base alarm was deleted or disabled after the
+        // user tapped Snooze (reconcile deliberately spares in-flight snooze
+        // PendingIntents so opening the app mid-countdown doesn't lose the
+        // re-ring). Suppress at fire time instead: if the base alarm is no
+        // longer armed, the snooze must not ring.
+        if (isSnoozeFire && !isAlarmStillArmed(context, baseAlarmId)) return
+
         postAlarmNotification(context, alarmId, baseAlarmId, mantraId, label)
 
         if (!isSnoozeFire) {
             rescheduleNextOccurrence(context, alarmId, mantraId, fireAt, label, repeatDaysEncoded)
         }
+    }
+
+    private fun isAlarmStillArmed(context: Context, alarmId: String): Boolean {
+        val alarms = JapamAlarmModule.readPersistedAlarms(context)
+        for (i in 0 until alarms.length()) {
+            val a = alarms.optJSONObject(i) ?: continue
+            if (a.optString("alarmId") == alarmId) return true
+        }
+        return false
     }
 
     private fun postAlarmNotification(
@@ -148,6 +164,10 @@ class JapamAlarmReceiver : BroadcastReceiver() {
         val intent = Intent(context, JapamAlarmActionReceiver::class.java).apply {
             this.action = action
             putExtra(JapamAlarmModule.INTENT_EXTRA_ALARM_ID, baseAlarmId)
+            // The notification is posted under notificationKey.hashCode()
+            // (the snooze-suffixed id for a snooze fire); the action receiver
+            // must dismiss THAT id, not the base alarm's.
+            putExtra(JapamAlarmModule.INTENT_EXTRA_NOTIFICATION_KEY, notificationKey)
             putExtra(JapamAlarmModule.INTENT_EXTRA_MANTRA_ID, mantraId)
             if (label != null) putExtra(JapamAlarmModule.INTENT_EXTRA_LABEL, label)
         }

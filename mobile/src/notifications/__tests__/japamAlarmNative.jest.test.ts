@@ -1,7 +1,11 @@
 import { Platform } from 'react-native';
 import { requireOptionalNativeModule } from 'expo-modules-core';
 import { scheduleNativeAlarmsForDay } from '@/notifications/japamAlarmNative';
-import type { JapamAlarm } from '@/notifications/japamAlarms';
+import {
+  ALARMKIT_SKIP_ONESHOT_COUNT,
+  localDateKey,
+  type JapamAlarm,
+} from '@/notifications/japamAlarms';
 
 // The Japam-alarm sound is resolved in JS (mantraId → bundled clip filename)
 // and threaded into the native module's scheduleAlarm call. iOS 26 AlarmKit
@@ -108,28 +112,26 @@ describe('scheduleNativeAlarmsForDay — recurrence passthrough', () => {
     const skipKey = (() => {
       const d = new Date();
       d.setDate(d.getDate() + 1);
-      const mm = `${d.getMonth() + 1}`.padStart(2, '0');
-      const dd = `${d.getDate()}`.padStart(2, '0');
-      return `${d.getFullYear()}-${mm}-${dd}`;
+      return localDateKey(d);
     })();
     await scheduleNativeAlarmsForDay([
       alarm('a1', 'om-namah-shivaya', { skipNextDate: skipKey }),
     ]);
-    // 3 discrete fires, all fixed, ids disambiguated after the first.
-    expect(scheduleAlarm).toHaveBeenCalledTimes(3);
+    // A week of discrete fires, all fixed, ids disambiguated after the first.
+    expect(scheduleAlarm).toHaveBeenCalledTimes(ALARMKIT_SKIP_ONESHOT_COUNT);
     const calls = scheduleAlarm.mock.calls.map((c) => c[0]);
     expect(calls.every((c) => c.fixed === true)).toBe(true);
     expect(calls[0].alarmId).toBe('japam-alarm:a1');
     expect(calls[1].alarmId).toBe('japam-alarm:a1:occ1');
-    expect(calls[2].alarmId).toBe('japam-alarm:a1:occ2');
+    expect(calls.at(-1)!.alarmId).toBe(
+      `japam-alarm:a1:occ${ALARMKIT_SKIP_ONESHOT_COUNT - 1}`
+    );
     // Strictly increasing fire times, none on the skipped date.
-    expect(calls[0].fireAt).toBeLessThan(calls[1].fireAt);
-    expect(calls[1].fireAt).toBeLessThan(calls[2].fireAt);
+    for (let i = 1; i < calls.length; i += 1) {
+      expect(calls[i - 1].fireAt).toBeLessThan(calls[i].fireAt);
+    }
     for (const c of calls) {
-      const d = new Date(c.fireAt);
-      const mm = `${d.getMonth() + 1}`.padStart(2, '0');
-      const dd = `${d.getDate()}`.padStart(2, '0');
-      expect(`${d.getFullYear()}-${mm}-${dd}`).not.toBe(skipKey);
+      expect(localDateKey(new Date(c.fireAt))).not.toBe(skipKey);
     }
   });
 

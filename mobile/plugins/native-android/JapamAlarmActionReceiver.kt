@@ -37,11 +37,16 @@ class JapamAlarmActionReceiver : BroadcastReceiver() {
         val alarmId = intent.getStringExtra(JapamAlarmModule.INTENT_EXTRA_ALARM_ID) ?: return
         val mantraId = intent.getStringExtra(JapamAlarmModule.INTENT_EXTRA_MANTRA_ID)
         val label = intent.getStringExtra(JapamAlarmModule.INTENT_EXTRA_LABEL)
+        // A snooze fire is posted under the ':snooze'-suffixed key, not the
+        // base alarmId — dismiss whatever id was actually posted (fall back
+        // to the base id for intents from older armed notifications).
+        val notificationKey =
+            intent.getStringExtra(JapamAlarmModule.INTENT_EXTRA_NOTIFICATION_KEY) ?: alarmId
 
         // Always dismiss the notification first — both actions imply "stop
         // making noise right now".
         val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        nm.cancel(alarmId.hashCode())
+        nm.cancel(notificationKey.hashCode())
 
         when (intent.action) {
             ACTION_STOP -> {

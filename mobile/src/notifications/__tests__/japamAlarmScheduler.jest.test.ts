@@ -7,9 +7,11 @@ import {
   cancelAllJapamAlarmNotifications,
 } from '@/notifications/japamAlarmScheduler';
 import {
+  EXPO_SKIP_ONESHOT_COUNT,
   JAPAM_ALARM_CATEGORY,
   JAPAM_SNOOZE_ACTION_ID,
   SNOOZE_MINUTES,
+  localDateKey,
   type JapamAlarm,
 } from '@/notifications/japamAlarms';
 
@@ -66,9 +68,7 @@ const alarm = (id: string, extra: Partial<JapamAlarm> = {}): JapamAlarm => ({
 const tomorrowKey = () => {
   const d = new Date();
   d.setDate(d.getDate() + 1);
-  const mm = `${d.getMonth() + 1}`.padStart(2, '0');
-  const dd = `${d.getDate()}`.padStart(2, '0');
-  return `${d.getFullYear()}-${mm}-${dd}`;
+  return localDateKey(d);
 };
 
 describe('scheduleJapamAlarms — expo fallback trigger shapes', () => {
@@ -111,13 +111,15 @@ describe('scheduleJapamAlarms — expo fallback trigger shapes', () => {
 
   test('pending skip-next → discrete DATE one-shots instead of a repeating trigger', async () => {
     await scheduleJapamAlarms([alarm('a1', { skipNextDate: tomorrowKey() })]);
-    expect(mockSchedule).toHaveBeenCalledTimes(3);
+    expect(mockSchedule).toHaveBeenCalledTimes(EXPO_SKIP_ONESHOT_COUNT);
     const calls = mockSchedule.mock.calls.map((c) => c[0]);
     expect(calls.every((c) => c.trigger.type === 'date')).toBe(true);
     expect(calls.map((c) => c.identifier)).toEqual([
       'japam-alarm:a1',
-      'japam-alarm:a1:occ1',
-      'japam-alarm:a1:occ2',
+      ...Array.from(
+        { length: EXPO_SKIP_ONESHOT_COUNT - 1 },
+        (_, i) => `japam-alarm:a1:occ${i + 1}`
+      ),
     ]);
   });
 
@@ -125,6 +127,67 @@ describe('scheduleJapamAlarms — expo fallback trigger shapes', () => {
     const n = await scheduleJapamAlarms([alarm('a1', { enabled: false })]);
     expect(n).toBe(0);
     expect(mockSchedule).not.toHaveBeenCalled();
+  });
+});
+
+describe('scheduleJapamAlarms — one-time bookkeeping (merge, not replace)', () => {
+  const ONCE_ARMED_KEY = '@vedansh/japam-alarms/once-armed';
+
+  test('a fired once-alarm is never re-armed and its past record survives reconcile', async () => {
+    // The alarm rang an hour ago but housekeeping hasn't disabled it yet
+    // (e.g. it fired while the app was foregrounded).
+    const pastFire = Date.now() - 60 * 60 * 1000;
+    await AsyncStorage.setItem(ONCE_ARMED_KEY, JSON.stringify({ a1: pastFire }));
+
+    // Any reconcile (say, the user toggled another alarm) must NOT recompute
+    // the record to tomorrow, and must NOT schedule the fired alarm again.
+    const n = await scheduleJapamAlarms([alarm('a1', { repeatDays: [] })]);
+    expect(n).toBe(0);
+    expect(mockSchedule).not.toHaveBeenCalled();
+    expect(await firedOnceAlarmIds(new Date())).toEqual(['a1']);
+
+    // Even across repeated reconciles the evidence survives.
+    await scheduleJapamAlarms([alarm('a1', { repeatDays: [] })]);
+    expect(await firedOnceAlarmIds(new Date())).toEqual(['a1']);
+  });
+
+  test('a future record is recomputed (covers time edits before the fire)', async () => {
+    const futureFire = Date.now() + 60 * 60 * 1000;
+    await AsyncStorage.setItem(ONCE_ARMED_KEY, JSON.stringify({ a1: futureFire }));
+    await scheduleJapamAlarms([alarm('a1', { repeatDays: [], time: { hour: 23, minute: 59 } })]);
+    expect(mockSchedule).toHaveBeenCalledTimes(1);
+    expect(await firedOnceAlarmIds(new Date())).toEqual([]);
+  });
+
+  test('records for removed or disabled alarms are dropped (re-enable arms fresh)', async () => {
+    const pastFire = Date.now() - 1000;
+    await AsyncStorage.setItem(ONCE_ARMED_KEY, JSON.stringify({ gone: pastFire }));
+    await scheduleJapamAlarms([alarm('a1', { repeatDays: [] })]);
+    expect(await firedOnceAlarmIds(new Date())).toEqual([]);
+  });
+});
+
+describe('scheduleJapamAlarms — orphaned snoozes and slot budget', () => {
+  test("cancels a pending snooze whose alarm was deleted, spares a live alarm's snooze", async () => {
+    mockGetPending.mockResolvedValue([
+      { identifier: 'japam-alarm:gone:snooze' },
+      { identifier: 'japam-alarm:kept:snooze' },
+    ]);
+    await scheduleJapamAlarms([alarm('kept')]);
+    const cancelled = mockCancel.mock.calls.map((c) => c[0]);
+    expect(cancelled).toContain('japam-alarm:gone:snooze');
+    expect(cancelled).not.toContain('japam-alarm:kept:snooze');
+  });
+
+  test('weekly slots are capped so japam alarms cannot crowd out other subsystems', async () => {
+    // 8 alarms × 6 repeat days = 48 wanted slots; the cap admits whole
+    // alarms in time order until the budget is spent.
+    const alarms = Array.from({ length: 8 }, (_, i) =>
+      alarm(`a${i}`, { time: { hour: i, minute: 0 }, repeatDays: [1, 2, 3, 4, 5, 6] })
+    );
+    const n = await scheduleJapamAlarms(alarms);
+    expect(mockSchedule.mock.calls.length).toBeLessThanOrEqual(24);
+    expect(n).toBe(4); // 4 alarms × 6 days = 24 slots exactly
   });
 });
 

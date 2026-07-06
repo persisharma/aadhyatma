@@ -90,7 +90,8 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
   const [editor, setEditor] = useState<EditorState>(null);
   const isHi = lang === 'hi';
   const use12h = useMemo(() => prefers12HourClock(), []);
-  const nowMs = useNowTick(30_000);
+  // Countdowns only render on enabled rows — no interval when nothing ticks.
+  const nowMs = useNowTick(30_000, alarms.some((a) => a.enabled));
 
   const onOpenSystemSettings = useCallback(() => {
     Linking.openSettings().catch(() => undefined);

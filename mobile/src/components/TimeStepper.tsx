@@ -109,10 +109,12 @@ const HOLD_DELAY_MS = 350;
 const HOLD_INTERVAL_MS = 90;
 
 /**
- * Chevron that fires once on press and auto-repeats while held — makes
- * 1-minute stepping usable without demanding 59 taps. The action fires on
- * press-in (not press-up) so the repeat is a seamless continuation of the
- * first step.
+ * Chevron that steps once per tap and auto-repeats while held — makes
+ * 1-minute stepping usable without demanding 59 taps. The single step fires
+ * on press-UP (onPress) and the repeat starts from onLongPress: a scroll
+ * drag that merely begins on the chevron is terminated by the ScrollView
+ * before either fires, so it can never mutate the time. (RN suppresses
+ * onPress after onLongPress, so a held press doesn't double-step.)
  */
 function RepeatChevron({
   onStep,
@@ -136,20 +138,22 @@ function RepeatChevron({
     }
   }, []);
 
-  const start = useCallback(() => {
+  const startRepeat = useCallback(() => {
     stepRef.current();
     const tick = () => {
       stepRef.current();
       timerRef.current = setTimeout(tick, HOLD_INTERVAL_MS);
     };
-    timerRef.current = setTimeout(tick, HOLD_DELAY_MS);
+    timerRef.current = setTimeout(tick, HOLD_INTERVAL_MS);
   }, []);
 
   useEffect(() => stop, [stop]);
 
   return (
     <Pressable
-      onPressIn={start}
+      onPress={() => stepRef.current()}
+      onLongPress={startRepeat}
+      delayLongPress={HOLD_DELAY_MS}
       onPressOut={stop}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
