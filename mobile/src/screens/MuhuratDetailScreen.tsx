@@ -80,15 +80,14 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.root}>
-      {/* Share card — captured to a PNG for the OS share sheet. It is rendered
-          ON-SCREEN at the origin (not translated off-screen) and then fully
-          covered by the opaque gradient + content painted after it. A view
-          moved off-screen under the New Architecture captures its own
-          background but NOT its subviews — the reported blank/parchment-only
-          image. On-screen-but-occluded, the subtree actually draws, and
-          captureRef snapshots this view regardless of what covers it.
-          collapsable={false} on the captured view itself keeps it a real
-          native view for view-shot to target. */}
+      {/* Share card — captured to a PNG for the OS share sheet. Rendered
+          off-screen (so the full card is captured regardless of screen height —
+          an on-screen card taller than the viewport clips), and handed an
+          explicit measured output size so view-shot renders the whole subtree
+          instead of a blank background. This mirrors the proven reader share
+          path (shareVerse.tsx), which captures a tall off-screen card the same
+          way. collapsable={false} on the captured view keeps it a real native
+          view for view-shot to target. */}
       {ready && (
         <View style={styles.captureLayer} pointerEvents="none">
           <View
@@ -145,7 +144,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   topBar: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, gap: 12 },
   backBtn: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  // On-screen at the origin so the subtree actually draws, but painted first
-  // (and pointerEvents="none") so the gradient + content fully cover it.
-  captureLayer: { position: 'absolute', left: 0, top: 0, width: SHARE_CARD_WIDTH },
+  // Fully off-screen so the whole card is captured no matter how tall it is
+  // (an on-screen card taller than the viewport gets clipped in the snapshot).
+  captureLayer: { position: 'absolute', left: -10000, top: -10000, width: SHARE_CARD_WIDTH },
 });
