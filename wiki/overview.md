@@ -18,14 +18,14 @@ backend.
 
 ## Stack
 - **Language:** TypeScript ~5.9.2 (strict). Path aliases `@/*` → `src/*`, `@assets/*` → `assets/*`.
-- **Framework:** Expo SDK ~54.0.33 · React Native 0.81.5 · React 19.1.0 (New Architecture disabled).
+- **Framework:** Expo SDK ~54.0.33 · React Native 0.81.5 · React 19.1.0 (New Architecture **enabled** — flipped on to fix an iOS 26 legacy-bridge launch crash; legacy arch must stay off).
 - **Navigation:** React Navigation 7 — `native-stack` + `bottom-tabs`. **Not** expo-router.
 - **State:** React Context only (no Redux/Zustand). `@react-native-async-storage/async-storage` 2.2.0 for persistence.
 - **OTA:** `expo-updates` ~29.0.17, `runtimeVersion` policy `appVersion`.
 - **Audio:** `expo-audio` (japam playback). **Notifications:** `expo-notifications`. **Calendar math:** `astronomy-engine` ~2.1.19.
 - **Fonts:** Noto Serif Devanagari (Devanagari), Cormorant Garamond (Latin), Noto Serif Gujarati + Noto Serif Kannada (the gu/kn reading languages).
 - **Reading languages:** `hi · en · gu · kn` (one shared `useGitaLanguage()` pref). gu/kn carry no authored content — derived at runtime by transliterating the Devanagari. See [[languages]].
-- **App version:** 1.3.2 (`mobile/app.json`).
+- **App version:** 1.4.3 (`mobile/app.json`).
 - **Entry Point:** `mobile/index.ts` → `registerRootComponent(App)` → `mobile/App.tsx`.
 
 ## Request Shape
