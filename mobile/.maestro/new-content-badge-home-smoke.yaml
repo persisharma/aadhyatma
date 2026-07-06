@@ -1,0 +1,162 @@
+# NEW Content Badge — Home category-tile coverage
+#
+# Complements new-content-badge-smoke.yaml (which covers the stotram CategoryList
+# path). This flow exercises the Home-screen CategoryCard badges (hasNewInCategory):
+#
+#   1. SCOPING — after the dev "upgrade" seed, the per-category badge lights up
+#      for exactly the categories that hold debut-new content: stotram (Krishna
+#      Stotram, Bajrang Baan, Ram Stuti — addedInVersion 1.3.0) AND sanskar (its
+#      7 sections — addedInVersion 1.3.1, added in #88). The categories with no
+#      debut-new content (granth, chalisa, japam, aarti) + By Deity must render
+#      WITHOUT the badge.
+#   2. CLEAR — marking all three stotram debut-new entries seen flips
+#      hasNewInCategory('stotram') to false: the tile loses its badge, persisted.
+#      (Sanskar's badge persists — only stotram's clear is asserted here.)
+#
+# CategoryCard's accessibilityLabel is mutually exclusive — "<NameEn>. Tap to
+# open." (no badge) vs "<NameEn>. New. Tap to open." (badge). Maestro's anchored
+# regex means scrolling to the PLAIN form proves the tile has NO badge (the plain
+# pattern cannot match the ". New." variant).
+#
+# Dev controls (dev-seed-new-content / dev-reset-new-content) are __DEV__-only
+# Home pills, identical to new-content-badge-smoke.yaml. Tapping a library card
+# fires markSeen(id) BEFORE navigating, so a tap + "Back" is enough to mark seen.
+
+appId: host.exp.Exponent
+---
+# ── Setup: force a clean slate, then simulate an update ──
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element:
+      id: "dev-reset-new-content"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn:
+    id: "dev-reset-new-content"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "dev-seed-new-content"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn:
+    id: "dev-seed-new-content"
+- waitForAnimationToEnd
+
+# ── 1. SCOPING: stotram tile NEW; every other tile renders without NEW ──
+- scrollUntilVisible:
+    element:
+      text: "Hymns & Praise. New. Tap to open."   # stotram → HAS badge
+    direction: UP
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Sacred Books. Tap to open."          # granth → plain (no badge)
+    direction: UP
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Chalisa. Tap to open."               # chalisa → plain
+    direction: DOWN
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Japa & Mantras. Tap to open."        # japam → plain
+    direction: DOWN
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Aarti. New. Tap to open."            # aarti → HAS badge (saraswati-aarti, 1.3.1)
+    direction: DOWN
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Good Habits. New. Tap to open."      # sanskar → HAS badge (7 debut-new sections, 1.3.1)
+    direction: DOWN
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "By Deity. Tap to open."              # deity tile → never tracked
+    direction: DOWN
+    timeout: 10000
+
+# ── 2. CLEAR: mark all three stotram debut-new entries seen ──
+- scrollUntilVisible:
+    element:
+      text: "Hymns & Praise. New. Tap to open."
+    direction: UP
+    timeout: 10000
+- tapOn: "Hymns & Praise. New. Tap to open."
+- waitForAnimationToEnd
+
+# Krishna Stotram
+- scrollUntilVisible:
+    element:
+      text: "Krishna Stotram\\..*New\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Krishna Stotram\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# Bajrang Baan
+- scrollUntilVisible:
+    element:
+      text: "Bajrang Baan\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Bajrang Baan\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# Ram Stuti
+- scrollUntilVisible:
+    element:
+      text: "Ram Stuti\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Ram Stuti\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# Back to Home — stotram tile must now render WITHOUT the badge.
+- tapOn: "Back"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Hymns & Praise. Tap to open."        # plain form → badge cleared
+    direction: UP
+    timeout: 10000
+
+# ── Cleanup: reset NEW state so later flows start clean ──
+- scrollUntilVisible:
+    element:
+      id: "dev-reset-new-content"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn:
+    id: "dev-reset-new-content"
+- waitForAnimationToEnd
+- stopApp:
+    appId: host.exp.Exponent

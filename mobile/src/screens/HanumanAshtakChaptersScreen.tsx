@@ -5,10 +5,13 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { hanumanAshtakChaptersManifest, hanumanAshtakTitleHi, hanumanAshtakTitleEn } from '@/data/hanuman-ashtak';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang, isLatinLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { getSourceBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'HanumanAshtakChapters'>;
@@ -16,11 +19,12 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'HanumanAshtakChapters'>
 export default function HanumanAshtakChaptersScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { getChapterProgress } = useReadingProgress();
 
-  const title = lang === 'hi' ? hanumanAshtakTitleHi : hanumanAshtakTitleEn;
+  const title = contentByLang(lang, hanumanAshtakTitleHi, hanumanAshtakTitleEn);
   const titleFontFamily =
-    lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
-  const titleFontSize = lang === 'hi' ? 22 : 20;
+    titleFontByLang(lang);
+  const titleFontSize = isLatinLang(lang) ? 20 : 22;
   const titleItalic = lang === 'en';
 
   return (
@@ -63,7 +67,10 @@ export default function HanumanAshtakChaptersScreen({ navigation }: Props) {
             <GitaChapterCard
               key={chapter.chapter}
               chapter={chapter}
-              onPress={() => navigation.navigate('HanumanAshtakReader', { chapter: chapter.chapter })}
+              onPress={() => {
+                const resumeIndex = getChapterProgress('hanuman-ashtak', chapter.chapter)?.verseIndex ?? 0;
+                navigation.navigate('HanumanAshtakReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
+              }}
             />
           ))}
         </ScrollView>
@@ -79,7 +86,7 @@ const styles = StyleSheet.create({
   back: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   backSpacer: { width: 44, height: 44 },
   backGlyph: { fontSize: 22, lineHeight: 24, marginTop: -2, includeFontPadding: false },
-  title: { flex: 1, textAlign: 'center', includeFontPadding: false },
+  title: { flex: 1, textAlign: 'center' },
   toggleRow: { paddingVertical: 8, paddingBottom: 16, alignItems: 'center' },
   scroll: { flex: 1 },
   scrollContent: { paddingBottom: 40 },

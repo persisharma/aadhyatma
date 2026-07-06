@@ -1,14 +1,14 @@
 import omJaiJagdish from './om-jai-jagdish.json';
 import hanumanAarti from './hanuman-aarti.json';
-import sankatMochan from './sankat-mochan.json';
 import jaiGaneshDeva from './jai-ganesh-deva.json';
 import omJaiShivOmkara from './om-jai-shiv-omkara.json';
 import jaiAmbeGauri from './jai-ambe-gauri.json';
 import aartiKunjBihari from './aarti-kunj-bihari.json';
+import saraswatiAarti from './saraswati-aarti.json';
 
 export type AartiVerse = {
   id: string;
-  type: 'stanza';
+  type: 'refrain' | 'stanza';
   section: 'body';
   number: number;
   labelHi: string;
@@ -17,6 +17,8 @@ export type AartiVerse = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 export type AartiData = {
@@ -26,7 +28,7 @@ export type AartiData = {
   subtitleEn: string;
   deity: string;
   language: string;
-  source: { baseText: string; retrievedOn: string };
+  source: { baseText: string; referenceUrls?: string[]; retrievedOn: string };
   counts: { totalVerses: number };
   verses: AartiVerse[];
 };
@@ -34,11 +36,11 @@ export type AartiData = {
 export const aartiCollection: readonly AartiData[] = [
   omJaiJagdish as AartiData,
   hanumanAarti as AartiData,
-  sankatMochan as AartiData,
   jaiGaneshDeva as AartiData,
   omJaiShivOmkara as AartiData,
   jaiAmbeGauri as AartiData,
   aartiKunjBihari as AartiData,
+  saraswatiAarti as AartiData,
 ];
 
 /**
@@ -49,11 +51,11 @@ export const aartiCollection: readonly AartiData[] = [
 export const aartiIdByIndex = [
   'om-jai-jagdish',
   'hanuman-aarti',
-  'sankat-mochan',
   'jai-ganesh-deva',
   'om-jai-shiv-omkara',
   'jai-ambe-gauri',
   'aarti-kunj-bihari',
+  'saraswati-aarti',
 ] as const satisfies readonly string[];
 
 export type AartiId = (typeof aartiIdByIndex)[number];

@@ -1,6 +1,7 @@
 import { CommonActions, createNavigationContainerRef } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
-import { buildProgressTarget } from '@/navigation/entryRoutes';
+import { findJapamMantra } from '@/data/japam';
+import { isJapamAlarmPayload } from './japamAlarms';
 import type { TabParamList } from '@/navigation/types';
 import type { NotificationPayload } from './pure';
 
@@ -20,10 +21,34 @@ function isDailyVersePayload(data: unknown): data is NotificationPayload {
   );
 }
 
+function isVratReminderPayload(data: unknown): data is { type: 'vrat-reminder'; ruleId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return d.type === 'vrat-reminder' && typeof d.ruleId === 'string';
+}
+
+function isSadhanaReminderPayload(data: unknown): data is { type: 'sadhana-reminder'; programId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return d.type === 'sadhana-reminder' && typeof d.programId === 'string';
+}
+
 /**
  * Resolve a notification response into a navigation dispatch. Returns true if
- * we successfully routed; false if the payload was unrecognised or the route
- * helper couldn't build a target.
+ * we recognised the payload and routed; false otherwise.
+ *
+ * A daily-verse tap always lands on the Daily Bhakti tab rather than deep-
+ * linking into the exact verse in a reader. Opening a reader runs that reader's
+ * `setProgress` effect, which would overwrite the user's saved reading position
+ * ("bookmark"). Landing on Daily Bhakti keeps the reminder lightweight and
+ * leaves the resume position untouched.
+ *
+ * The notification's verse identity (`sourceId`/`chapter`/`verseIndex`) is
+ * forwarded as params so the tab shows the exact verse the user tapped. We pass
+ * the identity baked into the notification rather than re-deriving it on-device,
+ * so an OTA pool change between scheduling and tapping can't shift the verse.
+ * This stays on the Daily Bhakti tab (not a reader), so reading progress is
+ * untouched.
  *
  * Idempotent and side-effect-light: safe to call even if `navigationRef` isn't
  * ready yet (no-ops in that case so the caller can retry on the next tick).
@@ -33,31 +58,69 @@ export function handleNotificationResponse(
 ): boolean {
   if (!navigationRef.isReady()) return false;
   const data = response.notification.request.content.data;
-  if (!isDailyVersePayload(data)) return false;
 
-  const target = buildProgressTarget({
-    sourceId: data.sourceId,
-    chapter: data.chapter,
-    verseIndex: data.verseIndex,
-  });
-
-  if (!target) {
-    // Routing helper rejected — fall back to the Daily Bhakti tab so the tap
-    // is never a silent no-op.
+  if (isDailyVersePayload(data)) {
     navigationRef.dispatch(
-      CommonActions.navigate({ name: 'DailyBhaktiTab' })
+      CommonActions.navigate({
+        name: 'DailyBhaktiTab',
+        params: {
+          sourceId: data.sourceId,
+          verseIndex: data.verseIndex,
+          ...(data.chapter != null ? { chapter: data.chapter } : {}),
+        },
+      })
+    );
+    return true;
+  }
+
+  // A vrat-reminder tap (PRD-09) deep-links into the observance's detail page,
+  // nested inside the Panchang tab's stack.
+  if (isVratReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'PanchangTab',
+        params: { screen: 'ObservanceDetail', params: { ruleId: data.ruleId } },
+      })
+    );
+    return true;
+  }
+
+  // A sadhana-reminder tap (PRD-11) opens Today's Practice, where the active
+  // sankalp's day is shown. Lands on the Home tab's RoutineToday screen; reading
+  // progress is untouched (the user chooses to open the day's reading there).
+  if (isSadhanaReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'HomeTab',
+        params: { screen: 'RoutineToday' },
+      } as never)
+    );
+    return true;
+  }
+
+  // A Japam-alarm tap opens the counter with the mantra preselected and the
+  // audio loop auto-started — so a tap on the lock-screen alarm drops the
+  // user directly into chanting. The mantraId is validated against the
+  // catalogue to survive content revisions (a stale alarm shouldn't crash
+  // the screen).
+  if (isJapamAlarmPayload(data)) {
+    if (findJapamMantra(data.mantraId)) {
+      navigationRef.dispatch(
+        CommonActions.navigate({
+          name: 'HomeTab',
+          params: {
+            screen: 'JapamCounter',
+            params: { mantraId: data.mantraId, autoPlay: true },
+          },
+        } as never)
+      );
+      return true;
+    }
+    navigationRef.dispatch(
+      CommonActions.navigate({ name: 'HomeTab' } as never)
     );
     return false;
   }
 
-  navigationRef.dispatch(
-    CommonActions.navigate({
-      name: 'HomeTab',
-      params: {
-        screen: target.screen,
-        params: target.params,
-      },
-    } as never)
-  );
-  return true;
+  return false;
 }

@@ -3,10 +3,13 @@ import type { Deity } from './texts';
 export type DeityIconKey =
   | 'bowArrow'
   | 'bansuriPeacockFeather'
+  | 'chakra'
   | 'trishul'
   | 'gada'
   | 'lotus'
-  | 'modak';
+  | 'modak'
+  | 'surya'
+  | 'veena';
 
 export type DeityMeta = {
   id: Deity;
@@ -23,8 +26,25 @@ export const deities: readonly DeityMeta[] = [
     nameEn: 'Shri Krishna',
     iconKey: 'bansuriPeacockFeather',
   },
+  { id: 'vishnu', nameHi: 'श्री विष्णु', nameEn: 'Shri Vishnu', iconKey: 'chakra' },
   { id: 'shiva', nameHi: 'श्री शिव', nameEn: 'Shri Shiva', iconKey: 'trishul' },
   { id: 'hanuman', nameHi: 'श्री हनुमान', nameEn: 'Shri Hanuman', iconKey: 'gada' },
   { id: 'durga', nameHi: 'माँ दुर्गा', nameEn: 'Maa Durga', iconKey: 'lotus' },
   { id: 'ganesha', nameHi: 'श्री गणेश', nameEn: 'Shri Ganesha', iconKey: 'modak' },
+  { id: 'savitr', nameHi: 'माँ गायत्री', nameEn: 'Maa Gayatri', iconKey: 'surya' },
+  { id: 'saraswati', nameHi: 'माँ सरस्वती', nameEn: 'Maa Saraswati', iconKey: 'veena' },
 ];
+
+const deityById: Record<Deity, DeityMeta> = Object.fromEntries(
+  deities.map((d) => [d.id, d])
+) as Record<Deity, DeityMeta>;
+
+/** Full metadata for a deity id. */
+export function getDeityMeta(id: Deity): DeityMeta {
+  return deityById[id];
+}
+
+/** The glyph icon key for a deity id — feed straight to `<DeityIcon />`. */
+export function deityIconKey(id: Deity): DeityIconKey {
+  return deityById[id].iconKey;
+}

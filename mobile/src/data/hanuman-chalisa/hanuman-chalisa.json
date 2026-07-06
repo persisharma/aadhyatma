@@ -6,10 +6,13 @@
   "language": "hi-en",
   "script": "Devanagari + Latin",
   "source": {
-    "baseText": "हनुमान चालीसा — गोस्वामी तुलसीदास (~16th century, public domain)",
-    "devanagariReference": "https://www.artofliving.org/in-hi/culture/reads/hanuman-chalisa-lyrics-meaning",
-    "meaningsAttribution": "Hindi भावार्थ adapted from Art of Living. English meanings adapted from Neem Karoli Baba Ashram (nkbashram.org/hanuman-chalisa). Romanized transliteration by the Aadhyatma editorial team.",
-    "retrievedOn": "2026-05-05"
+    "baseText": "Hanuman Chalisa by Goswami Tulsidas, checked against HinduNidhi, GreenMesg, and Vaidika Vignanam.",
+    "referenceUrls": [
+      "https://www.hindunidhi.com/hanuman-chalisa/",
+      "https://greenmesg.org/stotras/hanuman/hanuman_chalisa.php",
+      "https://vignanam.org/hindi/hanuman-chalisa.html"
+    ],
+    "retrievedOn": "2026-05-30"
   },
   "counts": {
     "openingDohas": 2,
@@ -23,8 +26,8 @@
       "type": "doha",
       "section": "opening",
       "number": 1,
-      "labelHi": "दोहा १",
-      "labelEn": "Doha 1",
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
       "lines": [
         "श्रीगुरु चरन सरोज रज, निज मन मुकुर सुधारि।",
         "बरनउँ रघुबर बिमल जसु, जो दायक फल चारि॥"
@@ -34,15 +37,17 @@
         "Baranau raghubar bimal jasu, jo daayak phal chaari."
       ],
       "meaningHi": "गुरुचरणों की कृपा से मन को निर्मल करके मैं श्रीराम के पवित्र यश का वर्णन करता हूँ, जो धर्म, अर्थ, काम और मोक्ष देने वाले हैं।",
-      "meaningEn": "Having polished the mirror of my heart with the dust of my Guru's lotus feet, I sing the pure fame of the best of the Raghus, which bestows the four fruits of life: righteousness, prosperity, pleasure and liberation."
+      "meaningEn": "Having polished the mirror of my heart with the dust of my Guru's lotus feet, I sing the pure fame of the best of the Raghus, which bestows the four fruits of life: righteousness, prosperity, pleasure and liberation.",
+      "meaningGu": "ગુરુના ચરણોની કૃપાથી મનને નિર્મળ કરીને હું શ્રીરામના પવિત્ર યશનું વર્ણન કરું છું, જે ધર્મ, અર્થ, કામ અને મોક્ષ આપનારા છે.",
+      "meaningKn": "ಗುರುಗಳ ಪಾದಗಳ ಕೃಪೆಯಿಂದ ಮನಸ್ಸನ್ನು ನಿರ್ಮಲಗೊಳಿಸಿ, ಧರ್ಮ, ಅರ್ಥ, ಕಾಮ ಮತ್ತು ಮೋಕ್ಷವನ್ನು ನೀಡುವ ಶ್ರೀರಾಮನ ಪವಿತ್ರ ಕೀರ್ತಿಯನ್ನು ನಾನು ವರ್ಣಿಸುತ್ತೇನೆ."
     },
     {
       "id": "opening-doha-2",
       "type": "doha",
       "section": "opening",
       "number": 2,
-      "labelHi": "दोहा २",
-      "labelEn": "Doha 2",
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
       "lines": [
         "बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार।",
         "बल बुधि विद्या देहु मोहिं, हरहु कलेस विकार॥"
@@ -52,15 +57,17 @@
         "Bal budhi vidyaa dehu mohi, harahu kales vikaar."
       ],
       "meaningHi": "अपनी सीमित बुद्धि को मानकर मैं पवनपुत्र हनुमान का स्मरण करता हूँ; वे मुझे बल, बुद्धि और विद्या दें और मेरे दुख-दोष दूर करें।",
-      "meaningEn": "Knowing this body of mine to lack intelligence, I remember the Son of the Wind. Grant me strength, wisdom and knowledge, and remove all my afflictions and impurities."
+      "meaningEn": "Knowing this body of mine to lack intelligence, I remember the Son of the Wind. Grant me strength, wisdom and knowledge, and remove all my afflictions and impurities.",
+      "meaningGu": "મારી મર્યાદિત બુદ્ધિને સ્વીકારીને હું પવનપુત્ર હનુમાનનું સ્મરણ કરું છું; તેઓ મને બળ, બુદ્ધિ અને વિદ્યા આપે અને મારા દુઃખ-દોષ દૂર કરે.",
+      "meaningKn": "ನನ್ನ ಸೀಮಿತ ಬುದ್ಧಿಯನ್ನು ಅರಿತು ನಾನು ಪವನಪುತ್ರ ಹನುಮಾನನನ್ನು ಸ್ಮರಿಸುತ್ತೇನೆ; ಅವರು ನನಗೆ ಬಲ, ಬುದ್ಧಿ ಮತ್ತು ವಿದ್ಯೆಯನ್ನು ನೀಡಿ, ನನ್ನ ದುಃಖ-ದೋಷಗಳನ್ನು ದೂರಮಾಡಲಿ."
     },
     {
       "id": "chaupai-01",
       "type": "chaupai",
       "section": "body",
       "number": 1,
-      "labelHi": "चौपाई १",
-      "labelEn": "Chaupai 1",
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
       "lines": [
         "जय हनुमान ज्ञान गुन सागर।",
         "जय कपीस तिहुँ लोक उजागर॥1॥"
@@ -70,15 +77,17 @@
         "Jai Kapees tihu lok ujaagar"
       ],
       "meaningHi": "हे हनुमान, आप ज्ञान और गुणों के अथाह सागर हैं; आपकी महिमा तीनों लोकों में प्रसिद्ध है।",
-      "meaningEn": "Hail Hanuman, ocean of wisdom and virtue. Hail Lord of the monkeys, illuminator of the three worlds."
+      "meaningEn": "Hail Hanuman, ocean of wisdom and virtue. Hail Lord of the monkeys, illuminator of the three worlds.",
+      "meaningGu": "હે હનુમાન, તમે જ્ઞાન અને ગુણોના અથાહ સાગર છો; તમારી મહિમા ત્રણેય લોકમાં પ્રસિદ્ધ છે.",
+      "meaningKn": "ಹೇ ಹನುಮಾನ, ನೀವು ಜ್ಞಾನ ಮತ್ತು ಗುಣಗಳ ಅಳತೆಯಿಲ್ಲದ ಸಾಗರ; ನಿಮ್ಮ ಮಹಿಮೆ ಮೂರು ಲೋಕಗಳಲ್ಲಿಯೂ ಪ್ರಸಿದ್ಧವಾಗಿದೆ."
     },
     {
       "id": "chaupai-02",
       "type": "chaupai",
       "section": "body",
       "number": 2,
-      "labelHi": "चौपाई २",
-      "labelEn": "Chaupai 2",
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
       "lines": [
         "राम दूत अतुलित बल धामा।",
         "अंजनि-पुत्र पवनसुत नामा॥2॥"
@@ -88,15 +97,17 @@
         "Anjani-putra pavanasut naamaa"
       ],
       "meaningHi": "आप श्रीराम के दूत और अपार शक्ति के धाम हैं; आप अंजनी के पुत्र और पवनसुत कहलाते हैं।",
-      "meaningEn": "You are Sri Ram's emissary and the abode of matchless power. You are Anjani's son, known as the Son of the Wind."
+      "meaningEn": "You are Sri Ram's emissary and the abode of matchless power. You are Anjani's son, known as the Son of the Wind.",
+      "meaningGu": "તમે શ્રીરામના દૂત અને અપાર શક્તિના ધામ છો; તમે અંજનીના પુત્ર અને પવનસુત તરીકે ઓળખાઓ છો.",
+      "meaningKn": "ನೀವು ಶ್ರೀರಾಮನ ದೂತರೂ ಅಪಾರ ಶಕ್ತಿಯ ನೆಲೆಯೂ ಆಗಿದ್ದೀರಿ; ನೀವು ಅಂಜನಿಯ ಪುತ್ರ, ಪವನಸುತ ಎಂದು ಕರೆಯಲ್ಪಡುತ್ತೀರಿ."
     },
     {
       "id": "chaupai-03",
       "type": "chaupai",
       "section": "body",
       "number": 3,
-      "labelHi": "चौपाई ३",
-      "labelEn": "Chaupai 3",
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
       "lines": [
         "महाबीर बिक्रम बजरंगी।",
         "कुमति निवार सुमति के संगी॥3॥"
@@ -106,15 +117,17 @@
         "Kumati nivaar sumati ke sangee"
       ],
       "meaningHi": "आप महान वीर और पराक्रमी हैं; आप बुरी बुद्धि को हटाकर अच्छी बुद्धि का साथ देते हैं।",
-      "meaningEn": "Great hero, mighty as a thunderbolt; you dispel base thoughts and stand as the companion of those of pure mind."
+      "meaningEn": "Great hero, mighty as a thunderbolt; you dispel base thoughts and stand as the companion of those of pure mind.",
+      "meaningGu": "તમે મહાન વીર અને પરાક્રમી છો; તમે ખરાબ બુદ્ધિને દૂર કરીને સારી બુદ્ધિને સાથ આપો છો.",
+      "meaningKn": "ನೀವು ಮಹಾವೀರರೂ ಪರಾಕ್ರಮಿಗಳೂ ಆಗಿದ್ದೀರಿ; ಕೆಟ್ಟ ಬುದ್ಧಿಯನ್ನು ದೂರಮಾಡಿ ಒಳ್ಳೆಯ ಬುದ್ಧಿಗೆ ಬೆಂಬಲ ನೀಡುತ್ತೀರಿ."
     },
     {
       "id": "chaupai-04",
       "type": "chaupai",
       "section": "body",
       "number": 4,
-      "labelHi": "चौपाई ४",
-      "labelEn": "Chaupai 4",
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
       "lines": [
         "कंचन बरन बिराज सुबेसा।",
         "कानन कुंडल कुंचित केसा॥4॥"
@@ -124,15 +137,17 @@
         "Kaanan kundal kunchit kesaa"
       ],
       "meaningHi": "आपका स्वरूप स्वर्ण जैसा तेजस्वी है; सुंदर वस्त्र, कुंडल और घुंघराले केश आपकी शोभा बढ़ाते हैं।",
-      "meaningEn": "Golden-hued and splendidly attired, you wear shining earrings and your hair falls in graceful curls."
+      "meaningEn": "Golden-hued and splendidly attired, you wear shining earrings and your hair falls in graceful curls.",
+      "meaningGu": "તમારું સ્વરૂપ સોનાની જેમ તેજસ્વી છે; સુંદર વસ્ત્રો, કુંડળ અને વાંકડિયા વાળ તમારી શોભા વધારે છે.",
+      "meaningKn": "ನಿಮ್ಮ ರೂಪವು ಬಂಗಾರದಂತೆ ಪ್ರಕಾಶಮಾನವಾಗಿದೆ; ಸುಂದರ ವಸ್ತ್ರಗಳು, ಕುಂಡಲಗಳು ಮತ್ತು ಗುಂಗುರು ಕೂದಲುಗಳು ನಿಮ್ಮ ಶೋಭೆಯನ್ನು ಹೆಚ್ಚಿಸುತ್ತವೆ."
     },
     {
       "id": "chaupai-05",
       "type": "chaupai",
       "section": "body",
       "number": 5,
-      "labelHi": "चौपाई ५",
-      "labelEn": "Chaupai 5",
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
       "lines": [
         "हाथ बज्र औ ध्वजा बिराजै।",
         "काँधे मूँज जनेऊ साजै॥5॥"
@@ -142,15 +157,17 @@
         "Kaandhe moonj janeu saajai"
       ],
       "meaningHi": "आपके हाथ में वज्र और ध्वजा शोभा देते हैं, और कंधे पर जनेऊ सुशोभित है।",
-      "meaningEn": "In your hands the mace and the banner shine, and across your shoulder the sacred munja-thread is borne."
+      "meaningEn": "In your hands the mace and the banner shine, and across your shoulder the sacred munja-thread is borne.",
+      "meaningGu": "તમારા હાથમાં વજ્ર અને ધ્વજા શોભે છે, અને ખભા પર જનોઈ સુંદર રીતે સજેલી છે.",
+      "meaningKn": "ನಿಮ್ಮ ಕೈಯಲ್ಲಿ ವಜ್ರಾಯುಧ ಮತ್ತು ಧ್ವಜ ಶೋಭಿಸುತ್ತವೆ, ಭುಜದ ಮೇಲೆ ಜನಿವಾರವು ಸುಂದರವಾಗಿ ಅಲಂಕರಿಸಿದೆ."
     },
     {
       "id": "chaupai-06",
       "type": "chaupai",
       "section": "body",
       "number": 6,
-      "labelHi": "चौपाई ६",
-      "labelEn": "Chaupai 6",
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
       "lines": [
         "शंकर सुवन केसरी नंदन।",
         "तेज प्रताप महा जग वंदन॥6॥"
@@ -160,15 +177,17 @@
         "Tej prataap mahaa jag vandan"
       ],
       "meaningHi": "आप शिव-अंश और केसरीनंदन हैं; आपके तेज और प्रताप को सारा जगत प्रणाम करता है।",
-      "meaningEn": "Born of Shiva's grace and the joy of Kesari, your splendour and might are revered by the whole world."
+      "meaningEn": "Born of Shiva's grace and the joy of Kesari, your splendour and might are revered by the whole world.",
+      "meaningGu": "તમે શિવના અંશ અને કેસરીના પુત્ર છો; તમારા તેજ અને પ્રતાપને આખું જગત પ્રણામ કરે છે.",
+      "meaningKn": "ನೀವು ಶಿವನ ಅಂಶವೂ ಕೇಸರಿಯ ಪುತ್ರರೂ ಆಗಿದ್ದೀರಿ; ನಿಮ್ಮ ತೇಜಸ್ಸು ಮತ್ತು ಪ್ರತಾಪಕ್ಕೆ ಇಡೀ ಜಗತ್ತು ನಮಸ್ಕರಿಸುತ್ತದೆ."
     },
     {
       "id": "chaupai-07",
       "type": "chaupai",
       "section": "body",
       "number": 7,
-      "labelHi": "चौपाई ७",
-      "labelEn": "Chaupai 7",
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
       "lines": [
         "विद्यावान गुनी अति चातुर।",
         "राम काज करिबे को आतुर॥7॥"
@@ -178,15 +197,17 @@
         "Raam kaaj karibe ko aatur"
       ],
       "meaningHi": "आप विद्वान, गुणवान और अत्यंत कुशल हैं; आप सदा रामकाज के लिए तत्पर रहते हैं।",
-      "meaningEn": "Learned, virtuous and supremely skilful, you remain ever eager to accomplish the work of Sri Ram."
+      "meaningEn": "Learned, virtuous and supremely skilful, you remain ever eager to accomplish the work of Sri Ram.",
+      "meaningGu": "તમે વિદ્વાન, ગુણવાન અને અત્યંત કુશળ છો; તમે સદા રામના કાર્ય માટે તત્પર રહો છો.",
+      "meaningKn": "ನೀವು ಜ್ಞಾನಿಗಳು, ಗುಣವಂತರೂ ಅತ್ಯಂತ ಕುಶಲರೂ ಆಗಿದ್ದೀರಿ; ನೀವು ಸದಾ ರಾಮನ ಕಾರ್ಯಕ್ಕೆ ಸಿದ್ಧರಾಗಿರುತ್ತೀರಿ."
     },
     {
       "id": "chaupai-08",
       "type": "chaupai",
       "section": "body",
       "number": 8,
-      "labelHi": "चौपाई ८",
-      "labelEn": "Chaupai 8",
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
       "lines": [
         "प्रभु चरित्र सुनिबे को रसिया।",
         "राम लखन सीता मन बसिया॥8॥"
@@ -196,15 +217,17 @@
         "Raam Lakhan Seetaa man basiyaa"
       ],
       "meaningHi": "आपको प्रभु की लीला और कथा सुनना अत्यंत प्रिय है; राम, लक्ष्मण और सीता आपके हृदय में बसते हैं।",
-      "meaningEn": "You delight in hearing the deeds of the Lord, and Ram, Lakshman and Sita dwell forever in your heart."
+      "meaningEn": "You delight in hearing the deeds of the Lord, and Ram, Lakshman and Sita dwell forever in your heart.",
+      "meaningGu": "પ્રભુની લીલા અને કથા સાંભળવી તમને અત્યંત પ્રિય છે; રામ, લક્ષ્મણ અને સીતા તમારા હૃદયમાં વસે છે.",
+      "meaningKn": "ಪ್ರಭುವಿನ ಲೀಲೆಯನ್ನೂ ಕಥೆಯನ್ನೂ ಕೇಳುವುದು ನಿಮಗೆ ಅತ್ಯಂತ ಪ್ರಿಯ; ರಾಮ, ಲಕ್ಷ್ಮಣ ಮತ್ತು ಸೀತಾ ನಿಮ್ಮ ಹೃದಯದಲ್ಲಿ ನೆಲೆಸಿದ್ದಾರೆ."
     },
     {
       "id": "chaupai-09",
       "type": "chaupai",
       "section": "body",
       "number": 9,
-      "labelHi": "चौपाई ९",
-      "labelEn": "Chaupai 9",
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
       "lines": [
         "सूक्ष्म रूप धरि सियहिं दिखावा।",
         "बिकट रूप धरि लंक जरावा॥9॥"
@@ -214,15 +237,17 @@
         "Bikat roop dhari lank jaraavaa"
       ],
       "meaningHi": "आपने सीता जी के सामने सूक्ष्म रूप धारण किया और लंका में विकराल रूप लेकर उसे जलाया।",
-      "meaningEn": "Taking a tiny form you appeared before Sita; assuming an awesome form you set Lanka ablaze."
+      "meaningEn": "Taking a tiny form you appeared before Sita; assuming an awesome form you set Lanka ablaze.",
+      "meaningGu": "તમે સીતાજી સમક્ષ સૂક્ષ્મ રૂપ ધારણ કર્યું અને લંકામાં વિકરાળ રૂપ લઈને તેને બાળી નાખી.",
+      "meaningKn": "ನೀವು ಸೀತೆಯ ಮುಂದೆ ಸೂಕ್ಷ್ಮ ರೂಪ ತಾಳಿದಿರಿ, ಲಂಕೆಯಲ್ಲಿ ಭೀಕರ ರೂಪ ಪಡೆದು ಅದನ್ನು ದಹಿಸಿದಿರಿ."
     },
     {
       "id": "chaupai-10",
       "type": "chaupai",
       "section": "body",
       "number": 10,
-      "labelHi": "चौपाई १०",
-      "labelEn": "Chaupai 10",
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
       "lines": [
         "भीम रूप धरि असुर संहारे।",
         "रामचंद्र के काज सवारे॥10॥"
@@ -232,15 +257,17 @@
         "Raamchandra ke kaaj savaare"
       ],
       "meaningHi": "आपने भयंकर रूप धारण कर असुरों का नाश किया और श्रीराम का कार्य सफल बनाया।",
-      "meaningEn": "Taking a fearsome form you slew the demons and brought every task of Sri Ramachandra to a perfect end."
+      "meaningEn": "Taking a fearsome form you slew the demons and brought every task of Sri Ramachandra to a perfect end.",
+      "meaningGu": "તમે ભયંકર રૂપ ધારણ કરીને અસુરોનો નાશ કર્યો અને શ્રીરામનું કાર્ય સફળ કર્યું.",
+      "meaningKn": "ನೀವು ಭಯಂಕರ ರೂಪ ತಾಳಿ ಅಸುರರನ್ನು ಸಂಹರಿಸಿ, ಶ್ರೀರಾಮನ ಕಾರ್ಯವನ್ನು ಯಶಸ್ವಿಗೊಳಿಸಿದಿರಿ."
     },
     {
       "id": "chaupai-11",
       "type": "chaupai",
       "section": "body",
       "number": 11,
-      "labelHi": "चौपाई ११",
-      "labelEn": "Chaupai 11",
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
       "lines": [
         "लाय सजीवन लखन जियाए।",
         "श्रीरघुबीर हरषि उर लाए॥11॥"
@@ -250,15 +277,17 @@
         "Shri Raghubeer harashi ur laae"
       ],
       "meaningHi": "संजीवनी लाकर आपने लक्ष्मण के प्राण बचाए, जिससे श्रीराम प्रसन्न होकर आपको हृदय से लगा लिया।",
-      "meaningEn": "You brought the life-giving Sanjivani and revived Lakshman; in joy, Sri Raghubir drew you to his heart."
+      "meaningEn": "You brought the life-giving Sanjivani and revived Lakshman; in joy, Sri Raghubir drew you to his heart.",
+      "meaningGu": "સંજીવની લાવીને તમે લક્ષ્મણના પ્રાણ બચાવ્યા, તેથી શ્રીરામ પ્રસન્ન થઈ તમને હૃદયથી લગાવી લીધા.",
+      "meaningKn": "ಸಂಜೀವಿನಿಯನ್ನು ತಂದು ನೀವು ಲಕ್ಷ್ಮಣನ ಪ್ರಾಣ ಉಳಿಸಿದಿರಿ; ಅದರಿಂದ ಸಂತುಷ್ಟರಾದ ಶ್ರೀರಾಮನು ನಿಮ್ಮನ್ನು ಹೃದಯಪೂರ್ವಕವಾಗಿ ಅಪ್ಪಿಕೊಂಡನು."
     },
     {
       "id": "chaupai-12",
       "type": "chaupai",
       "section": "body",
       "number": 12,
-      "labelHi": "चौपाई १२",
-      "labelEn": "Chaupai 12",
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
       "lines": [
         "रघुपति कीन्ही बहुत बड़ाई।",
         "तुम मम प्रिय भरतहि सम भाई॥12॥"
@@ -268,15 +297,17 @@
         "Tum mam priya Bharatahi sam bhaai"
       ],
       "meaningHi": "श्रीराम ने आपकी बहुत प्रशंसा की और आपको भरत के समान प्रिय बताया।",
-      "meaningEn": "The Lord of the Raghus praised you greatly, saying, \"You are as dear to me as my brother Bharat.\""
+      "meaningEn": "The Lord of the Raghus praised you greatly, saying, \"You are as dear to me as my brother Bharat.\"",
+      "meaningGu": "શ્રીરામે તમારી ખૂબ પ્રશંસા કરી અને તમને ભરત જેટલા પ્રિય ગણાવ્યા.",
+      "meaningKn": "ಶ್ರೀರಾಮನು ನಿಮ್ಮನ್ನು ಬಹಳವಾಗಿ ಕೊಂಡಾಡಿ, ನೀವು ಭರತನಷ್ಟು ಪ್ರಿಯರೆಂದು ಹೇಳಿದರು."
     },
     {
       "id": "chaupai-13",
       "type": "chaupai",
       "section": "body",
       "number": 13,
-      "labelHi": "चौपाई १३",
-      "labelEn": "Chaupai 13",
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
       "lines": [
         "सहस बदन तुम्हरो जस गावैं।",
         "अस कहि श्रीपति कंठ लगावैं॥13॥"
@@ -286,15 +317,17 @@
         "As kahi Shripati kanth lagaavai"
       ],
       "meaningHi": "श्रीराम ने कहा कि हजार मुख वाले भी आपकी महिमा गाते हैं, और यह कहकर आपको गले लगा लिया।",
-      "meaningEn": "\"The thousand-mouthed Shesha sings your fame,\" said the Lord of Lakshmi, and so saying, embraced you."
+      "meaningEn": "\"The thousand-mouthed Shesha sings your fame,\" said the Lord of Lakshmi, and so saying, embraced you.",
+      "meaningGu": "શ્રીરામે કહ્યું કે હજાર મુખ ધરાવનાર પણ તમારી મહિમા ગાય છે, અને એમ કહીને તમને ગળે લગાવી લીધા.",
+      "meaningKn": "ಸಾವಿರ ಬಾಯಿಗಳಿರುವವರೂ ನಿಮ್ಮ ಮಹಿಮೆಯನ್ನು ಹಾಡುತ್ತಾರೆ ಎಂದು ಶ್ರೀರಾಮನು ಹೇಳಿ, ನಿಮ್ಮನ್ನು ಅಪ್ಪಿಕೊಂಡನು."
     },
     {
       "id": "chaupai-14",
       "type": "chaupai",
       "section": "body",
       "number": 14,
-      "labelHi": "चौपाई १४",
-      "labelEn": "Chaupai 14",
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
       "lines": [
         "सनकादिक ब्रह्मादि मुनीसा।",
         "नारद सारद सहित अहीसा॥14॥"
@@ -304,15 +337,17 @@
         "Naarad Saarad sahit Aheesaa"
       ],
       "meaningHi": "सनकादि ऋषि, ब्रह्मा, नारद, सरस्वती और शेषनाग जैसे महान जन भी आपकी महिमा का स्मरण करते हैं।",
-      "meaningEn": "The sages Sanaka and his brothers, Brahma and the great seers, Narada, Saraswati and the king of serpents — all sing your praise."
+      "meaningEn": "The sages Sanaka and his brothers, Brahma and the great seers, Narada, Saraswati and the king of serpents — all sing your praise.",
+      "meaningGu": "સનકાદિ ઋષિઓ, બ્રહ્મા, નારદ, સરસ્વતી અને શેષનાગ જેવા મહાન જન પણ તમારી મહિમાનું સ્મરણ કરે છે.",
+      "meaningKn": "ಸನಕಾದಿ ಋಷಿಗಳು, ಬ್ರಹ್ಮ, ನಾರದ, ಸರಸ್ವತಿ ಮತ್ತು ಶೇಷನಾಗನಂತಹ ಮಹನೀಯರೂ ನಿಮ್ಮ ಮಹಿಮೆಯನ್ನು ಸ್ಮರಿಸುತ್ತಾರೆ."
     },
     {
       "id": "chaupai-15",
       "type": "chaupai",
       "section": "body",
       "number": 15,
-      "labelHi": "चौपाई १५",
-      "labelEn": "Chaupai 15",
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
       "lines": [
         "जम कुबेर दिगपाल जहाँ ते।",
         "कवि कोविद कहि सके कहाँ ते॥15॥"
@@ -322,15 +357,17 @@
         "Kavi Kovid kahi sake kahaan te"
       ],
       "meaningHi": "यम, कुबेर और दिग्पाल भी आपकी महिमा का पूर्ण वर्णन नहीं कर सकते; फिर कवि और विद्वान कैसे कर पाएँ।",
-      "meaningEn": "Yama, Kubera and the guardians of the directions cannot describe your full glory; how then can poets or scholars?"
+      "meaningEn": "Yama, Kubera and the guardians of the directions cannot describe your full glory; how then can poets or scholars?",
+      "meaningGu": "યમ, કુબેર અને દિગ્પાલો પણ તમારી મહિમાનું પૂર્ણ વર્ણન કરી શકતા નથી; તો કવિઓ અને વિદ્વાનો કેવી રીતે કરી શકે?",
+      "meaningKn": "ಯಮ, ಕುಬೇರ ಮತ್ತು ದಿಕ್ಪಾಲಕರಿಗೂ ನಿಮ್ಮ ಮಹಿಮೆಯನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ವರ್ಣಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ; ಹಾಗಾದರೆ ಕವಿಗಳು ಮತ್ತು ಪಂಡಿತರು ಹೇಗೆ ಸಾಧ್ಯ?"
     },
     {
       "id": "chaupai-16",
       "type": "chaupai",
       "section": "body",
       "number": 16,
-      "labelHi": "चौपाई १६",
-      "labelEn": "Chaupai 16",
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
       "lines": [
         "तुम उपकार सुग्रीवहिं कीन्हा।",
         "राम मिलाय राज पद दीन्हा॥16॥"
@@ -340,15 +377,17 @@
         "Raam milaay raaj pad deenhaa"
       ],
       "meaningHi": "आपने सुग्रीव को राम से मिलवाकर उसका खोया हुआ राज्य वापस दिलाया।",
-      "meaningEn": "You did Sugriva a great service: presenting him to Ram and restoring him to his royal throne."
+      "meaningEn": "You did Sugriva a great service: presenting him to Ram and restoring him to his royal throne.",
+      "meaningGu": "તમે સુગ્રીવને રામ સાથે મિલાવ્યા અને તેને ગુમાવેલું રાજ્ય પાછું અપાવ્યું.",
+      "meaningKn": "ನೀವು ಸುಗ್ರೀವನನ್ನು ರಾಮನೊಂದಿಗೆ ಸೇರಿಸಿ, ಅವನು ಕಳೆದುಕೊಂಡಿದ್ದ ರಾಜ್ಯವನ್ನು ಮರಳಿ ಪಡೆಯುವಂತೆ ಮಾಡಿದಿರಿ."
     },
     {
       "id": "chaupai-17",
       "type": "chaupai",
       "section": "body",
       "number": 17,
-      "labelHi": "चौपाई १७",
-      "labelEn": "Chaupai 17",
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
       "lines": [
         "तुम्हरो मंत्र विभीषण माना।",
         "लंकेश्वर भए सब जग जाना॥17॥"
@@ -358,15 +397,17 @@
         "Lankeshvar bhae sab jag jaanaa"
       ],
       "meaningHi": "विभीषण ने आपकी सलाह मानी और वह लंका का राजा बना; यह बात सब जानते हैं।",
-      "meaningEn": "Vibhishana heeded your counsel and became the Lord of Lanka, as all the world knows well."
+      "meaningEn": "Vibhishana heeded your counsel and became the Lord of Lanka, as all the world knows well.",
+      "meaningGu": "વિભીષણે તમારી સલાહ માની અને તે લંકાનો રાજા બન્યો; આ વાત સૌ જાણે છે.",
+      "meaningKn": "ವಿಭೀಷಣನು ನಿಮ್ಮ ಸಲಹೆಯನ್ನು ಅನುಸರಿಸಿ ಲಂಕೆಯ ರಾಜನಾದನು; ಈ ವಿಷಯ ಎಲ್ಲರಿಗೂ ತಿಳಿದಿದೆ."
     },
     {
       "id": "chaupai-18",
       "type": "chaupai",
       "section": "body",
       "number": 18,
-      "labelHi": "चौपाई १८",
-      "labelEn": "Chaupai 18",
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
       "lines": [
         "जुग सहस्र जोजन पर भानू।",
         "लील्यो ताहि मधुर फल जानू॥18॥"
@@ -376,15 +417,17 @@
         "Leelyo taahi madhur phal jaanoo"
       ],
       "meaningHi": "आपने सूर्य को दूर स्थित होने पर भी मीठा फल समझ लिया और उसे निगलने दौड़ पड़े।",
-      "meaningEn": "Though the sun stood thousands of yojanas away, you took it for a sweet fruit and made to swallow it whole."
+      "meaningEn": "Though the sun stood thousands of yojanas away, you took it for a sweet fruit and made to swallow it whole.",
+      "meaningGu": "સૂર્ય દૂર હોવા છતાં તમે તેને મીઠું ફળ સમજી લીધું અને તેને ગળી જવા દોડી પડ્યા.",
+      "meaningKn": "ಸೂರ್ಯನು ದೂರದಲ್ಲಿದ್ದರೂ ನೀವು ಅದನ್ನು ಸಿಹಿ ಹಣ್ಣೆಂದು ಭಾವಿಸಿ, ನುಂಗಲು ಧಾವಿಸಿದಿರಿ."
     },
     {
       "id": "chaupai-19",
       "type": "chaupai",
       "section": "body",
       "number": 19,
-      "labelHi": "चौपाई १९",
-      "labelEn": "Chaupai 19",
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
       "lines": [
         "प्रभु मुद्रिका मेलि मुख माहीं।",
         "जलधि लाँघि गए अचरज नाहीं॥19॥"
@@ -394,15 +437,17 @@
         "Jaladhi laanghi gae acharaj naahee"
       ],
       "meaningHi": "श्रीराम की मुद्रिका मुख में रखकर आपने समुद्र पार कर लिया; आपके लिए यह आश्चर्य की बात नहीं थी।",
-      "meaningEn": "Holding the Lord's signet ring in your mouth, you leapt across the ocean — for you, no wonder at all."
+      "meaningEn": "Holding the Lord's signet ring in your mouth, you leapt across the ocean — for you, no wonder at all.",
+      "meaningGu": "શ્રીરામની મુદ્રિકા મોઢામાં રાખીને તમે સમુદ્ર પાર કર્યો; તમારા માટે આ કોઈ આશ્ચર્યની વાત નહોતી.",
+      "meaningKn": "ಶ್ರೀರಾಮನ ಮುದ್ರಿಕೆಯನ್ನು ಬಾಯಲ್ಲಿ ಇಟ್ಟುಕೊಂಡು ನೀವು ಸಮುದ್ರವನ್ನು ದಾಟಿದಿರಿ; ಅದು ನಿಮಗೆ ಆಶ್ಚರ್ಯದ ವಿಷಯವಾಗಿರಲಿಲ್ಲ."
     },
     {
       "id": "chaupai-20",
       "type": "chaupai",
       "section": "body",
       "number": 20,
-      "labelHi": "चौपाई २०",
-      "labelEn": "Chaupai 20",
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
       "lines": [
         "दुर्गम काज जगत के जेते।",
         "सुगम अनुग्रह तुम्हरे तेते॥20॥"
@@ -412,15 +457,17 @@
         "Sugam anugrah tumhare tete"
       ],
       "meaningHi": "आपकी कृपा से संसार के कठिन काम भी आसान हो जाते हैं।",
-      "meaningEn": "Every difficult task in the world becomes easy through your grace."
+      "meaningEn": "Every difficult task in the world becomes easy through your grace.",
+      "meaningGu": "તમારી કૃપાથી સંસારના કઠિન કામ પણ સરળ બની જાય છે.",
+      "meaningKn": "ನಿಮ್ಮ ಕೃಪೆಯಿಂದ ಲೋಕದ ಕಷ್ಟಕರ ಕೆಲಸಗಳೂ ಸುಲಭವಾಗುತ್ತವೆ."
     },
     {
       "id": "chaupai-21",
       "type": "chaupai",
       "section": "body",
       "number": 21,
-      "labelHi": "चौपाई २१",
-      "labelEn": "Chaupai 21",
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
       "lines": [
         "राम दुआरे तुम रखवारे।",
         "होत न आज्ञा बिनु पैसारे॥21॥"
@@ -430,15 +477,17 @@
         "Hot na aagyaa binu paisaare"
       ],
       "meaningHi": "आप रामद्वार के रक्षक हैं; आपकी अनुमति और कृपा के बिना वहाँ प्रवेश नहीं होता।",
-      "meaningEn": "You are the gatekeeper at Sri Ram's door; none may enter there without your leave."
+      "meaningEn": "You are the gatekeeper at Sri Ram's door; none may enter there without your leave.",
+      "meaningGu": "તમે રામના દ્વારના રક્ષક છો; તમારી મંજૂરી અને કૃપા વિના ત્યાં પ્રવેશ મળતો નથી.",
+      "meaningKn": "ನೀವು ರಾಮನ ದ್ವಾರದ ರಕ್ಷಕರು; ನಿಮ್ಮ ಅನುಮತಿ ಮತ್ತು ಕೃಪೆಯಿಲ್ಲದೆ ಅಲ್ಲಿ ಪ್ರವೇಶ ಸಿಗುವುದಿಲ್ಲ."
     },
     {
       "id": "chaupai-22",
       "type": "chaupai",
       "section": "body",
       "number": 22,
-      "labelHi": "चौपाई २२",
-      "labelEn": "Chaupai 22",
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
       "lines": [
         "सब सुख लहै तुम्हारी सरना।",
         "तुम रक्षक काहू को डरना॥22॥"
@@ -448,15 +497,17 @@
         "Tum rakshak kaahoo ko daranaa"
       ],
       "meaningHi": "जो आपकी शरण में आता है उसे सुख मिलता है; आपके रहते उसे किसी बात का भय नहीं रहता।",
-      "meaningEn": "Whoever takes refuge in you finds every joy; with you as protector, what is there to fear?"
+      "meaningEn": "Whoever takes refuge in you finds every joy; with you as protector, what is there to fear?",
+      "meaningGu": "જે તમારી શરણમાં આવે છે તેને સુખ મળે છે; તમારી હાજરીમાં તેને કોઈ બાબતનો ભય રહેતો નથી.",
+      "meaningKn": "ನಿಮ್ಮ ಶರಣಾಗುವವನಿಗೆ ಸುಖ ದೊರೆಯುತ್ತದೆ; ನೀವು ಜೊತೆಯಿದ್ದಾಗ ಅವನಿಗೆ ಯಾವುದರ ಭಯವೂ ಇರುವುದಿಲ್ಲ."
     },
     {
       "id": "chaupai-23",
       "type": "chaupai",
       "section": "body",
       "number": 23,
-      "labelHi": "चौपाई २३",
-      "labelEn": "Chaupai 23",
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
       "lines": [
         "आपन तेज सम्हारो आपै।",
         "तीनों लोक हाँक तें काँपै॥23॥"
@@ -466,15 +517,17 @@
         "Teeno lok haank te kaanpai"
       ],
       "meaningHi": "आपके तेज को आप ही संभाल सकते हैं; आपकी हुंकार से तीनों लोक काँप उठते हैं।",
-      "meaningEn": "Only you can contain your own splendour; the three worlds tremble at your mighty roar."
+      "meaningEn": "Only you can contain your own splendour; the three worlds tremble at your mighty roar.",
+      "meaningGu": "તમારા તેજને તમે જ સંભાળી શકો છો; તમારી હૂંકારથી ત્રણે લોક કંપી ઊઠે છે.",
+      "meaningKn": "ನಿಮ್ಮ ತೇಜಸ್ಸನ್ನು ನೀವೇ ಹಿಡಿತದಲ್ಲಿಡಬಲ್ಲಿರಿ; ನಿಮ್ಮ ಘರ್ಜನೆಯಿಂದ ಮೂರು ಲೋಕಗಳೂ ನಡುಗುತ್ತವೆ."
     },
     {
       "id": "chaupai-24",
       "type": "chaupai",
       "section": "body",
       "number": 24,
-      "labelHi": "चौपाई २४",
-      "labelEn": "Chaupai 24",
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
       "lines": [
         "भूत पिशाच निकट नहिं आवै।",
         "महाबीर जब नाम सुनावै॥24॥"
@@ -484,15 +537,17 @@
         "Mahaabeer jab naam sunaavai"
       ],
       "meaningHi": "महावीर हनुमान का नाम लेने से नकारात्मक शक्तियाँ पास नहीं आतीं।",
-      "meaningEn": "Ghosts and goblins dare not come near once the name of Mahaveer Hanuman is spoken aloud."
+      "meaningEn": "Ghosts and goblins dare not come near once the name of Mahaveer Hanuman is spoken aloud.",
+      "meaningGu": "મહાવીર હનુમાનનું નામ લેવાથી નકારાત્મક શક્તિઓ નજીક આવતી નથી.",
+      "meaningKn": "ಮಹಾವೀರ ಹನುಮಾನದ ಹೆಸರನ್ನು ಸ್ಮರಿಸಿದರೆ ನಕಾರಾತ್ಮಕ ಶಕ್ತಿಗಳು ಸಮೀಪಿಸುವುದಿಲ್ಲ."
     },
     {
       "id": "chaupai-25",
       "type": "chaupai",
       "section": "body",
       "number": 25,
-      "labelHi": "चौपाई २५",
-      "labelEn": "Chaupai 25",
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
       "lines": [
         "नासै रोग हरै सब पीरा।",
         "जपत निरंतर हनुमत बीरा॥25॥"
@@ -502,15 +557,17 @@
         "Japat nirantar Hanumat beeraa"
       ],
       "meaningHi": "हनुमान जी का निरंतर स्मरण रोग, पीड़ा और कष्टों को दूर करने वाला माना गया है।",
-      "meaningEn": "All illness departs and every pain is lifted by the unbroken remembrance of brave Hanuman."
+      "meaningEn": "All illness departs and every pain is lifted by the unbroken remembrance of brave Hanuman.",
+      "meaningGu": "હનુમાનજીનું સતત સ્મરણ રોગ, પીડા અને કષ્ટોને દૂર કરનાર માનવામાં આવે છે.",
+      "meaningKn": "ಹನುಮಾನ್ ಜಿಯನ್ನು ನಿರಂತರವಾಗಿ ಸ್ಮರಿಸುವುದು ರೋಗ, ನೋವು ಮತ್ತು ಕಷ್ಟಗಳನ್ನು ದೂರಮಾಡುತ್ತದೆ ಎಂದು ನಂಬಲಾಗಿದೆ."
     },
     {
       "id": "chaupai-26",
       "type": "chaupai",
       "section": "body",
       "number": 26,
-      "labelHi": "चौपाई २६",
-      "labelEn": "Chaupai 26",
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
       "lines": [
         "संकट तें हनुमान छुड़ावै।",
         "मन क्रम वचन ध्यान जो लावै॥26॥"
@@ -520,15 +577,17 @@
         "Man kram vachan dhyaan jo laavai"
       ],
       "meaningHi": "जो मन, कर्म और वचन से हनुमान जी का ध्यान करता है, उसके संकट दूर होते हैं।",
-      "meaningEn": "Hanuman frees from peril whoever turns to him in thought, deed and word with steady devotion."
+      "meaningEn": "Hanuman frees from peril whoever turns to him in thought, deed and word with steady devotion.",
+      "meaningGu": "જે મન, કર્મ અને વચનથી હનુમાનજીનું ધ્યાન કરે છે, તેના સંકટો દૂર થાય છે.",
+      "meaningKn": "ಮನಸ್ಸು, ಕರ್ಮ ಮತ್ತು ಮಾತಿನಿಂದ ಹನುಮಾನ್ ಜಿಯನ್ನು ಧ್ಯಾನಿಸುವವನ ಸಂಕಟಗಳು ದೂರವಾಗುತ್ತವೆ."
     },
     {
       "id": "chaupai-27",
       "type": "chaupai",
       "section": "body",
       "number": 27,
-      "labelHi": "चौपाई २७",
-      "labelEn": "Chaupai 27",
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
       "lines": [
         "सब पर राम तपस्वी राजा।",
         "तिन के काज सकल तुम साजा॥27॥"
@@ -538,15 +597,17 @@
         "Tin ke kaaj sakal tum saajaa"
       ],
       "meaningHi": "श्रीराम सर्वोच्च तपस्वी राजा हैं, और उनके भक्तों के काम आप पूर्ण कराते हैं।",
-      "meaningEn": "Sri Ram is the supreme ascetic king above all, and you bring every one of his tasks to completion."
+      "meaningEn": "Sri Ram is the supreme ascetic king above all, and you bring every one of his tasks to completion.",
+      "meaningGu": "શ્રીરામ સૌથી શ્રેષ્ઠ તપસ્વી રાજા છે, અને તેમના સર્વ કાર્ય તમે પૂર્ણ કરો છો.",
+      "meaningKn": "ಶ್ರೀರಾಮನು ಸರ್ವಶ್ರೇಷ್ಠ ತಪಸ್ವಿ ರಾಜನು; ಅವನ ಸಮಸ್ತ ಕಾರ್ಯಗಳನ್ನು ನೀವೇ ನೆರವೇರಿಸುತ್ತೀರಿ."
     },
     {
       "id": "chaupai-28",
       "type": "chaupai",
       "section": "body",
       "number": 28,
-      "labelHi": "चौपाई २८",
-      "labelEn": "Chaupai 28",
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
       "lines": [
         "और मनोरथ जो कोई लावै।",
         "सोई अमित जीवन फल पावै॥28॥"
@@ -556,15 +617,17 @@
         "Soee amit jeevan phal paavai"
       ],
       "meaningHi": "जो अपनी सच्ची इच्छा आपके सामने रखता है, उसे श्रेष्ठ और व्यापक फल प्राप्त होता है।",
-      "meaningEn": "Whoever brings any sincere wish before you receives boundless and lasting fruit in this very life."
+      "meaningEn": "Whoever brings any sincere wish before you receives boundless and lasting fruit in this very life.",
+      "meaningGu": "જે પોતાની સાચી ઇચ્છા તમારી સામે મૂકે છે, તેને શ્રેષ્ઠ અને વ્યાપક ફળ પ્રાપ્ત થાય છે.",
+      "meaningKn": "ತನ್ನ ನಿಜವಾದ ಆಶೆಯನ್ನು ನಿಮ್ಮ ಮುಂದೆ ಇಡುವವನಿಗೆ ಶ್ರೇಷ್ಠವೂ ಸಮೃದ್ಧವೂ ಆದ ಫಲ ದೊರೆಯುತ್ತದೆ."
     },
     {
       "id": "chaupai-29",
       "type": "chaupai",
       "section": "body",
       "number": 29,
-      "labelHi": "चौपाई २९",
-      "labelEn": "Chaupai 29",
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
       "lines": [
         "चारों जुग परताप तुम्हारा।",
         "है परसिद्ध जगत उजियारा॥29॥"
@@ -574,15 +637,17 @@
         "Hai parasiddh jagat ujiyaaraa"
       ],
       "meaningHi": "आपकी कीर्ति चारों युगों में फैली हुई है और संसार को आलोकित करती है।",
-      "meaningEn": "Your glory shines through all four ages, renowned everywhere and lighting up the world."
+      "meaningEn": "Your glory shines through all four ages, renowned everywhere and lighting up the world.",
+      "meaningGu": "તમારી કીર્તિ ચારેય યુગોમાં ફેલાયેલી છે અને સમગ્ર જગતને પ્રકાશિત કરે છે.",
+      "meaningKn": "ನಿಮ್ಮ ಕೀರ್ತಿ ನಾಲ್ಕೂ ಯುಗಗಳಲ್ಲಿ ಹರಡಿಕೊಂಡಿದ್ದು, ಜಗತ್ತನ್ನು ಬೆಳಗಿಸುತ್ತದೆ."
     },
     {
       "id": "chaupai-30",
       "type": "chaupai",
       "section": "body",
       "number": 30,
-      "labelHi": "चौपाई ३०",
-      "labelEn": "Chaupai 30",
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
       "lines": [
         "साधु संत के तुम रखवारे।",
         "असुर निकंदन राम दुलारे॥30॥"
@@ -592,15 +657,17 @@
         "Asur nikandan Raam dulaare"
       ],
       "meaningHi": "आप साधु-संतों की रक्षा करते हैं, दुष्टों का नाश करते हैं और श्रीराम के प्रिय हैं।",
-      "meaningEn": "Guardian of saints and seekers, slayer of demons, dearly beloved of Sri Ram."
+      "meaningEn": "Guardian of saints and seekers, slayer of demons, dearly beloved of Sri Ram.",
+      "meaningGu": "તમે સાધુ-સંતોની રક્ષા કરો છો, દુષ્ટોનો નાશ કરો છો અને શ્રીરામને અતિ પ્રિય છો.",
+      "meaningKn": "ನೀವು ಸಾಧು-ಸಂತರನ್ನು ರಕ್ಷಿಸುತ್ತೀರಿ, ದುಷ್ಟರನ್ನು ಸಂಹರಿಸುತ್ತೀರಿ ಮತ್ತು ಶ್ರೀರಾಮನಿಗೆ ಅತ್ಯಂತ ಪ್ರಿಯರು."
     },
     {
       "id": "chaupai-31",
       "type": "chaupai",
       "section": "body",
       "number": 31,
-      "labelHi": "चौपाई ३१",
-      "labelEn": "Chaupai 31",
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
       "lines": [
         "अष्ट सिद्धि नौ निधि के दाता।",
         "अस बर दीन जानकी माता॥31॥"
@@ -610,15 +677,17 @@
         "As bar deen Jaanakee maataa"
       ],
       "meaningHi": "माता जानकी ने आपको ऐसा वर दिया कि आप अष्ट सिद्धि और नौ निधि प्रदान करने वाले हैं।",
-      "meaningEn": "By the boon of Mother Janaki, you bestow the eight powers and the nine treasures upon your devotees."
+      "meaningEn": "By the boon of Mother Janaki, you bestow the eight powers and the nine treasures upon your devotees.",
+      "meaningGu": "માતા જાનકીએ તમને એવો વર આપ્યો કે તમે અષ્ટ સિદ્ધિ અને નવ નિધિ આપનારા છો.",
+      "meaningKn": "ಮಾತಾ ಜಾನಕಿಯವರು ನಿಮಗೆ ಅಷ್ಟಸಿದ್ಧಿ ಮತ್ತು ನವನಿಧಿಗಳನ್ನು ನೀಡುವ ವರವನ್ನು ನೀಡಿದರು."
     },
     {
       "id": "chaupai-32",
       "type": "chaupai",
       "section": "body",
       "number": 32,
-      "labelHi": "चौपाई ३२",
-      "labelEn": "Chaupai 32",
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
       "lines": [
         "राम रसायन तुम्हरे पासा।",
         "सदा रहो रघुपति के दासा॥32॥"
@@ -628,15 +697,17 @@
         "Sadaa raho Raghupati ke daasaa"
       ],
       "meaningHi": "आपके पास रामभक्ति का अमृत है, और आप सदा रघुपति के सेवक बने रहते हैं।",
-      "meaningEn": "The elixir of Ram's name rests with you, and you remain forever the devoted servant of the Lord of the Raghus."
+      "meaningEn": "The elixir of Ram's name rests with you, and you remain forever the devoted servant of the Lord of the Raghus.",
+      "meaningGu": "તમારી પાસે રામભક્તિનું અમૃત છે, અને તમે સદા રઘુપતિના સેવક બની રહો છો.",
+      "meaningKn": "ನಿಮ್ಮ ಬಳಿ ರಾಮಭಕ್ತಿಯ ಅಮೃತವಿದೆ, ಮತ್ತು ನೀವು ಸದಾ ರಘುಪತಿಯ ಸೇವಕರಾಗಿಯೇ ಇರುತ್ತೀರಿ."
     },
     {
       "id": "chaupai-33",
       "type": "chaupai",
       "section": "body",
       "number": 33,
-      "labelHi": "चौपाई ३३",
-      "labelEn": "Chaupai 33",
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
       "lines": [
         "तुम्हरे भजन राम को पावै।",
         "जनम जनम के दुख बिसरावै॥33॥"
@@ -646,15 +717,17 @@
         "Janam janam ke dukh bisaraavai"
       ],
       "meaningHi": "आपके भजन से श्रीराम की प्राप्ति होती है और जन्म-जन्म के दुख हल्के पड़ जाते हैं।",
-      "meaningEn": "By singing your praise one comes to Ram and forgets the sorrows of birth after birth."
+      "meaningEn": "By singing your praise one comes to Ram and forgets the sorrows of birth after birth.",
+      "meaningGu": "તમારા ભજનથી શ્રીરામની પ્રાપ્તિ થાય છે અને જન્મોજન્મના દુખ હળવા પડે છે.",
+      "meaningKn": "ನಿಮ್ಮ ಭಜನೆಯಿಂದ ಶ್ರೀರಾಮನ ಅನುಗ್ರಹ ದೊರೆಯುತ್ತದೆ ಮತ್ತು ಜನ್ಮಜನ್ಮಾಂತರದ ದುಃಖಗಳು ಕಡಿಮೆಯಾಗುತ್ತವೆ."
     },
     {
       "id": "chaupai-34",
       "type": "chaupai",
       "section": "body",
       "number": 34,
-      "labelHi": "चौपाई ३४",
-      "labelEn": "Chaupai 34",
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
       "lines": [
         "अंत काल रघुबर पुर जाई।",
         "जहाँ जन्म हरि-भक्त कहाई॥34॥"
@@ -664,15 +737,17 @@
         "Jahaan janma Hari-bhakt kahaaee"
       ],
       "meaningHi": "आपका भक्त अंत समय में रामधाम को प्राप्त होता है और पुनर्जन्म हो तो हरिभक्त कहलाता है।",
-      "meaningEn": "At the final hour your devotee reaches Sri Ram's abode; if reborn, is known thereafter as a devotee of Hari."
+      "meaningEn": "At the final hour your devotee reaches Sri Ram's abode; if reborn, is known thereafter as a devotee of Hari.",
+      "meaningGu": "તમારો ભક્ત અંત સમયે રામધામને પ્રાપ્ત થાય છે, અને ફરી જન્મ થાય તો હરિભક્ત તરીકે ઓળખાય છે.",
+      "meaningKn": "ನಿಮ್ಮ ಭಕ್ತನು ಅಂತ್ಯಕಾಲದಲ್ಲಿ ರಾಮಧಾಮವನ್ನು ಪಡೆಯುತ್ತಾನೆ; ಪುನರ್ಜನ್ಮವಾದರೂ ಹರಿಭಕ್ತನೆಂದು ಕರೆಯಲ್ಪಡುತ್ತಾನೆ."
     },
     {
       "id": "chaupai-35",
       "type": "chaupai",
       "section": "body",
       "number": 35,
-      "labelHi": "चौपाई ३५",
-      "labelEn": "Chaupai 35",
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
       "lines": [
         "और देवता चित्त न धरई।",
         "हनुमत सेइ सर्व सुख करई॥35॥"
@@ -682,15 +757,17 @@
         "Hanumat sei sarva sukh karaee"
       ],
       "meaningHi": "हनुमान भक्ति से मन एकाग्र होता है और साधक को सर्व सुख की अनुभूति होती है।",
-      "meaningEn": "One who keeps no other deity in mind and serves Hanuman alone tastes every joy."
+      "meaningEn": "One who keeps no other deity in mind and serves Hanuman alone tastes every joy.",
+      "meaningGu": "જે ભક્ત મનમાં અન્ય કોઈ દેવતાને ધારણ કરતો નથી અને કેવળ હનુમાનજીની સેવા કરે છે, તેને સર્વ સુખ પ્રાપ્ત થાય છે.",
+      "meaningKn": "ಬೇರೆ ಯಾವ ದೇವತೆಯನ್ನೂ ಮನಸ್ಸಿನಲ್ಲಿ ಇಟ್ಟುಕೊಳ್ಳದೆ ಕೇವಲ ಹನುಮಂತನನ್ನು ಸೇವಿಸುವವನು ಸಮಸ್ತ ಸುಖವನ್ನು ಪಡೆಯುತ್ತಾನೆ."
     },
     {
       "id": "chaupai-36",
       "type": "chaupai",
       "section": "body",
       "number": 36,
-      "labelHi": "चौपाई ३६",
-      "labelEn": "Chaupai 36",
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
       "lines": [
         "संकट कटै मिटै सब पीरा।",
         "जो सुमिरै हनुमत बलबीरा॥36॥"
@@ -700,15 +777,17 @@
         "Jo sumirai Hanumat balabeeraa"
       ],
       "meaningHi": "जो बलवान हनुमान का स्मरण करता है, उसके संकट और पीड़ा मिटते हैं।",
-      "meaningEn": "Whoever remembers mighty Hanuman finds every peril cut away and every pain dissolved."
+      "meaningEn": "Whoever remembers mighty Hanuman finds every peril cut away and every pain dissolved.",
+      "meaningGu": "જે બળવાન હનુમાનનું સ્મરણ કરે છે, તેના સંકટ અને પીડા મટી જાય છે.",
+      "meaningKn": "ಬಲಶಾಲಿ ಹನುಮಾನನನ್ನು ಸ್ಮರಿಸುವವನ ಸಂಕಟ ಮತ್ತು ನೋವುಗಳು ದೂರವಾಗುತ್ತವೆ."
     },
     {
       "id": "chaupai-37",
       "type": "chaupai",
       "section": "body",
       "number": 37,
-      "labelHi": "चौपाई ३७",
-      "labelEn": "Chaupai 37",
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
       "lines": [
         "जै जै जै हनुमान गोसाईं।",
         "कृपा करहु गुरुदेव की नाईं॥37॥"
@@ -718,15 +797,17 @@
         "Kripaa karahu Gurudev kee naaee"
       ],
       "meaningHi": "हे स्वामी हनुमान, आप पर बार-बार वंदन; कृपया गुरु के समान करुणा और मार्गदर्शन दें।",
-      "meaningEn": "Victory, victory, victory to Lord Hanuman! Bestow your grace upon me as a true Guru would."
+      "meaningEn": "Victory, victory, victory to Lord Hanuman! Bestow your grace upon me as a true Guru would.",
+      "meaningGu": "હે સ્વામી હનુમાન, તમને વારંવાર વંદન; કૃપા કરીને ગુરુની જેમ કરુણા અને માર્ગદર્શન આપો.",
+      "meaningKn": "ಓ ಸ್ವಾಮಿ ಹನುಮಾನ್, ನಿಮಗೆ ಮರುಮರು ವಂದನೆ; ದಯವಿಟ್ಟು ಗುರುಗಳಂತೆ ಕರುಣೆ ಮತ್ತು ಮಾರ್ಗದರ್ಶನ ನೀಡಿ."
     },
     {
       "id": "chaupai-38",
       "type": "chaupai",
       "section": "body",
       "number": 38,
-      "labelHi": "चौपाई ३८",
-      "labelEn": "Chaupai 38",
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
       "lines": [
         "जो सत बार पाठ कर कोई।",
         "छूटहि बंदि महा सुख होई॥38॥"
@@ -736,15 +817,17 @@
         "Chhootahi bandi mahaa sukh hoee"
       ],
       "meaningHi": "जो श्रद्धा से बार-बार इस पाठ का अभ्यास करता है, वह बंधनों से मुक्त होकर गहरा आनंद पाता है।",
-      "meaningEn": "Whoever recites this prayer a hundred times is freed from bondage and tastes the deepest bliss."
+      "meaningEn": "Whoever recites this prayer a hundred times is freed from bondage and tastes the deepest bliss.",
+      "meaningGu": "જે કોઈ આ પાઠ સો વાર કરે છે, તે બંધનોથી મુક્ત થઈ મહા સુખ પામે છે.",
+      "meaningKn": "ಯಾರು ಈ ಪಾಠವನ್ನು ನೂರು ಬಾರಿ ಪಠಿಸುತ್ತಾರೋ, ಅವರು ಬಂಧನದಿಂದ ಮುಕ್ತರಾಗಿ ಮಹಾಸುಖವನ್ನು ಪಡೆಯುತ್ತಾರೆ."
     },
     {
       "id": "chaupai-39",
       "type": "chaupai",
       "section": "body",
       "number": 39,
-      "labelHi": "चौपाई ३९",
-      "labelEn": "Chaupai 39",
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
       "lines": [
         "जो यह पढ़ै हनुमान चालीसा।",
         "होय सिद्धि साखी गौरीसा॥39॥"
@@ -754,15 +837,17 @@
         "Hoy siddhi saakhee Gaureesaa"
       ],
       "meaningHi": "जो हनुमान चालीसा का पाठ करता है, उसके कार्य सिद्ध होते हैं; भगवान शिव इस बात के साक्षी माने गए हैं।",
-      "meaningEn": "Whoever reads this Hanuman Chalisa attains success — Lord Shiva, husband of Gauri, stands witness."
+      "meaningEn": "Whoever reads this Hanuman Chalisa attains success — Lord Shiva, husband of Gauri, stands witness.",
+      "meaningGu": "જે હનુમાન ચાલીસાનો પાઠ કરે છે, તેના કાર્ય સિદ્ધ થાય છે; ભગવાન શિવ આ વાતના સાક્ષી માનવામાં આવે છે.",
+      "meaningKn": "ಹನುಮಾನ್ ಚಾಲೀಸೆಯನ್ನು ಪಠಿಸುವವನ ಕಾರ್ಯಗಳು ಸಿದ್ಧಿಯಾಗುತ್ತವೆ; ಭಗವಾನ್ ಶಿವನೇ ಇದಕ್ಕೆ ಸಾಕ್ಷಿ ಎಂದು ಪರಿಗಣಿಸಲಾಗುತ್ತದೆ."
     },
     {
       "id": "chaupai-40",
       "type": "chaupai",
       "section": "body",
       "number": 40,
-      "labelHi": "चौपाई ४०",
-      "labelEn": "Chaupai 40",
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
       "lines": [
         "तुलसीदास सदा हरि चेरा।",
         "कीजै नाथ हृदय महँ डेरा॥40॥"
@@ -772,7 +857,9 @@
         "Keejai naath hriday maha deraa"
       ],
       "meaningHi": "तुलसीदास प्रार्थना करते हैं कि वे सदा हरि के सेवक रहें और हनुमान जी उनके हृदय में निवास करें।",
-      "meaningEn": "Tulsidas, ever the servant of Hari, prays: \"Lord, make your dwelling in my heart, always.\""
+      "meaningEn": "Tulsidas, ever the servant of Hari, prays: \"Lord, make your dwelling in my heart, always.\"",
+      "meaningGu": "તુલસીદાસ પ્રાર્થના કરે છે કે તેઓ સદા હરિના સેવક રહે અને હનુમાનજી તેમના હૃદયમાં નિવાસ કરે.",
+      "meaningKn": "ತುಳಸಿದಾಸರು ತಾವು ಸದಾ ಹರಿಯ ಸೇವಕರಾಗಿರಲಿ ಮತ್ತು ಹನುಮಾನ್ ಜೀ ತಮ್ಮ ಹೃದಯದಲ್ಲಿ ನೆಲೆಸಿರಲಿ ಎಂದು ಪ್ರಾರ್ಥಿಸುತ್ತಾರೆ."
     },
     {
       "id": "closing-doha",
@@ -789,7 +876,9 @@
         "Raam Lakhan Seetaa sahit, hriday basahu sur bhoop."
       ],
       "meaningHi": "हे पवनपुत्र, आप संकट हरने वाले और मंगलमय स्वरूप हैं; श्रीराम, लक्ष्मण और सीता सहित मेरे हृदय में निवास करें।",
-      "meaningEn": "Son of the Wind, dispeller of distress, embodiment of all that is auspicious — together with Ram, Lakshman and Sita, dwell within my heart, O King of the gods."
+      "meaningEn": "Son of the Wind, dispeller of distress, embodiment of all that is auspicious — together with Ram, Lakshman and Sita, dwell within my heart, O King of the gods.",
+      "meaningGu": "હે પવનપુત્ર, તમે સંકટ હરનાર અને મંગલમય સ્વરૂપ છો; શ્રીરામ, લક્ષ્મણ અને સીતા સાથે મારા હૃદયમાં નિવાસ કરો.",
+      "meaningKn": "ಓ ಪವನಪುತ್ರ, ನೀವು ಸಂಕಟಗಳನ್ನು ನಿವಾರಿಸುವ ಮಂಗಳಮಯ ಸ್ವರೂಪರು; ಶ್ರೀರಾಮ, ಲಕ್ಷ್ಮಣ ಮತ್ತು ಸೀತೆಯೊಂದಿಗೆ ನನ್ನ ಹೃದಯದಲ್ಲಿ ನೆಲೆಸಿರಿ."
     }
   ]
 }

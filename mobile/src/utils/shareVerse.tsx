@@ -11,6 +11,7 @@ import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
 import { buildShareCaption } from '@/data/shareLinks';
+import type { Lang } from '@/data/gita/language';
 
 export type ShareableVerse = {
   sourceId: string;
@@ -22,6 +23,9 @@ export type ShareableVerse = {
   linesEn: string[];
   meaningHi?: string;
   meaningEn?: string;
+  /** Verified native meaning overrides; when present, gu/kn use these instead of transliterating meaningHi. */
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 type ShareMode = 'card' | 'screenshot';
@@ -34,7 +38,7 @@ type ShareOptions = {
 
 type ShareContextValue = {
   /** Compose the verse card, then open the OS share sheet. */
-  share: (verse: ShareableVerse, lang: 'hi' | 'en', opts?: ShareOptions) => Promise<void>;
+  share: (verse: ShareableVerse, lang: Lang, opts?: ShareOptions) => Promise<void>;
   /** True while a capture/share is in flight (debounces tap). */
   busy: boolean;
 };
@@ -52,14 +56,14 @@ const OUTPUT_HEIGHT = 1350;
 export function ShareProvider({ children }: { children: React.ReactNode }) {
   const [pending, setPending] = useState<{
     verse: ShareableVerse;
-    lang: 'hi' | 'en';
+    lang: Lang;
   } | null>(null);
   const [busy, setBusy] = useState(false);
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
 
   const share = useCallback(
-    async (verse: ShareableVerse, lang: 'hi' | 'en', opts?: ShareOptions) => {
+    async (verse: ShareableVerse, lang: Lang, opts?: ShareOptions) => {
       if (inFlightRef.current) return;
       inFlightRef.current = true;
       setBusy(true);
@@ -164,6 +168,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               linesEn={pending.verse.linesEn}
               meaningHi={pending.verse.meaningHi}
               meaningEn={pending.verse.meaningEn}
+              meaningGu={pending.verse.meaningGu}
+              meaningKn={pending.verse.meaningKn}
               lang={pending.lang}
               width={CARD_WIDTH}
               height={CARD_HEIGHT}

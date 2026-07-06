@@ -1,0 +1,107 @@
+# Vrat Follow + My Vrat + Reminders Smoke (PRD-09 P2 + P3)
+#
+# Verifies the follow/prioritise/remind journey on top of the catalog:
+#   1. Open a vrat's detail from the व्रत-पर्व catalog and Follow it.
+#   2. The "Added — View in My Vrat" confirmation routes to the My Vrat screen.
+#   3. My Vrat shows the metric band (incl. "Reminders on"), the priority list,
+#      and the "Reminder defaults" door.
+#   4. The per-row reminder bell opens the reminder sheet (advance / on-the-day /
+#      day-of time), and "Save reminders" persists.
+#   5. Cleanup: unfollow so the flow is repeatable.
+#
+# Language note (same as the other panchang smokes): the screen reads the global
+# reading language; default Hindi is Devanagari which Maestro's iOS tree can't
+# read, so we flip to English on More first.
+#
+# Selector notes:
+#   - Detail Follow button accessibilityLabel is "Follow" → "Following".
+#   - The confirmation Pressable's label is "Added — View in My Vrat".
+#   - My Vrat per-row bell label is "Reminders for <NameEn>".
+#   - The defaults door label is "Reminder defaults"; sheet pills expose their
+#     English label ("2 days", "Save reminders").
+
+appId: host.exp.Exponent
+---
+# ── Boot Vedansh (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Global reading language → English ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Panchang → Vrat & Parv ──
+- tapOn: "Panchang, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Vrat and Parv"
+    timeout: 30000
+- tapOn: "Vrat and Parv"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+
+# ── Search a vrat → open its detail → Follow ──
+- tapOn: "Search vrat, festival, upvas, katha…"
+- inputText: "Nirjala"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Nirjala Ekadashi"
+    timeout: 15000
+- tapOn: "Nirjala Ekadashi"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "About"
+    timeout: 15000
+- tapOn: "Follow"
+- waitForAnimationToEnd
+- assertVisible: "Following"
+
+# ── Confirmation routes to My Vrat ──
+- extendedWaitUntil:
+    visible: "Added — View in My Vrat"
+    timeout: 8000
+- tapOn: "Added — View in My Vrat"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "My priority"
+    timeout: 15000
+- assertVisible: "Reminders on"
+- assertVisible: "Reminder defaults"
+
+# ── Per-row reminder bell → reminder sheet → save ──
+- tapOn: "Reminders for Nirjala Ekadashi"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Advance notice"
+    timeout: 10000
+- assertVisible: "On the day"
+- assertVisible: "Day-of time"
+- tapOn: "2 days"
+- tapOn: "Save reminders"
+- waitForAnimationToEnd
+
+# ── Cleanup: open the vrat and unfollow so the flow is repeatable ──
+- tapOn: "Nirjala Ekadashi"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Following"
+    timeout: 15000
+- tapOn: "Following"
+- waitForAnimationToEnd
+- assertVisible: "Follow"
+
+# ── Restore Hindi default (best-effort) + cleanup ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+- stopApp:
+    appId: host.exp.Exponent

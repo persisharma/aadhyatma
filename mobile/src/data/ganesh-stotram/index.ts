@@ -11,6 +11,8 @@ export type GaneshStotramVerse = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 export type GaneshStotramChapter = {
@@ -96,7 +98,7 @@ export function getGaneshStotramChapter(chapter: number): GaneshStotramChapter {
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 15) {
-    throw new Error(`ganesh-stotram: expected 15 total verses, got ${totalVerses}`);
+  if (totalVerses !== 28) {
+    throw new Error(`ganesh-stotram: expected 28 total verses, got ${totalVerses}`);
   }
 })();

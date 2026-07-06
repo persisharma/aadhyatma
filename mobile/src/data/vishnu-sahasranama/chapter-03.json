@@ -1,24 +1,36 @@
 {
   "chapter": 3,
-  "titleHi": "स्तोत्र मुख्य भाग",
-  "titleEn": "Main Stotram",
-  "verseCount": 21,
+  "titleHi": "स्तोत्र मुख्य भाग (नाम 1-287)",
+  "titleEn": "Main Stotram (Names 1-287)",
+  "verseCount": 31,
   "verses": [
     {
       "id": "vs-3-0",
       "chapter": 3,
       "number": 0,
-      "sanskrit": ["॥ विष्णु सहस्रनाम ॥", "स्तोत्र — सहस्र नाम"],
-      "linesEn": ["Vishnu Sahasranama", "Stotram - The Thousand Names"],
-      "meaningHi": "लाभ:\n\nयह विष्णु सहस्रनाम का मुख्य भाग है — जिसमें भगवान विष्णु के एक सहस्र (1000) दिव्य नामों का पाठ है। प्रत्येक नाम विष्णु के एक विशेष गुण, शक्ति या लीला को प्रकट करता है। इसके नियमित पाठ से सभी पापों का नाश, रोग-निवारण, शत्रु-भय से मुक्ति, और अन्ततः मोक्ष की प्राप्ति होती है। यह हिन्दू धर्म के सर्वाधिक शक्तिशाली स्तोत्रों में से एक है।\n\nकथा:\n\nभीष्म पितामह ने युधिष्ठिर के प्रश्न का उत्तर देते हुए ये सहस्र नाम सुनाए — 'संसार में सर्वश्रेष्ठ देवता कौन है? किसका स्मरण मनुष्य को बन्धनों से मुक्त करता है?' भीष्म ने कहा: 'विष्णु ही सर्वोपरि हैं — उनके सहस्र नामों का पाठ सभी कष्टों का अन्त करता है।'",
-      "meaningEn": "Benefits:\n\nThis is the main section of Vishnu Sahasranama — containing one thousand divine names of Lord Vishnu. Each name reveals a specific quality, power, or divine play of Vishnu. Regular recitation destroys all sins, cures ailments, liberates from fear of enemies, and ultimately grants moksha (liberation). It is one of the most powerful stotrams in Hinduism.\n\nStory:\n\nBhishma Pitamaha recited these thousand names in answer to Yudhishthira's question — 'Who is the greatest deity in the universe? Whose remembrance frees a person from all bondage?' Bhishma replied: 'Vishnu is supreme — reciting his thousand names ends all suffering.'"
+      "sanskrit": [
+        "॥ विष्णु सहस्रनाम ॥",
+        "स्तोत्र — नाम 1-287"
+      ],
+      "linesEn": [
+        "Vishnu Sahasranama",
+        "Stotram - Names 1-287"
+      ],
+      "meaningHi": "लाभ:\n\nयह विष्णु सहस्रनाम के मुख्य स्तोत्र का अंश है — इस अध्याय में भगवान विष्णु के नाम 1-287 दिए गए हैं। प्रत्येक नाम विष्णु के एक विशेष गुण, शक्ति या लीला को प्रकट करता है। परम्परा में सम्पूर्ण सहस्रनाम का पाठ पाप-नाश, रोग-निवारण, भय से मुक्ति और मोक्ष की प्राप्ति के लिए किया जाता है।\n\nकथा:\n\nमहाभारत के अनुशासन पर्व में भीष्म पितामह ने युधिष्ठिर के प्रश्नों का उत्तर देते हुए विष्णु सहस्रनाम सुनाया। यह ऐप-अंश उसी मुख्य स्तोत्र के प्रारम्भिक नामों को रखता है; पूर्ण 1000-नाम पाठ अभी इस अध्याय में नहीं है।",
+      "meaningEn": "Benefits:\n\nThis is an excerpt from the main Vishnu Sahasranama stotram — this chapter contains names 1-287 of Lord Vishnu. Each name reveals a specific quality, power, or divine play of Vishnu. In the tradition, reciting the complete Sahasranama is associated with destruction of sins, relief from illness and fear, and the attainment of moksha.\n\nStory:\n\nIn the Anushasana Parva of the Mahabharata, Bhishma Pitamaha recited the Vishnu Sahasranama in response to Yudhishthira's questions. This app excerpt keeps the opening names from that main stotram; the full 1000-name recitation is not present in this chapter."
     },
     {
       "id": "vs-3-1",
       "chapter": 3,
       "number": 1,
-      "sanskrit": ["विश्वं विष्णुर्वषट्कारो भूतभव्यभवत्प्रभुः।", "भूतकृद्भूतभृद्भावो भूतात्मा भूतभावनः।।"],
-      "linesEn": ["viśhvaṁ viṣhṇurvaṣhaṭkāro bhūtabhavyabhavatprabhuḥ", "bhūtakṛidbhūtabhṛidbhāvo bhūtātmā bhūtabhāvanaḥ"],
+      "sanskrit": [
+        "विश्वं विष्णुर्वषट्कारो भूतभव्यभवत्प्रभुः।",
+        "भूतकृद्भूतभृद्भावो भूतात्मा भूतभावनः।।"
+      ],
+      "linesEn": [
+        "viśhvaṁ viṣhṇurvaṣhaṭkāro bhūtabhavyabhavatprabhuḥ",
+        "bhūtakṛidbhūtabhṛidbhāvo bhūtātmā bhūtabhāvanaḥ"
+      ],
       "meaningHi": "1. विश्व (सर्वव्यापी), 2. विष्णु (सर्वत्र प्रवेश करने वाले), 3. वषट्कार (यज्ञ-स्वरूप), 4. भूत-भव्य-भवत्-प्रभु (भूत-वर्तमान-भविष्य के स्वामी), 5. भूतकृत् (प्राणियों को रचने वाले), 6. भूतभृत् (प्राणियों का भरण करने वाले), 7. भाव (सत्ता-स्वरूप), 8. भूतात्मा (प्राणियों की आत्मा), 9. भूतभावन (प्राणियों को उत्पन्न करने वाले)।",
       "meaningEn": "1. Vishvam (the all-pervading), 2. Vishnu (who enters everywhere), 3. Vashatkara (embodiment of sacrifice), 4. Bhuta-Bhavya-Bhavat-Prabhu (lord of past, present, future), 5. Bhutakrit (creator of beings), 6. Bhutabhrit (sustainer of beings), 7. Bhava (existence itself), 8. Bhutatma (soul of all beings), 9. Bhutabhavana (originator of beings)."
     },
@@ -26,8 +38,14 @@
       "id": "vs-3-2",
       "chapter": 3,
       "number": 2,
-      "sanskrit": ["पूतात्मा परमात्मा च मुक्तानां परमा गतिः।", "अव्ययः पुरुषः साक्षी क्षेत्रज्ञोऽक्षर एव च।।"],
-      "linesEn": ["pūtātmā paramātmā cha muktānāṁ paramā gatiḥ", "avyayaḥ puruṣhaḥ sākṣhī kṣhetrajño'kṣhara eva cha"],
+      "sanskrit": [
+        "पूतात्मा परमात्मा च मुक्तानां परमा गतिः।",
+        "अव्ययः पुरुषः साक्षी क्षेत्रज्ञोऽक्षर एव च।।"
+      ],
+      "linesEn": [
+        "pūtātmā paramātmā cha muktānāṁ paramā gatiḥ",
+        "avyayaḥ puruṣhaḥ sākṣhī kṣhetrajño'kṣhara eva cha"
+      ],
       "meaningHi": "10. पूतात्मा (पवित्र आत्मा), 11. परमात्मा (सर्वोच्च आत्मा), 12. मुक्तानां परमा गतिः (मुक्त जीवों की परम गति), 13. अव्यय (अविनाशी), 14. पुरुष (शरीर में निवास करने वाले), 15. साक्षी (सबको देखने वाले), 16. क्षेत्रज्ञ (शरीर-रूपी क्षेत्र को जानने वाले), 17. अक्षर (अविनाशी अक्षर-ब्रह्म)।",
       "meaningEn": "10. Putatma (pure soul), 11. Paramatma (supreme soul), 12. Muktanam Parama Gatih (ultimate goal of the liberated), 13. Avyaya (imperishable), 14. Purusha (dweller in the body), 15. Sakshi (the witness), 16. Kshetrajna (knower of the field/body), 17. Akshara (the imperishable syllable)."
     },
@@ -35,8 +53,14 @@
       "id": "vs-3-3",
       "chapter": 3,
       "number": 3,
-      "sanskrit": ["योगो योगविदां नेता प्रधानपुरुषेश्वरः।", "नारसिंहवपुः श्रीमान् केशवः पुरुषोत्तमः।।"],
-      "linesEn": ["yogo yogavidāṁ netā pradhānapuruṣheśhvaraḥ", "nārasiṁhavapuḥ śhrīmān keśhavaḥ puruṣhottamaḥ"],
+      "sanskrit": [
+        "योगो योगविदां नेता प्रधानपुरुषेश्वरः।",
+        "नारसिंहवपुः श्रीमान् केशवः पुरुषोत्तमः।।"
+      ],
+      "linesEn": [
+        "yogo yogavidāṁ netā pradhānapuruṣheśhvaraḥ",
+        "nārasiṁhavapuḥ śhrīmān keśhavaḥ puruṣhottamaḥ"
+      ],
       "meaningHi": "18. योग (योग-स्वरूप), 19. योगविदां नेता (योग जानने वालों के नेता), 20. प्रधान-पुरुषेश्वर (प्रकृति और पुरुष के ईश्वर), 21. नारसिंहवपु (नरसिंह शरीर वाले), 22. श्रीमान (लक्ष्मी सहित), 23. केशव (सुन्दर केशों वाले / ब्रह्मा-विष्णु-शिव के ईश्वर), 24. पुरुषोत्तम (पुरुषों में उत्तम)।",
       "meaningEn": "18. Yoga (yoga itself), 19. Yogavidam Neta (leader of yoga-knowers), 20. Pradhana-Purusheshvara (lord of Prakriti and Purusha), 21. Narasimhavapu (having Narasimha's form), 22. Shriman (with Lakshmi/prosperity), 23. Keshava (lord of Brahma-Vishnu-Shiva), 24. Purushottama (supreme among beings)."
     },
@@ -44,8 +68,14 @@
       "id": "vs-3-4",
       "chapter": 3,
       "number": 4,
-      "sanskrit": ["सर्वः शर्वः शिवः स्थाणुर्भूतादिर्निधिरव्ययः।", "सम्भवो भावनो भर्ता प्रभवः प्रभुरीश्वरः।।"],
-      "linesEn": ["sarvaḥ śharvaḥ śhivaḥ sthāṇurbhūtādirndhiravyayaḥ", "sambhavo bhāvano bhartā prabhavaḥ prabhurīśhvaraḥ"],
+      "sanskrit": [
+        "सर्वः शर्वः शिवः स्थाणुर्भूतादिर्निधिरव्ययः।",
+        "सम्भवो भावनो भर्ता प्रभवः प्रभुरीश्वरः।।"
+      ],
+      "linesEn": [
+        "sarvaḥ śharvaḥ śhivaḥ sthāṇurbhūtādirndhiravyayaḥ",
+        "sambhavo bhāvano bhartā prabhavaḥ prabhurīśhvaraḥ"
+      ],
       "meaningHi": "25. सर्व (सभी), 26. शर्व (संहारक), 27. शिव (मंगलकारी), 28. स्थाणु (अचल), 29. भूतादि (प्राणियों का आदि), 30. निधि (खजाना), 31. अव्यय (अक्षय), 32. सम्भव (स्वेच्छा से जन्म लेने वाले), 33. भावन (सबको उत्पन्न करने वाले), 34. भर्ता (पालक), 35. प्रभव (उत्पत्ति-स्थान), 36. प्रभु (सर्वसमर्थ), 37. ईश्वर (परम नियन्ता)।",
       "meaningEn": "25. Sarva (everything), 26. Sharva (destroyer), 27. Shiva (auspicious), 28. Sthanu (immovable), 29. Bhutadi (origin of beings), 30. Nidhi (treasure), 31. Avyaya (imperishable), 32. Sambhava (self-born by will), 33. Bhavana (creator), 34. Bharta (sustainer), 35. Prabhava (source of origin), 36. Prabhu (almighty), 37. Ishvara (supreme controller)."
     },
@@ -53,8 +83,14 @@
       "id": "vs-3-5",
       "chapter": 3,
       "number": 5,
-      "sanskrit": ["स्वयम्भूः शम्भुरादित्यः पुष्कराक्षो महास्वनः।", "अनादिनिधनो धाता विधाता धातुरुत्तमः।।"],
-      "linesEn": ["svayambhūḥ śhambhurādityaḥ puṣhkarākṣho mahāsvanaḥ", "anādinidhanо dhātā vidhātā dhāturuttamaḥ"],
+      "sanskrit": [
+        "स्वयम्भूः शम्भुरादित्यः पुष्कराक्षो महास्वनः।",
+        "अनादिनिधनो धाता विधाता धातुरुत्तमः।।"
+      ],
+      "linesEn": [
+        "svayambhūḥ śhambhurādityaḥ puṣhkarākṣho mahāsvanaḥ",
+        "anādinidhanо dhātā vidhātā dhāturuttamaḥ"
+      ],
       "meaningHi": "38. स्वयम्भू (स्वयं प्रकट), 39. शम्भु (सुख देने वाले), 40. आदित्य (सूर्य-स्वरूप), 41. पुष्कराक्ष (कमल-नेत्र), 42. महास्वन (विशाल ध्वनि वाले), 43. अनादि-निधन (जिनका न आदि है न अन्त), 44. धाता (धारण करने वाले), 45. विधाता (विधान करने वाले), 46. धातुरुत्तम (तत्वों में श्रेष्ठ)।",
       "meaningEn": "38. Svayambhu (self-manifested), 39. Shambhu (bestower of happiness), 40. Aditya (the sun), 41. Pushkaraksha (lotus-eyed), 42. Mahasvana (great-voiced), 43. Anadi-Nidhana (without beginning or end), 44. Dhata (the bearer), 45. Vidhata (the ordainer), 46. Dhaturuttama (the supreme element)."
     },
@@ -62,8 +98,14 @@
       "id": "vs-3-6",
       "chapter": 3,
       "number": 6,
-      "sanskrit": ["अप्रमेयो हृषीकेशः पद्मनाभोऽमरप्रभुः।", "विश्वकर्मा मनुस्त्वष्टा स्थविष्ठः स्थविरो ध्रुवः।।"],
-      "linesEn": ["aprameyo hṛiṣhīkeśhaḥ padmanābho'maraprabhuḥ", "viśhvakarmā manustvāṣhṭā sthaviṣhṭhaḥ sthaviro dhruvaḥ"],
+      "sanskrit": [
+        "अप्रमेयो हृषीकेशः पद्मनाभोऽमरप्रभुः।",
+        "विश्वकर्मा मनुस्त्वष्टा स्थविष्ठः स्थविरो ध्रुवः।।"
+      ],
+      "linesEn": [
+        "aprameyo hṛiṣhīkeśhaḥ padmanābho'maraprabhuḥ",
+        "viśhvakarmā manustvāṣhṭā sthaviṣhṭhaḥ sthaviro dhruvaḥ"
+      ],
       "meaningHi": "47. अप्रमेय (अपरिमेय — जिन्हें मापा न जा सके), 48. हृषीकेश (इन्द्रियों के ईश्वर), 49. पद्मनाभ (कमल-नाभि वाले — जिनकी नाभि से ब्रह्मा उत्पन्न हुए), 50. अमरप्रभु (देवताओं के स्वामी), 51. विश्वकर्मा (विश्व के निर्माता), 52. मनु (मनन करने वाले), 53. त्वष्टा (शिल्पी), 54. स्थविष्ठ (अत्यन्त स्थूल — विराट), 55. स्थविर (अत्यन्त प्राचीन), 56. ध्रुव (अचल — ध्रुव तारे के समान)।",
       "meaningEn": "47. Aprameya (immeasurable), 48. Hrishikesha (lord of the senses), 49. Padmanabha (lotus-naveled — from whose navel Brahma arose), 50. Amaraprabhu (lord of the immortals), 51. Vishvakarma (architect of the universe), 52. Manu (the thinker), 53. Tvashta (the sculptor), 54. Sthavishtha (the most massive — the cosmic form), 55. Sthavira (the most ancient), 56. Dhruva (the immovable — like the pole star)."
     },
@@ -71,8 +113,14 @@
       "id": "vs-3-7",
       "chapter": 3,
       "number": 7,
-      "sanskrit": ["अग्राह्यः शाश्वतः कृष्णो लोहिताक्षः प्रतर्दनः।", "प्रभूतस्त्रिककुब्धाम पवित्रं मङ्गलं परम्।।"],
-      "linesEn": ["agrāhyaḥ śhāśhvataḥ kṛiṣhṇo lohitākṣhaḥ pratardanaḥ", "prabhūtastrikakubdhāma pavitraṁ maṅgalaṁ param"],
+      "sanskrit": [
+        "अग्राह्यः शाश्वतः कृष्णो लोहिताक्षः प्रतर्दनः।",
+        "प्रभूतस्त्रिककुब्धाम पवित्रं मङ्गलं परम्।।"
+      ],
+      "linesEn": [
+        "agrāhyaḥ śhāśhvataḥ kṛiṣhṇo lohitākṣhaḥ pratardanaḥ",
+        "prabhūtastrikakubdhāma pavitraṁ maṅgalaṁ param"
+      ],
       "meaningHi": "57. अग्राह्य (अग्रहणीय — बुद्धि से परे), 58. शाश्वत (सनातन), 59. कृष्ण (श्याम वर्ण / सर्वाकर्षक), 60. लोहिताक्ष (लाल नेत्रों वाले), 61. प्रतर्दन (संहारक), 62. प्रभूत (प्रचुर — सर्वत्र भरपूर), 63. त्रिककुब्धाम (तीनों दिशाओं का आश्रय), 64. पवित्र (परम पवित्र), 65. मंगल (कल्याणकारी), 66. परम (सर्वोच्च)।",
       "meaningEn": "57. Agrahya (beyond grasp), 58. Shashvata (eternal), 59. Krishna (dark-hued / all-attractive), 60. Lohitaksha (red-eyed), 61. Pratardana (the destroyer), 62. Prabhuta (abundant), 63. Trikakubdhama (support of three quarters of space), 64. Pavitra (the most pure), 65. Mangala (auspicious), 66. Param (the supreme)."
     },
@@ -80,8 +128,14 @@
       "id": "vs-3-8",
       "chapter": 3,
       "number": 8,
-      "sanskrit": ["ईशानः प्राणदः प्राणो ज्येष्ठः श्रेष्ठः प्रजापतिः।", "हिरण्यगर्भो भूगर्भो माधवो मधुसूदनः।।"],
-      "linesEn": ["īśhānaḥ prāṇadaḥ prāṇo jyeṣhṭhaḥ śhreṣhṭhaḥ prajāpatiḥ", "hiraṇyagarbho bhūgarbho mādhavo madhusūdanaḥ"],
+      "sanskrit": [
+        "ईशानः प्राणदः प्राणो ज्येष्ठः श्रेष्ठः प्रजापतिः।",
+        "हिरण्यगर्भो भूगर्भो माधवो मधुसूदनः।।"
+      ],
+      "linesEn": [
+        "īśhānaḥ prāṇadaḥ prāṇo jyeṣhṭhaḥ śhreṣhṭhaḥ prajāpatiḥ",
+        "hiraṇyagarbho bhūgarbho mādhavo madhusūdanaḥ"
+      ],
       "meaningHi": "67. ईशान (शासन करने वाले), 68. प्राणद (प्राण देने वाले), 69. प्राण (प्राण स्वयं), 70. ज्येष्ठ (सबसे बड़े/प्राचीन), 71. श्रेष्ठ (सर्वोत्तम), 72. प्रजापति (प्रजाओं के पति), 73. हिरण्यगर्भ (स्वर्ण गर्भ — सृष्टि का प्रथम अंकुर), 74. भूगर्भ (पृथ्वी को गर्भ में धारण करने वाले), 75. माधव (लक्ष्मी के पति / मधु-वंशी), 76. मधुसूदन (मधु नामक असुर को मारने वाले)।",
       "meaningEn": "67. Ishana (the ruler), 68. Pranada (giver of life-breath), 69. Prana (life itself), 70. Jyeshtha (the eldest), 71. Shreshtha (the best), 72. Prajapati (lord of beings), 73. Hiranyagarbha (golden womb — first seed of creation), 74. Bhugarbha (bearer of the earth in womb), 75. Madhava (Lakshmi's lord / of Madhu dynasty), 76. Madhusudana (slayer of demon Madhu)."
     },
@@ -89,8 +143,14 @@
       "id": "vs-3-9",
       "chapter": 3,
       "number": 9,
-      "sanskrit": ["ईश्वरो विक्रमी धन्वी मेधावी विक्रमः क्रमः।", "अनुत्तमो दुराधर्षः कृतज्ञः कृतिरात्मवान्।।"],
-      "linesEn": ["īśhvaro vikramī dhanvī medhāvī vikramaḥ kramaḥ", "anuttamo durādharṣhaḥ kṛitajñaḥ kṛitirātmavān"],
+      "sanskrit": [
+        "ईश्वरो विक्रमी धन्वी मेधावी विक्रमः क्रमः।",
+        "अनुत्तमो दुराधर्षः कृतज्ञः कृतिरात्मवान्।।"
+      ],
+      "linesEn": [
+        "īśhvaro vikramī dhanvī medhāvī vikramaḥ kramaḥ",
+        "anuttamo durādharṣhaḥ kṛitajñaḥ kṛitirātmavān"
+      ],
       "meaningHi": "77. ईश्वर (सर्वशक्तिमान), 78. विक्रमी (पराक्रमी — वामन अवतार में तीन पग), 79. धन्वी (धनुर्धर — राम अवतार), 80. मेधावी (प्रज्ञावान), 81. विक्रम (शौर्य), 82. क्रम (गति/पग), 83. अनुत्तम (जिनसे कोई उत्तम नहीं), 84. दुराधर्ष (जिन्हें कोई दबा न सके), 85. कृतज्ञ (कृतज्ञ — भक्तों की सेवा स्मरण रखने वाले), 86. कृति (कर्मशील), 87. आत्मवान (आत्म-स्थित)।",
       "meaningEn": "77. Ishvara (omnipotent), 78. Vikrami (valorous — Vamana's three strides), 79. Dhanvi (the archer — Rama avatar), 80. Medhavi (supremely intelligent), 81. Vikrama (valor), 82. Krama (the step/progression), 83. Anuttama (unsurpassed), 84. Duradharsha (unconquerable), 85. Kritajna (grateful — remembers devotees' service), 86. Kriti (industrious), 87. Atmavan (self-established)."
     },
@@ -98,8 +158,14 @@
       "id": "vs-3-10",
       "chapter": 3,
       "number": 10,
-      "sanskrit": ["सुरेशः शरणं शर्म विश्वरेताः प्रजाभवः।", "अहः संवत्सरो व्यालः प्रत्ययः सर्वदर्शनः।।"],
-      "linesEn": ["sureśhaḥ śharaṇaṁ śharma viśhvaretāḥ prajābhavaḥ", "ahaḥ saṁvatsaro vyālaḥ pratyayaḥ sarvadarśhanaḥ"],
+      "sanskrit": [
+        "सुरेशः शरणं शर्म विश्वरेताः प्रजाभवः।",
+        "अहः संवत्सरो व्यालः प्रत्ययः सर्वदर्शनः।।"
+      ],
+      "linesEn": [
+        "sureśhaḥ śharaṇaṁ śharma viśhvaretāḥ prajābhavaḥ",
+        "ahaḥ saṁvatsaro vyālaḥ pratyayaḥ sarvadarśhanaḥ"
+      ],
       "meaningHi": "88. सुरेश (देवों के ईश्वर), 89. शरण (आश्रय), 90. शर्म (परम सुख), 91. विश्वरेता (विश्व के बीज), 92. प्रजाभव (प्रजाओं की उत्पत्ति), 93. अह (दिन — काल-स्वरूप), 94. संवत्सर (वर्ष — काल), 95. व्याल (सर्प — अनन्त शेषनाग), 96. प्रत्यय (प्रतीति — विश्वास का आधार), 97. सर्वदर्शन (सब कुछ देखने वाले)।",
       "meaningEn": "88. Suresha (lord of gods), 89. Sharana (refuge), 90. Sharma (supreme bliss), 91. Vishvareta (seed of the universe), 92. Prajabhava (source of beings), 93. Aha (the day — time itself), 94. Samvatsara (the year — time), 95. Vyala (serpent — Ananta Shesha), 96. Pratyaya (the basis of faith), 97. Sarvadarshana (the all-seeing)."
     },
@@ -107,8 +173,14 @@
       "id": "vs-3-11",
       "chapter": 3,
       "number": 11,
-      "sanskrit": ["अजः सर्वेश्वरः सिद्धः सिद्धिः सर्वादिरच्युतः।", "वृषाकपिरमेयात्मा सर्वयोगविनिःसृतः।।"],
-      "linesEn": ["ajaḥ sarveśhvaraḥ siddhaḥ siddhiḥ sarvādirachyutaḥ", "vṛiṣhākapirameyātmā sarvayogaviniḥsṛitaḥ"],
+      "sanskrit": [
+        "अजः सर्वेश्वरः सिद्धः सिद्धिः सर्वादिरच्युतः।",
+        "वृषाकपिरमेयात्मा सर्वयोगविनिःसृतः।।"
+      ],
+      "linesEn": [
+        "ajaḥ sarveśhvaraḥ siddhaḥ siddhiḥ sarvādirachyutaḥ",
+        "vṛiṣhākapirameyātmā sarvayogaviniḥsṛitaḥ"
+      ],
       "meaningHi": "98. अज (अजन्मा), 99. सर्वेश्वर (सबके ईश्वर), 100. सिद्ध (नित्य-सिद्ध), 101. सिद्धि (सिद्धि स्वयं), 102. सर्वादि (सबका आदि), 103. अच्युत (जो कभी च्युत/पतित न हों), 104. वृषाकपि (धर्म और वराह — वृष=धर्म, कपि=वराह), 105. अमेयात्मा (अपरिमित आत्मा), 106. सर्वयोग-विनिःसृत (सभी योगों से प्रकट)।",
       "meaningEn": "98. Aja (unborn), 99. Sarveshvara (lord of all), 100. Siddha (ever-accomplished), 101. Siddhi (accomplishment itself), 102. Sarvadi (the beginning of all), 103. Achyuta (the infallible — who never falls), 104. Vrishakapi (dharma embodied), 105. Ameyatma (immeasurable soul), 106. Sarvayoga-vinihsrita (manifested through all yogas)."
     },
@@ -116,8 +188,14 @@
       "id": "vs-3-12",
       "chapter": 3,
       "number": 12,
-      "sanskrit": ["वसुर्वसुमनाः सत्यः समात्माऽसम्मितः समः।", "अमोघः पुण्डरीकाक्षो वृषकर्मा वृषाकृतिः।।"],
-      "linesEn": ["vasurvasumanāḥ satyaḥ samātmā'sammitaḥ samaḥ", "amoghaḥ puṇḍarīkākṣho vṛiṣhakarmā vṛiṣhākṛitiḥ"],
+      "sanskrit": [
+        "वसुर्वसुमनाः सत्यः समात्माऽसम्मितः समः।",
+        "अमोघः पुण्डरीकाक्षो वृषकर्मा वृषाकृतिः।।"
+      ],
+      "linesEn": [
+        "vasurvasumanāḥ satyaḥ samātmā'sammitaḥ samaḥ",
+        "amoghaḥ puṇḍarīkākṣho vṛiṣhakarmā vṛiṣhākṛitiḥ"
+      ],
       "meaningHi": "107. वसु (निवास-स्थान / धन), 108. वसुमना (उदार मन), 109. सत्य (सत्य-स्वरूप), 110. समात्मा (सबमें सम), 111. असम्मित (अतुलनीय), 112. सम (समभाव), 113. अमोघ (जिनकी कृपा कभी व्यर्थ न हो), 114. पुण्डरीकाक्ष (कमल-नेत्र), 115. वृषकर्मा (धार्मिक कर्म वाले), 116. वृषाकृति (धर्म-स्वरूप)।",
       "meaningEn": "107. Vasu (the dwelling / wealth), 108. Vasumana (generous-minded), 109. Satya (truth itself), 110. Samatma (equal in all), 111. Asammita (incomparable), 112. Sama (equanimous), 113. Amogha (whose grace never fails), 114. Pundarikaksha (lotus-eyed), 115. Vrishakarma (of righteous deeds), 116. Vrishakruti (form of dharma)."
     },
@@ -125,8 +203,14 @@
       "id": "vs-3-13",
       "chapter": 3,
       "number": 13,
-      "sanskrit": ["रुद्रो बहुशिरा बभ्रुर्विश्वयोनिः शुचिश्रवाः।", "अमृतः शाश्वतस्थाणुर्वरारोहो महातपाः।।"],
-      "linesEn": ["rudro bahuśhirā babhrurviśhvayoniḥ śhuchiśhravāḥ", "amṛitaḥ śhāśhvatasthāṇurvarāroho mahātapāḥ"],
+      "sanskrit": [
+        "रुद्रो बहुशिरा बभ्रुर्विश्वयोनिः शुचिश्रवाः।",
+        "अमृतः शाश्वतस्थाणुर्वरारोहो महातपाः।।"
+      ],
+      "linesEn": [
+        "rudro bahuśhirā babhrurviśhvayoniḥ śhuchiśhravāḥ",
+        "amṛitaḥ śhāśhvatasthāṇurvarāroho mahātapāḥ"
+      ],
       "meaningHi": "117. रुद्र (रुलाने वाले / भयंकर), 118. बहुशिरा (अनेक सिरों वाले — विराट रूप), 119. बभ्रु (विश्व को धारण करने वाले), 120. विश्वयोनि (विश्व की उत्पत्ति), 121. शुचिश्रवा (पवित्र कीर्ति वाले), 122. अमृत (मृत्युरहित), 123. शाश्वतस्थाणु (सनातन अचल), 124. वरारोह (श्रेष्ठ उत्कर्ष वाले), 125. महातपा (महान तपस्वी)।",
       "meaningEn": "117. Rudra (the terrible / who makes weep), 118. Bahushira (many-headed — cosmic form), 119. Babhru (the bearer of the world), 120. Vishvayoni (womb of the universe), 121. Shuchishrava (of pure fame), 122. Amrita (immortal), 123. Shashvatasthanu (eternally firm), 124. Vararoha (of supreme ascent), 125. Mahatapa (of great austerity)."
     },
@@ -134,8 +218,14 @@
       "id": "vs-3-14",
       "chapter": 3,
       "number": 14,
-      "sanskrit": ["सर्वगः सर्वविद्भानुर्विष्वक्सेनो जनार्दनः।", "वेदो वेदविदव्यङ्गो वेदाङ्गो वेदवित् कविः।।"],
-      "linesEn": ["sarvagaḥ sarvavidbhānurviṣhvaksenо janārdanaḥ", "vedo vedavidavyaṅgo vedāṅgo vedavit kaviḥ"],
+      "sanskrit": [
+        "सर्वगः सर्वविद्भानुर्विष्वक्सेनो जनार्दनः।",
+        "वेदो वेदविदव्यङ्गो वेदाङ्गो वेदवित् कविः।।"
+      ],
+      "linesEn": [
+        "sarvagaḥ sarvavidbhānurviṣhvaksenо janārdanaḥ",
+        "vedo vedavidavyaṅgo vedāṅgo vedavit kaviḥ"
+      ],
       "meaningHi": "126. सर्वग (सर्वव्यापी), 127. सर्ववित् (सर्वज्ञ), 128. भानु (प्रकाश-स्वरूप), 129. विष्वक्सेन (जिनकी सेना सर्वत्र है), 130. जनार्दन (जनों को प्रेरित करने वाले / दुष्टों को दण्ड देने वाले), 131. वेद (वेद-स्वरूप), 132. वेदवित् (वेद जानने वाले), 133. अव्यंग (अंगहीनता-रहित — पूर्ण), 134. वेदांग (वेद के अंग), 135. वेदवित् (वेदों को जानने वाले), 136. कवि (क्रान्तदर्शी कवि)।",
       "meaningEn": "126. Sarvaga (all-pervading), 127. Sarvavit (omniscient), 128. Bhanu (luminous), 129. Vishvaksena (whose army is everywhere), 130. Janardana (who stirs people / punishes the wicked), 131. Veda (the Vedas themselves), 132. Vedavid (knower of Vedas), 133. Avyanga (without deficiency — complete), 134. Vedanga (limbs of Veda), 135. Vedavit (Veda-knower), 136. Kavi (the seer-poet)."
     },
@@ -143,8 +233,14 @@
       "id": "vs-3-15",
       "chapter": 3,
       "number": 15,
-      "sanskrit": ["लोकाध्यक्षः सुराध्यक्षो धर्माध्यक्षः कृताकृतः।", "चतुरात्मा चतुर्व्यूहश्चतुर्दंष्ट्रश्चतुर्भुजः।।"],
-      "linesEn": ["lokādhyakṣhaḥ surādhyakṣho dharmādhyakṣhaḥ kṛitākṛitaḥ", "chaturātmā chaturvyūhaśhchaturdaṁṣhṭraśhchaturbhujaḥ"],
+      "sanskrit": [
+        "लोकाध्यक्षः सुराध्यक्षो धर्माध्यक्षः कृताकृतः।",
+        "चतुरात्मा चतुर्व्यूहश्चतुर्दंष्ट्रश्चतुर्भुजः।।"
+      ],
+      "linesEn": [
+        "lokādhyakṣhaḥ surādhyakṣho dharmādhyakṣhaḥ kṛitākṛitaḥ",
+        "chaturātmā chaturvyūhaśhchaturdaṁṣhṭraśhchaturbhujaḥ"
+      ],
       "meaningHi": "137. लोकाध्यक्ष (लोकों के अध्यक्ष), 138. सुराध्यक्ष (देवताओं के अध्यक्ष), 139. धर्माध्यक्ष (धर्म के अध्यक्ष), 140. कृताकृत (कार्य-कारण दोनों), 141. चतुरात्मा (चार आत्माएँ — विराट, सूत्र, अव्याकृत, तुरीय), 142. चतुर्व्यूह (चार व्यूह — वासुदेव, संकर्षण, प्रद्युम्न, अनिरुद्ध), 143. चतुर्दंष्ट्र (चार दाँतों वाले — नरसिंह), 144. चतुर्भुज (चार भुजाओं वाले)।",
       "meaningEn": "137. Lokadhyaksha (presider over worlds), 138. Suradhyaksha (presider over gods), 139. Dharmadhyaksha (presider over dharma), 140. Kritakrita (both cause and effect), 141. Chaturatma (four selves — Virat, Sutra, Avyakrita, Turiya), 142. Chaturvyuha (four emanations — Vasudeva, Sankarshana, Pradyumna, Aniruddha), 143. Chaturdamshtra (four-fanged — Narasimha), 144. Chaturbhuja (four-armed)."
     },
@@ -152,8 +248,14 @@
       "id": "vs-3-16",
       "chapter": 3,
       "number": 16,
-      "sanskrit": ["भ्राजिष्णुर्भोजनं भोक्ता सहिष्णुर्जगदादिजः।", "अनघो विजयो जेता विश्वयोनिः पुनर्वसुः।।"],
-      "linesEn": ["bhrājiṣhṇurbhojanaṁ bhoktā sahiṣhṇurjagadādijaḥ", "anagho vijayo jetā viśhvayoniḥ punarvasuḥ"],
+      "sanskrit": [
+        "भ्राजिष्णुर्भोजनं भोक्ता सहिष्णुर्जगदादिजः।",
+        "अनघो विजयो जेता विश्वयोनिः पुनर्वसुः।।"
+      ],
+      "linesEn": [
+        "bhrājiṣhṇurbhojanaṁ bhoktā sahiṣhṇurjagadādijaḥ",
+        "anagho vijayo jetā viśhvayoniḥ punarvasuḥ"
+      ],
       "meaningHi": "145. भ्राजिष्णु (प्रकाशमान), 146. भोजन (भोग्य पदार्थ), 147. भोक्ता (भोगने वाले), 148. सहिष्णु (सहनशील), 149. जगदादिज (जगत में सबसे पहले उत्पन्न), 150. अनघ (निष्पाप), 151. विजय (विजयी), 152. जेता (जीतने वाले), 153. विश्वयोनि (विश्व की उत्पत्ति), 154. पुनर्वसु (पुनः-पुनः निवास करने वाले — अवतार)।",
       "meaningEn": "145. Bhrajishnu (self-luminous), 146. Bhojana (the food/enjoyment), 147. Bhokta (the enjoyer), 148. Sahishnu (the patient one), 149. Jagadadija (first-born of the world), 150. Anagha (sinless), 151. Vijaya (victorious), 152. Jeta (the conqueror), 153. Vishvayoni (source of universe), 154. Punarvasu (who dwells again and again — avatars)."
     },
@@ -161,8 +263,14 @@
       "id": "vs-3-17",
       "chapter": 3,
       "number": 17,
-      "sanskrit": ["उपेन्द्रो वामनः प्रांशुरमोघः शुचिरूर्जितः।", "अतीन्द्रः संग्रहः सर्गो धृतात्मा नियमो यमः।।"],
-      "linesEn": ["upendro vāmanaḥ prāṁśhuramoghaḥ śhuchirūrjitaḥ", "atīndraḥ saṁgrahaḥ sargo dhṛitātmā niyamo yamaḥ"],
+      "sanskrit": [
+        "उपेन्द्रो वामनः प्रांशुरमोघः शुचिरूर्जितः।",
+        "अतीन्द्रः सङ्ग्रहः सर्गो धृतात्मा नियमो यमः।।"
+      ],
+      "linesEn": [
+        "upendro vāmanaḥ prāṁśhuramoghaḥ śhuchirūrjitaḥ",
+        "atīndraḥ saṅgrahaḥ sargo dhṛitātmā niyamo yamaḥ"
+      ],
       "meaningHi": "155. उपेन्द्र (इन्द्र के अनुज — वामन अवतार), 156. वामन (बौना — वामन अवतार), 157. प्रांशु (अत्यन्त ऊँचे — त्रिविक्रम), 158. अमोघ (अचूक), 159. शुचि (पवित्र), 160. ऊर्जित (शक्तिशाली), 161. अतीन्द्र (इन्द्र से परे), 162. संग्रह (सबको एकत्र करने वाले), 163. सर्ग (सृष्टि), 164. धृतात्मा (आत्मा को धारण किए हुए), 165. नियम (नियम — अनुशासन), 166. यम (नियन्त्रक)।",
       "meaningEn": "155. Upendra (Indra's younger brother — Vamana), 156. Vamana (the dwarf — Vamana avatar), 157. Pranshu (extremely tall — Trivikrama), 158. Amogha (infallible), 159. Shuchi (pure), 160. Urjita (powerful), 161. Atindra (beyond Indra), 162. Samgraha (the collector of all), 163. Sarga (creation), 164. Dhritatma (self-possessed), 165. Niyama (discipline), 166. Yama (the controller)."
     },
@@ -170,8 +278,14 @@
       "id": "vs-3-18",
       "chapter": 3,
       "number": 18,
-      "sanskrit": ["वेद्यो वैद्यः सदायोगी वीरहा माधवो मधुः।", "अतीन्द्रियो महामायो महोत्साहो महाबलः।।"],
-      "linesEn": ["vedyo vaidyaḥ sadāyogī vīrahā mādhavo madhuḥ", "atīndriyo mahāmāyo mahotsāho mahābalaḥ"],
+      "sanskrit": [
+        "वेद्यो वैद्यः सदायोगी वीरहा माधवो मधुः।",
+        "अतीन्द्रियो महामायो महोत्साहो महाबलः।।"
+      ],
+      "linesEn": [
+        "vedyo vaidyaḥ sadāyogī vīrahā mādhavo madhuḥ",
+        "atīndriyo mahāmāyo mahotsāho mahābalaḥ"
+      ],
       "meaningHi": "167. वेद्य (जानने योग्य), 168. वैद्य (चिकित्सक — भवरोग के वैद्य), 169. सदायोगी (सदा योग में स्थित), 170. वीरहा (वीरों/शत्रुओं का नाश करने वाले), 171. माधव (माधव — लक्ष्मीपति), 172. मधु (मधुर — मधु जैसे मीठे), 173. अतीन्द्रिय (इन्द्रियातीत), 174. महामाय (महान माया वाले), 175. महोत्साह (महान उत्साह वाले), 176. महाबल (अपार बल वाले)।",
       "meaningEn": "167. Vedya (worthy of knowing), 168. Vaidya (the physician — healer of worldly disease), 169. Sadayogi (ever united in yoga), 170. Viraha (destroyer of heroes/enemies), 171. Madhava (lord of Lakshmi), 172. Madhu (sweet as honey), 173. Atindriya (beyond the senses), 174. Mahamaya (of great illusion), 175. Mahotsaha (of great enthusiasm), 176. Mahabala (of immense strength)."
     },
@@ -179,8 +293,14 @@
       "id": "vs-3-19",
       "chapter": 3,
       "number": 19,
-      "sanskrit": ["महाबुद्धिर्महावीर्यो महाशक्तिर्महाद्युतिः।", "अनिर्देश्यवपुः श्रीमानमेयात्मा महाद्रिधृक्।।"],
-      "linesEn": ["mahābuddhirmahāvīryo mahāśhaktirmahādyutiḥ", "anirdeśhyavapuḥ śhrīmānameyātmā mahādridhṛik"],
+      "sanskrit": [
+        "महाबुद्धिर्महावीर्यो महाशक्तिर्महाद्युतिः।",
+        "अनिर्देश्यवपुः श्रीमानमेयात्मा महाद्रिधृक्।।"
+      ],
+      "linesEn": [
+        "mahābuddhirmahāvīryo mahāśhaktirmahādyutiḥ",
+        "anirdeśhyavapuḥ śhrīmānameyātmā mahādridhṛik"
+      ],
       "meaningHi": "177. महाबुद्धि (परम बुद्धिमान), 178. महावीर्य (अपार वीर्य वाले), 179. महाशक्ति (अपार शक्ति), 180. महाद्युति (अपार तेज), 181. अनिर्देश्यवपु (जिनका शरीर वर्णन से परे है), 182. श्रीमान (लक्ष्मी-युक्त), 183. अमेयात्मा (अपरिमित आत्मा), 184. महाद्रिधृक् (महान पर्वत को धारण करने वाले — मन्दराचल / गोवर्धन)।",
       "meaningEn": "177. Mahabuddhi (supreme intellect), 178. Mahavirya (immense valor), 179. Mahashakti (immense power), 180. Mahadyuti (immense brilliance), 181. Anirdeshyavapu (whose form is indescribable), 182. Shriman (with Lakshmi), 183. Ameyatma (immeasurable soul), 184. Mahadridhrik (upholder of the great mountain — Mandara/Govardhana)."
     },
@@ -188,10 +308,175 @@
       "id": "vs-3-20",
       "chapter": 3,
       "number": 20,
-      "sanskrit": ["महेष्वासो महीभर्ता श्रीनिवासः सतां गतिः।", "अनिरुद्धः सुरानन्दो गोविन्दो गोविदां पतिः।।"],
-      "linesEn": ["maheṣhvāso mahībhartā śhrīnivāsaḥ satāṁ gatiḥ", "aniruddhaḥ surānando govindo govidāṁ patiḥ"],
+      "sanskrit": [
+        "महेष्वासो महीभर्ता श्रीनिवासः सतां गतिः।",
+        "अनिरुद्धः सुरानन्दो गोविन्दो गोविदां पतिः।।"
+      ],
+      "linesEn": [
+        "maheṣhvāso mahībhartā śhrīnivāsaḥ satāṁ gatiḥ",
+        "aniruddhaḥ surānando govindo govidāṁ patiḥ"
+      ],
       "meaningHi": "185. महेष्वास (महान धनुर्धर — राम), 186. महीभर्ता (पृथ्वी के भरणकर्ता), 187. श्रीनिवास (जिनमें लक्ष्मी निवास करती हैं — तिरुपति का प्रसिद्ध नाम), 188. सतां गति (सज्जनों की गति/आश्रय), 189. अनिरुद्ध (जिन्हें कोई रोक न सके — चतुर्व्यूह का चतुर्थ), 190. सुरानन्द (देवताओं को आनन्द देने वाले), 191. गोविन्द (गो/वेद/पृथ्वी/इन्द्रियों को प्राप्त करने वाले), 192. गोविदां पति (गो-विदों — ज्ञानियों के स्वामी)।",
       "meaningEn": "185. Maheshvasa (great archer — Rama), 186. Mahibharta (sustainer of the earth), 187. Shrinivasa (abode of Lakshmi — famous name of Tirupati deity), 188. Satam Gatih (refuge of the righteous), 189. Aniruddha (unstoppable — fourth of the Chaturvyuha), 190. Surananda (joy of the gods), 191. Govinda (attainer of cows/Vedas/earth/senses), 192. Govidam Patih (lord of the knowers)."
+    },
+    {
+      "id": "vs-3-21",
+      "chapter": 3,
+      "number": 21,
+      "sanskrit": [
+        "मरीचिर्दमनो हंसः सुपर्णो भुजगोत्तमः।",
+        "हिरण्यनाभः सुतपाः पद्मनाभः प्रजापतिः।।"
+      ],
+      "linesEn": [
+        "marīchirdamano haṁsaḥ suparṇo bhujagottamaḥ",
+        "hiraṇyanābhaḥ sutapāḥ padmanābhaḥ prajāpatiḥ"
+      ],
+      "meaningHi": "193. मरीचि (किरण — प्रकाश की रेखा), 194. दमन (दमन करने वाले — दुष्टों को नियन्त्रित करने वाले), 195. हंस (परमहंस — विवेक-स्वरूप), 196. सुपर्ण (सुन्दर पंखों वाले — गरुड़ध्वज), 197. भुजगोत्तम (सर्पों में श्रेष्ठ — शेषनाग), 198. हिरण्यनाभ (स्वर्ण-नाभि वाले), 199. सुतपा (उत्तम तपस्या वाले), 200. पद्मनाभ (कमल-नाभि), 201. प्रजापति (प्रजाओं के स्वामी)।",
+      "meaningEn": "193. Marichi (a ray of light), 194. Damana (the subduer — controller of the wicked), 195. Hamsa (the supreme swan — embodiment of discrimination), 196. Suparna (beautiful-winged — whose vehicle is Garuda), 197. Bhujagottama (best among serpents — Shesha Naga), 198. Hiranyunabha (golden-naveled), 199. Sutapa (of excellent austerity), 200. Padmanabha (lotus-naveled), 201. Prajapati (lord of creatures)."
+    },
+    {
+      "id": "vs-3-22",
+      "chapter": 3,
+      "number": 22,
+      "sanskrit": [
+        "अमृत्युः सर्वदृक् सिंहः सन्धाता सन्धिमान् स्थिरः।",
+        "अजो दुर्मर्षणः शास्ता विश्रुतात्मा सुरारिहा।।"
+      ],
+      "linesEn": [
+        "amṛityuḥ sarvadṛik siṁhaḥ sandhātā sandhimān sthiraḥ",
+        "ajo durmarṣhaṇaḥ śhāstā viśhrutātmā surārihā"
+      ],
+      "meaningHi": "202. अमृत्यु (मृत्यु-रहित), 203. सर्वदृक् (सर्वद्रष्टा), 204. सिंह (सिंह — नृसिंह अवतार), 205. सन्धाता (जोड़ने वाले — कर्म-फल का संयोजन), 206. सन्धिमान् (सन्धि करने वाले), 207. स्थिर (अचल), 208. अज (अजन्मा), 209. दुर्मर्षण (जिन्हें सहना कठिन — असुरों के लिए असह्य), 210. शास्ता (शासन करने वाले), 211. विश्रुतात्मा (विख्यात आत्मा), 212. सुरारिहा (देवताओं के शत्रुओं को मारने वाले)।",
+      "meaningEn": "202. Amrityu (deathless), 203. Sarvadrik (the all-seer), 204. Simha (the lion — Narasimha avatar), 205. Sandhata (the unifier — who connects karma and its fruit), 206. Sandhiman (who brings together), 207. Sthira (the steady), 208. Aja (unborn), 209. Durmarshana (unbearable for enemies), 210. Shasta (the ruler/teacher), 211. Vishrutatma (of renowned soul), 212. Surariha (slayer of enemies of the gods)."
+    },
+    {
+      "id": "vs-3-23",
+      "chapter": 3,
+      "number": 23,
+      "sanskrit": [
+        "गुरुर्गुरुतमो धाम सत्यः सत्यपराक्रमः।",
+        "निमिषोऽनिमिषः स्रग्वी वाचस्पतिरुदारधीः।।"
+      ],
+      "linesEn": [
+        "gururgurutamo dhāma satyaḥ satyaparākramaḥ",
+        "nimiṣho'nimiṣhaḥ sragvī vāchaspatirudāradhīḥ"
+      ],
+      "meaningHi": "213. गुरु (गुरु — सबसे भारी/महान), 214. गुरुतम (गुरुओं में भी गुरु — परम गुरु), 215. धाम (तेज / निवास — परमधाम), 216. सत्य (सत्य-स्वरूप), 217. सत्यपराक्रम (सत्य पराक्रम वाले — जिनका बल कभी विफल नहीं होता), 218. निमिष (पलक झपकने वाले — जीवों में व्याप्त), 219. अनिमिष (जो कभी पलक नहीं झपकते — सदा जाग्रत), 220. स्रग्वी (वनमाला धारण करने वाले), 221. वाचस्पति (वाणी के स्वामी — बृहस्पति), 222. उदारधी (उदार बुद्धि वाले)।",
+      "meaningEn": "213. Guru (the teacher — the weightiest/greatest), 214. Gurutama (the greatest among gurus — supreme teacher), 215. Dhama (abode of light — the supreme abode), 216. Satya (truth itself), 217. Satyaparakrama (of unfailing valor), 218. Nimisha (who blinks — pervading living beings), 219. Animisha (who never blinks — ever vigilant), 220. Sragvi (wearer of the flower garland — Vanamali), 221. Vachaspati (lord of speech — Brihaspati), 222. Udaradhi (of magnanimous intellect)."
+    },
+    {
+      "id": "vs-3-24",
+      "chapter": 3,
+      "number": 24,
+      "sanskrit": [
+        "अग्रणीर्ग्रामणीः श्रीमान् न्यायो नेता समीरणः।",
+        "सहस्रमूर्धा विश्वात्मा सहस्राक्षः सहस्रपात्।।"
+      ],
+      "linesEn": [
+        "agraṇīrgrāmaṇīḥ śhrīmān nyāyo netā samīraṇaḥ",
+        "sahasramūrdhā viśhvātmā sahasrākṣhaḥ sahasrapāt"
+      ],
+      "meaningHi": "223. अग्रणी (अग्रगण्य — सबसे आगे), 224. ग्रामणी (समूह के नेता), 225. श्रीमान (लक्ष्मी-सम्पन्न), 226. न्याय (न्याय-स्वरूप), 227. नेता (नेतृत्व करने वाले), 228. समीरण (वायु — प्राणवायु), 229. सहस्रमूर्धा (सहस्र सिरों वाले — विराट पुरुष), 230. विश्वात्मा (विश्व की आत्मा), 231. सहस्राक्ष (सहस्र नेत्रों वाले), 232. सहस्रपात् (सहस्र पैरों वाले)।",
+      "meaningEn": "223. Agrani (the foremost leader), 224. Gramani (leader of the group), 225. Shriman (endowed with Lakshmi/prosperity), 226. Nyaya (justice itself), 227. Neta (the guide), 228. Samiranah (the wind — life-breath), 229. Sahasramurdha (thousand-headed — the cosmic Purusha), 230. Vishvatma (soul of the universe), 231. Sahasraksha (thousand-eyed), 232. Sahasrapat (thousand-footed)."
+    },
+    {
+      "id": "vs-3-25",
+      "chapter": 3,
+      "number": 25,
+      "sanskrit": [
+        "आवर्तनो निवृत्तात्मा संवृतः सम्प्रमर्दनः।",
+        "अहः संवर्तको वह्निरनिलो धरणीधरः।।"
+      ],
+      "linesEn": [
+        "āvartano nivṛittātmā saṁvṛitaḥ sampramardanaḥ",
+        "ahaḥ saṁvartako vahniranilo dharaṇīdharaḥ"
+      ],
+      "meaningHi": "233. आवर्तन (संसार-चक्र को चलाने वाले), 234. निवृत्तात्मा (संसार से निवृत्त आत्मा — मुक्त), 235. संवृत (सबसे आच्छादित / सबको ढकने वाले), 236. सम्प्रमर्दन (शत्रुओं को कुचलने वाले), 237. अहःसंवर्तक (दिन-रात का चक्र चलाने वाले — काल), 238. वह्नि (अग्नि), 239. अनिल (वायु), 240. धरणीधर (पृथ्वी को धारण करने वाले — शेषनाग/वराह)।",
+      "meaningEn": "233. Avartana (who turns the wheel of samsara), 234. Nivrittatma (whose self is free from worldly ties), 235. Samvrita (who covers/envelops all), 236. Sampramardana (crusher of enemies), 237. Ahah-Samvartaka (who rotates day and night — Time), 238. Vahni (fire), 239. Anila (wind), 240. Dharanidharaa (supporter of the earth — Shesha/Varaha)."
+    },
+    {
+      "id": "vs-3-26",
+      "chapter": 3,
+      "number": 26,
+      "sanskrit": [
+        "सुप्रसादः प्रसन्नात्मा विश्वधृग्विश्वभुग्विभुः।",
+        "सत्कर्ता सत्कृतः साधुर्जह्नुर्नारायणो नरः।।"
+      ],
+      "linesEn": [
+        "suprasādaḥ prasannātmā viśhvadhṛigviśhvabhugvibhuḥ",
+        "satkartā satkṛitaḥ sādhurjahnurnārāyaṇo naraḥ"
+      ],
+      "meaningHi": "241. सुप्रसाद (सहज प्रसन्न — शीघ्र प्रसन्न होने वाले), 242. प्रसन्नात्मा (प्रसन्न आत्मा), 243. विश्वधृक् (विश्व को धारण करने वाले), 244. विश्वभुक् (विश्व का भोग करने वाले), 245. विभु (सर्वव्यापी), 246. सत्कर्ता (सत्पुरुषों का सत्कार करने वाले), 247. सत्कृत (सत्पुरुषों द्वारा पूजित), 248. साधु (सज्जन/साधु), 249. जह्नु (जह्नु — गंगा को पीने वाले ऋषि जैसे), 250. नारायण (जल में शयन करने वाले / नर से उत्पन्न), 251. नर (नर — नर-नारायण)।",
+      "meaningEn": "241. Suprasada (easily pleased — gracious), 242. Prasannatma (of serene self), 243. Vishvadhrik (upholder of the universe), 244. Vishvabhuk (enjoyer of the universe), 245. Vibhu (all-pervading), 246. Satkarta (who honors the good), 247. Satkrita (honored by the good), 248. Sadhu (the righteous one), 249. Jahnu (like sage Jahnu who drank the Ganga), 250. Narayana (who rests on waters / born of Nara), 251. Nara (the human — Nara-Narayana)."
+    },
+    {
+      "id": "vs-3-27",
+      "chapter": 3,
+      "number": 27,
+      "sanskrit": [
+        "असङ्ख्येयोऽप्रमेयात्मा विशिष्टः शिष्टकृच्छुचिः।",
+        "सिद्धार्थः सिद्धसङ्कल्पः सिद्धिदः सिद्धिसाधनः।।"
+      ],
+      "linesEn": [
+        "asaṅkhyeyo'prameyātmā viśhiṣhṭaḥ śhiṣhṭakṛichchhuchiḥ",
+        "siddhārthaḥ siddhasaṅkalpaḥ siddhidaḥ siddhisādhanaḥ"
+      ],
+      "meaningHi": "252. असंख्येय (जिन्हें गिना न जा सके), 253. अप्रमेयात्मा (अपरिमेय आत्मा), 254. विशिष्ट (विशेष / श्रेष्ठ), 255. शिष्टकृत् (शिष्टों की रक्षा करने वाले), 256. शुचि (पवित्र), 257. सिद्धार्थ (पूर्ण अर्थ/लक्ष्य वाले), 258. सिद्धसंकल्प (जिनका संकल्प सदा सिद्ध होता है), 259. सिद्धिद (सिद्धि प्रदान करने वाले), 260. सिद्धिसाधन (सिद्धि का साधन)।",
+      "meaningEn": "252. Asankhyeya (innumerable — beyond counting), 253. Aprameyatma (of immeasurable self), 254. Vishishta (distinguished/excellent), 255. Shishtakrit (protector of the righteous), 256. Shuchi (pure), 257. Siddhartha (whose purpose is always fulfilled), 258. Siddhasankalpa (whose will is always accomplished), 259. Siddhida (bestower of accomplishments), 260. Siddhisadhana (the means to attainment)."
+    },
+    {
+      "id": "vs-3-28",
+      "chapter": 3,
+      "number": 28,
+      "sanskrit": [
+        "वृषाही वृषभो विष्णुर्वृषपर्वा वृषोदरः।",
+        "वर्धनो वर्धमानश्च विविक्तः श्रुतिसागरः।।"
+      ],
+      "linesEn": [
+        "vṛiṣhāhī vṛiṣhabho viṣhṇurvṛiṣhaparvā vṛiṣhodaraḥ",
+        "vardhano vardhamānaśhcha viviktaḥ śhrutisāgaraḥ"
+      ],
+      "meaningHi": "261. वृषाही (धर्म का दिन — धर्म-काल), 262. वृषभ (श्रेष्ठ — बैल जैसे बलवान), 263. विष्णु (व्यापक), 264. वृषपर्वा (धर्म की सीढ़ियों वाले), 265. वृषोदर (जिनके उदर में धर्म है), 266. वर्धन (सबको बढ़ाने वाले), 267. वर्धमान (नित्य बढ़ते हुए), 268. विविक्त (एकान्त / विशुद्ध), 269. श्रुतिसागर (वेदों का सागर)।",
+      "meaningEn": "261. Vrishahi (day of dharma), 262. Vrishabha (the best — strong as a bull), 263. Vishnu (the all-pervading), 264. Vrishaparva (whose steps are dharma), 265. Vrishodara (in whose belly is dharma), 266. Vardhana (who makes all grow), 267. Vardhamana (ever-growing), 268. Vivikta (solitary / pure), 269. Shrutisagara (ocean of the Vedas)."
+    },
+    {
+      "id": "vs-3-29",
+      "chapter": 3,
+      "number": 29,
+      "sanskrit": [
+        "सुभुजो दुर्धरो वाग्मी महेन्द्रो वसुदो वसुः।",
+        "नैकरूपो बृहद्रूपः शिपिविष्टः प्रकाशनः।।"
+      ],
+      "linesEn": [
+        "subhujo durdharo vāgmī mahendro vasudo vasuḥ",
+        "naikarūpo bṛihadrūpaḥ śhipiviṣhṭaḥ prakāśhanaḥ"
+      ],
+      "meaningHi": "270. सुभुज (सुन्दर भुजाओं वाले), 271. दुर्धर (जिन्हें धारण करना कठिन — अथाह), 272. वाग्मी (वाक्पटु — दिव्य वाणी वाले), 273. महेन्द्र (महान इन्द्र — देवराज), 274. वसुद (धन/वसु प्रदान करने वाले), 275. वसु (धन-स्वरूप), 276. नैकरूप (अनेक रूपों वाले), 277. बृहद्रूप (विशाल रूप वाले — विराट), 278. शिपिविष्ट (किरणों में व्याप्त — सूर्य-मण्डल में स्थित), 279. प्रकाशन (प्रकाशित करने वाले)।",
+      "meaningEn": "270. Subhuja (of beautiful arms), 271. Durdhara (difficult to hold — unfathomable), 272. Vagmi (eloquent — of divine speech), 273. Mahendra (the great Indra — king of gods), 274. Vasuda (giver of wealth), 275. Vasu (wealth itself), 276. Naikarupa (of many forms), 277. Brihadrupa (of vast form — the cosmic form), 278. Shipivishta (pervading the rays — dwelling in the sun), 279. Prakashana (the illuminator)."
+    },
+    {
+      "id": "vs-3-30",
+      "chapter": 3,
+      "number": 30,
+      "sanskrit": [
+        "ओजस्तेजोद्युतिधरः प्रकाशात्मा प्रतापनः।",
+        "ऋद्धः स्पष्टाक्षरो मन्त्रश्चन्द्रांशुर्भास्करद्युतिः।।"
+      ],
+      "linesEn": [
+        "ojastejodyutidharaḥ prakāśhātmā pratāpanaḥ",
+        "ṛiddhaḥ spaṣhṭākṣharo mantraśhchandrāṁśhurbhāskaradyutiḥ"
+      ],
+      "meaningHi": "280. ओजस्तेजोद्युतिधर (ओज, तेज और द्युति को धारण करने वाले), 281. प्रकाशात्मा (प्रकाश-स्वरूप आत्मा), 282. प्रतापन (सबको तपाने वाले — सूर्य), 283. ऋद्ध (समृद्ध — सभी ऐश्वर्यों से पूर्ण), 284. स्पष्टाक्षर (स्पष्ट अक्षर वाले — वेद-वाणी), 285. मन्त्र (मन्त्र-स्वरूप — ॐकार), 286. चन्द्रांशु (चन्द्रमा की किरणें — शीतल प्रकाश), 287. भास्करद्युति (सूर्य के समान तेज)।",
+      "meaningEn": "280. Ojastejodyutidhara (bearer of vitality, brilliance and splendor), 281. Prakashatma (whose self is pure light), 282. Pratapana (who scorches — the sun), 283. Riddha (prosperous — full of all opulence), 284. Spashtakshara (of clear syllables — Vedic speech), 285. Mantra (the sacred formula — Omkara), 286. Chandranshu (moon-rayed — of cool light), 287. Bhaskaradyuti (of solar brilliance)."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Vishnu Sahasranama from Mahabharata Anushasana Parva; app stores an excerpt, with main-stotram names 1-287 only.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/vsahasranew.html",
+      "https://www.opensadhaka.com/stotras/vishnu-sahasranama",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

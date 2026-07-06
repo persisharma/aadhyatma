@@ -21,15 +21,24 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
   chalisa: backgroundImages.category_chalisa_booklet_mala,
   japam: backgroundImages.category_japam_mala,
   aarti: backgroundImages.category_aarti_diya,
+  // Theerth has no faded-sketch background of its own yet — the CategoryList
+  // re-uses the granth scripture image as a neutral parchment plate while
+  // PRD-07 Phase 4 commissions a dedicated kshetra sketch. Replace once
+  // the asset lands.
+  theerth: backgroundImages.category_granth_open_scripture,
+  sanskar: backgroundImages.source_gayatri_savitri_sun,
 };
 
 const deityBackgrounds: Record<Deity, BackgroundImage> = {
   rama: backgroundImages.deity_rama_darbar,
   krishna: backgroundImages.deity_krishna_bansuri,
+  vishnu: backgroundImages.deity_krishna_bansuri,
   shiva: shivaStrotamImages.shiva,
   hanuman: chalisaImages.hanuman_sea,
   durga: backgroundImages.deity_durga_lion,
   ganesha: backgroundImages.deity_ganesha_modak,
+  savitr: shivaStrotamImages.shiva,
+  saraswati: backgroundImages.deity_saraswati_veena,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
@@ -49,14 +58,25 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'durga-chalisa': backgroundImages.deity_durga_lion,
   'ganesh-chalisa': backgroundImages.deity_ganesha_modak,
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
+  'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,
+  'krishna-stotram': backgroundImages.deity_krishna_bansuri,
   'om-jai-jagdish': backgroundImages.source_vishnu_narayana,
   'hanuman-aarti': chalisaImages.hanuman_lankadahan,
-  'sankat-mochan': chalisaImages.hanuman_sita,
   'jai-ganesh-deva': backgroundImages.deity_ganesha_modak,
   'om-jai-shiv-omkara': shivaStrotamImages.shiva,
   'jai-ambe-gauri': backgroundImages.deity_durga_lion,
   'aarti-kunj-bihari': backgroundImages.deity_krishna_bansuri,
+  'prabhati-shloka': backgroundImages.category_stotram_hymn_scroll,
+  'surya-namaskar': backgroundImages.source_gayatri_savitri_sun,
+  'tulsi-puja': backgroundImages.deity_krishna_bansuri,
+  'bhojan-mantra': backgroundImages.category_granth_open_scripture,
+  'gau-seva': backgroundImages.deity_krishna_bansuri,
+  'sandhya-deepam': backgroundImages.category_aarti_diya,
+  'ratri-shloka': backgroundImages.deity_rama_darbar,
+  'saraswati-stotram': backgroundImages.deity_saraswati_veena,
+  'saraswati-aarti': backgroundImages.deity_saraswati_veena,
+  'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {
@@ -74,6 +94,40 @@ export function getCategoryBackground(categoryId: ContentCategory): BackgroundIm
 
 export function getDeityBackground(deityId: Deity): BackgroundImage {
   return deityBackgrounds[deityId];
+}
+
+/**
+ * Per-temple Theerth background overrides, keyed by temple id. Used for
+ * shrines whose presiding-deity plate is too generic for the temple detail.
+ */
+const theerthBackgroundOverrides: Record<string, BackgroundImage> = {
+  'khatu-shyam': backgroundImages.theerth_khatu_shyam,
+  'vetrimalai-murugan': backgroundImages.theerth_vetrimalai_murugan,
+  sabarimala: backgroundImages.theerth_sabarimala,
+  'gogaji-gogamedi': backgroundImages.theerth_gogaji_gogamedi,
+  'tejaji-kharnal': backgroundImages.theerth_tejaji_kharnal,
+  'khandoba-jejuri': backgroundImages.theerth_khandoba_jejuri,
+  'mahasu-devta-hanol': backgroundImages.theerth_mahasu_devta_hanol,
+  ramdevra: backgroundImages.theerth_ramdevra,
+  'salasar-balaji': backgroundImages.theerth_salasar_balaji,
+  'karni-mata': backgroundImages.theerth_karni_mata,
+  'jeen-mata': backgroundImages.theerth_jeen_mata,
+};
+
+export function getTheerthBackground(templeId: string, deityId: Deity): BackgroundImage {
+  return theerthBackgroundOverrides[templeId] ?? getDeityBackground(deityId);
+}
+
+const deityBackgroundList: BackgroundImage[] = Object.values(deityBackgrounds);
+
+/**
+ * A random deity backdrop, for the "By Deity" index which isn't tied to a single
+ * deity. Callers memoize per mount (useMemo []) so the pick is stable while the
+ * screen is open but varies between visits — same spirit as the Home spotlight
+ * shuffle.
+ */
+export function getRandomDeityBackground(): BackgroundImage {
+  return deityBackgroundList[Math.floor(Math.random() * deityBackgroundList.length)];
 }
 
 export function getSourceBackground(sourceId: string): BackgroundImage | null {
@@ -113,6 +167,11 @@ export function getReaderBackground(
   }
 
   for (const entry of library.filter((item) => item.status === 'active' && !item.hidden)) {
+    // Theerth entries open TheerthMapScreen and a per-temple detail screen that
+    // renders the temple's deity background (see TheerthDetailScreen), not a verse
+    // reader — so they have no source/reader background entry here. Category
+    // background is still enforced above.
+    if (entry.category === 'theerth') continue;
     if (!getSourceBackground(entry.id)) {
       throw new Error(`backgrounds: missing source background for ${entry.id}`);
     }

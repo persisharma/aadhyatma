@@ -1,6 +1,8 @@
-import React from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, Pressable, StyleSheet } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { useTheme } from '@/theme/ThemeContext';
+import { useReducedMotion } from '@/utils/useReducedMotion';
 
 type Props = {
   isBookmarked: boolean;
@@ -9,10 +11,25 @@ type Props = {
 
 export default function BookmarkButton({ isBookmarked, onToggle }: Props) {
   const { colors } = useTheme();
+  const reduceMotion = useReducedMotion();
+  const scale = useRef(new Animated.Value(1)).current;
+
+  const handleToggle = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
+    // Pulse only on save (design.md §25); removal stays quiet. Collapses to the
+    // final frame under reduce-motion.
+    if (!isBookmarked && !reduceMotion) {
+      Animated.sequence([
+        Animated.timing(scale, { toValue: 1.15, duration: 100, useNativeDriver: true }),
+        Animated.timing(scale, { toValue: 1, duration: 100, useNativeDriver: true }),
+      ]).start();
+    }
+    onToggle();
+  };
 
   return (
     <Pressable
-      onPress={onToggle}
+      onPress={handleToggle}
       hitSlop={12}
       style={[
         styles.circle,
@@ -25,14 +42,17 @@ export default function BookmarkButton({ isBookmarked, onToggle }: Props) {
       accessibilityLabel={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
       accessibilityState={{ selected: isBookmarked }}
     >
-      <Text
+      <Animated.Text
         style={[
           styles.icon,
-          { color: isBookmarked ? colors.saffron : colors.inkMuted },
+          {
+            color: isBookmarked ? colors.saffron : colors.inkMuted,
+            transform: [{ scale }],
+          },
         ]}
       >
         {isBookmarked ? '♥' : '♡'}
-      </Text>
+      </Animated.Text>
     </Pressable>
   );
 }

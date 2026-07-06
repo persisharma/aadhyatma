@@ -1,41 +1,34 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import {
-  setAudioModeAsync,
-  useAudioPlayer,
-  useAudioPlayerStatus,
-} from 'expo-audio';
+import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
+import { ensureBackgroundAudioMode } from '@/audio/audioSession';
 import { getJapamAudioSource } from '@assets/japam-audio';
+import type { Lang } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
 
 type Props = {
   mantraId: string;
-  lang: 'hi' | 'en';
+  lang: Lang;
   /** Called once per completed audio loop (= one bead). */
   onIteration: () => void;
+  /** Start playing as soon as the audio is loaded. Used by the alarm
+   *  deep-link flow so a tap on the notification drops the user into
+   *  chanting without a second press. */
+  autoPlay?: boolean;
 };
 
 const MIN_RATE = 0.5;
 const MAX_RATE = 1.5;
 const RATE_STEP = 0.1;
 
-let audioModeConfigured = false;
-async function ensureBackgroundAudioMode() {
-  if (audioModeConfigured) return;
-  audioModeConfigured = true;
-  try {
-    await setAudioModeAsync({
-      playsInSilentMode: true,
-      shouldPlayInBackground: true,
-      interruptionMode: 'mixWithOthers',
-      interruptionModeAndroid: 'duckOthers',
-    });
-  } catch {
-    audioModeConfigured = false;
-  }
-}
-
-export default function JapamAudioPlayer({ mantraId, lang, onIteration }: Props) {
+export default function JapamAudioPlayer({
+  mantraId,
+  lang,
+  onIteration,
+  autoPlay,
+}: Props) {
   const { colors, typography, radii } = useTheme();
   const source = useMemo(() => getJapamAudioSource(mantraId), [mantraId]);
 
@@ -49,6 +42,7 @@ export default function JapamAudioPlayer({ mantraId, lang, onIteration }: Props)
       mantraId={mantraId}
       lang={lang}
       onIteration={onIteration}
+      autoPlay={autoPlay}
       colors={colors}
       typography={typography}
       radii={radii}
@@ -68,6 +62,7 @@ function ActiveAudioPlayer({
   mantraId,
   lang,
   onIteration,
+  autoPlay,
   colors,
   typography,
   radii,
@@ -75,6 +70,7 @@ function ActiveAudioPlayer({
   const player = useAudioPlayer(source, { updateInterval: 250 });
   const status = useAudioPlayerStatus(player);
   const [rate, setRate] = useState(1.0);
+  const autoPlayedRef = useRef(false);
 
   const onIterationRef = useRef(onIteration);
   useEffect(() => {
@@ -89,6 +85,7 @@ function ActiveAudioPlayer({
   // Reset playback when the mantra changes.
   useEffect(() => {
     setRate(1.0);
+    autoPlayedRef.current = false;
     if (player.isLoaded) {
       player.pause();
       player.seekTo(0).catch(() => undefined);
@@ -96,25 +93,54 @@ function ActiveAudioPlayer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mantraId]);
 
-  // We don't use the player's native `loop` flag — instead we manually
-  // restart on `didJustFinish` so we can count loops reliably across
-  // platforms.
-  const finishedRef = useRef(false);
+  // Honour an `autoPlay` request once the file is ready. Gated on
+  // `status.isLoaded` because `play()` is a no-op before the player has
+  // loaded; gated on a ref so we don't re-trigger on every status update.
   useEffect(() => {
-    if (status.didJustFinish && !finishedRef.current) {
-      finishedRef.current = true;
-      onIterationRef.current();
-      // Restart for the next iteration.
-      player
-        .seekTo(0)
-        .then(() => {
-          player.play();
-        })
-        .catch(() => undefined);
-    } else if (!status.didJustFinish) {
-      finishedRef.current = false;
+    if (!autoPlay || autoPlayedRef.current) return;
+    if (!status.isLoaded) return;
+    autoPlayedRef.current = true;
+    try {
+      player.play();
+    } catch {
+      /* next render will retry via the gate above */
     }
-  }, [status.didJustFinish, player]);
+  }, [autoPlay, status.isLoaded, player]);
+
+  // Use the player's native `loop` flag for the auto-chant repeat. Manually
+  // restarting via `seekTo(0)` + `play()` on `didJustFinish` is unreliable on
+  // iOS: after the track finishes the restart often fails to resume and
+  // `didJustFinish` does not toggle back cleanly, which froze both the
+  // playback and the bead count. Native looping repeats gaplessly on every
+  // platform.
+  useEffect(() => {
+    player.loop = true;
+  }, [player]);
+
+  // Count one bead per completed recitation by detecting the loop wrap: the
+  // reported position jumps backwards toward the start after passing the
+  // midpoint of the track. This does not depend on `didJustFinish` (which is
+  // not emitted while `loop` is enabled, and behaves inconsistently across
+  // platforms), so counting stays reliable on iOS.
+  const prevTimeRef = useRef(0);
+  useEffect(() => {
+    if (!status.isLoaded) return;
+    const duration = status.duration ?? 0;
+    const current = status.currentTime ?? 0;
+    if (duration <= 0) {
+      prevTimeRef.current = current;
+      return;
+    }
+    const prev = prevTimeRef.current;
+    const wrapped =
+      status.playing &&
+      prev > duration * 0.5 &&
+      current + duration * 0.4 < prev;
+    if (wrapped) {
+      onIterationRef.current();
+    }
+    prevTimeRef.current = current;
+  }, [status.currentTime, status.duration, status.isLoaded, status.playing]);
 
   useEffect(() => {
     player.shouldCorrectPitch = true;
@@ -150,9 +176,23 @@ function ActiveAudioPlayer({
     setRate((r) => Math.min(MAX_RATE, +(r + RATE_STEP).toFixed(2)));
   }, []);
 
-  const playLabel = lang === 'hi' ? (isPlaying ? 'विराम' : 'चलाएँ') : isPlaying ? 'Pause' : 'Play';
-  const tempoLabel = lang === 'hi' ? 'गति' : 'Tempo';
+  const playLabel = isPlaying
+    ? pick(lang, { hi: 'विराम', en: 'Pause', gu: 'વિરામ', kn: 'ವಿರಾಮ' })
+    : pick(lang, { hi: 'चलाएँ', en: 'Play', gu: 'ચલાવો', kn: 'ಚಲಾಯಿಸಿ' });
+  const tempoLabel = pick(lang, { hi: 'गति', en: 'Tempo', gu: 'ગતિ', kn: 'ಗತಿ' });
   const a11yPlay = isPlaying ? 'Pause auto-chant' : 'Play auto-chant';
+  const labelHeadFont =
+    lang === 'gu'
+      ? fontFamilies.gujaratiBold
+      : lang === 'kn'
+        ? fontFamilies.kannadaBold
+        : typography.readerTitle.fontFamily;
+  const labelSubFont =
+    lang === 'gu'
+      ? fontFamilies.gujarati
+      : lang === 'kn'
+        ? fontFamilies.kannada
+        : typography.cardLatin.fontFamily;
 
   return (
     <View style={styles.wrap}>
@@ -189,7 +229,7 @@ function ActiveAudioPlayer({
             styles.playLabel,
             {
               color: isPlaying ? colors.onPrimary : colors.saffronDeep,
-              fontFamily: typography.readerTitle.fontFamily,
+              fontFamily: labelHeadFont,
             },
           ]}
         >
@@ -203,7 +243,7 @@ function ActiveAudioPlayer({
             styles.tempoLabel,
             {
               color: colors.inkMuted,
-              fontFamily: typography.cardLatin.fontFamily,
+              fontFamily: labelSubFont,
             },
           ]}
         >
@@ -267,12 +307,20 @@ function ActiveAudioPlayer({
   );
 }
 
-function UnavailableNotice({ lang }: { lang: 'hi' | 'en' }) {
+function UnavailableNotice({ lang }: { lang: Lang }) {
   const { colors, typography } = useTheme();
-  const text =
-    lang === 'hi'
-      ? 'इस मंत्र की ध्वनि उपलब्ध नहीं है'
-      : 'Audio not available';
+  const text = pick(lang, {
+    hi: 'इस मंत्र की ध्वनि उपलब्ध नहीं है',
+    en: 'Audio not available',
+    gu: 'આ મંત્રનો ધ્વનિ ઉપલબ્ધ નથી',
+    kn: 'ಈ ಮಂತ್ರದ ಧ್ವನಿ ಲಭ್ಯವಿಲ್ಲ',
+  });
+  const noticeFont =
+    lang === 'gu'
+      ? fontFamilies.gujarati
+      : lang === 'kn'
+        ? fontFamilies.kannada
+        : typography.swipeHint.fontFamily;
   return (
     <View style={styles.wrap}>
       <Text
@@ -280,7 +328,7 @@ function UnavailableNotice({ lang }: { lang: 'hi' | 'en' }) {
           styles.unavailable,
           {
             color: colors.inkMuted,
-            fontFamily: typography.swipeHint.fontFamily,
+            fontFamily: noticeFont,
             fontSize: typography.swipeHint.fontSize,
           },
         ]}

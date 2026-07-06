@@ -6,12 +6,17 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { getRamStutiChapter, type RamStutiVerse } from '@/data/ram-stuti';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
+import JumpToStartButton from '@/components/JumpToStartButton';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
@@ -24,7 +29,7 @@ const DOT_COUNT = 5;
 export default function RamStutiReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
@@ -54,13 +59,18 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
 
   const getItemLayout = useCallback((_: unknown, index: number) => ({ length: width, offset: width * index, index }), [width]);
 
+  const goToStart = useCallback(() => {
+    listRef.current?.scrollToIndex({ index: 0, animated: true });
+    setCurrentIndex(0);
+  }, []);
+
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
   }, [verseCount, currentIndex]);
 
-  const topTitle = chapter ? (lang === 'hi' ? chapter.titleHi : chapter.titleEn) : '';
+  const topTitle = chapter ? (contentByLang(lang, chapter.titleHi, chapter.titleEn)) : '';
 
   const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = e.nativeEvent.contentOffset.x;
@@ -74,6 +84,10 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
     });
   }, [width, verseCount]);
 
+  // Re-render visible pages when the language flips, a bookmark toggles, or a
+  // share is in flight — the in-page header actions depend on all three.
+  const listExtraData = useMemo(() => ({ lang, bookmarks, shareBusy }), [lang, bookmarks, shareBusy]);
+
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
@@ -85,7 +99,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
               <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
             </Pressable>
           </View>
-          <Text style={[styles.title, { color: colors.ink, fontFamily: lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily, fontSize: typography.readerTitle.fontSize, fontStyle: lang === 'en' ? 'italic' : 'normal' }]} numberOfLines={1}>
+          <Text style={[styles.title, { color: colors.ink, fontFamily: titleFontByLang(lang), fontSize: typography.readerTitle.fontSize, fontStyle: lang === 'en' ? 'italic' : 'normal' }]} numberOfLines={1}>
             {topTitle}
           </Text>
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
@@ -93,51 +107,61 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
               <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
                 {currentIndex + 1} / {verseCount}
               </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`ram-stuti:${chapter.chapter}:${currentIndex}`)}
-                onToggle={() => {
-                  const id = `ram-stuti:${chapter.chapter}:${currentIndex}`;
-                  if (isBookmarked(id)) { removeBookmark(id); }
-                  else {
-                    const v = chapter.verses[currentIndex];
-                    addBookmark({ id, sourceId: 'ram-stuti', chapter: chapter.chapter, verseIndex: currentIndex, savedAt: Date.now(), previewHi: v.sanskrit[0] ?? '', previewEn: v.linesEn[0] ?? '' });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = chapter.verses[currentIndex];
-                  const isIntro = v.number === 0;
-                  share(
-                    {
-                      sourceId: 'ram-stuti',
-                      sectionNameHi: chapter.titleHi,
-                      sectionNameEn: chapter.titleEn,
-                      verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${v.chapter}.${v.number}`,
-                      verseLabelEn: isIntro ? 'Introduction' : `Verse ${v.chapter}.${v.number}`,
-                      linesHi: [...v.sanskrit],
-                      linesEn: [...v.linesEn],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                    },
-                    lang
-                  );
-                }}
-              />
             </View>
           </View>
         </View>
 
-        <View style={styles.toggleRow}><LanguageToggle /></View>
+        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
+
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId="ram-stuti" chapter={chapter.chapter} /></View>
 
         <View style={styles.listContainer}>
           <FlatList
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <ShivaStrotamVersePage verse={item} sourceId="ram-stuti" width={width} />}
-            extraData={lang}
+            renderItem={({ item, index }) => (
+              <ShivaStrotamVersePage
+                verse={item}
+                sourceId="ram-stuti"
+                width={width}
+                topActions={
+                  <>
+                    <BookmarkButton
+                      isBookmarked={isBookmarked(`ram-stuti:${chapter.chapter}:${index}`)}
+                      onToggle={() => {
+                        const id = `ram-stuti:${chapter.chapter}:${index}`;
+                        if (isBookmarked(id)) { removeBookmark(id); }
+                        else {
+                          addBookmark({ id, sourceId: 'ram-stuti', chapter: chapter.chapter, verseIndex: index, savedAt: Date.now(), previewHi: item.sanskrit[0] ?? '', previewEn: item.linesEn[0] ?? '' });
+                        }
+                      }}
+                    />
+                    <ShareButton
+                      busy={shareBusy}
+                      onPress={() => {
+                        const isIntro = item.number === 0;
+                        share(
+                          {
+                            sourceId: 'ram-stuti',
+                            sectionNameHi: chapter.titleHi,
+                            sectionNameEn: chapter.titleEn,
+                            verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,
+                            verseLabelEn: isIntro ? 'Introduction' : `Verse ${item.chapter}.${item.number}`,
+                            linesHi: [...item.sanskrit],
+                            linesEn: [...item.linesEn],
+                            meaningHi: item.meaningHi,
+                            meaningEn: item.meaningEn,
+                          },
+                          lang
+                        );
+                      }}
+                    />
+                  </>
+                }
+              />
+            )}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
@@ -154,6 +178,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

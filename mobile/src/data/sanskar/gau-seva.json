@@ -1,0 +1,86 @@
+{
+  "titleHi": "गौ सेवा",
+  "titleEn": "Gau Seva",
+  "subtitleHi": "गौ माता एवं पशु-पक्षी सेवा के मन्त्र व विधि",
+  "subtitleEn": "Mantras and methods for serving cows, animals and birds",
+  "deity": "krishna",
+  "language": "sa-hi-en",
+  "source": {
+    "baseText": "Gau seva prayers including Govinda and Nandini/Kamadhenu invocations, checked against Sanskrit Documents and Drik Panchang Kamadhenu references.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/brahmaNyadevAya.html",
+      "https://www.drikpanchang.com/deities-namavali/goddesses/kamadhenu/108-kamadhenu-names.html?lang=hi",
+      "https://sanskritdocuments.org/doc_deities_misc/gosevAstuti.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
+  "counts": { "totalVerses": 4 },
+  "verses": [
+    {
+      "id": "gs-intro",
+      "number": 1,
+      "type": "intro",
+      "labelHi": "परिचय",
+      "labelEn": "Introduction",
+      "lines": ["गौ सेवा — गोविन्द की प्रसन्नता हेतु दैनिक सेवा"],
+      "linesEn": ["Gau Seva — Daily service for the pleasure of Govinda"],
+      "meaningHi": "गाय को भारतीय संस्कृति में 'कामधेनु' (सब इच्छाएँ पूर्ण करने वाली) माना गया है। श्रीकृष्ण का नाम 'गोविन्द' (गायों को आनन्द देने वाला) इसी कारण है — वे बाल्यकाल में गौचारण करते थे। महाभारत (अनुशासन पर्व) में कहा गया है कि गाय में तैंतीस कोटि देवताओं का वास है। प्रतिदिन पशु-पक्षियों को भोजन-जल देना 'भूत-यज्ञ' (पंच-महायज्ञों में से एक) कहलाता है। यह करुणा, सह-अस्तित्व और प्रकृति-सेवा का संस्कार बच्चों में डालता है।",
+      "meaningEn": "The cow is considered 'Kamadhenu' (wish-fulfilling) in Indian culture. Sri Krishna's name 'Govinda' (one who gives joy to cows) comes from his childhood as a cowherd. The Mahabharata (Anushasan Parva) states that 33 crore deities reside in the cow. Feeding animals and birds daily is called 'Bhuta Yajna' (one of the five great daily sacrifices). This instills the values of compassion, coexistence, and service to nature in children."
+    },
+    {
+      "id": "gs-01",
+      "number": 2,
+      "type": "mantra",
+      "labelHi": "गोविन्द नमन मन्त्र",
+      "labelEn": "Govinda Namana Mantra",
+      "lines": [
+        "नमो ब्रह्मण्यदेवाय गो ब्राह्मणहिताय च।",
+        "जगद्धिताय कृष्णाय गोविन्दाय नमो नमः॥"
+      ],
+      "linesEn": [
+        "Namo Brahmanya-devaaya go Braahmana-hitaaya cha.",
+        "Jagad-hitaaya Krishnaaya Govindaaya namo namah."
+      ],
+      "meaningHi": "ब्रह्मण्यदेव (ब्राह्मणों एवं वेदों के रक्षक), गायों और ब्राह्मणों के हितकारी, सम्पूर्ण जगत के हितैषी, श्रीकृष्ण — गोविन्द — को बारम्बार नमस्कार है।\n\nयह विष्णुपुराण का प्रसिद्ध श्लोक है। इसमें कृष्ण को 'गो-हित' (गायों का हित करने वाला) और 'जगद्-हित' (सम्पूर्ण जगत का हित करने वाला) कहा गया है। गौ-सेवा को कृष्ण-सेवा ही माना गया है — गाय की सेवा करने से गोविन्द प्रसन्न होते हैं।",
+      "meaningEn": "Salutations to the Lord of the Vedas (Brahmanya Deva), benefactor of cows and Brahmins, well-wisher of the entire world, to Krishna — to Govinda — repeated salutations.\n\nThis is a famous verse from the Vishnu Purana. It calls Krishna 'Go-hita' (benefactor of cows) and 'Jagad-hita' (benefactor of the whole world). Serving cows is considered serving Krishna himself — Govinda is pleased by service to cows."
+    },
+    {
+      "id": "gs-02",
+      "number": 3,
+      "type": "vidhi",
+      "labelHi": "गौ ग्रास विधि",
+      "labelEn": "Gau Grass Vidhi (Feeding Cows)",
+      "lines": [
+        "सर्वदेवमये देवि सर्वदेवैरलंकृते।",
+        "मातर्ममाभिलषितं सफलं कुरु नन्दिनि॥"
+      ],
+      "linesEn": [
+        "Sarva-deva-maye devi sarva-devair-alankrite.",
+        "Maatar-mamaabhilashitam saphalam kuru Nandini."
+      ],
+      "meaningHi": "हे सर्वदेवमयी (सब देवताओं से युक्त) देवी, सब देवताओं से अलंकृत, हे माता नन्दिनी (आनन्द देने वाली — गाय), मेरी अभिलाषा (इच्छा) को सफल करें।\n\n'नन्दिनी' गाय का एक नाम है — वसिष्ठ ऋषि की गाय नन्दिनी सर्वकामधुक् (सब कामनाएँ पूर्ण करने वाली) थी।",
+      "meaningEn": "O Goddess filled with all deities, adorned by all gods, O Mother Nandini (the joy-giver — the cow), fulfill my wishes.\n\n'Nandini' is a name for the cow — Sage Vasishtha's cow Nandini was Sarva-Kamadhuk (fulfiller of all desires).",
+      "vidhiHi": "१. घर की पहली रोटी गाय के लिए निकालें (इसे 'गौ ग्रास' कहते हैं)। २. गाय के पास शान्ति से जाएँ — दौड़कर या शोर करके नहीं। ३. खुली हथेली पर रोटी/चारा रखकर खिलाएँ — हाथ सपाट रखें। ४. गाय को जल भी अवश्य पिलाएँ। ५. यदि गाय उपलब्ध न हो तो गौशाला में दान करें या हरा चारा भिजवाएँ।",
+      "vidhiEn": "1. Set aside the first roti of the household for the cow (called 'Gau Grass'). 2. Approach the cow calmly — do not run or make loud noises. 3. Feed on an open, flat palm — keep the hand level with roti/fodder. 4. Always offer water to the cow as well. 5. If no cow is accessible, donate to a gaushala (cow shelter) or send green fodder."
+    },
+    {
+      "id": "gs-03",
+      "number": 4,
+      "type": "vidhi",
+      "labelHi": "पक्षी-सेवा विधि",
+      "labelEn": "Bird Feeding Vidhi",
+      "lines": [
+        "पक्षिणां च यथाकालं निवापं दत्तमक्षयम्।",
+        "तृप्ताः प्रयान्ति ते सर्वे दातुर्धर्मं प्रयच्छताम्॥"
+      ],
+      "linesEn": [
+        "Pakshiṇaam cha yathaa-kaalam nivaapam dattam-akshayam.",
+        "Triptaah prayaanti te sarve daatur-dharmam prayachchhataam."
+      ],
+      "meaningHi": "पक्षियों को यथासमय (उचित समय पर) दिया गया अन्न-जल अक्षय (कभी न समाप्त होने वाला) पुण्य देता है। तृप्त होकर जाते हुए वे पक्षी दाता को धर्म (पुण्य) प्रदान करते हैं।\n\nयह श्लोक पञ्च-महायज्ञ परम्परा (तैत्तिरीय आरण्यक) के 'भूत-यज्ञ' (समस्त प्राणियों की सेवा) का वैदिक भाव दर्शाता है। पक्षी-सेवा 'भूत-यज्ञ' का सरलतम रूप है — छोटे बच्चे भी कर सकते हैं।",
+      "meaningEn": "Food and water given to birds at the proper time yields inexhaustible merit. Satisfied, the birds depart granting dharma (spiritual merit) to the giver.\n\nThis verse reflects the Vedic concept of 'Bhuta Yajna' (service to all living beings) — one of the Pancha-Mahayajnas described in the Taittiriya Aranyaka. Bird-feeding is the simplest form of Bhuta Yajna — even small children can practice it.",
+      "vidhiHi": "१. प्रतिदिन प्रातःकाल अपने नाश्ते से पहले पक्षियों के लिए दाना (चावल, बाजरा, या मिश्रित अनाज) और एक कटोरी जल रखें। २. छत, बालकनी, या आँगन में खुली जगह पर रखें। ३. एक मिट्टी के बर्तन में जल रखें — गर्मियों में यह विशेष महत्वपूर्ण है। ४. नियमित समय और स्थान रखें — पक्षी आदत से आना सीख जाते हैं।",
+      "vidhiEn": "1. Every morning, before your own breakfast, set out grain (rice, millet, or mixed grain) and a bowl of water for birds. 2. Place in an open area — rooftop, balcony, or courtyard. 3. Keep water in an earthen pot — this is especially important in summers. 4. Maintain a regular time and place — birds learn to come by habit."
+    }
+  ]
+}

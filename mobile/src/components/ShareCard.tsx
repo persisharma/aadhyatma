@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
+import type { Lang } from '@/data/gita/language';
+import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
 import Ornament from './Ornament';
 
 export type ShareCardProps = {
@@ -12,17 +15,39 @@ export type ShareCardProps = {
   linesEn: string[];
   meaningHi?: string;
   meaningEn?: string;
-  lang: 'hi' | 'en';
+  meaningGu?: string;
+  meaningKn?: string;
+  lang: Lang;
   width: number;
   height: number;
 };
 
 const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(props, ref) {
   const { colors, typography } = useTheme();
-  const sectionName = props.lang === 'hi' ? props.sectionNameHi : props.sectionNameEn;
-  const verseLabel = props.lang === 'hi' ? props.verseLabelHi : props.verseLabelEn;
-  const meaning = props.lang === 'hi' ? props.meaningHi : props.meaningEn;
-  const lines = props.lang === 'hi' ? props.linesHi : props.linesEn;
+  const sectionName = contentByLang(props.lang, props.sectionNameHi, props.sectionNameEn);
+  const verseLabel = contentByLang(props.lang, props.verseLabelHi, props.verseLabelEn);
+  const meaning = meaningByLang(props.lang, props.meaningHi ?? '', props.meaningEn ?? '', {
+    gu: props.meaningGu,
+    kn: props.meaningKn,
+  });
+  const lines = verseLinesByLang(props.lang, props.linesHi, props.linesEn);
+  // Constrained surface (design.md §13 sanctioned): keeps its own tuned sizes, but the
+  // font family must follow the script or gu/kn render as tofu. hi/en unchanged — en
+  // romanization keeps rendering in the Devanagari face (which carries Latin glyphs), as before.
+  const verseFont =
+    props.lang === 'gu'
+      ? fontFamilies.gujarati
+      : props.lang === 'kn'
+        ? fontFamilies.kannada
+        : typography.verse.fontFamily;
+  const meaningFont =
+    props.lang === 'hi'
+      ? typography.meaning.fontFamily
+      : props.lang === 'gu'
+        ? fontFamilies.gujarati
+        : props.lang === 'kn'
+          ? fontFamilies.kannada // kn meaning now renders in Kannada script
+          : typography.cardLatin.fontFamily; // en
 
   return (
     <View
@@ -61,7 +86,7 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
               styles.verseLine,
               {
                 color: colors.ink,
-                fontFamily: typography.verse.fontFamily,
+                fontFamily: verseFont,
               },
             ]}
           >
@@ -75,14 +100,13 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
       {meaning ? (
         <Text
           numberOfLines={5}
+          adjustsFontSizeToFit
+          minimumFontScale={0.5}
           style={[
             styles.meaning,
             {
               color: colors.inkSoft,
-              fontFamily:
-                props.lang === 'hi'
-                  ? typography.meaning.fontFamily
-                  : typography.cardLatin.fontFamily,
+              fontFamily: meaningFont,
             },
           ]}
         >
@@ -122,7 +146,7 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
             },
           ]}
         >
-          Download on the App Store
+          Now available on iOS & Android
         </Text>
       </View>
     </View>

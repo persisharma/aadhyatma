@@ -19,7 +19,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
   getSearchIndex,
   runSearch,
@@ -29,6 +29,9 @@ import {
   type SearchVerseEntry,
 } from '@/data/searchIndex';
 import { library } from '@/data/texts';
+import { useNewContent } from '@/contexts/NewContentContext';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import { contentByLang, pick } from '@/utils/localize';
 import {
   buildProgressTarget,
   navigateToEntryStart,
@@ -50,6 +53,7 @@ const POPULAR_FALLBACK_IDS = [
 export default function SearchScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const { markSeen } = useNewContent();
   const inputRef = useRef<TextInput>(null);
   const [query, setQuery] = useState('');
   const [recent, setRecent] = useState<string[]>([]);
@@ -92,7 +96,6 @@ export default function SearchScreen({ navigation }: Props) {
 
   const trimmed = query.trim();
   const hasQuery = trimmed.length > 0;
-  const isHi = lang === 'hi';
 
   const popular = useMemo(() => {
     return POPULAR_FALLBACK_IDS
@@ -126,15 +129,17 @@ export default function SearchScreen({ navigation }: Props) {
     (sourceId: string) => {
       const entry = library.find((e) => e.id === sourceId);
       if (!entry) return;
+      markSeen(sourceId);
       commitRecent(query);
       Keyboard.dismiss();
       navigateToEntryStart(navigation as never, entry);
     },
-    [navigation, query, commitRecent]
+    [navigation, query, commitRecent, markSeen]
   );
 
   const openVerse = useCallback(
     (hit: SearchVerseEntry) => {
+      markSeen(hit.sourceId);
       const target = buildProgressTarget({
         sourceId: hit.sourceId,
         chapter: hit.chapter,
@@ -151,7 +156,7 @@ export default function SearchScreen({ navigation }: Props) {
       const entry = library.find((e) => e.id === hit.sourceId);
       if (entry) navigateToEntryStart(navigation as never, entry);
     },
-    [navigation, query, commitRecent]
+    [navigation, query, commitRecent, markSeen]
   );
 
   const openDeity = useCallback(
@@ -212,7 +217,7 @@ export default function SearchScreen({ navigation }: Props) {
               ref={inputRef}
               value={query}
               onChangeText={setQuery}
-              placeholder={isHi ? 'श्लोक, पाठ, मंत्र खोजें…' : 'Search verses, sections, mantras…'}
+              placeholder={pick(lang, { hi: 'श्लोक, पाठ, मंत्र खोजें…', en: 'Search verses, sections, mantras…', gu: 'શ્લોક, પાઠ, મંત્ર શોધો…', kn: 'ಶ್ಲೋಕ, ಪಠ್ಯ, ಮಂತ್ರ ಹುಡುಕಿ…' })}
               placeholderTextColor={colors.inkMuted}
               style={[
                 styles.input,
@@ -257,10 +262,10 @@ export default function SearchScreen({ navigation }: Props) {
             onRecentRemove={removeRecent}
             onRecentClearAll={clearAllRecent}
             onPopularPress={(id) => openSection(id)}
-            isHi={isHi}
+            lang={lang}
           />
         ) : totalHits === 0 ? (
-          <ZeroState colors={colors} typography={typography} isHi={isHi} />
+          <ZeroState colors={colors} typography={typography} lang={lang} />
         ) : (
           <ResultsList
             results={results}
@@ -268,7 +273,7 @@ export default function SearchScreen({ navigation }: Props) {
             typography={typography}
             spacing={spacing}
             radii={radii}
-            isHi={isHi}
+            lang={lang}
             onSectionPress={(h) => openSection(h.entry.sourceId)}
             onDeityPress={(h) => openDeity(h.entry.deityId)}
             onVersePress={(h) => openVerse(h.entry)}
@@ -303,13 +308,65 @@ function GroupHeader({
         {
           color: colors.inkMuted,
           fontSize: typography.sectionLabel.fontSize,
-          fontWeight: typography.sectionLabel.fontWeight,
+          fontFamily: typography.sectionLabel.fontFamily,
           letterSpacing: typography.sectionLabel.letterSpacing,
         },
       ]}
     >
       {label} · {count}
     </Text>
+  );
+}
+
+function PopularName({
+  nameHi,
+  nameEn,
+  lang,
+  colors,
+}: {
+  nameHi: string;
+  nameEn: string;
+  lang: Lang;
+  colors: Theme['colors'];
+}) {
+  const { primary, secondary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
+    devPrimary: 14,
+    devSecondary: 12,
+    latPrimary: 14,
+    latSecondary: 11,
+  });
+
+  return (
+    <View style={styles.popularMeta}>
+      <Text
+        numberOfLines={1}
+        style={[
+          styles.popularNameHi,
+          {
+            color: colors.ink,
+            fontFamily: primary.fontFamily,
+            fontSize: primary.fontSize,
+            fontStyle: primary.fontStyle,
+          },
+        ]}
+      >
+        {primary.text}
+      </Text>
+      <Text
+        numberOfLines={1}
+        style={[
+          styles.popularNameEn,
+          {
+            color: colors.inkMuted,
+            fontFamily: secondary.fontFamily,
+            fontSize: secondary.fontSize,
+            fontStyle: secondary.fontStyle,
+          },
+        ]}
+      >
+        {secondary.text}
+      </Text>
+    </View>
   );
 }
 
@@ -324,7 +381,7 @@ function EmptyState({
   onRecentRemove,
   onRecentClearAll,
   onPopularPress,
-  isHi,
+  lang,
 }: {
   recent: string[];
   popular: { id: string; nameHi: string; nameEn: string; thumb: string }[];
@@ -336,7 +393,7 @@ function EmptyState({
   onRecentRemove: (q: string) => void;
   onRecentClearAll: () => void;
   onPopularPress: (sourceId: string) => void;
-  isHi: boolean;
+  lang: Lang;
 }) {
   return (
     <FlatList
@@ -350,7 +407,7 @@ function EmptyState({
             <>
               <View style={styles.recentHeader}>
                 <GroupHeader
-                  label={isHi ? 'हाल ही में' : 'Recent'}
+                  label={pick(lang, { hi: 'हाल ही में', en: 'Recent', gu: 'તાજેતરનું', kn: 'ಇತ್ತೀಚಿನ' })}
                   count={recent.length}
                   colors={colors}
                   typography={typography}
@@ -358,12 +415,12 @@ function EmptyState({
                 <Pressable
                   onPress={onRecentClearAll}
                   accessibilityRole="button"
-                  accessibilityLabel={isHi ? 'सभी हटाएं' : 'Clear all'}
+                  accessibilityLabel={pick(lang, { hi: 'सभी हटाएं', en: 'Clear all', gu: 'બધું સાફ કરો', kn: 'ಎಲ್ಲವನ್ನು ತೆರವುಗೊಳಿಸಿ' })}
                   hitSlop={8}
                   style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
                 >
                   <Text style={{ color: colors.saffron, fontFamily: 'Inter_500Medium', fontSize: 12 }}>
-                    {isHi ? 'सभी हटाएं' : 'Clear All'}
+                    {pick(lang, { hi: 'सभी हटाएं', en: 'Clear All', gu: 'બધું સાફ કરો', kn: 'ಎಲ್ಲವನ್ನು ತೆರವುಗೊಳಿಸಿ' })}
                   </Text>
                 </Pressable>
               </View>
@@ -409,7 +466,7 @@ function EmptyState({
           ) : null}
 
           <GroupHeader
-            label={isHi ? 'लोकप्रिय' : 'Popular'}
+            label={pick(lang, { hi: 'लोकप्रिय', en: 'Popular', gu: 'લોકપ્રિય', kn: 'ಜನಪ್ರಿಯ' })}
             count={popular.length}
             colors={colors}
             typography={typography}
@@ -442,26 +499,12 @@ function EmptyState({
                 >
                   {p.thumb}
                 </Text>
-                <View style={styles.popularMeta}>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.popularNameHi,
-                      { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
-                    ]}
-                  >
-                    {p.nameHi}
-                  </Text>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.popularNameEn,
-                      { color: colors.inkMuted, fontFamily: 'CormorantGaramond_400Regular_Italic' },
-                    ]}
-                  >
-                    {p.nameEn}
-                  </Text>
-                </View>
+                <PopularName
+                  nameHi={p.nameHi}
+                  nameEn={p.nameEn}
+                  lang={lang}
+                  colors={colors}
+                />
               </Pressable>
             ))}
           </View>
@@ -474,11 +517,11 @@ function EmptyState({
 function ZeroState({
   colors,
   typography,
-  isHi,
+  lang,
 }: {
   colors: Theme['colors'];
   typography: Theme['typography'];
-  isHi: boolean;
+  lang: Lang;
 }) {
   return (
     <View style={styles.zero}>
@@ -496,7 +539,7 @@ function ZeroState({
           { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
         ]}
       >
-        {isHi ? 'कोई परिणाम नहीं' : 'No matches found'}
+        {pick(lang, { hi: 'कोई परिणाम नहीं', en: 'No matches found', gu: 'કોઈ પરિણામ નથી', kn: 'ಯಾವುದೇ ಫಲಿತಾಂಶವಿಲ್ಲ' })}
       </Text>
       <Text
         style={[
@@ -504,9 +547,7 @@ function ZeroState({
           { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
         ]}
       >
-        {isHi
-          ? 'देवनागरी शब्द या पाठ का नाम आज़माएँ।'
-          : 'Try a Devanagari word or a section name.'}
+        {pick(lang, { hi: 'देवनागरी शब्द या पाठ का नाम आज़माएँ।', en: 'Try a Devanagari word or a section name.', gu: 'દેવનાગરી શબ્દ કે પાઠનું નામ અજમાવો.', kn: 'ದೇವನಾಗರಿ ಪದ ಅಥವಾ ಪಠ್ಯದ ಹೆಸರನ್ನು ಪ್ರಯತ್ನಿಸಿ.' })}
       </Text>
     </View>
   );
@@ -525,7 +566,7 @@ function ResultsList({
   typography,
   spacing,
   radii,
-  isHi,
+  lang,
   onSectionPress,
   onDeityPress,
   onVersePress,
@@ -535,7 +576,7 @@ function ResultsList({
   typography: Theme['typography'];
   spacing: Theme['spacing'];
   radii: Theme['radii'];
-  isHi: boolean;
+  lang: Lang;
   onSectionPress: (h: SearchHit<SearchSectionEntry>) => void;
   onDeityPress: (h: SearchHit<SearchDeityEntry>) => void;
   onVersePress: (h: SearchHit<SearchVerseEntry>) => void;
@@ -546,7 +587,7 @@ function ResultsList({
       out.push({
         kind: 'header',
         key: 'h-sections',
-        label: isHi ? 'पाठ' : 'Sections',
+        label: pick(lang, { hi: 'पाठ', en: 'Sections', gu: 'પાઠ', kn: 'ಪಠ್ಯಗಳು' }),
         count: results.sections.length,
       });
       results.sections.forEach((h) =>
@@ -557,7 +598,7 @@ function ResultsList({
       out.push({
         kind: 'header',
         key: 'h-deities',
-        label: isHi ? 'देवता' : 'Deities',
+        label: pick(lang, { hi: 'देवता', en: 'Deities', gu: 'દેવતા', kn: 'ದೇವತೆಗಳು' }),
         count: results.deities.length,
       });
       results.deities.forEach((h) =>
@@ -568,7 +609,7 @@ function ResultsList({
       out.push({
         kind: 'header',
         key: 'h-verses',
-        label: isHi ? 'श्लोक' : 'Verses',
+        label: pick(lang, { hi: 'श्लोक', en: 'Verses', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕಗಳು' }),
         count: results.verses.length,
       });
       results.verses.forEach((h) =>
@@ -578,14 +619,12 @@ function ResultsList({
         out.push({
           kind: 'capped',
           key: 'capped',
-          label: isHi
-            ? 'और परिणाम — विशिष्ट खोजें टाइप करें'
-            : 'More results — type a more specific query',
+          label: pick(lang, { hi: 'और परिणाम — विशिष्ट खोजें टाइप करें', en: 'More results — type a more specific query', gu: 'વધુ પરિણામ — વધુ ચોક્કસ શોધ ટાઇપ કરો', kn: 'ಹೆಚ್ಚಿನ ಫಲಿತಾಂಶ — ಹೆಚ್ಚು ನಿರ್ದಿಷ್ಟ ಹುಡುಕಾಟ ಟೈಪ್ ಮಾಡಿ' }),
         });
       }
     }
     return out;
-  }, [results, isHi]);
+  }, [results, lang]);
 
   return (
     <FlatList
@@ -638,7 +677,7 @@ function ResultsList({
                   style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
                   numberOfLines={1}
                 >
-                  {isHi ? s.displayHi : s.displayEn}
+                  {contentByLang(lang, s.displayHi, s.displayEn)}
                 </Text>
                 <Text
                   style={[styles.resultSecondary, { color: colors.inkMuted, fontFamily: 'Inter_500Medium' }]}
@@ -681,13 +720,13 @@ function ResultsList({
                   style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
                   numberOfLines={1}
                 >
-                  {isHi ? d.displayHi : d.displayEn}
+                  {contentByLang(lang, d.displayHi, d.displayEn)}
                 </Text>
                 <Text
                   style={[styles.resultSecondary, { color: colors.inkMuted, fontFamily: 'Inter_500Medium' }]}
                   numberOfLines={1}
                 >
-                  {isHi ? 'देवता' : 'Deity'}
+                  {pick(lang, { hi: 'देवता', en: 'Deity', gu: 'દેવતા', kn: 'ದೇವತೆ' })}
                 </Text>
               </View>
               <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
@@ -719,7 +758,7 @@ function ResultsList({
                     { color: colors.ink, fontFamily: typography.verse.fontFamily },
                   ]}
                 >
-                  {isHi ? v.firstLineHi : v.firstLineEn || v.firstLineHi}
+                  {contentByLang(lang, v.firstLineHi, v.firstLineEn || v.firstLineHi)}
                 </Text>
                 <Text
                   numberOfLines={1}
@@ -728,7 +767,7 @@ function ResultsList({
                     { color: colors.inkMuted, fontFamily: 'CormorantGaramond_400Regular_Italic' },
                   ]}
                 >
-                  {(isHi ? v.sectionNameHi : v.sectionNameEn)} · {(isHi ? v.labelHi : v.labelEn)}
+                  {contentByLang(lang, v.sectionNameHi, v.sectionNameEn)} · {contentByLang(lang, v.labelHi, v.labelEn)}
                 </Text>
               </View>
               <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>

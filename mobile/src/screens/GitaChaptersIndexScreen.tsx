@@ -12,10 +12,13 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { gitaChaptersManifest, gitaTitleEn, gitaTitleHi } from '@/data/gita';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang, isLatinLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { getSourceBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'GitaChapters'>;
@@ -23,11 +26,12 @@ type Props = NativeStackScreenProps<RootStackParamList, 'GitaChapters'>;
 export default function GitaChaptersIndexScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { getChapterProgress } = useReadingProgress();
 
-  const title = lang === 'hi' ? gitaTitleHi : gitaTitleEn;
+  const title = contentByLang(lang, gitaTitleHi, gitaTitleEn);
   const titleFontFamily =
-    lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
-  const titleFontSize = lang === 'hi' ? 22 : 20;
+    titleFontByLang(lang);
+  const titleFontSize = isLatinLang(lang) ? 20 : 22;
   const titleItalic = lang === 'en';
 
   return (
@@ -88,9 +92,10 @@ export default function GitaChaptersIndexScreen({ navigation }: Props) {
             <GitaChapterCard
               key={chapter.chapter}
               chapter={chapter}
-              onPress={() =>
-                navigation.navigate('GitaReader', { chapter: chapter.chapter })
-              }
+              onPress={() => {
+                const resumeIndex = getChapterProgress('bhagavad-gita', chapter.chapter)?.verseIndex ?? 0;
+                navigation.navigate('GitaReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
+              }}
             />
           ))}
         </ScrollView>

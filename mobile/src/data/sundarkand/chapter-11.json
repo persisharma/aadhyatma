@@ -90,8 +90,8 @@
       "stanza": 27,
       "numInSection": 27,
       "subSuffix": null,
-      "labelHi": "दोहा २७",
-      "labelEn": "Doha 27",
+      "labelHi": "दोहा · २७",
+      "labelEn": "Doha · 27",
       "lines": [
         "जाइ पुकारे ते सब बन उजार जुबराज।",
         "सुनि सुग्रीव हरष कपि करि आए प्रभु काज॥28॥"
@@ -190,8 +190,8 @@
       "stanza": 28,
       "numInSection": 28,
       "subSuffix": null,
-      "labelHi": "दोहा २८",
-      "labelEn": "Doha 28",
+      "labelHi": "दोहा · २८",
+      "labelEn": "Doha · 28",
       "lines": [
         "प्रीति सहित सब भेंटे रघुपति करुना पुंज॥",
         "पूछी कुसल नाथ अब कुसल देखि पद कंज॥29॥"
@@ -290,8 +290,8 @@
       "stanza": 29,
       "numInSection": 29,
       "subSuffix": null,
-      "labelHi": "दोहा २९",
-      "labelEn": "Doha 29",
+      "labelHi": "दोहा · २९",
+      "labelEn": "Doha · 29",
       "lines": [
         "नाम पाहरू दिवस निसि ध्यान तुम्हार कपाट।",
         "लोचन निज पद जंत्रित जाहिं प्रान केहिं बाट॥30॥"
@@ -380,7 +380,7 @@
       "meaningEn": "The agony of separation from You is like a blazing fire, my body is but a heap of cotton, and my breath a gust of wind that could reduce it to ashes in moments. Yet my eyes, acting in their own selfishness (longing to behold Your divine beauty), pour forth a flood of tears, and thus my body is not consumed by the fire of separation.\"",
       "linesEn": [
         "Birah agini tanu tool sameeraa. svaas jarai chhan maahin sareeraa",
-        "नयन स्रवहिं जलु निज हित लागी। जरैं न पाव देह बिरहागी॥4॥"
+        "Nayan sravahin jalu nij hit laagee. jarain na paav deh birahaagee"
       ],
       "chapter": 11
     },
@@ -408,8 +408,8 @@
       "stanza": 30,
       "numInSection": 30,
       "subSuffix": null,
-      "labelHi": "दोहा ३०",
-      "labelEn": "Doha 30",
+      "labelHi": "दोहा · ३०",
+      "labelEn": "Doha · 30",
       "lines": [
         "निमिष निमिष करुनानिधि जाहिं कलप सम बीति।",
         "बेगि चलिअ प्रभु आनिअ भुज बल खल दल जीति॥31॥"
@@ -497,7 +497,7 @@
       "meaningHi": "-हे पुत्र! सुन, मैंने मन में (खूब) विचार करके देख लिया कि मैं तुझसे उऋण नहीं हो सकता। देवताओं के रक्षक प्रभु बार-बार हनुमान्जी को देख रहे हैं। नेत्रों में प्रेमाश्रुओं का जल भरा है और शरीर अत्यंत पुलकित है",
       "meaningEn": "Listen O' Son, I can never repay your debt; this truth I have realized deep within my heart.\" The protector of the Demigods, Shri Ram, gazed again and again upon Hanuman ji, His lotus eyes brimming with tears of love, while His entire body thrilled with divine emotion.",
       "linesEn": [
-        "सुनु सुत तोहि उरिन मैं नाहीं। देखेउँ करि बिचार मन माहीं॥",
+        "Sunu sut tohi urin main naaheen. dekheun kari bichaar man maaheen",
         "Puni puni kapihi chitav suratraataa. lochan neer pulak ati gaataa"
       ],
       "chapter": 11
@@ -508,8 +508,8 @@
       "stanza": 31,
       "numInSection": 31,
       "subSuffix": null,
-      "labelHi": "दोहा ३१",
-      "labelEn": "Doha 31",
+      "labelHi": "दोहा · ३१",
+      "labelEn": "Doha · 31",
       "lines": [
         "सुनि प्रभु बचन बिलोकि मुख गात हरषि हनुमंत।",
         "चरन परेउ प्रेमाकुल त्राहि त्राहि भगवंत॥32॥"
@@ -626,8 +626,8 @@
       "stanza": 32,
       "numInSection": 32,
       "subSuffix": null,
-      "labelHi": "दोहा ३२",
-      "labelEn": "Doha 32",
+      "labelHi": "दोहा · ३२",
+      "labelEn": "Doha · 32",
       "lines": [
         "ता कहुँ प्रभु कछु अगम नहिं जा पर तुम्ह अनुकूल।",
         "तव प्रभावँ बड़वानलहि जारि सकइ खलु तूल॥33॥"
@@ -640,5 +640,14 @@
       ],
       "chapter": 11
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

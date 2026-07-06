@@ -2,20 +2,14 @@
   "chapter": 3,
   "titleHi": "संकटनाशन गणेश स्तोत्र",
   "titleEn": "Sankatnashan Ganesh Stotram",
-  "verseCount": 5,
+  "verseCount": 10,
   "verses": [
     {
       "id": "gs-3-0",
       "chapter": 3,
       "number": 0,
-      "sanskrit": [
-        "॥ संकटनाशन गणेश स्तोत्र ॥",
-        "नारद पुराण"
-      ],
-      "linesEn": [
-        "Sankatnashan Ganesh Stotram",
-        "From Narada Purana"
-      ],
+      "sanskrit": ["॥ संकटनाशन गणेश स्तोत्र ॥", "नारद पुराण"],
+      "linesEn": ["Sankatnashan Ganesh Stotram", "From Narada Purana"],
       "meaningHi": "लाभ:\n\nसंकटनाशन गणेश स्तोत्र का पाठ सभी प्रकार के संकटों (विपत्तियों) को नष्ट करता है। इसके नियमित पाठ से आयु, इच्छापूर्ति और धन की सिद्धि होती है। विशेषकर कठिन परिस्थितियों और जीवन के संकट-काल में इसका पाठ अत्यन्त फलदायी माना जाता है। प्रत्येक मंगलवार और संकष्टी चतुर्थी को इसका पाठ विशेष लाभकारी है।\n\nकथा:\n\nयह स्तोत्र नारद पुराण से है। देवर्षि नारद — ब्रह्मा के मानसपुत्र और तीनों लोकों में विचरण करने वाले — इसके वक्ता हैं। नारद ने यह स्तोत्र भक्तों को संकट-निवारण के लिए प्रदान किया। 'संकटनाशन' — सभी संकटों को नष्ट करने वाला — गणेश जी का वह रूप है जो विशेष रूप से कठिन समय में भक्तों की रक्षा करता है।",
       "meaningEn": "Benefits:\n\nReciting the Sankatnashan Ganesh Stotram destroys all types of calamities and hardships. Regular recitation grants longevity, fulfillment of desires, and prosperity. It is considered especially potent during difficult circumstances and crisis periods in life. Recitation on Tuesdays and Sankashti Chaturthi is particularly beneficial.\n\nStory:\n\nThis stotram is from the Narada Purana. Devarshi Narada — mind-born son of Brahma who travels across all three worlds — is the speaker. Narada gifted this stotram to devotees for the removal of calamities. 'Sankatnashan' — destroyer of all calamities — is that form of Ganesha who especially protects devotees during difficult times."
     },
@@ -26,15 +20,15 @@
       "sanskrit": [
         "नारद उवाच —",
         "प्रणम्य शिरसा देवं गौरीपुत्रं विनायकम्।",
-        "भक्तावासं स्मरेन्नित्यमायुःकामार्थसिद्धये।।"
+        "भक्तावासं स्मरेन्नित्यमायुःकामार्थसिद्धये॥ १॥"
       ],
       "linesEn": [
-        "nārada uvācha —",
-        "praṇamya śhirasā devaṁ gaurīputraṁ vināyakam",
-        "bhaktāvāsaṁ smarennityamāyuḥkāmārthasiddhaye"
+        "Naarada uvaacha —",
+        "Pranamya shirasaa devam gaureeputram vinaayakam.",
+        "Bhaktaavasam smarennityam-aayuh-kaamartha-siddhaye. 1."
       ],
-      "meaningHi": "नारद जी कहते हैं — गौरी-पुत्र (पार्वती के पुत्र) विनायक देव को शिर झुकाकर प्रणाम करके, भक्तों के हृदय में निवास करने वाले उन्हें नित्य स्मरण करना चाहिए — आयु, इच्छापूर्ति और अर्थ (धन) की सिद्धि के लिए।\n\nयह स्तोत्र नारद पुराण से है। नारद मुनि — देवर्षि, ब्रह्मा के मानसपुत्र — इसके वक्ता हैं। 'संकटनाशन' — सभी संकटों (विपत्तियों) को नष्ट करने वाला।",
-      "meaningEn": "Narada says — Bowing one's head to Lord Vinayaka, the son of Gauri (Parvati), one should remember daily the one who dwells in devotees' hearts — for the attainment of longevity, desires, and prosperity.\n\nThis stotram is from the Narada Purana. Sage Narada — celestial sage, mind-born son of Brahma — is the speaker. 'Sankatnashan' means 'destroyer of all calamities.'"
+      "meaningHi": "नारद जी कहते हैं — गौरी-पुत्र (पार्वती के पुत्र) विनायक देव को शिर झुकाकर प्रणाम करके, भक्तों के हृदय में निवास करने वाले उन्हें नित्य स्मरण करना चाहिए — आयु, इच्छापूर्ति और अर्थ (धन) की सिद्धि के लिए।",
+      "meaningEn": "Narada says — Bowing one's head to Lord Vinayaka, the son of Gauri (Parvati), one should remember daily the one who dwells in devotees' hearts — for the attainment of longevity, desires, and prosperity."
     },
     {
       "id": "gs-3-2",
@@ -42,14 +36,14 @@
       "number": 2,
       "sanskrit": [
         "प्रथमं वक्रतुण्डं च एकदन्तं द्वितीयकम्।",
-        "तृतीयं कृष्णपिङ्गाक्षं गजवक्त्रं चतुर्थकम्।।"
+        "तृतीयं कृष्णपिङ्गाक्षं गजवक्त्रं चतुर्थकम्॥ २॥"
       ],
       "linesEn": [
-        "prathamaṁ vakratuṇḍaṁ cha ekadantaṁ dvitīyakam",
-        "tṛitīyaṁ kṛiṣhṇapiṅgākṣhaṁ gajavaktraṁ chaturthakam"
+        "Prathamam vakratundam cha ekadantam dviteeyakam.",
+        "Triteeyam krishnapingaaksham gajavaktram chaturthakam. 2."
       ],
-      "meaningHi": "प्रथम नाम वक्रतुण्ड (मुड़ी सूँड वाले), दूसरा एकदन्त (एक दाँत वाले), तीसरा कृष्णपिंगाक्ष (काले-भूरे नेत्रों वाले), चौथा गजवक्त्र (हाथी के मुख वाले) — इन नामों का स्मरण करना चाहिए।\n\nयह गणेश के अष्ट नाम (8 नाम) स्तोत्र का प्रारम्भ है। प्रत्येक नाम गणेश के एक विशेष स्वरूप का वर्णन करता है।",
-      "meaningEn": "The first name is Vakratunda (curved trunk), second Ekadanta (single tusk), third Krishnapingaksha (dark-brown eyed), fourth Gajavaktra (elephant-faced) — these names should be remembered.\n\nThis begins the Ashta Nama (8 names) section of the Ganesha stotram. Each name describes a specific aspect of Ganesha's form."
+      "meaningHi": "प्रथम नाम वक्रतुण्ड (मुड़ी सूँड वाले), दूसरा एकदन्त (एक दाँत वाले), तीसरा कृष्णपिंगाक्ष (काले-भूरे नेत्रों वाले), चौथा गजवक्त्र (हाथी के मुख वाले)। यह गणेश के द्वादश नाम (12 नाम) स्तोत्र का प्रारम्भ है।",
+      "meaningEn": "The first name is Vakratunda (curved trunk), second Ekadanta (single tusk), third Krishnapingaksha (dark-brown eyed), fourth Gajavaktra (elephant-faced). This begins the twelve names section of the Ganesha stotram."
     },
     {
       "id": "gs-3-3",
@@ -57,14 +51,14 @@
       "number": 3,
       "sanskrit": [
         "लम्बोदरं पञ्चमं च षष्ठं विकटमेव च।",
-        "सप्तमं विघ्नराजेन्द्रं धूम्रवर्णं तथाऽष्टमम्।।"
+        "सप्तमं विघ्नराजेन्द्रं धूम्रवर्णं तथाष्टमम्॥ ३॥"
       ],
       "linesEn": [
-        "lambodaraṁ pañchamaṁ cha ṣhaṣhṭhaṁ vikaṭameva cha",
-        "saptamaṁ vighnarājendraṁ dhūmravarṇaṁ tathā'ṣhṭamam"
+        "Lambodaram panchamam cha shashtham vikatameva cha.",
+        "Saptamam vighnaraa-jendram dhoomravarnam tathaash-tamam. 3."
       ],
-      "meaningHi": "पाँचवाँ नाम लम्बोदर (विशाल उदर वाले), छठा विकट (भयंकर रूप वाले), सातवाँ विघ्नराजेन्द्र (विघ्नों के राजाओं में श्रेष्ठ), आठवाँ धूम्रवर्ण (धुएँ के रंग वाले)।\n\n'लम्बोदर' — ब्रह्माण्ड को उदर में धारण करने वाले। 'विकट' — असुरों के लिए भयंकर रूप। 'विघ्नराजेन्द्र' — विघ्नों को हटाने में सर्वश्रेष्ठ। 'धूम्रवर्ण' — गणेश का एक रौद्र रूप।",
-      "meaningEn": "Fifth is Lambodara (large-bellied), sixth Vikata (the formidable), seventh Vighnarajendra (supreme lord of obstacles), eighth Dhumravarna (smoke-colored).\n\n'Lambodara' — containing the universe in his belly. 'Vikata' — terrifying form for demons. 'Vighnarajendra' — supreme remover of obstacles. 'Dhumravarna' — a fierce aspect of Ganesha."
+      "meaningHi": "पाँचवाँ नाम लम्बोदर (विशाल उदर वाले), छठा विकट (भयंकर रूप वाले), सातवाँ विघ्नराजेन्द्र (विघ्नों के राजाओं में श्रेष्ठ), आठवाँ धूम्रवर्ण (धुएँ के रंग वाले)।",
+      "meaningEn": "Fifth is Lambodara (large-bellied), sixth Vikata (the formidable), seventh Vighnarajendra (supreme lord of obstacles), eighth Dhumravarna (smoke-colored)."
     },
     {
       "id": "gs-3-4",
@@ -72,18 +66,96 @@
       "number": 4,
       "sanskrit": [
         "नवमं भालचन्द्रं च दशमं तु विनायकम्।",
-        "एकादशं गणपतिं द्वादशं तु गजाननम्।।",
-        "द्वादशैतानि नामानि त्रिसन्ध्यं यः पठेन्नरः।",
-        "न च विघ्नभयं तस्य सर्वसिद्धिकरं प्रभो।।"
+        "एकादशं गणपतिं द्वादशं तु गजाननम्॥ ४॥"
       ],
       "linesEn": [
-        "navamaṁ bhālachandraṁ cha daśhamaṁ tu vināyakam",
-        "ekādaśhaṁ gaṇapatiṁ dvādaśhaṁ tu gajānanam",
-        "dvādaśhaitāni nāmāni trisandhyaṁ yaḥ paṭhennaraḥ",
-        "na cha vighnabhayaṁ tasya sarvasiddhikaraṁ prabho"
+        "Navamam bhaalachandram cha dashamam tu vinaayakam.",
+        "Ekaadaasham ganapatim dvaadaasham tu gajaananam. 4."
       ],
-      "meaningHi": "नवाँ नाम भालचन्द्र (मस्तक पर चन्द्रमा धारण करने वाले), दसवाँ विनायक (सभी का नेतृत्व करने वाले), ग्यारहवाँ गणपति (गणों के पति), बारहवाँ गजानन (हाथी के मुख वाले)।\n\nजो मनुष्य इन बारह नामों का तीनों सन्ध्याओं (प्रातः, मध्याह्न, सायं) में पाठ करता है, उसे विघ्नों का भय नहीं रहता और उसे सम्पूर्ण सिद्धि प्राप्त होती है।\n\nयह स्तोत्र का फलश्रुति (लाभ-वर्णन) है — त्रिसन्ध्या पाठ का विधान है।",
-      "meaningEn": "Ninth is Bhalachandra (moon on forehead), tenth Vinayaka (supreme leader), eleventh Ganapati (lord of hosts), twelfth Gajanana (elephant-faced).\n\nThe person who recites these twelve names at the three junctions of the day (dawn, noon, dusk) shall have no fear of obstacles and shall attain all accomplishments.\n\nThis is the Phalashruti (declaration of benefits) — the prescribed method is recitation at the three Sandhyas."
+      "meaningHi": "नवाँ नाम भालचन्द्र (मस्तक पर चन्द्रमा धारण करने वाले), दसवाँ विनायक (सभी का नेतृत्व करने वाले), ग्यारहवाँ गणपति (गणों के पति), बारहवाँ गजानन (हाथी के मुख वाले)।",
+      "meaningEn": "Ninth is Bhalachandra (moon on forehead), tenth Vinayaka (supreme leader), eleventh Ganapati (lord of hosts), twelfth Gajanana (elephant-faced)."
+    },
+    {
+      "id": "gs-3-5",
+      "chapter": 3,
+      "number": 5,
+      "sanskrit": [
+        "द्वादशैतानि नामानि त्रिसन्ध्यं यः पठेन्नरः।",
+        "न च विघ्नभयं तस्य सर्वसिद्धिकरं प्रभो॥ ५॥"
+      ],
+      "linesEn": [
+        "Dvaadashaitaani naamaani trisandhyam yah pathennarah.",
+        "Na cha vighnabhayam tasya sarvasiddhikaram prabho. 5."
+      ],
+      "meaningHi": "जो मनुष्य इन बारह नामों का तीनों सन्ध्याओं (प्रातः, मध्याह्न, सायं) में पाठ करता है, उसे विघ्नों का भय नहीं रहता और उसे सम्पूर्ण सिद्धि प्राप्त होती है, हे प्रभु!",
+      "meaningEn": "The person who recites these twelve names at the three junctions of the day (dawn, noon, dusk) shall have no fear of obstacles and shall attain all accomplishments, O Lord!"
+    },
+    {
+      "id": "gs-3-6",
+      "chapter": 3,
+      "number": 6,
+      "sanskrit": [
+        "विद्यार्थी लभते विद्यां धनार्थी लभते धनम्।",
+        "पुत्रार्थी लभते पुत्रान्मोक्षार्थी लभते गतिम्॥ ६॥"
+      ],
+      "linesEn": [
+        "Vidyaarthee labhate vidyaam dhanarthee labhate dhanam.",
+        "Putraarthee labhate putraan-mokshaarthee labhate gatim. 6."
+      ],
+      "meaningHi": "विद्या चाहने वाला विद्या प्राप्त करता है, धन चाहने वाला धन प्राप्त करता है। पुत्र चाहने वाला पुत्र प्राप्त करता है और मोक्ष चाहने वाला परम गति (मोक्ष) प्राप्त करता है।",
+      "meaningEn": "The seeker of knowledge attains knowledge, the seeker of wealth attains wealth. The seeker of progeny attains sons, and the seeker of liberation attains the supreme state (moksha)."
+    },
+    {
+      "id": "gs-3-7",
+      "chapter": 3,
+      "number": 7,
+      "sanskrit": [
+        "जपेद्गणपतिस्तोत्रं षड्भिर्मासैः फलं लभेत्।",
+        "संवत्सरेण सिद्धिं च लभते नात्र संशयः॥ ७॥"
+      ],
+      "linesEn": [
+        "Japed-ganapatistotram shadbhirmaasaih phalam labhet.",
+        "Samvatsarena siddhim cha labhate naatra samshayah. 7."
+      ],
+      "meaningHi": "जो इस गणपति स्तोत्र का जप करता है, वह छह महीने में फल प्राप्त करता है। एक वर्ष में सिद्धि प्राप्त होती है — इसमें कोई संशय नहीं है।",
+      "meaningEn": "One who chants this Ganapati stotram obtains results within six months. Within a year, one attains siddhi (spiritual perfection) — there is no doubt about this."
+    },
+    {
+      "id": "gs-3-8",
+      "chapter": 3,
+      "number": 8,
+      "sanskrit": [
+        "अष्टभ्यो ब्राह्मणेभ्यश्च लिखित्वा यः समर्पयेत्।",
+        "तस्य विद्या भवेत्सर्वा गणेशस्य प्रसादतः॥ ८॥"
+      ],
+      "linesEn": [
+        "Ashtabhyo braahmanebhyashcha likhitvaa yah samarpayet.",
+        "Tasya vidyaa bhavetsarvaa ganeshasya prasaadatah. 8."
+      ],
+      "meaningHi": "जो इस स्तोत्र को लिखकर आठ ब्राह्मणों को समर्पित करता है, उसे गणेश की कृपा से सम्पूर्ण विद्या (सभी प्रकार का ज्ञान) प्राप्त होता है।",
+      "meaningEn": "One who writes this stotram and offers it to eight Brahmins — by the grace of Ganesha, all knowledge and learning becomes theirs."
+    },
+    {
+      "id": "gs-3-9",
+      "chapter": 3,
+      "number": 9,
+      "sanskrit": [
+        "॥ इति श्रीनारदपुराणे संकष्टनाशनं गणेशस्तोत्रं सम्पूर्णम् ॥"
+      ],
+      "linesEn": [
+        "Iti shree-naarada-puraane sankashta-naashanam ganesha-stotram sampoornam."
+      ],
+      "meaningHi": "इस प्रकार श्री नारद पुराण में वर्णित संकष्टनाशन (सभी संकटों को नष्ट करने वाला) गणेश स्तोत्र सम्पूर्ण हुआ।",
+      "meaningEn": "Thus ends the Sankashta-Nashana (destroyer of all calamities) Ganesha Stotram from the Shri Narada Purana."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Sankata Nashana Ganesha Stotram from Narada Purana, checked against Vaidika Vignanam and Shlokam.",
+    "referenceUrls": [
+      "https://vignanam.org/devanagari/sankata-nashana-ganesha-stotram.html",
+      "https://shlokam.org/sankatanashana/",
+      "https://stotranidhi.com/en/sankata-nashana-ganesha-stotram-in-english/"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

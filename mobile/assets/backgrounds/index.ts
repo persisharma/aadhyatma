@@ -9,18 +9,44 @@ export type BackgroundImageKey =
   | 'deity_durga_lion'
   | 'deity_ganesha_modak'
   | 'source_vishnu_narayana'
-  | 'source_gayatri_savitri_sun';
+  | 'source_gayatri_savitri_sun'
+  | 'deity_saraswati_veena'
+  | 'panchang_celestial_almanac'
+  | 'theerth_khatu_shyam'
+  | 'theerth_vetrimalai_murugan'
+  | 'theerth_sabarimala'
+  | 'theerth_gogaji_gogamedi'
+  | 'theerth_tejaji_kharnal'
+  | 'theerth_khandoba_jejuri'
+  | 'theerth_mahasu_devta_hanol'
+  | 'theerth_ramdevra'
+  | 'theerth_salasar_balaji'
+  | 'theerth_karni_mata'
+  | 'theerth_jeen_mata';
 
 export const backgroundImages: Record<BackgroundImageKey, number> = {
-  category_granth_open_scripture: require('./category-granth-open-scripture.png'),
-  category_stotram_hymn_scroll: require('./category-stotram-hymn-scroll.png'),
-  category_chalisa_booklet_mala: require('./category-chalisa-booklet-mala.png'),
-  category_japam_mala: require('./category-japam-mala.png'),
-  category_aarti_diya: require('./category-aarti-diya.png'),
-  deity_rama_darbar: require('./deity-rama-darbar.png'),
-  deity_krishna_bansuri: require('./deity-krishna-bansuri.png'),
-  deity_durga_lion: require('./deity-durga-lion.png'),
-  deity_ganesha_modak: require('./deity-ganesha-modak.png'),
-  source_vishnu_narayana: require('./source-vishnu-narayana.png'),
-  source_gayatri_savitri_sun: require('./source-gayatri-savitri-sun.png'),
+  category_granth_open_scripture: require('./category-granth-open-scripture.webp'),
+  category_stotram_hymn_scroll: require('./category-stotram-hymn-scroll.webp'),
+  category_chalisa_booklet_mala: require('./category-chalisa-booklet-mala.webp'),
+  category_japam_mala: require('./category-japam-mala.webp'),
+  category_aarti_diya: require('./category-aarti-diya.webp'),
+  deity_rama_darbar: require('./deity-rama-darbar.webp'),
+  deity_krishna_bansuri: require('./deity-krishna-bansuri.webp'),
+  deity_durga_lion: require('./deity-durga-lion.webp'),
+  deity_ganesha_modak: require('./deity-ganesha-modak.webp'),
+  source_vishnu_narayana: require('./source-vishnu-narayana.webp'),
+  source_gayatri_savitri_sun: require('./source-gayatri-savitri-sun.webp'),
+  deity_saraswati_veena: require('./deity-saraswati-veena.webp'),
+  panchang_celestial_almanac: require('./panchang-celestial-almanac.webp'),
+  theerth_khatu_shyam: require('./theerth-khatu-shyam.webp'),
+  theerth_vetrimalai_murugan: require('./theerth-vetrimalai-murugan.webp'),
+  theerth_sabarimala: require('./theerth-sabarimala.webp'),
+  theerth_gogaji_gogamedi: require('./theerth-gogaji-gogamedi.webp'),
+  theerth_tejaji_kharnal: require('./theerth-tejaji-kharnal.webp'),
+  theerth_khandoba_jejuri: require('./theerth-khandoba-jejuri.webp'),
+  theerth_mahasu_devta_hanol: require('./theerth-mahasu-devta-hanol.webp'),
+  theerth_ramdevra: require('./theerth-ramdevra.webp'),
+  theerth_salasar_balaji: require('./theerth-salasar-balaji.webp'),
+  theerth_karni_mata: require('./theerth-karni-mata.webp'),
+  theerth_jeen_mata: require('./theerth-jeen-mata.webp'),
 };

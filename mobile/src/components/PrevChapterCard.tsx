@@ -1,11 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import type { Lang } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
+import { titleFontByLang, scriptBodyFont } from '@/utils/langType';
 
 type Props = {
   width: number;
   prevTitle: string;
-  lang: 'hi' | 'en';
+  lang: Lang;
 };
 
 export default function PrevChapterCard({ width, prevTitle, lang }: Props) {
@@ -19,22 +22,22 @@ export default function PrevChapterCard({ width, prevTitle, lang }: Props) {
             styles.label,
             {
               color: colors.inkMuted,
-              fontFamily: typography.pageCounter.fontFamily,
+              fontFamily:
+                lang === 'en'
+                  ? typography.pageCounter.fontFamily
+                  : scriptBodyFont(lang, typography.meaning.fontFamily),
               fontSize: 14,
             },
           ]}
         >
-          {lang === 'hi' ? 'पिछला' : 'Previous'}
+          {pick(lang, { hi: 'पिछला', en: 'Previous', gu: 'પાછળ', kn: 'ಹಿಂದಿನ' })}
         </Text>
         <Text
           style={[
             styles.title,
             {
               color: colors.saffronDeep,
-              fontFamily:
-                lang === 'hi'
-                  ? typography.readerTitle.fontFamily
-                  : typography.cardLatin.fontFamily,
+              fontFamily: titleFontByLang(lang),
               fontSize: 20,
               fontStyle: lang === 'en' ? 'italic' : 'normal',
             },
@@ -59,10 +62,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   label: {
-    includeFontPadding: false,
+    // Indic label — keep Android's font padding so matras aren't clipped.
   },
   title: {
-    includeFontPadding: false,
     textAlign: 'center',
     paddingHorizontal: 32,
   },

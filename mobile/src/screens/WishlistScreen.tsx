@@ -5,51 +5,61 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { fontFamilies } from '@/theme/typography';
+import { contentByLang, pick } from '@/utils/localize';
 import { useBookmarks, type BookmarkRef } from '@/contexts/BookmarksContext';
 import { library } from '@/data/texts';
 import { aartiCollection, aartiIndexById } from '@/data/aarti';
 import { findJapamMantra } from '@/data/japam';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
+import { titleFontByLang } from '@/utils/langType';
 import { buildBookmarkTarget } from '@/navigation/entryRoutes';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Wishlist'>;
 
-function getSourceLabel(bm: BookmarkRef, lang: 'hi' | 'en'): string {
+function getSourceLabel(bm: BookmarkRef, lang: Lang): string {
   const sourceId = canonicalSourceId(bm.sourceId);
 
   // Library entries (chalisas, granths, stotrams)
   const entry = library.find((e) => e.id === sourceId);
-  if (entry) return lang === 'hi' ? entry.nameHi : entry.nameEn;
+  if (entry) return contentByLang(lang, entry.nameHi, entry.nameEn);
 
   // Aartis (canonical id is the library id; fallback by index)
   const aartiIndex = aartiIndexById[sourceId as keyof typeof aartiIndexById];
   if (aartiIndex != null) {
     const aarti = aartiCollection[aartiIndex];
-    if (aarti) return lang === 'hi' ? aarti.titleHi : aarti.titleEn;
+    if (aarti) return contentByLang(lang, aarti.titleHi, aarti.titleEn);
   }
 
   // Japam mantras (rarely bookmarked, but cover the case)
   const mantra = findJapamMantra(sourceId);
-  if (mantra) return lang === 'hi' ? mantra.nameHi : mantra.nameEn;
+  if (mantra) return contentByLang(lang, mantra.nameHi, mantra.nameEn);
 
   return sourceId;
 }
 
-function getVerseLabel(bm: BookmarkRef, lang: 'hi' | 'en'): string {
+function getVerseLabel(bm: BookmarkRef, lang: Lang): string {
   const parts = bm.id.split(':');
   if (bm.sourceId === 'bhagavad-gita' || bm.sourceId === 'shiva-strotam') {
     const ref = `${parts[1]}.${Number(parts[2]) + 1}`;
-    return lang === 'hi' ? `श्लोक ${ref}` : `Shloka ${ref}`;
+    return contentByLang(lang, `श्लोक ${ref}`, `Shloka ${ref}`);
   }
   const n = bm.verseIndex + 1;
-  return lang === 'hi' ? `श्लोक ${n}` : `Verse ${n}`;
+  return contentByLang(lang, `श्लोक ${n}`, `Verse ${n}`);
 }
 
 export default function WishlistScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  // null for hi/en → callers fall back to the original font (byte-identical); the
+  // bundled Noto serif for gu/kn so transliterated text renders in-script.
+  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
+  const scriptSerifBold =
+    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
+  const removeLabel = pick(lang, { hi: 'हटायें', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ' });
+  const cancelLabel = pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' });
   const { bookmarks, isLoading, removeBookmark } = useBookmarks();
   const rootNav = useNavigation<any>();
   const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null);
@@ -88,9 +98,29 @@ export default function WishlistScreen({ navigation }: Props) {
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
           </Pressable>
-          <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}>
-            Wishlist
-          </Text>
+          <View>
+            <Text
+              style={{
+                fontFamily: titleFontByLang(lang),
+                fontSize: 16,
+                fontStyle: lang === 'en' ? 'italic' : 'normal',
+                color: colors.ink,
+              }}
+            >
+              {pick(lang, { hi: 'संग्रह', en: 'Saved Verses', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ' })}
+            </Text>
+            <Text
+              style={{
+                fontFamily:
+                  lang === 'en' ? typography.meaning.fontFamily : 'CormorantGaramond_400Regular_Italic',
+                fontStyle: lang === 'en' ? 'normal' : 'italic',
+                fontSize: 11,
+                color: colors.inkMuted,
+              }}
+            >
+              {lang === 'en' ? 'संग्रह' : 'Saved Verses'}
+            </Text>
+          </View>
         </View>
 
         <ScrollView
@@ -104,8 +134,8 @@ export default function WishlistScreen({ navigation }: Props) {
           ) : bookmarks.length === 0 ? (
             <View style={styles.empty}>
               <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 24, color: colors.inkMuted, opacity: 0.4 }}>॥</Text>
-              <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 15, color: colors.inkMuted, textAlign: 'center', marginTop: 12 }}>
-                अभी तक कोई श्लोक सहेजा नहीं
+              <Text style={{ fontFamily: scriptSerif ?? typography.meaning.fontFamily, fontSize: 15, color: colors.inkMuted, textAlign: 'center', marginTop: 12 }}>
+                {contentByLang(lang, 'अभी तक कोई श्लोक सहेजा नहीं', 'अभी तक कोई श्लोक सहेजा नहीं')}
               </Text>
               <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 14, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
                 No verses saved yet
@@ -129,10 +159,10 @@ export default function WishlistScreen({ navigation }: Props) {
               >
                 <View style={styles.bmContent}>
                   <Text
-                    style={{ fontFamily: typography.verse.fontFamily, fontSize: 14, color: colors.ink, lineHeight: 22 }}
+                    style={{ fontFamily: scriptSerif ?? typography.verse.fontFamily, fontSize: 14, color: colors.ink, lineHeight: 22 }}
                     numberOfLines={2}
                   >
-                    {lang === 'hi' ? bm.previewHi : bm.previewEn}
+                    {contentByLang(lang, bm.previewHi, bm.previewEn)}
                   </Text>
                   <View style={styles.bmMeta}>
                     <View style={[styles.bmPillWrap, { backgroundColor: 'rgba(184, 98, 27, 0.14)' }]}>
@@ -154,6 +184,13 @@ export default function WishlistScreen({ navigation }: Props) {
                 >
                   <Text style={{ color: colors.saffron, fontSize: 18 }}>♥</Text>
                 </Pressable>
+                <Text
+                  accessible={false}
+                  importantForAccessibility="no"
+                  style={{ color: colors.saffron, fontSize: 18, includeFontPadding: false }}
+                >
+                  ›
+                </Text>
               </Pressable>
             ))
           )}
@@ -177,37 +214,45 @@ export default function WishlistScreen({ navigation }: Props) {
               { backgroundColor: colors.parchment, borderColor: colors.cardActiveBorder, borderRadius: radii.lg },
             ]}
           >
-            <Text style={[styles.confirmTitle, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}>
-              {lang === 'hi' ? 'विशलिस्ट से हटायें?' : 'Remove from wishlist?'}
+            <Text style={[styles.confirmTitle, { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily }]}>
+              {pick(lang, {
+                hi: 'विशलिस्ट से हटायें?',
+                en: 'Remove from wishlist?',
+                gu: 'વિશલિસ્ટમાંથી દૂર કરવું?',
+                kn: 'ವಿಶ್‌ಲಿಸ್ಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಬೇಕೆ?',
+              })}
             </Text>
-            <Text style={[styles.confirmBody, { color: colors.inkSoft, fontFamily: typography.cardLatin.fontFamily }]}>
-              {lang === 'hi'
-                ? 'यह श्लोक विशलिस्ट से हटा दिया जायेगा।'
-                : 'This verse will be removed from your wishlist.'}
+            <Text style={[styles.confirmBody, { color: colors.inkSoft, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : (scriptSerif ?? typography.meaning.fontFamily) }]}>
+              {pick(lang, {
+                hi: 'यह श्लोक विशलिस्ट से हटा दिया जायेगा।',
+                en: 'This verse will be removed from your wishlist.',
+                gu: 'આ શ્લોક તમારી વિશલિસ્ટમાંથી દૂર કરવામાં આવશે.',
+                kn: 'ಈ ಶ್ಲೋಕವನ್ನು ನಿಮ್ಮ ವಿಶ್‌ಲಿಸ್ಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ.',
+              })}
             </Text>
             <Pressable
               onPress={confirmRemove}
               accessibilityRole="button"
-              accessibilityLabel={lang === 'hi' ? 'हटायें' : 'Remove'}
+              accessibilityLabel={removeLabel}
               style={({ pressed }) => [
                 styles.confirmPrimary,
                 { backgroundColor: colors.saffron, borderRadius: radii.md },
                 pressed && { opacity: 0.85 },
               ]}
             >
-              <Text style={[styles.confirmPrimaryText, { color: colors.onPrimary ?? '#fff', fontFamily: typography.readerTitle.fontFamily }]}>
-                {lang === 'hi' ? 'हटायें' : 'Remove'}
+              <Text style={[styles.confirmPrimaryText, { color: colors.onPrimary ?? '#fff', fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily }]}>
+                {removeLabel}
               </Text>
             </Pressable>
             <Pressable
               onPress={() => setPendingRemoveId(null)}
               accessibilityRole="button"
-              accessibilityLabel={lang === 'hi' ? 'रद्द करें' : 'Cancel'}
+              accessibilityLabel={cancelLabel}
               style={({ pressed }) => [styles.confirmCancel, pressed && { opacity: 0.6 }]}
               hitSlop={8}
             >
-              <Text style={[styles.confirmCancelText, { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily }]}>
-                {lang === 'hi' ? 'रद्द करें' : 'Cancel'}
+              <Text style={[styles.confirmCancelText, { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : (scriptSerif ?? typography.meaning.fontFamily) }]}>
+                {cancelLabel}
               </Text>
             </Pressable>
           </Pressable>
@@ -232,10 +277,10 @@ const styles = StyleSheet.create({
   removeBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   backdrop: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24 },
   confirmCard: { width: '100%', maxWidth: 360, borderWidth: 1, paddingVertical: 22, paddingHorizontal: 22 },
-  confirmTitle: { fontSize: 18, textAlign: 'center', includeFontPadding: false },
-  confirmBody: { marginTop: 10, fontSize: 13, fontStyle: 'italic', textAlign: 'center', includeFontPadding: false },
+  confirmTitle: { fontSize: 18, textAlign: 'center' },
+  confirmBody: { marginTop: 10, fontSize: 13, fontStyle: 'italic', textAlign: 'center' },
   confirmPrimary: { marginTop: 18, paddingVertical: 13, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
-  confirmPrimaryText: { fontSize: 15, includeFontPadding: false },
+  confirmPrimaryText: { fontSize: 15 },
   confirmCancel: { marginTop: 10, paddingVertical: 12, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   confirmCancelText: { fontSize: 13, fontStyle: 'italic', opacity: 0.85 },
 });

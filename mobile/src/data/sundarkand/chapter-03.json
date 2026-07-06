@@ -128,8 +128,8 @@
       "stanza": 3,
       "numInSection": 1,
       "subSuffix": null,
-      "labelHi": "छंद १",
-      "labelEn": "Chhand 1",
+      "labelHi": "छंद · १",
+      "labelEn": "Chhand · 1",
       "lines": [
         "कनक कोटि बिचित्र मनि कृत सुंदरायतना घना।",
         "चउहट्ट हट्ट सुबट्ट बीथीं चारु पुर बहु बिधि बना॥",
@@ -152,8 +152,8 @@
       "stanza": 3,
       "numInSection": 2,
       "subSuffix": null,
-      "labelHi": "छंद २",
-      "labelEn": "Chhand 2",
+      "labelHi": "छंद · २",
+      "labelEn": "Chhand · 2",
       "lines": [
         "बन बाग उपबन बाटिका सर कूप बापीं सोहहीं।",
         "नर नाग सुर गंधर्ब कन्या रूप मुनि मन मोहहीं॥",
@@ -176,8 +176,8 @@
       "stanza": 3,
       "numInSection": 3,
       "subSuffix": null,
-      "labelHi": "छंद ३",
-      "labelEn": "Chhand 3",
+      "labelHi": "छंद · ३",
+      "labelEn": "Chhand · 3",
       "lines": [
         "करि जतन भट कोटिन्ह बिकट तन नगर चहुँ दिसि रच्छहीं।",
         "कहुँ महिष मानुष धेनु खर अज खल निसाचर भच्छहीं॥",
@@ -200,8 +200,8 @@
       "stanza": 3,
       "numInSection": 3,
       "subSuffix": null,
-      "labelHi": "दोहा ३",
-      "labelEn": "Doha 3",
+      "labelHi": "दोहा · ३",
+      "labelEn": "Doha · 3",
       "lines": [
         "पुर रखवारे देखि बहु कपि मन कीन्ह बिचार।",
         "अति लघु रूप धरों निसि नगर करौं पइसार॥3॥"
@@ -269,7 +269,7 @@
       "meaningHi": "वह लंकिनी फिर अपने को संभालकर उठी और डर के मारे हाथ जोड़कर विनती करने लगी। (वह बोली-) रावण को जब ब्रह्माजी ने वर दिया था, तब चलते समय उन्होंने मुझे राक्षसों के विनाश की यह पहचान बता दी थी कि-",
       "meaningEn": "Regaining her composure, she rose to her feet and, folding her hands in fear, said, \"When Lord Brahma granted Ravan the boon he desired, he gave me a sign before departing.",
       "linesEn": [
-        "पुनि संभारि उठी सो लंका। जोरि पानि कर बिनय ससंका॥",
+        "Puni sanbhaari uthee so lankaa. jori paani kar binay sasankaa",
         "Jab raavanahi brahm bar deenhaa. chalat biranchi kahaa mohi cheenhaa"
       ],
       "chapter": 3
@@ -300,8 +300,8 @@
       "stanza": 4,
       "numInSection": 4,
       "subSuffix": null,
-      "labelHi": "दोहा ४",
-      "labelEn": "Doha 4",
+      "labelHi": "दोहा · ४",
+      "labelEn": "Doha · 4",
       "lines": [
         "तात स्वर्ग अपबर्ग सुख धरिअ तुला एक अंग।",
         "तूल न ताहि सकल मिलि जो सुख लव सतसंग॥4॥"
@@ -400,8 +400,8 @@
       "stanza": 5,
       "numInSection": 5,
       "subSuffix": null,
-      "labelHi": "दोहा ५",
-      "labelEn": "Doha 5",
+      "labelHi": "दोहा · ५",
+      "labelEn": "Doha · 5",
       "lines": [
         "रामायुध अंकित गृह सोभा बरनि न जाइ।",
         "नव तुलसिका बृंद तहँ देखि हरष कपिराई॥5॥"
@@ -414,5 +414,14 @@
       ],
       "chapter": 3
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

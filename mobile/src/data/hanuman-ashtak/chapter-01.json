@@ -1,71 +1,183 @@
 {
   "chapter": 1,
-  "titleHi": "हनुमान अष्टक",
-  "titleEn": "Hanuman Ashtak",
+  "titleHi": "संकटमोचन हनुमानाष्टक",
+  "titleEn": "Sankat Mochan Hanuman Ashtak",
   "verseCount": 9,
   "verses": [
     {
-      "id": "ha-1-0", "chapter": 1, "number": 0,
-      "sanskrit": ["॥ हनुमान अष्टक ॥", "अष्ट पदों में स्तुति"],
-      "linesEn": ["Hanuman Ashtak", "Praise in Eight Verses"],
-      "meaningHi": "लाभ:\n\nहनुमान अष्टक आठ पदों में हनुमान जी की वीरता, भक्ति और दिव्य शक्तियों का वर्णन करता है। इसके पाठ से भय का नाश, शत्रुओं पर विजय, रोग-निवारण और संकटों से मुक्ति मिलती है। शनिवार और मंगलवार को इसका पाठ विशेष फलदायी है। हनुमान जी चिरंजीवी हैं — कलियुग में भी भक्तों की रक्षा करते हैं।\n\nकथा:\n\nइस अष्टक में हनुमान जी की बाल-लीला से लेकर राम-सेवा तक की सम्पूर्ण गाथा है। बाल्यकाल में सूर्य को निगलना, लंका दहन, संजीवनी पर्वत उठाना, और अहिरावण वध — प्रत्येक पद में एक महान कार्य का वर्णन है। शिशु हनुमान ने उगते सूर्य को फल समझकर निगल लिया — इन्द्र के वज्र से उनकी ठुड्डी (हनु) टूटी, इसी से नाम 'हनुमान' पड़ा।",
-      "meaningEn": "Benefits:\n\nThe Hanuman Ashtak describes Hanuman's valor, devotion, and divine powers in eight verses. Its recitation destroys fear, grants victory over enemies, cures ailments, and liberates from calamities. Recitation on Saturdays and Tuesdays is especially fruitful. Hanuman is immortal (Chiranjeevi) — he protects devotees even in Kali Yuga.\n\nStory:\n\nThis Ashtak covers Hanuman's complete saga from childhood exploits to service of Lord Rama. Swallowing the sun as a child, burning Lanka, lifting the Sanjeevani mountain, and slaying Ahiravana — each verse describes a great feat. Baby Hanuman swallowed the rising sun thinking it a fruit — Indra's thunderbolt broke his jaw (hanu), giving him the name 'Hanuman.'"
+      "id": "ha-1-0",
+      "chapter": 1,
+      "number": 0,
+      "sanskrit": [
+        "बाल समय रवि भक्षि लियो तब, तीनहुँ लोक भयो अंधियारो।",
+        "ताहि सों त्रास भयो जग को, यह संकट काहु सों जात न टारो।",
+        "देवन आनि करी बिनती तब, छाड़ि दियो रवि कष्ट निवारो।",
+        "को नहिं जानत है जग में कपि, संकटमोचन नाम तिहारो॥"
+      ],
+      "linesEn": [
+        "Baal samay ravi bhakshi liyo tab, teenahun lok bhayo andhiyaaro.",
+        "Taahi son traas bhayo jag ko, yah sankat kaahu son jaat na taaro.",
+        "Devan aani kari binti tab, chhaadi diyo ravi kasht nivaaro.",
+        "Ko nahin jaanat hai jag mein kapi, Sankatmochan naam tihaaro."
+      ],
+      "meaningHi": "बाल्यकाल में आपने सूर्य को निगल लिया जिससे तीनों लोकों में अंधकार छा गया। सम्पूर्ण जगत भयभीत हो उठा और कोई भी इस संकट को टाल नहीं पा रहा था। तब देवताओं ने आकर विनती की और आपने सूर्य को छोड़कर सबका कष्ट दूर किया। हे कपि, जगत में कौन नहीं जानता कि आपका नाम संकटमोचन है।",
+      "meaningEn": "In childhood you swallowed the sun, plunging all three worlds into darkness. The entire universe was terrified and no one could avert this crisis. Then the gods came and pleaded, and you released the sun, removing all distress. Who in this world does not know, O Hanuman, that your name is Sankat Mochan — the remover of afflictions."
     },
     {
-      "id": "ha-1-1", "chapter": 1, "number": 1,
-      "sanskrit": ["बाल समय रवि भक्षि लियो तब तीनहुँ लोक भयो अँधियारो।", "ताहि सों त्रास भयो जग को यह संकट काटन को कौन हारो।।"],
-      "linesEn": ["bāla samaya ravi bhakṣhi liyo taba tīnahūṁ loka bhayo aṁdhiyāro", "tāhī soṁ trāsa bhayo jaga ko yaha saṁkaṭa kāṭana ko kauna hāro"],
-      "meaningHi": "बाल्यकाल में हनुमान जी ने सूर्य को भक्षण (निगल) लिया, तब तीनों लोकों में अंधकार छा गया। उससे जगत को भय हुआ — यह संकट काटने में कौन समर्थ है?\n\nयह हनुमान जी की बाल-लीला है। शिशु हनुमान ने उगते सूर्य को फल समझकर उड़कर निगल लिया। इन्द्र ने वज्र से प्रहार किया जिससे उनकी ठुड्डी (हनु) टूटी — इसी से नाम 'हनुमान' पड़ा।",
-      "meaningEn": "In childhood, Hanuman swallowed the sun, plunging all three worlds into darkness. The universe trembled in fear — who could possibly remove such a crisis?\n\nThis is Hanuman's childhood feat. Baby Hanuman flew up and swallowed the rising sun thinking it a fruit. Indra struck him with his thunderbolt, breaking his jaw (hanu) — hence the name 'Hanuman.'"
+      "id": "ha-1-1",
+      "chapter": 1,
+      "number": 1,
+      "sanskrit": [
+        "बालि की त्रास कपीस बसै गिरि, जात महाप्रभु पंथ निहारो।",
+        "चौंकि महामुनि शाप दियो तब, चाहिय कौन बिचार बिचारो।",
+        "कै द्विज रूप लिवाय महाप्रभु, सो तुम दास के शोक निवारो।",
+        "को नहिं जानत है जग में कपि, संकटमोचन नाम तिहारो॥"
+      ],
+      "linesEn": [
+        "Baali ki traas kapees basai giri, jaat mahaprabhu panth nihaaro.",
+        "Chaunki mahaamuni shaap diyo tab, chaahiy kaun bichaar bichaaro.",
+        "Kai dwij roop livaay mahaprabhu, so tum daas ke shok nivaaro.",
+        "Ko nahin jaanat hai jag mein kapi, Sankatmochan naam tihaaro."
+      ],
+      "meaningHi": "बालि के भय से सुग्रीव पर्वत पर निवास करते थे। उसी समय श्रीराम उस पथ से जा रहे थे। महामुनि मतंग के शाप के कारण सुग्रीव चिंतित थे, कोई उपाय न सूझ रहा था। आपने ब्राह्मण का रूप धारण कर श्रीराम को सुग्रीव से मिलवाया और अपने स्वामी का शोक दूर किया। हे कपि, जगत में कौन नहीं जानता कि आपका नाम संकटमोचन है।",
+      "meaningEn": "Sugriva lived on a mountain in fear of Bali, while Lord Rama was passing by on that path. The great sage Matanga's curse had left Sugriva worried and no solution seemed possible. You took the form of a Brahmin, brought Lord Rama to Sugriva, and removed your master's grief. Who in this world does not know, O Hanuman, that your name is Sankat Mochan."
     },
     {
-      "id": "ha-1-2", "chapter": 1, "number": 2,
-      "sanskrit": ["बालपना में तिन्ह के संगा।", "क्षीरसिन्धु तट जाय खेलत संगा।।", "सीता शोक विनाशन लंका।", "दाहन सकल सुभट रन रंका।।"],
-      "linesEn": ["bālapanā meṁ tinha ke saṁgā", "kṣhīrasindhu taṭa jāya khelata saṁgā", "sītā śhoka vināśhana laṁkā", "dāhana sakala subhaṭa rana raṁkā"],
-      "meaningHi": "बालपन में वानरों के संग क्षीर-सागर के तट पर खेलते थे। सीता जी के शोक (दुख) को नष्ट करने वाले, लंका को दहन (जलाने) करने वाले, रणभूमि में सभी शूर-वीरों (सुभटों) को रंक (पराजित) करने वाले हैं।\n\nयह सुन्दरकाण्ड की कथा का संक्षेप है — सीता को ढूँढने लंका गए, अशोक वाटिका में सान्त्वना दी, और लंका दहन किया।",
-      "meaningEn": "In childhood, playing with monkeys on the shore of the Milky Ocean. Destroyer of Sita's sorrow, burner of Lanka, making all great warriors helpless in battle.\n\nThis summarizes the Sundarkand narrative — going to Lanka to find Sita, consoling her in Ashoka Vatika, and burning Lanka."
+      "id": "ha-1-2",
+      "chapter": 1,
+      "number": 2,
+      "sanskrit": [
+        "अंगद के संग लेन गए सिय, खोज कपीस यह बैन उचारो।",
+        "जीवत ना बचिहौ हम सो जु, बिना सुधि लाये इहाँ पगु धारो।",
+        "हेरी थके तट सिन्धु सबे तब, लाये सिया-सुधि प्राण उबारो।",
+        "को नहिं जानत है जग में कपि, संकटमोचन नाम तिहारो॥"
+      ],
+      "linesEn": [
+        "Angad ke sang len gaye Siya, khoj kapees yah bain uchaaro.",
+        "Jeevat naa bachihou ham so ju, bina sudhi laaye ihaan pagu dhaaro.",
+        "Heri thake tat sindhu sabe tab, laaye Siya-sudhi praan ubaaro.",
+        "Ko nahin jaanat hai jag mein kapi, Sankatmochan naam tihaaro."
+      ],
+      "meaningHi": "अंगद के साथ सीता की खोज में गए, तब सुग्रीव ने यह वचन कहा था कि बिना सीता का समाचार लाए यदि लौटे तो जीवित नहीं रहोगे। समुद्र तट पर सभी वानर खोजते-खोजते थक गए, तब आपने सीता की सुधि लाकर सबके प्राण बचाए। हे कपि, जगत में कौन नहीं जानता कि आपका नाम संकटमोचन है।",
+      "meaningEn": "You went with Angad to search for Sita, and Sugriva had declared that those who returned without news of her would not survive. All the monkeys searched exhausted to the ocean shore with no success. Then you brought news of Sita and saved everyone's lives. Who in this world does not know, O Hanuman, that your name is Sankat Mochan."
     },
     {
-      "id": "ha-1-3", "chapter": 1, "number": 3,
-      "sanskrit": ["लक्ष्मण मूर्छित पड़े सकारे।", "आनि संजीवन प्रान उबारे।।", "लक्ष्मण के प्रान जब जाहीं।", "लियो महावीर बूटी लाहीं।।"],
-      "linesEn": ["lakṣhmaṇa mūrchchhita paḍe sakāre", "āni sañjīvana prāṇa ubāre", "lakṣhmaṇa ke prāṇa jaba jāhīṁ", "liyo mahāvīra būṭī lāhīṁ"],
-      "meaningHi": "लक्ष्मण मूर्छित (बेहोश) होकर गिर पड़े। संजीवनी लाकर उनके प्राण बचा लिए। जब लक्ष्मण के प्राण जा रहे थे, महावीर (हनुमान) बूटी (संजीवनी) ले आए।\n\nमेघनाद की शक्ति (शस्त्र) से लक्ष्मण मृतप्राय हो गए। वैद्य सुषेण ने बताया कि द्रोणगिरि पर्वत से संजीवनी बूटी चाहिए। हनुमान ने पूरा पर्वत उठा लिया।",
-      "meaningEn": "Lakshmana fell unconscious. Bringing the Sanjeevani herb, his life was saved. When Lakshmana's life was departing, the great hero (Hanuman) brought the herb.\n\nMeghnad's weapon left Lakshmana near-death. The physician Sushena said Sanjeevani from Dronagiri mountain was needed. Hanuman lifted the entire mountain."
+      "id": "ha-1-3",
+      "chapter": 1,
+      "number": 3,
+      "sanskrit": [
+        "रावन त्रास दई सिय को सब, राक्षसि सों कहि सोक निवारो।",
+        "ताहि समय हनुमान महाप्रभु, जाय महा रजनीचर मारो।",
+        "चाहत सीय असोक सों आगि सु, दै प्रभुमुद्रिका सोक निवारो।",
+        "को नहिं जानत है जग में कपि, संकटमोचन नाम तिहारो॥"
+      ],
+      "linesEn": [
+        "Raavan traas dai Siy ko sab, raakshasi son kahi sok nivaaro.",
+        "Taahi samay Hanumaan mahaprabhu, jaay mahaa rajneechara maaro.",
+        "Chaahat Siy Ashok son aagi su, dai Prabhumudrika sok nivaaro.",
+        "Ko nahin jaanat hai jag mein kapi, Sankatmochan naam tihaaro."
+      ],
+      "meaningHi": "रावण ने सीताजी को भय दिखाया और राक्षसियों ने उन्हें अनेक प्रकार से सताया। उसी समय हनुमान महाप्रभु ने जाकर बड़े-बड़े राक्षसों का वध किया। जब सीताजी अशोक वाटिका में अग्नि में प्राण देना चाहती थीं, तब आपने प्रभु श्रीराम की मुद्रिका देकर उनका शोक दूर किया। हे कपि, जगत में कौन नहीं जानता कि आपका नाम संकटमोचन है।",
+      "meaningEn": "Ravana terrorized Sita and the demonesses tormented her grievously. At that time, great Hanuman went and slew the mighty demons. When Sita wished to enter fire at the Ashoka grove in despair, you gave her Lord Rama's ring and removed her sorrow completely. Who in this world does not know, O Hanuman, that your name is Sankat Mochan."
     },
     {
-      "id": "ha-1-4", "chapter": 1, "number": 4,
-      "sanskrit": ["रावण युद्ध अजान कियो तब।", "नागपाश बंधे सब तब।।", "श्री रघुनाथ समेत सवाये।", "ताहि समय हनुमान छुडाये।।"],
-      "linesEn": ["rāvaṇa yuddha ajāna kiyo taba", "nāgapāśha baṁdhe saba taba", "śhrī raghunātha sameta savāye", "tāhi samaya hanumāna chhuḍāye"],
-      "meaningHi": "रावण ने अज्ञान (छल) से युद्ध किया, तब नागपाश से सबको बाँध दिया — श्री रघुनाथ (राम) समेत सभी। उस समय हनुमान ने सबको छुड़ाया।\n\nइन्द्रजीत (मेघनाद) ने नागपाश अस्त्र चलाया जिससे राम-लक्ष्मण सहित सेना बंध गई। हनुमान ने गरुड़ को बुलाकर सबको मुक्त कराया।",
-      "meaningEn": "Ravana fought deceitfully, then bound everyone with the Nagapasha (serpent-weapon) — including Lord Raghunatha (Rama). At that time Hanuman freed them all.\n\nIndrajit (Meghnad) launched the Nagapasha weapon binding Rama, Lakshmana and the army. Hanuman summoned Garuda to release everyone."
+      "id": "ha-1-4",
+      "chapter": 1,
+      "number": 4,
+      "sanskrit": [
+        "बान लग्यो उर लछिमन के तब, प्राण तजे सुत रावन मारो।",
+        "लै गृह बैद्य सुषेन समेत, तबै गिरि द्रोण सु बीर उपारो।",
+        "आनि सजीवन हाथ दिए तब, लछिमन के तुम प्राण उबारो।",
+        "को नहिं जानत है जग में कपि, संकटमोचन नाम तिहारो॥"
+      ],
+      "linesEn": [
+        "Baan lagyo ur Lachhiman ke tab, praan taje sut Raavan maaro.",
+        "Lai grih baidya Sushen samet, tabai giri Dron su beer upaaro.",
+        "Aani sajeewan haath diye tab, Lachhiman ke tum praan ubaaro.",
+        "Ko nahin jaanat hai jag mein kapi, Sankatmochan naam tihaaro."
+      ],
+      "meaningHi": "मेघनाद (रावण-पुत्र) का बाण लक्ष्मण की छाती में लगा और उनके प्राण निकलने लगे। आपने वैद्य सुषेण को उनके घर सहित उठाकर ला दिया और द्रोणाचल पर्वत उखाड़कर ले आए। संजीवनी बूटी लक्ष्मण के हाथ में देकर आपने उनके प्राण बचाए। हे कपि, जगत में कौन नहीं जानता कि आपका नाम संकटमोचन है।",
+      "meaningEn": "When Meghnad's arrow struck Lakshman's chest and his life was ebbing away, you brought the physician Sushena along with his entire house and uprooted Mount Dronagiri. Placing the Sanjeevani herb in Lakshman's hands, you saved his life. Who in this world does not know, O Hanuman, that your name is Sankat Mochan."
     },
     {
-      "id": "ha-1-5", "chapter": 1, "number": 5,
-      "sanskrit": ["भीम रूप धरि असुर सँहारे।", "रामचन्द्र के काज सँवारे।।", "सेवक भक्ति सुमिरन प्रिय लागे।", "राम लखन सीता मन जागे।।"],
-      "linesEn": ["bhīma rūpa dhari asura saṁhāre", "rāmachandra ke kāja saṁvāre", "sevaka bhakti sumirana priya lāge", "rāma lakhana sītā mana jāge"],
-      "meaningHi": "भीम (विशाल/भयंकर) रूप धारण कर असुरों का संहार किया। रामचन्द्र के कार्य सँवारे (सफल किए)। सेवक-भक्ति और स्मरण — ये प्रिय लगते हैं। राम, लक्षमण, सीता — मन में जागते (विराजते) हैं।\n\nहनुमान जी का विशाल रूप — लंका में पंचमुखी हनुमान, अहिरावण वध आदि प्रसंगों में प्रकट हुआ।",
-      "meaningEn": "Taking a fearsome form, he slew the demons. He accomplished Ramachandra's missions. Servant-devotion and remembrance are dear to him. Rama, Lakshmana, Sita dwell awake in his mind.\n\nHanuman's colossal form appeared in episodes like the Panchmukhi form in Lanka and the slaying of Ahiravana."
+      "id": "ha-1-5",
+      "chapter": 1,
+      "number": 5,
+      "sanskrit": [
+        "रावन जुद्ध अजान कियो तब, नाग कि फाँस सबै सिर डारो।",
+        "श्रीरघुनाथ समेत सबै दल, मोह भयो यह संकट भारो।",
+        "आनि खगेस तबै हनुमान जु, बंधन काटि सुत्रास निवारो।",
+        "को नहिं जानत है जग में कपि, संकटमोचन नाम तिहारो॥"
+      ],
+      "linesEn": [
+        "Raavan juddh ajaan kiyo tab, naag ki phaans sabai sir daaro.",
+        "Shri Raghunath samet sabai dal, moh bhayo yah sankat bhaaro.",
+        "Aani Khages tabai Hanumaan ju, bandhan kaati sutraas nivaaro.",
+        "Ko nahin jaanat hai jag mein kapi, Sankatmochan naam tihaaro."
+      ],
+      "meaningHi": "रावण ने युद्ध में नागपाश का प्रयोग किया जिससे श्रीराम सहित सम्पूर्ण वानर सेना बंध गई। सबको मोह हो गया, यह अत्यंत भारी संकट था। तब हनुमानजी खगेश (गरुड़) को लाए और नागपाश काटकर सबको भय से मुक्त किया। हे कपि, जगत में कौन नहीं जानता कि आपका नाम संकटमोचन है।",
+      "meaningEn": "In battle, Ravana deployed the Nagpash (serpent-noose) weapon that bound Lord Rama along with the entire monkey army. Everyone fell unconscious in this terrible crisis. Then Hanuman brought Khagesh (Garuda, the king of birds) who cut the bonds and freed everyone from terror. Who in this world does not know, O Hanuman, that your name is Sankat Mochan."
     },
     {
-      "id": "ha-1-6", "chapter": 1, "number": 6,
-      "sanskrit": ["उर में राम लखन सिय राजें।", "हृदय छाँड़ के कहुँ नहिं बाजें।।", "सकल अमित चरित्र तुम्हारे।", "कहि न सकें सहसानन पारे।।"],
-      "linesEn": ["ura meṁ rāma lakhana siya rājaiṁ", "hṛidaya chhāṁḍa ke kahūṁ nahīṁ bājaiṁ", "sakala amita charitra tumhāre", "kahi na sakaiṁ sahasānana pāre"],
-      "meaningHi": "हृदय (उर) में राम, लक्षमण, सीता विराजते हैं। हृदय छोड़कर कहीं अन्यत्र नहीं विराजते। आपके सकल (सभी) अमित (अपार) चरित्र — सहस्रानन (शेषनाग — हजार मुख वाले) भी पार नहीं कर सकते (वर्णन नहीं कर सकते)।\n\nहनुमान जी ने अपना वक्ष फाड़कर दिखाया कि उसमें राम-सीता विराजते हैं — भक्ति का सर्वोच्च प्रतीक।",
-      "meaningEn": "Rama, Lakshmana, and Sita reign in his heart. They reside nowhere but in his heart. All your infinite deeds — even Sheshanaga (thousand-mouthed) cannot fully describe them.\n\nHanuman tore open his chest to show Rama-Sita dwelling within — the supreme symbol of devotion."
+      "id": "ha-1-6",
+      "chapter": 1,
+      "number": 6,
+      "sanskrit": [
+        "बंधु समेत जबै अहिरावन, लै रघुनाथ पाताल सिधारो।",
+        "देबिहिं पूजि भली विधि सों बलि, देउ सबै मिलि मंत्र बिचारो।",
+        "जाय सहाय भयो तब ही, अहिरावन सैन्य समेत संहारो।",
+        "को नहिं जानत है जग में कपि, संकटमोचन नाम तिहारो॥"
+      ],
+      "linesEn": [
+        "Bandhu samet jabai Ahiraavan, lai Raghunath paataal sidhaaro.",
+        "Debihin pooji bhali vidhi son bali, deu sabai mili mantra bichaaro.",
+        "Jaay sahaay bhayo tab hi, Ahiraavan sainya samet sanhaaro.",
+        "Ko nahin jaanat hai jag mein kapi, Sankatmochan naam tihaaro."
+      ],
+      "meaningHi": "जब अहिरावण अपने भाई सहित श्रीराम-लक्ष्मण को छलपूर्वक पाताल ले गया और देवी की पूजा कर उन्हें बलि देने का षड्यंत्र रचा, तब हनुमानजी वहाँ सहायता के लिए पहुँचे और अहिरावण को उसकी सम्पूर्ण सेना सहित संहार कर दिया। हे कपि, जगत में कौन नहीं जानता कि आपका नाम संकटमोचन है।",
+      "meaningEn": "When Ahiravana along with his brother took Lord Rama and Lakshman to the netherworld, planning to worship the goddess and sacrifice them through ritual, Hanuman went there as their savior and destroyed Ahiravana along with his entire army. Who in this world does not know, O Hanuman, that your name is Sankat Mochan."
     },
     {
-      "id": "ha-1-7", "chapter": 1, "number": 7,
-      "sanskrit": ["सकल सुमंगल दायक राजा।", "कीजे नाथ हृदय महँ काजा।।", "किये धर्म जो रक्षे धारी।", "जुगन जुगन प्रतिपालक भारी।।"],
-      "linesEn": ["sakala sumaṁgala dāyaka rājā", "kīje nātha hṛidaya mahaṁ kājā", "kiye dharma jo rakṣhe dhārī", "jugana jugana pratipālaka bhārī"],
-      "meaningHi": "सकल (सभी) सुमंगल देने वाले राजा! हे नाथ! हृदय में (अपने भक्तों का) कार्य कीजिए। जिन्होंने धर्म की रक्षा धारण की — युग-युग में (प्रत्येक युग में) बड़े प्रतिपालक (रक्षक) हैं।\n\nहनुमान चिरंजीवी हैं — सात चिरंजीवियों में से एक। प्रत्येक युग में धर्म की रक्षा करते हैं।",
-      "meaningEn": "King who grants all auspiciousness! O Lord! Work within the hearts (of your devotees). He who upheld the protection of dharma — the great protector age after age.\n\nHanuman is immortal (Chiranjeevi) — one of the seven immortals. He protects dharma in every age."
+      "id": "ha-1-7",
+      "chapter": 1,
+      "number": 7,
+      "sanskrit": [
+        "काज किये बड़ देवन के तुम, बीर महाप्रभु देखि बिचारो।",
+        "कौन सो संकट मोर गरीब को, जो तुमसों नहिं जात है टारो।",
+        "बेगि हरो हनुमान महाप्रभु, जो कछु संकट होय हमारो।",
+        "को नहिं जानत है जग में कपि, संकटमोचन नाम तिहारो॥"
+      ],
+      "linesEn": [
+        "Kaaj kiye bad devan ke tum, beer mahaprabhu dekhi bichaaro.",
+        "Kaun so sankat mor gareeb ko, jo tumson nahin jaat hai taaro.",
+        "Begi haro Hanumaan mahaprabhu, jo kachhu sankat hoy hamaaro.",
+        "Ko nahin jaanat hai jag mein kapi, Sankatmochan naam tihaaro."
+      ],
+      "meaningHi": "हे वीर महाप्रभु, आपने देवताओं के भी बड़े-बड़े कार्य सिद्ध किए हैं, यह विचार कीजिए। मेरे जैसे गरीब का ऐसा कौन सा संकट है जो आपसे दूर न हो सके? हे हनुमान महाप्रभु, हमारा जो कुछ भी संकट हो उसे शीघ्र हर लीजिए। हे कपि, जगत में कौन नहीं जानता कि आपका नाम संकटमोचन है।",
+      "meaningEn": "O mighty lord, you have accomplished great tasks even for the gods — please consider this. What affliction could a poor soul like me have that you cannot remove? O great Hanuman, quickly take away whatever troubles may befall us. Who in this world does not know, O Hanuman, that your name is Sankat Mochan."
     },
     {
-      "id": "ha-1-8", "chapter": 1, "number": 8,
-      "sanskrit": ["अष्टसिद्धि नव निधि के दाता।", "अस बर दीन्ह जानकी माता।।", "जो सत बार पाठ कर कोई।", "छूटहि बन्दि महासुख होई।।"],
-      "linesEn": ["aṣhṭasiddhi nava nidhi ke dātā", "asa bara dīnha jānakī mātā", "jo sata bāra pāṭha kara koī", "chhūṭahi bandi mahāsukha hoī"],
-      "meaningHi": "अष्ट सिद्धियों और नव निधियों के दाता — ऐसा वर जानकी माता (सीता) ने दिया है। जो सौ बार इस (अष्टक) का पाठ करता है, उसके बन्धन छूट जाते हैं और महासुख प्राप्त होता है।\n\nसीता जी ने हनुमान को वर दिया: 'तुम अष्ट सिद्धि, नव निधि के दाता बनोगे।' यह चालीसा में भी आया है। यह अष्टक का फलश्रुति (समापन) श्लोक है।",
-      "meaningEn": "Giver of the eight Siddhis and nine Nidhis — such a boon Mother Janaki (Sita) granted. Whoever recites this (Ashtak) a hundred times — their bonds are freed and great happiness is attained.\n\nSita granted Hanuman this boon: 'You shall bestow the eight Siddhis and nine Nidhis.' This appears in the Chalisa too. This is the Phalashruti (closing) verse of the Ashtak."
+      "id": "ha-1-8",
+      "chapter": 1,
+      "number": 8,
+      "sanskrit": [
+        "लाल देह लाली लसे, अरु धरि लाल लंगूर।",
+        "बज्र देह दानव दलन, जय जय जय कपि सूर॥"
+      ],
+      "linesEn": [
+        "Laal deh laali lase, aru dhari laal langoor.",
+        "Bajra deh daanav dalan, jay jay jay kapi soor."
+      ],
+      "meaningHi": "आपका लाल शरीर लालिमा से सुशोभित है और लाल पूँछ धारण किए हुए हैं। आपका शरीर वज्र के समान कठोर है और आप दानवों का दलन करने वाले हैं। जय जय जय हे कपि शूर।",
+      "meaningEn": "Your red body is radiant with crimson splendor, and you bear a magnificent red tail. Your body is as hard as a thunderbolt, and you are the crusher of demons. Victory, victory, victory to you, O heroic monkey warrior."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Sankat Mochan Hanuman Ashtak attributed to Goswami Tulsidas.",
+    "referenceUrls": [
+      "https://nkbashram.org/ashram-news-and-blog/sankatamochan-hanumanashtaka-8-parts",
+      "https://sanskritdocuments.org/doc_z_otherlang_hindi/sankatamochana.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

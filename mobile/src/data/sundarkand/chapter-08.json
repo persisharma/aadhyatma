@@ -108,8 +108,8 @@
       "stanza": 15,
       "numInSection": 15,
       "subSuffix": null,
-      "labelHi": "दोहा १५",
-      "labelEn": "Doha 15",
+      "labelHi": "दोहा · १५",
+      "labelEn": "Doha · 15",
       "lines": [
         "सुनु माता साखामृग नहिं बल बुद्धि बिसाल।",
         "प्रभु प्रताप तें गरुड़हि खाइ परम लघु ब्याल॥16॥"
@@ -226,8 +226,8 @@
       "stanza": 16,
       "numInSection": 16,
       "subSuffix": null,
-      "labelHi": "दोहा १६",
-      "labelEn": "Doha 16",
+      "labelHi": "दोहा · १६",
+      "labelEn": "Doha · 16",
       "lines": [
         "देखि बुद्धि बल निपुन कपि कहेउ जानकीं जाहु।",
         "रघुपति चरन हृदयँ धरि तात मधुर फल खाहु॥17॥"
@@ -326,8 +326,8 @@
       "stanza": 17,
       "numInSection": 17,
       "subSuffix": null,
-      "labelHi": "दोहा १७",
-      "labelEn": "Doha 17",
+      "labelHi": "दोहा · १७",
+      "labelEn": "Doha · 17",
       "lines": [
         "कछु मारेसि कछु मर्देसि कछु मिलएसि धरि धूरि।",
         "कछु पुनि जाइ पुकारे प्रभु मर्कट बल भूरि॥18॥"
@@ -444,8 +444,8 @@
       "stanza": 18,
       "numInSection": 18,
       "subSuffix": null,
-      "labelHi": "दोहा १८",
-      "labelEn": "Doha 18",
+      "labelHi": "दोहा · १८",
+      "labelEn": "Doha · 18",
       "lines": [
         "ब्रह्म अस्त्र तेहि साँधा कपि मन कीन्ह बिचार।",
         "जौं न ब्रह्मसर मानउँ महिमा मिटइ अपार॥19॥"
@@ -544,8 +544,8 @@
       "stanza": 19,
       "numInSection": 19,
       "subSuffix": null,
-      "labelHi": "दोहा १९",
-      "labelEn": "Doha 19",
+      "labelHi": "दोहा · १९",
+      "labelEn": "Doha · 19",
       "lines": [
         "कपिहि बिलोकि दसानन बिहसा कहि दुर्बाद।",
         "सुत बध सुरति कीन्हि पुनि उपजा हृदयँ बिसाद॥20॥"
@@ -594,7 +594,7 @@
       "meaningEn": "For what offense did you kill my demons? Tell me, fool, do you not fear for your life?\" Hanuman ji replied, \"Listen O' Ravan, it is by whose power that the illusory energy, Maya, creates the vast multitude of Universes.",
       "linesEn": [
         "Maare nisichar kehin aparaadhaa. kahu sath tohi na praan kai baadhaa",
-        "सुनु रावन ब्रह्मांड निकाया। पाइ जासु बल बिरचति माया॥2॥"
+        "Sunu raavan brahmaand nikaayaa. paai jaasu bal birachati maayaa"
       ],
       "chapter": 8
     },
@@ -662,8 +662,8 @@
       "stanza": 20,
       "numInSection": 20,
       "subSuffix": null,
-      "labelHi": "दोहा २०",
-      "labelEn": "Doha 20",
+      "labelHi": "दोहा · २०",
+      "labelEn": "Doha · 20",
       "lines": [
         "जाके बल लवलेस तें जितेहु चराचर झारि।",
         "तास दूत मैं जा करि हरि आनेहु प्रिय नारि॥21॥"
@@ -676,5 +676,14 @@
       ],
       "chapter": 8
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

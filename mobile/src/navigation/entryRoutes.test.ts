@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import {
+  buildEntryStartTarget,
   buildBookmarkTarget,
   buildProgressTarget,
   navigateToBookmark,
@@ -144,6 +145,24 @@ for (const sourceId of [
 
 // buildBookmarkTarget returns a nested-navigator descriptor.
 {
+  const target = buildEntryStartTarget({
+    id: 'vishnu-sahasranama',
+    nameHi: 'विष्णु सहस्रनाम अंश',
+    nameEn: 'Vishnu Sahasranama Excerpt',
+    sub: '',
+    subEn: '',
+    thumb: '',
+    status: 'active',
+    category: 'stotram',
+    deities: ['vishnu'],
+  });
+  assert.deepEqual(target, {
+    screen: 'VishnuSahasranamaChapters',
+    params: {},
+  });
+}
+
+{
   const target = buildBookmarkTarget(bm({
     id: 'shiv-chalisa::3',
     sourceId: 'shiv-chalisa',
@@ -187,6 +206,24 @@ for (const sourceId of [
   const ok = navigateToProgress(nav as never, progress);
   assert.equal(ok, true);
   assert.deepEqual(calls, [{ name: 'AartiReader', params: { aartiIndex: 2, initialIndex: 3 } }]);
+}
+
+// Resume into a chaptered source pushes the chapter index under the reader so
+// back lands on the subsection list.
+{
+  const { nav, calls } = makeNav();
+  const progress: ReadingProgress = {
+    sourceId: 'sundarkand',
+    chapter: 3,
+    verseIndex: 7,
+    updatedAt: 0,
+  };
+  const ok = navigateToProgress(nav as never, progress);
+  assert.equal(ok, true);
+  assert.deepEqual(calls, [
+    { name: 'SundarkandChapters', params: undefined },
+    { name: 'SundarkandReader', params: { chapter: 3, initialIndex: 7 } },
+  ]);
 }
 
 // buildProgressTarget routes a chaptered notification payload correctly.

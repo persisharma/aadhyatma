@@ -3,6 +3,8 @@ import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { fontFamilies } from '@/theme/typography';
+import { pick } from '@/utils/localize';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import TimeStepper from './TimeStepper';
 
@@ -19,20 +21,20 @@ export default function ReminderOptInModal() {
     shouldShowOptIn,
     prefs,
     setDailyVerseEnabled,
-    setTime,
+    setTimes,
     markOptInPromptShown,
   } = useNotificationPreferences();
   const [visible, setVisible] = useState(false);
-  const [chosenTime, setChosenTime] = useState(prefs.time);
+  const [chosenTime, setChosenTime] = useState(prefs.times[0]);
   const [busy, setBusy] = useState(false);
 
   // Sync visible when the gate flips on; reset chosenTime when we open.
   useEffect(() => {
     if (shouldShowOptIn && !visible) {
-      setChosenTime(prefs.time);
+      setChosenTime(prefs.times[0]);
       setVisible(true);
     }
-  }, [shouldShowOptIn, visible, prefs.time]);
+  }, [shouldShowOptIn, visible, prefs.times]);
 
   const close = useCallback(async () => {
     setVisible(false);
@@ -43,16 +45,38 @@ export default function ReminderOptInModal() {
     if (busy) return;
     setBusy(true);
     try {
-      await setTime(chosenTime);
+      await setTimes([chosenTime]);
       await setDailyVerseEnabled(true);
     } finally {
       setBusy(false);
       await markOptInPromptShown();
       setVisible(false);
     }
-  }, [busy, chosenTime, setTime, setDailyVerseEnabled, markOptInPromptShown]);
+  }, [busy, chosenTime, setTimes, setDailyVerseEnabled, markOptInPromptShown]);
 
-  const isHi = lang === 'hi';
+  // gu/kn need their own serif or the script renders as tofu; hi/en keep their
+  // original faces exactly (English prose has always rendered in the Devanagari
+  // serifs here, which carry Latin glyphs).
+  const headingFont =
+    lang === 'gu'
+      ? fontFamilies.gujaratiBold
+      : lang === 'kn'
+        ? fontFamilies.kannadaBold
+        : typography.readerTitle.fontFamily;
+  const ledeFont =
+    lang === 'gu'
+      ? fontFamilies.gujarati
+      : lang === 'kn'
+        ? fontFamilies.kannada
+        : typography.meaning.fontFamily;
+  const labelFont =
+    lang === 'gu'
+      ? fontFamilies.gujarati
+      : lang === 'kn'
+        ? fontFamilies.kannada
+        : typography.cardLatin.fontFamily;
+
+  const notNow = pick(lang, { hi: 'अभी नहीं', en: 'Not now', gu: 'હમણાં નહીં', kn: 'ಈಗ ಬೇಡ' });
 
   return (
     <Modal
@@ -67,15 +91,15 @@ export default function ReminderOptInModal() {
             <Text
               style={[
                 styles.title,
-                { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                { color: colors.ink, fontFamily: headingFont },
               ]}
             >
-              {isHi ? 'दैनिक श्लोक' : 'Daily Verse'}
+              {pick(lang, { hi: 'दैनिक श्लोक', en: 'Daily Verse', gu: 'દૈનિક શ્લોક', kn: 'ದೈನಿಕ ಶ್ಲೋಕ' })}
             </Text>
             <Pressable
               onPress={close}
               accessibilityRole="button"
-              accessibilityLabel={isHi ? 'अभी नहीं' : 'Not now'}
+              accessibilityLabel={notNow}
               hitSlop={16}
               style={({ pressed }) => [styles.close, pressed && { opacity: 0.7 }]}
             >
@@ -94,29 +118,35 @@ export default function ReminderOptInModal() {
                 styles.lead,
                 {
                   color: colors.ink,
-                  fontFamily: typography.readerTitle.fontFamily,
+                  fontFamily: headingFont,
                   fontSize: 22,
                 },
               ]}
             >
-              {isHi
-                ? 'हर प्रातः एक श्लोक'
-                : 'A verse every morning'}
+              {pick(lang, {
+                hi: 'हर प्रातः एक श्लोक',
+                en: 'A verse every morning',
+                gu: 'દરરોજ સવારે એક શ્લોક',
+                kn: 'ಪ್ರತಿ ಬೆಳಗ್ಗೆ ಒಂದು ಶ್ಲೋಕ',
+              })}
             </Text>
             <Text
               style={[
                 styles.lede,
                 {
                   color: colors.inkSoft,
-                  fontFamily: typography.meaning.fontFamily,
+                  fontFamily: ledeFont,
                   fontSize: 15,
                   lineHeight: 24,
                 },
               ]}
             >
-              {isHi
-                ? 'अपनी पसंद के समय पर एक श्लोक स्क्रीन पर आएगा — खोलते ही वही श्लोक पढ़ने को मिलेगा। आप कभी भी बंद कर सकते हैं।'
-                : 'One verse arrives at the time you choose. Tap to open it, or dismiss. You can turn this off any time.'}
+              {pick(lang, {
+                hi: 'अपनी पसंद के समय पर एक श्लोक स्क्रीन पर आएगा — खोलते ही वही श्लोक पढ़ने को मिलेगा। आप कभी भी बंद कर सकते हैं।',
+                en: 'One verse arrives at the time you choose. Tap to open it, or dismiss. You can turn this off any time.',
+                gu: 'તમે પસંદ કરેલા સમયે એક શ્લોક આવશે. ખોલવા માટે ટૅપ કરો, અથવા બંધ કરો. તમે આને ગમે ત્યારે બંધ કરી શકો છો.',
+                kn: 'ನೀವು ಆಯ್ಕೆಮಾಡಿದ ಸಮಯದಲ್ಲಿ ಒಂದು ಶ್ಲೋಕ ಬರುತ್ತದೆ. ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ, ಅಥವಾ ಮುಚ್ಚಿ. ನೀವು ಇದನ್ನು ಯಾವಾಗ ಬೇಕಾದರೂ ಆಫ್ ಮಾಡಬಹುದು.',
+              })}
             </Text>
 
             <View style={styles.timeBlock}>
@@ -125,11 +155,11 @@ export default function ReminderOptInModal() {
                   styles.timeLabel,
                   {
                     color: colors.inkMuted,
-                    fontFamily: typography.cardLatin.fontFamily,
+                    fontFamily: labelFont,
                   },
                 ]}
               >
-                {isHi ? 'समय चुनें' : 'Choose time'}
+                {pick(lang, { hi: 'समय चुनें', en: 'Choose time', gu: 'સમય પસંદ કરો', kn: 'ಸಮಯ ಆಯ್ಕೆಮಾಡಿ' })}
               </Text>
               <TimeStepper value={chosenTime} onChange={setChosenTime} />
             </View>
@@ -137,7 +167,12 @@ export default function ReminderOptInModal() {
             <Pressable
               onPress={onEnable}
               accessibilityRole="button"
-              accessibilityLabel={isHi ? 'सक्षम करें' : 'Enable daily verse'}
+              accessibilityLabel={pick(lang, {
+                hi: 'सक्षम करें',
+                en: 'Enable daily verse',
+                gu: 'દૈનિક શ્લોક સક્ષમ કરો',
+                kn: 'ದೈನಿಕ ಶ್ಲೋಕ ಸಕ್ರಿಯಗೊಳಿಸಿ',
+              })}
               disabled={busy}
               style={({ pressed }) => [
                 styles.primary,
@@ -151,17 +186,17 @@ export default function ReminderOptInModal() {
               <Text
                 style={[
                   styles.primaryText,
-                  { fontFamily: typography.readerTitle.fontFamily, color: colors.onPrimary },
+                  { fontFamily: headingFont, color: colors.onPrimary },
                 ]}
               >
-                {isHi ? 'सक्षम करें' : 'Enable'}
+                {pick(lang, { hi: 'सक्षम करें', en: 'Enable', gu: 'સક્ષમ કરો', kn: 'ಸಕ್ರಿಯಗೊಳಿಸಿ' })}
               </Text>
             </Pressable>
 
             <Pressable
               onPress={close}
               accessibilityRole="button"
-              accessibilityLabel={isHi ? 'अभी नहीं' : 'Not now'}
+              accessibilityLabel={notNow}
               style={({ pressed }) => [
                 styles.secondary,
                 { opacity: pressed ? 0.6 : 1 },
@@ -170,10 +205,10 @@ export default function ReminderOptInModal() {
               <Text
                 style={[
                   styles.secondaryText,
-                  { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                  { color: colors.inkMuted, fontFamily: labelFont },
                 ]}
               >
-                {isHi ? 'अभी नहीं' : 'Not now'}
+                {notNow}
               </Text>
             </Pressable>
           </View>
@@ -196,7 +231,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    includeFontPadding: false,
   },
   close: {
     width: 44,
@@ -212,12 +246,8 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 18,
   },
-  lead: {
-    includeFontPadding: false,
-  },
-  lede: {
-    includeFontPadding: false,
-  },
+  lead: {},
+  lede: {},
   timeBlock: {
     marginTop: 8,
     gap: 10,
@@ -226,7 +256,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     letterSpacing: 2.4,
     textTransform: 'uppercase',
-    includeFontPadding: false,
   },
   primary: {
     marginTop: 12,
@@ -237,7 +266,6 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     fontSize: 16,
-    includeFontPadding: false,
   },
   secondary: {
     paddingVertical: 14,
@@ -248,6 +276,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     letterSpacing: 1.4,
     textTransform: 'uppercase',
-    includeFontPadding: false,
   },
 });

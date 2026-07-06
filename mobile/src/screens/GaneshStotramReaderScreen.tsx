@@ -4,18 +4,44 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { getGaneshStotramChapter, type GaneshStotramVerse } from '@/data/ganesh-stotram';
+import { getGaneshStotramChapter, ganeshStotramChaptersManifest, type GaneshStotramVerse } from '@/data/ganesh-stotram';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
+import JumpToStartButton from '@/components/JumpToStartButton';
+import NextChapterCard from '@/components/NextChapterCard';
+import PrevChapterCard from '@/components/PrevChapterCard';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import type { HomeStackParamList } from '@/navigation/types';
+
+type NextTransitionItem = {
+  __type: 'transition';
+  id: string;
+  nextChapter: number;
+  nextTitleHi: string;
+  nextTitleEn: string;
+};
+
+type PrevTransitionItem = {
+  __type: 'prev-transition';
+  id: string;
+  prevChapter: number;
+  prevTitleHi: string;
+  prevTitleEn: string;
+  prevVerseCount: number;
+};
+
+type FlatListItem = GaneshStotramVerse | NextTransitionItem | PrevTransitionItem;
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'GaneshStotramReader'>;
 
@@ -24,15 +50,50 @@ const DOT_COUNT = 5;
 export default function GaneshStotramReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
 
   const chapter = useSafeChapter(route.params.chapter, getGaneshStotramChapter, navigation, 'GaneshStotramChapters');
-  const listRef = useRef<FlatList<GaneshStotramVerse>>(null);
+  const listRef = useRef<FlatList<FlatListItem>>(null);
   const verseCount = chapter?.verses.length ?? 0;
   const initialIndex = clampIndex(route.params.initialIndex, verseCount);
+  const isLastChapter = chapter == null ? true : chapter.chapter >= ganeshStotramChaptersManifest.length;
+  const isFirstChapter = chapter == null ? true : chapter.chapter <= 1;
+  const data: FlatListItem[] = useMemo(() => {
+    if (chapter == null) return [];
+    const items: FlatListItem[] = [];
+    if (!isFirstChapter) {
+      const prev = ganeshStotramChaptersManifest[chapter.chapter - 2];
+      if (prev) {
+        items.push({
+          __type: 'prev-transition' as const,
+          id: 'transition-prev',
+          prevChapter: chapter.chapter - 1,
+          prevTitleHi: prev.titleHi,
+          prevTitleEn: prev.titleEn,
+          prevVerseCount: prev.verseCount,
+        });
+      }
+    }
+    items.push(...chapter.verses);
+    if (!isLastChapter) {
+      const next = ganeshStotramChaptersManifest[chapter.chapter];
+      if (next) {
+        items.push({
+          __type: 'transition' as const,
+          id: 'transition-next',
+          nextChapter: chapter.chapter + 1,
+          nextTitleHi: next.titleHi,
+          nextTitleEn: next.titleEn,
+        });
+      }
+    }
+    return items;
+  }, [chapter, isFirstChapter, isLastChapter]);
+  const offset = isFirstChapter ? 0 : 1;
+  const hasNavigatedRef = useRef(false);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   useEffect(() => {
@@ -46,13 +107,40 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
     if (viewableItems.length === 0) return;
     const first = viewableItems[0];
     if (first.index == null) return;
+    const item = first.item as FlatListItem;
+    if ('__type' in item && item.__type === 'transition') {
+      if (!hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
+        setTimeout(() => {
+          navigation.replace('GaneshStotramReader', { chapter: item.nextChapter });
+        }, 400);
+      }
+      return;
+    }
+    if ('__type' in item && item.__type === 'prev-transition') {
+      if (!hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
+        setTimeout(() => {
+          navigation.replace('GaneshStotramReader', { chapter: item.prevChapter, initialIndex: item.prevVerseCount - 1 });
+        }, 400);
+      }
+      return;
+    }
+    const verseIdx = first.index - offset;
     setCurrentIndex((prev) => {
-      if (prev !== first.index) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
-      return first.index ?? prev;
+      if (prev !== verseIdx) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
+      return verseIdx >= 0 ? verseIdx : prev;
     });
   }).current;
 
   const getItemLayout = useCallback((_: unknown, index: number) => ({ length: width, offset: width * index, index }), [width]);
+
+  const goToStart = useCallback(() => {
+    listRef.current?.scrollToIndex({ index: offset, animated: true });
+    setCurrentIndex(0);
+  }, [offset]);
 
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
@@ -60,11 +148,11 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
   }, [verseCount, currentIndex]);
 
-  const topTitle = chapter ? (lang === 'hi' ? chapter.titleHi : chapter.titleEn) : '';
+  const topTitle = chapter ? (contentByLang(lang, chapter.titleHi, chapter.titleEn)) : '';
 
   const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = e.nativeEvent.contentOffset.x;
-    const idx = Math.round(offsetX / width);
+    const idx = Math.round(offsetX / width) - offset;
     setCurrentIndex((prev) => {
       if (prev !== idx && idx >= 0 && idx < verseCount) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
@@ -72,7 +160,11 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
       }
       return prev;
     });
-  }, [width, verseCount]);
+  }, [width, verseCount, offset]);
+
+  // Re-render visible pages when the language flips, a bookmark toggles, or a
+  // share is in flight — the in-page header actions depend on all three.
+  const listExtraData = useMemo(() => ({ lang, bookmarks, shareBusy }), [lang, bookmarks, shareBusy]);
 
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
@@ -85,7 +177,7 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
               <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
             </Pressable>
           </View>
-          <Text style={[styles.title, { color: colors.ink, fontFamily: lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily, fontSize: typography.readerTitle.fontSize, fontStyle: lang === 'en' ? 'italic' : 'normal' }]} numberOfLines={1}>
+          <Text style={[styles.title, { color: colors.ink, fontFamily: titleFontByLang(lang), fontSize: typography.readerTitle.fontSize, fontStyle: lang === 'en' ? 'italic' : 'normal' }]} numberOfLines={1}>
             {topTitle}
           </Text>
           <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
@@ -93,51 +185,70 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
               <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
                 {currentIndex + 1} / {verseCount}
               </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`ganesh-stotram:${chapter.chapter}:${currentIndex}`)}
-                onToggle={() => {
-                  const id = `ganesh-stotram:${chapter.chapter}:${currentIndex}`;
-                  if (isBookmarked(id)) { removeBookmark(id); }
-                  else {
-                    const v = chapter.verses[currentIndex];
-                    addBookmark({ id, sourceId: 'ganesh-stotram', chapter: chapter.chapter, verseIndex: currentIndex, savedAt: Date.now(), previewHi: v.sanskrit[0] ?? '', previewEn: v.linesEn[0] ?? '' });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = chapter.verses[currentIndex];
-                  const isIntro = v.number === 0;
-                  share(
-                    {
-                      sourceId: 'ganesh-stotram',
-                      sectionNameHi: chapter.titleHi,
-                      sectionNameEn: chapter.titleEn,
-                      verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${v.chapter}.${v.number}`,
-                      verseLabelEn: isIntro ? 'Introduction' : `Verse ${v.chapter}.${v.number}`,
-                      linesHi: [...v.sanskrit],
-                      linesEn: [...v.linesEn],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                    },
-                    lang
-                  );
-                }}
-              />
             </View>
           </View>
         </View>
 
-        <View style={styles.toggleRow}><LanguageToggle /></View>
+        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
+
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId="ganesh-stotram" chapter={chapter.chapter} /></View>
 
         <View style={styles.listContainer}>
           <FlatList
             ref={listRef}
-            data={chapter.verses}
-            keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <ShivaStrotamVersePage verse={item} sourceId="ganesh-stotram" width={width} />}
-            extraData={lang}
+            data={data}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item, index }) => {
+              if ('__type' in item && item.__type === 'transition') {
+                return <NextChapterCard width={width} nextTitle={contentByLang(lang, item.nextTitleHi, item.nextTitleEn)} lang={lang} />;
+              }
+              if ('__type' in item && item.__type === 'prev-transition') {
+                return <PrevChapterCard width={width} prevTitle={contentByLang(lang, item.prevTitleHi, item.prevTitleEn)} lang={lang} />;
+              }
+              const verseIdx = index - offset;
+              return (
+                <ShivaStrotamVersePage
+                  verse={item}
+                  sourceId="ganesh-stotram"
+                  width={width}
+                  topActions={
+                    <>
+                      <BookmarkButton
+                        isBookmarked={isBookmarked(`ganesh-stotram:${chapter.chapter}:${verseIdx}`)}
+                        onToggle={() => {
+                          const id = `ganesh-stotram:${chapter.chapter}:${verseIdx}`;
+                          if (isBookmarked(id)) { removeBookmark(id); }
+                          else {
+                            addBookmark({ id, sourceId: 'ganesh-stotram', chapter: chapter.chapter, verseIndex: verseIdx, savedAt: Date.now(), previewHi: item.sanskrit[0] ?? '', previewEn: item.linesEn[0] ?? '' });
+                          }
+                        }}
+                      />
+                      <ShareButton
+                        busy={shareBusy}
+                        onPress={() => {
+                          const isIntro = item.number === 0;
+                          share(
+                            {
+                              sourceId: 'ganesh-stotram',
+                              sectionNameHi: chapter.titleHi,
+                              sectionNameEn: chapter.titleEn,
+                              verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,
+                              verseLabelEn: isIntro ? 'Introduction' : `Verse ${item.chapter}.${item.number}`,
+                              linesHi: [...item.sanskrit],
+                              linesEn: [...item.linesEn],
+                              meaningHi: item.meaningHi,
+                              meaningEn: item.meaningEn,
+                            },
+                            lang
+                          );
+                        }}
+                      />
+                    </>
+                  }
+                />
+              );
+            }}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
@@ -150,10 +261,11 @@ export default function GaneshStotramReaderScreen({ navigation, route }: Props) 
             onScroll={handleScroll}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}
-            initialScrollIndex={initialIndex}
+            initialScrollIndex={initialIndex + offset}
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

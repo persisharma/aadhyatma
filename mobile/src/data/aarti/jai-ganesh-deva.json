@@ -5,15 +5,158 @@
   "subtitleEn": "Aarti of Lord Ganesha",
   "deity": "ganesha",
   "language": "hi-en",
-  "source": {"baseText": "Traditional Ganesh Aarti", "retrievedOn": "2026-05-08"},
-  "counts": {"totalVerses": 7},
+  "source": {
+    "baseText": "Jai Ganesh Deva Aarti, checked against Drik Panchang, Vedadhara, and HinduNidhi.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/shree-ganesh/jay-ganesh-aarti.html?ck=1&lang=hi",
+      "https://www.vedadhara.com/%E0%A4%9C%E0%A4%AF-%E0%A4%97%E0%A4%A3%E0%A5%87%E0%A4%B6-%E0%A4%9C%E0%A4%AF-%E0%A4%97%E0%A4%A3%E0%A5%87%E0%A4%B6-%E0%A4%A6%E0%A5%87%E0%A4%B5%E0%A4%BE",
+      "https://hindunidhi.com/shri-ganesh-aarti-hindi/pdf/"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
+  "counts": {
+    "totalVerses": 7
+  },
   "verses": [
-    {"id": "jgd-01", "type": "stanza", "section": "body", "number": 1, "labelHi": "पद १", "labelEn": "Stanza 1", "lines": ["जय गणेश जय गणेश जय गणेश देवा।", "माता जाकी पार्वती पिता महादेवा।।"], "linesEn": ["Jai Ganesh jai Ganesh jai Ganesh Deva.", "Maata jaaki Paarvati pitaa Mahaadeva."], "meaningHi": "गणेश — शिव-पार्वती के पुत्र। 'महादेवा' — शिव, जो देवों के भी देव हैं। यह आरती भारत में सर्वाधिक प्रचलित गणेश-आरती है। प्रत्येक पूजा, शुभ कार्य, और उत्सव 'जय गणेश' से आरम्भ होता है क्योंकि गणेश 'प्रथम पूज्य' (सबसे पहले पूजे जाने वाले) हैं — शिव ने स्वयं यह वर दिया।", "meaningEn": "Ganesha — son of Shiva and Parvati. 'Mahadeva' — Shiva, god of gods. This is the most popular Ganesh aarti in India. Every worship, auspicious event, and festival begins with 'Jai Ganesh' because Ganesha is 'Pratham Pujya' (first-worshipped) — a boon granted by Shiva himself."},
-    {"id": "jgd-02", "type": "stanza", "section": "body", "number": 2, "labelHi": "पद २", "labelEn": "Stanza 2", "lines": ["एकदन्त दयावन्त चार भुजा धारी।", "माथे पर तिलक सोहे मूसे की सवारी।।"], "linesEn": ["Ekdant dayaavant chaar bhuja dhaaree.", "Maathe par tilak sohe moose ki savaaree."], "meaningHi": "'एकदन्त' — एक दाँत वाले। पुराण-कथा: महाभारत लिखते समय लेखनी टूटी तो गणेश ने अपना दाँत तोड़कर लिखा — ज्ञान के लिए त्याग का प्रतीक। 'मूसे की सवारी' — चूहा (मूषक) वाहन। विशाल गणेश का छोटा वाहन — यह दर्शाता है कि ज्ञान (बड़ा) अहंकार (छोटा) पर सवार होता है, अहंकार को वश में रखता है।", "meaningEn": "'Ekdant' — single-tusked. Purana story: when the writing quill broke while scribing the Mahabharata, Ganesha broke his own tusk to write — symbolizing sacrifice for knowledge. 'Mouse vehicle' — the tiny mouse carrying the massive Ganesha shows that wisdom (large) rides upon ego (small), keeping ego under control."},
-    {"id": "jgd-03", "type": "stanza", "section": "body", "number": 3, "labelHi": "पद ३", "labelEn": "Stanza 3", "lines": ["पान चढ़े फूल चढ़े और चढ़े मेवा।", "लड्डुअन का भोग लगे सन्त करें सेवा।।"], "linesEn": ["Paan chadhe phool chadhe aur chadhe mevaa.", "Ladduan ka bhog lage sant karein sevaa."], "meaningHi": "पान (बेल-पत्र/पान), फूल, मेवा (सूखे फल) — गणेश पूजन की सामग्री। 'लड्डू का भोग' — मोदक/लड्डू गणेश का प्रिय प्रसाद। कथा: पार्वती ने बनाए, गणेश ने खाए — इसलिए 'मोदकप्रिय' नाम पड़ा। गणेश चतुर्थी पर 21 मोदकों का भोग लगाने की परम्परा है।", "meaningEn": "Betel leaves, flowers, dry fruits — materials for Ganesha worship. 'Laddoo offering' — modak/laddoo is Ganesha's favorite prasad. Story: Parvati made them, Ganesha loved them — hence the name 'Modakapriya.' On Ganesh Chaturthi, the tradition of offering 21 modaks exists."},
-    {"id": "jgd-04", "type": "stanza", "section": "body", "number": 4, "labelHi": "पद ४", "labelEn": "Stanza 4", "lines": ["अन्धन को आँख दे कोढ़िन को काया।", "बाँझन को पुत्र दे निर्धन को माया।।"], "linesEn": ["Andhan ko aankh de kodhhin ko kaaya.", "Baanjhan ko putra de nirdhan ko maaya."], "meaningHi": "'अन्धन को आँख' — अन्धकार (अज्ञान) में ज्ञान-चक्षु देना। 'कोढ़िन को काया' — रोग-मुक्ति। 'बाँझन को पुत्र' — सन्तान-प्राप्ति। 'निर्धन को माया' — धन-प्राप्ति। चार प्रकार के कष्ट — चार प्रकार की कृपा। लोक-विश्वास: बुधवार/गणेश-चतुर्थी को यह आरती करने से सभी मनोकामनाएँ पूर्ण होती हैं।", "meaningEn": "'Eyes to the blind' — giving the eye of knowledge in darkness (ignorance). 'Body to the leper' — disease cure. 'Son to the barren' — granting progeny. 'Wealth to the poor' — prosperity. Four types of suffering — four types of grace. Folk belief: performing this aarti on Wednesday/Ganesh Chaturthi fulfills all wishes."},
-    {"id": "jgd-05", "type": "stanza", "section": "body", "number": 5, "labelHi": "पद ५", "labelEn": "Stanza 5", "lines": ["सूर श्याम शरण आये सफल कीजै सेवा।", "माता जाकी पार्वती पिता महादेवा।।"], "linesEn": ["Soor Shyaam sharan aaye saphal keejai seva.", "Maata jaaki Paarvati pitaa Mahaadeva."], "meaningHi": "'सूर श्याम' — सूरदास (कवि) या सूर्य और श्याम (कृष्ण) दोनों अर्थ हैं। शरण आए हैं — सेवा सफल कीजिए। यहाँ कवि अपना परिचय देकर प्रार्थना करता है — भक्ति-काव्य की परम्परा में कवि अन्तिम पद में स्वयं को प्रकट करता है (जैसे तुलसी, सूर, मीरा करते हैं)।", "meaningEn": "'Soor Shyam' — the poet Surdas, or both Sun and Krishna (dual meaning). Having come to refuge — make the service fruitful. Here the poet reveals himself in prayer — in devotional poetry tradition, the poet appears in the final verse (as Tulsi, Sur, Meera do)."},
-    {"id": "jgd-06", "type": "stanza", "section": "body", "number": 6, "labelHi": "पद ६", "labelEn": "Stanza 6", "lines": ["दीनन की लाज रखो शम्भु सुतकारी।", "कामना को पूर्ण करो जाऊँ बलिहारी।।"], "linesEn": ["Deenan ki laaj rakho Shambhu sutkaaree.", "Kaamnaa ko poorn karo jaaoon balihaaree."], "meaningHi": "'दीनन की लाज' — दीनों (असहायों) की लज्जा (मान-सम्मान) रखना — अर्थात् उन्हें निराश न करना। 'शम्भु सुतकारी' — शम्भु (शिव) के पुत्र, जिन्होंने सृष्टि-कार्य किया। 'बलिहारी' — न्योछावर हो जाता हूँ। यह समर्पण का उच्चतम भाव है।", "meaningEn": "'Protect the dignity of the meek' — not letting the helpless feel ashamed (not disappointing them). 'Son of Shambhu' — Shiva's son who participates in creation. 'Balihari' — I sacrifice myself for you. This is the highest expression of surrender."},
-    {"id": "jgd-07", "type": "stanza", "section": "body", "number": 7, "labelHi": "पद ७", "labelEn": "Stanza 7", "lines": ["जय गणेश जय गणेश जय गणेश देवा।", "माता जाकी पार्वती पिता महादेवा।।"], "linesEn": ["Jai Ganesh jai Ganesh jai Ganesh Deva.", "Maata jaaki Paarvati pitaa Mahaadeva."], "meaningHi": "समापन: प्रथम पद की पुनरावृत्ति — आरती की चक्रीय संरचना। 'जय' तीन बार — त्रिदेव (ब्रह्मा-विष्णु-शिव) की ओर से जयघोष, या तीनों लोकों में जय। आरती का अन्त सदैव आरम्भ में लौटता है — यह सनातन चक्र (eternal cycle) का प्रतीक है।", "meaningEn": "Closing: repetition of the first verse — circular structure of aarti. 'Jai' thrice — victory cry from the Tridev (Brahma-Vishnu-Shiva), or victory across three worlds. Aarti always returns to its beginning — symbolizing the eternal cycle (Sanatan Chakra)."}
+    {
+      "id": "jgd-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "जय गणेश, जय गणेश, जय गणेश देवा।",
+        "माता जाकी पार्वती, पिता महादेवा॥"
+      ],
+      "linesEn": [
+        "Jai Ganesh, jai Ganesh, jai Ganesh Deva.",
+        "Maata jaaki Paarvati, pitaa Mahaadeva."
+      ],
+      "meaningHi": "जय हो गणेश देवा। जिनकी माता पार्वती हैं और पिता महादेव (शिव) हैं। गणेश प्रथम पूज्य हैं — प्रत्येक शुभ कार्य में सबसे पहले गणेश की वन्दना की जाती है।",
+      "meaningEn": "Victory to Lord Ganesha. Whose mother is Parvati and father is Mahadeva (Shiva). Ganesha is the first-worshipped — every auspicious endeavor begins with Ganesha's invocation.",
+      "meaningGu": "જય ગણેશ દેવા. જેમની માતા પાર્વતી છે અને પિતા મહાદેવ (શિવ) છે. ગણેશ પ્રથમ પૂજ્ય છે — પ્રત્યેક શુભ કાર્યમાં સૌપ્રથમ ગણેશની વંદના થાય છે.",
+      "meaningKn": "ಗಣೇಶ ದೇವರೇ, ನಿಮಗೆ ಜಯವಾಗಲಿ. ನಿಮ್ಮ ತಾಯಿ ಪಾರ್ವತಿ, ತಂದೆ ಮಹಾದೇವ ಅಂದರೆ ಶಿವ. ಗಣೇಶನು ಪ್ರಥಮ ಪೂಜ್ಯರು; ಪ್ರತಿಯೊಂದು ಶುಭಕಾರ್ಯವೂ ಮೊದಲು ಗಣೇಶನ ವಂದನೆಯಿಂದಲೇ ಆರಂಭವಾಗುತ್ತದೆ."
+    },
+    {
+      "id": "jgd-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "एकदन्त दयावन्त, चार भुजाधारी।",
+        "माथे पर तिलक सोहे, मूसे की सवारी॥"
+      ],
+      "linesEn": [
+        "Ekdant dayaavant, chaar bhujaadhaari.",
+        "Maathe par tilak sohe, moose ki savaari."
+      ],
+      "meaningHi": "एक दाँत वाले (एकदन्त), दयावान, चार भुजाएँ धारण करने वाले। माथे पर तिलक सुशोभित है और मूषक (चूहा) उनकी सवारी है — मूषक अहंकार का प्रतीक है जिसे गणेश ने वश में किया।",
+      "meaningEn": "Single-tusked, compassionate, bearing four arms. A tilak adorns the forehead and a mouse is the vehicle — the mouse symbolizes ego which Ganesha has tamed and rides upon.",
+      "meaningGu": "એક દાંતવાળા (એકદંત), દયાળુ, ચાર ભુજાઓ ધારણ કરનાર. કપાળ પર તિલક શોભે છે અને મૂષક (ઉંદર) તેમનું વાહન છે — મૂષક અહંકારનું પ્રતીક છે જેને ગણેશે વશ કર્યું છે.",
+      "meaningKn": "ಏಕದಂತರಾದ, ಕರುಣಾಮಯರಾದ, ನಾಲ್ಕು ಭುಜಗಳನ್ನು ಹೊಂದಿರುವ ಗಣೇಶನ ನೆತ್ತಿಯ ಮೇಲೆ ತಿಲಕವು ಶೋಭಿಸುತ್ತದೆ. ಮೂಷಕವು ಅವರ ವಾಹನ; ಮೂಷಕವು ಅಹಂಕಾರದ ಸಂಕೇತ, ಅದನ್ನು ಗಣೇಶನು ವಶಪಡಿಸಿಕೊಂಡು ತನ್ನ ವಾಹನವಾಗಿಸಿಕೊಂಡಿದ್ದಾರೆ."
+    },
+    {
+      "id": "jgd-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "पान चढ़े फूल चढ़े, और चढ़े मेवा।",
+        "लड्डुअन का भोग लगे, सन्त करें सेवा॥"
+      ],
+      "linesEn": [
+        "Paan chadhe phool chadhe, aur chadhe meva.",
+        "Ladduan ka bhog lage, sant karein seva."
+      ],
+      "meaningHi": "पान चढ़ता है, फूल चढ़ते हैं और मेवा (सूखे फल) चढ़ता है। लड्डुओं (मोदकों) का भोग लगता है और संत सेवा करते हैं — मोदक गणेश का सबसे प्रिय प्रसाद है।",
+      "meaningEn": "Betel leaves are offered, flowers are offered, and dry fruits are offered. Laddoos (modaks) are presented as food offering and saints perform service — modak is Ganesha's most beloved prasad.",
+      "meaningGu": "પાન ચઢે છે, ફૂલ ચઢે છે અને મેવા ચઢે છે. લાડુ (મોદક)નો ભોગ ધરાવાય છે અને સંતો સેવા કરે છે — મોદક ગણેશનો સૌથી પ્રિય પ્રસાદ છે.",
+      "meaningKn": "ಅವರಿಗೆ ವೀಳ್ಯದೆಲೆ ಅರ್ಪಿಸಲಾಗುತ್ತದೆ, ಹೂಗಳನ್ನು ಸಮರ್ಪಿಸಲಾಗುತ್ತದೆ, ಒಣಹಣ್ಣುಗಳನ್ನು ಅರ್ಪಿಸಲಾಗುತ್ತದೆ. ಲಡ್ಡು, ಅಂದರೆ ಮೋದಕವನ್ನು ನೈವೇದ್ಯವಾಗಿ ಇಡಲಾಗುತ್ತದೆ ಮತ್ತು ಸಂತರು ಅವರ ಸೇವೆ ಮಾಡುತ್ತಾರೆ; ಮೋದಕವು ಗಣೇಶನಿಗೆ ಅತ್ಯಂತ ಪ್ರಿಯವಾದ ಪ್ರಸಾದ."
+    },
+    {
+      "id": "jgd-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "अँधे को आँख देत, कोढ़िन को काया।",
+        "बाँझन को पुत्र देत, निर्धन को माया॥"
+      ],
+      "linesEn": [
+        "Andhe ko aankh det, kodhin ko kaaya.",
+        "Baanjhan ko putra det, nirdhan ko maya."
+      ],
+      "meaningHi": "अंधों को आँखें (दृष्टि/ज्ञान) देते हैं, कोढ़ियों को स्वस्थ काया देते हैं। बाँझ स्त्रियों को पुत्र देते हैं और निर्धनों को धन (माया) देते हैं — चार प्रकार के कष्टों का निवारण करने वाले हैं।",
+      "meaningEn": "They give sight to the blind, healthy bodies to the diseased. They grant sons to the childless and wealth to the poor — the remover of four types of suffering.",
+      "meaningGu": "અંધજનોને આંખ (દૃષ્ટિ/જ્ઞાન) આપે છે, કોઢીને સ્વસ્થ કાયા આપે છે. વાંઝણી સ્ત્રીઓને પુત્ર આપે છે અને નિર્ધનોને ધન (માયા) આપે છે — ચાર પ્રકારના કષ્ટોનું નિવારણ કરનાર છે.",
+      "meaningKn": "ಗಣೇಶನು ಕುರುಡರಿಗೆ ಕಣ್ಣು, ಅಂದರೆ ದೃಷ್ಟಿ ಮತ್ತು ಜ್ಞಾನವನ್ನು ನೀಡುತ್ತಾರೆ; ರೋಗಪೀಡಿತರಿಗೆ ಆರೋಗ್ಯವಂತ ದೇಹವನ್ನು ಕರುಣಿಸುತ್ತಾರೆ. ಸಂತಾನವಿಲ್ಲದ ಸ್ತ್ರೀಯರಿಗೆ ಪುತ್ರಪ್ರಾಪ್ತಿಯನ್ನು ಅನುಗ್ರಹಿಸುತ್ತಾರೆ, ಬಡವರಿಗೆ ಸಂಪತ್ತನ್ನು ನೀಡುತ್ತಾರೆ; ಅವರು ನಾಲ್ಕು ವಿಧದ ಕಷ್ಟಗಳನ್ನು ನಿವಾರಿಸುವವರು."
+    },
+    {
+      "id": "jgd-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "'सूर' श्याम शरण आए, सफल कीजे सेवा।",
+        "माता जाकी पार्वती, पिता महादेवा॥"
+      ],
+      "linesEn": [
+        "'Soor' Shyaam sharan aaye, saphal keeje sevaa.",
+        "Maata jaaki Paarvati, pitaa Mahaadeva."
+      ],
+      "meaningHi": "सूरदास (कवि) श्याम की शरण में आए हैं — हमारी सेवा सफल कीजिए। जिनकी माता पार्वती और पिता महादेव हैं — कवि अपना नाम देकर प्रार्थना करता है।",
+      "meaningEn": "The poet Surdas has come to seek refuge — make our service fruitful. Whose mother is Parvati and father Mahadeva — the poet reveals his name and offers his prayer.",
+      "meaningGu": "સૂરદાસ (કવિ) શ્યામની શરણે આવ્યા છે — અમારી સેવા સફળ કરો. જેમની માતા પાર્વતી અને પિતા મહાદેવ છે — કવિ પોતાનું નામ આપીને પ્રાર્થના કરે છે.",
+      "meaningKn": "ಕವಿ ಸೂರದಾಸರು ಶ್ಯಾಮನ ಶರಣಾಗತಿಗೆ ಬಂದಿದ್ದಾರೆ; ನಮ್ಮ ಸೇವೆಯನ್ನು ಸಫಲಗೊಳಿಸಿ. ತಾಯಿ ಪಾರ್ವತಿ, ತಂದೆ ಮಹಾದೇವರಾದ ಆ ದೇವರ ಪಾದಗಳಲ್ಲಿ ಕವಿ ತನ್ನ ಹೆಸರನ್ನು ಹೇಳಿಕೊಂಡು ಪ್ರಾರ್ಥನೆ ಸಲ್ಲಿಸುತ್ತಾನೆ."
+    },
+    {
+      "id": "jgd-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "दीनन की लाज राखो, शम्भु सुतवारी।",
+        "कामना को पूर्ण करो, जग बलिहारी॥"
+      ],
+      "linesEn": [
+        "Deenan ki laaj rakho, Shambhu sutvaari.",
+        "Kaamnaa ko poorn karo, jag balihaari."
+      ],
+      "meaningHi": "दीनों (असहायों) की लाज (मर्यादा) रखिए, हे शम्भु (शिव) के पुत्र। हमारी कामनाओं को पूर्ण कीजिए — मैं आप पर बलिहारी (न्योछावर) जाता हूँ।",
+      "meaningEn": "Protect the dignity of the meek, O son of Shambhu (Shiva). Fulfill our desires — I sacrifice myself in devotion to you.",
+      "meaningGu": "દીનો (અસહાયો)ની લાજ રાખો, હે શંભુ (શિવ)ના પુત્ર. અમારી કામનાઓ પૂર્ણ કરો — હું આપ પર ઓવારી (ન્યોછાવર) જાઉં છું.",
+      "meaningKn": "ಓ ಶಂಭುವಿನ ಪುತ್ರನೇ, ದೀನರ ಮತ್ತು ಅಸಹಾಯಕರ ಮಾನವನ್ನು ಕಾಪಾಡಿ, ಅವರ ಗೌರವವನ್ನು ರಕ್ಷಿಸಿ. ನಮ್ಮ ಆಶೆಗಳು ನೆರವೇರಲಿ; ನಾನು ಭಕ್ತಿಯಿಂದ ನಿಮ್ಮ ಮೇಲೆ ಸಂಪೂರ್ಣವಾಗಿ ಅರ್ಪಿತನಾಗುತ್ತೇನೆ."
+    },
+    {
+      "id": "jgd-07",
+      "type": "refrain",
+      "section": "body",
+      "number": 7,
+      "labelHi": "टेक",
+      "labelEn": "Closing Refrain",
+      "lines": [
+        "जय गणेश, जय गणेश, जय गणेश देवा।",
+        "माता जाकी पार्वती, पिता महादेवा॥"
+      ],
+      "linesEn": [
+        "Jai Ganesh, jai Ganesh, jai Ganesh Deva.",
+        "Maata jaaki Paarvati, pitaa Mahaadeva."
+      ],
+      "meaningHi": "समापन में पुनः टेक — जय गणेश देवा। आरती की चक्रीय संरचना पूर्णता का प्रतीक है — गणेश स्वयं पूर्णता के देवता हैं।",
+      "meaningEn": "Closing with the refrain — Victory to Lord Ganesha. The circular structure of aarti symbolizes completeness — Ganesha himself is the deity of wholeness and perfection.",
+      "meaningGu": "સમાપનમાં ફરી ટેક — જય ગણેશ દેવા. આરતીની ચક્રીય રચના પૂર્ણતાનું પ્રતીક છે — ગણેશ સ્વયં પૂર્ણતાના દેવ છે.",
+      "meaningKn": "ಕೊನೆಯಲ್ಲಿ ಮತ್ತೆ ಪಲ್ಲವಿ ಬರುತ್ತದೆ: ಜಯ ಗಣೇಶ ದೇವಾ. ಆರತಿಯ ಈ ವೃತ್ತಾಕಾರ ರಚನೆ ಪೂರ್ಣತೆಯ ಸಂಕೇತ; ಗಣೇಶನೇ ಸಂಪೂರ್ಣತೆ ಮತ್ತು ಸಿದ್ಧಿಯ ದೇವರು."
+    }
   ]
 }

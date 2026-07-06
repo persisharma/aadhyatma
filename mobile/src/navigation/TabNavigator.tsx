@@ -1,9 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Svg, { Path } from 'react-native-svg';
 import HomeStackNavigator from './HomeStackNavigator';
 import MoreStackNavigator from './MoreStackNavigator';
+import PanchangStackNavigator from './PanchangStackNavigator';
+import AudioStackNavigator from './AudioStackNavigator';
 import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
 import { useTheme } from '@/theme/ThemeContext';
 import type { TabParamList } from './types';
@@ -19,22 +23,29 @@ type BhaktiIconProps = TabIconProps & {
   accentColor: string;
 };
 
+// Full-screen reader routes that should hide the bottom tab bar so it doesn't
+// compete with immersive reading. Lives at the tab level (rather than per-screen
+// setOptions) so the bar animates out cleanly and restores itself on blur.
+const IMMERSIVE_HOME_ROUTES = ['VratKathaReader'];
+
 export default function TabNavigator() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
+
+  const tabBarStyle = {
+    backgroundColor: colors.parchmentSoft,
+    borderTopWidth: 1,
+    borderTopColor: colors.divider,
+    height: 60 + insets.bottom,
+    paddingBottom: insets.bottom,
+    paddingTop: 6,
+  };
 
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {
-          backgroundColor: colors.parchmentSoft,
-          borderTopWidth: 1,
-          borderTopColor: colors.divider,
-          height: 60 + insets.bottom,
-          paddingBottom: insets.bottom,
-          paddingTop: 6,
-        },
+        tabBarStyle,
         tabBarActiveTintColor: colors.saffron,
         tabBarInactiveTintColor: colors.inkMuted,
         tabBarLabelStyle: {
@@ -47,11 +58,17 @@ export default function TabNavigator() {
       <Tab.Screen
         name="HomeTab"
         component={HomeStackNavigator}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <HomeIcon color={color} size={size} />
-          ),
+        options={({ route }) => {
+          const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
+          return {
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }: TabIconProps) => (
+              <HomeIcon color={color} size={size} />
+            ),
+            tabBarStyle: IMMERSIVE_HOME_ROUTES.includes(focused)
+              ? { display: 'none' as const }
+              : tabBarStyle,
+          };
         }}
       />
       <Tab.Screen
@@ -61,6 +78,26 @@ export default function TabNavigator() {
           tabBarLabel: 'Bhakti',
           tabBarIcon: ({ color, size }) => (
             <BhaktiIcon color={color} accentColor={colors.saffron} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="PanchangTab"
+        component={PanchangStackNavigator}
+        options={{
+          tabBarLabel: 'Panchang',
+          tabBarIcon: ({ color, size }) => (
+            <PanchangIcon color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="AudioTab"
+        component={AudioStackNavigator}
+        options={{
+          tabBarLabel: 'Bhajan',
+          tabBarIcon: ({ color, size }) => (
+            <MusicIcon color={color} size={size} />
           ),
         }}
       />
@@ -201,6 +238,22 @@ function BhaktiIcon({ color, accentColor, size }: BhaktiIconProps) {
   );
 }
 
+function PanchangIcon({ color, size }: TabIconProps) {
+  const stroke = Math.max(1.5, size * 0.08);
+  const arm = size * 0.28;
+
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ position: 'absolute', width: stroke, height: size * 0.64, backgroundColor: color, borderRadius: stroke / 2 }} />
+      <View style={{ position: 'absolute', width: size * 0.64, height: stroke, backgroundColor: color, borderRadius: stroke / 2 }} />
+      <View style={{ position: 'absolute', top: size * 0.18, left: size * 0.5, width: arm, height: stroke, backgroundColor: color, borderRadius: stroke / 2 }} />
+      <View style={{ position: 'absolute', top: size * 0.5, right: size * 0.18, width: stroke, height: arm, backgroundColor: color, borderRadius: stroke / 2 }} />
+      <View style={{ position: 'absolute', bottom: size * 0.18, right: size * 0.5, width: arm, height: stroke, backgroundColor: color, borderRadius: stroke / 2 }} />
+      <View style={{ position: 'absolute', bottom: size * 0.5, left: size * 0.18, width: stroke, height: arm, backgroundColor: color, borderRadius: stroke / 2 }} />
+    </View>
+  );
+}
+
 function MoreIcon({ color, size }: TabIconProps) {
   const stroke = Math.max(1.5, size * 0.07);
   const dotSize = size * 0.11;
@@ -232,6 +285,19 @@ function MoreIcon({ color, size }: TabIconProps) {
           />
         ))}
       </View>
+    </View>
+  );
+}
+
+function MusicIcon({ color, size }: TabIconProps) {
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      <Svg width={size} height={size} viewBox="0 0 24 24">
+        <Path
+          fill={color}
+          d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"
+        />
+      </Svg>
     </View>
   );
 }

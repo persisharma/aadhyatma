@@ -2,6 +2,14 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import {
+  verseLinesByLang,
+  meaningByLang,
+  meaningSourceLang,
+  contentByLang,
+  pick,
+} from '@/utils/localize';
+import { verseToken, meaningToken, scriptTitleFont, pillTextStyle } from '@/utils/langType';
 import type { ShivaStrotamVerse } from '@/data/shiva-strotam';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
@@ -11,38 +19,47 @@ type Props = {
   verse: ShivaStrotamVerse;
   sourceId: string;
   width: number;
+  /** Per-verse actions (bookmark/share) rendered in the page header beside the pill. */
+  topActions?: React.ReactNode;
 };
 
-export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props) {
+export default function ShivaStrotamVersePage({ verse, sourceId, width, topActions }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const bg = getReaderBackground(sourceId, verse);
 
-  const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
-  const meaningLabel = lang === 'hi' ? 'अर्थ · Meaning' : 'Meaning · अर्थ';
-  const verseLines = lang === 'hi' ? verse.sanskrit : verse.linesEn;
+  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, { gu: verse.meaningGu, kn: verse.meaningKn });
+  // Single-language section labels — unified with VersePage's भावार्थ pattern
+  // across all readers (design.md §9).
+  const meaningLabel = pick(lang, {
+    hi: 'भावार्थ',
+    en: 'Meaning',
+    gu: 'ભાવાર્થ',
+    kn: 'ಭಾವಾರ್ಥ',
+  });
+  const verseLines = verseLinesByLang(lang, verse.sanskrit, verse.linesEn);
+  const verseTok = verseToken(lang, typography);
   const isIntro = verse.number === 0;
   const pillText = isIntro
-    ? (lang === 'hi' ? 'परिचय · Introduction' : 'Introduction · परिचय')
-    : lang === 'hi'
-      ? `श्लोक · ${verse.chapter}.${verse.number}`
-      : `Shloka · ${verse.chapter}.${verse.number}`;
+    ? pick(lang, {
+        hi: 'परिचय · Introduction',
+        en: 'Introduction · परिचय',
+        gu: 'પરિચય · Introduction',
+        kn: 'ಪರಿಚಯ · Introduction',
+      })
+    : contentByLang(
+        lang,
+        `श्लोक · ${verse.chapter}.${verse.number}`,
+        `Shloka · ${verse.chapter}.${verse.number}`
+      );
 
-  const bodyHiStyle = {
-    color: colors.inkSoft,
-    fontFamily: typography.meaning.fontFamily,
-    fontSize: typography.meaning.fontSize,
-    lineHeight: typography.meaning.lineHeight,
+  const meaningTok = meaningToken(meaningSourceLang(lang), typography);
+  const bodyStyle = {
+    color: meaningSourceLang(lang) === 'en' ? colors.ink : colors.inkSoft,
+    fontFamily: meaningTok.fontFamily,
+    fontSize: meaningTok.fontSize,
+    lineHeight: meaningTok.lineHeight,
   } as const;
-
-  const bodyEnStyle = {
-    color: colors.ink,
-    fontFamily: 'CormorantGaramond_500Medium',
-    fontSize: 18,
-    lineHeight: 30,
-  } as const;
-
-  const bodyStyle = lang === 'hi' ? bodyHiStyle : bodyEnStyle;
 
   const a11yLabel = [
     `Verse ${verse.chapter}.${verse.number}`,
@@ -65,25 +82,24 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props)
         accessible
         accessibilityLabel={a11yLabel}
       >
-        <View
-          style={[
-            styles.pill,
-            { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
-          ]}
-        >
-          <Text
+        <View style={styles.headerRow}>
+          <View
             style={[
-              styles.pillText,
-              {
-                color: colors.saffronDeep,
-                fontSize: typography.versePill.fontSize,
-                fontWeight: typography.versePill.fontWeight,
-                letterSpacing: typography.versePill.letterSpacing,
-              },
+              styles.pill,
+              { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
             ]}
           >
-            {pillText}
-          </Text>
+            <Text
+              style={[
+                styles.pillText,
+                pillTextStyle(lang, typography.versePill),
+                { color: colors.saffronDeep },
+              ]}
+            >
+              {pillText}
+            </Text>
+          </View>
+          {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
         </View>
 
         <View style={styles.verseBlock}>
@@ -94,12 +110,9 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props)
                 styles.verseLine,
                 {
                   color: colors.ink,
-                  fontFamily:
-                    lang === 'hi'
-                      ? typography.verse.fontFamily
-                      : 'CormorantGaramond_600SemiBold',
-                  fontSize: lang === 'hi' ? typography.verse.fontSize : 18,
-                  lineHeight: lang === 'hi' ? typography.verse.lineHeight : 28,
+                  fontFamily: verseTok.fontFamily,
+                  fontSize: verseTok.fontSize,
+                  lineHeight: verseTok.lineHeight,
                   fontStyle: lang === 'en' ? 'italic' : 'normal',
                 },
               ]}
@@ -117,9 +130,9 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width }: Props)
               styles.sectionLabel,
               {
                 color: colors.saffronDeep,
-                fontFamily: typography.meaningLabel.fontFamily,
+                fontFamily: lang === 'en' ? typography.meaningLabel.fontFamily : scriptTitleFont(lang, typography.readerTitle.fontFamily),
                 fontSize: typography.meaningLabel.fontSize,
-                letterSpacing: typography.meaningLabel.letterSpacing,
+                letterSpacing: lang === 'en' ? typography.meaningLabel.letterSpacing : 0,
               },
             ]}
           >
@@ -142,13 +155,25 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingTop: 16,
-    paddingBottom: 40,
+    // Clears the pager-dots overlay and the screen/tab-bar seam so the last
+    // meaning line never reads as tucked under the bar (design.md B2).
+    paddingBottom: 64,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 18,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   pill: {
     alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 4,
-    marginBottom: 18,
   },
   pillText: {
     textTransform: 'uppercase',
@@ -158,15 +183,14 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   verseLine: {
-    includeFontPadding: false,
+    // Devanagari verse body — keep Android's font padding (no top-matra clip).
   },
   sectionLabel: {
     textTransform: 'uppercase',
     marginBottom: 12,
     alignSelf: 'center',
-    includeFontPadding: false,
   },
   body: {
-    includeFontPadding: false,
+    // Devanagari meaning prose — keep Android's font padding (no matra clip).
   },
 });

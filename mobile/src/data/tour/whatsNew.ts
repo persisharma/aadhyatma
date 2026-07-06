@@ -26,13 +26,42 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.4.0';
+export const APP_TOUR_VERSION = '1.4.3';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.4.3': {
+    version: '1.4.3',
+    items: [
+      {
+        titleHi: 'पंचांग · दैनिक मुहूर्त',
+        titleEn: 'Panchang · Daily Muhurat',
+        bodyHi:
+          'पंचांग टैब पर अब चौघड़िया, राहु काल, और अभिजित मुहूर्त — पूरे दिन के शुभ-अशुभ समय एक ही जगह।',
+        bodyEn:
+          'The Panchang tab now shows Choghadiya, Rahu Kaal, and Abhijit Muhurat — the day\'s auspicious windows at a glance.',
+      },
+      {
+        titleHi: 'जप अलार्म — पुनरावृत्ति एवं छोड़ें',
+        titleEn: 'Japam Alarms — repeat & skip-next',
+        bodyHi:
+          'अपने जप के लिए कस्टम अलार्म — विशिष्ट दिनों में पुनरावृत्ति, अगली बार छोड़ें, या एक-बार का अलार्म।',
+        bodyEn:
+          'Custom japam alarms with day-of-week repeat, skip-next, and one-time triggers. Configure from More → Japam Alarms.',
+      },
+      {
+        titleHi: 'गुजराती एवं कन्नड़ पाठ',
+        titleEn: 'Gujarati & Kannada readers',
+        bodyHi:
+          'सभी पाठों के लिए दो नई भाषाएँ जुड़ीं — गुजराती और कन्नड़। "अन्य" → भाषा से चुनें।',
+        bodyEn:
+          'Two new reading scripts across the library: Gujarati and Kannada. Switch from More → Language.',
+      },
+    ],
+  },
   '1.4.0': {
     version: '1.4.0',
     items: [

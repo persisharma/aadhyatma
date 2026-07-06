@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import type { TimeOfDay } from '@/notifications/pure';
@@ -7,30 +7,57 @@ type Props = {
   value: TimeOfDay;
   onChange: (next: TimeOfDay) => void;
   minuteStep?: number;
+  /**
+   * Minute-of-day keys (`hour * 60 + minute`) already taken by other reminders.
+   * Stepping skips over these so a row can never land on a time another row
+   * already holds — keeping the list duplicate-free without a row vanishing
+   * mid-edit. Should exclude this row's own current value.
+   */
+  taken?: ReadonlySet<number>;
 };
 
-export default function TimeStepper({ value, onChange, minuteStep = 15 }: Props) {
+const EMPTY_TAKEN: ReadonlySet<number> = new Set();
+const DAY_MINUTES = 24 * 60;
+
+export default function TimeStepper({
+  value,
+  onChange,
+  minuteStep = 15,
+  taken = EMPTY_TAKEN,
+}: Props) {
   const { colors, radii } = useTheme();
 
   const bumpHour = useCallback(
     (delta: number) => {
-      const hour = (value.hour + delta + 24) % 24;
+      let hour = value.hour;
+      // Advance whole hours in the requested direction, skipping any hour whose
+      // hour:minute is already taken. 24 iterations is a hard stop — with at
+      // most a few reminders a free hour always exists well before that.
+      for (let i = 0; i < 24; i += 1) {
+        hour = (hour + delta + 24) % 24;
+        if (!taken.has(hour * 60 + value.minute)) break;
+      }
       onChange({ hour, minute: value.minute });
     },
-    [value, onChange]
+    [value, onChange, taken]
   );
 
   const bumpMinute = useCallback(
     (delta: number) => {
       const step = minuteStep > 0 ? minuteStep : 15;
-      const totalMinutes = value.hour * 60 + value.minute + delta * step;
-      const normalized = ((totalMinutes % (24 * 60)) + 24 * 60) % (24 * 60);
+      let total = value.hour * 60 + value.minute;
+      const slots = Math.max(1, Math.floor(DAY_MINUTES / step));
+      // Step by `step` minutes (wrapping at midnight), skipping taken slots.
+      for (let i = 0; i < slots; i += 1) {
+        total = ((total + delta * step) % DAY_MINUTES + DAY_MINUTES) % DAY_MINUTES;
+        if (!taken.has(total)) break;
+      }
       onChange({
-        hour: Math.floor(normalized / 60),
-        minute: normalized % 60,
+        hour: Math.floor(total / 60),
+        minute: total % 60,
       });
     },
-    [value, onChange, minuteStep]
+    [value, onChange, minuteStep, taken]
   );
 
   const hh = `${value.hour}`.padStart(2, '0');
@@ -78,29 +105,83 @@ type ColumnProps = {
   chevronColor: string;
 };
 
+const HOLD_DELAY_MS = 350;
+const HOLD_INTERVAL_MS = 90;
+
+/**
+ * Chevron that steps once per tap and auto-repeats while held — makes
+ * 1-minute stepping usable without demanding 59 taps. The single step fires
+ * on press-UP (onPress) and the repeat starts from onLongPress: a scroll
+ * drag that merely begins on the chevron is terminated by the ScrollView
+ * before either fires, so it can never mutate the time. (RN suppresses
+ * onPress after onLongPress, so a held press doesn't double-step.)
+ */
+function RepeatChevron({
+  onStep,
+  accessibilityLabel,
+  glyph,
+  color,
+}: {
+  onStep: () => void;
+  accessibilityLabel: string;
+  glyph: string;
+  color: string;
+}) {
+  const stepRef = useRef(onStep);
+  stepRef.current = onStep;
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const stop = useCallback(() => {
+    if (timerRef.current !== null) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const startRepeat = useCallback(() => {
+    stepRef.current();
+    const tick = () => {
+      stepRef.current();
+      timerRef.current = setTimeout(tick, HOLD_INTERVAL_MS);
+    };
+    timerRef.current = setTimeout(tick, HOLD_INTERVAL_MS);
+  }, []);
+
+  useEffect(() => stop, [stop]);
+
+  return (
+    <Pressable
+      onPress={() => stepRef.current()}
+      onLongPress={startRepeat}
+      delayLongPress={HOLD_DELAY_MS}
+      onPressOut={stop}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      hitSlop={10}
+      style={({ pressed }) => [styles.chevron, pressed && { opacity: 0.5 }]}
+    >
+      <Text style={[styles.chevronText, { color }]}>{glyph}</Text>
+    </Pressable>
+  );
+}
+
 function Column({ label, valueText, onUp, onDown, accentColor, chevronColor }: ColumnProps) {
   const { colors } = useTheme();
   return (
     <View style={styles.col}>
-      <Pressable
-        onPress={onUp}
-        accessibilityRole="button"
+      <RepeatChevron
+        onStep={onUp}
         accessibilityLabel={`Increase ${label}`}
-        hitSlop={10}
-        style={({ pressed }) => [styles.chevron, pressed && { opacity: 0.5 }]}
-      >
-        <Text style={[styles.chevronText, { color: chevronColor }]}>▵</Text>
-      </Pressable>
+        glyph="▵"
+        color={chevronColor}
+      />
       <Text style={[styles.value, { color: accentColor }]}>{valueText}</Text>
-      <Pressable
-        onPress={onDown}
-        accessibilityRole="button"
+      <RepeatChevron
+        onStep={onDown}
         accessibilityLabel={`Decrease ${label}`}
-        hitSlop={10}
-        style={({ pressed }) => [styles.chevron, pressed && { opacity: 0.5 }]}
-      >
-        <Text style={[styles.chevronText, { color: chevronColor }]}>▿</Text>
-      </Pressable>
+        glyph="▿"
+        color={chevronColor}
+      />
       <Text style={[styles.label, { color: colors.inkMuted }]}>{label}</Text>
     </View>
   );

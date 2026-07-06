@@ -22,6 +22,12 @@ import {
 } from './aarti';
 import { japamMantras, type JapamMantra } from './japam';
 import {
+  temples,
+  templesInGroup,
+  type TempleEntry,
+  type TheerthGroup,
+} from './theerth/temples';
+import {
   getGitaChapter,
   gitaChaptersManifest,
   type GitaVerse,
@@ -41,6 +47,10 @@ import {
   durgaStotramChaptersManifest,
 } from './durga-stotram';
 import {
+  getSaraswatiStotramChapter,
+  saraswatiStotramChaptersManifest,
+} from './saraswati-stotram';
+import {
   getGaneshStotramChapter,
   ganeshStotramChaptersManifest,
 } from './ganesh-stotram';
@@ -53,14 +63,24 @@ import {
   hanumanAshtakChaptersManifest,
 } from './hanuman-ashtak';
 import {
+  getBajrangBaanChapter,
+  bajrangBaanChaptersManifest,
+  type BajrangBaanVerse,
+} from './bajrang-baan';
+import {
   getRamStutiChapter,
   ramStutiChaptersManifest,
 } from './ram-stuti';
+import {
+  getKrishnaStotramChapter,
+  krishnaStotramChaptersManifest,
+} from './krishna-stotram';
 import {
   getRamcharitmanasChapter,
   ramcharitmanasChaptersManifest,
   type RamcharitmanasVerse,
 } from './ramcharitmanas';
+import { getSanskar, sanskarIds } from './sanskar';
 import { MatchRank, normalize, rankAny } from './searchNormalize';
 
 const CHALISA_IDS: readonly ChalisaId[] = [
@@ -257,6 +277,16 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.id === 'saraswati-stotram') {
+      pushChapteredShivaStrotamShape(
+        verses,
+        entry,
+        saraswatiStotramChaptersManifest,
+        getSaraswatiStotramChapter
+      );
+      continue;
+    }
+
     if (entry.id === 'ganesh-stotram') {
       pushChapteredShivaStrotamShape(
         verses,
@@ -287,12 +317,27 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.id === 'bajrang-baan') {
+      pushChapteredBajrangBaan(verses, entry);
+      continue;
+    }
+
     if (entry.id === 'ram-stuti') {
       pushChapteredShivaStrotamShape(
         verses,
         entry,
         ramStutiChaptersManifest,
         getRamStutiChapter
+      );
+      continue;
+    }
+
+    if (entry.id === 'krishna-stotram') {
+      pushChapteredShivaStrotamShape(
+        verses,
+        entry,
+        krishnaStotramChaptersManifest,
+        getKrishnaStotramChapter
       );
       continue;
     }
@@ -307,8 +352,18 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.category === 'sanskar') {
+      pushSanskar(verses, entry);
+      continue;
+    }
+
     if (entry.category === 'japam') {
       pushJapam(verses, entry);
+      continue;
+    }
+
+    if (entry.category === 'theerth') {
+      pushTheerth(verses, entry);
       continue;
     }
 
@@ -418,6 +473,29 @@ function pushChapteredShivaStrotamShape(
   }
 }
 
+function pushChapteredBajrangBaan(out: SearchVerseEntry[], entry: LibraryEntry) {
+  for (const ch of bajrangBaanChaptersManifest) {
+    const chapter = getBajrangBaanChapter(ch.chapter);
+    chapter.verses.forEach((v: BajrangBaanVerse, idx) => {
+      out.push(
+        makeVerseEntry({
+          sourceId: entry.id,
+          sectionNameHi: entry.nameHi,
+          sectionNameEn: entry.nameEn,
+          chapter: ch.chapter,
+          verseIndex: idx,
+          labelHi: v.labelHi,
+          labelEn: v.labelEn,
+          linesHi: v.lines,
+          linesEn: v.linesEn,
+          meaningHi: v.meaningHi,
+          meaningEn: v.meaningEn,
+        })
+      );
+    });
+  }
+}
+
 function pushChapteredRamcharitmanas(
   out: SearchVerseEntry[],
   entry: LibraryEntry
@@ -450,6 +528,58 @@ function pushAarti(out: SearchVerseEntry[], entry: LibraryEntry) {
   const aarti = aartiCollection[idx];
   if (!aarti) return;
   aarti.verses.forEach((v: AartiVerse, verseIdx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: verseIdx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+const THEERTH_ENTRY_TO_GROUP: Record<string, TheerthGroup | 'all'> = {
+  'dvadasha-jyotirlinga': 'jyotirlinga',
+  'char-dham': 'char-dham',
+  'chota-char-dham': 'chota-char-dham',
+  'shakti-peeth': 'shakti-peeth',
+  'famous-theerth': 'all',
+};
+
+function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const filter = THEERTH_ENTRY_TO_GROUP[entry.id];
+  if (!filter) return;
+  const list: readonly TempleEntry[] =
+    filter === 'all' ? temples : templesInGroup(filter);
+  list.forEach((t, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: t.nameHi,
+        labelEn: t.nameEn,
+        linesHi: [t.nameHi, `${t.cityHi}, ${t.stateHi}`],
+        linesEn: [t.nameEn, `${t.cityEn}, ${t.stateEn}`],
+        meaningHi: `${t.significanceHi}\n${t.originStoryHi}`,
+        meaningEn: `${t.significanceEn}\n${t.originStoryEn}`,
+      })
+    );
+  });
+}
+
+function pushSanskar(out: SearchVerseEntry[], entry: LibraryEntry) {
+  if (!(sanskarIds as readonly string[]).includes(entry.id)) return;
+  const sanskar = getSanskar(entry.id);
+  sanskar.verses.forEach((v, verseIdx) => {
     out.push(
       makeVerseEntry({
         sourceId: entry.id,

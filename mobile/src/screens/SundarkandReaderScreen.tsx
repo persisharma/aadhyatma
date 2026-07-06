@@ -22,13 +22,18 @@ import {
   type SundarkandVerse,
 } from '@/data/sundarkand';
 import { useGitaLanguage } from '@/data/gita/language';
+import { titleFontByLang } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
+import JumpToStartButton from '@/components/JumpToStartButton';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import SundarkandVersePage from '@/components/SundarkandVersePage';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
@@ -61,7 +66,7 @@ const DOT_COUNT = 5;
 export default function SundarkandReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
@@ -164,15 +169,20 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
     [width]
   );
 
+  const goToStart = useCallback(() => {
+    listRef.current?.scrollToIndex({ index: offset, animated: true });
+    setCurrentIndex(0);
+  }, [offset]);
+
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
   }, [currentIndex, verseCount]);
 
-  const title = lang === 'hi' ? sundarkandTitleHi : sundarkandTitleEn;
+  const title = contentByLang(lang, sundarkandTitleHi, sundarkandTitleEn);
   const titleFontFamily =
-    lang === 'hi' ? typography.readerTitle.fontFamily : typography.cardLatin.fontFamily;
+    titleFontByLang(lang);
   const titleItalic = lang === 'en';
 
   const handleScroll = useCallback(
@@ -189,6 +199,13 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
       });
     },
     [width, verseCount, offset]
+  );
+
+  // Re-render visible pages when the language flips, a bookmark toggles, or a
+  // share is in flight — the in-page header actions depend on all three.
+  const listExtraData = useMemo(
+    () => ({ lang, bookmarks, shareBusy }),
+    [lang, bookmarks, shareBusy]
   );
 
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
@@ -246,52 +263,15 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
               >
                 {currentIndex + 1} / {verseCount}
               </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`sundarkand:${chapter.chapter}:${currentIndex}`)}
-                onToggle={() => {
-                  const id = `sundarkand:${chapter.chapter}:${currentIndex}`;
-                  if (isBookmarked(id)) {
-                    removeBookmark(id);
-                  } else {
-                    const v = verses[currentIndex];
-                    addBookmark({
-                      id,
-                      sourceId: 'sundarkand',
-                      chapter: chapter.chapter,
-                      verseIndex: currentIndex,
-                      savedAt: Date.now(),
-                      previewHi: v.lines[0] ?? '',
-                      previewEn: v.linesEn[0] ?? '',
-                    });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = verses[currentIndex];
-                  share(
-                    {
-                      sourceId: 'sundarkand',
-                      sectionNameHi: chapter.titleHi,
-                      sectionNameEn: chapter.titleEn,
-                      verseLabelHi: v.labelHi,
-                      verseLabelEn: v.labelEn,
-                      linesHi: [...v.lines],
-                      linesEn: [...v.linesEn],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                    },
-                    lang
-                  );
-                }}
-              />
             </View>
           </View>
         </View>
 
-        <View style={styles.toggleRow}>
+        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
+
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
+          <AddToRoutineButton sourceId="sundarkand" chapter={chapter.chapter} />
         </View>
 
         <View style={styles.listContainer}>
@@ -299,12 +279,12 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => {
+            renderItem={({ item, index }) => {
               if ('__type' in item && item.__type === 'transition') {
                 return (
                   <NextChapterCard
                     width={width}
-                    nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn}
+                    nextTitle={contentByLang(lang, item.nextTitleHi, item.nextTitleEn)}
                     lang={lang}
                   />
                 );
@@ -313,14 +293,63 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
                 return (
                   <PrevChapterCard
                     width={width}
-                    prevTitle={lang === 'hi' ? item.prevTitleHi : item.prevTitleEn}
+                    prevTitle={contentByLang(lang, item.prevTitleHi, item.prevTitleEn)}
                     lang={lang}
                   />
                 );
               }
-              return <SundarkandVersePage verse={item} sourceId="sundarkand" width={width} />;
+              const verseIdx = index - offset;
+              return (
+                <SundarkandVersePage
+                  verse={item}
+                  sourceId="sundarkand"
+                  width={width}
+                  topActions={
+                    <>
+                      <BookmarkButton
+                        isBookmarked={isBookmarked(`sundarkand:${chapter.chapter}:${verseIdx}`)}
+                        onToggle={() => {
+                          const id = `sundarkand:${chapter.chapter}:${verseIdx}`;
+                          if (isBookmarked(id)) {
+                            removeBookmark(id);
+                          } else {
+                            addBookmark({
+                              id,
+                              sourceId: 'sundarkand',
+                              chapter: chapter.chapter,
+                              verseIndex: verseIdx,
+                              savedAt: Date.now(),
+                              previewHi: item.lines[0] ?? '',
+                              previewEn: item.linesEn[0] ?? '',
+                            });
+                          }
+                        }}
+                      />
+                      <ShareButton
+                        busy={shareBusy}
+                        onPress={() => {
+                          share(
+                            {
+                              sourceId: 'sundarkand',
+                              sectionNameHi: chapter.titleHi,
+                              sectionNameEn: chapter.titleEn,
+                              verseLabelHi: item.labelHi,
+                              verseLabelEn: item.labelEn,
+                              linesHi: [...item.lines],
+                              linesEn: [...item.linesEn],
+                              meaningHi: item.meaningHi,
+                              meaningEn: item.meaningEn,
+                            },
+                            lang
+                          );
+                        }}
+                      />
+                    </>
+                  }
+                />
+              );
             }}
-            extraData={lang}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
@@ -338,6 +367,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
             style={styles.list}
           />
 
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (
@@ -395,7 +425,6 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     textAlign: 'center',
-    includeFontPadding: false,
     marginHorizontal: 4,
   },
   counter: {

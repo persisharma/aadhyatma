@@ -1,0 +1,43 @@
+// Caption / secondary-line font picker.
+//
+// Bilingual rows show a name in one script with its counterpart in the other
+// (a Devanagari line under a Latin one in English mode, and vice versa). Many of
+// these captions hard-coded Cormorant Garamond — a Latin face — so Devanagari
+// rendered in it fell back thin and tiny ("not readable"). Choosing the font from
+// the text's *actual script* keeps every caption legible without each call site
+// having to reason about the active language.
+const DEVANAGARI = /[ऀ-ॿ]/;
+const GUJARATI = /[઀-૿]/;
+const KANNADA = /[ಀ-೿]/;
+
+export function isDevanagari(text: string): boolean {
+  return DEVANAGARI.test(text);
+}
+
+/**
+ * Font family + style for a secondary/caption line, chosen by the script of the
+ * text itself: the matching Noto Serif face (upright) for any Indic script we
+ * support — Devanagari, Gujarati, or Kannada — and Cormorant Garamond italic for
+ * Latin. Spread into a Text style alongside fontSize/color. Choosing the font from
+ * the text's actual script keeps every caption legible whatever the reading
+ * language, including the Gujarati/Kannada renderings derived at runtime.
+ */
+export function captionFont(text: string): { fontFamily: string; fontStyle: 'normal' | 'italic' } {
+  if (GUJARATI.test(text)) return { fontFamily: 'NotoSerifGujarati_500Medium', fontStyle: 'normal' };
+  if (KANNADA.test(text)) return { fontFamily: 'NotoSerifKannada_500Medium', fontStyle: 'normal' };
+  if (DEVANAGARI.test(text)) return { fontFamily: 'NotoSerifDevanagari_500Medium', fontStyle: 'normal' };
+  return { fontFamily: 'CormorantGaramond_400Regular_Italic', fontStyle: 'italic' };
+}
+
+/**
+ * Semibold/title face for a heading whose text is built dynamically (e.g. a
+ * caption prop): the Noto Serif SemiBold for Gujarati/Kannada text, else the
+ * given `fallback`. Use where a fixed Devanagari title token can't tell whether
+ * its content was re-scripted to gu/kn and `lang` isn't in scope. hi/en (the
+ * fallback path) are unchanged.
+ */
+export function titleScriptFont(text: string, fallback: string): string {
+  if (GUJARATI.test(text)) return 'NotoSerifGujarati_600SemiBold';
+  if (KANNADA.test(text)) return 'NotoSerifKannada_600SemiBold';
+  return fallback;
+}

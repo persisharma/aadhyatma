@@ -28,6 +28,21 @@ export default function CategoryIcon({ iconKey }: Props) {
       )}
       {iconKey === 'deity' && <TempleIcon {...paint} />}
       {iconKey === 'aarti' && <DiyaIcon {...paint} />}
+      {iconKey === 'theerth' && <ShikharaIcon {...paint} />}
+      {iconKey === 'sanskar' && <VedaManuscriptIcon {...paint} />}
+    </View>
+  );
+}
+
+function ShikharaIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.shikharaWrap}>
+      <View style={[styles.shikharaFlagPole, { backgroundColor: color }]} />
+      <View style={[styles.shikharaFlag, { borderLeftColor: accent }]} />
+      <View style={[styles.shikharaPeak, { borderBottomColor: color }]} />
+      <View style={[styles.shikharaPeakInner, { borderBottomColor: accent }]} />
+      <View style={[styles.shikharaBase, { backgroundColor: color }]} />
+      <View style={[styles.shikharaStep, { backgroundColor: accent }]} />
     </View>
   );
 }
@@ -497,25 +512,25 @@ const styles = StyleSheet.create({
   },
   flameOuter: {
     position: 'absolute',
-    top: 1,
-    width: 12,
-    height: 18,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 2,
-    transform: [{ rotate: '20deg' }],
+    top: 3,
+    width: 11,
+    height: 11,
+    borderTopLeftRadius: 5.5,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 5.5,
+    borderBottomRightRadius: 5.5,
+    transform: [{ rotate: '-45deg' }],
   },
   flameInner: {
     position: 'absolute',
     top: 7,
-    width: 6,
-    height: 9,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 1,
-    transform: [{ rotate: '20deg' }],
+    width: 5,
+    height: 5,
+    borderTopLeftRadius: 2.5,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 2.5,
+    borderBottomRightRadius: 2.5,
+    transform: [{ rotate: '-45deg' }],
   },
   diyaBowl: {
     position: 'absolute',
@@ -654,5 +669,70 @@ const styles = StyleSheet.create({
     height: 7,
     borderRadius: 4,
     borderWidth: 1.5,
+  },
+  shikharaWrap: {
+    width: 34,
+    height: 32,
+    position: 'relative',
+    alignItems: 'center',
+  },
+  shikharaFlagPole: {
+    position: 'absolute',
+    top: 0,
+    width: 1.5,
+    height: 6,
+    borderRadius: 1,
+  },
+  shikharaFlag: {
+    position: 'absolute',
+    top: 0,
+    left: 18,
+    width: 0,
+    height: 0,
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    borderLeftWidth: 5,
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+  },
+  shikharaPeak: {
+    position: 'absolute',
+    top: 5,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 13,
+    borderRightWidth: 13,
+    borderBottomWidth: 20,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    transform: [{ rotate: '180deg' }],
+  },
+  shikharaPeakInner: {
+    position: 'absolute',
+    top: 11,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 7,
+    borderRightWidth: 7,
+    borderBottomWidth: 11,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    transform: [{ rotate: '180deg' }],
+    opacity: 0.7,
+  },
+  shikharaBase: {
+    position: 'absolute',
+    bottom: 4,
+    width: 28,
+    height: 3,
+    borderRadius: 1.5,
+  },
+  shikharaStep: {
+    position: 'absolute',
+    bottom: 0,
+    width: 22,
+    height: 2.5,
+    borderRadius: 1,
+    opacity: 0.85,
   },
 });

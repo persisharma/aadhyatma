@@ -1,0 +1,104 @@
+# Vrat & Parv Catalog Smoke Test (PRD-09, P1)
+#
+# Verifies the new "Vrat & Parv" (व्रत-पर्व) catalog journey inside the Panchang tab:
+#   1. The [Calendar | Vrat & Parv] segment renders and switches.
+#   2. The browse-by-type landing shows category tiles (Vrat / Festivals / Upvas / Katha).
+#   3. The Katha tile opens the Katha library.
+#   4. A category tile drills into the per-type observance list.
+#   5. Search returns observance results that open a dedicated detail page.
+#   6. The detail page shows About + the Follow CTA, with no "coming soon" placeholder.
+#
+# Language note (same as panchang-smoke): the screen reads the global reading
+# language; default Hindi is Devanagari which Maestro's iOS tree can't read, so
+# we flip to English on More first, then assert English content.
+#
+# Selector notes:
+#   - The segment Pressable exposes its explicit accessibilityLabel
+#     ("Calendar" / "Vrat and Parv"), not the visible "Vrat & Parv" text.
+#   - Category tiles expose "<NameEn>, <count>" (e.g. "Vrat, 52") → match "Vrat,.*".
+#   - Back buttons on the new screens expose accessibilityLabel "Back" (English).
+#   - List/library/landing search fields expose their placeholder text.
+
+appId: host.exp.Exponent
+---
+# ── Boot Vedansh (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Global reading language → English ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Open Panchang tab, switch to the Vrat & Parv segment ──
+- tapOn: "Panchang, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Vrat and Parv"
+    timeout: 30000
+- tapOn: "Vrat and Parv"
+- waitForAnimationToEnd
+
+# ── Landing: browse-by-type tiles ──
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+- assertVisible: "Vrat,.*"
+- assertVisible: "Festivals,.*"
+- assertVisible: "Katha library,.*"
+
+# ── Katha tile → Katha library → back ──
+- tapOn: "Katha library,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search stories…"
+    timeout: 15000
+# Each katha row is a Pressable with an explicit accessibilityLabel
+# "Read katha <Title>" (children collapse into it), so match that, not bare "Read".
+- assertVisible: "Read katha.*"
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Vrat tile → per-type list → back ──
+- tapOn: "Vrat,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search within this list…"
+    timeout: 15000
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Search → result → dedicated detail page ──
+# Search for a specific term so the result row ("Nirjala Ekadashi") is
+# unambiguous vs the search field's own value ("Nirjala").
+- tapOn: "Search vrat, festival, upvas, katha…"
+- inputText: "Nirjala"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Nirjala Ekadashi"
+    timeout: 15000
+- tapOn: "Nirjala Ekadashi"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "About"
+    timeout: 15000
+# The "How to observe" placeholder was removed (hidden until real vidhi content
+# exists), so the detail must NOT show a coming-soon stub. Confirm the Follow CTA
+# renders and the placeholder is gone.
+- assertVisible: "Follow"
+- assertNotVisible: "COMING SOON"
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Restore Hindi default (best-effort) + cleanup ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+- stopApp:
+    appId: host.exp.Exponent

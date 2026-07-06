@@ -8,11 +8,11 @@
  */
 
 import * as Notifications from 'expo-notifications';
+import type { Lang } from '@/data/gita/language';
 import { getVersePool } from '@/data/versePool';
-import { pickVerseForDateKey, toDateKey } from './seed';
+import { assignSlotVerseIndices, toDateKey, type ReminderSlot } from './seed';
 import {
-  applyQuietHours,
-  computeFireDates,
+  computeFireDatesMulti,
   formatNotificationContent,
   IOS_PENDING_CAP,
   NOTIF_IDENTIFIER_PREFIX,
@@ -21,10 +21,11 @@ import {
 } from './pure';
 
 export {
-  applyQuietHours,
   computeFireDates,
+  computeFireDatesMulti,
   formatNotificationContent,
   IOS_PENDING_CAP,
+  MAX_REMINDER_TIMES,
   NOTIF_IDENTIFIER_PREFIX,
   ROLLING_WINDOW_DAYS,
 } from './pure';
@@ -53,29 +54,41 @@ export async function cancelAllDailyVerseNotifications(): Promise<void> {
  */
 export async function scheduleDailyVerseRollingWindow(
   config: DailyReminderConfig,
-  now: Date = new Date()
+  now: Date = new Date(),
+  lang: Lang = 'hi'
 ): Promise<number> {
   await cancelAllDailyVerseNotifications();
 
   if (!config.enabled) return 0;
+  if (config.times.length === 0) return 0;
 
   const pool = getVersePool();
   if (pool.length === 0) return 0;
 
-  const adjustedTime = applyQuietHours(config.time, config.quietStart, config.quietEnd);
-  const dates = computeFireDates(adjustedTime, now);
+  const dates = computeFireDatesMulti(config.times, now);
 
-  // Hard cap: never exceed iOS's pending-notification budget.
+  // Hard cap: never exceed iOS's pending-notification budget. When the user
+  // has multiple reminder times, this caps total notifications across all of
+  // them — the nearest fire instants win.
   const limit = Math.min(dates.length, IOS_PENDING_CAP);
+  const fires = dates.slice(0, limit);
+
+  // One verse per slot (day + time). Same-day reminders get distinct verses so
+  // multiple daily reminders deliver different content, not the same verse.
+  const slots: ReminderSlot[] = fires.map((fire) => ({
+    dateKey: toDateKey(fire),
+    hhmm: `${`${fire.getHours()}`.padStart(2, '0')}${`${fire.getMinutes()}`.padStart(2, '0')}`,
+  }));
+  const verseIndices = assignSlotVerseIndices(slots, pool.length);
 
   let scheduled = 0;
-  for (let i = 0; i < limit; i += 1) {
-    const fire = dates[i];
-    const dateKey = toDateKey(fire);
-    const verse = pickVerseForDateKey(dateKey, pool);
+  for (let i = 0; i < fires.length; i += 1) {
+    const fire = fires[i];
+    const { dateKey, hhmm } = slots[i];
+    const verse = pool[verseIndices[i]];
     if (!verse) continue;
 
-    const { title, body } = formatNotificationContent(verse);
+    const { title, body } = formatNotificationContent(verse, lang);
     const payload: NotificationPayload = {
       type: 'daily-verse',
       dateKey,
@@ -86,7 +99,7 @@ export async function scheduleDailyVerseRollingWindow(
 
     try {
       await Notifications.scheduleNotificationAsync({
-        identifier: `${NOTIF_IDENTIFIER_PREFIX}:${dateKey}`,
+        identifier: `${NOTIF_IDENTIFIER_PREFIX}:${dateKey}:${hhmm}`,
         content: {
           title,
           body,
@@ -100,7 +113,7 @@ export async function scheduleDailyVerseRollingWindow(
       });
       scheduled += 1;
     } catch {
-      // Per-day scheduling failure is non-fatal — a future PRD-06 diagnostics
+      // Per-slot scheduling failure is non-fatal — a future PRD-06 diagnostics
       // pass can ingest these via a local crash log.
     }
   }

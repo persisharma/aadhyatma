@@ -2,7 +2,7 @@
   "chapter": 2,
   "titleHi": "ध्यानम्",
   "titleEn": "Dhyanam",
-  "verseCount": 5,
+  "verseCount": 8,
   "verses": [
     {
       "id": "vs-2-0",
@@ -24,60 +24,132 @@
       "chapter": 2,
       "number": 1,
       "sanskrit": [
-        "क्षीरोदन्वत्प्रदेशे शुचिमणिविलसत्सैकतेमौक्तिकानां",
-        "मालाक्लुप्तासनस्थः स्फटिकमणिनिभैर्मौक्तिकैर्मण्डिताङ्गः।"
+        "क्षीरोदन्वत्प्रदेशे शुचिमणिविलसत्सैकते मौक्तिकानां",
+        "मालाक्लृप्तासनस्थः स्फटिकमणिनिभैर्मौक्तिकैर्मण्डिताङ्गः।",
+        "शुभ्रैरभ्रैरदभ्रैरुपरिविरचितैर्मुक्तपीयूषवर्षै-",
+        "रानन्दी नः पुनीयादरिनलिनगदाशङ्खपाणिर्मुकुन्दः।।"
       ],
       "linesEn": [
-        "kṣhīrodanvatpradeśhe śhuchmaṇivilasatsaikatemaūktikānāṁ",
-        "mālākḷuptāsanasthaḥ sphaṭikamaṇinibhairmaūktikairmaṇḍitāṅgaḥ"
+        "kṣhīrodanvatpradeśhe śhuchimaṇivilasatsaikate mauktikānāṁ",
+        "mālākḷptāsanasthaḥ sphaṭikamaṇinibhairmauktikairmaṇḍitāṅgaḥ",
+        "śhubhrairabhrairadabhrairuparivirachitairmuktapīyūṣhavarṣhai-",
+        "rānandī naḥ punīyādarinalinagadāśhaṅkhapāṇirmukuundaḥ"
       ],
-      "meaningHi": "क्षीरसागर (दूध के सागर) के तट पर, शुद्ध मणियों और मोतियों से चमकती बालू पर, मोतियों की माला से सुशोभित आसन पर विराजमान, स्फटिक मणि के समान मोतियों से अलंकृत अंगों वाले विष्णु का ध्यान करना चाहिए।\n\nक्षीरसागर — वैकुण्ठ से पहले विष्णु का निवास, जहाँ वे शेषनाग पर शयन करते हैं। समुद्र मंथन भी यहीं हुआ था।",
-      "meaningEn": "One should meditate upon Vishnu — seated on a throne adorned with pearl garlands on the shore of the Milky Ocean, where the sand glistens with pure gems and pearls, his limbs decorated with pearls resembling crystal gems.\n\nThe Milky Ocean (Kshirasagara) is Vishnu's abode before Vaikuntha, where he reclines on Shesha Naga. The churning of the ocean also took place here."
+      "meaningHi": "क्षीरसागर (दूध के सागर) के तट पर, शुद्ध मणियों और मोतियों से चमकती बालू पर, मोतियों की माला से सुशोभित आसन पर विराजमान, स्फटिक मणि के समान मोतियों से अलंकृत अंगों वाले, ऊपर श्वेत, घने बादल छाए हैं जो अमृत की वर्षा करते हैं — ऐसे विष्णु, जिनके हाथों में चक्र, कमल, गदा और शंख हैं — वे आनन्दमय मुकुन्द हमें पवित्र करें।\n\nक्षीरसागर — वैकुण्ठ से पहले विष्णु का निवास। 'मुकुन्द' — मुक्ति प्रदान करने वाले। चार आयुध: सुदर्शन चक्र (धर्म-रक्षा), पद्म (सृष्टि), कौमोदकी गदा (बल), पाञ्चजन्य शंख (ॐकार-ध्वनि)।",
+      "meaningEn": "On the shore of the Milky Ocean, where the sand glistens with pure gems, seated on a throne adorned with pearl garlands, his limbs decorated with pearls resembling crystal gems, above are pure dense clouds raining nectar — may that blissful Mukunda, with discus, lotus, mace, and conch in hand, purify us.\n\nThe Milky Ocean (Kshirasagara) is Vishnu's abode. 'Mukunda' means 'giver of liberation.' The four weapons: Sudarshana Chakra (dharma protection), Padma (creation), Kaumodaki Gada (strength), Panchajanya Shankha (sound of Om)."
     },
     {
       "id": "vs-2-2",
       "chapter": 2,
       "number": 2,
       "sanskrit": [
-        "शुभ्रैरभ्रैरदभ्रैरुपरिविरचितैर्मुक्तपीयूषवर्षैः",
-        "आनन्दी नः पुनीयादरिनलिनगदाशङ्खपाणिर्मुकुन्दः।।"
+        "भूः पादौ यस्य नाभिर्वियदसुरनिलश्चन्द्रसूर्यौ च नेत्रे",
+        "कर्णावाशाः शिरो द्यौर्मुखमपि दहनो यस्य वास्तेयमब्धिः।",
+        "अन्तःस्थं यस्य विश्वं सुरनरखगगोभोगिगन्धर्वदैत्यैः",
+        "चित्रं रंरम्यते तं त्रिभुवनवपुषं विष्णुमीशं नमामि।।"
       ],
       "linesEn": [
-        "śhubhrairabhrairadabhrairuparivirachitairmuktapīyūṣhavarṣhaiḥ",
-        "ānandī naḥ punīyādarinalinagadāśhaṅkhapāṇirmukuundaḥ"
+        "bhūḥ pādau yasya nābhirviyadasuranilāśhchandrasūryau cha netre",
+        "karṇāvāśhāḥ śhiro dyaurmukhamapi dahano yasya vāsteyamabdhiḥ",
+        "antaḥsthaṁ yasya viśhvaṁ suranarakhaghagobhogigandharvadaityaiḥ",
+        "chitraṁ raṁramyate taṁ tribhuvanavapuṣhaṁ viṣhṇumīśhaṁ namāmi"
       ],
-      "meaningHi": "ऊपर श्वेत, घने बादल छाए हैं जो अमृत की वर्षा करते हैं। ऐसे विष्णु — जिनके हाथों में चक्र, कमल, गदा और शंख हैं — वे आनन्दमय मुकुन्द हमें पवित्र करें।\n\n'मुकुन्द' — मुक्ति प्रदान करने वाले। चार आयुध: सुदर्शन चक्र (धर्म-रक्षा), पद्म (सृष्टि), कौमोदकी गदा (बल), पाञ्चजन्य शंख (ॐकार-ध्वनि)।",
-      "meaningEn": "Above are pure, dense clouds raining nectar. May that blissful Mukunda — with discus, lotus, mace, and conch in hand — purify us.\n\n'Mukunda' means 'giver of liberation.' The four weapons: Sudarshana Chakra (dharma protection), Padma (creation), Kaumodaki Gada (strength), Panchajanya Shankha (sound of Om)."
+      "meaningHi": "जिनके चरण पृथ्वी हैं, नाभि आकाश है, प्राण वायु है, नेत्र चन्द्र-सूर्य हैं, कान दिशाएँ हैं, सिर स्वर्ग है, मुख अग्नि है, और जिनकी कमर समुद्र है। जिनके भीतर यह विश्व स्थित है — देवता, मनुष्य, पक्षी, गाय, सर्प, गन्धर्व, दैत्य — सबके साथ विचित्र रूप से रमण करता है। उन तीनों लोकों को शरीर बनाने वाले विष्णु ईश्वर को मैं प्रणाम करता हूँ।\n\nयह विराट रूप (cosmic form) का वर्णन है — पुरुष सूक्त (ऋग्वेद) की भाँति, समग्र ब्रह्माण्ड विष्णु का शरीर है। गीता अध्याय 11 में अर्जुन को भी यही रूप दिखाया गया।",
+      "meaningEn": "He whose feet are the earth, navel the sky, breath the wind, eyes the moon and sun, ears the directions, head the heavens, mouth the fire, and waist the ocean. Within whom this universe exists — gods, humans, birds, cattle, serpents, Gandharvas, demons — all play wonderfully. I bow to that Vishnu, the Lord, whose body encompasses the three worlds.\n\nThis describes the Virat Rupa (cosmic form) — like the Purusha Sukta (Rig Veda), the entire universe is Vishnu's body. Arjuna was shown this same form in Gita Chapter 11."
     },
     {
       "id": "vs-2-3",
       "chapter": 2,
       "number": 3,
       "sanskrit": [
-        "भूः पादौ यस्य नाभिर्वियदसुरनिलश्चन्द्रसूर्यौ च नेत्रे।",
-        "कर्णावाशाः शिरो द्यौर्मुखमपि दहनो यस्य वास्तेयमब्धिः।।"
+        "ॐ नमो भगवते वासुदेवाय।।"
       ],
       "linesEn": [
-        "bhūḥ pādau yasya nābhirviyasuranilāśhchandrasūryau cha netre",
-        "karṇāvāśhāḥ śhiro dyaurmukhamapi dahano yasya vāsteyamabdhiḥ"
+        "oṁ namo bhagavate vāsudevāya"
       ],
-      "meaningHi": "जिनके चरण पृथ्वी हैं, नाभि आकाश है, प्राण वायु है, नेत्र चन्द्र-सूर्य हैं, कान दिशाएँ हैं, सिर स्वर्ग है, मुख अग्नि है, और जिनकी कमर (वास) समुद्र है — ऐसे विराट पुरुष का ध्यान करें।\n\nयह विराट रूप (cosmic form) का वर्णन है — पुरुष सूक्त (ऋग्वेद) की भाँति, समग्र ब्रह्माण्ड विष्णु का शरीर है। गीता अध्याय 11 में अर्जुन को भी यही रूप दिखाया गया।",
-      "meaningEn": "He whose feet are the earth, navel the sky, breath the wind, eyes the moon and sun, ears the directions, head the heavens, mouth the fire, and waist the ocean — meditate upon that cosmic being.\n\nThis describes the Virat Rupa (cosmic form) — like the Purusha Sukta (Rig Veda), the entire universe is Vishnu's body. Arjuna was shown this same form in Gita Chapter 11."
+      "meaningHi": "ॐ! भगवान वासुदेव को नमस्कार।\n\nयह द्वादशाक्षर मन्त्र (12 अक्षर) वैष्णव परम्परा का सर्वश्रेष्ठ मन्त्र है। 'वासुदेव' = वसुदेव के पुत्र कृष्ण, और सर्वव्यापी परमात्मा। यह मन्त्र ध्यान और मुख्य स्तोत्र के बीच सेतु का कार्य करता है।",
+      "meaningEn": "Om! Salutations to Bhagavan Vasudeva.\n\nThis is the Dvadasakshara mantra (12 syllables) — the supreme mantra of the Vaishnava tradition. 'Vasudeva' = son of Vasudeva (Krishna), and the all-pervading Supreme Self. This mantra serves as a bridge between the meditation and the main stotram."
     },
     {
       "id": "vs-2-4",
       "chapter": 2,
       "number": 4,
       "sanskrit": [
-        "अन्तःस्थं यस्य विश्वं सुरनरखगगोभोगिगन्धर्वदैत्यैः।",
-        "चित्रं रंरम्यते तं त्रिभुवनवपुषं विष्णुमीशं नमामि।।"
+        "शान्ताकारं भुजगशयनं पद्मनाभं सुरेशं",
+        "विश्वाधारं गगनसदृशं मेघवर्णं शुभाङ्गम्।",
+        "लक्ष्मीकान्तं कमलनयनं योगिभिर्ध्यानगम्यं",
+        "वन्दे विष्णुं भवभयहरं सर्वलोकैकनाथम्।।"
       ],
       "linesEn": [
-        "antaḥsthaṁ yasya viśhvaṁ suranarakhaghagobhogigandharvadaityaiḥ",
-        "chitraṁ raṁramyate taṁ tribhuvana-vapuṣhaṁ viṣhṇumīśhaṁ namāmi"
+        "śhāntākāraṁ bhujagaśhayanaṁ padmanābhaṁ sureśhaṁ",
+        "viśhvādhāraṁ gaganasadṛiśhaṁ meghavarṇaṁ śhubhāṅgam",
+        "lakṣhmīkāntaṁ kamalanayanaṁ yogibhirdhyānagamyaṁ",
+        "vande viṣhṇuṁ bhavabhayaharaṁ sarvalokaikanātham"
       ],
-      "meaningHi": "जिनके भीतर यह विश्व स्थित है — देवता, मनुष्य, पक्षी, गाय, सर्प, गन्धर्व, दैत्य — सबके साथ विचित्र रूप से रमण करता है। उन तीनों लोकों को शरीर बनाने वाले विष्णु ईश्वर को मैं प्रणाम करता हूँ।\n\nयह ध्यान-श्लोकों का अन्तिम है। ध्यान के बाद मुख्य सहस्रनाम पाठ आरम्भ होता है।",
-      "meaningEn": "Within whom this universe exists — gods, humans, birds, cattle, serpents, Gandharvas, demons — all play wonderfully. I bow to that Vishnu, the Lord, whose body encompasses the three worlds.\n\nThis is the final meditation verse. After dhyanam, the main Sahasranama recitation begins."
+      "meaningHi": "शान्त स्वरूप वाले, शेषनाग की शय्या पर शयन करने वाले, कमल-नाभि वाले, देवताओं के ईश्वर, विश्व के आधार, आकाश के समान व्यापक, मेघ के समान श्याम वर्ण, सुन्दर अंगों वाले, लक्ष्मी के प्रिय, कमल-नेत्र, योगियों द्वारा ध्यान से प्राप्य, संसार-भय को हरने वाले, सभी लोकों के एकमात्र स्वामी — ऐसे विष्णु को मैं वन्दन करता हूँ।\n\nयह विष्णु सहस्रनाम का सबसे प्रसिद्ध ध्यान-श्लोक है। अधिकांश विष्णु मन्दिरों में इसका दैनिक पाठ होता है। इसमें विष्णु के सगुण रूप का सम्पूर्ण चित्रण है।",
+      "meaningEn": "I bow to Vishnu — of serene form, reclining on the serpent (Shesha), lotus-naveled, lord of the gods, support of the universe, vast as the sky, cloud-complexioned, with auspicious limbs, beloved of Lakshmi, lotus-eyed, attainable through meditation by yogis, remover of the fear of worldly existence, the sole lord of all worlds.\n\nThis is the most famous dhyana shloka of Vishnu Sahasranama. It is recited daily in most Vishnu temples. It provides a complete portrait of Vishnu's divine form with attributes."
+    },
+    {
+      "id": "vs-2-5",
+      "chapter": 2,
+      "number": 5,
+      "sanskrit": [
+        "मेघश्यामं पीतकौशेयवासं",
+        "श्रीवत्साङ्कं कौस्तुभोद्भासिताङ्गम्।",
+        "पुण्योपेतं पुण्डरीकायताक्षं",
+        "विष्णुं वन्दे सर्वलोकैकनाथम्।।"
+      ],
+      "linesEn": [
+        "meghaśhyāmaṁ pītakauśheyavāsaṁ",
+        "śhrīvatsāṅkaṁ kaustubhodbhāsitāṅgam",
+        "puṇyopetaṁ puṇḍarīkāyatākṣhaṁ",
+        "viṣhṇuṁ vande sarvalokaikanātham"
+      ],
+      "meaningHi": "मेघ के समान श्याम वर्ण, पीत (पीले) रेशमी वस्त्र धारण किए हुए, श्रीवत्स चिह्न वाले, कौस्तुभ मणि से उद्भासित अंगों वाले, पुण्य-सम्पन्न, कमल के समान विशाल नेत्रों वाले, सभी लोकों के एकमात्र स्वामी विष्णु को मैं वन्दन करता हूँ।\n\nश्रीवत्स — विष्णु के वक्षस्थल पर स्थित चिह्न जहाँ लक्ष्मी का निवास है। कौस्तुभ — समुद्र मंथन से प्राप्त अमूल्य मणि जो विष्णु के वक्ष पर शोभित है। पीताम्बर — विष्णु का प्रसिद्ध पीला वस्त्र।",
+      "meaningEn": "I bow to Vishnu — dark as a rain cloud, wearing yellow silken garments, bearing the Shrivatsa mark, body illuminated by the Kaustubha gem, endowed with merit, with wide lotus-like eyes, the sole lord of all worlds.\n\nShrivatsa — the mark on Vishnu's chest where Lakshmi resides. Kaustubha — the priceless gem obtained from the churning of the ocean, adorning Vishnu's chest. Pitambara — Vishnu's famous yellow garment."
+    },
+    {
+      "id": "vs-2-6",
+      "chapter": 2,
+      "number": 6,
+      "sanskrit": [
+        "नमः समस्तभूतानामादिभूताय भूभृते।",
+        "अनेकरूपरूपाय विष्णवे प्रभविष्णवे।।"
+      ],
+      "linesEn": [
+        "namaḥ samastabhūtānāmādibhūtāya bhūbhṛite",
+        "anekarūparūpāya viṣhṇave prabhaviṣhṇave"
+      ],
+      "meaningHi": "समस्त प्राणियों के आदि-स्वरूप, पृथ्वी को धारण करने वाले, अनेक रूपों वाले, सर्वशक्तिमान विष्णु को नमस्कार।\n\nयह श्लोक ध्यान-खण्ड का समापन करता है। 'आदिभूत' — सृष्टि का प्रथम तत्व। 'भूभृत' — वराह अवतार में पृथ्वी को उठाने वाले। 'प्रभविष्णु' — सृजन-शक्ति सम्पन्न।",
+      "meaningEn": "Salutations to Vishnu — the primal essence of all beings, upholder of the earth, manifesting in countless forms, the all-powerful creator.\n\nThis verse concludes the dhyana section. 'Adibhuta' — the first principle of creation. 'Bhubhrit' — who lifted the earth as Varaha. 'Prabhavishnu' — endowed with creative power."
+    },
+    {
+      "id": "vs-2-7",
+      "chapter": 2,
+      "number": 7,
+      "sanskrit": [
+        "सशङ्खचक्रं सकिरीटकुण्डलं",
+        "सपीतवस्त्रं सरसीरुहेक्षणम्।",
+        "सहारवक्षःस्थलकौस्तुभश्रियं",
+        "नमामि विष्णुं शिरसा चतुर्भुजम्।।"
+      ],
+      "linesEn": [
+        "saśhaṅkhachakraṁ sakirīṭakuṇḍalaṁ",
+        "sapītavastraṁ sarasīruhekṣhaṇam",
+        "sahāravakṣhaḥsthalakauṣtubhaśhriyaṁ",
+        "namāmi viṣhṇuṁ śhirasā chaturbhujam"
+      ],
+      "meaningHi": "शंख और चक्र सहित, मुकुट और कुण्डल सहित, पीले वस्त्र सहित, कमल जैसे नेत्रों वाले, वक्षस्थल पर हार और कौस्तुभ मणि की शोभा सहित, चतुर्भुज विष्णु को मैं शिर झुकाकर प्रणाम करता हूँ।\n\nयह ध्यान का अन्तिम श्लोक है — विष्णु की सम्पूर्ण मूर्ति का वर्णन। शंख (पाञ्चजन्य), चक्र (सुदर्शन), मुकुट (किरीट), कुण्डल, पीताम्बर, कमलनयन, हार, और कौस्तुभ — ये विष्णु के आठ प्रमुख चिह्न हैं।",
+      "meaningEn": "I bow my head to the four-armed Vishnu — with conch and discus, wearing a crown and earrings, clad in yellow garments, with lotus-like eyes, chest adorned with a garland and the splendor of the Kaustubha gem.\n\nThis is the final dhyana verse — a complete description of Vishnu's iconic form. Conch (Panchajanya), discus (Sudarshana), crown (Kirita), earrings, yellow garment, lotus eyes, garland, and Kaustubha — these are Vishnu's eight primary insignia."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Vishnu Sahasranama from Mahabharata Anushasana Parva; app stores an excerpt, with main-stotram names 1-287 only.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/vsahasranew.html",
+      "https://www.opensadhaka.com/stotras/vishnu-sahasranama",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

@@ -1,20 +1,262 @@
 {
-  "titleHi": "ॐ जय शिव ओमकारा",
+  "titleHi": "ॐ जय शिव ओंकारा",
   "titleEn": "Om Jai Shiv Omkara",
   "subtitleHi": "आरती श्री शिव जी की",
   "subtitleEn": "Aarti of Lord Shiva",
   "deity": "shiva",
   "language": "hi-en",
-  "source": {"baseText": "Traditional Shiva Aarti", "retrievedOn": "2026-05-08"},
-  "counts": {"totalVerses": 8},
+  "source": {
+    "baseText": "Om Jai Shiv Omkara Aarti, checked against Drik Panchang, HinduNidhi, and Bhakti Bharat.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/lord-shiva/shiva-aarti.html?ck=1&lang=hi",
+      "https://hindunidhi.com/shiv-ji-aarti-hindi/",
+      "https://www.bhaktibharat.com/aarti/shiv-aarti"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
+  "counts": {
+    "totalVerses": 12
+  },
   "verses": [
-    {"id": "ojso-01", "type": "stanza", "section": "body", "number": 1, "labelHi": "पद १", "labelEn": "Stanza 1", "lines": ["ॐ जय शिव ओमकारा, स्वामी जय शिव ओमकारा।", "ब्रह्मा विष्णु सदाशिव, अर्द्धांगी धारा।।"], "linesEn": ["Om jai Shiv Omkaara, Swami jai Shiv Omkaara.", "Brahma Vishnu Sadaashiv, ardhaangee dhaaraa."], "meaningHi": "'ओमकारा' — ॐ (प्रणव) का स्वरूप। शिव ही ॐ हैं — यह शैव दर्शन का मूल है। 'ब्रह्मा विष्णु सदाशिव' — त्रिमूर्ति में शिव 'सदाशिव' (सनातन शिव) हैं — सृष्टि (ब्रह्मा), पालन (विष्णु) से परे, शाश्वत। 'अर्द्धांगी धारा' — पार्वती को अर्धांगिनी (शरीर का आधा भाग) धारण किया — अर्द्धनारीश्वर रूप।", "meaningEn": "'Omkara' — the form of Om (Pranava). Shiva IS Om — this is the foundation of Shaiva philosophy. 'Brahma Vishnu Sadashiv' — in the Trinity, Shiva is 'Sadashiva' (eternal Shiva) — beyond creation (Brahma) and sustenance (Vishnu), eternal. 'Ardhangi Dhara' — bearing Parvati as half the body — the Ardhanarishvara form."},
-    {"id": "ojso-02", "type": "stanza", "section": "body", "number": 2, "labelHi": "पद २", "labelEn": "Stanza 2", "lines": ["एकानन चतुरानन पंचानन राजे।", "हंसासन गरुड़ासन वृषवाहन साजे।।"], "linesEn": ["Ekaanan chaturaanan panchaanan raaje.", "Hansaasan Garudaasan vrishvaahan saaje."], "meaningHi": "'एकानन' (एक मुख — शिव), 'चतुरानन' (चार मुख — ब्रह्मा), 'पंचानन' (पाँच मुख — शिव का पंचमुखी रूप) — तीनों विराजते हैं। हंसासन (ब्रह्मा — हंस पर), गरुड़ासन (विष्णु — गरुड़ पर), वृषवाहन (शिव — नन्दी बैल पर)। एक ही पद में तीनों देवों के वाहन — यह दर्शाता है कि शिव-आरती त्रिमूर्ति-स्तुति भी है।", "meaningEn": "'Ekanan' (one-faced — Shiva), 'Chaturanan' (four-faced — Brahma), 'Panchanan' (five-faced — Shiva's Panchamukhi form) — all three reign. Swan-seated (Brahma), Garuda-seated (Vishnu), Bull-vehicled (Shiva on Nandi). All three deities' vehicles in one verse — showing this Shiva aarti is also a Trinity hymn."},
-    {"id": "ojso-03", "type": "stanza", "section": "body", "number": 3, "labelHi": "पद ३", "labelEn": "Stanza 3", "lines": ["दो भुज चार चतुर्भुज दसभुज अति सोहे।", "तीनों रूप निरखता त्रिभुवन जन मोहे।।"], "linesEn": ["Do bhuj chaar chaturbhuj dasbhuj ati sohe.", "Teenon roop nirakhta tribhuvan jan mohe."], "meaningHi": "दो भुज (शिव — सामान्य), चार भुज (विष्णु — चतुर्भुज), दस भुज (शिव/दुर्गा — दशभुज) — अत्यन्त शोभित हैं। तीनों रूपों को देखकर तीनों लोकों के जन मोहित होते हैं। संख्या-प्रतीकवाद: 2 (शिव की सरलता), 4 (विष्णु की पूर्णता), 10 (शक्ति की बहुमुखी सामर्थ्य)।", "meaningEn": "Two arms (Shiva — simplicity), four arms (Vishnu — chaturbhuj), ten arms (Shiva/Durga — dashabhuj) — all look magnificent. Seeing these three forms, beings of all three worlds are enchanted. Number symbolism: 2 (Shiva's simplicity), 4 (Vishnu's completeness), 10 (Shakti's multifaceted power)."},
-    {"id": "ojso-04", "type": "stanza", "section": "body", "number": 4, "labelHi": "पद ४", "labelEn": "Stanza 4", "lines": ["अक्षमाला वनमाला मुण्डमाला धारी।", "चन्दन मृगमद सोहै भोले शुभकारी।।"], "linesEn": ["Akshamaala vanmaala mundmaala dhaaree.", "Chandan mrigmad sohai Bhole shubhkaaree."], "meaningHi": "'अक्षमाला' (रुद्राक्ष माला — जप हेतु), 'वनमाला' (वनफूलों की माला — प्रकृति-प्रेम), 'मुण्डमाला' (खोपड़ियों की माला — संहार-शक्ति)। तीन माला = तीन गुण (सत्व, रजस, तमस)। 'मृगमद' — कस्तूरी (हिरण की नाभि से)। 'भोले' — शिव का लोक-प्रिय नाम — 'भोलेनाथ' — सरल, निश्छल, शीघ्र प्रसन्न होने वाले।", "meaningEn": "'Akshamala' (Rudraksha beads — for chanting), 'Vanamala' (forest flower garland — nature love), 'Mundamala' (skull garland — destructive power). Three garlands = three Gunas (Sattva, Rajas, Tamas). 'Mrigmad' — musk (from deer's navel). 'Bhole' — Shiva's popular folk name — 'Bholenath' — simple, innocent, easily pleased."},
-    {"id": "ojso-05", "type": "stanza", "section": "body", "number": 5, "labelHi": "पद ५", "labelEn": "Stanza 5", "lines": ["श्वेतांबर पीतांबर बाघम्बर अंगे।", "सनकादिक ब्रह्मादिक भूतादिक संगे।।"], "linesEn": ["Shvetaambar peetaambar baaghaambar ange.", "Sanakaadik Brahmaadik bhootaadik sange."], "meaningHi": "'श्वेताम्बर' (सफेद वस्त्र — सत्व), 'पीताम्बर' (पीला — विष्णु-अंश), 'बाघम्बर' (बाघछाला — शिव की तपस्वी वेशभूषा)। 'सनकादिक' (सनक-सनन्दन-सनातन-सनत्कुमार — ब्रह्मा के मानस-पुत्र), 'ब्रह्मादिक' (ब्रह्मा आदि देव), 'भूतादिक' (भूत-प्रेत-गण — शिव के अनुचर)। शिव का दरबार: ऋषि, देवता, और भूतगण — सब साथ बैठते हैं।", "meaningEn": "'Shvetambar' (white garment — Sattva), 'Pitambar' (yellow — Vishnu aspect), 'Baghaambar' (tiger skin — Shiva's ascetic attire). 'Sanakadik' (Sanaka-Sanandana-Sanatana-Sanatkumara — Brahma's mind-born sons), 'Brahmadik' (Brahma and other gods), 'Bhutadik' (ghosts and spirits — Shiva's attendants). Shiva's court: sages, gods, and ghost-beings all sit together."},
-    {"id": "ojso-06", "type": "stanza", "section": "body", "number": 6, "labelHi": "पद ६", "labelEn": "Stanza 6", "lines": ["कर के मध्य कमण्डलु चक्र त्रिशूल धर्ता।", "जगकर्ता जगभर्ता जगसंहारकर्ता।।"], "linesEn": ["Kar ke madhya kamandalu chakra trishool dhartaa.", "Jagkartaa jagbhartaa jagsanhaarkartaa."], "meaningHi": "'कमण्डलु' (तपस्वी का जल-पात्र — ज्ञान), 'चक्र' (सुदर्शन — विष्णु-शक्ति), 'त्रिशूल' (शिव का प्रमुख अस्त्र — तीन शक्तियों का प्रतीक: इच्छा, ज्ञान, क्रिया)। 'जगकर्ता-भर्ता-संहारकर्ता' — सृष्टि-पालन-संहार: त्रिमूर्ति के तीनों कार्य शिव में एकीकृत। शैव-सिद्धान्त में शिव पंचकृत्य (5 कार्य) करते हैं: सृष्टि, स्थिति, संहार, तिरोभाव, अनुग्रह।", "meaningEn": "'Kamandalu' (ascetic's water vessel — knowledge), 'Chakra' (Sudarshana — Vishnu's power), 'Trishul' (Shiva's primary weapon — symbol of three powers: will, knowledge, action). 'Creator-Sustainer-Destroyer of the world' — all three Trinity functions unified in Shiva. In Shaiva Siddhanta, Shiva performs five acts: creation, sustenance, destruction, concealment, and grace."},
-    {"id": "ojso-07", "type": "stanza", "section": "body", "number": 7, "labelHi": "पद ७", "labelEn": "Stanza 7", "lines": ["ब्रह्मा विष्णु सदाशिव जानत अविवेका।", "प्रणवाक्षर के मध्ये यह तीनों एका।।"], "linesEn": ["Brahma Vishnu Sadaashiv jaanat avivekaa.", "Pranavaakshar ke madhye yah teenon ekaa."], "meaningHi": "'अविवेका' — विवेकहीन (अज्ञानी) लोग ब्रह्मा, विष्णु, शिव को अलग-अलग जानते हैं। 'प्रणवाक्षर' (ॐ) के मध्य ये तीनों एक ही हैं! ॐ = अ (ब्रह्मा) + उ (विष्णु) + म (शिव)। यह अद्वैत का सार है — माण्डूक्य उपनिषद में ॐ के तीन मात्राओं का यही विश्लेषण है।", "meaningEn": "'Aviveka' — the undiscerning (ignorant) consider Brahma, Vishnu, Shiva separate. Within the Pranava syllable (Om), these three are ONE! Om = A (Brahma) + U (Vishnu) + M (Shiva). This is the essence of Advaita — Mandukya Upanishad analyzes Om's three matras exactly this way."},
-    {"id": "ojso-08", "type": "stanza", "section": "body", "number": 8, "labelHi": "पद ८", "labelEn": "Stanza 8", "lines": ["ॐ जय शिव ओमकारा, स्वामी जय शिव ओमकारा।", "ब्रह्मा विष्णु सदाशिव, अर्द्धांगी धारा।।"], "linesEn": ["Om jai Shiv Omkaara, Swami jai Shiv Omkaara.", "Brahma Vishnu Sadaashiv, ardhaangee dhaaraa."], "meaningHi": "समापन: प्रथम पद की पुनरावृत्ति। आरती चक्रीय है — जैसे ॐ अनन्त है, आरती भी अनन्त-चक्र में लौटती है। यह 'नित्य-पूजा' का भाव है: आरती कभी 'समाप्त' नहीं होती, बस एक चक्र पूर्ण होता है — कल फिर होगी।", "meaningEn": "Closing: repetition of the first verse. Aarti is circular — as Om is infinite, aarti too returns in an endless cycle. This embodies 'Nitya Puja' (daily worship): aarti never truly 'ends,' only one cycle completes — tomorrow it happens again."}
+    {
+      "id": "ojso-01",
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "ॐ जय शिव ओंकारा, स्वामी जय शिव ओंकारा।",
+        "ब्रह्मा, विष्णु, सदाशिव, अर्द्धांगी धारा॥"
+      ],
+      "linesEn": [
+        "Om jai Shiv Onkaaraa, Swami jai Shiv Onkaaraa.",
+        "Brahma, Vishnu, Sadaashiv, ardhaangi dhaaraa."
+      ],
+      "meaningHi": "ॐ रूप शिव की जय हो, हे स्वामी; आप ही ब्रह्मा, विष्णु और सदाशिव हैं और (पार्वती को) अर्द्धांगिनी रूप में धारण करते हैं।",
+      "meaningEn": "Om, victory to Shiva the primordial sound; O Lord, you are Brahma, Vishnu and Sadashiva, and you bear Parvati as half of your body.",
+      "meaningGu": "ૐ સ્વરૂપ શિવનો જય હો, હે સ્વામી; આપ જ બ્રહ્મા, વિષ્ણુ અને સદાશિવ છો અને (પાર્વતીને) અર્ધાંગિની રૂપે ધારણ કરો છો.",
+      "meaningKn": "ಓಂ ಸ್ವರೂಪರಾದ ಶಿವನಿಗೆ ಜಯವಾಗಲಿ, ಓ ಸ್ವಾಮಿಯೇ; ತಾವೇ ಬ್ರಹ್ಮ, ವಿಷ್ಣು ಮತ್ತು ಸದಾಶಿವರಾಗಿದ್ದು, ಪಾರ್ವತಿದೇವಿಯನ್ನು ತಮ್ಮ ಅರ್ಧಾಂಗಿಯಾಗಿ ಧರಿಸಿದ್ದೀರಿ.",
+      "type": "refrain",
+      "section": "body",
+      "number": 1
+    },
+    {
+      "id": "ojso-02",
+      "labelHi": "पद · १",
+      "labelEn": "Verse · 1",
+      "lines": [
+        "एकानन चतुरानन पञ्चानन राजे।",
+        "हंसासन गरूड़ासन वृषवाहन साजे॥"
+      ],
+      "linesEn": [
+        "Ekaanan chaturaanan panchaanan raaje.",
+        "Hansaasan garudaasan vrishvaahan saaje."
+      ],
+      "meaningHi": "आप एक मुख, चार मुख और पाँच मुख वाले रूपों में सुशोभित हैं; हंस, गरुड़ और वृषभ (नन्दी) के वाहनों से सजे हैं।",
+      "meaningEn": "You shine as the one-faced, four-faced and five-faced forms; adorned with the swan, the Garuda and the bull (Nandi) as your mounts.",
+      "meaningGu": "આપ એક મુખ, ચાર મુખ અને પાંચ મુખવાળાં રૂપોમાં શોભો છો; હંસ, ગરુડ અને વૃષભ (નંદી)નાં વાહનોથી સજ્જ છો.",
+      "meaningKn": "ತಾವು ಏಕಮುಖ, ಚತುರ್ಮುಖ ಮತ್ತು ಪಂಚಮುಖ ರೂಪಗಳಲ್ಲಿ ಕಂಗೊಳಿಸುತ್ತೀರಿ; ಹಂಸ, ಗರುಡ ಮತ್ತು ವೃಷಭನಾದ ನಂದಿ ಎಂಬ ವಾಹನಗಳಿಂದ ಅಲಂಕರಿತರಾಗಿದ್ದೀರಿ.",
+      "type": "stanza",
+      "section": "body",
+      "number": 2
+    },
+    {
+      "id": "ojso-03",
+      "labelHi": "पद · २",
+      "labelEn": "Verse · 2",
+      "lines": [
+        "दो भुज चार चतुर्भुज दसभुज अति सोहे।",
+        "त्रिगुण रूप निरखते त्रिभुवन जन मोहे॥"
+      ],
+      "linesEn": [
+        "Do bhuj chaar chaturbhuj dasbhuj ati sohe.",
+        "Trigun roop nirakhte tribhuvan jan mohe."
+      ],
+      "meaningHi": "आप दो भुजा, चार भुजा और दस भुजा वाले रूपों में अत्यन्त शोभित हैं; आपके त्रिगुणमय रूप को देखकर तीनों लोकों के जन मोहित हो जाते हैं।",
+      "meaningEn": "With two arms, four arms and ten arms you shine resplendent; beholding your threefold form, the people of all three worlds are enchanted.",
+      "meaningGu": "આપ બે ભુજા, ચાર ભુજા અને દસ ભુજાવાળાં રૂપોમાં અત્યંત શોભો છો; આપના ત્રિગુણમય રૂપને જોઈને ત્રણેય લોકના જનો મોહિત થઈ જાય છે.",
+      "meaningKn": "ತಾವು ಎರಡು ಭುಜ, ನಾಲ್ಕು ಭುಜ ಮತ್ತು ಹತ್ತು ಭುಜಗಳ ರೂಪಗಳಲ್ಲಿ ಅತ್ಯಂತ ದಿವ್ಯವಾಗಿ ಶೋಭಿಸುತ್ತೀರಿ; ನಿಮ್ಮ ತ್ರಿಗುಣಮಯ ರೂಪವನ್ನು ಕಂಡು ಮೂರು ಲೋಕಗಳ ಜನರೆಲ್ಲ ಮೋಹಿತರಾಗುತ್ತಾರೆ.",
+      "type": "stanza",
+      "section": "body",
+      "number": 3
+    },
+    {
+      "id": "ojso-04",
+      "labelHi": "पद · ३",
+      "labelEn": "Verse · 3",
+      "lines": [
+        "अक्षमाला वनमाला मुण्डमाला धारी।",
+        "त्रिपुरारी कंसारी कर माला धारी॥"
+      ],
+      "linesEn": [
+        "Akshamaala vanmaala mundmaala dhaaree.",
+        "Tripuraari Kansaari kar maala dhaaree."
+      ],
+      "meaningHi": "आप अक्षमाला, वनमाला और मुण्डमाला धारण करते हैं; आप त्रिपुर के शत्रु (त्रिपुरारी) और (विष्णु रूप में) कंस के शत्रु हैं, और हाथों में माला धारण करते हैं।",
+      "meaningEn": "You wear the rosary, the forest-garland and the garland of skulls; foe of Tripura and (as Vishnu) foe of Kamsa, you hold the garland in your hands.",
+      "meaningGu": "આપ અક્ષમાળા, વનમાળા અને મુંડમાળા ધારણ કરો છો; આપ ત્રિપુરના શત્રુ (ત્રિપુરારી) અને (વિષ્ણુ રૂપે) કંસના શત્રુ છો, અને હાથોમાં માળા ધારણ કરો છો.",
+      "meaningKn": "ತಾವು ಅಕ್ಷಮಾಲೆ, ವನಮಾಲೆ ಮತ್ತು ಮುಂಡಮಾಲೆಯನ್ನು ಧರಿಸುತ್ತೀರಿ; ತಾವು ತ್ರಿಪುರದ ಶತ್ರುವಾದ ತ್ರಿಪುರಾರಿ, ಹಾಗೆಯೇ ವಿಷ್ಣುರೂಪದಲ್ಲಿ ಕಂಸನ ಶತ್ರುವೂ ಆಗಿದ್ದೀರಿ, ಮತ್ತು ಕೈಗಳಲ್ಲಿ ಮಾಲೆಯನ್ನು ಹಿಡಿದಿದ್ದೀರಿ.",
+      "type": "stanza",
+      "section": "body",
+      "number": 4
+    },
+    {
+      "id": "ojso-05",
+      "labelHi": "पद · ४",
+      "labelEn": "Verse · 4",
+      "lines": [
+        "श्वेताम्बर पीताम्बर बाघम्बर अंगे।",
+        "सनकादिक गरुणादिक भूतादिक संगे॥"
+      ],
+      "linesEn": [
+        "Shvetaambar peetaambar baaghaambar ange.",
+        "Sanakaadik Garunaadik bhootaadik sange."
+      ],
+      "meaningHi": "आप श्वेत, पीत और व्याघ्र-चर्म के वस्त्र अंग पर धारण करते हैं; सनकादि ऋषि, गरुड़ आदि और भूत-गण आपके साथ रहते हैं।",
+      "meaningEn": "White robes, yellow robes and a tiger-skin clothe your body; the sages led by Sanaka, the hosts led by Garuda, and the spirit-attendants are all with you.",
+      "meaningGu": "આપ શ્વેત, પીત અને વ્યાઘ્ર-ચર્મનાં વસ્ત્રો અંગ પર ધારણ કરો છો; સનકાદિ ઋષિ, ગરુડ આદિ અને ભૂતગણ આપની સાથે રહે છે.",
+      "meaningKn": "ತಮ್ಮ ದೇಹದ ಮೇಲೆ ಶ್ವೇತವಸ್ತ್ರ, ಪೀತಾಂಬರ ಮತ್ತು ವ್ಯಾಘ್ರಚರ್ಮ ಶೋಭಿಸುತ್ತವೆ; ಸನಕಾದಿ ಋಷಿಗಳು, ಗರುಡಾದಿ ಗಣಗಳು ಮತ್ತು ಭೂತಗಣಗಳು ನಿಮ್ಮೊಂದಿಗೇ ಇರುತ್ತಾರೆ.",
+      "type": "stanza",
+      "section": "body",
+      "number": 5
+    },
+    {
+      "id": "ojso-06",
+      "labelHi": "पद · ५",
+      "labelEn": "Verse · 5",
+      "lines": [
+        "कर के मध्य कमण्डलु चक्र त्रिशूलधारी।",
+        "सुखकारी दुखहारी जगपालन कारी॥"
+      ],
+      "linesEn": [
+        "Kar ke madhya kamandalu chakra trishooldhaaree.",
+        "Sukhkaaree dukhhaaree jagpaalan kaaree."
+      ],
+      "meaningHi": "आपके हाथों में कमण्डलु, चक्र और त्रिशूल हैं; आप सुख देने वाले, दुःख हरने वाले और जगत का पालन करने वाले हैं।",
+      "meaningEn": "In your hands you bear the water-pot, the discus and the trident; giver of happiness, remover of sorrow, and sustainer of the world.",
+      "meaningGu": "આપના હાથોમાં કમંડલુ, ચક્ર અને ત્રિશૂળ છે; આપ સુખ આપનાર, દુઃખ હરનાર અને જગતનું પાલન કરનાર છો.",
+      "meaningKn": "ತಮ್ಮ ಕೈಗಳಲ್ಲಿ ಕಮಂಡಲು, ಚಕ್ರ ಮತ್ತು ತ್ರಿಶೂಲವಿವೆ; ತಾವು ಸುಖವನ್ನು ಕರುಣಿಸುವವರು, ದುಃಖವನ್ನು ನಿವಾರಿಸುವವರು ಮತ್ತು ಜಗತ್ತನ್ನು ಪಾಲಿಸುವವರು.",
+      "type": "stanza",
+      "section": "body",
+      "number": 6
+    },
+    {
+      "id": "ojso-07",
+      "labelHi": "पद · ६",
+      "labelEn": "Verse · 6",
+      "lines": [
+        "ब्रह्मा विष्णु सदाशिव जानत अविवेका।",
+        "प्रणवाक्षर मध्ये ये तीनों एका॥"
+      ],
+      "linesEn": [
+        "Brahma Vishnu Sadaashiv jaanat aviveka.",
+        "Pranavaakshar madhye ye teenon eka."
+      ],
+      "meaningHi": "अज्ञानी जन ब्रह्मा, विष्णु और सदाशिव को भिन्न मानते हैं; परन्तु प्रणव (ॐ) अक्षर के भीतर ये तीनों एक ही हैं।",
+      "meaningEn": "The undiscerning take Brahma, Vishnu and Sadashiva to be separate; yet within the syllable Om (Pranava) these three are one.",
+      "meaningGu": "અજ્ઞાની જનો બ્રહ્મા, વિષ્ણુ અને સદાશિવને ભિન્ન માને છે; પરંતુ પ્રણવ (ૐ) અક્ષરની ભીતર આ ત્રણેય એક જ છે.",
+      "meaningKn": "ಅಜ್ಞಾನಿಗಳು ಬ್ರಹ್ಮ, ವಿಷ್ಣು ಮತ್ತು ಸದಾಶಿವರನ್ನು ಬೇರೆ ಬೇರೆ ಎಂದು ಭಾವಿಸುತ್ತಾರೆ; ಆದರೆ ಪ್ರಣವಾಕ್ಷರವಾದ ಓಂನೊಳಗೆ ಈ ಮೂವರೂ ಒಂದೇ ಆಗಿದ್ದಾರೆ.",
+      "type": "stanza",
+      "section": "body",
+      "number": 7
+    },
+    {
+      "id": "ojso-08",
+      "labelHi": "पद · ७",
+      "labelEn": "Verse · 7",
+      "lines": [
+        "लक्ष्मी व सावित्री पार्वती संगा।",
+        "पार्वती अर्द्धांगी, शिवलहरी गंगा॥"
+      ],
+      "linesEn": [
+        "Lakshmi va Savitri Parvati sanga.",
+        "Parvati ardhaangi, Shivlahari Ganga."
+      ],
+      "meaningHi": "लक्ष्मी, सावित्री और पार्वती (विष्णु, ब्रह्मा और शिव की) संगिनी हैं; पार्वती आपकी अर्द्धांगिनी हैं और गंगा शिव की लहर रूप में (जटा में) विराजती हैं।",
+      "meaningEn": "Lakshmi, Savitri and Parvati are the consorts (of Vishnu, Brahma and Shiva); Parvati is the half of your body, and the Ganga flows as a wave from Shiva's locks.",
+      "meaningGu": "લક્ષ્મી, સાવિત્રી અને પાર્વતી (વિષ્ણુ, બ્રહ્મા અને શિવની) સંગિની છે; પાર્વતી આપની અર્ધાંગિની છે અને ગંગા શિવની લહર રૂપે (જટામાં) વિરાજે છે.",
+      "meaningKn": "ಲಕ್ಷ್ಮೀ, ಸಾವಿತ್ರೀ ಮತ್ತು ಪಾರ್ವತೀ ದೇವಿಯರು ಕ್ರಮವಾಗಿ ವಿಷ್ಣು, ಬ್ರಹ್ಮ ಮತ್ತು ಶಿವರ ಸಂಗಿನಿಯರು; ಪಾರ್ವತೀ ದೇವಿ ನಿಮ್ಮ ಅರ್ಧಾಂಗಿಯಾಗಿದ್ದಾರೆ, ಮತ್ತು ಗಂಗಾದೇವಿ ಶಿವನ ಜಟೆಯಲ್ಲಿ ಅಲೆಯ ರೂಪದಲ್ಲಿ ವಿರಾಜಿಸುತ್ತಾಳೆ.",
+      "type": "stanza",
+      "section": "body",
+      "number": 8
+    },
+    {
+      "id": "ojso-09",
+      "labelHi": "पद · ८",
+      "labelEn": "Verse · 8",
+      "lines": [
+        "पर्वत सोहैं पार्वती, शंकर कैलासा।",
+        "भांग धतूर का भोजन, भस्मी में वासा॥"
+      ],
+      "linesEn": [
+        "Parvat sohain Parvati, Shankar Kailasa.",
+        "Bhaang dhatoor ka bhojan, bhasmi mein vaasa."
+      ],
+      "meaningHi": "पर्वत (हिमालय) पर पार्वती और कैलाश पर शंकर सुशोभित हैं; भाँग-धतूरा आपका भोजन है और भस्म में आपका निवास है।",
+      "meaningEn": "Parvati graces the mountain (Himalaya) and Shankar resides on Kailasa; bhang and datura are your fare, and your dwelling is amid the ashes.",
+      "meaningGu": "પર્વત (હિમાલય) પર પાર્વતી અને કૈલાસ પર શંકર શોભે છે; ભાંગ-ધતૂરો આપનું ભોજન છે અને ભસ્મમાં આપનો નિવાસ છે.",
+      "meaningKn": "ಹಿಮಾಲಯ ಪರ್ವತದಲ್ಲಿ ಪಾರ್ವತೀ ದೇವಿ ಶೋಭಿಸುತ್ತಾಳೆ, ಕೈಲಾಸದಲ್ಲಿ ಶಂಕರನು ವಿರಾಜಿಸುತ್ತಾನೆ; ಭಾಂಗ್ ಮತ್ತು ಧತ್ತೂರಗಳು ನಿಮ್ಮ ಭೋಜನ, ಭಸ್ಮವೇ ನಿಮ್ಮ ವಾಸಸ್ಥಾನ.",
+      "type": "stanza",
+      "section": "body",
+      "number": 9
+    },
+    {
+      "id": "ojso-10",
+      "labelHi": "पद · ९",
+      "labelEn": "Verse · 9",
+      "lines": [
+        "जटा में गंगा बहत है, गल मुण्डन माला।",
+        "शेष नाग लिपटावत, ओढ़त मृगछाला॥"
+      ],
+      "linesEn": [
+        "Jata mein Ganga bahat hai, gal mundan mala.",
+        "Shesh naag liptaavat, odhat mrigchhala."
+      ],
+      "meaningHi": "आपकी जटाओं में गंगा बहती है और गले में मुण्डों की माला है; शेषनाग आपसे लिपटे रहते हैं और आप मृगछाला ओढ़ते हैं।",
+      "meaningEn": "The Ganga flows in your matted locks and a garland of skulls hangs at your throat; the serpent Shesha coils about you, and you wear a deerskin.",
+      "meaningGu": "આપની જટાઓમાં ગંગા વહે છે અને ગળામાં મુંડોની માળા છે; શેષનાગ આપને વીંટળાઈ રહે છે અને આપ મૃગચર્મ ઓઢો છો.",
+      "meaningKn": "ತಮ್ಮ ಜಟೆಗಳಲ್ಲಿ ಗಂಗಾದೇವಿ ಹರಿಯುತ್ತಾಳೆ, ಕಂಠದಲ್ಲಿ ಮುಂಡಗಳ ಮಾಲೆ ಅಲಂಕರಿಸಿದೆ; ಶೇಷನಾಗನು ನಿಮ್ಮನ್ನು ಸುತ್ತಿಕೊಂಡಿರುತ್ತಾನೆ, ಮತ್ತು ತಾವು ಮೃಗಚರ್ಮವನ್ನು ಹೊದ್ದಿದ್ದೀರಿ.",
+      "type": "stanza",
+      "section": "body",
+      "number": 10
+    },
+    {
+      "id": "ojso-11",
+      "labelHi": "पद · १०",
+      "labelEn": "Verse · 10",
+      "lines": [
+        "काशी में विराजे विश्वनाथ, नन्दी ब्रह्मचारी।",
+        "नित उठ दर्शन पावत, महिमा अति भारी॥"
+      ],
+      "linesEn": [
+        "Kashi mein viraaje Vishwanath, Nandi brahmachaari.",
+        "Nit uth darshan paavat, mahima ati bhaari."
+      ],
+      "meaningHi": "काशी में आप विश्वनाथ रूप में विराजते हैं और नन्दी ब्रह्मचारी (आपके सेवक) हैं; भक्त नित्य उठकर आपके दर्शन पाते हैं — आपकी महिमा अत्यन्त महान है।",
+      "meaningEn": "At Kashi you abide as Vishwanath, with the celibate Nandi in attendance; devotees rise each day to behold you — your glory is exceedingly great.",
+      "meaningGu": "કાશીમાં આપ વિશ્વનાથ રૂપે વિરાજો છો અને નંદી બ્રહ્મચારી (આપના સેવક) છે; ભક્તો નિત્ય ઊઠીને આપનાં દર્શન પામે છે — આપનો મહિમા અત્યંત મહાન છે.",
+      "meaningKn": "ಕಾಶಿಯಲ್ಲಿ ತಾವು ವಿಶ್ವನಾಥ ರೂಪವಾಗಿ ವಿರಾಜಿಸುತ್ತೀರಿ, ಬ್ರಹ್ಮಚಾರಿಯಾದ ನಂದಿ ನಿಮ್ಮ ಸೇವಕನಾಗಿ ಸನ್ನಿಧಾನದಲ್ಲಿರುತ್ತಾನೆ; ಭಕ್ತರು ಪ್ರತಿದಿನ ಎದ್ದು ನಿಮ್ಮ ದರ್ಶನವನ್ನು ಪಡೆಯುತ್ತಾರೆ — ನಿಮ್ಮ ಮಹಿಮೆ ಅತ್ಯಂತ ಮಹಾನ್.",
+      "type": "stanza",
+      "section": "body",
+      "number": 11
+    },
+    {
+      "id": "ojso-12",
+      "labelHi": "पद · ११",
+      "labelEn": "Verse · 11",
+      "lines": [
+        "त्रिगुणस्वामी जी की आरती जो कोइ नर गावे।",
+        "कहत शिवानन्द स्वामी, मनवान्छित फल पावे॥"
+      ],
+      "linesEn": [
+        "Trigun Swami ji ki aarti jo koi nar gaave.",
+        "Kahat Shivaanand Swami, manvaanchhit phal paave."
+      ],
+      "meaningHi": "जो कोई मनुष्य त्रिगुणस्वामी (शिव) की यह आरती गाता है, स्वामी शिवानन्द कहते हैं कि वह मनोवांछित फल पाता है।",
+      "meaningEn": "Whoever sings this aarti of the threefold Lord (Shiva) — says Swami Shivananda — obtains the fruit their heart desires.",
+      "meaningGu": "જે કોઈ મનુષ્ય ત્રિગુણસ્વામી (શિવ)ની આ આરતી ગાય છે, સ્વામી શિવાનંદ કહે છે કે તે મનોવાંછિત ફળ પામે છે.",
+      "meaningKn": "ಯಾವ ಮಾನವನಾದರೂ ತ್ರಿಗುಣಸ್ವಾಮಿಯಾದ ಶಿವನ ಈ ಆರತಿಯನ್ನು ಹಾಡಿದರೆ, ಸ್ವಾಮಿ ಶಿವಾನಂದರು ಹೇಳುವಂತೆ, ಅವನು ತನ್ನ ಮನಸ್ಸು ಬಯಸಿದ ಫಲವನ್ನು ಪಡೆಯುತ್ತಾನೆ.",
+      "type": "stanza",
+      "section": "body",
+      "number": 12
+    }
   ]
 }

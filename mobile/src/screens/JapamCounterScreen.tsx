@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Modal,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -12,6 +13,9 @@ import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { fontFamilies } from '@/theme/typography';
+import { contentByLang, pick, verseLinesByLang } from '@/utils/localize';
+import { isLatinLang } from '@/utils/langType';
 import { getSourceBackground } from '@/data/backgrounds';
 import {
   findJapamMantra,
@@ -19,11 +23,14 @@ import {
   type JapamMantra,
 } from '@/data/japam';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
+import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
+import { useFontScale } from '@/contexts/FontScaleContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
+import { AlarmEditorSheet } from '@/screens/JapamAlarmsScreen';
 import { useShare } from '@/utils/shareVerse';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -33,15 +40,22 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { getEntry, increment, resetBeads, clear } = useJapamCounter();
+  const { addAlarm, updateAlarm, removeAlarm } = useJapamAlarms();
   const { share, busy: shareBusy } = useShare();
+  const { factor } = useFontScale();
   const { height: windowHeight } = useWindowDimensions();
   const isShortScreen = windowHeight < 720;
   const isVeryShortScreen = windowHeight < 640;
 
-  const verseFontSize = isVeryShortScreen ? 19 : isShortScreen ? 21 : typography.verse.fontSize;
-  const verseLineHeight = isVeryShortScreen ? 32 : isShortScreen ? 35 : typography.verse.lineHeight;
-  const verseFontSizeEn = isVeryShortScreen ? 17 : isShortScreen ? 18 : 20;
-  const verseLineHeightEn = isVeryShortScreen ? 28 : isShortScreen ? 30 : 34;
+  // Mantra is reading text → it scales with the global M/L size on EVERY device
+  // (no per-device hardcoding, so M/L always takes effect). The tap surface
+  // scrolls, so a larger mantra never clips — including the long 4-line mantras
+  // (gayatri, hare-krishna). Non-Latin uses the themed (already-scaled) verse
+  // token; the Latin transliteration scales its own smaller base by the factor.
+  const verseFontSize = typography.verse.fontSize;
+  const verseLineHeight = typography.verse.lineHeight;
+  const verseFontSizeEn = Math.round(20 * factor);
+  const verseLineHeightEn = Math.round(34 * factor);
   const countFontSize = isVeryShortScreen ? 64 : isShortScreen ? 76 : 88;
   const countLineHeight = isVeryShortScreen ? 70 : isShortScreen ? 82 : 94;
 
@@ -60,6 +74,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
   const entry = getEntry(mantra?.id ?? '__none__');
   const [confirmKind, setConfirmKind] = useState<'beads' | 'all' | null>(null);
+  const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
 
   const registerBead = useCallback(() => {
@@ -85,11 +100,14 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const titleEn = mantra.nameEn;
 
   const beadProgress = entry.count / JAPAM_BEADS_PER_ROUND;
-  const beadsLabel = lang === 'hi' ? 'बीज' : 'Beads';
-  const roundsLabel = lang === 'hi' ? 'आवृत्ति' : 'Rounds';
-  const tapHint = lang === 'hi' ? 'जप के लिए स्पर्श करें' : 'Tap to chant';
-  const resetBeadsLabel = lang === 'hi' ? 'बीज पुनः ०' : 'Reset Beads';
-  const clearAllLabel = lang === 'hi' ? 'सब साफ़' : 'Clear All';
+  const beadsLabel = pick(lang, { hi: 'बीज', en: 'Beads', gu: 'મણકા', kn: 'ಮಣಿ' });
+  const roundsLabel = pick(lang, { hi: 'आवृत्ति', en: 'Rounds', gu: 'આવૃત્તિ', kn: 'ಆವೃತ್ತಿ' });
+  const tapHint = pick(lang, { hi: 'जप के लिए स्पर्श करें', en: 'Tap to chant', gu: 'જપ માટે સ્પર્શ કરો', kn: 'ಜಪಕ್ಕಾಗಿ ಸ್ಪರ್ಶಿಸಿ' });
+  const resetBeadsLabel = pick(lang, { hi: 'बीज पुनः ०', en: 'Reset Beads', gu: 'મણકા ફરી ૦', kn: 'ಮಣಿ ಮರು ೦' });
+  const clearAllLabel = pick(lang, { hi: 'सब साफ़', en: 'Clear All', gu: 'બધું સાફ', kn: 'ಎಲ್ಲ ತೆರವು' });
+  // Script serif for gu/kn (constrained surface keeps its own sizes); null for hi/en.
+  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
+  const scriptSerifBold = lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
 
 
   return (
@@ -117,26 +135,46 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <View style={styles.titleBlock}>
             <Text
               style={[
-                lang === 'hi' ? styles.titleHi : styles.titleEn,
-                lang === 'hi'
+                isLatinLang(lang) ? styles.titleEn : styles.titleHi,
+                isLatinLang(lang)
                   ? {
-                      color: colors.ink,
-                      fontFamily: typography.readerTitle.fontFamily,
-                      fontSize: typography.readerTitle.fontSize,
-                    }
-                  : {
                       color: colors.ink,
                       fontFamily: typography.cardLatin.fontFamily,
                       fontSize: 16,
+                    }
+                  : {
+                      color: colors.ink,
+                      fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily,
+                      fontSize: typography.readerTitle.fontSize,
                     },
               ]}
               numberOfLines={1}
             >
-              {lang === 'hi' ? titleHi : titleEn}
+              {contentByLang(lang, titleHi, titleEn)}
             </Text>
           </View>
 
-          <View style={styles.backSpacer}>
+          <View style={styles.topRightCluster}>
+            <Pressable
+              onPress={() => setAlarmEditorOpen(true)}
+              accessibilityRole="button"
+              accessibilityLabel={
+                lang === 'hi'
+                  ? 'इस मंत्र के लिए स्मरण बनाएँ'
+                  : 'Set an alarm for this mantra'
+              }
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.alarmBtn,
+                {
+                  backgroundColor: colors.parchmentSoft,
+                  borderColor: colors.divider,
+                },
+                pressed && { opacity: 0.7 },
+              ]}
+            >
+              <Text style={[styles.alarmGlyph, { color: colors.saffronDeep }]}>⏰</Text>
+            </Pressable>
             <ShareButton
               busy={shareBusy}
               onPress={() => {
@@ -163,34 +201,39 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <LanguageToggle />
         </View>
 
-        <Pressable
-          onPress={handleTap}
-          accessibilityRole="button"
-          accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this round, ${entry.rounds} rounds completed.`}
-          style={({ pressed }) => [
-            styles.tapArea,
-            pressed && styles.tapAreaPressed,
-          ]}
+        <ScrollView
+          style={styles.tapArea}
+          contentContainerStyle={styles.tapScroll}
+          showsVerticalScrollIndicator={false}
         >
-          <View style={[styles.tapContent, { paddingHorizontal: spacing.xxl }]}>
+          <Pressable
+            onPress={handleTap}
+            accessibilityRole="button"
+            accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this round, ${entry.rounds} rounds completed.`}
+            style={({ pressed }) => [
+              styles.tapContent,
+              { paddingHorizontal: spacing.xxl },
+              pressed && styles.tapAreaPressed,
+            ]}
+          >
             <View style={styles.mantraBlock}>
-              {(lang === 'hi' ? mantra.lines : mantra.linesEn).map((line, i) => (
+              {verseLinesByLang(lang, mantra.lines, mantra.linesEn).map((line, i) => (
                 <Text
                   key={`${lang}-${i}`}
                   style={[
-                    lang === 'hi' ? styles.mantraLine : styles.mantraLineEn,
-                    lang === 'hi'
+                    isLatinLang(lang) ? styles.mantraLineEn : styles.mantraLine,
+                    isLatinLang(lang)
                       ? {
-                          color: colors.ink,
-                          fontFamily: typography.verse.fontFamily,
-                          fontSize: verseFontSize,
-                          lineHeight: verseLineHeight,
-                        }
-                      : {
                           color: colors.ink,
                           fontFamily: typography.cardLatin.fontFamily,
                           fontSize: verseFontSizeEn,
                           lineHeight: verseLineHeightEn,
+                        }
+                      : {
+                          color: colors.ink,
+                          fontFamily: scriptSerif ?? typography.verse.fontFamily,
+                          fontSize: verseFontSize,
+                          lineHeight: verseLineHeight,
                         },
                   ]}
                 >
@@ -268,8 +311,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             >
               {tapHint}
             </Text>
-          </View>
-        </Pressable>
+          </Pressable>
+        </ScrollView>
 
         <View
           style={[
@@ -281,6 +324,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             mantraId={mantra.id}
             lang={lang}
             onIteration={registerBead}
+            autoPlay={route.params.autoPlay === true}
           />
         </View>
 
@@ -378,34 +422,36 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 styles.confirmTitle,
                 {
                   color: colors.ink,
-                  fontFamily: typography.readerTitle.fontFamily,
+                  fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily,
                 },
               ]}
             >
               {confirmKind === 'beads'
-                ? lang === 'hi'
-                  ? 'बीज पुनः शून्य करें?'
-                  : 'Reset bead count?'
-                : lang === 'hi'
-                  ? 'सब हटायें?'
-                  : 'Clear everything?'}
+                ? pick(lang, { hi: 'बीज पुनः शून्य करें?', en: 'Reset bead count?', gu: 'મણકા ફરી શૂન્ય કરવા?', kn: 'ಮಣಿ ಎಣಿಕೆ ಮರುಹೊಂದಿಸಬೇಕೆ?' })
+                : pick(lang, { hi: 'सब हटायें?', en: 'Clear everything?', gu: 'બધું હટાવવું?', kn: 'ಎಲ್ಲವನ್ನು ತೆರವುಗೊಳಿಸಬೇಕೆ?' })}
             </Text>
             <Text
               style={[
                 styles.confirmBody,
                 {
                   color: colors.inkSoft,
-                  fontFamily: typography.cardLatin.fontFamily,
+                  fontFamily: scriptSerif ?? typography.cardLatin.fontFamily,
                 },
               ]}
             >
               {confirmKind === 'beads'
-                ? lang === 'hi'
-                  ? 'चालू आवृत्ति की गिनती शून्य हो जायेगी। पूर्ण आवृत्तियाँ सुरक्षित रहेंगी।'
-                  : 'The current bead count will reset to 0. Completed rounds are kept.'
-                : lang === 'hi'
-                  ? 'बीज तथा सभी आवृत्तियाँ मिट जायेंगी। यह क्रिया पूर्ववत् नहीं की जा सकती।'
-                  : 'Beads and all rounds will be erased. This cannot be undone.'}
+                ? pick(lang, {
+                    hi: 'चालू आवृत्ति की गिनती शून्य हो जायेगी। पूर्ण आवृत्तियाँ सुरक्षित रहेंगी।',
+                    en: 'The current bead count will reset to 0. Completed rounds are kept.',
+                    gu: 'ચાલુ આવૃત્તિની ગણતરી શૂન્ય થઈ જશે. પૂર્ણ આવૃત્તિઓ સચવાશે.',
+                    kn: 'ಪ್ರಸ್ತುತ ಮಣಿ ಎಣಿಕೆ ೦ ಗೆ ಮರುಹೊಂದಿಸಲಾಗುತ್ತದೆ. ಪೂರ್ಣ ಆವೃತ್ತಿಗಳು ಉಳಿಯುತ್ತವೆ.',
+                  })
+                : pick(lang, {
+                    hi: 'बीज तथा सभी आवृत्तियाँ मिट जायेंगी। यह क्रिया पूर्ववत् नहीं की जा सकती।',
+                    en: 'Beads and all rounds will be erased. This cannot be undone.',
+                    gu: 'મણકા તથા બધી આવૃત્તિઓ ભૂંસાઈ જશે. આ ક્રિયા પાછી લઈ શકાતી નથી.',
+                    kn: 'ಮಣಿ ಮತ್ತು ಎಲ್ಲಾ ಆವೃತ್ತಿಗಳು ಅಳಿಸಲ್ಪಡುತ್ತವೆ. ಇದನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗದು.',
+                  })}
             </Text>
 
             <Pressable
@@ -432,7 +478,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                   styles.confirmPrimaryText,
                   {
                     color: colors.onPrimary,
-                    fontFamily: typography.readerTitle.fontFamily,
+                    fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily,
                   },
                 ]}
               >
@@ -450,16 +496,34 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                   styles.confirmCancelText,
                   {
                     color: colors.inkMuted,
-                    fontFamily: typography.cardLatin.fontFamily,
+                    fontFamily: scriptSerif ?? typography.cardLatin.fontFamily,
                   },
                 ]}
               >
-                {lang === 'hi' ? 'रद्द करें' : 'Cancel'}
+                {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' })}
               </Text>
             </Pressable>
           </Pressable>
         </Pressable>
       </Modal>
+
+      <AlarmEditorSheet
+        state={alarmEditorOpen ? { kind: 'new' } : null}
+        presetMantraId={mantra.id}
+        onClose={() => setAlarmEditorOpen(false)}
+        onCreate={async (draft) => {
+          await addAlarm(draft);
+          setAlarmEditorOpen(false);
+        }}
+        onSave={async (id, patch) => {
+          await updateAlarm(id, patch);
+          setAlarmEditorOpen(false);
+        }}
+        onDelete={async (id) => {
+          await removeAlarm(id);
+          setAlarmEditorOpen(false);
+        }}
+      />
     </View>
   );
 }
@@ -489,6 +553,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  topRightCluster: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  alarmBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  alarmGlyph: {
+    fontSize: 15,
+    includeFontPadding: false,
+  },
   backGlyph: {
     fontSize: 22,
     lineHeight: 24,
@@ -516,13 +597,17 @@ const styles = StyleSheet.create({
   },
   tapArea: {
     flex: 1,
-    overflow: 'hidden',
+  },
+  tapScroll: {
+    // flexGrow lets the tap surface fill the viewport (tappable everywhere) yet
+    // grow past it so a long/large mantra scrolls instead of clipping.
+    flexGrow: 1,
   },
   tapAreaPressed: {
     opacity: 0.92,
   },
   tapContent: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 8,
@@ -532,7 +617,9 @@ const styles = StyleSheet.create({
   },
   mantraLine: {
     textAlign: 'center',
-    includeFontPadding: false,
+    // No includeFontPadding:false here — this line is Devanagari, and on Android
+    // that prop strips the padding reserved for the shirorekha/top-matras and
+    // clips them (iOS ignores the prop, so it only shows on Android).
   },
   mantraLineEn: {
     textAlign: 'center',

@@ -5,8 +5,8 @@ export type ChalisaImageKey =
   | 'hanuman_lankadahan';
 
 export const chalisaImages: Record<ChalisaImageKey, number> = {
-  ram_hanuman: require('./Ram_hanuman.png'),
-  hanuman_sita: require('./Hanuman_sita.png'),
-  hanuman_sea: require('./Hanuman_sea.png'),
-  hanuman_lankadahan: require('./hanuman_lankadahan.png'),
+  ram_hanuman: require('./Ram_hanuman.webp'),
+  hanuman_sita: require('./Hanuman_sita.webp'),
+  hanuman_sea: require('./Hanuman_sea.webp'),
+  hanuman_lankadahan: require('./hanuman_lankadahan.webp'),
 };

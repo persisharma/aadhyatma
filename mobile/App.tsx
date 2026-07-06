@@ -19,22 +19,56 @@ import {
   CormorantGaramond_600SemiBold_Italic,
   CormorantGaramond_700Bold,
 } from '@expo-google-fonts/cormorant-garamond';
+import {
+  useFonts as useGujaratiFonts,
+  NotoSerifGujarati_500Medium,
+  NotoSerifGujarati_600SemiBold,
+} from '@expo-google-fonts/noto-serif-gujarati';
+import {
+  useFonts as useKannadaFonts,
+  NotoSerifKannada_500Medium,
+  NotoSerifKannada_600SemiBold,
+} from '@expo-google-fonts/noto-serif-kannada';
+import {
+  useFonts as useInterFonts,
+  Inter_500Medium,
+  Inter_600SemiBold,
+} from '@expo-google-fonts/inter';
 import { ThemeProvider } from '@/theme/ThemeContext';
+import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { lightColors } from '@/theme/colors';
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
+import { VratFollowProvider } from '@/contexts/VratFollowContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
+import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
+import { registerNativeAlarmForegroundHandler } from '@/notifications/japamAlarmNative';
+import { maybeHandleJapamSnoozeResponse } from '@/notifications/japamAlarmScheduler';
+import { JAPAM_SNOOZE_ACTION_ID } from '@/notifications/japamAlarms';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
+import { RoutineProvider } from '@/contexts/RoutineContext';
+import { SadhanaProvider } from '@/contexts/SadhanaContext';
+import { RoutineSheetProvider } from '@/contexts/RoutineSheetProvider';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
+import { NewContentProvider } from '@/contexts/NewContentContext';
 import {
   NotificationPreferencesProvider,
   configureForegroundNotificationHandler,
 } from '@/contexts/NotificationPreferencesContext';
+import { PanchangLocationProvider } from '@/contexts/PanchangLocationContext';
+import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
+import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import WhatsNewModal from '@/components/WhatsNewModal';
 import { TourProvider } from '@/contexts/TourContext';
+import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
+import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
+import VratReminderScheduler from '@/components/VratReminderScheduler';
+import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
+import MiniPlayer from '@/components/audio/MiniPlayer';
+import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
 
@@ -57,8 +91,21 @@ export default function App() {
     CormorantGaramond_600SemiBold_Italic,
     CormorantGaramond_700Bold,
   });
+  const [gujaratiLoaded] = useGujaratiFonts({
+    NotoSerifGujarati_500Medium,
+    NotoSerifGujarati_600SemiBold,
+  });
+  const [kannadaLoaded] = useKannadaFonts({
+    NotoSerifKannada_500Medium,
+    NotoSerifKannada_600SemiBold,
+  });
+  const [interLoaded] = useInterFonts({
+    Inter_500Medium,
+    Inter_600SemiBold,
+  });
 
-  const fontsReady = notoLoaded && cormorantLoaded;
+  const fontsReady =
+    notoLoaded && cormorantLoaded && gujaratiLoaded && kannadaLoaded && interLoaded;
 
   const onLayout = useCallback(async () => {
     if (fontsReady) {
@@ -91,6 +138,11 @@ export default function App() {
         // retry — if navigation never readies in ~5 s, give up rather than
         // spinning forever.
         let attempts = 0;
+        // Snooze taps are handled ONLY by the live listener below. The
+        // cold-start "last response" can be an hours-old tap replayed on an
+        // unrelated launch; re-executing it would schedule a phantom ring
+        // 5 minutes after app open. Ignore it here (don't navigate either).
+        if (response.actionIdentifier === JAPAM_SNOOZE_ACTION_ID) return;
         const tryHandle = () => {
           if (cancelled) return;
           if (handleNotificationResponse(response)) return;
@@ -103,13 +155,17 @@ export default function App() {
       .catch(() => undefined);
 
     const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      if (maybeHandleJapamSnoozeResponse(response)) return;
       handleNotificationResponse(response);
     });
+
+    const unregisterNotifee = registerNativeAlarmForegroundHandler();
 
     return () => {
       cancelled = true;
       if (timeoutId !== undefined) clearTimeout(timeoutId);
       sub.remove();
+      unregisterNotifee();
     };
   }, [fontsReady]);
 
@@ -120,31 +176,58 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayout}>
       <SafeAreaProvider>
+        <FontScaleProvider>
         <ThemeProvider>
           <GitaLanguageProvider>
+            <AudioPlayerProvider>
             <BookmarksProvider>
+              <VratFollowProvider>
               <UserActivityProvider>
-                <ReadingProgressProvider>
-                  <JapamCounterProvider>
-                    <NotificationPreferencesProvider>
-                      <TourProvider>
+                <NewContentProvider>
+                  <ReadingProgressProvider>
+                    <JapamCounterProvider>
+                      <RoutineProvider>
+                      <SadhanaProvider>
+                      <RoutineSheetProvider>
+                      <NotificationPreferencesProvider>
+                        <JapamAlarmsProvider>
+                        <PanchangLocationProvider>
+                        <TourProvider>
                         <ShareProvider>
-                          <NavigationContainer ref={navigationRef}>
-                            <StatusBar style="dark" />
-                            <RootNavigator />
-                            <ReminderOptInModal />
-                            <WhatsNewModal />
-                            <FeatureTour />
-                          </NavigationContainer>
+                          <View style={{ flex: 1 }}>
+                            <NavigationContainer ref={navigationRef}>
+                              <StatusBar style="dark" />
+                              <RootNavigator />
+                              <ReminderOptInModal />
+                              <UpdateReadyModal />
+                              <WhatsNewModal />
+                              <FeatureTour />
+                            </NavigationContainer>
+                            <RoutineCelebrationOverlay />
+                            <SadhanaCompletionOverlay />
+                            <VratReminderScheduler />
+                            <SadhanaReminderScheduler />
+                            <MiniPlayer />
+                            <NowPlayingScreen />
+                          </View>
                         </ShareProvider>
-                      </TourProvider>
-                    </NotificationPreferencesProvider>
-                  </JapamCounterProvider>
-                </ReadingProgressProvider>
+                        </TourProvider>
+                        </PanchangLocationProvider>
+                        </JapamAlarmsProvider>
+                      </NotificationPreferencesProvider>
+                      </RoutineSheetProvider>
+                      </SadhanaProvider>
+                      </RoutineProvider>
+                    </JapamCounterProvider>
+                  </ReadingProgressProvider>
+                </NewContentProvider>
               </UserActivityProvider>
+              </VratFollowProvider>
             </BookmarksProvider>
+            </AudioPlayerProvider>
           </GitaLanguageProvider>
         </ThemeProvider>
+        </FontScaleProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

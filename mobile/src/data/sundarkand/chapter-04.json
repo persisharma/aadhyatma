@@ -90,8 +90,8 @@
       "stanza": 6,
       "numInSection": 6,
       "subSuffix": null,
-      "labelHi": "दोहा ६",
-      "labelEn": "Doha 6",
+      "labelHi": "दोहा · ६",
+      "labelEn": "Doha · 6",
       "lines": [
         "तब हनुमंत कही सब राम कथा निज नाम।",
         "सुनत जुगल तन पुलक मन मगन सुमिरि गुन ग्राम॥6॥"
@@ -190,8 +190,8 @@
       "stanza": 7,
       "numInSection": 7,
       "subSuffix": null,
-      "labelHi": "दोहा ७",
-      "labelEn": "Doha 7",
+      "labelHi": "दोहा · ७",
+      "labelEn": "Doha · 7",
       "lines": [
         "अस मैं अधम सखा सुनु मोहू पर रघुबीर।",
         "कीन्हीं कृपा सुमिरि गुन भरे बिलोचन नीर॥7॥"
@@ -290,8 +290,8 @@
       "stanza": 8,
       "numInSection": 8,
       "subSuffix": null,
-      "labelHi": "दोहा ८",
-      "labelEn": "Doha 8",
+      "labelHi": "दोहा · ८",
+      "labelEn": "Doha · 8",
       "lines": [
         "निज पद नयन दिएँ मन राम पद कमल लीन।",
         "परम दुखी भा पवनसुत देखि जानकी दीन॥8॥"
@@ -304,5 +304,14 @@
       ],
       "chapter": 4
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

@@ -5,26 +5,41 @@ import type { DeityIconKey } from '@/data/deities';
 type Props = {
   iconKey?: DeityIconKey;
   fallbackText: string;
+  /** Rendered glyph size in dp. Defaults to 36 (the catalog-card avatar size). */
+  size?: number;
 };
+
+/** The size the View-based glyphs below are drawn at; larger sizes scale up. */
+const BASE_SIZE = 36;
 
 const emojiIcons: Partial<Record<DeityIconKey, string>> = {
   bowArrow: '🏹',
+  chakra: '☸️',
   trishul: '🔱',
   lotus: '🪷',
+  surya: '☀️',
 };
 
-export default function DeityIcon({ iconKey, fallbackText }: Props) {
-  if (iconKey === 'bansuriPeacockFeather') return <KrishnaIcon />;
-  if (iconKey === 'gada') return <GadaIcon />;
-  if (iconKey === 'modak') return <ModakIcon />;
+export default function DeityIcon({ iconKey, fallbackText, size = BASE_SIZE }: Props) {
+  const scale = size / BASE_SIZE;
+  if (iconKey === 'bansuriPeacockFeather') return <Scaled scale={scale}><KrishnaIcon /></Scaled>;
+  if (iconKey === 'gada') return <Scaled scale={scale}><GadaIcon /></Scaled>;
+  if (iconKey === 'modak') return <Scaled scale={scale}><ModakIcon /></Scaled>;
+  if (iconKey === 'veena') return <Scaled scale={scale}><VeenaIcon /></Scaled>;
 
   const emoji = iconKey ? emojiIcons[iconKey] : undefined;
+  if (emoji) {
+    return <Text style={[styles.emoji, { fontSize: size * 0.61, lineHeight: size * 0.78 }]}>{emoji}</Text>;
+  }
 
-  return (
-    <Text style={emoji ? styles.emoji : styles.fallback}>
-      {emoji ?? fallbackText}
-    </Text>
-  );
+  return <Text style={[styles.fallback, { fontSize: size * 0.44 }]}>{fallbackText}</Text>;
+}
+
+/** Scales the fixed-size View glyphs. Renders children directly at 1× so the
+ *  common catalog-card case keeps its exact layout. */
+function Scaled({ scale, children }: { scale: number; children: React.ReactNode }) {
+  if (scale === 1) return <>{children}</>;
+  return <View style={{ transform: [{ scale }] }} accessible={false}>{children}</View>;
 }
 
 function KrishnaIcon() {
@@ -71,6 +86,18 @@ function ModakIcon() {
       <View style={styles.modakBody} />
       <View style={styles.modakPleatLeft} />
       <View style={styles.modakPleatRight} />
+    </View>
+  );
+}
+
+function VeenaIcon() {
+  return (
+    <View style={styles.veenaWrap} accessible={false}>
+      <View style={styles.veenaUpperGourd} />
+      <View style={styles.veenaNeck} />
+      <View style={[styles.veenaString, styles.veenaStringOne]} />
+      <View style={[styles.veenaString, styles.veenaStringTwo]} />
+      <View style={styles.veenaGourd} />
     </View>
   );
 }
@@ -299,5 +326,58 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4C872',
     opacity: 0.45,
     transform: [{ rotate: '22deg' }],
+  },
+  veenaWrap: {
+    width: 30,
+    height: 34,
+    position: 'relative',
+    transform: [{ rotate: '-16deg' }],
+  },
+  veenaGourd: {
+    position: 'absolute',
+    left: 1,
+    bottom: 0,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: gold,
+    borderWidth: 1.2,
+    borderColor: ink,
+  },
+  veenaNeck: {
+    position: 'absolute',
+    left: 8,
+    bottom: 13,
+    width: 3.5,
+    height: 21,
+    borderRadius: 2,
+    backgroundColor: ink,
+  },
+  veenaUpperGourd: {
+    position: 'absolute',
+    left: 5,
+    top: 0,
+    width: 9,
+    height: 9,
+    borderRadius: 4.5,
+    backgroundColor: gold,
+    borderWidth: 1,
+    borderColor: ink,
+  },
+  veenaString: {
+    position: 'absolute',
+    width: 1,
+    backgroundColor: gold,
+    opacity: 0.85,
+  },
+  veenaStringOne: {
+    left: 9,
+    top: 2,
+    height: 24,
+  },
+  veenaStringTwo: {
+    left: 11,
+    top: 2,
+    height: 24,
   },
 });

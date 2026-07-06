@@ -13,12 +13,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
+import { fontFamilies } from '@/theme/typography';
+import { scriptBodyFont } from '@/utils/langType';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
-import { applyQuietHours } from '@/notifications/pure';
+import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
 import TimeStepper from '@/components/TimeStepper';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Reminders'>;
+
+const DEFAULT_NEW_TIME: TimeOfDay = { hour: 18, minute: 0 };
 
 export default function ReminderSettingsScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
@@ -28,11 +34,17 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
     permissionStatus,
     isLoading,
     setDailyVerseEnabled,
-    setTime,
-    setQuietHours,
+    setTimes,
   } = useNotificationPreferences();
 
-  const isHi = lang === 'hi';
+  const scriptSerifBold =
+    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
+  const screenTitle = orderTitlesByLanguage(lang, 'स्मरण', 'Reminders', {
+    devPrimary: 22,
+    devSecondary: 14,
+    latPrimary: 22,
+    latSecondary: 14,
+  });
 
   const onToggle = useCallback(
     async (next: boolean) => {
@@ -45,11 +57,41 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
     Linking.openSettings().catch(() => undefined);
   }, []);
 
-  // Compute the time we'll actually fire (after quiet-hours clamp) so the user
-  // sees the truth instead of their nominal time when the two collide.
-  const adjusted = applyQuietHours(prefs.time, prefs.quietStart, prefs.quietEnd);
-  const clamped =
-    adjusted.hour !== prefs.time.hour || adjusted.minute !== prefs.time.minute;
+  const updateAt = useCallback(
+    async (index: number, time: TimeOfDay) => {
+      const next = prefs.times.map((t, i) => (i === index ? time : t));
+      await setTimes(next);
+    },
+    [prefs.times, setTimes]
+  );
+
+  const removeAt = useCallback(
+    async (index: number) => {
+      const next = prefs.times.filter((_, i) => i !== index);
+      await setTimes(next);
+    },
+    [prefs.times, setTimes]
+  );
+
+  const addTime = useCallback(async () => {
+    // Suggest a time that doesn't collide with an existing reminder. Fall back
+    // to the default; setTimes will dedupe if the user already has it set.
+    const existing = new Set(prefs.times.map((t) => t.hour * 60 + t.minute));
+    let candidate: TimeOfDay = DEFAULT_NEW_TIME;
+    if (existing.has(candidate.hour * 60 + candidate.minute)) {
+      for (let h = 0; h < 24; h += 1) {
+        const trial = { hour: h, minute: 0 };
+        if (!existing.has(trial.hour * 60 + trial.minute)) {
+          candidate = trial;
+          break;
+        }
+      }
+    }
+    await setTimes([...prefs.times, candidate]);
+  }, [prefs.times, setTimes]);
+
+  const canAdd = prefs.times.length < MAX_REMINDER_TIMES;
+  const canRemove = prefs.times.length > 1;
 
   return (
     <View style={styles.root}>
@@ -76,21 +118,28 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
             <Text
               style={[
                 styles.titleHi,
-                { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                {
+                  color: colors.ink,
+                  fontFamily: screenTitle.primary.fontFamily,
+                  fontSize: screenTitle.primary.fontSize,
+                  fontStyle: screenTitle.primary.fontStyle,
+                },
               ]}
             >
-              {isHi ? 'स्मरण' : 'Reminders'}
+              {screenTitle.primary.text}
             </Text>
             <Text
               style={[
                 styles.titleEn,
                 {
                   color: colors.inkMuted,
-                  fontFamily: 'CormorantGaramond_400Regular_Italic',
+                  fontFamily: screenTitle.secondary.fontFamily,
+                  fontSize: screenTitle.secondary.fontSize,
+                  fontStyle: screenTitle.secondary.fontStyle,
                 },
               ]}
             >
-              {isHi ? 'Reminders' : 'स्मरण'}
+              {screenTitle.secondary.text}
             </Text>
           </View>
           <View style={styles.backSpacer} />
@@ -119,10 +168,10 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 <Text
                   style={[
                     styles.cardTitle,
-                    { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                    { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
                   ]}
                 >
-                  {isHi ? 'दैनिक श्लोक' : 'Daily verse'}
+                  {pick(lang, { hi: 'दैनिक श्लोक', en: 'Daily verse', gu: 'દૈનિક શ્લોક', kn: 'ದೈನಿಕ ಶ್ಲೋಕ' })}
                 </Text>
                 <Text
                   style={[
@@ -133,9 +182,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     },
                   ]}
                 >
-                  {isHi
-                    ? 'चुने हुए समय पर एक श्लोक स्क्रीन पर आएगा।'
-                    : 'One verse at the time you choose.'}
+                  {pick(lang, { hi: 'चुने हुए समयों पर श्लोक स्क्रीन पर आएँगे।', en: 'A verse at every time you choose.', gu: 'પસંદ કરેલા સમયે શ્લોક સ્ક્રીન પર આવશે.', kn: 'ಆಯ್ಕೆಮಾಡಿದ ಸಮಯಗಳಲ್ಲಿ ಶ್ಲೋಕ ಪರದೆಯಲ್ಲಿ ಬರುತ್ತದೆ.' })}
                 </Text>
               </View>
               <Switch
@@ -145,7 +192,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 trackColor={{ false: colors.divider, true: colors.saffron }}
                 thumbColor={colors.parchment}
                 ios_backgroundColor={colors.divider}
-                accessibilityLabel={isHi ? 'दैनिक श्लोक चालू / बंद' : 'Toggle daily verse'}
+                accessibilityLabel={pick(lang, { hi: 'दैनिक श्लोक चालू / बंद', en: 'Toggle daily verse', gu: 'દૈનિક શ્લોક ચાલુ / બંધ', kn: 'ದೈನಿಕ ಶ್ಲೋಕ ಆನ್ / ಆಫ್' })}
               />
             </View>
 
@@ -173,15 +220,13 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     },
                   ]}
                 >
-                  {isHi
-                    ? 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।'
-                    : 'Notifications are disabled. Tap to open Settings.'}
+                  {pick(lang, { hi: 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।', en: 'Notifications are disabled. Tap to open Settings.', gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ખોલો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })}
                 </Text>
               </Pressable>
             )}
           </View>
 
-          {/* Time picker */}
+          {/* Times picker — supports multiple reminders */}
           <View
             style={[
               styles.card,
@@ -195,10 +240,10 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
             <Text
               style={[
                 styles.cardTitle,
-                { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
               ]}
             >
-              {isHi ? 'समय' : 'Time'}
+              {pick(lang, { hi: 'समय', en: 'Times', gu: 'સમય', kn: 'ಸಮಯ' })}
             </Text>
             <Text
               style={[
@@ -206,112 +251,99 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
               ]}
             >
-              {isHi
-                ? 'जब आप रोज़ श्लोक प्राप्त करना चाहें।'
-                : 'When the daily verse arrives.'}
+              {pick(lang, { hi: `जब आप रोज़ श्लोक प्राप्त करना चाहें। अधिकतम ${MAX_REMINDER_TIMES} समय जोड़ सकते हैं।`, en: `When the daily verse arrives. Add up to ${MAX_REMINDER_TIMES}.`, gu: `તમે રોજ શ્લોક મેળવવા માગો ત્યારે. વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકો.`, kn: `ನೀವು ಪ್ರತಿದಿನ ಶ್ಲೋಕ ಪಡೆಯಲು ಬಯಸಿದಾಗ. ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}
             </Text>
-            <View style={styles.timeRow}>
-              <TimeStepper value={prefs.time} onChange={setTime} />
+
+            <View style={styles.timesList}>
+              {prefs.times.map((t, index) => (
+                <View key={`${t.hour}-${t.minute}-${index}`} style={styles.timeRow}>
+                  <TimeStepper
+                    value={t}
+                    taken={
+                      new Set(
+                        prefs.times
+                          .filter((_, i) => i !== index)
+                          .map((o) => o.hour * 60 + o.minute)
+                      )
+                    }
+                    onChange={(next) => {
+                      updateAt(index, next);
+                    }}
+                  />
+                  {canRemove && (
+                    <Pressable
+                      onPress={() => removeAt(index)}
+                      accessibilityRole="button"
+                      accessibilityLabel={
+                        pick(lang, { hi: `समय हटाएँ ${index + 1}`, en: `Remove reminder ${index + 1}`, gu: `સમય દૂર કરો ${index + 1}`, kn: `ಸಮಯ ತೆಗೆದುಹಾಕಿ ${index + 1}` })
+                      }
+                      hitSlop={10}
+                      style={({ pressed }) => [
+                        styles.removeBtn,
+                        {
+                          borderColor: colors.divider,
+                          backgroundColor: colors.parchmentDeep,
+                          borderRadius: radii.sm,
+                          opacity: pressed ? 0.6 : 1,
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.removeGlyph,
+                          { color: colors.inkSoft },
+                        ]}
+                      >
+                        ✕
+                      </Text>
+                    </Pressable>
+                  )}
+                </View>
+              ))}
             </View>
-            {clamped && (
+
+            {canAdd && (
+              <Pressable
+                onPress={addTime}
+                accessibilityRole="button"
+                accessibilityLabel={pick(lang, { hi: 'समय जोड़ें', en: 'Add reminder', gu: 'સમય ઉમેરો', kn: 'ಸಮಯ ಸೇರಿಸಿ' })}
+                style={({ pressed }) => [
+                  styles.addBtn,
+                  {
+                    borderColor: colors.saffron,
+                    borderRadius: radii.sm,
+                    opacity: pressed ? 0.65 : 1,
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.addBtnText,
+                    {
+                      color: colors.saffronDeep,
+                      fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
+                    },
+                  ]}
+                >
+                  {pick(lang, { hi: '+ समय जोड़ें', en: '+ Add reminder', gu: '+ સમય ઉમેરો', kn: '+ ಸಮಯ ಸೇರಿಸಿ' })}
+                </Text>
+              </Pressable>
+            )}
+            {!canAdd && (
               <Text
                 style={[
                   styles.note,
-                  { color: colors.saffronDeep, fontFamily: typography.cardLatin.fontFamily },
+                  { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily) },
                 ]}
               >
-                {isHi
-                  ? `यह समय शांत घंटों में है — सूचना ${pad(adjusted.hour)}:${pad(adjusted.minute)} पर आएगी।`
-                  : `Inside quiet hours — notification will fire at ${pad(adjusted.hour)}:${pad(adjusted.minute)}.`}
+                {pick(lang, { hi: `अधिकतम ${MAX_REMINDER_TIMES} समय जोड़े जा सकते हैं।`, en: `Up to ${MAX_REMINDER_TIMES} reminders.`, gu: `વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકાય.`, kn: `ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}
               </Text>
             )}
           </View>
-
-          {/* Quiet hours */}
-          <View
-            style={[
-              styles.card,
-              {
-                backgroundColor: colors.parchmentSoft,
-                borderColor: colors.divider,
-                borderRadius: radii.lg,
-              },
-            ]}
-          >
-            <Text
-              style={[
-                styles.cardTitle,
-                { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
-              ]}
-            >
-              {isHi ? 'शांत घंटे' : 'Quiet hours'}
-            </Text>
-            <Text
-              style={[
-                styles.cardSub,
-                { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
-              ]}
-            >
-              {isHi
-                ? 'इन घंटों में सूचना नहीं आएगी।'
-                : 'No notifications inside this window.'}
-            </Text>
-            <View style={styles.quietRow}>
-              <View style={styles.quietCol}>
-                <Text
-                  style={[
-                    styles.quietLabel,
-                    {
-                      color: colors.inkMuted,
-                      fontFamily: typography.cardLatin.fontFamily,
-                    },
-                  ]}
-                >
-                  {isHi ? 'से' : 'From'}
-                </Text>
-                <TimeStepper
-                  value={prefs.quietStart}
-                  onChange={(t) => setQuietHours(t, prefs.quietEnd)}
-                />
-              </View>
-              <View style={styles.quietCol}>
-                <Text
-                  style={[
-                    styles.quietLabel,
-                    {
-                      color: colors.inkMuted,
-                      fontFamily: typography.cardLatin.fontFamily,
-                    },
-                  ]}
-                >
-                  {isHi ? 'तक' : 'Until'}
-                </Text>
-                <TimeStepper
-                  value={prefs.quietEnd}
-                  onChange={(t) => setQuietHours(prefs.quietStart, t)}
-                />
-              </View>
-            </View>
-          </View>
-
-          <Text
-            style={[
-              styles.footnote,
-              { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
-            ]}
-          >
-            {isHi
-              ? 'सूचनाएँ इस उपकरण पर ही बनती हैं — सर्वर पर कुछ नहीं जाता।'
-              : 'Notifications are scheduled on this device. Nothing leaves your phone.'}
-          </Text>
         </ScrollView>
       </SafeAreaView>
     </View>
   );
-}
-
-function pad(n: number): string {
-  return `${n}`.padStart(2, '0');
 }
 
 const styles = StyleSheet.create({
@@ -387,22 +419,37 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     marginTop: 2,
   },
-  timeRow: {
+  timesList: {
     marginTop: 4,
-    alignItems: 'flex-start',
+    gap: 12,
   },
-  quietRow: {
+  timeRow: {
     flexDirection: 'row',
-    gap: 14,
-    marginTop: 6,
-    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: 10,
   },
-  quietCol: {
-    gap: 6,
+  removeBtn: {
+    width: 32,
+    height: 32,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  quietLabel: {
-    fontSize: 10,
-    letterSpacing: 2.4,
+  removeGlyph: {
+    fontSize: 14,
+    lineHeight: 16,
+    includeFontPadding: false,
+  },
+  addBtn: {
+    marginTop: 4,
+    alignSelf: 'flex-start',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderWidth: 1,
+  },
+  addBtnText: {
+    fontSize: 12,
+    letterSpacing: 1.4,
     textTransform: 'uppercase',
     includeFontPadding: false,
   },
@@ -420,13 +467,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     letterSpacing: 1.4,
     marginTop: 6,
-    includeFontPadding: false,
-  },
-  footnote: {
-    fontSize: 11,
-    letterSpacing: 1.4,
-    textAlign: 'center',
-    marginTop: 18,
     includeFontPadding: false,
   },
 });
