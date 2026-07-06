@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Panchang screen — after Daily Muhurat (A card + C detail)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* Tokens from mobile/src/theme/colors.ts */
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-deep:#E9D9B1;
+    --parchment-hi:#F6ECD0; --gradient-end:#F1E3BF;
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34;
+    --divider:rgba(138,62,11,0.18); --saffron-tint:rgba(184,98,27,0.12); --gold-tint:rgba(166,124,52,0.14);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4); --on-primary:#fff;
+    --shubh:#8A3E0B; --shubh-bg:rgba(166,124,52,0.16);
+    --avoid:#9E4A2E; --avoid-bg:rgba(158,74,46,0.10);
+    --sans:'Inter',system-ui,sans-serif; --serif:'Cormorant Garamond',serif; --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:#c9b896;font-size:14px;margin-bottom:20px;max-width:900px}
+  .wrap{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;align-items:center;width:340px}
+  .cap{font-size:12px;color:#b7a377;margin-top:10px;text-align:center}
+  .cap b{color:#e9d9b1}
+  .arrow{align-self:center;font-size:28px;color:#c9b896;margin-top:330px}
+
+  .phone{width:340px;height:730px;background:var(--parchment);border-radius:38px;border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:52px;overflow-y:auto;background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:14px 16px 22px}
+
+  /* system header */
+  .sysrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .loc{font-family:var(--deva);font-size:13px;color:var(--ink-soft);display:flex;align-items:center;gap:5px}
+  .loc .cev{color:var(--ink-muted);font-size:10px}
+  .systoggle{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:999px;font-size:10.5px;overflow:hidden}
+  .systoggle span{padding:4px 10px;color:var(--ink-muted);font-family:var(--deva)}
+  .systoggle .on{background:var(--saffron);color:var(--on-primary)}
+  .star{width:34px;height:34px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--saffron);font-size:15px}
+  /* segment */
+  .seg{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:999px;padding:3px;margin-bottom:14px}
+  .seg div{flex:1;text-align:center;font-size:12.5px;padding:8px;border-radius:999px;color:var(--ink-muted);font-family:var(--deva)}
+  .seg .on{background:var(--saffron);color:var(--on-primary);font-weight:600}
+  /* mini calendar */
+  .calstrip{display:flex;gap:6px;margin-bottom:14px}
+  .cald{flex:1;text-align:center;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:10px;padding:6px 0}
+  .cald .dow{font-size:9px;color:var(--ink-muted);font-family:var(--sans);letter-spacing:.4px}
+  .cald .dn{font-family:var(--serif);font-size:16px;color:var(--ink);margin-top:1px}
+  .cald.sel{background:var(--saffron);border-color:var(--saffron)}
+  .cald.sel .dow,.cald.sel .dn{color:var(--on-primary)}
+  .cald .dot{width:4px;height:4px;border-radius:50%;background:var(--saffron);margin:2px auto 0}
+  /* anga */
+  .lunar{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);text-align:center;margin-bottom:9px}
+  .anga{display:flex;gap:9px;margin-bottom:7px}
+  .tile{flex:1;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:11px;box-shadow:0 1px 2px rgba(60,30,10,.06)}
+  .tile .lab{font-size:9px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;font-family:var(--sans)}
+  .tile .val{font-family:var(--deva);font-size:17px;color:var(--ink);margin-top:2px}
+  .tile .sub{font-size:10px;color:var(--ink-muted);margin-top:1px;font-family:var(--serif);font-style:italic}
+  .anga2{display:flex;gap:9px;margin-bottom:16px}
+  .anga2 .tile{padding:9px 11px}
+  .anga2 .val{font-size:14px}
+
+  /* NEW glance card (Variant A) */
+  .newtag{font-size:8px;font-weight:700;letter-spacing:.5px;color:var(--on-primary);background:var(--saffron);padding:2px 6px;border-radius:7px;margin-left:7px;vertical-align:middle;font-family:var(--sans)}
+  .card{border:1px solid var(--card-border);background:linear-gradient(var(--card-from),var(--card-to));border-radius:18px;padding:16px;box-shadow:0 8px 24px rgba(60,30,10,.14)}
+  .ctitle{font-family:var(--deva);font-size:14px;color:var(--ink-soft)}
+  .nowbig{display:flex;align-items:center;gap:12px;margin-top:10px}
+  .nowdot{width:12px;height:12px;border-radius:50%;background:var(--shubh);flex:none;box-shadow:0 0 0 4px var(--shubh-bg)}
+  .nowbig .t{flex:1}
+  .nowbig .k{font-size:9px;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-muted);font-family:var(--sans)}
+  .nowbig .v{font-family:var(--deva);font-size:21px;color:var(--ink);line-height:1.2}
+  .nowbig .s{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-soft);margin-top:1px}
+  .tag{font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:3px 8px;border-radius:8px;font-family:var(--sans);color:var(--shubh);background:var(--shubh-bg)}
+  .tworow{display:flex;gap:10px;margin-top:13px}
+  .box{flex:1;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:10px 11px}
+  .box .k{font-family:var(--deva);font-size:12px;color:var(--ink-muted)}
+  .box .v{font-family:var(--serif);font-size:14px;color:var(--ink);margin-top:3px;font-variant-numeric:tabular-nums}
+  .box.avoid .v{color:var(--avoid)}
+  .box.shubh .v{color:var(--shubh)}
+  .viewall{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:11px;border-top:1px solid var(--divider);color:var(--saffron);font-size:13px;font-family:var(--deva)}
+  /* upcoming observance (existing content below) */
+  .secth{font-family:var(--serif);font-style:italic;color:var(--ink-muted);font-size:12px;letter-spacing:.4px;text-transform:uppercase;margin:18px 2px 8px}
+  .obsrow{display:flex;align-items:center;gap:10px;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:11px;margin-bottom:8px}
+  .obsrow .om2{font-family:var(--deva);color:var(--saffron-deep);font-size:16px}
+  .obsrow .on{flex:1;font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .obsrow .od{font-size:11px;color:var(--ink-muted);font-family:var(--serif);font-style:italic}
+
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:52px;background:var(--parchment-soft);border-top:1px solid var(--divider);display:flex}
+  .tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;color:var(--ink-muted);font-family:var(--deva)}
+  .tabbar .tab.active{color:var(--saffron)}
+
+  /* detail (Variant C full) */
+  .topbar{display:flex;align-items:center;gap:12px;padding:2px 0 12px}
+  .back{width:34px;height:34px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .ssbar{display:flex;justify-content:space-around;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:10px;margin-bottom:6px}
+  .ssbar .k{font-size:9px;color:var(--ink-muted);text-transform:uppercase;text-align:center;font-family:var(--sans)}
+  .ssbar .v{font-family:var(--serif);font-size:15px;color:var(--ink);text-align:center}
+  .grplab{font-family:var(--sans);font-size:9px;letter-spacing:.6px;text-transform:uppercase;color:var(--saffron-deep);margin:16px 2px 8px}
+  .muh{display:flex;justify-content:space-between;padding:9px 11px;border-radius:10px;font-family:var(--deva);font-size:13.5px;margin-bottom:5px;border:1px solid var(--divider);background:var(--parchment-soft);color:var(--ink)}
+  .muh.shubh{background:var(--shubh-bg);border-color:transparent;color:var(--shubh)}
+  .muh.avoid{background:var(--avoid-bg);border-color:transparent;color:var(--avoid)}
+  .muh.now{border:1.5px solid var(--saffron)}
+  .muh .tm{font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+  .muh.shubh .tm{color:var(--shubh)}.muh.avoid .tm{color:var(--avoid)}
+  .nowchip{font-size:8px;font-weight:700;color:var(--on-primary);background:var(--saffron);padding:1px 5px;border-radius:5px;margin-left:6px}
+  .special{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.5}
+</style>
+</head>
+<body>
+  <h1>Panchang screen — after Daily Muhurat</h1>
+  <div class="sub">The real Panchang → Calendar view with the <b>A glance card</b> slotted below the anga grid, opening the <b>C full readout</b>. Token-exact, emoji-free, warm palette. Data: 5 Jul 2026, Sujangarh.</div>
+
+  <div class="wrap">
+
+    <!-- FRAME 1 — full Panchang Calendar view -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>11:30</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="sysrow">
+          <div class="loc">सुजानगढ़ <span class="cev">▾</span></div>
+          <div class="systoggle"><span class="on">पूर्णिमांत</span><span>अमांत</span></div>
+          <div class="star">★</div>
+        </div>
+        <div class="seg"><div class="on">पंचांग · Calendar</div><div>व्रत-पर्व</div></div>
+        <div class="calstrip">
+          <div class="cald"><div class="dow">FRI</div><div class="dn">3</div></div>
+          <div class="cald"><div class="dow">SAT</div><div class="dn">4</div><div class="dot"></div></div>
+          <div class="cald sel"><div class="dow">SUN</div><div class="dn">5</div></div>
+          <div class="cald"><div class="dow">MON</div><div class="dn">6</div></div>
+          <div class="cald"><div class="dow">TUE</div><div class="dn">7</div><div class="dot"></div></div>
+        </div>
+
+        <div class="lunar">आषाढ़ · कृष्ण पक्ष · Ashadha · Krishna · संवत 2083</div>
+        <div class="anga">
+          <div class="tile"><div class="lab">तिथि · Tithi</div><div class="val">पंचमी</div><div class="sub">till 1:30 PM</div></div>
+          <div class="tile"><div class="lab">नक्षत्र · Nakshatra</div><div class="val">शतभिषा</div><div class="sub">till 3:11 PM</div></div>
+        </div>
+        <div class="anga2">
+          <div class="tile"><div class="lab">योग</div><div class="val">आयुष्मान</div></div>
+          <div class="tile"><div class="lab">करण</div><div class="val">तैतिल</div></div>
+          <div class="tile"><div class="lab">वार</div><div class="val">रविवार</div></div>
+        </div>
+
+        <!-- NEW glance card -->
+        <div class="card">
+          <div class="ctitle">आज का मुहूर्त · Today's Timings <span class="newtag">NEW</span></div>
+          <div class="nowbig">
+            <div class="nowdot"></div>
+            <div class="t"><div class="k">अभी · Now</div><div class="v">अमृत चौघड़िया</div><div class="s">till 12:37 PM · auspicious</div></div>
+            <div class="tag">शुभ</div>
+          </div>
+          <div class="tworow">
+            <div class="box avoid"><div class="k">राहु काल</div><div class="v">5:47–7:31 PM</div></div>
+            <div class="box shubh"><div class="k">अभिजीत</div><div class="v">12:09–12:57</div></div>
+          </div>
+          <div class="viewall"><span>सभी मुहूर्त व चौघड़िया</span><span>›</span></div>
+        </div>
+
+        <div class="secth">आगामी · Upcoming</div>
+        <div class="obsrow"><span class="om2">☾</span><span class="on">देवशयनी एकादशी</span><span class="od">Jul 6</span></div>
+      </div></div>
+      <div class="tabbar"><div class="tab">॥ गृह</div><div class="tab">भक्ति</div><div class="tab active">पंचांग</div><div class="tab">श्रवण</div><div class="tab">अधिक</div></div>
+    </div>
+    <div class="cap"><b>Panchang → Calendar view.</b> The glance card sits below the Tithi/Nakshatra anga grid, above the upcoming-observances list. Answers "is now good?" without leaving the tab.</div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <!-- FRAME 2 — full Muhurat detail (Variant C) -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>11:30</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">आज का मुहूर्त · Muhurat</div></div>
+        <div class="ssbar">
+          <div><div class="k">सूर्योदय</div><div class="v">05:42</div></div>
+          <div><div class="k">सूर्यास्त</div><div class="v">19:30</div></div>
+          <div><div class="k">अभिजीत</div><div class="v">12:09</div></div>
+        </div>
+
+        <div class="grplab">दिन चौघड़िया · Day</div>
+        <div class="muh"><span>उद्वेग</span><span class="tm">05:42–07:26</span></div>
+        <div class="muh shubh"><span>चर</span><span class="tm">07:26–09:10</span></div>
+        <div class="muh shubh"><span>लाभ</span><span class="tm">09:10–10:53</span></div>
+        <div class="muh shubh now"><span>अमृत <span class="nowchip">अभी</span></span><span class="tm">10:53–12:37</span></div>
+        <div class="muh avoid"><span>काल</span><span class="tm">12:37–14:20</span></div>
+        <div class="muh shubh"><span>शुभ</span><span class="tm">14:20–16:04</span></div>
+        <div class="muh avoid"><span>रोग</span><span class="tm">16:04–17:47</span></div>
+        <div class="muh"><span>उद्वेग</span><span class="tm">17:47–19:30</span></div>
+
+        <div class="grplab">त्याज्य काल · Avoid</div>
+        <div class="muh avoid"><span>राहु काल</span><span class="tm">17:47–19:31</span></div>
+        <div class="muh avoid"><span>यमगण्ड</span><span class="tm">12:37–14:20</span></div>
+        <div class="muh avoid"><span>गुलिक काल</span><span class="tm">15:04–16:47</span></div>
+
+        <div class="grplab">विशेष · Special</div>
+        <div class="muh shubh"><span>अभिजीत मुहूर्त</span><span class="tm">12:09–12:57</span></div>
+        <div class="muh shubh"><span>प्रदोष वेला</span><span class="tm">19:30–20:42</span></div>
+
+        <div class="special">पंचक — शुक्र 03 जुलाई रात्रि 24:47 से बुध 08 जुलाई दिन 04:00 तक।<br>सभी समय सुजानगढ़ के अनुसार।</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Muhurat detail (View all).</b> The full reverent readout: all 8 day choghadiya with the current one flagged अभी, the three avoid-kaal, Abhijit/Pradosh, and the Panchak note.</div>
+    </div>
+
+  </div>
+</body>
+</html>

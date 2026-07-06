@@ -61,9 +61,11 @@ type FollowAlongTrack = {
 
 **Authoring the cues** (the real cost): a small in-repo tool (a `scripts/*.mjs` "tap-along" utility, or a spreadsheet import) where a curator marks the timestamp of each line against the recording once per track. ~40 cues for the Chalisa — minutes of work per track, done at content time, not runtime.
 
+> **Reader reality (verified in source).** The reader is a **horizontal one-verse-per-page `FlatList`** (`getItemLayout` by index; `scrollToIndex` pages between verses), *not* a vertical scroll of lines. So "follow-along" is primarily **auto-paging to the active verse** as the recitation crosses cue boundaries, with an optional **active-line wash within** a multi-line verse page. `positionSec` updates at a **500 ms** cadence (`createAudioPlayer(..., { updateInterval: 500 })`) — ample for verse/line granularity, and the reason word-level karaoke is out of scope (§3).
+
 ## 5. Surfaces
 
-- **Reader + player together.** When `AudioPlayerContext.currentTrack.linkedTextId` matches the open reader's text **and** a `FollowAlongTrack` exists, the reader enters **follow-along mode**: the active line gets the highlight treatment; the page auto-advances/scrolls to keep it visible (reusing the reader's existing paging).
+- **Reader + player together.** When `AudioPlayerContext.currentTrack.linkedTextId` matches the open reader's text **and** a `FollowAlongTrack` exists, the reader enters **follow-along mode**: the active verse page is auto-paged into view and its active line gets a warm wash (reusing the reader's existing `scrollToIndex` paging).
 - **A "follow along" affordance** on the reader top-bar / now-playing surface to toggle auto-scroll (so a user can read ahead without the view yanking back).
 - **Tap-to-seek** on a line while a linked track is loaded.
 - **Now-playing → open text.** From the now-playing overlay, a "read along" action opens the linked reader in follow-along mode (deep-link via `entryRoutes.ts` using `linkedTextId`).
@@ -103,3 +105,25 @@ type FollowAlongTrack = {
 1. **Cue authoring tooling** — a `scripts/*.mjs` tap-along utility vs. spreadsheet import. Default: small tap-along script.
 2. **Auto-scroll default** — on or off by default, and where the toggle lives.
 3. **Pilot track confirmation** — depends on which real recitation lands first from PRD-02.
+
+## 10. Acceptance criteria
+
+The pilot (Phase 1, Hanuman Chalisa) is done when:
+
+1. Playing the linked recitation with the Chalisa reader open **auto-pages to the verse being chanted**, staying within ~1 update tick (≤ 500 ms) of the cue boundary.
+2. **Tap-to-seek**: tapping a verse/line seeks the audio to that cue's `atSec` and playback continues from there.
+3. **Auto-scroll toggle** lets the user read ahead without the view snapping back; re-enabling resumes tracking at the current position.
+4. **Graceful no-op**: opening a reader whose track has no `FollowAlongTrack` (or with audio paused / a different track loaded) behaves exactly as today — no highlight, no scroll hijack, no errors.
+5. **No reading-progress corruption**: entering follow-along and auto-paging must not overwrite the user's saved resume position in a way that differs from normal reading (progress semantics unchanged).
+6. Manual paging **while playing** temporarily suspends auto-scroll (grace window) so the two don't fight.
+
+## 11. Success metrics (bundle-only, local)
+
+| Metric | Target | Measured |
+|---|---|---|
+| Follow-along session rate (of recitation plays with the linked reader opened) | ≥ 30% | local counter |
+| Tap-to-seek usage per follow-along session | ≥ 1 (median) | local counter |
+| Auto-scroll kept on (not disabled) | ≥ 70% | local flag rate |
+| Crash-free follow-along sessions | ≥ 99.5% | App Store Connect + local crash log (PRD-06) |
+
+No third-party analytics SDK — counters are read only from the in-app diagnostics surface (roadmap §3).

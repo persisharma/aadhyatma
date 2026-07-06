@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-14 · Today's Panchang / Muhurat — 3 user-friendly designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* Tokens copied verbatim from mobile/src/theme/colors.ts (source of truth). */
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-deep:#E9D9B1;
+    --parchment-hi:#F6ECD0; --gradient-end:#F1E3BF;
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34;
+    --divider:rgba(138,62,11,0.18); --saffron-tint:rgba(184,98,27,0.12); --gold-tint:rgba(166,124,52,0.14);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4); --on-primary:#fff;
+    /* Proposed warm auspicious/avoid pair (NOT green/red) — needs a token if adopted */
+    --shubh:#8A3E0B; --shubh-bg:rgba(166,124,52,0.16);
+    --avoid:#9E4A2E; --avoid-bg:rgba(158,74,46,0.10);
+    --sans:'Inter',system-ui,sans-serif; --serif:'Cormorant Garamond',serif; --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:#c9b896;font-size:14px;margin-bottom:6px;max-width:960px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:960px}
+  .legend b{color:#e9d9b1}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;align-items:center;width:340px}
+  .cap{font-size:12px;color:#b7a377;margin-top:10px;text-align:left}
+  .cap b{color:#e9d9b1}
+  .cap .pro{color:#9ec5a6}.cap .con{color:#d79b86}
+
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px}
+  .om{font-family:var(--deva);text-align:center;color:var(--saffron);font-size:20px}
+  .hd{font-family:var(--deva);text-align:center;font-size:18px;color:var(--ink);margin-top:2px}
+  .dateline{font-family:var(--serif);font-style:italic;text-align:center;font-size:12.5px;color:var(--ink-muted);margin:2px 0 14px}
+
+  /* chips / tags */
+  .tag{font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:8px;font-family:var(--sans)}
+  .tag.shubh{color:var(--shubh);background:var(--shubh-bg)}
+  .tag.avoid{color:var(--avoid);background:var(--avoid-bg)}
+  .now-chip{font-size:8px;font-weight:700;color:var(--on-primary);background:var(--saffron);padding:1px 6px;border-radius:6px;letter-spacing:.4px}
+
+  /* ---------- Variant A: Glance card ---------- */
+  .card{border:1px solid var(--card-border);background:linear-gradient(var(--card-from),var(--card-to));border-radius:18px;padding:18px;box-shadow:0 8px 24px rgba(60,30,10,.14)}
+  .nowbig{display:flex;align-items:center;gap:12px}
+  .nowdot{width:12px;height:12px;border-radius:50%;background:var(--shubh);flex:none;box-shadow:0 0 0 4px var(--shubh-bg)}
+  .nowdot.av{background:var(--avoid);box-shadow:0 0 0 4px var(--avoid-bg)}
+  .nowbig .t{flex:1}
+  .nowbig .k{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-muted)}
+  .nowbig .v{font-family:var(--deva);font-size:22px;color:var(--ink);line-height:1.2}
+  .nowbig .s{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-soft);margin-top:1px}
+  .tworow{display:flex;gap:10px;margin-top:14px}
+  .box{flex:1;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:11px}
+  .box .k{font-family:var(--deva);font-size:12px;color:var(--ink-muted)}
+  .box .v{font-family:var(--serif);font-size:15px;color:var(--ink);margin-top:3px;font-variant-numeric:tabular-nums}
+  .box.avoid .v{color:var(--avoid)}
+  .box.shubh .v{color:var(--shubh)}
+  .anga-inline{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:16px}
+  .anga-inline div{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft)}
+  .anga-inline b{color:var(--ink);font-weight:600}
+  .viewall{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:12px;border-top:1px solid var(--divider);color:var(--saffron);font-size:13px;font-family:var(--deva)}
+
+  /* ---------- Variant B: Day-arc timeline ---------- */
+  .arcwrap{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:16px;padding:16px 14px 14px}
+  .arcends{display:flex;justify-content:space-between;font-family:var(--serif);font-size:12px;color:var(--ink-muted);margin-bottom:8px}
+  .arc{position:relative;height:34px;border-radius:8px;overflow:hidden;display:flex;border:1px solid var(--divider)}
+  .seg{height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:9px;color:var(--ink-soft);border-right:1px solid rgba(255,255,255,.4)}
+  .seg.shubh{background:var(--shubh-bg);color:var(--shubh)}
+  .seg.avoid{background:var(--avoid-bg);color:var(--avoid)}
+  .seg.neu{background:transparent}
+  .nowmark{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--saffron)}
+  .nowmark::after{content:"अभी";position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-family:var(--sans);font-size:8px;font-weight:700;color:var(--on-primary);background:var(--saffron);padding:1px 5px;border-radius:5px;white-space:nowrap}
+  .arclegend{display:flex;gap:14px;margin-top:12px;font-size:10px;color:var(--ink-muted)}
+  .arclegend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:middle}
+  .lgnd-shubh{background:var(--shubh-bg);border:1px solid var(--shubh)}
+  .lgnd-avoid{background:var(--avoid-bg);border:1px solid var(--avoid)}
+  .list{margin-top:14px}
+  .lrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--divider)}
+  .lrow .dot2{width:8px;height:8px;border-radius:50%;flex:none}
+  .lrow .nm{flex:1;font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .lrow .tm{font-size:12px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+
+  /* ---------- Variant C: Reverent list ---------- */
+  .frame{border:1px solid var(--gold);border-radius:14px;padding:16px;background:var(--parchment-soft);position:relative}
+  .frame::before,.frame::after{content:"॥";position:absolute;color:var(--saffron);opacity:.5;font-family:var(--deva);font-size:14px}
+  .frame::before{top:8px;left:12px}.frame::after{top:8px;right:12px}
+  .grp{margin-bottom:12px}
+  .grplab{font-family:var(--sans);font-size:9px;letter-spacing:.6px;text-transform:uppercase;color:var(--saffron-deep);text-align:center;margin:4px 0 8px}
+  .kv{display:flex;justify-content:space-between;font-family:var(--deva);font-size:13.5px;color:var(--ink);padding:3px 4px}
+  .kv .kk{color:var(--ink-soft)}
+  .kv .vv{font-variant-numeric:tabular-nums}
+  .rule{height:1px;background:var(--divider);margin:8px 0}
+  .muh{display:flex;justify-content:space-between;padding:4px;border-radius:8px;font-family:var(--deva);font-size:13px}
+  .muh.shubh{background:var(--shubh-bg)}
+  .muh.avoid{background:var(--avoid-bg);color:var(--avoid)}
+  .special{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);text-align:center;margin-top:10px;line-height:1.5}
+</style>
+</head>
+<body>
+  <h1>Today's Panchang / Muhurat — 3 user-friendly designs</h1>
+  <div class="sub">Same data as the shared card (5 Jul 2026, Sujangarh), rebuilt in the app's parchment system — token-exact (from <code>colors.ts</code>), no emoji, warm auspicious/avoid palette instead of green/red.</div>
+  <div class="legend"><b>The problem with the traditional card:</b> everything is one weight, centered, and undifferentiated — you can't answer "is <i>now</i> good?" at a glance. Each design below solves that differently.</div>
+
+  <div class="wrap">
+
+    <!-- ============ VARIANT A ============ -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>11:30</span><span>Panchang</span></div>
+      <div class="screen"><div class="pad">
+        <div class="om">ॐ</div>
+        <div class="hd">आज का पंचांग</div>
+        <div class="dateline">रविवार, 5 जुलाई 2026 · आषाढ़ कृष्ण पक्ष</div>
+        <div class="card">
+          <div class="nowbig">
+            <div class="nowdot"></div>
+            <div class="t"><div class="k">अभी · Now</div><div class="v">अमृत चौघड़िया</div><div class="s">till 12:37 PM · auspicious</div></div>
+            <div class="tag shubh">शुभ</div>
+          </div>
+          <div class="tworow">
+            <div class="box avoid"><div class="k">राहु काल</div><div class="v">5:47–7:31 PM</div></div>
+            <div class="box shubh"><div class="k">अभिजीत</div><div class="v">12:09–12:57</div></div>
+          </div>
+          <div class="anga-inline">
+            <div>तिथि <b>पंचमी</b></div><div>नक्षत्र <b>शतभिषा</b></div>
+            <div>योग <b>आयुष्मान</b></div><div>वार <b>रविवार</b></div>
+            <div>सूर्योदय <b>05:42</b></div><div>सूर्यास्त <b>19:30</b></div>
+          </div>
+          <div class="viewall"><span>सभी मुहूर्त व चौघड़िया</span><span>›</span></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>A · Glance card.</b> "Is now good?" answered in the top line; Rahu Kaal + Abhijit next; panchang angas demoted to a quiet inline strip; full table one tap away.<br><span class="pro">＋ Fastest daily answer; fits the existing card slot below the anga grid; least scrolling.</span><br><span class="con">－ Hides the full choghadiya behind a tap; less "complete almanac" feel.</span></div>
+    </div>
+
+    <!-- ============ VARIANT B ============ -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>11:30</span><span>Panchang</span></div>
+      <div class="screen"><div class="pad">
+        <div class="om">ॐ</div>
+        <div class="hd">दिन का प्रवाह · Today's flow</div>
+        <div class="dateline">रविवार, 5 जुलाई 2026</div>
+        <div class="arcwrap">
+          <div class="arcends"><span>सूर्योदय 05:42</span><span>सूर्यास्त 19:30</span></div>
+          <div class="arc">
+            <div class="seg neu" style="flex:1">उद्वेग</div>
+            <div class="seg shubh" style="flex:1">चर</div>
+            <div class="seg shubh" style="flex:1">लाभ</div>
+            <div class="seg shubh" style="flex:1">अमृत</div>
+            <div class="seg avoid" style="flex:1">काल</div>
+            <div class="seg shubh" style="flex:1">शुभ</div>
+            <div class="seg avoid" style="flex:1">रोग</div>
+            <div class="seg neu" style="flex:1;border-right:none">उद्वेग</div>
+            <div class="nowmark" style="left:42%"></div>
+          </div>
+          <div class="arclegend"><span><i class="lgnd-shubh"></i>शुभ / auspicious</span><span><i class="lgnd-avoid"></i>त्याज्य / avoid</span></div>
+        </div>
+        <div class="list">
+          <div class="lrow"><span class="dot2" style="background:var(--avoid)"></span><span class="nm">राहु काल</span><span class="tm">5:47–7:31 PM</span></div>
+          <div class="lrow"><span class="dot2" style="background:var(--avoid)"></span><span class="nm">यमगण्ड</span><span class="tm">12:37–2:20 PM</span></div>
+          <div class="lrow"><span class="dot2" style="background:var(--shubh)"></span><span class="nm">अभिजीत मुहूर्त</span><span class="tm">12:09–12:57 PM</span></div>
+          <div class="lrow" style="border-bottom:none"><span class="dot2" style="background:var(--shubh)"></span><span class="nm">प्रदोष वेला</span><span class="tm">7:30–8:42 PM</span></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>B · Day-arc timeline.</b> Sunrise→sunset as a single bar, choghadiya as colour bands, a live "अभी" marker showing where you are; kaal windows listed below.<br><span class="pro">＋ Most intuitive "where are we now"; shows the whole day at once; visually distinctive.</span><br><span class="con">－ Bands are approximate widths; a busy element to fit the calm aesthetic; needs care on small screens.</span></div>
+    </div>
+
+    <!-- ============ VARIANT C ============ -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>11:30</span><span>Panchang</span></div>
+      <div class="screen"><div class="pad">
+        <div class="om">ॐ</div>
+        <div class="hd" style="margin-bottom:2px">आज का पंचांग</div>
+        <div class="dateline">रविवार, 5 जुलाई 2026 · संवत 2083</div>
+        <div class="frame">
+          <div class="grp">
+            <div class="grplab">पंचांग</div>
+            <div class="kv"><span class="kk">तिथि</span><span class="vv">पंचमी · 13:30</span></div>
+            <div class="kv"><span class="kk">नक्षत्र</span><span class="vv">शतभिषा · 15:11</span></div>
+            <div class="kv"><span class="kk">योग</span><span class="vv">आयुष्मान · 16:38</span></div>
+            <div class="kv"><span class="kk">करण</span><span class="vv">तैतिल · 13:30</span></div>
+          </div>
+          <div class="rule"></div>
+          <div class="grp">
+            <div class="grplab">सूर्य</div>
+            <div class="kv"><span class="kk">सूर्योदय</span><span class="vv">05:42</span></div>
+            <div class="kv"><span class="kk">सूर्यास्त</span><span class="vv">19:30</span></div>
+          </div>
+          <div class="rule"></div>
+          <div class="grp">
+            <div class="grplab">शुभ मुहूर्त · चौघड़िया</div>
+            <div class="muh shubh"><span>चर</span><span>07:26–09:10</span></div>
+            <div class="muh shubh"><span>लाभ</span><span>09:10–10:53</span></div>
+            <div class="muh shubh"><span>अमृत</span><span>10:53–12:37</span></div>
+            <div class="muh shubh"><span>शुभ</span><span>14:20–16:04</span></div>
+          </div>
+          <div class="grp">
+            <div class="grplab">विशेष</div>
+            <div class="muh shubh"><span>अभिजीत</span><span>12:09–12:57</span></div>
+            <div class="muh avoid"><span>राहु काल</span><span>17:47–19:31</span></div>
+          </div>
+          <div class="special">पंचक — शुक्र 03 जुलाई रात्रि से बुध 08 जुलाई तक।</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>C · Reverent list (modernized traditional).</b> Keeps the almanac completeness &amp; centered feel of the shared card, but grouped, spaced, and warm-tagged so it's readable.<br><span class="pro">＋ Closest to what traditional users expect; complete readout on one screen; on-brand reverence.</span><br><span class="con">－ Densest; still requires reading to find "now"; least glanceable of the three.</span></div>
+    </div>
+
+  </div>
+</body>
+</html>

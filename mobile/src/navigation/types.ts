@@ -75,6 +75,8 @@ export type PanchangStackParamList = {
   ObservanceDetail: { ruleId: string };
   KathaLibrary: undefined;
   MyVrat: undefined;
+  // Daily Muhurat detail (Choghadiya / Rahu Kaal / Abhijit) — PRD-14
+  MuhuratDetail: { dateMs: number };
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing

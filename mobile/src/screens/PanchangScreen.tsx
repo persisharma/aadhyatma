@@ -10,6 +10,8 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
+import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
+import { formatClock as formatTime12 } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
 import {
@@ -35,15 +37,6 @@ const MONTHS_FULL_HI = ['जनवरी', 'फ़रवरी', 'मार्�
 const WEEKDAYS_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const WEEKDAYS_HI = ['रवि', 'सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि'];
 type ObservanceCalendarTag = 'vrat' | 'festival' | 'mixed';
-
-function formatTime12(date: Date | null): string {
-  if (!date) return '';
-  const h = date.getHours();
-  const m = date.getMinutes();
-  const ampm = h >= 12 ? 'PM' : 'AM';
-  const h12 = h % 12 || 12;
-  return `${h12}:${String(m).padStart(2, '0')} ${ampm}`;
-}
 
 function startOfLocalDay(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -467,6 +460,14 @@ export default function PanchangScreen() {
               <TimeCell icon="☽" label={contentByLang(lang, 'ब्रह्म मुहूर्त', 'Brahma Muhurta')} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} lang={lang} colors={colors} />
             </View>
           </View>
+
+          {/* Daily Muhurat — Choghadiya / Rahu Kaal glance card (PRD-14). Reads the
+              selected day; opens the full reverent readout. */}
+          <MuhuratGlanceCard
+            date={selectedDate}
+            calendarSystem={calendarSystem}
+            onViewAll={() => rootNav.navigate('MuhuratDetail', { dateMs: selectedDate.getTime() })}
+          />
             </>
           ) : (
             <View style={{ paddingVertical: 72, alignItems: 'center', justifyContent: 'center' }}>
