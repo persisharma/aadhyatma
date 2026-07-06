@@ -34,19 +34,23 @@ export default function SadhanaCompletionOverlay() {
       if (committedDays.current.has(key)) continue;
       committedDays.current.add(key);
       commitDay(card.program.id, card.status.dayIndex, card.autoVia);
-      if (
-        !isLoading &&
-        !shower &&
-        card.status.dayIndex < card.status.totalDays &&
-        !wasDayCelebrated(card.program.id, card.status.dayIndex)
-      ) {
-        const caption = contentByLang(lang, 'संकल्प दिवस पूर्ण', 'Sankalp day complete');
-        setShower({ caption, programId: key });
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
-        markDayCelebrated(card.program.id, card.status.dayIndex);
-      }
     }
-  }, [cards, commitDay, isLoading, lang, markDayCelebrated, shower, wasDayCelebrated]);
+  }, [cards, commitDay]);
+
+  useEffect(() => {
+    if (isLoading || shower) return;
+    const doneToday = cards.find(
+      (card) =>
+        card.status.kind === 'done-today' &&
+        !wasDayCelebrated(card.program.id, card.status.dayIndex)
+    );
+    if (!doneToday || doneToday.status.kind !== 'done-today') return;
+
+    const caption = contentByLang(lang, 'संकल्प दिवस पूर्ण', 'Sankalp day complete');
+    setShower({ caption, programId: `${doneToday.program.id}:${doneToday.status.dayIndex}` });
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+    markDayCelebrated(doneToday.program.id, doneToday.status.dayIndex);
+  }, [cards, isLoading, lang, markDayCelebrated, shower, wasDayCelebrated]);
 
   useEffect(() => {
     if (isLoading || shower) return;

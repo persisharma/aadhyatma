@@ -64,7 +64,7 @@ beforeEach(() => {
 });
 
 describe('SadhanaCompletionOverlay', () => {
-  it('commits an active sankalp day and plays the daily completion shower from the app root', () => {
+  it('commits an active sankalp day from the app root when its content is complete', () => {
     mockCards = [
       {
         program: { id: 'hanuman-41' },
@@ -74,10 +74,24 @@ describe('SadhanaCompletionOverlay', () => {
       },
     ];
 
+    renderOverlay();
+
+    expect(mockCommitDay).toHaveBeenCalledWith('hanuman-41', 2, 'read-to-end');
+  });
+
+  it('plays the daily completion shower when a sankalp day is done today', () => {
+    mockCards = [
+      {
+        program: { id: 'hanuman-41' },
+        status: { kind: 'done-today', dayIndex: 2, totalDays: 41 },
+        allItemsDoneToday: false,
+        autoVia: 'read-to-end',
+      },
+    ];
+
     const tree = renderOverlay();
     const text = tree.root.findAllByType(Text).map((n) => n.props.children).join(' ');
 
-    expect(mockCommitDay).toHaveBeenCalledWith('hanuman-41', 2, 'read-to-end');
     expect(text).toContain('Sankalp day complete');
     expect(mockMarkDayCelebrated).toHaveBeenCalledWith('hanuman-41', 2);
     expect(mockNotificationAsync).toHaveBeenCalledWith('success');
@@ -88,15 +102,14 @@ describe('SadhanaCompletionOverlay', () => {
     mockCards = [
       {
         program: { id: 'hanuman-41' },
-        status: { kind: 'active', dayIndex: 2, totalDays: 41, items: [] },
-        allItemsDoneToday: true,
+        status: { kind: 'done-today', dayIndex: 2, totalDays: 41 },
+        allItemsDoneToday: false,
         autoVia: 'read-to-end',
       },
     ];
 
     const tree = renderOverlay();
 
-    expect(mockCommitDay).toHaveBeenCalledWith('hanuman-41', 2, 'read-to-end');
     expect(tree.root.findAllByType(Text)).toHaveLength(0);
     expect(mockMarkDayCelebrated).not.toHaveBeenCalled();
   });
