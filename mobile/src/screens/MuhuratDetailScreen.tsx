@@ -18,10 +18,13 @@ import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratDetail'>;
 
-// One frame + a short beat so the off-screen share card is committed and its
-// fonts are resolved before capture. Without this, the New Architecture returns
-// a blank snapshot for a view that has never been on-screen (matches the reader
-// share path in shareVerse.tsx).
+// Render width (dp) of the hidden share card. Output PNG is captured at 2× for
+// a crisp image, matching the reader share path (shareVerse.tsx).
+const SHARE_CARD_WIDTH = 340;
+const SHARE_SCALE = 2;
+
+// One frame + a short beat so the hidden share card is committed and its fonts
+// are resolved before capture, matching the reader share path (shareVerse.tsx).
 async function waitForLayout() {
   await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
   await new Promise<void>((resolve) => setTimeout(resolve, 60));
@@ -42,6 +45,10 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
   const nowStartMs = muhurat.isToday ? muhurat.nowChoghadiya?.start.getTime() ?? null : null;
 
   const shotRef = useRef<View>(null);
+  // Measured height of the hidden card (dp). Handed to captureRef as an explicit
+  // output size — a content-sized view captured with no dimensions can come back
+  // blank under the New Architecture.
+  const cardHeightRef = useRef(0);
   const [busy, setBusy] = useState(false);
 
   const onShare = useCallback(async () => {
@@ -49,7 +56,15 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
     setBusy(true);
     try {
       await waitForLayout();
-      const uri = await captureRef(shotRef, { format: 'png', quality: 1, result: 'tmpfile' });
+      const h = cardHeightRef.current;
+      const uri = await captureRef(shotRef, {
+        format: 'png',
+        quality: 1,
+        result: 'tmpfile',
+        ...(h > 0
+          ? { width: SHARE_CARD_WIDTH * SHARE_SCALE, height: Math.round(h * SHARE_SCALE) }
+          : null),
+      });
       if (await Sharing.isAvailableAsync()) {
         await Sharing.shareAsync(uri, {
           mimeType: 'image/png',
@@ -65,6 +80,29 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.root}>
+      {/* Share card — captured to a PNG for the OS share sheet. It is rendered
+          ON-SCREEN at the origin (not translated off-screen) and then fully
+          covered by the opaque gradient + content painted after it. A view
+          moved off-screen under the New Architecture captures its own
+          background but NOT its subviews — the reported blank/parchment-only
+          image. On-screen-but-occluded, the subtree actually draws, and
+          captureRef snapshots this view regardless of what covers it.
+          collapsable={false} on the captured view itself keeps it a real
+          native view for view-shot to target. */}
+      {ready && (
+        <View style={styles.captureLayer} pointerEvents="none">
+          <View
+            ref={shotRef}
+            collapsable={false}
+            onLayout={(e) => {
+              cardHeightRef.current = e.nativeEvent.layout.height;
+            }}
+            style={{ width: SHARE_CARD_WIDTH, backgroundColor: colors.parchment, padding: 18 }}
+          >
+            <MuhuratCardBody p={p} md={md} variant="share" cityLabel={cityLabel} brand />
+          </View>
+        </View>
+      )}
       <LinearGradient colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
@@ -84,7 +122,7 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
             onPress={onShare}
             busy={busy || !ready}
             accessibilityLabel={pick(lang, { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ' })}
-            accessibilityHint={undefined}
+            accessibilityHint=""
           />
         </View>
 
@@ -98,15 +136,6 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
           )}
         </ScrollView>
       </SafeAreaView>
-
-      {/* Off-screen share card — captured to a PNG for the OS share sheet. */}
-      {ready && (
-        <View collapsable={false} style={styles.offscreen} pointerEvents="none">
-          <View ref={shotRef} style={{ width: 340, backgroundColor: colors.parchment, padding: 18 }}>
-            <MuhuratCardBody p={p} md={md} variant="share" cityLabel={cityLabel} brand />
-          </View>
-        </View>
-      )}
     </View>
   );
 }
@@ -116,5 +145,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   topBar: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, gap: 12 },
   backBtn: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  offscreen: { position: 'absolute', left: -10000, top: 0 },
+  // On-screen at the origin so the subtree actually draws, but painted first
+  // (and pointerEvents="none") so the gradient + content fully cover it.
+  captureLayer: { position: 'absolute', left: 0, top: 0, width: SHARE_CARD_WIDTH },
 });
