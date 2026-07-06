@@ -6,6 +6,8 @@ import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 const mockCommitDay = jest.fn();
 const mockMarkCelebrated = jest.fn();
 const mockWasCelebrated = jest.fn(() => false);
+const mockMarkDayCelebrated = jest.fn();
+const mockWasDayCelebrated = jest.fn(() => false);
 const mockNotificationAsync = jest.fn((_type?: unknown) => Promise.resolve());
 let mockIsLoading = false;
 let mockCards: any[] = [];
@@ -24,6 +26,8 @@ jest.mock('@/contexts/SadhanaContext', () => ({
     commitDay: mockCommitDay,
     markCelebrated: mockMarkCelebrated,
     wasCelebrated: mockWasCelebrated,
+    markDayCelebrated: mockMarkDayCelebrated,
+    wasDayCelebrated: mockWasDayCelebrated,
     isLoading: mockIsLoading,
   }),
 }));
@@ -52,13 +56,15 @@ beforeEach(() => {
   mockCommitDay.mockClear();
   mockMarkCelebrated.mockClear();
   mockWasCelebrated.mockClear();
+  mockMarkDayCelebrated.mockClear();
+  mockWasDayCelebrated.mockClear();
   mockNotificationAsync.mockClear();
   mockIsLoading = false;
   mockCards = [];
 });
 
 describe('SadhanaCompletionOverlay', () => {
-  it('commits an active sankalp day from the app root when its content is complete', () => {
+  it('commits an active sankalp day and plays the daily completion shower from the app root', () => {
     mockCards = [
       {
         program: { id: 'hanuman-41' },
@@ -68,9 +74,31 @@ describe('SadhanaCompletionOverlay', () => {
       },
     ];
 
-    renderOverlay();
+    const tree = renderOverlay();
+    const text = tree.root.findAllByType(Text).map((n) => n.props.children).join(' ');
 
     expect(mockCommitDay).toHaveBeenCalledWith('hanuman-41', 2, 'read-to-end');
+    expect(text).toContain('Sankalp day complete');
+    expect(mockMarkDayCelebrated).toHaveBeenCalledWith('hanuman-41', 2);
+    expect(mockNotificationAsync).toHaveBeenCalledWith('success');
+  });
+
+  it('does not replay a daily completion shower after that sankalp day was celebrated', () => {
+    mockWasDayCelebrated.mockReturnValue(true);
+    mockCards = [
+      {
+        program: { id: 'hanuman-41' },
+        status: { kind: 'active', dayIndex: 2, totalDays: 41, items: [] },
+        allItemsDoneToday: true,
+        autoVia: 'read-to-end',
+      },
+    ];
+
+    const tree = renderOverlay();
+
+    expect(mockCommitDay).toHaveBeenCalledWith('hanuman-41', 2, 'read-to-end');
+    expect(tree.root.findAllByType(Text)).toHaveLength(0);
+    expect(mockMarkDayCelebrated).not.toHaveBeenCalled();
   });
 
   it('plays and records a once-only sankalp completion celebration after hydration', () => {

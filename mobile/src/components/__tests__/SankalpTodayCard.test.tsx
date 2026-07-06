@@ -88,7 +88,7 @@ describe('SankalpTodayCard', () => {
     expect(mockCommitDay).not.toHaveBeenCalled();
   });
 
-  it('does not allow an active sankalp day to be marked done before content is complete', () => {
+  it('allows an active sankalp day to be manually marked offered', () => {
     const program = getProgram('navratri-durga-9')!;
     const item = program.days![0].items[0];
     const card: SadhanaTodayCard = {
@@ -112,10 +112,16 @@ describe('SankalpTodayCard', () => {
       autoVia: 'read-to-end',
     };
 
-    const text = textOf(render(card));
+    const tree = render(card);
+    const text = textOf(tree);
 
     expect(text).toContain('Durga Chalisa');
-    expect(text).not.toContain("Mark today's practice done");
-    expect(mockCommitDay).not.toHaveBeenCalled();
+    const markButton = tree.root.findAll(
+      (n) => n.props.accessibilityLabel === 'Mark offered'
+    )[0];
+
+    expect(markButton).toBeDefined();
+    act(() => markButton!.props.onPress());
+    expect(mockCommitDay).toHaveBeenCalledWith(program.id, 1, 'marked');
   });
 });

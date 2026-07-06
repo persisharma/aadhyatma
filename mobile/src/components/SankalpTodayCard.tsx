@@ -7,6 +7,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import PracticeSeal from '@/components/PracticeSeal';
+import { useSadhana } from '@/contexts/SadhanaContext';
 import { offeredTail } from '@/data/routine/practiceView';
 import { navigateToRoutineItem } from '@/navigation/entryRoutes';
 import type { SadhanaTodayCard as CardData } from '@/data/sadhana/useSadhanaToday';
@@ -20,6 +21,7 @@ import type { HomeStackParamList } from '@/navigation/types';
 export default function SankalpTodayCard({ card }: { card: CardData }) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { commitDay } = useSadhana();
   const nav = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
   const { program, status, items } = card;
@@ -140,16 +142,25 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
             {items.map((it, i) => {
               const tail = offeredTail(it.done, it.doneAt, lang);
               const titleMain = contentByLang(lang, it.display.titleHi, it.display.titleEn);
+              const canMark = status.kind === 'active' && !it.done;
               return (
-                <Pressable
+                <View
                   key={it.key}
-                  onPress={() => navigateToRoutineItem(nav, it.item)}
                   style={[
                     styles.itemRow,
                     { borderTopColor: colors.divider, borderTopWidth: i === 0 ? 0 : 1 },
                   ]}
                 >
-                  <View
+                  <Pressable
+                    onPress={canMark ? () => commitDay(program.id, status.dayIndex, 'marked') : undefined}
+                    accessibilityRole="button"
+                    accessibilityState={{ checked: it.done }}
+                    accessibilityLabel={
+                      it.done
+                        ? contentByLang(lang, 'अर्पित', 'Offered')
+                        : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
+                    }
+                    hitSlop={10}
                     style={{
                       width: 26,
                       height: 26,
@@ -162,8 +173,8 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
                     }}
                   >
                     {it.done && <Text style={{ color: colors.onPrimary, fontSize: 13 }}>✓</Text>}
-                  </View>
-                  <View style={{ flex: 1, minWidth: 0 }}>
+                  </Pressable>
+                  <Pressable style={{ flex: 1, minWidth: 0 }} onPress={() => navigateToRoutineItem(nav, it.item)}>
                     <Text
                       style={{
                         fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
@@ -183,9 +194,11 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
                     >
                       {contentByLang(lang, it.display.subHi, it.display.subEn)} · {tail}
                     </Text>
-                  </View>
-                  <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
-                </Pressable>
+                  </Pressable>
+                  <Pressable onPress={() => navigateToRoutineItem(nav, it.item)} hitSlop={8}>
+                    <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
+                  </Pressable>
+                </View>
               );
             })}
           </View>

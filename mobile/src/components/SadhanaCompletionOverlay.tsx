@@ -15,7 +15,14 @@ import RoutineCelebration from './RoutineCelebration';
 export default function SadhanaCompletionOverlay() {
   const { lang } = useGitaLanguage();
   const cards = useSadhanaToday();
-  const { commitDay, isLoading, markCelebrated, wasCelebrated } = useSadhana();
+  const {
+    commitDay,
+    isLoading,
+    markCelebrated,
+    wasCelebrated,
+    markDayCelebrated,
+    wasDayCelebrated,
+  } = useSadhana();
   const committedDays = useRef<Set<string>>(new Set());
   const firedProgram = useRef<string | null>(null);
   const [shower, setShower] = useState<{ caption: string; programId: string } | null>(null);
@@ -27,8 +34,19 @@ export default function SadhanaCompletionOverlay() {
       if (committedDays.current.has(key)) continue;
       committedDays.current.add(key);
       commitDay(card.program.id, card.status.dayIndex, card.autoVia);
+      if (
+        !isLoading &&
+        !shower &&
+        card.status.dayIndex < card.status.totalDays &&
+        !wasDayCelebrated(card.program.id, card.status.dayIndex)
+      ) {
+        const caption = contentByLang(lang, 'संकल्प दिवस पूर्ण', 'Sankalp day complete');
+        setShower({ caption, programId: key });
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+        markDayCelebrated(card.program.id, card.status.dayIndex);
+      }
     }
-  }, [cards, commitDay]);
+  }, [cards, commitDay, isLoading, lang, markDayCelebrated, shower, wasDayCelebrated]);
 
   useEffect(() => {
     if (isLoading || shower) return;

@@ -14,6 +14,7 @@ import type { DayCompletion, SadhanaEnrollment } from '@/data/sadhana/types';
 
 const ENROLLMENTS_KEY = '@vedansh/sadhana';
 const CELEBRATED_KEY = '@vedansh/sadhana-celebrated';
+const DAY_CELEBRATED_KEY = '@vedansh/sadhana-day-celebrated';
 const REMINDERS_KEY = '@vedansh/sadhana-reminders';
 
 type SadhanaContextValue = {
@@ -31,6 +32,9 @@ type SadhanaContextValue = {
   /** Whether a completed program has already played its पूर्णाहुति celebration. */
   wasCelebrated: (programId: string) => boolean;
   markCelebrated: (programId: string) => void;
+  /** Whether a sankalp day has already played its daily completion shower today. */
+  wasDayCelebrated: (programId: string, dayIndex: number) => boolean;
+  markDayCelebrated: (programId: string, dayIndex: number) => void;
   /** Program ids with a daily reminder enabled (PRD-11 P3). */
   reminderProgramIds: string[];
   isReminderEnabled: (programId: string) => boolean;
@@ -49,6 +53,7 @@ function isEnrollmentArray(v: unknown): v is SadhanaEnrollment[] {
 export function SadhanaProvider({ children }: { children: React.ReactNode }) {
   const [enrollments, setEnrollments] = useState<SadhanaEnrollment[]>([]);
   const [celebrated, setCelebrated] = useState<string[]>([]);
+  const [dayCelebrated, setDayCelebrated] = useState<string[]>([]);
   const [reminderProgramIds, setReminderProgramIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -57,9 +62,10 @@ export function SadhanaProvider({ children }: { children: React.ReactNode }) {
     Promise.all([
       AsyncStorage.getItem(ENROLLMENTS_KEY),
       AsyncStorage.getItem(CELEBRATED_KEY),
+      AsyncStorage.getItem(DAY_CELEBRATED_KEY),
       AsyncStorage.getItem(REMINDERS_KEY),
     ])
-      .then(([rawE, rawC, rawR]) => {
+      .then(([rawE, rawC, rawD, rawR]) => {
         if (cancelled) return;
         if (rawE) {
           try {
@@ -74,6 +80,22 @@ export function SadhanaProvider({ children }: { children: React.ReactNode }) {
             const parsed = JSON.parse(rawC);
             if (Array.isArray(parsed) && parsed.every((x) => typeof x === 'string')) {
               setCelebrated(parsed);
+            }
+          } catch {
+            /* corrupted — leave empty */
+          }
+        }
+        if (rawD) {
+          try {
+            const parsed = JSON.parse(rawD);
+            if (
+              parsed &&
+              typeof parsed === 'object' &&
+              parsed.date === toDateKey(new Date()) &&
+              Array.isArray(parsed.keys) &&
+              parsed.keys.every((x: unknown) => typeof x === 'string')
+            ) {
+              setDayCelebrated(parsed.keys);
             }
           } catch {
             /* corrupted — leave empty */
@@ -107,6 +129,14 @@ export function SadhanaProvider({ children }: { children: React.ReactNode }) {
   const persistCelebrated = useCallback((next: string[]) => {
     setCelebrated(next);
     AsyncStorage.setItem(CELEBRATED_KEY, JSON.stringify(next)).catch(() => undefined);
+  }, []);
+
+  const persistDayCelebrated = useCallback((next: string[]) => {
+    setDayCelebrated(next);
+    AsyncStorage.setItem(
+      DAY_CELEBRATED_KEY,
+      JSON.stringify({ date: toDateKey(new Date()), keys: next })
+    ).catch(() => undefined);
   }, []);
 
   const enrollmentFor = useCallback(
@@ -178,6 +208,24 @@ export function SadhanaProvider({ children }: { children: React.ReactNode }) {
     [celebrated, persistCelebrated]
   );
 
+  const dayCelebrationKey = useCallback((programId: string, dayIndex: number) => {
+    return `${programId}:${dayIndex}`;
+  }, []);
+
+  const wasDayCelebrated = useCallback(
+    (programId: string, dayIndex: number) => dayCelebrated.includes(dayCelebrationKey(programId, dayIndex)),
+    [dayCelebrated, dayCelebrationKey]
+  );
+
+  const markDayCelebrated = useCallback(
+    (programId: string, dayIndex: number) => {
+      const key = dayCelebrationKey(programId, dayIndex);
+      if (dayCelebrated.includes(key)) return;
+      persistDayCelebrated([...dayCelebrated, key]);
+    },
+    [dayCelebrated, dayCelebrationKey, persistDayCelebrated]
+  );
+
   const persistReminders = useCallback((next: string[]) => {
     setReminderProgramIds(next);
     AsyncStorage.setItem(REMINDERS_KEY, JSON.stringify(next)).catch(() => undefined);
@@ -213,6 +261,8 @@ export function SadhanaProvider({ children }: { children: React.ReactNode }) {
       commitDay,
       wasCelebrated,
       markCelebrated,
+      wasDayCelebrated,
+      markDayCelebrated,
       reminderProgramIds,
       isReminderEnabled,
       setReminderEnabled,
@@ -227,6 +277,8 @@ export function SadhanaProvider({ children }: { children: React.ReactNode }) {
       commitDay,
       wasCelebrated,
       markCelebrated,
+      wasDayCelebrated,
+      markDayCelebrated,
       reminderProgramIds,
       isReminderEnabled,
       setReminderEnabled,
