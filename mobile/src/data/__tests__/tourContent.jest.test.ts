@@ -1,5 +1,6 @@
 import { APP_TOUR_VERSION, getWhatsNewForVersion, whatsNew } from '@/data/tour/whatsNew';
 import { tourSteps } from '@/data/tour/steps';
+import appJson from '../../../app.json';
 
 // Tab names the tour is allowed to navigate to (mirrors TabParamList).
 const VALID_TABS = new Set(['HomeTab', 'DailyBhaktiTab', 'PanchangTab', 'AudioTab', 'MoreTab']);
@@ -19,6 +20,12 @@ describe('getWhatsNewForVersion', () => {
   test('APP_TOUR_VERSION has a defined what\'s-new entry', () => {
     // Guard against bumping the version without adding release notes.
     expect(whatsNew[APP_TOUR_VERSION]).toBeDefined();
+  });
+
+  test('APP_TOUR_VERSION is kept in sync with app.json expo.version', () => {
+    // If these drift, What's New keys off a version with no entry and silently
+    // never fires. Bump both together (RULEBOOK §6.1).
+    expect(APP_TOUR_VERSION).toBe(appJson.expo.version);
   });
 
   test('every what\'s-new item carries all bilingual fields', () => {

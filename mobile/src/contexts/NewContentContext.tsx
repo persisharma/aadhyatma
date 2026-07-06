@@ -17,8 +17,12 @@ const STORAGE_KEY = '@vedansh/new-content-state';
  * during a fresh cold-start mount. Used to distinguish a returning user
  * (upgrader) from a genuine fresh install at the feature's debut without racing
  * sibling providers that write their keys on mount (e.g. notif-meta).
+ *
+ * Exported so other debut-gated surfaces (e.g. the feature tour vs What's New
+ * split in `TourContext`) classify install-vs-upgrade with the same signal —
+ * keep this the single source of truth.
  */
-const UPGRADER_SIGNAL_KEYS = [
+export const UPGRADER_SIGNAL_KEYS = [
   '@vedansh/bookmarks',
   '@vedansh/reading-progress',
   '@vedansh/search-recent',

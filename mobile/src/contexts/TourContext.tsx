@@ -12,6 +12,7 @@ import {
   getWhatsNewForVersion,
   type WhatsNewEntry,
 } from '@/data/tour/whatsNew';
+import { UPGRADER_SIGNAL_KEYS } from '@/contexts/NewContentContext';
 
 const TOUR_COMPLETED_KEY = '@vedansh/tour-completed-v';
 const WHATS_NEW_SEEN_KEY = '@vedansh/whats-new-seen-v';
@@ -42,25 +43,48 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [tourCompletedVersion, setTourCompletedVersion] = useState<string | null>(null);
   const [whatsNewSeenVersion, setWhatsNewSeenVersion] = useState<string | null>(null);
+  // Distinguishes a genuine fresh install from a returning user on the debut
+  // release (both lack the tour keys). A fresh install gets the full tour; a
+  // returning user gets the version's What's New instead — matching "install →
+  // tour, update → new-features-only". Detected via deliberate-action keys that
+  // never exist on a clean first boot (see NewContentContext).
+  const [isFreshInstall, setIsFreshInstall] = useState(false);
+  // Explicit replay request (More → Show App Tour). Forces the tour regardless
+  // of install-vs-upgrade classification or a prior completion.
+  const [replayRequested, setReplayRequested] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
-        const [tour, seen] = await AsyncStorage.multiGet([
+        const [[, tour], [, seen]] = await AsyncStorage.multiGet([
           TOUR_COMPLETED_KEY,
           WHATS_NEW_SEEN_KEY,
         ]);
+        let freshInstall = false;
+        try {
+          const keys = await AsyncStorage.getAllKeys();
+          // No deliberate-action key from a prior session ⇒ nobody has used the
+          // app before ⇒ genuine fresh install.
+          freshInstall = !UPGRADER_SIGNAL_KEYS.some((k) => keys.includes(k));
+        } catch {
+          // getAllKeys failed — assume returning user (the safer default is to
+          // show the lighter What's New sheet, not the full tour, to someone
+          // who may already know the app).
+          freshInstall = false;
+        }
         if (cancelled) return;
-        setTourCompletedVersion(tour[1] ?? null);
-        setWhatsNewSeenVersion(seen[1] ?? null);
+        setTourCompletedVersion(tour ?? null);
+        setWhatsNewSeenVersion(seen ?? null);
+        setIsFreshInstall(freshInstall);
       } catch {
-        // AsyncStorage is best-effort. On read failure, default to "never
-        // seen" so the user gets the tour — over-showing is friendlier than
-        // missing it entirely on first install.
+        // AsyncStorage is best-effort. On read failure, default to a fresh
+        // install so the user still gets oriented — over-showing the tour is
+        // friendlier than missing onboarding entirely.
         if (!cancelled) {
           setTourCompletedVersion(null);
           setWhatsNewSeenVersion(null);
+          setIsFreshInstall(true);
         }
       } finally {
         if (!cancelled) setIsLoading(false);
@@ -72,41 +96,51 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const markTourCompleted = useCallback(async () => {
+    // Flip in-memory state FIRST (synchronously), before the awaited write, so
+    // a consumer that hides on dismissal can't observe a stale "should show"
+    // and bounce back open (mirrors NotificationPreferences.persistMeta).
+    setTourCompletedVersion(APP_TOUR_VERSION);
+    setWhatsNewSeenVersion(APP_TOUR_VERSION);
+    setReplayRequested(false);
     try {
       await AsyncStorage.multiSet([
         [TOUR_COMPLETED_KEY, APP_TOUR_VERSION],
         [WHATS_NEW_SEEN_KEY, APP_TOUR_VERSION],
       ]);
     } catch {
-      // Persistence failure — still update in-memory so we don't loop the
-      // tour within this session.
+      // Persistence failure — in-memory state already updated above.
     }
-    setTourCompletedVersion(APP_TOUR_VERSION);
-    setWhatsNewSeenVersion(APP_TOUR_VERSION);
   }, []);
 
   const markWhatsNewSeen = useCallback(async () => {
+    setWhatsNewSeenVersion(APP_TOUR_VERSION);
     try {
       await AsyncStorage.setItem(WHATS_NEW_SEEN_KEY, APP_TOUR_VERSION);
     } catch {
-      /* best-effort */
+      /* best-effort — in-memory state already updated */
     }
-    setWhatsNewSeenVersion(APP_TOUR_VERSION);
   }, []);
 
   const resetTour = useCallback(async () => {
+    // Force the tour on the next render regardless of install-vs-upgrade or a
+    // prior completion; clear the persisted markers so it re-shows.
+    setReplayRequested(true);
+    setTourCompletedVersion(null);
+    setWhatsNewSeenVersion(null);
     try {
       await AsyncStorage.multiRemove([TOUR_COMPLETED_KEY, WHATS_NEW_SEEN_KEY]);
     } catch {
-      /* best-effort */
+      /* best-effort — in-memory state already updated */
     }
-    setTourCompletedVersion(null);
-    setWhatsNewSeenVersion(null);
   }, []);
 
   const value = useMemo<TourContextValue>(() => {
     const whatsNewEntry = getWhatsNewForVersion(APP_TOUR_VERSION);
-    const shouldShowFirstLaunchTour = !isLoading && tourCompletedVersion === null;
+    // Tour: an explicit replay, or an un-completed genuine fresh install.
+    const shouldShowFirstLaunchTour =
+      !isLoading && (replayRequested || (tourCompletedVersion === null && isFreshInstall));
+    // What's New: a returning user on a version whose notes they haven't seen —
+    // never alongside the tour, never on a fresh install (the tour covers it).
     const shouldShowWhatsNew =
       !isLoading &&
       !shouldShowFirstLaunchTour &&
@@ -125,6 +159,8 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
     isLoading,
     tourCompletedVersion,
     whatsNewSeenVersion,
+    isFreshInstall,
+    replayRequested,
     markTourCompleted,
     markWhatsNewSeen,
     resetTour,

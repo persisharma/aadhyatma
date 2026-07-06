@@ -3,7 +3,7 @@
 # The tour auto-shows once per install and then never again, which is not
 # deterministic to assert from a shared simulator whose AsyncStorage persists
 # between flows. Instead we drive it through the **replay** affordance
-# (More → "Show feature tour again"), which calls resetTour() and re-opens the
+# (More → "Show App Tour"), which calls resetTour() and re-opens the
 # same overlay from step 1 — identical UI to the first-launch path, but on
 # demand.
 #
@@ -17,9 +17,9 @@
 #   • Done on the final step dismisses the tour
 #
 # Selector notes:
-#   • The replay row's a11y label is the constant English "Show feature tour
-#     again" (language-independent), so this flow works whatever reading
-#     language is persisted.
+#   • The replay row's visible label and a11y label are both the constant
+#     English "Show App Tour" for `en`; the a11y label stays "Show App Tour" in
+#     every language, so matching it works whatever reading language persists.
 #   • Tour controls expose constant a11y labels: "Skip tour", "Next step",
 #     "Previous step", "Done" — matched directly rather than the bilingual
 #     visible captions ("Next · आगे" etc.).
@@ -36,9 +36,9 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
-      text: "Show feature tour again"
+      text: "Show App Tour"
     centerElement: true
-- tapOn: "Show feature tour again"
+- tapOn: "Show App Tour"
 - waitForAnimationToEnd
 
 # ── Step 1: Home ──

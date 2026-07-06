@@ -409,7 +409,7 @@ export default function MoreScreen({ navigation }: Props) {
             <Pressable
               onPress={() => { resetTour(); }}
               accessibilityRole="button"
-              accessibilityLabel="Show feature tour again"
+              accessibilityLabel="Show App Tour"
               style={({ pressed }) => [
                 styles.linkRow,
                 { borderBottomColor: colors.divider },

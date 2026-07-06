@@ -1478,12 +1478,13 @@ One enrolled sankalp's card on the Today's Practice ledger (§31) — flat `parc
 
 ### Gating & persistence (`mobile/src/contexts/TourContext.tsx`)
 
-Two AsyncStorage keys hold the last-seen **version string**: `@vedansh/tour-completed-v` and `@vedansh/whats-new-seen-v`.
+Two AsyncStorage keys hold the last-seen **version string**: `@vedansh/tour-completed-v` and `@vedansh/whats-new-seen-v`. A third signal — whether any deliberate-action key from a prior session exists (`UPGRADER_SIGNAL_KEYS`, re-exported from `NewContentContext`, §44) — separates a genuine fresh install from a returning user on the debut release (both lack the tour keys). This realises "**install → full tour, update → new-features-only**".
 
-- **Fresh install** → `shouldShowFirstLaunchTour` (tour key absent). Completing or skipping (`markTourCompleted`) writes **both** keys to `APP_TOUR_VERSION`, so a brand-new user is never immediately double-prompted with the What's New sheet.
-- **Update launch** → `shouldShowWhatsNew` = tour not pending **and** a `whatsNew` entry exists for `APP_TOUR_VERSION` **and** the what's-new key ≠ `APP_TOUR_VERSION`. `markWhatsNewSeen` advances only the what's-new key (never retroactively completes the tour).
-- **Replay** → `resetTour()` clears both keys and re-arms the first-launch tour (More → "Show App Tour", §37).
-- Storage-read failure defaults to "never seen" (friendlier to over-show onboarding than to swallow it); write failures still flip in-memory state so the surface doesn't loop within a session.
+- **Fresh install** (no prior-usage keys, tour key absent) → `shouldShowFirstLaunchTour`. Completing or skipping (`markTourCompleted`) writes **both** keys to `APP_TOUR_VERSION`, so a brand-new user is never then double-prompted with the What's New sheet.
+- **Update launch** (returning user — a prior-usage key exists) → the tour is suppressed and `shouldShowWhatsNew` fires instead: a `whatsNew` entry exists for `APP_TOUR_VERSION` **and** the what's-new key ≠ `APP_TOUR_VERSION`. `markWhatsNewSeen` advances only the what's-new key (never retroactively completes the tour). This is what makes the debut version's own release notes reachable — without the install/upgrade split they never would be (a tour-completer has already "seen" this version).
+- **Replay** → `resetTour()` sets an in-memory replay flag **and** clears both keys, forcing the first-launch tour regardless of install-vs-upgrade classification or a prior completion (More → "Show App Tour", §37).
+- `markTourCompleted`/`markWhatsNewSeen`/`resetTour` flip in-memory state **before** the awaited AsyncStorage write (mirroring `NotificationPreferences.persistMeta`), so a self-mounting modal that hides on dismissal can't read a stale "should show" and bounce back open. The modals additionally edge-guard auto-open with a ref (open once per episode, keyed on the gate — never on local `visible`).
+- Storage-read failure defaults to a fresh install (still orients the user); a `getAllKeys` failure defaults to "returning user" (show the lighter What's New, not the full tour, to someone who may already know the app). Write failures still flip in-memory state so the surface doesn't loop within a session.
 
 **Content lives in `mobile/src/data/tour/whatsNew.ts`:** `APP_TOUR_VERSION` (must equal `app.json` `expo.version`), a per-version `whatsNew` map of bilingual `items`, and `getWhatsNewForVersion()` (returns null for unknown or empty entries → sheet suppressed).
 

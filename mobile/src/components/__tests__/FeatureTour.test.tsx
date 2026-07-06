@@ -135,6 +135,20 @@ describe('FeatureTour navigation', () => {
     expect(mockMarkTourCompleted).toHaveBeenCalledTimes(1);
   });
 
+  test('Skip does not bounce back open while the gate is still "should show"', () => {
+    // Regression: close() hides optimistically before markTourCompleted()
+    // flips the gate. The open effect must be edge-guarded (not keyed on
+    // `visible`), or it would immediately re-open the tour and strand it.
+    // Here the mocked gate stays true across the dismissal.
+    const tree = mount();
+    expect(tree.root.findByType(Modal).props.visible).toBe(true);
+
+    press(tree, 'Skip tour');
+    expect(mockMarkTourCompleted).toHaveBeenCalledTimes(1);
+    // Must remain hidden even though shouldShowFirstLaunchTour is still true.
+    expect(tree.root.findByType(Modal).props.visible).toBe(false);
+  });
+
   test('stays hidden and drives no navigation when the gate is off', () => {
     mockShouldShow = false;
     const tree = mount();

@@ -6,6 +6,14 @@ import { APP_TOUR_VERSION } from '@/data/tour/whatsNew';
 
 const TOUR_COMPLETED_KEY = '@vedansh/tour-completed-v';
 const WHATS_NEW_SEEN_KEY = '@vedansh/whats-new-seen-v';
+// A deliberate-action key present ⇒ the store looks like a returning user
+// (see NewContentContext.UPGRADER_SIGNAL_KEYS). Seed it to simulate an upgrade.
+const UPGRADER_SIGNAL_KEY = '@vedansh/bookmarks';
+
+// Simulate a returning user: some prior app usage exists in storage.
+async function seedReturningUser() {
+  await AsyncStorage.setItem(UPGRADER_SIGNAL_KEY, '[]');
+}
 
 let ctx: ReturnType<typeof useTour>;
 function Capture() {
@@ -35,6 +43,25 @@ describe('TourContext gating', () => {
     expect(ctx.isLoading).toBe(false);
     expect(ctx.shouldShowFirstLaunchTour).toBe(true);
     // A brand-new user must NOT also be hit with the what's-new sheet.
+    expect(ctx.shouldShowWhatsNew).toBe(false);
+  });
+
+  test('returning user on the debut release → What\'s New, NOT the full tour', async () => {
+    // No tour keys yet, but prior app usage exists → treat as an update, not a
+    // fresh install. Per "install → tour, update → new-features-only".
+    await seedReturningUser();
+
+    await mountAndLoad();
+
+    expect(ctx.shouldShowFirstLaunchTour).toBe(false);
+    expect(ctx.shouldShowWhatsNew).toBe(true);
+    expect(ctx.whatsNewEntry?.version).toBe(APP_TOUR_VERSION);
+  });
+
+  test('genuine fresh install (no prior usage) → tour, never What\'s New', async () => {
+    // Nothing in storage at all → nobody has used the app → full tour.
+    await mountAndLoad();
+    expect(ctx.shouldShowFirstLaunchTour).toBe(true);
     expect(ctx.shouldShowWhatsNew).toBe(false);
   });
 

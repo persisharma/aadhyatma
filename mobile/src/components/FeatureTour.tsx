@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   InteractionManager,
   Modal,
@@ -11,7 +11,7 @@ import { CommonActions } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useTour } from '@/contexts/TourContext';
-import { tourSteps, type TourAnchor, type TourStep } from '@/data/tour/steps';
+import { tourSteps, type TourAnchor } from '@/data/tour/steps';
 import { navigationRef } from '@/notifications/deepLink';
 
 /**
@@ -27,19 +27,34 @@ export default function FeatureTour() {
   const { shouldShowFirstLaunchTour, markTourCompleted } = useTour();
   const [visible, setVisible] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
+  // Rising-edge guard: open exactly once per "should show" episode. Keyed on
+  // shouldShowFirstLaunchTour ALONE (never `visible`), so the optimistic hide in
+  // close() can't be misread as "not shown yet" and re-open the tour before
+  // markTourCompleted() has flipped the gate off. Re-armed when the gate clears
+  // (e.g. resetTour() from More → replay).
+  const openedRef = useRef(false);
 
   useEffect(() => {
-    if (shouldShowFirstLaunchTour && !visible) {
-      setStepIndex(0);
-      setVisible(true);
+    if (shouldShowFirstLaunchTour) {
+      if (!openedRef.current) {
+        openedRef.current = true;
+        setStepIndex(0);
+        setVisible(true);
+      }
+    } else {
+      openedRef.current = false;
     }
-  }, [shouldShowFirstLaunchTour, visible]);
+  }, [shouldShowFirstLaunchTour]);
 
-  const navigateToStep = useCallback((step: TourStep) => {
-    if (!navigationRef.isReady()) return;
-    // Defer until current frame settles so the tour overlay's enter
-    // animation doesn't compete with the underlying navigator's swap.
-    InteractionManager.runAfterInteractions(() => {
+  // Drive navigation on each step change while the tour is up. The dispatch is
+  // deferred (so the overlay's fade doesn't compete with the navigator swap)
+  // and the handle is cancelled on cleanup — so a pending navigate never fires
+  // after the step changed again or the tour was dismissed.
+  useEffect(() => {
+    if (!visible) return undefined;
+    const step = tourSteps[stepIndex];
+    if (!step || !navigationRef.isReady()) return undefined;
+    const handle = InteractionManager.runAfterInteractions(() => {
       if (!navigationRef.isReady()) return;
       navigationRef.dispatch(
         CommonActions.navigate({
@@ -48,18 +63,14 @@ export default function FeatureTour() {
         } as never)
       );
     });
-  }, []);
+    return () => handle.cancel();
+  }, [visible, stepIndex]);
 
-  // Drive navigation on each step change while the tour is up.
-  useEffect(() => {
-    if (!visible) return;
-    const step = tourSteps[stepIndex];
-    if (step) navigateToStep(step);
-  }, [visible, stepIndex, navigateToStep]);
-
-  const close = useCallback(async () => {
+  const close = useCallback(() => {
+    // Hide immediately (optimistic); persist in the background. The open effect
+    // is guarded by openedRef, so this early hide won't bounce back open.
     setVisible(false);
-    await markTourCompleted();
+    void markTourCompleted();
   }, [markTourCompleted]);
 
   const next = useCallback(() => {

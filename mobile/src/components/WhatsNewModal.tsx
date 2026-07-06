@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
@@ -25,14 +25,25 @@ export default function WhatsNewModal() {
   const { lang } = useGitaLanguage();
   const { shouldShowWhatsNew, whatsNewEntry, markWhatsNewSeen } = useTour();
   const [visible, setVisible] = useState(false);
+  // Rising-edge guard — open once per episode, keyed on shouldShowWhatsNew
+  // alone so the optimistic hide in close() can't bounce it back open before
+  // markWhatsNewSeen() flips the gate off.
+  const openedRef = useRef(false);
 
   useEffect(() => {
-    if (shouldShowWhatsNew && !visible) setVisible(true);
-  }, [shouldShowWhatsNew, visible]);
+    if (shouldShowWhatsNew) {
+      if (!openedRef.current) {
+        openedRef.current = true;
+        setVisible(true);
+      }
+    } else {
+      openedRef.current = false;
+    }
+  }, [shouldShowWhatsNew]);
 
-  const close = useCallback(async () => {
+  const close = useCallback(() => {
     setVisible(false);
-    await markWhatsNewSeen();
+    void markWhatsNewSeen();
   }, [markWhatsNewSeen]);
 
   if (!whatsNewEntry) return null;
