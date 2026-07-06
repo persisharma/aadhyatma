@@ -1,12 +1,15 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import {
   isIosNativeAlarmSupported,
   requestIosAlarmPermission,
   getIosAlarmAuthorizationStatus,
 } from '@/notifications/japamAlarmNative';
+import { firedOnceAlarmIds } from '@/notifications/japamAlarmScheduler';
+import { localDateKey } from '@/notifications/japamAlarms';
 import { JapamAlarmsProvider, useJapamAlarms } from '../JapamAlarmsContext';
 
 // iOS is the platform under test: on iOS 26 the scheduler routes Japam alarms
@@ -26,6 +29,7 @@ jest.mock('expo-notifications', () => ({
 jest.mock('@/notifications/japamAlarmScheduler', () => ({
   scheduleJapamAlarms: jest.fn().mockResolvedValue(0),
   cancelAllJapamAlarmNotifications: jest.fn().mockResolvedValue(undefined),
+  firedOnceAlarmIds: jest.fn().mockResolvedValue([]),
 }));
 
 jest.mock('@/notifications/japamAlarmNative', () => ({
@@ -66,14 +70,16 @@ async function mountAndHydrate(): Promise<TestRenderer.ReactTestRenderer> {
   return tree;
 }
 
-beforeEach(() => {
+beforeEach(async () => {
   jest.clearAllMocks();
+  await AsyncStorage.clear();
   // Sensible defaults; individual tests override.
   mockIsIosNative.mockReturnValue(false);
   mockRequestAlarmKit.mockResolvedValue(false);
   mockGetAlarmKitStatus.mockResolvedValue('undetermined');
   mockGetNotifPerms.mockResolvedValue({ status: 'undetermined' });
   mockRequestNotifPerms.mockResolvedValue({ status: 'undetermined' });
+  (firedOnceAlarmIds as jest.Mock).mockResolvedValue([]);
 });
 
 describe('JapamAlarmsContext permission — iOS AlarmKit', () => {
@@ -133,5 +139,127 @@ describe('JapamAlarmsContext permission — iOS AlarmKit', () => {
     expect(captured.permissionStatus).toBe('granted');
     expect(mockGetAlarmKitStatus).toHaveBeenCalled();
     expect(mockGetNotifPerms).not.toHaveBeenCalled();
+  });
+});
+
+describe('JapamAlarmsContext — repeat days, skip-next, one-time housekeeping', () => {
+  const STORAGE_KEY = '@vedansh/japam-alarms';
+
+  test('addAlarm normalizes repeat days; all-seven is stored as daily (no field)', async () => {
+    await mountAndHydrate();
+
+    await act(async () => {
+      await captured.addAlarm({
+        mantraId: 'om-namah-shivaya',
+        time: { hour: 6, minute: 0 },
+        repeatDays: [5, 1, 3],
+      });
+      await captured.addAlarm({
+        mantraId: 'om-namah-shivaya',
+        time: { hour: 7, minute: 0 },
+        repeatDays: [0, 1, 2, 3, 4, 5, 6],
+      });
+      await captured.addAlarm({
+        mantraId: 'om-namah-shivaya',
+        time: { hour: 8, minute: 0 },
+        repeatDays: [],
+      });
+    });
+
+    expect(captured.alarms).toHaveLength(3);
+    expect(captured.alarms[0].repeatDays).toEqual([1, 3, 5]);
+    expect(captured.alarms[1].repeatDays).toBeUndefined();
+    expect(captured.alarms[2].repeatDays).toEqual([]);
+  });
+
+  test('updateAlarm sets skip-next; a later time change clears it', async () => {
+    await mountAndHydrate();
+    let id = '';
+    await act(async () => {
+      const a = await captured.addAlarm({
+        mantraId: 'om-namah-shivaya',
+        time: { hour: 6, minute: 0 },
+      });
+      id = a!.id;
+    });
+
+    await act(async () => {
+      await captured.updateAlarm(id, { skipNextDate: '2099-01-01' });
+    });
+    expect(captured.alarms[0].skipNextDate).toBe('2099-01-01');
+
+    // Changing the time redefines "next" — the old skip no longer applies.
+    await act(async () => {
+      await captured.updateAlarm(id, { time: { hour: 7, minute: 15 } });
+    });
+    expect(captured.alarms[0].time).toEqual({ hour: 7, minute: 15 });
+    expect(captured.alarms[0].skipNextDate).toBeUndefined();
+
+    // repeatDays: null clears back to daily.
+    await act(async () => {
+      await captured.updateAlarm(id, { repeatDays: [2, 4] });
+    });
+    expect(captured.alarms[0].repeatDays).toEqual([2, 4]);
+    await act(async () => {
+      await captured.updateAlarm(id, { repeatDays: null });
+    });
+    expect(captured.alarms[0].repeatDays).toBeUndefined();
+  });
+
+  test('housekeeping drops a stale skip date and auto-disables fired one-time alarms', async () => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    await AsyncStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify([
+        {
+          id: 'stale-skip',
+          mantraId: 'om-namah-shivaya',
+          time: { hour: 6, minute: 0 },
+          enabled: true,
+          skipNextDate: localDateKey(yesterday),
+        },
+        {
+          id: 'fired-once',
+          mantraId: 'om-namah-shivaya',
+          time: { hour: 7, minute: 0 },
+          enabled: true,
+          repeatDays: [],
+        },
+      ])
+    );
+    (firedOnceAlarmIds as jest.Mock).mockResolvedValue(['fired-once']);
+
+    await mountAndHydrate();
+    await flush();
+
+    const staleSkip = captured.alarms.find((a) => a.id === 'stale-skip')!;
+    expect(staleSkip.skipNextDate).toBeUndefined();
+    expect(staleSkip.enabled).toBe(true);
+
+    const firedOnce = captured.alarms.find((a) => a.id === 'fired-once')!;
+    expect(firedOnce.enabled).toBe(false);
+  });
+
+  test('a pending (today-or-future) skip date survives housekeeping', async () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    await AsyncStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify([
+        {
+          id: 'pending-skip',
+          mantraId: 'om-namah-shivaya',
+          time: { hour: 6, minute: 0 },
+          enabled: true,
+          skipNextDate: localDateKey(tomorrow),
+        },
+      ])
+    );
+
+    await mountAndHydrate();
+    await flush();
+
+    expect(captured.alarms[0].skipNextDate).toBe(localDateKey(tomorrow));
   });
 });

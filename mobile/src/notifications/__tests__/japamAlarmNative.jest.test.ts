@@ -1,7 +1,11 @@
 import { Platform } from 'react-native';
 import { requireOptionalNativeModule } from 'expo-modules-core';
 import { scheduleNativeAlarmsForDay } from '@/notifications/japamAlarmNative';
-import type { JapamAlarm } from '@/notifications/japamAlarms';
+import {
+  ALARMKIT_SKIP_ONESHOT_COUNT,
+  localDateKey,
+  type JapamAlarm,
+} from '@/notifications/japamAlarms';
 
 // The Japam-alarm sound is resolved in JS (mantraId → bundled clip filename)
 // and threaded into the native module's scheduleAlarm call. iOS 26 AlarmKit
@@ -45,11 +49,16 @@ beforeEach(() => {
   mockRequire.mockReturnValue({ scheduleAlarm, cancelAll });
 });
 
-const alarm = (id: string, mantraId: string): JapamAlarm => ({
+const alarm = (
+  id: string,
+  mantraId: string,
+  extra: Partial<JapamAlarm> = {}
+): JapamAlarm => ({
   id,
   mantraId,
   time: { hour: 6, minute: 0 },
   enabled: true,
+  ...extra,
 });
 
 describe('scheduleNativeAlarmsForDay — mantra sound passthrough', () => {
@@ -68,5 +77,78 @@ describe('scheduleNativeAlarmsForDay — mantra sound passthrough', () => {
     expect(scheduleAlarm).toHaveBeenCalledWith(
       expect.objectContaining({ mantraId: 'gayatri-mantra', sound: null })
     );
+  });
+});
+
+describe('scheduleNativeAlarmsForDay — recurrence passthrough', () => {
+  test('daily alarm: repeatDays null, not fixed', async () => {
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
+    expect(scheduleAlarm).toHaveBeenCalledTimes(1);
+    expect(scheduleAlarm).toHaveBeenCalledWith(
+      expect.objectContaining({ repeatDays: null, fixed: false })
+    );
+  });
+
+  test('weekly subset flows through as-is', async () => {
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya', { repeatDays: [1, 3, 5] }),
+    ]);
+    expect(scheduleAlarm).toHaveBeenCalledWith(
+      expect.objectContaining({ repeatDays: [1, 3, 5], fixed: false })
+    );
+  });
+
+  test('one-time alarm schedules as fixed', async () => {
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya', { repeatDays: [] }),
+    ]);
+    expect(scheduleAlarm).toHaveBeenCalledWith(
+      expect.objectContaining({ repeatDays: [], fixed: true })
+    );
+  });
+
+  test('pending skip-next on the AlarmKit tier arms discrete fixed one-shots', async () => {
+    // Skip set for the next occurrence relative to "now" — always pending.
+    const skipKey = (() => {
+      const d = new Date();
+      d.setDate(d.getDate() + 1);
+      return localDateKey(d);
+    })();
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya', { skipNextDate: skipKey }),
+    ]);
+    // A week of discrete fires, all fixed, ids disambiguated after the first.
+    expect(scheduleAlarm).toHaveBeenCalledTimes(ALARMKIT_SKIP_ONESHOT_COUNT);
+    const calls = scheduleAlarm.mock.calls.map((c) => c[0]);
+    expect(calls.every((c) => c.fixed === true)).toBe(true);
+    expect(calls[0].alarmId).toBe('japam-alarm:a1');
+    expect(calls[1].alarmId).toBe('japam-alarm:a1:occ1');
+    expect(calls.at(-1)!.alarmId).toBe(
+      `japam-alarm:a1:occ${ALARMKIT_SKIP_ONESHOT_COUNT - 1}`
+    );
+    // Strictly increasing fire times, none on the skipped date.
+    for (let i = 1; i < calls.length; i += 1) {
+      expect(calls[i - 1].fireAt).toBeLessThan(calls[i].fireAt);
+    }
+    for (const c of calls) {
+      expect(localDateKey(new Date(c.fireAt))).not.toBe(skipKey);
+    }
+  });
+
+  test('a past skip-next is ignored — plain recurrence is armed', async () => {
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya', { skipNextDate: '2020-01-01' }),
+    ]);
+    expect(scheduleAlarm).toHaveBeenCalledTimes(1);
+    expect(scheduleAlarm).toHaveBeenCalledWith(
+      expect.objectContaining({ repeatDays: null, fixed: false })
+    );
+  });
+
+  test('disabled alarms are not scheduled', async () => {
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya', { enabled: false }),
+    ]);
+    expect(scheduleAlarm).not.toHaveBeenCalled();
   });
 });

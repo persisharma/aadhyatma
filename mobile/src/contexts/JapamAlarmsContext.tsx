@@ -12,13 +12,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import {
   MAX_JAPAM_ALARMS,
+  isOnceAlarm,
+  localDateKey,
   makeAlarmId,
+  normalizeRepeatDays,
   parseStoredAlarms,
   sortAlarms,
   type JapamAlarm,
 } from '@/notifications/japamAlarms';
 import {
   cancelAllJapamAlarmNotifications,
+  firedOnceAlarmIds,
   scheduleJapamAlarms,
 } from '@/notifications/japamAlarmScheduler';
 import {
@@ -34,6 +38,17 @@ export type AlarmDraft = {
   mantraId: string;
   time: TimeOfDay;
   label?: string;
+  /** Weekday selection: undefined = daily, [] = once, subset = weekly. */
+  repeatDays?: number[];
+};
+
+/** `null` clears an optional field; `undefined` leaves it untouched. */
+export type AlarmPatch = {
+  mantraId?: string;
+  time?: TimeOfDay;
+  label?: string;
+  repeatDays?: number[] | null;
+  skipNextDate?: string | null;
 };
 
 type PermissionStatus = 'granted' | 'denied' | 'undetermined';
@@ -44,7 +59,7 @@ type JapamAlarmsContextValue = {
   permissionStatus: PermissionStatus;
   canAdd: boolean;
   addAlarm: (draft: AlarmDraft) => Promise<JapamAlarm | null>;
-  updateAlarm: (id: string, patch: Partial<AlarmDraft>) => Promise<void>;
+  updateAlarm: (id: string, patch: AlarmPatch) => Promise<void>;
   toggleAlarm: (id: string, enabled: boolean) => Promise<void>;
   removeAlarm: (id: string) => Promise<void>;
   requestPermission: () => Promise<PermissionStatus>;
@@ -152,6 +167,39 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
     []
   );
 
+  // Housekeeping on load + each foreground: drop skip-next dates that have
+  // passed (the skipped occurrence is behind us), and auto-disable one-time
+  // alarms whose recorded fire moment went by — a "once" alarm that rang
+  // shouldn't sit armed for tomorrow like a stock repeating alarm would.
+  useEffect(() => {
+    if (isLoading) return;
+    let cancelled = false;
+    (async () => {
+      const now = new Date();
+      const todayKey = localDateKey(now);
+      const firedOnce = new Set(await firedOnceAlarmIds(now));
+      if (cancelled) return;
+      let changed = false;
+      const next = alarmsRef.current.map((a) => {
+        let out = a;
+        if (out.skipNextDate !== undefined && out.skipNextDate < todayKey) {
+          const { skipNextDate: _dropped, ...rest } = out;
+          out = rest;
+          changed = true;
+        }
+        if (out.enabled && isOnceAlarm(out) && firedOnce.has(out.id)) {
+          out = { ...out, enabled: false };
+          changed = true;
+        }
+        return out;
+      });
+      if (changed) await persist(() => next);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoading, foregroundTick, persist]);
+
   const requestPermission = useCallback<JapamAlarmsContextValue['requestPermission']>(
     async () => {
       try {
@@ -187,12 +235,18 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
       if (permissionStatus !== 'granted') {
         await requestPermission();
       }
+      const days =
+        draft.repeatDays !== undefined
+          ? normalizeRepeatDays(draft.repeatDays)
+          : undefined;
       const alarm: JapamAlarm = {
         id: makeAlarmId(),
         mantraId: draft.mantraId,
         time: { hour: draft.time.hour, minute: draft.time.minute },
         enabled: true,
         ...(draft.label?.trim() ? { label: draft.label.trim() } : {}),
+        // All seven days is canonically "daily" — stored as no repeatDays.
+        ...(days !== undefined && days.length < 7 ? { repeatDays: days } : {}),
       };
       await persist((prev) => [...prev, alarm]);
       return alarm;
@@ -216,6 +270,27 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
             const trimmed = patch.label.trim();
             if (trimmed) next.label = trimmed;
             else delete next.label;
+          }
+          if (patch.repeatDays !== undefined) {
+            if (patch.repeatDays === null) {
+              delete next.repeatDays;
+            } else {
+              const days = normalizeRepeatDays(patch.repeatDays);
+              if (days.length < 7) next.repeatDays = days;
+              else delete next.repeatDays;
+            }
+          }
+          if (patch.skipNextDate !== undefined) {
+            if (patch.skipNextDate === null) delete next.skipNextDate;
+            else next.skipNextDate = patch.skipNextDate;
+          }
+          // A changed time or repeat selection re-defines which occurrence is
+          // "next" — a previously chosen skip no longer refers to anything.
+          if (
+            patch.skipNextDate === undefined &&
+            (patch.time !== undefined || patch.repeatDays !== undefined)
+          ) {
+            delete next.skipNextDate;
           }
           return next;
         })

@@ -43,16 +43,22 @@ class JapamBootReceiver : BroadcastReceiver() {
             val storedFireAt = a.optLong("fireAt", 0L)
             if (storedFireAt <= 0L) continue
             val label = if (a.has("label")) a.optString("label", null) else null
+            val repeatDaysEncoded =
+                if (a.has("repeatDays")) a.optString("repeatDays", null) else null
+            val repeatDays = JapamAlarmModule.parseRepeatDays(repeatDaysEncoded)
             // A reboot after the stored fire time leaves storedFireAt in the
-            // past. Re-arm the next daily occurrence (preserving its wall-clock
-            // time) instead of skipping, so a 6 AM alarm survives an 8 AM
-            // reboot without waiting for the next app foreground.
+            // past. Re-arm the next valid occurrence (preserving its wall-clock
+            // time and honouring repeat days) instead of skipping, so a 6 AM
+            // alarm survives an 8 AM reboot without waiting for the next app
+            // foreground. A one-shot whose moment passed while the device was
+            // off is gone — don't resurrect it for tomorrow.
             val fireAt =
                 if (storedFireAt > now) storedFireAt
-                else nextDailyOccurrence(storedFireAt, now)
+                else nextOccurrenceFrom(storedFireAt, now, repeatDays)
+            if (fireAt <= 0L) continue
             try {
                 val pi = JapamAlarmModule.buildPendingIntent(
-                    context, alarmId, mantraId, fireAt, label
+                    context, alarmId, mantraId, fireAt, label, repeatDaysEncoded
                 )
                 if (canExact) {
                     val showPi = android.app.PendingIntent.getActivity(
@@ -75,19 +81,27 @@ class JapamBootReceiver : BroadcastReceiver() {
 
     /**
      * Next epoch-ms occurrence of the wall-clock time encoded in [pastFireAt],
-     * at or after [now] (rolls to tomorrow when today's time has already
-     * passed). Mirrors the JS `nextFireTimestamp` so reboot re-arm matches what
-     * the app schedules on foreground.
+     * at or after [now], on a weekday allowed by [repeatDays] (null = daily;
+     * empty = one-shot → returns 0 so the caller drops it). Mirrors the JS
+     * `nextAlarmFireTimestamp` so reboot re-arm matches what the app
+     * schedules on foreground.
      */
-    private fun nextDailyOccurrence(pastFireAt: Long, now: Long): Long {
+    private fun nextOccurrenceFrom(pastFireAt: Long, now: Long, repeatDays: Set<Int>?): Long {
+        if (repeatDays != null && repeatDays.isEmpty()) return 0L
         val src = java.util.Calendar.getInstance().apply { timeInMillis = pastFireAt }
-        return java.util.Calendar.getInstance().apply {
+        val cal = java.util.Calendar.getInstance().apply {
             timeInMillis = now
             set(java.util.Calendar.HOUR_OF_DAY, src.get(java.util.Calendar.HOUR_OF_DAY))
             set(java.util.Calendar.MINUTE, src.get(java.util.Calendar.MINUTE))
             set(java.util.Calendar.SECOND, 0)
             set(java.util.Calendar.MILLISECOND, 0)
-            if (timeInMillis <= now) add(java.util.Calendar.DAY_OF_YEAR, 1)
-        }.timeInMillis
+        }
+        for (i in 0 until 8) {
+            val jsDay = cal.get(java.util.Calendar.DAY_OF_WEEK) - 1
+            val dayOk = repeatDays == null || repeatDays.contains(jsDay)
+            if (cal.timeInMillis > now && dayOk) return cal.timeInMillis
+            cal.add(java.util.Calendar.DAY_OF_YEAR, 1)
+        }
+        return cal.timeInMillis
     }
 }

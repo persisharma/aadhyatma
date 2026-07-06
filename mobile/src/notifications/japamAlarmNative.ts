@@ -25,22 +25,38 @@ import { findJapamMantra } from '@/data/japam';
 import { getJapamAlarmSoundName } from '@assets/japam-alarm-sounds';
 import { navigationRef } from './deepLink';
 import {
-  nextFireTimestamp,
+  ALARMKIT_SKIP_ONESHOT_COUNT,
+  isOnceAlarm,
+  isSkipPending,
+  nextAlarmFireTimestamp,
   notificationIdentifierFor,
+  skipOneshotPlan,
   type JapamAlarm,
 } from './japamAlarms';
 
+/** Shared args for both platforms' scheduleAlarm. */
+type NativeScheduleArgs = {
+  alarmId: string;
+  mantraId: string;
+  fireAt: number;
+  label?: string | null;
+  /** Bundled alarm-clip filename (e.g. 'om-namah-shivaya.wav'), or null when
+   *  the mantra has no clip. Android derives sound from mantraId and ignores
+   *  this; iOS (AlarmKit) rings it via `.named(sound)`. */
+  sound?: string | null;
+  /** Weekday recurrence (JS getDay indices 0=Sun…6=Sat). null/absent = daily.
+   *  Empty = one-shot (Android skips the post-fire re-arm). iOS maps it into
+   *  AlarmKit's weekly recurrence. */
+  repeatDays?: number[] | null;
+  /** True forces a single non-recurring fire at `fireAt` (one-time alarms;
+   *  also each discrete occurrence while an AlarmKit skip is pending). */
+  fixed?: boolean;
+};
+
 type AndroidNativeModuleShape = {
-  scheduleAlarm: (args: {
-    alarmId: string;
-    mantraId: string;
-    fireAt: number;
-    label?: string | null;
-    /** Bundled alarm-clip filename (e.g. 'om-namah-shivaya.wav'), or null when
-     *  the mantra has no clip. Android derives sound from mantraId and ignores
-     *  this; iOS (AlarmKit) rings it via `.named(sound)`. */
-    sound?: string | null;
-  }) => Promise<{ alarmId: string; fireAt: number; exact: boolean }>;
+  scheduleAlarm: (
+    args: NativeScheduleArgs
+  ) => Promise<{ alarmId: string; fireAt: number; exact: boolean }>;
   cancelAlarm: (alarmId: string) => Promise<null>;
   cancelAll: () => Promise<null>;
   getCapability: () => Promise<{ supported: boolean; canScheduleExact: boolean }>;
@@ -49,15 +65,9 @@ type AndroidNativeModuleShape = {
 /** Mirror of the Android-side shape; the iOS Expo module exposes the same
  *  surface so the scheduler can call either through one bridge function. */
 type IosNativeModuleShape = {
-  scheduleAlarm: (args: {
-    alarmId: string;
-    mantraId: string;
-    fireAt: number;
-    label?: string | null;
-    /** Bundled alarm-clip filename passed to AlarmKit's `.named(sound)`; null
-     *  falls back to the system alarm tone. */
-    sound?: string | null;
-  }) => Promise<{ alarmId: string; fireAt: number; exact: boolean }>;
+  scheduleAlarm: (
+    args: NativeScheduleArgs
+  ) => Promise<{ alarmId: string; fireAt: number; exact: boolean }>;
   cancelAlarm: (alarmId: string) => Promise<void>;
   cancelAll: () => Promise<void>;
   getCapability: () => Promise<{ supported: boolean; canScheduleExact: boolean }>;
@@ -154,7 +164,8 @@ export async function getIosAlarmAuthorizationStatus(): Promise<
 export async function scheduleNativeAlarmsForDay(
   alarms: JapamAlarm[]
 ): Promise<number> {
-  const mod = getAndroidModule() ?? getIosModule();
+  const androidMod = getAndroidModule();
+  const mod = androidMod ?? getIosModule();
   if (!mod) return 0;
   try {
     await mod.cancelAll();
@@ -165,14 +176,40 @@ export async function scheduleNativeAlarmsForDay(
   const now = new Date();
   for (const alarm of alarms) {
     if (!alarm.enabled) continue;
+    const base = {
+      mantraId: alarm.mantraId,
+      label: alarm.label ?? null,
+      sound: getJapamAlarmSoundName(alarm.mantraId),
+    };
     try {
-      await mod.scheduleAlarm({
-        alarmId: notificationIdentifierFor(alarm.id),
-        mantraId: alarm.mantraId,
-        fireAt: nextFireTimestamp(alarm.time, now),
-        label: alarm.label ?? null,
-        sound: getJapamAlarmSoundName(alarm.mantraId),
-      });
+      // AlarmKit owns its recurrence, so a pending skip-next has to be armed
+      // as discrete fixed fires (a week of cover — renewal needs an app
+      // foreground). Android's re-arm happens per-fire in Kotlin from a
+      // JS-computed fireAt that already lands after the skip, so it takes
+      // the plain path below.
+      if (androidMod === null && isSkipPending(alarm, now)) {
+        const id = notificationIdentifierFor(alarm.id);
+        for (const { suffix, fireAt } of skipOneshotPlan(
+          alarm,
+          ALARMKIT_SKIP_ONESHOT_COUNT,
+          now
+        )) {
+          await mod.scheduleAlarm({
+            ...base,
+            alarmId: `${id}${suffix}`,
+            fireAt,
+            fixed: true,
+          });
+        }
+      } else {
+        await mod.scheduleAlarm({
+          ...base,
+          alarmId: notificationIdentifierFor(alarm.id),
+          fireAt: nextAlarmFireTimestamp(alarm, now),
+          repeatDays: alarm.repeatDays ?? null,
+          fixed: isOnceAlarm(alarm),
+        });
+      }
       scheduled += 1;
     } catch {
       /* per-alarm failure non-fatal */

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Linking,
   Modal,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Switch,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,17 +15,59 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
+import { useJapamAlarms, type AlarmDraft, type AlarmPatch } from '@/contexts/JapamAlarmsContext';
 import { japamMantras, findJapamMantra } from '@/data/japam';
 import { getJapamAudioSource } from '@assets/japam-audio';
 import TimeStepper from '@/components/TimeStepper';
-import { MAX_JAPAM_ALARMS, type JapamAlarm } from '@/notifications/japamAlarms';
+import {
+  ALL_WEEKDAYS,
+  DAY_LETTERS_EN,
+  DAY_LETTERS_HI,
+  MAX_JAPAM_ALARMS,
+  describeUntilFire,
+  formatTimeLabel,
+  localDateKey,
+  nextAlarmFireTimestamp,
+  normalizeRepeatDays,
+  prefers12HourClock,
+  repeatSummary,
+  type JapamAlarm,
+} from '@/notifications/japamAlarms';
 import type { TimeOfDay } from '@/notifications/pure';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'JapamAlarms'>;
 
 const DEFAULT_TIME: TimeOfDay = { hour: 6, minute: 0 };
+
+/** "Mon, 6 Jul" — the short date used by skip-next copy. Locale-formatted
+ *  with a plain fallback when Intl data is unavailable. */
+function shortDateLabel(ts: number, isHi: boolean): string {
+  const d = new Date(ts);
+  try {
+    return d.toLocaleDateString(isHi ? 'hi-IN' : 'en-IN', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+    });
+  } catch {
+    return localDateKey(d);
+  }
+}
+
+/** Re-render dependency that advances every `ms` — keeps "rings in …"
+ *  countdowns fresh while a screen or sheet is on screen. `enabled: false`
+ *  stops the interval (e.g. while the editor modal is closed). */
+function useNowTick(ms: number, enabled = true): number {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (!enabled) return undefined;
+    setNow(Date.now());
+    const id = setInterval(() => setNow(Date.now()), ms);
+    return () => clearInterval(id);
+  }, [ms, enabled]);
+  return now;
+}
 
 type EditorState =
   | { kind: 'new' }
@@ -46,6 +89,9 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
 
   const [editor, setEditor] = useState<EditorState>(null);
   const isHi = lang === 'hi';
+  const use12h = useMemo(() => prefers12HourClock(), []);
+  // Countdowns only render on enabled rows — no interval when nothing ticks.
+  const nowMs = useNowTick(30_000, alarms.some((a) => a.enabled));
 
   const onOpenSystemSettings = useCallback(() => {
     Linking.openSettings().catch(() => undefined);
@@ -185,6 +231,8 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                   key={alarm.id}
                   alarm={alarm}
                   isHi={isHi}
+                  use12h={use12h}
+                  nowMs={nowMs}
                   onPress={() => setEditor({ kind: 'edit', alarm })}
                   onToggle={(v) => toggleAlarm(alarm.id, v)}
                 />
@@ -230,17 +278,6 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                 : `Up to ${MAX_JAPAM_ALARMS} alarms.`}
             </Text>
           )}
-
-          <Text
-            style={[
-              styles.footnote,
-              { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
-            ]}
-          >
-            {isHi
-              ? 'स्मरण इस उपकरण पर बनता है — सर्वर पर कुछ नहीं जाता।'
-              : 'Alarms ring on this device. Nothing leaves your phone.'}
-          </Text>
         </ScrollView>
       </SafeAreaView>
 
@@ -267,18 +304,44 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
 function AlarmRow({
   alarm,
   isHi,
+  use12h,
+  nowMs,
   onPress,
   onToggle,
 }: {
   alarm: JapamAlarm;
   isHi: boolean;
+  use12h: boolean;
+  nowMs: number;
   onPress: () => void;
   onToggle: (next: boolean) => void;
 }) {
   const { colors, typography, radii } = useTheme();
   const mantra = findJapamMantra(alarm.mantraId);
+  // The a11y label stays 24 h regardless of display so tests and screen
+  // readers address a stable name.
   const hh = `${alarm.time.hour}`.padStart(2, '0');
   const mm = `${alarm.time.minute}`.padStart(2, '0');
+
+  const repeatLine = useMemo(() => {
+    const parts = [repeatSummary(alarm.repeatDays, isHi)];
+    if (alarm.enabled) {
+      const fireAt = nextAlarmFireTimestamp(alarm, new Date(nowMs));
+      parts.push(describeUntilFire(fireAt, nowMs, isHi));
+      if (
+        alarm.skipNextDate !== undefined &&
+        alarm.skipNextDate >= localDateKey(new Date(nowMs))
+      ) {
+        const skipped = new Date(`${alarm.skipNextDate}T12:00:00`);
+        parts.push(
+          isHi
+            ? `${shortDateLabel(skipped.getTime(), true)} छोड़ेंगे`
+            : `skips ${shortDateLabel(skipped.getTime(), false)}`
+        );
+      }
+    }
+    return parts.join(' · ');
+  }, [alarm, isHi, nowMs]);
 
   return (
     <Pressable
@@ -302,7 +365,7 @@ function AlarmRow({
             { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
           ]}
         >
-          {hh}:{mm}
+          {formatTimeLabel(alarm.time, use12h)}
         </Text>
         <Text
           style={[
@@ -318,6 +381,15 @@ function AlarmRow({
             : isHi
               ? 'अज्ञात मंत्र'
               : 'Unknown mantra'}
+        </Text>
+        <Text
+          style={[
+            styles.rowRepeat,
+            { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+          ]}
+          numberOfLines={1}
+        >
+          {repeatLine}
         </Text>
         {alarm.label ? (
           <Text
@@ -350,11 +422,8 @@ type EditorProps = {
   state: EditorState;
   presetMantraId?: string;
   onClose: () => void;
-  onCreate: (draft: { mantraId: string; time: TimeOfDay; label?: string }) => void;
-  onSave: (
-    id: string,
-    patch: { mantraId?: string; time?: TimeOfDay; label?: string }
-  ) => void;
+  onCreate: (draft: AlarmDraft) => void;
+  onSave: (id: string, patch: AlarmPatch) => void;
   onDelete?: (id: string) => void;
 };
 
@@ -374,42 +443,118 @@ export function AlarmEditorSheet({
     mantraId: string;
     time: TimeOfDay;
     label: string;
+    days: number[];
+    skipNextDate: string | undefined;
   }>(() => {
     if (state?.kind === 'edit') {
       return {
         mantraId: state.alarm.mantraId,
         time: state.alarm.time,
         label: state.alarm.label ?? '',
+        days: state.alarm.repeatDays ?? [...ALL_WEEKDAYS],
+        skipNextDate: state.alarm.skipNextDate,
       };
     }
     return {
       mantraId: presetMantraId ?? japamMantras[0]?.id ?? '',
       time: DEFAULT_TIME,
       label: '',
+      days: [...ALL_WEEKDAYS],
+      skipNextDate: undefined,
     };
   }, [state, presetMantraId]);
 
   const [mantraId, setMantraId] = useState(initial.mantraId);
   const [time, setTime] = useState(initial.time);
+  const [label, setLabel] = useState(initial.label);
+  // Concrete weekday selection: all 7 = daily, none = once.
+  const [days, setDays] = useState<number[]>(initial.days);
+  const [skipNextDate, setSkipNextDate] = useState<string | undefined>(
+    initial.skipNextDate
+  );
 
   React.useEffect(() => {
     if (state) {
       setMantraId(initial.mantraId);
       setTime(initial.time);
+      setLabel(initial.label);
+      setDays(initial.days);
+      setSkipNextDate(initial.skipNextDate);
     }
-  }, [state, initial.mantraId, initial.time]);
+  }, [state, initial]);
 
   const visible = state !== null;
   const lockedMantra = presetMantraId != null;
+  const nowMs = useNowTick(30_000, visible);
+  const use12h = useMemo(() => prefers12HourClock(), []);
+
+  const repeatDaysValue = useMemo(
+    () => (days.length === 7 ? undefined : normalizeRepeatDays(days)),
+    [days]
+  );
+
+  const toggleDay = useCallback((day: number) => {
+    // A changed pattern redefines which occurrence is "next" — drop any skip.
+    setSkipNextDate(undefined);
+    setDays((prev) =>
+      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
+    );
+  }, []);
+
+  const onChangeTime = useCallback((next: TimeOfDay) => {
+    setSkipNextDate(undefined);
+    setTime(next);
+  }, []);
+
+  // Next fire (with the pending skip) drives the "rings in …" preview; the
+  // next fire WITHOUT it is the occurrence the skip button offers to skip.
+  const previewFireAt = useMemo(
+    () =>
+      nextAlarmFireTimestamp(
+        { time, repeatDays: repeatDaysValue, skipNextDate },
+        new Date(nowMs)
+      ),
+    [time, repeatDaysValue, skipNextDate, nowMs]
+  );
+  const skipCandidateTs = useMemo(
+    () =>
+      nextAlarmFireTimestamp(
+        { time, repeatDays: repeatDaysValue },
+        new Date(nowMs)
+      ),
+    [time, repeatDaysValue, nowMs]
+  );
+
+  const isOnce = days.length === 0;
+  const canSkip = state?.kind === 'edit' && !isOnce;
+
+  const onToggleSkip = useCallback(() => {
+    setSkipNextDate((cur) =>
+      cur !== undefined ? undefined : localDateKey(new Date(skipCandidateTs))
+    );
+  }, [skipCandidateTs]);
 
   const onConfirm = useCallback(() => {
     if (!mantraId) return;
     if (state?.kind === 'edit') {
-      onSave(state.alarm.id, { mantraId, time });
+      onSave(state.alarm.id, {
+        mantraId,
+        time,
+        label,
+        repeatDays: repeatDaysValue ?? null,
+        skipNextDate: skipNextDate ?? null,
+      });
     } else {
-      onCreate({ mantraId, time });
+      onCreate({
+        mantraId,
+        time,
+        ...(label.trim() ? { label: label.trim() } : {}),
+        ...(repeatDaysValue !== undefined ? { repeatDays: repeatDaysValue } : {}),
+      });
     }
-  }, [state, mantraId, time, onCreate, onSave]);
+  }, [state, mantraId, time, label, repeatDaysValue, skipNextDate, onCreate, onSave]);
+
+  const dayLetters = isHi ? DAY_LETTERS_HI : DAY_LETTERS_EN;
 
   return (
     <Modal
@@ -430,10 +575,14 @@ export function AlarmEditorSheet({
               backgroundColor: colors.parchment,
               borderColor: colors.cardActiveBorder,
               borderRadius: radii.lg,
-              padding: spacing.xxl,
             },
           ]}
         >
+          <ScrollView
+            contentContainerStyle={[styles.editorScroll, { padding: spacing.xxl }]}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+          >
           <Text
             style={[
               styles.editorTitle,
@@ -458,7 +607,70 @@ export function AlarmEditorSheet({
             >
               {isHi ? 'समय' : 'Time'}
             </Text>
-            <TimeStepper value={time} onChange={setTime} minuteStep={5} />
+            <TimeStepper value={time} onChange={onChangeTime} minuteStep={1} />
+          </View>
+
+          <View style={styles.editorBlock}>
+            <Text
+              style={[
+                styles.editorLabel,
+                { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+              ]}
+            >
+              {isHi ? 'दोहराव' : 'Repeat'}
+            </Text>
+            <View style={styles.dayChipsRow}>
+              {ALL_WEEKDAYS.map((day) => {
+                const selected = days.includes(day);
+                return (
+                  <Pressable
+                    key={day}
+                    onPress={() => toggleDay(day)}
+                    accessibilityRole="checkbox"
+                    accessibilityState={{ checked: selected }}
+                    accessibilityLabel={`Repeat ${
+                      ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day]
+                    }`}
+                    hitSlop={4}
+                    style={({ pressed }) => [
+                      styles.dayChip,
+                      {
+                        borderColor: selected ? colors.saffron : colors.divider,
+                        backgroundColor: selected
+                          ? 'rgba(184, 98, 27, 0.10)'
+                          : colors.parchmentSoft,
+                        opacity: pressed ? 0.7 : 1,
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.dayChipText,
+                        {
+                          color: selected ? colors.saffronDeep : colors.inkMuted,
+                          fontFamily: typography.cardLatin.fontFamily,
+                        },
+                      ]}
+                    >
+                      {dayLetters[day]}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+            <Text
+              style={[
+                styles.repeatSummary,
+                { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+              ]}
+            >
+              {repeatSummary(repeatDaysValue, isHi)}
+              {isOnce
+                ? isHi
+                  ? ' — बजने के बाद बंद हो जायेगा'
+                  : ' — turns off after ringing'
+                : ''}
+            </Text>
           </View>
 
           {!lockedMantra && (
@@ -531,8 +743,101 @@ export function AlarmEditorSheet({
             </View>
           )}
 
+          <View style={styles.editorBlock}>
+            <Text
+              style={[
+                styles.editorLabel,
+                { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+              ]}
+            >
+              {isHi ? 'नाम (वैकल्पिक)' : 'Label (optional)'}
+            </Text>
+            <TextInput
+              value={label}
+              onChangeText={setLabel}
+              placeholder={isHi ? 'जैसे — ब्रह्ममुहूर्त' : 'e.g. Brahmamuhurta'}
+              placeholderTextColor={colors.inkMuted}
+              maxLength={40}
+              returnKeyType="done"
+              accessibilityLabel={isHi ? 'स्मरण का नाम' : 'Alarm label'}
+              style={[
+                styles.labelInput,
+                {
+                  color: colors.ink,
+                  borderColor: colors.divider,
+                  backgroundColor: colors.parchmentSoft,
+                  borderRadius: radii.sm,
+                  fontFamily: typography.meaning.fontFamily,
+                },
+              ]}
+            />
+          </View>
+
+          {canSkip && (
+            <Pressable
+              onPress={onToggleSkip}
+              accessibilityRole="button"
+              accessibilityState={{ selected: skipNextDate !== undefined }}
+              accessibilityLabel={isHi ? 'अगली बार छोड़ें' : 'Skip next alarm'}
+              style={({ pressed }) => [
+                styles.skipBtn,
+                {
+                  borderColor:
+                    skipNextDate !== undefined ? colors.saffron : colors.divider,
+                  backgroundColor:
+                    skipNextDate !== undefined
+                      ? 'rgba(184, 98, 27, 0.10)'
+                      : colors.parchmentSoft,
+                  borderRadius: radii.sm,
+                  opacity: pressed ? 0.7 : 1,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.skipBtnText,
+                  {
+                    color:
+                      skipNextDate !== undefined
+                        ? colors.saffronDeep
+                        : colors.inkSoft,
+                    fontFamily: typography.cardLatin.fontFamily,
+                  },
+                ]}
+              >
+                {skipNextDate !== undefined
+                  ? isHi
+                    ? `छोड़ेंगे: ${shortDateLabel(
+                        new Date(`${skipNextDate}T12:00:00`).getTime(),
+                        true
+                      )} ✓`
+                    : `Skipping ${shortDateLabel(
+                        new Date(`${skipNextDate}T12:00:00`).getTime(),
+                        false
+                      )} ✓`
+                  : isHi
+                    ? `अगली बार छोड़ें (${shortDateLabel(skipCandidateTs, true)})`
+                    : `Skip next (${shortDateLabel(skipCandidateTs, false)})`}
+              </Text>
+            </Pressable>
+          )}
+
+          <Text
+            style={[
+              styles.previewText,
+              { color: colors.inkSoft, fontFamily: typography.cardLatin.fontFamily },
+            ]}
+            accessibilityLabel="Next ring preview"
+          >
+            {isHi
+              ? `${formatTimeLabel(time, use12h)} — ${describeUntilFire(previewFireAt, nowMs, true)} बजेगा`
+              : `Rings ${describeUntilFire(previewFireAt, nowMs, false)} — at ${formatTimeLabel(time, use12h)}`}
+          </Text>
+
           <Pressable
             onPress={onConfirm}
+            accessibilityRole="button"
+            accessibilityLabel="Confirm alarm"
             style={({ pressed }) => [
               styles.editorPrimary,
               {
@@ -588,6 +893,7 @@ export function AlarmEditorSheet({
               {isHi ? 'रद्द करें' : 'Cancel'}
             </Text>
           </Pressable>
+          </ScrollView>
         </Pressable>
       </Pressable>
     </Modal>
@@ -648,6 +954,7 @@ const styles = StyleSheet.create({
   rowText: { flex: 1, gap: 2 },
   rowTime: { fontSize: 28, includeFontPadding: false },
   rowMantra: { fontSize: 14, includeFontPadding: false },
+  rowRepeat: { fontSize: 11, letterSpacing: 0.4, includeFontPadding: false },
   rowLabel: {
     fontSize: 11,
     letterSpacing: 1.2,
@@ -690,13 +997,6 @@ const styles = StyleSheet.create({
     marginTop: 6,
     includeFontPadding: false,
   },
-  footnote: {
-    fontSize: 11,
-    letterSpacing: 1.4,
-    textAlign: 'center',
-    marginTop: 18,
-    includeFontPadding: false,
-  },
   backdrop: {
     flex: 1,
     justifyContent: 'center',
@@ -706,9 +1006,10 @@ const styles = StyleSheet.create({
   editorCard: {
     width: '100%',
     maxWidth: 380,
+    maxHeight: '88%',
     borderWidth: 1,
-    gap: 14,
   },
+  editorScroll: { gap: 14 },
   editorTitle: { fontSize: 18, textAlign: 'center', includeFontPadding: false },
   editorBlock: { gap: 8, alignItems: 'center' },
   editorLabel: {
@@ -717,6 +1018,48 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     includeFontPadding: false,
     alignSelf: 'flex-start',
+  },
+  dayChipsRow: {
+    flexDirection: 'row',
+    gap: 6,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+  },
+  dayChip: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dayChipText: { fontSize: 13, includeFontPadding: false },
+  repeatSummary: {
+    fontSize: 11,
+    fontStyle: 'italic',
+    includeFontPadding: false,
+  },
+  labelInput: {
+    alignSelf: 'stretch',
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 14,
+    minHeight: 44,
+  },
+  skipBtn: {
+    alignSelf: 'center',
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 9,
+    minHeight: 40,
+    justifyContent: 'center',
+  },
+  skipBtnText: { fontSize: 12, includeFontPadding: false },
+  previewText: {
+    fontSize: 12,
+    textAlign: 'center',
+    includeFontPadding: false,
   },
   mantraChipsRow: { gap: 8, paddingVertical: 2 },
   mantraChip: {

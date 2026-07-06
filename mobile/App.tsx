@@ -43,6 +43,8 @@ import { VratFollowProvider } from '@/contexts/VratFollowContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
 import { registerNativeAlarmForegroundHandler } from '@/notifications/japamAlarmNative';
+import { maybeHandleJapamSnoozeResponse } from '@/notifications/japamAlarmScheduler';
+import { JAPAM_SNOOZE_ACTION_ID } from '@/notifications/japamAlarms';
 import { ReadingProgressProvider } from '@/contexts/ReadingProgressContext';
 import { RoutineProvider } from '@/contexts/RoutineContext';
 import { SadhanaProvider } from '@/contexts/SadhanaContext';
@@ -133,6 +135,11 @@ export default function App() {
         // retry — if navigation never readies in ~5 s, give up rather than
         // spinning forever.
         let attempts = 0;
+        // Snooze taps are handled ONLY by the live listener below. The
+        // cold-start "last response" can be an hours-old tap replayed on an
+        // unrelated launch; re-executing it would schedule a phantom ring
+        // 5 minutes after app open. Ignore it here (don't navigate either).
+        if (response.actionIdentifier === JAPAM_SNOOZE_ACTION_ID) return;
         const tryHandle = () => {
           if (cancelled) return;
           if (handleNotificationResponse(response)) return;
@@ -145,6 +152,7 @@ export default function App() {
       .catch(() => undefined);
 
     const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      if (maybeHandleJapamSnoozeResponse(response)) return;
       handleNotificationResponse(response);
     });
 
