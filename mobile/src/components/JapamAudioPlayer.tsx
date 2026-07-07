@@ -4,7 +4,7 @@ import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { ensureBackgroundAudioMode } from '@/audio/audioSession';
-import { getJapamAudioSource } from '@assets/japam-audio';
+import { getJapamAudioRepetitions, getJapamAudioSource } from '@assets/japam-audio';
 import type { Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 
@@ -71,6 +71,14 @@ function ActiveAudioPlayer({
   const status = useAudioPlayerStatus(player);
   const [rate, setRate] = useState(1.0);
   const autoPlayedRef = useRef(false);
+  // How many times the recording chants the mantra per full playback. A plain
+  // single-recitation clip is 1 (one bead per loop); musical renditions repeat
+  // the mantra many times, so the count is spread across the clip.
+  const repetitions = useMemo(() => getJapamAudioRepetitions(mantraId), [mantraId]);
+  // Last-seen playback position and how many beads this loop has already
+  // registered, used to advance the count once per repetition segment.
+  const prevTimeRef = useRef(0);
+  const emittedBeadsRef = useRef(0);
 
   const onIterationRef = useRef(onIteration);
   useEffect(() => {
@@ -86,6 +94,8 @@ function ActiveAudioPlayer({
   useEffect(() => {
     setRate(1.0);
     autoPlayedRef.current = false;
+    prevTimeRef.current = 0;
+    emittedBeadsRef.current = 0;
     if (player.isLoaded) {
       player.pause();
       player.seekTo(0).catch(() => undefined);
@@ -117,12 +127,17 @@ function ActiveAudioPlayer({
     player.loop = true;
   }, [player]);
 
-  // Count one bead per completed recitation by detecting the loop wrap: the
-  // reported position jumps backwards toward the start after passing the
-  // midpoint of the track. This does not depend on `didJustFinish` (which is
-  // not emitted while `loop` is enabled, and behaves inconsistently across
-  // platforms), so counting stays reliable on iOS.
-  const prevTimeRef = useRef(0);
+  // Advance the bead count as the clip plays. A single-recitation clip
+  // (`repetitions === 1`) registers one bead per completed loop; a musical
+  // rendition that chants the mantra `repetitions` times is split into that
+  // many equal segments and registers one bead as each segment completes, so
+  // the count tracks the chanting rather than the multi-minute file.
+  //
+  // Segment crossings are detected from the reported position (not
+  // `didJustFinish`, which is not emitted while `loop` is enabled and behaves
+  // inconsistently across platforms), keeping counting reliable on iOS. The
+  // loop wrap — position jumping backwards past the midpoint — closes out any
+  // remaining beads for the loop, then re-seeds the counter for the new pass.
   useEffect(() => {
     if (!status.isLoaded) return;
     const duration = status.duration ?? 0;
@@ -132,15 +147,28 @@ function ActiveAudioPlayer({
       return;
     }
     const prev = prevTimeRef.current;
+    const segmentsAt = (t: number) =>
+      Math.min(repetitions, Math.floor((t / duration) * repetitions));
     const wrapped =
-      status.playing &&
-      prev > duration * 0.5 &&
-      current + duration * 0.4 < prev;
+      status.playing && prev > duration * 0.5 && current + duration * 0.4 < prev;
     if (wrapped) {
-      onIterationRef.current();
+      // Finish the loop (every remaining repetition), then account for any
+      // segments already elapsed at the new position.
+      for (let k = emittedBeadsRef.current; k < repetitions; k++) {
+        onIterationRef.current();
+      }
+      const seeded = segmentsAt(current);
+      for (let k = 0; k < seeded; k++) onIterationRef.current();
+      emittedBeadsRef.current = seeded;
+    } else if (status.playing) {
+      const reached = segmentsAt(current);
+      for (let k = emittedBeadsRef.current; k < reached; k++) {
+        onIterationRef.current();
+      }
+      if (reached > emittedBeadsRef.current) emittedBeadsRef.current = reached;
     }
     prevTimeRef.current = current;
-  }, [status.currentTime, status.duration, status.isLoaded, status.playing]);
+  }, [status.currentTime, status.duration, status.isLoaded, status.playing, repetitions]);
 
   useEffect(() => {
     player.shouldCorrectPitch = true;
