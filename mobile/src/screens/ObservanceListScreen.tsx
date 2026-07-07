@@ -14,6 +14,7 @@ import { captionFont } from '@/utils/scriptFont';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
+import { useTourTarget } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'ObservanceList'>;
 
@@ -46,6 +47,9 @@ const TITLES: Record<BrowseCategory, { hi: string; en: string }> = {
 export default function ObservanceListScreen({ route, navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  // Feature-tour anchors (design.md §47): the first row (list) and its ★ follow.
+  const vratListRef = useTourTarget('vratList');
+  const vratFollowRef = useTourTarget('vratFollow');
   const [calendarSystem] = usePanchangCalendarSystem();
   const [query, setQuery] = useState('');
   const { isFollowing, follow, unfollow } = useVratFollows();
@@ -119,11 +123,10 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
             style={[styles.search, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, color: colors.ink }]}
           />
 
-          {filtered.map(({ rule, next }) => {
+          {filtered.map(({ rule, next }, i) => {
             const following = isFollowing(rule.id);
-            return (
+            const row = (
               <ObservanceRow
-                key={rule.id}
                 rule={rule}
                 nextDate={next?.date ?? null}
                 today={today}
@@ -131,9 +134,17 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
                 colors={colors}
                 typography={typography}
                 following={following}
+                starRef={i === 0 ? vratFollowRef : undefined}
                 onToggleFollow={() => (following ? unfollow(rule.id) : follow(rule.id))}
                 onPress={() => navigation.navigate('ObservanceDetail', { ruleId: rule.id })}
               />
+            );
+            return i === 0 ? (
+              <View key={rule.id} ref={vratListRef} collapsable={false}>
+                {row}
+              </View>
+            ) : (
+              <React.Fragment key={rule.id}>{row}</React.Fragment>
             );
           })}
           {filtered.length === 0 && (
@@ -147,7 +158,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   );
 }
 
-function ObservanceRow({ rule, nextDate, today, lang, colors, typography, following, onToggleFollow, onPress }: {
+function ObservanceRow({ rule, nextDate, today, lang, colors, typography, following, starRef, onToggleFollow, onPress }: {
   rule: ObservanceRule;
   nextDate: Date | null;
   today: Date;
@@ -155,6 +166,7 @@ function ObservanceRow({ rule, nextDate, today, lang, colors, typography, follow
   colors: any;
   typography: any;
   following: boolean;
+  starRef?: React.Ref<View>;
   onToggleFollow: () => void;
   onPress: () => void;
 }) {
@@ -163,6 +175,8 @@ function ObservanceRow({ rule, nextDate, today, lang, colors, typography, follow
       {/* Leading star — tap to follow/unfollow without opening the detail; a
           filled gold ★ marks an already-followed vrat, an outline ☆ an un-followed one. */}
       <Pressable
+        ref={starRef}
+        collapsable={false}
         onPress={onToggleFollow}
         accessibilityRole="button"
         accessibilityState={{ selected: following }}

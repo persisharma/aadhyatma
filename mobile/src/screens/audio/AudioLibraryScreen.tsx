@@ -12,6 +12,7 @@ import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
 import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 import TrackCard from '@/components/audio/TrackCard';
+import { useTourTarget } from '@/components/tour/tourTargets';
 
 // A single Devanagari glyph per deity for the filter avatar (the chip mirrors the
 // catalog thumb — a letter on a saffron-gold disc).
@@ -32,6 +33,8 @@ export default function AudioLibraryScreen() {
   const { lang } = useGitaLanguage();
   const { currentTrack, isPlaying, playTrack, openNowPlaying } = useAudioPlayerContext();
   const [filter, setFilter] = useState<Deity | null>(null);
+  // Feature-tour anchor for the Bhajan "inside" step (design.md §47).
+  const bhajanInsideRef = useTourTarget('bhajanInside');
 
   // Only tracks with a real recording are shown — nothing surfaces without audio.
   const available = useMemo(() => AUDIO_TRACKS.filter((t) => hasRealAudio(t.id)), []);
@@ -90,7 +93,7 @@ export default function AudioLibraryScreen() {
             ))}
           </ScrollView>
 
-          <View style={{ paddingHorizontal: spacing.screenGutter, gap: 12 }}>
+          <View ref={bhajanInsideRef} collapsable={false} style={{ paddingHorizontal: spacing.screenGutter, gap: 12 }}>
             {currentTrack && (
               <>
                 <SectionHeading hi="जारी रखें" en="Continue listening" />

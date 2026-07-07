@@ -16,11 +16,15 @@ import { useNewContent } from '@/contexts/NewContentContext';
 import { isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
 import { formatLocation } from '@/utils/formatLocation';
 import type { HomeStackParamList } from '@/navigation/types';
+import { useTourTarget } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'CategoryList'>;
 
 export default function CategoryListScreen({ navigation, route }: Props) {
   const { colors, spacing } = useTheme();
+  // Feature-tour anchor — the tour rings the first item when it lands here for
+  // the Japa "inside" step (design.md §47). Harmless for other categories.
+  const japamInsideRef = useTourTarget('japamInside');
   const { lang } = useGitaLanguage();
   const { categoryId } = route.params;
   const { getProgress, clearProgress, clearChapterProgress, isLoading } = useReadingProgress();
@@ -105,9 +109,16 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl, gap: spacing.md }]}
           showsVerticalScrollIndicator={false}
         >
-          {items.map((entry) => {
+          {items.map((entry, i) => {
             const onPress = entry.status === 'active' ? () => handlePress(entry) : undefined;
-            return <LibraryCard key={entry.id} entry={entry} onPress={onPress} />;
+            const card = <LibraryCard entry={entry} onPress={onPress} />;
+            return i === 0 ? (
+              <View key={entry.id} ref={japamInsideRef} collapsable={false}>
+                {card}
+              </View>
+            ) : (
+              <React.Fragment key={entry.id}>{card}</React.Fragment>
+            );
           })}
         </ScrollView>
       </SafeAreaView>

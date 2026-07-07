@@ -90,8 +90,10 @@ function calendarTagLabel(tag: ObservanceCalendarTag, lang: Lang): string {
 export default function PanchangScreen() {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  // Feature-tour spotlight anchor for the date/tithi card (design.md §47).
-  const dateCardRef = useTourTarget('panchangDate');
+  // Feature-tour spotlight anchors (design.md §47): the Choghadiya/Muhurat glance
+  // card and the [Calendar | Vrat & Parv] segment.
+  const muhuratCardRef = useTourTarget('muhuratCard');
+  const panchangSegmentRef = useTourTarget('panchangSegment');
   const rootNav = useNavigation<any>();
   const { followCount, reminderCount } = useVratFollows();
   const todayKey = new Date().toDateString();
@@ -257,7 +259,7 @@ export default function PanchangScreen() {
             </View>
           </View>
 
-          <View style={[styles.segmented, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.pill }]}>
+          <View ref={panchangSegmentRef} collapsable={false} style={[styles.segmented, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.pill }]}>
             {(['calendar', 'catalog'] as const).map((tab) => {
               const selected = panchangTab === tab;
               return (
@@ -425,7 +427,7 @@ export default function PanchangScreen() {
 
           {p ? (
             <>
-          <View ref={dateCardRef} collapsable={false} style={[styles.dateHeader, { borderBottomColor: colors.divider }]}>
+          <View style={[styles.dateHeader, { borderBottomColor: colors.divider }]}>
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.saffronDeep }}>
               {contentByLang(lang, p.vara.nameHi, p.vara.nameEn)}
               <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
@@ -445,11 +447,13 @@ export default function PanchangScreen() {
               to sit directly under the date header, above the anga grid: "is now
               auspicious?" is the live, time-sensitive question users open Panchang
               for, so it leads the day panel rather than trailing the times card. */}
-          <MuhuratGlanceCard
-            date={selectedDate}
-            calendarSystem={calendarSystem}
-            onViewAll={() => rootNav.navigate('MuhuratDetail', { dateMs: selectedDate.getTime() })}
-          />
+          <View ref={muhuratCardRef} collapsable={false}>
+            <MuhuratGlanceCard
+              date={selectedDate}
+              calendarSystem={calendarSystem}
+              onViewAll={() => rootNav.navigate('MuhuratDetail', { dateMs: selectedDate.getTime() })}
+            />
+          </View>
 
           {/* Two-tier anga grid: Tithi + Nakshatra lead (the two anchors users read
               first) on elevated off-white cards; Yoga + Karana sit as a quieter,

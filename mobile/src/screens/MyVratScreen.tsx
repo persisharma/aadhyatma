@@ -16,6 +16,7 @@ import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { ObservanceRule } from '@/panchang/types';
 import type { PanchangStackParamList } from '@/navigation/types';
+import { useTourTarget } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MyVrat'>;
 
@@ -48,6 +49,9 @@ type FollowItem = {
 export default function MyVratScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  // Feature-tour anchor (design.md §47) — the content region in both the empty
+  // (first-launch) and populated states.
+  const myVratRef = useTourTarget('myVrat');
   const [calendarSystem] = usePanchangCalendarSystem();
   const { follows, followCount, reminderCount, reminderDefault, setReminder, setReminderDefault } =
     useVratFollows();
@@ -131,7 +135,7 @@ export default function MyVratScreen({ navigation }: Props) {
         </View>
 
         {followCount === 0 ? (
-          <View style={styles.empty}>
+          <View ref={myVratRef} collapsable={false} style={styles.empty}>
             <Text style={{ fontSize: 36, color: colors.gold, marginBottom: 10 }}>★</Text>
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18, color: colors.ink, textAlign: 'center' }}>
               {contentByLang(lang, 'अभी कोई व्रत नहीं', 'No vrats yet')}
@@ -174,7 +178,7 @@ export default function MyVratScreen({ navigation }: Props) {
             showsVerticalScrollIndicator={false}
           >
             {/* Metric band */}
-            <View style={[styles.metricBand, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
+            <View ref={myVratRef} collapsable={false} style={[styles.metricBand, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
               <Metric value={followCount} label={contentByLang(lang, 'फ़ॉलो', 'Following')} lang={lang} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
               <Metric value={reminderCount} label={contentByLang(lang, 'अनुस्मारक', 'Reminders on')} lang={lang} colors={colors} />

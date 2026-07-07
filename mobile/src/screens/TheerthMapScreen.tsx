@@ -29,6 +29,7 @@ import {
   type TheerthGroup,
 } from '@/data/theerth/temples';
 import type { HomeStackParamList } from '@/navigation/types';
+import { useTourTarget } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'TheerthMap'>;
 type ListMode = 'category' | 'state';
@@ -61,6 +62,8 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { isNew, markSeen } = useNewContent();
+  // Feature-tour anchor for the Theerth "inside" step (design.md §47).
+  const theerthInsideRef = useTourTarget('theerthInside');
   const group = route.params?.group as CategoryKey | undefined;
   const stateEn = route.params?.stateEn;
   const isDrill = !!group || !!stateEn;
@@ -112,6 +115,7 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
             radii={radii}
             spacing={spacing}
             isTempleNew={isTempleNew}
+            firstCardRef={theerthInsideRef}
             onOpenCategory={(key) => navigation.push('TheerthMap', { group: key })}
             onOpenState={(s) => navigation.push('TheerthMap', { stateEn: s })}
           />
@@ -189,11 +193,13 @@ function Listing({
   radii,
   spacing,
   isTempleNew,
+  firstCardRef,
   onOpenCategory,
   onOpenState,
 }: {
   lang: Lang;
   isTempleNew: (id: string) => boolean;
+  firstCardRef?: React.Ref<View>;
   onOpenCategory: (key: CategoryKey) => void;
   onOpenState: (stateEn: string) => void;
 } & ThemeBits) {
@@ -234,20 +240,28 @@ function Listing({
       <View style={styles.viewToggleRow}>
         <ModeToggle mode={mode} onChange={setMode} lang={lang} colors={colors} typography={typography} radii={radii} />
       </View>
-      {(mode === 'category' ? categoryCards : stateCards).map((c) => (
-        <BrowseCard
-          key={c.key}
-          glyph={mode === 'category' ? '॥' : 'ॐ'}
-          name={c.label}
-          meta={`${c.count} ${pick(lang, { hi: 'तीर्थ', en: 'temples', gu: 'તીર્થ', kn: 'ತೀರ್ಥ' })}`}
-          hasNew={c.hasNew}
-          lang={lang}
-          colors={colors}
-          typography={typography}
-          radii={radii}
-          onPress={() => (mode === 'category' ? onOpenCategory(c.key as CategoryKey) : onOpenState(c.key))}
-        />
-      ))}
+      {(mode === 'category' ? categoryCards : stateCards).map((c, i) => {
+        const card = (
+          <BrowseCard
+            glyph={mode === 'category' ? '॥' : 'ॐ'}
+            name={c.label}
+            meta={`${c.count} ${pick(lang, { hi: 'तीर्थ', en: 'temples', gu: 'તીર્થ', kn: 'ತೀರ್ಥ' })}`}
+            hasNew={c.hasNew}
+            lang={lang}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            onPress={() => (mode === 'category' ? onOpenCategory(c.key as CategoryKey) : onOpenState(c.key))}
+          />
+        );
+        return i === 0 ? (
+          <View key={c.key} ref={firstCardRef} collapsable={false}>
+            {card}
+          </View>
+        ) : (
+          <React.Fragment key={c.key}>{card}</React.Fragment>
+        );
+      })}
     </ScrollView>
   );
 }

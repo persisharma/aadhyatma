@@ -10,9 +10,10 @@
 # What this covers:
 #   • replay entry point on the More hub
 #   • the overlay renders step 1 with Skip + Next controls
-#   • Next drives the walk-through forward AND navigates the live app to each
-#     surface (Home → Panchang → Today's Practice → Bhajan → Bhakti → Japa →
-#     Wishlist → Reminder → Share)
+#   • Next drives the walk-through forward AND navigates the live app across the
+#     whole sequence — the 5 tabs, then the Home routine card / categories /
+#     Japa (+ mantra list) / Theerth (+ map), Bhakti verse + share, the Panchang
+#     muhurat → vrat drill, the Bhajan library, and the More reminder/alarm drill
 #   • Back steps returns to the previous step
 #   • Done on the final step dismisses the tour
 #
@@ -41,7 +42,7 @@ appId: host.exp.Exponent
 - tapOn: "Show App Tour"
 - waitForAnimationToEnd
 
-# ── Step 1: Home ──
+# ── Step 1: Home (tab) ──
 # Wait for the overlay itself to mount — "Skip tour" is tour-only, whereas "Home"
 # is exposed both as the tour subtitle and (as "Home, tab, 1 of 5") by the tab
 # bar; waiting on the Skip control avoids passing before the tour has rendered.
@@ -52,14 +53,15 @@ appId: host.exp.Exponent
     timeout: 10000
 - assertVisible: "Home"
 
-# ── Walk forward through every step, asserting each surface's subtitle ──
+# ── Walk forward through every step, asserting each card's English subtitle ──
+# Tabs 2–5
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "Panchang"
+- assertVisible: "Daily Bhakti"
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "Today.s Practice"
+- assertVisible: "Panchang"
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
@@ -67,32 +69,90 @@ appId: host.exp.Exponent
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "Bhakti"
+- assertVisible: "More"
+
+# Home: routine card, categories, Japa (+ mantra list), Theerth (+ map)
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Daily Practice"
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "Japa.*Alarms"
+- assertVisible: "Categories"
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "Wishlist.*Resume"
+- assertVisible: "Japa"
 
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Mantras"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Pilgrimage"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Sacred Journeys"
+
+# Bhakti: verse + share
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Daily Verse"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Share"
+
+# Panchang: muhurat → vrat & parv → vrat list → follow → My Vrat
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Daily Muhurat"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Vrat . Parv"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Vrat List"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Follow a Vrat"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "My Vrat . Reminders"
+
+# Bhajan library
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Bhajan Library"
+
+# More: daily reminder → reminder times → japam alarm
 - tapOn: "Next step"
 - waitForAnimationToEnd
 - assertVisible: "Daily Reminder"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Reminder Times"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Japam Alarm"
 
 # ── Back returns to the previous step ──
 - tapOn: "Previous step"
 - waitForAnimationToEnd
-- assertVisible: "Wishlist.*Resume"
+- assertVisible: "Reminder Times"
 
 # ── Forward again to the final step, then finish ──
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "Daily Reminder"
-- tapOn: "Next step"
-- waitForAnimationToEnd
-- assertVisible: "Share"
+- assertVisible: "Japam Alarm"
 - tapOn: "Done"
 - waitForAnimationToEnd
 

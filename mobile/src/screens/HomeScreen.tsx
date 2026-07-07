@@ -24,16 +24,20 @@ import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
-import { useTourTarget } from '@/components/tour/tourTargets';
+import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { hasNewInCategory, devSimulateUpgrade, devResetNewState } = useNewContent();
-  // Feature-tour spotlight anchors (design.md §47).
-  const discoverRef = useTourTarget('discover');
-  const japaTileRef = useTourTarget('japaTile');
+  // Feature-tour spotlight anchors (design.md §47). Home tiles live in the
+  // vertical scroll, so they reveal themselves (scroll into view) before measure.
+  const homeScrollRef = React.useRef<ScrollView>(null);
+  const routineCardRef = useTourTarget('routineCard');
+  const categoriesGridRef = useTourTarget('categoriesGrid', (ref) => scrollNodeIntoView(homeScrollRef, ref));
+  const japaTileRef = useTourTarget('japaTile', (ref) => scrollNodeIntoView(homeScrollRef, ref));
+  const theerthTileRef = useTourTarget('theerthTile', (ref) => scrollNodeIntoView(homeScrollRef, ref));
   // Sibling tabs (Daily Bhakti, Panchang) live on the root tab navigator, not in
   // the Home stack — navigate via the parent so the action bubbles up. Same
   // pattern as RoutineBanner / PanchangScreen.
@@ -184,6 +188,7 @@ export default function HomeScreen({ navigation }: Props) {
       />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ScrollView
+          ref={homeScrollRef}
           contentContainerStyle={[
             styles.scroll,
             {
@@ -211,7 +216,7 @@ export default function HomeScreen({ navigation }: Props) {
             DISCOVER
           </Text>
 
-          <View ref={discoverRef} collapsable={false}>
+          <View>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -249,13 +254,13 @@ export default function HomeScreen({ navigation }: Props) {
             CATEGORIES
           </Text>
 
-          <View style={[styles.grid, { gap: gridGap }]}>
+          <View ref={categoriesGridRef} collapsable={false} style={[styles.grid, { gap: gridGap }]}>
             {tiles.map((tile) => (
               <View
                 key={tile.key}
                 style={{ width: tileWidth }}
-                ref={tile.key === 'japam' ? japaTileRef : undefined}
-                collapsable={tile.key === 'japam' ? false : undefined}
+                ref={tile.key === 'japam' ? japaTileRef : tile.key === 'theerth' ? theerthTileRef : undefined}
+                collapsable={tile.key === 'japam' || tile.key === 'theerth' ? false : undefined}
               >
                 <CategoryCard
                   nameHi={tile.nameHi}
@@ -323,7 +328,7 @@ export default function HomeScreen({ navigation }: Props) {
         onPress={() => navigation.navigate('Search')}
         bottomOffset={searchFabBottom}
       />
-      <RoutineBanner />
+      <RoutineBanner bannerRef={routineCardRef} />
     </View>
   );
 }

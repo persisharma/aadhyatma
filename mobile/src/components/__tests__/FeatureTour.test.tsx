@@ -19,6 +19,7 @@ jest.mock('@/contexts/TourContext', () => ({
 // are mounted here, so every measure resolves null (ring falls back to the tab).
 jest.mock('@/components/tour/tourTargets', () => ({
   measureTourTarget: () => Promise.resolve(null),
+  revealTourTarget: () => {},
   useTourTarget: () => ({ current: null }),
 }));
 
@@ -135,7 +136,7 @@ describe('FeatureTour', () => {
 
     expect(allText(tree)).toContain(`2 / ${tourSteps.length}`);
     const nav = mockDispatch.mock.calls.at(-1)![0];
-    expect(nav.payload.name).toBe(tourSteps[1].navigateTo.name); // PanchangTab
+    expect(nav.payload.name).toBe(tourSteps[1].navigateTo.name); // DailyBhaktiTab
   });
 
   test('Back is a no-op on the first step (guarded), Skip completes the tour', () => {

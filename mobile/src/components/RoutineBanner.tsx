@@ -16,7 +16,7 @@ import LotusMark from './LotusMark';
  * itself fires app-wide from RoutineCelebrationOverlay (mounted at the nav
  * root), so it plays on whatever screen completion happens — not just here.
  */
-export default function RoutineBanner() {
+export default function RoutineBanner({ bannerRef }: { bannerRef?: React.Ref<View> } = {}) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const navigation = useNavigation<any>();
@@ -58,6 +58,8 @@ export default function RoutineBanner() {
   if (status === 'nudge') {
     return (
       <Pressable
+        ref={bannerRef}
+        collapsable={false}
         onPress={() => open('RoutineCreate')}
         accessibilityRole="button"
         accessibilityLabel={pick(lang, { hi: 'अपनी नित्य साधना बनाएँ', en: 'Set your daily practice', gu: 'તમારી નિત્ય સાધના સેટ કરો', kn: 'ನಿಮ್ಮ ನಿತ್ಯ ಸಾಧನೆ ಹೊಂದಿಸಿ' })}
@@ -84,6 +86,8 @@ export default function RoutineBanner() {
   if (status === 'complete') {
     return (
       <Pressable
+        ref={bannerRef}
+        collapsable={false}
         onPress={() => open('RoutineToday')}
         accessibilityRole="button"
         accessibilityLabel={pick(lang, { hi: 'आज की साधना पूर्ण', en: "Today's practice complete", gu: 'આજની સાધના પૂર્ણ', kn: 'ಇಂದಿನ ಸಾಧನೆ ಪೂರ್ಣ' })}
@@ -109,6 +113,8 @@ export default function RoutineBanner() {
   const pct = total > 0 ? doneCount / total : 0;
   return (
     <Pressable
+      ref={bannerRef}
+      collapsable={false}
       onPress={() => open('RoutineToday')}
       accessibilityRole="button"
       accessibilityLabel={pick(lang, { hi: 'आज की साधना', en: "Today's practice", gu: 'આજની સાધના', kn: 'ಇಂದಿನ ಸಾಧನೆ' })}

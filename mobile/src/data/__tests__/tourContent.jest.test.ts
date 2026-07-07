@@ -8,13 +8,23 @@ const VALID_TABS = new Set(['HomeTab', 'DailyBhaktiTab', 'PanchangTab', 'AudioTa
 // Spotlight target ids a step may ring (mirrors TourTargetId). A step without a
 // targetId rings its destination tab instead (design.md §47).
 const VALID_TARGET_IDS = new Set([
-  'discover',
+  'routineCard',
+  'categoriesGrid',
   'japaTile',
-  'panchangDate',
-  'routineToday',
+  'japamInside',
+  'theerthTile',
+  'theerthInside',
   'dailyVerse',
   'shareButton',
+  'muhuratCard',
+  'panchangSegment',
+  'vratList',
+  'vratFollow',
+  'myVrat',
+  'bhajanInside',
   'reminderToggle',
+  'reminderTimes',
+  'japamAdd',
 ]);
 
 describe('getWhatsNewForVersion', () => {

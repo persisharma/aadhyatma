@@ -18,6 +18,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useJapamAlarms, type AlarmDraft, type AlarmPatch } from '@/contexts/JapamAlarmsContext';
 import { japamMantras, findJapamMantra } from '@/data/japam';
 import { getJapamAudioSource } from '@assets/japam-audio';
+import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 import TimeStepper from '@/components/TimeStepper';
 import {
   ALL_WEEKDAYS,
@@ -91,6 +92,11 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
     removeAlarm,
   } = useJapamAlarms();
 
+  // Feature-tour anchor (design.md §47): the "+ Add alarm" button — the last
+  // scroll child, so scroll it into view before the tour measures it.
+  const alarmsScrollRef = React.useRef<ScrollView>(null);
+  const japamAddRef = useTourTarget('japamAdd', (ref) => scrollNodeIntoView(alarmsScrollRef, ref));
+
   const [editor, setEditor] = useState<EditorState>(null);
   const isHi = lang === 'hi';
   const use12h = useMemo(() => prefers12HourClock(), []);
@@ -155,6 +161,7 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
         </View>
 
         <ScrollView
+          ref={alarmsScrollRef}
           contentContainerStyle={[
             styles.scroll,
             { paddingHorizontal: spacing.xxl, paddingBottom: spacing.xxl * 2 },
@@ -246,6 +253,8 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
 
           {canAdd ? (
             <Pressable
+              ref={japamAddRef}
+              collapsable={false}
               onPress={() => setEditor({ kind: 'new' })}
               accessibilityRole="button"
               accessibilityLabel={isHi ? 'स्मरण जोड़ें' : 'Add alarm'}

@@ -21,7 +21,7 @@ import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
 import TimeStepper from '@/components/TimeStepper';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
-import { useTourTarget } from '@/components/tour/tourTargets';
+import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Reminders'>;
 
@@ -29,8 +29,11 @@ const DEFAULT_NEW_TIME: TimeOfDay = { hour: 18, minute: 0 };
 
 export default function ReminderSettingsScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
-  // Feature-tour spotlight anchor for the daily-verse reminder row (design.md §47).
+  // Feature-tour spotlight anchors (design.md §47): the daily-verse toggle card
+  // and the times card (which can sit below the fold → scroll it into view).
+  const remindersScrollRef = React.useRef<ScrollView>(null);
   const reminderToggleRef = useTourTarget('reminderToggle');
+  const reminderTimesRef = useTourTarget('reminderTimes', (ref) => scrollNodeIntoView(remindersScrollRef, ref));
   const { lang } = useGitaLanguage();
   const {
     prefs,
@@ -149,6 +152,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
         </View>
 
         <ScrollView
+          ref={remindersScrollRef}
           contentContainerStyle={[
             styles.scroll,
             { paddingHorizontal: spacing.xxl, paddingBottom: spacing.xxl * 2 },
@@ -233,6 +237,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
 
           {/* Times picker — supports multiple reminders */}
           <View
+            ref={reminderTimesRef}
+            collapsable={false}
             style={[
               styles.card,
               {
