@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { InteractionManager, Modal, Text } from 'react-native';
+import { InteractionManager, Text } from 'react-native';
 import FeatureTour from '@/components/FeatureTour';
 import { tourSteps } from '@/data/tour/steps';
 
@@ -15,12 +15,27 @@ jest.mock('@/contexts/TourContext', () => ({
   }),
 }));
 
+// Isolate the component from the cross-screen spotlight registry — no screens
+// are mounted here, so every measure resolves null (ring falls back to the tab).
+jest.mock('@/components/tour/tourTargets', () => ({
+  measureTourTarget: () => Promise.resolve(null),
+  useTourTarget: () => ({ current: null }),
+}));
+
+// Safe-area insets without a provider.
+jest.mock('react-native-safe-area-context', () => {
+  const RN = require('react-native');
+  return {
+    SafeAreaView: RN.View,
+    useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
+  };
+});
+
 // Minimal theme stub — FeatureTour only reads a handful of tokens.
 jest.mock('@/theme/ThemeContext', () => ({
   useTheme: () => ({
     colors: {
-      parchment: '#fff', parchmentSoft: '#fff', parchmentHighlight: '#fff',
-      parchmentGradientEnd: '#fff', divider: '#ccc', ink: '#000', inkSoft: '#333',
+      parchment: '#fff', parchmentSoft: '#fff', divider: '#ccc', ink: '#000', inkSoft: '#333',
       inkMuted: '#666', saffron: '#b8621b', onPrimary: '#fff', dotRest: '#ccc',
     },
     typography: {
@@ -45,17 +60,17 @@ jest.mock('@react-navigation/native', () => ({
   },
 }));
 
-type Pressable = { props: { accessibilityLabel?: string; onPress?: () => void } };
+type PressableNode = { props: { accessibilityLabel?: string; onPress?: () => void } };
 
-function findByA11y(tree: TestRenderer.ReactTestRenderer, label: string): Pressable {
+function queryA11y(tree: TestRenderer.ReactTestRenderer, label: string): PressableNode | undefined {
   return tree.root
     .findAll((n) => n.props?.accessibilityLabel === label)
-    .find((n) => typeof n.props?.onPress === 'function') as unknown as Pressable;
+    .find((n) => typeof n.props?.onPress === 'function') as unknown as PressableNode | undefined;
 }
 
 function press(tree: TestRenderer.ReactTestRenderer, label: string) {
   act(() => {
-    findByA11y(tree, label).props.onPress!();
+    queryA11y(tree, label)!.props.onPress!();
   });
 }
 
@@ -70,6 +85,8 @@ function allText(tree: TestRenderer.ReactTestRenderer): string {
 }
 
 let runAfter: jest.SpyInstance;
+let rafSpy: jest.SpyInstance;
+let cafSpy: jest.SpyInstance;
 beforeEach(() => {
   mockShouldShow = true;
   mockMarkTourCompleted.mockClear();
@@ -81,8 +98,16 @@ beforeEach(() => {
       cb?.();
       return { then: () => undefined, done: () => undefined, cancel: () => undefined };
     }) as unknown as typeof InteractionManager.runAfterInteractions);
+  // Stub the measure-retry frame loop so no timer escapes the test environment
+  // (measure resolves null here → the component would otherwise reschedule).
+  rafSpy = jest.spyOn(global, 'requestAnimationFrame').mockImplementation(() => 0 as unknown as number);
+  cafSpy = jest.spyOn(global, 'cancelAnimationFrame').mockImplementation(() => {});
 });
-afterEach(() => runAfter.mockRestore());
+afterEach(() => {
+  runAfter.mockRestore();
+  rafSpy.mockRestore();
+  cafSpy.mockRestore();
+});
 
 function mount(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
@@ -92,13 +117,14 @@ function mount(): TestRenderer.ReactTestRenderer {
   return tree;
 }
 
-describe('FeatureTour navigation', () => {
-  test('navigates to the first step on open and shows 1 / N', () => {
+describe('FeatureTour', () => {
+  test('navigates to the first step on open and shows 1 / N with Skip', () => {
     const tree = mount();
     expect(mockDispatch).toHaveBeenCalled();
     const first = mockDispatch.mock.calls[0][0];
     expect(first.payload.name).toBe(tourSteps[0].navigateTo.name); // HomeTab
     expect(allText(tree)).toContain(`1 / ${tourSteps.length}`);
+    expect(queryA11y(tree, 'Skip tour')).toBeDefined();
   });
 
   test('Next advances the step and drives navigation to the next surface', () => {
@@ -114,7 +140,6 @@ describe('FeatureTour navigation', () => {
 
   test('Back is a no-op on the first step (guarded), Skip completes the tour', () => {
     const tree = mount();
-    // Back exists but is disabled on step 0; pressing does not move past 1/N.
     press(tree, 'Previous step');
     expect(allText(tree)).toContain(`1 / ${tourSteps.length}`);
 
@@ -124,37 +149,33 @@ describe('FeatureTour navigation', () => {
 
   test('walking to the last step shows Done and completing persists', () => {
     const tree = mount();
-    // Advance to the final step.
     for (let i = 0; i < tourSteps.length - 1; i += 1) {
       press(tree, 'Next step');
     }
     expect(allText(tree)).toContain(`${tourSteps.length} / ${tourSteps.length}`);
 
-    // On the last step the primary action is "Done".
     press(tree, 'Done');
     expect(mockMarkTourCompleted).toHaveBeenCalledTimes(1);
   });
 
   test('Skip does not bounce back open while the gate is still "should show"', () => {
-    // Regression: close() hides optimistically before markTourCompleted()
-    // flips the gate. The open effect must be edge-guarded (not keyed on
-    // `visible`), or it would immediately re-open the tour and strand it.
-    // Here the mocked gate stays true across the dismissal.
+    // Regression: close() hides optimistically before markTourCompleted() flips
+    // the gate. The open effect is edge-guarded (keyed on the gate, not `visible`)
+    // so it must not re-open. Here the mocked gate stays true across dismissal.
     const tree = mount();
-    expect(tree.root.findByType(Modal).props.visible).toBe(true);
+    expect(queryA11y(tree, 'Skip tour')).toBeDefined();
 
     press(tree, 'Skip tour');
     expect(mockMarkTourCompleted).toHaveBeenCalledTimes(1);
-    // Must remain hidden even though shouldShowFirstLaunchTour is still true.
-    expect(tree.root.findByType(Modal).props.visible).toBe(false);
+    // Overlay unmounts and stays gone even though shouldShowFirstLaunchTour is still true.
+    expect(queryA11y(tree, 'Skip tour')).toBeUndefined();
   });
 
-  test('stays hidden and drives no navigation when the gate is off', () => {
+  test('renders nothing and drives no navigation when the gate is off', () => {
     mockShouldShow = false;
     const tree = mount();
-    // No navigation dispatched when the tour should not show.
     expect(mockDispatch).not.toHaveBeenCalled();
-    // The overlay Modal is present but not visible.
-    expect(tree.root.findByType(Modal).props.visible).toBe(false);
+    expect(queryA11y(tree, 'Skip tour')).toBeUndefined();
+    expect(tree.toJSON()).toBeNull();
   });
 });

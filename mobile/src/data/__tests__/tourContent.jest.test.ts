@@ -1,9 +1,21 @@
 import { APP_TOUR_VERSION, getWhatsNewForVersion, whatsNew } from '@/data/tour/whatsNew';
-import { tourSteps } from '@/data/tour/steps';
+import { tourSteps, TAB_ORDER } from '@/data/tour/steps';
 import appJson from '../../../app.json';
 
 // Tab names the tour is allowed to navigate to (mirrors TabParamList).
 const VALID_TABS = new Set(['HomeTab', 'DailyBhaktiTab', 'PanchangTab', 'AudioTab', 'MoreTab']);
+
+// Spotlight target ids a step may ring (mirrors TourTargetId). A step without a
+// targetId rings its destination tab instead (design.md §47).
+const VALID_TARGET_IDS = new Set([
+  'discover',
+  'japaTile',
+  'panchangDate',
+  'routineToday',
+  'dailyVerse',
+  'shareButton',
+  'reminderToggle',
+]);
 
 describe('getWhatsNewForVersion', () => {
   test('returns the entry for a known non-empty version', () => {
@@ -61,10 +73,26 @@ describe('tourSteps content contract', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  test('anchor and pointer values are within the allowed set', () => {
+  test('anchor and pointer values are within the allowed set (fallback placement)', () => {
     tourSteps.forEach((s) => {
       expect(['top', 'center', 'bottom']).toContain(s.anchor);
       expect(['up', 'down', 'none']).toContain(s.pointer);
+    });
+  });
+
+  test('every step targetId (when present) is a known spotlight target', () => {
+    tourSteps.forEach((s) => {
+      if (s.targetId !== undefined) expect(VALID_TARGET_IDS.has(s.targetId)).toBe(true);
+    });
+  });
+
+  test('TAB_ORDER covers every valid tab with a unique index and resolves each step', () => {
+    // Ring-the-tab fallback needs a defined index for every step's destination.
+    expect(new Set(Object.keys(TAB_ORDER))).toEqual(VALID_TABS);
+    const indices = Object.values(TAB_ORDER);
+    expect(new Set(indices).size).toBe(indices.length);
+    tourSteps.forEach((s) => {
+      expect(TAB_ORDER[s.navigateTo.name]).toBeGreaterThanOrEqual(0);
     });
   });
 });

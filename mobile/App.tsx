@@ -201,7 +201,6 @@ export default function App() {
                               <ReminderOptInModal />
                               <UpdateReadyModal />
                               <WhatsNewModal />
-                              <FeatureTour />
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
                             <SadhanaCompletionOverlay />
@@ -209,6 +208,10 @@ export default function App() {
                             <SadhanaReminderScheduler />
                             <MiniPlayer />
                             <NowPlayingScreen />
+                            {/* Top-level so the spotlight overlays the tab bar +
+                                mini-player, and is in-tree (not a Modal) so it can
+                                ring the live UI and stay visible to a11y/Maestro. */}
+                            <FeatureTour />
                           </View>
                         </ShareProvider>
                         </TourProvider>

@@ -8,6 +8,7 @@
  */
 
 import type { HomeStackParamList, MoreStackParamList, TabParamList } from '@/navigation/types';
+import type { TourTargetId } from '@/components/tour/tourTargets';
 
 /**
  * Where to send the user for this step. Mirrors the nested-route shape
@@ -30,9 +31,16 @@ export type TourStep = {
   id: string;
   /** Screen to navigate to before showing this step's tooltip. */
   navigateTo: TourNavTarget;
-  /** Where the tooltip card sits on the screen. */
+  /**
+   * On-screen element to ring with the spotlight, registered via
+   * `useTourTarget`. Omitted when the step has no stable element (or one that
+   * may be absent on first launch, e.g. the mini-player) — the tour then rings
+   * the destination tab instead. See design.md §47.
+   */
+  targetId?: TourTargetId;
+  /** Fallback card position when `targetId` can't be measured. */
   anchor: TourAnchor;
-  /** Direction the pointer triangle on the card points. */
+  /** Fallback pointer direction when `targetId` can't be measured. */
   pointer: TourPointer;
   titleHi: string;
   titleEn: string;
@@ -40,10 +48,23 @@ export type TourStep = {
   bodyEn: string;
 };
 
+/**
+ * Tab order in `TabNavigator` — used to ring the destination tab when a step
+ * has no measurable element target. Must mirror the `Tab.Screen` order.
+ */
+export const TAB_ORDER: Record<TourNavTarget['name'], number> = {
+  HomeTab: 0,
+  DailyBhaktiTab: 1,
+  PanchangTab: 2,
+  AudioTab: 3,
+  MoreTab: 4,
+};
+
 export const tourSteps: readonly TourStep[] = [
   {
     id: 'home',
     navigateTo: { name: 'HomeTab', params: { screen: 'Home' } },
+    targetId: 'discover',
     anchor: 'bottom',
     pointer: 'up',
     titleHi: 'मुख पृष्ठ',
@@ -56,6 +77,7 @@ export const tourSteps: readonly TourStep[] = [
   {
     id: 'panchang',
     navigateTo: { name: 'PanchangTab' },
+    targetId: 'panchangDate',
     anchor: 'bottom',
     pointer: 'up',
     titleHi: 'पंचांग',
@@ -68,6 +90,7 @@ export const tourSteps: readonly TourStep[] = [
   {
     id: 'sadhana',
     navigateTo: { name: 'HomeTab', params: { screen: 'RoutineToday' } },
+    targetId: 'routineToday',
     anchor: 'top',
     pointer: 'down',
     titleHi: 'आज की साधना',
@@ -92,6 +115,7 @@ export const tourSteps: readonly TourStep[] = [
   {
     id: 'bhakti',
     navigateTo: { name: 'DailyBhaktiTab' },
+    targetId: 'dailyVerse',
     anchor: 'top',
     pointer: 'down',
     titleHi: 'भक्ति',
@@ -104,6 +128,7 @@ export const tourSteps: readonly TourStep[] = [
   {
     id: 'japa',
     navigateTo: { name: 'HomeTab', params: { screen: 'Home' } },
+    targetId: 'japaTile',
     anchor: 'bottom',
     pointer: 'up',
     titleHi: 'जप एवं अलार्म',
@@ -128,6 +153,7 @@ export const tourSteps: readonly TourStep[] = [
   {
     id: 'reminders',
     navigateTo: { name: 'MoreTab', params: { screen: 'Reminders' } },
+    targetId: 'reminderToggle',
     anchor: 'center',
     pointer: 'none',
     titleHi: 'दैनिक स्मरण',
@@ -140,6 +166,7 @@ export const tourSteps: readonly TourStep[] = [
   {
     id: 'share',
     navigateTo: { name: 'DailyBhaktiTab' },
+    targetId: 'shareButton',
     anchor: 'top',
     pointer: 'down',
     titleHi: 'साझा करें',

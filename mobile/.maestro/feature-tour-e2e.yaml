@@ -42,10 +42,15 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd
 
 # ── Step 1: Home ──
+# Wait for the overlay itself to mount — "Skip tour" is tour-only, whereas "Home"
+# is exposed both as the tour subtitle and (as "Home, tab, 1 of 5") by the tab
+# bar; waiting on the Skip control avoids passing before the tour has rendered.
+# NB: controls expose only their a11y label ("Skip tour"), and Maestro matches
+# the WHOLE string — "Skip" alone never matches "Skip tour".
 - extendedWaitUntil:
-    visible: "Home"
+    visible: "Skip tour"
     timeout: 10000
-- assertVisible: "Skip"
+- assertVisible: "Home"
 
 # ── Walk forward through every step, asserting each surface's subtitle ──
 - tapOn: "Next step"

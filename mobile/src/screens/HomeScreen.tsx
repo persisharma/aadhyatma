@@ -24,12 +24,16 @@ import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
+import { useTourTarget } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { hasNewInCategory, devSimulateUpgrade, devResetNewState } = useNewContent();
+  // Feature-tour spotlight anchors (design.md §47).
+  const discoverRef = useTourTarget('discover');
+  const japaTileRef = useTourTarget('japaTile');
   // Sibling tabs (Daily Bhakti, Panchang) live on the root tab navigator, not in
   // the Home stack — navigate via the parent so the action bubbles up. Same
   // pattern as RoutineBanner / PanchangScreen.
@@ -188,26 +192,28 @@ export default function HomeScreen({ navigation }: Props) {
             DISCOVER
           </Text>
 
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            decelerationRate="fast"
-            snapToInterval={featureSnap}
-            snapToAlignment="start"
-            // Full-bleed: cancel the page gutter so cards run edge-to-edge and the
-            // next card peeks, then re-pad the content so the first card aligns
-            // with the rest of the page.
-            style={{ marginHorizontal: -gridPadding }}
-            contentContainerStyle={{
-              paddingHorizontal: gridPadding,
-              gap: featureGap,
-              paddingBottom: 4,
-            }}
-          >
-            {orderedSpotlights.map(({ onPress, ...item }) => (
-              <FeatureCard key={item.key} item={item} width={featureWidth} onPress={onPress} />
-            ))}
-          </ScrollView>
+          <View ref={discoverRef} collapsable={false}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              decelerationRate="fast"
+              snapToInterval={featureSnap}
+              snapToAlignment="start"
+              // Full-bleed: cancel the page gutter so cards run edge-to-edge and the
+              // next card peeks, then re-pad the content so the first card aligns
+              // with the rest of the page.
+              style={{ marginHorizontal: -gridPadding }}
+              contentContainerStyle={{
+                paddingHorizontal: gridPadding,
+                gap: featureGap,
+                paddingBottom: 4,
+              }}
+            >
+              {orderedSpotlights.map(({ onPress, ...item }) => (
+                <FeatureCard key={item.key} item={item} width={featureWidth} onPress={onPress} />
+              ))}
+            </ScrollView>
+          </View>
 
           <Text
             style={[
@@ -226,7 +232,12 @@ export default function HomeScreen({ navigation }: Props) {
 
           <View style={[styles.grid, { gap: gridGap }]}>
             {tiles.map((tile) => (
-              <View key={tile.key} style={{ width: tileWidth }}>
+              <View
+                key={tile.key}
+                style={{ width: tileWidth }}
+                ref={tile.key === 'japam' ? japaTileRef : undefined}
+                collapsable={tile.key === 'japam' ? false : undefined}
+              >
                 <CategoryCard
                   nameHi={tile.nameHi}
                   nameEn={tile.nameEn}

@@ -21,6 +21,7 @@ import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
 import TimeStepper from '@/components/TimeStepper';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
+import { useTourTarget } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Reminders'>;
 
@@ -28,6 +29,8 @@ const DEFAULT_NEW_TIME: TimeOfDay = { hour: 18, minute: 0 };
 
 export default function ReminderSettingsScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
+  // Feature-tour spotlight anchor for the daily-verse reminder row (design.md §47).
+  const reminderToggleRef = useTourTarget('reminderToggle');
   const { lang } = useGitaLanguage();
   const {
     prefs,
@@ -154,6 +157,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
         >
           {/* Daily verse toggle */}
           <View
+            ref={reminderToggleRef}
+            collapsable={false}
             style={[
               styles.card,
               {

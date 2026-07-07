@@ -23,6 +23,7 @@ import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import RoutineBanner from '@/components/RoutineBanner';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import { useTourTarget } from '@/components/tour/tourTargets';
 
 /**
  * Resolve the verse to show on entry. When a reminder tap forwarded a verse
@@ -44,6 +45,9 @@ function resolveInitialVerse(
 
 export default function DailyBhaktiScreen() {
   const { colors, typography, spacing } = useTheme();
+  // Feature-tour spotlight anchors (design.md §47).
+  const dailyVerseRef = useTourTarget('dailyVerse');
+  const shareButtonRef = useTourTarget('shareButton');
   const { lang } = useGitaLanguage();
   const screenTitle = orderTitlesByLanguage(lang, 'दैनिक भक्ति', 'Daily Verse', {
     devPrimary: 22,
@@ -145,7 +149,7 @@ export default function DailyBhaktiScreen() {
           </View>
 
           {/* Verse Card */}
-          <View style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+          <View ref={dailyVerseRef} collapsable={false} style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
             {/* Top row: source pill + action icons */}
             <View style={styles.cardHeader}>
               <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
@@ -172,25 +176,27 @@ export default function DailyBhaktiScreen() {
                     }
                   }}
                 />
-                <ShareButton
-                  busy={shareBusy}
-                  onPress={() => {
-                    share(
-                      {
-                        sourceId: verse.sourceId,
-                        sectionNameHi: verse.sourceNameHi,
-                        sectionNameEn: verse.sourceNameEn,
-                        verseLabelHi: verse.labelHi ?? '',
-                        verseLabelEn: verse.labelEn ?? '',
-                        linesHi: verse.textHi,
-                        linesEn: verse.textEn,
-                        meaningHi: verse.meaningHi,
-                        meaningEn: verse.meaningEn,
-                      },
-                      lang
-                    );
-                  }}
-                />
+                <View ref={shareButtonRef} collapsable={false}>
+                  <ShareButton
+                    busy={shareBusy}
+                    onPress={() => {
+                      share(
+                        {
+                          sourceId: verse.sourceId,
+                          sectionNameHi: verse.sourceNameHi,
+                          sectionNameEn: verse.sourceNameEn,
+                          verseLabelHi: verse.labelHi ?? '',
+                          verseLabelEn: verse.labelEn ?? '',
+                          linesHi: verse.textHi,
+                          linesEn: verse.textEn,
+                          meaningHi: verse.meaningHi,
+                          meaningEn: verse.meaningEn,
+                        },
+                        lang
+                      );
+                    }}
+                  />
+                </View>
               </View>
             </View>
 

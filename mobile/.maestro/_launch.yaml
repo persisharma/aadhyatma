@@ -31,9 +31,11 @@ appId: host.exp.Exponent
     visible: "Good Habits\\..*Tap to open\\."
     timeout: 60000
 # Dismiss whichever first-launch onboarding surface auto-appeared (fresh
-# install → feature tour "Skip"; returning user → What's New "Close").
+# install → feature tour, dismissed via its "Skip tour" a11y label; returning
+# user → What's New "Close"). The tour control exposes only its a11y label and
+# Maestro matches the whole string, so this must be "Skip tour", not "Skip".
 - tapOn:
-    text: "Skip"
+    text: "Skip tour"
     optional: true
 - tapOn:
     text: "Close"
