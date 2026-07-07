@@ -27,6 +27,7 @@ import { useVratFollows } from '@/contexts/VratFollowContext';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { useTourTarget } from '@/components/tour/tourTargets';
 import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
 
@@ -89,6 +90,8 @@ function calendarTagLabel(tag: ObservanceCalendarTag, lang: Lang): string {
 export default function PanchangScreen() {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  // Feature-tour spotlight anchor for the date/tithi card (design.md §47).
+  const dateCardRef = useTourTarget('panchangDate');
   const rootNav = useNavigation<any>();
   const { followCount, reminderCount } = useVratFollows();
   const todayKey = new Date().toDateString();
@@ -422,7 +425,7 @@ export default function PanchangScreen() {
 
           {p ? (
             <>
-          <View style={[styles.dateHeader, { borderBottomColor: colors.divider }]}>
+          <View ref={dateCardRef} collapsable={false} style={[styles.dateHeader, { borderBottomColor: colors.divider }]}>
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.saffronDeep }}>
               {contentByLang(lang, p.vara.nameHi, p.vara.nameEn)}
               <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>

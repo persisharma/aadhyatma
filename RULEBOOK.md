@@ -157,6 +157,18 @@ New sections are registered in `mobile/src/navigation/HomeStackNavigator.tsx` (n
 
 No manual routing in HomeScreen is needed — `CategoryListScreen` filters items by their `category` field automatically.
 
+### 6.1 Onboarding surfaces — feature tour & What's New (contract)
+
+The first-launch **feature tour** (`FeatureTour.tsx`) and post-update **What's New sheet** (`WhatsNewModal.tsx`) are gated by `TourContext.tsx` and driven by data in `mobile/src/data/tour/{steps,whatsNew}.ts` (design.md §47). Two contract rules bind them to releases and navigation:
+
+1. **Version bump discipline.** `APP_TOUR_VERSION` in `data/tour/whatsNew.ts` **must equal** `app.json` `expo.version` (enforced by `src/data/__tests__/tourContent.jest.test.ts`). On every version bump: update `APP_TOUR_VERSION` and add a `whatsNew[version]` entry listing **only** that release's new features (bilingual `titleHi/En` + `bodyHi/En`); omit the entry (or leave `items` empty) to intentionally skip the sheet. `getWhatsNewForVersion` returns null for unknown/empty versions → sheet suppressed. The same jest gate also fails a bump that forgets the entry.
+   - **Install vs update.** `TourContext` shows the **full tour** only to a genuine fresh install (no prior-usage key from `UPGRADER_SIGNAL_KEYS`, §44) and shows the version's **What's New** to a returning user — so a release's own `whatsNew` entry is reachable by the users updating into it. Do not "simplify" this to `tourCompletedVersion === null` alone; that regresses every existing user into the full tour and makes the current version's release notes unreachable.
+2. **New tab ⇒ consider a tour step.** The tour walks the real tabs; adding a tab to `TabParamList` (§6) should usually add a `tourSteps` entry with its `navigateTo`. A compile-time check pins every step's `navigateTo.name` to a real tab, so an invalid target fails `tsc`.
+
+**Language.** The tour is intentionally bilingual (hi+en) on every card — a pre-language-pick welcome, never a hi/en `lang` branch. The What's New sheet **does** honour the reading language (fires for returning users) and must route text through `contentByLang` + fonts through `titleFontByLang`/`meaningToken` — never a bare hi/en ternary (§3, wiki `concepts/languages`).
+
+**Tests.** UT: `src/contexts/__tests__/TourContext.test.tsx`, `src/components/__tests__/FeatureTour.test.tsx`, `src/data/__tests__/tourContent.jest.test.ts`. E2E: `.maestro/feature-tour-e2e.yaml`; `_launch.yaml` dismisses the auto-tour (optional `Skip`) so it never blocks other flows on a fresh simulator.
+
 ---
 
 ## 8. Search index integration for new sections
