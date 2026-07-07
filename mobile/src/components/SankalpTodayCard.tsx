@@ -8,6 +8,7 @@ import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import PracticeSeal from '@/components/PracticeSeal';
 import { useSadhana } from '@/contexts/SadhanaContext';
+import { completedDayCount } from '@/data/sadhana/progress';
 import { offeredTail } from '@/data/routine/practiceView';
 import { navigateToRoutineItem } from '@/navigation/entryRoutes';
 import type { SadhanaTodayCard as CardData } from '@/data/sadhana/useSadhanaToday';
@@ -27,22 +28,21 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
   const { program, status, items } = card;
 
   const title = contentByLang(lang, program.titleHi, program.titleEn);
-  let dayLabel: string;
-  if (status.kind === 'completed') {
-    dayLabel = contentByLang(lang, 'पूर्णाहुति', 'Sankalp complete');
-  } else if (status.kind === 'waiting') {
-    dayLabel = contentByLang(
-      lang,
-      `संकल्प · ${status.doneCount} / ${status.totalDays}`,
-      `Sankalp · ${status.doneCount} / ${status.totalDays}`
-    );
-  } else {
-    dayLabel = contentByLang(
-      lang,
-      `संकल्प · दिन ${status.dayIndex} / ${status.totalDays}`,
-      `Sankalp · Day ${status.dayIndex} / ${status.totalDays}`
-    );
-  }
+  // The eyebrow is a *days-completed* progress counter, so finishing today's day
+  // visibly ticks it (0/N → 1/N) and it agrees with the List/Detail surfaces,
+  // which already read `completedDayCount` (design.md §46). It must NOT use
+  // `status.dayIndex`: that is the day you are *on* (= done + 1), so a fresh day 1
+  // would show "1 / N" before anything is done and stay "1 / N" after completing
+  // it — the counter would never move on completion ("still 0/N after reading").
+  const daysDone = completedDayCount(card.enrollment);
+  const dayLabel =
+    status.kind === 'completed'
+      ? contentByLang(lang, 'पूर्णाहुति', 'Sankalp complete')
+      : contentByLang(
+          lang,
+          `संकल्प · ${daysDone} / ${status.totalDays}`,
+          `Sankalp · ${daysDone} / ${status.totalDays}`
+        );
 
   return (
     <View

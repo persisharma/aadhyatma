@@ -122,6 +122,11 @@ describe('SankalpTodayCard', () => {
     const text = textOf(tree);
 
     expect(text).toContain('Durga Chalisa');
+    // The eyebrow counts days *offered*, not the day-in-progress: a fresh active
+    // day has 0 committed, so it reads "0 / 9" (not "Day 1 / 9"). This is what
+    // ticks to 1/9 on completion — the "still 0/N after finishing" fix.
+    expect(text).toContain('Sankalp · 0 / 9');
+    expect(text).not.toContain('Day 1');
     const markButton = tree.root.findAll(
       (n) => n.props.accessibilityLabel === 'Mark offered'
     )[0];
@@ -129,5 +134,44 @@ describe('SankalpTodayCard', () => {
     expect(markButton).toBeDefined();
     act(() => markButton!.props.onPress());
     expect(mockCommitDay).toHaveBeenCalledWith(program.id, 1, 'marked');
+  });
+
+  it('eyebrow reflects completed days across active and done-today states', () => {
+    const program = getProgram('hanuman-41')!;
+    const item = program.day!.items[0];
+    const mkItem = (done: boolean) => ({
+      item,
+      key: `${program.id}:x:${item.id}`,
+      display: resolveRoutineItem(item),
+      done,
+    });
+
+    // Two days already offered, working on day 3 → counter shows the 2 done.
+    const active: SadhanaTodayCard = {
+      enrollment: {
+        programId: program.id,
+        startedOn: '2026-07-01',
+        status: 'active',
+        completedDays: { 1: { at: '2026-07-01', via: 'read-to-end' }, 2: { at: '2026-07-02', via: 'read-to-end' } },
+      },
+      program,
+      status: { kind: 'active', dayIndex: 3, totalDays: 41, items: [item] },
+      items: [mkItem(false)],
+      allItemsDoneToday: false,
+      autoVia: 'read-to-end',
+    };
+    expect(textOf(render(active))).toContain('Sankalp · 2 / 41');
+
+    // Once today's day commits, done-today shows the incremented count.
+    const doneToday: SadhanaTodayCard = {
+      ...active,
+      enrollment: {
+        ...active.enrollment,
+        completedDays: { ...active.enrollment.completedDays, 3: { at: '2026-07-03', via: 'read-to-end' } },
+      },
+      status: { kind: 'done-today', dayIndex: 3, totalDays: 41 },
+      items: [],
+    };
+    expect(textOf(render(doneToday))).toContain('Sankalp · 3 / 41');
   });
 });
