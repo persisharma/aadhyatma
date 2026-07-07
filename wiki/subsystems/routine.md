@@ -93,5 +93,6 @@ and a संकल्प Home DISCOVER spotlight card — pinned by `screens/__t
 - Tests: `contexts/__tests__/RoutineContext.test.tsx`, `screens/__tests__/RoutineCompletion.test.tsx`,
   `screens/__tests__/SankalpTouchpoints.test.tsx` (catalog entry points),
   `components/__tests__/routineBannerView.test.ts` + `RoutineBanner`/`RoutineCelebration` tests;
-  Maestro `routine-smoke.yaml` (daily lifecycle) and `routine-weekday-smoke.yaml`
-  (weekday chip, un-mark, open-into-reader, remove-item).
+  Maestro `routine-smoke.yaml` (daily lifecycle), `routine-weekday-smoke.yaml`
+  (weekday chip, un-mark, open-into-reader, remove-item), and `sadhana-sankalp-smoke.yaml`
+  (enroll → practise → set-aside lifecycle for the consecutive Hanuman Chalisa 41-day program).

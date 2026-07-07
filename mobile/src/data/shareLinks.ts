@@ -39,3 +39,15 @@ export function buildShareCaption(p: ShareCaptionParams): string {
   const firstLine = contentByLang(p.lang, p.firstLineHi, p.firstLineEn);
   return [`${header}`, `"${firstLine}"`, '', `${pick(p.lang, SHARE_CTA)} ${SMART_LINK}`].join('\n');
 }
+
+const APP_SHARE_INVITE: LocalizedStrings = {
+  hi: 'Vedansh — गीता, चालीसा, आरती और नित्य साधना, एक ही ऐप में। पढ़ें और सुनें:',
+  en: 'Vedansh — Gita, Chalisa, Aarti & daily sadhana in one app. Read and listen:',
+  gu: 'Vedansh — ગીતા, ચાલીસા, આરતી અને નિત્ય સાધના, એક જ ઍપમાં. વાંચો અને સાંભળો:',
+  kn: 'Vedansh — ಗೀತಾ, ಚಾಲೀಸಾ, ಆರತಿ ಮತ್ತು ನಿತ್ಯ ಸಾಧನೆ ಒಂದೇ ಆ್ಯಪ್‌ನಲ್ಲಿ. ಓದಿ ಮತ್ತು ಕೇಳಿ:',
+};
+
+/** Plain app-invite message — the download link with no verse attached (shared from More). */
+export function buildAppShareMessage(lang: Lang): string {
+  return `${pick(lang, APP_SHARE_INVITE)} ${SMART_LINK}`;
+}

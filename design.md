@@ -1093,10 +1093,11 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 3. **Wishlist card** — flat `parchment-soft` row: 36 px `saffron` icon tile with ♥, "Wishlist" + "`N` verses saved" meta. → the saved-verse list (§24; rows re-open their exact verse via `buildBookmarkTarget`, §38).
 4. **Reminders card** — `gold` ॐ icon tile; meta shows the live state ("Daily verse at 07:00" / "Daily verse off"). → Reminder Settings (§38).
 5. **Japam Alarms card** — `saffron-deep` ⏰ icon tile; meta lists active alarm times or invites "Wake to a mantra you love". → §35 alarms.
-6. **Language card** — the app-wide default reading language as a 2×2 radio grid over the `LANGUAGES` metadata (हिन्दी / English / ગુજરાતી / ಕನ್ನಡ, each labelled in its own script at 17); the selection gets a `saffron` border, `saffron-tint`-strength fill, and a corner ✓. Same state as every Language Toggle (§16) — `useGitaLanguage`, persisted.
-7. **Reading size card** (`ReadingSizeCard`) — the global M/L type-scale control; see the Reading Size section (§44).
-8. **Panchang disclosure card** — ☽ icon tile + a small-print methodology note ("Tithi follows Surya Siddhanta with modern corrections…", localized), naming the current panchang city and pointing location changes at the Panchang tab (§33).
-9. **Links card** — `About & Disclaimer` (opens a pageSheet modal with the bilingual disclaimer + "Report an Error" CTA) and `Report an Error` (mailto).
+6. **Share the App card** — flat `parchment-soft` row: 36 px `saffron` icon tile with the ↗ share glyph, "Share the App" + "Send Vedansh to someone you love" meta (all localized). Opens the OS share sheet with a plain app-invite message (no verse) — `buildAppShareMessage(lang)` in `data/shareLinks.ts`, the localized `APP_SHARE_INVITE` line + the `SMART_LINK` download URL (§39 share-verse shares the same smart link but attaches a verse card).
+7. **Language card** — the app-wide default reading language as a 2×2 radio grid over the `LANGUAGES` metadata (हिन्दी / English / ગુજરાતી / ಕನ್ನಡ, each labelled in its own script at 17); the selection gets a `saffron` border, `saffron-tint`-strength fill, and a corner ✓. Same state as every Language Toggle (§16) — `useGitaLanguage`, persisted.
+8. **Reading size card** (`ReadingSizeCard`) — the global M/L type-scale control; see the Reading Size section (§44).
+9. **Panchang disclosure card** — ☽ icon tile + a small-print methodology note ("Tithi follows Surya Siddhanta with modern corrections…", localized), naming the current panchang city and pointing location changes at the Panchang tab (§33).
+10. **Links card** — `About & Disclaimer` (opens a pageSheet modal with the bilingual disclaimer + "Report an Error" CTA) and `Report an Error` (mailto).
 
 **Profile** (`ProfileScreen.tsx`) — the साधक insights surface, fed by `UserActivityContext` (reads, japam beads/rounds, per-source and per-mantra tallies, all local):
 
@@ -1136,14 +1137,14 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 
 ## 39. Share Verse Cards
 
-**Purpose.** Let a reader send any verse out of the app as a branded parchment image — composed off-screen, captured as a PNG, and handed to the native share sheet with a caption + install link (PRD-05). `ShareProvider` / `useShare()` in `mobile/src/utils/shareVerse.tsx`; card in `ShareCard.tsx`; links in `mobile/src/data/shareLinks.ts`.
+**Purpose.** Let a reader send any verse out of the app as a branded parchment image — composed off-screen, captured as a PNG, and handed to the native share sheet with a caption + install link (PRD-05). `ShareProvider` / `useShare()` in `mobile/src/utils/shareVerse.tsx`; card in `ShareCard.tsx`; links in `mobile/src/data/shareLinks.ts`. For a verse-less invite (just the download link), the More hub's **Share the App** card (§37) calls `buildAppShareMessage(lang)` from the same `shareLinks.ts` and opens the native share sheet directly.
 
 ### Component: Share Button (`ShareButton.tsx`)
 
 - Same family as the Bookmark button (§25): 34×34 circle, `parchment-soft` fill, 1 px `divider` border, `↗` glyph in `saffron` (18, weight 600). 12 px `hitSlop`.
-- Placement: in the verse page's **header row**, right of the verse-type pill, alongside the Bookmark button (readers pass both via the verse page's `topActions` slot). Every reader carries one — all 15 reader screens plus Daily Bhakti and the Japam counter.
-- While a capture/share is in flight (`busy` from `useShare()`), the button disables and drops to 50 % opacity — this debounces double-taps.
-- Accessibility: `accessibilityRole="button"`, label "Share verse", hint "Long-press to share a screenshot of this reader instead". [The provider supports a `mode: 'screenshot'` capture of a caller-supplied ref, and the button accepts `onLongPress` — but no shipping reader currently wires `onLongPress`, so only the card path is live today.]
+- Placement: in the verse page's **header row**, right of the verse-type pill, alongside the Bookmark button (readers pass both via the verse page's `topActions` slot). Every reader carries one — all 15 reader screens plus Daily Bhakti and the Japam counter. It is also the **only** share affordance elsewhere in the app: the **Today's Panchang** (Muhurat detail) header uses this same circle rather than a bespoke button, so the share glyph reads identically everywhere.
+- While a capture/share is in flight (`busy`), the button disables and drops to 50 % opacity — this debounces double-taps. On the Muhurat detail screen `busy` also covers the pre-ready window before the panchang is computed.
+- Accessibility: `accessibilityRole="button"`; label defaults to "Share verse" and hint to "Long-press to share a screenshot of this reader instead", but both are **optional props** — non-verse surfaces override them (the Panchang header passes a localized "Share panchang" label and no hint, since it has no long-press path). [The verse provider supports a `mode: 'screenshot'` capture of a caller-supplied ref, and the button accepts `onLongPress` — but no shipping reader currently wires `onLongPress`, so only the card path is live today.]
 
 ### Component: Share Card (`ShareCard.tsx`)
 
