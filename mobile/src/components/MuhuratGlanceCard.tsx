@@ -5,6 +5,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
+import { fontFamilies } from '@/theme/typography';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { formatClock, formatRange } from '@/panchang/muhuratFormat';
 import type { CalendarSystem } from '@/panchang/types';
@@ -62,7 +63,9 @@ export default function MuhuratGlanceCard({
               ? contentByLang(lang, `${nowChoghadiya!.nameHi} चौघड़िया`, `${nowChoghadiya!.nameEn} Choghadiya`)
               : contentByLang(lang, 'अभिजीत मुहूर्त', 'Abhijit Muhurat')}
           </Text>
-          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
+          {/* Times use the non-italic semibold face, never the thin italic
+              cardLatin — italic strokes wash out on the gradient (design.md §3/§12). */}
+          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
             {showNow
               ? contentByLang(lang, `${formatClock(nowChoghadiya!.end)} तक`, `till ${formatClock(nowChoghadiya!.end)}`)
               : abhijit
@@ -75,9 +78,9 @@ export default function MuhuratGlanceCard({
             style={[
               styles.tag,
               {
-                fontFamily: typography.cardLatin.fontFamily,
+                fontFamily: fontFamilies.latinBold,
                 color: nowAvoid ? colors.avoid : colors.saffronDeep,
-                backgroundColor: nowAvoid ? colors.avoidTint : colors.goldTint,
+                backgroundColor: nowAvoid ? colors.avoidChipBg : colors.goldChipBg,
               },
             ]}
           >
@@ -89,11 +92,11 @@ export default function MuhuratGlanceCard({
       <View style={styles.tiles}>
         <View style={[styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
           <Text style={{ fontFamily: titleFont, fontSize: 12, color: colors.inkMuted }}>{contentByLang(lang, 'राहु काल', 'Rahu Kaal')}</Text>
-          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 13, color: colors.avoid, marginTop: 3 }}>{formatRange(rahu.start, rahu.end)}</Text>
+          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.avoid, marginTop: 3 }}>{formatRange(rahu.start, rahu.end)}</Text>
         </View>
         <View style={[styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
           <Text style={{ fontFamily: titleFont, fontSize: 12, color: colors.inkMuted }}>{contentByLang(lang, 'अभिजीत', 'Abhijit')}</Text>
-          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 13, color: colors.saffronDeep, marginTop: 3 }}>
+          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.saffronDeep, marginTop: 3 }}>
             {abhijit ? formatRange(abhijit.start, abhijit.end) : '—'}
           </Text>
         </View>
@@ -110,10 +113,10 @@ export default function MuhuratGlanceCard({
 }
 
 const styles = StyleSheet.create({
-  card: { borderWidth: 1, marginTop: 12 },
+  card: { borderWidth: 1 },
   nowRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10 },
   dot: { width: 12, height: 12, borderRadius: 6 },
-  tag: { fontSize: 9, fontWeight: '700', letterSpacing: 0.4, textTransform: 'uppercase', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, overflow: 'hidden' },
+  tag: { fontSize: 10, fontWeight: '700', letterSpacing: 0.4, textTransform: 'uppercase', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, overflow: 'hidden' },
   tiles: { flexDirection: 'row', gap: 10, marginTop: 13 },
   tile: { flex: 1, borderWidth: 1, padding: 11 },
   viewAll: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 14, paddingTop: 12, borderTopWidth: 1 },

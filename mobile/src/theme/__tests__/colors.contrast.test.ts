@@ -73,3 +73,27 @@ describe('secondary text readability', () => {
     expect(muted).toBeLessThan(soft);
   });
 });
+
+describe('signal text readability on card surfaces (design.md §12)', () => {
+  // The Muhurat glance card renders times and quality chips in the SIGNAL colors
+  // (`avoid` terracotta, `saffronDeep`) on the `cardActive*` gradient and on
+  // `parchmentSoft` tiles — not on the base parchment the tokens above are tuned
+  // for. `cardActiveFrom` is the lightest surface on that card, so it is the
+  // worst-case background: a color that clears AA there clears it everywhere the
+  // card renders it (the gradient darkens downward, the chip tint darkens further).
+  // This pins the signal colors so a palette tweak can't lighten them below the
+  // WCAG AA 4.5:1 floor and reintroduce the "faint secondary text" regression.
+  const cardSurfaces = ['cardActiveFrom', 'cardActiveTo', 'parchmentSoft'] as const;
+
+  for (const surface of cardSurfaces) {
+    test(`avoid clears WCAG AA on ${surface}`, () => {
+      expect(contrastRatio(lightColors.avoid, lightColors[surface])).toBeGreaterThanOrEqual(4.5);
+    });
+    test(`saffronDeep clears WCAG AA on ${surface}`, () => {
+      expect(contrastRatio(lightColors.saffronDeep, lightColors[surface])).toBeGreaterThanOrEqual(4.5);
+    });
+    test(`inkSoft clears WCAG AA on ${surface}`, () => {
+      expect(contrastRatio(lightColors.inkSoft, lightColors[surface])).toBeGreaterThanOrEqual(4.5);
+    });
+  }
+});
