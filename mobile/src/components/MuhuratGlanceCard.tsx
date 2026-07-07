@@ -110,7 +110,7 @@ export default function MuhuratGlanceCard({
 }
 
 const styles = StyleSheet.create({
-  card: { borderWidth: 1, marginTop: 12 },
+  card: { borderWidth: 1 },
   nowRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10 },
   dot: { width: 12, height: 12, borderRadius: 6 },
   tag: { fontSize: 9, fontWeight: '700', letterSpacing: 0.4, textTransform: 'uppercase', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, overflow: 'hidden' },
