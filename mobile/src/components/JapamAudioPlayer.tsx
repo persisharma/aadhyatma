@@ -23,6 +23,13 @@ const MIN_RATE = 0.5;
 const MAX_RATE = 1.5;
 const RATE_STEP = 0.1;
 
+// When the counter is opened by tapping an alarm (`autoPlay`), the mantra
+// plays from the shared recording and auto-stops after this long — so the
+// alarm "rings" the mantra then falls silent, rather than looping forever.
+// Reuses the same bundled mp3 (no separate, size-adding alarm clip). Any
+// manual play/pause cancels the cap so a real chanting session isn't cut off.
+const ALARM_AUTO_STOP_MS = 30_000;
+
 export default function JapamAudioPlayer({
   mantraId,
   lang,
@@ -79,6 +86,14 @@ function ActiveAudioPlayer({
   // registered, used to advance the count once per repetition segment.
   const prevTimeRef = useRef(0);
   const emittedBeadsRef = useRef(0);
+  // Pending alarm auto-stop timer (see ALARM_AUTO_STOP_MS).
+  const capTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clearCapTimer = useCallback(() => {
+    if (capTimerRef.current) {
+      clearTimeout(capTimerRef.current);
+      capTimerRef.current = null;
+    }
+  }, []);
 
   const onIterationRef = useRef(onIteration);
   useEffect(() => {
@@ -96,6 +111,7 @@ function ActiveAudioPlayer({
     autoPlayedRef.current = false;
     prevTimeRef.current = 0;
     emittedBeadsRef.current = 0;
+    clearCapTimer();
     if (player.isLoaded) {
       player.pause();
       player.seekTo(0).catch(() => undefined);
@@ -106,16 +122,27 @@ function ActiveAudioPlayer({
   // Honour an `autoPlay` request once the file is ready. Gated on
   // `status.isLoaded` because `play()` is a no-op before the player has
   // loaded; gated on a ref so we don't re-trigger on every status update.
+  // The alarm wake reuses the shared recording, so cap it at
+  // ALARM_AUTO_STOP_MS — the mantra rings then stops instead of looping.
   useEffect(() => {
     if (!autoPlay || autoPlayedRef.current) return;
     if (!status.isLoaded) return;
     autoPlayedRef.current = true;
     try {
       player.play();
+      clearCapTimer();
+      capTimerRef.current = setTimeout(() => {
+        capTimerRef.current = null;
+        try {
+          player.pause();
+        } catch {
+          /* player may already be released */
+        }
+      }, ALARM_AUTO_STOP_MS);
     } catch {
       /* next render will retry via the gate above */
     }
-  }, [autoPlay, status.isLoaded, player]);
+  }, [autoPlay, status.isLoaded, player, clearCapTimer]);
 
   // Use the player's native `loop` flag for the auto-chant repeat. Manually
   // restarting via `seekTo(0)` + `play()` on `didJustFinish` is unreliable on
@@ -178,23 +205,27 @@ function ActiveAudioPlayer({
   // Pause and release the global audio session when unmounting.
   useEffect(() => {
     return () => {
+      clearCapTimer();
       try {
         player.pause();
       } catch {
         /* player may already be released */
       }
     };
-  }, [player]);
+  }, [player, clearCapTimer]);
 
   const isPlaying = status.playing;
 
   const togglePlay = useCallback(() => {
+    // A deliberate tap means the user is chanting, not just hearing the alarm
+    // out — drop the auto-stop so their session isn't cut off at 30 s.
+    clearCapTimer();
     if (status.playing) {
       player.pause();
     } else {
       player.play();
     }
-  }, [player, status.playing]);
+  }, [player, status.playing, clearCapTimer]);
 
   const decreaseRate = useCallback(() => {
     setRate((r) => Math.max(MIN_RATE, +(r - RATE_STEP).toFixed(2)));
