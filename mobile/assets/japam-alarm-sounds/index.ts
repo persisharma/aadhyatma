@@ -28,8 +28,8 @@
 
 const japamAlarmSounds: Record<string, string> = {
   'om-namah-shivaya': 'om-namah-shivaya.wav',
-  // 'hare-krishna-mahamantra': 'hare-krishna-mahamantra.wav',
-  // 'gayatri-mantra': 'gayatri-mantra.wav',
+  'hare-krishna-mahamantra': 'hare-krishna-mahamantra.wav',
+  'gayatri-mantra': 'gayatri-mantra.wav',
   // 'om-namo-bhagavate-vasudevaya': 'om-namo-bhagavate-vasudevaya.wav',
 };
 
