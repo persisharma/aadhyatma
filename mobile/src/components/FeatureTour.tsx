@@ -119,6 +119,21 @@ export default function FeatureTour() {
   const close = useCallback(() => {
     setVisible(false);
     void markTourCompleted();
+    // The walkthrough pushes screens onto tab stacks (e.g. TheerthMap on Home,
+    // MyVrat on Panchang, JapamAlarms on More); reset so every tab returns to
+    // its root and the user lands back on Home instead of on the last surface.
+    if (navigationRef.isReady()) {
+      navigationRef.resetRoot({
+        index: 0,
+        routes: [
+          { name: 'HomeTab' },
+          { name: 'DailyBhaktiTab' },
+          { name: 'PanchangTab' },
+          { name: 'AudioTab' },
+          { name: 'MoreTab' },
+        ],
+      });
+    }
   }, [markTourCompleted]);
 
   const next = useCallback(() => {

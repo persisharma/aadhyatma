@@ -76,7 +76,14 @@ export function measureTourTarget(id: TourTargetId): Promise<Rect | null> {
  */
 export function revealTourTarget(id: TourTargetId): void {
   const entry = registry.get(id);
-  entry?.reveal?.(entry.ref);
+  if (!entry?.reveal) return;
+  // Best-effort: a native measure/scroll error must not escape into the tour's
+  // animation-frame loop. Measurement + the tab-ring fallback still run.
+  try {
+    entry.reveal(entry.ref);
+  } catch {
+    // ignore
+  }
 }
 
 /**

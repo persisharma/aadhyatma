@@ -50,10 +50,15 @@ jest.mock('@/theme/ThemeContext', () => ({
   }),
 }));
 
-// Capture dispatched navigation actions.
+// Capture dispatched navigation actions + the reset-on-close.
 const mockDispatch = jest.fn();
+const mockResetRoot = jest.fn();
 jest.mock('@/notifications/deepLink', () => ({
-  navigationRef: { isReady: () => true, dispatch: (a: unknown) => mockDispatch(a) },
+  navigationRef: {
+    isReady: () => true,
+    dispatch: (a: unknown) => mockDispatch(a),
+    resetRoot: (s: unknown) => mockResetRoot(s),
+  },
 }));
 jest.mock('@react-navigation/native', () => ({
   CommonActions: {
@@ -92,6 +97,7 @@ beforeEach(() => {
   mockShouldShow = true;
   mockMarkTourCompleted.mockClear();
   mockDispatch.mockClear();
+  mockResetRoot.mockClear();
   // Run the deferred navigation callback synchronously.
   runAfter = jest
     .spyOn(InteractionManager, 'runAfterInteractions')
@@ -146,6 +152,9 @@ describe('FeatureTour', () => {
 
     press(tree, 'Skip tour');
     expect(mockMarkTourCompleted).toHaveBeenCalledTimes(1);
+    // Closing resets the tab stacks to their roots so no tab is left parked on a
+    // screen the tour drilled into.
+    expect(mockResetRoot).toHaveBeenCalledTimes(1);
   });
 
   test('walking to the last step shows Done and completing persists', () => {
@@ -157,6 +166,7 @@ describe('FeatureTour', () => {
 
     press(tree, 'Done');
     expect(mockMarkTourCompleted).toHaveBeenCalledTimes(1);
+    expect(mockResetRoot).toHaveBeenCalledTimes(1);
   });
 
   test('Skip does not bounce back open while the gate is still "should show"', () => {

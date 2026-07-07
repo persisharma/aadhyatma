@@ -216,8 +216,7 @@ export default function HomeScreen({ navigation }: Props) {
             DISCOVER
           </Text>
 
-          <View>
-            <ScrollView
+          <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               decelerationRate="fast"
@@ -237,7 +236,6 @@ export default function HomeScreen({ navigation }: Props) {
                 <FeatureCard key={item.key} item={item} width={featureWidth} onPress={onPress} />
               ))}
             </ScrollView>
-          </View>
 
           <Text
             style={[
@@ -254,13 +252,23 @@ export default function HomeScreen({ navigation }: Props) {
             CATEGORIES
           </Text>
 
-          <View ref={categoriesGridRef} collapsable={false} style={[styles.grid, { gap: gridGap }]}>
-            {tiles.map((tile) => (
+          <View style={[styles.grid, { gap: gridGap }]}>
+            {tiles.map((tile, i) => (
               <View
                 key={tile.key}
                 style={{ width: tileWidth }}
-                ref={tile.key === 'japam' ? japaTileRef : tile.key === 'theerth' ? theerthTileRef : undefined}
-                collapsable={tile.key === 'japam' || tile.key === 'theerth' ? false : undefined}
+                ref={
+                  tile.key === 'japam'
+                    ? japaTileRef
+                    : tile.key === 'theerth'
+                      ? theerthTileRef
+                      : i === 0
+                        ? categoriesGridRef
+                        : undefined
+                }
+                collapsable={
+                  tile.key === 'japam' || tile.key === 'theerth' || i === 0 ? false : undefined
+                }
               >
                 <CategoryCard
                   nameHi={tile.nameHi}
