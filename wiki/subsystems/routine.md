@@ -83,7 +83,15 @@ and a संकल्प Home DISCOVER spotlight card — pinned by `screens/__t
   banner (it was swallowing the tap; caught by `search-smoke.yaml`).
 - **Waiting sankalps are previews, not completions** — `waiting.items` powers the visible
   preselected content row, but `useSadhanaToday()` only computes completion and `SankalpTodayCard`
-  only shows the manual completion CTA for `active` days.
+  only shows the completion checkbox for `active` days (the waiting-preview row has no check
+  circle — a rest-day read can't advance the vow, so an empty circle would falsely promise it).
+- **Sankalp day-completion is committed, not derived** — unlike a routine item (whose `done` is
+  recomputed live in `useRoutineToday`), a sankalp day only advances when `SadhanaCompletionOverlay`
+  (mounted once at the App root) sees an `active` card with `allItemsDoneToday` and calls
+  `commitDay`, persisting `completedDays[dayIndex]`. This is why "routine completed but sankalp
+  didn't" can happen if the overlay isn't mounted/reached. The `SankalpTodayCard` eyebrow shows
+  `completedDayCount(enrollment) / N` (NOT `status.dayIndex`) so it ticks 0→1 on the commit and
+  agrees with the List/Detail pills. Guarded by `SadhanaCompletion.integration.test.tsx`.
 - **Indic typography traps (app-wide, caught here first):** `scriptBodyFont`/`scriptTitleFont` return
   the *fallback* for `hi` — passing a Cormorant token (`cardLatin` etc.) silently drops Hindi to the OS
   system face; and any `letterSpacing` on Devanagari splits the shirorekha ("शि व"). Use the `meaning`
