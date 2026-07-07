@@ -5,28 +5,93 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useBookmarks } from '@/contexts/BookmarksContext';
-import { useGitaLanguage, LANGUAGES } from '@/data/gita/language';
+import { useGitaLanguage, LANGUAGES, type Lang } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
-import { pillTextStyle, scriptBodyFont } from '@/utils/langType';
-import ReadingSizeCard from '@/components/ReadingSizeCard';
-import { pick, contentByLang } from '@/utils/localize';
-import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
+import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { pick } from '@/utils/localize';
+import { helpContent, buildDiscrepancyMailto, SUPPORT_EMAIL } from '@/data/help/content';
 import { buildAppShareMessage } from '@/data/shareLinks';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
-import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
+import { useFontScale } from '@/contexts/FontScaleContext';
+import LanguagePickerSheet from '@/components/LanguagePickerSheet';
+import ReadingSizePickerSheet, { readingSizeLabel } from '@/components/ReadingSizePickerSheet';
 import type { TimeOfDay } from '@/notifications/pure';
-import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
 
 function formatReminderTimes(times: TimeOfDay[]): string {
   if (times.length === 0) return '';
   return times
-    .map(
-      (t) => `${`${t.hour}`.padStart(2, '0')}:${`${t.minute}`.padStart(2, '0')}`
-    )
+    .map((t) => `${`${t.hour}`.padStart(2, '0')}:${`${t.minute}`.padStart(2, '0')}`)
     .join(', ');
+}
+
+/** Native-script face for a language's own name (used in the Language row state). */
+function nativeNameFont(lang: Lang, devanagariFallback: string): string {
+  if (lang === 'en') return fontFamilies.latin;
+  if (lang === 'gu') return fontFamilies.gujaratiBold;
+  if (lang === 'kn') return fontFamilies.kannadaBold;
+  return devanagariFallback;
+}
+
+type RowProps = {
+  icon: string;
+  iconBg: string;
+  iconFontFamily?: string;
+  iconFontSize?: number;
+  label: string;
+  labelFontFamily: string;
+  state?: string;
+  stateFontFamily?: string;
+  onPress: () => void;
+  accessibilityLabel: string;
+  first?: boolean;
+};
+
+/** One inset settings row: [icon tile] [label] … [state] [chevron]. */
+function SettingsRow({
+  icon,
+  iconBg,
+  iconFontFamily,
+  iconFontSize = 17,
+  label,
+  labelFontFamily,
+  state,
+  stateFontFamily,
+  onPress,
+  accessibilityLabel,
+  first,
+}: RowProps) {
+  const { colors } = useTheme();
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      style={({ pressed }) => [
+        styles.row,
+        !first && { borderTopWidth: 1, borderTopColor: colors.divider },
+        pressed && { backgroundColor: colors.saffronTint },
+      ]}
+    >
+      <View style={[styles.rowIcon, { backgroundColor: iconBg }]}>
+        <Text style={{ color: colors.onPrimary, fontSize: iconFontSize, fontFamily: iconFontFamily }}>{icon}</Text>
+      </View>
+      <Text style={[styles.rowLabel, { color: colors.ink, fontFamily: labelFontFamily }]} numberOfLines={1}>
+        {label}
+      </Text>
+      {state ? (
+        <Text
+          style={[styles.rowState, { color: colors.inkMuted, fontFamily: stateFontFamily ?? fontFamilies.inter }]}
+          numberOfLines={1}
+        >
+          {state}
+        </Text>
+      ) : null}
+      <Text style={[styles.chevron, { color: colors.gold }]}>›</Text>
+    </Pressable>
+  );
 }
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'MoreHome'>;
@@ -34,37 +99,53 @@ type Props = NativeStackScreenProps<MoreStackParamList, 'MoreHome'>;
 export default function MoreScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { bookmarks } = useBookmarks();
-  const { lang: defaultLang, setLang: setDefaultLang } = useGitaLanguage();
-  const { location: panchangLocation } = usePanchangLocation();
+  const { lang } = useGitaLanguage();
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
   const { alarms: japamAlarms } = useJapamAlarms();
+  const { scale } = useFontScale();
   const activeJapamAlarms = japamAlarms.filter((a) => a.enabled);
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
+  const [langSheet, setLangSheet] = useState(false);
+  const [sizeSheet, setSizeSheet] = useState(false);
+
   const hi = helpContent.hi;
   const en = helpContent.en;
   const profileTotals = lifetimeTotals();
   const streak = currentStreak();
-  const screenTitle = orderTitlesByLanguage(defaultLang, 'अन्य', 'More', {
-    devPrimary: 22,
-    devSecondary: 14,
-    latPrimary: 22,
-    latSecondary: 14,
-  });
+
+  const isEn = lang === 'en';
+  const titleFont = isEn ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold);
+  const labelFont = isEn ? fontFamilies.interSemiBold : scriptTitleFont(lang, fontFamilies.devanagariBold);
+  const chromeFont = isEn ? fontFamilies.inter : scriptBodyFont(lang, fontFamilies.devanagari);
+
+  const currentLang = LANGUAGES.find((l) => l.value === lang) ?? LANGUAGES[0];
+
   const shareApp = () => {
     Share.share(
-      { message: buildAppShareMessage(defaultLang) },
-      { dialogTitle: pick(defaultLang, { hi: 'Vedansh साझा करें', en: 'Share Vedansh', gu: 'Vedansh શેર કરો', kn: 'Vedansh ಹಂಚಿಕೊಳ್ಳಿ' }) }
+      { message: buildAppShareMessage(lang) },
+      { dialogTitle: pick(lang, { hi: 'Vedansh साझा करें', en: 'Share Vedansh', gu: 'Vedansh શેર કરો', kn: 'Vedansh ಹಂಚಿಕೊಳ್ಳಿ' }) }
     ).catch(() => {
       // Share sheet dismissed or unavailable — nothing to recover.
     });
   };
-  const profileCardTitle = orderTitlesByLanguage(
-    defaultLang,
-    'साधक प्रोफ़ाइल',
-    'Sadhak Profile · Insights',
-    { devPrimary: 18, devSecondary: 13, latPrimary: 18, latSecondary: 13 }
-  );
+
+  const reportError = () => {
+    const url = buildDiscrepancyMailto();
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(url);
+        } else {
+          Alert.alert('Email', `Please email us at ${SUPPORT_EMAIL}`);
+        }
+      })
+      .catch(() => Alert.alert('Email', `Please email us at ${SUPPORT_EMAIL}`));
+  };
+
+  const remindersState = notifPrefs.dailyVerseEnabled
+    ? formatReminderTimes(notifPrefs.times) || pick(lang, { hi: 'चालू', en: 'On', gu: 'ચાલુ', kn: 'ಆನ್' })
+    : pick(lang, { hi: 'बंद', en: 'Off', gu: 'બંધ', kn: 'ಆಫ್' });
 
   return (
     <View style={styles.root}>
@@ -73,367 +154,172 @@ export default function MoreScreen({ navigation }: Props) {
         style={StyleSheet.absoluteFill}
       />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-        <ScrollView
-          contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Title */}
-          <View style={styles.titleArea}>
-            <Text style={{ fontFamily: screenTitle.primary.fontFamily, fontSize: screenTitle.primary.fontSize, fontStyle: screenTitle.primary.fontStyle, color: colors.ink, textAlign: 'center' }}>
-              {screenTitle.primary.text}
-            </Text>
-            <Text style={{ fontFamily: screenTitle.secondary.fontFamily, fontSize: screenTitle.secondary.fontSize, fontStyle: screenTitle.secondary.fontStyle, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
-              {screenTitle.secondary.text}
+        <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+          {/* Header — single line, left-aligned, selected language only */}
+          <View style={styles.header}>
+            <Text style={{ fontFamily: titleFont, fontSize: 30, color: colors.ink }}>
+              {pick(lang, { hi: 'अन्य', en: 'More', gu: 'અન્ય', kn: 'ಇನ್ನಷ್ಟು' })}
             </Text>
           </View>
 
-          {/* Profile Card with insights snapshot */}
-          <Pressable
-            onPress={() => navigation.navigate('Profile')}
-            accessibilityRole="button"
-            accessibilityLabel="Open Sadhak profile"
-            style={({ pressed }) => [
-              styles.profileCard,
-              {
-                borderColor: colors.cardActiveBorder,
-                borderRadius: radii.lg,
-                opacity: pressed ? 0.92 : 1,
-              },
-            ]}
-          >
-            <LinearGradient
-              colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={[StyleSheet.absoluteFill, { borderRadius: radii.lg }]}
-            />
-            <View style={styles.profileTopRow}>
-              <View style={[styles.profileCrest, { backgroundColor: colors.saffron }]}>
-                <Text
-                  style={{
-                    color: colors.onPrimary,
-                    fontFamily: typography.readerTitle.fontFamily,
-                    fontSize: 22,
-                  }}
+          <View style={styles.groups}>
+            {/* ── Group 1: साधना / Practice ── */}
+            <View style={styles.group}>
+              <Text style={[styles.groupLabel, { color: colors.saffronDeep }, isEn ? styles.groupLabelLatin : { fontFamily: chromeFont }]}>
+                {pick(lang, { hi: 'साधना', en: 'Practice', gu: 'સાધના', kn: 'ಸಾಧನೆ' })}
+              </Text>
+              <View style={[styles.list, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+                {/* Compact profile hero row */}
+                <Pressable
+                  onPress={() => navigation.navigate('Profile')}
+                  accessibilityRole="button"
+                  accessibilityLabel="Open Sadhak profile"
+                  style={({ pressed }) => [styles.profileRow, pressed && { opacity: 0.9 }]}
                 >
-                  ॐ
-                </Text>
-              </View>
-              <View style={styles.profileTitleBlock}>
-                <Text
-                  style={{
-                    fontFamily: profileCardTitle.primary.fontFamily,
-                    fontSize: profileCardTitle.primary.fontSize,
-                    fontStyle: profileCardTitle.primary.fontStyle,
-                    color: colors.ink,
-                  }}
-                >
-                  {profileCardTitle.primary.text}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: profileCardTitle.secondary.fontFamily,
-                    fontSize: profileCardTitle.secondary.fontSize,
-                    fontStyle: profileCardTitle.secondary.fontStyle,
-                    color: colors.inkMuted,
-                    marginTop: 2,
-                  }}
-                >
-                  {profileCardTitle.secondary.text}
-                </Text>
-              </View>
-              <Text style={{ color: colors.saffron, fontSize: 22 }}>›</Text>
-            </View>
-
-            <View style={[styles.profileDivider, { backgroundColor: colors.divider }]} />
-
-            <View style={styles.profileStatsRow}>
-              <View style={styles.profileStatCell}>
-                <Text
-                  style={[
-                    styles.profileStatValue,
-                    {
-                      color: colors.saffronDeep,
-                      fontFamily: typography.readerTitle.fontFamily,
-                    },
-                  ]}
-                >
-                  {profileTotals.totalReads}
-                </Text>
-                <Text style={[styles.profileStatLabel, pillTextStyle(defaultLang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
-                  {pick(defaultLang, { hi: 'श्लोक', en: 'VERSES', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ' })}
-                </Text>
-              </View>
-              <View style={[styles.profileStatRule, { backgroundColor: colors.divider }]} />
-              <View style={styles.profileStatCell}>
-                <Text
-                  style={[
-                    styles.profileStatValue,
-                    {
-                      color: colors.saffronDeep,
-                      fontFamily: typography.readerTitle.fontFamily,
-                    },
-                  ]}
-                >
-                  {profileTotals.totalRounds}
-                </Text>
-                <Text style={[styles.profileStatLabel, pillTextStyle(defaultLang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
-                  {pick(defaultLang, { hi: 'आवृत्ति', en: 'ROUNDS', gu: 'આવૃત્તિ', kn: 'ಆವೃತ್ತಿ' })}
-                </Text>
-              </View>
-              <View style={[styles.profileStatRule, { backgroundColor: colors.divider }]} />
-              <View style={styles.profileStatCell}>
-                <Text
-                  style={[
-                    styles.profileStatValue,
-                    {
-                      color: colors.saffronDeep,
-                      fontFamily: typography.readerTitle.fontFamily,
-                    },
-                  ]}
-                >
-                  {streak}
-                </Text>
-                <Text style={[styles.profileStatLabel, pillTextStyle(defaultLang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
-                  {pick(defaultLang, { hi: 'श्रृंखला', en: 'STREAK', gu: 'શ્રેણી', kn: 'ಸರಣಿ' })}
-                </Text>
-              </View>
-            </View>
-          </Pressable>
-
-          {/* Wishlist Card */}
-          <Pressable
-            onPress={() => navigation.navigate('Wishlist')}
-            accessibilityRole="button"
-            accessibilityLabel={`Wishlist, ${bookmarks.length} verse${bookmarks.length !== 1 ? 's' : ''} saved`}
-            style={({ pressed }) => [
-              styles.section,
-              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: pressed ? 0.85 : 1 },
-            ]}
-          >
-            <View style={[styles.sectionIcon, { backgroundColor: colors.saffron }]}>
-              <Text style={{ color: '#fff', fontSize: 16 }}>♥</Text>
-            </View>
-            <View style={styles.sectionMeta}>
-              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
-                Wishlist
-              </Text>
-              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-                {bookmarks.length} verse{bookmarks.length !== 1 ? 's' : ''} saved
-              </Text>
-            </View>
-            <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
-          </Pressable>
-
-          {/* Reminders Card */}
-          <Pressable
-            onPress={() => navigation.navigate('Reminders')}
-            accessibilityRole="button"
-            accessibilityLabel={
-              notifPrefs.dailyVerseEnabled
-                ? `Reminders, daily verse on at ${formatReminderTimes(notifPrefs.times)}`
-                : 'Reminders, daily verse off'
-            }
-            style={({ pressed }) => [
-              styles.section,
-              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: pressed ? 0.85 : 1 },
-            ]}
-          >
-            <View style={[styles.sectionIcon, { backgroundColor: colors.gold }]}>
-              <Text style={{ color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>
-                ॐ
-              </Text>
-            </View>
-            <View style={styles.sectionMeta}>
-              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
-                Reminders
-              </Text>
-              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-                {notifPrefs.dailyVerseEnabled
-                  ? `Daily verse at ${formatReminderTimes(notifPrefs.times)}`
-                  : 'Daily verse off'}
-              </Text>
-            </View>
-            <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
-          </Pressable>
-
-          {/* Japam Alarms Card */}
-          <Pressable
-            onPress={() => navigation.navigate('JapamAlarms')}
-            accessibilityRole="button"
-            accessibilityLabel={
-              activeJapamAlarms.length > 0
-                ? `Japam alarms, ${activeJapamAlarms.length} active`
-                : 'Japam alarms, none set'
-            }
-            style={({ pressed }) => [
-              styles.section,
-              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: pressed ? 0.85 : 1 },
-            ]}
-          >
-            <View style={[styles.sectionIcon, { backgroundColor: colors.saffronDeep }]}>
-              <Text style={{ color: colors.onPrimary, fontSize: 18 }}>⏰</Text>
-            </View>
-            <View style={styles.sectionMeta}>
-              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
-                Japam Alarms
-              </Text>
-              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-                {activeJapamAlarms.length > 0
-                  ? `${activeJapamAlarms.length} alarm${activeJapamAlarms.length !== 1 ? 's' : ''} at ${formatReminderTimes(activeJapamAlarms.map((a) => a.time))}`
-                  : 'Wake to a mantra you love'}
-              </Text>
-            </View>
-            <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
-          </Pressable>
-
-          {/* Share App Card */}
-          <Pressable
-            onPress={shareApp}
-            accessibilityRole="button"
-            accessibilityLabel={pick(defaultLang, {
-              hi: 'Vedansh ऐप साझा करें',
-              en: 'Share Vedansh app',
-              gu: 'Vedansh ઍપ શેર કરો',
-              kn: 'Vedansh ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ',
-            })}
-            style={({ pressed }) => [
-              styles.section,
-              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: pressed ? 0.85 : 1 },
-            ]}
-          >
-            <View style={[styles.sectionIcon, { backgroundColor: colors.saffron }]}>
-              <Text style={{ color: '#fff', fontSize: 18, fontWeight: '600', marginTop: -1 }}>↗</Text>
-            </View>
-            <View style={styles.sectionMeta}>
-              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
-                {pick(defaultLang, { hi: 'ऐप साझा करें', en: 'Share the App', gu: 'ઍપ શેર કરો', kn: 'ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ' })}
-              </Text>
-              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-                {pick(defaultLang, {
-                  hi: 'किसी प्रियजन को Vedansh भेजें',
-                  en: 'Send Vedansh to someone you love',
-                  gu: 'કોઈ પ્રિયજનને Vedansh મોકલો',
-                  kn: 'ಪ್ರೀತಿಪಾತ್ರರಿಗೆ Vedansh ಕಳುಹಿಸಿ',
-                })}
-              </Text>
-            </View>
-            <Text style={{ color: colors.saffron, fontSize: 20 }}>›</Text>
-          </Pressable>
-
-          {/* Language Card */}
-          <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, flexDirection: 'column', alignItems: 'stretch' }]}>
-            <View
-              accessibilityRole="header"
-              style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 12 }}
-            >
-              <View style={[styles.sectionIcon, { backgroundColor: colors.gold }]}>
-                <Text style={{ color: '#fff', fontSize: 14 }}>अ</Text>
-              </View>
-              <View>
-                <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.ink }}>
-                  Language
-                </Text>
-                <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-                  Default reading language
-                </Text>
-              </View>
-            </View>
-
-            <View style={styles.langRow} accessibilityRole="radiogroup" accessibilityLabel="Default reading language">
-              {LANGUAGES.map((opt) => {
-                const selected = defaultLang === opt.value;
-                const family =
-                  opt.script === 'devanagari'
-                    ? typography.readerTitle.fontFamily
-                    : opt.script === 'latin'
-                      ? fontFamilies.latin
-                      : opt.script === 'gujarati'
-                        ? fontFamilies.gujaratiBold
-                        : fontFamilies.kannadaBold;
-                return (
-                  <Pressable
-                    key={opt.value}
-                    onPress={() => setDefaultLang(opt.value)}
-                    accessibilityRole="radio"
-                    accessibilityState={{ selected }}
-                    accessibilityLabel={opt.a11yLabel}
-                    style={[
-                      styles.langOption,
-                      { borderColor: selected ? colors.saffron : colors.divider },
-                      selected && { backgroundColor: 'rgba(184, 98, 27, 0.1)' },
-                    ]}
-                  >
-                    {selected && <Text style={[styles.langCheck, { color: colors.saffron }]}>✓</Text>}
-                    <Text style={[styles.langLabel, { fontFamily: family, color: selected ? colors.saffronDeep : colors.ink }]}>
-                      {opt.nativeLabel}
+                  <LinearGradient
+                    colors={[colors.cardActiveFrom, colors.cardActiveTo]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 1 }}
+                    style={StyleSheet.absoluteFill}
+                  />
+                  <View style={[styles.profileBadge, { backgroundColor: colors.saffron }]}>
+                    <Text style={{ color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily, fontSize: 26 }}>ॐ</Text>
+                  </View>
+                  <View style={styles.profileMeta}>
+                    <Text style={{ fontFamily: labelFont, fontSize: 18, color: colors.ink }} numberOfLines={1}>
+                      {pick(lang, { hi: 'साधक प्रोफ़ाइल', en: 'Sadhak Profile', gu: 'સાધક પ્રોફાઇલ', kn: 'ಸಾಧಕ ಪ್ರೊಫೈಲ್' })}
                     </Text>
-                  </Pressable>
-                );
-              })}
-            </View>
-          </View>
+                    <Text style={{ marginTop: 3, fontFamily: chromeFont, fontSize: 14, color: colors.inkMuted }} numberOfLines={1}>
+                      <Text style={{ color: colors.saffron, fontFamily: fontFamilies.interSemiBold }}>{profileTotals.totalReads}</Text>
+                      {' '}
+                      {pick(lang, { hi: 'श्लोक', en: 'verses', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ' })}
+                      {'    ·    '}
+                      <Text style={{ color: colors.saffron, fontFamily: fontFamilies.interSemiBold }}>{streak}</Text>
+                      {' '}
+                      {pick(lang, { hi: 'श्रृंखला', en: 'day streak', gu: 'શ્રેણી', kn: 'ಸರಣಿ' })}
+                    </Text>
+                  </View>
+                  <Text style={[styles.chevron, { color: colors.gold }]}>›</Text>
+                </Pressable>
 
-          {/* Reading size (PRD-04 slice 2) */}
-          <ReadingSizeCard />
-
-          {/* Panchang Disclosure */}
-          <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, flexDirection: 'column', alignItems: 'stretch' }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-              <View style={[styles.sectionIcon, { backgroundColor: colors.gold }]}>
-                <Text style={{ color: '#fff', fontSize: 14 }}>☽</Text>
-              </View>
-              <View>
-                <Text style={{ fontFamily: defaultLang === 'en' ? 'Inter_600SemiBold' : scriptBodyFont(defaultLang, fontFamilies.devanagari), fontSize: 14, color: colors.ink }}>
-                  {pick(defaultLang, { hi: 'पंचांग', en: 'Panchang', gu: 'પંચાંગ', kn: 'ಪಂಚಾಂಗ' })}
-                </Text>
-                <Text style={{ fontFamily: defaultLang === 'en' ? fontFamilies.devanagari : 'Inter_500Medium', fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
-                  {defaultLang === 'en' ? 'पंचांग पद्धति' : 'Panchang School'}
-                </Text>
-              </View>
-            </View>
-            <Text style={{ fontFamily: defaultLang === 'en' ? 'CormorantGaramond_400Regular_Italic' : scriptBodyFont(defaultLang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
-              {pick(defaultLang, {
-                hi: `पंचांग · ${panchangLocation.labelHi}, भारत · पूर्णिमांत/अमान्त चयन\nतिथि की गणना सूर्य सिद्धांत + आधुनिक खगोलीय सुधार के अनुसार होती है। स्थान पंचांग टैब से बदलें।`,
-                en: `Panchang · ${panchangLocation.labelEn}, India · Purnimant/Amanta selectable\nTithi follows Surya Siddhanta with modern corrections. Change the location from the Panchang tab.`,
-                gu: `પંચાંગ · ${contentByLang(defaultLang, panchangLocation.labelHi, panchangLocation.labelEn)}, ભારત · પૂર્ણિમાંત/અમાન્ત પસંદગી\nતિથિની ગણતરી સૂર્ય સિદ્ધાંત + આધુનિક ખગોળીય સુધારા મુજબ થાય છે. સ્થાન પંચાંગ ટૅબમાંથી બદલો.`,
-                kn: `ಪಂಚಾಂಗ · ${contentByLang(defaultLang, panchangLocation.labelHi, panchangLocation.labelEn)}, ಭಾರತ · ಪೂರ್ಣಿಮಾಂತ/ಅಮಾಂತ ಆಯ್ಕೆ\nತಿಥಿ ಲೆಕ್ಕಾಚಾರ ಸೂರ್ಯ ಸಿದ್ಧಾಂತ + ಆಧುನಿಕ ಖಗೋಳ ಸುಧಾರಣೆ ಪ್ರಕಾರ. ಸ್ಥಳವನ್ನು ಪಂಚಾಂಗ ಟ್ಯಾಬ್‌ನಿಂದ ಬದಲಿಸಿ.`,
-              })}
-            </Text>
-          </View>
-
-          {/* Links */}
-          <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, flexDirection: 'column', alignItems: 'stretch', paddingVertical: 4, paddingHorizontal: 16 }]}>
-            <Pressable
-              onPress={() => setDisclaimerVisible(true)}
-              accessibilityRole="button"
-              accessibilityLabel="About and disclaimer"
-              style={[styles.linkRow, { borderBottomColor: colors.divider }]}
-            >
-              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 13, color: colors.ink }}>About & Disclaimer</Text>
-              <Text style={{ color: colors.inkMuted, fontSize: 16 }}>›</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                const url = buildDiscrepancyMailto();
-                Linking.canOpenURL(url).then((supported) => {
-                  if (supported) {
-                    Linking.openURL(url);
-                  } else {
-                    Alert.alert('Email', 'Please email us at incardible.app@gmail.com');
+                <SettingsRow
+                  icon="♥"
+                  iconBg={colors.saffron}
+                  label={pick(lang, { hi: 'संग्रह', en: 'Wishlist', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ' })}
+                  labelFontFamily={labelFont}
+                  state={`${bookmarks.length}`}
+                  onPress={() => navigation.navigate('Wishlist')}
+                  accessibilityLabel={`Wishlist, ${bookmarks.length} verse${bookmarks.length !== 1 ? 's' : ''} saved`}
+                />
+                <SettingsRow
+                  icon="ॐ"
+                  iconBg={colors.gold}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={18}
+                  label={pick(lang, { hi: 'स्मरण', en: 'Reminders', gu: 'સ્મરણ', kn: 'ಸ್ಮರಣೆ' })}
+                  labelFontFamily={labelFont}
+                  state={remindersState}
+                  stateFontFamily={notifPrefs.dailyVerseEnabled ? fontFamilies.inter : chromeFont}
+                  onPress={() => navigation.navigate('Reminders')}
+                  accessibilityLabel={
+                    notifPrefs.dailyVerseEnabled
+                      ? `Reminders, daily verse on at ${formatReminderTimes(notifPrefs.times)}`
+                      : 'Reminders, daily verse off'
                   }
-                });
-              }}
-              accessibilityRole="button"
-              accessibilityLabel="Report an error"
-              style={({ pressed }) => [styles.linkRowLast, pressed && { opacity: 0.6 }]}
-            >
-              <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 13, color: colors.ink }}>Report an Error</Text>
-              <Text style={{ color: colors.inkMuted, fontSize: 16 }}>›</Text>
-            </Pressable>
+                />
+                <SettingsRow
+                  icon="⏰"
+                  iconBg={colors.saffronDeep}
+                  iconFontSize={18}
+                  label={pick(lang, { hi: 'जप अलार्म', en: 'Japam Alarms', gu: 'જપ અલાર્મ', kn: 'ಜಪ ಅಲಾರಂ' })}
+                  labelFontFamily={labelFont}
+                  state={activeJapamAlarms.length > 0 ? `${activeJapamAlarms.length}` : undefined}
+                  onPress={() => navigation.navigate('JapamAlarms')}
+                  accessibilityLabel={
+                    activeJapamAlarms.length > 0 ? `Japam alarms, ${activeJapamAlarms.length} active` : 'Japam alarms, none set'
+                  }
+                />
+              </View>
+            </View>
+
+            {/* ── Group 2: ऐप / App ── */}
+            <View style={styles.group}>
+              <Text style={[styles.groupLabel, { color: colors.saffronDeep }, isEn ? styles.groupLabelLatin : { fontFamily: chromeFont }]}>
+                {pick(lang, { hi: 'ऐप', en: 'App', gu: 'ઍપ', kn: 'ಆ್ಯಪ್' })}
+              </Text>
+              <View style={[styles.list, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+                <SettingsRow
+                  first
+                  icon="अ"
+                  iconBg={colors.gold}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={16}
+                  label={pick(lang, { hi: 'भाषा', en: 'Language', gu: 'ભાષા', kn: 'ಭಾಷೆ' })}
+                  labelFontFamily={labelFont}
+                  state={currentLang.nativeLabel}
+                  stateFontFamily={nativeNameFont(lang, typography.readerTitle.fontFamily)}
+                  onPress={() => setLangSheet(true)}
+                  accessibilityLabel={`Language, ${currentLang.a11yLabel}`}
+                />
+                <SettingsRow
+                  icon="Aa"
+                  iconBg={colors.saffron}
+                  iconFontFamily={fontFamilies.interSemiBold}
+                  iconFontSize={14}
+                  label={pick(lang, { hi: 'पाठ का आकार', en: 'Reading Size', gu: 'વાંચન કદ', kn: 'ಓದುವ ಗಾತ್ರ' })}
+                  labelFontFamily={labelFont}
+                  state={readingSizeLabel(scale, lang)}
+                  stateFontFamily={chromeFont}
+                  onPress={() => setSizeSheet(true)}
+                  accessibilityLabel={`Reading size, ${scale === 'L' ? 'Large' : 'Standard'}`}
+                />
+                <SettingsRow
+                  icon="↗"
+                  iconBg={colors.saffron}
+                  label={pick(lang, { hi: 'ऐप साझा करें', en: 'Share the App', gu: 'ઍપ શેર કરો', kn: 'ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ' })}
+                  labelFontFamily={labelFont}
+                  onPress={shareApp}
+                  accessibilityLabel={pick(lang, {
+                    hi: 'Vedansh ऐप साझा करें',
+                    en: 'Share Vedansh app',
+                    gu: 'Vedansh ઍપ શેર કરો',
+                    kn: 'Vedansh ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ',
+                  })}
+                />
+              </View>
+            </View>
+
+            {/* ── Group 3: जानकारी / Info ── */}
+            <View style={styles.group}>
+              <Text style={[styles.groupLabel, { color: colors.saffronDeep }, isEn ? styles.groupLabelLatin : { fontFamily: chromeFont }]}>
+                {pick(lang, { hi: 'जानकारी', en: 'Info', gu: 'માહિતી', kn: 'ಮಾಹಿತಿ' })}
+              </Text>
+              <View style={[styles.list, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+                <SettingsRow
+                  first
+                  icon="ⓘ"
+                  iconBg={colors.inkMuted}
+                  label={pick(lang, { hi: 'परिचय व अस्वीकरण', en: 'About & Disclaimer', gu: 'પરિચય અને અસ્વીકરણ', kn: 'ಪರಿಚಯ ಮತ್ತು ಹಕ್ಕುನಿರಾಕರಣೆ' })}
+                  labelFontFamily={labelFont}
+                  onPress={() => setDisclaimerVisible(true)}
+                  accessibilityLabel="About and disclaimer"
+                />
+                <SettingsRow
+                  icon="⚑"
+                  iconBg={colors.inkMuted}
+                  label={pick(lang, { hi: 'त्रुटि सूचित करें', en: 'Report an Error', gu: 'ભૂલ જણાવો', kn: 'ದೋಷ ವರದಿ ಮಾಡಿ' })}
+                  labelFontFamily={labelFont}
+                  onPress={reportError}
+                  accessibilityLabel="Report an error"
+                />
+              </View>
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
+
+      <LanguagePickerSheet visible={langSheet} onClose={() => setLangSheet(false)} />
+      <ReadingSizePickerSheet visible={sizeSheet} onClose={() => setSizeSheet(false)} />
 
       {/* Disclaimer Modal */}
       <Modal
@@ -495,16 +381,7 @@ export default function MoreScreen({ navigation }: Props) {
                 {hi.reportIntro}
               </Text>
               <Pressable
-                onPress={() => {
-                const url = buildDiscrepancyMailto();
-                Linking.canOpenURL(url).then((supported) => {
-                  if (supported) {
-                    Linking.openURL(url);
-                  } else {
-                    Alert.alert('Email', 'Please email us at incardible.app@gmail.com');
-                  }
-                });
-              }}
+                onPress={reportError}
                 accessibilityRole="button"
                 accessibilityLabel={`${en.reportButtonLabel}. ${hi.reportButtonLabel}.`}
                 style={{ backgroundColor: colors.saffron, borderRadius: radii.md, paddingVertical: 14, minHeight: 44, alignItems: 'center', justifyContent: 'center', marginTop: 16 }}
@@ -524,66 +401,64 @@ export default function MoreScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  scroll: { paddingTop: 20, paddingBottom: 40, gap: 14 },
-  titleArea: { marginBottom: 8 },
-  section: {
-    borderRadius: 16,
+  scroll: { paddingTop: 12, paddingBottom: 40, paddingHorizontal: 16 },
+  header: { paddingHorizontal: 4, paddingBottom: 8, marginBottom: 12 },
+  groups: { gap: 22 },
+  group: { flexDirection: 'column' },
+  groupLabel: {
+    fontSize: 13,
+    paddingHorizontal: 10,
+    paddingBottom: 8,
+  },
+  groupLabelLatin: {
+    fontFamily: 'Inter_600SemiBold',
+    fontSize: 12,
+    letterSpacing: 1.8,
+    textTransform: 'uppercase',
+  },
+  list: {
+    borderRadius: 20,
     borderWidth: 1,
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
+    overflow: 'hidden',
     shadowColor: '#3c1e0a',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.06,
     shadowRadius: 2,
     elevation: 2,
   },
-  sectionIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    paddingVertical: 15,
+    paddingHorizontal: 16,
+  },
+  rowIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 11,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  sectionMeta: { flex: 1 },
-  langRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  langOption: {
-    flexGrow: 1,
-    flexBasis: '46%',
+  rowLabel: { flex: 1, fontSize: 18 },
+  rowState: { fontSize: 15 },
+  chevron: { fontSize: 19 },
+  profileRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    overflow: 'hidden',
+  },
+  profileBadge: {
+    width: 52,
     height: 52,
-    paddingHorizontal: 12,
-    borderRadius: 12,
-    borderWidth: 1,
+    borderRadius: 26,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
   },
-  langLabel: {
-    fontSize: 17,
-    includeFontPadding: false,
-    textAlign: 'center',
-  },
-  langCheck: {
-    position: 'absolute',
-    top: 4,
-    right: 6,
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  linkRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 14,
-    borderBottomWidth: 1,
-  },
-  linkRowLast: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 14,
-  },
+  profileMeta: { flex: 1 },
   modalRoot: { flex: 1 },
   modalHeader: {
     flexDirection: 'row',
@@ -598,60 +473,5 @@ const styles = StyleSheet.create({
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  profileCard: {
-    borderWidth: 1,
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-    overflow: 'hidden',
-    shadowColor: '#3c1e0a',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 3,
-    elevation: 2,
-  },
-  profileTopRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  profileCrest: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  profileTitleBlock: {
-    flex: 1,
-  },
-  profileDivider: {
-    height: 1,
-    opacity: 0.55,
-    marginTop: 14,
-    marginBottom: 12,
-  },
-  profileStatsRow: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-  },
-  profileStatCell: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  profileStatRule: {
-    width: 1,
-    opacity: 0.5,
-  },
-  profileStatValue: {
-    fontSize: 20,
-    includeFontPadding: false,
-  },
-  profileStatLabel: {
-    fontSize: 10,
-    fontWeight: '600',
-    letterSpacing: 1.6,
-    textTransform: 'uppercase',
-    marginTop: 4,
   },
 });
