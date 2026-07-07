@@ -14,7 +14,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import { cardFontByLang, isLatinLang } from '@/utils/langType';
+import { cardFontByLang, isLatinLang, scriptBodyFont } from '@/utils/langType';
 import { useNewContent, templeNewKey } from '@/contexts/NewContentContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -471,8 +471,11 @@ function BrowseCard({
           numberOfLines={1}
           style={{
             color: colors.inkMuted,
+            // §46 meta convention: script serif for Indic (Inter has no Indic
+            // glyphs) and tracking only on Latin — spacing splits the shirorekha.
+            fontFamily: scriptBodyFont(lang, isLatinLang(lang) ? typography.cardMeta.fontFamily : fontFamilies.devanagari),
             fontSize: typography.cardMeta.fontSize,
-            letterSpacing: typography.cardMeta.letterSpacing,
+            letterSpacing: isLatinLang(lang) ? typography.cardMeta.letterSpacing : 0,
             opacity: 0.9,
             marginTop: 3,
           }}

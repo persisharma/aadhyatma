@@ -7,7 +7,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useGitaLanguage, LANGUAGES } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
-import { scriptBodyFont } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont } from '@/utils/langType';
 import ReadingSizeCard from '@/components/ReadingSizeCard';
 import { pick, contentByLang } from '@/utils/localize';
 import { helpContent, buildDiscrepancyMailto } from '@/data/help/content';
@@ -160,7 +160,7 @@ export default function MoreScreen({ navigation }: Props) {
                 >
                   {profileTotals.totalReads}
                 </Text>
-                <Text style={[styles.profileStatLabel, { color: colors.inkMuted }]}>
+                <Text style={[styles.profileStatLabel, pillTextStyle(defaultLang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
                   {pick(defaultLang, { hi: 'श्लोक', en: 'VERSES', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ' })}
                 </Text>
               </View>
@@ -177,7 +177,7 @@ export default function MoreScreen({ navigation }: Props) {
                 >
                   {profileTotals.totalRounds}
                 </Text>
-                <Text style={[styles.profileStatLabel, { color: colors.inkMuted }]}>
+                <Text style={[styles.profileStatLabel, pillTextStyle(defaultLang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
                   {pick(defaultLang, { hi: 'आवृत्ति', en: 'ROUNDS', gu: 'આવૃત્તિ', kn: 'ಆವೃತ್ತಿ' })}
                 </Text>
               </View>
@@ -194,7 +194,7 @@ export default function MoreScreen({ navigation }: Props) {
                 >
                   {streak}
                 </Text>
-                <Text style={[styles.profileStatLabel, { color: colors.inkMuted }]}>
+                <Text style={[styles.profileStatLabel, pillTextStyle(defaultLang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
                   {pick(defaultLang, { hi: 'श्रृंखला', en: 'STREAK', gu: 'શ્રેણી', kn: 'ಸರಣಿ' })}
                 </Text>
               </View>

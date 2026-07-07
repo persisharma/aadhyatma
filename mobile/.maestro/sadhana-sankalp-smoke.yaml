@@ -13,9 +13,9 @@
 #   3. SadhanaProgramListScreen — open the "Hanuman Chalisa — 41 Days" sankalp.
 #   4. SadhanaProgramDetailScreen — "Begin this sankalp" enrolls and lands on Today.
 #   5. RoutineToday — the SankalpTodayCard shows "SANKALP · 0 / 41" (0 days done) + the day's
-#      Hanuman Chalisa item + a "Mark today's practice done" button; tapping it
-#      commits the day → the card flips to the "done today" resting state
-#      ("Today's reading is done. Come back tomorrow").
+#      Hanuman Chalisa item with an item-named check circle ("Mark offered —
+#      Hanuman Chalisa"); tapping it commits the day → the card flips to the
+#      "done today" resting state ("Today's reading is done. Come back tomorrow").
 #   6. Cleanup — Back returns to the (now active) Detail; "Set this sankalp aside"
 #      abandons the vow (SadhanaContext.abandon → status 'abandoned'), returning
 #      the program to the "Available" shelf so back-to-back runs stay clean.
@@ -48,6 +48,9 @@
 #     "Begin this sankalp" for a fresh/abandoned enrolment (never-completed).
 #   - SankalpTodayCard's eyebrow is a days-completed counter, uppercased
 #     ("SANKALP · 0 / 41" fresh → "SANKALP · 1 / 41" once the day is committed).
+#     The commit control is the item's check circle, whose accessibilityLabel
+#     names the item ("Mark offered — Hanuman Chalisa") so it never collides with
+#     the routine rows' generic circles.
 #   - "Back" is the RoutineShell back-chevron accessibilityLabel.
 #
 # PRECONDITION: the Hanuman-41 sankalp is not currently active (fresh install, or
@@ -110,9 +113,8 @@ appId: host.exp.Exponent
 - assertVisible: "Sankalp · 0 / 41"
 - assertVisible: "Hanuman Chalisa — 41 Days"
 - takeScreenshot: /tmp/vedansh-sankalp-day1
-# Commit today's practice via the explicit control (reading isn't auto-done, so
-# the ghost "Mark today's practice done" button is present).
-- tapOn: "Mark today's practice done"
+# Commit today's practice via the item-named check circle.
+- tapOn: "Mark offered — Hanuman Chalisa"
 - waitForAnimationToEnd
 # The day is recorded → the card flips to its resting "done today" state.
 - assertVisible: "Today's reading is done.*"

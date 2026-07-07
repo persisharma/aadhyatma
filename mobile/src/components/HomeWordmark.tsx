@@ -30,7 +30,8 @@ export default function HomeWordmark() {
             {
               color: colors.ink,
               fontFamily: typography.screenTitle.fontFamily,
-              letterSpacing: typography.screenTitle.letterSpacing,
+              // no tracking on the Devanagari wordmark — it splits the shirorekha
+              letterSpacing: 0,
             },
           ]}
         >

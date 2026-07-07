@@ -135,7 +135,13 @@ export default function UpdateReadyModal() {
             <Text
               style={[
                 styles.secondaryText,
-                { color: colors.inkMuted, fontFamily: scriptSerif ?? typography.cardLatin.fontFamily },
+                {
+                  color: colors.inkMuted,
+                  // hi must not fall back to Cormorant (no Devanagari glyphs)
+                  fontFamily: scriptSerif ?? (lang === 'hi' ? typography.meaning.fontFamily : typography.cardLatin.fontFamily),
+                },
+                // tracking splits the shirorekha on Indic labels
+                lang !== 'en' && { letterSpacing: 0 },
               ]}
             >
               {pick(lang, { hi: 'बाद में', en: 'Later', gu: 'પછી', kn: 'ನಂತರ' })}
