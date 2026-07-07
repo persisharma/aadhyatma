@@ -1445,7 +1445,7 @@ One enrolled sankalp's card on the Today's Practice ledger (§31) — flat `parc
 
 - **active** — one tappable unit row per item (26 px check circle → filled `saffron` ✓ when done today; resolved title `cardHindi` + a `cardMeta` sub "Whole text · Tap to read"; `›` 26). Auto-commits the day once every unit is genuinely done today (`isItemAutoComplete`); else a ghost "आज का पाठ अर्पित करें / Mark today's practice done" commits manually. Completing the vow plays the §31 `PracticeSeal` (पूर्णाहुति) once.
 - **done-today** — a calm "Today's reading is done. Come back tomorrow" line.
-- **waiting** (calendar-gated: weekday off-day / festival window not open) — the resting copy ("Your sankalp begins 11 Oct." / "Resting today — …") **plus the next selected unit as a tap-to-read preview**, so an upcoming sankalp never opens onto an empty dead end (the day is not committable until the gate opens).
+- **waiting** (calendar-gated: weekday off-day / festival window not open) — the resting copy ("Your sankalp begins 11 Oct." / "Resting today — …") **plus the next selected unit as a tap-to-read preview**, so an upcoming sankalp never opens onto an empty dead end (the day is not committable until the gate opens). The preview row carries **no offering check circle** — that affordance belongs to `active` alone; a rest-day read cannot advance the vow, so the row reads as a preview ("झलक · पढ़ने के लिए टैप करें / Preview · Tap to read"), never a to-do whose empty circle would falsely promise the `n / N` counter will move.
 - **completed** — the seal + a "Your N-day sankalp is complete 🙏" line.
 
 ### Data & resolver (`mobile/src/data/sadhana/`)

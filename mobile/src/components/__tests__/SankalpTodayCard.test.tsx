@@ -78,7 +78,8 @@ describe('SankalpTodayCard', () => {
       autoVia: 'read-to-end',
     };
 
-    const text = textOf(render(card));
+    const tree = render(card);
+    const text = textOf(tree);
 
     expect(text).toContain('Navratri');
     expect(text).toContain('Durga Chalisa');
@@ -86,6 +87,11 @@ describe('SankalpTodayCard', () => {
     expect(text).toContain('Tap to read');
     expect(text).not.toContain("Mark today's practice done");
     expect(mockCommitDay).not.toHaveBeenCalled();
+    // A waiting day is a read-ahead preview, not a to-do: the offering checkbox
+    // (a completion affordance) must not render, or its empty circle promises
+    // progress a rest-day read can never deliver — the "still 0/4" confusion.
+    expect(tree.root.findAll((n) => n.props.accessibilityLabel === 'Mark offered')).toHaveLength(0);
+    expect(text).toContain('Preview');
   });
 
   it('allows an active sankalp day to be manually marked offered', () => {

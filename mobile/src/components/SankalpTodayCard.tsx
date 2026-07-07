@@ -140,9 +140,19 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         <>
           <View style={{ marginTop: spacing.md }}>
             {items.map((it, i) => {
-              const tail = offeredTail(it.done, it.doneAt, lang);
+              // Only an active day is committable — the offering checkbox is a
+              // completion affordance and belongs to `active` alone. On a waiting
+              // day the unit is a read-ahead *preview* (design.md §46; the day is
+              // not committable until the gate opens), so we drop the check circle
+              // and label the row as a preview rather than a to-do — otherwise the
+              // empty circle promises progress a rest-day read can never deliver
+              // (the "still 0/4 after reading" confusion).
+              const committable = status.kind === 'active';
               const titleMain = contentByLang(lang, it.display.titleHi, it.display.titleEn);
-              const canMark = status.kind === 'active' && !it.done;
+              const canMark = committable && !it.done;
+              const tail = committable
+                ? offeredTail(it.done, it.doneAt, lang)
+                : contentByLang(lang, 'झलक · पढ़ने के लिए टैप करें', 'Preview · Tap to read');
               return (
                 <View
                   key={it.key}
@@ -151,29 +161,31 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
                     { borderTopColor: colors.divider, borderTopWidth: i === 0 ? 0 : 1 },
                   ]}
                 >
-                  <Pressable
-                    onPress={canMark ? () => commitDay(program.id, status.dayIndex, 'marked') : undefined}
-                    accessibilityRole="button"
-                    accessibilityState={{ checked: it.done }}
-                    accessibilityLabel={
-                      it.done
-                        ? contentByLang(lang, 'अर्पित', 'Offered')
-                        : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
-                    }
-                    hitSlop={10}
-                    style={{
-                      width: 26,
-                      height: 26,
-                      borderRadius: 13,
-                      borderWidth: 2,
-                      borderColor: colors.saffron,
-                      backgroundColor: it.done ? colors.saffron : 'transparent',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {it.done && <Text style={{ color: colors.onPrimary, fontSize: 13 }}>✓</Text>}
-                  </Pressable>
+                  {committable && (
+                    <Pressable
+                      onPress={canMark ? () => commitDay(program.id, status.dayIndex, 'marked') : undefined}
+                      accessibilityRole="button"
+                      accessibilityState={{ checked: it.done }}
+                      accessibilityLabel={
+                        it.done
+                          ? contentByLang(lang, 'अर्पित', 'Offered')
+                          : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
+                      }
+                      hitSlop={10}
+                      style={{
+                        width: 26,
+                        height: 26,
+                        borderRadius: 13,
+                        borderWidth: 2,
+                        borderColor: colors.saffron,
+                        backgroundColor: it.done ? colors.saffron : 'transparent',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {it.done && <Text style={{ color: colors.onPrimary, fontSize: 13 }}>✓</Text>}
+                    </Pressable>
+                  )}
                   <Pressable style={{ flex: 1, minWidth: 0 }} onPress={() => navigateToRoutineItem(nav, it.item)}>
                     <Text
                       style={{
