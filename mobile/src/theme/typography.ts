@@ -20,9 +20,9 @@ export const fontFamilies = {
 
 export const typography = {
   screenTitle: {
+    // Devanagari-only token — no letterSpacing: tracking splits the shirorekha.
     fontFamily: fontFamilies.devanagariBold,
     fontSize: 34,
-    letterSpacing: 0.3,
   },
   readerTitle: {
     fontFamily: fontFamilies.devanagariBold,
@@ -127,9 +127,9 @@ export const typography = {
     fontSize: 22,
   },
   footerMantra: {
+    // Devanagari-only token — no letterSpacing: tracking splits the shirorekha.
     fontFamily: fontFamilies.devanagari,
     fontSize: 18,
-    letterSpacing: 0.4,
   },
 } as const;
 

@@ -32,6 +32,7 @@ import { library } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { contentByLang, pick } from '@/utils/localize';
+import { pillTextStyle } from '@/utils/langType';
 import {
   buildProgressTarget,
   navigateToEntryStart,
@@ -293,11 +294,13 @@ type Theme = ReturnType<typeof useTheme>;
 function GroupHeader({
   label,
   count,
+  lang,
   colors,
   typography,
 }: {
   label: string;
   count: number;
+  lang: Lang;
   colors: Theme['colors'];
   typography: Theme['typography'];
 }) {
@@ -307,9 +310,9 @@ function GroupHeader({
         styles.groupHeader,
         {
           color: colors.inkMuted,
-          fontSize: typography.sectionLabel.fontSize,
-          fontFamily: typography.sectionLabel.fontFamily,
-          letterSpacing: typography.sectionLabel.letterSpacing,
+          // pillTextStyle: sectionLabel's Latin tracking splits the shirorekha
+          // on the localized hi/gu/kn group names.
+          ...pillTextStyle(lang, typography.sectionLabel),
         },
       ]}
     >
@@ -409,6 +412,7 @@ function EmptyState({
                 <GroupHeader
                   label={pick(lang, { hi: 'हाल ही में', en: 'Recent', gu: 'તાજેતરનું', kn: 'ಇತ್ತೀಚಿನ' })}
                   count={recent.length}
+                  lang={lang}
                   colors={colors}
                   typography={typography}
                 />
@@ -468,6 +472,7 @@ function EmptyState({
           <GroupHeader
             label={pick(lang, { hi: 'लोकप्रिय', en: 'Popular', gu: 'લોકપ્રિય', kn: 'ಜನಪ್ರಿಯ' })}
             count={popular.length}
+            lang={lang}
             colors={colors}
             typography={typography}
           />
@@ -642,6 +647,7 @@ function ResultsList({
             <GroupHeader
               label={item.label}
               count={item.count}
+              lang={lang}
               colors={colors}
               typography={typography}
             />

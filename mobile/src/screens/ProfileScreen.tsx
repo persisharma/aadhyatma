@@ -6,7 +6,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
-import { titleFontByLang, scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { titleFontByLang, scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import {
   toDateKey,
@@ -245,7 +245,7 @@ export default function ProfileScreen({ navigation }: Props) {
                 >
                   {streak}
                 </Text>
-                <Text style={[styles.identityFooterLabel, { color: colors.inkMuted }]}>
+                <Text style={[styles.identityFooterLabel, pillTextStyle(lang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
                   {pick(lang, { hi: 'दिवस श्रृंखला', en: 'DAY STREAK', gu: 'દિવસ શ્રેણી', kn: 'ದಿನ ಸರಣಿ' })}
                 </Text>
               </View>
@@ -264,7 +264,7 @@ export default function ProfileScreen({ navigation }: Props) {
                 >
                   {lifetimeDayCount}
                 </Text>
-                <Text style={[styles.identityFooterLabel, { color: colors.inkMuted }]}>
+                <Text style={[styles.identityFooterLabel, pillTextStyle(lang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
                   {pick(lang, { hi: 'सक्रिय दिन', en: 'ACTIVE DAYS', gu: 'સક્રિય દિવસો', kn: 'ಸಕ್ರಿಯ ದಿನಗಳು' })}
                 </Text>
               </View>
@@ -283,7 +283,7 @@ export default function ProfileScreen({ navigation }: Props) {
                 >
                   {bookmarks.length}
                 </Text>
-                <Text style={[styles.identityFooterLabel, { color: colors.inkMuted }]}>
+                <Text style={[styles.identityFooterLabel, pillTextStyle(lang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
                   {pick(lang, { hi: 'सहेजे श्लोक', en: 'SAVED VERSES', gu: 'સાચવેલા શ્લોક', kn: 'ಉಳಿಸಿದ ಶ್ಲೋಕಗಳು' })}
                 </Text>
               </View>

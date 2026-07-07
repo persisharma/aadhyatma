@@ -69,9 +69,12 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
             styles.headerText,
             {
               color: colors.saffronDeep,
-              fontFamily: typography.cardLatin.fontFamily,
+              // Cormorant tracking for Latin; script serif with no tracking for
+              // Indic headers (tracking splits the shirorekha).
+              fontFamily: props.lang === 'en' ? typography.cardLatin.fontFamily : meaningFont,
               fontSize: 13,
             },
+            props.lang !== 'en' && { letterSpacing: 0 },
           ]}
         >
           {sectionName.toUpperCase()} · {verseLabel.toUpperCase()}
@@ -201,8 +204,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   wordmarkHi: {
+    // no tracking on the Devanagari wordmark — it splits the shirorekha
     fontSize: 18,
-    letterSpacing: 1,
     includeFontPadding: false,
   },
   wordmarkLatin: {

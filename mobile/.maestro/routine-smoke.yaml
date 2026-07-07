@@ -72,6 +72,15 @@ appId: host.exp.Exponent
 - tapOn: "Set your daily practice"
 - waitForAnimationToEnd
 
+# ── Step 3b: The wizard opens on the PRD-11 'choose' fork (build your own vs
+# prebuilt sankalp) — take the build-your-own path. The ModeCard's child Texts
+# merge into one accessibilityText, so anchor with ".*". ──
+- extendedWaitUntil:
+    visible: "How would you like to begin.*"
+    timeout: 15000
+- tapOn: "Build your own.*"
+- waitForAnimationToEnd
+
 # ── Step 4: Name the routine ──
 - extendedWaitUntil:
     visible: "Name your routine"
@@ -131,12 +140,18 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: "Today's Practice"
     timeout: 15000
-# One item, none done yet → progress reads "0/1 · done".
-- assertVisible: "0/1.*"
-- tapOn: "Mark done"
+# One item, none done yet → the PRD-10 ledger headline reads "0 of 1".
+- assertVisible: "0 of 1.*"
+# The check-off circle's accessibilityLabel (PRD-10 "offered" register).
+- tapOn: "Mark offered"
 # Capture the app-wide pushpa-varsha mid-animation (transient ~2s one-shot).
 - takeScreenshot: /tmp/vedansh-celebration
-- assertVisible: "1/1.*"
+# Let the celebration overlay finish before reading the headline underneath.
+- waitForAnimationToEnd:
+    timeout: 10000
+- extendedWaitUntil:
+    visible: "1 of 1 offered.*"
+    timeout: 10000
 
 # ── Step 8: My Routines lists the routine with its DAILY schedule pill ──
 - tapOn: "All routines"

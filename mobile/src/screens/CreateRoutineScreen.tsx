@@ -6,7 +6,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { pick, type LocalizedStrings } from '@/utils/localize';
-import { scriptTitleFont } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import type { RoutineScheduleMode } from '@/data/routine/types';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -107,6 +107,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
                 placeholder="प्रातः साधना"
                 value={nameHi}
                 onChangeText={setNameHi}
+                lang={lang}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -117,6 +118,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
                 placeholder="Morning Sadhana"
                 value={nameEn}
                 onChangeText={setNameEn}
+                lang={lang}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -198,7 +200,14 @@ function Heading({ msg, lang, colors, typography }: { msg: LocalizedStrings; lan
         {pick(lang, msg)}
       </Text>
       <Text
-        style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 14, color: colors.inkMuted, marginTop: 4 }}
+        style={{
+          // The secondary line is Hindi when reading English — cardLatin
+          // (Cormorant) has no Devanagari, so it takes the meaning face.
+          fontFamily: lang === 'en' ? typography.meaning.fontFamily : typography.cardLatin.fontFamily,
+          fontSize: 14,
+          color: colors.inkMuted,
+          marginTop: 4,
+        }}
       >
         {secondary}
       </Text>
@@ -211,6 +220,7 @@ function Field({
   placeholder,
   value,
   onChangeText,
+  lang,
   colors,
   typography,
   radii,
@@ -220,12 +230,15 @@ function Field({
   placeholder: string;
   value: string;
   onChangeText: (t: string) => void;
+  lang: Lang;
 } & Required<ThemeBits>) {
   return (
     <View style={{ marginBottom: spacing.md }}>
       <Text
         style={{
-          ...typography.sectionLabel,
+          // sectionLabel carries Latin tracking/uppercase — pillTextStyle zeroes
+          // both for Indic labels (tracking splits the shirorekha).
+          ...pillTextStyle(lang, typography.sectionLabel),
           color: colors.inkMuted,
           marginBottom: 6,
         }}
@@ -274,24 +287,53 @@ function ModeCard({
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      style={{
-        borderWidth: selected ? 1.5 : 1,
-        borderColor: selected ? colors.saffron : colors.divider,
-        backgroundColor: selected ? colors.parchmentHighlight : colors.parchmentSoft,
-        borderRadius: radii.lg,
-        padding: spacing.lg,
-        marginBottom: spacing.md,
-      }}
+      style={({ pressed }) => [
+        modeCardStyles.card,
+        {
+          borderWidth: selected ? 1.5 : 1,
+          borderColor: selected ? colors.saffron : colors.cardActiveBorder,
+          borderRadius: radii.lg,
+          padding: spacing.lg,
+          marginBottom: spacing.md,
+        },
+        pressed && { opacity: 0.85 },
+      ]}
     >
-      <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 16, color: colors.ink }}>
+      {/* Warm active-card fill (design.md §8) under the content. */}
+      <LinearGradient
+        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[modeCardStyles.bg, { borderRadius: radii.lg }]}
+      />
+      <Text
+        style={{
+          fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
+          fontSize: typography.cardHindi.fontSize,
+          color: colors.ink,
+        }}
+      >
         {pick(lang, title)}
       </Text>
-      <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 13, color: colors.inkMuted, marginTop: 6 }}>
+      <Text
+        style={{
+          fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+          fontSize: 13,
+          lineHeight: 20,
+          color: colors.inkMuted,
+          marginTop: 6,
+        }}
+      >
         {pick(lang, desc)}
       </Text>
     </Pressable>
   );
 }
+
+const modeCardStyles = StyleSheet.create({
+  card: { position: 'relative', overflow: 'hidden' },
+  bg: { ...StyleSheet.absoluteFillObject },
+});
 
 function PrimaryButton({
   label,
@@ -329,7 +371,8 @@ function PrimaryButton({
               ? typography.verseLatin.fontFamily
               : scriptTitleFont(lang, typography.cardHindi.fontFamily),
           fontSize: 16,
-          lineHeight: 22,
+          // ≥1.5× — RN clips Devanagari top matras (ें ैं) below ~1.45×.
+          lineHeight: 24,
           color: colors.onPrimary,
         }}
       >

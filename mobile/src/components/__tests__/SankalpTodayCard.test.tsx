@@ -85,6 +85,12 @@ describe('SankalpTodayCard', () => {
     expect(text).toContain('Whole text');
     expect(text).toContain('Tap to read');
     expect(text).not.toContain("Mark today's practice done");
+    // A waiting preview is read-only — no check circle at all (a dead circle
+    // reads as a broken control).
+    const circles = render(card).root.findAll(
+      (n) => typeof n.props.accessibilityLabel === 'string' && n.props.accessibilityLabel.startsWith('Mark offered')
+    );
+    expect(circles).toHaveLength(0);
     expect(mockCommitDay).not.toHaveBeenCalled();
   });
 
@@ -116,8 +122,10 @@ describe('SankalpTodayCard', () => {
     const text = textOf(tree);
 
     expect(text).toContain('Durga Chalisa');
+    // The circle's label names its item so it never collides with the routine
+    // rows' generic "Mark offered" circles (a11y + Maestro disambiguation).
     const markButton = tree.root.findAll(
-      (n) => n.props.accessibilityLabel === 'Mark offered'
+      (n) => n.props.accessibilityLabel === 'Mark offered — Durga Chalisa'
     )[0];
 
     expect(markButton).toBeDefined();

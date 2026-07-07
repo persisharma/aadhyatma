@@ -71,8 +71,11 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
           <PracticeSeal size={64} />
           <Text
             style={{
+              // caption scale — the reading-body size (20/34) made the card
+              // read as a prose block instead of a ledger card
               fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: typography.meaning.fontSize,
+              fontSize: 14,
+              lineHeight: 21,
               color: colors.inkSoft,
               textAlign: 'center',
               marginTop: spacing.sm,
@@ -91,7 +94,8 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         <Text
           style={{
             fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-            fontSize: typography.meaning.fontSize,
+            fontSize: 14,
+            lineHeight: 21,
             color: colors.inkSoft,
             marginTop: spacing.sm,
           }}
@@ -108,10 +112,10 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         <Text
           style={{
             fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-            fontSize: typography.meaning.fontSize,
+            fontSize: 14,
+            lineHeight: 21,
             color: colors.inkSoft,
             marginTop: spacing.sm,
-            lineHeight: typography.meaning.lineHeight,
           }}
         >
           {status.reason === 'window-upcoming'
@@ -142,7 +146,6 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
             {items.map((it, i) => {
               const tail = offeredTail(it.done, it.doneAt, lang);
               const titleMain = contentByLang(lang, it.display.titleHi, it.display.titleEn);
-              const canMark = status.kind === 'active' && !it.done;
               return (
                 <View
                   key={it.key}
@@ -151,34 +154,41 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
                     { borderTopColor: colors.divider, borderTopWidth: i === 0 ? 0 : 1 },
                   ]}
                 >
-                  <Pressable
-                    onPress={canMark ? () => commitDay(program.id, status.dayIndex, 'marked') : undefined}
-                    accessibilityRole="button"
-                    accessibilityState={{ checked: it.done }}
-                    accessibilityLabel={
-                      it.done
-                        ? contentByLang(lang, 'अर्पित', 'Offered')
-                        : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
-                    }
-                    hitSlop={10}
-                    style={{
-                      width: 26,
-                      height: 26,
-                      borderRadius: 13,
-                      borderWidth: 2,
-                      borderColor: colors.saffron,
-                      backgroundColor: it.done ? colors.saffron : 'transparent',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {it.done && <Text style={{ color: colors.onPrimary, fontSize: 13 }}>✓</Text>}
-                  </Pressable>
+                  {/* The check circle exists only on an ACTIVE day — a waiting
+                      (calendar-gated) preview is read-only, and a dead circle
+                      reads as a broken control. Label names the item so it
+                      never collides with the routine rows' generic circles. */}
+                  {status.kind === 'active' && (
+                    <Pressable
+                      onPress={it.done ? undefined : () => commitDay(program.id, status.dayIndex, 'marked')}
+                      accessibilityRole="button"
+                      accessibilityState={{ checked: it.done }}
+                      accessibilityLabel={
+                        it.done
+                          ? contentByLang(lang, `अर्पित — ${titleMain}`, `Offered — ${titleMain}`)
+                          : contentByLang(lang, `अर्पित चिह्नित करें — ${titleMain}`, `Mark offered — ${titleMain}`)
+                      }
+                      hitSlop={10}
+                      style={{
+                        width: 26,
+                        height: 26,
+                        borderRadius: 13,
+                        borderWidth: 2,
+                        borderColor: colors.saffron,
+                        backgroundColor: it.done ? colors.saffron : 'transparent',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {it.done && <Text style={{ color: colors.onPrimary, fontSize: 13 }}>✓</Text>}
+                    </Pressable>
+                  )}
                   <Pressable style={{ flex: 1, minWidth: 0 }} onPress={() => navigateToRoutineItem(nav, it.item)}>
                     <Text
                       style={{
                         fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
                         fontSize: typography.cardHindi.fontSize,
+                        lineHeight: 26,
                         color: it.done ? colors.inkMuted : colors.ink,
                       }}
                     >
@@ -186,7 +196,10 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
                     </Text>
                     <Text
                       style={{
-                        fontFamily: scriptBodyFont(lang, typography.cardMeta.fontFamily),
+                        fontFamily:
+                          lang === 'en'
+                            ? typography.cardMeta.fontFamily
+                            : scriptBodyFont(lang, typography.meaning.fontFamily),
                         fontSize: typography.cardMeta.fontSize,
                         color: colors.saffronDeep,
                         marginTop: 2,
@@ -222,6 +235,8 @@ function formatShortDate(key: string, lang: string): string {
 
 const styles = StyleSheet.create({
   card: { borderWidth: 1, marginBottom: 16 },
-  itemRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12 },
-  chev: { fontSize: 26 },
+  // flex-start pins the circle/chevron to the title's first line instead of the
+  // middle of a wrapped two-line block.
+  itemRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, paddingVertical: 12 },
+  chev: { fontSize: 26, lineHeight: 26 },
 });

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { scriptBodyFont } from '@/utils/langType';
 import { malaBeads, malaLabel } from '@/data/routine/practiceView';
 
 /**
@@ -62,7 +63,12 @@ export default function MalaStreak({
       {showLabel && (
         <Text
           style={{
-            fontFamily: typography.cardLatin.fontFamily,
+            // cardLatin (Cormorant) has no Indic glyphs — Hindi/gu/kn labels
+            // take the script serif so they don't fall to the system face.
+            fontFamily:
+              lang === 'en'
+                ? typography.cardLatin.fontFamily
+                : scriptBodyFont(lang, typography.meaning.fontFamily),
             fontSize: 14,
             color: empty ? colors.inkMuted : colors.inkSoft,
             marginLeft: 10,

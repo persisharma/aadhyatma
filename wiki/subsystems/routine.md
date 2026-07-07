@@ -2,7 +2,7 @@
 title: Daily Routine (Nitya Sadhana)
 type: subsystem
 sources: [mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/data/routine/useRoutineToday.ts, mobile/src/data/routine/vaar.ts, mobile/src/data/sadhana/progress.ts, mobile/src/data/sadhana/useSadhanaToday.ts, mobile/src/contexts/RoutineContext.tsx, mobile/src/contexts/RoutineSheetProvider.tsx, mobile/src/components/RoutineBanner.tsx, mobile/src/components/SankalpTodayCard.tsx, mobile/src/components/routineBannerView.ts, mobile/src/components/AddToRoutineButton.tsx, mobile/src/components/RoutineCelebration.tsx, docs/roadmap/prds/07-daily-routine-sadhana.md, docs/roadmap/prds/11-sadhana-programs.md]
-last_verified_date: 2026-07-03
+last_verified_date: 2026-07-06
 confidence: high
 status: current
 ---
@@ -58,6 +58,11 @@ The catalog (`SadhanaProgramListScreen`) + detail follow the app card language (
 (By-Deity convention) and the detail on `getDeityBackground(program.deity)`; cards are warm
 `LibraryCard`-style (gradient thumb from `program.thumb`, both languages via `orderTitlesByLanguage`,
 status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Practice ledger.
+The catalog has **three standing entry points** (July 2026 review — it used to hang solely off the
+create-routine chooser, unreachable in practice once a routine existed): the `CreateRoutineScreen`
+'choose' fork, ghost "तैयार संकल्प चुनें / Browse sankalps" buttons on `RoutineToday` + `RoutineList`,
+and a संकल्प Home DISCOVER spotlight card — pinned by `screens/__tests__/SankalpTouchpoints.test.tsx`.
+`RoutineList` cards and the wizard's `ModeCard`s now wear the warm §8 gradient card language too.
 
 ## Dependencies
 
@@ -79,7 +84,14 @@ status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Prac
 - **Waiting sankalps are previews, not completions** — `waiting.items` powers the visible
   preselected content row, but `useSadhanaToday()` only computes completion and `SankalpTodayCard`
   only shows the manual completion CTA for `active` days.
+- **Indic typography traps (app-wide, caught here first):** `scriptBodyFont`/`scriptTitleFont` return
+  the *fallback* for `hi` — passing a Cormorant token (`cardLatin` etc.) silently drops Hindi to the OS
+  system face; and any `letterSpacing` on Devanagari splits the shirorekha ("शि व"). Use the `meaning`
+  face for Hindi prose captions, `scriptBodyFont`+`cardMeta` for meta lines, `pillTextStyle()` for
+  pills/labels, and lineHeight ≥1.5× fontSize (matras clip below ~1.45×). Guarded by
+  `utils/__tests__/typographySafety.test.ts`.
 - Tests: `contexts/__tests__/RoutineContext.test.tsx`, `screens/__tests__/RoutineCompletion.test.tsx`,
+  `screens/__tests__/SankalpTouchpoints.test.tsx` (catalog entry points),
   `components/__tests__/routineBannerView.test.ts` + `RoutineBanner`/`RoutineCelebration` tests;
   Maestro `routine-smoke.yaml` (daily lifecycle) and `routine-weekday-smoke.yaml`
   (weekday chip, un-mark, open-into-reader, remove-item).

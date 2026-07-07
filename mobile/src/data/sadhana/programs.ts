@@ -17,10 +17,10 @@ const HANUMAN_41: SadhanaProgram = {
   subtitleHi: 'इकतालीस दिन का संकल्प',
   subtitleEn: 'A 41-day sankalp',
   deity: 'hanuman',
-  introHi:
-    'इकतालीस दिन तक प्रतिदिन हनुमान चालीसा का पाठ करने का संकल्प लें। कोई दिन छूट जाए तो साधना रुकती है, टूटती नहीं — अगले दिन वहीं से आगे बढ़ें।',
-  introEn:
-    'Take a sankalp to recite the Hanuman Chalisa once every day for 41 days. Miss a day and the vow pauses, it does not break — pick up the next day where you left off.',
+  // The grace rule ("miss a day and the sankalp pauses…") is NOT restated here —
+  // the detail screen's footer carries it for every program.
+  introHi: 'इकतालीस दिन तक प्रतिदिन हनुमान चालीसा का पाठ करने का संकल्प लें।',
+  introEn: 'Take a sankalp to recite the Hanuman Chalisa once every day for 41 days.',
   cadence: { kind: 'consecutive', days: 41 },
   day: { items: [{ id: 'hanuman-chalisa', kind: 'section', sourceId: 'hanuman-chalisa' }] },
 };
