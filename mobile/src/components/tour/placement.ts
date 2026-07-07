@@ -69,6 +69,27 @@ function clamp(v: number, lo: number, hi: number): number {
   return Math.min(Math.max(v, lo), hi);
 }
 
+/**
+ * Re-measure loop tuning. A freshly-navigated screen shifts for several frames as
+ * its header/content lays out (and, on the Panchang home, as the muhurat card
+ * mounts after the calendar computes). Taking an early measurement rings the wrong
+ * spot, so keep re-measuring until the rect holds still for a run of frames.
+ */
+export const MEASURE_MAX_TRIES = 48; // hard cap (~0.8s at 60fps) before giving up
+export const MEASURE_MIN_TRIES = 6; // never accept before the entry animation settles
+export const MEASURE_STABLE_FRAMES = 4; // consecutive identical frames = "settled"
+
+/**
+ * Whether the re-measure loop should stop: either the rect has held still for
+ * `MEASURE_STABLE_FRAMES` consecutive frames past the `MEASURE_MIN_TRIES` warm-up,
+ * or we've hit the hard `MEASURE_MAX_TRIES` cap. `stable` counts consecutive
+ * frames whose measurement matched the previous one.
+ */
+export function measureSettled(tries: number, stable: number): boolean {
+  if (tries >= MEASURE_MAX_TRIES) return true;
+  return tries >= MEASURE_MIN_TRIES && stable >= MEASURE_STABLE_FRAMES;
+}
+
 /** Whether two rects are the same to the nearest pixel (measurement settled). */
 export function sameRect(a: Rect | null, b: Rect | null): boolean {
   if (!a || !b) return a === b;

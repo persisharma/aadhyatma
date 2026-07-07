@@ -13,8 +13,8 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useTour } from '@/contexts/TourContext';
 import { tourSteps, TAB_ORDER } from '@/data/tour/steps';
 import { navigationRef } from '@/notifications/deepLink';
-import { measureTourTarget, type Rect } from '@/components/tour/tourTargets';
-import { placeTourCard, tabItemRect, inflateRect, sameRect } from '@/components/tour/placement';
+import { measureTourTarget, revealTourTarget, type Rect } from '@/components/tour/tourTargets';
+import { placeTourCard, tabItemRect, inflateRect, sameRect, measureSettled } from '@/components/tour/placement';
 
 /**
  * In-context first-launch feature tour. Renders a translucent **in-tree** overlay
@@ -33,7 +33,6 @@ const POINTER_W = 22;
 const POINTER_H = 14;
 const TAB_COUNT = 5;
 const TAB_BAR_CONTENT_HEIGHT = 60; // matches TabNavigator tabBarStyle height (excl. safe area)
-const MAX_MEASURE_TRIES = 24; // re-measure up to ~24 frames while the screen mounts + settles
 
 export default function FeatureTour() {
   const { colors, typography, radii } = useTheme();
@@ -68,10 +67,12 @@ export default function FeatureTour() {
   const isLast = stepIndex === tourSteps.length - 1;
   const isFirst = stepIndex === 0;
 
-  // On each step: navigate to the surface, then measure its element target,
-  // re-measuring across frames until the rect settles (a freshly-pushed screen
-  // shifts as its header lays out — taking only the first measure would ring the
-  // wrong spot). Deferred + cancelled on cleanup so nothing stale lands.
+  // On each step: navigate to the surface, scroll the target into view, then
+  // measure it — re-measuring across frames and always keeping the LATEST rect,
+  // until it settles (a freshly-navigated screen shifts as its header/content lays
+  // out — and some targets, e.g. the muhurat card, mount a few frames late; taking
+  // only an early measure would ring the wrong spot). Deferred + cancelled on
+  // cleanup so nothing stale lands. Depends on screen size so a rotation re-measures.
   useEffect(() => {
     if (!visible || !step || !navigationRef.isReady()) return undefined;
     setTargetRect(null);
@@ -80,17 +81,22 @@ export default function FeatureTour() {
     let tries = 0;
     let prev: Rect | null = null;
     let stable = 0;
+    let revealed = false;
     const measure = () => {
       if (cancelled || !step.targetId) return;
+      // Ask the screen to scroll the target on-screen until the first measure
+      // lands, so below-the-fold targets aren't ringed at the wrong spot.
+      if (!revealed) revealTourTarget(step.targetId);
       void measureTourTarget(step.targetId).then((rect) => {
         if (cancelled) return;
         if (rect) {
-          setTargetRect(rect);
+          revealed = true;
+          setTargetRect(rect); // last write wins → ring tracks to the final position
           stable = sameRect(prev, rect) ? stable + 1 : 0;
           prev = rect;
         }
         tries += 1;
-        if (tries < MAX_MEASURE_TRIES && stable < 2) raf = requestAnimationFrame(measure);
+        if (!measureSettled(tries, stable)) raf = requestAnimationFrame(measure);
       });
     };
     const handle = InteractionManager.runAfterInteractions(() => {
@@ -108,11 +114,26 @@ export default function FeatureTour() {
       if (raf !== undefined) cancelAnimationFrame(raf);
       handle.cancel();
     };
-  }, [visible, stepIndex, step]);
+  }, [visible, stepIndex, step, screenW, screenH]);
 
   const close = useCallback(() => {
     setVisible(false);
     void markTourCompleted();
+    // The walkthrough pushes screens onto tab stacks (e.g. TheerthMap on Home,
+    // MyVrat on Panchang, JapamAlarms on More); reset so every tab returns to
+    // its root and the user lands back on Home instead of on the last surface.
+    if (navigationRef.isReady()) {
+      navigationRef.resetRoot({
+        index: 0,
+        routes: [
+          { name: 'HomeTab' },
+          { name: 'DailyBhaktiTab' },
+          { name: 'PanchangTab' },
+          { name: 'AudioTab' },
+          { name: 'MoreTab' },
+        ],
+      });
+    }
   }, [markTourCompleted]);
 
   const next = useCallback(() => {

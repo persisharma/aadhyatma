@@ -18,14 +18,11 @@ import SankalpTodayCard from '@/components/SankalpTodayCard';
 import MalaStreak from '@/components/MalaStreak';
 import PracticeSeal from '@/components/PracticeSeal';
 import type { HomeStackParamList } from '@/navigation/types';
-import { useTourTarget } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'RoutineToday'>;
 
 export default function RoutineTodayScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
-  // Feature-tour spotlight anchor for "Today's Practice" (design.md §47).
-  const routineTodayRef = useTourTarget('routineToday');
   const { lang } = useGitaLanguage();
   const { markManualDone, unmarkManualDone } = useRoutines();
   const { currentStreak } = useUserActivity();
@@ -55,7 +52,6 @@ export default function RoutineTodayScreen({ navigation }: Props) {
       titleEn="Today's Practice"
       onBack={() => navigation.goBack()}
       right={right}
-      topBarRef={routineTodayRef}
     >
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }}

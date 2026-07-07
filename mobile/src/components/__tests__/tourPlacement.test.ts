@@ -3,7 +3,11 @@ import {
   tabItemRect,
   inflateRect,
   sameRect,
+  measureSettled,
   CARD_GAP,
+  MEASURE_MAX_TRIES,
+  MEASURE_MIN_TRIES,
+  MEASURE_STABLE_FRAMES,
 } from '@/components/tour/placement';
 
 const screen = { width: 390, height: 844 };
@@ -70,6 +74,25 @@ describe('tabItemRect', () => {
     expect(r.x).toBe(156);
     expect(r.width).toBe(78);
     expect(r.y).toBe(844 - 60);
+  });
+});
+
+describe('measureSettled', () => {
+  test('does not settle before the warm-up minimum, even when stable', () => {
+    expect(measureSettled(MEASURE_MIN_TRIES - 1, MEASURE_STABLE_FRAMES + 5)).toBe(false);
+  });
+
+  test('does not settle past the warm-up until the rect holds still long enough', () => {
+    expect(measureSettled(MEASURE_MIN_TRIES, MEASURE_STABLE_FRAMES - 1)).toBe(false);
+  });
+
+  test('settles once past the warm-up with a long-enough stable run', () => {
+    expect(measureSettled(MEASURE_MIN_TRIES, MEASURE_STABLE_FRAMES)).toBe(true);
+  });
+
+  test('hard-stops at the max tries regardless of stability', () => {
+    expect(measureSettled(MEASURE_MAX_TRIES, 0)).toBe(true);
+    expect(measureSettled(MEASURE_MAX_TRIES + 1, 0)).toBe(true);
   });
 });
 
