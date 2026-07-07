@@ -15,9 +15,13 @@
 # read the same in either language).
 #
 # Selector notes:
-#   • More card titles are constant English text ("Wishlist", "Reminders",
-#     "Language", "About & Disclaimer"); the Profile card a11y label is
-#     "Open Sadhak profile".
+#   • The More redesign uses single-language row labels, so rows are matched by
+#     their composed English a11y labels: "Wishlist, N verses saved",
+#     "Reminders, …", "Language, <current>", the Profile row is "Open Sadhak
+#     profile", and About is "About and disclaimer".
+#   • Language & Reading-size are no longer inline — the row opens a bottom-sheet
+#     picker. Set English by tapping the "Language, …" row, then "English" in the
+#     sheet (selecting closes the sheet).
 #   • ProfileScreen's back button is an unlabeled "‹" glyph — the only one on
 #     the screen — so it is tapped directly.
 #   • The disclaimer Modal is presentationStyle pageSheet; config.yaml's
@@ -28,12 +32,16 @@ appId: host.exp.Exponent
 ---
 - runFlow: _launch.yaml
 
-# ── Open More, set reading language to English (Language card radio) ──
+# ── Open More, set reading language to English (Language row → picker sheet) ──
 - tapOn: "More, tab.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "English"
+    visible: "Language,.*"
     timeout: 15000
+- tapOn: "Language,.*"
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 10000
 - tapOn: "English"
 - waitForAnimationToEnd
 
@@ -64,7 +72,11 @@ appId: host.exp.Exponent
     visible: "Wishlist.*"
     timeout: 15000
 
-# ── Restore Hindi (best-effort) while the Language card is still in view ──
+# ── Restore Hindi (best-effort): reopen the Language sheet and pick Hindi ──
+- tapOn:
+    text: "Language,.*"
+    optional: true
+- waitForAnimationToEnd
 - tapOn:
     text: "Hindi"
     optional: true
