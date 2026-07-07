@@ -106,13 +106,8 @@ import {
 // and null when no clip exists so callers fall back to the system alarm tone.
 {
   assert.equal(getJapamAlarmSoundName('om-namah-shivaya'), 'om-namah-shivaya.wav');
-  assert.equal(
-    getJapamAlarmSoundName('hare-krishna-mahamantra'),
-    'hare-krishna-mahamantra.wav'
-  );
-  assert.equal(getJapamAlarmSoundName('gayatri-mantra'), 'gayatri-mantra.wav');
   // Mantras without a bundled clip (commented-out entries / unknown ids).
-  assert.equal(getJapamAlarmSoundName('om-namo-bhagavate-vasudevaya'), null);
+  assert.equal(getJapamAlarmSoundName('gayatri-mantra'), null);
   assert.equal(getJapamAlarmSoundName('does-not-exist'), null);
 }
 

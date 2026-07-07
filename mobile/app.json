@@ -60,9 +60,7 @@
         {
           "color": "#B8621B",
           "sounds": [
-            "./assets/japam-alarm-sounds/om-namah-shivaya.wav",
-            "./assets/japam-alarm-sounds/hare-krishna-mahamantra.wav",
-            "./assets/japam-alarm-sounds/gayatri-mantra.wav"
+            "./assets/japam-alarm-sounds/om-namah-shivaya.wav"
           ]
         }
       ],
