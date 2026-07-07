@@ -54,6 +54,14 @@ appId: host.exp.Exponent
 - tapOn: "Set your daily practice"
 - waitForAnimationToEnd
 
+# ── Step 2b: The wizard opens on the PRD-11 'choose' fork — take the
+# build-your-own path (ModeCard child Texts merge; anchor with ".*"). ──
+- extendedWaitUntil:
+    visible: "How would you like to begin.*"
+    timeout: 15000
+- tapOn: "Build your own.*"
+- waitForAnimationToEnd
+
 # ── Step 3: Name the routine ──
 - extendedWaitUntil:
     visible: "Name your routine"
@@ -108,18 +116,25 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: "Today's Practice"
     timeout: 15000
-- assertVisible: "0/1.*"
-- tapOn: "Mark done"
-- waitForAnimationToEnd
-- assertVisible: "1/1.*"
+# The PRD-10 ledger headline reads "0 of 1"; the check-off circle's label is
+# "Mark offered" (→ "Offered — tap to undo" once checked).
+- assertVisible: "0 of 1.*"
+- tapOn: "Mark offered"
+# Let the pushpa-varsha overlay finish before reading the headline underneath.
+- waitForAnimationToEnd:
+    timeout: 10000
+- extendedWaitUntil:
+    visible: "1 of 1 offered.*"
+    timeout: 10000
 # Tap the same check-off again to UN-mark (manual done is reversible).
-- tapOn: "Mark done"
+- tapOn: "Offered — tap to undo"
 - waitForAnimationToEnd
-- assertVisible: "0/1.*"
+- assertVisible: "0 of 1.*"
 
 # ── Step 7: Open the item into its reader, then return ──
-# The row's subtitle carries the routine name, so this taps the open-item Pressable.
-- tapOn: ".*E2E Weekday Routine.*"
+# The open-item Pressable merges the row title + subtitle ("Hanuman Chalisa,
+# हनुमान चालीसा · Tap to read") — anchor on title + tail.
+- tapOn: "Hanuman Chalisa.*Tap to read.*"
 - waitForAnimationToEnd:
     timeout: 15000
 - tapOn:

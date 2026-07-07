@@ -1,8 +1,8 @@
 ---
 title: Overview
 type: overview
-sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/routine/, RULEBOOK.md, design.md, scripts/, push.sh]
-last_verified_date: 2026-06-13
+sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, RULEBOOK.md, design.md, scripts/, push.sh]
+last_verified_date: 2026-07-06
 confidence: medium
 status: current
 ---
@@ -51,14 +51,14 @@ Deep links and notification taps route through `navigationRef`, exported from
 
 | Module | Purpose | Key Paths |
 |---|---|---|
-| `mobile/src/screens/` | Reader & feature screens (one per text/variant) | `GitaReaderScreen`, `ChalisaReaderScreen`, `DailyBhaktiScreen`, `PanchangScreen` |
-| `mobile/src/components/` | Reusable UI | `GitaVersePage`, `LibraryCard`, `UpdateReadyModal`, `ReminderOptInModal`, `LanguageToggle`, `RoutineBanner`, `AddToRoutineButton`, `HomeWordmark` |
-| `mobile/src/navigation/` | Nav graph + types | `RootNavigator`, `TabNavigator`, `HomeStackNavigator`, `MoreStackNavigator`, `types.ts`, `entryRoutes.ts` |
-| `mobile/src/contexts/` | App state | `BookmarksContext`, `JapamCounterContext`, `ReadingProgressContext`, `UserActivityContext`, `NewContentContext`, `NotificationPreferencesContext`, `RoutineContext`, `RoutineSheetProvider` |
+| `mobile/src/screens/` | Reader & feature screens (one per text/variant) | `GitaReaderScreen`, `ChalisaReaderScreen`, `DailyBhaktiScreen`, `PanchangScreen`, `MuhuratDetailScreen`, `JapamAlarmsScreen` |
+| `mobile/src/components/` | Reusable UI | `GitaVersePage`, `LibraryCard`, `UpdateReadyModal`, `ReminderOptInModal`, `LanguageToggle`, `RoutineBanner`, `AddToRoutineButton`, `HomeWordmark`, `MuhuratGlanceCard`, `MuhuratCardBody` |
+| `mobile/src/navigation/` | Nav graph + types | `RootNavigator`, `TabNavigator`, `HomeStackNavigator`, `MoreStackNavigator`, `PanchangStackNavigator`, `types.ts`, `entryRoutes.ts` |
+| `mobile/src/contexts/` | App state | `BookmarksContext`, `JapamCounterContext`, `JapamAlarmsContext`, `ReadingProgressContext`, `UserActivityContext`, `NewContentContext`, `NotificationPreferencesContext`, `RoutineContext`, `RoutineSheetProvider` |
 | `mobile/src/data/` | Bundled content + registries | `texts.ts` (library index), `searchIndex.ts`, `deities.ts`, `categories.ts`, `gita/chapter-01..18.json`, `chalisa/`, `sundarkand/`, stotram dirs, `sourceIdMigration.ts`, `routine/` (types, units, vaar, useRoutineToday — see [[routine]]) |
-| `mobile/src/panchang/` | Hindu-calendar engine | `festivals.ts` + astronomy-engine calculations |
+| `mobile/src/panchang/` | Hindu-calendar engine | `festivals.ts` + astronomy-engine; `muhurat.ts` (Choghadiya/Kaal/Abhijit engine — pure), `muhuratFormat.ts`, `useMuhurat.ts` (see [[panchang]]) |
 | `mobile/src/theme/` | Design tokens (light-only) | `ThemeContext.tsx`, `colors.ts`, `typography.ts`, `spacing.ts` |
-| `mobile/src/utils/` | Helpers | `shareVerse.tsx`, `semverCompare.ts`, `titleByLanguage.ts` |
+| `mobile/src/utils/` | Helpers | `shareVerse.tsx`, `semverCompare.ts`, `titleByLanguage.ts`, `useMinuteTick.ts` |
 
 ## Data Layer
 
@@ -85,10 +85,11 @@ ID changes. User language preference, routines (`@vedansh/routines`) and daily d
 - **tsx + `node:assert`** for the Panchang engine — `npm run test:engine`; and for `src/data` /
   `src/notifications` suites, which are **deliberately excluded from Jest** (see the comment in
   `mobile/jest.config.js`). Run those via `tsx --test`.
-- **Maestro** E2E — 16+ flows in `mobile/.maestro/` (`npm run test:e2e`): per-category smokes,
-  NEW-badge ×3, routine ×2, search, wishlist, reminders, more-hub, resume-reading, deity-browse,
-  gita-reader. The README table lists behaviours **deliberately covered by unit tests instead**
-  (chapter auto-advance, OTA modal, notification deep-link, share card, japam reset).
+- **Maestro** E2E — 18+ flows in `mobile/.maestro/` (`npm run test:e2e`): per-category smokes,
+  NEW-badge ×3, routine ×2, sadhana-sankalp, japam-alarms, search, wishlist, reminders, more-hub,
+  resume-reading, deity-browse, gita-reader, language-smoke. The README table lists behaviours
+  **deliberately covered by unit tests instead** (chapter auto-advance, OTA modal, notification
+  deep-link, share card, japam reset).
 - `contentCorrectness.test.ts` pins RULEBOOK content rules; `readerTypeScale`, `colors.contrast`,
   `semverCompare`, and `entryRoutes` tests gate the rest.
 

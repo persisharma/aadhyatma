@@ -328,6 +328,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                       color: colors.saffronDeep,
                       fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
                     },
+                    // tracking/uppercase split the shirorekha on Indic labels
+                    lang !== 'en' && { letterSpacing: 0, textTransform: 'none' as const },
                   ]}
                 >
                   {pick(lang, { hi: '+ समय जोड़ें', en: '+ Add reminder', gu: '+ સમય ઉમેરો', kn: '+ ಸಮಯ ಸೇರಿಸಿ' })}
@@ -339,6 +341,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 style={[
                   styles.note,
                   { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily) },
+                  lang !== 'en' && { letterSpacing: 0 },
                 ]}
               >
                 {pick(lang, { hi: `अधिकतम ${MAX_REMINDER_TIMES} समय जोड़े जा सकते हैं।`, en: `Up to ${MAX_REMINDER_TIMES} reminders.`, gu: `વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકાય.`, kn: `ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}

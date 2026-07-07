@@ -5,6 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
+import { pillTextStyle } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { resolveRoutineItem } from '@/data/routine/units';
 import { WEEKDAY_LABELS, deityLabelForWeekday } from '@/data/routine/vaar';
@@ -61,7 +62,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
       >
         {isWeekday && (
           <View style={{ marginBottom: spacing.md }}>
-            <Text style={{ ...typography.sectionLabel, color: colors.inkMuted, marginBottom: 8 }}>
+            <Text style={{ ...pillTextStyle(lang, typography.sectionLabel), color: colors.inkMuted, marginBottom: 8 }}>
               {pick(lang, { hi: 'वार · देव', en: 'Weekday · deity', gu: 'વાર · દેવ', kn: 'ವಾರ · ದೇವ' })}
             </Text>
             <View style={styles.dayStrip}>

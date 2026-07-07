@@ -96,7 +96,8 @@ export function RoutineButton({
               ? typography.verseLatin.fontFamily
               : scriptTitleFont(lang, typography.cardHindi.fontFamily),
           fontSize: 16,
-          lineHeight: 22,
+          // ≥1.5× — RN clips Devanagari top matras (ें ैं) below ~1.45×.
+          lineHeight: 24,
           color: ghost ? colors.saffron : colors.onPrimary,
         }}
       >

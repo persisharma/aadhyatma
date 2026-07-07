@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang, meaningByLang } from '@/utils/localize';
+import { contentByLang, meaningByLang, pick } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { useUserActivity } from '@/contexts/UserActivityContext';
@@ -205,6 +205,8 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                         backgroundColor: e.done ? colors.saffron : 'transparent',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        // optically centres the 28px circle on the 24px title line
+                        marginTop: -2,
                       }}
                     >
                       {e.done && <Text style={{ color: colors.onPrimary, fontSize: 14 }}>✓</Text>}
@@ -215,6 +217,7 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                         style={{
                           fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
                           fontSize: 16,
+                          lineHeight: 24,
                           color: e.done ? colors.inkMuted : colors.ink,
                         }}
                       >
@@ -222,8 +225,13 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                       </Text>
                       <Text
                         style={{
-                          fontFamily: typography.cardLatin.fontFamily,
-                          fontSize: 12,
+                          // Mixed-script line (alt-language title + localized tail):
+                          // the §46 meta convention — Inter/cardMeta has no Indic glyphs.
+                          fontFamily:
+                            lang === 'en'
+                              ? typography.cardMeta.fontFamily
+                              : scriptBodyFont(lang, typography.meaning.fontFamily),
+                          fontSize: typography.cardMeta.fontSize,
                           color: e.done ? colors.inkMuted : colors.saffronDeep,
                           marginTop: 2,
                         }}
@@ -233,7 +241,7 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                     </Pressable>
 
                     <Pressable onPress={() => navigateToRoutineItem(itemNav, e.item)} hitSlop={8}>
-                      <Text style={{ color: colors.saffron, fontSize: 18 }}>›</Text>
+                      <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 24 }}>›</Text>
                     </Pressable>
                   </View>
                 );
@@ -242,11 +250,13 @@ export default function RoutineTodayScreen({ navigation }: Props) {
 
             <Text
               style={{
-                fontFamily: scriptBodyFont(lang, typography.cardLatin.fontFamily),
+                // meaning face, not cardLatin: the hi caption must not fall to the
+                // system font; 1.5× leading keeps Devanagari matras unclipped.
+                fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
                 fontSize: 12,
                 color: colors.inkMuted,
                 marginTop: spacing.lg,
-                lineHeight: 17,
+                lineHeight: 18,
               }}
             >
               {meaningByLang(
@@ -257,6 +267,19 @@ export default function RoutineTodayScreen({ navigation }: Props) {
             </Text>
           </>
         )}
+
+        {/* Discovery: the prebuilt-sankalp catalog must stay reachable outside
+            the create-routine chooser (its only other entry point). */}
+        <RoutineButton
+          label={pick(lang, {
+            hi: 'तैयार संकल्प चुनें',
+            en: 'Browse sankalps',
+            gu: 'તૈયાર સંકલ્પ પસંદ કરો',
+            kn: 'ಸಿದ್ಧ ಸಂಕಲ್ಪ ಆರಿಸಿ',
+          })}
+          variant="ghost"
+          onPress={() => navigation.navigate('SadhanaPrograms')}
+        />
       </ScrollView>
     </RoutineShell>
   );
@@ -266,6 +289,8 @@ const styles = StyleSheet.create({
   emptyCard: { alignItems: 'center', paddingVertical: 40, paddingHorizontal: 20, borderWidth: 1 },
   summary: { alignItems: 'center', borderWidth: 1 },
   track: { height: 7, width: '100%', overflow: 'hidden' },
-  itemRow: { flexDirection: 'row', alignItems: 'center', gap: 14, paddingVertical: 14 },
+  // flex-start so the circle and chevron pin to the title's first line instead
+  // of drifting to the middle of a wrapped two-line block.
+  itemRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 14, paddingVertical: 14 },
   itemInfo: { flex: 1, minWidth: 0 },
 });

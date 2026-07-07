@@ -140,6 +140,25 @@ export default function HomeScreen({ navigation }: Props) {
       onPress: () => rootNav.navigate('PanchangTab'),
     },
     {
+      key: 'sankalp',
+      titleHi: 'संकल्प', titleEn: 'Sadhana Programs',
+      descHi: '४१-दिन हनुमान चालीसा जैसे तैयार संकल्प लें।',
+      descEn: 'Take a prebuilt vow, like the 41-day Hanuman Chalisa.',
+      ctaHi: 'संकल्प लें', ctaEn: 'Begin',
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.saffronDeep,
+          }}
+        >
+          सं
+        </Text>
+      ),
+      onPress: () => navigation.navigate('SadhanaPrograms'),
+    },
+    {
       key: 'theerth',
       titleHi: 'तीर्थ यात्रा', titleEn: 'Sacred Journeys',
       descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
@@ -257,7 +276,6 @@ export default function HomeScreen({ navigation }: Props) {
                 color: colors.inkMuted,
                 fontFamily: typography.footerMantra.fontFamily,
                 fontSize: typography.footerMantra.fontSize,
-                letterSpacing: typography.footerMantra.letterSpacing,
               },
             ]}
           >

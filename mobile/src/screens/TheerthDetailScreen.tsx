@@ -5,7 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import { meaningToken, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { meaningToken, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getTheerthBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -119,9 +119,8 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             >
               <Text
                 style={{
-                  fontSize: 10,
-                  letterSpacing: 3,
-                  fontWeight: '600',
+                  // pillTextStyle: tracking splits the shirorekha on Indic labels.
+                  ...pillTextStyle(lang, typography.versePill),
                   color: colors.saffronDeep,
                 }}
               >
