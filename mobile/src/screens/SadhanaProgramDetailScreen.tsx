@@ -58,17 +58,8 @@ export default function SadhanaProgramDetailScreen({ navigation, route }: Props)
         >
           {contentByLang(lang, program.titleHi, program.titleEn)}
         </Text>
-        <Text
-          style={{
-            fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-            fontSize: 14,
-            color: colors.saffronDeep,
-            textAlign: 'center',
-            marginTop: 4,
-          }}
-        >
-          {contentByLang(lang, program.subtitleHi, program.subtitleEn)}
-        </Text>
+        {/* No subtitle — it restated the title ("… — ४१ दिन" / "A 41-day
+            sankalp") and padded the screen with a duplicate line. */}
 
         <View
           style={[
@@ -98,7 +89,10 @@ export default function SadhanaProgramDetailScreen({ navigation, route }: Props)
         {(active || completed) && (
           <Text
             style={{
-              fontFamily: scriptBodyFont(lang, typography.cardMeta.fontFamily),
+              fontFamily:
+                lang === 'en'
+                  ? typography.cardMeta.fontFamily
+                  : scriptBodyFont(lang, typography.meaning.fontFamily),
               fontSize: typography.cardMeta.fontSize,
               color: colors.inkMuted,
               textAlign: 'center',
@@ -123,7 +117,7 @@ export default function SadhanaProgramDetailScreen({ navigation, route }: Props)
                 <Text style={{ fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: typography.cardHindi.fontSize, color: colors.ink }}>
                   {contentByLang(lang, 'दैनिक स्मरण', 'Daily reminder')}
                 </Text>
-                <Text style={{ fontFamily: scriptBodyFont(lang, typography.cardMeta.fontFamily), fontSize: typography.cardMeta.fontSize, color: colors.inkMuted, marginTop: 2 }}>
+                <Text style={{ fontFamily: lang === 'en' ? typography.cardMeta.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: typography.cardMeta.fontSize, color: colors.inkMuted, marginTop: 2 }}>
                   {contentByLang(lang, 'आपके नित्य स्मरण समय पर', 'At your daily reminder time')}
                 </Text>
               </View>
@@ -160,7 +154,9 @@ export default function SadhanaProgramDetailScreen({ navigation, route }: Props)
 
         <Text
           style={{
-            fontFamily: scriptBodyFont(lang, typography.cardLatin.fontFamily),
+            // meaning face, not cardLatin: the hi footer must not fall to the
+            // system font (cardLatin/Cormorant has no Indic glyphs).
+            fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
             fontSize: 12,
             color: colors.inkMuted,
             marginTop: spacing.lg,

@@ -40,6 +40,10 @@ type Props = NativeStackScreenProps<MoreStackParamList, 'JapamAlarms'>;
 
 const DEFAULT_TIME: TimeOfDay = { hour: 6, minute: 0 };
 
+// Tracking/uppercase are Latin-only affordances — on Devanagari they split the
+// shirorekha ("शि व"), so Hindi labels reset both and take the Devanagari face.
+const INDIC_LABEL_RESET = { letterSpacing: 0, textTransform: 'none' } as const;
+
 /** "Mon, 6 Jul" — the short date used by skip-next copy. Locale-formatted
  *  with a plain fallback when Intl data is unavailable. */
 function shortDateLabel(ts: number, isHi: boolean): string {
@@ -259,8 +263,9 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                   styles.addBtnText,
                   {
                     color: colors.saffronDeep,
-                    fontFamily: typography.cardLatin.fontFamily,
+                    fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily,
                   },
+                  isHi && INDIC_LABEL_RESET,
                 ]}
               >
                 {isHi ? '+ स्मरण जोड़ें' : '+ Add alarm'}
@@ -270,7 +275,8 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
             <Text
               style={[
                 styles.note,
-                { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
+                isHi && INDIC_LABEL_RESET,
               ]}
             >
               {isHi
@@ -385,7 +391,8 @@ function AlarmRow({
         <Text
           style={[
             styles.rowRepeat,
-            { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+            { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
+            isHi && INDIC_LABEL_RESET,
           ]}
           numberOfLines={1}
         >
@@ -395,7 +402,8 @@ function AlarmRow({
           <Text
             style={[
               styles.rowLabel,
-              { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+              { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
+              isHi && INDIC_LABEL_RESET,
             ]}
             numberOfLines={1}
           >
@@ -602,7 +610,8 @@ export function AlarmEditorSheet({
             <Text
               style={[
                 styles.editorLabel,
-                { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
+                isHi && INDIC_LABEL_RESET,
               ]}
             >
               {isHi ? 'समय' : 'Time'}
@@ -614,7 +623,8 @@ export function AlarmEditorSheet({
             <Text
               style={[
                 styles.editorLabel,
-                { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
+                isHi && INDIC_LABEL_RESET,
               ]}
             >
               {isHi ? 'दोहराव' : 'Repeat'}
@@ -678,7 +688,8 @@ export function AlarmEditorSheet({
               <Text
                 style={[
                   styles.editorLabel,
-                  { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                  { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
+                  isHi && INDIC_LABEL_RESET,
                 ]}
               >
                 {isHi ? 'मंत्र' : 'Mantra'}
@@ -729,7 +740,8 @@ export function AlarmEditorSheet({
                             styles.mantraChipSub,
                             {
                               color: colors.inkMuted,
-                              fontFamily: typography.cardLatin.fontFamily,
+                              fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily,
+                              fontStyle: isHi ? 'normal' : 'italic',
                             },
                           ]}
                         >
@@ -747,7 +759,8 @@ export function AlarmEditorSheet({
             <Text
               style={[
                 styles.editorLabel,
-                { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
+                isHi && INDIC_LABEL_RESET,
               ]}
             >
               {isHi ? 'नाम (वैकल्पिक)' : 'Label (optional)'}

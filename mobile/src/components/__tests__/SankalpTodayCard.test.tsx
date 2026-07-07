@@ -86,11 +86,13 @@ describe('SankalpTodayCard', () => {
     expect(text).toContain('Whole text');
     expect(text).toContain('Tap to read');
     expect(text).not.toContain("Mark today's practice done");
+    // A waiting preview is read-only — no check circle at all (a dead circle
+    // reads as a broken control).
+    const circles = tree.root.findAll(
+      (n) => typeof n.props.accessibilityLabel === 'string' && n.props.accessibilityLabel.startsWith('Mark offered')
+    );
+    expect(circles).toHaveLength(0);
     expect(mockCommitDay).not.toHaveBeenCalled();
-    // A waiting day is a read-ahead preview, not a to-do: the offering checkbox
-    // (a completion affordance) must not render, or its empty circle promises
-    // progress a rest-day read can never deliver — the "still 0/4" confusion.
-    expect(tree.root.findAll((n) => n.props.accessibilityLabel === 'Mark offered')).toHaveLength(0);
     expect(text).toContain('Preview');
   });
 
@@ -127,8 +129,10 @@ describe('SankalpTodayCard', () => {
     // ticks to 1/9 on completion — the "still 0/N after finishing" fix.
     expect(text).toContain('Sankalp · 0 / 9');
     expect(text).not.toContain('Day 1');
+    // The circle's label names its item so it never collides with the routine
+    // rows' generic "Mark offered" circles (a11y + Maestro disambiguation).
     const markButton = tree.root.findAll(
-      (n) => n.props.accessibilityLabel === 'Mark offered'
+      (n) => n.props.accessibilityLabel === 'Mark offered — Durga Chalisa'
     )[0];
 
     expect(markButton).toBeDefined();

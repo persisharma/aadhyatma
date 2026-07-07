@@ -74,7 +74,11 @@ export default function ReminderOptInModal() {
       ? fontFamilies.gujarati
       : lang === 'kn'
         ? fontFamilies.kannada
-        : typography.cardLatin.fontFamily;
+        : lang === 'hi'
+          ? typography.meaning.fontFamily // Cormorant has no Devanagari glyphs
+          : typography.cardLatin.fontFamily;
+  // Tracking/uppercase split the shirorekha on Indic labels — Latin-only.
+  const indicLabelReset = lang !== 'en' && ({ letterSpacing: 0, textTransform: 'none' } as const);
 
   const notNow = pick(lang, { hi: 'अभी नहीं', en: 'Not now', gu: 'હમણાં નહીં', kn: 'ಈಗ ಬೇಡ' });
 
@@ -157,6 +161,7 @@ export default function ReminderOptInModal() {
                     color: colors.inkMuted,
                     fontFamily: labelFont,
                   },
+                  indicLabelReset,
                 ]}
               >
                 {pick(lang, { hi: 'समय चुनें', en: 'Choose time', gu: 'સમય પસંદ કરો', kn: 'ಸಮಯ ಆಯ್ಕೆಮಾಡಿ' })}
@@ -206,6 +211,7 @@ export default function ReminderOptInModal() {
                 style={[
                   styles.secondaryText,
                   { color: colors.inkMuted, fontFamily: labelFont },
+                  indicLabelReset,
                 ]}
               >
                 {notNow}

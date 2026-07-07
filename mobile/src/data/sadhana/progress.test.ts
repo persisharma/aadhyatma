@@ -32,6 +32,10 @@ test('catalog is well-formed', () => {
     // Every program carries a Devanagari thumb glyph for its listing card
     // (design.md §8 — LibraryCard-style thumb).
     assert.ok(p.thumb && p.thumb.trim().length > 0, `${p.id} must have a thumb glyph`);
+    // The grace rule lives in the detail screen's footer for every program —
+    // intros must not restate it (it duplicated on-screen for hanuman-41 once).
+    assert.ok(!p.introHi.includes('टूटत'), `${p.id} introHi must not restate the grace rule`);
+    assert.ok(!/never breaks|does not break/i.test(p.introEn), `${p.id} introEn must not restate the grace rule`);
   }
 });
 
