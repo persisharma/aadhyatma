@@ -438,6 +438,16 @@ export default function PanchangScreen() {
             </Text>
           </View>
 
+          {/* Daily Muhurat — Choghadiya / Rahu Kaal glance card (PRD-14). Promoted
+              to sit directly under the date header, above the anga grid: "is now
+              auspicious?" is the live, time-sensitive question users open Panchang
+              for, so it leads the day panel rather than trailing the times card. */}
+          <MuhuratGlanceCard
+            date={selectedDate}
+            calendarSystem={calendarSystem}
+            onViewAll={() => rootNav.navigate('MuhuratDetail', { dateMs: selectedDate.getTime() })}
+          />
+
           {/* Two-tier anga grid: Tithi + Nakshatra lead (the two anchors users read
               first) on elevated off-white cards; Yoga + Karana sit as a quieter,
               flatter secondary row. */}
@@ -460,14 +470,6 @@ export default function PanchangScreen() {
               <TimeCell icon="☽" label={contentByLang(lang, 'ब्रह्म मुहूर्त', 'Brahma Muhurta')} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} lang={lang} colors={colors} />
             </View>
           </View>
-
-          {/* Daily Muhurat — Choghadiya / Rahu Kaal glance card (PRD-14). Reads the
-              selected day; opens the full reverent readout. */}
-          <MuhuratGlanceCard
-            date={selectedDate}
-            calendarSystem={calendarSystem}
-            onViewAll={() => rootNav.navigate('MuhuratDetail', { dateMs: selectedDate.getTime() })}
-          />
             </>
           ) : (
             <View style={{ paddingVertical: 72, alignItems: 'center', justifyContent: 'center' }}>
