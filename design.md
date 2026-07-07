@@ -534,7 +534,7 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 **Purpose.** Single source of truth for the app-wide reading language. Used on the Chapters Index (Section 15) and in every reader's persistent toggle row (Section 9).
 
-**Shape.** A deliberate **two-segment** pill (`LanguageToggle.tsx`): the left segment is the user's **chosen regional language** — Hindi by default, or Gujarati/Kannada if picked in the More-tab language settings (`regionalLang`) — the right segment is always **English**. The segments come from `[regionalMeta, EN_META]` over the `LANGUAGES` metadata array; all four languages never render at once in the reader — gu/kn are chosen in More and then occupy the regional slot. The active segment is tinted with `saffron-tint` and typed in `saffron-deep`; the inactive segment is transparent and typed in `ink-muted`. Pressed (inactive) drops opacity to 0.7.
+**Shape.** A deliberate **two-segment** pill (`LanguageToggle.tsx`): the left segment is the user's **chosen regional language** — Hindi by default, or Gujarati/Kannada if picked in the More-tab **language picker sheet** (`regionalLang`) — the right segment is always **English**. The segments come from `[regionalMeta, EN_META]` over the `LANGUAGES` metadata array; all four languages never render at once in the reader — gu/kn are chosen in More and then occupy the regional slot. The active segment is tinted with `saffron-tint` and typed in `saffron-deep`; the inactive segment is transparent and typed in `ink-muted`. Pressed (inactive) drops opacity to 0.7.
 
 ```
 ┌────── pill radius ──────┐
@@ -544,7 +544,7 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 - Container: `parchment-soft` background, `divider` border 1 px, `pill` radius, 3 px inner padding.
 - Each segment: `minWidth 56`, `minHeight 44`, centered.
-- Each segment shows its **full native name** in its own script/face: `हिन्दी` Noto Serif Devanagari 15 600 · `English` Cormorant italic 14 · `ગુજરાતી` Gujarati serif 14 600 · `ಕನ್ನಡ` Kannada serif 13 600. The English names (`Hindi`/`English`/…) are the accessibility labels; the full four-way choice lives in the More-tab radios.
+- Each segment shows its **full native name** in its own script/face: `हिन्दी` Noto Serif Devanagari 15 600 · `English` Cormorant italic 14 · `ગુજરાતી` Gujarati serif 14 600 · `ಕನ್ನಡ` Kannada serif 13 600. The English names (`Hindi`/`English`/…) are the accessibility labels; the full four-way choice lives in the More-tab **language picker sheet** (§37).
 
 **Behaviour.**
 
@@ -1085,20 +1085,19 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 
 ## 37. More Hub & Profile
 
-**Purpose.** The settings-and-self tab (`MoreTab` → `MoreStackNavigator`: `MoreHome` → `Profile` / `Wishlist` / `Reminders` / `JapamAlarms`). One scroll of cards over the Home gradient, 14 gap, `spacing.xxl` gutters.
+**Purpose.** The settings-and-self tab (`MoreTab` → `MoreStackNavigator`: `MoreHome` → `Profile` / `Wishlist` / `Reminders` / `JapamAlarms`). One scroll over the Home gradient, **16 px gutters**, three grouped sections ~22 apart. **All hub chrome is single-language** (the selected reading language only) — bilingual pairing is reserved for actual reading content, never navigation/settings (V4 redesign).
 
 **Hub** (`MoreScreen.tsx`), top to bottom:
 
-1. Centred title `अन्य · More` (language-aware primary/secondary via `orderTitlesByLanguage`, 22/14).
-2. **Sadhak Profile card** — the one gradient card on the screen (`cardActiveFrom → cardActiveTo`, `cardActiveBorder`, `radii.lg`): a 44 px `saffron` ॐ crest, `साधक प्रोफ़ाइल · Sadhak Profile · Insights` title, `saffron` ›, then a hairline and a three-cell stat strip — lifetime **verses / rounds / streak** (`saffron-deep` values at 20, tracked-uppercase 10 pt labels). → Profile.
-3. **Wishlist card** — flat `parchment-soft` row: 36 px `saffron` icon tile with ♥, "Wishlist" + "`N` verses saved" meta. → the saved-verse list (§24; rows re-open their exact verse via `buildBookmarkTarget`, §38).
-4. **Reminders card** — `gold` ॐ icon tile; meta shows the live state ("Daily verse at 07:00" / "Daily verse off"). → Reminder Settings (§38).
-5. **Japam Alarms card** — `saffron-deep` ⏰ icon tile; meta lists active alarm times or invites "Wake to a mantra you love". → §35 alarms.
-6. **Share the App card** — flat `parchment-soft` row: 36 px `saffron` icon tile with the ↗ share glyph, "Share the App" + "Send Vedansh to someone you love" meta (all localized). Opens the OS share sheet with a plain app-invite message (no verse) — `buildAppShareMessage(lang)` in `data/shareLinks.ts`, the localized `APP_SHARE_INVITE` line + the `SMART_LINK` download URL (§39 share-verse shares the same smart link but attaches a verse card).
-7. **Language card** — the app-wide default reading language as a 2×2 radio grid over the `LANGUAGES` metadata (हिन्दी / English / ગુજરાતી / ಕನ್ನಡ, each labelled in its own script at 17); the selection gets a `saffron` border, `saffron-tint`-strength fill, and a corner ✓. Same state as every Language Toggle (§16) — `useGitaLanguage`, persisted.
-8. **Reading size card** (`ReadingSizeCard`) — the global M/L type-scale control; see the Reading Size section (§44).
-9. **Panchang disclosure card** — ☽ icon tile + a small-print methodology note ("Tithi follows Surya Siddhanta with modern corrections…", localized), naming the current panchang city and pointing location changes at the Panchang tab (§33).
-10. **Links card** — `About & Disclaimer` (opens a pageSheet modal with the bilingual disclaimer + "Report an Error" CTA) and `Report an Error` (mailto).
+1. **Title** — one left-aligned line, selected language only (`अन्य` / `More` / `અન્ય` / `ಇನ್ನಷ್ಟು`), 30 pt in the script's title face (`latinBold` for en, `scriptTitleFont` for hi/gu/kn). No `More` subtitle.
+2. **Three grouped inset lists** — each is an uppercase **group label** (`saffron-deep`, 13; Latin gets tracking + uppercase via the chrome font, Indic drops both) above one **list container** (`parchment-soft`, radius 20, 1 px `divider`, `overflow:hidden`, soft shadow) whose rows are split by hairline `divider` top-borders. Standard row anatomy: `[38 px icon tile, radius 11] [label 18]  …  [state 15 ink-muted] [chevron › 19 gold]`, padding 15×16, pressed → `saffron-tint` wash.
+   - **साधना / Practice** — a compact **profile hero row** (tinted `cardActiveFrom → cardActiveTo` gradient, 52 px circular `saffron` ॐ badge, `साधक प्रोफ़ाइल` title, sub-line "**`N`** श्लोक · **`N`** श्रृंखला" = lifetime verses + streak in `saffron`; the old `rounds` count is dropped; a11y "Open Sadhak profile" → Profile), then **संग्रह** (♥ `saffron`, state = saved count; label matches the WishlistScreen title → Wishlist §24), **स्मरण** (ॐ `gold`, state = reminder time(s) or Off → Reminder Settings §38), **जप अलार्म** (⏰ `saffron-deep`, state = active count → §35).
+   - **ऐप / App** — **भाषा** (अ `gold`, state = current language's native name; opens the **Language picker sheet**, not an inline grid), **पाठ का आकार** (Aa `saffron`, state = मानक/बड़ा; opens the **Reading-size picker sheet**, §43), **ऐप साझा करें** (↗ `saffron`; OS share sheet via `buildAppShareMessage(lang)`, `data/shareLinks.ts` — the localized `APP_SHARE_INVITE` + `SMART_LINK`).
+   - **जानकारी / Info** — **परिचय व अस्वीकरण** (ⓘ `ink-muted`; opens the pageSheet disclaimer modal with the bilingual disclaimer + "Report an Error" CTA) and **त्रुटि सूचित करें** (⚑ `ink-muted`; `mailto` via `buildDiscrepancyMailto`).
+
+**Picker sheets** — `LanguagePickerSheet.tsx` and `ReadingSizePickerSheet.tsx` are bottom-sheet `Modal`s (slide up, `modalBackdrop`, grabber, `parchmentHighlight`) following the `AddToRoutineSheet` pattern. Language lists the four `LANGUAGES` as radios each in its own script; picking one applies it (`useGitaLanguage`, §16) and closes. Reading-size shows the M/L pills + the live "श्री राम जय राम" sample (§43) + a Done button; picking a size keeps the sheet open so the preview updates.
+
+*Removed in V4:* the tall bilingual header + `More` subtitle, the big 3-stat profile card (→ compact hero row), the inline 2×2 language grid and inline reading-size card (→ rows opening sheets), and the Panchang methodology card (it duplicated the Panchang tab, §33).
 
 **Profile** (`ProfileScreen.tsx`) — the साधक insights surface, fed by `UserActivityContext` (reads, japam beads/rounds, per-source and per-mantra tallies, all local):
 
@@ -1303,7 +1302,7 @@ Each deity's avatar glyph is a compact **symbolic attribute**, not a portrait (d
 
 ## 43. Reading Size Setting
 
-**Purpose.** A two-preset reading-text size control (PRD-04, slice 2) — comfort sizing for verse and meaning text without letting UI chrome reflow or clip. `mobile/src/theme/fontScale.ts` + `mobile/src/contexts/FontScaleContext.tsx` + `mobile/src/components/ReadingSizeCard.tsx`.
+**Purpose.** A two-preset reading-text size control (PRD-04, slice 2) — comfort sizing for verse and meaning text without letting UI chrome reflow or clip. `mobile/src/theme/fontScale.ts` + `mobile/src/contexts/FontScaleContext.tsx` + `mobile/src/components/ReadingSizePickerSheet.tsx`.
 
 ### Presets
 
@@ -1322,19 +1321,20 @@ Only the reading-content tokens listed in `READING_STYLE_KEYS`: `verse`, `meanin
 
 `FontScaleProvider` mounts in `App.tsx` **above** `ThemeProvider`; `ThemeProvider` reads `useFontScale()` and serves `scaleTypography(typography, factor)` as `theme.typography`. Because every reader already pulls its type from the theme (§3 "no hardcoded fontSize on reading content"), the entire app scales with **zero per-screen work** — this is the payoff of the one-reading-type-scale rule. Persisted at `@vedansh/font-scale` (the raw `'M'`/`'L'` string); unknown/corrupt values fall back to `M`.
 
-### Component: Reading Size Card (`ReadingSizeCard.tsx`)
+### Component: Reading Size Picker Sheet (`ReadingSizePickerSheet.tsx`)
 
-Lives on the **More tab**, directly below the Language card, and mirrors its shell: `parchment-soft` section card, 1 px `divider` border, radius 16, padding 16.
+Opened from the **पाठ का आकार** row on the More hub (§37; the row's state text shows the current preset). A bottom-sheet `Modal` (slide up, `modalBackdrop`, grabber, `parchmentHighlight`) — single-language chrome:
 
-1. **Header row**: a 32 px `gold` rounded square with a white "Aa" glyph; title "पढ़ने का आकार / Reading size" (Inter 14 semibold `ink`) over the sub "श्लोक व अर्थ के अक्षरों का आकार / Verse & meaning text size" (Inter 11 `ink-muted`). All four reading languages have native copy.
-2. **Preset pills** (`radiogroup`; each pill a `radio` with `selected` state): Standard / Large, labelled in the active language. Selected: `saffron` border + a light saffron tint fill + `saffron` ✓ prefix, label in `saffron-deep`; unselected: `divider` border, `ink`. Pill labels are chrome — fixed size by design (the code comments this explicitly).
+1. **Header**: title "पाठ का आकार / Reading size" over the sub "श्लोक व अर्थ के अक्षरों का आकार / Verse & meaning text size", both in the selected language only. All four reading languages have native copy.
+2. **Preset pills** (`radiogroup`; each pill a `radio` with `selected` state): Standard / Large, labelled in the active language. Selected: `saffron` border + `saffron-tint` fill + `saffron` ✓ prefix, label in `saffron-deep`; unselected: `divider` border, `ink`. Pill labels are chrome — fixed size by design.
 3. **Live sample line** — "श्री राम जय राम" (per-script variants incl. IAST for en) rendered with the *same* verse token the readers consume, so it grows/shrinks the instant a pill is tapped. This is the preview; there is no separate preview machinery.
+4. **Done button** (`saffron`) closes the sheet. Picking a size does **not** auto-close, so the preview change stays visible for comparison. `readingSizeLabel(scale, lang)` is exported for the More row's state text.
 
 ### Interplay with OS font scaling (§12)
 
 The preset multiplies the app's own type tokens; it does not replace platform accessibility. No component sets `allowFontScaling={false}` (there are zero overrides in `src/`), so the OS-level font multiplier still applies on top of the preset per React Native's default — §12's "use the system's user-chosen font-scale" holds.
 
-**Files:** `mobile/src/theme/fontScale.ts`, `mobile/src/contexts/FontScaleContext.tsx`, `mobile/src/theme/ThemeContext.tsx`, `mobile/src/components/ReadingSizeCard.tsx`, `mobile/src/screens/MoreScreen.tsx`; design note `docs/superpowers/specs/2026-06-30-font-scale-ui-design.md`.
+**Files:** `mobile/src/theme/fontScale.ts`, `mobile/src/contexts/FontScaleContext.tsx`, `mobile/src/theme/ThemeContext.tsx`, `mobile/src/components/ReadingSizePickerSheet.tsx`, `mobile/src/screens/MoreScreen.tsx`; design note `docs/superpowers/specs/2026-06-30-font-scale-ui-design.md`.
 
 ---
 
