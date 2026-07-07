@@ -205,7 +205,7 @@ export default function MoreScreen({ navigation }: Props) {
                 <SettingsRow
                   icon="♥"
                   iconBg={colors.saffron}
-                  label={pick(lang, { hi: 'पसंदीदा श्लोक', en: 'Wishlist', gu: 'પસંદીદા શ્લોક', kn: 'ಆಯ್ದ ಶ್ಲೋಕ' })}
+                  label={pick(lang, { hi: 'संग्रह', en: 'Wishlist', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ' })}
                   labelFontFamily={labelFont}
                   state={`${bookmarks.length}`}
                   onPress={() => navigation.navigate('Wishlist')}
