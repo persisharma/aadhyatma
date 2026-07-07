@@ -452,8 +452,8 @@ export default function PanchangScreen() {
               first) on elevated off-white cards; Yoga + Karana sit as a quieter,
               flatter secondary row. */}
           <View style={styles.angaGrid}>
-            <PanchangTile prominent label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            <PanchangTile prominent label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
           <View style={styles.angaGridSecondary}>
             <PanchangTile label={contentByLang(lang, 'योग', 'Yoga')} element={p.yoga} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
@@ -602,7 +602,7 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
   );
 }
 
-function PanchangTile({ label, element, lang, colors, typography, radii, elevation, prominent }: {
+function PanchangTile({ label, element, lang, colors, typography, radii, elevation }: {
   label: string;
   element: PanchangElement;
   lang: Lang;
@@ -610,15 +610,12 @@ function PanchangTile({ label, element, lang, colors, typography, radii, elevati
   typography: any;
   radii: any;
   elevation: any;
-  prominent?: boolean;
 }) {
   return (
     <View
       style={[
-        prominent ? styles.angaTile : styles.angaTileSecondary,
-        prominent
-          ? { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, ...elevation.card }
-          : { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md },
+        styles.angaTile,
+        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, ...elevation.card },
       ]}
     >
       {/* The type label leads in the active language (TITHI / तिथि …) — same
@@ -636,17 +633,15 @@ function PanchangTile({ label, element, lang, colors, typography, radii, elevati
       >
         {label}
       </Text>
+      {/* Single-language value. adjustsFontSizeToFit shrinks the longest names
+          (e.g. "Uttara Bhadrapada") to one line so every card keeps equal height. */}
       <Text
         numberOfLines={1}
-        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: prominent ? 20 : 15, color: colors.ink, marginTop: prominent ? 4 : 3 }}
+        adjustsFontSizeToFit
+        minimumFontScale={0.8}
+        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18, color: colors.ink, marginTop: 4 }}
       >
         {contentByLang(lang, element.nameHi, element.nameEn)}
-      </Text>
-      <Text
-        numberOfLines={1}
-        style={{ ...captionFont(lang === 'en' ? element.nameHi : element.nameEn), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}
-      >
-        {lang === 'en' ? element.nameHi : element.nameEn}
       </Text>
       {element.endTime && (
         <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft, marginTop: 5 }}>
@@ -1025,8 +1020,7 @@ const styles = StyleSheet.create({
   dateHeader: { marginTop: 10, paddingBottom: 8, borderBottomWidth: StyleSheet.hairlineWidth, marginBottom: 12 },
   angaGrid: { flexDirection: 'row', gap: 8, marginTop: 12 },
   angaGridSecondary: { flexDirection: 'row', gap: 8, marginTop: 8 },
-  angaTile: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 14, paddingHorizontal: 14 },
-  angaTileSecondary: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 9, paddingHorizontal: 12 },
+  angaTile: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 12, paddingHorizontal: 14 },
   timesCard: { borderWidth: 1, padding: 14, marginTop: 10 },
   timesRow: { flexDirection: 'row', justifyContent: 'space-between' },
   timeCell: { flexDirection: 'row', alignItems: 'center', width: '47%', paddingVertical: 4 },

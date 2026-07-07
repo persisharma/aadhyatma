@@ -4,6 +4,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { formatClock, formatRange } from '@/panchang/muhuratFormat';
 import type { PanchangData, PanchangElement } from '@/panchang/types';
@@ -67,23 +68,30 @@ export default function MuhuratCardBody({
 
   const Muh = ({ name, time, quality, now }: { name: string; time: string; quality: 'auspicious' | 'avoid'; now?: boolean }) => {
     const bg = quality === 'avoid' ? colors.avoidTint : colors.goldTint;
-    const tone = quality === 'avoid' ? colors.avoid : colors.ink;
+    // Dark ink for the name AND time on BOTH qualities — the tint + the `· avoid`
+    // text tag carry the quality, never graying the text (this component's rule,
+    // design.md §12). Terracotta text on the terracotta `avoidTint` wash was
+    // muddy/low-contrast (~4.8:1); dark ink reads cleanly on either tint.
+    const tone = colors.ink;
     // §12 — quality carries a text cue, never colour alone.
     const qualityLabel = quality === 'avoid' ? contentByLang(lang, 'त्याज्य', 'avoid') : contentByLang(lang, 'शुभ', 'auspicious');
     return (
       <View style={[styles.muh, { backgroundColor: bg, borderRadius: radii.md }, now && { borderWidth: 1.5, borderColor: colors.saffron }]}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, flex: 1, minWidth: 0 }}>
           <Text style={{ fontFamily: titleFont, fontSize: 14, color: tone }}>{name}</Text>
-          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 9, color: quality === 'avoid' ? colors.avoid : colors.saffronDeep }}>
+          {/* Quality tag, now-badge, and time use the non-italic semibold face —
+              never the thin italic cardLatin, which washes out on the tint
+              (design.md §3/§12; same fix as MuhuratGlanceCard). */}
+          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 10, color: quality === 'avoid' ? colors.avoid : colors.saffronDeep }}>
             · {qualityLabel}
           </Text>
           {now && (
-            <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 8, fontWeight: '700', color: colors.onPrimary, backgroundColor: colors.saffron, paddingHorizontal: 5, paddingVertical: 1, borderRadius: 5, overflow: 'hidden' }}>
+            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 8, fontWeight: '700', color: colors.onPrimary, backgroundColor: colors.saffron, paddingHorizontal: 5, paddingVertical: 1, borderRadius: 5, overflow: 'hidden' }}>
               अभी
             </Text>
           )}
         </View>
-        <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: quality === 'avoid' ? colors.avoid : colors.inkSoft }}>
+        <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 12, color: colors.inkSoft }}>
           {time}
         </Text>
       </View>

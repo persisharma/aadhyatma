@@ -34,6 +34,13 @@ export const lightColors = {
   // (design.md §12 — never colour alone).
   avoid: '#9E4A2E',
   avoidTint: 'rgba(158, 74, 46, 0.12)',
+  // Chip/pill fills for the quality tags (auspicious/avoid) on the Muhurat glance
+  // card. The row tints above (0.12–0.14) are too faint to read as a *pill* on the
+  // cardActive gradient — a chip needs a fill solid enough to register as its own
+  // surface. Deepened to ~0.20/0.22 so the tag reads clearly. See MuhuratGlanceCard
+  // and colors.contrast.test.ts (signal text clears AA on the card surface).
+  avoidChipBg: 'rgba(158, 74, 46, 0.20)',
+  goldChipBg: 'rgba(166, 124, 52, 0.22)',
 
   // "NEW" badge — saffron-tinted (primary/active accent → reads as fresh & live),
   // distinct from the muted gold "SOON" badge while staying in the warm palette.
