@@ -78,7 +78,15 @@ status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Prac
   banner (it was swallowing the tap; caught by `search-smoke.yaml`).
 - **Waiting sankalps are previews, not completions** — `waiting.items` powers the visible
   preselected content row, but `useSadhanaToday()` only computes completion and `SankalpTodayCard`
-  only shows the manual completion CTA for `active` days.
+  only shows the completion checkbox for `active` days (the waiting-preview row has no check
+  circle — a rest-day read can't advance the vow, so an empty circle would falsely promise it).
+- **Sankalp day-completion is committed, not derived** — unlike a routine item (whose `done` is
+  recomputed live in `useRoutineToday`), a sankalp day only advances when `SadhanaCompletionOverlay`
+  (mounted once at the App root) sees an `active` card with `allItemsDoneToday` and calls
+  `commitDay`, persisting `completedDays[dayIndex]`. This is why "routine completed but sankalp
+  didn't" can happen if the overlay isn't mounted/reached. The `SankalpTodayCard` eyebrow shows
+  `completedDayCount(enrollment) / N` (NOT `status.dayIndex`) so it ticks 0→1 on the commit and
+  agrees with the List/Detail pills. Guarded by `SadhanaCompletion.integration.test.tsx`.
 - Tests: `contexts/__tests__/RoutineContext.test.tsx`, `screens/__tests__/RoutineCompletion.test.tsx`,
   `components/__tests__/routineBannerView.test.ts` + `RoutineBanner`/`RoutineCelebration` tests;
   Maestro `routine-smoke.yaml` (daily lifecycle), `routine-weekday-smoke.yaml`
