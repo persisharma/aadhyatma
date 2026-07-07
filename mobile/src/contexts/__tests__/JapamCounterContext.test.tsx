@@ -5,9 +5,9 @@
 // japam-smoke header). So the round rollover + resetBeads + clear semantics are
 // pinned down here instead.
 //
-// NOTE: `increment` is a useCallback closing over `entries`, so calling it
-// several times inside ONE act() would all read the same stale snapshot. Each
-// increment therefore runs in its own act() (a re-render refreshes the closure).
+// `increment` reads from a ref that `persist` updates synchronously, so several
+// calls in ONE act() — and a single batched `increment(id, n)` — compose on the
+// latest value rather than a stale render snapshot (see the batching tests).
 
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
@@ -92,5 +92,34 @@ describe('JapamCounterContext (PR #40/#93 bead-count logic)', () => {
       api.clear(MANTRA);
     });
     expect(api.getEntry(MANTRA)).toEqual({ count: 0, rounds: 0, updatedAt: 0 });
+  });
+
+  test('a single call can add many beads at once (batched delta)', () => {
+    mount();
+    act(() => {
+      api.increment(MANTRA, 5);
+    });
+    expect(api.getEntry(MANTRA).count).toBe(5);
+  });
+
+  test('several increments in ONE tick compose instead of clobbering', () => {
+    mount();
+    act(() => {
+      api.increment(MANTRA); // +1
+      api.increment(MANTRA, 2); // +2
+      api.increment(MANTRA); // +1
+    });
+    // Without synchronous composition these would collapse to the last write.
+    expect(api.getEntry(MANTRA).count).toBe(4);
+  });
+
+  test('a batch that crosses the round boundary rolls over correctly', () => {
+    mount();
+    act(() => {
+      api.increment(MANTRA, JAPAM_BEADS_PER_ROUND + 2);
+    });
+    const e = api.getEntry(MANTRA);
+    expect(e.rounds).toBe(1);
+    expect(e.count).toBe(2);
   });
 });

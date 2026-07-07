@@ -5,14 +5,20 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { ensureBackgroundAudioMode } from '@/audio/audioSession';
 import { getJapamAudioRepetitions, getJapamAudioSource } from '@assets/japam-audio';
+import {
+  advanceBeadProgress,
+  INITIAL_BEAD_PROGRESS,
+  type BeadProgress,
+} from '@/components/japamBeadProgress';
 import type { Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 
 type Props = {
   mantraId: string;
   lang: Lang;
-  /** Called once per completed audio loop (= one bead). */
-  onIteration: () => void;
+  /** Register newly-chanted beads. Called with the number of beads completed
+   *  since the last call (>= 1) — one per recitation, batched per status tick. */
+  onIteration: (beads: number) => void;
   /** Start playing as soon as the audio is loaded. Used by the alarm
    *  deep-link flow so a tap on the notification drops the user into
    *  chanting without a second press. */
@@ -82,10 +88,9 @@ function ActiveAudioPlayer({
   // single-recitation clip is 1 (one bead per loop); musical renditions repeat
   // the mantra many times, so the count is spread across the clip.
   const repetitions = useMemo(() => getJapamAudioRepetitions(mantraId), [mantraId]);
-  // Last-seen playback position and how many beads this loop has already
-  // registered, used to advance the count once per repetition segment.
-  const prevTimeRef = useRef(0);
-  const emittedBeadsRef = useRef(0);
+  // Cumulative bead-counting state (loops completed, beads emitted, last
+  // position). Advanced by the pure `advanceBeadProgress` reducer each tick.
+  const progressRef = useRef<BeadProgress>(INITIAL_BEAD_PROGRESS);
   // Pending alarm auto-stop timer (see ALARM_AUTO_STOP_MS).
   const capTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const clearCapTimer = useCallback(() => {
@@ -109,8 +114,7 @@ function ActiveAudioPlayer({
   useEffect(() => {
     setRate(1.0);
     autoPlayedRef.current = false;
-    prevTimeRef.current = 0;
-    emittedBeadsRef.current = 0;
+    progressRef.current = INITIAL_BEAD_PROGRESS;
     clearCapTimer();
     if (player.isLoaded) {
       player.pause();
@@ -154,47 +158,25 @@ function ActiveAudioPlayer({
     player.loop = true;
   }, [player]);
 
-  // Advance the bead count as the clip plays. A single-recitation clip
-  // (`repetitions === 1`) registers one bead per completed loop; a musical
-  // rendition that chants the mantra `repetitions` times is split into that
-  // many equal segments and registers one bead as each segment completes, so
-  // the count tracks the chanting rather than the multi-minute file.
-  //
-  // Segment crossings are detected from the reported position (not
-  // `didJustFinish`, which is not emitted while `loop` is enabled and behaves
-  // inconsistently across platforms), keeping counting reliable on iOS. The
-  // loop wrap — position jumping backwards past the midpoint — closes out any
-  // remaining beads for the loop, then re-seeds the counter for the new pass.
+  // Advance the bead count as the clip plays, via the pure `advanceBeadProgress`
+  // reducer. A single-recitation clip (`repetitions === 1`) registers one bead
+  // per completed loop; a musical rendition that chants the mantra
+  // `repetitions` times registers one bead per equal-time segment, so the count
+  // tracks the chanting rather than the multi-minute file. Position (not
+  // `didJustFinish`, which isn't emitted while `loop` is enabled and behaves
+  // inconsistently across platforms) drives the counting. A multi-bead tick is
+  // applied as ONE `onIteration(delta)` call — a single atomic counter update
+  // (one render, one persist) rather than N calls.
   useEffect(() => {
     if (!status.isLoaded) return;
-    const duration = status.duration ?? 0;
-    const current = status.currentTime ?? 0;
-    if (duration <= 0) {
-      prevTimeRef.current = current;
-      return;
-    }
-    const prev = prevTimeRef.current;
-    const segmentsAt = (t: number) =>
-      Math.min(repetitions, Math.floor((t / duration) * repetitions));
-    const wrapped =
-      status.playing && prev > duration * 0.5 && current + duration * 0.4 < prev;
-    if (wrapped) {
-      // Finish the loop (every remaining repetition), then account for any
-      // segments already elapsed at the new position.
-      for (let k = emittedBeadsRef.current; k < repetitions; k++) {
-        onIterationRef.current();
-      }
-      const seeded = segmentsAt(current);
-      for (let k = 0; k < seeded; k++) onIterationRef.current();
-      emittedBeadsRef.current = seeded;
-    } else if (status.playing) {
-      const reached = segmentsAt(current);
-      for (let k = emittedBeadsRef.current; k < reached; k++) {
-        onIterationRef.current();
-      }
-      if (reached > emittedBeadsRef.current) emittedBeadsRef.current = reached;
-    }
-    prevTimeRef.current = current;
+    const { state, delta } = advanceBeadProgress(progressRef.current, {
+      currentTime: status.currentTime ?? 0,
+      duration: status.duration ?? 0,
+      repetitions,
+      playing: !!status.playing,
+    });
+    progressRef.current = state;
+    if (delta > 0) onIterationRef.current(delta);
   }, [status.currentTime, status.duration, status.isLoaded, status.playing, repetitions]);
 
   useEffect(() => {

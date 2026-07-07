@@ -38,10 +38,10 @@ export type UserActivityContextValue = {
   isLoading: boolean;
   /** Log a verse advance on a reader. Called when the user pages forward to a new verse/chapter pair. */
   logRead: (sourceId: string) => void;
-  /** Log a single bead tap. */
-  logJapaBead: (mantraId: string) => void;
-  /** Log a completed round (every 108 beads). */
-  logJapaRound: (mantraId: string) => void;
+  /** Log chanted beads (default 1; pass a count to batch a tick's worth). */
+  logJapaBead: (mantraId: string, beads?: number) => void;
+  /** Log completed rounds (default 1; every 108 beads is one round). */
+  logJapaRound: (mantraId: string, rounds?: number) => void;
   /** Returns aggregated stats over an inclusive [start,end] DateKey window. */
   totalsBetween: (startKey: DateKey, endKey: DateKey) => ActivityTotals;
   /** Lifetime totals across every recorded day. */
@@ -146,6 +146,10 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
   }, []);
 
   const persist = useCallback((next: ActivityMap) => {
+    // Update the ref synchronously so back-to-back mutations in one tick (e.g.
+    // logging beads then a round rollover) compose instead of clobbering each
+    // other via a stale render snapshot.
+    activityRef.current = next;
     setActivity(next);
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
   }, []);
@@ -175,10 +179,11 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
   );
 
   const logJapaBead = useCallback(
-    (mantraId: string) => {
+    (mantraId: string, beads: number = 1) => {
+      const inc = beads > 0 ? Math.floor(beads) : 1;
       mutateToday((day) => {
         const cur = day.japa[mantraId] ?? { beads: 0, rounds: 0 };
-        day.japa[mantraId] = { ...cur, beads: cur.beads + 1 };
+        day.japa[mantraId] = { ...cur, beads: cur.beads + inc };
         return day;
       });
     },
@@ -186,10 +191,11 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
   );
 
   const logJapaRound = useCallback(
-    (mantraId: string) => {
+    (mantraId: string, rounds: number = 1) => {
+      const inc = rounds > 0 ? Math.floor(rounds) : 1;
       mutateToday((day) => {
         const cur = day.japa[mantraId] ?? { beads: 0, rounds: 0 };
-        day.japa[mantraId] = { ...cur, rounds: cur.rounds + 1 };
+        day.japa[mantraId] = { ...cur, rounds: cur.rounds + inc };
         return day;
       });
     },
