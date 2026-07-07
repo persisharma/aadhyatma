@@ -12,7 +12,7 @@
 #   2. CreateRoutineScreen 'choose' step forks — pick "Choose a prebuilt sankalp".
 #   3. SadhanaProgramListScreen — open the "Hanuman Chalisa — 41 Days" sankalp.
 #   4. SadhanaProgramDetailScreen — "Begin this sankalp" enrolls and lands on Today.
-#   5. RoutineToday — the SankalpTodayCard shows "SANKALP · DAY 1 / 41" + the day's
+#   5. RoutineToday — the SankalpTodayCard shows "SANKALP · 0 / 41" (0 days done) + the day's
 #      Hanuman Chalisa item + a "Mark today's practice done" button; tapping it
 #      commits the day → the card flips to the "done today" resting state
 #      ("Today's reading is done. Come back tomorrow").
@@ -46,8 +46,8 @@
 #     ("Hanuman Chalisa — 41 Days, 41 days, A 41-day sankalp"), anchored with ".*".
 #   - SadhanaProgramDetailScreen title is "Sankalp"; the primary button reads
 #     "Begin this sankalp" for a fresh/abandoned enrolment (never-completed).
-#   - SankalpTodayCard's day label is uppercased ("SANKALP · DAY 1 / 41"); the
-#     commit control is "Mark today's practice done" (ghost RoutineButton).
+#   - SankalpTodayCard's eyebrow is a days-completed counter, uppercased
+#     ("SANKALP · 0 / 41" fresh → "SANKALP · 1 / 41" once the day is committed).
 #   - "Back" is the RoutineShell back-chevron accessibilityLabel.
 #
 # PRECONDITION: the Hanuman-41 sankalp is not currently active (fresh install, or
@@ -103,9 +103,11 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: "Today's Practice"
     timeout: 15000
-# Eyebrow day label reads "Sankalp · Day 1 / 41" (the sectionLabel token
-# uppercases visually via textTransform; the accessibility text is the raw casing).
-- assertVisible: "Sankalp · Day 1 / 41"
+# Eyebrow is a days-completed counter: a freshly begun sankalp has 0 days done,
+# so it reads "Sankalp · 0 / 41" (the sectionLabel token uppercases visually via
+# textTransform; the accessibility text is the raw casing). It ticks to 1/41 once
+# today's day is committed below — never anchored to the day-you-are-on index.
+- assertVisible: "Sankalp · 0 / 41"
 - assertVisible: "Hanuman Chalisa — 41 Days"
 - takeScreenshot: /tmp/vedansh-sankalp-day1
 # Commit today's practice via the explicit control (reading isn't auto-done, so

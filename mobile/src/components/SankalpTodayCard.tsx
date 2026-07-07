@@ -8,6 +8,7 @@ import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import PracticeSeal from '@/components/PracticeSeal';
 import { useSadhana } from '@/contexts/SadhanaContext';
+import { completedDayCount } from '@/data/sadhana/progress';
 import { offeredTail } from '@/data/routine/practiceView';
 import { navigateToRoutineItem } from '@/navigation/entryRoutes';
 import type { SadhanaTodayCard as CardData } from '@/data/sadhana/useSadhanaToday';
@@ -27,22 +28,21 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
   const { program, status, items } = card;
 
   const title = contentByLang(lang, program.titleHi, program.titleEn);
-  let dayLabel: string;
-  if (status.kind === 'completed') {
-    dayLabel = contentByLang(lang, 'पूर्णाहुति', 'Sankalp complete');
-  } else if (status.kind === 'waiting') {
-    dayLabel = contentByLang(
-      lang,
-      `संकल्प · ${status.doneCount} / ${status.totalDays}`,
-      `Sankalp · ${status.doneCount} / ${status.totalDays}`
-    );
-  } else {
-    dayLabel = contentByLang(
-      lang,
-      `संकल्प · दिन ${status.dayIndex} / ${status.totalDays}`,
-      `Sankalp · Day ${status.dayIndex} / ${status.totalDays}`
-    );
-  }
+  // The eyebrow is a *days-completed* progress counter, so finishing today's day
+  // visibly ticks it (0/N → 1/N) and it agrees with the List/Detail surfaces,
+  // which already read `completedDayCount` (design.md §46). It must NOT use
+  // `status.dayIndex`: that is the day you are *on* (= done + 1), so a fresh day 1
+  // would show "1 / N" before anything is done and stay "1 / N" after completing
+  // it — the counter would never move on completion ("still 0/N after reading").
+  const daysDone = completedDayCount(card.enrollment);
+  const dayLabel =
+    status.kind === 'completed'
+      ? contentByLang(lang, 'पूर्णाहुति', 'Sankalp complete')
+      : contentByLang(
+          lang,
+          `संकल्प · ${daysDone} / ${status.totalDays}`,
+          `Sankalp · ${daysDone} / ${status.totalDays}`
+        );
 
   return (
     <View
@@ -140,9 +140,19 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
         <>
           <View style={{ marginTop: spacing.md }}>
             {items.map((it, i) => {
-              const tail = offeredTail(it.done, it.doneAt, lang);
+              // Only an active day is committable — the offering checkbox is a
+              // completion affordance and belongs to `active` alone. On a waiting
+              // day the unit is a read-ahead *preview* (design.md §46; the day is
+              // not committable until the gate opens), so we drop the check circle
+              // and label the row as a preview rather than a to-do — otherwise the
+              // empty circle promises progress a rest-day read can never deliver
+              // (the "still 0/4 after reading" confusion).
+              const committable = status.kind === 'active';
               const titleMain = contentByLang(lang, it.display.titleHi, it.display.titleEn);
-              const canMark = status.kind === 'active' && !it.done;
+              const canMark = committable && !it.done;
+              const tail = committable
+                ? offeredTail(it.done, it.doneAt, lang)
+                : contentByLang(lang, 'झलक · पढ़ने के लिए टैप करें', 'Preview · Tap to read');
               return (
                 <View
                   key={it.key}
@@ -151,29 +161,31 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
                     { borderTopColor: colors.divider, borderTopWidth: i === 0 ? 0 : 1 },
                   ]}
                 >
-                  <Pressable
-                    onPress={canMark ? () => commitDay(program.id, status.dayIndex, 'marked') : undefined}
-                    accessibilityRole="button"
-                    accessibilityState={{ checked: it.done }}
-                    accessibilityLabel={
-                      it.done
-                        ? contentByLang(lang, 'अर्पित', 'Offered')
-                        : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
-                    }
-                    hitSlop={10}
-                    style={{
-                      width: 26,
-                      height: 26,
-                      borderRadius: 13,
-                      borderWidth: 2,
-                      borderColor: colors.saffron,
-                      backgroundColor: it.done ? colors.saffron : 'transparent',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {it.done && <Text style={{ color: colors.onPrimary, fontSize: 13 }}>✓</Text>}
-                  </Pressable>
+                  {committable && (
+                    <Pressable
+                      onPress={canMark ? () => commitDay(program.id, status.dayIndex, 'marked') : undefined}
+                      accessibilityRole="button"
+                      accessibilityState={{ checked: it.done }}
+                      accessibilityLabel={
+                        it.done
+                          ? contentByLang(lang, 'अर्पित', 'Offered')
+                          : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
+                      }
+                      hitSlop={10}
+                      style={{
+                        width: 26,
+                        height: 26,
+                        borderRadius: 13,
+                        borderWidth: 2,
+                        borderColor: colors.saffron,
+                        backgroundColor: it.done ? colors.saffron : 'transparent',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {it.done && <Text style={{ color: colors.onPrimary, fontSize: 13 }}>✓</Text>}
+                    </Pressable>
+                  )}
                   <Pressable style={{ flex: 1, minWidth: 0 }} onPress={() => navigateToRoutineItem(nav, it.item)}>
                     <Text
                       style={{
