@@ -13,6 +13,7 @@ import { helpContent, buildDiscrepancyMailto, SUPPORT_EMAIL } from '@/data/help/
 import { buildAppShareMessage } from '@/data/shareLinks';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { useTour } from '@/contexts/TourContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import LanguagePickerSheet from '@/components/LanguagePickerSheet';
@@ -102,6 +103,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { lang } = useGitaLanguage();
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
+  const { resetTour } = useTour();
   const { alarms: japamAlarms } = useJapamAlarms();
   const { scale } = useFontScale();
   const activeJapamAlarms = japamAlarms.filter((a) => a.enabled);
@@ -311,6 +313,15 @@ export default function MoreScreen({ navigation }: Props) {
                   labelFontFamily={labelFont}
                   onPress={reportError}
                   accessibilityLabel="Report an error"
+                />
+                {/* Replay the first-launch feature tour on demand (design.md §37/§47). */}
+                <SettingsRow
+                  icon="↻"
+                  iconBg={colors.gold}
+                  label={pick(lang, { hi: 'ऐप भ्रमण फिर देखें', en: 'Show App Tour', gu: 'ઍપ પરિચય ફરી જુઓ', kn: 'ಆ್ಯಪ್ ಪ್ರವಾಸ ಮತ್ತೆ ನೋಡಿ' })}
+                  labelFontFamily={labelFont}
+                  onPress={() => resetTour()}
+                  accessibilityLabel="Show App Tour"
                 />
               </View>
             </View>

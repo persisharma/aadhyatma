@@ -18,6 +18,7 @@ export function RoutineShell({
   right,
   background,
   children,
+  topBarRef,
 }: {
   titleHi: string;
   titleEn: string;
@@ -25,6 +26,9 @@ export function RoutineShell({
   right?: React.ReactNode;
   background?: number | null;
   children: React.ReactNode;
+  /** Optional measurable ref for the top bar — used by the feature tour to ring
+   * "Today's Practice" (design.md §47). Only the RoutineToday screen passes it. */
+  topBarRef?: React.Ref<View>;
 }) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
@@ -32,7 +36,7 @@ export function RoutineShell({
     <View style={styles.root}>
       <BackgroundLayer source={background} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-        <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
+        <View ref={topBarRef} collapsable={false} style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
           <Pressable
             onPress={onBack}
             accessibilityRole="button"

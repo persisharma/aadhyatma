@@ -38,6 +38,10 @@ jest.mock('@/contexts/NotificationPreferencesContext', () => ({
 jest.mock('@/contexts/JapamAlarmsContext', () => ({
   useJapamAlarms: () => ({ alarms: [] }),
 }));
+const mockResetTour = jest.fn();
+jest.mock('@/contexts/TourContext', () => ({
+  useTour: () => ({ resetTour: mockResetTour }),
+}));
 
 const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/language')>(
   '@/data/gita/language'
@@ -74,6 +78,7 @@ describe('MoreScreen (redesign)', () => {
   beforeEach(() => {
     mockGetItem.mockReset().mockResolvedValue(null);
     mockSetItem.mockReset().mockResolvedValue(undefined);
+    mockResetTour.mockClear();
   });
 
   test('renders the practice/app/info rows with their a11y labels', async () => {
@@ -86,6 +91,13 @@ describe('MoreScreen (redesign)', () => {
     expect(byLabel(tree, 'Reading size, Standard')).toBeDefined();
     expect(byLabel(tree, 'About and disclaimer')).toBeDefined();
     expect(byLabel(tree, 'Report an error')).toBeDefined();
+    expect(byLabel(tree, 'Show App Tour')).toBeDefined();
+  });
+
+  test('tapping Show App Tour replays the feature tour', async () => {
+    const tree = await renderMore(makeNav());
+    act(() => byLabel(tree, 'Show App Tour').props.onPress());
+    expect(mockResetTour).toHaveBeenCalled();
   });
 
   test('rows navigate to their destinations', async () => {
