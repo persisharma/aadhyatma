@@ -77,20 +77,25 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
 
-  const registerBead = useCallback(() => {
-    if (!mantra) return;
-    const next = increment(mantra.id);
-    if (next.rounds > lastRoundRef.current) {
-      lastRoundRef.current = next.rounds;
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(
-        () => undefined
-      );
-    } else {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
-    }
-  }, [increment, mantra]);
+  const registerBead = useCallback(
+    (beads: number = 1) => {
+      if (!mantra) return;
+      const next = increment(mantra.id, beads);
+      if (next.rounds > lastRoundRef.current) {
+        lastRoundRef.current = next.rounds;
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(
+          () => undefined
+        );
+      } else {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
+      }
+    },
+    [increment, mantra]
+  );
 
-  const handleTap = registerBead;
+  // A screen tap is exactly one bead. Wrapped so the Pressable's gesture event
+  // is never passed through as a bead count.
+  const handleTap = useCallback(() => registerBead(1), [registerBead]);
 
   if (!mantra) {
     return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
