@@ -39,6 +39,44 @@ describe('placeTourCard', () => {
     expect(p.top).toBeUndefined();
   });
 
+  test('neither side fits but there is more room ABOVE → pins to the top inset, arrow down at the target below it', () => {
+    // Target sits low, leaving little room below and more above; a card too tall
+    // for either side pins to the roomier (top) edge and still points down at it.
+    const lowTall = { x: 20, y: 560, width: 350, height: 200 }; // bottom = 760
+    // availBelow = 844 - 34 - 760 - 10 = 40; availAbove = 560 - 47 - 10 = 503
+    const p = placeTourCard(lowTall, screen, insets, 20, 22, 600);
+    expect(p.arrow).toBe('down');
+    expect(p.top).toBe(insets.top + 8);
+    expect(p.bottom).toBeUndefined();
+  });
+
+  test('card taller than the viewport bottom-pins (controls stay reachable) even with more room above', () => {
+    // Low target → more room above, but a card taller than the safe viewport must
+    // NOT top-pin (that would push Back/Next off the bottom). It bottom-pins so the
+    // controls stay on-screen; the title clips at the top instead.
+    const lowTarget = { x: 20, y: 600, width: 350, height: 100 }; // bottom = 700
+    // availAbove = 600 - 47 - 10 = 543 > availBelow = 844 - 34 - 700 - 10 = 100
+    // usableHeight = 844 - 47 - 34 - 16 = 747; card is taller than that.
+    const p = placeTourCard(lowTarget, screen, insets, 20, 22, 800);
+    expect(p.arrow).toBe('up');
+    expect(p.bottom).toBe(insets.bottom + 8);
+    expect(p.top).toBeUndefined();
+  });
+
+  test('a taller card flips to the side that actually holds it', () => {
+    // Target high up. A short card fits just below (arrow up)…
+    const target = { x: 20, y: 90, width: 350, height: 60 }; // bottom = 150
+    const short = placeTourCard(target, screen, insets, 20, 22, 200);
+    expect(short.arrow).toBe('up');
+    expect(short.top).toBe(150 + CARD_GAP);
+    // …but once the measured card is taller than the room below it, it no longer
+    // pretends to fit there. availBelow = 844 - 34 - 150 - 10 = 650.
+    const tall = placeTourCard(target, screen, insets, 20, 22, 660);
+    expect(tall.arrow).toBe('up'); // still more room below than above here
+    expect(tall.bottom).toBe(insets.bottom + 8); // pinned, not overlapping the ring
+    expect(tall.top).toBeUndefined();
+  });
+
   test('arrow is nudged under the target centre, clamped inside the card box', () => {
     // Target centre far right → arrow clamps to the card's right edge.
     const right = placeTourCard({ x: 340, y: 700, width: 40, height: 50 }, screen, insets);
