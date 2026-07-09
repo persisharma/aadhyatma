@@ -100,13 +100,22 @@ export function scrollNodeIntoView(
   const scroll = scrollRef.current;
   const node = targetRef.current;
   if (!scroll || !node || typeof node.measureLayout !== 'function') return;
-  const innerNode = scroll.getInnerViewNode?.();
-  if (innerNode == null) {
+  // On the New Architecture (Fabric), measureLayout requires a *ref* to the
+  // relative native component — passing a numeric node handle (getInnerViewNode)
+  // makes it console.error ("must be called with a ref to a native component")
+  // and no-op, so the target never scrolled into view. getInnerViewRef returns
+  // the inner content view instance, which Fabric accepts (as does Paper). It
+  // exists at runtime + in RN's generated types, but the public d.ts omits it —
+  // narrow to its known shape instead of reaching for `any`.
+  const innerRef = (scroll as ScrollView & {
+    getInnerViewRef?: () => View | null;
+  }).getInnerViewRef?.();
+  if (innerRef == null) {
     scroll.scrollTo({ y: 0, animated: false });
     return;
   }
   node.measureLayout(
-    innerNode,
+    innerRef,
     (_x: number, y: number) => scroll.scrollTo({ y: Math.max(0, y - padding), animated: false }),
     () => {}
   );
