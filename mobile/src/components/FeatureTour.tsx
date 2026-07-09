@@ -14,7 +14,14 @@ import { useTour } from '@/contexts/TourContext';
 import { tourSteps, TAB_ORDER } from '@/data/tour/steps';
 import { navigationRef } from '@/notifications/deepLink';
 import { measureTourTarget, revealTourTarget, type Rect } from '@/components/tour/tourTargets';
-import { placeTourCard, tabItemRect, inflateRect, sameRect, measureSettled } from '@/components/tour/placement';
+import {
+  placeTourCard,
+  tabItemRect,
+  inflateRect,
+  sameRect,
+  measureSettled,
+  CARD_HEIGHT_EST,
+} from '@/components/tour/placement';
 
 /**
  * In-context first-launch feature tour. Renders a translucent **in-tree** overlay
@@ -45,6 +52,12 @@ export default function FeatureTour() {
   // Measured element rect for the current step, or null → ring the destination
   // tab instead (fallback while measuring / when the element isn't present).
   const [targetRect, setTargetRect] = useState<Rect | null>(null);
+  // The card's real rendered height (arrow + card), reported by onLayout. Feeds
+  // the above/below fit decision so the card never lands on a side too small to
+  // hold it — which is what made it cover the highlighted element on shorter
+  // screens or larger type scales. Seeded with the estimate until the first
+  // layout lands.
+  const [cardHeight, setCardHeight] = useState(CARD_HEIGHT_EST);
 
   // Rising-edge guard: open exactly once per "should show" episode. Keyed on
   // shouldShowFirstLaunchTour ALONE (never `visible`), so the optimistic hide in
@@ -155,8 +168,8 @@ export default function FeatureTour() {
   );
   const ringRect = useMemo(() => inflateRect(baseRect, RING_PAD), [baseRect]);
   const placement = useMemo(
-    () => placeTourCard(baseRect, screen, { top: insets.top, bottom: insets.bottom }, CARD_HPAD, POINTER_W),
-    [baseRect, screen, insets.top, insets.bottom]
+    () => placeTourCard(baseRect, screen, { top: insets.top, bottom: insets.bottom }, CARD_HPAD, POINTER_W, cardHeight),
+    [baseRect, screen, insets.top, insets.bottom, cardHeight]
   );
 
   if (!visible || !step) return null;
@@ -207,9 +220,15 @@ export default function FeatureTour() {
         </Pressable>
       </View>
 
-      {/* Card — hugs the target on whichever side has room; arrow leads to it. */}
+      {/* Card — hugs the target on whichever side has room; arrow leads to it.
+          onLayout reports the real height (arrow + card) so placement can decide
+          the side by the card's true size, not a fixed guess. */}
       <View
         pointerEvents="box-none"
+        onLayout={(e) => {
+          const h = Math.round(e.nativeEvent.layout.height);
+          if (h > 0) setCardHeight((prev) => (prev === h ? prev : h));
+        }}
         style={[
           styles.cardWrap,
           placement.top !== undefined ? { top: placement.top } : { bottom: placement.bottom },

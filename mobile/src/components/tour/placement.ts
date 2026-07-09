@@ -25,8 +25,11 @@ export type CardPlacement = {
 /** Gap between the target's edge and the card (leaves room for the arrow). */
 export const CARD_GAP = 10;
 
-/** Conservative tooltip-card height (px), incl. arrow — used to decide whether a
- *  side has room. Overshooting is safe: it just biases toward the bottom-pin. */
+/** Fallback tooltip-card height (px), incl. arrow — used to decide whether a side
+ *  has room until the card reports its real rendered height (which varies with
+ *  the bilingual copy, the type scale, and the device). `FeatureTour` measures the
+ *  card via `onLayout` and passes that back in; this constant only seeds the very
+ *  first frame before the measurement lands. */
 export const CARD_HEIGHT_EST = 300;
 
 /**
@@ -34,9 +37,15 @@ export const CARD_HEIGHT_EST = 300;
  * side that can actually fit it — so the card never covers the ring and its
  * controls stay on-screen. Target in the upper part → card just below it (arrow
  * up); target low (e.g. a bottom tab) → card just above it (arrow down). When
- * neither side has room (a large target that fills the screen) the card pins
- * above the bottom inset with the arrow up, so Back/Next are always reachable.
- * The arrow is nudged horizontally to sit under the target's centre.
+ * neither side can hold the whole card (a tall target, a short screen, or a
+ * large type scale) the card pins flush to the safe-area edge on the **roomier**
+ * side, so it clears the ring as much as possible and its controls stay
+ * reachable; the arrow still leads back toward the target from the card's near
+ * edge. The arrow is nudged horizontally to sit under the target's centre.
+ *
+ * `cardHeight` is the card's real rendered height (incl. its arrow) when known —
+ * measured by `FeatureTour` and fed back in — so the fit decision holds on any
+ * device and type scale, not just when the card happens to match a fixed guess.
  */
 export function placeTourCard(
   target: Rect,
@@ -44,7 +53,7 @@ export function placeTourCard(
   insets: Insets,
   cardHPad = 20,
   arrowW = 22,
-  cardHeightEst = CARD_HEIGHT_EST
+  cardHeight = CARD_HEIGHT_EST
 ): CardPlacement {
   const availBelow = screen.height - insets.bottom - (target.y + target.height) - CARD_GAP;
   const availAbove = target.y - insets.top - CARD_GAP;
@@ -54,14 +63,23 @@ export function placeTourCard(
   const targetCenterX = target.x + target.width / 2;
   const arrowLeft = clamp(targetCenterX - cardHPad - arrowW / 2, 0, Math.max(0, slotWidth - arrowW));
 
-  if (availBelow >= cardHeightEst) {
+  if (availBelow >= cardHeight) {
     return { top: target.y + target.height + CARD_GAP, arrow: 'up', arrowLeft };
   }
-  if (availAbove >= cardHeightEst) {
+  if (availAbove >= cardHeight) {
     return { bottom: screen.height - target.y + CARD_GAP, arrow: 'down', arrowLeft };
   }
-  // Neither side fits — pin above the bottom inset so the controls stay
-  // reachable; the arrow still points up toward the (large/low) target.
+  // Neither side holds the whole card. Keep the card's bottom controls
+  // (Back/Next) reachable: top-pin only when the whole card fits within the safe
+  // viewport AND there is more room above the target — that clears a low target
+  // (arrow down) without pushing the controls off-screen. Otherwise pin flush to
+  // the bottom edge (arrow up), which keeps the controls on-screen even for a
+  // card taller than the viewport (large type scale). The arrow still leads to
+  // the target.
+  const usableHeight = screen.height - insets.top - insets.bottom - 16;
+  if (cardHeight <= usableHeight && availAbove > availBelow) {
+    return { top: insets.top + 8, arrow: 'down', arrowLeft };
+  }
   return { bottom: insets.bottom + 8, arrow: 'up', arrowLeft };
 }
 
