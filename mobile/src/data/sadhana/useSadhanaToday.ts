@@ -16,7 +16,7 @@ import type { CalendarSystem } from '@/panchang/types';
 import { isItemAutoComplete, resolveRoutineItem, type RoutineItemDisplay } from '@/data/routine/units';
 import type { RoutineItem } from '@/data/routine/types';
 import { getProgram } from './programs';
-import { resolveSadhanaToday, type SadhanaSchedule, type SadhanaTodayStatus } from './progress';
+import { orderSadhanaCards, resolveSadhanaToday, type SadhanaSchedule, type SadhanaTodayStatus } from './progress';
 import type { SadhanaEnrollment, SadhanaProgram } from './types';
 
 export type SadhanaTodayItem = {
@@ -129,6 +129,6 @@ export function useSadhanaToday(): SadhanaTodayCard[] {
         autoVia: hasJapam ? 'japam-target' : 'read-to-end',
       });
     }
-    return cards;
+    return orderSadhanaCards(cards);
   }, [activeEnrollments, getProgress, dayTotals, calendarSystem]);
 }
