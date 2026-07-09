@@ -317,11 +317,30 @@ function matchesLunarTithiRuleOnDate(
   // month that repeats it. Monthly vrats have no fixed month (matchingMonth ===
   // null) and still recur inside the adhik maas, so only guard the named ones.
   if (matchingMonth !== null && isAdhik) return false;
-  const tithiMatch = rule.paksha === 'shukla'
-    ? tithiIndex === rule.tithi - 1
-    : tithiIndex === rule.tithi + 14;
   const monthMatch = matchingMonth === null || lunarMonth === matchingMonth;
-  return tithiMatch && monthMatch;
+  const target = rule.paksha === 'shukla' ? rule.tithi - 1 : rule.tithi + 14;
+  if (tithiIndex === target) return monthMatch;
+  // Kshaya fallback: when the target tithi touches no sunrise (it begins after
+  // this sunrise and ends before tomorrow's), the sunrise-tithi index jumps from
+  // target-1 today to target+1 tomorrow. DrikPanchang observes such a vrat on the
+  // day the tithi actually prevails — this one (e.g. Yogini Ekadashi on 10 Jul
+  // 2026, tithi 8:16 AM → 5:22 AM next day). Without this, the observance would
+  // silently vanish for that fortnight. The look-ahead reuses the per-day cache,
+  // so a sequential year scan pays no extra astronomy.
+  if (tithiIndex === (target + 29) % 30) {
+    const nextDay = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+    const next = computeTithiAndMonth(nextDay, { calendarSystem: computationSystem, location });
+    if (next.tithiIndex !== (target + 1) % 30) return false;
+    if (monthMatch) return true;
+    // This day's sunrise month is authoritative for every kshaya tithi except the
+    // month-OPENING pratipada (shukla 1 under amanta, krishna 1 under purnimant),
+    // whose lunation boundary falls at its start — only there does tomorrow's
+    // month apply. A kshaya purnima/amavasya ends the OLD month and must never
+    // borrow tomorrow's (that misplaced Holi 2027 onto Magha Purnima).
+    const opensMonth = computationSystem === 'amanta' ? target === 0 : target === 15;
+    return opensMonth && matchingMonth !== null && next.lunarMonth === matchingMonth && !next.isAdhik;
+  }
+  return false;
 }
 
 function monthForRuleInSystem(rule: ObservanceRule, calendarSystem: CalendarSystem): number | null {

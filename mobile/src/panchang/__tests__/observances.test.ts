@@ -343,3 +343,16 @@ test('search returns default observances and can include hidden captured catalog
   assert.equal(searchObservances('mahadwadashi').length, 0);
   assert.ok(hidden.some((rule) => rule.id === 'mahadwadashi'));
 });
+
+test('kshaya Ekadashi is not dropped — Yogini Ekadashi 2026 resolves to 10 July', () => {
+  // Ekadashi tithi runs 10 Jul 8:16 AM → 11 Jul 5:22 AM IST 2026, touching no
+  // sunrise; drikpanchang observes the vrat on 10 July, the day it prevails.
+  const live = resolveObservancesForYearLive(2026, 'purnimant');
+  const yogini = live.filter((item) => item.rule.id === 'yogini-ekadashi');
+  assert.equal(yogini.length, 1, 'exactly one Yogini Ekadashi in 2026');
+  assert.equal(yogini[0].date.getMonth(), 6);
+  assert.equal(yogini[0].date.getDate(), 10);
+
+  // The precomputed Ujjain table (what the app actually reads) must agree.
+  assert.ok(idsFor(new Date(2026, 6, 10)).includes('yogini-ekadashi'));
+});

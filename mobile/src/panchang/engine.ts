@@ -347,6 +347,33 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
   const tithiEndTime = bisectTithiEnd(sunrise, tithiIndex);
   const nakshatraEndTime = bisectNakshatraEnd(sunrise, nakshatraIndex);
 
+  // Kshaya detection: a tithi lasts 19h59m–26h47m, so between consecutive sunrises
+  // the sunrise-tithi index advances by 1 (normal), 0 (vriddhi — spans two sunrises),
+  // or 2 (kshaya — exactly one tithi begins and ends inside this panchang day and is
+  // the sunrise-tithi of no date, e.g. Yogini Ekadashi on 10 Jul 2026). The +2 test
+  // costs two ephemeris evaluations at tomorrow's sunrise; the end-time bisection
+  // runs only on actual kshaya days (a handful per year).
+  const nextSunrise = computeSunrise(
+    new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate() + 1),
+    observer
+  );
+  const nextYear = nextSunrise.getFullYear();
+  const nextSunriseTithiIndex = computeTithiIndex(
+    getSiderealSunLng(nextSunrise, nextYear),
+    getSiderealMoonLng(nextSunrise, nextYear)
+  );
+  let kshayaTithi: (PanchangData['tithi']) | null = null;
+  if ((tithiIndex + 2) % 30 === nextSunriseTithiIndex && tithiEndTime) {
+    const kshayaIndex = (tithiIndex + 1) % 30;
+    kshayaTithi = {
+      index: kshayaIndex,
+      paksha: kshayaIndex < 15 ? 'shukla' : 'krishna',
+      nameHi: TITHI_NAMES_HI[kshayaIndex],
+      nameEn: TITHI_NAMES_EN[kshayaIndex],
+      endTime: bisectTithiEnd(tithiEndTime, kshayaIndex),
+    };
+  }
+
   const sunset = computeSunset(localDate, observer);
   const moonrise = computeMoonrise(localDate, observer);
 
@@ -371,6 +398,7 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
       nameEn: TITHI_NAMES_EN[tithiIndex],
       endTime: tithiEndTime,
     },
+    kshayaTithi,
     nakshatra: {
       index: nakshatraIndex,
       nameHi: NAKSHATRA_NAMES_HI[nakshatraIndex],

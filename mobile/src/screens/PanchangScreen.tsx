@@ -459,12 +459,12 @@ export default function PanchangScreen() {
               first) on elevated off-white cards; Yoga + Karana sit as a quieter,
               flatter secondary row. */}
           <View style={styles.angaGrid}>
-            <PanchangTile label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} kshaya={p.kshayaTithi} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
           <View style={styles.angaGridSecondary}>
-            <PanchangTile label={contentByLang(lang, 'योग', 'Yoga')} element={p.yoga} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'योग', 'Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
 
           <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
@@ -609,15 +609,28 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
   );
 }
 
-function PanchangTile({ label, element, lang, colors, typography, radii, elevation }: {
+function PanchangTile({ label, element, kshaya, panchangDate, lang, colors, typography, radii, elevation }: {
   label: string;
   element: PanchangElement;
+  // Kshaya anga (tithi skipped at every sunrise) — rendered as a second row so
+  // days like 10 Jul 2026 read "दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल".
+  kshaya?: PanchangElement | null;
+  panchangDate: Date;
   lang: Lang;
   colors: any;
   typography: any;
   radii: any;
   elevation: any;
 }) {
+  // End instants past midnight belong to the next civil day; without the date
+  // suffix "तक 2:04 AM" reads as this morning (already past) instead of tonight.
+  const endLabel = (end: Date) => {
+    const sameDay = end.getFullYear() === panchangDate.getFullYear()
+      && end.getMonth() === panchangDate.getMonth()
+      && end.getDate() === panchangDate.getDate();
+    const time = formatTime12(end);
+    return contentByLang(lang, 'तक ', 'till ') + (sameDay ? time : `${time}, ${formatShortDate(end, lang)}`);
+  };
   return (
     <View
       style={[
@@ -652,8 +665,25 @@ function PanchangTile({ label, element, lang, colors, typography, radii, elevati
       </Text>
       {element.endTime && (
         <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft, marginTop: 5 }}>
-          {contentByLang(lang, 'तक ', 'till ')}{formatTime12(element.endTime)}
+          {endLabel(element.endTime)}
         </Text>
+      )}
+      {kshaya && (
+        <>
+          <Text
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.8}
+            style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink, marginTop: 6 }}
+          >
+            {contentByLang(lang, kshaya.nameHi, kshaya.nameEn)}
+          </Text>
+          {kshaya.endTime && (
+            <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft, marginTop: 3 }}>
+              {endLabel(kshaya.endTime)}
+            </Text>
+          )}
+        </>
       )}
     </View>
   );
