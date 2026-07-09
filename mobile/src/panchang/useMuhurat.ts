@@ -47,15 +47,54 @@ type Solved = {
   nowPeriods: ChoghadiyaPeriod[];
 };
 
+/**
+ * The astronomy solve for a given (city, calendar day, calendar system, is-today)
+ * is deterministic — sunrise/sunset for a fixed date and place never change within
+ * a session — so we memoise it across mounts and date navigation. Only the live
+ * "now" read changes minute-to-minute, and that is recomputed cheaply from the
+ * cached solve via `useMinuteTick`. This makes revisiting a date (or re-mounting
+ * the card) instant instead of re-paying the deferred solve each time.
+ */
+const SOLVE_CACHE = new Map<string, Solved>();
+const SOLVE_CACHE_MAX = 90; // ~a season of daily navigation; bounds memory.
+
+function solveCacheKey(
+  cityId: string,
+  calendarSystem: CalendarSystem,
+  date: Date,
+  isToday: boolean
+): string {
+  const day = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  return `${cityId}|${calendarSystem}|${day}|${isToday ? 1 : 0}`;
+}
+
+function writeSolveCache(key: string, value: Solved): void {
+  SOLVE_CACHE.set(key, value);
+  if (SOLVE_CACHE.size > SOLVE_CACHE_MAX) {
+    const oldest = SOLVE_CACHE.keys().next().value;
+    if (oldest !== undefined) SOLVE_CACHE.delete(oldest);
+  }
+}
+
 export function useMuhurat(date: Date, calendarSystem: CalendarSystem): UseMuhuratResult {
   const { location } = usePanchangLocation();
   const dateMs = date.getTime();
   const cityId = location.cityId;
   const isToday = isSameLocalDay(date, new Date());
+  const cacheKey = solveCacheKey(cityId, calendarSystem, date, isToday);
 
-  const [solved, setSolved] = useState<Solved | null>(null);
+  // Seed from the cache so a previously-solved date renders instantly (no null
+  // flash / skeleton) on re-mount or re-navigation.
+  const [solved, setSolved] = useState<Solved | null>(() => SOLVE_CACHE.get(cacheKey) ?? null);
 
   useEffect(() => {
+    const cached = SOLVE_CACHE.get(cacheKey);
+    if (cached) {
+      // Synchronous set (no deferral) — the solve is already done for this day.
+      setSolved(cached);
+      return;
+    }
+
     let cancelled = false;
     setSolved(null);
     const handle = setTimeout(() => {
@@ -80,7 +119,9 @@ export function useMuhurat(date: Date, calendarSystem: CalendarSystem): UseMuhur
           }
         }
 
-        if (!cancelled) setSolved({ md, panchang: today, nowPeriods });
+        const value: Solved = { md, panchang: today, nowPeriods };
+        writeSolveCache(cacheKey, value);
+        if (!cancelled) setSolved(value);
       } catch {
         /* invalid input — leave null so consumers show a skeleton */
       }
@@ -90,7 +131,7 @@ export function useMuhurat(date: Date, calendarSystem: CalendarSystem): UseMuhur
       clearTimeout(handle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateMs, calendarSystem, cityId, isToday]);
+  }, [cacheKey]);
 
   const tick = useMinuteTick();
 

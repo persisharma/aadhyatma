@@ -29,9 +29,44 @@ export default function MuhuratGlanceCard({
   const { isToday, nowChoghadiya, muhurat } = useMuhurat(date, calendarSystem);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
 
-  // Solve runs off the render path; render nothing until it lands (matches the
-  // Panchang tab's skeleton behaviour).
-  if (!muhurat) return null;
+  // The solve runs off the render path (and only the first time per day — it is
+  // memoised in useMuhurat). Until it lands we render a skeleton that reserves
+  // the card's footprint, so the section no longer pops in below the day panel.
+  if (!muhurat) {
+    const bar = (w: number, h: number, soft?: boolean) => (
+      <View style={[styles.skelBar, { width: w, height: h, backgroundColor: soft ? colors.parchmentSoft : colors.divider }]} />
+    );
+    return (
+      <LinearGradient
+        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
+        style={[styles.card, { borderColor: colors.cardActiveBorder, borderRadius: radii.lg, padding: spacing.lg }, elevation.raised]}
+        accessibilityRole="progressbar"
+        accessibilityLabel={contentByLang(lang, 'मुहूर्त लोड हो रहा है', 'Loading timings')}
+      >
+        <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.saffronDeep, letterSpacing: 0.4 }}>
+          {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
+        </Text>
+        <View style={styles.nowRow}>
+          <View style={[styles.dot, { backgroundColor: colors.divider }]} />
+          <View style={{ flex: 1, gap: 6 }}>
+            {bar(60, 9)}
+            {bar(168, 18)}
+            {bar(92, 11, true)}
+          </View>
+        </View>
+        <View style={styles.tiles}>
+          {[0, 1].map((i) => (
+            <View key={i} style={[styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
+              {bar(52, 10)}
+              <View style={{ height: 5 }} />
+              {bar(84, 13)}
+            </View>
+          ))}
+        </View>
+        <View style={[styles.viewAll, { borderTopColor: colors.divider }]}>{bar(150, 12)}</View>
+      </LinearGradient>
+    );
+  }
   const { abhijit, rahu } = muhurat;
 
   const showNow = isToday && nowChoghadiya != null;
@@ -120,4 +155,5 @@ const styles = StyleSheet.create({
   tiles: { flexDirection: 'row', gap: 10, marginTop: 13 },
   tile: { flex: 1, borderWidth: 1, padding: 11 },
   viewAll: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 14, paddingTop: 12, borderTopWidth: 1 },
+  skelBar: { borderRadius: 5, opacity: 0.55 },
 });
