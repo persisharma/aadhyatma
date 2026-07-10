@@ -22,7 +22,6 @@ import {
   measureSettled,
   CARD_HEIGHT_EST,
   REMEASURE_POLL_MS,
-  REMEASURE_POLL_TRIES,
 } from '@/components/tour/placement';
 
 /**
@@ -100,7 +99,6 @@ export default function FeatureTour() {
     let raf: number | undefined;
     let poll: ReturnType<typeof setTimeout> | undefined;
     let tries = 0;
-    let pollsLeft = REMEASURE_POLL_TRIES;
     let prev: Rect | null = null;
     let stable = 0;
     let revealed = false;
@@ -111,13 +109,13 @@ export default function FeatureTour() {
       setTargetRect((cur) => (sameRect(cur, rect) ? cur : rect));
     };
 
-    // Slow path: after the frame loop settles, re-reveal + re-measure a bounded
-    // number of times so a late async layout shift re-positions the ring.
+    // Slow path: after the frame loop settles, re-reveal + re-measure for as long
+    // as the step is shown, so a late async layout shift re-positions the ring no
+    // matter how slow the hydration is (device-agnostic — no fixed time window).
     const schedulePoll = () => {
-      if (cancelled || !step.targetId || pollsLeft <= 0) return;
+      if (cancelled || !step.targetId) return;
       poll = setTimeout(() => {
         if (cancelled || !step.targetId) return;
-        pollsLeft -= 1;
         revealTourTarget(step.targetId);
         void measureTourTarget(step.targetId).then((rect) => {
           if (cancelled) return;
