@@ -14,7 +14,8 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 
 // Bump whenever OBSERVANCE_RULES or the month engine changes (the same trigger as
 // regenerating precomputedObservances.ts); stale versions are purged on hydrate.
-const CACHE_VERSION = 1;
+// v2: kshaya-tithi fallback + vriddhi dedupe in matchesLunarTithiRuleOnDate.
+const CACHE_VERSION = 2;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 
