@@ -169,3 +169,39 @@ test('Tithi/month helper uses the corrected lunar month logic', () => {
     }
   }
 });
+
+test('Kshaya tithi is captured — Krishna Ekadashi skipped at sunrise, 10 Jul 2026 (Bengaluru)', () => {
+  const bengaluru = { cityId: 'bengaluru', latitude: 12.9716, longitude: 77.5946, elevation: 920 };
+  // Ekadashi runs 10 Jul 8:16 AM → 11 Jul 5:22 AM IST (drikpanchang Yogini Ekadashi
+  // 2026), touching neither sunrise — the classical kshaya case.
+  const p = computePanchangForDate(new Date(2026, 6, 10), { location: bengaluru });
+  assert.equal(p.tithi.index, 24, `Krishna Dashami at sunrise, got ${p.tithi.index}`);
+  assertTimeWithin(p.tithi.endTime, 8, 16, 10, 'dashami end');
+  assert.ok(p.kshayaTithi, 'kshaya tithi captured');
+  assert.equal(p.kshayaTithi.index, 25, `kshaya Ekadashi, got ${p.kshayaTithi.index}`);
+  assert.equal(p.kshayaTithi.paksha, 'krishna');
+  assert.equal(p.kshayaTithi.nameEn, 'Ekadashi');
+  assertTimeWithin(p.kshayaTithi.endTime, 5, 22, 10, 'ekadashi end (next civil day)');
+  assert.ok(p.kshayaTithi.endTime! > p.tithi.endTime!, 'kshaya ends after it starts');
+
+  const next = computePanchangForDate(new Date(2026, 6, 11), { location: bengaluru });
+  assert.equal(next.tithi.index, 26, `Dwadashi at next sunrise, got ${next.tithi.index}`);
+  assert.equal(next.kshayaTithi, null, 'no kshaya on a normal day');
+});
+
+test('kshaya nakshatra is captured — Mrigashira skipped at sunrise, 29 Jan 2026 (Ujjain)', () => {
+  const p = computePanchangForDate(new Date(2026, 0, 29));
+  assert.equal(p.nakshatra.index, 3, `Rohini at sunrise, got ${p.nakshatra.index}`);
+  assert.ok(p.kshayaNakshatra, 'kshaya nakshatra captured');
+  assert.equal(p.kshayaNakshatra.index, 4, `kshaya Mrigashira, got ${p.kshayaNakshatra.index}`);
+  assertTimeWithin(p.kshayaNakshatra.endTime, 5, 28, 10, 'mrigashira end (next civil day)');
+  assert.ok(p.kshayaNakshatra.endTime! > p.nakshatra.endTime!, 'kshaya ends after it starts');
+});
+
+test('kshaya angas are null on ordinary days', () => {
+  for (const date of [new Date(2026, 0, 14), new Date(2026, 2, 3), new Date(2026, 9, 20)]) {
+    const p = computePanchangForDate(date);
+    assert.equal(p.kshayaTithi, null, `tithi ${date.toDateString()}`);
+    assert.equal(p.kshayaNakshatra, null, `nakshatra ${date.toDateString()}`);
+  }
+});

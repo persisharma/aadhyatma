@@ -303,6 +303,22 @@ function getLocalDateKey(date: Date): string {
   return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 }
 
+// Sunrise memo shared by every solver. A day's sunrise is solved once per location:
+// computePanchangForDate needs today's AND tomorrow's (kshaya detection), and
+// tomorrow's own call, useMuhurat's today+tomorrow pair, and the festival scans all
+// ask for the same instants — without the memo each is an independent root-find.
+const sunriseCache = new Map<string, Date>();
+
+function sunriseFor(localDate: Date, location?: GeoLocation & { cityId?: string }): Date {
+  const key = `${locationKey(location)}:${getLocalDateKey(localDate)}`;
+  let cached = sunriseCache.get(key);
+  if (!cached) {
+    cached = computeSunrise(localDate, observerFor(location ?? UJJAIN_GEO));
+    sunriseCache.set(key, cached);
+  }
+  return cached;
+}
+
 // Lightweight tithi + lunar-month for a date, computed at sunrise — exactly the
 // two values festival matching needs. Skips the end-time bisections and the
 // sunset/moonrise rise/set solves that computePanchangForDate also performs.
@@ -316,7 +332,7 @@ export function computeTithiAndMonth(
   if (cached) return cached;
 
   const year = localDate.getFullYear();
-  const sunrise = computeSunrise(localDate, observerFor(options.location ?? UJJAIN_GEO));
+  const sunrise = sunriseFor(localDate, options.location);
   const sunLng = getSiderealSunLng(sunrise, year);
   const moonLng = getSiderealMoonLng(sunrise, year);
   const tithiIndex = computeTithiIndex(sunLng, moonLng);
@@ -331,7 +347,7 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
   const calendarSystem = options.calendarSystem ?? 'purnimant';
   const observer = observerFor(options.location ?? UJJAIN_GEO);
   const year = localDate.getFullYear();
-  const sunrise = computeSunrise(localDate, observer);
+  const sunrise = sunriseFor(localDate, options.location);
 
   const sunLng = getSiderealSunLng(sunrise, year);
   const moonLng = getSiderealMoonLng(sunrise, year);
@@ -346,6 +362,44 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
 
   const tithiEndTime = bisectTithiEnd(sunrise, tithiIndex);
   const nakshatraEndTime = bisectNakshatraEnd(sunrise, nakshatraIndex);
+
+  // Kshaya detection: a tithi or nakshatra can begin after this sunrise and end
+  // before the next, touching neither — it is then the sunrise-anga of no civil
+  // date (e.g. Ekadashi on 10 Jul 2026). Between consecutive sunrises the index
+  // advances by 1 (normal), 0 (vriddhi — spans two sunrises), or 2 (kshaya), so a
+  // +2 jump pins the skipped anga. Tomorrow's sunrise comes from the shared memo
+  // and the two ephemeris reads are cheap; the end-time bisections run only on
+  // actual kshaya days (a handful per year).
+  const nextSunrise = sunriseFor(
+    new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate() + 1),
+    options.location
+  );
+  const nextYear = nextSunrise.getFullYear();
+  const nextSunLng = getSiderealSunLng(nextSunrise, nextYear);
+  const nextMoonLng = getSiderealMoonLng(nextSunrise, nextYear);
+
+  let kshayaTithi: PanchangData['kshayaTithi'] = null;
+  if ((tithiIndex + 2) % 30 === computeTithiIndex(nextSunLng, nextMoonLng) && tithiEndTime) {
+    const kshayaIndex = (tithiIndex + 1) % 30;
+    kshayaTithi = {
+      index: kshayaIndex,
+      paksha: kshayaIndex < 15 ? 'shukla' : 'krishna',
+      nameHi: TITHI_NAMES_HI[kshayaIndex],
+      nameEn: TITHI_NAMES_EN[kshayaIndex],
+      endTime: bisectTithiEnd(tithiEndTime, kshayaIndex),
+    };
+  }
+
+  let kshayaNakshatra: PanchangData['kshayaNakshatra'] = null;
+  if ((nakshatraIndex + 2) % 27 === computeNakshatraIndex(nextMoonLng) && nakshatraEndTime) {
+    const kshayaIndex = (nakshatraIndex + 1) % 27;
+    kshayaNakshatra = {
+      index: kshayaIndex,
+      nameHi: NAKSHATRA_NAMES_HI[kshayaIndex],
+      nameEn: NAKSHATRA_NAMES_EN[kshayaIndex],
+      endTime: bisectNakshatraEnd(nakshatraEndTime, kshayaIndex),
+    };
+  }
 
   const sunset = computeSunset(localDate, observer);
   const moonrise = computeMoonrise(localDate, observer);
@@ -371,12 +425,14 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
       nameEn: TITHI_NAMES_EN[tithiIndex],
       endTime: tithiEndTime,
     },
+    kshayaTithi,
     nakshatra: {
       index: nakshatraIndex,
       nameHi: NAKSHATRA_NAMES_HI[nakshatraIndex],
       nameEn: NAKSHATRA_NAMES_EN[nakshatraIndex],
       endTime: nakshatraEndTime,
     },
+    kshayaNakshatra,
     yoga: {
       index: yogaIndex,
       nameHi: YOGA_NAMES_HI[yogaIndex],
