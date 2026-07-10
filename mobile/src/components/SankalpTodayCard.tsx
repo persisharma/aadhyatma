@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -35,6 +36,11 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
   // would show "1 / N" before anything is done and stay "1 / N" after completing
   // it — the counter would never move on completion ("still 0/N after reading").
   const daysDone = completedDayCount(card.enrollment);
+  // Overall multi-day vow progress, mirroring the routine ledger's summary bar
+  // (§31 / design.md §46). The eyebrow carries the `n / N` count; this gives the
+  // same count a visual, so a sankalp reads as an in-progress commitment at a
+  // glance — not just today's unit.
+  const dayPct = status.totalDays > 0 ? Math.round((daysDone / status.totalDays) * 100) : 0;
   const dayLabel =
     status.kind === 'completed'
       ? contentByLang(lang, 'पूर्णाहुति', 'Sankalp complete')
@@ -65,6 +71,28 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
       >
         {title}
       </Text>
+
+      {/* Multi-day progress bar — same gradient track as the §31 routine summary
+          card, so an enrolled sankalp shows its overall advance, not only today's
+          unit. Hidden once complete: the पूर्णाहुति seal below is the terminal
+          state and a full bar would be redundant. */}
+      {status.kind !== 'completed' && (
+        <View
+          style={[
+            styles.track,
+            { backgroundColor: colors.parchmentDeep, borderRadius: radii.pill, marginTop: spacing.sm },
+          ]}
+          accessibilityRole="progressbar"
+          accessibilityValue={{ min: 0, max: status.totalDays, now: daysDone }}
+        >
+          <LinearGradient
+            colors={[colors.gold, colors.saffron]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ width: `${dayPct}%`, height: '100%', borderRadius: radii.pill }}
+          />
+        </View>
+      )}
 
       {status.kind === 'completed' && (
         <View style={{ alignItems: 'center', marginTop: spacing.md }}>
@@ -245,6 +273,8 @@ function formatShortDate(key: string, lang: string): string {
 
 const styles = StyleSheet.create({
   card: { borderWidth: 1, marginBottom: 16 },
+  // Matches the §31 routine summary track (7 px, pill, clipped fill).
+  track: { height: 7, width: '100%', overflow: 'hidden' },
   // flex-start pins the circle/chevron to the title's first line instead of the
   // middle of a wrapped two-line block.
   itemRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, paddingVertical: 12 },
