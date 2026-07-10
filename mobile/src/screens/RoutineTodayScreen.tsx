@@ -57,10 +57,9 @@ export default function RoutineTodayScreen({ navigation }: Props) {
         contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
-        {sadhanaCards.map((c) => (
-          <SankalpTodayCard key={c.program.id} card={c} />
-        ))}
-
+        {/* नित्य साधना — the everyday daily routine leads the ledger; the
+            prebuilt sankalps follow below (a screen titled "Today's Practice"
+            should open on what you do every day, not the special vows). */}
         {total === 0 ? (
           sadhanaCards.length === 0 ? (
           <View
@@ -262,6 +261,17 @@ export default function RoutineTodayScreen({ navigation }: Props) {
               )}
             </Text>
           </>
+        )}
+
+        {/* Prebuilt sankalps sit below the daily routine. The top gap only
+            applies when a daily routine is present above them; with no routine
+            the ScrollView's own paddingTop handles the spacing. */}
+        {sadhanaCards.length > 0 && (
+          <View style={{ marginTop: total > 0 ? spacing.xl : 0 }}>
+            {sadhanaCards.map((c) => (
+              <SankalpTodayCard key={c.program.id} card={c} />
+            ))}
+          </View>
         )}
 
         {/* Discovery: the prebuilt-sankalp catalog must stay reachable outside

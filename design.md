@@ -893,6 +893,8 @@ type IndiaMapProps = {
 
 **Purpose.** The daily-driver screen the routine banner (§30) opens — today's scheduled items across all routines, presented as a devotional ledger rather than a utility checklist (PRD-10). `RoutineTodayScreen.tsx`, inside the parchment `RoutineShell`.
 
+**Screen order.** The **नित्य साधना daily routine leads** — the completion summary card + item rows render first, because a screen titled *Today's Practice* should open on what you do every day. Any enrolled prebuilt-sankalp cards (`SankalpTodayCard`, §46) follow **below** the routine (separated by a `spacing.xl` gap that appears only when a routine is present above them), then the ghost **Browse sankalps** button. The sankalp cards are themselves ordered by `orderSadhanaCards` (§46): daily-cadence/active first, then resting/upcoming by nearest date, completed last. (Before July 2026 the sankalp cards rendered above the routine — a screen-order bug that buried the everyday practice.)
+
 **Components & where they live** (all pull tokens from the theme; no hard-coded hexes):
 - `mobile/src/components/MalaStreak.tsx` — the streak drawn as a bead string.
 - `mobile/src/components/PracticeSeal.tsx` — the completion seal (wraps `LotusMark`).
