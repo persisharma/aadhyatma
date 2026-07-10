@@ -37,10 +37,11 @@ export type PanchangData = {
   calendarSystem: CalendarSystem;
   vara: { nameHi: string; nameEn: string; index: number };
   tithi: PanchangElement & { paksha: Paksha };
-  // Kshaya (skipped) tithi: begins after this day's sunrise and ends before the
-  // next sunrise, so it is the sunrise-tithi of no civil day. Null on normal days.
-  // Its start instant is tithi.endTime; its endTime is always non-null.
+  // Kshaya (skipped) angas: begin after this day's sunrise and end before the
+  // next sunrise, so they are the sunrise-anga of no civil day. Null on normal
+  // days. Their start instant is the main anga's endTime; endTime is non-null.
   kshayaTithi: (PanchangElement & { paksha: Paksha }) | null;
+  kshayaNakshatra: PanchangElement | null;
   nakshatra: PanchangElement;
   yoga: PanchangElement;
   karana: PanchangElement;

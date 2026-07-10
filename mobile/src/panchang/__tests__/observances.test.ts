@@ -356,3 +356,10 @@ test('kshaya Ekadashi is not dropped — Yogini Ekadashi 2026 resolves to 10 Jul
   // The precomputed Ujjain table (what the app actually reads) must agree.
   assert.ok(idsFor(new Date(2026, 6, 10)).includes('yogini-ekadashi'));
 });
+
+test('vriddhi tithi fires a monthly vrat once, on the first day', () => {
+  // Krishna chaturthi touched both the 29 and 30 Jan 2024 sunrises (vriddhi);
+  // Sankashti Chaturthi (drikpanchang: 29 Jan 2024) must not repeat on the 30th.
+  assert.ok(idsFor(new Date(2024, 0, 29)).includes('sankashti-chaturthi-vrat'));
+  assert.ok(!idsFor(new Date(2024, 0, 30)).includes('sankashti-chaturthi-vrat'));
+});

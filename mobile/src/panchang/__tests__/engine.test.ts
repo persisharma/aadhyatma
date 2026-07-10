@@ -189,8 +189,19 @@ test('Kshaya tithi is captured — Krishna Ekadashi skipped at sunrise, 10 Jul 2
   assert.equal(next.kshayaTithi, null, 'no kshaya on a normal day');
 });
 
-test('kshayaTithi is null on ordinary days', () => {
+test('kshaya nakshatra is captured — Mrigashira skipped at sunrise, 29 Jan 2026 (Ujjain)', () => {
+  const p = computePanchangForDate(new Date(2026, 0, 29));
+  assert.equal(p.nakshatra.index, 3, `Rohini at sunrise, got ${p.nakshatra.index}`);
+  assert.ok(p.kshayaNakshatra, 'kshaya nakshatra captured');
+  assert.equal(p.kshayaNakshatra.index, 4, `kshaya Mrigashira, got ${p.kshayaNakshatra.index}`);
+  assertTimeWithin(p.kshayaNakshatra.endTime, 5, 28, 10, 'mrigashira end (next civil day)');
+  assert.ok(p.kshayaNakshatra.endTime! > p.nakshatra.endTime!, 'kshaya ends after it starts');
+});
+
+test('kshaya angas are null on ordinary days', () => {
   for (const date of [new Date(2026, 0, 14), new Date(2026, 2, 3), new Date(2026, 9, 20)]) {
-    assert.equal(computePanchangForDate(date).kshayaTithi, null, date.toDateString());
+    const p = computePanchangForDate(date);
+    assert.equal(p.kshayaTithi, null, `tithi ${date.toDateString()}`);
+    assert.equal(p.kshayaNakshatra, null, `nakshatra ${date.toDateString()}`);
   }
 });

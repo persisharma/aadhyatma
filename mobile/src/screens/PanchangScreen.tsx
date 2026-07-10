@@ -11,7 +11,7 @@ import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
-import { formatClock as formatTime12 } from '@/panchang/muhuratFormat';
+import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
 import {
@@ -460,7 +460,7 @@ export default function PanchangScreen() {
               flatter secondary row. */}
           <View style={styles.angaGrid}>
             <PanchangTile label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} kshaya={p.kshayaTithi} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} kshaya={p.kshayaNakshatra} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
           <View style={styles.angaGridSecondary}>
             <PanchangTile label={contentByLang(lang, 'योग', 'Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
@@ -612,7 +612,7 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
 function PanchangTile({ label, element, kshaya, panchangDate, lang, colors, typography, radii, elevation }: {
   label: string;
   element: PanchangElement;
-  // Kshaya anga (tithi skipped at every sunrise) — rendered as a second row so
+  // Kshaya anga (skipped at every sunrise) — rendered as a second, smaller row so
   // days like 10 Jul 2026 read "दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल".
   kshaya?: PanchangElement | null;
   panchangDate: Date;
@@ -622,15 +622,7 @@ function PanchangTile({ label, element, kshaya, panchangDate, lang, colors, typo
   radii: any;
   elevation: any;
 }) {
-  // End instants past midnight belong to the next civil day; without the date
-  // suffix "तक 2:04 AM" reads as this morning (already past) instead of tonight.
-  const endLabel = (end: Date) => {
-    const sameDay = end.getFullYear() === panchangDate.getFullYear()
-      && end.getMonth() === panchangDate.getMonth()
-      && end.getDate() === panchangDate.getDate();
-    const time = formatTime12(end);
-    return contentByLang(lang, 'तक ', 'till ') + (sameDay ? time : `${time}, ${formatShortDate(end, lang)}`);
-  };
+  const rows = kshaya ? [element, kshaya] : [element];
   return (
     <View
       style={[
@@ -653,38 +645,27 @@ function PanchangTile({ label, element, kshaya, panchangDate, lang, colors, typo
       >
         {label}
       </Text>
-      {/* Single-language value. adjustsFontSizeToFit shrinks the longest names
-          (e.g. "Uttara Bhadrapada") to one line so every card keeps equal height. */}
-      <Text
-        numberOfLines={1}
-        adjustsFontSizeToFit
-        minimumFontScale={0.8}
-        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18, color: colors.ink, marginTop: 4 }}
-      >
-        {contentByLang(lang, element.nameHi, element.nameEn)}
-      </Text>
-      {element.endTime && (
-        <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft, marginTop: 5 }}>
-          {endLabel(element.endTime)}
-        </Text>
-      )}
-      {kshaya && (
-        <>
+      {rows.map((row, i) => (
+        <React.Fragment key={i}>
+          {/* Single-language value. adjustsFontSizeToFit shrinks the longest names
+              (e.g. "Uttara Bhadrapada") to one line so every card keeps equal height. */}
           <Text
             numberOfLines={1}
             adjustsFontSizeToFit
             minimumFontScale={0.8}
-            style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink, marginTop: 6 }}
+            style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: i === 0 ? 18 : 15, color: colors.ink, marginTop: i === 0 ? 4 : 6 }}
           >
-            {contentByLang(lang, kshaya.nameHi, kshaya.nameEn)}
+            {contentByLang(lang, row.nameHi, row.nameEn)}
           </Text>
-          {kshaya.endTime && (
-            <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft, marginTop: 3 }}>
-              {endLabel(kshaya.endTime)}
+          {/* formatEndInstant appends a short date when the end falls past
+              midnight — a bare "तक 2:04 AM" would read as this morning. */}
+          {row.endTime && (
+            <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft, marginTop: i === 0 ? 5 : 3 }}>
+              {contentByLang(lang, 'तक ', 'till ')}{formatEndInstant(row.endTime, panchangDate, lang)}
             </Text>
           )}
-        </>
-      )}
+        </React.Fragment>
+      ))}
     </View>
   );
 }
