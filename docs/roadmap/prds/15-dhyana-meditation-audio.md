@@ -100,6 +100,10 @@ Ship one signature **guided dhyāna** — a fixed ~8-minute OM/breath-anchored m
 - One studio day covers both languages + bells. Female or male voice: decide with the same "single voice vs. section-appropriate" question already open in PRD-02 §13.
 - **Why we don't just reuse a stock meditation track:** voice is the product here (Miracle of Mind is literally Sadhguru's voice); a generic track undercuts the devotional register and creates licensing risk.
 
+### Placeholder assets (available now)
+
+`mobile/assets/audio/dhyana/` carries generated **placeholder** assets so implementation isn't blocked on the studio: `bell-start.m4a` / `bell-end.m4a` (synthesized bells, near-shippable), `guided-hi.m4a` / `guided-en.m4a` (full 8:06 sessions with a synthetic espeak-ng voice — development only), plus the **timestamped bilingual scripts** (`SCRIPT-hi.md`, `SCRIPT-en.md`, drafted, pending teacher review) that the studio records from, a regeneration pipeline (`mobile/scripts/gen-dhyana-placeholder-audio.py`, `verify-dhyana-audio.py`), and a Suno-based upgrade path (`SUNO.md`). None of it is bundled into the binary until `require()`d.
+
 ## 9. Binary-size budget
 
 | Release | Added audio | Budget | Notes |
