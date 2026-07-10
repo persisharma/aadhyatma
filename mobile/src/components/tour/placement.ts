@@ -108,6 +108,20 @@ export function measureSettled(tries: number, stable: number): boolean {
   return tries >= MEASURE_MIN_TRIES && stable >= MEASURE_STABLE_FRAMES;
 }
 
+/**
+ * After the frame-settle loop converges, the tour keeps re-measuring at this
+ * cadence for as long as the step is shown. Some screens load their content
+ * asynchronously (e.g. Japam alarms hydrate from AsyncStorage) and shift the
+ * target *after* the ~0.8s frame cap — the empty-state layout looks "stable" to
+ * the frame loop, so without this the ring freezes on a stale spot. Polling lets
+ * the ring follow the target to its final position no matter how late (or slow)
+ * the async load is — so it holds on any device, not just ones that hydrate
+ * within a fixed window. The `sameRect` guard makes it a no-op (no re-render)
+ * once nothing moves, and it is torn down when the step changes, so the cost is a
+ * single cheap `measureInWindow` per tick while a step is on screen.
+ */
+export const REMEASURE_POLL_MS = 400;
+
 /** Whether two rects are the same to the nearest pixel (measurement settled). */
 export function sameRect(a: Rect | null, b: Rect | null): boolean {
   if (!a || !b) return a === b;

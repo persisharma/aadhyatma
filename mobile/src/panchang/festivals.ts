@@ -140,6 +140,8 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'hartalika-teej-katha', nameHi: 'हरतालिका तीज कथा', nameEn: 'Hartalika Teej Katha', sourceUrl: 'https://www.drikpanchang.com/festivals/teej/legends/hartalika-vrat-legend.html', relatedRuleIds: ['hartalika-teej'] }),
   katha({ id: 'maha-shivaratri-vrat-katha', nameHi: 'महा शिवरात्रि व्रत कथा', nameEn: 'Maha Shivaratri Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/maha-shivaratri/maha-shivaratri-vrat-katha.html', relatedRuleIds: ['maha-shivaratri', 'masik-shivaratri'] }),
   katha({ id: 'gangaur-vrat-katha', nameHi: 'गणगौर व्रत कथा', nameEn: 'Gangaur Vrat Katha', sourceUrl: VratKathaUrl, relatedRuleIds: ['gangaur'] }),
+  katha({ id: 'sheetala-saptami-vrat-katha', nameHi: 'शीतला सप्तमी व्रत कथा (बसोड़ा)', nameEn: 'Sheetala Saptami Vrat Katha (Basoda)', sourceUrl: VratKathaUrl, relatedRuleIds: ['shitala-saptami'] }),
+  katha({ id: 'bachh-baras-vrat-katha', nameHi: 'बछ बारस व्रत कथा', nameEn: 'Bachh Baras Vrat Katha', sourceUrl: VratKathaUrl, relatedRuleIds: ['bachh-baras'] }),
   katha({ id: 'rama-navami-vrat-katha', nameHi: 'राम नवमी व्रत कथा', nameEn: 'Rama Navami Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/rama-navami/rama-navami-vrat-katha.html', relatedRuleIds: ['ram-navami'] }),
   katha({ id: 'sita-navami-vrat-katha', nameHi: 'सीता नवमी व्रत कथा', nameEn: 'Sita Navami Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/sita-navami/sita-navami-vrat-katha.html', relatedRuleIds: ['sita-navami'] }),
   katha({ id: 'hanuman-jayanti-vrat-katha', nameHi: 'हनुमान जयंती व्रत कथा', nameEn: 'Hanuman Jayanti Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/hanuman-jayanti/hanuman-jayanti-vrat-katha.html', relatedRuleIds: ['hanuman-jayanti'] }),
@@ -388,7 +390,8 @@ export const ADVANCED_OBSERVANCE_RULES: ObservanceRule[] = [
   hidden({ id: 'jayaparvati-vrat', nameHi: 'जयापार्वती व्रत', nameEn: 'Jayaparvati Vrat', kathaId: 'jayaparvati-vrat-katha' }),
   hidden({ id: 'ashoka-ashtami', nameHi: 'अशोक अष्टमी', nameEn: 'Ashoka Ashtami', lunarMonth: 1, paksha: 'shukla', tithi: 8, kathaId: 'ashoka-ashtami-vrat-katha' }),
   hidden({ id: 'asha-dashami', nameHi: 'आशा दशमी', nameEn: 'Asha Dashami' }),
-  hidden({ id: 'shitala-saptami', nameHi: 'शीतला सप्तमी', nameEn: 'Shitala Saptami', kathaId: 'sankashti-chaturthi-vrat-katha' }),
+  hidden({ id: 'shitala-saptami', nameHi: 'शीतला सप्तमी', nameEn: 'Shitala Saptami', kathaId: 'sheetala-saptami-vrat-katha' }),
+  hidden({ id: 'bachh-baras', nameHi: 'बछ बारस', nameEn: 'Bachh Baras', kathaId: 'bachh-baras-vrat-katha' }),
 ];
 
 export const OBSERVANCE_RULES: ObservanceRule[] = [

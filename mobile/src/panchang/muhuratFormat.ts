@@ -2,6 +2,9 @@
  * Display helpers for muhurat times. Pure — 12-hour clock with AM/PM, matching
  * the Panchang tab's existing time cells.
  */
+import { transliterateDevanagari } from '@/utils/transliterate';
+import type { Lang } from '@/data/gita/language';
+
 /** 12-hour clock with AM/PM. Null → '' (matches the Panchang tab's time cells). */
 export function formatClock(d: Date | null): string {
   if (!d) return '';
@@ -14,4 +17,29 @@ export function formatClock(d: Date | null): string {
 
 export function formatRange(a: Date, b: Date): string {
   return `${formatClock(a)} – ${formatClock(b)}`;
+}
+
+const MONTHS_SHORT_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTHS_SHORT_HI = ['जन', 'फ़र', 'मार्च', 'अप्रै', 'मई', 'जून', 'जुल', 'अग', 'सित', 'अक्टू', 'नवं', 'दिसं'];
+
+export function isSameLocalDay(a: Date, b: Date): boolean {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+/**
+ * Clock for an anga/muhurat end instant, with a short-date suffix whenever it
+ * falls on a different civil day than `referenceDay` — a bare "2:04 AM" for
+ * tonight otherwise reads as this morning. Shared by every end-time surface
+ * (Panchang anga tiles, Muhurat detail/share card).
+ */
+export function formatEndInstant(end: Date, referenceDay: Date, lang: Lang): string {
+  const time = formatClock(end);
+  if (isSameLocalDay(end, referenceDay)) return time;
+  const month =
+    lang === 'en'
+      ? MONTHS_SHORT_EN[end.getMonth()]
+      : lang === 'hi'
+        ? MONTHS_SHORT_HI[end.getMonth()]
+        : transliterateDevanagari(MONTHS_SHORT_HI[end.getMonth()], lang);
+  return `${time}, ${end.getDate()} ${month}`;
 }

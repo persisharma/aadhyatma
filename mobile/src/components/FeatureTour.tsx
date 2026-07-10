@@ -21,6 +21,7 @@ import {
   sameRect,
   measureSettled,
   CARD_HEIGHT_EST,
+  REMEASURE_POLL_MS,
 } from '@/components/tour/placement';
 
 /**
@@ -84,17 +85,47 @@ export default function FeatureTour() {
   // measure it — re-measuring across frames and always keeping the LATEST rect,
   // until it settles (a freshly-navigated screen shifts as its header/content lays
   // out — and some targets, e.g. the muhurat card, mount a few frames late; taking
-  // only an early measure would ring the wrong spot). Deferred + cancelled on
-  // cleanup so nothing stale lands. Depends on screen size so a rotation re-measures.
+  // only an early measure would ring the wrong spot). Once the frame loop settles,
+  // a bounded low-frequency poll keeps re-measuring: some screens hydrate their
+  // content asynchronously (e.g. Japam alarms load from AsyncStorage) and shift
+  // the target AFTER the frame cap, and the empty-state layout looks "stable" to
+  // the frame loop — without the poll the ring freezes on that stale spot. Both
+  // phases keep the LATEST rect and are cancelled on cleanup so nothing stale lands.
+  // Depends on screen size so a rotation re-measures.
   useEffect(() => {
     if (!visible || !step || !navigationRef.isReady()) return undefined;
     setTargetRect(null);
     let cancelled = false;
     let raf: number | undefined;
+    let poll: ReturnType<typeof setTimeout> | undefined;
     let tries = 0;
     let prev: Rect | null = null;
     let stable = 0;
     let revealed = false;
+
+    // Commit the latest measurement, skipping a no-op re-render when unchanged.
+    const commit = (rect: Rect) => {
+      revealed = true;
+      setTargetRect((cur) => (sameRect(cur, rect) ? cur : rect));
+    };
+
+    // Slow path: after the frame loop settles, re-reveal + re-measure for as long
+    // as the step is shown, so a late async layout shift re-positions the ring no
+    // matter how slow the hydration is (device-agnostic — no fixed time window).
+    const schedulePoll = () => {
+      if (cancelled || !step.targetId) return;
+      poll = setTimeout(() => {
+        if (cancelled || !step.targetId) return;
+        revealTourTarget(step.targetId);
+        void measureTourTarget(step.targetId).then((rect) => {
+          if (cancelled) return;
+          if (rect) commit(rect);
+          schedulePoll();
+        });
+      }, REMEASURE_POLL_MS);
+    };
+
+    // Fast path: re-measure across frames until the rect holds still.
     const measure = () => {
       if (cancelled || !step.targetId) return;
       // Ask the screen to scroll the target on-screen until the first measure
@@ -103,13 +134,13 @@ export default function FeatureTour() {
       void measureTourTarget(step.targetId).then((rect) => {
         if (cancelled) return;
         if (rect) {
-          revealed = true;
-          setTargetRect(rect); // last write wins → ring tracks to the final position
+          commit(rect); // last write wins → ring tracks to the final position
           stable = sameRect(prev, rect) ? stable + 1 : 0;
           prev = rect;
         }
         tries += 1;
-        if (!measureSettled(tries, stable)) raf = requestAnimationFrame(measure);
+        if (measureSettled(tries, stable)) schedulePoll();
+        else raf = requestAnimationFrame(measure);
       });
     };
     const handle = InteractionManager.runAfterInteractions(() => {
@@ -125,6 +156,7 @@ export default function FeatureTour() {
     return () => {
       cancelled = true;
       if (raf !== undefined) cancelAnimationFrame(raf);
+      if (poll !== undefined) clearTimeout(poll);
       handle.cancel();
     };
   }, [visible, stepIndex, step, screenW, screenH]);

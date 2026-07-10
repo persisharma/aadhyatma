@@ -133,6 +133,44 @@ export function resolveSadhanaToday(
   return { kind: 'active', dayIndex, totalDays: total, items: dayItemsFor(p, dayIndex) };
 }
 
+/** The fields `orderSadhanaCards` sorts on — a structural subset of the view-model card. */
+export type SadhanaOrderable = { program: SadhanaProgram; status: SadhanaTodayStatus };
+
+/**
+ * Ledger order for the Today's Practice screen (design.md §31/§46):
+ * 1. the daily practice comes first — practicable-today cards (`active`), with
+ *    `consecutive` (daily) cadence ahead of a calendar-gated day that merely
+ *    happens to be eligible today;
+ * 2. then cards already offered today (`done-today`);
+ * 3. then resting / upcoming sankalps **by nearest date first** (a `waiting`
+ *    card's `whenKey` — the next eligible / window-start day; missing keys sort
+ *    last);
+ * 4. completed sankalps last.
+ * Ties preserve input (enrollment) order — Array.sort is stable. Pure and does
+ * not mutate its input, so it is unit-tested without a provider tree.
+ */
+export function orderSadhanaCards<T extends SadhanaOrderable>(cards: T[]): T[] {
+  const statusRank = (s: SadhanaTodayStatus): number =>
+    s.kind === 'active' ? 0 : s.kind === 'done-today' ? 1 : s.kind === 'waiting' ? 2 : 3;
+  // Daily (consecutive) is "the daily card" the ledger opens on.
+  const cadenceRank = (p: SadhanaProgram): number => (p.cadence.kind === 'consecutive' ? 0 : 1);
+  const nearestKey = (s: SadhanaTodayStatus): string => (s.kind === 'waiting' ? s.whenKey ?? '' : '');
+
+  return [...cards].sort((a, b) => {
+    const byStatus = statusRank(a.status) - statusRank(b.status);
+    if (byStatus !== 0) return byStatus;
+    const byCadence = cadenceRank(a.program) - cadenceRank(b.program);
+    if (byCadence !== 0) return byCadence;
+    // Nearest upcoming date first; undated cards keep enrollment order behind dated ones.
+    const ak = nearestKey(a.status);
+    const bk = nearestKey(b.status);
+    if (ak && bk) return ak < bk ? -1 : ak > bk ? 1 : 0;
+    if (ak) return -1;
+    if (bk) return 1;
+    return 0;
+  });
+}
+
 /** completedDays with `dayIndex` recorded — pure, for the context to persist. */
 export function withDayCommitted(
   e: SadhanaEnrollment,

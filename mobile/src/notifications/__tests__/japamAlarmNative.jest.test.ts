@@ -73,9 +73,12 @@ describe('scheduleNativeAlarmsForDay — mantra sound passthrough', () => {
   });
 
   test('passes null when the mantra has no bundled clip (falls back to system tone)', async () => {
-    await scheduleNativeAlarmsForDay([alarm('a2', 'gayatri-mantra')]);
+    await scheduleNativeAlarmsForDay([alarm('a2', 'om-namo-bhagavate-vasudevaya')]);
     expect(scheduleAlarm).toHaveBeenCalledWith(
-      expect.objectContaining({ mantraId: 'gayatri-mantra', sound: null })
+      expect.objectContaining({
+        mantraId: 'om-namo-bhagavate-vasudevaya',
+        sound: null,
+      })
     );
   });
 });

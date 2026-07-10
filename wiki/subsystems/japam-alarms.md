@@ -1,8 +1,8 @@
 ---
 title: Japam Alarms
 type: subsystem
-sources: [mobile/src/notifications/japamAlarms.ts, mobile/src/notifications/japamAlarmScheduler.ts, mobile/src/notifications/japamAlarmNative.ts, mobile/src/contexts/JapamAlarmsContext.tsx, mobile/src/screens/JapamAlarmsScreen.tsx, mobile/modules/japam-alarm-ios/ios/JapamAlarmIosModule.swift, mobile/plugins/native-android/JapamAlarmModule.kt, mobile/plugins/native-android/JapamAlarmReceiver.kt, mobile/plugins/native-android/JapamBootReceiver.kt, mobile/plugins/native-android/JapamAlarmActionReceiver.kt]
-last_verified_date: 2026-07-06
+sources: [mobile/src/notifications/japamAlarms.ts, mobile/src/notifications/japamAlarmScheduler.ts, mobile/src/notifications/japamAlarmNative.ts, mobile/src/contexts/JapamAlarmsContext.tsx, mobile/src/screens/JapamAlarmsScreen.tsx, mobile/assets/japam-alarm-sounds/index.ts, mobile/modules/japam-alarm-ios/ios/JapamAlarmIosModule.swift, mobile/plugins/native-android/JapamAlarmModule.kt, mobile/plugins/native-android/JapamAlarmReceiver.kt, mobile/plugins/native-android/JapamBootReceiver.kt, mobile/plugins/native-android/JapamAlarmActionReceiver.kt]
+last_verified_date: 2026-07-10
 confidence: high
 status: current
 ---
@@ -40,6 +40,8 @@ Japam Alarms let users schedule timed reminders to chant a mantra, with per-alar
 - iOS: `modules/japam-alarm-ios/ios/JapamAlarmIosModule.swift` — AlarmKit wrapper.
 - Android: `plugins/native-android/JapamAlarmModule.kt` + `JapamAlarmReceiver.kt` (re-arms for next day) + `JapamBootReceiver.kt` (re-arms after device reboot) + `JapamAlarmActionReceiver.kt` (handles Snooze; `SNOOZE_MS = 5 min`, matching `SNOOZE_MINUTES = 5` in pure helpers).
 
+**Alarm ring tune** (`assets/japam-alarm-sounds/index.ts`): per-mantra ≤30 s WAV clips (mono 22.05 kHz PCM — iOS notification-sound constraints). `getJapamAlarmSoundName(mantraId)` resolves the filename used by every tier: AlarmKit rings `.named(sound)`, the Android receiver looks up `res/raw/<mantra_id_with_underscores>`, and the expo tier creates one notification channel per mantra (`japam-alarm:<mantraId>`) because Android 8+ pins a channel's sound at creation. Clips bundled: `om-namah-shivaya`, `hare-krishna-mahamantra`, `gayatri-mantra` (the latter two are 28 s loudness-normalised excerpts cut from `assets/audio-library/` takes). `om-namo-bhagavate-vasudevaya` has no recording yet → system default tone.
+
 **Context** (`contexts/JapamAlarmsContext.tsx`): CRUD on alarms, auto-disables one-time alarms after they fire, sweeps stale `skipNextDate` values on load.
 
 **Screen** (`screens/JapamAlarmsScreen.tsx`): alarm list + inline editor. Editor shows a day-chip group (Sun … Sat) + a "Once" chip; a skip-next affordance for alarms with a pending skip.
@@ -66,3 +68,4 @@ Japam Alarms let users schedule timed reminders to chant a mantra, with per-alar
 - **Android reboot** — `JapamBootReceiver` re-arms all alarms after a device reboot. Without it, all alarms silently vanish on power cycle.
 - **Snooze identifier exclusion** — snooze one-shots (`:snooze` suffix) are excluded from reconcile cancellation so a freshly-snoozed alarm isn't immediately cancelled by the next reconcile.
 - **One-time alarms never skip** — `isSkipPending` returns false for one-time alarms; `skipNextDate` is documented as ignored for them but the scheduler double-checks via `isOnceAlarm`.
+- **Alarm clips need double registration** — a new mantra WAV must be added BOTH to `assets/japam-alarm-sounds/index.ts` AND to `app.json` → `expo-notifications.sounds[]`. The plugin copies the listed files into the native bundles (Android `res/raw/` with hyphens→underscores, iOS bundle root); missing either step silently falls back to the default chime. This was the July 2026 "alarm only rings Om Namah Shivaya" bug — the other mantras' clips were never generated/registered.

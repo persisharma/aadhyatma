@@ -140,6 +140,52 @@ describe('SankalpTodayCard', () => {
     expect(mockCommitDay).toHaveBeenCalledWith(program.id, 1, 'marked');
   });
 
+  it('renders a multi-day progress bar reflecting days offered, hidden once complete', () => {
+    const program = getProgram('hanuman-41')!;
+    const item = program.day!.items[0];
+    const bar = (tree: TestRenderer.ReactTestRenderer) =>
+      tree.root.findAll((n) => n.props.accessibilityRole === 'progressbar')[0];
+
+    // Ten of 41 days offered → the bar is present and reports 10/41.
+    const active: SadhanaTodayCard = {
+      enrollment: {
+        programId: program.id,
+        startedOn: '2026-07-01',
+        status: 'active',
+        completedDays: Object.fromEntries(
+          Array.from({ length: 10 }, (_, i) => [i + 1, { at: '2026-07-01', via: 'read-to-end' }])
+        ),
+      },
+      program,
+      status: { kind: 'active', dayIndex: 11, totalDays: 41, items: [item] },
+      items: [
+        { item, key: `${program.id}:11:${item.id}`, display: resolveRoutineItem(item), done: false },
+      ],
+      allItemsDoneToday: false,
+      autoVia: 'read-to-end',
+    };
+    const activeBar = bar(render(active));
+    expect(activeBar).toBeDefined();
+    expect(activeBar!.props.accessibilityValue).toEqual({ min: 0, max: 41, now: 10 });
+
+    // On पूर्णाहुति the terminal seal replaces the bar — no progressbar node.
+    const completed: SadhanaTodayCard = {
+      enrollment: {
+        programId: program.id,
+        startedOn: '2026-07-01',
+        status: 'completed',
+        completedDays: {},
+        completedOn: '2026-08-10',
+      },
+      program,
+      status: { kind: 'completed', totalDays: 41, completedOn: '2026-08-10' },
+      items: [],
+      allItemsDoneToday: false,
+      autoVia: 'read-to-end',
+    };
+    expect(bar(render(completed))).toBeUndefined();
+  });
+
   it('eyebrow reflects completed days across active and done-today states', () => {
     const program = getProgram('hanuman-41')!;
     const item = program.day!.items[0];

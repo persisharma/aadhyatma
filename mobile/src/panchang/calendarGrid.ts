@@ -22,7 +22,7 @@ function startOfLocalDay(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
-function addDays(date: Date, days: number): Date {
+export function addDays(date: Date, days: number): Date {
   const next = startOfLocalDay(date);
   next.setDate(next.getDate() + days);
   return next;

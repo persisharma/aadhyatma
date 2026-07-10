@@ -6,7 +6,7 @@ import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
-import { formatClock, formatRange } from '@/panchang/muhuratFormat';
+import { formatClock, formatEndInstant, formatRange } from '@/panchang/muhuratFormat';
 import type { PanchangData, PanchangElement } from '@/panchang/types';
 import type { ChoghadiyaPeriod, KaalWindow, MuhuratDay } from '@/panchang/muhurat';
 
@@ -19,9 +19,11 @@ function fmtDate(d: Date, lang: Lang): string {
     lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
-function elementLine(e: PanchangElement, lang: Lang): string {
+// referenceDay = the panchang date, so ends past midnight carry a short-date
+// suffix instead of reading as this morning (same rule as the anga tiles).
+function elementLine(e: PanchangElement, referenceDay: Date, lang: Lang): string {
   const name = contentByLang(lang, e.nameHi, e.nameEn);
-  return e.endTime ? `${name} · ${formatClock(e.endTime)}` : name;
+  return e.endTime ? `${name} · ${formatEndInstant(e.endTime, referenceDay, lang)}` : name;
 }
 
 /**
@@ -117,10 +119,12 @@ export default function MuhuratCardBody({
         <Text style={[styles.ornR, { color: colors.saffron, fontFamily: typography.readerTitle.fontFamily }]}>॥</Text>
 
         <GroupLabel hi="पंचांग" en="Panchang" />
-        <KV k={contentByLang(lang, 'तिथि', 'Tithi')} v={elementLine(p.tithi, lang)} />
-        <KV k={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} v={elementLine(p.nakshatra, lang)} />
-        {variant === 'full' && <KV k={contentByLang(lang, 'योग', 'Yoga')} v={elementLine(p.yoga, lang)} />}
-        {variant === 'full' && <KV k={contentByLang(lang, 'करण', 'Karana')} v={elementLine(p.karana, lang)} />}
+        <KV k={contentByLang(lang, 'तिथि', 'Tithi')} v={elementLine(p.tithi, p.date, lang)} />
+        {p.kshayaTithi && <KV k={contentByLang(lang, 'क्षय तिथि', 'Kshaya Tithi')} v={elementLine(p.kshayaTithi, p.date, lang)} />}
+        <KV k={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} v={elementLine(p.nakshatra, p.date, lang)} />
+        {p.kshayaNakshatra && <KV k={contentByLang(lang, 'क्षय नक्षत्र', 'Kshaya Nakshatra')} v={elementLine(p.kshayaNakshatra, p.date, lang)} />}
+        {variant === 'full' && <KV k={contentByLang(lang, 'योग', 'Yoga')} v={elementLine(p.yoga, p.date, lang)} />}
+        {variant === 'full' && <KV k={contentByLang(lang, 'करण', 'Karana')} v={elementLine(p.karana, p.date, lang)} />}
         <Rule />
 
         <GroupLabel hi="सूर्य" en="Sun" />

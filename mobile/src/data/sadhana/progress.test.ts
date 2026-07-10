@@ -8,16 +8,19 @@ import { SADHANA_PROGRAMS, getProgram } from './programs';
 import {
   completedDayCount,
   dayItemsFor,
+  orderSadhanaCards,
   programDayCount,
   resolveSadhanaToday,
   withDayCommitted,
+  type SadhanaOrderable,
+  type SadhanaTodayStatus,
 } from './progress';
 import type { SadhanaEnrollment } from './types';
 
-const HANUMAN = getProgram('hanuman-41')!;
+const HANUMAN = getProgram('hanuman-41')!; // consecutive (daily)
 const GITA = getProgram('gita-18')!;
-const NAVRATRI = getProgram('navratri-durga-9')!;
-const SHRAVAN = getProgram('shravan-somvar')!;
+const NAVRATRI = getProgram('navratri-durga-9')!; // festival-window
+const SHRAVAN = getProgram('shravan-somvar')!; // weekday
 
 function enrollment(over: Partial<SadhanaEnrollment> = {}): SadhanaEnrollment {
   return { programId: 'hanuman-41', startedOn: '2026-07-01', status: 'active', completedDays: {}, ...over };
@@ -167,4 +170,55 @@ test('withDayCommitted appends the day immutably', () => {
   assert.deepEqual(e.completedDays, {}); // unchanged
   assert.equal(completedDayCount({ ...e, completedDays: next }), 1);
   assert.equal(next[1].via, 'marked');
+});
+
+// ── ordering ─────────────────────────────────────────────────────────────
+const orderCard = (program: typeof HANUMAN, status: SadhanaTodayStatus): SadhanaOrderable => ({
+  program,
+  status,
+});
+const order = (cards: SadhanaOrderable[]) => orderSadhanaCards(cards).map((c) => c.program.id);
+
+test('orderSadhanaCards: daily card first, then upcoming sankalps nearest-first', () => {
+  const cards: SadhanaOrderable[] = [
+    orderCard(NAVRATRI, { kind: 'waiting', totalDays: 9, doneCount: 0, reason: 'window-upcoming', whenKey: '2026-10-11', items: [] }),
+    orderCard(SHRAVAN, { kind: 'waiting', totalDays: 4, doneCount: 0, reason: 'weekday-off', whenKey: '2026-08-03', items: [] }),
+    orderCard(HANUMAN, { kind: 'active', dayIndex: 3, totalDays: 41, items: [] }),
+  ];
+  assert.deepEqual(order(cards), ['hanuman-41', 'shravan-somvar', 'navratri-durga-9']);
+});
+
+test('orderSadhanaCards: daily (consecutive) active outranks a calendar-gated card eligible today', () => {
+  const cards: SadhanaOrderable[] = [
+    orderCard(SHRAVAN, { kind: 'active', dayIndex: 1, totalDays: 4, items: [] }),
+    orderCard(HANUMAN, { kind: 'active', dayIndex: 1, totalDays: 41, items: [] }),
+  ];
+  assert.deepEqual(order(cards), ['hanuman-41', 'shravan-somvar']);
+});
+
+test('orderSadhanaCards: resting sankalps sort nearest-first regardless of input order', () => {
+  const cards: SadhanaOrderable[] = [
+    orderCard(NAVRATRI, { kind: 'waiting', totalDays: 9, doneCount: 0, reason: 'window-upcoming', whenKey: '2026-10-11', items: [] }),
+    orderCard(SHRAVAN, { kind: 'waiting', totalDays: 4, doneCount: 0, reason: 'weekday-off', whenKey: '2026-08-03', items: [] }),
+  ];
+  assert.deepEqual(order(cards), ['shravan-somvar', 'navratri-durga-9']);
+});
+
+test('orderSadhanaCards: done-today outranks waiting; completed sinks last', () => {
+  const cards: SadhanaOrderable[] = [
+    orderCard(NAVRATRI, { kind: 'completed', totalDays: 9, completedOn: '2026-01-01' }),
+    orderCard(SHRAVAN, { kind: 'waiting', totalDays: 4, doneCount: 1, reason: 'weekday-off', whenKey: '2026-08-03', items: [] }),
+    orderCard(HANUMAN, { kind: 'done-today', dayIndex: 2, totalDays: 41 }),
+  ];
+  assert.deepEqual(order(cards), ['hanuman-41', 'shravan-somvar', 'navratri-durga-9']);
+});
+
+test('orderSadhanaCards: does not mutate its input', () => {
+  const cards: SadhanaOrderable[] = [
+    orderCard(HANUMAN, { kind: 'active', dayIndex: 1, totalDays: 41, items: [] }),
+    orderCard(NAVRATRI, { kind: 'waiting', totalDays: 9, doneCount: 0, reason: 'window-upcoming', whenKey: '2026-10-11', items: [] }),
+  ];
+  const before = cards.map((c) => c.program.id);
+  orderSadhanaCards(cards);
+  assert.deepEqual(cards.map((c) => c.program.id), before);
 });
