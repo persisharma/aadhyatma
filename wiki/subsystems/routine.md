@@ -57,7 +57,12 @@ The catalog (`SadhanaProgramListScreen`) + detail follow the app card language (
 `RoutineShell` gained an optional `background` prop → the catalog sits on `getRandomDeityBackground()`
 (By-Deity convention) and the detail on `getDeityBackground(program.deity)`; cards are warm
 `LibraryCard`-style (gradient thumb from `program.thumb`, both languages via `orderTitlesByLanguage`,
-status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Practice ledger.
+status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Practice ledger. It is a
+**tap-to-expand accordion**: the header (eyebrow + title + progress bar + resting prose) is always
+shown with a rotating dropdown caret, and the unit rows **collapse by default, dropping down only when
+the header is tapped** — styled identically to the §31 daily-routine ledger rows (28 px offering ring,
+16/24 title, `cardMeta` sub, bottom dividers). Only `active`/`waiting`-with-items days are expandable
+(`hasItems`); `done-today`/`completed` have no units so the header stays a plain block.
 The catalog has **three standing entry points** (July 2026 review — it used to hang solely off the
 create-routine chooser, unreachable in practice once a routine existed): the `CreateRoutineScreen`
 'choose' fork, ghost "तैयार संकल्प चुनें / Browse sankalps" buttons on `RoutineToday` + `RoutineList`,

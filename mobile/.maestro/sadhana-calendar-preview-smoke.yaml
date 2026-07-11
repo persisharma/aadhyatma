@@ -75,7 +75,10 @@ appId: host.exp.Exponent
 # Resting copy for an upcoming festival window…
 - assertVisible: "Your sankalp begins.*"
 # …AND the day-1 unit as a tap-to-read preview (this is what used to be missing).
-# The item row merges title + sub into one node ("Durga Chalisa … Tap to read").
+# The preview rows drop down when the card is tapped (accordion) — tap the
+# eyebrow to expand. The item row merges title + sub into one node.
+- tapOn: "Sankalp · 0 / 9"
+- waitForAnimationToEnd
 - assertVisible: "Durga Chalisa.*Tap to read.*"
 - takeScreenshot: /tmp/vedansh-sankalp-preview
 
