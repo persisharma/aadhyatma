@@ -41,7 +41,12 @@ UserActivity day totals show `rounds ≥ targetRounds`. `useRoutineToday()` comp
 Routine + ReadingProgress + UserActivity into `{entries, doneCount, total, hasRoutine}`;
 `doneMode` is `'manual' | 'auto' | null` (manual wins).
 
-**UI surfaces:** a docked `RoutineBanner` on Home above the tab bar (pure view-model in
+**UI surfaces:** the `RoutineToday` ledger is a **tap-to-expand accordion** — the completion
+summary card is the always-visible header (with a centred rotating `›` caret) and the item rows +
+help caption **collapse by default, dropping down only when the summary card is tapped** (`expanded`
+state in `RoutineTodayScreen`). This mirrors the sankalp cards (see Sadhana Programs below), so both
+ledgers on the screen behave and look identical. Also: a docked `RoutineBanner` on Home above the tab
+bar (pure view-model in
 `routineBannerView.ts`; single-line chip since #110); `RoutineCelebration` (pushpa-varsha)
 plays once per day when everything is done; five native-stack routes — `RoutineToday`,
 `RoutineList`, `RoutineCreate`, `RoutineDetail`, `RoutineAddItems`; every reader's toggle row

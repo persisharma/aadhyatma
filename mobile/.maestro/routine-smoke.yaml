@@ -142,6 +142,10 @@ appId: host.exp.Exponent
     timeout: 15000
 # One item, none done yet → the PRD-10 ledger headline reads "0 of 1".
 - assertVisible: "0 of 1.*"
+# The ledger is a tap-to-expand accordion — tap the summary card (its headline)
+# to drop the item rows down before checking one off.
+- tapOn: "0 of 1.*"
+- waitForAnimationToEnd
 # The check-off circle's accessibilityLabel (PRD-10 "offered" register).
 - tapOn: "Mark offered"
 # Capture the app-wide pushpa-varsha mid-animation (transient ~2s one-shot).
