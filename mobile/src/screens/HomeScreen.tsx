@@ -20,6 +20,8 @@ import LotusMark from '@/components/LotusMark';
 import HomeWordmark from '@/components/HomeWordmark';
 import SearchFloatingButton from '@/components/SearchFloatingButton';
 import RoutineBanner from '@/components/RoutineBanner';
+import TodayStrip from '@/components/TodayStrip';
+import ContinueReadingCard from '@/components/ContinueReadingCard';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
@@ -57,23 +59,30 @@ export default function HomeScreen({ navigation }: Props) {
     aarti: <CategoryIcon iconKey="aarti" />,
     theerth: <CategoryIcon iconKey="theerth" />,
     sanskar: <CategoryIcon iconKey="sanskar" />,
+    vrat: <CategoryIcon iconKey="vrat" />,
   };
 
   type TileItem = {
     key: string;
     nameHi: string;
     nameEn: string;
+    shortNameEn?: string;
     status: 'active';
     icon?: React.ReactNode;
     onPress: () => void;
     hasNew?: boolean;
   };
 
+  // 3×3 launcher grid: the 7 registry categories, plus the व्रत tile (a door
+  // into the Panchang tab's Vrat & Parv catalog, PRD-09 — not a ContentCategory;
+  // its content lives in the observance engine, not the library) and the देवता
+  // tile (the Deity Index). Nine tiles — the grid stays a full square.
   const tiles: TileItem[] = [
     ...categories.map((c) => ({
       key: c.id,
       nameHi: c.nameHi,
       nameEn: c.nameEn,
+      shortNameEn: c.shortNameEn,
       status: 'active' as const,
       icon: categoryIcons[c.id],
       hasNew: hasNewInCategory(c.id),
@@ -82,6 +91,19 @@ export default function HomeScreen({ navigation }: Props) {
           ? navigation.navigate('TheerthMap', {})
           : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
     })),
+    {
+      key: 'vrat',
+      nameHi: 'व्रत',
+      nameEn: 'Vrat & Parv',
+      shortNameEn: 'Vrat',
+      status: 'active' as const,
+      icon: categoryIcons['vrat'],
+      onPress: () =>
+        rootNav.navigate('PanchangTab', {
+          screen: 'ObservanceList',
+          params: { category: 'vrat' },
+        }),
+    },
     {
       key: 'deity',
       nameHi: 'देवता',
@@ -95,7 +117,7 @@ export default function HomeScreen({ navigation }: Props) {
   const screenWidth = Dimensions.get('window').width;
   const gridPadding = spacing.xxl;
   const gridGap = 10;
-  const tileWidth = (screenWidth - 2 * gridPadding - gridGap) / 2;
+  const tileWidth = (screenWidth - 2 * gridPadding - 2 * gridGap) / 3;
 
   // Discover carousel — wide cards that peek the next one. Width is the viewport
   // minus the side gutter and a sliver of the following card; snap by card+gap.
@@ -202,40 +224,7 @@ export default function HomeScreen({ navigation }: Props) {
             <HomeWordmark />
           </View>
 
-          <Text
-            style={[
-              styles.sectionLabel,
-              {
-                color: colors.inkMuted,
-                fontSize: typography.sectionLabel.fontSize,
-                fontFamily: typography.sectionLabel.fontFamily,
-                letterSpacing: typography.sectionLabel.letterSpacing,
-              },
-            ]}
-          >
-            DISCOVER
-          </Text>
-
-          <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              decelerationRate="fast"
-              snapToInterval={featureSnap}
-              snapToAlignment="start"
-              // Full-bleed: cancel the page gutter so cards run edge-to-edge and the
-              // next card peeks, then re-pad the content so the first card aligns
-              // with the rest of the page.
-              style={{ marginHorizontal: -gridPadding }}
-              contentContainerStyle={{
-                paddingHorizontal: gridPadding,
-                gap: featureGap,
-                paddingBottom: 4,
-              }}
-            >
-              {orderedSpotlights.map(({ onPress, ...item }) => (
-                <FeatureCard key={item.key} item={item} width={featureWidth} onPress={onPress} />
-              ))}
-            </ScrollView>
+          <TodayStrip />
 
           <Text
             style={[
@@ -273,14 +262,54 @@ export default function HomeScreen({ navigation }: Props) {
                 <CategoryCard
                   nameHi={tile.nameHi}
                   nameEn={tile.nameEn}
+                  displayNameEn={tile.shortNameEn}
                   status={tile.status}
                   icon={tile.icon}
                   onPress={tile.onPress}
                   hasNew={tile.hasNew}
+                  variant="launcher"
                 />
               </View>
             ))}
           </View>
+
+          <ContinueReadingCard />
+
+          <Text
+            style={[
+              styles.sectionLabel,
+              styles.sectionLabelSpaced,
+              {
+                color: colors.inkMuted,
+                fontSize: typography.sectionLabel.fontSize,
+                fontFamily: typography.sectionLabel.fontFamily,
+                letterSpacing: typography.sectionLabel.letterSpacing,
+              },
+            ]}
+          >
+            DISCOVER
+          </Text>
+
+          <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              decelerationRate="fast"
+              snapToInterval={featureSnap}
+              snapToAlignment="start"
+              // Full-bleed: cancel the page gutter so cards run edge-to-edge and the
+              // next card peeks, then re-pad the content so the first card aligns
+              // with the rest of the page.
+              style={{ marginHorizontal: -gridPadding }}
+              contentContainerStyle={{
+                paddingHorizontal: gridPadding,
+                gap: featureGap,
+                paddingBottom: 4,
+              }}
+            >
+              {orderedSpotlights.map(({ onPress, ...item }) => (
+                <FeatureCard key={item.key} item={item} width={featureWidth} onPress={onPress} />
+              ))}
+            </ScrollView>
 
           <Text
             style={[
@@ -354,7 +383,7 @@ const styles = StyleSheet.create({
   hero: {
     alignItems: 'center',
     marginTop: 6,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   sectionLabel: {
     textTransform: 'uppercase',

@@ -13,23 +13,109 @@ type Props = {
   onPress?: () => void;
   /** When true (and active), shows a green "NEW" badge top-right. */
   hasNew?: boolean;
+  /**
+   * `card` (default): the classic gradient card with the name inside — used by
+   * any 2-column layout. `launcher`: the Home 3×3 grid tile — a compact glyph
+   * square with the name *below* it at caption size (design.md §19). The
+   * accessibility label always carries the full `nameEn` in both variants.
+   */
+  variant?: 'card' | 'launcher';
+  /** Short English label for the launcher grid; falls back to `nameEn`. */
+  displayNameEn?: string;
 };
 
-export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, hasNew }: Props) {
+export default function CategoryCard({
+  nameHi,
+  nameEn,
+  status,
+  icon,
+  onPress,
+  hasNew,
+  variant = 'card',
+  displayNameEn,
+}: Props) {
   const { colors, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const isActive = status === 'active';
+  const isLauncher = variant === 'launcher';
 
   // Home tiles show a single language line (the reader's primary). The demoted
   // second-language line is dropped here to tighten the grid; catalog/detail
   // screens keep the bilingual pairing. The English accessibilityLabel below is
-  // left intact, so screen readers still announce the English name.
-  const { primary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
-    devPrimary: 16,
-    devSecondary: 12,
-    latPrimary: 17,
-    latSecondary: 12,
-  });
+  // left intact, so screen readers still announce the (full) English name.
+  const { primary } = orderTitlesByLanguage(
+    lang,
+    nameHi,
+    isLauncher ? (displayNameEn ?? nameEn) : nameEn,
+    isLauncher
+      ? // Caption-sized label under the launcher tile; Latin one step up as usual.
+        { devPrimary: 13, devSecondary: 11, latPrimary: 14, latSecondary: 11 }
+      : { devPrimary: 16, devSecondary: 12, latPrimary: 17, latSecondary: 12 }
+  );
+
+  if (isLauncher && isActive) {
+    return (
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [styles.launcher, pressed && styles.cardPressed]}
+        accessibilityRole="button"
+        accessibilityLabel={`${nameEn}.${hasNew ? ' New.' : ''} Tap to open.`}
+      >
+        <View
+          style={[
+            styles.launcherTile,
+            {
+              borderRadius: 16,
+              borderColor: colors.cardActiveBorder,
+              borderWidth: 1,
+              shadowColor: '#3C1E0A',
+              shadowOpacity: 0.12,
+              shadowRadius: 10,
+              shadowOffset: { width: 0, height: 3 },
+              elevation: 3,
+            },
+          ]}
+        >
+          <LinearGradient
+            colors={[colors.cardActiveFrom, colors.cardActiveTo]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={[styles.cardBg, { borderRadius: 16 }]}
+          />
+          {icon}
+          {hasNew && (
+            <View
+              style={[
+                styles.badge,
+                styles.launcherBadge,
+                { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill },
+              ]}
+              pointerEvents="none"
+            >
+              <Text style={[styles.badgeText, { color: colors.newBadgeText, letterSpacing: 1.6 }]}>
+                NEW
+              </Text>
+            </View>
+          )}
+        </View>
+        <Text
+          numberOfLines={1}
+          style={[
+            styles.launcherName,
+            {
+              color: colors.ink,
+              fontFamily: primary.fontFamily,
+              fontSize: primary.fontSize,
+              fontStyle: primary.fontStyle,
+              letterSpacing: primary.letterSpacing,
+            },
+          ]}
+        >
+          {primary.text}
+        </Text>
+      </Pressable>
+    );
+  }
 
   const content = (
     <>
@@ -154,6 +240,23 @@ const styles = StyleSheet.create({
   },
   nameHi: {
     textAlign: 'center',
+  },
+  launcher: {
+    alignItems: 'stretch',
+  },
+  launcherTile: {
+    height: 72,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  launcherName: {
+    marginTop: 6,
+    textAlign: 'center',
+  },
+  launcherBadge: {
+    top: 6,
+    right: 6,
   },
   badge: {
     position: 'absolute',

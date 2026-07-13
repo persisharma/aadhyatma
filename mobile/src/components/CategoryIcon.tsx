@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import type { ContentCategory } from '@/data/texts';
 import { useTheme } from '@/theme/ThemeContext';
 
-export type CategoryIconKey = ContentCategory | 'deity';
+export type CategoryIconKey = ContentCategory | 'deity' | 'vrat';
 
 type Props = {
   iconKey: CategoryIconKey;
@@ -30,6 +30,7 @@ export default function CategoryIcon({ iconKey }: Props) {
       {iconKey === 'aarti' && <DiyaIcon {...paint} />}
       {iconKey === 'theerth' && <ShikharaIcon {...paint} />}
       {iconKey === 'sanskar' && <VedaManuscriptIcon {...paint} />}
+      {iconKey === 'vrat' && <KalashIcon {...paint} />}
     </View>
   );
 }
@@ -130,6 +131,19 @@ function TempleIcon({ color, accent }: IconPaint) {
       </View>
       <View style={[styles.templeBase, { backgroundColor: color }]} />
       <View style={[styles.templeStep, { backgroundColor: accent }]} />
+    </View>
+  );
+}
+
+function KalashIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.kalashWrap}>
+      <View style={[styles.kalashCoconut, { borderColor: color }]} />
+      <View style={[styles.kalashLeaf, styles.kalashLeafLeft, { backgroundColor: accent }]} />
+      <View style={[styles.kalashLeaf, styles.kalashLeafRight, { backgroundColor: accent }]} />
+      <View style={[styles.kalashNeck, { backgroundColor: color }]} />
+      <View style={[styles.kalashPot, { borderColor: color }]} />
+      <View style={[styles.kalashBand, { backgroundColor: accent }]} />
     </View>
   );
 }
@@ -501,6 +515,64 @@ const styles = StyleSheet.create({
     bottom: 1,
     width: 24,
     height: 2.4,
+    borderRadius: 1,
+    opacity: 0.85,
+  },
+  kalashWrap: {
+    width: 34,
+    height: 32,
+    position: 'relative',
+    alignItems: 'center',
+  },
+  kalashCoconut: {
+    position: 'absolute',
+    top: 0,
+    width: 9,
+    height: 8,
+    borderWidth: 1.7,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 3,
+    borderBottomRightRadius: 3,
+  },
+  kalashLeaf: {
+    position: 'absolute',
+    top: 5,
+    width: 8,
+    height: 2.2,
+    borderRadius: 2,
+  },
+  kalashLeafLeft: {
+    left: 6,
+    transform: [{ rotate: '24deg' }],
+  },
+  kalashLeafRight: {
+    right: 6,
+    transform: [{ rotate: '-24deg' }],
+  },
+  kalashNeck: {
+    position: 'absolute',
+    top: 8,
+    width: 14,
+    height: 2.6,
+    borderRadius: 1.5,
+  },
+  kalashPot: {
+    position: 'absolute',
+    top: 10,
+    width: 24,
+    height: 20,
+    borderWidth: 1.8,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+  kalashBand: {
+    position: 'absolute',
+    top: 18,
+    width: 16,
+    height: 1.8,
     borderRadius: 1,
     opacity: 0.85,
   },
