@@ -119,6 +119,11 @@ appId: host.exp.Exponent
 # The PRD-10 ledger headline reads "0 of 1"; the check-off circle's label is
 # "Mark offered" (→ "Offered — tap to undo" once checked).
 - assertVisible: "0 of 1.*"
+# The ledger is a tap-to-expand accordion — tap the summary card (its headline)
+# to drop the item rows down. Expansion persists, so the row stays visible
+# through the un-mark and open-into-reader steps below.
+- tapOn: "0 of 1.*"
+- waitForAnimationToEnd
 - tapOn: "Mark offered"
 # Let the pushpa-varsha overlay finish before reading the headline underneath.
 - waitForAnimationToEnd:

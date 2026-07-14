@@ -45,6 +45,19 @@ function render(card: SadhanaTodayCard): TestRenderer.ReactTestRenderer {
   return tree;
 }
 
+/**
+ * The units drop down only after the card header is tapped (accordion). Find
+ * the header — the one Pressable carrying an `expanded` accessibility state —
+ * and toggle it open so the item rows render.
+ */
+function expand(tree: TestRenderer.ReactTestRenderer): void {
+  const header = tree.root.findAll(
+    (n) => typeof n.props.accessibilityState?.expanded === 'boolean'
+  )[0];
+  expect(header).toBeDefined();
+  act(() => header!.props.onPress());
+}
+
 beforeEach(() => {
   mockCommitDay.mockClear();
   mockMarkCelebrated.mockClear();
@@ -79,6 +92,12 @@ describe('SankalpTodayCard', () => {
     };
 
     const tree = render(card);
+
+    // Header is always visible; the unit rows are collapsed until tapped.
+    expect(textOf(tree)).toContain('Navratri');
+    expect(textOf(tree)).not.toContain('Durga Chalisa');
+
+    expand(tree);
     const text = textOf(tree);
 
     expect(text).toContain('Navratri');
@@ -121,14 +140,18 @@ describe('SankalpTodayCard', () => {
     };
 
     const tree = render(card);
-    const text = textOf(tree);
 
-    expect(text).toContain('Durga Chalisa');
     // The eyebrow counts days *offered*, not the day-in-progress: a fresh active
     // day has 0 committed, so it reads "0 / 9" (not "Day 1 / 9"). This is what
-    // ticks to 1/9 on completion — the "still 0/N after finishing" fix.
-    expect(text).toContain('Sankalp · 0 / 9');
-    expect(text).not.toContain('Day 1');
+    // ticks to 1/9 on completion — the "still 0/N after finishing" fix. The
+    // eyebrow lives in the always-visible header.
+    expect(textOf(tree)).toContain('Sankalp · 0 / 9');
+    expect(textOf(tree)).not.toContain('Day 1');
+
+    // The unit row (and its offering circle) only appear once the card is opened.
+    expand(tree);
+    const text = textOf(tree);
+    expect(text).toContain('Durga Chalisa');
     // The circle's label names its item so it never collides with the routine
     // rows' generic "Mark offered" circles (a11y + Maestro disambiguation).
     const markButton = tree.root.findAll(
@@ -138,6 +161,39 @@ describe('SankalpTodayCard', () => {
     expect(markButton).toBeDefined();
     act(() => markButton!.props.onPress());
     expect(mockCommitDay).toHaveBeenCalledWith(program.id, 1, 'marked');
+  });
+
+  it('tap-toggles the units dropdown open and closed', () => {
+    const program = getProgram('navratri-durga-9')!;
+    const item = program.days![0].items[0];
+    const card: SadhanaTodayCard = {
+      enrollment: { programId: program.id, startedOn: '2026-07-03', status: 'active', completedDays: {} },
+      program,
+      status: { kind: 'active', dayIndex: 1, totalDays: 9, items: [item] },
+      items: [
+        { item, key: `${program.id}:1:${item.id}`, display: resolveRoutineItem(item), done: false },
+      ],
+      allItemsDoneToday: false,
+      autoVia: 'read-to-end',
+    };
+
+    const tree = render(card);
+    const header = () =>
+      tree.root.findAll((n) => typeof n.props.accessibilityState?.expanded === 'boolean')[0];
+
+    // Collapsed by default: header present, units hidden.
+    expect(header()!.props.accessibilityState.expanded).toBe(false);
+    expect(textOf(tree)).not.toContain('Durga Chalisa');
+
+    // Tap once → open.
+    act(() => header()!.props.onPress());
+    expect(header()!.props.accessibilityState.expanded).toBe(true);
+    expect(textOf(tree)).toContain('Durga Chalisa');
+
+    // Tap again → collapse.
+    act(() => header()!.props.onPress());
+    expect(header()!.props.accessibilityState.expanded).toBe(false);
+    expect(textOf(tree)).not.toContain('Durga Chalisa');
   });
 
   it('renders a multi-day progress bar reflecting days offered, hidden once complete', () => {
