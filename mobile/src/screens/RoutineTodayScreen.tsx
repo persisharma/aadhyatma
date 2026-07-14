@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -34,6 +34,12 @@ export default function RoutineTodayScreen({ navigation }: Props) {
   const streak = currentStreak();
   const summary = practiceSummary(doneCount, total, lang);
   const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+
+  // The routine ledger is a tap-to-expand accordion, matching the sankalp cards
+  // (§46): the completion summary card is the always-visible header and the item
+  // rows drop down only when it is tapped. Collapsed by default so the screen
+  // opens on a compact summary, not a long list.
+  const [expanded, setExpanded] = useState(false);
 
   const right = (
     <Pressable
@@ -96,8 +102,17 @@ export default function RoutineTodayScreen({ navigation }: Props) {
           ) : null
         ) : (
           <>
-            {/* Completion summary card */}
-            <View
+            {/* Completion summary card — also the accordion header: tap it to
+                drop the item rows down (or fold them away). */}
+            <Pressable
+              onPress={() => setExpanded((v) => !v)}
+              accessibilityRole="button"
+              accessibilityState={{ expanded }}
+              accessibilityHint={
+                expanded
+                  ? contentByLang(lang, 'पाठ छिपाने के लिए टैप करें', 'Tap to hide the readings')
+                  : contentByLang(lang, 'पाठ देखने के लिए टैप करें', 'Tap to see the readings')
+              }
               style={[
                 styles.summary,
                 {
@@ -162,104 +177,120 @@ export default function RoutineTodayScreen({ navigation }: Props) {
               <View style={{ marginTop: spacing.lg }}>
                 <MalaStreak streak={streak} />
               </View>
-            </View>
 
-            {/* Today's items */}
-            <View style={{ marginTop: spacing.lg }}>
-              {entries.map((e, i) => {
-                const tail = offeredTail(e.done, e.doneAt, lang);
-                const titleMain = contentByLang(lang, e.display.titleHi, e.display.titleEn);
-                const titleAlt = lang === 'en' ? e.display.titleHi : e.display.titleEn;
-                const last = i === entries.length - 1;
-                return (
-                  <View
-                    key={e.key}
-                    style={[
-                      styles.itemRow,
-                      { borderBottomColor: colors.divider, borderBottomWidth: last ? 0 : 1 },
-                    ]}
-                  >
-                    <Pressable
-                      onPress={() =>
-                        e.done ? (e.doneMode === 'manual' ? unmarkManualDone(e.key) : undefined) : markManualDone(e.key)
-                      }
-                      accessibilityRole="button"
-                      accessibilityState={{ checked: e.done }}
-                      accessibilityLabel={
-                        e.done
-                          ? contentByLang(lang, 'अर्पित — चिह्न हटाएँ', 'Offered — tap to undo')
-                          : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
-                      }
-                      hitSlop={10}
-                      style={{
-                        width: 28,
-                        height: 28,
-                        borderRadius: 14,
-                        borderWidth: 2,
-                        borderColor: colors.saffron,
-                        backgroundColor: e.done ? colors.saffron : 'transparent',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        // optically centres the 28px circle on the 24px title line
-                        marginTop: -2,
-                      }}
+              {/* Dropdown caret — a › rotated to point down when collapsed and
+                  up once the item rows are showing, the same accordion cue the
+                  sankalp cards use (§46). */}
+              <Text
+                style={[
+                  styles.summaryCaret,
+                  { color: colors.saffron, transform: [{ rotate: expanded ? '-90deg' : '90deg' }] },
+                ]}
+              >
+                ›
+              </Text>
+            </Pressable>
+
+            {/* Today's items — dropped down only when the summary header is tapped. */}
+            {expanded && (
+            <>
+              <View style={{ marginTop: spacing.lg }}>
+                {entries.map((e, i) => {
+                  const tail = offeredTail(e.done, e.doneAt, lang);
+                  const titleMain = contentByLang(lang, e.display.titleHi, e.display.titleEn);
+                  const titleAlt = lang === 'en' ? e.display.titleHi : e.display.titleEn;
+                  const last = i === entries.length - 1;
+                  return (
+                    <View
+                      key={e.key}
+                      style={[
+                        styles.itemRow,
+                        { borderBottomColor: colors.divider, borderBottomWidth: last ? 0 : 1 },
+                      ]}
                     >
-                      {e.done && <Text style={{ color: colors.onPrimary, fontSize: 14 }}>✓</Text>}
-                    </Pressable>
-
-                    <Pressable style={styles.itemInfo} onPress={() => navigateToRoutineItem(itemNav, e.item)}>
-                      <Text
+                      <Pressable
+                        onPress={() =>
+                          e.done ? (e.doneMode === 'manual' ? unmarkManualDone(e.key) : undefined) : markManualDone(e.key)
+                        }
+                        accessibilityRole="button"
+                        accessibilityState={{ checked: e.done }}
+                        accessibilityLabel={
+                          e.done
+                            ? contentByLang(lang, 'अर्पित — चिह्न हटाएँ', 'Offered — tap to undo')
+                            : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
+                        }
+                        hitSlop={10}
                         style={{
-                          fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
-                          fontSize: 16,
-                          lineHeight: 24,
-                          color: e.done ? colors.inkMuted : colors.ink,
+                          width: 28,
+                          height: 28,
+                          borderRadius: 14,
+                          borderWidth: 2,
+                          borderColor: colors.saffron,
+                          backgroundColor: e.done ? colors.saffron : 'transparent',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          // optically centres the 28px circle on the 24px title line
+                          marginTop: -2,
                         }}
                       >
-                        {titleMain}
-                      </Text>
-                      <Text
-                        style={{
-                          // Mixed-script line (alt-language title + localized tail):
-                          // the §46 meta convention — Inter/cardMeta has no Indic glyphs.
-                          fontFamily:
-                            lang === 'en'
-                              ? typography.cardMeta.fontFamily
-                              : scriptBodyFont(lang, typography.meaning.fontFamily),
-                          fontSize: typography.cardMeta.fontSize,
-                          color: e.done ? colors.inkMuted : colors.saffronDeep,
-                          marginTop: 2,
-                        }}
-                      >
-                        {titleAlt} · {tail}
-                      </Text>
-                    </Pressable>
+                        {e.done && <Text style={{ color: colors.onPrimary, fontSize: 14 }}>✓</Text>}
+                      </Pressable>
 
-                    <Pressable onPress={() => navigateToRoutineItem(itemNav, e.item)} hitSlop={8}>
-                      <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 24 }}>›</Text>
-                    </Pressable>
-                  </View>
-                );
-              })}
-            </View>
+                      <Pressable style={styles.itemInfo} onPress={() => navigateToRoutineItem(itemNav, e.item)}>
+                        <Text
+                          style={{
+                            fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
+                            fontSize: 16,
+                            lineHeight: 24,
+                            color: e.done ? colors.inkMuted : colors.ink,
+                          }}
+                        >
+                          {titleMain}
+                        </Text>
+                        <Text
+                          style={{
+                            // Mixed-script line (alt-language title + localized tail):
+                            // the §46 meta convention — Inter/cardMeta has no Indic glyphs.
+                            fontFamily:
+                              lang === 'en'
+                                ? typography.cardMeta.fontFamily
+                                : scriptBodyFont(lang, typography.meaning.fontFamily),
+                            fontSize: typography.cardMeta.fontSize,
+                            color: e.done ? colors.inkMuted : colors.saffronDeep,
+                            marginTop: 2,
+                          }}
+                        >
+                          {titleAlt} · {tail}
+                        </Text>
+                      </Pressable>
 
-            <Text
-              style={{
-                // meaning face, not cardLatin: the hi caption must not fall to the
-                // system font; 1.5× leading keeps Devanagari matras unclipped.
-                fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                fontSize: 12,
-                color: colors.inkMuted,
-                marginTop: spacing.lg,
-                lineHeight: 18,
-              }}
-            >
-              {meaningByLang(
-                lang,
-                'पाठ खोलने के लिए पंक्ति पर टैप करें — अंतिम पृष्ठ तक पहुँचने पर स्वतः अर्पित होगा। या ◯ को टैप कर स्वयं अर्पित चिह्नित करें।',
-                'Open a reading to begin — it completes on its own when you reach the last page. Or tap the circle to mark it offered.'
-              )}
-            </Text>
+                      <Pressable onPress={() => navigateToRoutineItem(itemNav, e.item)} hitSlop={8}>
+                        <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 24 }}>›</Text>
+                      </Pressable>
+                    </View>
+                  );
+                })}
+              </View>
+
+              <Text
+                style={{
+                  // meaning face, not cardLatin: the hi caption must not fall to the
+                  // system font; 1.5× leading keeps Devanagari matras unclipped.
+                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                  fontSize: 12,
+                  color: colors.inkMuted,
+                  marginTop: spacing.lg,
+                  lineHeight: 18,
+                }}
+              >
+                {meaningByLang(
+                  lang,
+                  'पाठ खोलने के लिए पंक्ति पर टैप करें — अंतिम पृष्ठ तक पहुँचने पर स्वतः अर्पित होगा। या ◯ को टैप कर स्वयं अर्पित चिह्नित करें।',
+                  'Open a reading to begin — it completes on its own when you reach the last page. Or tap the circle to mark it offered.'
+                )}
+              </Text>
+            </>
+            )}
           </>
         )}
 
@@ -294,6 +325,8 @@ export default function RoutineTodayScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   emptyCard: { alignItems: 'center', paddingVertical: 40, paddingHorizontal: 20, borderWidth: 1 },
   summary: { alignItems: 'center', borderWidth: 1 },
+  // Centred accordion caret at the foot of the summary card.
+  summaryCaret: { fontSize: 22, lineHeight: 22, marginTop: 10 },
   track: { height: 7, width: '100%', overflow: 'hidden' },
   // flex-start so the circle and chevron pin to the title's first line instead
   // of drifting to the middle of a wrapped two-line block.

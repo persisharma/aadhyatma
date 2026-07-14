@@ -113,7 +113,10 @@ appId: host.exp.Exponent
 - assertVisible: "Sankalp · 0 / 41"
 - assertVisible: "Hanuman Chalisa — 41 Days"
 - takeScreenshot: /tmp/vedansh-sankalp-day1
-# Commit today's practice via the item-named check circle.
+# The unit rows now drop down only when the card is tapped (accordion). Tap the
+# eyebrow to expand, then commit today's practice via the item-named check circle.
+- tapOn: "Sankalp · 0 / 41"
+- waitForAnimationToEnd
 - tapOn: "Mark offered — Hanuman Chalisa"
 - waitForAnimationToEnd
 # The day is recorded → the card flips to its resting "done today" state.

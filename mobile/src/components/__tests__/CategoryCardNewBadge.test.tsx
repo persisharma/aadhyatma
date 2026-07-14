@@ -76,3 +76,60 @@ describe('CategoryCard single-language label', () => {
     expect(text).not.toMatch(/Hymns & Praise/); // second-language line dropped on Home cards
   });
 });
+
+describe('CategoryCard launcher variant', () => {
+  test('renders the label below the tile and keeps the NEW badge', () => {
+    const tree = render(
+      <CategoryCard
+        nameHi="स्तोत्रम्"
+        nameEn="Hymns & Praise"
+        displayNameEn="Hymns"
+        status="active"
+        hasNew
+        variant="launcher"
+        onPress={() => undefined}
+      />
+    );
+    const text = textOf(tree);
+    expect(text).toMatch(/स्तोत्रम्/);
+    expect(text).toMatch(/NEW/);
+  });
+
+  test("a 'coming' launcher tile renders the compact SOON tile, not the 2-column card", () => {
+    const tree = render(
+      <CategoryCard
+        nameHi="आगामी"
+        nameEn="Coming Soon"
+        status="coming"
+        hasNew
+        variant="launcher"
+      />
+    );
+    const text = textOf(tree);
+    expect(text).toMatch(/SOON/);
+    expect(text).not.toMatch(/NEW/);
+    const disabled = tree.root.findAll(
+      (n) => n.props?.accessibilityState?.disabled === true
+    );
+    expect(disabled.length).toBeGreaterThan(0);
+  });
+
+  test('accessibility label carries the FULL English name, not the short display name', () => {
+    // Maestro smokes tap tiles by their full label ("Hymns & Praise. Tap to
+    // open.") — the short launcher name must never leak into accessibility.
+    const tree = render(
+      <CategoryCard
+        nameHi="स्तोत्रम्"
+        nameEn="Hymns & Praise"
+        displayNameEn="Hymns"
+        status="active"
+        variant="launcher"
+        onPress={() => undefined}
+      />
+    );
+    const labelled = tree.root.findAll(
+      (n) => n.props?.accessibilityLabel === 'Hymns & Praise. Tap to open.'
+    );
+    expect(labelled.length).toBeGreaterThan(0);
+  });
+});

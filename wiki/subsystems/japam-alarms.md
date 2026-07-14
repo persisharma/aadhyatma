@@ -2,7 +2,7 @@
 title: Japam Alarms
 type: subsystem
 sources: [mobile/src/notifications/japamAlarms.ts, mobile/src/notifications/japamAlarmScheduler.ts, mobile/src/notifications/japamAlarmNative.ts, mobile/src/contexts/JapamAlarmsContext.tsx, mobile/src/screens/JapamAlarmsScreen.tsx, mobile/assets/japam-alarm-sounds/index.ts, mobile/modules/japam-alarm-ios/ios/JapamAlarmIosModule.swift, mobile/plugins/native-android/JapamAlarmModule.kt, mobile/plugins/native-android/JapamAlarmReceiver.kt, mobile/plugins/native-android/JapamBootReceiver.kt, mobile/plugins/native-android/JapamAlarmActionReceiver.kt]
-last_verified_date: 2026-07-10
+last_verified_date: 2026-07-14
 confidence: high
 status: current
 ---
@@ -68,4 +68,5 @@ Japam Alarms let users schedule timed reminders to chant a mantra, with per-alar
 - **Android reboot** — `JapamBootReceiver` re-arms all alarms after a device reboot. Without it, all alarms silently vanish on power cycle.
 - **Snooze identifier exclusion** — snooze one-shots (`:snooze` suffix) are excluded from reconcile cancellation so a freshly-snoozed alarm isn't immediately cancelled by the next reconcile.
 - **One-time alarms never skip** — `isSkipPending` returns false for one-time alarms; `skipNextDate` is documented as ignored for them but the scheduler double-checks via `isOnceAlarm`.
-- **Alarm clips need double registration** — a new mantra WAV must be added BOTH to `assets/japam-alarm-sounds/index.ts` AND to `app.json` → `expo-notifications.sounds[]`. The plugin copies the listed files into the native bundles (Android `res/raw/` with hyphens→underscores, iOS bundle root); missing either step silently falls back to the default chime. This was the July 2026 "alarm only rings Om Namah Shivaya" bug — the other mantras' clips were never generated/registered.
+- **Alarm clips need double registration** — a new mantra WAV must be added BOTH to `assets/japam-alarm-sounds/index.ts` AND to `app.json` → `expo-notifications.sounds[]`. The plugin copies the listed files into the native bundles (Android `res/raw/` with hyphens→underscores, iOS bundle root); missing either step silently falls back to the default chime.
+- **Clip WAV must be a bare `RIFF/WAVE/fmt /data` file — no `LIST` chunk** — iOS's notification / AlarmKit sound loader uses a minimal WAV parser that expects the `data` chunk immediately after `fmt ` and does not skip an intervening chunk. ffmpeg inserts a `LIST`/`INFO` metadata chunk (encoder tag, title, creator) between `fmt ` and `data` unless you pass `-map_metadata -1 -fflags +bitexact -flags +bitexact`; a clip carrying that chunk registers fine but silently fails to load and rings the default tone. This was the **real** July 2026 "alarm only rings Om Namah Shivaya" bug: #193 registered `hare-krishna-mahamantra` and `gayatri-mantra` correctly, but both were ffmpeg-encoded with a LIST chunk (the clean `om-namah-shivaya.wav` had none), so only that one ever played. Fixed by stripping the chunk to the canonical layout (audio PCM preserved byte-for-byte). Verify a new clip with a chunk dump — it must list only `fmt ` and `data`.

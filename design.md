@@ -35,6 +35,7 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 | `avoid` | `#9E4A2E` | Muted terracotta — inauspicious/त्याज्य timings (Rahu/Gulika/Yamaganda, avoid choghadiya). Warm palette, **never red**; PRD-14. |
 | `avoidTint` | `rgba(158, 74, 46, 0.12)` | Fill behind an `avoid` row. Auspicious rows reuse `goldTint`; quality is always labelled in text too (§12). |
 | `avoidChipBg` / `goldChipBg` | `rgba(158, 74, 46, 0.20)` / `rgba(166, 124, 52, 0.22)` | Fill behind a quality **chip/pill** (avoid / auspicious) on the Muhurat glance card. Deeper than the row tints so the pill reads as its own surface on the `cardActive` gradient — the 0.12–0.14 row tints were too faint to register as a chip (§31). |
+| `avoidDeep` | `#7A3722` | Text **on** the avoid chip tint. Raw `avoid` clears AA on the card surfaces but drops to ~3.5:1 composited on `avoidChipBg` over the gradient's dark stop — chip text uses this deeper cut; pinned with compositing math in `colors.contrast.test.ts`. |
 
 **Home gradient** (top → bottom): `#F6ECD0` → `#F1E3BF` (`parchmentHighlight` → `parchmentGradientEnd` in `colors.ts`).
 
@@ -591,18 +592,22 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 1. Status bar area (safe region)
 2. Hero block: the **Home wordmark lockup** (Section 5) — `ॐ वेदांश़ ॐ` on one row over the "Sacred Texts · Daily Reading" tagline. (Earlier revisions stacked a crest above a 34px title; the lockup is the compact replacement.)
-2a. Section label "DISCOVER" + **Feature Spotlight carousel** (§32) — a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Panchang, Pilgrimage).
-3. Section label "CATEGORIES" (Inter 11, uppercase, ink-muted, 0.22em tracking)
-4. **Category grid** (2-column wrap layout):
-   - **8 active tiles**: the 7 registry categories from `categories.ts` — ग्रन्थ, स्तोत्रम्, चालीसा, जप, आरती, तीर्थ, संस्कार — plus an appended **देवता · By Deity** tile that opens `DeityIndexScreen`
-   - Gap: **10px** between tiles, 28px side padding; tile width = half the remaining row
-   - Tap → CategoryList for that category (तीर्थ opens the Theerth browse surface, §26; देवता opens the Deity Index)
-   - Tile spec: see Section 19
-5. Footer mantra (Section 7 — token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
-6. **Floating search button** (`SearchFloatingButton`) docked bottom-right, lifted above the routine banner → opens the Search screen. (The old Help floating button/modal never shipped.)
-7. **Routine banner** (§30) docked above the tab bar
+3. **आज · Today strip** (§48) — a one-card daily-panchang glance (vara + tithi headline, observance chips, Abhijit / Rahu Kaal windows). Tap → Panchang tab.
+4. Section label "CATEGORIES" (Inter 11, uppercase, ink-muted, 0.22em tracking)
+5. **Category grid** (3-column launcher layout, 3×3):
+   - **9 active tiles**: the 7 registry categories from `categories.ts` — ग्रन्थ, स्तोत्रम्, चालीसा, जप, आरती, तीर्थ, संस्कार — plus an appended **व्रत · Vrat & Parv** tile (opens the Panchang tab's `ObservanceList` vrat catalog via `panchangTabTarget()` — the `entryRoutes.ts` helper that carries `initial: false` so a lazily-mounted Panchang tab keeps its calendar as the initial route; PRD-09 — a grid door, **not** a `ContentCategory`; its content lives in the observance engine, not the library) and a **देवता · By Deity** tile (opens `DeityIndexScreen`)
+   - Gap: **10px** between tiles, **24px** side padding (`spacing.xxl`, the Home page gutter); tile width = a third of the remaining row
+   - Tap → CategoryList for that category (तीर्थ opens the Theerth browse surface, §26; व्रत opens the vrat catalog; देवता opens the Deity Index)
+   - Tile spec: the **launcher variant**, Section 19
+6. **Continue-reading card** (§49) — resumes the most recent reading position; hidden until progress exists
+7. Section label "DISCOVER" + **Feature Spotlight carousel** (§32) — a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Sankalp, Pilgrimage — the Panchang card was retired when the Today strip took over that surface). Moved *below* the grid: the prime slot now belongs to today-relevant content; the carousel keeps its per-open shuffle one swipe down.
+8. Footer mantra (Section 7 — token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
+9. **Floating search button** (`SearchFloatingButton`) docked bottom-right, lifted above the routine banner → opens the Search screen. (The old Help floating button/modal never shipped.)
+10. **Routine banner** (§30) docked above the tab bar
 
 There is **no deity chip row on Home** — deity browsing lives in the Deity Index screen (§20).
+
+**Why today-first:** a July 2026 competitive review found the previous Home never changed between visits (hero + DISCOVER carousel + 2-column catalog grid) — nothing on it answered "what matters today". The Today strip, the resume card, and the compact 3×3 launcher put today's panchang state, all nine sections, and the reading loop inside the first viewport.
 
 **Gradient background:** same as Section 2 Home gradient.
 
@@ -612,9 +617,18 @@ There is **no deity chip row on Home** — deity browsing lives in the Deity Ind
 
 **Purpose.** Grid tile representing a content category on the Home screen.
 
-Two variants: `active` (has content) and `coming` (placeholder).
+Two status variants — `active` (has content) and `coming` (placeholder) — and two **layout variants** (`variant` prop in `CategoryCard.tsx`): `launcher` (the Home 3×3 grid) and `card` (the classic 2-column gradient card, kept for the `coming` state and any future 2-column layout).
 
-**Active:**
+**Launcher (Home grid, active):**
+
+- Column layout: a compact **glyph tile** with the name *below* it (myBhakti-review learning: label-below is what lets three columns breathe; the name-inside card can't shrink past two columns without truncating).
+- Tile: height **72**, full column width, `radii.lg`, `cardActiveFrom → cardActiveTo` gradient, 1px `cardActiveBorder`, **`elevation.card`** (the theme token — no inline shadow literals). The tile has an opaque `cardActiveFrom` base and **no `overflow: 'hidden'`** (it would clip the iOS shadow); the gradient carries its own matching radius. `CategoryIcon` stroke vector centered.
+- Label: **one line, caption size** — `devPrimary 13` / `latPrimary 14` via `orderTitlesByLanguage()`, `ink`, centered, `numberOfLines 1`, 6px below the tile.
+- **Short English display names.** Under a ~⅓-row tile the full registry names ("Hymns & Praise", "Japa & Mantras") don't survive one line, so `categories.ts` carries an optional `shortNameEn` ("Hymns", "Japa", "Books", "Habits") used **only** by the launcher label. The **accessibility label always carries the full `nameEn`** (`"{nameEn}.{ New.?} Tap to open."`) — the Maestro smokes tap tiles by that full label, and screen readers keep the descriptive name.
+- `NEW` badge: same pill as the card variant, inset 6px in the tile's top-right corner.
+- **Coming (launcher).** A `status: 'coming'` tile keeps the launcher geometry: `cardSurface` tile at 55% opacity, same `elevation.card` lift as its active siblings, with the `SOON` pill (gold tint) and the caption label below; not pressable (`accessibilityState.disabled`). It does **not** fall through to the 2-column card layout.
+
+**Active (card variant):**
 
 - Background: linear-gradient `cardActiveFrom → cardActiveTo` (`#FFF5E0 → #F5DEAC`, same gradient as library card)
 - Border: 1px `cardActiveBorder` (`rgba(184, 98, 27, 0.4)`)
@@ -893,7 +907,7 @@ type IndiaMapProps = {
 
 **Purpose.** The daily-driver screen the routine banner (§30) opens — today's scheduled items across all routines, presented as a devotional ledger rather than a utility checklist (PRD-10). `RoutineTodayScreen.tsx`, inside the parchment `RoutineShell`.
 
-**Screen order.** The **नित्य साधना daily routine leads** — the completion summary card + item rows render first, because a screen titled *Today's Practice* should open on what you do every day. Any enrolled prebuilt-sankalp cards (`SankalpTodayCard`, §46) follow **below** the routine (separated by a `spacing.xl` gap that appears only when a routine is present above them), then the ghost **Browse sankalps** button. The sankalp cards are themselves ordered by `orderSadhanaCards` (§46): daily-cadence/active first, then resting/upcoming by nearest date, completed last. (Before July 2026 the sankalp cards rendered above the routine — a screen-order bug that buried the everyday practice.)
+**Screen order.** The **नित्य साधना daily routine leads** — the completion summary card + item rows render first, because a screen titled *Today's Practice* should open on what you do every day. Any enrolled prebuilt-sankalp cards (`SankalpTodayCard`, §46) follow **below** the routine (separated by a `spacing.xl` gap that appears only when a routine is present above them), then the ghost **Browse sankalps** button. **Both ledgers are tap-to-expand accordions:** the daily-routine summary card (below) and each sankalp card (§46) show only their header until tapped, then drop their item rows down — the two use the same row spec and the same rotating `›` caret cue, so the surface reads as one system. The sankalp cards are themselves ordered by `orderSadhanaCards` (§46): daily-cadence/active first, then resting/upcoming by nearest date, completed last. (Before July 2026 the sankalp cards rendered above the routine — a screen-order bug that buried the everyday practice.)
 
 **Components & where they live** (all pull tokens from the theme; no hard-coded hexes):
 - `mobile/src/components/MalaStreak.tsx` — the streak drawn as a bead string.
@@ -901,7 +915,7 @@ type IndiaMapProps = {
 - `mobile/src/data/routine/practiceView.ts` — pure view-model (summary lines, offered-time formatting, mala math), unit-tested like `routineBannerView.ts`.
 - `mobile/src/utils/useReducedMotion.ts` — shared reduce-motion hook (§12).
 
-**Completion summary card.** One centered `parchment-soft` card (`goldTint` border, `radii.lg`, `elevation.card`, `spacing.lg` padding) at the top:
+**Completion summary card (accordion header).** One centered `parchment-soft` card (`goldTint` border, `radii.lg`, `elevation.card`, `spacing.lg` padding) at the top. **The whole card is the accordion header — a `Pressable` (`accessibilityRole="button"` + `accessibilityState.expanded`) that toggles the item rows below.** The rows **collapse by default** so the screen opens on a compact summary, not a long list; a centred **dropdown caret** at the foot of the card (a `›` rotated to point down when collapsed, up when open — `summaryCaret`, matching §46's sankalp caret) signals it. Its contents:
 - Headline: partial → `{done} of {total}`; complete → `{total} of {total} offered`. Latin headline uses Cormorant 600 upright; Hindi uses the Devanagari screen-title face.
 - Italic sub-line (Cormorant italic / Devanagari `meaning` in Hindi): partial → `{n} reading(s) remaining`; complete → `Today's practice is complete` / `आज की साधना पूर्ण`.
 - Progress strip: a gold→saffron `expo-linear-gradient` fill on a `parchment-deep` track. **Hidden when complete.**
@@ -916,7 +930,7 @@ type IndiaMapProps = {
 
 **No strikethrough.** A completed item's title is **muted (`ink-muted`), never struck through** — striking a sacred text reads as "cancelled," the opposite of "offered." The completion mark is a `saffron` ring that fills with a `✓` when offered; tapping it toggles the manual mark.
 
-**Item rows.** Title in the card-title face (16 over a 24 line — ≥1.5× so Devanagari matras never clip); sub-line (`{alt title} · {tail}`) follows §46's meta convention (`scriptBodyFont` + `cardMeta` — never Cormorant on the mixed-script line). Rows align `flex-start` with a small optical offset on the ring and chevron so both pin to the title's **first** line instead of drifting to the middle of a wrapped two-line block. The help caption under the ledger uses the `meaning` face at 12/18.
+**Item rows (dropdown).** Rendered only when the summary header is expanded. Title in the card-title face (16 over a 24 line — ≥1.5× so Devanagari matras never clip); sub-line (`{alt title} · {tail}`) follows §46's meta convention (`scriptBodyFont` + `cardMeta` — never Cormorant on the mixed-script line). Rows align `flex-start` with a small optical offset on the ring and chevron so both pin to the title's **first** line instead of drifting to the middle of a wrapped two-line block. The help caption under the ledger uses the `meaning` face at 12/18 and drops down with the rows. This row spec is the shared contract §46's sankalp dropdown mirrors exactly.
 
 **Browse sankalps.** A ghost `RoutineButton` "तैयार संकल्प चुनें / Browse sankalps" closes the ledger and opens the §46 catalog — one of the catalog's three standing entry points (the create-flow chooser and the §32 Home spotlight are the others), so sankalps stay discoverable after a routine exists.
 
@@ -926,9 +940,9 @@ type IndiaMapProps = {
 
 ## 32. Home Feature Spotlight (DISCOVER carousel)
 
-**Purpose.** Raise awareness of the app's distinct sections — not just the catalog categories, but the *cross-cutting surfaces* a first-time user easily misses (Daily Practice, the Daily Verse tab, the Panchang tab, the Pilgrimage map). A single horizontal carousel of feature cards sits **between the wordmark hero and the CATEGORIES grid** (§18). One flexible card shell carries every section so any content fits.
+**Purpose.** Raise awareness of the app's distinct sections — not just the catalog categories, but the *cross-cutting surfaces* a first-time user easily misses (Daily Practice, the Daily Verse tab, Sankalp, the Pilgrimage map — the Panchang card was retired in favour of the Today strip, §48). A single horizontal carousel of feature cards sits **below the CATEGORIES grid and the Continue-reading card** (§18) — it originally led the page, but the prime slot now belongs to today-relevant content (§48/§49). One flexible card shell carries every section so any content fits.
 
-**Placement & label.** A `DISCOVER` section label (Inter 11 600 `0.22em` uppercase `ink-muted`, same token as `CATEGORIES`) precedes the carousel; the `CATEGORIES` grid follows with `marginTop: 24`. The carousel is a horizontal `ScrollView` that **full-bleeds** to the screen edges — it cancels the page gutter with `marginHorizontal: -screenGutter` and re-pads its content (`paddingHorizontal: screenGutter`) so the first card aligns with the page while the next card peeks. `snapToInterval = cardWidth + gap`, `decelerationRate="fast"`, `snapToAlignment="start"`.
+**Placement & label.** A `DISCOVER` section label (Inter 11 600 `0.22em` uppercase `ink-muted`, same token as `CATEGORIES`) precedes the carousel. The carousel is a horizontal `ScrollView` that **full-bleeds** to the screen edges — it cancels the page gutter with `marginHorizontal: -spacing.xxl` and re-pads its content (`paddingHorizontal: spacing.xxl`) so the first card aligns with the page while the next card peeks. `snapToInterval = cardWidth + gap`, `decelerationRate="fast"`, `snapToAlignment="start"`.
 
 **Card width.** `min(320, screenWidth − gutter − 56)` so a sliver of the following card always shows (a peek cue that the row scrolls). Gap `spacing.md`.
 
@@ -952,7 +966,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 ```
 
 - **Surface.** `cardActiveFrom → cardActiveTo` gradient, `cardActiveBorder` 1px, `radii.lg`, `elevation.raised` (this is a focal hero element). `minHeight: 112` + the flex spacer keep the CTA pinned to a common baseline across cards of differing copy length.
-- **Icon tile.** 46×46, `saffronTint` fill, `radii.md`. Wraps any glyph: a `CategoryIcon` vector, the `LotusMark`, or a plain Devanagari `Text` glyph (e.g. `पं` for Panchang) — the tile makes them all read as one family. Saffron-tint (light) keeps the `saffronDeep` vectors high-contrast.
+- **Icon tile.** 46×46, `saffronTint` fill, `radii.md`. Wraps any glyph: a `CategoryIcon` vector, the `LotusMark`, or a plain Devanagari `Text` glyph (e.g. `सं` for Sankalp) — the tile makes them all read as one family. Saffron-tint (light) keeps the `saffronDeep` vectors high-contrast.
 - **Eyebrow.** Short uppercase context tag (`versePill` tokens, `saffronDeep`). When `hasNew`, the eyebrow slot is **replaced** by the saffron `NEW` badge (same geometry/colour as §19) — carries the text cue, never colour-only (§12).
 - **Title.** `orderTitlesByLanguage`, primary `numberOfLines 1`, secondary demoted to `ink-muted`.
 - **Description.** Hindi → Devanagari 13 `ink-soft`; English → Cormorant italic 14 `ink-soft`. `numberOfLines 2`.
@@ -961,7 +975,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 
 **Props.** `{ item: FeatureSpotlight; width: number; onPress: () => void }`. `width` is owned by the screen (viewport-sized). `FeatureSpotlight` is `{ key, eyebrowHi/En, titleHi/En, descHi/En, ctaHi/En, icon, hasNew? }`.
 
-**Spotlight set (current).** Defined in `HomeScreen.tsx` with navigation wired per item: नित्य साधना → `RoutineToday`; दैनिक भक्ति → `DailyBhaktiTab`; आज का पंचांग → `PanchangTab`; संकल्प → `SadhanaPrograms` (a direct door into the §46 catalog — glyph tile `सं`, same pattern as Panchang's `पं`); तीर्थ यात्रा → `TheerthMap`. Sibling-tab targets navigate via the **parent** (`useNavigation()` → bubble up), not the Home stack — same pattern as `RoutineBanner`/`PanchangScreen`.
+**Spotlight set (current).** Defined in `HomeScreen.tsx` with navigation wired per item: नित्य साधना → `RoutineToday`; दैनिक भक्ति → `DailyBhaktiTab`; संकल्प → `SadhanaPrograms` (a direct door into the §46 catalog — glyph tile `सं`); तीर्थ यात्रा → `TheerthMap`. The former आज-का-पंचांग card was **retired** when the Today strip (§48) took over that surface — keeping both produced two "Today's Panchang." buttons for screen readers. Sibling-tab targets navigate via the **parent** (`useNavigation()` → bubble up), not the Home stack — same pattern as `RoutineBanner`/`PanchangScreen`.
 
 **Adding a spotlight.** Append a `FeatureSpotlight` to the `spotlights` array in `HomeScreen.tsx` with both-language copy, an icon node, and an `onPress`. No new tokens are needed — the shell reuses existing card/elevation/typography tokens.
 
@@ -983,7 +997,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 3. **Calendar card** (`parchment-soft`, `divider` border, `radii.lg`, `elevation.card`): `‹ [full date + "Month view" affordance] ›` day stepper; the date expands an inline month grid — weekday row (Inter 9), 7-column cells (min-height 38, radius 8), selected day `saffron-tint` + `saffron` border, today `gold` border, and tiny 7 pt Inter observance tags per day (`पर्व` on `saffron-tint`, `व्रत` on `gold-tint`, `व्रत+` when mixed). A horizontal swipe anywhere on the card (dx > 54, mostly-horizontal) steps one day. An `आज · Today` pill resets.
 4. **Day panel** (the panchang proper, once computed — an `ActivityIndicator` in `saffron` while the day is derived off the render path):
    - *Date header*: vara name (reader-title face 15, `saffron-deep`) · full date · `विक्रम संवत् N`, then lunar month (+ अधिक flag) · shukla/krishna paksha (11 pt `ink-muted`), over a hairline `divider`.
-   - *Muhurat glance card* (`MuhuratGlanceCard`, PRD-14): the `cardActiveFrom → cardActiveTo` gradient hero, promoted to lead the day panel (directly under the date header, **above** the anga grid) — "is now auspicious?" is the live, time-sensitive answer users open Panchang for. Kicker `आज का मुहूर्त`, a hero "now" row (current choghadiya + quality tag when `isToday`, else the day's Abhijit), a two-up `राहु काल` / `अभिजीत` tile pair, and a `सभी मुहूर्त व चौघड़िया →` footer → `MuhuratDetail`. While its own `useMuhurat` solve is in flight it shows a **skeleton** in the same gradient card (kicker text + muted `divider`/`parchment-soft` placeholder bars sized to the real hero row, tile pair, and footer, `accessibilityRole="progressbar"`), so the section reserves its footprint instead of popping in below the day panel. The solve is **memoised per city + calendar day + calendar system** (`useMuhurat` `SOLVE_CACHE`), so revisiting a date — or re-mounting the card — renders instantly with no skeleton; only the live "now" read recomputes each minute. **Times, ranges, and the quality chip use the non-italic semibold/bold Cormorant face, never the thin italic `cardLatin` (§3), and the chip sits on `avoidChipBg`/`goldChipBg` so it reads as a solid pill on the gradient (§12).**
+   - *Muhurat glance card* (`MuhuratGlanceCard`, PRD-14): the `cardActiveFrom → cardActiveTo` gradient hero, promoted to lead the day panel (directly under the date header, **above** the anga grid) — "is now auspicious?" is the live, time-sensitive answer users open Panchang for. Kicker `आज का मुहूर्त` (`cardLatin` for en; script-bold serif, no tracking, for hi/gu/kn — Cormorant has no Indic glyphs, §3), a hero "now" row (current choghadiya + quality tag when `isToday`, else the day's Abhijit), a two-up `राहु काल` / `अभिजीत` tile pair, and a `सभी मुहूर्त व चौघड़िया →` footer → `MuhuratDetail`. While its own `useMuhurat` solve is in flight it shows a **skeleton** in the same gradient card (kicker text + muted `divider`/`parchment-soft` placeholder bars sized to the real hero row, tile pair, and footer, `accessibilityRole="progressbar"`), so the section reserves its footprint instead of popping in below the day panel. The solve is **memoised per city + calendar day + calendar system** (`useMuhurat` `SOLVE_CACHE`), so revisiting a date — or re-mounting the card — renders instantly with no skeleton; only the live "now" read recomputes each minute. **Times, ranges, and the quality chip use the non-italic semibold/bold Cormorant face, never the thin italic `cardLatin` (§3), and the chip sits on `avoidChipBg`/`goldChipBg` so it reads as a solid pill on the gradient (§12); avoid-chip text uses `avoidDeep` — the tint composites darker than the card, dropping raw `avoid` under AA (§2).**
    - *Anga grid, uniform 2×2*: Tithi · Nakshatra · Yoga · Karana each render on identical elevated tiles (`parchment-soft`, `radii.md`, `elevation.card`) — one size, no prominent/secondary split. Each tile: a 9 pt `saffron-deep` type label (tracked uppercase Cormorant in English; plain script serif otherwise), the value in the active reading language only at 18 pt `ink` (single-line, `adjustsFontSizeToFit` down to a 0.8 scale so the longest name — "Uttara Bhadrapada" — fits without truncation), and `till H:MM AM/PM` when the anga ends that day. No second cross-script line. End instants that fall past midnight carry a short-date suffix (`तक 2:04 AM, 12 जुल` — `formatEndInstant` in `panchang/muhuratFormat.ts`, shared with the Muhurat card) so a next-day end never reads as this morning; panchang convention shows end times only (an anga's start is the previous one's end, usually on the previous day). On **kshaya** days — a tithi or nakshatra that begins after this sunrise and ends before the next, touching neither (e.g. Ekadashi on 10 Jul 2026) — the Tithi/Nakshatra tile adds a second row: the skipped anga's name at 15 pt `ink` plus its own `तक` line, so the day reads `दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल` instead of Ekadashi silently vanishing between Dashami and Dwadashi. Data: `PanchangData.kshayaTithi` / `kshayaNakshatra` (engine-detected via the sunrise-to-sunrise index jump).
    - *Times card*: 2×2 grid — Sunrise, Sunset, Moonrise, Brahma Muhurta — each a `gold` ☀/☽ text-presentation glyph (variation selector forces monochrome; "no emoji") + 10 pt label + Cormorant SemiBold 13 value.
 5. **व्रत और पर्व** for the selected date: `ObservanceCard`s (`parchment-soft`, `radii.md`, `elevation.card`) with a category pill (`व्रत` on `gold-tint` / `पर्व` on `saffron-tint`), deity, name, short description, and action pills — `कथा पढ़ें · Read Katha` (gold-tint pill → katha reader) and `पढ़ें: <section>` (outline pill → the linked text via `buildEntryStartTarget`, §38).
@@ -1460,12 +1474,16 @@ Cards follow the **active Library Card** language (§8): every program is starta
 
 ### Component: SankalpTodayCard (`SankalpTodayCard.tsx`)
 
-One enrolled sankalp's card on the Today's Practice ledger (§31) — flat `parchment-soft` + `elevation.card`, `saffron` border, matching the ledger aesthetic (not the catalog's gradient). Eyebrow (`sectionLabel` via `pillTextStyle`, `saffron-deep`): `Sankalp · n / N` in every non-terminal state (or `पूर्णाहुति / Sankalp complete`). **`n` is `completedDayCount(enrollment)` — days actually offered, not `status.dayIndex`** — so completing today's day ticks it `0/N → 1/N` and it agrees with the List/Detail status pills (which already read `completedDayCount`). Using `dayIndex` (the day you are *on* = done + 1) would show `1/N` on a fresh day 1 before anything is done and stay `1/N` after completing it — the counter would never move on completion. Then the program title (`cardHindi + 3`). **Below the title, a multi-day progress bar** — the same gradient track as the §31 routine summary card (7 px, `radii.pill`, `parchment-deep` track, `gold→saffron` fill spanning `completedDayCount / totalDays`, `accessibilityRole="progressbar"`) — so an enrolled sankalp reads as an in-progress commitment at a glance, not only today's unit. It shows in every non-terminal state (`active` / `done-today` / `waiting`) and is **hidden once `completed`**, where the पूर्णाहुति seal is the terminal marker and a full bar would be redundant. All state prose (waiting / done-today / completed lines) sits at **caption scale (14/21)**, not the reading-body token — at 20/34 the card read as a prose block (July 2026 review: "too verbose"). States:
+One enrolled sankalp's card on the Today's Practice ledger (§31) — flat `parchment-soft` + `elevation.card`, `saffron` border, matching the ledger aesthetic (not the catalog's gradient). The card is a **tap-to-expand accordion**: its header is always visible and its unit rows **collapse by default, dropping down only when the header is tapped** — so a sankalp with several units stays a compact ledger row until opened, and a card can grow (more content added later) without dominating the screen.
 
-- **active** — one tappable unit row per item (26 px check circle → filled `saffron` ✓ when done today; resolved title `cardHindi` on a 26 line + a `cardMeta` sub "Whole text · Tap to read"; `›` 26; rows align `flex-start` so circle and chevron pin to the title's first line). The circle's a11y label **names its item** (`Mark offered — ‹titleEn›`) so it never collides with §31's generic routine circles; tapping it commits the day. Auto-commit still fires once every unit is genuinely done today (`isItemAutoComplete`). Completing the vow plays the §31 `PracticeSeal` (पूर्णाहुति) once.
-- **done-today** — a calm "Today's reading is done. Come back tomorrow" line.
-- **waiting** (calendar-gated: weekday off-day / festival window not open) — the resting copy ("Your sankalp begins 11 Oct." / "Resting today — …") **plus the next selected unit as a tap-to-read preview**, so an upcoming sankalp never opens onto an empty dead end (the day is not committable until the gate opens). The preview row carries **no offering check circle** — that affordance belongs to `active` alone; a rest-day read cannot advance the vow, so the row reads as a preview ("झलक · पढ़ने के लिए टैप करें / Preview · Tap to read"), never a to-do whose empty circle would falsely promise the `n / N` counter will move.
-- **completed** — the seal + a "Your N-day sankalp is complete 🙏" line.
+**Header (always visible, tappable when there are units to reveal):** Eyebrow (`sectionLabel` via `pillTextStyle`, `saffron-deep`): `Sankalp · n / N` in every non-terminal state (or `पूर्णाहुति / Sankalp complete`). **`n` is `completedDayCount(enrollment)` — days actually offered, not `status.dayIndex`** — so completing today's day ticks it `0/N → 1/N` and it agrees with the List/Detail status pills (which already read `completedDayCount`). Using `dayIndex` (the day you are *on* = done + 1) would show `1/N` on a fresh day 1 before anything is done and stay `1/N` after completing it — the counter would never move on completion. Then the program title (`cardHindi + 3`). On the title's right, a **dropdown caret** (a `›` rotated to point **down** when collapsed and **up** when open) appears whenever there is something to expand; the header carries `accessibilityRole="button"` + `accessibilityState.expanded` (absent on `done-today`/`completed`, which have no units to drop down, leaving the header a plain block). **Below the title, a multi-day progress bar** — the same gradient track as the §31 routine summary card (7 px, `radii.pill`, `parchment-deep` track, `gold→saffron` fill spanning `completedDayCount / totalDays`, `accessibilityRole="progressbar"`) — so an enrolled sankalp reads as an in-progress commitment at a glance, not only today's unit. It shows in every non-terminal state (`active` / `done-today` / `waiting`) and is **hidden once `completed`**, where the पूर्णाहुति seal is the terminal marker and a full bar would be redundant. All state prose (waiting / done-today / completed lines) sits at **caption scale (14/21)**, not the reading-body token — at 20/34 the card read as a prose block (July 2026 review: "too verbose").
+
+**Units dropdown (hidden until the header is tapped).** The dropped-down rows **match the §31 daily-routine ledger row exactly** — 28 px offering ring (filled `saffron` ✓ when done, `marginTop: -2` to optically centre on the 24-line title), title `cardHindi` at **16/24**, a `cardMeta` sub-line, `›` at **18/24**, `flex-start` alignment (ring/chevron pin to the title's first line), gap 14, 14 px vertical padding, and **bottom** hairline dividers (last row borderless) — so a sankalp's practice reads identically to the everyday routine once opened. A top hairline (`itemsSheet`) sets the dropdown off from the header. Per-state row behaviour:
+
+- **active** — each unit row is committable: the offering ring's a11y label **names its item** (`Mark offered — ‹titleEn›`) so it never collides with §31's generic routine circles; tapping it commits the day. Auto-commit still fires once every unit is genuinely done today (`isItemAutoComplete`), independent of whether the card is expanded (the root `SadhanaCompletionOverlay` owns commit). Completing the vow plays the §31 `PracticeSeal` (पूर्णाहुति) once.
+- **done-today** — a calm "Today's reading is done. Come back tomorrow" line; no units, so no dropdown.
+- **waiting** (calendar-gated: weekday off-day / festival window not open) — the resting copy ("Your sankalp begins 11 Oct." / "Resting today — …") **plus the next selected unit as a tap-to-read preview** inside the dropdown, so an upcoming sankalp never opens onto an empty dead end (the day is not committable until the gate opens). The preview row carries **no offering check circle** — that affordance belongs to `active` alone; a rest-day read cannot advance the vow, so the row reads as a preview ("झलक · पढ़ने के लिए टैप करें / Preview · Tap to read"), never a to-do whose empty circle would falsely promise the `n / N` counter will move.
+- **completed** — the seal + a "Your N-day sankalp is complete 🙏" line; no units, so no dropdown.
 
 ### Data & resolver (`mobile/src/data/sadhana/`)
 
@@ -1508,3 +1526,48 @@ Two AsyncStorage keys hold the last-seen **version string**: `@vedansh/tour-comp
 **Content lives in `mobile/src/data/tour/whatsNew.ts`:** `APP_TOUR_VERSION` (must equal `app.json` `expo.version`), a per-version `whatsNew` map of bilingual `items`, and `getWhatsNewForVersion()` (returns null for unknown or empty entries → sheet suppressed).
 
 **Files:** `mobile/src/components/FeatureTour.tsx`, `WhatsNewModal.tsx`; `mobile/src/components/tour/{tourTargets,placement}.ts` (spotlight registry + `reveal`/`scrollNodeIntoView` + pure card placement + `measureSettled`); `mobile/src/contexts/TourContext.tsx`; `mobile/src/data/tour/{steps,whatsNew}.ts`; the spotlight refs live in `HomeScreen`, `CategoryListScreen`, `TheerthMapScreen`, `DailyBhaktiScreen`, `PanchangScreen`, `ObservanceListScreen`, `MyVratScreen`, `AudioLibraryScreen`, `ReminderSettingsScreen`, `JapamAlarmsScreen` (and `RoutineBanner` forwards a `bannerRef`); wired in `mobile/App.tsx` (top-level overlay), replay row in `MoreScreen.tsx` (§37). Tests: `src/contexts/__tests__/TourContext.test.tsx`, `src/components/__tests__/FeatureTour.test.tsx`, `src/components/__tests__/tourPlacement.test.ts`, `src/data/__tests__/tourContent.jest.test.ts`; e2e `.maestro/feature-tour-e2e.yaml` (+ `_launch.yaml` dismisses the auto-tour for every other flow).
+
+---
+
+## 48. Home Today Strip (आज का पंचांग)
+
+**Purpose.** Make Home answer *"what matters today"*, not only *"what can I read"*. One glance-card between the wordmark hero and the CATEGORIES grid (§18) surfaces the day's panchang state; the full detail stays on the Panchang tab. This closed the daily-freshness gap identified in the July 2026 competitive review — the previous Home rendered identically on every visit.
+
+**Structure (`TodayStrip.tsx`):**
+
+1. **Eyebrow row** — `आज का पंचांग` / `Today's Panchang` via **`eyebrowTextStyle()`** (`utils/langType.ts`, 12, `saffron-deep`; italic Cormorant + tracking for en, script-bold serif with no tracking for hi/gu/kn — Cormorant has no Indic glyphs and Latin tracking splits the shirorekha, §3; the Muhurat glance card shares the same helper) with a `saffron-deep` `›` affordance right-aligned (`saffron` fails the 4.5:1 floor on the gradient).
+2. **Headline** — hi/gu/kn `{vara} · {paksha} {tithi}` (e.g. `शनिवार · शुक्ल एकादशी`); en `{vara} · {tithi} ({paksha})` (e.g. `Saturday · Ekadashi (Shukla)`), one line: script-bold serif for hi/gu/kn (`scriptTitleFont`), `latinBold 17` (+0.3 tracking) for en; `ink`. Paksha display names come from `PAKSHA_NAMES_HI/EN` (`panchang/names.ts`). Shows `—` for the frame before the deferred solve lands.
+3. **Chip row** (wraps, gap 6) — one normalized chip list so the pill spec exists once: up to **2 observance chips** for today (`saffronTint` fill, `saffron-deep` text), then an **Abhijit chip** (`goldChipBg` fill, `saffron-deep`) and a **Rahu Kaal chip** (`avoidChipBg` fill, **`avoidDeep`** text — the tint composites darker than the card, so raw `avoid` drops under AA there; terracotta, never red, PRD-14). The kaal chip's label comes from the `KaalWindow`'s own `nameHi/nameEn` (KAAL_NAMES, `muhurat.ts`) — no duplicated literals. Chip names render via `pillTextStyle()` (Inter for en; script serif, no tracking, for Indic); the **time ranges render in `latinSemiBold` 11** — never the thin italic (§3), the same rule the Muhurat glance card re-learned (§31).
+
+**Surface.** `cardActiveFrom → cardActiveTo` gradient, 1px `cardActiveBorder`, `radii.lg`, **`elevation.raised`** (theme token). Opaque `cardActiveFrom` base, no `overflow: 'hidden'` (it would clip the iOS shadow) — the gradient carries its own radius. The §19/§32 card family.
+
+**Behaviour.**
+
+- Whole card is one `Pressable` → parent-tab navigate to `PanchangTab` (same bubble-up pattern as `RoutineBanner`).
+- Data comes from **one solve**: `useMuhurat(today, calendarSystem, { live: false })` supplies both the muhurat windows **and** the day's `PanchangData` (cached, off the render path); observances ride the lighter `useObservancesForDate` (split out of `usePanchangForSelection` so the strip never pays for the upcoming-window resolution it doesn't render). `live: false` skips the per-minute tick — the strip shows only static day windows; the date instead rolls over via **`useTodayKey()`** (`utils/useTodayKey.ts`): a timer just past local midnight plus an AppState foreground re-check, so an overnight-backgrounded app never shows yesterday's panchang. A mid-session observance-store upgrade re-resolves the chips **without** clearing them first (no blink; `useObservancesForDate` resets only when the day/city/system changes). The calendar system itself is a **module-level store** (`usePanchangCalendarSystem`), so a purnimant/amanta change on the Panchang tab propagates to the mounted Home strip immediately.
+- Accessibility: single button, label `"Today's Panchang. {vara}, {tithi}. {observances}. Tap to open."`.
+
+**Files:** `mobile/src/components/TodayStrip.tsx`; consumed by `HomeScreen.tsx` (§18).
+
+---
+
+## 49. Continue-Reading Card (जारी रखें)
+
+**Purpose.** Surface the most recent reading position on Home so the daily loop resumes in one tap — previously resume existed only behind category lists (`ResumeReadingSheet`, §21). This is the retention card the myBhakti-style competitors *can't* have (no reader), so it deepens the app's own loop rather than copying theirs.
+
+**Structure (`ContinueReadingCard.tsx`)** — a single-row card below the CATEGORIES grid (§18):
+
+1. **Thumb tile** 44×44, `saffronTint` fill, `radii.md`, the entry's `thumb` glyph (`typography.thumb` family, 20, `saffron-deep`).
+2. **Body** — eyebrow `जारी रखें` / `CONTINUE READING` (`versePill` via `pillTextStyle()`, `saffron-deep`); the entry title one line via `orderTitlesByLanguage()` (`devPrimary 15` / `latPrimary 16`, `ink`); position line from the shared **`formatLocation()`** helper (per-source unit words — Sarga/Kanda/Stotram/पद — same labels as the resume sheets), `ink-muted` 12 — `latinSemiBold` for en, script serif for Indic; numerals never italic, §3.
+3. **CTA pill** — `पढ़ें ›` / `Read ›`, `saffronTint` fill, `saffron-deep` text. The whole card is the press target; the pill is an affordance (same contract as §32's FeatureCard).
+
+**Surface.** `parchmentSoft` flat + 1px `divider`, `radii.lg` — deliberately quieter than the gradient cards around it (it's a shortcut, not a spotlight). Own `marginTop` so the gap collapses when hidden.
+
+**Behaviour.**
+
+- Source of truth: `ReadingProgressContext` — entries walked **newest-first** via `readingProgressByRecency()` (`utils/latestProgress.ts`, unit-tested); the card surfaces the first entry that is still active/visible **and** routable, so a hidden or retired source falls through to the next entry instead of blanking the card. theerth is excluded (its target is the map, not a reader).
+- Routing goes through **`navigateToProgress()`** (`entryRoutes.ts`) — the same path as the resume sheets — so chaptered sources get the chapters screen pushed under the reader (back lands on the chapter list, not Home). The routability gate is **`canResumeProgress()`** — the same branch conditions as `navigateToProgress` itself, so a rendered entry can never no-op on tap. Nothing routable → the card renders nothing.
+- Hidden while progress is loading or absent (first-run Home shows no empty shell).
+- Accessibility: `"Continue reading. {nameEn}, {position}. Tap to resume."`.
+
+**Files:** `mobile/src/components/ContinueReadingCard.tsx`, `mobile/src/utils/latestProgress.ts` (+ test); consumed by `HomeScreen.tsx` (§18).

@@ -76,7 +76,19 @@ function writeSolveCache(key: string, value: Solved): void {
   }
 }
 
-export function useMuhurat(date: Date, calendarSystem: CalendarSystem): UseMuhuratResult {
+export function useMuhurat(
+  date: Date,
+  calendarSystem: CalendarSystem,
+  opts?: {
+    /**
+     * When false, skip the per-minute tick (and with it the live
+     * nowChoghadiya/nowKaal refresh) — for consumers that render only the
+     * static day windows (e.g. the Home Today strip) and shouldn't re-render
+     * every minute. Defaults to true.
+     */
+    live?: boolean;
+  }
+): UseMuhuratResult {
   const { location } = usePanchangLocation();
   const dateMs = date.getTime();
   const cityId = location.cityId;
@@ -133,7 +145,7 @@ export function useMuhurat(date: Date, calendarSystem: CalendarSystem): UseMuhur
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cacheKey]);
 
-  const tick = useMinuteTick();
+  const tick = useMinuteTick(opts?.live !== false);
 
   const now = useMemo(() => {
     if (!solved || !isToday) return { nowChoghadiya: null as ChoghadiyaPeriod | null, nowKaal: null as KaalWindow | null };

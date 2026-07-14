@@ -41,7 +41,12 @@ UserActivity day totals show `rounds ≥ targetRounds`. `useRoutineToday()` comp
 Routine + ReadingProgress + UserActivity into `{entries, doneCount, total, hasRoutine}`;
 `doneMode` is `'manual' | 'auto' | null` (manual wins).
 
-**UI surfaces:** a docked `RoutineBanner` on Home above the tab bar (pure view-model in
+**UI surfaces:** the `RoutineToday` ledger is a **tap-to-expand accordion** — the completion
+summary card is the always-visible header (with a centred rotating `›` caret) and the item rows +
+help caption **collapse by default, dropping down only when the summary card is tapped** (`expanded`
+state in `RoutineTodayScreen`). This mirrors the sankalp cards (see Sadhana Programs below), so both
+ledgers on the screen behave and look identical. Also: a docked `RoutineBanner` on Home above the tab
+bar (pure view-model in
 `routineBannerView.ts`; single-line chip since #110); `RoutineCelebration` (pushpa-varsha)
 plays once per day when everything is done; five native-stack routes — `RoutineToday`,
 `RoutineList`, `RoutineCreate`, `RoutineDetail`, `RoutineAddItems`; every reader's toggle row
@@ -57,7 +62,12 @@ The catalog (`SadhanaProgramListScreen`) + detail follow the app card language (
 `RoutineShell` gained an optional `background` prop → the catalog sits on `getRandomDeityBackground()`
 (By-Deity convention) and the detail on `getDeityBackground(program.deity)`; cards are warm
 `LibraryCard`-style (gradient thumb from `program.thumb`, both languages via `orderTitlesByLanguage`,
-status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Practice ledger.
+status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Practice ledger. It is a
+**tap-to-expand accordion**: the header (eyebrow + title + progress bar + resting prose) is always
+shown with a rotating dropdown caret, and the unit rows **collapse by default, dropping down only when
+the header is tapped** — styled identically to the §31 daily-routine ledger rows (28 px offering ring,
+16/24 title, `cardMeta` sub, bottom dividers). Only `active`/`waiting`-with-items days are expandable
+(`hasItems`); `done-today`/`completed` have no units so the header stays a plain block.
 The catalog has **three standing entry points** (July 2026 review — it used to hang solely off the
 create-routine chooser, unreachable in practice once a routine existed): the `CreateRoutineScreen`
 'choose' fork, ghost "तैयार संकल्प चुनें / Browse sankalps" buttons on `RoutineToday` + `RoutineList`,

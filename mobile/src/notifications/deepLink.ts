@@ -1,4 +1,5 @@
 import { CommonActions, createNavigationContainerRef } from '@react-navigation/native';
+import { panchangTabTarget } from '@/navigation/entryRoutes';
 import * as Notifications from 'expo-notifications';
 import { findJapamMantra } from '@/data/japam';
 import { isJapamAlarmPayload } from './japamAlarms';
@@ -79,7 +80,9 @@ export function handleNotificationResponse(
     navigationRef.dispatch(
       CommonActions.navigate({
         name: 'PanchangTab',
-        params: { screen: 'ObservanceDetail', params: { ruleId: data.ruleId } },
+        // panchangTabTarget carries initial:false so a cold-start deep link
+        // can't make ObservanceDetail the lazily-mounted stack's initial route.
+        params: panchangTabTarget('ObservanceDetail', { ruleId: data.ruleId }),
       })
     );
     return true;
