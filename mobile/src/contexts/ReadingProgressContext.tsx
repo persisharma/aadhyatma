@@ -5,6 +5,17 @@ import { toDateKey, useUserActivity } from '@/contexts/UserActivityContext';
 
 const STORAGE_KEY = '@vedansh/reading-progress';
 
+/**
+ * Same-page recency refresh throttle. Reader screens re-report their position
+ * whenever their persist effect re-runs (every persist changes `progress`,
+ * which changes `setProgress`'s identity) — persisting unconditionally would
+ * loop forever because `updatedAt` is always fresh. Throttling the same-page
+ * write breaks that loop while still letting a re-opened text bump its
+ * `updatedAt`, so the Home continue-reading card follows the most recently
+ * OPENED text instead of freezing on the last one whose page changed.
+ */
+const RECENCY_REFRESH_MS = 60_000;
+
 export type ReadingProgress = {
   sourceId: string;
   chapter?: number;
@@ -110,10 +121,18 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
       if (isLoading) return;
       const key = progressKey(entry.sourceId, entry.chapter);
       const current = progress[key];
-      if (current && current.verseIndex === entry.verseIndex) {
-        if (toDateKey(new Date(current.updatedAt)) === toDateKey(new Date(entry.updatedAt))) {
-          return;
+      if (
+        current &&
+        current.verseIndex === entry.verseIndex &&
+        toDateKey(new Date(current.updatedAt)) === toDateKey(new Date(entry.updatedAt))
+      ) {
+        // Same page, same day: no verse advance happened, so never logRead —
+        // but DO refresh `updatedAt` (throttled, see RECENCY_REFRESH_MS) so
+        // continue-reading recency still updates when a text is re-opened.
+        if (entry.updatedAt - current.updatedAt >= RECENCY_REFRESH_MS) {
+          persist({ ...progress, [key]: entry });
         }
+        return;
       }
       persist({ ...progress, [key]: entry });
       logRead(entry.sourceId);

@@ -13,10 +13,12 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
   }),
 }));
 
-// ReadingProgressProvider depends on useUserActivity().logRead — stub it.
+// ReadingProgressProvider depends on useUserActivity().logRead — stub it with
+// a shared spy so tests can assert when a read is (not) logged.
+const mockLogRead = jest.fn();
 jest.mock('@/contexts/UserActivityContext', () => ({
   ...jest.requireActual('@/contexts/UserActivityContext'),
-  useUserActivity: () => ({ logRead: jest.fn() }),
+  useUserActivity: () => ({ logRead: mockLogRead }),
 }));
 
 const STORAGE_KEY = '@vedansh/reading-progress';
@@ -160,5 +162,48 @@ describe('ReadingProgressContext — per-subsection progress', () => {
     const refreshed = captured.getProgress('durga-chalisa');
     expect(refreshed?.verseIndex).toBe(40);
     expect(toDateKey(new Date(refreshed!.updatedAt))).toBe(toDateKey(new Date()));
+  });
+
+  test('re-opening the same page later the same day refreshes recency without logging a read', async () => {
+    // Anchor mid-day so "+5 minutes" cannot cross midnight.
+    const noon = new Date();
+    noon.setHours(12, 0, 0, 0);
+    mockStore[STORAGE_KEY] = JSON.stringify({
+      'ratri-shloka': { sourceId: 'ratri-shloka', verseIndex: 3, updatedAt: noon.getTime() },
+    });
+    await mountAndHydrate();
+    mockLogRead.mockClear();
+
+    // Same page, same day, 5 minutes later — e.g. the reader re-opened via the
+    // Home continue-reading card. Recency must bump so the card's newest-first
+    // ordering follows the most recently opened text…
+    await act(async () => {
+      captured.setProgress({
+        sourceId: 'ratri-shloka',
+        verseIndex: 3,
+        updatedAt: noon.getTime() + 5 * 60_000,
+      });
+    });
+    expect(captured.getProgress('ratri-shloka')?.updatedAt).toBe(noon.getTime() + 5 * 60_000);
+    // …but no verse advance happened, so activity stats must not inflate.
+    expect(mockLogRead).not.toHaveBeenCalled();
+  });
+
+  test('same-page writes seconds apart are dropped (breaks the reader persist→effect loop)', async () => {
+    const noon = new Date();
+    noon.setHours(12, 0, 0, 0);
+    mockStore[STORAGE_KEY] = JSON.stringify({
+      'ratri-shloka': { sourceId: 'ratri-shloka', verseIndex: 3, updatedAt: noon.getTime() },
+    });
+    await mountAndHydrate();
+
+    await act(async () => {
+      captured.setProgress({
+        sourceId: 'ratri-shloka',
+        verseIndex: 3,
+        updatedAt: noon.getTime() + 2_000,
+      });
+    });
+    expect(captured.getProgress('ratri-shloka')?.updatedAt).toBe(noon.getTime());
   });
 });
