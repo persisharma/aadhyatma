@@ -14,6 +14,14 @@
 # Superpowers visual brainstorming scratchpad
 .superpowers/
 
+# Local secrets — Expo access tokens (EXPO_TOKEN) etc. NEVER commit these.
+# Preferred path is an env var set in the environment config, not a file; these
+# entries are a safety net for local `export`-into-a-file workflows.
+.env.local
+.env.*.local
+mobile/.env.local
+mobile/.env.*.local
+
 # macOS
 .DS_Store
 
