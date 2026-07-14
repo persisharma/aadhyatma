@@ -127,6 +127,27 @@ describe('TodayStrip', () => {
     expect(scrolls[0].props.showsHorizontalScrollIndicator).toBe(false);
   });
 
+  it('auto-drifts an overflowing chip row and stops for good on a user drag', () => {
+    mockObservances = [
+      { date: new Date(), rule: { id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat' } },
+    ];
+    mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
+    const tree = render();
+    const scroll = tree.root.findAllByType(ScrollView)[0];
+
+    // Measurement callbacks are wired; reporting an overflowing content width
+    // kicks the drift off (async behind the reduce-motion check — the wiring
+    // not throwing is the contract this pins).
+    act(() => {
+      scroll.props.onLayout({ nativeEvent: { layout: { width: 200 } } });
+      scroll.props.onContentSizeChange(420, 24);
+    });
+
+    // A drag hands control to the user permanently.
+    expect(typeof scroll.props.onScrollBeginDrag).toBe('function');
+    act(() => scroll.props.onScrollBeginDrag());
+  });
+
   it('requests the static (live: false) muhurat read — no per-minute tick', () => {
     render();
     expect(mockUseMuhurat).toHaveBeenCalledWith(

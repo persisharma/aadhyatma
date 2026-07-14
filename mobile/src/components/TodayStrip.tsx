@@ -1,5 +1,14 @@
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  AccessibilityInfo,
+  Animated,
+  Easing,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
@@ -24,6 +33,10 @@ import { useTodayKey } from '@/utils/useTodayKey';
  * ride the lighter `useObservancesForDate`. `live: false` skips the per-minute
  * tick — the strip renders only static day windows.
  */
+/** Auto-scroll pacing for the chip row. ~24px/s reads as a drift, not a marquee. */
+const AUTO_SCROLL_PX_PER_SEC = 24;
+const AUTO_SCROLL_END_PAUSE_MS = 1800;
+
 export default function TodayStrip() {
   const { colors, typography, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
@@ -105,6 +118,71 @@ export default function TodayStrip() {
     ? `Today's Panchang. ${panchang.vara.nameEn}, ${panchang.tithi.nameEn}.${a11yFest ? ` ${a11yFest}.` : ''} Tap to open.`
     : "Today's Panchang. Tap to open.";
 
+  // ── Chip-row auto-scroll ──────────────────────────────────────────────────
+  // When the chips overflow the row, drift them to the end and back on a slow
+  // loop so off-screen chips surface without a drag. A user drag takes over
+  // for good; reduce-motion users never see it. All mutable bits live in one
+  // ref — none of this should re-render the card.
+  const scrollRef = React.useRef<ScrollView>(null);
+  const auto = React.useRef({
+    layoutW: 0,
+    contentW: 0,
+    stopped: false,
+    anim: null as Animated.CompositeAnimation | null,
+    x: new Animated.Value(0),
+  });
+
+  const stopAutoScroll = React.useCallback(() => {
+    const s = auto.current;
+    s.stopped = true;
+    s.anim?.stop();
+    s.anim = null;
+  }, []);
+
+  const maybeStartAutoScroll = React.useCallback(() => {
+    const s = auto.current;
+    if (s.stopped || s.anim || s.contentW - s.layoutW <= 8) return;
+    AccessibilityInfo.isReduceMotionEnabled()
+      .then((reduceMotion) => {
+        // Re-check: a drag or an unmount can land while the promise resolves.
+        const overflow = s.contentW - s.layoutW;
+        if (reduceMotion || s.stopped || s.anim || overflow <= 8) return;
+        const duration = (overflow / AUTO_SCROLL_PX_PER_SEC) * 1000;
+        s.anim = Animated.loop(
+          Animated.sequence([
+            Animated.delay(AUTO_SCROLL_END_PAUSE_MS),
+            Animated.timing(s.x, {
+              toValue: overflow,
+              duration,
+              easing: Easing.inOut(Easing.quad),
+              useNativeDriver: false,
+            }),
+            Animated.delay(AUTO_SCROLL_END_PAUSE_MS),
+            Animated.timing(s.x, {
+              toValue: 0,
+              duration,
+              easing: Easing.inOut(Easing.quad),
+              useNativeDriver: false,
+            }),
+          ])
+        );
+        s.anim.start();
+      })
+      .catch(() => undefined);
+  }, []);
+
+  React.useEffect(() => {
+    const s = auto.current;
+    const sub = s.x.addListener(({ value }) => {
+      scrollRef.current?.scrollTo?.({ x: value, animated: false });
+    });
+    return () => {
+      s.x.removeListener(sub);
+      s.anim?.stop();
+      s.anim = null;
+    };
+  }, []);
+
   return (
     <Pressable
       onPress={() => rootNav.navigate('PanchangTab')}
@@ -155,12 +233,22 @@ export default function TodayStrip() {
         // stack on narrow screens — overflow scrolls horizontally instead
         // (drags scroll; plain taps still bubble to the card Pressable, since
         // a ScrollView only claims the responder on move). Full-bleed to the
-        // card edge so a clipped chip peeks and signals the scroll.
+        // card edge so a clipped chip peeks; overflow also auto-drifts (above).
         <ScrollView
+          ref={scrollRef}
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.chipScroll}
           contentContainerStyle={styles.chipRow}
+          onLayout={(e) => {
+            auto.current.layoutW = e.nativeEvent.layout.width;
+            maybeStartAutoScroll();
+          }}
+          onContentSizeChange={(w) => {
+            auto.current.contentW = w;
+            maybeStartAutoScroll();
+          }}
+          onScrollBeginDrag={stopAutoScroll}
         >
           {chips.map((chip) => (
             <View

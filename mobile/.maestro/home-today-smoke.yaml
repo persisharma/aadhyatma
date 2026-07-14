@@ -1,14 +1,14 @@
-# Home Today-First Smoke Test (design.md §18/§48/§49)
+# Home Today-First Smoke Test (design.md §18/§48)
 #
-# Covers the three surfaces added by the Home redesign:
+# Covers the surfaces of the Home redesign (the Continue-reading card was
+# retired in July 2026 — resume lives in the ResumeReadingSheet, covered by
+# resume-reading-smoke.yaml):
 #   1. The "आज · Today" strip renders on Home (a11y label "Today's Panchang. …").
 #   2. The व्रत (Vrat & Parv) launcher tile opens the Panchang stack's
 #      ObservanceList — and, because the tile navigates via panchangTabTarget
 #      (initial: false), backing out lands on PanchangHome (the calendar),
 #      proving the vrat door did not hijack the lazily-mounted stack's
 #      initial route.
-#   3. Reading a page of a text surfaces the "Continue reading" card on Home,
-#      and tapping it resumes the reader.
 #
 # Language note (same as panchang-smoke / vrat-catalog-smoke): default Hindi
 # renders Devanagari, which Maestro's iOS tree can't read — flip to English on
@@ -18,7 +18,6 @@
 #   - The PanchangHome segment Pressable exposes accessibilityLabel
 #     "Vrat and Parv", not the visible "Vrat & Parv" text.
 #   - ObservanceList's back button exposes "Back" (English mode).
-#   - The Continue-reading card sits below the 3×3 grid → scrollUntilVisible.
 
 appId: host.exp.Exponent
 ---
@@ -52,29 +51,3 @@ appId: host.exp.Exponent
 - assertVisible: "Vrat and Parv"
 - tapOn: "Home, tab.*"
 - waitForAnimationToEnd
-
-# ── 3. Continue-reading card after reading ──
-- tapOn: "Chalisa\\..*Tap to open\\."
-- waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: "Hanuman Chalisa\\..*Tap to open\\."
-    timeout: 15000
-- tapOn: "Hanuman Chalisa\\..*Tap to open\\."
-- waitForAnimationToEnd:
-    timeout: 15000
-- swipe:
-    direction: LEFT
-- waitForAnimationToEnd
-- tapOn: "Back to home"
-- waitForAnimationToEnd
-- tapOn: "Home, tab.*"
-- waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: "Continue reading\\..*Tap to resume\\."
-    direction: DOWN
-    visibilityPercentage: 60
-    timeout: 15000
-- tapOn: "Continue reading\\..*Tap to resume\\."
-- waitForAnimationToEnd
-- assertVisible: "Back to home"
