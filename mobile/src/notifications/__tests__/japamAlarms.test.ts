@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
-import { getJapamAlarmSoundName } from '../../../assets/japam-alarm-sounds';
+import {
+  getAllJapamAlarmSoundNames,
+  getJapamAlarmSoundName,
+} from '../../../assets/japam-alarm-sounds';
 import {
   MAX_JAPAM_ALARMS,
   JAPAM_ALARM_IDENTIFIER_PREFIX,
@@ -111,6 +115,46 @@ import {
   // Mantras without a bundled clip (commented-out entries / unknown ids).
   assert.equal(getJapamAlarmSoundName('om-namo-bhagavate-vasudevaya'), null);
   assert.equal(getJapamAlarmSoundName('does-not-exist'), null);
+}
+
+// Every bundled alarm clip must be a bare `RIFF/WAVE/fmt /data` WAV with NO
+// intervening chunk. iOS's notification / AlarmKit sound loader uses a minimal
+// parser that expects `data` immediately after `fmt ` and does not skip an
+// interposed chunk — an ffmpeg-written `LIST`/`INFO` metadata chunk registers
+// fine but silently fails to load and rings the default tone (the real July
+// 2026 "only Om Namah Shivaya rings" bug). Also enforces mono/16-bit PCM and
+// the ≤30 s duration constraint.
+{
+  const dir = new URL('../../../assets/japam-alarm-sounds/', import.meta.url);
+  for (const file of getAllJapamAlarmSoundNames()) {
+    const buf = readFileSync(new URL(file, dir));
+    assert.equal(buf.toString('latin1', 0, 4), 'RIFF', `${file}: missing RIFF`);
+    assert.equal(buf.toString('latin1', 8, 12), 'WAVE', `${file}: missing WAVE`);
+    assert.equal(buf.readUInt32LE(4), buf.length - 8, `${file}: RIFF size mismatch`);
+    // Walk chunks; the only chunk ids allowed are `fmt ` then `data`.
+    const ids: string[] = [];
+    let fmt: Buffer | null = null;
+    let dataSize = 0;
+    let i = 12;
+    while (i + 8 <= buf.length) {
+      const id = buf.toString('latin1', i, i + 4);
+      const size = buf.readUInt32LE(i + 4);
+      ids.push(id);
+      if (id === 'fmt ') fmt = buf.subarray(i + 8, i + 8 + size);
+      if (id === 'data') dataSize = size;
+      i += 8 + size + (size & 1);
+    }
+    assert.deepEqual(ids, ['fmt ', 'data'], `${file}: expected only fmt+data, got ${ids.join(',')}`);
+    assert.ok(fmt, `${file}: no fmt chunk`);
+    const channels = fmt.readUInt16LE(2);
+    const sampleRate = fmt.readUInt32LE(4);
+    const bits = fmt.readUInt16LE(14);
+    assert.equal(fmt.readUInt16LE(0), 1, `${file}: not PCM`);
+    assert.equal(channels, 1, `${file}: must be mono`);
+    assert.equal(bits, 16, `${file}: must be 16-bit`);
+    const durationSec = dataSize / (sampleRate * channels * (bits / 8));
+    assert.ok(durationSec <= 30, `${file}: duration ${durationSec.toFixed(1)}s exceeds 30s cap`);
+  }
 }
 
 // nextFireTimestamp: future-of-today returns today; past-of-today rolls to tomorrow.
