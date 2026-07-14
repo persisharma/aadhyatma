@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 import {
   getAllJapamAlarmSoundNames,
@@ -125,9 +126,9 @@ import {
 // 2026 "only Om Namah Shivaya rings" bug). Also enforces mono/16-bit PCM and
 // the ≤30 s duration constraint.
 {
-  const dir = new URL('../../../assets/japam-alarm-sounds/', import.meta.url);
+  const dir = join(import.meta.dirname, '../../../assets/japam-alarm-sounds');
   for (const file of getAllJapamAlarmSoundNames()) {
-    const buf = readFileSync(new URL(file, dir));
+    const buf = readFileSync(join(dir, file));
     assert.equal(buf.toString('latin1', 0, 4), 'RIFF', `${file}: missing RIFF`);
     assert.equal(buf.toString('latin1', 8, 12), 'WAVE', `${file}: missing WAVE`);
     assert.equal(buf.readUInt32LE(4), buf.length - 8, `${file}: RIFF size mismatch`);
