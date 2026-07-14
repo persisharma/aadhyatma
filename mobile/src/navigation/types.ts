@@ -1,9 +1,13 @@
+import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 
 export type TabParamList = {
   HomeTab: undefined;
   DailyBhaktiTab: { sourceId?: string; chapter?: number; verseIndex?: number } | undefined;
-  PanchangTab: undefined;
+  // Nested-navigator params so cross-tab jumps like
+  // navigate('PanchangTab', { screen: 'ObservanceList', params: {...}, initial: false })
+  // are type-checked instead of hidden behind `useNavigation<any>()`.
+  PanchangTab: NavigatorScreenParams<PanchangStackParamList> | undefined;
   // Dedicated audio library + media player.
   AudioTab: undefined;
   MoreTab: undefined;

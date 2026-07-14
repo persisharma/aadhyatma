@@ -78,11 +78,12 @@ describe('signal text readability on card surfaces (design.md §12)', () => {
   // The Muhurat glance card renders times and quality chips in the SIGNAL colors
   // (`avoid` terracotta, `saffronDeep`) on the `cardActive*` gradient and on
   // `parchmentSoft` tiles — not on the base parchment the tokens above are tuned
-  // for. `cardActiveFrom` is the lightest surface on that card, so it is the
-  // worst-case background: a color that clears AA there clears it everywhere the
-  // card renders it (the gradient darkens downward, the chip tint darkens further).
-  // This pins the signal colors so a palette tweak can't lighten them below the
-  // WCAG AA 4.5:1 floor and reintroduce the "faint secondary text" regression.
+  // for. NOTE: for DARK text on these light surfaces, a tinted chip background
+  // *lowers* the ratio (it darkens the surface toward the text) — so raw-surface
+  // checks are necessary but NOT sufficient for chip text; the composited checks
+  // in the next describe block cover the chips. This pins the signal colors so a
+  // palette tweak can't lighten them below the WCAG AA 4.5:1 floor and
+  // reintroduce the "faint secondary text" regression.
   const cardSurfaces = ['cardActiveFrom', 'cardActiveTo', 'parchmentSoft'] as const;
 
   for (const surface of cardSurfaces) {
@@ -96,4 +97,41 @@ describe('signal text readability on card surfaces (design.md §12)', () => {
       expect(contrastRatio(lightColors.inkSoft, lightColors[surface])).toBeGreaterThanOrEqual(4.5);
     });
   }
+});
+
+describe('chip text readability on COMPOSITED chip tints (design.md §3/§12)', () => {
+  // The quality/muhurat chips (Muhurat glance card, Home Today strip §48) render
+  // text on an rgba tint stacked over the cardActive gradient. The effective
+  // surface is the alpha composite, which sits DARKER than the raw card surface —
+  // `avoid` on `avoidChipBg` over the gradient's dark stop measured ~3.5:1, which
+  // is why chip text uses the deeper `avoidDeep` cut. These tests do the actual
+  // compositing so the chip text colors are pinned against the surfaces they
+  // really render on.
+  function compositeOver(rgba: string, hexBelow: string): string {
+    const m = /^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/.exec(rgba);
+    if (!m) throw new Error(`Expected rgba(r, g, b, a), got ${rgba}`);
+    const [r, g, b] = [1, 2, 3].map((i) => parseInt(m[i], 10));
+    const a = parseFloat(m[4]);
+    const below = [1, 3, 5].map((i) => parseInt(hexBelow.slice(i, i + 2), 16));
+    const out = [r, g, b].map((c, i) => Math.round(a * c + (1 - a) * below[i]));
+    return `#${out.map((c) => c.toString(16).padStart(2, '0')).join('')}`;
+  }
+
+  const gradientStops = ['cardActiveFrom', 'cardActiveTo'] as const;
+
+  for (const stop of gradientStops) {
+    test(`avoidDeep clears WCAG AA on avoidChipBg composited over ${stop}`, () => {
+      const surface = compositeOver(lightColors.avoidChipBg, lightColors[stop]);
+      expect(contrastRatio(lightColors.avoidDeep, surface)).toBeGreaterThanOrEqual(4.5);
+    });
+    test(`saffronDeep clears WCAG AA on goldChipBg composited over ${stop}`, () => {
+      const surface = compositeOver(lightColors.goldChipBg, lightColors[stop]);
+      expect(contrastRatio(lightColors.saffronDeep, surface)).toBeGreaterThanOrEqual(4.5);
+    });
+  }
+
+  test('regression: raw avoid does NOT clear AA on the composited avoid chip (why avoidDeep exists)', () => {
+    const surface = compositeOver(lightColors.avoidChipBg, lightColors.cardActiveTo);
+    expect(contrastRatio(lightColors.avoid, surface)).toBeLessThan(4.5);
+  });
 });

@@ -20,10 +20,13 @@ import LotusMark from '@/components/LotusMark';
 import HomeWordmark from '@/components/HomeWordmark';
 import SearchFloatingButton from '@/components/SearchFloatingButton';
 import RoutineBanner from '@/components/RoutineBanner';
+import TodayStrip from '@/components/TodayStrip';
+import ContinueReadingCard from '@/components/ContinueReadingCard';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
+import { panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
@@ -48,54 +51,64 @@ export default function HomeScreen({ navigation }: Props) {
   // hidden behind / overlapped by the banner.
   const searchFabBottom = spacing.sm + 60 + spacing.md;
 
-  const categoryIcons: Record<CategoryIconKey, React.ReactNode> = {
-    granth: <CategoryIcon iconKey="granth" />,
-    stotram: <CategoryIcon iconKey="stotram" />,
-    chalisa: <CategoryIcon iconKey="chalisa" />,
-    japam: <CategoryIcon iconKey="japam" />,
-    deity: <CategoryIcon iconKey="deity" />,
-    aarti: <CategoryIcon iconKey="aarti" />,
-    theerth: <CategoryIcon iconKey="theerth" />,
-    sanskar: <CategoryIcon iconKey="sanskar" />,
-  };
-
   type TileItem = {
     key: string;
     nameHi: string;
     nameEn: string;
-    status: 'active';
+    shortNameEn?: string;
+    status: 'active' | 'coming';
     icon?: React.ReactNode;
     onPress: () => void;
     hasNew?: boolean;
   };
 
-  const tiles: TileItem[] = [
-    ...categories.map((c) => ({
-      key: c.id,
-      nameHi: c.nameHi,
-      nameEn: c.nameEn,
-      status: 'active' as const,
-      icon: categoryIcons[c.id],
-      hasNew: hasNewInCategory(c.id),
-      onPress: () =>
-        c.id === 'theerth'
-          ? navigation.navigate('TheerthMap', {})
-          : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
-    })),
-    {
-      key: 'deity',
-      nameHi: 'देवता',
-      nameEn: 'By Deity',
-      status: 'active' as const,
-      icon: categoryIcons['deity'],
-      onPress: () => navigation.navigate('DeityIndex'),
-    },
-  ];
+  // 3×3 launcher grid: the 7 registry categories, plus the व्रत tile (a door
+  // into the Panchang tab's Vrat & Parv catalog, PRD-09 — not a ContentCategory;
+  // its content lives in the observance engine, not the library) and the देवता
+  // tile (the Deity Index). Nine tiles — the grid stays a full square.
+  // Memoized so the 9 memoized CategoryCards keep stable icon/onPress props
+  // across unrelated HomeScreen re-renders (context churn, tour registration).
+  const tiles: TileItem[] = React.useMemo(() => {
+    const iconFor = (key: CategoryIconKey) => <CategoryIcon iconKey={key} />;
+    return [
+      ...categories.map((c) => ({
+        key: c.id,
+        nameHi: c.nameHi,
+        nameEn: c.nameEn,
+        shortNameEn: c.shortNameEn,
+        status: c.status,
+        icon: iconFor(c.id),
+        hasNew: c.status === 'active' ? hasNewInCategory(c.id) : undefined,
+        onPress: () =>
+          c.id === 'theerth'
+            ? navigation.navigate('TheerthMap', {})
+            : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
+      })),
+      {
+        key: 'vrat',
+        nameHi: 'व्रत',
+        nameEn: 'Vrat & Parv',
+        shortNameEn: 'Vrat',
+        status: 'active' as const,
+        icon: iconFor('vrat'),
+        onPress: () =>
+          rootNav.navigate('PanchangTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
+      },
+      {
+        key: 'deity',
+        nameHi: 'देवता',
+        nameEn: 'By Deity',
+        status: 'active' as const,
+        icon: iconFor('deity'),
+        onPress: () => navigation.navigate('DeityIndex'),
+      },
+    ];
+  }, [hasNewInCategory, navigation, rootNav]);
 
   const screenWidth = Dimensions.get('window').width;
   const gridPadding = spacing.xxl;
   const gridGap = 10;
-  const tileWidth = (screenWidth - 2 * gridPadding - gridGap) / 2;
+  const tileWidth = (screenWidth - 2 * gridPadding - 2 * gridGap) / 3;
 
   // Discover carousel — wide cards that peek the next one. Width is the viewport
   // minus the side gutter and a sliver of the following card; snap by card+gap.
@@ -124,25 +137,9 @@ export default function HomeScreen({ navigation }: Props) {
       icon: <CategoryIcon iconKey="stotram" />,
       onPress: () => rootNav.navigate('DailyBhaktiTab'),
     },
-    {
-      key: 'panchang',
-      titleHi: 'आज का पंचांग', titleEn: "Today's Panchang",
-      descHi: 'तिथि, नक्षत्र और व्रत-पर्व एक ही नज़र में।',
-      descEn: 'Tithi, nakshatra and festivals at a glance.',
-      ctaHi: 'देखें', ctaEn: 'View',
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.saffronDeep,
-          }}
-        >
-          पं
-        </Text>
-      ),
-      onPress: () => rootNav.navigate('PanchangTab'),
-    },
+    // NOTE: no Panchang spotlight here — the Today strip (§48) owns that
+    // surface now; a second card produced two "Today's Panchang." buttons for
+    // screen readers.
     {
       key: 'sankalp',
       titleHi: 'संकल्प', titleEn: 'Sadhana Programs',
@@ -202,9 +199,58 @@ export default function HomeScreen({ navigation }: Props) {
             <HomeWordmark />
           </View>
 
+          <TodayStrip />
+
           <Text
             style={[
               styles.sectionLabel,
+              styles.sectionLabelSpaced,
+              {
+                color: colors.inkMuted,
+                fontSize: typography.sectionLabel.fontSize,
+                fontFamily: typography.sectionLabel.fontFamily,
+                letterSpacing: typography.sectionLabel.letterSpacing,
+              },
+            ]}
+          >
+            CATEGORIES
+          </Text>
+
+          {/* categoriesGrid tour target rings the whole grid, not one tile. */}
+          <View style={[styles.grid, { gap: gridGap }]} ref={categoriesGridRef} collapsable={false}>
+            {tiles.map((tile) => (
+              <View
+                key={tile.key}
+                style={{ width: tileWidth }}
+                ref={
+                  tile.key === 'japam'
+                    ? japaTileRef
+                    : tile.key === 'theerth'
+                      ? theerthTileRef
+                      : undefined
+                }
+                collapsable={tile.key === 'japam' || tile.key === 'theerth' ? false : undefined}
+              >
+                <CategoryCard
+                  nameHi={tile.nameHi}
+                  nameEn={tile.nameEn}
+                  displayNameEn={tile.shortNameEn}
+                  status={tile.status}
+                  icon={tile.icon}
+                  onPress={tile.onPress}
+                  hasNew={tile.hasNew}
+                  variant="launcher"
+                />
+              </View>
+            ))}
+          </View>
+
+          <ContinueReadingCard />
+
+          <Text
+            style={[
+              styles.sectionLabel,
+              styles.sectionLabelSpaced,
               {
                 color: colors.inkMuted,
                 fontSize: typography.sectionLabel.fontSize,
@@ -236,51 +282,6 @@ export default function HomeScreen({ navigation }: Props) {
                 <FeatureCard key={item.key} item={item} width={featureWidth} onPress={onPress} />
               ))}
             </ScrollView>
-
-          <Text
-            style={[
-              styles.sectionLabel,
-              styles.sectionLabelSpaced,
-              {
-                color: colors.inkMuted,
-                fontSize: typography.sectionLabel.fontSize,
-                fontFamily: typography.sectionLabel.fontFamily,
-                letterSpacing: typography.sectionLabel.letterSpacing,
-              },
-            ]}
-          >
-            CATEGORIES
-          </Text>
-
-          <View style={[styles.grid, { gap: gridGap }]}>
-            {tiles.map((tile, i) => (
-              <View
-                key={tile.key}
-                style={{ width: tileWidth }}
-                ref={
-                  tile.key === 'japam'
-                    ? japaTileRef
-                    : tile.key === 'theerth'
-                      ? theerthTileRef
-                      : i === 0
-                        ? categoriesGridRef
-                        : undefined
-                }
-                collapsable={
-                  tile.key === 'japam' || tile.key === 'theerth' || i === 0 ? false : undefined
-                }
-              >
-                <CategoryCard
-                  nameHi={tile.nameHi}
-                  nameEn={tile.nameEn}
-                  status={tile.status}
-                  icon={tile.icon}
-                  onPress={tile.onPress}
-                  hasNew={tile.hasNew}
-                />
-              </View>
-            ))}
-          </View>
 
           <Text
             style={[
@@ -354,7 +355,7 @@ const styles = StyleSheet.create({
   hero: {
     alignItems: 'center',
     marginTop: 6,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   sectionLabel: {
     textTransform: 'uppercase',

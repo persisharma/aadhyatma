@@ -5,11 +5,16 @@ import { useEffect, useState } from 'react';
  * read (e.g. the current Choghadiya on the Muhurat card) flips within ~1s of the
  * minute rather than lagging up to a full interval. Returns an incrementing
  * counter to use in deps.
+ *
+ * Pass `enabled: false` to skip the timer entirely (the hook is still called
+ * unconditionally, per the rules of hooks) — for consumers that only render
+ * static day-level data and don't need a per-minute re-render.
  */
-export function useMinuteTick(): number {
+export function useMinuteTick(enabled: boolean = true): number {
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
+    if (!enabled) return undefined;
     let intervalId: ReturnType<typeof setInterval> | undefined;
     // Align the first fire to the next :00, then tick once a minute.
     const msToNextMinute = 60_000 - (Date.now() % 60_000);
@@ -21,7 +26,7 @@ export function useMinuteTick(): number {
       clearTimeout(timeoutId);
       if (intervalId) clearInterval(intervalId);
     };
-  }, []);
+  }, [enabled]);
 
   return tick;
 }

@@ -79,3 +79,7 @@ export const LUNAR_MONTH_NAMES_EN = [
   'Chaitra', 'Vaishakha', 'Jyeshtha', 'Ashadha', 'Shravana', 'Bhadrapada',
   'Ashwin', 'Kartik', 'Margashirsha', 'Pausha', 'Magha', 'Phalguna',
 ];
+
+// Paksha display names (base form — surfaces append 'पक्ष'/'Paksha' as needed).
+export const PAKSHA_NAMES_HI = { shukla: 'शुक्ल', krishna: 'कृष्ण' } as const;
+export const PAKSHA_NAMES_EN = { shukla: 'Shukla', krishna: 'Krishna' } as const;
