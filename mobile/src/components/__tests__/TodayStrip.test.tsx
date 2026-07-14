@@ -1,6 +1,6 @@
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text, View as mockView } from 'react-native';
+import { ScrollView, Text, View as mockView } from 'react-native';
 import TodayStrip from '@/components/TodayStrip';
 
 // ---- mutable mock state (reset in beforeEach) ----
@@ -95,7 +95,7 @@ describe('TodayStrip', () => {
     expect(text).toContain('शनिवार · शुक्ल एकादशी');
   });
 
-  it('renders the observance pill and the muhurat windows line with time ranges', () => {
+  it('renders observance and muhurat chips with compact time ranges', () => {
     mockObservances = [
       { date: new Date(), rule: { id: 'yogini-ekadashi', nameHi: 'योगिनी एकादशी', nameEn: 'Yogini Ekadashi' } },
     ];
@@ -110,15 +110,21 @@ describe('TodayStrip', () => {
     expect(text).toContain('9:00 – 10:39 AM');
   });
 
-  it('shows only the lead observance when several fall on the same day', () => {
+  it('lays the chips on one horizontal-scroll row (no wrap on narrow devices)', () => {
     mockObservances = [
       { date: new Date(), rule: { id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat' } },
       { date: new Date(), rule: { id: 'somvati', nameHi: 'सोमवती अमावस्या', nameEn: 'Somvati Amavasya' } },
     ];
     mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
-    const text = textOf(render());
+    const tree = render();
+    // Both observances still render — overflow scrolls instead of wrapping.
+    const text = textOf(tree);
     expect(text).toContain('अमावस्या व्रत');
-    expect(text).not.toContain('सोमवती');
+    expect(text).toContain('सोमवती अमावस्या');
+    const scrolls = tree.root.findAllByType(ScrollView);
+    expect(scrolls.length).toBe(1);
+    expect(scrolls[0].props.horizontal).toBe(true);
+    expect(scrolls[0].props.showsHorizontalScrollIndicator).toBe(false);
   });
 
   it('requests the static (live: false) muhurat read — no per-minute tick', () => {

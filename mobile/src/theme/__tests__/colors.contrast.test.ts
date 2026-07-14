@@ -96,16 +96,11 @@ describe('signal text readability on card surfaces (design.md §12)', () => {
     test(`inkSoft clears WCAG AA on ${surface}`, () => {
       expect(contrastRatio(lightColors.inkSoft, lightColors[surface])).toBeGreaterThanOrEqual(4.5);
     });
-    // The Home Today strip (§48) renders its muhurat-windows meta line in
-    // inkMuted directly on the cardActive gradient.
-    test(`inkMuted clears WCAG AA on ${surface}`, () => {
-      expect(contrastRatio(lightColors.inkMuted, lightColors[surface])).toBeGreaterThanOrEqual(4.5);
-    });
   }
 });
 
 describe('chip text readability on COMPOSITED chip tints (design.md §3/§12)', () => {
-  // The quality/muhurat chips (Muhurat glance card §31) render
+  // The quality/muhurat chips (Muhurat glance card, Home Today strip §48) render
   // text on an rgba tint stacked over the cardActive gradient. The effective
   // surface is the alpha composite, which sits DARKER than the raw card surface —
   // `avoid` on `avoidChipBg` over the gradient's dark stop measured ~3.5:1, which

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
@@ -10,14 +10,14 @@ import { useMuhurat } from '@/panchang/useMuhurat';
 import { formatRangeCompact } from '@/panchang/muhuratFormat';
 import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
 import { contentByLang } from '@/utils/localize';
-import { pillTextStyle, scriptTitleFont, scriptBodyFont, eyebrowTextStyle } from '@/utils/langType';
+import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
 
 /**
  * Home "आज · Today" strip (design.md §48): a one-card daily-panchang glance —
- * vara + tithi headline, today's lead observance pill, and one quiet line with
- * the day's Abhijit / Rahu Kaal windows — so Home answers "what matters today",
- * not only "what can I read". Tapping anywhere opens the Panchang tab.
+ * vara + tithi headline plus one row of observance / Abhijit / Rahu Kaal chips —
+ * so Home answers "what matters today", not only "what can I read". Tapping
+ * anywhere opens the Panchang tab.
  *
  * Data comes from ONE solve: `useMuhurat` (cached, off the render path)
  * supplies both the muhurat windows and the day's PanchangData; observances
@@ -55,13 +55,20 @@ export default function TodayStrip() {
     fontSize: 10.5,
   });
 
-  // One lead observance pill at most — the full observance list lives on the
-  // Panchang tab this card opens. The former per-window pills read as a wall
-  // of caps; the windows now share one quiet dot-marked meta line instead.
-  const observance = observances[0];
-
-  type DayWindow = { key: string; labelHi: string; labelEn: string; range: string; dot: string };
-  const windows: DayWindow[] = [
+  // One normalized chip list — observances first, then the day's windows — so
+  // the pill spec exists once. Chip text colors are the DEEP cuts: the tint
+  // composites darker than the raw card surface (colors.contrast.test.ts pins
+  // avoidDeep/saffronDeep against the composited chip surfaces). Ranges are
+  // compact (shared meridiem written once) so the row needs less width.
+  type Chip = { key: string; labelHi: string; labelEn: string; range?: string; bg: string; fg: string };
+  const chips: Chip[] = [
+    ...observances.slice(0, 2).map((o) => ({
+      key: o.rule.id,
+      labelHi: o.rule.nameHi,
+      labelEn: o.rule.nameEn,
+      bg: colors.saffronTint,
+      fg: colors.saffronDeep,
+    })),
     ...(muhurat?.abhijit
       ? [
           {
@@ -69,7 +76,8 @@ export default function TodayStrip() {
             labelHi: 'अभिजीत',
             labelEn: 'Abhijit',
             range: formatRangeCompact(muhurat.abhijit.start, muhurat.abhijit.end),
-            dot: colors.gold,
+            bg: colors.goldChipBg,
+            fg: colors.saffronDeep,
           },
         ]
       : []),
@@ -82,19 +90,19 @@ export default function TodayStrip() {
             labelHi: muhurat.rahu.nameHi,
             labelEn: muhurat.rahu.nameEn,
             range: formatRangeCompact(muhurat.rahu.start, muhurat.rahu.end),
-            dot: colors.avoid,
+            bg: colors.avoidChipBg,
+            fg: colors.avoidDeep,
           },
         ]
       : []),
   ];
 
-  // Meta-line text: inkMuted clears AA on both gradient stops
-  // (colors.contrast.test.ts); numerals/ranges never in the thin italic (§3).
-  const windowLabelFont =
-    lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, fontFamilies.devanagari);
-
+  const a11yFest = observances
+    .slice(0, 2)
+    .map((o) => o.rule.nameEn)
+    .join(', ');
   const a11y = panchang
-    ? `Today's Panchang. ${panchang.vara.nameEn}, ${panchang.tithi.nameEn}.${observance ? ` ${observance.rule.nameEn}.` : ''} Tap to open.`
+    ? `Today's Panchang. ${panchang.vara.nameEn}, ${panchang.tithi.nameEn}.${a11yFest ? ` ${a11yFest}.` : ''} Tap to open.`
     : "Today's Panchang. Tap to open.";
 
   return (
@@ -142,34 +150,38 @@ export default function TodayStrip() {
       >
         {headline}
       </Text>
-      {(observance != null || windows.length > 0) && (
-        <View style={styles.metaRow}>
-          {observance != null && (
+      {chips.length > 0 && (
+        // ONE fixed-height chip row on every device: no wrapping into a tall
+        // stack on narrow screens — overflow scrolls horizontally instead
+        // (drags scroll; plain taps still bubble to the card Pressable, since
+        // a ScrollView only claims the responder on move). Full-bleed to the
+        // card edge so a clipped chip peeks and signals the scroll.
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.chipScroll}
+          contentContainerStyle={styles.chipRow}
+        >
+          {chips.map((chip) => (
             <View
-              style={[styles.chip, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}
+              key={chip.key}
+              style={[styles.chip, { backgroundColor: chip.bg, borderRadius: radii.pill }]}
             >
-              <Text numberOfLines={1} style={[chipText, { maxWidth: 200, color: colors.saffronDeep }]}>
-                {contentByLang(lang, observance.rule.nameHi, observance.rule.nameEn)}
-              </Text>
-            </View>
-          )}
-          {windows.map((w) => (
-            <View key={w.key} style={styles.window}>
-              <View style={[styles.dot, { backgroundColor: w.dot }]} />
-              <Text numberOfLines={1}>
-                <Text style={{ fontFamily: windowLabelFont, fontSize: 12, color: colors.inkMuted }}>
-                  {contentByLang(lang, w.labelHi, w.labelEn)}
+              <Text numberOfLines={1} style={{ maxWidth: 200 }}>
+                <Text style={[chipText, { color: chip.fg }]}>
+                  {contentByLang(lang, chip.labelHi, chip.labelEn)}
                 </Text>
-                <Text
-                  style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 12, color: colors.inkMuted }}
-                >
-                  {' '}
-                  {w.range}
-                </Text>
+                {chip.range != null && (
+                  // Time ranges never render in the thin italic face (design.md §3).
+                  <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 11, color: chip.fg }}>
+                    {'  '}
+                    {chip.range}
+                  </Text>
+                )}
               </Text>
             </View>
           ))}
-        </View>
+        </ScrollView>
       )}
     </Pressable>
   );
@@ -187,26 +199,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  metaRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    columnGap: 14,
-    rowGap: 6,
+  chipScroll: {
+    // Cancel the card's horizontal padding so chips run (and clip) at the card
+    // edge; the row re-pads its content to align the first chip with the text.
     marginTop: 9,
+    marginHorizontal: -14,
+  },
+  chipRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 14,
   },
   chip: {
     paddingHorizontal: 10,
     paddingVertical: 3,
-  },
-  window: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  dot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
   },
 });
