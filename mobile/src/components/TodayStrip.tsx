@@ -7,17 +7,17 @@ import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import { useMuhurat } from '@/panchang/useMuhurat';
-import { formatRange } from '@/panchang/muhuratFormat';
+import { formatRangeCompact } from '@/panchang/muhuratFormat';
 import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
 import { contentByLang } from '@/utils/localize';
-import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
+import { pillTextStyle, scriptTitleFont, scriptBodyFont, eyebrowTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
 
 /**
  * Home "आज · Today" strip (design.md §48): a one-card daily-panchang glance —
- * vara + tithi headline, today's observance chips, and the day's Abhijit /
- * Rahu Kaal windows — so Home answers "what matters today", not only "what can
- * I read". Tapping anywhere opens the Panchang tab.
+ * vara + tithi headline, today's lead observance pill, and one quiet line with
+ * the day's Abhijit / Rahu Kaal windows — so Home answers "what matters today",
+ * not only "what can I read". Tapping anywhere opens the Panchang tab.
  *
  * Data comes from ONE solve: `useMuhurat` (cached, off the render path)
  * supplies both the muhurat windows and the day's PanchangData; observances
@@ -55,28 +55,21 @@ export default function TodayStrip() {
     fontSize: 10.5,
   });
 
-  // One normalized chip list — observances first, then the day's windows — so
-  // the pill spec exists once. Chip text colors are the DEEP cuts: the tint
-  // composites darker than the raw card surface (colors.contrast.test.ts pins
-  // avoidDeep/saffronDeep against the composited chip surfaces).
-  type Chip = { key: string; labelHi: string; labelEn: string; range?: string; bg: string; fg: string };
-  const chips: Chip[] = [
-    ...observances.slice(0, 2).map((o) => ({
-      key: o.rule.id,
-      labelHi: o.rule.nameHi,
-      labelEn: o.rule.nameEn,
-      bg: colors.saffronTint,
-      fg: colors.saffronDeep,
-    })),
+  // One lead observance pill at most — the full observance list lives on the
+  // Panchang tab this card opens. The former per-window pills read as a wall
+  // of caps; the windows now share one quiet dot-marked meta line instead.
+  const observance = observances[0];
+
+  type DayWindow = { key: string; labelHi: string; labelEn: string; range: string; dot: string };
+  const windows: DayWindow[] = [
     ...(muhurat?.abhijit
       ? [
           {
             key: 'abhijit',
             labelHi: 'अभिजीत',
             labelEn: 'Abhijit',
-            range: formatRange(muhurat.abhijit.start, muhurat.abhijit.end),
-            bg: colors.goldChipBg,
-            fg: colors.saffronDeep,
+            range: formatRangeCompact(muhurat.abhijit.start, muhurat.abhijit.end),
+            dot: colors.gold,
           },
         ]
       : []),
@@ -88,20 +81,20 @@ export default function TodayStrip() {
             key: muhurat.rahu.key,
             labelHi: muhurat.rahu.nameHi,
             labelEn: muhurat.rahu.nameEn,
-            range: formatRange(muhurat.rahu.start, muhurat.rahu.end),
-            bg: colors.avoidChipBg,
-            fg: colors.avoidDeep,
+            range: formatRangeCompact(muhurat.rahu.start, muhurat.rahu.end),
+            dot: colors.avoid,
           },
         ]
       : []),
   ];
 
-  const a11yFest = observances
-    .slice(0, 2)
-    .map((o) => o.rule.nameEn)
-    .join(', ');
+  // Meta-line text: inkMuted clears AA on both gradient stops
+  // (colors.contrast.test.ts); numerals/ranges never in the thin italic (§3).
+  const windowLabelFont =
+    lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, fontFamilies.devanagari);
+
   const a11y = panchang
-    ? `Today's Panchang. ${panchang.vara.nameEn}, ${panchang.tithi.nameEn}.${a11yFest ? ` ${a11yFest}.` : ''} Tap to open.`
+    ? `Today's Panchang. ${panchang.vara.nameEn}, ${panchang.tithi.nameEn}.${observance ? ` ${observance.rule.nameEn}.` : ''} Tap to open.`
     : "Today's Panchang. Tap to open.";
 
   return (
@@ -149,27 +142,35 @@ export default function TodayStrip() {
       >
         {headline}
       </Text>
-      <View style={styles.chipRow}>
-        {chips.map((chip) => (
-          <View
-            key={chip.key}
-            style={[styles.chip, { backgroundColor: chip.bg, borderRadius: radii.pill }]}
-          >
-            <Text numberOfLines={1} style={{ maxWidth: 200 }}>
-              <Text style={[chipText, { color: chip.fg }]}>
-                {contentByLang(lang, chip.labelHi, chip.labelEn)}
+      {(observance != null || windows.length > 0) && (
+        <View style={styles.metaRow}>
+          {observance != null && (
+            <View
+              style={[styles.chip, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}
+            >
+              <Text numberOfLines={1} style={[chipText, { maxWidth: 200, color: colors.saffronDeep }]}>
+                {contentByLang(lang, observance.rule.nameHi, observance.rule.nameEn)}
               </Text>
-              {chip.range != null && (
-                // Time ranges never render in the thin italic face (design.md §3).
-                <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 11, color: chip.fg }}>
-                  {'  '}
-                  {chip.range}
+            </View>
+          )}
+          {windows.map((w) => (
+            <View key={w.key} style={styles.window}>
+              <View style={[styles.dot, { backgroundColor: w.dot }]} />
+              <Text numberOfLines={1}>
+                <Text style={{ fontFamily: windowLabelFont, fontSize: 12, color: colors.inkMuted }}>
+                  {contentByLang(lang, w.labelHi, w.labelEn)}
                 </Text>
-              )}
-            </Text>
-          </View>
-        ))}
-      </View>
+                <Text
+                  style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 12, color: colors.inkMuted }}
+                >
+                  {' '}
+                  {w.range}
+                </Text>
+              </Text>
+            </View>
+          ))}
+        </View>
+      )}
     </Pressable>
   );
 }
@@ -186,14 +187,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  chipRow: {
+  metaRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 6,
+    alignItems: 'center',
+    columnGap: 14,
+    rowGap: 6,
     marginTop: 9,
   },
   chip: {
     paddingHorizontal: 10,
     paddingVertical: 3,
+  },
+  window: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
   },
 });

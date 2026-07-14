@@ -95,7 +95,7 @@ describe('TodayStrip', () => {
     expect(text).toContain('शनिवार · शुक्ल एकादशी');
   });
 
-  it('renders observance and muhurat chips with time ranges', () => {
+  it('renders the observance pill and the muhurat windows line with time ranges', () => {
     mockObservances = [
       { date: new Date(), rule: { id: 'yogini-ekadashi', nameHi: 'योगिनी एकादशी', nameEn: 'Yogini Ekadashi' } },
     ];
@@ -104,8 +104,21 @@ describe('TodayStrip', () => {
     expect(text).toContain('योगिनी एकादशी');
     expect(text).toContain('अभिजीत');
     expect(text).toContain('राहु काल');
-    expect(text).toMatch(/11:17/);
-    expect(text).toMatch(/9:00/);
+    // Cross-noon window keeps both meridiems; same-meridiem window compacts
+    // to a single trailing AM/PM (formatRangeCompact).
+    expect(text).toContain('11:17 AM – 12:05 PM');
+    expect(text).toContain('9:00 – 10:39 AM');
+  });
+
+  it('shows only the lead observance when several fall on the same day', () => {
+    mockObservances = [
+      { date: new Date(), rule: { id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat' } },
+      { date: new Date(), rule: { id: 'somvati', nameHi: 'सोमवती अमावस्या', nameEn: 'Somvati Amavasya' } },
+    ];
+    mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
+    const text = textOf(render());
+    expect(text).toContain('अमावस्या व्रत');
+    expect(text).not.toContain('सोमवती');
   });
 
   it('requests the static (live: false) muhurat read — no per-minute tick', () => {
