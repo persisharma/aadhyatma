@@ -40,29 +40,51 @@ function useObservanceStoreVersion(): number {
   return version;
 }
 
-export function usePanchangCalendarSystem(): [CalendarSystem, (next: CalendarSystem) => void] {
-  const [calendarSystem, setCalendarSystemState] = useState<CalendarSystem>('purnimant');
+// The calendar system is a small module-level store, not per-instance state:
+// it is read by hooks on several always-mounted screens at once (the Panchang
+// tab AND the Home Today strip), so a change made on one screen must propagate
+// to every mounted instance immediately — per-instance useState hydrated once
+// from AsyncStorage left the Home strip on a stale system for the whole session.
+let calendarSystemValue: CalendarSystem = 'purnimant';
+const calendarSystemListeners = new Set<(next: CalendarSystem) => void>();
+let calendarSystemHydration: Promise<void> | null = null;
 
-  useEffect(() => {
-    let cancelled = false;
-    AsyncStorage.getItem(CALENDAR_SYSTEM_STORAGE_KEY)
+function hydrateCalendarSystemOnce(): Promise<void> {
+  if (!calendarSystemHydration) {
+    calendarSystemHydration = AsyncStorage.getItem(CALENDAR_SYSTEM_STORAGE_KEY)
       .then((stored) => {
-        if (!cancelled && isCalendarSystem(stored)) {
-          setCalendarSystemState(stored);
+        if (isCalendarSystem(stored) && stored !== calendarSystemValue) {
+          calendarSystemValue = stored;
+          calendarSystemListeners.forEach((listener) => listener(stored));
         }
       })
       .catch(() => undefined);
+  }
+  return calendarSystemHydration;
+}
+
+function setCalendarSystemGlobal(next: CalendarSystem): void {
+  if (next === calendarSystemValue) return;
+  calendarSystemValue = next;
+  calendarSystemListeners.forEach((listener) => listener(next));
+  AsyncStorage.setItem(CALENDAR_SYSTEM_STORAGE_KEY, next).catch(() => undefined);
+}
+
+export function usePanchangCalendarSystem(): [CalendarSystem, (next: CalendarSystem) => void] {
+  const [calendarSystem, setCalendarSystemState] = useState<CalendarSystem>(calendarSystemValue);
+
+  useEffect(() => {
+    const listener = (next: CalendarSystem) => setCalendarSystemState(next);
+    calendarSystemListeners.add(listener);
+    // Re-sync in case the store changed between render and subscribe.
+    setCalendarSystemState(calendarSystemValue);
+    hydrateCalendarSystemOnce();
     return () => {
-      cancelled = true;
+      calendarSystemListeners.delete(listener);
     };
   }, []);
 
-  const setCalendarSystem = (next: CalendarSystem) => {
-    setCalendarSystemState(next);
-    AsyncStorage.setItem(CALENDAR_SYSTEM_STORAGE_KEY, next).catch(() => undefined);
-  };
-
-  return [calendarSystem, setCalendarSystem];
+  return [calendarSystem, setCalendarSystemGlobal];
 }
 
 export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): UsePanchangResult {
@@ -98,6 +120,39 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
   return { today, upcoming };
 }
 
+/**
+ * Just the day's observances, resolved off the render path. Split out of
+ * `usePanchangForSelection` so lightweight consumers (the Home Today strip)
+ * don't also pay for the upcoming-window resolution they never render.
+ */
+export function useObservancesForDate(
+  date: Date,
+  calendarSystem: CalendarSystem
+): ResolvedObservance[] {
+  const dateMs = date.getTime();
+  const { location } = usePanchangLocation();
+  const cityId = location.cityId;
+  const storeVersion = useObservanceStoreVersion();
+
+  const [observances, setObservances] = useState<ResolvedObservance[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    const selected = new Date(dateMs);
+    setObservances([]);
+    const handle = setTimeout(() => {
+      const result = getObservancesForDate(selected, calendarSystem, location);
+      if (!cancelled) setObservances(result);
+    }, 0);
+    return () => {
+      cancelled = true;
+      clearTimeout(handle);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateMs, calendarSystem, cityId, storeVersion]);
+
+  return observances;
+}
+
 export function usePanchangForSelection(
   date: Date,
   calendarSystem: CalendarSystem
@@ -128,21 +183,7 @@ export function usePanchangForSelection(
   }, [dateMs, calendarSystem, cityId]);
 
   // Observances for the selected day, resolved off the render path as well.
-  const [observances, setObservances] = useState<ResolvedObservance[]>([]);
-  useEffect(() => {
-    let cancelled = false;
-    const selected = new Date(dateMs);
-    setObservances([]);
-    const handle = setTimeout(() => {
-      const result = getObservancesForDate(selected, calendarSystem, location);
-      if (!cancelled) setObservances(result);
-    }, 0);
-    return () => {
-      cancelled = true;
-      clearTimeout(handle);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateMs, calendarSystem, cityId, storeVersion]);
+  const observances = useObservancesForDate(date, calendarSystem);
 
   const [upcoming, setUpcoming] = useState<ResolvedObservance[]>([]);
   useEffect(() => {

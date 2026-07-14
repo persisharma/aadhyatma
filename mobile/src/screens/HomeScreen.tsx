@@ -67,7 +67,7 @@ export default function HomeScreen({ navigation }: Props) {
     nameHi: string;
     nameEn: string;
     shortNameEn?: string;
-    status: 'active';
+    status: 'active' | 'coming';
     icon?: React.ReactNode;
     onPress: () => void;
     hasNew?: boolean;
@@ -83,9 +83,9 @@ export default function HomeScreen({ navigation }: Props) {
       nameHi: c.nameHi,
       nameEn: c.nameEn,
       shortNameEn: c.shortNameEn,
-      status: 'active' as const,
+      status: c.status,
       icon: categoryIcons[c.id],
-      hasNew: hasNewInCategory(c.id),
+      hasNew: c.status === 'active' ? hasNewInCategory(c.id) : undefined,
       onPress: () =>
         c.id === 'theerth'
           ? navigation.navigate('TheerthMap', {})
@@ -102,6 +102,10 @@ export default function HomeScreen({ navigation }: Props) {
         rootNav.navigate('PanchangTab', {
           screen: 'ObservanceList',
           params: { category: 'vrat' },
+          // Without this, a lazily-mounted Panchang tab would take
+          // ObservanceList as its *initial* route, making the calendar
+          // (PanchangHome) unreachable for the session.
+          initial: false,
         }),
     },
     {
@@ -146,25 +150,9 @@ export default function HomeScreen({ navigation }: Props) {
       icon: <CategoryIcon iconKey="stotram" />,
       onPress: () => rootNav.navigate('DailyBhaktiTab'),
     },
-    {
-      key: 'panchang',
-      titleHi: 'आज का पंचांग', titleEn: "Today's Panchang",
-      descHi: 'तिथि, नक्षत्र और व्रत-पर्व एक ही नज़र में।',
-      descEn: 'Tithi, nakshatra and festivals at a glance.',
-      ctaHi: 'देखें', ctaEn: 'View',
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.saffronDeep,
-          }}
-        >
-          पं
-        </Text>
-      ),
-      onPress: () => rootNav.navigate('PanchangTab'),
-    },
+    // NOTE: no Panchang spotlight here — the Today strip (§48) owns that
+    // surface now; a second card produced two "Today's Panchang." buttons for
+    // screen readers.
     {
       key: 'sankalp',
       titleHi: 'संकल्प', titleEn: 'Sadhana Programs',
@@ -241,8 +229,9 @@ export default function HomeScreen({ navigation }: Props) {
             CATEGORIES
           </Text>
 
-          <View style={[styles.grid, { gap: gridGap }]}>
-            {tiles.map((tile, i) => (
+          {/* categoriesGrid tour target rings the whole grid, not one tile. */}
+          <View style={[styles.grid, { gap: gridGap }]} ref={categoriesGridRef} collapsable={false}>
+            {tiles.map((tile) => (
               <View
                 key={tile.key}
                 style={{ width: tileWidth }}
@@ -251,13 +240,9 @@ export default function HomeScreen({ navigation }: Props) {
                     ? japaTileRef
                     : tile.key === 'theerth'
                       ? theerthTileRef
-                      : i === 0
-                        ? categoriesGridRef
-                        : undefined
+                      : undefined
                 }
-                collapsable={
-                  tile.key === 'japam' || tile.key === 'theerth' || i === 0 ? false : undefined
-                }
+                collapsable={tile.key === 'japam' || tile.key === 'theerth' ? false : undefined}
               >
                 <CategoryCard
                   nameHi={tile.nameHi}

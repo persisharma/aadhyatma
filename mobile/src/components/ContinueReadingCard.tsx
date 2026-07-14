@@ -6,10 +6,12 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
-import { library } from '@/data/texts';
+import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
+import { library, type LibraryEntry } from '@/data/texts';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
-import { buildProgressTarget } from '@/navigation/entryRoutes';
-import { latestReadingProgress } from '@/utils/latestProgress';
+import { buildProgressTarget, navigateToProgress } from '@/navigation/entryRoutes';
+import { readingProgressByRecency } from '@/utils/latestProgress';
+import { formatLocation } from '@/utils/formatLocation';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont } from '@/utils/langType';
@@ -17,10 +19,13 @@ import type { HomeStackParamList } from '@/navigation/types';
 
 /**
  * Home "Continue reading" card (design.md §49): surfaces the most recent
- * reading position so the daily loop starts from Home, not from re-finding the
- * text inside its category. Hidden until some progress exists. Routing reuses
- * the same table as bookmarks/notification deep links (`buildProgressTarget`),
- * so the card can never drift from what the readers accept.
+ * *resumable* reading position so the daily loop starts from Home. Walks the
+ * progress entries newest-first and shows the first one whose source is still
+ * active/visible and routable — a hidden or retired source falls through to
+ * the next entry instead of blanking the card. Navigation goes through
+ * `navigateToProgress` — the same path as the resume sheets — so chaptered
+ * sources get the chapters screen pushed under the reader (back lands on the
+ * chapter list, not Home).
  */
 export default function ContinueReadingCard() {
   const { colors, typography, radii } = useTheme();
@@ -28,13 +33,23 @@ export default function ContinueReadingCard() {
   const { progress, isLoading } = useReadingProgress();
   const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
-  const latest = React.useMemo(() => latestReadingProgress(progress), [progress]);
-  if (isLoading || !latest) return null;
+  const resumable = React.useMemo(() => {
+    let found: { latest: ReadingProgress; entry: LibraryEntry } | null = null;
+    for (const candidate of readingProgressByRecency(progress)) {
+      const sourceId = canonicalSourceId(candidate.sourceId);
+      const entry = library.find((e) => e.id === sourceId && e.status === 'active' && !e.hidden);
+      // theerth is excluded: its progress target is the map, not a reader, and
+      // navigateToProgress (deliberately) has no theerth branch.
+      if (entry && entry.category !== 'theerth' && buildProgressTarget(candidate)) {
+        found = { latest: candidate, entry };
+        break;
+      }
+    }
+    return found;
+  }, [progress]);
 
-  const sourceId = canonicalSourceId(latest.sourceId);
-  const entry = library.find((e) => e.id === sourceId && e.status === 'active' && !e.hidden);
-  const target = buildProgressTarget(latest);
-  if (!entry || !target) return null;
+  if (isLoading || !resumable) return null;
+  const { latest, entry } = resumable;
 
   const { primary } = orderTitlesByLanguage(lang, entry.nameHi, entry.nameEn, {
     devPrimary: 15,
@@ -43,20 +58,14 @@ export default function ContinueReadingCard() {
     latSecondary: 12,
   });
 
-  const verseNo = latest.verseIndex + 1;
-  const positionHi =
-    latest.chapter != null ? `अध्याय ${latest.chapter} · श्लोक ${verseNo}` : `श्लोक ${verseNo}`;
-  const positionEn =
-    latest.chapter != null ? `Chapter ${latest.chapter} · Verse ${verseNo}` : `Verse ${verseNo}`;
+  // Per-source unit words (Sarga/Kanda/Stotram/पद …) come from the shared
+  // formatLocation helper — same labels as the resume sheets.
+  const position = formatLocation(latest);
+  const positionEn = position.en;
 
   return (
     <Pressable
-      onPress={() =>
-        (navigation.navigate as (name: keyof HomeStackParamList, params: object) => void)(
-          target.screen,
-          target.params
-        )
-      }
+      onPress={() => navigateToProgress(navigation, latest)}
       style={({ pressed }) => [
         styles.card,
         {
@@ -114,7 +123,7 @@ export default function ContinueReadingCard() {
                 : scriptBodyFont(lang, fontFamilies.devanagari),
           }}
         >
-          {contentByLang(lang, positionHi, positionEn)}
+          {contentByLang(lang, position.hi, position.en)}
         </Text>
       </View>
       <View style={[styles.cta, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>

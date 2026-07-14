@@ -34,7 +34,7 @@ export default function CategoryCard({
   variant = 'card',
   displayNameEn,
 }: Props) {
-  const { colors, radii } = useTheme();
+  const { colors, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const isActive = status === 'active';
   const isLauncher = variant === 'launcher';
@@ -53,7 +53,64 @@ export default function CategoryCard({
       : { devPrimary: 16, devSecondary: 12, latPrimary: 17, latSecondary: 12 }
   );
 
-  if (isLauncher && isActive) {
+  if (isLauncher) {
+    const launcherLabel = (
+      <Text
+        numberOfLines={1}
+        style={[
+          styles.launcherName,
+          {
+            color: colors.ink,
+            fontFamily: primary.fontFamily,
+            fontSize: primary.fontSize,
+            fontStyle: primary.fontStyle,
+            letterSpacing: primary.letterSpacing,
+          },
+        ]}
+      >
+        {primary.text}
+      </Text>
+    );
+
+    if (!isActive) {
+      return (
+        <View
+          style={styles.launcher}
+          accessibilityRole="button"
+          accessibilityState={{ disabled: true }}
+          accessibilityLabel={`${nameEn}. Coming soon.`}
+        >
+          <View
+            style={[
+              styles.launcherTile,
+              styles.launcherTileComing,
+              {
+                borderRadius: radii.lg,
+                backgroundColor: colors.cardSurface,
+                borderColor: colors.divider,
+                borderWidth: 1,
+              },
+              elevation.card,
+            ]}
+          >
+            {icon}
+            <View
+              style={[
+                styles.badge,
+                styles.launcherBadge,
+                { backgroundColor: colors.goldTint, borderRadius: radii.pill },
+              ]}
+            >
+              <Text style={[styles.badgeText, { color: colors.inkMuted, letterSpacing: 1.6 }]}>
+                SOON
+              </Text>
+            </View>
+          </View>
+          {launcherLabel}
+        </View>
+      );
+    }
+
     return (
       <Pressable
         onPress={onPress}
@@ -65,22 +122,22 @@ export default function CategoryCard({
           style={[
             styles.launcherTile,
             {
-              borderRadius: 16,
+              borderRadius: radii.lg,
               borderColor: colors.cardActiveBorder,
               borderWidth: 1,
-              shadowColor: '#3C1E0A',
-              shadowOpacity: 0.12,
-              shadowRadius: 10,
-              shadowOffset: { width: 0, height: 3 },
-              elevation: 3,
+              // Opaque base so the Android shadow renders; the gradient carries
+              // its own radius instead of overflow:'hidden', which would clip
+              // the iOS shadow (design.md §4).
+              backgroundColor: colors.cardActiveFrom,
             },
+            elevation.card,
           ]}
         >
           <LinearGradient
             colors={[colors.cardActiveFrom, colors.cardActiveTo]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
-            style={[styles.cardBg, { borderRadius: 16 }]}
+            style={[styles.cardBg, { borderRadius: radii.lg }]}
           />
           {icon}
           {hasNew && (
@@ -98,21 +155,7 @@ export default function CategoryCard({
             </View>
           )}
         </View>
-        <Text
-          numberOfLines={1}
-          style={[
-            styles.launcherName,
-            {
-              color: colors.ink,
-              fontFamily: primary.fontFamily,
-              fontSize: primary.fontSize,
-              fontStyle: primary.fontStyle,
-              letterSpacing: primary.letterSpacing,
-            },
-          ]}
-        >
-          {primary.text}
-        </Text>
+        {launcherLabel}
       </Pressable>
     );
   }
@@ -248,7 +291,9 @@ const styles = StyleSheet.create({
     height: 72,
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'hidden',
+  },
+  launcherTileComing: {
+    opacity: 0.55,
   },
   launcherName: {
     marginTop: 6,

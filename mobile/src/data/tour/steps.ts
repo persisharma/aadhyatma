@@ -144,8 +144,8 @@ export const tourSteps: readonly TourStep[] = [
     pointer: 'none',
     titleHi: 'श्रेणियाँ',
     titleEn: 'Categories',
-    bodyHi: 'ग्रन्थ, स्तोत्रम्, चालीसा, आरती, संस्कार — हर पाठ श्रेणी के अनुसार।',
-    bodyEn: 'Granth, stotram, chalisa, aarti, sanskar — every text grouped by category.',
+    bodyHi: 'ग्रन्थ, स्तोत्रम्, चालीसा, जप, आरती, तीर्थ, संस्कार, व्रत और देवता — नौ द्वार, हर पाठ श्रेणी के अनुसार।',
+    bodyEn: 'Granth, stotram, chalisa, japa, aarti, theerth, sanskar, vrat and deities — nine doors, every text grouped by category.',
   },
   {
     id: 'japa',

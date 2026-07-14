@@ -1,4 +1,4 @@
-import { latestReadingProgress } from '../latestProgress';
+import { latestReadingProgress, readingProgressByRecency } from '../latestProgress';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 
 const entry = (sourceId: string, updatedAt: number, chapter?: number): ReadingProgress => ({
@@ -30,5 +30,24 @@ describe('latestReadingProgress', () => {
     const latest = latestReadingProgress(progress);
     expect(latest?.chapter).toBe(12);
     expect(latest?.updatedAt).toBe(500);
+  });
+});
+
+describe('readingProgressByRecency', () => {
+  test('returns entries newest-first (fallback order for the Home card)', () => {
+    const progress = {
+      'bhagavad-gita::2': entry('bhagavad-gita', 100, 2),
+      'hanuman-chalisa': entry('hanuman-chalisa', 300),
+      'sundarkand::1': entry('sundarkand', 200, 1),
+    };
+    expect(readingProgressByRecency(progress).map((e) => e.sourceId)).toEqual([
+      'hanuman-chalisa',
+      'sundarkand',
+      'bhagavad-gita',
+    ]);
+  });
+
+  test('returns an empty array for an empty map', () => {
+    expect(readingProgressByRecency({})).toEqual([]);
   });
 });

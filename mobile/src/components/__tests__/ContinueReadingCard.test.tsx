@@ -44,6 +44,13 @@ function textOf(tree: TestRenderer.ReactTestRenderer): string {
     .join(' ');
 }
 
+function pressCard(tree: TestRenderer.ReactTestRenderer): void {
+  const button = tree.root.findAll(
+    (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
+  )[0];
+  act(() => button.props.onPress());
+}
+
 beforeEach(() => {
   mockLang = 'hi';
   mockNavigate.mockClear();
@@ -66,7 +73,7 @@ describe('ContinueReadingCard', () => {
     expect(render().toJSON()).toBeNull();
   });
 
-  it('shows the latest entry with its position and resumes via the shared routing table', () => {
+  it('shows the latest entry with formatLocation wording and resumes it', () => {
     mockProgress = {
       progress: {
         'hanuman-chalisa': { sourceId: 'hanuman-chalisa', verseIndex: 4, updatedAt: 100 },
@@ -77,19 +84,16 @@ describe('ContinueReadingCard', () => {
     const text = textOf(tree);
     expect(text).toContain('जारी रखें');
     expect(text).toContain('हनुमान चालीसा');
-    expect(text).toContain('श्लोक 5'); // verseIndex 4 → verse #5
+    expect(text).toContain('पद 5'); // formatLocation: chalisas use पद, verseIndex 4 → 5
 
-    const button = tree.root.findAll(
-      (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
-    )[0];
-    act(() => button.props.onPress());
+    pressCard(tree);
     expect(mockNavigate).toHaveBeenCalledWith('ChalisaReader', {
       initialIndex: 4,
       chalisaId: 'hanuman-chalisa',
     });
   });
 
-  it('routes chaptered sources through the chapter reader', () => {
+  it('resumes chaptered sources via navigateToProgress — chapters screen pushed under the reader', () => {
     mockProgress = {
       progress: {
         'bhagavad-gita::12': {
@@ -103,14 +107,28 @@ describe('ContinueReadingCard', () => {
     };
     const tree = render();
     expect(textOf(tree)).toContain('अध्याय 12');
-    const button = tree.root.findAll(
-      (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
-    )[0];
-    act(() => button.props.onPress());
-    expect(mockNavigate).toHaveBeenCalledWith('GitaReader', { chapter: 12, initialIndex: 3 });
+    pressCard(tree);
+    // Same back-stack contract as the resume sheets: chapter index first, then the reader.
+    expect(mockNavigate).toHaveBeenNthCalledWith(1, 'GitaChapters');
+    expect(mockNavigate).toHaveBeenNthCalledWith(2, 'GitaReader', {
+      chapter: 12,
+      initialIndex: 3,
+    });
   });
 
-  it('renders nothing for an unroutable source', () => {
+  it('falls back to the next-most-recent routable entry when the latest is unroutable', () => {
+    mockProgress = {
+      progress: {
+        'unknown-source': { sourceId: 'unknown-source', verseIndex: 0, updatedAt: 900 },
+        'hanuman-chalisa': { sourceId: 'hanuman-chalisa', verseIndex: 2, updatedAt: 100 },
+      },
+      isLoading: false,
+    };
+    const tree = render();
+    expect(textOf(tree)).toContain('हनुमान चालीसा');
+  });
+
+  it('renders nothing when no entry is routable', () => {
     mockProgress = {
       progress: {
         'unknown-source': { sourceId: 'unknown-source', verseIndex: 0, updatedAt: 100 },

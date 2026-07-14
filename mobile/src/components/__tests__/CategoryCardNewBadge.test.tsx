@@ -95,6 +95,25 @@ describe('CategoryCard launcher variant', () => {
     expect(text).toMatch(/NEW/);
   });
 
+  test("a 'coming' launcher tile renders the compact SOON tile, not the 2-column card", () => {
+    const tree = render(
+      <CategoryCard
+        nameHi="आगामी"
+        nameEn="Coming Soon"
+        status="coming"
+        hasNew
+        variant="launcher"
+      />
+    );
+    const text = textOf(tree);
+    expect(text).toMatch(/SOON/);
+    expect(text).not.toMatch(/NEW/);
+    const disabled = tree.root.findAll(
+      (n) => n.props?.accessibilityState?.disabled === true
+    );
+    expect(disabled.length).toBeGreaterThan(0);
+  });
+
   test('accessibility label carries the FULL English name, not the short display name', () => {
     // Maestro smokes tap tiles by their full label ("Hymns & Praise. Tap to
     // open.") — the short launcher name must never leak into accessibility.

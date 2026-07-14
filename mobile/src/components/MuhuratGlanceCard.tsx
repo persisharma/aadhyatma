@@ -28,6 +28,12 @@ export default function MuhuratGlanceCard({
   const { lang } = useGitaLanguage();
   const { isToday, nowChoghadiya, muhurat } = useMuhurat(date, calendarSystem);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
+  // cardLatin (Cormorant) has no Indic glyphs, and Latin tracking splits the
+  // shirorekha — the eyebrow/micro-labels swap to the script serif for hi/gu/kn
+  // (design.md §3, same rule as pillTextStyle).
+  const eyebrowFont =
+    lang === 'en' ? typography.cardLatin.fontFamily : scriptTitleFont(lang, fontFamilies.devanagariBold);
+  const eyebrowTracking = lang === 'en' ? 0.4 : 0;
 
   // The solve runs off the render path (and only the first time per day — it is
   // memoised in useMuhurat). Until it lands we render a skeleton that reserves
@@ -43,7 +49,7 @@ export default function MuhuratGlanceCard({
         accessibilityRole="progressbar"
         accessibilityLabel={contentByLang(lang, 'मुहूर्त लोड हो रहा है', 'Loading timings')}
       >
-        <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.saffronDeep, letterSpacing: 0.4 }}>
+        <Text style={{ fontFamily: eyebrowFont, fontSize: 12, color: colors.saffronDeep, letterSpacing: eyebrowTracking }}>
           {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
         </Text>
         <View style={styles.nowRow}>
@@ -77,7 +83,7 @@ export default function MuhuratGlanceCard({
       colors={[colors.cardActiveFrom, colors.cardActiveTo]}
       style={[styles.card, { borderColor: colors.cardActiveBorder, borderRadius: radii.lg, padding: spacing.lg }, elevation.raised]}
     >
-      <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12, color: colors.saffronDeep, letterSpacing: 0.4 }}>
+      <Text style={{ fontFamily: eyebrowFont, fontSize: 12, color: colors.saffronDeep, letterSpacing: eyebrowTracking }}>
         {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
       </Text>
 
@@ -90,7 +96,15 @@ export default function MuhuratGlanceCard({
           ]}
         />
         <View style={{ flex: 1 }}>
-          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 9, letterSpacing: 0.6, textTransform: 'uppercase', color: colors.inkMuted }}>
+          <Text
+            style={{
+              fontFamily: eyebrowFont,
+              fontSize: 9,
+              letterSpacing: lang === 'en' ? 0.6 : 0,
+              textTransform: lang === 'en' ? 'uppercase' : 'none',
+              color: colors.inkMuted,
+            }}
+          >
             {showNow ? contentByLang(lang, 'अभी', 'Now') : contentByLang(lang, 'शुभ मुहूर्त', 'Auspicious')}
           </Text>
           <Text style={{ fontFamily: titleFont, fontSize: 20, color: colors.ink }}>

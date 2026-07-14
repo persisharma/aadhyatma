@@ -5,9 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
-import { usePanchangCalendarSystem, usePanchangForSelection } from '@/panchang/usePanchang';
+import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { formatRange } from '@/panchang/muhuratFormat';
+import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, scriptTitleFont } from '@/utils/langType';
 
@@ -15,12 +16,15 @@ import { pillTextStyle, scriptTitleFont } from '@/utils/langType';
  * Home "आज · Today" strip (design.md §48): a one-card daily-panchang glance —
  * vara + tithi headline, today's observance chips, and the day's Abhijit /
  * Rahu Kaal windows — so Home answers "what matters today", not only "what can
- * I read". Tapping anywhere opens the Panchang tab. A thin view over the
- * existing engines (`usePanchangForSelection`, `useMuhurat`); both solve off
- * the render path, so the card paints immediately and fills in a frame later.
+ * I read". Tapping anywhere opens the Panchang tab.
+ *
+ * Data comes from ONE solve: `useMuhurat` (cached, off the render path)
+ * supplies both the muhurat windows and the day's PanchangData; observances
+ * ride the lighter `useObservancesForDate`. `live: false` skips the per-minute
+ * tick — the strip renders only static day windows.
  */
 export default function TodayStrip() {
-  const { colors, typography, radii } = useTheme();
+  const { colors, typography, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   // Sibling tab — navigate via the parent so the action bubbles up (same
   // pattern as RoutineBanner / the Panchang spotlight card).
@@ -29,19 +33,48 @@ export default function TodayStrip() {
 
   const todayKey = new Date().toDateString();
   const today = React.useMemo(() => new Date(todayKey), [todayKey]);
-  const { panchang, observances } = usePanchangForSelection(today, calendarSystem);
-  const { muhurat } = useMuhurat(today, calendarSystem);
+  const observances = useObservancesForDate(today, calendarSystem);
+  const { muhurat, panchang } = useMuhurat(today, calendarSystem, { live: false });
 
-  const headlineFont = lang === 'en' ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold);
+  const headlineFont =
+    lang === 'en' ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold);
   const headline = panchang
     ? contentByLang(
         lang,
-        `${panchang.vara.nameHi} · ${panchang.tithi.paksha === 'shukla' ? 'शुक्ल' : 'कृष्ण'} ${panchang.tithi.nameHi}`,
-        `${panchang.vara.nameEn} · ${panchang.tithi.nameEn} (${panchang.tithi.paksha === 'shukla' ? 'Shukla' : 'Krishna'})`
+        `${panchang.vara.nameHi} · ${PAKSHA_NAMES_HI[panchang.tithi.paksha]} ${panchang.tithi.nameHi}`,
+        `${panchang.vara.nameEn} · ${panchang.tithi.nameEn} (${PAKSHA_NAMES_EN[panchang.tithi.paksha]})`
       )
     : '—';
 
   const festChips = observances.slice(0, 2);
+
+  const chipText = pillTextStyle(lang, {
+    ...typography.versePill,
+    letterSpacing: 0.8,
+    fontSize: 10.5,
+  });
+
+  // Time ranges never render in the thin italic face (design.md §3).
+  const muhuratChips = muhurat
+    ? [
+        muhurat.abhijit && {
+          key: 'abhijit',
+          labelHi: 'अभिजीत',
+          labelEn: 'Abhijit',
+          range: formatRange(muhurat.abhijit.start, muhurat.abhijit.end),
+          bg: colors.goldChipBg,
+          fg: colors.saffronDeep,
+        },
+        {
+          key: 'rahu',
+          labelHi: 'राहु काल',
+          labelEn: 'Rahu Kaal',
+          range: formatRange(muhurat.rahu.start, muhurat.rahu.end),
+          bg: colors.avoidChipBg,
+          fg: colors.avoid,
+        },
+      ].filter((c): c is NonNullable<typeof c> => Boolean(c))
+    : [];
 
   const a11yFest = festChips.map((o) => o.rule.nameEn).join(', ');
   const a11y = panchang
@@ -53,9 +86,14 @@ export default function TodayStrip() {
       onPress={() => rootNav.navigate('PanchangTab')}
       style={({ pressed }) => [
         styles.card,
+        elevation.raised,
         {
           borderRadius: radii.lg,
           borderColor: colors.cardActiveBorder,
+          // Opaque base so the Android elevation shadow renders (design.md §4);
+          // no overflow:'hidden' — it would clip the iOS shadow — the gradient
+          // carries its own matching radius instead.
+          backgroundColor: colors.cardActiveFrom,
         },
         pressed && { opacity: 0.85 },
       ]}
@@ -71,15 +109,20 @@ export default function TodayStrip() {
       <View style={styles.headRow}>
         <Text
           style={{
-            fontFamily: typography.cardLatin.fontFamily,
+            // cardLatin (Cormorant) has no Indic glyphs, and Latin tracking
+            // splits the shirorekha — script serif for hi/gu/kn (design.md §3).
+            fontFamily:
+              lang === 'en'
+                ? typography.cardLatin.fontFamily
+                : scriptTitleFont(lang, fontFamilies.devanagariBold),
             fontSize: 12,
-            letterSpacing: 0.4,
+            letterSpacing: lang === 'en' ? 0.4 : 0,
             color: colors.saffronDeep,
           }}
         >
           {contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
         </Text>
-        <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 14, color: colors.saffron }}>
+        <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 14, color: colors.saffronDeep }}>
           ›
         </Text>
       </View>
@@ -101,54 +144,27 @@ export default function TodayStrip() {
             key={o.rule.id}
             style={[styles.chip, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}
           >
-            <Text
-              numberOfLines={1}
-              style={[
-                pillTextStyle(lang, { ...typography.versePill, letterSpacing: 0.8, fontSize: 10.5 }),
-                { color: colors.saffronDeep, maxWidth: 180 },
-              ]}
-            >
+            <Text numberOfLines={1} style={[chipText, { color: colors.saffronDeep, maxWidth: 180 }]}>
               {contentByLang(lang, o.rule.nameHi, o.rule.nameEn)}
             </Text>
           </View>
         ))}
-        {muhurat?.abhijit && (
-          <View style={[styles.chip, { backgroundColor: colors.goldChipBg, borderRadius: radii.pill }]}>
+        {muhuratChips.map((chip) => (
+          <View
+            key={chip.key}
+            style={[styles.chip, { backgroundColor: chip.bg, borderRadius: radii.pill }]}
+          >
             <Text numberOfLines={1}>
-              <Text
-                style={[
-                  pillTextStyle(lang, { ...typography.versePill, letterSpacing: 0.8, fontSize: 10.5 }),
-                  { color: colors.saffronDeep },
-                ]}
-              >
-                {contentByLang(lang, 'अभिजीत', 'Abhijit')}
+              <Text style={[chipText, { color: chip.fg }]}>
+                {contentByLang(lang, chip.labelHi, chip.labelEn)}
               </Text>
-              {/* Time ranges never render in the thin italic face (design.md §3). */}
-              <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 11, color: colors.saffronDeep }}>
+              <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 11, color: chip.fg }}>
                 {'  '}
-                {formatRange(muhurat.abhijit.start, muhurat.abhijit.end)}
+                {chip.range}
               </Text>
             </Text>
           </View>
-        )}
-        {muhurat && (
-          <View style={[styles.chip, { backgroundColor: colors.avoidChipBg, borderRadius: radii.pill }]}>
-            <Text numberOfLines={1}>
-              <Text
-                style={[
-                  pillTextStyle(lang, { ...typography.versePill, letterSpacing: 0.8, fontSize: 10.5 }),
-                  { color: colors.avoid },
-                ]}
-              >
-                {contentByLang(lang, 'राहु काल', 'Rahu Kaal')}
-              </Text>
-              <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 11, color: colors.avoid }}>
-                {'  '}
-                {formatRange(muhurat.rahu.start, muhurat.rahu.end)}
-              </Text>
-            </Text>
-          </View>
-        )}
+        ))}
       </View>
     </Pressable>
   );
@@ -157,15 +173,9 @@ export default function TodayStrip() {
 const styles = StyleSheet.create({
   card: {
     position: 'relative',
-    overflow: 'hidden',
     borderWidth: 1,
     paddingVertical: 12,
     paddingHorizontal: 14,
-    shadowColor: '#3C1E0A',
-    shadowOpacity: 0.12,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 3,
   },
   headRow: {
     flexDirection: 'row',

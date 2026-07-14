@@ -1,0 +1,58 @@
+# Home Today-First Smoke Test (design.md §18/§48/§49)
+#
+# Covers the three surfaces added by the Home redesign:
+#   1. The "आज · Today" strip renders on Home (a11y label "Today's Panchang. …").
+#   2. The व्रत (Vrat & Parv) launcher tile opens the Panchang stack's
+#      ObservanceList — and, because the tile navigates with `initial: false`,
+#      backing out lands on PanchangHome (the calendar), proving the vrat door
+#      did not hijack the lazily-mounted stack's initial route.
+#   3. Reading a few pages of a text surfaces the "Continue reading" card on
+#      Home, and tapping it resumes the reader.
+#
+# Runs in the default (Hindi) language: tile/card accessibility labels are
+# English by contract, while on-screen headings ("व्रत", "व्रत-पर्व") are Hindi.
+
+appId: host.exp.Exponent
+---
+- runFlow: _launch.yaml
+
+# ── 1. Today strip on Home ──
+- assertVisible: "Today's Panchang\\..*Tap to open\\."
+
+# ── 2. व्रत tile → Vrat catalog → back lands on the Panchang calendar ──
+- assertVisible: "Vrat & Parv\\..*Tap to open\\."
+- tapOn: "Vrat & Parv\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "व्रत"
+    timeout: 15000
+- tapOn: "वापस"
+- waitForAnimationToEnd
+# PanchangHome hosts the [पंचांग | व्रत-पर्व] segment — visible only if the
+# calendar screen sits under ObservanceList in the stack.
+- assertVisible: "व्रत-पर्व"
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+
+# ── 3. Continue-reading card after reading ──
+- tapOn: "Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Hanuman Chalisa\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Hanuman Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- swipe:
+    direction: LEFT
+- waitForAnimationToEnd
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Continue reading\\..*Tap to resume\\."
+    timeout: 15000
+- tapOn: "Continue reading\\..*Tap to resume\\."
+- waitForAnimationToEnd
+- assertVisible: "Back to home"
