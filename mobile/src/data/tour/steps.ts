@@ -21,6 +21,7 @@ import type {
   TabParamList,
 } from '@/navigation/types';
 import type { TourTargetId } from '@/components/tour/tourTargets';
+import { panchangTabTarget } from '@/navigation/entryRoutes';
 
 /**
  * Where to send the user for this step. Mirrors the nested-route shape
@@ -29,7 +30,13 @@ import type { TourTargetId } from '@/components/tour/tourTargets';
 export type TourNavTarget =
   | { name: 'HomeTab'; params?: { screen: keyof HomeStackParamList; params?: object } }
   | { name: 'MoreTab'; params?: { screen: keyof MoreStackParamList; params?: object } }
-  | { name: 'PanchangTab'; params?: { screen: keyof PanchangStackParamList; params?: object } }
+  | {
+      name: 'PanchangTab';
+      // `initial?: false` — deep Panchang-stack steps must be built with
+      // panchangTabTarget (entryRoutes.ts) so a lazily-mounted tab doesn't take
+      // the step's screen as its initial route (calendar unreachable after).
+      params?: { screen: keyof PanchangStackParamList; params?: object; initial?: false };
+    }
   | { name: 'DailyBhaktiTab' }
   | { name: 'AudioTab' };
 
@@ -241,7 +248,7 @@ export const tourSteps: readonly TourStep[] = [
   },
   {
     id: 'vrat-list',
-    navigateTo: { name: 'PanchangTab', params: { screen: 'ObservanceList', params: { category: 'vrat' } } },
+    navigateTo: { name: 'PanchangTab', params: panchangTabTarget('ObservanceList', { category: 'vrat' }) },
     targetId: 'vratList',
     anchor: 'top',
     pointer: 'down',
@@ -252,7 +259,7 @@ export const tourSteps: readonly TourStep[] = [
   },
   {
     id: 'vrat-follow',
-    navigateTo: { name: 'PanchangTab', params: { screen: 'ObservanceList', params: { category: 'vrat' } } },
+    navigateTo: { name: 'PanchangTab', params: panchangTabTarget('ObservanceList', { category: 'vrat' }) },
     targetId: 'vratFollow',
     anchor: 'top',
     pointer: 'down',
@@ -263,7 +270,7 @@ export const tourSteps: readonly TourStep[] = [
   },
   {
     id: 'my-vrat',
-    navigateTo: { name: 'PanchangTab', params: { screen: 'MyVrat' } },
+    navigateTo: { name: 'PanchangTab', params: panchangTabTarget('MyVrat') },
     targetId: 'myVrat',
     anchor: 'top',
     pointer: 'down',

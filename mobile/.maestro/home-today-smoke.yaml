@@ -3,18 +3,37 @@
 # Covers the three surfaces added by the Home redesign:
 #   1. The "आज · Today" strip renders on Home (a11y label "Today's Panchang. …").
 #   2. The व्रत (Vrat & Parv) launcher tile opens the Panchang stack's
-#      ObservanceList — and, because the tile navigates with `initial: false`,
-#      backing out lands on PanchangHome (the calendar), proving the vrat door
-#      did not hijack the lazily-mounted stack's initial route.
-#   3. Reading a few pages of a text surfaces the "Continue reading" card on
-#      Home, and tapping it resumes the reader.
+#      ObservanceList — and, because the tile navigates via panchangTabTarget
+#      (initial: false), backing out lands on PanchangHome (the calendar),
+#      proving the vrat door did not hijack the lazily-mounted stack's
+#      initial route.
+#   3. Reading a page of a text surfaces the "Continue reading" card on Home,
+#      and tapping it resumes the reader.
 #
-# Runs in the default (Hindi) language: tile/card accessibility labels are
-# English by contract, while on-screen headings ("व्रत", "व्रत-पर्व") are Hindi.
+# Language note (same as panchang-smoke / vrat-catalog-smoke): default Hindi
+# renders Devanagari, which Maestro's iOS tree can't read — flip to English on
+# More first. Tile/card a11y labels are English by contract either way.
+#
+# Selector notes (per vrat-catalog-smoke):
+#   - The PanchangHome segment Pressable exposes accessibilityLabel
+#     "Vrat and Parv", not the visible "Vrat & Parv" text.
+#   - ObservanceList's back button exposes "Back" (English mode).
+#   - The Continue-reading card sits below the 3×3 grid → scrollUntilVisible.
 
 appId: host.exp.Exponent
 ---
 - runFlow: _launch.yaml
+
+# ── Global reading language → English ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
 
 # ── 1. Today strip on Home ──
 - assertVisible: "Today's Panchang\\..*Tap to open\\."
@@ -24,13 +43,13 @@ appId: host.exp.Exponent
 - tapOn: "Vrat & Parv\\..*Tap to open\\."
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "व्रत"
+    visible: "Vrat"
     timeout: 15000
-- tapOn: "वापस"
+- tapOn: "Back"
 - waitForAnimationToEnd
-# PanchangHome hosts the [पंचांग | व्रत-पर्व] segment — visible only if the
-# calendar screen sits under ObservanceList in the stack.
-- assertVisible: "व्रत-पर्व"
+# The [Calendar | Vrat and Parv] segment lives on PanchangHome — visible only
+# if the calendar screen sits under ObservanceList in the stack (initial: false).
+- assertVisible: "Vrat and Parv"
 - tapOn: "Home, tab.*"
 - waitForAnimationToEnd
 
@@ -50,8 +69,11 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd
 - tapOn: "Home, tab.*"
 - waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: "Continue reading\\..*Tap to resume\\."
+- scrollUntilVisible:
+    element:
+      text: "Continue reading\\..*Tap to resume\\."
+    direction: DOWN
+    visibilityPercentage: 60
     timeout: 15000
 - tapOn: "Continue reading\\..*Tap to resume\\."
 - waitForAnimationToEnd

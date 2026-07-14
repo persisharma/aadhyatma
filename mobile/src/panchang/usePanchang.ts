@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { computePanchangForDate } from './engine';
 import {
@@ -45,45 +45,69 @@ function useObservanceStoreVersion(): number {
 // tab AND the Home Today strip), so a change made on one screen must propagate
 // to every mounted instance immediately — per-instance useState hydrated once
 // from AsyncStorage left the Home strip on a stale system for the whole session.
+// Consumed via useSyncExternalStore, which is tearing-safe by construction (no
+// hand-rolled "re-sync between render and subscribe" patch needed).
 let calendarSystemValue: CalendarSystem = 'purnimant';
-const calendarSystemListeners = new Set<(next: CalendarSystem) => void>();
+// True once the user has explicitly chosen a system this session — a late
+// AsyncStorage hydration must never clobber an explicit in-session choice.
+let calendarSystemDirty = false;
 let calendarSystemHydration: Promise<void> | null = null;
+const calendarSystemListeners = new Set<() => void>();
+
+function notifyCalendarSystemListeners(): void {
+  calendarSystemListeners.forEach((listener) => listener());
+}
 
 function hydrateCalendarSystemOnce(): Promise<void> {
   if (!calendarSystemHydration) {
     calendarSystemHydration = AsyncStorage.getItem(CALENDAR_SYSTEM_STORAGE_KEY)
       .then((stored) => {
-        if (isCalendarSystem(stored) && stored !== calendarSystemValue) {
+        if (!calendarSystemDirty && isCalendarSystem(stored) && stored !== calendarSystemValue) {
           calendarSystemValue = stored;
-          calendarSystemListeners.forEach((listener) => listener(stored));
+          notifyCalendarSystemListeners();
         }
       })
-      .catch(() => undefined);
+      .catch(() => {
+        // A transient storage failure must not poison the session — clear the
+        // settled promise so the next subscriber retries the read.
+        calendarSystemHydration = null;
+      });
   }
   return calendarSystemHydration;
 }
 
 function setCalendarSystemGlobal(next: CalendarSystem): void {
+  // Mark dirty and persist even for an equal-value "confirmation" tap, so an
+  // in-flight hydration of a stale stored value can never override the choice.
+  calendarSystemDirty = true;
+  AsyncStorage.setItem(CALENDAR_SYSTEM_STORAGE_KEY, next).catch(() => undefined);
   if (next === calendarSystemValue) return;
   calendarSystemValue = next;
-  calendarSystemListeners.forEach((listener) => listener(next));
-  AsyncStorage.setItem(CALENDAR_SYSTEM_STORAGE_KEY, next).catch(() => undefined);
+  notifyCalendarSystemListeners();
+}
+
+function subscribeCalendarSystem(onStoreChange: () => void): () => void {
+  calendarSystemListeners.add(onStoreChange);
+  hydrateCalendarSystemOnce();
+  return () => {
+    calendarSystemListeners.delete(onStoreChange);
+  };
+}
+
+function getCalendarSystemSnapshot(): CalendarSystem {
+  return calendarSystemValue;
+}
+
+/** Test-only: reset the module store between jest tests. */
+export function __resetCalendarSystemStoreForTests(value: CalendarSystem = 'purnimant'): void {
+  calendarSystemValue = value;
+  calendarSystemDirty = false;
+  calendarSystemHydration = null;
+  calendarSystemListeners.clear();
 }
 
 export function usePanchangCalendarSystem(): [CalendarSystem, (next: CalendarSystem) => void] {
-  const [calendarSystem, setCalendarSystemState] = useState<CalendarSystem>(calendarSystemValue);
-
-  useEffect(() => {
-    const listener = (next: CalendarSystem) => setCalendarSystemState(next);
-    calendarSystemListeners.add(listener);
-    // Re-sync in case the store changed between render and subscribe.
-    setCalendarSystemState(calendarSystemValue);
-    hydrateCalendarSystemOnce();
-    return () => {
-      calendarSystemListeners.delete(listener);
-    };
-  }, []);
-
+  const calendarSystem = useSyncExternalStore(subscribeCalendarSystem, getCalendarSystemSnapshot);
   return [calendarSystem, setCalendarSystemGlobal];
 }
 
@@ -135,10 +159,20 @@ export function useObservancesForDate(
   const storeVersion = useObservanceStoreVersion();
 
   const [observances, setObservances] = useState<ResolvedObservance[]>([]);
+  // The reset-to-empty applies only when the *selection* changes (stale data
+  // would be wrong for another day/city/system). A pure storeVersion bump —
+  // a background city scan landing mid-session — keeps the previous list on
+  // screen until the re-resolve lands, so the always-mounted Home strip's
+  // chips don't blink out for a frame on every upgrade.
+  const selectionKey = `${dateMs}|${calendarSystem}|${cityId}`;
+  const lastSelectionKey = useRef<string | null>(null);
   useEffect(() => {
     let cancelled = false;
     const selected = new Date(dateMs);
-    setObservances([]);
+    if (lastSelectionKey.current !== selectionKey) {
+      lastSelectionKey.current = selectionKey;
+      setObservances([]);
+    }
     const handle = setTimeout(() => {
       const result = getObservancesForDate(selected, calendarSystem, location);
       if (!cancelled) setObservances(result);
@@ -148,7 +182,7 @@ export function useObservancesForDate(
       clearTimeout(handle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateMs, calendarSystem, cityId, storeVersion]);
+  }, [selectionKey, storeVersion]);
 
   return observances;
 }

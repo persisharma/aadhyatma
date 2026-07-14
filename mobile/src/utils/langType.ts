@@ -49,6 +49,23 @@ export function pillTextStyle(
   };
 }
 
+/**
+ * Card eyebrow / kicker style (the small `saffron-deep` context line atop the
+ * glance cards — Muhurat glance card, Home Today strip). The Latin face is the
+ * italic Cormorant `cardLatin` cut with a touch of tracking; hi/gu/kn swap to
+ * the script serif bold with NO tracking — Cormorant has no Indic glyphs and
+ * Latin tracking splits the connecting shirorekha (design.md §3). One
+ * definition so eyebrow-bearing cards can't drift apart.
+ */
+export function eyebrowTextStyle(lang: Lang, fontSize: number, latinTracking = 0.4): TextStyle {
+  const latin = isLatinLang(lang);
+  return {
+    fontSize,
+    fontFamily: latin ? fontFamilies.latinItalic : scriptTitleFont(lang, fontFamilies.devanagariBold),
+    letterSpacing: latin ? latinTracking : 0,
+  };
+}
+
 type ReadingToken = { fontFamily: string; fontSize: number; lineHeight: number };
 
 /** Verse/recitation body token for the language's script. */

@@ -24,7 +24,7 @@ type Props = {
   displayNameEn?: string;
 };
 
-export default function CategoryCard({
+function CategoryCard({
   nameHi,
   nameEn,
   status,
@@ -316,3 +316,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
 });
+
+// Memoized: HomeScreen renders 9 of these with memoized icon/onPress props, so
+// unrelated Home re-renders skip reconciling the gradient + glyph subtrees.
+export default React.memo(CategoryCard);

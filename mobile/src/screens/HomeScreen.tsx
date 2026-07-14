@@ -26,6 +26,7 @@ import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
+import { panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
@@ -50,18 +51,6 @@ export default function HomeScreen({ navigation }: Props) {
   // hidden behind / overlapped by the banner.
   const searchFabBottom = spacing.sm + 60 + spacing.md;
 
-  const categoryIcons: Record<CategoryIconKey, React.ReactNode> = {
-    granth: <CategoryIcon iconKey="granth" />,
-    stotram: <CategoryIcon iconKey="stotram" />,
-    chalisa: <CategoryIcon iconKey="chalisa" />,
-    japam: <CategoryIcon iconKey="japam" />,
-    deity: <CategoryIcon iconKey="deity" />,
-    aarti: <CategoryIcon iconKey="aarti" />,
-    theerth: <CategoryIcon iconKey="theerth" />,
-    sanskar: <CategoryIcon iconKey="sanskar" />,
-    vrat: <CategoryIcon iconKey="vrat" />,
-  };
-
   type TileItem = {
     key: string;
     nameHi: string;
@@ -77,46 +66,44 @@ export default function HomeScreen({ navigation }: Props) {
   // into the Panchang tab's Vrat & Parv catalog, PRD-09 — not a ContentCategory;
   // its content lives in the observance engine, not the library) and the देवता
   // tile (the Deity Index). Nine tiles — the grid stays a full square.
-  const tiles: TileItem[] = [
-    ...categories.map((c) => ({
-      key: c.id,
-      nameHi: c.nameHi,
-      nameEn: c.nameEn,
-      shortNameEn: c.shortNameEn,
-      status: c.status,
-      icon: categoryIcons[c.id],
-      hasNew: c.status === 'active' ? hasNewInCategory(c.id) : undefined,
-      onPress: () =>
-        c.id === 'theerth'
-          ? navigation.navigate('TheerthMap', {})
-          : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
-    })),
-    {
-      key: 'vrat',
-      nameHi: 'व्रत',
-      nameEn: 'Vrat & Parv',
-      shortNameEn: 'Vrat',
-      status: 'active' as const,
-      icon: categoryIcons['vrat'],
-      onPress: () =>
-        rootNav.navigate('PanchangTab', {
-          screen: 'ObservanceList',
-          params: { category: 'vrat' },
-          // Without this, a lazily-mounted Panchang tab would take
-          // ObservanceList as its *initial* route, making the calendar
-          // (PanchangHome) unreachable for the session.
-          initial: false,
-        }),
-    },
-    {
-      key: 'deity',
-      nameHi: 'देवता',
-      nameEn: 'By Deity',
-      status: 'active' as const,
-      icon: categoryIcons['deity'],
-      onPress: () => navigation.navigate('DeityIndex'),
-    },
-  ];
+  // Memoized so the 9 memoized CategoryCards keep stable icon/onPress props
+  // across unrelated HomeScreen re-renders (context churn, tour registration).
+  const tiles: TileItem[] = React.useMemo(() => {
+    const iconFor = (key: CategoryIconKey) => <CategoryIcon iconKey={key} />;
+    return [
+      ...categories.map((c) => ({
+        key: c.id,
+        nameHi: c.nameHi,
+        nameEn: c.nameEn,
+        shortNameEn: c.shortNameEn,
+        status: c.status,
+        icon: iconFor(c.id),
+        hasNew: c.status === 'active' ? hasNewInCategory(c.id) : undefined,
+        onPress: () =>
+          c.id === 'theerth'
+            ? navigation.navigate('TheerthMap', {})
+            : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
+      })),
+      {
+        key: 'vrat',
+        nameHi: 'व्रत',
+        nameEn: 'Vrat & Parv',
+        shortNameEn: 'Vrat',
+        status: 'active' as const,
+        icon: iconFor('vrat'),
+        onPress: () =>
+          rootNav.navigate('PanchangTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
+      },
+      {
+        key: 'deity',
+        nameHi: 'देवता',
+        nameEn: 'By Deity',
+        status: 'active' as const,
+        icon: iconFor('deity'),
+        onPress: () => navigation.navigate('DeityIndex'),
+      },
+    ];
+  }, [hasNewInCategory, navigation, rootNav]);
 
   const screenWidth = Dimensions.get('window').width;
   const gridPadding = spacing.xxl;

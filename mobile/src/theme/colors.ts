@@ -41,6 +41,12 @@ export const lightColors = {
   // and colors.contrast.test.ts (signal text clears AA on the card surface).
   avoidChipBg: 'rgba(158, 74, 46, 0.20)',
   goldChipBg: 'rgba(166, 124, 52, 0.22)',
+  // Text ON the avoid chip tint. `avoid` clears AA on the raw card surfaces but
+  // NOT composited on `avoidChipBg` over the gradient's dark stop (~3.5:1) — a
+  // terracotta-tinted background *lowers* the ratio for dark terracotta text.
+  // This deeper cut clears 4.5:1 on the worst-case composite; pinned (with the
+  // compositing math) in colors.contrast.test.ts.
+  avoidDeep: '#7A3722',
 
   // "NEW" badge — saffron-tinted (primary/active accent → reads as fresh & live),
   // distinct from the muted gold "SOON" badge while staying in the warm palette.

@@ -14,6 +14,7 @@ import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
+import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
 import {
   usePanchangCalendarSystem,
   usePanchangForSelection,
@@ -437,8 +438,8 @@ export default function PanchangScreen() {
             <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
               {contentByLang(
                 lang,
-                `${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} · ${p.tithi.paksha === 'shukla' ? 'शुक्ल पक्ष' : 'कृष्ण पक्ष'}`,
-                `${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} · ${p.tithi.paksha === 'shukla' ? 'Shukla Paksha' : 'Krishna Paksha'}`
+                `${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} · ${PAKSHA_NAMES_HI[p.tithi.paksha]} पक्ष`,
+                `${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} · ${PAKSHA_NAMES_EN[p.tithi.paksha]} Paksha`
               )}
             </Text>
           </View>

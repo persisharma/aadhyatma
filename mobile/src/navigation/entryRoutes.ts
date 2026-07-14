@@ -5,9 +5,25 @@ import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import { aartiIndexById } from '@/data/aarti';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
-import type { HomeStackParamList } from './types';
+import type { HomeStackParamList, PanchangStackParamList } from './types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
+
+/**
+ * Nested-navigation params for a screen inside the Panchang tab's stack.
+ * Always sets `initial: false`: without it, navigating a LAZILY-mounted
+ * Panchang tab makes the target the stack's *initial* route, leaving the
+ * calendar (PanchangHome) unreachable for the whole session. Every cross-tab
+ * caller (the Home व्रत tile, the vrat-reminder deep link, feature-tour
+ * steps) must build its params through this helper rather than hand-rolling
+ * the `{ screen, params }` shape.
+ */
+export function panchangTabTarget<T extends keyof PanchangStackParamList>(
+  screen: T,
+  params?: PanchangStackParamList[T]
+): { screen: T; params?: PanchangStackParamList[T]; initial: false } {
+  return { screen, params, initial: false };
+}
 
 const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa']);
 
@@ -120,6 +136,18 @@ export function navigateToRoutineItem(nav: Nav, item: RoutineItem): boolean {
   const entry = library.find((e) => e.id === item.sourceId);
   if (entry) return navigateToEntryStart(nav, entry);
   return false;
+}
+
+/**
+ * True when `navigateToProgress` can route this progress entry — the SAME
+ * branch conditions, so a gate built on this predicate (the Home
+ * continue-reading card) can never render an entry whose tap would no-op.
+ */
+export function canResumeProgress(p: { sourceId: string; chapter?: number }): boolean {
+  const sourceId = canonicalSourceId(p.sourceId);
+  if (chalisaIds.has(sourceId) || sanskarIds.has(sourceId)) return true;
+  if ((aartiIndexById as Record<string, number>)[sourceId] != null) return true;
+  return stotramReaderRouteBySourceId[sourceId] != null && p.chapter != null;
 }
 
 export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean {

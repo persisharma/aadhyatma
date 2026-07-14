@@ -10,7 +10,8 @@ import { useMuhurat } from '@/panchang/useMuhurat';
 import { formatRange } from '@/panchang/muhuratFormat';
 import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
 import { contentByLang } from '@/utils/localize';
-import { pillTextStyle, scriptTitleFont } from '@/utils/langType';
+import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
+import { useTodayKey } from '@/utils/useTodayKey';
 
 /**
  * Home "आज · Today" strip (design.md §48): a one-card daily-panchang glance —
@@ -31,7 +32,9 @@ export default function TodayStrip() {
   const rootNav = useNavigation<any>();
   const [calendarSystem] = usePanchangCalendarSystem();
 
-  const todayKey = new Date().toDateString();
+  // useTodayKey rolls the strip over at midnight / on app foreground — with
+  // live:false there is no minute tick, so the date needs its own trigger.
+  const todayKey = useTodayKey();
   const today = React.useMemo(() => new Date(todayKey), [todayKey]);
   const observances = useObservancesForDate(today, calendarSystem);
   const { muhurat, panchang } = useMuhurat(today, calendarSystem, { live: false });
@@ -46,37 +49,57 @@ export default function TodayStrip() {
       )
     : '—';
 
-  const festChips = observances.slice(0, 2);
-
   const chipText = pillTextStyle(lang, {
     ...typography.versePill,
     letterSpacing: 0.8,
     fontSize: 10.5,
   });
 
-  // Time ranges never render in the thin italic face (design.md §3).
-  const muhuratChips = muhurat
-    ? [
-        muhurat.abhijit && {
-          key: 'abhijit',
-          labelHi: 'अभिजीत',
-          labelEn: 'Abhijit',
-          range: formatRange(muhurat.abhijit.start, muhurat.abhijit.end),
-          bg: colors.goldChipBg,
-          fg: colors.saffronDeep,
-        },
-        {
-          key: 'rahu',
-          labelHi: 'राहु काल',
-          labelEn: 'Rahu Kaal',
-          range: formatRange(muhurat.rahu.start, muhurat.rahu.end),
-          bg: colors.avoidChipBg,
-          fg: colors.avoid,
-        },
-      ].filter((c): c is NonNullable<typeof c> => Boolean(c))
-    : [];
+  // One normalized chip list — observances first, then the day's windows — so
+  // the pill spec exists once. Chip text colors are the DEEP cuts: the tint
+  // composites darker than the raw card surface (colors.contrast.test.ts pins
+  // avoidDeep/saffronDeep against the composited chip surfaces).
+  type Chip = { key: string; labelHi: string; labelEn: string; range?: string; bg: string; fg: string };
+  const chips: Chip[] = [
+    ...observances.slice(0, 2).map((o) => ({
+      key: o.rule.id,
+      labelHi: o.rule.nameHi,
+      labelEn: o.rule.nameEn,
+      bg: colors.saffronTint,
+      fg: colors.saffronDeep,
+    })),
+    ...(muhurat?.abhijit
+      ? [
+          {
+            key: 'abhijit',
+            labelHi: 'अभिजीत',
+            labelEn: 'Abhijit',
+            range: formatRange(muhurat.abhijit.start, muhurat.abhijit.end),
+            bg: colors.goldChipBg,
+            fg: colors.saffronDeep,
+          },
+        ]
+      : []),
+    ...(muhurat
+      ? [
+          {
+            // Kaal name rides the KaalWindow itself (KAAL_NAMES, muhurat.ts) —
+            // no duplicated literals to drift.
+            key: muhurat.rahu.key,
+            labelHi: muhurat.rahu.nameHi,
+            labelEn: muhurat.rahu.nameEn,
+            range: formatRange(muhurat.rahu.start, muhurat.rahu.end),
+            bg: colors.avoidChipBg,
+            fg: colors.avoidDeep,
+          },
+        ]
+      : []),
+  ];
 
-  const a11yFest = festChips.map((o) => o.rule.nameEn).join(', ');
+  const a11yFest = observances
+    .slice(0, 2)
+    .map((o) => o.rule.nameEn)
+    .join(', ');
   const a11y = panchang
     ? `Today's Panchang. ${panchang.vara.nameEn}, ${panchang.tithi.nameEn}.${a11yFest ? ` ${a11yFest}.` : ''} Tap to open.`
     : "Today's Panchang. Tap to open.";
@@ -107,19 +130,7 @@ export default function TodayStrip() {
         style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]}
       />
       <View style={styles.headRow}>
-        <Text
-          style={{
-            // cardLatin (Cormorant) has no Indic glyphs, and Latin tracking
-            // splits the shirorekha — script serif for hi/gu/kn (design.md §3).
-            fontFamily:
-              lang === 'en'
-                ? typography.cardLatin.fontFamily
-                : scriptTitleFont(lang, fontFamilies.devanagariBold),
-            fontSize: 12,
-            letterSpacing: lang === 'en' ? 0.4 : 0,
-            color: colors.saffronDeep,
-          }}
-        >
+        <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
           {contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
         </Text>
         <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 14, color: colors.saffronDeep }}>
@@ -139,29 +150,22 @@ export default function TodayStrip() {
         {headline}
       </Text>
       <View style={styles.chipRow}>
-        {festChips.map((o) => (
-          <View
-            key={o.rule.id}
-            style={[styles.chip, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}
-          >
-            <Text numberOfLines={1} style={[chipText, { color: colors.saffronDeep, maxWidth: 180 }]}>
-              {contentByLang(lang, o.rule.nameHi, o.rule.nameEn)}
-            </Text>
-          </View>
-        ))}
-        {muhuratChips.map((chip) => (
+        {chips.map((chip) => (
           <View
             key={chip.key}
             style={[styles.chip, { backgroundColor: chip.bg, borderRadius: radii.pill }]}
           >
-            <Text numberOfLines={1}>
+            <Text numberOfLines={1} style={{ maxWidth: 200 }}>
               <Text style={[chipText, { color: chip.fg }]}>
                 {contentByLang(lang, chip.labelHi, chip.labelEn)}
               </Text>
-              <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 11, color: chip.fg }}>
-                {'  '}
-                {chip.range}
-              </Text>
+              {chip.range != null && (
+                // Time ranges never render in the thin italic face (design.md §3).
+                <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 11, color: chip.fg }}>
+                  {'  '}
+                  {chip.range}
+                </Text>
+              )}
             </Text>
           </View>
         ))}

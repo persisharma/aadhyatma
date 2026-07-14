@@ -49,13 +49,22 @@ const muhuratDay = {
   },
 };
 
+const mountedTrees: TestRenderer.ReactTestRenderer[] = [];
+
 function render(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(<TodayStrip />);
   });
+  mountedTrees.push(tree);
   return tree;
 }
+
+afterEach(() => {
+  // useTodayKey schedules a real timer to the next midnight — unmount so its
+  // effect cleanup clears it, or the jest process never exits.
+  mountedTrees.splice(0).forEach((tree) => act(() => tree.unmount()));
+});
 
 function textOf(tree: TestRenderer.ReactTestRenderer): string {
   return tree.root

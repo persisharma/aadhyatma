@@ -9,7 +9,7 @@ import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import { library, type LibraryEntry } from '@/data/texts';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
-import { buildProgressTarget, navigateToProgress } from '@/navigation/entryRoutes';
+import { canResumeProgress, navigateToProgress } from '@/navigation/entryRoutes';
 import { readingProgressByRecency } from '@/utils/latestProgress';
 import { formatLocation } from '@/utils/formatLocation';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
@@ -38,9 +38,9 @@ export default function ContinueReadingCard() {
     for (const candidate of readingProgressByRecency(progress)) {
       const sourceId = canonicalSourceId(candidate.sourceId);
       const entry = library.find((e) => e.id === sourceId && e.status === 'active' && !e.hidden);
-      // theerth is excluded: its progress target is the map, not a reader, and
-      // navigateToProgress (deliberately) has no theerth branch.
-      if (entry && entry.category !== 'theerth' && buildProgressTarget(candidate)) {
+      // canResumeProgress mirrors navigateToProgress's own branches, so a
+      // rendered entry can never no-op on tap.
+      if (entry && canResumeProgress(candidate)) {
         found = { latest: candidate, entry };
         break;
       }

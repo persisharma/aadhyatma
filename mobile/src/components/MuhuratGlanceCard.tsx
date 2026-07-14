@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
-import { scriptTitleFont } from '@/utils/langType';
+import { scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { formatClock, formatRange } from '@/panchang/muhuratFormat';
@@ -28,12 +28,6 @@ export default function MuhuratGlanceCard({
   const { lang } = useGitaLanguage();
   const { isToday, nowChoghadiya, muhurat } = useMuhurat(date, calendarSystem);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
-  // cardLatin (Cormorant) has no Indic glyphs, and Latin tracking splits the
-  // shirorekha — the eyebrow/micro-labels swap to the script serif for hi/gu/kn
-  // (design.md §3, same rule as pillTextStyle).
-  const eyebrowFont =
-    lang === 'en' ? typography.cardLatin.fontFamily : scriptTitleFont(lang, fontFamilies.devanagariBold);
-  const eyebrowTracking = lang === 'en' ? 0.4 : 0;
 
   // The solve runs off the render path (and only the first time per day — it is
   // memoised in useMuhurat). Until it lands we render a skeleton that reserves
@@ -49,7 +43,7 @@ export default function MuhuratGlanceCard({
         accessibilityRole="progressbar"
         accessibilityLabel={contentByLang(lang, 'मुहूर्त लोड हो रहा है', 'Loading timings')}
       >
-        <Text style={{ fontFamily: eyebrowFont, fontSize: 12, color: colors.saffronDeep, letterSpacing: eyebrowTracking }}>
+        <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
           {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
         </Text>
         <View style={styles.nowRow}>
@@ -83,7 +77,7 @@ export default function MuhuratGlanceCard({
       colors={[colors.cardActiveFrom, colors.cardActiveTo]}
       style={[styles.card, { borderColor: colors.cardActiveBorder, borderRadius: radii.lg, padding: spacing.lg }, elevation.raised]}
     >
-      <Text style={{ fontFamily: eyebrowFont, fontSize: 12, color: colors.saffronDeep, letterSpacing: eyebrowTracking }}>
+      <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
         {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
       </Text>
 
@@ -97,13 +91,10 @@ export default function MuhuratGlanceCard({
         />
         <View style={{ flex: 1 }}>
           <Text
-            style={{
-              fontFamily: eyebrowFont,
-              fontSize: 9,
-              letterSpacing: lang === 'en' ? 0.6 : 0,
-              textTransform: lang === 'en' ? 'uppercase' : 'none',
-              color: colors.inkMuted,
-            }}
+            style={[
+              eyebrowTextStyle(lang, 9, 0.6),
+              { textTransform: lang === 'en' ? 'uppercase' : 'none', color: colors.inkMuted },
+            ]}
           >
             {showNow ? contentByLang(lang, 'अभी', 'Now') : contentByLang(lang, 'शुभ मुहूर्त', 'Auspicious')}
           </Text>
@@ -128,7 +119,9 @@ export default function MuhuratGlanceCard({
               styles.tag,
               {
                 fontFamily: fontFamilies.latinBold,
-                color: nowAvoid ? colors.avoid : colors.saffronDeep,
+                // Deep cuts on the chip tints — the composite darkens the surface,
+                // so raw `avoid` drops under AA there (colors.contrast.test.ts).
+                color: nowAvoid ? colors.avoidDeep : colors.saffronDeep,
                 backgroundColor: nowAvoid ? colors.avoidChipBg : colors.goldChipBg,
               },
             ]}
