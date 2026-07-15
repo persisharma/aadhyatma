@@ -43,6 +43,8 @@ appId: host.exp.Exponent
 # ── Step 2: Set global reading language to English (More tab) ──
 - tapOn: "More, tab.*"
 - waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "English"
     timeout: 15000
@@ -67,6 +69,10 @@ appId: host.exp.Exponent
 
 # ── Step 6: Restore Hindi (best-effort) ──
 - tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Language,.*"   # open the Language picker sheet (best-effort restore)
+    optional: true
 - waitForAnimationToEnd
 - tapOn:
     text: "Hindi"

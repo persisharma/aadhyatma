@@ -13,6 +13,8 @@ appId: host.exp.Exponent
 # ── English, then Home → Sacred Books → Bhagavad Gītā chapter index ──
 - tapOn: "More, tab.*"
 - waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "English"
     timeout: 15000

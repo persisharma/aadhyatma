@@ -11,11 +11,18 @@
 #   3. The "Ujjain" reference header renders (the redundant on-screen "Panchang"
 #      title/subtitle/pill were removed in the layout redesign — the bottom-tab
 #      label "Panchang" is now the only on-screen occurrence).
-#   4. The Purnimant/Amanta toggle renders and changes the reference line.
+#   4. The Purnimant/Amanta toggle renders and its selected state flips on tap
+#      (the old "Reference: … · <system>" line was removed in the header redesign
+#      — the segmented pill is now the only calendar-system indicator).
 #   5. Compact date navigation changes the selected date.
 #   6. The expandable calendar can move months and select a date.
 #   7. The "Vrat & Observances" and "Upcoming" sections render.
 #   8. Global reading-language switching (useGitaLanguage) reflects on the screen.
+#   9. The Daily Muhurat glance card renders and lands (its "Today's Timings"
+#      frame plus the solved Rahu Kaal / Abhijit tiles) — covering the
+#      always-render skeleton + memoised-solve change (#190). The card used to
+#      `return null` until the off-render solve landed, so it must now be present
+#      as a stable frame first, then fill in with the real timings.
 #
 # Why we switch to English first:
 #   The screen reads the GLOBAL reading language (useGitaLanguage); the default
@@ -45,8 +52,15 @@ appId: host.exp.Exponent
 # ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
 - runFlow: _launch.yaml
 
-# ── Step 2: Set global reading language to English (More tab) ──
+# ── Step 2: Set global reading language to English (More tab → Language picker) ──
+# The More hub now shows the current reading language as a "Language" disclosure
+# row (accessibilityLabel "Language, <current>") that opens LanguagePickerSheet —
+# the old inline English/Hindi pills are gone (gu/kn added a 4-way picker). The
+# sheet's rows opt out of the modal's accessibility wrappers (accessible={false}),
+# so each language radio (accessibilityLabel = "English"/"Hindi"/…) is tappable.
 - tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "English"
@@ -83,7 +97,12 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd
 - tapOn: "Amanta calendar system"
 - waitForAnimationToEnd
-- assertVisible: ".*Ujjain, India · Amanta.*"
+# The header redesign removed the "Reference: Ujjain, India · <system>" line; the
+# calendar system is now shown ONLY as the segmented pill's selected state
+# (accessibilityState.selected). Assert the tap flipped the selection.
+- assertVisible:
+    text: "Amanta calendar system"
+    selected: true
 - tapOn: "Expand calendar"
 - waitForAnimationToEnd
 - tapOn: "Next month"
@@ -91,7 +110,23 @@ appId: host.exp.Exponent
 - tapOn: "Select 15 .*"
 - waitForAnimationToEnd
 
-# ── Step 5: Assert the engine time block and observances render ──
+# ── Step 5: Assert the Daily Muhurat glance card renders and lands (#190) ──
+# The card sits directly under the date header, above the anga grid and the
+# times card. It renders a "Today's Timings" skeleton frame immediately (no more
+# `return null` pop-in), then fills in with the solved Rahu Kaal / Abhijit tiles
+# a moment later. Assert the frame first (stable canary), then wait for the solve.
+- scrollUntilVisible:
+    element:
+      text: "Today's Timings"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- extendedWaitUntil:
+    visible: "Rahu Kaal"     # real card = solve landed (skeleton has no tile labels)
+    timeout: 15000
+- assertVisible: "Abhijit"
+
+# ── Step 6: Assert the engine time block and observances render ──
 # The time block is below the inline calendar on compact iPhone viewports.
 - scrollUntilVisible:
     element:
@@ -117,17 +152,23 @@ appId: host.exp.Exponent
     centerElement: true
     timeout: 20000
 
-# ── Step 6: Restore Panchang + language defaults (best-effort) ──
+# ── Step 7: Restore Panchang + language defaults (best-effort) ──
 - scrollUntilVisible:
     element:
-      text: ".*Ujjain.*"   # full element is "Reference: Ujjain, India · …" (full-string match)
+      text: ".*Ujjain.*"   # the "Location: Ujjain" chip in the sticky header (full-string match)
     direction: UP
     centerElement: true
     timeout: 20000
 - tapOn: "Purnimant calendar system"
 - waitForAnimationToEnd
-- assertVisible: ".*Ujjain, India · Purnimant.*"
+- assertVisible:
+    text: "Purnimant calendar system"
+    selected: true
 - tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Language,.*"
+    optional: true
 - waitForAnimationToEnd
 - tapOn:
     text: "Hindi"

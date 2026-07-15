@@ -40,6 +40,8 @@ appId: host.exp.Exponent
 # ── Step 2: Set global reading language to English (More tab) ──
 - tapOn: "More, tab.*"
 - waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "English"
     timeout: 15000

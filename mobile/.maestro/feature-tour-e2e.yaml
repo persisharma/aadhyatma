@@ -86,7 +86,7 @@ appId: host.exp.Exponent
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "Mantras"
+- assertVisible: "Japa . Mantras"   # step titleEn is "Japa — Mantras" (— matched by .)
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
