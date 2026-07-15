@@ -138,18 +138,11 @@ export function navigateToRoutineItem(nav: Nav, item: RoutineItem): boolean {
   return false;
 }
 
-/**
- * True when `navigateToProgress` can route this progress entry — the SAME
- * branch conditions, so a gate built on this predicate (the Home
- * continue-reading card) can never render an entry whose tap would no-op.
- */
-export function canResumeProgress(p: { sourceId: string; chapter?: number }): boolean {
-  const sourceId = canonicalSourceId(p.sourceId);
-  if (chalisaIds.has(sourceId) || sanskarIds.has(sourceId)) return true;
-  if ((aartiIndexById as Record<string, number>)[sourceId] != null) return true;
-  return stotramReaderRouteBySourceId[sourceId] != null && p.chapter != null;
-}
-
+// (A `canResumeProgress` pre-check predicate mirroring navigateToProgress's
+// branches lived here as the render gate of the retired Home continue-reading
+// card — deleted with the card, design.md §49. navigateToProgress itself
+// returns false for unroutable entries, which is the contract the remaining
+// callers rely on.)
 export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean {
   const sourceId = canonicalSourceId(progress.sourceId);
   if (chalisaIds.has(sourceId)) {

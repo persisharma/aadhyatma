@@ -1,10 +1,11 @@
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text, View as mockView } from 'react-native';
+import { ScrollView, Text, View as mockView } from 'react-native';
 import TodayStrip from '@/components/TodayStrip';
 
 // ---- mutable mock state (reset in beforeEach) ----
 let mockLang: 'hi' | 'en' = 'hi';
+let mockReduceMotion = false;
 const mockNavigate = jest.fn();
 let mockObservances: unknown[] = [];
 let mockMuhurat: { muhurat: unknown; panchang: unknown } = { muhurat: null, panchang: null };
@@ -20,7 +21,9 @@ jest.mock('expo-linear-gradient', () => ({
 }));
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
+  useIsFocused: () => true,
 }));
+jest.mock('@/utils/useReducedMotion', () => ({ useReducedMotion: () => mockReduceMotion }));
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: mockLang }) }));
 jest.mock('@/panchang/usePanchang', () => ({
   usePanchangCalendarSystem: () => ['purnimant', jest.fn()],
@@ -76,6 +79,7 @@ function textOf(tree: TestRenderer.ReactTestRenderer): string {
 
 beforeEach(() => {
   mockLang = 'hi';
+  mockReduceMotion = false;
   mockNavigate.mockClear();
   mockUseMuhurat.mockClear();
   mockObservances = [];
@@ -95,7 +99,7 @@ describe('TodayStrip', () => {
     expect(text).toContain('शनिवार · शुक्ल एकादशी');
   });
 
-  it('renders observance and muhurat chips with time ranges', () => {
+  it('renders observance and muhurat chips with compact time ranges', () => {
     mockObservances = [
       { date: new Date(), rule: { id: 'yogini-ekadashi', nameHi: 'योगिनी एकादशी', nameEn: 'Yogini Ekadashi' } },
     ];
@@ -104,8 +108,48 @@ describe('TodayStrip', () => {
     expect(text).toContain('योगिनी एकादशी');
     expect(text).toContain('अभिजीत');
     expect(text).toContain('राहु काल');
-    expect(text).toMatch(/11:17/);
-    expect(text).toMatch(/9:00/);
+    // Cross-noon window keeps both meridiems; same-meridiem window compacts
+    // to a single trailing AM/PM (formatRangeCompact).
+    expect(text).toContain('11:17 AM – 12:05 PM');
+    expect(text).toContain('9:00 – 10:39 AM');
+  });
+
+  it('lays the chips on one horizontal-scroll row (no wrap on narrow devices)', () => {
+    mockObservances = [
+      { date: new Date(), rule: { id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat' } },
+      { date: new Date(), rule: { id: 'somvati', nameHi: 'सोमवती अमावस्या', nameEn: 'Somvati Amavasya' } },
+    ];
+    mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
+    const tree = render();
+    // Both observances still render — overflow scrolls instead of wrapping.
+    const text = textOf(tree);
+    expect(text).toContain('अमावस्या व्रत');
+    expect(text).toContain('सोमवती अमावस्या');
+    const scrolls = tree.root.findAllByType(ScrollView);
+    expect(scrolls.length).toBe(1);
+    expect(scrolls[0].props.horizontal).toBe(true);
+    expect(scrolls[0].props.showsHorizontalScrollIndicator).toBe(false);
+  });
+
+  it('auto-drifts an overflowing chip row and stops for good on a user drag', () => {
+    mockObservances = [
+      { date: new Date(), rule: { id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat' } },
+    ];
+    mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
+    const tree = render();
+    const scroll = tree.root.findAllByType(ScrollView)[0];
+
+    // Measurement callbacks are wired; reporting an overflowing content width
+    // kicks the drift off (async behind the reduce-motion check — the wiring
+    // not throwing is the contract this pins).
+    act(() => {
+      scroll.props.onLayout({ nativeEvent: { layout: { width: 200 } } });
+      scroll.props.onContentSizeChange(420, 24);
+    });
+
+    // A drag hands control to the user permanently.
+    expect(typeof scroll.props.onScrollBeginDrag).toBe('function');
+    act(() => scroll.props.onScrollBeginDrag());
   });
 
   it('requests the static (live: false) muhurat read — no per-minute tick', () => {

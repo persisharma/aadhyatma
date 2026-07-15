@@ -21,7 +21,6 @@ import HomeWordmark from '@/components/HomeWordmark';
 import SearchFloatingButton from '@/components/SearchFloatingButton';
 import RoutineBanner from '@/components/RoutineBanner';
 import TodayStrip from '@/components/TodayStrip';
-import ContinueReadingCard from '@/components/ContinueReadingCard';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
@@ -244,8 +243,6 @@ export default function HomeScreen({ navigation }: Props) {
               </View>
             ))}
           </View>
-
-          <ContinueReadingCard />
 
           <Text
             style={[

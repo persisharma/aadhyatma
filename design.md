@@ -592,22 +592,23 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 1. Status bar area (safe region)
 2. Hero block: the **Home wordmark lockup** (Section 5) — `ॐ वेदांश़ ॐ` on one row over the "Sacred Texts · Daily Reading" tagline. (Earlier revisions stacked a crest above a 34px title; the lockup is the compact replacement.)
-3. **आज · Today strip** (§48) — a one-card daily-panchang glance (vara + tithi headline, observance chips, Abhijit / Rahu Kaal windows). Tap → Panchang tab.
+3. **आज · Today strip** (§48) — a one-card daily-panchang glance (vara + tithi headline, one horizontal-scroll row of observance / Abhijit / Rahu Kaal chips). Tap → Panchang tab.
 4. Section label "CATEGORIES" (Inter 11, uppercase, ink-muted, 0.22em tracking)
 5. **Category grid** (3-column launcher layout, 3×3):
    - **9 active tiles**: the 7 registry categories from `categories.ts` — ग्रन्थ, स्तोत्रम्, चालीसा, जप, आरती, तीर्थ, संस्कार — plus an appended **व्रत · Vrat & Parv** tile (opens the Panchang tab's `ObservanceList` vrat catalog via `panchangTabTarget()` — the `entryRoutes.ts` helper that carries `initial: false` so a lazily-mounted Panchang tab keeps its calendar as the initial route; PRD-09 — a grid door, **not** a `ContentCategory`; its content lives in the observance engine, not the library) and a **देवता · By Deity** tile (opens `DeityIndexScreen`)
    - Gap: **10px** between tiles, **24px** side padding (`spacing.xxl`, the Home page gutter); tile width = a third of the remaining row
    - Tap → CategoryList for that category (तीर्थ opens the Theerth browse surface, §26; व्रत opens the vrat catalog; देवता opens the Deity Index)
    - Tile spec: the **launcher variant**, Section 19
-6. **Continue-reading card** (§49) — resumes the most recent reading position; hidden until progress exists
-7. Section label "DISCOVER" + **Feature Spotlight carousel** (§32) — a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Sankalp, Pilgrimage — the Panchang card was retired when the Today strip took over that surface). Moved *below* the grid: the prime slot now belongs to today-relevant content; the carousel keeps its per-open shuffle one swipe down.
-8. Footer mantra (Section 7 — token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
-9. **Floating search button** (`SearchFloatingButton`) docked bottom-right, lifted above the routine banner → opens the Search screen. (The old Help floating button/modal never shipped.)
-10. **Routine banner** (§30) docked above the tab bar
+6. Section label "DISCOVER" + **Feature Spotlight carousel** (§32) — a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Sankalp, Pilgrimage — the Panchang card was retired when the Today strip took over that surface). Moved *below* the grid: the prime slot now belongs to today-relevant content; the carousel keeps its per-open shuffle one swipe down.
+7. Footer mantra (Section 7 — token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
+8. **Floating search button** (`SearchFloatingButton`) docked bottom-right, lifted above the routine banner → opens the Search screen. (The old Help floating button/modal never shipped.)
+9. **Routine banner** (§30) docked above the tab bar
+
+(A **Continue-reading card** briefly sat between the grid and DISCOVER — retired July 2026, §49.)
 
 There is **no deity chip row on Home** — deity browsing lives in the Deity Index screen (§20).
 
-**Why today-first:** a July 2026 competitive review found the previous Home never changed between visits (hero + DISCOVER carousel + 2-column catalog grid) — nothing on it answered "what matters today". The Today strip, the resume card, and the compact 3×3 launcher put today's panchang state, all nine sections, and the reading loop inside the first viewport.
+**Why today-first:** a July 2026 competitive review found the previous Home never changed between visits (hero + DISCOVER carousel + 2-column catalog grid) — nothing on it answered "what matters today". The Today strip and the compact 3×3 launcher put today's panchang state and all nine sections inside the first viewport.
 
 **Gradient background:** same as Section 2 Home gradient.
 
@@ -940,7 +941,7 @@ type IndiaMapProps = {
 
 ## 32. Home Feature Spotlight (DISCOVER carousel)
 
-**Purpose.** Raise awareness of the app's distinct sections — not just the catalog categories, but the *cross-cutting surfaces* a first-time user easily misses (Daily Practice, the Daily Verse tab, Sankalp, the Pilgrimage map — the Panchang card was retired in favour of the Today strip, §48). A single horizontal carousel of feature cards sits **below the CATEGORIES grid and the Continue-reading card** (§18) — it originally led the page, but the prime slot now belongs to today-relevant content (§48/§49). One flexible card shell carries every section so any content fits.
+**Purpose.** Raise awareness of the app's distinct sections — not just the catalog categories, but the *cross-cutting surfaces* a first-time user easily misses (Daily Practice, the Daily Verse tab, Sankalp, the Pilgrimage map — the Panchang card was retired in favour of the Today strip, §48). A single horizontal carousel of feature cards sits **below the CATEGORIES grid** (§18) — it originally led the page, but the prime slot now belongs to today-relevant content (§48). One flexible card shell carries every section so any content fits.
 
 **Placement & label.** A `DISCOVER` section label (Inter 11 600 `0.22em` uppercase `ink-muted`, same token as `CATEGORIES`) precedes the carousel. The carousel is a horizontal `ScrollView` that **full-bleeds** to the screen edges — it cancels the page gutter with `marginHorizontal: -spacing.xxl` and re-pads its content (`paddingHorizontal: spacing.xxl`) so the first card aligns with the page while the next card peeks. `snapToInterval = cardWidth + gap`, `decelerationRate="fast"`, `snapToAlignment="start"`.
 
@@ -1537,7 +1538,7 @@ Two AsyncStorage keys hold the last-seen **version string**: `@vedansh/tour-comp
 
 1. **Eyebrow row** — `आज का पंचांग` / `Today's Panchang` via **`eyebrowTextStyle()`** (`utils/langType.ts`, 12, `saffron-deep`; italic Cormorant + tracking for en, script-bold serif with no tracking for hi/gu/kn — Cormorant has no Indic glyphs and Latin tracking splits the shirorekha, §3; the Muhurat glance card shares the same helper) with a `saffron-deep` `›` affordance right-aligned (`saffron` fails the 4.5:1 floor on the gradient).
 2. **Headline** — hi/gu/kn `{vara} · {paksha} {tithi}` (e.g. `शनिवार · शुक्ल एकादशी`); en `{vara} · {tithi} ({paksha})` (e.g. `Saturday · Ekadashi (Shukla)`), one line: script-bold serif for hi/gu/kn (`scriptTitleFont`), `latinBold 17` (+0.3 tracking) for en; `ink`. Paksha display names come from `PAKSHA_NAMES_HI/EN` (`panchang/names.ts`). Shows `—` for the frame before the deferred solve lands.
-3. **Chip row** (wraps, gap 6) — one normalized chip list so the pill spec exists once: up to **2 observance chips** for today (`saffronTint` fill, `saffron-deep` text), then an **Abhijit chip** (`goldChipBg` fill, `saffron-deep`) and a **Rahu Kaal chip** (`avoidChipBg` fill, **`avoidDeep`** text — the tint composites darker than the card, so raw `avoid` drops under AA there; terracotta, never red, PRD-14). The kaal chip's label comes from the `KaalWindow`'s own `nameHi/nameEn` (KAAL_NAMES, `muhurat.ts`) — no duplicated literals. Chip names render via `pillTextStyle()` (Inter for en; script serif, no tracking, for Indic); the **time ranges render in `latinSemiBold` 11** — never the thin italic (§3), the same rule the Muhurat glance card re-learned (§31).
+3. **Chip row** — **one fixed-height horizontal-scroll row** (`ScrollView horizontal`, no indicator, gap 6; full-bleed via −14 margin / +14 content padding so a clipped chip peeks at the card edge and signals the scroll). The July 2026 shipped version let the chips *wrap*, which on narrow devices stacked up to four pills into a tall block; the row now never wraps — overflow scrolls sideways instead, so the card height is the same on every device. Drags scroll; plain taps still bubble to the card `Pressable` (a ScrollView only claims the responder on move). **Overflow auto-drifts**: when the content is wider than the row, the row slowly ping-pongs to the end and back on a loop (~24px/s, ~1.8s pause at each end, `Animated.loop` driving `scrollTo` — see `AUTO_SCROLL_*` in `TodayStrip.tsx`) so hidden chips surface without a drag. Lifecycle contract (post-review hardening): the first user drag stops it **for good**; it **pauses while the Home tab is unfocused** (`useIsFocused` — bottom-tab screens stay mounted, so an ungated loop would burn JS-thread frames from other tabs); it never runs under reduce-motion (**`useReducedMotion`** — the shared subscribed hook, §11, so a mid-session preference flip stops/allows it live); and any layout/content-size change **re-plans** the loop against the fresh overflow (a language switch or day rollover re-targets instead of driving a stale offset). Replanning is fully synchronous — there is no async check that could start a loop after unmount — and the loop only starts once the row has a measured width and >8px of real overflow. One normalized chip list so the pill spec exists once: up to **2 observance chips** for today (`saffronTint` fill, `saffron-deep` text), then an **Abhijit chip** (`goldChipBg` fill, `saffron-deep`) and a **Rahu Kaal chip** (`avoidChipBg` fill, **`avoidDeep`** text — the tint composites darker than the card, so raw `avoid` drops under AA there; terracotta, never red, PRD-14). The kaal chip's label comes from the `KaalWindow`'s own `nameHi/nameEn` (KAAL_NAMES, `muhurat.ts`) — no duplicated literals. Chip names render via `pillTextStyle()` (Inter for en; script serif, no tracking, for Indic); the **time ranges render in `latinSemiBold` 11** — never the thin italic (§3) — and use **`formatRangeCompact()`** (`muhuratFormat.ts`): the shared meridiem written once (`3:37 – 5:13 PM`), full form when the window crosses noon/midnight.
 
 **Surface.** `cardActiveFrom → cardActiveTo` gradient, 1px `cardActiveBorder`, `radii.lg`, **`elevation.raised`** (theme token). Opaque `cardActiveFrom` base, no `overflow: 'hidden'` (it would clip the iOS shadow) — the gradient carries its own radius. The §19/§32 card family.
 
@@ -1551,23 +1552,15 @@ Two AsyncStorage keys hold the last-seen **version string**: `@vedansh/tour-comp
 
 ---
 
-## 49. Continue-Reading Card (जारी रखें)
+## 49. Continue-Reading Card (जारी रखें) — RETIRED (July 2026)
 
-**Purpose.** Surface the most recent reading position on Home so the daily loop resumes in one tap — previously resume existed only behind category lists (`ResumeReadingSheet`, §21). This is the retention card the myBhakti-style competitors *can't* have (no reader), so it deepens the app's own loop rather than copying theirs.
+**What it was.** A single-row `parchmentSoft` card below the CATEGORIES grid (§18) that resumed the most recent reading position (thumb tile + `जारी रखें` eyebrow + title + `formatLocation()` position + `पढ़ें ›` pill), walking progress entries newest-first and routing through `navigateToProgress()`.
 
-**Structure (`ContinueReadingCard.tsx`)** — a single-row card below the CATEGORIES grid (§18):
+**Why it went.** Removed by product decision in the July 2026 Home-density pass — the card added a third always-on block between the grid and DISCOVER, and resume already lives where reading starts: the **`ResumeReadingSheet`** behind every category list (§21, e2e `resume-reading-smoke.yaml`).
 
-1. **Thumb tile** 44×44, `saffronTint` fill, `radii.md`, the entry's `thumb` glyph (`typography.thumb` family, 20, `saffron-deep`).
-2. **Body** — eyebrow `जारी रखें` / `CONTINUE READING` (`versePill` via `pillTextStyle()`, `saffron-deep`); the entry title one line via `orderTitlesByLanguage()` (`devPrimary 15` / `latPrimary 16`, `ink`); position line from the shared **`formatLocation()`** helper (per-source unit words — Sarga/Kanda/Stotram/पद — same labels as the resume sheets), `ink-muted` 12 — `latinSemiBold` for en, script serif for Indic; numerals never italic, §3.
-3. **CTA pill** — `पढ़ें ›` / `Read ›`, `saffronTint` fill, `saffron-deep` text. The whole card is the press target; the pill is an affordance (same contract as §32's FeatureCard).
+**What survives it.**
 
-**Surface.** `parchmentSoft` flat + 1px `divider`, `radii.lg` — deliberately quieter than the gradient cards around it (it's a shortcut, not a spotlight). Own `marginTop` so the gap collapses when hidden.
+- **`ReadingProgressContext` same-page guard** (restored to the pre-card behavior): a same-verse, same-day `setProgress` is a **hard no-op** — no persist, no `logRead`. A recency-refresh variant (bump `updatedAt` on re-open) shipped briefly alongside this card and was **reverted by review**: routine/sadhana completion and its `doneAt` timestamp are derived *live* from `getProgress()`'s max-`updatedAt` entry (`routine/units.ts`, `useSadhanaToday`), so bumping a sibling chapter's entry on a mere re-open flipped which entry was "latest" and un-completed items finished earlier that day. Cross-day same-page writes still persist + log (streak refresh). What DID stay from that work: `setProgress`/`clearProgress` are now **identity-stable** (a `progressRef` mirror, same pattern as `UserActivityContext`'s `activityRef`), so the 15+ reader persist-effects keyed on `setProgress` no longer re-run on every write from anywhere.
+- `navigateToProgress()` (`entryRoutes.ts`) — still the shared resume-routing path for the sheets and notification deep links; it returns `false` for unroutable entries. (`canResumeProgress()`, the card's render gate, was deleted with the card — it had no other callers.)
 
-**Behaviour.**
-
-- Source of truth: `ReadingProgressContext` — entries walked **newest-first** via `readingProgressByRecency()` (`utils/latestProgress.ts`, unit-tested); the card surfaces the first entry that is still active/visible **and** routable, so a hidden or retired source falls through to the next entry instead of blanking the card. theerth is excluded (its target is the map, not a reader).
-- Routing goes through **`navigateToProgress()`** (`entryRoutes.ts`) — the same path as the resume sheets — so chaptered sources get the chapters screen pushed under the reader (back lands on the chapter list, not Home). The routability gate is **`canResumeProgress()`** — the same branch conditions as `navigateToProgress` itself, so a rendered entry can never no-op on tap. Nothing routable → the card renders nothing.
-- Hidden while progress is loading or absent (first-run Home shows no empty shell).
-- Accessibility: `"Continue reading. {nameEn}, {position}. Tap to resume."`.
-
-**Files:** `mobile/src/components/ContinueReadingCard.tsx`, `mobile/src/utils/latestProgress.ts` (+ test); consumed by `HomeScreen.tsx` (§18).
+**Deleted files:** `ContinueReadingCard.tsx` (+ test), `utils/latestProgress.ts` (+ test); the `HomeScreen` slot and the `home-today-smoke.yaml` continue-reading leg went with them. Re-introducing a Home resume surface should start from this section's history (`git log --follow -- mobile/src/components/ContinueReadingCard.tsx`).
