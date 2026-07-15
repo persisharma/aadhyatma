@@ -25,7 +25,7 @@ The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat o
   - `abhijit` — the 8th of 15 equal day-muhurtas (≈ solar noon); `null` if the day duration collapses.
 - `classifyNow(md, at)` — point query returning current choghadiya + kaal for a given timestamp.
 
-**Display helpers** (`panchang/muhuratFormat.ts`): `formatClock(d)` → 12-hour AM/PM string; `formatRange(a, b)` → range string. Both pure.
+**Display helpers** (`panchang/muhuratFormat.ts`): `formatClock(d)` → 12-hour AM/PM string; `formatRange(a, b)` → range string; `formatRangeCompact(a, b)` → range with a shared meridiem written once (`3:37 – 5:13 PM`, full form across noon/midnight — the Home Today strip's chips); `formatEndInstant` → end clock with a short-date suffix on day-crossing. All pure.
 
 **Hook** (`panchang/useMuhurat.ts`): bridges the engine with the live clock.
 - Defers both `computePanchangForDate` calls (today + tomorrow) via `setTimeout(0)` to avoid synchronous render stutters — returns `null` while the solve is in flight.

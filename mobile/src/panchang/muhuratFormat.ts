@@ -19,6 +19,20 @@ export function formatRange(a: Date, b: Date): string {
   return `${formatClock(a)} – ${formatClock(b)}`;
 }
 
+/**
+ * Range with the shared meridiem written once — `11:17 – 12:05 PM` instead of
+ * `11:17 AM – 12:05 PM` — for tight glance surfaces (Home Today strip). Falls
+ * back to the full range when the window crosses noon/midnight. Meridiem
+ * equality is computed from the Dates (not by parsing formatClock's string),
+ * so a future change to the clock format can't silently corrupt the range.
+ */
+export function formatRangeCompact(a: Date, b: Date): string {
+  const from = formatClock(a);
+  const to = formatClock(b);
+  const sameMeridiem = (a.getHours() >= 12) === (b.getHours() >= 12);
+  return sameMeridiem ? `${from.replace(/ [AP]M$/, '')} – ${to}` : `${from} – ${to}`;
+}
+
 const MONTHS_SHORT_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_SHORT_HI = ['जन', 'फ़र', 'मार्च', 'अप्रै', 'मई', 'जून', 'जुल', 'अग', 'सित', 'अक्टू', 'नवं', 'दिसं'];
 
