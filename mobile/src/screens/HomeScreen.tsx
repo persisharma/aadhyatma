@@ -36,7 +36,9 @@ export default function HomeScreen({ navigation }: Props) {
   // Feature-tour spotlight anchors (design.md §47). Home tiles live in the
   // vertical scroll, so they reveal themselves (scroll into view) before measure.
   const homeScrollRef = React.useRef<ScrollView>(null);
-  const routineCardRef = useTourTarget('routineCard');
+  // The routine banner now lives inline in the scroll (below the Today strip),
+  // so it reveals itself into view before the tour measures its spotlight ring.
+  const routineCardRef = useTourTarget('routineCard', (ref) => scrollNodeIntoView(homeScrollRef, ref));
   const categoriesGridRef = useTourTarget('categoriesGrid', (ref) => scrollNodeIntoView(homeScrollRef, ref));
   const japaTileRef = useTourTarget('japaTile', (ref) => scrollNodeIntoView(homeScrollRef, ref));
   const theerthTileRef = useTourTarget('theerthTile', (ref) => scrollNodeIntoView(homeScrollRef, ref));
@@ -44,11 +46,6 @@ export default function HomeScreen({ navigation }: Props) {
   // the Home stack — navigate via the parent so the action bubbles up. Same
   // pattern as RoutineBanner / PanchangScreen.
   const rootNav = useNavigation<any>();
-
-  // The docked RoutineBanner (rendered below) sits at `spacing.sm` above the tab
-  // bar and stands ~60px tall at most. Lift the search FAB above it so it isn't
-  // hidden behind / overlapped by the banner.
-  const searchFabBottom = spacing.sm + 60 + spacing.md;
 
   type TileItem = {
     key: string;
@@ -200,6 +197,13 @@ export default function HomeScreen({ navigation }: Props) {
 
           <TodayStrip />
 
+          {/* Routine banner, inline (not docked) on Home — it sits with the
+              Today strip as the "today" cluster, above the library grid, so it
+              no longer floats over and clips the DISCOVER carousel below. */}
+          <View style={styles.routineInline}>
+            <RoutineBanner variant="inline" bannerRef={routineCardRef} />
+          </View>
+
           <Text
             style={[
               styles.sectionLabel,
@@ -330,11 +334,7 @@ export default function HomeScreen({ navigation }: Props) {
         </ScrollView>
       </SafeAreaView>
 
-      <SearchFloatingButton
-        onPress={() => navigation.navigate('Search')}
-        bottomOffset={searchFabBottom}
-      />
-      <RoutineBanner bannerRef={routineCardRef} />
+      <SearchFloatingButton onPress={() => navigation.navigate('Search')} />
     </View>
   );
 }
@@ -360,6 +360,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   sectionLabelSpaced: {
+    marginTop: 16,
+  },
+  routineInline: {
     marginTop: 16,
   },
   grid: {

@@ -1,8 +1,9 @@
 # Daily Routine (Nitya Sadhana) Smoke Test — PRD-07, feat(routine) Phase 1
 #
 # Routine is NOT a Home category nor a bottom tab. It is reached from the
-# docked RoutineBanner pinned above the tab bar on Home (and Daily Bhakti),
-# and lives as a stack of five screens inside HomeStackNavigator:
+# RoutineBanner — inline in the Home scroll (below the Today strip) and docked
+# above the tab bar on Daily Bhakti — and lives as a stack of five screens
+# inside HomeStackNavigator:
 #   RoutineBanner → RoutineCreate → RoutineAddItems → RoutineToday
 #                                                    ↘ RoutineList → RoutineDetail
 #
@@ -66,8 +67,9 @@ appId: host.exp.Exponent
 - tapOn: "Home, tab.*"
 - waitForAnimationToEnd
 
-# ── Step 3: Open routine creation from the docked banner ──
-# No-routine state: the banner nudges "Set your daily practice".
+# ── Step 3: Open routine creation from the inline Home banner ──
+# No-routine state: the banner nudges "Set your daily practice". It sits inline
+# just below the Today strip (above the fold), so it taps without scrolling.
 - extendedWaitUntil:
     visible: "Set your daily practice"
     timeout: 15000

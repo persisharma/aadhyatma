@@ -2,7 +2,7 @@
 title: Daily Routine (Nitya Sadhana)
 type: subsystem
 sources: [mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/data/routine/useRoutineToday.ts, mobile/src/data/routine/vaar.ts, mobile/src/data/sadhana/progress.ts, mobile/src/data/sadhana/useSadhanaToday.ts, mobile/src/contexts/RoutineContext.tsx, mobile/src/contexts/RoutineSheetProvider.tsx, mobile/src/components/RoutineBanner.tsx, mobile/src/components/SankalpTodayCard.tsx, mobile/src/components/routineBannerView.ts, mobile/src/components/AddToRoutineButton.tsx, mobile/src/components/RoutineCelebration.tsx, docs/roadmap/prds/07-daily-routine-sadhana.md, docs/roadmap/prds/11-sadhana-programs.md]
-last_verified_date: 2026-07-06
+last_verified_date: 2026-07-15
 confidence: high
 status: current
 ---
@@ -45,9 +45,11 @@ Routine + ReadingProgress + UserActivity into `{entries, doneCount, total, hasRo
 summary card is the always-visible header (with a centred rotating `›` caret) and the item rows +
 help caption **collapse by default, dropping down only when the summary card is tapped** (`expanded`
 state in `RoutineTodayScreen`). This mirrors the sankalp cards (see Sadhana Programs below), so both
-ledgers on the screen behave and look identical. Also: a docked `RoutineBanner` on Home above the tab
-bar (pure view-model in
-`routineBannerView.ts`; single-line chip since #110); `RoutineCelebration` (pushpa-varsha)
+ledgers on the screen behave and look identical. Also: a `RoutineBanner` (pure view-model in
+`routineBannerView.ts`; single-line chip since #110) with a `variant` prop — **`inline`** on Home
+(flows in the scroll between the Today strip and CATEGORIES; July 2026 — it used to dock at the
+bottom and floated over the DISCOVER carousel) and **`docked`** above the tab bar on Daily Bhakti;
+`RoutineCelebration` (pushpa-varsha)
 plays once per day when everything is done; five native-stack routes — `RoutineToday`,
 `RoutineList`, `RoutineCreate`, `RoutineDetail`, `RoutineAddItems`; every reader's toggle row
 hosts an `AddToRoutineButton` (chaptered readers pass the current chapter) which opens
@@ -89,8 +91,11 @@ and a संकल्प Home DISCOVER spotlight card — pinned by `screens/__t
 - **`useRoutines()` throws outside `<RoutineProvider>`** — App.tsx wiring is mandatory.
 - **Bilingual fields are hardcoded hi/en pairs** (`nameHi`/`nameEn`, `subHi`/`subEn`,
   `{hi, en}` label maps) — the app-wide pattern; any new-language work must touch these.
-- **Search FAB vs banner z-order** — the search ⌕ FAB had to be lifted above the docked
-  banner (it was swallowing the tap; caught by `search-smoke.yaml`).
+- **Search FAB vs banner z-order (historical)** — the search ⌕ FAB once had to be lifted above the
+  docked banner (it was swallowing the tap; caught by `search-smoke.yaml`). Since the Home banner
+  moved **inline** (July 2026) the two no longer overlap on Home, so the FAB uses its default bottom
+  offset; the z-order concern only ever applied where a docked banner shares a screen with the FAB
+  (Home no longer does; Daily Bhakti has no FAB).
 - **Waiting sankalps are previews, not completions** — `waiting.items` powers the visible
   preselected content row, but `useSadhanaToday()` only computes completion and `SankalpTodayCard`
   only shows the completion checkbox for `active` days (the waiting-preview row has no check

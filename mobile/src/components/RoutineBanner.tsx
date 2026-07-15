@@ -9,14 +9,22 @@ import { bannerStatus, bannerLine } from './routineBannerView';
 import LotusMark from './LotusMark';
 
 /**
- * Docked routine banner (PRD-07 §6.1). Pinned just above the tab bar on Home
- * and Daily Bhakti. Single language-aware line. Three states: nudge (no
- * routine), progress (partial), and complete — which shows a lotus "पूर्ण"
+ * Routine banner (PRD-07 §6.1). Single language-aware line. Three states: nudge
+ * (no routine), progress (partial), and complete — which shows a lotus "पूर्ण"
  * achievement badge as a persistent status chip. The completion pushpa-varsha
  * itself fires app-wide from RoutineCelebrationOverlay (mounted at the nav
  * root), so it plays on whatever screen completion happens — not just here.
+ *
+ * Two layouts via `variant`:
+ * - `docked` (default) — a floating chip pinned just above the tab bar. Used on
+ *   Daily Bhakti.
+ * - `inline` — flows in the Home scroll between the Today strip and CATEGORIES,
+ *   so it no longer overlays (and clips) the content beneath it.
  */
-export default function RoutineBanner({ bannerRef }: { bannerRef?: React.Ref<View> } = {}) {
+export default function RoutineBanner({
+  bannerRef,
+  variant = 'docked',
+}: { bannerRef?: React.Ref<View>; variant?: 'docked' | 'inline' } = {}) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const navigation = useNavigation<any>();
@@ -27,24 +35,41 @@ export default function RoutineBanner({ bannerRef }: { bannerRef?: React.Ref<Vie
   const open = (screen: 'RoutineToday' | 'RoutineCreate') =>
     navigation.navigate('HomeTab', { screen });
 
-  // Docked just above the tab bar. The tab bar already owns the bottom
-  // safe-area inset (height: 60 + insets.bottom), so adding it here too
-  // double-counted it and left a ~inset-sized gap below the chip.
-  const base = {
-    position: 'absolute' as const,
-    left: spacing.lg,
-    right: spacing.lg,
-    bottom: spacing.sm,
-    borderRadius: radii.lg,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
-    backgroundColor: colors.parchmentSoft,
-    shadowColor: colors.ink,
-    shadowOpacity: 0.16,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: -4 },
-    elevation: 6,
-  };
+  // Docked: floating chip just above the tab bar. The tab bar already owns the
+  // bottom safe-area inset (height: 60 + insets.bottom), so adding it here too
+  // double-counted it and left a ~inset-sized gap below the chip. Its shadow
+  // lifts UPWARD (offset -4) to read as hovering off the bar.
+  // Inline: flows in the page, so no absolute positioning; its shadow drops
+  // DOWNWARD (offset +3), the way the other Home cards cast, so it reads as a
+  // card in the layout rather than a floating overlay.
+  const base =
+    variant === 'inline'
+      ? {
+          borderRadius: radii.lg,
+          paddingHorizontal: spacing.lg,
+          paddingVertical: spacing.sm,
+          backgroundColor: colors.parchmentSoft,
+          shadowColor: colors.ink,
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
+          shadowOffset: { width: 0, height: 3 },
+          elevation: 3,
+        }
+      : {
+          position: 'absolute' as const,
+          left: spacing.lg,
+          right: spacing.lg,
+          bottom: spacing.sm,
+          borderRadius: radii.lg,
+          paddingHorizontal: spacing.lg,
+          paddingVertical: spacing.sm,
+          backgroundColor: colors.parchmentSoft,
+          shadowColor: colors.ink,
+          shadowOpacity: 0.16,
+          shadowRadius: 12,
+          shadowOffset: { width: 0, height: -4 },
+          elevation: 6,
+        };
 
   const lineStyle = {
     flex: 1,

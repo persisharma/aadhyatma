@@ -22,12 +22,21 @@ jest.mock('@react-navigation/native', () => ({
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: mockLang }) }));
 jest.mock('@/data/routine/useRoutineToday', () => ({ useRoutineToday: () => mockToday }));
 
-function render(): TestRenderer.ReactTestRenderer {
+function render(variant?: 'docked' | 'inline'): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
-    tree = TestRenderer.create(<RoutineBanner />);
+    tree = TestRenderer.create(<RoutineBanner variant={variant} />);
   });
   return tree;
+}
+
+// Flatten the outer Pressable's resolved style (it's a pressed-state function)
+// into one object so we can assert on layout props like `position`.
+function rootStyle(tree: TestRenderer.ReactTestRenderer): Record<string, unknown> {
+  const pressable = tree.root.findAll((n) => typeof n.props?.onPress === 'function')[0];
+  const raw = pressable.props.style;
+  const resolved = typeof raw === 'function' ? raw({ pressed: false }) : raw;
+  return Object.assign({}, ...[].concat(resolved).filter(Boolean));
 }
 
 function textOf(tree: TestRenderer.ReactTestRenderer): string {
@@ -80,6 +89,16 @@ describe('RoutineBanner — progress', () => {
     expect(text).toMatch(/2\s*\/\s*4/); // "2/4" (textOf joins Text children with spaces)
     expect(text).not.toContain("Today's practice");
     expect(text).not.toContain('आज का पाठ');
+  });
+});
+
+describe('RoutineBanner — layout variant', () => {
+  it('defaults to a docked (absolutely-positioned) floating chip', () => {
+    expect(rootStyle(render()).position).toBe('absolute');
+  });
+
+  it('inline variant flows in the page — not absolutely positioned', () => {
+    expect(rootStyle(render('inline')).position).toBeUndefined();
   });
 });
 
