@@ -5,6 +5,7 @@ import TodayStrip from '@/components/TodayStrip';
 
 // ---- mutable mock state (reset in beforeEach) ----
 let mockLang: 'hi' | 'en' = 'hi';
+let mockReduceMotion = false;
 const mockNavigate = jest.fn();
 let mockObservances: unknown[] = [];
 let mockMuhurat: { muhurat: unknown; panchang: unknown } = { muhurat: null, panchang: null };
@@ -20,7 +21,9 @@ jest.mock('expo-linear-gradient', () => ({
 }));
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
+  useIsFocused: () => true,
 }));
+jest.mock('@/utils/useReducedMotion', () => ({ useReducedMotion: () => mockReduceMotion }));
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: mockLang }) }));
 jest.mock('@/panchang/usePanchang', () => ({
   usePanchangCalendarSystem: () => ['purnimant', jest.fn()],
@@ -76,6 +79,7 @@ function textOf(tree: TestRenderer.ReactTestRenderer): string {
 
 beforeEach(() => {
   mockLang = 'hi';
+  mockReduceMotion = false;
   mockNavigate.mockClear();
   mockUseMuhurat.mockClear();
   mockObservances = [];

@@ -1,20 +1,9 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
 import { toDateKey, useUserActivity } from '@/contexts/UserActivityContext';
 
 const STORAGE_KEY = '@vedansh/reading-progress';
-
-/**
- * Same-page recency refresh throttle. Reader screens re-report their position
- * whenever their persist effect re-runs (every persist changes `progress`,
- * which changes `setProgress`'s identity) — persisting unconditionally would
- * loop forever because `updatedAt` is always fresh. Throttling the same-page
- * write breaks that loop while still letting a re-opened text bump its
- * `updatedAt`, so the Home continue-reading card follows the most recently
- * OPENED text instead of freezing on the last one whose page changed.
- */
-const RECENCY_REFRESH_MS = 60_000;
 
 export type ReadingProgress = {
   sourceId: string;
@@ -90,6 +79,13 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
   const [progress, setProgressState] = useState<ProgressMap>({});
   const [isLoading, setIsLoading] = useState(true);
   const { logRead } = useUserActivity();
+  // Ref mirrors keep the mutators identity-stable (same pattern as
+  // UserActivityContext's activityRef). Every reader screen puts setProgress
+  // in its persist-effect deps, so a setProgress that depended on `progress`
+  // would change identity on every write and re-run every mounted reader's
+  // effect — including readers sitting unfocused in other stacks/tabs.
+  const progressRef = useRef<ProgressMap>({});
+  const loadingRef = useRef(true);
 
   useEffect(() => {
     AsyncStorage.getItem(STORAGE_KEY)
@@ -98,6 +94,7 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
           try {
             const parsed = JSON.parse(raw);
             const { items, changed } = migrate(parsed);
+            progressRef.current = items;
             setProgressState(items);
             if (changed) {
               AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(items)).catch(() => undefined);
@@ -108,59 +105,65 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
         }
       })
       .catch(() => undefined)
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        loadingRef.current = false;
+        setIsLoading(false);
+      });
   }, []);
 
   const persist = useCallback((next: ProgressMap) => {
+    progressRef.current = next;
     setProgressState(next);
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
   }, []);
 
   const setProgress = useCallback(
     (entry: ReadingProgress) => {
-      if (isLoading) return;
+      if (loadingRef.current) return;
+      const current = progressRef.current;
       const key = progressKey(entry.sourceId, entry.chapter);
-      const current = progress[key];
-      if (
-        current &&
-        current.verseIndex === entry.verseIndex &&
-        toDateKey(new Date(current.updatedAt)) === toDateKey(new Date(entry.updatedAt))
-      ) {
-        // Same page, same day: no verse advance happened, so never logRead —
-        // but DO refresh `updatedAt` (throttled, see RECENCY_REFRESH_MS) so
-        // continue-reading recency still updates when a text is re-opened.
-        if (entry.updatedAt - current.updatedAt >= RECENCY_REFRESH_MS) {
-          persist({ ...progress, [key]: entry });
+      const existing = current[key];
+      if (existing && existing.verseIndex === entry.verseIndex) {
+        if (toDateKey(new Date(existing.updatedAt)) === toDateKey(new Date(entry.updatedAt))) {
+          // Same page, same day → hard no-op. Do NOT refresh `updatedAt`:
+          // routine/sadhana completion and its doneAt timestamp are derived
+          // LIVE from getProgress()'s max-updatedAt entry (routine/units.ts,
+          // useSadhanaToday), so bumping a sibling chapter's entry on a mere
+          // re-open flips which entry is "latest" and un-completes items
+          // finished earlier today. (A recency-bump variant shipped briefly
+          // for the retired Home continue-reading card — design.md §49.)
+          return;
         }
-        return;
       }
-      persist({ ...progress, [key]: entry });
+      persist({ ...current, [key]: entry });
       logRead(entry.sourceId);
     },
-    [isLoading, progress, persist, logRead]
+    [persist, logRead]
   );
 
   const clearProgress = useCallback(
     (sourceId: string) => {
+      const current = progressRef.current;
       const sid = canonicalSourceId(sourceId);
-      const keys = Object.keys(progress).filter((k) => progress[k].sourceId === sid);
+      const keys = Object.keys(current).filter((k) => current[k].sourceId === sid);
       if (keys.length === 0) return;
-      const next = { ...progress };
+      const next = { ...current };
       for (const k of keys) delete next[k];
       persist(next);
     },
-    [progress, persist]
+    [persist]
   );
 
   const clearChapterProgress = useCallback(
     (sourceId: string, chapter?: number) => {
+      const current = progressRef.current;
       const key = progressKey(canonicalSourceId(sourceId), chapter);
-      if (!(key in progress)) return;
-      const next = { ...progress };
+      if (!(key in current)) return;
+      const next = { ...current };
       delete next[key];
       persist(next);
     },
-    [progress, persist]
+    [persist]
   );
 
   const getProgress = useCallback(

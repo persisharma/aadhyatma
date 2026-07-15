@@ -164,7 +164,7 @@ describe('ReadingProgressContext — per-subsection progress', () => {
     expect(toDateKey(new Date(refreshed!.updatedAt))).toBe(toDateKey(new Date()));
   });
 
-  test('re-opening the same page later the same day refreshes recency without logging a read', async () => {
+  test('same-page same-day write is a hard no-op — updatedAt untouched, no read logged', async () => {
     // Anchor mid-day so "+5 minutes" cannot cross midnight.
     const noon = new Date();
     noon.setHours(12, 0, 0, 0);
@@ -174,9 +174,10 @@ describe('ReadingProgressContext — per-subsection progress', () => {
     await mountAndHydrate();
     mockLogRead.mockClear();
 
-    // Same page, same day, 5 minutes later — e.g. the reader re-opened via the
-    // Home continue-reading card. Recency must bump so the card's newest-first
-    // ordering follows the most recently opened text…
+    // Re-opening a text at its saved page must NOT bump updatedAt: routine and
+    // sadhana completion (and their doneAt timestamps) are derived live from
+    // getProgress()'s max-updatedAt entry, so a bump on a sibling chapter's
+    // re-open would flip which entry is "latest" and un-complete done items.
     await act(async () => {
       captured.setProgress({
         sourceId: 'ratri-shloka',
@@ -184,26 +185,17 @@ describe('ReadingProgressContext — per-subsection progress', () => {
         updatedAt: noon.getTime() + 5 * 60_000,
       });
     });
-    expect(captured.getProgress('ratri-shloka')?.updatedAt).toBe(noon.getTime() + 5 * 60_000);
-    // …but no verse advance happened, so activity stats must not inflate.
+    expect(captured.getProgress('ratri-shloka')?.updatedAt).toBe(noon.getTime());
     expect(mockLogRead).not.toHaveBeenCalled();
   });
 
-  test('same-page writes seconds apart are dropped (breaks the reader persist→effect loop)', async () => {
-    const noon = new Date();
-    noon.setHours(12, 0, 0, 0);
-    mockStore[STORAGE_KEY] = JSON.stringify({
-      'ratri-shloka': { sourceId: 'ratri-shloka', verseIndex: 3, updatedAt: noon.getTime() },
-    });
+  test('setProgress keeps a stable identity across writes (mounted readers must not re-run persist effects on every write)', async () => {
     await mountAndHydrate();
-
+    const before = captured.setProgress;
     await act(async () => {
-      captured.setProgress({
-        sourceId: 'ratri-shloka',
-        verseIndex: 3,
-        updatedAt: noon.getTime() + 2_000,
-      });
+      captured.setProgress({ sourceId: 'sundarkand', chapter: 1, verseIndex: 4, updatedAt: 100 });
     });
-    expect(captured.getProgress('ratri-shloka')?.updatedAt).toBe(noon.getTime());
+    expect(captured.getChapterProgress('sundarkand', 1)?.verseIndex).toBe(4);
+    expect(captured.setProgress).toBe(before);
   });
 });

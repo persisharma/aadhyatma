@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-  AccessibilityInfo,
-  Animated,
-  Easing,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Animated, Easing, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useReducedMotion } from '@/utils/useReducedMotion';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -121,67 +113,91 @@ export default function TodayStrip() {
   // ── Chip-row auto-scroll ──────────────────────────────────────────────────
   // When the chips overflow the row, drift them to the end and back on a slow
   // loop so off-screen chips surface without a drag. A user drag takes over
-  // for good; reduce-motion users never see it. All mutable bits live in one
-  // ref — none of this should re-render the card.
+  // for good; the loop pauses while the Home tab is unfocused and never runs
+  // under reduce-motion (useReducedMotion — live, subscribed). Mutable bits
+  // live in one lazily-created ref; replanning is fully synchronous, so
+  // nothing can start after unmount.
+  const isFocused = useIsFocused();
+  const reduceMotion = useReducedMotion();
   const scrollRef = React.useRef<ScrollView>(null);
-  const auto = React.useRef({
-    layoutW: 0,
-    contentW: 0,
-    stopped: false,
-    anim: null as Animated.CompositeAnimation | null,
-    x: new Animated.Value(0),
-  });
+  type AutoScrollState = {
+    layoutW: number;
+    contentW: number;
+    dragged: boolean;
+    // Live mirrors of the two hooks, so the stable callbacks read fresh values.
+    focused: boolean;
+    reduceMotion: boolean;
+    anim: Animated.CompositeAnimation | null;
+    x: Animated.Value;
+  };
+  const autoRef = React.useRef<AutoScrollState | null>(null);
+  if (autoRef.current == null) {
+    autoRef.current = {
+      layoutW: 0,
+      contentW: 0,
+      dragged: false,
+      focused: true,
+      reduceMotion: false,
+      anim: null,
+      x: new Animated.Value(0),
+    };
+  }
 
   const stopAutoScroll = React.useCallback(() => {
-    const s = auto.current;
-    s.stopped = true;
+    const s = autoRef.current!;
     s.anim?.stop();
     s.anim = null;
   }, []);
 
-  const maybeStartAutoScroll = React.useCallback(() => {
-    const s = auto.current;
-    if (s.stopped || s.anim || s.contentW - s.layoutW <= 8) return;
-    AccessibilityInfo.isReduceMotionEnabled()
-      .then((reduceMotion) => {
-        // Re-check: a drag or an unmount can land while the promise resolves.
-        const overflow = s.contentW - s.layoutW;
-        if (reduceMotion || s.stopped || s.anim || overflow <= 8) return;
-        const duration = (overflow / AUTO_SCROLL_PX_PER_SEC) * 1000;
-        s.anim = Animated.loop(
-          Animated.sequence([
-            Animated.delay(AUTO_SCROLL_END_PAUSE_MS),
-            Animated.timing(s.x, {
-              toValue: overflow,
-              duration,
-              easing: Easing.inOut(Easing.quad),
-              useNativeDriver: false,
-            }),
-            Animated.delay(AUTO_SCROLL_END_PAUSE_MS),
-            Animated.timing(s.x, {
-              toValue: 0,
-              duration,
-              easing: Easing.inOut(Easing.quad),
-              useNativeDriver: false,
-            }),
-          ])
-        );
-        s.anim.start();
-      })
-      .catch(() => undefined);
-  }, []);
+  // Stop and (when allowed) restart the drift against the CURRENT overflow —
+  // called on layout/content-size changes too, so a language switch or day
+  // rollover re-targets the loop instead of leaving it driving a stale offset.
+  const replanAutoScroll = React.useCallback(() => {
+    const s = autoRef.current!;
+    stopAutoScroll();
+    const overflow = s.contentW - s.layoutW;
+    if (s.dragged || !s.focused || s.reduceMotion || s.layoutW <= 0 || overflow <= 8) return;
+    const duration = (overflow / AUTO_SCROLL_PX_PER_SEC) * 1000;
+    const drift = (toValue: number) =>
+      Animated.timing(s.x, {
+        toValue,
+        duration,
+        easing: Easing.inOut(Easing.quad),
+        useNativeDriver: false,
+      });
+    s.anim = Animated.loop(
+      Animated.sequence([
+        Animated.delay(AUTO_SCROLL_END_PAUSE_MS),
+        drift(overflow),
+        Animated.delay(AUTO_SCROLL_END_PAUSE_MS),
+        drift(0),
+      ])
+    );
+    s.anim.start();
+  }, [stopAutoScroll]);
+
+  const onChipRowDrag = React.useCallback(() => {
+    autoRef.current!.dragged = true;
+    stopAutoScroll();
+  }, [stopAutoScroll]);
 
   React.useEffect(() => {
-    const s = auto.current;
+    const s = autoRef.current!;
+    s.focused = isFocused;
+    s.reduceMotion = reduceMotion;
+    replanAutoScroll();
+  }, [isFocused, reduceMotion, replanAutoScroll]);
+
+  React.useEffect(() => {
+    const s = autoRef.current!;
     const sub = s.x.addListener(({ value }) => {
       scrollRef.current?.scrollTo?.({ x: value, animated: false });
     });
     return () => {
       s.x.removeListener(sub);
-      s.anim?.stop();
-      s.anim = null;
+      stopAutoScroll();
     };
-  }, []);
+  }, [stopAutoScroll]);
 
   return (
     <Pressable
@@ -241,14 +257,14 @@ export default function TodayStrip() {
           style={styles.chipScroll}
           contentContainerStyle={styles.chipRow}
           onLayout={(e) => {
-            auto.current.layoutW = e.nativeEvent.layout.width;
-            maybeStartAutoScroll();
+            autoRef.current!.layoutW = e.nativeEvent.layout.width;
+            replanAutoScroll();
           }}
           onContentSizeChange={(w) => {
-            auto.current.contentW = w;
-            maybeStartAutoScroll();
+            autoRef.current!.contentW = w;
+            replanAutoScroll();
           }}
-          onScrollBeginDrag={stopAutoScroll}
+          onScrollBeginDrag={onChipRowDrag}
         >
           {chips.map((chip) => (
             <View
