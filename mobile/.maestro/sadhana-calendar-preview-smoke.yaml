@@ -29,6 +29,8 @@ appId: host.exp.Exponent
 - runFlow: _launch.yaml
 - tapOn: "More, tab.*"
 - waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "English"
     timeout: 15000
@@ -72,12 +74,14 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: "Today's Practice"
     timeout: 15000
-# Resting copy for an upcoming festival window…
-- assertVisible: "Your sankalp begins.*"
+# Resting copy for an upcoming festival window. The card header is an accessible
+# button (accordion), so the eyebrow + title + this prose merge into ONE label —
+# anchor with a leading .* (the "Sankalp · 0 / 9" eyebrow comes first).
+- assertVisible: ".*Your sankalp begins.*"
 # …AND the day-1 unit as a tap-to-read preview (this is what used to be missing).
-# The preview rows drop down when the card is tapped (accordion) — tap the
-# eyebrow to expand. The item row merges title + sub into one node.
-- tapOn: "Sankalp · 0 / 9"
+# The preview rows drop down when the card is tapped (accordion) — tap the header
+# (merged label) to expand. The item row merges title + sub into one node.
+- tapOn: ".*Sankalp · 0 / 9.*"
 - waitForAnimationToEnd
 - assertVisible: "Durga Chalisa.*Tap to read.*"
 - takeScreenshot: /tmp/vedansh-sankalp-preview

@@ -65,6 +65,8 @@ appId: host.exp.Exponent
 # ── Step 2: Set global reading language to English (More tab) ──
 - tapOn: "More, tab.*"
 - waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "English"
     timeout: 15000
@@ -106,21 +108,24 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: "Today's Practice"
     timeout: 15000
-# Eyebrow is a days-completed counter: a freshly begun sankalp has 0 days done,
-# so it reads "Sankalp · 0 / 41" (the sectionLabel token uppercases visually via
-# textTransform; the accessibility text is the raw casing). It ticks to 1/41 once
-# today's day is committed below — never anchored to the day-you-are-on index.
-- assertVisible: "Sankalp · 0 / 41"
-- assertVisible: "Hanuman Chalisa — 41 Days"
+# Eyebrow is a days-completed counter: a freshly begun sankalp reads
+# "Sankalp · 0 / 41" (uppercased visually via textTransform; a11y keeps raw case).
+# NB: #199 made the card header an accessible button (accordion), so RN MERGES the
+# eyebrow + title into ONE comma-joined a11y label — the standalone strings are no
+# longer individually matchable; anchor the merged label with .* on both sides.
+- assertVisible: ".*Sankalp · 0 / 41.*"
+- assertVisible: ".*Hanuman Chalisa — 41 Days.*"
 - takeScreenshot: /tmp/vedansh-sankalp-day1
-# The unit rows now drop down only when the card is tapped (accordion). Tap the
-# eyebrow to expand, then commit today's practice via the item-named check circle.
-- tapOn: "Sankalp · 0 / 41"
+# The unit rows drop down only when the card is tapped (accordion). Tap the header
+# (merged label) to expand, then commit today's practice via the item check circle.
+- tapOn: ".*Sankalp · 0 / 41.*"
 - waitForAnimationToEnd
 - tapOn: "Mark offered — Hanuman Chalisa"
 - waitForAnimationToEnd
-# The day is recorded → the card flips to its resting "done today" state.
-- assertVisible: "Today's reading is done.*"
+# The day is recorded → the card flips to its resting "done today" state. The
+# resting prose lives inside the same accordion-header button, so it's part of the
+# merged label too — anchor with a leading .*.
+- assertVisible: ".*Today's reading is done.*"
 
 # ── Step 8: Cleanup — Back to Detail, then set the sankalp aside ──
 # Back pops RoutineToday → the now-active SadhanaProgramDetail.

@@ -24,8 +24,13 @@ appId: host.exp.Exponent
 ---
 - runFlow: _launch.yaml
 
-# ── Global reading language → English ──
+# ── Global reading language → English (More → Language picker sheet) ──
+# The More hub shows the current reading language as a "Language, <current>" row
+# that opens LanguagePickerSheet — the old inline English/Hindi pills are gone
+# (gu/kn added a 4-way picker). Open the sheet, then pick English.
 - tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "English"
