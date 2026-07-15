@@ -5,9 +5,10 @@ import { useTheme } from '@/theme/ThemeContext';
 type Props = {
   onPress: () => void;
   /**
-   * Distance from the bottom edge. Defaults to `spacing.xl`. On Home the docked
-   * RoutineBanner occupies the bottom; the caller passes a larger offset so the
-   * FAB clears it (it used to be hidden behind the banner — search-smoke #57).
+   * Distance from the bottom edge. Defaults to `spacing.xl`. Home used to pass a
+   * larger offset so the FAB cleared the docked RoutineBanner (it was otherwise
+   * hidden behind it — search-smoke #57); since the routine banner moved inline
+   * on Home, the FAB uses the default offset and no caller overrides it today.
    */
   bottomOffset?: number;
 };
@@ -56,8 +57,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    // Sit above the docked RoutineBanner (a sibling rendered after this on
-    // Home) so taps reach the FAB rather than the banner beneath it.
+    // Keep a positive z so the FAB stays above the scroll content it floats over.
     zIndex: 5,
     elevation: 8,
   },

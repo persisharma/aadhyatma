@@ -1,10 +1,12 @@
 # Library Search Smoke Test — PRD-03 (#57: on-device global library search)
 #
-# History: this was RED while the ⌕ FAB on Home sat behind the always-present
-# RoutineBanner (the banner is rendered after it → on top), so a center-tap on
-# the FAB landed on the banner and opened RoutineCreate instead of Search. Fixed
-# by lifting the FAB above the banner (HomeScreen passes a banner-clearing
-# bottomOffset + SearchFloatingButton sets zIndex). The flow is green again.
+# History: this was RED while the ⌕ FAB on Home sat behind the then-docked
+# RoutineBanner (the banner was rendered after it → on top), so a center-tap on
+# the FAB landed on the banner and opened RoutineCreate instead of Search. It was
+# fixed by lifting the FAB above the banner (a banner-clearing bottomOffset +
+# zIndex). As of July 2026 the Home routine banner moved INLINE (into the scroll),
+# so nothing overlays the FAB on Home anymore and it uses its default offset — the
+# two can no longer collide here.
 #
 # Search is reached from the floating ⌕ button on Home (SearchFloatingButton);
 # the "Search card" was removed from the More screen in #66, so the floating
