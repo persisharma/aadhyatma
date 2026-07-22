@@ -13,9 +13,11 @@ appId: host.exp.Exponent
 ---
 - runFlow: _launch.yaml
 
-# Open Chalisa category
-- assertVisible: "Chalisa. Tap to open."
-- tapOn: "Chalisa. Tap to open."
+# Open Chalisa category. The `.*` absorbs an optional " New." — the Chalisa
+# tile now flags NEW in upgrader state because Gayatri Chalisa is debut-new
+# (addedInVersion 1.4.4). Mirrors the stotram-smoke category-tile selector.
+- assertVisible: "Chalisa\\..*Tap to open\\."
+- tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 
 # Verify all 5 sections appear in CategoryList

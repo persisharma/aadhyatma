@@ -25,7 +25,7 @@ appId: host.exp.Exponent
 # ── Step 2: Verify all 6 categories visible on Home (full accessibilityLabel match) ──
 - assertVisible: "Sacred Books. Tap to open."      # Granth
 - assertVisible: "Hymns & Praise\\..*Tap to open\\."    # Stotram
-- assertVisible: "Chalisa. Tap to open."
+- assertVisible: "Chalisa\\..*Tap to open\\."       # Chalisa (Gayatri Chalisa 1.4.4 → can show NEW)
 - assertVisible: "Japa & Mantras. Tap to open."    # Japam
 - assertVisible: "Aarti\\..*Tap to open\\."
 - assertVisible: "Good Habits\\..*Tap to open\\."       # Sanskar
