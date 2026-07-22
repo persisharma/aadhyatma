@@ -57,6 +57,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'shiv-chalisa': shivaStrotamImages.shiva,
   'durga-chalisa': backgroundImages.deity_durga_lion,
   'ganesh-chalisa': backgroundImages.deity_ganesha_modak,
+  'gayatri-chalisa': backgroundImages.source_gayatri_savitri_sun,
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,

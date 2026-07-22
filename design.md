@@ -456,7 +456,7 @@ When a new text is added, pick the pattern that fits the source:
 - `mobile/src/data/gita/chapters-manifest.json` — lightweight list of `{ chapter, titleHi, titleEn, verseCount }` used by the Chapters Index.
 - `mobile/src/data/sundarkand/chapter-01..16.json` + `chapters-manifest.json` — 354 verses across 5 verse types (shloka, doha, chaupai, sortha, chhand), chapter-scoped like the Gita.
 - `mobile/src/data/hanuman-chalisa/hanuman-chalisa.json` — 43 verses (2 opening dohas + 40 chaupais + 1 closing doha).
-- Further content-module dirs under `mobile/src/data/` follow the same committed-JSON pattern: `aarti/`, `sanskar/`, `japam/`, `ramcharitmanas/`, the chalisa dirs (`shiv-chalisa`, `durga-chalisa`, `ganesh-chalisa`, `bajrang-baan`, `hanuman-ashtak`), and the stotram dirs (`shiva-strotam`, `durga-stotram`, `ganesh-stotram`, `saraswati-stotram`, `krishna-stotram`, `vishnu-sahasranama`, `ram-stuti`), plus `theerth/temples.ts`.
+- Further content-module dirs under `mobile/src/data/` follow the same committed-JSON pattern: `aarti/`, `sanskar/`, `japam/`, `ramcharitmanas/`, the chalisa dirs (`shiv-chalisa`, `durga-chalisa`, `ganesh-chalisa`, `gayatri-chalisa`, `bajrang-baan`, `hanuman-ashtak`), and the stotram dirs (`shiva-strotam`, `durga-stotram`, `ganesh-stotram`, `saraswati-stotram`, `krishna-stotram`, `vishnu-sahasranama`, `ram-stuti`), plus `theerth/temples.ts`.
 
 **Registries & cross-cutting data (`mobile/src/data/`):**
 - `texts.ts` — the library registry (`library`): every content entry with category, deities, counts, status. Ordering is curated here (§21).
