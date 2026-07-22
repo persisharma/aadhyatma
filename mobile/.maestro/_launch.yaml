@@ -25,22 +25,31 @@ appId: host.exp.Exponent
 - launchApp:
     appId: host.exp.Exponent
 - tapOn: "Vedansh"
+# Let the bundle finish executing and any onboarding surface animate in.
 - waitForAnimationToEnd:
     timeout: 30000
-- extendedWaitUntil:
-    visible: "Good Habits\\..*Tap to open\\."
-    timeout: 60000
-# Dismiss whichever first-launch onboarding surface auto-appeared (fresh
-# install → feature tour, dismissed via its "Skip tour" a11y label; returning
-# user → What's New "Close"). The tour control exposes only its a11y label and
-# Maestro matches the whole string, so this must be "Skip tour", not "Skip".
+# Dismiss whichever first-launch onboarding surface auto-appeared BEFORE
+# asserting Home — a fresh install shows the feature tour (an OVERLAY, so Home
+# is visible behind it), but a returning user on a debut release gets the
+# What's New sheet, a FULL modal that covers Home entirely. If we asserted
+# "Good Habits" first, that covering modal would fail the canary before we ever
+# reached the dismiss taps (observed on a 1.4.4 fresh-Expo-Go run). Both dismiss
+# controls are optional no-ops once the surface has been seen. The tour control
+# exposes only its a11y label and Maestro matches the whole string, so it must
+# be "Skip tour", not "Skip"; the What's New ✕ exposes a11y label "Close".
 - tapOn:
     text: "Skip tour"
     optional: true
 - tapOn:
     text: "Close"
     optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
 - waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
 - swipe:
     direction: DOWN
 - waitForAnimationToEnd

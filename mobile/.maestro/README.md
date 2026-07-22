@@ -2,6 +2,8 @@
 
 End-to-end UI tests for the Vedansh app. Runs against the iOS Simulator or Android Emulator using [Maestro](https://maestro.mobile.dev).
 
+> **Verifying on a machine that runs several Conductor worktrees?** Use the isolated-simulator recipe (dedicated sim + this worktree's own Metro port + `--device`) in `wiki/runbooks/e2e-verification.md` — the shared sim's ambiguous "Vedansh" project can silently load the wrong worktree's bundle.
+
 ## Why Maestro
 
 Per `RULEBOOK.md` §9 (Cross-platform verification), every section must be tested on both iOS and Android before merge. These flows automate that check.
