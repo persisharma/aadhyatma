@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
@@ -82,11 +83,16 @@ class JapamAlarmReceiver : BroadcastReceiver() {
 
         // Per-mantra channel: Android 8+ binds sound at channel-creation time
         // so each mantra gets its own channel keyed by sanitised mantraId.
+        // NAME-based resource URI, never the int resource id: raw ids renumber
+        // on app updates while the channel keeps the URI it was created with,
+        // which turns the alarm silent after an update.
         val soundResId = lookupSoundResource(context, mantraId)
         val soundUri: Uri? = if (soundResId != 0) {
-            Uri.parse("android.resource://${context.packageName}/$soundResId")
+            Uri.parse(
+                "android.resource://${context.packageName}/raw/${mantraId.replace("-", "_")}"
+            )
         } else null
-        val channelId = if (soundResId != 0) "japam-alarm-$mantraId" else "japam-alarm-default"
+        val channelId = if (soundResId != 0) "japam-alarm-$mantraId-v2" else "japam-alarm-default-v2"
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             ensureChannel(nm, channelId, soundUri)
@@ -140,11 +146,13 @@ class JapamAlarmReceiver : BroadcastReceiver() {
             .addAction(0, "Snooze 5m", snoozePi)
 
         // Pre-Android-8 path: channel doesn't carry sound, so set it on the
-        // notification builder directly. Falls back to the system default
-        // notification ringtone when no custom WAV is bundled for the mantra.
+        // notification builder directly, on the ALARM stream (see
+        // ensureChannel). Falls back to the system default alarm ringtone
+        // when no custom WAV is bundled for the mantra.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             builder.setSound(
-                soundUri ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                soundUri ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
+                AudioManager.STREAM_ALARM
             )
             builder.setDefaults(Notification.DEFAULT_VIBRATE or Notification.DEFAULT_LIGHTS)
         }
@@ -180,6 +188,13 @@ class JapamAlarmReceiver : BroadcastReceiver() {
     }
 
     private fun ensureChannel(nm: NotificationManager, channelId: String, soundUri: Uri?) {
+        // The retired v1 channels (same ids without the -v2 suffix) rang on
+        // the NOTIFICATION stream, which vibrate/silent mode, DnD, and a
+        // zeroed notification-volume slider all mute — the "alarm makes no
+        // sound on Android" bug. A channel pins its sound + audio attributes
+        // at creation, so the fix requires fresh channel ids; delete the v1
+        // channel so it doesn't linger in the app's notification settings.
+        nm.deleteNotificationChannel(channelId.removeSuffix("-v2"))
         // Idempotent — getNotificationChannel returns null if not yet created.
         if (nm.getNotificationChannel(channelId) != null) return
         val channel = NotificationChannel(
@@ -190,15 +205,15 @@ class JapamAlarmReceiver : BroadcastReceiver() {
             description = "Alarms with the mantra audio as the alarm tone."
             enableVibration(true)
             vibrationPattern = longArrayOf(0, 250, 250, 250)
-            // USAGE_NOTIFICATION (not USAGE_ALARM) — user opted for "normal
-            // alarm" semantics that respect silent / DnD rather than the
-            // alarm-stream tier that overrides them.
+            // USAGE_ALARM: ring on the alarm stream — audible through
+            // vibrate/silent and governed by the alarm volume slider, like
+            // the Clock app and the AlarmKit tier on iOS.
             val attrs = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
             setSound(
-                soundUri ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
+                soundUri ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
                 attrs
             )
         }
