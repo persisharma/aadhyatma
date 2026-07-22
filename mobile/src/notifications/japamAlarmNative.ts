@@ -40,7 +40,7 @@ type NativeScheduleArgs = {
   mantraId: string;
   fireAt: number;
   label?: string | null;
-  /** Bundled alarm-clip filename (e.g. 'om-namah-shivaya.wav'), or null when
+  /** Bundled alarm-clip filename (e.g. 'om_namah_shivaya.wav'), or null when
    *  the mantra has no clip. Android derives sound from mantraId and ignores
    *  this; iOS (AlarmKit) rings it via `.named(sound)`. */
   sound?: string | null;

@@ -12,7 +12,7 @@
  *      Mono or stereo, 44.1 kHz, 16-bit PCM works on both platforms:
  *        ffmpeg -i <input>.mp3 -ar 44100 -ac 2 -acodec pcm_s16le \
  *          -map_metadata -1 -fflags +bitexact -flags +bitexact \
- *          mobile/assets/japam-alarm-sounds/<mantra-id>.wav
+ *          mobile/assets/japam-alarm-sounds/<mantra_id>.wav
  *      The `-map_metadata -1 -fflags/-flags +bitexact` flags are NOT optional:
  *      without them ffmpeg writes a `LIST`/`INFO` metadata chunk (encoder tag,
  *      title, etc.) between the `fmt ` and `data` chunks. iOS's notification /
@@ -23,8 +23,14 @@
  *      (verify: the file must contain no `LIST` chunk). This was the real
  *      July 2026 "alarm only rings Om Namah Shivaya" bug — the other clips
  *      were registered but carried an ffmpeg LIST chunk and never played.
- *   2. Drop it next to this file as `<mantra-id>.wav` (id must match
- *      `JapamMantra.id` in `mobile/src/data/japam/japam.json`).
+ *   2. Drop it next to this file as `<mantra_id>.wav`. The filename MUST be a
+ *      valid Android resource name — lowercase a-z, 0-9 and underscore only,
+ *      starting with a letter — because `expo-notifications` copies it into
+ *      `res/raw/` verbatim and REJECTS hyphens at prebuild (Android build
+ *      failure). So underscore the mantra id: `om-namah-shivaya` (the
+ *      `JapamMantra.id` in `mobile/src/data/japam/japam.json`) → the file
+ *      `om_namah_shivaya.wav`. The Android receiver looks it up by the same
+ *      `mantraId.replace('-','_')` transform.
  *   3. Register it in `japamAlarmSounds` below.
  *   4. Add the same relative path to `app.json` →
  *      `expo.plugins[expo-notifications].sounds[]`. Without that step the
@@ -37,14 +43,16 @@
  * the mantra; callers fall back to `default`.
  */
 
+// Keys are `JapamMantra.id` (hyphenated); values are the bundled filenames,
+// which MUST use underscores — see the naming note in the workflow above.
 const japamAlarmSounds: Record<string, string> = {
-  'om-namah-shivaya': 'om-namah-shivaya.wav',
+  'om-namah-shivaya': 'om_namah_shivaya.wav',
   // 28 s excerpts cut from the bundled recordings in assets/audio-library/
   // (loudness-normalised, faded, mono 22.05 kHz PCM — see workflow above).
-  'hare-krishna-mahamantra': 'hare-krishna-mahamantra.wav',
-  'gayatri-mantra': 'gayatri-mantra.wav',
+  'hare-krishna-mahamantra': 'hare_krishna_mahamantra.wav',
+  'gayatri-mantra': 'gayatri_mantra.wav',
   // No recording shipped yet — alarm falls back to the system default chime.
-  // 'om-namo-bhagavate-vasudevaya': 'om-namo-bhagavate-vasudevaya.wav',
+  // 'om-namo-bhagavate-vasudevaya': 'om_namo_bhagavate_vasudevaya.wav',
 };
 
 export function getJapamAlarmSoundName(mantraId: string): string | null {
