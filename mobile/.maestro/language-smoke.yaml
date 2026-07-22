@@ -46,9 +46,9 @@ appId: host.exp.Exponent
 - tapOn: "Home, tab.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Chalisa. Tap to open."
+    visible: "Chalisa\\..*Tap to open\\."
     timeout: 15000
-- tapOn: "Chalisa. Tap to open."
+- tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Hanuman Chalisa\\..*Tap to open\\."

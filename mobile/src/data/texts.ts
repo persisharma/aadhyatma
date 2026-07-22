@@ -8,6 +8,7 @@ import { vishnuSahasranamaTotal } from './vishnu-sahasranama';
 import { shivChalisaCounts } from './shiv-chalisa';
 import { durgaChalisaCounts } from './durga-chalisa';
 import { ganeshChalisaCounts } from './ganesh-chalisa';
+import { gayatriChalisaCounts } from './gayatri-chalisa';
 import { hanumanAshtakTotal } from './hanuman-ashtak';
 import { bajrangBaanTotal } from './bajrang-baan';
 import { ramStutiTotal } from './ram-stuti';
@@ -220,6 +221,19 @@ export const library: readonly LibraryEntry[] = [
     verseCount: ganeshChalisaCounts.totalVerses,
   },
   {
+    id: 'gayatri-chalisa',
+    nameHi: 'गायत्री चालीसा',
+    nameEn: 'Gayatri Chalisa',
+    sub: '40 चौपाई + 3 दोहा · अर्थ सहित',
+    subEn: '40 Chaupai + 3 Doha · with meaning',
+    thumb: 'गा',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['savitr'],
+    verseCount: gayatriChalisaCounts.totalVerses,
+    addedInVersion: '1.4.4',
+  },
+  {
     id: 'hanuman-ashtak',
     nameHi: 'संकटमोचन हनुमानाष्टक',
     nameEn: 'Sankat Mochan Hanuman Ashtak',
@@ -400,6 +414,19 @@ export const library: readonly LibraryEntry[] = [
     deities: ['saraswati'],
     verseCount: 8,
     addedInVersion: '1.3.1',
+  },
+  {
+    id: 'gayatri-aarti',
+    nameHi: 'गायत्री माता की आरती',
+    nameEn: 'Gayatri Mata Ki Aarti',
+    sub: '12 पद · व्याख्या सहित',
+    subEn: '12 verses · with commentary',
+    thumb: 'जय',
+    status: 'active',
+    category: 'aarti',
+    deities: ['savitr'],
+    verseCount: 12,
+    addedInVersion: '1.4.4',
   },
   {
     id: 'prabhati-shloka',

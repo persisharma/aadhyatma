@@ -25,7 +25,13 @@ export function panchangTabTarget<T extends keyof PanchangStackParamList>(
   return { screen, params, initial: false };
 }
 
-const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa']);
+const chalisaIds = new Set([
+  'hanuman-chalisa',
+  'shiv-chalisa',
+  'durga-chalisa',
+  'ganesh-chalisa',
+  'gayatri-chalisa',
+]);
 
 const theerthIds = new Set([
   'dvadasha-jyotirlinga',

@@ -325,6 +325,54 @@ assert.ok(
   `Shiv Chalisa doha 2 should have "दीनदयाला" (with long ii), got: "${shivDoha2.lines[0]}"`
 );
 
+// ─── 10a. Gayatri Chalisa canonical structure & opening ──────────────────────
+
+const gayatriChalisa = readJson('gayatri-chalisa/gayatri-chalisa.json');
+assert.equal(
+  gayatriChalisa.verses.length,
+  43,
+  'Gayatri Chalisa should have 43 verses (2 opening dohas + 40 chaupais + 1 closing doha)'
+);
+assert.equal(
+  gayatriChalisa.verses.filter((v: any) => v.type === 'chaupai').length,
+  40,
+  'Gayatri Chalisa should have exactly 40 chaupais'
+);
+const gayatriFirstChaupai = gayatriChalisa.verses.find(
+  (v: any) => v.type === 'chaupai' && v.number === 1
+);
+assert.ok(gayatriFirstChaupai, 'Gayatri Chalisa should have chaupai 1');
+assert.ok(
+  gayatriFirstChaupai.lines[0].includes('भूर्भुवः स्वः'),
+  `Gayatri Chalisa chaupai 1 should open with the Vyahriti "भूर्भुवः स्वः", got: "${gayatriFirstChaupai.lines[0]}"`
+);
+const gayatriClosing = gayatriChalisa.verses.find((v: any) => v.section === 'closing');
+assert.ok(
+  gayatriClosing?.lines.join(' ').includes('यह चालीसा भक्ति'),
+  'Gayatri Chalisa closing doha should be the canonical phala-shruti'
+);
+
+// ─── 10b. Gayatri Mata Aarti canonical structure & refrain ───────────────────
+
+const gayatriAarti = readJson('aarti/gayatri-aarti.json');
+assert.equal(
+  gayatriAarti.verses.length,
+  12,
+  'Gayatri Mata Aarti should have 12 verses (2 refrains + 10 stanzas)'
+);
+assert.equal(
+  gayatriAarti.verses.filter((v: any) => v.type === 'stanza').length,
+  10,
+  'Gayatri Mata Aarti should have exactly 10 stanzas'
+);
+assert.equal(gayatriAarti.deity, 'savitr', 'Gayatri Mata Aarti deity should be savitr (Maa Gayatri)');
+const gayatriAartiRefrain = gayatriAarti.verses.find((v: any) => v.type === 'refrain');
+assert.ok(gayatriAartiRefrain, 'Gayatri Mata Aarti should open with a refrain');
+assert.ok(
+  gayatriAartiRefrain.lines[0].includes('जयति जय गायत्री माता'),
+  `Gayatri Mata Aarti refrain should be "जयति जय गायत्री माता", got: "${gayatriAartiRefrain.lines[0]}"`
+);
+
 // ─── 11. Library labels are precise about excerpts and verse types ───────────
 
 const libraryById = new Map(library.map((entry) => [entry.id, entry]));
@@ -332,6 +380,7 @@ const libraryById = new Map(library.map((entry) => [entry.id, entry]));
 assert.equal(libraryById.get('hanuman-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('shiv-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('ganesh-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
+assert.equal(libraryById.get('gayatri-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('durga-chalisa')?.sub, '40 चौपाई + 1 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('sundarkand')?.sub, '16 अनुभाग · 354 पद');
 assert.match(libraryById.get('ramcharitmanas')?.nameHi || '', /मंगलाचरण/);
@@ -473,9 +522,11 @@ for (const file of [
   'shiv-chalisa/shiv-chalisa.json',
   'ganesh-chalisa/ganesh-chalisa.json',
   'durga-chalisa/durga-chalisa.json',
+  'gayatri-chalisa/gayatri-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',
+  'aarti/gayatri-aarti.json',
 ]) {
   const meaningsEn: string[] = readJson(file)
     .verses.map((v: any) => v.meaningEn)

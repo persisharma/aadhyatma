@@ -88,6 +88,7 @@ const CHALISA_IDS: readonly ChalisaId[] = [
   'shiv-chalisa',
   'durga-chalisa',
   'ganesh-chalisa',
+  'gayatri-chalisa',
 ];
 
 /** Cap how many verses can come back from a single query (UX + perf). */

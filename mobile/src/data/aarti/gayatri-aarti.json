@@ -1,0 +1,238 @@
+{
+  "titleHi": "गायत्री माता की आरती",
+  "titleEn": "Gayatri Mata Ki Aarti",
+  "subtitleHi": "जयति जय गायत्री माता, जयति जय गायत्री माता",
+  "subtitleEn": "Jayati Jai Gayatri Mata, Jayati Jai Gayatri Mata",
+  "deity": "savitr",
+  "language": "hi",
+  "source": {
+    "baseText": "Traditional Gayatri Mata Aarti (Jayati Jai Gayatri Mata) — cross-verified line-for-line against SanskritDocuments, BhaktiBharat, and DrikPanchang-aligned sources. 'कलह', 'कर्त्री/हर्त्री', 'दारिद्र्य', 'अघहरी', 'भाँति' are the majority/correct readings over OCR variants.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/gAyatrIAratIHindi.html",
+      "https://www.bhaktibharat.com/aarti/gayatri-mata-ki-arti",
+      "https://hindi.astroyogi.com/spirituality/aarti/gayatri-aarti.aspx"
+    ],
+    "retrievedOn": "2026-07-22"
+  },
+  "counts": {
+    "totalVerses": 12
+  },
+  "verses": [
+    {
+      "id": "ga-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "जयति जय गायत्री माता, जयति जय गायत्री माता।",
+        "सत् मारग पर हमें चलाओ, जो है सुखदाता॥"
+      ],
+      "linesEn": [
+        "Jayati jai Gayatri Mata, jayati jai Gayatri Mata.",
+        "Sat marag par hamen chalao, jo hai sukhdata."
+      ],
+      "meaningHi": "जय हो गायत्री माता! हे माँ, आपकी बारम्बार जय हो। हमें उस सत्य के मार्ग पर चलाइए जो सच्चे सुख का दाता है। यह आरती की टेक है, जो प्रत्येक पद के पश्चात् दोहराई जाती है।",
+      "meaningEn": "Victory to you, Mother Gayatri! Glory upon glory to you, O Mother. Lead us along the path of truth, which alone is the giver of true joy. This is the refrain, repeated after each stanza."
+    },
+    {
+      "id": "ga-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "आदि शक्ति तुम अलख निरंजन, जग पालन कर्त्री।",
+        "दुःख शोक भय क्लेश कलह, दारिद्र्य दैन्य हर्त्री॥"
+      ],
+      "linesEn": [
+        "Aadi shakti tum alakh niranjan, jag paalan kartri.",
+        "Dukh shok bhay klesh kalah, daaridrya dainya hartri."
+      ],
+      "meaningHi": "आप आदिशक्ति हैं — अलक्ष्य और निरंजन (निर्मल), समस्त जगत का पालन करने वाली। आप दुःख, शोक, भय, क्लेश, कलह, दरिद्रता और दीनता को हरने वाली हैं।",
+      "meaningEn": "You are the primordial power — unseen and untainted, sustainer of all the world. You take away sorrow, grief, fear, affliction, strife, poverty and misery."
+    },
+    {
+      "id": "ga-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "ब्रह्म रूपिणी, प्रणत पालिनी, जगतधातृ अम्बे।",
+        "भवभयहारी, जनहितकारी, सुखदा जगदम्बे॥"
+      ],
+      "linesEn": [
+        "Brahm roopini, pranat paalini, jagatdhaatri ambe.",
+        "Bhavabhayahaari, janahitkaari, sukhda jagdambe."
+      ],
+      "meaningHi": "आप ब्रह्म-स्वरूपा, शरणागतों की रक्षक और जगत को धारण करने वाली अम्बा हैं। संसार के भय को हरने वाली, जनहित करने वाली, सुख देने वाली जगदम्बा हैं।",
+      "meaningEn": "You are the embodiment of Brahman, protector of those who surrender, and Amba who upholds the world. Remover of worldly fear, doer of good to all, joy-giving Jagadamba."
+    },
+    {
+      "id": "ga-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "भय हारिणी, भव तारिणी अनघे, अज आनन्द राशी।",
+        "अविकारी, अघहरी, अविचलित, अमले, अविनाशी॥"
+      ],
+      "linesEn": [
+        "Bhay haarini, bhav taarini anaghe, aj aanand raashi.",
+        "Avikaari, aghahari, avichalit, amale, avinaashi."
+      ],
+      "meaningHi": "आप भय हरने वाली, भवसागर से पार उतारने वाली, निष्पाप, अजन्मा और आनन्द की राशि हैं। आप विकाररहित, पापनाशिनी, अविचल, निर्मल और अविनाशी हैं।",
+      "meaningEn": "You dispel fear and carry us across the ocean of existence; sinless, unborn, a treasure-store of bliss. You are free of flaw, destroyer of sin, unwavering, pure and imperishable."
+    },
+    {
+      "id": "ga-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "कामधेनु सतचित आनन्दा, जय गंगा गीता।",
+        "सविता की शाश्वती शक्ति तुम, सावित्री सीता॥"
+      ],
+      "linesEn": [
+        "Kaamadhenu satchit aananda, jai Ganga Gita.",
+        "Savita ki shaashvati shakti tum, Savitri Sita."
+      ],
+      "meaningHi": "आप कामधेनु के समान मनोकामना पूर्ण करने वाली, सत्-चित्-आनन्द-स्वरूपा हैं; गंगा और गीता के रूप में आपकी जय हो। आप सविता (सूर्य) की शाश्वत शक्ति हैं — सावित्री और सीता स्वरूपा।",
+      "meaningEn": "Like the wish-granting cow you fulfil all desires, embodiment of being-consciousness-bliss (sat-chit-ananda); victory to you as Ganga and as the Gita. You are the eternal power of Savita (the Sun) — Savitri and Sita."
+    },
+    {
+      "id": "ga-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "ऋग् यजु साम अथर्व प्रणयिनी, प्रणव महामहिमे।",
+        "कुण्डलिनी सहस्रार, सुषुम्ना शोभा गुण गरिमे॥"
+      ],
+      "linesEn": [
+        "Rig yaju saam atharva pranayini, pranav mahaamahime.",
+        "Kundalini sahasraar, sushumna shobha gun garime."
+      ],
+      "meaningHi": "ऋग्, यजु, साम और अथर्व — चारों वेदों से प्रिय, प्रणव (ॐ) की महान महिमा वाली आप हैं। आप कुण्डलिनी, सहस्रार और सुषुम्ना की शोभा एवं गुण-गरिमा हैं।",
+      "meaningEn": "Beloved of the four Vedas — Rig, Yajur, Sama and Atharva — you bear the great glory of Pranava (Om). You are the splendour and noble grace of the Kundalini, the Sahasrara and the Sushumna."
+    },
+    {
+      "id": "ga-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · ६",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "स्वाहा, स्वधा, शची, ब्रह्माणी, राधा, रुद्राणी।",
+        "जय सतरूपा वाणी, विद्या, कमला कल्याणी॥"
+      ],
+      "linesEn": [
+        "Svaha, svadha, shachi, Brahmani, Radha, Rudrani.",
+        "Jai Satroopa vaani, vidya, Kamala kalyaani."
+      ],
+      "meaningHi": "स्वाहा, स्वधा, शची, ब्रह्माणी, राधा और रुद्राणी — ये सब आप ही हैं। सतरूपा, वाणी (सरस्वती), विद्या और कमला (लक्ष्मी) कल्याणी की जय हो।",
+      "meaningEn": "Svaha, Svadha, Shachi, Brahmani, Radha and Rudrani — all these are you. Victory to you as Satarupa, as Vani (speech/Saraswati), as Vidya and as the auspicious Kamala (Lakshmi)."
+    },
+    {
+      "id": "ga-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद · ७",
+      "labelEn": "Stanza · 7",
+      "lines": [
+        "जननी हम हैं दीन हीन, दुःख दारिद के घेरे।",
+        "यदपि कुटिल कपटी कपूत, तऊ बालक हैं तेरे॥"
+      ],
+      "linesEn": [
+        "Janani hum hain deen heen, dukh daarid ke ghere.",
+        "Yadapi kutil kapati kapoot, tau baalak hain tere."
+      ],
+      "meaningHi": "हे जननी, हम दीन-हीन हैं, दुःख और दरिद्रता से घिरे हुए। यद्यपि हम कुटिल, कपटी और कुपुत्र हैं, फिर भी हम आपके ही बालक हैं।",
+      "meaningEn": "O Mother, we are wretched and helpless, encircled by sorrow and poverty. Though we are crooked, deceitful and unworthy children, we are still your own."
+    },
+    {
+      "id": "ga-09",
+      "type": "stanza",
+      "section": "body",
+      "number": 9,
+      "labelHi": "पद · ८",
+      "labelEn": "Stanza · 8",
+      "lines": [
+        "स्नेह सनी करुणामयि माता, चरण शरण दीजै।",
+        "बिलख रहे हम शिशु सुत तेरे, दया दृष्टि कीजै॥"
+      ],
+      "linesEn": [
+        "Sneh sani karunaamayi Mata, charan sharan deejai.",
+        "Bilakh rahe hum shishu sut tere, daya drishti keejai."
+      ],
+      "meaningHi": "हे स्नेह में सनी करुणामयी माता, हमें अपने चरणों की शरण दीजिए। हम आपके शिशु-पुत्र बिलख रहे हैं — हम पर दया-दृष्टि कीजिए।",
+      "meaningEn": "O compassionate Mother, steeped in love, grant us the refuge of your feet. We, your infant children, are weeping — cast your merciful gaze upon us."
+    },
+    {
+      "id": "ga-10",
+      "type": "stanza",
+      "section": "body",
+      "number": 10,
+      "labelHi": "पद · ९",
+      "labelEn": "Stanza · 9",
+      "lines": [
+        "काम क्रोध मद लोभ दम्भ, दुर्भाव द्वेष हरिये।",
+        "शुद्ध बुद्धि निष्पाप हृदय, मन को पवित्र करिये॥"
+      ],
+      "linesEn": [
+        "Kaam krodh mad lobh dambh, durbhaav dvesh hariye.",
+        "Shuddh buddhi nishpaap hriday, man ko pavitra kariye."
+      ],
+      "meaningHi": "काम, क्रोध, मद, लोभ, दम्भ, दुर्भाव और द्वेष को हर लीजिए। हमारी बुद्धि को शुद्ध, हृदय को निष्पाप और मन को पवित्र कर दीजिए।",
+      "meaningEn": "Take away lust, anger, pride, greed, hypocrisy, ill-will and malice. Make our intellect pure, our heart sinless, and our mind holy."
+    },
+    {
+      "id": "ga-11",
+      "type": "stanza",
+      "section": "body",
+      "number": 11,
+      "labelHi": "पद · १०",
+      "labelEn": "Stanza · 10",
+      "lines": [
+        "तुम समर्थ सब भाँति तारिणी, तुष्टि पुष्टि त्राता।",
+        "सत् मारग पर हमें चलाओ, जो है सुखदाता॥"
+      ],
+      "linesEn": [
+        "Tum samarth sab bhaanti taarini, tushti pushti traata.",
+        "Sat marag par hamen chalao, jo hai sukhdata."
+      ],
+      "meaningHi": "आप सब प्रकार से तारने में समर्थ हैं, तुष्टि और पुष्टि प्रदान करने वाली रक्षिका हैं। हमें उस सत्य के मार्ग पर चलाइए जो सच्चे सुख का दाता है।",
+      "meaningEn": "You are able to deliver us in every way, the protector who grants contentment and nourishment. Lead us along the path of truth, which alone is the giver of true joy."
+    },
+    {
+      "id": "ga-12",
+      "type": "refrain",
+      "section": "body",
+      "number": 12,
+      "labelHi": "टेक",
+      "labelEn": "Closing Refrain",
+      "lines": [
+        "जयति जय गायत्री माता, जयति जय गायत्री माता।",
+        "सत् मारग पर हमें चलाओ, जो है सुखदाता॥"
+      ],
+      "linesEn": [
+        "Jayati jai Gayatri Mata, jayati jai Gayatri Mata.",
+        "Sat marag par hamen chalao, jo hai sukhdata."
+      ],
+      "meaningHi": "जय हो गायत्री माता! हे माँ, आपकी बारम्बार जय हो। हमें उस सत्य के मार्ग पर चलाइए जो सच्चे सुख का दाता है। (समापन टेक।)",
+      "meaningEn": "Victory to you, Mother Gayatri! Glory upon glory to you, O Mother. Lead us along the path of truth, which alone is the giver of true joy. (Closing refrain.)"
+    }
+  ]
+}

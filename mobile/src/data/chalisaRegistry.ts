@@ -22,14 +22,26 @@ import {
   ganeshChalisaVerses,
   type GaneshChalisaVerse,
 } from './ganesh-chalisa';
+import {
+  gayatriChalisaTitleEn,
+  gayatriChalisaTitleHi,
+  gayatriChalisaVerses,
+  type GayatriChalisaVerse,
+} from './gayatri-chalisa';
 
-export type ChalisaId = 'hanuman-chalisa' | 'shiv-chalisa' | 'durga-chalisa' | 'ganesh-chalisa';
+export type ChalisaId =
+  | 'hanuman-chalisa'
+  | 'shiv-chalisa'
+  | 'durga-chalisa'
+  | 'ganesh-chalisa'
+  | 'gayatri-chalisa';
 
 export type ChalisaVerse =
   | HanumanChalisaVerse
   | ShivChalisaVerse
   | DurgaChalisaVerse
-  | GaneshChalisaVerse;
+  | GaneshChalisaVerse
+  | GayatriChalisaVerse;
 
 export type ChalisaPayload = {
   id: ChalisaId;
@@ -62,6 +74,12 @@ const registry: Record<ChalisaId, ChalisaPayload> = {
     titleHi: ganeshChalisaTitleHi,
     titleEn: ganeshChalisaTitleEn,
     verses: ganeshChalisaVerses,
+  },
+  'gayatri-chalisa': {
+    id: 'gayatri-chalisa',
+    titleHi: gayatriChalisaTitleHi,
+    titleEn: gayatriChalisaTitleEn,
+    verses: gayatriChalisaVerses,
   },
 };
 

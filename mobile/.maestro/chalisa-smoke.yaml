@@ -1,7 +1,8 @@
 # Chalisa Category Smoke Test
 #
-# Verifies the Chalisa category and its 4 active sections render correctly.
-# Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa.
+# Verifies the Chalisa category and its 5 active sections render correctly.
+# Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa,
+# Gayatri Chalisa.
 #
 # Chalisas share ChalisaReaderScreen (multi-instance pattern, dispatched by
 # route.params.chalisaId). Opening Hanuman Chalisa verifies the dispatch
@@ -12,18 +13,21 @@ appId: host.exp.Exponent
 ---
 - runFlow: _launch.yaml
 
-# Open Chalisa category
-- assertVisible: "Chalisa. Tap to open."
-- tapOn: "Chalisa. Tap to open."
+# Open Chalisa category. The `.*` absorbs an optional " New." — the Chalisa
+# tile now flags NEW in upgrader state because Gayatri Chalisa is debut-new
+# (addedInVersion 1.4.4). Mirrors the stotram-smoke category-tile selector.
+- assertVisible: "Chalisa\\..*Tap to open\\."
+- tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 4 sections appear in CategoryList
+# Verify all 5 sections appear in CategoryList
 - extendedWaitUntil:
     visible: "Hanuman Chalisa\\..*Tap to open\\."
     timeout: 15000
 - assertVisible: "Shiv Chalisa\\..*Tap to open\\."
 - assertVisible: "Durga Chalisa\\..*Tap to open\\."
 - assertVisible: "Ganesh Chalisa\\..*Tap to open\\."
+- assertVisible: "Gayatri Chalisa\\..*Tap to open\\."
 
 # Open Hanuman Chalisa reader
 - tapOn: "Hanuman Chalisa\\..*Tap to open\\."
