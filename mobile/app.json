@@ -26,7 +26,7 @@
     },
     "android": {
       "package": "com.prashantsharma.vedansh",
-      "versionCode": 5,
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -60,9 +60,9 @@
         {
           "color": "#B8621B",
           "sounds": [
-            "./assets/japam-alarm-sounds/om-namah-shivaya.wav",
-            "./assets/japam-alarm-sounds/hare-krishna-mahamantra.wav",
-            "./assets/japam-alarm-sounds/gayatri-mantra.wav"
+            "./assets/japam-alarm-sounds/om_namah_shivaya.wav",
+            "./assets/japam-alarm-sounds/hare_krishna_mahamantra.wav",
+            "./assets/japam-alarm-sounds/gayatri_mantra.wav"
           ]
         }
       ],

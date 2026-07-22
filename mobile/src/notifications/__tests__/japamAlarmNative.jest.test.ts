@@ -67,7 +67,7 @@ describe('scheduleNativeAlarmsForDay — mantra sound passthrough', () => {
     expect(scheduleAlarm).toHaveBeenCalledWith(
       expect.objectContaining({
         mantraId: 'om-namah-shivaya',
-        sound: 'om-namah-shivaya.wav',
+        sound: 'om_namah_shivaya.wav',
       })
     );
   });

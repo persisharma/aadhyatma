@@ -110,12 +110,28 @@ import {
 // (WITH extension — what AlarmKit's `.named()` and expo-notifications expect),
 // and null when no clip exists so callers fall back to the system alarm tone.
 {
-  assert.equal(getJapamAlarmSoundName('om-namah-shivaya'), 'om-namah-shivaya.wav');
-  assert.equal(getJapamAlarmSoundName('hare-krishna-mahamantra'), 'hare-krishna-mahamantra.wav');
-  assert.equal(getJapamAlarmSoundName('gayatri-mantra'), 'gayatri-mantra.wav');
+  assert.equal(getJapamAlarmSoundName('om-namah-shivaya'), 'om_namah_shivaya.wav');
+  assert.equal(getJapamAlarmSoundName('hare-krishna-mahamantra'), 'hare_krishna_mahamantra.wav');
+  assert.equal(getJapamAlarmSoundName('gayatri-mantra'), 'gayatri_mantra.wav');
   // Mantras without a bundled clip (commented-out entries / unknown ids).
   assert.equal(getJapamAlarmSoundName('om-namo-bhagavate-vasudevaya'), null);
   assert.equal(getJapamAlarmSoundName('does-not-exist'), null);
+}
+
+// Every bundled clip's filename must be a valid Android resource name —
+// lowercase a-z/0-9/underscore, starting with a letter. `expo-notifications`
+// copies each file in app.json `sounds[]` into `res/raw/` verbatim and REJECTS
+// hyphens at prebuild, so a hyphenated filename fails the Android build (mantra
+// ids are hyphenated, but the clip FILES must be underscored). Regression test
+// for the 1.4.4 Android build failure on `om-namah-shivaya.wav`.
+{
+  const ANDROID_RESOURCE = /^[a-z][a-z0-9_]*\.(wav|caf|aiff)$/;
+  for (const file of getAllJapamAlarmSoundNames()) {
+    assert.ok(
+      ANDROID_RESOURCE.test(file),
+      `${file}: not a valid Android res/raw name (a-z, 0-9, _ only; no hyphens)`
+    );
+  }
 }
 
 // Every bundled alarm clip must be a bare `RIFF/WAVE/fmt /data` WAV with NO
