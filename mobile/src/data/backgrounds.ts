@@ -77,6 +77,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'ratri-shloka': backgroundImages.deity_rama_darbar,
   'saraswati-stotram': backgroundImages.deity_saraswati_veena,
   'saraswati-aarti': backgroundImages.deity_saraswati_veena,
+  'gayatri-aarti': backgroundImages.source_gayatri_savitri_sun,
   'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
 };
 

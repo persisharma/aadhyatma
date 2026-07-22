@@ -352,6 +352,27 @@ assert.ok(
   'Gayatri Chalisa closing doha should be the canonical phala-shruti'
 );
 
+// ─── 10b. Gayatri Mata Aarti canonical structure & refrain ───────────────────
+
+const gayatriAarti = readJson('aarti/gayatri-aarti.json');
+assert.equal(
+  gayatriAarti.verses.length,
+  12,
+  'Gayatri Mata Aarti should have 12 verses (2 refrains + 10 stanzas)'
+);
+assert.equal(
+  gayatriAarti.verses.filter((v: any) => v.type === 'stanza').length,
+  10,
+  'Gayatri Mata Aarti should have exactly 10 stanzas'
+);
+assert.equal(gayatriAarti.deity, 'savitr', 'Gayatri Mata Aarti deity should be savitr (Maa Gayatri)');
+const gayatriAartiRefrain = gayatriAarti.verses.find((v: any) => v.type === 'refrain');
+assert.ok(gayatriAartiRefrain, 'Gayatri Mata Aarti should open with a refrain');
+assert.ok(
+  gayatriAartiRefrain.lines[0].includes('जयति जय गायत्री माता'),
+  `Gayatri Mata Aarti refrain should be "जयति जय गायत्री माता", got: "${gayatriAartiRefrain.lines[0]}"`
+);
+
 // ─── 11. Library labels are precise about excerpts and verse types ───────────
 
 const libraryById = new Map(library.map((entry) => [entry.id, entry]));
@@ -505,6 +526,7 @@ for (const file of [
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',
+  'aarti/gayatri-aarti.json',
 ]) {
   const meaningsEn: string[] = readJson(file)
     .verses.map((v: any) => v.meaningEn)
