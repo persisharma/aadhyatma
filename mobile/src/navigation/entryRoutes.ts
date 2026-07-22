@@ -31,6 +31,10 @@ const chalisaIds = new Set([
   'durga-chalisa',
   'ganesh-chalisa',
   'gayatri-chalisa',
+  'ram-chalisa',
+  'krishna-chalisa',
+  'vishnu-chalisa',
+  'saraswati-chalisa',
 ]);
 
 const theerthIds = new Set([
@@ -65,6 +69,9 @@ const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'krishna-stotram': 'KrishnaStotramChapters',
   'bajrang-baan': 'BajrangBaanChapters',
   'ram-stuti': 'RamStutiChapters',
+  // Ram's aarti (library id 'ram-aarti') reuses the Ram Stuti content, so it
+  // opens the same chapters/reader routes rather than the index-based AartiReader.
+  'ram-aarti': 'RamStutiChapters',
   'ramcharitmanas': 'RamcharitmanasChapters',
   'sundarkand': 'SundarkandChapters',
   'bhagavad-gita': 'GitaChapters',
@@ -80,6 +87,7 @@ const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'krishna-stotram': 'KrishnaStotramReader',
   'bajrang-baan': 'BajrangBaanReader',
   'ram-stuti': 'RamStutiReader',
+  'ram-aarti': 'RamStutiReader',
   'ramcharitmanas': 'RamcharitmanasReader',
   'sundarkand': 'SundarkandReader',
   'bhagavad-gita': 'GitaReader',

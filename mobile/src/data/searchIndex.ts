@@ -89,6 +89,10 @@ const CHALISA_IDS: readonly ChalisaId[] = [
   'durga-chalisa',
   'ganesh-chalisa',
   'gayatri-chalisa',
+  'ram-chalisa',
+  'krishna-chalisa',
+  'vishnu-chalisa',
+  'saraswati-chalisa',
 ];
 
 /** Cap how many verses can come back from a single query (UX + perf). */
@@ -323,7 +327,9 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
-    if (entry.id === 'ram-stuti') {
+    if (entry.id === 'ram-stuti' || entry.id === 'ram-aarti') {
+      // 'ram-aarti' is the Aarti-list alias for the Ram Stuti content, so it
+      // indexes the same verses under its own sourceId (see texts.ts / entryRoutes.ts).
       pushChapteredShivaStrotamShape(
         verses,
         entry,
