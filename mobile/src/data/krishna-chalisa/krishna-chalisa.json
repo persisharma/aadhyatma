@@ -1,0 +1,799 @@
+{
+  "titleHi": "कृष्ण चालीसा",
+  "titleEn": "Krishna Chalisa",
+  "subtitleHi": "40 चौपाई + 3 दोहा · अर्थ सहित",
+  "subtitleEn": "40 Chaupai + 3 Doha · with meaning",
+  "language": "hi",
+  "script": "devanagari",
+  "source": {
+    "baseText": "Traditional Krishna Chalisa (\"Jai Yadunandan\" version of 40 verses), transcribed verbatim from sanskritdocuments.org and cross-checked against Bhakti Bharat and Bhaktinidhi.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_z_otherlang_hindi/krishna40.html",
+      "https://www.bhaktibharat.com/chalisa/krishna-chalisa",
+      "https://bhaktinidhi.com/hi/krishna-chalisa-in-hindi/"
+    ],
+    "retrievedOn": "2026-07-22"
+  },
+  "counts": {
+    "openingDohas": 2,
+    "chaupais": 40,
+    "closingDohas": 1,
+    "totalVerses": 43
+  },
+  "verses": [
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "बंशी शोभित कर मधुर, नील जलद तन श्याम।",
+        "अरुण अधर जनु बिम्बफल, नयन कमल अभिराम॥"
+      ],
+      "linesEn": [
+        "Banshee shobhit kar madhur, neel jalad tan shyaam.",
+        "Arun adhar janu bimbaphal, nayan kamal abhiraam."
+      ],
+      "meaningHi": "जिनके मधुर हाथ में बांसुरी सुशोभित है और जिनका शरीर नील मेघ के समान श्याम है, जिनके लाल अधर मानो बिम्बफल हों और नेत्र कमल के समान मनोहर हैं।",
+      "meaningEn": "In his graceful hand the sweet flute shines, and his body is dark like a blue rain-cloud; his ruddy lips glow like the bimba fruit and his eyes are as enchanting as lotuses."
+    },
+    {
+      "id": "opening-doha-2",
+      "type": "doha",
+      "section": "opening",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "पूर्ण इन्द्र, अरविन्द मुख, पीताम्बर शुभ साज।",
+        "जय मनमोहन मदन छवि, कृष्णचन्द्र महाराज॥"
+      ],
+      "linesEn": [
+        "Poorna indra, arvind mukh, peetaambar shubh saaj.",
+        "Jai manmohan madan chhavi, krishnachandra mahaaraaj."
+      ],
+      "meaningHi": "पूर्ण चंद्रमा के समान और कमल-सा मुख, जिनका पीताम्बर शुभ शोभा देता है; हे मन को मोहने वाले, कामदेव-सी छवि वाले कृष्णचन्द्र महाराज, आपकी जय हो।",
+      "meaningEn": "His face is like the full moon and the lotus, adorned in an auspicious yellow garment; victory to the heart-captivating Krishnachandra Maharaj, whose beauty rivals that of the god of love."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जय यदुनंदन जय जगवंदन।",
+        "जय वसुदेव देवकी नन्दन॥"
+      ],
+      "linesEn": [
+        "Jai yadunandan jai jagvandan.",
+        "Jai vasudev devakee nandan."
+      ],
+      "meaningHi": "हे यदुवंश को आनंद देने वाले, हे जगत के वंदनीय, आपकी जय हो; हे वसुदेव और देवकी के पुत्र, आपकी जय हो।",
+      "meaningEn": "Victory to the joy of the Yadu clan, victory to the one whom the whole world adores; victory to the beloved son of Vasudeva and Devaki."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "जय यशुदा सुत नन्द दुलारे।",
+        "जय प्रभु भक्तन के दृग तारे॥"
+      ],
+      "linesEn": [
+        "Jai yashuda sut nand dulaare.",
+        "Jai prabhu bhaktan ke drig taare."
+      ],
+      "meaningHi": "हे यशोदा के पुत्र और नन्द के दुलारे, आपकी जय हो; हे प्रभु, आप भक्तों की आँखों के तारे (सबसे प्रिय) हैं।",
+      "meaningEn": "Victory to the son of Yashoda and the darling of Nanda; victory to you, Lord, the very apple of your devotees' eyes."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "जय नट-नागर, नाग नथैया।",
+        "कृष्ण कन्हैया धेनु चरैया॥"
+      ],
+      "linesEn": [
+        "Jai nat-naagar, naag nathaiya.",
+        "Krishna kanhaiya dhenu charaiya."
+      ],
+      "meaningHi": "हे नृत्य में निपुण चतुर नागर, हे नाग (कालिय) को नाथने वाले, आपकी जय हो; आप कृष्ण कन्हैया गायें चराने वाले हैं।",
+      "meaningEn": "Victory to the clever dancer, the one who tamed and reined the serpent (Kaliya); it is you, Krishna Kanhaiya, who herds the cows."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "पुनि नख पर प्रभु गिरिवर धारो।",
+        "आओ दीनन कष्ट निवारो॥"
+      ],
+      "linesEn": [
+        "Puni nakh par prabhu girivar dhaaro.",
+        "Aao deenan kasht nivaaro."
+      ],
+      "meaningHi": "हे प्रभु, आपने अपने नख (उंगली) पर गोवर्धन पर्वत को धारण किया था; आइए और दीन-दुखियों के कष्टों को दूर कीजिए।",
+      "meaningEn": "Lord, you once held the great Govardhan mountain upon your fingertip; come now and dispel the sufferings of the lowly and the helpless."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "वंशी मधुर अधर धरि टेरौ।",
+        "होवे पूर्ण विनय यह मेरौ॥"
+      ],
+      "linesEn": [
+        "Vanshee madhur adhar dhari terau.",
+        "Hove poorn vinay yah merau."
+      ],
+      "meaningHi": "अपने अधरों पर मधुर बांसुरी रखकर मुझे पुकारिए; यही मेरी विनती है कि यह पूर्ण हो जाए।",
+      "meaningEn": "Placing the sweet flute upon your lips, call out to me; may this humble prayer of mine be fulfilled."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "आओ हरि पुनि माखन चाखो।",
+        "आज लाज भारत की राखो॥"
+      ],
+      "linesEn": [
+        "Aao hari puni maakhan chaakho.",
+        "Aaj laaj bhaarat kee raakho."
+      ],
+      "meaningHi": "हे हरि, आइए और फिर से माखन चखिए; आज भारत की लाज रखिए (उसकी रक्षा कीजिए)।",
+      "meaningEn": "Come, Hari, and once again taste the butter; today uphold the honour of Bharat and protect it."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "गोल कपोल, चिबुक अरुणारे।",
+        "मृदु मुस्कान मोहिनी डारे॥"
+      ],
+      "linesEn": [
+        "Gol kapol, chibuk arunaare.",
+        "Mridu muskaan mohinee daare."
+      ],
+      "meaningHi": "आपके गाल गोल हैं और ठोड़ी लालिमा लिए हुए है; आपकी कोमल मुस्कान मोहिनी-सी छा जाती है।",
+      "meaningEn": "Round are his cheeks and his chin tinged with a rosy glow; his gentle smile casts an utterly bewitching spell."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "राजित राजिव नयन विशाला।",
+        "मोर मुकुट वैजन्तीमाला॥"
+      ],
+      "linesEn": [
+        "Raajit raajiv nayan vishaala.",
+        "Mor mukut vaijanteemaala."
+      ],
+      "meaningHi": "कमल के समान बड़े-बड़े नेत्र सुशोभित हैं; सिर पर मोरपंख का मुकुट और गले में वैजयन्ती माला शोभा देती है।",
+      "meaningEn": "His large lotus-like eyes shine radiantly; a peacock-feather crown adorns his head and the Vaijayanti garland hangs about his neck."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "कुंडल श्रवण, पीत पट आछे।",
+        "कटि किंकिणी काछनी काछे॥"
+      ],
+      "linesEn": [
+        "Kundal shravan, peet pat aachhe.",
+        "Kati kinkinee kaachhanee kaachhe."
+      ],
+      "meaningHi": "कानों में कुण्डल और तन पर सुंदर पीत वस्त्र सुशोभित हैं; कमर पर करधनी (किंकिणी) और काछनी (धोती) की सुंदर कसावट है।",
+      "meaningEn": "Earrings adorn his ears and a fine yellow garment graces his body; a jingling waist-band and neatly girded dhoti wrap around his waist."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "नील जलज सुन्दर तनु सोहे।",
+        "छबि लखि, सुर नर मुनिमन मोहे॥"
+      ],
+      "linesEn": [
+        "Neel jalaj sundar tanu sohe.",
+        "Chhabi lakhi, sur nar muniman mohe."
+      ],
+      "meaningHi": "नीले कमल के समान सुंदर शरीर शोभा दे रहा है; उस छवि को देखकर देवता, मनुष्य और मुनियों के मन मोहित हो जाते हैं।",
+      "meaningEn": "His beautiful body glows like a blue lotus; beholding that form, the minds of gods, humans, and sages are all enchanted."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "मस्तक तिलक, अलक घुंघराले।",
+        "आओ कृष्ण बांसुरी वाले॥"
+      ],
+      "linesEn": [
+        "Mastak tilak, alak ghunghraale.",
+        "Aao krishna baansuree vaale."
+      ],
+      "meaningHi": "माथे पर तिलक और घुंघराले केश सुशोभित हैं; हे बांसुरी वाले कृष्ण, आइए।",
+      "meaningEn": "A sacred mark adorns his forehead and curly locks frame his face; come, O Krishna, holder of the flute."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "करि पय पान, पूतनहि तार्‍यो।",
+        "अका बका कागासुर मार्‍यो॥"
+      ],
+      "linesEn": [
+        "Kari pay paan, pootanahi taaryo.",
+        "Aka baka kaagaasur maaryo."
+      ],
+      "meaningHi": "आपने पूतना का स्तनपान करके उसका उद्धार किया; और अघासुर, बकासुर तथा कागासुर जैसे राक्षसों का वध किया।",
+      "meaningEn": "By drinking her milk you granted liberation even to the demoness Putana; and you slew the demons Aghasura, Bakasura, and the crow-demon Kagasura."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "मधुवन जलत अगिन जब ज्वाला।",
+        "भै शीतल लखतहिं नंदलाला॥"
+      ],
+      "linesEn": [
+        "Madhuvan jalat agin jab jvaala.",
+        "Bhai sheetal lakhtahin nandlaala."
+      ],
+      "meaningHi": "जब मधुवन में अग्नि की ज्वाला धधक उठी, तब नंदलाल (कृष्ण) को देखते ही वह शांत और शीतल हो गई।",
+      "meaningEn": "When the flames of a raging fire engulfed Madhuvan, the very sight of Nandlala (Krishna) turned it cool and calm."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "सुरपति जब ब्रज चढ़्यो रिसाई।",
+        "मूसर धार वारि वर्षाई॥"
+      ],
+      "linesEn": [
+        "Surpati jab braj chadhyo risaai.",
+        "Moosar dhaar vaari varshaai."
+      ],
+      "meaningHi": "जब देवराज इन्द्र क्रोध में भरकर ब्रज पर चढ़ आया और मूसल के समान मोटी धार से मूसलाधार वर्षा की।",
+      "meaningEn": "When Indra, king of the gods, in fury descended upon Braj and poured down rain in torrents thick as pestles."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "लगत लगत व्रज चहन बहायो।",
+        "गोवर्धन नख धारि बचायो॥"
+      ],
+      "linesEn": [
+        "Lagat lagat vraj chahan bahaayo.",
+        "Govardhan nakh dhaari bachaayo."
+      ],
+      "meaningHi": "जब बाढ़ ब्रज को चारों ओर से बहा ले जाने ही वाली थी, तब आपने गोवर्धन पर्वत को अपने नख पर उठाकर सबकी रक्षा की।",
+      "meaningEn": "When the flood was about to sweep away Braj on every side, you lifted the Govardhan hill on your fingertip and saved all."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "लखि यसुदा मन भ्रम अधिकाई।",
+        "मुख मंह चौदह भुवन दिखाई॥"
+      ],
+      "linesEn": [
+        "Lakhi yasuda man bhram adhikaai.",
+        "Mukh manh chaudah bhuvan dikhaai."
+      ],
+      "meaningHi": "जब माता यशोदा के मन में संदेह अधिक बढ़ गया, तब आपने अपने मुख में चौदह भुवनों (समस्त सृष्टि) के दर्शन करा दिए।",
+      "meaningEn": "When great doubt arose in mother Yashoda's mind, you revealed all fourteen worlds within your open mouth."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "दुष्ट कंस अति उधम मचायो।",
+        "कोटि कमल जब फूल मंगायो॥"
+      ],
+      "linesEn": [
+        "Dusht kans ati udham machaayo.",
+        "Koti kamal jab phool mangaayo."
+      ],
+      "meaningHi": "दुष्ट कंस ने बहुत उपद्रव मचाया और जब उसने करोड़ों कमल के फूल मंगवाए (एक असंभव माँग रखी)।",
+      "meaningEn": "The wicked Kansa created much havoc and, plotting your death, demanded that millions of lotus flowers be brought forth."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "नाथि कालियहिं तब तुम लीन्हें।",
+        "चरण चिह्न दै निर्भय कीन्हें॥"
+      ],
+      "linesEn": [
+        "Naathi kaaliyahin tab tum leenhen.",
+        "Charan chihn dai nirbhay keenhen."
+      ],
+      "meaningHi": "तब आपने कालिय नाग को नाथ (वश में) कर लिया और अपने चरण-चिह्न देकर उसे निर्भय बना दिया।",
+      "meaningEn": "Then you subdued the serpent Kaliya, and by marking him with the imprint of your feet you made him free from fear."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "करि गोपिन संग रास विलासा।",
+        "सबकी पूरण करी अभिलाषा॥"
+      ],
+      "linesEn": [
+        "Kari gopin sang raas vilaasa.",
+        "Sabkee pooran karee abhilaasha."
+      ],
+      "meaningHi": "आपने गोपियों के संग रास-लीला की और सभी की मनोकामनाएँ पूर्ण कीं।",
+      "meaningEn": "You performed the divine Raas dance in the company of the gopis and fulfilled the heartfelt longings of them all."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "केतिक महा असुर संहार्‍यो।",
+        "कंसहि केस पकिड़ दै मार्‍यो॥"
+      ],
+      "linesEn": [
+        "Ketik maha asur sanhaaryo.",
+        "Kansahi kes pakid dai maaryo."
+      ],
+      "meaningHi": "आपने अनेक महाबली असुरों का संहार किया और कंस को उसके केश पकड़कर मार डाला।",
+      "meaningEn": "You destroyed countless mighty demons, and seizing Kansa by his hair, you struck him down and slew him."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "मात-पिता की बन्दि छुड़ाई।",
+        "उग्रसेन कहँ राज दिलाई॥"
+      ],
+      "linesEn": [
+        "Maat-pita kee bandi chhudaai.",
+        "Ugrasen kahan raaj dilaai."
+      ],
+      "meaningHi": "आपने अपने माता-पिता को कारागार के बंधन से मुक्त कराया और उग्रसेन को पुनः राज्य दिलाया।",
+      "meaningEn": "You freed your mother and father from their prison bondage and restored the kingdom to King Ugrasena."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "महि से मृतक छहों सुत लायो।",
+        "मातु देवकी शोक मिटायो॥"
+      ],
+      "linesEn": [
+        "Mahi se mritak chhahon sut laayo.",
+        "Maatu devakee shok mitaayo."
+      ],
+      "meaningHi": "आप मृत्युलोक (यमलोक) से देवकी के छहों मृत पुत्रों को वापस ले आए और माता देवकी के शोक को दूर किया।",
+      "meaningEn": "You brought back the six slain sons of Devaki from the realm of death and thus wiped away mother Devaki's grief."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "भौमासुर मुर दैत्य संहारी।",
+        "लाये षट दश सहसकुमारी॥"
+      ],
+      "linesEn": [
+        "Bhaumaasur mur daitya sanhaaree.",
+        "Laaye shat dash sahaskumaaree."
+      ],
+      "meaningHi": "आपने भौमासुर (नरकासुर) और मुर नामक दैत्यों का संहार किया और सोलह हजार कन्याओं को (उनकी कैद से) मुक्त करा लाए।",
+      "meaningEn": "You destroyed the demons Bhaumasura (Narakasura) and Mura, and rescued the sixteen thousand maidens held captive by them."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "दै भीमहिं तृण चीर सहारा।",
+        "जरासिंधु राक्षस कहँ मारा॥"
+      ],
+      "linesEn": [
+        "Dai bheemahin trin cheer sahaara.",
+        "Jaraasindhu raakshas kahan maara."
+      ],
+      "meaningHi": "आपने भीम को (एक तिनके को चीरकर) संकेत-सहारा देकर राक्षस जरासंध का वध करवाया।",
+      "meaningEn": "Giving Bhima a sign of support by tearing apart a blade of grass, you had the demon Jarasandha slain."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "असुर बकासुर आदिक मार्‍यो।",
+        "भक्तन के तब कष्ट निवार्‍यो॥"
+      ],
+      "linesEn": [
+        "Asur bakaasur aadik maaryo.",
+        "Bhaktan ke tab kasht nivaaryo."
+      ],
+      "meaningHi": "आपने बकासुर आदि अनेक असुरों को मारा और इस प्रकार अपने भक्तों के कष्टों को दूर किया।",
+      "meaningEn": "You slew Bakasura and many other demons like him, and in doing so removed the sufferings of your devotees."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "दीन सुदामा के दुःख टार्‍यो।",
+        "तंदुल तीन मूंठ मुख डार्‍यो॥"
+      ],
+      "linesEn": [
+        "Deen sudaama ke duhkh taaryo.",
+        "Tandul teen moonth mukh daaryo."
+      ],
+      "meaningHi": "आपने दीन सुदामा के दुःखों को दूर किया और प्रेमपूर्वक उनके तीन मुट्ठी चावल (तंदुल) मुख में डाल लिए।",
+      "meaningEn": "You removed the sorrows of the humble Sudama, lovingly putting into your mouth the three fistfuls of beaten rice he offered."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "प्रेम के साग विदुर घर माँगे।",
+        "दुर्योधन के मेवा त्यागे॥"
+      ],
+      "linesEn": [
+        "Prem ke saag vidur ghar maange.",
+        "Duryodhan ke meva tyaage."
+      ],
+      "meaningHi": "आपने प्रेमवश विदुर के घर का साधारण साग माँगकर खाया और दुर्योधन के छप्पन भोग (मेवा) को त्याग दिया।",
+      "meaningEn": "Out of love you asked for and ate the simple greens at Vidura's home, while spurning the rich delicacies offered by Duryodhana."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "लखी प्रेम की महिमा भारी।",
+        "ऐसे श्याम दीन हितकारी॥"
+      ],
+      "linesEn": [
+        "Lakhee prem kee mahima bhaaree.",
+        "Aise shyaam deen hitkaaree."
+      ],
+      "meaningHi": "इससे प्रेम की महान महिमा प्रकट होती है; ऐसे हैं श्याम, जो दीन-दुखियों के हितकारी हैं।",
+      "meaningEn": "Herein shines the boundless glory of love; such is Shyam, ever the benefactor of the poor and the humble."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "भारत के पारथ रथ हाँके।",
+        "लिये चक्र कर नहिं बल थाके॥"
+      ],
+      "linesEn": [
+        "Bhaarat ke paarath rath haanke.",
+        "Liye chakra kar nahin bal thaake."
+      ],
+      "meaningHi": "महाभारत के युद्ध में आपने पार्थ (अर्जुन) के रथ को हाँका और हाथ में चक्र लेकर भी आपका बल कभी नहीं थका।",
+      "meaningEn": "In the war of the Mahabharata you drove the chariot of Partha (Arjuna); even taking up the discus in your hand, your strength never wearied."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "निज गीता के ज्ञान सुनाए।",
+        "भक्तन हृदय सुधा वर्षाए॥"
+      ],
+      "linesEn": [
+        "Nij geeta ke gyaan sunaae.",
+        "Bhaktan hriday sudha varshaae."
+      ],
+      "meaningHi": "आपने स्वयं गीता का ज्ञान सुनाया और भक्तों के हृदय में अमृत (सुधा) की वर्षा कर दी।",
+      "meaningEn": "You yourself imparted the wisdom of the Gita and showered nectar upon the hearts of your devotees."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "मीरा थी ऐसी मतवाली।",
+        "विष पी गई बजाकर ताली॥"
+      ],
+      "linesEn": [
+        "Meera thee aisee matvaalee.",
+        "Vish pee gaee bajaakar taalee."
+      ],
+      "meaningHi": "मीरा आपके प्रेम में ऐसी मतवाली (मग्न) थी कि उसने ताली बजाते हुए (हँसते हुए) विष भी पी लिया।",
+      "meaningEn": "Mira was so intoxicated in your love that, clapping her hands joyfully, she drank down even poison."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "राना भेजा साँप पिटारी।",
+        "शालीग्राम बने बनवारी॥"
+      ],
+      "linesEn": [
+        "Raana bheja saanp pitaaree.",
+        "Shaaleegraam bane banvaaree."
+      ],
+      "meaningHi": "राणा ने पिटारी में साँप भेजा, किन्तु बनवारी (कृष्ण) की कृपा से वह शालिग्राम बन गया।",
+      "meaningEn": "The Rana sent a serpent hidden in a basket, but by the grace of Banwari (Krishna) it turned into a sacred Shaligram stone."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "निज माया तुम विधिहिं दिखायो।",
+        "उर ते संशय सकल मिटायो॥"
+      ],
+      "linesEn": [
+        "Nij maaya tum vidhihin dikhaayo.",
+        "Ur te sanshay sakal mitaayo."
+      ],
+      "meaningHi": "आपने ब्रह्मा को अपनी माया के दर्शन कराए और उनके हृदय से सारा संशय मिटा दिया।",
+      "meaningEn": "You revealed your divine maya (illusion) even to Brahma the creator, and erased all doubt from his heart."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "तब शत निन्दा करि तत्काला।",
+        "जीवन मुक्त भयो शिशुपाला॥"
+      ],
+      "linesEn": [
+        "Tab shat ninda kari tatkaala.",
+        "Jeevan mukt bhayo shishupaala."
+      ],
+      "meaningHi": "शिशुपाल ने तत्काल सौ बार निन्दा की, फिर भी (आपकी कृपा से) वह जीवन-मुक्त हो गया।",
+      "meaningEn": "Shishupala hurled a hundred insults at once, yet even so, by your grace, he attained liberation from the cycle of life."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "जबहिं द्रौपदी टेर लगाई।",
+        "दीनानाथ लाज अब जाई॥"
+      ],
+      "linesEn": [
+        "Jabahin draupadee ter lagaai.",
+        "Deenaanaath laaj ab jaai."
+      ],
+      "meaningHi": "जब द्रौपदी ने पुकार लगाई कि हे दीनानाथ, अब मेरी लाज जा रही है (मेरी रक्षा कीजिए)।",
+      "meaningEn": "When Draupadi cried out, \"O Lord of the helpless, my honour is now slipping away — save me!\""
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "तुरतहि वसन बने नंदलाला।",
+        "बढ़े चीर भै अरि मुंह काला॥"
+      ],
+      "linesEn": [
+        "Turatahi vasan bane nandlaala.",
+        "Badhe cheer bhai ari munh kaala."
+      ],
+      "meaningHi": "तब नंदलाल (कृष्ण) तुरंत ही वस्त्र बन गए; द्रौपदी की साड़ी बढ़ती चली गई और शत्रुओं के मुँह काले पड़ गए।",
+      "meaningEn": "At once Nandlala (Krishna) became her endless garment; her cloth grew and grew, and the faces of her enemies were blackened in shame."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "अस अनाथ के नाथ कन्हैया।",
+        "डूबत भंवर बचावै नैया॥"
+      ],
+      "linesEn": [
+        "As anaath ke naath kanhaiya.",
+        "Doobat bhanvar bachaavai naiya."
+      ],
+      "meaningHi": "ऐसे हैं अनाथों के नाथ कन्हैया, जो भँवर में डूबती हुई नाव को भी बचा लेते हैं।",
+      "meaningEn": "Such is Kanhaiya, the protector of the destitute, who rescues even the boat sinking in a whirlpool."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "सुन्दरदास आस उर धारी।",
+        "दया दृष्टि कीजै बनवारी॥"
+      ],
+      "linesEn": [
+        "Sundardaas aas ur dhaaree.",
+        "Daya drishti keejai banvaaree."
+      ],
+      "meaningHi": "सुन्दरदास (कवि) ने अपने हृदय में यह आशा धारण की है; हे बनवारी, मुझ पर अपनी दया-दृष्टि कीजिए।",
+      "meaningEn": "Sundardas (the poet) holds this hope in his heart; O Banwari, cast your merciful gaze upon me."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "नाथ सकल मम कुमति निवारो।",
+        "क्षमहु बेगि अपराध हमारो॥"
+      ],
+      "linesEn": [
+        "Naath sakal mam kumati nivaaro.",
+        "Kshamahu begi aparaadh hamaaro."
+      ],
+      "meaningHi": "हे नाथ, मेरी समस्त दुर्बुद्धि (कुमति) को दूर कीजिए और मेरे अपराधों को शीघ्र क्षमा कीजिए।",
+      "meaningEn": "O Lord, dispel all my wrong-mindedness and swiftly forgive my transgressions."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "खोलो पट अब दर्शन दीजै।",
+        "बोलो कृष्ण कन्हैया की जै॥"
+      ],
+      "linesEn": [
+        "Kholo pat ab darshan deejai.",
+        "Bolo krishna kanhaiya kee jai."
+      ],
+      "meaningHi": "अब पट (मंदिर के कपाट) खोलिए और मुझे अपने दर्शन दीजिए; बोलो, कृष्ण कन्हैया की जय हो।",
+      "meaningEn": "Open now the temple doors and grant me your holy sight; proclaim aloud — victory to Krishna Kanhaiya!"
+    },
+    {
+      "id": "closing-doha-1",
+      "type": "doha",
+      "section": "closing",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "यह चालीसा कृष्ण का, पाठ करै उर धारि।",
+        "अष्ट सिद्धि नवनिधि फल, लहै पदारथ चारि॥"
+      ],
+      "linesEn": [
+        "Yah chaaleesa krishna ka, paath karai ur dhaari.",
+        "Asht siddhi navnidhi phal, lahai padaarath chaari."
+      ],
+      "meaningHi": "जो व्यक्ति इस कृष्ण चालीसा को हृदय में धारण कर पाठ करता है, वह आठों सिद्धियों और नौ निधियों को पाकर चारों पदार्थ (धर्म, अर्थ, काम, मोक्ष) प्राप्त कर लेता है।",
+      "meaningEn": "Whoever recites this Krishna Chalisa, holding it in the heart, attains the eight siddhis and nine treasures and gains the four aims of life (dharma, wealth, desire, and liberation)."
+    }
+  ]
+}
