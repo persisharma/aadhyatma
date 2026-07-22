@@ -11,7 +11,7 @@ The companion command `/add-section` (see [`.claude/commands/add-section.md`](./
 This is a hard, repo-wide gate that applies to **every** change, not just new sections — features, bug fixes, refactors, content edits, and data changes alike.
 
 - **Unit tests (UT).** Every change adds or updates automated unit tests that pin the new or fixed behaviour. Run `npm test` from `mobile/` — it runs `typecheck`, the Jest suites (`test:readers`), the panchang engine tests (`test:engine`), and the data/content tests (`test:data`); all must pass. A bug fix must include a test that fails before the fix and passes after.
-- **E2E verification.** Every change is exercised end-to-end via the Maestro flows in `mobile/.maestro/` (`npm run test:e2e`) on a simulator/emulator, and the flow covering the touched area must pass. If a change adds a user-facing surface no existing flow covers, extend or add the matching `<category>-smoke.yaml` (see §9).
+- **E2E verification.** Every change is exercised end-to-end via the Maestro flows in `mobile/.maestro/` (`npm run test:e2e`) on a simulator/emulator, and the flow covering the touched area must pass. If a change adds a user-facing surface no existing flow covers, extend or add the matching `<category>-smoke.yaml` (see §9). **How to author and verify a flow — including the isolated-simulator recipe for machines running several worktrees, and the selector/onboarding gotchas — is the `wiki/runbooks/e2e-verification.md` runbook.**
 - **No exceptions.** A PR without both UT and e2e evidence is a hard reject — the same bar as a missing reader-screen test (§2 row 14) or a missing Maestro flow (§9).
 
 ## 0.1 Docs ship in the same PR — design.md / RULEBOOK sync is a merge gate
