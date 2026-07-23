@@ -5,7 +5,10 @@
 # Mochan Hanuman Ashtak keeps its dedicated reader but lives in this category.
 # Verifies:
 #   1. Home shows the Ashtakam category tile
-#   2. CategoryList shows Sankat Mochan Hanuman Ashtak and Lingashtakam
+#   2. CategoryList shows all 14 sections: Sankat Mochan Hanuman Ashtak,
+#      Lingashtakam, Madhurashtakam, Achyutashtakam, plus the PRD-A §A.4.2
+#      deity-expansion texts (Mahalakshmi, Surya, Radha, Subrahmanya, Ganga,
+#      Bhavani, Narasimha, Datta, Shani, Kalika) — scroll down the list
 #   3. Reader opens; language toggle flips Hindi → English (title becomes "Lingashtakam")
 #   4. Back returns to the list
 #
@@ -28,12 +31,94 @@ appId: host.exp.Exponent
 - tapOn: "Ashtakam\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# ── Step 3: CategoryList lists the migrated pre-existing Ashtak + Lingashtakam; open Lingashtakam ──
+# ── Step 3: CategoryList lists every ashtakam section (library order); scroll through all 14 ──
 - extendedWaitUntil:
     visible: "Sankat Mochan Hanuman Ashtak\\..*Tap to open\\."
     timeout: 15000
 - extendedWaitUntil:
     visible: "Lingashtakam\\..*Tap to open\\."
+    timeout: 15000
+# PRD-A §A.4.2 deity-expansion sections — the list is several screens tall,
+# so scroll to each in library order (RULEBOOK §2 row 15 / §9).
+- scrollUntilVisible:
+    element:
+      text: "Madhurashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Achyutashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Mahalakshmi Ashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Surya Ashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Radhashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Subrahmanya Ashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Gangashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Bhavani Ashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Narasimha Ashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Datta Ashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Shani Ashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Kalika Ashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+
+# ── Step 3b: Open Lingashtakam (representative reader — scroll back up) ──
+- scrollUntilVisible:
+    element:
+      text: "Lingashtakam\\..*Tap to open\\."
+    direction: UP
+    visibilityPercentage: 60
     timeout: 15000
 - tapOn: "Lingashtakam\\..*Tap to open\\."
 - waitForAnimationToEnd:

@@ -26,6 +26,7 @@ import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import VersePage from '@/components/VersePage';
+import WhenToRecitePanel from '@/components/WhenToRecitePanel';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
@@ -213,6 +214,7 @@ export default function SuktamReaderScreen({ navigation, route }: Props) {
                 verse={item}
                 sourceId={suktamId}
                 width={width}
+                belowContent={index === 0 ? <WhenToRecitePanel sourceId={suktamId} /> : undefined}
                 topActions={
                   <>
                     <BookmarkButton

@@ -28,6 +28,12 @@ import {
   suryaAshtakamTotal,
   radhashtakamTotal,
   subrahmanyaAshtakamTotal,
+  gangashtakamTotal,
+  bhavaniAshtakamTotal,
+  narasimhaAshtakamTotal,
+  dattaAshtakamTotal,
+  shaniAshtakamTotal,
+  kalikaAshtakamTotal,
 } from './ashtakam';
 import { deviSuktamTotal, purushaSuktamTotal, narayanaSuktamTotal } from './suktam';
 import {
@@ -36,7 +42,12 @@ import {
   shivaKavachamTotal,
   durgaKavachTotal,
 } from './kavacham';
-import { krishnaStutiTotal, durgaStutiArjunaTotal } from './stuti';
+import {
+  krishnaStutiTotal,
+  durgaStutiArjunaTotal,
+  kuberaStotramTotal,
+  navagrahaStotramTotal,
+} from './stuti';
 
 export type TextStatus = 'active' | 'coming';
 export type ContentCategory =
@@ -64,7 +75,15 @@ export type Deity =
   | 'lakshmi'
   | 'surya'
   | 'radha'
-  | 'kartikeya';
+  | 'kartikeya'
+  | 'kubera'
+  | 'ganga'
+  | 'parvati'
+  | 'narasimha'
+  | 'dattatreya'
+  | 'shani'
+  | 'kali'
+  | 'navagraha';
 
 export type LibraryEntry = {
   id: string;
@@ -724,6 +743,78 @@ export const library: readonly LibraryEntry[] = [
     deities: ['kartikeya'],
     verseCount: subrahmanyaAshtakamTotal,
   },
+  {
+    id: 'gangashtakam',
+    nameHi: 'श्रीगङ्गाष्टकम्',
+    nameEn: 'Gangashtakam',
+    sub: `${gangashtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${gangashtakamTotal} shlokas · with meaning`,
+    thumb: 'गं',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['ganga'],
+    verseCount: gangashtakamTotal,
+  },
+  {
+    id: 'bhavani-ashtakam',
+    nameHi: 'भवान्यष्टकम्',
+    nameEn: 'Bhavani Ashtakam',
+    sub: `${bhavaniAshtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${bhavaniAshtakamTotal} shlokas · with meaning`,
+    thumb: 'भ',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['parvati'],
+    verseCount: bhavaniAshtakamTotal,
+  },
+  {
+    id: 'narasimha-ashtakam',
+    nameHi: 'श्रीनृसिंहाष्टकम्',
+    nameEn: 'Narasimha Ashtakam',
+    sub: `${narasimhaAshtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${narasimhaAshtakamTotal} shlokas · with meaning`,
+    thumb: 'नृ',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['narasimha'],
+    verseCount: narasimhaAshtakamTotal,
+  },
+  {
+    id: 'datta-ashtakam',
+    nameHi: 'श्री दत्ताष्टकम्',
+    nameEn: 'Datta Ashtakam',
+    sub: `${dattaAshtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${dattaAshtakamTotal} shlokas · with meaning`,
+    thumb: 'द',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['dattatreya'],
+    verseCount: dattaAshtakamTotal,
+  },
+  {
+    id: 'shani-ashtakam',
+    nameHi: 'श्री शनैश्चराष्टकम्',
+    nameEn: 'Shani Ashtakam',
+    sub: `${shaniAshtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${shaniAshtakamTotal} shlokas · with meaning`,
+    thumb: 'श',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['shani'],
+    verseCount: shaniAshtakamTotal,
+  },
+  {
+    id: 'kalika-ashtakam',
+    nameHi: 'श्रीकालिकाष्टकम्',
+    nameEn: 'Kalika Ashtakam',
+    sub: `${kalikaAshtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${kalikaAshtakamTotal} shlokas · with meaning`,
+    thumb: 'का',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['kali'],
+    verseCount: kalikaAshtakamTotal,
+  },
   // ─────────── Suktam (सूक्तम्) — PRD-A, multi-instance form ───────────
   {
     id: 'devi-suktam',
@@ -838,5 +929,29 @@ export const library: readonly LibraryEntry[] = [
     category: 'stotram',
     deities: ['durga'],
     verseCount: durgaStutiArjunaTotal,
+  },
+  {
+    id: 'kubera-stotram',
+    nameHi: 'श्री कुबेर स्तोत्रम्',
+    nameEn: 'Kubera Stotram',
+    sub: `${kuberaStotramTotal} श्लोक · अर्थ सहित`,
+    subEn: `${kuberaStotramTotal} shlokas · with meaning`,
+    thumb: 'कु',
+    status: 'active',
+    category: 'stotram',
+    deities: ['kubera'],
+    verseCount: kuberaStotramTotal,
+  },
+  {
+    id: 'navagraha-stotram',
+    nameHi: 'नवग्रह स्तोत्रम्',
+    nameEn: 'Navagraha Stotram',
+    sub: `${navagrahaStotramTotal} श्लोक · अर्थ सहित`,
+    subEn: `${navagrahaStotramTotal} shlokas · with meaning`,
+    thumb: 'न',
+    status: 'active',
+    category: 'stotram',
+    deities: ['navagraha'],
+    verseCount: navagrahaStotramTotal,
   },
 ];

@@ -4,6 +4,8 @@
 // `lines` + IAST `linesEn` + bilingual meanings).
 import krishnaStuti from './krishna-stuti.json';
 import durgaStutiArjuna from './durga-stuti-arjuna.json';
+import kuberaStotram from './kubera-stotram.json';
+import navagrahaStotram from './navagraha-stotram.json';
 
 export type StutiVerse = {
   id: string;
@@ -18,7 +20,11 @@ export type StutiVerse = {
   meaningKn?: string;
 };
 
-export type StutiId = 'krishna-stuti' | 'durga-stuti-arjuna';
+export type StutiId =
+  | 'krishna-stuti'
+  | 'durga-stuti-arjuna'
+  | 'kubera-stotram'
+  | 'navagraha-stotram';
 
 export type StutiPayload = {
   id: StutiId;
@@ -43,9 +49,28 @@ const registry: Record<StutiId, StutiPayload> = {
     deity: durgaStutiArjuna.deity,
     verses: durgaStutiArjuna.verses,
   },
+  'kubera-stotram': {
+    id: 'kubera-stotram',
+    titleHi: kuberaStotram.titleHi,
+    titleEn: kuberaStotram.titleEn,
+    deity: kuberaStotram.deity,
+    verses: kuberaStotram.verses,
+  },
+  'navagraha-stotram': {
+    id: 'navagraha-stotram',
+    titleHi: navagrahaStotram.titleHi,
+    titleEn: navagrahaStotram.titleEn,
+    deity: navagrahaStotram.deity,
+    verses: navagrahaStotram.verses,
+  },
 };
 
-export const stutiIds: readonly StutiId[] = ['krishna-stuti', 'durga-stuti-arjuna'];
+export const stutiIds: readonly StutiId[] = [
+  'krishna-stuti',
+  'durga-stuti-arjuna',
+  'kubera-stotram',
+  'navagraha-stotram',
+];
 
 export function getStuti(id: string | undefined): StutiPayload {
   if (id && id in registry) return registry[id as StutiId];
@@ -56,3 +81,5 @@ export const krishnaStutiTitleHi = krishnaStuti.titleHi;
 export const krishnaStutiTitleEn = krishnaStuti.titleEn;
 export const krishnaStutiTotal = krishnaStuti.verses.length;
 export const durgaStutiArjunaTotal = durgaStutiArjuna.verses.length;
+export const kuberaStotramTotal = kuberaStotram.verses.length;
+export const navagrahaStotramTotal = navagrahaStotram.verses.length;

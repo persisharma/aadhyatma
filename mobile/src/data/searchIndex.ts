@@ -85,6 +85,8 @@ import {
   type RamcharitmanasVerse,
 } from './ramcharitmanas';
 import { getSanskar, sanskarIds } from './sanskar';
+import { getPurposeMeta } from './purposes';
+import { purposesForText } from './discoveryMeta';
 import { MatchRank, normalize, rankAny } from './searchNormalize';
 
 const CHALISA_IDS: readonly ChalisaId[] = [
@@ -213,11 +215,16 @@ function buildSectionEntries(): readonly SearchSectionEntry[] {
 }
 
 function sectionEntry(entry: LibraryEntry): SearchSectionEntry {
+  const purposeFields = purposesForText(entry.id).flatMap((purposeId) => {
+    const purpose = getPurposeMeta(purposeId);
+    return [purpose.nameHi, purpose.nameEn, purpose.id];
+  });
   const fields = [
     entry.nameHi,
     entry.nameEn,
     entry.sub,
     entry.thumb,
+    ...purposeFields,
   ];
   const fieldsNorm = fields.map(normalize);
   return {

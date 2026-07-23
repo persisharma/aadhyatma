@@ -21,6 +21,7 @@ import HomeWordmark from '@/components/HomeWordmark';
 import SearchFloatingButton from '@/components/SearchFloatingButton';
 import RoutineBanner from '@/components/RoutineBanner';
 import TodayStrip from '@/components/TodayStrip';
+import TodayRecommendationsRow from '@/components/TodayRecommendationsRow';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
@@ -86,6 +87,15 @@ export default function HomeScreen({ navigation }: Props) {
       icon: iconFor('deity'),
       onPress: () => navigation.navigate('DeityIndex'),
     };
+    const purposeTile: TileItem = {
+      key: 'purpose',
+      nameHi: 'उद्देश्य',
+      nameEn: 'By Purpose',
+      shortNameEn: 'Purpose',
+      status: 'active',
+      icon: iconFor('purpose'),
+      onPress: () => navigation.navigate('BrowseByPurpose'),
+    };
     const result: TileItem[] = [];
     for (const c of categories) {
       result.push({
@@ -102,7 +112,7 @@ export default function HomeScreen({ navigation }: Props) {
             : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
       });
       if (c.id === 'japam') result.push(vratTile);
-      if (c.id === 'theerth') result.push(deityTile);
+      if (c.id === 'theerth') result.push(deityTile, purposeTile);
     }
     return result;
   }, [hasNewInCategory, navigation, rootNav]);
@@ -202,6 +212,8 @@ export default function HomeScreen({ navigation }: Props) {
           </View>
 
           <TodayStrip />
+
+          <TodayRecommendationsRow />
 
           {/* Routine banner, inline (not docked) on Home — it sits with the
               Today strip as the "today" cluster, above the library grid, so it

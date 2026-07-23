@@ -141,6 +141,21 @@ const index = getSearchIndex();
   assert.equal(top.entry.sourceId, 'hanuman-chalisa');
 }
 
+// PRD-B purpose names are searchable as section metadata, so users can type an
+// intent instead of a title.
+{
+  const res = runSearch('protection', index);
+  const sectionIds = res.sections.map((h) => h.entry.sourceId);
+  assert.ok(sectionIds.includes('rama-raksha-stotra'), 'protection should find Rama Raksha Stotra');
+  assert.ok(sectionIds.includes('durga-kavach'), 'protection should find Durga Kavach');
+}
+
+{
+  const res = runSearch('सुरक्षा', index);
+  const sectionIds = res.sections.map((h) => h.entry.sourceId);
+  assert.ok(sectionIds.includes('rama-raksha-stotra'), 'सुरक्षा should find Rama Raksha Stotra');
+}
+
 // Rebuild is idempotent — second call returns the same instance.
 {
   const a = getSearchIndex();

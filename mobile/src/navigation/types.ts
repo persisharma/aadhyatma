@@ -1,5 +1,6 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
+import type { PurposeId } from '@/data/purposes';
 
 export type TabParamList = {
   HomeTab: undefined;
@@ -19,6 +20,9 @@ export type HomeStackParamList = {
   CategoryList: { categoryId: ContentCategory };
   DeityList: { deityId: Deity };
   DeityIndex: undefined;
+  DeityDetail: { deityId: Deity };
+  BrowseByPurpose: undefined;
+  PurposeList: { purposeId: PurposeId };
   ChalisaReader: { initialIndex?: number; chalisaId?: string } | undefined;
   AshtakamReader: { initialIndex?: number; ashtakamId?: string } | undefined;
   SuktamReader: { initialIndex?: number; suktamId?: string } | undefined;

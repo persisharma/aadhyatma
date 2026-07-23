@@ -13,6 +13,7 @@ import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import VersePage from '@/components/VersePage';
+import WhenToRecitePanel from '@/components/WhenToRecitePanel';
 import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
@@ -126,6 +127,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
                 verse={item}
                 sourceId={sourceId}
                 width={width}
+                belowContent={index === 0 ? <WhenToRecitePanel sourceId={sourceId} /> : undefined}
                 topActions={
                   <>
                     <BookmarkButton

@@ -1,0 +1,145 @@
+{
+  "titleHi": "भवान्यष्टकम्",
+  "titleEn": "Bhavani Ashtakam",
+  "deity": "parvati",
+  "source": {
+    "baseText": "Bhavani Ashtakam (Adi Shankaracharya-krita, 'न तातो न माता') — the 8-verse ashtakam of total surrender to Maa Bhavani (Parvati); cross-verified, all sources concordant.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/bhavani8.html",
+      "https://stotranidhi.com/hi/bhavani-ashtakam-in-sanskrit/",
+      "https://www.vachmi.com/articles/Bhavaniashtakam.html"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "By Adi Shankaracharya (इति श्रीमदादिशङ्कराचार्यविरचितं), in Bhujangaprayata metre; sanskritdocuments classifies it under Parvati (Bhavani is her epithet). Refrain: गतिस्त्वं गतिस्त्वं त्वमेका भवानि. One reading adopted against the SD print: v2 पपात (perfect, 'I fell' — stotranidhi + vachmi concord) where SD prints प्रपात; flagged for §5. No phalashruti in this text."
+  },
+  "verses": [
+    {
+      "id": "bhavani-ashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "न तातो न माता न बन्धुर्न दाता न पुत्रो न पुत्री न भृत्यो न भर्ता।",
+        "न जाया न विद्या न वृत्तिर्ममैव गतिस्त्वं गतिस्त्वं त्वमेका भवानि॥"
+      ],
+      "linesEn": [
+        "na tāto na mātā na bandhurna dātā na putro na putrī na bhṛtyo na bhartā",
+        "na jāyā na vidyā na vṛttirmamaiva gatistvaṃ gatistvaṃ tvamekā bhavāni"
+      ],
+      "meaningHi": "न पिता, न माता, न बन्धु, न दाता; न पुत्र, न पुत्री, न सेवक, न स्वामी; न पत्नी, न विद्या, न कोई वृत्ति ही मेरी है — हे भवानी! एकमात्र तुम्हीं मेरी गति हो, तुम्हीं मेरी शरण हो।",
+      "meaningEn": "Neither father nor mother, neither kinsman nor benefactor; neither son nor daughter, neither servant nor master; neither wife, nor learning, nor any livelihood is truly mine — you are my refuge, you alone are my refuge, O Bhavani."
+    },
+    {
+      "id": "bhavani-ashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "भवाब्धावपारे महादुःखभीरु पपात प्रकामी प्रलोभी प्रमत्तः।",
+        "कुसंसारपाशप्रबद्धः सदाहं गतिस्त्वं गतिस्त्वं त्वमेका भवानि॥"
+      ],
+      "linesEn": [
+        "bhavābdhāvapāre mahāduḥkhabhīru papāta prakāmī pralobhī pramattaḥ",
+        "kusaṃsārapāśaprabaddhaḥ sadāhaṃ gatistvaṃ gatistvaṃ tvamekā bhavāni"
+      ],
+      "meaningHi": "महान दुःखों से भयभीत मैं अपार भवसागर में गिर पड़ा हूँ — कामनाओं से भरा, लोभी और प्रमत्त; कुत्सित संसार के पाशों से सदा बँधा हुआ — हे भवानी! एकमात्र तुम्हीं मेरी गति हो, तुम्हीं मेरी शरण हो।",
+      "meaningEn": "Terrified of great sorrows, I have fallen into the shoreless ocean of worldly existence — full of cravings, greedy, heedless, forever bound in the snares of this wretched samsara — you are my refuge, you alone are my refuge, O Bhavani."
+    },
+    {
+      "id": "bhavani-ashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "न जानामि दानं न च ध्यानयोगं न जानामि तन्त्रं न च स्तोत्रमन्त्रम्।",
+        "न जानामि पूजां न च न्यासयोगं गतिस्त्वं गतिस्त्वं त्वमेका भवानि॥"
+      ],
+      "linesEn": [
+        "na jānāmi dānaṃ na ca dhyānayogaṃ na jānāmi tantraṃ na ca stotramantram",
+        "na jānāmi pūjāṃ na ca nyāsayogaṃ gatistvaṃ gatistvaṃ tvamekā bhavāni"
+      ],
+      "meaningHi": "न मैं दान जानता हूँ, न ध्यान-योग; न तन्त्र जानता हूँ, न स्तोत्र और मन्त्र; न पूजा जानता हूँ, न न्यास-योग — हे भवानी! एकमात्र तुम्हीं मेरी गति हो, तुम्हीं मेरी शरण हो।",
+      "meaningEn": "I know not charity, nor the yoga of meditation; I know not tantra, nor hymn and mantra; I know not worship, nor the yoga of nyasa — you are my refuge, you alone are my refuge, O Bhavani."
+    },
+    {
+      "id": "bhavani-ashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "न जानामि पुण्यं न जानामि तीर्थं न जानामि मुक्तिं लयं वा कदाचित्।",
+        "न जानामि भक्तिं व्रतं वापि मातर्गतिस्त्वं गतिस्त्वं त्वमेका भवानि॥"
+      ],
+      "linesEn": [
+        "na jānāmi puṇyaṃ na jānāmi tīrthaṃ na jānāmi muktiṃ layaṃ vā kadācit",
+        "na jānāmi bhaktiṃ vrataṃ vāpi mātargatistvaṃ gatistvaṃ tvamekā bhavāni"
+      ],
+      "meaningHi": "न मैं पुण्य जानता हूँ, न तीर्थ; न कभी मुक्ति जानी, न लय; हे माता! न भक्ति जानता हूँ, न व्रत ही — हे भवानी! एकमात्र तुम्हीं मेरी गति हो, तुम्हीं मेरी शरण हो।",
+      "meaningEn": "I know not merit, I know not pilgrimage; I have never known liberation or absorption; O Mother, I know neither devotion nor holy vow — you are my refuge, you alone are my refuge, O Bhavani."
+    },
+    {
+      "id": "bhavani-ashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "कुकर्मी कुसङ्गी कुबुद्धिः कुदासः कुलाचारहीनः कदाचारलीनः।",
+        "कुदृष्टिः कुवाक्यप्रबन्धः सदाहं गतिस्त्वं गतिस्त्वं त्वमेका भवानि॥"
+      ],
+      "linesEn": [
+        "kukarmī kusaṅgī kubuddhiḥ kudāsaḥ kulācārahīnaḥ kadācāralīnaḥ",
+        "kudṛṣṭiḥ kuvākyaprabandhaḥ sadāhaṃ gatistvaṃ gatistvaṃ tvamekā bhavāni"
+      ],
+      "meaningHi": "मैं कुकर्मी, कुसंगी, कुबुद्धि और बुरा सेवक हूँ; कुलाचार से हीन और कदाचार में लीन हूँ; कुदृष्टि वाला और कुवचनों में लगा रहने वाला हूँ — फिर भी हे भवानी! एकमात्र तुम्हीं मेरी गति हो, तुम्हीं मेरी शरण हो।",
+      "meaningEn": "I am a doer of evil deeds, keeper of bad company, of wicked mind, a worthless servant; devoid of family virtue and sunk in bad conduct; of evil gaze and given to evil speech — yet you are my refuge, you alone are my refuge, O Bhavani."
+    },
+    {
+      "id": "bhavani-ashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "प्रजेशं रमेशं महेशं सुरेशं दिनेशं निशीथेश्वरं वा कदाचित्।",
+        "न जानामि चान्यत् सदाहं शरण्ये गतिस्त्वं गतिस्त्वं त्वमेका भवानि॥"
+      ],
+      "linesEn": [
+        "prajeśaṃ rameśaṃ maheśaṃ sureśaṃ dineśaṃ niśītheśvaraṃ vā kadācit",
+        "na jānāmi cānyat sadāhaṃ śaraṇye gatistvaṃ gatistvaṃ tvamekā bhavāni"
+      ],
+      "meaningHi": "ब्रह्मा (प्रजेश), विष्णु (रमेश), महेश, इन्द्र (सुरेश), सूर्य (दिनेश) या चन्द्र (निशीथेश्वर) — इनमें से किसी को भी मैंने कभी नहीं जाना; हे शरण्ये! और कुछ भी मैं नहीं जानता — हे भवानी! एकमात्र तुम्हीं मेरी गति हो, तुम्हीं मेरी शरण हो।",
+      "meaningEn": "Brahma the lord of beings, Vishnu the lord of Rama, Mahesha, Indra the lord of gods, the Sun lord of day or the Moon lord of night — I have never truly known any of them, nor anything else, O giver of refuge — you are my refuge, you alone are my refuge, O Bhavani."
+    },
+    {
+      "id": "bhavani-ashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "विवादे विषादे प्रमादे प्रवासे जले चानले पर्वते शत्रुमध्ये।",
+        "अरण्ये शरण्ये सदा मां प्रपाहि गतिस्त्वं गतिस्त्वं त्वमेका भवानि॥"
+      ],
+      "linesEn": [
+        "vivāde viṣāde pramāde pravāse jale cānale parvate śatrumadhye",
+        "araṇye śaraṇye sadā māṃ prapāhi gatistvaṃ gatistvaṃ tvamekā bhavāni"
+      ],
+      "meaningHi": "विवाद में, विषाद में, प्रमाद में, प्रवास में; जल में, अग्नि में, पर्वत पर, शत्रुओं के बीच और अरण्य में — हे शरण्ये! सदा मेरी रक्षा करो — हे भवानी! एकमात्र तुम्हीं मेरी गति हो, तुम्हीं मेरी शरण हो।",
+      "meaningEn": "In dispute and in despair, in heedlessness and in distant lands; in water, in fire, on the mountain, amid enemies and in the forest — O giver of refuge, protect me always — you are my refuge, you alone are my refuge, O Bhavani."
+    },
+    {
+      "id": "bhavani-ashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "अनाथो दरिद्रो जरारोगयुक्तो महाक्षीणदीनः सदा जाड्यवक्त्रः।",
+        "विपत्तौ प्रविष्टः प्रनष्टः सदाहं गतिस्त्वं गतिस्त्वं त्वमेका भवानि॥"
+      ],
+      "linesEn": [
+        "anātho daridro jarārogayukto mahākṣīṇadīnaḥ sadā jāḍyavaktraḥ",
+        "vipattau praviṣṭaḥ pranaṣṭaḥ sadāhaṃ gatistvaṃ gatistvaṃ tvamekā bhavāni"
+      ],
+      "meaningHi": "मैं अनाथ, दरिद्र, वृद्धावस्था और रोगों से ग्रस्त, अत्यन्त क्षीण-दीन और सदा जड़ता से मूक-मुख हूँ; विपत्ति में पड़ा और नष्टप्राय हूँ — हे भवानी! एकमात्र तुम्हीं मेरी गति हो, तुम्हीं मेरी शरण हो।",
+      "meaningEn": "Helpless, destitute, gripped by old age and disease, utterly wasted and wretched, my face ever dull and mute; sunk in calamity and all but lost — you are my refuge, you alone are my refuge, O Bhavani."
+    }
+  ]
+}

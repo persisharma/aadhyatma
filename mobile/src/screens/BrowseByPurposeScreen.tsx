@@ -1,50 +1,32 @@
 import React, { useMemo } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
-import { library } from '@/data/texts';
-import { deities } from '@/data/deities';
+import { purposes } from '@/data/purposes';
 import { getRandomDeityBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
-import DeityCard from '@/components/DeityCard';
-import { useNewContent } from '@/contexts/NewContentContext';
+import CategoryCard from '@/components/CategoryCard';
+import CategoryIcon from '@/components/CategoryIcon';
 import type { HomeStackParamList } from '@/navigation/types';
 
-type Props = NativeStackScreenProps<HomeStackParamList, 'DeityIndex'>;
+type Props = NativeStackScreenProps<HomeStackParamList, 'BrowseByPurpose'>;
 
-export default function DeityIndexScreen({ navigation }: Props) {
+export default function BrowseByPurposeScreen({ navigation }: Props) {
   const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const { isNew } = useNewContent();
-  // The index isn't tied to one deity, so it wears a random deity backdrop —
-  // stable while open (useMemo []), fresh on each visit. Matches the image
-  // backgrounds every other listing screen carries (see CategoryListScreen).
   const backgroundImage = useMemo(() => getRandomDeityBackground(), []);
-  const title = orderTitlesByLanguage(lang, 'देवता', 'By Deity', {
+  const title = orderTitlesByLanguage(lang, 'उद्देश्य', 'By Purpose', {
     devPrimary: 16,
     devSecondary: 13,
     latPrimary: 16,
     latSecondary: 13,
   });
-
-  const deityTexts = (deityId: string) =>
-    library.filter(
-      (e) => !e.hidden && e.status === 'active' && e.deities.includes(deityId as any)
-    );
-
-  const getItemCount = (deityId: string): string => {
-    const count = deityTexts(deityId).length;
-    if (count === 0) return '';
-    return `${count} text${count > 1 ? 's' : ''}`;
-  };
-
-  // A deity is NEW when any of its texts is still unacknowledged — mirrors the
-  // per-text NEW chip its DeityList subsection already shows via LibraryCard.
-  const deityHasNew = (deityId: string): boolean =>
-    deityTexts(deityId).some((e) => isNew(e.id));
+  const screenWidth = Dimensions.get('window').width;
+  const gridGap = 10;
+  const tileWidth = (screenWidth - 2 * spacing.xxl - 2 * gridGap) / 3;
 
   return (
     <View style={styles.root}>
@@ -75,35 +57,28 @@ export default function DeityIndexScreen({ navigation }: Props) {
             >
               {title.primary.text}
             </Text>
-            <Text
-              style={{
-                fontFamily: title.secondary.fontFamily,
-                fontSize: title.secondary.fontSize,
-                fontStyle: title.secondary.fontStyle,
-                color: colors.inkMuted,
-                marginLeft: 6,
-              }}
-            >
-              · {title.secondary.text}
-            </Text>
           </View>
         </View>
 
         <ScrollView
-          contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl, gap: spacing.md }]}
+          contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl, gap: gridGap }]}
           showsVerticalScrollIndicator={false}
         >
-          {deities.map((deity) => (
-            <DeityCard
-              key={deity.id}
-              nameHi={deity.nameHi}
-              nameEn={deity.nameEn}
-              itemCount={getItemCount(deity.id)}
-              iconKey={deity.iconKey}
-              hasNew={deityHasNew(deity.id)}
-              onPress={() => navigation.navigate('DeityDetail', { deityId: deity.id })}
-            />
-          ))}
+          <View style={[styles.grid, { gap: gridGap }]}>
+            {purposes.map((purpose) => (
+              <View key={purpose.id} style={{ width: tileWidth }}>
+                <CategoryCard
+                  nameHi={purpose.nameHi}
+                  nameEn={purpose.nameEn}
+                  displayNameEn={purpose.shortNameEn}
+                  status="active"
+                  icon={<CategoryIcon iconKey={purpose.iconKey} />}
+                  onPress={() => navigation.navigate('PurposeList', { purposeId: purpose.id })}
+                  variant="launcher"
+                />
+              </View>
+            ))}
+          </View>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -134,5 +109,9 @@ const styles = StyleSheet.create({
   scroll: {
     paddingTop: 8,
     paddingBottom: 40,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });

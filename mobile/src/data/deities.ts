@@ -14,7 +14,15 @@ export type DeityIconKey =
   | 'lakshmi'
   | 'suryadev'
   | 'radha'
-  | 'kartikeya';
+  | 'kartikeya'
+  | 'kubera'
+  | 'ganga'
+  | 'parvati'
+  | 'narasimha'
+  | 'dattatreya'
+  | 'shani'
+  | 'kali'
+  | 'navagraha';
 
 export type DeityMeta = {
   id: Deity;
@@ -43,6 +51,14 @@ export const deities: readonly DeityMeta[] = [
   { id: 'surya', nameHi: 'सूर्य देव', nameEn: 'Surya Dev', iconKey: 'suryadev' },
   { id: 'radha', nameHi: 'राधा रानी', nameEn: 'Radha Rani', iconKey: 'radha' },
   { id: 'kartikeya', nameHi: 'कार्तिकेय', nameEn: 'Kartikeya', iconKey: 'kartikeya' },
+  { id: 'kubera', nameHi: 'कुबेर', nameEn: 'Kubera', iconKey: 'kubera' },
+  { id: 'ganga', nameHi: 'माँ गंगा', nameEn: 'Maa Ganga', iconKey: 'ganga' },
+  { id: 'parvati', nameHi: 'माँ पार्वती', nameEn: 'Maa Parvati', iconKey: 'parvati' },
+  { id: 'narasimha', nameHi: 'नरसिंह', nameEn: 'Narasimha', iconKey: 'narasimha' },
+  { id: 'dattatreya', nameHi: 'दत्तात्रेय', nameEn: 'Dattatreya', iconKey: 'dattatreya' },
+  { id: 'shani', nameHi: 'शनि देव', nameEn: 'Shani Dev', iconKey: 'shani' },
+  { id: 'kali', nameHi: 'माँ काली', nameEn: 'Maa Kali', iconKey: 'kali' },
+  { id: 'navagraha', nameHi: 'नवग्रह', nameEn: 'Navagraha', iconKey: 'navagraha' },
 ];
 
 const deityById: Record<Deity, DeityMeta> = Object.fromEntries(

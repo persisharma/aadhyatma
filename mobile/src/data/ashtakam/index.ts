@@ -10,6 +10,12 @@ import mahalakshmiAshtakam from './mahalakshmi-ashtakam.json';
 import suryaAshtakam from './surya-ashtakam.json';
 import radhashtakam from './radhashtakam.json';
 import subrahmanyaAshtakam from './subrahmanya-ashtakam.json';
+import gangashtakam from './gangashtakam.json';
+import bhavaniAshtakam from './bhavani-ashtakam.json';
+import narasimhaAshtakam from './narasimha-ashtakam.json';
+import dattaAshtakam from './datta-ashtakam.json';
+import shaniAshtakam from './shani-ashtakam.json';
+import kalikaAshtakam from './kalika-ashtakam.json';
 
 export type AshtakamVerse = {
   id: string;
@@ -31,7 +37,13 @@ export type AshtakamId =
   | 'mahalakshmi-ashtakam'
   | 'surya-ashtakam'
   | 'radhashtakam'
-  | 'subrahmanya-ashtakam';
+  | 'subrahmanya-ashtakam'
+  | 'gangashtakam'
+  | 'bhavani-ashtakam'
+  | 'narasimha-ashtakam'
+  | 'datta-ashtakam'
+  | 'shani-ashtakam'
+  | 'kalika-ashtakam';
 
 export type AshtakamPayload = {
   id: AshtakamId;
@@ -91,6 +103,48 @@ const registry: Record<AshtakamId, AshtakamPayload> = {
     deity: subrahmanyaAshtakam.deity,
     verses: subrahmanyaAshtakam.verses,
   },
+  gangashtakam: {
+    id: 'gangashtakam',
+    titleHi: gangashtakam.titleHi,
+    titleEn: gangashtakam.titleEn,
+    deity: gangashtakam.deity,
+    verses: gangashtakam.verses,
+  },
+  'bhavani-ashtakam': {
+    id: 'bhavani-ashtakam',
+    titleHi: bhavaniAshtakam.titleHi,
+    titleEn: bhavaniAshtakam.titleEn,
+    deity: bhavaniAshtakam.deity,
+    verses: bhavaniAshtakam.verses,
+  },
+  'narasimha-ashtakam': {
+    id: 'narasimha-ashtakam',
+    titleHi: narasimhaAshtakam.titleHi,
+    titleEn: narasimhaAshtakam.titleEn,
+    deity: narasimhaAshtakam.deity,
+    verses: narasimhaAshtakam.verses,
+  },
+  'datta-ashtakam': {
+    id: 'datta-ashtakam',
+    titleHi: dattaAshtakam.titleHi,
+    titleEn: dattaAshtakam.titleEn,
+    deity: dattaAshtakam.deity,
+    verses: dattaAshtakam.verses,
+  },
+  'shani-ashtakam': {
+    id: 'shani-ashtakam',
+    titleHi: shaniAshtakam.titleHi,
+    titleEn: shaniAshtakam.titleEn,
+    deity: shaniAshtakam.deity,
+    verses: shaniAshtakam.verses,
+  },
+  'kalika-ashtakam': {
+    id: 'kalika-ashtakam',
+    titleHi: kalikaAshtakam.titleHi,
+    titleEn: kalikaAshtakam.titleEn,
+    deity: kalikaAshtakam.deity,
+    verses: kalikaAshtakam.verses,
+  },
 };
 
 export const ashtakamIds: readonly AshtakamId[] = [
@@ -101,6 +155,12 @@ export const ashtakamIds: readonly AshtakamId[] = [
   'surya-ashtakam',
   'radhashtakam',
   'subrahmanya-ashtakam',
+  'gangashtakam',
+  'bhavani-ashtakam',
+  'narasimha-ashtakam',
+  'datta-ashtakam',
+  'shani-ashtakam',
+  'kalika-ashtakam',
 ];
 
 export function getAshtakam(id: string | undefined): AshtakamPayload {
@@ -117,3 +177,9 @@ export const mahalakshmiAshtakamTotal = mahalakshmiAshtakam.verses.length;
 export const suryaAshtakamTotal = suryaAshtakam.verses.length;
 export const radhashtakamTotal = radhashtakam.verses.length;
 export const subrahmanyaAshtakamTotal = subrahmanyaAshtakam.verses.length;
+export const gangashtakamTotal = gangashtakam.verses.length;
+export const bhavaniAshtakamTotal = bhavaniAshtakam.verses.length;
+export const narasimhaAshtakamTotal = narasimhaAshtakam.verses.length;
+export const dattaAshtakamTotal = dattaAshtakam.verses.length;
+export const shaniAshtakamTotal = shaniAshtakam.verses.length;
+export const kalikaAshtakamTotal = kalikaAshtakam.verses.length;
