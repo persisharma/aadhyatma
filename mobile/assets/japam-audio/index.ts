@@ -37,10 +37,10 @@ export type JapamAudioClip = {
 const japamAudio: Record<string, JapamAudioClip> = {
   // Single recitation — one loop is one bead.
   'om-namah-shivaya': { source: require('./om-namah-shivaya.mp3') },
-  // Musical mahamantra kirtan (~8 min): chants the mahamantra continuously.
+  // Musical mahamantra rendition (~2:14): chants the mahamantra ~4 times.
   'hare-krishna-mahamantra': {
     source: require('../audio-library/hare-rama.mp3'),
-    repetitions: 16,
+    repetitions: 4,
   },
   // Melodic Gayatri rendition (~3 min): repeats the mantra several times.
   'gayatri-mantra': {

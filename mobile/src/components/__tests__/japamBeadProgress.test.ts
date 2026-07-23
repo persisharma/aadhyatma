@@ -109,7 +109,7 @@ describe('advanceBeadProgress', () => {
 
 describe('getJapamAudioRepetitions', () => {
   test('musical renditions declare their repetition count', () => {
-    expect(getJapamAudioRepetitions('hare-krishna-mahamantra')).toBe(16);
+    expect(getJapamAudioRepetitions('hare-krishna-mahamantra')).toBe(4);
     expect(getJapamAudioRepetitions('gayatri-mantra')).toBe(6);
   });
 
