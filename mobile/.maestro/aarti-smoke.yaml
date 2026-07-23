@@ -19,7 +19,7 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd
 
 # Verify all 9 sections appear in CategoryList
-# (Sankat Mochan Hanumanashtak was migrated to stotram category post-merge with main.)
+# (Sankat Mochan Hanumanashtak now lives in the Ashtakam category.)
 - extendedWaitUntil:
     visible: "Om Jai Jagdish Hare\\..*Tap to open\\."
     timeout: 15000

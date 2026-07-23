@@ -1,0 +1,115 @@
+{
+  "id": "narayana-suktam",
+  "titleHi": "नारायण सूक्तम्",
+  "titleEn": "Narayana Suktam",
+  "deity": "vishnu",
+  "source": {
+    "baseText": "Narayana Suktam — Yajurveda, Taittiriya Aranyaka (Mahanarayana Upanishad); 14-verse editorial recension per VastuCart, cross-verified. The closing Narayana Gayatri (ॐ नारायणाय विद्महे…) + śānti frame is recited after and is omitted from the numbered verses here.",
+    "referenceUrls": [
+      "https://stotra.vastucart.in/stotra/narayana-suktam",
+      "https://www.vignanam.org/veda/narayana-suktam.html"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Plain Devanagari (svara accent marks omitted for consistency, as in the app's other Suktam)."
+  },
+  "verses": [
+    {
+      "id": "narayana-suktam-1", "number": 1, "labelHi": "श्लोक · १", "labelEn": "Shloka · 1",
+      "lines": ["सहस्रशीर्षं देवं विश्वाक्षं विश्वशम्भुवम्।", "विश्वं नारायणं देवमक्षरं परमं पदम्॥"],
+      "linesEn": ["sahasra-śīrṣaṃ devaṃ viśvākṣaṃ viśva-śambhuvam", "viśvaṃ nārāyaṇaṃ devam-akṣaraṃ paramaṃ padam"],
+      "meaningHi": "सहस्रों मस्तकों वाले, विश्व के नेत्र-स्वरूप, विश्व का कल्याण करने वाले, विश्वरूप, अक्षर एवं परम पद-स्वरूप उन नारायण देव का (हम ध्यान करते हैं)।",
+      "meaningEn": "(We meditate on) the God of a thousand heads, the eye of the universe, the source of the world's well-being — the all-pervading Narayana, the imperishable, the supreme abode."
+    },
+    {
+      "id": "narayana-suktam-2", "number": 2, "labelHi": "श्लोक · २", "labelEn": "Shloka · 2",
+      "lines": ["विश्वतः परमान्नित्यं विश्वं नारायणं हरिम्।", "विश्वमेवेदं पुरुषस्तद्विश्वमुपजीवति॥"],
+      "linesEn": ["viśvataḥ paramān-nityaṃ viśvaṃ nārāyaṇaṃ harim", "viśvam-evedaṃ puruṣas-tad-viśvam-upajīvati"],
+      "meaningHi": "जो विश्व से परे, नित्य और विश्वरूप हैं — उन हरि नारायण को (हम जानते हैं)। यह सम्पूर्ण विश्व वही पुरुष है, और यह विश्व उन्हीं के आश्रय से जीवित रहता है।",
+      "meaningEn": "Beyond the universe, eternal, all-pervading — that Hari Narayana. This whole universe is verily that Person, and it lives by depending upon Him."
+    },
+    {
+      "id": "narayana-suktam-3", "number": 3, "labelHi": "श्लोक · ३", "labelEn": "Shloka · 3",
+      "lines": ["पतिं विश्वस्यात्मेश्वरं शाश्वतं शिवमच्युतम्।", "नारायणं महाज्ञेयं विश्वात्मानं परायणम्॥"],
+      "linesEn": ["patiṃ viśvasyātmeśvaraṃ śāśvataṃ śivam-acyutam", "nārāyaṇaṃ mahā-jñeyaṃ viśvātmānaṃ parāyaṇam"],
+      "meaningHi": "विश्व के स्वामी, आत्मा के ईश्वर, शाश्वत, कल्याणकारी (शिव), अच्युत, परम ज्ञेय, विश्वात्मा और परम आश्रय-स्वरूप नारायण को (हम प्रणाम करते हैं)।",
+      "meaningEn": "The Lord of the universe, the ruler of the Self, eternal, auspicious, imperishable — Narayana, the supremely knowable, the Self of all, the ultimate refuge."
+    },
+    {
+      "id": "narayana-suktam-4", "number": 4, "labelHi": "श्लोक · ४", "labelEn": "Shloka · 4",
+      "lines": ["नारायणपरो ज्योतिरात्मा नारायणः परः।", "नारायणपरं ब्रह्म तत्त्वं नारायणः परः॥"],
+      "linesEn": ["nārāyaṇaparo jyotir-ātmā nārāyaṇaḥ paraḥ", "nārāyaṇaparaṃ brahma tattvaṃ nārāyaṇaḥ paraḥ"],
+      "meaningHi": "परम ज्योति नारायण ही हैं, परम आत्मा नारायण ही हैं; परम ब्रह्म नारायण ही हैं और परम तत्त्व भी नारायण ही हैं।",
+      "meaningEn": "Narayana is the supreme Light; Narayana is the supreme Self. Narayana is the supreme Brahman; the supreme Reality is Narayana alone."
+    },
+    {
+      "id": "narayana-suktam-5", "number": 5, "labelHi": "श्लोक · ५", "labelEn": "Shloka · 5",
+      "lines": ["नारायणपरो ध्याता ध्यानं नारायणः परः।", "यच्च किञ्चिज्जगत्सर्वं दृश्यते श्रूयतेऽपि वा॥"],
+      "linesEn": ["nārāyaṇaparo dhyātā dhyānaṃ nārāyaṇaḥ paraḥ", "yacca kiñcij-jagat-sarvaṃ dṛśyate śrūyate'pi vā"],
+      "meaningHi": "परम ध्याता नारायण ही हैं, परम ध्यान भी नारायण ही हैं। इस जगत् में जो कुछ भी दृश्य अथवा श्रव्य है —",
+      "meaningEn": "Narayana is the supreme meditator; Narayana is the supreme meditation. And whatever there is in all this world, seen or heard —"
+    },
+    {
+      "id": "narayana-suktam-6", "number": 6, "labelHi": "श्लोक · ६", "labelEn": "Shloka · 6",
+      "lines": ["अन्तर्बहिश्च तत्सर्वं व्याप्य नारायणः स्थितः।", "अनन्तमव्ययं कविं समुद्रेऽन्तं विश्वशम्भुवम्॥"],
+      "linesEn": ["antar-bahiśca tat-sarvaṃ vyāpya nārāyaṇaḥ sthitaḥ", "anantam-avyayaṃ kaviṃ samudre'ntaṃ viśva-śambhuvam"],
+      "meaningHi": "उस सबको भीतर और बाहर व्याप्त करके नारायण स्थित हैं — जो अनन्त, अव्यय, सर्वज्ञ (कवि), (कारण-)समुद्र में स्थित और विश्व का कल्याण करने वाले हैं।",
+      "meaningEn": "Pervading all that, within and without, Narayana abides — the infinite, the imperishable, the all-knowing, dwelling within the (causal) ocean, the source of the world's well-being."
+    },
+    {
+      "id": "narayana-suktam-7", "number": 7, "labelHi": "श्लोक · ७", "labelEn": "Shloka · 7",
+      "lines": ["पद्मकोशप्रतीकाशं हृदयं चाप्यधोमुखम्।", "अधो निष्ट्या वितस्त्यान्ते नाभ्यामुपरि तिष्ठति॥"],
+      "linesEn": ["padma-kośa-pratīkāśaṃ hṛdayaṃ cāpy-adho-mukham", "adho niṣṭyā vitastyānte nābhyām-upari tiṣṭhati"],
+      "meaningHi": "कमल-कोश के समान अधोमुख हृदय, कण्ठ से नीचे एक वितस्ति (बालिश्त) की दूरी पर और नाभि से ऊपर स्थित है।",
+      "meaningEn": "The heart, resembling the calyx of a lotus and turned downward, is situated a span below the throat and above the navel."
+    },
+    {
+      "id": "narayana-suktam-8", "number": 8, "labelHi": "श्लोक · ८", "labelEn": "Shloka · 8",
+      "lines": ["ज्वालमालाकुलं भाती विश्वस्यायतनं महत्।", "सन्ततं शिलाभिस्तु लम्बत्याकोशसन्निभम्॥"],
+      "linesEn": ["jvāla-mālākulaṃ bhāti viśvasyāyatanaṃ mahat", "santataṃ śilābhis-tu lambaty-ākośa-sannibham"],
+      "meaningHi": "वह ज्वालाओं की माला से घिरा हुआ प्रकाशित होता है और विश्व का महान् आयतन (आश्रय-स्थान) है; नाड़ियों से घिरा हुआ वह कोश के समान लटका रहता है।",
+      "meaningEn": "Garlanded with rings of flame, it shines as the great abode of the universe; bound about by fibres, it hangs like a lotus-bud."
+    },
+    {
+      "id": "narayana-suktam-9", "number": 9, "labelHi": "श्लोक · ९", "labelEn": "Shloka · 9",
+      "lines": ["तस्यान्ते सुषिरं सूक्ष्मं तस्मिन्सर्वं प्रतिष्ठितम्।", "तस्य मध्ये महानग्निर्विश्वार्चिर्विश्वतोमुखः॥"],
+      "linesEn": ["tasyānte suṣiraṃ sūkṣmaṃ tasmin-sarvaṃ pratiṣṭhitam", "tasya madhye mahān-agnir-viśvārcir-viśvato-mukhaḥ"],
+      "meaningHi": "उसके अन्त में एक सूक्ष्म छिद्र है, जिसमें सब कुछ प्रतिष्ठित है। उसके मध्य में विश्व-ज्वाला वाली, सब ओर मुख वाली महान् अग्नि है।",
+      "meaningEn": "At its end is a subtle cavity in which all is established; in its midst is a great fire, whose flames pervade all, facing every direction."
+    },
+    {
+      "id": "narayana-suktam-10", "number": 10, "labelHi": "श्लोक · १०", "labelEn": "Shloka · 10",
+      "lines": ["सोऽग्रभुग्विभजन्तिष्ठन्नाहारमजरः कविः।", "तिर्यगूर्ध्वमधश्शायी रश्मयस्तस्य सन्तता॥"],
+      "linesEn": ["so'gra-bhug-vibhajan-tiṣṭhann-āhāram-ajaraḥ kaviḥ", "tiryag-ūrdhvam-adhaś-śāyī raśmayas-tasya santatā"],
+      "meaningHi": "वह (अग्नि) सर्वप्रथम भोक्ता है, आहार को विभाजित करती हुई स्थित रहती है, अजर और सर्वज्ञ है; तिरछे, ऊपर और नीचे व्याप्त उसकी किरणें सतत फैली रहती हैं।",
+      "meaningEn": "It is the foremost enjoyer, abiding while distributing the food, ageless and all-knowing; spreading sideways, upward and downward, its rays extend continuously."
+    },
+    {
+      "id": "narayana-suktam-11", "number": 11, "labelHi": "श्लोक · ११", "labelEn": "Shloka · 11",
+      "lines": ["सन्तापयति स्वं देहमापादतलमस्तकः।", "तस्य मध्ये वह्निशिखा अणीयोर्ध्वा व्यवस्थितः॥"],
+      "linesEn": ["santāpayati svaṃ deham-āpāda-tala-mastakaḥ", "tasya madhye vahni-śikhā aṇīyordhvā vyavasthitaḥ"],
+      "meaningHi": "वह पाँव के तलवे से मस्तक तक सम्पूर्ण देह को उष्ण करती है। उसके मध्य में एक अत्यन्त सूक्ष्म, ऊर्ध्वमुखी अग्नि-शिखा स्थित है।",
+      "meaningEn": "It warms the whole body from the sole of the foot to the head. In its midst stands a most subtle, upward-pointing flame."
+    },
+    {
+      "id": "narayana-suktam-12", "number": 12, "labelHi": "श्लोक · १२", "labelEn": "Shloka · 12",
+      "lines": ["नीलतोयदमध्यस्था विद्युल्लेखेव भास्वरा।", "नीवारशूकवत्तन्वी पीता भास्वत्यणूपमा॥"],
+      "linesEn": ["nīla-toyada-madhyasthā vidyul-lekheva bhāsvarā", "nīvāra-śūka-vat-tanvī pītā bhāsvaty-aṇūpamā"],
+      "meaningHi": "वह (शिखा) नील मेघ के मध्य विद्युत्-रेखा के समान देदीप्यमान है; धान के अग्रभाग (शूक) के समान सूक्ष्म, पीतवर्ण, प्रकाशमान और अणु के समान है।",
+      "meaningEn": "Like a streak of lightning within a dark blue cloud, it shines; slender as the tip of a paddy-grain, golden, radiant, and fine as an atom."
+    },
+    {
+      "id": "narayana-suktam-13", "number": 13, "labelHi": "श्लोक · १३", "labelEn": "Shloka · 13",
+      "lines": ["तस्याः शिखाया मध्ये परमात्मा व्यवस्थितः।", "स ब्रह्म स शिवः स हरिः सेन्द्रः सोऽक्षरः परमः स्वराट्॥"],
+      "linesEn": ["tasyāḥ śikhāyā madhye paramātmā vyavasthitaḥ", "sa brahma sa śivaḥ sa hariḥ sendraḥ so'kṣaraḥ paramaḥ svarāṭ"],
+      "meaningHi": "उस शिखा के मध्य में परमात्मा विराजमान हैं। वही ब्रह्मा हैं, वही शिव हैं, वही हरि हैं, वही इन्द्र हैं, वही अक्षर, परम और स्वयं-प्रकाश (स्वराट्) हैं।",
+      "meaningEn": "In the midst of that flame the Supreme Self is seated. He is Brahma, He is Shiva, He is Hari, He is Indra; He is the imperishable, the supreme, the self-luminous sovereign."
+    },
+    {
+      "id": "narayana-suktam-14", "number": 14, "labelHi": "श्लोक · १४", "labelEn": "Shloka · 14",
+      "lines": ["ऋतं सत्यं परं ब्रह्म पुरुषं कृष्णपिङ्गलम्।", "ऊर्ध्वरेतं विरूपाक्षं विश्वरूपाय वै नमो नमः॥"],
+      "linesEn": ["ṛtaṃ satyaṃ paraṃ brahma puruṣaṃ kṛṣṇa-piṅgalam", "ūrdhva-retaṃ virūpākṣaṃ viśva-rūpāya vai namo namaḥ"],
+      "meaningHi": "जो ऋत (शाश्वत नियम), सत्य, परम ब्रह्म और पुरुष हैं, जो कृष्ण-पिंगल वर्ण वाले, ऊर्ध्वरेता (परम संयमी) और विरूपाक्ष हैं — उस विश्वरूप को बारम्बार नमस्कार है।",
+      "meaningEn": "To Him who is cosmic order, truth, the supreme Brahman and the Person, dark-and-tawny of hue, of sublimated energy, of uncommon eyes — to that Universal Form, salutation again and again."
+    }
+  ]
+}

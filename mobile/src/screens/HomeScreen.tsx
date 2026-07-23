@@ -58,16 +58,37 @@ export default function HomeScreen({ navigation }: Props) {
     hasNew?: boolean;
   };
 
-  // 3×3 launcher grid: the 7 registry categories, plus the व्रत tile (a door
-  // into the Panchang tab's Vrat & Parv catalog, PRD-09 — not a ContentCategory;
-  // its content lives in the observance engine, not the library) and the देवता
-  // tile (the Deity Index). Nine tiles — the grid stays a full square.
-  // Memoized so the 9 memoized CategoryCards keep stable icon/onPress props
-  // across unrelated HomeScreen re-renders (context churn, tour registration).
+  // Launcher grid: the registry content categories (categories.ts, ranked by
+  // usefulness + USP), with two non-content tiles interleaved at their ranked
+  // spots — व्रत (a door into the Panchang observance engine, PRD-09; not a
+  // ContentCategory) right after जप, and देवता (the Deity Index) after तीर्थ.
+  // 13 tiles today, so the final row is ragged pending a grid-count decision.
+  // Anchoring by id (not index) keeps the interleave correct if categories are
+  // added/reordered. Memoized so the CategoryCards keep stable icon/onPress
+  // props across unrelated HomeScreen re-renders (context churn, tour registration).
   const tiles: TileItem[] = React.useMemo(() => {
     const iconFor = (key: CategoryIconKey) => <CategoryIcon iconKey={key} />;
-    return [
-      ...categories.map((c) => ({
+    const vratTile: TileItem = {
+      key: 'vrat',
+      nameHi: 'व्रत',
+      nameEn: 'Vrat & Parv',
+      shortNameEn: 'Vrat',
+      status: 'active',
+      icon: iconFor('vrat'),
+      onPress: () =>
+        rootNav.navigate('PanchangTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
+    };
+    const deityTile: TileItem = {
+      key: 'deity',
+      nameHi: 'देवता',
+      nameEn: 'By Deity',
+      status: 'active',
+      icon: iconFor('deity'),
+      onPress: () => navigation.navigate('DeityIndex'),
+    };
+    const result: TileItem[] = [];
+    for (const c of categories) {
+      result.push({
         key: c.id,
         nameHi: c.nameHi,
         nameEn: c.nameEn,
@@ -79,26 +100,11 @@ export default function HomeScreen({ navigation }: Props) {
           c.id === 'theerth'
             ? navigation.navigate('TheerthMap', {})
             : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
-      })),
-      {
-        key: 'vrat',
-        nameHi: 'व्रत',
-        nameEn: 'Vrat & Parv',
-        shortNameEn: 'Vrat',
-        status: 'active' as const,
-        icon: iconFor('vrat'),
-        onPress: () =>
-          rootNav.navigate('PanchangTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
-      },
-      {
-        key: 'deity',
-        nameHi: 'देवता',
-        nameEn: 'By Deity',
-        status: 'active' as const,
-        icon: iconFor('deity'),
-        onPress: () => navigation.navigate('DeityIndex'),
-      },
-    ];
+      });
+      if (c.id === 'japam') result.push(vratTile);
+      if (c.id === 'theerth') result.push(deityTile);
+    }
+    return result;
   }, [hasNewInCategory, navigation, rootNav]);
 
   const screenWidth = Dimensions.get('window').width;

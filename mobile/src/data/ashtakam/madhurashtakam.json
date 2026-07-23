@@ -1,0 +1,146 @@
+{
+  "id": "madhurashtakam",
+  "titleHi": "मधुराष्टकम्",
+  "titleEn": "Madhurashtakam",
+  "deity": "krishna",
+  "source": {
+    "baseText": "Madhurashtakam of Shri Vallabhacharya — cross-verified across three authoritative sources; all 8 verses concordant",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/madhurst.html",
+      "https://vignanam.org/devanagari/madhurashtakam.html",
+      "https://www.mantra.tips/en/mantras/madhurashtakam"
+    ],
+    "retrievedOn": "2026-07-22",
+    "notes": "Verse 5 fourth pada reads रमणं (majority: sanskritdocuments, mantra.tips); vignanam has the variant स्मरणं. Meaning unchanged."
+  },
+  "verses": [
+    {
+      "id": "madhurashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "अधरं मधुरं वदनं मधुरं नयनं मधुरं हसितं मधुरम्।",
+        "हृदयं मधुरं गमनं मधुरं मधुराधिपतेरखिलं मधुरम्॥"
+      ],
+      "linesEn": [
+        "adharaṃ madhuraṃ vadanaṃ madhuraṃ nayanaṃ madhuraṃ hasitaṃ madhuram",
+        "hṛdayaṃ madhuraṃ gamanaṃ madhuraṃ madhurādhipater akhilaṃ madhuram"
+      ],
+      "meaningHi": "उन (श्रीकृष्ण) के अधर मधुर हैं, मुख मधुर है, नेत्र मधुर हैं, मुस्कान मधुर है; हृदय मधुर है, चाल मधुर है — मधुरा के अधिपति का सब कुछ मधुर है। यह अष्टक कृष्ण के अंग-अंग की माधुरी का रसमय स्मरण है।",
+      "meaningEn": "His lips are sweet, His face is sweet, His eyes are sweet, His smile is sweet; His heart is sweet, His gait is sweet — everything about the Lord of Madhura (Krishna) is sweet."
+    },
+    {
+      "id": "madhurashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "वचनं मधुरं चरितं मधुरं वसनं मधुरं वलितं मधुरम्।",
+        "चलितं मधुरं भ्रमितं मधुरं मधुराधिपतेरखिलं मधुरम्॥"
+      ],
+      "linesEn": [
+        "vacanaṃ madhuraṃ caritaṃ madhuraṃ vasanaṃ madhuraṃ valitaṃ madhuram",
+        "calitaṃ madhuraṃ bhramitaṃ madhuraṃ madhurādhipater akhilaṃ madhuram"
+      ],
+      "meaningHi": "उनके वचन मधुर हैं, चरित्र मधुर है, वस्त्र मधुर है, अंग-भंगिमा मधुर है; उनकी गति मधुर है, विचरण मधुर है — मधुरा के अधिपति का सब कुछ मधुर है।",
+      "meaningEn": "His words are sweet, His deeds are sweet, His garment is sweet, His graceful bearing is sweet; His movement is sweet, His wandering is sweet — everything about the Lord of Madhura is sweet."
+    },
+    {
+      "id": "madhurashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "वेणुर्मधुरो रेणुर्मधुरः पाणिर्मधुरः पादौ मधुरौ।",
+        "नृत्यं मधुरं सख्यं मधुरं मधुराधिपतेरखिलं मधुरम्॥"
+      ],
+      "linesEn": [
+        "veṇur madhuro reṇur madhuraḥ pāṇir madhuraḥ pādau madhurau",
+        "nṛtyaṃ madhuraṃ sakhyaṃ madhuraṃ madhurādhipater akhilaṃ madhuram"
+      ],
+      "meaningHi": "उनकी वेणु (बाँसुरी) मधुर है, चरण-रज मधुर है, हाथ मधुर हैं, दोनों चरण मधुर हैं; उनका नृत्य मधुर है, सख्य (मित्रता) मधुर है — मधुरा के अधिपति का सब कुछ मधुर है।",
+      "meaningEn": "His flute is sweet, the dust of His feet is sweet, His hands are sweet, His feet are sweet; His dance is sweet, His friendship is sweet — everything about the Lord of Madhura is sweet."
+    },
+    {
+      "id": "madhurashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "गीतं मधुरं पीतं मधुरं भुक्तं मधुरं सुप्तं मधुरम्।",
+        "रूपं मधुरं तिलकं मधुरं मधुराधिपतेरखिलं मधुरम्॥"
+      ],
+      "linesEn": [
+        "gītaṃ madhuraṃ pītaṃ madhuraṃ bhuktaṃ madhuraṃ suptaṃ madhuram",
+        "rūpaṃ madhuraṃ tilakaṃ madhuraṃ madhurādhipater akhilaṃ madhuram"
+      ],
+      "meaningHi": "उनका गान मधुर है, पीना (जलपान) मधुर है, भोजन मधुर है, शयन मधुर है; उनका रूप मधुर है, तिलक मधुर है — मधुरा के अधिपति का सब कुछ मधुर है।",
+      "meaningEn": "His song is sweet, His drinking is sweet, His eating is sweet, His sleeping is sweet; His form is sweet, His tilak is sweet — everything about the Lord of Madhura is sweet."
+    },
+    {
+      "id": "madhurashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "करणं मधुरं तरणं मधुरं हरणं मधुरं रमणं मधुरम्।",
+        "वमितं मधुरं शमितं मधुरं मधुराधिपतेरखिलं मधुरम्॥"
+      ],
+      "linesEn": [
+        "karaṇaṃ madhuraṃ taraṇaṃ madhuraṃ haraṇaṃ madhuraṃ ramaṇaṃ madhuram",
+        "vamitaṃ madhuraṃ śamitaṃ madhuraṃ madhurādhipater akhilaṃ madhuram"
+      ],
+      "meaningHi": "उनका करना (लीला) मधुर है, तैरना/पार करना मधुर है, हरण (चुराना) मधुर है, रमण (क्रीड़ा) मधुर है; उनका उद्गार मधुर है, शमन (शान्त करना) मधुर है — मधुरा के अधिपति का सब कुछ मधुर है।",
+      "meaningEn": "His doing (play) is sweet, His crossing is sweet, His stealing is sweet, His sporting is sweet; His outpouring is sweet, His calming is sweet — everything about the Lord of Madhura is sweet."
+    },
+    {
+      "id": "madhurashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "गुञ्जा मधुरा माला मधुरा यमुना मधुरा वीची मधुरा।",
+        "सलिलं मधुरं कमलं मधुरं मधुराधिपतेरखिलं मधुरम्॥"
+      ],
+      "linesEn": [
+        "guñjā madhurā mālā madhurā yamunā madhurā vīcī madhurā",
+        "salilaṃ madhuraṃ kamalaṃ madhuraṃ madhurādhipater akhilaṃ madhuram"
+      ],
+      "meaningHi": "उनकी गुञ्जा-माला मधुर है, पुष्प-माला मधुर है, यमुना मधुर है, उसकी लहरें मधुर हैं; जल मधुर है, कमल मधुर है — मधुरा के अधिपति का सब कुछ मधुर है।",
+      "meaningEn": "His gunja-berry garland is sweet, His flower-garland is sweet, the Yamuna is sweet, her waves are sweet; her waters are sweet, the lotus is sweet — everything about the Lord of Madhura is sweet."
+    },
+    {
+      "id": "madhurashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "गोपी मधुरा लीला मधुरा युक्तं मधुरं मुक्तं मधुरम्।",
+        "दृष्टं मधुरं शिष्टं मधुरं मधुराधिपतेरखिलं मधुरम्॥"
+      ],
+      "linesEn": [
+        "gopī madhurā līlā madhurā yuktaṃ madhuraṃ muktaṃ madhuram",
+        "dṛṣṭaṃ madhuraṃ śiṣṭaṃ madhuraṃ madhurādhipater akhilaṃ madhuram"
+      ],
+      "meaningHi": "उनकी गोपियाँ मधुर हैं, लीला मधुर है, संयोग मधुर है, वियोग/मुक्ति मधुर है; उनका दर्शन मधुर है, शिष्ट आचरण मधुर है — मधुरा के अधिपति का सब कुछ मधुर है।",
+      "meaningEn": "His gopis are sweet, His play is sweet, His union is sweet, His parting is sweet; His glance is sweet, His courtesy is sweet — everything about the Lord of Madhura is sweet."
+    },
+    {
+      "id": "madhurashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "गोपा मधुरा गावो मधुरा यष्टिर्मधुरा सृष्टिर्मधुरा।",
+        "दलितं मधुरं फलितं मधुरं मधुराधिपतेरखिलं मधुरम्॥"
+      ],
+      "linesEn": [
+        "gopā madhurā gāvo madhurā yaṣṭir madhurā sṛṣṭir madhurā",
+        "dalitaṃ madhuraṃ phalitaṃ madhuraṃ madhurādhipater akhilaṃ madhuram"
+      ],
+      "meaningHi": "उनके गोप (ग्वाले) मधुर हैं, गौएँ मधुर हैं, यष्टि (लाठी) मधुर है, सृष्टि मधुर है; उनका दलन मधुर है, फलित होना मधुर है — मधुरा के अधिपति का सब कुछ मधुर है।",
+      "meaningEn": "His cowherds are sweet, His cows are sweet, His staff is sweet, His creation is sweet; His subduing is sweet, His fruit-bearing is sweet — everything about the Lord of Madhura is sweet."
+    }
+  ]
+}

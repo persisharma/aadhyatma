@@ -15,6 +15,10 @@
 import { library, type LibraryEntry } from './texts';
 import { deities } from './deities';
 import { getChalisa, type ChalisaId } from './chalisaRegistry';
+import { getAshtakam, ashtakamIds, type AshtakamId } from './ashtakam';
+import { getSuktam, suktamIds, type SuktamId } from './suktam';
+import { getKavacham, kavachamIds, type KavachamId } from './kavacham';
+import { getStuti, stutiIds, type StutiId } from './stuti';
 import {
   aartiCollection,
   aartiIdByIndex,
@@ -94,6 +98,11 @@ const CHALISA_IDS: readonly ChalisaId[] = [
   'vishnu-chalisa',
   'saraswati-chalisa',
 ];
+
+const ASHTAKAM_IDS: readonly AshtakamId[] = ashtakamIds;
+const SUKTAM_IDS: readonly SuktamId[] = suktamIds;
+const KAVACHAM_IDS: readonly KavachamId[] = kavachamIds;
+const STUTI_IDS: readonly StutiId[] = stutiIds;
 
 /** Cap how many verses can come back from a single query (UX + perf). */
 export const VERSE_RESULT_CAP = 50;
@@ -252,6 +261,26 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (ASHTAKAM_IDS.includes(entry.id as AshtakamId)) {
+      pushAshtakamVerses(verses, entry);
+      continue;
+    }
+
+    if (SUKTAM_IDS.includes(entry.id as SuktamId)) {
+      pushSuktamVerses(verses, entry);
+      continue;
+    }
+
+    if (KAVACHAM_IDS.includes(entry.id as KavachamId)) {
+      pushKavachamVerses(verses, entry);
+      continue;
+    }
+
+    if (STUTI_IDS.includes(entry.id as StutiId)) {
+      pushStutiVerses(verses, entry);
+      continue;
+    }
+
     if (entry.id === 'bhagavad-gita') {
       pushChapteredGita(verses, entry);
       continue;
@@ -384,6 +413,86 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
 function pushChalisaVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
   const chalisa = getChalisa(entry.id);
   chalisa.verses.forEach((v, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+function pushAshtakamVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const ashtakam = getAshtakam(entry.id);
+  ashtakam.verses.forEach((v, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+function pushStutiVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const stuti = getStuti(entry.id);
+  stuti.verses.forEach((v, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+function pushKavachamVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const kavacham = getKavacham(entry.id);
+  kavacham.verses.forEach((v, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+function pushSuktamVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const suktam = getSuktam(entry.id);
+  suktam.verses.forEach((v, idx) => {
     out.push(
       makeVerseEntry({
         sourceId: entry.id,

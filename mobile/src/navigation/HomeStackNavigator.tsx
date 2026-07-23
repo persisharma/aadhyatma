@@ -10,6 +10,10 @@ import CategoryListScreen from '@/screens/CategoryListScreen';
 import DeityListScreen from '@/screens/DeityListScreen';
 import DeityIndexScreen from '@/screens/DeityIndexScreen';
 import ChalisaReaderScreen from '@/screens/ChalisaReaderScreen';
+import AshtakamReaderScreen from '@/screens/AshtakamReaderScreen';
+import SuktamReaderScreen from '@/screens/SuktamReaderScreen';
+import KavachamReaderScreen from '@/screens/KavachamReaderScreen';
+import StutiReaderScreen from '@/screens/StutiReaderScreen';
 import GitaChaptersIndexScreen from '@/screens/GitaChaptersIndexScreen';
 import GitaReaderScreen from '@/screens/GitaReaderScreen';
 import SundarkandChaptersScreen from '@/screens/SundarkandChaptersScreen';
@@ -88,6 +92,26 @@ export default function HomeStackNavigator() {
       <Stack.Screen
         name="ChalisaReader"
         component={ChalisaReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="AshtakamReader"
+        component={AshtakamReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="SuktamReader"
+        component={SuktamReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="KavachamReader"
+        component={KavachamReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="StutiReader"
+        component={StutiReaderScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
       <Stack.Screen name="GitaChapters" component={GitaChaptersIndexScreen} />
