@@ -1,0 +1,145 @@
+{
+  "titleHi": "सूर्याष्टकम्",
+  "titleEn": "Surya Ashtakam",
+  "deity": "surya",
+  "source": {
+    "baseText": "Surya Ashtakam (Samba-krita, Samba Purana) — the 8-verse ashtakam proper; cross-verified across authoritative stotra sources, all 8 verses concordant.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_z_misc_navagraha/sUryAShTakam.pdf",
+      "https://mantra.tips/en/mantras/surya-ashtakam",
+      "https://stotranidhi.com/hi/surya-ashtakam-in-sanskrit/"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Samba Purana; spoken by Samba (son of Krishna), also framed as श्रीशिवप्रोक्त. Ships the 8-verse ashtakam proper (each of v2-8 ends तं सूर्यं प्रणमाम्यहम्); the phalashruti verses (9-11) are omitted, consistent with the other ashtakams. Minor cross-source variants noted for §5: v4 ब्रह्मविष्णु / ब्रह्माविष्णु, v6 एकचक्रधरं / एकचक्ररथं — meaning unchanged."
+  },
+  "verses": [
+    {
+      "id": "surya-ashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "आदिदेव नमस्तुभ्यं प्रसीद मम भास्कर।",
+        "दिवाकर नमस्तुभ्यं प्रभाकर नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "ādideva namastubhyaṃ prasīda mama bhāskara",
+        "divākara namastubhyaṃ prabhākara namo'stu te"
+      ],
+      "meaningHi": "हे आदिदेव भास्कर! आपको नमस्कार है; आप मुझ पर प्रसन्न हों। हे दिवाकर! हे प्रभाकर! आपको मैं नमस्कार करता हूँ।",
+      "meaningEn": "O primordial Lord Bhaskara (maker of light), salutations to you; be gracious unto me. O Divakara (maker of day), O Prabhakara (source of splendour), I bow to you."
+    },
+    {
+      "id": "surya-ashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "सप्ताश्वरथमारूढं प्रचण्डं कश्यपात्मजम्।",
+        "श्वेतपद्मधरं देवं तं सूर्यं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "saptāśvarathamārūḍhaṃ pracaṇḍaṃ kaśyapātmajam",
+        "śvetapadmadharaṃ devaṃ taṃ sūryaṃ praṇamāmyaham"
+      ],
+      "meaningHi": "सात घोड़ों के रथ पर आरूढ़, प्रचण्ड तेजस्वी, कश्यप-पुत्र, श्वेत कमल धारण करने वाले उन देव सूर्य को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lord Surya — mounted on the chariot of seven horses, fiercely radiant, the son of Kashyapa, bearing a white lotus."
+    },
+    {
+      "id": "surya-ashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "लोहितं रथमारूढं सर्वलोकपितामहम्।",
+        "महापापहरं देवं तं सूर्यं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "lohitaṃ rathamārūḍhaṃ sarvalokapitāmaham",
+        "mahāpāpaharaṃ devaṃ taṃ sūryaṃ praṇamāmyaham"
+      ],
+      "meaningHi": "लाल रथ पर आरूढ़, समस्त लोकों के पितामह, महापापों को हरने वाले उन देव सूर्य को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lord Surya — mounted on the crimson chariot, grandsire of all the worlds, remover of the gravest sins."
+    },
+    {
+      "id": "surya-ashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "त्रैगुण्यं च महाशूरं ब्रह्मविष्णुमहेश्वरम्।",
+        "महापापहरं देवं तं सूर्यं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "traiguṇyaṃ ca mahāśūraṃ brahmaviṣṇumaheśvaram",
+        "mahāpāpaharaṃ devaṃ taṃ sūryaṃ praṇamāmyaham"
+      ],
+      "meaningHi": "त्रिगुणमय, महावीर, ब्रह्मा-विष्णु-महेश्वर स्वरूप, महापापों को हरने वाले उन देव सूर्य को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lord Surya — embodiment of the three gunas, the great hero, the very form of Brahma, Vishnu and Maheshvara, remover of the gravest sins."
+    },
+    {
+      "id": "surya-ashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "बृंहितं तेजःपुञ्जं च वायुमाकाशमेव च।",
+        "प्रभुं च सर्वलोकानां तं सूर्यं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "bṛṃhitaṃ tejaḥpuñjaṃ ca vāyumākāśameva ca",
+        "prabhuṃ ca sarvalokānāṃ taṃ sūryaṃ praṇamāmyaham"
+      ],
+      "meaningHi": "विशाल तेज के पुंज, वायु और आकाश स्वरूप, समस्त लोकों के प्रभु उन सूर्य को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Surya — a mass of vast radiance, the very form of wind and space, the lord of all the worlds."
+    },
+    {
+      "id": "surya-ashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "बन्धूकपुष्पसङ्काशं हारकुण्डलभूषितम्।",
+        "एकचक्रधरं देवं तं सूर्यं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "bandhūkapuṣpasaṅkāśaṃ hārakuṇḍalabhūṣitam",
+        "ekacakradharaṃ devaṃ taṃ sūryaṃ praṇamāmyaham"
+      ],
+      "meaningHi": "बन्धूक (दुपहरिया) पुष्प के समान रक्तवर्ण, हार और कुण्डलों से विभूषित, एक चक्र धारण करने वाले उन देव सूर्य को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lord Surya — glowing red like the bandhuka flower, adorned with necklace and earrings, bearing the single wheel."
+    },
+    {
+      "id": "surya-ashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "तं सूर्यं जगत्कर्तारं महातेजःप्रदीपनम्।",
+        "महापापहरं देवं तं सूर्यं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "taṃ sūryaṃ jagatkartāraṃ mahātejaḥpradīpanam",
+        "mahāpāpaharaṃ devaṃ taṃ sūryaṃ praṇamāmyaham"
+      ],
+      "meaningHi": "जगत् के कर्ता, महान तेज के प्रकाशक, महापापों को हरने वाले उन देव सूर्य को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lord Surya — maker of the world, kindler of great radiance, remover of the gravest sins."
+    },
+    {
+      "id": "surya-ashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "तं सूर्यं जगतां नाथं ज्ञानविज्ञानमोक्षदम्।",
+        "महापापहरं देवं तं सूर्यं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "taṃ sūryaṃ jagatāṃ nāthaṃ jñānavijñānamokṣadam",
+        "mahāpāpaharaṃ devaṃ taṃ sūryaṃ praṇamāmyaham"
+      ],
+      "meaningHi": "जगत् के नाथ, ज्ञान-विज्ञान और मोक्ष प्रदान करने वाले, महापापों को हरने वाले उन देव सूर्य को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lord Surya — lord of the worlds, bestower of knowledge, insight and liberation, remover of the gravest sins."
+    }
+  ]
+}

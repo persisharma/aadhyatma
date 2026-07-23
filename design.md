@@ -659,7 +659,7 @@ Two status variants — `active` (has content) and `coming` (placeholder) — an
 
 ## 20. Component: Deity Chip
 
-> **Superseded.** The circular deity chip row never survived past the Home redesign. Deity browsing now lives in the **Deity Index screen** (`DeityIndexScreen.tsx`, reached from the देवता tile in the Home grid): all 9 deities from `deities.ts` render as full-width `DeityCard` rows, each carrying a `DeityIcon` attribute vector (bow-and-arrow for Rama, bansuri for Krishna, trishul for Shiva, …), over a randomly-picked deity background plate (`getRandomDeityBackground`, stable per mount). Tapping a row pushes the DeityList (§22). See the Deity Index section for the full spec.
+> **Superseded.** The circular deity chip row never survived past the Home redesign. Deity browsing now lives in the **Deity Index screen** (`DeityIndexScreen.tsx`, reached from the देवता tile in the Home grid): all deities from `deities.ts` (thirteen, growing per PRD-A §A.4.2) render as full-width `DeityCard` rows, each carrying a `DeityIcon` attribute vector (bow-and-arrow for Rama, bansuri for Krishna, trishul for Shiva, …), over a randomly-picked deity background plate (`getRandomDeityBackground`, stable per mount). Tapping a row pushes the DeityList (§22). See the Deity Index section for the full spec.
 
 ---
 
@@ -1269,7 +1269,7 @@ Ten categories, all `active`: `granth` (ग्रन्थ · Sacred Books) · `
 
 ### Deity set (`mobile/src/data/deities.ts`)
 
-Nine deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · krishna (bansuriPeacockFeather) · vishnu (chakra) · shiva (trishul) · hanuman (gada) · durga (lotus) · ganesha (modak) · savitr / माँ गायत्री (surya) · saraswati (veena). `getDeityMeta` / `deityIconKey` are the lookup helpers; the icon system is §42.
+Thirteen deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · krishna (bansuriPeacockFeather) · vishnu (chakra) · shiva (trishul) · hanuman (gada) · durga (lotus) · ganesha (modak) · savitr / माँ गायत्री (surya) · saraswati (veena) · lakshmi / माँ लक्ष्मी (lakshmi 🪔) · surya / सूर्य देव (suryadev 🌞) · radha / राधा रानी (radha 🌸) · kartikeya / कार्तिकेय (kartikeya 🦚). `getDeityMeta` / `deityIconKey` are the lookup helpers; the icon system is §42. (PRD-A deity expansion §A.4.2 is ongoing: 9 → 21, each new deity ships with ≥1 source-verified text; note the `surya` deity id is distinct from savitr's `surya` icon key.)
 
 ### Data-shape families (one directory per module under `mobile/src/data/`)
 
@@ -1296,7 +1296,7 @@ Nine deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · krishna
 
 1. Status bar (safe area).
 2. **Top bar** (`spacing.xxl` gutter): 44 px circular back button (`parchment-soft` fill, `divider` border, `‹` in `ink-soft`) + title `देवता · By Deity` via `orderTitlesByLanguage` (primary 16 `ink`, secondary 13 `ink-muted`, dot-separated on one baseline).
-3. **Deity card list** — vertical `ScrollView`, `spacing.xxl` side padding, `spacing.md` gap. All nine deities from `deities.ts`, in registry order.
+3. **Deity card list** — vertical `ScrollView`, `spacing.xxl` side padding, `spacing.md` gap. All deities from `deities.ts` (thirteen and growing — PRD-A §A.4.2), in registry order.
 
 **Background.** A `BackgroundLayer` with a **random deity sketch** — the index isn't tied to one deity, so it draws from the deity background pool (`getRandomDeityBackground`), chosen once per visit (`useMemo([])`) so it's stable while open and fresh on the next visit. This is a sanctioned variation on §6's deterministic rule, matching the image backdrop every other listing screen carries.
 
@@ -1317,7 +1317,7 @@ Wears the active LibraryCard treatment (§8): `cardActiveFrom → cardActiveTo` 
 Each deity's avatar glyph is a compact **symbolic attribute**, not a portrait (design spec: `docs/superpowers/specs/2026-05-08-deity-icons-design.md`). Two render paths:
 
 - **Hand-built vector glyphs** (pure `View` compositions — no SVG, per the §30 convention): Krishna's bansuri + peacock-feather plume, Hanuman's gada, Ganesha's modak, Saraswati's veena. Drawn at a 36 dp base size and transform-scaled for other sizes. These carry their own small fixed palette (a warm ink-brown + gold, plus peacock green/teal/yellow for the feather eye) — deliberate illustration colors baked into the art, not theme tokens.
-- **Emoji glyphs** for the remaining keys: bow-and-arrow (rama), chakra (vishnu), trishul (shiva), lotus (durga), sun (savitr). [A pragmatic, spec-approved exception to §5's "no emoji" rule — scoped to these avatar glyphs only; the fallback for any missing/poor glyph is the deity's Devanagari initials, never a blank avatar.]
+- **Emoji glyphs** for the remaining keys: bow-and-arrow (rama), chakra (vishnu), trishul (shiva), lotus (durga), sun (savitr), and the PRD-A deity-expansion keys — 🪔 (lakshmi), 🌞 (suryadev), and further deities as they land. [A pragmatic, spec-approved exception to §5's "no emoji" rule — scoped to these avatar glyphs only; the fallback for any missing/poor glyph is the deity's Devanagari initials, never a blank avatar.]
 
 **Interactions.** Tap a card → push `DeityListScreen` for that deity (§22) — same `LibraryCard` rows, resume-sheet behaviour (§40), and NEW clearing (§44) as a category list.
 

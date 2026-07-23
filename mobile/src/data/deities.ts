@@ -9,7 +9,12 @@ export type DeityIconKey =
   | 'lotus'
   | 'modak'
   | 'surya'
-  | 'veena';
+  | 'veena'
+  // PRD-A deity expansion (§A.4.2) — emoji glyphs (see DeityIcon.emojiIcons).
+  | 'lakshmi'
+  | 'suryadev'
+  | 'radha'
+  | 'kartikeya';
 
 export type DeityMeta = {
   id: Deity;
@@ -33,6 +38,11 @@ export const deities: readonly DeityMeta[] = [
   { id: 'ganesha', nameHi: 'श्री गणेश', nameEn: 'Shri Ganesha', iconKey: 'modak' },
   { id: 'savitr', nameHi: 'माँ गायत्री', nameEn: 'Maa Gayatri', iconKey: 'surya' },
   { id: 'saraswati', nameHi: 'माँ सरस्वती', nameEn: 'Maa Saraswati', iconKey: 'veena' },
+  // ─── PRD-A deity expansion (§A.4.2) — 9 → 21, each shipped with ≥1 verified text ───
+  { id: 'lakshmi', nameHi: 'माँ लक्ष्मी', nameEn: 'Maa Lakshmi', iconKey: 'lakshmi' },
+  { id: 'surya', nameHi: 'सूर्य देव', nameEn: 'Surya Dev', iconKey: 'suryadev' },
+  { id: 'radha', nameHi: 'राधा रानी', nameEn: 'Radha Rani', iconKey: 'radha' },
+  { id: 'kartikeya', nameHi: 'कार्तिकेय', nameEn: 'Kartikeya', iconKey: 'kartikeya' },
 ];
 
 const deityById: Record<Deity, DeityMeta> = Object.fromEntries(

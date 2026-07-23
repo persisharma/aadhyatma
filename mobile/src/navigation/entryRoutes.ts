@@ -4,6 +4,8 @@ import type { RoutineItem } from '@/data/routine/types';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import { aartiIndexById } from '@/data/aarti';
+import { ashtakamIds as ashtakamIdList } from '@/data/ashtakam';
+import { stutiIds as stutiIdList } from '@/data/stuti';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
 import type { HomeStackParamList, PanchangStackParamList } from './types';
 
@@ -38,8 +40,10 @@ const chalisaIds = new Set([
 ]);
 
 // Ashtakam (अष्टकम्) multi-instance form — one AshtakamReader dispatches on
-// `ashtakamId`, mirroring the chalisa routing above (PRD-A).
-const ashtakamIds = new Set(['lingashtakam', 'madhurashtakam', 'achyutashtakam']);
+// `ashtakamId`, mirroring the chalisa routing above (PRD-A). Derived from the
+// data registry so new ashtakams route without touching this file (a hardcoded
+// mirror here silently orphaned mahalakshmi-/surya-ashtakam from the library).
+const ashtakamIds = new Set<string>(ashtakamIdList);
 
 // Suktam (सूक्तम्) multi-instance form — one SuktamReader dispatches on `suktamId`.
 const suktamIds = new Set(['devi-suktam', 'purusha-suktam', 'narayana-suktam']);
@@ -53,7 +57,8 @@ const kavachamIds = new Set([
 ]);
 
 // Stuti (स्तुति) multi-instance form — one StutiReader dispatches on `stutiId`.
-const stutiIds = new Set(['krishna-stuti', 'durga-stuti-arjuna']);
+// Derived from the data registry (same rationale as ashtakamIds above).
+const stutiIds = new Set<string>(stutiIdList);
 
 const theerthIds = new Set([
   'dvadasha-jyotirlinga',
