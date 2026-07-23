@@ -27,6 +27,17 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
   // the asset lands.
   theerth: backgroundImages.category_granth_open_scripture,
   sanskar: backgroundImages.source_gayatri_savitri_sun,
+  // Kavacham is `status: 'coming'` (PRD-A) — its tile never opens a CategoryList,
+  // so this entry only satisfies the Record<ContentCategory> type. Reuses the
+  // neutral scripture plate (same precedent as theerth above); replace with a
+  // dedicated kavach/armour sketch when the section flips to `active`.
+  kavacham: backgroundImages.category_granth_open_scripture,
+  // Ashtakam reuses the hymn-scroll plate (Stotram-family form). Per-text reader
+  // backgrounds resolve by source id below (Lingashtakam → Shiva sketch).
+  ashtakam: backgroundImages.category_stotram_hymn_scroll,
+  suktam: backgroundImages.category_stotram_hymn_scroll,
+  // No `stuti` key — स्तुति folded into `stotram` (not a category). Its texts
+  // resolve per-id reader backgrounds via sourceBackgrounds below.
 };
 
 const deityBackgrounds: Record<Deity, BackgroundImage> = {
@@ -79,6 +90,18 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'saraswati-aarti': backgroundImages.deity_saraswati_veena,
   'gayatri-aarti': backgroundImages.source_gayatri_savitri_sun,
   'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
+  lingashtakam: shivaStrotamImages.shiva,
+  madhurashtakam: backgroundImages.deity_krishna_bansuri,
+  achyutashtakam: backgroundImages.source_vishnu_narayana,
+  'devi-suktam': backgroundImages.deity_durga_lion,
+  'purusha-suktam': backgroundImages.source_vishnu_narayana,
+  'narayana-suktam': backgroundImages.source_vishnu_narayana,
+  'rama-raksha-stotra': backgroundImages.deity_rama_darbar,
+  'ganesha-kavacham': backgroundImages.deity_ganesha_modak,
+  'shiva-kavacham': shivaStrotamImages.shiva,
+  'durga-kavach': backgroundImages.deity_durga_lion,
+  'krishna-stuti': backgroundImages.deity_krishna_bansuri,
+  'durga-stuti-arjuna': backgroundImages.deity_durga_lion,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {

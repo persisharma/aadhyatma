@@ -30,6 +30,9 @@ export default function CategoryIcon({ iconKey }: Props) {
       {iconKey === 'aarti' && <DiyaIcon {...paint} />}
       {iconKey === 'theerth' && <ShikharaIcon {...paint} />}
       {iconKey === 'sanskar' && <VedaManuscriptIcon {...paint} />}
+      {iconKey === 'kavacham' && <KavachIcon {...paint} />}
+      {iconKey === 'ashtakam' && <AshtakamIcon {...paint} />}
+      {iconKey === 'suktam' && <SuktamIcon {...paint} />}
       {iconKey === 'vrat' && <KalashIcon {...paint} />}
     </View>
   );
@@ -138,12 +141,17 @@ function TempleIcon({ color, accent }: IconPaint) {
 function KalashIcon({ color, accent }: IconPaint) {
   return (
     <View style={styles.kalashWrap}>
-      <View style={[styles.kalashCoconut, { borderColor: color }]} />
-      <View style={[styles.kalashLeaf, styles.kalashLeafLeft, { backgroundColor: accent }]} />
-      <View style={[styles.kalashLeaf, styles.kalashLeafRight, { backgroundColor: accent }]} />
+      <View testID="category-icon-vrat-coconut" style={[styles.kalashCoconut, { borderColor: color }]}>
+        <View style={[styles.kalashCoconutMark, { backgroundColor: color }]} />
+      </View>
+      <View
+        testID="category-icon-vrat-left-leaf"
+        style={[styles.kalashLeaf, styles.kalashLeafLeft, { borderColor: accent }]}
+      />
+      <View style={[styles.kalashLeaf, styles.kalashLeafRight, { borderColor: accent }]} />
       <View style={[styles.kalashNeck, { backgroundColor: color }]} />
-      <View style={[styles.kalashPot, { borderColor: color }]} />
-      <View style={[styles.kalashBand, { backgroundColor: accent }]} />
+      <View testID="category-icon-vrat-pot" style={[styles.kalashPot, { borderColor: color }]} />
+      <View testID="category-icon-vrat-band" style={[styles.kalashBand, { backgroundColor: accent }]} />
     </View>
   );
 }
@@ -187,12 +195,178 @@ function VedaManuscriptIcon({ color, accent }: IconPaint) {
   );
 }
 
+// Kavacham (कवच) — a devotional "armour" text. Icon is a protective crest with
+// a central tilak-like spine, in the same outline-stroke idiom as CategoryIcons.
+function KavachIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.kavachWrap}>
+      <View testID="category-icon-kavach-shield" style={[styles.kavachShield, { borderColor: color }]} />
+      <View testID="category-icon-kavach-spine" style={[styles.kavachSpine, { backgroundColor: accent }]} />
+      <View testID="category-icon-kavach-crossbar" style={[styles.kavachCrossbar, { backgroundColor: accent }]} />
+      <View testID="category-icon-kavach-arc" style={[styles.kavachArc, { borderColor: color }]} />
+      <View testID="category-icon-kavach-bindu" style={[styles.kavachBindu, { backgroundColor: color }]} />
+    </View>
+  );
+}
+
+// Ashtakam (अष्टकम् · "eight") — two overlapping squares form an eight-point
+// star (aṣṭadala), echoing the eight-verse form, in the outline-stroke idiom.
+function AshtakamIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.ashtakamWrap}>
+      <View style={[styles.ashtakamSquare, { borderColor: color }]} />
+      <View style={[styles.ashtakamSquareRot, { borderColor: accent }]} />
+    </View>
+  );
+}
+
+// Suktam (सूक्तम् · Vedic/Puranic hymn) — paired palm-leaf manuscript lines
+// give the category a sacred-text silhouette instead of a generic text glyph.
+function SuktamIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.suktamWrap}>
+      <View testID="category-icon-suktam-bindu" style={[styles.suktamBindu, { backgroundColor: color }]} />
+      <View
+        testID="category-icon-suktam-leaf-top"
+        style={[styles.suktamLeaf, styles.suktamLeafTop, { borderColor: color }]}
+      />
+      <View
+        testID="category-icon-suktam-leaf-bottom"
+        style={[styles.suktamLeaf, styles.suktamLeafBottom, { borderColor: color }]}
+      />
+      <View
+        testID="category-icon-suktam-rule-top"
+        style={[styles.suktamRule, styles.suktamRuleTop, { backgroundColor: accent }]}
+      />
+      <View style={[styles.suktamRule, styles.suktamRuleBottom, { backgroundColor: accent }]} />
+      <View style={[styles.suktamKnot, { backgroundColor: accent }]} />
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   frame: {
     width: 36,
     height: 32,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  suktamWrap: {
+    width: 34,
+    height: 32,
+    position: 'relative',
+  },
+  suktamBindu: {
+    position: 'absolute',
+    top: 0,
+    left: 15,
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+  },
+  suktamLeaf: {
+    position: 'absolute',
+    left: 2,
+    width: 30,
+    height: 8,
+    borderWidth: 1.8,
+    borderRadius: 5,
+  },
+  suktamLeafTop: {
+    top: 7,
+  },
+  suktamLeafBottom: {
+    top: 18,
+  },
+  suktamRule: {
+    position: 'absolute',
+    left: 9,
+    width: 16,
+    height: 1.6,
+    borderRadius: 1,
+  },
+  suktamRuleTop: {
+    top: 10.2,
+  },
+  suktamRuleBottom: {
+    top: 21.2,
+  },
+  suktamKnot: {
+    position: 'absolute',
+    left: 15,
+    bottom: 0,
+    width: 4,
+    height: 4,
+    borderRadius: 1,
+    transform: [{ rotate: '45deg' }],
+  },
+  kavachWrap: {
+    width: 32,
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  kavachShield: {
+    width: 24,
+    height: 28,
+    borderWidth: 2,
+    borderTopLeftRadius: 9,
+    borderTopRightRadius: 9,
+    borderBottomLeftRadius: 13,
+    borderBottomRightRadius: 13,
+  },
+  kavachSpine: {
+    position: 'absolute',
+    top: 8,
+    width: 2.2,
+    height: 18,
+    borderRadius: 1,
+    opacity: 0.9,
+  },
+  kavachCrossbar: {
+    position: 'absolute',
+    top: 15,
+    width: 13,
+    height: 2,
+    borderRadius: 1,
+  },
+  kavachArc: {
+    position: 'absolute',
+    top: 20,
+    width: 13,
+    height: 7,
+    borderBottomWidth: 2,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderTopWidth: 0,
+    borderRadius: 7,
+  },
+  kavachBindu: {
+    position: 'absolute',
+    top: 10,
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+  },
+  ashtakamWrap: {
+    width: 28,
+    height: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ashtakamSquare: {
+    position: 'absolute',
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+  },
+  ashtakamSquareRot: {
+    position: 'absolute',
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    transform: [{ rotate: '45deg' }],
   },
   manuscriptWrap: {
     width: 36,
@@ -527,51 +701,57 @@ const styles = StyleSheet.create({
   kalashCoconut: {
     position: 'absolute',
     top: 0,
-    width: 9,
-    height: 8,
-    borderWidth: 1.7,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 3,
-    borderBottomRightRadius: 3,
+    width: 10,
+    height: 10,
+    borderWidth: 1.8,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  kalashCoconutMark: {
+    width: 4.5,
+    height: 2.2,
+    borderRadius: 2,
+    opacity: 0.85,
   },
   kalashLeaf: {
     position: 'absolute',
-    top: 5,
-    width: 8,
-    height: 2.2,
-    borderRadius: 2,
+    top: 7,
+    width: 12,
+    height: 6,
+    borderTopWidth: 2,
+    borderRadius: 6,
   },
   kalashLeafLeft: {
-    left: 6,
-    transform: [{ rotate: '24deg' }],
+    left: 3,
+    transform: [{ rotate: '28deg' }],
   },
   kalashLeafRight: {
-    right: 6,
-    transform: [{ rotate: '-24deg' }],
+    right: 3,
+    transform: [{ rotate: '-28deg' }],
   },
   kalashNeck: {
     position: 'absolute',
-    top: 8,
+    top: 11,
     width: 14,
     height: 2.6,
     borderRadius: 1.5,
   },
   kalashPot: {
     position: 'absolute',
-    top: 10,
-    width: 24,
-    height: 20,
-    borderWidth: 1.8,
-    borderTopLeftRadius: 4,
-    borderTopRightRadius: 4,
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
+    top: 14,
+    width: 27,
+    height: 18,
+    borderWidth: 1.9,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 13,
+    borderBottomRightRadius: 13,
   },
   kalashBand: {
     position: 'absolute',
-    top: 18,
-    width: 16,
+    top: 22,
+    width: 17,
     height: 1.8,
     borderRadius: 1,
     opacity: 0.85,

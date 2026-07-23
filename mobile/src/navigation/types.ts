@@ -20,6 +20,10 @@ export type HomeStackParamList = {
   DeityList: { deityId: Deity };
   DeityIndex: undefined;
   ChalisaReader: { initialIndex?: number; chalisaId?: string } | undefined;
+  AshtakamReader: { initialIndex?: number; ashtakamId?: string } | undefined;
+  SuktamReader: { initialIndex?: number; suktamId?: string } | undefined;
+  KavachamReader: { initialIndex?: number; kavachamId?: string } | undefined;
+  StutiReader: { initialIndex?: number; stutiId?: string } | undefined;
   GitaChapters: undefined;
   GitaReader: { chapter: number; initialIndex?: number };
   SundarkandChapters: undefined;

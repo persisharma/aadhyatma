@@ -1,0 +1,143 @@
+{
+  "id": "durga-kavach",
+  "titleHi": "श्री दुर्गा कवच",
+  "titleEn": "Durga Kavach",
+  "deity": "durga",
+  "source": {
+    "baseText": "Durga Kavach (Devyah Kavacham, Navadurga + Matrika armour) — Durga Saptashati / Devi Mahatmyam, Markandeya Purana. 18-verse recension per VastuCart, cross-verified against Drik Panchang's Saptashati Devi Kavacham. The viniyoga + ॐ नमश्चण्डिकायै + closing phalashruti frame is omitted from the numbered verses here.",
+    "referenceUrls": [
+      "https://stotra.vastucart.in/stotra/durga-kavach",
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/patha-vidhi/devi-kavacham/durga-saptashati-devi-kavacham.html"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "This is the Navadurga/Matrika body-and-direction armour (प्रथमं शैलपुत्री… / प्राच्यां रक्षतु मामैन्द्री…), DISTINCT from the 'Ya Devi Sarvabhuteshu' Aparajita Stuti already shipped as Devi Suktam (§10.11 dedup). vastucart's own 'devi-kavacham' page is that Ya-Devi text; this 'durga-kavach' page is the true kavacham. Verse 17 corrects vastucart's typo ऐवं→एवं."
+  },
+  "verses": [
+    {
+      "id": "durga-kavach-1", "number": 1, "labelHi": "श्लोक · १", "labelEn": "Shloka · 1",
+      "lines": ["ॐ यद्गुह्यं परमं लोके सर्वरक्षाकरं नृणाम्।", "यन्न कस्यचिदाख्यातं तन्मे ब्रूहि पितामह॥"],
+      "linesEn": ["oṃ yad-guhyaṃ paramaṃ loke sarva-rakṣā-karaṃ nṛṇām", "yan na kasyacid-ākhyātaṃ tan me brūhi pitāmaha"],
+      "meaningHi": "(मार्कण्डेय बोले —) हे पितामह! संसार में जो परम गोपनीय, समस्त मनुष्यों की रक्षा करने वाला और किसी को भी न बताया गया रहस्य है, वह मुझे बताइए।",
+      "meaningEn": "(Markandeya said —) O Grandsire, tell me that which is the supreme secret in the world, the protector of all men, and which has been disclosed to no one."
+    },
+    {
+      "id": "durga-kavach-2", "number": 2, "labelHi": "श्लोक · २", "labelEn": "Shloka · 2",
+      "lines": ["अस्ति गुह्यतमं विप्र सर्वभूतोपकारकम्।", "देव्यास्तु कवचं पुण्यं तच्छृणुष्व महामुने॥"],
+      "linesEn": ["asti guhyatamaṃ vipra sarva-bhūtopakārakam", "devyās-tu kavacaṃ puṇyaṃ tac-chṛṇuṣva mahāmune"],
+      "meaningHi": "(ब्रह्मा बोले —) हे विप्र! एक अत्यन्त गोपनीय, समस्त प्राणियों का उपकार करने वाला देवी का पुण्यमय कवच है; हे महामुने! उसे सुनो।",
+      "meaningEn": "(Brahma said —) O sage, there is a most secret and holy armour of the Goddess, the benefactor of all beings; hear it, O great sage."
+    },
+    {
+      "id": "durga-kavach-3", "number": 3, "labelHi": "श्लोक · ३", "labelEn": "Shloka · 3",
+      "lines": ["प्रथमं शैलपुत्री च द्वितीयं ब्रह्मचारिणी।", "तृतीयं चन्द्रघण्टेति कूष्माण्डेति चतुर्थकम्॥"],
+      "linesEn": ["prathamaṃ śailaputrī ca dvitīyaṃ brahmacāriṇī", "tṛtīyaṃ candraghaṇṭeti kūṣmāṇḍeti caturthakam"],
+      "meaningHi": "प्रथम शैलपुत्री, द्वितीय ब्रह्मचारिणी, तृतीय चन्द्रघण्टा और चतुर्थ कूष्माण्डा —",
+      "meaningEn": "The first is Shailaputri, the second Brahmacharini, the third Chandraghanta, and the fourth Kushmanda —"
+    },
+    {
+      "id": "durga-kavach-4", "number": 4, "labelHi": "श्लोक · ४", "labelEn": "Shloka · 4",
+      "lines": ["पञ्चमं स्कन्दमातेति षष्ठं कात्यायनीति च।", "सप्तमं कालरात्रीति महागौरीति चाष्टमम्॥"],
+      "linesEn": ["pañcamaṃ skandamāteti ṣaṣṭhaṃ kātyāyanīti ca", "saptamaṃ kālarātrīti mahāgaurīti cāṣṭamam"],
+      "meaningHi": "पञ्चम स्कन्दमाता, षष्ठ कात्यायनी, सप्तम कालरात्रि और अष्टम महागौरी —",
+      "meaningEn": "The fifth Skandamata, the sixth Katyayani, the seventh Kalaratri, and the eighth Mahagauri —"
+    },
+    {
+      "id": "durga-kavach-5", "number": 5, "labelHi": "श्लोक · ५", "labelEn": "Shloka · 5",
+      "lines": ["नवमं सिद्धिदात्री च नवदुर्गाः प्रकीर्तिताः।", "उक्तान्येतानि नामानि ब्रह्मणैव महात्मना॥"],
+      "linesEn": ["navamaṃ siddhidātrī ca navadurgāḥ prakīrtitāḥ", "uktāny-etāni nāmāni brahmaṇaiva mahātmanā"],
+      "meaningHi": "और नवम सिद्धिदात्री — ये नवदुर्गा कही गई हैं। ये नाम महात्मा ब्रह्मा द्वारा ही कहे गए हैं।",
+      "meaningEn": "And the ninth Siddhidatri — these are proclaimed as the nine Durgas. These names were declared by the great Brahma himself."
+    },
+    {
+      "id": "durga-kavach-6", "number": 6, "labelHi": "श्लोक · ६", "labelEn": "Shloka · 6",
+      "lines": ["अग्निना दह्यमानस्तु शत्रुमध्यगतो रणे।", "विषमे दुर्गमे चैव भयार्ताः शरणं गताः॥"],
+      "linesEn": ["agninā dahyamānas-tu śatru-madhyagato raṇe", "viṣame durgame caiva bhayārtāḥ śaraṇaṃ gatāḥ"],
+      "meaningHi": "आग से जलता हुआ, रण में शत्रुओं के बीच घिरा हुआ, विषम और दुर्गम स्थान में पड़ा हुआ — भय से पीड़ित होकर जो (देवी की) शरण में जाते हैं,",
+      "meaningEn": "Those tormented by fear — burning in fire, caught amid enemies in battle, in perilous and impassable places — who take refuge (in the Goddess),"
+    },
+    {
+      "id": "durga-kavach-7", "number": 7, "labelHi": "श्लोक · ७", "labelEn": "Shloka · 7",
+      "lines": ["न तेषां जायते किञ्चिदशुभं रणसंकटे।", "नापदं तस्य पश्यामि शोकदुःखभयं न हि॥"],
+      "linesEn": ["na teṣāṃ jāyate kiñcid-aśubhaṃ raṇa-saṅkaṭe", "nāpadaṃ tasya paśyāmi śoka-duḥkha-bhayaṃ na hi"],
+      "meaningHi": "उन्हें रण-संकट में कोई अशुभ नहीं होता। मैं उसकी कोई आपत्ति नहीं देखता, न ही शोक, दुःख अथवा भय।",
+      "meaningEn": "no misfortune befalls them in the peril of battle. I see no calamity for such a one, nor sorrow, grief or fear."
+    },
+    {
+      "id": "durga-kavach-8", "number": 8, "labelHi": "श्लोक · ८", "labelEn": "Shloka · 8",
+      "lines": ["यैस्तु भक्त्या स्मृता नूनं तेषां वृद्धिः प्रजायते।", "ये त्वां स्मरन्ति देवेशि रक्षसे तान्न संशयः॥"],
+      "linesEn": ["yais-tu bhaktyā smṛtā nūnaṃ teṣāṃ vṛddhiḥ prajāyate", "ye tvāṃ smaranti deveśi rakṣase tān na saṃśayaḥ"],
+      "meaningHi": "जिन्होंने भक्ति से तुम्हारा स्मरण किया है, उनकी निश्चय ही उन्नति होती है। हे देवेशि! जो तुम्हारा स्मरण करते हैं, उनकी तुम रक्षा करती हो — इसमें सन्देह नहीं।",
+      "meaningEn": "Those who remember you with devotion surely prosper. O Queen of the gods, those who remember you — you protect them, there is no doubt."
+    },
+    {
+      "id": "durga-kavach-9", "number": 9, "labelHi": "श्लोक · ९", "labelEn": "Shloka · 9",
+      "lines": ["प्रेतसंस्था तु चामुण्डा वाराही महिषासना।", "ऐन्द्री गजसमारूढा वैष्णवी गरुडासना॥"],
+      "linesEn": ["pretasaṃsthā tu cāmuṇḍā vārāhī mahiṣāsanā", "aindrī gaja-samārūḍhā vaiṣṇavī garuḍāsanā"],
+      "meaningHi": "चामुण्डा प्रेत पर स्थित हैं, वाराही महिष पर आसीन हैं; ऐन्द्री गज पर आरूढ़ हैं और वैष्णवी गरुड़ पर विराजमान हैं।",
+      "meaningEn": "Chamunda is seated upon a corpse, Varahi upon a buffalo; Aindri is mounted on an elephant, and Vaishnavi upon Garuda."
+    },
+    {
+      "id": "durga-kavach-10", "number": 10, "labelHi": "श्लोक · १०", "labelEn": "Shloka · 10",
+      "lines": ["माहेश्वरी वृषारूढा कौमारी शिखिवाहना।", "लक्ष्मीः पद्मासना देवी पद्महस्ता हरिप्रिया॥"],
+      "linesEn": ["māheśvarī vṛṣārūḍhā kaumārī śikhi-vāhanā", "lakṣmīḥ padmāsanā devī padma-hastā hari-priyā"],
+      "meaningHi": "माहेश्वरी वृषभ पर आरूढ़ हैं, कौमारी मयूर पर सवार हैं; लक्ष्मी देवी कमल पर विराजमान, हाथ में कमल धारण किए और हरि की प्रिया हैं।",
+      "meaningEn": "Maheshwari is mounted on a bull, Kaumari rides a peacock; Goddess Lakshmi is seated on a lotus, lotus in hand, the beloved of Hari."
+    },
+    {
+      "id": "durga-kavach-11", "number": 11, "labelHi": "श्लोक · ११", "labelEn": "Shloka · 11",
+      "lines": ["श्वेतरूपधरा देवी ईश्वरी वृषवाहना।", "ब्राह्मी हंसासना देवी सर्वाभरणभूषिता॥"],
+      "linesEn": ["śveta-rūpadharā devī īśvarī vṛṣa-vāhanā", "brāhmī haṃsāsanā devī sarvābharaṇa-bhūṣitā"],
+      "meaningHi": "श्वेतरूपधारिणी ईश्वरी देवी वृषभ पर सवार हैं; ब्राह्मी देवी हंस पर आसीन और समस्त आभूषणों से विभूषित हैं।",
+      "meaningEn": "The white-hued Goddess Ishvari rides a bull; Goddess Brahmi is seated on a swan, adorned with all ornaments."
+    },
+    {
+      "id": "durga-kavach-12", "number": 12, "labelHi": "श्लोक · १२", "labelEn": "Shloka · 12",
+      "lines": ["इत्येता मातरः सर्वाः सर्वयोगसमन्विताः।", "नानाभरणशोभाढ्या नानारत्नोपशोभिताः॥"],
+      "linesEn": ["ity-etā mātaraḥ sarvāḥ sarva-yoga-samanvitāḥ", "nānābharaṇa-śobhāḍhyā nānāratno-paśobhitāḥ"],
+      "meaningHi": "इस प्रकार ये सब मातृकाएँ समस्त योग-शक्तियों से युक्त, अनेक आभूषणों की शोभा से सम्पन्न और नाना रत्नों से सुशोभित हैं।",
+      "meaningEn": "Thus all these Mother-goddesses are endowed with every yogic power, resplendent with manifold ornaments, and adorned with various jewels."
+    },
+    {
+      "id": "durga-kavach-13", "number": 13, "labelHi": "श्लोक · १३", "labelEn": "Shloka · 13",
+      "lines": ["रक्षन्तु मां च देव्यो मे शरणागतवत्सले।", "वीरे मुण्डे स्थिते घोरे दुष्टग्रहनिबर्हिणि॥"],
+      "linesEn": ["rakṣantu māṃ ca devyo me śaraṇāgata-vatsale", "vīre muṇḍe sthite ghore duṣṭa-graha-nibarhiṇi"],
+      "meaningHi": "हे शरणागतवत्सले! ये देवियाँ मेरी रक्षा करें। हे वीरे! हे मुण्डधारिणी! हे घोररूपे! हे दुष्ट ग्रहों का नाश करने वाली!",
+      "meaningEn": "O tender to those who seek refuge, may these goddesses protect me. O valiant one, O wearer of skulls, O terrible one, O destroyer of malignant planets!"
+    },
+    {
+      "id": "durga-kavach-14", "number": 14, "labelHi": "श्लोक · १४", "labelEn": "Shloka · 14",
+      "lines": ["शूलेन पाहि नो देवि पाहि खड्गेन चाम्बिके।", "घण्टास्वनेन नः पाहि चापज्यानिःस्वनेन च॥"],
+      "linesEn": ["śūlena pāhi no devi pāhi khaḍgena cāmbike", "ghaṇṭā-svanena naḥ pāhi cāpa-jyā-niḥsvanena ca"],
+      "meaningHi": "हे देवी! अपने शूल से हमारी रक्षा करो; हे अम्बिके! खड्ग से रक्षा करो। घण्टे की ध्वनि से और धनुष की प्रत्यंचा के टंकार से हमारी रक्षा करो।",
+      "meaningEn": "O Goddess, protect us with your trident; O Ambika, protect us with your sword. Protect us with the sound of your bell and the twang of your bowstring."
+    },
+    {
+      "id": "durga-kavach-15", "number": 15, "labelHi": "श्लोक · १५", "labelEn": "Shloka · 15",
+      "lines": ["प्राच्यां रक्षतु मामैन्द्री आग्नेय्यामग्निदेवता।", "दक्षिणे अवतु वाराही नैर्ऋत्यां खड्गधारिणी॥"],
+      "linesEn": ["prācyāṃ rakṣatu mām-aindrī āgneyyām-agni-devatā", "dakṣiṇe avatu vārāhī nairṛtyāṃ khaḍga-dhāriṇī"],
+      "meaningHi": "पूर्व दिशा में ऐन्द्री मेरी रक्षा करें, आग्नेय कोण में अग्निदेवता; दक्षिण में वाराही रक्षा करें और नैरृत्य कोण में खड्गधारिणी।",
+      "meaningEn": "In the east may Aindri protect me, in the south-east the fire-goddess; in the south may Varahi guard me, and in the south-west the sword-bearer."
+    },
+    {
+      "id": "durga-kavach-16", "number": 16, "labelHi": "श्लोक · १६", "labelEn": "Shloka · 16",
+      "lines": ["प्रतीच्यां वारुणी रक्षेद्वायव्यां मृगवाहिनी।", "उदीच्यां रक्ष कौबेरी ईशान्यां शूलधारिणी॥"],
+      "linesEn": ["pratīcyāṃ vāruṇī rakṣed-vāyavyāṃ mṛga-vāhinī", "udīcyāṃ rakṣa kauberī īśānyāṃ śūla-dhāriṇī"],
+      "meaningHi": "पश्चिम में वारुणी रक्षा करें, वायव्य कोण में मृगवाहिनी; उत्तर में कौबेरी रक्षा करें और ईशान कोण में शूलधारिणी।",
+      "meaningEn": "In the west may Varuni protect me, in the north-west the deer-riding one; in the north may Kauberi guard me, and in the north-east the trident-bearer."
+    },
+    {
+      "id": "durga-kavach-17", "number": 17, "labelHi": "श्लोक · १७", "labelEn": "Shloka · 17",
+      "lines": ["ऊर्ध्वं ब्रह्माणी मे रक्षेदधस्ताद्वैष्णवी तथा।", "एवं दश दिशो रक्षेच्चामुण्डा शववाहना॥"],
+      "linesEn": ["ūrdhvaṃ brahmāṇī me rakṣed-adhastād-vaiṣṇavī tathā", "evaṃ daśa diśo rakṣec-cāmuṇḍā śava-vāhanā"],
+      "meaningHi": "ऊपर की ओर ब्राह्मणी मेरी रक्षा करें और नीचे की ओर वैष्णवी; इस प्रकार दसों दिशाओं में शव पर आरूढ़ चामुण्डा रक्षा करें।",
+      "meaningEn": "Above may Brahmani protect me, and below Vaishnavi; thus in all ten directions may Chamunda, riding upon a corpse, guard me."
+    },
+    {
+      "id": "durga-kavach-18", "number": 18, "labelHi": "श्लोक · १८", "labelEn": "Shloka · 18",
+      "lines": ["जया मे चाग्रतः पातु विजया पातु पृष्ठतः।", "अजिता वामपार्श्वे तु दक्षिणे चापराजिता॥"],
+      "linesEn": ["jayā me cāgrataḥ pātu vijayā pātu pṛṣṭhataḥ", "ajitā vāma-pārśve tu dakṣiṇe cāparājitā"],
+      "meaningHi": "जया मेरे आगे की ओर से रक्षा करें, विजया पीछे से; अजिता मेरे बायें पार्श्व में और अपराजिता दायें पार्श्व में रक्षा करें।",
+      "meaningEn": "May Jaya protect me in front, Vijaya behind; may Ajita guard my left side, and Aparajita my right."
+    }
+  ]
+}

@@ -16,6 +16,15 @@ import { krishnaStotramTotal } from './krishna-stotram';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
+import { lingashtakamTotal, madhurashtakamTotal, achyutashtakamTotal } from './ashtakam';
+import { deviSuktamTotal, purushaSuktamTotal, narayanaSuktamTotal } from './suktam';
+import {
+  ramaRakshaStotraTotal,
+  ganeshaKavachamTotal,
+  shivaKavachamTotal,
+  durgaKavachTotal,
+} from './kavacham';
+import { krishnaStutiTotal, durgaStutiArjunaTotal } from './stuti';
 
 export type TextStatus = 'active' | 'coming';
 export type ContentCategory =
@@ -25,7 +34,10 @@ export type ContentCategory =
   | 'japam'
   | 'aarti'
   | 'theerth'
-  | 'sanskar';
+  | 'sanskar'
+  | 'kavacham'
+  | 'ashtakam'
+  | 'suktam';
 export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr' | 'saraswati';
 
 export type LibraryEntry = {
@@ -241,7 +253,7 @@ export const library: readonly LibraryEntry[] = [
     subEn: `${hanumanAshtakTotal} shlokas · with meaning`,
     thumb: 'ह',
     status: 'active',
-    category: 'stotram',
+    category: 'ashtakam',
     deities: ['hanuman'],
     verseCount: hanumanAshtakTotal,
   },
@@ -531,5 +543,157 @@ export const library: readonly LibraryEntry[] = [
     deities: ['saraswati'],
     verseCount: 6,
     addedInVersion: '1.3.1',
+  },
+  // ─────────── Ashtakam (अष्टकम्) — PRD-A, multi-instance form ───────────
+  {
+    id: 'lingashtakam',
+    nameHi: 'लिङ्गाष्टकम्',
+    nameEn: 'Lingashtakam',
+    sub: `${lingashtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${lingashtakamTotal} shlokas · with meaning`,
+    thumb: 'लि',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['shiva'],
+    verseCount: lingashtakamTotal,
+  },
+  {
+    id: 'madhurashtakam',
+    nameHi: 'मधुराष्टकम्',
+    nameEn: 'Madhurashtakam',
+    sub: `${madhurashtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${madhurashtakamTotal} shlokas · with meaning`,
+    thumb: 'म',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['krishna'],
+    verseCount: madhurashtakamTotal,
+  },
+  {
+    id: 'achyutashtakam',
+    nameHi: 'अच्युताष्टकम्',
+    nameEn: 'Achyutashtakam',
+    sub: `${achyutashtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${achyutashtakamTotal} shlokas · with meaning`,
+    thumb: 'अ',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['vishnu'],
+    verseCount: achyutashtakamTotal,
+  },
+  // ─────────── Suktam (सूक्तम्) — PRD-A, multi-instance form ───────────
+  {
+    id: 'devi-suktam',
+    nameHi: 'तन्त्रोक्त देवीसूक्तम्',
+    nameEn: 'Tantrokta Devi Suktam',
+    sub: `${deviSuktamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${deviSuktamTotal} shlokas · with meaning`,
+    thumb: 'दे',
+    status: 'active',
+    category: 'suktam',
+    deities: ['durga'],
+    verseCount: deviSuktamTotal,
+  },
+  {
+    id: 'purusha-suktam',
+    nameHi: 'पुरुष सूक्तम्',
+    nameEn: 'Purusha Suktam',
+    sub: `${purushaSuktamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${purushaSuktamTotal} shlokas · with meaning`,
+    thumb: 'पु',
+    status: 'active',
+    category: 'suktam',
+    deities: ['vishnu'],
+    verseCount: purushaSuktamTotal,
+  },
+  {
+    id: 'narayana-suktam',
+    nameHi: 'नारायण सूक्तम्',
+    nameEn: 'Narayana Suktam',
+    sub: `${narayanaSuktamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${narayanaSuktamTotal} shlokas · with meaning`,
+    thumb: 'ना',
+    status: 'active',
+    category: 'suktam',
+    deities: ['vishnu'],
+    verseCount: narayanaSuktamTotal,
+  },
+  // ─────────── Kavacham (कवच) — PRD-A, multi-instance form ───────────
+  {
+    id: 'rama-raksha-stotra',
+    nameHi: 'श्रीरामरक्षास्तोत्रम्',
+    nameEn: 'Rama Raksha Stotra',
+    sub: `${ramaRakshaStotraTotal} श्लोक · अर्थ सहित`,
+    subEn: `${ramaRakshaStotraTotal} shlokas · with meaning`,
+    thumb: 'रा',
+    status: 'active',
+    category: 'kavacham',
+    deities: ['rama'],
+    verseCount: ramaRakshaStotraTotal,
+  },
+  {
+    id: 'ganesha-kavacham',
+    nameHi: 'गणेश कवचम्',
+    nameEn: 'Ganesha Kavacham',
+    sub: `${ganeshaKavachamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${ganeshaKavachamTotal} shlokas · with meaning`,
+    thumb: 'गण',
+    status: 'active',
+    category: 'kavacham',
+    deities: ['ganesha'],
+    verseCount: ganeshaKavachamTotal,
+  },
+  {
+    id: 'shiva-kavacham',
+    nameHi: 'श्री शिव कवचम्',
+    nameEn: 'Shiva Kavacham',
+    sub: `${shivaKavachamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${shivaKavachamTotal} shlokas · with meaning`,
+    thumb: 'शि',
+    status: 'active',
+    category: 'kavacham',
+    deities: ['shiva'],
+    verseCount: shivaKavachamTotal,
+  },
+  {
+    id: 'durga-kavach',
+    nameHi: 'श्री दुर्गा कवच',
+    nameEn: 'Durga Kavach',
+    sub: `${durgaKavachTotal} श्लोक · अर्थ सहित`,
+    subEn: `${durgaKavachTotal} shlokas · with meaning`,
+    thumb: 'दु',
+    status: 'active',
+    category: 'kavacham',
+    deities: ['durga'],
+    verseCount: durgaKavachTotal,
+  },
+  // ─────────── Stuti (स्तुति) — PRD-A form, FILED UNDER `stotram` ───────────
+  // Folded July 2026: स्तुति reads as a synonym of स्तोत्रम् to users, and Ram
+  // Stuti already lived under stotram — so these render via the multi-instance
+  // StutiReader (routed by id in entryRoutes) but surface in the Stotram list,
+  // not a separate tile. Keeps the Home grid a unified 12 (4×3).
+  {
+    id: 'krishna-stuti',
+    nameHi: 'श्री कृष्ण स्तुति',
+    nameEn: 'Krishna Stuti',
+    sub: `${krishnaStutiTotal} श्लोक · अर्थ सहित`,
+    subEn: `${krishnaStutiTotal} shlokas · with meaning`,
+    thumb: 'कृ',
+    status: 'active',
+    category: 'stotram',
+    deities: ['krishna'],
+    verseCount: krishnaStutiTotal,
+  },
+  {
+    id: 'durga-stuti-arjuna',
+    nameHi: 'दुर्गा स्तुति (अर्जुनकृत)',
+    nameEn: 'Durga Stuti (Arjuna Krita)',
+    sub: `${durgaStutiArjunaTotal} श्लोक · अर्थ सहित`,
+    subEn: `${durgaStutiArjunaTotal} shlokas · with meaning`,
+    thumb: 'दु',
+    status: 'active',
+    category: 'stotram',
+    deities: ['durga'],
+    verseCount: durgaStutiArjunaTotal,
   },
 ];

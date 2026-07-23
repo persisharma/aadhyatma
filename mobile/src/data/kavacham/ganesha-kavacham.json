@@ -1,0 +1,87 @@
+{
+  "id": "ganesha-kavacham",
+  "titleHi": "गणेश कवचम्",
+  "titleEn": "Ganesha Kavacham",
+  "deity": "ganesha",
+  "source": {
+    "baseText": "Ganesha Kavacham (anga-nyasa recension, 10 verses; Ganesha Purana tradition) — adopted from VastuCart's editorial version. The viniyoga + dhyana + phalashruti frame is omitted from the numbered verses here.",
+    "referenceUrls": [
+      "https://stotra.vastucart.in/stotra/ganesh-kavacham",
+      "https://mantra.tips/en/mantras/ganesha-kavacham"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Adopted VastuCart's popular 10-verse anga-nyasa recension (गणेशो मस्तकं पातु…). A longer Kashyapa Ganesha Purana Kavacham (गणेशो मे शिरः पातु…) is a distinct text. Flagged for human §5 review of the exact recension."
+  },
+  "verses": [
+    {
+      "id": "ganesha-kavacham-1", "number": 1, "labelHi": "श्लोक · १", "labelEn": "Shloka · 1",
+      "lines": ["गणेशो मस्तकं पातु ललाटं गणनायकः।", "नेत्रे मे पातु विघ्नेशो गणराजः श्रुती सदा॥"],
+      "linesEn": ["gaṇeśo mastakaṃ pātu lalāṭaṃ gaṇa-nāyakaḥ", "netre me pātu vighneśo gaṇa-rājaḥ śrutī sadā"],
+      "meaningHi": "गणेश मेरे मस्तक की रक्षा करें, गणनायक ललाट की; विघ्नेश मेरे नेत्रों की और गणराज सदा कानों की रक्षा करें।",
+      "meaningEn": "May Ganesha protect my head, Gananayaka my forehead; may Vighnesha guard my eyes and Ganaraja ever my ears."
+    },
+    {
+      "id": "ganesha-kavacham-2", "number": 2, "labelHi": "श्लोक · २", "labelEn": "Shloka · 2",
+      "lines": ["घ्राणं पातु गणश्रेष्ठो मुखं तु सुमुखः सदा।", "जिह्वां पातु गणक्रीडो दन्तान् पातु गजाननः॥"],
+      "linesEn": ["ghrāṇaṃ pātu gaṇa-śreṣṭho mukhaṃ tu sumukhaḥ sadā", "jihvāṃ pātu gaṇa-krīḍo dantān pātu gajānanaḥ"],
+      "meaningHi": "गणश्रेष्ठ मेरी नासिका की रक्षा करें, सुमुख सदा मुख की; गणक्रीड मेरी जिह्वा की और गजानन दाँतों की रक्षा करें।",
+      "meaningEn": "May Ganashreshtha protect my nose, Sumukha ever my mouth; may Ganakrida guard my tongue and Gajanana my teeth."
+    },
+    {
+      "id": "ganesha-kavacham-3", "number": 3, "labelHi": "श्लोक · ३", "labelEn": "Shloka · 3",
+      "lines": ["कण्ठं पातु गणाधीशो स्कन्धौ विघ्नहरो मम।", "भुजौ पातु गजस्कन्धो हस्तौ मे पातु सिद्धिदः॥"],
+      "linesEn": ["kaṇṭhaṃ pātu gaṇādhīśo skandhau vighna-haro mama", "bhujau pātu gaja-skandho hastau me pātu siddhi-daḥ"],
+      "meaningHi": "गणाधीश मेरे कण्ठ की रक्षा करें, विघ्नहर मेरे कन्धों की; गजस्कन्ध मेरी भुजाओं की और सिद्धिद मेरे हाथों की रक्षा करें।",
+      "meaningEn": "May Ganadhisha protect my throat, Vighnahara my shoulders; may Gajaskandha guard my arms and Siddhida my hands."
+    },
+    {
+      "id": "ganesha-kavacham-4", "number": 4, "labelHi": "श्लोक · ४", "labelEn": "Shloka · 4",
+      "lines": ["वक्षः पातु गणाध्यक्षो हृदयं गणपूजितः।", "उदरं लम्बतुण्डश्च कटिं पातु गजप्रियः॥"],
+      "linesEn": ["vakṣaḥ pātu gaṇādhyakṣo hṛdayaṃ gaṇa-pūjitaḥ", "udaraṃ lamba-tuṇḍaśca kaṭiṃ pātu gaja-priyaḥ"],
+      "meaningHi": "गणाध्यक्ष मेरे वक्ष की रक्षा करें, गणपूजित हृदय की; लम्बतुण्ड मेरे उदर की और गजप्रिय कटि की रक्षा करें।",
+      "meaningEn": "May Ganadhyaksha protect my chest, Ganapujita my heart; may Lambatunda guard my belly and Gajapriya my waist."
+    },
+    {
+      "id": "ganesha-kavacham-5", "number": 5, "labelHi": "श्लोक · ५", "labelEn": "Shloka · 5",
+      "lines": ["ऊरू मे पातु विकटो जानुनी पातु मंगलः।", "जंघे पातु गजक्रीडो गुल्फौ विघ्नप्रणाशनः॥"],
+      "linesEn": ["ūrū me pātu vikaṭo jānunī pātu maṅgalaḥ", "jaṅghe pātu gaja-krīḍo gulphau vighna-praṇāśanaḥ"],
+      "meaningHi": "विकट मेरी ऊरुओं की रक्षा करें, मंगल घुटनों की; गजक्रीड मेरी पिंडलियों की और विघ्नप्रणाशन गुल्फों (टखनों) की रक्षा करें।",
+      "meaningEn": "May Vikata protect my thighs, Mangala my knees; may Gajakrida guard my shanks and Vighna-pranashana my ankles."
+    },
+    {
+      "id": "ganesha-kavacham-6", "number": 6, "labelHi": "श्लोक · ६", "labelEn": "Shloka · 6",
+      "lines": ["पादौ मे पातु सर्वज्ञो विघ्नश्चापगतो मम।", "सर्वाङ्गं मे सदा पातु विनायकमहाबलः॥"],
+      "linesEn": ["pādau me pātu sarvajño vighnaś-cāpagato mama", "sarvāṅgaṃ me sadā pātu vināyaka-mahābalaḥ"],
+      "meaningHi": "सर्वज्ञ मेरे चरणों की रक्षा करें और मेरे विघ्न दूर हो जाएँ; महाबली विनायक मेरे सम्पूर्ण शरीर की सदा रक्षा करें।",
+      "meaningEn": "May the All-knowing protect my feet, and may my obstacles depart; may the mighty Vinayaka ever guard my whole body."
+    },
+    {
+      "id": "ganesha-kavacham-7", "number": 7, "labelHi": "श्लोक · ७", "labelEn": "Shloka · 7",
+      "lines": ["पूर्वस्यां पातु हेरम्बो ह्याग्नेयां लम्बकर्णकः।", "दक्षिणस्यां गजग्रीवो नैरृत्यां तु गणाधिपः॥"],
+      "linesEn": ["pūrvasyāṃ pātu herambo hy-āgneyāṃ lamba-karṇakaḥ", "dakṣiṇasyāṃ gaja-grīvo nairṛtyāṃ tu gaṇādhipaḥ"],
+      "meaningHi": "पूर्व दिशा में हेरम्ब रक्षा करें, आग्नेय कोण में लम्बकर्ण; दक्षिण में गजग्रीव और नैरृत्य कोण में गणाधिप रक्षा करें।",
+      "meaningEn": "In the east may Heramba protect me, in the south-east Lambakarna; in the south Gajagriva, and in the south-west Ganadhipa."
+    },
+    {
+      "id": "ganesha-kavacham-8", "number": 8, "labelHi": "श्लोक · ८", "labelEn": "Shloka · 8",
+      "lines": ["पश्चिमे पातु विघ्नेशो वायव्यां पातु गणप्रभुः।", "उदीच्यां पातु विकटो ऐशान्यां लम्बजठरः॥"],
+      "linesEn": ["paścime pātu vighneśo vāyavyāṃ pātu gaṇa-prabhuḥ", "udīcyāṃ pātu vikaṭo aiśānyāṃ lamba-jaṭharaḥ"],
+      "meaningHi": "पश्चिम में विघ्नेश रक्षा करें, वायव्य कोण में गणप्रभु; उत्तर में विकट और ईशान कोण में लम्बजठर रक्षा करें।",
+      "meaningEn": "In the west may Vighnesha protect me, in the north-west Ganaprabhu; in the north Vikata, and in the north-east Lambajathara."
+    },
+    {
+      "id": "ganesha-kavacham-9", "number": 9, "labelHi": "श्लोक · ९", "labelEn": "Shloka · 9",
+      "lines": ["ऊर्ध्वं पातु गजाननो ह्यधस्ताद्विष्णुवल्लभः।", "दिवा पातु महाबुद्धी रात्रौ पातु गणेश्वरः॥"],
+      "linesEn": ["ūrdhvaṃ pātu gajānano hy-adhastād-viṣṇu-vallabhaḥ", "divā pātu mahā-buddhī rātrau pātu gaṇeśvaraḥ"],
+      "meaningHi": "ऊपर की ओर गजानन रक्षा करें और नीचे की ओर विष्णुवल्लभ; दिन में महाबुद्धि और रात्रि में गणेश्वर रक्षा करें।",
+      "meaningEn": "Above may Gajanana protect me, and below Vishnu-vallabha; by day may Mahabuddhi, and by night Ganeshvara, guard me."
+    },
+    {
+      "id": "ganesha-kavacham-10", "number": 10, "labelHi": "श्लोक · १०", "labelEn": "Shloka · 10",
+      "lines": ["सन्ध्ययोः पातु विश्वेशो राजद्वारे गणाधिपः।", "संग्रामे पातु विघ्नेशो विजयं दिशतु प्रभुः॥"],
+      "linesEn": ["sandhyayoḥ pātu viśveśo rāja-dvāre gaṇādhipaḥ", "saṅgrāme pātu vighneśo vijayaṃ diśatu prabhuḥ"],
+      "meaningHi": "दोनों सन्ध्याओं में विश्वेश रक्षा करें, राजद्वार पर गणाधिप; संग्राम में विघ्नेश रक्षा करें — प्रभु मुझे विजय प्रदान करें।",
+      "meaningEn": "At both twilights may Vishvesha protect me, at the king's gate Ganadhipa; in battle may Vighnesha guard me — may the Lord grant me victory."
+    }
+  ]
+}

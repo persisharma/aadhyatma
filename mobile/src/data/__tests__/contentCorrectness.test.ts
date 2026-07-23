@@ -8,6 +8,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { library } from '../texts';
 import { deities } from '../deities';
+import { categories } from '../categories';
 
 const DATA = join(__dirname, '..');
 const TRANSLATIONS = join(DATA, '..', '..', '.translations');
@@ -108,8 +109,20 @@ assert.ok(
 const sankatMochan = readJson('hanuman-ashtak/chapter-01.json');
 assert.ok(
   sankatMochan.verses.length >= 9,
-  `Sankat Mochan (in stotram) should have >= 9 verses (8 pada + doha), got ${sankatMochan.verses.length}`
+  `Sankat Mochan Hanuman Ashtak should have >= 9 verses (8 pada + doha), got ${sankatMochan.verses.length}`
 );
+
+const standaloneAshtakamEntries = library.filter((entry) =>
+  /ashtak/i.test(`${entry.id} ${entry.nameEn}`)
+);
+assert.ok(standaloneAshtakamEntries.length >= 1, 'expected standalone Ashtak/Ashtakam entries');
+for (const entry of standaloneAshtakamEntries) {
+  assert.equal(
+    entry.category,
+    'ashtakam',
+    `${entry.id} is a standalone Ashtak/Ashtakam and must live under the Ashtakam category`
+  );
+}
 
 const jaiAmbeGauri = readJson('aarti/jai-ambe-gauri.json');
 assert.ok(
@@ -611,6 +624,24 @@ for (const mantra of japam.mantras) {
     );
   }
 }
+
+// ─── 18. PRD-A: Kavacham category is ACTIVE with source-verified content ─────
+// The Kavacham textual form (PRD-A Content Breadth Engine) flipped `coming` →
+// `active` when the first source-verified text (Rama Raksha Stotra, 38 shlokas,
+// cross-verified from ≥2 authorities) shipped. Guard that it stays active and
+// carries ≥1 active entry (so it never silently regresses to an empty tile).
+const kavacham = categories.find((c) => c.id === 'kavacham');
+assert.ok(kavacham, 'kavacham category should be registered in categories.ts');
+assert.equal(
+  kavacham!.status,
+  'active',
+  'kavacham is active now that source-verified Kavacham content has shipped (PRD-A)'
+);
+const activeKavacham = library.filter((e) => e.category === 'kavacham' && e.status === 'active');
+assert.ok(
+  activeKavacham.length >= 1,
+  'kavacham category is active, so it must have ≥1 active library entry'
+);
 
 // ─── Done ────────────────────────────────────────────────────────────────────
 

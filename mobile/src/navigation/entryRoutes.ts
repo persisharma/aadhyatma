@@ -33,6 +33,24 @@ const chalisaIds = new Set([
   'gayatri-chalisa',
 ]);
 
+// Ashtakam (अष्टकम्) multi-instance form — one AshtakamReader dispatches on
+// `ashtakamId`, mirroring the chalisa routing above (PRD-A).
+const ashtakamIds = new Set(['lingashtakam', 'madhurashtakam', 'achyutashtakam']);
+
+// Suktam (सूक्तम्) multi-instance form — one SuktamReader dispatches on `suktamId`.
+const suktamIds = new Set(['devi-suktam', 'purusha-suktam', 'narayana-suktam']);
+
+// Kavacham (कवच) multi-instance form — one KavachamReader dispatches on `kavachamId`.
+const kavachamIds = new Set([
+  'rama-raksha-stotra',
+  'ganesha-kavacham',
+  'shiva-kavacham',
+  'durga-kavach',
+]);
+
+// Stuti (स्तुति) multi-instance form — one StutiReader dispatches on `stutiId`.
+const stutiIds = new Set(['krishna-stuti', 'durga-stuti-arjuna']);
+
 const theerthIds = new Set([
   'dvadasha-jyotirlinga',
   'char-dham',
@@ -95,6 +113,18 @@ export function buildEntryStartTarget(entry: LibraryEntry): BookmarkTarget | nul
   if (chalisaIds.has(entry.id)) {
     return { screen: 'ChalisaReader', params: { initialIndex: 0, chalisaId: entry.id } };
   }
+  if (ashtakamIds.has(entry.id)) {
+    return { screen: 'AshtakamReader', params: { initialIndex: 0, ashtakamId: entry.id } };
+  }
+  if (suktamIds.has(entry.id)) {
+    return { screen: 'SuktamReader', params: { initialIndex: 0, suktamId: entry.id } };
+  }
+  if (kavachamIds.has(entry.id)) {
+    return { screen: 'KavachamReader', params: { initialIndex: 0, kavachamId: entry.id } };
+  }
+  if (stutiIds.has(entry.id)) {
+    return { screen: 'StutiReader', params: { initialIndex: 0, stutiId: entry.id } };
+  }
   if (sanskarIds.has(entry.id)) {
     return { screen: 'SanskarReader', params: { initialIndex: 0, sanskarId: entry.id } };
   }
@@ -153,6 +183,22 @@ export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean
   const sourceId = canonicalSourceId(progress.sourceId);
   if (chalisaIds.has(sourceId)) {
     nav.navigate('ChalisaReader', { initialIndex: progress.verseIndex, chalisaId: sourceId });
+    return true;
+  }
+  if (ashtakamIds.has(sourceId)) {
+    nav.navigate('AshtakamReader', { initialIndex: progress.verseIndex, ashtakamId: sourceId });
+    return true;
+  }
+  if (suktamIds.has(sourceId)) {
+    nav.navigate('SuktamReader', { initialIndex: progress.verseIndex, suktamId: sourceId });
+    return true;
+  }
+  if (kavachamIds.has(sourceId)) {
+    nav.navigate('KavachamReader', { initialIndex: progress.verseIndex, kavachamId: sourceId });
+    return true;
+  }
+  if (stutiIds.has(sourceId)) {
+    nav.navigate('StutiReader', { initialIndex: progress.verseIndex, stutiId: sourceId });
     return true;
   }
   if (sanskarIds.has(sourceId)) {
@@ -229,6 +275,30 @@ export function buildProgressTarget(p: {
     return {
       screen: 'ChalisaReader',
       params: { initialIndex: p.verseIndex, chalisaId: sourceId },
+    };
+  }
+  if (ashtakamIds.has(sourceId)) {
+    return {
+      screen: 'AshtakamReader',
+      params: { initialIndex: p.verseIndex, ashtakamId: sourceId },
+    };
+  }
+  if (suktamIds.has(sourceId)) {
+    return {
+      screen: 'SuktamReader',
+      params: { initialIndex: p.verseIndex, suktamId: sourceId },
+    };
+  }
+  if (kavachamIds.has(sourceId)) {
+    return {
+      screen: 'KavachamReader',
+      params: { initialIndex: p.verseIndex, kavachamId: sourceId },
+    };
+  }
+  if (stutiIds.has(sourceId)) {
+    return {
+      screen: 'StutiReader',
+      params: { initialIndex: p.verseIndex, stutiId: sourceId },
     };
   }
   if (sanskarIds.has(sourceId)) {

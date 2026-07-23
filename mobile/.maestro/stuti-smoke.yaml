@@ -1,0 +1,56 @@
+# Stuti Smoke Test (PRD-A — Content Breadth Engine)
+#
+# Stuti (स्तुति) is a PRD-A form with a multi-instance reader (StutiReader
+# dispatches on `stutiId`), like the chalisas/ashtakams/suktams/kavachams.
+# It is NOT its own category — स्तुति ≈ स्तोत्रम्, so its texts (Krishna Stuti,
+# Durga Stuti) are filed under the **Stotram** category (folded July 2026).
+# First text: Krishna Stuti (source-verified, 12 verses). Verifies:
+#   1. Home shows the Stotram (Hymns & Praise) category tile
+#   2. Its CategoryList lists Krishna Stuti (near the bottom — scroll to it)
+#   3. Reader opens (StutiReader); language toggle flips Hindi → English
+#
+# Selectors: visible text + accessibilityLabel. No pixel coordinates (§9).
+
+appId: host.exp.Exponent
+---
+# ── Step 1: Boot Vedansh in Expo Go ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Open the Stotram category tile (full nameEn = "Hymns & Praise") ──
+- scrollUntilVisible:
+    element:
+      text: "Hymns & Praise\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Hymns & Praise\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# ── Step 3: Stotram list now includes Krishna Stuti (scroll — it's near the end) ──
+- scrollUntilVisible:
+    element:
+      text: "Krishna Stuti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Krishna Stuti\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Step 4: Toggle to English; reader title shows "Krishna Stuti" ──
+- tapOn:
+    id: "lang-toggle-en"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Krishna Stuti"
+    timeout: 15000
+
+# ── Cleanup ──
+- stopApp:
+    appId: host.exp.Exponent

@@ -1,0 +1,143 @@
+{
+  "id": "purusha-suktam",
+  "titleHi": "पुरुष सूक्तम्",
+  "titleEn": "Purusha Suktam",
+  "deity": "vishnu",
+  "source": {
+    "baseText": "Purusha Suktam — Rigveda Mandala 10, Sukta 90 (18-verse editorial recension per VastuCart, cross-verified against the standard Rig Veda text). The ॐ तच्छं योः… śānti frame is recited before/after and is omitted from the numbered verses here.",
+    "referenceUrls": [
+      "https://stotra.vastucart.in/stotra/purusha-suktam",
+      "https://www.vignanam.org/veda/purusha-suktam.html"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Plain Devanagari (svara accent marks omitted for consistency, as in the app's other Suktam). Verses 16–18 are the extended portion carried in the common 18-verse recitation."
+  },
+  "verses": [
+    {
+      "id": "purusha-suktam-1", "number": 1, "labelHi": "श्लोक · १", "labelEn": "Shloka · 1",
+      "lines": ["सहस्रशीर्षा पुरुषः सहस्राक्षः सहस्रपात्।", "स भूमिं विश्वतो वृत्वाऽत्यतिष्ठद्दशाङ्गुलम्॥"],
+      "linesEn": ["sahasra-śīrṣā puruṣaḥ sahasrākṣaḥ sahasra-pāt", "sa bhūmiṃ viśvato vṛtvā'tyatiṣṭhad-daśāṅgulam"],
+      "meaningHi": "वह पुरुष (विराट ब्रह्म) सहस्रों (अनन्त) शीर्ष, सहस्रों नेत्र और सहस्रों चरणों वाला है। वह समस्त पृथ्वी को सब ओर से व्याप्त करके भी दस अंगुल (सीमा) से परे स्थित है।",
+      "meaningEn": "The cosmic Person has a thousand heads, a thousand eyes, a thousand feet. Pervading the earth on every side, He yet extends beyond it by ten fingers' breadth (beyond all limits)."
+    },
+    {
+      "id": "purusha-suktam-2", "number": 2, "labelHi": "श्लोक · २", "labelEn": "Shloka · 2",
+      "lines": ["पुरुष एवेदं सर्वं यद्भूतं यच्च भव्यम्।", "उतामृतत्वस्येशानो यदन्नेनातिरोहति॥"],
+      "linesEn": ["puruṣa evedaṃ sarvaṃ yad-bhūtaṃ yacca bhavyam", "utāmṛtatvasyeśāno yad-annenātirohati"],
+      "meaningHi": "जो कुछ हो चुका है और जो होने वाला है — यह सब पुरुष ही है। वह अमरत्व का स्वामी है, और उस जगत् का भी जो अन्न के द्वारा वृद्धि को प्राप्त होता है।",
+      "meaningEn": "All this — whatever has been and whatever is yet to be — is the Person alone. He is the lord of immortality, and also of this (world) that grows by food."
+    },
+    {
+      "id": "purusha-suktam-3", "number": 3, "labelHi": "श्लोक · ३", "labelEn": "Shloka · 3",
+      "lines": ["एतावानस्य महिमाऽतो ज्यायाँश्च पूरुषः।", "पादोऽस्य विश्वा भूतानि त्रिपादस्यामृतं दिवि॥"],
+      "linesEn": ["etāvān-asya mahimā'to jyāyāṃśca pūruṣaḥ", "pādo'sya viśvā bhūtāni tri-pād-asyāmṛtaṃ divi"],
+      "meaningHi": "इतनी ही उसकी महिमा है, और पुरुष तो इससे भी अधिक महान् है। उसका एक चौथाई भाग ये समस्त प्राणी हैं; उसके तीन चौथाई अंश द्युलोक में अमर रूप से स्थित हैं।",
+      "meaningEn": "Such is His greatness, and the Person is even greater than this. One quarter of Him is all beings; His three quarters are the immortal in the heavens."
+    },
+    {
+      "id": "purusha-suktam-4", "number": 4, "labelHi": "श्लोक · ४", "labelEn": "Shloka · 4",
+      "lines": ["त्रिपादूर्ध्व उदैत्पुरुषः पादोऽस्येहाभवत्पुनः।", "ततो विष्वङ्व्यक्रामत्साशनानशने अभि॥"],
+      "linesEn": ["tri-pād-ūrdhva udait-puruṣaḥ pādo'syehābhavat-punaḥ", "tato viṣvaṅ-vyakrāmat-sāśanānaśane abhi"],
+      "meaningHi": "अपने तीन चौथाई अंश से ऊपर उठा हुआ पुरुष, उसका एक चौथाई अंश यहाँ (जगत् में) पुनः प्रकट हुआ। तत्पश्चात् वह सब ओर — भोक्ता (चेतन) और अभोक्ता (जड़) दोनों में — व्याप्त हो गया।",
+      "meaningEn": "With three quarters the Person rose upward; one quarter of Him came into being here again. Thence He spread out in all directions, over what eats and what does not (the sentient and the insentient)."
+    },
+    {
+      "id": "purusha-suktam-5", "number": 5, "labelHi": "श्लोक · ५", "labelEn": "Shloka · 5",
+      "lines": ["तस्माद्विराडजायत विराजो अधि पूरुषः।", "स जातो अत्यरिच्यत पश्चाद्भूमिमथो पुरः॥"],
+      "linesEn": ["tasmād-virāḍ-ajāyata virājo adhi pūruṣaḥ", "sa jāto atyaricyata paścād-bhūmim-atho puraḥ"],
+      "meaningHi": "उससे विराट् (ब्रह्माण्ड) उत्पन्न हुआ, और विराट् से (आधिदैविक) पुरुष। उत्पन्न होकर वह (सब से) बढ़ गया, और तब उसने पृथ्वी को आगे-पीछे सब ओर रचा।",
+      "meaningEn": "From Him was born the cosmic egg (Virat), and from Virat the Person (again). Being born, He surpassed all; and then He formed the earth, behind and before."
+    },
+    {
+      "id": "purusha-suktam-6", "number": 6, "labelHi": "श्लोक · ६", "labelEn": "Shloka · 6",
+      "lines": ["यत्पुरुषेण हविषा देवा यज्ञमतन्वत।", "वसन्तो अस्यासीदाज्यं ग्रीष्म इध्मः शरद्धविः॥"],
+      "linesEn": ["yat-puruṣeṇa haviṣā devā yajñam-atanvata", "vasanto asyāsīd-ājyaṃ grīṣma idhmaḥ śarad-dhaviḥ"],
+      "meaningHi": "जब देवताओं ने पुरुष को हवि (आहुति) बनाकर यज्ञ का विस्तार किया, तब वसन्त उसका घृत बना, ग्रीष्म ईंधन और शरद् हवि बनी।",
+      "meaningEn": "When the gods performed the sacrifice with the Person as the offering, spring was its clarified butter, summer its fuel, and autumn the oblation."
+    },
+    {
+      "id": "purusha-suktam-7", "number": 7, "labelHi": "श्लोक · ७", "labelEn": "Shloka · 7",
+      "lines": ["सप्तास्यासन्परिधयस्त्रिः सप्त समिधः कृताः।", "देवा यद्यज्ञं तन्वाना अबध्नन्पुरुषं पशुम्॥"],
+      "linesEn": ["saptāsyāsan-paridhayas-triḥ sapta samidhaḥ kṛtāḥ", "devā yad-yajñaṃ tanvānā abadhnan-puruṣaṃ paśum"],
+      "meaningHi": "उस यज्ञ में सात परिधियाँ थीं और इक्कीस (तीन गुणा सात) समिधाएँ बनाई गईं, जब देवताओं ने यज्ञ का विस्तार करते हुए पुरुष को (यज्ञ-)पशु के रूप में बाँधा।",
+      "meaningEn": "Seven were the enclosing sticks, and thrice seven the fuel-sticks made, when the gods, extending the sacrifice, bound the Person as the (sacrificial) victim."
+    },
+    {
+      "id": "purusha-suktam-8", "number": 8, "labelHi": "श्लोक · ८", "labelEn": "Shloka · 8",
+      "lines": ["तं यज्ञं बर्हिषि प्रौक्षन्पुरुषं जातमग्रतः।", "तेन देवा अयजन्त साध्या ऋषयश्च ये॥"],
+      "linesEn": ["taṃ yajñaṃ barhiṣi praukṣan-puruṣaṃ jātam-agrataḥ", "tena devā ayajanta sādhyā ṛṣayaśca ye"],
+      "meaningHi": "आदि में उत्पन्न उस पुरुष-रूप यज्ञ को उन्होंने कुश-आसन पर प्रोक्षित (अभिषिक्त) किया। उसी के द्वारा देवताओं ने, साध्यों ने और जो ऋषि थे, उन्होंने यज्ञ किया।",
+      "meaningEn": "That Person, born in the beginning, they consecrated as the sacrifice upon the sacred grass. With Him the gods offered sacrifice, and the Sadhyas and the sages."
+    },
+    {
+      "id": "purusha-suktam-9", "number": 9, "labelHi": "श्लोक · ९", "labelEn": "Shloka · 9",
+      "lines": ["तस्माद्यज्ञात्सर्वहुतः सम्भृतं पृषदाज्यम्।", "पशूँस्ताँश्चक्रे वायव्यानारण्यान्ग्राम्याश्च ये॥"],
+      "linesEn": ["tasmād-yajñāt-sarva-hutaḥ sambhṛtaṃ pṛṣadājyam", "paśūṃs-tāṃś-cakre vāyavyān-āraṇyān-grāmyāśca ye"],
+      "meaningHi": "उस सर्व-हुत यज्ञ से दही-मिश्रित घृत एकत्र हुआ। उसी से (देवता ने) वायु-सम्बन्धी, वन के तथा ग्राम के जो पशु हैं, उनकी रचना की।",
+      "meaningEn": "From that all-offered sacrifice was gathered the curds-and-butter; He made those creatures — of the air, of the forest, and of the village."
+    },
+    {
+      "id": "purusha-suktam-10", "number": 10, "labelHi": "श्लोक · १०", "labelEn": "Shloka · 10",
+      "lines": ["तस्माद्यज्ञात्सर्वहुत ऋचः सामानि जज्ञिरे।", "छन्दांसि जज्ञिरे तस्माद्यजुस्तस्मादजायत॥"],
+      "linesEn": ["tasmād-yajñāt-sarva-huta ṛcaḥ sāmāni jajñire", "chandāṃsi jajñire tasmād-yajus-tasmād-ajāyata"],
+      "meaningHi": "उस सर्व-हुत यज्ञ से ऋचाएँ (ऋग्वेद) और साम (सामवेद) उत्पन्न हुए। उसी से छन्द उत्पन्न हुए, और उसी से यजुः (यजुर्वेद) उत्पन्न हुआ।",
+      "meaningEn": "From that all-offered sacrifice were born the Rik and Saman hymns; from it were born the metres, and from it the Yajus arose."
+    },
+    {
+      "id": "purusha-suktam-11", "number": 11, "labelHi": "श्लोक · ११", "labelEn": "Shloka · 11",
+      "lines": ["तस्मादश्वा अजायन्त ये के चोभयादतः।", "गावो ह जज्ञिरे तस्मात्तस्माज्जाता अजावयः॥"],
+      "linesEn": ["tasmād-aśvā ajāyanta ye ke cobhayādataḥ", "gāvo ha jajñire tasmāt-tasmāj-jātā ajāvayaḥ"],
+      "meaningHi": "उसी से घोड़े उत्पन्न हुए और वे सब जिनके दोनों जबड़ों में दाँत होते हैं। उसी से गौएँ उत्पन्न हुईं, और उसी से बकरियाँ तथा भेड़ें उत्पन्न हुईं।",
+      "meaningEn": "From Him were born the horses, and all creatures with teeth in both jaws. From Him were born cattle, and from Him goats and sheep."
+    },
+    {
+      "id": "purusha-suktam-12", "number": 12, "labelHi": "श्लोक · १२", "labelEn": "Shloka · 12",
+      "lines": ["यत्पुरुषं व्यदधुः कतिधा व्यकल्पयन्।", "मुखं किमस्य कौ बाहू का ऊरू पादा उच्येते॥"],
+      "linesEn": ["yat-puruṣaṃ vyadadhuḥ katidhā vyakalpayan", "mukhaṃ kimasya kau bāhū kā ūrū pādā ucyete"],
+      "meaningHi": "जब उन्होंने पुरुष का विधान किया, तो उसे कितने प्रकार से विभाजित किया? उसका मुख क्या था, दोनों भुजाएँ क्या थीं, ऊरु और चरण किसे कहा गया?",
+      "meaningEn": "When they divided the Person, into how many parts did they apportion Him? What was His mouth, what His arms, what are called His thighs and His feet?"
+    },
+    {
+      "id": "purusha-suktam-13", "number": 13, "labelHi": "श्लोक · १३", "labelEn": "Shloka · 13",
+      "lines": ["ब्राह्मणोऽस्य मुखमासीद्बाहू राजन्यः कृतः।", "ऊरू तदस्य यद्वैश्यः पद्भ्यां शूद्रो अजायत॥"],
+      "linesEn": ["brāhmaṇo'sya mukham-āsīd-bāhū rājanyaḥ kṛtaḥ", "ūrū tad-asya yad-vaiśyaḥ padbhyāṃ śūdro ajāyata"],
+      "meaningHi": "उसका मुख ब्राह्मण हुआ, भुजाएँ क्षत्रिय बनीं, ऊरु वैश्य हुए, और उसके चरणों से शूद्र उत्पन्न हुआ — (यह समाज के चार वर्गों के परस्पर आश्रित होने का रूपक है)।",
+      "meaningEn": "The brahmana was His mouth, the arms were made the kshatriya, His thighs became the vaishya, and from His feet the shudra was born — an image of the four interdependent orders of society."
+    },
+    {
+      "id": "purusha-suktam-14", "number": 14, "labelHi": "श्लोक · १४", "labelEn": "Shloka · 14",
+      "lines": ["चन्द्रमा मनसो जातश्चक्षोः सूर्यो अजायत।", "मुखादिन्द्रश्चाग्निश्च प्राणाद्वायुरजायत॥"],
+      "linesEn": ["candramā manaso jātaś-cakṣoḥ sūryo ajāyata", "mukhād-indraś-cāgniśca prāṇād-vāyur-ajāyata"],
+      "meaningHi": "उसके मन से चन्द्रमा उत्पन्न हुआ, नेत्रों से सूर्य; मुख से इन्द्र और अग्नि, तथा प्राण से वायु उत्पन्न हुआ।",
+      "meaningEn": "From His mind the moon was born, from His eye the sun; from His mouth Indra and Agni, and from His breath the wind was born."
+    },
+    {
+      "id": "purusha-suktam-15", "number": 15, "labelHi": "श्लोक · १५", "labelEn": "Shloka · 15",
+      "lines": ["नाभ्या आसीदन्तरिक्षं शीर्ष्णो द्यौः समवर्तत।", "पद्भ्यां भूमिर्दिशः श्रोत्रात्तथा लोकाँ अकल्पयन्॥"],
+      "linesEn": ["nābhyā āsīd-antarikṣaṃ śīrṣṇo dyauḥ samavartata", "padbhyāṃ bhūmir-diśaḥ śrotrāt-tathā lokāṃ akalpayan"],
+      "meaningHi": "उसकी नाभि से अन्तरिक्ष हुआ, शीर्ष से द्युलोक उत्पन्न हुआ, चरणों से भूमि और कानों से दिशाएँ — इस प्रकार (देवताओं ने) लोकों की रचना की।",
+      "meaningEn": "From His navel arose the mid-air, from His head the heaven came forth; from His feet the earth, from His ears the quarters — thus they fashioned the worlds."
+    },
+    {
+      "id": "purusha-suktam-16", "number": 16, "labelHi": "श्लोक · १६", "labelEn": "Shloka · 16",
+      "lines": ["वेदाहमेतं पुरुषं महान्तमादित्यवर्णं तमसस्तु पारे।", "सर्वाणि रूपाणि विचित्य धीरः नामानि कृत्वाऽभिवदन्यदास्ते॥"],
+      "linesEn": ["vedāham-etaṃ puruṣaṃ mahāntam-āditya-varṇaṃ tamasas-tu pāre", "sarvāṇi rūpāṇi vicitya dhīraḥ nāmāni kṛtvā'bhivadan-yad-āste"],
+      "meaningHi": "मैं इस महान् पुरुष को जानता हूँ, जो सूर्य के समान वर्ण वाला और अन्धकार (अज्ञान) से परे है। वह धीर पुरुष समस्त रूपों की रचना करके और नाम देकर (उन्हें) पुकारता हुआ स्थित है।",
+      "meaningEn": "I know this great Person, radiant as the sun, beyond the darkness. That steadfast One, having shaped all forms and given them names, abides calling them forth."
+    },
+    {
+      "id": "purusha-suktam-17", "number": 17, "labelHi": "श्लोक · १७", "labelEn": "Shloka · 17",
+      "lines": ["धाता पुरस्ताद्यमुदाजहार शक्रः प्रविद्वान्प्रदिशश्चतस्रः।", "तमेवं विद्वानमृत इह भवति नान्यः पन्था अयनाय विद्यते॥"],
+      "linesEn": ["dhātā purastād-yam-udājahāra śakraḥ pravidvān-pradiśaś-catasraḥ", "tam-evaṃ vidvān-amṛta iha bhavati nānyaḥ panthā ayanāya vidyate"],
+      "meaningHi": "जिस पुरुष को धाता (विधाता) ने आदि में प्रकट किया और सर्वज्ञ इन्द्र ने चारों दिशाओं में घोषित किया — उसे इस प्रकार जानने वाला यहीं अमर हो जाता है; मुक्ति के लिए अन्य कोई मार्ग नहीं है।",
+      "meaningEn": "Him whom the Creator declared of old, and whom all-knowing Indra proclaimed through the four quarters — knowing Him thus, one becomes immortal here; there is no other path to liberation."
+    },
+    {
+      "id": "purusha-suktam-18", "number": 18, "labelHi": "श्लोक · १८", "labelEn": "Shloka · 18",
+      "lines": ["यज्ञेन यज्ञमयजन्त देवास्तानि धर्माणि प्रथमान्यासन्।", "ते ह नाकं महिमानः सचन्ते यत्र पूर्वे साध्याः सन्ति देवाः॥"],
+      "linesEn": ["yajñena yajñam-ayajanta devās-tāni dharmāṇi prathamāny-āsan", "te ha nākaṃ mahimānaḥ sacante yatra pūrve sādhyāḥ santi devāḥ"],
+      "meaningHi": "देवताओं ने यज्ञ के द्वारा यज्ञ (रूप पुरुष) का यजन किया; वे ही प्रथम धर्म (विधान) थे। वे महिमाशाली (उपासक) उस स्वर्ग को प्राप्त करते हैं, जहाँ पूर्वकाल के साध्य देवगण निवास करते हैं।",
+      "meaningEn": "By sacrifice the gods worshipped the sacrifice (the Person); these were the first ordinances. Those mighty ones attain the heaven where dwell the ancient Sadhya gods."
+    }
+  ]
+}

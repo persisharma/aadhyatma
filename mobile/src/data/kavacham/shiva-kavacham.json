@@ -1,0 +1,80 @@
+{
+  "id": "shiva-kavacham",
+  "titleHi": "श्री शिव कवचम्",
+  "titleEn": "Shiva Kavacham",
+  "deity": "shiva",
+  "source": {
+    "baseText": "Shiva Kavacham (anga-nyasa recension, 9 verses; Rishabha Yogishvara tradition) — adopted from VastuCart's editorial version. The viniyoga + ॐ नमो भगवते सदाशिवाय… prose invocation is omitted from the numbered verses here.",
+    "referenceUrls": [
+      "https://stotra.vastucart.in/stotra/shiv-kavach",
+      "https://www.shastras.com/shiva-stotras/shiva-kavacham/"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Adopted VastuCart's popular 9-verse anga-nyasa recension (शिरो मे ईश्वरः पातु…). A longer classical Shiva Kavacha (Skanda/Brahmottara Khanda) is a distinct, much longer text. Flagged for human §5 review of the exact recension."
+  },
+  "verses": [
+    {
+      "id": "shiva-kavacham-1", "number": 1, "labelHi": "श्लोक · १", "labelEn": "Shloka · 1",
+      "lines": ["शिरो मे ईश्वरः पातु ललाटं पार्वतीपतिः।", "नेत्रे मे त्रिपुरारिश्च हृदयं विश्वनाथकः॥"],
+      "linesEn": ["śiro me īśvaraḥ pātu lalāṭaṃ pārvatī-patiḥ", "netre me tripurāriśca hṛdayaṃ viśvanāthakaḥ"],
+      "meaningHi": "ईश्वर मेरे शिर की रक्षा करें, पार्वतीपति ललाट की; त्रिपुरारि मेरे नेत्रों की और विश्वनाथ मेरे हृदय की रक्षा करें।",
+      "meaningEn": "May Ishvara protect my head, Parvati's Lord my forehead; may Tripurari guard my eyes and Vishvanatha my heart."
+    },
+    {
+      "id": "shiva-kavacham-2", "number": 2, "labelHi": "श्लोक · २", "labelEn": "Shloka · 2",
+      "lines": ["कण्ठं पातु वृषध्वजः स्कन्धौ मे भूतनायकः।", "बाहू मे पातु शूलीशः कक्षौ कालभैरवः॥"],
+      "linesEn": ["kaṇṭhaṃ pātu vṛṣadhvajaḥ skandhau me bhūta-nāyakaḥ", "bāhū me pātu śūlīśaḥ kakṣau kāla-bhairavaḥ"],
+      "meaningHi": "वृषध्वज मेरे कण्ठ की रक्षा करें, भूतनायक मेरे कन्धों की; शूली (शूलधारी) मेरी भुजाओं की और कालभैरव मेरी काखों (कक्षों) की रक्षा करें।",
+      "meaningEn": "May the bull-bannered One protect my throat, the Lord of beings my shoulders; may the trident-bearer guard my arms and Kala-bhairava my sides."
+    },
+    {
+      "id": "shiva-kavacham-3", "number": 3, "labelHi": "श्लोक · ३", "labelEn": "Shloka · 3",
+      "lines": ["हस्तौ मे पातु गिरिशः उदरं भैरवः सदा।", "नाभिं पातु विरूपाक्षः कटिं मे सर्वगोऽव्ययः॥"],
+      "linesEn": ["hastau me pātu giriśaḥ udaraṃ bhairavaḥ sadā", "nābhiṃ pātu virūpākṣaḥ kaṭiṃ me sarvago'vyayaḥ"],
+      "meaningHi": "गिरिश मेरे हाथों की रक्षा करें, भैरव सदा मेरे उदर की; विरूपाक्ष मेरी नाभि की और सर्वव्यापी अव्यय मेरी कटि की रक्षा करें।",
+      "meaningEn": "May Girisha protect my hands, Bhairava ever my belly; may Virupaksha guard my navel and the all-pervading imperishable One my waist."
+    },
+    {
+      "id": "shiva-kavacham-4", "number": 4, "labelHi": "श्लोक · ४", "labelEn": "Shloka · 4",
+      "lines": ["ऊरू मे पातु कूर्माङ्गः जानुनी सर्वतोमुखः।", "जङ्घे मे पातु डमरुधारी पादौ मृत्युञ्जयः॥"],
+      "linesEn": ["ūrū me pātu kūrmāṅgaḥ jānunī sarvatomukhaḥ", "jaṅghe me pātu ḍamaru-dhārī pādau mṛtyuñjayaḥ"],
+      "meaningHi": "कूर्माङ्ग मेरी ऊरुओं की रक्षा करें, सर्वतोमुख घुटनों की; डमरुधारी मेरी पिंडलियों की और मृत्युञ्जय मेरे चरणों की रक्षा करें।",
+      "meaningEn": "May Kurmanga protect my thighs, the all-facing One my knees; may the drum-bearer guard my shanks and Mrityunjaya my feet."
+    },
+    {
+      "id": "shiva-kavacham-5", "number": 5, "labelHi": "श्लोक · ५", "labelEn": "Shloka · 5",
+      "lines": ["सर्वाङ्गं पातु कालाग्निरुद्रः सर्वत्र सर्वदा।", "प्राच्यां पातु महादेवः आग्नेय्यां पातु भैरवः॥"],
+      "linesEn": ["sarvāṅgaṃ pātu kālāgni-rudraḥ sarvatra sarvadā", "prācyāṃ pātu mahādevaḥ āgneyyāṃ pātu bhairavaḥ"],
+      "meaningHi": "कालाग्निरुद्र मेरे सम्पूर्ण शरीर की सर्वत्र और सर्वदा रक्षा करें। पूर्व दिशा में महादेव रक्षा करें और आग्नेय कोण में भैरव।",
+      "meaningEn": "May Kalagni-rudra protect my whole body, everywhere and always. In the east may Mahadeva protect me, and in the south-east Bhairava."
+    },
+    {
+      "id": "shiva-kavacham-6", "number": 6, "labelHi": "श्लोक · ६", "labelEn": "Shloka · 6",
+      "lines": ["दक्षिणे पातु वीरेशः नैरृत्यां पातु भूतपः।", "पश्चिमे पातु गिरिशः वायव्यां पातु शंकरः॥"],
+      "linesEn": ["dakṣiṇe pātu vīreśaḥ nairṛtyāṃ pātu bhūtapaḥ", "paścime pātu giriśaḥ vāyavyāṃ pātu śaṅkaraḥ"],
+      "meaningHi": "दक्षिण में वीरेश रक्षा करें, नैरृत्य कोण में भूतप; पश्चिम में गिरिश और वायव्य कोण में शंकर रक्षा करें।",
+      "meaningEn": "In the south may Viresha protect me, in the south-west Bhutapa; in the west Girisha, and in the north-west Shankara."
+    },
+    {
+      "id": "shiva-kavacham-7", "number": 7, "labelHi": "श्लोक · ७", "labelEn": "Shloka · 7",
+      "lines": ["उत्तरे पातु विश्वेशः ऐशान्यां पातु ईश्वरः।", "ऊर्ध्वं पातु विरूपाक्षः अधः पातु महेश्वरः॥"],
+      "linesEn": ["uttare pātu viśveśaḥ aiśānyāṃ pātu īśvaraḥ", "ūrdhvaṃ pātu virūpākṣaḥ adhaḥ pātu maheśvaraḥ"],
+      "meaningHi": "उत्तर में विश्वेश रक्षा करें, ईशान कोण में ईश्वर; ऊपर की ओर विरूपाक्ष और नीचे की ओर महेश्वर रक्षा करें।",
+      "meaningEn": "In the north may Vishvesha protect me, in the north-east Ishvara; above may Virupaksha, and below Maheshvara, guard me."
+    },
+    {
+      "id": "shiva-kavacham-8", "number": 8, "labelHi": "श्लोक · ८", "labelEn": "Shloka · 8",
+      "lines": ["एतत्ते कवचं पुण्यं देवानामपि दुर्लभम्।", "यः पठेच्छिवभक्तश्च सिद्ध्यन्ति कवचं ध्रुवम्॥"],
+      "linesEn": ["etat-te kavacaṃ puṇyaṃ devānām-api durlabham", "yaḥ paṭhec-chiva-bhaktaśca sidhyanti kavacaṃ dhruvam"],
+      "meaningHi": "यह पवित्र कवच देवताओं के लिए भी दुर्लभ है। जो शिवभक्त इसका पाठ करता है, उसे यह कवच निश्चय ही सिद्ध होता है।",
+      "meaningEn": "This holy armour is hard to obtain even for the gods. The devotee of Shiva who recites it — for him the armour surely becomes efficacious."
+    },
+    {
+      "id": "shiva-kavacham-9", "number": 9, "labelHi": "श्लोक · ९", "labelEn": "Shloka · 9",
+      "lines": ["महादेवप्रसादेन सर्वरक्षाफलं लभेत्।", "यं यं कामयते कामं तं तं प्राप्नोत्यसंशयम्॥"],
+      "linesEn": ["mahādeva-prasādena sarva-rakṣā-phalaṃ labhet", "yaṃ yaṃ kāmayate kāmaṃ taṃ taṃ prāpnoty-asaṃśayam"],
+      "meaningHi": "महादेव की कृपा से (साधक) सर्व रक्षा का फल प्राप्त करता है। वह जो-जो कामना करता है, उन-उन कामनाओं को निःसन्देह प्राप्त करता है।",
+      "meaningEn": "By the grace of Mahadeva one obtains the fruit of all-round protection. Whatever desire he cherishes, that he attains without doubt."
+    }
+  ]
+}

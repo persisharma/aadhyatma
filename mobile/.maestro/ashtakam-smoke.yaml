@@ -1,0 +1,59 @@
+# Ashtakam Category Smoke Test (PRD-A — Content Breadth Engine)
+#
+# Ashtakam (अष्टकम्) is the catalog home for standalone Ashtak/Ashtakam texts.
+# New PRD-A texts use AshtakamReader (`ashtakamId`); the pre-existing Sankat
+# Mochan Hanuman Ashtak keeps its dedicated reader but lives in this category.
+# Verifies:
+#   1. Home shows the Ashtakam category tile
+#   2. CategoryList shows Sankat Mochan Hanuman Ashtak and Lingashtakam
+#   3. Reader opens; language toggle flips Hindi → English (title becomes "Lingashtakam")
+#   4. Back returns to the list
+#
+# Selectors: visible text + accessibilityLabel. CategoryCard uses
+# "<NameEn>. Tap to open."; LibraryCard uses "<NameEn>. <sub>. Tap to open." —
+# match on the NameEn substring. No pixel coordinates (RULEBOOK §9).
+
+appId: host.exp.Exponent
+---
+# ── Step 1: Boot Vedansh in Expo Go ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Find + open the Ashtakam category tile (row 3 — scroll if needed) ──
+- scrollUntilVisible:
+    element:
+      text: "Ashtakam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Ashtakam\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# ── Step 3: CategoryList lists the migrated pre-existing Ashtak + Lingashtakam; open Lingashtakam ──
+- extendedWaitUntil:
+    visible: "Sankat Mochan Hanuman Ashtak\\..*Tap to open\\."
+    timeout: 15000
+- extendedWaitUntil:
+    visible: "Lingashtakam\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Lingashtakam\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss the Resume sheet if a prior session left progress
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Step 4: Toggle to English; the reader title shows "Lingashtakam" ──
+- tapOn:
+    id: "lang-toggle-en"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Lingashtakam"
+    timeout: 15000
+
+# ── Cleanup ──
+- stopApp:
+    appId: host.exp.Exponent
