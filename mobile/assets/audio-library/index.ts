@@ -15,6 +15,9 @@ import type { AudioSource } from 'expo-audio';
 const audioLibrary: Record<string, AudioSource> = {
   'gayatri-mantra': require('./gayatri-mantra.mp3'),
   'hare-rama': require('./hare-rama.mp3'),
+  'govinda-hari-govinda': require('./govinda-hari-govinda.mp3'),
+  'har-har-bhole': require('./har-har-bhole.mp3'),
+  'mahamrityunjay-mantra': require('./mahamrityunjay-mantra.mp3'),
 };
 
 /** True when a real recording is bundled for this track id. */
