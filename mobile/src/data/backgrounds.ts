@@ -50,6 +50,11 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
   ganesha: backgroundImages.deity_ganesha_modak,
   savitr: shivaStrotamImages.shiva,
   saraswati: backgroundImages.deity_saraswati_veena,
+  // PRD-A deity expansion (§A.4.2) — reuse the closest existing plate; flagged for
+  // dedicated art later (same precedent as theerth/kavacham). Lakshmi → Narayana
+  // (her consort's) plate.
+  lakshmi: backgroundImages.source_vishnu_narayana,
+  surya: backgroundImages.source_gayatri_savitri_sun,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
@@ -107,6 +112,8 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'durga-kavach': backgroundImages.deity_durga_lion,
   'krishna-stuti': backgroundImages.deity_krishna_bansuri,
   'durga-stuti-arjuna': backgroundImages.deity_durga_lion,
+  'mahalakshmi-ashtakam': backgroundImages.source_vishnu_narayana,
+  'surya-ashtakam': backgroundImages.source_gayatri_savitri_sun,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {

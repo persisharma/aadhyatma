@@ -1,0 +1,145 @@
+{
+  "titleHi": "महालक्ष्म्यष्टकम्",
+  "titleEn": "Mahalakshmi Ashtakam",
+  "deity": "lakshmi",
+  "source": {
+    "baseText": "Mahalakshmi Ashtakam (Indra-krita, Padma Purana) — the 8-verse ashtakam proper; cross-verified across authoritative stotra sources, all 8 verses concordant.",
+    "referenceUrls": [
+      "https://www.paavn.in/stotra/mahalakshmi-ashtakam",
+      "https://mantra.tips/en/mantras/mahalakshmi-ashtakam/",
+      "https://mahakatha.com/mantras/lakshmi/mahalakshmi-stotram/"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Padma Purana; spoken by Indra in gratitude after Mahalakshmi vanquished the demon Kolasura. Ships the 8-verse ashtakam proper; the 3 phalashruti verses (9-11, recitation-benefit frame) are omitted — consistent with the other ashtakams. Minor cross-source variants noted for §5 review: sandhi-spacing नमोऽस्तु ते / नमोऽस्तुते, and आद्यशक्ति / आदिशक्ति in v5 — meaning unchanged."
+  },
+  "verses": [
+    {
+      "id": "mahalakshmi-ashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "नमस्तेऽस्तु महामाये श्रीपीठे सुरपूजिते।",
+        "शङ्खचक्रगदाहस्ते महालक्ष्मि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "namaste'stu mahāmāye śrīpīṭhe surapūjite",
+        "śaṅkhacakragadāhaste mahālakṣmi namo'stu te"
+      ],
+      "meaningHi": "हे महामाया! श्रीपीठ पर विराजमान, देवताओं द्वारा पूजित, शंख-चक्र-गदा धारण करने वाली माँ महालक्ष्मी, आपको नमस्कार है।",
+      "meaningEn": "Salutations to you, O Mahamaya, enthroned upon the Shri-pitha and worshipped by the gods, bearing the conch, discus and mace in your hands — O Mahalakshmi, I bow to you."
+    },
+    {
+      "id": "mahalakshmi-ashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "नमस्ते गरुडारूढे कोलासुरभयंकरि।",
+        "सर्वपापहरे देवि महालक्ष्मि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "namaste garuḍārūḍhe kolāsurabhayaṅkari",
+        "sarvapāpahare devi mahālakṣmi namo'stu te"
+      ],
+      "meaningHi": "गरुड़ पर सवार, कोलासुर के लिए भयंकर, समस्त पापों को हरने वाली हे देवी महालक्ष्मी, आपको नमस्कार है।",
+      "meaningEn": "Salutations to you who rides upon Garuda, a terror to the demon Kolasura, the remover of all sins — O Mahalakshmi, I bow to you."
+    },
+    {
+      "id": "mahalakshmi-ashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "सर्वज्ञे सर्ववरदे सर्वदुष्टभयंकरि।",
+        "सर्वदुःखहरे देवि महालक्ष्मि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "sarvajñe sarvavarade sarvaduṣṭabhayaṅkari",
+        "sarvaduḥkhahare devi mahālakṣmi namo'stu te"
+      ],
+      "meaningHi": "सर्वज्ञ, सब वर देने वाली, समस्त दुष्टों के लिए भयंकर, समस्त दुःखों को हरने वाली हे देवी महालक्ष्मी, आपको नमस्कार है।",
+      "meaningEn": "Salutations to you, all-knowing, the giver of every boon, a terror to all the wicked, the remover of all sorrow — O Mahalakshmi, I bow to you."
+    },
+    {
+      "id": "mahalakshmi-ashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "सिद्धिबुद्धिप्रदे देवि भुक्तिमुक्तिप्रदायिनि।",
+        "मन्त्रमूर्ते सदा देवि महालक्ष्मि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "siddhibuddhiprade devi bhuktimuktipradāyini",
+        "mantramūrte sadā devi mahālakṣmi namo'stu te"
+      ],
+      "meaningHi": "सिद्धि और बुद्धि प्रदान करने वाली, भोग और मोक्ष देने वाली, सदा मन्त्र-स्वरूपा हे देवी महालक्ष्मी, आपको नमस्कार है।",
+      "meaningEn": "Salutations to you, bestower of accomplishment and wisdom, granter of both enjoyment and liberation, ever the very embodiment of the mantra — O Mahalakshmi, I bow to you."
+    },
+    {
+      "id": "mahalakshmi-ashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "आद्यन्तरहिते देवि आद्यशक्तिमहेश्वरि।",
+        "योगजे योगसम्भूते महालक्ष्मि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "ādyantarahite devi ādyaśaktimaheśvari",
+        "yogaje yogasambhūte mahālakṣmi namo'stu te"
+      ],
+      "meaningHi": "आदि और अन्त से रहित, आद्याशक्ति महेश्वरी, योग से उत्पन्न हे देवी महालक्ष्मी, आपको नमस्कार है।",
+      "meaningEn": "Salutations to you, without beginning or end, the primordial Shakti and supreme sovereign, arisen from yoga — O Mahalakshmi, I bow to you."
+    },
+    {
+      "id": "mahalakshmi-ashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "स्थूलसूक्ष्ममहारौद्रे महाशक्तिमहोदरे।",
+        "महापापहरे देवि महालक्ष्मि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "sthūlasūkṣmamahāraudre mahāśaktimahodare",
+        "mahāpāpahare devi mahālakṣmi namo'stu te"
+      ],
+      "meaningHi": "स्थूल, सूक्ष्म एवं महारौद्र रूप वाली, महाशक्ति, महोदरा (जिसके उदर में समस्त जगत् है), महापापों को हरने वाली हे देवी महालक्ष्मी, आपको नमस्कार है।",
+      "meaningEn": "Salutations to you of the gross, subtle and terrifying forms, great in power and vast of womb (holding all the worlds within), remover of the gravest sins — O Mahalakshmi, I bow to you."
+    },
+    {
+      "id": "mahalakshmi-ashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "पद्मासनस्थिते देवि परब्रह्मस्वरूपिणि।",
+        "परमेशि जगन्मातर्महालक्ष्मि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "padmāsanasthite devi parabrahmasvarūpiṇi",
+        "parameśi jaganmātarmahālakṣmi namo'stu te"
+      ],
+      "meaningHi": "कमल के आसन पर विराजमान, परब्रह्म-स्वरूपा, परमेश्वरी, जगत् की माता हे देवी महालक्ष्मी, आपको नमस्कार है।",
+      "meaningEn": "Salutations to you seated upon the lotus, the very form of Parabrahman, the supreme sovereign and mother of the world — O Mahalakshmi, I bow to you."
+    },
+    {
+      "id": "mahalakshmi-ashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "श्वेताम्बरधरे देवि नानालङ्कारभूषिते।",
+        "जगत्स्थिते जगन्मातर्महालक्ष्मि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "śvetāmbaradhare devi nānālaṅkārabhūṣite",
+        "jagatsthite jaganmātarmahālakṣmi namo'stu te"
+      ],
+      "meaningHi": "श्वेत वस्त्र धारण करने वाली, नाना अलंकारों से विभूषित, जगत् में स्थित, जगन्माता हे देवी महालक्ष्मी, आपको नमस्कार है।",
+      "meaningEn": "Salutations to you robed in white, adorned with manifold ornaments, abiding within the world, mother of the universe — O Mahalakshmi, I bow to you."
+    }
+  ]
+}

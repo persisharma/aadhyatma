@@ -18,6 +18,9 @@ const emojiIcons: Partial<Record<DeityIconKey, string>> = {
   trishul: '🔱',
   lotus: '🪷',
   surya: '☀️',
+  // PRD-A deity expansion (§A.4.2)
+  lakshmi: '🪔',
+  suryadev: '🌞',
 };
 
 export default function DeityIcon({ iconKey, fallbackText, size = BASE_SIZE }: Props) {

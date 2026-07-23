@@ -6,6 +6,8 @@
 import lingashtakam from './lingashtakam.json';
 import madhurashtakam from './madhurashtakam.json';
 import achyutashtakam from './achyutashtakam.json';
+import mahalakshmiAshtakam from './mahalakshmi-ashtakam.json';
+import suryaAshtakam from './surya-ashtakam.json';
 
 export type AshtakamVerse = {
   id: string;
@@ -20,7 +22,12 @@ export type AshtakamVerse = {
   meaningKn?: string;
 };
 
-export type AshtakamId = 'lingashtakam' | 'madhurashtakam' | 'achyutashtakam';
+export type AshtakamId =
+  | 'lingashtakam'
+  | 'madhurashtakam'
+  | 'achyutashtakam'
+  | 'mahalakshmi-ashtakam'
+  | 'surya-ashtakam';
 
 export type AshtakamPayload = {
   id: AshtakamId;
@@ -52,12 +59,28 @@ const registry: Record<AshtakamId, AshtakamPayload> = {
     deity: achyutashtakam.deity,
     verses: achyutashtakam.verses,
   },
+  'mahalakshmi-ashtakam': {
+    id: 'mahalakshmi-ashtakam',
+    titleHi: mahalakshmiAshtakam.titleHi,
+    titleEn: mahalakshmiAshtakam.titleEn,
+    deity: mahalakshmiAshtakam.deity,
+    verses: mahalakshmiAshtakam.verses,
+  },
+  'surya-ashtakam': {
+    id: 'surya-ashtakam',
+    titleHi: suryaAshtakam.titleHi,
+    titleEn: suryaAshtakam.titleEn,
+    deity: suryaAshtakam.deity,
+    verses: suryaAshtakam.verses,
+  },
 };
 
 export const ashtakamIds: readonly AshtakamId[] = [
   'lingashtakam',
   'madhurashtakam',
   'achyutashtakam',
+  'mahalakshmi-ashtakam',
+  'surya-ashtakam',
 ];
 
 export function getAshtakam(id: string | undefined): AshtakamPayload {
@@ -70,3 +93,5 @@ export const lingashtakamTitleEn = lingashtakam.titleEn;
 export const lingashtakamTotal = lingashtakam.verses.length;
 export const madhurashtakamTotal = madhurashtakam.verses.length;
 export const achyutashtakamTotal = achyutashtakam.verses.length;
+export const mahalakshmiAshtakamTotal = mahalakshmiAshtakam.verses.length;
+export const suryaAshtakamTotal = suryaAshtakam.verses.length;

@@ -20,7 +20,13 @@ import { krishnaStotramTotal } from './krishna-stotram';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
-import { lingashtakamTotal, madhurashtakamTotal, achyutashtakamTotal } from './ashtakam';
+import {
+  lingashtakamTotal,
+  madhurashtakamTotal,
+  achyutashtakamTotal,
+  mahalakshmiAshtakamTotal,
+  suryaAshtakamTotal,
+} from './ashtakam';
 import { deviSuktamTotal, purushaSuktamTotal, narayanaSuktamTotal } from './suktam';
 import {
   ramaRakshaStotraTotal,
@@ -42,7 +48,19 @@ export type ContentCategory =
   | 'kavacham'
   | 'ashtakam'
   | 'suktam';
-export type Deity = 'rama' | 'krishna' | 'vishnu' | 'shiva' | 'hanuman' | 'durga' | 'ganesha' | 'savitr' | 'saraswati';
+export type Deity =
+  | 'rama'
+  | 'krishna'
+  | 'vishnu'
+  | 'shiva'
+  | 'hanuman'
+  | 'durga'
+  | 'ganesha'
+  | 'savitr'
+  | 'saraswati'
+  // PRD-A deity expansion (§A.4.2) — each new deity ships with ≥1 source-verified text.
+  | 'lakshmi'
+  | 'surya';
 
 export type LibraryEntry = {
   id: string;
@@ -653,6 +671,30 @@ export const library: readonly LibraryEntry[] = [
     category: 'ashtakam',
     deities: ['vishnu'],
     verseCount: achyutashtakamTotal,
+  },
+  {
+    id: 'mahalakshmi-ashtakam',
+    nameHi: 'महालक्ष्म्यष्टकम्',
+    nameEn: 'Mahalakshmi Ashtakam',
+    sub: `${mahalakshmiAshtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${mahalakshmiAshtakamTotal} shlokas · with meaning`,
+    thumb: 'ल',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['lakshmi'],
+    verseCount: mahalakshmiAshtakamTotal,
+  },
+  {
+    id: 'surya-ashtakam',
+    nameHi: 'सूर्याष्टकम्',
+    nameEn: 'Surya Ashtakam',
+    sub: `${suryaAshtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${suryaAshtakamTotal} shlokas · with meaning`,
+    thumb: 'सू',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['surya'],
+    verseCount: suryaAshtakamTotal,
   },
   // ─────────── Suktam (सूक्तम्) — PRD-A, multi-instance form ───────────
   {
