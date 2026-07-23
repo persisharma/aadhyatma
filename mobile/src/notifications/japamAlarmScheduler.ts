@@ -57,8 +57,12 @@ import {
   isNativeAlarmSupported,
 } from './japamAlarmNative';
 
-/** Fallback channel for mantras without a custom alarm clip. */
-const FALLBACK_CHANNEL_ID = 'japam-alarms';
+/** Fallback channel for mantras without a custom alarm clip.
+ *  `-v2`: the v1 channels rang with default (notification-stream) audio
+ *  attributes, muted by vibrate/silent mode and a zeroed notification-volume
+ *  slider. Channels pin sound + attributes at creation, so moving to the
+ *  ALARM stream required fresh ids (v1 channels are deleted on ensure). */
+const FALLBACK_CHANNEL_ID = 'japam-alarms-v2';
 
 /** AsyncStorage key for the one-time-alarm bookkeeping: `{ [alarmId]: fireAtMs }`
  *  recording what each enabled one-time alarm was armed for. The context
@@ -70,8 +74,8 @@ let categoryEnsured = false;
 
 function channelIdFor(mantraId: string, customSound: string | null): string {
   // Android 8+ pins sound at channel-creation time; channel per custom sound
-  // so each mantra rings with its own clip.
-  return customSound ? `japam-alarm:${mantraId}` : FALLBACK_CHANNEL_ID;
+  // so each mantra rings with its own clip. `:v2` — see FALLBACK_CHANNEL_ID.
+  return customSound ? `japam-alarm:${mantraId}:v2` : FALLBACK_CHANNEL_ID;
 }
 
 async function ensureAndroidChannel(
@@ -85,6 +89,9 @@ async function ensureAndroidChannel(
       name: customSound ? 'Japam Alarms (Mantra)' : 'Japam Alarms',
       importance: Notifications.AndroidImportance.HIGH,
       sound: customSound ?? 'default',
+      // Alarm stream: audible through vibrate/silent, follows the alarm
+      // volume slider — matching the Kotlin tier and AlarmKit on iOS.
+      audioAttributes: { usage: Notifications.AndroidAudioUsage.ALARM },
       vibrationPattern: [0, 250, 250, 250],
       lightColor: '#B8621B',
       showBadge: false,
@@ -92,6 +99,15 @@ async function ensureAndroidChannel(
     ensuredChannels.add(channelId);
   } catch {
     /* Channel creation failure is non-fatal — falls back to default channel. */
+  }
+  // Retire the notification-stream v1 channel this one replaces, so it
+  // doesn't linger in the app's notification settings.
+  try {
+    await Notifications.deleteNotificationChannelAsync(
+      channelId === FALLBACK_CHANNEL_ID ? 'japam-alarms' : channelId.replace(/:v2$/, '')
+    );
+  } catch {
+    /* Nothing to delete / API unavailable — non-fatal. */
   }
 }
 
