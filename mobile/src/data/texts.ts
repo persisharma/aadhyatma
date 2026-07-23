@@ -26,6 +26,8 @@ import {
   achyutashtakamTotal,
   mahalakshmiAshtakamTotal,
   suryaAshtakamTotal,
+  radhashtakamTotal,
+  subrahmanyaAshtakamTotal,
 } from './ashtakam';
 import { deviSuktamTotal, purushaSuktamTotal, narayanaSuktamTotal } from './suktam';
 import {
@@ -60,7 +62,9 @@ export type Deity =
   | 'saraswati'
   // PRD-A deity expansion (§A.4.2) — each new deity ships with ≥1 source-verified text.
   | 'lakshmi'
-  | 'surya';
+  | 'surya'
+  | 'radha'
+  | 'kartikeya';
 
 export type LibraryEntry = {
   id: string;
@@ -695,6 +699,30 @@ export const library: readonly LibraryEntry[] = [
     category: 'ashtakam',
     deities: ['surya'],
     verseCount: suryaAshtakamTotal,
+  },
+  {
+    id: 'radhashtakam',
+    nameHi: 'श्रीराधाष्टकम्',
+    nameEn: 'Radhashtakam',
+    sub: `${radhashtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${radhashtakamTotal} shlokas · with meaning`,
+    thumb: 'रा',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['radha'],
+    verseCount: radhashtakamTotal,
+  },
+  {
+    id: 'subrahmanya-ashtakam',
+    nameHi: 'श्रीसुब्रह्मण्याष्टकम्',
+    nameEn: 'Subrahmanya Ashtakam',
+    sub: `${subrahmanyaAshtakamTotal} श्लोक · अर्थ सहित`,
+    subEn: `${subrahmanyaAshtakamTotal} shlokas · with meaning`,
+    thumb: 'सु',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['kartikeya'],
+    verseCount: subrahmanyaAshtakamTotal,
   },
   // ─────────── Suktam (सूक्तम्) — PRD-A, multi-instance form ───────────
   {

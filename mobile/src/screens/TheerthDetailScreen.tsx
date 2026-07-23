@@ -27,6 +27,8 @@ const DEITY_LABELS: Record<Deity, { hi: string; en: string }> = {
   saraswati: { hi: 'सरस्वती', en: 'SARASWATI' },
   lakshmi: { hi: 'लक्ष्मी', en: 'LAKSHMI' },
   surya: { hi: 'सूर्य', en: 'SURYA' },
+  radha: { hi: 'राधा', en: 'RADHA' },
+  kartikeya: { hi: 'कार्तिकेय', en: 'KARTIKEYA' },
 };
 
 function deityLabel(deity: Deity, lang: Lang): string {

@@ -21,6 +21,8 @@ const emojiIcons: Partial<Record<DeityIconKey, string>> = {
   // PRD-A deity expansion (§A.4.2)
   lakshmi: '🪔',
   suryadev: '🌞',
+  radha: '🌸',
+  kartikeya: '🦚',
 };
 
 export default function DeityIcon({ iconKey, fallbackText, size = BASE_SIZE }: Props) {

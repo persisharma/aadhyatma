@@ -1,0 +1,146 @@
+{
+  "titleHi": "श्रीसुब्रह्मण्याष्टकम्",
+  "titleEn": "Subrahmanya Ashtakam",
+  "deity": "kartikeya",
+  "source": {
+    "baseText": "Shri Subrahmanya Ashtakam / Subrahmanya Karavalamba Stotram ('हे स्वामिनाथ करुणाकर दीनबन्धो') — the 8-verse ashtakam proper; cross-verified across authoritative stotra sources.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_subrahmanya/subrahmaNyAShTakamkarAvalambastotra.html",
+      "https://stotranidhi.com/hi/subrahmanya-ashtakam-in-sanskrit/",
+      "https://brah.ma/stotra/sri-subrahmanya-karavalamba-stotram",
+      "https://stotra.vastucart.in/stotra/subrahmanya-ashtakam"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Classical karavalamba hymn to Subrahmanya/Kartikeya; every verse ends वल्लीशनाथ मम देहि करावलम्बम्. Base = sanskritdocuments.org critical text (Brihatstotraratnakara 1927 Madras, proofread), with three readings adopted where 2+ sources concord on the grammatical form against apparent print slips: v3 श्रुत्यागम (stotranidhi/transliteral; SD prints श‍ृत्यागम), v5 मध्यवेद्य + देवेन्द्रपीठनगरं (stotranidhi/vastucart; SD prints मध्यवेऽद्य/पीठनकरं) and v5 देवादिदेव (stotranidhi/vastucart). Marked variants kept per SD main text: v4 चापादि (var पाशादि), धरतुण्ड (var धृततुण्ड); v6 हारादि (var हीरादि). vastucart's vv6-8 follow a divergent South-Indian recension (हीरादिरत्नवर…, पातालदारुण…, ध्यायाम्यहं…) — not adopted; flagged for §5. Phalashruti (2 verses) omitted, consistent with the other ashtakams."
+  },
+  "verses": [
+    {
+      "id": "subrahmanya-ashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "हे स्वामिनाथ करुणाकर दीनबन्धो श्रीपार्वतीशमुखपङ्कजपद्मबन्धो।",
+        "श्रीशादिदेवगणपूजितपादपद्म वल्लीशनाथ मम देहि करावलम्बम्॥"
+      ],
+      "linesEn": [
+        "he svāminātha karuṇākara dīnabandho śrīpārvatīśamukhapaṅkajapadmabandho",
+        "śrīśādidevagaṇapūjitapādapadma vallīśanātha mama dehi karāvalambam"
+      ],
+      "meaningHi": "हे स्वामिनाथ! हे करुणा की खान! हे दीनों के बन्धु! हे पार्वतीपति शिव के मुख-कमल को (सूर्य की भाँति) प्रफुल्लित करने वाले! विष्णु आदि देवगण जिनके चरण-कमलों की पूजा करते हैं — हे वल्ली के स्वामी! मुझे अपने हाथ का सहारा दीजिए।",
+      "meaningEn": "O Swaminatha, mine of compassion, friend of the helpless, the sun that gladdens the lotus-face of Parvati's lord Shiva! Your lotus feet are worshipped by Vishnu and all the hosts of gods — O lord of Valli, give me the support of your hand."
+    },
+    {
+      "id": "subrahmanya-ashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "देवाधिदेवसुत देवगणाधिनाथ देवेन्द्रवन्द्यमृदुपङ्कजमञ्जुपाद।",
+        "देवर्षिनारदमुनीन्द्रसुगीतकीर्ते वल्लीशनाथ मम देहि करावलम्बम्॥"
+      ],
+      "linesEn": [
+        "devādhidevasuta devagaṇādhinātha devendravandyamṛdupaṅkajamañjupāda",
+        "devarṣināradamunīndrasugītakīrte vallīśanātha mama dehi karāvalambam"
+      ],
+      "meaningHi": "हे देवाधिदेव शिव के पुत्र! हे देवगणों के अधिनायक! देवराज इन्द्र जिनके कोमल कमल-सदृश सुन्दर चरणों की वन्दना करते हैं, देवर्षि नारद और मुनीन्द्र जिनकी कीर्ति का गान करते हैं — हे वल्ली के स्वामी! मुझे अपने हाथ का सहारा दीजिए।",
+      "meaningEn": "O son of the god of gods, sovereign of the divine hosts, whose tender, lovely lotus feet Indra himself venerates, whose glory the divine sage Narada and the best of sages sing — O lord of Valli, give me the support of your hand."
+    },
+    {
+      "id": "subrahmanya-ashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "नित्यान्नदाननिरताखिलरोगहारिन् भाग्यप्रदानपरिपूरितभक्तकाम।",
+        "श्रुत्यागमप्रणववाच्यनिजस्वरूप वल्लीशनाथ मम देहि करावलम्बम्॥"
+      ],
+      "linesEn": [
+        "nityānnadānaniratākhilarogahārin bhāgyapradānaparipūritabhaktakāma",
+        "śrutyāgamapraṇavavācyanijasvarūpa vallīśanātha mama dehi karāvalambam"
+      ],
+      "meaningHi": "हे नित्य अन्नदान में तत्पर, समस्त रोगों को हरने वाले! भाग्य प्रदान कर भक्तों की कामनाएँ परिपूर्ण करने वाले! श्रुति, आगम और प्रणव (ॐ) जिनके निज स्वरूप का वर्णन करते हैं — हे वल्ली के स्वामी! मुझे अपने हाथ का सहारा दीजिए।",
+      "meaningEn": "Ever intent on the gift of food, remover of every disease, you fill your devotees' desires with the gift of good fortune; your true nature is what the Vedas, the Agamas and the sacred syllable Om declare — O lord of Valli, give me the support of your hand."
+    },
+    {
+      "id": "subrahmanya-ashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "क्रौञ्चासुरेन्द्रपरिखण्डन शक्तिशूलचापादिशस्त्रपरिमण्डितदिव्यपाणे।",
+        "श्रीकुण्डलीशधरतुण्डशिखीन्द्रवाह वल्लीशनाथ मम देहि करावलम्बम्॥"
+      ],
+      "linesEn": [
+        "krauñcāsurendraparikhaṇḍana śaktiśūlacāpādiśastraparimaṇḍitadivyapāṇe",
+        "śrīkuṇḍalīśadharatuṇḍaśikhīndravāha vallīśanātha mama dehi karāvalambam"
+      ],
+      "meaningHi": "हे क्रौञ्च पर्वत (असुरेन्द्र) का खण्डन करने वाले! जिनके दिव्य हाथ शक्ति, शूल, धनुष आदि शस्त्रों से सुशोभित हैं! जिनका वाहन वह मयूरराज है जिसकी चोंच में सर्पराज विराजते हैं — हे वल्ली के स्वामी! मुझे अपने हाथ का सहारा दीजिए।",
+      "meaningEn": "O render of the mighty Krauncha asura, whose divine hands are adorned with the shakti lance, the spear, the bow and other weapons, who rides the kingly peacock that bears the lord of serpents in its beak — O lord of Valli, give me the support of your hand."
+    },
+    {
+      "id": "subrahmanya-ashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "देवादिदेव रथमण्डलमध्यवेद्य देवेन्द्रपीठनगरं दृढचापहस्तम्।",
+        "शूरं निहत्य सुरकोटिभिरीड्यमान वल्लीशनाथ मम देहि करावलम्बम्॥"
+      ],
+      "linesEn": [
+        "devādideva rathamaṇḍalamadhyavedya devendrapīṭhanagaraṃ dṛḍhacāpahastam",
+        "śūraṃ nihatya surakoṭibhirīḍyamāna vallīśanātha mama dehi karāvalambam"
+      ],
+      "meaningHi": "हे देवादिदेव! देव-रथों के मण्डल के मध्य विराजमान, देवेन्द्र के सिंहासन-नगर पर दृढ़ धनुष धारण करने वाले शूरपद्म असुर का वध कर करोड़ों देवताओं द्वारा स्तुत होने वाले — हे वल्ली के स्वामी! मुझे अपने हाथ का सहारा दीजिए।",
+      "meaningEn": "O god of the foremost gods, manifest amid the circle of the celestial chariots! Slaying the firm-bowed demon Shura who had seized the city of Indra's throne, you were praised by crores of gods — O lord of Valli, give me the support of your hand."
+    },
+    {
+      "id": "subrahmanya-ashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "हारादिरत्नमणियुक्तकिरीटहार केयूरकुण्डललसत्कवचाभिरामम्।",
+        "हे वीर तारकजयामरवृन्दवन्द्य वल्लीशनाथ मम देहि करावलम्बम्॥"
+      ],
+      "linesEn": [
+        "hārādiratnamaṇiyuktakirīṭahāra keyūrakuṇḍalalasatkavacābhirāmam",
+        "he vīra tārakajayāmaravṛndavandya vallīśanātha mama dehi karāvalambam"
+      ],
+      "meaningHi": "रत्नों और मणियों से जड़े मुकुट, हार, केयूर (बाजूबन्द), कुण्डल और चमकते कवच से शोभायमान! हे वीर! तारकासुर पर विजय पाने वाले, अमर-वृन्द से वन्दित — हे वल्ली के स्वामी! मुझे अपने हाथ का सहारा दीजिए।",
+      "meaningEn": "Resplendent with crown and necklaces set with gems and jewels, with armlets, earrings and gleaming armour! O hero, victor over Taraka, venerated by the assembly of the immortals — O lord of Valli, give me the support of your hand."
+    },
+    {
+      "id": "subrahmanya-ashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "पञ्चाक्षरादिमनुमन्त्रितगाङ्गतोयैः पञ्चामृतैः प्रमुदितेन्द्रमुखैर्मुनीन्द्रैः।",
+        "पट्टाभिषिक्तहरियुक्त परासनाथ वल्लीशनाथ मम देहि करावलम्बम्॥"
+      ],
+      "linesEn": [
+        "pañcākṣarādimanumantritagāṅgatoyaiḥ pañcāmṛtaiḥ pramuditendramukhairmunīndraiḥ",
+        "paṭṭābhiṣiktahariyukta parāsanātha vallīśanātha mama dehi karāvalambam"
+      ],
+      "meaningHi": "पञ्चाक्षर आदि मन्त्रों से अभिमन्त्रित गंगाजल और पञ्चामृत से, प्रसन्न इन्द्र आदि देवों और मुनीन्द्रों द्वारा जिनका पट्टाभिषेक हुआ, जो हरि सहित परम आसन के स्वामी हैं — हे वल्ली के स्वामी! मुझे अपने हाथ का सहारा दीजिए।",
+      "meaningEn": "Ceremonially crowned by the rejoicing sages with Indra at their head, with Ganga waters sanctified by the five-syllable and other mantras and with the five nectars; lord of the supreme seat, joined by Hari — O lord of Valli, give me the support of your hand."
+    },
+    {
+      "id": "subrahmanya-ashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "श्रीकार्तिकेय करुणामृतपूर्णदृष्ट्या कामादिरोगकलुषीकृतदुष्टचित्तम्।",
+        "सिक्त्वा तु मामव कलाधरकान्तिकान्त्या वल्लीशनाथ मम देहि करावलम्बम्॥"
+      ],
+      "linesEn": [
+        "śrīkārtikeya karuṇāmṛtapūrṇadṛṣṭyā kāmādirogakaluṣīkṛtaduṣṭacittam",
+        "siktvā tu māmava kalādharakāntikāntyā vallīśanātha mama dehi karāvalambam"
+      ],
+      "meaningHi": "हे श्रीकार्तिकेय! काम आदि रोगों से कलुषित मेरे दूषित चित्त को करुणामृत से परिपूर्ण अपनी दृष्टि से और चन्द्रमा-सी शीतल कान्ति से सींचकर मेरी रक्षा कीजिए — हे वल्ली के स्वामी! मुझे अपने हाथ का सहारा दीजिए।",
+      "meaningEn": "O Shri Kartikeya! Bathing my defiled heart, sullied by lust and its kindred ills, in your glance brimming with the nectar of compassion and in your radiance cool as the moon, protect me — O lord of Valli, give me the support of your hand."
+    }
+  ]
+}
