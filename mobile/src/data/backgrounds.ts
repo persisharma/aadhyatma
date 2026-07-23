@@ -55,6 +55,8 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
   // (her consort's) plate.
   lakshmi: backgroundImages.source_vishnu_narayana,
   surya: backgroundImages.source_gayatri_savitri_sun,
+  radha: backgroundImages.deity_krishna_bansuri,
+  kartikeya: shivaStrotamImages.shiva,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
@@ -114,6 +116,8 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'durga-stuti-arjuna': backgroundImages.deity_durga_lion,
   'mahalakshmi-ashtakam': backgroundImages.source_vishnu_narayana,
   'surya-ashtakam': backgroundImages.source_gayatri_savitri_sun,
+  radhashtakam: backgroundImages.deity_krishna_bansuri,
+  'subrahmanya-ashtakam': shivaStrotamImages.shiva,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {
