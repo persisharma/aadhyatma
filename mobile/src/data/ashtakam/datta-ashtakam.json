@@ -1,0 +1,145 @@
+{
+  "titleHi": "श्री दत्ताष्टकम्",
+  "titleEn": "Datta Ashtakam",
+  "deity": "dattatreya",
+  "source": {
+    "baseText": "Sri Datta Ashtakam ('गुरुमूर्तिं चिदाकाशं', refrain दत्तमानन्दमाश्रये) — the 8-verse ashtakam proper; cross-verified, sources concordant.",
+    "referenceUrls": [
+      "https://stotranidhi.com/hi/sri-datta-ashtakam-in-sanskrit/",
+      "https://sriguru.org.in/sri-datta-ashtakam/",
+      "https://www.srihansh.com/2025/06/sri-datta-ashtakam.html"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Datta Sampradaya ashtakam to Dattatreya, the Trimurti-svarupa Adi Guru; refrain दत्तमानन्दमाश्रये ('I take refuge in Datta, the embodiment of bliss'). stotranidhi (Devanagari) and sriguru.org.in/srihansh (Telugu script, same text) concordant. v8 (दत्तमानन्दाष्टकं यः पठेत्…) is counted within the eight and kept; the separate trailing phalashruti (एककालं द्विकालं वा…) omitted per house precedent. v3 अनघाप्रिय kept verbatim per stotranidhi (sriguru prints अनघाप्रिया) — Anagha is Datta's consort; flagged for §5. NOT the Shankaracharya-attributed दत्तदिगम्बरं ashtakam (SD marks that attribution doubtful) nor the Narada-Purana stotram."
+  },
+  "verses": [
+    {
+      "id": "datta-ashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "गुरुमूर्तिं चिदाकाशं सच्चिदानन्दविग्रहम्।",
+        "निर्विकल्पं निराबाधं दत्तमानन्दमाश्रये॥"
+      ],
+      "linesEn": [
+        "gurumūrtiṃ cidākāśaṃ saccidānandavigraham",
+        "nirvikalpaṃ nirābādhaṃ dattamānandamāśraye"
+      ],
+      "meaningHi": "जो गुरु की मूर्ति हैं, चिदाकाश (चैतन्य-आकाश) स्वरूप हैं, जिनका विग्रह सच्चिदानन्द है, जो निर्विकल्प और निराबाध हैं — मैं उन आनन्दस्वरूप दत्त की शरण लेता हूँ।",
+      "meaningEn": "The very form of the Guru, the sky of pure consciousness, whose body is being, consciousness and bliss, beyond all wavering and beyond all affliction — I take refuge in Datta, the embodiment of bliss."
+    },
+    {
+      "id": "datta-ashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "योगातीतं गुणातीतं सर्वरक्षाकरं विभुम्।",
+        "सर्वदुःखहरं देवं दत्तमानन्दमाश्रये॥"
+      ],
+      "linesEn": [
+        "yogātītaṃ guṇātītaṃ sarvarakṣākaraṃ vibhum",
+        "sarvaduḥkhaharaṃ devaṃ dattamānandamāśraye"
+      ],
+      "meaningHi": "जो योग से परे और गुणों से परे हैं, सबकी रक्षा करने वाले सर्वव्यापी विभु हैं, समस्त दुःखों को हरने वाले देव हैं — मैं उन आनन्दस्वरूप दत्त की शरण लेता हूँ।",
+      "meaningEn": "Beyond yoga and beyond the gunas, the all-pervading Lord who protects all, the god who removes every sorrow — I take refuge in Datta, the embodiment of bliss."
+    },
+    {
+      "id": "datta-ashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "अवधूतं सदाध्यानम् औदुम्बरसुशोभितम्।",
+        "अनघाप्रिय विभुं देवं दत्तमानन्दमाश्रये॥"
+      ],
+      "linesEn": [
+        "avadhūtaṃ sadādhyānam audumbarasuśobhitam",
+        "anaghāpriya vibhuṃ devaṃ dattamānandamāśraye"
+      ],
+      "meaningHi": "जो अवधूत हैं, सदा ध्यानस्थ रहते हैं, औदुम्बर वृक्ष के नीचे सुशोभित हैं, अनघा देवी के प्रिय सर्वव्यापी देव हैं — मैं उन आनन्दस्वरूप दत्त की शरण लेता हूँ।",
+      "meaningEn": "The Avadhuta, ever absorbed in meditation, resplendent beneath the audumbara tree, the all-pervading Lord beloved of Anagha — I take refuge in Datta, the embodiment of bliss."
+    },
+    {
+      "id": "datta-ashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "निराकारं निराभासं ब्रह्मविष्णुशिवात्मकम्।",
+        "निर्गुणं निष्कलं शान्तं दत्तमानन्दमाश्रये॥"
+      ],
+      "linesEn": [
+        "nirākāraṃ nirābhāsaṃ brahmaviṣṇuśivātmakam",
+        "nirguṇaṃ niṣkalaṃ śāntaṃ dattamānandamāśraye"
+      ],
+      "meaningHi": "जो निराकार और निराभास हैं, ब्रह्मा-विष्णु-शिव स्वरूप हैं, निर्गुण, निष्कल (अखण्ड) और शान्त हैं — मैं उन आनन्दस्वरूप दत्त की शरण लेता हूँ।",
+      "meaningEn": "Formless and beyond all appearance, the very self of Brahma, Vishnu and Shiva, without attributes, indivisible and serene — I take refuge in Datta, the embodiment of bliss."
+    },
+    {
+      "id": "datta-ashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "अनसूयासुतं देवं अत्रिवंशकुलोद्भवम्।",
+        "दिगम्बरं महातेजं दत्तमानन्दमाश्रये॥"
+      ],
+      "linesEn": [
+        "anasūyāsutaṃ devaṃ atrivaṃśakulodbhavam",
+        "digambaraṃ mahātejaṃ dattamānandamāśraye"
+      ],
+      "meaningHi": "जो माता अनसूया के पुत्र हैं, अत्रि ऋषि के वंश-कुल में प्रकट हुए देव हैं, दिगम्बर और महान तेज वाले हैं — मैं उन आनन्दस्वरूप दत्त की शरण लेता हूँ।",
+      "meaningEn": "The divine son of Anasuya, arisen in the lineage of Sage Atri, clad only in the directions, of mighty radiance — I take refuge in Datta, the embodiment of bliss."
+    },
+    {
+      "id": "datta-ashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "सह्याद्रिवासिनं दत्तं आत्मज्ञानप्रदायकम्।",
+        "अखण्डमण्डलाकारं दत्तमानन्दमाश्रये॥"
+      ],
+      "linesEn": [
+        "sahyādrivāsinaṃ dattaṃ ātmajñānapradāyakam",
+        "akhaṇḍamaṇḍalākāraṃ dattamānandamāśraye"
+      ],
+      "meaningHi": "जो सह्याद्रि पर्वत पर निवास करते हैं, आत्मज्ञान प्रदान करने वाले हैं और अखण्ड मण्डल के आकार वाले (सर्वव्यापी) हैं — मैं उन आनन्दस्वरूप दत्त की शरण लेता हूँ।",
+      "meaningEn": "Dweller upon the Sahyadri mountain, the bestower of Self-knowledge, whose form is the unbroken circle of the whole — I take refuge in Datta, the embodiment of bliss."
+    },
+    {
+      "id": "datta-ashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "पञ्चयज्ञप्रियं देवं पञ्चरूपसुशोभितम्।",
+        "गुरुपरम्परं वन्दे दत्तमानन्दमाश्रये॥"
+      ],
+      "linesEn": [
+        "pañcayajñapriyaṃ devaṃ pañcarūpasuśobhitam",
+        "guruparamparaṃ vande dattamānandamāśraye"
+      ],
+      "meaningHi": "जो पञ्च-यज्ञों के प्रिय देव हैं और पाँच रूपों से सुशोभित हैं — मैं गुरु-परम्परा की वन्दना करता हूँ और उन आनन्दस्वरूप दत्त की शरण लेता हूँ।",
+      "meaningEn": "The god who delights in the five sacrifices, resplendent in five forms — I bow to the unbroken lineage of Gurus and take refuge in Datta, the embodiment of bliss."
+    },
+    {
+      "id": "datta-ashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "दत्तमानन्दाष्टकं यः पठेत् सर्वविद्या जयं लभेत्।",
+        "दत्तानुग्रहफलं प्राप्तं दत्तमानन्दमाश्रये॥"
+      ],
+      "linesEn": [
+        "dattamānandāṣṭakaṃ yaḥ paṭhet sarvavidyā jayaṃ labhet",
+        "dattānugrahaphalaṃ prāptaṃ dattamānandamāśraye"
+      ],
+      "meaningHi": "जो इस दत्त-आनन्दाष्टक का पाठ करता है, वह समस्त विद्याओं में विजय पाता है और उसे दत्त के अनुग्रह का फल प्राप्त होता है — मैं आनन्दस्वरूप दत्त की शरण लेता हूँ।",
+      "meaningEn": "Whoever recites this Datta-Anandashtakam gains victory in all branches of knowledge and obtains the fruit of Datta's grace — I take refuge in Datta, the embodiment of bliss."
+    }
+  ]
+}

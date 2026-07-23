@@ -57,6 +57,14 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
   surya: backgroundImages.source_gayatri_savitri_sun,
   radha: backgroundImages.deity_krishna_bansuri,
   kartikeya: shivaStrotamImages.shiva,
+  kubera: backgroundImages.source_vishnu_narayana,
+  ganga: shivaStrotamImages.shiva,
+  parvati: backgroundImages.deity_durga_lion,
+  narasimha: backgroundImages.source_vishnu_narayana,
+  dattatreya: shivaStrotamImages.shiva,
+  shani: backgroundImages.source_gayatri_savitri_sun,
+  kali: backgroundImages.deity_durga_lion,
+  navagraha: backgroundImages.source_gayatri_savitri_sun,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
@@ -118,6 +126,14 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'surya-ashtakam': backgroundImages.source_gayatri_savitri_sun,
   radhashtakam: backgroundImages.deity_krishna_bansuri,
   'subrahmanya-ashtakam': shivaStrotamImages.shiva,
+  'kubera-stotram': backgroundImages.source_vishnu_narayana,
+  gangashtakam: shivaStrotamImages.shiva,
+  'bhavani-ashtakam': backgroundImages.deity_durga_lion,
+  'narasimha-ashtakam': backgroundImages.source_vishnu_narayana,
+  'datta-ashtakam': shivaStrotamImages.shiva,
+  'shani-ashtakam': backgroundImages.source_gayatri_savitri_sun,
+  'kalika-ashtakam': backgroundImages.deity_durga_lion,
+  'navagraha-stotram': backgroundImages.source_gayatri_savitri_sun,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {

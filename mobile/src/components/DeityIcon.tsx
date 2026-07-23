@@ -23,6 +23,14 @@ const emojiIcons: Partial<Record<DeityIconKey, string>> = {
   suryadev: '🌞',
   radha: '🌸',
   kartikeya: '🦚',
+  kubera: '💎',
+  ganga: '🌊',
+  parvati: '🌺',
+  narasimha: '🦁',
+  dattatreya: '🕉️',
+  shani: '🪐',
+  kali: '🌑',
+  navagraha: '🌌',
 };
 
 export default function DeityIcon({ iconKey, fallbackText, size = BASE_SIZE }: Props) {
