@@ -1,9 +1,10 @@
 # Aarti Category Smoke Test
 #
-# Verifies the Aarti category and its 8 active sections render correctly.
+# Verifies the Aarti category and its 9 active sections render correctly.
 # Sections: Om Jai Jagdish Hare, Hanuman Ji Ki Aarti, Jai Ganesh Deva,
 #           Om Jai Shiv Omkara, Jai Ambe Gauri, Aarti Kunj Bihari Ki,
-#           Saraswati Mata Ki Aarti, Gayatri Mata Ki Aarti.
+#           Saraswati Mata Ki Aarti, Gayatri Mata Ki Aarti,
+#           Shri Ram Chandra Ji Ki Aarti (reuses the Ram Stuti content).
 #
 # Aartis share AartiReaderScreen (multi-instance, dispatched by route param).
 # Opens Om Jai Jagdish to verify the dispatch resolves correctly.
@@ -17,7 +18,7 @@ appId: host.exp.Exponent
 - tapOn: "Aarti\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 8 sections appear in CategoryList
+# Verify all 9 sections appear in CategoryList
 # (Sankat Mochan Hanumanashtak now lives in the Ashtakam category.)
 - extendedWaitUntil:
     visible: "Om Jai Jagdish Hare\\..*Tap to open\\."
@@ -39,6 +40,14 @@ appId: host.exp.Exponent
 - scrollUntilVisible:
     element:
       text: "Gayatri Mata Ki Aarti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+# Ram's aarti is the last card — it reuses the Ram Stuti content (opens the
+# RamStuti reader), listed here under the Aarti category. NEW badge absorbed by `.*`.
+- scrollUntilVisible:
+    element:
+      text: "Shri Ram Chandra Ji Ki Aarti\\..*Tap to open\\."
     direction: DOWN
     visibilityPercentage: 60
     timeout: 10000

@@ -28,20 +28,52 @@ import {
   gayatriChalisaVerses,
   type GayatriChalisaVerse,
 } from './gayatri-chalisa';
+import {
+  ramChalisaTitleEn,
+  ramChalisaTitleHi,
+  ramChalisaVerses,
+  type RamChalisaVerse,
+} from './ram-chalisa';
+import {
+  krishnaChalisaTitleEn,
+  krishnaChalisaTitleHi,
+  krishnaChalisaVerses,
+  type KrishnaChalisaVerse,
+} from './krishna-chalisa';
+import {
+  vishnuChalisaTitleEn,
+  vishnuChalisaTitleHi,
+  vishnuChalisaVerses,
+  type VishnuChalisaVerse,
+} from './vishnu-chalisa';
+import {
+  saraswatiChalisaTitleEn,
+  saraswatiChalisaTitleHi,
+  saraswatiChalisaVerses,
+  type SaraswatiChalisaVerse,
+} from './saraswati-chalisa';
 
 export type ChalisaId =
   | 'hanuman-chalisa'
   | 'shiv-chalisa'
   | 'durga-chalisa'
   | 'ganesh-chalisa'
-  | 'gayatri-chalisa';
+  | 'gayatri-chalisa'
+  | 'ram-chalisa'
+  | 'krishna-chalisa'
+  | 'vishnu-chalisa'
+  | 'saraswati-chalisa';
 
 export type ChalisaVerse =
   | HanumanChalisaVerse
   | ShivChalisaVerse
   | DurgaChalisaVerse
   | GaneshChalisaVerse
-  | GayatriChalisaVerse;
+  | GayatriChalisaVerse
+  | RamChalisaVerse
+  | KrishnaChalisaVerse
+  | VishnuChalisaVerse
+  | SaraswatiChalisaVerse;
 
 export type ChalisaPayload = {
   id: ChalisaId;
@@ -80,6 +112,30 @@ const registry: Record<ChalisaId, ChalisaPayload> = {
     titleHi: gayatriChalisaTitleHi,
     titleEn: gayatriChalisaTitleEn,
     verses: gayatriChalisaVerses,
+  },
+  'ram-chalisa': {
+    id: 'ram-chalisa',
+    titleHi: ramChalisaTitleHi,
+    titleEn: ramChalisaTitleEn,
+    verses: ramChalisaVerses,
+  },
+  'krishna-chalisa': {
+    id: 'krishna-chalisa',
+    titleHi: krishnaChalisaTitleHi,
+    titleEn: krishnaChalisaTitleEn,
+    verses: krishnaChalisaVerses,
+  },
+  'vishnu-chalisa': {
+    id: 'vishnu-chalisa',
+    titleHi: vishnuChalisaTitleHi,
+    titleEn: vishnuChalisaTitleEn,
+    verses: vishnuChalisaVerses,
+  },
+  'saraswati-chalisa': {
+    id: 'saraswati-chalisa',
+    titleHi: saraswatiChalisaTitleHi,
+    titleEn: saraswatiChalisaTitleEn,
+    verses: saraswatiChalisaVerses,
   },
 };
 

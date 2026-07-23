@@ -365,6 +365,69 @@ assert.ok(
   'Gayatri Chalisa closing doha should be the canonical phala-shruti'
 );
 
+// ─── 10c. Ram / Krishna / Vishnu / Saraswati Chalisa structure & openings ─────
+// The four deity chalisas added to close the per-deity coverage gap. Each is the
+// canonical 40-chaupai form; verse text is verbatim from the sources declared in
+// each file's `source.referenceUrls`.
+
+const NEW_CHALISAS = [
+  {
+    file: 'ram-chalisa/ram-chalisa.json',
+    name: 'Ram Chalisa',
+    total: 43,
+    opening: 'श्री रघुबीर भक्त हितकारी',
+    closing: 'राम चालीसा जो पढ़े',
+  },
+  {
+    file: 'krishna-chalisa/krishna-chalisa.json',
+    name: 'Krishna Chalisa',
+    total: 43,
+    opening: 'जय यदुनंदन जय जगवंदन',
+    closing: 'यह चालीसा कृष्ण का',
+  },
+  {
+    file: 'vishnu-chalisa/vishnu-chalisa.json',
+    name: 'Vishnu Chalisa',
+    total: 41,
+    opening: 'नमो विष्णु भगवान खरारी',
+    closing: null,
+  },
+  {
+    file: 'saraswati-chalisa/saraswati-chalisa.json',
+    name: 'Saraswati Chalisa',
+    total: 43,
+    opening: 'जय श्री सकल बुद्धि बलरासी',
+    closing: 'रामसागर',
+  },
+] as const;
+
+for (const c of NEW_CHALISAS) {
+  const data = readJson(c.file);
+  assert.equal(data.verses.length, c.total, `${c.name} should have ${c.total} verses`);
+  assert.equal(data.verses.length, data.counts.totalVerses, `${c.name} verses.length must match counts.totalVerses`);
+  assert.equal(
+    data.verses.filter((v: any) => v.type === 'chaupai').length,
+    40,
+    `${c.name} should have exactly 40 chaupais`
+  );
+  const first = data.verses.find((v: any) => v.type === 'chaupai' && v.number === 1);
+  assert.ok(first, `${c.name} should have chaupai 1`);
+  assert.ok(
+    first.lines[0].includes(c.opening),
+    `${c.name} chaupai 1 should open with "${c.opening}", got: "${first.lines[0]}"`
+  );
+  if (c.closing) {
+    const closingText = data.verses
+      .filter((v: any) => v.section === 'closing')
+      .flatMap((v: any) => v.lines)
+      .join(' ');
+    assert.ok(
+      closingText.includes(c.closing),
+      `${c.name} closing doha should contain "${c.closing}", got: "${closingText}"`
+    );
+  }
+}
+
 // ─── 10b. Gayatri Mata Aarti canonical structure & refrain ───────────────────
 
 const gayatriAarti = readJson('aarti/gayatri-aarti.json');
@@ -536,6 +599,10 @@ for (const file of [
   'ganesh-chalisa/ganesh-chalisa.json',
   'durga-chalisa/durga-chalisa.json',
   'gayatri-chalisa/gayatri-chalisa.json',
+  'ram-chalisa/ram-chalisa.json',
+  'krishna-chalisa/krishna-chalisa.json',
+  'vishnu-chalisa/vishnu-chalisa.json',
+  'saraswati-chalisa/saraswati-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',

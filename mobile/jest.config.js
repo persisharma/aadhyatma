@@ -14,6 +14,7 @@ module.exports = {
     '<rootDir>/src/components/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/theme/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/notifications/__tests__/**/*.jest.test.{ts,tsx}',
+    '<rootDir>/src/audio/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/data/__tests__/**/*.jest.test.{ts,tsx}',
   ],
   moduleNameMapper: {

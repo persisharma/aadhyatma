@@ -9,6 +9,10 @@ import { shivChalisaCounts } from './shiv-chalisa';
 import { durgaChalisaCounts } from './durga-chalisa';
 import { ganeshChalisaCounts } from './ganesh-chalisa';
 import { gayatriChalisaCounts } from './gayatri-chalisa';
+import { ramChalisaCounts } from './ram-chalisa';
+import { krishnaChalisaCounts } from './krishna-chalisa';
+import { vishnuChalisaCounts } from './vishnu-chalisa';
+import { saraswatiChalisaCounts } from './saraswati-chalisa';
 import { hanumanAshtakTotal } from './hanuman-ashtak';
 import { bajrangBaanTotal } from './bajrang-baan';
 import { ramStutiTotal } from './ram-stuti';
@@ -246,6 +250,58 @@ export const library: readonly LibraryEntry[] = [
     addedInVersion: '1.4.4',
   },
   {
+    id: 'ram-chalisa',
+    nameHi: 'राम चालीसा',
+    nameEn: 'Ram Chalisa',
+    sub: '40 चौपाई + 3 दोहा · अर्थ सहित',
+    subEn: '40 Chaupai + 3 Doha · with meaning',
+    thumb: 'रा',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['rama'],
+    verseCount: ramChalisaCounts.totalVerses,
+    addedInVersion: '1.4.5',
+  },
+  {
+    id: 'krishna-chalisa',
+    nameHi: 'कृष्ण चालीसा',
+    nameEn: 'Krishna Chalisa',
+    sub: '40 चौपाई + 3 दोहा · अर्थ सहित',
+    subEn: '40 Chaupai + 3 Doha · with meaning',
+    thumb: 'कृ',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['krishna'],
+    verseCount: krishnaChalisaCounts.totalVerses,
+    addedInVersion: '1.4.5',
+  },
+  {
+    id: 'vishnu-chalisa',
+    nameHi: 'विष्णु चालीसा',
+    nameEn: 'Vishnu Chalisa',
+    sub: '40 चौपाई + 1 दोहा · अर्थ सहित',
+    subEn: '40 Chaupai + 1 Doha · with meaning',
+    thumb: 'वि',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['vishnu'],
+    verseCount: vishnuChalisaCounts.totalVerses,
+    addedInVersion: '1.4.5',
+  },
+  {
+    id: 'saraswati-chalisa',
+    nameHi: 'सरस्वती चालीसा',
+    nameEn: 'Saraswati Chalisa',
+    sub: '40 चौपाई + 3 दोहा · अर्थ सहित',
+    subEn: '40 Chaupai + 3 Doha · with meaning',
+    thumb: 'सर',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['saraswati'],
+    verseCount: saraswatiChalisaCounts.totalVerses,
+    addedInVersion: '1.4.5',
+  },
+  {
     id: 'hanuman-ashtak',
     nameHi: 'संकटमोचन हनुमानाष्टक',
     nameEn: 'Sankat Mochan Hanuman Ashtak',
@@ -439,6 +495,23 @@ export const library: readonly LibraryEntry[] = [
     deities: ['savitr'],
     verseCount: 12,
     addedInVersion: '1.4.4',
+  },
+  {
+    // Rama's aarti reuses the existing Ram Stuti (श्रीरामचन्द्र कृपालु भजु मन) —
+    // popularly sung as Ram's aarti. This entry lists it under the Aarti
+    // category; routing (entryRoutes.ts) sends it to the RamStuti reader, so the
+    // 9-verse content is shared, not duplicated.
+    id: 'ram-aarti',
+    nameHi: 'श्री राम चंद्र जी की आरती',
+    nameEn: 'Shri Ram Chandra Ji Ki Aarti',
+    sub: `${ramStutiTotal} पद · व्याख्या सहित`,
+    subEn: `${ramStutiTotal} verses · with commentary`,
+    thumb: 'रा',
+    status: 'active',
+    category: 'aarti',
+    deities: ['rama'],
+    verseCount: ramStutiTotal,
+    addedInVersion: '1.4.5',
   },
   {
     id: 'prabhati-shloka',
