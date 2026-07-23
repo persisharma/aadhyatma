@@ -1,0 +1,167 @@
+# Deity Expansion Smoke Test (PRD-A §A.4.2 — 9 → 21 deities)
+#
+# deity-browse-smoke covers the general By-Deity intent on the original nine
+# (Rama/Krishna/Vishnu). This flow covers the July 2026 deity expansion:
+#   1. The Deity Index lists the twelve NEW deity cards (registry order:
+#      Maa Lakshmi, Surya Dev, Radha Rani, Kartikeya, Kubera, Maa Ganga,
+#      Maa Parvati, Narasimha, Dattatreya, Shani Dev, Maa Kali, Navagraha)
+#   2. A new deity opens its deity-filtered list with its starter text
+#      (Shani Dev → Shani Ashtakam) and the text opens in AshtakamReader —
+#      this also guards the entryRoutes registry-derived routing fix (the old
+#      hardcoded ashtakamIds set silently orphaned new ashtakams)
+#   3. A stuti-registry starter text routes too (Navagraha → Navagraha
+#      Stotram via StutiReader) and the language toggle flips to English
+#
+# Selectors: DeityCard a11y label is "<NameEn>. <n> texts.[ New.]" and
+# LibraryCard is "<NameEn>. <sub>.[ New.] Tap to open." — match the NameEn
+# substring via a full-string regex. No pixel coordinates (RULEBOOK §9).
+
+appId: host.exp.Exponent
+---
+# ── Step 1: Boot Vedansh in Expo Go ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Home → By Deity index ──
+- scrollUntilVisible:
+    element:
+      text: "By Deity. Tap to open."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "By Deity. Tap to open."
+- waitForAnimationToEnd
+
+# ── Step 3: All twelve expansion deity cards render (registry order; scroll) ──
+- scrollUntilVisible:
+    element:
+      text: "Maa Lakshmi\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Surya Dev\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Radha Rani\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Kartikeya\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Kubera\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Maa Ganga\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Maa Parvati\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Narasimha\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Dattatreya\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Shani Dev\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Maa Kali\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Navagraha\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+
+# ── Step 4: Shani Dev → Shani Ashtakam opens in AshtakamReader ──
+- scrollUntilVisible:
+    element:
+      text: "Shani Dev\\..*"
+    direction: UP
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Shani Dev\\..*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Shani Ashtakam\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Shani Ashtakam\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss the Resume sheet if a prior session left progress
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    id: "lang-toggle-en"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Shani Ashtakam"
+    timeout: 15000
+# Back out to the deity list, then the deity index
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Step 5: Navagraha → Navagraha Stotram opens in StutiReader ──
+- scrollUntilVisible:
+    element:
+      text: "Navagraha\\..*"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Navagraha\\..*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Navagraha Stotram\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Navagraha Stotram\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    id: "lang-toggle-en"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Navagraha Stotram"
+    timeout: 15000
+
+# ── Cleanup ──
+- stopApp:
+    appId: host.exp.Exponent
