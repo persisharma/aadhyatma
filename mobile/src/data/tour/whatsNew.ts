@@ -26,13 +26,26 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.4.4';
+export const APP_TOUR_VERSION = '1.4.5';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.4.5': {
+    version: '1.4.5',
+    items: [
+      {
+        titleHi: 'बेहतर ऐप टूर एवं पंचांग',
+        titleEn: 'Smoother app tour & Panchang',
+        bodyHi:
+          'गाइडेड ऐप टूर अब हर सुविधा को सही जगह पर हाइलाइट करता है, और पंचांग का दैनिक मुहूर्त कार्ड बिना अटके तुरंत दिखता है।',
+        bodyEn:
+          'The guided app tour now highlights each feature in the right spot, and the Panchang Daily Muhurat card appears instantly without a jump.',
+      },
+    ],
+  },
   '1.4.4': {
     version: '1.4.4',
     items: [
