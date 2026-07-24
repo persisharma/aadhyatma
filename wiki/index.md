@@ -17,6 +17,7 @@
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
+- [[deity-icons]] — deity avatar glyph system: 21 hand-drawn View-composition glyphs (`deityGlyphs/` total registry), baked palette, 36 dp canvas/scaling contract, no-emoji rule.
 
 ## Entities
 _(none yet — add per-model pages as they warrant)_
