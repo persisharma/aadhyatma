@@ -90,7 +90,8 @@ describe('MiniPlayer', () => {
   test('shows a deity glyph thumbnail plus the title when a track is loaded', () => {
     mockUse.mockReturnValue(baseState());
     const tree = render();
-    expect(textOf(tree)).toContain('🏹'); // rama → bowArrow emoji
+    // rama → bowArrow → hand-drawn glyph
+    expect(tree.root.findAllByProps({ testID: 'deity-glyph-bowArrow' }).length).toBeGreaterThan(0);
     expect(textOf(tree)).toContain('हरे राम');
   });
 });
