@@ -47,7 +47,7 @@
 # No pixel coordinates — the shared launch flow dismisses Expo Go's native
 # dev-menu sheet after config.yaml exposes the RN tree behind it.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
 - runFlow: _launch.yaml
@@ -177,4 +177,4 @@ appId: host.exp.Exponent
 
 # ── Cleanup — Expo Go termination resets navigation for the next flow ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

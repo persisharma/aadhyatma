@@ -19,7 +19,7 @@
 #     "Vrat and Parv", not the visible "Vrat & Parv" text.
 #   - ObservanceList's back button exposes "Back" (English mode).
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 

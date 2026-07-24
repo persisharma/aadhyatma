@@ -1,0 +1,59 @@
+# Bhajan Audio Playback Smoke Test (audio subsystem — PR #186/#212)
+#
+# Closes the audio-playback e2e gap: AudioLibraryScreen, MiniPlayer and
+# NowPlayingScreen shipped with unit tests only. Audio needs a native module
+# (expo-av), so this runs on the NATIVE build, not Expo Go.
+#
+# Path: Home → Bhajan tab → Bhajans & Aartis → play "Govinda Hari Govinda"
+# (a #212 track) → MiniPlayer appears → pause/play → open NowPlaying → header +
+# title + pause/play → minimize → stop & close.
+#
+# Selectors use accessibilityLabels, which are English regardless of reading
+# language: TrackCard = "Play <titleEn>. <kind>."; MiniPlayer body =
+# "Now playing: <titleEn>. Open player."; play/pause = "Play"/"Pause".
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# Open the Bhajan (audio library) tab.
+- tapOn: "Bhajan, tab.*"
+- waitForAnimationToEnd
+- assertVisible: "Bhajans & Aartis"
+
+# Start a #212 library track. TrackCard a11y label is "Play <titleEn>. <kind>."
+- scrollUntilVisible:
+    element:
+      text: ".*Play Govinda Hari Govinda.*"
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- tapOn: ".*Play Govinda Hari Govinda.*"
+- waitForAnimationToEnd
+
+# MiniPlayer floats in once playback starts.
+- extendedWaitUntil:
+    visible: ".*Now playing: Govinda Hari Govinda.*Open player.*"
+    timeout: 15000
+# Toggle pause then play from the mini-player (labels flip with state).
+- tapOn: "Pause"
+- waitForAnimationToEnd
+- tapOn: "Play"
+- waitForAnimationToEnd
+
+# Expand into the full NowPlaying surface.
+- tapOn: ".*Now playing: Govinda Hari Govinda.*Open player.*"
+- waitForAnimationToEnd:
+    timeout: 15000
+- assertVisible: "Now Playing"
+- assertVisible: ".*Govinda Hari Govinda.*"
+# Pause/play from the big transport control.
+- tapOn: "Pause"
+- waitForAnimationToEnd
+- tapOn: "Play"
+- waitForAnimationToEnd
+
+# Collapse the player, then stop + close to leave clean state.
+- tapOn: "Minimize player"
+- waitForAnimationToEnd
+- tapOn: "Stop and close player"
+- waitForAnimationToEnd

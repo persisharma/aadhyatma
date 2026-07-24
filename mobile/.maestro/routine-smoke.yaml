@@ -44,7 +44,7 @@
 # PRECONDITION: no routine exists yet (fresh install / clean slate). The flow
 # deletes the routine it creates at the end, so back-to-back runs stay clean.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
 - runFlow: _launch.yaml
@@ -123,7 +123,7 @@ appId: host.exp.Exponent
     direction: DOWN
     centerElement: true
     waitToSettleTimeoutMs: 600
-    timeout: 25000
+    timeout: 60000
 - tapOn: "Add Hanuman Chalisa"
 - waitForAnimationToEnd
 # "Done" sits below the full library list (~30 rows; iOS virtualizes the
@@ -135,7 +135,7 @@ appId: host.exp.Exponent
     direction: DOWN
     centerElement: true
     waitToSettleTimeoutMs: 600
-    timeout: 25000
+    timeout: 60000
 - tapOn: "Done"
 - waitForAnimationToEnd:
     timeout: 15000
@@ -193,4 +193,4 @@ appId: host.exp.Exponent
 
 # ── Cleanup — Expo Go termination resets navigation for the next flow ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

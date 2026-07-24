@@ -6,7 +6,7 @@
 #
 # English first so chapter cards read "Chapter N. …" (see gita-smoke).
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
@@ -79,4 +79,4 @@ appId: host.exp.Exponent
 - tapOn: "Jump to beginning"
 - waitForAnimationToEnd
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

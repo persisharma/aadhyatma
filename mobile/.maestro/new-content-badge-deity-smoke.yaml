@@ -15,7 +15,7 @@
 # Tapping a library card fires markSeen(id) before navigating, so tap + "Back"
 # (every reader/chapters screen exposes accessibilityLabel "Back") marks it seen.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Setup: force a clean slate, then simulate an update ──
 - runFlow: _launch.yaml
@@ -86,4 +86,4 @@ appId: host.exp.Exponent
     id: "dev-reset-new-content"
 - waitForAnimationToEnd
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

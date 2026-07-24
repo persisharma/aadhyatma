@@ -27,7 +27,7 @@
 #   • The transliterated strings are deterministic and pinned by
 #     src/utils/__tests__/transliterate.test.ts.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
@@ -77,4 +77,4 @@ appId: host.exp.Exponent
 - assertVisible: "हनुमान चालीसा"
 
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

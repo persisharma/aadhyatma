@@ -7,7 +7,7 @@
 # straight to a reader. This flow opens Sundarkand to keep the verify path
 # simple (no chapter selection).
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
@@ -39,4 +39,4 @@ appId: host.exp.Exponent
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

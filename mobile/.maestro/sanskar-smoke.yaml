@@ -17,7 +17,7 @@
 # No pixel coordinates — modal-sheet visibility handled by config.yaml's
 # snapshotKeyHonorModalViews: false.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot Vedansh in Expo Go ──
 - runFlow: _launch.yaml
@@ -98,7 +98,7 @@ appId: host.exp.Exponent
 # ── Step 6: Restart and verify Surya Namaskar step indicator ──
 # Reopens fresh because the reader's nav stack is already deep.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 - tapOn: "Good Habits\\..*Tap to open\\."
 - waitForAnimationToEnd
@@ -128,4 +128,4 @@ appId: host.exp.Exponent
 
 # ── Cleanup ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh
