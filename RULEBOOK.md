@@ -498,10 +498,10 @@ Intent-driven discovery is metadata over bundled content, not new scripture text
 
 ### 13.2 Golden accuracy contract
 
-- Golden fixtures live in `panchang/__tests__/fixtures/kundali-swiss-ephemeris.json` and record independent Swiss Ephemeris version, Lahiri mode, UTC instant, coordinates, elevation, ayanamsa, Lagna, and all nine graha longitudes.
-- Every fixture must hold angular error to ≤0.10° for grahas, ≤0.15° for Lagna, and ≤0.03° for ayanamsa. Rahu/Ketu opposition, all 12 whole-sign houses, rashi/nakshatra/pada bounds, and retrograde flags require invariants.
+- The three hand-picked goldens live in `panchang/__tests__/fixtures/kundali-swiss-ephemeris.json`. Broad coverage lives in `kundali-swiss-ephemeris-150.json`: a reproducible 15-city × 10-instant matrix generated only by `scripts/generate-kundali-swiss-corpus.py` from pinned official Swiss Ephemeris 2.10.03 files, `SIDM_LAHIRI`, and `calc_ut`.
+- The 150-case corpus holds angular error to ≤0.012° for grahas and Lagna and ≤0.005° for ayanamsa; rashi, nakshatra, pada, whole-sign house, retrograde state, first Mahadasha lord, and birth Antardasha lord require exact equality. The independently derived first-Mahadasha boundary may differ by ≤5 days because a sub-0.01° Moon delta is amplified across a multi-year balance; the test must prove that delta is explained by the Moon delta to within one minute.
 - Vimshottari uses the Moon's 27-nakshatra position, the canonical `Ketu → Venus → Sun → Moon → Mars → Rahu → Jupiter → Saturn → Mercury` order, a 120-year cycle, proportional balance at birth, and contiguous Mahadasha/Antardasha intervals.
-- Any deliberate ephemeris/ayanamsa/Dasha-policy change requires regenerating documented independent fixtures and calling out the change in release notes; never silently update expected numbers to match implementation.
+- Full method and measured maxima are recorded in `panchang/KUNDALI_VERIFICATION.md`. Any deliberate ephemeris/ayanamsa/Dasha-policy change requires regenerating the independent corpus and calling out the change in release notes; never silently update expected numbers or widen tolerances to match implementation.
 
 ### 13.3 Interpretation and safety
 
