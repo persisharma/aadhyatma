@@ -5,14 +5,20 @@
 # overview → chart/grahas/dasha → Daily Rashifal.
 #
 # Prerequisite: install the native debug app on the target simulator with
-# `npx expo run:ios --device <UDID> --port <isolated-port>`. This flow launches
-# the real app bundle directly; it never opens Expo Go.
+# `npx expo run:ios --device <UDID> --port 8084`. This flow launches the real
+# app bundle and connects that development build to this worktree's Metro; it
+# never opens Expo Go.
 
 appId: com.prashantsharma.vedansh
 ---
 - launchApp:
     appId: com.prashantsharma.vedansh
     clearState: true
+- openLink:
+    link: "com.prashantsharma.vedansh://expo-development-client/?url=http%3A%2F%2F127.0.0.1%3A8084"
+- tapOn:
+    text: "Open"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 30000
 - tapOn:

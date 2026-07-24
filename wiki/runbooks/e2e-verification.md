@@ -90,7 +90,10 @@ Use this when a flow declares `appId: com.prashantsharma.vedansh`:
    `xcrun simctl listapps <UDID> | grep com.prashantsharma.vedansh`.
 4. Run
    `maestro --device <UDID> test .maestro/kundali-smoke.yaml`.
-   The flow clears only this app's simulator state before launch and never touches Expo Go.
+   The flow clears only this app's simulator state, reconnects the native development build to
+   this worktree's Metro on port 8084, and never touches Expo Go. The explicit development-client
+   link and its iOS `Open` confirmation are required after `clearState`; otherwise Expo may reopen
+   a stale project URL.
 
 ## Gotchas
 
