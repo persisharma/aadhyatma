@@ -1,0 +1,71 @@
+# Intent Discovery Smoke Test
+#
+# PRD-B path: Home → By Purpose → Protection → Rama Raksha Stotra → reader.
+# Verifies the purpose grid, cross-deity purpose list, route dispatch, and the
+# first-page-only "When to Recite" panel.
+
+appId: host.exp.Exponent
+---
+- stopApp:
+    appId: host.exp.Exponent
+- openLink:
+    link: "exp://127.0.0.1:8081"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
+- swipe:
+    direction: DOWN
+- waitForAnimationToEnd
+
+# ── Home → Browse by Purpose ──
+- scrollUntilVisible:
+    element:
+      text: "By Purpose. Tap to open."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "By Purpose. Tap to open."
+- waitForAnimationToEnd
+
+# ── Purpose grid renders bilingual intent tiles ──
+- extendedWaitUntil:
+    visible: "Protection. Tap to open."
+    timeout: 15000
+- assertVisible: "Wealth. Tap to open."
+- assertVisible: "Knowledge. Tap to open."
+
+# ── Protection list shows tagged texts across deities ──
+- tapOn: "Protection. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Rama Raksha Stotra.*Tap to open\\."
+    timeout: 15000
+- assertVisible: "Durga Kavach.*Tap to open\\."
+
+# ── Open a tagged text and verify the first-page metadata panel ──
+- tapOn: "Rama Raksha Stotra.*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*When to Recite.*"
+    timeout: 15000
+- assertVisible: ".*Best Days.*"
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+- stopApp:
+    appId: host.exp.Exponent

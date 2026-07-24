@@ -54,6 +54,23 @@ async function renderWithProvider(entry: LibraryEntry): Promise<TestRenderer.Rea
   return tree;
 }
 
+async function renderCompactEnglish(entry: LibraryEntry): Promise<TestRenderer.ReactTestRenderer> {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NewContentProvider>
+          <LibraryCard entry={entry} variant="compact" onPress={() => undefined} />
+        </NewContentProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  await act(async () => {
+    for (let i = 0; i < 5; i++) await Promise.resolve();
+  });
+  return tree;
+}
+
 beforeEach(() => {
   mockStore = {};
   jest.clearAllMocks();
@@ -87,5 +104,14 @@ describe('LibraryCard NEW badge (integration with NewContentProvider)', () => {
     );
     expect(labelled.length).toBeGreaterThan(0);
     expect(labelled[0].props.accessibilityLabel).toMatch(/New\./);
+  });
+
+  test('compact card renders only the primary language title', async () => {
+    const tree = await renderCompactEnglish(hanuman);
+    const text = textOf(tree);
+    expect(text).toMatch(/Hanuman Chalisa/);
+    expect(text).not.toMatch(/हनुमान चालीसा/);
+    expect(text).not.toMatch(/40 Chaupai/);
+    expect(text).not.toMatch(/with meaning/);
   });
 });

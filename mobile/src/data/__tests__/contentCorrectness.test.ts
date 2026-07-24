@@ -9,6 +9,14 @@ import { join } from 'node:path';
 import { library } from '../texts';
 import { deities } from '../deities';
 import { categories } from '../categories';
+import { purposes } from '../purposes';
+import {
+  discoveryMeta,
+  getTodayRecommendationsForDate,
+  textsForPurpose,
+} from '../discoveryMeta';
+import { deityEssays } from '../deityEssays';
+import { getRuleById } from '../../panchang/vratCatalog';
 
 const DATA = join(__dirname, '..');
 const TRANSLATIONS = join(DATA, '..', '..', '.translations');
@@ -709,6 +717,55 @@ assert.ok(
   activeKavacham.length >= 1,
   'kavacham category is active, so it must have ≥1 active library entry'
 );
+
+// ─── 19. PRD-B: intent discovery metadata is complete and source-cited ─────
+const activeLibraryIds = new Set(
+  library.filter((e) => e.status === 'active' && !e.hidden).map((e) => e.id)
+);
+const purposeIds = new Set(purposes.map((p) => p.id));
+assert.ok(purposes.length >= 12, 'PRD-B should ship a meaningful purpose taxonomy');
+
+for (const purpose of purposes) {
+  assert.ok(purpose.nameHi.trim(), `${purpose.id}: nameHi should be present`);
+  assert.ok(purpose.nameEn.trim(), `${purpose.id}: nameEn should be present`);
+  assert.ok(purpose.iconKey.trim(), `${purpose.id}: iconKey should be present`);
+  assert.match(
+    purpose.iconKey,
+    /^purpose-/,
+    `${purpose.id}: iconKey should use a purpose-specific glyph`
+  );
+  assert.ok(
+    textsForPurpose(purpose.id).length >= 1,
+    `${purpose.id}: every shipped purpose must have at least one active text`
+  );
+}
+
+for (const [textId, meta] of Object.entries(discoveryMeta)) {
+  assert.ok(activeLibraryIds.has(textId), `${textId}: discoveryMeta key must be an active library id`);
+  assert.ok(meta.source?.trim(), `${textId}: discovery associations must carry a source line`);
+  for (const purposeId of meta.purposes ?? []) {
+    assert.ok(purposeIds.has(purposeId), `${textId}: unknown purpose ${purposeId}`);
+  }
+  for (const day of meta.bestDays ?? []) {
+    assert.ok(Number.isInteger(day) && day >= 0 && day <= 6, `${textId}: invalid bestDays value ${day}`);
+  }
+  for (const festivalId of meta.bestFestivals ?? []) {
+    assert.ok(getRuleById(festivalId), `${textId}: unknown bestFestivals id ${festivalId}`);
+  }
+}
+
+// Tuesday recommendation should surface Hanuman content through the existing
+// vaar deity map, without a new date engine.
+const tuesday = new Date(2026, 6, 14);
+const tuesdayIds = getTodayRecommendationsForDate(tuesday).map((entry) => entry.id);
+assert.ok(tuesdayIds.includes('hanuman-chalisa'), 'Tuesday recommendations should include Hanuman Chalisa');
+
+for (const [deityId, essay] of Object.entries(deityEssays)) {
+  assert.ok(deities.some((d) => d.id === deityId), `${deityId}: deity essay key must be a valid deity`);
+  assert.ok(essay.titleHi.trim() && essay.titleEn.trim(), `${deityId}: essay titles should be present`);
+  assert.ok(essay.bodyHi.trim() && essay.bodyEn.trim(), `${deityId}: essay bodies should be present`);
+  assert.ok(essay.source.trim(), `${deityId}: deity essay should carry a source line`);
+}
 
 // ─── Done ────────────────────────────────────────────────────────────────────
 

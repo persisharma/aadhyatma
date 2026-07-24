@@ -27,18 +27,24 @@ export default function ReminderOptInModal() {
   const [visible, setVisible] = useState(false);
   const [chosenTime, setChosenTime] = useState(prefs.times[0]);
   const [busy, setBusy] = useState(false);
+  const [dismissedThisSession, setDismissedThisSession] = useState(false);
 
   // Sync visible when the gate flips on; reset chosenTime when we open.
   useEffect(() => {
-    if (shouldShowOptIn && !visible) {
+    if (!shouldShowOptIn) {
+      setDismissedThisSession(false);
+      return;
+    }
+    if (!visible && !dismissedThisSession) {
       setChosenTime(prefs.times[0]);
       setVisible(true);
     }
-  }, [shouldShowOptIn, visible, prefs.times]);
+  }, [shouldShowOptIn, visible, dismissedThisSession, prefs.times]);
 
-  const close = useCallback(async () => {
+  const close = useCallback(() => {
+    setDismissedThisSession(true);
     setVisible(false);
-    await markOptInPromptShown();
+    void markOptInPromptShown();
   }, [markOptInPromptShown]);
 
   const onEnable = useCallback(async () => {
@@ -49,8 +55,9 @@ export default function ReminderOptInModal() {
       await setDailyVerseEnabled(true);
     } finally {
       setBusy(false);
-      await markOptInPromptShown();
+      setDismissedThisSession(true);
       setVisible(false);
+      void markOptInPromptShown();
     }
   }, [busy, chosenTime, setTimes, setDailyVerseEnabled, markOptInPromptShown]);
 

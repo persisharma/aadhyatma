@@ -88,3 +88,49 @@ test('renders the first Hanuman Chalisa verse without throwing', () => {
   assert.ok(renderedText.includes(chalisa.titleHi));
   assert.ok(renderedText.includes(firstVerse.lines[0]));
 });
+
+test('renders When to Recite panel only on the first verse page', () => {
+  let firstTree: TestRenderer.ReactTestRenderer | undefined;
+
+  act(() => {
+    firstTree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <ShareProvider>
+          <ChalisaReaderScreen navigation={navigation} route={route} />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+
+  const firstText = firstTree!
+    .root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+
+  assert.ok(firstText.includes('When to Recite'));
+  assert.ok(firstText.includes('Best Days'));
+
+  let secondTree: TestRenderer.ReactTestRenderer | undefined;
+  act(() => {
+    secondTree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <ShareProvider>
+          <ChalisaReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { chalisaId: 'hanuman-chalisa', initialIndex: 1 } }}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+
+  const secondText = secondTree!
+    .root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+
+  assert.ok(!secondText.includes('When to Recite'));
+  assert.ok(!secondText.includes('Best Days'));
+});

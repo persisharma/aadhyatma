@@ -2,10 +2,12 @@ import React from 'react';
 import {
   Pressable,
   StyleSheet,
+  type StyleProp,
   Text,
   View,
   type AccessibilityRole,
   type AccessibilityState,
+  type ViewStyle,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
@@ -18,9 +20,11 @@ import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 type Props = {
   entry: LibraryEntry;
   onPress?: () => void;
+  style?: StyleProp<ViewStyle>;
+  variant?: 'default' | 'compact';
 };
 
-export default function LibraryCard({ entry, onPress }: Props) {
+export default function LibraryCard({ entry, onPress, style, variant = 'default' }: Props) {
   const { colors, typography, radii } = useTheme();
   const { isNew } = useNewContent();
   const { openAddToRoutine } = useRoutineSheet();
@@ -31,6 +35,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
     latPrimary: 19,
     latSecondary: 12,
   });
+  const compact = variant === 'compact';
   const isActive = entry.status === 'active';
   const showNew = isActive && isNew(entry.id);
   const sub = lang === 'en' ? entry.subEn : entry.sub;
@@ -46,7 +51,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
           colors={[colors.cardThumbActiveFrom, colors.cardThumbActiveTo]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={[styles.thumb, { borderRadius: radii.md }]}
+          style={[styles.thumb, compact && styles.thumbCompact, { borderRadius: radii.md }]}
         >
           <Text
             style={[
@@ -65,6 +70,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
         <View
           style={[
             styles.thumb,
+            compact && styles.thumbCompact,
             {
               backgroundColor: colors.cardThumbRest,
               borderRadius: radii.md,
@@ -102,31 +108,36 @@ export default function LibraryCard({ entry, onPress }: Props) {
               opacity: isActive ? 1 : 0.55,
             },
           ]}
+          numberOfLines={compact ? 2 : undefined}
         >
           {primary.text}
         </Text>
-        <Text
-          style={[
-            styles.nameEn,
-            {
-              color: colors.inkMuted,
-              fontFamily: secondary.fontFamily,
-              fontSize: secondary.fontSize,
-              fontStyle: secondary.fontStyle,
-              opacity: isActive ? 1 : 0.55,
-            },
-          ]}
-        >
-          {secondary.text}
-        </Text>
-        <Text
-          style={[
-            styles.cardSub,
-            { color: colors.inkMuted, fontSize: typography.cardMeta.fontSize },
-          ]}
-        >
-          {sub}
-        </Text>
+        {!compact && (
+          <Text
+            style={[
+              styles.nameEn,
+              {
+                color: colors.inkMuted,
+                fontFamily: secondary.fontFamily,
+                fontSize: secondary.fontSize,
+                fontStyle: secondary.fontStyle,
+                opacity: isActive ? 1 : 0.55,
+              },
+            ]}
+          >
+            {secondary.text}
+          </Text>
+        )}
+        {!compact && (
+          <Text
+            style={[
+              styles.cardSub,
+              { color: colors.inkMuted, fontSize: typography.cardMeta.fontSize },
+            ]}
+          >
+            {sub}
+          </Text>
+        )}
       </View>
 
       {isActive ? (
@@ -185,6 +196,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
 
   const cardStyle = [
     styles.card,
+    compact && styles.cardCompact,
     { borderRadius: radii.lg },
     isActive
       ? {
@@ -212,7 +224,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
     return (
       <Pressable
         onPress={onPress}
-        style={({ pressed }) => [cardStyle, pressed && styles.cardPressed]}
+        style={({ pressed }) => [cardStyle, style, pressed && styles.cardPressed]}
         accessibilityRole={accessibilityRole}
         accessibilityLabel={accessibilityLabel}
         accessibilityState={accessibilityState}
@@ -230,7 +242,7 @@ export default function LibraryCard({ entry, onPress }: Props) {
 
   return (
     <View
-      style={cardStyle}
+      style={[cardStyle, style]}
       accessibilityLabel={accessibilityLabel}
       accessibilityState={accessibilityState}
     >
@@ -248,6 +260,10 @@ const styles = StyleSheet.create({
     gap: 14,
     overflow: 'hidden',
   },
+  cardCompact: {
+    padding: 14,
+    gap: 12,
+  },
   cardBg: {
     ...StyleSheet.absoluteFillObject,
   },
@@ -259,6 +275,10 @@ const styles = StyleSheet.create({
     height: 52,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  thumbCompact: {
+    width: 44,
+    height: 44,
   },
   thumbText: {
     // Devanagari letter avatar (ग / ॐ …) — keep Android's font padding so the

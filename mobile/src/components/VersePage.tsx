@@ -11,6 +11,7 @@ import {
 } from '@/utils/localize';
 import { verseToken, meaningToken, scriptTitleFont, pillTextStyle } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
+import { getDiscoveryMeta } from '@/data/discoveryMeta';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
 
@@ -33,9 +34,11 @@ type Props = {
   width: number;
   /** Per-verse actions (bookmark/share) rendered in the page header beside the pill. */
   topActions?: React.ReactNode;
+  /** Extra content rendered below the meaning, used only for first-page reader metadata. */
+  belowContent?: React.ReactNode;
 };
 
-export default function VersePage({ verse, sourceId, width, topActions }: Props) {
+export default function VersePage({ verse, sourceId, width, topActions, belowContent }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
@@ -58,7 +61,16 @@ export default function VersePage({ verse, sourceId, width, topActions }: Props)
     lineHeight: meaningTok.lineHeight,
   } as const;
 
-  const a11yLabel = [pillText, ...verseLines, meaningLabel, meaning].join('. ');
+  const discoveryMeta = belowContent ? getDiscoveryMeta(sourceId) : null;
+  const discoveryA11y = discoveryMeta
+    ? [
+        contentByLang(lang, 'कब पाठ करें', 'When to Recite'),
+        discoveryMeta.bestDays?.length ? contentByLang(lang, 'श्रेष्ठ दिन', 'Best Days') : null,
+        discoveryMeta.bestTime ? contentByLang(lang, 'समय', 'Best Time') : null,
+        discoveryMeta.viniyog ? contentByLang(lang, 'विनियोग', 'Viniyog') : null,
+      ].filter(Boolean)
+    : [];
+  const a11yLabel = [pillText, ...verseLines, meaningLabel, meaning, ...discoveryA11y].join('. ');
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
@@ -130,6 +142,7 @@ export default function VersePage({ verse, sourceId, width, topActions }: Props)
           {meaningLabel}
         </Text>
         <Text style={[styles.body, bodyStyle]}>{meaning}</Text>
+        {belowContent}
       </ScrollView>
     </View>
   );

@@ -593,21 +593,22 @@ When building new components, pull tokens from the theme — never hard-code a h
 1. Status bar area (safe region)
 2. Hero block: the **Home wordmark lockup** (Section 5) — `ॐ वेदांश़ ॐ` on one row over the "Sacred Texts · Daily Reading" tagline. (Earlier revisions stacked a crest above a 34px title; the lockup is the compact replacement.)
 3. **आज · Today strip** (§48) — a one-card daily-panchang glance (vara + tithi headline, one horizontal-scroll row of observance / Abhijit / Rahu Kaal chips). Tap → Panchang tab.
-4. **Routine banner** (§30), **inline** (not docked) on Home — the नित्य साधना nudge / progress / complete chip, sitting directly under the Today strip (16px gap each side). It moved out of the bottom overlay (July 2026) so it no longer floats over — and clips — the DISCOVER carousel; the "today" cluster (panchang → today's practice) now reads as one block above the library. Still **docked** above the tab bar on Daily Bhakti (§21).
-5. Section label "CATEGORIES" (Inter 11, uppercase, ink-muted, 0.22em tracking)
-6. **Category grid** (3-column launcher layout, wraps as tiles are added):
-   - **Rank = usefulness + app-USP first** (July 2026). `categories.ts` array order drives the grid; the sequence is **चालीसा · आरती · स्तोत्रम् · ग्रन्थ · जप** (daily-recite + flagship read + the Japa mala-counter USP) → **संस्कार · तीर्थ** (habit/browse USPs) → the thin PRD-A parity forms **कवच · अष्टकम् · सूक्तम्** last (2–4 texts each; their NEW badges handle discovery). (**स्तुति is not a tile** — its texts fold into `stotram`, §41.) The grid **interleaves two non-content tiles** at ranked spots: **व्रत · Vrat & Parv** right after जप (opens the Panchang tab's `ObservanceList` vrat catalog via `panchangTabTarget()` — the `entryRoutes.ts` helper carrying `initial: false` so a lazily-mounted Panchang tab keeps its calendar as the initial route; PRD-09 — a grid door, **not** a `ContentCategory`; content lives in the observance engine, not the library), and **देवता · By Deity** after तीर्थ (opens `DeityIndexScreen`). HomeScreen anchors these two by id (after `japam` / `theerth`), not by index, so reordering categories keeps them in place.
-   - **12 tiles total** (10 content categories + व्रत + देवता) → a unified **4×3** grid (स्तुति folded into `stotram`, July 2026). Any `coming` tile renders inline at its registry position as a dimmed, non-interactive "SOON" launcher (Section 19). As more PRD-A forms (e.g. सहस्रनाम) land the grid keeps growing down; it is no longer a fixed square.
+4. **आज के लिए · For Today recommendations** (§50) — a compact horizontal row of `LibraryCard`s chosen from today's vaar deity and active festival metadata. This keeps PRD-B's By-Day/By-Festival surfacing on Home without adding another calendar engine.
+5. **Routine banner** (§30), **inline** (not docked) on Home — the नित्य साधना nudge / progress / complete chip, sitting directly under the Today strip / recommendations cluster (16px gap each side). It moved out of the bottom overlay (July 2026) so it no longer floats over — and clips — the DISCOVER carousel; the "today" cluster (panchang → today's recommendations → today's practice) now reads as one block above the library. Still **docked** above the tab bar on Daily Bhakti (§21).
+6. Section label "CATEGORIES" (Inter 11, uppercase, ink-muted, 0.22em tracking)
+7. **Category grid** (3-column launcher layout, wraps as tiles are added):
+   - **Rank = usefulness + app-USP first** (July 2026). `categories.ts` array order drives the grid; the sequence is **चालीसा · आरती · स्तोत्रम् · ग्रन्थ · जप** (daily-recite + flagship read + the Japa mala-counter USP) → **संस्कार · तीर्थ** (habit/browse USPs) → the thin PRD-A parity forms **कवच · अष्टकम् · सूक्तम्** last (2–4 texts each; their NEW badges handle discovery). (**स्तुति is not a tile** — its texts fold into `stotram`, §41.) The grid **interleaves three non-content tiles** at ranked spots: **व्रत · Vrat & Parv** right after जप (opens the Panchang tab's `ObservanceList` vrat catalog via `panchangTabTarget()` — the `entryRoutes.ts` helper carrying `initial: false` so a lazily-mounted Panchang tab keeps its calendar as the initial route; PRD-09 — a grid door, **not** a `ContentCategory`; content lives in the observance engine, not the library), plus **देवता · By Deity** and **उद्देश्य · By Purpose** after तीर्थ. By Deity opens `DeityIndexScreen`; By Purpose opens `BrowseByPurposeScreen` (§50). HomeScreen anchors these by id (after `japam` / `theerth`), not by index, so reordering categories keeps them in place.
+   - **13 tiles total** (10 content categories + व्रत + देवता + उद्देश्य), flowing as a 3-column launcher grid. Any `coming` tile renders inline at its registry position as a dimmed, non-interactive "SOON" launcher (Section 19). As more PRD-A forms (e.g. सहस्रनाम) land the grid keeps growing down; it is no longer a fixed square.
    - Gap: **10px** between tiles, **24px** side padding (`spacing.xxl`, the Home page gutter); tile width = a third of the remaining row
-   - Tap → CategoryList for that category (तीर्थ opens the Theerth browse surface, §26; व्रत opens the vrat catalog; देवता opens the Deity Index)
+   - Tap → CategoryList for that category (तीर्थ opens the Theerth browse surface, §26; व्रत opens the vrat catalog; देवता opens the Deity Index; उद्देश्य opens Browse by Purpose)
    - Tile spec: the **launcher variant**, Section 19
-7. Section label "DISCOVER" + **Feature Spotlight carousel** (§32) — a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Sankalp, Pilgrimage — the Panchang card was retired when the Today strip took over that surface). Moved *below* the grid: the prime slot now belongs to today-relevant content; the carousel keeps its per-open shuffle one swipe down.
-8. Footer mantra (Section 7 — token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
-9. **Floating search button** (`SearchFloatingButton`) docked bottom-right → opens the Search screen. Uses its default `spacing.xl` bottom offset now that the routine banner no longer docks at Home's bottom (it used to pass a banner-clearing offset). (The old Help floating button/modal never shipped.)
+8. Section label "DISCOVER" + **Feature Spotlight carousel** (§32) — a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Sankalp, Pilgrimage — the Panchang card was retired when the Today strip took over that surface). Moved *below* the grid: the prime slot now belongs to today-relevant content; the carousel keeps its per-open shuffle one swipe down.
+9. Footer mantra (Section 7 — token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
+10. **Floating search button** (`SearchFloatingButton`) docked bottom-right → opens the Search screen. Uses its default `spacing.xl` bottom offset now that the routine banner no longer docks at Home's bottom (it used to pass a banner-clearing offset). (The old Help floating button/modal never shipped.)
 
 (A **Continue-reading card** briefly sat between the grid and DISCOVER — retired July 2026, §49.)
 
-There is **no deity chip row on Home** — deity browsing lives in the Deity Index screen (§20).
+There is **no deity chip row on Home** — deity browsing lives in the Deity Index screen (§20), and intent browsing lives behind the By Purpose tile (§50).
 
 **Why today-first:** a July 2026 competitive review found the previous Home never changed between visits (hero + DISCOVER carousel + 2-column catalog grid) — nothing on it answered "what matters today". The Today strip and the compact launcher put today's panchang state and the top-ranked sections inside the first viewport.
 
@@ -659,7 +660,7 @@ Two status variants — `active` (has content) and `coming` (placeholder) — an
 
 ## 20. Component: Deity Chip
 
-> **Superseded.** The circular deity chip row never survived past the Home redesign. Deity browsing now lives in the **Deity Index screen** (`DeityIndexScreen.tsx`, reached from the देवता tile in the Home grid): all deities from `deities.ts` (thirteen, growing per PRD-A §A.4.2) render as full-width `DeityCard` rows, each carrying a `DeityIcon` attribute vector (bow-and-arrow for Rama, bansuri for Krishna, trishul for Shiva, …), over a randomly-picked deity background plate (`getRandomDeityBackground`, stable per mount). Tapping a row pushes the DeityList (§22). See the Deity Index section for the full spec.
+> **Superseded.** The circular deity chip row never survived past the Home redesign. Deity browsing now lives in the **Deity Index screen** (`DeityIndexScreen.tsx`, reached from the देवता tile in the Home grid): all 21 deities from `deities.ts` render as full-width `DeityCard` rows, each carrying a `DeityIcon` attribute vector (bow-and-arrow for Rama, bansuri for Krishna, trishul for Shiva, …), over a randomly-picked deity background plate (`getRandomDeityBackground`, stable per mount). Tapping a row pushes the Deity Detail page (§50), which carries the essay and grouped text list. The older `DeityListScreen` remains as a plain filtered-list route for compatibility.
 
 ---
 
@@ -681,7 +682,7 @@ Background: the category's faded sketch plate (`getCategoryBackground`, §6) und
 
 ## 22. Screen: Deity List
 
-Same as Section 21, but filtered by deity tag instead of category. Title shows deity name: "श्री राम · Shri Rama".
+The legacy Deity List is the plain filtered-list fallback: same as Section 21, but filtered by deity tag instead of category. Title shows deity name: "श्री राम · Shri Rama". The primary deity browse path now lands on the richer Deity Detail page (§50), then opens the same `LibraryCard` rows through `navigateToEntryStart()`.
 
 ---
 
@@ -1321,7 +1322,7 @@ Each deity's avatar glyph is a compact **symbolic attribute**, not a portrait (d
 - **The 21 attributes:** bow-and-arrow (rama), bansuri + peacock-feather plume (krishna), Sudarshana chakra (vishnu), trishul (shiva), gada (hanuman), open lotus (durga), modak (ganesha), eight-ray sun (savitr), veena (saraswati), coins-into-lotus (lakshmi), rising sun over horizon (suryadev), lotus bud on stem (radha), vel spear (kartikeya), treasure pot (kubera), descending waves (ganga), five-petal blossom (parvati), lion emblem in a mane ring (narasimha), hand-drawn ॐ (dattatreya), ringed graha (shani), khadga (kali), nine-dot yantra (navagraha).
 - **Fallback:** an undefined `iconKey` renders the deity's first two Devanagari characters — never a blank avatar.
 
-**Interactions.** Tap a card → push `DeityListScreen` for that deity (§22) — same `LibraryCard` rows, resume-sheet behaviour (§40), and NEW clearing (§44) as a category list.
+**Interactions.** Tap a card → push the Deity Detail page (§50) for that deity — essay plus grouped `LibraryCard` rows, resume-sheet behaviour (§40), and NEW clearing (§44). `DeityListScreen` remains a compatibility route for plain filtered lists.
 
 **Files:** `mobile/src/screens/DeityIndexScreen.tsx`, `mobile/src/components/DeityCard.tsx`, `DeityIcon.tsx`, `mobile/src/data/deities.ts`; spec `docs/superpowers/specs/2026-05-08-deity-icons-design.md`.
 
@@ -1567,3 +1568,31 @@ Two AsyncStorage keys hold the last-seen **version string**: `@vedansh/tour-comp
 - `navigateToProgress()` (`entryRoutes.ts`) — still the shared resume-routing path for the sheets and notification deep links; it returns `false` for unroutable entries. (`canResumeProgress()`, the card's render gate, was deleted with the card — it had no other callers.)
 
 **Deleted files:** `ContinueReadingCard.tsx` (+ test), `utils/latestProgress.ts` (+ test); the `HomeScreen` slot and the `home-today-smoke.yaml` continue-reading leg went with them. Re-introducing a Home resume surface should start from this section's history (`git log --follow -- mobile/src/components/ContinueReadingCard.tsx`).
+
+---
+
+## 50. Intent-Driven Discovery (उद्देश्य)
+
+**Purpose.** PRD-B makes the expanded library findable by user need, day, festival, and deity hub. The feature is metadata-first: it never creates an astrological prescription engine and never generates devotional associations. Curated tags live in `mobile/src/data/discoveryMeta.ts`, purpose labels in `purposes.ts`, and tests pin source lines plus valid ids.
+
+### Browse by Purpose
+
+Entry point: the Home launcher grid's **उद्देश्य · By Purpose** tile (§18), placed next to By Deity. `BrowseByPurposeScreen.tsx` uses the same top bar/back-button treatment as Category and Deity screens, on a random deity background plate. The body is a 3-column launcher grid of purpose tiles from `purposes.ts`; each tile uses the compact `CategoryCard` launcher with an icon from the existing category icon set, plus a small English caption so the prototype's hi/en intent tiles remain visible even in Hindi mode. Tapping a purpose pushes `PurposeList`.
+
+`PurposeListScreen.tsx` mirrors `CategoryListScreen`: title is ordered by `orderTitlesByLanguage()`, background is a faded hymn plate, rows are `LibraryCard`s from `textsForPurpose(purposeId)`, and all row navigation goes through `navigateToEntryStart()`. Existing resume behaviour is preserved with `ResumeReadingSheet`.
+
+Search is a secondary entry point: `searchIndex.ts` folds each tagged text's purpose display names and ids into the section fields, so queries like `protection` or `सुरक्षा` find the associated texts.
+
+### Reader Metadata Panel
+
+`WhenToRecitePanel.tsx` renders the text-level ritual metadata from `discoveryMeta`: best days, festivals, best time, purpose chips, and optional Viniyog rows (rishi, chandas, devata). It uses the same parchment/card surface family as other reader metadata: `cardSurface`, `cardActiveBorder`, `radii.lg`, `sectionLabel`, `cardMeta`, and saffron-tint chips.
+
+Placement is **first verse page only**: `VersePage` exposes a `belowContent` slot, and each flat reader passes the panel only when `index === 0`. The panel appears below the verse meaning inside that page's vertical scroll. Swiping to verse 2 and beyond gives plain verse pages. This avoids repeating whole-text metadata on every verse and matches the approved PRD-B prototype update.
+
+### For Today
+
+`TodayRecommendationsRow.tsx` sits below `TodayStrip` and above the Routine banner on Home. It calls `getTodayRecommendationsForDate(new Date(useTodayKey()))`, which reuses `deityForWeekday()` for the vaar deity and `getObservancesForDate()` / observance `linkSectionId` for active festivals. The row is a horizontal scroll of `LibraryCard`s; tapping opens the existing reader target. It is intentionally a small row, not a second panchang card.
+
+### Deity Detail
+
+`DeityIndexScreen` now opens `DeityDetailScreen`. The detail page keeps the existing deity background and top bar, then shows a source-cited essay from `deityEssays.ts` followed by that deity's texts grouped by content form (`categories.ts` order). Each group heading uses `sectionLabel`; entries remain `LibraryCard`s and route through `navigateToEntryStart()`. `DeityListScreen` remains a compatibility fallback for direct filtered-list navigation.

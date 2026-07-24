@@ -1,5 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
+import { purposes } from '@/data/purposes';
 import CategoryIcon, { type CategoryIconKey } from '../CategoryIcon';
 
 function renderIcon(iconKey: CategoryIconKey) {
@@ -45,5 +46,28 @@ describe('CategoryIcon', () => {
       'category-icon-suktam-rule-top',
       'category-icon-suktam-bindu',
     ]);
+  });
+
+  it('renders Purpose as an intent compass rather than reused armour', () => {
+    expectParts('purpose', [
+      'category-icon-purpose-ring',
+      'category-icon-purpose-arrow',
+      'category-icon-purpose-bindu',
+    ]);
+  });
+
+  it('renders Insight as an inner-seeing glyph rather than a generic book', () => {
+    expectParts('insight', [
+      'category-icon-insight-eye',
+      'category-icon-insight-pupil',
+      'category-icon-insight-ray',
+    ]);
+  });
+
+  it('renders a dedicated glyph for every shipped purpose icon', () => {
+    for (const purpose of purposes) {
+      expect(purpose.iconKey).toMatch(/^purpose-/);
+      expectParts(purpose.iconKey, [`category-icon-${purpose.iconKey}`]);
+    }
   });
 });

@@ -3,7 +3,25 @@ import { StyleSheet, View } from 'react-native';
 import type { ContentCategory } from '@/data/texts';
 import { useTheme } from '@/theme/ThemeContext';
 
-export type CategoryIconKey = ContentCategory | 'deity' | 'vrat';
+export type PurposeIconKey =
+  | 'purpose-protection'
+  | 'purpose-obstacles'
+  | 'purpose-courage'
+  | 'purpose-peace'
+  | 'purpose-insight'
+  | 'purpose-devotion'
+  | 'purpose-wealth'
+  | 'purpose-prosperity'
+  | 'purpose-health'
+  | 'purpose-victory'
+  | 'purpose-moksha'
+  | 'purpose-auspicious'
+  | 'purpose-family'
+  | 'purpose-morning';
+
+type PurposeIconKind = PurposeIconKey extends `purpose-${infer Kind}` ? Kind : never;
+
+export type CategoryIconKey = ContentCategory | 'deity' | 'vrat' | 'purpose' | 'insight' | PurposeIconKey;
 
 type Props = {
   iconKey: CategoryIconKey;
@@ -17,6 +35,7 @@ type IconPaint = {
 export default function CategoryIcon({ iconKey }: Props) {
   const { colors, typography } = useTheme();
   const paint = { color: colors.saffronDeep, accent: colors.gold };
+  const purposeKind = getPurposeIconKind(iconKey);
 
   return (
     <View style={styles.frame} accessible={false}>
@@ -34,8 +53,17 @@ export default function CategoryIcon({ iconKey }: Props) {
       {iconKey === 'ashtakam' && <AshtakamIcon {...paint} />}
       {iconKey === 'suktam' && <SuktamIcon {...paint} />}
       {iconKey === 'vrat' && <KalashIcon {...paint} />}
+      {iconKey === 'purpose' && <PurposeIcon {...paint} />}
+      {iconKey === 'insight' && <InsightIcon {...paint} />}
+      {purposeKind && <PurposeTileIcon kind={purposeKind} {...paint} />}
     </View>
   );
+}
+
+function getPurposeIconKind(iconKey: CategoryIconKey): PurposeIconKind | null {
+  return iconKey.startsWith('purpose-')
+    ? (iconKey.slice('purpose-'.length) as PurposeIconKind)
+    : null;
 }
 
 function ShikharaIcon({ color, accent }: IconPaint) {
@@ -244,12 +272,610 @@ function SuktamIcon({ color, accent }: IconPaint) {
   );
 }
 
+// Purpose (उद्देश्य) — a compass/intent marker: direction without implying
+// protection, temple, or a specific practice category.
+function PurposeIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.purposeWrap}>
+      <View testID="category-icon-purpose-ring" style={[styles.purposeRing, { borderColor: color }]} />
+      <View testID="category-icon-purpose-arrow" style={[styles.purposeArrow, { borderBottomColor: accent }]} />
+      <View style={[styles.purposeStem, { backgroundColor: color }]} />
+      <View testID="category-icon-purpose-bindu" style={[styles.purposeBindu, { backgroundColor: color }]} />
+    </View>
+  );
+}
+
+// Insight (अन्तर्दृष्टि) — an inner-seeing eye with a small rising ray, used
+// for knowledge/understanding rather than reusing the generic Books glyph.
+function InsightIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.insightWrap}>
+      <View testID="category-icon-insight-eye" style={[styles.insightEye, { borderColor: color }]} />
+      <View testID="category-icon-insight-pupil" style={[styles.insightPupil, { backgroundColor: accent }]} />
+      <View testID="category-icon-insight-ray" style={[styles.insightRay, { backgroundColor: color }]} />
+      <View style={[styles.insightRayLeft, { backgroundColor: color }]} />
+      <View style={[styles.insightRayRight, { backgroundColor: color }]} />
+    </View>
+  );
+}
+
+function PurposeTileIcon({ kind, color, accent }: IconPaint & { kind: PurposeIconKind }) {
+  const testID = `category-icon-purpose-${kind}`;
+
+  if (kind === 'insight') {
+    return (
+      <View testID={testID} style={styles.purposeTileWrap}>
+        <InsightIcon color={color} accent={accent} />
+      </View>
+    );
+  }
+
+  return (
+    <View testID={testID} style={styles.purposeTileWrap}>
+      {kind === 'protection' && (
+        <>
+          <View style={[styles.purposeShield, { borderColor: color }]} />
+          <View style={[styles.purposeCenterDot, { backgroundColor: accent }]} />
+          <View style={[styles.purposeShortRule, { backgroundColor: accent }]} />
+        </>
+      )}
+      {kind === 'obstacles' && (
+        <>
+          <View style={[styles.purposeMountainLarge, { borderBottomColor: color }]} />
+          <View style={[styles.purposeMountainSmall, { borderBottomColor: accent }]} />
+          <View style={[styles.purposePath, { borderColor: color }]} />
+        </>
+      )}
+      {kind === 'courage' && (
+        <>
+          <View style={[styles.purposeFlagPole, { backgroundColor: color }]} />
+          <View style={[styles.purposeFlag, { borderLeftColor: accent }]} />
+          <View style={[styles.purposeBaseRule, { backgroundColor: color }]} />
+        </>
+      )}
+      {kind === 'peace' && (
+        <>
+          <View style={[styles.purposePeaceRing, { borderColor: color }]} />
+          <View style={[styles.purposePeaceLine, { backgroundColor: accent }]} />
+          <View style={[styles.purposeCenterDot, { backgroundColor: color }]} />
+        </>
+      )}
+      {kind === 'devotion' && (
+        <>
+          <View style={[styles.purposeDevotionFlameOuter, { backgroundColor: accent }]} />
+          <View style={[styles.purposeDevotionFlameInner, { backgroundColor: color }]} />
+          <View style={[styles.purposeBowl, { borderColor: color }]} />
+        </>
+      )}
+      {kind === 'wealth' && (
+        <>
+          <View style={[styles.purposeCoinTop, { borderColor: accent }]} />
+          <View style={[styles.purposeCoinMid, { borderColor: color }]} />
+          <View style={[styles.purposeCoinBottom, { borderColor: color }]} />
+        </>
+      )}
+      {kind === 'prosperity' && (
+        <>
+          <View style={[styles.purposeStemTall, { backgroundColor: color }]} />
+          <View style={[styles.purposeLeafLeft, { borderColor: accent }]} />
+          <View style={[styles.purposeLeafRight, { borderColor: accent }]} />
+          <View style={[styles.purposeBaseRule, { backgroundColor: color }]} />
+        </>
+      )}
+      {kind === 'health' && (
+        <>
+          <View style={[styles.purposeHealthRing, { borderColor: color }]} />
+          <View style={[styles.purposeHealthVertical, { backgroundColor: accent }]} />
+          <View style={[styles.purposeHealthHorizontal, { backgroundColor: accent }]} />
+        </>
+      )}
+      {kind === 'victory' && (
+        <>
+          <View style={[styles.purposeVictoryCup, { borderColor: color }]} />
+          <View style={[styles.purposeVictoryStem, { backgroundColor: color }]} />
+          <View style={[styles.purposeVictoryFlag, { borderLeftColor: accent }]} />
+          <View style={[styles.purposeBaseRule, { backgroundColor: color }]} />
+        </>
+      )}
+      {kind === 'moksha' && (
+        <>
+          <View style={[styles.purposeArch, { borderColor: color }]} />
+          <View style={[styles.purposeRisingDot, { backgroundColor: accent }]} />
+          <View style={[styles.purposeRay, { backgroundColor: color }]} />
+        </>
+      )}
+      {kind === 'auspicious' && (
+        <>
+          <View style={[styles.purposeTilakDrop, { backgroundColor: accent }]} />
+          <View style={[styles.purposeTilakStem, { backgroundColor: color }]} />
+          <View style={[styles.purposeSideRayLeft, { backgroundColor: color }]} />
+          <View style={[styles.purposeSideRayRight, { backgroundColor: color }]} />
+        </>
+      )}
+      {kind === 'family' && (
+        <>
+          <View style={[styles.purposeHomeRoof, { borderBottomColor: color }]} />
+          <View style={[styles.purposeHomeBase, { borderColor: color }]} />
+          <View style={[styles.purposeFamilyDotLeft, { backgroundColor: accent }]} />
+          <View style={[styles.purposeFamilyDotRight, { backgroundColor: accent }]} />
+        </>
+      )}
+      {kind === 'morning' && (
+        <>
+          <View style={[styles.purposeSunRise, { borderColor: accent }]} />
+          <View style={[styles.purposeHorizon, { backgroundColor: color }]} />
+          <View style={[styles.purposeMorningRay, { backgroundColor: color }]} />
+          <View style={[styles.purposeMorningRayLeft, { backgroundColor: color }]} />
+          <View style={[styles.purposeMorningRayRight, { backgroundColor: color }]} />
+        </>
+      )}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   frame: {
     width: 36,
     height: 32,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  purposeTileWrap: {
+    width: 34,
+    height: 32,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  purposeShield: {
+    width: 23,
+    height: 27,
+    borderWidth: 2,
+    borderTopLeftRadius: 9,
+    borderTopRightRadius: 9,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+  purposeCenterDot: {
+    position: 'absolute',
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
+  },
+  purposeShortRule: {
+    position: 'absolute',
+    top: 19,
+    width: 12,
+    height: 2,
+    borderRadius: 1,
+  },
+  purposeMountainLarge: {
+    position: 'absolute',
+    bottom: 8,
+    left: 4,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderBottomWidth: 17,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+  },
+  purposeMountainSmall: {
+    position: 'absolute',
+    bottom: 8,
+    right: 4,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 8,
+    borderRightWidth: 8,
+    borderBottomWidth: 13,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+  },
+  purposePath: {
+    position: 'absolute',
+    bottom: 2,
+    width: 20,
+    height: 8,
+    borderBottomWidth: 2,
+    borderRadius: 10,
+  },
+  purposeFlagPole: {
+    position: 'absolute',
+    left: 14,
+    top: 6,
+    width: 2,
+    height: 19,
+    borderRadius: 1,
+  },
+  purposeFlag: {
+    position: 'absolute',
+    left: 16,
+    top: 7,
+    width: 0,
+    height: 0,
+    borderTopWidth: 5,
+    borderBottomWidth: 5,
+    borderLeftWidth: 12,
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+  },
+  purposeBaseRule: {
+    position: 'absolute',
+    bottom: 4,
+    width: 22,
+    height: 3,
+    borderRadius: 2,
+  },
+  purposePeaceRing: {
+    width: 24,
+    height: 24,
+    borderWidth: 2,
+    borderRadius: 12,
+  },
+  purposePeaceLine: {
+    position: 'absolute',
+    width: 18,
+    height: 2,
+    borderRadius: 1,
+  },
+  purposeDevotionFlameOuter: {
+    position: 'absolute',
+    top: 2,
+    width: 13,
+    height: 18,
+    borderTopLeftRadius: 9,
+    borderTopRightRadius: 2,
+    borderBottomLeftRadius: 9,
+    borderBottomRightRadius: 9,
+    transform: [{ rotate: '42deg' }],
+  },
+  purposeDevotionFlameInner: {
+    position: 'absolute',
+    top: 8,
+    width: 7,
+    height: 10,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 1,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    transform: [{ rotate: '42deg' }],
+  },
+  purposeBowl: {
+    position: 'absolute',
+    bottom: 4,
+    width: 24,
+    height: 12,
+    borderWidth: 2,
+    borderTopWidth: 0,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+  purposeCoinTop: {
+    position: 'absolute',
+    top: 6,
+    width: 18,
+    height: 8,
+    borderWidth: 2,
+    borderRadius: 9,
+  },
+  purposeCoinMid: {
+    position: 'absolute',
+    top: 13,
+    width: 24,
+    height: 8,
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+  purposeCoinBottom: {
+    position: 'absolute',
+    top: 20,
+    width: 28,
+    height: 8,
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+  purposeStemTall: {
+    position: 'absolute',
+    bottom: 5,
+    width: 2,
+    height: 19,
+    borderRadius: 1,
+  },
+  purposeLeafLeft: {
+    position: 'absolute',
+    top: 8,
+    left: 7,
+    width: 13,
+    height: 9,
+    borderWidth: 2,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    transform: [{ rotate: '-20deg' }],
+  },
+  purposeLeafRight: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    width: 13,
+    height: 9,
+    borderWidth: 2,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    transform: [{ rotate: '20deg' }],
+  },
+  purposeHealthRing: {
+    width: 25,
+    height: 25,
+    borderWidth: 2,
+    borderRadius: 13,
+  },
+  purposeHealthVertical: {
+    position: 'absolute',
+    width: 4,
+    height: 16,
+    borderRadius: 2,
+  },
+  purposeHealthHorizontal: {
+    position: 'absolute',
+    width: 16,
+    height: 4,
+    borderRadius: 2,
+  },
+  purposeVictoryCup: {
+    position: 'absolute',
+    top: 8,
+    width: 24,
+    height: 13,
+    borderWidth: 2,
+    borderTopWidth: 0,
+    borderBottomLeftRadius: 11,
+    borderBottomRightRadius: 11,
+  },
+  purposeVictoryStem: {
+    position: 'absolute',
+    bottom: 6,
+    width: 3,
+    height: 8,
+    borderRadius: 1.5,
+  },
+  purposeVictoryFlag: {
+    position: 'absolute',
+    top: 2,
+    right: 9,
+    width: 0,
+    height: 0,
+    borderTopWidth: 4,
+    borderBottomWidth: 4,
+    borderLeftWidth: 9,
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+  },
+  purposeArch: {
+    position: 'absolute',
+    bottom: 4,
+    width: 24,
+    height: 25,
+    borderWidth: 2,
+    borderBottomWidth: 0,
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+  },
+  purposeRisingDot: {
+    position: 'absolute',
+    top: 7,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  purposeRay: {
+    position: 'absolute',
+    top: 2,
+    width: 2,
+    height: 8,
+    borderRadius: 1,
+  },
+  purposeTilakDrop: {
+    position: 'absolute',
+    top: 4,
+    width: 12,
+    height: 16,
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    borderBottomRightRadius: 2,
+    transform: [{ rotate: '45deg' }],
+  },
+  purposeTilakStem: {
+    position: 'absolute',
+    bottom: 5,
+    width: 3,
+    height: 12,
+    borderRadius: 2,
+  },
+  purposeSideRayLeft: {
+    position: 'absolute',
+    top: 13,
+    left: 5,
+    width: 7,
+    height: 2,
+    borderRadius: 1,
+    transform: [{ rotate: '-20deg' }],
+  },
+  purposeSideRayRight: {
+    position: 'absolute',
+    top: 13,
+    right: 5,
+    width: 7,
+    height: 2,
+    borderRadius: 1,
+    transform: [{ rotate: '20deg' }],
+  },
+  purposeHomeRoof: {
+    position: 'absolute',
+    top: 5,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 13,
+    borderRightWidth: 13,
+    borderBottomWidth: 11,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+  },
+  purposeHomeBase: {
+    position: 'absolute',
+    bottom: 5,
+    width: 22,
+    height: 14,
+    borderWidth: 2,
+    borderTopWidth: 0,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+  },
+  purposeFamilyDotLeft: {
+    position: 'absolute',
+    bottom: 10,
+    left: 12,
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+  },
+  purposeFamilyDotRight: {
+    position: 'absolute',
+    bottom: 10,
+    right: 12,
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+  },
+  purposeSunRise: {
+    position: 'absolute',
+    bottom: 7,
+    width: 22,
+    height: 22,
+    borderWidth: 2,
+    borderBottomWidth: 0,
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+  },
+  purposeHorizon: {
+    position: 'absolute',
+    bottom: 7,
+    width: 28,
+    height: 3,
+    borderRadius: 2,
+  },
+  purposeMorningRay: {
+    position: 'absolute',
+    top: 0,
+    width: 2,
+    height: 6,
+    borderRadius: 1,
+  },
+  purposeMorningRayLeft: {
+    position: 'absolute',
+    top: 4,
+    left: 7,
+    width: 2,
+    height: 6,
+    borderRadius: 1,
+    transform: [{ rotate: '-35deg' }],
+  },
+  purposeMorningRayRight: {
+    position: 'absolute',
+    top: 4,
+    right: 7,
+    width: 2,
+    height: 6,
+    borderRadius: 1,
+    transform: [{ rotate: '35deg' }],
+  },
+  purposeWrap: {
+    width: 32,
+    height: 32,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  purposeRing: {
+    width: 24,
+    height: 24,
+    borderWidth: 2,
+    borderRadius: 12,
+  },
+  purposeArrow: {
+    position: 'absolute',
+    top: 5,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 5,
+    borderRightWidth: 5,
+    borderBottomWidth: 12,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    transform: [{ rotate: '42deg' }],
+  },
+  purposeStem: {
+    position: 'absolute',
+    width: 2,
+    height: 13,
+    borderRadius: 1,
+    transform: [{ rotate: '42deg' }],
+  },
+  purposeBindu: {
+    position: 'absolute',
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
+  },
+  insightWrap: {
+    width: 32,
+    height: 32,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  insightEye: {
+    width: 27,
+    height: 15,
+    borderWidth: 2,
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+    borderBottomLeftRadius: 14,
+    borderBottomRightRadius: 14,
+    transform: [{ scaleY: 0.78 }],
+  },
+  insightPupil: {
+    position: 'absolute',
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
+  },
+  insightRay: {
+    position: 'absolute',
+    top: 0,
+    width: 2,
+    height: 7,
+    borderRadius: 1,
+  },
+  insightRayLeft: {
+    position: 'absolute',
+    top: 3,
+    left: 8,
+    width: 2,
+    height: 6,
+    borderRadius: 1,
+    transform: [{ rotate: '-34deg' }],
+  },
+  insightRayRight: {
+    position: 'absolute',
+    top: 3,
+    right: 8,
+    width: 2,
+    height: 6,
+    borderRadius: 1,
+    transform: [{ rotate: '34deg' }],
   },
   suktamWrap: {
     width: 34,

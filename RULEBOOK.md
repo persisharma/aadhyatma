@@ -38,7 +38,7 @@ Every section, regardless of size, must supply these inputs. The slash command w
 | 4 | `sub` | **yes** | `40 चौपाई · अर्थ सहित` | listing subtitle. Devanagari, follows the `<count> <unit> · अर्थ सहित` pattern of existing sections |
 | 5 | `thumb` | **yes** | `ह` / `भ` / `सु` / `ॐ` | single Devanagari glyph rendered inside `LibraryCard` |
 | 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `theerth`, `sanskar`, `ashtakam`, `suktam`, `kavacham` (source of truth: `mobile/src/data/categories.ts`). Determines which grid tile this section appears under on Home. The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. The `theerth` tile routes to the Theerth browse screen (state/category list; map in the drill-in view) — see §11. `ashtakam`, `suktam` and `kavacham` are PRD-A forms, each with a multi-instance reader (dispatching on `ashtakamId`/`suktamId`/`kavachamId`, like the chalisas). **Stuti** is a fourth PRD-A form but is **not** a category — its texts (Krishna Stuti, Durga Stuti) are filed under `stotram` (स्तुति ≈ स्तोत्रम्) yet still render via the multi-instance `StutiReader`, routed by `stutiId`. |
-| 7 | `deities` | **yes** | `['hanuman', 'rama']` | Array of deity tags from: `rama`, `krishna`, `vishnu`, `shiva`, `hanuman`, `durga`, `ganesha`, `savitr` (Maa Gayatri), `saraswati`, `lakshmi` (Maa Lakshmi), `surya` (Surya Dev), `radha` (Radha Rani), `kartikeya` (Kartikeya), `kubera` (Kubera), `ganga` (Maa Ganga), `parvati` (Maa Parvati), `narasimha` (Narasimha), `dattatreya` (Dattatreya), `shani` (Shani Dev), `kali` (Maa Kali), `navagraha` (Navagraha) — PRD-A deity expansion §A.4.2 complete, 9 → 21 (source of truth: `mobile/src/data/deities.ts`). The section appears under each tagged deity in the Deity Index. At least one required. |
+| 7 | `deities` | **yes** | `['hanuman', 'rama']` | Array of deity tags from the `Deity` union in `mobile/src/data/texts.ts` and display metadata in `deities.ts`: `rama`, `krishna`, `vishnu`, `shiva`, `hanuman`, `durga`, `ganesha`, `savitr` (Maa Gayatri), `saraswati`, `lakshmi` (Maa Lakshmi), `surya` (Surya Dev), `radha` (Radha Rani), `kartikeya` (Kartikeya), `kubera` (Kubera), `ganga` (Maa Ganga), `parvati` (Maa Parvati), `narasimha` (Narasimha), `dattatreya` (Dattatreya), `shani` (Shani Dev), `kali` (Maa Kali), `navagraha` (Navagraha) — PRD-A deity expansion §A.4.2 complete, 9 → 21 (source of truth: `mobile/src/data/deities.ts`). The section appears under each tagged deity in the Deity Index/Detail surfaces. At least one required. |
 | 8 | Subsection structure | optional | 18 chapters / 7 kāṇḍas / none | if present, supply count + per-subsection `titleHi`/`titleEn` (mirrors Gita's `chapters-manifest.json`) |
 | 9 | **Background image(s)** for content page | **yes** | `mobile/assets/<id>/*.png` | at least one bundled local PNG/WebP. Faded vintage sketch per `design.md` §6 (≈50 % opacity after sepia, subject top-anchored, bottom third clean) |
 | 10 | Per-verse `lines` (Devanagari) | **yes** | `["जय हनुमान ज्ञान गुण सागर", …]` | array of strings; preserve original line breaks |
@@ -449,3 +449,38 @@ All of §10 applies. The high-risk ones for theerth:
 7. Detail screen shows, over the temple's presiding-deity background (§11.4): hero (temple name + city + state + deity badge), `महिमा · Significance` block, `उद्भव कथा · Origin Story` block, sources footer. Both languages populated (verified in §10).
 8. Back from detail returns to the browse/drill-in screen preserving its view-mode state.
 9. Per-temple device check on iOS AND Android — Devanagari rendering in pin tooltips can differ between platforms.
+
+---
+
+## 12. Intent discovery metadata (PRD-B)
+
+Intent-driven discovery is metadata over bundled content, not new scripture text and not an astrological prescription engine.
+
+### 12.1 File set
+
+| # | Path | Contract |
+|---|------|----------|
+| 1 | `mobile/src/data/purposes.ts` | Source of truth for shipped purpose ids, Hindi/English labels, and icon keys. Every purpose must have at least one active tagged text. |
+| 2 | `mobile/src/data/discoveryMeta.ts` | Source of truth for per-text purpose tags, best days, best festivals, best time, optional Viniyog, and source line. Keys must be active `library` ids. |
+| 3 | `mobile/src/data/deityEssays.ts` | Source-cited deity page essay copy. Keys must be valid `Deity` ids. |
+| 4 | `mobile/src/data/searchIndex.ts` | Purpose display names and ids must be indexed as section fields so search can find texts by user intent. |
+| 5 | `mobile/src/screens/BrowseByPurposeScreen.tsx` / `PurposeListScreen.tsx` | Purpose grid and filtered list. Rows route through `navigateToEntryStart()` and preserve resume-sheet behaviour. |
+| 6 | `mobile/src/components/WhenToRecitePanel.tsx` | Reader metadata panel. Render on verse page 1 only (`index === 0`), below the meaning inside that page scroll; never repeat on pages 2…N. |
+| 7 | `mobile/src/components/TodayRecommendationsRow.tsx` | Home By-Day/By-Festival recommendation row. Must reuse `deityForWeekday()` and `getObservancesForDate()` rather than adding date logic. |
+| 8 | `mobile/src/screens/DeityDetailScreen.tsx` | Deity essay plus texts grouped by category. Rows route through `navigateToEntryStart()`. |
+
+### 12.2 Curation rules
+
+- Purpose tags are curated associations. Do not generate or infer new devotional claims from an LLM. Each `discoveryMeta` row must carry a non-empty `source` explaining the association/provenance.
+- `bestDays` values are JavaScript weekdays (`0` Sunday … `6` Saturday), matching `data/routine/vaar.ts`.
+- `bestFestivals` values are observance rule ids resolvable by `getRuleById()`.
+- `bestTime` is a small closed set (`brahma-muhurta`, `sunrise`, `sunset`, `any`). Add a new value only with a label helper update and tests.
+- Viniyog fields are whole-text metadata. They must not be rendered per verse or stored on verse rows.
+- Purpose search must not create standalone “purpose result” rows unless a new UX explicitly calls for them; the current contract is section-level matching.
+
+### 12.3 Verification
+
+- `contentCorrectness.test.ts` verifies every purpose has at least one active text, every metadata key/id/day/festival is valid, every metadata row has a source, Tuesday recommendations include Hanuman content through the vaar map, and deity essays are source-cited.
+- `searchIndex.test.ts` verifies English and Hindi purpose names find tagged sections.
+- Jest screen tests verify Browse by Purpose, Purpose List, Deity Detail, and the first-page-only reader panel.
+- A Maestro flow should cover Home → By Purpose → purpose list → text → reader before merge; if it is not run, the PR must state that explicitly.

@@ -9,6 +9,9 @@ import SearchScreen from '@/screens/SearchScreen';
 import CategoryListScreen from '@/screens/CategoryListScreen';
 import DeityListScreen from '@/screens/DeityListScreen';
 import DeityIndexScreen from '@/screens/DeityIndexScreen';
+import DeityDetailScreen from '@/screens/DeityDetailScreen';
+import BrowseByPurposeScreen from '@/screens/BrowseByPurposeScreen';
+import PurposeListScreen from '@/screens/PurposeListScreen';
 import ChalisaReaderScreen from '@/screens/ChalisaReaderScreen';
 import AshtakamReaderScreen from '@/screens/AshtakamReaderScreen';
 import SuktamReaderScreen from '@/screens/SuktamReaderScreen';
@@ -89,6 +92,9 @@ export default function HomeStackNavigator() {
       <Stack.Screen name="CategoryList" component={CategoryListScreen} />
       <Stack.Screen name="DeityList" component={DeityListScreen} />
       <Stack.Screen name="DeityIndex" component={DeityIndexScreen} />
+      <Stack.Screen name="DeityDetail" component={DeityDetailScreen} />
+      <Stack.Screen name="BrowseByPurpose" component={BrowseByPurposeScreen} />
+      <Stack.Screen name="PurposeList" component={PurposeListScreen} />
       <Stack.Screen
         name="ChalisaReader"
         component={ChalisaReaderScreen}
