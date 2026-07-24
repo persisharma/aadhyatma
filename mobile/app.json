@@ -26,7 +26,7 @@
     },
     "android": {
       "package": "com.prashantsharma.vedansh",
-      "versionCode": 6,
+      "versionCode": 7,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -38,9 +38,7 @@
         "FOREGROUND_SERVICE_MEDIA_PLAYBACK",
         "WAKE_LOCK",
         "SCHEDULE_EXACT_ALARM",
-        "USE_EXACT_ALARM",
         "POST_NOTIFICATIONS",
-        "USE_FULL_SCREEN_INTENT",
         "RECEIVE_BOOT_COMPLETED"
       ]
     },

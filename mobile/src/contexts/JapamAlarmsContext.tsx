@@ -26,7 +26,9 @@ import {
   scheduleJapamAlarms,
 } from '@/notifications/japamAlarmScheduler';
 import {
+  getNativeAlarmCapability,
   isIosNativeAlarmSupported,
+  requestAndroidExactAlarmPermission,
   requestIosAlarmPermission,
   getIosAlarmAuthorizationStatus,
 } from '@/notifications/japamAlarmNative';
@@ -52,17 +54,20 @@ export type AlarmPatch = {
 };
 
 type PermissionStatus = 'granted' | 'denied' | 'undetermined';
+type ExactAlarmStatus = 'granted' | 'needs-permission' | 'unavailable';
 
 type JapamAlarmsContextValue = {
   alarms: JapamAlarm[];
   isLoading: boolean;
   permissionStatus: PermissionStatus;
+  exactAlarmStatus: ExactAlarmStatus;
   canAdd: boolean;
   addAlarm: (draft: AlarmDraft) => Promise<JapamAlarm | null>;
   updateAlarm: (id: string, patch: AlarmPatch) => Promise<void>;
   toggleAlarm: (id: string, enabled: boolean) => Promise<void>;
   removeAlarm: (id: string) => Promise<void>;
   requestPermission: () => Promise<PermissionStatus>;
+  openExactAlarmSettings: () => Promise<boolean>;
 };
 
 const JapamAlarmsContext = createContext<JapamAlarmsContextValue | null>(null);
@@ -85,11 +90,20 @@ async function readPermissionStatus(): Promise<PermissionStatus> {
   }
 }
 
+async function readExactAlarmStatus(): Promise<ExactAlarmStatus> {
+  if (Platform.OS !== 'android') return 'unavailable';
+  const capability = await getNativeAlarmCapability();
+  if (!capability.supported) return 'unavailable';
+  return capability.canScheduleExact ? 'granted' : 'needs-permission';
+}
+
 export function JapamAlarmsProvider({ children }: { children: React.ReactNode }) {
   const [alarms, setAlarms] = useState<JapamAlarm[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [permissionStatus, setPermissionStatus] =
     useState<PermissionStatus>('undetermined');
+  const [exactAlarmStatus, setExactAlarmStatus] =
+    useState<ExactAlarmStatus>('unavailable');
   const alarmsRef = useRef<JapamAlarm[]>([]);
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
   const [foregroundTick, setForegroundTick] = useState(0);
@@ -98,15 +112,17 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
     let cancelled = false;
     (async () => {
       try {
-        const [raw, status] = await Promise.all([
+        const [raw, status, exactStatus] = await Promise.all([
           AsyncStorage.getItem(STORAGE_KEY),
           readPermissionStatus(),
+          readExactAlarmStatus(),
         ]);
         if (cancelled) return;
         const loaded = sortAlarms(parseStoredAlarms(raw));
         alarmsRef.current = loaded;
         setAlarms(loaded);
         setPermissionStatus(status);
+        setExactAlarmStatus(exactStatus);
         setIsLoading(false);
       } catch {
         if (!cancelled) setIsLoading(false);
@@ -143,9 +159,14 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
       const prev = appStateRef.current;
       appStateRef.current = next;
       if (prev !== 'active' && next === 'active') {
-        readPermissionStatus().then((status) => {
-          setPermissionStatus((cur) => (cur === status ? cur : status));
-        });
+        Promise.all([readPermissionStatus(), readExactAlarmStatus()]).then(
+          ([status, exactStatus]) => {
+            setPermissionStatus((cur) => (cur === status ? cur : status));
+            setExactAlarmStatus((cur) =>
+              cur === exactStatus ? cur : exactStatus
+            );
+          }
+        );
         setForegroundTick((t) => t + 1);
       }
     });
@@ -228,6 +249,16 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
     },
     []
   );
+
+  const openExactAlarmSettings = useCallback<
+    JapamAlarmsContextValue['openExactAlarmSettings']
+  >(async () => {
+    const handled = await requestAndroidExactAlarmPermission();
+    if (!handled) return false;
+    const next = await readExactAlarmStatus();
+    setExactAlarmStatus(next);
+    return true;
+  }, []);
 
   const addAlarm = useCallback<JapamAlarmsContextValue['addAlarm']>(
     async (draft) => {
@@ -325,23 +356,27 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
       alarms,
       isLoading,
       permissionStatus,
+      exactAlarmStatus,
       canAdd,
       addAlarm,
       updateAlarm,
       toggleAlarm,
       removeAlarm,
       requestPermission,
+      openExactAlarmSettings,
     }),
     [
       alarms,
       isLoading,
       permissionStatus,
+      exactAlarmStatus,
       canAdd,
       addAlarm,
       updateAlarm,
       toggleAlarm,
       removeAlarm,
       requestPermission,
+      openExactAlarmSettings,
     ]
   );
 

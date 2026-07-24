@@ -85,11 +85,13 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
   const {
     alarms,
     permissionStatus,
+    exactAlarmStatus,
     canAdd,
     addAlarm,
     updateAlarm,
     toggleAlarm,
     removeAlarm,
+    openExactAlarmSettings,
   } = useJapamAlarms();
 
   // Feature-tour anchor (design.md §47): the "+ Add alarm" button — the last
@@ -106,6 +108,9 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
   const onOpenSystemSettings = useCallback(() => {
     Linking.openSettings().catch(() => undefined);
   }, []);
+  const onOpenExactAlarmSettings = useCallback(() => {
+    openExactAlarmSettings().catch(() => undefined);
+  }, [openExactAlarmSettings]);
 
   const titleHi = 'जप स्मरण';
   const titleEn = 'Japam Alarms';
@@ -204,6 +209,39 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
               </Text>
             </Pressable>
           )}
+
+          {permissionStatus === 'granted' &&
+            exactAlarmStatus === 'needs-permission' &&
+            alarms.some((alarm) => alarm.enabled) && (
+              <Pressable
+                onPress={onOpenExactAlarmSettings}
+                accessibilityRole="button"
+                accessibilityLabel="Allow precise alarm timing"
+                style={({ pressed }) => [
+                  styles.permissionBanner,
+                  {
+                    backgroundColor: colors.parchmentDeep,
+                    borderColor: colors.divider,
+                    borderRadius: radii.sm,
+                    opacity: pressed ? 0.85 : 1,
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.permissionText,
+                    {
+                      color: colors.inkSoft,
+                      fontFamily: typography.meaning.fontFamily,
+                    },
+                  ]}
+                >
+                  {isHi
+                    ? 'सटीक समय पर जप अलार्म के लिए “अलार्म और रिमाइंडर” की अनुमति दें। अनुमति न होने पर अलार्म देर से बज सकता है।'
+                    : 'Allow “Alarms & reminders” for precise Japam timing. Without it, Android may delay the alarm. Tap to open Settings.'}
+                </Text>
+              </Pressable>
+            )}
 
           {alarms.length === 0 ? (
             <View
