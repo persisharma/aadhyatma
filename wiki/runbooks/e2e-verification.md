@@ -10,10 +10,11 @@ status: current
 ## Summary
 
 Every user-facing change ships with an e2e flow. UI e2e is [Maestro](https://maestro.mobile.dev)
-flows in `mobile/.maestro/*.yaml`, run against **Expo Go** on an iOS simulator. This runbook
-covers the **policy**, how to **author** a flow, and how to **verify** one on a live simulator —
-including the isolated-simulator recipe for machines running many Conductor worktrees at once.
-For the flow catalog, setup, and element-selection rules, see `mobile/.maestro/README.md`.
+flows in `mobile/.maestro/*.yaml`, normally run against **Expo Go** on an iOS simulator; native
+module and app-shell coverage uses an installed development build. This runbook covers the
+**policy**, how to **author** a flow, and how to **verify** one on a live simulator — including
+the isolated-simulator recipe for machines running many Conductor worktrees at once. For the flow
+catalog, setup, and element-selection rules, see `mobile/.maestro/README.md`.
 
 PRD-C's `kundali-smoke.yaml` is the first native-build exception: it launches
 `com.prashantsharma.vedansh` directly so custom native configuration and the real app shell are
@@ -90,10 +91,9 @@ Use this when a flow declares `appId: com.prashantsharma.vedansh`:
    `xcrun simctl listapps <UDID> | grep com.prashantsharma.vedansh`.
 4. Run
    `maestro --device <UDID> test .maestro/kundali-smoke.yaml`.
-   The flow clears only this app's simulator state, reconnects the native development build to
-   this worktree's Metro on port 8084, and never touches Expo Go. The explicit development-client
-   link and its iOS `Open` confirmation are required after `clearState`; otherwise Expo may reopen
-   a stale project URL.
+   The flow clears only this app's simulator state and launches the native development build with
+   React Native's `RCT_jsLocation=127.0.0.1:8084` launch argument, so it cannot inherit a Metro
+   server from another workspace and never touches Expo Go.
 
 ## Gotchas
 

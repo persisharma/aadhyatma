@@ -6,21 +6,25 @@
 #
 # Prerequisite: install the native debug app on the target simulator with
 # `npx expo run:ios --device <UDID> --port 8084`. This flow launches the real
-# app bundle and connects that development build to this worktree's Metro; it
-# never opens Expo Go.
+# app bundle with React Native's native Metro-location argument; it never opens
+# Expo Go or depends on the simulator's previous packager.
 
 appId: com.prashantsharma.vedansh
 ---
 - launchApp:
     appId: com.prashantsharma.vedansh
     clearState: true
-- openLink:
-    link: "com.prashantsharma.vedansh://expo-development-client/?url=http%3A%2F%2F127.0.0.1%3A8084"
-- tapOn:
-    text: "Open"
-    optional: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
 - waitForAnimationToEnd:
     timeout: 30000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+# The first native bundle load can remount the first-launch tour once while
+# Metro settles; a second optional dismissal keeps the smoke deterministic.
 - tapOn:
     text: "Skip tour"
     optional: true
@@ -34,7 +38,7 @@ appId: com.prashantsharma.vedansh
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
 - extendedWaitUntil:
-    visible: "आज के लिए|FOR TODAY"
+    visible: "Good Habits\\..*Tap to open\\."
     timeout: 60000
 
 # Use English for stable visible-text assertions; accessibility labels stay
