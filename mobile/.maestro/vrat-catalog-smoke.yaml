@@ -19,7 +19,7 @@
 #   - Back buttons on the new screens expose accessibilityLabel "Back" (English).
 #   - List/library/landing search fields expose their placeholder text.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Boot Vedansh (exits on Home) ──
 - runFlow: _launch.yaml
@@ -107,4 +107,4 @@ appId: host.exp.Exponent
     optional: true
 - waitForAnimationToEnd
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

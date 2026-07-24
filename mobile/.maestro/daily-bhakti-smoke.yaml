@@ -35,7 +35,7 @@
 #   - The next control exposes accessibilityLabel "Next verse" in English mode
 #     (isHindi ? 'अगला श्लोक' : 'Next verse') — reliable, unlike the "↻ next" glyph.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
 - runFlow: _launch.yaml
@@ -81,4 +81,4 @@ appId: host.exp.Exponent
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

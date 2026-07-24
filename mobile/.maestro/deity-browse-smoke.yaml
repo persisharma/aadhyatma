@@ -12,7 +12,7 @@
 # ("<NameEn>. <sub>. Tap to open.") both key off NameEn, and the deity index
 # item counts ("N texts") are always English.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
@@ -61,4 +61,4 @@ appId: host.exp.Exponent
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

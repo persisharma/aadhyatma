@@ -23,7 +23,7 @@
 # PRECONDITION: Navratri-9 not already active (fresh install, or this flow, which
 # sets it aside at the end). Re-enrolling replaces any prior enrollment.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Boot + switch to English (Devanagari isn't reliably read by Maestro) ──
 - runFlow: _launch.yaml
@@ -99,4 +99,4 @@ appId: host.exp.Exponent
     timeout: 10000
 
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FullWindowOverlay } from 'react-native-screens';
 import { useTheme } from '@/theme/ThemeContext';
 import { useTour } from '@/contexts/TourContext';
 import { tourSteps, TAB_ORDER } from '@/data/tour/steps';
@@ -25,10 +26,9 @@ import {
 } from '@/components/tour/placement';
 
 /**
- * In-context first-launch feature tour. Renders a translucent **in-tree** overlay
- * (not a native Modal, so it can draw a spotlight over the live UI and remain
- * visible to the accessibility tree / Maestro) above the whole app. Each step
- * navigates to the real surface it describes, rings the element (or its
+ * In-context first-launch feature tour. Renders a translucent full-window
+ * overlay above the app. Each step navigates to the real surface it describes,
+ * rings the element (or its
  * destination tab when no element target is measurable), and hugs a compact
  * tooltip card to it. See design.md §47.
  *
@@ -207,15 +207,17 @@ export default function FeatureTour() {
   if (!visible || !step) return null;
 
   return (
-    <View style={[StyleSheet.absoluteFill, styles.overlay]}>
-      {/* Scrim — a Pressable so it captures (swallows) touches; only the tour's
-          own controls advance it, keeping the walk-through linear. */}
-      <Pressable
-        style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(15, 10, 5, 0.55)' }]}
-        onPress={() => {}}
-        accessibilityElementsHidden
-        importantForAccessibility="no-hide-descendants"
-      />
+    <FullWindowOverlay unstable_accessibilityContainerViewIsModal>
+      <View style={[StyleSheet.absoluteFill, styles.overlay]}>
+        {/* Visual-only scrim. The full-window overlay itself blocks the app
+            underneath; keeping the scrim out of the hit-test path lets the tour
+            controls receive taps reliably. */}
+        <View
+          pointerEvents="none"
+          style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(15, 10, 5, 0.55)' }]}
+          accessibilityElementsHidden
+          importantForAccessibility="no-hide-descendants"
+        />
 
       {/* Spotlight ring around the current target. */}
       <View
@@ -345,7 +347,8 @@ export default function FeatureTour() {
           </View>
         )}
       </View>
-    </View>
+      </View>
+    </FullWindowOverlay>
   );
 }
 

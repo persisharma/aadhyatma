@@ -15,13 +15,29 @@
 #    tile carries a NEW badge → ".*Pilgrimage.*Tap to open.*"; detail prose →
 #    ".*Sources.*".
 #  - In a drill-in a temple is both a map pin and a list row → pin tap uses index 0.
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
-- stopApp:
-    appId: host.exp.Exponent
-# Point this at your worktree's Metro dev server (Expo default 8081).
-- openLink:
-    link: "exp://127.0.0.1:8081"
+# Native dev-client build: launch reconnects to Metro and lands on Home.
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
 
 # Home → Pilgrimage tile lands directly on the Theerth listing (no intermediate
 # library-entry list anymore). The tile shows a NEW badge → regex.
@@ -62,4 +78,4 @@ appId: host.exp.Exponent
 - assertVisible: "Gujarat"
 
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

@@ -19,7 +19,7 @@
 # cannot boot in this environment, the integrated path is also covered by the
 # Jest tests (NewContentContext.test.tsx + LibraryCardNewBadge.test.tsx).
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot, then force a clean (nothing-new) start regardless of prior runs ──
 - runFlow: _launch.yaml
@@ -87,7 +87,7 @@ appId: host.exp.Exponent
 
 # ── Step 6: Restart → dismissal persisted; re-open stotram ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 - tapOn: "Hymns & Praise. New. Tap to open."
 - waitForAnimationToEnd
@@ -107,7 +107,7 @@ appId: host.exp.Exponent
 
 # ── Cleanup: reset NEW state so later flows in `maestro test .maestro/` start clean ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 - scrollUntilVisible:
     element:
@@ -119,4 +119,4 @@ appId: host.exp.Exponent
     id: "dev-reset-new-content"
 - waitForAnimationToEnd
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh
