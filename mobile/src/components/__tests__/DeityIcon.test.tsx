@@ -3,6 +3,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { Text } from 'react-native';
 
 import DeityIcon from '../DeityIcon';
+import { deityGlyphs } from '../deityGlyphs';
 
 function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
@@ -29,17 +30,9 @@ function texts(tree: TestRenderer.ReactTestRenderer) {
 }
 
 describe('DeityIcon', () => {
-  test('renders drawn glyphs (no text) for the converted organic keys', () => {
-    const keys = [
-      'bowArrow',
-      'trishul',
-      'lotus',
-      'lakshmi',
-      'radha',
-      'kali',
-      'narasimha',
-      'dattatreya',
-    ] as const;
+  test('every registered iconKey renders a drawn View glyph — no emoji, no text', () => {
+    const keys = Object.keys(deityGlyphs) as (keyof typeof deityGlyphs)[];
+    expect(keys.length).toBe(21);
     for (const key of keys) {
       const tree = render(<DeityIcon iconKey={key} fallbackText="ॐ" />);
       expect(texts(tree)).toHaveLength(0);
@@ -70,25 +63,6 @@ describe('DeityIcon', () => {
     expect(texts(render(<DeityIcon iconKey="gada" fallbackText="ॐ" size={120} />))).toHaveLength(0);
   });
 
-  test('renders drawn glyphs (no text) for the converted geometric keys', () => {
-    const keys = [
-      'chakra',
-      'surya',
-      'suryadev',
-      'navagraha',
-      'shani',
-      'kartikeya',
-      'kubera',
-      'ganga',
-      'parvati',
-    ] as const;
-    for (const key of keys) {
-      const tree = render(<DeityIcon iconKey={key} fallbackText="ॐ" />);
-      expect(texts(tree)).toHaveLength(0);
-      expect(tree.root.findAllByProps({ testID: `deity-glyph-${key}` }).length).toBeGreaterThan(0);
-    }
-  });
-
   test('chakra glyph carries its silhouette parts', () => {
     const tree = render(<DeityIcon iconKey="chakra" fallbackText="ॐ" />);
     for (const part of ['ring', 'spoke', 'hub']) {
@@ -102,5 +76,18 @@ describe('DeityIcon', () => {
     expect(shani.root.findAllByProps({ testID: 'deity-icon-shani-disc' }).length).toBeGreaterThan(0);
     const nava = render(<DeityIcon iconKey="navagraha" fallbackText="ॐ" />);
     expect(nava.root.findAllByProps({ testID: 'deity-icon-navagraha-center' }).length).toBeGreaterThan(0);
+  });
+
+  test('trishul, lakshmi, and narasimha glyphs carry their silhouette parts', () => {
+    const trishul = render(<DeityIcon iconKey="trishul" fallbackText="ॐ" />);
+    for (const part of ['shaft', 'crossbar', 'prong']) {
+      expect(trishul.root.findAllByProps({ testID: `deity-icon-trishul-${part}` }).length).toBeGreaterThan(0);
+    }
+    const lakshmi = render(<DeityIcon iconKey="lakshmi" fallbackText="ॐ" />);
+    expect(lakshmi.root.findAllByProps({ testID: 'deity-icon-lakshmi-coin' }).length).toBeGreaterThan(0);
+    expect(lakshmi.root.findAllByProps({ testID: 'deity-icon-lakshmi-cup' }).length).toBeGreaterThan(0);
+    const narasimha = render(<DeityIcon iconKey="narasimha" fallbackText="ॐ" />);
+    expect(narasimha.root.findAllByProps({ testID: 'deity-icon-narasimha-mane' }).length).toBeGreaterThan(0);
+    expect(narasimha.root.findAllByProps({ testID: 'deity-icon-narasimha-face' }).length).toBeGreaterThan(0);
   });
 });

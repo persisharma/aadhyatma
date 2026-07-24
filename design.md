@@ -1312,12 +1312,14 @@ Wears the active LibraryCard treatment (§8): `cardActiveFrom → cardActiveTo` 
 - **NEW pill** top-right when `hasNew`: `newBadgeBg` fill, `newBadgeText` text, `pill` radius, 9 pt uppercase — same geometry as §19.
 - Whole card is the press target; a11y label reads name + count + "New." when badged.
 
-### Deity Icon system (`DeityIcon.tsx`)
+### Deity Icon system (`DeityIcon.tsx` + `deityGlyphs/`)
 
-Each deity's avatar glyph is a compact **symbolic attribute**, not a portrait (design spec: `docs/superpowers/specs/2026-05-08-deity-icons-design.md`). Two render paths:
+Each deity's avatar glyph is a compact **symbolic attribute**, not a portrait (design spec: `docs/superpowers/specs/2026-05-08-deity-icons-design.md`). All 21 icon keys render as **hand-built vector glyphs** — pure `View` compositions, no SVG per the §30 convention and no emoji per §5 — one file per key under `mobile/src/components/deityGlyphs/`, registered in a total `Record<DeityIconKey, ComponentType>` so a deity added without a drawn glyph fails typecheck.
 
-- **Hand-built vector glyphs** (pure `View` compositions — no SVG, per the §30 convention): Krishna's bansuri + peacock-feather plume, Hanuman's gada, Ganesha's modak, Saraswati's veena. Drawn at a 36 dp base size and transform-scaled for other sizes. These carry their own small fixed palette (a warm ink-brown + gold, plus peacock green/teal/yellow for the feather eye) — deliberate illustration colors baked into the art, not theme tokens.
-- **Emoji glyphs** for the remaining keys: bow-and-arrow (rama), chakra (vishnu), trishul (shiva), lotus (durga), sun (savitr), and the PRD-A deity-expansion keys — 🪔 (lakshmi), 🌞 (suryadev), 🌸 (radha), 🦚 (kartikeya), 💎 (kubera), 🌊 (ganga), 🌺 (parvati), 🦁 (narasimha), 🕉️ (dattatreya), 🪐 (shani), 🌑 (kali), 🌌 (navagraha). [A pragmatic, spec-approved exception to §5's "no emoji" rule — scoped to these avatar glyphs only; the fallback for any missing/poor glyph is the deity's Devanagari initials, never a blank avatar.]
+- **Canvas + scaling:** every glyph draws inside a uniform 36×36 dp centered canvas (`DeityIcon` wraps it with a `deity-glyph-<key>` testID) and is transform-scaled for other sizes (`size` prop; MiniPlayer 26, cards 36, Now Playing 150). The layout box stays 36×36 at every size — consumers center it in fixed frames.
+- **Baked illustration palette** (`deityGlyphs/palette.ts`): warm ink-brown `#733207` silhouettes/strokes (borderWidth ~1.3–2), gold `#D49A35` accent fills, plus goldSoft/cream and the peacock leafGreen/teal/deepBlue/featherYellow family (also used for Ganga's cool-water waves) and a flame orange. Deliberate illustration colors baked into the art, not theme tokens — the glyphs sit on the fixed `cardThumbActiveFrom → cardThumbActiveTo` medallion gradient.
+- **The 21 attributes:** bow-and-arrow (rama), bansuri + peacock-feather plume (krishna), Sudarshana chakra (vishnu), trishul (shiva), gada (hanuman), open lotus (durga), modak (ganesha), eight-ray sun (savitr), veena (saraswati), coins-into-lotus (lakshmi), rising sun over horizon (suryadev), lotus bud on stem (radha), vel spear (kartikeya), treasure pot (kubera), descending waves (ganga), five-petal blossom (parvati), lion emblem in a mane ring (narasimha), hand-drawn ॐ (dattatreya), ringed graha (shani), khadga (kali), nine-dot yantra (navagraha).
+- **Fallback:** an undefined `iconKey` renders the deity's first two Devanagari characters — never a blank avatar.
 
 **Interactions.** Tap a card → push `DeityListScreen` for that deity (§22) — same `LibraryCard` rows, resume-sheet behaviour (§40), and NEW clearing (§44) as a category list.
 

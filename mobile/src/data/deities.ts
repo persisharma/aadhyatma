@@ -10,7 +10,7 @@ export type DeityIconKey =
   | 'modak'
   | 'surya'
   | 'veena'
-  // PRD-A deity expansion (§A.4.2) — emoji glyphs (see DeityIcon.emojiIcons).
+  // PRD-A deity expansion (§A.4.2) — drawn glyphs live in components/deityGlyphs/.
   | 'lakshmi'
   | 'suryadev'
   | 'radha'

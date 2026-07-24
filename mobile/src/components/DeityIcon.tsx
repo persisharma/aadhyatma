@@ -20,31 +20,10 @@ type Props = {
  */
 const BASE_SIZE = 36;
 
-const emojiIcons: Partial<Record<DeityIconKey, string>> = {
-  bowArrow: '🏹',
-  chakra: '☸️',
-  trishul: '🔱',
-  lotus: '🪷',
-  surya: '☀️',
-  // PRD-A deity expansion (§A.4.2)
-  lakshmi: '🪔',
-  suryadev: '🌞',
-  radha: '🌸',
-  kartikeya: '🦚',
-  kubera: '💎',
-  ganga: '🌊',
-  parvati: '🌺',
-  narasimha: '🦁',
-  dattatreya: '🕉️',
-  shani: '🪐',
-  kali: '🌑',
-  navagraha: '🌌',
-};
-
 export default function DeityIcon({ iconKey, fallbackText, size = BASE_SIZE }: Props) {
   const scale = size / BASE_SIZE;
-  const Glyph = iconKey ? deityGlyphs[iconKey] : undefined;
-  if (Glyph && iconKey) {
+  if (iconKey) {
+    const Glyph = deityGlyphs[iconKey];
     return (
       <Scaled scale={scale}>
         <View style={styles.canvas} testID={`deity-glyph-${iconKey}`} accessible={false}>
@@ -52,11 +31,6 @@ export default function DeityIcon({ iconKey, fallbackText, size = BASE_SIZE }: P
         </View>
       </Scaled>
     );
-  }
-
-  const emoji = iconKey ? emojiIcons[iconKey] : undefined;
-  if (emoji) {
-    return <Text style={[styles.emoji, { fontSize: size * 0.61, lineHeight: size * 0.78 }]}>{emoji}</Text>;
   }
 
   return <Text style={[styles.fallback, { fontSize: size * 0.44 }]}>{fallbackText}</Text>;
@@ -75,12 +49,6 @@ const styles = StyleSheet.create({
     height: BASE_SIZE,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  emoji: {
-    fontSize: 22,
-    lineHeight: 28,
-    includeFontPadding: false,
-    textAlign: 'center',
   },
   fallback: {
     color: cream,
