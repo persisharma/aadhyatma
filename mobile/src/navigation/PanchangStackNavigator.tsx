@@ -6,6 +6,8 @@ import ObservanceDetailScreen from '@/screens/ObservanceDetailScreen';
 import KathaLibraryScreen from '@/screens/KathaLibraryScreen';
 import MyVratScreen from '@/screens/MyVratScreen';
 import MuhuratDetailScreen from '@/screens/MuhuratDetailScreen';
+import KundaliScreen from '@/screens/KundaliScreen';
+import RashifalScreen from '@/screens/RashifalScreen';
 import type { PanchangStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<PanchangStackParamList>();
@@ -40,6 +42,16 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="MuhuratDetail"
         component={MuhuratDetailScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="Kundali"
+        component={KundaliScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="Rashifal"
+        component={RashifalScreen}
         options={{ animation: 'slide_from_right' }}
       />
     </Stack.Navigator>

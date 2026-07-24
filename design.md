@@ -992,11 +992,11 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 
 **Structure (top to bottom):**
 
-1. **System header** — one compact row, equal-width flex sides so the centre toggle stays screen-centred:
+1. **Surface modes** — the fixed first control in every mode: segmented pill `पंचांग · Panchang` / `व्रत-पर्व · Vrat & Parv` / `ज्योतिष · Jyotish` (13 pt, active `saffron-tint`/`saffron-deep`). It must not move vertically when the selected mode changes.
+2. **Contextual Panchang header** — shown below the mode selector for Panchang and Vrat & Parv only; hidden in Jyotish because current city, lunar-month convention, and followed-vrat state do not apply to a birth chart. One compact row, equal-width flex sides so the centre toggle stays screen-centred:
    - *Location chip* (left): a drawn teardrop pin (11 px, `saffron`, counter-rotated `parchment-soft` hole — no emoji per §5) + city name at 12 pt, in a `parchment-soft` pill with `divider` border. Tap → Location Picker (below).
    - *Calendar-system toggle* (centre): segmented pill `पूर्णिमांत / अमान्त` (Purnimant default), active half `saffron-tint` + `saffron-deep`, inactive `ink-muted`. Persisted at `@vedansh:panchang-calendar-system`.
    - *My Vrat button* (right): 34 px circle, `gold` ★, with a `saffron` count badge when the user follows any vrat. → MyVrat.
-2. **Surface tabs** — segmented pill `पंचांग · Calendar` / `व्रत-पर्व · Vrat & Parv` (13 pt, active `saffron-tint`/`saffron-deep`).
 3. **Calendar card** (`parchment-soft`, `divider` border, `radii.lg`, `elevation.card`): `‹ [full date + "Month view" affordance] ›` day stepper; the date expands an inline month grid — weekday row (Inter 9), 7-column cells (min-height 38, radius 8), selected day `saffron-tint` + `saffron` border, today `gold` border, and tiny 7 pt Inter observance tags per day (`पर्व` on `saffron-tint`, `व्रत` on `gold-tint`, `व्रत+` when mixed). A horizontal swipe anywhere on the card (dx > 54, mostly-horizontal) steps one day. An `आज · Today` pill resets.
 4. **Day panel** (the panchang proper, once computed — an `ActivityIndicator` in `saffron` while the day is derived off the render path):
    - *Date header*: vara name (reader-title face 15, `saffron-deep`) · full date · `विक्रम संवत् N`, then lunar month (+ अधिक flag) · shukla/krishna paksha (11 pt `ink-muted`), over a hairline `divider`.
@@ -1596,3 +1596,23 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 ### Deity Detail
 
 `DeityIndexScreen` now opens `DeityDetailScreen`. The detail page keeps the existing deity background and top bar, then shows a source-cited essay from `deityEssays.ts` followed by that deity's texts grouped by content form (`categories.ts` order). Each group heading uses `sectionLabel`; entries remain `LibraryCard`s and route through `navigateToEntryStart()`. `DeityListScreen` remains a compatibility fallback for direct filtered-list navigation.
+
+---
+
+## 51. Kundali + Daily Rashifal (PRD-C)
+
+**Discovery.** Kundali is a permanent `CategoryCard variant="launcher"` on Home (`कुंडली · Kundali`, insight glyph, NEW badge), not a shuffled Discover card. It deep-links to `PanchangHome({ initialTab: 'jyotish' })`. Panchang's top peer selector is `Panchang | Vrat & Parv | Jyotish`; it remains the fixed first control in every mode, while location/calendar-system/My Vrat controls appear beneath it only for the two Panchang-derived modes. The Jyotish landing keeps Kundali, Daily Rashifal, and the existing Navagraha Stotram one tap apart. Birth city is deliberately independent of the current Panchang location.
+
+**Birth input.** One card asks for optional name, `YYYY-MM-DD`, 24-hour `HH:mm`, and a bundled Indian city. v1 is explicitly India/IST only. The profile persists on-device under `@vedansh:kundali-birth-profile:v1`; the result header offers Edit and the bottom action offers a destructive-but-recoverable “Delete saved profile” reset. Copy explains that correct birth time matters for Lagna/houses.
+
+**Novice-first result.** The default `Overview` tab precedes `Chart | Grahas | Dasha`. It explains Lagna, Moon rashi/nakshatra, and the current Mahadasha in bounded, traditional language, and every insight links to its underlying detail tab. A Navagraha practice card routes through the existing library/reader dispatcher. Never lead a novice with an unexplained chart.
+
+**North Indian chart.** `NorthIndianChart` is a fixed-house North Indian diamond rendered with `react-native-svg`: first house at top, seventh at bottom, small numeric rashi labels, two-letter graha abbreviations. Its enclosing accessible image label narrates all twelve houses and occupants; chart geometry is never the only representation because the Grahas table carries the same values textually.
+
+**Grahas and Dasha.** Graha rows show sign, degree/minute, house, nakshatra/pada, and `℞` for retrograde. The Vimshottari timeline shows nine Mahadashas with dates and ordered Antardasha lords. Both views include a short explanation before raw data.
+
+**Rashifal.** Daily Rashifal selects the saved Kundali's Moon sign when available, otherwise lets the user choose any of twelve signs. Cards are `Favour`, `Pause`, and `Reflection`, followed by an existing Surya/Shani/Navagraha reader link chosen by the pure transit rules. The disclaimer is part of the surface, not fine print: “traditional transit-based guidance—not a certain prediction.” No luck score, guaranteed event, fear copy, random generation, AI call, or remote horoscope feed.
+
+**Surface family.** Continue the warm manuscript palette: parchment gradients, `cardActiveBorder`, saffron/gold tints, `radii.lg`, theme elevation, existing script-aware type helpers, and minimum 40–48dp controls. English accessibility labels remain stable for Maestro even when Hindi is the visible reading language.
+
+**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`; `NorthIndianChart.tsx`, `KundaliOverview.tsx`; `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.

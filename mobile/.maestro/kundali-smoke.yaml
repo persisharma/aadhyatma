@@ -1,0 +1,155 @@
+# PRD-C Kundali + Rashifal native-build smoke
+#
+# Verifies the intentionally shallow discovery path:
+# Home permanent launcher → Panchang/Jyotish landing → birth input → beginner
+# overview → chart/grahas/dasha → Daily Rashifal.
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084`. This flow launches the real
+# app bundle with React Native's native Metro-location argument; it never opens
+# Expo Go or depends on the simulator's previous packager.
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+# The first native bundle load can remount the first-launch tour once while
+# Metro settles; a second optional dismissal keeps the smoke deterministic.
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
+
+# Use English for stable visible-text assertions; accessibility labels stay
+# English in every language, but the explanatory headings below are localized.
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+
+# Permanent Home launcher — this must not depend on the shuffled Discover row.
+- scrollUntilVisible:
+    element:
+      text: "Kundali. New. Tap to open."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Kundali. New. Tap to open."
+- waitForAnimationToEnd
+
+# Panchang peer-mode landing.
+- extendedWaitUntil:
+    visible: "Understand Jyotish"
+    timeout: 15000
+- assertVisible: "Panchang"
+- assertVisible: "Vrat & Parv"
+- assertVisible: "Jyotish"
+- assertVisible: "Create Kundali"
+- assertVisible: "Open Daily Rashifal"
+- assertVisible: "Open Navagraha Stotram"
+- tapOn: "Create Kundali"
+- waitForAnimationToEnd
+
+# If a previous manual run left a profile on this simulator, enter edit mode.
+- tapOn:
+    text: "Edit birth details"
+    optional: true
+- tapOn:
+    id: "kundali-name-input"
+- eraseText: 40
+- inputText: "Aarav"
+- tapOn:
+    id: "kundali-date-input"
+- eraseText: 20
+- inputText: "1992-08-14"
+- tapOn:
+    id: "kundali-time-input"
+- eraseText: 10
+- inputText: "05:42"
+
+# Pin the golden-fixture city rather than relying on a previous profile.
+- scrollUntilVisible:
+    element:
+      id: "kundali-city-button"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "kundali-city-button"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-city-search"
+- inputText: "Ujjain"
+- tapOn: "Select Ujjain birth city"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "kundali-generate-button"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "kundali-generate-button"
+- waitForAnimationToEnd
+
+# Novice-first result and expert detail tabs.
+- extendedWaitUntil:
+    visible: "Kundali result"
+    timeout: 20000
+- assertVisible: "Understand your chart first"
+- assertVisible: "Overview tab"
+- assertVisible: "Chart tab"
+- assertVisible: "Grahas tab"
+- assertVisible: "Dasha tab"
+- tapOn: "Chart tab"
+- assertVisible: "North Indian chart"
+- assertVisible: "North Indian Kundali.*"
+- tapOn: "Grahas tab"
+- assertVisible: "Graha positions"
+- tapOn: "Dasha tab"
+- assertVisible: "Vimshottari Dasha"
+
+# Return to the Jyotish landing and verify daily guidance.
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Open Daily Rashifal"
+    timeout: 15000
+- tapOn: "Open Daily Rashifal"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Daily Rashifal"
+    timeout: 15000
+- assertVisible: "FAVOUR"
+- assertVisible: "PAUSE"
+- assertVisible: "REFLECTION"
+- assertVisible: ".*not a certain prediction.*"
+- assertVisible: "Open .* practice"
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

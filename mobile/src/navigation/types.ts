@@ -79,16 +79,20 @@ export type MoreStackParamList = {
   JapamAlarms: undefined;
 };
 
-// Panchang tab stack — the date-first calendar plus the "Vrat & Parv" (व्रत-पर्व)
-// catalog journey (PRD-09). PanchangHome hosts the [Calendar | Vrat & Parv] segment.
+export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
+
+// Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
+// (PRD-09), and the Jyotish tools landing (PRD-C).
 export type PanchangStackParamList = {
-  PanchangHome: undefined;
+  PanchangHome: { initialTab?: PanchangHomeMode } | undefined;
   ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
   ObservanceDetail: { ruleId: string };
   KathaLibrary: undefined;
   MyVrat: undefined;
   // Daily Muhurat detail (Choghadiya / Rahu Kaal / Abhijit) — PRD-14
   MuhuratDetail: { dateMs: number };
+  Kundali: undefined;
+  Rashifal: { rashiIndex?: number } | undefined;
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing

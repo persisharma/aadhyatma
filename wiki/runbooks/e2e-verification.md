@@ -2,7 +2,7 @@
 title: E2E (Maestro) — authoring, verification, and the ship-with-e2e policy
 type: runbook
 sources: [mobile/.maestro, mobile/.maestro/README.md, mobile/.maestro/_launch.yaml, RULEBOOK.md]
-last_verified_date: 2026-07-22
+last_verified_date: 2026-07-24
 confidence: high
 status: current
 ---
@@ -10,10 +10,15 @@ status: current
 ## Summary
 
 Every user-facing change ships with an e2e flow. UI e2e is [Maestro](https://maestro.mobile.dev)
-flows in `mobile/.maestro/*.yaml`, run against **Expo Go** on an iOS simulator. This runbook
-covers the **policy**, how to **author** a flow, and how to **verify** one on a live simulator —
-including the isolated-simulator recipe for machines running many Conductor worktrees at once.
-For the flow catalog, setup, and element-selection rules, see `mobile/.maestro/README.md`.
+flows in `mobile/.maestro/*.yaml`, normally run against **Expo Go** on an iOS simulator; native
+module and app-shell coverage uses an installed development build. This runbook covers the
+**policy**, how to **author** a flow, and how to **verify** one on a live simulator — including
+the isolated-simulator recipe for machines running many Conductor worktrees at once. For the flow
+catalog, setup, and element-selection rules, see `mobile/.maestro/README.md`.
+
+PRD-C's `kundali-smoke.yaml` is the first native-build exception: it launches
+`com.prashantsharma.vedansh` directly so custom native configuration and the real app shell are
+covered rather than Expo Go. Its file header and the native recipe below are authoritative.
 
 ## Policy — every change ships with e2e
 
@@ -72,6 +77,23 @@ worktree's **own** Metro:
    `maestro --device <UDID> test .maestro/<flow>.yaml`.
    The screenshot in `~/.maestro/tests/<ts>/` confirms the correct bundle loaded
    (look for the app's version, e.g. the What's New sheet showing the expected `V1.4.x`).
+
+### Native debug build (Kundali and native-module coverage)
+
+Use this when a flow declares `appId: com.prashantsharma.vedansh`:
+
+1. Boot a dedicated shutdown simulator and confirm its UDID.
+2. From `mobile/`, run
+   `npx expo run:ios --device <UDID> --port 8084`.
+   The generated `ios/` directory is gitignored; the command prebuilds, compiles, installs, starts
+   the worktree's Metro, and launches the native debug binary.
+3. Confirm the installed bundle:
+   `xcrun simctl listapps <UDID> | grep com.prashantsharma.vedansh`.
+4. Run
+   `maestro --device <UDID> test .maestro/kundali-smoke.yaml`.
+   The flow clears only this app's simulator state and launches the native development build with
+   React Native's `RCT_jsLocation=127.0.0.1:8084` launch argument, so it cannot inherit a Metro
+   server from another workspace and never touches Expo Go.
 
 ## Gotchas
 

@@ -60,10 +60,11 @@ export default function HomeScreen({ navigation }: Props) {
   };
 
   // Launcher grid: the registry content categories (categories.ts, ranked by
-  // usefulness + USP), with two non-content tiles interleaved at their ranked
-  // spots — व्रत (a door into the Panchang observance engine, PRD-09; not a
-  // ContentCategory) right after जप, and देवता (the Deity Index) after तीर्थ.
-  // 13 tiles today, so the final row is ragged pending a grid-count decision.
+  // usefulness + USP), with non-content tiles interleaved at their ranked
+  // spots — व्रत (a door into the Panchang observance engine, PRD-09) and
+  // कुंडली (the PRD-C Jyotish landing) right after जप, and देवता after तीर्थ.
+  // These are permanent launchers, not shuffled Discover cards: high-intent
+  // tools must remain findable in the same place on every visit.
   // Anchoring by id (not index) keeps the interleave correct if categories are
   // added/reordered. Memoized so the CategoryCards keep stable icon/onPress
   // props across unrelated HomeScreen re-renders (context churn, tour registration).
@@ -86,6 +87,19 @@ export default function HomeScreen({ navigation }: Props) {
       status: 'active',
       icon: iconFor('deity'),
       onPress: () => navigation.navigate('DeityIndex'),
+    };
+    const kundaliTile: TileItem = {
+      key: 'kundali',
+      nameHi: 'कुंडली',
+      nameEn: 'Kundali',
+      status: 'active',
+      icon: iconFor('insight'),
+      hasNew: true,
+      onPress: () =>
+        rootNav.navigate(
+          'PanchangTab',
+          panchangTabTarget('PanchangHome', { initialTab: 'jyotish' })
+        ),
     };
     const purposeTile: TileItem = {
       key: 'purpose',
@@ -111,7 +125,7 @@ export default function HomeScreen({ navigation }: Props) {
             ? navigation.navigate('TheerthMap', {})
             : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
       });
-      if (c.id === 'japam') result.push(vratTile);
+      if (c.id === 'japam') result.push(vratTile, kundaliTile);
       if (c.id === 'theerth') result.push(deityTile, purposeTile);
     }
     return result;

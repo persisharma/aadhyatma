@@ -1,21 +1,35 @@
 ---
-title: Panchang & Muhurat
+title: Panchang, Muhurat & Jyotish
 type: subsystem
-sources: [mobile/src/panchang/engine.ts, mobile/src/panchang/festivalEngine.ts, mobile/src/panchang/muhurat.ts, mobile/src/panchang/muhuratFormat.ts, mobile/src/panchang/useMuhurat.ts, mobile/src/screens/PanchangScreen.tsx, mobile/src/screens/MuhuratDetailScreen.tsx, mobile/src/components/MuhuratGlanceCard.tsx, mobile/src/components/MuhuratCardBody.tsx, mobile/src/navigation/PanchangStackNavigator.tsx, docs/roadmap/prds/14-daily-muhurat.md, docs/roadmap/trds/14-daily-muhurat.trd.md]
-last_verified_date: 2026-07-09
+sources: [mobile/src/panchang/engine.ts, mobile/src/panchang/festivalEngine.ts, mobile/src/panchang/muhurat.ts, mobile/src/panchang/muhuratFormat.ts, mobile/src/panchang/useMuhurat.ts, mobile/src/panchang/kundali.ts, mobile/src/panchang/useKundali.ts, mobile/src/screens/PanchangScreen.tsx, mobile/src/screens/MuhuratDetailScreen.tsx, mobile/src/screens/KundaliScreen.tsx, mobile/src/screens/RashifalScreen.tsx, mobile/src/components/MuhuratGlanceCard.tsx, mobile/src/components/MuhuratCardBody.tsx, mobile/src/components/NorthIndianChart.tsx, mobile/src/components/KundaliOverview.tsx, mobile/src/navigation/PanchangStackNavigator.tsx, docs/roadmap/prds/14-daily-muhurat.md, docs/roadmap/trds/14-daily-muhurat.trd.md]
+last_verified_date: 2026-07-24
 confidence: high
 status: current
 ---
 
 ## Summary
 
-The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat observances, a katha library, and — as of PRD-14 — a Daily Muhurat glance card and full detail screen. The muhurat engine (Choghadiya, Rahu/Gulika/Yamaganda Kaal, Abhijit) is pure arithmetic from sunrise/sunset timestamps and the weekday; no astronomy inside the engine itself.
+The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat observances, a katha library, Daily Muhurat, and — as of PRD-C — Kundali plus deterministic Daily Rashifal. Panchang's top selector now has three peer modes: `Panchang | Vrat & Parv | Jyotish`. The Kundali/Rashifal engine extends the existing astronomy primitives; it is pure, offline, Lahiri sidereal, and India/IST-only in v1.
 
 ## Details
 
-**Navigation** (`PanchangStackNavigator.tsx`): tab 3 root is `PanchangScreen`; a `MuhuratDetail` route was added to the same native stack.
+**Navigation** (`PanchangStackNavigator.tsx`): tab 3 root is `PanchangScreen`; `MuhuratDetail`, `Kundali`, and `Rashifal` are routes in the same native stack. `PanchangHome` accepts `initialTab`, allowing Home's permanent Kundali launcher to land directly on Jyotish without making the calendar root unreachable.
 
-**PanchangScreen** (`screens/PanchangScreen.tsx`): date picker + month calendar + observance list + katha section + a `MuhuratGlanceCard` row. Tapping the glance card navigates to `MuhuratDetail`.
+**PanchangScreen** (`screens/PanchangScreen.tsx`): the three-way mode selector is the fixed first control, so switching to Jyotish cannot move it; the location/calendar-system/My Vrat row follows only in Panchang and Vrat modes. The screen then provides date picker + month calendar + observance list + katha section + a `MuhuratGlanceCard` row. Its Jyotish landing presents Create Kundali, Daily Rashifal, and the existing Navagraha Stotram together. Tapping the glance card navigates to `MuhuratDetail`.
+
+**Kundali engine** (`panchang/kundali.ts`): pure calculations from an explicit UTC instant and bundled Indian city coordinates.
+- Reuses `engine.ts`'s Lahiri ayanamsa; Sun/Moon/classical planets come from `astronomy-engine`, Rahu is the mean ascending node, and Ketu is exactly opposite.
+- `computeLagna` solves the eastern ecliptic/horizon intersection and converts it to the sidereal ascendant.
+- Houses are whole-sign from the Lagna sign. Each of nine grahas includes sidereal longitude, rashi, degree, nakshatra, pada, house, and retrograde state.
+- `computeVimshottariDasha` uses the Moon's nakshatra, canonical nine-lord order, birth balance, and contiguous Mahadasha/Antardasha periods over the 120-year cycle.
+- `buildKundaliInsights` explains Lagna, Moon, and current Dasha structurally for newcomers; it does not diagnose personality or promise events.
+- `computeRashifal` anchors the India civil day at 06:00 IST, evaluates deterministic transit-house support for any Moon-sign index, and returns Favour/Pause/Practice/Reflection copy plus one allow-listed existing reader id. No random, AI, network, or luck-score path exists.
+
+**Kundali hook/UI**:
+- `useKundali.ts` owns the on-device profile `{ name?, date, time, cityId }`, strict input parsing, IST→UTC conversion, and AsyncStorage hydration. Birth city is independent of `PanchangLocationContext`.
+- `KundaliScreen` is input first when no profile exists; saved profiles open the result. Results lead with `Overview`, followed by `Chart | Grahas | Dasha`.
+- `NorthIndianChart` renders the fixed-house diamond with SVG and exposes all twelve houses/occupants in one accessibility label; the Grahas table is the equivalent textual representation.
+- `RashifalScreen` defaults to the saved chart's Moon rashi or allows manual selection across all twelve signs. The traditional-guidance disclaimer is always visible, and practice buttons route through the existing reader dispatcher.
 
 **Muhurat engine** (`panchang/muhurat.ts`): pure arithmetic — no React, no astronomy, no `Date.now()`.
 - Inputs: `sunrise: Date, sunset: Date, nextSunrise: Date, weekday: number`.
@@ -43,6 +57,9 @@ The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat o
 - `muhurat.drikfixture.test.ts` — golden values against DrikPanchang reference data.
 - `muhurat.external.test.ts` — cross-check against an external reference.
 - `muhurat.twoYear.test.ts` — two-year sweep for invariants (8+8 choghadiya always present, abhijit within day span).
+- `kundali.engine.test.ts` — three hand-picked independent Swiss Ephemeris 2.10.03/Lahiri goldens plus whole-sign/node/Dasha invariants, novice-copy framing, all-sign Rashifal determinism, and a static purity guard.
+- `kundali.swiss-corpus.test.ts` — a generated but committed 15-city × 10-instant Swiss Ephemeris matrix: 150 charts / 1,350 placements across 1950–2026. It pins official ephemeris file hashes and verifies strict angular bounds plus exact Lagna-rashi, rashi, nakshatra, pada, whole-sign-house, retrograde, first-Mahadasha-lord, and birth-Antardasha agreement. Method and measured maxima are in `panchang/KUNDALI_VERIFICATION.md`.
+- Targeted Jest covers the accessible North Indian chart, novice-first result tabs, Rashifal framing/Moon-sign selection, and strict profile IST conversion. `.maestro/kundali-smoke.yaml` covers Home → Jyotish → birth profile → Overview/Chart/Grahas/Dasha → Rashifal.
 
 **Anga model — sunrise anga + kshaya capture** (`panchang/engine.ts`): a civil day's tithi/nakshatra is the one current **at local sunrise** (udaya-vyapini convention), with `endTime` bisected forward from sunrise — end times only, no start times (an anga's start is the previous anga's end, usually the previous day; same convention as DrikPanchang). A tithi lasts 19h59m–26h47m, so between consecutive sunrises the index advances by 1 (normal), 0 (**vriddhi** — same anga at two sunrises), or 2 (**kshaya** — the anga begins and ends strictly inside the day, touching no sunrise; kshaya tithis occur roughly monthly, kshaya nakshatras similarly). `computePanchangForDate` detects the +2 jump against the next day's sunrise (memoised in `sunriseCache`, shared with all solvers) and fills `PanchangData.kshayaTithi` / `kshayaNakshatra`; UI shows them as a second row on the Tithi/Nakshatra tiles and as `क्षय` rows on the Muhurat card, with `formatEndInstant` (muhuratFormat.ts) adding a short-date suffix for past-midnight ends. Reference cases: Bengaluru 10 Jul 2026 — Dashami till 8:16 AM, kshaya Ekadashi till 5:22 AM on 11 Jul; Ujjain 29 Jan 2026 — Rohini, kshaya Mrigashira till 5:28 AM on 30 Jan.
 
@@ -52,6 +69,8 @@ The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat o
 
 - [[overview]] — Panchang tab (tab 3); `PanchangLocationContext` supplies the city lat/lon.
 - `panchang/engine.ts` (`computePanchangForDate`) — astronomy-engine wrapper giving sunrise/sunset; `useMuhurat` calls it twice per date (today + tomorrow).
+- `panchang/engine.ts` (`getAyanamsa`) — shared Lahiri primitive used by both Panchang and Kundali; do not fork it.
+- `panchang/locations.ts` — the same bundled city coordinates are reused for birth-city selection, while persistence remains separate from current Panchang location.
 - `utils/useMinuteTick.ts` — minute-tick utility that drives the live "now" choghadiya refresh.
 
 ## Gotchas
@@ -60,6 +79,10 @@ The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat o
 - **Bump `CACHE_VERSION` in `observanceCache.ts` with every such change** — non-Ujjain cities persist their scans to AsyncStorage keyed by version; without the bump, previously-scanned devices hydrate the old dates forever and never re-run the scan (the fix ships only to Ujjain and fresh installs).
 
 - **Engine is pure; hook is not** — all astronomy and clock calls live in `useMuhurat.ts`. Never add `Date.now()` or astronomy imports to `muhurat.ts`.
+- **Kundali engine is pure; UI supplies time** — `kundali.ts` takes explicit dates and coordinates. AsyncStorage, `new Date()` for “today”, and React belong in hooks/screens. The source-purity test pins this boundary.
+- **Golden fixtures are independent** — values in both Kundali Swiss fixtures are Swiss Ephemeris/Lahiri references, not captured outputs from this engine. Regenerate the 150-case corpus only with `scripts/generate-kundali-swiss-corpus.py` and its pinned official files; do not “fix” a failure by copying current app output or widening a tolerance.
+- **Birth city is not current location** — never bind Kundali input to `PanchangLocationContext`; a user's birth place and present Panchang city are separate domain values.
+- **Rashifal is guidance** — do not add deterministic predictions, random/AI copy, remote feeds, professional directives, or devotional content ids outside the allow-list without an explicit product/content review.
 - **Two astronomy solves per view** — both today and tomorrow are computed to get `nextSunrise`. Both run in `setTimeout(0)`; the screen shows a skeleton/`null` until they complete.
 - **Pre-dawn correction is `isToday`-only** — the yesterday-night prepend only happens when `isToday` is true; when browsing past/future dates `nowPeriods` = today's windows only, so `nowChoghadiya`/`nowKaal` return null for non-today views.
 - **Polar-latitude guard** — if `sunset ≤ sunrise` or `nextSunrise ≤ sunset`, `useMuhurat` returns `null` silently; the UI shows a skeleton indefinitely. Unlikely in practice given the location list is curated.
