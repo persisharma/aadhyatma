@@ -10,8 +10,10 @@
 #   - This flow exits with the Vedansh Home screen rendered and Maestro able
 #     to read past the Expo dev-menu sheet (config.yaml sets
 #     snapshotKeyHonorModalViews: false).
-#   - The "Good Habits. Tap to open." assertion is the canary that confirms
-#     the bundle finished executing.
+#   - The Today-strip + For Today assertions are the canary that confirms the
+#     bundle finished executing. Keep these above-the-fold: Home now has daily
+#     recommendation cards before Categories, so older category tiles such as
+#     "Good Habits" can sit below the first viewport.
 #   - Expo Go can leave a native dev-menu bottom sheet open after project load;
 #     the downward swipe dismisses it when present and is harmless on Home.
 #   - On first launch one onboarding surface may auto-appear over Home and
@@ -29,14 +31,13 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd:
     timeout: 30000
 # Dismiss whichever first-launch onboarding surface auto-appeared BEFORE
-# asserting Home — a fresh install shows the feature tour (an OVERLAY, so Home
-# is visible behind it), but a returning user on a debut release gets the
-# What's New sheet, a FULL modal that covers Home entirely. If we asserted
-# "Good Habits" first, that covering modal would fail the canary before we ever
-# reached the dismiss taps (observed on a 1.4.4 fresh-Expo-Go run). Both dismiss
-# controls are optional no-ops once the surface has been seen. The tour control
-# exposes only its a11y label and Maestro matches the whole string, so it must
-# be "Skip tour", not "Skip"; the What's New ✕ exposes a11y label "Close".
+# asserting Home — a fresh install can show the feature tour (an OVERLAY), a
+# returning user on a debut release gets the What's New sheet, and notification
+# preferences can show the Daily Verse opt-in page sheet. All controls are
+# optional no-ops once the surface has been seen. The tour control exposes only
+# its a11y label and Maestro matches the whole string, so it must be "Skip tour",
+# not "Skip"; the Daily Verse prompt localizes "Not now", so cover every
+# supported primary language.
 - tapOn:
     text: "Skip tour"
     optional: true
@@ -46,9 +47,15 @@ appId: host.exp.Exponent
 - tapOn:
     text: "Got it"
     optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Good Habits\\..*Tap to open\\."
+    visible: "आज का पंचांग|Today.s Panchang"
+    timeout: 60000
+- extendedWaitUntil:
+    visible: "आज के लिए|FOR TODAY"
     timeout: 60000
 - swipe:
     direction: DOWN
