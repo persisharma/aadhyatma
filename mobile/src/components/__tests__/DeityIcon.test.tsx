@@ -51,4 +51,38 @@ describe('DeityIcon', () => {
   test('renders a View-based glyph (no text) for a drawn icon like gada', () => {
     expect(texts(render(<DeityIcon iconKey="gada" fallbackText="ॐ" size={120} />))).toHaveLength(0);
   });
+
+  test('renders drawn glyphs (no text) for the converted geometric keys', () => {
+    const keys = [
+      'chakra',
+      'surya',
+      'suryadev',
+      'navagraha',
+      'shani',
+      'kartikeya',
+      'kubera',
+      'ganga',
+      'parvati',
+    ] as const;
+    for (const key of keys) {
+      const tree = render(<DeityIcon iconKey={key} fallbackText="ॐ" />);
+      expect(texts(tree)).toHaveLength(0);
+      expect(tree.root.findAllByProps({ testID: `deity-glyph-${key}` }).length).toBeGreaterThan(0);
+    }
+  });
+
+  test('chakra glyph carries its silhouette parts', () => {
+    const tree = render(<DeityIcon iconKey="chakra" fallbackText="ॐ" />);
+    for (const part of ['ring', 'spoke', 'hub']) {
+      expect(tree.root.findAllByProps({ testID: `deity-icon-chakra-${part}` }).length).toBeGreaterThan(0);
+    }
+  });
+
+  test('shani glyph carries ring and disc; navagraha carries its gold center', () => {
+    const shani = render(<DeityIcon iconKey="shani" fallbackText="ॐ" />);
+    expect(shani.root.findAllByProps({ testID: 'deity-icon-shani-ring' }).length).toBeGreaterThan(0);
+    expect(shani.root.findAllByProps({ testID: 'deity-icon-shani-disc' }).length).toBeGreaterThan(0);
+    const nava = render(<DeityIcon iconKey="navagraha" fallbackText="ॐ" />);
+    expect(nava.root.findAllByProps({ testID: 'deity-icon-navagraha-center' }).length).toBeGreaterThan(0);
+  });
 });

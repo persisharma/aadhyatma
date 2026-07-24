@@ -3,8 +3,17 @@ import type { ComponentType } from 'react';
 import type { DeityIconKey } from '@/data/deities';
 
 import BansuriPeacockFeatherGlyph from './bansuriPeacockFeather';
+import ChakraGlyph from './chakra';
 import GadaGlyph from './gada';
+import GangaGlyph from './ganga';
+import KartikeyaGlyph from './kartikeya';
+import KuberaGlyph from './kubera';
 import ModakGlyph from './modak';
+import NavagrahaGlyph from './navagraha';
+import ParvatiGlyph from './parvati';
+import ShaniGlyph from './shani';
+import SuryaGlyph from './surya';
+import SuryadevGlyph from './suryadev';
 import VeenaGlyph from './veena';
 
 /**
@@ -15,7 +24,16 @@ import VeenaGlyph from './veena';
  */
 export const deityGlyphs: Partial<Record<DeityIconKey, ComponentType>> = {
   bansuriPeacockFeather: BansuriPeacockFeatherGlyph,
+  chakra: ChakraGlyph,
   gada: GadaGlyph,
+  ganga: GangaGlyph,
+  kartikeya: KartikeyaGlyph,
+  kubera: KuberaGlyph,
   modak: ModakGlyph,
+  navagraha: NavagrahaGlyph,
+  parvati: ParvatiGlyph,
+  shani: ShaniGlyph,
+  surya: SuryaGlyph,
+  suryadev: SuryadevGlyph,
   veena: VeenaGlyph,
 };
