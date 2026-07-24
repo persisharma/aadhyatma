@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Pressable, Text, View as mockView } from 'react-native';
@@ -158,4 +160,19 @@ test('every PRD-C practice id resolves through the existing reader dispatcher', 
     assert.ok(entry, `${sourceId} exists`);
     assert.ok(buildEntryStartTarget(entry), `${sourceId} has a reader route`);
   }
+});
+
+test('Panchang mode selector stays fixed above contextual controls', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'PanchangScreen.tsx'), 'utf8');
+  const selector = source.indexOf('ref={panchangSegmentRef}');
+  const contextualHeader = source.indexOf(
+    "{panchangTab !== 'jyotish' && <View style={styles.systemHeader}>"
+  );
+
+  assert.ok(selector >= 0, 'Panchang mode selector exists');
+  assert.ok(contextualHeader >= 0, 'contextual Panchang controls remain hidden in Jyotish');
+  assert.ok(
+    selector < contextualHeader,
+    'primary mode selector renders before contextual controls and cannot jump between modes'
+  );
 });

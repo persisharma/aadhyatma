@@ -15,7 +15,7 @@ The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat o
 
 **Navigation** (`PanchangStackNavigator.tsx`): tab 3 root is `PanchangScreen`; `MuhuratDetail`, `Kundali`, and `Rashifal` are routes in the same native stack. `PanchangHome` accepts `initialTab`, allowing Home's permanent Kundali launcher to land directly on Jyotish without making the calendar root unreachable.
 
-**PanchangScreen** (`screens/PanchangScreen.tsx`): date picker + month calendar + observance list + katha section + a `MuhuratGlanceCard` row. Its Jyotish landing presents Create Kundali, Daily Rashifal, and the existing Navagraha Stotram together. Tapping the glance card navigates to `MuhuratDetail`.
+**PanchangScreen** (`screens/PanchangScreen.tsx`): the three-way mode selector is the fixed first control, so switching to Jyotish cannot move it; the location/calendar-system/My Vrat row follows only in Panchang and Vrat modes. The screen then provides date picker + month calendar + observance list + katha section + a `MuhuratGlanceCard` row. Its Jyotish landing presents Create Kundali, Daily Rashifal, and the existing Navagraha Stotram together. Tapping the glance card navigates to `MuhuratDetail`.
 
 **Kundali engine** (`panchang/kundali.ts`): pure calculations from an explicit UTC instant and bundled Indian city coordinates.
 - Reuses `engine.ts`'s Lahiri ayanamsa; Sun/Moon/classical planets come from `astronomy-engine`, Rahu is the mean ascending node, and Ketu is exactly opposite.

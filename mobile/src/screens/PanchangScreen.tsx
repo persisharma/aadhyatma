@@ -205,11 +205,42 @@ export default function PanchangScreen({ route }: Props) {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
           showsVerticalScrollIndicator={false}
         >
-          {/* Slim system header — one compact row. The calendar-system toggle and
-              the tappable location reference share a line (the toggle already names
-              the system, so it is dropped from the location text), with the My Vrat
-              star at the trailing edge. This reclaims the vertical space the old
-              stacked toggle-over-location header took. */}
+          {/* Keep the primary mode switch first in every mode. Contextual
+              Panchang controls render below it so selecting Jyotish does not
+              make this segmented control jump vertically. */}
+          <View ref={panchangSegmentRef} collapsable={false} style={[styles.segmented, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.pill }]}>
+            {(['calendar', 'catalog', 'jyotish'] as const).map((tab) => {
+              const selected = panchangTab === tab;
+              const labels = {
+                calendar: { hi: 'पंचांग', en: 'Panchang' },
+                catalog: { hi: 'व्रत-पर्व', en: 'Vrat & Parv' },
+                jyotish: { hi: 'ज्योतिष', en: 'Jyotish' },
+              } as const;
+              return (
+                <Pressable
+                  key={tab}
+                  onPress={() => setPanchangTab(tab)}
+                  accessibilityRole="tab"
+                  accessibilityState={{ selected }}
+                  accessibilityLabel={labels[tab].en}
+                  style={({ pressed }) => [
+                    styles.segmentOption,
+                    { borderRadius: radii.pill },
+                    selected && { backgroundColor: colors.saffronTint },
+                    pressed && !selected && { opacity: 0.7 },
+                  ]}
+                >
+                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 13, color: selected ? colors.saffronDeep : colors.inkMuted }}>
+                    {contentByLang(lang, labels[tab].hi, labels[tab].en)}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+
+          {/* Slim system header — relevant to Panchang and Vrat only. The
+              location, lunar calendar system, and My Vrat controls stay out of
+              Jyotish while preserving a stable primary-navigation position. */}
           {panchangTab !== 'jyotish' && <View style={styles.systemHeader}>
             {/* Equal-width flex sides keep the calendar-system toggle centred on
                 screen regardless of how wide the location chip / star are. */}
@@ -271,36 +302,6 @@ export default function PanchangScreen({ route }: Props) {
               </Pressable>
             </View>
           </View>}
-
-          <View ref={panchangSegmentRef} collapsable={false} style={[styles.segmented, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.pill }]}>
-            {(['calendar', 'catalog', 'jyotish'] as const).map((tab) => {
-              const selected = panchangTab === tab;
-              const labels = {
-                calendar: { hi: 'पंचांग', en: 'Panchang' },
-                catalog: { hi: 'व्रत-पर्व', en: 'Vrat & Parv' },
-                jyotish: { hi: 'ज्योतिष', en: 'Jyotish' },
-              } as const;
-              return (
-                <Pressable
-                  key={tab}
-                  onPress={() => setPanchangTab(tab)}
-                  accessibilityRole="tab"
-                  accessibilityState={{ selected }}
-                  accessibilityLabel={labels[tab].en}
-                  style={({ pressed }) => [
-                    styles.segmentOption,
-                    { borderRadius: radii.pill },
-                    selected && { backgroundColor: colors.saffronTint },
-                    pressed && !selected && { opacity: 0.7 },
-                  ]}
-                >
-                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 13, color: selected ? colors.saffronDeep : colors.inkMuted }}>
-                    {contentByLang(lang, labels[tab].hi, labels[tab].en)}
-                  </Text>
-                </Pressable>
-              );
-            })}
-          </View>
 
           {panchangTab === 'calendar' ? (
             <>
@@ -1221,7 +1222,7 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   scroll: { paddingTop: 8, paddingBottom: 24 },
-  systemHeader: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 2 },
+  systemHeader: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 10 },
   // Equal-width sides → the centre toggle is screen-centred. alignItems keeps the
   // chip hugging the left edge and the star the right.
   headerSide: { flex: 1, alignItems: 'flex-start' },
