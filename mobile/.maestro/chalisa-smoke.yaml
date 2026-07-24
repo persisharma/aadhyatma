@@ -10,7 +10,7 @@
 # resolves correctly — origin of the PR #31 regression that RULEBOOK §3
 # explicitly guards against.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
@@ -31,8 +31,24 @@ appId: host.exp.Exponent
 - assertVisible: "Gayatri Chalisa\\..*Tap to open\\."
 - assertVisible: "Ram Chalisa\\..*Tap to open\\."
 - assertVisible: "Krishna Chalisa\\..*Tap to open\\."
-- assertVisible: "Vishnu Chalisa\\..*Tap to open\\."
-- assertVisible: "Saraswati Chalisa\\..*Tap to open\\."
+# Vishnu & Saraswati are below the fold on the 9-section list — scroll to them
+# (the list grew past one screen; plain assertVisible only sees the top rows).
+- scrollUntilVisible:
+    element:
+      text: "Vishnu Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Saraswati Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+# Scroll back up so the reader opens from Hanuman Chalisa at the top.
+- scrollUntilVisible:
+    element:
+      text: "Hanuman Chalisa\\..*Tap to open\\."
+    direction: UP
+    timeout: 15000
 
 # Open Hanuman Chalisa reader
 - tapOn: "Hanuman Chalisa\\..*Tap to open\\."
@@ -52,4 +68,4 @@ appId: host.exp.Exponent
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

@@ -28,7 +28,7 @@
 #     snapshotKeyHonorModalViews:false lets Maestro read its RN content.
 #     "Disclaimer & Fair Use" is helpContent.en.disclaimerHeading.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
@@ -61,7 +61,9 @@ appId: host.exp.Exponent
 # Switch range → Monthly shows the current month caption; Daily shows "Today".
 - tapOn: "Monthly"
 - waitForAnimationToEnd
-- assertVisible: "June.*"
+# Month caption is "<Month> <Year>" (ProfileScreen EN_MONTHS) — match ANY month
+# so the flow doesn't rot each calendar month (was hardcoded "June").
+- assertVisible: "(January|February|March|April|May|June|July|August|September|October|November|December) 20\\d\\d"
 - tapOn: "Daily"
 - waitForAnimationToEnd
 - assertVisible: "Today"
@@ -100,4 +102,4 @@ appId: host.exp.Exponent
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

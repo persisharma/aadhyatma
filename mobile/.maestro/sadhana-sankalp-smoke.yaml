@@ -57,7 +57,7 @@
 # a prior run of THIS flow, which sets it aside at the end). Re-enrolling replaces
 # any prior enrolment, so an interrupted run self-heals on the next pass.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
 - runFlow: _launch.yaml
@@ -156,4 +156,4 @@ appId: host.exp.Exponent
 
 # ── Cleanup — Expo Go termination resets navigation for the next flow ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

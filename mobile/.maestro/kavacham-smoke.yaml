@@ -10,7 +10,7 @@
 #
 # Selectors: visible text + accessibilityLabel. No pixel coordinates (§9).
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot Vedansh in Expo Go ──
 - runFlow: _launch.yaml
@@ -49,4 +49,4 @@ appId: host.exp.Exponent
 
 # ── Cleanup ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

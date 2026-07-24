@@ -18,7 +18,7 @@
 # expects a clean counter, which the suite baseline provides (reset Vedansh
 # storage before a full run, per README).
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
@@ -56,4 +56,4 @@ appId: host.exp.Exponent
 - tapOn: "Back"
 - waitForAnimationToEnd
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

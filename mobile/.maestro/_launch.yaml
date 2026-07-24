@@ -6,7 +6,7 @@
 # flows at once.
 #
 # Caller contract:
-#   - Caller's appId MUST be host.exp.Exponent (Expo Go).
+#   - Caller's appId MUST be com.prashantsharma.vedansh (Expo Go).
 #   - This flow exits with the Vedansh Home screen rendered and Maestro able
 #     to read past the Expo dev-menu sheet (config.yaml sets
 #     snapshotKeyHonorModalViews: false).
@@ -20,14 +20,29 @@
 #     gets the What's New sheet (dismiss via its "Close" ✕). Both optional taps
 #     are harmless no-ops once the surface has been seen, and only one of them
 #     is ever present at a time (they're mutually exclusive).
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - launchApp:
-    appId: host.exp.Exponent
-- tapOn: "Vedansh"
-# Let the bundle finish executing and any onboarding surface animate in.
+    appId: com.prashantsharma.vedansh
+    clearState: true
+# clearState gives every flow a clean AsyncStorage baseline so runs are
+# order-independent and don't leak routines/bookmarks/counters between flows
+# (the native build persists state across launches, unlike an Expo Go reload).
+# Native build (dev-client) auto-reconnects to Metro and lands on Home — there
+# is no Expo Go project picker to tap. Let the bundle finish executing.
 - waitForAnimationToEnd:
     timeout: 30000
+# clearState resets iOS permission grants, so a fresh launch pops the native
+# "…Would Like to Send You Notifications" alert over Home (the app requests
+# permission on boot for reminders/japam alarms). It's a NATIVE alert that
+# blocks the canary underneath, so dismiss it first. Optional — a no-op once the
+# grant is set at the sim level (`simctl privacy grant notifications`).
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
 # Dismiss whichever first-launch onboarding surface auto-appeared BEFORE
 # asserting Home — a fresh install shows the feature tour (an OVERLAY, so Home
 # is visible behind it), but a returning user on a debut release gets the

@@ -7,7 +7,7 @@
 # "Alarm label", "Confirm alarm", "Skip next alarm"). If the transparent
 # Modal's tree is invisible to Maestro on iOS Expo Go, run this flow on an
 # Android target where Modal children are part of the view hierarchy.
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
@@ -97,4 +97,4 @@ appId: host.exp.Exponent
 - takeScreenshot: jalarms-9-editor-edit
 
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

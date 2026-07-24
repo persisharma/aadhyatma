@@ -25,7 +25,7 @@
 # reliably read Devanagari. We flip the global reading language to English on
 # the More tab, then assert. Hindi is restored at the end via the index toggle.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Boot Vedansh in Expo Go (exits on Home) ──
 - runFlow: _launch.yaml
@@ -123,4 +123,4 @@ appId: host.exp.Exponent
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

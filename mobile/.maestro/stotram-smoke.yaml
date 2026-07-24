@@ -11,7 +11,7 @@
 # (BajrangBaanReaderScreen.test.tsx) which validates first-verse render,
 # matching this Maestro flow's check.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
@@ -94,4 +94,4 @@ appId: host.exp.Exponent
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

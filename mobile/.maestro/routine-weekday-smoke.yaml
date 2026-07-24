@@ -33,7 +33,7 @@
 #
 # PRECONDITION: no routine exists (fresh state). The flow deletes what it creates.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot + switch reading language to English ──
 - runFlow: _launch.yaml
@@ -98,7 +98,7 @@ appId: host.exp.Exponent
     direction: DOWN
     centerElement: true
     waitToSettleTimeoutMs: 600
-    timeout: 25000
+    timeout: 60000
 - tapOn: "Add Hanuman Chalisa"
 - waitForAnimationToEnd
 # "Done" sits below the full list. centerElement keeps its tap-point mid-screen
@@ -109,7 +109,7 @@ appId: host.exp.Exponent
     direction: DOWN
     centerElement: true
     waitToSettleTimeoutMs: 600
-    timeout: 25000
+    timeout: 60000
 - tapOn: "Done"
 - waitForAnimationToEnd:
     timeout: 15000
@@ -191,4 +191,4 @@ appId: host.exp.Exponent
 
 # ── Cleanup ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

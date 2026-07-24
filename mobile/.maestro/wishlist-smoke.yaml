@@ -33,7 +33,7 @@
 # pre-existing bookmarks: the destructive path only Cancels, and cleanup
 # removes the single verse this flow touched.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
 - runFlow: _launch.yaml
@@ -117,4 +117,4 @@ appId: host.exp.Exponent
 
 # ── Cleanup — Expo Go termination resets navigation for the next flow ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh
