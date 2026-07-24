@@ -484,3 +484,34 @@ Intent-driven discovery is metadata over bundled content, not new scripture text
 - `searchIndex.test.ts` verifies English and Hindi purpose names find tagged sections.
 - Jest screen tests verify Browse by Purpose, Purpose List, Deity Detail, and the first-page-only reader panel.
 - A Maestro flow should cover Home → By Purpose → purpose list → text → reader before merge; if it is not run, the PR must state that explicitly.
+
+---
+
+## 13. Kundali and Rashifal engine (PRD-C)
+
+### 13.1 One pure astronomy foundation
+
+- Extend the existing `mobile/src/panchang/` astronomy stack. Do not add a second astrology SDK, network ephemeris, or screen-local calculation.
+- `kundali.ts` stays pure: explicit `Date` + coordinates in, typed data out. No React, AsyncStorage, wall-clock reads, randomness, fetch, or platform APIs. UI/hook code supplies “now” explicitly.
+- v1 accepts `timezone: 'Asia/Kolkata'` only and bundled Indian cities. Birth profile location is separate from `PanchangLocationContext`; changing one must not mutate the other.
+- Sidereal positions use the same Lahiri ayanamsa primitive as Panchang. Classical grahas come from `astronomy-engine`; Rahu is the mean ascending node and Ketu is exactly opposite. Houses are whole-sign from the sidereal Lagna.
+
+### 13.2 Golden accuracy contract
+
+- Golden fixtures live in `panchang/__tests__/fixtures/kundali-swiss-ephemeris.json` and record independent Swiss Ephemeris version, Lahiri mode, UTC instant, coordinates, elevation, ayanamsa, Lagna, and all nine graha longitudes.
+- Every fixture must hold angular error to ≤0.10° for grahas, ≤0.15° for Lagna, and ≤0.03° for ayanamsa. Rahu/Ketu opposition, all 12 whole-sign houses, rashi/nakshatra/pada bounds, and retrograde flags require invariants.
+- Vimshottari uses the Moon's 27-nakshatra position, the canonical `Ketu → Venus → Sun → Moon → Mars → Rahu → Jupiter → Saturn → Mercury` order, a 120-year cycle, proportional balance at birth, and contiguous Mahadasha/Antardasha intervals.
+- Any deliberate ephemeris/ayanamsa/Dasha-policy change requires regenerating documented independent fixtures and calling out the change in release notes; never silently update expected numbers to match implementation.
+
+### 13.3 Interpretation and safety
+
+- Kundali insight copy explains what a placement means structurally (what Lagna/Moon/Dasha is). It must not turn generic positions into fixed personality diagnoses or guaranteed life events.
+- Rashifal is deterministic from explicit India civil day + Moon-sign index + pure transit rules. Never use `Math.random`, AI generation, a remote horoscope feed, luck/compatibility scores, fear copy, or deterministic predictions.
+- Every Rashifal surface must visibly frame output as traditional guidance/reflection, not certainty. Avoid “will happen”, “guaranteed”, “certain”, medical/legal/financial directives, and remedial claims.
+- Practice links may target only active, existing library ids and route through `buildEntryStartTarget()`. PRD-C v1 is allow-listed to `navagraha-stotram`, `surya-ashtakam`, and `shani-ashtakam`; it does not invent new devotional prescriptions.
+
+### 13.4 Product and verification contract
+
+- Home keeps a permanent Kundali launcher; Panchang keeps Jyotish as a peer of Panchang and Vrat–Parv. Do not bury Kundali only in a carousel, More, or a second-level catalog.
+- Results lead with Overview before Chart/Grahas/Dasha. The chart must have an equivalent text representation and a full accessibility summary.
+- Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest for new UI, and `.maestro/kundali-smoke.yaml` on an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.

@@ -12,7 +12,7 @@
 ## Subsystems
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.
 - [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, home banner + celebration.
-- [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, Daily Muhurat (Choghadiya · Rahu Kaal · Abhijit).
+- [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, Daily Muhurat, Kundali (Lagna · grahas · whole-sign houses · Vimshottari Dasha), and deterministic Daily Rashifal.
 - [[japam-alarms]] — Japam Alarms: repeat-days, one-time, and skip-next; native AlarmKit/AlarmManager tier with expo fallback.
 
 ## Concepts

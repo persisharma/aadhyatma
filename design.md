@@ -1596,3 +1596,23 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 ### Deity Detail
 
 `DeityIndexScreen` now opens `DeityDetailScreen`. The detail page keeps the existing deity background and top bar, then shows a source-cited essay from `deityEssays.ts` followed by that deity's texts grouped by content form (`categories.ts` order). Each group heading uses `sectionLabel`; entries remain `LibraryCard`s and route through `navigateToEntryStart()`. `DeityListScreen` remains a compatibility fallback for direct filtered-list navigation.
+
+---
+
+## 51. Kundali + Daily Rashifal (PRD-C)
+
+**Discovery.** Kundali is a permanent `CategoryCard variant="launcher"` on Home (`कुंडली · Kundali`, insight glyph, NEW badge), not a shuffled Discover card. It deep-links to `PanchangHome({ initialTab: 'jyotish' })`. Panchang's top peer selector is `Panchang | Vrat & Parv | Jyotish`; the Jyotish landing keeps Kundali, Daily Rashifal, and the existing Navagraha Stotram one tap apart. Birth city is deliberately independent of the current Panchang location.
+
+**Birth input.** One card asks for optional name, `YYYY-MM-DD`, 24-hour `HH:mm`, and a bundled Indian city. v1 is explicitly India/IST only. The profile persists on-device under `@vedansh:kundali-birth-profile:v1`; the result header offers Edit and the bottom action offers a destructive-but-recoverable “Delete saved profile” reset. Copy explains that correct birth time matters for Lagna/houses.
+
+**Novice-first result.** The default `Overview` tab precedes `Chart | Grahas | Dasha`. It explains Lagna, Moon rashi/nakshatra, and the current Mahadasha in bounded, traditional language, and every insight links to its underlying detail tab. A Navagraha practice card routes through the existing library/reader dispatcher. Never lead a novice with an unexplained chart.
+
+**North Indian chart.** `NorthIndianChart` is a fixed-house North Indian diamond rendered with `react-native-svg`: first house at top, seventh at bottom, small numeric rashi labels, two-letter graha abbreviations. Its enclosing accessible image label narrates all twelve houses and occupants; chart geometry is never the only representation because the Grahas table carries the same values textually.
+
+**Grahas and Dasha.** Graha rows show sign, degree/minute, house, nakshatra/pada, and `℞` for retrograde. The Vimshottari timeline shows nine Mahadashas with dates and ordered Antardasha lords. Both views include a short explanation before raw data.
+
+**Rashifal.** Daily Rashifal selects the saved Kundali's Moon sign when available, otherwise lets the user choose any of twelve signs. Cards are `Favour`, `Pause`, and `Reflection`, followed by an existing Surya/Shani/Navagraha reader link chosen by the pure transit rules. The disclaimer is part of the surface, not fine print: “traditional transit-based guidance—not a certain prediction.” No luck score, guaranteed event, fear copy, random generation, AI call, or remote horoscope feed.
+
+**Surface family.** Continue the warm manuscript palette: parchment gradients, `cardActiveBorder`, saffron/gold tints, `radii.lg`, theme elevation, existing script-aware type helpers, and minimum 40–48dp controls. English accessibility labels remain stable for Maestro even when Hindi is the visible reading language.
+
+**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`; `NorthIndianChart.tsx`, `KundaliOverview.tsx`; `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.

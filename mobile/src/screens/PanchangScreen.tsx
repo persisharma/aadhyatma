@@ -1,7 +1,8 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { backgroundImages } from '@assets/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
@@ -31,6 +32,8 @@ import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { useTourTarget } from '@/components/tour/tourTargets';
 import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
+import CategoryIcon from '@/components/CategoryIcon';
+import type { PanchangHomeMode, PanchangStackParamList } from '@/navigation/types';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -39,6 +42,7 @@ const MONTHS_FULL_HI = ['जनवरी', 'फ़रवरी', 'मार्�
 const WEEKDAYS_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const WEEKDAYS_HI = ['रवि', 'सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि'];
 type ObservanceCalendarTag = 'vrat' | 'festival' | 'mixed';
+type Props = NativeStackScreenProps<PanchangStackParamList, 'PanchangHome'>;
 
 function startOfLocalDay(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -88,7 +92,7 @@ function calendarTagLabel(tag: ObservanceCalendarTag, lang: Lang): string {
   return contentByLang(lang, 'व्रत+', 'Both');
 }
 
-export default function PanchangScreen() {
+export default function PanchangScreen({ route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   // Feature-tour spotlight anchors (design.md §47): the Choghadiya/Muhurat glance
@@ -102,7 +106,9 @@ export default function PanchangScreen() {
   const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(new Date()));
   const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(new Date()));
   const [calendarExpanded, setCalendarExpanded] = useState(false);
-  const [panchangTab, setPanchangTab] = useState<'calendar' | 'catalog'>('calendar');
+  const [panchangTab, setPanchangTab] = useState<PanchangHomeMode>(
+    route.params?.initialTab ?? 'calendar'
+  );
   const [catalogQuery, setCatalogQuery] = useState('');
   const calendarSwipeStart = useRef<{ x: number; y: number } | null>(null);
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
@@ -129,6 +135,10 @@ export default function PanchangScreen() {
     }),
     [visibleMonth, selectedDate, today, monthObservances]
   );
+
+  useEffect(() => {
+    if (route.params?.initialTab) setPanchangTab(route.params.initialTab);
+  }, [route.params?.initialTab]);
 
   const shiftSelectedDate = (days: number) => {
     setSelectedDate((current) => {
@@ -184,6 +194,8 @@ export default function PanchangScreen() {
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
+  const openKundali = () => rootNav.navigate('Kundali');
+  const openRashifal = () => rootNav.navigate('Rashifal');
 
   return (
     <View style={styles.root}>
@@ -198,7 +210,7 @@ export default function PanchangScreen() {
               the system, so it is dropped from the location text), with the My Vrat
               star at the trailing edge. This reclaims the vertical space the old
               stacked toggle-over-location header took. */}
-          <View style={styles.systemHeader}>
+          {panchangTab !== 'jyotish' && <View style={styles.systemHeader}>
             {/* Equal-width flex sides keep the calendar-system toggle centred on
                 screen regardless of how wide the location chip / star are. */}
             <View style={styles.headerSide}>
@@ -258,18 +270,23 @@ export default function PanchangScreen() {
                 )}
               </Pressable>
             </View>
-          </View>
+          </View>}
 
           <View ref={panchangSegmentRef} collapsable={false} style={[styles.segmented, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.pill }]}>
-            {(['calendar', 'catalog'] as const).map((tab) => {
+            {(['calendar', 'catalog', 'jyotish'] as const).map((tab) => {
               const selected = panchangTab === tab;
+              const labels = {
+                calendar: { hi: 'पंचांग', en: 'Panchang' },
+                catalog: { hi: 'व्रत-पर्व', en: 'Vrat & Parv' },
+                jyotish: { hi: 'ज्योतिष', en: 'Jyotish' },
+              } as const;
               return (
                 <Pressable
                   key={tab}
                   onPress={() => setPanchangTab(tab)}
                   accessibilityRole="tab"
                   accessibilityState={{ selected }}
-                  accessibilityLabel={tab === 'calendar' ? 'Calendar' : 'Vrat and Parv'}
+                  accessibilityLabel={labels[tab].en}
                   style={({ pressed }) => [
                     styles.segmentOption,
                     { borderRadius: radii.pill },
@@ -278,7 +295,7 @@ export default function PanchangScreen() {
                   ]}
                 >
                   <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 13, color: selected ? colors.saffronDeep : colors.inkMuted }}>
-                    {tab === 'calendar' ? contentByLang(lang, 'पंचांग', 'Calendar') : contentByLang(lang, 'व्रत-पर्व', 'Vrat & Parv')}
+                    {contentByLang(lang, labels[tab].hi, labels[tab].en)}
                   </Text>
                 </Pressable>
               );
@@ -529,7 +546,7 @@ export default function PanchangScreen() {
             </View>
           )}
             </>
-          ) : (
+          ) : panchangTab === 'catalog' ? (
             <CatalogLanding
               lang={lang}
               today={today}
@@ -547,11 +564,260 @@ export default function PanchangScreen() {
               followCount={followCount}
               reminderCount={reminderCount}
             />
+          ) : (
+            <JyotishLanding
+              lang={lang}
+              colors={colors}
+              typography={typography}
+              radii={radii}
+              elevation={elevation}
+              onOpenKundali={openKundali}
+              onOpenRashifal={openRashifal}
+              onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
+            />
           )}
         </ScrollView>
       </SafeAreaView>
       <LocationPickerModal visible={locationPickerVisible} onClose={() => setLocationPickerVisible(false)} />
     </View>
+  );
+}
+
+function JyotishLanding({
+  lang,
+  colors,
+  typography,
+  radii,
+  elevation,
+  onOpenKundali,
+  onOpenRashifal,
+  onOpenNavagraha,
+}: {
+  lang: Lang;
+  colors: any;
+  typography: any;
+  radii: any;
+  elevation: any;
+  onOpenKundali: () => void;
+  onOpenRashifal: () => void;
+  onOpenNavagraha: () => void;
+}) {
+  return (
+    <View accessibilityLabel="Jyotish tools landing">
+      <View
+        style={[
+          styles.jyotishHero,
+          { borderColor: colors.cardActiveBorder, borderRadius: radii.lg },
+          elevation.card,
+        ]}
+      >
+        <View style={[styles.jyotishHeroIcon, { backgroundColor: colors.saffronTint, borderRadius: radii.lg }]}>
+          <CategoryIcon iconKey="insight" />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text
+            style={{
+              color: colors.ink,
+              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+              fontSize: 22,
+            }}
+          >
+            {contentByLang(lang, 'ज्योतिष को समझें', 'Understand Jyotish')}
+          </Text>
+          <Text
+            style={{
+              color: colors.inkMuted,
+              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+              fontSize: 12,
+              lineHeight: 18,
+              marginTop: 5,
+            }}
+          >
+            {meaningByLang(
+              lang,
+              'पंचांग की खगोलीय गणना से जन्म कुंडली और दैनिक राशि-मार्गदर्शन—सरल अर्थ के साथ।',
+              'Birth charts and daily rashi guidance from the same astronomy foundation as Panchang—explained in plain language.'
+            )}
+          </Text>
+        </View>
+      </View>
+
+      <Text style={[styles.jyotishSectionLabel, { color: colors.inkMuted }]}>
+        {contentByLang(lang, 'अपने लिए', 'FOR YOU')}
+      </Text>
+      <JyotishToolCard
+        titleHi="जन्म कुंडली"
+        titleEn="Create Kundali"
+        bodyHi="लग्न, ग्रह, भाव और दशा—पहले सरल सार, फिर पूरा चार्ट।"
+        bodyEn="Lagna, grahas, houses, and Dasha—with beginner insights before the full chart."
+        badge="NEW"
+        glyph="कु"
+        onPress={onOpenKundali}
+        accessibilityLabel="Create Kundali"
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        radii={radii}
+        elevation={elevation}
+      />
+      <JyotishToolCard
+        titleHi="आज का राशिफल"
+        titleEn="Daily Rashifal"
+        bodyHi="चन्द्र राशि और आज के गोचर से पारम्परिक चिंतन-संकेत।"
+        bodyEn="Traditional reflection prompts from your Moon sign and today's transits."
+        glyph="रा"
+        onPress={onOpenRashifal}
+        accessibilityLabel="Open Daily Rashifal"
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        radii={radii}
+        elevation={elevation}
+      />
+
+      <Text style={[styles.jyotishSectionLabel, { color: colors.inkMuted }]}>
+        {contentByLang(lang, 'कुंडली से साधना तक', 'FROM CHART TO PRACTICE')}
+      </Text>
+      <Pressable
+        onPress={onOpenNavagraha}
+        accessibilityRole="button"
+        accessibilityLabel="Open Navagraha Stotram"
+        style={({ pressed }) => [
+          styles.jyotishPractice,
+          { borderColor: colors.divider, backgroundColor: colors.goldTint, borderRadius: radii.lg },
+          pressed && { opacity: 0.7 },
+        ]}
+      >
+        <Text style={[styles.jyotishPracticeGlyph, { color: colors.gold }]}>ॐ</Text>
+        <View style={{ flex: 1 }}>
+          <Text
+            style={{
+              color: colors.ink,
+              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+              fontSize: 15,
+            }}
+          >
+            {contentByLang(lang, 'नवग्रह स्तोत्रम्', 'Navagraha Stotram')}
+          </Text>
+          <Text
+            style={{
+              color: colors.inkMuted,
+              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+              fontSize: 11,
+              marginTop: 2,
+            }}
+          >
+            {meaningByLang(
+              lang,
+              'ऐप में पहले से उपलब्ध पारम्परिक पाठ',
+              'An existing traditional practice in your library'
+            )}
+          </Text>
+        </View>
+        <Text style={{ color: colors.saffronDeep, fontSize: 18 }}>›</Text>
+      </Pressable>
+
+      <Text
+        style={{
+          color: colors.inkMuted,
+          fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+          fontSize: 11,
+          lineHeight: 17,
+          textAlign: 'center',
+          marginTop: 14,
+        }}
+      >
+        {meaningByLang(
+          lang,
+          'पारम्परिक मार्गदर्शन; निश्चित भविष्यवाणी या पेशेवर सलाह नहीं। v1 भारत/IST तक सीमित है।',
+          'Traditional guidance, not deterministic prediction or professional advice. v1 is India/IST only.'
+        )}
+      </Text>
+    </View>
+  );
+}
+
+function JyotishToolCard({
+  titleHi,
+  titleEn,
+  bodyHi,
+  bodyEn,
+  badge,
+  glyph,
+  onPress,
+  accessibilityLabel,
+  lang,
+  colors,
+  typography,
+  radii,
+  elevation,
+}: {
+  titleHi: string;
+  titleEn: string;
+  bodyHi: string;
+  bodyEn: string;
+  badge?: string;
+  glyph: string;
+  onPress: () => void;
+  accessibilityLabel: string;
+  lang: Lang;
+  colors: any;
+  typography: any;
+  radii: any;
+  elevation: any;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      style={({ pressed }) => [
+        styles.jyotishToolCard,
+        {
+          borderColor: colors.cardActiveBorder,
+          backgroundColor: colors.parchmentSoft,
+          borderRadius: radii.lg,
+        },
+        elevation.card,
+        pressed && { opacity: 0.72 },
+      ]}
+    >
+      <View style={[styles.jyotishToolGlyph, { backgroundColor: colors.saffronTint, borderRadius: radii.md }]}>
+        <Text style={{ color: colors.saffronDeep, fontFamily: 'NotoSansDevanagari_600SemiBold', fontSize: 18 }}>
+          {glyph}
+        </Text>
+      </View>
+      <View style={{ flex: 1 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 7 }}>
+          <Text
+            style={{
+              color: colors.ink,
+              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+              fontSize: 17,
+            }}
+          >
+            {contentByLang(lang, titleHi, titleEn)}
+          </Text>
+          {badge && (
+            <View style={[styles.jyotishBadge, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]}>
+              <Text style={[styles.jyotishBadgeText, { color: colors.newBadgeText }]}>{badge}</Text>
+            </View>
+          )}
+        </View>
+        <Text
+          style={{
+            color: colors.inkMuted,
+            fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+            fontSize: 12,
+            lineHeight: 18,
+            marginTop: 4,
+          }}
+        >
+          {meaningByLang(lang, bodyHi, bodyEn)}
+        </Text>
+      </View>
+      <Text style={{ color: colors.saffronDeep, fontSize: 20 }}>›</Text>
+    </Pressable>
   );
 }
 
@@ -985,6 +1251,15 @@ const styles = StyleSheet.create({
   myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
+  jyotishHero: { backgroundColor: '#FFF5E0', borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },
+  jyotishHeroIcon: { width: 58, height: 58, alignItems: 'center', justifyContent: 'center' },
+  jyotishSectionLabel: { fontFamily: 'Inter_600SemiBold', fontSize: 9, letterSpacing: 1.5, marginTop: 18, marginBottom: 8 },
+  jyotishToolCard: { minHeight: 98, borderWidth: 1, padding: 14, marginBottom: 10, flexDirection: 'row', alignItems: 'center', gap: 12 },
+  jyotishToolGlyph: { width: 46, height: 46, alignItems: 'center', justifyContent: 'center' },
+  jyotishBadge: { paddingHorizontal: 7, paddingVertical: 3 },
+  jyotishBadgeText: { fontFamily: 'Inter_600SemiBold', fontSize: 7, letterSpacing: 1.1 },
+  jyotishPractice: { minHeight: 72, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
+  jyotishPracticeGlyph: { fontFamily: 'NotoSansDevanagari_600SemiBold', fontSize: 24 },
   catalogSearch: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: 'CormorantGaramond_500Medium', fontSize: 15 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
   upCard: { width: 150, borderWidth: 1, padding: 12 },

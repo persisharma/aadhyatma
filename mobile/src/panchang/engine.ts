@@ -44,7 +44,7 @@ function observerFor(loc: GeoLocation & { cityId?: string }): Observer {
   return cached;
 }
 
-function getAyanamsa(year: number): number {
+export function getAyanamsa(year: number): number {
   return 23.853 + 0.01396 * (year - 2000);
 }
 
@@ -54,7 +54,7 @@ export function getSiderealSunLng(date: Date, year: number): number {
   return (tropical - getAyanamsa(year) + 360) % 360;
 }
 
-function getSiderealMoonLng(date: Date, year: number): number {
+export function getSiderealMoonLng(date: Date, year: number): number {
   const astroTime = MakeTime(date);
   const tropical = EclipticGeoMoon(astroTime).lon;
   return (tropical - getAyanamsa(year) + 360) % 360;
