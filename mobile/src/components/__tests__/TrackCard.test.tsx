@@ -11,7 +11,7 @@ jest.mock('expo-linear-gradient', () => ({
 
 import TrackCard from '@/components/audio/TrackCard';
 
-// rama → bowArrow → 🏹 (a single-codepoint emoji in main's DeityIcon)
+// rama → bowArrow → hand-drawn glyph (deityGlyphs/bowArrow, testID deity-glyph-bowArrow)
 const withDeity: AudioTrack = {
   id: 'hare-rama',
   titleHi: 'हरे राम',
@@ -50,12 +50,13 @@ function textOf(tree: TestRenderer.ReactTestRenderer): string {
 
 describe('TrackCard thumb', () => {
   test('renders the deity glyph for a track with a deity', () => {
-    expect(textOf(render(<TrackCard track={withDeity} onPress={() => undefined} />))).toContain('🏹');
+    const tree = render(<TrackCard track={withDeity} onPress={() => undefined} />);
+    expect(tree.root.findAllByProps({ testID: 'deity-glyph-bowArrow' }).length).toBeGreaterThan(0);
   });
 
   test('falls back to the Devanagari thumb letter when the track has no deity', () => {
-    const text = textOf(render(<TrackCard track={withoutDeity} onPress={() => undefined} />));
-    expect(text).not.toContain('🏹');
-    expect(text).toContain('ओ');
+    const tree = render(<TrackCard track={withoutDeity} onPress={() => undefined} />);
+    expect(tree.root.findAllByProps({ testID: 'deity-glyph-bowArrow' })).toHaveLength(0);
+    expect(textOf(tree)).toContain('ओ');
   });
 });
