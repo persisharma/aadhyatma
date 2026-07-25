@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import { pick } from '@/utils/localize';
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   check: { fontSize: 13 },
-  pillLabel: { fontFamily: 'Inter_600SemiBold', fontSize: 14 },
+  pillLabel: { fontFamily: fontFamilies.interSemiBold, fontSize: 14 },
   done: {
     marginTop: 20,
     borderRadius: 12,

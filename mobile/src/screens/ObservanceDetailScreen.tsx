@@ -5,6 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getKathaContent } from '@/panchang/kathaContent';
@@ -124,11 +125,11 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
             <View style={styles.hero}>
               <View style={styles.heroTags}>
                 <View style={[styles.pill, { backgroundColor: rule.category === 'festival' ? colors.saffronTint : colors.goldTint, borderRadius: radii.pill }]}>
-                  <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep }}>
+                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep }}>
                     {categoryLabel(rule.category, lang)}
                   </Text>
                 </View>
-                <Text style={{ fontFamily: 'CormorantGaramond_500Medium', fontSize: 13, color: colors.inkMuted }}>
+                <Text style={{ fontFamily: fontFamilies.latin, fontSize: 13, color: colors.inkMuted }}>
                   {contentByLang(lang, rule.deityHi, rule.deityEn)}
                 </Text>
               </View>
@@ -140,7 +141,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
               </Text>
               {next && (
                 <View style={[styles.nextPill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
-                  <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
+                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
                     {contentByLang(lang, 'अगला', 'Next')} · {formatDate(next.date, lang)} · {relativeLabel(next.date, today, lang)}
                   </Text>
                 </View>
@@ -164,7 +165,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                   pressed && { opacity: 0.8 },
                 ]}
               >
-                <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 13, color: following ? colors.parchment : colors.saffronDeep }}>
+                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 13, color: following ? colors.parchment : colors.saffronDeep }}>
                   {following ? (contentByLang(lang, '✓ फ़ॉलो किया', '✓ Following')) : contentByLang(lang, '★ फ़ॉलो करें', '★ Follow')}
                 </Text>
               </Pressable>
@@ -179,7 +180,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                     pressed && { opacity: 0.8 },
                   ]}
                 >
-                  <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 13, color: colors.parchment }}>
+                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 13, color: colors.parchment }}>
                     {contentByLang(lang, '॥ कथा पढ़ें', '॥ Read Katha')}
                   </Text>
                 </Pressable>
@@ -195,7 +196,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
                   {contentByLang(lang, 'मेरा व्रत में जोड़ा', 'Added to My Vrat')}
                 </Text>
-                <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
+                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
                   {contentByLang(lang, 'देखें →', 'View →')}
                 </Text>
               </Pressable>

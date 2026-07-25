@@ -5,6 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getKathaLibrary } from '@/panchang/vratCatalog';
 import type { PanchangStackParamList } from '@/navigation/types';
@@ -51,7 +52,7 @@ export default function KathaLibraryScreen({ navigation }: Props) {
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink }}>
               {contentByLang(lang, 'कथा संग्रह', 'Katha Library')}
             </Text>
-            <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 11, color: colors.inkMuted }}>
+            <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 11, color: colors.inkMuted }}>
               {lang === 'en' ? 'कथा संग्रह' : 'Katha Library'} · {library.length}
             </Text>
           </View>
@@ -84,11 +85,11 @@ export default function KathaLibraryScreen({ navigation }: Props) {
                 <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
                   {contentByLang(lang, katha.titleHi, katha.titleEn)}
                 </Text>
-                <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
+                <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, color: colors.inkMuted, marginTop: 1 }}>
                   {lang === 'en' ? katha.titleHi : katha.titleEn} · {katha.sections.length} {contentByLang(lang, 'खंड', 'sections')}
                 </Text>
               </View>
-              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep }}>
+              <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep }}>
                 {contentByLang(lang, 'पढ़ें', 'Read')}
               </Text>
             </Pressable>
@@ -110,6 +111,6 @@ const styles = StyleSheet.create({
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 },
   backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 8, paddingBottom: 32 },
-  search: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: 'CormorantGaramond_500Medium', fontSize: 15, marginBottom: 8 },
+  search: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: fontFamilies.latin, fontSize: 15, marginBottom: 8 },
   row: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
 });

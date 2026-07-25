@@ -19,6 +19,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
   getSearchIndex,
@@ -224,7 +225,7 @@ export default function SearchScreen({ navigation }: Props) {
                 styles.input,
                 {
                   color: colors.ink,
-                  fontFamily: 'Inter_500Medium',
+                  fontFamily: fontFamilies.inter,
                 },
               ]}
               accessibilityLabel="Search input"
@@ -423,7 +424,7 @@ function EmptyState({
                   hitSlop={8}
                   style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
                 >
-                  <Text style={{ color: colors.saffron, fontFamily: 'Inter_500Medium', fontSize: 12 }}>
+                  <Text style={{ color: colors.saffron, fontFamily: fontFamilies.inter, fontSize: 12 }}>
                     {pick(lang, { hi: 'सभी हटाएं', en: 'Clear All', gu: 'બધું સાફ કરો', kn: 'ಎಲ್ಲವನ್ನು ತೆರವುಗೊಳಿಸಿ' })}
                   </Text>
                 </Pressable>
@@ -448,7 +449,7 @@ function EmptyState({
                         numberOfLines={1}
                         style={[
                           styles.recentChipText,
-                          { color: colors.inkSoft, fontFamily: 'Inter_500Medium' },
+                          { color: colors.inkSoft, fontFamily: fontFamilies.inter },
                         ]}
                       >
                         {q}
@@ -686,7 +687,7 @@ function ResultsList({
                   {contentByLang(lang, s.displayHi, s.displayEn)}
                 </Text>
                 <Text
-                  style={[styles.resultSecondary, { color: colors.inkMuted, fontFamily: 'Inter_500Medium' }]}
+                  style={[styles.resultSecondary, { color: colors.inkMuted, fontFamily: fontFamilies.inter }]}
                   numberOfLines={1}
                 >
                   {s.subtitleHi}
@@ -729,7 +730,7 @@ function ResultsList({
                   {contentByLang(lang, d.displayHi, d.displayEn)}
                 </Text>
                 <Text
-                  style={[styles.resultSecondary, { color: colors.inkMuted, fontFamily: 'Inter_500Medium' }]}
+                  style={[styles.resultSecondary, { color: colors.inkMuted, fontFamily: fontFamilies.inter }]}
                   numberOfLines={1}
                 >
                   {pick(lang, { hi: 'देवता', en: 'Deity', gu: 'દેવતા', kn: 'ದೇವತೆ' })}
@@ -770,7 +771,7 @@ function ResultsList({
                   numberOfLines={1}
                   style={[
                     styles.verseMeta,
-                    { color: colors.inkMuted, fontFamily: 'CormorantGaramond_400Regular_Italic' },
+                    { color: colors.inkMuted, fontFamily: fontFamilies.latinItalic },
                   ]}
                 >
                   {contentByLang(lang, v.sectionNameHi, v.sectionNameEn)} · {contentByLang(lang, v.labelHi, v.labelEn)}
@@ -785,7 +786,7 @@ function ResultsList({
           <Text
             style={[
               styles.cappedNote,
-              { color: colors.inkMuted, fontFamily: 'CormorantGaramond_400Regular_Italic' },
+              { color: colors.inkMuted, fontFamily: fontFamilies.latinItalic },
             ]}
           >
             {item.label}

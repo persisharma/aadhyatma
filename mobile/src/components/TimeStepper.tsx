@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import type { TimeOfDay } from '@/notifications/pure';
 
 type Props = {
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
   },
   colon: {
     fontSize: 18,
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     lineHeight: 22,
     marginBottom: 14,
     includeFontPadding: false,
@@ -222,14 +223,14 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 22,
     lineHeight: 28,
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     textAlign: 'center',
     includeFontPadding: false,
     marginVertical: 1,
   },
   label: {
-    fontSize: 8,
-    fontFamily: 'Inter_500Medium',
+    fontSize: 10,
+    fontFamily: fontFamilies.inter,
     letterSpacing: 1.5,
     marginTop: 2,
     includeFontPadding: false,

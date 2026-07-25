@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import type { Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import { titleFontByLang } from '@/utils/langType';
@@ -64,11 +65,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     borderRadius: 999,
     borderWidth: 1,
-    shadowColor: '#3c1e0a',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.18,
-    shadowRadius: 10,
-    elevation: 4,
+    ...elevation.lifted,
   },
   glyph: {
     fontSize: 15,

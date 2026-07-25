@@ -8,6 +8,7 @@ import {
   type KundaliChart,
 } from '@/panchang/kundali';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 
 type Props = {
   chart: KundaliChart;
@@ -82,8 +83,8 @@ export default function NorthIndianChart({ chart, size = 300 }: Props) {
                 x={x}
                 y={y - 5}
                 fill={colors.saffronDeep}
-                fontFamily="Inter_600SemiBold"
-                fontSize="9"
+                fontFamily={fontFamilies.interSemiBold}
+                fontSize="10"
                 textAnchor="middle"
               >
                 {rashiIndex + 1}
@@ -92,8 +93,12 @@ export default function NorthIndianChart({ chart, size = 300 }: Props) {
                 x={x}
                 y={y + 8}
                 fill={colors.ink}
-                fontFamily="Inter_600SemiBold"
-                fontSize={grahas.length > 8 ? '7' : '8'}
+                fontFamily={fontFamilies.interSemiBold}
+                // These sizes are viewBox units, not points: the chart scales
+                // with `size`, so unlike the fixed UI chrome covered by the 10pt
+                // floor (design.md §3) they grow with the diagram. The dense
+                // branch keeps a 9-graha house from overrunning its cell.
+                fontSize={grahas.length > 8 ? '8' : '9'}
                 textAnchor="middle"
               >
                 {grahas}

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import type { LibraryEntry } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { useRoutineSheet } from '@/contexts/RoutineSheetContext';
@@ -202,21 +203,13 @@ export default function LibraryCard({ entry, onPress, style, variant = 'default'
       ? {
           borderColor: colors.cardActiveBorder,
           borderWidth: 1,
-          shadowColor: '#3C1E0A',
-          shadowOpacity: 0.14,
-          shadowRadius: 16,
-          shadowOffset: { width: 0, height: 6 },
-          elevation: 4,
+          ...elevation.raised,
         }
       : {
           backgroundColor: colors.cardSurface,
           borderColor: colors.divider,
           borderWidth: 1,
-          shadowColor: '#3C1E0A',
-          shadowOpacity: 0.06,
-          shadowRadius: 4,
-          shadowOffset: { width: 0, height: 1 },
-          elevation: 1,
+          ...elevation.subtle,
         },
   ];
 
@@ -321,7 +314,7 @@ const styles = StyleSheet.create({
     right: 12,
   },
   badgeText: {
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: '600',
     textTransform: 'uppercase',
   },

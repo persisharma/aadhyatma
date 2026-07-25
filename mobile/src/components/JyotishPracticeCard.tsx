@@ -97,6 +97,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    fontSize: 8,
+    fontSize: 10,
   },
 });

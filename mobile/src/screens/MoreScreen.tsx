@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useGitaLanguage, LANGUAGES, type Lang } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
@@ -422,7 +423,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   groupLabelLatin: {
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 12,
     letterSpacing: 1.8,
     textTransform: 'uppercase',
@@ -431,11 +432,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     overflow: 'hidden',
-    shadowColor: '#3c1e0a',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 2,
-    elevation: 2,
+    ...elevation.subtle,
   },
   row: {
     flexDirection: 'row',

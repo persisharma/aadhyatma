@@ -22,6 +22,7 @@ import {
 } from '@/panchang/kundali';
 import { useKundali } from '@/panchang/useKundali';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import {
   pillTextStyle,
@@ -588,8 +589,8 @@ const styles = StyleSheet.create({
   headerCopy: { flex: 1 },
   headerSpacer: { width: 48 },
   caption: {
-    fontFamily: 'Inter_500Medium',
-    fontSize: 9,
+    fontFamily: fontFamilies.inter,
+    fontSize: 10,
     lineHeight: 13,
   },
   sharePill: {
@@ -600,7 +601,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   shareText: {
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 10,
   },
   reflectionNote: {
@@ -618,8 +619,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   infoText: {
-    fontFamily: 'Inter_600SemiBold',
-    fontSize: 9,
+    fontFamily: fontFamilies.interSemiBold,
+    fontSize: 10,
   },
   recoveryNote: {
     padding: 11,
@@ -630,7 +631,7 @@ const styles = StyleSheet.create({
     gap: 9,
   },
   recoveryMark: {
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 12,
   },
   signSource: {
@@ -642,9 +643,9 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   signSourceCopy: { flex: 1 },
-  eyebrow: { fontSize: 8 },
+  eyebrow: { fontSize: 10 },
   signTranslation: {
-    fontFamily: 'Inter_500Medium',
+    fontFamily: fontFamilies.inter,
     fontSize: 10,
   },
   changeButton: {
@@ -655,7 +656,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   changeText: {
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 10,
   },
   chooseIntro: { marginHorizontal: 2, marginBottom: 8 },
@@ -680,8 +681,8 @@ const styles = StyleSheet.create({
   },
   signSecondary: {
     marginTop: 1,
-    fontFamily: 'Inter_500Medium',
-    fontSize: 7,
+    fontFamily: fontFamilies.inter,
+    fontSize: 10,
   },
   natalDot: {
     width: 5,
@@ -698,7 +699,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   sectionLabel: {
-    fontSize: 9,
+    fontSize: 10,
     marginTop: 18,
     marginBottom: 8,
   },

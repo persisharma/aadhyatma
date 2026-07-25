@@ -303,7 +303,7 @@ export default function PanchangScreen({ route }: Props) {
                 </View>
                 <Text
                   numberOfLines={1}
-                  style={{ flexShrink: 1, fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}
+                  style={{ flexShrink: 1, fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}
                 >
                   {contentByLang(lang, location.labelHi, location.labelEn)}
                 </Text>
@@ -372,7 +372,7 @@ export default function PanchangScreen({ route }: Props) {
                   <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink, textAlign: 'center' }}>
                     {formatFullDate(selectedDate, lang)}
                   </Text>
-                  <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep, marginTop: 2 }}>
+                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 10, color: colors.saffronDeep, marginTop: 2 }}>
                     {calendarExpanded
                       ? contentByLang(lang, 'माह छिपाएँ', 'Hide month')
                       : contentByLang(lang, 'माह देखें', 'Month view')}
@@ -399,7 +399,7 @@ export default function PanchangScreen({ route }: Props) {
                 accessibilityLabel="Today"
                 style={({ pressed }) => [styles.todayButton, styles.compactTodayButton, { borderColor: colors.divider }, pressed && { opacity: 0.7 }]}
               >
-                <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
+                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
                   {contentByLang(lang, 'आज', 'Today')}
                 </Text>
               </Pressable>
@@ -455,7 +455,7 @@ export default function PanchangScreen({ route }: Props) {
                       >
                         <Text
                           style={{
-                            fontFamily: 'Inter_600SemiBold',
+                            fontFamily: fontFamilies.interSemiBold,
                             fontSize: 12,
                             color: cell.isCurrentMonth ? colors.ink : colors.inkMuted,
                             opacity: cell.isCurrentMonth ? 1 : 0.45,
@@ -470,7 +470,13 @@ export default function PanchangScreen({ route }: Props) {
                               { backgroundColor: observanceTag === 'festival' ? colors.saffronTint : colors.goldTint },
                             ]}
                           >
-                            <Text style={[styles.dateTagText, { color: colors.saffronDeep }]}>
+                            <Text
+                              style={[
+                                pillTextStyle(lang, typography.versePill),
+                                styles.dateTagText,
+                                { color: colors.saffronDeep },
+                              ]}
+                            >
                               {calendarTagLabel(observanceTag, lang)}
                             </Text>
                           </View>
@@ -488,7 +494,7 @@ export default function PanchangScreen({ route }: Props) {
           <View style={[styles.dateHeader, { borderBottomColor: colors.divider }]}>
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.saffronDeep }}>
               {contentByLang(lang, p.vara.nameHi, p.vara.nameEn)}
-              <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
+              <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
                 {'  '}{formatFullDate(p.date, lang)} · {contentByLang(lang, `विक्रम संवत् ${p.vikramSamvat}`, `Vikram Samvat ${p.vikramSamvat}`)}
               </Text>
             </Text>
@@ -575,7 +581,7 @@ export default function PanchangScreen({ route }: Props) {
               {upcoming.map((item, i) => (
                 <View key={`${item.rule.id}-${item.date.toDateString()}`} style={[styles.upcomingRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}>
                   <View style={[styles.upcomingDot, { backgroundColor: markerColor(item.rule.marker, colors) }]} />
-                  <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, width: 50 }}>
+                  <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, width: 50 }}>
                     {formatShortDate(item.date, lang)}
                   </Text>
                   <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.ink, flex: 1 }}>
@@ -685,7 +691,7 @@ function JyotishLanding({
           <Text
             style={[
               pillTextStyle(lang, typography.sectionLabel),
-              { color: colors.saffronDeep, fontSize: 8 },
+              { color: colors.saffronDeep, fontSize: 10 },
             ]}
           >
             {contentByLang(lang, 'ज्योतिष', 'Jyotish')}
@@ -735,7 +741,7 @@ function JyotishLanding({
           <Text
             style={[
               pillTextStyle(lang, typography.sectionLabel),
-              { color: colors.saffronDeep, fontSize: 8 },
+              { color: colors.saffronDeep, fontSize: 10 },
             ]}
           >
             {contentByLang(lang, 'ज्योतिष', 'Jyotish')}
@@ -820,7 +826,7 @@ function JyotishLanding({
           <Text
             style={[
               pillTextStyle(lang, typography.sectionLabel),
-              { color: colors.saffronDeep, fontSize: 8 },
+              { color: colors.saffronDeep, fontSize: 10 },
             ]}
           >
             {formatFullDate(today, lang)}
@@ -877,7 +883,7 @@ function JyotishLanding({
               <Text
                 style={[
                   pillTextStyle(lang, typography.sectionLabel),
-                  { color: colors.saffronDeep, fontSize: 8 },
+                  { color: colors.saffronDeep, fontSize: 10 },
                 ]}
               >
                 {contentByLang(
@@ -958,7 +964,7 @@ function JyotishLanding({
               <Text
                 style={[
                   pillTextStyle(lang, typography.sectionLabel),
-                  { color: colors.saffronDeep, fontSize: 8 },
+                  { color: colors.saffronDeep, fontSize: 10 },
                 ]}
               >
                 {contentByLang(lang, 'कुंडली की एक झलक', 'Chart at a glance')}
@@ -1400,11 +1406,11 @@ function PanchangTile({ label, element, kshaya, panchangDate, lang, colors, typo
           source as the old row, kept uppercase so it reads as a quiet tag. */}
       <Text
         style={{
-          fontSize: 9,
+          fontSize: 10,
           color: colors.saffronDeep,
           // English keeps the tracked uppercase Cormorant tag; Indic uses its own
           // script serif with no tracking (letterSpacing splits the shirorekha).
-          fontFamily: lang === 'en' ? 'CormorantGaramond_600SemiBold' : scriptTitleFont(lang, typography.cardHindi.fontFamily),
+          fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.cardHindi.fontFamily),
           letterSpacing: lang === 'en' ? 1 : 0,
           textTransform: lang === 'en' ? 'uppercase' : 'none',
         }}
@@ -1426,7 +1432,7 @@ function PanchangTile({ label, element, kshaya, panchangDate, lang, colors, typo
           {/* formatEndInstant appends a short date when the end falls past
               midnight — a bare "तक 2:04 AM" would read as this morning. */}
           {row.endTime && (
-            <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft, marginTop: i === 0 ? 5 : 3 }}>
+            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft, marginTop: i === 0 ? 5 : 3 }}>
               {contentByLang(lang, 'तक ', 'till ')}{formatEndInstant(row.endTime, panchangDate, lang)}
             </Text>
           )}
@@ -1444,8 +1450,8 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
           All four metrics now share one filled-with-accent (gold) glyph style. */}
       <Text style={{ fontSize: 17, color: colors.gold, width: 22, textAlign: 'center' }}>{`${icon}︎`}</Text>
       <View style={{ marginLeft: 9, flex: 1 }}>
-        <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 10, color: colors.inkMuted }}>{label}</Text>
-        <Text style={{ fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 13, color: colors.ink }}>{value}</Text>
+        <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 10, color: colors.inkMuted }}>{label}</Text>
+        <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.ink }}>{value}</Text>
       </View>
     </View>
   );
@@ -1470,11 +1476,11 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
       <View style={styles.observanceTop}>
         <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
-          <Text style={{ fontFamily: lang === 'en' ? 'Inter_600SemiBold' : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
+          <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
             {item.rule.category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat') : contentByLang(lang, 'पर्व', 'Festival')}
           </Text>
         </View>
-        <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted }}>
+        <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted }}>
           {contentByLang(lang, item.rule.deityHi, item.rule.deityEn)}
         </Text>
       </View>
@@ -1492,7 +1498,7 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
             accessibilityLabel={`Read katha ${katha.titleEn}`}
             style={({ pressed }) => [styles.kathaButton, { backgroundColor: colors.goldTint, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
           >
-            <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
+            <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
               {contentByLang(lang, 'कथा पढ़ें', 'Read Katha')}
             </Text>
           </Pressable>
@@ -1504,7 +1510,7 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
             accessibilityLabel={`Open ${linkedEntry.nameEn}`}
             style={({ pressed }) => [styles.linkButton, { borderColor: colors.divider }, pressed && { opacity: 0.7 }]}
           >
-            <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 12, color: colors.saffronDeep }}>
+            <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
               {contentByLang(lang, `पढ़ें: ${linkedEntry.nameHi}`, `Read: ${linkedEntry.nameEn}`)}
             </Text>
           </Pressable>
@@ -1643,7 +1649,7 @@ function CatalogLanding({
                       <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 20, color: colors.saffron }}>
                         {categoryGlyph(item.rule.category)}
                       </Text>
-                      <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4 }}>
+                      <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4 }}>
                         {formatShortDate(item.date, lang).toUpperCase()}
                       </Text>
                     </View>
@@ -1683,7 +1689,7 @@ function CatalogLanding({
                     <Text style={{ ...captionFont(lang === 'en' ? meta.hi : meta.en), fontSize: 12, color: colors.inkMuted }}>
                       {lang === 'en' ? meta.hi : meta.en}
                     </Text>
-                    <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
+                    <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
                       {count} {contentByLang(lang, 'व्रत-पर्व', 'observances')}
                     </Text>
                   </Pressable>
@@ -1704,7 +1710,7 @@ function CatalogLanding({
                 <Text style={{ ...captionFont(lang === 'en' ? 'कथा संग्रह' : 'Katha library'), fontSize: 12, color: colors.inkMuted }}>
                   {lang === 'en' ? 'कथा संग्रह' : 'Katha library'}
                 </Text>
-                <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
+                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
                   {kathaCount} {contentByLang(lang, 'कथाएँ', 'stories')}
                 </Text>
               </Pressable>
@@ -1745,46 +1751,46 @@ const styles = StyleSheet.create({
   // Counter-rotate the hole so it stays visually upright inside the tilted head.
   pinHole: { width: 4, height: 4, borderRadius: 2, transform: [{ rotate: '45deg' }] },
   myVratButton: { width: 34, height: 34, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 15, height: 15, borderRadius: 7.5, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
-  starBadgeText: { fontFamily: 'Inter_600SemiBold', fontSize: 9, lineHeight: 13 },
+  starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 16, height: 16, borderRadius: 8, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
+  starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
   myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },
   jyotishHeroIcon: { width: 58, height: 58, alignItems: 'center', justifyContent: 'center' },
   jyotishIntro: { paddingHorizontal: 1, paddingTop: 12, paddingBottom: 5 },
-  jyotishSectionLabel: { fontSize: 9, marginTop: 18, marginBottom: 8 },
+  jyotishSectionLabel: { fontSize: 10, marginTop: 18, marginBottom: 8 },
   jyotishToolCard: { minHeight: 98, borderWidth: 1, padding: 14, marginBottom: 10, flexDirection: 'row', alignItems: 'center', gap: 12 },
   jyotishToolGlyph: { width: 46, height: 46, alignItems: 'center', justifyContent: 'center' },
   jyotishBadge: { paddingHorizontal: 7, paddingVertical: 3 },
-  jyotishBadgeText: { fontFamily: 'Inter_600SemiBold', fontSize: 7, letterSpacing: 1.1 },
+  jyotishBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 1.1 },
   jyotishPractice: { minHeight: 72, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
   jyotishPracticeGlyph: { fontFamily: fontFamilies.devanagariBold, fontSize: 24 },
   jyotishMicroNote: { marginHorizontal: 4, marginTop: 12, flexDirection: 'row', alignItems: 'flex-start', gap: 9 },
   jyotishInfoMark: { width: 18, height: 18, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  jyotishInfoText: { fontFamily: 'Inter_600SemiBold', fontSize: 9 },
+  jyotishInfoText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
   jyotishGuidanceBlock: { borderWidth: 1, overflow: 'hidden' },
   jyotishGuidanceHead: { paddingHorizontal: 14, paddingVertical: 12, borderBottomWidth: StyleSheet.hairlineWidth, flexDirection: 'row', alignItems: 'center', gap: 10 },
-  jyotishTranslation: { fontFamily: 'Inter_500Medium', fontSize: 10 },
-  jyotishGuidanceDate: { fontFamily: 'Inter_500Medium', fontSize: 9, marginTop: 2 },
+  jyotishTranslation: { fontFamily: fontFamilies.inter, fontSize: 10 },
+  jyotishGuidanceDate: { fontFamily: fontFamilies.inter, fontSize: 10, marginTop: 2 },
   jyotishSharePill: { minHeight: 38, paddingHorizontal: 11, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  jyotishShareText: { fontFamily: 'Inter_600SemiBold', fontSize: 10 },
+  jyotishShareText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
   jyotishGuidanceFooter: { paddingHorizontal: 13, paddingVertical: 11, alignItems: 'flex-end' },
-  jyotishInlineLink: { fontFamily: 'Inter_600SemiBold', fontSize: 10 },
+  jyotishInlineLink: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
   jyotishPersonalCard: { borderWidth: 1, padding: 14 },
   jyotishPersonalHead: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', gap: 9 },
   jyotishSavedPill: { paddingHorizontal: 8, paddingVertical: 5, borderWidth: 1 },
-  jyotishSavedText: { fontFamily: 'Inter_600SemiBold', fontSize: 7 },
+  jyotishSavedText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
   jyotishFactGrid: { marginTop: 10, flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   jyotishFact: { width: '48.7%', minHeight: 62, paddingHorizontal: 10, paddingVertical: 9, borderWidth: 1 },
-  jyotishFactLabel: { fontSize: 7 },
-  jyotishFactDetail: { fontFamily: 'Inter_500Medium', fontSize: 8, marginTop: 1 },
+  jyotishFactLabel: { fontSize: 10 },
+  jyotishFactDetail: { fontFamily: fontFamilies.inter, fontSize: 10, marginTop: 1 },
   jyotishActions: { marginTop: 12, flexDirection: 'row', gap: 8 },
   jyotishPrimary: { minHeight: 42, flex: 1, paddingHorizontal: 15, alignItems: 'center', justifyContent: 'center' },
-  jyotishPrimaryText: { fontFamily: 'Inter_600SemiBold', fontSize: 11 },
+  jyotishPrimaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   jyotishSecondary: { minHeight: 42, flex: 1, paddingHorizontal: 15, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  jyotishSecondaryText: { fontFamily: 'Inter_600SemiBold', fontSize: 11 },
-  catalogSearch: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: 'CormorantGaramond_500Medium', fontSize: 15 },
+  jyotishSecondaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
+  catalogSearch: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: fontFamilies.latin, fontSize: 15 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
   upCard: { width: 150, borderWidth: 1, padding: 12 },
   upCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
@@ -1816,9 +1822,13 @@ const styles = StyleSheet.create({
   compactActions: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 8 },
   expandedCalendar: { marginTop: 10, paddingTop: 10, borderTopWidth: StyleSheet.hairlineWidth },
   monthHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 },
+  // Deliberately 34, not the 44 used for back controls: a calendar month stepper
+  // is a different control class and 44 would crowd the month header. The
+  // hitSlop={10} at the call site takes the real touch target to 54, clearing
+  // the 44 minimum — the size exception is visual only (design.md §12).
   monthButton: { width: 34, height: 34, borderWidth: 1, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
   weekdayRow: { flexDirection: 'row', marginBottom: 4 },
-  weekdayText: { width: `${100 / 7}%`, textAlign: 'center', fontFamily: 'Inter_600SemiBold', fontSize: 9 },
+  weekdayText: { width: `${100 / 7}%`, textAlign: 'center', fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
   dateGrid: { flexDirection: 'row', flexWrap: 'wrap' },
   dateCell: {
     width: `${100 / 7}%`,
@@ -1831,8 +1841,11 @@ const styles = StyleSheet.create({
     marginVertical: 1,
     paddingVertical: 3,
   },
-  dateTag: { minWidth: 24, minHeight: 12, borderRadius: 6, paddingHorizontal: 4, alignItems: 'center', justifyContent: 'center', marginTop: 2 },
-  dateTagText: { fontFamily: 'Inter_600SemiBold', fontSize: 7, lineHeight: 10 },
+  // Grown from 24×12 to fit the 10px type floor: the tag label can be Devanagari
+  // ("व्रत"), whose matras clip below ~1.4× leading, so the box follows the
+  // 14pt line box rather than the old 10pt one.
+  dateTag: { minWidth: 28, minHeight: 16, borderRadius: 8, paddingHorizontal: 5, alignItems: 'center', justifyContent: 'center', marginTop: 2 },
+  dateTagText: { fontSize: 10, lineHeight: 14 },
   todayButton: { alignSelf: 'center', marginTop: 8, borderWidth: 1, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 },
   compactTodayButton: { marginTop: 0, paddingHorizontal: 14, paddingVertical: 7 },
   dateHeader: { marginTop: 10, paddingBottom: 8, borderBottomWidth: StyleSheet.hairlineWidth, marginBottom: 12 },

@@ -9,6 +9,7 @@ import MoreStackNavigator from './MoreStackNavigator';
 import AudioStackNavigator from './AudioStackNavigator';
 import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import type { TabParamList } from './types';
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -49,7 +50,7 @@ export default function TabNavigator() {
         tabBarActiveTintColor: colors.saffron,
         tabBarInactiveTintColor: colors.inkMuted,
         tabBarLabelStyle: {
-          fontFamily: 'Inter_500Medium',
+          fontFamily: fontFamilies.inter,
           fontSize: 10,
           letterSpacing: 0.02,
         },

@@ -8,6 +8,7 @@ import {
   type KundaliResultTab,
 } from '@/panchang/kundali';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
@@ -139,8 +140,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   icon: { width: 30, height: 30, alignItems: 'center', justifyContent: 'center' },
-  iconText: { fontFamily: 'Inter_600SemiBold', fontSize: 12 },
+  iconText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   cardCopy: { flex: 1 },
-  eyebrow: { fontSize: 8 },
-  learn: { fontFamily: 'Inter_600SemiBold', fontSize: 10, marginTop: 8 },
+  eyebrow: { fontSize: 10 },
+  learn: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, marginTop: 8 },
 });

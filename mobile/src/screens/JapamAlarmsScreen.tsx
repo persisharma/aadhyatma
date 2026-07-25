@@ -14,6 +14,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useJapamAlarms, type AlarmDraft, type AlarmPatch } from '@/contexts/JapamAlarmsContext';
 import { japamMantras, findJapamMantra } from '@/data/japam';
@@ -155,7 +156,7 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                 styles.titleEn,
                 {
                   color: colors.inkMuted,
-                  fontFamily: 'CormorantGaramond_400Regular_Italic',
+                  fontFamily: fontFamilies.latinItalic,
                 },
               ]}
             >

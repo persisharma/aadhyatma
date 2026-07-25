@@ -293,7 +293,7 @@ function RashifalShareCard(props: RashifalProps) {
           style={{
             color: colors.inkMuted,
             fontFamily: scriptBodyFont(props.lang, typography.meaning.fontFamily),
-            fontSize: 7.5,
+            fontSize: 10,
             lineHeight: 10,
             textAlign: 'center',
           }}
@@ -434,7 +434,7 @@ function KundaliShareCard(props: KundaliProps) {
           style={{
             color: colors.inkMuted,
             fontFamily: scriptBodyFont(props.lang, typography.meaning.fontFamily),
-            fontSize: 7.5,
+            fontSize: 10,
             lineHeight: 10,
             textAlign: 'center',
           }}
@@ -490,8 +490,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   meta: {
-    fontFamily: 'Inter_600SemiBold',
-    fontSize: 7.5,
+    fontFamily: fontFamilies.interSemiBold,
+    fontSize: 10,
     lineHeight: 10,
     textAlign: 'right',
   },
@@ -512,14 +512,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   signGlyphText: {
-    fontFamily: 'CormorantGaramond_600SemiBold',
+    fontFamily: fontFamilies.latinSemiBold,
     fontSize: 22,
   },
   kicker: {
-    fontSize: 8,
+    fontSize: 10,
   },
   signSecondary: {
-    fontFamily: 'Inter_500Medium',
+    fontFamily: fontFamilies.inter,
     fontSize: 11,
   },
   shareGuidance: {
@@ -549,11 +549,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   shareMarkerText: {
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 10,
   },
   shareLabel: {
-    fontSize: 8.5,
+    fontSize: 10,
   },
   sharePractice: {
     marginTop: 8,
@@ -574,8 +574,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   birthMeta: {
-    fontFamily: 'Inter_500Medium',
-    fontSize: 9.5,
+    fontFamily: fontFamilies.inter,
+    fontSize: 10,
     marginTop: 2,
     textAlign: 'center',
   },
@@ -592,8 +592,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   chipText: {
-    fontFamily: 'Inter_600SemiBold',
-    fontSize: 8.5,
+    fontFamily: fontFamilies.interSemiBold,
+    fontSize: 10,
   },
   method: {
     marginTop: 'auto',

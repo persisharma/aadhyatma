@@ -4,6 +4,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRulesForCategory, type BrowseCategory } from '@/panchang/vratCatalog';
@@ -204,10 +205,10 @@ function ObservanceRow({ rule, nextDate, today, lang, colors, typography, follow
         </View>
         {nextDate && (
           <View style={{ alignItems: 'flex-end' }}>
-            <Text style={{ fontFamily: lang === 'en' ? 'Inter_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
+            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
               {shortDate(nextDate, lang)}
             </Text>
-            <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft, marginTop: 1 }}>
+            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft, marginTop: 1 }}>
               {relativeLabel(nextDate, today, lang)}
             </Text>
           </View>
@@ -223,7 +224,7 @@ const styles = StyleSheet.create({
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 },
   backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 8, paddingBottom: 32 },
-  search: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: 'CormorantGaramond_500Medium', fontSize: 15, marginBottom: 8 },
+  search: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: fontFamilies.latin, fontSize: 15, marginBottom: 8 },
   row: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: StyleSheet.hairlineWidth },
   starBtn: { width: 36, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', marginRight: 4 },
   rowMain: { flex: 1, flexDirection: 'row', alignItems: 'center', paddingVertical: 13 },

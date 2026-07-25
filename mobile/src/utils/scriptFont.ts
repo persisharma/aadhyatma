@@ -1,3 +1,4 @@
+import { fontFamilies } from '@/theme/typography';
 // Caption / secondary-line font picker.
 //
 // Bilingual rows show a name in one script with its counterpart in the other
@@ -23,10 +24,10 @@ export function isDevanagari(text: string): boolean {
  * language, including the Gujarati/Kannada renderings derived at runtime.
  */
 export function captionFont(text: string): { fontFamily: string; fontStyle: 'normal' | 'italic' } {
-  if (GUJARATI.test(text)) return { fontFamily: 'NotoSerifGujarati_500Medium', fontStyle: 'normal' };
-  if (KANNADA.test(text)) return { fontFamily: 'NotoSerifKannada_500Medium', fontStyle: 'normal' };
-  if (DEVANAGARI.test(text)) return { fontFamily: 'NotoSerifDevanagari_500Medium', fontStyle: 'normal' };
-  return { fontFamily: 'CormorantGaramond_400Regular_Italic', fontStyle: 'italic' };
+  if (GUJARATI.test(text)) return { fontFamily: fontFamilies.gujarati, fontStyle: 'normal' };
+  if (KANNADA.test(text)) return { fontFamily: fontFamilies.kannada, fontStyle: 'normal' };
+  if (DEVANAGARI.test(text)) return { fontFamily: fontFamilies.devanagari, fontStyle: 'normal' };
+  return { fontFamily: fontFamilies.latinItalic, fontStyle: 'italic' };
 }
 
 /**
@@ -37,7 +38,7 @@ export function captionFont(text: string): { fontFamily: string; fontStyle: 'nor
  * fallback path) are unchanged.
  */
 export function titleScriptFont(text: string, fallback: string): string {
-  if (GUJARATI.test(text)) return 'NotoSerifGujarati_600SemiBold';
-  if (KANNADA.test(text)) return 'NotoSerifKannada_600SemiBold';
+  if (GUJARATI.test(text)) return fontFamilies.gujaratiBold;
+  if (KANNADA.test(text)) return fontFamilies.kannadaBold;
   return fallback;
 }
