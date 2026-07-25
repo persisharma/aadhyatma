@@ -1282,7 +1282,7 @@ function JyotishToolCard({
       ]}
     >
       <View style={[styles.jyotishToolGlyph, { backgroundColor: colors.saffronTint, borderRadius: radii.md }]}>
-        <Text style={{ color: colors.saffronDeep, fontFamily: 'NotoSansDevanagari_600SemiBold', fontSize: 18 }}>
+        <Text style={{ color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold, fontSize: 18 }}>
           {glyph}
         </Text>
       </View>
@@ -1759,7 +1759,7 @@ const styles = StyleSheet.create({
   jyotishBadge: { paddingHorizontal: 7, paddingVertical: 3 },
   jyotishBadgeText: { fontFamily: 'Inter_600SemiBold', fontSize: 7, letterSpacing: 1.1 },
   jyotishPractice: { minHeight: 72, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
-  jyotishPracticeGlyph: { fontFamily: 'NotoSansDevanagari_600SemiBold', fontSize: 24 },
+  jyotishPracticeGlyph: { fontFamily: fontFamilies.devanagariBold, fontSize: 24 },
   jyotishMicroNote: { marginHorizontal: 4, marginTop: 12, flexDirection: 'row', alignItems: 'flex-start', gap: 9 },
   jyotishInfoMark: { width: 18, height: 18, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   jyotishInfoText: { fontFamily: 'Inter_600SemiBold', fontSize: 9 },

@@ -19,6 +19,7 @@ import {
 import type { City } from '@/panchang/locations';
 import type { BirthProfile } from '@/panchang/useKundali';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
@@ -481,7 +482,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   om: {
-    fontFamily: 'NotoSansDevanagari_600SemiBold',
+    fontFamily: fontFamilies.devanagariBold,
     fontSize: 18,
   },
   brandRight: {

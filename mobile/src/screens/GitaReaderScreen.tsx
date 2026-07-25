@@ -3,7 +3,6 @@ import {
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  Pressable,
   StyleSheet,
   Text,
   View,
@@ -29,7 +28,7 @@ import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { contentByLang } from '@/utils/localize';
-import { titleFontByLang } from '@/utils/langType';
+import ReaderHeader from '@/components/ReaderHeader';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import type { RootStackParamList } from '@/navigation/types';
@@ -211,59 +210,27 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <View style={styles.topBar}>
-          <View style={styles.topSide}>
-            <Pressable
-              onPress={() => navigation.goBack()}
-              accessibilityRole="button"
-              accessibilityLabel="Back to chapters"
-              hitSlop={16}
-              style={({ pressed }) => [
-                styles.back,
+        <ReaderHeader
+          title={topTitle}
+          onBack={() => navigation.goBack()}
+          backAccessibilityLabel="Back to chapters"
+          sideWidth={60}
+          right={
+            <Text
+              style={[
+                styles.counter,
                 {
-                  backgroundColor: colors.parchmentSoft,
-                  borderColor: colors.divider,
+                  color: colors.inkMuted,
+                  fontFamily: typography.pageCounter.fontFamily,
+                  fontSize: typography.pageCounter.fontSize,
+                  fontStyle: 'italic',
                 },
-                pressed && { opacity: 0.7 },
               ]}
             >
-              <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
-            </Pressable>
-          </View>
-
-          <Text
-            style={[
-              styles.title,
-              {
-                color: colors.ink,
-                fontFamily: titleFontByLang(lang),
-                fontSize: typography.readerTitle.fontSize,
-                fontStyle: lang === 'en' ? 'italic' : 'normal',
-              },
-            ]}
-            numberOfLines={1}
-          >
-            {topTitle}
-          </Text>
-
-          <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Text
-                style={[
-                  styles.counter,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.pageCounter.fontFamily,
-                    fontSize: typography.pageCounter.fontSize,
-                    fontStyle: 'italic',
-                  },
-                ]}
-              >
-                {currentIndex + 1} / {verseCount}
-              </Text>
-            </View>
-          </View>
-        </View>
+              {currentIndex + 1} / {verseCount}
+            </Text>
+          }
+        />
 
         <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
@@ -392,39 +359,6 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-  },
-  topBar: {
-    paddingHorizontal: 22,
-    paddingTop: 8,
-    paddingBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  topSide: {
-    width: 60,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  back: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backGlyph: {
-    fontSize: 22,
-    lineHeight: 24,
-    marginTop: -2,
-    includeFontPadding: false,
-  },
-  title: {
-    flex: 1,
-    textAlign: 'center',
-    includeFontPadding: false,
-    marginHorizontal: 4,
   },
   counter: {
     includeFontPadding: false,

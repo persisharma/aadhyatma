@@ -3,7 +3,6 @@ import {
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  Pressable,
   StyleSheet,
   Text,
   View,
@@ -21,7 +20,8 @@ import { getKathaContent } from '@/panchang/kathaContent';
 import type { KathaContentSection } from '@/panchang/types';
 import type { HomeStackParamList } from '@/navigation/types';
 import { contentByLang } from '@/utils/localize';
-import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { scriptBodyFont } from '@/utils/langType';
+import ReaderHeader from '@/components/ReaderHeader';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'VratKathaReader'>;
 
@@ -62,36 +62,18 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <View style={styles.topBar}>
-          <View style={styles.topSide}>
-            <Pressable
-              onPress={() => navigation.goBack()}
-              accessibilityRole="button"
-              accessibilityLabel="Back"
-              hitSlop={16}
-              style={({ pressed }) => [
-                styles.back,
-                { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
-                pressed && { opacity: 0.7 },
-              ]}
-            >
-              <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
-            </Pressable>
-          </View>
-          <Text
-            numberOfLines={1}
-            style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}
-          >
-            {title}
-          </Text>
-          <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
-            {total > 0 && (
+        <ReaderHeader
+          title={title}
+          onBack={() => navigation.goBack()}
+          right={
+            total > 0 ? (
               <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily }]}>
                 {currentIndex + 1} / {total}
               </Text>
-            )}
-          </View>
-        </View>
+            ) : null
+          }
+          sideWidth={80}
+        />
 
         {!katha ? (
           <View style={styles.empty}>
@@ -153,11 +135,6 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  topBar: { paddingHorizontal: 16, paddingTop: 4, paddingBottom: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  topSide: { width: 80, flexDirection: 'row', alignItems: 'center' },
-  back: { width: 40, height: 40, borderRadius: 20, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  backGlyph: { fontSize: 22, lineHeight: 24, marginTop: -2, includeFontPadding: false },
-  title: { flex: 1, textAlign: 'center', fontSize: 18, includeFontPadding: false, marginHorizontal: 4 },
   counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
   toggleRow: { paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   listContainer: { flex: 1 },
