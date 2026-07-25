@@ -9,7 +9,7 @@ import {
 } from 'astronomy-engine';
 
 import { getAyanamsa } from './engine';
-import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from './names';
+import { NAKSHATRA_NAMES_HI } from './names';
 
 export type Graha =
   | 'sun'
@@ -98,6 +98,12 @@ export type RashifalGuidance = {
   dateKey: string;
   rashiIndex: number;
   focusGrahas: readonly Graha[];
+  favourGraha: Graha;
+  favourHouse: number;
+  pauseGraha: Graha;
+  pauseHouse: number;
+  reflectionGraha: Graha;
+  reflectionHouse: number;
   favourHi: string;
   favourEn: string;
   pauseHi: string;
@@ -173,6 +179,37 @@ export const RASHI_NAMES_EN = [
   'Makara',
   'Kumbha',
   'Meena',
+] as const;
+
+/** Plain-English equivalents shown beside the traditional Sanskrit rashi names. */
+export const RASHI_NAMES_WESTERN = [
+  'Aries',
+  'Taurus',
+  'Gemini',
+  'Cancer',
+  'Leo',
+  'Virgo',
+  'Libra',
+  'Scorpio',
+  'Sagittarius',
+  'Capricorn',
+  'Aquarius',
+  'Pisces',
+] as const;
+
+export const RASHI_GLYPHS = [
+  '♈︎',
+  '♉︎',
+  '♊︎',
+  '♋︎',
+  '♌︎',
+  '♍︎',
+  '♎︎',
+  '♏︎',
+  '♐︎',
+  '♑︎',
+  '♒︎',
+  '♓︎',
 ] as const;
 
 export const DASHA_ORDER: readonly DashaLord[] = [
@@ -509,7 +546,7 @@ export function buildKundaliInsights(
       eyebrowHi: 'आरम्भ बिंदु · लग्न',
       eyebrowEn: 'Starting point · Lagna',
       titleHi: `${RASHI_NAMES_HI[chart.lagnaRashiIndex]} लग्न`,
-      titleEn: `${RASHI_NAMES_EN[chart.lagnaRashiIndex]} Lagna`,
+      titleEn: `${RASHI_NAMES_EN[chart.lagnaRashiIndex]} Lagna · ${RASHI_NAMES_WESTERN[chart.lagnaRashiIndex]} rising`,
       bodyHi:
         'लग्न जन्म के समय पूर्वी क्षितिज पर उदित राशि है और प्रथम भाव निर्धारित करता है। पारम्परिक ज्योतिष में इसी से शेष कुंडली को पढ़ना आरम्भ होता है।',
       bodyEn:
@@ -521,11 +558,11 @@ export function buildKundaliInsights(
       eyebrowHi: 'अन्तर लय · चन्द्र',
       eyebrowEn: 'Inner rhythm · Moon',
       titleHi: `${RASHI_NAMES_HI[moon.rashiIndex]} राशि · ${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} पद ${moon.pada}`,
-      titleEn: `${RASHI_NAMES_EN[moon.rashiIndex]} · ${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]} Pada ${moon.pada}`,
+      titleEn: `${RASHI_NAMES_EN[moon.rashiIndex]} Moon · ${RASHI_NAMES_WESTERN[moon.rashiIndex]}`,
       bodyHi:
         'चन्द्र राशि मन की पारम्परिक दृष्टि देती है और नक्षत्र उसकी स्थिति को अधिक सूक्ष्म बनाता है। यह विचार का साधन है, स्थायी व्यक्तित्व-निर्णय नहीं।',
       bodyEn:
-        'The Moon sign is a traditional lens on inner rhythm, and the nakshatra refines its placement. It is a reflection aid, not a fixed personality verdict.',
+        'The Moon sign is a traditional lens on inner rhythm, and the nakshatra refines its placement. A reflection aid, not a personality verdict.',
       targetTab: 'grahas',
     },
     {
@@ -639,6 +676,12 @@ export function computeRashifal(date: Date, rashiIndex: number): RashifalGuidanc
     dateKey: indiaDateKey(date),
     rashiIndex,
     focusGrahas,
+    favourGraha: favourTransit.graha,
+    favourHouse: favourTransit.house,
+    pauseGraha: pauseTransit.graha,
+    pauseHouse: pauseTransit.house,
+    reflectionGraha: moonTransit.graha,
+    reflectionHouse: moonTransit.house,
     favourHi: `${HOUSE_THEME_HI[favourTransit.house - 1]} में शांत, क्रमबद्ध प्रयास को स्थान दें।`,
     favourEn: `Give calm, orderly attention to ${HOUSE_THEME_EN[favourTransit.house - 1]}.`,
     pauseHi: `${HOUSE_THEME_HI[pauseTransit.house - 1]} से जुड़े विषयों में जल्दबाज़ी या निश्चित निष्कर्ष से रुकें।`,

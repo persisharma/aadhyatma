@@ -513,5 +513,9 @@ Intent-driven discovery is metadata over bundled content, not new scripture text
 ### 13.4 Product and verification contract
 
 - Home keeps a permanent Kundali launcher; Panchang keeps Jyotish as a peer of Panchang and Vrat–Parv. Do not bury Kundali only in a carousel, More, or a second-level catalog.
-- Results lead with Overview before Chart/Grahas/Dasha. The chart must have an equivalent text representation and a full accessibility summary.
+- Do not create a “Default profile” or silently preselect a birth city. Profile hydration has explicit loading/guest/saved/error states, and failed persistence must remain visible and recoverable.
+- Before a profile is saved, the Jyotish landing leads to creation. After saving, it leads with all three Daily Rashifal guidance rows, then a compact Kundali reference, then one shared practice treatment.
+- Results lead with Overview before Chart/Grahas/Dasha. Lagna, Moon, and Dasha insight cards are actionable; the chart must have an equivalent text representation and a full accessibility summary. Every traditional rashi name shown in English UI is paired with its plain-English equivalent.
+- The Dasha surface exposes the current Mahadasha/Antardasha, dates, elapsed and remaining time, and a full nine-period timeline. Those timing values must also be accessible to assistive technology.
+- Kundali and Rashifal share cards use the app theme and a 4:5 preview. Kundali must warn that personal birth details are included; Rashifal must state that name and birth details are excluded. Do not place duplicate share controls inside Kundali tabs.
 - Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest for new UI, and `.maestro/kundali-smoke.yaml` on an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.

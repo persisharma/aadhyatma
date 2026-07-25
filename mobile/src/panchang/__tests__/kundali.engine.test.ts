@@ -162,6 +162,13 @@ test('beginner insights explain Lagna, Moon, and Dasha without deterministic cla
   assert.match(copy, /traditional/);
   assert.match(copy, /does not guarantee/);
   assert.doesNotMatch(copy, /\byou will\b|\bwill happen\b|\bcertain to\b/);
+  assert.equal(
+    insights.find((insight) => insight.id === 'moon')?.bodyEn,
+    'The Moon sign is a traditional lens on inner rhythm, and the nakshatra refines its placement. A reflection aid, not a personality verdict.'
+  );
+  assert.equal(insights.find((insight) => insight.id === 'lagna')?.targetTab, 'chart');
+  assert.equal(insights.find((insight) => insight.id === 'moon')?.targetTab, 'grahas');
+  assert.equal(insights.find((insight) => insight.id === 'dasha')?.targetTab, 'dasha');
 });
 
 test('Rashifal is deterministic for an India civil day and valid for all rashis', () => {
@@ -175,6 +182,12 @@ test('Rashifal is deterministic for an India civil day and valid for all rashis'
     assert.ok(first.favourEn.length > 0);
     assert.ok(first.pauseEn.length > 0);
     assert.ok(first.reflectionEn.endsWith('?'));
+    assert.ok(GRAHA_ORDER.includes(first.favourGraha));
+    assert.ok(GRAHA_ORDER.includes(first.pauseGraha));
+    assert.equal(first.reflectionGraha, 'moon');
+    assert.ok(first.favourHouse >= 1 && first.favourHouse <= 12);
+    assert.ok(first.pauseHouse >= 1 && first.pauseHouse <= 12);
+    assert.ok(first.reflectionHouse >= 1 && first.reflectionHouse <= 12);
     assert.ok(
       ['navagraha-stotram', 'surya-ashtakam', 'shani-ashtakam'].includes(first.sourceId)
     );
