@@ -9,20 +9,18 @@ import {
 } from '@/panchang/kundali';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = {
   chart: KundaliChart;
   at: Date;
   onOpenTab: (tab: KundaliResultTab) => void;
-  onOpenPractice: () => void;
 };
 
 export default function KundaliOverview({
   chart,
   at,
   onOpenTab,
-  onOpenPractice,
 }: Props) {
   const { colors, typography, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
@@ -79,86 +77,70 @@ export default function KundaliOverview({
             pressed && { opacity: 0.72 },
           ]}
         >
-          <Text style={[styles.eyebrow, { color: colors.saffronDeep }]}>
-            {contentByLang(lang, insight.eyebrowHi, insight.eyebrowEn).toUpperCase()}
-          </Text>
-          <Text
-            style={{
-              color: colors.ink,
-              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-              fontSize: 18,
-              marginTop: 5,
-            }}
+          <View
+            style={[
+              styles.icon,
+              { backgroundColor: colors.saffronTint, borderRadius: radii.md },
+            ]}
           >
-            {contentByLang(lang, insight.titleHi, insight.titleEn)}
-          </Text>
-          <Text
-            style={{
-              color: colors.inkSoft,
-              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 13,
-              lineHeight: 20,
-              marginTop: 7,
-            }}
-          >
-            {meaningByLang(lang, insight.bodyHi, insight.bodyEn)}
-          </Text>
-          <Text style={[styles.learn, { color: colors.saffronDeep }]}>
-            {contentByLang(lang, 'और समझें  ›', 'Learn more  ›')}
-          </Text>
+            <Text style={[styles.iconText, { color: colors.saffronDeep }]}>
+              {insight.id === 'lagna' ? '1' : insight.id === 'moon' ? '☾' : '◷'}
+            </Text>
+          </View>
+          <View style={styles.cardCopy}>
+            <Text
+              style={[
+                pillTextStyle(lang, typography.sectionLabel),
+                styles.eyebrow,
+                { color: colors.saffronDeep },
+              ]}
+            >
+              {contentByLang(lang, insight.eyebrowHi, insight.eyebrowEn)}
+            </Text>
+            <Text
+              style={{
+                color: colors.ink,
+                fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                fontSize: 17,
+                marginTop: 4,
+              }}
+            >
+              {contentByLang(lang, insight.titleHi, insight.titleEn)}
+            </Text>
+            <Text
+              style={{
+                color: colors.inkSoft,
+                fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                fontSize: 12,
+                lineHeight: 19,
+                marginTop: 6,
+              }}
+            >
+              {meaningByLang(lang, insight.bodyHi, insight.bodyEn)}
+            </Text>
+            <Text style={[styles.learn, { color: colors.saffronDeep }]}>
+              {contentByLang(lang, 'और जानें  ›', 'Learn more  ›')}
+            </Text>
+          </View>
         </Pressable>
       ))}
-
-      <Pressable
-        onPress={onOpenPractice}
-        accessibilityRole="button"
-        accessibilityLabel="Open Navagraha Stotram practice"
-        style={({ pressed }) => [
-          styles.practice,
-          { borderColor: colors.divider, borderRadius: radii.lg },
-          pressed && { opacity: 0.7 },
-        ]}
-      >
-        <Text style={[styles.practiceGlyph, { color: colors.gold }]}>ॐ</Text>
-        <View style={{ flex: 1 }}>
-          <Text
-            style={{
-              color: colors.ink,
-              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-              fontSize: 15,
-            }}
-          >
-            {contentByLang(lang, 'आज की सरल साधना', 'A simple practice for today')}
-          </Text>
-          <Text
-            style={{
-              color: colors.inkMuted,
-              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 12,
-              marginTop: 2,
-            }}
-          >
-            {contentByLang(lang, 'नवग्रह स्तोत्रम्', 'Navagraha Stotram')}
-          </Text>
-        </View>
-        <Text style={{ color: colors.saffronDeep, fontSize: 18 }}>›</Text>
-      </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   intro: { borderWidth: 1, padding: 14, marginBottom: 12 },
-  card: { borderWidth: 1, padding: 16, marginBottom: 12 },
-  eyebrow: { fontFamily: 'Inter_600SemiBold', fontSize: 9, letterSpacing: 1.4 },
-  learn: { fontFamily: 'Inter_600SemiBold', fontSize: 11, marginTop: 10 },
-  practice: {
-    minHeight: 70,
+  card: {
     borderWidth: 1,
-    paddingHorizontal: 14,
+    padding: 14,
+    marginBottom: 10,
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
+    alignItems: 'flex-start',
+    gap: 10,
   },
-  practiceGlyph: { fontFamily: 'NotoSansDevanagari_600SemiBold', fontSize: 24 },
+  icon: { width: 30, height: 30, alignItems: 'center', justifyContent: 'center' },
+  iconText: { fontFamily: 'Inter_600SemiBold', fontSize: 12 },
+  cardCopy: { flex: 1 },
+  eyebrow: { fontSize: 8 },
+  learn: { fontFamily: 'Inter_600SemiBold', fontSize: 10, marginTop: 8 },
 });

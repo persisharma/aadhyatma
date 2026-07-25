@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
+  Keyboard,
   Modal,
   Pressable,
   ScrollView,
@@ -15,23 +16,29 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import KundaliOverview from '@/components/KundaliOverview';
+import JyotishPracticeCard from '@/components/JyotishPracticeCard';
+import JyotishShareCard from '@/components/JyotishShareCard';
+import JyotishShareSheet from '@/components/JyotishShareSheet';
+import JyotishStateCard from '@/components/JyotishStateCard';
 import NorthIndianChart from '@/components/NorthIndianChart';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
 import {
+  DASHA_YEARS,
   GRAHA_NAMES_EN,
   GRAHA_NAMES_HI,
   getCurrentDasha,
   RASHI_NAMES_EN,
   RASHI_NAMES_HI,
+  RASHI_NAMES_WESTERN,
   type KundaliChart,
   type KundaliResultTab,
 } from '@/panchang/kundali';
 import { CITIES, getCityById, type City } from '@/panchang/locations';
+import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from '@/panchang/names';
 import {
-  DEFAULT_BIRTH_CITY_ID,
   useKundali,
   validateBirthProfile,
   type BirthProfile,
@@ -39,7 +46,7 @@ import {
 } from '@/panchang/useKundali';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'Kundali'>;
 
@@ -53,7 +60,7 @@ const RESULT_TABS: { id: KundaliResultTab; hi: string; en: string }[] = [
 const EMPTY_PROFILE: BirthProfile = {
   date: '',
   time: '',
-  cityId: DEFAULT_BIRTH_CITY_ID,
+  cityId: '',
 };
 
 function formatDegrees(value: number): string {
@@ -71,40 +78,99 @@ function formatPeriodDate(date: Date): string {
   }).format(date);
 }
 
+function formatBirthDate(value: string): string {
+  return new Intl.DateTimeFormat('en-IN', {
+    timeZone: 'UTC',
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(`${value}T00:00:00.000Z`));
+}
+
+function formatBirthTime(value: string): string {
+  const [hour, minute] = value.split(':').map(Number);
+  return `${hour % 12 || 12}:${String(minute).padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`;
+}
+
+function formatDuration(milliseconds: number, roundUp = false): string {
+  const totalMonths = Math.max(
+    0,
+    roundUp
+      ? Math.ceil(milliseconds / (365.2425 / 12 * 86_400_000))
+      : Math.floor(milliseconds / (365.2425 / 12 * 86_400_000))
+  );
+  const years = Math.floor(totalMonths / 12);
+  const months = totalMonths % 12;
+  if (years && months) return `${years} y ${months} m`;
+  if (years) return `${years} y`;
+  return `${months} m`;
+}
+
 function devotionalTarget(sourceId: string) {
   const entry = library.find((candidate) => candidate.id === sourceId);
   return entry ? buildEntryStartTarget(entry) : null;
 }
 
-export default function KundaliScreen({ navigation }: Props) {
+export default function KundaliScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
-  const { profile, chart, hydrated, saveProfile, clearProfile } = useKundali();
+  const {
+    profile,
+    chart,
+    hydrated,
+    loadState,
+    saveProfile,
+    clearProfile,
+  } = useKundali();
   const [draft, setDraft] = useState<BirthProfile>(EMPTY_PROFILE);
   const [errors, setErrors] = useState<BirthProfileErrors>({});
   const [editing, setEditing] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
   const [activeTab, setActiveTab] = useState<KundaliResultTab>('overview');
   const [cityPickerVisible, setCityPickerVisible] = useState(false);
+  const [shareVisible, setShareVisible] = useState(false);
+  const openInEditMode = useRef(route.params?.editing === true);
+  const contentScrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
     if (!hydrated) return;
     if (profile) {
       setDraft(profile);
+      setEditing(openInEditMode.current);
+      openInEditMode.current = false;
+    } else if (loadState === 'guest') {
+      setEditing(true);
+    } else if (loadState === 'error') {
       setEditing(false);
     }
-  }, [hydrated, profile]);
+  }, [hydrated, loadState, profile]);
+
+  useEffect(() => {
+    if (!hydrated || editing || !chart) return;
+    contentScrollRef.current?.scrollTo({ y: 0, animated: false });
+  }, [activeTab, chart, editing, hydrated]);
 
   const handleGenerate = async () => {
+    Keyboard.dismiss();
     const nextErrors = validateBirthProfile(draft);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
+    setSaveError('');
     setSaving(true);
     try {
       await saveProfile(draft);
       setActiveTab('overview');
       setEditing(false);
+    } catch {
+      setSaveError(
+        contentByLang(
+          lang,
+          'जन्म विवरण सुरक्षित नहीं हो सके। कृपया फिर प्रयास करें।',
+          'Birth details could not be saved. Please try again.'
+        )
+      );
     } finally {
       setSaving(false);
     }
@@ -115,11 +181,26 @@ export default function KundaliScreen({ navigation }: Props) {
     if (target) rootNav.navigate('HomeTab', target);
   };
 
+  const handleTabChange = (tab: KundaliResultTab) => {
+    setActiveTab(tab);
+  };
+
   const startOver = async () => {
-    await clearProfile();
-    setDraft(EMPTY_PROFILE);
-    setActiveTab('overview');
-    setEditing(true);
+    try {
+      await clearProfile();
+      setDraft(EMPTY_PROFILE);
+      setActiveTab('overview');
+      setSaveError('');
+      setEditing(true);
+    } catch {
+      setSaveError(
+        contentByLang(
+          lang,
+          'सुरक्षित विवरण हट नहीं सके। कृपया फिर प्रयास करें।',
+          'Saved details could not be removed. Please try again.'
+        )
+      );
+    }
   };
 
   return (
@@ -157,17 +238,37 @@ export default function KundaliScreen({ navigation }: Props) {
               {contentByLang(lang, 'लाहिरी · पूर्ण राशि भाव · IST', 'Lahiri · Whole-sign houses · IST')}
             </Text>
           </View>
-          {chart && !editing ? (
-            <Pressable
-              onPress={() => setEditing(true)}
-              accessibilityRole="button"
-              accessibilityLabel="Edit birth details"
-              hitSlop={10}
-            >
-              <Text style={[styles.actionText, { color: colors.saffronDeep }]}>
-                {contentByLang(lang, 'बदलें', 'Edit')}
-              </Text>
-            </Pressable>
+          {chart && profile && !editing ? (
+            <View style={styles.headerActions}>
+              <Pressable
+                onPress={() => setShareVisible(true)}
+                accessibilityRole="button"
+                accessibilityLabel="Share your Kundali"
+                style={({ pressed }) => [
+                  styles.sharePill,
+                  {
+                    borderColor: colors.divider,
+                    backgroundColor: colors.parchmentSoft,
+                    borderRadius: radii.pill,
+                  },
+                  pressed && { opacity: 0.65 },
+                ]}
+              >
+                <Text style={[styles.shareText, { color: colors.saffronDeep }]}>
+                  ↗ {contentByLang(lang, 'साझा करें', 'Share')}
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={() => setEditing(true)}
+                accessibilityRole="button"
+                accessibilityLabel="Edit birth details"
+                hitSlop={10}
+              >
+                <Text style={[styles.actionText, { color: colors.saffronDeep }]}>
+                  {contentByLang(lang, 'बदलें', 'Edit')}
+                </Text>
+              </Pressable>
+            </View>
           ) : (
             <View style={{ width: 36 }} />
           )}
@@ -179,23 +280,43 @@ export default function KundaliScreen({ navigation }: Props) {
           </View>
         ) : (
           <ScrollView
+            ref={contentScrollRef}
             contentContainerStyle={[
               styles.scroll,
               { paddingHorizontal: spacing.xxl, paddingBottom: spacing.xxl * 2 },
             ]}
             keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag"
             showsVerticalScrollIndicator={false}
           >
-            {editing || !chart ? (
+            {loadState === 'error' && !editing ? (
+              <JyotishStateCard
+                kind="error"
+                lang={lang}
+                titleHi="कुंडली फिर नहीं बन सकी"
+                titleEn="Your chart couldn’t be rebuilt"
+                bodyHi="जन्म विवरण अधूरे हो सकते हैं। नई गणना के लिए उन्हें दोबारा भरें।"
+                bodyEn="The saved birth details may be incomplete. Re-enter them for a fresh calculation."
+                actionHi="जन्म विवरण फिर भरें"
+                actionEn="Re-enter birth details"
+                actionAccessibilityLabel="Re-enter birth details"
+                onAction={startOver}
+              />
+            ) : editing || !chart ? (
               <BirthInput
                 draft={draft}
                 errors={errors}
                 saving={saving}
+                saveError={saveError}
                 lang={lang}
                 onChange={setDraft}
-                onChooseCity={() => setCityPickerVisible(true)}
+                onChooseCity={() => {
+                  Keyboard.dismiss();
+                  setCityPickerVisible(true);
+                }}
                 onGenerate={handleGenerate}
                 onCancel={chart ? () => setEditing(false) : undefined}
+                onDelete={profile ? startOver : undefined}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -207,9 +328,9 @@ export default function KundaliScreen({ navigation }: Props) {
                 profile={profile!}
                 activeTab={activeTab}
                 lang={lang}
-                onChangeTab={setActiveTab}
+                onChangeTab={handleTabChange}
                 onOpenPractice={() => openPractice()}
-                onStartOver={startOver}
+                onManageDetails={() => setEditing(true)}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -224,12 +345,37 @@ export default function KundaliScreen({ navigation }: Props) {
         selectedCityId={draft.cityId}
         lang={lang}
         onSelect={(city) => {
+          Keyboard.dismiss();
           setDraft((current) => ({ ...current, cityId: city.id }));
           setErrors((current) => ({ ...current, cityId: undefined }));
           setCityPickerVisible(false);
         }}
-        onClose={() => setCityPickerVisible(false)}
+        onClose={() => {
+          Keyboard.dismiss();
+          setCityPickerVisible(false);
+        }}
       />
+      {chart && profile && (
+        <JyotishShareSheet
+          visible={shareVisible}
+          lang={lang}
+          titleHi="अपनी कुंडली साझा करें"
+          titleEn="Share your Kundali"
+          privacyHi="इस कार्ड में नाम, जन्म तिथि, समय और नगर शामिल हैं। साझा करने से पहले जाँच लें।"
+          privacyEn="This card includes the chart name, birth date, time, and city. Review it before sharing."
+          onClose={() => setShareVisible(false)}
+          renderCard={(width) => (
+            <JyotishShareCard
+              kind="kundali"
+              width={width}
+              lang={lang}
+              chart={chart}
+              profile={profile}
+              city={getCityById(profile.cityId)!}
+            />
+          )}
+        />
+      )}
     </View>
   );
 }
@@ -238,11 +384,13 @@ function BirthInput({
   draft,
   errors,
   saving,
+  saveError,
   lang,
   onChange,
   onChooseCity,
   onGenerate,
   onCancel,
+  onDelete,
   colors,
   typography,
   radii,
@@ -251,17 +399,19 @@ function BirthInput({
   draft: BirthProfile;
   errors: BirthProfileErrors;
   saving: boolean;
+  saveError: string;
   lang: Lang;
   onChange: (profile: BirthProfile) => void;
   onChooseCity: () => void;
   onGenerate: () => void;
   onCancel?: () => void;
+  onDelete?: () => void;
   colors: any;
   typography: any;
   radii: any;
   elevation: any;
 }) {
-  const city = getCityById(draft.cityId) ?? CITIES[0];
+  const city = getCityById(draft.cityId);
   const inputStyle = [
     styles.input,
     {
@@ -277,7 +427,11 @@ function BirthInput({
       <View
         style={[
           styles.heroCard,
-          { borderColor: colors.cardActiveBorder, borderRadius: radii.lg },
+          {
+            backgroundColor: colors.cardActiveFrom,
+            borderColor: colors.cardActiveBorder,
+            borderRadius: radii.lg,
+          },
           elevation.card,
         ]}
       >
@@ -301,8 +455,8 @@ function BirthInput({
         >
           {meaningByLang(
             lang,
-            'जन्म समय और नगर से लग्न, ग्रह, भाव और विम्शोत्तरी दशा की पारम्परिक गणना। जानकारी इसी उपकरण पर रहती है।',
-            'Use birth time and city to calculate Lagna, grahas, houses, and Vimshottari Dasha. Your profile stays on this device.'
+            'सटीक समय से लग्न और भाव की गणना सबसे विश्वसनीय होती है।',
+            'An exact time gives the most reliable Lagna and house calculation.'
           )}
         </Text>
       </View>
@@ -357,7 +511,7 @@ function BirthInput({
         testID="kundali-city-button"
         onPress={onChooseCity}
         accessibilityRole="button"
-        accessibilityLabel={`Birth city, ${city.nameEn}`}
+        accessibilityLabel={`Birth city, ${city?.nameEn ?? 'not selected'}`}
         style={({ pressed }) => [
           styles.cityButton,
           {
@@ -371,17 +525,26 @@ function BirthInput({
         <View>
           <Text
             style={{
-              color: colors.ink,
+              color: city ? colors.ink : colors.inkMuted,
               fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
               fontSize: 15,
             }}
           >
-            {contentByLang(lang, city.nameHi, city.nameEn)}
+            {city
+              ? contentByLang(lang, city.nameHi, city.nameEn)
+              : contentByLang(lang, 'भारत का जन्म नगर चुनें', 'Choose an Indian city')}
           </Text>
-          <Text style={[styles.caption, { color: colors.inkMuted }]}>India · IST (UTC+5:30)</Text>
+          {city && (
+            <Text style={[styles.caption, { color: colors.inkMuted }]}>
+              {city.nameEn} · IST (UTC+5:30)
+            </Text>
+          )}
         </View>
         <Text style={{ color: colors.saffronDeep, fontSize: 18 }}>⌄</Text>
       </Pressable>
+      {errors.cityId && (
+        <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.cityId}</Text>
+      )}
 
       <View
         style={[
@@ -401,8 +564,8 @@ function BirthInput({
         >
           {meaningByLang(
             lang,
-            'v1 भारत/IST के लिए है। सही जन्म समय लग्न और भावों के लिए महत्वपूर्ण है।',
-            'v1 is for India/IST. An accurate birth time matters for Lagna and houses.'
+            'कुंडली की गणना अभी भारत के जन्म स्थानों के लिए उपलब्ध है। चुने हुए स्थान का स्थानीय समय भरें (IST, UTC+5:30)।',
+            'Birth-chart calculation currently supports birth places in India. Enter the local time at the selected place (IST, UTC+5:30).'
           )}
         </Text>
       </View>
@@ -427,6 +590,29 @@ function BirthInput({
           </Text>
         )}
       </Pressable>
+      <Text
+        style={{
+          color: colors.inkMuted,
+          fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+          fontSize: 10,
+          textAlign: 'center',
+          marginTop: 9,
+        }}
+      >
+        {contentByLang(
+          lang,
+          'जन्म विवरण इसी उपकरण पर रहते हैं।',
+          'Your birth details stay on this device.'
+        )}
+      </Text>
+      {!!saveError && (
+        <Text
+          accessibilityRole="alert"
+          style={[styles.saveError, { color: colors.avoidDeep }]}
+        >
+          {saveError}
+        </Text>
+      )}
       {onCancel && (
         <Pressable
           onPress={onCancel}
@@ -436,6 +622,18 @@ function BirthInput({
         >
           <Text style={[styles.actionText, { color: colors.saffronDeep }]}>
             {contentByLang(lang, 'रद्द करें', 'Cancel')}
+          </Text>
+        </Pressable>
+      )}
+      {onDelete && (
+        <Pressable
+          onPress={onDelete}
+          accessibilityRole="button"
+          accessibilityLabel="Remove saved birth details"
+          style={styles.secondaryAction}
+        >
+          <Text style={[styles.actionText, { color: colors.avoidDeep }]}>
+            {contentByLang(lang, 'सुरक्षित जन्म विवरण हटाएँ', 'Remove saved birth details')}
           </Text>
         </Pressable>
       )}
@@ -478,7 +676,7 @@ function KundaliResult({
   lang,
   onChangeTab,
   onOpenPractice,
-  onStartOver,
+  onManageDetails,
   colors,
   typography,
   radii,
@@ -490,14 +688,31 @@ function KundaliResult({
   lang: Lang;
   onChangeTab: (tab: KundaliResultTab) => void;
   onOpenPractice: () => void;
-  onStartOver: () => void;
+  onManageDetails: () => void;
   colors: any;
   typography: any;
   radii: any;
   elevation: any;
 }) {
   const city = getCityById(profile.cityId)!;
-  const currentDasha = getCurrentDasha(chart, new Date());
+  const now = new Date();
+  const currentDasha = getCurrentDasha(chart, now);
+  const currentElapsed = currentDasha
+    ? now.getTime() - currentDasha.maha.start.getTime()
+    : 0;
+  const currentRemaining = currentDasha
+    ? currentDasha.maha.end.getTime() - now.getTime()
+    : 0;
+  const currentProgress = currentDasha
+    ? Math.max(
+      0,
+      Math.min(
+        1,
+        currentElapsed
+          / (currentDasha.maha.end.getTime() - currentDasha.maha.start.getTime())
+      )
+    )
+    : 0;
   return (
     <>
       <View
@@ -519,7 +734,8 @@ function KundaliResult({
             {profile.name || contentByLang(lang, 'जन्म कुंडली', 'Birth Kundali')}
           </Text>
           <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 4 }]}>
-            {profile.date} · {profile.time} IST · {contentByLang(lang, city.nameHi, city.nameEn)}
+            {formatBirthDate(profile.date)} · {formatBirthTime(profile.time)} ·{' '}
+            {contentByLang(lang, city.nameHi, city.nameEn)}
           </Text>
         </View>
         <View style={[styles.lagnaPill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
@@ -532,6 +748,11 @@ function KundaliResult({
               RASHI_NAMES_HI[chart.lagnaRashiIndex],
               RASHI_NAMES_EN[chart.lagnaRashiIndex]
             )}
+          </Text>
+          <Text style={[styles.lagnaTranslation, { color: colors.inkMuted }]}>
+            {lang === 'en'
+              ? RASHI_NAMES_WESTERN[chart.lagnaRashiIndex]
+              : RASHI_NAMES_EN[chart.lagnaRashiIndex]}
           </Text>
         </View>
       </View>
@@ -567,12 +788,11 @@ function KundaliResult({
       </View>
 
       {activeTab === 'overview' && (
-        <KundaliOverview
-          chart={chart}
-          at={new Date()}
-          onOpenTab={onChangeTab}
-          onOpenPractice={onOpenPractice}
-        />
+          <KundaliOverview
+            chart={chart}
+            at={new Date()}
+            onOpenTab={onChangeTab}
+          />
       )}
       {activeTab === 'chart' && (
         <View>
@@ -585,7 +805,40 @@ function KundaliResult({
             colors={colors}
             typography={typography}
           />
-          <NorthIndianChart chart={chart} />
+          <View
+            style={[
+              styles.chartCard,
+              {
+                backgroundColor: colors.parchmentSoft,
+                borderColor: colors.divider,
+                borderRadius: radii.lg,
+              },
+            ]}
+          >
+            <NorthIndianChart chart={chart} />
+            <View
+              style={[
+                styles.chartNote,
+                { backgroundColor: colors.saffronTint, borderRadius: radii.md },
+              ]}
+            >
+              <Text
+                style={{
+                  color: colors.inkSoft,
+                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                  fontSize: 10,
+                  lineHeight: 15,
+                  textAlign: 'center',
+                }}
+              >
+                {contentByLang(
+                  lang,
+                  `प्रथम भाव उभारा गया है: जन्म के समय ${RASHI_NAMES_HI[chart.lagnaRashiIndex]} राशि उदित थी।`,
+                  `House 1 is highlighted: ${RASHI_NAMES_EN[chart.lagnaRashiIndex]} · ${RASHI_NAMES_WESTERN[chart.lagnaRashiIndex]} was rising at birth.`
+                )}
+              </Text>
+            </View>
+          </View>
         </View>
       )}
       {activeTab === 'grahas' && (
@@ -623,11 +876,21 @@ function KundaliResult({
                       lang,
                       RASHI_NAMES_HI[position.rashiIndex],
                       RASHI_NAMES_EN[position.rashiIndex]
-                    )}{' '}
+                    )}
+                    <Text style={[styles.tableTranslation, { color: colors.inkMuted }]}>
+                      {' '}· {lang === 'en'
+                        ? RASHI_NAMES_WESTERN[position.rashiIndex]
+                        : RASHI_NAMES_EN[position.rashiIndex]}
+                    </Text>
+                    {' '}
                     {formatDegrees(position.degreeInRashi)}
                   </Text>
                   <Text style={[styles.caption, { color: colors.inkMuted }]}>
-                    {contentByLang(lang, `नक्षत्र ${position.nakshatraIndex + 1} · पद ${position.pada}`, `Nakshatra ${position.nakshatraIndex + 1} · Pada ${position.pada}`)}
+                    {contentByLang(
+                      lang,
+                      `${NAKSHATRA_NAMES_HI[position.nakshatraIndex]} · पद ${position.pada}`,
+                      `${NAKSHATRA_NAMES_EN[position.nakshatraIndex]} · Pada ${position.pada}`
+                    )}
                   </Text>
                 </View>
               </View>
@@ -649,7 +912,17 @@ function KundaliResult({
           {currentDasha && (
             <View
               accessible
-              accessibilityLabel={`Current Dasha, ${GRAHA_NAMES_EN[currentDasha.maha.lord]} Mahadasha${currentDasha.antar ? `, ${GRAHA_NAMES_EN[currentDasha.antar.lord]} Antardasha` : ''}`}
+              accessibilityLabel={[
+                `Current Dasha, ${GRAHA_NAMES_EN[currentDasha.maha.lord]} Mahadasha`,
+                currentDasha.antar
+                  ? `${GRAHA_NAMES_EN[currentDasha.antar.lord]} Antardasha`
+                  : null,
+                `${formatPeriodDate(currentDasha.maha.start)} to ${formatPeriodDate(currentDasha.maha.end)}`,
+                `${formatDuration(currentElapsed)} elapsed`,
+                `${formatDuration(currentRemaining, true)} left`,
+              ]
+                .filter(Boolean)
+                .join(', ')}
               style={[
                 styles.currentDasha,
                 {
@@ -680,47 +953,178 @@ function KundaliResult({
               <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 4 }]}>
                 {formatPeriodDate(currentDasha.maha.start)} — {formatPeriodDate(currentDasha.maha.end)}
               </Text>
-            </View>
-          )}
-          {chart.vimshottari.map((period, index) => (
-            <View key={`${period.lord}-${period.start.toISOString()}`} style={styles.dashaRow}>
-              <View style={styles.timelineRail}>
-                <View style={[styles.timelineDot, { backgroundColor: colors.saffron }]} />
-                {index < chart.vimshottari.length - 1 && (
-                  <View style={[styles.timelineLine, { backgroundColor: colors.divider }]} />
-                )}
-              </View>
               <View
+                testID="dasha-progress"
+                accessibilityRole="progressbar"
+                accessibilityValue={{
+                  min: 0,
+                  max: 100,
+                  now: Math.round(currentProgress * 100),
+                }}
                 style={[
-                  styles.dashaCard,
-                  { borderColor: colors.divider, backgroundColor: colors.parchmentSoft, borderRadius: radii.md },
+                  styles.progressTrack,
+                  { backgroundColor: colors.divider, borderRadius: radii.pill },
                 ]}
               >
-                <Text style={[styles.tablePrimary, { color: colors.ink }]}>
-                  {contentByLang(lang, GRAHA_NAMES_HI[period.lord], GRAHA_NAMES_EN[period.lord])}{' '}
-                  {contentByLang(lang, 'महादशा', 'Mahadasha')}
+                <View
+                  style={[
+                    styles.progressFill,
+                    {
+                      width: `${currentProgress * 100}%`,
+                      backgroundColor: colors.saffron,
+                      borderRadius: radii.pill,
+                    },
+                  ]}
+                />
+              </View>
+              <View style={styles.progressCaptions}>
+                <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
+                  {formatDuration(currentElapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
                 </Text>
-                <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 3 }]}>
-                  {formatPeriodDate(period.start)} — {formatPeriodDate(period.end)}
-                </Text>
-                <Text style={[styles.caption, { color: colors.saffronDeep, marginTop: 6 }]}>
-                  {contentByLang(lang, 'अन्तर्दशाएँ', 'Antardashas')}: {' '}
-                  {period.antardashas.map((antar) => GRAHA_NAMES_EN[antar.lord]).join(' · ')}
+                <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
+                  {formatDuration(currentRemaining, true)} {contentByLang(lang, 'शेष', 'left')}
                 </Text>
               </View>
+              <View
+                accessibilityLabel="Antardasha timeline"
+                style={styles.antarChips}
+              >
+                {currentDasha.maha.antardashas.map((antar) => {
+                  const selected = antar === currentDasha.antar;
+                  return (
+                    <View
+                      key={`${antar.lord}-${antar.start.toISOString()}`}
+                      style={[
+                        styles.antarChip,
+                        {
+                          borderColor: selected ? colors.saffron : colors.divider,
+                          backgroundColor: selected
+                            ? colors.saffronTint
+                            : colors.parchmentSoft,
+                          borderRadius: radii.pill,
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.antarChipText,
+                          { color: selected ? colors.saffronDeep : colors.inkMuted },
+                        ]}
+                      >
+                        {contentByLang(
+                          lang,
+                          GRAHA_NAMES_HI[antar.lord],
+                          GRAHA_NAMES_EN[antar.lord]
+                        )}
+                        {selected ? ` · ${contentByLang(lang, 'अब', 'Now')}` : ''}
+                      </Text>
+                    </View>
+                  );
+                })}
+              </View>
             </View>
-          ))}
+          )}
+          <View accessibilityLabel="Full Mahadasha timeline">
+            {chart.vimshottari.map((period, index) => {
+              const selected = period === currentDasha?.maha;
+              const birthWithin =
+                chart.input.date.getTime() >= period.start.getTime()
+                && chart.input.date.getTime() < period.end.getTime();
+              const durationLabel = birthWithin
+                ? `${formatDuration(period.end.getTime() - chart.input.date.getTime(), true)} ${contentByLang(lang, 'जन्म पर शेष', 'left at birth')}`
+                : `${DASHA_YEARS[period.lord]} ${contentByLang(lang, 'वर्ष', 'years')}`;
+              return (
+                <View
+                  key={`${period.lord}-${period.start.toISOString()}`}
+                  style={styles.dashaRow}
+                >
+                  <View style={styles.timelineRail}>
+                    <View
+                      style={[
+                        styles.timelineDot,
+                        {
+                          backgroundColor: selected
+                            ? colors.saffron
+                            : colors.divider,
+                        },
+                      ]}
+                    />
+                    {index < chart.vimshottari.length - 1 && (
+                      <View
+                        style={[
+                          styles.timelineLine,
+                          { backgroundColor: colors.divider },
+                        ]}
+                      />
+                    )}
+                  </View>
+                  <View
+                    style={[
+                      styles.dashaCard,
+                      {
+                        borderColor: selected ? colors.saffron : colors.divider,
+                        backgroundColor: selected
+                          ? colors.cardActiveFrom
+                          : colors.parchmentSoft,
+                        borderRadius: radii.md,
+                      },
+                    ]}
+                  >
+                    <View style={styles.dashaTitleRow}>
+                      <Text style={[styles.tablePrimary, { color: colors.ink }]}>
+                        {contentByLang(
+                          lang,
+                          GRAHA_NAMES_HI[period.lord],
+                          GRAHA_NAMES_EN[period.lord]
+                        )}{' '}
+                        {contentByLang(lang, 'महादशा', 'Mahadasha')}
+                      </Text>
+                      {selected && (
+                        <View
+                          style={[
+                            styles.nowTag,
+                            {
+                              backgroundColor: colors.saffronTint,
+                              borderRadius: radii.pill,
+                            },
+                          ]}
+                        >
+                          <Text style={[styles.nowTagText, { color: colors.saffronDeep }]}>
+                            {contentByLang(lang, 'अब', 'Now')}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                    <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 3 }]}>
+                      {formatPeriodDate(period.start)} — {formatPeriodDate(period.end)} ·{' '}
+                      {durationLabel}
+                    </Text>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
         </View>
       )}
 
+      <Text
+        style={[
+          pillTextStyle(lang, typography.sectionLabel),
+          styles.practiceLabel,
+          { color: colors.inkMuted },
+        ]}
+      >
+        {contentByLang(lang, 'साधना', 'Practice')}
+      </Text>
+      <JyotishPracticeCard onPress={onOpenPractice} />
       <Pressable
-        onPress={onStartOver}
+        onPress={onManageDetails}
         accessibilityRole="button"
-        accessibilityLabel="Delete saved birth profile and start over"
+        accessibilityLabel="Manage birth details"
         style={styles.secondaryAction}
       >
-        <Text style={[styles.actionText, { color: colors.avoidDeep }]}>
-          {contentByLang(lang, 'सहेजी जानकारी मिटाएँ', 'Delete saved profile')}
+        <Text style={[styles.actionText, { color: colors.saffronDeep }]}>
+          {contentByLang(lang, 'जन्म विवरण सँभालें', 'Manage birth details')}
         </Text>
       </Pressable>
     </>
@@ -799,6 +1203,7 @@ function CityPicker({
       transparent
       animationType="slide"
       onRequestClose={onClose}
+      onDismiss={Keyboard.dismiss}
       accessibilityViewIsModal
     >
       <View style={[styles.modalBackdrop, { backgroundColor: colors.modalBackdrop }]}>
@@ -885,14 +1290,18 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   topBar: { minHeight: 64, flexDirection: 'row', alignItems: 'center', gap: 12 },
   backButton: { width: 40, height: 40, borderRadius: 20, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  sharePill: { minHeight: 34, paddingHorizontal: 9, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  shareText: { fontFamily: 'Inter_600SemiBold', fontSize: 9 },
   scroll: { paddingTop: 8 },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   caption: { fontFamily: 'Inter_500Medium', fontSize: 10, lineHeight: 14 },
   actionText: { fontFamily: 'Inter_600SemiBold', fontSize: 12 },
-  heroCard: { backgroundColor: '#FFF5E0', borderWidth: 1, padding: 18 },
+  heroCard: { borderWidth: 1, padding: 18 },
   inputRow: { flexDirection: 'row', gap: 12 },
   input: { height: 48, borderWidth: 1, paddingHorizontal: 13, fontFamily: 'Inter_500Medium', fontSize: 14 },
   error: { fontFamily: 'Inter_500Medium', fontSize: 10, marginTop: 4 },
+  saveError: { fontFamily: 'Inter_500Medium', fontSize: 10, lineHeight: 15, marginTop: 8, textAlign: 'center' },
   cityButton: { minHeight: 56, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   note: { flexDirection: 'row', gap: 10, borderWidth: 1, padding: 12, marginTop: 16 },
   noteMark: { fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 19 },
@@ -903,21 +1312,36 @@ const styles = StyleSheet.create({
   lagnaPill: { minWidth: 72, paddingVertical: 7, paddingHorizontal: 10, alignItems: 'center' },
   lagnaLabel: { fontFamily: 'Inter_600SemiBold', fontSize: 8, letterSpacing: 1 },
   lagnaValue: { fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 14, marginTop: 2 },
+  lagnaTranslation: { fontFamily: 'Inter_500Medium', fontSize: 8, marginTop: 1 },
   resultTabs: { flexDirection: 'row', padding: 3, borderWidth: 1, marginVertical: 14 },
   resultTab: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center' },
   resultTabText: { fontFamily: 'Inter_600SemiBold', fontSize: 10 },
   sectionIntro: { marginBottom: 14 },
+  chartCard: { borderWidth: 1, padding: 13 },
+  chartNote: { marginTop: 9, paddingHorizontal: 10, paddingVertical: 9 },
   table: { borderWidth: 1, overflow: 'hidden' },
   tableRow: { minHeight: 62, borderBottomWidth: StyleSheet.hairlineWidth, paddingHorizontal: 13, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', gap: 12 },
   tablePrimary: { fontFamily: 'Inter_600SemiBold', fontSize: 12 },
+  tableTranslation: { fontFamily: 'Inter_500Medium', fontSize: 9 },
   eyebrowText: { fontFamily: 'Inter_600SemiBold', fontSize: 9, letterSpacing: 1.3 },
   currentDasha: { borderWidth: 1, padding: 14, marginBottom: 14 },
   currentDashaTitle: { fontFamily: 'Inter_600SemiBold', fontSize: 14, marginTop: 5 },
-  dashaRow: { flexDirection: 'row', minHeight: 92 },
+  progressTrack: { height: 6, marginTop: 10, overflow: 'hidden' },
+  progressFill: { height: '100%' },
+  progressCaptions: { marginTop: 5, flexDirection: 'row', justifyContent: 'space-between', gap: 8 },
+  progressCaption: { fontFamily: 'Inter_500Medium', fontSize: 8 },
+  antarChips: { marginTop: 9, flexDirection: 'row', flexWrap: 'wrap', gap: 5 },
+  antarChip: { paddingHorizontal: 7, paddingVertical: 4, borderWidth: 1 },
+  antarChipText: { fontFamily: 'Inter_600SemiBold', fontSize: 7 },
+  dashaRow: { flexDirection: 'row', minHeight: 68 },
   timelineRail: { width: 22, alignItems: 'center' },
   timelineDot: { width: 9, height: 9, borderRadius: 4.5, marginTop: 19 },
   timelineLine: { width: 1, flex: 1 },
-  dashaCard: { flex: 1, borderWidth: 1, padding: 13, marginBottom: 10 },
+  dashaCard: { flex: 1, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 10, marginBottom: 8 },
+  dashaTitleRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 },
+  nowTag: { paddingHorizontal: 7, paddingVertical: 3 },
+  nowTagText: { fontFamily: 'Inter_600SemiBold', fontSize: 7 },
+  practiceLabel: { fontSize: 9, marginTop: 18, marginBottom: 8 },
   modalBackdrop: { flex: 1, justifyContent: 'flex-end' },
   modalSheet: { height: '78%', overflow: 'hidden' },
   modalHeader: { minHeight: 58, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: StyleSheet.hairlineWidth },

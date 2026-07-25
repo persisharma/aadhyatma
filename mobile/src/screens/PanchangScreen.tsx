@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { backgroundImages } from '@assets/backgrounds';
@@ -15,7 +15,12 @@ import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
-import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
+import {
+  NAKSHATRA_NAMES_EN,
+  NAKSHATRA_NAMES_HI,
+  PAKSHA_NAMES_EN,
+  PAKSHA_NAMES_HI,
+} from '@/panchang/names';
 import {
   usePanchangCalendarSystem,
   usePanchangForSelection,
@@ -28,11 +33,32 @@ import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchan
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { useTourTarget } from '@/components/tour/tourTargets';
 import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import CategoryIcon from '@/components/CategoryIcon';
+import JyotishGuidanceRows from '@/components/JyotishGuidanceRows';
+import JyotishPracticeCard from '@/components/JyotishPracticeCard';
+import JyotishShareCard from '@/components/JyotishShareCard';
+import JyotishShareSheet from '@/components/JyotishShareSheet';
+import JyotishStateCard from '@/components/JyotishStateCard';
+import {
+  computeRashifal,
+  getCurrentDasha,
+  GRAHA_NAMES_EN,
+  GRAHA_NAMES_HI,
+  RASHI_NAMES_EN,
+  RASHI_NAMES_HI,
+  RASHI_NAMES_WESTERN,
+  type KundaliChart,
+} from '@/panchang/kundali';
+import {
+  useKundali,
+  type BirthProfile,
+  type KundaliLoadState,
+} from '@/panchang/useKundali';
+import { getCityById } from '@/panchang/locations';
 import type { PanchangHomeMode, PanchangStackParamList } from '@/navigation/types';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -114,6 +140,12 @@ export default function PanchangScreen({ route }: Props) {
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
   const { location } = usePanchangLocation();
   const [locationPickerVisible, setLocationPickerVisible] = useState(false);
+  const {
+    profile: kundaliProfile,
+    chart: kundaliChart,
+    loadState: kundaliLoadState,
+    reloadProfile,
+  } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
   const monthObservances = usePanchangMonthObservances(visibleMonth, calendarSystem);
   const monthObservanceTags = useMemo(() => {
@@ -139,6 +171,12 @@ export default function PanchangScreen({ route }: Props) {
   useEffect(() => {
     if (route.params?.initialTab) setPanchangTab(route.params.initialTab);
   }, [route.params?.initialTab]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (panchangTab === 'jyotish') void reloadProfile();
+    }, [panchangTab, reloadProfile])
+  );
 
   const shiftSelectedDate = (days: number) => {
     setSelectedDate((current) => {
@@ -194,7 +232,8 @@ export default function PanchangScreen({ route }: Props) {
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
-  const openKundali = () => rootNav.navigate('Kundali');
+  const openKundali = (editing = false) =>
+    rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
   const openRashifal = () => rootNav.navigate('Rashifal');
 
   return (
@@ -572,7 +611,12 @@ export default function PanchangScreen({ route }: Props) {
               typography={typography}
               radii={radii}
               elevation={elevation}
-              onOpenKundali={openKundali}
+              today={today}
+              loadState={kundaliLoadState}
+              profile={kundaliProfile}
+              chart={kundaliChart}
+              onOpenKundali={() => openKundali(false)}
+              onEditKundali={() => openKundali(true)}
               onOpenRashifal={openRashifal}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
             />
@@ -590,7 +634,12 @@ function JyotishLanding({
   typography,
   radii,
   elevation,
+  today,
+  loadState,
+  profile,
+  chart,
   onOpenKundali,
+  onEditKundali,
   onOpenRashifal,
   onOpenNavagraha,
 }: {
@@ -599,16 +648,498 @@ function JyotishLanding({
   typography: any;
   radii: any;
   elevation: any;
+  today: Date;
+  loadState: KundaliLoadState;
+  profile: BirthProfile | null;
+  chart: KundaliChart | null;
   onOpenKundali: () => void;
+  onEditKundali: () => void;
   onOpenRashifal: () => void;
   onOpenNavagraha: () => void;
 }) {
+  const [shareVisible, setShareVisible] = useState(false);
+  const moon = chart?.grahas.find((position) => position.graha === 'moon');
+  const guidance = useMemo(
+    () => (moon ? computeRashifal(today, moon.rashiIndex) : null),
+    [moon, today]
+  );
+  const currentDasha = chart ? getCurrentDasha(chart, today) : null;
+  const city = profile ? getCityById(profile.cityId) : null;
+
+  const sectionLabel = (hi: string, en: string) => (
+    <Text
+      style={[
+        pillTextStyle(lang, typography.sectionLabel),
+        styles.jyotishSectionLabel,
+        { color: colors.inkMuted },
+      ]}
+    >
+      {contentByLang(lang, hi, en)}
+    </Text>
+  );
+
+  if (loadState === 'loading') {
+    return (
+      <View accessibilityLabel="Jyotish tools landing">
+        <View style={styles.jyotishIntro}>
+          <Text
+            style={[
+              pillTextStyle(lang, typography.sectionLabel),
+              { color: colors.saffronDeep, fontSize: 8 },
+            ]}
+          >
+            {contentByLang(lang, 'ज्योतिष', 'Jyotish')}
+          </Text>
+          <Text
+            style={{
+              color: colors.ink,
+              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+              fontSize: 25,
+              marginTop: 4,
+            }}
+          >
+            {contentByLang(lang, 'आपका दृश्य तैयार हो रहा है', 'Preparing your view')}
+          </Text>
+          <Text
+            style={{
+              color: colors.inkMuted,
+              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+              fontSize: 12,
+              lineHeight: 18,
+              marginTop: 4,
+            }}
+          >
+            {meaningByLang(
+              lang,
+              'इस उपकरण पर सुरक्षित जन्म विवरण पढ़े जा रहे हैं।',
+              'Reading the birth details stored on this device.'
+            )}
+          </Text>
+        </View>
+        <JyotishStateCard
+          kind="loading"
+          lang={lang}
+          titleHi="आपकी कुंडली बन रही है"
+          titleEn="Calculating your chart"
+          bodyHi="कुंडली तैयार होते ही आज का चन्द्र-राशि मार्गदर्शन पहले दिखाई देगा।"
+          bodyEn="Today’s Moon-sign guidance will lead as soon as the chart is ready."
+        />
+      </View>
+    );
+  }
+
+  if (loadState === 'error') {
+    return (
+      <View accessibilityLabel="Jyotish tools landing">
+        <View style={styles.jyotishIntro}>
+          <Text
+            style={[
+              pillTextStyle(lang, typography.sectionLabel),
+              { color: colors.saffronDeep, fontSize: 8 },
+            ]}
+          >
+            {contentByLang(lang, 'ज्योतिष', 'Jyotish')}
+          </Text>
+          <Text
+            style={{
+              color: colors.ink,
+              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+              fontSize: 25,
+              marginTop: 4,
+            }}
+          >
+            {contentByLang(lang, 'अपना दृश्य फिर से बनाएँ', 'Let’s restore your view')}
+          </Text>
+          <Text
+            style={{
+              color: colors.inkMuted,
+              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+              fontSize: 12,
+              lineHeight: 18,
+              marginTop: 4,
+            }}
+          >
+            {meaningByLang(
+              lang,
+              'जन्म विवरण ठीक होने तक पंचांग उपलब्ध रहेगा।',
+              'Your Panchang remains available while birth details are repaired.'
+            )}
+          </Text>
+        </View>
+        <JyotishStateCard
+          kind="error"
+          lang={lang}
+          titleHi="जन्म विवरण पढ़े नहीं जा सके"
+          titleEn="We couldn’t read your birth details"
+          bodyHi="कुछ हटाया नहीं गया। कुंडली फिर बनाने के लिए विवरण दोबारा भरें।"
+          bodyEn="Nothing was deleted. Re-enter the details to rebuild your Kundali."
+          actionHi="जन्म विवरण फिर भरें"
+          actionEn="Re-enter birth details"
+          onAction={onOpenKundali}
+        />
+        {sectionLabel('अभी उपलब्ध', 'Available now')}
+        <JyotishToolCard
+          titleHi="चन्द्र राशि स्वयं चुनें"
+          titleEn="Choose a Moon sign manually"
+          bodyHi="कुंडली उपलब्ध न होने पर भी दैनिक मार्गदर्शन पढ़ें।"
+          bodyEn="Daily guidance still works while your chart is unavailable."
+          glyph="रा"
+          onPress={onOpenRashifal}
+          accessibilityLabel="Open Daily Rashifal"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
+      </View>
+    );
+  }
+
+  if (loadState === 'saved' && profile && chart && moon && guidance && city) {
+    const lagnaPrimary = contentByLang(
+      lang,
+      RASHI_NAMES_HI[chart.lagnaRashiIndex],
+      RASHI_NAMES_EN[chart.lagnaRashiIndex]
+    );
+    const lagnaSecondary =
+      lang === 'en'
+        ? `${RASHI_NAMES_WESTERN[chart.lagnaRashiIndex]} rising`
+        : RASHI_NAMES_EN[chart.lagnaRashiIndex];
+    const moonPrimary = contentByLang(
+      lang,
+      RASHI_NAMES_HI[moon.rashiIndex],
+      RASHI_NAMES_EN[moon.rashiIndex]
+    );
+    const moonSecondary =
+      lang === 'en' ? RASHI_NAMES_WESTERN[moon.rashiIndex] : RASHI_NAMES_EN[moon.rashiIndex];
+
+    return (
+      <View accessibilityLabel="Jyotish tools landing, saved profile">
+        <View style={styles.jyotishIntro}>
+          <Text
+            style={[
+              pillTextStyle(lang, typography.sectionLabel),
+              { color: colors.saffronDeep, fontSize: 8 },
+            ]}
+          >
+            {formatFullDate(today, lang)}
+          </Text>
+          <Text
+            style={{
+              color: colors.ink,
+              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+              fontSize: 26,
+              marginTop: 4,
+            }}
+          >
+            {contentByLang(lang, 'आज आपका ज्योतिष', 'Your Jyotish today')}
+          </Text>
+          <Text
+            style={{
+              color: colors.inkMuted,
+              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+              fontSize: 12,
+              lineHeight: 18,
+              marginTop: 3,
+            }}
+          >
+            {meaningByLang(
+              lang,
+              'दैनिक चन्द्र-राशि मार्गदर्शन पहले; आपकी पूरी कुंडली एक स्पर्श दूर।',
+              'Daily Moon-sign guidance first; your full chart remains one tap away.'
+            )}
+          </Text>
+        </View>
+
+        {sectionLabel('आज का राशिफल', 'Today’s Rashifal')}
+        <View
+          style={[
+            styles.jyotishGuidanceBlock,
+            {
+              borderColor: colors.cardActiveBorder,
+              backgroundColor: colors.cardActiveFrom,
+              borderRadius: radii.lg,
+            },
+            elevation.card,
+          ]}
+        >
+          <View
+            style={[
+              styles.jyotishGuidanceHead,
+              {
+                backgroundColor: colors.cardActiveFrom,
+                borderBottomColor: colors.divider,
+              },
+            ]}
+          >
+            <View style={{ flex: 1 }}>
+              <Text
+                style={[
+                  pillTextStyle(lang, typography.sectionLabel),
+                  { color: colors.saffronDeep, fontSize: 8 },
+                ]}
+              >
+                {contentByLang(
+                  lang,
+                  'चन्द्र राशि · आपकी कुंडली से',
+                  'Moon sign · From your Kundali'
+                )}
+              </Text>
+              <Text
+                style={{
+                  color: colors.ink,
+                  fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                  fontSize: 21,
+                  marginTop: 3,
+                }}
+              >
+                {moonPrimary}
+                <Text style={[styles.jyotishTranslation, { color: colors.inkMuted }]}>
+                  {' '}· {moonSecondary}
+                </Text>
+              </Text>
+              <Text style={[styles.jyotishGuidanceDate, { color: colors.inkMuted }]}>
+                {formatFullDate(today, lang)}
+              </Text>
+            </View>
+            <Pressable
+              onPress={() => setShareVisible(true)}
+              accessibilityRole="button"
+              accessibilityLabel="Share today’s Rashifal"
+              style={({ pressed }) => [
+                styles.jyotishSharePill,
+                {
+                  borderColor: colors.divider,
+                  backgroundColor: colors.parchmentSoft,
+                  borderRadius: radii.pill,
+                },
+                pressed && { opacity: 0.65 },
+              ]}
+            >
+              <Text style={[styles.jyotishShareText, { color: colors.saffronDeep }]}>
+                ↗ {contentByLang(lang, 'साझा करें', 'Share')}
+              </Text>
+            </Pressable>
+          </View>
+          <JyotishGuidanceRows guidance={guidance} lang={lang} />
+          <View
+            style={[
+              styles.jyotishGuidanceFooter,
+              { backgroundColor: colors.cardActiveFrom },
+            ]}
+          >
+            <Pressable
+              onPress={onOpenRashifal}
+              accessibilityRole="button"
+              accessibilityLabel="Open Daily Rashifal"
+            >
+              <Text style={[styles.jyotishInlineLink, { color: colors.saffronDeep }]}>
+                {contentByLang(lang, 'पूरा राशिफल खोलें', 'Open Daily Rashifal')} ›
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+
+        {sectionLabel('आपकी कुंडली', 'Your Kundali')}
+        <View
+          style={[
+            styles.jyotishPersonalCard,
+            {
+              borderColor: colors.divider,
+              backgroundColor: colors.parchmentSoft,
+              borderRadius: radii.lg,
+            },
+            elevation.card,
+          ]}
+        >
+          <View style={styles.jyotishPersonalHead}>
+            <View>
+              <Text
+                style={[
+                  pillTextStyle(lang, typography.sectionLabel),
+                  { color: colors.saffronDeep, fontSize: 8 },
+                ]}
+              >
+                {contentByLang(lang, 'कुंडली की एक झलक', 'Chart at a glance')}
+              </Text>
+              <Text
+                style={{
+                  color: colors.ink,
+                  fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                  fontSize: 17,
+                  marginTop: 3,
+                }}
+              >
+                {profile.name || contentByLang(lang, 'आपकी जन्म कुंडली', 'Your birth chart')}
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.jyotishSavedPill,
+                {
+                  borderColor: colors.divider,
+                  backgroundColor: colors.cardSurface,
+                  borderRadius: radii.pill,
+                },
+              ]}
+            >
+              <Text style={[styles.jyotishSavedText, { color: colors.inkMuted }]}>
+                {contentByLang(lang, 'इसी उपकरण पर सुरक्षित', 'Saved on this device')}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.jyotishFactGrid}>
+            {[
+              {
+                labelHi: 'लग्न',
+                labelEn: 'Lagna',
+                value: lagnaPrimary,
+                detail: lagnaSecondary,
+              },
+              {
+                labelHi: 'चन्द्र राशि',
+                labelEn: 'Moon sign',
+                value: moonPrimary,
+                detail: moonSecondary,
+              },
+              {
+                labelHi: 'नक्षत्र',
+                labelEn: 'Nakshatra',
+                value: contentByLang(
+                  lang,
+                  NAKSHATRA_NAMES_HI[moon.nakshatraIndex],
+                  NAKSHATRA_NAMES_EN[moon.nakshatraIndex]
+                ),
+                detail: contentByLang(lang, `पद ${moon.pada}`, `Pada ${moon.pada}`),
+              },
+              {
+                labelHi: 'वर्तमान दशा',
+                labelEn: 'Current period',
+                value: currentDasha
+                  ? contentByLang(
+                    lang,
+                    GRAHA_NAMES_HI[currentDasha.maha.lord],
+                    GRAHA_NAMES_EN[currentDasha.maha.lord]
+                  )
+                  : '—',
+                detail: contentByLang(lang, 'महादशा', 'Mahadasha'),
+              },
+            ].map((fact) => (
+              <View
+                key={fact.labelEn}
+                style={[
+                  styles.jyotishFact,
+                  {
+                    borderColor: colors.divider,
+                    backgroundColor: colors.cardSurface,
+                    borderRadius: radii.md,
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    pillTextStyle(lang, typography.sectionLabel),
+                    styles.jyotishFactLabel,
+                    { color: colors.inkMuted },
+                  ]}
+                >
+                  {contentByLang(lang, fact.labelHi, fact.labelEn)}
+                </Text>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    color: colors.ink,
+                    fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                    fontSize: 14,
+                    marginTop: 3,
+                  }}
+                >
+                  {fact.value}
+                </Text>
+                <Text style={[styles.jyotishFactDetail, { color: colors.inkMuted }]}>
+                  {fact.detail}
+                </Text>
+              </View>
+            ))}
+          </View>
+          <View style={styles.jyotishActions}>
+            <Pressable
+              onPress={onOpenKundali}
+              accessibilityRole="button"
+              accessibilityLabel="Open Kundali"
+              style={({ pressed }) => [
+                styles.jyotishPrimary,
+                { backgroundColor: colors.saffronDeep, borderRadius: radii.pill },
+                pressed && { opacity: 0.72 },
+              ]}
+            >
+              <Text style={[styles.jyotishPrimaryText, { color: colors.onPrimary }]}>
+                {contentByLang(lang, 'कुंडली खोलें', 'Open Kundali')}
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={onEditKundali}
+              accessibilityRole="button"
+              accessibilityLabel="Edit birth details"
+              style={({ pressed }) => [
+                styles.jyotishSecondary,
+                {
+                  borderColor: colors.divider,
+                  backgroundColor: colors.parchmentSoft,
+                  borderRadius: radii.pill,
+                },
+                pressed && { opacity: 0.72 },
+              ]}
+            >
+              <Text style={[styles.jyotishSecondaryText, { color: colors.saffronDeep }]}>
+                {contentByLang(lang, 'विवरण बदलें', 'Edit details')}
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+
+        {sectionLabel('साधना', 'Practice')}
+        <JyotishPracticeCard
+          subtitleHi="आज के चन्द्र-राशि मार्गदर्शन के साथ"
+          subtitleEn="Suggested alongside today’s Moon-sign guidance"
+          onPress={onOpenNavagraha}
+        />
+        <JyotishShareSheet
+          visible={shareVisible}
+          lang={lang}
+          titleHi={`आज का ${RASHI_NAMES_HI[moon.rashiIndex]} राशिफल साझा करें`}
+          titleEn={`Share today’s ${RASHI_NAMES_EN[moon.rashiIndex]} Rashifal`}
+          privacyHi="केवल चन्द्र-राशि मार्गदर्शन साझा होगा। नाम या जन्म विवरण शामिल नहीं हैं।"
+          privacyEn="Only Moon-sign guidance is shared. No name or birth details are included."
+          onClose={() => setShareVisible(false)}
+          renderCard={(width) => (
+            <JyotishShareCard
+              kind="rashifal"
+              width={width}
+              lang={lang}
+              guidance={guidance}
+              rashiIndex={moon.rashiIndex}
+              practiceHi="नवग्रह स्तोत्रम्"
+              practiceEn="Navagraha Stotram"
+              date={today}
+            />
+          )}
+        />
+      </View>
+    );
+  }
+
   return (
     <View accessibilityLabel="Jyotish tools landing">
       <View
         style={[
           styles.jyotishHero,
-          { borderColor: colors.cardActiveBorder, borderRadius: radii.lg },
+          {
+            backgroundColor: colors.cardActiveFrom,
+            borderColor: colors.cardActiveBorder,
+            borderRadius: radii.lg,
+          },
           elevation.card,
         ]}
       >
@@ -643,9 +1174,7 @@ function JyotishLanding({
         </View>
       </View>
 
-      <Text style={[styles.jyotishSectionLabel, { color: colors.inkMuted }]}>
-        {contentByLang(lang, 'अपने लिए', 'FOR YOU')}
-      </Text>
+      {sectionLabel('अपने लिए', 'For you')}
       <JyotishToolCard
         titleHi="जन्म कुंडली"
         titleEn="Create Kundali"
@@ -676,64 +1205,33 @@ function JyotishLanding({
         elevation={elevation}
       />
 
-      <Text style={[styles.jyotishSectionLabel, { color: colors.inkMuted }]}>
-        {contentByLang(lang, 'कुंडली से साधना तक', 'FROM CHART TO PRACTICE')}
-      </Text>
-      <Pressable
-        onPress={onOpenNavagraha}
-        accessibilityRole="button"
-        accessibilityLabel="Open Navagraha Stotram"
-        style={({ pressed }) => [
-          styles.jyotishPractice,
-          { borderColor: colors.divider, backgroundColor: colors.goldTint, borderRadius: radii.lg },
-          pressed && { opacity: 0.7 },
-        ]}
-      >
-        <Text style={[styles.jyotishPracticeGlyph, { color: colors.gold }]}>ॐ</Text>
-        <View style={{ flex: 1 }}>
-          <Text
-            style={{
-              color: colors.ink,
-              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-              fontSize: 15,
-            }}
-          >
-            {contentByLang(lang, 'नवग्रह स्तोत्रम्', 'Navagraha Stotram')}
-          </Text>
-          <Text
-            style={{
-              color: colors.inkMuted,
-              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 11,
-              marginTop: 2,
-            }}
-          >
-            {meaningByLang(
-              lang,
-              'ऐप में पहले से उपलब्ध पारम्परिक पाठ',
-              'An existing traditional practice in your library'
-            )}
-          </Text>
+      <View style={styles.jyotishMicroNote}>
+        <View
+          style={[
+            styles.jyotishInfoMark,
+            { borderColor: colors.divider, borderRadius: radii.pill },
+          ]}
+        >
+          <Text style={[styles.jyotishInfoText, { color: colors.saffronDeep }]}>i</Text>
         </View>
-        <Text style={{ color: colors.saffronDeep, fontSize: 18 }}>›</Text>
-      </Pressable>
-
-      <Text
-        style={{
-          color: colors.inkMuted,
-          fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-          fontSize: 11,
-          lineHeight: 17,
-          textAlign: 'center',
-          marginTop: 14,
-        }}
-      >
-        {meaningByLang(
-          lang,
-          'पारम्परिक मार्गदर्शन; निश्चित भविष्यवाणी या पेशेवर सलाह नहीं। v1 भारत/IST तक सीमित है।',
-          'Traditional guidance, not deterministic prediction or professional advice. v1 is India/IST only.'
-        )}
-      </Text>
+        <Text
+          style={{
+            flex: 1,
+            color: colors.inkMuted,
+            fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+            fontSize: 11,
+            lineHeight: 16,
+          }}
+        >
+          {meaningByLang(
+            lang,
+            'पारम्परिक मार्गदर्शन चिंतन का सहारा है, निश्चित भविष्यवाणी नहीं।',
+            'Traditional guidance is a reflection aid, not a certain prediction.'
+          )}
+        </Text>
+      </View>
+      {sectionLabel('साधना', 'Practice')}
+      <JyotishPracticeCard onPress={onOpenNavagraha} />
     </View>
   );
 }
@@ -1252,15 +1750,40 @@ const styles = StyleSheet.create({
   myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
-  jyotishHero: { backgroundColor: '#FFF5E0', borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },
+  jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },
   jyotishHeroIcon: { width: 58, height: 58, alignItems: 'center', justifyContent: 'center' },
-  jyotishSectionLabel: { fontFamily: 'Inter_600SemiBold', fontSize: 9, letterSpacing: 1.5, marginTop: 18, marginBottom: 8 },
+  jyotishIntro: { paddingHorizontal: 1, paddingTop: 12, paddingBottom: 5 },
+  jyotishSectionLabel: { fontSize: 9, marginTop: 18, marginBottom: 8 },
   jyotishToolCard: { minHeight: 98, borderWidth: 1, padding: 14, marginBottom: 10, flexDirection: 'row', alignItems: 'center', gap: 12 },
   jyotishToolGlyph: { width: 46, height: 46, alignItems: 'center', justifyContent: 'center' },
   jyotishBadge: { paddingHorizontal: 7, paddingVertical: 3 },
   jyotishBadgeText: { fontFamily: 'Inter_600SemiBold', fontSize: 7, letterSpacing: 1.1 },
   jyotishPractice: { minHeight: 72, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
   jyotishPracticeGlyph: { fontFamily: 'NotoSansDevanagari_600SemiBold', fontSize: 24 },
+  jyotishMicroNote: { marginHorizontal: 4, marginTop: 12, flexDirection: 'row', alignItems: 'flex-start', gap: 9 },
+  jyotishInfoMark: { width: 18, height: 18, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  jyotishInfoText: { fontFamily: 'Inter_600SemiBold', fontSize: 9 },
+  jyotishGuidanceBlock: { borderWidth: 1, overflow: 'hidden' },
+  jyotishGuidanceHead: { paddingHorizontal: 14, paddingVertical: 12, borderBottomWidth: StyleSheet.hairlineWidth, flexDirection: 'row', alignItems: 'center', gap: 10 },
+  jyotishTranslation: { fontFamily: 'Inter_500Medium', fontSize: 10 },
+  jyotishGuidanceDate: { fontFamily: 'Inter_500Medium', fontSize: 9, marginTop: 2 },
+  jyotishSharePill: { minHeight: 38, paddingHorizontal: 11, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  jyotishShareText: { fontFamily: 'Inter_600SemiBold', fontSize: 10 },
+  jyotishGuidanceFooter: { paddingHorizontal: 13, paddingVertical: 11, alignItems: 'flex-end' },
+  jyotishInlineLink: { fontFamily: 'Inter_600SemiBold', fontSize: 10 },
+  jyotishPersonalCard: { borderWidth: 1, padding: 14 },
+  jyotishPersonalHead: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', gap: 9 },
+  jyotishSavedPill: { paddingHorizontal: 8, paddingVertical: 5, borderWidth: 1 },
+  jyotishSavedText: { fontFamily: 'Inter_600SemiBold', fontSize: 7 },
+  jyotishFactGrid: { marginTop: 10, flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  jyotishFact: { width: '48.7%', minHeight: 62, paddingHorizontal: 10, paddingVertical: 9, borderWidth: 1 },
+  jyotishFactLabel: { fontSize: 7 },
+  jyotishFactDetail: { fontFamily: 'Inter_500Medium', fontSize: 8, marginTop: 1 },
+  jyotishActions: { marginTop: 12, flexDirection: 'row', gap: 8 },
+  jyotishPrimary: { minHeight: 42, flex: 1, paddingHorizontal: 15, alignItems: 'center', justifyContent: 'center' },
+  jyotishPrimaryText: { fontFamily: 'Inter_600SemiBold', fontSize: 11 },
+  jyotishSecondary: { minHeight: 42, flex: 1, paddingHorizontal: 15, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  jyotishSecondaryText: { fontFamily: 'Inter_600SemiBold', fontSize: 11 },
   catalogSearch: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: 'CormorantGaramond_500Medium', fontSize: 15 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
   upCard: { width: 150, borderWidth: 1, padding: 12 },

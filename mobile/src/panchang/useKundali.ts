@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { CITIES, getCityById } from './locations';
+import { getCityById } from './locations';
 import { computeKundali, type KundaliChart, type KundaliInput } from './kundali';
 
 export type BirthProfile = {
@@ -12,6 +12,7 @@ export type BirthProfile = {
 };
 
 export type BirthProfileErrors = Partial<Record<'date' | 'time' | 'cityId', string>>;
+export type KundaliLoadState = 'loading' | 'guest' | 'saved' | 'error';
 
 export const KUNDALI_PROFILE_STORAGE_KEY = '@vedansh:kundali-birth-profile:v1';
 
@@ -91,22 +92,58 @@ export function useKundali(): {
   profile: BirthProfile | null;
   chart: KundaliChart | null;
   hydrated: boolean;
+  loadState: KundaliLoadState;
   saveProfile: (next: BirthProfile) => Promise<void>;
   clearProfile: () => Promise<void>;
+  reloadProfile: () => Promise<void>;
 } {
   const [profile, setProfile] = useState<BirthProfile | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+
+  const reloadProfile = useCallback(async () => {
+    setHydrated(false);
+    try {
+      const raw = await AsyncStorage.getItem(KUNDALI_PROFILE_STORAGE_KEY);
+      if (!raw) {
+        setProfile(null);
+        setLoadError(false);
+        return;
+      }
+      const parsed = parseStoredBirthProfile(raw);
+      setProfile(parsed);
+      setLoadError(parsed === null);
+    } catch {
+      setProfile(null);
+      setLoadError(true);
+    } finally {
+      setHydrated(true);
+    }
+  }, []);
 
   useEffect(() => {
     let active = true;
-    AsyncStorage.getItem(KUNDALI_PROFILE_STORAGE_KEY)
-      .then((raw) => {
-        if (active) setProfile(parseStoredBirthProfile(raw));
-      })
-      .catch(() => undefined)
-      .finally(() => {
+    void (async () => {
+      try {
+        const raw = await AsyncStorage.getItem(KUNDALI_PROFILE_STORAGE_KEY);
+        if (!active) return;
+        if (!raw) {
+          setProfile(null);
+          setLoadError(false);
+          return;
+        }
+        const parsed = parseStoredBirthProfile(raw);
+        setProfile(parsed);
+        setLoadError(parsed === null);
+      } catch {
+        if (active) {
+          setProfile(null);
+          setLoadError(true);
+        }
+      } finally {
         if (active) setHydrated(true);
-      });
+      }
+    })();
     return () => {
       active = false;
     };
@@ -121,16 +158,20 @@ export function useKundali(): {
       cityId: next.cityId,
       ...(next.name?.trim() ? { name: next.name.trim() } : {}),
     };
-    setProfile(normalized);
     await AsyncStorage.setItem(
       KUNDALI_PROFILE_STORAGE_KEY,
       JSON.stringify(normalized)
-    ).catch(() => undefined);
+    );
+    setProfile(normalized);
+    setLoadError(false);
+    setHydrated(true);
   }, []);
 
   const clearProfile = useCallback(async () => {
+    await AsyncStorage.removeItem(KUNDALI_PROFILE_STORAGE_KEY);
     setProfile(null);
-    await AsyncStorage.removeItem(KUNDALI_PROFILE_STORAGE_KEY).catch(() => undefined);
+    setLoadError(false);
+    setHydrated(true);
   }, []);
 
   const chart = useMemo(
@@ -138,7 +179,21 @@ export function useKundali(): {
     [profile]
   );
 
-  return { profile, chart, hydrated, saveProfile, clearProfile };
-}
+  const loadState: KundaliLoadState = !hydrated
+    ? 'loading'
+    : loadError
+      ? 'error'
+      : profile
+        ? 'saved'
+        : 'guest';
 
-export const DEFAULT_BIRTH_CITY_ID = CITIES[0].id;
+  return {
+    profile,
+    chart,
+    hydrated,
+    loadState,
+    saveProfile,
+    clearProfile,
+    reloadProfile,
+  };
+}

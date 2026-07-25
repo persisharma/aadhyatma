@@ -2,7 +2,8 @@
 #
 # Verifies the intentionally shallow discovery path:
 # Home permanent launcher → Panchang/Jyotish landing → birth input → beginner
-# overview → chart/grahas/dasha → Daily Rashifal.
+# overview card routes → chart/grahas/full Dasha timeline → saved daily-first
+# landing → privacy-aware Kundali/Rashifal share previews.
 #
 # Prerequisite: install the native debug app on the target simulator with
 # `npx expo run:ios --device <UDID> --port 8084`. This flow launches the real
@@ -74,6 +75,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Create Kundali"
 - assertVisible: "Open Daily Rashifal"
 - assertVisible: "Open Navagraha Stotram"
+- assertVisible: ".*reflection aid, not a certain prediction.*"
 - tapOn: "Create Kundali"
 - waitForAnimationToEnd
 
@@ -94,12 +96,13 @@ appId: com.prashantsharma.vedansh
 - eraseText: 10
 - inputText: "05:42"
 
-# Pin the golden-fixture city rather than relying on a previous profile.
+# No city is silently preselected. Pin the golden-fixture city explicitly.
 - scrollUntilVisible:
     element:
       id: "kundali-city-button"
     direction: DOWN
     timeout: 10000
+- assertVisible: "Birth city, not selected"
 - tapOn:
     id: "kundali-city-button"
 - waitForAnimationToEnd
@@ -126,30 +129,120 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Chart tab"
 - assertVisible: "Grahas tab"
 - assertVisible: "Dasha tab"
-- tapOn: "Chart tab"
+
+# The three beginner cards are actionable and route to their promised tabs.
+- scrollUntilVisible:
+    element:
+      text: "Karka Lagna · Cancer rising. Learn more in chart."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Karka Lagna · Cancer rising. Learn more in chart."
 - assertVisible: "North Indian chart"
 - assertVisible: "North Indian Kundali.*"
-- tapOn: "Grahas tab"
+- tapOn: "Overview tab"
+- scrollUntilVisible:
+    element:
+      text: "Kumbha Moon · Aquarius. Learn more in grahas."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Kumbha Moon · Aquarius. Learn more in grahas."
 - assertVisible: "Graha positions"
-- tapOn: "Dasha tab"
+- assertVisible: "Dhanishta · Pada 4"
+- tapOn: "Overview tab"
+- scrollUntilVisible:
+    element:
+      text: "Jupiter Mahadasha. Learn more in dasha."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Jupiter Mahadasha. Learn more in dasha."
 - assertVisible: "Vimshottari Dasha"
+- assertVisible:
+    id: "dasha-progress"
+- assertVisible: ".*elapsed.*"
+- assertVisible: ".*left.*"
+- assertVisible: "Now"
+- scrollUntilVisible:
+    element:
+      text: "Mercury Mahadasha"
+    direction: DOWN
+    timeout: 15000
+- assertVisible: "Mercury Mahadasha"
 
-# Return to the Jyotish landing and verify daily guidance.
+# Kundali sharing is explicit because the card contains personal birth details.
+- tapOn: "Share your Kundali"
+- waitForAnimationToEnd
+- assertVisible: "4:5 · 1080×1350"
+- assertVisible: ".*includes the chart name, birth date, time, and city.*"
+- assertVisible: "Open share sheet"
+- tapOn: "Close share preview"
+- waitForAnimationToEnd
+
+# Returning to Jyotish refreshes storage: Daily Rashifal now leads, followed by
+# the compact Kundali reference and the one shared practice treatment.
 - tapOn: "Back"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Open Daily Rashifal"
+    visible: "Your Jyotish today"
+    timeout: 15000
+- assertVisible: "Today’s Rashifal"
+- assertVisible: "Favour|FAVOUR"
+- assertVisible: "Pause|PAUSE"
+- assertVisible: "Reflect|REFLECT"
+- assertVisible: "Share today’s Rashifal"
+- tapOn: "Share today’s Rashifal"
+- waitForAnimationToEnd
+- assertVisible: ".*No name or birth details are included.*"
+- assertVisible: "4:5 · 1080×1350"
+- tapOn: "Close share preview"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Your Kundali"
+    direction: DOWN
+    timeout: 15000
+- assertVisible: "Saved on this device"
+- assertVisible: "Karka"
+- assertVisible: "Cancer rising"
+- assertVisible: "Kumbha"
+- assertVisible: "Aquarius"
+- assertVisible: "Dhanishta"
+- assertVisible: "Jupiter"
+- scrollUntilVisible:
+    element:
+      text: "Open Daily Rashifal"
+    direction: UP
     timeout: 15000
 - tapOn: "Open Daily Rashifal"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Daily Rashifal"
     timeout: 15000
-- assertVisible: "FAVOUR"
-- assertVisible: "PAUSE"
-- assertVisible: "REFLECTION"
+- assertVisible: "From your Kundali"
+- assertVisible: ".*Kumbha.*"
+- assertVisible: ".*Aquarius.*"
+- assertVisible: "Favour|FAVOUR"
+- assertVisible: "Pause|PAUSE"
+- assertVisible: "Reflect|REFLECT"
+- assertVisible: ".*bhava"
 - assertVisible: ".*not a certain prediction.*"
 - assertVisible: "Open .* practice"
+- assertVisible: "Share today’s Rashifal"
+- tapOn: "Share today’s Rashifal"
+- waitForAnimationToEnd
+- assertVisible: ".*No name or birth details are included.*"
+- assertVisible: "Open share sheet"
+- tapOn: "Close share preview"
+- waitForAnimationToEnd
+
+# Change exposes the 12-sign grid with plain-English equivalents; no sign is
+# duplicated as both the traditional and translation label.
+- tapOn: "Change Moon sign"
+- assertVisible: ".*Mesha.*Aries.*"
+- assertVisible: ".*Meena.*Pisces.*"
+- tapOn: ".*Mesha.*Moon sign"
+- waitForAnimationToEnd
+- assertVisible: ".*Mesha.*"
+- assertVisible: ".*Aries.*"
 
 - stopApp:
     appId: com.prashantsharma.vedansh

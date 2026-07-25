@@ -3,12 +3,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Pressable, Text, View as mockView } from 'react-native';
+import { Text, View as mockView } from 'react-native';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
-import { computeKundali } from '@/panchang/kundali';
+import {
+  computeKundali,
+  RASHI_NAMES_EN,
+  RASHI_NAMES_WESTERN,
+} from '@/panchang/kundali';
 import {
   birthProfileToInput,
   parseStoredBirthProfile,
@@ -44,14 +48,25 @@ jest.mock('expo-linear-gradient', () => ({
     mockReact.createElement(mockView, props, children),
 }));
 
+jest.mock('react-native-view-shot', () => ({
+  captureRef: jest.fn(() => Promise.resolve('file://jyotish-share.png')),
+}));
+
+jest.mock('expo-sharing', () => ({
+  isAvailableAsync: jest.fn(() => Promise.resolve(true)),
+  shareAsync: jest.fn(() => Promise.resolve()),
+}));
+
 jest.mock('@/panchang/useKundali', () => ({
   ...jest.requireActual('@/panchang/useKundali'),
   useKundali: () => ({
     profile: mockProfile,
     chart: mockChart,
     hydrated: true,
+    loadState: 'saved',
     saveProfile: jest.fn(),
     clearProfile: jest.fn(),
+    reloadProfile: jest.fn(),
   }),
 }));
 
@@ -99,6 +114,30 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   assert.ok(tree.root.findByProps({ accessibilityLabel: 'Dasha tab' }));
 
   act(() => {
+    tree.root.findByProps({
+      accessibilityLabel: `${['Mesha', 'Vrishabha', 'Mithuna', 'Karka', 'Simha', 'Kanya', 'Tula', 'Vrischika', 'Dhanu', 'Makara', 'Kumbha', 'Meena'][mockChart.lagnaRashiIndex]} Lagna · ${['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'][mockChart.lagnaRashiIndex]} rising. Learn more in chart.`,
+    }).props.onPress();
+  });
+  assert.equal(
+    tree.root.findByProps({ accessibilityLabel: 'Chart tab' }).props.accessibilityState.selected,
+    true
+  );
+
+  act(() => {
+    tree.root.findByProps({ accessibilityLabel: 'Overview tab' }).props.onPress();
+  });
+  const moon = mockChart.grahas.find((position) => position.graha === 'moon')!;
+  act(() => {
+    tree.root.findByProps({
+      accessibilityLabel: `${['Mesha', 'Vrishabha', 'Mithuna', 'Karka', 'Simha', 'Kanya', 'Tula', 'Vrischika', 'Dhanu', 'Makara', 'Kumbha', 'Meena'][moon.rashiIndex]} Moon · ${['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'][moon.rashiIndex]}. Learn more in grahas.`,
+    }).props.onPress();
+  });
+  assert.equal(
+    tree.root.findByProps({ accessibilityLabel: 'Grahas tab' }).props.accessibilityState.selected,
+    true
+  );
+
+  act(() => {
     tree.root.findByProps({ accessibilityLabel: 'Grahas tab' }).props.onPress();
   });
   text = textOf(tree);
@@ -112,12 +151,23 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   assert.ok(text.includes('Vimshottari Dasha'));
   assert.ok(text.includes('not an event guarantee'));
   assert.ok(text.includes('CURRENT PERIOD'));
+  assert.ok(text.includes('elapsed'));
+  assert.ok(text.includes('left'));
+  assert.ok(text.includes('Now'));
+  assert.ok(tree.root.findByProps({ testID: 'dasha-progress' }));
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Full Mahadasha timeline' }));
   assert.ok(
     tree.root.findAll((node) =>
       typeof node.props.accessibilityLabel === 'string'
       && node.props.accessibilityLabel.startsWith('Current Dasha,')
     ).length > 0
   );
+
+  act(() => {
+    tree.root.findByProps({ accessibilityLabel: 'Share your Kundali' }).props.onPress();
+  });
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Share your Kundali image preview' }));
+  assert.ok(textOf(tree).includes('Review it before sharing'));
 });
 
 test('Daily Rashifal uses the saved Moon sign and remains guidance, not certainty', () => {
@@ -129,16 +179,35 @@ test('Daily Rashifal uses the saved Moon sign and remains guidance, not certaint
   );
 
   const moon = mockChart.grahas.find((position) => position.graha === 'moon')!;
+  act(() => {
+    tree.root.findByProps({ accessibilityLabel: 'Change Moon sign' }).props.onPress();
+  });
   const selected = tree.root.findByProps({
-    accessibilityLabel: `${['Mesha', 'Vrishabha', 'Mithuna', 'Karka', 'Simha', 'Kanya', 'Tula', 'Vrischika', 'Dhanu', 'Makara', 'Kumbha', 'Meena'][moon.rashiIndex]} Moon sign`,
+    accessibilityLabel: `${RASHI_NAMES_EN[moon.rashiIndex]}, ${RASHI_NAMES_WESTERN[moon.rashiIndex]} Moon sign`,
   });
   assert.equal(selected.props.accessibilityState.selected, true);
 
   const text = textOf(tree);
   assert.ok(text.includes('not a certain prediction'));
-  assert.ok(text.includes('FAVOUR'));
-  assert.ok(text.includes('PAUSE'));
-  assert.ok(text.includes('REFLECTION'));
+  assert.ok(text.includes('Favour'));
+  assert.ok(text.includes('Pause'));
+  assert.ok(text.includes('Reflect'));
+  assert.ok(text.includes('bhava'));
+  assert.ok(text.includes('Aquarius') || text.includes('Aries') || text.includes('Taurus')
+    || text.includes('Gemini') || text.includes('Cancer') || text.includes('Leo')
+    || text.includes('Virgo') || text.includes('Libra') || text.includes('Scorpio')
+    || text.includes('Sagittarius') || text.includes('Capricorn') || text.includes('Pisces'));
+
+  act(() => {
+    tree.root.findByProps({ accessibilityLabel: 'Share today’s Rashifal' }).props.onPress();
+  });
+  assert.ok(
+    tree.root.findAll((node) =>
+      typeof node.props.accessibilityLabel === 'string'
+      && node.props.accessibilityLabel.endsWith('Rashifal image preview')
+    ).length > 0
+  );
+  assert.ok(textOf(tree).includes('No name or birth details are included'));
 });
 
 test('birth profile parsing is strict and converts India wall time to the correct UTC instant', () => {

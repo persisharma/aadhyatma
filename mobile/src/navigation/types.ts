@@ -91,7 +91,7 @@ export type PanchangStackParamList = {
   MyVrat: undefined;
   // Daily Muhurat detail (Choghadiya / Rahu Kaal / Abhijit) — PRD-14
   MuhuratDetail: { dateMs: number };
-  Kundali: undefined;
+  Kundali: { editing?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
 };
 
