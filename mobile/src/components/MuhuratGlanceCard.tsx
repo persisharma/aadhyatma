@@ -158,7 +158,9 @@ const styles = StyleSheet.create({
   card: { borderWidth: 1 },
   nowRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10 },
   dot: { width: 12, height: 12, borderRadius: 6 },
-  tag: { fontSize: 10, fontWeight: '700', letterSpacing: 0.4, textTransform: 'uppercase', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, overflow: 'hidden' },
+  // No fontWeight: the call site sets fontFamilies.latinBold, a static 700 file
+  // that already carries the weight (see utils/langType.ts).
+  tag: { fontSize: 10, letterSpacing: 0.4, textTransform: 'uppercase', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, overflow: 'hidden' },
   tiles: { flexDirection: 'row', gap: 10, marginTop: 13 },
   tile: { flex: 1, borderWidth: 1, padding: 11 },
   viewAll: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 14, paddingTop: 12, borderTopWidth: 1 },

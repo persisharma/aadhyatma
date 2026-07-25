@@ -5,6 +5,14 @@
  * tokens — per the sanctioned exception in design.md §42. The glyphs sit on
  * the fixed warm `cardThumbActiveFrom → cardThumbActiveTo` medallion gradient,
  * so they keep a hand-painted miniature look instead of adapting to theme.
+ *
+ * On the cool hues: `leafGreen`, `teal` and `deepBlue` are the peacock/water
+ * family (Krishna's feather, Kartikeya's plume, Ganga's waves). They are a
+ * deliberate, bounded exception to the warm-manuscript "never green/red" rule in
+ * theme/colors.ts, which governs theme colour and UI chrome. They are painted
+ * attributes, never signals: nothing here may be imported into chrome — no
+ * badge, chip, border, state colour or icon tint outside these glyph files.
+ * Chrome takes its colour from theme/colors.ts only.
  */
 export const ink = '#733207';
 export const gold = '#D49A35';

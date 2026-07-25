@@ -87,8 +87,12 @@ export default function MuhuratCardBody({
           <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 10, color: quality === 'avoid' ? colors.avoid : colors.saffronDeep }}>
             · {qualityLabel}
           </Text>
+          {/* The now-badge carries no fontWeight: latinSemiBold is a static 600
+              file, so asking for 700 on top cannot be satisfied — on Android
+              that can drop the custom face entirely and fall back to Roboto.
+              The face carries its own weight (see utils/langType.ts). */}
           {now && (
-            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 10, fontWeight: '700', color: colors.onPrimary, backgroundColor: colors.saffron, paddingHorizontal: 5, paddingVertical: 1, borderRadius: 5, overflow: 'hidden' }}>
+            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 10, color: colors.onPrimary, backgroundColor: colors.saffron, paddingHorizontal: 5, paddingVertical: 1, borderRadius: 5, overflow: 'hidden' }}>
               अभी
             </Text>
           )}

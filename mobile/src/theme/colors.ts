@@ -32,6 +32,13 @@ export const lightColors = {
   // Kept in the WARM manuscript palette — never green/red. Auspicious reuses the
   // gold tint; `avoid` is a muted terracotta. Both always carry a text label too
   // (design.md §12 — never colour alone).
+  //
+  // Scope of the warm-only rule: it governs THEME COLOUR AND UI CHROME, which is
+  // everything in this file. The one sanctioned exception is the baked deity-glyph
+  // illustration palette (`components/deityGlyphs/palette.ts`, design.md §42),
+  // which carries cool peacock/water hues — leafGreen, teal, deepBlue — because
+  // they are painted attributes of the art, not signals. Those values must never
+  // be pulled into chrome; chrome takes its colour from this file only.
   avoid: '#9E4A2E',
   avoidTint: 'rgba(158, 74, 46, 0.12)',
   // Chip/pill fills for the quality tags (auspicious/avoid) on the Muhurat glance

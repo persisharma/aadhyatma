@@ -3,7 +3,6 @@ import { ActivityIndicator, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Svg, { Path } from 'react-native-svg';
 import HomeStackNavigator from './HomeStackNavigator';
 import MoreStackNavigator from './MoreStackNavigator';
 import AudioStackNavigator from './AudioStackNavigator';
@@ -52,7 +51,9 @@ export default function TabNavigator() {
         tabBarLabelStyle: {
           fontFamily: fontFamilies.inter,
           fontSize: 10,
-          letterSpacing: 0.02,
+          // RN letterSpacing is in px, not em: the previous 0.02 was invisible.
+          // 0.4 matches the cardMeta chrome token, the nearest sibling scale.
+          letterSpacing: 0.4,
         },
       }}
     >
@@ -319,15 +320,60 @@ function MoreIcon({ color, size }: TabIconProps) {
   );
 }
 
+// Redrawn in the same stroked-View grammar as its four siblings (same
+// `stroke = max(1.5, size * 0.07)`, same rounded caps). It was a filled SVG
+// path, which read visibly heavier than the outlined icons beside it —
+// especially in the inactive state, where a solid glyph dominates the row.
 function MusicIcon({ color, size }: TabIconProps) {
+  const stroke = Math.max(1.5, size * 0.07);
+  const head = size * 0.34;
+  const headLeft = size * 0.16;
+  const headBottom = size * 0.18;
+  // Stem rises from the head's right edge; the flag springs from the stem top.
+  const stemLeft = headLeft + head - stroke;
+  const stemBottom = headBottom + head / 2;
+  const stemHeight = size * 0.5;
+
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <Svg width={size} height={size} viewBox="0 0 24 24">
-        <Path
-          fill={color}
-          d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"
-        />
-      </Svg>
+      {/* Note head — a stroked circle, so its weight matches the outlines. */}
+      <View
+        style={{
+          position: 'absolute',
+          left: headLeft,
+          bottom: headBottom,
+          width: head,
+          height: head,
+          borderRadius: head / 2,
+          borderWidth: stroke,
+          borderColor: color,
+        }}
+      />
+      {/* Stem */}
+      <View
+        style={{
+          position: 'absolute',
+          left: stemLeft,
+          bottom: stemBottom,
+          width: stroke,
+          height: stemHeight,
+          borderRadius: stroke / 2,
+          backgroundColor: color,
+        }}
+      />
+      {/* Flag */}
+      <View
+        style={{
+          position: 'absolute',
+          left: stemLeft + stroke,
+          bottom: stemBottom + stemHeight - stroke,
+          width: size * 0.24,
+          height: stroke,
+          borderRadius: stroke / 2,
+          backgroundColor: color,
+          transform: [{ rotate: '30deg' }],
+        }}
+      />
     </View>
   );
 }
