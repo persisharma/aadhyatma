@@ -306,7 +306,7 @@ Two variants: `active` (live module) and `coming` (placeholder).
 
 - Background: linear-gradient `#FFF5E0 → #F5DEAC`
 - Border: `rgba(184, 98, 27, 0.4)`
-- Shadow: `md`
+- Shadow: `md` (runtime: **`elevation.raised`**)
 - Thumb: gradient `#F8D291 → #E0A255` with the text's first Devanagari letter (`ह`, `रा`, `भ`, `सु`) in white, Noto Serif Devanagari 22.
 - Right side: saffron `›` chevron.
 
@@ -314,10 +314,10 @@ Two variants: `active` (live module) and `coming` (placeholder).
 
 - Background: `rgba(255, 250, 235, 0.72)`
 - Border: `divider`
-- Shadow: `sm`
+- Shadow: `sm` (runtime: **`elevation.subtle`**)
 - Thumb: flat `#F1E0B3` with `saffron-deep` letter.
 - Content (thumb + names) at 55% opacity so it looks dormant but still legible.
-- Top-right pill badge: `SOON` (Inter 9, uppercase, 0.18em tracking, `rgba(166,124,52,0.14)` fill).
+- Top-right pill badge: `SOON` (**10**, uppercase, 0.18em tracking, `rgba(166,124,52,0.14)` fill — was 9, below the §3.0 floor).
 
 ### Content per card
 
@@ -770,8 +770,8 @@ Two status variants — `active` (has content) and `coming` (placeholder) — an
 
 - Background: linear-gradient `cardActiveFrom → cardActiveTo` (`#FFF5E0 → #F5DEAC`, same gradient as library card)
 - Border: 1px `cardActiveBorder` (`rgba(184, 98, 27, 0.4)`)
-- Shadow: lifted (offset `0,4`, opacity `0.12`, radius 12; Android elevation 3)
-- Radius: **16**
+- Shadow: **`elevation.lifted`** (§4 — offset `0,4`, opacity `0.11`, radius 12, Android 3). Was an inline `0.12` literal until July 2026.
+- Radius: **`radii.lg`** (18). Was an ad-hoc `16`, off the radius scale (§4).
 - Layout (vertical, centered):
   - Icon: a `CategoryIcon` stroke vector (saffron-deep), centered above the name
   - **One name line only** — the active reading language's primary via `orderTitlesByLanguage()` (`devPrimary 16` / `latPrimary 17`, `ink`), 6px below the icon. The demoted second-language line is **deliberately dropped** on Home tiles to tighten the grid (see the comment in `CategoryCard.tsx`); catalog/detail screens keep the bilingual pairing. The English `accessibilityLabel` stays intact so screen readers still announce the English name.
@@ -782,9 +782,9 @@ Two status variants — `active` (has content) and `coming` (placeholder) — an
 
 - Background: `cardSurface` flat
 - Border: 1px `divider`
-- Shadow: `sm`
+- Shadow: `sm` (runtime: **`elevation.subtle`**)
 - Card at 55% opacity
-- "SOON" pill badge: top-right corner, 8px inset. 9px, 600, uppercase, 0.18em tracking, `goldTint` fill, `ink-muted` text
+- "SOON" pill badge: top-right corner, 8px inset. **10** (the §3.0 floor; was 9), 600, uppercase, 0.18em tracking, `goldTint` fill, `ink-muted` text
 - Tap disabled (no navigation)
 
 **New content (active tiles & library cards):**
@@ -832,7 +832,7 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 3. **Verse card** (centered, 28px side margins):
    - Background: `parchment-soft`
    - Border: 1px `divider`
-   - Shadow: `md`
+   - Shadow: `md` (runtime: **`elevation.raised`** — was an inline `0.14/24` shadow until July 2026)
    - Radius: 18
    - Padding: 24px
    - Content (top to bottom):
@@ -1132,11 +1132,11 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
    - *Location chip* (left): a drawn teardrop pin (11 px, `saffron`, counter-rotated `parchment-soft` hole — no emoji per §5) + city name at 12 pt, in a `parchment-soft` pill with `divider` border. Tap → Location Picker (below).
    - *Calendar-system toggle* (centre): segmented pill `पूर्णिमांत / अमान्त` (Purnimant default), active half `saffron-tint` + `saffron-deep`, inactive `ink-muted`. Persisted at `@vedansh:panchang-calendar-system`.
    - *My Vrat button* (right): 34 px circle, `gold` ★, with a `saffron` count badge when the user follows any vrat. → MyVrat.
-3. **Calendar card** (`parchment-soft`, `divider` border, `radii.lg`, `elevation.card`): `‹ [full date + "Month view" affordance] ›` day stepper; the date expands an inline month grid — weekday row (Inter 9), 7-column cells (min-height 38, radius 8), selected day `saffron-tint` + `saffron` border, today `gold` border, and tiny 7 pt Inter observance tags per day (`पर्व` on `saffron-tint`, `व्रत` on `gold-tint`, `व्रत+` when mixed). A horizontal swipe anywhere on the card (dx > 54, mostly-horizontal) steps one day. An `आज · Today` pill resets.
+3. **Calendar card** (`parchment-soft`, `divider` border, `radii.lg`, `elevation.card`): `‹ [full date + "Month view" affordance] ›` day stepper; the date expands an inline month grid — weekday row (Inter **10**), 7-column cells (min-height 38, radius 8), selected day `saffron-tint` + `saffron` border, today `gold` border, and **10 pt** observance tags per day (`पर्व` on `saffron-tint`, `व्रत` on `gold-tint`, `व्रत+` when mixed; tag box `minWidth 28 / minHeight 16 / radius 8`, line-height 14). Both were below the §3.0 floor until July 2026 (9 and 7); the tag box grew from 24×12 to fit, and its label now goes through `pillTextStyle` — it had named Inter, which has no Devanagari glyphs for `व्रत`. A horizontal swipe anywhere on the card (dx > 54, mostly-horizontal) steps one day. An `आज · Today` pill resets.
 4. **Day panel** (the panchang proper, once computed — an `ActivityIndicator` in `saffron` while the day is derived off the render path):
    - *Date header*: vara name (reader-title face 15, `saffron-deep`) · full date · `विक्रम संवत् N`, then lunar month (+ अधिक flag) · shukla/krishna paksha (11 pt `ink-muted`), over a hairline `divider`.
    - *Muhurat glance card* (`MuhuratGlanceCard`, PRD-14): the `cardActiveFrom → cardActiveTo` gradient hero, promoted to lead the day panel (directly under the date header, **above** the anga grid) — "is now auspicious?" is the live, time-sensitive answer users open Panchang for. Kicker `आज का मुहूर्त` (`cardLatin` for en; script-bold serif, no tracking, for hi/gu/kn — Cormorant has no Indic glyphs, §3), a hero "now" row (current choghadiya + quality tag when `isToday`, else the day's Abhijit), a two-up `राहु काल` / `अभिजीत` tile pair, and a `सभी मुहूर्त व चौघड़िया →` footer → `MuhuratDetail`. While its own `useMuhurat` solve is in flight it shows a **skeleton** in the same gradient card (kicker text + muted `divider`/`parchment-soft` placeholder bars sized to the real hero row, tile pair, and footer, `accessibilityRole="progressbar"`), so the section reserves its footprint instead of popping in below the day panel. The solve is **memoised per city + calendar day + calendar system** (`useMuhurat` `SOLVE_CACHE`), so revisiting a date — or re-mounting the card — renders instantly with no skeleton; only the live "now" read recomputes each minute. **Times, ranges, and the quality chip use the non-italic semibold/bold Cormorant face, never the thin italic `cardLatin` (§3), and the chip sits on `avoidChipBg`/`goldChipBg` so it reads as a solid pill on the gradient (§12); avoid-chip text uses `avoidDeep` — the tint composites darker than the card, dropping raw `avoid` under AA (§2).**
-   - *Anga grid, uniform 2×2*: Tithi · Nakshatra · Yoga · Karana each render on identical elevated tiles (`parchment-soft`, `radii.md`, `elevation.card`) — one size, no prominent/secondary split. Each tile: a 9 pt `saffron-deep` type label (tracked uppercase Cormorant in English; plain script serif otherwise), the value in the active reading language only at 18 pt `ink` (single-line, `adjustsFontSizeToFit` down to a 0.8 scale so the longest name — "Uttara Bhadrapada" — fits without truncation), and `till H:MM AM/PM` when the anga ends that day. No second cross-script line. End instants that fall past midnight carry a short-date suffix (`तक 2:04 AM, 12 जुल` — `formatEndInstant` in `panchang/muhuratFormat.ts`, shared with the Muhurat card) so a next-day end never reads as this morning; panchang convention shows end times only (an anga's start is the previous one's end, usually on the previous day). On **kshaya** days — a tithi or nakshatra that begins after this sunrise and ends before the next, touching neither (e.g. Ekadashi on 10 Jul 2026) — the Tithi/Nakshatra tile adds a second row: the skipped anga's name at 15 pt `ink` plus its own `तक` line, so the day reads `दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल` instead of Ekadashi silently vanishing between Dashami and Dwadashi. Data: `PanchangData.kshayaTithi` / `kshayaNakshatra` (engine-detected via the sunrise-to-sunrise index jump).
+   - *Anga grid, uniform 2×2*: Tithi · Nakshatra · Yoga · Karana each render on identical elevated tiles (`parchment-soft`, `radii.md`, `elevation.card`) — one size, no prominent/secondary split. Each tile: a **10 pt** `saffron-deep` type label (tracked uppercase Cormorant in English; plain script serif otherwise — was 9, below the §3.0 floor, until July 2026), the value in the active reading language only at 18 pt `ink` (single-line, `adjustsFontSizeToFit` down to a 0.8 scale so the longest name — "Uttara Bhadrapada" — fits without truncation), and `till H:MM AM/PM` when the anga ends that day. No second cross-script line. End instants that fall past midnight carry a short-date suffix (`तक 2:04 AM, 12 जुल` — `formatEndInstant` in `panchang/muhuratFormat.ts`, shared with the Muhurat card) so a next-day end never reads as this morning; panchang convention shows end times only (an anga's start is the previous one's end, usually on the previous day). On **kshaya** days — a tithi or nakshatra that begins after this sunrise and ends before the next, touching neither (e.g. Ekadashi on 10 Jul 2026) — the Tithi/Nakshatra tile adds a second row: the skipped anga's name at 15 pt `ink` plus its own `तक` line, so the day reads `दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल` instead of Ekadashi silently vanishing between Dashami and Dwadashi. Data: `PanchangData.kshayaTithi` / `kshayaNakshatra` (engine-detected via the sunrise-to-sunrise index jump).
    - *Times card*: 2×2 grid — Sunrise, Sunset, Moonrise, Brahma Muhurta — each a `gold` ☀/☽ text-presentation glyph (variation selector forces monochrome; "no emoji") + 10 pt label + Cormorant SemiBold 13 value.
 5. **व्रत और पर्व** for the selected date: `ObservanceCard`s (`parchment-soft`, `radii.md`, `elevation.card`) with a category pill (`व्रत` on `gold-tint` / `पर्व` on `saffron-tint`), deity, name, short description, and action pills — `कथा पढ़ें · Read Katha` (gold-tint pill → katha reader) and `पढ़ें: <section>` (outline pill → the linked text via `buildEntryStartTarget`, §38).
 6. **आगामी · Upcoming** rows: coloured marker dot (`saffron` star-tier / `ink` halfmoon / `gold` default), short date, name.
@@ -1155,7 +1155,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 
 **Katha Library** (`KathaLibraryScreen`) — searchable list of every bundled bilingual katha: ॥ glyph, title, `<n> sections` caption, `पढ़ें · Read` affordance.
 
-**Vrat Katha Reader** (`VratKathaReaderScreen` + `KathaSectionPage`) — lives in the **Home stack** (`VratKathaReader` route; Panchang surfaces navigate cross-tab to it) and is currently the **only route in `IMMERSIVE_HOME_ROUTES`** (`TabNavigator.tsx`), so the bottom tab bar hides for immersive reading. Plain `parchment` (no sketch). Top bar: 40 px back circle · katha title · `n / m` counter; then `ReadingProgressBar` and the Language Toggle (§16). Body: a horizontal paged `FlatList` of section cards — each page carries a `प्रसंग · n/m` / `Part · n/m` pill (`versePill` tokens on `saffron-tint`), section title at 20 pt, a vertically-compressed `॥` Ornament, and body paragraphs at the shared `meaning` token (14 pt paragraph gap); long sections scroll vertically inside the page. §5 pager dots overlay the bottom; light haptic per page.
+**Vrat Katha Reader** (`VratKathaReaderScreen` + `KathaSectionPage`) — lives in the **Home stack** (`VratKathaReader` route; Panchang surfaces navigate cross-tab to it) and is currently the **only route in `IMMERSIVE_HOME_ROUTES`** (`TabNavigator.tsx`), so the bottom tab bar hides for immersive reading. Plain `parchment` (no sketch). Top bar: **`ReaderHeader`** (§9) — 44 px back circle · katha title · `n / m` counter; then `ReadingProgressBar` and the Language Toggle (§16). Until July 2026 this screen was the most-drifted top bar in the app: a 40 px button, a 16 gutter and a hard-coded 18 title, all of which the shared header replaced. Body: a horizontal paged `FlatList` of section cards — each page carries a `प्रसंग · n/m` / `Part · n/m` pill (`versePill` tokens on `saffron-tint`), section title at 20 pt, a vertically-compressed `॥` Ornament, and body paragraphs at the shared `meaning` token (14 pt paragraph gap); long sections scroll vertically inside the page. §5 pager dots overlay the bottom; light haptic per page.
 
 **Location Picker** (`LocationPickerModal.tsx`) — a `pageSheet` modal on plain `parchment`: title `स्थान चुनें · Choose location` + ✕; a "📍 Use my location" row (GPS fixes **snap to the nearest bundled city** — offline labels, finite cache keys — with denied/error fallback copy); a city search field; and the full 51-city list with a `saffron-deep` ✓ on the selection. Location state (`PanchangLocationContext`, `@vedansh:panchang-location`, default **Ujjain**) is the single reference for every location-sensitive computation; changing city warms that city's observance cache after interactions settle.
 
@@ -1251,7 +1251,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 **Hub** (`MoreScreen.tsx`), top to bottom:
 
 1. **Title** — one left-aligned line, selected language only (`अन्य` / `More` / `અન્ય` / `ಇನ್ನಷ್ಟು`), 30 pt in the script's title face (`latinBold` for en, `scriptTitleFont` for hi/gu/kn). No `More` subtitle.
-2. **Three grouped inset lists** — each is an uppercase **group label** (`saffron-deep`, 13; Latin gets tracking + uppercase via the chrome font, Indic drops both) above one **list container** (`parchment-soft`, radius 20, 1 px `divider`, `overflow:hidden`, soft shadow) whose rows are split by hairline `divider` top-borders. Standard row anatomy: `[38 px icon tile, radius 11] [label 18]  …  [state 15 ink-muted] [chevron › 19 gold]`, padding 15×16, pressed → `saffron-tint` wash.
+2. **Three grouped inset lists** — each is an uppercase **group label** (`saffron-deep`, 13; Latin gets tracking + uppercase via the chrome font, Indic drops both) above one **list container** (`parchment-soft`, **`radii.lg`**, 1 px `divider`, `overflow:hidden`, **`elevation.subtle`**) whose rows are split by hairline `divider` top-borders. Standard row anatomy: `[38 px icon tile, radii.sm] [label 18]  …  [state 15 ink-muted] [chevron › 19 gold]`. The container radius was an ad-hoc 20 and the icon tile 11, both off the radius scale (§4), with a hand-rolled shadow; all three are tokens as of July 2026, padding 15×16, pressed → `saffron-tint` wash.
    - **साधना / Practice** — a compact **profile hero row** (tinted `cardActiveFrom → cardActiveTo` gradient, 52 px circular `saffron` ॐ badge, `साधक प्रोफ़ाइल` title, sub-line "**`N`** श्लोक · **`N`** श्रृंखला" = lifetime verses + streak in `saffron`; the old `rounds` count is dropped; a11y "Open Sadhak profile" → Profile), then **संग्रह** (♥ `saffron`, state = saved count; label matches the WishlistScreen title → Wishlist §24), **स्मरण** (ॐ `gold`, state = reminder time(s) or Off → Reminder Settings §38), **जप अलार्म** (⏰ `saffron-deep`, state = active count → §35).
    - **ऐप / App** — **भाषा** (अ `gold`, state = current language's native name; opens the **Language picker sheet**, not an inline grid), **पाठ का आकार** (Aa `saffron`, state = मानक/बड़ा; opens the **Reading-size picker sheet**, §43), **ऐप साझा करें** (↗ `saffron`; OS share sheet via `buildAppShareMessage(lang)`, `data/shareLinks.ts` — the localized `APP_SHARE_INVITE` + `SMART_LINK`).
    - **जानकारी / Info** — **परिचय व अस्वीकरण** (ⓘ `ink-muted`; opens the pageSheet disclaimer modal with the bilingual disclaimer + "Report an Error" CTA), **त्रुटि सूचित करें** (⚑ `ink-muted`; `mailto` via `buildDiscrepancyMailto`), and **ऐप भ्रमण फिर देखें / Show App Tour** (↻ `gold`; a11y label constant "Show App Tour") which calls `resetTour()` to replay the first-launch feature tour on demand (§47).
@@ -1370,7 +1370,7 @@ Multi-chapter readers must let the reader swipe **across** chapter boundaries (t
 
 ### Component: Jump-to-Start (`JumpToStartButton.tsx`)
 
-A floating pill anchored bottom-right of the verse pager (16/16 inset, clear of the centred pager dots) rendered only when the reader is past verse 1 — a one-tap return after a subsection auto-jump, without swiping back through every page. `parchment-soft` fill, `cardActiveBorder` 1 px, `pill` radius, raised shadow; `⇤` glyph (15) + language-aware label `आरंभ` / `Start` (13, italic for en) in `saffron-deep`. Tap scrolls (animated) to index 0 of the current chapter.
+A floating pill anchored bottom-right of the verse pager (16/16 inset, clear of the centred pager dots) rendered only when the reader is past verse 1 — a one-tap return after a subsection auto-jump, without swiping back through every page. `parchment-soft` fill, `cardActiveBorder` 1 px, `pill` radius, **`elevation.lifted`** (§4 — was an inline `0.18/10` shadow); `⇤` glyph (15) + language-aware label `आरंभ` / `Start` (13, italic for en) in `saffron-deep`. Tap scrolls (animated) to index 0 of the current chapter.
 
 **Files:** `mobile/src/contexts/ReadingProgressContext.tsx`, `mobile/src/components/ReadingProgressBar.tsx`, `ResumeReadingSheet.tsx`, `JumpToStartButton.tsx`, `NextChapterCard.tsx`, `PrevChapterCard.tsx`, `mobile/src/utils/formatLocation.ts`; consumers `GitaReaderScreen.tsx` (canonical), `CategoryListScreen.tsx`, `DeityListScreen.tsx`, `GitaChaptersIndexScreen.tsx`.
 
@@ -1447,7 +1447,7 @@ Wears the active LibraryCard treatment (§8): `cardActiveFrom → cardActiveTo` 
 - **Avatar**: 44×44 circle in the `cardThumbActiveFrom → cardThumbActiveTo` gradient, containing a `DeityIcon` (below); falls back to the deity's first two Devanagari characters.
 - **Names** via `orderTitlesByLanguage` (dev 16/12, lat 18/11): primary in `ink`, secondary italic `ink-muted`, then the count line at 10 `ink-muted`.
 - Right `›` chevron in `saffron`.
-- **NEW pill** top-right when `hasNew`: `newBadgeBg` fill, `newBadgeText` text, `pill` radius, 9 pt uppercase — same geometry as §19.
+- **NEW pill** top-right when `hasNew`: `newBadgeBg` fill, `newBadgeText` text, `pill` radius, **10 pt** uppercase (was 9, below the §3.0 floor) — same geometry as §19.
 - Whole card is the press target; a11y label reads name + count + "New." when badged.
 
 ### Deity Icon system (`DeityIcon.tsx` + `deityGlyphs/`)
@@ -1645,7 +1645,7 @@ One enrolled sankalp's card on the Today's Practice ledger (§31) — flat `parc
 
 **Measured spotlight.** Each step names an on-screen element via `targetId`, registered with `useTourTarget(id, reveal?)` in the owning screen (`components/tour/tourTargets.ts` — a module-singleton ref registry). After navigating, the tour first calls the target's optional `reveal()` — a `scrollNodeIntoView(scrollRef, targetRef)` that scrolls a below-the-fold target (the Japa/Theerth tiles, the categories grid, the reminder "+ Add" row, the japam add-alarm button) on-screen — then measures the element (`measureInWindow`) and rings it with a `saffron` highlight (2px border + soft `saffron` glow, rect inflated ~6px). Measurement is **settle-aware**: the tour re-measures across frames and always keeps the latest rect, committing only once it holds still for `MEASURE_STABLE_FRAMES` past a `MEASURE_MIN_TRIES` warm-up (or hits the `MEASURE_MAX_TRIES` cap) — `measureSettled()` in `placement.ts`, pure + unit-tested. This stops a freshly-navigated screen (whose header/content shifts for several frames, and whose muhurat card mounts a few frames late) from ringing a stale, pre-layout spot. **After the frame loop settles, a low-frequency poll** (`REMEASURE_POLL_MS`) keeps re-revealing + re-measuring for as long as the step is shown: some screens hydrate their content **asynchronously** (e.g. Japam alarms load from AsyncStorage *after* the ~0.8s frame cap), and the empty-state layout looks "stable" to the frame loop — so the ring would otherwise freeze on the target's pre-hydration position (the "+ Add alarm" button ends up ringed over the alarm row that loaded in beneath it). The poll follows the target to its final spot no matter how late/slow the load is (device-agnostic — no fixed time window); a `sameRect` guard makes it a no-op (no re-render) once nothing moves, and it is torn down when the step changes. Steps with no stable element — the five bottom-tab overview steps, or a target that may be absent on first launch — omit `targetId` and ring the **destination tab** instead (computed from `TAB_ORDER` + default-tab-bar geometry). `placeTourCard` (`components/tour/placement.ts`, pure + unit-tested) sits the card in the band opposite the ring so it never covers it and points the arrow at it; if the element can't be measured it falls back to the step's declared `anchor`/`pointer`. This replaces the original anchor-only card, which covered ~half the screen and pointed at nothing specific. **The fit decision uses the card's real rendered height, not a fixed guess** — `FeatureTour` reports the card+arrow height via `onLayout` and feeds it back into `placeTourCard`, so a card that grows with the bilingual copy, the type scale, or a shorter device is never placed on a side too small to hold it (which previously let it cover the very element it rings). `CARD_HEIGHT_EST` only seeds the first frame before the measurement lands. When **neither** side can hold the whole card, the card pins flush to a safe-area edge with the arrow still leading back toward the target — top-pinned (arrow down) only when the whole card fits the safe viewport *and* there is more room above the target (clearing a low target), otherwise bottom-pinned (arrow up) so the card's Back/Next controls stay on-screen even for a card taller than the viewport (large type scale).
 
-**Card spec.** `parchment-soft` fill, `divider` border, `radii.lg`, 18 padding, elevated shadow. Header (pinned to the top of the overlay, not the card): step counter `n / N` (left) + `Skip` (right), `cardLatin`, `parchment`, tracked-uppercase. The card holds a `readerTitle`-face Hindi title (20, `ink`, centred) over an italic `subtitle`-face English title (13, `ink-muted`); a `divider` hairline; then a bilingual body (`meaning` face — Hindi 14/24 `ink`, English 12/20 `ink-soft` at 0.85). Footer: a `dotRest`/`saffron` progress-dot row, then **Back** (secondary outline, `divider` border, disabled + 0.3 opacity on step 1) and **Next · आगे** / on the last step **Done · पूर्ण** (primary solid `saffron`, `onPrimary`, `radii.md`). a11y labels are constant English — `Skip tour`, `Previous step`, `Next step`, `Done` — so e2e is language-independent.
+**Card spec.** `parchment-soft` fill, `divider` border, `radii.lg`, 18 padding, **`elevation.overlay`** (§4 — the tier for floating above a scrim; was an inline off-palette `#0a0604` shadow until July 2026). Header (pinned to the top of the overlay, not the card): step counter `n / N` (left) + `Skip` (right), `cardLatin`, `parchment`, tracked-uppercase. The card holds a `readerTitle`-face Hindi title (20, `ink`, centred) over an italic `subtitle`-face English title (13, `ink-muted`); a `divider` hairline; then a bilingual body (`meaning` face — Hindi 14/24 `ink`, English 12/20 `ink-soft` at 0.85). Footer: a `dotRest`/`saffron` progress-dot row, then **Back** (secondary outline, `divider` border, disabled + 0.3 opacity on step 1) and **Next · आगे** / on the last step **Done · पूर्ण** (primary solid `saffron`, `onPrimary`, `radii.md`). a11y labels are constant English — `Skip tour`, `Previous step`, `Next step`, `Done` — so e2e is language-independent.
 
 **Bilingual, always.** The tour renders Hindi (primary) **and** English (secondary) on every card and never branches on `lang`. It is a first-run welcome shown before any reading language is chosen (default `hi`), and the app's identity is Hindi-led-bilingual (§1); showing both is the welcome, not a localization bug (contrast the What's New sheet below, which *does* honour the reading language because it fires for returning users). Because it never picks hi-or-en by `lang`, it doesn't trip the gu/kn ternary hazard (wiki `concepts/languages`).
 
@@ -1760,8 +1760,8 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 ## 52. Component: Text Field (`TextField.tsx`)
 
-**Purpose.** The app's single text-input spec. Every `TextInput` on a themed surface goes
-through it.
+**Purpose.** The spec for every **standalone** text input — a field that owns its own height,
+border, fill and face.
 
 A July 2026 audit found three specs for one control class — content-search fields at 44 in
 Cormorant 15, Kundali's form inputs at 48 in Inter 14, and Kundali's modal city search at 46 —
@@ -1776,6 +1776,15 @@ typographic, matching how the system already splits its faces (§3):
 **Shared spec.** Full width, 1 px `divider` border, `parchmentSoft` fill, `radii.md`, `ink`
 text, `inkMuted` placeholder. Both variants clear the §12 44 pt touch minimum. Callers pass
 content and per-field overrides only (e.g. an error-state `borderColor`), never geometry.
+
+**Not in scope: composite search bars.** The global Search top bar (§36) is a `searchPill`
+*container* that owns the 44 height, border and fill, with a `⌕` glyph, a bare `flex: 1`
+`TextInput`, and a `✕` clear button as siblings. `TextField` owns exactly the geometry that
+container owns, so wrapping it there would mean two competing boxes; it deliberately stays a
+composite. **Known divergence:** that inner input is Inter 15, where this section's `search`
+variant says Cormorant 15 for content search. Aligning the app's primary search field is a
+visible change to its most-used surface and is left as an explicit product decision rather
+than folded into the July 2026 token pass — it is the one place the rule above is not applied.
 
 **Files:** `mobile/src/components/TextField.tsx`. Consumers: `KathaLibraryScreen`,
 `ObservanceListScreen`, `PanchangScreen` (catalog search), `KundaliScreen` (form fields + city
