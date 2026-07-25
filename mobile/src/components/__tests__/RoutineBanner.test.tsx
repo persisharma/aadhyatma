@@ -98,7 +98,9 @@ describe('RoutineBanner — layout variant', () => {
   });
 
   it('inline variant flows in the page — not absolutely positioned', () => {
-    expect(rootStyle(render('inline')).position).toBeUndefined();
+    const style = rootStyle(render('inline'));
+    expect(style.position).toBeUndefined();
+    expect(style.minHeight).toBe(57);
   });
 });
 

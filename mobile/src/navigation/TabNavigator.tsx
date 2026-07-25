@@ -1,18 +1,18 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { Suspense, lazy } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 import HomeStackNavigator from './HomeStackNavigator';
 import MoreStackNavigator from './MoreStackNavigator';
-import PanchangStackNavigator from './PanchangStackNavigator';
 import AudioStackNavigator from './AudioStackNavigator';
 import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
 import { useTheme } from '@/theme/ThemeContext';
 import type { TabParamList } from './types';
 
 const Tab = createBottomTabNavigator<TabParamList>();
+const LazyPanchangStackNavigator = lazy(() => import('./PanchangStackNavigator'));
 
 type TabIconProps = {
   color: string;
@@ -83,7 +83,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="PanchangTab"
-        component={PanchangStackNavigator}
+        component={PanchangTabRoot}
         options={{
           tabBarLabel: 'Panchang',
           tabBarIcon: ({ color, size }) => (
@@ -112,6 +112,35 @@ export default function TabNavigator() {
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+/**
+ * Keep Panchang, Kundali, and Rashifal screen modules out of Home's startup
+ * evaluation. The bottom tab navigator is lazy by default, but a static import
+ * would still evaluate the entire Panchang stack before Home can become
+ * interactive. Suspense gives the first cross-tab navigation an immediate,
+ * lightweight surface while that stack loads.
+ */
+function PanchangTabRoot() {
+  const { colors } = useTheme();
+  return (
+    <Suspense
+      fallback={
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colors.parchment,
+          }}
+        >
+          <ActivityIndicator color={colors.saffron} />
+        </View>
+      }
+    >
+      <LazyPanchangStackNavigator />
+    </Suspense>
   );
 }
 

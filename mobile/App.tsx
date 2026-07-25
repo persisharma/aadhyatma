@@ -35,9 +35,9 @@ import {
   Inter_600SemiBold,
 } from '@expo-google-fonts/inter';
 import { ThemeProvider } from '@/theme/ThemeContext';
-import { FontScaleProvider } from '@/contexts/FontScaleContext';
+import { FontScaleProvider, useFontScale } from '@/contexts/FontScaleContext';
 import { lightColors } from '@/theme/colors';
-import { GitaLanguageProvider } from '@/data/gita/language';
+import { GitaLanguageProvider, useGitaLanguage } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { VratFollowProvider } from '@/contexts/VratFollowContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
@@ -107,18 +107,6 @@ export default function App() {
   const fontsReady =
     notoLoaded && cormorantLoaded && gujaratiLoaded && kannadaLoaded && interLoaded;
 
-  const onLayout = useCallback(async () => {
-    if (fontsReady) {
-      await SplashScreen.hideAsync().catch(() => undefined);
-    }
-  }, [fontsReady]);
-
-  useEffect(() => {
-    if (fontsReady) {
-      SplashScreen.hideAsync().catch(() => undefined);
-    }
-  }, [fontsReady]);
-
   // Wire notification taps to deep-link navigation. Handles both:
   //  (a) Cold start — app was killed; iOS launches us with the tap response,
   //      pulled via `getLastNotificationResponseAsync()`.
@@ -174,7 +162,7 @@ export default function App() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayout}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <FontScaleProvider>
         <ThemeProvider>
@@ -194,6 +182,7 @@ export default function App() {
                         <PanchangLocationProvider>
                         <TourProvider>
                         <ShareProvider>
+                          <AppReadyGate>
                           <View style={{ flex: 1 }}>
                             <NavigationContainer ref={navigationRef}>
                               <StatusBar style="dark" />
@@ -213,6 +202,7 @@ export default function App() {
                                 ring the live UI and stay visible to a11y/Maestro. */}
                             <FeatureTour />
                           </View>
+                          </AppReadyGate>
                         </ShareProvider>
                         </TourProvider>
                         </PanchangLocationProvider>
@@ -233,5 +223,34 @@ export default function App() {
         </FontScaleProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
+  );
+}
+
+/**
+ * Font-size and language preferences both change Home geometry. Keep the native
+ * splash in place until those two layout-critical reads finish, so Home's first
+ * visible frame is already its final frame and an immediate press cannot be
+ * cancelled by preference hydration moving the category grid.
+ */
+function AppReadyGate({ children }: { children: React.ReactNode }) {
+  const { isLoading: fontScaleLoading } = useFontScale();
+  const { isLoading: languageLoading } = useGitaLanguage();
+  const ready = !fontScaleLoading && !languageLoading;
+  const hideSplash = useCallback(() => {
+    if (ready) SplashScreen.hideAsync().catch(() => undefined);
+  }, [ready]);
+
+  useEffect(() => {
+    hideSplash();
+  }, [hideSplash]);
+
+  if (!ready) {
+    return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
+  }
+
+  return (
+    <View style={{ flex: 1 }} onLayout={hideSplash}>
+      {children}
+    </View>
   );
 }

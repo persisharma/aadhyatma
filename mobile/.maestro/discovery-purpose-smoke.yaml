@@ -35,6 +35,7 @@ appId: host.exp.Exponent
       text: "By Purpose. Tap to open."
     direction: DOWN
     timeout: 10000
+    centerElement: true
 - tapOn: "By Purpose. Tap to open."
 - waitForAnimationToEnd
 

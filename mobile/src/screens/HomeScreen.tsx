@@ -48,6 +48,53 @@ export default function HomeScreen({ navigation }: Props) {
   // pattern as RoutineBanner / PanchangScreen.
   const rootNav = useNavigation<any>();
 
+  // iOS can cancel a child Pressable's `onPress` when the launcher lives inside
+  // this vertical ScrollView, even when the finger never actually drags. Keep a
+  // one-tick fallback for that exact press lifecycle; a real scroll marks the
+  // gesture as a drag and suppresses navigation.
+  type PendingTilePress = {
+    action: () => void;
+    didDrag: boolean;
+    handled: boolean;
+    fallback?: ReturnType<typeof setTimeout>;
+  };
+  const pendingTilePress = React.useRef<PendingTilePress | null>(null);
+  const beginTilePress = React.useCallback((action: () => void) => {
+    if (pendingTilePress.current?.fallback !== undefined) {
+      clearTimeout(pendingTilePress.current.fallback);
+    }
+    pendingTilePress.current = { action, didDrag: false, handled: false };
+  }, []);
+  const markTileDrag = React.useCallback(() => {
+    if (pendingTilePress.current) pendingTilePress.current.didDrag = true;
+  }, []);
+  const finishTilePress = React.useCallback(() => {
+    const pending = pendingTilePress.current;
+    if (!pending || pending.didDrag || pending.handled) return;
+    pending.fallback = setTimeout(() => {
+      if (pendingTilePress.current !== pending || pending.didDrag || pending.handled) return;
+      pending.handled = true;
+      pendingTilePress.current = null;
+      pending.action();
+    }, 0);
+  }, []);
+  const activateTile = React.useCallback((fallbackAction: () => void) => {
+    const pending = pendingTilePress.current;
+    if (pending?.fallback !== undefined) clearTimeout(pending.fallback);
+    const action = pending?.action ?? fallbackAction;
+    if (pending) pending.handled = true;
+    pendingTilePress.current = null;
+    action();
+  }, []);
+  React.useEffect(
+    () => () => {
+      if (pendingTilePress.current?.fallback !== undefined) {
+        clearTimeout(pendingTilePress.current.fallback);
+      }
+    },
+    []
+  );
+
   type TileItem = {
     key: string;
     nameHi: string;
@@ -220,6 +267,7 @@ export default function HomeScreen({ navigation }: Props) {
             },
           ]}
           showsVerticalScrollIndicator={false}
+          onScrollBeginDrag={markTileDrag}
         >
           <View style={styles.hero}>
             <HomeWordmark />
@@ -272,7 +320,9 @@ export default function HomeScreen({ navigation }: Props) {
                   displayNameEn={tile.shortNameEn}
                   status={tile.status}
                   icon={tile.icon}
-                  onPress={tile.onPress}
+                  onPress={() => activateTile(tile.onPress)}
+                  onPressIn={() => beginTilePress(tile.onPress)}
+                  onPressOut={finishTilePress}
                   hasNew={tile.hasNew}
                   variant="launcher"
                 />

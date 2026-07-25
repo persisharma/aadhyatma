@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { InteractionManager } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { computePanchangForDate } from './engine';
 import {
@@ -173,13 +174,17 @@ export function useObservancesForDate(
       lastSelectionKey.current = selectionKey;
       setObservances([]);
     }
-    const handle = setTimeout(() => {
-      const result = getObservancesForDate(selected, calendarSystem, location);
-      if (!cancelled) setObservances(result);
-    }, 0);
+    let handle: ReturnType<typeof setTimeout> | undefined;
+    const interaction = InteractionManager.runAfterInteractions(() => {
+      handle = setTimeout(() => {
+        const result = getObservancesForDate(selected, calendarSystem, location);
+        if (!cancelled) setObservances(result);
+      }, 0);
+    });
     return () => {
       cancelled = true;
-      clearTimeout(handle);
+      interaction.cancel();
+      if (handle !== undefined) clearTimeout(handle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectionKey, storeVersion]);

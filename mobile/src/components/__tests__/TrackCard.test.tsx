@@ -35,7 +35,7 @@ const withoutDeity: AudioTrack = {
 function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
-    tree = TestRenderer.create(<GitaLanguageProvider>{node}</GitaLanguageProvider>);
+    tree = TestRenderer.create(<GitaLanguageProvider initialLang="hi">{node}</GitaLanguageProvider>);
   });
   return tree;
 }

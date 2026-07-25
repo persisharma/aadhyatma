@@ -57,7 +57,7 @@ function render(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider>
+      <GitaLanguageProvider initialLang="hi">
         <NowPlayingScreen />
       </GitaLanguageProvider>
     );

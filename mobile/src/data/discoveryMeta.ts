@@ -230,13 +230,14 @@ export function getTodayRecommendationsForDate(date: Date): LibraryEntry[] {
     if (entry.deities.includes(weekdayDeity) && entry.category !== 'theerth') add(entry);
   }
 
-  const festivalIds = new Set(getObservancesForDate(date).map((item) => item.rule.id));
+  const observances = getObservancesForDate(date);
+  const festivalIds = new Set(observances.map((item) => item.rule.id));
   for (const [textId, meta] of Object.entries(discoveryMeta)) {
     if (meta.bestFestivals?.some((festivalId) => festivalIds.has(festivalId))) {
       add(activeById.get(textId));
     }
   }
-  for (const observance of getObservancesForDate(date)) {
+  for (const observance of observances) {
     if (observance.rule.linkSectionId) add(activeById.get(observance.rule.linkSectionId));
   }
 
