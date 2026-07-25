@@ -31,8 +31,12 @@ appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
-# ── Open More, select Gujarati on the Language card ──
+# ── Open More → Language picker sheet, select Gujarati ──
+# Language selection moved from inline radios into LanguagePickerSheet; open it
+# via the "Language, <current>" row first (same pattern as home-today).
 - tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Gujarati"
@@ -67,12 +71,14 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "હનુમાન ચાલીસા"
 
 # ── Switch to Kannada via the in-reader toggle; the title re-renders ──
-- tapOn: "Kannada"
+- tapOn:
+    id: "lang-toggle-kn"
 - waitForAnimationToEnd
 - assertVisible: "ಹನುಮಾನ ಚಾಲೀಸಾ"
 
 # ── Restore Hindi so the next flow starts from the suite baseline ──
-- tapOn: "Hindi"
+- tapOn:
+    id: "lang-toggle-hi"
 - waitForAnimationToEnd
 - assertVisible: "हनुमान चालीसा"
 

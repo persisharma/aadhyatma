@@ -44,7 +44,10 @@ appId: com.prashantsharma.vedansh
     timeout: 120000
 - tapOn: ".*Pilgrimage.*Tap to open.*"
 - waitForAnimationToEnd
-- tapOn: "English"
+# Force English via the listing's LanguageToggle (testID; the segment isn't
+# reliably tappable by the text "English").
+- tapOn:
+    id: "lang-toggle-en"
 - waitForAnimationToEnd
 - assertVisible: "By Category"
 

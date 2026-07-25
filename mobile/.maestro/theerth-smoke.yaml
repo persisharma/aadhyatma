@@ -47,8 +47,10 @@ appId: com.prashantsharma.vedansh
 - tapOn: ".*Pilgrimage.*Tap to open.*"
 - waitForAnimationToEnd
 
-# Listing: force English, then confirm the By State / By Category toggle is here.
-- tapOn: "English"
+# Listing: force English via the LanguageToggle (tap its testID — the segment
+# isn't reliably tappable by the text "English"), then confirm the toggle is here.
+- tapOn:
+    id: "lang-toggle-en"
 - waitForAnimationToEnd
 - assertVisible: "By State"
 - assertVisible: "By Category"
