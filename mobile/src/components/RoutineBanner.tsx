@@ -46,6 +46,7 @@ export default function RoutineBanner({
     variant === 'inline'
       ? {
           borderRadius: radii.lg,
+          minHeight: 57,
           paddingHorizontal: spacing.lg,
           paddingVertical: spacing.sm,
           backgroundColor: colors.parchmentSoft,

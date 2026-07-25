@@ -11,6 +11,8 @@ type Props = {
   status: 'active' | 'coming';
   icon?: React.ReactNode;
   onPress?: () => void;
+  onPressIn?: () => void;
+  onPressOut?: () => void;
   /** When true (and active), shows a green "NEW" badge top-right. */
   hasNew?: boolean;
   /**
@@ -30,6 +32,8 @@ function CategoryCard({
   status,
   icon,
   onPress,
+  onPressIn,
+  onPressOut,
   hasNew,
   variant = 'card',
   displayNameEn,
@@ -114,6 +118,8 @@ function CategoryCard({
     return (
       <Pressable
         onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
         style={({ pressed }) => [styles.launcher, pressed && styles.cardPressed]}
         accessibilityRole="button"
         accessibilityLabel={`${nameEn}.${hasNew ? ' New.' : ''} Tap to open.`}

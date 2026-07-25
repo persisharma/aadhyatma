@@ -63,7 +63,7 @@ function render(): TestRenderer.ReactTestRenderer {
   act(() => {
     tree = TestRenderer.create(
       <SafeAreaProvider initialMetrics={initialMetrics}>
-        <GitaLanguageProvider>
+        <GitaLanguageProvider initialLang="hi">
           <MiniPlayer />
         </GitaLanguageProvider>
       </SafeAreaProvider>

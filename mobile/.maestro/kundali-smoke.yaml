@@ -62,6 +62,7 @@ appId: com.prashantsharma.vedansh
       text: "Kundali. New. Tap to open."
     direction: DOWN
     timeout: 15000
+    centerElement: true
 - tapOn: "Kundali. New. Tap to open."
 - waitForAnimationToEnd
 

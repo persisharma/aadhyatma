@@ -2,7 +2,7 @@
 title: Overview
 type: overview
 sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, RULEBOOK.md, design.md, scripts/, push.sh]
-last_verified_date: 2026-07-06
+last_verified_date: 2026-07-25
 confidence: medium
 status: current
 ---
@@ -35,12 +35,18 @@ context providers (Theme, GitaLanguage, Bookmarks, UserActivity, NewContent, Rea
 JapamCounter, Routine, RoutineSheet, NotificationPreferences, Share) around a
 `NavigationContainer` → `RootNavigator` → a **5-tab bottom navigator**:
 
+The native splash stays visible until fonts plus the persisted font-size and reading-language
+preferences have hydrated. Those preferences alter Home geometry, so this gate makes the first
+visible Home frame stable instead of moving the launcher grid immediately after landing.
+
 1. **Home** → `HomeStackNavigator` (native-stack, 30+ reader screens: Gita, chalisas,
    Sundarkand, stotrams, sanskar, japam, search — plus 5 Daily-Routine screens:
    RoutineToday/List/Create/Detail/AddItems). HomeScreen shows the ॐ वेदांश़ ॐ `HomeWordmark`
-   (replaced `Crest`, #110) and a docked `RoutineBanner` above the tab bar.
+   (replaced `Crest`, #110), the Panchang-backed Today strip, and an inline `RoutineBanner`.
 2. **DailyBhakti** → `DailyBhaktiScreen`.
-3. **Panchang** → `PanchangStackNavigator` (PanchangScreen, observances, katha library, vrat).
+3. **Panchang** → lazy `PanchangStackNavigator` (PanchangScreen, observances, katha library,
+   vrat, Kundali, Rashifal). Its modules are evaluated only when the tab/launcher first opens,
+   keeping Home startup independent of the heavier calendar/Jyotish graph.
 4. **Audio ("Bhajan")** → `AudioStackNavigator` (audio library, Now Playing).
 5. **More** → `MoreStackNavigator` (MoreHome, Wishlist, Profile, Reminders).
 

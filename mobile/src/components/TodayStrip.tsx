@@ -244,49 +244,44 @@ export default function TodayStrip() {
       >
         {headline}
       </Text>
-      {chips.length > 0 && (
-        // ONE fixed-height chip row on every device: no wrapping into a tall
-        // stack on narrow screens — overflow scrolls horizontally instead
-        // (drags scroll; plain taps still bubble to the card Pressable, since
-        // a ScrollView only claims the responder on move). Full-bleed to the
-        // card edge so a clipped chip peeks; overflow also auto-drifts (above).
-        <ScrollView
-          ref={scrollRef}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.chipScroll}
-          contentContainerStyle={styles.chipRow}
-          onLayout={(e) => {
-            autoRef.current!.layoutW = e.nativeEvent.layout.width;
-            replanAutoScroll();
-          }}
-          onContentSizeChange={(w) => {
-            autoRef.current!.contentW = w;
-            replanAutoScroll();
-          }}
-          onScrollBeginDrag={onChipRowDrag}
-        >
-          {chips.map((chip) => (
-            <View
-              key={chip.key}
-              style={[styles.chip, { backgroundColor: chip.bg, borderRadius: radii.pill }]}
-            >
-              <Text numberOfLines={1} style={{ maxWidth: 200 }}>
-                <Text style={[chipText, { color: chip.fg }]}>
-                  {contentByLang(lang, chip.labelHi, chip.labelEn)}
-                </Text>
-                {chip.range != null && (
-                  // Time ranges never render in the thin italic face (design.md §3).
-                  <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 11, color: chip.fg }}>
-                    {'  '}
-                    {chip.range}
-                  </Text>
-                )}
+      {/* Reserve this row even before the deferred Panchang solve completes.
+          Otherwise its later insertion moves the category grid during a press. */}
+      <ScrollView
+        ref={scrollRef}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.chipScroll}
+        contentContainerStyle={styles.chipRow}
+        onLayout={(e) => {
+          autoRef.current!.layoutW = e.nativeEvent.layout.width;
+          replanAutoScroll();
+        }}
+        onContentSizeChange={(w) => {
+          autoRef.current!.contentW = w;
+          replanAutoScroll();
+        }}
+        onScrollBeginDrag={onChipRowDrag}
+      >
+        {chips.map((chip) => (
+          <View
+            key={chip.key}
+            style={[styles.chip, { backgroundColor: chip.bg, borderRadius: radii.pill }]}
+          >
+            <Text numberOfLines={1} style={{ maxWidth: 200 }}>
+              <Text style={[chipText, { color: chip.fg }]}>
+                {contentByLang(lang, chip.labelHi, chip.labelEn)}
               </Text>
-            </View>
-          ))}
-        </ScrollView>
-      )}
+              {chip.range != null && (
+                // Time ranges never render in the thin italic face (design.md §3).
+                <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 11, color: chip.fg }}>
+                  {'  '}
+                  {chip.range}
+                </Text>
+              )}
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
     </Pressable>
   );
 }
@@ -308,6 +303,7 @@ const styles = StyleSheet.create({
     // edge; the row re-pads its content to align the first chip with the text.
     marginTop: 9,
     marginHorizontal: -14,
+    height: 24,
   },
   chipRow: {
     flexDirection: 'row',

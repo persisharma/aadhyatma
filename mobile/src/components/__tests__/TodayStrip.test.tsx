@@ -88,9 +88,13 @@ beforeEach(() => {
 
 describe('TodayStrip', () => {
   it('renders the eyebrow and a placeholder headline before the solve lands', () => {
-    const text = textOf(render());
+    const tree = render();
+    const text = textOf(tree);
     expect(text).toContain('आज का पंचांग');
     expect(text).toContain('—');
+    expect(tree.root.findByType(ScrollView).props.style).toEqual(
+      expect.objectContaining({ height: 24 })
+    );
   });
 
   it('renders vara + paksha tithi once panchang resolves', () => {

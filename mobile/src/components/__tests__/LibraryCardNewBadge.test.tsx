@@ -41,7 +41,7 @@ async function renderWithProvider(entry: LibraryEntry): Promise<TestRenderer.Rea
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider>
+      <GitaLanguageProvider initialLang="hi">
         <NewContentProvider>
           <LibraryCard entry={entry} onPress={() => undefined} />
         </NewContentProvider>

@@ -46,6 +46,8 @@ type GitaLanguageContextValue = {
   lang: Lang;
   /** User's chosen regional language (hi/gu/kn). Used by the 2-segment reader toggle. */
   regionalLang: RegionalLang;
+  /** True until the persisted app-wide language has been read. */
+  isLoading: boolean;
   setLang: (next: Lang) => void;
 };
 
@@ -63,13 +65,20 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 
-export function GitaLanguageProvider({ initialLang = 'hi', children }: ProviderProps) {
-  const [lang, setLangState] = useState<Lang>(initialLang);
+export function GitaLanguageProvider({ initialLang, children }: ProviderProps) {
+  const resolvedInitialLang = initialLang ?? 'hi';
+  const [lang, setLangState] = useState<Lang>(resolvedInitialLang);
   const [regionalLang, setRegionalLangState] = useState<RegionalLang>(
-    initialLang !== 'en' ? initialLang : 'hi'
+    resolvedInitialLang !== 'en' ? resolvedInitialLang : 'hi'
   );
+  const [isLoading, setIsLoading] = useState(initialLang == null);
 
   useEffect(() => {
+    // Tests, previews, and other explicit callers own their initial language;
+    // do not let device storage override that deterministic input.
+    if (initialLang != null) return undefined;
+
+    let cancelled = false;
     Promise.all([
       AsyncStorage.getItem(LANG_STORAGE_KEY),
       AsyncStorage.getItem(REGIONAL_LANG_STORAGE_KEY),
@@ -78,8 +87,14 @@ export function GitaLanguageProvider({ initialLang = 'hi', children }: ProviderP
         if (isLang(storedLang)) setLangState(storedLang);
         if (isRegionalLang(storedRegional)) setRegionalLangState(storedRegional);
       })
-      .catch(() => undefined);
-  }, []);
+      .catch(() => undefined)
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [initialLang]);
 
   const setLang = (next: Lang) => {
     setLangState(next);
@@ -91,8 +106,8 @@ export function GitaLanguageProvider({ initialLang = 'hi', children }: ProviderP
   };
 
   const value = useMemo<GitaLanguageContextValue>(
-    () => ({ lang, regionalLang, setLang }),
-    [lang, regionalLang]
+    () => ({ lang, regionalLang, isLoading, setLang }),
+    [lang, regionalLang, isLoading]
   );
   return <GitaLanguageContext.Provider value={value}>{children}</GitaLanguageContext.Provider>;
 }

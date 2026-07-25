@@ -8,6 +8,7 @@
  * the tab on a real device, so they must never run synchronously during render.
  */
 import { useEffect, useMemo, useState } from 'react';
+import { InteractionManager } from 'react-native';
 import { computePanchangForDate } from '@/panchang/engine';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useMinuteTick } from '@/utils/useMinuteTick';
@@ -109,38 +110,42 @@ export function useMuhurat(
 
     let cancelled = false;
     setSolved(null);
-    const handle = setTimeout(() => {
-      try {
-        const d = new Date(dateMs);
-        const today = computePanchangForDate(d, { calendarSystem, location });
-        const tomorrow = computePanchangForDate(new Date(dateMs + DAY_MS), { calendarSystem, location });
-        // Guard against degenerate/inverted spans (bad input / polar latitudes).
-        if (today.sunset <= today.sunrise || tomorrow.sunrise <= today.sunset) return;
+    let handle: ReturnType<typeof setTimeout> | undefined;
+    const interaction = InteractionManager.runAfterInteractions(() => {
+      handle = setTimeout(() => {
+        try {
+          const d = new Date(dateMs);
+          const today = computePanchangForDate(d, { calendarSystem, location });
+          const tomorrow = computePanchangForDate(new Date(dateMs + DAY_MS), { calendarSystem, location });
+          // Guard against degenerate/inverted spans (bad input / polar latitudes).
+          if (today.sunset <= today.sunrise || tomorrow.sunrise <= today.sunset) return;
 
-        const md = computeMuhuratDay(today.sunrise, today.sunset, tomorrow.sunrise, d.getDay());
-        const nowPeriods = [...md.dayChoghadiya, ...md.nightChoghadiya];
+          const md = computeMuhuratDay(today.sunrise, today.sunset, tomorrow.sunrise, d.getDay());
+          const nowPeriods = [...md.dayChoghadiya, ...md.nightChoghadiya];
 
-        // Pre-dawn correction: before today's sunrise, the active choghadiya
-        // belongs to yesterday's night window. Only relevant when `date` is today.
-        if (isToday) {
-          const yd = new Date(dateMs - DAY_MS);
-          const yesterday = computePanchangForDate(yd, { calendarSystem, location });
-          if (yesterday.sunset > yesterday.sunrise && today.sunrise > yesterday.sunset) {
-            const prev = computeMuhuratDay(yesterday.sunrise, yesterday.sunset, today.sunrise, yd.getDay());
-            nowPeriods.unshift(...prev.nightChoghadiya);
+          // Pre-dawn correction: before today's sunrise, the active choghadiya
+          // belongs to yesterday's night window. Only relevant when `date` is today.
+          if (isToday) {
+            const yd = new Date(dateMs - DAY_MS);
+            const yesterday = computePanchangForDate(yd, { calendarSystem, location });
+            if (yesterday.sunset > yesterday.sunrise && today.sunrise > yesterday.sunset) {
+              const prev = computeMuhuratDay(yesterday.sunrise, yesterday.sunset, today.sunrise, yd.getDay());
+              nowPeriods.unshift(...prev.nightChoghadiya);
+            }
           }
-        }
 
-        const value: Solved = { md, panchang: today, nowPeriods };
-        writeSolveCache(cacheKey, value);
-        if (!cancelled) setSolved(value);
-      } catch {
-        /* invalid input — leave null so consumers show a skeleton */
-      }
-    }, 0);
+          const value: Solved = { md, panchang: today, nowPeriods };
+          writeSolveCache(cacheKey, value);
+          if (!cancelled) setSolved(value);
+        } catch {
+          /* invalid input — leave null so consumers show a skeleton */
+        }
+      }, 0);
+    });
     return () => {
       cancelled = true;
-      clearTimeout(handle);
+      interaction.cancel();
+      if (handle !== undefined) clearTimeout(handle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cacheKey]);
