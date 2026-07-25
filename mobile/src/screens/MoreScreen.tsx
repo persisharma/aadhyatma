@@ -3,6 +3,7 @@ import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, 
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { radii } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
 import { useBookmarks } from '@/contexts/BookmarksContext';
@@ -429,7 +430,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   list: {
-    borderRadius: 20,
+    borderRadius: radii.lg,
     borderWidth: 1,
     overflow: 'hidden',
     ...elevation.subtle,
@@ -444,7 +445,7 @@ const styles = StyleSheet.create({
   rowIcon: {
     width: 38,
     height: 38,
-    borderRadius: 11,
+    borderRadius: radii.sm,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -193,7 +193,7 @@ function CategoryCard({
         style={({ pressed }) => [
           styles.card,
           {
-            borderRadius: 16,
+            borderRadius: radii.lg,
             borderColor: colors.cardActiveBorder,
             borderWidth: 1,
             ...elevation.lifted,
@@ -207,7 +207,7 @@ function CategoryCard({
           colors={[colors.cardActiveFrom, colors.cardActiveTo]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={[styles.cardBg, { borderRadius: 16 }]}
+          style={[styles.cardBg, { borderRadius: radii.lg }]}
         />
         {content}
         {hasNew && (
@@ -229,7 +229,7 @@ function CategoryCard({
       style={[
         styles.card,
         {
-          borderRadius: 16,
+          borderRadius: radii.lg,
           backgroundColor: colors.cardSurface,
           borderColor: colors.divider,
           borderWidth: 1,

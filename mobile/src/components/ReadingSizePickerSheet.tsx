@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { radii } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
@@ -140,14 +141,14 @@ const styles = StyleSheet.create({
     gap: 6,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 12,
+    borderRadius: radii.md,
     borderWidth: 1,
   },
   check: { fontSize: 13 },
   pillLabel: { fontFamily: fontFamilies.interSemiBold, fontSize: 14 },
   done: {
     marginTop: 20,
-    borderRadius: 12,
+    borderRadius: radii.md,
     paddingVertical: 13,
     minHeight: 44,
     alignItems: 'center',

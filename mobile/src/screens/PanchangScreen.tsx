@@ -12,6 +12,7 @@ import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
+import TextField from '@/components/TextField';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
@@ -1563,12 +1564,10 @@ function CatalogLanding({
 
   return (
     <View style={{ marginTop: 12 }}>
-      <TextInput
+      <TextField
         value={query}
         onChangeText={onChangeQuery}
         placeholder={contentByLang(lang, 'व्रत, पर्व, उपवास, कथा खोजें…', 'Search vrat, festival, upvas, katha…')}
-        placeholderTextColor={colors.inkMuted}
-        style={[styles.catalogSearch, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, color: colors.ink }]}
       />
 
       {trimmed ? (
@@ -1790,7 +1789,6 @@ const styles = StyleSheet.create({
   jyotishPrimaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   jyotishSecondary: { minHeight: 42, flex: 1, paddingHorizontal: 15, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   jyotishSecondaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
-  catalogSearch: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: fontFamilies.latin, fontSize: 15 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
   upCard: { width: 150, borderWidth: 1, padding: 12 },
   upCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },

@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import TextField from '@/components/TextField';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -15,7 +16,7 @@ import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 type Props = NativeStackScreenProps<PanchangStackParamList, 'KathaLibrary'>;
 
 export default function KathaLibraryScreen({ navigation }: Props) {
-  const { colors, typography, spacing, radii } = useTheme();
+  const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
   const [query, setQuery] = useState('');
@@ -64,12 +65,11 @@ export default function KathaLibraryScreen({ navigation }: Props) {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          <TextInput
+          <TextField
             value={query}
             onChangeText={setQuery}
             placeholder={contentByLang(lang, 'कथाएँ खोजें…', 'Search stories…')}
-            placeholderTextColor={colors.inkMuted}
-            style={[styles.search, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, color: colors.ink }]}
+            style={styles.search}
           />
 
           {filtered.map((katha) => (
@@ -111,6 +111,6 @@ const styles = StyleSheet.create({
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 },
   backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 8, paddingBottom: 32 },
-  search: { width: '100%', height: 44, borderWidth: 1, paddingHorizontal: 14, fontFamily: fontFamilies.latin, fontSize: 15, marginBottom: 8 },
+  search: { marginBottom: 8 },
   row: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
 });

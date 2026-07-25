@@ -7,7 +7,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -16,6 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import KundaliOverview from '@/components/KundaliOverview';
+import TextField from '@/components/TextField';
 import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
@@ -413,16 +413,6 @@ function BirthInput({
   elevation: any;
 }) {
   const city = getCityById(draft.cityId);
-  const inputStyle = [
-    styles.input,
-    {
-      color: colors.ink,
-      backgroundColor: colors.parchmentSoft,
-      borderColor: colors.divider,
-      borderRadius: radii.md,
-    },
-  ];
-
   return (
     <>
       <View
@@ -463,45 +453,44 @@ function BirthInput({
       </View>
 
       <FieldLabel hi="नाम (वैकल्पिक)" en="Name (optional)" lang={lang} colors={colors} typography={typography} />
-      <TextInput
+      <TextField
+        variant="form"
         testID="kundali-name-input"
         accessibilityLabel="Birth name"
         value={draft.name ?? ''}
         onChangeText={(name) => onChange({ ...draft, name })}
         placeholder="Your name"
-        placeholderTextColor={colors.inkMuted}
         autoCapitalize="words"
-        style={inputStyle}
       />
 
       <View style={styles.inputRow}>
         <View style={{ flex: 1 }}>
           <FieldLabel hi="जन्म तिथि" en="Birth date" lang={lang} colors={colors} typography={typography} />
-          <TextInput
+          <TextField
+            variant="form"
             testID="kundali-date-input"
             accessibilityLabel="Birth date YYYY-MM-DD"
             value={draft.date}
             onChangeText={(date) => onChange({ ...draft, date })}
             placeholder="YYYY-MM-DD"
-            placeholderTextColor={colors.inkMuted}
             keyboardType="numbers-and-punctuation"
             maxLength={10}
-            style={[inputStyle, errors.date && { borderColor: colors.avoid }]}
+            style={errors.date ? { borderColor: colors.avoid } : undefined}
           />
           {errors.date && <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.date}</Text>}
         </View>
         <View style={{ flex: 0.72 }}>
           <FieldLabel hi="समय" en="Time" lang={lang} colors={colors} typography={typography} />
-          <TextInput
+          <TextField
+            variant="form"
             testID="kundali-time-input"
             accessibilityLabel="Birth time HH:mm"
             value={draft.time}
             onChangeText={(time) => onChange({ ...draft, time })}
             placeholder="HH:mm"
-            placeholderTextColor={colors.inkMuted}
             keyboardType="numbers-and-punctuation"
             maxLength={5}
-            style={[inputStyle, errors.time && { borderColor: colors.avoid }]}
+            style={errors.time ? { borderColor: colors.avoid } : undefined}
           />
           {errors.time && <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.time}</Text>}
         </View>
@@ -1229,23 +1218,14 @@ function CityPicker({
               <Text style={{ color: colors.saffronDeep, fontSize: 24 }}>×</Text>
             </Pressable>
           </View>
-          <TextInput
+          <TextField
+            variant="form"
             testID="kundali-city-search"
             accessibilityLabel="Search birth cities"
             value={query}
             onChangeText={setQuery}
             placeholder="Search Indian cities…"
-            placeholderTextColor={colors.inkMuted}
-            style={[
-              styles.modalSearch,
-              {
-                color: colors.ink,
-                borderColor: colors.divider,
-                backgroundColor: colors.parchmentSoft,
-                borderRadius: radii.md,
-                marginHorizontal: spacing.xxl,
-              },
-            ]}
+            style={[styles.modalSearch, { marginHorizontal: spacing.xxl }]}
           />
           <ScrollView keyboardShouldPersistTaps="handled">
             {filtered.map((city) => {
@@ -1303,7 +1283,6 @@ const styles = StyleSheet.create({
   actionText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   heroCard: { borderWidth: 1, padding: 18 },
   inputRow: { flexDirection: 'row', gap: 12 },
-  input: { height: 48, borderWidth: 1, paddingHorizontal: 13, fontFamily: fontFamilies.inter, fontSize: 14 },
   error: { fontFamily: fontFamilies.inter, fontSize: 10, marginTop: 4 },
   saveError: { fontFamily: fontFamilies.inter, fontSize: 10, lineHeight: 15, marginTop: 8, textAlign: 'center' },
   cityButton: { minHeight: 56, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
@@ -1349,6 +1328,6 @@ const styles = StyleSheet.create({
   modalBackdrop: { flex: 1, justifyContent: 'flex-end' },
   modalSheet: { height: '78%', overflow: 'hidden' },
   modalHeader: { minHeight: 58, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: StyleSheet.hairlineWidth },
-  modalSearch: { height: 46, borderWidth: 1, paddingHorizontal: 13, marginVertical: 12, fontFamily: fontFamilies.inter, fontSize: 14 },
+  modalSearch: { marginVertical: 12 },
   cityRow: { minHeight: 58, borderBottomWidth: StyleSheet.hairlineWidth, flexDirection: 'row', alignItems: 'center' },
 });

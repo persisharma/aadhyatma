@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Switch, Text, View } from 'react-native';
+import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -209,7 +210,7 @@ export default function VratReminderSheet({
 
 const styles = StyleSheet.create({
   overlay: { justifyContent: 'flex-end' },
-  sheet: { borderTopWidth: 1, paddingHorizontal: 22, paddingTop: 10, paddingBottom: 34 },
+  sheet: { borderTopWidth: 1, paddingHorizontal: spacing.readingGutter, paddingTop: 10, paddingBottom: 34 },
   handle: { alignSelf: 'center', width: 40, height: 5, borderRadius: 2.5, marginBottom: 12 },
   optRow: { paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth },
   optRowInline: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth },

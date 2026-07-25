@@ -21,6 +21,7 @@ import {
   RASHI_NAMES_WESTERN,
 } from '@/panchang/kundali';
 import { useKundali } from '@/panchang/useKundali';
+import { radii } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -579,9 +580,10 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    // 44 to match every other back control (design.md §12).
+    width: 44,
+    height: 44,
+    borderRadius: radii.xl,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
