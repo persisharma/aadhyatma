@@ -6,6 +6,18 @@ import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import { aartiIndexById } from '@/data/aarti';
 import { ashtakamIds as ashtakamIdList } from '@/data/ashtakam';
 import { stutiIds as stutiIdList } from '@/data/stuti';
+import { shivaStrotamChaptersManifest } from '@/data/shiva-strotam';
+import { durgaStotramChaptersManifest } from '@/data/durga-stotram';
+import { saraswatiStotramChaptersManifest } from '@/data/saraswati-stotram';
+import { ganeshStotramChaptersManifest } from '@/data/ganesh-stotram';
+import { vishnuSahasranamaChaptersManifest } from '@/data/vishnu-sahasranama';
+import { hanumanAshtakChaptersManifest } from '@/data/hanuman-ashtak';
+import { krishnaStotramChaptersManifest } from '@/data/krishna-stotram';
+import { bajrangBaanChaptersManifest } from '@/data/bajrang-baan';
+import { ramStutiChaptersManifest } from '@/data/ram-stuti';
+import { ramcharitmanasChaptersManifest } from '@/data/ramcharitmanas';
+import { sundarkandChaptersManifest } from '@/data/sundarkand';
+import { gitaChaptersManifest } from '@/data/gita';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
 import type { HomeStackParamList, PanchangStackParamList } from './types';
 
@@ -100,6 +112,34 @@ const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'bhagavad-gita': 'GitaChapters',
 };
 
+/**
+ * How many chapters (subsections) each chaptered text actually ships, read
+ * straight off the shipped manifests rather than mirrored by hand — a hardcoded
+ * count here would go stale the moment a text gains or loses a chapter (the
+ * same failure mode that once orphaned mahalakshmi-/surya-ashtakam above).
+ * `texts.ts` already imports these modules to compute its verse counts, so this
+ * adds no weight to the bundle.
+ *
+ * Used to skip the chapters index for single-chapter texts — see
+ * `buildEntryStartTarget`.
+ */
+const chapterCountBySourceId: Record<string, number> = {
+  'shiva-strotam': shivaStrotamChaptersManifest.length,
+  'durga-stotram': durgaStotramChaptersManifest.length,
+  'saraswati-stotram': saraswatiStotramChaptersManifest.length,
+  'ganesh-stotram': ganeshStotramChaptersManifest.length,
+  'vishnu-sahasranama': vishnuSahasranamaChaptersManifest.length,
+  'hanuman-ashtak': hanumanAshtakChaptersManifest.length,
+  'krishna-stotram': krishnaStotramChaptersManifest.length,
+  'bajrang-baan': bajrangBaanChaptersManifest.length,
+  'ram-stuti': ramStutiChaptersManifest.length,
+  // ram-aarti reuses the Ram Stuti content, so it inherits its chapter count.
+  'ram-aarti': ramStutiChaptersManifest.length,
+  'ramcharitmanas': ramcharitmanasChaptersManifest.length,
+  'sundarkand': sundarkandChaptersManifest.length,
+  'bhagavad-gita': gitaChaptersManifest.length,
+};
+
 const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'shiva-strotam': 'ShivaStrotamReader',
   'durga-stotram': 'DurgaStotramReader',
@@ -147,6 +187,16 @@ export function buildEntryStartTarget(entry: LibraryEntry): BookmarkTarget | nul
   }
   const chaptersRoute = stotramChaptersRouteById[entry.id];
   if (chaptersRoute) {
+    // A single-chapter text has nothing to choose from: its chapters index is a
+    // one-row list, so routing through it costs a second tap and shows no
+    // information the card didn't already carry. Open the reader directly.
+    // Every "open this text" surface starts here — the Home FOR TODAY row, the
+    // By-Purpose discovery lists, search, category/deity lists, Rashifal — so
+    // fixing it once fixes the two-tap open everywhere.
+    const readerRoute = stotramReaderRouteBySourceId[entry.id];
+    if (readerRoute && chapterCountBySourceId[entry.id] === 1) {
+      return { screen: readerRoute, params: { chapter: 1, initialIndex: 0 } };
+    }
     return { screen: chaptersRoute, params: {} };
   }
   return null;
@@ -227,9 +277,11 @@ export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean
   if (readerRoute && progress.chapter != null) {
     // Push the chapter (subsection) index under the reader so pressing back from
     // the reader lands on the subsection list rather than the section list — lets
-    // the user reach sibling chapters after resuming.
+    // the user reach sibling chapters after resuming. Skipped for single-chapter
+    // texts: there are no siblings to reach, so the push only strands the user on
+    // a one-row list when they press back (same rule as buildEntryStartTarget).
     const chaptersRoute = stotramChaptersRouteById[sourceId];
-    if (chaptersRoute) {
+    if (chaptersRoute && chapterCountBySourceId[sourceId] !== 1) {
       (nav.navigate as (name: keyof HomeStackParamList) => void)(chaptersRoute);
     }
     (nav.navigate as (name: keyof HomeStackParamList, params: object) => void)(readerRoute, {
