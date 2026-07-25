@@ -14,7 +14,7 @@ import android.os.Build
  *
  *   STOP  → dismiss the notification (it would auto-dismiss on tap, but the
  *           explicit Stop button is what the user expects on the lock-screen
- *           full-screen alert).
+ *           alarm notification).
  *   SNOOZE_5M → dismiss the current notification, then schedule a one-shot
  *           fire 5 minutes from now using a snooze-suffixed alarmId so it
  *           coexists with the standard 24h re-arm that JapamAlarmReceiver

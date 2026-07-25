@@ -5,7 +5,7 @@
  *   - AlarmManager.setAlarmClock scheduling (system-alarm-icon tier, Doze-
  *     exempt)
  *   - Native NotificationManager display with the bundled mantra WAV as the
- *     channel sound, and a full-screen content intent
+ *     channel sound and a high-importance lock-screen notification
  *   - 24h-later re-schedule on every fire (one-shot alarm rearms itself)
  *   - SharedPreferences persistence + boot receiver re-arm across reboot
  *
@@ -60,6 +60,7 @@ type AndroidNativeModuleShape = {
   cancelAlarm: (alarmId: string) => Promise<null>;
   cancelAll: () => Promise<null>;
   getCapability: () => Promise<{ supported: boolean; canScheduleExact: boolean }>;
+  requestExactAlarmPermission: () => Promise<boolean>;
 };
 
 /** Mirror of the Android-side shape; the iOS Expo module exposes the same
@@ -119,6 +120,22 @@ export async function getNativeAlarmCapability(): Promise<NativeAlarmCapability>
     return await mod.getCapability();
   } catch {
     return { supported: false, canScheduleExact: false };
+  }
+}
+
+/**
+ * Android-only: opens the system "Alarms & reminders" special-access screen
+ * when exact scheduling is not already available. Returns whether the native
+ * request was successfully handled; the caller must re-read capability after
+ * the app returns because Android does not return the user's choice directly.
+ */
+export async function requestAndroidExactAlarmPermission(): Promise<boolean> {
+  const mod = getAndroidModule();
+  if (!mod || typeof mod.requestExactAlarmPermission !== 'function') return false;
+  try {
+    return await mod.requestExactAlarmPermission();
+  } catch {
+    return false;
   }
 }
 

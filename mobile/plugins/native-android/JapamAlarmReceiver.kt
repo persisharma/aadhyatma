@@ -18,8 +18,9 @@ import androidx.core.app.NotificationCompat
 /**
  * Fired by AlarmManager.setAlarmClock at the scheduled minute. Responsible
  * for:
- *   - posting the alarm notification with the mantra sound + full-screen
- *     intent so the lock screen wakes;
+ *   - posting a high-importance lock-screen notification with the mantra
+ *     sound, without requesting the Play-restricted full-screen intent
+ *     permission;
  *   - attaching Stop / Snooze action buttons (handled by
  *     [JapamAlarmActionReceiver]);
  *   - re-arming the same alarm for its next repeat day (daily when no
@@ -141,7 +142,6 @@ class JapamAlarmReceiver : BroadcastReceiver() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setOngoing(false)
-            .setFullScreenIntent(contentPi, true)
             .addAction(0, "Stop", stopPi)
             .addAction(0, "Snooze 5m", snoozePi)
 

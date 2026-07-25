@@ -4,7 +4,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import androidx.core.content.edit
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
@@ -29,9 +31,9 @@ import org.json.JSONObject
  *     after a device reboot (PendingIntents do NOT survive reboot; the boot
  *     receiver replays them).
  *
- * Display of the alarm itself (full-screen UI, looping mantra audio, Stop/
- * Snooze actions) is handled by Notifee on the JS side, invoked from a
- * background task that the AlarmReceiver wakes via a HeadlessJS task.
+ * Display of the alarm itself (high-importance lock-screen notification,
+ * mantra sound, and Stop/Snooze actions) is handled by
+ * [JapamAlarmReceiver].
  */
 class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
     ReactContextBaseJavaModule(reactContext) {
@@ -286,6 +288,40 @@ class JapamAlarmModule(private val reactContext: ReactApplicationContext) :
             promise.resolve(result)
         } catch (t: Throwable) {
             promise.reject("E_CAPABILITY", t.message, t)
+        }
+    }
+
+    /**
+     * Opens Android's user-controlled "Alarms & reminders" special-access
+     * screen. Vedansh's Japam alarm is a secondary app feature, so it uses
+     * SCHEDULE_EXACT_ALARM (user granted) rather than the Play-restricted,
+     * auto-granted USE_EXACT_ALARM permission.
+     *
+     * The promise reports whether the settings screen was opened (or exact
+     * access was already available), not whether the user ultimately granted
+     * access. JS refreshes [getCapability] when the app returns to foreground.
+     */
+    @ReactMethod
+    fun requestExactAlarmPermission(promise: Promise) {
+        try {
+            val ctx = reactApplicationContext
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                promise.resolve(true)
+                return
+            }
+            val am = ctx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (am.canScheduleExactAlarms()) {
+                promise.resolve(true)
+                return
+            }
+            val intent = Intent(
+                Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,
+                Uri.parse("package:${ctx.packageName}")
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            ctx.startActivity(intent)
+            promise.resolve(true)
+        } catch (t: Throwable) {
+            promise.reject("E_EXACT_ALARM_PERMISSION", t.message, t)
         }
     }
 
