@@ -1,7 +1,7 @@
 ---
 title: Overview
 type: overview
-sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, RULEBOOK.md, design.md, scripts/, push.sh]
+sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
 last_verified_date: 2026-07-25
 confidence: medium
 status: current
@@ -63,7 +63,7 @@ Deep links and notification taps route through `navigationRef`, exported from
 | `mobile/src/contexts/` | App state | `BookmarksContext`, `JapamCounterContext`, `JapamAlarmsContext`, `ReadingProgressContext`, `UserActivityContext`, `NewContentContext`, `NotificationPreferencesContext`, `RoutineContext`, `RoutineSheetProvider` |
 | `mobile/src/data/` | Bundled content + registries | `texts.ts` (library index), `searchIndex.ts`, `deities.ts`, `categories.ts`, `gita/chapter-01..18.json`, `chalisa/`, `sundarkand/`, stotram dirs, `sourceIdMigration.ts`, `routine/` (types, units, vaar, useRoutineToday — see [[routine]]) |
 | `mobile/src/panchang/` | Hindu-calendar engine | `festivals.ts` + astronomy-engine; `muhurat.ts` (Choghadiya/Kaal/Abhijit engine — pure), `muhuratFormat.ts`, `useMuhurat.ts` (see [[panchang]]) |
-| `mobile/src/theme/` | Design tokens (light-only) | `ThemeContext.tsx`, `colors.ts`, `typography.ts`, `spacing.ts` |
+| `mobile/src/theme/` | Design tokens (light-only) | `ThemeContext.tsx`, `colors.ts`, `typography.ts`, `spacing.ts` (spacing + radii), `elevation.ts`, `fontScale.ts` |
 | `mobile/src/utils/` | Helpers | `shareVerse.tsx`, `semverCompare.ts`, `titleByLanguage.ts`, `useMinuteTick.ts` |
 
 ## Data Layer
@@ -117,6 +117,17 @@ ID changes. User language preference, routines (`@vedansh/routines`) and daily d
 - **Two test runners** — never add `src/data` tests to Jest; they run via `tsx --test` and Jest's `testMatch` excludes them.
 - **Romanization is by source language, not module** — Sanskrit = IAST; Awadhi/Hindi = pronunciation ASCII (design.md §3.1).
 - **Scripts are manual** — `scripts/*.mjs` are one-time transform/repair tools, not part of the build.
+- **Three design-token rules are lint-enforced, because all three fail silently in RN** —
+  `mobile/eslint.config.js` (`no-restricted-syntax`) rejects a font-family **string literal**, a
+  hex on **`shadowColor`**, and a **`fontSize` below 10** anywhere in `src/` outside `src/theme/`.
+  An unloaded/misspelled font family renders in the system font with no warning — that is how four
+  call sites shipped naming `NotoSansDevanagari_600SemiBold`, a family the app never installed.
+  `npm run lint` must report **0 errors** (RULEBOOK §4 step 3).
+- **Shared UI contracts to reuse, not re-implement** — `ReaderHeader.tsx` is the only reader/
+  chapters top bar (`variant="reader"` 16pt / `"index"` 22-20pt), and `TextField.tsx` is the only
+  text-input spec (`variant="search"` 44/Cormorant for content search, `"form"` 48/Inter for data
+  entry). Both were extracted in July 2026 from ~32 and 3 divergent copies respectively;
+  hand-rolling either is a RULEBOOK §3 hard reject.
 
 > Personal identifiers (owner email, bundle IDs, EAS project id/URL) live in `mobile/app.json`
 > and `mobile/eas.json` and are intentionally **not** reproduced here — see those files directly.
