@@ -1,8 +1,8 @@
 ---
 title: Japam Alarms
 type: subsystem
-sources: [mobile/src/notifications/japamAlarms.ts, mobile/src/notifications/japamAlarmScheduler.ts, mobile/src/notifications/japamAlarmNative.ts, mobile/src/contexts/JapamAlarmsContext.tsx, mobile/src/screens/JapamAlarmsScreen.tsx, mobile/assets/japam-alarm-sounds/index.ts, mobile/modules/japam-alarm-ios/ios/JapamAlarmIosModule.swift, mobile/plugins/native-android/JapamAlarmModule.kt, mobile/plugins/native-android/JapamAlarmReceiver.kt, mobile/plugins/native-android/JapamBootReceiver.kt, mobile/plugins/native-android/JapamAlarmActionReceiver.kt]
-last_verified_date: 2026-07-22
+sources: [mobile/app.json, mobile/src/notifications/japamAlarms.ts, mobile/src/notifications/japamAlarmScheduler.ts, mobile/src/notifications/japamAlarmNative.ts, mobile/src/contexts/JapamAlarmsContext.tsx, mobile/src/screens/JapamAlarmsScreen.tsx, mobile/assets/japam-alarm-sounds/index.ts, mobile/modules/japam-alarm-ios/ios/JapamAlarmIosModule.swift, mobile/plugins/native-android/JapamAlarmModule.kt, mobile/plugins/native-android/JapamAlarmReceiver.kt, mobile/plugins/native-android/JapamBootReceiver.kt, mobile/plugins/native-android/JapamAlarmActionReceiver.kt]
+last_verified_date: 2026-07-24
 confidence: high
 status: current
 ---
@@ -38,18 +38,19 @@ Japam Alarms let users schedule timed reminders to chant a mantra, with per-alar
 
 **Native modules**:
 - iOS: `modules/japam-alarm-ios/ios/JapamAlarmIosModule.swift` — AlarmKit wrapper.
-- Android: `plugins/native-android/JapamAlarmModule.kt` + `JapamAlarmReceiver.kt` (re-arms for next day) + `JapamBootReceiver.kt` (re-arms after device reboot) + `JapamAlarmActionReceiver.kt` (handles Snooze; `SNOOZE_MS = 5 min`, matching `SNOOZE_MINUTES = 5` in pure helpers).
+- Android: `plugins/native-android/JapamAlarmModule.kt` + `JapamAlarmReceiver.kt` (re-arms for next day) + `JapamBootReceiver.kt` (re-arms after device reboot) + `JapamAlarmActionReceiver.kt` (handles Snooze; `SNOOZE_MS = 5 min`, matching `SNOOZE_MINUTES = 5` in pure helpers). The manifest declares user-controlled `SCHEDULE_EXACT_ALARM`, not the Play-restricted `USE_EXACT_ALARM` or `USE_FULL_SCREEN_INTENT`. `requestExactAlarmPermission()` opens Android's **Alarms & reminders** special-access screen; on return, the context refreshes `canScheduleExactAlarms()` and re-arms through `setAlarmClock()`. Until access is granted, the native module uses `setAndAllowWhileIdle()` as a Doze-tolerant but potentially delayed fallback.
 
 **Alarm ring tune** (`assets/japam-alarm-sounds/index.ts`): per-mantra ≤30 s WAV clips (mono 22.05 kHz PCM — iOS notification-sound constraints). `getJapamAlarmSoundName(mantraId)` resolves the filename used by every tier: AlarmKit rings `.named(sound)`, the Android receiver looks up `res/raw/<mantra_id_with_underscores>`, and the expo tier creates one notification channel per mantra (`japam-alarm:<mantraId>:v2`) because Android 8+ pins a channel's sound at creation. Both Android tiers ring on the **alarm stream** (`USAGE_ALARM` / expo `audioAttributes.usage: ALARM`) so the alarm is audible through vibrate/silent and follows the alarm volume slider, matching AlarmKit's override-silent semantics on iOS. Clips bundled: `om-namah-shivaya`, `hare-krishna-mahamantra`, `gayatri-mantra` (the latter two are 28 s loudness-normalised excerpts cut from `assets/audio-library/` takes). `om-namo-bhagavate-vasudevaya` has no recording yet → system default tone.
 
-**Context** (`contexts/JapamAlarmsContext.tsx`): CRUD on alarms, auto-disables one-time alarms after they fire, sweeps stale `skipNextDate` values on load.
+**Context** (`contexts/JapamAlarmsContext.tsx`): CRUD on alarms, auto-disables one-time alarms after they fire, sweeps stale `skipNextDate` values on load, and separately tracks notification permission versus Android exact-alarm access. Returning from system settings refreshes both signals and triggers scheduler reconciliation.
 
-**Screen** (`screens/JapamAlarmsScreen.tsx`): alarm list + inline editor. Editor shows a day-chip group (Sun … Sat) + a "Once" chip; a skip-next affordance for alarms with a pending skip.
+**Screen** (`screens/JapamAlarmsScreen.tsx`): alarm list + inline editor. Editor shows a day-chip group (Sun … Sat) + a "Once" chip; a skip-next affordance for alarms with a pending skip. When an enabled Android alarm lacks exact access, an explanatory banner warns that Android may delay it and lets the user open **Alarms & reminders** settings.
 
 **Testing**:
 - `notifications/__tests__/japamAlarms.test.ts` — pure helpers via `tsx --test`.
 - `notifications/__tests__/japamAlarmScheduler.jest.test.ts` — expo-notifications mock paths.
 - `notifications/__tests__/japamAlarmNative.jest.test.ts` — native-tier mock paths.
+- `notifications/__tests__/androidAlarmPolicy.jest.test.ts` — manifest/API guard against reintroducing `USE_EXACT_ALARM`, `USE_FULL_SCREEN_INTENT`, or `setFullScreenIntent`.
 - `contexts/__tests__/JapamAlarmsContext.test.tsx` — CRUD + one-time auto-disable.
 - `screens/__tests__/JapamAlarmEditor.test.tsx` — editor UI.
 - Maestro: `mobile/.maestro/japam-alarms-e2e.yaml`.
@@ -66,6 +67,8 @@ Japam Alarms let users schedule timed reminders to chant a mantra, with per-alar
 - **iOS 64-pending budget** — expo WEEKLY triggers consume pending slots. `JAPAM_EXPO_SLOT_CAP = 24` leaves room for the daily-verse rolling window. Don't raise this without auditing total pending usage.
 - **Skip forces one-shots on recurrence tiers** — a pending `skipNextDate` can't be expressed as a gap in a WEEKLY/AlarmKit recurrence rule. The scheduler replaces the standing recurrence with `N` discrete one-shots for the skip window, identified by the `:occN` suffix scheme.
 - **Android reboot** — `JapamBootReceiver` re-arms all alarms after a device reboot. Without it, all alarms silently vanish on power cycle.
+- **Full-screen takeover is intentionally absent on Android** — Vedansh's alarm is a secondary feature, so the Play submission must not declare `USE_FULL_SCREEN_INTENT`. A high-importance `CATEGORY_ALARM` lock-screen notification still carries the mantra sound, tap target, Stop, and Snooze. Precise firing is a separate capability controlled by `SCHEDULE_EXACT_ALARM`.
+- **Exact timing requires a user grant on new Android installs** — `SCHEDULE_EXACT_ALARM` is not pre-granted. Keep the explanatory screen banner and `ACTION_REQUEST_SCHEDULE_EXACT_ALARM` bridge paired; removing either leaves users on the inexact fallback without a recovery path.
 - **Snooze identifier exclusion** — snooze one-shots (`:snooze` suffix) are excluded from reconcile cancellation so a freshly-snoozed alarm isn't immediately cancelled by the next reconcile.
 - **One-time alarms never skip** — `isSkipPending` returns false for one-time alarms; `skipNextDate` is documented as ignored for them but the scheduler double-checks via `isOnceAlarm`.
 - **Alarm clips need double registration** — a new mantra WAV must be added BOTH to `assets/japam-alarm-sounds/index.ts` AND to `app.json` → `expo-notifications.sounds[]`. The plugin copies the listed files into the native bundles (Android `res/raw/` with hyphens→underscores, iOS bundle root); missing either step silently falls back to the default chime.
