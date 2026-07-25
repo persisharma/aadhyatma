@@ -86,10 +86,13 @@ appId: com.prashantsharma.vedansh
     optional: true
 - waitForAnimationToEnd
 
-# Language toggle test
-- tapOn: "English"
+# Language toggle test — the reader's LanguageToggle exposes testIDs; its
+# segments aren't reliably tappable by the visible/a11y name, so use the ids.
+- tapOn:
+    id: "lang-toggle-en"
 - waitForAnimationToEnd
-- tapOn: "Hindi"
+- tapOn:
+    id: "lang-toggle-hi"
 - waitForAnimationToEnd
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.

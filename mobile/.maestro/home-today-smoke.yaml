@@ -51,8 +51,9 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "Back"
 - waitForAnimationToEnd
-# The [Calendar | Vrat and Parv] segment lives on PanchangHome — visible only
-# if the calendar screen sits under ObservanceList in the stack (initial: false).
-- assertVisible: "Vrat and Parv"
+# The [Panchang | Vrat & Parv | Jyotish] segment lives on PanchangHome — visible
+# only if the calendar screen sits under ObservanceList in the stack (initial: false).
+# The segment's a11y label uses the ampersand form.
+- assertVisible: "Vrat & Parv"
 - tapOn: "Home, tab.*"
 - waitForAnimationToEnd

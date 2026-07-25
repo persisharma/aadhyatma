@@ -40,9 +40,9 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Panchang, tab.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Vrat and Parv"
+    visible: "Vrat & Parv"
     timeout: 30000
-- tapOn: "Vrat and Parv"
+- tapOn: "Vrat & Parv"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Browse by type"
