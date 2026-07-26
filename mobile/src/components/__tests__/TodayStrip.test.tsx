@@ -175,6 +175,15 @@ describe('TodayStrip', () => {
     expect(mockNavigate).toHaveBeenCalledWith('PanchangTab');
   });
 
+  it('wires the card for Home first-tap recovery (onPressIn/onPressOut)', () => {
+    const tree = render();
+    const button = tree.root.findAll(
+      (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
+    )[0];
+    expect(typeof button.props.onPressIn).toBe('function');
+    expect(typeof button.props.onPressOut).toBe('function');
+  });
+
   it('uses English names when the reading language is English', () => {
     mockLang = 'en';
     mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
