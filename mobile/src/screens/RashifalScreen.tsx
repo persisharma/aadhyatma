@@ -179,8 +179,9 @@ export default function RashifalScreen({ navigation, route }: Props) {
                 flex: 1,
                 color: colors.inkMuted,
                 fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                fontSize: 11,
-                lineHeight: 16,
+                fontSize: 13,
+                // Devanagari needs ~1.6× or top (चंद्रबिंदु on नहीं) / bottom matras clip.
+                lineHeight: 21,
               }}
             >
               {meaningByLang(
@@ -328,7 +329,7 @@ export default function RashifalScreen({ navigation, route }: Props) {
                     style={{
                       color: colors.inkMuted,
                       fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                      fontSize: 10,
+                      fontSize: 14,
                       marginTop: 4,
                     }}
                   >
@@ -379,7 +380,7 @@ export default function RashifalScreen({ navigation, route }: Props) {
                                 lang,
                                 typography.readerTitle.fontFamily
                               ),
-                              fontSize: 12,
+                              fontSize: 16,
                             }}
                           >
                             {sign.primary}
@@ -592,8 +593,8 @@ const styles = StyleSheet.create({
   headerSpacer: { width: 48 },
   caption: {
     fontFamily: fontFamilies.inter,
-    fontSize: 10,
-    lineHeight: 13,
+    fontSize: 12,
+    lineHeight: 18,
   },
   sharePill: {
     minHeight: 36,
@@ -645,10 +646,10 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   signSourceCopy: { flex: 1 },
-  eyebrow: { fontSize: 10 },
+  eyebrow: { fontSize: 15 },
   signTranslation: {
     fontFamily: fontFamilies.inter,
-    fontSize: 10,
+    fontSize: 12,
   },
   changeButton: {
     minHeight: 38,
@@ -670,8 +671,8 @@ const styles = StyleSheet.create({
   },
   signOption: {
     width: '31.8%',
-    minHeight: 55,
-    padding: 6,
+    minHeight: 64,
+    padding: 8,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -684,7 +685,7 @@ const styles = StyleSheet.create({
   signSecondary: {
     marginTop: 1,
     fontFamily: fontFamilies.inter,
-    fontSize: 10,
+    fontSize: 14,
   },
   natalDot: {
     width: 5,
@@ -701,7 +702,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   sectionLabel: {
-    fontSize: 10,
+    fontSize: 12,
     marginTop: 18,
     marginBottom: 8,
   },

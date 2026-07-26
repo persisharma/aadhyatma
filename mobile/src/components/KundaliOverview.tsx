@@ -142,6 +142,6 @@ const styles = StyleSheet.create({
   icon: { width: 30, height: 30, alignItems: 'center', justifyContent: 'center' },
   iconText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   cardCopy: { flex: 1 },
-  eyebrow: { fontSize: 10 },
-  learn: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, marginTop: 8 },
+  eyebrow: { fontSize: 12 },
+  learn: { fontFamily: fontFamilies.interSemiBold, fontSize: 12, marginTop: 8 },
 });

@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
+import { pillTextStyle } from '@/utils/langType';
 import { getDiscoveryMeta, bestTimeLabel } from '@/data/discoveryMeta';
 import { getPurposeMeta } from '@/data/purposes';
 import { WEEKDAY_LABELS } from '@/data/routine/vaar';
@@ -44,12 +45,13 @@ export default function WhenToRecitePanel({ sourceId }: Props) {
         style={styles.header}
       >
         <Text
-          style={{
-            color: colors.saffronDeep,
-            fontFamily: typography.sectionLabel.fontFamily,
-            fontSize: typography.sectionLabel.fontSize,
-            letterSpacing: typography.sectionLabel.letterSpacing,
-          }}
+          style={[
+            { color: colors.saffronDeep },
+            // sectionLabel is a Latin token (Inter + tracking); route Indic text
+            // through pillTextStyle to swap to the script serif and drop tracking
+            // so the shirorekha stays intact. (design.md §3; utils/langType.ts)
+            pillTextStyle(lang, typography.sectionLabel),
+          ]}
         >
           {contentByLang(lang, 'कब पाठ करें', 'When to Recite')}
         </Text>

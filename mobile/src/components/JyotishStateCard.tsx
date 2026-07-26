@@ -146,6 +146,6 @@ const styles = StyleSheet.create({
   },
   actionText: {
     fontFamily: fontFamilies.interSemiBold,
-    fontSize: 11,
+    fontSize: 12,
   },
 });

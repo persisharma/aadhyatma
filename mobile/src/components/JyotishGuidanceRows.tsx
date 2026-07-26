@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    fontSize: 10,
+    fontSize: 12,
   },
   context: {
     alignSelf: 'flex-start',
@@ -186,6 +186,6 @@ const styles = StyleSheet.create({
   },
   contextText: {
     fontFamily: fontFamilies.interSemiBold,
-    fontSize: 10,
+    fontSize: 12,
   },
 });
