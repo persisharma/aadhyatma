@@ -74,4 +74,29 @@ describe('FeatureCard', () => {
     expect(onPress).toHaveBeenCalledTimes(1);
     expect(pressable.props.accessibilityLabel).toMatch(/Tap to open\./);
   });
+
+  test('forwards onPressIn/onPressOut for the Home first-tap fallback', () => {
+    const onPressIn = jest.fn();
+    const onPressOut = jest.fn();
+    const tree = render(
+      <FeatureCard
+        item={item}
+        width={300}
+        onPress={() => undefined}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+      />
+    );
+    const pressable = tree.root.find(
+      (n) =>
+        typeof n.props?.accessibilityLabel === 'string' &&
+        n.props.accessibilityLabel.includes('Daily Verse')
+    );
+    act(() => {
+      pressable.props.onPressIn();
+      pressable.props.onPressOut();
+    });
+    expect(onPressIn).toHaveBeenCalledTimes(1);
+    expect(onPressOut).toHaveBeenCalledTimes(1);
+  });
 });

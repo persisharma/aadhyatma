@@ -6,6 +6,7 @@ import { useReducedMotion } from '@/utils/useReducedMotion';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
+import { useTilePress } from '@/contexts/TilePressContext';
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { formatRangeCompact } from '@/panchang/muhuratFormat';
@@ -35,6 +36,8 @@ export default function TodayStrip() {
   // Sibling tab — navigate via the parent so the action bubbles up (same
   // pattern as RoutineBanner / the Panchang spotlight card).
   const rootNav = useNavigation<any>();
+  const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
+  const openPanchang = React.useCallback(() => rootNav.navigate('PanchangTab'), [rootNav]);
   const [calendarSystem] = usePanchangCalendarSystem();
 
   // useTodayKey rolls the strip over at midnight / on app foreground — with
@@ -177,9 +180,12 @@ export default function TodayStrip() {
   }, [stopAutoScroll]);
 
   const onChipRowDrag = React.useCallback(() => {
+    // Stop the auto-drift for good AND mark the shared press gesture as a scroll
+    // so a horizontal chip swipe never opens the Panchang tab.
+    markTileDrag();
     autoRef.current!.dragged = true;
     stopAutoScroll();
-  }, [stopAutoScroll]);
+  }, [markTileDrag, stopAutoScroll]);
 
   React.useEffect(() => {
     const s = autoRef.current!;
@@ -201,7 +207,9 @@ export default function TodayStrip() {
 
   return (
     <Pressable
-      onPress={() => rootNav.navigate('PanchangTab')}
+      onPress={() => activateTile(openPanchang)}
+      onPressIn={() => beginTilePress(openPanchang)}
+      onPressOut={finishTilePress}
       style={({ pressed }) => [
         styles.card,
         elevation.raised,

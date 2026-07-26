@@ -25,6 +25,7 @@ import TodayRecommendationsRow from '@/components/TodayRecommendationsRow';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
+import { useTilePressController, TilePressProvider } from '@/contexts/TilePressContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
 import { panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
@@ -48,52 +49,13 @@ export default function HomeScreen({ navigation }: Props) {
   // pattern as RoutineBanner / PanchangScreen.
   const rootNav = useNavigation<any>();
 
-  // iOS can cancel a child Pressable's `onPress` when the launcher lives inside
-  // this vertical ScrollView, even when the finger never actually drags. Keep a
-  // one-tick fallback for that exact press lifecycle; a real scroll marks the
-  // gesture as a drag and suppresses navigation.
-  type PendingTilePress = {
-    action: () => void;
-    didDrag: boolean;
-    handled: boolean;
-    fallback?: ReturnType<typeof setTimeout>;
-  };
-  const pendingTilePress = React.useRef<PendingTilePress | null>(null);
-  const beginTilePress = React.useCallback((action: () => void) => {
-    if (pendingTilePress.current?.fallback !== undefined) {
-      clearTimeout(pendingTilePress.current.fallback);
-    }
-    pendingTilePress.current = { action, didDrag: false, handled: false };
-  }, []);
-  const markTileDrag = React.useCallback(() => {
-    if (pendingTilePress.current) pendingTilePress.current.didDrag = true;
-  }, []);
-  const finishTilePress = React.useCallback(() => {
-    const pending = pendingTilePress.current;
-    if (!pending || pending.didDrag || pending.handled) return;
-    pending.fallback = setTimeout(() => {
-      if (pendingTilePress.current !== pending || pending.didDrag || pending.handled) return;
-      pending.handled = true;
-      pendingTilePress.current = null;
-      pending.action();
-    }, 0);
-  }, []);
-  const activateTile = React.useCallback((fallbackAction: () => void) => {
-    const pending = pendingTilePress.current;
-    if (pending?.fallback !== undefined) clearTimeout(pending.fallback);
-    const action = pending?.action ?? fallbackAction;
-    if (pending) pending.handled = true;
-    pendingTilePress.current = null;
-    action();
-  }, []);
-  React.useEffect(
-    () => () => {
-      if (pendingTilePress.current?.fallback !== undefined) {
-        clearTimeout(pendingTilePress.current.fallback);
-      }
-    },
-    []
-  );
+  // First-tap recovery for the launcher tiles and the Today/Discover cards:
+  // iOS can cancel a child Pressable's `onPress` when it lives inside a
+  // ScrollView even without a real drag. One shared controller (context) covers
+  // every Home card so a vertical page-scroll started on any card suppresses its
+  // fallback instead of navigating. See @/contexts/TilePressContext.
+  const tilePress = useTilePressController();
+  const { beginTilePress, markTileDrag, finishTilePress, activateTile } = tilePress;
 
   type TileItem = {
     key: string;
@@ -257,6 +219,7 @@ export default function HomeScreen({ navigation }: Props) {
         style={StyleSheet.absoluteFill}
       />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
+        <TilePressProvider value={tilePress}>
         <ScrollView
           ref={homeScrollRef}
           contentContainerStyle={[
@@ -360,9 +323,19 @@ export default function HomeScreen({ navigation }: Props) {
                 gap: featureGap,
                 paddingBottom: 4,
               }}
+              // A horizontal swipe here is a scroll, not a tap — suppress the
+              // shared first-tap fallback so a swipe never opens a card.
+              onScrollBeginDrag={markTileDrag}
             >
               {orderedSpotlights.map(({ onPress, ...item }) => (
-                <FeatureCard key={item.key} item={item} width={featureWidth} onPress={onPress} />
+                <FeatureCard
+                  key={item.key}
+                  item={item}
+                  width={featureWidth}
+                  onPress={() => activateTile(onPress)}
+                  onPressIn={() => beginTilePress(onPress)}
+                  onPressOut={finishTilePress}
+                />
               ))}
             </ScrollView>
 
@@ -414,6 +387,7 @@ export default function HomeScreen({ navigation }: Props) {
             </View>
           )}
         </ScrollView>
+        </TilePressProvider>
       </SafeAreaView>
 
       <SearchFloatingButton onPress={() => navigation.navigate('Search')} />

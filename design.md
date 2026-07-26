@@ -606,6 +606,8 @@ When building new components, pull tokens from the theme — never hard-code a h
 9. Footer mantra (Section 7 — token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
 10. **Floating search button** (`SearchFloatingButton`) docked bottom-right → opens the Search screen. Uses its default `spacing.xl` bottom offset now that the routine banner no longer docks at Home's bottom (it used to pass a banner-clearing offset). (The old Help floating button/modal never shipped.)
 
+**First-tap recovery (all Home cards).** Every tappable Home card opens on the **first** tap, not the second. iOS can cancel a child `Pressable`'s `onPress` when it lives inside a `ScrollView` even when the finger never actually drags, so a naive `onPress` intermittently no-ops the first touch. A single shared controller (`contexts/TilePressContext.tsx`, `useTilePressController` + `TilePressProvider`) remembers the action on `onPressIn`, arms a one-tick fallback on `onPressOut`, and fires it unless a real `onPress` already ran or a scroll drag intervened. It is shared (context) across the **whole** Home surface — the category grid (§19), the Today strip (§48), the For-Today row (§50), and the DISCOVER carousel (§32) — because a card lives inside the outer vertical scroll, so a vertical page-drag started on a card must suppress *that card's* fallback; a per-component copy could not see the outer scroll and would navigate on a plain scroll. Each enclosing `ScrollView` (the outer vertical one and every inner horizontal row) wires `onScrollBeginDrag` to the controller's `markTileDrag`, so a swipe is always a scroll and never a tap. Introduced for the grid in July 2026 (#219) and extended to the Today/Discover cards immediately after. Pinned by `contexts/__tests__/TilePressContext.test.tsx`.
+
 (A **Continue-reading card** briefly sat between the grid and DISCOVER — retired July 2026, §49.)
 
 There is **no deity chip row on Home** — deity browsing lives in the Deity Index screen (§20), and intent browsing lives behind the By Purpose tile (§50).
@@ -1550,7 +1552,7 @@ Two AsyncStorage keys hold the last-seen **version string**: `@vedansh/tour-comp
 
 **Behaviour.**
 
-- Whole card is one `Pressable` → parent-tab navigate to `PanchangTab` (same bubble-up pattern as `RoutineBanner`).
+- Whole card is one `Pressable` → parent-tab navigate to `PanchangTab` (same bubble-up pattern as `RoutineBanner`). It opens on the **first** tap: the card is wired to the shared Home first-tap controller (`onPressIn`/`onPressOut`/`onPress` → `TilePressContext`, §18), and the chip row's `onScrollBeginDrag` marks a horizontal chip swipe as a scroll so it never opens the tab.
 - Data comes from **one solve**: `useMuhurat(today, calendarSystem, { live: false })` supplies both the muhurat windows **and** the day's `PanchangData` (cached, off the render path); observances ride the lighter `useObservancesForDate` (split out of `usePanchangForSelection` so the strip never pays for the upcoming-window resolution it doesn't render). `live: false` skips the per-minute tick — the strip shows only static day windows; the date instead rolls over via **`useTodayKey()`** (`utils/useTodayKey.ts`): a timer just past local midnight plus an AppState foreground re-check, so an overnight-backgrounded app never shows yesterday's panchang. A mid-session observance-store upgrade re-resolves the chips **without** clearing them first (no blink; `useObservancesForDate` resets only when the day/city/system changes). The calendar system itself is a **module-level store** (`usePanchangCalendarSystem`), so a purnimant/amanta change on the Panchang tab propagates to the mounted Home strip immediately.
 - Accessibility: single button, label `"Today's Panchang. {vara}, {tithi}. {observances}. Tap to open."`.
 
@@ -1593,7 +1595,7 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 ### For Today
 
-`TodayRecommendationsRow.tsx` sits below `TodayStrip` and above the Routine banner on Home. It calls `getTodayRecommendationsForDate(new Date(useTodayKey()))`, which reuses `deityForWeekday()` for the vaar deity and `getObservancesForDate()` / observance `linkSectionId` for active festivals. The row is a horizontal scroll of `LibraryCard`s; tapping opens the existing reader target. It is intentionally a small row, not a second panchang card.
+`TodayRecommendationsRow.tsx` sits below `TodayStrip` and above the Routine banner on Home. It calls `getTodayRecommendationsForDate(new Date(useTodayKey()))`, which reuses `deityForWeekday()` for the vaar deity and `getObservancesForDate()` / observance `linkSectionId` for active festivals. The row is a horizontal scroll of `FeatureCard`s (292px, the §32 shell); tapping opens the existing reader target via `navigateToEntryStart` and opens on the **first** tap — each card and the row are wired to the shared Home first-tap controller (`TilePressContext`, §18). It is intentionally a small row, not a second panchang card.
 
 ### Deity Detail
 

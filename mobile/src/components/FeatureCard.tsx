@@ -39,9 +39,12 @@ type Props = {
   /** Carousel item width — owned by the screen so it can size to the viewport. */
   width: number;
   onPress: () => void;
+  /** Home first-tap recovery (TilePressContext) — a no-op elsewhere. */
+  onPressIn?: () => void;
+  onPressOut?: () => void;
 };
 
-export default function FeatureCard({ item, width, onPress }: Props) {
+export default function FeatureCard({ item, width, onPress, onPressIn, onPressOut }: Props) {
   const { colors, radii, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const isHi = lang === 'hi';
@@ -62,6 +65,8 @@ export default function FeatureCard({ item, width, onPress }: Props) {
   return (
     <Pressable
       onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
       style={({ pressed }) => [
         styles.card,
         {
