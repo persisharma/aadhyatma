@@ -119,6 +119,15 @@ export default function HomeScreen({ navigation }: Props) {
       icon: iconFor('purpose'),
       onPress: () => navigation.navigate('BrowseByPurpose'),
     };
+    const nityaSadhnaTile: TileItem = {
+      key: 'routine',
+      nameHi: 'नित्य साधना',
+      nameEn: 'Daily Practice',
+      shortNameEn: 'Sadhana',
+      status: 'active',
+      icon: iconFor('routine'),
+      onPress: () => navigation.navigate('RoutineToday'),
+    };
     const result: TileItem[] = [];
     for (const c of categories) {
       result.push({
@@ -137,6 +146,9 @@ export default function HomeScreen({ navigation }: Props) {
       if (c.id === 'japam') result.push(vratTile, kundaliTile);
       if (c.id === 'theerth') result.push(deityTile, purposeTile);
     }
+    // नित्य साधना closes the grid at 15 tiles so every row is a full 3 (was 14
+    // → an orphan pair in the last row). Same RoutineToday target as the banner.
+    result.push(nityaSadhnaTile);
     return result;
   }, [hasNewInCategory, navigation, rootNav]);
 

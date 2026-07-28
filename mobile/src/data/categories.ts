@@ -17,9 +17,10 @@ export type CategoryMeta = {
 // forms lead (Chalisa/Aarti/Stotram), then the flagship read + interactive-USP
 // tools (Granth/Japa), then habit/browse surfaces, then the thin new PRD-A
 // parity forms (2–4 texts each) which trail — their NEW badges handle discovery.
-// The Home grid additionally interleaves two non-content tiles at ranked spots —
-// व्रत (Panchang observance engine) after जप, देवता (Deity Index) after तीर्थ —
-// see HomeScreen. Every other consumer looks a category up by id, so this order
+// The Home grid additionally interleaves non-content tiles — व्रत + कुंडली after
+// जप, देवता + उद्देश्य after तीर्थ — and appends a नित्य साधना (RoutineToday) tile
+// last so the grid closes on a full 3-wide row; see HomeScreen. Every other
+// consumer looks a category up by id, so this order
 // only drives display (order-independent everywhere else).
 export const categories: readonly CategoryMeta[] = [
   { id: 'chalisa', nameHi: 'चालीसा', nameEn: 'Chalisa', status: 'active' },
@@ -40,5 +41,6 @@ export const categories: readonly CategoryMeta[] = [
   // NOTE: स्तुति (Stuti) is intentionally NOT a category. Its texts (Krishna
   // Stuti, Durga Stuti) are filed under `stotram` — स्तुति ≈ स्तोत्रम् to users,
   // and Ram Stuti already lived there. They still render via the multi-instance
-  // StutiReader (routed by id). This keeps the Home grid a unified 12 (4×3).
+  // StutiReader (routed by id). With the interleaved + नित्य साधना tiles the Home
+// grid is 15 (5×3).
 ];
