@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { useTilePress } from '@/contexts/TilePressContext';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
@@ -19,6 +20,7 @@ export default function TodayRecommendationsRow() {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const navigation = useNavigation<Nav>();
+  const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
   const todayKey = useTodayKey();
   const recommendations = React.useMemo(
     () => getTodayRecommendationsForDate(new Date(todayKey)),
@@ -51,16 +53,24 @@ export default function TodayRecommendationsRow() {
           gap: spacing.sm,
           paddingBottom: 4,
         }}
+        // A horizontal swipe here is a scroll, not a tap — suppress the shared
+        // first-tap fallback so a swipe never opens a card.
+        onScrollBeginDrag={markTileDrag}
       >
-        {recommendations.slice(0, 6).map((entry) => (
-          <View key={entry.id} style={styles.cardWrap}>
-            <FeatureCard
-              item={spotlightForEntry(entry, typography.thumb.fontFamily, colors.saffronDeep)}
-              width={styles.cardWrap.width}
-              onPress={() => navigateToEntryStart(navigation, entry)}
-            />
-          </View>
-        ))}
+        {recommendations.slice(0, 6).map((entry) => {
+          const open = () => navigateToEntryStart(navigation, entry);
+          return (
+            <View key={entry.id} style={styles.cardWrap}>
+              <FeatureCard
+                item={spotlightForEntry(entry, typography.thumb.fontFamily, colors.saffronDeep)}
+                width={styles.cardWrap.width}
+                onPress={() => activateTile(open)}
+                onPressIn={() => beginTilePress(open)}
+                onPressOut={finishTilePress}
+              />
+            </View>
+          );
+        })}
       </ScrollView>
     </View>
   );

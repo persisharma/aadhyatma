@@ -130,8 +130,9 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Shani Ashtakam"
     timeout: 15000
-# Back out to the deity list, then the deity index
-- tapOn: "Back"
+# Back out to the deity list (AshtakamReader's back is labeled "Back to home"),
+# then the deity index (DeityList's back is "Back").
+- tapOn: "Back to home"
 - waitForAnimationToEnd
 - tapOn: "Back"
 - waitForAnimationToEnd

@@ -31,6 +31,14 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Good Habits\\..*Tap to open\\."       # Sanskar
 
 # ── Step 3: Open Sanskar category, verify all 8 sections (regex for LibraryCard) ──
+# "Good Habits" is the last Home tile — low enough that a direct tap can land on
+# the bottom tab bar (→ Panchang). Center it first so the tap stays mid-screen.
+- scrollUntilVisible:
+    element:
+      text: "Good Habits\\..*Tap to open\\."
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
 - tapOn: "Good Habits\\..*Tap to open\\."
 - waitForAnimationToEnd
 - extendedWaitUntil:

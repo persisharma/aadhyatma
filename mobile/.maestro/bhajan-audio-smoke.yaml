@@ -18,7 +18,9 @@ appId: com.prashantsharma.vedansh
 # Open the Bhajan (audio library) tab.
 - tapOn: "Bhajan, tab.*"
 - waitForAnimationToEnd
-- assertVisible: "Bhajans & Aartis"
+# SectionHeading merges its Hindi + English into one a11y label
+# ("भजन व आरती Bhajans & Aartis"), so wildcard the English side.
+- assertVisible: ".*Bhajans & Aartis.*"
 
 # Start a #212 library track. TrackCard a11y label is "Play <titleEn>. <kind>."
 - scrollUntilVisible:
@@ -44,7 +46,9 @@ appId: com.prashantsharma.vedansh
 - tapOn: ".*Now playing: Govinda Hari Govinda.*Open player.*"
 - waitForAnimationToEnd:
     timeout: 15000
-- assertVisible: "Now Playing"
+# NowPlayingScreen's header is localized (en "Now Playing" / hi "अभी बज रहा है");
+# the app runs in its default language here, so match either.
+- assertVisible: "Now Playing|अभी बज रहा है"
 - assertVisible: ".*Govinda Hari Govinda.*"
 # Pause/play from the big transport control.
 - tapOn: "Pause"
