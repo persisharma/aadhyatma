@@ -1,3 +1,8 @@
+/* eslint-disable react/jsx-key -- The JSX below lives in `test.each` fixture
+   tuples, not in a rendered list: each element is mounted on its own by
+   TestRenderer, so React never reconciles them as siblings and a `key` would be
+   inert. The rule flags any JSX inside an array literal and cannot tell the two
+   apart. */
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { StyleSheet, Text } from 'react-native';

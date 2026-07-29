@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
@@ -537,7 +538,7 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   topBar: {
-    paddingHorizontal: 22,
+    paddingHorizontal: spacing.readingGutter,
     paddingTop: 8,
     paddingBottom: 10,
     flexDirection: 'row',

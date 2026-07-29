@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont, pillTextStyle } from '@/utils/langType';
@@ -65,11 +66,7 @@ function ProgramCard({
           borderRadius: radii.lg,
           borderColor: colors.cardActiveBorder,
           borderWidth: 1,
-          shadowColor: '#3C1E0A',
-          shadowOpacity: 0.14,
-          shadowRadius: 16,
-          shadowOffset: { width: 0, height: 6 },
-          elevation: 4,
+          ...elevation.raised,
           opacity: isDone ? 0.9 : 1,
         },
         pressed && styles.cardPressed,

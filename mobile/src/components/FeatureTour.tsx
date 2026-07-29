@@ -11,6 +11,7 @@ import { CommonActions } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FullWindowOverlay } from 'react-native-screens';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import { useTour } from '@/contexts/TourContext';
 import { tourSteps, TAB_ORDER } from '@/data/tour/steps';
 import { navigationRef } from '@/notifications/deepLink';
@@ -377,11 +378,7 @@ const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
     padding: 18,
-    shadowColor: '#0a0604',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.25,
-    shadowRadius: 14,
-    elevation: 10,
+    ...elevation.overlay,
   },
   titleHi: { fontSize: 20, includeFontPadding: false, textAlign: 'center' },
   titleEn: { fontSize: 13, marginTop: 2, fontStyle: 'italic', textAlign: 'center', includeFontPadding: false },

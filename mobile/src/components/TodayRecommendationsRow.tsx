@@ -6,6 +6,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTilePress } from '@/contexts/TilePressContext';
 import { contentByLang } from '@/utils/localize';
+import { pillTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
 import { getTodayRecommendationsForDate } from '@/data/discoveryMeta';
 import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
@@ -33,12 +34,12 @@ export default function TodayRecommendationsRow() {
       <Text
         style={[
           styles.sectionLabel,
-          {
-            color: colors.inkMuted,
-            fontSize: typography.sectionLabel.fontSize,
-            fontFamily: typography.sectionLabel.fontFamily,
-            letterSpacing: typography.sectionLabel.letterSpacing,
-          },
+          { color: colors.inkMuted },
+          // sectionLabel is a Latin token (Inter + 2.4 tracking + uppercase). On
+          // hi/gu/kn that face has no glyphs (silent system fallback) and the
+          // tracking splits the shirorekha, so route through pillTextStyle to
+          // swap to the script serif and drop tracking/case. (design.md §3)
+          pillTextStyle(lang, typography.sectionLabel),
         ]}
       >
         {contentByLang(lang, 'आज के लिए', 'FOR TODAY')}
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   sectionLabel: {
-    textTransform: 'uppercase',
+    // textTransform/letterSpacing/fontFamily are owned by pillTextStyle (script-aware).
     paddingHorizontal: 4,
   },
   cardWrap: {

@@ -1,7 +1,16 @@
-import React from 'react';
+import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
+import { View as mockView } from 'react-native';
 import { purposes } from '@/data/purposes';
 import CategoryIcon, { type CategoryIconKey } from '../CategoryIcon';
+
+// The 'routine' icon renders LotusMark, which pulls in expo-linear-gradient
+// (ESM, untransformed by the RN preset). Stub it to a plain View — same pattern
+// as RoutineBanner/RoutineCelebration tests.
+jest.mock('expo-linear-gradient', () => ({
+  LinearGradient: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
+    mockReact.createElement(mockView, props, children),
+}));
 
 function renderIcon(iconKey: CategoryIconKey) {
   let tree: TestRenderer.ReactTestRenderer | undefined;
@@ -62,6 +71,17 @@ describe('CategoryIcon', () => {
       'category-icon-insight-pupil',
       'category-icon-insight-ray',
     ]);
+  });
+
+  it('renders the नित्य साधना tile as the lotus mark (twelve gradient petals)', () => {
+    const root = renderIcon('routine');
+    // Each petal is a LinearGradient (mocked to a View forwarding its colors
+    // array). Restrict to host nodes so the mock's composite wrapper isn't
+    // double-counted.
+    const petals = root.findAll(
+      (node) => typeof node.type === 'string' && Array.isArray((node.props as { colors?: unknown }).colors)
+    );
+    expect(petals).toHaveLength(12);
   });
 
   it('renders a dedicated glyph for every shipped purpose icon', () => {

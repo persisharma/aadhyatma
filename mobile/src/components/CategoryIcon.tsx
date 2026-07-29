@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import type { ContentCategory } from '@/data/texts';
 import { useTheme } from '@/theme/ThemeContext';
+import LotusMark from '@/components/LotusMark';
 
 export type PurposeIconKey =
   | 'purpose-protection'
@@ -21,7 +22,7 @@ export type PurposeIconKey =
 
 type PurposeIconKind = PurposeIconKey extends `purpose-${infer Kind}` ? Kind : never;
 
-export type CategoryIconKey = ContentCategory | 'deity' | 'vrat' | 'purpose' | 'insight' | PurposeIconKey;
+export type CategoryIconKey = ContentCategory | 'deity' | 'vrat' | 'purpose' | 'insight' | 'routine' | PurposeIconKey;
 
 type Props = {
   iconKey: CategoryIconKey;
@@ -55,6 +56,8 @@ export default function CategoryIcon({ iconKey }: Props) {
       {iconKey === 'vrat' && <KalashIcon {...paint} />}
       {iconKey === 'purpose' && <PurposeIcon {...paint} />}
       {iconKey === 'insight' && <InsightIcon {...paint} />}
+      {/* नित्य साधना launcher tile — reuse the routine's completed-bloom mark. */}
+      {iconKey === 'routine' && <LotusMark size={30} />}
       {purposeKind && <PurposeTileIcon kind={purposeKind} {...paint} />}
     </View>
   );

@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
@@ -89,13 +90,13 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   symbol: {
-    fontFamily: 'NotoSansDevanagari_600SemiBold',
+    fontFamily: fontFamilies.devanagariBold,
     fontSize: 24,
   },
   copy: {
     flex: 1,
   },
   label: {
-    fontSize: 8,
+    fontSize: 10,
   },
 });

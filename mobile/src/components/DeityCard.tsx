@@ -2,6 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { DeityIconKey } from '@/data/deities';
@@ -38,11 +39,7 @@ export default function DeityCard({ nameHi, nameEn, itemCount, iconKey, onPress,
           // warm gradient fill (below), saffron-tinted border, lifted shadow.
           borderColor: colors.cardActiveBorder,
           borderRadius: radii.lg,
-          shadowColor: '#3C1E0A',
-          shadowOpacity: 0.14,
-          shadowRadius: 16,
-          shadowOffset: { width: 0, height: 6 },
-          elevation: 4,
+          ...elevation.raised,
         },
         pressed && styles.cardPressed,
       ]}
@@ -167,7 +164,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   badgeText: {
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: '600',
     textTransform: 'uppercase',
   },

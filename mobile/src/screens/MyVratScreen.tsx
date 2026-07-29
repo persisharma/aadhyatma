@@ -167,7 +167,7 @@ export default function MyVratScreen({ navigation }: Props) {
                 pressed && { opacity: 0.8 },
               ]}
             >
-              <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.parchment }}>
+              <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 14, color: colors.parchment }}>
                 {contentByLang(lang, 'व्रत-पर्व देखें →', 'Browse व्रत-पर्व →')}
               </Text>
             </Pressable>
@@ -240,7 +240,7 @@ export default function MyVratScreen({ navigation }: Props) {
                     <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 14, color: colors.inkSoft }}>
                       {contentByLang(lang, it.rule.nameHi, it.rule.nameEn)}
                     </Text>
-                    <Text style={{ fontFamily: lang === 'en' ? 'Inter_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
+                    <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
                       {shortDate(it.next.date, lang)} · {relativeLabel(it.next.date, today, lang)}
                     </Text>
                   </View>
@@ -269,8 +269,8 @@ export default function MyVratScreen({ navigation }: Props) {
 function Metric({ value, label, lang, colors }: { value: number; label: string; lang: Lang; colors: any }) {
   return (
     <View style={styles.metric}>
-      <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 22, color: colors.saffronDeep }}>{value}</Text>
-      <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+      <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 22, color: colors.saffronDeep }}>{value}</Text>
+      <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
         {label}
       </Text>
     </View>
@@ -317,10 +317,10 @@ function PriorityRow({
       </Pressable>
       {nextDate && (
         <View style={{ alignItems: 'flex-end' }}>
-          <Text style={{ fontFamily: lang === 'en' ? 'Inter_600SemiBold' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
+          <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
             {shortDate(nextDate, lang)}
           </Text>
-          <Text style={{ fontFamily: lang === 'en' ? 'CormorantGaramond_500Medium' : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
+          <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
             {relativeLabel(nextDate, today, lang)}
           </Text>
         </View>

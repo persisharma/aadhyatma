@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import {
   verseLinesByLang,
@@ -190,7 +191,7 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
                   styles.fallbackNote,
                   {
                     color: colors.inkMuted,
-                    fontFamily: lang === 'en' ? 'CormorantGaramond_400Regular_Italic' : scriptBodyFont(lang, typography.meaning.fontFamily),
+                    fontFamily: lang === 'en' ? fontFamilies.latinItalic : scriptBodyFont(lang, typography.meaning.fontFamily),
                     fontSize: 14,
                     lineHeight: 22,
                   },

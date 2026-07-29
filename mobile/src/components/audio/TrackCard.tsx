@@ -2,6 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { pick } from '@/utils/localize';
@@ -57,11 +58,7 @@ export default function TrackCard({ track, onPress, playing }: Props) {
           borderRadius: radii.lg,
           borderColor: colors.cardActiveBorder,
           borderWidth: 1,
-          shadowColor: '#3C1E0A',
-          shadowOpacity: 0.14,
-          shadowRadius: 16,
-          shadowOffset: { width: 0, height: 6 },
-          elevation: 4,
+          ...elevation.raised,
         },
         pressed && styles.cardPressed,
       ]}

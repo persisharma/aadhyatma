@@ -3,7 +3,6 @@ import {
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  Pressable,
   StyleSheet,
   Text,
   View,
@@ -22,7 +21,7 @@ import {
   type SundarkandVerse,
 } from '@/data/sundarkand';
 import { useGitaLanguage } from '@/data/gita/language';
-import { titleFontByLang } from '@/utils/langType';
+import ReaderHeader from '@/components/ReaderHeader';
 import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
@@ -181,9 +180,6 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
   }, [currentIndex, verseCount]);
 
   const title = contentByLang(lang, sundarkandTitleHi, sundarkandTitleEn);
-  const titleFontFamily =
-    titleFontByLang(lang);
-  const titleItalic = lang === 'en';
 
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -213,59 +209,26 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <View style={styles.topBar}>
-          <View style={styles.topSide}>
-            <Pressable
-              onPress={() => navigation.goBack()}
-              accessibilityRole="button"
-              accessibilityLabel="Back to chapters"
-              hitSlop={16}
-              style={({ pressed }) => [
-                styles.back,
+        <ReaderHeader
+          title={title}
+          onBack={() => navigation.goBack()}
+          backAccessibilityLabel="Back to chapters"
+          right={
+            <Text
+              style={[
+                styles.counter,
                 {
-                  backgroundColor: colors.parchmentSoft,
-                  borderColor: colors.divider,
+                  color: colors.inkMuted,
+                  fontFamily: typography.pageCounter.fontFamily,
+                  fontSize: typography.pageCounter.fontSize,
+                  fontStyle: 'italic',
                 },
-                pressed && { opacity: 0.7 },
               ]}
             >
-              <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
-            </Pressable>
-          </View>
-
-          <Text
-            style={[
-              styles.title,
-              {
-                color: colors.ink,
-                fontFamily: titleFontFamily,
-                fontSize: typography.readerTitle.fontSize,
-                fontStyle: titleItalic ? 'italic' : 'normal',
-              },
-            ]}
-            numberOfLines={1}
-          >
-            {title}
-          </Text>
-
-          <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Text
-                style={[
-                  styles.counter,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.pageCounter.fontFamily,
-                    fontSize: typography.pageCounter.fontSize,
-                    fontStyle: 'italic',
-                  },
-                ]}
-              >
-                {currentIndex + 1} / {verseCount}
-              </Text>
-            </View>
-          </View>
-        </View>
+              {currentIndex + 1} / {verseCount}
+            </Text>
+          }
+        />
 
         <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
@@ -394,38 +357,6 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-  },
-  topBar: {
-    paddingHorizontal: 22,
-    paddingTop: 8,
-    paddingBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  topSide: {
-    width: 120,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  back: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backGlyph: {
-    fontSize: 22,
-    lineHeight: 24,
-    marginTop: -2,
-    includeFontPadding: false,
-  },
-  title: {
-    flex: 1,
-    textAlign: 'center',
-    marginHorizontal: 4,
   },
   counter: {
     includeFontPadding: false,

@@ -193,14 +193,10 @@ function CategoryCard({
         style={({ pressed }) => [
           styles.card,
           {
-            borderRadius: 16,
+            borderRadius: radii.lg,
             borderColor: colors.cardActiveBorder,
             borderWidth: 1,
-            shadowColor: '#3C1E0A',
-            shadowOpacity: 0.12,
-            shadowRadius: 12,
-            shadowOffset: { width: 0, height: 4 },
-            elevation: 3,
+            ...elevation.lifted,
           },
           pressed && styles.cardPressed,
         ]}
@@ -211,7 +207,7 @@ function CategoryCard({
           colors={[colors.cardActiveFrom, colors.cardActiveTo]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={[styles.cardBg, { borderRadius: 16 }]}
+          style={[styles.cardBg, { borderRadius: radii.lg }]}
         />
         {content}
         {hasNew && (
@@ -233,16 +229,12 @@ function CategoryCard({
       style={[
         styles.card,
         {
-          borderRadius: 16,
+          borderRadius: radii.lg,
           backgroundColor: colors.cardSurface,
           borderColor: colors.divider,
           borderWidth: 1,
           opacity: 0.55,
-          shadowColor: '#3C1E0A',
-          shadowOpacity: 0.06,
-          shadowRadius: 4,
-          shadowOffset: { width: 0, height: 1 },
-          elevation: 1,
+          ...elevation.subtle,
         },
       ]}
       accessibilityRole="button"
@@ -317,7 +309,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   badgeText: {
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: '600',
     textTransform: 'uppercase',
   },

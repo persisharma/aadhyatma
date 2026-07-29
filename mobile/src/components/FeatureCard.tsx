@@ -2,6 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
@@ -73,11 +74,7 @@ export default function FeatureCard({ item, width, onPress, onPressIn, onPressOu
           width,
           borderRadius: radii.lg,
           borderColor: colors.cardActiveBorder,
-          shadowColor: '#3C1E0A',
-          shadowOpacity: 0.16,
-          shadowRadius: 14,
-          shadowOffset: { width: 0, height: 6 },
-          elevation: 5,
+          ...elevation.raised,
         },
         pressed && styles.cardPressed,
       ]}
@@ -188,7 +185,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   tagText: {
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: '600',
     textTransform: 'uppercase',
   },

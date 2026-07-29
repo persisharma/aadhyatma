@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, RULEBOOK.md]
-last_verified_date: 2026-06-13
+sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, RULEBOOK.md]
+last_verified_date: 2026-07-25
 confidence: high
 status: current
 ---
@@ -11,9 +11,10 @@ status: current
 
 Each devotional text is read through its own `<Pascal>ReaderScreen.tsx` — a horizontally-paged
 `FlatList` (`pagingEnabled`, one verse page per screen width) with a language-aware top bar,
-bookmark/share buttons, and pager dots. There is **no shared reader shell**: every reader is a
-near-identical copy of the same pattern, so behavior is kept consistent by convention + tests,
-not by a base component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()`.
+bookmark/share buttons, and pager dots. The **top bar is shared** — `ReaderHeader.tsx`, since
+July 2026 — but the rest of the shell is not: every reader is still a near-identical copy of the
+same paging pattern, so that behavior is kept consistent by convention + tests, not by a base
+component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()`.
 
 ## Details
 
@@ -27,6 +28,9 @@ not by a base component. Content is bundled JSON loaded per chapter via `get<Sec
 - Current page tracked via `onViewableItemsChanged` (60% threshold) + `handleScroll`.
 - The toggle row hosts `LanguageToggle` **and** (since #87) an `AddToRoutineButton` — every
   reader has one; chaptered readers pass the current `chapter` (see [[routine]]).
+- The top bar is `ReaderHeader` (`variant="reader"`; chapters/index screens pass
+  `variant="index"` for the larger 22/20 title). Screens pass `title` / `onBack` / `right` and
+  never geometry — RULEBOOK §3 makes a hand-rolled `topBar` block a hard reject.
 
 **Chapter auto-advance (the cross-subsection navigation contract).** A reader whose text has
 > 1 subsection must let the user swipe across chapter/kāṇḍa boundaries. The mechanism:
@@ -61,16 +65,22 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
 - [[overview]] — app stack and module map.
 - `RULEBOOK.md` §3 — the reader design contract (shell, type safety, smoke test, **auto-advance**).
 - `design.md` — reader shell visuals (paged FlatList, ornament divider, pager dots).
-- Shared components: `NextChapterCard.tsx`, `PrevChapterCard.tsx`, `JumpToStartButton.tsx`,
-  `LanguageToggle.tsx`, `BookmarkButton.tsx`, `ShareButton.tsx`.
+- Shared components: `ReaderHeader.tsx`, `NextChapterCard.tsx`, `PrevChapterCard.tsx`,
+  `JumpToStartButton.tsx`, `LanguageToggle.tsx`, `BookmarkButton.tsx`, `ShareButton.tsx`.
 
 ## Gotchas
 
-- **No shared reader shell** — each reader is copy-pasted, so a new feature (like auto-advance)
-  must be hand-applied to every multi-chapter reader. This is exactly how the 4 stotram readers
-  drifted: they were scaffolded without the transition logic and silently dead-ended at the last
-  page of each chapter. `readerAutoAdvance.test.tsx` is the guard; add new chaptered readers to
-  its table.
+- **The reader *body* still has no shared shell** — each reader's paging logic is copy-pasted, so
+  a new feature (like auto-advance) must be hand-applied to every multi-chapter reader. This is
+  exactly how the 4 stotram readers drifted: they were scaffolded without the transition logic and
+  silently dead-ended at the last page of each chapter. `readerAutoAdvance.test.tsx` is the guard;
+  add new chaptered readers to its table. The **top bar** is no longer in this category — it was
+  extracted to `ReaderHeader.tsx` in July 2026 after the ~32 copies had drifted into two gutters,
+  three bottom paddings, two back-button sizes and an off-token title size.
+- **`ReaderHeader`'s back label is deliberately English and un-localized** (`"Back"`). The Maestro
+  flows tap that string literally (`deity-browse-smoke`, `vrat-catalog-smoke`) and the default
+  reading language is `hi`, so localizing it breaks e2e. Override it only to name a destination
+  ("Back to chapters").
 - **`onViewableItemsChanged` is `useRef(fn).current`** — it captures `offset`/`navigation` from
   the first render. Safe here because `chapter` (hence `offset`) is fixed per screen instance.
 - **Latent gap in single-chapter readers** — Ramcharitmanas loads only `chapter-01` today

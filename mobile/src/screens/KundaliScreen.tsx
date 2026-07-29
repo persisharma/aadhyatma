@@ -7,7 +7,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -16,6 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import KundaliOverview from '@/components/KundaliOverview';
+import TextField from '@/components/TextField';
 import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
@@ -45,6 +45,7 @@ import {
   type BirthProfileErrors,
 } from '@/panchang/useKundali';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
@@ -412,16 +413,6 @@ function BirthInput({
   elevation: any;
 }) {
   const city = getCityById(draft.cityId);
-  const inputStyle = [
-    styles.input,
-    {
-      color: colors.ink,
-      backgroundColor: colors.parchmentSoft,
-      borderColor: colors.divider,
-      borderRadius: radii.md,
-    },
-  ];
-
   return (
     <>
       <View
@@ -462,45 +453,44 @@ function BirthInput({
       </View>
 
       <FieldLabel hi="नाम (वैकल्पिक)" en="Name (optional)" lang={lang} colors={colors} typography={typography} />
-      <TextInput
+      <TextField
+        variant="form"
         testID="kundali-name-input"
         accessibilityLabel="Birth name"
         value={draft.name ?? ''}
         onChangeText={(name) => onChange({ ...draft, name })}
         placeholder="Your name"
-        placeholderTextColor={colors.inkMuted}
         autoCapitalize="words"
-        style={inputStyle}
       />
 
       <View style={styles.inputRow}>
         <View style={{ flex: 1 }}>
           <FieldLabel hi="जन्म तिथि" en="Birth date" lang={lang} colors={colors} typography={typography} />
-          <TextInput
+          <TextField
+            variant="form"
             testID="kundali-date-input"
             accessibilityLabel="Birth date YYYY-MM-DD"
             value={draft.date}
             onChangeText={(date) => onChange({ ...draft, date })}
             placeholder="YYYY-MM-DD"
-            placeholderTextColor={colors.inkMuted}
             keyboardType="numbers-and-punctuation"
             maxLength={10}
-            style={[inputStyle, errors.date && { borderColor: colors.avoid }]}
+            style={errors.date ? { borderColor: colors.avoid } : undefined}
           />
           {errors.date && <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.date}</Text>}
         </View>
         <View style={{ flex: 0.72 }}>
           <FieldLabel hi="समय" en="Time" lang={lang} colors={colors} typography={typography} />
-          <TextInput
+          <TextField
+            variant="form"
             testID="kundali-time-input"
             accessibilityLabel="Birth time HH:mm"
             value={draft.time}
             onChangeText={(time) => onChange({ ...draft, time })}
             placeholder="HH:mm"
-            placeholderTextColor={colors.inkMuted}
             keyboardType="numbers-and-punctuation"
             maxLength={5}
-            style={[inputStyle, errors.time && { borderColor: colors.avoid }]}
+            style={errors.time ? { borderColor: colors.avoid } : undefined}
           />
           {errors.time && <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.time}</Text>}
         </View>
@@ -594,7 +584,7 @@ function BirthInput({
         style={{
           color: colors.inkMuted,
           fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-          fontSize: 10,
+          fontSize: 12,
           textAlign: 'center',
           marginTop: 9,
         }}
@@ -826,8 +816,8 @@ function KundaliResult({
                 style={{
                   color: colors.inkSoft,
                   fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                  fontSize: 10,
-                  lineHeight: 15,
+                  fontSize: 12,
+                  lineHeight: 18,
                   textAlign: 'center',
                 }}
               >
@@ -1228,23 +1218,14 @@ function CityPicker({
               <Text style={{ color: colors.saffronDeep, fontSize: 24 }}>×</Text>
             </Pressable>
           </View>
-          <TextInput
+          <TextField
+            variant="form"
             testID="kundali-city-search"
             accessibilityLabel="Search birth cities"
             value={query}
             onChangeText={setQuery}
             placeholder="Search Indian cities…"
-            placeholderTextColor={colors.inkMuted}
-            style={[
-              styles.modalSearch,
-              {
-                color: colors.ink,
-                borderColor: colors.divider,
-                backgroundColor: colors.parchmentSoft,
-                borderRadius: radii.md,
-                marginHorizontal: spacing.xxl,
-              },
-            ]}
+            style={[styles.modalSearch, { marginHorizontal: spacing.xxl }]}
           />
           <ScrollView keyboardShouldPersistTaps="handled">
             {filtered.map((city) => {
@@ -1289,50 +1270,52 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   topBar: { minHeight: 64, flexDirection: 'row', alignItems: 'center', gap: 12 },
-  backButton: { width: 40, height: 40, borderRadius: 20, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  // 44 to match the back control on every other screen (design.md §12). The 40
+  // here was a local drift; the hitSlop already cleared the touch minimum, but
+  // the control read visibly smaller than its counterparts.
+  backButton: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   sharePill: { minHeight: 34, paddingHorizontal: 9, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  shareText: { fontFamily: 'Inter_600SemiBold', fontSize: 9 },
+  shareText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
   scroll: { paddingTop: 8 },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  caption: { fontFamily: 'Inter_500Medium', fontSize: 10, lineHeight: 14 },
-  actionText: { fontFamily: 'Inter_600SemiBold', fontSize: 12 },
+  caption: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18 },
+  actionText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   heroCard: { borderWidth: 1, padding: 18 },
   inputRow: { flexDirection: 'row', gap: 12 },
-  input: { height: 48, borderWidth: 1, paddingHorizontal: 13, fontFamily: 'Inter_500Medium', fontSize: 14 },
-  error: { fontFamily: 'Inter_500Medium', fontSize: 10, marginTop: 4 },
-  saveError: { fontFamily: 'Inter_500Medium', fontSize: 10, lineHeight: 15, marginTop: 8, textAlign: 'center' },
+  error: { fontFamily: fontFamilies.inter, fontSize: 12, marginTop: 4 },
+  saveError: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 17, marginTop: 8, textAlign: 'center' },
   cityButton: { minHeight: 56, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   note: { flexDirection: 'row', gap: 10, borderWidth: 1, padding: 12, marginTop: 16 },
-  noteMark: { fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 19 },
+  noteMark: { fontFamily: fontFamilies.latinSemiBold, fontSize: 19 },
   primaryButton: { minHeight: 50, marginTop: 18, alignItems: 'center', justifyContent: 'center' },
-  primaryButtonText: { fontFamily: 'Inter_600SemiBold', fontSize: 14 },
+  primaryButtonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 14 },
   secondaryAction: { minHeight: 44, alignItems: 'center', justifyContent: 'center', marginTop: 10 },
   resultHeader: { minHeight: 76, borderWidth: 1, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
   lagnaPill: { minWidth: 72, paddingVertical: 7, paddingHorizontal: 10, alignItems: 'center' },
-  lagnaLabel: { fontFamily: 'Inter_600SemiBold', fontSize: 8, letterSpacing: 1 },
-  lagnaValue: { fontFamily: 'CormorantGaramond_600SemiBold', fontSize: 14, marginTop: 2 },
-  lagnaTranslation: { fontFamily: 'Inter_500Medium', fontSize: 8, marginTop: 1 },
+  lagnaLabel: { fontFamily: fontFamilies.interSemiBold, fontSize: 12, letterSpacing: 1 },
+  lagnaValue: { fontFamily: fontFamilies.latinSemiBold, fontSize: 15, marginTop: 2 },
+  lagnaTranslation: { fontFamily: fontFamilies.inter, fontSize: 12, marginTop: 1 },
   resultTabs: { flexDirection: 'row', padding: 3, borderWidth: 1, marginVertical: 14 },
   resultTab: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center' },
-  resultTabText: { fontFamily: 'Inter_600SemiBold', fontSize: 10 },
+  resultTabText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   sectionIntro: { marginBottom: 14 },
   chartCard: { borderWidth: 1, padding: 13 },
   chartNote: { marginTop: 9, paddingHorizontal: 10, paddingVertical: 9 },
   table: { borderWidth: 1, overflow: 'hidden' },
   tableRow: { minHeight: 62, borderBottomWidth: StyleSheet.hairlineWidth, paddingHorizontal: 13, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', gap: 12 },
-  tablePrimary: { fontFamily: 'Inter_600SemiBold', fontSize: 12 },
-  tableTranslation: { fontFamily: 'Inter_500Medium', fontSize: 9 },
-  eyebrowText: { fontFamily: 'Inter_600SemiBold', fontSize: 9, letterSpacing: 1.3 },
+  tablePrimary: { fontFamily: fontFamilies.interSemiBold, fontSize: 14 },
+  tableTranslation: { fontFamily: fontFamilies.inter, fontSize: 12 },
+  eyebrowText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12, letterSpacing: 1.3 },
   currentDasha: { borderWidth: 1, padding: 14, marginBottom: 14 },
-  currentDashaTitle: { fontFamily: 'Inter_600SemiBold', fontSize: 14, marginTop: 5 },
+  currentDashaTitle: { fontFamily: fontFamilies.interSemiBold, fontSize: 14, marginTop: 5 },
   progressTrack: { height: 6, marginTop: 10, overflow: 'hidden' },
   progressFill: { height: '100%' },
   progressCaptions: { marginTop: 5, flexDirection: 'row', justifyContent: 'space-between', gap: 8 },
-  progressCaption: { fontFamily: 'Inter_500Medium', fontSize: 8 },
+  progressCaption: { fontFamily: fontFamilies.inter, fontSize: 12 },
   antarChips: { marginTop: 9, flexDirection: 'row', flexWrap: 'wrap', gap: 5 },
   antarChip: { paddingHorizontal: 7, paddingVertical: 4, borderWidth: 1 },
-  antarChipText: { fontFamily: 'Inter_600SemiBold', fontSize: 7 },
+  antarChipText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   dashaRow: { flexDirection: 'row', minHeight: 68 },
   timelineRail: { width: 22, alignItems: 'center' },
   timelineDot: { width: 9, height: 9, borderRadius: 4.5, marginTop: 19 },
@@ -1340,11 +1323,11 @@ const styles = StyleSheet.create({
   dashaCard: { flex: 1, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 10, marginBottom: 8 },
   dashaTitleRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 },
   nowTag: { paddingHorizontal: 7, paddingVertical: 3 },
-  nowTagText: { fontFamily: 'Inter_600SemiBold', fontSize: 7 },
-  practiceLabel: { fontSize: 9, marginTop: 18, marginBottom: 8 },
+  nowTagText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
+  practiceLabel: { fontSize: 12, marginTop: 18, marginBottom: 8 },
   modalBackdrop: { flex: 1, justifyContent: 'flex-end' },
   modalSheet: { height: '78%', overflow: 'hidden' },
   modalHeader: { minHeight: 58, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: StyleSheet.hairlineWidth },
-  modalSearch: { height: 46, borderWidth: 1, paddingHorizontal: 13, marginVertical: 12, fontFamily: 'Inter_500Medium', fontSize: 14 },
+  modalSearch: { marginVertical: 12 },
   cityRow: { minHeight: 58, borderBottomWidth: StyleSheet.hairlineWidth, flexDirection: 'row', alignItems: 'center' },
 });

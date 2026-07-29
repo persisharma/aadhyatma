@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
@@ -434,11 +435,7 @@ function BrowseCard({
           // warm gradient fill (below), saffron-tinted border, lifted shadow.
           borderColor: colors.cardActiveBorder,
           borderRadius: radii.lg,
-          shadowColor: '#3C1E0A',
-          shadowOpacity: 0.14,
-          shadowRadius: 16,
-          shadowOffset: { width: 0, height: 6 },
-          elevation: 4,
+          ...elevation.raised,
         },
         pressed && { opacity: 0.85 },
       ]}
@@ -564,7 +561,7 @@ const rowStyles = StyleSheet.create({
     paddingVertical: 2,
   },
   badgeText: {
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: '600',
     textTransform: 'uppercase',
   },

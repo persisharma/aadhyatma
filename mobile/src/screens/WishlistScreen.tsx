@@ -112,7 +112,7 @@ export default function WishlistScreen({ navigation }: Props) {
             <Text
               style={{
                 fontFamily:
-                  lang === 'en' ? typography.meaning.fontFamily : 'CormorantGaramond_400Regular_Italic',
+                  lang === 'en' ? typography.meaning.fontFamily : fontFamilies.latinItalic,
                 fontStyle: lang === 'en' ? 'normal' : 'italic',
                 fontSize: 11,
                 color: colors.inkMuted,
@@ -137,10 +137,10 @@ export default function WishlistScreen({ navigation }: Props) {
               <Text style={{ fontFamily: scriptSerif ?? typography.meaning.fontFamily, fontSize: 15, color: colors.inkMuted, textAlign: 'center', marginTop: 12 }}>
                 {contentByLang(lang, 'अभी तक कोई श्लोक सहेजा नहीं', 'अभी तक कोई श्लोक सहेजा नहीं')}
               </Text>
-              <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 14, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
+              <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 14, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
                 No verses saved yet
               </Text>
-              <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted, textAlign: 'center', marginTop: 8, opacity: 0.6 }}>
+              <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, color: colors.inkMuted, textAlign: 'center', marginTop: 8, opacity: 0.6 }}>
                 Tap the ♡ icon while reading to save verses
               </Text>
             </View>
@@ -170,7 +170,7 @@ export default function WishlistScreen({ navigation }: Props) {
                         {getVerseLabel(bm, lang)}
                       </Text>
                     </View>
-                    <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', fontSize: 12, color: colors.inkMuted }}>
+                    <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, color: colors.inkMuted }}>
                       {getSourceLabel(bm, lang)}
                     </Text>
                   </View>
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   bmContent: { flex: 1, minWidth: 0 },
   bmMeta: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 6 },
   bmPillWrap: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
-  bmPillText: { fontSize: 10, fontFamily: 'CormorantGaramond_600SemiBold' },
+  bmPillText: { fontSize: 10, fontFamily: fontFamilies.latinSemiBold },
   removeBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   backdrop: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24 },
   confirmCard: { width: '100%', maxWidth: 360, borderWidth: 1, paddingVertical: 22, paddingHorizontal: 22 },

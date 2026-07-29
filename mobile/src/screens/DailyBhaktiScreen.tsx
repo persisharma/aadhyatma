@@ -4,6 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, type RouteProp } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import {
   verseLinesByLang,
@@ -225,7 +227,7 @@ export default function DailyBhaktiScreen() {
             {/* Meaning section */}
             <Text style={[styles.meaningLabel, { color: colors.saffronDeep }]}>
               {contentByLang(lang, 'अर्थ', 'Meaning')}{' '}
-              <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', color: colors.inkMuted }}>
+              <Text style={{ fontFamily: fontFamilies.latinItalic, color: colors.inkMuted }}>
                 · {contentByLang(lang, 'Meaning', 'अर्थ')}
               </Text>
             </Text>
@@ -247,7 +249,7 @@ export default function DailyBhaktiScreen() {
             <View style={styles.cardFooter}>
               <Text
                 style={{
-                  fontFamily: 'CormorantGaramond_400Regular_Italic',
+                  fontFamily: fontFamilies.latinItalic,
                   fontSize: 11,
                   color: colors.inkMuted,
                 }}
@@ -282,11 +284,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 1,
     padding: 20,
-    shadowColor: '#3c1e0a',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.14,
-    shadowRadius: 24,
-    elevation: 6,
+    ...elevation.raised,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -305,13 +303,13 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   pillText: {
-    fontFamily: 'CormorantGaramond_600SemiBold',
+    fontFamily: fontFamilies.latinSemiBold,
     fontSize: 13,
     letterSpacing: 0.3,
   },
   ornamentWrap: { marginVertical: 14 },
   meaningLabel: {
-    fontFamily: 'NotoSerifDevanagari_600SemiBold',
+    fontFamily: fontFamilies.devanagariBold,
     fontSize: 12,
   },
   cardFooter: {

@@ -15,6 +15,7 @@ import * as Sharing from 'expo-sharing';
 
 import type { Lang } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
@@ -230,8 +231,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   formatText: {
-    fontFamily: 'Inter_600SemiBold',
-    fontSize: 8,
+    fontFamily: fontFamilies.interSemiBold,
+    fontSize: 10,
   },
   close: {
     width: 34,
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   check: {
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 11,
   },
   actions: {
@@ -269,7 +270,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   primaryText: {
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 11,
   },
   secondary: {
@@ -280,7 +281,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   secondaryText: {
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 11,
   },
 });

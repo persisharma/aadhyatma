@@ -1,10 +1,8 @@
 import React from 'react';
 import {
-  Pressable,
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,9 +10,9 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { gitaChaptersManifest, gitaTitleEn, gitaTitleHi } from '@/data/gita';
 import { useGitaLanguage } from '@/data/gita/language';
-import { titleFontByLang, isLatinLang } from '@/utils/langType';
 import { contentByLang } from '@/utils/localize';
 import { getSourceBackground } from '@/data/backgrounds';
+import ReaderHeader from '@/components/ReaderHeader';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
@@ -24,15 +22,11 @@ import type { RootStackParamList } from '@/navigation/types';
 type Props = NativeStackScreenProps<RootStackParamList, 'GitaChapters'>;
 
 export default function GitaChaptersIndexScreen({ navigation }: Props) {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const { getChapterProgress } = useReadingProgress();
 
   const title = contentByLang(lang, gitaTitleHi, gitaTitleEn);
-  const titleFontFamily =
-    titleFontByLang(lang);
-  const titleFontSize = isLatinLang(lang) ? 20 : 22;
-  const titleItalic = lang === 'en';
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -40,41 +34,11 @@ export default function GitaChaptersIndexScreen({ navigation }: Props) {
       <BackgroundLayer source={getSourceBackground('bhagavad-gita')} />
 
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <View style={styles.topBar}>
-          <Pressable
-            onPress={() => navigation.goBack()}
-            accessibilityRole="button"
-            accessibilityLabel="Back to home"
-            hitSlop={16}
-            style={({ pressed }) => [
-              styles.back,
-              {
-                backgroundColor: colors.parchmentSoft,
-                borderColor: colors.divider,
-              },
-              pressed && { opacity: 0.7 },
-            ]}
-          >
-            <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
-          </Pressable>
-
-          <Text
-            style={[
-              styles.title,
-              {
-                color: colors.ink,
-                fontFamily: titleFontFamily,
-                fontSize: titleFontSize,
-                fontStyle: titleItalic ? 'italic' : 'normal',
-              },
-            ]}
-            numberOfLines={1}
-          >
-            {title}
-          </Text>
-
-          <View style={styles.backSpacer} />
-        </View>
+        <ReaderHeader
+          title={title}
+          onBack={() => navigation.goBack()}
+          variant="index"
+        />
 
         <View style={styles.toggleRow}>
           <LanguageToggle />
@@ -110,38 +74,6 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-  },
-  topBar: {
-    paddingHorizontal: 22,
-    paddingTop: 8,
-    paddingBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  back: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backSpacer: {
-    width: 44,
-    height: 44,
-  },
-  backGlyph: {
-    fontSize: 22,
-    lineHeight: 24,
-    marginTop: -2,
-    includeFontPadding: false,
-  },
-  title: {
-    flex: 1,
-    textAlign: 'center',
-    includeFontPadding: false,
   },
   toggleRow: {
     paddingVertical: 8,

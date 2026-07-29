@@ -3,6 +3,7 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-nati
 
 import type { Lang } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
@@ -55,7 +56,7 @@ export default function JyotishStateCard({
             { backgroundColor: colors.avoidTint, borderRadius: radii.pill },
           ]}
         >
-          <Text style={{ color: colors.avoidDeep, fontFamily: 'Inter_600SemiBold' }}>!</Text>
+          <Text style={{ color: colors.avoidDeep, fontFamily: fontFamilies.interSemiBold }}>!</Text>
         </View>
       )}
       <Text
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   actionText: {
-    fontFamily: 'Inter_600SemiBold',
-    fontSize: 11,
+    fontFamily: fontFamilies.interSemiBold,
+    fontSize: 12,
   },
 });

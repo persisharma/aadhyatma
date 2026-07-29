@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Switch, Text, View } from 'react-native';
+import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import type { VratReminderPref } from '@/contexts/VratFollowContext';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -86,12 +88,12 @@ export default function VratReminderSheet({
     },
   ];
   const pillText = (selected: boolean) => ({
-    fontFamily: 'Inter_600SemiBold' as const,
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 12,
     color: selected ? colors.parchment : colors.saffronDeep,
   });
   const optLabel = { fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink };
-  const optHint = { fontFamily: 'CormorantGaramond_400Regular_Italic' as const, fontSize: 11, color: colors.inkMuted, marginTop: 1 };
+  const optHint = { fontFamily: fontFamilies.latinItalic, fontSize: 11, color: colors.inkMuted, marginTop: 1 };
 
   return (
     <View style={[StyleSheet.absoluteFill, styles.overlay]}>
@@ -197,7 +199,7 @@ export default function VratReminderSheet({
           accessibilityLabel="Save reminders"
           style={({ pressed }) => [styles.saveBtn, { backgroundColor: colors.saffron, borderRadius: radii.pill }, pressed && { opacity: 0.85 }]}
         >
-          <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 14, color: colors.parchment }}>
+          <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 14, color: colors.parchment }}>
             {contentByLang(lang, 'सहेजें', 'Save reminders')}
           </Text>
         </Pressable>
@@ -208,7 +210,7 @@ export default function VratReminderSheet({
 
 const styles = StyleSheet.create({
   overlay: { justifyContent: 'flex-end' },
-  sheet: { borderTopWidth: 1, paddingHorizontal: 22, paddingTop: 10, paddingBottom: 34 },
+  sheet: { borderTopWidth: 1, paddingHorizontal: spacing.readingGutter, paddingTop: 10, paddingBottom: 34 },
   handle: { alignSelf: 'center', width: 40, height: 5, borderRadius: 2.5, marginBottom: 12 },
   optRow: { paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth },
   optRowInline: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth },

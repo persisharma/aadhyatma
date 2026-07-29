@@ -87,8 +87,12 @@ export default function MuhuratCardBody({
           <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 10, color: quality === 'avoid' ? colors.avoid : colors.saffronDeep }}>
             · {qualityLabel}
           </Text>
+          {/* The now-badge carries no fontWeight: latinSemiBold is a static 600
+              file, so asking for 700 on top cannot be satisfied — on Android
+              that can drop the custom face entirely and fall back to Roboto.
+              The face carries its own weight (see utils/langType.ts). */}
           {now && (
-            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 8, fontWeight: '700', color: colors.onPrimary, backgroundColor: colors.saffron, paddingHorizontal: 5, paddingVertical: 1, borderRadius: 5, overflow: 'hidden' }}>
+            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 10, color: colors.onPrimary, backgroundColor: colors.saffron, paddingHorizontal: 5, paddingVertical: 1, borderRadius: 5, overflow: 'hidden' }}>
               अभी
             </Text>
           )}
@@ -177,7 +181,7 @@ const styles = StyleSheet.create({
   frame: { borderWidth: 1, padding: 16, position: 'relative' },
   ornL: { position: 'absolute', top: 8, left: 12, fontSize: 14, opacity: 0.55 },
   ornR: { position: 'absolute', top: 8, right: 12, fontSize: 14, opacity: 0.55 },
-  grplab: { fontSize: 9, letterSpacing: 0.6, textTransform: 'uppercase', textAlign: 'center', marginTop: 6, marginBottom: 8 },
+  grplab: { fontSize: 10, letterSpacing: 0.6, textTransform: 'uppercase', textAlign: 'center', marginTop: 6, marginBottom: 8 },
   kv: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4, paddingHorizontal: 2 },
   rule: { height: 1, marginVertical: 10 },
   muh: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 11, marginBottom: 5 },

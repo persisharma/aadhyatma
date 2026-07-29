@@ -5,6 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
+import { pillTextStyle } from '@/utils/langType';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { categories } from '@/data/categories';
 import { deities } from '@/data/deities';
@@ -154,12 +155,13 @@ export default function DeityDetailScreen({ navigation, route }: Props) {
           {groups.map(({ category, items }) => (
             <View key={category.id} style={styles.group}>
               <Text
-                style={{
-                  color: colors.saffronDeep,
-                  fontFamily: typography.sectionLabel.fontFamily,
-                  fontSize: typography.sectionLabel.fontSize,
-                  letterSpacing: typography.sectionLabel.letterSpacing,
-                }}
+                style={[
+                  { color: colors.saffronDeep },
+                  // sectionLabel is a Latin token (Inter + tracking); route Indic
+                  // text through pillTextStyle to swap to the script serif and drop
+                  // tracking so the shirorekha stays intact. (design.md §3)
+                  pillTextStyle(lang, typography.sectionLabel),
+                ]}
               >
                 {contentByLang(lang, category.nameHi, category.nameEn)} {items.length}
               </Text>

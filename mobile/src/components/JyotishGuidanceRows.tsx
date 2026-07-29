@@ -9,6 +9,7 @@ import {
   type RashifalGuidance,
 } from '@/panchang/kundali';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont } from '@/utils/langType';
 
@@ -167,14 +168,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   markerText: {
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 12,
   },
   copy: {
     flex: 1,
   },
   label: {
-    fontSize: 8,
+    fontSize: 12,
   },
   context: {
     alignSelf: 'flex-start',
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   contextText: {
-    fontFamily: 'Inter_600SemiBold',
-    fontSize: 8,
+    fontFamily: fontFamilies.interSemiBold,
+    fontSize: 12,
   },
 });

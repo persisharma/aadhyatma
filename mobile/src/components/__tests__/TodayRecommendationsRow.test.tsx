@@ -1,9 +1,12 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import TodayRecommendationsRow from '@/components/TodayRecommendationsRow';
 
 const mockNavigate = jest.fn();
+// Mutable so a single test can flip the reading language; read at render time
+// (inside useGitaLanguage), so no jest-hoisting TDZ issue.
+let mockLang: 'hi' | 'en' | 'gu' | 'kn' = 'en';
 const renderedFeatureCardProps: Array<{
   item: { key: string; titleEn: string; descEn: string };
   width: number;
@@ -40,7 +43,7 @@ jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
 }));
 jest.mock('@/data/gita/language', () => ({
-  useGitaLanguage: () => ({ lang: 'en' }),
+  useGitaLanguage: () => ({ lang: mockLang }),
 }));
 jest.mock('@/utils/useTodayKey', () => ({
   useTodayKey: () => '2026-07-23',
@@ -69,6 +72,27 @@ jest.mock('@/components/FeatureCard', () => {
 describe('TodayRecommendationsRow', () => {
   beforeEach(() => {
     renderedFeatureCardProps.length = 0;
+    mockLang = 'en';
+  });
+
+  // Regression: the 'आज के लिए' eyebrow reused the Latin sectionLabel token
+  // (Inter + 2.4 tracking + uppercase) verbatim, so in Hindi the tracking wedged
+  // gaps between the Devanagari words and the missing Inter glyphs fell back to
+  // the system face. It must route through pillTextStyle() instead.
+  test('the आज के लिए eyebrow drops Latin tracking and uses the Devanagari serif in Hindi', () => {
+    mockLang = 'hi';
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      tree = TestRenderer.create(<TodayRecommendationsRow />);
+    });
+    const eyebrow = tree.root
+      .findAllByType(Text)
+      .find((node) => typeof node.props.children === 'string' && node.props.children.includes('आज के लिए'));
+    expect(eyebrow).toBeTruthy();
+    const style = StyleSheet.flatten(eyebrow!.props.style);
+    expect(style.letterSpacing).toBe(0);
+    expect(style.textTransform).toBe('none');
+    expect(style.fontFamily).toBe('NotoSerifDevanagari_600SemiBold');
   });
 
   test('renders homepage recommendations with the Discover card shell', () => {
