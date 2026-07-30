@@ -18,10 +18,11 @@
 #     the downward swipe dismisses it when present and is harmless on Home.
 #   - On first launch one onboarding surface may auto-appear over Home and
 #     block downstream flows until dismissed: a genuine fresh install gets the
-#     feature tour (dismiss via "Skip"); a returning user on the debut release
-#     gets the What's New sheet (dismiss via its "Close" ✕). Both optional taps
-#     are harmless no-ops once the surface has been seen, and only one of them
-#     is ever present at a time (they're mutually exclusive).
+#     feature tour (dismiss via "Skip") and then the language/size setup sheet
+#     (dismiss via "Begin"); a returning user on the debut release gets the
+#     What's New sheet (dismiss via its "Close" ✕). All optional taps are
+#     harmless no-ops once the surface has been seen, and the tour and What's
+#     New are mutually exclusive.
 appId: com.prashantsharma.vedansh
 ---
 - launchApp:
@@ -55,6 +56,14 @@ appId: com.prashantsharma.vedansh
 # supported primary language.
 - tapOn:
     text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd
+# Skipping (or finishing) the tour on a fresh install hands over to the
+# first-run language + reading-size sheet — accept its defaults with "Begin"
+# (constant English a11y label) so flows land on Home in the hi/Standard
+# baseline. Language-specific flows set their own language afterwards.
+- tapOn:
+    text: "Begin"
     optional: true
 - tapOn:
     text: "Close"

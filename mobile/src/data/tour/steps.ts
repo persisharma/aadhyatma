@@ -11,7 +11,8 @@
  * Shape of the walkthrough: the five bottom tabs → the Home routine card &
  * categories (Japa and Theerth split out with their inside views) → what's
  * inside each section (Bhakti, a Panchang vrat drill, Bhajan, and a More
- * reminder/alarm drill).
+ * reminder/alarm drill) → the More Language and Reading Size rows, which the
+ * post-tour setup sheet (`OnboardingSetupSheet`) then asks the user to set.
  */
 
 import type {
@@ -326,6 +327,30 @@ export const tourSteps: readonly TourStep[] = [
     titleEn: 'Japam Alarm',
     bodyHi: 'समय-समय पर जप की याद के लिए अलार्म जोड़ें।',
     bodyEn: 'Add alarms to remind you to chant japam through the day.',
+  },
+
+  // ── More: language + reading size (the two the setup sheet asks for next) ────
+  {
+    id: 'language-row',
+    navigateTo: { name: 'MoreTab', params: { screen: 'MoreHome' } },
+    targetId: 'languageRow',
+    anchor: 'top',
+    pointer: 'down',
+    titleHi: 'भाषा',
+    titleEn: 'Language',
+    bodyHi: 'पढ़ने की भाषा — हिन्दी, English, ગુજરાતી या ಕನ್ನಡ; कभी भी यहाँ से बदलें।',
+    bodyEn: 'Your reading language — Hindi, English, Gujarati, or Kannada; change it here any time.',
+  },
+  {
+    id: 'reading-size-row',
+    navigateTo: { name: 'MoreTab', params: { screen: 'MoreHome' } },
+    targetId: 'readingSizeRow',
+    anchor: 'top',
+    pointer: 'down',
+    titleHi: 'पाठ का आकार',
+    titleEn: 'Reading Size',
+    bodyHi: 'श्लोक व अर्थ के अक्षर मानक या बड़े — जैसा पढ़ने में सुख हो।',
+    bodyEn: 'Verse & meaning text at Standard or Large — whichever reads easiest.',
   },
 ] as const;
 

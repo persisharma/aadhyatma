@@ -61,6 +61,7 @@ import { handleNotificationResponse, navigationRef } from '@/notifications/deepL
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
+import OnboardingSetupSheet from '@/components/OnboardingSetupSheet';
 import WhatsNewModal from '@/components/WhatsNewModal';
 import { TourProvider } from '@/contexts/TourContext';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
@@ -201,6 +202,10 @@ export default function App() {
                                 mini-player, and is in-tree (not a Modal) so it can
                                 ring the live UI and stay visible to a11y/Maestro. */}
                             <FeatureTour />
+                            {/* Opens the moment the tour closes on a fresh
+                                install (or a replay) — language + reading size,
+                                the two settings the last tour steps point at. */}
+                            <OnboardingSetupSheet />
                           </View>
                           </AppReadyGate>
                         </ShareProvider>

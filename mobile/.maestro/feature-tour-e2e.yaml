@@ -13,9 +13,12 @@
 #   • Next drives the walk-through forward AND navigates the live app across the
 #     whole sequence — the 5 tabs, then the Home routine card / categories /
 #     Japa (+ mantra list) / Theerth (+ map), Bhakti verse + share, the Panchang
-#     muhurat → vrat drill, the Bhajan library, and the More reminder/alarm drill
+#     muhurat → vrat drill, the Bhajan library, the More reminder/alarm drill,
+#     and the More Language + Reading Size rows that close the walkthrough
 #   • Back steps returns to the previous step
 #   • Done on the final step dismisses the tour
+#   • the first-run setup sheet then opens: all four languages offered, a size
+#     pick keeps it open, and "Begin" applies + dismisses it
 #
 # Selector notes:
 #   • The replay row's visible label and a11y label are both the constant
@@ -144,21 +147,52 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "Japam Alarm"
 
+# More: the two settings the setup sheet asks for right after the tour
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Language"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Reading Size"
+
 # ── Back returns to the previous step ──
 - tapOn: "Previous step"
 - waitForAnimationToEnd
-- assertVisible: "Reminder Times"
+- assertVisible: "Language"
 
 # ── Forward again to the final step, then finish ──
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "Japam Alarm"
+- assertVisible: "Reading Size"
 - tapOn: "Done"
 - waitForAnimationToEnd
 
 # ── Tour dismissed: its controls are gone ──
 - assertNotVisible: "Skip tour"
 - assertNotVisible: "Next step"
+
+# ── The first-run setup sheet takes over: pick a language + size, then Begin ──
+# resetTour() clears the setup key too, so the replay path reproduces the real
+# fresh-install sequence (tour → setup sheet) deterministically.
+- extendedWaitUntil:
+    visible: "Choose your reading language"
+    timeout: 10000
+# All four languages are offered, each labelled with its constant English a11y
+# name (the sheet's own chrome is bilingual hi+en — no language is set yet).
+- assertVisible: "Gujarati"
+- assertVisible: "Kannada"
+- tapOn: "Hindi"
+- waitForAnimationToEnd
+# Size pills live in the same sheet; picking one does NOT dismiss it.
+- tapOn: "Large reading size"
+- waitForAnimationToEnd
+- assertVisible: "Choose your reading language"
+- tapOn: "Standard reading size"
+- waitForAnimationToEnd
+- tapOn: "Begin"
+- waitForAnimationToEnd
+- assertNotVisible: "Choose your reading language"
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:

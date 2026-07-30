@@ -20,6 +20,7 @@ import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import LanguagePickerSheet from '@/components/LanguagePickerSheet';
 import ReadingSizePickerSheet, { readingSizeLabel } from '@/components/ReadingSizePickerSheet';
+import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 import type { TimeOfDay } from '@/notifications/pure';
 import type { MoreStackParamList } from '@/navigation/types';
 
@@ -109,6 +110,12 @@ export default function MoreScreen({ navigation }: Props) {
   const { alarms: japamAlarms } = useJapamAlarms();
   const { scale } = useFontScale();
   const activeJapamAlarms = japamAlarms.filter((a) => a.enabled);
+  // Feature-tour spotlight targets (§47) — both rows sit in the "App" group,
+  // below the fold on smaller devices, so each declares a reveal that scrolls
+  // it on-screen before the tour measures it.
+  const moreScrollRef = React.useRef<ScrollView>(null);
+  const languageRowRef = useTourTarget('languageRow', (ref) => scrollNodeIntoView(moreScrollRef, ref));
+  const readingSizeRowRef = useTourTarget('readingSizeRow', (ref) => scrollNodeIntoView(moreScrollRef, ref));
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
   const [langSheet, setLangSheet] = useState(false);
   const [sizeSheet, setSizeSheet] = useState(false);
@@ -158,7 +165,11 @@ export default function MoreScreen({ navigation }: Props) {
         style={StyleSheet.absoluteFill}
       />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-        <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          ref={moreScrollRef}
+          contentContainerStyle={styles.scroll}
+          showsVerticalScrollIndicator={false}
+        >
           {/* Header — single line, left-aligned, selected language only */}
           <View style={styles.header}>
             <Text style={{ fontFamily: titleFont, fontSize: 30, color: colors.ink }}>
@@ -252,31 +263,37 @@ export default function MoreScreen({ navigation }: Props) {
                 {pick(lang, { hi: 'ऐप', en: 'App', gu: 'ઍપ', kn: 'ಆ್ಯಪ್' })}
               </Text>
               <View style={[styles.list, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
-                <SettingsRow
-                  first
-                  icon="अ"
-                  iconBg={colors.gold}
-                  iconFontFamily={typography.readerTitle.fontFamily}
-                  iconFontSize={16}
-                  label={pick(lang, { hi: 'भाषा', en: 'Language', gu: 'ભાષા', kn: 'ಭಾಷೆ' })}
-                  labelFontFamily={labelFont}
-                  state={currentLang.nativeLabel}
-                  stateFontFamily={nativeNameFont(lang, typography.readerTitle.fontFamily)}
-                  onPress={() => setLangSheet(true)}
-                  accessibilityLabel={`Language, ${currentLang.a11yLabel}`}
-                />
-                <SettingsRow
-                  icon="Aa"
-                  iconBg={colors.saffron}
-                  iconFontFamily={fontFamilies.interSemiBold}
-                  iconFontSize={14}
-                  label={pick(lang, { hi: 'पाठ का आकार', en: 'Reading Size', gu: 'વાંચન કદ', kn: 'ಓದುವ ಗಾತ್ರ' })}
-                  labelFontFamily={labelFont}
-                  state={readingSizeLabel(scale, lang)}
-                  stateFontFamily={chromeFont}
-                  onPress={() => setSizeSheet(true)}
-                  accessibilityLabel={`Reading size, ${scale === 'L' ? 'Large' : 'Standard'}`}
-                />
+                {/* Tour targets: wrapped in measurable views so FeatureTour can
+                    ring these two rows (§47 steps 23–24). */}
+                <View ref={languageRowRef} collapsable={false}>
+                  <SettingsRow
+                    first
+                    icon="अ"
+                    iconBg={colors.gold}
+                    iconFontFamily={typography.readerTitle.fontFamily}
+                    iconFontSize={16}
+                    label={pick(lang, { hi: 'भाषा', en: 'Language', gu: 'ભાષા', kn: 'ಭಾಷೆ' })}
+                    labelFontFamily={labelFont}
+                    state={currentLang.nativeLabel}
+                    stateFontFamily={nativeNameFont(lang, typography.readerTitle.fontFamily)}
+                    onPress={() => setLangSheet(true)}
+                    accessibilityLabel={`Language, ${currentLang.a11yLabel}`}
+                  />
+                </View>
+                <View ref={readingSizeRowRef} collapsable={false}>
+                  <SettingsRow
+                    icon="Aa"
+                    iconBg={colors.saffron}
+                    iconFontFamily={fontFamilies.interSemiBold}
+                    iconFontSize={14}
+                    label={pick(lang, { hi: 'पाठ का आकार', en: 'Reading Size', gu: 'વાંચન કદ', kn: 'ಓದುವ ಗಾತ್ರ' })}
+                    labelFontFamily={labelFont}
+                    state={readingSizeLabel(scale, lang)}
+                    stateFontFamily={chromeFont}
+                    onPress={() => setSizeSheet(true)}
+                    accessibilityLabel={`Reading size, ${scale === 'L' ? 'Large' : 'Standard'}`}
+                  />
+                </View>
                 <SettingsRow
                   icon="↗"
                   iconBg={colors.saffron}

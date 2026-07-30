@@ -34,7 +34,9 @@ export type TourTargetId =
   | 'bhajanInside'
   | 'reminderToggle'
   | 'reminderTimes'
-  | 'japamAdd';
+  | 'japamAdd'
+  | 'languageRow'
+  | 'readingSizeRow';
 
 export type Rect = { x: number; y: number; width: number; height: number };
 
