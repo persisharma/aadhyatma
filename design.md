@@ -207,14 +207,16 @@ This table is the **single source of truth** for reading-content sizing, impleme
 
 > **Runtime tokens (source of truth: `mobile/src/theme/spacing.ts`).** One 4-step scale:
 > `radii.sm` **10** · `radii.md` **14** · `radii.lg` **18** · `radii.xl` **22** · `radii.pill` **999**.
-> `xl` was added in July 2026 for the two places 22 genuinely appears — the `DeityCard`
-> card radius, and half of the 44 pt circular control — after an audit found ten ad-hoc
-> radii (11, 12, 15, 16, 17, 20, 22, 24, 26, 32) and none of them on the scale.
+> `xl` was added in July 2026 for the shared **44 pt circular back-button control** — half of
+> 44 is 22 — now used by `ReaderHeader.tsx` (every reader/index top bar) and `RashifalScreen.tsx`,
+> after an audit found ten ad-hoc radii (11, 12, 15, 16, 17, 20, 22, 24, 26, 32) and none of them
+> on the scale.
 >
-> **Not tokenised, on purpose:** a radius that is exactly half its box is a *circle*, not a
-> card corner (back buttons, the profile badge, the Panchang month stepper), and
-> `deityGlyphs/` + `CategoryIcon` internals are illustration geometry. Both stay as
-> literals; only card/tile/pill corners take a token.
+> **Not tokenised, on purpose:** an *incidental* circle — a radius that is exactly half its box —
+> keeps a bare literal: the `DeityCard` avatar (`borderRadius: 22`), the profile badge, and the
+> Panchang month stepper, as do `deityGlyphs/` + `CategoryIcon` illustration internals. Card /
+> tile / pill corners and the one shared 44 pt back control take a token; one-off circles stay
+> literals.
 
 ### Elevation
 
@@ -1240,7 +1242,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
    - Verse hits are capped at `VERSE_RESULT_CAP = 50`, with an italic "More results — type a more specific query" note when clipped.
 4. **Zero state**: dimmed `॥`, "कोई परिणाम नहीं / No matches found", and a hint to try a Devanagari word or section name.
 
-**Index coverage.** Sections (every active library entry), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §8).
+**Index coverage.** Sections (every active library entry), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §7).
 
 **Normalization** (`data/searchNormalize.ts`) — one pure fold applied to both index and query, so Devanagari and Latin queries meet in the middle: Unicode NFD with the combining nukta stripped (क़ ⇄ क), lowercase, IAST diacritics folded to ASCII (`kṛṣṇa` → `krsna`, so a plain-ASCII query matches the romanized corpus), punctuation dropped **including daṇḍa `।`/`॥`**, whitespace collapsed. Ranking is exact > prefix > substring per field (`MatchRank`), idempotent and unit-tested.
 
@@ -1401,7 +1403,7 @@ type LibraryEntry = {
 };
 ```
 
-`verseCount` and counted subtitles are computed from the module's own exported totals (`sundarkandTotal`, `shivChalisaCounts.totalVerses`, …) so the card can never drift from the data (RULEBOOK §10.10). Japam entries are spread into the array from `japamMantras`, so a new mantra automatically becomes a catalog row.
+`verseCount` and counted subtitles are computed from the module's own exported totals (`sundarkandTotal`, `shivChalisaCounts.totalVerses`, …) so the card can never drift from the data (RULEBOOK §11.10). Japam entries are spread into the array from `japamMantras`, so a new mantra automatically becomes a catalog row.
 
 ### Category set (`mobile/src/data/categories.ts`)
 
@@ -1416,7 +1418,7 @@ Twenty-one deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · k
 - **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati chalisa dirs — nine total), **aartis** (`aarti/index.ts` `aartiCollection`, 8 aartis, `refrain`/`stanza` verse types; the Aarti *category* also lists a 9th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (8 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
 - **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants.
 - **Japam** (`japam/japam.json`) — mantras with round targets; routes to the counter, not a verse pager.
-- **Theerth** (`theerth/temples.ts`) — the prose-per-temple shape of §26–27 / RULEBOOK §11; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (§44).
+- **Theerth** (`theerth/temples.ts`) — the prose-per-temple shape of §26–27 / RULEBOOK §12; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (§44).
 
 **RULEBOOK §1 is the intake contract** for every row above: mandatory `id`/names/`sub`/`thumb`/`category`/`deities`, per-verse `lines` + `meaningHi` + `meaningEn` (both languages — the toggle must work on every page), optional commentary, background sketches per §6. Gujarati/Kannada are never authored — derived at runtime (§3.1).
 

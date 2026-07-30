@@ -113,4 +113,4 @@ Use this when a flow declares `appId: com.prashantsharma.vedansh`:
 - `mobile/.maestro/README.md` — setup, running, flow catalog, element-selection rules (authority).
 - `mobile/.maestro/_launch.yaml` — shared boot subflow (onboarding dismissal, Home canary).
 - [[readers]] — multi-instance reader dispatch (chalisas/aartis) the smokes exercise.
-- `RULEBOOK.md` §0 (test gate), §3 (multi-instance readers), §13 (readers serve right content).
+- `RULEBOOK.md` §0 (test gate), §3 (multi-instance readers), §4 (readers serve right content).
