@@ -1,8 +1,8 @@
 ---
 title: Reading Languages (hi/en/gu/kn)
 type: concept
-sources: [mobile/src/data/gita/language.tsx, mobile/src/utils/transliterate.ts, mobile/src/utils/localize.ts, mobile/src/utils/langType.ts, mobile/src/utils/titleByLanguage.ts, mobile/src/components/LanguageToggle.tsx, mobile/src/theme/typography.ts, mobile/src/data/__tests__/contentCorrectness.test.ts, mobile/.translations/, docs/superpowers/specs/2026-06-13-gujarati-kannada-language-support-design.md, docs/superpowers/specs/2026-06-25-native-gukn-scaleout-progress.md]
-last_verified_date: 2026-06-26
+sources: [mobile/src/data/gita/language.tsx, mobile/src/components/OnboardingSetupSheet.tsx, mobile/src/contexts/TourContext.tsx, mobile/src/utils/transliterate.ts, mobile/src/utils/localize.ts, mobile/src/utils/langType.ts, mobile/src/utils/titleByLanguage.ts, mobile/src/components/LanguageToggle.tsx, mobile/src/theme/typography.ts, mobile/src/data/__tests__/contentCorrectness.test.ts, mobile/.translations/, docs/superpowers/specs/2026-06-13-gujarati-kannada-language-support-design.md, docs/superpowers/specs/2026-06-25-native-gukn-scaleout-progress.md]
+last_verified_date: 2026-07-30
 confidence: high
 status: current
 ---
@@ -54,6 +54,16 @@ confirming Noto Serif Kannada renders U+0C81/U+0CBC.
 the fusion artifact cites at least two Gujarati and two Kannada verification sources. Incomplete
 sections deliberately omit native fields and continue to fall back to transliteration.
 
+**First-run selection** (2026-07-30): the language is no longer left at its `'hi'` default until the
+user finds Settings. The first-launch feature tour ends on the More hub's **Language** and **Reading
+Size** rows (`languageRow`/`readingSizeRow` spotlight targets), and the moment it closes
+`OnboardingSetupSheet` asks for both — four `LANGUAGES` radios (each in its own script) + the §43
+M/L pills, applied live through the same `setLang`/`setScale` state as every other surface, with a
+`verseToken`-rendered sample line as the preview. Gated by `TourContext.shouldShowOnboardingSetup`
+(fresh install or tour replay only; key `@vedansh/onboarding-setup-v`), so a returning user — who
+already has a language — never sees it. The sheet's chrome is bilingual hi+en like the tour, because
+it runs *before* a language exists.
+
 **Typography** (`utils/langType.ts` + `theme/typography.ts`): `verseToken`/`meaningToken`/
 `titleFontByLang`/`cardFontByLang`/`isLatinLang` select tokens per language. gu/kn use bundled
 **Noto Serif Gujarati / Kannada** (`fontFamilies.gujarati(Bold)`/`kannada(Bold)`,
@@ -84,6 +94,10 @@ fallback rather than treating generated prose as verified native translation.
   NotificationPreferences provider thread the persisted `@vedansh/language` and reschedule the
   rolling window when the language changes (notifications are built ahead of time). gu/kn-script
   search-query *input* remains a noted follow-up (display works; typing queries in gu/kn doesn't).
+- **The first-run setup sheet must not branch on `lang`.** It runs before the user has picked one, so
+  every chrome string is Hindi over English (the language options need no translation — each is
+  written in its own script). Same rule as the tour; a `pick()`-localized sheet would show Hindi to
+  an English-first installer.
 - **Native meaning coverage is partial by design** — completed chalisas/aartis can render
   `meaningGu`/`meaningKn`; every other section stays on fallback until its source gate passes.
   Commentary remains fallback-only.

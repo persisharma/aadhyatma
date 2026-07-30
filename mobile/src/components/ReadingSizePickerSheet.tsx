@@ -27,12 +27,18 @@ const OPTIONS: readonly {
   { value: 'L', label: { hi: 'बड़ा', en: 'Large', gu: 'મોટું', kn: 'ದೊಡ್ಡ' }, a11y: 'Large' },
 ];
 
-const SAMPLE: Record<Lang, string> = {
+/**
+ * Live-preview line, per script. Exported so the first-run setup sheet (§47)
+ * previews a size change with the same words this sheet does.
+ */
+export const READING_SIZE_SAMPLE: Record<Lang, string> = {
   hi: 'श्री राम जय राम',
   en: 'Śrī Rāma jaya Rāma',
   gu: 'શ્રી રામ જય રામ',
   kn: 'ಶ್ರೀ ರಾಮ ಜಯ ರಾಮ',
 };
+
+const SAMPLE = READING_SIZE_SAMPLE;
 
 /** Localized label for a preset — reused by the More row to render its state text. */
 export function readingSizeLabel(scale: FontScale, lang: Lang): string {

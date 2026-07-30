@@ -6,6 +6,7 @@ import { APP_TOUR_VERSION } from '@/data/tour/whatsNew';
 
 const TOUR_COMPLETED_KEY = '@vedansh/tour-completed-v';
 const WHATS_NEW_SEEN_KEY = '@vedansh/whats-new-seen-v';
+const SETUP_COMPLETED_KEY = '@vedansh/onboarding-setup-v';
 // A deliberate-action key present ⇒ the store looks like a returning user
 // (see NewContentContext.UPGRADER_SIGNAL_KEYS). Seed it to simulate an upgrade.
 const UPGRADER_SIGNAL_KEY = '@vedansh/bookmarks';
@@ -129,9 +130,10 @@ describe('TourContext gating', () => {
     });
 
     expect(ctx.shouldShowFirstLaunchTour).toBe(true);
-    // Both keys cleared.
+    // All three onboarding keys cleared.
     expect(await AsyncStorage.getItem(TOUR_COMPLETED_KEY)).toBeNull();
     expect(await AsyncStorage.getItem(WHATS_NEW_SEEN_KEY)).toBeNull();
+    expect(await AsyncStorage.getItem(SETUP_COMPLETED_KEY)).toBeNull();
   });
 
   test('what\'s-new never shows while the first-launch tour is pending', async () => {
@@ -140,5 +142,96 @@ describe('TourContext gating', () => {
     await mountAndLoad();
     expect(ctx.shouldShowFirstLaunchTour).toBe(true);
     expect(ctx.shouldShowWhatsNew).toBe(false);
+  });
+});
+
+describe('post-tour language/size setup gating', () => {
+  test('fresh install: suppressed while the tour is up, shown the moment it closes', async () => {
+    await mountAndLoad();
+    expect(ctx.shouldShowFirstLaunchTour).toBe(true);
+    expect(ctx.shouldShowOnboardingSetup).toBe(false);
+
+    await act(async () => {
+      await ctx.markTourCompleted();
+    });
+
+    expect(ctx.shouldShowFirstLaunchTour).toBe(false);
+    expect(ctx.shouldShowOnboardingSetup).toBe(true);
+    // Completing the tour must NOT retroactively complete the setup step.
+    expect(await AsyncStorage.getItem(SETUP_COMPLETED_KEY)).toBeNull();
+  });
+
+  test('completing setup records the key and clears the prompt', async () => {
+    await mountAndLoad();
+    await act(async () => {
+      await ctx.markTourCompleted();
+    });
+    expect(ctx.shouldShowOnboardingSetup).toBe(true);
+
+    await act(async () => {
+      await ctx.markOnboardingSetupCompleted();
+    });
+
+    expect(ctx.shouldShowOnboardingSetup).toBe(false);
+    expect(await AsyncStorage.getItem(SETUP_COMPLETED_KEY)).toBe(APP_TOUR_VERSION);
+  });
+
+  test('a returning user never gets the setup sheet', async () => {
+    // Prior usage exists → they already have a reading language; the What's New
+    // sheet is their surface, not a first-run picker.
+    await seedReturningUser();
+    await mountAndLoad();
+
+    expect(ctx.shouldShowOnboardingSetup).toBe(false);
+    expect(ctx.shouldShowWhatsNew).toBe(true);
+  });
+
+  test('a fresh install that already completed setup is not asked again', async () => {
+    await AsyncStorage.setItem(TOUR_COMPLETED_KEY, APP_TOUR_VERSION);
+    await AsyncStorage.setItem(WHATS_NEW_SEEN_KEY, APP_TOUR_VERSION);
+    await AsyncStorage.setItem(SETUP_COMPLETED_KEY, APP_TOUR_VERSION);
+
+    await mountAndLoad();
+
+    expect(ctx.shouldShowFirstLaunchTour).toBe(false);
+    expect(ctx.shouldShowOnboardingSetup).toBe(false);
+  });
+
+  test('resetTour re-arms the setup sheet too, and it fires after the replayed tour', async () => {
+    // A returning user (would otherwise never see the setup sheet) replays the
+    // tour from More → Show App Tour.
+    await seedReturningUser();
+    await AsyncStorage.setItem(SETUP_COMPLETED_KEY, APP_TOUR_VERSION);
+    await mountAndLoad();
+    expect(ctx.shouldShowOnboardingSetup).toBe(false);
+
+    await act(async () => {
+      await ctx.resetTour();
+    });
+    // Tour first — the sheet waits its turn.
+    expect(ctx.shouldShowFirstLaunchTour).toBe(true);
+    expect(ctx.shouldShowOnboardingSetup).toBe(false);
+    expect(await AsyncStorage.getItem(SETUP_COMPLETED_KEY)).toBeNull();
+
+    await act(async () => {
+      await ctx.markTourCompleted();
+    });
+
+    expect(ctx.shouldShowOnboardingSetup).toBe(true);
+  });
+
+  test('storage-read failure still runs the full first-run sequence', async () => {
+    const spy = jest
+      .spyOn(AsyncStorage, 'multiGet')
+      .mockRejectedValueOnce(new Error('storage unavailable'));
+
+    await mountAndLoad();
+    expect(ctx.shouldShowFirstLaunchTour).toBe(true);
+    await act(async () => {
+      await ctx.markTourCompleted();
+    });
+    expect(ctx.shouldShowOnboardingSetup).toBe(true);
+
+    spy.mockRestore();
   });
 });

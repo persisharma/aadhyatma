@@ -25,6 +25,8 @@ const VALID_TARGET_IDS = new Set([
   'reminderToggle',
   'reminderTimes',
   'japamAdd',
+  'languageRow',
+  'readingSizeRow',
 ]);
 
 describe('getWhatsNewForVersion', () => {
@@ -94,6 +96,15 @@ describe('tourSteps content contract', () => {
     tourSteps.forEach((s) => {
       if (s.targetId !== undefined) expect(VALID_TARGET_IDS.has(s.targetId)).toBe(true);
     });
+  });
+
+  test('the walkthrough ends on the Language and Reading Size rows', () => {
+    // The post-tour setup sheet (§47) asks the user to pick exactly these two,
+    // so the last two steps must be the ones that show where they live.
+    const tail = tourSteps.slice(-2).map((s) => s.id);
+    expect(tail).toEqual(['language-row', 'reading-size-row']);
+    expect(tourSteps.at(-2)?.targetId).toBe('languageRow');
+    expect(tourSteps.at(-1)?.targetId).toBe('readingSizeRow');
   });
 
   test('TAB_ORDER covers every valid tab with a unique index and resolves each step', () => {
