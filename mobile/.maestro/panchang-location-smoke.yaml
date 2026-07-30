@@ -34,7 +34,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Step 2: Set global reading language to English (More tab) ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
 - waitForAnimationToEnd
@@ -45,7 +45,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Step 3: Open the Panchang tab; default reference is Ujjain ──
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: ".*Ujjain.*"
@@ -61,6 +61,10 @@ appId: com.prashantsharma.vedansh
 # ── Step 5: Search for Delhi and pick it (partial query — see selector notes) ──
 - tapOn: "Search city"
 - inputText: "Delh"
+# Dismiss the soft keyboard first — on Android it covers the "Delhi" result row,
+# so the tap would land on the keyboard and leave the picker open (the reference
+# line then never updates and the sunrise block stays behind the open modal).
+- hideKeyboard
 - waitForAnimationToEnd
 - tapOn: "Delhi"
 - waitForAnimationToEnd
@@ -69,51 +73,36 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: ".*Delhi.*"
     timeout: 15000
+# The panchang recomputes asynchronously after the location change; let it settle
+# before scrolling so the sunrise/sunset block has rendered (on Android the
+# recompute can lag the location-line update).
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: "Sunrise"
     direction: DOWN
     centerElement: true
-    timeout: 10000
+    timeout: 20000
 - assertVisible: "Brahma Muhurta"
 
 # ── Step 7: Selection persists across a tab switch ──
-- tapOn: "More, tab.*"
+# The Panchang list keeps its scroll position across a tab switch on Android
+# (iOS resets it), and the earlier "scroll to Sunrise" left the top reference
+# line off-screen — so scroll back up to it rather than a plain assert.
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: ".*Delhi.*"
-    timeout: 15000
-
-# ── Step 8: Restore the Ujjain default (best-effort cleanup) ──
 - scrollUntilVisible:
     element:
-      text: "Location: .*"
+      text: ".*Delhi.*"
     direction: UP
     centerElement: true
-    timeout: 20000
-- tapOn: "Location: .*"
-- waitForAnimationToEnd
-- tapOn: "Search city"
-- inputText: "Ujjai"
-- waitForAnimationToEnd
-- tapOn: "Ujjain"
-- waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: ".*Ujjain.*"
     timeout: 15000
-- tapOn: "More, tab.*"
-- waitForAnimationToEnd
-- tapOn:
-    text: "Language,.*"   # open the Language picker sheet (best-effort restore)
-    optional: true
-- waitForAnimationToEnd
-- tapOn:
-    text: "Hindi"
-    optional: true
-- waitForAnimationToEnd
 
-# ── Cleanup — Expo Go termination resets navigation for the next flow ──
+# No explicit location/language restore needed: the next run's _launch
+# clearState wipes persisted state, so the app defaults back to Ujjain + Hindi.
+# (An in-flow restore here only added a flaky, redundant location-picker round
+# trip.) Stop the app so the next flow starts clean.
 - stopApp:
     appId: com.prashantsharma.vedansh

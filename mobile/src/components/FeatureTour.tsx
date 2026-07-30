@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   InteractionManager,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -207,7 +208,7 @@ export default function FeatureTour() {
   if (!visible || !step) return null;
 
   return (
-    <FullWindowOverlay unstable_accessibilityContainerViewIsModal>
+    <TourOverlayContainer>
       <View style={[StyleSheet.absoluteFill, styles.overlay]}>
         {/* Visual-only scrim. The full-window overlay itself blocks the app
             underneath; keeping the scrim out of the hit-test path lets the tour
@@ -348,8 +349,28 @@ export default function FeatureTour() {
         )}
       </View>
       </View>
-    </FullWindowOverlay>
+    </TourOverlayContainer>
   );
+}
+
+/**
+ * iOS renders the tour in a separate UIWindow via FullWindowOverlay so the
+ * spotlight floats above the navigator, tab bar, and mini-player. On Android
+ * FullWindowOverlay can land in a detached window that the accessibility tree
+ * (TalkBack + Maestro) never sees, so render the overlay in-tree there — the
+ * top-level root View already spans the screen and the children use
+ * StyleSheet.absoluteFill. Keeping it in-tree fixes both the a11y gap and e2e
+ * drivability without changing the iOS presentation.
+ */
+function TourOverlayContainer({ children }: { children: React.ReactNode }) {
+  if (Platform.OS === 'ios') {
+    return (
+      <FullWindowOverlay unstable_accessibilityContainerViewIsModal>
+        {children}
+      </FullWindowOverlay>
+    );
+  }
+  return <>{children}</>;
 }
 
 const styles = StyleSheet.create({

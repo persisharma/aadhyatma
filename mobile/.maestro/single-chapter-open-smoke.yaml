@@ -24,7 +24,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Set global reading language to English (More tab) ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -35,7 +35,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Home → Hymns & Praise (stotram) category ──
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Hymns & Praise\\..*Tap to open\\."
@@ -85,7 +85,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 
 # ── Restore Hindi (best-effort) so later flows start from the default ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn:
     text: "Language,.*"

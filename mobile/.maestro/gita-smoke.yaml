@@ -31,7 +31,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Set global reading language to English (More tab) ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
 - waitForAnimationToEnd
@@ -42,7 +42,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Home → Sacred Books (Granth) category ──
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - assertVisible: "Sacred Books\\..*Tap to open\\."
 - tapOn: "Sacred Books\\..*Tap to open\\."

@@ -4,30 +4,32 @@
 # Verifies the purpose grid, cross-deity purpose list, route dispatch, and the
 # first-page-only "When to Recite" panel.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
-- stopApp:
-    appId: host.exp.Exponent
-- openLink:
-    link: "exp://127.0.0.1:8081"
-- waitForAnimationToEnd:
-    timeout: 30000
-- tapOn:
-    text: "Skip tour"
-    optional: true
-- tapOn:
-    text: "Close"
-    optional: true
-- tapOn:
-    text: "Got it"
-    optional: true
+# Native build: launch via the shared _launch subflow (clearState, first-launch
+# tour / What's New / notification dismiss, lands on Home). Category and tile
+# a11y labels are English by contract regardless of display language.
+- runFlow: _launch.yaml
+
+# Flip the reading language to English so the reader's WhenToRecitePanel renders
+# "When to Recite" / "Best Days" (Latin) rather than the default Devanagari,
+# which Maestro can't reliably read. Category/purpose tile a11y labels are
+# English by contract, so only the reader body needs this.
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
 - extendedWaitUntil:
     visible: "Good Habits\\..*Tap to open\\."
     timeout: 60000
-- swipe:
-    direction: DOWN
-- waitForAnimationToEnd
 
 # ── Home → Browse by Purpose ──
 - scrollUntilVisible:
@@ -62,11 +64,12 @@ appId: host.exp.Exponent
     text: "Start over from the beginning"
     optional: true
 - waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: ".*When to Recite.*"
+# The WhenToRecitePanel sits below the verse in the reader's ScrollView — scroll
+# it into view (below the fold on Android's shorter viewport). The panel is
+# expanded by default, so "Best Days" is present once the header is on-screen.
+- scrollUntilVisible:
+    element:
+      text: ".*When to Recite.*"
+    direction: DOWN
     timeout: 15000
 - assertVisible: ".*Best Days.*"
-
-# Clean up — Expo Go termination resets navigation stack for the next flow.
-- stopApp:
-    appId: host.exp.Exponent

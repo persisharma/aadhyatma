@@ -91,6 +91,26 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Hymns & Praise. New. Tap to open."
 - waitForAnimationToEnd
 
+# Saraswati Stotram (addedInVersion 1.3.1) — a 4th debut-new stotram entry added
+# after this flow was first written. It sits at the top of the list; it must be
+# opened too, else the category keeps one unseen NEW entry and its Home tile
+# badge never clears (hasNewInCategory stays true), failing the plain-form
+# assertion below.
+- scrollUntilVisible:
+    element:
+      text: "Saraswati Stotram\\..*Tap to open\\."
+    direction: UP
+    timeout: 15000
+- tapOn: "Saraswati Stotram\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
 # Krishna Stotram
 - scrollUntilVisible:
     element:
