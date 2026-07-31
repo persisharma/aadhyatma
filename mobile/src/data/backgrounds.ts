@@ -134,6 +134,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'datta-ashtakam': shivaStrotamImages.shiva,
   'shani-ashtakam': backgroundImages.source_gayatri_savitri_sun,
   'kalika-ashtakam': backgroundImages.deity_durga_lion,
+  rudrashtakam: shivaStrotamImages.shiva,
   'navagraha-stotram': backgroundImages.source_gayatri_savitri_sun,
 };
 

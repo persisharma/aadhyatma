@@ -1,7 +1,7 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
+sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
 last_verified_date: 2026-08-01
 confidence: high
 status: current
@@ -54,9 +54,13 @@ Valmiki Ramayan (7 kāṇḍas). Single-chapter texts (Hanuman Ashtak, Krishna S
 Ramcharitmanas — 1 chapter file each today) render verses only; they need no transition because
 there is no next subsection yet.
 
-**Multi-instance readers** (`ChalisaReaderScreen`, `AartiReaderScreen`, `SanskarReaderScreen`)
-dispatch on a `route.params` discriminator through a registry — they do not import one section's
-data at the top of the file (RULEBOOK §3).
+**Multi-instance readers** (`ChalisaReaderScreen`, `AartiReaderScreen`, `AshtakamReaderScreen`,
+`SanskarReaderScreen`) dispatch on a `route.params` discriminator through a registry — they do
+not import one section's data at the top of the file (RULEBOOK §3). For Ashtakam, the total
+registry in `data/ashtakam/index.ts` is the source of truth; the matching `data/texts.ts` row
+makes an active entry discoverable through category, deity, search, routine, progress, and
+purpose surfaces. Rudrashtakam is the current reference addition: 8 hymn verses plus its
+phalashruti, represented as 9 reader pages without creating a new deity or category.
 
 **Tests:** `readerAutoAdvance.test.tsx` enforces the auto-advance contract for every
 multi-chapter reader (transition injected at chapter 1's tail, prev-transition at chapter 2's

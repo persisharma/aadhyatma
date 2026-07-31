@@ -8,6 +8,8 @@
 - [`design.md`](../design.md) — visual system spec (tokens, type scale, romanization rules).
 - [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap + PRDs 01–07.
 - [`docs/superpowers/`](../docs/superpowers/) — deity-icon plan + design spec.
+- [`docs/content-parity/chalisa-aarti-existing-deities.md`](../docs/content-parity/chalisa-aarti-existing-deities.md) — source-candidate manifest for Chalisa/Aarti parity using only existing deity ids.
+- [`docs/content-parity/other-content-existing-deities.md`](../docs/content-parity/other-content-existing-deities.md) — full non-Chalisa/Aarti parity benchmark and acquisition waves for the existing deity taxonomy.
 
 ## Subsystems
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.
