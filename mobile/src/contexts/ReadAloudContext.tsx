@@ -230,6 +230,12 @@ export function ReadAloudProvider({ children }: { children: React.ReactNode }) {
     return resolveVoice(target, voices) ? 'ready' : 'unavailable';
   }, [voices, target, probeFailed]);
 
+  // Read by `start`/`speakPreview`, which must not re-create on every probe change.
+  const availabilityRef = useRef(availability);
+  useEffect(() => {
+    availabilityRef.current = availability;
+  }, [availability]);
+
   // The user may leave to install voice data; re-probe when they come back.
   useEffect(() => {
     if (availability !== 'unavailable') return undefined;
@@ -341,6 +347,11 @@ export function ReadAloudProvider({ children }: { children: React.ReactNode }) {
 
   const start = useCallback(
     (session: ReadAloudSession, pageIndex: number) => {
+      // Refuse to speak a language this device has no voice for. Without this, the
+      // engine would silently use its default voice — reading Kannada text aloud in
+      // English — which is the whole failure mode the per-language design prevents.
+      if (availabilityRef.current === 'unavailable') return;
+
       const chunks = session.chunksFor(pageIndex);
       if (chunks === null) return;
 
@@ -395,6 +406,7 @@ export function ReadAloudProvider({ children }: { children: React.ReactNode }) {
 
   const speakPreview = useCallback(
     (text: string) => {
+      if (availabilityRef.current === 'unavailable') return;
       claimPlayback('tts');
       tokenRef.current += 1;
       clearWatchdog();

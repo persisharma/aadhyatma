@@ -10,6 +10,7 @@ import React, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   DEFAULT_READ_ALOUD_PREFS,
+  SPEECH_TARGETS,
   clampRate,
   type ReadAloudPrefs,
   type SpeechTarget,
@@ -68,7 +69,9 @@ export function parseReadAloudPrefs(raw: string | null): ReadAloudPrefs {
   const voices = src.voiceByTarget;
   if (typeof voices === 'object' && voices !== null) {
     const v = voices as Record<string, unknown>;
-    for (const target of ['hi', 'en'] as const) {
+    // Driven off SPEECH_TARGETS so a new reading language cannot be silently dropped
+    // here — one voice slot per language, since read-aloud never substitutes one.
+    for (const target of SPEECH_TARGETS) {
       if (typeof v[target] === 'string' && (v[target] as string).length > 0) {
         next.voiceByTarget[target] = v[target] as string;
       }

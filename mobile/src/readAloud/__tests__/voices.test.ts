@@ -27,16 +27,17 @@ const EN_IN = v('com.apple.voice.compact.en-IN.Rishi', 'en-IN', 'Default', 'Rish
 const EN_US = v('com.apple.voice.compact.en-US.Samantha', 'en-US', 'Default', 'Samantha');
 
 describe('speechLangFor', () => {
-  it('maps gu and kn to the Hindi voice, not their own', () => {
-    // gu/kn verse text on screen is a runtime transliteration of Devanagari, so the
-    // speech path deliberately reads the Devanagari source with a Hindi voice.
-    expect(speechLangFor('gu')).toBe('hi');
-    expect(speechLangFor('kn')).toBe('hi');
+  it('speaks every reading language in its own voice — no substitution', () => {
+    // A Gujarati reader hears Gujarati or nothing; read-aloud never quietly swaps in
+    // another language, because the user would read one script and hear another.
+    for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+      expect(speechLangFor(lang)).toBe(lang);
+    }
   });
 
-  it('maps hi to hi and en to en', () => {
-    expect(speechLangFor('hi')).toBe('hi');
-    expect(speechLangFor('en')).toBe('en');
+  it('has a locale for all four languages', () => {
+    expect(SPEECH_LOCALE.gu).toEqual({ ios: 'gu-IN', android: 'gu' });
+    expect(SPEECH_LOCALE.kn).toEqual({ ios: 'kn-IN', android: 'kn' });
   });
 });
 
@@ -142,6 +143,42 @@ describe('speakOptionsFor — iOS', () => {
     const opts = speakOptionsFor('hi', null, 1, 'ios');
     expect('voice' in opts).toBe(false);
     expect(opts.language).toBe('hi-IN');
+  });
+});
+
+describe('gu/kn targets', () => {
+  const GU = v('gu-voice', 'gu-IN', 'Default', 'Dhwani');
+  const KN = v('kn-voice', 'kn-IN', 'Default', 'Soumya');
+
+  it('resolves a Gujarati or Kannada voice when the device has one', () => {
+    expect(resolveVoice('gu', [HI_DEFAULT, GU])?.identifier).toBe('gu-voice');
+    expect(resolveVoice('kn', [HI_DEFAULT, KN])?.identifier).toBe('kn-voice');
+  });
+
+  it('returns null rather than falling back to Hindi', () => {
+    // The whole point: no voice for the reading language means "unavailable", which the
+    // UI surfaces. Returning a Hindi voice here would read Gujarati text as Hindi.
+    expect(resolveVoice('gu', [HI_DEFAULT, HI_ENHANCED])).toBeNull();
+    expect(resolveVoice('kn', [HI_DEFAULT, EN_IN])).toBeNull();
+  });
+
+  it('builds Android options without the region tag for gu/kn too', () => {
+    expect(speakOptionsFor('gu', null, 1, 'android').language).toBe('gu');
+    expect(speakOptionsFor('kn', null, 1, 'android').language).toBe('kn');
+    expect('language' in speakOptionsFor('gu', GU, 1, 'android')).toBe(false);
+  });
+
+  it('builds iOS options with the BCP-47 tag for gu/kn', () => {
+    expect(speakOptionsFor('gu', GU, 1, 'ios').language).toBe('gu-IN');
+    expect(speakOptionsFor('kn', KN, 1, 'ios').language).toBe('kn-IN');
+  });
+
+  it('keeps a saved voice per language, so switching language switches voice', () => {
+    const voices = [HI_DEFAULT, GU, KN];
+    expect(resolveVoice('hi', voices, HI_DEFAULT.identifier)?.identifier).toBe(HI_DEFAULT.identifier);
+    expect(resolveVoice('gu', voices, GU.identifier)?.identifier).toBe(GU.identifier);
+    // A saved identifier belonging to another language must not leak across targets.
+    expect(resolveVoice('kn', voices, GU.identifier)?.identifier).toBe(KN.identifier);
   });
 });
 

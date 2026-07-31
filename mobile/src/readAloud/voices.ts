@@ -3,14 +3,18 @@
  *
  * Two decisions live here, and both are load-bearing.
  *
- * 1. **v1 resolves two speech locales, not four.** gu/kn verse lines are runtime
- *    Devanagari→Gujarati/Kannada *script conversion* (utils/transliterate.ts), not
- *    authored Gujarati/Kannada. Handing those glyphs to a gu-IN/kn-IN voice applies
- *    Gujarati/Kannada phonology to Sanskrit — strictly worse than Hindi phonology —
- *    and adds two more device-voice-availability failure modes. So gu/kn speak the
- *    Devanagari source with a Hindi voice, and (since the meaning is spoken too, and
- *    a Hindi voice cannot read Gujarati glyphs at all) they speak `meaningHi` even
- *    where authored `meaningGu`/`meaningKn` exists. Disclosed in the settings sheet.
+ * 1. **Each reading language is spoken in its own voice, or not at all.** There is no
+ *    substitution: a Gujarati reader hears a Gujarati voice reading the Gujarati on
+ *    screen, and a device with no Gujarati voice reports read-aloud *unavailable* for
+ *    Gujarati rather than quietly speaking something else. Substituting Hindi for gu/kn
+ *    would mean the user reads one script and hears another language — and for the
+ *    meaning it would silently discard authored `meaningGu`/`meaningKn`. An honest
+ *    "not available on this device" is better than a confusing approximation.
+ *
+ *    Consequence to accept: gu/kn coverage depends on the device having that voice
+ *    installed, which is less common than Hindi. That is a real limitation, surfaced
+ *    plainly in the UI (with an Android hop to TTS settings to install it) rather than
+ *    hidden behind a fallback.
  *
  * 2. **Both platforms fail SILENTLY for an unavailable language**, so the caller must
  *    probe `getAvailableVoicesAsync()` and gate the UI on the result. `onError` never
@@ -19,6 +23,8 @@
  *        nil, and the system default voice speaks instead.
  *      - Android: `isLanguageAvailable` returns LANG_MISSING_DATA/LANG_NOT_SUPPORTED and
  *        `speakOut` falls back to `Locale.getDefault()`.
+ *    Without the probe, "no Gujarati voice" would present as Gujarati text read aloud
+ *    in an American accent — which is exactly what decision 1 exists to prevent.
  */
 
 import type { SpeechOptions } from 'expo-speech';
@@ -47,11 +53,17 @@ export type ProbedVoice = {
 export const SPEECH_LOCALE: Record<SpeechTarget, { ios: string; android: string }> = {
   hi: { ios: 'hi-IN', android: 'hi' },
   en: { ios: 'en-IN', android: 'en' },
+  gu: { ios: 'gu-IN', android: 'gu' },
+  kn: { ios: 'kn-IN', android: 'kn' },
 };
 
-/** Which voice locale speaks a given reading language. gu/kn → 'hi' (see header). */
+/**
+ * Which voice speaks a given reading language — identity. Kept as a named function
+ * because call sites read better for it, and because it used to collapse gu/kn onto
+ * Hindi; the identity mapping is the deliberate decision, not an oversight.
+ */
 export function speechLangFor(lang: Lang): SpeechTarget {
-  return lang === 'en' ? 'en' : 'hi';
+  return lang;
 }
 
 /** Normalizes 'hi_IN' / 'hi-in' / 'hi-IN' to a comparable 'hi-in'. */
@@ -75,12 +87,16 @@ export function resolveVoice(
   voices: readonly ProbedVoice[],
   preferredIdentifier?: string
 ): ProbedVoice | null {
+  const wanted = normalizeTag(SPEECH_LOCALE[target].ios);
+
   if (preferredIdentifier) {
     const saved = voices.find((v) => v.identifier === preferredIdentifier);
-    if (saved) return saved;
+    // Honour the saved choice only if it actually speaks the requested language. A
+    // stored identifier can outlive its target (prefs carried over, a voice
+    // uninstalled and its id reused), and using it anyway would read one language's
+    // text in another's voice — the exact failure this module exists to prevent.
+    if (saved && primarySubtag(saved.language) === target) return saved;
   }
-
-  const wanted = normalizeTag(SPEECH_LOCALE[target].ios);
   const rank = (a: ProbedVoice, b: ProbedVoice) => {
     const aEnhanced = a.quality === 'Enhanced' ? 0 : 1;
     const bEnhanced = b.quality === 'Enhanced' ? 0 : 1;

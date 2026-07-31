@@ -206,7 +206,11 @@ describe('preview', () => {
     expect(speechMock.__calls[0].text).toBe(READING_SIZE_SAMPLE.hi);
   });
 
-  it('previews in the active script', async () => {
+  it('previews in the active script when that language has a voice', async () => {
+    speechMock.getAvailableVoicesAsync.mockResolvedValue([
+      ...voiceList,
+      { identifier: 'kn-voice', name: 'Soumya', quality: 'Default', language: 'kn-IN' },
+    ]);
     const t = await renderSheet('kn');
 
     await act(async () => {
@@ -215,6 +219,7 @@ describe('preview', () => {
     });
 
     expect(speechMock.__calls[0].text).toBe(READING_SIZE_SAMPLE.kn);
+    expect(speechMock.__calls[0].options.voice).toBe('kn-voice');
   });
 });
 
@@ -251,20 +256,50 @@ describe('the unavailable state', () => {
   });
 });
 
-describe('the gu/kn disclosure', () => {
-  it('tells Gujarati and Kannada readers they will hear Hindi', async () => {
-    // They read a transliterated script but the speech path uses the Devanagari
-    // source with a Hindi voice — surprising unless it is said out loud.
-    for (const lang of ['gu', 'kn'] as const) {
-      const t = await renderSheet(lang);
-      expect(allText(t)).toMatch(lang === 'gu' ? /હિન્દી આવાજ/ : /ಹಿಂದಿ ಧ್ವನಿ/);
-      act(() => t.unmount());
-      tree = null;
-    }
+describe('voices are per reading language', () => {
+  const GU = { identifier: 'gu-voice', name: 'Dhwani', quality: 'Default', language: 'gu-IN' };
+
+  it('offers only the active language\'s voices, never another language\'s', async () => {
+    speechMock.getAvailableVoicesAsync.mockResolvedValue([...voiceList, GU]);
+    const t = await renderSheet('gu');
+
+    expect(byLabel(t, 'Voice Dhwani')).toHaveLength(1);
+    // The Hindi voices are installed but must not be offered to a Gujarati reader.
+    expect(byLabel(t, 'Voice Lekha')).toHaveLength(0);
+    expect(byLabel(t, 'Voice Lekha Premium')).toHaveLength(0);
   });
 
-  it('shows no such note for Hindi or English readers', async () => {
-    const t = await renderSheet('hi');
-    expect(allText(t)).not.toMatch(/હિન્દી આવાજ/);
+  it('reports unavailable for a language the device has no voice for — no Hindi fallback', async () => {
+    // Only Hindi voices installed, reading in Gujarati. Substituting Hindi would mean
+    // reading one script and hearing another language; unavailable is the honest answer.
+    speechMock.getAvailableVoicesAsync.mockResolvedValue(voiceList);
+    const t = await renderSheet('gu');
+
+    expect(byLabel(t, 'Automatic voice')).toHaveLength(0);
+    expect(byLabel(t, 'Check again for voices')).toHaveLength(1);
+    expect(byLabel(t, 'Preview voice')).toHaveLength(0);
+  });
+
+  it('names the language whose voice is missing, in its own script', async () => {
+    speechMock.getAvailableVoicesAsync.mockResolvedValue(voiceList);
+    const t = await renderSheet('gu');
+    expect(allText(t)).toContain('ગુજરાતી');
+  });
+
+  it('says which language the voice list is for', async () => {
+    speechMock.getAvailableVoicesAsync.mockResolvedValue([...voiceList, GU]);
+    const t = await renderSheet('gu');
+    expect(allText(t)).toContain('ગુજરાતી');
+  });
+
+  it('persists the choice under the active language, not a shared key', async () => {
+    speechMock.getAvailableVoicesAsync.mockResolvedValue([...voiceList, GU]);
+    const t = await renderSheet('gu');
+
+    await act(async () => {
+      byLabel(t, 'Voice Dhwani')[0].props.onPress();
+    });
+
+    expect(JSON.parse(store['@vedansh/read-aloud']).voiceByTarget).toEqual({ gu: 'gu-voice' });
   });
 });

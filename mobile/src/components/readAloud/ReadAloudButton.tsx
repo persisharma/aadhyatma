@@ -1,9 +1,17 @@
 import React, { useCallback } from 'react';
 import { Alert, Linking, Platform, Pressable, StyleSheet, Text } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { LANGUAGES, useGitaLanguage, type Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import type { ReadAloudControl } from '@/screens/_useReaderReadAloud';
+
+/**
+ * The language's own name, in its own script — the string to interpolate when telling
+ * the user which voice to install. Shared with `ReadAloudSettingsSheet`.
+ */
+export function languageName(lang: Lang): string {
+  return (LANGUAGES.find((l) => l.value === lang) ?? LANGUAGES[0]).nativeLabel;
+}
 
 /**
  * The reader top-bar read-aloud control, rendered in `ReaderHeader`'s `right` slot
@@ -31,11 +39,14 @@ export default function ReadAloudButton({ control }: { control: ReadAloudControl
       gu: 'આવાજ ઉપલબ્ધ નથી',
       kn: 'ಧ್ವನಿ ಲಭ್ಯವಿಲ್ಲ',
     });
+    // Names the language the user is actually reading in — read-aloud never
+    // substitutes another one, so this is the voice they need to install.
+    const name = languageName(lang);
     const body = pick(lang, {
-      hi: 'इस उपकरण में हिन्दी की आवाज़ नहीं है। उपकरण की सेटिंग्स में हिन्दी वाणी डाउनलोड करें।',
-      en: "This device has no Hindi voice installed. Add Hindi speech data in your device's settings.",
-      gu: 'આ ઉપકરણમાં હિન્દી આવાજ નથી. ઉપકરણની સેટિંગ્સમાં હિન્દી વાણી ડાઉનલોડ કરો.',
-      kn: 'ಈ ಸಾಧನದಲ್ಲಿ ಹಿಂದಿ ಧ್ವನಿ ಇಲ್ಲ. ಸಾಧನದ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಹಿಂದಿ ವಾಣಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ.',
+      hi: `इस उपकरण में ${name} की आवाज़ नहीं है। उपकरण की सेटिंग्स में ${name} वाणी डाउनलोड करें।`,
+      en: `This device has no ${name} voice installed. Add ${name} speech data in your device's settings.`,
+      gu: `આ ઉપકરણમાં ${name} આવાજ નથી. ઉપકરણની સેટિંગ્સમાં ${name} વાણી ડાઉનલોડ કરો.`,
+      kn: `ಈ ಸಾಧನದಲ್ಲಿ ${name} ಧ್ವನಿ ಇಲ್ಲ. ಸಾಧನದ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ${name} ವಾಣಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ.`,
     });
     const close = pick(lang, { hi: 'ठीक है', en: 'OK', gu: 'ઠીક છે', kn: 'ಸರಿ' });
 

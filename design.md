@@ -1837,23 +1837,32 @@ Verse lines first, then the भावार्थ (**on by default**), then Gita
 One utterance **per verse line** — the gap between utterances then lands on the visual line
 break, which for a chaupai or doha half-line is where a reciter breathes.
 
-v1 resolves **two** speech locales, not four:
+**Each reading language is spoken in its own voice, or not at all.** Read-aloud never substitutes
+one language for another, so what is heard is exactly what is on screen:
 
 | Reading language | Spoken source | Voice |
 | --- | --- | --- |
-| `hi` | Devanagari lines + `meaningHi` | `hi` |
-| `en` | `linesEn` / `transliteration` + `meaningEn` | `en` |
-| `gu` | **Devanagari lines + `meaningHi`** — not the on-screen Gujarati | `hi` |
-| `kn` | **Devanagari lines + `meaningHi`** — not the on-screen Kannada | `hi` |
+| `hi` | Devanagari lines + `meaningHi` | `hi-IN` |
+| `en` | `linesEn` / `transliteration` + `meaningEn` | `en-IN` |
+| `gu` | the on-screen Gujarati lines + `meaningGu` (or the re-scripted fallback) | `gu-IN` |
+| `kn` | the on-screen Kannada lines + `meaningKn` (or the re-scripted fallback) | `kn-IN` |
 
-gu/kn verse text on screen is *runtime script conversion* of Devanagari (`utils/transliterate.ts`),
-not authored content. Handing those glyphs to a `gu-IN`/`kn-IN` voice would apply Gujarati or
-Kannada phonology to Sanskrit — worse than Hindi phonology — and add two more device-voice
-failure modes. Because the meaning is spoken too, the rule extends to it: a Hindi voice cannot
-read Gujarati glyphs at all, so gu/kn hear `meaningHi` **even where authored `meaningGu` /
-`meaningKn` exists**. This is a deliberate divergence from `verseLinesByLang` / `meaningByLang`
-**on the speech path only**, and the settings sheet says so in-script rather than letting it
-surprise the reader. It also collapses "no voice on this device" to the single case "no Hindi voice".
+The spoken text therefore comes straight from the same `verseLinesByLang` / `meaningByLang`
+helpers the page renders with — including the authored native meanings, which a substitution
+would have silently discarded.
+
+**A language whose voice the device lacks reports read-aloud unavailable for that language**
+(§53.4), naming it in its own script and, on Android, offering a hop to TTS settings to install
+it. The alternative — quietly speaking Hindi instead — would have the user reading one script
+while hearing another language, and both platforms' silent-fallback behaviour makes that easy to
+ship by accident: the guard is that `start()` refuses outright when availability is `unavailable`,
+so the engine is never handed text it cannot voice.
+
+**Cost to accept:** gu/kn coverage depends on that voice being installed, which is less common
+than Hindi. That is a real limitation of the honest design, surfaced plainly rather than hidden.
+Switching the app's reading language switches the whole voice section — voices are stored per
+language (`voiceByTarget`), and a saved identifier is only honoured if it still speaks that
+language, so a stale preference can never leak a voice across languages.
 
 Dandas are normalized for the synthesizer (`।` → a sentence stop; engines otherwise read a bare
 danda as nothing, or aloud as "vertical line"). **Only the string handed to the synthesizer is
@@ -1914,6 +1923,7 @@ Both platforms fall back to the device default voice for an unavailable language
 neither fires an error callback. So voices are probed at startup (`getAvailableVoicesAsync`, raced
 against a 4 s timeout because Android's engine binds slowly), the control is gated on the result,
 and a **3 s `onStart` watchdog** catches the OEM engine that reports a language then emits nothing.
+Availability is resolved **for the active reading language**, so it changes when the language does.
 The probe re-runs when the app foregrounds while unavailable, so installing voice data and coming
 back just works.
 
@@ -1931,16 +1941,17 @@ slide `Modal`, backdrop `Pressable` → close, grabber, `parchment-highlight`, r
 button that does not auto-close on selection. Sub-header names it a device voice
 ("उपकरण की आवाज़ से — मानव पाठ नहीं"). Sections:
 
-1. **आवाज़ / Voice** — `स्वतः / Automatic` plus up to 4 probed voices, Enhanced first, each
-   showing the OS voice name. Replaced by the explainer + a TTS-settings hop + a "फिर देखें /
-   Check again" re-probe when no voice exists.
+1. **आवाज़ / Voice** — `स्वतः / Automatic` plus up to 4 probed voices **for the active reading
+   language**, Enhanced first, each showing the OS voice name, under a line naming that language.
+   Replaced by the explainer + a TTS-settings hop + a "फिर देखें / Check again" re-probe when the
+   device has no voice for it.
 2. **गति / Speed** — the §54 `RateStepper`, 0.5–1.5 in 0.1 steps.
 3. **क्या पढ़ें / What to read** — `अर्थ भी` (on) and `व्याख्या भी` (off), `accessibilityRole="switch"`.
 4. **सुनकर देखें / Preview** — speaks `READING_SIZE_SAMPLE[lang]`, reused from §43. The only way
    a user can judge a voice.
 
-Persisted at `@vedansh/read-aloud` (`rate`, `voiceByTarget`, `readMeaning`, `readCommentary`),
-validated field by field on hydrate.
+Persisted at `@vedansh/read-aloud` (`rate`, `voiceByTarget` — one slot per reading language,
+`readMeaning`, `readCommentary`), validated field by field on hydrate.
 
 ### 53.6 Mutual exclusion
 

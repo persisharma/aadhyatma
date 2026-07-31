@@ -17,7 +17,8 @@ The app makes sound three ways, and they are **mutually exclusive**:
 2. **The japam loop** — a component-scoped looping player inside `JapamAudioPlayer` that also
    drives the bead count.
 3. **Read aloud (पाठ सुनें)** — on-device TTS via `expo-speech`, reader-scoped, added July 2026.
-   The universal fallback for the ~15 texts that will never get a recording.
+   Covers the ~15 texts that will never get a recording — for whichever reading languages the
+   device actually has a voice for; it never substitutes one language for another.
 
 Exclusivity is arbitrated by `src/audio/playbackArbiter.ts`, **not** by any context's value.
 
@@ -65,10 +66,11 @@ scrollToPage}`. The reader owns the FlatList, so it owns scrolling; the controll
 unmount / `sourceId` change. `ReadAloudButton` renders in `ReaderHeader`'s `right` slot. Enabled on
 **Gita + Chalisa** in v1; the adapter already covers every other shape, so fan-out is wiring only.
 
-**Two speech locales, not four.** `hi`/`gu`/`kn` all speak the **Devanagari source and
-`meaningHi`** with a `hi` voice; only `en` differs. gu/kn on-screen text is runtime script
-conversion, and a Hindi voice cannot read Gujarati glyphs at all — so gu/kn read their script and
-hear Hindi, disclosed in the settings sheet. See design.md §53.1.
+**One voice per reading language, or none.** `speechLangFor` is identity: hi→hi-IN, en→en-IN,
+gu→gu-IN, kn→kn-IN. The spoken text comes from the same `verseLinesByLang`/`meaningByLang` the page
+renders with, authored `meaningGu`/`meaningKn` included, so **heard === seen**. A language whose
+voice the device lacks reports `unavailable` (named in its own script, with an Android TTS-settings
+hop) rather than being spoken by another language's voice. See design.md §53.1.
 
 ## Dependencies
 
@@ -80,6 +82,12 @@ hear Hindi, disclosed in the settings sheet. See design.md §53.1.
 
 ## Gotchas
 
+- **Never substitute a voice across languages, and never let the engine do it for you.** This is
+  the whole point of the per-language design: reading Gujarati with only a Hindi voice installed must
+  be *silent*, not Gujarati-read-as-Hindi. Three guards, all needed — `resolveVoice` returns `null`
+  instead of falling back (and rejects a saved identifier whose language no longer matches the
+  target), `start()`/`speakPreview()` refuse when `availability === 'unavailable'`, and the probe
+  gates the UI. Dropping any one of them re-opens the failure below.
 - **Both platforms fail SILENTLY for a missing voice — `onError` never fires.** iOS leaves
   `utterance.voice = nil` and uses the system default; Android's `speakOut` falls back to
   `Locale.getDefault()`. Availability therefore comes from a `getAvailableVoicesAsync()` probe
@@ -89,8 +97,8 @@ hear Hindi, disclosed in the settings sheet. See design.md §53.1.
   and Java's single-arg `Locale` treats the whole string as the language, so `'hi-IN'` becomes
   `"hi-in"` → `LANG_NOT_SUPPORTED` → silent device-default fallback. `speakOptionsFor()` omits
   `language` entirely when a probed `voice` identifier exists (`setVoice` runs after it anyway) and
-  otherwise passes the bare `'hi'`. Note `getVoices()` *returns* `hi-IN` form — the format you read
-  back is not the format Android accepts.
+  otherwise passes the bare primary subtag (`'hi'`, `'gu'`, `'kn'`, `'en'`). Note `getVoices()`
+  *returns* the `hi-IN` form — the format you read back is not the format Android accepts.
 - **`Speech.pause`/`resume` do not exist on Android** — the native module defines only
   `isSpeaking`/`getVoices`/`stop`/`speak`. So the app never calls them on **either** platform;
   pause stops the engine and re-speaks the remembered line on resume. Granularity is one verse line.

@@ -95,10 +95,10 @@ function Capture() {
  */
 let tree: TestRenderer.ReactTestRenderer | null = null;
 
-async function mount() {
+async function mount(lang: 'hi' | 'en' | 'gu' | 'kn' = 'hi') {
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="hi">
+      <GitaLanguageProvider initialLang={lang}>
         <ReadAloudPrefsProvider>
           <ReadAloudProvider>
             <Capture />
@@ -157,13 +157,44 @@ describe('voice probe', () => {
       await Promise.resolve();
     });
     // The reader gates on `unavailable` before calling start, but the controller
-    // must not speak into a voiceless engine even if it is called.
+    // must refuse independently — a voiceless engine would fall back to its default
+    // voice and read the text in the wrong language, silently.
+    expect(speechMock.speak).not.toHaveBeenCalled();
+    expect(ctx.status).toBe('idle');
     expect(ctx.availability).toBe('unavailable');
   });
 
   it('exposes the probed candidates for the settings sheet', async () => {
     await mount();
     expect(ctx.candidateVoices.map((v) => v.identifier)).toEqual(['hi-voice']);
+  });
+
+  it('targets the reading language itself, with no substitution', async () => {
+    // Reading Gujarati on a device that only has Hindi and English voices: the target
+    // is 'gu' and it is unavailable, rather than silently becoming 'hi'.
+    await mount('gu');
+    expect(ctx.target).toBe('gu');
+    expect(ctx.availability).toBe('unavailable');
+    expect(ctx.candidateVoices).toEqual([]);
+  });
+
+  it('is ready for a language whose voice IS installed', async () => {
+    speechMock.getAvailableVoicesAsync.mockResolvedValueOnce([
+      { identifier: 'gu-voice', name: 'Dhwani', quality: 'Default', language: 'gu-IN' },
+    ]);
+    await mount('gu');
+    expect(ctx.target).toBe('gu');
+    expect(ctx.availability).toBe('ready');
+  });
+
+  it('never speaks with another language\'s voice', async () => {
+    await mount('kn');
+    await act(async () => {
+      ctx.start(makeSession(), 0);
+      await Promise.resolve();
+    });
+    // Kannada is unavailable here; nothing may be handed to the Hindi voice.
+    expect(speechMock.speak).not.toHaveBeenCalled();
   });
 });
 

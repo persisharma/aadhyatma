@@ -16,6 +16,7 @@ import {
 } from '@/readAloud/prefs';
 import type { VoiceAvailability } from '@/readAloud/voices';
 import RateStepper from './RateStepper';
+import { languageName } from './readAloud/ReadAloudButton';
 import { READING_SIZE_SAMPLE } from './ReadingSizePickerSheet';
 
 /**
@@ -138,17 +139,16 @@ export default function ReadAloudSettingsSheet({ visible, onClose }: Props) {
                   ))}
                 </View>
 
-                {/* gu/kn read their own script but hear Hindi: their verse text is a
-                    runtime transliteration of Devanagari that no Hindi voice can
-                    pronounce, so the speech path uses the Devanagari source
-                    (voices.ts). Say so rather than letting it surprise them. */}
-                {lang === 'gu' || lang === 'kn' ? (
-                  <Text style={[styles.note, { color: colors.inkMuted, fontFamily: chromeFont }]}>
-                    {lang === 'gu'
-                      ? 'શ્લોક અને અર્થ હિન્દી આવાજમાં બોલાય છે.'
-                      : 'ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ ಹಿಂದಿ ಧ್ವನಿಯಲ್ಲಿ ಹೇಳಲಾಗುತ್ತದೆ.'}
-                  </Text>
-                ) : null}
+                {/* The voice list is per reading language, so say which one is being
+                    configured — switching the app's language switches this section. */}
+                <Text style={[styles.note, { color: colors.inkMuted, fontFamily: chromeFont }]}>
+                  {pick(lang, {
+                    hi: `${languageName(lang)} में पढ़ने के लिए`,
+                    en: `For reading in ${languageName(lang)}`,
+                    gu: `${languageName(lang)} માં વાંચવા માટે`,
+                    kn: `${languageName(lang)} ನಲ್ಲಿ ಓದಲು`,
+                  })}
+                </Text>
               </>
             )}
 
@@ -311,22 +311,25 @@ function TogglePill({
 function UnavailableBlock({ lang, onRetry }: { lang: Lang; onRetry: () => void }) {
   const { colors } = useTheme();
   const chromeFont = cardFontByLang(lang);
+  const name = languageName(lang);
 
   return (
     <View style={styles.unavailableBlock}>
+      {/* Names the reading language, not a fixed one: read-aloud speaks each language
+          in its own voice, so this is the voice the user actually needs. */}
       <Text style={[styles.note, { color: colors.ink, fontFamily: chromeFont, marginTop: 0 }]}>
         {Platform.OS === 'android'
           ? pick(lang, {
-              hi: 'इस उपकरण में हिन्दी की आवाज़ नहीं है। सेटिंग्स में हिन्दी वाणी डाउनलोड करके लौटें।',
-              en: "This device has no Hindi voice installed. Add Hindi speech data in settings, then come back.",
-              gu: 'આ ઉપકરણમાં હિન્દી આવાજ નથી. સેટિંગ્સમાં હિન્દી વાણી ડાઉનલોડ કરીને પરત આવો.',
-              kn: 'ಈ ಸಾಧನದಲ್ಲಿ ಹಿಂದಿ ಧ್ವನಿ ಇಲ್ಲ. ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಹಿಂದಿ ವಾಣಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ ಹಿಂತಿರುಗಿ.',
+              hi: `इस उपकरण में ${name} की आवाज़ नहीं है। सेटिंग्स में ${name} वाणी डाउनलोड करके लौटें।`,
+              en: `This device has no ${name} voice installed. Add ${name} speech data in settings, then come back.`,
+              gu: `આ ઉપકરણમાં ${name} આવાજ નથી. સેટિંગ્સમાં ${name} વાણી ડાઉનલોડ કરીને પરત આવો.`,
+              kn: `ಈ ಸಾಧನದಲ್ಲಿ ${name} ಧ್ವನಿ ಇಲ್ಲ. ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ${name} ವಾಣಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ ಹಿಂತಿರುಗಿ.`,
             })
           : pick(lang, {
-              hi: 'इस उपकरण में हिन्दी की आवाज़ नहीं है। Settings › Accessibility › Spoken Content › Voices में हिन्दी जोड़ें।',
-              en: 'This device has no Hindi voice installed. Add one in Settings › Accessibility › Spoken Content › Voices.',
-              gu: 'આ ઉપકરણમાં હિન્દી આવાજ નથી. Settings › Accessibility › Spoken Content › Voices માં હિન્દી ઉમેરો.',
-              kn: 'ಈ ಸಾಧನದಲ್ಲಿ ಹಿಂದಿ ಧ್ವನಿ ಇಲ್ಲ. Settings › Accessibility › Spoken Content › Voices ನಲ್ಲಿ ಹಿಂದಿ ಸೇರಿಸಿ.',
+              hi: `इस उपकरण में ${name} की आवाज़ नहीं है। Settings › Accessibility › Spoken Content › Voices में जोड़ें।`,
+              en: `This device has no ${name} voice installed. Add one in Settings › Accessibility › Spoken Content › Voices.`,
+              gu: `આ ઉપકરણમાં ${name} આવાજ નથી. Settings › Accessibility › Spoken Content › Voices માં ઉમેરો.`,
+              kn: `ಈ ಸಾಧನದಲ್ಲಿ ${name} ಧ್ವನಿ ಇಲ್ಲ. Settings › Accessibility › Spoken Content › Voices ನಲ್ಲಿ ಸೇರಿಸಿ.`,
             })}
       </Text>
 

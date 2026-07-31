@@ -91,6 +91,15 @@ describe('parseReadAloudPrefs', () => {
     expect(parsed.voiceByTarget).toEqual({ hi: 'hi-voice' });
   });
 
+  it('accepts a voice for all four reading languages', () => {
+    // Read-aloud speaks each language in its own voice, so each gets its own slot —
+    // there is no shared "the" voice.
+    const parsed = parseReadAloudPrefs(
+      JSON.stringify({ voiceByTarget: { hi: 'h', en: 'e', gu: 'g', kn: 'k' } })
+    );
+    expect(parsed.voiceByTarget).toEqual({ hi: 'h', en: 'e', gu: 'g', kn: 'k' });
+  });
+
   it('drops an empty-string identifier rather than storing a hole', () => {
     expect(parseReadAloudPrefs(JSON.stringify({ voiceByTarget: { hi: '' } })).voiceByTarget).toEqual(
       {}
@@ -155,17 +164,26 @@ describe('ReadAloudPrefsProvider', () => {
     expect(JSON.parse(mockStore[READ_ALOUD_STORAGE_KEY]).voiceByTarget).toEqual({});
   });
 
-  it('keeps the other target when one is set', async () => {
+  it('keeps the other targets when one is set', async () => {
     await mountAndHydrate();
 
-    await act(async () => {
-      ctx.setVoice('hi', 'hi-voice');
-    });
-    await act(async () => {
-      ctx.setVoice('en', 'en-voice');
-    });
+    for (const [target, id] of [
+      ['hi', 'hi-voice'],
+      ['en', 'en-voice'],
+      ['gu', 'gu-voice'],
+      ['kn', 'kn-voice'],
+    ] as const) {
+      await act(async () => {
+        ctx.setVoice(target, id);
+      });
+    }
 
-    expect(ctx.prefs.voiceByTarget).toEqual({ hi: 'hi-voice', en: 'en-voice' });
+    expect(ctx.prefs.voiceByTarget).toEqual({
+      hi: 'hi-voice',
+      en: 'en-voice',
+      gu: 'gu-voice',
+      kn: 'kn-voice',
+    });
   });
 
   it('persists the what-to-read toggles', async () => {

@@ -9,9 +9,10 @@
  * future line highlighting.
  *
  * The spoken text is derived through the same `utils/localize` helpers the page renders
- * with, so what is heard matches what is seen — with one documented exception: gu/kn
- * speak the Devanagari source and the Hindi meaning, because their on-screen script is
- * a runtime transliteration that no Hindi voice can pronounce. See `voices.ts`.
+ * with, so **what is heard is exactly what is seen** — including gu/kn, which speak
+ * their own transliterated script and their authored `meaningGu`/`meaningKn` where it
+ * exists. Read-aloud never substitutes another language: a device with no voice for the
+ * active reading language reports unavailable instead (see `voices.ts`).
  */
 
 import type { Lang } from '@/data/gita/language';
@@ -34,14 +35,6 @@ export type BuildScriptOptions = {
   /** Hard ceiling per utterance. Android's `speak()` throws above ~4000 chars. */
   maxChars: number;
 };
-
-/**
- * The reading language whose *content* is spoken. gu/kn fall back to the Devanagari /
- * Hindi source because their rendered script is a transliteration (see module header).
- */
-function spokenContentLang(lang: Lang): 'hi' | 'en' {
-  return lang === 'en' ? 'en' : 'hi';
-}
 
 /** Sentence-ish boundaries: Devanagari dandas plus Latin terminal punctuation. */
 const SENTENCE_SPLIT = /(?<=[।॥.!?])\s+/;
@@ -114,10 +107,9 @@ export function buildVerseScript(
 ): ReadAloudChunk[] {
   if (!verse) return [];
 
-  const contentLang = spokenContentLang(lang);
   const chunks: ReadAloudChunk[] = [];
   const push = (part: SpokenPart, text: string) => {
-    const prepared = prepareForSpeech(text, contentLang);
+    const prepared = prepareForSpeech(text, lang);
     if (prepared.length === 0) return;
     for (const piece of packProse(prepared, opts.maxChars)) {
       chunks.push({ id: `${part}-${chunks.length}`, text: piece, part });
@@ -127,26 +119,32 @@ export function buildVerseScript(
   if (verse.kind === 'prose') {
     // The katha body IS the text, so it is 'verse' and must not sit behind readMeaning —
     // gating it there would make every katha page silent.
-    const body = commentaryByLang(contentLang, verse.bodyHi, verse.bodyEn);
+    const body = commentaryByLang(lang, verse.bodyHi, verse.bodyEn);
     for (const paragraph of body) push('verse', paragraph);
     return chunks;
   }
 
-  for (const line of verseLinesByLang(contentLang, verse.deva, verse.latin)) {
+  for (const line of verseLinesByLang(lang, verse.deva, verse.latin)) {
     push('verse', line);
   }
 
   if (opts.readMeaning) {
-    // No `native` argument: gu/kn deliberately speak the Hindi meaning, not the
-    // authored meaningGu/meaningKn, because contentLang is 'hi' for them.
-    push('meaning', meaningByLang(contentLang, verse.meaningHi, verse.meaningEn));
+    // Authored native meanings are passed through, so gu/kn speak the verified
+    // Gujarati/Kannada prose the page shows rather than a re-scripted fallback.
+    push(
+      'meaning',
+      meaningByLang(lang, verse.meaningHi, verse.meaningEn, {
+        gu: verse.meaningGu,
+        kn: verse.meaningKn,
+      })
+    );
     if (verse.extraHi || verse.extraEn) {
-      push('meaning', meaningByLang(contentLang, verse.extraHi ?? '', verse.extraEn ?? ''));
+      push('meaning', meaningByLang(lang, verse.extraHi ?? '', verse.extraEn ?? ''));
     }
   }
 
   if (opts.readCommentary && verse.commentaryHi && verse.commentaryEn) {
-    for (const paragraph of commentaryByLang(contentLang, verse.commentaryHi, verse.commentaryEn)) {
+    for (const paragraph of commentaryByLang(lang, verse.commentaryHi, verse.commentaryEn)) {
       push('commentary', paragraph);
     }
   }

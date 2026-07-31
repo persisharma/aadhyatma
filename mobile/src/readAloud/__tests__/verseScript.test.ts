@@ -166,26 +166,35 @@ describe('buildVerseScript', () => {
     expect(chunks.find((c) => c.part === 'meaning')?.text).toBe('Dhritarashtra said.');
   });
 
-  it('speaks Devanagari + Hindi meaning for gu/kn, NOT the on-screen transliteration', () => {
-    // The locale-table divergence: gu/kn read their own script but hear Hindi, because
-    // their rendered script is a runtime transliteration no Hindi voice can pronounce.
+  it('speaks exactly what gu/kn readers SEE — their own script, never Devanagari', () => {
+    // Read-aloud substitutes no language: a Gujarati reader hears the Gujarati on
+    // screen, and a device without a Gujarati voice reports unavailable instead.
     for (const lang of ['gu', 'kn'] as const) {
       const chunks = buildVerseScript(toReadableVerse(chalisaVerse), lang, OPTS);
       const verse = chunks.filter((c) => c.part === 'verse');
-      expect(verse[0].text).toContain('जय हनुमान');
 
       const onScreen = verseLinesByLang(lang, chalisaVerse.lines, chalisaVerse.linesEn)[0];
-      expect(verse[0].text).not.toBe(onScreen);
-      expect(chunks.find((c) => c.part === 'meaning')?.text).toBe('हे हनुमान जी, आपकी जय हो.');
+      // Compare on the danda-stripped form, since prepareForSpeech normalizes those.
+      expect(verse[0].text).toBe(onScreen.replace(/[।॥]/g, '.'));
+      expect(verse[0].text).not.toContain('जय हनुमान');
     }
   });
 
-  it('prefers the Hindi meaning over an authored meaningGu/meaningKn', () => {
+  it('speaks an authored meaningGu/meaningKn when the section has one', () => {
     const withNative = { ...chalisaVerse, meaningGu: 'ગુજરાતી અર્થ', meaningKn: 'ಕನ್ನಡ ಅರ್ಥ' };
-    const chunks = buildVerseScript(toReadableVerse(withNative), 'gu', OPTS);
-    const meaning = chunks.find((c) => c.part === 'meaning');
-    expect(meaning?.text).not.toContain('ગુજરાતી અર્થ');
-    expect(meaning?.text).toContain('हनुमान');
+    expect(buildVerseScript(toReadableVerse(withNative), 'gu', OPTS).find((c) => c.part === 'meaning')?.text)
+      .toBe('ગુજરાતી અર્થ');
+    expect(buildVerseScript(toReadableVerse(withNative), 'kn', OPTS).find((c) => c.part === 'meaning')?.text)
+      .toBe('ಕನ್ನಡ ಅರ್ಥ');
+  });
+
+  it('falls back to the re-scripted Hindi meaning when no native one is authored', () => {
+    // Matches what the page renders (meaningByLang's documented policy) — the spoken
+    // text tracks the visible text, whichever branch that policy takes.
+    const chunks = buildVerseScript(toReadableVerse(chalisaVerse), 'gu', OPTS);
+    const meaning = chunks.find((c) => c.part === 'meaning')?.text ?? '';
+    expect(meaning).toMatch(/[\u0A80-\u0AFF]/); // Gujarati block
+    expect(meaning).not.toMatch(/[\u0900-\u097F]/); // no Devanagari
   });
 
   it('normalizes dandas to a single sentence stop', () => {

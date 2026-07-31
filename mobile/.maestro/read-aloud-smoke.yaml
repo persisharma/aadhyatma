@@ -9,11 +9,12 @@
 # Two halves, deliberately split by determinism:
 #   • The settings sheet is fully deterministic — it renders and persists
 #     preferences whether or not the device has a voice installed. Asserted hard.
-#   • The in-reader speaking assertions depend on the device actually having
-#     Hindi TTS voice data. A bare CI emulator often has none, in which case the
-#     control renders MUTED ("Read aloud unavailable") by design. Those steps are
-#     therefore `optional: true` — the control's presence is still asserted, only
-#     the play/pause transition is allowed to be skipped.
+#   • The in-reader speaking assertions depend on the device actually having a voice
+#     for the ACTIVE READING LANGUAGE — Hindi here, since that is the default.
+#     Read-aloud never substitutes another language, so a bare CI emulator with no
+#     Hindi voice renders the control MUTED ("Read aloud unavailable") by design.
+#     Those steps are therefore `optional: true` — the control's presence is still
+#     asserted, only the play/pause transition is allowed to be skipped.
 #
 # Selector notes:
 #   • Read-aloud a11y labels are English and un-localized on purpose (same rule
