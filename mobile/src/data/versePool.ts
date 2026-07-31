@@ -11,6 +11,7 @@ import { getHanumanAshtakChapter, hanumanAshtakChaptersManifest } from './hanuma
 import { getRamStutiChapter, ramStutiChaptersManifest } from './ram-stuti';
 import { getBajrangBaanChapter, bajrangBaanChaptersManifest } from './bajrang-baan';
 import { getRamcharitmanasChapter, ramcharitmanasChaptersManifest } from './ramcharitmanas';
+import { getValmikiRamayanChapter, valmikiRamayanChaptersManifest } from './valmiki-ramayan';
 import { japamMantras } from './japam';
 import { sanskarIds, getSanskar } from './sanskar';
 
@@ -34,7 +35,7 @@ export type UniformVerse = {
  * - **Shloka** sources: chaptered, verses carry `sanskrit` / `linesEn` and a
  *   numbered label (e.g. `श्लोक 1.5`). Most stotrams plus the Gita.
  * - **Pada** sources: chaptered, verses carry `lines` / `linesEn` and their own
- *   `labelHi` / `labelEn` (Sundarkand, Bajrang Baan, Ramcharitmanas).
+ *   `labelHi` / `labelEn` (Sundarkand, Bajrang Baan, Ramcharitmanas, Valmiki Ramayan).
  * - **Japam**: one mantra per entry, no chapter.
  * - **Sanskar**: a flat verse list per ritual, no chapter; the first `intro`
  *   verse is a section descriptor and is excluded from the random pool.
@@ -92,6 +93,7 @@ const PADA_SOURCES: readonly PadaSource[] = [
   { id: 'sundarkand', manifest: sundarkandChaptersManifest, getChapter: getSundarkandChapter },
   { id: 'bajrang-baan', manifest: bajrangBaanChaptersManifest, getChapter: getBajrangBaanChapter },
   { id: 'ramcharitmanas', manifest: ramcharitmanasChaptersManifest, getChapter: getRamcharitmanasChapter },
+  { id: 'valmiki-ramayan', manifest: valmikiRamayanChaptersManifest, getChapter: getValmikiRamayanChapter },
 ];
 
 function buildPool(): UniformVerse[] {

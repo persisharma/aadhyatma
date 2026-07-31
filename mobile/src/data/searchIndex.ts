@@ -84,6 +84,11 @@ import {
   ramcharitmanasChaptersManifest,
   type RamcharitmanasVerse,
 } from './ramcharitmanas';
+import {
+  getValmikiRamayanChapter,
+  valmikiRamayanChaptersManifest,
+  type ValmikiRamayanVerse,
+} from './valmiki-ramayan';
 import { getSanskar, sanskarIds } from './sanskar';
 import { getPurposeMeta } from './purposes';
 import { purposesForText } from './discoveryMeta';
@@ -390,6 +395,11 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.id === 'valmiki-ramayan') {
+      pushChapteredValmikiRamayan(verses, entry);
+      continue;
+    }
+
     if (entry.category === 'aarti') {
       pushAarti(verses, entry);
       continue;
@@ -626,6 +636,29 @@ function pushChapteredRamcharitmanas(
   for (const ch of ramcharitmanasChaptersManifest) {
     const chapter = getRamcharitmanasChapter(ch.chapter);
     chapter.verses.forEach((v: RamcharitmanasVerse, idx) => {
+      out.push(
+        makeVerseEntry({
+          sourceId: entry.id,
+          sectionNameHi: entry.nameHi,
+          sectionNameEn: entry.nameEn,
+          chapter: ch.chapter,
+          verseIndex: idx,
+          labelHi: v.labelHi,
+          labelEn: v.labelEn,
+          linesHi: v.lines,
+          linesEn: v.linesEn,
+          meaningHi: v.meaningHi,
+          meaningEn: v.meaningEn,
+        })
+      );
+    });
+  }
+}
+
+function pushChapteredValmikiRamayan(out: SearchVerseEntry[], entry: LibraryEntry) {
+  for (const ch of valmikiRamayanChaptersManifest) {
+    const chapter = getValmikiRamayanChapter(ch.chapter);
+    chapter.verses.forEach((v: ValmikiRamayanVerse, idx) => {
       out.push(
         makeVerseEntry({
           sourceId: entry.id,

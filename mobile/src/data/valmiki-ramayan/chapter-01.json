@@ -1,0 +1,164 @@
+{
+  "chapter": 1,
+  "titleHi": "बालकाण्ड",
+  "titleEn": "Bala Kanda",
+  "verseCount": 7,
+  "source": {
+    "baseText": "Śrīmad Vālmīki Rāmāyaṇa, Bālakāṇḍa — Gita Press / IIT Kanpur (valmiki.iitk.ac.in) reading, cross-checked against ramcharit.in and wisdomlib.org",
+    "referenceUrls": [
+      "https://www.valmiki.iitk.ac.in/",
+      "https://www.ramcharit.in/valmiki-ramayana-bala-kanda-in-sanskrit-with-hindi-meaning-pdf/",
+      "https://www.wisdomlib.org/hinduism/book/the-ramayana-sanskrit"
+    ],
+    "notes": "Curated selection of widely published Bālakāṇḍa shlokas, not the complete kāṇḍa. Verse numbering follows the Gita Press / IIT Kanpur reading (kāṇḍa.sarga.śloka).",
+    "retrievedOn": "2026-07-31"
+  },
+  "verses": [
+    {
+      "id": "bala-1-1-1",
+      "kanda": 1,
+      "section": "shloka",
+      "stanza": 1,
+      "numInSection": 1,
+      "reference": "1.1.1",
+      "labelHi": "श्लोक · १.१.१",
+      "labelEn": "Shloka · 1.1.1",
+      "lines": [
+        "तपःस्वाध्यायनिरतं तपस्वी वाग्विदां वरम्।",
+        "नारदं परिपप्रच्छ वाल्मीकिर्मुनिपुङ्गवम्॥"
+      ],
+      "linesEn": [
+        "tapaḥsvādhyāyanirataṁ tapasvī vāgvidāṁ varam",
+        "nāradaṁ paripaprachchha vālmīkirmunipuṅgavam"
+      ],
+      "meaningHi": "तपस्वी वाल्मीकि ने तप और स्वाध्याय में सदा लगे रहने वाले, वाणी के ज्ञाताओं में श्रेष्ठ, मुनिश्रेष्ठ नारद जी से प्रश्न किया। यह सम्पूर्ण रामायण का प्रथम श्लोक है — पूरा महाकाव्य एक जिज्ञासु के प्रश्न से आरम्भ होता है, न कि किसी घोषणा से। यही रामायण की शिक्षा-परम्परा का मूल भाव है: सच्ची जिज्ञासा ही ज्ञान का द्वार है।",
+      "meaningEn": "Valmiki, himself an ascetic, put a question to Narada — foremost among the masters of speech, ever devoted to austerity and to the study of the scriptures. This is the very first verse of the Ramayana: the whole epic begins not with a proclamation but with a seeker's question, which is the heart of its teaching tradition — sincere enquiry is the doorway to knowledge."
+    },
+    {
+      "id": "bala-1-1-2",
+      "kanda": 1,
+      "section": "shloka",
+      "stanza": 1,
+      "numInSection": 2,
+      "reference": "1.1.2",
+      "labelHi": "श्लोक · १.१.२",
+      "labelEn": "Shloka · 1.1.2",
+      "lines": [
+        "को न्वस्मिन्साम्प्रतं लोके गुणवान्कश्च वीर्यवान्।",
+        "धर्मज्ञश्च कृतज्ञश्च सत्यवाक्यो दृढव्रतः॥"
+      ],
+      "linesEn": [
+        "ko nvasminsāmprataṁ loke guṇavānkaśhcha vīryavān",
+        "dharmajñaśhcha kṛitajñaśhcha satyavākyo dṛiḍhavrataḥ"
+      ],
+      "meaningHi": "इस समय इस संसार में ऐसा कौन पुरुष है जो गुणवान हो, पराक्रमी हो, धर्म का ज्ञाता हो, कृतज्ञ हो, सत्यवादी हो और अपने व्रत में दृढ़ हो? वाल्मीकि जी का यही प्रश्न रामायण का बीज है — नारद जी इसी के उत्तर में श्रीराम का चरित्र सुनाते हैं। इसका महत्त्व यह है कि रामायण किसी शक्तिशाली व्यक्ति की नहीं, बल्कि सद्गुणों से पूर्ण मनुष्य की खोज से जन्मी है।",
+      "meaningEn": "Who, in this world today, is endowed with excellence and with valour, who knows dharma, who is grateful, truthful in speech and firm in his vows? This question of Valmiki's is the seed of the entire Ramayana — Narada answers it by narrating the life of Rama. Its significance lies in what is being sought: not a powerful man, but a complete human being defined by virtue."
+    },
+    {
+      "id": "bala-1-1-8",
+      "kanda": 1,
+      "section": "shloka",
+      "stanza": 1,
+      "numInSection": 3,
+      "reference": "1.1.8",
+      "labelHi": "श्लोक · १.१.८",
+      "labelEn": "Shloka · 1.1.8",
+      "lines": [
+        "इक्ष्वाकुवंशप्रभवो रामो नाम जनैः श्रुतः।",
+        "नियतात्मा महावीर्यो द्युतिमान्धृतिमान्वशी॥"
+      ],
+      "linesEn": [
+        "ikṣhvākuvaṁśhaprabhavo rāmo nāma janaiḥ śhrutaḥ",
+        "niyatātmā mahāvīryo dyutimāndhṛitimānvaśhī"
+      ],
+      "meaningHi": "इक्ष्वाकु के वंश में उत्पन्न, जनसाधारण में 'राम' नाम से विख्यात एक पुरुष हैं — संयमी, महापराक्रमी, तेजस्वी, धैर्यवान और इन्द्रियों के स्वामी। यह नारद जी का उत्तर है, जिसमें पहली बार श्रीराम का नाम आता है। ध्यान देने योग्य है कि नारद जी राम के ऐश्वर्य से नहीं, उनके आत्मसंयम से परिचय आरम्भ करते हैं।",
+      "meaningEn": "There is one born in the line of Ikshvaku, known among the people by the name Rama — self-restrained, of great valour, radiant, steadfast, and master of his senses. This is Narada's reply, and the first time Rama is named in the epic. Notably, Narada introduces him not by his royal splendour but by his self-command."
+    },
+    {
+      "id": "bala-1-1-98",
+      "kanda": 1,
+      "section": "shloka",
+      "stanza": 1,
+      "numInSection": 4,
+      "reference": "1.1.98",
+      "labelHi": "श्लोक · १.१.९८",
+      "labelEn": "Shloka · 1.1.98",
+      "lines": [
+        "इदं पवित्रं पापघ्नं पुण्यं वेदैश्च सम्मितम्।",
+        "यः पठेद् रामचरितं सर्वपापैः प्रमुच्यते॥"
+      ],
+      "linesEn": [
+        "idaṁ pavitraṁ pāpaghnaṁ puṇyaṁ vedaiśhcha sammitam",
+        "yaḥ paṭhed rāmacharitaṁ sarvapāpaiḥ pramuchyate"
+      ],
+      "meaningHi": "यह रामचरित पवित्र है, पापों का नाश करने वाला है, पुण्यदायक है और वेदों के समान माननीय है; जो इसका पाठ करता है वह समस्त पापों से मुक्त हो जाता है। यह संक्षेप-रामायण (प्रथम सर्ग) की फलश्रुति है — रामकथा के नित्य पाठ की परम्परा का शास्त्रीय आधार यही श्लोक है।",
+      "meaningEn": "This account of Rama's life is sacred, destroys sin, bestows merit, and is held equal to the Vedas; whoever recites it is released from all sins. This is the phalashruti (declaration of fruits) that closes the Samkshepa Ramayana of the first sarga, and it is the scriptural basis for the tradition of reciting the Rama story daily."
+    },
+    {
+      "id": "bala-1-2-15",
+      "kanda": 1,
+      "section": "shloka",
+      "stanza": 1,
+      "numInSection": 5,
+      "reference": "1.2.15",
+      "labelHi": "श्लोक · १.२.१५",
+      "labelEn": "Shloka · 1.2.15",
+      "lines": [
+        "मा निषाद प्रतिष्ठां त्वमगमः शाश्वतीः समाः।",
+        "यत्क्रौञ्चमिथुनादेकमवधीः काममोहितम्॥"
+      ],
+      "linesEn": [
+        "mā niṣhāda pratiṣhṭhāṁ tvamagamaḥ śhāśhvatīḥ samāḥ",
+        "yatkrauñchamithunādekamavadhīḥ kāmamohitam"
+      ],
+      "meaningHi": "हे निषाद! तुझे कभी प्रतिष्ठा प्राप्त न हो, क्योंकि तूने प्रेम में मग्न क्रौंच-युगल में से एक का वध कर दिया। व्याध द्वारा क्रौंच पक्षी के वध को देखकर वाल्मीकि जी के मुख से करुणा में यही वाणी निकली — और यही आदिकवि का पहला 'श्लोक' बना। इसका महत्त्व यह है कि काव्य का जन्म करुणा से हुआ, और रामायण का छन्द भी इसी शोक से उपजा।",
+      "meaningEn": "O fowler, may you never find honour, for you have killed one of a pair of krauncha birds absorbed in love. Seeing the hunter strike the bird, this cry of compassion rose from Valmiki — and became the first shloka of the first poet. Its significance is that poetry itself was born of pity, and the metre of the Ramayana arose out of that grief."
+    },
+    {
+      "id": "bala-1-2-36",
+      "kanda": 1,
+      "section": "shloka",
+      "stanza": 1,
+      "numInSection": 6,
+      "reference": "1.2.36",
+      "labelHi": "श्लोक · १.२.३६",
+      "labelEn": "Shloka · 1.2.36",
+      "lines": [
+        "यावत्स्थास्यन्ति गिरयः सरितश्च महीतले।",
+        "तावद् रामायणकथा लोकेषु प्रचरिष्यति॥"
+      ],
+      "linesEn": [
+        "yāvatsthāsyanti girayaḥ saritaśhcha mahītale",
+        "tāvad rāmāyaṇakathā lokeṣhu prachariṣhyati"
+      ],
+      "meaningHi": "जब तक इस पृथ्वी पर पर्वत और नदियाँ स्थित रहेंगी, तब तक रामायण की कथा लोकों में प्रचलित रहेगी। यह ब्रह्मा जी का वाल्मीकि जी को दिया गया वरदान है, जिसमें रामकथा की अक्षयता की घोषणा है। यह श्लोक रामायण के पाठ के आरम्भ में मंगल-वचन के रूप में भी उद्धृत किया जाता है।",
+      "meaningEn": "As long as mountains and rivers stand upon this earth, so long will the story of the Ramayana live on among the worlds. This is Brahma's boon to Valmiki, declaring the imperishability of the Rama story. The verse is often quoted as an auspicious opening when a recitation of the Ramayana begins."
+    },
+    {
+      "id": "bala-1-18-8-10",
+      "kanda": 1,
+      "section": "shloka",
+      "stanza": 1,
+      "numInSection": 7,
+      "reference": "1.18.8–10",
+      "labelHi": "श्लोक · १.१८.८–१०",
+      "labelEn": "Shloka · 1.18.8–10",
+      "lines": [
+        "ततश्च द्वादशे मासे चैत्रे नावमिके तिथौ।",
+        "नक्षत्रेऽदितिदैवत्ये स्वोच्चसंस्थेषु पञ्चसु।",
+        "ग्रहेषु कर्कटे लग्ने वाक्पताविन्दुना सह॥",
+        "प्रोद्यमाने जगन्नाथं सर्वलोकनमस्कृतम्।",
+        "कौसल्याजनयद् रामं दिव्यलक्षणसंयुतम्॥"
+      ],
+      "linesEn": [
+        "tataśhcha dvādaśhe māse chaitre nāvamike tithau",
+        "nakṣhatre'ditidaivatye svochchasaṁstheṣhu pañchasu",
+        "graheṣhu karkaṭe lagne vākpatāvindunā saha",
+        "prodyamāne jagannāthaṁ sarvalokanamaskṛitam",
+        "kausalyājanayad rāmaṁ divyalakṣhaṇasaṁyutam"
+      ],
+      "meaningHi": "यज्ञ के पश्चात बारहवें मास में, चैत्र मास की नवमी तिथि को, अदिति-देवता वाले पुनर्वसु नक्षत्र में, पाँच ग्रहों के स्वोच्च में स्थित होने पर, कर्क लग्न के उदय होते समय, बृहस्पति के चन्द्रमा के साथ रहते हुए — कौसल्या ने दिव्य लक्षणों से युक्त, सर्वलोकवन्दित जगत्पति श्रीराम को जन्म दिया। यही श्रीराम-जन्म का मूल प्रमाण है और चैत्र शुक्ल नवमी को 'रामनवमी' के रूप में मनाने का शास्त्रीय आधार है।",
+      "meaningEn": "In the twelfth month after the sacrifice, on the ninth lunar day of Chaitra, under the constellation presided over by Aditi, with five planets in exaltation, as Cancer rose on the horizon and Jupiter stood with the Moon — Kausalya gave birth to Rama, Lord of the world, honoured by all, bearing divine marks. This is the epic's own account of Rama's birth and the scriptural basis for observing Chaitra Shukla Navami as Rama Navami."
+    }
+  ]
+}

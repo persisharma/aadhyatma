@@ -1,0 +1,78 @@
+{
+  "chapter": 4,
+  "titleHi": "किष्किन्धाकाण्ड",
+  "titleEn": "Kishkindha Kanda",
+  "verseCount": 3,
+  "source": {
+    "baseText": "Śrīmad Vālmīki Rāmāyaṇa, Kiṣkindhākāṇḍa — Gita Press / IIT Kanpur (valmiki.iitk.ac.in) reading, cross-checked against ramcharit.in and gyaandweep.com",
+    "referenceUrls": [
+      "https://www.valmiki.iitk.ac.in/",
+      "https://www.ramcharit.in/valmiki-ramayana-kiskindhakand-sarga-chapter-3-slokas-with-hindi-meaning/",
+      "https://gyaandweep.com/ramayana/kishkinda-kanda/3/"
+    ],
+    "notes": "Curated selection of widely published Kiṣkindhākāṇḍa shlokas, not the complete kāṇḍa. Verse numbering follows the Gita Press / IIT Kanpur reading (kāṇḍa.sarga.śloka).",
+    "retrievedOn": "2026-07-31"
+  },
+  "verses": [
+    {
+      "id": "kishkindha-4-3-28",
+      "kanda": 4,
+      "section": "shloka",
+      "stanza": 4,
+      "numInSection": 1,
+      "reference": "4.3.28",
+      "labelHi": "श्लोक · ४.३.२८",
+      "labelEn": "Shloka · 4.3.28",
+      "lines": [
+        "नानृग्वेदविनीतस्य नायजुर्वेदधारिणः।",
+        "नासामवेदविदुषः शक्यमेवं विभाषितुम्॥"
+      ],
+      "linesEn": [
+        "nānṛigvedavinītasya nāyajurvedadhāriṇaḥ",
+        "nāsāmavedaviduṣhaḥ śhakyamevaṁ vibhāṣhitum"
+      ],
+      "meaningHi": "जो ऋग्वेद में शिक्षित न हो, जिसने यजुर्वेद धारण न किया हो, और जो सामवेद का विद्वान न हो — वह इस प्रकार नहीं बोल सकता। हनुमान जी के प्रथम सम्भाषण को सुनकर श्रीराम ने लक्ष्मण जी से यह कहा। इसका भाव यह है कि वाणी मनुष्य के भीतर के संस्कार का प्रमाण है; हनुमान जी का परिचय उनके बल से नहीं, उनकी विनम्र और शुद्ध वाणी से हुआ।",
+      "meaningEn": "One untrained in the Rigveda, who has not held the Yajurveda, who is no scholar of the Samaveda, could not speak in this manner. Rama said this to Lakshmana on first hearing Hanuman speak. Its sense is that speech is the evidence of a person's inner cultivation: Hanuman was recognised not by his strength but by the purity and courtesy of his words."
+    },
+    {
+      "id": "kishkindha-4-3-29",
+      "kanda": 4,
+      "section": "shloka",
+      "stanza": 4,
+      "numInSection": 2,
+      "reference": "4.3.29",
+      "labelHi": "श्लोक · ४.३.२९",
+      "labelEn": "Shloka · 4.3.29",
+      "lines": [
+        "नूनं व्याकरणं कृत्स्नमनेन बहुधा श्रुतम्।",
+        "बहु व्याहरतानेन न किञ्चिदपशब्दितम्॥"
+      ],
+      "linesEn": [
+        "nūnaṁ vyākaraṇaṁ kṛitsnamanena bahudhā śhrutam",
+        "bahu vyāharatānena na kiñchidapaśhabditam"
+      ],
+      "meaningHi": "निश्चय ही इसने सम्पूर्ण व्याकरण का बहुविध अध्ययन किया है; इतना बोलने पर भी इसके मुख से एक भी अशुद्ध शब्द नहीं निकला। यह श्रीराम द्वारा हनुमान जी की वाक्-कुशलता की प्रशंसा का दूसरा चरण है। इसका महत्त्व यह है कि रामायण विद्या और विनय को समान आदर देती है — हनुमान जी शक्ति के साथ शास्त्र के भी आदर्श हैं।",
+      "meaningEn": "Surely he has studied the whole of grammar, and in many ways; for all that he has spoken, not one word was ill-formed. This continues Rama's praise of Hanuman's mastery of speech. Its significance is that the Ramayana honours learning alongside humility — Hanuman is an ideal of scholarship as much as of strength."
+    },
+    {
+      "id": "kishkindha-4-6-22",
+      "kanda": 4,
+      "section": "shloka",
+      "stanza": 4,
+      "numInSection": 3,
+      "reference": "4.6.22",
+      "labelHi": "श्लोक · ४.६.२२",
+      "labelEn": "Shloka · 4.6.22",
+      "lines": [
+        "नाहं जानामि केयूरे नाहं जानामि कुण्डले।",
+        "नूपुरे त्वभिजानामि नित्यं पादाभिवन्दनात्॥"
+      ],
+      "linesEn": [
+        "nāhaṁ jānāmi keyūre nāhaṁ jānāmi kuṇḍale",
+        "nūpure tvabhijānāmi nityaṁ pādābhivandanāt"
+      ],
+      "meaningHi": "मैं इन बाजूबन्दों को नहीं पहचानता, न इन कुण्डलों को पहचानता हूँ; परन्तु इन नूपुरों को पहचानता हूँ, क्योंकि नित्य चरणों में प्रणाम करता रहा हूँ। सुग्रीव द्वारा दिखाए गए सीता जी के आभूषणों को देखकर लक्ष्मण जी ने यह कहा। यह श्लोक लक्ष्मण जी की मर्यादा का सबसे सुन्दर प्रमाण माना जाता है — उन्होंने भाभी के मुख की ओर कभी दृष्टि नहीं उठाई।",
+      "meaningEn": "I do not know these armlets, nor do I know these earrings; but the anklets I do know, for I bowed at those feet every day. Lakshmana said this when Sugriva showed him the ornaments dropped by Sita. The verse is held to be the finest testimony to Lakshmana's decorum — he had never once raised his eyes to his elder brother's wife."
+    }
+  ]
+}

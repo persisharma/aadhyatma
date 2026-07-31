@@ -589,7 +589,7 @@ When a new text is added, pick the pattern that fits the source:
 - `mobile/src/data/gita/chapters-manifest.json` — lightweight list of `{ chapter, titleHi, titleEn, verseCount }` used by the Chapters Index.
 - `mobile/src/data/sundarkand/chapter-01..16.json` + `chapters-manifest.json` — 354 verses across 5 verse types (shloka, doha, chaupai, sortha, chhand), chapter-scoped like the Gita.
 - `mobile/src/data/hanuman-chalisa/hanuman-chalisa.json` — 43 verses (2 opening dohas + 40 chaupais + 1 closing doha).
-- Further content-module dirs under `mobile/src/data/` follow the same committed-JSON pattern: `aarti/`, `sanskar/`, `japam/`, `ramcharitmanas/`, the chalisa dirs (`shiv-chalisa`, `durga-chalisa`, `ganesh-chalisa`, `gayatri-chalisa`, `bajrang-baan`), the Ashtakam-category legacy dir (`hanuman-ashtak`), and the stotram dirs (`shiva-strotam`, `durga-stotram`, `ganesh-stotram`, `saraswati-stotram`, `krishna-stotram`, `vishnu-sahasranama`, `ram-stuti`), plus `theerth/temples.ts`.
+- Further content-module dirs under `mobile/src/data/` follow the same committed-JSON pattern: `aarti/`, `sanskar/`, `japam/`, `ramcharitmanas/`, `valmiki-ramayan/`, the chalisa dirs (`shiv-chalisa`, `durga-chalisa`, `ganesh-chalisa`, `gayatri-chalisa`, `bajrang-baan`), the Ashtakam-category legacy dir (`hanuman-ashtak`), and the stotram dirs (`shiva-strotam`, `durga-stotram`, `ganesh-stotram`, `saraswati-stotram`, `krishna-stotram`, `vishnu-sahasranama`, `ram-stuti`), plus `theerth/temples.ts`.
 
 **Registries & cross-cutting data (`mobile/src/data/`):**
 - `texts.ts` — the library registry (`library`): every content entry with category, deities, counts, status. Ordering is curated here (§21).
@@ -639,7 +639,7 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 ## 15. Screen: Chapters Index (Gita-style modules)
 
-**Purpose.** Let the reader pick a chapter and set their reading language before entering the Reader. Used by modules whose natural unit is a chapter (Gita; future Ramcharitmanas kāṇḍas).
+**Purpose.** Let the reader pick a chapter and set their reading language before entering the Reader. Used by modules whose natural unit is a chapter (Gita's 18 adhyāyas; Vālmīki Rāmāyaṇa's 6 kāṇḍas, §53; future Ramcharitmanas kāṇḍas).
 
 **Layer stack:** same as Reader (Section 9, parchment + background sketch + gradient overlay + content column).
 
@@ -848,7 +848,7 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 
 **Gradient background:** same as Home.
 
-**Verse pool:** an explicit registry — `mobile/src/data/versePool.ts` — mapping each participating section (Gita, Sundarkand, the stotrams, chalisas, Ramcharitmanas, japam mantras, sanskar verses, …) into a `UniformVerse` shape. Membership is **registered per section**, not inferred from categories, so the pool only surfaces content with a well-formed verse + meaning mapping. Selection: `Math.random()` over the flat pool on each visit / `↻ next` tap.
+**Verse pool:** an explicit registry — `mobile/src/data/versePool.ts` — mapping each participating section (Gita, Sundarkand, the stotrams, chalisas, Ramcharitmanas, Valmiki Ramayan, japam mantras, sanskar verses, …) into a `UniformVerse` shape. Membership is **registered per section**, not inferred from categories, so the pool only surfaces content with a well-formed verse + meaning mapping. Selection: `Math.random()` over the flat pool on each visit / `↻ next` tap.
 
 **Deep-linking:** a daily-verse reminder tap can pin the tab to a specific verse via route params (`sourceId` / `chapter` / `verseIndex`); the pinned verse is resolved from the pool by identity and shown instead of a random pick.
 
@@ -1240,7 +1240,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
    - Verse hits are capped at `VERSE_RESULT_CAP = 50`, with an italic "More results — type a more specific query" note when clipped.
 4. **Zero state**: dimmed `॥`, "कोई परिणाम नहीं / No matches found", and a hint to try a Devanagari word or section name.
 
-**Index coverage.** Sections (every active library entry), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §8).
+**Index coverage.** Sections (every active library entry), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, Valmiki Ramayan, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §8).
 
 **Normalization** (`data/searchNormalize.ts`) — one pure fold applied to both index and query, so Devanagari and Latin queries meet in the middle: Unicode NFD with the combining nukta stripped (क़ ⇄ क), lowercase, IAST diacritics folded to ASCII (`kṛṣṇa` → `krsna`, so a plain-ASCII query matches the romanized corpus), punctuation dropped **including daṇḍa `।`/`॥`**, whitespace collapsed. Ranking is exact > prefix > substring per field (`MatchRank`), idempotent and unit-tested.
 
@@ -1360,7 +1360,7 @@ The continuous form of the `n / total` page counter. A 3 px full-width track in 
 
 1. Text title via `orderTitlesByLanguage` (dev primary 20 / secondary 13; lat primary 22 / secondary 12), then a 1 px `divider` rule.
 2. Prompt: `जहाँ छोड़ा था, वहीं से जारी रखें?` (reader-title face, 17, `ink`) over `Resume where you left off?` (italic 13, `ink-soft`).
-3. **Last-read card**: `parchment-soft`, `divider` border, `radii.md`; `अंतिम पठित` / `LAST READ` in the `sectionLabel` token over the pre-formatted location at 16 in the active script (via `formatLocation`, which speaks each source's vocabulary — `अध्याय N · श्लोक M` for Gita, `सर्ग` for Sundarkand, `स्तोत्र` for stotrams, `काण्ड` for Ramcharitmanas, plain `पद N` for chalisas/aartis).
+3. **Last-read card**: `parchment-soft`, `divider` border, `radii.md`; `अंतिम पठित` / `LAST READ` in the `sectionLabel` token over the pre-formatted location at 16 in the active script (via `formatLocation`, which speaks each source's vocabulary — `अध्याय N · श्लोक M` for Gita, `सर्ग` for Sundarkand, `स्तोत्र` for stotrams, `काण्ड … · पद` for Ramcharitmanas, `काण्ड … · श्लोक` for Valmiki Ramayan, plain `पद N` for chalisas/aartis).
 4. Primary button: solid `saffron`, `radii.md`, `जारी रखें · Resume` in `onPrimary`.
 5. Secondary button: outlined `cardActiveBorder`, `आरंभ से पढ़ें · Start Over` in `saffron-deep`.
 6. `Cancel` — italic 13 `ink-muted`, 44 pt min-height text button.
@@ -1415,7 +1415,7 @@ Twenty-one deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · k
 ### Data-shape families (one directory per module under `mobile/src/data/`)
 
 - **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati chalisa dirs — nine total), **aartis** (`aarti/index.ts` `aartiCollection`, 8 aartis, `refrain`/`stanza` verse types; the Aarti *category* also lists a 9th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (8 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
-- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants.
+- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (6 kāṇḍas — a curated śloka selection, §53), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants.
 - **Japam** (`japam/japam.json`) — mantras with round targets; routes to the counter, not a verse pager.
 - **Theerth** (`theerth/temples.ts`) — the prose-per-temple shape of §26–27 / RULEBOOK §11; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (§44).
 
@@ -1814,3 +1814,63 @@ than folded into the July 2026 token pass — it is the one place the rule above
 **Files:** `mobile/src/components/TextField.tsx`. Consumers: `KathaLibraryScreen`,
 `ObservanceListScreen`, `PanchangScreen` (catalog search), `KundaliScreen` (form fields + city
 picker).
+
+
+## 53. Section: Vālmīki Rāmāyaṇa (वाल्मीकि रामायण) — curated śloka selection
+
+**Purpose.** A Granth-category reader for Maharishi Vālmīki's Sanskrit Rāmāyaṇa. The full epic
+is ~24,000 ślokas across 7 kāṇḍas; this section ships a **curated selection of widely published
+ślokas per kāṇḍa** (27 today) rather than the complete text, because RULEBOOK §10.5 forbids
+presenting a partial text as complete. The listing subtitle states the scope in both languages —
+`6 काण्ड · 27 चयनित श्लोक` / `6 kandas · 27 selected shlokas` — the same "चयनित" convention Durga
+Stotram (§18 catalog) already uses.
+
+**Scope note (why 6 kāṇḍas, not 7).** Bālakāṇḍa → Yuddhakāṇḍa ship; **Uttarakāṇḍa is not
+included yet** because no śloka in it cleared the two-independent-source verification bar of
+RULEBOOK §10.1 during authoring. Adding it later is a data-only change: drop `chapter-07.json`,
+extend `chapters-manifest.json`, bump the `sub`/`subEn` count and the `chapteredTotals.test.ts`
+expectation. Do not ship an Uttarakāṇḍa chapter with unverified text to make the count read "7".
+
+**Structure.** Standard chaptered-Granth pipeline (§15 chapters index → §9 reader), one chapter
+per kāṇḍa:
+
+| # | `titleHi` | `titleEn` | Ślokas |
+|---|---|---|---|
+| 1 | बालकाण्ड | Bala Kanda | 7 |
+| 2 | अयोध्याकाण्ड | Ayodhya Kanda | 4 |
+| 3 | अरण्यकाण्ड | Aranya Kanda | 3 |
+| 4 | किष्किन्धाकाण्ड | Kishkindha Kanda | 3 |
+| 5 | सुन्दरकाण्ड | Sundara Kanda | 4 |
+| 6 | युद्धकाण्ड | Yuddha Kanda | 6 |
+
+Source of truth for the table: `mobile/src/data/valmiki-ramayan/chapters-manifest.json` (the
+loader's module-load invariants fail the build if the mirror above drifts from the payload).
+
+**Verse pill.** `श्लोक · <kāṇḍa>.<sarga>.<śloka>` / `Shloka · <kāṇḍa>.<sarga>.<śloka>` —
+the Gita's `श्लोक · १.१` grammar (§3 pill vocabulary) extended to the epic's three-part citation,
+with Devanagari numerals in `labelHi`. A verse whose in-sarga index differs between editions
+cites the sarga only (`श्लोक · ३.५०`) rather than guessing a number; the reason is recorded in
+that chapter's `source.notes`.
+
+**Background.** Per-kāṇḍa, deterministic per verse: `ValmikiRamayanVerse.stanza` carries the
+kāṇḍa number, and `getReaderBackground('valmiki-ramayan', verse)` maps Kiṣkindhā → the
+Rāma-Hanumān plate, Sundara → the Hanumān-crossing-the-ocean plate, and every other kāṇḍa →
+the Rāma darbār plate (§6, RULEBOOK §3 "deterministic per verse id").
+
+**Romanization.** Sanskrit, so IAST + Hunterian digraphs per §3.1 (`śh`, `ṣh`, `kṣh`, `chh`,
+`ch`, epenthetic `ṛi`) — the same style as the Gita corpus, never the Awadhi ASCII used for
+Tulsidas.
+
+**Not a duplicate of Sundarkand.** Chapter 5 here is Vālmīki's **Sanskrit** Sundarakāṇḍa; the
+separate `sundarkand` Granth section is Tulsidas's **Awadhi** Sundarkand. No line is shared
+between the two (RULEBOOK §10.11).
+
+**Files.** `mobile/src/data/valmiki-ramayan/` (`chapter-01..06.json`, `chapters-manifest.json`,
+`index.ts`), `mobile/src/components/ValmikiRamayanVersePage.tsx` (explicit re-export of
+`SundarkandVersePage` — the `lines`/`linesEn` archetype), `mobile/src/screens/
+ValmikiRamayanChaptersScreen.tsx`, `mobile/src/screens/ValmikiRamayanReaderScreen.tsx`.
+Registered in `texts.ts`, `entryRoutes.ts` (chapters + reader + chapter count),
+`HomeStackNavigator.tsx`, `backgrounds.ts`, `searchIndex.ts`, `versePool.ts`, `formatLocation.ts`.
+Tests: `src/screens/__tests__/ValmikiRamayanReaderScreen.test.tsx` (per-kāṇḍa first-verse render),
+`readerAutoAdvance.test.tsx` (kāṇḍa-boundary swipe contract), `chapteredTotals.test.ts`,
+`readerTypeScale.test.tsx`. E2E: `.maestro/granth-smoke.yaml`.

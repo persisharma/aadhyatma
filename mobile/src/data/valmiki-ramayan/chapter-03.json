@@ -1,0 +1,78 @@
+{
+  "chapter": 3,
+  "titleHi": "अरण्यकाण्ड",
+  "titleEn": "Aranya Kanda",
+  "verseCount": 3,
+  "source": {
+    "baseText": "Śrīmad Vālmīki Rāmāyaṇa, Araṇyakāṇḍa — Gita Press / IIT Kanpur (valmiki.iitk.ac.in) reading, cross-checked against ramcharit.in and sanskritdocuments.org",
+    "referenceUrls": [
+      "https://www.valmiki.iitk.ac.in/",
+      "https://www.ramcharit.in/valmiki-ramayana-aranya-kanda-in-hindi-sanskrit-complete-pdf/",
+      "https://sanskritdocuments.org/sites/valmikiramayan/"
+    ],
+    "notes": "Curated selection of widely published Araṇyakāṇḍa shlokas, not the complete kāṇḍa. 3.37.2 is also popularly quoted as Yuddhakāṇḍa 16.21; the IIT Kanpur text places it at 3.37.2, which is the reading used here. For the Jaṭāyu verse the sarga (3.50) is verified but the in-sarga number varies between editions, so only the sarga is cited.",
+    "retrievedOn": "2026-07-31"
+  },
+  "verses": [
+    {
+      "id": "aranya-3-37-2",
+      "kanda": 3,
+      "section": "shloka",
+      "stanza": 3,
+      "numInSection": 1,
+      "reference": "3.37.2",
+      "labelHi": "श्लोक · ३.३७.२",
+      "labelEn": "Shloka · 3.37.2",
+      "lines": [
+        "सुलभाः पुरुषा राजन् सततं प्रियवादिनः।",
+        "अप्रियस्य च पथ्यस्य वक्ता श्रोता च दुर्लभः॥"
+      ],
+      "linesEn": [
+        "sulabhāḥ puruṣhā rājan satataṁ priyavādinaḥ",
+        "apriyasya cha pathyasya vaktā śhrotā cha durlabhaḥ"
+      ],
+      "meaningHi": "हे राजन्! सदा प्रिय बोलने वाले पुरुष सहज ही मिल जाते हैं, परन्तु अप्रिय होने पर भी हितकर बात कहने वाला — और उसे सुनने वाला — दोनों दुर्लभ हैं। सीता-हरण के संकल्प पर मारीच ने रावण को यह चेतावनी दी थी। यह श्लोक सत्परामर्श का महत्त्व बताता है: विनाश तब आता है जब राजा के पास केवल हाँ कहने वाले शेष रह जाते हैं।",
+      "meaningEn": "O king, men who always speak pleasantly are easy to find; but one who says what is unwelcome yet beneficial — and one who will listen to it — are both rare. Maricha warned Ravana in these words when he resolved to abduct Sita. The verse states the worth of honest counsel: ruin arrives when a ruler is left with none but those who agree."
+    },
+    {
+      "id": "aranya-3-37-13",
+      "kanda": 3,
+      "section": "shloka",
+      "stanza": 3,
+      "numInSection": 2,
+      "reference": "3.37.13",
+      "labelHi": "श्लोक · ३.३७.१३",
+      "labelEn": "Shloka · 3.37.13",
+      "lines": [
+        "रामो विग्रहवान् धर्मः साधुः सत्यपराक्रमः।",
+        "राजा सर्वस्य लोकस्य देवानामिव वासवः॥"
+      ],
+      "linesEn": [
+        "rāmo vigrahavān dharmaḥ sādhuḥ satyaparākramaḥ",
+        "rājā sarvasya lokasya devānāmiva vāsavaḥ"
+      ],
+      "meaningHi": "राम साक्षात् मूर्तिमान धर्म हैं, साधुस्वभाव हैं और सत्य ही उनका पराक्रम है; जैसे देवताओं के राजा इन्द्र हैं, वैसे ही वे सम्पूर्ण लोक के राजा हैं। यह वचन शत्रुपक्ष के मारीच का है — और इसी कारण अधिक भारी है, क्योंकि राम के धर्म की साक्षी उनका विरोधी दे रहा है। भक्ति-परम्परा में यह श्लोक श्रीराम के स्वरूप-वर्णन के रूप में उद्धृत होता है।",
+      "meaningEn": "Rama is dharma itself given form, gentle in nature, with truth for his valour; as Indra is king of the gods, so is he king of the whole world. These words come from Maricha, of the enemy's side — and carry the more weight for it, since Rama's righteousness is attested by his opponent. In devotional tradition the verse is quoted as a description of Rama's very nature."
+    },
+    {
+      "id": "aranya-3-50-jatayu",
+      "kanda": 3,
+      "section": "shloka",
+      "stanza": 3,
+      "numInSection": 3,
+      "reference": "3.50",
+      "labelHi": "श्लोक · ३.५०",
+      "labelEn": "Shloka · 3.50",
+      "lines": [
+        "वृद्धोऽहं त्वं युवा धन्वी सरथः कवची शरी।",
+        "न चाप्यादाय कुशली वैदेहीं मे गमिष्यसि॥"
+      ],
+      "linesEn": [
+        "vṛiddho'haṁ tvaṁ yuvā dhanvī sarathaḥ kavachī śharī",
+        "na chāpyādāya kuśhalī vaidehīṁ me gamiṣhyasi"
+      ],
+      "meaningHi": "मैं वृद्ध हूँ और तुम युवा हो, धनुर्धर हो, रथ, कवच और बाणों से युक्त हो; फिर भी मेरे सामने से वैदेही सीता को लेकर तुम कुशलपूर्वक नहीं जा सकोगे। सीता-हरण करते रावण को रोकते हुए वृद्ध जटायु ने यह कहा और अपने प्राण दे दिए। इसका महत्त्व यह है कि धर्म की रक्षा सामर्थ्य की तुलना नहीं देखती — अशक्त होकर भी अन्याय के सामने खड़ा होना ही जटायु का गौरव है।",
+      "meaningEn": "I am old and you are young, an archer with chariot, armour and arrows; and yet you shall not pass me safely, carrying Vaidehi away. So spoke the aged Jatayu as he barred Ravana's flight with Sita, and he gave his life for it. Its significance is that standing for dharma does not wait on a comparison of strength — Jatayu's glory is that he opposed injustice knowing he could not win."
+    }
+  ]
+}

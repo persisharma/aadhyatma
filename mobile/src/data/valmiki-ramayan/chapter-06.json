@@ -1,0 +1,138 @@
+{
+  "chapter": 6,
+  "titleHi": "युद्धकाण्ड",
+  "titleEn": "Yuddha Kanda",
+  "verseCount": 6,
+  "source": {
+    "baseText": "Śrīmad Vālmīki Rāmāyaṇa, Yuddhakāṇḍa — Gita Press / IIT Kanpur (valmiki.iitk.ac.in) reading, cross-checked against ramcharit.in and gyaandweep.com",
+    "referenceUrls": [
+      "https://www.valmiki.iitk.ac.in/",
+      "https://www.ramcharit.in/valmiki-ramayana-yuddha-kanda-in-hindi-sanskrit-complete-pdf/",
+      "https://gyaandweep.com/ramayana/yuddha-kanda/"
+    ],
+    "notes": "Curated selection of widely published Yuddhakāṇḍa shlokas, not the complete kāṇḍa. Numbering follows the 128-sarga Gita Press / IIT Kanpur reading; in the critical edition (116 sargas) 6.109.25 appears as 6.99.39.",
+    "retrievedOn": "2026-07-31"
+  },
+  "verses": [
+    {
+      "id": "yuddha-6-18-3",
+      "kanda": 6,
+      "section": "shloka",
+      "stanza": 6,
+      "numInSection": 1,
+      "reference": "6.18.3",
+      "labelHi": "श्लोक · ६.१८.३",
+      "labelEn": "Shloka · 6.18.3",
+      "lines": [
+        "मित्रभावेन सम्प्राप्तं न त्यजेयं कथञ्चन।",
+        "दोषो यद्यपि तस्य स्यात्सतामेतदगर्हितम्॥"
+      ],
+      "linesEn": [
+        "mitrabhāvena samprāptaṁ na tyajeyaṁ kathañchana",
+        "doṣho yadyapi tasya syātsatāmetadagarhitam"
+      ],
+      "meaningHi": "जो मित्रभाव से मेरे पास आया है, उसे मैं किसी भी प्रकार नहीं त्यागूँगा; यदि उसमें कोई दोष भी हो, तो भी सत्पुरुषों की दृष्टि में उसे स्वीकार करना निन्दनीय नहीं है। विभीषण के शरणागत होने पर वानरों के संदेह का उत्तर देते हुए श्रीराम ने यह कहा। यह श्लोक शरणागत-वत्सलता का मूल वचन है — यही राम को 'शरणागतवत्सल' नाम देता है।",
+      "meaningEn": "One who has come to me in friendship I will not forsake on any account; even if some fault be found in him, the good hold such acceptance blameless. Rama spoke thus in answer to the vanaras' suspicions when Vibhishana sought refuge with him. The verse is the root statement of his compassion to those who seek shelter — it is what earns Rama the name Sharanagata-vatsala."
+    },
+    {
+      "id": "yuddha-6-105-3",
+      "kanda": 6,
+      "section": "shloka",
+      "stanza": 6,
+      "numInSection": 2,
+      "reference": "6.105.3",
+      "labelHi": "श्लोक · ६.१०५.३",
+      "labelEn": "Shloka · 6.105.3",
+      "lines": [
+        "राम राम महाबाहो शृणु गुह्यं सनातनम्।",
+        "येन सर्वानरीन् वत्स समरे विजयिष्यसि॥"
+      ],
+      "linesEn": [
+        "rāma rāma mahābāho śhṛiṇu guhyaṁ sanātanam",
+        "yena sarvānarīn vatsa samare vijayiṣhyasi"
+      ],
+      "meaningHi": "हे महाबाहु राम! एक सनातन गुह्य रहस्य सुनो, जिसके द्वारा हे वत्स! तुम युद्ध में समस्त शत्रुओं पर विजय प्राप्त करोगे। रावण के साथ निर्णायक युद्ध से पूर्व, थके हुए श्रीराम को देखकर अगस्त्य मुनि ने यह कहकर आदित्यहृदय का उपदेश आरम्भ किया। यह श्लोक आदित्यहृदय स्तोत्र की प्रस्तावना है।",
+      "meaningEn": "O mighty-armed Rama, hear an eternal secret by which, dear child, you shall conquer all your foes in battle. Seeing Rama weary before the decisive fight with Ravana, the sage Agastya began his teaching of the Aditya Hridaya with these words. The verse is the preface to that hymn."
+    },
+    {
+      "id": "yuddha-6-105-4",
+      "kanda": 6,
+      "section": "shloka",
+      "stanza": 6,
+      "numInSection": 3,
+      "reference": "6.105.4",
+      "labelHi": "श्लोक · ६.१०५.४",
+      "labelEn": "Shloka · 6.105.4",
+      "lines": [
+        "आदित्यहृदयं पुण्यं सर्वशत्रुविनाशनम्।",
+        "जयावहं जपेन्नित्यमक्षय्यं परमं शिवम्॥"
+      ],
+      "linesEn": [
+        "ādityahṛidayaṁ puṇyaṁ sarvaśhatruvināśhanam",
+        "jayāvahaṁ japennityamakṣhayyaṁ paramaṁ śhivam"
+      ],
+      "meaningHi": "आदित्यहृदय पुण्यदायक है, समस्त शत्रुओं का नाश करने वाला है, विजय दिलाने वाला, अक्षय और परम कल्याणकारी है — इसका नित्य जप करना चाहिए। यह आदित्यहृदय स्तोत्र का मुख्य फलश्रुति-श्लोक है, जो युद्धकाण्ड के १०५वें सर्ग में सूर्योपासना का उपदेश देता है। रविवार तथा सूर्य-उपासना में इसी स्तोत्र का पाठ किया जाता है।",
+      "meaningEn": "The Aditya Hridaya is meritorious, destroys every enemy, brings victory, is inexhaustible and supremely auspicious — it should be recited daily. This is the principal phalashruti verse of the Aditya Hridaya, the hymn to the Sun taught in the 105th sarga of the Yuddha Kanda. It is the hymn recited on Sundays and in the worship of Surya."
+    },
+    {
+      "id": "yuddha-6-109-25",
+      "kanda": 6,
+      "section": "shloka",
+      "stanza": 6,
+      "numInSection": 4,
+      "reference": "6.109.25",
+      "labelHi": "श्लोक · ६.१०९.२५",
+      "labelEn": "Shloka · 6.109.25",
+      "lines": [
+        "मरणान्तानि वैराणि निर्वृत्तं नः प्रयोजनम्।",
+        "क्रियतामस्य संस्कारो ममाप्येष यथा तव॥"
+      ],
+      "linesEn": [
+        "maraṇāntāni vairāṇi nirvṛittaṁ naḥ prayojanam",
+        "kriyatāmasya saṁskāro mamāpyeṣha yathā tava"
+      ],
+      "meaningHi": "शत्रुता मृत्यु के साथ समाप्त हो जाती है; हमारा प्रयोजन पूर्ण हो चुका है। इसका अन्त्येष्टि-संस्कार किया जाए — यह मेरे लिए भी वैसा ही है जैसा तुम्हारे लिए है। रावण के वध के पश्चात जब विभीषण संस्कार करने में हिचकिचाए, तब श्रीराम ने यह कहा। यह श्लोक रामायण की सर्वोच्च क्षमा-शिक्षा है: मृत्यु के आगे बैर नहीं टिकता।",
+      "meaningEn": "Enmities end with death; our purpose has been accomplished. Let his funeral rites be performed — he is as much mine now as he is yours. Rama said this when Vibhishana hesitated to perform the last rites for Ravana. The verse is the epic's highest teaching on forgiveness: hostility does not outlive death."
+    },
+    {
+      "id": "yuddha-6-128-99",
+      "kanda": 6,
+      "section": "shloka",
+      "stanza": 6,
+      "numInSection": 5,
+      "reference": "6.128.99",
+      "labelHi": "श्लोक · ६.१२८.९९",
+      "labelEn": "Shloka · 6.128.99",
+      "lines": [
+        "न पर्यदेवन् विधवा न च व्यालकृतं भयम्।",
+        "न व्याधिजं भयं वापि रामे राज्यं प्रशासति॥"
+      ],
+      "linesEn": [
+        "na paryadevan vidhavā na cha vyālakṛitaṁ bhayam",
+        "na vyādhijaṁ bhayaṁ vāpi rāme rājyaṁ praśhāsati"
+      ],
+      "meaningHi": "श्रीराम के राज्य-शासन में कोई विधवा शोक नहीं करती थी, न हिंसक जन्तुओं से भय था, न रोगों से उत्पन्न भय था। यह रामराज्य का वर्णन है, जो राज्याभिषेक के पश्चात युद्धकाण्ड के अन्तिम सर्ग में आता है। इसका महत्त्व यह है कि रामायण आदर्श शासन को विजय या वैभव से नहीं, प्रजा की निर्भयता से मापती है।",
+      "meaningEn": "While Rama ruled the kingdom no widow grieved, there was no fear from wild beasts, nor any fear arising from disease. This is the description of Rama Rajya that comes in the final sarga of the Yuddha Kanda, after the coronation. Its significance is the measure it uses: the epic judges ideal rule not by conquest or splendour but by the freedom of the people from fear."
+    },
+    {
+      "id": "yuddha-6-128-104",
+      "kanda": 6,
+      "section": "shloka",
+      "stanza": 6,
+      "numInSection": 6,
+      "reference": "6.128.104",
+      "labelHi": "श्लोक · ६.१२८.१०४",
+      "labelEn": "Shloka · 6.128.104",
+      "lines": [
+        "नित्यपुष्पा नित्यफलास्तरवः स्कन्धविस्तृताः।",
+        "कालवर्षी च पर्जन्यः सुखस्पर्शश्च मारुतः॥"
+      ],
+      "linesEn": [
+        "nityapuṣhpā nityaphalāstaravaḥ skandhavistṛitāḥ",
+        "kālavarṣhī cha parjanyaḥ sukhasparśhaśhcha mārutaḥ"
+      ],
+      "meaningHi": "वृक्ष सदा पुष्पित और फलित रहते थे तथा उनके तने विस्तृत थे; मेघ समय पर वर्षा करते थे और वायु का स्पर्श सुखद था। रामराज्य के इसी वर्णन में प्रकृति की भी सहभागिता दिखाई गई है। इसका भाव यह है कि धर्मपूर्वक शासन से मनुष्य ही नहीं, समस्त प्रकृति भी सन्तुलित और उदार हो जाती है।",
+      "meaningEn": "The trees were always in flower and always in fruit, broad of trunk; the clouds rained in season, and the touch of the wind was pleasant. In this same description of Rama Rajya, nature too is shown taking part. The sense is that under righteous rule not only people but the whole natural order becomes balanced and generous."
+    }
+  ]
+}

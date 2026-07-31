@@ -16,6 +16,7 @@ import { krishnaStotramChaptersManifest } from '@/data/krishna-stotram';
 import { bajrangBaanChaptersManifest } from '@/data/bajrang-baan';
 import { ramStutiChaptersManifest } from '@/data/ram-stuti';
 import { ramcharitmanasChaptersManifest } from '@/data/ramcharitmanas';
+import { valmikiRamayanChaptersManifest } from '@/data/valmiki-ramayan';
 import { sundarkandChaptersManifest } from '@/data/sundarkand';
 import { gitaChaptersManifest } from '@/data/gita';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
@@ -108,6 +109,7 @@ const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   // opens the same chapters/reader routes rather than the index-based AartiReader.
   'ram-aarti': 'RamStutiChapters',
   'ramcharitmanas': 'RamcharitmanasChapters',
+  'valmiki-ramayan': 'ValmikiRamayanChapters',
   'sundarkand': 'SundarkandChapters',
   'bhagavad-gita': 'GitaChapters',
 };
@@ -136,6 +138,7 @@ const chapterCountBySourceId: Record<string, number> = {
   // ram-aarti reuses the Ram Stuti content, so it inherits its chapter count.
   'ram-aarti': ramStutiChaptersManifest.length,
   'ramcharitmanas': ramcharitmanasChaptersManifest.length,
+  'valmiki-ramayan': valmikiRamayanChaptersManifest.length,
   'sundarkand': sundarkandChaptersManifest.length,
   'bhagavad-gita': gitaChaptersManifest.length,
 };
@@ -152,6 +155,7 @@ const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'ram-stuti': 'RamStutiReader',
   'ram-aarti': 'RamStutiReader',
   'ramcharitmanas': 'RamcharitmanasReader',
+  'valmiki-ramayan': 'ValmikiRamayanReader',
   'sundarkand': 'SundarkandReader',
   'bhagavad-gita': 'GitaReader',
 };

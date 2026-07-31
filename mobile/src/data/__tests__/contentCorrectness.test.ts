@@ -473,6 +473,59 @@ assert.match(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);
 assert.equal(libraryById.get('durga-stotram')?.nameHi, 'दुर्गा स्तोत्रम्');
 assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
 
+// Vālmīki Rāmāyaṇa ships a declared curated selection, never a text implied to be
+// complete (RULEBOOK §10.5). The card subtitle must say so in both languages, every
+// chapter file must cite its sources and say in `source.notes` that it is a
+// selection, and the declared count must equal the shipped verses.
+{
+  const entry = libraryById.get('valmiki-ramayan');
+  assert.ok(entry, 'valmiki-ramayan must exist in the library');
+  assert.match(entry.sub, /चयनित/, 'Hindi sub must declare the selection');
+  assert.match(entry.subEn || '', /selected/i, 'English sub must declare the selection');
+
+  const manifest = readJson('valmiki-ramayan/chapters-manifest.json') as {
+    chapter: number;
+    verseCount: number;
+  }[];
+  let shipped = 0;
+  for (const summary of manifest) {
+    const file = `valmiki-ramayan/chapter-0${summary.chapter}.json`;
+    const chapter = readJson(file) as {
+      verseCount: number;
+      source?: { baseText?: string; referenceUrls?: string[]; notes?: string; retrievedOn?: string };
+      verses: { id: string; reference: string; lines: string[]; linesEn: string[] }[];
+    };
+    assert.equal(chapter.verses.length, summary.verseCount, `${file}: verse count drift`);
+    assert.ok(chapter.source?.baseText?.trim(), `${file}: missing source.baseText (RULEBOOK §10.2)`);
+    assert.ok(chapter.source?.retrievedOn?.trim(), `${file}: missing source.retrievedOn`);
+    assert.ok(
+      (chapter.source?.referenceUrls?.length ?? 0) >= 2,
+      `${file}: needs ≥2 reference sources (RULEBOOK §10.1)`
+    );
+    assert.match(
+      chapter.source?.notes || '',
+      /selection/i,
+      `${file}: source.notes must state that the file is a curated selection`
+    );
+    for (const verse of chapter.verses) {
+      assert.match(
+        verse.reference,
+        new RegExp(`^${summary.chapter}\\.\\d+(\\.\\d+(–\\d+)?)?$`),
+        `${verse.id}: reference must cite its own kāṇḍa`
+      );
+      assert.equal(
+        verse.lines.length,
+        verse.linesEn.length,
+        `${verse.id}: linesEn must be index-paired with lines (RULEBOOK §10.12)`
+      );
+    }
+    shipped += chapter.verses.length;
+  }
+  assert.equal(entry.verseCount, shipped, 'library verseCount must equal shipped verses');
+  assert.match(entry.sub, new RegExp(`${shipped}`), 'Hindi sub count must match shipped verses');
+  assert.match(entry.subEn || '', new RegExp(`${shipped}`), 'English sub count must match');
+}
+
 // Every library entry must carry an English count-detail string that is free of
 // Devanagari, so the card subtitle matches the selected language. Guards the
 // regression where English-selected cards still showed the Hindi `sub`.

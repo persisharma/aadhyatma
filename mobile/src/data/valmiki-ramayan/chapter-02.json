@@ -1,0 +1,98 @@
+{
+  "chapter": 2,
+  "titleHi": "अयोध्याकाण्ड",
+  "titleEn": "Ayodhya Kanda",
+  "verseCount": 4,
+  "source": {
+    "baseText": "Śrīmad Vālmīki Rāmāyaṇa, Ayodhyākāṇḍa — Gita Press / IIT Kanpur (valmiki.iitk.ac.in) reading, cross-checked against ramcharit.in and shriramcharitmanas.in",
+    "referenceUrls": [
+      "https://www.valmiki.iitk.ac.in/",
+      "https://www.ramcharit.in/valmiki-ramayana-ayodhya-kand-complete-in-hindi-pdf/",
+      "https://www.shriramcharitmanas.in/"
+    ],
+    "notes": "Curated selection of widely published Ayodhyākāṇḍa shlokas, not the complete kāṇḍa. Verse numbering follows the Gita Press / IIT Kanpur reading (kāṇḍa.sarga.śloka).",
+    "retrievedOn": "2026-07-31"
+  },
+  "verses": [
+    {
+      "id": "ayodhya-2-25-3",
+      "kanda": 2,
+      "section": "shloka",
+      "stanza": 2,
+      "numInSection": 1,
+      "reference": "2.25.3",
+      "labelHi": "श्लोक · २.२५.३",
+      "labelEn": "Shloka · 2.25.3",
+      "lines": [
+        "यं पालयसि धर्मं त्वं धृत्या च नियमेन च।",
+        "स वै राघवशार्दूल धर्मस्त्वामभिरक्षतु॥"
+      ],
+      "linesEn": [
+        "yaṁ pālayasi dharmaṁ tvaṁ dhṛityā cha niyamena cha",
+        "sa vai rāghavaśhārdūla dharmastvāmabhirakṣhatu"
+      ],
+      "meaningHi": "हे रघुवंश के सिंह! जिस धर्म का तुम धैर्य और नियम के साथ पालन करते हो, वही धर्म तुम्हारी सब ओर से रक्षा करे। वनगमन के समय माता कौसल्या ने श्रीराम को यह आशीर्वाद दिया था। इसका भाव यह है कि जिसकी रक्षा हम धर्म से करते हैं, अन्त में वही धर्म हमारा रक्षक बनता है — इसीलिए यह श्लोक आज भी यात्रा और नए कार्य के आरम्भ में आशीर्वाद के रूप में कहा जाता है।",
+      "meaningEn": "O tiger among the Raghus, may that very dharma which you uphold with steadfastness and discipline protect you on every side. Mother Kausalya gave Rama this blessing as he left for the forest. Its sense is that the dharma we guard becomes, in the end, our own guardian — which is why the verse is still spoken as a blessing before a journey or a new undertaking."
+    },
+    {
+      "id": "ayodhya-2-27-4",
+      "kanda": 2,
+      "section": "shloka",
+      "stanza": 2,
+      "numInSection": 2,
+      "reference": "2.27.4",
+      "labelHi": "श्लोक · २.२७.४",
+      "labelEn": "Shloka · 2.27.4",
+      "lines": [
+        "भर्तुर्भाग्यं तु भार्यैका प्राप्नोति पुरुषर्षभ।",
+        "अतश्चैवाहमादिष्टा वने वस्तव्यमित्यपि॥"
+      ],
+      "linesEn": [
+        "bharturbhāgyaṁ tu bhāryaikā prāpnoti puruṣharṣhabha",
+        "ataśhchaivāhamādiṣhṭā vane vastavyamityapi"
+      ],
+      "meaningHi": "हे पुरुषश्रेष्ठ! पति का भाग्य एकमात्र पत्नी ही पाती है; इसी कारण मुझे भी वन में निवास करने का आदेश मिला हुआ है। वनवास की आज्ञा सुनकर श्रीराम ने सीता जी को अयोध्या में ही रहने के लिए समझाया था, तब सीता जी ने यह उत्तर दिया। इसका महत्त्व यह है कि सीता जी वनवास को त्याग नहीं, अपने धर्म का सहज भाग मानती हैं।",
+      "meaningEn": "O best of men, a wife alone shares her husband's destiny; by that very reason I too stand instructed to dwell in the forest. When Rama urged Sita to remain in Ayodhya, this was her reply. Its force lies in her framing: she treats the exile not as a sacrifice but as the natural portion of her own dharma."
+    },
+    {
+      "id": "ayodhya-2-40-9",
+      "kanda": 2,
+      "section": "shloka",
+      "stanza": 2,
+      "numInSection": 3,
+      "reference": "2.40.9",
+      "labelHi": "श्लोक · २.४०.९",
+      "labelEn": "Shloka · 2.40.9",
+      "lines": [
+        "रामं दशरथं विद्धि मां विद्धि जनकात्मजाम्।",
+        "अयोध्यामटवीं विद्धि गच्छ तात यथासुखम्॥"
+      ],
+      "linesEn": [
+        "rāmaṁ daśharathaṁ viddhi māṁ viddhi janakātmajām",
+        "ayodhyāmaṭavīṁ viddhi gachchha tāta yathāsukham"
+      ],
+      "meaningHi": "राम को ही दशरथ समझो, जनकनन्दिनी सीता को ही मुझ माता के समान समझो, और वन को ही अयोध्या समझो; हे पुत्र! सुखपूर्वक जाओ। वन जाते समय माता सुमित्रा ने लक्ष्मण जी को यह विदाई-आशीर्वाद दिया। इसका भाव यह है कि जहाँ कर्तव्य और स्नेह हों, वहीं घर है — यही सेवाभाव लक्ष्मण जी के चरित्र का आधार बना।",
+      "meaningEn": "Look upon Rama as Dasharatha, upon Janaka's daughter Sita as your mother, and upon the forest as Ayodhya; go, my son, and be at ease. These were Sumitra's parting words to Lakshmana as he left for the forest. Her teaching is that home is wherever duty and love are — and this became the ground of Lakshmana's lifelong service."
+    },
+    {
+      "id": "ayodhya-2-109-13",
+      "kanda": 2,
+      "section": "shloka",
+      "stanza": 2,
+      "numInSection": 4,
+      "reference": "2.109.13",
+      "labelHi": "श्लोक · २.१०९.१३",
+      "labelEn": "Shloka · 2.109.13",
+      "lines": [
+        "सत्यमेवेश्वरो लोके सत्ये धर्मः सदाश्रितः।",
+        "सत्यमूलानि सर्वाणि सत्यान्नास्ति परं पदम्॥"
+      ],
+      "linesEn": [
+        "satyameveśhvaro loke satye dharmaḥ sadāśhritaḥ",
+        "satyamūlāni sarvāṇi satyānnāsti paraṁ padam"
+      ],
+      "meaningHi": "इस लोक में सत्य ही ईश्वर है, धर्म भी सदा सत्य पर ही आश्रित है; सब कुछ सत्य में ही मूल रखता है, और सत्य से बढ़कर कोई परम पद नहीं है। जाबालि के नास्तिक तर्कों के उत्तर में श्रीराम ने यह कहा। यह श्लोक रामायण का नैतिक केन्द्र है — राम का सम्पूर्ण वनवास पिता के सत्य वचन की रक्षा के लिए ही था।",
+      "meaningEn": "In this world truth itself is God; dharma too always rests upon truth. All things are rooted in truth, and there is no state higher than truth. Rama spoke these words in answer to Jabali's sceptical arguments. The verse is the moral centre of the Ramayana — Rama's entire exile was undertaken to keep his father's given word true."
+    }
+  ]
+}

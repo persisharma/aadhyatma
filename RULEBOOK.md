@@ -190,7 +190,7 @@ Every new section must also be reachable from global search (`SearchScreen`). Th
 
 | Verse shape | Devanagari source | Latin source | Used by |
 |---|---|---|---|
-| `lines` + `linesEn` | `lines` | `linesEn` | chalisas, aartis, sundarkand, ramcharitmanas |
+| `lines` + `linesEn` | `lines` | `linesEn` | chalisas, aartis, sundarkand, ramcharitmanas, valmiki-ramayan |
 | `sanskrit` + `linesEn` | `sanskrit` | `linesEn` | shiva-strotam, durga-stotram, ganesh-stotram, vishnu-sahasranama, hanuman-ashtak, ram-stuti |
 | `sanskrit` + `transliteration` | `sanskrit` | `transliteration` | bhagavad-gita |
 
@@ -289,6 +289,8 @@ The `deity` field (and `deities` array in `texts.ts`) must match the actual deit
 
 ### 10.5 Complete texts only — never fabricate
 Ship the full canonical version (all verses) only after internet verification. Missing stanzas are worse than a "coming soon" label. Never add wrong, pre-generated, or unverified text to fill gaps. If the complete verified text isn't available, don't ship the section at all — mark it `status: 'coming'` until verified. Origin: Hanuman Aarti had 6 of 13 verses with a fabricated closing, Jai Ambe Gauri had 5 of 12.
+
+**Declared selections are the one exception, and they must declare themselves.** A text too large to ship whole (Vālmīki Rāmāyaṇa ≈ 24,000 ślokas; Durgā Saptashatī) may ship as a *curated selection* of verified verses — but only when: (a) the `sub`/`subEn` name it as one, using the `चयनित` / `selected` wording (`6 काण्ड · 27 चयनित श्लोक` / `6 kandas · 27 selected shlokas`, following `durga-stotram`'s `3 चयनित स्तोत्र`); (b) each JSON's `source.notes` says explicitly that the file is a selection and not the complete kāṇḍa/adhyāya; and (c) every shipped verse still clears §10.1–§10.4 individually. What stays banned is the thing this rule was written for: a text the UI *implies* is complete but isn't. Omitting a subsection you could not verify (e.g. Uttarakāṇḍa) is correct behaviour — say so in `source.notes` and in the section's `design.md` entry; padding the count with unverified text is a hard reject.
 
 ### 10.6 No fabricated content
 Every line in a content file must exist in at least one published source. Fake closing verses, paraphrased refrains, composite mashups from different texts = hard reject. If a line appears in zero internet sources, it is fabricated and must be removed. Origin: "हनुमत बीर सकल दुख भावे" (Hanuman Aarti closing) appeared in zero published sources.
