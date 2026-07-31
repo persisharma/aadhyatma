@@ -1,11 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 
-// The five bottom-tab-bar icons (design.md §17). All are hand-built from `View`
-// strokes on the same `stroke = max(1.5, size * 0.07)` grammar with rounded caps
-// — no icon font, no SVG — so they tint with the active/inactive colour and stay
-// crisp at any size. Kept in a leaf module (React + View only) so they render in
-// isolation under Jest, without pulling in the whole navigator graph.
+// The five bottom-tab-bar icons (design.md §17). Four are hand-built from `View`
+// strokes; Bhajan preserves the original filled SVG glyph so its classic note
+// silhouette stays crisp at tab-bar size. Kept in a leaf module so the icons
+// render in isolation under Jest, without pulling in the navigator graph.
 
 export type TabIconProps = {
   color: string;
@@ -190,64 +190,19 @@ export function MoreIcon({ color, size }: TabIconProps) {
   );
 }
 
-// Composed from Views in the same grammar as its four siblings (same
-// `stroke = max(1.5, size * 0.07)`, same rounded caps). Replaced a filled SVG
-// path that read visibly heavier than the icons beside it: here only the note
-// head is solid, with a thin stem and a hairline flag, so the glyph stays light
-// while still reading unmistakably as a music note. The head MUST stay filled —
-// a hollow ring reads as a broken glyph, not a note (see tabBarIcons.test.tsx).
+// This is the original filled note used by the audio tab before the later icon
+// redraw. The filled head, vertical stem, and square flag are intentional: the
+// reference icon is a classic eighth note, not a stroked approximation.
 export function MusicIcon({ color, size }: TabIconProps) {
-  const stroke = Math.max(1.5, size * 0.07);
-  const head = size * 0.34;
-  const headLeft = size * 0.16;
-  const headBottom = size * 0.18;
-  // Stem rises from the head's right edge; the flag springs from the stem top.
-  const stemLeft = headLeft + head - stroke;
-  const stemBottom = headBottom + head / 2;
-  const stemHeight = size * 0.5;
-
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      {/* Note head — a filled disc (see note above: a hollow ring reads broken). */}
-      <View
-        testID="tab-music-icon-head"
-        style={{
-          position: 'absolute',
-          left: headLeft,
-          bottom: headBottom,
-          width: head,
-          height: head,
-          borderRadius: head / 2,
-          backgroundColor: color,
-        }}
-      />
-      {/* Stem */}
-      <View
-        testID="tab-music-icon-stem"
-        style={{
-          position: 'absolute',
-          left: stemLeft,
-          bottom: stemBottom,
-          width: stroke,
-          height: stemHeight,
-          borderRadius: stroke / 2,
-          backgroundColor: color,
-        }}
-      />
-      {/* Flag */}
-      <View
-        testID="tab-music-icon-flag"
-        style={{
-          position: 'absolute',
-          left: stemLeft + stroke,
-          bottom: stemBottom + stemHeight - stroke,
-          width: size * 0.24,
-          height: stroke,
-          borderRadius: stroke / 2,
-          backgroundColor: color,
-          transform: [{ rotate: '30deg' }],
-        }}
-      />
+      <Svg width={size} height={size} viewBox="0 0 24 24">
+        <Path
+          testID="tab-music-icon-path"
+          fill={color}
+          d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"
+        />
+      </Svg>
     </View>
   );
 }
