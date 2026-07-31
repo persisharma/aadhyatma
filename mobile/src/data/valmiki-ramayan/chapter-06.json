@@ -5,12 +5,18 @@
   "verseCount": 6,
   "source": {
     "baseText": "Śrīmad Vālmīki Rāmāyaṇa, Yuddhakāṇḍa — Gita Press / IIT Kanpur (valmiki.iitk.ac.in) reading, cross-checked against ramcharit.in and gyaandweep.com",
+    "canonicalEdition": "Gita Press Śrīmad Vālmīki Rāmāyaṇa (Hindi, with Sanskrit text) — the edition family this section's kāṇḍa.sarga.śloka numbering follows",
+    "canonicalEditionUrls": [
+      "https://archive.org/details/valmiki-ramayana_202404",
+      "https://ebooks.iskcondesiretree.com/pdf/Valmiki_Ramayan/Valmiki_Ramayana_Gita_Press.pdf"
+    ],
+    "canonicalEditionStatus": "page-level check OUTSTANDING: both hosts are blocked by the authoring environment's network policy (archive.org and ebooks.iskcondesiretree.com return 403 through the egress proxy), so the ślokas here were verified against the secondary sources in referenceUrls instead. Re-verify against this edition from an unblocked session and then set canonicalEditionStatus to the date it was confirmed.",
     "referenceUrls": [
       "https://www.valmiki.iitk.ac.in/",
       "https://www.ramcharit.in/valmiki-ramayana-yuddha-kanda-in-hindi-sanskrit-complete-pdf/",
       "https://gyaandweep.com/ramayana/yuddha-kanda/"
     ],
-    "notes": "Curated selection of widely published Yuddhakāṇḍa shlokas, not the complete kāṇḍa. Numbering follows the 128-sarga Gita Press / IIT Kanpur reading; in the critical edition (116 sargas) 6.109.25 appears as 6.99.39.",
+    "notes": "Curated selection of widely published Yuddhakāṇḍa shlokas, not the complete kāṇḍa. Vālmīki's own name for the sixth kāṇḍa is Yuddhakāṇḍa; Lankākāṇḍa is Tulsidas's name for it in the Rāmcharitmānas, so the Vālmīki name is used here. Numbering follows the 128-sarga Gita Press / IIT Kanpur reading; in the critical edition (116 sargas) 6.109.25 appears as 6.99.39.",
     "retrievedOn": "2026-07-31"
   },
   "verses": [

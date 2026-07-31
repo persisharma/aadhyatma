@@ -492,7 +492,15 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
     const file = `valmiki-ramayan/chapter-0${summary.chapter}.json`;
     const chapter = readJson(file) as {
       verseCount: number;
-      source?: { baseText?: string; referenceUrls?: string[]; notes?: string; retrievedOn?: string };
+      source?: {
+        baseText?: string;
+        canonicalEdition?: string;
+        canonicalEditionUrls?: string[];
+        canonicalEditionStatus?: string;
+        referenceUrls?: string[];
+        notes?: string;
+        retrievedOn?: string;
+      };
       verses: { id: string; reference: string; lines: string[]; linesEn: string[] }[];
     };
     assert.equal(chapter.verses.length, summary.verseCount, `${file}: verse count drift`);
@@ -506,6 +514,25 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
       chapter.source?.notes || '',
       /selection/i,
       `${file}: source.notes must state that the file is a curated selection`
+    );
+    // The Gita Press edition is the numbering authority for this section, but it
+    // could not be fetched from the authoring environment, so it is recorded as
+    // pending rather than cited as verified (RULEBOOK §10.2). Keep the block
+    // present and its status non-empty: a future session must either confirm it
+    // against the edition or leave the outstanding note standing — silently
+    // deleting it would turn an honest gap into an implied verification.
+    assert.match(
+      chapter.source?.canonicalEdition || '',
+      /Gita Press/i,
+      `${file}: source.canonicalEdition must name the Gita Press edition`
+    );
+    assert.ok(
+      (chapter.source?.canonicalEditionUrls?.length ?? 0) >= 1,
+      `${file}: source.canonicalEditionUrls must point at the edition`
+    );
+    assert.ok(
+      chapter.source?.canonicalEditionStatus?.trim(),
+      `${file}: source.canonicalEditionStatus must say whether the page-level check is done`
     );
     for (const verse of chapter.verses) {
       assert.match(

@@ -50,6 +50,13 @@ export default function ValmikiRamayanChaptersScreen({ navigation }: Props) {
             <GitaChapterCard
               key={chapter.chapter}
               chapter={chapter}
+              // The epic's subsection unit is the kāṇḍa, not the Gita's अध्याय, and
+              // each one holds ślokas (design.md §53, §3 pill vocabulary).
+              chapterLabelHi="काण्ड"
+              chapterLabelEn="Kanda"
+              unitLabelHi="श्लोक"
+              unitLabelEn="shlokas"
+              unitLabelEnSingular="shloka"
               onPress={() => {
                 const resumeIndex =
                   getChapterProgress('valmiki-ramayan', chapter.chapter)?.verseIndex ?? 0;

@@ -186,8 +186,8 @@ export const library: readonly LibraryEntry[] = [
     nameEn: 'Valmiki Ramayan',
     // A curated selection, not the full 24,000-śloka epic — the subtitle says so
     // in both languages (RULEBOOK §10.5: never present a partial text as complete).
-    sub: `6 काण्ड · ${valmikiRamayanTotal} चयनित श्लोक`,
-    subEn: `6 kandas · ${valmikiRamayanTotal} selected shlokas`,
+    sub: `7 काण्ड · ${valmikiRamayanTotal} चयनित श्लोक`,
+    subEn: `7 kandas · ${valmikiRamayanTotal} selected shlokas`,
     thumb: 'वा',
     status: 'active',
     category: 'granth',

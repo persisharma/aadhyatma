@@ -5,6 +5,7 @@ import ch03 from './chapter-03.json';
 import ch04 from './chapter-04.json';
 import ch05 from './chapter-05.json';
 import ch06 from './chapter-06.json';
+import ch07 from './chapter-07.json';
 
 export type ValmikiRamayanVerse = {
   id: string;
@@ -57,6 +58,7 @@ export const valmikiRamayanChapters: readonly ValmikiRamayanChapter[] = [
   ch04 as ValmikiRamayanChapter,
   ch05 as ValmikiRamayanChapter,
   ch06 as ValmikiRamayanChapter,
+  ch07 as ValmikiRamayanChapter,
 ];
 
 export const valmikiRamayanTotal = valmikiRamayanChapters.reduce(
