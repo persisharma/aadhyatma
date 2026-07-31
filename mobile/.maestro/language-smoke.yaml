@@ -34,7 +34,7 @@ appId: com.prashantsharma.vedansh
 # ── Open More → Language picker sheet, select Gujarati ──
 # Language selection moved from inline radios into LanguagePickerSheet; open it
 # via the "Language, <current>" row first (same pattern as home-today).
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -43,11 +43,15 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "Gujarati"
 - waitForAnimationToEnd
-# More-screen chrome is now Gujarati (Panchang card title transliterated).
-- assertVisible: "પંચાંગ"
+# The More-screen chrome re-scripts to Gujarati — the Language row label itself
+# renders "ભાષા" (pick(gu) of 'Language'), proving the reading-language switch
+# re-scripted the UI. (The old "પંચાંગ" assertion pointed at a Panchang card that
+# the More screen doesn't contain.) Reader-title assertions below further prove
+# the bundled Gujarati font renders verse text.
+- assertVisible: ".*ભાષા.*"
 
 # ── Open a reader to confirm verse-script rendering ──
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Chalisa\\..*Tap to open\\."
@@ -70,15 +74,38 @@ appId: com.prashantsharma.vedansh
 # meaning body sits below the fold so it's not asserted from this flow.)
 - assertVisible: "હનુમાન ચાલીસા"
 
-# ── Switch to Kannada via the in-reader toggle; the title re-renders ──
-- tapOn:
-    id: "lang-toggle-kn"
+# ── Switch to Kannada, then Hindi, via the More Language picker ──
+# The in-reader LanguageToggle is a 2-segment [regional, English] pill (it only
+# exposes the language chosen in More + English), so kn/hi are selected from the
+# More picker rather than an in-reader lang-toggle-kn/hi chip that doesn't exist.
+# The Language row keeps a stable English a11y label ("Language, <lang>") and the
+# radios use Latin labels, so the same selectors work in any display script.
+# Switching tabs preserves the Home stack, so returning to Home lands back on the
+# open Hanuman Chalisa reader, now re-rendered in the newly chosen script.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Kannada"
+    timeout: 15000
+- tapOn: "Kannada"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - assertVisible: "ಹನುಮಾನ ಚಾಲೀಸಾ"
 
 # ── Restore Hindi so the next flow starts from the suite baseline ──
-- tapOn:
-    id: "lang-toggle-hi"
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Hindi"
+    timeout: 15000
+- tapOn: "Hindi"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - assertVisible: "हनुमान चालीसा"
 

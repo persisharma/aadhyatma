@@ -39,7 +39,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Step 2: Set global reading language to English (More tab) ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
 - waitForAnimationToEnd
@@ -50,7 +50,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Step 3: Open the Sundarkand reader (Home → Sacred Books → Sundarkand) ──
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - assertVisible: "Sacred Books. Tap to open."
 - tapOn: "Sacred Books. Tap to open."
@@ -88,7 +88,7 @@ appId: com.prashantsharma.vedansh
 # ── Step 5: Open the Wishlist (More tab → Wishlist) ──
 # The More card's a11y label is composed ("Wishlist, N verses saved"), and
 # Maestro matches the full string — anchor with .* not the bare word.
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Wishlist.*"

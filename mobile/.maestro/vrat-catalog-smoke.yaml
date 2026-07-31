@@ -25,7 +25,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Global reading language → English ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
 - waitForAnimationToEnd
@@ -36,7 +36,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Open Panchang tab, switch to the Vrat & Parv segment ──
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Vrat & Parv"
@@ -96,7 +96,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Restore Hindi default (best-effort) + cleanup ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn:
     text: "Language,.*"   # open the Language picker sheet (best-effort restore)

@@ -16,7 +16,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # Open the Bhajan (audio library) tab.
-- tapOn: "Bhajan, tab.*"
+- tapOn: { id: "tab-bhajan" }
 - waitForAnimationToEnd
 # SectionHeading merges its Hindi + English into one a11y label
 # ("भजन व आरती Bhajans & Aartis"), so wildcard the English side.

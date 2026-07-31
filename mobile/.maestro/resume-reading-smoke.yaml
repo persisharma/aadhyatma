@@ -11,7 +11,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── English, then Home → Sacred Books → Bhagavad Gītā chapter index ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
 - waitForAnimationToEnd
@@ -20,7 +20,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - tapOn: "Sacred Books\\..*Tap to open\\."
 - waitForAnimationToEnd

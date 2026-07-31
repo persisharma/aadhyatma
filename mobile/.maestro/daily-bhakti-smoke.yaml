@@ -41,7 +41,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Step 2: Set global reading language to English (More tab) ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
 - waitForAnimationToEnd
@@ -52,7 +52,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Step 3: Open the Bhakti tab ──
-- tapOn: "Bhakti, tab.*"
+- tapOn: { id: "tab-bhakti" }
 - waitForAnimationToEnd
 
 # ── Step 4: Assert the verse card rendered ──
@@ -62,13 +62,21 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Meaning.*"
 
 # ── Step 5: "next" swaps to another verse; the screen stays intact ──
+# The "Next verse" control sits below the verse + Meaning block, off-screen on
+# Android's shorter viewport — scroll to it (no-op when already visible on iOS).
+- scrollUntilVisible:
+    element:
+      text: "Next verse"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
 - tapOn: "Next verse"
 - waitForAnimationToEnd
 - assertVisible: "Daily Verse"
 - assertVisible: "Meaning.*"
 
 # ── Step 6: Restore Hindi (best-effort) ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn:
     text: "Language,.*"   # open the Language picker sheet (best-effort restore)
