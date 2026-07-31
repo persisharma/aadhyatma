@@ -34,6 +34,7 @@ jest.mock('@assets/audio-library', () => ({
 
 import * as ExpoAudio from 'expo-audio';
 import { AudioPlayerProvider, useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
+import { registerStopper, __resetPlaybackArbiter } from '@/audio/playbackArbiter';
 import type { AudioTrack } from '@/data/audio/tracks';
 
 const mockPlayer = (ExpoAudio as unknown as { __player: {
@@ -117,5 +118,21 @@ describe('AudioPlayerContext.playTrack', () => {
     act(() => ctx.playTrack(track));
     expect(mockPlayer.play).toHaveBeenCalledTimes(2);
     expect(mockPlayer.replace).toHaveBeenCalledTimes(1); // not reloaded
+  });
+
+  test('claims playback so read-aloud and japam are silenced first', () => {
+    // On iOS the audio session mixes rather than interrupts, so without this a
+    // spoken verse and a recorded bhajan would play simultaneously.
+    __resetPlaybackArbiter();
+    const stopTts = jest.fn();
+    const stopJapam = jest.fn();
+    registerStopper('tts', stopTts);
+    registerStopper('japam', stopJapam);
+
+    mount();
+    act(() => ctx.playTrack(track));
+
+    expect(stopTts).toHaveBeenCalledTimes(1);
+    expect(stopJapam).toHaveBeenCalledTimes(1);
   });
 });

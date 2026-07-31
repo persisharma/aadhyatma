@@ -31,6 +31,8 @@ import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from './_useReaderReadAloud';
 import type { RootStackParamList } from '@/navigation/types';
 
 type NextTransitionItem = {
@@ -106,6 +108,17 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   const listRef = useRef<FlatList<FlatListItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const hasNavigatedRef = useRef(false);
+
+  // Called before the null-chapter early return below, so hook order stays stable;
+  // with no chapter it simply has zero pages to speak.
+  const readAloud = useReaderReadAloud({
+    sourceId: 'bhagavad-gita',
+    data,
+    offset,
+    verseCount,
+    currentIndex,
+    listRef,
+  });
 
   useEffect(() => {
     if (chapter == null) return;
@@ -214,21 +227,26 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           title={topTitle}
           onBack={() => navigation.goBack()}
           backAccessibilityLabel="Back to chapters"
-          sideWidth={60}
+          // Was 60 for the bare counter; the read-aloud control needs the room, and
+          // both side columns must match or the centred title shifts off-centre.
+          sideWidth={96}
           right={
-            <Text
-              style={[
-                styles.counter,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.pageCounter.fontFamily,
-                  fontSize: typography.pageCounter.fontSize,
-                  fontStyle: 'italic',
-                },
-              ]}
-            >
-              {currentIndex + 1} / {verseCount}
-            </Text>
+            <View style={styles.headerRight}>
+              <Text
+                style={[
+                  styles.counter,
+                  {
+                    color: colors.inkMuted,
+                    fontFamily: typography.pageCounter.fontFamily,
+                    fontSize: typography.pageCounter.fontSize,
+                    fontStyle: 'italic',
+                  },
+                ]}
+              >
+                {currentIndex + 1} / {verseCount}
+              </Text>
+              <ReadAloudButton control={readAloud} />
+            </View>
           }
         />
 
@@ -364,6 +382,11 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     minWidth: 48,
     textAlign: 'right',
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   toggleRow: {
     paddingVertical: 6,

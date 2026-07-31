@@ -1192,7 +1192,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 - Transport row: `−15 · ◀◀ · [▶/❚❚] · ▶▶ · +15`; the play button is a 72 px `saffron` disc with `saffron-deep` rim and `on-primary` glyph.
 - Secondary row: a 44 px ⟳ loop toggle (kept for mantra japa) — outline at rest, filled `saffron` when looping.
 
-**Reader entry point.** Readers whose text has a linked recitation with real audio (via `getTrackForText` + `hasRealAudio`) show a small `saffron-deep` **▶** in the top bar after the page counter (`ChalisaReaderScreen.tsx`); tapping plays the recitation and opens Now Playing — the structural "audio hook" §9 reserved.
+**Reader entry point.** Readers whose text has a linked recitation with real audio (via `getTrackForText` + `hasRealAudio`) show a small `saffron-deep` **▶** in the top bar after the page counter (`ChalisaReaderScreen.tsx`); tapping plays the recitation and opens Now Playing — the structural "audio hook" §9 reserved. Since July 2026 that `▶` is joined by the **read-aloud** control (§53), which speaks the text with the device voice for the many sections that have no recording. The two are **mutually exclusive**: both claim playback through `src/audio/playbackArbiter.ts`, so starting one silences the other — load-bearing on iOS, whose session is configured `mixWithOthers` and would otherwise play both at once. Read-aloud deliberately has **no mini-player and no lock-screen surface**: `expo-speech` exposes no media-session API, so it stays reader-scoped and stops when the app backgrounds.
 
 ---
 
@@ -1257,7 +1257,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 1. **Title** — one left-aligned line, selected language only (`अन्य` / `More` / `અન્ય` / `ಇನ್ನಷ್ಟು`), 30 pt in the script's title face (`latinBold` for en, `scriptTitleFont` for hi/gu/kn). No `More` subtitle.
 2. **Three grouped inset lists** — each is an uppercase **group label** (`saffron-deep`, 13; Latin gets tracking + uppercase via the chrome font, Indic drops both) above one **list container** (`parchment-soft`, **`radii.lg`**, 1 px `divider`, `overflow:hidden`, **`elevation.subtle`**) whose rows are split by hairline `divider` top-borders. Standard row anatomy: `[38 px icon tile, radii.sm] [label 18]  …  [state 15 ink-muted] [chevron › 19 gold]`. The container radius was an ad-hoc 20 and the icon tile 11, both off the radius scale (§4), with a hand-rolled shadow; all three are tokens as of July 2026, padding 15×16, pressed → `saffron-tint` wash.
    - **साधना / Practice** — a compact **profile hero row** (tinted `cardActiveFrom → cardActiveTo` gradient, 52 px circular `saffron` ॐ badge, `साधक प्रोफ़ाइल` title, sub-line "**`N`** श्लोक · **`N`** श्रृंखला" = lifetime verses + streak in `saffron`; the old `rounds` count is dropped; a11y "Open Sadhak profile" → Profile), then **संग्रह** (♥ `saffron`, state = saved count; label matches the WishlistScreen title → Wishlist §24), **स्मरण** (ॐ `gold`, state = reminder time(s) or Off → Reminder Settings §38), **जप अलार्म** (⏰ `saffron-deep`, state = active count → §35).
-   - **ऐप / App** — **भाषा** (अ `gold`, state = current language's native name; opens the **Language picker sheet**, not an inline grid), **पाठ का आकार** (Aa `saffron`, state = मानक/बड़ा; opens the **Reading-size picker sheet**, §43), **ऐप साझा करें**
+   - **ऐप / App** — **भाषा** (अ `gold`, state = current language's native name; opens the **Language picker sheet**, not an inline grid), **पाठ का आकार** (Aa `saffron`, state = मानक/बड़ा; opens the **Reading-size picker sheet**, §43), **पाठ सुनें / Read Aloud** (♪︎ `saffron-deep` at 15, state = what will be spoken + the rate via the exported `readAloudRowLabel`, or `उपलब्ध नहीं` when the device has no voice; opens the **Read-aloud settings sheet**, §53), **ऐप साझा करें**
      Both settings rows are also feature-tour spotlight targets (`languageRow` / `readingSizeRow`, §47 steps 23–24): each `SettingsRow` is wrapped in a measurable `View` and registers a `scrollNodeIntoView` reveal against the More `ScrollView`, since the App group can sit below the fold. The tour ends on them, and the post-tour setup sheet then asks the user to set both. (↗ `saffron`; OS share sheet via `buildAppShareMessage(lang)`, `data/shareLinks.ts` — the localized `APP_SHARE_INVITE` + `SMART_LINK`). Last in the group: **Instagram पर फ़ॉलो करें / Follow on Instagram** (◉ `saffron-deep` at 19, state = the `@vedansh.app` handle, a11y label constant "Follow on Instagram") — `Linking.openURL(INSTAGRAM_URL)` from the same `data/shareLinks.ts`, falling back to an `Alert` naming the handle if the OS can't open it. The link is the canonical `https://www.instagram.com/…` form, **not** `instagram://`: a custom scheme would need `LSApplicationQueriesSchemes` / `android.queries` in `app.json` (a store rebuild), whereas the https URL is claimed by the installed Instagram app via universal/app links and degrades to the browser otherwise — so the row ships over OTA.
    - **जानकारी / Info** — **परिचय व अस्वीकरण** (ⓘ `ink-muted`; opens the pageSheet disclaimer modal with the bilingual disclaimer + "Report an Error" CTA), **त्रुटि सूचित करें** (⚑ `ink-muted`; `mailto` via `buildDiscrepancyMailto`), and **ऐप भ्रमण फिर देखें / Show App Tour** (↻ `gold`; a11y label constant "Show App Tour") which calls `resetTour()` to replay the first-launch feature tour on demand (§47).
 
@@ -1498,7 +1498,7 @@ Opened from the **पाठ का आकार** row on the More hub (§37; the
 1. **Header**: title "पाठ का आकार / Reading size" over the sub "श्लोक व अर्थ के अक्षरों का आकार / Verse & meaning text size", both in the selected language only. All four reading languages have native copy.
 2. **Preset pills** (`radiogroup`; each pill a `radio` with `selected` state): Standard / Large, labelled in the active language. Selected: `saffron` border + `saffron-tint` fill + `saffron` ✓ prefix, label in `saffron-deep`; unselected: `divider` border, `ink`. Pill labels are chrome — fixed size by design.
 3. **Live sample line** — "श्री राम जय राम" (per-script variants incl. IAST for en) rendered with the *same* verse token the readers consume, so it grows/shrinks the instant a pill is tapped. This is the preview; there is no separate preview machinery.
-4. **Done button** (`saffron`) closes the sheet. Picking a size does **not** auto-close, so the preview change stays visible for comparison. `readingSizeLabel(scale, lang)` is exported for the More row's state text, and `READING_SIZE_SAMPLE` for the first-run setup sheet (§47), which previews the same line with the same verse token.
+4. **Done button** (`saffron`) closes the sheet. Picking a size does **not** auto-close, so the preview change stays visible for comparison. `readingSizeLabel(scale, lang)` is exported for the More row's state text, and `READING_SIZE_SAMPLE` for the first-run setup sheet (§47), which previews the same line with the same verse token. The read-aloud sheet (§53) **speaks** that same line as its voice preview, so all three surfaces preview with identical words.
 
 **First run:** the same two presets are offered on the post-tour setup sheet (§47) alongside the language choice, so the preference is set once at install rather than discovered later on the More hub.
 
@@ -1816,3 +1816,170 @@ than folded into the July 2026 token pass — it is the one place the rule above
 **Files:** `mobile/src/components/TextField.tsx`. Consumers: `KathaLibraryScreen`,
 `ObservanceListScreen`, `PanchangScreen` (catalog search), `KundaliScreen` (form fields + city
 picker).
+
+---
+
+## 53. Read Aloud (पाठ सुनें) — on-device TTS
+
+**Purpose.** Let the device speak the verse on screen. The app's answer to "I want to listen"
+has been *recorded* recitation (§34), but only 5 real recordings exist for 13 catalog tracks, so
+most texts have no audio at all and commissioning more costs money, licensing and binary size
+(`docs/roadmap/prds/02-verse-audio.md`). On-device TTS closes that gap for zero bytes. It is
+**assistive, never a substitute for human recitation** — see RULEBOOK §11.14.
+
+**Scope (v1).** `GitaReaderScreen` and `ChalisaReaderScreen` (the latter is a registry reader, so
+all 9 chalisas are covered). The remaining 18 readers are unchanged; the shared hook and adapter
+already handle every verse shape, so fan-out is wiring only.
+
+### 53.1 What is spoken, and in which voice
+
+Verse lines first, then the भावार्थ (**on by default**), then Gita commentary (off by default).
+One utterance **per verse line** — the gap between utterances then lands on the visual line
+break, which for a chaupai or doha half-line is where a reciter breathes.
+
+v1 resolves **two** speech locales, not four:
+
+| Reading language | Spoken source | Voice |
+| --- | --- | --- |
+| `hi` | Devanagari lines + `meaningHi` | `hi` |
+| `en` | `linesEn` / `transliteration` + `meaningEn` | `en` |
+| `gu` | **Devanagari lines + `meaningHi`** — not the on-screen Gujarati | `hi` |
+| `kn` | **Devanagari lines + `meaningHi`** — not the on-screen Kannada | `hi` |
+
+gu/kn verse text on screen is *runtime script conversion* of Devanagari (`utils/transliterate.ts`),
+not authored content. Handing those glyphs to a `gu-IN`/`kn-IN` voice would apply Gujarati or
+Kannada phonology to Sanskrit — worse than Hindi phonology — and add two more device-voice
+failure modes. Because the meaning is spoken too, the rule extends to it: a Hindi voice cannot
+read Gujarati glyphs at all, so gu/kn hear `meaningHi` **even where authored `meaningGu` /
+`meaningKn` exists**. This is a deliberate divergence from `verseLinesByLang` / `meaningByLang`
+**on the speech path only**, and the settings sheet says so in-script rather than letting it
+surprise the reader. It also collapses "no voice on this device" to the single case "no Hindi voice".
+
+Dandas are normalized for the synthesizer (`।` → a sentence stop; engines otherwise read a bare
+danda as nothing, or aloud as "vertical line"). **Only the string handed to the synthesizer is
+touched** — displayed, shared and indexed text is never altered (RULEBOOK §11.14).
+
+### 53.2 The reader control
+
+Lives in **`ReaderHeader`'s `right` slot** after the page counter and beside the recorded-audio
+`▶` — the correct adjacency, two ways to hear the same text. It is *not* in the verse page's
+`topActions`, which renders once per page and would put N copies of a screen-level control into
+`listExtraData`.
+
+| State | Glyph | a11y label |
+| --- | --- | --- |
+| Idle | `♪︎` `saffron-deep` at 15 | `Read aloud` |
+| Speaking | `❚❚` `saffron-deep` | `Pause reading aloud` |
+| No voice installed | `♪︎` `ink-muted`, `accessibilityState.disabled` | `Read aloud unavailable` |
+
+`♪︎` carries the trailing U+FE0E text variation selector so it renders monochrome, never as a
+colour emoji (§5 "no emoji", same treatment as the Panchang ☀/☽ glyphs in §33). Labels are
+**English and un-localized**, the same rule and reason as `ReaderHeader`'s back label: Maestro
+taps them literally and the default reading language is `hi`.
+
+`sideWidth` grows for the extra glyph — Gita from 60 to 96 (its bare `<Text>` counter is now
+wrapped in a row `View`), Chalisa to 148 with the recorded `▶` present and 132 without. Both side
+columns must match or the centred title shifts.
+
+**The muted state is deliberate.** Hiding the control when no voice exists would leave the user
+with no way to learn why read-aloud never appears. Pressing it explains, and on Android offers
+`com.android.settings.TTS_SETTINGS`; iOS gets the Settings path in words (no deep link exists to
+Spoken Content).
+
+**Suppressed entirely under a screen reader.** VoiceOver/TalkBack already read each page's
+`accessibilityLabel`; two voices at once is a defect, not a feature.
+
+### 53.3 Pause, auto-advance, and the swipe latch
+
+**Pause is line-granular and identical on both platforms.** Android's native module has no
+`pause`/`resume` at all, so the app never calls `Speech.pause` — pause stops the engine and
+records the chunk; resume re-speaks that line from its start. That is also the honest human
+behaviour, and lines run 1–2 s.
+
+Finishing a page scrolls to the next and keeps speaking. A **manual swipe re-targets rather than
+stops** — the user wants the page they just moved to. A pending-page latch distinguishes the
+controller's own scroll (which fires the same viewability/scroll handlers) from a user swipe, with
+a 250 ms trailing debounce so a multi-page flick starts one session. A page with no text is
+skipped; a chapter-transition sentinel **stops** the session rather than reading across the
+boundary (v1). If a scroll never lands within 600 ms the session ends, because
+`onScrollToIndexFailed` is a no-op in every reader and the alternative is speaking an invisible page.
+
+**Speech stops** on reader exit, on a `sourceId` change, and when the app backgrounds. There is
+no mini-player and no lock-screen surface in v1: expo-speech exposes no media-session API, and
+auto-advancing a screen the user cannot see is worse than silence.
+
+### 53.4 Availability is a first-class state
+
+Both platforms fall back to the device default voice for an unavailable language **silently** —
+neither fires an error callback. So voices are probed at startup (`getAvailableVoicesAsync`, raced
+against a 4 s timeout because Android's engine binds slowly), the control is gated on the result,
+and a **3 s `onStart` watchdog** catches the OEM engine that reports a language then emits nothing.
+The probe re-runs when the app foregrounds while unavailable, so installing voice data and coming
+back just works.
+
+### 53.5 Settings
+
+**More → ऐप / App → Read Aloud**, below Reading Size. State text comes from
+`readAloudRowLabel(prefs, lang, availability)` — exported from the sheet so row and sheet cannot
+drift, exactly as `readingSizeLabel` does (§43). Reads `श्लोक व अर्थ · 1.0×`, or `उपलब्ध नहीं`.
+Icon `♪︎` on `saffron-deep`. The row sits **after** the two feature-tour anchor rows: RULEBOOK
+§6.1 pins the tour's final steps to Language + Reading Size and the tour resolves them by ref, so
+a later row is safe **as long as no tour step is added for it** — v1 adds none.
+
+**`ReadAloudSettingsSheet`** is a structural clone of `ReadingSizePickerSheet` (§43): transparent
+slide `Modal`, backdrop `Pressable` → close, grabber, `parchment-highlight`, radio pills, a Done
+button that does not auto-close on selection. Sub-header names it a device voice
+("उपकरण की आवाज़ से — मानव पाठ नहीं"). Sections:
+
+1. **आवाज़ / Voice** — `स्वतः / Automatic` plus up to 4 probed voices, Enhanced first, each
+   showing the OS voice name. Replaced by the explainer + a TTS-settings hop + a "फिर देखें /
+   Check again" re-probe when no voice exists.
+2. **गति / Speed** — the §54 `RateStepper`, 0.5–1.5 in 0.1 steps.
+3. **क्या पढ़ें / What to read** — `अर्थ भी` (on) and `व्याख्या भी` (off), `accessibilityRole="switch"`.
+4. **सुनकर देखें / Preview** — speaks `READING_SIZE_SAMPLE[lang]`, reused from §43. The only way
+   a user can judge a voice.
+
+Persisted at `@vedansh/read-aloud` (`rate`, `voiceByTarget`, `readMeaning`, `readCommentary`),
+validated field by field on hydrate.
+
+### 53.6 Mutual exclusion
+
+Recorded audio (§34), the japam loop (§35) and read-aloud are **mutually exclusive**, arbitrated by
+`src/audio/playbackArbiter.ts`. Each source registers a stopper and claims playback before
+starting. This is a module singleton rather than a context field so no consumer's contract changes.
+It is load-bearing on iOS, where the audio session is configured `mixWithOthers` — without it a
+bhajan and a spoken verse literally play over each other.
+
+iOS passes `useApplicationAudioSession: true`. Without it `AVSpeechSynthesizer` builds its own
+session and **the hardware mute switch silences speech**. Trade-off: under `mixWithOthers`, TTS
+does not duck other apps on iOS — the same behaviour recorded playback already has.
+
+**Files:** `mobile/src/readAloud/` (`prefs.ts`, `verseAdapter.ts`, `verseScript.ts`,
+`pronounce.ts`, `voices.ts`) · `mobile/src/contexts/ReadAloudContext.tsx`,
+`ReadAloudPrefsContext.tsx` · `mobile/src/audio/playbackArbiter.ts` ·
+`mobile/src/screens/_useReaderReadAloud.ts` ·
+`mobile/src/components/readAloud/ReadAloudButton.tsx` · `ReadAloudSettingsSheet.tsx`.
+Requires a **store release, not an OTA** — `expo-speech` is a native module.
+
+---
+
+## 54. Component: Rate Stepper (`RateStepper.tsx`)
+
+**Purpose.** The `− 1.0× +` control for a playback or speech rate. Extracted from
+`JapamAudioPlayer`'s tempo block when read-aloud needed the same control, on the same reasoning
+that produced `ReaderHeader` (§7) and `TextField` (§52) — one spec, two callers.
+
+**Spec.** Optional italic 11 pt caption (`ink-muted`) above a row of `32×32` `radii.md`
+`divider`-bordered buttons with `−`/`+` at 18 in `ink-soft`, `hitSlop` 8, either side of the value
+in the page-counter face at 14 with `minWidth: 38`. A button at its bound is `disabled` at 0.4
+opacity and reports `accessibilityState.disabled`. Float comparisons use an epsilon, because 0.1
+steps land on 1.4999999999999998. Button labels are the un-localized `Slower` / `Faster` so Maestro
+can drive them in any reading language.
+
+**Callers.** `JapamAudioPlayer` (tempo, 0.5–1.5, caption `गति / Tempo`) and
+`ReadAloudSettingsSheet` (speech rate, same range, no caption — the sheet supplies its own section
+label). Bounds and step are props; the japam player owns expo-audio's limits and read-aloud owns
+`src/readAloud/prefs.ts`'s, which deliberately duplicate the numbers rather than share a constant,
+because they are different concerns that happen to agree today.
+
+**Files:** `mobile/src/components/RateStepper.tsx`.

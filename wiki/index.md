@@ -14,6 +14,7 @@
 - [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, home banner + celebration.
 - [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, Daily Muhurat, Kundali (Lagna · grahas · whole-sign houses · Vimshottari Dasha), and deterministic Daily Rashifal.
 - [[japam-alarms]] — Japam Alarms: repeat-days, one-time, and skip-next; native AlarmKit/AlarmManager tier with expo fallback.
+- [[audio]] — the three sound sources (recorded library, japam loop, read-aloud TTS), the playback arbiter that keeps them mutually exclusive, and the expo-speech platform traps.
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.

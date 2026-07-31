@@ -102,6 +102,8 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
 - **Background image.** Render with `<ImageBackground source={…} resizeMode="cover">` then layer the parchment `<LinearGradient>` overlay on top per `design.md` §6. Selection must be **deterministic per verse id** (e.g. `images[hash(verse.id) % images.length]`) — not random per render.
 - **Reader shell.** Horizontal paginated `FlatList`, ornament divider (`Ornament.tsx`), pager dots, language-aware top-bar title. Match the layouts of `GitaReaderScreen.tsx` and `SundarkandReaderScreen.tsx` — do not invent a third shell.
 - **The top bar is `ReaderHeader`, never a local copy.** Every reader and chapters/index screen renders `mobile/src/components/ReaderHeader.tsx` — `variant="reader"` (16 pt title) for readers, `variant="index"` (22/20) for chapters and index landing screens. Screens pass content (`title`, `right`, `onBack`) and never geometry. Hand-rolling a `topBar` + `back` + `title` style block is a hard reject: ~32 screens each carried their own copy until July 2026 and they had drifted to two gutters, three bottom paddings, two button sizes and an off-token title size. The back control's `accessibilityLabel` defaults to the **English, un-localized** `"Back"` because the Maestro flows tap that string and the default reading language is `hi`; override it only to name a destination. (`design.md` §9)
+- **Read-aloud is exposed only through the shared hook + button, never a raw `Speech.speak`.** A reader gains TTS by calling `useReaderReadAloud()` (`mobile/src/screens/_useReaderReadAloud.ts`) and rendering `ReadAloudButton` in `ReaderHeader`'s `right` slot — never by importing `expo-speech` in a screen, and never by putting the control in a verse page's `topActions` (which renders once per page). Widen `sideWidth` so both header side columns still match, or the centred title shifts. Add every newly-enabled reader to the table in `mobile/src/screens/__tests__/readerReadAloud.test.tsx`, the same way `readerAutoAdvance.test.tsx` tables the chaptered readers. (`design.md` §53)
+- **Never pass a region-tagged locale as `expo-speech`'s `language` on Android.** Always build options with `speakOptionsFor()` (`mobile/src/readAloud/voices.ts`). Android's native module does `Locale(options.language)`, and Java's single-arg `Locale` constructor treats the whole string as the language — so `'hi-IN'` becomes `"hi-in"`, resolves to `LANG_NOT_SUPPORTED`, and **silently falls back to the device default voice**, i.e. Devanagari read in an American accent with no error. Equally, **never trust `onError` to report a missing voice**: both platforms fail silently, so availability must come from a `getAvailableVoicesAsync()` probe plus the `onStart` watchdog. (`design.md` §53.1, §53.4)
 - **Text inputs are `TextField`, with one of two variants.** `mobile/src/components/TextField.tsx` — `variant="search"` (44, Cormorant 15) for searching **content**, `variant="form"` (48, Inter 14) for **data entry**. Do not hand-roll a `TextInput` height/face/padding: there were three specs for one control class until July 2026. (`design.md` §52)
 - **Back buttons are 44 visually.** `hitSlop` counts toward the 44 *touch* minimum, but the back control is the one control on every screen, so a 40 among 44s reads as a defect regardless of its hit area. Smaller controls of other classes are allowed when `hitSlop` clears 44 **and** the size is deliberate and commented (today: the Panchang month stepper at 34 + `hitSlop={10}`). (`design.md` §12)
 - **Chaptered readers auto-advance across subsection boundaries.** A reader whose text has more than one subsection (`<section>ChaptersManifest.length > 1`) must let the user cross chapter/kāṇḍa boundaries **by swiping** — it must never dead-end on the last page of a subsection. Match `GitaReaderScreen.tsx` / `ShivaStrotamReaderScreen.tsx`: inject a `NextChapterCard` after the last verse (unless it is the last chapter) and a `PrevChapterCard` before the first verse (unless it is the first chapter) into the `FlatList` `data`; detect those `__type: 'transition' | 'prev-transition'` items in `onViewableItemsChanged` and `navigation.replace(<thisRoute>, { chapter })` (the prev case lands on the previous chapter's last verse via `initialIndex`). The prepended prev card shifts indices by one, so carry an `offset` through `initialScrollIndex`, `handleScroll`, and the viewable-index math. `mobile/src/screens/__tests__/readerAutoAdvance.test.tsx` enforces this for every multi-chapter reader — add a new chaptered reader to its table when you create one. (Origin: Durga / Ganesh / Saraswati / Vishnu Sahasranama readers rendered only `chapter.verses`, so swiping past a chapter's last verse dead-ended instead of advancing to the next subsection.)
@@ -356,6 +358,24 @@ Origin: the same raw-ITRANS paste recurred across Krishna Stotram, Ramcharitmana
 
 ### 11.13 Meaning faithfulness
 Hindi and English meanings must faithfully convey the verse's meaning without adding theological interpretation beyond what the verse states. Simplification for readability is fine; invention is not.
+
+### 11.14 Synthetic recitation is assistive, never authoritative
+§11.3 forbids AI-**generated** liturgical text. A synthetic **voice** reading authored text is a
+different thing, but close enough to need its own rule, because a `hi-IN` voice applies Hindi
+phonology to Sanskrit: word-final schwa deletion (`रामः` → "raam"), mishandled visarga and
+anusvāra, no vedic accent, `ॐ` frequently clipped, and anuṣṭubh metre flattened to prose. On a
+devotional reader that can read as disrespectful rather than merely imperfect. So:
+
+- **TTS may read authored verse; it must never alter it.** The pronunciation normalizer
+  (`mobile/src/readAloud/pronounce.ts`) affects **only** the string handed to the synthesizer.
+  Displayed text, share cards, and the search index are never touched.
+- **Never present it as human recitation.** The settings sheet names it a device voice
+  ("उपकरण की आवाज़ से — मानव पाठ नहीं"). Where a real recording exists (`hasRealAudio`), the
+  recorded `▶` stays **first** in the reader top bar and read-aloud second.
+- **Never record, cache, or ship TTS output as an audio asset.** Pre-rendering synthetic
+  recitation into bundled files would make it indistinguishable from a commissioned recording —
+  that is squarely inside §11.3.
+- **Always opt-in per press.** Read-aloud never autoplays on opening a reader.
 
 ---
 

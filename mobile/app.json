@@ -3,7 +3,7 @@
     "name": "Vedansh",
     "slug": "vedansh",
     "scheme": "vedansh",
-    "version": "1.4.5",
+    "version": "1.4.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.prashantsharma.vedansh",
-      "buildNumber": "45",
+      "buildNumber": "46",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "UIBackgroundModes": [
@@ -26,7 +26,7 @@
     },
     "android": {
       "package": "com.prashantsharma.vedansh",
-      "versionCode": 7,
+      "versionCode": 8,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

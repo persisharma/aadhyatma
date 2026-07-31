@@ -30,6 +30,8 @@ import WhenToRecitePanel from '@/components/WhenToRecitePanel';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import { getTrackForText } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
 import type { RootStackParamList } from '@/navigation/types';
@@ -57,6 +59,16 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const listRef = useRef<FlatList<ChalisaVerse>>(null);
   const initialIndex = clampIndex(route.params?.initialIndex, total);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  // Flat reader: list index === verse index, so no offset.
+  const readAloud = useReaderReadAloud({
+    sourceId: chalisaId,
+    data: verses,
+    offset: 0,
+    verseCount: total,
+    currentIndex,
+    listRef,
+  });
 
   useEffect(() => {
     setProgress({
@@ -162,8 +174,11 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
                   </Text>
                 </Pressable>
               )}
+              <ReadAloudButton control={readAloud} />
             </View>
           }
+          // Counter + recorded ▶ + read-aloud ♪ exceeds the default 120.
+          sideWidth={audioTrack ? 148 : 132}
         />
 
         <ReadingProgressBar current={currentIndex + 1} total={total} />
