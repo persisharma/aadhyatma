@@ -454,7 +454,7 @@ export const library: readonly LibraryEntry[] = [
   },
   // ─────────── Theerth (तीर्थ) — pilgrimage map archetype ───────────
   // One LibraryEntry per yatra; each opens TheerthMapScreen with that
-  // group's pins pre-filtered. Per RULEBOOK §11, each temple carries
+  // group's pins pre-filtered. Per RULEBOOK §12, each temple carries
   // concise source-linked prose for the detail screen.
   {
     id: 'dvadasha-jyotirlinga',

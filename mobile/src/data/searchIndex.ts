@@ -6,7 +6,7 @@
  * is lazy (first call to {@link getSearchIndex}) so it doesn't impact cold
  * boot.
  *
- * Adding a new section: see RULEBOOK §8. If the section uses the standard
+ * Adding a new section: see RULEBOOK §7. If the section uses the standard
  * `lines`/`linesEn` or `sanskrit`/`linesEn`/`transliteration` field shape it
  * is picked up automatically once added to `library` in `texts.ts`. A section
  * with a novel verse shape needs a new branch in {@link buildVerseEntries}.
