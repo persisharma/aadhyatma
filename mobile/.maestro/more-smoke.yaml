@@ -49,6 +49,17 @@ appId: com.prashantsharma.vedansh
 #    "Wishlist, N verses saved", "Reminders, daily verse …" — so match with .*) ──
 - assertVisible: "Wishlist.*"
 - assertVisible: "Reminders.*"
+# The Instagram row is present but never tapped — tapping leaves the app for the
+# Instagram profile (browser or installed app), which the flow can't come back from.
+- scrollUntilVisible:
+    element:
+      text: "Follow on Instagram"
+    centerElement: true
+- assertVisible: "Follow on Instagram"
+- scrollUntilVisible:
+    element:
+      text: "Open Sadhak profile"
+    centerElement: true
 
 # ── Sadhak Profile: insights screen + lifetime/monthly/daily range toggle ──
 - tapOn: "Open Sadhak profile"

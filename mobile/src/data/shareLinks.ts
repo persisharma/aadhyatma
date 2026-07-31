@@ -15,6 +15,18 @@ export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com
 
 export const SMART_LINK = 'https://persisharma.github.io/get-vedansh/';
 
+/**
+ * Public Instagram profile, opened from the More hub's "Follow on Instagram" row (§37).
+ *
+ * Canonical `https://` form on purpose — not the `instagram://user?username=…` scheme.
+ * `Linking.canOpenURL` on a custom scheme needs `LSApplicationQueriesSchemes` (iOS) /
+ * `android.queries` (Android) in `app.json`, i.e. a store rebuild; the https URL is
+ * claimed by the installed Instagram app via universal/app links anyway, and degrades
+ * to the browser when it isn't installed — so this ships over OTA.
+ */
+export const INSTAGRAM_HANDLE = 'vedansh.app';
+export const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}`;
+
 export type ShareCaptionParams = {
   sectionNameHi: string;
   sectionNameEn: string;
