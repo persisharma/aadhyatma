@@ -64,6 +64,7 @@ export default function TabNavigator() {
           const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
           return {
             tabBarLabel: 'Home',
+            tabBarButtonTestID: 'tab-home',
             tabBarIcon: ({ color, size }: TabIconProps) => (
               <HomeIcon color={color} size={size} />
             ),
@@ -78,6 +79,7 @@ export default function TabNavigator() {
         component={DailyBhaktiScreen}
         options={{
           tabBarLabel: 'Bhakti',
+          tabBarButtonTestID: 'tab-bhakti',
           tabBarIcon: ({ color, size }) => (
             <BhaktiIcon color={color} accentColor={colors.saffron} size={size} />
           ),
@@ -88,6 +90,7 @@ export default function TabNavigator() {
         component={PanchangTabRoot}
         options={{
           tabBarLabel: 'Panchang',
+          tabBarButtonTestID: 'tab-panchang',
           tabBarIcon: ({ color, size }) => (
             <PanchangIcon color={color} size={size} />
           ),
@@ -98,6 +101,7 @@ export default function TabNavigator() {
         component={AudioStackNavigator}
         options={{
           tabBarLabel: 'Bhajan',
+          tabBarButtonTestID: 'tab-bhajan',
           tabBarIcon: ({ color, size }) => (
             <MusicIcon color={color} size={size} />
           ),
@@ -108,6 +112,7 @@ export default function TabNavigator() {
         component={MoreStackNavigator}
         options={{
           tabBarLabel: 'More',
+          tabBarButtonTestID: 'tab-more',
           tabBarIcon: ({ color, size }) => (
             <MoreIcon color={color} size={size} />
           ),

@@ -12,7 +12,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # Set reading language to English for stable assertions
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
 - waitForAnimationToEnd

@@ -44,7 +44,7 @@ appId: com.prashantsharma.vedansh
 
 # Use English for stable visible-text assertions; accessibility labels stay
 # English in every language, but the explanatory headings below are localized.
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -53,7 +53,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # Permanent Home launcher — this must not depend on the shuffled Discover row.

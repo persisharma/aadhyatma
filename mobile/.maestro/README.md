@@ -6,7 +6,7 @@ End-to-end UI tests for the Vedansh app. Runs against the iOS Simulator or Andro
 
 ## Why Maestro
 
-Per `RULEBOOK.md` §9 (Cross-platform verification), every section must be tested on both iOS and Android before merge. These flows automate that check.
+Per `RULEBOOK.md` §8 (Cross-platform verification), every section must be tested on both iOS and Android before merge. These flows automate that check.
 
 ## Setup (one-time)
 

@@ -57,7 +57,7 @@ const stateByNorm = new Map(INDIA_STATES.map((s) => [norm(s.nameEn), s] as const
 const ids = temples.map((t) => t.id);
 assert.equal(new Set(ids).size, ids.length, 'temple ids must be unique');
 
-// ─── 2. Deity ∈ union (RULEBOOK §10.4) ────────────────────────────────────────
+// ─── 2. Deity ∈ union (RULEBOOK §11.4) ────────────────────────────────────────
 for (const t of temples) {
   assert.ok(VALID_DEITIES.has(t.deity), `${t.id}: invalid deity "${t.deity}"`);
 }

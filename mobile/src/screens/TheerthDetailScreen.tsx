@@ -69,7 +69,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       {/* Each temple sits on its presiding deity's faded background (RULEBOOK
-          §11.4 / §10.8) — a relevant per-temple plate instead of a flat wash. */}
+          §12.4 / §11.8) — a relevant per-temple plate instead of a flat wash. */}
       <BackgroundLayer source={getTheerthBackground(temple.id, temple.deity)} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>

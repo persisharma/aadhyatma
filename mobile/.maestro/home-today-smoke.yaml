@@ -27,7 +27,7 @@ appId: com.prashantsharma.vedansh
 # The More hub shows the current reading language as a "Language, <current>" row
 # that opens LanguagePickerSheet — the old inline English/Hindi pills are gone
 # (gu/kn added a 4-way picker). Open the sheet, then pick English.
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -36,7 +36,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # ── 1. Today strip on Home ──
@@ -55,5 +55,5 @@ appId: com.prashantsharma.vedansh
 # only if the calendar screen sits under ObservanceList in the stack (initial: false).
 # The segment's a11y label uses the ampersand form.
 - assertVisible: "Vrat & Parv"
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd

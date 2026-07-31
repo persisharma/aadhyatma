@@ -27,7 +27,7 @@ appId: com.prashantsharma.vedansh
 ---
 # ── Boot + switch to English (Devanagari isn't reliably read by Maestro) ──
 - runFlow: _launch.yaml
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
 - waitForAnimationToEnd
@@ -36,7 +36,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # ── Open the sankalp catalog from the docked banner ──
