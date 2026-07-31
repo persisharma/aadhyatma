@@ -13,34 +13,24 @@ function render(el: React.ReactElement) {
 }
 
 describe('tabBarIcons — MusicIcon (Bhajan tab)', () => {
-  it('draws the note head as a FILLED disc, not a hollow ring', () => {
-    // Regression guard. The head was once authored as a bordered ring
-    // (borderWidth only, no fill), which reads as a broken glyph rather than a
-    // music note — the Bhajan tab icon looked broken in the bar. A note head
-    // must be a solid disc. See design.md §17 and tabBarIcons.tsx.
+  it('draws the classic filled eighth-note glyph', () => {
+    // Regression guard for the user-approved reference icon: a filled head,
+    // vertical stem, and square flag. See design.md §17 and tabBarIcons.tsx.
     const color = '#B8621B'; // saffron — the active tint
     const size = 25; // React Navigation's default tabBarIcon size
     const root = render(<MusicIcon color={color} size={size} />);
 
-    const style = root.findByProps({ testID: 'tab-music-icon-head' }).props.style;
+    const path = root.findByProps({ testID: 'tab-music-icon-path' }).props;
 
-    // Filled: a solid background in the tint colour.
-    expect(style.backgroundColor).toBe(color);
-    // NOT a hollow ring — the head carries no stroked border.
-    expect(style.borderWidth).toBeUndefined();
-    expect(style.borderColor).toBeUndefined();
-    // A circular head: a square box with a full-radius corner.
-    expect(style.width).toBe(style.height);
-    expect(style.borderRadius).toBeCloseTo(style.width / 2);
+    expect(path.fill).toBe(color);
+    expect(path.d).toBe('M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z');
   });
 
-  it('tints the stem and flag so the whole glyph reads as a note', () => {
+  it('tints the whole glyph so it reads as a note', () => {
     const color = '#6E5230'; // ink-muted — the inactive tint
     const root = render(<MusicIcon color={color} size={25} />);
 
-    for (const testID of ['tab-music-icon-stem', 'tab-music-icon-flag']) {
-      expect(root.findByProps({ testID }).props.style.backgroundColor).toBe(color);
-    }
+    expect(root.findByProps({ testID: 'tab-music-icon-path' }).props.fill).toBe(color);
   });
 });
 
