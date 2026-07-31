@@ -17,6 +17,7 @@ import {
 } from '../discoveryMeta';
 import { deityEssays } from '../deityEssays';
 import { getRuleById } from '../../panchang/vratCatalog';
+import { isChapteredSource, chaptersForSource } from '../routine/chapters';
 
 const DATA = join(__dirname, '..');
 const TRANSLATIONS = join(DATA, '..', '..', '.translations');
@@ -472,6 +473,125 @@ assert.doesNotMatch(libraryById.get('ramcharitmanas')?.sub || '', /अंश|Exc
 assert.match(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);
 assert.equal(libraryById.get('durga-stotram')?.nameHi, 'दुर्गा स्तोत्रम्');
 assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
+
+// Vālmīki Rāmāyaṇa ships a declared curated selection, never a text implied to be
+// complete (RULEBOOK §11.5). The card subtitle must say so in both languages, every
+// chapter file must cite its sources and say in `source.notes` that it is a
+// selection, and the declared count must equal the shipped verses.
+{
+  const entry = libraryById.get('valmiki-ramayan');
+  assert.ok(entry, 'valmiki-ramayan must exist in the library');
+  assert.match(entry.sub, /चयनित/, 'Hindi sub must declare the selection');
+  assert.match(entry.subEn || '', /selected/i, 'English sub must declare the selection');
+
+  const manifest = readJson('valmiki-ramayan/chapters-manifest.json') as {
+    chapter: number;
+    verseCount: number;
+  }[];
+  let shipped = 0;
+  for (const summary of manifest) {
+    const file = `valmiki-ramayan/chapter-0${summary.chapter}.json`;
+    const chapter = readJson(file) as {
+      verseCount: number;
+      source?: {
+        baseText?: string;
+        canonicalEdition?: string;
+        canonicalEditionUrls?: string[];
+        canonicalEditionStatus?: string;
+        referenceUrls?: string[];
+        notes?: string;
+        retrievedOn?: string;
+      };
+      verses: { id: string; reference: string; lines: string[]; linesEn: string[] }[];
+    };
+    assert.equal(chapter.verses.length, summary.verseCount, `${file}: verse count drift`);
+    assert.ok(chapter.source?.baseText?.trim(), `${file}: missing source.baseText (RULEBOOK §11.2)`);
+    assert.ok(chapter.source?.retrievedOn?.trim(), `${file}: missing source.retrievedOn`);
+    assert.ok(
+      (chapter.source?.referenceUrls?.length ?? 0) >= 2,
+      `${file}: needs ≥2 reference sources (RULEBOOK §11.1)`
+    );
+    assert.match(
+      chapter.source?.notes || '',
+      /selection/i,
+      `${file}: source.notes must state that the file is a curated selection`
+    );
+    // The Gita Press edition is the numbering authority for this section, but it
+    // could not be fetched from the authoring environment, so it is recorded as
+    // pending rather than cited as verified (RULEBOOK §11.2). Keep the block
+    // present and its status non-empty: a future session must either confirm it
+    // against the edition or leave the outstanding note standing — silently
+    // deleting it would turn an honest gap into an implied verification.
+    assert.match(
+      chapter.source?.canonicalEdition || '',
+      /Gita Press/i,
+      `${file}: source.canonicalEdition must name the Gita Press edition`
+    );
+    assert.ok(
+      (chapter.source?.canonicalEditionUrls?.length ?? 0) >= 1,
+      `${file}: source.canonicalEditionUrls must point at the edition`
+    );
+    assert.ok(
+      chapter.source?.canonicalEditionStatus?.trim(),
+      `${file}: source.canonicalEditionStatus must say whether the page-level check is done`
+    );
+    // §11.2: baseText / referenceUrls name only sources actually read. The Gita
+    // Press edition (pending — see canonicalEdition) and the IIT Kanpur host
+    // (blocked at authoring, per the wiki log) must NOT appear here as though
+    // consulted; they belong in the canonicalEdition block above (review finding #3).
+    assert.doesNotMatch(
+      chapter.source?.baseText || '',
+      /Gita Press|IIT Kanpur|iitk/i,
+      `${file}: baseText must not cite the pending/blocked edition as a read source (RULEBOOK §11.2)`
+    );
+    const refUrls = chapter.source?.referenceUrls ?? [];
+    assert.ok(
+      !refUrls.some((u) => /iitk/i.test(u)),
+      `${file}: referenceUrls must not include the blocked IIT Kanpur host (RULEBOOK §11.2)`
+    );
+    const canonUrls = chapter.source?.canonicalEditionUrls ?? [];
+    assert.ok(
+      !refUrls.some((u) => canonUrls.includes(u)),
+      `${file}: referenceUrls must not repeat a canonicalEdition (pending) URL (RULEBOOK §11.2)`
+    );
+    for (const verse of chapter.verses) {
+      assert.match(
+        verse.reference,
+        new RegExp(`^${summary.chapter}\\.\\d+(\\.\\d+(–\\d+)?)?$`),
+        `${verse.id}: reference must cite its own kāṇḍa`
+      );
+      assert.equal(
+        verse.lines.length,
+        verse.linesEn.length,
+        `${verse.id}: linesEn must be index-paired with lines (RULEBOOK §11.12)`
+      );
+    }
+    shipped += chapter.verses.length;
+  }
+  assert.equal(entry.verseCount, shipped, 'library verseCount must equal shipped verses');
+  assert.match(entry.sub, new RegExp(`${shipped}`), 'Hindi sub count must match shipped verses');
+  assert.match(entry.subEn || '', new RegExp(`${shipped}`), 'English sub count must match');
+
+  // A newly shipped section must be version-tagged, or NewContentContext seeds it
+  // as already-known for upgraders and the NEW badge never fires (review finding #2).
+  assert.ok(
+    !!entry.addedInVersion && /^\d+\.\d+/.test(entry.addedInVersion),
+    'valmiki-ramayan must set addedInVersion so it debuts as NEW for upgraders'
+  );
+
+  // The in-reader AddToRoutine button passes the current kāṇḍa; the routine sheet
+  // only shows its Whole/kāṇḍa selector when the source is registered as chaptered
+  // (AddToRoutineSheet gates on chaptersForSource(...).length) — review finding #1.
+  assert.ok(
+    isChapteredSource('valmiki-ramayan'),
+    'valmiki-ramayan must be registered in routine/chapters.ts (routine kāṇḍa selector)'
+  );
+  assert.equal(
+    chaptersForSource('valmiki-ramayan').length,
+    manifest.length,
+    'routine chapter registry must expose all 7 valmiki-ramayan kāṇḍas'
+  );
+}
 
 // Every library entry must carry an English count-detail string that is free of
 // Devanagari, so the card subtitle matches the selected language. Guards the

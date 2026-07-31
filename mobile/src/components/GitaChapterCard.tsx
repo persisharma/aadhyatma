@@ -15,6 +15,11 @@ type Props = {
   chapterLabelEn?: string;
   unitLabelHi?: string;
   unitLabelEn?: string;
+  /**
+   * English unit label for a one-verse subsection ("1 verse", not "1 verses").
+   * Devanagari needs no counterpart — श्लोक / पद are already number-agnostic.
+   */
+  unitLabelEnSingular?: string;
 };
 
 export default function GitaChapterCard({
@@ -24,6 +29,7 @@ export default function GitaChapterCard({
   chapterLabelEn = 'Chapter',
   unitLabelHi = 'श्लोक',
   unitLabelEn = 'verses',
+  unitLabelEnSingular = 'verse',
 }: Props) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
@@ -34,7 +40,11 @@ export default function GitaChapterCard({
   const primaryIsItalic = lang === 'en';
 
   const chapterLabel = contentByLang(lang, chapterLabelHi, chapterLabelEn);
-  const unitLabel = contentByLang(lang, unitLabelHi, unitLabelEn);
+  const unitLabel = contentByLang(
+    lang,
+    unitLabelHi,
+    chapter.verseCount === 1 ? unitLabelEnSingular : unitLabelEn
+  );
   const chapterTag = `${chapterLabel} ${chapter.chapter}`;
   const verseMeta = `${chapter.verseCount} ${unitLabel}`;
 

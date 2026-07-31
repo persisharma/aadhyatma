@@ -1,0 +1,103 @@
+{
+  "chapter": 5,
+  "titleHi": "सुन्दरकाण्ड",
+  "titleEn": "Sundara Kanda",
+  "verseCount": 4,
+  "source": {
+    "baseText": "Śrīmad Vālmīki Rāmāyaṇa, Sundarakāṇḍa — verified against gyaandweep.com and sanskritdocuments.org",
+    "canonicalEdition": "Gita Press Śrīmad Vālmīki Rāmāyaṇa (Hindi, with Sanskrit text) — the edition family this section's kāṇḍa.sarga.śloka numbering follows",
+    "canonicalEditionUrls": [
+      "https://archive.org/details/valmiki-ramayana_202404",
+      "https://ebooks.iskcondesiretree.com/pdf/Valmiki_Ramayan/Valmiki_Ramayana_Gita_Press.pdf"
+    ],
+    "canonicalEditionStatus": "page-level check OUTSTANDING: both hosts are blocked by the authoring environment's network policy (archive.org and ebooks.iskcondesiretree.com return 403 through the egress proxy), so the ślokas here were verified against the secondary sources in referenceUrls instead. Re-verify against this edition from an unblocked session and then set canonicalEditionStatus to the date it was confirmed.",
+    "referenceUrls": [
+      "https://gyaandweep.com/ramayana/sundara-kanda/42/",
+      "https://sanskritdocuments.org/sites/valmikiramayan/"
+    ],
+    "notes": "Curated selection of widely published Sundarakāṇḍa shlokas, not the complete kāṇḍa. This is Vālmīki's Sanskrit Sundarakāṇḍa — distinct from the separate Tulsidas Awadhi Sundarkand section in this app; no verse is shared between the two.",
+    "retrievedOn": "2026-07-31"
+  },
+  "verses": [
+    {
+      "id": "sundara-5-12-10",
+      "kanda": 5,
+      "section": "shloka",
+      "stanza": 5,
+      "numInSection": 1,
+      "reference": "5.12.10",
+      "labelHi": "श्लोक · ५.१२.१०",
+      "labelEn": "Shloka · 5.12.10",
+      "lines": [
+        "अनिर्वेदः श्रियो मूलमनिर्वेदः परं सुखम्।",
+        "अनिर्वेदो हि सततं सर्वार्थेषु प्रवर्तकः॥"
+      ],
+      "linesEn": [
+        "anirvedaḥ śhriyo mūlamanirvedaḥ paraṁ sukham",
+        "anirvedo hi satataṁ sarvārtheṣhu pravartakaḥ"
+      ],
+      "meaningHi": "निराश न होना ही सम्पत्ति का मूल है, निराश न होना ही परम सुख है; उत्साह ही सदा सब कार्यों में प्रवृत्त करने वाला है। लंका में सीता जी को खोजते-खोजते जब हनुमान जी को सफलता नहीं मिली, तब उन्होंने स्वयं को इन शब्दों से सम्भाला और खोज जारी रखी। इसी संकल्प के बाद उन्हें अशोक वाटिका में सीता जी के दर्शन हुए — इसीलिए यह श्लोक अध्यवसाय का मन्त्र माना जाता है।",
+      "meaningEn": "Freedom from despair is the root of prosperity; freedom from despair is the highest happiness; it is undespairing effort that always carries every undertaking forward. Hanuman steadied himself with these words when his search for Sita through Lanka had failed, and resumed looking. It was after this resolve that he found her in the Ashoka grove — which is why the verse is treated as a mantra of perseverance."
+    },
+    {
+      "id": "sundara-5-13-59",
+      "kanda": 5,
+      "section": "shloka",
+      "stanza": 5,
+      "numInSection": 2,
+      "reference": "5.13.59",
+      "labelHi": "श्लोक · ५.१३.५९",
+      "labelEn": "Shloka · 5.13.59",
+      "lines": [
+        "नमोऽस्तु रामाय सलक्ष्मणाय देव्यै च तस्यै जनकात्मजायै।",
+        "नमोऽस्तु रुद्रेन्द्रयमानिलेभ्यो नमोऽस्तु चन्द्रार्कमरुद्गणेभ्यः॥"
+      ],
+      "linesEn": [
+        "namo'stu rāmāya salakṣhmaṇāya devyai cha tasyai janakātmajāyai",
+        "namo'stu rudrendrayamānilebhyo namo'stu chandrārkamarudgaṇebhyaḥ"
+      ],
+      "meaningHi": "लक्ष्मण सहित श्रीराम को नमस्कार हो, और जनकनन्दिनी देवी सीता को नमस्कार हो; रुद्र, इन्द्र, यम और वायु को नमस्कार हो; चन्द्र, सूर्य तथा मरुद्गणों को नमस्कार हो। सीता जी की खोज में निकलने से पूर्व हनुमान जी ने यह वन्दना की थी। परम्परा में यह श्लोक रामायण-पाठ के आरम्भ का ध्यान-श्लोक है — कार्य आरम्भ करने से पहले नमन का आदर्श।",
+      "meaningEn": "Salutations to Rama with Lakshmana, and to that goddess, the daughter of Janaka; salutations to Rudra, Indra, Yama and Vayu; salutations to the Moon, the Sun and the host of Maruts. Hanuman offered this prayer before setting out on his search for Sita. By tradition it is recited as the dhyana verse that opens a reading of the Ramayana — the model of bowing before beginning a task."
+    },
+    {
+      "id": "sundara-5-42-33",
+      "kanda": 5,
+      "section": "shloka",
+      "stanza": 5,
+      "numInSection": 3,
+      "reference": "5.42.33",
+      "labelHi": "श्लोक · ५.४२.३३",
+      "labelEn": "Shloka · 5.42.33",
+      "lines": [
+        "जयत्यतिबलो रामो लक्ष्मणश्च महाबलः।",
+        "राजा जयति सुग्रीवो राघवेणाभिपालितः॥"
+      ],
+      "linesEn": [
+        "jayatyatibalo rāmo lakṣhmaṇaśhcha mahābalaḥ",
+        "rājā jayati sugrīvo rāghaveṇābhipālitaḥ"
+      ],
+      "meaningHi": "अतिबलशाली श्रीराम की जय हो और महाबली लक्ष्मण की जय हो; राघव के द्वारा रक्षित राजा सुग्रीव की जय हो। लंका में राक्षसों से युद्ध करते समय हनुमान जी ने यह जयघोष किया। परम्परा में इसे 'जय-मन्त्र' कहा जाता है और विजय तथा निर्भयता के लिए इसका पाठ किया जाता है।",
+      "meaningEn": "Victory to Rama of surpassing strength, and to mighty Lakshmana; victory to King Sugriva, who is protected by the scion of Raghu. Hanuman raised this cry while fighting the rakshasas in Lanka. Tradition calls it the Jaya Mantra and recites it for victory and freedom from fear."
+    },
+    {
+      "id": "sundara-5-42-34",
+      "kanda": 5,
+      "section": "shloka",
+      "stanza": 5,
+      "numInSection": 4,
+      "reference": "5.42.34",
+      "labelHi": "श्लोक · ५.४२.३४",
+      "labelEn": "Shloka · 5.42.34",
+      "lines": [
+        "दासोऽहं कोसलेन्द्रस्य रामस्याक्लिष्टकर्मणः।",
+        "हनूमान् शत्रुसैन्यानां निहन्ता मारुतात्मजः॥"
+      ],
+      "linesEn": [
+        "dāso'haṁ kosalendrasya rāmasyākliṣhṭakarmaṇaḥ",
+        "hanūmān śhatrusainyānāṁ nihantā mārutātmajaḥ"
+      ],
+      "meaningHi": "मैं कोसलनरेश, अनायास ही महान कर्म करने वाले श्रीराम का दास हूँ; मैं पवनपुत्र हनुमान हूँ, शत्रु-सेनाओं का संहारक। यह हनुमान जी का अपना परिचय है, जो पूर्ववर्ती जयघोष के साथ मिलकर पूर्ण होता है। ध्यान देने योग्य है कि वे अपने बल से पहले अपने दासत्व का नाम लेते हैं — भक्ति में सेवा ही सर्वोच्च परिचय है।",
+      "meaningEn": "I am the servant of Rama, lord of Kosala, who achieves great deeds without strain; I am Hanuman, son of the Wind, destroyer of enemy armies. This is Hanuman's own self-introduction, completing the victory cry that precedes it. Note the order: he names his servitude before his strength — in devotion, service is the highest identity."
+    }
+  ]
+}

@@ -190,7 +190,7 @@ Every new section must also be reachable from global search (`SearchScreen`). Th
 
 | Verse shape | Devanagari source | Latin source | Used by |
 |---|---|---|---|
-| `lines` + `linesEn` | `lines` | `linesEn` | chalisas, aartis, sundarkand, ramcharitmanas |
+| `lines` + `linesEn` | `lines` | `linesEn` | chalisas, aartis, sundarkand, ramcharitmanas, valmiki-ramayan |
 | `sanskrit` + `linesEn` | `sanskrit` | `linesEn` | shiva-strotam, durga-stotram, ganesh-stotram, vishnu-sahasranama, hanuman-ashtak, ram-stuti |
 | `sanskrit` + `transliteration` | `sanskrit` | `transliteration` | bhagavad-gita |
 
@@ -268,6 +268,8 @@ Every religious text (aarti, chalisa, stotram, granth verse) must be verified ag
 ### 11.2 Source citation in data
 Every content JSON file must have a `source.baseText` field naming the edition or website(s) verified against, and `source.retrievedOn` with the ISO date of verification. Example: `{"baseText": "brandbharat.com, vignanam.org", "retrievedOn": "2026-05-23"}`. A file without source citation is unverified and must not ship as `active`.
 
+**Cite what you actually read; record what you couldn't.** `baseText` and `referenceUrls` mean "this text was checked against these". Never list a print edition, scan, or PDF you did not open — including one named for you — as though it had been consulted. When a named authority is unreachable from the authoring environment (blocked host, paywall, offline volume), record it separately as pending and say why: `source.canonicalEdition` (the edition), `source.canonicalEditionUrls`, and `source.canonicalEditionStatus` (what is outstanding and how to clear it). `valmiki-ramayan/chapter-0*.json` is the worked example — the Gita Press Vālmīki Rāmāyaṇa is its numbering authority, but archive.org and ebooks.iskcondesiretree.com are both 403 through the session's egress proxy, so the ślokas were verified against reachable secondary sources and the Gita Press check is logged as outstanding. **Do not delete a pending block to make a file look clean** — clear it by doing the check and dating it. Pinned by `contentCorrectness.test.ts`.
+
 ### 11.3 No AI-generated liturgical text
 Religious text must come from published traditional sources. Never generate, paraphrase, or "reconstruct" verse text using an LLM. Meanings/commentary may be editorial (clearly labeled), but the prayer text itself (`lines`, `sanskrit`, `linesEn`) must be verbatim from a verified source. Origin: Durga Chalisa was partially AI-generated.
 
@@ -276,6 +278,8 @@ The `deity` field (and `deities` array in `texts.ts`) must match the actual deit
 
 ### 11.5 Complete texts only — never fabricate
 Ship the full canonical version (all verses) only after internet verification. Missing stanzas are worse than a "coming soon" label. Never add wrong, pre-generated, or unverified text to fill gaps. If the complete verified text isn't available, don't ship the section at all — mark it `status: 'coming'` until verified. Origin: Hanuman Aarti had 6 of 13 verses with a fabricated closing, Jai Ambe Gauri had 5 of 12.
+
+**Declared selections are the one exception, and they must declare themselves.** A text too large to ship whole (Vālmīki Rāmāyaṇa ≈ 24,000 ślokas; Durgā Saptashatī) may ship as a *curated selection* of verified verses — but only when: (a) the `sub`/`subEn` name it as one, using the `चयनित` / `selected` wording (`7 काण्ड · 28 चयनित श्लोक` / `7 kandas · 28 selected shlokas`, following `durga-stotram`'s `3 चयनित स्तोत्र`); (b) each JSON's `source.notes` says explicitly that the file is a selection and not the complete kāṇḍa/adhyāya; and (c) every shipped verse still clears §11.1–§11.4 individually. What stays banned is the thing this rule was written for: a text the UI *implies* is complete but isn't. Uneven depth between subsections is correct behaviour when that is what verification supported — say so in `source.notes` and in the section's `design.md` entry; padding a subsection with unverified text to even the counts out is a hard reject. Omitting a subsection entirely is also acceptable, under the same disclosure rule.
 
 ### 11.6 No fabricated content
 Every line in a content file must exist in at least one published source. Fake closing verses, paraphrased refrains, composite mashups from different texts = hard reject. If a line appears in zero internet sources, it is fabricated and must be removed. Origin: "हनुमत बीर सकल दुख भावे" (Hanuman Aarti closing) appeared in zero published sources.

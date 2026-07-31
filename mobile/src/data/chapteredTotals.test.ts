@@ -59,6 +59,17 @@ const cases = [
     },
   },
   {
+    id: 'valmiki-ramayan',
+    expectedTotal: 28,
+    load: async () => {
+      const mod = await import('./valmiki-ramayan');
+      return {
+        manifest: mod.valmikiRamayanChaptersManifest,
+        total: mod.valmikiRamayanTotal,
+      };
+    },
+  },
+  {
     id: 'shiva-strotam',
     expectedTotal: 23,
     load: async () => {

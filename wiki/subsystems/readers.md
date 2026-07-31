@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, RULEBOOK.md]
-last_verified_date: 2026-07-25
+sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, RULEBOOK.md]
+last_verified_date: 2026-07-31
 confidence: high
 status: current
 ---
@@ -44,10 +44,11 @@ component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()
 3. The prepended prev card shifts indices by one → an `offset = isFirstChapter ? 0 : 1` is
    carried through `initialScrollIndex`, `handleScroll`, and the viewable-index math.
 
-**Who has it:** Gita (18), Sundarkand (16), Shiva Strotam (4), and — as of 2026-06-09 — Durga
-(3), Ganesh (3), Saraswati (3), Vishnu Sahasranama (4). Single-chapter texts (Hanuman Ashtak,
-Krishna Stotram, Ram Stuti, Ramcharitmanas — 1 chapter file each today) render verses only;
-they need no transition because there is no next subsection yet.
+**Who has it:** Gita (18), Sundarkand (16), Shiva Strotam (4), Durga (3), Ganesh (3),
+Saraswati (3), Vishnu Sahasranama (4) — the last four added 2026-06-09 — and, as of 2026-07-31,
+Valmiki Ramayan (7 kāṇḍas). Single-chapter texts (Hanuman Ashtak, Krishna Stotram, Ram Stuti,
+Ramcharitmanas — 1 chapter file each today) render verses only; they need no transition because
+there is no next subsection yet.
 
 **Multi-instance readers** (`ChalisaReaderScreen`, `AartiReaderScreen`, `SanskarReaderScreen`)
 dispatch on a `route.params` discriminator through a registry — they do not import one section's
@@ -83,6 +84,12 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
   ("Back to chapters").
 - **`onViewableItemsChanged` is `useRef(fn).current`** — it captures `offset`/`navigation` from
   the first render. Safe here because `chapter` (hence `offset`) is fixed per screen instance.
+- **`ValmikiRamayanVersePage.tsx` is a one-line re-export of `SundarkandVersePage`** — its verse
+  type is a superset of the `lines`/`linesEn` archetype. RULEBOOK §2 row 4 requires the explicit
+  re-export file rather than the reader importing another section's page, so the coupling is
+  visible and a future shape change breaks at the re-export instead of on first paint (the PR #31
+  Balkand crash). The reader also carries `stanza = kāṇḍa`, which is what `getReaderBackground`
+  keys the per-kāṇḍa sketch off.
 - **Latent gap in single-chapter readers** — Ramcharitmanas loads only `chapter-01` today
   (conceptually 7 kāṇḍas); the moment a 2nd chapter file is added it needs the auto-advance
   pattern or it will dead-end. The test auto-covers it once its manifest length exceeds 1.

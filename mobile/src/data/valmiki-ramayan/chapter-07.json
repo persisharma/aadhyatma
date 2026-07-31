@@ -1,0 +1,44 @@
+{
+  "chapter": 7,
+  "titleHi": "उत्तरकाण्ड",
+  "titleEn": "Uttara Kanda",
+  "verseCount": 1,
+  "source": {
+    "baseText": "Śrīmad Vālmīki Rāmāyaṇa, Uttarakāṇḍa — sanskritdocuments.org Rāmāyaṇa mirror, cross-checked against gyaandweep.com and ramcharit.in",
+    "canonicalEdition": "Gita Press Śrīmad Vālmīki Rāmāyaṇa (Hindi, with Sanskrit text) — the edition family this section's kāṇḍa.sarga.śloka numbering follows",
+    "canonicalEditionUrls": [
+      "https://archive.org/details/valmiki-ramayana_202404",
+      "https://ebooks.iskcondesiretree.com/pdf/Valmiki_Ramayan/Valmiki_Ramayana_Gita_Press.pdf"
+    ],
+    "canonicalEditionStatus": "page-level check OUTSTANDING: both hosts are blocked by the authoring environment's network policy (archive.org and ebooks.iskcondesiretree.com return 403 through the egress proxy), so the ślokas here were verified against the secondary sources in referenceUrls instead. Re-verify against this edition from an unblocked session and then set canonicalEditionStatus to the date it was confirmed.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/mirrors/ramayana/utf/7_uttarakanda_98.html",
+      "https://gyaandweep.com/ramayana/uttara-kanda/",
+      "https://www.ramcharit.in/valmiki-ramayana-uttar-kanda-in-hindi-sanskrit-complete-pdf/"
+    ],
+    "notes": "Curated selection of widely published Uttarakāṇḍa shlokas, not the complete kāṇḍa — the thinnest chapter in this section (1 śloka) because Uttarakāṇḍa verses were the hardest to clear the two-independent-source bar of §11.1. Cited at sarga level: the Gita Press family numbers this sarga 108, the sanskritdocuments mirror groups it as 98, so the in-sarga śloka index is not asserted.",
+    "retrievedOn": "2026-07-31"
+  },
+  "verses": [
+    {
+      "id": "uttara-7-108-hanuman-vara",
+      "kanda": 7,
+      "section": "shloka",
+      "stanza": 7,
+      "numInSection": 1,
+      "reference": "7.108",
+      "labelHi": "श्लोक · ७.१०८",
+      "labelEn": "Shloka · 7.108",
+      "lines": [
+        "मत्कथाः प्रचरिष्यन्ति यावल्लोके हरीश्वर।",
+        "तावत्त्वं धारयन्प्राणान्प्रतिज्ञामनुपालय॥"
+      ],
+      "linesEn": [
+        "matkathāḥ prachariṣhyanti yāvalloke harīśhvara",
+        "tāvattvaṁ dhārayanprāṇānpratijñāmanupālaya"
+      ],
+      "meaningHi": "हे कपीश्वर! जब तक इस लोक में मेरी कथा प्रचलित रहेगी, तब तक तुम प्राण धारण करते हुए अपनी प्रतिज्ञा का पालन करते रहो। अपने धाम को लौटने से पूर्व श्रीराम ने हनुमान जी को यही वरदान दिया। यही हनुमान जी के चिरंजीवी होने का शास्त्रीय आधार है — और इसी से यह भाव आया कि जहाँ भी रामकथा का पाठ होता है, वहाँ हनुमान जी उपस्थित रहते हैं। बालकाण्ड में ब्रह्मा जी का वरदान (१.२.३६) कहता है कि कथा पर्वतों और नदियों के रहने तक चलेगी; यह श्लोक उसी अवधि को हनुमान जी के जीवन से जोड़ देता है।",
+      "meaningEn": "O lord of the monkeys, so long as my story lives on in this world, so long shall you hold your life-breath and keep your vow. This is the boon Rama gave Hanuman before returning to his own abode. It is the scriptural basis for Hanuman being chiranjivi (ever-living) — and for the belief that wherever the Rama story is recited, Hanuman is present. Brahma's boon in the Bala Kanda (1.2.36) says the story will last as long as mountains and rivers do; this verse binds Hanuman's life to that same span."
+    }
+  ]
+}

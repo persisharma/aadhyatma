@@ -54,7 +54,7 @@ maestro test --debug-output ./maestro-debug .maestro/sanskar-smoke.yaml
 | Flow | Purpose |
 |---|---|
 | `_launch.yaml` | **Shared subflow** — boots Expo Go, opens Vedansh, waits for Home, and dismisses the first-launch feature tour if it auto-appeared (optional `Skip` tap — a no-op once the tour has been seen). Used by every category smoke via `runFlow: _launch.yaml`. |
-| `granth-smoke.yaml` | Granth: 3 sections (Bhagavad Gītā, Sundarkand, Ramcharitmanas). Opens Sundarkand. |
+| `granth-smoke.yaml` | Granth: 4 sections (Bhagavad Gītā, Sundarkand, Ramcharitmanas, Valmiki Ramayan). Opens Sundarkand. |
 | `gita-smoke.yaml` | Bhagavad Gītā **chaptered reader** — the path `granth-smoke` skips. Home → Sacred Books → Bhagavad Gītā → chapter index → Chapter 1 reader; exercises horizontal verse paging and the `JumpToStartButton` "back to verse 1" pill (PR #97). Auto-advance to the next chapter (PR #29) is scroll-velocity driven (~47 swipes), so it's unit-tested in `src/screens/__tests__/gitaAutoAdvance.test.tsx` instead. |
 | `stotram-smoke.yaml` | Stotram: 7 sections. Opens Bajrang Baan (matches the jest smoke test). |
 | `chalisa-smoke.yaml` | Chalisa: 4 sections. Opens Hanuman Chalisa (guards against PR #31 multi-instance regression). |

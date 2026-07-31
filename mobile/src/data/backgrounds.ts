@@ -77,6 +77,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'gayatri-mantra': backgroundImages.source_gayatri_savitri_sun,
   'om-namo-bhagavate-vasudevaya': backgroundImages.source_vishnu_narayana,
   ramcharitmanas: backgroundImages.deity_rama_darbar,
+  'valmiki-ramayan': backgroundImages.deity_rama_darbar,
   'durga-stotram': backgroundImages.deity_durga_lion,
   'ganesh-stotram': backgroundImages.deity_ganesha_modak,
   'vishnu-sahasranama': backgroundImages.source_vishnu_narayana,
@@ -197,6 +198,15 @@ export function getReaderBackground(
 ): BackgroundImage | null {
   if (sourceId === 'hanuman-chalisa') {
     return (verse?.id && hanumanChalisaOverrides[verse.id]) || chalisaImages.ram_hanuman;
+  }
+
+  if (sourceId === 'valmiki-ramayan') {
+    // `verse.stanza` carries the kāṇḍa number (see `ValmikiRamayanVerse`), so the
+    // plate changes per kāṇḍa and stays deterministic per verse.
+    const kanda = verse?.stanza ?? 1;
+    if (kanda === 4) return chalisaImages.ram_hanuman; // Kiṣkindhā — Rāma meets Hanumān
+    if (kanda === 5) return chalisaImages.hanuman_sea; // Sundara — Hanumān crosses the ocean
+    return backgroundImages.deity_rama_darbar;
   }
 
   if (sourceId === 'sundarkand') {

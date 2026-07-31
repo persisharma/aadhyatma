@@ -18,6 +18,7 @@ import { bajrangBaanTotal } from './bajrang-baan';
 import { ramStutiTotal } from './ram-stuti';
 import { krishnaStotramTotal } from './krishna-stotram';
 import { ramcharitmanasTotal } from './ramcharitmanas';
+import { valmikiRamayanTotal } from './valmiki-ramayan';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
 import {
@@ -178,6 +179,21 @@ export const library: readonly LibraryEntry[] = [
     category: 'granth',
     deities: ['rama'],
     verseCount: ramcharitmanasTotal,
+  },
+  {
+    id: 'valmiki-ramayan',
+    nameHi: 'वाल्मीकि रामायण',
+    nameEn: 'Valmiki Ramayan',
+    // A curated selection, not the full 24,000-śloka epic — the subtitle says so
+    // in both languages (RULEBOOK §11.5: never present a partial text as complete).
+    sub: `7 काण्ड · ${valmikiRamayanTotal} चयनित श्लोक`,
+    subEn: `7 kandas · ${valmikiRamayanTotal} selected shlokas`,
+    thumb: 'वा',
+    status: 'active',
+    category: 'granth',
+    deities: ['rama', 'hanuman'],
+    verseCount: valmikiRamayanTotal,
+    addedInVersion: '1.4.5',
   },
   {
     id: 'durga-stotram',
