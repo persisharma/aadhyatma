@@ -58,7 +58,7 @@ appId: com.prashantsharma.vedansh
 # the old inline English/Hindi pills are gone (gu/kn added a 4-way picker). The
 # sheet's rows opt out of the modal's accessibility wrappers (accessible={false}),
 # so each language radio (accessibilityLabel = "English"/"Hindi"/…) is tappable.
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -70,7 +70,7 @@ appId: com.prashantsharma.vedansh
 
 # ── Step 3: Open the Panchang tab ──
 # "Panchang, tab.*" matches only the tab button, not the More "Panchang" card.
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 
 # ── Step 4: Assert the header, toggle, and calendar controls rendered (English) ──
@@ -164,7 +164,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible:
     text: "Purnimant calendar system"
     selected: true
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn:
     text: "Language,.*"

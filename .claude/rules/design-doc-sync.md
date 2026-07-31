@@ -11,7 +11,7 @@ Code is canonical, but `design.md` and `RULEBOOK.md` must never lag it by more t
 3. If no section covers the surface, ADD one (continue the § numbering; match the house style: Purpose, Structure, token-based specs, file pointers).
 4. If the change alters the **integration contract** (content shapes, file sets, category/deity/registry enumerations, verification steps, test gates), update the matching `RULEBOOK.md` section too.
 
-**Enumerations:** categories, deities, and theerth groups live in code (`mobile/src/data/categories.ts`, `deities.ts`, `theerth/temples.ts`). When you change one, refresh every doc mirror of that list (design.md §18/§41/§42, RULEBOOK §1 rows 6–7, §11).
+**Enumerations:** categories, deities, and theerth groups live in code (`mobile/src/data/categories.ts`, `deities.ts`, `theerth/temples.ts`). When you change one, refresh every doc mirror of that list (design.md §18/§41/§42, RULEBOOK §1 rows 6–7, §12).
 
 ## When it does NOT apply
 

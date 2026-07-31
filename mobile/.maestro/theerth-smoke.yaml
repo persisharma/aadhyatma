@@ -77,7 +77,13 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: "By State"
 - waitForAnimationToEnd
-- assertVisible: "Gujarat"
+# The state list is alphabetical and scrollable; Gujarat sits below the fold on
+# Android's shorter viewport (the top shows Andaman…Chhattisgarh), so scroll to it.
+- scrollUntilVisible:
+    element:
+      text: "Gujarat"
+    direction: DOWN
+    timeout: 10000
 
 - stopApp:
     appId: com.prashantsharma.vedansh

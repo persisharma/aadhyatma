@@ -1,6 +1,7 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Modal } from 'react-native';
+import { Linking, Modal } from 'react-native';
+import { INSTAGRAM_URL } from '@/data/shareLinks';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 
@@ -89,6 +90,7 @@ describe('MoreScreen (redesign)', () => {
     expect(byLabel(tree, 'Japam alarms, none set')).toBeDefined();
     expect(byLabel(tree, 'Language, Hindi')).toBeDefined();
     expect(byLabel(tree, 'Reading size, Standard')).toBeDefined();
+    expect(byLabel(tree, 'Follow on Instagram')).toBeDefined();
     expect(byLabel(tree, 'About and disclaimer')).toBeDefined();
     expect(byLabel(tree, 'Report an error')).toBeDefined();
     expect(byLabel(tree, 'Show App Tour')).toBeDefined();
@@ -111,6 +113,14 @@ describe('MoreScreen (redesign)', () => {
     expect(nav.navigate).toHaveBeenCalledWith('Reminders');
     act(() => byLabel(tree, 'Japam alarms, none set').props.onPress());
     expect(nav.navigate).toHaveBeenCalledWith('JapamAlarms');
+  });
+
+  test('tapping Follow on Instagram opens the public profile URL', async () => {
+    const openURL = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+    const tree = await renderMore(makeNav());
+    await act(async () => byLabel(tree, 'Follow on Instagram').props.onPress());
+    expect(openURL).toHaveBeenCalledWith(INSTAGRAM_URL);
+    openURL.mockRestore();
   });
 
   const openModals = (tree: TestRenderer.ReactTestRenderer) =>

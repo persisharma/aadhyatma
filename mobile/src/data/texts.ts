@@ -185,7 +185,7 @@ export const library: readonly LibraryEntry[] = [
     nameHi: 'वाल्मीकि रामायण',
     nameEn: 'Valmiki Ramayan',
     // A curated selection, not the full 24,000-śloka epic — the subtitle says so
-    // in both languages (RULEBOOK §10.5: never present a partial text as complete).
+    // in both languages (RULEBOOK §11.5: never present a partial text as complete).
     sub: `7 काण्ड · ${valmikiRamayanTotal} चयनित श्लोक`,
     subEn: `7 kandas · ${valmikiRamayanTotal} selected shlokas`,
     thumb: 'वा',
@@ -470,7 +470,7 @@ export const library: readonly LibraryEntry[] = [
   },
   // ─────────── Theerth (तीर्थ) — pilgrimage map archetype ───────────
   // One LibraryEntry per yatra; each opens TheerthMapScreen with that
-  // group's pins pre-filtered. Per RULEBOOK §11, each temple carries
+  // group's pins pre-filtered. Per RULEBOOK §12, each temple carries
   // concise source-linked prose for the detail screen.
   {
     id: 'dvadasha-jyotirlinga',

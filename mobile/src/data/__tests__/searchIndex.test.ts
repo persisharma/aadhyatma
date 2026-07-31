@@ -28,7 +28,7 @@ const index = getSearchIndex();
 
 // Every active, non-hidden section also produces at least one verse entry —
 // otherwise the user can't find any verses for that section. Mirrors the
-// RULEBOOK §8 contract for new sections.
+// RULEBOOK §7 contract for new sections.
 {
   const activeIds = library
     .filter((e) => e.status === 'active' && !e.hidden)

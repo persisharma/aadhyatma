@@ -475,7 +475,7 @@ assert.equal(libraryById.get('durga-stotram')?.nameHi, 'दुर्गा स�
 assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
 
 // Vālmīki Rāmāyaṇa ships a declared curated selection, never a text implied to be
-// complete (RULEBOOK §10.5). The card subtitle must say so in both languages, every
+// complete (RULEBOOK §11.5). The card subtitle must say so in both languages, every
 // chapter file must cite its sources and say in `source.notes` that it is a
 // selection, and the declared count must equal the shipped verses.
 {
@@ -505,11 +505,11 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
       verses: { id: string; reference: string; lines: string[]; linesEn: string[] }[];
     };
     assert.equal(chapter.verses.length, summary.verseCount, `${file}: verse count drift`);
-    assert.ok(chapter.source?.baseText?.trim(), `${file}: missing source.baseText (RULEBOOK §10.2)`);
+    assert.ok(chapter.source?.baseText?.trim(), `${file}: missing source.baseText (RULEBOOK §11.2)`);
     assert.ok(chapter.source?.retrievedOn?.trim(), `${file}: missing source.retrievedOn`);
     assert.ok(
       (chapter.source?.referenceUrls?.length ?? 0) >= 2,
-      `${file}: needs ≥2 reference sources (RULEBOOK §10.1)`
+      `${file}: needs ≥2 reference sources (RULEBOOK §11.1)`
     );
     assert.match(
       chapter.source?.notes || '',
@@ -518,7 +518,7 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
     );
     // The Gita Press edition is the numbering authority for this section, but it
     // could not be fetched from the authoring environment, so it is recorded as
-    // pending rather than cited as verified (RULEBOOK §10.2). Keep the block
+    // pending rather than cited as verified (RULEBOOK §11.2). Keep the block
     // present and its status non-empty: a future session must either confirm it
     // against the edition or leave the outstanding note standing — silently
     // deleting it would turn an honest gap into an implied verification.
@@ -535,24 +535,24 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
       chapter.source?.canonicalEditionStatus?.trim(),
       `${file}: source.canonicalEditionStatus must say whether the page-level check is done`
     );
-    // §10.2: baseText / referenceUrls name only sources actually read. The Gita
+    // §11.2: baseText / referenceUrls name only sources actually read. The Gita
     // Press edition (pending — see canonicalEdition) and the IIT Kanpur host
     // (blocked at authoring, per the wiki log) must NOT appear here as though
     // consulted; they belong in the canonicalEdition block above (review finding #3).
     assert.doesNotMatch(
       chapter.source?.baseText || '',
       /Gita Press|IIT Kanpur|iitk/i,
-      `${file}: baseText must not cite the pending/blocked edition as a read source (RULEBOOK §10.2)`
+      `${file}: baseText must not cite the pending/blocked edition as a read source (RULEBOOK §11.2)`
     );
     const refUrls = chapter.source?.referenceUrls ?? [];
     assert.ok(
       !refUrls.some((u) => /iitk/i.test(u)),
-      `${file}: referenceUrls must not include the blocked IIT Kanpur host (RULEBOOK §10.2)`
+      `${file}: referenceUrls must not include the blocked IIT Kanpur host (RULEBOOK §11.2)`
     );
     const canonUrls = chapter.source?.canonicalEditionUrls ?? [];
     assert.ok(
       !refUrls.some((u) => canonUrls.includes(u)),
-      `${file}: referenceUrls must not repeat a canonicalEdition (pending) URL (RULEBOOK §10.2)`
+      `${file}: referenceUrls must not repeat a canonicalEdition (pending) URL (RULEBOOK §11.2)`
     );
     for (const verse of chapter.verses) {
       assert.match(
@@ -563,7 +563,7 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
       assert.equal(
         verse.lines.length,
         verse.linesEn.length,
-        `${verse.id}: linesEn must be index-paired with lines (RULEBOOK §10.12)`
+        `${verse.id}: linesEn must be index-paired with lines (RULEBOOK §11.12)`
       );
     }
     shipped += chapter.verses.length;

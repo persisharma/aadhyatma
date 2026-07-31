@@ -60,7 +60,7 @@ test('renders sourced temple detail content in Hindi', () => {
   assert.match(text, /शिव/, 'deity badge');
   assert.match(text, /सोमराज|चन्द्र/, 'Somnath story');
   assert.match(text, /स्रोत/, 'source label');
-  assert.doesNotMatch(text, /RULEBOOK §10\.3/, 'placeholder should not render');
+  assert.doesNotMatch(text, /RULEBOOK §11\.3/, 'placeholder should not render');
 });
 
 test('renders sourced statewise temple detail content in English', () => {
@@ -69,7 +69,7 @@ test('renders sourced statewise temple detail content in English', () => {
   assert.match(text, /Nathdwara/);
   assert.match(text, /Govardhan|Pushtimarg/);
   assert.match(text, /Sources/);
-  assert.doesNotMatch(text, /RULEBOOK §10\.3/);
+  assert.doesNotMatch(text, /RULEBOOK §11\.3/);
 });
 
 test('shows a not-found message for an unknown temple id', () => {

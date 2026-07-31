@@ -10,18 +10,17 @@ import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import type { TabParamList } from './types';
+import {
+  HomeIcon,
+  BhaktiIcon,
+  PanchangIcon,
+  MusicIcon,
+  MoreIcon,
+  type TabIconProps,
+} from './tabBarIcons';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const LazyPanchangStackNavigator = lazy(() => import('./PanchangStackNavigator'));
-
-type TabIconProps = {
-  color: string;
-  size: number;
-};
-
-type BhaktiIconProps = TabIconProps & {
-  accentColor: string;
-};
 
 // Full-screen reader routes that should hide the bottom tab bar so it doesn't
 // compete with immersive reading. Lives at the tab level (rather than per-screen
@@ -64,6 +63,7 @@ export default function TabNavigator() {
           const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
           return {
             tabBarLabel: 'Home',
+            tabBarButtonTestID: 'tab-home',
             tabBarIcon: ({ color, size }: TabIconProps) => (
               <HomeIcon color={color} size={size} />
             ),
@@ -78,6 +78,7 @@ export default function TabNavigator() {
         component={DailyBhaktiScreen}
         options={{
           tabBarLabel: 'Bhakti',
+          tabBarButtonTestID: 'tab-bhakti',
           tabBarIcon: ({ color, size }) => (
             <BhaktiIcon color={color} accentColor={colors.saffron} size={size} />
           ),
@@ -88,6 +89,7 @@ export default function TabNavigator() {
         component={PanchangTabRoot}
         options={{
           tabBarLabel: 'Panchang',
+          tabBarButtonTestID: 'tab-panchang',
           tabBarIcon: ({ color, size }) => (
             <PanchangIcon color={color} size={size} />
           ),
@@ -98,6 +100,7 @@ export default function TabNavigator() {
         component={AudioStackNavigator}
         options={{
           tabBarLabel: 'Bhajan',
+          tabBarButtonTestID: 'tab-bhajan',
           tabBarIcon: ({ color, size }) => (
             <MusicIcon color={color} size={size} />
           ),
@@ -108,6 +111,7 @@ export default function TabNavigator() {
         component={MoreStackNavigator}
         options={{
           tabBarLabel: 'More',
+          tabBarButtonTestID: 'tab-more',
           tabBarIcon: ({ color, size }) => (
             <MoreIcon color={color} size={size} />
           ),
@@ -143,237 +147,5 @@ function PanchangTabRoot() {
     >
       <LazyPanchangStackNavigator />
     </Suspense>
-  );
-}
-
-function HomeIcon({ color, size }: TabIconProps) {
-  const stroke = Math.max(1.5, size * 0.07);
-  const windowSize = size * 0.11;
-
-  return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View
-        style={{
-          position: 'absolute',
-          top: size * 0.28,
-          left: size * 0.12,
-          width: size * 0.5,
-          height: stroke,
-          borderRadius: stroke / 2,
-          backgroundColor: color,
-          transform: [{ rotate: '-43deg' }],
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          top: size * 0.28,
-          right: size * 0.12,
-          width: size * 0.5,
-          height: stroke,
-          borderRadius: stroke / 2,
-          backgroundColor: color,
-          transform: [{ rotate: '43deg' }],
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          top: size * 0.2,
-          right: size * 0.17,
-          width: stroke,
-          height: size * 0.22,
-          backgroundColor: color,
-          borderRadius: stroke / 2,
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          top: size * 0.42,
-          width: size * 0.56,
-          height: size * 0.38,
-          borderWidth: stroke,
-          borderTopWidth: 0,
-          borderColor: color,
-          borderBottomLeftRadius: stroke,
-          borderBottomRightRadius: stroke,
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          top: size * 0.52,
-          width: size * 0.28,
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          gap: size * 0.05,
-        }}
-      >
-        {[0, 1, 2, 3].map((pane) => (
-          <View
-            key={pane}
-            style={{
-              width: windowSize,
-              height: windowSize,
-              borderRadius: stroke * 0.3,
-              backgroundColor: color,
-            }}
-          />
-        ))}
-      </View>
-    </View>
-  );
-}
-
-function BhaktiIcon({ color, accentColor, size }: BhaktiIconProps) {
-  const stroke = Math.max(1.5, size * 0.07);
-
-  return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View
-        style={{
-          position: 'absolute',
-          top: size * 0.08,
-          width: stroke,
-          height: size * 0.58,
-          borderRadius: stroke / 2,
-          backgroundColor: accentColor,
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          top: size * 0.12,
-          width: size * 0.48,
-          height: size * 0.58,
-          borderLeftWidth: stroke,
-          borderRightWidth: stroke,
-          borderBottomWidth: stroke,
-          borderColor: color,
-          borderBottomLeftRadius: size * 0.24,
-          borderBottomRightRadius: size * 0.24,
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          top: size * 0.78,
-          width: size * 0.12,
-          height: size * 0.12,
-          borderRadius: size * 0.06,
-          backgroundColor: color,
-        }}
-      />
-    </View>
-  );
-}
-
-function PanchangIcon({ color, size }: TabIconProps) {
-  const stroke = Math.max(1.5, size * 0.08);
-  const arm = size * 0.28;
-
-  return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{ position: 'absolute', width: stroke, height: size * 0.64, backgroundColor: color, borderRadius: stroke / 2 }} />
-      <View style={{ position: 'absolute', width: size * 0.64, height: stroke, backgroundColor: color, borderRadius: stroke / 2 }} />
-      <View style={{ position: 'absolute', top: size * 0.18, left: size * 0.5, width: arm, height: stroke, backgroundColor: color, borderRadius: stroke / 2 }} />
-      <View style={{ position: 'absolute', top: size * 0.5, right: size * 0.18, width: stroke, height: arm, backgroundColor: color, borderRadius: stroke / 2 }} />
-      <View style={{ position: 'absolute', bottom: size * 0.18, right: size * 0.5, width: arm, height: stroke, backgroundColor: color, borderRadius: stroke / 2 }} />
-      <View style={{ position: 'absolute', bottom: size * 0.5, left: size * 0.18, width: stroke, height: arm, backgroundColor: color, borderRadius: stroke / 2 }} />
-    </View>
-  );
-}
-
-function MoreIcon({ color, size }: TabIconProps) {
-  const stroke = Math.max(1.5, size * 0.07);
-  const dotSize = size * 0.11;
-
-  return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View
-        style={{
-          width: size * 0.74,
-          height: size * 0.74,
-          borderWidth: stroke,
-          borderColor: color,
-          borderRadius: size * 0.37,
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'row',
-          gap: size * 0.08,
-        }}
-      >
-        {[0, 1, 2].map((dot) => (
-          <View
-            key={dot}
-            style={{
-              width: dotSize,
-              height: dotSize,
-              borderRadius: dotSize / 2,
-              backgroundColor: color,
-            }}
-          />
-        ))}
-      </View>
-    </View>
-  );
-}
-
-// Redrawn in the same stroked-View grammar as its four siblings (same
-// `stroke = max(1.5, size * 0.07)`, same rounded caps). It was a filled SVG
-// path, which read visibly heavier than the outlined icons beside it —
-// especially in the inactive state, where a solid glyph dominates the row.
-function MusicIcon({ color, size }: TabIconProps) {
-  const stroke = Math.max(1.5, size * 0.07);
-  const head = size * 0.34;
-  const headLeft = size * 0.16;
-  const headBottom = size * 0.18;
-  // Stem rises from the head's right edge; the flag springs from the stem top.
-  const stemLeft = headLeft + head - stroke;
-  const stemBottom = headBottom + head / 2;
-  const stemHeight = size * 0.5;
-
-  return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      {/* Note head — a stroked circle, so its weight matches the outlines. */}
-      <View
-        style={{
-          position: 'absolute',
-          left: headLeft,
-          bottom: headBottom,
-          width: head,
-          height: head,
-          borderRadius: head / 2,
-          borderWidth: stroke,
-          borderColor: color,
-        }}
-      />
-      {/* Stem */}
-      <View
-        style={{
-          position: 'absolute',
-          left: stemLeft,
-          bottom: stemBottom,
-          width: stroke,
-          height: stemHeight,
-          borderRadius: stroke / 2,
-          backgroundColor: color,
-        }}
-      />
-      {/* Flag */}
-      <View
-        style={{
-          position: 'absolute',
-          left: stemLeft + stroke,
-          bottom: stemBottom + stemHeight - stroke,
-          width: size * 0.24,
-          height: stroke,
-          borderRadius: stroke / 2,
-          backgroundColor: color,
-          transform: [{ rotate: '30deg' }],
-        }}
-      />
-    </View>
   );
 }

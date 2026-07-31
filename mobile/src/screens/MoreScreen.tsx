@@ -12,7 +12,7 @@ import { fontFamilies } from '@/theme/typography';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { pick } from '@/utils/localize';
 import { helpContent, buildDiscrepancyMailto, SUPPORT_EMAIL } from '@/data/help/content';
-import { buildAppShareMessage } from '@/data/shareLinks';
+import { buildAppShareMessage, INSTAGRAM_HANDLE, INSTAGRAM_URL } from '@/data/shareLinks';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useTour } from '@/contexts/TourContext';
@@ -139,6 +139,12 @@ export default function MoreScreen({ navigation }: Props) {
     ).catch(() => {
       // Share sheet dismissed or unavailable — nothing to recover.
     });
+  };
+
+  const openInstagram = () => {
+    Linking.openURL(INSTAGRAM_URL).catch(() =>
+      Alert.alert('Instagram', `@${INSTAGRAM_HANDLE}`)
+    );
   };
 
   const reportError = () => {
@@ -306,6 +312,22 @@ export default function MoreScreen({ navigation }: Props) {
                     gu: 'Vedansh ઍપ શેર કરો',
                     kn: 'Vedansh ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ',
                   })}
+                />
+                {/* Leaves the app for the public @vedansh.app profile (§37). */}
+                <SettingsRow
+                  icon="◉"
+                  iconBg={colors.saffronDeep}
+                  iconFontSize={19}
+                  label={pick(lang, {
+                    hi: 'Instagram पर फ़ॉलो करें',
+                    en: 'Follow on Instagram',
+                    gu: 'Instagram પર ફોલો કરો',
+                    kn: 'Instagram ನಲ್ಲಿ ಫಾಲೋ ಮಾಡಿ',
+                  })}
+                  labelFontFamily={labelFont}
+                  state={`@${INSTAGRAM_HANDLE}`}
+                  onPress={openInstagram}
+                  accessibilityLabel="Follow on Instagram"
                 />
               </View>
             </View>

@@ -55,7 +55,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: /tmp/vedansh-home-wordmark
 
 # ── Step 2: Set global reading language to English (More tab) ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
 - waitForAnimationToEnd
@@ -64,7 +64,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # ── Step 3: Open routine creation from the inline Home banner ──

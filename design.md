@@ -207,14 +207,16 @@ This table is the **single source of truth** for reading-content sizing, impleme
 
 > **Runtime tokens (source of truth: `mobile/src/theme/spacing.ts`).** One 4-step scale:
 > `radii.sm` **10** · `radii.md` **14** · `radii.lg` **18** · `radii.xl` **22** · `radii.pill` **999**.
-> `xl` was added in July 2026 for the two places 22 genuinely appears — the `DeityCard`
-> card radius, and half of the 44 pt circular control — after an audit found ten ad-hoc
-> radii (11, 12, 15, 16, 17, 20, 22, 24, 26, 32) and none of them on the scale.
+> `xl` was added in July 2026 for the shared **44 pt circular back-button control** — half of
+> 44 is 22 — now used by `ReaderHeader.tsx` (every reader/index top bar) and `RashifalScreen.tsx`,
+> after an audit found ten ad-hoc radii (11, 12, 15, 16, 17, 20, 22, 24, 26, 32) and none of them
+> on the scale.
 >
-> **Not tokenised, on purpose:** a radius that is exactly half its box is a *circle*, not a
-> card corner (back buttons, the profile badge, the Panchang month stepper), and
-> `deityGlyphs/` + `CategoryIcon` internals are illustration geometry. Both stay as
-> literals; only card/tile/pill corners take a token.
+> **Not tokenised, on purpose:** an *incidental* circle — a radius that is exactly half its box —
+> keeps a bare literal: the `DeityCard` avatar (`borderRadius: 22`), the profile badge, and the
+> Panchang month stepper, as do `deityGlyphs/` + `CategoryIcon` illustration internals. Card /
+> tile / pill corners and the one shared 44 pt back control take a token; one-off circles stay
+> literals.
 
 ### Elevation
 
@@ -712,7 +714,7 @@ When building new components, pull tokens from the theme — never hard-code a h
   - **Bhajan** — audio stack
   - **More** — profile, wishlist (§24), reminders, settings
 - Tab labels: English, `fontFamilies.inter` 10 @ **`0.4`** tracking. (Was `0.02`, a no-op: RN `letterSpacing` is in **px**, not em, so 0.02 px is invisible. 0.4 matches the `cardMeta` chrome token.)
-- Each tab carries a custom stroke-style icon in the tint colour — **all five** hand-built from `View` strokes on the same `stroke = max(1.5, size * 0.07)` grammar with rounded caps. Bhajan's note was a *filled* SVG path until July 2026 and read visibly heavier than its outlined siblings, worst in the inactive state; it is now a stroked circle head + stem + flag, and `react-native-svg` is no longer imported by the navigator.
+- Each tab carries a custom stroke-style icon in the tint colour — **all five** hand-built from `View` strokes on the same `stroke = max(1.5, size * 0.07)` grammar with rounded caps. Bhajan's note was a *filled* SVG path until July 2026 and read visibly heavier than its outlined siblings, worst in the inactive state; it is now a `View`-composed note with a **filled disc head** + thin stem + hairline flag, and `react-native-svg` is no longer imported by the navigator. The head **must stay filled** — a first pass made it a hollow ring (`borderWidth` only), which read as a broken glyph rather than a note; a solid head matches the filled accents already on the sibling icons (Home's window panes, More's dots, Bhakti's flame) and stays lighter than the old SVG.
 - Active tint: `saffron`; inactive: `ink-muted`. No active dot indicator — the tinted icon+label is the cue
 - Tap targets: full tab width × full bar height (well above 44×44 minimum)
 - The tab bar **stays visible inside readers**. The only exception is the immersive Vrat Katha reader (`IMMERSIVE_HOME_ROUTES = ['VratKathaReader']`), which hides the bar while focused
@@ -1240,7 +1242,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
    - Verse hits are capped at `VERSE_RESULT_CAP = 50`, with an italic "More results — type a more specific query" note when clipped.
 4. **Zero state**: dimmed `॥`, "कोई परिणाम नहीं / No matches found", and a hint to try a Devanagari word or section name.
 
-**Index coverage.** Sections (every active library entry), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, Valmiki Ramayan, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §8).
+**Index coverage.** Sections (every active library entry), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, Valmiki Ramayan, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §7).
 
 **Normalization** (`data/searchNormalize.ts`) — one pure fold applied to both index and query, so Devanagari and Latin queries meet in the middle: Unicode NFD with the combining nukta stripped (क़ ⇄ क), lowercase, IAST diacritics folded to ASCII (`kṛṣṇa` → `krsna`, so a plain-ASCII query matches the romanized corpus), punctuation dropped **including daṇḍa `।`/`॥`**, whitespace collapsed. Ranking is exact > prefix > substring per field (`MatchRank`), idempotent and unit-tested.
 
@@ -1256,7 +1258,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 2. **Three grouped inset lists** — each is an uppercase **group label** (`saffron-deep`, 13; Latin gets tracking + uppercase via the chrome font, Indic drops both) above one **list container** (`parchment-soft`, **`radii.lg`**, 1 px `divider`, `overflow:hidden`, **`elevation.subtle`**) whose rows are split by hairline `divider` top-borders. Standard row anatomy: `[38 px icon tile, radii.sm] [label 18]  …  [state 15 ink-muted] [chevron › 19 gold]`. The container radius was an ad-hoc 20 and the icon tile 11, both off the radius scale (§4), with a hand-rolled shadow; all three are tokens as of July 2026, padding 15×16, pressed → `saffron-tint` wash.
    - **साधना / Practice** — a compact **profile hero row** (tinted `cardActiveFrom → cardActiveTo` gradient, 52 px circular `saffron` ॐ badge, `साधक प्रोफ़ाइल` title, sub-line "**`N`** श्लोक · **`N`** श्रृंखला" = lifetime verses + streak in `saffron`; the old `rounds` count is dropped; a11y "Open Sadhak profile" → Profile), then **संग्रह** (♥ `saffron`, state = saved count; label matches the WishlistScreen title → Wishlist §24), **स्मरण** (ॐ `gold`, state = reminder time(s) or Off → Reminder Settings §38), **जप अलार्म** (⏰ `saffron-deep`, state = active count → §35).
    - **ऐप / App** — **भाषा** (अ `gold`, state = current language's native name; opens the **Language picker sheet**, not an inline grid), **पाठ का आकार** (Aa `saffron`, state = मानक/बड़ा; opens the **Reading-size picker sheet**, §43), **ऐप साझा करें**
-     Both settings rows are also feature-tour spotlight targets (`languageRow` / `readingSizeRow`, §47 steps 23–24): each `SettingsRow` is wrapped in a measurable `View` and registers a `scrollNodeIntoView` reveal against the More `ScrollView`, since the App group can sit below the fold. The tour ends on them, and the post-tour setup sheet then asks the user to set both. (↗ `saffron`; OS share sheet via `buildAppShareMessage(lang)`, `data/shareLinks.ts` — the localized `APP_SHARE_INVITE` + `SMART_LINK`).
+     Both settings rows are also feature-tour spotlight targets (`languageRow` / `readingSizeRow`, §47 steps 23–24): each `SettingsRow` is wrapped in a measurable `View` and registers a `scrollNodeIntoView` reveal against the More `ScrollView`, since the App group can sit below the fold. The tour ends on them, and the post-tour setup sheet then asks the user to set both. (↗ `saffron`; OS share sheet via `buildAppShareMessage(lang)`, `data/shareLinks.ts` — the localized `APP_SHARE_INVITE` + `SMART_LINK`). Last in the group: **Instagram पर फ़ॉलो करें / Follow on Instagram** (◉ `saffron-deep` at 19, state = the `@vedansh.app` handle, a11y label constant "Follow on Instagram") — `Linking.openURL(INSTAGRAM_URL)` from the same `data/shareLinks.ts`, falling back to an `Alert` naming the handle if the OS can't open it. The link is the canonical `https://www.instagram.com/…` form, **not** `instagram://`: a custom scheme would need `LSApplicationQueriesSchemes` / `android.queries` in `app.json` (a store rebuild), whereas the https URL is claimed by the installed Instagram app via universal/app links and degrades to the browser otherwise — so the row ships over OTA.
    - **जानकारी / Info** — **परिचय व अस्वीकरण** (ⓘ `ink-muted`; opens the pageSheet disclaimer modal with the bilingual disclaimer + "Report an Error" CTA), **त्रुटि सूचित करें** (⚑ `ink-muted`; `mailto` via `buildDiscrepancyMailto`), and **ऐप भ्रमण फिर देखें / Show App Tour** (↻ `gold`; a11y label constant "Show App Tour") which calls `resetTour()` to replay the first-launch feature tour on demand (§47).
 
 **Picker sheets** — `LanguagePickerSheet.tsx` and `ReadingSizePickerSheet.tsx` are bottom-sheet `Modal`s (slide up, `modalBackdrop`, grabber, `parchmentHighlight`) following the `AddToRoutineSheet` pattern. Language lists the four `LANGUAGES` as radios each in its own script; picking one applies it (`useGitaLanguage`, §16) and closes. Reading-size shows the M/L pills + the live "श्री राम जय राम" sample (§43) + a Done button; picking a size keeps the sheet open so the preview updates. The first-run setup sheet (§47) is the same two choices in one bilingual sheet, shown once after the walkthrough.
@@ -1402,7 +1404,7 @@ type LibraryEntry = {
 };
 ```
 
-`verseCount` and counted subtitles are computed from the module's own exported totals (`sundarkandTotal`, `shivChalisaCounts.totalVerses`, …) so the card can never drift from the data (RULEBOOK §10.10). Japam entries are spread into the array from `japamMantras`, so a new mantra automatically becomes a catalog row.
+`verseCount` and counted subtitles are computed from the module's own exported totals (`sundarkandTotal`, `shivChalisaCounts.totalVerses`, …) so the card can never drift from the data (RULEBOOK §11.10). Japam entries are spread into the array from `japamMantras`, so a new mantra automatically becomes a catalog row.
 
 ### Category set (`mobile/src/data/categories.ts`)
 
@@ -1417,7 +1419,7 @@ Twenty-one deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · k
 - **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati chalisa dirs — nine total), **aartis** (`aarti/index.ts` `aartiCollection`, 8 aartis, `refrain`/`stanza` verse types; the Aarti *category* also lists a 9th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (8 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
 - **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas — a curated śloka selection, §53), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants.
 - **Japam** (`japam/japam.json`) — mantras with round targets; routes to the counter, not a verse pager.
-- **Theerth** (`theerth/temples.ts`) — the prose-per-temple shape of §26–27 / RULEBOOK §11; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (§44).
+- **Theerth** (`theerth/temples.ts`) — the prose-per-temple shape of §26–27 / RULEBOOK §12; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (§44).
 
 **RULEBOOK §1 is the intake contract** for every row above: mandatory `id`/names/`sub`/`thumb`/`category`/`deities`, per-verse `lines` + `meaningHi` + `meaningEn` (both languages — the toggle must work on every page), optional commentary, background sketches per §6. Gujarati/Kannada are never authored — derived at runtime (§3.1).
 
@@ -1820,7 +1822,7 @@ picker).
 
 **Purpose.** A Granth-category reader for Maharishi Vālmīki's Sanskrit Rāmāyaṇa. The full epic
 is ~24,000 ślokas across 7 kāṇḍas; this section ships a **curated selection of widely published
-ślokas per kāṇḍa** (28 today, all 7 kāṇḍas) rather than the complete text, because RULEBOOK §10.5 forbids
+ślokas per kāṇḍa** (28 today, all 7 kāṇḍas) rather than the complete text, because RULEBOOK §11.5 forbids
 presenting a partial text as complete. The listing subtitle states the scope in both languages —
 `7 काण्ड · 28 चयनित श्लोक` / `7 kandas · 28 selected shlokas` — the same "चयनित" convention Durga
 Stotram (§18 catalog) already uses.
@@ -1832,7 +1834,7 @@ this section is the Vālmīki text. Likewise chapter 5 is सुन्दरक�
 Sundarakāṇḍa), distinct from the separate Tulsidas `sundarkand` section.
 
 **Chapter depth is uneven by design.** All 7 kāṇḍas ship, but the śloka count per kāṇḍa reflects
-how much text cleared the two-independent-source bar of RULEBOOK §10.1 — Uttarakāṇḍa is the
+how much text cleared the two-independent-source bar of RULEBOOK §11.1 — Uttarakāṇḍa is the
 thinnest at 1. Topping a kāṇḍa up later is a data-only change (add verses, bump `verseCount` in
 the chapter + manifest, and the `chapteredTotals.test.ts` / `searchIndex.test.ts` expectations).
 Never pad a kāṇḍa with unverified text to even the counts out.
@@ -1863,7 +1865,7 @@ Yuddhakāṇḍa family), which is also the reading IIT Kanpur's edition uses. T
 in every chapter's `source.canonicalEdition` / `canonicalEditionUrls`, with
 `canonicalEditionStatus` flagging that the page-level check against it is **outstanding** — both
 hosts (archive.org, ebooks.iskcondesiretree.com) are 403 through the authoring session's egress
-proxy, so the ślokas were verified against reachable secondary sources instead. RULEBOOK §10.2
+proxy, so the ślokas were verified against reachable secondary sources instead. RULEBOOK §11.2
 governs that pending-citation shape; `contentCorrectness.test.ts` keeps the block from being
 quietly deleted.
 
@@ -1884,7 +1886,7 @@ Tulsidas.
 
 **Not a duplicate of Sundarkand.** Chapter 5 here is Vālmīki's **Sanskrit** Sundarakāṇḍa; the
 separate `sundarkand` Granth section is Tulsidas's **Awadhi** Sundarkand. No line is shared
-between the two (RULEBOOK §10.11).
+between the two (RULEBOOK §11.11).
 
 **Files.** `mobile/src/data/valmiki-ramayan/` (`chapter-01..07.json`, `chapters-manifest.json`,
 `index.ts`), `mobile/src/components/ValmikiRamayanVersePage.tsx` (explicit re-export of

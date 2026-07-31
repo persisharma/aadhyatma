@@ -114,7 +114,7 @@ const DEVANAGARI = /[ऀ-ॿ]/;
         throw new Error(`valmiki-ramayan: ${v.id} stanza must equal its kāṇḍa number`);
       }
       if (v.lines.length < 1) throw new Error(`valmiki-ramayan: ${v.id} has no lines`);
-      // The reader renders `linesEn` index-paired with `lines` (RULEBOOK §10.12).
+      // The reader renders `linesEn` index-paired with `lines` (RULEBOOK §11.12).
       if (v.lines.length !== v.linesEn.length) {
         throw new Error(
           `valmiki-ramayan: ${v.id} has ${v.lines.length} lines but ${v.linesEn.length} linesEn`
