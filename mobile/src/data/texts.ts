@@ -193,6 +193,7 @@ export const library: readonly LibraryEntry[] = [
     category: 'granth',
     deities: ['rama', 'hanuman'],
     verseCount: valmikiRamayanTotal,
+    addedInVersion: '1.4.5',
   },
   {
     id: 'durga-stotram',

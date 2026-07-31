@@ -46,7 +46,7 @@ component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()
 
 **Who has it:** Gita (18), Sundarkand (16), Shiva Strotam (4), Durga (3), Ganesh (3),
 Saraswati (3), Vishnu Sahasranama (4) — the last four added 2026-06-09 — and, as of 2026-07-31,
-Valmiki Ramayan (6 kāṇḍas). Single-chapter texts (Hanuman Ashtak, Krishna Stotram, Ram Stuti,
+Valmiki Ramayan (7 kāṇḍas). Single-chapter texts (Hanuman Ashtak, Krishna Stotram, Ram Stuti,
 Ramcharitmanas — 1 chapter file each today) render verses only; they need no transition because
 there is no next subsection yet.
 

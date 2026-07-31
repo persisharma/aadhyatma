@@ -17,6 +17,7 @@ import {
 } from '../discoveryMeta';
 import { deityEssays } from '../deityEssays';
 import { getRuleById } from '../../panchang/vratCatalog';
+import { isChapteredSource, chaptersForSource } from '../routine/chapters';
 
 const DATA = join(__dirname, '..');
 const TRANSLATIONS = join(DATA, '..', '..', '.translations');
@@ -534,6 +535,25 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
       chapter.source?.canonicalEditionStatus?.trim(),
       `${file}: source.canonicalEditionStatus must say whether the page-level check is done`
     );
+    // §10.2: baseText / referenceUrls name only sources actually read. The Gita
+    // Press edition (pending — see canonicalEdition) and the IIT Kanpur host
+    // (blocked at authoring, per the wiki log) must NOT appear here as though
+    // consulted; they belong in the canonicalEdition block above (review finding #3).
+    assert.doesNotMatch(
+      chapter.source?.baseText || '',
+      /Gita Press|IIT Kanpur|iitk/i,
+      `${file}: baseText must not cite the pending/blocked edition as a read source (RULEBOOK §10.2)`
+    );
+    const refUrls = chapter.source?.referenceUrls ?? [];
+    assert.ok(
+      !refUrls.some((u) => /iitk/i.test(u)),
+      `${file}: referenceUrls must not include the blocked IIT Kanpur host (RULEBOOK §10.2)`
+    );
+    const canonUrls = chapter.source?.canonicalEditionUrls ?? [];
+    assert.ok(
+      !refUrls.some((u) => canonUrls.includes(u)),
+      `${file}: referenceUrls must not repeat a canonicalEdition (pending) URL (RULEBOOK §10.2)`
+    );
     for (const verse of chapter.verses) {
       assert.match(
         verse.reference,
@@ -551,6 +571,26 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
   assert.equal(entry.verseCount, shipped, 'library verseCount must equal shipped verses');
   assert.match(entry.sub, new RegExp(`${shipped}`), 'Hindi sub count must match shipped verses');
   assert.match(entry.subEn || '', new RegExp(`${shipped}`), 'English sub count must match');
+
+  // A newly shipped section must be version-tagged, or NewContentContext seeds it
+  // as already-known for upgraders and the NEW badge never fires (review finding #2).
+  assert.ok(
+    !!entry.addedInVersion && /^\d+\.\d+/.test(entry.addedInVersion),
+    'valmiki-ramayan must set addedInVersion so it debuts as NEW for upgraders'
+  );
+
+  // The in-reader AddToRoutine button passes the current kāṇḍa; the routine sheet
+  // only shows its Whole/kāṇḍa selector when the source is registered as chaptered
+  // (AddToRoutineSheet gates on chaptersForSource(...).length) — review finding #1.
+  assert.ok(
+    isChapteredSource('valmiki-ramayan'),
+    'valmiki-ramayan must be registered in routine/chapters.ts (routine kāṇḍa selector)'
+  );
+  assert.equal(
+    chaptersForSource('valmiki-ramayan').length,
+    manifest.length,
+    'routine chapter registry must expose all 7 valmiki-ramayan kāṇḍas'
+  );
 }
 
 // Every library entry must carry an English count-detail string that is free of

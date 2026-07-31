@@ -76,7 +76,10 @@ describe('NewContentContext', () => {
     expect(captured.hasNewInCategory('stotram')).toBe(true);
     expect(captured.hasNewInCategory('sanskar')).toBe(true);
     expect(captured.isNew('prabhati-shloka')).toBe(true);
-    expect(captured.hasNewInCategory('granth')).toBe(false);
+    // valmiki-ramayan (granth) ships tagged addedInVersion 1.4.5, so it debuts as
+    // NEW for upgraders — review finding #2 (previously untagged → silently seeded known).
+    expect(captured.isNew('valmiki-ramayan')).toBe(true);
+    expect(captured.hasNewInCategory('granth')).toBe(true);
     expect(captured.hasNewInCategory('deity')).toBe(false);
   });
 
