@@ -11,7 +11,7 @@ import { getHanumanAshtakChapter, hanumanAshtakChaptersManifest } from './hanuma
 import { getRamStutiChapter, ramStutiChaptersManifest } from './ram-stuti';
 import { getBajrangBaanChapter, bajrangBaanChaptersManifest } from './bajrang-baan';
 import { getRamcharitmanasChapter, ramcharitmanasChaptersManifest } from './ramcharitmanas';
-import { getValmikiRamayanChapter, valmikiRamayanChaptersManifest } from './valmiki-ramayan';
+import { valmikiRamayanDailySelection } from './valmiki-ramayan';
 import { japamMantras } from './japam';
 import { sanskarIds, getSanskar } from './sanskar';
 
@@ -93,7 +93,6 @@ const PADA_SOURCES: readonly PadaSource[] = [
   { id: 'sundarkand', manifest: sundarkandChaptersManifest, getChapter: getSundarkandChapter },
   { id: 'bajrang-baan', manifest: bajrangBaanChaptersManifest, getChapter: getBajrangBaanChapter },
   { id: 'ramcharitmanas', manifest: ramcharitmanasChaptersManifest, getChapter: getRamcharitmanasChapter },
-  { id: 'valmiki-ramayan', manifest: valmikiRamayanChaptersManifest, getChapter: getValmikiRamayanChapter },
 ];
 
 function buildPool(): UniformVerse[] {
@@ -169,6 +168,27 @@ function buildPool(): UniformVerse[] {
         });
       });
     }
+  }
+
+  // The complete Valmiki corpus is 23k verses. Keep Daily Bhakti on the
+  // established lightweight anchor set so opening the app does not load all
+  // seven multi-megabyte kāṇḍas.
+  if (isActive('valmiki-ramayan')) {
+    valmikiRamayanDailySelection.forEach((v) => {
+      pool.push({
+        sourceId: 'valmiki-ramayan',
+        sourceNameHi: nameHi('valmiki-ramayan'),
+        sourceNameEn: nameEn('valmiki-ramayan'),
+        chapter: v.kanda,
+        verseIndex: v.numInSection - 1,
+        textHi: v.lines,
+        textEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+      });
+    });
   }
 
   // Japam — one mantra per entry, no chapter.

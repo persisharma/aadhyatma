@@ -85,8 +85,7 @@ import {
   type RamcharitmanasVerse,
 } from './ramcharitmanas';
 import {
-  getValmikiRamayanChapter,
-  valmikiRamayanChaptersManifest,
+  valmikiRamayanDailySelection,
   type ValmikiRamayanVerse,
 } from './valmiki-ramayan';
 import { getSanskar, sanskarIds } from './sanskar';
@@ -656,26 +655,26 @@ function pushChapteredRamcharitmanas(
 }
 
 function pushChapteredValmikiRamayan(out: SearchVerseEntry[], entry: LibraryEntry) {
-  for (const ch of valmikiRamayanChaptersManifest) {
-    const chapter = getValmikiRamayanChapter(ch.chapter);
-    chapter.verses.forEach((v: ValmikiRamayanVerse, idx) => {
-      out.push(
-        makeVerseEntry({
-          sourceId: entry.id,
-          sectionNameHi: entry.nameHi,
-          sectionNameEn: entry.nameEn,
-          chapter: ch.chapter,
-          verseIndex: idx,
-          labelHi: v.labelHi,
-          labelEn: v.labelEn,
-          linesHi: v.lines,
-          linesEn: v.linesEn,
-          meaningHi: v.meaningHi,
-          meaningEn: v.meaningEn,
-        })
-      );
-    });
-  }
+  // Index the established anchor selection, not all 23k verses. The global
+  // index duplicates normalized text in memory; indexing the complete epic
+  // would make opening Search load every kāṇḍa and materially regress startup.
+  valmikiRamayanDailySelection.forEach((v: ValmikiRamayanVerse) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        chapter: v.kanda,
+        verseIndex: v.numInSection - 1,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
 }
 
 function pushAarti(out: SearchVerseEntry[], entry: LibraryEntry) {

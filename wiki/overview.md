@@ -2,7 +2,7 @@
 title: Overview
 type: overview
 sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
-last_verified_date: 2026-07-25
+last_verified_date: 2026-08-01
 confidence: medium
 status: current
 ---
@@ -25,7 +25,7 @@ backend.
 - **Audio:** `expo-audio` (japam playback). **Notifications:** `expo-notifications`. **Calendar math:** `astronomy-engine` ~2.1.19.
 - **Fonts:** Noto Serif Devanagari (Devanagari), Cormorant Garamond (Latin), Noto Serif Gujarati + Noto Serif Kannada (the gu/kn reading languages).
 - **Reading languages:** `hi · en · gu · kn` (one shared `useGitaLanguage()` pref). gu/kn carry no authored content — derived at runtime by transliterating the Devanagari. See [[languages]].
-- **App version:** 1.4.3 (`mobile/app.json`).
+- **App version:** 1.4.5, iOS build 45 (`mobile/app.json`).
 - **Entry Point:** `mobile/index.ts` → `registerRootComponent(App)` → `mobile/App.tsx`.
 
 ## Request Shape

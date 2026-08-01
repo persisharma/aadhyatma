@@ -60,7 +60,7 @@ const cases = [
   },
   {
     id: 'valmiki-ramayan',
-    expectedTotal: 28,
+    expectedTotal: 23289,
     load: async () => {
       const mod = await import('./valmiki-ramayan');
       return {

@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, RULEBOOK.md]
-last_verified_date: 2026-07-31
+sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
+last_verified_date: 2026-08-01
 confidence: high
 status: current
 ---
@@ -14,7 +14,11 @@ Each devotional text is read through its own `<Pascal>ReaderScreen.tsx` — a ho
 bookmark/share buttons, and pager dots. The **top bar is shared** — `ReaderHeader.tsx`, since
 July 2026 — but the rest of the shell is not: every reader is still a near-identical copy of the
 same paging pattern, so that behavior is kept consistent by convention + tests, not by a base
-component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()`.
+component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()`. Valmiki
+Ramayan is the large-corpus case: its 23,289 verified verse records stay split across seven
+kāṇḍa JSON modules, and the accessor requires/caches only the kāṇḍa the reader opens. The Home,
+Daily Bhakti, and search paths use the 28-row `daily-selection.json` projection so they do not
+parse the complete epic during startup; the platform bundle still carries every kāṇḍa offline.
 
 ## Details
 

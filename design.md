@@ -1417,7 +1417,7 @@ Twenty-one deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · k
 ### Data-shape families (one directory per module under `mobile/src/data/`)
 
 - **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati chalisa dirs — nine total), **aartis** (`aarti/index.ts` `aartiCollection`, 8 aartis, `refrain`/`stanza` verse types; the Aarti *category* also lists a 9th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (8 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
-- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas — a curated śloka selection, §53), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants.
+- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas / 648 sargas / 23,289 verified verse records, §53), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants; the large Valmiki payload is the exception that validates lazily per loaded kāṇḍa.
 - **Japam** (`japam/japam.json`) — mantras with round targets; routes to the counter, not a verse pager.
 - **Theerth** (`theerth/temples.ts`) — the prose-per-temple shape of §26–27 / RULEBOOK §12; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (§44).
 
@@ -1818,14 +1818,14 @@ than folded into the July 2026 token pass — it is the one place the rule above
 picker).
 
 
-## 53. Section: Vālmīki Rāmāyaṇa (वाल्मीकि रामायण) — curated śloka selection
+## 53. Section: Vālmīki Rāmāyaṇa (वाल्मीकि रामायण) — complete digital corpus
 
-**Purpose.** A Granth-category reader for Maharishi Vālmīki's Sanskrit Rāmāyaṇa. The full epic
-is ~24,000 ślokas across 7 kāṇḍas; this section ships a **curated selection of widely published
-ślokas per kāṇḍa** (28 today, all 7 kāṇḍas) rather than the complete text, because RULEBOOK §11.5 forbids
-presenting a partial text as complete. The listing subtitle states the scope in both languages —
-`7 काण्ड · 28 चयनित श्लोक` / `7 kandas · 28 selected shlokas` — the same "चयनित" convention Durga
-Stotram (§18 catalog) already uses.
+**Purpose.** A Granth-category reader for Maharishi Vālmīki's Sanskrit Rāmāyaṇa. It ships the
+complete 648-sarga Southern-recension digital corpus used by the National Sanskrit University /
+IIT Kanpur edition: **23,289 verified verse records** across all 7 kāṇḍas. The traditional
+"24,000 ślokas" is a conventional total; recension and verse-count conventions differ, so the
+catalog says exactly what is bundled: `7 काण्ड · 648 सर्ग · 23289 श्लोक` / `7 kandas · 648 sargas
+· 23289 shlokas`.
 
 **Naming follows Vālmīki, not Tulsidas.** The sixth kāṇḍa is **युद्धकाण्ड / Yuddha Kanda** —
 Vālmīki's own name for it. लंकाकाण्ड is Tulsidas's name for the same book in the Rāmcharitmānas;
@@ -1833,47 +1833,44 @@ the alias is recorded in `chapter-06.json`'s `source.notes` but is not the displ
 this section is the Vālmīki text. Likewise chapter 5 is सुन्दरकाण्ड (Vālmīki's Sanskrit
 Sundarakāṇḍa), distinct from the separate Tulsidas `sundarkand` section.
 
-**Chapter depth is uneven by design.** All 7 kāṇḍas ship, but the śloka count per kāṇḍa reflects
-how much text cleared the two-independent-source bar of RULEBOOK §11.1 — Uttarakāṇḍa is the
-thinnest at 1. Topping a kāṇḍa up later is a data-only change (add verses, bump `verseCount` in
-the chapter + manifest, and the `chapteredTotals.test.ts` / `searchIndex.test.ts` expectations).
-Never pad a kāṇḍa with unverified text to even the counts out.
+**Corpus repair and provenance.** The pinned structured export contains merged verse rows. The
+reproducible `scripts/build-valmiki-ramayan.py` builder splits only on printed canonical citation
+markers, replaces 18 malformed/duplicate rows from the independent verse-by-verse mirror,
+corrects 28 corrupt or source-contaminated rows against a pinned Dravida-patha transcription and the Gita Press
+scan, and drops two Uttarakāṇḍa export artefacts that repeat the preceding verse and citation. Hindi comes from
+Gita Press prose published by RamCharit.in; combined prose ranges are repeated intact on their
+constituent verse pages. The one truncated Hindi page (2.102 after verse 9) is filled from
+independent Dharmasutra verse meanings. Source commits, hash, dates, and caveats live in every
+chapter's `source` object.
 
 **Structure.** Standard chaptered-Granth pipeline (§15 chapters index → §9 reader), one chapter
 per kāṇḍa. The chapters index passes `chapterLabelHi/En="काण्ड"/"Kanda"` and
 `unitLabelHi/En="श्लोक"/"shlokas"` (plus `unitLabelEnSingular="shloka"`) to `GitaChapterCard` — the
-card's defaults are the Gita's अध्याय / verses, which would mislabel a kāṇḍa. `GitaChapterCard`
-now also switches to the singular English unit when a subsection holds exactly one verse, so
-Uttarakāṇḍa reads "1 shloka", not "1 shlokas" (Devanagari needs no counterpart — श्लोक / पद are
-number-agnostic):
+card's defaults are the Gita's अध्याय / verses, which would mislabel a kāṇḍa:
 
-| # | `titleHi` | `titleEn` | Ślokas |
-|---|---|---|---|
-| 1 | बालकाण्ड | Bala Kanda | 7 |
-| 2 | अयोध्याकाण्ड | Ayodhya Kanda | 4 |
-| 3 | अरण्यकाण्ड | Aranya Kanda | 3 |
-| 4 | किष्किन्धाकाण्ड | Kishkindha Kanda | 3 |
-| 5 | सुन्दरकाण्ड | Sundara Kanda | 4 |
-| 6 | युद्धकाण्ड | Yuddha Kanda | 6 |
-| 7 | उत्तरकाण्ड | Uttara Kanda | 1 |
+| # | `titleHi` | `titleEn` | Sargas | Verse records |
+|---|---|---|---:|---:|
+| 1 | बालकाण्ड | Bala Kanda | 77 | 2,217 |
+| 2 | अयोध्याकाण्ड | Ayodhya Kanda | 119 | 4,262 |
+| 3 | अरण्यकाण्ड | Aranya Kanda | 75 | 2,439 |
+| 4 | किष्किन्धाकाण्ड | Kishkindha Kanda | 67 | 2,445 |
+| 5 | सुन्दरकाण्ड | Sundara Kanda | 68 | 2,772 |
+| 6 | युद्धकाण्ड | Yuddha Kanda | 131 | 5,693 |
+| 7 | उत्तरकाण्ड | Uttara Kanda | 111 | 3,461 |
 
 Source of truth for the table: `mobile/src/data/valmiki-ramayan/chapters-manifest.json` (the
-loader's module-load invariants fail the build if the mirror above drifts from the payload).
+loader's per-kāṇḍa invariants fail when a loaded payload drifts from the manifest).
 
-**Numbering authority.** Citations follow the **Gita Press** Śrīmad Vālmīki Rāmāyaṇa (the 128-sarga
-Yuddhakāṇḍa family), which is also the reading IIT Kanpur's edition uses. That edition is recorded
-in every chapter's `source.canonicalEdition` / `canonicalEditionUrls`, with
-`canonicalEditionStatus` flagging that the page-level check against it is **outstanding** — both
-hosts (archive.org, ebooks.iskcondesiretree.com) are 403 through the authoring session's egress
-proxy, so the ślokas were verified against reachable secondary sources instead. RULEBOOK §11.2
-governs that pending-citation shape; `contentCorrectness.test.ts` keeps the block from being
-quietly deleted.
+**Numbering authority.** Citations follow the declared National Sanskrit University / IIT Kanpur
+Southern-recension digital corpus. The complete searchable Gita Press Sanskrit-English scan was
+opened as an independent structural and verse-by-verse reference; its dated verification state is
+recorded in every chapter's `source.canonicalEditionStatus` rather than implying identical sarga
+numbering between editions.
 
 **Verse pill.** `श्लोक · <kāṇḍa>.<sarga>.<śloka>` / `Shloka · <kāṇḍa>.<sarga>.<śloka>` —
 the Gita's `श्लोक · १.१` grammar (§3 pill vocabulary) extended to the epic's three-part citation,
-with Devanagari numerals in `labelHi`. A verse whose in-sarga index differs between editions
-cites the sarga only (`श्लोक · ३.५०`) rather than guessing a number; the reason is recorded in
-that chapter's `source.notes`.
+with Devanagari numerals in `labelHi`. The decimal supplemental sarga `3.56.1` therefore renders a
+four-part citation such as `३.५६.१.१`; no reference is silently renumbered to another edition.
 
 **Background.** Per-kāṇḍa, deterministic per verse: `ValmikiRamayanVerse.stanza` carries the
 kāṇḍa number, and `getReaderBackground('valmiki-ramayan', verse)` maps Kiṣkindhā → the
@@ -1884,12 +1881,20 @@ the Rāma darbār plate (§6, RULEBOOK §3 "deterministic per verse id").
 `ch`, epenthetic `ṛi`) — the same style as the Gita corpus, never the Awadhi ASCII used for
 Tulsidas.
 
+**Loading and cross-feature budget.** `texts.ts` reads the lightweight manifest total without
+loading scripture. `getValmikiRamayanChapter()` requires and validates only the selected kāṇḍa,
+then caches it. Daily Bhakti and global search deliberately retain the 28 established anchor
+verses from `daily-selection.json`; indexing all 23,289 long-form verses would duplicate their
+normalized text in memory and put every multi-megabyte kāṇḍa on a non-reader path. The complete
+corpus remains continuously readable and directly addressable in the reader.
+
 **Not a duplicate of Sundarkand.** Chapter 5 here is Vālmīki's **Sanskrit** Sundarakāṇḍa; the
 separate `sundarkand` Granth section is Tulsidas's **Awadhi** Sundarkand. No line is shared
 between the two (RULEBOOK §11.11).
 
 **Files.** `mobile/src/data/valmiki-ramayan/` (`chapter-01..07.json`, `chapters-manifest.json`,
-`index.ts`), `mobile/src/components/ValmikiRamayanVersePage.tsx` (explicit re-export of
+`daily-selection.json`, `index.ts`) plus `scripts/build-valmiki-ramayan.py`,
+`mobile/src/components/ValmikiRamayanVersePage.tsx` (explicit re-export of
 `SundarkandVersePage` — the `lines`/`linesEn` archetype), `mobile/src/screens/
 ValmikiRamayanChaptersScreen.tsx`, `mobile/src/screens/ValmikiRamayanReaderScreen.tsx`.
 Registered in `texts.ts`, `entryRoutes.ts` (chapters + reader + chapter count),

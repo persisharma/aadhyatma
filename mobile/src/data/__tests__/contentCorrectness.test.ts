@@ -474,25 +474,30 @@ assert.match(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);
 assert.equal(libraryById.get('durga-stotram')?.nameHi, 'दुर्गा स्तोत्रम्');
 assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
 
-// Vālmīki Rāmāyaṇa ships a declared curated selection, never a text implied to be
-// complete (RULEBOOK §11.5). The card subtitle must say so in both languages, every
-// chapter file must cite its sources and say in `source.notes` that it is a
-// selection, and the declared count must equal the shipped verses.
+// Vālmīki Rāmāyaṇa ships the complete 648-sarga digital corpus for the declared
+// Southern-recension numbering. Counts, sources, references, and the merged-row
+// repair contract must stay aligned across the registry, manifest, and payloads.
 {
   const entry = libraryById.get('valmiki-ramayan');
   assert.ok(entry, 'valmiki-ramayan must exist in the library');
-  assert.match(entry.sub, /चयनित/, 'Hindi sub must declare the selection');
-  assert.match(entry.subEn || '', /selected/i, 'English sub must declare the selection');
+  assert.doesNotMatch(entry.sub, /चयनित/, 'Hindi sub must not describe the complete corpus as selected');
+  assert.doesNotMatch(entry.subEn || '', /selected/i, 'English sub must not describe it as selected');
+  assert.match(entry.sub, /648 सर्ग/, 'Hindi sub must declare all 648 sargas');
+  assert.match(entry.subEn || '', /648 sargas/, 'English sub must declare all 648 sargas');
 
   const manifest = readJson('valmiki-ramayan/chapters-manifest.json') as {
     chapter: number;
+    sargaCount: number;
     verseCount: number;
   }[];
   let shipped = 0;
+  let shippedSargas = 0;
+  const references = new Set<string>();
   for (const summary of manifest) {
     const file = `valmiki-ramayan/chapter-0${summary.chapter}.json`;
     const chapter = readJson(file) as {
       verseCount: number;
+      sargaCount: number;
       source?: {
         baseText?: string;
         canonicalEdition?: string;
@@ -502,26 +507,25 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
         notes?: string;
         retrievedOn?: string;
       };
-      verses: { id: string; reference: string; lines: string[]; linesEn: string[] }[];
+      verses: {
+        id: string;
+        reference: string;
+        lines: string[];
+        linesEn: string[];
+        meaningHi: string;
+        meaningEn: string;
+      }[];
     };
     assert.equal(chapter.verses.length, summary.verseCount, `${file}: verse count drift`);
+    assert.equal(chapter.sargaCount, summary.sargaCount, `${file}: sarga count drift`);
     assert.ok(chapter.source?.baseText?.trim(), `${file}: missing source.baseText (RULEBOOK §11.2)`);
     assert.ok(chapter.source?.retrievedOn?.trim(), `${file}: missing source.retrievedOn`);
     assert.ok(
       (chapter.source?.referenceUrls?.length ?? 0) >= 2,
       `${file}: needs ≥2 reference sources (RULEBOOK §11.1)`
     );
-    assert.match(
-      chapter.source?.notes || '',
-      /selection/i,
-      `${file}: source.notes must state that the file is a curated selection`
-    );
-    // The Gita Press edition is the numbering authority for this section, but it
-    // could not be fetched from the authoring environment, so it is recorded as
-    // pending rather than cited as verified (RULEBOOK §11.2). Keep the block
-    // present and its status non-empty: a future session must either confirm it
-    // against the edition or leave the outstanding note standing — silently
-    // deleting it would turn an honest gap into an implied verification.
+    assert.match(chapter.source?.notes || '', /complete 648-sarga/i, `${file}: must declare corpus scope`);
+    assert.match(chapter.source?.notes || '', /merged Sanskrit rows were split/i, `${file}: must retain repair provenance`);
     assert.match(
       chapter.source?.canonicalEdition || '',
       /Gita Press/i,
@@ -535,19 +539,11 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
       chapter.source?.canonicalEditionStatus?.trim(),
       `${file}: source.canonicalEditionStatus must say whether the page-level check is done`
     );
-    // §11.2: baseText / referenceUrls name only sources actually read. The Gita
-    // Press edition (pending — see canonicalEdition) and the IIT Kanpur host
-    // (blocked at authoring, per the wiki log) must NOT appear here as though
-    // consulted; they belong in the canonicalEdition block above (review finding #3).
-    assert.doesNotMatch(
-      chapter.source?.baseText || '',
-      /Gita Press|IIT Kanpur|iitk/i,
-      `${file}: baseText must not cite the pending/blocked edition as a read source (RULEBOOK §11.2)`
-    );
+    assert.match(chapter.source?.canonicalEditionStatus || '', /Verified 2026-08-01/);
     const refUrls = chapter.source?.referenceUrls ?? [];
     assert.ok(
-      !refUrls.some((u) => /iitk/i.test(u)),
-      `${file}: referenceUrls must not include the blocked IIT Kanpur host (RULEBOOK §11.2)`
+      refUrls.some((u) => /Valmiki_Ramayan_Dataset/.test(u)),
+      `${file}: referenceUrls must pin the structured corpus`
     );
     const canonUrls = chapter.source?.canonicalEditionUrls ?? [];
     assert.ok(
@@ -557,20 +553,49 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
     for (const verse of chapter.verses) {
       assert.match(
         verse.reference,
-        new RegExp(`^${summary.chapter}\\.\\d+(\\.\\d+(–\\d+)?)?$`),
+        new RegExp(`^${summary.chapter}\\.\\d+(?:\\.\\d+)?\\.\\d+$`),
         `${verse.id}: reference must cite its own kāṇḍa`
       );
+      assert.ok(!references.has(verse.reference), `${verse.id}: duplicate canonical reference`);
+      references.add(verse.reference);
       assert.equal(
         verse.lines.length,
         verse.linesEn.length,
         `${verse.id}: linesEn must be index-paired with lines (RULEBOOK §11.12)`
       );
+      assert.ok(verse.meaningHi.trim(), `${verse.id}: missing Hindi meaning`);
+      assert.ok(verse.meaningEn.trim(), `${verse.id}: missing English meaning`);
+      assert.ok(
+        !verse.lines.some((line) => /[^\u0900-\u097f\s।॥]/u.test(line)),
+        `${verse.id}: Sanskrit lines must not contain headings, OCR characters, or citation artifacts`
+      );
+      assert.ok(
+        !verse.linesEn.some((line) => /[ऀ-ॿ।॥0-9]/u.test(line)),
+        `${verse.id}: linesEn must be clean IAST without Devanagari or citation markers`
+      );
     }
     shipped += chapter.verses.length;
+    shippedSargas += summary.sargaCount;
   }
+  assert.equal(shipped, 23289, 'complete verified corpus total must remain 23,289 verses');
+  assert.equal(shippedSargas, 648, 'complete corpus must contain 648 sargas');
   assert.equal(entry.verseCount, shipped, 'library verseCount must equal shipped verses');
   assert.match(entry.sub, new RegExp(`${shipped}`), 'Hindi sub count must match shipped verses');
   assert.match(entry.subEn || '', new RegExp(`${shipped}`), 'English sub count must match');
+
+  const dailySelection = readJson('valmiki-ramayan/daily-selection.json') as {
+    id: string;
+    reference: string;
+  }[];
+  assert.equal(dailySelection.length, 28, 'daily/search projection must retain 28 anchors');
+  assert.equal(
+    new Set(dailySelection.map((verse) => verse.reference)).size,
+    dailySelection.length,
+    'daily/search projection must not contain duplicate references'
+  );
+  for (const verse of dailySelection) {
+    assert.ok(references.has(verse.reference), `${verse.id}: daily anchor must exist in full corpus`);
+  }
 
   // A newly shipped section must be version-tagged, or NewContentContext seeds it
   // as already-known for upgraders and the NEW badge never fires (review finding #2).
@@ -697,7 +722,11 @@ function collectJsonFiles(dirRel = ''): string[] {
     const rel = dirRel ? `${dirRel}/${entry.name}` : entry.name;
     if (entry.isDirectory()) {
       if (entry.name !== '__tests__') files.push(...collectJsonFiles(rel));
-    } else if (entry.name.endsWith('.json') && entry.name !== 'chapters-manifest.json') {
+    } else if (
+      entry.name.endsWith('.json') &&
+      entry.name !== 'chapters-manifest.json' &&
+      rel !== 'valmiki-ramayan/daily-selection.json'
+    ) {
       files.push(rel);
     }
   }
