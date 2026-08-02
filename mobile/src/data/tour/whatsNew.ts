@@ -26,13 +26,26 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.4.5';
+export const APP_TOUR_VERSION = '1.4.6';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.4.6': {
+    version: '1.4.6',
+    items: [
+      {
+        titleHi: 'नए भजन एवं मंत्र',
+        titleEn: 'New bhajans & mantras',
+        bodyHi:
+          'भजन लाइब्रेरी में पाँच नए भजन जुड़े — गोविन्द बोलो, ॐ गं गणपतये नमः, नारायण हरि हरि, जय नंदलाल की, और कृष्णाय वासुदेवाय।',
+        bodyEn:
+          'Five new bhajans join the audio library — Govind Bolo, Om Gam Ganapataye Namah, Narayan Hari Hari, Jai Nandlal Ki, and Krishnaya Vasudevaya.',
+      },
+    ],
+  },
   '1.4.5': {
     version: '1.4.5',
     items: [
