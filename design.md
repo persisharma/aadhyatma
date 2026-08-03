@@ -1258,7 +1258,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 2. **Three grouped inset lists** — each is an uppercase **group label** (`saffron-deep`, 13; Latin gets tracking + uppercase via the chrome font, Indic drops both) above one **list container** (`parchment-soft`, **`radii.lg`**, 1 px `divider`, `overflow:hidden`, **`elevation.subtle`**) whose rows are split by hairline `divider` top-borders. Standard row anatomy: `[38 px icon tile, radii.sm] [label 18]  …  [state 15 ink-muted] [chevron › 19 gold]`. The container radius was an ad-hoc 20 and the icon tile 11, both off the radius scale (§4), with a hand-rolled shadow; all three are tokens as of July 2026, padding 15×16, pressed → `saffron-tint` wash.
    - **साधना / Practice** — a compact **profile hero row** (tinted `cardActiveFrom → cardActiveTo` gradient, 52 px circular `saffron` ॐ badge, `साधक प्रोफ़ाइल` title, sub-line "**`N`** श्लोक · **`N`** श्रृंखला" = lifetime verses + streak in `saffron`; the old `rounds` count is dropped; a11y "Open Sadhak profile" → Profile), then **संग्रह** (♥ `saffron`, state = saved count; label matches the WishlistScreen title → Wishlist §24), **स्मरण** (ॐ `gold`, state = reminder time(s) or Off → Reminder Settings §38), **जप अलार्म** (⏰ `saffron-deep`, state = active count → §35).
    - **ऐप / App** — **भाषा** (अ `gold`, state = current language's native name; opens the **Language picker sheet**, not an inline grid), **पाठ का आकार** (Aa `saffron`, state = मानक/बड़ा; opens the **Reading-size picker sheet**, §43), **ऐप साझा करें**
-     Both settings rows are also feature-tour spotlight targets (`languageRow` / `readingSizeRow`, §47 steps 23–24): each `SettingsRow` is wrapped in a measurable `View` and registers a `scrollNodeIntoView` reveal against the More `ScrollView`, since the App group can sit below the fold. The tour ends on them, and the post-tour setup sheet then asks the user to set both. (↗ `saffron`; OS share sheet via `buildAppShareMessage(lang)`, `data/shareLinks.ts` — the localized `APP_SHARE_INVITE` + `SMART_LINK`). Last in the group: **Instagram पर फ़ॉलो करें / Follow on Instagram** (◉ `saffron-deep` at 19, state = the `@vedansh.app` handle, a11y label constant "Follow on Instagram") — `Linking.openURL(INSTAGRAM_URL)` from the same `data/shareLinks.ts`, falling back to an `Alert` naming the handle if the OS can't open it. The link is the canonical `https://www.instagram.com/…` form, **not** `instagram://`: a custom scheme would need `LSApplicationQueriesSchemes` / `android.queries` in `app.json` (a store rebuild), whereas the https URL is claimed by the installed Instagram app via universal/app links and degrades to the browser otherwise — so the row ships over OTA.
+     Both settings rows are also feature-tour spotlight targets (`languageRow` / `readingSizeRow`, §47 steps 23–24): each `SettingsRow` is wrapped in a measurable `View` and registers a `scrollNodeIntoView` reveal against the More `ScrollView`, since the App group can sit below the fold. The tour ends on them, and the post-tour setup sheet then asks the user to set both. (↗ `saffron`; OS share sheet via `buildAppShareMessage(lang)`, `data/shareLinks.ts` — the localized `APP_SHARE_INVITE` + `SMART_LINK`), **ऐप को रेटिंग दें / Rate the App** (★ `gold` at 18, no state, a11y label constant "Rate the app") — the manual entry point for the rating sheet (§54): it calls `open()`, bypassing the auto-ask gate and spending no ask slot, and keeps working even after the user has opted out of the automatic prompt. Last in the group: **Instagram पर फ़ॉलो करें / Follow on Instagram** (◉ `saffron-deep` at 19, state = the `@vedansh.app` handle, a11y label constant "Follow on Instagram") — `Linking.openURL(INSTAGRAM_URL)` from the same `data/shareLinks.ts`, falling back to an `Alert` naming the handle if the OS can't open it. The link is the canonical `https://www.instagram.com/…` form, **not** `instagram://`: a custom scheme would need `LSApplicationQueriesSchemes` / `android.queries` in `app.json` (a store rebuild), whereas the https URL is claimed by the installed Instagram app via universal/app links and degrades to the browser otherwise — so the row ships over OTA.
    - **जानकारी / Info** — **परिचय व अस्वीकरण** (ⓘ `ink-muted`; opens the pageSheet disclaimer modal with the bilingual disclaimer + "Report an Error" CTA), **त्रुटि सूचित करें** (⚑ `ink-muted`; `mailto` via `buildDiscrepancyMailto`), and **ऐप भ्रमण फिर देखें / Show App Tour** (↻ `gold`; a11y label constant "Show App Tour") which calls `resetTour()` to replay the first-launch feature tour on demand (§47).
 
 **Picker sheets** — `LanguagePickerSheet.tsx` and `ReadingSizePickerSheet.tsx` are bottom-sheet `Modal`s (slide up, `modalBackdrop`, grabber, `parchmentHighlight`) following the `AddToRoutineSheet` pattern. Language lists the four `LANGUAGES` as radios each in its own script; picking one applies it (`useGitaLanguage`, §16) and closes. Reading-size shows the M/L pills + the live "श्री राम जय राम" sample (§43) + a Done button; picking a size keeps the sheet open so the preview updates. The first-run setup sheet (§47) is the same two choices in one bilingual sheet, shown once after the walkthrough.
@@ -1902,3 +1902,88 @@ Registered in `texts.ts`, `entryRoutes.ts` (chapters + reader + chapter count),
 Tests: `src/screens/__tests__/ValmikiRamayanReaderScreen.test.tsx` (per-kāṇḍa first-verse render),
 `readerAutoAdvance.test.tsx` (kāṇḍa-boundary swipe contract), `chapteredTotals.test.ts`,
 `readerTypeScale.test.tsx`. E2E: `.maestro/granth-smoke.yaml`.
+
+---
+
+## 54. App Rating Prompt (रेटिंग)
+
+**Purpose.** Ask engaged users for a store rating, without ever becoming a nag. Two surfaces over
+one piece of state: an **auto-opening card** that has to earn its way past a conservative gate, and
+a **permanent More row** the user can reach whenever they feel like it (§37).
+
+**Bundle-only, by constraint.** No `expo-store-review`, no `SKStoreReviewController`, no Play
+In-App Review. Every one of those is a native module, so a rating nudge behind one could only ship
+in a store build — and this repo's operating constraint (`docs/roadmap/2026-Q3-roadmap.md`) is that
+features ship inside the bundle. The sheet is therefore ours, and the primary button hands off to
+the store listing with `Linking.openURL` — the same reasoning that keeps the Instagram row on an
+`https://` URL (§37). Cost of the choice: the user leaves the app instead of rating in place, and
+the OS does not throttle us, so **we** own the throttling. Hence the gate below.
+
+**Structure** (`components/RatingPromptSheet.tsx`) — a centered card on a `modalBackdrop`
+(transparent `Modal`, `animationType="fade"`), matching `UpdateReadyModal` (§44) rather than the
+pageSheet modals: this is a short interruption, not a screen to work in. Max width 360, `radii.lg`,
+`parchment`, `spacing.xxl` padding, 12 gap, everything centered:
+
+1. **Decorative star row** — `★★★★★` at 22 in `gold`, `letterSpacing: 3`. Says "rating" faster
+   than a sentence can. `accessibilityElementsHidden` + `importantForAccessibility="no"` so it never
+   reads as a control (§12) — it is not interactive; there is no in-app star capture.
+2. **Title** 20, `accessibilityRole="header"`, script title face — `Vedansh आपको कैसा लगा?` /
+   `Enjoying Vedansh?` / `Vedansh કેવું લાગ્યું?` / `Vedansh ಹೇಗಿದೆ?`
+3. **Lede** 15/23 `ink-soft`, script body face — one sentence on why it helps, one on the cost
+   ("एक मिनट लगेगा" / "It takes a minute").
+4. **Primary** — `saffron` fill, `radii.md`, 44 min-height: `रेटिंग दें` / `Rate Vedansh` /
+   `રેટિંગ આપો` / `ರೇಟಿಂಗ್ ನೀಡಿ`. A11y label is the constant `"Rate Vedansh on the store"`.
+5. **`बाद में` / Maybe later** — 13 `ink-muted`, the tracked-uppercase secondary treatment.
+6. **`फिर न पूछें` / Don't ask again** — 12, same colour, one step quieter. Deliberately a
+   **first-class button, not a buried one**: an easy permanent no is what makes the ask acceptable.
+
+All four languages are hand-authored via `pick` (this is UI chrome, not content, so nothing is
+transliterated), and Indic labels drop Latin tracking/uppercase per §3.
+
+**The gate** (`data/ratingPrompt.ts`, pure). The sheet may auto-open only when **all** hold:
+
+| Condition | Threshold | Why |
+|---|---|---|
+| Outcome still `pending` | — | `rated` and `declined` are terminal; neither is ever re-asked |
+| Auto-opens so far | `< MAX_ASKS` (2) | Lifetime ceiling |
+| Cold starts | `≥ MIN_APP_OPENS` (5) | Earn the ask — same principle as the reminder opt-in (§38) |
+| Distinct active days | `≥ MIN_ACTIVE_DAYS` (3) | A habit, not a visit |
+| Lifetime verse reads | `≥ MIN_VERSE_READS` (20) | Filters users who opened but never read |
+| Since the last ask | `≥ REASK_COOLDOWN_DAYS` (45) | The quiet period |
+| No other surface asking | — | Tour, onboarding setup, What's New, reminder opt-in (§47/§38) |
+
+Engagement numbers come from `UserActivityContext.lifetimeTotals()`; the cold-start count is read
+from the **notification meta's** `appOpenCount` rather than a second counter — one "how many times
+have they come back" number, already incremented once per cold start, serving both earned asks.
+
+**Persistence & lifecycle** (`contexts/RatingPromptContext.tsx`). One AsyncStorage blob,
+`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome }`, defensively parsed (junk fields fall
+back to defaults, never crash). Behaviour:
+
+- Eligibility is evaluated once per app session; the sheet then opens after
+  **`RATING_PROMPT_DELAY_MS` = 2500 ms**, so Home has settled first — a prompt on the launch frame
+  reads as an ad. If eligibility lapses before the timer fires, the timer is cleared.
+- **Opening consumes an ask slot and starts the cooldown** (`afterAsked`). A swipe-away still
+  counts as "we asked" — the cooldown, not the outcome, is what silences the second ask.
+- **Primary** → `afterRated` (terminal) + `Linking.openURL(storeReviewUrl(Platform.OS))`. iOS gets
+  `…?action=write-review` (the App Store review composer); Play has no listing equivalent, so
+  Android lands on the listing, whose rating stars are the first thing on the page. If the OS
+  refuses the deep link, it falls back to the plain listing, then fails **silently** — a broken
+  hand-off must not throw an error at a user who just tried to do us a favour. "Rated" records the
+  *hand-off*, not a review the app cannot observe.
+- **Maybe later** → close only. **Don't ask again** → `afterDeclined` (terminal).
+- The **More row** calls `open()`, which bypasses the gate and spends **no** ask slot — a user who
+  went looking has opted in. It keeps working after `declined`; opting out silences the auto-ask.
+
+**Placement.** `<RatingPromptSheet />` mounts last in `App.tsx`, inside `RatingPromptProvider`
+(itself inside `TourProvider` + `NotificationPreferencesProvider`, whose flags the gate reads).
+
+**Files.** `mobile/src/data/ratingPrompt.ts` (state, gate, store URLs),
+`mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/components/RatingPromptSheet.tsx`,
+row in `mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
+Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundary,
+defensive parse, URL shapes), `src/components/__tests__/RatingPromptSheet.test.tsx` (delay,
+persisted outcomes, refusal to stack, all four languages, a11y-hidden stars),
+`src/screens/__tests__/MoreScreen.test.tsx` (the row opens the sheet instead of leaving the app).
+E2E: `.maestro/rating-prompt-smoke.yaml` — the manual path only; the auto path's thresholds are
+unreachable under `clearState`, so the gate is unit-tested instead.

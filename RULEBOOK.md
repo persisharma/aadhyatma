@@ -180,6 +180,17 @@ The first-launch **feature tour** (`FeatureTour.tsx`), the **first-run setup she
 
 **Tests.** UT: `src/contexts/__tests__/TourContext.test.tsx`, `src/components/__tests__/FeatureTour.test.tsx`, `src/components/__tests__/OnboardingSetupSheet.test.tsx`, `src/data/__tests__/tourContent.jest.test.ts`. E2E: `.maestro/feature-tour-e2e.yaml` (replay → full step walk → setup sheet → `Begin`); `_launch.yaml` dismisses **both** first-run surfaces (optional `Skip tour`, then optional `Begin`) so neither blocks other flows on a fresh simulator.
 
+### 6.2 Auto-opening surfaces — the no-stacking contract
+
+Anything that opens itself over the app (the §6.1 trio, the reminder opt-in, the OTA update modal, the **rating prompt** of design.md §54) competes for the same moment. Two rules keep that from turning into a pile-up:
+
+1. **Every new auto-opening surface must be added to the rating gate's stand-down set.** `RatingPromptContext`'s `blockedBySurface` ORs the "this surface wants the screen" flags (`shouldShowOptIn`, `shouldShowFirstLaunchTour`, `shouldShowOnboardingSetup`, `shouldShowWhatsNew`). A new surface that skips this can land on top of the rating card, or under it. If the new surface's provider sits **below** `RatingPromptProvider` in `App.tsx`, hoist the flag rather than reaching down for it.
+2. **Every new auto-opening surface that CAN fire on a clean install must be dismissible from `_launch.yaml`.** Add an `optional: true` tap for its dismiss control, matching that control's **full** a11y label (Maestro matches whole strings). Skipping this makes the surface block every downstream flow the first time it fires on a clean simulator — and because it only fires under its own gate, the breakage shows up as unrelated flows going red. The rating prompt is the one surface exempt today: `_launch.yaml` runs `clearState: true` and the gate needs 5 cold starts, so it provably cannot appear. A surface whose gate a fresh launch **could** satisfy is not exempt.
+
+**No native store-review module.** The rating hand-off uses `Linking.openURL` to the store listing, not `expo-store-review` / `SKStoreReviewController` / Play In-App Review. Those are native modules: adding one moves the feature out of the bundle and behind a store rebuild, which the roadmap's bundle-only constraint forbids. The same reasoning governs the Instagram row's `https://` URL (design.md §37). Since the OS is not throttling us, the throttling in `data/ratingPrompt.ts` (2 lifetime asks, 45-day cooldown, engagement floor) **is** the user protection — do not loosen a threshold without an explicit product decision.
+
+**Tests.** UT: `src/data/__tests__/ratingPrompt.jest.test.ts`, `src/components/__tests__/RatingPromptSheet.test.tsx`, `src/screens/__tests__/MoreScreen.test.tsx`. E2E: `.maestro/rating-prompt-smoke.yaml` (manual More entry point; the auto path's thresholds are unreachable under `clearState`).
+
 ---
 
 ## 7. Search index integration for new sections
