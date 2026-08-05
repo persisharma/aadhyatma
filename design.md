@@ -95,6 +95,16 @@ that would then have clipped were grown rather than trimmed: the calendar `dateT
 (24×12 → 28×16 — its label can be Devanagari, whose matras clip below ~1.4× leading) and
 the Panchang `starBadge` (15 → 16).
 
+**Leading is part of the floor.** A 10 pt line needs **≥ 1.4× leading** (14) whenever it can
+carry Indic text; `lineHeight === fontSize` sits the first baseline so high that the top of
+the line is sliced off, which reads as trimmed text rather than tight text. And a chrome line
+that can render Indic must *name* a face that has the script — Inter does not, and the OS
+fallback's metrics are taller than any fixed leading can predict, so route it through
+`pillTextStyle` / `scriptTitleFont` (`utils/langType.ts`). Both halves of this bit the Jyotish
+share cards in August 2026: three micro lines shipped at 10/10, and the Kundali header
+(Inter + a Devanagari label) rendered `जन्म कुंडली` as "जन्म कुंडला" while its method footer lost
+its shirorekha. Guarded by `components/__tests__/jyotishShareCardFit.test.tsx`.
+
 **Enforced:** `eslint.config.js` bans `fontSize` below 10 outside `src/theme/`.
 
 **One documented exception:** `NorthIndianChart` keeps sub-10 numbers because those are
@@ -1776,6 +1786,8 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 **Rashifal.** Daily Rashifal selects the saved Kundali's Moon sign when available, otherwise lets the user choose any of twelve signs. The source card says whether it came from the Kundali, and Change exposes a 12-sign grid pairing every traditional name with its plain-English equivalent. Guidance is consistently `Favour`, `Pause`, and `Reflect`; the full Rashifal page adds the supporting graha/bhava chip to each row, followed by the one existing Surya/Shani/Navagraha reader selected by the pure transit rules. The disclaimer is part of the surface, not fine print: “traditional transit-based guidance—not a certain prediction.” No luck score, guaranteed event, fear copy, random generation, AI call, or remote horoscope feed.
 
 **Sharing.** Both result surfaces use the same 4:5, 1080×1350 share-preview family and expose a single header Share action. Kundali sharing is opt-in and warns that chart name, birth date, time, and city are included. Rashifal sharing includes Moon-sign guidance and the suggested existing practice, but explicitly excludes name and birth details. There is no second or floating share button inside the Kundali tabs.
+
+**Share-card fit (August 2026).** The card's height is *pinned* — `aspectRatio` 4:5 on a width of `min(334, screenWidth - 2 × spacing.xxl)`, with `overflow: 'hidden'` — while everything stacked inside it is type at fixed point sizes that does not scale with width. So the Kundali diagram takes **the height that is left** (`kundaliChartSize()`: content height minus a 196 dp chrome budget for the brand header, name lockup, chip row and two-line method footer, capped at the historic `min(208, width × 0.61)`), never a flat fraction of the width. Sizing it by width alone overran the box on every card below ~334 dp — a 360 dp phone gets 312 — and the `marginTop: 'auto'` method footer was the piece pushed out and clipped. The footer's own leading follows §3.0 (10/14, script-aware face). Both invariants are pinned by `components/__tests__/jyotishShareCardFit.test.tsx` and the footer line is asserted in `kundali-smoke.yaml`. **Known gap:** the Rashifal card's chrome is *entirely* fixed-height (three `minHeight` guidance rows + practice + disclaimer ≈ 375 dp), so it has no comparable slack on ≤ 360 dp phones; it fits at 334 and its disclaimer leading is fixed, but the row block wants the same treatment before that card is trusted on small screens.
 
 **Surface family.** Continue the existing warm manuscript palette only: parchment gradients, `cardActiveBorder`, saffron/gold tints, `radii.lg`, theme elevation, existing script-aware type helpers, and controls that respect the §12 minimum — back buttons at 44 (both KundaliScreen and RashifalScreen drifted to 40 and were corrected in July 2026), form fields via the `TextField` `form` variant at 48 (§52). Do not introduce one-off colours for guidance rows, practice, or share cards; all variants must come from theme tokens already used by the app. English accessibility labels include both traditional and plain-English sign names and remain stable for Maestro even when Hindi is the visible reading language.
 
