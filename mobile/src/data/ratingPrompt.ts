@@ -53,8 +53,12 @@ export const MIN_APP_OPENS = 5;
 export const MIN_ACTIVE_DAYS = 3;
 /** Lifetime verse advances — filters users who opened the app but never read. */
 export const MIN_VERSE_READS = 20;
-/** Quiet period between asks. */
-export const REASK_COOLDOWN_DAYS = 45;
+/**
+ * Quiet period between asks. Short on purpose (product decision, Aug 2026):
+ * `MAX_ASKS` already caps lifetime exposure at two cards, so the cooldown sets
+ * how soon the second one lands rather than how many a user can receive.
+ */
+export const REASK_COOLDOWN_DAYS = 10;
 /** Hard ceiling on auto-opens over the app's lifetime. */
 export const MAX_ASKS = 2;
 

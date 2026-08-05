@@ -1949,7 +1949,7 @@ transliterated), and Indic labels drop Latin tracking/uppercase per §3.
 | Cold starts | `≥ MIN_APP_OPENS` (5) | Earn the ask — same principle as the reminder opt-in (§38) |
 | Distinct active days | `≥ MIN_ACTIVE_DAYS` (3) | A habit, not a visit |
 | Lifetime verse reads | `≥ MIN_VERSE_READS` (20) | Filters users who opened but never read |
-| Since the last ask | `≥ REASK_COOLDOWN_DAYS` (45) | The quiet period |
+| Since the last ask | `≥ REASK_COOLDOWN_DAYS` (10) | The quiet period. Short by design — `MAX_ASKS` is what caps exposure, so this only sets *when* the one remaining card lands |
 | No other surface asking | — | Tour, onboarding setup, What's New, reminder opt-in (§47/§38) |
 
 Engagement numbers come from `UserActivityContext.lifetimeTotals()`; the cold-start count is read

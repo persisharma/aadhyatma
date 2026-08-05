@@ -38,6 +38,22 @@ function eligibleInput(overrides: Partial<RatingEligibilityInput> = {}): RatingE
   };
 }
 
+describe('thresholds', () => {
+  /**
+   * Pinned deliberately. RULEBOOK §6.2 makes these the user protection (the OS
+   * does not throttle a `Linking` hand-off), so a silent loosening should fail
+   * a test rather than slip through — updating this expectation is the explicit
+   * product decision the rule asks for.
+   */
+  it('are the values design.md §54 documents', () => {
+    expect(MIN_APP_OPENS).toBe(5);
+    expect(MIN_ACTIVE_DAYS).toBe(3);
+    expect(MIN_VERSE_READS).toBe(20);
+    expect(REASK_COOLDOWN_DAYS).toBe(10);
+    expect(MAX_ASKS).toBe(2);
+  });
+});
+
 describe('isEligibleForRatingPrompt', () => {
   it('allows the ask once every threshold is met', () => {
     expect(isEligibleForRatingPrompt(eligibleInput())).toBe(true);
