@@ -8,7 +8,9 @@
 **Numbers used (update before publishing if they've moved):**
 - Android — 50+ downloads in the **first week** on the Play Store.
 - iOS — ~90+ downloads over **~10 weeks** on the App Store.
-- **10+ five-star ratings** across the two stores combined (5.0★ on both listings).
+- **10+ five-star ratings — combined across both platforms**, not per store (roughly 5 + 5; both
+  listings show 5.0★). The copy states this explicitly so a reader who clicks through and sees 5
+  on each listing doesn't read the claim as inflated. Keep that framing if you edit the line.
 
 **This post also does two jobs beyond the milestone:**
 1. **Asks for feedback** — an open call for suggestions on what to build next.
@@ -39,7 +41,7 @@ A few things I'm taking from it:
 • Ship the second platform earlier than feels comfortable. React Native made this nearly free — I delayed on polish, not on effort.
 • Small absolute numbers still teach you things. 50 vs 90 is nobody's growth chart. The 10x difference in rate is the signal.
 
-The other number I keep looking at: 10+ five-star ratings now, across both stores. Not a single one below five. Those took effort — nobody rates an app they merely tolerate — and I'm quietly very happy about them.
+The other number I keep looking at: 10+ ratings now between the two stores put together — and every single one of them five stars. 5.0★ on the App Store, 5.0★ on Play. Those took effort — nobody rates an app they merely tolerate — and I'm quietly very happy about them.
 
 Which brings me to the ask.
 
