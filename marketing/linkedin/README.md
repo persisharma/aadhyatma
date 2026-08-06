@@ -17,7 +17,8 @@ marketing/linkedin/
 │   └── flow-routine.yaml   # captures the daily-routine screens (creates + deletes a demo routine)
 ├── posts/
 │   ├── post-1-vrat.md      # post copy / template
-│   └── post-2-routine.md
+│   ├── post-2-routine.md
+│   └── post-3-milestone.md # Android week-one downloads milestone (no reel — store screenshots)
 └── README.md
 ```
 Generated outputs (`shots/`, `frames/`, `*.mp4`, `.metro.log`) are **git-ignored** — they're regenerable.
@@ -36,6 +37,9 @@ node make-reel.js vrat       # → vedansh-vrat-reel.mp4
 node make-reel.js routine    # → vedansh-routine-reel.mp4
 ```
 Then attach each `.mp4` to its post in `posts/` on LinkedIn.
+
+Not every post needs a reel — `post-3-milestone.md` is a numbers/milestone post and pairs with a
+static side-by-side of the two store listings instead.
 
 ## Editing the reels
 - **Captions / slide order / cover + outro text:** edit the `REELS` manifest near the top of `make-reel.js`.
