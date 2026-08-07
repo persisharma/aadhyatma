@@ -54,13 +54,21 @@ export const MIN_ACTIVE_DAYS = 3;
 /** Lifetime verse advances — filters users who opened the app but never read. */
 export const MIN_VERSE_READS = 20;
 /**
- * Quiet period between asks. Short on purpose (product decision, Aug 2026):
- * `MAX_ASKS` already caps lifetime exposure at two cards, so the cooldown sets
- * how soon the second one lands rather than how many a user can receive.
+ * Quiet period between asks (product decision, Aug 2026: "ask every 5 days if
+ * not given"). With no lifetime ceiling this is now the ONLY thing spacing the
+ * asks out, so it is load-bearing in a way it wasn't when `MAX_ASKS` was 2.
  */
-export const REASK_COOLDOWN_DAYS = 10;
-/** Hard ceiling on auto-opens over the app's lifetime. */
-export const MAX_ASKS = 2;
+export const REASK_COOLDOWN_DAYS = 5;
+/**
+ * Lifetime ceiling on auto-opens — `null` means no ceiling: keep asking every
+ * `REASK_COOLDOWN_DAYS` until the user either rates or opts out.
+ *
+ * Deliberate product decision, and the reason "Don't ask again" is now the
+ * user's ONLY permanent escape rather than a convenience. Do not remove or
+ * de-emphasise that button while this is null — it is what keeps an unbounded
+ * ask from being unbounded nagging (RULEBOOK §6.2).
+ */
+export const MAX_ASKS: number | null = null;
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -113,7 +121,7 @@ export type RatingEligibilityInput = {
 export function isEligibleForRatingPrompt(input: RatingEligibilityInput): boolean {
   const { state, appOpens, activeDays, totalReads, now, blockedBySurface } = input;
   if (state.outcome !== 'pending') return false;
-  if (state.askCount >= MAX_ASKS) return false;
+  if (MAX_ASKS !== null && state.askCount >= MAX_ASKS) return false;
   if (blockedBySurface) return false;
   if (appOpens < MIN_APP_OPENS) return false;
   if (activeDays < MIN_ACTIVE_DAYS) return false;

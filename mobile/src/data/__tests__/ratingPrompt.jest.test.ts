@@ -49,8 +49,9 @@ describe('thresholds', () => {
     expect(MIN_APP_OPENS).toBe(5);
     expect(MIN_ACTIVE_DAYS).toBe(3);
     expect(MIN_VERSE_READS).toBe(20);
-    expect(REASK_COOLDOWN_DAYS).toBe(10);
-    expect(MAX_ASKS).toBe(2);
+    expect(REASK_COOLDOWN_DAYS).toBe(5);
+    // null = no lifetime ceiling: keep asking until the user rates or opts out.
+    expect(MAX_ASKS).toBeNull();
   });
 });
 
@@ -66,9 +67,10 @@ describe('isEligibleForRatingPrompt', () => {
     }
   });
 
-  it('stops after MAX_ASKS auto-opens', () => {
-    const state: RatingPromptState = { askCount: MAX_ASKS, lastAskedAt: null, outcome: 'pending' };
-    expect(isEligibleForRatingPrompt(eligibleInput({ state }))).toBe(false);
+  it('keeps asking indefinitely while MAX_ASKS is null', () => {
+    // The 50th ask is as eligible as the first — only rating or opting out stops it.
+    const state: RatingPromptState = { askCount: 50, lastAskedAt: null, outcome: 'pending' };
+    expect(isEligibleForRatingPrompt(eligibleInput({ state }))).toBe(true);
   });
 
   it('stands down while another surface owns the screen', () => {
@@ -92,7 +94,7 @@ describe('isEligibleForRatingPrompt', () => {
       )
     ).toBe(false);
 
-    // Exactly at the window: askable again (askCount 1 < MAX_ASKS 2).
+    // Exactly at the window: askable again.
     expect(
       isEligibleForRatingPrompt(
         eligibleInput({ state: asked, now: NOW + REASK_COOLDOWN_DAYS * DAY_MS })
@@ -121,14 +123,26 @@ describe('state transitions', () => {
     ).toBe(false);
   });
 
-  it('a full ask cycle ends silent', () => {
+  it('only "Don\'t ask again" ends the cycle now that asks are uncapped', () => {
     let state = RATING_PROMPT_DEFAULTS;
-    state = afterAsked(state, NOW); // first ask, dismissed with "Maybe later"
-    state = afterAsked(state, NOW + REASK_COOLDOWN_DAYS * DAY_MS); // second ask
-    expect(state.askCount).toBe(MAX_ASKS);
+    // Four "Maybe later" dismissals, one every cooldown window.
+    for (let i = 0; i < 4; i += 1) {
+      state = afterAsked(state, NOW + i * REASK_COOLDOWN_DAYS * DAY_MS);
+    }
+    expect(state.askCount).toBe(4);
+
+    // Still eligible for a fifth — repetition is the point of the 5-day cadence.
     expect(
       isEligibleForRatingPrompt(
         eligibleInput({ state, now: NOW + 10 * REASK_COOLDOWN_DAYS * DAY_MS })
+      )
+    ).toBe(true);
+
+    // Opting out is the only thing that stops it.
+    state = afterDeclined(state, NOW + 10 * REASK_COOLDOWN_DAYS * DAY_MS);
+    expect(
+      isEligibleForRatingPrompt(
+        eligibleInput({ state, now: NOW + 500 * REASK_COOLDOWN_DAYS * DAY_MS })
       )
     ).toBe(false);
   });

@@ -1945,11 +1945,11 @@ transliterated), and Indic labels drop Latin tracking/uppercase per §3.
 | Condition | Threshold | Why |
 |---|---|---|
 | Outcome still `pending` | — | `rated` and `declined` are terminal; neither is ever re-asked |
-| Auto-opens so far | `< MAX_ASKS` (2) | Lifetime ceiling |
+| Auto-opens so far | `< MAX_ASKS` (**`null` — no ceiling**) | Uncapped by product decision: keep asking until the user rates or opts out |
 | Cold starts | `≥ MIN_APP_OPENS` (5) | Earn the ask — same principle as the reminder opt-in (§38) |
 | Distinct active days | `≥ MIN_ACTIVE_DAYS` (3) | A habit, not a visit |
 | Lifetime verse reads | `≥ MIN_VERSE_READS` (20) | Filters users who opened but never read |
-| Since the last ask | `≥ REASK_COOLDOWN_DAYS` (10) | The quiet period. Short by design — `MAX_ASKS` is what caps exposure, so this only sets *when* the one remaining card lands |
+| Since the last ask | `≥ REASK_COOLDOWN_DAYS` (5) | The quiet period, and now the **only** thing spacing asks out — with no lifetime ceiling it is load-bearing, not a scheduling detail |
 | No other surface asking | — | Tour, onboarding setup, What's New, reminder opt-in (§47/§38) |
 
 Engagement numbers come from `UserActivityContext.lifetimeTotals()`; the cold-start count is read
@@ -1971,7 +1971,10 @@ back to defaults, never crash). Behaviour:
   refuses the deep link, it falls back to the plain listing, then fails **silently** — a broken
   hand-off must not throw an error at a user who just tried to do us a favour. "Rated" records the
   *hand-off*, not a review the app cannot observe.
-- **Maybe later** → close only. **Don't ask again** → `afterDeclined` (terminal).
+- **Maybe later** → close only; the same card returns after the 5-day cooldown, indefinitely.
+- **Don't ask again** → `afterDeclined` (terminal). With `MAX_ASKS` at `null` this is the user's
+  **only** permanent escape, which is why it stays a visible first-class button and must not be
+  demoted to a long-press, a swipe, or an overflow (RULEBOOK §6.2).
 - The **More row** calls `open()`, which bypasses the gate and spends **no** ask slot — a user who
   went looking has opted in. It keeps working after `declined`; opting out silences the auto-ask.
 
