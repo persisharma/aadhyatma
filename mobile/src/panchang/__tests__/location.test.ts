@@ -8,7 +8,16 @@ import {
   resolveObservancesForYearLive,
   resolveObservancesForYearLiveChunked,
 } from '../festivalEngine';
-import { CITIES, DEFAULT_LOCATION, getCityById, nearestCity, toPanchangLocation } from '../locations';
+import {
+  CITIES,
+  DEFAULT_LOCATION,
+  MAJOR_CITIES,
+  cityMatchesQuery,
+  getCityById,
+  nearestCity,
+  toPanchangLocation,
+} from '../locations';
+import { RAJASTHAN_TEHSILS } from '../rajasthanTehsils';
 import { setStoredObservanceYear, subscribeObservanceStore } from '../observanceStore';
 
 const DELHI = { latitude: 28.6139, longitude: 77.209, elevation: 216, cityId: 'delhi' };
@@ -99,11 +108,67 @@ test('city list: unique ids, Ujjain first as default', () => {
   assert.equal(DEFAULT_LOCATION.source, 'default');
 });
 
+test('city list is two tiers: national cities first, then Rajasthan tehsils', () => {
+  assert.deepEqual(CITIES, [...MAJOR_CITIES, ...RAJASTHAN_TEHSILS]);
+  // The picker splits the list at the first entry carrying a district, so every
+  // national entry must be district-less and every tehsil must carry one.
+  assert.ok(MAJOR_CITIES.every((c) => !c.districtEn && !c.districtHi), 'no districts on national tier');
+  assert.ok(
+    RAJASTHAN_TEHSILS.every((c) => !!c.districtEn && !!c.districtHi),
+    'every tehsil names its district in both scripts'
+  );
+});
+
+test('Rajasthan tehsils: prefixed ids, all 33 districts, coordinates inside the state', () => {
+  assert.ok(RAJASTHAN_TEHSILS.length > 300, `expected 300+ tehsils, got ${RAJASTHAN_TEHSILS.length}`);
+  assert.ok(RAJASTHAN_TEHSILS.every((c) => c.id.startsWith('rj-')), 'ids are rj-prefixed');
+  assert.equal(new Set(RAJASTHAN_TEHSILS.map((c) => c.districtEn)).size, 33, '33 revenue districts');
+  for (const c of RAJASTHAN_TEHSILS) {
+    assert.ok(
+      c.latitude >= 23 && c.latitude <= 30.4 && c.longitude >= 69.4 && c.longitude <= 78.4,
+      `${c.nameEn} (${c.latitude}, ${c.longitude}) is outside Rajasthan`
+    );
+    assert.ok(c.elevation >= 0 && c.elevation <= 1800, `${c.nameEn} elevation ${c.elevation} out of range`);
+    assert.ok(c.nameHi.length > 0 && /[ऀ-ॿ]/.test(c.nameHi), `${c.nameEn} lacks a Devanagari name`);
+  }
+});
+
+test('Rajasthan tehsils: no two share a coordinate (would mean a bad geocode)', () => {
+  const seen = new Map<string, string>();
+  for (const c of RAJASTHAN_TEHSILS) {
+    const key = `${c.latitude},${c.longitude}`;
+    assert.equal(seen.get(key), undefined, `${c.nameEn} shares ${key} with ${seen.get(key)}`);
+    seen.set(key, c.nameEn);
+  }
+});
+
+test('cityMatchesQuery matches name in either script, and a tehsil by its district', () => {
+  const jaipur = getCityById('jaipur')!;
+  assert.equal(cityMatchesQuery(jaipur, ''), true, 'empty query matches everything');
+  assert.equal(cityMatchesQuery(jaipur, 'JAIP'), true, 'case-insensitive English');
+  assert.equal(cityMatchesQuery(jaipur, 'जयपु'), true, 'Hindi');
+  assert.equal(cityMatchesQuery(jaipur, 'kochi'), false);
+
+  const tehsil = getCityById('rj-mount-abu')!;
+  assert.equal(tehsil.districtEn, 'Sirohi');
+  assert.equal(cityMatchesQuery(tehsil, 'sirohi'), true, 'found by district');
+  assert.equal(cityMatchesQuery(tehsil, 'सिरोही'), true, 'found by district in Hindi');
+});
+
 test('nearestCity snaps GPS coordinates to the expected city', () => {
   assert.equal(nearestCity(28.7, 77.1).id, 'delhi');
   assert.equal(nearestCity(19.2, 72.97).id, 'mumbai', 'Thane → Mumbai');
   assert.equal(nearestCity(23.18, 75.79).id, 'ujjain');
   assert.equal(nearestCity(25.59, 85.14).id, 'patna');
+});
+
+test('nearestCity resolves inside Rajasthan at tehsil granularity', () => {
+  // Before the tehsil tier every one of these snapped to Jaipur, Ajmer or Jodhpur.
+  assert.equal(nearestCity(24.5925, 72.7156).id, 'rj-mount-abu', 'Mount Abu');
+  assert.equal(nearestCity(27.28, 75.2).id, 'rj-dantaramgarh', 'Danta Ramgarh, Sikar');
+  assert.equal(nearestCity(24.88, 74.63).id, 'rj-chittorgarh', 'Chittorgarh');
+  assert.equal(nearestCity(28.02, 73.31).id, 'rj-bikaner', 'Bikaner');
+  assert.equal(nearestCity(26.92, 71.92).id, 'rj-pokaran', 'Pokaran');
 });
 
 test('non-Ujjain location falls back to Ujjain observances until store fills, then upgrades', async () => {

@@ -4,15 +4,22 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
-import { CITIES, type City } from '@/panchang/locations';
+import { CITIES, cityMatchesQuery, type City } from '@/panchang/locations';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+
+type Row = { kind: 'header'; id: string; hi: string; en: string } | { kind: 'city'; city: City };
 
 /**
  * City/GPS picker for the panchang reference location. GPS fixes are snapped to
  * the nearest bundled city (offline labels, finite observance-cache keys), so
  * the list below is the complete set of locations the engine computes for.
+ *
+ * `CITIES` is two tiers — nationwide cities, then Rajasthan tehsils — and the tehsils
+ * outnumber the cities several times over, so the list is split under two group
+ * headers rather than rendered as one flat 390-row scroll. A tehsil is identified by
+ * carrying a `districtEn`.
  */
 export default function LocationPickerModal({ visible, onClose }: {
   visible: boolean;
@@ -23,12 +30,20 @@ export default function LocationPickerModal({ visible, onClose }: {
   const { location, gpsStatus, selectCity, requestDeviceLocation } = usePanchangLocation();
   const [query, setQuery] = useState('');
 
-  const filteredCities = useMemo(() => {
-    const needle = query.trim().toLowerCase();
-    if (!needle) return CITIES;
-    return CITIES.filter(
-      (city) => city.nameEn.toLowerCase().includes(needle) || city.nameHi.includes(needle)
-    );
+  const rows = useMemo<Row[]>(() => {
+    const matches = CITIES.filter((city) => cityMatchesQuery(city, query));
+    const cities = matches.filter((city) => !city.districtEn);
+    const tehsils = matches.filter((city) => city.districtEn);
+    const out: Row[] = [];
+    if (cities.length > 0) {
+      out.push({ kind: 'header', id: 'h-cities', hi: 'प्रमुख शहर', en: 'Major cities' });
+      out.push(...cities.map((city) => ({ kind: 'city' as const, city })));
+    }
+    if (tehsils.length > 0) {
+      out.push({ kind: 'header', id: 'h-tehsils', hi: 'राजस्थान · तहसील', en: 'Rajasthan · tehsils' });
+      out.push(...tehsils.map((city) => ({ kind: 'city' as const, city })));
+    }
+    return out;
   }, [query]);
 
   const onUseMyLocation = async () => {
@@ -117,25 +132,44 @@ export default function LocationPickerModal({ visible, onClose }: {
             <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted }}>
               {meaningByLang(
                 lang,
-                'भारत के प्रमुख शहर — सूर्योदय व तिथि की गणना इसी स्थान के लिए होगी।',
-                'Major cities of India — sunrise and tithi are computed for this place.'
+                'भारत के प्रमुख शहर व राजस्थान की तहसीलें — सूर्योदय व तिथि की गणना इसी स्थान के लिए होगी।',
+                'Major Indian cities plus every Rajasthan tehsil — sunrise and tithi are computed for this place.'
               )}
             </Text>
           </View>
 
           <FlatList
-            data={filteredCities}
-            keyExtractor={(city) => city.id}
+            data={rows}
+            keyExtractor={(row) => (row.kind === 'header' ? row.id : row.city.id)}
             contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingVertical: spacing.lg }}
             keyboardShouldPersistTaps="handled"
-            renderItem={({ item: city }) => {
+            renderItem={({ item: row }) => {
+              if (row.kind === 'header') {
+                return (
+                  <Text
+                    style={[
+                      styles.groupHeader,
+                      {
+                        color: colors.inkMuted,
+                        fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                      },
+                    ]}
+                  >
+                    {contentByLang(lang, row.hi, row.en)}
+                  </Text>
+                );
+              }
+              const { city } = row;
               const selected = city.id === location.cityId;
+              // Both halves of the title are in the same language, so one script font
+              // covers them; the caption line stays single-script for the same reason.
+              const district = contentByLang(lang, city.districtHi ?? '', city.districtEn ?? '');
               return (
                 <Pressable
                   onPress={() => onPickCity(city)}
                   accessibilityRole="button"
                   accessibilityState={{ selected }}
-                  accessibilityLabel={`${city.nameEn}${selected ? ', selected' : ''}`}
+                  accessibilityLabel={`${city.nameEn}${city.districtEn ? `, ${city.districtEn} district` : ''}${selected ? ', selected' : ''}`}
                   style={({ pressed }) => [
                     styles.cityRow,
                     { borderBottomColor: colors.divider },
@@ -143,9 +177,19 @@ export default function LocationPickerModal({ visible, onClose }: {
                   ]}
                 >
                   <View style={{ flex: 1 }}>
-                    <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-                      {contentByLang(lang, city.nameHi, city.nameEn)}
-                    </Text>
+                    <View style={styles.titleLine}>
+                      <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                        {contentByLang(lang, city.nameHi, city.nameEn)}
+                      </Text>
+                      {district !== '' && (
+                        <Text
+                          numberOfLines={1}
+                          style={{ flexShrink: 1, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}
+                        >
+                          {`· ${district}`}
+                        </Text>
+                      )}
+                    </View>
                     <Text style={{ ...captionFont(lang === 'en' ? city.nameHi : city.nameEn), fontSize: 11, color: colors.inkMuted }}>
                       {lang === 'en' ? city.nameHi : city.nameEn}
                     </Text>
@@ -209,5 +253,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
     minHeight: 52,
+  },
+  titleLine: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    gap: 5,
+  },
+  groupHeader: {
+    fontSize: 12,
+    lineHeight: 18,
+    letterSpacing: 0.4,
+    paddingTop: 14,
+    paddingBottom: 4,
+    includeFontPadding: false,
   },
 });

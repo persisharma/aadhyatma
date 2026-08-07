@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
+  FlatList,
   Keyboard,
   Modal,
   Pressable,
@@ -36,7 +37,7 @@ import {
   type KundaliChart,
   type KundaliResultTab,
 } from '@/panchang/kundali';
-import { CITIES, getCityById, type City } from '@/panchang/locations';
+import { CITIES, cityMatchesQuery, getCityById, type City } from '@/panchang/locations';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from '@/panchang/names';
 import {
   useKundali,
@@ -1179,13 +1180,7 @@ function CityPicker({
 }) {
   const { colors, typography, spacing, radii } = useTheme();
   const [query, setQuery] = useState('');
-  const filtered = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
-    if (!normalized) return CITIES;
-    return CITIES.filter((city) =>
-      `${city.nameEn} ${city.nameHi}`.toLowerCase().includes(normalized)
-    );
-  }, [query]);
+  const filtered = useMemo(() => CITIES.filter((city) => cityMatchesQuery(city, query)), [query]);
 
   return (
     <Modal
@@ -1227,16 +1222,20 @@ function CityPicker({
             placeholder="Search Indian cities…"
             style={[styles.modalSearch, { marginHorizontal: spacing.xxl }]}
           />
-          <ScrollView keyboardShouldPersistTaps="handled">
-            {filtered.map((city) => {
+          {/* FlatList, not a mapped ScrollView: the list is ~390 rows once the
+              Rajasthan tehsils are in, and mounting all of them stalled the sheet. */}
+          <FlatList
+            data={filtered}
+            keyExtractor={(city) => city.id}
+            keyboardShouldPersistTaps="handled"
+            renderItem={({ item: city }) => {
               const selected = city.id === selectedCityId;
               return (
                 <Pressable
-                  key={city.id}
                   onPress={() => onSelect(city)}
                   accessibilityRole="radio"
                   accessibilityState={{ selected }}
-                  accessibilityLabel={`Select ${city.nameEn} birth city`}
+                  accessibilityLabel={`Select ${city.nameEn}${city.districtEn ? `, ${city.districtEn} district` : ''} birth city`}
                   style={({ pressed }) => [
                     styles.cityRow,
                     { borderBottomColor: colors.divider, paddingHorizontal: spacing.xxl },
@@ -1253,13 +1252,16 @@ function CityPicker({
                     >
                       {contentByLang(lang, city.nameHi, city.nameEn)}
                     </Text>
-                    <Text style={[styles.caption, { color: colors.inkMuted }]}>{city.nameEn}</Text>
+                    {/* Caption is a Latin face (§3.0), so it stays English-only. */}
+                    <Text style={[styles.caption, { color: colors.inkMuted }]}>
+                      {city.districtEn ? `${city.nameEn} · ${city.districtEn}` : city.nameEn}
+                    </Text>
                   </View>
                   {selected && <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>✓</Text>}
                 </Pressable>
               );
-            })}
-          </ScrollView>
+            }}
+          />
         </SafeAreaView>
       </View>
     </Modal>

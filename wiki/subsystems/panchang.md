@@ -17,6 +17,11 @@ The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat o
 
 **PanchangScreen** (`screens/PanchangScreen.tsx`): the three-way mode selector is the fixed first control, so switching to Jyotish cannot move it; the location/calendar-system/My Vrat row follows only in Panchang and Vrat modes. The screen then provides date picker + month calendar + observance list + katha section + a `MuhuratGlanceCard` row. The Jyotish branch is stateful: guests get Create Kundali, Daily Rashifal, and one Navagraha practice card; saved profiles get a daily-first landing with all three guidance rows, a compact Kundali reference, then the same one practice treatment. Focus refresh after save prevents a stale guest landing. Tapping the glance card navigates to `MuhuratDetail`.
 
+**Location list** (`panchang/locations.ts` + `panchang/rajasthanTehsils.ts`): `CITIES` is `[...MAJOR_CITIES, ...RAJASTHAN_TEHSILS]` — 52 nationwide cities/pilgrimage centres (Ujjain first, because `DEFAULT_LOCATION` is `CITIES[0]`) followed by 342 Rajasthan tehsil headquarters spanning all 33 revenue districts.
+- A tehsil is any `City` carrying `districtHi`/`districtEn`; the national tier leaves both undefined, and that field is what the picker partitions the two groups on and what labels the row `<name> · <district>`.
+- `cityMatchesQuery(city, q)` is the one search predicate, shared by `LocationPickerModal` and the Kundali birth-city sheet: English name, Hindi name, or district in either script.
+- Tehsil coordinates were resolved from the GeoNames gazetteer first, then the All-India Pincode Directory, and gated on the Rajasthan bounding box, the district's own office box, and coordinate uniqueness. 28 tehsils are deliberately absent because no dataset row survived those gates — see the generated file's header. `location.test.ts` pins the gates as invariants.
+
 **Kundali engine** (`panchang/kundali.ts`): pure calculations from an explicit UTC instant and bundled Indian city coordinates.
 - Reuses `engine.ts`'s Lahiri ayanamsa; Sun/Moon/classical planets come from `astronomy-engine`, Rahu is the mean ascending node, and Ketu is exactly opposite.
 - `computeLagna` solves the eastern ecliptic/horizon intersection and converts it to the sidereal ascendant.
@@ -74,13 +79,18 @@ The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat o
 - [[overview]] — Panchang tab (tab 3); `PanchangLocationContext` supplies the city lat/lon.
 - `panchang/engine.ts` (`computePanchangForDate`) — astronomy-engine wrapper giving sunrise/sunset; `useMuhurat` calls it twice per date (today + tomorrow).
 - `panchang/engine.ts` (`getAyanamsa`) — shared Lahiri primitive used by both Panchang and Kundali; do not fork it.
-- `panchang/locations.ts` — the same bundled city coordinates are reused for birth-city selection, while persistence remains separate from current Panchang location.
+- `panchang/locations.ts` / `panchang/rajasthanTehsils.ts` — the same bundled city coordinates are reused for birth-city selection, while persistence remains separate from current Panchang location.
 - `utils/useMinuteTick.ts` — minute-tick utility that drives the live "now" choghadiya refresh.
 
 ## Gotchas
 
 - **Regenerate the precomputed observance table after any matching change** — `TZ=Asia/Kolkata npx tsx scripts/gen-precomputed-observances.mts` (from `mobile/`); the app reads `precomputedObservances.ts` for Ujjain, so an engine fix that isn't regenerated never reaches users for 2024–2031.
 - **Bump `CACHE_VERSION` in `observanceCache.ts` with every such change** — non-Ujjain cities persist their scans to AsyncStorage keyed by version; without the bump, previously-scanned devices hydrate the old dates forever and never re-run the scan (the fix ships only to Ujjain and fresh installs).
+
+- **A `City.id` is a persisted key, never a display string** — it is written to `@vedansh:panchang-location`, to the Kundali birth profile, and into `observanceCache` keys. Renaming `rj-rajgarh-alwar` silently resets a user's chosen location to Ujjain and orphans their cached observance year. Adding entries is free; renaming is not. Tehsil ids are `rj-<slug>`, plus `-<district>` only where the bare slug repeats (Rajgarh, Ramgarh, Shahpura, Kishangarh…).
+- **Adding cities does NOT need a `CACHE_VERSION` bump** — the version guards *matching* changes, and a new city has no prior cached scan to invalidate. Bump it only when the festival/tithi logic moves.
+- **Don't "fix" a missing Rajasthan tehsil by inventing a coordinate** — 28 are absent because the gazetteer and the postal directory either had no row or disagreed (some postal rows are geocoded onto a same-named town 500 km away, and a few snap several tehsils onto one point). A wrong coordinate is worse than an absent row: the user gets another district's sunrise under their own town's name. `location.test.ts` fails on out-of-state coordinates and on any two tehsils sharing a point.
+- **Any picker over this list must virtualize** — the Kundali birth-city sheet was a `ScrollView` + `.map()`, which mounted all ~390 rows and stalled the sheet open. Both pickers are `FlatList` now.
 
 - **Engine is pure; hook is not** — all astronomy and clock calls live in `useMuhurat.ts`. Never add `Date.now()` or astronomy imports to `muhurat.ts`.
 - **Kundali engine is pure; UI supplies time** — `kundali.ts` takes explicit dates and coordinates. AsyncStorage, `new Date()` for “today”, and React belong in hooks/screens. The source-purity test pins this boundary.

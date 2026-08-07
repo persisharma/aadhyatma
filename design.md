@@ -1171,7 +1171,20 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 
 **Vrat Katha Reader** (`VratKathaReaderScreen` + `KathaSectionPage`) — lives in the **Home stack** (`VratKathaReader` route; Panchang surfaces navigate cross-tab to it) and is currently the **only route in `IMMERSIVE_HOME_ROUTES`** (`TabNavigator.tsx`), so the bottom tab bar hides for immersive reading. Plain `parchment` (no sketch). Top bar: **`ReaderHeader`** (§9) — 44 px back circle · katha title · `n / m` counter; then `ReadingProgressBar` and the Language Toggle (§16). Until July 2026 this screen was the most-drifted top bar in the app: a 40 px button, a 16 gutter and a hard-coded 18 title, all of which the shared header replaced. Body: a horizontal paged `FlatList` of section cards — each page carries a `प्रसंग · n/m` / `Part · n/m` pill (`versePill` tokens on `saffron-tint`), section title at 20 pt, a vertically-compressed `॥` Ornament, and body paragraphs at the shared `meaning` token (14 pt paragraph gap); long sections scroll vertically inside the page. §5 pager dots overlay the bottom; light haptic per page.
 
-**Location Picker** (`LocationPickerModal.tsx`) — a `pageSheet` modal on plain `parchment`: title `स्थान चुनें · Choose location` + ✕; a "📍 Use my location" row (GPS fixes **snap to the nearest bundled city** — offline labels, finite cache keys — with denied/error fallback copy); a city search field; and the full 51-city list with a `saffron-deep` ✓ on the selection. Location state (`PanchangLocationContext`, `@vedansh:panchang-location`, default **Ujjain**) is the single reference for every location-sensitive computation; changing city warms that city's observance cache after interactions settle.
+**Location Picker** (`LocationPickerModal.tsx`) — a `pageSheet` modal on plain `parchment`: title `स्थान चुनें · Choose location` + ✕; a "📍 Use my location" row (GPS fixes **snap to the nearest bundled city** — offline labels, finite cache keys — with denied/error fallback copy); a search field; and the location list with a `saffron-deep` ✓ on the selection. Location state (`PanchangLocationContext`, `@vedansh:panchang-location`, default **Ujjain**) is the single reference for every location-sensitive computation; changing city warms that city's observance cache after interactions settle.
+
+The list is **two tiers**, rendered as one `FlatList` under two group headers (12 pt, `ink-muted`, `letterSpacing` 0.4, 14/4 pt padding, script title face):
+
+| Group header | Source | Count |
+| --- | --- | --- |
+| `प्रमुख शहर · Major cities` | `MAJOR_CITIES` (`panchang/locations.ts`) | 52, Ujjain first (it is `DEFAULT_LOCATION`) |
+| `राजस्थान · तहसील` / `Rajasthan · tehsils` | `RAJASTHAN_TEHSILS` (`panchang/rajasthanTehsils.ts`) | 342 across all 33 revenue districts |
+
+- **A tehsil is a `City` carrying `districtHi`/`districtEn`**; the national tier leaves both undefined, and the picker partitions the filtered list on that field rather than on an index. Groups whose filtered result is empty drop their header.
+- **Row**: title line is the name in the current language + `· <district>` at 12 pt `ink-muted` (`numberOfLines` 1, `flexShrink`). Both halves are the same language, so one script face covers them — per §3.0 never mix a Devanagari district into a Latin caption. The caption line below stays the single-script cross-reference it always was.
+- **Search** (`cityMatchesQuery`, exported from `locations.ts` and shared with the Kundali birth-city sheet) matches English name, Hindi name, and district in either script, so `alwar` surfaces all 21 Alwar tehsils.
+- **The location chip (§ above) keeps showing the town alone**, not `town · district` — 12 pt in a pill has no room, and the picker's ✓ already resolves which same-named tehsil is active.
+- **Birth-city sheet** (`KundaliScreen.tsx`) shares the same list, search predicate and `· district` caption, and is a `FlatList` rather than a mapped `ScrollView` — at ~390 rows, mounting every row stalled the sheet open.
 
 ---
 
