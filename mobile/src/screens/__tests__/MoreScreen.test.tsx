@@ -43,6 +43,10 @@ const mockResetTour = jest.fn();
 jest.mock('@/contexts/TourContext', () => ({
   useTour: () => ({ resetTour: mockResetTour }),
 }));
+const mockOpenRatingPrompt = jest.fn();
+jest.mock('@/contexts/RatingPromptContext', () => ({
+  useRatingPrompt: () => ({ open: mockOpenRatingPrompt }),
+}));
 
 const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/language')>(
   '@/data/gita/language'
@@ -80,6 +84,7 @@ describe('MoreScreen (redesign)', () => {
     mockGetItem.mockReset().mockResolvedValue(null);
     mockSetItem.mockReset().mockResolvedValue(undefined);
     mockResetTour.mockClear();
+    mockOpenRatingPrompt.mockClear();
   });
 
   test('renders the practice/app/info rows with their a11y labels', async () => {
@@ -90,6 +95,7 @@ describe('MoreScreen (redesign)', () => {
     expect(byLabel(tree, 'Japam alarms, none set')).toBeDefined();
     expect(byLabel(tree, 'Language, Hindi')).toBeDefined();
     expect(byLabel(tree, 'Reading size, Standard')).toBeDefined();
+    expect(byLabel(tree, 'Rate the app')).toBeDefined();
     expect(byLabel(tree, 'Follow on Instagram')).toBeDefined();
     expect(byLabel(tree, 'About and disclaimer')).toBeDefined();
     expect(byLabel(tree, 'Report an error')).toBeDefined();
@@ -113,6 +119,16 @@ describe('MoreScreen (redesign)', () => {
     expect(nav.navigate).toHaveBeenCalledWith('Reminders');
     act(() => byLabel(tree, 'Japam alarms, none set').props.onPress());
     expect(nav.navigate).toHaveBeenCalledWith('JapamAlarms');
+  });
+
+  test('tapping Rate the app opens the rating sheet instead of leaving the app', async () => {
+    const openURL = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+    const tree = await renderMore(makeNav());
+    act(() => byLabel(tree, 'Rate the app').props.onPress());
+    expect(mockOpenRatingPrompt).toHaveBeenCalledTimes(1);
+    // The store hand-off happens from the sheet's primary button, not this row.
+    expect(openURL).not.toHaveBeenCalled();
+    openURL.mockRestore();
   });
 
   test('tapping Follow on Instagram opens the public profile URL', async () => {

@@ -63,7 +63,9 @@ import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import OnboardingSetupSheet from '@/components/OnboardingSetupSheet';
 import WhatsNewModal from '@/components/WhatsNewModal';
+import RatingPromptSheet from '@/components/RatingPromptSheet';
 import { TourProvider } from '@/contexts/TourContext';
+import { RatingPromptProvider } from '@/contexts/RatingPromptContext';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
@@ -183,6 +185,10 @@ export default function App() {
                         <JapamAlarmsProvider>
                         <PanchangLocationProvider>
                         <TourProvider>
+                        {/* Inside TourProvider + NotificationPreferencesProvider:
+                            the rating gate reads their "a surface is already
+                            asking" flags so prompts can't stack (§54). */}
+                        <RatingPromptProvider>
                         <ShareProvider>
                           <AppReadyGate>
                           <View style={{ flex: 1 }}>
@@ -212,9 +218,14 @@ export default function App() {
                                 install (or a replay) — language + reading size,
                                 the two settings the last tour steps point at. */}
                             <OnboardingSetupSheet />
+                          {/* Last in the stack: the rating ask never competes
+                              with the tour, onboarding, or What's New — its gate
+                              stands down while any of those want the screen. */}
+                          <RatingPromptSheet />
                           </View>
                           </AppReadyGate>
                         </ShareProvider>
+                        </RatingPromptProvider>
                         </TourProvider>
                         </PanchangLocationProvider>
                         </JapamAlarmsProvider>
