@@ -1,7 +1,8 @@
 import { CommonActions, createNavigationContainerRef } from '@react-navigation/native';
-import { panchangTabTarget } from '@/navigation/entryRoutes';
+import { buildEntryStartTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import * as Notifications from 'expo-notifications';
 import { findJapamMantra } from '@/data/japam';
+import { library } from '@/data/texts';
 import { isJapamAlarmPayload } from './japamAlarms';
 import type { TabParamList } from '@/navigation/types';
 import type { NotificationPayload } from './pure';
@@ -26,6 +27,18 @@ function isVratReminderPayload(data: unknown): data is { type: 'vrat-reminder'; 
   if (!data || typeof data !== 'object') return false;
   const d = data as Record<string, unknown>;
   return d.type === 'vrat-reminder' && typeof d.ruleId === 'string';
+}
+
+function isFestiveReminderPayload(
+  data: unknown
+): data is { type: 'festive-reminder'; ruleId: string; sourceId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return (
+    d.type === 'festive-reminder' &&
+    typeof d.ruleId === 'string' &&
+    typeof d.sourceId === 'string'
+  );
 }
 
 function isSadhanaReminderPayload(data: unknown): data is { type: 'sadhana-reminder'; programId: string } {
@@ -82,6 +95,40 @@ export function handleNotificationResponse(
         name: 'PanchangTab',
         // panchangTabTarget carries initial:false so a cold-start deep link
         // can't make ObservanceDetail the lazily-mounted stack's initial route.
+        params: panchangTabTarget('ObservanceDetail', { ruleId: data.ruleId }),
+      })
+    );
+    return true;
+  }
+
+  // A festive-reminder tap opens the very reading its message named — that
+  // invitation ("आज हनुमान चालीसा का पाठ करें") is the whole notification, so
+  // landing anywhere else breaks the promise. Routed through
+  // `buildEntryStartTarget`, the same table every other "open this text" surface
+  // uses, so a festival tap behaves exactly like tapping the text's own card.
+  //
+  // Unlike `daily-verse` above, opening a reader here is intended: this is a
+  // user-initiated "open this section" action, not a glance at one verse, so it
+  // legitimately moves the resume position the way any library tap does.
+  //
+  // The `sourceId` is validated against the shipped library so a notification
+  // queued months ago (they arm up to four months out) can't crash on content
+  // that an OTA update renamed — it falls back to the festival's Panchang page.
+  if (isFestiveReminderPayload(data)) {
+    const entry = library.find((e) => e.id === data.sourceId);
+    const target = entry ? buildEntryStartTarget(entry) : null;
+    if (target) {
+      navigationRef.dispatch(
+        CommonActions.navigate({
+          name: 'HomeTab',
+          params: { screen: target.screen, params: target.params },
+        } as never)
+      );
+      return true;
+    }
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'PanchangTab',
         params: panchangTabTarget('ObservanceDetail', { ruleId: data.ruleId }),
       })
     );

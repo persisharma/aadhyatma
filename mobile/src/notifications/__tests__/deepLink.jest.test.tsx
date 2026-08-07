@@ -114,4 +114,85 @@ describe('handleNotificationResponse', () => {
     expect(handleNotificationResponse(responseWithData({ type: 'vrat-reminder' }))).toBe(false);
     expect(dispatchSpy).not.toHaveBeenCalled();
   });
+
+  test('a festive-reminder tap opens the reading its message named', () => {
+    readySpy.mockReturnValue(true);
+
+    const festive = {
+      type: 'festive-reminder',
+      ruleId: 'hanuman-jayanti',
+      sourceId: 'hanuman-chalisa',
+      occurrenceDateKey: '2026-04-02',
+    };
+    expect(handleNotificationResponse(responseWithData(festive))).toBe(true);
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+
+    const action = dispatchSpy.mock.calls[0][0];
+    // Unlike daily-verse, this DOES open a reader: the notification body is an
+    // explicit invitation to read that text, so landing anywhere else breaks the
+    // promise. Routed through buildEntryStartTarget, the same table the text's own
+    // library card uses.
+    expect(action).toMatchObject({
+      type: 'NAVIGATE',
+      payload: {
+        name: 'HomeTab',
+        params: {
+          screen: 'ChalisaReader',
+          params: { chalisaId: 'hanuman-chalisa', initialIndex: 0 },
+        },
+      },
+    });
+  });
+
+  test('a festive-reminder for a multi-chapter text opens its chapters index', () => {
+    readySpy.mockReturnValue(true);
+
+    const festive = {
+      type: 'festive-reminder',
+      ruleId: 'janmashtami',
+      sourceId: 'bhagavad-gita',
+      occurrenceDateKey: '2026-09-04',
+    };
+    expect(handleNotificationResponse(responseWithData(festive))).toBe(true);
+
+    const action = dispatchSpy.mock.calls[0][0];
+    expect(action.payload?.name).toBe('HomeTab');
+    expect(action.payload?.params).toMatchObject({ screen: 'GitaChapters' });
+  });
+
+  test('a festive-reminder naming unknown content falls back to the festival page', () => {
+    readySpy.mockReturnValue(true);
+
+    // A notification armed months ago can outlive an OTA content rename; it must
+    // still land somewhere meaningful rather than no-op or crash.
+    const festive = {
+      type: 'festive-reminder',
+      ruleId: 'diwali',
+      sourceId: 'retired-by-an-ota-update',
+      occurrenceDateKey: '2026-11-08',
+    };
+    expect(handleNotificationResponse(responseWithData(festive))).toBe(true);
+
+    const action = dispatchSpy.mock.calls[0][0];
+    expect(action).toMatchObject({
+      type: 'NAVIGATE',
+      payload: {
+        name: 'PanchangTab',
+        params: { screen: 'ObservanceDetail', params: { ruleId: 'diwali' } },
+      },
+    });
+  });
+
+  test('ignores a festive-reminder payload missing ruleId or sourceId', () => {
+    readySpy.mockReturnValue(true);
+
+    for (const data of [
+      { type: 'festive-reminder' },
+      { type: 'festive-reminder', ruleId: 'diwali' },
+      { type: 'festive-reminder', sourceId: 'mahalakshmi-ashtakam' },
+    ]) {
+      expect(handleNotificationResponse(responseWithData(data))).toBe(false);
+    }
+    expect(dispatchSpy).not.toHaveBeenCalled();
+  });
 });

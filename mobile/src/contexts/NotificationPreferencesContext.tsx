@@ -27,6 +27,12 @@ export type NotificationPreferences = {
   dailyVerseEnabled: boolean;
   /** One or more daily reminder times, sorted by hour:minute. */
   times: TimeOfDay[];
+  /**
+   * Festive reminders — one morning notification on each famous festival in
+   * `notifications/festiveReminders.ts`. Default ON: it needs no setup and rides
+   * the daily-verse permission grant. Armed by `<FestiveReminderScheduler>`.
+   */
+  festiveRemindersEnabled: boolean;
 };
 
 type NotificationMeta = {
@@ -37,6 +43,7 @@ type NotificationMeta = {
 const DEFAULTS: NotificationPreferences = {
   dailyVerseEnabled: true,
   times: [{ hour: 7, minute: 0 }],
+  festiveRemindersEnabled: true,
 };
 
 const META_DEFAULTS: NotificationMeta = {
@@ -53,6 +60,8 @@ type NotificationPreferencesContextValue = {
   shouldShowOptIn: boolean;
   /** Toggle daily verse on/off. When turning on, also requests permission. */
   setDailyVerseEnabled: (enabled: boolean) => Promise<void>;
+  /** Toggle festive reminders on/off. When turning on, also requests permission. */
+  setFestiveRemindersEnabled: (enabled: boolean) => Promise<void>;
   /** Replace the full set of reminder times. The list is normalised (sorted,
    * deduped, capped at MAX_REMINDER_TIMES) before being persisted. */
   setTimes: (times: TimeOfDay[]) => Promise<void>;
@@ -133,6 +142,13 @@ function parsePrefs(raw: string | null): NotificationPreferences {
           ? parsed.dailyVerseEnabled
           : DEFAULTS.dailyVerseEnabled,
       times,
+      // Absent key = a user who upgraded from before festive reminders existed.
+      // They fall to the default (on), which is the same treatment a fresh
+      // install gets — the feature ships enabled, not opted into.
+      festiveRemindersEnabled:
+        typeof parsed.festiveRemindersEnabled === 'boolean'
+          ? parsed.festiveRemindersEnabled
+          : DEFAULTS.festiveRemindersEnabled,
     };
   } catch {
     return DEFAULTS;
@@ -232,12 +248,16 @@ export function NotificationPreferencesProvider({
           }
         }
 
-        // The toggle defaults to ON, but a fresh install starts with
-        // `undetermined` permission, so the reconciliation effect below would
-        // silently cancel everything. Request permission once per cold start
-        // while still undetermined so the default-on behaviour actually fires.
-        // The OS rate-limits the prompt itself once the user has answered.
-        if (loadedPrefs.dailyVerseEnabled && status === 'undetermined') {
+        // Both the daily-verse and festive toggles default to ON, but a fresh
+        // install starts with `undetermined` permission, so the reconciliation
+        // effect below would silently cancel everything. Request permission once
+        // per cold start while still undetermined so the default-on behaviour
+        // actually fires. The OS rate-limits the prompt itself once the user has
+        // answered. One grant covers every notification family (§38).
+        if (
+          (loadedPrefs.dailyVerseEnabled || loadedPrefs.festiveRemindersEnabled) &&
+          status === 'undetermined'
+        ) {
           try {
             const { status: requested } = await Notifications.requestPermissionsAsync({
               ios: { allowAlert: true, allowBadge: true, allowSound: true },
@@ -291,7 +311,18 @@ export function NotificationPreferencesProvider({
     // notifications into the new language (they're built ahead of time). `dayAngas`
     // for the same reason: titles carry the fire day's tithi/vrat, so a new
     // resolution (first solve, location switch, day rollover) must rewrite them.
-  }, [isLoading, prefs, permissionStatus, foregroundTick, lang, dayAngas]);
+    // Depends on the two daily-verse fields rather than the whole `prefs` object,
+    // so toggling an unrelated pref (festive reminders) can't trigger a pointless
+    // cancel-and-reschedule of the whole 30-day window.
+  }, [
+    isLoading,
+    prefs.dailyVerseEnabled,
+    prefs.times,
+    permissionStatus,
+    foregroundTick,
+    lang,
+    dayAngas,
+  ]);
 
   // Keep the toggle honest: `enabled=true` with a `denied` OS permission is
   // an inconsistent state — reminders can't fire, so the UI must not claim
@@ -302,15 +333,22 @@ export function NotificationPreferencesProvider({
   //       to the app (foreground re-check picks up the new status).
   // Once flipped, the user must toggle on again to re-prompt — and on a
   // hard denial that toggle bounces back, surfacing the OS-side block.
+  // Festive reminders ride the same grant, so a hard denial has to flip that
+  // toggle too — otherwise the Reminders screen shows an "on" switch for pushes
+  // the OS will never deliver.
   useEffect(() => {
     if (isLoading) return;
-    if (prefs.dailyVerseEnabled && permissionStatus === 'denied') {
-      const next = { ...prefsRef.current, dailyVerseEnabled: false };
-      prefsRef.current = next;
-      setPrefs(next);
-      AsyncStorage.setItem(PREFS_KEY, JSON.stringify(next)).catch(() => undefined);
-    }
-  }, [isLoading, prefs.dailyVerseEnabled, permissionStatus]);
+    if (permissionStatus !== 'denied') return;
+    if (!prefs.dailyVerseEnabled && !prefs.festiveRemindersEnabled) return;
+    const next = {
+      ...prefsRef.current,
+      dailyVerseEnabled: false,
+      festiveRemindersEnabled: false,
+    };
+    prefsRef.current = next;
+    setPrefs(next);
+    AsyncStorage.setItem(PREFS_KEY, JSON.stringify(next)).catch(() => undefined);
+  }, [isLoading, prefs.dailyVerseEnabled, prefs.festiveRemindersEnabled, permissionStatus]);
 
   // On app foreground transitions, re-check permission and bump foregroundTick
   // so the reconciliation effect re-runs with fresh dates.
@@ -386,6 +424,26 @@ export function NotificationPreferencesProvider({
     [permissionStatus, persistPrefs, requestPermission]
   );
 
+  const setFestiveRemindersEnabled = useCallback<
+    NotificationPreferencesContextValue['setFestiveRemindersEnabled']
+  >(
+    async (enabled) => {
+      if (enabled) {
+        let status = permissionStatus;
+        if (status !== 'granted') {
+          status = await requestPermission();
+        }
+        // On a hard denial the switch bounces back, surfacing the OS-side block —
+        // same contract as the daily-verse toggle.
+        const granted = status === 'granted';
+        await persistPrefs((prev) => ({ ...prev, festiveRemindersEnabled: granted }));
+      } else {
+        await persistPrefs((prev) => ({ ...prev, festiveRemindersEnabled: false }));
+      }
+    },
+    [permissionStatus, persistPrefs, requestPermission]
+  );
+
   const setTimes = useCallback<NotificationPreferencesContextValue['setTimes']>(
     async (times) => {
       const next = normaliseTimes(times);
@@ -425,6 +483,7 @@ export function NotificationPreferencesProvider({
       isLoading,
       shouldShowOptIn,
       setDailyVerseEnabled,
+      setFestiveRemindersEnabled,
       setTimes,
       markOptInPromptShown,
       requestPermission,
@@ -437,6 +496,7 @@ export function NotificationPreferencesProvider({
       isLoading,
       shouldShowOptIn,
       setDailyVerseEnabled,
+      setFestiveRemindersEnabled,
       setTimes,
       markOptInPromptShown,
       requestPermission,
