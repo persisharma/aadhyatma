@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 
 import { library } from '@/data/texts';
+import { getTodayRecommendationDetails } from '@/data/discoveryMeta';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import { OBSERVANCE_RULES } from '@/panchang/festivals';
 import { getNextOccurrence } from '@/panchang/vratCatalog';
@@ -51,6 +52,17 @@ for (const entry of FESTIVE_REMINDERS) {
   assert.ok(
     target,
     `content "${entry.sourceId}" (festive reminder "${entry.ruleId}") has no start route`
+  );
+  // A hidden or retired entry is silently dropped by the FOR TODAY row, so the
+  // notification would name a reading the homepage then refuses to show.
+  assert.equal(
+    libraryEntry.status,
+    'active',
+    `content "${entry.sourceId}" (festive reminder "${entry.ruleId}") is not active`
+  );
+  assert.ok(
+    !libraryEntry.hidden,
+    `content "${entry.sourceId}" (festive reminder "${entry.ruleId}") is hidden`
   );
 }
 
@@ -115,4 +127,45 @@ for (const entry of FESTIVE_REMINDERS) {
       `"${entry.ruleId}" resolved to a past date`
     );
   }
+}
+
+// ---------------------------------------------------------------------------
+// The homepage shows what the notification promised
+// ---------------------------------------------------------------------------
+{
+  // A festive reminder lands the user on Home, so Home's FOR TODAY row has to
+  // lead with the festival's reading on that day — otherwise the notification
+  // invites the user to a text the destination never shows. Both surfaces read
+  // this same catalog; this is the assertion that keeps them in step.
+  const from = new Date(2026, 0, 1);
+  for (const entry of FESTIVE_REMINDERS) {
+    const occurrence = getNextOccurrence(entry.ruleId, from, 'purnimant');
+    assert.ok(occurrence, `"${entry.ruleId}" has no occurrence to check the homepage against`);
+
+    const details = getTodayRecommendationDetails(occurrence.date);
+    const match = details.find((d) => d.entry.id === entry.sourceId);
+    assert.ok(
+      match,
+      `Home's FOR TODAY row on ${entry.ruleId} does not include "${entry.sourceId}"`
+    );
+    assert.ok(
+      match.festivalHi && match.festivalEn,
+      `"${entry.sourceId}" on ${entry.ruleId} is not attributed to a festival`
+    );
+    // Festival content leads: the first card is never a plain weekday pick.
+    assert.ok(
+      details[0]?.festivalHi,
+      `Home's FOR TODAY row on ${entry.ruleId} leads with a non-festival card`
+    );
+  }
+}
+
+// An ordinary day is unchanged: no festival attribution, weekday deity content.
+{
+  const details = getTodayRecommendationDetails(new Date(2026, 6, 14)); // a Tuesday
+  assert.ok(details.length > 0, 'an ordinary day should still recommend something');
+  assert.ok(
+    details.some((d) => d.entry.id === 'hanuman-chalisa'),
+    'Tuesday should still surface Hanuman content through the vaar deity map'
+  );
 }

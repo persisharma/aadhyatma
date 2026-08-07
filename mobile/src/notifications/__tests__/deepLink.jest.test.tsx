@@ -115,7 +115,7 @@ describe('handleNotificationResponse', () => {
     expect(dispatchSpy).not.toHaveBeenCalled();
   });
 
-  test('a festive-reminder tap opens the reading its message named', () => {
+  test('a festive-reminder tap lands on the Home screen, not a reader', () => {
     readySpy.mockReturnValue(true);
 
     const festive = {
@@ -128,67 +128,56 @@ describe('handleNotificationResponse', () => {
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
 
     const action = dispatchSpy.mock.calls[0][0];
-    // Unlike daily-verse, this DOES open a reader: the notification body is an
-    // explicit invitation to read that text, so landing anywhere else breaks the
-    // promise. Routed through buildEntryStartTarget, the same table the text's own
-    // library card uses.
+    // The reading the message named is one tap away in Home's FOR TODAY row,
+    // which leads with the festival's content on a festival day. Landing here
+    // instead of in a reader keeps the resume position safe (same reason
+    // daily-verse stays on a tab) and lets Home recompute today from today.
+    // `screen: 'Home'` is explicit — focusing the tab alone would restore
+    // whatever screen the Home stack was left on.
     expect(action).toMatchObject({
       type: 'NAVIGATE',
-      payload: {
-        name: 'HomeTab',
-        params: {
-          screen: 'ChalisaReader',
-          params: { chalisaId: 'hanuman-chalisa', initialIndex: 0 },
-        },
-      },
+      payload: { name: 'HomeTab', params: { screen: 'Home' } },
     });
   });
 
-  test('a festive-reminder for a multi-chapter text opens its chapters index', () => {
+  test('a festive-reminder lands on Home regardless of the content it named', () => {
     readySpy.mockReturnValue(true);
 
-    const festive = {
-      type: 'festive-reminder',
-      ruleId: 'janmashtami',
-      sourceId: 'bhagavad-gita',
-      occurrenceDateKey: '2026-09-04',
-    };
-    expect(handleNotificationResponse(responseWithData(festive))).toBe(true);
-
-    const action = dispatchSpy.mock.calls[0][0];
-    expect(action.payload?.name).toBe('HomeTab');
-    expect(action.payload?.params).toMatchObject({ screen: 'GitaChapters' });
+    // Including content an OTA update has since retired: the payload's sourceId
+    // no longer drives routing, so a stale one cannot strand the user.
+    for (const sourceId of ['bhagavad-gita', 'retired-by-an-ota-update']) {
+      dispatchSpy.mockClear();
+      const festive = {
+        type: 'festive-reminder',
+        ruleId: 'janmashtami',
+        sourceId,
+        occurrenceDateKey: '2026-09-04',
+      };
+      expect(handleNotificationResponse(responseWithData(festive))).toBe(true);
+      expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+        payload: { name: 'HomeTab', params: { screen: 'Home' } },
+      });
+    }
   });
 
-  test('a festive-reminder naming unknown content falls back to the festival page', () => {
+  test('a festive-reminder without a sourceId still routes', () => {
     readySpy.mockReturnValue(true);
 
-    // A notification armed months ago can outlive an OTA content rename; it must
-    // still land somewhere meaningful rather than no-op or crash.
-    const festive = {
-      type: 'festive-reminder',
-      ruleId: 'diwali',
-      sourceId: 'retired-by-an-ota-update',
-      occurrenceDateKey: '2026-11-08',
-    };
-    expect(handleNotificationResponse(responseWithData(festive))).toBe(true);
-
-    const action = dispatchSpy.mock.calls[0][0];
-    expect(action).toMatchObject({
-      type: 'NAVIGATE',
-      payload: {
-        name: 'PanchangTab',
-        params: { screen: 'ObservanceDetail', params: { ruleId: 'diwali' } },
-      },
+    expect(
+      handleNotificationResponse(
+        responseWithData({ type: 'festive-reminder', ruleId: 'diwali' })
+      )
+    ).toBe(true);
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      payload: { name: 'HomeTab', params: { screen: 'Home' } },
     });
   });
 
-  test('ignores a festive-reminder payload missing ruleId or sourceId', () => {
+  test('ignores a festive-reminder payload missing ruleId', () => {
     readySpy.mockReturnValue(true);
 
     for (const data of [
       { type: 'festive-reminder' },
-      { type: 'festive-reminder', ruleId: 'diwali' },
       { type: 'festive-reminder', sourceId: 'mahalakshmi-ashtakam' },
     ]) {
       expect(handleNotificationResponse(responseWithData(data))).toBe(false);

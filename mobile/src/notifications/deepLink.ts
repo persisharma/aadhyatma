@@ -1,8 +1,7 @@
 import { CommonActions, createNavigationContainerRef } from '@react-navigation/native';
-import { buildEntryStartTarget, panchangTabTarget } from '@/navigation/entryRoutes';
+import { panchangTabTarget } from '@/navigation/entryRoutes';
 import * as Notifications from 'expo-notifications';
 import { findJapamMantra } from '@/data/japam';
-import { library } from '@/data/texts';
 import { isJapamAlarmPayload } from './japamAlarms';
 import type { TabParamList } from '@/navigation/types';
 import type { NotificationPayload } from './pure';
@@ -31,14 +30,13 @@ function isVratReminderPayload(data: unknown): data is { type: 'vrat-reminder'; 
 
 function isFestiveReminderPayload(
   data: unknown
-): data is { type: 'festive-reminder'; ruleId: string; sourceId: string } {
+): data is { type: 'festive-reminder'; ruleId: string } {
   if (!data || typeof data !== 'object') return false;
   const d = data as Record<string, unknown>;
-  return (
-    d.type === 'festive-reminder' &&
-    typeof d.ruleId === 'string' &&
-    typeof d.sourceId === 'string'
-  );
+  // Only `ruleId` gates routing. The payload also carries `sourceId` (the text
+  // the message named), but Home re-derives today's content from the date, so
+  // routing must not fail on a payload missing it.
+  return d.type === 'festive-reminder' && typeof d.ruleId === 'string';
 }
 
 function isSadhanaReminderPayload(data: unknown): data is { type: 'sadhana-reminder'; programId: string } {
@@ -101,36 +99,26 @@ export function handleNotificationResponse(
     return true;
   }
 
-  // A festive-reminder tap opens the very reading its message named — that
-  // invitation ("आज हनुमान चालीसा का पाठ करें") is the whole notification, so
-  // landing anywhere else breaks the promise. Routed through
-  // `buildEntryStartTarget`, the same table every other "open this text" surface
-  // uses, so a festival tap behaves exactly like tapping the text's own card.
+  // A festive-reminder tap lands on the HOME screen, not on a reader.
   //
-  // Unlike `daily-verse` above, opening a reader here is intended: this is a
-  // user-initiated "open this section" action, not a glance at one verse, so it
-  // legitimately moves the resume position the way any library tap does.
+  // The reading stays one tap away, because Home's FOR TODAY row leads with the
+  // festival's own content on a festival day (`getTodayRecommendationsForDate`
+  // reads the same curated catalog the notification's copy came from). Landing
+  // here rather than deep in a reader keeps three things true: the reader's
+  // `setProgress` effect can't clobber the user's resume position on a tap they
+  // may have made from a lock screen (the same reason `daily-verse` above stays
+  // on a tab), the day's Panchang/routine context arrives with the reading, and
+  // a notification armed up to four months ago can't strand the user on content
+  // an OTA update has since renamed — Home recomputes today from today.
   //
-  // The `sourceId` is validated against the shipped library so a notification
-  // queued months ago (they arm up to four months out) can't crash on content
-  // that an OTA update renamed — it falls back to the festival's Panchang page.
+  // `{ screen: 'Home' }` is explicit: focusing `HomeTab` alone would restore
+  // whatever screen the Home stack was left on, which may be several readers deep.
   if (isFestiveReminderPayload(data)) {
-    const entry = library.find((e) => e.id === data.sourceId);
-    const target = entry ? buildEntryStartTarget(entry) : null;
-    if (target) {
-      navigationRef.dispatch(
-        CommonActions.navigate({
-          name: 'HomeTab',
-          params: { screen: target.screen, params: target.params },
-        } as never)
-      );
-      return true;
-    }
     navigationRef.dispatch(
       CommonActions.navigate({
-        name: 'PanchangTab',
-        params: panchangTabTarget('ObservanceDetail', { ruleId: data.ruleId }),
-      })
+        name: 'HomeTab',
+        params: { screen: 'Home' },
+      } as never)
     );
     return true;
   }
