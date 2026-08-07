@@ -68,7 +68,7 @@ describe('isEligibleForRatingPrompt', () => {
   });
 
   it('keeps asking indefinitely while MAX_ASKS is null', () => {
-    // The 50th ask is as eligible as the first — only rating or opting out stops it.
+    // The 50th ask is as eligible as the first — only rating stops it from the sheet.
     const state: RatingPromptState = { askCount: 50, lastAskedAt: null, outcome: 'pending' };
     expect(isEligibleForRatingPrompt(eligibleInput({ state }))).toBe(true);
   });
@@ -123,27 +123,35 @@ describe('state transitions', () => {
     ).toBe(false);
   });
 
-  it('only "Don\'t ask again" ends the cycle now that asks are uncapped', () => {
+  it('runs indefinitely — rating is the only exit the sheet offers', () => {
     let state = RATING_PROMPT_DEFAULTS;
-    // Four "Maybe later" dismissals, one every cooldown window.
-    for (let i = 0; i < 4; i += 1) {
+    // Ten "Maybe later" dismissals, one every cooldown window. The sheet ships
+    // with two actions only, so this is the whole vocabulary a user has short of
+    // rating: the cadence never runs out on its own.
+    for (let i = 0; i < 10; i += 1) {
       state = afterAsked(state, NOW + i * REASK_COOLDOWN_DAYS * DAY_MS);
     }
-    expect(state.askCount).toBe(4);
-
-    // Still eligible for a fifth — repetition is the point of the 5-day cadence.
+    expect(state.askCount).toBe(10);
     expect(
       isEligibleForRatingPrompt(
-        eligibleInput({ state, now: NOW + 10 * REASK_COOLDOWN_DAYS * DAY_MS })
+        eligibleInput({ state, now: NOW + 100 * REASK_COOLDOWN_DAYS * DAY_MS })
       )
     ).toBe(true);
 
-    // Opting out is the only thing that stops it.
-    state = afterDeclined(state, NOW + 10 * REASK_COOLDOWN_DAYS * DAY_MS);
+    // Rating ends it.
     expect(
       isEligibleForRatingPrompt(
-        eligibleInput({ state, now: NOW + 500 * REASK_COOLDOWN_DAYS * DAY_MS })
+        eligibleInput({ state: afterRated(state, NOW), now: NOW + 1000 * DAY_MS })
       )
+    ).toBe(false);
+  });
+
+  it('still honours a declined state, though nothing in the UI writes one', () => {
+    // afterDeclined is unreachable from the sheet now, but the gate must respect
+    // a state written by an earlier build (or a future Settings-side opt-out).
+    const state = afterDeclined(RATING_PROMPT_DEFAULTS, NOW);
+    expect(
+      isEligibleForRatingPrompt(eligibleInput({ state, now: NOW + 1000 * DAY_MS }))
     ).toBe(false);
   });
 });

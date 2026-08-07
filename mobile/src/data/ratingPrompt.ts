@@ -140,7 +140,15 @@ export function afterRated(state: RatingPromptState, now: number): RatingPromptS
   return { ...state, outcome: 'rated', lastAskedAt: now };
 }
 
-/** State after "Don't ask again" — terminal. */
+/**
+ * State after a permanent opt-out — terminal.
+ *
+ * NOT reachable from the sheet: the card ships with two actions only ("now" and
+ * "later", product decision Aug 2026), so nothing in the current UI calls this.
+ * It is kept because the gate must still honour an `outcome: 'declined'` written
+ * by an earlier build, and because a Settings-side opt-out (the mitigation
+ * RULEBOOK §6.2 describes) would use exactly this transition.
+ */
 export function afterDeclined(state: RatingPromptState, now: number): RatingPromptState {
   return { ...state, outcome: 'declined', lastAskedAt: now };
 }

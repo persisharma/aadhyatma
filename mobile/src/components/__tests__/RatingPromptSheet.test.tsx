@@ -218,10 +218,10 @@ describe('auto-open gate', () => {
     expect(modalVisible(tree)).toBe(true);
   });
 
-  test('never re-opens for a user who already answered', async () => {
+  test('never re-opens for a user who already rated', async () => {
     mockStore.set(
       RATING_PROMPT_STORAGE_KEY,
-      JSON.stringify({ askCount: 1, lastAskedAt: 1, outcome: 'declined' })
+      JSON.stringify({ askCount: 1, lastAskedAt: 1, outcome: 'rated' })
     );
     expect(modalVisible(await renderAndSettle())).toBe(false);
   });
@@ -252,15 +252,31 @@ describe('buttons', () => {
     expect(savedState()).toMatchObject({ askCount: 1, outcome: 'pending' });
   });
 
-  test('"Don\'t ask again" is terminal', async () => {
+  test('offers exactly two actions — no permanent opt-out', async () => {
     const tree = await renderAndSettle();
-    await act(async () => {
-      pressableByLabel(tree, "Don't ask again").props.onPress();
-    });
 
-    expect(openURL).not.toHaveBeenCalled();
-    expect(modalVisible(tree)).toBe(false);
-    expect(savedState().outcome).toBe('declined');
+    // Product decision (Aug 2026): "only now and later". Rating is the only
+    // outcome reachable from this card that ends the 5-day cadence.
+    expect(pressableByLabel(tree, 'Rate Vedansh on the store')).toBeDefined();
+    expect(pressableByLabel(tree, 'Maybe later')).toBeDefined();
+
+    const actions = tree.root.findAll(
+      (n) => typeof n.props?.onPress === 'function' && typeof n.props?.accessibilityLabel === 'string'
+    );
+    expect(actions).toHaveLength(2);
+
+    const text = allText(tree);
+    expect(text).not.toMatch(/ask again/i);
+    expect(text).not.toMatch(/फिर न पूछें/);
+  });
+
+  test('a state declined by an earlier build is still honoured', async () => {
+    // The button is gone, but the gate must not resurrect an opted-out user.
+    mockStore.set(
+      RATING_PROMPT_STORAGE_KEY,
+      JSON.stringify({ askCount: 3, lastAskedAt: 1, outcome: 'declined' })
+    );
+    expect(modalVisible(await renderAndSettle())).toBe(false);
   });
 
   test('a store hand-off that the OS refuses falls back to the plain listing', async () => {
@@ -286,11 +302,11 @@ describe('presentation', () => {
   // gu/kn are runtime-transliterated everywhere else in the app but hand-authored
   // here (`pick`), so each language needs its own copy to exist at all.
   test.each([
-    ['en', /Rate Vedansh/, /Don’t ask again/],
-    ['hi', /रेटिंग दें/, /फिर न पूछें/],
-    ['gu', /રેટિંગ આપો/, /ફરી ન પૂછો/],
-    ['kn', /ರೇಟಿಂಗ್ ನೀಡಿ/, /ಮತ್ತೆ ಕೇಳಬೇಡಿ/],
-  ] as const)('renders %s copy, not a hardcoded English string', async (lang, primary, never) => {
+    ['en', /Rate Vedansh/, /Maybe later/],
+    ['hi', /रेटिंग दें/, /बाद में/],
+    ['gu', /રેટિંગ આપો/, /પછી/],
+    ['kn', /ರೇಟಿಂಗ್ ನೀಡಿ/, /ನಂತರ/],
+  ] as const)('renders %s copy, not a hardcoded English string', async (lang, primary, later) => {
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => {
       tree = TestRenderer.create(
@@ -313,7 +329,7 @@ describe('presentation', () => {
     expect(modalVisible(tree)).toBe(true);
     const text = allText(tree);
     expect(text).toMatch(primary);
-    expect(text).toMatch(never);
+    expect(text).toMatch(later);
   });
 
   test('the decorative star row is hidden from assistive tech', async () => {

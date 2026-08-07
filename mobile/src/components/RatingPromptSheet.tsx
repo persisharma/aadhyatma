@@ -13,18 +13,23 @@ import { useRatingPrompt } from '@/contexts/RatingPromptContext';
  * rather than the pageSheet modals: this is a short interruption the user can
  * wave off, not a screen to work in.
  *
- * Three exits, all explicit — primary (store hand-off), "Maybe later" (asks
- * once more after the cooldown), and "Don't ask again" (terminal). The last one
- * is a first-class button, not buried: an easy permanent no is what makes the
- * ask itself acceptable.
+ * Two exits, both explicit — primary (store hand-off) and "Maybe later", which
+ * closes and lets the 5-day cadence bring the card back. There is deliberately
+ * NO permanent opt-out button (product decision, Aug 2026: "only now and
+ * later"); the only terminal state a user can reach from this card is rating.
+ *
+ * Because of that, `outcome: 'declined'` is no longer reachable from the UI. It
+ * stays in the model (`data/ratingPrompt.ts`) so a state written by an earlier
+ * build is still honoured and a future Settings-side opt-out has a home — see
+ * RULEBOOK §6.2 for the risk posture this creates.
  *
  * Visibility and persistence are owned by `RatingPromptContext`; this component
- * is pure presentation plus three callbacks.
+ * is pure presentation plus two callbacks.
  */
 export default function RatingPromptSheet() {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const { visible, rate, dismiss, decline } = useRatingPrompt();
+  const { visible, rate, dismiss } = useRatingPrompt();
 
   // gu/kn need their own serif or the script renders as tofu; hi/en keep the
   // faces the other modals use (Cormorant carries no Devanagari, so hi never
@@ -49,13 +54,6 @@ export default function RatingPromptSheet() {
     gu: 'પછી',
     kn: 'ನಂತರ',
   });
-  const neverLabel = pick(lang, {
-    hi: 'फिर न पूछें',
-    en: 'Don’t ask again',
-    gu: 'ફરી ન પૂછો',
-    kn: 'ಮತ್ತೆ ಕೇಳಬೇಡಿ',
-  });
-
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={dismiss}>
       <View style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}>
@@ -124,23 +122,6 @@ export default function RatingPromptSheet() {
               {laterLabel}
             </Text>
           </Pressable>
-
-          <Pressable
-            onPress={decline}
-            accessibilityRole="button"
-            accessibilityLabel="Don't ask again"
-            style={({ pressed }) => [styles.tertiary, { opacity: pressed ? 0.6 : 1 }]}
-          >
-            <Text
-              style={[
-                styles.tertiaryText,
-                { color: colors.inkMuted, fontFamily: labelFont },
-                lang !== 'en' && styles.indicLabelReset,
-              ]}
-            >
-              {neverLabel}
-            </Text>
-          </Pressable>
         </View>
       </View>
     </Modal>
@@ -188,7 +169,8 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   secondary: {
-    paddingVertical: 12,
+    paddingTop: 12,
+    paddingBottom: 4,
     minHeight: 44,
     alignItems: 'center',
     justifyContent: 'center',
@@ -197,17 +179,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     letterSpacing: 1.4,
     textTransform: 'uppercase',
-    includeFontPadding: false,
-  },
-  tertiary: {
-    paddingBottom: 4,
-    minHeight: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tertiaryText: {
-    fontSize: 12,
-    letterSpacing: 1.2,
     includeFontPadding: false,
   },
   indicLabelReset: {

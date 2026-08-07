@@ -1933,9 +1933,15 @@ pageSheet modals: this is a short interruption, not a screen to work in. Max wid
    ("एक मिनट लगेगा" / "It takes a minute").
 4. **Primary** — `saffron` fill, `radii.md`, 44 min-height: `रेटिंग दें` / `Rate Vedansh` /
    `રેટિંગ આપો` / `ರೇಟಿಂಗ್ ನೀಡಿ`. A11y label is the constant `"Rate Vedansh on the store"`.
-5. **`बाद में` / Maybe later** — 13 `ink-muted`, the tracked-uppercase secondary treatment.
-6. **`फिर न पूछें` / Don't ask again** — 12, same colour, one step quieter. Deliberately a
-   **first-class button, not a buried one**: an easy permanent no is what makes the ask acceptable.
+5. **`बाद में` / Maybe later** — 13 `ink-muted`, the tracked-uppercase secondary treatment. The
+   card's last element, and the only exit besides rating.
+
+**Two actions, no permanent opt-out** (product decision, Aug 2026: "only now and later"). The
+earlier third button — `फिर न पूछें` / Don't ask again — is **removed**. Consequence, stated
+plainly: with `MAX_ASKS` at `null` there is now no state a user can reach from this card that stops
+the 5-day cadence except rating. `outcome: 'declined'` and `afterDeclined` survive in the model so
+the gate still honours a state written by an earlier build, and so a Settings-side opt-out has a
+home if one is added — see RULEBOOK §6.2 for the risk posture and the mitigations on the table.
 
 All four languages are hand-authored via `pick` (this is UI chrome, not content, so nothing is
 transliterated), and Indic labels drop Latin tracking/uppercase per §3.
@@ -1944,7 +1950,7 @@ transliterated), and Indic labels drop Latin tracking/uppercase per §3.
 
 | Condition | Threshold | Why |
 |---|---|---|
-| Outcome still `pending` | — | `rated` and `declined` are terminal; neither is ever re-asked |
+| Outcome still `pending` | — | `rated` and `declined` are terminal. Only `rated` is reachable from the sheet; `declined` is honoured for back-compat (see below) |
 | Auto-opens so far | `< MAX_ASKS` (**`null` — no ceiling**) | Uncapped by product decision: keep asking until the user rates or opts out |
 | Cold starts | `≥ MIN_APP_OPENS` (5) | Earn the ask — same principle as the reminder opt-in (§38) |
 | Distinct active days | `≥ MIN_ACTIVE_DAYS` (3) | A habit, not a visit |
@@ -1971,10 +1977,9 @@ back to defaults, never crash). Behaviour:
   refuses the deep link, it falls back to the plain listing, then fails **silently** — a broken
   hand-off must not throw an error at a user who just tried to do us a favour. "Rated" records the
   *hand-off*, not a review the app cannot observe.
-- **Maybe later** → close only; the same card returns after the 5-day cooldown, indefinitely.
-- **Don't ask again** → `afterDeclined` (terminal). With `MAX_ASKS` at `null` this is the user's
-  **only** permanent escape, which is why it stays a visible first-class button and must not be
-  demoted to a long-press, a swipe, or an overflow (RULEBOOK §6.2).
+- **Maybe later** → close only; the same card returns after the 5-day cooldown, indefinitely. This
+  is the sheet's only non-terminal exit, and the `Modal`'s `onRequestClose` (Android back) maps to
+  it too — so a back press is a "later", never an opt-out.
 - The **More row** calls `open()`, which bypasses the gate and spends **no** ask slot — a user who
   went looking has opted in. It keeps working after `declined`; opting out silences the auto-ask.
 
@@ -1986,7 +1991,7 @@ back to defaults, never crash). Behaviour:
 row in `mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
 Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundary,
 defensive parse, URL shapes), `src/components/__tests__/RatingPromptSheet.test.tsx` (delay,
-persisted outcomes, refusal to stack, all four languages, a11y-hidden stars),
+persisted outcomes, refusal to stack, the two-action shape, all four languages, a11y-hidden stars),
 `src/screens/__tests__/MoreScreen.test.tsx` (the row opens the sheet instead of leaving the app).
 E2E: `.maestro/rating-prompt-smoke.yaml` — the manual path only; the auto path's thresholds are
 unreachable under `clearState`, so the gate is unit-tested instead.

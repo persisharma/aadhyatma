@@ -530,7 +530,7 @@
       modal as a control. Pick one, or tell me what's wrong with all three.
     </p>
     <div class="meta">
-      <span><b>Shipped today</b> the modal (variant C)</span>
+      <span><b>Shipped today</b> variant C, every 5 days, no opt-out</span>
       <span><b>Recommended</b> variant A</span>
       <span><b>Decision needed</b> placement + tone</span>
       <span><b>Palette</b> locked to theme/colors.ts</span>
@@ -555,12 +555,18 @@
         <span class="tag now">Variant C · shipped</span>
         <h3>The star modal</h3>
         <p>
-          Centered card, dimmed backdrop, decorative star row, three exits. It interrupts whatever
+          Centered card, dimmed backdrop, decorative star row, two exits. It interrupts whatever
           you were doing 2.5 seconds after launch — usually mid-Home, occasionally mid-reading.
         </p>
         <p>
           It is well-behaved for what it is. But nothing about it could only belong to Vedansh: swap
           the wordmark and it's any app on the store.
+        </p>
+        <p>
+          <strong>Now on a 5-day loop with no off switch.</strong> Since this prototype was first
+          drawn, the lifetime cap was removed and the permanent opt-out button deleted — so a user
+          who never rates sees this card every 5 days indefinitely. That raises the stakes on the
+          questions below considerably.
         </p>
         <dl class="verdict">
           <dt>Strength</dt>
@@ -599,7 +605,6 @@
                 <div class="b">यदि यह ऐप आपकी साधना में सहायक रहा है, तो स्टोर पर दी गई एक छोटी रेटिंग इसे और साधकों तक पहुँचाती है।</div>
                 <div class="p">रेटिंग दें</div>
                 <div class="s2">बाद में</div>
-                <div class="s3">फिर न पूछें</div>
               </div>
             </div>
           </div>
@@ -1026,8 +1031,9 @@
       <li>
         <span class="qn">05</span>
         <span>
-          <span class="qt">Is dropping "फिर न पूछें" acceptable once the ask can't interrupt?</span>
-          <span class="qh">Two actions is calmer, but it removes a permanent opt-out. Cap is still 2 asks either way.</span>
+          <span class="qt">The card now repeats every 5 days forever, with no way for a user to
+          turn it off. Do we ship that, or restore an exit?</span>
+          <span class="qh">Three exits are available: a finite cap, a Settings-side "don't ask for ratings" row, or the OS-throttled native review sheet. Also a store-review exposure — Apple directs developers to the native API and disallows custom review prompts.</span>
         </span>
       </li>
     </ol>

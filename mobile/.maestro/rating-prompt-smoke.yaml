@@ -6,8 +6,8 @@
 # exactly what makes the feature testable at all.
 #
 # Scope — what this flow covers and deliberately omits:
-#   - COVERS the sheet: it opens from More, shows its copy, and both
-#     "Maybe later" and "Don't ask again" dismiss it.
+#   - COVERS the sheet: it opens from More, shows its copy, "Maybe later"
+#     dismisses it, and it reopens on demand afterwards.
 #   - OMITS the AUTO-open path. That gate needs 5 cold starts, 3 active days,
 #     and 20 verse reads (data/ratingPrompt.ts) — `_launch.yaml` runs with
 #     clearState:true, so a Maestro run can never satisfy it. The gate is
@@ -17,16 +17,16 @@
 #     Play listing via Linking, and the flow could not come back from that —
 #     the same reason more-smoke.yaml never taps the Instagram row.
 #
-# Order note: "Don't ask again" IS tapped, and it persists a terminal outcome.
-# That only silences the AUTO path; the More row keeps working, and
-# `_launch.yaml`'s clearState wipes the flag for the next flow anyway.
+# Two actions only: the sheet ships "now" and "later" and NO permanent opt-out
+# (design.md §54), so this flow also pins that absence — a re-added third button
+# should fail here as well as in the unit tests.
 #
 # Selector notes (verified against MoreScreen.tsx / RatingPromptSheet.tsx):
 #   - The More row's a11y label is "Rate the app" (the visible label is
 #     localized: "Rate the App" in English, "ऐप को रेटिंग दें" in Hindi).
-#   - The sheet's buttons expose constant English a11y labels — "Maybe later",
-#     "Don't ask again", "Rate Vedansh on the store" — so they are stable in
-#     every reading language.
+#   - The sheet's buttons expose constant English a11y labels — "Maybe later"
+#     and "Rate Vedansh on the store" — so they are stable in every reading
+#     language.
 #   - The sheet is a TRANSPARENT Modal over More; config.yaml's
 #     snapshotKeyHonorModalViews:false lets Maestro read its RN content.
 
@@ -63,6 +63,9 @@ appId: com.prashantsharma.vedansh
     timeout: 10000
 - assertVisible: "Maybe later"
 - assertVisible: "Rate Vedansh"
+# Two actions only — no permanent opt-out on this card.
+- assertNotVisible: "Don't ask again"
+- assertNotVisible: "फिर न पूछें"
 
 # ── Step 5: "Maybe later" closes it without leaving the app ──
 - tapOn: "Maybe later"
@@ -70,16 +73,18 @@ appId: com.prashantsharma.vedansh
 - assertNotVisible: "Enjoying Vedansh\\?"
 - assertVisible: "Rate the App"
 
-# ── Step 6: Reopen, then take the permanent opt-out ──
+# ── Step 6: Reopens on demand — dismissing is never permanent ──
+# "Maybe later" only closes the card; the 5-day cadence brings it back and the
+# More row reopens it immediately. There is no state a user can reach from this
+# sheet that makes it unavailable.
 - tapOn: "Rate the app"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Enjoying Vedansh\\?"
     timeout: 10000
-- tapOn: "Don't ask again"
+- tapOn: "Maybe later"
 - waitForAnimationToEnd
 - assertNotVisible: "Enjoying Vedansh\\?"
-# The row itself stays — opting out silences the auto-ask, not the manual path.
 - assertVisible: "Rate the App"
 
 # ── Cleanup — termination resets navigation for the next flow ──

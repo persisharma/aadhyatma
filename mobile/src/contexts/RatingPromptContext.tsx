@@ -13,7 +13,6 @@ import {
   RATING_PROMPT_DEFAULTS,
   RATING_PROMPT_STORAGE_KEY,
   afterAsked,
-  afterDeclined,
   afterRated,
   isEligibleForRatingPrompt,
   parseRatingPromptState,
@@ -31,10 +30,11 @@ import { useTour } from '@/contexts/TourContext';
  * gate itself is pure (`data/ratingPrompt.ts`).
  *
  * Two entry points:
- *  - Auto — at most `MAX_ASKS` times over the app's lifetime, once per cold
- *    start, only for users with real practice history, and never on top of
- *    another first-run/post-update surface. Opening consumes an ask slot and
- *    starts the cooldown, so a swipe-away still counts as "we asked".
+ *  - Auto — once per cold start, on a `REASK_COOLDOWN_DAYS` cadence with no
+ *    lifetime ceiling, only for users with real practice history, and never on
+ *    top of another first-run/post-update surface. Opening records the ask and
+ *    restarts the cooldown, so a swipe-away still counts as "we asked". Rating
+ *    is the only outcome the sheet can reach that ends the cadence.
  *  - Manual — the "Rate the App" row in More (§37) calls `open()`, which
  *    bypasses the gate and does NOT spend an ask slot. A user who goes looking
  *    for it has already opted in.
@@ -51,10 +51,11 @@ type RatingPromptContextValue = {
   state: RatingPromptState;
   /** Open the sheet from a user action (More row) — ignores the gate. */
   open: () => void;
-  /** "Maybe later": close. An auto-open already spent its slot; a manual one hasn't. */
+  /**
+   * "Maybe later": close. The 5-day cadence brings the card back — there is no
+   * permanent opt-out on the sheet (design.md §54, RULEBOOK §6.2).
+   */
   dismiss: () => void;
-  /** "Don't ask again": close and never auto-open again. */
-  decline: () => void;
   /** "Rate Vedansh": hand off to the store listing and stop asking. */
   rate: () => void;
 };
@@ -153,11 +154,6 @@ export function RatingPromptProvider({ children }: { children: React.ReactNode }
 
   const dismiss = useCallback(() => setVisible(false), []);
 
-  const decline = useCallback(() => {
-    setVisible(false);
-    persist(afterDeclined(stateRef.current, Date.now()));
-  }, [persist]);
-
   const rate = useCallback(() => {
     setVisible(false);
     persist(afterRated(stateRef.current, Date.now()));
@@ -171,8 +167,8 @@ export function RatingPromptProvider({ children }: { children: React.ReactNode }
   }, [persist]);
 
   const value = useMemo<RatingPromptContextValue>(
-    () => ({ visible, state, open, dismiss, decline, rate }),
-    [visible, state, open, dismiss, decline, rate]
+    () => ({ visible, state, open, dismiss, rate }),
+    [visible, state, open, dismiss, rate]
   );
 
   return <RatingPromptContext.Provider value={value}>{children}</RatingPromptContext.Provider>;
