@@ -15,6 +15,7 @@ import {
   scheduleDailyVerseRollingWindow,
 } from '@/notifications/scheduler';
 import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
+import type { DayAngaMap } from '@/notifications/dayAnga';
 import { useGitaLanguage } from '@/data/gita/language';
 
 const PREFS_KEY = '@vedansh/notif-prefs';
@@ -59,6 +60,18 @@ type NotificationPreferencesContextValue = {
   markOptInPromptShown: () => Promise<void>;
   /** Ask the OS for notification permission. Returns the new status. */
   requestPermission: () => Promise<PermissionStatus>;
+  /**
+   * Publish the panchang context (tithi / vrat) used for notification titles.
+   *
+   * This provider sits ABOVE `PanchangLocationProvider` in the tree, so it cannot
+   * read the user's panchang location itself. `<DailyVerseAngaBridge />` mounts
+   * below both, resolves the window, and pushes the result up here — the same
+   * headless-component pattern `VratReminderScheduler` uses.
+   *
+   * `key` identifies the inputs the map was resolved for; republishing an
+   * identical key is ignored, so this can never drive a reschedule loop.
+   */
+  publishDayAngas: (key: string, map: DayAngaMap) => void;
 };
 
 const NotificationPreferencesContext =
@@ -167,6 +180,14 @@ export function NotificationPreferencesProvider({
   const [permissionStatus, setPermissionStatus] =
     useState<PermissionStatus>('undetermined');
   const [isLoading, setIsLoading] = useState(true);
+  // Panchang context for notification titles, pushed up by <DailyVerseAngaBridge />.
+  // Starts empty: the first reconcile schedules plain titles and the bridge's
+  // publish reschedules them with panchang. That extra pass costs one more
+  // cancel+reschedule at cold start — the same work this effect already does on
+  // every foreground — which is cheaper than gating the whole schedule on an
+  // astronomy solve that may never arrive (e.g. the bridge isn't mounted in tests).
+  const [dayAngas, setDayAngas] = useState<DayAngaMap>({});
+  const dayAngaKeyRef = useRef<string | null>(null);
   /** Tracks whether we've already bumped the app-open count for this mount. */
   const openCountBumpedRef = useRef(false);
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
@@ -255,7 +276,8 @@ export function NotificationPreferencesProvider({
         await scheduleDailyVerseRollingWindow(
           { enabled: true, times: prefs.times },
           new Date(),
-          lang
+          lang,
+          dayAngas
         ).catch(() => undefined);
       } else {
         await cancelAllDailyVerseNotifications().catch(() => undefined);
@@ -266,8 +288,10 @@ export function NotificationPreferencesProvider({
       cancelled = true;
     };
     // `lang` is included so changing the reading language reschedules the queued
-    // notifications into the new language (they're built ahead of time).
-  }, [isLoading, prefs, permissionStatus, foregroundTick, lang]);
+    // notifications into the new language (they're built ahead of time). `dayAngas`
+    // for the same reason: titles carry the fire day's tithi/vrat, so a new
+    // resolution (first solve, location switch, day rollover) must rewrite them.
+  }, [isLoading, prefs, permissionStatus, foregroundTick, lang, dayAngas]);
 
   // Keep the toggle honest: `enabled=true` with a `denied` OS permission is
   // an inconsistent state — reminders can't fire, so the UI must not claim
@@ -379,6 +403,14 @@ export function NotificationPreferencesProvider({
     await persistMeta((prev) => ({ ...prev, optInPromptShown: true }));
   }, [persistMeta]);
 
+  const publishDayAngas = useCallback<
+    NotificationPreferencesContextValue['publishDayAngas']
+  >((key, map) => {
+    if (dayAngaKeyRef.current === key) return;
+    dayAngaKeyRef.current = key;
+    setDayAngas(map);
+  }, []);
+
   const shouldShowOptIn =
     !isLoading &&
     !prefs.dailyVerseEnabled &&
@@ -396,6 +428,7 @@ export function NotificationPreferencesProvider({
       setTimes,
       markOptInPromptShown,
       requestPermission,
+      publishDayAngas,
     }),
     [
       prefs,
@@ -407,6 +440,7 @@ export function NotificationPreferencesProvider({
       setTimes,
       markOptInPromptShown,
       requestPermission,
+      publishDayAngas,
     ]
   );
 

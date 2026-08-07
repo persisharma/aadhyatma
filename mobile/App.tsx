@@ -68,6 +68,7 @@ import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
+import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
@@ -196,6 +197,11 @@ export default function App() {
                             <SadhanaCompletionOverlay />
                             <VratReminderScheduler />
                             <SadhanaReminderScheduler />
+                            {/* Feeds the daily-verse scheduler each fire day's
+                                tithi/vrat for its title. Must stay inside
+                                PanchangLocationProvider — the notification
+                                provider itself sits above it. */}
+                            <DailyVerseAngaBridge />
                             <MiniPlayer />
                             <NowPlayingScreen />
                             {/* Top-level so the spotlight overlays the tab bar +
