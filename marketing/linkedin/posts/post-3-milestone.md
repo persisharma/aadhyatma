@@ -1,10 +1,17 @@
 # Post 3 — Milestone: Android crossed 50+ downloads in week one
 
 **CTA link:** https://persisharma.github.io/get-vedansh/  (smart link → iPhone & Android)
-**Pair with:** `milestone-stores.png` (in this folder) — the two store listings side by side, captioned
-with the downloads-over-time figure. Already cropped and scrubbed: no status bars, no browser chrome,
-and the developer name/handle masked out of both listings. Upload as-is.
-Regenerate with `python3 ../make-store-card.py <play.png> <ios.png>` if the numbers move.
+**Pair with:** `milestone-stores-portrait.png` (4:5) — **upload this one.** LinkedIn's feed is mostly
+mobile, and 4:5 is the tallest ratio it shows uncropped, so the panels stay legible on a phone.
+`milestone-stores.png` is the same card in 2.27:1 landscape — fine on desktop, but it renders as a
+thin strip on mobile with ~8pt captions. Keep it only if you need a wide crop somewhere else.
+
+Both are already scrubbed: no status bars, no browser chrome, and the developer name/handle masked out
+of both listings. Upload as-is.
+Regenerate with `python3 ../make-store-card.py <play.png> <ios.png>` (writes both) if the numbers move.
+
+Attaching an image also stops LinkedIn rendering a link-preview card, so the CTA URL stays as plain
+text in the body — that's why the link can stay in the post rather than going in the first comment.
 **Suggested timing:** post while the week-one number is still fresh.
 
 **Numbers used (update before publishing if they've moved):**

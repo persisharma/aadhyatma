@@ -82,27 +82,57 @@ def rounded(im, r=28):
 play_panel, ios_panel = rounded(play_panel), rounded(ios_panel)
 
 # --- Compose -----------------------------------------------------------------
-M, GAP, LBL, CAP = 80, 70, 62, 130
-W = M * 2 + PW * 2 + GAP
-H = M + LBL + PH + CAP + M
-card = Image.new('RGB', (W, H), PARCHMENT)
-d = ImageDraw.Draw(card)
-
-def centre(text, font, cx, y, fill):
-    w = d.textbbox((0, 0), text, font=font)[2]
-    d.text((cx - w / 2, y), text, font=font, fill=fill)
-
-cols = [
-    (M,            ios_panel,  'App Store',   CAP_IOS,  INK),
-    (M + PW + GAP, play_panel, 'Google Play', CAP_PLAY, SAFFRON),  # saffron = the milestone
+BLOCKS = [
+    (ios_panel,  'App Store',   CAP_IOS,  INK),
+    (play_panel, 'Google Play', CAP_PLAY, SAFFRON),  # saffron = the milestone
 ]
-for x, panel, label, (big, small), big_fill in cols:
-    cx = x + PW / 2
-    centre(label.upper(), f_label, cx, M - 4, MUTED)
-    card.paste(panel, (x, M + LBL), panel)
-    y = M + LBL + PH + 26
-    centre(big, f_cap_big, cx, y, big_fill)
-    centre(small, f_cap_sm, cx, y + 56, MUTED)
+M, GAP, LBL, CAP = 80, 70, 62, 130
 
-card.save(OUT)
-print(f'{OUT}  {card.size[0]}x{card.size[1]}')
+
+def render(stacked):
+    """stacked=False → 2.27:1 landscape.  stacked=True → 4:5 portrait.
+
+    Portrait is the one to actually post: LinkedIn's feed is mostly mobile, and a
+    4:5 image gets far more vertical real estate than a wide strip, so the panel
+    text stays legible on a phone instead of shrinking to ~8pt.
+    """
+    if stacked:
+        W = M * 2 + PW
+        H = M + (LBL + PH + CAP) * 2 + GAP + M
+    else:
+        W = M * 2 + PW * 2 + GAP
+        H = M + LBL + PH + CAP + M
+    card = Image.new('RGB', (W, H), PARCHMENT)
+    d = ImageDraw.Draw(card)
+
+    def centre(text, font, cx, y, fill):
+        w = d.textbbox((0, 0), text, font=font)[2]
+        d.text((cx - w / 2, y), text, font=font, fill=fill)
+
+    for i, (panel, label, (big, small), big_fill) in enumerate(BLOCKS):
+        x = M if stacked else M + i * (PW + GAP)
+        top = M + i * (LBL + PH + CAP + GAP) if stacked else M
+        cx = x + PW / 2
+        centre(label.upper(), f_label, cx, top - 4, MUTED)
+        card.paste(panel, (x, top + LBL), panel)
+        y = top + LBL + PH + 26
+        centre(big, f_cap_big, cx, y, big_fill)
+        centre(small, f_cap_sm, cx, y + 56, MUTED)
+
+    if stacked:
+        # Two 1.58:1 panels stacked come out at ~0.62:1 — taller than the 4:5 (0.8)
+        # LinkedIn allows, so the feed would crop it. Pad the sides out to exactly
+        # 4:5 rather than shrinking the panels, which is what keeps phone text big.
+        target_w = round(H * 0.8)
+        if target_w > W:
+            padded_card = Image.new('RGB', (target_w, H), PARCHMENT)
+            padded_card.paste(card, ((target_w - W) // 2, 0))
+            card = padded_card
+    return card
+
+
+for stacked, path in ((False, OUT), (True, OUT.replace('.png', '-portrait.png'))):
+    card = render(stacked)
+    card.save(path)
+    r = card.size[0] / card.size[1]
+    print(f'{path}  {card.size[0]}x{card.size[1]}  ({r:.2f}:1)')
