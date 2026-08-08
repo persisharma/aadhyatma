@@ -39,15 +39,15 @@ type NotificationMeta = {
   appOpenCount: number;
   optInPromptShown: boolean;
   /**
-   * Has the one-time *re-offer* of the opt-in sheet been shown? The re-offer
-   * exists for installs where `optInPromptShown` was burned while the OS
-   * permission was never actually answered — the pre-fix Android builds read a
-   * never-requested POST_NOTIFICATIONS as `denied`, silently flipped the
-   * default-on reminder off, and let the user dismiss the sheet as their only
-   * ask. For those users the sheet is offered once more; answering or
-   * dismissing it sets this flag and ends the matter.
+   * When the user last said "no" to reminders, epoch ms — an OS-prompt
+   * refusal, a "Not now" on the opt-in sheet, or switching the toggle off.
+   * Drives the re-offer cadence: until a yes-or-no exists the sheet asks on
+   * every open, and after a no it returns once the 15-day snooze elapses.
+   * `null` = no decline on record (fresh installs, and every pre-cadence
+   * install — deliberately, so users the old Android bug silently opted out
+   * get their first re-offer on the launch after updating).
    */
-  optInReofferShown: boolean;
+  lastDeclinedAt: number | null;
 };
 
 const DEFAULTS: NotificationPreferences = {
@@ -58,8 +58,16 @@ const DEFAULTS: NotificationPreferences = {
 const META_DEFAULTS: NotificationMeta = {
   appOpenCount: 0,
   optInPromptShown: false,
-  optInReofferShown: false,
+  lastDeclinedAt: null,
 };
+
+/**
+ * How long a "no" silences the opt-in sheet. After an OS-prompt refusal, a
+ * "Not now", or a manual toggle-off, the sheet returns once this has elapsed
+ * — each further "no" restarts the clock.
+ */
+export const OPT_IN_REOFFER_SNOOZE_DAYS = 15;
+const OPT_IN_REOFFER_SNOOZE_MS = OPT_IN_REOFFER_SNOOZE_DAYS * 24 * 60 * 60 * 1000;
 
 type NotificationPreferencesContextValue = {
   prefs: NotificationPreferences;
@@ -175,12 +183,15 @@ function parseMeta(raw: string | null): NotificationMeta {
         typeof parsed.optInPromptShown === 'boolean'
           ? parsed.optInPromptShown
           : META_DEFAULTS.optInPromptShown,
-      // Absent on every pre-reoffer install by design: those are exactly the
-      // installs the re-offer must remain available for.
-      optInReofferShown:
-        typeof parsed.optInReofferShown === 'boolean'
-          ? parsed.optInReofferShown
-          : META_DEFAULTS.optInReofferShown,
+      // Absent on every pre-cadence install by design: a missing decline
+      // reads as "snooze already over", so the sheet re-offers on the first
+      // launch after updating and the normal 15-day cadence takes it from there.
+      lastDeclinedAt:
+        typeof parsed.lastDeclinedAt === 'number' &&
+        Number.isFinite(parsed.lastDeclinedAt) &&
+        parsed.lastDeclinedAt > 0
+          ? parsed.lastDeclinedAt
+          : META_DEFAULTS.lastDeclinedAt,
     };
   } catch {
     return META_DEFAULTS;
@@ -265,8 +276,10 @@ export function NotificationPreferencesProvider({
 
         // The toggle defaults to ON, but a fresh install has not been granted
         // notification permission yet, so the reconciliation effect below would
-        // silently cancel everything. Ask on the first launch that finds the
-        // permission unanswered, so the default-on behaviour actually fires.
+        // silently cancel everything. Ask on EVERY launch that finds the
+        // permission still unanswered (this effect runs each cold start), so
+        // the default-on behaviour actually fires — per product rule, the ask
+        // repeats until the user confirms a yes or a no.
         //
         // `status === 'undetermined'` here means "never answered" on BOTH
         // platforms — `readNotificationPermissionState()` folds Android's
@@ -275,8 +288,10 @@ export function NotificationPreferencesProvider({
         // entirely on Android and leave reminders off out of the box.
         //
         // `requestNotificationPermission()` records the ask, so a refusal
-        // resolves as `denied` from the next launch on and we don't re-prompt
-        // every cold start; the opt-in sheet (third open) is the second chance.
+        // resolves as `denied` from the next launch on and this stops firing;
+        // the refusal also flips the toggle off below, which stamps
+        // `lastDeclinedAt` and hands the follow-up to the opt-in sheet's
+        // 15-day re-offer cadence.
         if (loadedPrefs.dailyVerseEnabled && state.status === 'undetermined' && state.canAskAgain) {
           const requested = await requestNotificationPermission();
           if (cancelled) return;
@@ -332,6 +347,10 @@ export function NotificationPreferencesProvider({
   //       to the app (foreground re-check picks up the new status).
   // Once flipped, the user must toggle on again to re-prompt — and on a
   // hard denial that toggle bounces back, surfacing the OS-side block.
+  //
+  // Every flip is also a user "no" (they refused the prompt or revoked in
+  // system settings), so it stamps the decline and starts the re-offer snooze
+  // — otherwise the opt-in sheet would reappear on the very next open.
   useEffect(() => {
     if (isLoading) return;
     if (prefs.dailyVerseEnabled && permissionStatus === 'denied') {
@@ -339,6 +358,10 @@ export function NotificationPreferencesProvider({
       prefsRef.current = next;
       setPrefs(next);
       AsyncStorage.setItem(PREFS_KEY, JSON.stringify(next)).catch(() => undefined);
+      const nextMeta = { ...metaRef.current, lastDeclinedAt: Date.now() };
+      metaRef.current = nextMeta;
+      setMeta(nextMeta);
+      AsyncStorage.setItem(META_KEY, JSON.stringify(nextMeta)).catch(() => undefined);
     }
   }, [isLoading, prefs.dailyVerseEnabled, permissionStatus]);
 
@@ -397,11 +420,19 @@ export function NotificationPreferencesProvider({
         }
         const granted = status === 'granted';
         await persistPrefs((prev) => ({ ...prev, dailyVerseEnabled: granted }));
+        if (status === 'denied') {
+          // The enable attempt surfaced the OS prompt and the user refused —
+          // that's a "no": snooze the opt-in sheet for the full window.
+          await persistMeta((prev) => ({ ...prev, lastDeclinedAt: Date.now() }));
+        }
       } else {
         await persistPrefs((prev) => ({ ...prev, dailyVerseEnabled: false }));
+        // Switching the reminder off is the clearest "no" of all — start the
+        // snooze so the re-offer waits its 15 days rather than nagging.
+        await persistMeta((prev) => ({ ...prev, lastDeclinedAt: Date.now() }));
       }
     },
-    [permissionStatus, persistPrefs, requestPermission]
+    [permissionStatus, persistPrefs, persistMeta, requestPermission]
   );
 
   const setTimes = useCallback<NotificationPreferencesContextValue['setTimes']>(
@@ -418,12 +449,14 @@ export function NotificationPreferencesProvider({
   const markOptInPromptShown = useCallback<
     NotificationPreferencesContextValue['markOptInPromptShown']
   >(async () => {
-    // Whichever offer was on screen (first ask or re-offer), one dismissal or
-    // answer settles both — the user has now truly been asked.
+    // Closing the sheet without enabling is a "no": stamp the decline so the
+    // next offer waits out the snooze. The stamp is harmless on the Enable
+    // path (the sheet calls this there too) — with the reminder on, the gate
+    // never consults it.
     await persistMeta((prev) => ({
       ...prev,
       optInPromptShown: true,
-      optInReofferShown: true,
+      lastDeclinedAt: Date.now(),
     }));
   }, [persistMeta]);
 
@@ -435,25 +468,28 @@ export function NotificationPreferencesProvider({
     setDayAngas(map);
   }, []);
 
-  // The OS permission was never actually answered — an "Enable" tap can still
-  // put the system prompt on screen.
-  const permissionNeverAnswered =
-    permissionStatus === 'undetermined' && permission.canAskAgain;
   // Hard-blocked: the OS will not prompt again, so the sheet's Enable button
   // cannot succeed — don't show an offer that dead-ends. The Reminders screen's
   // banner (which routes to system Settings) owns this state.
   const permissionHardBlocked =
     permissionStatus === 'denied' && !permission.canAskAgain;
+  // The ask cadence, per product rule: until the user has confirmed a yes or a
+  // no, ask on every open; after a "no", come back once per snooze window.
+  // `lastDeclinedAt` is the single record of a "no" (OS refusal, sheet
+  // dismissal, manual toggle-off — every path stamps it), so "no decline on
+  // record" IS the not-yet-confirmed state, and an elapsed snooze re-offers.
+  // A "yes" needs no marker: the reminder is then on and the `!enabled` guard
+  // holds the sheet closed. (`optInPromptShown` no longer gates repeat offers
+  // — it survives only as a legacy field older builds may read.)
+  const reofferSnoozeOver =
+    meta.lastDeclinedAt === null ||
+    Date.now() - meta.lastDeclinedAt >= OPT_IN_REOFFER_SNOOZE_MS;
   const shouldShowOptIn =
     !isLoading &&
     !prefs.dailyVerseEnabled &&
     !permissionHardBlocked &&
     meta.appOpenCount >= 3 &&
-    (!meta.optInPromptShown ||
-      // One-time re-offer for installs whose only "ask" happened while the OS
-      // permission was still unanswered (the pre-fix Android state) — see the
-      // optInReofferShown doc on NotificationMeta.
-      (permissionNeverAnswered && !meta.optInReofferShown));
+    reofferSnoozeOver;
 
   const value = useMemo<NotificationPreferencesContextValue>(
     () => ({

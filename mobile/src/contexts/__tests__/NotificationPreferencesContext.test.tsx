@@ -135,39 +135,40 @@ describe('after the user has answered', () => {
   });
 });
 
-describe('opt-in sheet re-offer for unanswered installs', () => {
+describe('opt-in sheet cadence: every open until confirmed, then 15-day snooze', () => {
   const PREFS_KEY = '@vedansh/notif-prefs';
   const META_KEY = '@vedansh/notif-meta';
+  const DAY_MS = 24 * 60 * 60 * 1000;
 
-  /** Persisted state the pre-fix Android builds left behind: reminder silently
-   * flipped off, sheet already dismissed once, OS prompt never actually shown. */
-  async function seedAffectedInstall() {
+  async function seedOff(meta: Record<string, unknown>) {
     await AsyncStorage.setItem(
       PREFS_KEY,
       JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
     );
     await AsyncStorage.setItem(
       META_KEY,
-      JSON.stringify({ appOpenCount: 12, optInPromptShown: true })
+      JSON.stringify({ appOpenCount: 12, ...meta })
     );
   }
 
-  test('re-offers the sheet when the OS permission was never answered', async () => {
-    await seedAffectedInstall();
+  test('with no decline on record the sheet asks on every open — optInPromptShown no longer settles it', async () => {
+    // Persisted state the pre-fix Android builds left behind: reminder
+    // silently flipped off, sheet burned once, OS prompt never shown.
+    await seedOff({ optInPromptShown: true });
 
     await mountAndHydrate();
 
-    // No auto-prompt (reminder is off), but the sheet comes back once.
     expect(mockRequest).not.toHaveBeenCalled();
     expect(captured.permissionStatus).toBe('undetermined');
     expect(captured.shouldShowOptIn).toBe(true);
   });
 
-  test('the re-offer happens once: dismissing it settles both flags', async () => {
-    await seedAffectedInstall();
+  test('dismissing the sheet stamps the decline and starts the snooze', async () => {
+    await seedOff({ optInPromptShown: true });
     await mountAndHydrate();
     expect(captured.shouldShowOptIn).toBe(true);
 
+    const before = Date.now();
     await act(async () => {
       await captured.markOptInPromptShown();
     });
@@ -176,46 +177,59 @@ describe('opt-in sheet re-offer for unanswered installs', () => {
     expect(captured.shouldShowOptIn).toBe(false);
     const meta = JSON.parse((await AsyncStorage.getItem(META_KEY)) ?? '{}');
     expect(meta.optInPromptShown).toBe(true);
-    expect(meta.optInReofferShown).toBe(true);
+    expect(meta.lastDeclinedAt).toBeGreaterThanOrEqual(before);
   });
 
-  test('no re-offer once the user has actually answered the OS prompt', async () => {
-    await seedAffectedInstall();
+  test('a fresh "no" keeps the sheet away…', async () => {
+    await seedOff({ optInPromptShown: true, lastDeclinedAt: Date.now() - DAY_MS });
+
+    await mountAndHydrate();
+
+    expect(captured.shouldShowOptIn).toBe(false);
+  });
+
+  test('…and it returns once 15 days have passed', async () => {
+    await seedOff({ optInPromptShown: true, lastDeclinedAt: Date.now() - 16 * DAY_MS });
+
+    await mountAndHydrate();
+
+    expect(captured.shouldShowOptIn).toBe(true);
+  });
+
+  test('an OS-prompt refusal counts as the "no": the flip-off stamps the decline', async () => {
+    // Fresh install, launch ask fires, user refuses.
+    mockRequest.mockResolvedValue({ status: 'denied', canAskAgain: true });
+
+    await mountAndHydrate();
+
+    expect(captured.prefs.dailyVerseEnabled).toBe(false);
+    // Refused seconds ago → snoozed, not re-offered on this open.
+    expect(captured.shouldShowOptIn).toBe(false);
+    const meta = JSON.parse((await AsyncStorage.getItem(META_KEY)) ?? '{}');
+    expect(typeof meta.lastDeclinedAt).toBe('number');
+  });
+
+  test('manually switching the reminder off also starts the snooze', async () => {
     await AsyncStorage.setItem(NOTIF_PROMPTED_KEY, '1');
-    mockGet.mockResolvedValue({ status: 'denied', canAskAgain: true });
-
+    mockGet.mockResolvedValue({ status: 'granted', canAskAgain: true });
     await mountAndHydrate();
+    expect(captured.prefs.dailyVerseEnabled).toBe(true);
 
-    expect(captured.permissionStatus).toBe('denied');
+    await act(async () => {
+      await captured.setDailyVerseEnabled(false);
+    });
+    await flush();
+
+    expect(captured.prefs.dailyVerseEnabled).toBe(false);
     expect(captured.shouldShowOptIn).toBe(false);
-  });
-
-  test('no re-offer when a stored optInReofferShown flag says it already ran', async () => {
-    await AsyncStorage.setItem(
-      PREFS_KEY,
-      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
-    );
-    await AsyncStorage.setItem(
-      META_KEY,
-      JSON.stringify({ appOpenCount: 12, optInPromptShown: true, optInReofferShown: true })
-    );
-
-    await mountAndHydrate();
-
-    expect(captured.shouldShowOptIn).toBe(false);
+    const meta = JSON.parse((await AsyncStorage.getItem(META_KEY)) ?? '{}');
+    expect(typeof meta.lastDeclinedAt).toBe('number');
   });
 
   test('no sheet at all when the OS is hard-blocked — Enable could never succeed', async () => {
     // Android < 13 with notifications switched off in system settings: expo
     // reports denied + canAskAgain=false without the app ever asking.
-    await AsyncStorage.setItem(
-      PREFS_KEY,
-      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
-    );
-    await AsyncStorage.setItem(
-      META_KEY,
-      JSON.stringify({ appOpenCount: 12, optInPromptShown: false })
-    );
+    await seedOff({ optInPromptShown: false });
     mockGet.mockResolvedValue({ status: 'denied', canAskAgain: false });
 
     await mountAndHydrate();
@@ -225,7 +239,7 @@ describe('opt-in sheet re-offer for unanswered installs', () => {
     expect(captured.shouldShowOptIn).toBe(false);
   });
 
-  test('first-offer path is untouched: fresh meta still gates on the third open', async () => {
+  test('the third-open gate still applies before any offer', async () => {
     await AsyncStorage.setItem(
       PREFS_KEY,
       JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
