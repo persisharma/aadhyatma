@@ -45,6 +45,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
   const {
     prefs,
     permissionStatus,
+    canAskAgain,
     isLoading,
     setDailyVerseEnabled,
     setFestiveRemindersEnabled,
@@ -74,9 +75,18 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
     [setFestiveRemindersEnabled]
   );
 
-  const onOpenSystemSettings = useCallback(() => {
+  // The banner has two jobs, because "denied" has two flavours. While the OS
+  // prompt is still available (a single refusal on Android, where the system
+  // allows one more ask) the useful action is to ask again — `setDailyVerseEnabled`
+  // re-requests and switches the reminder on if granted. Once the OS is done
+  // asking, Settings is the only path left.
+  const onFixPermission = useCallback(() => {
+    if (canAskAgain) {
+      void setDailyVerseEnabled(true);
+      return;
+    }
     Linking.openSettings().catch(() => undefined);
-  }, []);
+  }, [canAskAgain, setDailyVerseEnabled]);
 
   const updateAt = useCallback(
     async (index: number, time: TimeOfDay) => {
@@ -222,9 +232,11 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
 
             {permissionStatus === 'denied' && (
               <Pressable
-                onPress={onOpenSystemSettings}
+                onPress={onFixPermission}
                 accessibilityRole="button"
-                accessibilityLabel="Open iOS settings"
+                accessibilityLabel={
+                  canAskAgain ? 'Allow notifications' : 'Open system settings'
+                }
                 style={({ pressed }) => [
                   styles.permissionBanner,
                   {
@@ -244,7 +256,9 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     },
                   ]}
                 >
-                  {pick(lang, { hi: 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।', en: 'Notifications are disabled. Tap to open Settings.', gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ખોલો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })}
+                  {canAskAgain
+                    ? pick(lang, { hi: 'सूचना अनुमति बंद है — अनुमति देने के लिए टैप करें।', en: 'Notifications are off. Tap to allow them.', gu: 'સૂચના પરવાનગી બંધ છે — પરવાનગી આપવા માટે ટૅપ કરો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಅನುಮತಿ ನೀಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })
+                    : pick(lang, { hi: 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।', en: 'Notifications are disabled. Tap to open Settings.', gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ખોલો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })}
                 </Text>
               </Pressable>
             )}
