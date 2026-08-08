@@ -151,6 +151,22 @@ Full walkthrough in [`docs/muhurat-finder-prototype.html`](../../muhurat-finder-
 
 Entry points: Panchang → Muhurat (primary), Home's **कुंडली/व्रत** grid neighbourhood (a **मुहूर्त** tile), and a contextual link from `MuhuratDetailScreen`.
 
+### 6.1 Inherited state — the finder owns none of this
+
+Every item below already ships. The finder **reads** it and must never keep a private copy:
+
+| Capability | Shipped as | Consequence for the finder |
+|---|---|---|
+| Location | `PanchangLocationContext` + `LocationPickerModal` — 54 bundled cities, GPS snapped to nearest, `gpsStatus` idle/locating/denied/error | Every window is sunrise-derived; changing the city changes every time on every screen |
+| Calendar system | purnimant (default) / amanta, persisted | **A correctness dependency.** Masa shuddhi asks which lunar month a date is in, and the two systems disagree across the whole krishna paksha — rule tables must declare which they assume |
+| Reading language | hi · en · gu · kn (gu/kn transliterated at runtime) | Inherited free *only if* every string is authored Devanagari + English and goes through `contentByLang` |
+| Reading size | `FontScaleContext` M/L, set at onboarding | A muhurat row is name + tag + time range; at L the range must not wrap (`tabular-nums` + `nowrap`) |
+| Reminders | `VratFollowContext` — `advanceDays 0\|1\|2\|3`, `dayOf`, `dayOfTime`; default 1 day + 07:00 | Reuse the vrat **follow-and-remind** pattern verbatim. **No quiet hours** — removed in #70 |
+| Panchang mode selector | पंचांग · व्रत-पर्व · ज्योतिष, fixed first control | Must not move when entering the finder |
+| Observance markers | star / dot / halfmoon on the month grid | Abujh days and muhurat hits mark the existing grid — no second calendar vocabulary |
+
+**Found while auditing this:** `LocationPickerModal` renders its "use my location" affordance as a 📍 emoji, while `design.md` specifies a drawn teardrop pin for the location chip ("no emoji per §5"). A live §5 exception worth closing separately from this PRD.
+
 **Design constraints** (per `design.md` §33/§51 and the PRD-14 non-negotiables): warm auspicious/avoid palette, no green/red, no emoji, tokens from `colors.ts`, Devanagari-first labels with English subtitles, disclaimer visible on every muhurat surface.
 
 ## 7. Content track — the real cost

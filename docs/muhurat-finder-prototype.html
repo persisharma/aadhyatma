@@ -468,8 +468,11 @@
       <div class="screen"><div class="pad">
         <div class="navrow">
           <div class="title">मुहूर्त<small>Muhurat</small></div>
-          <div class="locpill"><span class="pin"></span>उज्जैन</div>
+          <div class="locpill"><span class="pin"></span>उज्जैन ›</div>
         </div>
+
+        <!-- Fixed first control in every Panchang mode — never moves -->
+        <div class="chips"><div class="chip on">पंचांग</div><div class="chip">व्रत-पर्व</div><div class="chip">ज्योतिष</div></div>
 
         <div class="sechead-hi">आज के शुभ समय</div>
         <div class="muh now"><span class="mname">अमृत</span><span class="mtag">· शुभ</span><span class="mnow">अभी</span><span class="mtime">→ 12:32 pm</span></div>
@@ -594,29 +597,228 @@
           <p style="text-align:center;font-family:var(--latin);font-size:12px;color:var(--ink-muted);margin:var(--s-sm) 0 var(--s-lg)">
             सोमवार, 17 अगस्त 2026 · अमृत 6:03 am</p>
 
+          <!-- Shape is VratReminderPref verbatim: advanceDays 0|1|2|3 + dayOf + dayOfTime -->
+          <div class="sechead">advanceDays</div>
+          <div class="chips" style="margin-bottom:var(--s-md)">
+            <div class="chip">बंद</div><div class="chip on">1 दिन</div><div class="chip">2 दिन</div><div class="chip">3 दिन</div>
+          </div>
           <div class="card">
-            <div class="row"><span class="k">एक दिन पूर्व</span><span class="ok">चालू</span></div>
-            <div class="row"><span class="k">उसी सुबह, 5:30 बजे</span><span class="ok">चालू</span></div>
-            <div class="row"><span class="k">मुहूर्त से 30 मिनट पूर्व</span><span class="v" style="color:var(--ink-muted);font-weight:500">बंद</span></div>
+            <div class="row"><span class="k">पूर्व-संध्या सूचना</span><span class="ok">चालू</span></div>
+            <div class="row"><span class="k">उसी दिन प्रातः</span><span class="v">7:00 पूर्वाह्न</span></div>
           </div>
 
           <div class="whycard">
-            <div class="wb">Uses the shipped local-notification scheduler — no new mechanism, works offline,
-              nothing leaves the device.</div>
+            <div class="wb">Same <b>advanceDays / dayOf / dayOfTime</b> model the <b>Vrat follow</b> already uses
+              (<code style="font-family:var(--inter);font-size:11px">DEFAULT_REMINDER</code> = 1 day + 07:00), scheduled by
+              the shipped local scheduler. Offline, nothing leaves the device.</div>
           </div>
 
-          <div class="cta">सुरक्षित करें</div>
+          <div class="cta">इस मुहूर्त को फ़ॉलो करें</div>
           <div class="cta2">साझा करें · मुहूर्त कार्ड</div>
         </div>
       </div>
       <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
     </div>
-    <p class="cap"><b>8 · Reminder &amp; share.</b> Sheet sits on <code>modalBackdrop</code> with <code>elevation.overlay</code>. Both actions reuse shipped machinery — the notification scheduler and the muhurat share card. No birth details on a muhurat card.</p>
+    <p class="cap"><b>8 · Follow &amp; remind.</b> Rebuilt on the real <code>VratReminderPref</code> shape — <b>advanceDays 0–3 + dayOf + dayOfTime</b> — not invented toggles. "Follow" mirrors <code>VratFollowContext</code>. <b>No quiet-hours row:</b> that was removed in #70.</p>
+  </div>
+
+</div>
+
+<h1 style="margin-top:34px">Shipped capabilities the finder inherits</h1>
+<p class="sub">Location, calendar system and reading language are not decoration — each one changes the computed result.</p>
+
+<div class="wrap">
+
+  <!-- ── 9. Location picker ───────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>􀙇 􀛨 􀋨</span></div>
+      <div class="screen" style="background:var(--modal-backdrop)">
+        <div style="position:absolute;top:56px;bottom:0;left:0;right:0;
+          background:linear-gradient(var(--parchment-hi),var(--gradient-end));
+          border-radius:var(--r-xl) var(--r-xl) 0 0;border-top:1px solid var(--divider);
+          padding:var(--s-lg) var(--gutter);box-shadow:var(--e-overlay);overflow:hidden">
+          <div style="display:flex;align-items:center;margin-bottom:var(--s-md)">
+            <div class="title" style="font-size:15px">स्थान चुनें</div>
+            <div style="margin-left:auto;color:var(--saffron);font-size:15px">✕</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:var(--s-sm);padding:10px 12px;border-radius:var(--r-md);
+            background:var(--gold-tint);margin-bottom:var(--s-md)">
+            <span class="pin" style="width:11px;height:11px"></span>
+            <span style="font-family:var(--deva);font-size:15px;color:var(--saffron-deep);line-height:1.5">मेरा स्थान उपयोग करें</span>
+          </div>
+          <p style="font-family:var(--deva);font-size:12px;color:var(--ink-muted);line-height:1.6;margin-bottom:var(--s-md)">
+            स्थान की अनुमति नहीं मिली — नीचे सूची से अपना शहर चुनें।</p>
+
+          <div style="display:flex;align-items:center;min-height:44px;border:1px solid var(--divider);
+            border-radius:var(--r-md);background:var(--parchment-soft);padding:0 12px;margin-bottom:var(--s-md)">
+            <span style="font-family:var(--deva);font-size:14px;color:var(--ink-muted)">शहर खोजें…</span>
+          </div>
+
+          <div class="card" style="padding:0 var(--s-md)">
+            <div class="row"><span class="v">उज्जैन</span><span class="ok">चयनित</span></div>
+            <div class="row"><span class="v">अयोध्या</span></div>
+            <div class="row"><span class="v">वाराणसी</span></div>
+            <div class="row"><span class="v">हरिद्वार</span></div>
+            <div class="row"><span class="v">बेंगलुरु</span></div>
+            <div class="row"><span class="v">चेन्नई</span></div>
+          </div>
+          <p class="fine" style="margin-top:0">54 bundled cities · GPS fixes snap to the nearest one, so every
+            location the engine sees has a stable <b>cityId</b> and an offline label — no reverse geocoding.</p>
+        </div>
+      </div>
+      <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
+    </div>
+    <p class="cap"><b>9 · Location picker (shipped).</b> <code>LocationPickerModal</code> — 54 cities, GPS snapped to nearest, four <code>gpsStatus</code> states with their real Hindi copy. <b>Muhurat windows are sunrise-derived, so the city changes every time on every screen.</b></p>
+  </div>
+
+  <!-- ── 10. Calendar system ──────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>􀙇 􀛨 􀋨</span></div>
+      <div class="screen"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title">गृह प्रवेश<small>Calendar system affects this</small></div>
+        </div>
+
+        <!-- The Panchang peer-mode selector is the fixed first control in every mode -->
+        <div class="chips"><div class="chip on">पंचांग</div><div class="chip">व्रत-पर्व</div><div class="chip">ज्योतिष</div></div>
+
+        <div style="display:flex;gap:var(--s-sm);margin-bottom:var(--s-md)">
+          <div class="locpill" style="margin-left:0"><span class="pin"></span>उज्जैन</div>
+          <div class="chips" style="flex:1;margin:0">
+            <div class="chip on">पूर्णिमांत</div><div class="chip">अमान्त</div>
+          </div>
+        </div>
+
+        <div class="whycard" style="margin:0 0 var(--s-md);background:var(--avoid-tint)">
+          <div class="wh" style="color:var(--avoid-deep)">यह परिणाम बदलता है</div>
+          <div class="wb">Masa shuddhi asks <i>which lunar month is this?</i> — and purnimant and amanta answer
+            differently for the whole krishna paksha. A date in <b>कार्तिक कृष्ण</b> under purnimant is
+            <b>आश्विन कृष्ण</b> under amanta, so a month-barred occasion can flip verdicts on the same day.</div>
+        </div>
+
+        <div class="day rec">
+          <div class="dtop"><span class="dnum">26</span><span class="dmon">Nov 2026</span><span class="dvara">गुरुवार</span></div>
+          <div class="dpanch">पूर्णिमांत · <b style="color:var(--ink)">मार्गशीर्ष</b> कृष्ण द्वितीया · मृगशिरा</div>
+          <div class="facts"><span class="fact">मास <span class="tag">ok</span></span><span class="pill-hi pill good">श्रेष्ठ</span></div>
+        </div>
+        <div class="day">
+          <div class="dtop"><span class="dnum">26</span><span class="dmon">Nov 2026</span><span class="dvara">गुरुवार</span></div>
+          <div class="dpanch">अमान्त · <b style="color:var(--ink)">कार्तिक</b> कृष्ण द्वितीया · मृगशिरा</div>
+          <div class="facts"><span class="fact">मास <span class="tag">ok</span></span><span class="pill-hi pill good">श्रेष्ठ</span></div>
+          <div class="dnote">same day, different month name — the rule table must say which system it is written against</div>
+        </div>
+
+        <p class="disc"><span class="hi">गणना पद्धति आपकी पंचांग सेटिंग से ली जाती है।</span></p>
+      </div></div>
+      <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
+    </div>
+    <p class="cap"><b>10 · Calendar system + mode selector.</b> पूर्णिमांत/अमान्त is persisted app state the finder must read — <b>and a correctness dependency, not a preference.</b> The three-way mode selector stays the fixed first control.</p>
+  </div>
+
+  <!-- ── 11. Language ─────────────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>􀙇 􀛨 􀋨</span></div>
+      <div class="screen"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title" style="font-family:'Noto Serif Devanagari',serif">ವಾಹನ ಖರೀದಿ<small>Reading language · ಕನ್ನಡ</small></div>
+        </div>
+        <div class="chips"><div class="chip">ಎಲ್ಲಾ 25</div><div class="chip on">ಶ್ರೇಷ್ಠ 12</div><div class="chip">ಮಧ್ಯಮ 13</div></div>
+
+        <div class="day rec">
+          <div class="dtop"><span class="dnum">17</span><span class="dmon">Aug 2026</span><span class="dvara">ಸೋಮವಾರ</span></div>
+          <div class="dpanch">ಶ್ರಾವಣ ಶುಕ್ಲ ಪಂಚಮೀ · ಚಿತ್ರಾ</div>
+          <div class="facts"><span class="fact">ನಕ್ಷತ್ರ <span class="tag">ok</span></span><span class="fact">ತಿಥಿ <span class="tag">ok</span></span><span class="fact">ವಾರ <span class="tag">ok</span></span></div>
+          <div class="dwin">ಸರ್ವೋತ್ತಮ · <b>ಅಮೃತ</b> 6:03–7:40am</div>
+        </div>
+        <div class="day rec">
+          <div class="dtop"><span class="dnum">19</span><span class="dmon">Aug 2026</span><span class="dvara">ಬುಧವಾರ</span></div>
+          <div class="dpanch">ಶ್ರಾವಣ ಶುಕ್ಲ ಸಪ್ತಮೀ · ಸ್ವಾತೀ</div>
+          <div class="facts"><span class="fact">ನಕ್ಷತ್ರ <span class="tag">ok</span></span><span class="fact">ತಿಥಿ <span class="tag">ok</span></span><span class="fact">ವಾರ <span class="tag">ok</span></span></div>
+          <div class="dwin">ಸರ್ವೋತ್ತಮ · <b>ಲಾಭ</b> 6:04–7:41am</div>
+        </div>
+
+        <div class="whycard">
+          <div class="wh" style="font-family:var(--latin);font-style:italic">gu / kn are derived, not authored</div>
+          <div class="wb">Panchang names come from the Devanagari tables through the shipped runtime
+            transliterator, and the face switches via <code style="font-family:var(--inter);font-size:11px">scriptTitleFont</code> /
+            <code style="font-family:var(--inter);font-size:11px">scriptBodyFont</code>. <b>Any new muhurat string must be
+            authored in Devanagari + English only</b> — hard-coding a Latin label breaks gu/kn silently.</div>
+        </div>
+
+        <p class="disc"><span class="hi" style="font-family:'Noto Serif Devanagari',serif">ಸಾಂಪ್ರದಾಯಿಕ ಮಾರ್ಗದರ್ಶನ.</span></p>
+      </div></div>
+      <div class="tabbar"><span>ಮುಖಪುಟ</span><span>ಶ್ರವಣ</span><span class="on">ಪಂಚಾಂಗ</span><span>ಸಾಧನಾ</span><span>ಇನ್ನಷ್ಟು</span></div>
+    </div>
+    <p class="cap"><b>11 · Four reading languages.</b> hi · en · <b>gu · kn derived at runtime</b> by transliterating the Devanagari. Kannada shown. The finder inherits this for free — <i>if</i> every string goes through <code>contentByLang</code>.</p>
+  </div>
+
+  <!-- ── 12. Font scale ───────────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>􀙇 􀛨 􀋨</span></div>
+      <div class="screen"><div class="pad" style="font-size:112%">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title" style="font-size:19px">वाहन क्रय<small style="font-size:13px">Reading size · L</small></div>
+        </div>
+
+        <div class="day rec">
+          <div class="dtop"><span class="dnum" style="font-size:25px">17</span><span class="dmon" style="font-size:13px">Aug 2026</span><span class="dvara" style="font-size:13px">सोमवार</span></div>
+          <div class="dpanch" style="font-size:14px">श्रावण शुक्ल पंचमी · चित्रा</div>
+          <div class="facts"><span class="fact" style="font-size:12px">नक्षत्र <span class="tag">ok</span></span><span class="fact" style="font-size:12px">तिथि <span class="tag">ok</span></span><span class="fact" style="font-size:12px">वार <span class="tag">ok</span></span></div>
+          <div class="dwin" style="font-size:13px">सर्वोत्तम · <b>अमृत</b> 6:03–7:40am</div>
+        </div>
+
+        <div class="muh"><span class="mname" style="font-size:15px">अमृत</span><span class="mtag">· शुभ</span><span class="mtime" style="font-size:13px">6:03 – 7:40 am</span></div>
+        <div class="muh avoid"><span class="mname" style="font-size:15px">राहु काल</span><span class="mtag">· त्याज्य</span><span class="mtime" style="font-size:13px">7:40 – 9:17 am</span></div>
+
+        <div class="whycard">
+          <div class="wh">पठन आकार · Reading size</div>
+          <div class="wb"><b>FontScaleContext</b> (M / L, persisted, chosen during onboarding) scales the
+            <i>reading</i> styles. Time ranges must stay on one line at L — the muhurat rows use
+            <code style="font-family:var(--inter);font-size:11px">tabular-nums</code> + <code style="font-family:var(--inter);font-size:11px">nowrap</code>
+            so a long range cannot wrap under the name.</div>
+        </div>
+      </div></div>
+      <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
+    </div>
+    <p class="cap"><b>12 · Reading size L.</b> The one layout risk the finder adds: a muhurat row carries a name, a word tag and a time range. At L the range must not wrap — the shipped rows already pin this.</p>
   </div>
 
 </div>
 
 <div class="note">
+  <h3>Shipped capabilities the finder must inherit (screens 9–12)</h3>
+  <p>An earlier cut of this prototype drew a decorative "उज्जैन" pill and invented a three-toggle reminder sheet, as if the
+  app had neither. It has both, and several more. Each of these is <b>state the finder has to read, not chrome to redraw</b>:</p>
+  <table>
+    <tr><th>Capability</th><th>Shipped as</th><th>Why the finder cannot ignore it</th></tr>
+    <tr><td><b>Location</b></td><td><code>PanchangLocationContext</code> + <code>LocationPickerModal</code> — 54 bundled cities, GPS snapped to the nearest, <code>gpsStatus</code> idle/locating/denied/error</td>
+        <td>Every muhurat window is derived from sunrise/sunset. <b>Change the city and every time on every screen changes.</b> The finder reads the same context; it must never carry its own location.</td></tr>
+    <tr><td><b>Calendar system</b></td><td>purnimant (default) / amanta, persisted</td>
+        <td><b>A correctness dependency, not a preference.</b> Masa shuddhi asks which lunar month a date is in, and the two systems disagree across the whole krishna paksha. The rule tables must state which system they are written against.</td></tr>
+    <tr><td><b>Reading language</b></td><td>hi · en · gu · kn, gu/kn transliterated at runtime; <code>contentByLang</code>, <code>scriptTitleFont</code>/<code>scriptBodyFont</code></td>
+        <td>Inherited free <i>if</i> every string is authored Devanagari + English. A hard-coded Latin label breaks gu/kn silently.</td></tr>
+    <tr><td><b>Reading size</b></td><td><code>FontScaleContext</code> M/L, persisted, set at onboarding</td>
+        <td>A muhurat row is name + word tag + time range. At L the range must not wrap — pinned with <code>tabular-nums</code> + <code>nowrap</code>.</td></tr>
+    <tr><td><b>Reminders</b></td><td><code>VratFollowContext</code> — <code>advanceDays 0|1|2|3</code>, <code>dayOf</code>, <code>dayOfTime</code>; default 1 day + 07:00</td>
+        <td>The follow-and-remind pattern already exists for vrats. The finder should reuse it verbatim rather than invent toggles. <b>No quiet-hours row</b> — removed in #70.</td></tr>
+    <tr><td><b>Panchang mode selector</b></td><td>पंचांग · व्रत-पर्व · ज्योतिष — the fixed first control in every mode</td>
+        <td>The finder lives under पंचांग; the selector must stay put when entering it, per the stabilisation work already done.</td></tr>
+    <tr><td><b>Observance markers &amp; month grid</b></td><td>star/dot/halfmoon on the month calendar</td>
+        <td>Abujh days and muhurat hits should mark the existing grid rather than introduce a second calendar vocabulary.</td></tr>
+  </table>
+  <p style="margin-top:8px"><b>One inconsistency found while reading the source:</b> <code>LocationPickerModal</code> renders its
+  "use my location" affordance as a <code>📍</code> emoji, while <code>design.md</code> specifies a drawn teardrop pin for the
+  location chip "no emoji per §5" — and the deity-glyph work deleted the last emoji path elsewhere. The prototype draws the
+  pin in both places. Small, but it is a live §5 exception worth closing separately.</p>
+
   <h3>Design-token provenance — what this revision corrected</h3>
   <p>The first cut of this prototype inherited its palette from <code>docs/muhurat-prototype.html</code>, which predates the
   July 2026 Mobile Design Review (#222). Checked against <code>mobile/src/theme/*.ts</code>, six things were wrong — one of
