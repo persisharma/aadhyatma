@@ -52,14 +52,53 @@ export function buildShareCaption(p: ShareCaptionParams): string {
   return [`${header}`, `"${firstLine}"`, '', `${pick(p.lang, SHARE_CTA)} ${SMART_LINK}`].join('\n');
 }
 
+// Multi-line feature-list invite (no emoji — §5 house style; plain • bullets).
+// Each string ends with the download CTA + colon so buildAppShareMessage can
+// append SMART_LINK on the same line.
 const APP_SHARE_INVITE: LocalizedStrings = {
-  hi: 'Vedansh — गीता, चालीसा, आरती और नित्य साधना, एक ही ऐप में। पढ़ें और सुनें:',
-  en: 'Vedansh — Gita, Chalisa, Aarti & daily sadhana in one app. Read and listen:',
-  gu: 'Vedansh — ગીતા, ચાલીસા, આરતી અને નિત્ય સાધના, એક જ ઍપમાં. વાંચો અને સાંભળો:',
-  kn: 'Vedansh — ಗೀತಾ, ಚಾಲೀಸಾ, ಆರತಿ ಮತ್ತು ನಿತ್ಯ ಸಾಧನೆ ಒಂದೇ ಆ್ಯಪ್‌ನಲ್ಲಿ. ಓದಿ ಮತ್ತು ಕೇಳಿ:',
+  hi: [
+    'Vedansh — संपूर्ण भक्ति, एक ही ऐप में।',
+    '• गीता, सुंदरकांड, चालीसा, आरती व स्तोत्र',
+    '• जप माला व जप अलार्म',
+    '• पंचांग — व्रत-त्योहार, मुहूर्त, कुंडली व राशिफल',
+    '• भजन ऑडियो व दैनिक भक्ति',
+    '• नित्य साधना — अपनी दैनिक पूजा की दिनचर्या',
+    'हिंदी · English · ગુજરાતી · ಕನ್ನಡ — बिना इंटरनेट भी।',
+    'डाउनलोड करें:',
+  ].join('\n'),
+  en: [
+    'Vedansh — complete bhakti in one app.',
+    '• Gita, Sundarkand, Chalisa, Aarti & Stotra',
+    '• Japa mala counter & japa alarms',
+    '• Panchang — vrat & festivals, muhurat, kundali, rashifal',
+    '• Bhajan audio & a daily verse',
+    '• Nitya sadhana — your own daily puja routine',
+    'हिंदी · English · ગુજરાતી · ಕನ್ನಡ — works offline too.',
+    'Download:',
+  ].join('\n'),
+  gu: [
+    'Vedansh — સંપૂર્ણ ભક્તિ, એક જ ઍપમાં.',
+    '• ગીતા, સુંદરકાંડ, ચાલીસા, આરતી અને સ્તોત્ર',
+    '• જપ માળા અને જપ અલાર્મ',
+    '• પંચાંગ — વ્રત-તહેવાર, મુહૂર્ત, કુંડળી અને રાશિફળ',
+    '• ભજન ઑડિયો અને દૈનિક ભક્તિ',
+    '• નિત્ય સાધના — તમારી દૈનિક પૂજાની દિનચર્યા',
+    'હિંદી · English · ગુજરાતી · ಕನ್ನಡ — ઇન્ટરનેટ વિના પણ.',
+    'ડાઉનલોડ કરો:',
+  ].join('\n'),
+  kn: [
+    'Vedansh — ಸಂಪೂರ್ಣ ಭಕ್ತಿ, ಒಂದೇ ಆ್ಯಪ್‌ನಲ್ಲಿ.',
+    '• ಗೀತಾ, ಸುಂದರಕಾಂಡ, ಚಾಲೀಸಾ, ಆರತಿ ಮತ್ತು ಸ್ತೋತ್ರ',
+    '• ಜಪ ಮಾಲಾ ಮತ್ತು ಜಪ ಅಲಾರಂ',
+    '• ಪಂಚಾಂಗ — ವ್ರತ-ಹಬ್ಬ, ಮುಹೂರ್ತ, ಕುಂಡಲಿ ಮತ್ತು ರಾಶಿಫಲ',
+    '• ಭಜನ್ ಆಡಿಯೊ ಮತ್ತು ದೈನಿಕ ಭಕ್ತಿ',
+    '• ನಿತ್ಯ ಸಾಧನಾ — ನಿಮ್ಮ ದೈನಂದಿನ ಪೂಜಾ ದಿನಚರಿ',
+    'ಹಿಂದಿ · English · ગુજરાતી · ಕನ್ನಡ — ಇಂಟರ್ನೆಟ್ ಇಲ್ಲದೆಯೂ.',
+    'ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ:',
+  ].join('\n'),
 };
 
-/** Plain app-invite message — the download link with no verse attached (shared from More). */
+/** App-invite message — feature list + download link, no verse attached (shared from More). */
 export function buildAppShareMessage(lang: Lang): string {
   return `${pick(lang, APP_SHARE_INVITE)} ${SMART_LINK}`;
 }
