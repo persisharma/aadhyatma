@@ -6,136 +6,246 @@
 <title>Idea H · शुभ मुहूर्त खोज (Event Muhurat Finder) — Prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@500;600&display=swap" rel="stylesheet" />
 <style>
+  /* ══════════════════════════════════════════════════════════════════════════
+     TOKENS — mirrored 1:1 from mobile/src/theme/*.ts (v1.4.5, post-#222).
+     Every value below is the token's real value; the comment names the token.
+     Nothing here is invented. See the "Design-token provenance" note at the end.
+     ══════════════════════════════════════════════════════════════════════════ */
   :root{
-    --parchment:#f3e7c9; --parchment-soft:#f8efd6; --parchment-hi:#fff5e0;
-    --gradient-end:#e9d9b1; --gold:#a67c34; --gold-soft:#c9b896; --gold-tint:#d8c393;
-    --saffron:#b8621b; --saffron-deep:#8a3e0b; --saffron-tint:rgba(184,98,27,0.10);
-    --ink:#2f1e10; --ink-soft:#5c4326; --ink-muted:#8a6a47; --divider:#d9c9a6;
-    --good:#3e7c4f; --good-tint:rgba(62,124,79,0.14);
-    --avoid:#a33a2a; --avoid-tint:rgba(163,58,42,0.12);
-    --neutral:#8a6a47; --neutral-tint:rgba(138,106,71,0.10);
-    --sans:'Inter',system-ui,sans-serif; --serif:'Cormorant Garamond',serif; --deva:'Noto Serif Devanagari',serif;
+    /* colors.ts — lightColors */
+    --parchment:#F3E7C9;              /* parchment */
+    --parchment-soft:#F8EFD6;         /* parchmentSoft */
+    --parchment-deep:#E9D9B1;         /* parchmentDeep */
+    --parchment-hi:#F6ECD0;           /* parchmentHighlight */
+    --gradient-end:#F1E3BF;           /* parchmentGradientEnd */
+    --ink:#1A0E03;                    /* ink — deepened for ~15.4:1 */
+    --ink-soft:#5A3A1E;               /* inkSoft */
+    --ink-muted:#6E5230;              /* inkMuted — ~5.9:1, not the old tan */
+    --saffron:#B8621B;                /* saffron */
+    --saffron-deep:#8A3E0B;           /* saffronDeep */
+    --gold:#A67C34;                   /* gold */
+    --divider:rgba(138,62,11,0.18);   /* divider */
+    --saffron-tint:rgba(184,98,27,0.12);
+    --gold-tint:rgba(166,124,52,0.14);      /* AUSPICIOUS wash — never green */
+    --gold-chip:rgba(166,124,52,0.22);      /* goldChipBg */
+    --avoid:#9E4A2E;                  /* avoid — muted terracotta, never red */
+    --avoid-tint:rgba(158,74,46,0.12);
+    --avoid-chip:rgba(158,74,46,0.20);
+    --avoid-deep:#7A3722;             /* avoidDeep — text on avoid chips */
+    --new-badge-bg:rgba(184,98,27,0.16);
+    --new-badge-text:#8A3E0B;
+    --card-surface:rgba(255,250,235,0.72);
+    --card-active-from:#FFF5E0;
+    --card-active-to:#F5DEAC;
+    --card-active-border:rgba(184,98,27,0.4);
+    --modal-backdrop:rgba(47,30,16,0.55);
+    --on-primary:#FFFFFF;
+
+    /* spacing.ts */
+    --s-xs:4px; --s-sm:8px; --s-md:12px; --s-lg:16px; --s-xl:20px; --s-xxl:24px;
+    --gutter:24px;                    /* PanchangScreen uses spacing.xxl */
+    /* radii.ts — the 10·14·18·22 scale + pill */
+    --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-pill:999px;
+
+    /* elevation.ts — WARM_SHADOW #3C1E0A, never inlined elsewhere */
+    --e-subtle:0 1px 4px rgba(60,30,10,.06);
+    --e-card:0 2px 6px rgba(60,30,10,.10);
+    --e-lifted:0 4px 12px rgba(60,30,10,.11);
+    --e-raised:0 6px 14px rgba(60,30,10,.16);
+    --e-overlay:0 6px 14px rgba(60,30,10,.25);
+
+    /* typography.ts */
+    --deva:'Noto Serif Devanagari',serif;   /* devanagari 500 / Bold 600 */
+    --latin:'Cormorant Garamond',serif;      /* latin 500 / SemiBold 600 / italic 400 */
+    --inter:'Inter',system-ui,sans-serif;    /* chrome only — never reading content */
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
-  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
-  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:980px}
-  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:980px}
-  .legend b{color:#e9d9b1}
-  .legend code{background:rgba(255,245,224,.08);padding:1px 5px;border-radius:4px;font-size:11.5px}
+  /* The dark stage is presentation chrome for this document, NOT app UI. */
+  body{font-family:var(--inter);font-weight:500;background:#24160B;color:var(--parchment-deep);padding:24px;line-height:1.5}
+  h1{font-family:var(--latin);font-weight:600;font-size:28px;color:var(--parchment-hi);margin-bottom:2px}
+  .sub{font-family:var(--latin);font-style:italic;color:var(--gold);font-size:15px;margin-bottom:6px;max-width:1000px}
+  .legend{font-size:12.5px;color:#B79B6B;margin-bottom:20px;max-width:1000px}
+  .legend b{color:var(--parchment-deep)}
+  .legend code{background:rgba(246,236,208,.08);padding:1px 5px;border-radius:4px;font-size:11.5px}
   .wrap{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
   .col{display:flex;flex-direction:column;align-items:center}
-  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:center}
-  .cap b{color:#e9d9b1}
+  .cap{width:340px;font-size:12px;color:#B79B6B;margin-top:10px;text-align:center;line-height:1.6}
+  .cap b{color:var(--parchment-deep)}
+  .cap code{font-size:11px}
 
-  .phone{width:340px;height:730px;background:var(--parchment);border-radius:38px;border:10px solid #0d0804;
+  /* device chrome — not app tokens */
+  .phone{width:340px;height:730px;background:var(--parchment);border-radius:38px;border:10px solid #120A03;
     box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
-  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
-  .screen{position:absolute;top:32px;left:0;right:0;bottom:52px;overflow-y:auto;background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);
+    font-size:12px;font-weight:600;color:var(--ink);background:var(--parchment-hi)}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:52px;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
   .screen::-webkit-scrollbar{width:0}
-  .pad{padding:14px 16px 24px}
-  .tabbar{position:absolute;bottom:0;left:0;right:0;height:52px;background:var(--parchment-soft);border-top:1px solid var(--divider);
-    display:flex;align-items:center;justify-content:space-around;font-size:10px;color:var(--ink-muted)}
-  .tabbar .on{color:var(--saffron);font-weight:600}
+  .pad{padding:var(--s-md) var(--gutter) var(--s-xxl)}
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:52px;background:var(--parchment-soft);
+    border-top:1px solid var(--divider);display:flex;align-items:center;justify-content:space-around;
+    font-family:var(--deva);font-size:10px;color:var(--ink-muted);line-height:1.5}
+  .tabbar .on{color:var(--saffron);font-family:var(--deva);font-weight:600}
 
-  /* header */
-  .navrow{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-  .back{width:30px;height:30px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
-    display:flex;align-items:center;justify-content:center;color:var(--saffron);font-size:15px;flex:none}
-  .title{font-family:var(--deva);font-size:17px;color:var(--ink);line-height:1.5}
-  .title small{display:block;font-family:var(--sans);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;text-transform:uppercase}
-  .locpill{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);background:var(--parchment-soft);
-    border:1px solid var(--divider);padding:4px 10px;border-radius:20px;margin-left:auto;flex:none}
+  /* ── header ─────────────────────────────────────────────── */
+  .navrow{display:flex;align-items:center;gap:var(--s-md);margin-bottom:var(--s-md)}
+  /* 44pt circular control; radii.xl is exactly half of it */
+  .back{width:34px;height:34px;border-radius:var(--r-xl);border:1px solid var(--divider);
+    background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--saffron);
+    font-size:16px;flex:none;box-shadow:var(--e-subtle)}
+  /* Devanagari title — NO letterSpacing (tracking splits the shirorekha) */
+  .title{font-family:var(--deva);font-weight:600;font-size:17px;color:var(--ink);line-height:1.5}
+  .title small{display:block;font-family:var(--latin);font-style:italic;font-weight:400;
+    font-size:12px;color:var(--ink-muted);letter-spacing:0;line-height:1.5}
+  .locpill{font-family:var(--deva);font-size:12px;color:var(--ink-soft);background:var(--parchment-soft);
+    border:1px solid var(--divider);padding:6px 10px;border-radius:var(--r-pill);margin-left:auto;flex:none;
+    min-height:34px;display:flex;align-items:center;gap:5px;line-height:1.5}
+  /* drawn teardrop pin — no emoji (§5) */
+  .pin{width:9px;height:9px;border:1.4px solid var(--saffron);border-radius:50% 50% 50% 0;transform:rotate(-45deg);flex:none}
 
-  /* window chips */
-  .chips{display:flex;gap:7px;margin-bottom:14px}
-  .chip{flex:1;text-align:center;font-size:12px;padding:7px 0;border-radius:16px;border:1px solid var(--divider);
-    background:var(--parchment-soft);color:var(--ink-muted)}
-  .chip.on{background:var(--saffron);border-color:var(--saffron);color:#fff8ec;font-weight:600}
+  /* sectionLabel: Inter SemiBold 11 / tracking 2.4 / uppercase — LATIN ONLY */
+  .sechead{font-family:var(--inter);font-weight:600;font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+    color:var(--ink-muted);margin:var(--s-lg) 0 var(--s-sm)}
+  /* Devanagari section heading — same slot, no tracking */
+  .sechead-hi{font-family:var(--deva);font-weight:600;font-size:13px;color:var(--ink-muted);
+    margin:var(--s-lg) 0 var(--s-sm);line-height:1.5}
 
-  .sechead{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-muted);margin:16px 0 8px}
+  /* ── chips ──────────────────────────────────────────────── */
+  .chips{display:flex;gap:var(--s-sm);margin-bottom:var(--s-md)}
+  .chip{flex:1;text-align:center;font-family:var(--deva);font-size:12px;padding:7px 0;border-radius:var(--r-pill);
+    border:1px solid var(--divider);background:var(--parchment-soft);color:var(--ink-muted);min-height:34px;
+    display:flex;align-items:center;justify-content:center;line-height:1.5}
+  .chip.on{background:var(--saffron);border-color:var(--saffron);color:var(--on-primary);font-weight:600}
 
-  /* event grid */
-  .egrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-  .ecard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:11px 10px;min-height:74px;
-    display:flex;flex-direction:column;justify-content:space-between}
-  .ecard .gl{font-size:17px;line-height:1;margin-bottom:6px;color:var(--saffron)}
-  .ecard .hi{font-family:var(--deva);font-size:13.5px;color:var(--ink);line-height:1.45}
-  .ecard .en{font-size:10px;color:var(--ink-muted)}
-  .ecard.sel{border-color:var(--saffron);background:var(--saffron-tint);box-shadow:0 0 0 1px var(--saffron) inset}
+  /* ── occasion cards ─────────────────────────────────────── */
+  .egrid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-md)}
+  .ecard{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);
+    padding:var(--s-md);min-height:80px;display:flex;flex-direction:column;justify-content:space-between;
+    box-shadow:var(--e-subtle)}
+  .ecard .gl{color:var(--saffron);height:22px;margin-bottom:var(--s-sm)}
+  .ecard .hi{font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink);line-height:1.5}
+  .ecard .en{font-family:var(--latin);font-style:italic;font-size:12px;color:var(--ink-muted);line-height:1.5}
+  .ecard.sel{background:linear-gradient(var(--card-active-from),var(--card-active-to));
+    border-color:var(--card-active-border);box-shadow:var(--e-lifted)}
+  .ecard.row{flex-direction:row;align-items:center;gap:var(--s-md);min-height:72px}
+  .ecard.row .gl{margin-bottom:0}
 
-  /* result day card */
-  .day{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:11px 12px;margin-bottom:9px}
-  .day.rec{border-left:3px solid var(--good)}
-  .day.work{border-left:3px solid var(--gold)}
-  .dtop{display:flex;align-items:baseline;gap:8px}
-  .dnum{font-family:var(--serif);font-size:21px;color:var(--ink);font-weight:600;line-height:1}
-  .dmon{font-size:11px;color:var(--ink-muted)}
-  .dvara{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);margin-left:auto}
-  .pill{font-size:9.5px;padding:2px 8px;border-radius:10px;font-weight:600;letter-spacing:.03em}
-  .pill.good{background:var(--good-tint);color:var(--good)}
-  .pill.mid{background:var(--neutral-tint);color:var(--gold)}
-  .pill.bad{background:var(--avoid-tint);color:var(--avoid)}
-  .dpanch{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);margin:6px 0 7px;line-height:1.6}
-  .facts{display:flex;gap:5px;flex-wrap:wrap}
-  .fact{font-size:9.5px;padding:2px 7px;border-radius:9px;background:var(--good-tint);color:var(--good);font-family:var(--deva)}
-  .fact.no{background:var(--neutral-tint);color:var(--neutral)}
-  .dwin{margin-top:8px;padding-top:7px;border-top:1px dashed var(--divider);font-size:11px;color:var(--ink-soft)}
-  .dwin b{font-family:var(--deva);color:var(--ink)}
+  /* ── day cards ──────────────────────────────────────────── */
+  .day{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);
+    padding:var(--s-md);margin-bottom:var(--s-md);box-shadow:var(--e-card)}
+  .day.rec{background:linear-gradient(var(--card-active-from),var(--card-active-to));
+    border-color:var(--card-active-border);box-shadow:var(--e-lifted)}
+  .dtop{display:flex;align-items:baseline;gap:var(--s-sm)}
+  .dnum{font-family:var(--latin);font-weight:600;font-size:22px;color:var(--ink);line-height:1}
+  .dmon{font-family:var(--latin);font-style:italic;font-size:12px;color:var(--ink-muted)}
+  .dvara{font-family:var(--deva);font-size:12px;color:var(--ink-soft);margin-left:auto;line-height:1.5}
+  .dpanch{font-family:var(--deva);font-size:12px;color:var(--ink-soft);margin:var(--s-sm) 0;line-height:1.6}
+  /* Quality pill — gold for auspicious, terracotta for avoid, ALWAYS with words */
+  .pill{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:.4px;text-transform:uppercase;
+    padding:3px 8px;border-radius:var(--r-sm)}
+  .pill.good{background:var(--gold-chip);color:var(--saffron-deep)}
+  .pill.mid{background:var(--saffron-tint);color:var(--saffron-deep)}
+  .pill.bad{background:var(--avoid-chip);color:var(--avoid-deep)}
+  .pill-hi{font-family:var(--deva);font-weight:600;font-size:11px;letter-spacing:0;text-transform:none;
+    padding:3px 9px;border-radius:var(--r-sm);line-height:1.5}
+  .facts{display:flex;gap:var(--s-sm);flex-wrap:wrap;align-items:center}
+  /* Factor tags: tint + WORD, never colour alone (§12) */
+  .fact{font-family:var(--deva);font-size:11px;padding:3px 8px;border-radius:var(--r-sm);
+    background:var(--gold-tint);color:var(--ink);line-height:1.5}
+  .fact .tag{font-family:var(--latin);font-weight:600;font-size:10px;color:var(--saffron-deep)}
+  .fact.no{background:var(--avoid-tint)}
+  .fact.no .tag{color:var(--avoid)}
+  .dwin{margin-top:var(--s-sm);padding-top:var(--s-sm);border-top:1px solid var(--divider);
+    font-family:var(--latin);font-size:12px;color:var(--ink-soft);line-height:1.6}
+  .dwin b{font-family:var(--deva);font-weight:600;color:var(--ink)}
+  .dnote{margin-top:var(--s-xs);font-family:var(--deva);font-size:11px;color:var(--ink-muted);line-height:1.5}
 
-  /* empty state */
-  .empty{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:16px;padding:16px 14px;text-align:center}
-  .empty .mark{font-size:26px;color:var(--gold);margin-bottom:8px}
-  .empty .eh{font-family:var(--deva);font-size:15px;color:var(--ink);line-height:1.6;margin-bottom:6px}
-  .empty .eb{font-size:11.5px;color:var(--ink-soft);line-height:1.65}
-  .empty .eb b{font-family:var(--deva);color:var(--ink)}
-  .whycard{margin-top:10px;background:var(--saffron-tint);border:1px solid var(--gold-tint);border-radius:12px;padding:10px 11px;text-align:left}
-  .whycard .wh{font-family:var(--deva);font-size:12px;color:var(--saffron-deep);margin-bottom:4px}
-  .whycard .wb{font-size:10.5px;color:var(--ink-soft);line-height:1.6}
-  .kshaya{margin-top:6px;font-size:9.5px;color:var(--ink-muted);font-style:italic;line-height:1.5}
+  /* ── empty state ────────────────────────────────────────── */
+  .empty{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:var(--r-lg);
+    padding:var(--s-lg);text-align:center;box-shadow:var(--e-card)}
+  /* gold ॥ frame — the app's reverent card mark (§5) */
+  .danda{font-family:var(--deva);font-size:20px;color:var(--gold);margin-bottom:var(--s-sm);line-height:1.5}
+  .empty .eh{font-family:var(--deva);font-weight:600;font-size:15px;color:var(--ink);line-height:1.6;margin-bottom:var(--s-sm)}
+  .empty .eb{font-family:var(--latin);font-size:13px;color:var(--ink-soft);line-height:1.65}
+  .whycard{margin-top:var(--s-md);background:var(--gold-tint);border:1px solid var(--divider);
+    border-radius:var(--r-md);padding:var(--s-md);text-align:left}
+  .whycard .wh{font-family:var(--deva);font-weight:600;font-size:12px;color:var(--saffron-deep);
+    margin-bottom:var(--s-xs);line-height:1.5}
+  .whycard .wb{font-family:var(--latin);font-size:12px;color:var(--ink-soft);line-height:1.6}
+  .whycard .wb b{font-family:var(--deva);font-weight:600;color:var(--ink)}
+  .fine{margin-top:var(--s-sm);font-family:var(--latin);font-style:italic;font-size:11px;
+    color:var(--ink-muted);line-height:1.6}
+  .fine b{font-family:var(--deva);font-weight:600;font-style:normal;color:var(--ink-soft)}
 
-  /* detail */
-  .hero{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:16px;padding:14px;text-align:center;margin-bottom:12px}
-  .hero .hd{font-family:var(--serif);font-size:34px;color:var(--ink);font-weight:600;line-height:1}
-  .hero .hm{font-size:11.5px;color:var(--ink-muted);margin-top:2px}
-  .hero .hv{font-family:var(--deva);font-size:13px;color:var(--saffron-deep);margin-top:5px}
-  .row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--divider);font-size:11.5px}
+  /* ── detail ─────────────────────────────────────────────── */
+  .hero{background:linear-gradient(var(--card-active-from),var(--card-active-to));
+    border:1px solid var(--card-active-border);border-radius:var(--r-lg);padding:var(--s-lg);
+    text-align:center;margin-bottom:var(--s-md);box-shadow:var(--e-raised)}
+  .hero .hd{font-family:var(--latin);font-weight:600;font-size:34px;color:var(--ink);line-height:1}
+  .hero .hm{font-family:var(--latin);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:2px}
+  .hero .hv{font-family:var(--deva);font-size:13px;color:var(--saffron-deep);margin-top:var(--s-sm);line-height:1.6}
+  .card{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:var(--r-md);
+    padding:0 var(--s-md);margin-bottom:var(--s-md);box-shadow:var(--e-card)}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:var(--s-sm);
+    padding:9px 0;border-bottom:1px solid var(--divider);font-size:12px;min-height:34px}
   .row:last-child{border-bottom:none}
-  .row .k{font-family:var(--deva);color:var(--ink-soft)}
-  .row .v{font-family:var(--deva);color:var(--ink)}
-  .row .ok{color:var(--good);font-weight:600;font-family:var(--sans);font-size:11px}
-  .card{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:10px 12px;margin-bottom:10px}
-  .wrow{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--divider);font-size:11.5px}
-  .wrow:last-child{border-bottom:none}
-  .wdot{width:7px;height:7px;border-radius:50%;flex:none}
-  .wdot.g{background:var(--good)} .wdot.a{background:var(--avoid)} .wdot.b{background:var(--gold)}
-  .wname{font-family:var(--deva);color:var(--ink);width:66px;flex:none}
-  .wtime{color:var(--ink-soft);margin-left:auto;font-variant-numeric:tabular-nums}
-  .wrow.struck .wname,.wrow.struck .wtime{color:var(--avoid);text-decoration:line-through;opacity:.75}
-  .cta{margin-top:12px;background:var(--saffron);color:#fff8ec;border-radius:22px;padding:11px;text-align:center;
-    font-family:var(--deva);font-size:13.5px}
-  .cta2{margin-top:7px;border:1px solid var(--gold-tint);color:var(--saffron-deep);border-radius:22px;padding:10px;
-    text-align:center;font-family:var(--deva);font-size:12.5px;background:var(--parchment-soft)}
-  .disc{margin-top:12px;font-size:9.5px;color:var(--ink-muted);line-height:1.6;font-style:italic;text-align:center}
+  .row .k{font-family:var(--deva);color:var(--ink-soft);line-height:1.5}
+  .row .v{font-family:var(--deva);font-weight:600;color:var(--ink);line-height:1.5}
+  .row .ok{font-family:var(--deva);font-size:11px;color:var(--saffron-deep);line-height:1.5}
 
-  .note{margin-top:26px;max-width:980px;font-size:12.5px;color:#b7a377;line-height:1.75}
-  .note h3{font-family:var(--serif);color:#fff5e0;font-size:17px;margin:18px 0 6px;font-weight:600}
-  .note b{color:#e9d9b1}
-  .note code{background:rgba(255,245,224,.08);padding:1px 5px;border-radius:4px;font-size:11.5px}
+  /* Muhurat rows — mirrors MuhuratCardBody `Muh`:
+     tint carries the quality, text stays dark ink on BOTH, plus a word tag. */
+  .muh{display:flex;align-items:center;gap:var(--s-sm);padding:8px 10px;border-radius:var(--r-md);
+    margin-bottom:6px;background:var(--gold-tint)}
+  .muh.avoid{background:var(--avoid-tint)}
+  .muh.now{border:1.5px solid var(--saffron)}
+  .muh .mname{font-family:var(--deva);font-weight:600;font-size:13px;color:var(--ink);line-height:1.5}
+  .muh .mtag{font-family:var(--latin);font-weight:600;font-size:10px;color:var(--saffron-deep)}
+  .muh.avoid .mtag{color:var(--avoid)}
+  .muh .mnow{font-family:var(--deva);font-size:10px;color:var(--saffron-deep);background:var(--saffron-tint);
+    padding:2px 6px;border-radius:var(--r-sm);line-height:1.5}
+  .muh .mtime{font-family:var(--latin);font-weight:600;font-size:12px;color:var(--ink);margin-left:auto;
+    font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  .cta{margin-top:var(--s-md);background:var(--saffron);color:var(--on-primary);border-radius:var(--r-pill);
+    padding:var(--s-md);text-align:center;font-family:var(--deva);font-weight:600;font-size:14px;
+    line-height:1.5;box-shadow:var(--e-card)}
+  .cta2{margin-top:var(--s-sm);border:1px solid var(--divider);color:var(--saffron-deep);
+    border-radius:var(--r-pill);padding:var(--s-md);text-align:center;font-family:var(--deva);font-size:13px;
+    background:var(--parchment-soft);line-height:1.5}
+  .disc{margin-top:var(--s-md);font-family:var(--latin);font-style:italic;font-size:11px;
+    color:var(--ink-muted);line-height:1.65;text-align:center}
+  .disc .hi{font-family:var(--deva);font-style:normal;font-size:11px;line-height:1.6}
+
+  .badge-new{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;
+    background:var(--new-badge-bg);color:var(--new-badge-text);padding:2px 7px;border-radius:var(--r-sm)}
+
+  /* ── notes ──────────────────────────────────────────────── */
+  .note{margin-top:26px;max-width:1000px;font-size:12.5px;color:#B79B6B;line-height:1.75}
+  .note h3{font-family:var(--latin);color:var(--parchment-hi);font-size:18px;margin:18px 0 6px;font-weight:600}
+  .note b{color:var(--parchment-deep)}
+  .note code{background:rgba(246,236,208,.08);padding:1px 5px;border-radius:4px;font-size:11.5px}
   .note ul{margin:4px 0 0 18px}
-  .note li{margin-bottom:4px}
+  .note li{margin-bottom:5px}
+  .note table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+  .note th{text-align:left;color:var(--parchment-deep);border-bottom:1px solid rgba(246,236,208,.2);padding:6px 8px}
+  .note td{border-bottom:1px solid rgba(246,236,208,.08);padding:6px 8px;vertical-align:top}
+  .swatch{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:5px;
+    border:1px solid rgba(246,236,208,.25)}
 </style>
 </head>
 <body>
 
 <h1>शुभ मुहूर्त खोज · Event Muhurat Finder</h1>
-<p class="sub">Idea H — "which day should I do this on?" answered from the panchang + muhurat engines already shipped in v1.4.5.</p>
+<p class="sub">Idea H / PRD-16 — "which day should I do this on?" answered from the panchang + muhurat engines already shipped in v1.4.5.</p>
 <p class="legend">
-  <b>Every date, time and panchang value below is real output</b> from the shipped <code>computePanchangForDate()</code> +
-  <code>computeMuhuratDay()</code>, run for Ujjain over 7&nbsp;Aug&nbsp;2026 → 4&nbsp;Apr&nbsp;2027. Nothing is mocked.
-  The <b>rule tables are DRAFT</b> and have not passed RULEBOOK §10 content verification — see the notes under the screens.
+  <b>Every date, time and panchang value is real output</b> from the shipped <code>computePanchangForDate()</code>,
+  <code>computeMuhuratDay()</code> and <code>getSiderealPlanetLongitude()</code>, run for Ujjain over
+  7&nbsp;Aug&nbsp;2026 → 4&nbsp;Apr&nbsp;2027. Nothing is mocked. <b>Tokens are mirrored 1:1 from
+  <code>mobile/src/theme/*.ts</code></b> as of v1.4.5 (post-#222) — see <i>Design-token provenance</i> at the end.
+  The <b>rule tables are DRAFT</b> and have not passed RULEBOOK §10 content verification.
 </p>
 
 <div class="wrap">
@@ -148,28 +258,34 @@
         <div class="navrow">
           <div class="back">‹</div>
           <div class="title">शुभ मुहूर्त खोज<small>Find a Muhurat</small></div>
-          <div class="locpill">उज्जैन</div>
+          <div class="locpill"><span class="pin"></span>उज्जैन</div>
         </div>
 
         <div class="sechead">Search window</div>
         <div class="chips"><div class="chip">30 दिन</div><div class="chip">60 दिन</div><div class="chip on">90 दिन</div></div>
 
-        <div class="sechead">कार्य चुनें · Choose the occasion</div>
+        <div class="sechead-hi">कार्य चुनें</div>
         <div class="egrid">
-          <div class="ecard sel"><div class="gl">⌂</div><div><div class="hi">गृह प्रवेश</div><div class="en">Griha Pravesh</div></div></div>
-          <div class="ecard"><div class="gl">◈</div><div><div class="hi">वाहन क्रय</div><div class="en">Vehicle purchase</div></div></div>
-          <div class="ecard"><div class="gl">✦</div><div><div class="hi">नामकरण</div><div class="en">Naming ceremony</div></div></div>
-          <div class="ecard"><div class="gl">✎</div><div><div class="hi">विद्यारम्भ</div><div class="en">Starting education</div></div></div>
-          <div class="ecard"><div class="gl">⛏</div><div><div class="hi">भूमि पूजन</div><div class="en">Bhumi Pujan</div></div></div>
-          <div class="ecard"><div class="gl">☼</div><div><div class="hi">व्यापार आरम्भ</div><div class="en">Starting a business</div></div></div>
+          <div class="ecard sel"><div class="gl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/><path d="M10.5 19v-5h3v5"/></svg></div>
+            <div><div class="hi">गृह प्रवेश</div><div class="en">Griha Pravesh</div></div></div>
+          <div class="ecard"><div class="gl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2"/><path d="M12 4.5v5M12 14.5v5M4.5 12h5M14.5 12h5"/></svg></div>
+            <div><div class="hi">वाहन क्रय</div><div class="en">Vehicle purchase</div></div></div>
+          <div class="ecard"><div class="gl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4c1.6 2.2 2.6 3.7 2.6 5.2A2.6 2.6 0 0 1 12 11.8a2.6 2.6 0 0 1-2.6-2.6C9.4 7.7 10.4 6.2 12 4Z"/><path d="M5.5 15.5h13"/><path d="M7 15.5c1-2.2 2.8-3 5-3s4 .8 5 3"/><path d="M8 18.5h8"/></svg></div>
+            <div><div class="hi">नामकरण</div><div class="en">Naming ceremony</div></div></div>
+          <div class="ecard"><div class="gl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.5C10.4 6 8.2 5.4 4.8 5.4v11.4c3.4 0 5.6.6 7.2 2.1"/><path d="M12 7.5c1.6-1.5 3.8-2.1 7.2-2.1v11.4c-3.4 0-5.6.6-7.2 2.1"/><path d="M12 7.5v11.4"/></svg></div>
+            <div><div class="hi">विद्यारम्भ</div><div class="en">Starting education</div></div></div>
+          <div class="ecard"><div class="gl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 7.5h5l1.2 2H8.3Z"/><path d="M8.3 9.5c-.9 1.5-1.3 3-1.3 4.6 0 2.2 2.2 3.4 5 3.4s5-1.2 5-3.4c0-1.6-.4-3.1-1.3-4.6"/><path d="M12 4.5v3"/><path d="M4 20h16"/></svg></div>
+            <div><div class="hi">भूमि पूजन</div><div class="en">Bhumi Pujan</div></div></div>
+          <div class="ecard"><div class="gl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M6 8h12"/><path d="M6 8 3.5 13h5Z"/><path d="M18 8l-2.5 5h5Z"/><path d="M8.5 19h7"/></svg></div>
+            <div><div class="hi">व्यापार आरम्भ</div><div class="en">Starting a business</div></div></div>
         </div>
 
         <div class="cta">मुहूर्त खोजें</div>
-        <p class="disc">परम्परागत मार्गदर्शन। विवाह मुहूर्त के लिए अपने पुरोहित से परामर्श करें।<br />Traditional guidance — not a substitute for your family purohit.</p>
+        <p class="disc"><span class="hi">परम्परागत मार्गदर्शन। विवाह मुहूर्त हेतु पुरोहित से परामर्श करें।</span><br />Traditional guidance — not a substitute for your family purohit.</p>
       </div></div>
       <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
     </div>
-    <p class="cap"><b>1 · Entry.</b> Six occasions, one window chip. Reached from the Panchang tab and from the existing <b>Muhurat</b> detail screen. No form, no birth chart — muhurta for these events is chart-independent.</p>
+    <p class="cap"><b>1 · Entry.</b> Occasion glyphs are <b>stroked vector marks</b>, not emoji (§5) — the same grammar as the <code>deityGlyphs/</code> registry. Selected card takes the <code>cardActive</code> gradient + <code>elevation.lifted</code>.</p>
   </div>
 
   <!-- ── 2. Empty-with-reason ─────────────────────────────── -->
@@ -183,51 +299,53 @@
         </div>
 
         <div class="empty">
-          <div class="mark">॥</div>
+          <div class="danda">॥</div>
           <div class="eh">अगले 90 दिनों में कोई शुभ मुहूर्त नहीं</div>
           <div class="eb">No Griha Pravesh muhurat falls in this window — and that is the correct answer, not a gap in the data.</div>
 
           <div class="whycard">
             <div class="wh">कारण · चातुर्मास</div>
-            <div class="wb">Your whole window lies inside <b>Chaturmas</b>, which began on <b>देवशयनी एकादशी, 25 Jul 2026</b>.
+            <div class="wb">Your whole window lies inside <b>चातुर्मास</b>, which began on <b>देवशयनी एकादशी, 25 Jul 2026</b>.
               Griha Pravesh is traditionally not performed during these four months.</div>
-            <div class="kshaya">When the bar lifts is convention-dependent: published muhurat lists resume in
-              <b>कार्तिक शुक्ल</b> (post-Diwali, from ~11 Nov), while the stricter tithi-span reading waits for
-              <b>देव उठनी एकादशी</b> — itself contested at 20 vs 21 Nov 2026 because Kartik Shukla Ekadashi is a
-              <b>kshaya tithi</b> that touches no sunrise. v1 must pick one and name it.</div>
           </div>
+          <div class="whycard" style="background:var(--avoid-tint)">
+            <div class="wh" style="color:var(--avoid-deep)">और · गुरु अस्त</div>
+            <div class="wb"><b>गुरु</b> was combust 15 Jul – 13 Aug 2026, and <b>शुक्र</b> 18 – 30 Oct 2026 — an
+              independent bar at both ends of the window.</div>
+          </div>
+          <p class="fine">When the bar lifts is convention-dependent: published lists resume in <b>कार्तिक शुक्ल</b>
+            (post-Diwali, ~11 Nov); the strict reading waits for <b>देव उठनी एकादशी</b> — itself contested at 20 vs 21 Nov
+            because that Ekadashi is a <b>क्षय तिथि</b> touching no sunrise.</p>
         </div>
 
-        <div class="sechead">इसके बाद पहले मुहूर्त · First dates after</div>
-        <p style="font-size:10px;color:var(--ink-muted);margin:-3px 0 8px;line-height:1.55;font-style:italic">
-          Draft rules use the strict reading. Published lists also carry 11 &amp; 14 Nov — see the validation note.</p>
+        <div class="sechead-hi">इसके बाद पहले मुहूर्त</div>
 
         <div class="day rec">
           <div class="dtop"><span class="dnum">26</span><span class="dmon">Nov 2026</span><span class="dvara">गुरुवार</span></div>
           <div class="dpanch">कार्तिक कृष्ण द्वितीया · मृगशिरा</div>
-          <div class="facts"><span class="fact">नक्षत्र ✓</span><span class="fact">तिथि ✓</span><span class="fact">वार ✓</span>
-            <span class="pill good">श्रेष्ठ</span></div>
-          <div class="dwin">शुभ समय · <b>चर</b> 10:52am–12:13pm · <b>लाभ</b> 12:13pm–1:35pm · <b>शुभ</b> 4:18pm–5:40pm</div>
+          <div class="facts"><span class="fact">नक्षत्र <span class="tag">ok</span></span><span class="fact">तिथि <span class="tag">ok</span></span><span class="fact">वार <span class="tag">ok</span></span>
+            <span class="pill-hi pill good">श्रेष्ठ</span></div>
+          <div class="dwin">शुभ समय · <b>चर</b> 10:52am–12:13pm · <b>लाभ</b> 12:13pm–1:35pm</div>
         </div>
 
         <div class="day rec">
           <div class="dtop"><span class="dnum">3</span><span class="dmon">Dec 2026</span><span class="dvara">गुरुवार</span></div>
           <div class="dpanch">मार्गशीर्ष कृष्ण दशमी · उत्तरा फाल्गुनी</div>
-          <div class="facts"><span class="fact">नक्षत्र ✓</span><span class="fact">तिथि ✓</span><span class="fact">वार ✓</span>
-            <span class="pill good">श्रेष्ठ</span></div>
-          <div class="dwin">शुभ समय · <b>चर</b> 10:55am–12:16pm · <b>लाभ</b> 12:16pm–1:37pm · <b>शुभ</b> 4:19pm–5:40pm</div>
+          <div class="facts"><span class="fact">नक्षत्र <span class="tag">ok</span></span><span class="fact">तिथि <span class="tag">ok</span></span><span class="fact">वार <span class="tag">ok</span></span>
+            <span class="pill-hi pill good">श्रेष्ठ</span></div>
+          <div class="dwin">शुभ समय · <b>चर</b> 10:55am–12:16pm · <b>लाभ</b> 12:16pm–1:37pm</div>
         </div>
 
-        <div class="day work">
+        <div class="day">
           <div class="dtop"><span class="dnum">25</span><span class="dmon">Nov 2026</span><span class="dvara">बुधवार</span></div>
           <div class="dpanch">कार्तिक कृष्ण प्रतिपदा · रोहिणी</div>
-          <div class="facts"><span class="fact">नक्षत्र ✓</span><span class="fact no">तिथि —</span><span class="fact">वार ✓</span>
-            <span class="pill mid">मध्यम</span></div>
+          <div class="facts"><span class="fact">नक्षत्र <span class="tag">ok</span></span><span class="fact no">तिथि <span class="tag">weak</span></span><span class="fact">वार <span class="tag">ok</span></span>
+            <span class="pill-hi pill mid">मध्यम</span></div>
         </div>
       </div></div>
       <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
     </div>
-    <p class="cap"><b>2 · The empty state is the feature.</b> Every competitor returns a list. Returning <i>nothing, with the reason and the season's opening date</i>, is the trust moment — and it's the case a naive filter gets wrong.</p>
+    <p class="cap"><b>2 · The empty state is the feature.</b> Competitors return a list. Returning <i>nothing, with the reason</i> is the trust moment. Note the reason cards use <b>goldTint / avoidTint washes with dark ink</b> — never a coloured alert.</p>
   </div>
 
   <!-- ── 3. Results ───────────────────────────────────────── -->
@@ -244,45 +362,45 @@
         <div class="day rec">
           <div class="dtop"><span class="dnum">17</span><span class="dmon">Aug 2026</span><span class="dvara">सोमवार</span></div>
           <div class="dpanch">श्रावण शुक्ल पंचमी · चित्रा</div>
-          <div class="facts"><span class="fact">नक्षत्र ✓</span><span class="fact">तिथि ✓</span><span class="fact">वार ✓</span>
-            <span class="pill good">श्रेष्ठ</span></div>
-          <div class="dwin">सर्वोत्तम · <b>अमृत</b> 6:03am–7:40am &nbsp;·&nbsp; <b>अभिजित</b> 12:05pm–12:56pm</div>
+          <div class="facts"><span class="fact">नक्षत्र <span class="tag">ok</span></span><span class="fact">तिथि <span class="tag">ok</span></span><span class="fact">वार <span class="tag">ok</span></span>
+            <span class="pill-hi pill good">श्रेष्ठ</span></div>
+          <div class="dwin">सर्वोत्तम · <b>अमृत</b> 6:03–7:40am &nbsp;·&nbsp; <b>अभिजित</b> 12:05–12:56pm</div>
         </div>
 
         <div class="day rec">
           <div class="dtop"><span class="dnum">19</span><span class="dmon">Aug 2026</span><span class="dvara">बुधवार</span></div>
           <div class="dpanch">श्रावण शुक्ल सप्तमी · स्वाती</div>
-          <div class="facts"><span class="fact">नक्षत्र ✓</span><span class="fact">तिथि ✓</span><span class="fact">वार ✓</span>
-            <span class="pill good">श्रेष्ठ</span></div>
-          <div class="dwin">सर्वोत्तम · <b>लाभ</b> 6:04am–7:41am &nbsp;·&nbsp; <b>लाभ</b> 5:19pm–6:56pm</div>
+          <div class="facts"><span class="fact">नक्षत्र <span class="tag">ok</span></span><span class="fact">तिथि <span class="tag">ok</span></span><span class="fact">वार <span class="tag">ok</span></span>
+            <span class="pill-hi pill good">श्रेष्ठ</span></div>
+          <div class="dwin">सर्वोत्तम · <b>लाभ</b> 6:04–7:41am &nbsp;·&nbsp; <b>लाभ</b> 5:19–6:56pm</div>
         </div>
 
         <div class="day rec">
           <div class="dtop"><span class="dnum">28</span><span class="dmon">Aug 2026</span><span class="dvara">शुक्रवार</span></div>
           <div class="dpanch">श्रावण शुक्ल पूर्णिमा · शतभिषा</div>
-          <div class="facts"><span class="fact">नक्षत्र ✓</span><span class="fact">तिथि ✓</span><span class="fact">वार ✓</span>
-            <span class="pill good">श्रेष्ठ</span></div>
-          <div class="dwin">सर्वोत्तम · <b>अमृत</b> 9:17am–10:52am &nbsp;·&nbsp; <b>शुभ</b> 12:27pm–2:03pm</div>
+          <div class="facts"><span class="fact">नक्षत्र <span class="tag">ok</span></span><span class="fact">तिथि <span class="tag">ok</span></span><span class="fact">वार <span class="tag">ok</span></span>
+            <span class="pill-hi pill good">श्रेष्ठ</span></div>
+          <div class="dwin">सर्वोत्तम · <b>अमृत</b> 9:17–10:52am &nbsp;·&nbsp; <b>शुभ</b> 12:27–2:03pm</div>
         </div>
 
-        <div class="day work">
+        <div class="day">
           <div class="dtop"><span class="dnum">14</span><span class="dmon">Aug 2026</span><span class="dvara">शुक्रवार</span></div>
           <div class="dpanch">श्रावण शुक्ल द्वितीया · पूर्वा फाल्गुनी</div>
-          <div class="facts"><span class="fact no">नक्षत्र —</span><span class="fact">तिथि ✓</span><span class="fact">वार ✓</span>
-            <span class="pill mid">मध्यम</span></div>
-          <div class="dwin">शुभ समय · <b>अमृत</b> 9:17am–10:54am &nbsp;·&nbsp; <b>शुभ</b> 12:31pm–2:08pm</div>
+          <div class="facts"><span class="fact no">नक्षत्र <span class="tag">weak</span></span><span class="fact">तिथि <span class="tag">ok</span></span><span class="fact">वार <span class="tag">ok</span></span>
+            <span class="pill-hi pill mid">मध्यम</span></div>
+          <div class="dwin">शुभ समय · <b>अमृत</b> 9:17–10:54am &nbsp;·&nbsp; <b>शुभ</b> 12:31–2:08pm</div>
         </div>
 
-        <div class="day work">
+        <div class="day">
           <div class="dtop"><span class="dnum">9</span><span class="dmon">Aug 2026</span><span class="dvara">रविवार</span></div>
           <div class="dpanch">श्रावण कृष्ण एकादशी · मृगशिरा</div>
-          <div class="facts"><span class="fact">नक्षत्र ✓</span><span class="fact">तिथि ✓</span><span class="fact no">वार —</span>
-            <span class="pill mid">मध्यम</span></div>
+          <div class="facts"><span class="fact">नक्षत्र <span class="tag">ok</span></span><span class="fact">तिथि <span class="tag">ok</span></span><span class="fact no">वार <span class="tag">weak</span></span>
+            <span class="pill-hi pill mid">मध्यम</span></div>
         </div>
       </div></div>
       <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
     </div>
-    <p class="cap"><b>3 · Ranked days.</b> Two tiers only — <b>श्रेष्ठ</b> (all three factors) and <b>मध्यम</b> (two). <b>No score out of 100</b>, matching the Rashifal precedent that bars luck-scores. The three chips <i>are</i> the reasoning.</p>
+    <p class="cap"><b>3 · Ranked days.</b> Two tiers, <b>no score out of 100</b> (the Rashifal no-luck-score rule). श्रेष्ठ cards take the active gradient; मध्यम stay on <code>cardSurface</code> — hierarchy by <b>surface</b>, not by hue.</p>
   </div>
 
   <!-- ── 4. Day detail ────────────────────────────────────── -->
@@ -296,51 +414,50 @@
         </div>
 
         <div class="hero">
+          <div class="danda" style="margin-bottom:var(--s-xs)">॥</div>
           <div class="hd">17</div>
           <div class="hm">August 2026 · सोमवार</div>
           <div class="hv">श्रावण शुक्ल पंचमी · चित्रा नक्षत्र</div>
-          <div style="margin-top:7px"><span class="pill good">श्रेष्ठ · तीनों अनुकूल</span></div>
+          <div style="margin-top:var(--s-sm)"><span class="pill-hi pill good">श्रेष्ठ · तीनों अनुकूल</span></div>
         </div>
 
-        <div class="sechead">अनुकूलता · Why this day</div>
+        <div class="sechead-hi">अनुकूलता</div>
         <div class="card">
-          <div class="row"><span class="k">नक्षत्र</span><span class="v">चित्रा</span><span class="ok">✓</span></div>
-          <div class="row"><span class="k">तिथि</span><span class="v">शुक्ल पंचमी</span><span class="ok">✓</span></div>
-          <div class="row"><span class="k">वार</span><span class="v">सोमवार</span><span class="ok">✓</span></div>
+          <div class="row"><span class="k">नक्षत्र</span><span class="v">चित्रा</span><span class="ok">अनुकूल</span></div>
+          <div class="row"><span class="k">तिथि</span><span class="v">शुक्ल पंचमी</span><span class="ok">अनुकूल</span></div>
+          <div class="row"><span class="k">वार</span><span class="v">सोमवार</span><span class="ok">अनुकूल</span></div>
         </div>
 
-        <div class="sechead">दोष रहित · Clear of</div>
+        <div class="sechead-hi">दोष रहित</div>
         <div class="card">
-          <div class="row"><span class="k">रिक्ता तिथि</span><span class="ok">नहीं ✓</span></div>
-          <div class="row"><span class="k">भद्रा (विष्टि करण)</span><span class="ok">नहीं ✓</span></div>
-          <div class="row"><span class="k">पंचक</span><span class="ok">नहीं ✓</span></div>
-          <div class="row"><span class="k">व्यतीपात / वैधृति योग</span><span class="ok">नहीं ✓</span></div>
-          <div class="row"><span class="k">अधिक मास</span><span class="ok">नहीं ✓</span></div>
+          <div class="row"><span class="k">रिक्ता तिथि</span><span class="ok">नहीं</span></div>
+          <div class="row"><span class="k">भद्रा (विष्टि करण)</span><span class="ok">नहीं</span></div>
+          <div class="row"><span class="k">पंचक</span><span class="ok">नहीं</span></div>
+          <div class="row"><span class="k">व्यतीपात / वैधृति</span><span class="ok">नहीं</span></div>
+          <div class="row"><span class="k">शुक्र / गुरु अस्त</span><span class="ok">नहीं</span></div>
         </div>
 
-        <div class="sechead">दिन के शुभ समय · Windows that day</div>
-        <div class="card">
-          <div class="wrow"><span class="wdot g"></span><span class="wname">अमृत</span><span class="wtime">6:03 – 7:40 am</span></div>
-          <div class="wrow struck"><span class="wdot a"></span><span class="wname">राहु काल</span><span class="wtime">7:40 – 9:17 am</span></div>
-          <div class="wrow"><span class="wdot g"></span><span class="wname">शुभ</span><span class="wtime">9:17 – 10:54 am</span></div>
-          <div class="wrow"><span class="wdot b"></span><span class="wname">अभिजित</span><span class="wtime">12:05 – 12:56 pm</span></div>
-          <div class="wrow"><span class="wdot g"></span><span class="wname">लाभ</span><span class="wtime">3:44 – 5:21 pm</span></div>
-          <div class="wrow"><span class="wdot g"></span><span class="wname">अमृत</span><span class="wtime">5:21 – 6:57 pm</span></div>
-        </div>
+        <div class="sechead-hi">दिन के शुभ समय</div>
+        <div class="muh"><span class="mname">अमृत</span><span class="mtag">· शुभ</span><span class="mtime">6:03 – 7:40 am</span></div>
+        <div class="muh avoid"><span class="mname">राहु काल</span><span class="mtag">· त्याज्य</span><span class="mtime">7:40 – 9:17 am</span></div>
+        <div class="muh"><span class="mname">शुभ</span><span class="mtag">· शुभ</span><span class="mtime">9:17 – 10:54 am</span></div>
+        <div class="muh now"><span class="mname">अभिजित</span><span class="mtag">· शुभ</span><span class="mnow">अभी</span><span class="mtime">12:05 – 12:56 pm</span></div>
+        <div class="muh"><span class="mname">लाभ</span><span class="mtag">· शुभ</span><span class="mtime">3:44 – 5:21 pm</span></div>
+        <div class="muh"><span class="mname">अमृत</span><span class="mtag">· शुभ</span><span class="mtime">5:21 – 6:57 pm</span></div>
 
-        <div class="cta">अनुस्मारक लगाएँ · Remind me</div>
-        <div class="cta2">साझा करें · Share this muhurat</div>
-        <p class="disc">परम्परागत पंचांग-आधारित मार्गदर्शन। स्थानीय परम्परा भिन्न हो सकती है।<br />Traditional panchang guidance. Regional practice varies.</p>
+        <div class="cta">अनुस्मारक लगाएँ</div>
+        <div class="cta2">साझा करें</div>
+        <p class="disc"><span class="hi">परम्परागत पंचांग-आधारित मार्गदर्शन। स्थानीय परम्परा भिन्न हो सकती है।</span></p>
       </div></div>
       <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
     </div>
-    <p class="cap"><b>4 · Day detail.</b> Rahu Kaal is <b>struck through in place</b>, not hidden — the user sees it was considered. Reminder reuses the shipped local-notification scheduler; share reuses the muhurat share card.</p>
+    <p class="cap"><b>4 · Day detail.</b> Muhurat rows mirror <code>MuhuratCardBody</code> exactly: Rahu Kaal keeps <b>dark ink text on the avoid tint with a <span style="font-family:var(--deva)">· त्याज्य</span> word tag</b> — not struck through, not greyed. The running window takes a saffron ring + <span style="font-family:var(--deva)">अभी</span> badge.</p>
   </div>
 
 </div>
 
 <h1 style="margin-top:34px">Phase 1 hub · अबूझ मुहूर्त · Phase 4 personalisation</h1>
-<p class="sub">The surrounding surfaces: where the finder lives, the zero-content-risk slice that ships first, and the layer no offline competitor has.</p>
+<p class="sub">Where the finder lives, the zero-content-risk slice that ships first, and the layer no offline competitor has.</p>
 
 <div class="wrap">
 
@@ -351,36 +468,36 @@
       <div class="screen"><div class="pad">
         <div class="navrow">
           <div class="title">मुहूर्त<small>Muhurat</small></div>
-          <div class="locpill">उज्जैन</div>
+          <div class="locpill"><span class="pin"></span>उज्जैन</div>
         </div>
 
-        <div class="sechead">आज के शुभ समय · Today · shipped</div>
-        <div class="card">
-          <div class="wrow"><span class="wdot g"></span><span class="wname">अमृत</span><span class="wtime">now → 12:32 pm</span></div>
-          <div class="wrow struck"><span class="wdot a"></span><span class="wname">राहु काल</span><span class="wtime">5:25 – 7:03 pm</span></div>
-          <div class="wrow"><span class="wdot b"></span><span class="wname">अभिजित</span><span class="wtime">12:06 – 12:58 pm</span></div>
-          <div class="wrow"><span class="wdot b"></span><span class="wname">ब्रह्म मुहूर्त</span><span class="wtime">4:32 – 5:20 am</span></div>
-        </div>
+        <div class="sechead-hi">आज के शुभ समय</div>
+        <div class="muh now"><span class="mname">अमृत</span><span class="mtag">· शुभ</span><span class="mnow">अभी</span><span class="mtime">→ 12:32 pm</span></div>
+        <div class="muh avoid"><span class="mname">राहु काल</span><span class="mtag">· त्याज्य</span><span class="mtime">5:25 – 7:03 pm</span></div>
+        <div class="muh"><span class="mname">अभिजित</span><span class="mtag">· शुभ</span><span class="mtime">12:06 – 12:58 pm</span></div>
+        <div class="muh"><span class="mname">ब्रह्म मुहूर्त</span><span class="mtag">· शुभ</span><span class="mtime">4:32 – 5:20 am</span></div>
 
         <div class="sechead">Phase 1 · new</div>
-        <div class="ecard" style="margin-bottom:9px">
-          <div class="gl">◈</div>
-          <div><div class="hi">शुभ मुहूर्त खोज</div><div class="en">Find a day for an occasion →</div></div>
+        <div class="ecard row sel" style="margin-bottom:var(--s-md)">
+          <div class="gl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8 20 20"/><path d="M11 8v3l2 1.5"/></svg></div>
+          <div style="flex:1"><div class="hi">शुभ मुहूर्त खोज</div><div class="en">Find a day for an occasion</div></div>
+          <span class="badge-new">new</span>
         </div>
-        <div class="ecard">
-          <div class="gl">✧</div>
-          <div><div class="hi">अबूझ मुहूर्त</div><div class="en">Days that need no muhurat →</div></div>
+        <div class="ecard row">
+          <div class="gl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 13.9 9h5.6l-4.5 3.4 1.7 5.4L12 14.6l-4.7 3.2 1.7-5.4L4.5 9h5.6Z"/></svg></div>
+          <div style="flex:1"><div class="hi">अबूझ मुहूर्त</div><div class="en">Days needing no muhurat</div></div>
+          <span class="badge-new">new</span>
         </div>
 
         <div class="sechead">Phase 3 · later</div>
-        <div class="card" style="opacity:.55">
+        <div class="card" style="opacity:.5">
           <div class="row"><span class="k">होरा</span><span class="v">planetary hour</span></div>
-          <div class="row"><span class="k">यात्रा · दिशा शूल</span><span class="v">travel direction</span></div>
+          <div class="row"><span class="k">यात्रा · दिशा शूल</span><span class="v">travel</span></div>
         </div>
       </div></div>
       <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
     </div>
-    <p class="cap"><b>5 · The hub.</b> Today's nitya windows (shipped) sit above the two new doors. Brahma Muhurta is already in <b>PanchangData</b> and simply isn't surfaced yet — a free row.</p>
+    <p class="cap"><b>5 · The hub.</b> Today's nitya rows are the shipped <code>MuhuratCardBody</code> language, unchanged. <b>ब्रह्म मुहूर्त is already in <code>PanchangData</code></b> and just isn't surfaced — a free row. New doors carry the <code>newBadge</code> tokens.</p>
   </div>
 
   <!-- ── 6. Abujh ─────────────────────────────────────────── -->
@@ -393,12 +510,12 @@
           <div class="title">अबूझ मुहूर्त<small>No muhurat needed</small></div>
         </div>
 
-        <div class="empty" style="text-align:left;padding:12px 13px">
-          <div class="eb">These days are auspicious in their entirety — <b>no panchang shuddhi is required</b>. Any hour works.
-            Traditionally chosen for purchases, new ventures and beginnings when no computed muhurat is available.</div>
+        <div class="empty" style="text-align:left;padding:var(--s-md)">
+          <div class="eb">These days are auspicious in their entirety — <b style="font-family:var(--deva);color:var(--ink)">कोई शुद्धि आवश्यक नहीं</b>.
+            Any hour works. Traditionally chosen for purchases and new beginnings when no computed muhurat is available.</div>
         </div>
 
-        <div class="sechead">आगामी · Upcoming</div>
+        <div class="sechead-hi">आगामी</div>
 
         <div class="day rec"><div class="dtop"><span class="dnum">21</span><span class="dmon">Oct 2026</span><span class="dvara">बुधवार</span></div>
           <div class="dpanch">दशहरा · विजयादशमी &nbsp;·&nbsp; धनिष्ठा</div></div>
@@ -413,11 +530,11 @@
         <div class="day rec"><div class="dtop"><span class="dnum">9</span><span class="dmon">May 2027</span><span class="dvara">रविवार</span></div>
           <div class="dpanch">अक्षय तृतीया &nbsp;·&nbsp; मृगशिरा</div></div>
 
-        <p class="disc">इन दिनों के लिए किसी गणना की आवश्यकता नहीं।</p>
+        <p class="disc"><span class="hi">इन दिनों हेतु किसी गणना की आवश्यकता नहीं।</span></p>
       </div></div>
       <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
     </div>
-    <p class="cap"><b>6 · Abujh — ships first.</b> Every one of these is already a rule in <b>festivals.ts</b>, so this slice needs <b>zero new content review</b>. Dates are real engine output.</p>
+    <p class="cap"><b>6 · Abujh — ships first.</b> Every one is already a rule in <code>festivals.ts</code>, so this slice needs <b>zero new content review</b>. Dates are real engine output.</p>
   </div>
 
   <!-- ── 7. Personalised ──────────────────────────────────── -->
@@ -430,129 +547,134 @@
           <div class="title">वाहन क्रय<small>Phase 4 · personalised</small></div>
         </div>
 
-        <div class="whycard" style="margin:0 0 12px">
-          <div class="wh">आपकी कुंडली से · from your saved Kundali</div>
+        <div class="whycard" style="margin:0 0 var(--s-md)">
+          <div class="wh">आपकी कुंडली से</div>
           <div class="wb">जन्म नक्षत्र <b>रोहिणी</b> · जन्म राशि <b>वृषभ</b> — तारा बल और चन्द्र बल जोड़े गए।</div>
         </div>
 
         <div class="chips"><div class="chip">सभी</div><div class="chip on">मेरे लिए श्रेष्ठ</div></div>
 
-        <div class="day work">
+        <div class="day">
           <div class="dtop"><span class="dnum">17</span><span class="dmon">Aug 2026</span><span class="dvara">सोमवार</span></div>
           <div class="dpanch">श्रावण शुक्ल पंचमी · चित्रा</div>
-          <div class="facts"><span class="fact">नक्षत्र ✓</span><span class="fact">तिथि ✓</span><span class="fact">वार ✓</span></div>
-          <div class="dwin" style="border-top-style:solid">
-            <span class="fact">तारा 11 · सम्पत् ✓</span> &nbsp;<span class="fact no">चन्द्र भाव 5 ✗</span>
-            <div style="margin-top:5px;font-size:10.5px;color:var(--ink-muted)">सामान्यतः श्रेष्ठ — आपके लिए मध्यम</div>
-          </div>
+          <div class="facts"><span class="fact">तारा 11 · सम्पत् <span class="tag">ok</span></span><span class="fact no">चन्द्र भाव 5 <span class="tag">weak</span></span></div>
+          <div class="dnote">सामान्यतः श्रेष्ठ — आपके लिए मध्यम</div>
         </div>
 
-        <div class="day work">
+        <div class="day">
           <div class="dtop"><span class="dnum">19</span><span class="dmon">Aug 2026</span><span class="dvara">बुधवार</span></div>
           <div class="dpanch">श्रावण शुक्ल सप्तमी · स्वाती</div>
-          <div class="facts"><span class="fact">नक्षत्र ✓</span><span class="fact">तिथि ✓</span><span class="fact">वार ✓</span></div>
-          <div class="dwin" style="border-top-style:solid">
-            <span class="fact no">तारा 12 · विपत् ✗</span> &nbsp;<span class="fact">चन्द्र भाव 6 ✓</span>
-            <div style="margin-top:5px;font-size:10.5px;color:var(--ink-muted)">विपत् तारा — आपके लिए टालें</div>
-          </div>
+          <div class="facts"><span class="fact no">तारा 12 · विपत् <span class="tag">avoid</span></span><span class="fact">चन्द्र भाव 6 <span class="tag">ok</span></span></div>
+          <div class="dnote">विपत् तारा — आपके लिए टालें</div>
         </div>
 
         <div class="day rec">
           <div class="dtop"><span class="dnum">26</span><span class="dmon">Nov 2026</span><span class="dvara">गुरुवार</span></div>
           <div class="dpanch">कार्तिक कृष्ण द्वितीया · मृगशिरा</div>
-          <div class="facts"><span class="fact">नक्षत्र ✓</span><span class="fact">तिथि ✓</span><span class="fact">वार ✓</span></div>
-          <div class="dwin" style="border-top-style:solid">
-            <span class="fact">तारा 2 · सम्पत् ✓</span> &nbsp;<span class="fact no">चन्द्र भाव 2 ✗</span>
-          </div>
+          <div class="facts"><span class="fact">तारा 2 · सम्पत् <span class="tag">ok</span></span><span class="fact no">चन्द्र भाव 2 <span class="tag">weak</span></span></div>
         </div>
 
-        <p class="disc">तारा बल व चन्द्र बल पारम्परिक गणना हैं। पुरोहित से पुष्टि करें।</p>
+        <p class="disc"><span class="hi">तारा बल व चन्द्र बल पारम्परिक गणना हैं। पुरोहित से पुष्टि करें।</span></p>
       </div></div>
       <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
     </div>
     <p class="cap"><b>7 · "Good" vs "good for you".</b> Real Tarabala/Chandrabala for a sample profile — and it <b>re-ranks the list</b>: 17 and 19 Aug are श्रेष्ठ generally but each fails one personal test. Two integers of arithmetic each.</p>
   </div>
 
-  <!-- ── 8. Reminder + share ──────────────────────────────── -->
+  <!-- ── 8. Reminder sheet ────────────────────────────────── -->
   <div class="col">
     <div class="phone">
       <div class="statusbar"><span>9:41</span><span>􀙇 􀛨 􀋨</span></div>
-      <div class="screen" style="background:rgba(26,20,12,.45)">
+      <div class="screen" style="background:var(--modal-backdrop)">
         <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(var(--parchment-hi),var(--gradient-end));
-          border-radius:22px 22px 0 0;border-top:1px solid var(--divider);padding:16px 16px 22px">
-          <div style="width:36px;height:4px;border-radius:2px;background:var(--divider);margin:0 auto 14px"></div>
-          <div class="title" style="text-align:center;margin-bottom:4px">अनुस्मारक · Remind me</div>
-          <p style="text-align:center;font-size:11.5px;color:var(--ink-muted);margin-bottom:14px">
+          border-radius:var(--r-xl) var(--r-xl) 0 0;border-top:1px solid var(--divider);
+          padding:var(--s-lg) var(--gutter) var(--s-xxl);box-shadow:var(--e-overlay)">
+          <div style="width:36px;height:4px;border-radius:2px;background:var(--divider);margin:0 auto var(--s-lg)"></div>
+          <div class="title" style="text-align:center">अनुस्मारक<small>Remind me</small></div>
+          <p style="text-align:center;font-family:var(--latin);font-size:12px;color:var(--ink-muted);margin:var(--s-sm) 0 var(--s-lg)">
             सोमवार, 17 अगस्त 2026 · अमृत 6:03 am</p>
 
           <div class="card">
-            <div class="row"><span class="k">एक दिन पूर्व</span><span class="ok">✓</span></div>
-            <div class="row"><span class="k">उसी सुबह, 5:30 बजे</span><span class="ok">✓</span></div>
-            <div class="row"><span class="k">मुहूर्त से 30 मिनट पूर्व</span><span class="v">—</span></div>
+            <div class="row"><span class="k">एक दिन पूर्व</span><span class="ok">चालू</span></div>
+            <div class="row"><span class="k">उसी सुबह, 5:30 बजे</span><span class="ok">चालू</span></div>
+            <div class="row"><span class="k">मुहूर्त से 30 मिनट पूर्व</span><span class="v" style="color:var(--ink-muted);font-weight:500">बंद</span></div>
           </div>
 
-          <div class="whycard" style="margin-bottom:12px">
+          <div class="whycard">
             <div class="wb">Uses the shipped local-notification scheduler — no new mechanism, works offline,
               nothing leaves the device.</div>
           </div>
 
           <div class="cta">सुरक्षित करें</div>
-          <div class="cta2">साझा करें · 4:5 मुहूर्त कार्ड</div>
+          <div class="cta2">साझा करें · मुहूर्त कार्ड</div>
         </div>
       </div>
       <div class="tabbar"><span>होम</span><span>श्रवण</span><span class="on">पंचांग</span><span>साधना</span><span>अधिक</span></div>
     </div>
-    <p class="cap"><b>8 · Reminder &amp; share.</b> Both reuse shipped machinery — <b>NotificationPreferences</b> scheduling and the muhurat share card (<code style="color:#e9d9b1">view-shot</code> + <code style="color:#e9d9b1">expo-sharing</code>). No birth details on a muhurat card.</p>
+    <p class="cap"><b>8 · Reminder &amp; share.</b> Sheet sits on <code>modalBackdrop</code> with <code>elevation.overlay</code>. Both actions reuse shipped machinery — the notification scheduler and the muhurat share card. No birth details on a muhurat card.</p>
   </div>
 
 </div>
 
 <div class="note">
-  <h3>Iterative computation — each phase leans only on shipped primitives</h3>
-  <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:8px">
-    <tr style="text-align:left;color:#e9d9b1;border-bottom:1px solid rgba(255,245,224,.2)">
-      <th style="padding:6px 8px">Phase</th><th style="padding:6px 8px">Adds</th><th style="padding:6px 8px">Computed from (already ships)</th></tr>
-    <tr style="border-bottom:1px solid rgba(255,245,224,.08)"><td style="padding:6px 8px"><b>0 ✅</b></td>
-      <td style="padding:6px 8px">Choghadiya · Rahu/Gulika/Yamaganda · Abhijit · Brahma Muhurta</td>
-      <td style="padding:6px 8px"><code>muhurat.ts</code>, <code>PanchangData</code></td></tr>
-    <tr style="border-bottom:1px solid rgba(255,245,224,.08)"><td style="padding:6px 8px"><b>1</b></td>
-      <td style="padding:6px 8px">Abujh calendar · 6 occasions · tithi/nakshatra/vara/yoga/karana shuddhi · empty-with-reason</td>
-      <td style="padding:6px 8px"><code>festivals.ts</code> rules (no new content) + <code>PanchangData</code> + <code>MuhuratDay</code></td></tr>
-    <tr style="border-bottom:1px solid rgba(255,245,224,.08)"><td style="padding:6px 8px"><b>2</b></td>
-      <td style="padding:6px 8px">Masa shuddhi · <b>Shukra/Guru asta</b> · Bhadra as a window · window-time anga evaluation</td>
-      <td style="padding:6px 8px"><code>getSiderealPlanetLongitude()</code>, karana boundary solve</td></tr>
-    <tr style="border-bottom:1px solid rgba(255,245,224,.08)"><td style="padding:6px 8px"><b>3</b></td>
-      <td style="padding:6px 8px">Lagna-grade windows to the minute · Hora · Yatra + disha shool</td>
-      <td style="padding:6px 8px"><code>computeLagna()</code> swept across the day</td></tr>
-    <tr><td style="padding:6px 8px"><b>4</b></td>
-      <td style="padding:6px 8px"><b>Tarabala + Chandrabala</b> — "good for you"</td>
-      <td style="padding:6px 8px">saved Kundali profile (PRD-C) — two integers each</td></tr>
+  <h3>Design-token provenance — what this revision corrected</h3>
+  <p>The first cut of this prototype inherited its palette from <code>docs/muhurat-prototype.html</code>, which predates the
+  July 2026 Mobile Design Review (#222). Checked against <code>mobile/src/theme/*.ts</code>, six things were wrong — one of
+  them a direct violation of a rule stated in <code>colors.ts</code> itself:</p>
+  <table>
+    <tr><th>Was</th><th>Now</th><th>Why it mattered</th></tr>
+    <tr><td><span class="swatch" style="background:#3e7c4f"></span><code>#3e7c4f</code> green for auspicious</td>
+        <td><span class="swatch" style="background:#A67C34"></span><code>goldTint</code> / <code>goldChipBg</code></td>
+        <td><b>Rule violation.</b> <code>colors.ts</code>: signalling is "kept in the WARM manuscript palette — <b>never green/red</b>". Auspicious reuses the gold tint.</td></tr>
+    <tr><td>Rahu Kaal struck through, terracotta text, <code>opacity .75</code></td>
+        <td>dark <code>ink</code> on <code>avoidTint</code> + <span style="font-family:var(--deva)">· त्याज्य</span> word tag</td>
+        <td><b>Rule violation.</b> <code>MuhuratCardBody</code> renders name and time in dark ink on <i>both</i> qualities — the tint plus a text tag carry quality; the text is never greyed (terracotta-on-avoidTint measured ~4.8:1).</td></tr>
+    <tr><td><span class="swatch" style="background:#2f1e10"></span><code>#2f1e10</code> ink · <span class="swatch" style="background:#8a6a47"></span><code>#8a6a47</code> muted</td>
+        <td><span class="swatch" style="background:#1A0E03"></span><code>#1A0E03</code> · <span class="swatch" style="background:#6E5230"></span><code>#6E5230</code></td>
+        <td>Both were the pre-#222 values the audit deliberately deepened. The old muted tan reached only ~4.0:1 — <b>below WCAG AA</b>. Now ~15.4:1 and ~5.9:1.</td></tr>
+    <tr><td>Ad-hoc radii (9, 10, 12, 16, 20, 22) and hand-rolled shadows</td>
+        <td><code>radii</code> 10·14·18·22·pill; the five <code>elevation</code> clusters</td>
+        <td>The audit migrated 14 files of hand-rolled shadows and made radii a coherent 4-step scale. A prototype off-scale re-teaches the drift.</td></tr>
+    <tr><td>9.5px chrome text in six places</td><td>10px floor</td>
+        <td>#222 raised 50 chrome sites to a <b>10pt floor</b>.</td></tr>
+    <tr><td>Character icons <code>⌂ ◈ ✦ ✎ ⛏ ☼</code>; <code>✓ / ✗</code> marks</td>
+        <td>stroked inline SVG glyphs; <span style="font-family:var(--deva)">अनुकूल / नहीं / शुभ / त्याज्य</span> words</td>
+        <td>§5 <b>"No emoji"</b> — the app draws vector glyphs (<code>deityGlyphs/</code>). And §12: accent-only information must carry a text or shape cue, <b>never colour alone</b>.</td></tr>
   </table>
-  <p style="margin-top:10px">Phase 1 ships value with <b>no content risk at all</b> (Abujh is a re-projection of shipped festival rules).
-  Phase 4 is the smallest code change and the largest differentiator — no offline app offers personalised muhurat without a
-  consultation funnel. <b>Nothing in any phase needs a backend, a network call, or a new dependency.</b></p>
-  <p style="margin-top:8px;font-style:italic">One caution the Abujh run demonstrated: the scratch script above duplicated
-  Akshaya Navami on 18 <i>and</i> 19 Nov 2026 — a <b>vriddhi</b> tithi at two sunrises. The shipped
-  <code>festivalEngine</code> already dedupes that case (it removed 74 duplicate dates across 2024–2031). Consume the
-  festival engine; never re-implement tithi matching.</p>
+  <p>Also aligned: <code>spacing.xxl</code> (24) screen gutter as <code>PanchangScreen</code> uses; <code>cardSurface</code> /
+  <code>cardActive*</code> gradients for rest-vs-selected instead of inventing a hue; <code>sectionLabel</code> as Inter
+  SemiBold 11 / tracking 2.4 / uppercase and <b>Latin-only</b> — Devanagari headings get their own token with
+  <b>no letterSpacing</b>, because tracking splits the shirorekha (the exact bug #222 fixed in the TheerthDetail deity pill);
+  Devanagari line-height held at ≥1.5×; and the <code>newBadge</code> tokens for the two new doors.</p>
+  <p><b>Deliberate deviations, both non-app chrome:</b> the dark page background behind the phones is presentation staging for
+  this document, and the phone bezel is device chrome. Neither is app UI, so neither takes app tokens. Fonts are the Google
+  Fonts web cuts of the same three families (Noto Serif Devanagari, Cormorant Garamond, Inter) at the weights
+  <code>typography.ts</code> loads — 500/600 Devanagari, 500/600/700 + italics Cormorant, 500/600 Inter.</p>
+
+  <h3>Iterative computation — each phase leans only on shipped primitives</h3>
+  <table>
+    <tr><th>Phase</th><th>Adds</th><th>Computed from (already ships)</th></tr>
+    <tr><td><b>0 ✅</b></td><td>Choghadiya · Rahu/Gulika/Yamaganda · Abhijit · Brahma Muhurta</td>
+        <td><code>muhurat.ts</code>, <code>PanchangData</code></td></tr>
+    <tr><td><b>1</b></td><td>Abujh calendar · 6 occasions · tithi/nakshatra/vara/yoga/karana shuddhi · empty-with-reason</td>
+        <td><code>festivals.ts</code> rules (no new content) + <code>PanchangData</code> + <code>MuhuratDay</code></td></tr>
+    <tr><td><b>2</b></td><td>Masa shuddhi · <b>Shukra/Guru asta</b> · Bhadra as a window · window-time anga evaluation</td>
+        <td><code>getSiderealPlanetLongitude()</code>, karana boundary solve</td></tr>
+    <tr><td><b>3</b></td><td>Lagna-grade windows to the minute · Hora · Yatra + disha shool</td>
+        <td><code>computeLagna()</code> swept across the day</td></tr>
+    <tr><td><b>4</b></td><td><b>Tarabala + Chandrabala</b> — "good for you"</td>
+        <td>saved Kundali profile (PRD-C) — two integers each</td></tr>
+  </table>
+  <p style="margin-top:10px">Phase 1 ships value with <b>no content risk at all</b> (Abujh re-projects shipped festival rules).
+  Phase 4 is the smallest code change and the largest differentiator. <b>No phase needs a backend, a network call, or a new
+  dependency.</b></p>
 
   <h3>Why this is cheap to build</h3>
-  <p>Everything the finder needs already ships and is already verified. <code>PanchangData</code> gives tithi (with paksha and
-  kshaya), nakshatra, yoga, karana, vara, lunar month and <code>isAdhik</code>; <code>MuhuratDay</code> gives the 8+8 choghadiya,
-  Rahu/Gulika/Yamaganda and Abhijit. <b>The finder adds no astronomy</b> — one new pure module,
-  <code>panchang/eventMuhurat.ts</code>, that reads those two structures and a bundled rule table. Rahu Kaal and the day
-  choghadiya are both exact eighths of the daytime, so excluding a kaal is dropping a slot, not clipping an interval.</p>
-
-  <h3>What the real run exposed</h3>
-  <ul>
-    <li><b>A naive filter is confidently wrong.</b> Without the Chaturmas rule the draft returned <b>5 "recommended" Griha
-      Pravesh dates</b> between Aug and Oct 2026 — every one of which a purohit would reject. With it: zero, correctly.</li>
-    <li><b>The season boundary is itself a kshaya tithi.</b> Dev Uthani Ekadashi 2026 touches no sunrise; only the shipped
-      kshaya fallback resolves it to 20 Nov. A finder built on a naive tithi lookup would miss the date that unlocks the
-      entire feature.</li>
-    <li><b>Yield is low, and that's honest.</b> Over 240 days: Griha Pravesh 10 recommended, Vidyarambh 19, Namkaran 42.
-      Scarcity is the product — it is why people search at all.</li>
-  </ul>
+  <p><code>PanchangData</code> gives tithi (with paksha and kshaya), nakshatra, yoga, karana, vara, lunar month and
+  <code>isAdhik</code>; <code>MuhuratDay</code> gives the 8+8 choghadiya, Rahu/Gulika/Yamaganda and Abhijit;
+  <code>kundali.ts</code> gives graha longitudes and the Lagna. <b>The finder adds no astronomy</b> — one new pure module,
+  <code>panchang/eventMuhurat.ts</code>, reading those structures plus a bundled rule table. Rahu Kaal and the day choghadiya
+  are both exact eighths of daytime, so excluding a kaal is dropping a slot, not clipping an interval.</p>
 
   <h3>External validation (7 Aug 2026)</h3>
   <p>The "zero Griha Pravesh dates in the next 90 days" result was checked against published muhurat lists, since it is a
@@ -565,58 +687,51 @@
     <li><b>14 and 20 Nov differ by one nakshatra</b>, and both are days where the nakshatra changes within hours of sunrise
       (14 Nov: Purvashadha ends 8:22 pm; 20 Nov: Purva Bhadrapada ends 6:54 am). The engine reports the <i>sunrise</i> anga
       by its documented udaya-vyapini convention; muhurat lists report the anga prevailing during the <i>muhurat window</i>.
-      <b>This is a design finding, not an engine bug</b> — the finder must evaluate angas at the candidate window, not at
-      sunrise, or it will disagree with every published list on early-changeover days.</li>
+      <b>A design finding, not an engine bug</b> — the finder must evaluate angas at the candidate window, or it will
+      disagree with every published list on early-changeover days.</li>
     <li><b>21 Nov diverges</b> (engine: Dwadashi; list: Trayodashi), but that list is internally inconsistent — it runs
       Ekadashi → Trayodashi, skipping Dwadashi. The engine is backed by in-repo DrikPanchang fixtures and a 150-chart Swiss
       Ephemeris corpus; the aggregator is not.</li>
   </ul>
   <p><b>Where the draft was too strict:</b> it lifts the bar at Dev Uthani Ekadashi, so its first dates are 25–26 Nov.
   Published lists resume at Kartik Shukla post-Diwali and carry <b>11 and 14 Nov</b>. Under a third reading (month-based:
-  only Ashadha–Ashwin barred, Kartik free) even <b>30 Oct 2026</b> would qualify — inside the 90-day window. Three attested
-  conventions, three different answers; only the strict and published readings give zero for this window, and they agree.</p>
+  only Ashadha–Ashwin barred, Kartik free) even <b>30 Oct 2026</b> would qualify. Three attested conventions, three answers;
+  only the strict and published readings give zero for this window, and they agree.</p>
 
   <h3>A missing rule the validation surfaced — शुक्र/गुरु अस्त</h3>
   <p>DrikPanchang states its own method plainly: it selects dates by <b>Nakshatra, Weekday, Tithi and Lunar-Month Shuddhi</b>
   — which is the draft's factor model — and adds, citing <i>Muhurta Chintamani</i> and <i>Dharmasindhu</i>, that
   <b>"entry into a new home should not be done while Shukra Tara and Guru Tara are Asta"</b> (Venus/Jupiter combust).
-  The draft has no such rule. <b>It is computable from shipped code</b> — <code>kundali.ts</code>'s
-  <code>getSiderealPlanetLongitude()</code> already returns Sun, Venus and Jupiter longitudes, so asta is one elongation
-  test away. Run over Jul 2026 – May 2027:</p>
+  The draft had no such rule. <b>It is computable from shipped code</b> — <code>getSiderealPlanetLongitude()</code> already
+  returns Sun, Venus and Jupiter, so asta is one elongation test away. Run over Jul 2026 – May 2027:</p>
   <ul>
-    <li><b>गुरु अस्त (Jupiter combust): 15 Jul → 13 Aug 2026</b> (11° orb) — independently bars the first week of the
-      90-day window.</li>
-    <li><b>शुक्र अस्त (Venus combust): 18 Oct → 30 Oct 2026</b> at a flat 10° orb. Venus is <b>retrograde</b> throughout,
-      with <b>inferior conjunction on 24 Oct 2026</b> (0.19° separation) and a direct station around 14 Nov.</li>
-    <li>This lands right on the loophole: <b>30 Oct 2026</b> — the one date that escapes Chaturmas under the loosest
-      month-based reading — sits at <b>9.71° from the Sun</b>. Barred under a flat 10° orb; <i>not</i> barred under the
-      8° orb some texts use for a retrograde Shukra. The date is genuinely borderline, and no published list carries an
-      October date regardless.</li>
+    <li><b>गुरु अस्त: 15 Jul → 13 Aug 2026</b> (11° orb) — independently bars the first week of the 90-day window.</li>
+    <li><b>शुक्र अस्त: 18 Oct → 30 Oct 2026</b> at a flat 10° orb. Venus is <b>retrograde</b> throughout, with
+      <b>inferior conjunction on 24 Oct 2026</b> (0.19° separation) and a direct station around 14 Nov.</li>
+    <li>This lands on the loophole: <b>30 Oct 2026</b> — the one date that escapes Chaturmas under the loosest month-based
+      reading — sits at <b>9.71° from the Sun</b>. Barred under a flat 10° orb; <i>not</i> barred under the 8° orb some texts
+      use for a retrograde Shukra. Genuinely borderline, and no published list carries an October date regardless.</li>
   </ul>
-  <p>So the zero-result for 7 Aug – 4 Nov 2026 survives every reading, but the loophole closes on an <b>orb convention</b>
-  (8° vs 10° for retrograde Venus) that v1 must state explicitly. Whether Tara asta also gates lesser events like vehicle
-  purchase — screen 3's 9 and 14 Aug fall inside Guru asta — is an open content question; the cited rule names Griha Pravesh
-  only. Strictly, "Tara asta" is heliacal set/rise (latitude- and visibility-dependent), not a fixed orb, which is a further
-  refinement for §10 review.</p>
 
   <h3>Open gates before this ships</h3>
   <ul>
     <li><b>RULEBOOK §10 content review of the rule tables.</b> The nakshatra/tithi/vara lists here are drafted, not sourced.
-      They are religious content and need ≥2 authoritative concordant sources each, with recension notes — the same bar
-      every text in the app clears.</li>
-    <li><b>Bhadra is approximated.</b> Detection uses the <i>sunrise</i> karana; Bhadra actually spans half a tithi and can
-      start mid-day. A real Bhadra window solver is a follow-up, or v1 states the limitation plainly.</li>
-    <li><b>Regional variance.</b> North Indian and South Indian muhurta practice diverge, as do sampradayas. v1 should name
-      the convention it follows (DrikPanchang, as the rest of the Panchang subsystem already does).</li>
-    <li><b>Shukra/Guru asta must be added, and its orb stated.</b> Computable today from <code>getSiderealPlanetLongitude()</code>;
-      the orb (10° flat vs 8° for retrograde Venus, 11° Jupiter) changes real answers — see the asta section above.</li>
-    <li><b>Vivah is deliberately excluded.</b> Marriage muhurta needs both charts and guna milan, and is the highest-stakes
-      decision a user could take from an app. Out of scope — the disclaimer says so on every screen.</li>
-    <li><b>Abhijit on Wednesday.</b> Several traditions void it; the engine currently always emits it. Flagged, not decided.</li>
+      They are religious content and need ≥2 authoritative concordant sources each, with recension notes.</li>
+    <li><b>Shukra/Guru asta must be added, and its orb stated</b> (10° flat vs 8° retrograde Venus, 11° Jupiter). Strictly,
+      Tara asta is heliacal set/rise — latitude- and visibility-dependent, not a fixed orb.</li>
+    <li><b>Bhadra is approximated</b> — detection uses the sunrise karana, but Bhadra spans half a tithi and can start
+      mid-day. Needs a window solver or a stated limitation.</li>
+    <li><b>Chaturmas convention</b> must be picked and named; three readings are attested.</li>
+    <li><b>Regional variance.</b> North and South practice diverge, as do sampradayas. Name the convention followed
+      (DrikPanchang, as the rest of the Panchang subsystem already does).</li>
+    <li><b>Vivah is deliberately excluded</b> — needs both charts and guna milan, and is the highest-stakes decision a user
+      could take from an app.</li>
+    <li><b>Abhijit on Wednesday.</b> Several traditions void it; the engine always emits it. Flagged, not decided.</li>
   </ul>
 
   <p style="margin-top:14px;font-style:italic">Provenance: dates and windows computed for Ujjain with the v1.4.5 engine on
-  7 Aug 2026. Rule tables are draft and unverified. This file is a design prototype, not shipped behaviour.</p>
+  7 Aug 2026; tokens mirrored from <code>mobile/src/theme/*.ts</code> at the same commit. Rule tables are draft and
+  unverified. This file is a design prototype, not shipped behaviour.</p>
 </div>
 
 </body>
