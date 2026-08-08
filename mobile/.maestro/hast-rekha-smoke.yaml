@@ -73,6 +73,27 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*not a certain prediction.*"
 - assertVisible: "Observe your palm"
 - assertVisible: "Choose your Heart line form"
+
+# Camera guide entry — a clean simulator has no camera permission, so this
+# exercises the screen mount, the on-device privacy copy, and the manual
+# fallback without a native permission dialog. Capture/review are unit-tested
+# (HastRekhaCameraScreen.test.tsx); Maestro cannot drive a live camera.
+- tapOn: "Use camera guide"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Palm camera guide"
+    timeout: 15000
+- assertVisible: ".*never saved, never uploaded.*"
+- tapOn:
+    text: "Choose manually instead"
+    optional: true
+- tapOn:
+    text: "Back"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Observe your palm"
+    timeout: 15000
 - tapOn:
     id: "hastrekha-heart-curved"
 - scrollUntilVisible:

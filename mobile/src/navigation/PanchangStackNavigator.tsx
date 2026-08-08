@@ -9,6 +9,7 @@ import MuhuratDetailScreen from '@/screens/MuhuratDetailScreen';
 import KundaliScreen from '@/screens/KundaliScreen';
 import RashifalScreen from '@/screens/RashifalScreen';
 import HastRekhaScreen from '@/screens/HastRekhaScreen';
+import HastRekhaCameraScreen from '@/screens/HastRekhaCameraScreen';
 import type { PanchangStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<PanchangStackParamList>();
@@ -58,6 +59,11 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="HastRekha"
         component={HastRekhaScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="HastRekhaCamera"
+        component={HastRekhaCameraScreen}
         options={{ animation: 'slide_from_right' }}
       />
     </Stack.Navigator>

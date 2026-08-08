@@ -14,6 +14,7 @@ import type { PanchangStackParamList } from '@/navigation/types';
 import {
   computeHastRekha,
   PALM_LINES,
+  validatePalmProfile,
   type PalmLineId,
   type PalmProfile,
 } from '@/panchang/hastRekha';
@@ -45,7 +46,7 @@ function isComplete(selections: Selections): selections is PalmProfile {
   );
 }
 
-export default function HastRekhaScreen({ navigation }: Props) {
+export default function HastRekhaScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
@@ -58,6 +59,19 @@ export default function HastRekhaScreen({ navigation }: Props) {
   useEffect(() => {
     if (!touched && profile) setSelections(profile);
   }, [profile, touched]);
+
+  // The camera guide (HastRekhaCamera) hands its confirmed choices back as a
+  // route param. Apply once, persist, and clear the param so back/forward
+  // navigation cannot replay it.
+  const prefill = route.params?.prefill;
+  useEffect(() => {
+    if (!prefill || validatePalmProfile(prefill).length > 0) return;
+    setTouched(true);
+    setSaveFailed(false);
+    setSelections(prefill);
+    void saveProfile(prefill).catch(() => setSaveFailed(true));
+    navigation.setParams({ prefill: undefined });
+  }, [prefill, navigation, saveProfile]);
 
   const reading = useMemo(
     () => (isComplete(selections) ? computeHastRekha(selections) : null),
@@ -291,9 +305,29 @@ export default function HastRekhaScreen({ navigation }: Props) {
                     'In good light, look at the palm of your active (dominant) hand. For each line, choose the form that looks closest.'
                   )}
                 </Text>
-                <Text style={[styles.progressText, { color: colors.inkMuted }]}>
-                  {`${answered}/4`}
-                </Text>
+                <View style={styles.introFoot}>
+                  <Text style={[styles.progressText, { color: colors.inkMuted }]}>
+                    {`${answered}/4`}
+                  </Text>
+                  <Pressable
+                    onPress={() => navigation.navigate('HastRekhaCamera')}
+                    accessibilityRole="button"
+                    accessibilityLabel="Use camera guide"
+                    style={({ pressed }) => [
+                      styles.cameraPill,
+                      {
+                        borderColor: colors.divider,
+                        backgroundColor: colors.saffronTint,
+                        borderRadius: radii.pill,
+                      },
+                      pressed && { opacity: 0.65 },
+                    ]}
+                  >
+                    <Text style={[styles.cameraPillText, { color: colors.saffronDeep }]}>
+                      {contentByLang(lang, 'कैमरा गाइड से देखें', 'Use camera guide')}
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
 
               {PALM_LINES.map((spec) => {
@@ -629,10 +663,27 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   eyebrow: { fontSize: 15 },
+  introFoot: {
+    marginTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
   progressText: {
     fontFamily: fontFamilies.interSemiBold,
     fontSize: 10,
-    marginTop: 6,
+  },
+  cameraPill: {
+    minHeight: 38,
+    paddingHorizontal: 13,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cameraPillText: {
+    fontFamily: fontFamilies.interSemiBold,
+    fontSize: 10,
   },
   lineBlock: { marginTop: 12 },
   sectionLabel: {

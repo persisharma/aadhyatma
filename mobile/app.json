@@ -72,6 +72,14 @@
           "locationWhenInUsePermission": "Vedansh uses your location only to compute accurate sunrise and panchang times for your city. Location never leaves your device.",
           "isAndroidBackgroundLocationEnabled": false
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Vedansh uses the camera only to help you observe your palm lines for Hast Rekha. Photos are processed on this device and are never saved or uploaded.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
       ]
     ],
     "owner": "prashant.sharma",

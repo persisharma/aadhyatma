@@ -9,6 +9,7 @@ import type { PalmProfile } from '@/panchang/hastRekha';
 const mockNavigation = {
   goBack: jest.fn(),
   navigate: jest.fn(),
+  setParams: jest.fn(),
 };
 
 const mockSaveProfile = jest.fn((_next: PalmProfile) => Promise.resolve());
@@ -67,11 +68,13 @@ function tap(tree: TestRenderer.ReactTestRenderer, testID: string): void {
   });
 }
 
-function renderScreen(): TestRenderer.ReactTestRenderer {
+function renderScreen(
+  params?: { prefill?: PalmProfile }
+): TestRenderer.ReactTestRenderer {
   return render(
     <HastRekhaScreen
       navigation={mockNavigation as any}
-      route={{ key: 'HastRekha-test', name: 'HastRekha' } as any}
+      route={{ key: 'HastRekha-test', name: 'HastRekha', params } as any}
     />
   );
 }
@@ -188,6 +191,38 @@ test('a corrupt stored profile surfaces recovery copy without blocking new choic
   assert.ok(text.includes('couldn’t be loaded'));
   assert.ok(text.includes('Nothing was deleted'));
   assert.ok(text.includes('Heart line'));
+});
+
+test('the observe card offers the camera guide entry', () => {
+  const tree = renderScreen();
+  act(() => {
+    tree.root.findByProps({ accessibilityLabel: 'Use camera guide' }).props.onPress();
+  });
+  assert.equal(mockNavigation.navigate.mock.calls[0][0], 'HastRekhaCamera');
+});
+
+test('a camera prefill applies once, persists, and clears its route param', () => {
+  const prefill: PalmProfile = {
+    heart: 'curved',
+    head: 'long',
+    life: 'broad',
+    fate: 'defined',
+  };
+  const tree = renderScreen({ prefill });
+
+  assert.ok(textOf(tree).includes('Your reading'));
+  assert.deepEqual(mockSaveProfile.mock.calls[0][0], prefill);
+  const [clearedParams] = mockNavigation.setParams.mock.calls[0];
+  assert.ok('prefill' in clearedParams && clearedParams.prefill === undefined);
+});
+
+test('an invalid prefill from a stale deep link is ignored', () => {
+  const tree = renderScreen({
+    prefill: { heart: 'wavy', head: 'long', life: 'broad', fate: 'defined' } as any,
+  });
+
+  assert.ok(!textOf(tree).includes('Your reading'));
+  assert.equal(mockSaveProfile.mock.calls.length, 0);
 });
 
 test('English mode leaks no Devanagari into the visible copy', () => {

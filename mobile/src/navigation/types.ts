@@ -1,6 +1,7 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
+import type { PalmProfile } from '@/panchang/hastRekha';
 
 export type TabParamList = {
   HomeTab: undefined;
@@ -95,7 +96,8 @@ export type PanchangStackParamList = {
   MuhuratDetail: { dateMs: number };
   Kundali: { editing?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
-  HastRekha: undefined;
+  HastRekha: { prefill?: PalmProfile } | undefined;
+  HastRekhaCamera: undefined;
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing
