@@ -9,7 +9,6 @@ import React, {
 } from 'react';
 import { AppState, Platform, type AppStateStatus } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Notifications from 'expo-notifications';
 import {
   MAX_JAPAM_ALARMS,
   isOnceAlarm,
@@ -33,6 +32,11 @@ import {
   getIosAlarmAuthorizationStatus,
 } from '@/notifications/japamAlarmNative';
 import type { TimeOfDay } from '@/notifications/pure';
+import {
+  readNotificationPermissionState,
+  requestNotificationPermission,
+  type PermissionStatus,
+} from '@/notifications/permissionState';
 
 const STORAGE_KEY = '@vedansh/japam-alarms';
 
@@ -53,7 +57,6 @@ export type AlarmPatch = {
   skipNextDate?: string | null;
 };
 
-type PermissionStatus = 'granted' | 'denied' | 'undetermined';
 type ExactAlarmStatus = 'granted' | 'needs-permission' | 'unavailable';
 
 type JapamAlarmsContextValue = {
@@ -81,10 +84,12 @@ async function readPermissionStatus(): Promise<PermissionStatus> {
     if (Platform.OS === 'ios' && isIosNativeAlarmSupported()) {
       return await getIosAlarmAuthorizationStatus();
     }
-    const { status } = await Notifications.getPermissionsAsync();
-    if (status === 'granted') return 'granted';
-    if (status === 'denied') return 'denied';
-    return 'undetermined';
+    // Effective status, not expo's raw one: on Android a never-requested
+    // POST_NOTIFICATIONS reads back as `denied`, which would light up the
+    // "notifications are off, open Settings" banner on a fresh install before
+    // the user was ever asked (see notifications/permissionState.ts).
+    const { status } = await readNotificationPermissionState();
+    return status;
   } catch {
     return 'undetermined';
   }
@@ -232,17 +237,11 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
           setPermissionStatus(next);
           return next;
         }
-        const { status } = await Notifications.requestPermissionsAsync({
+        const { status } = await requestNotificationPermission({
           ios: { allowAlert: true, allowBadge: false, allowSound: true },
         });
-        const next: PermissionStatus =
-          status === 'granted'
-            ? 'granted'
-            : status === 'denied'
-              ? 'denied'
-              : 'undetermined';
-        setPermissionStatus(next);
-        return next;
+        setPermissionStatus(status);
+        return status;
       } catch {
         return 'undetermined';
       }

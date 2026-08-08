@@ -104,6 +104,7 @@ simulator; they're covered by Jest/tsx suites instead:
 | Notification-tap deep link (PR #97) | Maestro can't schedule + tap a real OS notification | `src/notifications/__tests__/deepLink.jest.test.tsx` |
 | Share-verse card | Tapping Share opens the OS share sheet, which Maestro can't inspect (and the Gita verse page collapses the share button under its `accessible` ScrollView) | `src/components/__tests__/shareCardFit.test.tsx` |
 | Japam Reset/Clear confirm | The confirm modal's accessible backdrop collapses its buttons in the a11y tree (see `japam-smoke.yaml`) | counter logic exercised via the increment path in `japam-smoke.yaml` |
+| First-run notification-permission ask, incl. the Android "never requested reads back as denied" case (design.md §38) | The OS permission dialog is native and non-deterministic on CI, and `_launch.yaml` runs `clearState: true` without resetting the OS-level grant | `src/notifications/__tests__/permissionState.jest.test.ts`, `src/contexts/__tests__/NotificationPreferencesContext.test.tsx` |
 | Rating prompt **auto**-open (design.md §54) | The gate needs 5 cold starts, 3 active days, and 20 verse reads; `_launch.yaml` runs `clearState: true`, so a flow can never satisfy it. The manual path IS covered — see `rating-prompt-smoke.yaml`. | `src/data/__tests__/ratingPrompt.jest.test.ts`, `src/components/__tests__/RatingPromptSheet.test.tsx` |
 
 ## Adding a new section — the per-category smoke MUST be updated

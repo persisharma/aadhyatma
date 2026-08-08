@@ -117,6 +117,7 @@ ID changes. User language preference, routines (`@vedansh/routines`) and daily d
 - **Two test runners** — never add `src/data` tests to Jest; they run via `tsx --test` and Jest's `testMatch` excludes them.
 - **Romanization is by source language, not module** — Sanskrit = IAST; Awadhi/Hindi = pronunciation ASCII (design.md §3.1).
 - **Scripts are manual** — `scripts/*.mjs` are one-time transform/repair tools, not part of the build.
+- **Notification permission goes through `src/notifications/permissionState.ts`** — on Android, expo's raw `getPermissionsAsync()` reports a never-requested `POST_NOTIFICATIONS` as `denied`, so "never asked" and "user refused" are indistinguishable from `status` alone. The module resolves an effective status from `canAskAgain` + a persisted app-wide "we asked" flag, and both reminder features (daily verse, japam alarms) read it. See [[japam-alarms]].
 - **Three design-token rules are lint-enforced, because all three fail silently in RN** —
   `mobile/eslint.config.js` (`no-restricted-syntax`) rejects a font-family **string literal**, a
   hex on **`shadowColor`**, and a **`fontSize` below 10** anywhere in `src/` outside `src/theme/`.
