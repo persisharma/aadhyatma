@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 
 import { library } from '@/data/texts';
-import { getTodayRecommendationDetails } from '@/data/discoveryMeta';
+import { getTodayFestival, getTodayRecommendationDetails } from '@/data/discoveryMeta';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import { OBSERVANCE_RULES } from '@/panchang/festivals';
 import { getNextOccurrence } from '@/panchang/vratCatalog';
@@ -168,4 +168,44 @@ for (const entry of FESTIVE_REMINDERS) {
     details.some((d) => d.entry.id === 'hanuman-chalisa'),
     'Tuesday should still surface Hanuman content through the vaar deity map'
   );
+}
+
+// ---------------------------------------------------------------------------
+// The toran dresses exactly the catalog days, with the catalog's greeting
+// ---------------------------------------------------------------------------
+{
+  // On each catalog festival's own date, `getTodayFestival` (the Home toran's
+  // driver) must return a catalog festival whose greeting matches the entry —
+  // and must agree with the FOR TODAY row's leading card, so the garland, the
+  // card, and the morning's notification all name the same day. (Not asserted
+  // to be *this* entry's ruleId: two catalog festivals can share a civil day,
+  // and then both surfaces consistently name the first-resolved one.)
+  const from = new Date(2026, 0, 1);
+  for (const entry of FESTIVE_REMINDERS) {
+    const occurrence = getNextOccurrence(entry.ruleId, from, 'purnimant');
+    assert.ok(occurrence, `"${entry.ruleId}" has no occurrence to check the toran against`);
+
+    const festival = getTodayFestival(occurrence.date);
+    assert.ok(festival, `getTodayFestival is null on ${entry.ruleId}'s own date`);
+    const catalogEntry = getFestiveReminderEntry(festival.ruleId);
+    assert.ok(catalogEntry, `toran festival "${festival.ruleId}" is not in the catalog`);
+    assert.equal(festival.greetingHi, catalogEntry.greetingHi);
+    assert.equal(festival.greetingEn, catalogEntry.greetingEn);
+    assert.ok(festival.nameHi.length > 0 && festival.nameEn.length > 0);
+
+    const leading = getTodayRecommendationDetails(occurrence.date)[0];
+    assert.equal(
+      leading?.festivalHi,
+      festival.nameHi,
+      `toran and FOR TODAY lead disagree on ${entry.ruleId}'s date`
+    );
+  }
+
+  // Diwali specifically resolves to Diwali (no same-day catalog collision).
+  const diwali = getNextOccurrence('diwali', from, 'purnimant');
+  assert.ok(diwali);
+  assert.equal(getTodayFestival(diwali.date)?.ruleId, 'diwali');
+
+  // An ordinary day hangs no garland.
+  assert.equal(getTodayFestival(new Date(2026, 6, 14)), null);
 }

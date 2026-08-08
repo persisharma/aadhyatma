@@ -739,6 +739,7 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 1. Status bar area (safe region)
 2. Hero block: the **Home wordmark lockup** (Section 5) — `ॐ वेदांश़ ॐ` on one row over the "Sacred Texts · Daily Reading" tagline. (Earlier revisions stacked a crest above a 34px title; the lockup is the compact replacement.)
+   - **On a catalog festival day only** (the 18 festivals of `notifications/festiveReminders.ts`): the **Festive Toran** (§55) hangs directly below the lockup — a marigold garland with the day's greeting chip. Absent every other day.
 3. **आज · Today strip** (§48) — a one-card daily-panchang glance (vara + tithi headline, one horizontal-scroll row of observance / Abhijit / Rahu Kaal chips). Tap → Panchang tab.
 4. **आज के लिए · For Today recommendations** (§50) — a compact horizontal row of `FeatureCard`s (292px wide, the same shell the DISCOVER carousel uses) chosen from today's vaar deity and active festival metadata. This keeps PRD-B's By-Day/By-Festival surfacing on Home without adding another calendar engine. Card tap → the text itself via `navigateToEntryStart` (§38) — single-chapter texts open their reader directly rather than a one-row chapters index.
 5. **Routine banner** (§30), **inline** (not docked) on Home — the नित्य साधना nudge / progress / complete chip, sitting directly under the Today strip / recommendations cluster (16px gap each side). It moved out of the bottom overlay (July 2026) so it no longer floats over — and clips — the DISCOVER carousel; the "today" cluster (panchang → today's recommendations → today's practice) now reads as one block above the library. Still **docked** above the tab bar on Daily Bhakti (§21).
@@ -1326,6 +1327,7 @@ The list is **two tiers**, rendered as one `FlatList` under two group headers (1
 - **Own Android channel** `festive-reminders` (importance DEFAULT, `sound: 'default'`), so festival pushes can be muted in system settings without silencing the daily verse. A channel's sound and importance are pinned at creation, so changing either later needs a **new id** — the `-v2` dance documented for the japam channels in §35.
 - **Setting** (`ReminderSettingsScreen`, §37): a third card below Times — title `पर्व स्मरण` / *Festival reminders*, a subtitle stating the festival count and fire time (both read off the planner constants so the copy can't drift), and a `saffron` Switch. No time picker: the fire time is fixed.
 - **A tap lands on Home, and Home is already showing the festival** — see the deep-link table below and §50's FOR TODAY row. The catalog is the single source both surfaces read, and `festiveReminders.test.ts` asserts that on every catalog festival's own date the FOR TODAY row both contains that festival's `sourceId` and leads with a festival-attributed card. The notification's promise and the homepage cannot drift apart.
+- **Home is also dressed for the day** — the Festive Toran (§55) hangs the same catalog greeting under the wordmark on those 18 days.
 
 **Japam alarms** — see §35 for the scheduling tiers; they participate in deep-linking below.
 
@@ -2038,3 +2040,28 @@ persisted outcomes, refusal to stack, the two-action shape, all four languages, 
 `src/screens/__tests__/MoreScreen.test.tsx` (the row opens the sheet instead of leaving the app).
 E2E: `.maestro/rating-prompt-smoke.yaml` — the manual path only; the auto path's thresholds are
 unreachable under `clearState`, so the gate is unit-tested instead.
+
+---
+
+## 55. Festive Toran (पर्व तोरण)
+
+**Purpose.** On each of the **18 catalog festivals** (`mobile/src/notifications/festiveReminders.ts` — the same list that drives the §38 festive reminder), Home hangs a toran below the wordmark: a sagging garland string of marigolds and leaves with a chip underneath carrying the festival's greeting. The doorway is dressed for the day, all day, and interrupts nothing. Every other day of the year Home is untouched. Component: `mobile/src/components/FestiveToran.tsx`; mounted by `HomeScreen` between the hero lockup and the Today strip.
+
+**Which festival.** `getTodayFestival(date)` (`mobile/src/data/discoveryMeta.ts`): the **first** of today's observances that is in the festive catalog, else null. It walks `getObservancesForDate` in the same order as the For-Today row's tier 1 (§50), so the garland, the leading FOR TODAY card, and the morning's notification always name the same festival — including on a day two catalog festivals share (all three consistently take the first-resolved one). An observance solve that throws simply hangs no garland. Resolution keys off `useTodayKey()` in HomeScreen, so the toran appears/vanishes on the day boundary without a relaunch.
+
+**Structure.**
+- **String**: one SVG path (`M-4 6 Q150 44 304 6`, `preserveAspectRatio="none"` so it stretches to any width), stroked `saffronDeep` at 0.55 opacity.
+- **Ornaments**: 5 marigolds alternating with 4 leaves at fixed stations along the sag (`y = 6 + 19·sin(πx/300)`). Marigolds are **View compositions** — 8 rotated petals alternating `cardThumbActiveFrom`/`cardThumbActiveTo` around a `saffronDeep` core — the same drawn-blossom grammar as the §30 pushpa-varsha and the §42 deity glyphs. Leaves are asymmetric-radius `gold` views. **No emoji, no images** (§42's rule).
+- **Greeting chip**: centered under the garland — `goldChipBg` fill, `cardActiveBorder` border, `saffronDeep` text at **12 pt** (§3.0 floor respected), face via `titleScriptFont` so hi renders in the Devanagari serif, gu/kn in their re-scripted SemiBold cuts, en in the card title face. Copy = the catalog's `greetingHi`/`greetingEn` through `contentByLang` — identical wording to the notification body's greeting.
+
+**Motion (§11).** One sway: ±0.7° rotation about the string's tie-line (`transformOrigin: '50% 0%'`), 6 s per full alternate cycle, native driver. `useReducedMotion()` hangs the garland still — no other animation exists on the surface.
+
+**Layout.** The component always occupies its fixed `TORAN_HEIGHT` (74 dp: 46 garland + chip), so once mounted it can never nudge the Today strip (the §48 reserved-height lesson). It scrolls away with the wordmark — deliberately not pinned.
+
+**A11y (§12).** The garland is decorative: `accessibilityElementsHidden` + `importantForAccessibility="no-hide-descendants"`. The chip's greeting text is the surface's one accessible element.
+
+**Colours.** Theme tokens only — `saffronDeep`, `gold`, `cardThumbActiveFrom/To`, `goldChipBg`, `cardActiveBorder`. Nothing outside §2's warm palette; the baked deity-glyph palette is *not* used here.
+
+**Decision trail.** Chosen as Option A of four prototyped treatments (`festive-theme-preview.html` at the repo root: toran / utsav banner / pushpa-varsha one-shot / full skin). The banner duplicated the FOR TODAY festival card; the one-shot shower and the full skin are parked. Scope locked: all 18 festivals (not just `star`-marker majors), not pinned, no shower.
+
+**Tests.** `components/__tests__/FestiveToran.test.tsx` (ornament census, reserved height, per-language greeting + face, decorative-garland a11y, reduce-motion mount; fake timers because of the sway loop) and the `getTodayFestival` block in `notifications/__tests__/festiveReminders.test.ts` (every catalog festival's own date hangs a garland whose greeting matches the catalog and agrees with the FOR TODAY lead; ordinary day → null; Diwali → `diwali`). E2E deliberately none: festival dates make the surface non-deterministic under `clearState` — same rationale as the §54 auto path.

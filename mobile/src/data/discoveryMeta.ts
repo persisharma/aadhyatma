@@ -309,6 +309,42 @@ export function getTodayRecommendationsForDate(date: Date): LibraryEntry[] {
   return getTodayRecommendationDetails(date).map((r) => r.entry);
 }
 
+/** The catalog festival Home should dress for today, when there is one. */
+export type TodayFestival = {
+  ruleId: string;
+  nameHi: string;
+  nameEn: string;
+  greetingHi: string;
+  greetingEn: string;
+};
+
+/**
+ * The festival driving today's festive theme (the Home toran, design.md §55):
+ * the FIRST of today's observances that is in the curated festive catalog, or
+ * null on an ordinary day. Walks `getObservancesForDate` in the same order as
+ * `getTodayRecommendationDetails`' tier 1, so the garland's greeting always
+ * names the same festival as the leading FOR TODAY card — and the same one the
+ * morning's notification greeted the user with.
+ */
+export function getTodayFestival(date: Date): TodayFestival | null {
+  try {
+    for (const observance of getObservancesForDate(date)) {
+      const festive = getFestiveReminderEntry(observance.rule.id);
+      if (!festive) continue;
+      return {
+        ruleId: observance.rule.id,
+        nameHi: observance.rule.nameHi,
+        nameEn: observance.rule.nameEn,
+        greetingHi: festive.greetingHi,
+        greetingEn: festive.greetingEn,
+      };
+    }
+  } catch {
+    // A day the calendar cannot solve simply isn't themed.
+  }
+  return null;
+}
+
 export function bestTimeLabel(bestTime: BestTime): { hi: string; en: string } {
   switch (bestTime) {
     case 'brahma-muhurta':

@@ -1,11 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vedansh — Festive Home: 4 treatments</title>
+<title>Vedansh — Festive Toran: all 18 festivals</title>
 <style>
-  /* ── Page tokens ─────────────────────────────────────────────────────────
-     The phones inside are artwork: they always render Vedansh's light
-     manuscript palette (the app is light-only). The page chrome around them
-     follows the viewer's theme, in neutrals biased toward the app's ink. */
   :root {
     --bg: #FAF7EF;
     --bg-raise: #FFFFFF;
@@ -16,51 +12,27 @@
     --accent-deep: #8A3E0B;
     --line: rgba(138, 62, 11, 0.16);
     --chip-bg: rgba(184, 98, 27, 0.10);
-    --warn-bg: rgba(158, 74, 46, 0.10);
-    --warn-ink: #8A4630;
-    --ok-bg: rgba(122, 106, 44, 0.12);
-    --ok-ink: #6C5A18;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #191006;
-      --bg-raise: #221709;
-      --ink: #F0E3C8;
-      --ink-soft: #CBAE83;
-      --ink-mute: #9A805D;
-      --accent: #E0954C;
-      --accent-deep: #F0B478;
-      --line: rgba(224, 149, 76, 0.22);
-      --chip-bg: rgba(224, 149, 76, 0.14);
-      --warn-bg: rgba(224, 122, 90, 0.14);
-      --warn-ink: #E8A184;
-      --ok-bg: rgba(196, 178, 106, 0.14);
-      --ok-ink: #CDBA74;
+      --bg: #191006; --bg-raise: #221709;
+      --ink: #F0E3C8; --ink-soft: #CBAE83; --ink-mute: #9A805D;
+      --accent: #E0954C; --accent-deep: #F0B478;
+      --line: rgba(224, 149, 76, 0.22); --chip-bg: rgba(224, 149, 76, 0.14);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #191006;
-    --bg-raise: #221709;
-    --ink: #F0E3C8;
-    --ink-soft: #CBAE83;
-    --ink-mute: #9A805D;
-    --accent: #E0954C;
-    --accent-deep: #F0B478;
-    --line: rgba(224, 149, 76, 0.22);
-    --chip-bg: rgba(224, 149, 76, 0.14);
-    --warn-bg: rgba(224, 122, 90, 0.14);
-    --warn-ink: #E8A184;
-    --ok-bg: rgba(196, 178, 106, 0.14);
-    --ok-ink: #CDBA74;
+    --bg: #191006; --bg-raise: #221709;
+    --ink: #F0E3C8; --ink-soft: #CBAE83; --ink-mute: #9A805D;
+    --accent: #E0954C; --accent-deep: #F0B478;
+    --line: rgba(224, 149, 76, 0.22); --chip-bg: rgba(224, 149, 76, 0.14);
   }
 
   * { box-sizing: border-box; margin: 0; }
   body {
-    background: var(--bg);
-    color: var(--ink);
+    background: var(--bg); color: var(--ink);
     font-family: Georgia, "Noto Serif", "Noto Serif Devanagari", serif;
-    line-height: 1.55;
-    padding: 48px 20px 96px;
+    line-height: 1.55; padding: 48px 20px 96px;
   }
   .page { max-width: 1080px; margin: 0 auto; }
 
@@ -69,155 +41,67 @@
     font-size: 11px; letter-spacing: 2.6px; text-transform: uppercase;
     color: var(--accent); font-weight: 600;
   }
-  h1 {
-    font-size: clamp(26px, 4.4vw, 40px); font-weight: 500;
-    letter-spacing: -0.01em; text-wrap: balance; margin: 10px 0 6px;
-  }
-  .lede { color: var(--ink-soft); max-width: 62ch; font-size: 16px; }
+  h1 { font-size: clamp(26px, 4.4vw, 38px); font-weight: 500; letter-spacing: -0.01em; text-wrap: balance; margin: 10px 0 6px; }
+  .lede { color: var(--ink-soft); max-width: 64ch; font-size: 16px; }
   .lede b { color: var(--ink); font-weight: 600; }
+  h2 { font-size: 23px; font-weight: 500; margin: 46px 0 6px; }
+  .sub { color: var(--ink-mute); font-size: 14px; max-width: 70ch; margin-bottom: 20px; }
+  .sub b { color: var(--ink-soft); font-weight: 600; }
 
-  /* Shipped-state strip */
-  .shipped {
-    margin: 34px 0 10px; padding: 16px 18px;
-    border: 1px solid var(--line); border-radius: 12px;
-    background: var(--bg-raise);
-    display: flex; flex-wrap: wrap; gap: 10px 26px; align-items: baseline;
+  .decided {
+    margin: 30px 0 0; padding: 14px 18px;
+    border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 10px; background: var(--bg-raise);
+    font-size: 14.5px; color: var(--ink-soft); max-width: 74ch;
   }
-  .shipped .k {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--ink-mute); display: block; margin-bottom: 2px;
-  }
-  .shipped .step { font-size: 14.5px; color: var(--ink-soft); }
-  .shipped .step b { color: var(--ink); font-weight: 600; }
-  .shipped .arrow { color: var(--accent); align-self: center; font-size: 15px; }
+  .decided b { color: var(--ink); }
 
-  .note {
-    margin: 14px 0 0; font-size: 13.5px; color: var(--ink-mute); max-width: 74ch;
-  }
-  .note b { color: var(--ink-soft); font-weight: 600; }
+  /* Hero: full phone + notes side by side */
+  .hero-row { display: grid; grid-template-columns: 320px 1fr; gap: 34px; align-items: start; margin-top: 26px; }
+  @media (max-width: 780px) { .hero-row { grid-template-columns: 1fr; } }
+  .hero-notes { font-size: 15px; color: var(--ink-soft); max-width: 58ch; }
+  .hero-notes p + p { margin-top: 10px; }
+  .hero-notes b { color: var(--ink); font-weight: 600; }
+  .hero-notes ul { margin: 12px 0 0 18px; padding: 0; font-size: 14.5px; }
+  .hero-notes li { margin: 6px 0; }
 
-  /* Option cards */
-  .options { display: grid; gap: 28px; margin-top: 40px; }
-  .option {
-    border: 1px solid var(--line); border-radius: 16px;
-    background: var(--bg-raise);
-    padding: 26px;
-    display: grid; grid-template-columns: 320px 1fr; gap: 30px;
-    align-items: start;
-  }
-  @media (max-width: 780px) { .option { grid-template-columns: 1fr; } }
-
-  .option .tag {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 11px; letter-spacing: 2.4px; text-transform: uppercase;
-    color: var(--accent); font-weight: 700;
-  }
-  .option h2 { font-size: 23px; font-weight: 500; margin: 6px 0 2px; }
-  .option .hi { color: var(--ink-mute); font-size: 15px; margin-bottom: 12px; }
-  .option p { color: var(--ink-soft); font-size: 15px; max-width: 58ch; }
-  .option p + p { margin-top: 10px; }
-  .option p b { color: var(--ink); font-weight: 600; }
-
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 14px; }
-  .chip {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 11.5px; font-weight: 600; letter-spacing: 0.4px;
-    padding: 4px 11px; border-radius: 999px;
-    background: var(--chip-bg); color: var(--accent-deep);
-  }
-  .chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
-  .chip.ok { background: var(--ok-bg); color: var(--ok-ink); }
-
-  ul.pts { margin: 12px 0 0 18px; padding: 0; color: var(--ink-soft); font-size: 14.5px; }
-  ul.pts li { margin: 5px 0; }
-  ul.pts li b { color: var(--ink); font-weight: 600; }
-
-  .replay {
-    margin-top: 14px;
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 12.5px; font-weight: 600; letter-spacing: 0.6px;
-    color: var(--accent-deep); background: none;
-    border: 1px solid var(--line); border-radius: 8px;
-    padding: 7px 14px; cursor: pointer;
-  }
-  .replay:hover { background: var(--chip-bg); }
-  .replay:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  /* ── Phone frame — always the app's light manuscript world ────────────── */
+  /* Phone frame */
   .phone {
-    width: 300px; margin: 0 auto;
-    border-radius: 34px; padding: 9px;
-    background: #241505;
-    box-shadow: 0 18px 44px rgba(26, 14, 3, 0.35);
+    width: 300px; margin: 0 auto; border-radius: 34px; padding: 9px;
+    background: #241505; box-shadow: 0 18px 44px rgba(26, 14, 3, 0.35);
   }
   .screen {
-    position: relative; overflow: hidden;
-    border-radius: 26px; height: 596px;
+    position: relative; overflow: hidden; border-radius: 26px; height: 596px;
     background: linear-gradient(178deg, #F6ECD0 0%, #F1E3BF 100%);
-    color: #1A0E03;
-    font-size: 12px;
+    color: #1A0E03; font-size: 12px;
   }
-  .screen, .screen * { font-family: Georgia, "Noto Serif Devanagari", serif; }
+  .screen, .screen *, .crop, .crop * { font-family: Georgia, "Noto Serif Devanagari", serif; }
 
-  .m-status {
-    display: flex; justify-content: space-between; padding: 10px 18px 0;
-    font-size: 9.5px; color: #6E5230;
-    font-family: ui-sans-serif, system-ui, sans-serif;
-  }
+  .m-status { display: flex; justify-content: space-between; padding: 10px 18px 0; font-size: 9.5px; color: #6E5230; font-family: ui-sans-serif, system-ui, sans-serif; }
   .m-wordmark { text-align: center; padding: 10px 0 2px; font-size: 17px; color: #8A3E0B; letter-spacing: 1px; }
   .m-wordsub { text-align: center; font-size: 8.5px; letter-spacing: 3px; color: #A67C34; text-transform: uppercase; font-family: ui-sans-serif, system-ui, sans-serif; }
-
-  .m-body { padding: 8px 14px 0; display: grid; gap: 10px; }
-
+  .m-body { padding: 52px 14px 0; display: grid; gap: 10px; }
   .m-strip { display: flex; gap: 5px; overflow: hidden; }
-  .m-pill {
-    flex-shrink: 0; font-size: 9px; padding: 4px 8px; border-radius: 999px;
-    background: rgba(255, 250, 235, 0.72); border: 1px solid rgba(138, 62, 11, 0.18);
-    color: #5A3A1E; white-space: nowrap;
-  }
+  .m-pill { flex-shrink: 0; font-size: 9px; padding: 4px 8px; border-radius: 999px; background: rgba(255, 250, 235, 0.72); border: 1px solid rgba(138, 62, 11, 0.18); color: #5A3A1E; white-space: nowrap; }
   .m-pill.star { color: #8A3E0B; border-color: rgba(184, 98, 27, 0.4); }
-
   .m-label { font-size: 9px; letter-spacing: 1px; color: #6E5230; }
-
-  .m-card {
-    border-radius: 12px; padding: 10px 12px;
-    background: linear-gradient(135deg, #FFF5E0, #F5DEAC);
-    border: 1px solid rgba(184, 98, 27, 0.4);
-  }
+  .m-card { border-radius: 12px; padding: 10px 12px; background: linear-gradient(135deg, #FFF5E0, #F5DEAC); border: 1px solid rgba(184, 98, 27, 0.4); }
   .m-card .t { font-size: 13.5px; color: #1A0E03; }
   .m-card .d { font-size: 10px; color: #8A3E0B; margin-top: 2px; }
   .m-card .cta { display: inline-block; margin-top: 7px; font-size: 9px; letter-spacing: 1.6px; color: #8A3E0B; border: 1px solid rgba(184, 98, 27, 0.5); border-radius: 999px; padding: 3px 10px; font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 600; }
-
-  .m-routine {
-    border-radius: 12px; padding: 9px 12px; font-size: 10.5px; color: #5A3A1E;
-    background: rgba(255, 250, 235, 0.72); border: 1px solid rgba(138, 62, 11, 0.18);
-    display: flex; justify-content: space-between; align-items: center;
-  }
+  .m-routine { border-radius: 12px; padding: 9px 12px; font-size: 10.5px; color: #5A3A1E; background: rgba(255, 250, 235, 0.72); border: 1px solid rgba(138, 62, 11, 0.18); display: flex; justify-content: space-between; align-items: center; }
   .m-routine .n { color: #8A3E0B; }
-
   .m-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .m-tile {
-    border-radius: 12px; padding: 12px 12px 10px;
-    background: rgba(255, 250, 235, 0.72); border: 1px solid rgba(138, 62, 11, 0.18);
-  }
+  .m-tile { border-radius: 12px; padding: 12px 12px 10px; background: rgba(255, 250, 235, 0.72); border: 1px solid rgba(138, 62, 11, 0.18); }
   .m-tile .g { font-size: 15px; color: #B8621B; }
   .m-tile .n { font-size: 11.5px; margin-top: 3px; }
   .m-tile .c { font-size: 8.5px; color: #6E5230; margin-top: 1px; font-family: ui-sans-serif, system-ui, sans-serif; }
-
-  .m-tabs {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    display: flex; justify-content: space-around; align-items: center;
-    padding: 9px 6px 16px; background: #F8EFD6;
-    border-top: 1px solid rgba(138, 62, 11, 0.18);
-  }
+  .m-tabs { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 9px 6px 16px; background: #F8EFD6; border-top: 1px solid rgba(138, 62, 11, 0.18); }
   .m-tab { font-size: 8.5px; color: #6E5230; text-align: center; }
   .m-tab.on { color: #8A3E0B; }
   .m-tab .i { display: block; font-size: 12px; margin-bottom: 1px; }
 
-  /* ── Festive elements (all drawn — the app's no-emoji rule) ───────────── */
-
-  /* Marigold: layered radial gradients, same flower grammar as pushpa-varsha */
+  /* Marigold + garland */
   .flower {
     display: inline-block; border-radius: 50%;
     background:
@@ -230,345 +114,122 @@
       radial-gradient(circle at 21% 32%, #E8A84C 0 16%, transparent 17%),
       radial-gradient(circle at 50% 50%, #C97A1F 0 40%, transparent 41%);
   }
-
-  /* Toran garland */
   .toran { position: absolute; top: 58px; left: 0; right: 0; height: 46px; pointer-events: none; }
   .toran svg { position: absolute; inset: 0; width: 100%; height: 100%; }
   .toran .flower { position: absolute; width: 13px; height: 13px; }
-  .toran .leaf {
-    position: absolute; width: 7px; height: 11px; background: #A67C34;
-    border-radius: 0 60% 0 60%; opacity: 0.75;
-  }
+  .toran .leaf { position: absolute; width: 7px; height: 11px; background: #A67C34; border-radius: 0 60% 0 60%; opacity: 0.75; }
   .sway { animation: sway 6s ease-in-out infinite alternate; transform-origin: 50% 0; }
   @keyframes sway { from { transform: rotate(-0.7deg); } to { transform: rotate(0.7deg); } }
-
   .fest-chip {
     position: absolute; top: 96px; left: 50%; transform: translateX(-50%);
     font-size: 9px; letter-spacing: 1px; color: #8A3E0B;
     background: rgba(248, 210, 145, 0.6); border: 1px solid rgba(184, 98, 27, 0.4);
     border-radius: 999px; padding: 3px 12px; white-space: nowrap;
   }
+  @media (prefers-reduced-motion: reduce) { .sway { animation: none; } }
 
-  /* Diya: bowl + flame */
-  .diya { position: absolute; width: 26px; height: 26px; pointer-events: none; }
-  .diya .bowl {
-    position: absolute; bottom: 0; left: 2px; width: 22px; height: 10px;
-    background: linear-gradient(#B8621B, #8A3E0B); border-radius: 0 0 12px 12px;
+  /* Gallery of header crops */
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+  .g-item { border: 1px solid var(--line); border-radius: 14px; background: var(--bg-raise); overflow: hidden; }
+  .crop {
+    position: relative; height: 128px; overflow: hidden;
+    background: linear-gradient(178deg, #F6ECD0 0%, #F3E7C9 100%);
+    color: #1A0E03; font-size: 12px;
   }
-  .diya .flame {
-    position: absolute; bottom: 8px; left: 9px; width: 8px; height: 12px;
-    background: radial-gradient(circle at 50% 78%, #F8D291 0 30%, #E0954C 60%, #C4611B 100%);
-    border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
-    transform-origin: 50% 100%;
-    animation: flicker 1.7s ease-in-out infinite;
-  }
-  .diya .glow {
-    position: absolute; bottom: 2px; left: -8px; width: 42px; height: 30px;
-    background: radial-gradient(closest-side, rgba(248, 210, 145, 0.55), transparent);
-    animation: glowpulse 1.7s ease-in-out infinite;
-  }
-  @keyframes flicker {
-    0%, 100% { transform: scale(1) rotate(-1.5deg); }
-    45% { transform: scale(1.06, 0.95) rotate(2deg); }
-    70% { transform: scale(0.96, 1.05) rotate(-1deg); }
-  }
-  @keyframes glowpulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
-
-  /* Utsav banner (Option B) */
-  .m-utsav {
-    position: relative; border-radius: 12px; padding: 11px 12px 11px 44px;
-    background: linear-gradient(120deg, #F8D291, #F5DEAC 70%);
-    border: 1px solid rgba(184, 98, 27, 0.5);
-  }
-  .m-utsav .diya { left: 10px; top: 14px; }
-  .m-utsav .g { font-size: 13px; color: #8A3E0B; }
-  .m-utsav .s { font-size: 10px; color: #5A3A1E; margin-top: 2px; }
-  .m-utsav .cta { display: inline-block; margin-top: 6px; font-size: 9px; letter-spacing: 1.4px; color: #FFFFFF; background: #B8621B; border-radius: 999px; padding: 3px 11px; font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 600; }
-
-  /* Pushpa-varsha (Option C) */
-  .shower { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .shower .flower { position: absolute; top: -26px; opacity: 0; }
-  .shower.play .flower { animation: fall var(--fall) linear var(--delay) forwards; }
-  @keyframes fall {
-    0% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
-    6% { opacity: 1; }
-    88% { opacity: 1; }
-    100% { opacity: 0; transform: translate(var(--drift), 640px) rotate(var(--spin)); }
-  }
-  .shower .caption {
-    position: absolute; top: 44%; left: 0; right: 0; text-align: center;
-    font-size: 19px; color: #8A3E0B; opacity: 0;
-    text-shadow: 0 1px 0 rgba(255, 250, 235, 0.8);
-  }
-  .shower .caption .sub { font-size: 10px; color: #6E5230; letter-spacing: 1px; margin-top: 3px; }
-  .shower.play .caption { animation: capfade 5.4s ease-in-out 0.5s forwards; }
-  @keyframes capfade { 0% { opacity: 0; } 18% { opacity: 1; } 78% { opacity: 1; } 100% { opacity: 0; } }
-
-  /* Option D extras */
-  .skin-head {
-    position: absolute; top: 0; left: 0; right: 0; height: 108px; pointer-events: none;
-    background: linear-gradient(180deg, rgba(248, 210, 145, 0.85), rgba(248, 210, 145, 0));
-  }
-  .skin-tabs { background: linear-gradient(0deg, #F5DEAC, #F8EFD6) !important; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .sway, .diya .flame, .diya .glow { animation: none; }
-    .shower.play .flower { animation-duration: 0.01s; animation-delay: 0s; opacity: 0; }
-    .shower.play .caption { animation: capfade-static 0.3s forwards; }
-    @keyframes capfade-static { to { opacity: 1; } }
-  }
-
-  /* Comparison + recommendation */
-  .compare { margin-top: 48px; }
-  .compare h2, .rec h2 { font-size: 24px; font-weight: 500; margin-bottom: 14px; }
-  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
-  table { border-collapse: collapse; width: 100%; min-width: 640px; background: var(--bg-raise); font-size: 14px; }
-  th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--line); }
-  th { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--ink-mute); font-weight: 600; }
-  td { color: var(--ink-soft); }
-  td:first-child { color: var(--ink); font-weight: 600; white-space: nowrap; }
-  tr:last-child td { border-bottom: none; }
-
-  .rec { margin-top: 48px; padding: 26px 28px; border-radius: 16px; border: 1px solid var(--line); background: var(--bg-raise); }
-  .rec p { color: var(--ink-soft); font-size: 15.5px; max-width: 72ch; }
-  .rec p + p { margin-top: 10px; }
-  .rec p b { color: var(--ink); font-weight: 600; }
-  .rec ol { margin: 12px 0 0 20px; color: var(--ink-soft); font-size: 15px; }
-  .rec ol li { margin: 6px 0; }
+  .crop .m-wordmark { padding-top: 14px; }
+  .crop .toran { top: 62px; }
+  .crop .fest-chip { top: 100px; }
+  .g-meta { padding: 10px 14px 12px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .g-meta .n { font-size: 13.5px; color: var(--ink); }
+  .g-meta .d { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.6px; color: var(--ink-mute); white-space: nowrap; font-variant-numeric: tabular-nums; }
 </style>
 
 <div class="page">
-  <div class="eyebrow">Vedansh · Design review · Festive Home</div>
-  <h1>पर्व के दिन घर कैसे सजे? — four treatments</h1>
+  <div class="eyebrow">Vedansh · Festive Toran · Pre-implementation review</div>
+  <h1>तोरण, अठारह पर्वों पर — the garland on every festival</h1>
   <p class="lede">
-    On each of the <b>18 catalog festivals</b> (the same <code>festiveReminders.ts</code> list that drives the
-    morning notification), Home gets a festive layer. Everything below is drawn in the app's own
-    manuscript grammar — <b>no emoji</b> (the §42 rule), warm palette only (§2), and motion held to the
-    §11 restraint: soft falls and fades, never scale-pops or confetti.
+    <b>Decision: Option A, as prototyped.</b> On each of the 18 catalog festivals, Home hangs a
+    marigold toran below the wordmark with the festival's greeting chip — all day, no interruption,
+    swaying ±0.7° (still under reduce-motion). The garland is identical on every festival;
+    <b>only the greeting chip changes</b>, and it comes from the same <code>festiveReminders.ts</code>
+    catalog the 07:30 notification reads, so the doorway always echoes the morning's message.
   </p>
 
-  <div class="shipped">
-    <div><span class="k">Already shipped</span></div>
-    <div class="step"><b>07:30 notification</b><br>दीपावली · शुभ दीपावली…</div>
-    <div class="arrow">→</div>
-    <div class="step"><b>Tap lands on Home</b><br>resume position untouched</div>
-    <div class="arrow">→</div>
-    <div class="step"><b>FOR TODAY leads with the festival</b><br>महालक्ष्म्यष्टकम् · आज दीपावली है</div>
-  </div>
-  <p class="note">Every phone below already shows that shipped state — the options are the <b>decoration layer on top</b>. All four key off the same festival resolution the FOR TODAY row uses, so the theme can never name a festival the row doesn't show.</p>
-
-  <div class="options">
-
-    <!-- OPTION A -->
-    <section class="option" id="opt-a">
-      <div>
-        <div class="phone"><div class="screen" data-mock data-opt="a"></div></div>
-      </div>
-      <div>
-        <div class="tag">Option A · Ambient</div>
-        <h2>Toran — a garland over the doorway</h2>
-        <div class="hi">तोरण — दिन भर, बिना रोक-टोक</div>
-        <div class="chips">
-          <span class="chip ok">No interruption</span>
-          <span class="chip">All day</span>
-          <span class="chip">Effort: S–M</span>
-          <span class="chip ok">Motion-rule safe</span>
-        </div>
-        <p>A marigold-and-leaf garland strung below the wordmark — the way a doorway is dressed for a
-        festival — with a quiet chip naming the day. It sways <b>±0.7°</b> on a slow loop; under
-        reduce-motion it simply hangs still.</p>
-        <ul class="pts">
-          <li><b>Feels like:</b> the house is decorated; nothing demands a tap.</li>
-          <li><b>Code:</b> one <code>FestiveToran</code> View-composition (same grammar as the deity glyphs), mounted in HomeScreen when today resolves to a catalog festival.</li>
-          <li><b>Risk:</b> lowest. Doesn't move any existing layout below it if given reserved height (the TodayStrip lesson).</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- OPTION B -->
-    <section class="option" id="opt-b">
-      <div>
-        <div class="phone"><div class="screen" data-mock data-opt="b"></div></div>
-      </div>
-      <div>
-        <div class="tag">Option B · Content-forward</div>
-        <h2>Utsav banner — the greeting as a card</h2>
-        <div class="hi">उत्सव पट्टिका — शुभकामना + पाठ का न्यौता</div>
-        <div class="chips">
-          <span class="chip ok">No interruption</span>
-          <span class="chip">All day</span>
-          <span class="chip">Effort: S</span>
-          <span class="chip warn">Overlaps FOR TODAY</span>
-        </div>
-        <p>The notification's own copy, resident on Home for the day: a gradient card above the Today
-        strip with a flickering diya, the greeting, and a filled <b>पढ़ें</b> button to the reading.
-        RoutineBanner grammar, so it costs almost nothing to build.</p>
-        <ul class="pts">
-          <li><b>Feels like:</b> the app greets you the moment you arrive.</li>
-          <li><b>Honest concern:</b> the FOR TODAY row's first card already says <i>आज दीपावली है · पढ़ें</i> — two cards, same festival, same CTA, ~90&nbsp;px apart. If we take B, the FOR TODAY festival card should demote or dedupe.</li>
-          <li><b>Risk:</b> pushes everything below it down all day (Home real estate is contested — §18).</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- OPTION C -->
-    <section class="option" id="opt-c">
-      <div>
-        <div class="phone"><div class="screen" data-mock data-opt="c"></div></div>
-        <button class="replay" data-replay="c">↺ Replay the shower</button>
-      </div>
-      <div>
-        <div class="tag">Option C · Moment</div>
-        <h2>Pushpa-varsha — flowers on first open</h2>
-        <div class="hi">पुष्प-वर्षा — पर्व के दिन पहली बार खोलने पर, एक बार</div>
-        <div class="chips">
-          <span class="chip">Once per festival day</span>
-          <span class="chip">~6 s, tap-through</span>
-          <span class="chip ok">Effort: XS</span>
-          <span class="chip ok">Already sanctioned</span>
-        </div>
-        <p>The <b>existing</b> routine-completion flower shower, re-aimed: first Home open on a festival
-        day plays the marigold fall with the festival's greeting as the caption, plus the success
-        haptic. Once per day, persisted; pointer-events pass through, so it never blocks a tap.</p>
-        <ul class="pts">
-          <li><b>Feels like:</b> the devas noticed the day. The one animated moment §11 already blesses.</li>
-          <li><b>Code:</b> reuse <code>RoutineCelebration</code> with a caption prop + a <code>@vedansh/festive-celebrated</code> date key. Days of work: well under one.</li>
-          <li><b>Watch-out:</b> if the user's routine also completes today, two showers could stack — needs the same no-stacking gate the §6.2 surfaces use.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- OPTION D -->
-    <section class="option" id="opt-d">
-      <div>
-        <div class="phone"><div class="screen" data-mock data-opt="d"></div></div>
-      </div>
-      <div>
-        <div class="tag">Option D · Full skin</div>
-        <h2>Deep utsav — diyas, toran, gilded chrome</h2>
-        <div class="hi">दीप-सज्जा — पूरा घर सोने में</div>
-        <div class="chips">
-          <span class="chip">All day</span>
-          <span class="chip warn">Effort: L</span>
-          <span class="chip warn">Largest QA surface</span>
-        </div>
-        <p>The maximal read of "fancy": header bathed in a deeper gold, corner diyas with live flames,
-        the toran, and a gilded tab bar — Home visibly transformed for the day.</p>
-        <ul class="pts">
-          <li><b>Feels like:</b> a true festival takeover. Unmissable.</li>
-          <li><b>Honest concern:</b> it re-tints surfaces that carry text, so every affected contrast pair re-enters <code>colors.contrast.test.ts</code>; and a day-long glow dilutes what the pushpa-varsha keeps special. It also leans against the app's "reverent, not confetti" stance.</li>
-          <li><b>If chosen:</b> scope to the header band only (no tab-bar tint) and hold flames still under reduce-motion.</li>
-        </ul>
-      </div>
-    </section>
+  <div class="decided">
+    <b>Scope locked for build:</b> all 18 festivals (not just the star-marker majors) ·
+    toran scrolls away with the wordmark (not pinned) · no flower shower (Option C parked) ·
+    festival resolution shared with the FOR TODAY row, so the garland can never name a day the row doesn't show.
   </div>
 
-  <div class="compare">
-    <h2>Side by side</h2>
-    <div class="tablewrap">
-      <table>
-        <thead>
-          <tr><th>Option</th><th>Presence</th><th>Interruption</th><th>New code</th><th>Design-system fit</th><th>Effort</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>A · Toran</td><td>All day, ambient</td><td>None</td><td>1 component</td><td>Clean (§2 §11 §42)</td><td>S–M</td></tr>
-          <tr><td>B · Utsav banner</td><td>All day, top card</td><td>None, but takes space</td><td>1 card + dedupe of FOR TODAY</td><td>Clean, duplicates content</td><td>S</td></tr>
-          <tr><td>C · Pushpa-varsha</td><td>~6 s, once</td><td>Tap-through only</td><td>Reuse + 1 storage key</td><td>Already sanctioned</td><td>XS</td></tr>
-          <tr><td>D · Full skin</td><td>All day, everywhere</td><td>None, but loud</td><td>Theme layer + contrast re-audit</td><td>Strains §2/§11</td><td>L</td></tr>
-        </tbody>
-      </table>
+  <h2>The day itself</h2>
+  <p class="sub">Diwali, full Home. The toran + chip sit between the wordmark and the Today strip; everything below is the already-shipped state (festival pill, FOR TODAY leading with the festival's reading).</p>
+
+  <div class="hero-row">
+    <div>
+      <div class="phone"><div class="screen" id="hero"></div></div>
+    </div>
+    <div class="hero-notes">
+      <p><b>What ships:</b> one <code>FestiveToran</code> component (SVG string + View-composed marigolds
+      and leaves, the deity-glyph grammar — no emoji, no images), mounted in <code>HomeScreen</code> when
+      today resolves to a catalog festival via a new <code>getTodayFestival(date)</code> helper.</p>
+      <ul>
+        <li><b>Colours:</b> all theme tokens — saffron, gold, saffronDeep, the card-thumb ambers. Nothing outside §2's warm palette.</li>
+        <li><b>Motion:</b> a single 6&nbsp;s alternate rotate of ±0.7°; <code>useReducedMotion()</code> hangs it still.</li>
+        <li><b>Type:</b> greeting chip ≥ 10&nbsp;pt (the §3.0 floor), script-aware font via the shared helpers; gu/kn re-script the Devanagari, en uses the authored greeting.</li>
+        <li><b>Layout:</b> fixed reserved height, so the garland never nudges the Today strip mid-scroll.</li>
+      </ul>
     </div>
   </div>
 
-  <div class="rec">
-    <h2>Recommendation: C + A</h2>
-    <p><b>Pushpa-varsha on first open, toran for the rest of the day.</b> The shower gives the
-    celebration its moment — using the one animation the design language already blesses, with the
-    festival's own greeting as the caption — and the garland keeps the house feeling dressed after
-    the flowers settle, without spending any Home real estate or interrupting anything. B's job is
-    already done by the FOR TODAY festival card; D can stay in the drawer unless we want a
-    Diwali-tier "major festival" flag later (the catalog's fame order could gate it to the top 5).</p>
-    <p>To decide before build:</p>
-    <ol>
-      <li><b>All 18 festivals, or majors only?</b> A toran on Vivah Panchami may feel like crying wolf; we could gate the theme to <code>marker: 'star'</code> festivals (~9) and let the rest keep just the FOR TODAY card.</li>
-      <li><b>Shower + routine-completion collision:</b> same day, two showers — play festive first and suppress the second, or space them?</li>
-      <li><b>Does the toran persist on scroll</b> (pinned header) or scroll away with the wordmark? Prototype shows it scrolling away — calmer.</li>
-    </ol>
-  </div>
+  <h2>All eighteen doorways</h2>
+  <p class="sub">Header crop per festival — real greeting from the catalog, real next date from the panchang engine (purnimant, from 8 Aug 2026). This is the <b>complete</b> set of days the toran will ever appear on; every other day of the year Home is untouched.</p>
+
+  <div class="gallery" id="gallery"></div>
 </div>
 
-<template id="home-mock">
-  <div class="m-status"><span>9:41</span><span>॥</span></div>
-  <div class="m-wordmark">ॐ वेदांश़ ॐ</div>
-  <div class="m-wordsub">Vedansh</div>
-  <div class="m-body">
-    <div class="m-slot-banner"></div>
-    <div class="m-strip">
-      <span class="m-pill star">✦ दीपावली</span>
-      <span class="m-pill">अमावस्या</span>
-      <span class="m-pill">राहु 10:42–12:06</span>
-      <span class="m-pill">शुभ 6:14–7:38</span>
-    </div>
-    <div>
-      <div class="m-label">आज के लिए</div>
-      <div class="m-card" style="margin-top:5px">
-        <div class="t">महालक्ष्म्यष्टकम्</div>
-        <div class="d">आज दीपावली है</div>
-        <span class="cta">पढ़ें</span>
-      </div>
-    </div>
-    <div class="m-routine"><span>नित्य साधना · 2/4 पूर्ण</span><span class="n">जारी रखें ›</span></div>
-    <div class="m-grid">
-      <div class="m-tile"><div class="g">॥</div><div class="n">चालीसा</div><div class="c">9 पाठ</div></div>
-      <div class="m-tile"><div class="g">✻</div><div class="n">आरती</div><div class="c">11 आरती</div></div>
-      <div class="m-tile"><div class="g">❖</div><div class="n">ग्रंथ</div><div class="c">4 ग्रंथ</div></div>
-      <div class="m-tile"><div class="g">◉</div><div class="n">जप</div><div class="c">4 मंत्र</div></div>
-    </div>
-  </div>
-  <div class="m-tabs">
-    <div class="m-tab on"><span class="i">⌂</span>होम</div>
-    <div class="m-tab"><span class="i">☀</span>भक्ति</div>
-    <div class="m-tab"><span class="i">☾</span>पंचांग</div>
-    <div class="m-tab"><span class="i">♪</span>भजन</div>
-    <div class="m-tab"><span class="i">⋯</span>अधिक</div>
-  </div>
-</template>
-
 <script>
-  const tpl = document.getElementById('home-mock');
+  const FESTIVALS = [
+    { nameHi: 'जन्माष्टमी', nameEn: 'Janmashtami', greet: 'जय श्री कृष्ण', date: '4 Sep 2026' },
+    { nameHi: 'गणेश चतुर्थी', nameEn: 'Ganesh Chaturthi', greet: 'गणपति बप्पा मोरया', date: '15 Sep 2026' },
+    { nameHi: 'नवरात्रि प्रारंभ', nameEn: 'Navratri Begins', greet: 'जय माता दी', date: '11 Oct 2026' },
+    { nameHi: 'दशहरा', nameEn: 'Dussehra', greet: 'विजयादशमी की शुभकामनाएँ', date: '21 Oct 2026' },
+    { nameHi: 'करवा चौथ', nameEn: 'Karwa Chauth', greet: 'करवा चौथ की शुभकामनाएँ', date: '29 Oct 2026' },
+    { nameHi: 'धनतेरस', nameEn: 'Dhanteras', greet: 'शुभ धनतेरस', date: '7 Nov 2026' },
+    { nameHi: 'दीपावली', nameEn: 'Diwali', greet: 'शुभ दीपावली', date: '9 Nov 2026' },
+    { nameHi: 'गोवर्धन पूजा', nameEn: 'Govardhan Puja', greet: 'गोवर्धन पूजा की शुभकामनाएँ', date: '10 Nov 2026' },
+    { nameHi: 'छठ पूजा', nameEn: 'Chhath Puja', greet: 'छठ पूजा की शुभकामनाएँ', date: '15 Nov 2026' },
+    { nameHi: 'गीता जयंती', nameEn: 'Gita Jayanti', greet: 'गीता जयंती की शुभकामनाएँ', date: '20 Dec 2026' },
+    { nameHi: 'मकर संक्रांति', nameEn: 'Makar Sankranti', greet: 'मकर संक्रांति की शुभकामनाएँ', date: '15 Jan 2027' },
+    { nameHi: 'वसंत पंचमी', nameEn: 'Vasant Panchami', greet: 'जय मां सरस्वती', date: '11 Feb 2027' },
+    { nameHi: 'महा शिवरात्रि', nameEn: 'Maha Shivaratri', greet: 'हर हर महादेव', date: '7 Mar 2027' },
+    { nameHi: 'होली', nameEn: 'Holi', greet: 'होली की शुभकामनाएँ', date: '22 Mar 2027' },
+    { nameHi: 'राम नवमी', nameEn: 'Ram Navami', greet: 'जय श्री राम', date: '15 Apr 2027' },
+    { nameHi: 'हनुमान जयंती', nameEn: 'Hanuman Jayanti', greet: 'जय बजरंगबली', date: '20 Apr 2027' },
+    { nameHi: 'अक्षय तृतीया', nameEn: 'Akshaya Tritiya', greet: 'अक्षय तृतीया की शुभकामनाएँ', date: '9 May 2027' },
+    { nameHi: 'गुरु पूर्णिमा', nameEn: 'Guru Purnima', greet: 'गुरु पूर्णिमा की शुभकामनाएँ', date: '18 Jul 2027' },
+  ];
 
   function makeToran() {
     const t = document.createElement('div');
     t.className = 'toran sway';
     t.innerHTML = '<svg viewBox="0 0 300 46" aria-hidden="true">' +
       '<path d="M-4 6 Q150 44 304 6" fill="none" stroke="#8A3E0B" stroke-width="1.4" opacity="0.55"/></svg>';
-    // Flowers + leaves along the sag curve y = 6 + 19*sin(pi*x/300) approx of the quadratic
     const xs = [18, 52, 86, 120, 150, 180, 214, 248, 282];
     xs.forEach((x, i) => {
       const y = 6 + 19 * Math.sin(Math.PI * x / 300);
+      const el = document.createElement('span');
       if (i % 2 === 0) {
-        const f = document.createElement('span');
-        f.className = 'flower';
-        f.style.left = (x / 3) + '%';
-        f.style.top = y + 'px';
-        t.appendChild(f);
+        el.className = 'flower';
+        el.style.width = el.style.height = '13px';
+        el.style.top = y + 'px';
       } else {
-        const l = document.createElement('span');
-        l.className = 'leaf';
-        l.style.left = (x / 3) + '%';
-        l.style.top = (y + 1) + 'px';
-        t.appendChild(l);
+        el.className = 'leaf';
+        el.style.top = (y + 1) + 'px';
       }
+      el.style.left = (x / 3) + '%';
+      t.appendChild(el);
     });
     return t;
-  }
-
-  function makeDiya(pos) {
-    const d = document.createElement('div');
-    d.className = 'diya';
-    Object.assign(d.style, pos);
-    d.innerHTML = '<span class="glow"></span><span class="flame"></span><span class="bowl"></span>';
-    return d;
   }
 
   function makeChip(text) {
@@ -578,76 +239,63 @@
     return c;
   }
 
-  function makeShower() {
-    const s = document.createElement('div');
-    s.className = 'shower';
-    for (let i = 0; i < 14; i++) {
-      const f = document.createElement('span');
-      f.className = 'flower';
-      const size = 12 + (i * 7) % 9;
-      f.style.width = f.style.height = size + 'px';
-      f.style.left = (3 + (i * 41) % 92) + '%';
-      f.style.setProperty('--fall', (3.6 + (i * 13) % 18 / 10) + 's');
-      f.style.setProperty('--delay', ((i * 0.13) % 1.6) + 's');
-      f.style.setProperty('--drift', (((i % 2 ? 1 : -1) * (8 + (i * 5) % 14))) + 'px');
-      f.style.setProperty('--spin', (((i % 2 ? 1 : -1) * (140 + (i * 37) % 220))) + 'deg');
-      s.appendChild(f);
-    }
-    const cap = document.createElement('div');
-    cap.className = 'caption';
-    cap.innerHTML = 'शुभ दीपावली<div class="sub">HAPPY DIWALI</div>';
-    s.appendChild(cap);
-    return s;
+  function headerBlock() {
+    const frag = document.createDocumentFragment();
+    const status = document.createElement('div');
+    status.className = 'm-status';
+    status.innerHTML = '<span>9:41</span><span>॥</span>';
+    const wm = document.createElement('div');
+    wm.className = 'm-wordmark';
+    wm.textContent = 'ॐ वेदांश़ ॐ';
+    const ws = document.createElement('div');
+    ws.className = 'm-wordsub';
+    ws.textContent = 'Vedansh';
+    frag.append(status, wm, ws);
+    return frag;
   }
 
-  document.querySelectorAll('[data-mock]').forEach((screen) => {
-    screen.appendChild(tpl.content.cloneNode(true));
-    const opt = screen.dataset.opt;
+  /* Hero: full Diwali Home */
+  const hero = document.getElementById('hero');
+  hero.appendChild(headerBlock());
+  hero.appendChild(makeToran());
+  hero.appendChild(makeChip('शुभ दीपावली'));
+  hero.insertAdjacentHTML('beforeend',
+    '<div class="m-body">' +
+      '<div class="m-strip">' +
+        '<span class="m-pill star">✦ दीपावली</span><span class="m-pill">अमावस्या</span>' +
+        '<span class="m-pill">राहु 10:42–12:06</span><span class="m-pill">शुभ 6:14–7:38</span>' +
+      '</div>' +
+      '<div><div class="m-label">आज के लिए</div>' +
+        '<div class="m-card" style="margin-top:5px"><div class="t">महालक्ष्म्यष्टकम्</div>' +
+        '<div class="d">आज दीपावली है</div><span class="cta">पढ़ें</span></div></div>' +
+      '<div class="m-routine"><span>नित्य साधना · 2/4 पूर्ण</span><span class="n">जारी रखें ›</span></div>' +
+      '<div class="m-grid">' +
+        '<div class="m-tile"><div class="g">॥</div><div class="n">चालीसा</div><div class="c">9 पाठ</div></div>' +
+        '<div class="m-tile"><div class="g">✻</div><div class="n">आरती</div><div class="c">11 आरती</div></div>' +
+        '<div class="m-tile"><div class="g">❖</div><div class="n">ग्रंथ</div><div class="c">4 ग्रंथ</div></div>' +
+        '<div class="m-tile"><div class="g">◉</div><div class="n">जप</div><div class="c">4 मंत्र</div></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="m-tabs">' +
+      '<div class="m-tab on"><span class="i">⌂</span>होम</div><div class="m-tab"><span class="i">☀</span>भक्ति</div>' +
+      '<div class="m-tab"><span class="i">☾</span>पंचांग</div><div class="m-tab"><span class="i">♪</span>भजन</div>' +
+      '<div class="m-tab"><span class="i">⋯</span>अधिक</div>' +
+    '</div>');
 
-    if (opt === 'a') {
-      screen.appendChild(makeToran());
-      screen.appendChild(makeChip('✦ शुभ दीपावली ✦'));
-      // reserve room so the garland doesn't overlap the strip
-      screen.querySelector('.m-body').style.paddingTop = '52px';
-    }
-
-    if (opt === 'b') {
-      const slot = screen.querySelector('.m-slot-banner');
-      slot.className = 'm-utsav';
-      slot.appendChild(makeDiya({ position: 'absolute', left: '10px', top: '14px' }));
-      const g = document.createElement('div');
-      g.innerHTML = '<div class="g">शुभ दीपावली</div>' +
-        '<div class="s">दीप जलाएँ और महालक्ष्म्यष्टकम् का पाठ करें।</div>' +
-        '<span class="cta">पढ़ें</span>';
-      slot.appendChild(g);
-    }
-
-    if (opt === 'c') {
-      const shower = makeShower();
-      shower.dataset.showerFor = 'c';
-      screen.appendChild(shower);
-      requestAnimationFrame(() => shower.classList.add('play'));
-    }
-
-    if (opt === 'd') {
-      const head = document.createElement('div');
-      head.className = 'skin-head';
-      screen.insertBefore(head, screen.firstChild);
-      screen.appendChild(makeToran());
-      screen.appendChild(makeDiya({ left: '12px', top: '84px' }));
-      screen.appendChild(makeDiya({ right: '12px', top: '84px' }));
-      screen.querySelector('.m-tabs').classList.add('skin-tabs');
-      screen.querySelector('.m-body').style.paddingTop = '52px';
-    }
-  });
-
-  document.querySelectorAll('[data-replay]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const shower = document.querySelector('[data-shower-for="' + btn.dataset.replay + '"]');
-      if (!shower) return;
-      shower.classList.remove('play');
-      void shower.offsetWidth;
-      shower.classList.add('play');
-    });
+  /* Gallery: one header crop per festival, in date order */
+  const gallery = document.getElementById('gallery');
+  FESTIVALS.forEach((f) => {
+    const item = document.createElement('div');
+    item.className = 'g-item';
+    const crop = document.createElement('div');
+    crop.className = 'crop';
+    crop.appendChild(headerBlock());
+    crop.appendChild(makeToran());
+    crop.appendChild(makeChip(f.greet));
+    const meta = document.createElement('div');
+    meta.className = 'g-meta';
+    meta.innerHTML = '<span class="n">' + f.nameHi + ' · ' + f.nameEn + '</span><span class="d">' + f.date + '</span>';
+    item.append(crop, meta);
+    gallery.appendChild(item);
   });
 </script>
