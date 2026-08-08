@@ -38,6 +38,16 @@ export type NotificationPreferences = {
 type NotificationMeta = {
   appOpenCount: number;
   optInPromptShown: boolean;
+  /**
+   * Has the one-time *re-offer* of the opt-in sheet been shown? The re-offer
+   * exists for installs where `optInPromptShown` was burned while the OS
+   * permission was never actually answered — the pre-fix Android builds read a
+   * never-requested POST_NOTIFICATIONS as `denied`, silently flipped the
+   * default-on reminder off, and let the user dismiss the sheet as their only
+   * ask. For those users the sheet is offered once more; answering or
+   * dismissing it sets this flag and ends the matter.
+   */
+  optInReofferShown: boolean;
 };
 
 const DEFAULTS: NotificationPreferences = {
@@ -48,6 +58,7 @@ const DEFAULTS: NotificationPreferences = {
 const META_DEFAULTS: NotificationMeta = {
   appOpenCount: 0,
   optInPromptShown: false,
+  optInReofferShown: false,
 };
 
 type NotificationPreferencesContextValue = {
@@ -164,6 +175,12 @@ function parseMeta(raw: string | null): NotificationMeta {
         typeof parsed.optInPromptShown === 'boolean'
           ? parsed.optInPromptShown
           : META_DEFAULTS.optInPromptShown,
+      // Absent on every pre-reoffer install by design: those are exactly the
+      // installs the re-offer must remain available for.
+      optInReofferShown:
+        typeof parsed.optInReofferShown === 'boolean'
+          ? parsed.optInReofferShown
+          : META_DEFAULTS.optInReofferShown,
     };
   } catch {
     return META_DEFAULTS;
@@ -401,7 +418,13 @@ export function NotificationPreferencesProvider({
   const markOptInPromptShown = useCallback<
     NotificationPreferencesContextValue['markOptInPromptShown']
   >(async () => {
-    await persistMeta((prev) => ({ ...prev, optInPromptShown: true }));
+    // Whichever offer was on screen (first ask or re-offer), one dismissal or
+    // answer settles both — the user has now truly been asked.
+    await persistMeta((prev) => ({
+      ...prev,
+      optInPromptShown: true,
+      optInReofferShown: true,
+    }));
   }, [persistMeta]);
 
   const publishDayAngas = useCallback<
@@ -412,11 +435,25 @@ export function NotificationPreferencesProvider({
     setDayAngas(map);
   }, []);
 
+  // The OS permission was never actually answered — an "Enable" tap can still
+  // put the system prompt on screen.
+  const permissionNeverAnswered =
+    permissionStatus === 'undetermined' && permission.canAskAgain;
+  // Hard-blocked: the OS will not prompt again, so the sheet's Enable button
+  // cannot succeed — don't show an offer that dead-ends. The Reminders screen's
+  // banner (which routes to system Settings) owns this state.
+  const permissionHardBlocked =
+    permissionStatus === 'denied' && !permission.canAskAgain;
   const shouldShowOptIn =
     !isLoading &&
     !prefs.dailyVerseEnabled &&
-    !meta.optInPromptShown &&
-    meta.appOpenCount >= 3;
+    !permissionHardBlocked &&
+    meta.appOpenCount >= 3 &&
+    (!meta.optInPromptShown ||
+      // One-time re-offer for installs whose only "ask" happened while the OS
+      // permission was still unanswered (the pre-fix Android state) — see the
+      // optInReofferShown doc on NotificationMeta.
+      (permissionNeverAnswered && !meta.optInReofferShown));
 
   const value = useMemo<NotificationPreferencesContextValue>(
     () => ({

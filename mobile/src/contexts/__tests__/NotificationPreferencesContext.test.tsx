@@ -135,6 +135,113 @@ describe('after the user has answered', () => {
   });
 });
 
+describe('opt-in sheet re-offer for unanswered installs', () => {
+  const PREFS_KEY = '@vedansh/notif-prefs';
+  const META_KEY = '@vedansh/notif-meta';
+
+  /** Persisted state the pre-fix Android builds left behind: reminder silently
+   * flipped off, sheet already dismissed once, OS prompt never actually shown. */
+  async function seedAffectedInstall() {
+    await AsyncStorage.setItem(
+      PREFS_KEY,
+      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
+    );
+    await AsyncStorage.setItem(
+      META_KEY,
+      JSON.stringify({ appOpenCount: 12, optInPromptShown: true })
+    );
+  }
+
+  test('re-offers the sheet when the OS permission was never answered', async () => {
+    await seedAffectedInstall();
+
+    await mountAndHydrate();
+
+    // No auto-prompt (reminder is off), but the sheet comes back once.
+    expect(mockRequest).not.toHaveBeenCalled();
+    expect(captured.permissionStatus).toBe('undetermined');
+    expect(captured.shouldShowOptIn).toBe(true);
+  });
+
+  test('the re-offer happens once: dismissing it settles both flags', async () => {
+    await seedAffectedInstall();
+    await mountAndHydrate();
+    expect(captured.shouldShowOptIn).toBe(true);
+
+    await act(async () => {
+      await captured.markOptInPromptShown();
+    });
+    await flush();
+
+    expect(captured.shouldShowOptIn).toBe(false);
+    const meta = JSON.parse((await AsyncStorage.getItem(META_KEY)) ?? '{}');
+    expect(meta.optInPromptShown).toBe(true);
+    expect(meta.optInReofferShown).toBe(true);
+  });
+
+  test('no re-offer once the user has actually answered the OS prompt', async () => {
+    await seedAffectedInstall();
+    await AsyncStorage.setItem(NOTIF_PROMPTED_KEY, '1');
+    mockGet.mockResolvedValue({ status: 'denied', canAskAgain: true });
+
+    await mountAndHydrate();
+
+    expect(captured.permissionStatus).toBe('denied');
+    expect(captured.shouldShowOptIn).toBe(false);
+  });
+
+  test('no re-offer when a stored optInReofferShown flag says it already ran', async () => {
+    await AsyncStorage.setItem(
+      PREFS_KEY,
+      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
+    );
+    await AsyncStorage.setItem(
+      META_KEY,
+      JSON.stringify({ appOpenCount: 12, optInPromptShown: true, optInReofferShown: true })
+    );
+
+    await mountAndHydrate();
+
+    expect(captured.shouldShowOptIn).toBe(false);
+  });
+
+  test('no sheet at all when the OS is hard-blocked — Enable could never succeed', async () => {
+    // Android < 13 with notifications switched off in system settings: expo
+    // reports denied + canAskAgain=false without the app ever asking.
+    await AsyncStorage.setItem(
+      PREFS_KEY,
+      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
+    );
+    await AsyncStorage.setItem(
+      META_KEY,
+      JSON.stringify({ appOpenCount: 12, optInPromptShown: false })
+    );
+    mockGet.mockResolvedValue({ status: 'denied', canAskAgain: false });
+
+    await mountAndHydrate();
+
+    expect(captured.permissionStatus).toBe('denied');
+    expect(captured.canAskAgain).toBe(false);
+    expect(captured.shouldShowOptIn).toBe(false);
+  });
+
+  test('first-offer path is untouched: fresh meta still gates on the third open', async () => {
+    await AsyncStorage.setItem(
+      PREFS_KEY,
+      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
+    );
+    await AsyncStorage.setItem(
+      META_KEY,
+      JSON.stringify({ appOpenCount: 1, optInPromptShown: false })
+    );
+
+    await mountAndHydrate();
+
+    // This mount bumps the count to 2 — still below the third-open gate.
+    expect(captured.shouldShowOptIn).toBe(false);
+  });
+});
+
 describe('user-driven toggle', () => {
   test('turning the toggle back on re-asks and enables when granted', async () => {
     await AsyncStorage.setItem(NOTIF_PROMPTED_KEY, '1');
