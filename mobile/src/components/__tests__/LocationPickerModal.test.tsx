@@ -25,6 +25,22 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
   '@/data/gita/language'
 );
 
+// Every rendered tree is unmounted after its test: the picker's FlatList
+// (VirtualizedList) schedules cell-batching timeouts, and a timer that outlives
+// the suite fires into the next one as "Cannot log after tests are done" —
+// which fails the whole Jest run even with every test passing (the CI red on
+// PR #241). Unmounting clears VirtualizedList's pending timeout.
+const trees: TestRenderer.ReactTestRenderer[] = [];
+
+afterEach(async () => {
+  for (const tree of trees) {
+    await act(async () => {
+      tree.unmount();
+    });
+  }
+  trees.length = 0;
+});
+
 async function renderPicker(lang: 'hi' | 'en' = 'en') {
   let tree: TestRenderer.ReactTestRenderer;
   await act(async () => {
@@ -36,6 +52,7 @@ async function renderPicker(lang: 'hi' | 'en' = 'en') {
       </ThemeProvider>
     );
   });
+  trees.push(tree!);
   return tree!;
 }
 

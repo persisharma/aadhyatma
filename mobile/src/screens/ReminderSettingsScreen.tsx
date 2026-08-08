@@ -19,6 +19,8 @@ import { fontFamilies } from '@/theme/typography';
 import { scriptBodyFont } from '@/utils/langType';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
+import { FESTIVE_HOUR, FESTIVE_MINUTE } from '@/notifications/festiveReminderPure';
+import { FESTIVE_REMINDERS } from '@/notifications/festiveReminders';
 import TimeStepper from '@/components/TimeStepper';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
@@ -27,6 +29,10 @@ import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets
 type Props = NativeStackScreenProps<MoreStackParamList, 'Reminders'>;
 
 const DEFAULT_NEW_TIME: TimeOfDay = { hour: 18, minute: 0 };
+
+/** The festive fire time, read off the planner so the copy can't drift from it. */
+const FESTIVE_CLOCK = `${FESTIVE_HOUR}:${`${FESTIVE_MINUTE}`.padStart(2, '0')}`;
+const FESTIVE_COUNT = FESTIVE_REMINDERS.length;
 
 export default function ReminderSettingsScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
@@ -41,6 +47,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
     permissionStatus,
     isLoading,
     setDailyVerseEnabled,
+    setFestiveRemindersEnabled,
     setTimes,
   } = useNotificationPreferences();
 
@@ -58,6 +65,13 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
       await setDailyVerseEnabled(next);
     },
     [setDailyVerseEnabled]
+  );
+
+  const onToggleFestive = useCallback(
+    async (next: boolean) => {
+      await setFestiveRemindersEnabled(next);
+    },
+    [setFestiveRemindersEnabled]
   );
 
   const onOpenSystemSettings = useCallback(() => {
@@ -354,6 +368,54 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 {pick(lang, { hi: `अधिकतम ${MAX_REMINDER_TIMES} समय जोड़े जा सकते हैं।`, en: `Up to ${MAX_REMINDER_TIMES} reminders.`, gu: `વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકાય.`, kn: `ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}
               </Text>
             )}
+          </View>
+
+          {/* Festive reminders — default on, no setup, one push per famous
+              festival carrying that festival's greeting + the day's reading. */}
+          <View
+            style={[
+              styles.card,
+              {
+                backgroundColor: colors.parchmentSoft,
+                borderColor: colors.divider,
+                borderRadius: radii.lg,
+              },
+            ]}
+          >
+            <View style={styles.cardHeader}>
+              <View style={styles.cardTextBlock}>
+                <Text
+                  style={[
+                    styles.cardTitle,
+                    { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
+                  ]}
+                >
+                  {pick(lang, { hi: 'पर्व स्मरण', en: 'Festival reminders', gu: 'પર્વ સ્મરણ', kn: 'ಪರ್ವ ಸ್ಮರಣ' })}
+                </Text>
+                <Text
+                  style={[
+                    styles.cardSub,
+                    { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
+                  ]}
+                >
+                  {pick(lang, {
+                    hi: `${FESTIVE_COUNT} प्रमुख पर्वों पर सुबह ${FESTIVE_CLOCK} बजे शुभकामना, और उस दिन के पाठ का न्यौता।`,
+                    en: `A greeting at ${FESTIVE_CLOCK} am on ${FESTIVE_COUNT} major festivals, with the reading for that day one tap away.`,
+                    gu: `${FESTIVE_COUNT} મુખ્ય પર્વો પર સવારે ${FESTIVE_CLOCK} વાગ્યે શુભકામના, અને તે દિવસના પાઠનું આમંત્રણ.`,
+                    kn: `${FESTIVE_COUNT} ಪ್ರಮುಖ ಹಬ್ಬಗಳಂದು ಬೆಳಿಗ್ಗೆ ${FESTIVE_CLOCK} ಕ್ಕೆ ಶುಭಾಶಯ, ಮತ್ತು ಆ ದಿನದ ಪಾಠಕ್ಕೆ ಆಹ್ವಾನ.`,
+                  })}
+                </Text>
+              </View>
+              <Switch
+                value={prefs.festiveRemindersEnabled}
+                onValueChange={onToggleFestive}
+                disabled={isLoading}
+                trackColor={{ false: colors.divider, true: colors.saffron }}
+                thumbColor={colors.parchment}
+                ios_backgroundColor={colors.divider}
+                accessibilityLabel={pick(lang, { hi: 'पर्व स्मरण चालू / बंद', en: 'Toggle festival reminders', gu: 'પર્વ સ્મરણ ચાલુ / બંધ', kn: 'ಪರ್ವ ಸ್ಮರಣ ಆನ್ / ಆಫ್' })}
+              />
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>

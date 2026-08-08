@@ -8,11 +8,13 @@ import { useTilePress } from '@/contexts/TilePressContext';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
-import { getTodayRecommendationsForDate } from '@/data/discoveryMeta';
+import {
+  getTodayRecommendationDetails,
+  type TodayRecommendation,
+} from '@/data/discoveryMeta';
 import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
 import { navigateToEntryStart } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
-import type { LibraryEntry } from '@/data/texts';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
@@ -23,7 +25,7 @@ export default function TodayRecommendationsRow() {
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
   const todayKey = useTodayKey();
   const recommendations = React.useMemo(
-    () => getTodayRecommendationsForDate(new Date(todayKey)),
+    () => getTodayRecommendationDetails(new Date(todayKey)),
     [todayKey]
   );
 
@@ -57,12 +59,17 @@ export default function TodayRecommendationsRow() {
         // first-tap fallback so a swipe never opens a card.
         onScrollBeginDrag={markTileDrag}
       >
-        {recommendations.slice(0, 6).map((entry) => {
+        {recommendations.slice(0, 6).map((recommendation) => {
+          const { entry } = recommendation;
           const open = () => navigateToEntryStart(navigation, entry);
           return (
             <View key={entry.id} style={styles.cardWrap}>
               <FeatureCard
-                item={spotlightForEntry(entry, typography.thumb.fontFamily, colors.saffronDeep)}
+                item={spotlightForEntry(
+                  recommendation,
+                  typography.thumb.fontFamily,
+                  colors.saffronDeep
+                )}
                 width={styles.cardWrap.width}
                 onPress={() => activateTile(open)}
                 onPressIn={() => beginTilePress(open)}
@@ -77,16 +84,20 @@ export default function TodayRecommendationsRow() {
 }
 
 function spotlightForEntry(
-  entry: LibraryEntry,
+  { entry, festivalHi, festivalEn }: TodayRecommendation,
   thumbFontFamily: string,
   thumbColor: string
 ): FeatureSpotlight {
+  // A festival card names the occasion instead of the generic line, so a reader
+  // arriving from the morning's festive reminder lands on the same festival the
+  // notification greeted them with (design.md §38 / §50).
+  const isFestival = Boolean(festivalHi && festivalEn);
   return {
     key: entry.id,
     titleHi: entry.nameHi,
     titleEn: entry.nameEn,
-    descHi: 'आज के लिए अनुशंसित',
-    descEn: 'Recommended for today',
+    descHi: isFestival ? `आज ${festivalHi} है` : 'आज के लिए अनुशंसित',
+    descEn: isFestival ? `Today is ${festivalEn}` : 'Recommended for today',
     ctaHi: 'पढ़ें',
     ctaEn: 'Read',
     icon: (

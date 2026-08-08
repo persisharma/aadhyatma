@@ -114,4 +114,74 @@ describe('handleNotificationResponse', () => {
     expect(handleNotificationResponse(responseWithData({ type: 'vrat-reminder' }))).toBe(false);
     expect(dispatchSpy).not.toHaveBeenCalled();
   });
+
+  test('a festive-reminder tap lands on the Home screen, not a reader', () => {
+    readySpy.mockReturnValue(true);
+
+    const festive = {
+      type: 'festive-reminder',
+      ruleId: 'hanuman-jayanti',
+      sourceId: 'hanuman-chalisa',
+      occurrenceDateKey: '2026-04-02',
+    };
+    expect(handleNotificationResponse(responseWithData(festive))).toBe(true);
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+
+    const action = dispatchSpy.mock.calls[0][0];
+    // The reading the message named is one tap away in Home's FOR TODAY row,
+    // which leads with the festival's content on a festival day. Landing here
+    // instead of in a reader keeps the resume position safe (same reason
+    // daily-verse stays on a tab) and lets Home recompute today from today.
+    // `screen: 'Home'` is explicit — focusing the tab alone would restore
+    // whatever screen the Home stack was left on.
+    expect(action).toMatchObject({
+      type: 'NAVIGATE',
+      payload: { name: 'HomeTab', params: { screen: 'Home' } },
+    });
+  });
+
+  test('a festive-reminder lands on Home regardless of the content it named', () => {
+    readySpy.mockReturnValue(true);
+
+    // Including content an OTA update has since retired: the payload's sourceId
+    // no longer drives routing, so a stale one cannot strand the user.
+    for (const sourceId of ['bhagavad-gita', 'retired-by-an-ota-update']) {
+      dispatchSpy.mockClear();
+      const festive = {
+        type: 'festive-reminder',
+        ruleId: 'janmashtami',
+        sourceId,
+        occurrenceDateKey: '2026-09-04',
+      };
+      expect(handleNotificationResponse(responseWithData(festive))).toBe(true);
+      expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+        payload: { name: 'HomeTab', params: { screen: 'Home' } },
+      });
+    }
+  });
+
+  test('a festive-reminder without a sourceId still routes', () => {
+    readySpy.mockReturnValue(true);
+
+    expect(
+      handleNotificationResponse(
+        responseWithData({ type: 'festive-reminder', ruleId: 'diwali' })
+      )
+    ).toBe(true);
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      payload: { name: 'HomeTab', params: { screen: 'Home' } },
+    });
+  });
+
+  test('ignores a festive-reminder payload missing ruleId', () => {
+    readySpy.mockReturnValue(true);
+
+    for (const data of [
+      { type: 'festive-reminder' },
+      { type: 'festive-reminder', sourceId: 'mahalakshmi-ashtakam' },
+    ]) {
+      expect(handleNotificationResponse(responseWithData(data))).toBe(false);
+    }
+    expect(dispatchSpy).not.toHaveBeenCalled();
+  });
 });

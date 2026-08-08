@@ -31,7 +31,9 @@ describe('resolveDayAngas', () => {
       // prints them together.
       expect(anga.paksha).toBe(anga.tithiIndex < 15 ? 'shukla' : 'krishna');
     }
-  });
+    // 31 days of real sunrise+tithi bisection: well under a second warm, but the
+    // first cold solve on a loaded runner has been seen past jest's 5 s default.
+  }, 30000);
 
   it('names the day\'s headline observance, preferring the more significant one', async () => {
     // 16 Feb 2026 carries both Maha Shivaratri (star / festival) and Masik
@@ -69,7 +71,7 @@ describe('resolveDayAngas', () => {
       return calls > 3;
     });
     expect(Object.keys(map).length).toBeLessThan(ANGA_WINDOW_DAYS);
-  });
+  }, 30000);
 
   it('keeps the tithi when the observance lookup fails', async () => {
     const spy = jest

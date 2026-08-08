@@ -14,7 +14,7 @@ const renderedFeatureCardProps: Array<{
   onPressIn?: () => void;
   onPressOut?: () => void;
 }> = [];
-const recommendations = [
+const entries = [
   {
     id: 'vishnu-sahasranama',
     nameHi: 'विष्णु सहस्रनाम अंश',
@@ -38,6 +38,11 @@ const recommendations = [
     hidden: false,
   },
 ];
+// Mutable so a test can switch the day from ordinary to a festival day. Named
+// `mock*` because jest.mock() factories may only reach out-of-scope variables
+// with that prefix (same reason as mockLang above).
+let mockRecommendations: { entry: unknown; festivalHi?: string; festivalEn?: string }[] =
+  entries.map((entry) => ({ entry }));
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
@@ -49,7 +54,7 @@ jest.mock('@/utils/useTodayKey', () => ({
   useTodayKey: () => '2026-07-23',
 }));
 jest.mock('@/data/discoveryMeta', () => ({
-  getTodayRecommendationsForDate: () => recommendations,
+  getTodayRecommendationDetails: () => mockRecommendations,
 }));
 jest.mock('@/components/FeatureCard', () => {
   const React = require('react');
@@ -73,6 +78,7 @@ describe('TodayRecommendationsRow', () => {
   beforeEach(() => {
     renderedFeatureCardProps.length = 0;
     mockLang = 'en';
+    mockRecommendations = entries.map((entry) => ({ entry }));
   });
 
   // Regression: the 'आज के लिए' eyebrow reused the Latin sectionLabel token
@@ -111,6 +117,25 @@ describe('TodayRecommendationsRow', () => {
       'Vishnu Chalisa',
     ]);
     expect(renderedFeatureCardProps.every((props) => props.item.descEn === 'Recommended for today')).toBe(true);
+  });
+
+  // A festive reminder lands the user on Home, so the card that its message
+  // named must say which festival it is — not the generic "Recommended for
+  // today" line the rest of the row carries.
+  test('a festival-day card names the occasion instead of the generic line', () => {
+    mockRecommendations = [
+      { entry: entries[0], festivalHi: 'दीपावली', festivalEn: 'Diwali' },
+      { entry: entries[1] },
+    ];
+
+    act(() => {
+      TestRenderer.create(<TodayRecommendationsRow />);
+    });
+
+    expect(renderedFeatureCardProps.map((props) => props.item.descEn)).toEqual([
+      'Today is Diwali',
+      'Recommended for today',
+    ]);
   });
 
   test('wires each card and the row for Home first-tap recovery', () => {
