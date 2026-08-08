@@ -189,14 +189,18 @@
 
           <div class="whycard">
             <div class="wh">कारण · चातुर्मास</div>
-            <div class="wb">Your whole window lies inside <b>Chaturmas</b> — from <b>देवशयनी एकादशी, 25 Jul 2026</b> to
-              <b>देव उठनी एकादशी, 20 Nov 2026</b>. Griha Pravesh is traditionally not performed in these four months.</div>
-            <div class="kshaya">Note: Dev Uthani Ekadashi 2026 is a <b>kshaya tithi</b> — Kartik Shukla Ekadashi touches no
-              sunrise. The shipped festival engine resolves it to 20 Nov (Dashami at sunrise, Dwadashi the next).</div>
+            <div class="wb">Your whole window lies inside <b>Chaturmas</b>, which began on <b>देवशयनी एकादशी, 25 Jul 2026</b>.
+              Griha Pravesh is traditionally not performed during these four months.</div>
+            <div class="kshaya">When the bar lifts is convention-dependent: published muhurat lists resume in
+              <b>कार्तिक शुक्ल</b> (post-Diwali, from ~11 Nov), while the stricter tithi-span reading waits for
+              <b>देव उठनी एकादशी</b> — itself contested at 20 vs 21 Nov 2026 because Kartik Shukla Ekadashi is a
+              <b>kshaya tithi</b> that touches no sunrise. v1 must pick one and name it.</div>
           </div>
         </div>
 
         <div class="sechead">इसके बाद पहले मुहूर्त · First dates after</div>
+        <p style="font-size:10px;color:var(--ink-muted);margin:-3px 0 8px;line-height:1.55;font-style:italic">
+          Draft rules use the strict reading. Published lists also carry 11 &amp; 14 Nov — see the validation note.</p>
 
         <div class="day rec">
           <div class="dtop"><span class="dnum">26</span><span class="dmon">Nov 2026</span><span class="dvara">गुरुवार</span></div>
@@ -353,6 +357,28 @@
     <li><b>Yield is low, and that's honest.</b> Over 240 days: Griha Pravesh 10 recommended, Vidyarambh 19, Namkaran 42.
       Scarcity is the product — it is why people search at all.</li>
   </ul>
+
+  <h3>External validation (7 Aug 2026)</h3>
+  <p>The "zero Griha Pravesh dates in the next 90 days" result was checked against published muhurat lists, since it is a
+  surprising claim. <b>It holds.</b> No source lists any Griha Pravesh date in Aug, Sep or Oct 2026; Hindi sources state the
+  bar directly — <span style="font-family:var(--deva)">चातुर्मास … में गृह प्रवेश करना निषेध होता है</span> — and give the
+  preferred months as Magha, Phalguna, Vaishakha, Jyeshtha. Chaturmas start (25 Jul 2026) matches the engine exactly.</p>
+  <p>Day-by-day against a published Nov-2026 list (engine run for Ujjain; list is New Delhi):</p>
+  <ul>
+    <li><b>Exact match on 11, 25 and 26 Nov</b> — tithi, nakshatra and weekday all agree.</li>
+    <li><b>14 and 20 Nov differ by one nakshatra</b>, and both are days where the nakshatra changes within hours of sunrise
+      (14 Nov: Purvashadha ends 8:22 pm; 20 Nov: Purva Bhadrapada ends 6:54 am). The engine reports the <i>sunrise</i> anga
+      by its documented udaya-vyapini convention; muhurat lists report the anga prevailing during the <i>muhurat window</i>.
+      <b>This is a design finding, not an engine bug</b> — the finder must evaluate angas at the candidate window, not at
+      sunrise, or it will disagree with every published list on early-changeover days.</li>
+    <li><b>21 Nov diverges</b> (engine: Dwadashi; list: Trayodashi), but that list is internally inconsistent — it runs
+      Ekadashi → Trayodashi, skipping Dwadashi. The engine is backed by in-repo DrikPanchang fixtures and a 150-chart Swiss
+      Ephemeris corpus; the aggregator is not.</li>
+  </ul>
+  <p><b>Where the draft was too strict:</b> it lifts the bar at Dev Uthani Ekadashi, so its first dates are 25–26 Nov.
+  Published lists resume at Kartik Shukla post-Diwali and carry <b>11 and 14 Nov</b>. Under a third reading (month-based:
+  only Ashadha–Ashwin barred, Kartik free) even <b>30 Oct 2026</b> would qualify — inside the 90-day window. Three attested
+  conventions, three different answers; only the strict and published readings give zero for this window, and they agree.</p>
 
   <h3>Open gates before this ships</h3>
   <ul>
