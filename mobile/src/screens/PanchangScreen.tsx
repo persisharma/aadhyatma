@@ -236,6 +236,7 @@ export default function PanchangScreen({ route }: Props) {
   const openKundali = (editing = false) =>
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
   const openRashifal = () => rootNav.navigate('Rashifal');
+  const openHastRekha = () => rootNav.navigate('HastRekha');
 
   return (
     <View style={styles.root}>
@@ -625,6 +626,7 @@ export default function PanchangScreen({ route }: Props) {
               onOpenKundali={() => openKundali(false)}
               onEditKundali={() => openKundali(true)}
               onOpenRashifal={openRashifal}
+              onOpenHastRekha={openHastRekha}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
             />
           )}
@@ -648,6 +650,7 @@ function JyotishLanding({
   onOpenKundali,
   onEditKundali,
   onOpenRashifal,
+  onOpenHastRekha,
   onOpenNavagraha,
 }: {
   lang: Lang;
@@ -662,6 +665,7 @@ function JyotishLanding({
   onOpenKundali: () => void;
   onEditKundali: () => void;
   onOpenRashifal: () => void;
+  onOpenHastRekha: () => void;
   onOpenNavagraha: () => void;
 }) {
   const [shareVisible, setShareVisible] = useState(false);
@@ -793,6 +797,20 @@ function JyotishLanding({
           glyph="रा"
           onPress={onOpenRashifal}
           accessibilityLabel="Open Daily Rashifal"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
+        <JyotishToolCard
+          titleHi="हस्तरेखा दर्शन"
+          titleEn="Palm Reading"
+          bodyHi="जन्म विवरण के बिना भी हथेली की चार रेखाओं से चिंतन-संकेत।"
+          bodyEn="Reflection cues from four palm lines—no birth details needed."
+          glyph="ह"
+          onPress={onOpenHastRekha}
+          accessibilityLabel="Open Palm Reading"
           lang={lang}
           colors={colors}
           typography={typography}
@@ -1106,6 +1124,23 @@ function JyotishLanding({
           </View>
         </View>
 
+        {sectionLabel('और उपकरण', 'More tools')}
+        <JyotishToolCard
+          titleHi="हस्तरेखा दर्शन"
+          titleEn="Palm Reading"
+          bodyHi="हथेली की चार रेखाओं से पारम्परिक चिंतन-संकेत।"
+          bodyEn="Traditional reflection cues from four palm lines."
+          badge="NEW"
+          glyph="ह"
+          onPress={onOpenHastRekha}
+          accessibilityLabel="Open Palm Reading"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
+
         {sectionLabel('साधना', 'Practice')}
         <JyotishPracticeCard
           subtitleHi="आज के चन्द्र-राशि मार्गदर्शन के साथ"
@@ -1205,6 +1240,21 @@ function JyotishLanding({
         glyph="रा"
         onPress={onOpenRashifal}
         accessibilityLabel="Open Daily Rashifal"
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        radii={radii}
+        elevation={elevation}
+      />
+      <JyotishToolCard
+        titleHi="हस्तरेखा दर्शन"
+        titleEn="Palm Reading"
+        bodyHi="हथेली की चार रेखाओं को स्वयं पहचानें और पारम्परिक चिंतन-संकेत पाएँ।"
+        bodyEn="Identify your four palm lines and receive traditional reflection cues."
+        badge="NEW"
+        glyph="ह"
+        onPress={onOpenHastRekha}
+        accessibilityLabel="Open Palm Reading"
         lang={lang}
         colors={colors}
         typography={typography}

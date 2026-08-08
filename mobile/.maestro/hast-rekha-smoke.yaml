@@ -1,0 +1,146 @@
+# Hast Rekha (Palm Reading) smoke — Jyotish landing → guided line picker →
+# deterministic reading → saved-profile persistence.
+#
+# Verifies: the Palm Reading tool card on the guest Jyotish landing, the
+# four-line radiogroup picker, that a complete selection reveals the reading
+# with the guidance disclaimer and the vitality-not-lifespan framing, the
+# suggested practice, and that the reading is restored from storage after
+# leaving and returning (Saved on this device).
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+# The first native bundle load can remount the first-launch tour once while
+# Metro settles; a second optional dismissal keeps the smoke deterministic.
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
+
+# Use English for stable visible-text assertions.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# Guest Jyotish landing carries the Palm Reading tool card.
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- tapOn: "Jyotish"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Understand Jyotish"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Open Palm Reading"
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Open Palm Reading"
+- waitForAnimationToEnd
+
+# Guided picker: disclaimer + all four classical lines.
+- extendedWaitUntil:
+    visible: "Palm Reading"
+    timeout: 15000
+- assertVisible: ".*not a certain prediction.*"
+- assertVisible: "Observe your palm"
+- assertVisible: "Choose your Heart line form"
+- tapOn:
+    id: "hastrekha-heart-curved"
+- scrollUntilVisible:
+    element:
+      id: "hastrekha-head-sloping"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "hastrekha-head-sloping"
+- scrollUntilVisible:
+    element:
+      id: "hastrekha-life-broad"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "hastrekha-life-broad"
+- scrollUntilVisible:
+    element:
+      id: "hastrekha-fate-absent"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "hastrekha-fate-absent"
+- waitForAnimationToEnd
+
+# Reading appears with the guardrail copy and the practice hand-off.
+- scrollUntilVisible:
+    element:
+      text: "Palm reading result"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Four lines, four cues"
+- assertVisible: "Saved on this device"
+- assertVisible: ".*never length of life.*"
+- assertVisible: "Reflect.*"
+- scrollUntilVisible:
+    element:
+      text: "Open Navagraha Stotram practice"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Open Navagraha Stotram practice"
+
+# Persistence: leave and return — the saved profile restores the reading.
+- tapOn: "Back"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Open Palm Reading"
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Open Palm Reading"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Palm reading result"
+    direction: DOWN
+    timeout: 15000
+- assertVisible: "Saved on this device"
+
+# Start over returns to the empty picker state.
+- scrollUntilVisible:
+    element:
+      text: "Start over"
+    direction: UP
+    timeout: 10000
+- tapOn: "Start over"
+- waitForAnimationToEnd
+- assertVisible: ".*Choose a form for all four lines.*"
+
+- stopApp:
+    appId: com.prashantsharma.vedansh
