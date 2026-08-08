@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Idea H · Event Muhurat Finder — Prototype v3 (in-app)</title>
+<title>Idea H · Event Muhurat Finder — Prototype v4 (visibility map)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@500;600&display=swap" rel="stylesheet" />
@@ -25,7 +25,6 @@
     --card-active-border:rgba(184,98,27,0.4);
     --modal-backdrop:rgba(47,30,16,0.55); --on-primary:#FFFFFF;
     --s-xs:4px; --s-sm:8px; --s-md:12px; --s-lg:16px; --s-xl:20px; --s-xxl:24px;
-    --gutter:24px;
     --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-pill:999px;
     --e-subtle:0 1px 4px rgba(60,30,10,.06); --e-card:0 2px 6px rgba(60,30,10,.10);
     --e-lifted:0 4px 12px rgba(60,30,10,.11); --e-raised:0 6px 14px rgba(60,30,10,.16);
@@ -48,14 +47,14 @@
 
   .phone{width:340px;height:730px;background:var(--parchment);border-radius:38px;border:10px solid #120A03;
     box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
-  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--s-xxl);
     font-size:12px;font-weight:600;color:var(--ink);background:var(--parchment-hi)}
   .screen{position:absolute;top:32px;left:0;right:0;bottom:56px;overflow-y:auto;
     background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
   .screen::-webkit-scrollbar{width:0}
   .pad{padding:var(--s-md) var(--s-lg) var(--s-xxl)}
+  .padx{padding:var(--s-md) var(--s-xxl) var(--s-xxl)} /* Home uses spacing.xxl gutter */
 
-  /* ── tab bar as shipped: Home · Bhakti · Panchang · Bhajan · More ── */
   .tabbar{position:absolute;bottom:0;left:0;right:0;height:56px;background:var(--parchment-soft);
     border-top:1px solid var(--divider);display:flex;align-items:stretch}
   .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
@@ -63,52 +62,74 @@
   .tab svg{stroke:var(--ink-muted)}
   .tab.on{color:var(--saffron)} .tab.on svg{stroke:var(--saffron)}
 
-  /* ── segmented controls (Panchang | Vrat & Parv | Jyotish) ── */
+  /* ── Home: hero / strip / for-today / banner / grid ── */
+  .hero{text-align:center;padding:var(--s-md) 0 var(--s-lg)}
+  .hero .crest{display:flex;align-items:center;justify-content:center;gap:var(--s-md)}
+  .hero .om{font-family:var(--deva);font-size:15px;color:var(--saffron)}
+  .hero .rule{height:1px;width:34px;background:var(--saffron);opacity:.5}
+  .hero .wm{font-family:var(--deva);font-weight:600;font-size:30px;color:var(--ink);line-height:1.4}
+  .hero .tag{font-family:var(--latin);font-style:italic;font-size:15px;letter-spacing:.6px;color:var(--ink-soft)}
+
+  .strip{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);
+    padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-md);box-shadow:var(--e-card)}
+  .strip .head{font-family:var(--latin);font-weight:700;font-size:16px;color:var(--ink)}
+  .strip .head .sep{color:var(--ink-muted);font-weight:500}
+  .chiprow{display:flex;gap:var(--s-sm);margin-top:var(--s-sm);overflow:hidden}
+  .schip{font-family:var(--latin);font-weight:600;font-size:12.5px;padding:5px 11px;border-radius:var(--r-pill);
+    white-space:nowrap;flex:none}
+  .schip.gold{background:var(--gold-chip);color:var(--saffron-deep)}
+  .schip.avoid{background:var(--avoid-chip);color:var(--avoid-deep)}
+  .schip.follow{background:var(--saffron-tint);color:var(--saffron-deep);border:1px dashed var(--card-active-border)}
+
+  .rowhead{font-family:var(--inter);font-weight:600;font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+    color:var(--ink-muted);margin:var(--s-lg) 0 var(--s-sm)}
+  .ftrow{display:flex;gap:var(--s-md);overflow:hidden}
+  .ftcard{flex:none;width:200px;background:var(--card-surface);border:1px solid var(--divider);
+    border-radius:var(--r-md);padding:var(--s-md);box-shadow:var(--e-subtle)}
+  .ftcard .t{font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink);line-height:1.5}
+  .ftcard .d{font-family:var(--latin);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:2px}
+
+  .rbanner{display:flex;align-items:center;gap:var(--s-md);background:linear-gradient(var(--card-active-from),var(--card-active-to));
+    border:1px solid var(--card-active-border);border-radius:var(--r-md);padding:var(--s-md) var(--s-lg);
+    margin-top:var(--s-md);box-shadow:var(--e-card)}
+  .rbanner .lotus{color:var(--saffron);flex:none;display:flex}
+  .rbanner .t{flex:1;font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink);line-height:1.5}
+  .rbanner .t small{display:block;font-family:var(--latin);font-style:italic;font-weight:400;font-size:12px;color:var(--ink-muted)}
+  .rbanner .chev{color:var(--saffron)}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s-md)}
+  .gtile2{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);
+    padding:var(--s-md) var(--s-sm);min-height:76px;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;text-align:center;box-shadow:var(--e-subtle);position:relative}
+  .gtile2 .hi{font-family:var(--deva);font-weight:600;font-size:15px;color:var(--ink);line-height:1.5}
+  .gtile2 .en{font-family:var(--latin);font-style:italic;font-size:11px;color:var(--ink-muted);line-height:1.4}
+  .gtile2.new{border-color:var(--card-active-border);box-shadow:var(--e-lifted)}
+  .gtile2 .nb{position:absolute;top:6px;right:6px;font-family:var(--inter);font-weight:600;font-size:10px;
+    letter-spacing:1px;text-transform:uppercase;background:var(--new-badge-bg);color:var(--new-badge-text);
+    padding:1px 5px;border-radius:6px}
+  .gtile2.wide{grid-column:1 / -1;flex-direction:row;gap:var(--s-md);min-height:56px}
+
+  /* ── shared (Panchang & finder screens, from v3) ── */
   .seg{display:flex;background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-pill);
     padding:3px;margin-bottom:var(--s-md);box-shadow:var(--e-subtle)}
   .seg div{flex:1;text-align:center;font-family:var(--latin);font-weight:600;font-size:14px;padding:8px 4px;
     border-radius:var(--r-pill);color:var(--ink-soft);white-space:nowrap}
   .seg .on{background:var(--gold-chip);color:var(--saffron-deep)}
-  .seg.small div{font-size:13px;padding:6px 4px}
-
-  .ctlrow{display:flex;gap:var(--s-sm);align-items:center;margin-bottom:var(--s-md)}
-  .locpill{font-family:var(--latin);font-weight:600;font-size:14px;color:var(--ink-soft);background:var(--card-surface);
-    border:1px solid var(--divider);padding:8px 12px;border-radius:var(--r-pill);display:flex;align-items:center;gap:6px;
-    box-shadow:var(--e-subtle)}
-  .pin{width:9px;height:9px;background:var(--saffron);border-radius:50% 50% 50% 0;transform:rotate(-45deg);flex:none}
-  .starbtn{width:38px;height:38px;border-radius:var(--r-pill);border:1px solid var(--divider);background:var(--card-surface);
-    display:flex;align-items:center;justify-content:center;margin-left:auto;position:relative;box-shadow:var(--e-subtle)}
-  .starbtn .n{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:8px;background:var(--saffron);
-    color:var(--on-primary);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 3px}
-
-  /* ── date navigator card ── */
-  .datecard{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-lg);
-    padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-md);box-shadow:var(--e-card)}
-  .dctop{display:flex;align-items:center;justify-content:space-between}
-  .dcbtn{width:38px;height:38px;border-radius:var(--r-pill);border:1px solid var(--divider);background:var(--parchment-soft);
-    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:15px}
-  .dcdate{text-align:center}
-  .dcdate .d{font-family:var(--latin);font-weight:700;font-size:21px;color:var(--ink)}
-  .dcdate .mv{font-family:var(--inter);font-weight:600;font-size:12px;color:var(--saffron)}
-  .dcbot{display:flex;align-items:center;justify-content:space-between;margin-top:var(--s-sm)}
-  .dcbot .m{font-family:var(--latin);font-weight:600;font-size:15px;color:var(--ink-soft)}
-  .todaybtn{font-family:var(--latin);font-weight:700;font-size:15px;color:var(--ink);background:var(--parchment-soft);
-    border:1px solid var(--divider);border-radius:var(--r-pill);padding:6px 16px}
-
-  .dayline{padding:0 2px var(--s-md)}
-  .dayline .w{font-family:var(--latin);font-weight:700;font-size:20px;color:var(--saffron-deep)}
-  .dayline .rest{font-family:var(--latin);font-size:14px;color:var(--ink-soft)}
-  .dayline .l2{font-family:var(--latin);font-size:14px;color:var(--ink-soft);margin-top:1px}
-
-  /* ── Today's Timings glance card (MuhuratGlanceCard) ── */
+  .navrow{display:flex;align-items:center;gap:var(--s-md);margin-bottom:var(--s-md)}
+  .back{width:34px;height:34px;border-radius:var(--r-xl);border:1px solid var(--divider);
+    background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--saffron);
+    font-size:16px;flex:none;box-shadow:var(--e-subtle)}
+  .title{font-family:var(--latin);font-weight:700;font-size:19px;color:var(--ink);line-height:1.3}
+  .title small{display:block;font-family:var(--latin);font-style:italic;font-weight:400;font-size:12.5px;color:var(--ink-muted)}
+  .sechead{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--avoid);margin:var(--s-lg) 0 var(--s-sm)}
   .glance{background:linear-gradient(var(--card-active-from),var(--card-active-to));
     border:1px solid var(--card-active-border);border-radius:var(--r-lg);padding:var(--s-lg);
     margin-bottom:var(--s-md);box-shadow:var(--e-raised)}
   .glabel{font-family:var(--latin);font-style:italic;font-size:14px;color:var(--saffron-deep);margin-bottom:var(--s-sm)}
   .gnow{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted)}
   .gmain{display:flex;align-items:center;gap:var(--s-sm);margin:2px 0}
-  .gdot{width:12px;height:12px;border-radius:6px;background:var(--avoid);flex:none}
-  .gdot.g{background:var(--saffron)}
+  .gdot{width:12px;height:12px;border-radius:6px;background:var(--saffron);flex:none}
   .gname{font-family:var(--latin);font-weight:700;font-size:24px;color:var(--ink);line-height:1.2}
   .gpill{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:.8px;text-transform:uppercase;
     background:var(--gold-chip);color:var(--saffron-deep);padding:4px 10px;border-radius:var(--r-sm);margin-left:auto;flex:none}
@@ -121,8 +142,6 @@
   .glink{display:flex;align-items:center;font-family:var(--latin);font-weight:600;font-size:16px;color:var(--saffron-deep);
     border-top:1px solid var(--divider);margin-top:var(--s-md);padding-top:var(--s-md)}
   .glink .chev{margin-left:auto;color:var(--saffron)}
-
-  /* ── NEW: finder door ── */
   .door{display:flex;align-items:center;gap:var(--s-md);padding:var(--s-md) var(--s-lg);border-radius:var(--r-md);
     background:var(--card-surface);border:1px solid var(--card-active-border);margin-bottom:var(--s-md);
     box-shadow:var(--e-lifted);min-height:60px}
@@ -133,40 +152,6 @@
   .door .chev{color:var(--saffron);font-size:15px;flex:none}
   .badge-new{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;
     background:var(--new-badge-bg);color:var(--new-badge-text);padding:2px 7px;border-radius:var(--r-sm);flex:none}
-
-  /* ── anga tiles ── */
-  .anga{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-md)}
-  .atile{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);
-    padding:var(--s-md) var(--s-lg);box-shadow:var(--e-card)}
-  .atile .lab{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;
-    color:var(--avoid);margin-bottom:4px}
-  .atile .val{font-family:var(--latin);font-weight:700;font-size:22px;color:var(--ink);line-height:1.2}
-  .atile .till{font-family:var(--latin);font-size:13px;color:var(--ink-soft);margin-top:4px}
-
-  /* ── generic ── */
-  .navrow{display:flex;align-items:center;gap:var(--s-md);margin-bottom:var(--s-md)}
-  .back{width:34px;height:34px;border-radius:var(--r-xl);border:1px solid var(--divider);
-    background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--saffron);
-    font-size:16px;flex:none;box-shadow:var(--e-subtle)}
-  .title{font-family:var(--latin);font-weight:700;font-size:19px;color:var(--ink);line-height:1.3}
-  .title small{display:block;font-family:var(--latin);font-style:italic;font-weight:400;font-size:12.5px;color:var(--ink-muted)}
-  .sechead{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;
-    color:var(--avoid);margin:var(--s-lg) 0 var(--s-sm)}
-  .olist{border:1px solid var(--divider);border-radius:var(--r-md);background:var(--card-surface);
-    overflow:hidden;box-shadow:var(--e-subtle)}
-  .orow{display:flex;align-items:center;gap:var(--s-md);padding:var(--s-md) var(--s-lg);min-height:58px;
-    border-bottom:1px solid var(--divider)}
-  .orow:last-child{border-bottom:none}
-  .orow .gl{color:var(--saffron);flex:none;display:flex}
-  .orow .ot{flex:1}
-  .orow .h{font-family:var(--latin);font-weight:700;font-size:16px;color:var(--ink)}
-  .orow .s{font-family:var(--deva);font-size:12px;color:var(--ink-muted);line-height:1.5}
-  .orow .chev{color:var(--saffron);flex:none}
-  .fine{margin-top:var(--s-sm);font-family:var(--latin);font-style:italic;font-size:12.5px;
-    color:var(--ink-muted);line-height:1.6;text-align:center}
-  .fine b{font-weight:700;font-style:normal;color:var(--ink-soft)}
-  .fine .lnk{color:var(--saffron);font-weight:600}
-
   .res{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);
     padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-md);box-shadow:var(--e-card);display:flex;gap:var(--s-md)}
   .res.top{background:linear-gradient(var(--card-active-from),var(--card-active-to));
@@ -185,7 +170,19 @@
     line-height:1.3;white-space:nowrap}
   .rtime .nm{font-weight:600;font-size:14px;color:var(--saffron-deep)}
   .rwhy{margin-top:var(--s-sm);font-family:var(--latin);font-weight:600;font-size:14px;color:var(--saffron)}
-
+  .olist{border:1px solid var(--divider);border-radius:var(--r-md);background:var(--card-surface);
+    overflow:hidden;box-shadow:var(--e-subtle)}
+  .orow{display:flex;align-items:center;gap:var(--s-md);padding:var(--s-md) var(--s-lg);min-height:58px;
+    border-bottom:1px solid var(--divider)}
+  .orow:last-child{border-bottom:none}
+  .orow .gl{color:var(--saffron);flex:none;display:flex}
+  .orow .ot{flex:1}
+  .orow .h{font-family:var(--latin);font-weight:700;font-size:16px;color:var(--ink)}
+  .orow .s{font-family:var(--deva);font-size:12px;color:var(--ink-muted);line-height:1.5}
+  .orow .chev{color:var(--saffron);flex:none}
+  .fine{margin-top:var(--s-sm);font-family:var(--latin);font-style:italic;font-size:12.5px;
+    color:var(--ink-muted);line-height:1.6;text-align:center}
+  .fine .lnk{color:var(--saffron);font-weight:600}
   .empty{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:var(--r-lg);
     padding:var(--s-lg);text-align:center;box-shadow:var(--e-card)}
   .danda{font-family:var(--deva);font-size:20px;color:var(--gold);margin-bottom:var(--s-sm)}
@@ -197,13 +194,11 @@
     color:var(--saffron-deep);margin-bottom:4px}
   .whycard .wb{font-family:var(--latin);font-size:13.5px;color:var(--ink-soft);line-height:1.6}
   .whycard .wb b{font-weight:700;color:var(--ink)}
-
   .answer{background:linear-gradient(var(--card-active-from),var(--card-active-to));
     border:1px solid var(--card-active-border);border-radius:var(--r-lg);padding:var(--s-lg);
     text-align:center;margin-bottom:var(--s-md);box-shadow:var(--e-raised)}
   .answer .ad{font-family:var(--latin);font-weight:700;font-size:28px;color:var(--ink);line-height:1.15}
   .answer .aw{font-family:var(--latin);font-size:14px;color:var(--ink-soft);margin-top:2px}
-  .answer .apill{display:inline-block;margin-top:var(--s-sm)}
   .answer .abest{margin-top:var(--s-md);padding-top:var(--s-md);border-top:1px solid var(--divider)}
   .answer .albl{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted)}
   .answer .abig{font-family:var(--latin);font-weight:700;font-size:24px;color:var(--ink);margin-top:3px;white-space:nowrap}
@@ -219,8 +214,11 @@
   .disclose .chev{margin-left:auto;color:var(--saffron)}
   .disc{margin-top:var(--s-md);font-family:var(--latin);font-style:italic;font-size:12px;
     color:var(--ink-muted);line-height:1.6;text-align:center}
-
-  /* ── month grid ── */
+  .jrow{display:flex;align-items:center;gap:var(--s-md);background:var(--card-surface);border:1px solid var(--divider);
+    border-radius:var(--r-md);padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-sm);box-shadow:var(--e-subtle)}
+  .jrow .k{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--saffron-deep);width:64px;flex:none}
+  .jrow .v{flex:1;font-family:var(--latin);font-size:13.5px;color:var(--ink-soft);line-height:1.55}
   .mgrid{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-lg);
     padding:var(--s-md);box-shadow:var(--e-card)}
   .mrow{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
@@ -251,48 +249,104 @@
 </head>
 <body>
 
-<h1>Event Muhurat Finder <span style="font-family:var(--inter);font-size:13px;color:var(--gold);letter-spacing:2px">V3 · IN-APP</span></h1>
-<p class="sub">Rebuilt against the shipped Panchang screen (user screenshot, 8 Aug 2026, Bengaluru, English). Screen 1 is the app as it exists today — the finder enters as one door under the card users already read.</p>
+<h1>Event Muhurat Finder <span style="font-family:var(--inter);font-size:13px;color:var(--gold);letter-spacing:2px">V4 · VISIBILITY MAP</span></h1>
+<p class="sub">Where the feature surfaces across the app — additive only. Every existing element on every screen stays exactly where it is; insertions are called out per screen.</p>
 <p class="legend">
-  <b>Engine check against the screenshot: 7/7 exact.</b> Dashami till 1:59 PM · Rohini till 4:49 PM · Dhruva · Vishti ·
-  Rahu Kaal 9:15–10:50 AM · Abhijit 11:59 AM–12:50 PM · Labh till 8:09 PM (at 6:52 PM) — all reproduced to the minute by
-  <code>computePanchangForDate()</code> + <code>computeMuhuratDay()</code> for Bengaluru. All finder times below are
-  recomputed for <b>Bengaluru</b>. Chrome follows the selected language (English here); every string is authored
-  Devanagari + English per the localisation contract. Rule tables remain <b>DRAFT</b> (§10 review pending).
+  Screen structures follow source: <code>HomeScreen.tsx</code> (hero → TodayStrip → FOR TODAY → routine banner → CATEGORIES grid → DISCOVER),
+  <code>TodayStrip.tsx</code> (vara+tithi headline, then observance/Abhijit/Rahu-Kaal chips), the grid's <b>anchored-by-id doors</b>
+  (व्रत+कुंडली after जप; देवता+उद्देश्य after तीर्थ; नित्य साधना last), and the Panchang screen from the user's screenshot —
+  which the engine reproduced <b>7/7 to the minute</b>. All times computed for <b>Bengaluru</b> with the shipped v1.4.5 engine.
+  English chrome per the user's selected language; strings authored hi+en. Rule tables remain <b>DRAFT</b> (§10 pending).
 </p>
 
 <div class="wrap">
 
-  <!-- ── 1. Panchang tab TODAY + the insertion ────────────── -->
+  <!-- ── 1. HOME — everything kept, two insertions ────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
+      <div class="screen"><div class="padx">
+
+        <div class="hero">
+          <div class="crest">
+            <span class="rule"></span><span class="om">ॐ</span>
+            <span class="wm">वेदांश़</span>
+            <span class="om">ॐ</span><span class="rule"></span>
+          </div>
+          <div class="tag">Sacred Texts · Daily Reading</div>
+        </div>
+
+        <div class="strip">
+          <div class="head">Saturday <span class="sep">·</span> Dashami <span class="sep">· Shravana Krishna</span></div>
+          <div class="chiprow">
+            <span class="schip follow">Vahan muhurat · Mon 6:07 AM</span>
+            <span class="schip gold">Abhijit 11:59 AM – 12:50 PM</span>
+            <span class="schip avoid">Rahu Kaal 9:15 – 10:50 AM</span>
+          </div>
+        </div>
+
+        <div class="rowhead">For Today</div>
+        <div class="ftrow">
+          <div class="ftcard"><div class="t">शनिवार · हनुमान चालीसा</div><div class="d">Saturday's recitation</div></div>
+          <div class="ftcard"><div class="t">संकट मोचन अष्टक</div><div class="d">Recommended today</div></div>
+        </div>
+
+        <div class="rbanner">
+          <div class="lotus"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20c-4 0-7-2.6-8-6 2.2.4 3.9 0 5-.8C9.5 15 10.6 17 12 20Zm0 0c4 0 7-2.6 8-6-2.2.4-3.9 0-5-.8-.5 1.8-1.6 3.8-3 6.8Zm0 0c-1.8-3.6-1.8-8 0-12 1.8 4 1.8 8.4 0 12Z"/></svg></div>
+          <div class="t">नित्य साधना<small>2 of 3 done today · continue</small></div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="rowhead">Categories</div>
+        <div class="grid">
+          <div class="gtile2"><div class="hi">चालीसा</div><div class="en">Chalisa</div></div>
+          <div class="gtile2"><div class="hi">आरती</div><div class="en">Aarti</div></div>
+          <div class="gtile2"><div class="hi">स्तोत्रम्</div><div class="en">Hymns</div></div>
+          <div class="gtile2"><div class="hi">ग्रन्थ</div><div class="en">Sacred Books</div></div>
+          <div class="gtile2"><div class="hi">जप</div><div class="en">Japa</div></div>
+          <div class="gtile2"><div class="hi">व्रत</div><div class="en">Vrat &amp; Parv</div></div>
+          <div class="gtile2"><div class="hi">कुंडली</div><div class="en">Kundali</div></div>
+          <div class="gtile2 new"><span class="nb">new</span><div class="hi">मुहूर्त</div><div class="en">Muhurat</div></div>
+          <div class="gtile2"><div class="hi">संस्कार</div><div class="en">Good Habits</div></div>
+          <div class="gtile2"><div class="hi">तीर्थ</div><div class="en">Pilgrimage</div></div>
+          <div class="gtile2"><div class="hi">देवता</div><div class="en">By Deity</div></div>
+          <div class="gtile2"><div class="hi">उद्देश्य</div><div class="en">By Purpose</div></div>
+          <div class="gtile2"><div class="hi">कवच</div><div class="en">Kavacham</div></div>
+          <div class="gtile2"><div class="hi">अष्टकम्</div><div class="en">Ashtakam</div></div>
+          <div class="gtile2"><div class="hi">सूक्तम्</div><div class="en">Suktam</div></div>
+          <div class="gtile2 wide"><div class="hi">नित्य साधना</div><div class="en">Daily Practice</div></div>
+        </div>
+
+        <div class="rowhead" style="margin-top:var(--s-xl)">Discover</div>
+        <div class="ftrow"><div class="ftcard" style="opacity:.5"><div class="t">…</div><div class="d">carousel continues</div></div></div>
+      </div></div>
+      <div class="tabbar">
+        <div class="tab on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 5c0 4 2.2 6 5 6s5-2 5-6"/></svg>Bhakti</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M12 5h5M19 12v5M12 19H7M5 12V7"/></svg>Panchang</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l8-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="15" cy="16" r="2"/></svg>Bhajan</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
+      </div>
+    </div>
+    <p class="cap"><b>1 · Home — two insertions, zero removals.</b> ① A <b>मुहूर्त tile</b> anchored after कुंडली (same anchored-by-id pattern as the other doors; NEW badge from <code>NewContentContext</code>). ② A <b>followed-muhurat chip</b> leads the Today-strip chip row — <i>contextual</i>: it exists only while a follow is upcoming. Hero, FOR TODAY, routine banner, all 15 existing tiles, DISCOVER — untouched. नित्य साधना closes as a full-width row (see the grid-math note).</p>
+  </div>
+
+  <!-- ── 2. PANCHANG — the screenshot + one door ──────────── -->
   <div class="col">
     <div class="phone">
       <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
       <div class="screen"><div class="pad">
         <div class="seg"><div class="on">Panchang</div><div>Vrat &amp; Parv</div><div>Jyotish</div></div>
-        <div class="ctlrow">
-          <div class="locpill"><span class="pin"></span>Bengaluru</div>
-          <div class="seg small" style="flex:1;margin:0"><div class="on">Purnimant</div><div>Amanta</div></div>
-          <div class="starbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A67C34" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5 13.9 9h5.6l-4.5 3.4 1.7 5.4L12 14.6l-4.7 3.2 1.7-5.4L4.5 9h5.6Z"/></svg><span class="n">3</span></div>
-        </div>
 
-        <div class="datecard">
-          <div class="dctop">
-            <div class="dcbtn">‹</div>
-            <div class="dcdate"><div class="d">8 August 2026</div><div class="mv">Month view</div></div>
-            <div class="dcbtn">›</div>
-          </div>
-          <div class="dcbot"><span class="m">August 2026</span><span class="todaybtn">Today</span></div>
-        </div>
-
-        <div class="dayline">
-          <span class="w">Saturday</span> <span class="rest">8 August 2026 · Vikram Samvat 2083</span>
-          <div class="l2">Shravana · Krishna Paksha</div>
+        <div class="strip" style="margin-bottom:var(--s-md)">
+          <div class="head" style="font-size:15px">Saturday, 8 August 2026 <span class="sep">· Bengaluru</span></div>
+          <div style="font-family:var(--latin);font-size:13px;color:var(--ink-soft)">Vikram Samvat 2083 · Shravana · Krishna Paksha</div>
         </div>
 
         <div class="glance">
           <div class="glabel">Today's Timings</div>
           <div class="gnow">Now</div>
-          <div class="gmain"><span class="gdot g"></span><span class="gname">Labh Choghadiya</span><span class="gpill">Auspicious</span></div>
+          <div class="gmain"><span class="gdot"></span><span class="gname">Labh Choghadiya</span><span class="gpill">Auspicious</span></div>
           <div class="gtill">till 8:09 PM</div>
           <div class="gtiles">
             <div class="gtile avoid"><div class="k">Rahu Kaal</div><div class="t">9:15 AM – 10:50 AM</div></div>
@@ -301,18 +355,18 @@
           <div class="glink">All timings &amp; choghadiya <span class="chev">›</span></div>
         </div>
 
-        <!-- ═══ THE INSERTION — one door, same card grammar ═══ -->
+        <!-- ═══ INSERTION ═══ -->
         <div class="door">
           <div class="gl"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8 20 20"/><path d="M11 8v3l2 1.5"/></svg></div>
           <div class="dt"><div class="h">Find a Muhurat</div><div class="s">Planning something? Griha Pravesh, vehicle, naming…</div></div>
           <span class="badge-new">new</span><div class="chev">›</div>
         </div>
 
-        <div class="anga">
-          <div class="atile"><div class="lab">Tithi</div><div class="val">Dashami</div><div class="till">till 1:59 PM</div></div>
-          <div class="atile"><div class="lab">Nakshatra</div><div class="val">Rohini</div><div class="till">till 4:49 PM</div></div>
-          <div class="atile"><div class="lab">Yoga</div><div class="val">Dhruva</div></div>
-          <div class="atile"><div class="lab">Karana</div><div class="val">Vishti</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s-md)">
+          <div class="gtile" style="flex:none"><div class="sechead" style="margin:0 0 4px">Tithi</div><div class="k" style="font-size:20px">Dashami</div><div class="t">till 1:59 PM</div></div>
+          <div class="gtile" style="flex:none"><div class="sechead" style="margin:0 0 4px">Nakshatra</div><div class="k" style="font-size:20px">Rohini</div><div class="t">till 4:49 PM</div></div>
+          <div class="gtile" style="flex:none"><div class="sechead" style="margin:0 0 4px">Yoga</div><div class="k" style="font-size:20px">Dhruva</div></div>
+          <div class="gtile" style="flex:none"><div class="sechead" style="margin:0 0 4px">Karana</div><div class="k" style="font-size:20px">Vishti</div></div>
         </div>
       </div></div>
       <div class="tabbar">
@@ -323,48 +377,33 @@
         <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
       </div>
     </div>
-    <p class="cap"><b>1 · The shipped screen + one door.</b> Everything above and below the door is the app as-is (engine-verified to the minute). The finder slots <b>between the Today's Timings card and the anga tiles</b> — where timing-intent users already are. Note today's karana: <b>Vishti = Bhadra</b> — the finder would exclude today for most occasions.</p>
+    <p class="cap"><b>2 · Panchang — one door between the timings card and the anga tiles.</b> Header/date-navigator rows condensed here for space; nothing else moves (values engine-matched to the user's screenshot 7/7). Secondary entry: a footer row on <code>MuhuratDetail</code>. Note today's karana — <b>Vishti = Bhadra</b>.</p>
   </div>
 
-  <!-- ── 2. Occasion ──────────────────────────────────────── -->
+  <!-- ── 3. JYOTISH — Phase-4 surface ─────────────────────── -->
   <div class="col">
     <div class="phone">
       <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
       <div class="screen"><div class="pad">
-        <div class="navrow">
-          <div class="back">‹</div>
-          <div class="title">Find a Muhurat<small>What are you planning?</small></div>
+        <div class="seg"><div>Panchang</div><div>Vrat &amp; Parv</div><div class="on">Jyotish</div></div>
+
+        <div class="strip">
+          <div class="head" style="font-family:var(--deva);font-size:15px">आपका दैनिक राशिफल <span class="sep" style="font-family:var(--latin)">· Vrishabha</span></div>
+        </div>
+        <div class="jrow"><span class="k">Favour</span><span class="v">Steady efforts bear fruit; good day for grounded work.</span></div>
+        <div class="jrow"><span class="k">Pause</span><span class="v">Avoid haste in money matters this afternoon.</span></div>
+        <div class="jrow"><span class="k">Reflect</span><span class="v">धृति — patience as practice.</span></div>
+
+        <!-- ═══ INSERTION (Phase 4) ═══ -->
+        <div class="door" style="margin-top:var(--s-md)">
+          <div class="gl"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="7.5"/><path d="M12 8v4l2.5 2"/></svg></div>
+          <div class="dt"><div class="h">Muhurat, for you</div><div class="s">Tarabala today: Sampat — favourable</div></div>
+          <span class="badge-new">new</span><div class="chev">›</div>
         </div>
 
-        <div class="olist">
-          <div class="orow">
-            <div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/><path d="M10.5 19v-5h3v5"/></svg></div>
-            <div class="ot"><div class="h">Griha Pravesh</div><div class="s">गृह प्रवेश</div></div><div class="chev">›</div></div>
-          <div class="orow">
-            <div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2"/><path d="M12 4.5v5M12 14.5v5M4.5 12h5M14.5 12h5"/></svg></div>
-            <div class="ot"><div class="h">Vehicle Purchase</div><div class="s">वाहन क्रय</div></div><div class="chev">›</div></div>
-          <div class="orow">
-            <div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4c1.6 2.2 2.6 3.7 2.6 5.2A2.6 2.6 0 0 1 12 11.8a2.6 2.6 0 0 1-2.6-2.6C9.4 7.7 10.4 6.2 12 4Z"/><path d="M5.5 15.5h13"/><path d="M7 15.5c1-2.2 2.8-3 5-3s4 .8 5 3"/><path d="M8 18.5h8"/></svg></div>
-            <div class="ot"><div class="h">Naming Ceremony</div><div class="s">नामकरण</div></div><div class="chev">›</div></div>
-          <div class="orow">
-            <div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.5C10.4 6 8.2 5.4 4.8 5.4v11.4c3.4 0 5.6.6 7.2 2.1"/><path d="M12 7.5c1.6-1.5 3.8-2.1 7.2-2.1v11.4c-3.4 0-5.6.6-7.2 2.1"/><path d="M12 7.5v11.4"/></svg></div>
-            <div class="ot"><div class="h">Starting Education</div><div class="s">विद्यारम्भ</div></div><div class="chev">›</div></div>
-          <div class="orow">
-            <div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 7.5h5l1.2 2H8.3Z"/><path d="M8.3 9.5c-.9 1.5-1.3 3-1.3 4.6 0 2.2 2.2 3.4 5 3.4s5-1.2 5-3.4c0-1.6-.4-3.1-1.3-4.6"/><path d="M12 4.5v3"/><path d="M4 20h16"/></svg></div>
-            <div class="ot"><div class="h">Bhumi Pujan</div><div class="s">भूमि पूजन</div></div><div class="chev">›</div></div>
-          <div class="orow">
-            <div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M6 8h12"/><path d="M6 8 3.5 13h5Z"/><path d="M18 8l-2.5 5h5Z"/><path d="M8.5 19h7"/></svg></div>
-            <div class="ot"><div class="h">Starting a Business</div><div class="s">व्यापार आरम्भ</div></div><div class="chev">›</div></div>
-        </div>
-
-        <div class="sechead" style="margin-top:var(--s-lg)">Or</div>
-        <div class="door" style="border-color:var(--divider);box-shadow:var(--e-subtle)">
-          <div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M12 3.5 13.9 9h5.6l-4.5 3.4 1.7 5.4L12 14.6l-4.7 3.2 1.7-5.4L4.5 9h5.6Z"/></svg></div>
-          <div class="dt"><div class="h">Special auspicious days</div><div class="s">Abujh days — no muhurat needed</div></div>
-          <div class="chev">›</div>
-        </div>
-
-        <p class="fine">Searching the next 3 months · <span class="lnk">Change range ›</span></p>
+        <div class="jrow" style="opacity:.75"><span class="k">Kundali</span><span class="v">Compact chart reference · Chart | Grahas | Dasha</span></div>
+        <div class="jrow" style="opacity:.75"><span class="k">Practice</span><span class="v">One suggested reading, via the existing reader</span></div>
+        <p class="disc">Traditional guidance — not prediction.</p>
       </div></div>
       <div class="tabbar">
         <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
@@ -374,188 +413,10 @@
         <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
       </div>
     </div>
-    <p class="cap"><b>2 · One decision.</b> English chrome because the user's language is English; the Devanagari sits as the caption line (authored pairs, so hi/gu/kn render natively). Range defaults to 3 months, changeable after.</p>
+    <p class="cap"><b>3 · Jyotish (Phase 4) — one row on the saved landing.</b> The daily-first order (Rashifal rows → Kundali reference → practice) is a documented rule and stays. "Muhurat, for you" slots after the guidance rows — Tarabala/Chandrabala come from the same saved profile Rashifal already reads.</p>
   </div>
 
-  <!-- ── 3. Results ───────────────────────────────────────── -->
-  <div class="col">
-    <div class="phone">
-      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
-      <div class="screen"><div class="pad">
-        <div class="navrow">
-          <div class="back">‹</div>
-          <div class="title">Vehicle Purchase<small>Aug – Nov 2026 · Bengaluru</small></div>
-        </div>
-
-        <div class="sechead">Best dates</div>
-
-        <div class="res top">
-          <div class="rank">1</div>
-          <div class="rbody">
-            <div class="rdate">17 Aug <span class="wd">· Monday</span></div>
-            <div class="rtier">Shreshtha <span class="prov">· DrikPanchang convention</span></div>
-            <div class="rpanch">Chitra · Shravana Shukla Panchami</div>
-            <div class="rtime"><span class="nm">Amrit</span> 6:07 – 7:41 AM</div>
-            <div class="rwhy">Why this date ›</div>
-          </div>
-        </div>
-
-        <div class="res">
-          <div class="rank">2</div>
-          <div class="rbody">
-            <div class="rdate">19 Aug <span class="wd">· Wednesday</span></div>
-            <div class="rtier">Shreshtha</div>
-            <div class="rpanch">Swati · Shravana Shukla Saptami</div>
-            <div class="rtime"><span class="nm">Labh</span> 6:08 – 7:41 AM</div>
-          </div>
-        </div>
-
-        <div class="res">
-          <div class="rank">3</div>
-          <div class="rbody">
-            <div class="rdate">28 Aug <span class="wd">· Friday</span></div>
-            <div class="rtier">Shreshtha</div>
-            <div class="rpanch">Shatabhisha · Shravana Shukla Purnima</div>
-            <div class="rtime"><span class="nm">Char</span> 6:08 – 7:41 AM</div>
-          </div>
-        </div>
-
-        <div class="sechead">More suitable dates</div>
-
-        <div class="res">
-          <div class="rank">·</div>
-          <div class="rbody">
-            <div class="rdate">9 Aug <span class="wd">· Sunday</span></div>
-            <div class="rtier mid">Madhyam</div>
-            <div class="rpanch">Mrigashira · Shravana Krishna Ekadashi</div>
-            <div class="rtime"><span class="nm">Char</span> 7:41 – 9:15 AM</div>
-          </div>
-        </div>
-        <div class="res">
-          <div class="rank">·</div>
-          <div class="rbody">
-            <div class="rdate">14 Aug <span class="wd">· Friday</span></div>
-            <div class="rtier mid">Madhyam</div>
-            <div class="rpanch">Purva Phalguni · Shravana Shukla Dwitiya</div>
-            <div class="rtime"><span class="nm">Char</span> 6:07 – 7:41 AM</div>
-          </div>
-        </div>
-      </div></div>
-      <div class="tabbar">
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 5c0 4 2.2 6 5 6s5-2 5-6"/></svg>Bhakti</div>
-        <div class="tab on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M12 5h5M19 12v5M12 19H7M5 12V7"/></svg>Panchang</div>
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l8-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="15" cy="16" r="2"/></svg>Bhajan</div>
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
-      </div>
-    </div>
-    <p class="cap"><b>3 · Ranked, Bengaluru times.</b> All windows recomputed for the screenshot's city — 17 Aug best window is <b>Amrit 6:07–7:41 AM</b> here (it was 6:03 in Ujjain). Tier styling mirrors the shipped AUSPICIOUS pill's uppercase Inter grammar; section labels reuse the TITHI/NAKSHATRA style.</p>
-  </div>
-
-  <!-- ── 4. Day detail ────────────────────────────────────── -->
-  <div class="col">
-    <div class="phone">
-      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
-      <div class="screen"><div class="pad">
-        <div class="navrow">
-          <div class="back">‹</div>
-          <div class="title">Vehicle Purchase<small>17 August 2026 · Bengaluru</small></div>
-        </div>
-
-        <div class="answer">
-          <div class="danda">॥</div>
-          <div class="ad">17 August</div>
-          <div class="aw">Monday · Shravana Shukla Panchami · Chitra</div>
-          <div class="apill"><span class="gpill" style="margin-left:0">Shreshtha · all three favourable</span></div>
-          <div class="abest">
-            <div class="albl">Best time</div>
-            <div class="abig">6:07 – 7:41 AM</div>
-            <div class="anm">Amrit Choghadiya</div>
-          </div>
-        </div>
-
-        <div class="cta">Follow this muhurat</div>
-        <div class="cta2">Share</div>
-
-        <div class="disclose">Why this date <span class="chev">›</span></div>
-        <div class="disclose" style="margin-top:0">Other timings that day <span class="chev">›</span></div>
-
-        <p class="disc">Per the DrikPanchang convention · traditions may differ.<br />Confirm with your family purohit.</p>
-      </div></div>
-      <div class="tabbar">
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 5c0 4 2.2 6 5 6s5-2 5-6"/></svg>Bhakti</div>
-        <div class="tab on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M12 5h5M19 12v5M12 19H7M5 12V7"/></svg>Panchang</div>
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l8-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="15" cy="16" r="2"/></svg>Bhajan</div>
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
-      </div>
-    </div>
-    <p class="cap"><b>4 · Answer → action → evidence.</b> The answer block reuses the Today's Timings card gradient and the ॥ mark. Follow uses the vrat <code>VratReminderPref</code> model (advanceDays 0–3 + day-of, default 1 day + 07:00). Evidence is two disclosure rows below the actions.</p>
-  </div>
-
-  <!-- ── 5. Empty-with-reason ─────────────────────────────── -->
-  <div class="col">
-    <div class="phone">
-      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
-      <div class="screen"><div class="pad">
-        <div class="navrow">
-          <div class="back">‹</div>
-          <div class="title">Griha Pravesh<small>Aug – Nov 2026 · Bengaluru</small></div>
-        </div>
-
-        <div class="empty">
-          <div class="danda">॥</div>
-          <div class="eh">No auspicious muhurat in the next 3 months</div>
-          <div class="eb">No Griha Pravesh muhurat falls in this window — and that is the correct answer, not a gap in the data.</div>
-
-          <div class="whycard">
-            <div class="wh">Reason · Chaturmas</div>
-            <div class="wb">This window lies inside <b>Chaturmas</b>, which began on <b>Devshayani Ekadashi, 25 July 2026</b>.
-              Griha Pravesh is traditionally not performed during these four months.</div>
-          </div>
-          <div class="whycard" style="background:var(--avoid-tint)">
-            <div class="wh" style="color:var(--avoid-deep)">Also · Guru asta</div>
-            <div class="wb"><b>Jupiter</b> is combust till <b>13 Aug</b>, and <b>Venus</b> 18 – 30 Oct — an independent
-              bar at both ends of the window.</div>
-          </div>
-        </div>
-
-        <div class="sechead">First dates after</div>
-
-        <div class="res top">
-          <div class="rank">1</div>
-          <div class="rbody">
-            <div class="rdate">26 Nov <span class="wd">· Thursday</span></div>
-            <div class="rtier">Shreshtha <span class="prov">· DrikPanchang convention</span></div>
-            <div class="rpanch">Mrigashira · Margashirsha Krishna Dwitiya</div>
-            <div class="rtime"><span class="nm">Char</span> 10:40 AM – 12:06 PM</div>
-            <div class="rwhy">Why this date ›</div>
-          </div>
-        </div>
-        <div class="res">
-          <div class="rank">2</div>
-          <div class="rbody">
-            <div class="rdate">3 Dec <span class="wd">· Thursday</span></div>
-            <div class="rtier">Shreshtha</div>
-            <div class="rpanch">Uttara Phalguni · Margashirsha Krishna Dashami</div>
-            <div class="rtime"><span class="nm">Char</span> 10:43 AM – 12:09 PM</div>
-          </div>
-        </div>
-
-        <div class="cta2">Remind me when the season opens</div>
-      </div></div>
-      <div class="tabbar">
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 5c0 4 2.2 6 5 6s5-2 5-6"/></svg>Bhakti</div>
-        <div class="tab on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M12 5h5M19 12v5M12 19H7M5 12V7"/></svg>Panchang</div>
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l8-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="15" cy="16" r="2"/></svg>Bhajan</div>
-        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
-      </div>
-    </div>
-    <p class="cap"><b>5 · Empty-with-reason, preserved.</b> Times recomputed for Bengaluru (26 Nov: Char 10:40 AM–12:06 PM). Ends in an action — a reminder for when Chaturmas lifts.</p>
-  </div>
-
-  <!-- ── 6. Month view integration ────────────────────────── -->
+  <!-- ── 4. MONTH VIEW — overlay on the existing grid ─────── -->
   <div class="col">
     <div class="phone">
       <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
@@ -566,27 +427,13 @@
         </div>
 
         <div class="mgrid">
-          <div class="mrow">
-            <div class="mdow">S</div><div class="mdow">M</div><div class="mdow">T</div><div class="mdow">W</div><div class="mdow">T</div><div class="mdow">F</div><div class="mdow">S</div>
-          </div>
-          <div class="mrow">
-            <div class="mday dim">26</div><div class="mday dim">27</div><div class="mday dim">28</div><div class="mday dim">29</div><div class="mday dim">30</div><div class="mday dim">31</div><div class="mday">1</div>
-          </div>
-          <div class="mrow">
-            <div class="mday">2</div><div class="mday">3</div><div class="mday">4</div><div class="mday">5</div><div class="mday">6</div><div class="mday">7</div><div class="mday today">8</div>
-          </div>
-          <div class="mrow">
-            <div class="mday hit">9</div><div class="mday">10</div><div class="mday">11</div><div class="mday">12</div><div class="mday">13</div><div class="mday hit">14<span class="mk"><span class="star"></span></span></div><div class="mday">15</div>
-          </div>
-          <div class="mrow">
-            <div class="mday">16</div><div class="mday hit">17</div><div class="mday">18</div><div class="mday hit">19</div><div class="mday">20</div><div class="mday">21</div><div class="mday">22</div>
-          </div>
-          <div class="mrow">
-            <div class="mday">23</div><div class="mday">24</div><div class="mday">25</div><div class="mday hit">26<span class="mk"><span class="dot"></span></span></div><div class="mday">27</div><div class="mday hit">28<span class="mk"><span class="star"></span></span></div><div class="mday">29</div>
-          </div>
-          <div class="mrow">
-            <div class="mday">30</div><div class="mday">31</div><div class="mday dim">1</div><div class="mday dim">2</div><div class="mday dim">3</div><div class="mday dim">4</div><div class="mday dim">5</div>
-          </div>
+          <div class="mrow"><div class="mdow">S</div><div class="mdow">M</div><div class="mdow">T</div><div class="mdow">W</div><div class="mdow">T</div><div class="mdow">F</div><div class="mdow">S</div></div>
+          <div class="mrow"><div class="mday dim">26</div><div class="mday dim">27</div><div class="mday dim">28</div><div class="mday dim">29</div><div class="mday dim">30</div><div class="mday dim">31</div><div class="mday">1</div></div>
+          <div class="mrow"><div class="mday">2</div><div class="mday">3</div><div class="mday">4</div><div class="mday">5</div><div class="mday">6</div><div class="mday">7</div><div class="mday today">8</div></div>
+          <div class="mrow"><div class="mday hit">9</div><div class="mday">10</div><div class="mday">11</div><div class="mday">12</div><div class="mday">13</div><div class="mday hit">14<span class="mk"><span class="star"></span></span></div><div class="mday">15</div></div>
+          <div class="mrow"><div class="mday">16</div><div class="mday hit">17</div><div class="mday">18</div><div class="mday hit">19</div><div class="mday">20</div><div class="mday">21</div><div class="mday">22</div></div>
+          <div class="mrow"><div class="mday">23</div><div class="mday">24</div><div class="mday">25</div><div class="mday hit">26<span class="mk"><span class="dot"></span></span></div><div class="mday">27</div><div class="mday hit">28<span class="mk"><span class="star"></span></span></div><div class="mday">29</div></div>
+          <div class="mrow"><div class="mday">30</div><div class="mday">31</div><div class="mday dim">1</div><div class="mday dim">2</div><div class="mday dim">3</div><div class="mday dim">4</div><div class="mday dim">5</div></div>
         </div>
 
         <div class="mlegend">
@@ -612,68 +459,246 @@
         <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
       </div>
     </div>
-    <p class="cap"><b>6 · Month view overlay (the "Month view" link already exists).</b> Muhurat days as a <b>gold ring</b> on the existing grid, coexisting with the shipped star/dot festival markers — one calendar, not two. 28 Aug carries both: Raksha Bandhan <i>and</i> a vehicle muhurat.</p>
+    <p class="cap"><b>4 · Month view — an overlay, not a new calendar.</b> The "Month view" link already exists on the date card. Muhurat days ring the existing grid alongside the shipped star/dot markers; 28 Aug carries both Raksha Bandhan and a vehicle muhurat.</p>
+  </div>
+
+</div>
+
+<h1 style="margin-top:34px">The finder flow (unchanged from v2/v3 review)</h1>
+<p class="sub">Answer-first: occasion → ranked dates → answer/action/evidence → empty-with-reason. All times Bengaluru.</p>
+
+<div class="wrap">
+
+  <!-- ── 5. Occasion ──────────────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
+      <div class="screen"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title">Find a Muhurat<small>What are you planning?</small></div>
+        </div>
+        <div class="olist">
+          <div class="orow"><div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/><path d="M10.5 19v-5h3v5"/></svg></div>
+            <div class="ot"><div class="h">Griha Pravesh</div><div class="s">गृह प्रवेश</div></div><div class="chev">›</div></div>
+          <div class="orow"><div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2"/><path d="M12 4.5v5M12 14.5v5M4.5 12h5M14.5 12h5"/></svg></div>
+            <div class="ot"><div class="h">Vehicle Purchase</div><div class="s">वाहन क्रय</div></div><div class="chev">›</div></div>
+          <div class="orow"><div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4c1.6 2.2 2.6 3.7 2.6 5.2A2.6 2.6 0 0 1 12 11.8a2.6 2.6 0 0 1-2.6-2.6C9.4 7.7 10.4 6.2 12 4Z"/><path d="M5.5 15.5h13"/><path d="M7 15.5c1-2.2 2.8-3 5-3s4 .8 5 3"/><path d="M8 18.5h8"/></svg></div>
+            <div class="ot"><div class="h">Naming Ceremony</div><div class="s">नामकरण</div></div><div class="chev">›</div></div>
+          <div class="orow"><div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.5C10.4 6 8.2 5.4 4.8 5.4v11.4c3.4 0 5.6.6 7.2 2.1"/><path d="M12 7.5c1.6-1.5 3.8-2.1 7.2-2.1v11.4c-3.4 0-5.6.6-7.2 2.1"/><path d="M12 7.5v11.4"/></svg></div>
+            <div class="ot"><div class="h">Starting Education</div><div class="s">विद्यारम्भ</div></div><div class="chev">›</div></div>
+          <div class="orow"><div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 7.5h5l1.2 2H8.3Z"/><path d="M8.3 9.5c-.9 1.5-1.3 3-1.3 4.6 0 2.2 2.2 3.4 5 3.4s5-1.2 5-3.4c0-1.6-.4-3.1-1.3-4.6"/><path d="M12 4.5v3"/><path d="M4 20h16"/></svg></div>
+            <div class="ot"><div class="h">Bhumi Pujan</div><div class="s">भूमि पूजन</div></div><div class="chev">›</div></div>
+          <div class="orow"><div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M6 8h12"/><path d="M6 8 3.5 13h5Z"/><path d="M18 8l-2.5 5h5Z"/><path d="M8.5 19h7"/></svg></div>
+            <div class="ot"><div class="h">Starting a Business</div><div class="s">व्यापार आरम्भ</div></div><div class="chev">›</div></div>
+        </div>
+        <div class="sechead" style="margin-top:var(--s-lg)">Or</div>
+        <div class="door" style="border-color:var(--divider);box-shadow:var(--e-subtle)">
+          <div class="gl"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M12 3.5 13.9 9h5.6l-4.5 3.4 1.7 5.4L12 14.6l-4.7 3.2 1.7-5.4L4.5 9h5.6Z"/></svg></div>
+          <div class="dt"><div class="h">Special auspicious days</div><div class="s">Abujh days — no muhurat needed</div></div>
+          <div class="chev">›</div>
+        </div>
+        <p class="fine">Searching the next 3 months · <span class="lnk">Change range ›</span></p>
+      </div></div>
+      <div class="tabbar">
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 5c0 4 2.2 6 5 6s5-2 5-6"/></svg>Bhakti</div>
+        <div class="tab on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M12 5h5M19 12v5M12 19H7M5 12V7"/></svg>Panchang</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l8-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="15" cy="16" r="2"/></svg>Bhajan</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
+      </div>
+    </div>
+    <p class="cap"><b>5 · One decision.</b> Range defaults to 3 months; "Change range" below. Devanagari as the caption line — authored hi+en pairs.</p>
+  </div>
+
+  <!-- ── 6. Results ───────────────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
+      <div class="screen"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title">Vehicle Purchase<small>Aug – Nov 2026 · Bengaluru</small></div>
+        </div>
+        <div class="sechead">Best dates</div>
+        <div class="res top"><div class="rank">1</div><div class="rbody">
+          <div class="rdate">17 Aug <span class="wd">· Monday</span></div>
+          <div class="rtier">Shreshtha <span class="prov">· DrikPanchang convention</span></div>
+          <div class="rpanch">Chitra · Shravana Shukla Panchami</div>
+          <div class="rtime"><span class="nm">Amrit</span> 6:07 – 7:41 AM</div>
+          <div class="rwhy">Why this date ›</div>
+        </div></div>
+        <div class="res"><div class="rank">2</div><div class="rbody">
+          <div class="rdate">19 Aug <span class="wd">· Wednesday</span></div>
+          <div class="rtier">Shreshtha</div>
+          <div class="rpanch">Swati · Shravana Shukla Saptami</div>
+          <div class="rtime"><span class="nm">Labh</span> 6:08 – 7:41 AM</div>
+        </div></div>
+        <div class="res"><div class="rank">3</div><div class="rbody">
+          <div class="rdate">28 Aug <span class="wd">· Friday</span></div>
+          <div class="rtier">Shreshtha</div>
+          <div class="rpanch">Shatabhisha · Shravana Shukla Purnima</div>
+          <div class="rtime"><span class="nm">Char</span> 6:08 – 7:41 AM</div>
+        </div></div>
+        <div class="sechead">More suitable dates</div>
+        <div class="res"><div class="rank">·</div><div class="rbody">
+          <div class="rdate">9 Aug <span class="wd">· Sunday</span></div>
+          <div class="rtier mid">Madhyam</div>
+          <div class="rpanch">Mrigashira · Shravana Krishna Ekadashi</div>
+          <div class="rtime"><span class="nm">Char</span> 7:41 – 9:15 AM</div>
+        </div></div>
+        <div class="res"><div class="rank">·</div><div class="rbody">
+          <div class="rdate">14 Aug <span class="wd">· Friday</span></div>
+          <div class="rtier mid">Madhyam</div>
+          <div class="rpanch">Purva Phalguni · Shravana Shukla Dwitiya</div>
+          <div class="rtime"><span class="nm">Char</span> 6:07 – 7:41 AM</div>
+        </div></div>
+      </div></div>
+      <div class="tabbar">
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 5c0 4 2.2 6 5 6s5-2 5-6"/></svg>Bhakti</div>
+        <div class="tab on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M12 5h5M19 12v5M12 19H7M5 12V7"/></svg>Panchang</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l8-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="15" cy="16" r="2"/></svg>Bhajan</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
+      </div>
+    </div>
+    <p class="cap"><b>6 · Ranked, not filtered.</b> Time is the dominant element; factors live behind "Why this date". Tier grammar mirrors the shipped AUSPICIOUS pill.</p>
+  </div>
+
+  <!-- ── 7. Day detail ────────────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
+      <div class="screen"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title">Vehicle Purchase<small>17 August 2026 · Bengaluru</small></div>
+        </div>
+        <div class="answer">
+          <div class="danda">॥</div>
+          <div class="ad">17 August</div>
+          <div class="aw">Monday · Shravana Shukla Panchami · Chitra</div>
+          <div style="margin-top:var(--s-sm)"><span class="gpill" style="margin-left:0">Shreshtha · all three favourable</span></div>
+          <div class="abest">
+            <div class="albl">Best time</div>
+            <div class="abig">6:07 – 7:41 AM</div>
+            <div class="anm">Amrit Choghadiya</div>
+          </div>
+        </div>
+        <div class="cta">Follow this muhurat</div>
+        <div class="cta2">Share</div>
+        <div class="disclose">Why this date <span class="chev">›</span></div>
+        <div class="disclose" style="margin-top:0">Other timings that day <span class="chev">›</span></div>
+        <p class="disc">Per the DrikPanchang convention · traditions may differ.<br />Confirm with your family purohit.</p>
+      </div></div>
+      <div class="tabbar">
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 5c0 4 2.2 6 5 6s5-2 5-6"/></svg>Bhakti</div>
+        <div class="tab on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M12 5h5M19 12v5M12 19H7M5 12V7"/></svg>Panchang</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l8-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="15" cy="16" r="2"/></svg>Bhajan</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
+      </div>
+    </div>
+    <p class="cap"><b>7 · Answer → action → evidence.</b> Follow reuses the vrat <code>VratReminderPref</code> model; a followed muhurat then appears in Home's Today strip (screen 1) and the ★ follow store.</p>
+  </div>
+
+  <!-- ── 8. Empty-with-reason ─────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
+      <div class="screen"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title">Griha Pravesh<small>Aug – Nov 2026 · Bengaluru</small></div>
+        </div>
+        <div class="empty">
+          <div class="danda">॥</div>
+          <div class="eh">No auspicious muhurat in the next 3 months</div>
+          <div class="eb">No Griha Pravesh muhurat falls in this window — and that is the correct answer, not a gap in the data.</div>
+          <div class="whycard">
+            <div class="wh">Reason · Chaturmas</div>
+            <div class="wb">This window lies inside <b>Chaturmas</b>, which began on <b>Devshayani Ekadashi, 25 July 2026</b>.
+              Griha Pravesh is traditionally not performed during these four months.</div>
+          </div>
+          <div class="whycard" style="background:var(--avoid-tint)">
+            <div class="wh" style="color:var(--avoid-deep)">Also · Guru asta</div>
+            <div class="wb"><b>Jupiter</b> is combust till <b>13 Aug</b>, and <b>Venus</b> 18 – 30 Oct — an independent bar
+              at both ends of the window.</div>
+          </div>
+        </div>
+        <div class="sechead">First dates after</div>
+        <div class="res top"><div class="rank">1</div><div class="rbody">
+          <div class="rdate">26 Nov <span class="wd">· Thursday</span></div>
+          <div class="rtier">Shreshtha <span class="prov">· DrikPanchang convention</span></div>
+          <div class="rpanch">Mrigashira · Margashirsha Krishna Dwitiya</div>
+          <div class="rtime"><span class="nm">Char</span> 10:40 AM – 12:06 PM</div>
+        </div></div>
+        <div class="res"><div class="rank">2</div><div class="rbody">
+          <div class="rdate">3 Dec <span class="wd">· Thursday</span></div>
+          <div class="rtier">Shreshtha</div>
+          <div class="rpanch">Uttara Phalguni · Margashirsha Krishna Dashami</div>
+          <div class="rtime"><span class="nm">Char</span> 10:43 AM – 12:09 PM</div>
+        </div></div>
+        <div class="cta2">Remind me when the season opens</div>
+      </div></div>
+      <div class="tabbar">
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 5c0 4 2.2 6 5 6s5-2 5-6"/></svg>Bhakti</div>
+        <div class="tab on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M12 5h5M19 12v5M12 19H7M5 12V7"/></svg>Panchang</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l8-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="15" cy="16" r="2"/></svg>Bhajan</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
+      </div>
+    </div>
+    <p class="cap"><b>8 · Empty-with-reason, preserved.</b> Ends in an action — the season-opening reminder joins the same follow store, which is what later surfaces the Today-strip chip.</p>
   </div>
 
 </div>
 
 <div class="note">
-  <h3>Where the feature fits — the placement map</h3>
+  <h3>Visibility map — every surface, additive only</h3>
   <table>
-    <tr><th>Entry</th><th>Where</th><th>Why there</th></tr>
-    <tr><td><b>Primary</b></td><td><b>Panchang tab, directly below the Today's Timings card</b> (screen 1) — one door row, "Find a Muhurat", NEW badge</td>
-        <td>It's where timing-intent users already are, reading this exact card. Same card grammar; anchored by id like Home's grid doors; no navigation added. The Panchang stack is lazy-loaded, so the door costs nothing at Home launch.</td></tr>
-    <tr><td><b>Secondary</b></td><td><b>MuhuratDetailScreen</b> footer (the "All timings &amp; choghadiya" destination): "Planning an occasion? Find a day ›"</td>
-        <td>The user deepest into muhurat data is one tap from the finder.</td></tr>
-    <tr><td><b>Calendar</b></td><td><b>Month view</b> (screen 6): gold-ring overlay on the existing grid, beside the shipped star/dot/halfmoon markers</td>
-        <td>The Month view link already exists on the date card. One calendar vocabulary — the finder marks it, it doesn't fork it.</td></tr>
-    <tr><td><b>Abujh days</b></td><td>"Special auspicious days" row inside the finder (screen 2), and the same ring marker on Month view</td>
-        <td>Ships first — zero content risk, re-projects <code>festivals.ts</code> rules.</td></tr>
-    <tr><td><b>Later</b></td><td>Home grid <b>मुहूर्त tile</b> next to कुंडली (PRD-16); <b>Jyotish mode</b> hosts the Phase-4 personalised layer (Tarabala/Chandrabala) since the saved Kundali lives there</td>
-        <td>Home tiles are anchored-by-id doors; the NEW badge system already exists. Personalised muhurat belongs beside Rashifal, not in the generic finder.</td></tr>
-    <tr><td><b>Follows</b></td><td>Followed muhurats join the <b>star badge</b> store (the ★3 control in the header) alongside vrat follows</td>
-        <td>Same <code>advanceDays/dayOf/dayOfTime</code> reminder model — one follow inventory, not two.</td></tr>
+    <tr><th>Surface</th><th>What appears</th><th>Permanent or contextual</th><th>What it displaces</th></tr>
+    <tr><td><b>Home · CATEGORIES grid</b></td><td><b>मुहूर्त · Muhurat</b> tile after कुंडली — the anchored-by-id door pattern (<code>result.push(vratTile, kundaliTile, muhuratTile)</code>), NEW badge via <code>NewContentContext</code></td><td>Permanent</td><td><b>Nothing.</b> Grid grows 15 → 16; see grid math below.</td></tr>
+    <tr><td><b>Home · Today strip</b></td><td>A <b>followed-muhurat chip</b> leading the chip row ("Vahan muhurat · Mon 6:07 AM"), same pill spec, tap → day detail</td><td>Contextual — only while a follow is upcoming; zero chrome otherwise</td><td>Nothing — chips prepend to the existing observance/Abhijit/Rahu row (which already auto-drifts on overflow)</td></tr>
+    <tr><td><b>Home · FOR TODAY row</b></td><td>On <b>abujh days only</b>, one recommendation card ("Akshaya Tritiya today — auspicious for beginnings") via the existing PRD-B intent slots</td><td>Contextual (~10 days/year)</td><td>Nothing — the row is already a dynamic recommendation surface</td></tr>
+    <tr><td><b>Panchang tab</b></td><td><b>Find a Muhurat</b> door between the Today's Timings card and the anga tiles</td><td>Permanent (primary entry)</td><td>Nothing — one row inserted, card and tiles untouched</td></tr>
+    <tr><td><b>MuhuratDetail</b> ("All timings")</td><td>Footer row: "Planning an occasion? Find a day ›"</td><td>Permanent (secondary)</td><td>Nothing — appended after the 8+8 table</td></tr>
+    <tr><td><b>Month view</b></td><td>Gold-ring overlay marking muhurat/abujh days beside the shipped star/dot/halfmoon markers</td><td>Contextual — only with an occasion overlay active</td><td>Nothing — same grid, one added marker type</td></tr>
+    <tr><td><b>Jyotish landing</b> (saved)</td><td><b>"Muhurat, for you"</b> row after the Favour/Pause/Reflect guidance rows (Phase 4 — Tarabala/Chandrabala from the saved profile)</td><td>Permanent once Phase 4 ships</td><td>Nothing — daily-first order (Rashifal → Kundali → practice) documented and kept</td></tr>
+    <tr><td><b>★ follow store</b></td><td>Followed muhurats join the star-badge inventory beside vrat follows (same <code>advanceDays/dayOf/dayOfTime</code> model)</td><td>Contextual</td><td>Nothing — one follow inventory, not two</td></tr>
+    <tr><td><b>Notifications</b></td><td>Evening-before + morning-of reminders via the shipped local scheduler</td><td>Contextual</td><td>Nothing — existing pipeline</td></tr>
   </table>
+  <p><b>Deliberately NOT added:</b> a More-screen row (More is settings/utility, not discovery), a Home hero banner (the "today cluster" —
+  strip + FOR TODAY + routine banner — is already dense; the tile and the contextual chip are enough), and any new tab.</p>
 
-  <h3>Engine vs. the user's screenshot — 7/7 exact</h3>
-  <table>
-    <tr><th>Screenshot (Bengaluru, 8 Aug 2026, 6:52 PM)</th><th>Engine</th></tr>
-    <tr><td>Tithi Dashami till 1:59 PM</td><td>Dashami till 1:59 pm ✓</td></tr>
-    <tr><td>Nakshatra Rohini till 4:49 PM</td><td>Rohini till 4:49 pm ✓</td></tr>
-    <tr><td>Yoga Dhruva · Karana Vishti</td><td>Dhruva · Vishti ✓</td></tr>
-    <tr><td>Rahu Kaal 9:15 AM – 10:50 AM</td><td>9:15 am – 10:50 am ✓</td></tr>
-    <tr><td>Abhijit 11:59 AM – 12:50 PM</td><td>11:59 am – 12:50 pm ✓</td></tr>
-    <tr><td>NOW: Labh Choghadiya till 8:09 PM</td><td>Labh (auspicious) till 8:09 pm at 6:52 pm ✓</td></tr>
-    <tr><td>Vikram Samvat 2083 · Shravana · Krishna Paksha</td><td>2083 · Shravana · krishna ✓</td></tr>
-  </table>
-  <p>Unsurprising — it's the same engine — but it means every number in this prototype is exactly what the shipped app would
-  show. Bonus finding: <b>8 Aug's karana is Vishti (Bhadra)</b>, visible on the user's own screenshot — the finder would
-  exclude that day for most occasions, and the "Why" screen can point at the karana tile the user can already see.</p>
-
-  <h3>What v3 corrected against the real app</h3>
+  <h3>Home grid math — the one real layout question</h3>
+  <p>The grid is 15 tiles = 5 full rows of 3, deliberately closed by नित्य साधना (design.md §18: appended last "so the grid
+  closes on a full row of 3 rather than an orphan pair"). Adding मुहूर्त makes 16 → one orphan. Options:</p>
   <ul>
-    <li><b>Chrome localises to the selected language.</b> The screenshot runs English: "Panchang | Vrat &amp; Parv | Jyotish",
-      "Today's Timings", uppercase Inter anga labels, English tab bar. v1/v2 mocked Devanagari-first chrome. Strings stay
-      authored hi+en; this skin is the en render.</li>
-    <li><b>The real tab bar is Home · Bhakti · Panchang · Bhajan · More</b> — earlier mocks had wrong labels and a missing
-      Bhajan tab.</li>
-    <li><b>Header furniture:</b> mode selector pills (gold-chip active, not solid saffron), location chip + Purnimant/Amanta
-      + the ★3 My-Vrat badge, the date navigator card with Month view and Today.</li>
-    <li><b>Times recomputed for Bengaluru</b> — the screenshot's city — throughout (17 Aug Amrit 6:07–7:41 AM vs Ujjain's 6:03).</li>
-    <li><b>Tier grammar follows the shipped AUSPICIOUS pill</b> (uppercase Inter on gold-chip); tier words render per
-      language (en: Shreshtha/Madhyam · hi: श्रेष्ठ/मध्यम).</li>
+    <li><b>Shown above:</b> नित्य साधना renders as a <b>full-width closing row</b> — it is the "daily practice" door, and a
+      wide closer reads as intentional. One-line change; no tile removed or reordered.</li>
+    <li><b>Alternative:</b> accept a single orphan tile until सहस्रनाम (the next planned PRD-A form, design.md §736) lands
+      as tile 17… which still doesn't square; 18 does. Slower and uglier in the interim.</li>
+    <li><b>Rejected:</b> demoting or removing any existing tile — the user constraint, and the ranked order (§735) is a
+      product decision this feature has no business editing.</li>
   </ul>
+  <p>मुहूर्त slots <b>after कुंडली</b> because the ranked sequence groups the two Panchang-tab doors (व्रत · कुंडली) right
+  after जप — a muhurat door belongs in that cluster, not with the content categories.</p>
 
-  <h3>Carried forward (unchanged from v2)</h3>
-  <p>Answer-first IA (ranked "Best dates", time as the dominant element, evidence behind "Why this date"), provenance as
-  interaction ("· DrikPanchang convention"), empty-with-reason ending in an action, the <code>VratReminderPref</code> follow
-  model, no green/red, no emoji in app UI, no luck scores, 10pt floor, radii/elevation/token fidelity. Open gates are
-  unchanged: §10 review of the rule tables, asta orb declaration, Bhadra window solver, Chaturmas convention naming,
-  window-time anga evaluation, Vivah excluded. Full detail in PRD-16 and the git history of this file.</p>
+  <h3>Grounding</h3>
+  <p>Home structure is from <code>HomeScreen.tsx</code> (hero → TodayStrip → TodayRecommendationsRow → inline RoutineBanner →
+  CATEGORIES → DISCOVER), the hero lockup and "Sacred Texts · Daily Reading" tagline from <code>HomeWordmark.tsx</code>, the
+  strip's chip model from <code>TodayStrip.tsx</code> (observances first, then Abhijit + Rahu Kaal; deep-cut chip text
+  colours; auto-drift on overflow), and tile doors from the anchored-by-id blocks in <code>HomeScreen.tsx</code>. The Panchang
+  screen values were engine-verified against the user's screenshot 7/7 (Dashami 1:59 PM · Rohini 4:49 PM · Dhruva · Vishti ·
+  Rahu 9:15–10:50 · Abhijit 11:59–12:50 · Labh till 8:09 PM). FOR TODAY card contents and Rashifal copy are representative
+  stand-ins; their slots and order are exact. Finder IA is unchanged from the v2 design review (answer-first, ranked,
+  provenance on the card, empty-with-reason). Rule tables remain draft — §10 review is the ship gate; other open gates
+  (asta orb, Bhadra window, Chaturmas convention, window-time anga evaluation, Vivah excluded) are tracked in PRD-16.</p>
 
-  <p style="margin-top:14px;font-style:italic">Provenance: all panchang values and windows computed with the shipped v1.4.5
-  engine for Bengaluru on 7 Aug 2026; tokens mirrored from <code>mobile/src/theme/*.ts</code>. Rule tables are draft and
-  unverified. This file is a design prototype, not shipped behaviour.</p>
+  <p style="margin-top:14px;font-style:italic">Provenance: all panchang values computed with the shipped v1.4.5 engine for
+  Bengaluru on 7 Aug 2026; tokens mirrored from <code>mobile/src/theme/*.ts</code>. This file is a design prototype, not
+  shipped behaviour.</p>
 </div>
 
 </body>
