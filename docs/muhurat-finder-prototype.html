@@ -380,6 +380,29 @@
   only Ashadha–Ashwin barred, Kartik free) even <b>30 Oct 2026</b> would qualify — inside the 90-day window. Three attested
   conventions, three different answers; only the strict and published readings give zero for this window, and they agree.</p>
 
+  <h3>A missing rule the validation surfaced — शुक्र/गुरु अस्त</h3>
+  <p>DrikPanchang states its own method plainly: it selects dates by <b>Nakshatra, Weekday, Tithi and Lunar-Month Shuddhi</b>
+  — which is the draft's factor model — and adds, citing <i>Muhurta Chintamani</i> and <i>Dharmasindhu</i>, that
+  <b>"entry into a new home should not be done while Shukra Tara and Guru Tara are Asta"</b> (Venus/Jupiter combust).
+  The draft has no such rule. <b>It is computable from shipped code</b> — <code>kundali.ts</code>'s
+  <code>getSiderealPlanetLongitude()</code> already returns Sun, Venus and Jupiter longitudes, so asta is one elongation
+  test away. Run over Jul 2026 – May 2027:</p>
+  <ul>
+    <li><b>गुरु अस्त (Jupiter combust): 15 Jul → 13 Aug 2026</b> (11° orb) — independently bars the first week of the
+      90-day window.</li>
+    <li><b>शुक्र अस्त (Venus combust): 18 Oct → 30 Oct 2026</b> at a flat 10° orb. Venus is <b>retrograde</b> throughout,
+      with <b>inferior conjunction on 24 Oct 2026</b> (0.19° separation) and a direct station around 14 Nov.</li>
+    <li>This lands right on the loophole: <b>30 Oct 2026</b> — the one date that escapes Chaturmas under the loosest
+      month-based reading — sits at <b>9.71° from the Sun</b>. Barred under a flat 10° orb; <i>not</i> barred under the
+      8° orb some texts use for a retrograde Shukra. The date is genuinely borderline, and no published list carries an
+      October date regardless.</li>
+  </ul>
+  <p>So the zero-result for 7 Aug – 4 Nov 2026 survives every reading, but the loophole closes on an <b>orb convention</b>
+  (8° vs 10° for retrograde Venus) that v1 must state explicitly. Whether Tara asta also gates lesser events like vehicle
+  purchase — screen 3's 9 and 14 Aug fall inside Guru asta — is an open content question; the cited rule names Griha Pravesh
+  only. Strictly, "Tara asta" is heliacal set/rise (latitude- and visibility-dependent), not a fixed orb, which is a further
+  refinement for §10 review.</p>
+
   <h3>Open gates before this ships</h3>
   <ul>
     <li><b>RULEBOOK §10 content review of the rule tables.</b> The nakshatra/tithi/vara lists here are drafted, not sourced.
@@ -389,6 +412,8 @@
       start mid-day. A real Bhadra window solver is a follow-up, or v1 states the limitation plainly.</li>
     <li><b>Regional variance.</b> North Indian and South Indian muhurta practice diverge, as do sampradayas. v1 should name
       the convention it follows (DrikPanchang, as the rest of the Panchang subsystem already does).</li>
+    <li><b>Shukra/Guru asta must be added, and its orb stated.</b> Computable today from <code>getSiderealPlanetLongitude()</code>;
+      the orb (10° flat vs 8° for retrograde Venus, 11° Jupiter) changes real answers — see the asta section above.</li>
     <li><b>Vivah is deliberately excluded.</b> Marriage muhurta needs both charts and guna milan, and is the highest-stakes
       decision a user could take from an app. Out of scope — the disclaimer says so on every screen.</li>
     <li><b>Abhijit on Wednesday.</b> Several traditions void it; the engine currently always emits it. Flagged, not decided.</li>
