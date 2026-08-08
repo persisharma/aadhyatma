@@ -140,10 +140,16 @@ describe('opt-in sheet cadence: every open until confirmed, then 15-day snooze',
   const META_KEY = '@vedansh/notif-meta';
   const DAY_MS = 24 * 60 * 60 * 1000;
 
+  /** Festive reminders are off too, so no launch OS ask competes with the
+   * sheet — these tests isolate the sheet's own cadence. */
   async function seedOff(meta: Record<string, unknown>) {
     await AsyncStorage.setItem(
       PREFS_KEY,
-      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
+      JSON.stringify({
+        dailyVerseEnabled: false,
+        festiveRemindersEnabled: false,
+        times: [{ hour: 7, minute: 0 }],
+      })
     );
     await AsyncStorage.setItem(
       META_KEY,
@@ -160,6 +166,29 @@ describe('opt-in sheet cadence: every open until confirmed, then 15-day snooze',
 
     expect(mockRequest).not.toHaveBeenCalled();
     expect(captured.permissionStatus).toBe('undetermined');
+    expect(captured.shouldShowOptIn).toBe(true);
+  });
+
+  test('with festive reminders still on (their default), the OS ask runs first and the sheet follows', async () => {
+    // The actual post-update state of a pre-fix Android install: daily verse
+    // silently off, festive reminders default-on, permission never answered.
+    // Festive drives the launch OS ask; the sheet must not stack on top of it,
+    // and once the ask resolves (granted here) it opens to offer daily verse.
+    await AsyncStorage.setItem(
+      PREFS_KEY,
+      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
+    );
+    await AsyncStorage.setItem(
+      META_KEY,
+      JSON.stringify({ appOpenCount: 12, optInPromptShown: true })
+    );
+
+    await mountAndHydrate();
+
+    expect(mockRequest).toHaveBeenCalledTimes(1);
+    expect(captured.permissionStatus).toBe('granted');
+    expect(captured.prefs.festiveRemindersEnabled).toBe(true);
+    expect(captured.prefs.dailyVerseEnabled).toBe(false);
     expect(captured.shouldShowOptIn).toBe(true);
   });
 

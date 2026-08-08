@@ -33,6 +33,12 @@ export type NotificationPreferences = {
   dailyVerseEnabled: boolean;
   /** One or more daily reminder times, sorted by hour:minute. */
   times: TimeOfDay[];
+  /**
+   * Festive reminders — one morning notification on each famous festival in
+   * `notifications/festiveReminders.ts`. Default ON: it needs no setup and rides
+   * the daily-verse permission grant. Armed by `<FestiveReminderScheduler>`.
+   */
+  festiveRemindersEnabled: boolean;
 };
 
 type NotificationMeta = {
@@ -53,6 +59,7 @@ type NotificationMeta = {
 const DEFAULTS: NotificationPreferences = {
   dailyVerseEnabled: true,
   times: [{ hour: 7, minute: 0 }],
+  festiveRemindersEnabled: true,
 };
 
 const META_DEFAULTS: NotificationMeta = {
@@ -84,6 +91,8 @@ type NotificationPreferencesContextValue = {
   shouldShowOptIn: boolean;
   /** Toggle daily verse on/off. When turning on, also requests permission. */
   setDailyVerseEnabled: (enabled: boolean) => Promise<void>;
+  /** Toggle festive reminders on/off. When turning on, also requests permission. */
+  setFestiveRemindersEnabled: (enabled: boolean) => Promise<void>;
   /** Replace the full set of reminder times. The list is normalised (sorted,
    * deduped, capped at MAX_REMINDER_TIMES) before being persisted. */
   setTimes: (times: TimeOfDay[]) => Promise<void>;
@@ -164,6 +173,13 @@ function parsePrefs(raw: string | null): NotificationPreferences {
           ? parsed.dailyVerseEnabled
           : DEFAULTS.dailyVerseEnabled,
       times,
+      // Absent key = a user who upgraded from before festive reminders existed.
+      // They fall to the default (on), which is the same treatment a fresh
+      // install gets — the feature ships enabled, not opted into.
+      festiveRemindersEnabled:
+        typeof parsed.festiveRemindersEnabled === 'boolean'
+          ? parsed.festiveRemindersEnabled
+          : DEFAULTS.festiveRemindersEnabled,
     };
   } catch {
     return DEFAULTS;
@@ -274,12 +290,13 @@ export function NotificationPreferencesProvider({
           }
         }
 
-        // The toggle defaults to ON, but a fresh install has not been granted
-        // notification permission yet, so the reconciliation effect below would
-        // silently cancel everything. Ask on EVERY launch that finds the
-        // permission still unanswered (this effect runs each cold start), so
-        // the default-on behaviour actually fires — per product rule, the ask
-        // repeats until the user confirms a yes or a no.
+        // The daily-verse and festive toggles default to ON, but a fresh
+        // install has not been granted notification permission yet, so the
+        // reconciliation effects below would silently cancel everything. Ask
+        // on EVERY launch that finds the permission still unanswered (this
+        // effect runs each cold start), so the default-on behaviour actually
+        // fires — per product rule, the ask repeats until the user confirms a
+        // yes or a no. One grant covers every notification family (§38).
         //
         // `status === 'undetermined'` here means "never answered" on BOTH
         // platforms — `readNotificationPermissionState()` folds Android's
@@ -289,10 +306,14 @@ export function NotificationPreferencesProvider({
         //
         // `requestNotificationPermission()` records the ask, so a refusal
         // resolves as `denied` from the next launch on and this stops firing;
-        // the refusal also flips the toggle off below, which stamps
+        // the refusal also flips the toggles off below, which stamps
         // `lastDeclinedAt` and hands the follow-up to the opt-in sheet's
         // 15-day re-offer cadence.
-        if (loadedPrefs.dailyVerseEnabled && state.status === 'undetermined' && state.canAskAgain) {
+        if (
+          (loadedPrefs.dailyVerseEnabled || loadedPrefs.festiveRemindersEnabled) &&
+          state.status === 'undetermined' &&
+          state.canAskAgain
+        ) {
           const requested = await requestNotificationPermission();
           if (cancelled) return;
           setPermission((cur) => (samePermission(cur, requested) ? cur : requested));
@@ -333,7 +354,18 @@ export function NotificationPreferencesProvider({
     // notifications into the new language (they're built ahead of time). `dayAngas`
     // for the same reason: titles carry the fire day's tithi/vrat, so a new
     // resolution (first solve, location switch, day rollover) must rewrite them.
-  }, [isLoading, prefs, permissionStatus, foregroundTick, lang, dayAngas]);
+    // Depends on the two daily-verse fields rather than the whole `prefs` object,
+    // so toggling an unrelated pref (festive reminders) can't trigger a pointless
+    // cancel-and-reschedule of the whole 30-day window.
+  }, [
+    isLoading,
+    prefs.dailyVerseEnabled,
+    prefs.times,
+    permissionStatus,
+    foregroundTick,
+    lang,
+    dayAngas,
+  ]);
 
   // Keep the toggle honest: `enabled=true` with a `denied` OS permission is
   // an inconsistent state — reminders can't fire, so the UI must not claim
@@ -347,23 +379,30 @@ export function NotificationPreferencesProvider({
   //       to the app (foreground re-check picks up the new status).
   // Once flipped, the user must toggle on again to re-prompt — and on a
   // hard denial that toggle bounces back, surfacing the OS-side block.
+  // Festive reminders ride the same grant, so a denial has to flip that
+  // toggle too — otherwise the Reminders screen shows an "on" switch for
+  // pushes the OS will never deliver.
   //
   // Every flip is also a user "no" (they refused the prompt or revoked in
   // system settings), so it stamps the decline and starts the re-offer snooze
   // — otherwise the opt-in sheet would reappear on the very next open.
   useEffect(() => {
     if (isLoading) return;
-    if (prefs.dailyVerseEnabled && permissionStatus === 'denied') {
-      const next = { ...prefsRef.current, dailyVerseEnabled: false };
-      prefsRef.current = next;
-      setPrefs(next);
-      AsyncStorage.setItem(PREFS_KEY, JSON.stringify(next)).catch(() => undefined);
-      const nextMeta = { ...metaRef.current, lastDeclinedAt: Date.now() };
-      metaRef.current = nextMeta;
-      setMeta(nextMeta);
-      AsyncStorage.setItem(META_KEY, JSON.stringify(nextMeta)).catch(() => undefined);
-    }
-  }, [isLoading, prefs.dailyVerseEnabled, permissionStatus]);
+    if (permissionStatus !== 'denied') return;
+    if (!prefs.dailyVerseEnabled && !prefs.festiveRemindersEnabled) return;
+    const next = {
+      ...prefsRef.current,
+      dailyVerseEnabled: false,
+      festiveRemindersEnabled: false,
+    };
+    prefsRef.current = next;
+    setPrefs(next);
+    AsyncStorage.setItem(PREFS_KEY, JSON.stringify(next)).catch(() => undefined);
+    const nextMeta = { ...metaRef.current, lastDeclinedAt: Date.now() };
+    metaRef.current = nextMeta;
+    setMeta(nextMeta);
+    AsyncStorage.setItem(META_KEY, JSON.stringify(nextMeta)).catch(() => undefined);
+  }, [isLoading, prefs.dailyVerseEnabled, prefs.festiveRemindersEnabled, permissionStatus]);
 
   // On app foreground transitions, re-check permission and bump foregroundTick
   // so the reconciliation effect re-runs with fresh dates.
@@ -435,6 +474,26 @@ export function NotificationPreferencesProvider({
     [permissionStatus, persistPrefs, persistMeta, requestPermission]
   );
 
+  const setFestiveRemindersEnabled = useCallback<
+    NotificationPreferencesContextValue['setFestiveRemindersEnabled']
+  >(
+    async (enabled) => {
+      if (enabled) {
+        let status = permissionStatus;
+        if (status !== 'granted') {
+          status = await requestPermission();
+        }
+        // On a hard denial the switch bounces back, surfacing the OS-side block —
+        // same contract as the daily-verse toggle.
+        const granted = status === 'granted';
+        await persistPrefs((prev) => ({ ...prev, festiveRemindersEnabled: granted }));
+      } else {
+        await persistPrefs((prev) => ({ ...prev, festiveRemindersEnabled: false }));
+      }
+    },
+    [permissionStatus, persistPrefs, requestPermission]
+  );
+
   const setTimes = useCallback<NotificationPreferencesContextValue['setTimes']>(
     async (times) => {
       const next = normaliseTimes(times);
@@ -484,10 +543,20 @@ export function NotificationPreferencesProvider({
   const reofferSnoozeOver =
     meta.lastDeclinedAt === null ||
     Date.now() - meta.lastDeclinedAt >= OPT_IN_REOFFER_SNOOZE_MS;
+  // While the permission is unanswered and any toggle is on, the hydrate
+  // effect is putting the OS prompt on screen this launch — hold the sheet
+  // back so two asks never stack. The moment that request resolves,
+  // permissionStatus changes and this recomputes: granted keeps festive alive
+  // and the sheet then offers the daily verse; denied stamps the decline and
+  // snoozes it.
+  const osAskInFlight =
+    permissionStatus === 'undetermined' &&
+    (prefs.dailyVerseEnabled || prefs.festiveRemindersEnabled);
   const shouldShowOptIn =
     !isLoading &&
     !prefs.dailyVerseEnabled &&
     !permissionHardBlocked &&
+    !osAskInFlight &&
     meta.appOpenCount >= 3 &&
     reofferSnoozeOver;
 
@@ -500,6 +569,7 @@ export function NotificationPreferencesProvider({
       isLoading,
       shouldShowOptIn,
       setDailyVerseEnabled,
+      setFestiveRemindersEnabled,
       setTimes,
       markOptInPromptShown,
       requestPermission,
@@ -513,6 +583,7 @@ export function NotificationPreferencesProvider({
       isLoading,
       shouldShowOptIn,
       setDailyVerseEnabled,
+      setFestiveRemindersEnabled,
       setTimes,
       markOptInPromptShown,
       requestPermission,

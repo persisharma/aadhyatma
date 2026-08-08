@@ -2,6 +2,7 @@ import { library, type LibraryEntry } from './texts';
 import { purposes, type PurposeId } from './purposes';
 import { deityForWeekday } from './routine/vaar';
 import { getObservancesForDate } from '@/panchang/festivalEngine';
+import { getFestiveReminderEntry } from '@/notifications/festiveReminders';
 
 export type Vaar = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -216,32 +217,132 @@ export function getDiscoveryMeta(textId: string): DiscoveryMeta | null {
   return discoveryMeta[textId] ?? null;
 }
 
-export function getTodayRecommendationsForDate(date: Date): LibraryEntry[] {
-  const recommendations: LibraryEntry[] = [];
+/**
+ * One FOR TODAY recommendation, plus why it is there.
+ *
+ * `festivalHi`/`festivalEn` are set only when the entry earned its place because
+ * today is that festival — Home uses them to name the occasion on the card, so a
+ * user arriving from a festive reminder sees the same festival the notification
+ * greeted them with.
+ */
+export type TodayRecommendation = {
+  entry: LibraryEntry;
+  festivalHi?: string;
+  festivalEn?: string;
+};
+
+/**
+ * Today's recommendations, **festival first**.
+ *
+ * Order is deliberate. On an ordinary day this is the vaar deity's texts, as it
+ * always was. On a festival day the festival's own reading leads, because that is
+ * the day's occasion and — for the 18 famous festivals — it is the exact text the
+ * morning's festive reminder invited the user to read (design.md §38). Both
+ * surfaces read `festiveReminders.ts`, so the notification's promise and the
+ * homepage cannot disagree. Weekday-deity texts still follow, so nothing is lost.
+ *
+ * Within the festival tier: the curated festive-reminder mapping first, then the
+ * observance rule's own `linkSectionId`, then `bestFestivals` discovery metadata.
+ */
+export function getTodayRecommendationDetails(date: Date): TodayRecommendation[] {
+  const recommendations: TodayRecommendation[] = [];
   const seen = new Set<string>();
-  const add = (entry: LibraryEntry | undefined) => {
+  const add = (entry: LibraryEntry | undefined, festival?: { hi: string; en: string }) => {
     if (!entry || seen.has(entry.id) || entry.hidden || entry.status !== 'active') return;
     seen.add(entry.id);
-    recommendations.push(entry);
+    recommendations.push(
+      festival
+        ? { entry, festivalHi: festival.hi, festivalEn: festival.en }
+        : { entry }
+    );
   };
 
+  // An observance lookup runs the calendar engine; a day it cannot solve must
+  // still produce the weekday recommendations rather than an empty row.
+  let observances: ReturnType<typeof getObservancesForDate> = [];
+  try {
+    observances = getObservancesForDate(date);
+  } catch {
+    observances = [];
+  }
+
+  // Tier 1 — the curated festival → reading mapping the festive reminders use.
+  for (const observance of observances) {
+    const festive = getFestiveReminderEntry(observance.rule.id);
+    if (!festive) continue;
+    add(activeById.get(festive.sourceId), {
+      hi: observance.rule.nameHi,
+      en: observance.rule.nameEn,
+    });
+  }
+
+  // Tier 2 — the observance rule's own linked section (covers festivals outside
+  // the curated notification catalog).
+  for (const observance of observances) {
+    if (!observance.rule.linkSectionId) continue;
+    add(activeById.get(observance.rule.linkSectionId), {
+      hi: observance.rule.nameHi,
+      en: observance.rule.nameEn,
+    });
+  }
+
+  // Tier 3 — texts that tag themselves as suited to one of today's festivals.
+  const festivalById = new Map(observances.map((item) => [item.rule.id, item.rule] as const));
+  for (const [textId, meta] of Object.entries(discoveryMeta)) {
+    const matched = meta.bestFestivals?.find((festivalId) => festivalById.has(festivalId));
+    if (!matched) continue;
+    const rule = festivalById.get(matched);
+    add(activeById.get(textId), rule ? { hi: rule.nameHi, en: rule.nameEn } : undefined);
+  }
+
+  // Tier 4 — the vaar deity, which is what an ordinary day is made of.
   const weekdayDeity = deityForWeekday(date.getDay());
   for (const entry of library) {
     if (entry.deities.includes(weekdayDeity) && entry.category !== 'theerth') add(entry);
   }
 
-  const observances = getObservancesForDate(date);
-  const festivalIds = new Set(observances.map((item) => item.rule.id));
-  for (const [textId, meta] of Object.entries(discoveryMeta)) {
-    if (meta.bestFestivals?.some((festivalId) => festivalIds.has(festivalId))) {
-      add(activeById.get(textId));
-    }
-  }
-  for (const observance of observances) {
-    if (observance.rule.linkSectionId) add(activeById.get(observance.rule.linkSectionId));
-  }
-
   return recommendations.slice(0, 8);
+}
+
+/** Entry-only view of {@link getTodayRecommendationDetails}. */
+export function getTodayRecommendationsForDate(date: Date): LibraryEntry[] {
+  return getTodayRecommendationDetails(date).map((r) => r.entry);
+}
+
+/** The catalog festival Home should dress for today, when there is one. */
+export type TodayFestival = {
+  ruleId: string;
+  nameHi: string;
+  nameEn: string;
+  greetingHi: string;
+  greetingEn: string;
+};
+
+/**
+ * The festival driving today's festive theme (the Home toran, design.md §55):
+ * the FIRST of today's observances that is in the curated festive catalog, or
+ * null on an ordinary day. Walks `getObservancesForDate` in the same order as
+ * `getTodayRecommendationDetails`' tier 1, so the garland's greeting always
+ * names the same festival as the leading FOR TODAY card — and the same one the
+ * morning's notification greeted the user with.
+ */
+export function getTodayFestival(date: Date): TodayFestival | null {
+  try {
+    for (const observance of getObservancesForDate(date)) {
+      const festive = getFestiveReminderEntry(observance.rule.id);
+      if (!festive) continue;
+      return {
+        ruleId: observance.rule.id,
+        nameHi: observance.rule.nameHi,
+        nameEn: observance.rule.nameEn,
+        greetingHi: festive.greetingHi,
+        greetingEn: festive.greetingEn,
+      };
+    }
+  } catch {
+    // A day the calendar cannot solve simply isn't themed.
+  }
+  return null;
 }
 
 export function bestTimeLabel(bestTime: BestTime): { hi: string; en: string } {

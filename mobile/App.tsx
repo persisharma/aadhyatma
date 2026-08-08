@@ -69,6 +69,7 @@ import { RatingPromptProvider } from '@/contexts/RatingPromptContext';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
+import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import MiniPlayer from '@/components/audio/MiniPlayer';
@@ -202,6 +203,12 @@ export default function App() {
                             <RoutineCelebrationOverlay />
                             <SadhanaCompletionOverlay />
                             <VratReminderScheduler />
+                            {/* Default-on festival pushes. Below
+                                NotificationPreferencesProvider for the pref +
+                                shared permission grant; needs no panchang
+                                location (festival dates come from the bundled
+                                precomputed table). */}
+                            <FestiveReminderScheduler />
                             <SadhanaReminderScheduler />
                             {/* Feeds the daily-verse scheduler each fire day's
                                 tithi/vrat for its title. Must stay inside

@@ -28,6 +28,17 @@ function isVratReminderPayload(data: unknown): data is { type: 'vrat-reminder'; 
   return d.type === 'vrat-reminder' && typeof d.ruleId === 'string';
 }
 
+function isFestiveReminderPayload(
+  data: unknown
+): data is { type: 'festive-reminder'; ruleId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  // Only `ruleId` gates routing. The payload also carries `sourceId` (the text
+  // the message named), but Home re-derives today's content from the date, so
+  // routing must not fail on a payload missing it.
+  return d.type === 'festive-reminder' && typeof d.ruleId === 'string';
+}
+
 function isSadhanaReminderPayload(data: unknown): data is { type: 'sadhana-reminder'; programId: string } {
   if (!data || typeof data !== 'object') return false;
   const d = data as Record<string, unknown>;
@@ -84,6 +95,30 @@ export function handleNotificationResponse(
         // can't make ObservanceDetail the lazily-mounted stack's initial route.
         params: panchangTabTarget('ObservanceDetail', { ruleId: data.ruleId }),
       })
+    );
+    return true;
+  }
+
+  // A festive-reminder tap lands on the HOME screen, not on a reader.
+  //
+  // The reading stays one tap away, because Home's FOR TODAY row leads with the
+  // festival's own content on a festival day (`getTodayRecommendationsForDate`
+  // reads the same curated catalog the notification's copy came from). Landing
+  // here rather than deep in a reader keeps three things true: the reader's
+  // `setProgress` effect can't clobber the user's resume position on a tap they
+  // may have made from a lock screen (the same reason `daily-verse` above stays
+  // on a tab), the day's Panchang/routine context arrives with the reading, and
+  // a notification armed up to four months ago can't strand the user on content
+  // an OTA update has since renamed — Home recomputes today from today.
+  //
+  // `{ screen: 'Home' }` is explicit: focusing `HomeTab` alone would restore
+  // whatever screen the Home stack was left on, which may be several readers deep.
+  if (isFestiveReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'HomeTab',
+        params: { screen: 'Home' },
+      } as never)
     );
     return true;
   }
