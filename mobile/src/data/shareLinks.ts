@@ -63,7 +63,7 @@ const APP_SHARE_INVITE: LocalizedStrings = {
     '• पंचांग — व्रत-त्योहार, मुहूर्त, कुंडली व राशिफल',
     '• भजन ऑडियो व दैनिक भक्ति',
     '• नित्य साधना — अपनी दैनिक पूजा की दिनचर्या',
-    'हिंदी · English · ગુજરાતી · ಕನ್ನಡ — बिना इंटरनेट भी।',
+    'हिंदी · English · ગુજરાતી · ಕನ್ನಡ में पढ़ें।',
     'डाउनलोड करें:',
   ].join('\n'),
   en: [
@@ -73,7 +73,7 @@ const APP_SHARE_INVITE: LocalizedStrings = {
     '• Panchang — vrat & festivals, muhurat, kundali, rashifal',
     '• Bhajan audio & a daily verse',
     '• Nitya sadhana — your own daily puja routine',
-    'हिंदी · English · ગુજરાતી · ಕನ್ನಡ — works offline too.',
+    'Read in हिंदी · English · ગુજરાતી · ಕನ್ನಡ.',
     'Download:',
   ].join('\n'),
   gu: [
@@ -83,7 +83,7 @@ const APP_SHARE_INVITE: LocalizedStrings = {
     '• પંચાંગ — વ્રત-તહેવાર, મુહૂર્ત, કુંડળી અને રાશિફળ',
     '• ભજન ઑડિયો અને દૈનિક ભક્તિ',
     '• નિત્ય સાધના — તમારી દૈનિક પૂજાની દિનચર્યા',
-    'હિંદી · English · ગુજરાતી · ಕನ್ನಡ — ઇન્ટરનેટ વિના પણ.',
+    'હિંદી · English · ગુજરાતી · ಕನ್ನಡમાં વાંચો.',
     'ડાઉનલોડ કરો:',
   ].join('\n'),
   kn: [
@@ -93,7 +93,7 @@ const APP_SHARE_INVITE: LocalizedStrings = {
     '• ಪಂಚಾಂಗ — ವ್ರತ-ಹಬ್ಬ, ಮುಹೂರ್ತ, ಕುಂಡಲಿ ಮತ್ತು ರಾಶಿಫಲ',
     '• ಭಜನ್ ಆಡಿಯೊ ಮತ್ತು ದೈನಿಕ ಭಕ್ತಿ',
     '• ನಿತ್ಯ ಸಾಧನಾ — ನಿಮ್ಮ ದೈನಂದಿನ ಪೂಜಾ ದಿನಚರಿ',
-    'ಹಿಂದಿ · English · ગુજરાતી · ಕನ್ನಡ — ಇಂಟರ್ನೆಟ್ ಇಲ್ಲದೆಯೂ.',
+    'ಹಿಂದಿ · English · ગુજરાતી · ಕನ್ನಡದಲ್ಲಿ ಓದಿ.',
     'ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ:',
   ].join('\n'),
 };
