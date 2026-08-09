@@ -6,7 +6,7 @@ this version covers the complete app.
 
 ---
 
-## Version A — Full script (~75–90 sec)
+## Version A — Full script (~85–95 sec)
 
 **[HOOK — 0:00]**
 
@@ -34,26 +34,30 @@ this version covers the complete app.
 **पंचांग** देखिए हर दिन का — तिथि, त्योहार, व्रत और कथाएँ।
 शुभ काम के लिए **daily muhurat**, और साथ में आपकी **कुंडली** और **राशिफल** भी! 🪔✨
 
-**[DAILY BHAKTI & BHAJAN — 0:45]**
+और व्रत से पहले "आज कौनसी **कथा** पढ़नी है?" —
+इसके लिए कहानियों की किताब में ढूंढने की ज़रूरत नहीं।
+हर व्रत की कथा मिलती है app में ही — बिल्कुल सही दिन पर। 📖🙏
+
+**[DAILY BHAKTI & BHAJAN — 0:50]**
 
 हर सुबह पाइए एक **daily shlok**, और सुनिए अपने पसंदीदा **भजन** — app के अंदर ही। 🎵
 
-**[ROUTINE — 0:52]**
+**[ROUTINE — 0:57]**
 
 अपनी **नित्य साधना** बनाइए — रोज़ का पूजा routine set कीजिए,
 और app आपको धीरे से याद दिलाएगा। हर दिन, हर वार के देवता के अनुसार। 🌸
 
-**[LANGUAGES + SHARE — 1:00]**
+**[LANGUAGES + SHARE — 1:05]**
 
 ये सब available है **Hindi, English, ગુજરાતી और ಕನ್ನಡ** में।
 और कोई श्लोक दिल को छू जाए, तो उसे सुंदर card बनाकर अपनों के साथ **share** भी कर सकते हैं। ❤️
 
-**[OFFLINE — 1:10]**
+**[OFFLINE — 1:15]**
 
 और सबसे खास बात — पूरा app **offline** भी काम करता है।
 मंदिर में हों, यात्रा पर हों, या network ना हो — आपकी भक्ति कभी रुकेगी नहीं। 🙏
 
-**[CTA — 1:18]**
+**[CTA — 1:23]**
 
 तो अगर आप अपनी daily spiritual routine को आसान और सुंदर बनाना चाहते हैं,
 तो **Vedansh** को आज ही try करें।
@@ -69,6 +73,8 @@ this version covers the complete app.
 अब नहीं! 🙏
 
 मिलिए **Vedansh App** से — जहाँ एक ही जगह मिलती है **श्रीमद्भगवद्गीता** (पूरे 18 अध्याय), **हनुमान चालीसा**, **सुंदरकांड**, स्तोत्र, आरती, संस्कार, **मंत्र जप** counter और alarms, **पंचांग** — त्योहार, व्रत, muhurat, **कुंडली** और **राशिफल** के साथ — daily shlok, **भजन**, और आपकी अपनी **नित्य साधना** routine। 🕉️📿🪔
+
+और व्रत के दिन कौनसी **कथा** पढ़नी है? कहानियों की किताब में ढूंढना छोड़िए — हर व्रत की कथा app में ही मिलती है, सही दिन पर। 📖
 
 आप पढ़ सकते हैं, भजन सुन सकते हैं, जप कर सकते हैं और श्लोक share भी —
 वो भी **Hindi, English, ગુજરાતી और ಕನ್ನಡ** में।
@@ -89,6 +95,7 @@ this version covers the complete app.
 | Sacred texts | Gita reader page-turn → chalisa → Sundarkand cards |
 | Japam | Japam counter tap-tap-tap → alarm setup screen |
 | Panchang | Panchang tab: tithi card → festival list → muhurat card → Kundali chart → Rashifal |
+| Vrat katha | Hands flipping through a thick katha book (frustrated) → cut to vrat day in app opening today's katha |
 | Daily Bhakti & Bhajan | Daily shlok notification → Bhajan Now Playing screen |
 | Routine | RoutineToday checklist → completion celebration |
 | Languages + Share | Language toggle hi→en→gu→kn on the same verse → share-card render |
