@@ -1,3 +1,4 @@
+import type { OccasionId } from '@/panchang/eventMuhurat';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
@@ -91,6 +92,10 @@ export type PanchangStackParamList = {
   MyVrat: undefined;
   // Daily Muhurat detail (Choghadiya / Rahu Kaal / Abhijit) — PRD-14
   MuhuratDetail: { dateMs: number };
+  MuhuratFinder: undefined;
+  MuhuratResults: { occasionId: OccasionId };
+  MuhuratDayDetail: { occasionId: OccasionId; dateMs: number };
+  AbujhDays: undefined;
   Kundali: { editing?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
 };

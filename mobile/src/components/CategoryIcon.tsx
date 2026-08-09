@@ -22,7 +22,7 @@ export type PurposeIconKey =
 
 type PurposeIconKind = PurposeIconKey extends `purpose-${infer Kind}` ? Kind : never;
 
-export type CategoryIconKey = ContentCategory | 'deity' | 'vrat' | 'purpose' | 'insight' | 'routine' | PurposeIconKey;
+export type CategoryIconKey = ContentCategory | 'deity' | 'vrat' | 'purpose' | 'insight' | 'routine' | 'muhurat' | PurposeIconKey;
 
 type Props = {
   iconKey: CategoryIconKey;
@@ -56,6 +56,7 @@ export default function CategoryIcon({ iconKey }: Props) {
       {iconKey === 'vrat' && <KalashIcon {...paint} />}
       {iconKey === 'purpose' && <PurposeIcon {...paint} />}
       {iconKey === 'insight' && <InsightIcon {...paint} />}
+      {iconKey === 'muhurat' && <MuhuratIcon {...paint} />}
       {/* नित्य साधना launcher tile — reuse the routine's completed-bloom mark. */}
       {iconKey === 'routine' && <LotusMark size={30} />}
       {purposeKind && <PurposeTileIcon kind={purposeKind} {...paint} />}
@@ -298,6 +299,21 @@ function InsightIcon({ color, accent }: IconPaint) {
       <View testID="category-icon-insight-ray" style={[styles.insightRay, { backgroundColor: color }]} />
       <View style={[styles.insightRayLeft, { backgroundColor: color }]} />
       <View style={[styles.insightRayRight, { backgroundColor: color }]} />
+    </View>
+  );
+}
+
+// मुहूर्त — a ghatika dial: ring, a hand raised toward the marked auspicious
+// moment (accent dot at the 1-o'clock position), and a base line. Same drawn
+// View-composition grammar as the other launcher glyphs (design.md §30, no
+// SVG, no emoji).
+function MuhuratIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.muhuratWrap}>
+      <View testID="category-icon-muhurat-dial" style={[styles.muhuratDial, { borderColor: color }]} />
+      <View testID="category-icon-muhurat-hand" style={[styles.muhuratHand, { backgroundColor: color }]} />
+      <View testID="category-icon-muhurat-mark" style={[styles.muhuratMark, { backgroundColor: accent }]} />
+      <View style={[styles.muhuratBase, { backgroundColor: accent }]} />
     </View>
   );
 }
@@ -832,6 +848,19 @@ const styles = StyleSheet.create({
     height: 5,
     borderRadius: 2.5,
   },
+  muhuratWrap: { width: 34, height: 34, alignItems: 'center', justifyContent: 'center' },
+  muhuratDial: { width: 24, height: 24, borderRadius: 12, borderWidth: 2 },
+  muhuratHand: {
+    position: 'absolute',
+    width: 2,
+    height: 9,
+    borderRadius: 1,
+    top: 8,
+    left: 18,
+    transform: [{ rotate: '35deg' }],
+  },
+  muhuratMark: { position: 'absolute', width: 4, height: 4, borderRadius: 2, top: 6, right: 8 },
+  muhuratBase: { position: 'absolute', bottom: 2, width: 16, height: 2, borderRadius: 1 },
   insightWrap: {
     width: 32,
     height: 32,

@@ -12,6 +12,7 @@ import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
+import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
 import TextField from '@/components/TextField';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -519,6 +520,11 @@ export default function PanchangScreen({ route }: Props) {
               onViewAll={() => rootNav.navigate('MuhuratDetail', { dateMs: selectedDate.getTime() })}
             />
           </View>
+
+          {/* Event Muhurat Finder door (PRD-16) — between the glance card and the
+              anga grid: the "is now auspicious?" reader is the user with a date
+              decision to make. Additive; nothing above or below moves. */}
+          <MuhuratFinderDoor onPress={() => rootNav.navigate('MuhuratFinder')} />
 
           {/* Two-tier anga grid: Tithi + Nakshatra lead (the two anchors users read
               first) on elevated off-white cards; Yoga + Karana sit as a quieter,

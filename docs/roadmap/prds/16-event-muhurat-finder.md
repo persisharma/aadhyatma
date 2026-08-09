@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Draft — feasibility proven by a real 240-day engine run; content review is the gate |
+| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); follow/remind + share are the next slice |
 | **Target release** | TBD (phased; Phase 1 is small) |
 | **T-shirt size** | Code S–M per phase · **content L** (rule tables are the real cost) |
 | **Owner** | TBA |
