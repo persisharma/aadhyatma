@@ -6,7 +6,7 @@ this version covers the complete app.
 
 ---
 
-## Version A — Full script (~85–95 sec)
+## Version A — Full script (~75–85 sec)
 
 **[HOOK — 0:00]**
 
@@ -52,12 +52,7 @@ this version covers the complete app.
 ये सब available है **Hindi, English, ગુજરાતી और ಕನ್ನಡ** में।
 और कोई श्लोक दिल को छू जाए, तो उसे सुंदर card बनाकर अपनों के साथ **share** भी कर सकते हैं। ❤️
 
-**[OFFLINE — 1:15]**
-
-और सबसे खास बात — पूरा app **offline** भी काम करता है।
-मंदिर में हों, यात्रा पर हों, या network ना हो — आपकी भक्ति कभी रुकेगी नहीं। 🙏
-
-**[CTA — 1:23]**
+**[CTA — 1:15]**
 
 तो अगर आप अपनी daily spiritual routine को आसान और सुंदर बनाना चाहते हैं,
 तो **Vedansh** को आज ही try करें।
@@ -77,9 +72,7 @@ this version covers the complete app.
 और व्रत के दिन कौनसी **कथा** पढ़नी है? कहानियों की किताब में ढूंढना छोड़िए — हर व्रत की कथा app में ही मिलती है, सही दिन पर। 📖
 
 आप पढ़ सकते हैं, भजन सुन सकते हैं, जप कर सकते हैं और श्लोक share भी —
-वो भी **Hindi, English, ગુજરાતી और ಕನ್ನಡ** में।
-
-और सबसे खास बात — यह **offline** भी काम करता है। ❤️
+वो भी **Hindi, English, ગુજરાતી और ಕನ್ನಡ** में। ❤️
 
 तो अपनी daily spiritual routine को आसान और सुंदर बनाने के लिए,
 **Vedansh** को एक बार जरूर try करें। 🙏
@@ -99,11 +92,10 @@ this version covers the complete app.
 | Daily Bhakti & Bhajan | Daily shlok notification → Bhajan Now Playing screen |
 | Routine | RoutineToday checklist → completion celebration |
 | Languages + Share | Language toggle hi→en→gu→kn on the same verse → share-card render |
-| Offline | Airplane-mode toggle ON → app still opens a chapter |
 | CTA | App icon + store badges |
 
 Feature claims verified against the app (v1.4.5): Gita 18 chapters, chalisas,
 Sundarkand, stotrams, aartis, sanskar; japam counter + japam alarms; Panchang with
 festivals, vrat, katha, Daily Muhurat, Kundali, Daily Rashifal; Daily Bhakti verse;
 Bhajan audio tab; Daily Routine (नित्य साधना); verse share cards; full-text search;
-reading languages hi/en/gu/kn; fully offline (all content bundled).
+reading languages hi/en/gu/kn.
