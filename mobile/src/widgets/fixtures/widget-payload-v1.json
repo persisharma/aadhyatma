@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2099-01-01T06:30:00.000Z",
+  "writerAppVersion": "1.4.6",
+  "locale": "gu",
+  "panchang": {
+    "timeZone": "Asia/Kolkata",
+    "cityId": "ujjain",
+    "cityLabel": { "hi": "उज्जैन", "en": "Ujjain", "gu": "ઉજ્જૈન", "kn": "ಉಜ್ಜೈನ" },
+    "calendarSystem": "purnimant",
+    "validThrough": "2099-01-14T18:29:59.000Z",
+    "days": [{
+      "dateKey": "2099-01-01",
+      "representedDate": { "hi": "1 जन", "en": "1 Jan", "gu": "1 જાન્યુ", "kn": "1 ಜನ" },
+      "tithi": { "hi": "शुक्ल प्रतिपदा", "en": "Shukla Pratipada", "gu": "શુક્લ પ્રતિપદા", "kn": "ಶುಕ್ಲ ಪ್ರತಿಪದಾ" },
+      "sunrise": { "hi": "सूर्योदय 6:00 AM", "en": "Sunrise 6:00 AM", "gu": "સૂર્યોદય 6:00 AM", "kn": "ಸೂರ್ಯೋದಯ 6:00 AM" },
+      "rahuKaal": { "hi": "राहु काल 7:30 – 9:00 AM", "en": "Rahu Kaal 7:30 – 9:00 AM", "gu": "રાહુ કાલ 7:30 – 9:00 AM", "kn": "ರಾಹು ಕಾಲ 7:30 – 9:00 AM" },
+      "deepLink": "vedansh://widget/panchang?date=2099-01-01"
+    }]
+  },
+  "verses": {
+    "timeZone": "America/Los_Angeles",
+    "validThrough": "2099-01-15T07:59:59.000Z",
+    "days": [{
+      "dateKey": "2099-01-01",
+      "sourceId": "bhagavad-gita",
+      "chapter": 1,
+      "verseIndex": 0,
+      "lines": { "hi": ["धर्मक्षेत्रे कुरुक्षेत्रे"], "en": ["On the field of dharma"], "gu": ["ધર્મક્ષેત્રે કુરુક્ષેત્રે"], "kn": ["ಧರ್ಮಕ್ಷೇತ್ರೇ ಕುರುಕ್ಷೇತ್ರೇ"] },
+      "excerpt": { "hi": "धर्मक्षेत्रे कुरुक्षेत्रे", "en": "On the field of dharma", "gu": "ધર્મક્ષેત્રે કુરુક્ષેત્રે", "kn": "ಧರ್ಮಕ್ಷೇತ್ರೇ ಕುರುಕ್ಷೇತ್ರೇ" },
+      "source": { "hi": "भगवद्गीता · 1.1", "en": "Bhagavad Gita · 1.1", "gu": "ભગવદ્ગીતા · 1.1", "kn": "ಭಗವದ್ಗೀತೆ · 1.1" },
+      "accessibilityLabel": { "hi": "धर्मक्षेत्रे कुरुक्षेत्रे। भगवद्गीता 1.1", "en": "On the field of dharma. Bhagavad Gita 1.1", "gu": "ધર્મક્ષેત્રે કુરુક્ષેત્રે. ભગવદ્ગીતા 1.1", "kn": "ಧರ್ಮಕ್ಷೇತ್ರೇ ಕುರುಕ್ಷೇತ್ರೇ. ಭಗವದ್ಗೀತೆ 1.1" },
+      "deepLink": "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=1&verseIndex=0"
+    }]
+  },
+  "japam": {
+    "dateKey": "2099-01-01",
+    "timeZone": "America/Los_Angeles",
+    "totalBeads": 216,
+    "totalRounds": 2,
+    "japaStreak": 3,
+    "lastUsedMantraId": "om-namah-shivaya",
+    "deepLink": "vedansh://widget/japam?mantraId=om-namah-shivaya"
+  }
+}

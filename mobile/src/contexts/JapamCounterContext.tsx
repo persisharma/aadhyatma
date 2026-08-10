@@ -22,6 +22,7 @@ type EntryMap = Record<string, JapamCounterEntry>;
 
 type JapamCounterContextValue = {
   isLoading: boolean;
+  entries: Readonly<EntryMap>;
   getEntry: (mantraId: string) => JapamCounterEntry;
   /** Adds `beads` (default 1) to the count, rolling over to new rounds at
    *  JAPAM_BEADS_PER_ROUND. Safe to call several times in one synchronous tick
@@ -37,6 +38,7 @@ const EMPTY: JapamCounterEntry = { count: 0, rounds: 0, updatedAt: 0 };
 
 const JapamCounterContext = createContext<JapamCounterContextValue>({
   isLoading: true,
+  entries: {},
   getEntry: () => EMPTY,
   increment: () => EMPTY,
   resetBeads: () => {},
@@ -124,7 +126,7 @@ export function JapamCounterProvider({ children }: { children: React.ReactNode }
   );
 
   return (
-    <JapamCounterContext.Provider value={{ isLoading, getEntry, increment, resetBeads, clear }}>
+    <JapamCounterContext.Provider value={{ isLoading, entries, getEntry, increment, resetBeads, clear }}>
       {children}
     </JapamCounterContext.Provider>
   );

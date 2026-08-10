@@ -1,0 +1,111 @@
+import React, { useCallback, useState } from 'react';
+import { Alert, AppState, Platform, Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useFocusEffect } from '@react-navigation/native';
+import ReaderHeader from '@/components/ReaderHeader';
+import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang, pick } from '@/utils/localize';
+import { fontFamilies } from '@/theme/typography';
+import { radii, spacing } from '@/theme/spacing';
+import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/widgets/native';
+import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
+import type { MoreStackParamList } from '@/navigation/types';
+
+type Props = NativeStackScreenProps<MoreStackParamList, 'WidgetGallery'>;
+
+export default function WidgetGalleryScreen({ navigation }: Props) {
+  const { colors } = useTheme();
+  const { lang } = useGitaLanguage();
+  const [payloadState, setPayloadState] = useState<WidgetPayloadState>({ kind: 'missing' });
+  const [pinSupported, setPinSupported] = useState(false);
+  const titleFont = scriptTitleFont(lang, fontFamilies.devanagariBold);
+  const bodyFont = scriptBodyFont(lang, fontFamilies.devanagari);
+  // Card eyebrow follows the app's eyebrow convention (design.md §48/§55): italic
+  // Cormorant + tracking for en, script serif with NO tracking for hi/gu/kn — the
+  // previous hand-rolled Inter + letterSpacing split the Devanagari shirorekha.
+  const eyebrowStyle = eyebrowTextStyle(lang, 11);
+
+  const refresh = useCallback(() => { readWidgetPayload().then(setPayloadState); }, []);
+  useFocusEffect(useCallback(() => {
+    refresh();
+    isWidgetPinSupported().then(setPinSupported);
+    const interval = setInterval(refresh, 5_000);
+    const sub = AppState.addEventListener('change', (state) => { if (state === 'active') refresh(); });
+    return () => { clearInterval(interval); sub.remove(); };
+  }, [refresh]));
+
+  const now = new Date();
+  const day = payloadState.kind === 'ready'
+    ? payloadState.payload.panchang.days.find((item) => item.dateKey === widgetDateKey(now, WIDGET_TIME_ZONE))
+    : undefined;
+  const verse = payloadState.kind === 'ready'
+    ? payloadState.payload.verses.days.find((item) => item.dateKey === widgetDateKey(now, payloadState.payload.verses.timeZone))
+    : undefined;
+  // The japam slice is a single-day snapshot, not a window: guard it against the
+  // day boundary exactly like panchang/verse so a yesterday count is never shown
+  // as today's (PRD §3.5; the native iOS widget applies the same guard).
+  const japam = payloadState.kind === 'ready'
+    && payloadState.payload.japam.dateKey === widgetDateKey(now, payloadState.payload.japam.timeZone)
+    ? payloadState.payload.japam
+    : undefined;
+  const recovery = payloadState.kind === 'expired'
+    ? pick(lang, { hi: 'विजेट ताज़ा करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to refresh widgets', gu: 'વિજેટ તાજું કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ನವೀಕರಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ' })
+    : pick(lang, { hi: 'विजेट तैयार करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to prepare widgets', gu: 'વિજેટ તૈયાર કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ಸಿದ್ಧಪಡಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ' });
+
+  const pin = async () => {
+    const opened = await requestPinWidget();
+    if (!opened) Alert.alert('Widgets', pick(lang, { hi: 'होम स्क्रीन को दबाकर रखें, फिर विजेट चुनें।', en: 'Long-press the Home Screen, then choose Widgets.', gu: 'હોમ સ્ક્રીન દબાવી રાખો, પછી Widgets પસંદ કરો.', kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿದು Widgets ಆಯ್ಕೆಮಾಡಿ.' }));
+  };
+
+  return (
+    <SafeAreaView style={[styles.root, { backgroundColor: colors.parchment }]} edges={['top', 'left', 'right']}>
+      <ReaderHeader title={contentByLang(lang, 'होम-स्क्रीन विजेट', 'Home-Screen Widgets')} onBack={navigation.goBack} variant="index" />
+      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+        <Text style={[styles.intro, { color: colors.inkMuted, fontFamily: bodyFont }]}>
+          {pick(lang, { hi: 'आज का श्लोक और पंचांग एक नज़र में। जप-साधना केवल आपके जप की प्रगति दिखाती है।', en: 'See today’s verse and Panchang at a glance. Japam progress reflects Japam only.', gu: 'આજનો શ્લોક અને પંચાંગ એક નજરમાં. જપ પ્રગતિ ફક્ત જપ બતાવે છે.', kn: 'ಇಂದಿನ ಶ್ಲೋಕ ಮತ್ತು ಪಂಚಾಂಗ ಒಂದೇ ನೋಟದಲ್ಲಿ. ಜಪ ಪ್ರಗತಿ ಜಪವನ್ನು ಮಾತ್ರ ತೋರಿಸುತ್ತದೆ.' })}
+        </Text>
+        <View style={styles.grid}>
+          <Preview title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" colors={colors} eyebrowStyle={eyebrowStyle}>
+            <Text numberOfLines={2} style={[styles.verse, { color: colors.ink, fontFamily: bodyFont }]}>{verse?.excerpt[lang] ?? recovery}</Text>
+            {verse ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{verse.source[lang]}</Text> : null}
+          </Preview>
+          <Preview title={contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle}>
+            <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{day?.tithi[lang] ?? recovery}</Text>
+            {day ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{day.representedDate[lang]} · {day.sunrise[lang]} · {day.rahuKaal[lang]}</Text> : null}
+          </Preview>
+          <Preview title={contentByLang(lang, 'जप-साधना', 'Japam practice')} accessibilityLabel="Japam widget preview" colors={colors} eyebrowStyle={eyebrowStyle}>
+            <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{japam ? `${japam.totalBeads} / 108` : recovery}</Text>
+            {japam ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{japam.totalRounds} {contentByLang(lang, 'माला', 'rounds')} · {japam.japaStreak} {contentByLang(lang, 'जप-दिन', 'Japam days')}</Text> : null}
+          </Preview>
+        </View>
+        <View style={[styles.instructions, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+          <Text style={[styles.instructionsTitle, { color: colors.ink, fontFamily: titleFont }]}>{contentByLang(lang, 'कैसे जोड़ें', 'How to add')}</Text>
+          <Text style={[styles.instruction, { color: colors.inkSoft, fontFamily: bodyFont }]}>{Platform.OS === 'ios'
+            ? pick(lang, { hi: '1. होम स्क्रीन को दबाकर रखें  2. संपादित करें या + चुनें  3. “Vedansh” खोजें  4. विजेट चुनकर जोड़ें', en: '1. Long-press the Home Screen  2. Tap Edit or +  3. Search “Vedansh”  4. Choose a widget and add it', gu: '1. હોમ સ્ક્રીન દબાવી રાખો  2. Edit અથવા +  3. “Vedansh” શોધો  4. વિજેટ ઉમેરો', kn: '1. ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿಯಿರಿ  2. Edit ಅಥವಾ +  3. “Vedansh” ಹುಡುಕಿ  4. ವಿಜೆಟ್ ಸೇರಿಸಿ' })
+            : pick(lang, { hi: 'होम स्क्रीन को दबाकर रखें, Widgets खोलें और Vedansh चुनें।', en: 'Long-press the Home Screen, open Widgets, and choose Vedansh.', gu: 'હોમ સ્ક્રીન દબાવી રાખો, Widgets ખોલો અને Vedansh પસંદ કરો.', kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿದು Widgets ತೆರೆಯಿರಿ ಮತ್ತು Vedansh ಆಯ್ಕೆಮಾಡಿ.' })}</Text>
+          {Platform.OS === 'android' ? <Pressable testID="widget-add-button" accessibilityRole="button" accessibilityLabel="Add Vedansh widget" onPress={pin} style={({ pressed }) => [styles.button, { backgroundColor: colors.saffronDeep }, pressed && { opacity: .75 }]}>
+            <Text style={[styles.buttonText, { color: colors.onPrimary }]}>{pinSupported ? contentByLang(lang, 'विजेट जोड़ें', 'Add widget') : contentByLang(lang, 'जोड़ने के चरण देखें', 'View add steps')}</Text>
+          </Pressable> : null}
+        </View>
+        <Text style={[styles.note, { color: colors.inkMuted, fontFamily: bodyFont }]}>{contentByLang(lang, 'विजेट पुराने आँकड़ों को आज का बताकर नहीं दिखाते।', 'Widgets never present stale information as today’s.')}</Text>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+function Preview({ title, accessibilityLabel, colors, eyebrowStyle, children }: { title: string; accessibilityLabel: string; colors: ReturnType<typeof useTheme>['colors']; eyebrowStyle: TextStyle; children: React.ReactNode }) {
+  return <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={[styles.preview, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+    <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{title}</Text>{children}<Text style={[styles.brand, { color: colors.gold }]}>ॐ वेदांश़</Text>
+  </View>;
+}
+
+const styles = StyleSheet.create({
+  // Geometry snaps to the shared spacing/radii scales (design.md §3/§4). The
+  // preview cards borrow the card-family corner (radii.lg) and the CTA is a pill.
+  // Font sizes here are layout-tuned facsimile chrome for the widget previews (see
+  // design.md §57) and stay ≥10 pt per the chrome floor.
+  root: { flex: 1 }, scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl + spacing.lg }, intro: { fontSize: 15, lineHeight: 23, marginBottom: spacing.xl }, grid: { gap: spacing.md }, preview: { minHeight: 142, borderRadius: radii.lg, borderWidth: 1, padding: spacing.lg, justifyContent: 'space-between' }, verse: { fontSize: 18, lineHeight: 29, marginVertical: spacing.md }, headline: { fontSize: 22, lineHeight: 31, marginVertical: spacing.md }, meta: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18 }, brand: { fontFamily: fontFamilies.devanagariBold, fontSize: 11, marginTop: spacing.md }, instructions: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.lg, marginTop: spacing.xxl }, instructionsTitle: { fontSize: 20, marginBottom: spacing.sm }, instruction: { fontSize: 14, lineHeight: 23 }, button: { minHeight: 48, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', marginTop: spacing.lg }, buttonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 15 }, note: { fontSize: 13, lineHeight: 20, textAlign: 'center', marginTop: spacing.lg },
+});

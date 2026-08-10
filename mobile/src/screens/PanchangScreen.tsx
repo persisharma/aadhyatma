@@ -130,7 +130,7 @@ export default function PanchangScreen({ route }: Props) {
   const { followCount, reminderCount } = useVratFollows();
   const todayKey = new Date().toDateString();
   const today = useMemo(() => startOfLocalDay(new Date(todayKey)), [todayKey]);
-  const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(new Date()));
+  const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(route.params?.dateMs ? new Date(route.params.dateMs) : new Date()));
   const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(new Date()));
   const [calendarExpanded, setCalendarExpanded] = useState(false);
   const [panchangTab, setPanchangTab] = useState<PanchangHomeMode>(
@@ -172,6 +172,14 @@ export default function PanchangScreen({ route }: Props) {
   useEffect(() => {
     if (route.params?.initialTab) setPanchangTab(route.params.initialTab);
   }, [route.params?.initialTab]);
+
+  useEffect(() => {
+    if (route.params?.dateMs == null || !Number.isFinite(route.params.dateMs)) return;
+    const represented = startOfLocalDay(new Date(route.params.dateMs));
+    setSelectedDate(represented);
+    setVisibleMonth(startOfMonth(represented));
+    setPanchangTab('calendar');
+  }, [route.params?.dateMs]);
 
   useFocusEffect(
     useCallback(() => {
