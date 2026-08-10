@@ -63,7 +63,8 @@ scrollToPage}`. The reader owns the FlatList, so it owns scrolling; the controll
 `chunksFor` returning `null` means a chapter sentinel (stop); `[]` means an empty page (skip).
 
 **Reader wiring.** `_useReaderReadAloud.ts` builds the session, owns the swipe latch, and stops on
-unmount / `sourceId` change. `ReadAloudButton` renders in `ReaderHeader`'s `right` slot. Enabled on
+unmount / `sourceId` change. `ReadAloudButton` renders on the language-toggle row, pinned right
+(`readAloudSlot`), below the progress bar — not in `ReaderHeader`'s `right` slot. Enabled on
 **Gita + Chalisa** in v1; the adapter already covers every other shape, so fan-out is wiring only.
 
 **One voice per reading language, or none.** `speechLangFor` is identity: hi→hi-IN, en→en-IN,
@@ -71,6 +72,15 @@ gu→gu-IN, kn→kn-IN. The spoken text comes from the same `verseLinesByLang`/`
 renders with, authored `meaningGu`/`meaningKn` included, so **heard === seen**. A language whose
 voice the device lacks reports `unavailable` (named in its own script, with an Android TTS-settings
 hop) rather than being spoken by another language's voice. See design.md §56.1.
+
+**Indian accent only; English's one exception is `en-US`.** The picker offers a single accent per
+language — the Indian one (`voicesForTarget` filters to the exact `-IN` locale, so American/British/
+etc. never appear as choices). `resolveVoice` is Indian-first, then the `FALLBACK_LOCALE` map allows
+**English alone** to fall back to `en-US` (near-universal default) when no `en-IN` voice is installed
+— to *no other accent*. So an `en-GB`-only device reports English `unavailable`, and the `en-US`
+voice is only ever the invisible fallback, never a presented option. hi/gu/kn have no fallback. A
+saved voice is honoured only if its locale is still accepted (the `-IN` voice, or English's `en-US`),
+so a stale non-Indian preference can never resurrect a dropped accent.
 
 ## Dependencies
 
@@ -129,4 +139,8 @@ hop) rather than being spoken by another language's voice. See design.md §56.1.
   `mixWithOthers` on Android means audio focus is never requested (Android 12+ then force-mutes).
 - **No OTA for read-aloud.** `expo-speech` is a native module, so it needs a store release. That
   bump drags `APP_TOUR_VERSION` + a `whatsNew[version]` entry (gated by `tourContent.jest.test.ts`).
-- **`♪︎` carries U+FE0E** so it renders monochrome — RULEBOOK forbids emoji.
+- **The reader control is a labelled pill** — `▶︎`/`❚❚` icon + a localized "Listen"/"Pause" label
+  (design.md §56.2), not a bare glyph. The `▶︎`/`❚❚` carry U+FE0E so they render monochrome —
+  RULEBOOK forbids emoji. The visible label is localized; the `accessibilityLabel` stays English
+  ("Read aloud" / "Pause reading aloud" / "Read aloud unavailable") for Maestro. The `♪`
+  (`READ_ALOUD_GLYPH`) now only marks the More → Read Aloud settings row.

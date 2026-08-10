@@ -2097,13 +2097,24 @@ one language for another, so what is heard is exactly what is on screen:
 | Reading language | Spoken source | Voice |
 | --- | --- | --- |
 | `hi` | Devanagari lines + `meaningHi` | `hi-IN` |
-| `en` | `linesEn` / `transliteration` + `meaningEn` | `en-IN` |
+| `en` | `linesEn` / `transliteration` + `meaningEn` | `en-IN`, else `en-US` |
 | `gu` | the on-screen Gujarati lines + `meaningGu` (or the re-scripted fallback) | `gu-IN` |
 | `kn` | the on-screen Kannada lines + `meaningKn` (or the re-scripted fallback) | `kn-IN` |
 
 The spoken text therefore comes straight from the same `verseLinesByLang` / `meaningByLang`
 helpers the page renders with — including the authored native meanings, which a substitution
 would have silently discarded.
+
+**One accent per language — the Indian one.** The devotional content is Hindi/Sanskrit in
+Devanagari, so the app deliberately offers only the **Indian** voice for each reading language
+(`voicesForTarget` lists `-IN` voices only; the Voice picker never presents American/British/etc.).
+English is the sole language with a fallback: a device without an `en-IN` voice is common, so rather
+than go silent it falls back to **`en-US` only** — the near-universal default English voice — and to
+no other accent (`FALLBACK_LOCALE` in `voices.ts`). That `en-US` voice is reachable only as this
+invisible resolution fallback; it is never shown as a choice. Hindi/Gujarati/Kannada have no
+non-Indian accent and therefore no fallback: their `-IN` voice or *unavailable* (§56.4). English is
+still English either way, so "heard === seen" holds — this is an accent fallback within one
+language, not the cross-language substitution the module forbids.
 
 **A language whose voice the device lacks reports read-aloud unavailable for that language**
 (§56.4), naming it in its own script and, on Android, offering a hop to TTS settings to install
@@ -2124,25 +2135,37 @@ touched** — displayed, shared and indexed text is never altered (RULEBOOK §11
 
 ### 56.2 The reader control
 
-Lives in **`ReaderHeader`'s `right` slot** after the page counter and beside the recorded-audio
-`▶` — the correct adjacency, two ways to hear the same text. It is *not* in the verse page's
+Lives on the **language-toggle row**, pinned to the **right edge** while the हिन्दी/English
+toggle + add-to-routine group stays centred (`readAloudSlot`: `position: absolute`, `right: 16`,
+vertically centred within the row's content box). It sits directly below the reading-progress bar,
+clear of it, and inline with the toggle — one always-visible, screen-level control per reader. It is
+*not* in `ReaderHeader`'s `right` slot (which was cramped beside the counter + recorded `▶`, and
+forced the centred title off-axis via a widened `sideWidth`), and *not* in the verse page's
 `topActions`, which renders once per page and would put N copies of a screen-level control into
 `listExtraData`.
 
-| State | Glyph | a11y label |
-| --- | --- | --- |
-| Idle | `♪︎` `saffron-deep` at 15 | `Read aloud` |
-| Speaking | `❚❚` `saffron-deep` | `Pause reading aloud` |
-| No voice installed | `♪︎` `ink-muted`, `accessibilityState.disabled` | `Read aloud unavailable` |
+It is a **labelled pill** (icon + text), not a bare glyph, so the affordance is legible — the
+July-2026 first cut was a lone `♪` at 15 with no label, which read as decoration and was easy to
+miss.
 
-`♪︎` carries the trailing U+FE0E text variation selector so it renders monochrome, never as a
-colour emoji (§5 "no emoji", same treatment as the Panchang ☀/☽ glyphs in §33). Labels are
-**English and un-localized**, the same rule and reason as `ReaderHeader`'s back label: Maestro
-taps them literally and the default reading language is `hi`.
+| State | Pill | Visible label | a11y label |
+| --- | --- | --- | --- |
+| Idle | `▶︎` + label, `saffron-deep` on a `saffron-tint` fill, `cardActiveBorder`, `radii.sm` | `सुनें` / `Listen` / `સાંભળો` / `ಕೇಳಿ` | `Read aloud` |
+| Speaking | `❚❚` + label, same fill | `रोकें` / `Pause` / `થોભો` / `ವಿರಾಮ` | `Pause reading aloud` |
+| No voice installed | `▶︎` + label, `ink-muted` on `parchment-soft`, `divider`, `accessibilityState.disabled` | `सुनें` / `Listen` … | `Read aloud unavailable` |
 
-`sideWidth` grows for the extra glyph — Gita from 60 to 96 (its bare `<Text>` counter is now
-wrapped in a row `View`), Chalisa to 148 with the recorded `▶` present and 132 without. Both side
-columns must match or the centred title shifts.
+`▶︎`/`❚❚` carry the trailing U+FE0E text variation selector so they render monochrome, never as
+colour emoji (§5 "no emoji", same treatment as the Panchang ☀/☽ glyphs in §33). The **visible
+label is localized** to the reading language, but the **`accessibilityLabel` stays English and
+un-localized**, the same rule and reason as `ReaderHeader`'s back label: Maestro taps it literally
+and the default reading language is `hi`. The play `▶︎` is shared with the recorded-audio control
+(which stays in the header); the "Listen" label is what distinguishes the two where both appear
+(Chalisa). The More → Read Aloud *settings* row keeps the `♪` note (`READ_ALOUD_GLYPH`) — it is a
+settings entry, not a play control.
+
+With the pill off the header, `sideWidth` is back to the bare-counter size — Gita `60`; Chalisa
+`60`, or `84` when a recorded `▶` shares the header. The pill always shows its full label now (no
+`compact` on the reader screens) since the toggle row has the room.
 
 **The muted state is deliberate.** Hiding the control when no voice exists would leave the user
 with no way to learn why read-aloud never appears. Pressing it explains, and on Android offers

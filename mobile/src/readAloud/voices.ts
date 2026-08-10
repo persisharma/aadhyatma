@@ -66,66 +66,85 @@ export function speechLangFor(lang: Lang): SpeechTarget {
   return lang;
 }
 
+/**
+ * The one accent the app will fall back to when the Indian voice is not installed —
+ * English only. Every language is Indian-first (`SPEECH_LOCALE`), but a device without
+ * an `en-IN` voice is common, so English keeps coverage by falling back to `en-US` (the
+ * near-universal default English voice) and to *nothing else*: never British, Australian,
+ * Irish, etc. The result is that the app only ever *offers* Indian voices (see
+ * `voicesForTarget`), yet English is never silent on a plain en-US device. Hindi/Gujarati/
+ * Kannada have no non-Indian accent, so they have no fallback — their `-IN` voice or
+ * unavailable. English is still English either way, so "heard === seen" holds; this is an
+ * accent fallback within one language, not the cross-language substitution the module forbids.
+ */
+const FALLBACK_LOCALE: Partial<Record<SpeechTarget, string>> = { en: 'en-US' };
+
 /** Normalizes 'hi_IN' / 'hi-in' / 'hi-IN' to a comparable 'hi-in'. */
 function normalizeTag(tag: string): string {
   return tag.toLowerCase().replace(/_/g, '-');
 }
 
-function primarySubtag(tag: string): string {
-  return normalizeTag(tag).split('-')[0];
+/** Locales acceptable for a target, most-preferred first: the Indian voice, then the (English-only) fallback. */
+function acceptedLocales(target: SpeechTarget): string[] {
+  const wanted = normalizeTag(SPEECH_LOCALE[target].ios);
+  const fallback = FALLBACK_LOCALE[target];
+  return fallback ? [wanted, normalizeTag(fallback)] : [wanted];
+}
+
+function rankVoices(a: ProbedVoice, b: ProbedVoice): number {
+  const aEnhanced = a.quality === 'Enhanced' ? 0 : 1;
+  const bEnhanced = b.quality === 'Enhanced' ? 0 : 1;
+  if (aEnhanced !== bEnhanced) return aEnhanced - bEnhanced;
+  return a.name.localeCompare(b.name);
 }
 
 /**
  * Picks the best available voice for a target, or `null` when the device has none.
  *
- * Ranking: the user's saved choice (if still installed) → exact locale match → same
- * primary subtag. Within a tier, `Enhanced` quality first, then alphabetically by name
- * so the pick is deterministic across runs (voice lists are not stably ordered).
+ * Ranking: the user's saved choice (if still installed and still an accepted locale) →
+ * the Indian voice → the English-only `en-US` fallback. Within a tier, `Enhanced` quality
+ * first, then alphabetically by name so the pick is deterministic across runs (voice lists
+ * are not stably ordered).
  */
 export function resolveVoice(
   target: SpeechTarget,
   voices: readonly ProbedVoice[],
   preferredIdentifier?: string
 ): ProbedVoice | null {
-  const wanted = normalizeTag(SPEECH_LOCALE[target].ios);
+  const accepted = acceptedLocales(target);
 
   if (preferredIdentifier) {
     const saved = voices.find((v) => v.identifier === preferredIdentifier);
-    // Honour the saved choice only if it actually speaks the requested language. A
-    // stored identifier can outlive its target (prefs carried over, a voice
-    // uninstalled and its id reused), and using it anyway would read one language's
-    // text in another's voice — the exact failure this module exists to prevent.
-    if (saved && primarySubtag(saved.language) === target) return saved;
+    // Honour the saved choice only if it speaks a locale the app still accepts for this
+    // target (the Indian voice, or English's en-US fallback). A stored identifier can
+    // outlive its target — prefs carried over, a voice uninstalled and its id reused, or
+    // an accent the app used to offer but no longer does — and using it anyway would read
+    // one language in another's voice, or in an accent we deliberately dropped.
+    if (saved && accepted.includes(normalizeTag(saved.language))) return saved;
   }
-  const rank = (a: ProbedVoice, b: ProbedVoice) => {
-    const aEnhanced = a.quality === 'Enhanced' ? 0 : 1;
-    const bEnhanced = b.quality === 'Enhanced' ? 0 : 1;
-    if (aEnhanced !== bEnhanced) return aEnhanced - bEnhanced;
-    return a.name.localeCompare(b.name);
-  };
 
-  const exact = voices.filter((v) => normalizeTag(v.language) === wanted).sort(rank);
-  if (exact.length > 0) return exact[0];
-
-  const sameLanguage = voices.filter((v) => primarySubtag(v.language) === target).sort(rank);
-  if (sameLanguage.length > 0) return sameLanguage[0];
+  // Indian first, then the single permitted fallback — never any other accent.
+  for (const locale of accepted) {
+    const matches = voices.filter((v) => normalizeTag(v.language) === locale).sort(rankVoices);
+    if (matches.length > 0) return matches[0];
+  }
 
   return null;
 }
 
-/** Every voice installed for a target, best-first — the settings sheet's candidate list. */
+/**
+ * The settings sheet's candidate list: Indian voices only, best-first. The app offers
+ * exactly one accent per language — the Indian one — so the picker never lists en-US (or
+ * any other accent). en-US is reachable only as the invisible `resolveVoice` fallback when
+ * no en-IN voice exists, so English stays audible on a plain device without the app ever
+ * *presenting* a non-Indian voice as a choice.
+ */
 export function voicesForTarget(
   target: SpeechTarget,
   voices: readonly ProbedVoice[]
 ): ProbedVoice[] {
-  return voices
-    .filter((v) => primarySubtag(v.language) === target)
-    .sort((a, b) => {
-      const aEnhanced = a.quality === 'Enhanced' ? 0 : 1;
-      const bEnhanced = b.quality === 'Enhanced' ? 0 : 1;
-      if (aEnhanced !== bEnhanced) return aEnhanced - bEnhanced;
-      return a.name.localeCompare(b.name);
-    });
+  const wanted = normalizeTag(SPEECH_LOCALE[target].ios);
+  return voices.filter((v) => normalizeTag(v.language) === wanted).sort(rankVoices);
 }
 
 /**

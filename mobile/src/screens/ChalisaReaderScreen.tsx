@@ -174,18 +174,23 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
                   </Text>
                 </Pressable>
               )}
-              <ReadAloudButton control={readAloud} />
             </View>
           }
-          // Counter + recorded ▶ + read-aloud ♪ exceeds the default 120.
-          sideWidth={audioTrack ? 148 : 132}
+          // Counter (+ optional recorded ▶); the read-aloud control now lives on the
+          // toggle row, so the header side column is back to its compact size.
+          sideWidth={audioTrack ? 84 : 60}
         />
 
         <ReadingProgressBar current={currentIndex + 1} total={total} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
+        <View style={styles.toggleRow}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={chalisaId} />
+          {/* Pinned to the right edge so the toggle group stays centred; the read-aloud
+              pill (▶ + "सुनें") sits inline with the toggle, clear of the progress bar. */}
+          <View style={styles.readAloudSlot}>
+            <ReadAloudButton control={readAloud} />
+          </View>
         </View>
 
         <View style={styles.listContainer}>
@@ -293,9 +298,19 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   toggleRow: {
-    paddingVertical: 6,
-    paddingBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    gap: 18,
+    paddingTop: 6,
+    paddingBottom: 12,
+  },
+  readAloudSlot: {
+    position: 'absolute',
+    right: 16,
+    top: 6,
+    bottom: 12,
+    justifyContent: 'center',
   },
   listContainer: {
     flex: 1,

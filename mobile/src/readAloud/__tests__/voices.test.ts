@@ -25,6 +25,7 @@ const HI_DEFAULT = v('com.apple.voice.compact.hi-IN.Lekha', 'hi-IN', 'Default', 
 const HI_ENHANCED = v('com.apple.voice.enhanced.hi-IN.Lekha', 'hi-IN', 'Enhanced', 'Lekha Premium');
 const EN_IN = v('com.apple.voice.compact.en-IN.Rishi', 'en-IN', 'Default', 'Rishi');
 const EN_US = v('com.apple.voice.compact.en-US.Samantha', 'en-US', 'Default', 'Samantha');
+const EN_GB = v('com.apple.voice.compact.en-GB.Daniel', 'en-GB', 'Default', 'Daniel');
 
 describe('speechLangFor', () => {
   it('speaks every reading language in its own voice — no substitution', () => {
@@ -64,13 +65,28 @@ describe('resolveVoice', () => {
     );
   });
 
-  it('prefers an exact locale match over a same-language one', () => {
-    // en-IN is the exact target for 'en'; en-US only shares the primary subtag.
+  it('prefers the Indian voice over the en-US fallback', () => {
+    // en-IN is the app's chosen accent for 'en'; en-US is only the fallback.
     expect(resolveVoice('en', [EN_US, EN_IN])?.identifier).toBe(EN_IN.identifier);
   });
 
-  it('accepts a same-language voice when no exact locale match exists', () => {
+  it('falls back to en-US when no Indian English voice is installed', () => {
+    // Option B: English stays audible on a plain device rather than going silent.
     expect(resolveVoice('en', [EN_US])?.identifier).toBe(EN_US.identifier);
+  });
+
+  it('falls back ONLY to en-US — never another English accent', () => {
+    // "Indian in the app, en-US the single fallback." A British/Australian/etc. voice is
+    // not an accepted accent, so an en-GB-only device reports English unavailable.
+    expect(resolveVoice('en', [EN_GB])).toBeNull();
+    // With both present, en-US wins — en-GB is never chosen.
+    expect(resolveVoice('en', [EN_GB, EN_US])?.identifier).toBe(EN_US.identifier);
+  });
+
+  it('ignores a saved voice in an accent the app no longer offers', () => {
+    // A stale en-GB preference must not resurrect a dropped accent; resolution falls
+    // through to the permitted en-US fallback.
+    expect(resolveVoice('en', [EN_GB, EN_US], EN_GB.identifier)?.identifier).toBe(EN_US.identifier);
   });
 
   it('normalizes Android-style underscored tags', () => {
@@ -87,13 +103,22 @@ describe('resolveVoice', () => {
 });
 
 describe('voicesForTarget', () => {
-  it('lists every same-language voice, Enhanced first', () => {
+  it('lists every Indian-locale voice for the target, Enhanced first', () => {
     const list = voicesForTarget('hi', [HI_DEFAULT, EN_US, HI_ENHANCED]);
     expect(list.map((x) => x.identifier)).toEqual([HI_ENHANCED.identifier, HI_DEFAULT.identifier]);
   });
 
   it('excludes other languages', () => {
     expect(voicesForTarget('hi', [EN_US, EN_IN])).toEqual([]);
+  });
+
+  it('offers ONLY the Indian English voice — the en-US fallback is never presented', () => {
+    // "Only Indian in the app": the picker lists en-IN and hides en-US/en-GB, even though
+    // en-US remains reachable as resolveVoice's invisible fallback.
+    expect(voicesForTarget('en', [EN_IN, EN_US, EN_GB]).map((x) => x.identifier)).toEqual([
+      EN_IN.identifier,
+    ]);
+    expect(voicesForTarget('en', [EN_US, EN_GB])).toEqual([]);
   });
 });
 

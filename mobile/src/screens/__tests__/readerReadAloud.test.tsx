@@ -155,10 +155,10 @@ afterEach(() => {
 });
 
 describe.each(READERS)('$name', ({ render, firstSpokenLine }) => {
-  it('renders exactly one read-aloud control in the top bar', async () => {
+  it('renders exactly one read-aloud control on the toggle row', async () => {
     const t = await mount(render);
-    // Exactly one: the control belongs in the header, NOT in the per-page
-    // `topActions`, which would render one copy per verse page.
+    // Exactly one: the control is a screen-level control on the language-toggle
+    // row, NOT in the per-page `topActions` (one copy per verse page).
     expect(findByA11y(t, 'Read aloud')).toHaveLength(1);
   });
 
@@ -201,9 +201,9 @@ describe.each(READERS)('$name', ({ render, firstSpokenLine }) => {
     expect(findByA11y(t, 'Read aloud')).toHaveLength(1);
   });
 
-  it('keeps the page counter visible beside the control', async () => {
-    // The header's `sideWidth` had to grow for the extra glyph; if the counter is
-    // squeezed out or the title is pushed off-centre, this is the tripwire.
+  it('keeps the page counter visible in the header', async () => {
+    // The control moved off the header to the toggle row, freeing the counter's
+    // space; if the counter is ever squeezed out again, this is the tripwire.
     const t = await mount(render);
     const text = t.root
       .findAllByType(Text)
