@@ -182,6 +182,28 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
                   ))}
                 </>
               )}
+              <Pressable
+                testID="muhurat-view-on-calendar"
+                accessibilityRole="button"
+                accessibilityLabel={contentByLang(lang, 'कैलेंडर में देखें', 'View on calendar')}
+                onPress={() =>
+                  navigation.navigate('PanchangHome', {
+                    muhuratOverlay: {
+                      occasionId: rule.id,
+                      days: [...summary!.shreshtha, ...summary!.madhyam].map((v) => v.dateMs),
+                    },
+                  })
+                }
+                style={[
+                  styles.calendarLink,
+                  { borderColor: colors.border, backgroundColor: colors.surface, borderRadius: radii.pill },
+                  elevation.subtle,
+                ]}
+              >
+                <Text style={{ fontFamily: titleFont, fontSize: 14, color: colors.saffronDeep, lineHeight: 22 }}>
+                  {contentByLang(lang, 'कैलेंडर में देखें', 'View on calendar')} ›
+                </Text>
+              </Pressable>
             </>
           ) : (
             <>
@@ -221,5 +243,6 @@ const styles = StyleSheet.create({
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   card: { flexDirection: 'row', gap: 10, borderWidth: 1, padding: 14, marginBottom: 12 },
   empty: { borderWidth: 1, padding: 16, marginTop: 12 },
+  calendarLink: { borderWidth: 1, alignItems: 'center', paddingVertical: 12, marginTop: 4 },
   reason: { borderWidth: 1, padding: 12, marginTop: 12 },
 });

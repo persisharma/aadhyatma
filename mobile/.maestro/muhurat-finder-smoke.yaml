@@ -97,6 +97,9 @@ appId: com.prashantsharma.vedansh
     visible: ".*DrikPanchang convention.*|Not suitable.*"
     timeout: 20000
 - assertVisible: "Why this date"
+# Share affordance present on shareable days (OS share sheet itself is not
+# driven from e2e — capture/dismiss is not deterministic on simulators).
+- assertVisible: "Share muhurat|मुहूर्त साझा करें"
 - scrollUntilVisible:
     element:
       text: "Day's full timings.*"
@@ -112,7 +115,20 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - back
 - waitForAnimationToEnd
-- back
+
+# ── Month-view overlay: results → View on calendar → ringed days chip ──────
+- scrollUntilVisible:
+    element:
+      id: "muhurat-view-on-calendar"
+    direction: DOWN
+- tapOn:
+    id: "muhurat-view-on-calendar"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*muhurat days ringed.*|.*शुभ दिन घेरे में.*"
+    timeout: 20000
+- tapOn:
+    id: "muhurat-overlay-clear"
 - waitForAnimationToEnd
 
 # ── Entry 2: the Panchang-tab door + the Abujh calendar ─────────────────────

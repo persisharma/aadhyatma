@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { captureRef } from 'react-native-view-shot';
+import * as Sharing from 'expo-sharing';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -23,12 +25,23 @@ import { formatRangeCompact } from '@/panchang/muhuratFormat';
 import { VARA_NAMES_HI, VARA_NAMES_EN, PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { PanchangData } from '@/panchang/types';
+import MuhuratFinderShareCard from '@/components/MuhuratFinderShareCard';
+import ShareButton from '@/components/ShareButton';
 import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratDayDetail'>;
 
 const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MONTHS_HI = ['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्तूबर','नवंबर','दिसंबर'];
+
+// Share-card capture geometry — mirrors MuhuratDetailScreen / shareVerse.tsx.
+const SHARE_CARD_WIDTH = 340;
+const SHARE_SCALE = 2;
+
+async function waitForLayout() {
+  await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+  await new Promise<void>((resolve) => setTimeout(resolve, 60));
+}
 
 /**
  * Day detail — Answer → Action → Evidence (design.md §53). One dominant
@@ -46,6 +59,36 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
 
   const [data, setData] = useState<{ v: DayVerdict; p: PanchangData } | null>(null);
+  const shotRef = useRef<View>(null);
+  const cardHeightRef = useRef(0);
+  const [busy, setBusy] = useState(false);
+  const shareable = data != null && data.v.tier !== 'excluded';
+  const cityLabel = contentByLang(lang, location.labelHi, location.labelEn);
+
+  const onShare = useCallback(async () => {
+    if (busy || !shareable) return;
+    setBusy(true);
+    try {
+      await waitForLayout();
+      const h = cardHeightRef.current;
+      const uri = await captureRef(shotRef, {
+        format: 'png',
+        quality: 1,
+        result: 'tmpfile',
+        ...(h > 0 ? { width: SHARE_CARD_WIDTH * SHARE_SCALE, height: Math.round(h * SHARE_SCALE) } : null),
+      });
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(uri, {
+          mimeType: 'image/png',
+          dialogTitle: pick(lang, { hi: 'मुहूर्त साझा करें', en: 'Share muhurat', gu: 'મુહૂર્ત શેર કરો', kn: 'ಮುಹೂರ್ತ ಹಂಚಿ' }),
+        });
+      }
+    } catch {
+      /* capture/share unavailable — non-fatal */
+    } finally {
+      setBusy(false);
+    }
+  }, [busy, shareable, lang]);
   useEffect(() => {
     let cancelled = false;
     const id = setTimeout(() => {
@@ -103,7 +146,34 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
         <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink, flex: 1, lineHeight: 26 }}>
           {contentByLang(lang, rule.nameHi, rule.nameEn)}
         </Text>
+        {shareable && (
+          <ShareButton
+            onPress={onShare}
+            busy={busy}
+            accessibilityLabel={pick(lang, { hi: 'मुहूर्त साझा करें', en: 'Share muhurat', gu: 'મુહૂર્ત શેર કરો', kn: 'ಮುಹೂರ್ತ ಹಂಚಿ' })}
+            accessibilityHint=""
+          />
+        )}
       </View>
+
+      {/* Off-screen share card — captured whole regardless of screen height,
+          with an explicit measured output size (a content-sized view captured
+          with no dimensions can come back blank under the New Architecture).
+          Same proven pipeline as MuhuratDetailScreen / shareVerse.tsx. */}
+      {shareable && (
+        <View style={styles.captureLayer} pointerEvents="none">
+          <View
+            ref={shotRef}
+            collapsable={false}
+            onLayout={(e) => {
+              cardHeightRef.current = e.nativeEvent.layout.height;
+            }}
+            style={{ width: SHARE_CARD_WIDTH, backgroundColor: colors.parchment, padding: 18 }}
+          >
+            <MuhuratFinderShareCard rule={rule} verdict={data.v} p={data.p} cityLabel={cityLabel} />
+          </View>
+        </View>
+      )}
 
       {!data ? (
         <View style={styles.loading}>
@@ -252,6 +322,8 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
+  // Parked far off-screen; opacity:0 would still be composited over content.
+  captureLayer: { position: 'absolute', left: -10000, top: 0 },
   topBar: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingTop: 8, paddingBottom: 10 },
   back: { width: 44, height: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },

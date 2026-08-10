@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); follow/remind + share are the next slice |
+| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; follow/remind (+ Today-strip chip, FOR TODAY abujh card) are the next slice |
 | **Target release** | TBD (phased; Phase 1 is small) |
 | **T-shirt size** | Code S–M per phase · **content L** (rule tables are the real cost) |
 | **Owner** | TBA |

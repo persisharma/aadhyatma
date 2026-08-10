@@ -85,7 +85,13 @@ export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
 export type PanchangStackParamList = {
-  PanchangHome: { initialTab?: PanchangHomeMode } | undefined;
+  PanchangHome:
+    | {
+        initialTab?: PanchangHomeMode;
+        /** PRD-16: ring these days (epoch ms) on the month calendar for an occasion. */
+        muhuratOverlay?: { occasionId: OccasionId; days: number[] };
+      }
+    | undefined;
   ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
   ObservanceDetail: { ruleId: string };
   KathaLibrary: undefined;

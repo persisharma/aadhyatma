@@ -33,6 +33,15 @@ jest.mock('react-native-safe-area-context', () => ({
     mockReact.createElement(mockView, props, children),
 }));
 
+jest.mock('react-native-view-shot', () => ({
+  captureRef: jest.fn(async () => 'file://muhurat-share.png'),
+}));
+
+jest.mock('expo-sharing', () => ({
+  isAvailableAsync: jest.fn(async () => true),
+  shareAsync: jest.fn(async () => undefined),
+}));
+
 jest.mock('@/contexts/PanchangLocationContext', () => ({
   usePanchangLocation: () => ({
     location: {
@@ -143,6 +152,15 @@ test('MuhuratResultsScreen ranks the validated 17 Aug 2026 Vahan day shreshtha, 
     'MuhuratDayDetail',
     expect.objectContaining({ occasionId: 'vahan' })
   );
+  act(() => {
+    r.root.findByProps({ testID: 'muhurat-view-on-calendar' }).props.onPress();
+  });
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('PanchangHome', {
+    muhuratOverlay: {
+      occasionId: 'vahan',
+      days: [new Date(2026, 7, 17).getTime()],
+    },
+  });
   act(() => r.unmount());
 });
 
@@ -169,6 +187,19 @@ test('MuhuratDayDetailScreen renders answer-first with provenance and the doshas
   expect(mockNavigation.navigate).toHaveBeenCalledWith('MuhuratDetail', {
     dateMs: new Date(2026, 7, 17).getTime(),
   });
+
+  // Share: the off-screen finder card is captured and handed to the OS sheet.
+  const { captureRef } = jest.requireMock('react-native-view-shot');
+  const sharing = jest.requireMock('expo-sharing');
+  const share = r.root.findByProps({ accessibilityLabel: 'मुहूर्त साझा करें' });
+  await act(async () => {
+    await share.props.onPress();
+  });
+  expect(captureRef).toHaveBeenCalled();
+  expect(sharing.shareAsync).toHaveBeenCalledWith(
+    'file://muhurat-share.png',
+    expect.objectContaining({ mimeType: 'image/png' })
+  );
   act(() => r.unmount());
 });
 
