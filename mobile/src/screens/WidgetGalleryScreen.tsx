@@ -106,6 +106,6 @@ const styles = StyleSheet.create({
   // Geometry snaps to the shared spacing/radii scales (design.md §3/§4). The
   // preview cards borrow the card-family corner (radii.lg) and the CTA is a pill.
   // Font sizes here are layout-tuned facsimile chrome for the widget previews (see
-  // design.md §56) and stay ≥10 pt per the chrome floor.
+  // design.md §57) and stay ≥10 pt per the chrome floor.
   root: { flex: 1 }, scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl + spacing.lg }, intro: { fontSize: 15, lineHeight: 23, marginBottom: spacing.xl }, grid: { gap: spacing.md }, preview: { minHeight: 142, borderRadius: radii.lg, borderWidth: 1, padding: spacing.lg, justifyContent: 'space-between' }, verse: { fontSize: 18, lineHeight: 29, marginVertical: spacing.md }, headline: { fontSize: 22, lineHeight: 31, marginVertical: spacing.md }, meta: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18 }, brand: { fontFamily: fontFamilies.devanagariBold, fontSize: 11, marginTop: spacing.md }, instructions: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.lg, marginTop: spacing.xxl }, instructionsTitle: { fontSize: 20, marginBottom: spacing.sm }, instruction: { fontSize: 14, lineHeight: 23 }, button: { minHeight: 48, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', marginTop: spacing.lg }, buttonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 15 }, note: { fontSize: 13, lineHeight: 20, textAlign: 'center', marginTop: spacing.lg },
 });

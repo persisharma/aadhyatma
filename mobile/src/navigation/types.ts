@@ -96,6 +96,7 @@ export type PanchangStackParamList = {
   MuhuratDetail: { dateMs: number };
   Kundali: { editing?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
+  GunaMilan: undefined;
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing

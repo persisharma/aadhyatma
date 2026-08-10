@@ -244,6 +244,7 @@ export default function PanchangScreen({ route }: Props) {
   const openKundali = (editing = false) =>
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
   const openRashifal = () => rootNav.navigate('Rashifal');
+  const openGunaMilan = () => rootNav.navigate('GunaMilan');
 
   return (
     <View style={styles.root}>
@@ -633,6 +634,7 @@ export default function PanchangScreen({ route }: Props) {
               onOpenKundali={() => openKundali(false)}
               onEditKundali={() => openKundali(true)}
               onOpenRashifal={openRashifal}
+              onOpenGunaMilan={openGunaMilan}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
             />
           )}
@@ -656,6 +658,7 @@ function JyotishLanding({
   onOpenKundali,
   onEditKundali,
   onOpenRashifal,
+  onOpenGunaMilan,
   onOpenNavagraha,
 }: {
   lang: Lang;
@@ -670,6 +673,7 @@ function JyotishLanding({
   onOpenKundali: () => void;
   onEditKundali: () => void;
   onOpenRashifal: () => void;
+  onOpenGunaMilan: () => void;
   onOpenNavagraha: () => void;
 }) {
   const [shareVisible, setShareVisible] = useState(false);
@@ -801,6 +805,21 @@ function JyotishLanding({
           glyph="रा"
           onPress={onOpenRashifal}
           accessibilityLabel="Open Daily Rashifal"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
+        <JyotishToolCard
+          titleHi="अष्टकूट मिलान"
+          titleEn="Guna Milan"
+          bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट हिसाब, निजी और ऑफ़लाइन।"
+          bodyEn="A private, offline 36-point match with every koota explained."
+          badge="NEW"
+          glyph="मि"
+          onPress={onOpenGunaMilan}
+          accessibilityLabel="Open Guna Milan"
           lang={lang}
           colors={colors}
           typography={typography}
@@ -1114,6 +1133,22 @@ function JyotishLanding({
           </View>
         </View>
 
+        {sectionLabel('मिलान', 'Compatibility')}
+        <JyotishToolCard
+          titleHi="अष्टकूट मिलान"
+          titleEn="Guna Milan"
+          bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट हिसाब, निजी और ऑफ़लाइन।"
+          bodyEn="A private, offline 36-point match with every koota explained."
+          badge="NEW"
+          glyph="मि"
+          onPress={onOpenGunaMilan}
+          accessibilityLabel="Open Guna Milan"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
         {sectionLabel('साधना', 'Practice')}
         <JyotishPracticeCard
           subtitleHi="आज के चन्द्र-राशि मार्गदर्शन के साथ"
@@ -1213,6 +1248,21 @@ function JyotishLanding({
         glyph="रा"
         onPress={onOpenRashifal}
         accessibilityLabel="Open Daily Rashifal"
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        radii={radii}
+        elevation={elevation}
+      />
+      <JyotishToolCard
+        titleHi="अष्टकूट मिलान"
+        titleEn="Guna Milan"
+        bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट हिसाब, निजी और ऑफ़लाइन।"
+        bodyEn="A private, offline 36-point match with every koota explained."
+        badge="NEW"
+        glyph="मि"
+        onPress={onOpenGunaMilan}
+        accessibilityLabel="Open Guna Milan"
         lang={lang}
         colors={colors}
         typography={typography}
