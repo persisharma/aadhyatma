@@ -87,7 +87,7 @@ function ScoreDial({ result, lang }: { result: ExactGunaMilanResult; lang: Lang 
 }
 
 export default function GunaMilanScreen({ navigation }: Props) {
-  const { colors, typography, radii, spacing } = useTheme();
+  const { colors, typography, radii, spacing, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const { profile: savedProfile } = useKundali();
   const [groom, setGroom] = useState<GunaMilanPersonInput>(EMPTY_PERSON);
@@ -189,6 +189,9 @@ export default function GunaMilanScreen({ navigation }: Props) {
                     setRemember(next);
                     if (!next) clearSaved();
                   }}
+                  trackColor={{ false: colors.divider, true: colors.saffron }}
+                  thumbColor={colors.parchment}
+                  ios_backgroundColor={colors.divider}
                   accessibilityLabel={contentByLang(lang, 'इस उपकरण पर मिलान विवरण याद रखें', 'Remember match details on this device')}
                 />
               </View>
@@ -203,7 +206,7 @@ export default function GunaMilanScreen({ navigation }: Props) {
             </>
           ) : (
             <View accessibilityLabel={result.kind === 'exact' ? contentByLang(lang, `गुण मिलान परिणाम, ३६ में से ${result.total}`, `Guna Milan result, ${result.total} out of 36`) : contentByLang(lang, `गुण मिलान अंक सीमा, ३६ में से ${result.minTotal} से ${result.maxTotal}`, `Guna Milan score range, ${result.minTotal} to ${result.maxTotal} out of 36`)}>
-              <View style={[styles.resultHero, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}>
+              <View style={[styles.resultHero, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
                 {result.kind === 'exact' ? (
                   <>
                     <ScoreDial result={result} lang={lang} />

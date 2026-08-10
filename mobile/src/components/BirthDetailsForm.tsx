@@ -31,21 +31,23 @@ export default function BirthDetailsForm({
   onUseSaved,
   disabled,
 }: Props) {
-  const { colors, typography, radii } = useTheme();
+  const { colors, typography, radii, elevation } = useTheme();
   const roleEn = role === 'groom' ? 'Groom' : 'Bride';
   const roleHi = role === 'groom' ? 'वर' : 'वधू';
   const update = (patch: Partial<GunaMilanPersonInput>) => onChange({ ...value, ...patch });
   return (
     <View
       accessibilityLabel={contentByLang(lang, `${roleHi} जन्म विवरण, समय IST में`, `${roleEn} birth details, time in IST`)}
-      style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}
+      style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}
     >
       <View style={styles.headingRow}>
         <View style={{ flex: 1 }}>
           <Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 20 }}>
             {contentByLang(lang, roleHi, roleEn)}
           </Text>
-          <Text style={[styles.role, { color: colors.inkMuted }]}>{roleEn.toUpperCase()}</Text>
+          {lang !== 'en' ? (
+            <Text style={[styles.role, { color: colors.inkMuted }]}>{roleEn.toUpperCase()}</Text>
+          ) : null}
         </View>
         {savedAvailable && onUseSaved ? (
           <Pressable
