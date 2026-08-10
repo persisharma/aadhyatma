@@ -15,6 +15,7 @@ import {
   incrementGunaMilanMetric,
   parseStoredGunaMilanDraft,
   saveRememberedGunaMilanDraft,
+  validateGunaMilanPerson,
 } from '@/panchang/gunaMilanState';
 
 const mockNavigation = { goBack: jest.fn(), navigate: jest.fn() };
@@ -150,6 +151,22 @@ test('storage parser is versioned, opt-in only, and rejects fabricated or corrup
   assert.equal(parseStoredGunaMilanDraft(JSON.stringify({ version: 1, remember: false, draft })), null);
   assert.equal(parseStoredGunaMilanDraft(JSON.stringify({ version: 2, remember: true, draft })), null);
   assert.equal(parseStoredGunaMilanDraft('{bad'), null);
+});
+
+test('validation attributes each error to its own field, never the other', () => {
+  // A valid date with an empty time (the form's initial state) reports only a
+  // time error — the date must not be flagged. Regression for the ?? vs || bug.
+  assert.deepEqual(validateGunaMilanPerson({ date: '2000-01-01', time: '' }), {
+    time: 'Use 24-hour HH:mm in IST',
+  });
+  // An invalid date with a valid time reports only a date error — the time,
+  // which is well-formed, must not be flagged.
+  assert.deepEqual(validateGunaMilanPerson({ date: '2001-02-29', time: '12:00' }), {
+    date: 'Use a valid YYYY-MM-DD date',
+  });
+  // Fully valid: exact time and unknown (null) time both pass clean.
+  assert.deepEqual(validateGunaMilanPerson({ date: '1992-08-14', time: '05:42' }), {});
+  assert.deepEqual(validateGunaMilanPerson({ date: '1992-08-14', time: null }), {});
 });
 
 test('explicit opt-out removes a save that was already in flight', async () => {

@@ -30,14 +30,18 @@ export type PersonInputErrors = Partial<Record<'date' | 'time', string>>;
 
 export function validateGunaMilanPerson(input: GunaMilanPersonInput): PersonInputErrors {
   const errors: PersonInputErrors = {};
+  // Validate the date against a known-good time so an empty or malformed time
+  // ('' is the form's initial state) can never masquerade as a date error.
   try {
-    parseIstMoment(input.date, input.time ?? '00:00');
+    parseIstMoment(input.date, '00:00');
   } catch {
     errors.date = 'Use a valid YYYY-MM-DD date';
   }
+  // Validate the time only when provided, against a known-good date so an
+  // invalid date can never masquerade as a time error.
   if (input.time !== null) {
     try {
-      parseIstMoment(input.date || '2000-01-01', input.time);
+      parseIstMoment('2000-01-01', input.time);
     } catch {
       errors.time = 'Use 24-hour HH:mm in IST';
     }
