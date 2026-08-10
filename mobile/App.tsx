@@ -65,11 +65,15 @@ import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import OnboardingSetupSheet from '@/components/OnboardingSetupSheet';
 import WhatsNewModal from '@/components/WhatsNewModal';
+import RatingPromptSheet from '@/components/RatingPromptSheet';
 import { TourProvider } from '@/contexts/TourContext';
+import { RatingPromptProvider } from '@/contexts/RatingPromptContext';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
+import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
+import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
@@ -189,6 +193,10 @@ export default function App() {
                         <JapamAlarmsProvider>
                         <PanchangLocationProvider>
                         <TourProvider>
+                        {/* Inside TourProvider + NotificationPreferencesProvider:
+                            the rating gate reads their "a surface is already
+                            asking" flags so prompts can't stack (§54). */}
+                        <RatingPromptProvider>
                         <ShareProvider>
                           <AppReadyGate>
                           <View style={{ flex: 1 }}>
@@ -202,7 +210,18 @@ export default function App() {
                             <RoutineCelebrationOverlay />
                             <SadhanaCompletionOverlay />
                             <VratReminderScheduler />
+                            {/* Default-on festival pushes. Below
+                                NotificationPreferencesProvider for the pref +
+                                shared permission grant; needs no panchang
+                                location (festival dates come from the bundled
+                                precomputed table). */}
+                            <FestiveReminderScheduler />
                             <SadhanaReminderScheduler />
+                            {/* Feeds the daily-verse scheduler each fire day's
+                                tithi/vrat for its title. Must stay inside
+                                PanchangLocationProvider — the notification
+                                provider itself sits above it. */}
+                            <DailyVerseAngaBridge />
                             <MiniPlayer />
                             <NowPlayingScreen />
                             {/* Top-level so the spotlight overlays the tab bar +
@@ -213,9 +232,14 @@ export default function App() {
                                 install (or a replay) — language + reading size,
                                 the two settings the last tour steps point at. */}
                             <OnboardingSetupSheet />
+                          {/* Last in the stack: the rating ask never competes
+                              with the tour, onboarding, or What's New — its gate
+                              stands down while any of those want the screen. */}
+                          <RatingPromptSheet />
                           </View>
                           </AppReadyGate>
                         </ShareProvider>
+                        </RatingPromptProvider>
                         </TourProvider>
                         </PanchangLocationProvider>
                         </JapamAlarmsProvider>

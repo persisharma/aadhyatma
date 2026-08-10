@@ -11,6 +11,7 @@ import * as Notifications from 'expo-notifications';
 import type { Lang } from '@/data/gita/language';
 import { getVersePool } from '@/data/versePool';
 import { assignSlotVerseIndices, toDateKey, type ReminderSlot } from './seed';
+import type { DayAngaMap } from './dayAnga';
 import {
   computeFireDatesMulti,
   formatNotificationContent,
@@ -30,6 +31,7 @@ export {
   ROLLING_WINDOW_DAYS,
 } from './pure';
 export type { DailyReminderConfig, NotificationPayload, TimeOfDay } from './pure';
+export type { DayAnga, DayAngaMap } from './dayAnga';
 
 /**
  * Cancel every notification we own. Leaves any third-party scheduled
@@ -49,13 +51,19 @@ export async function cancelAllDailyVerseNotifications(): Promise<void> {
  * notifications first so this function is idempotent and safe to call on every
  * app foreground.
  *
+ * `angas` supplies each fire day's panchang context (tithi / vrat) for the title;
+ * it is optional and partial by design — any day missing from it gets the plain
+ * `दैनिक भक्ति` title, so a pending or failed panchang resolve degrades to the
+ * pre-panchang behaviour rather than blocking the schedule.
+ *
  * Returns the count actually scheduled (always ≤ ROLLING_WINDOW_DAYS, always
  * ≤ IOS_PENDING_CAP).
  */
 export async function scheduleDailyVerseRollingWindow(
   config: DailyReminderConfig,
   now: Date = new Date(),
-  lang: Lang = 'hi'
+  lang: Lang = 'hi',
+  angas: DayAngaMap = {}
 ): Promise<number> {
   await cancelAllDailyVerseNotifications();
 
@@ -88,7 +96,7 @@ export async function scheduleDailyVerseRollingWindow(
     const verse = pool[verseIndices[i]];
     if (!verse) continue;
 
-    const { title, body } = formatNotificationContent(verse, lang);
+    const { title, body } = formatNotificationContent(verse, lang, angas[dateKey]);
     const payload: NotificationPayload = {
       type: 'daily-verse',
       dateKey,

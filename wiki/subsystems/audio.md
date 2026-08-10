@@ -70,14 +70,14 @@ unmount / `sourceId` change. `ReadAloudButton` renders in `ReaderHeader`'s `righ
 gu→gu-IN, kn→kn-IN. The spoken text comes from the same `verseLinesByLang`/`meaningByLang` the page
 renders with, authored `meaningGu`/`meaningKn` included, so **heard === seen**. A language whose
 voice the device lacks reports `unavailable` (named in its own script, with an Android TTS-settings
-hop) rather than being spoken by another language's voice. See design.md §53.1.
+hop) rather than being spoken by another language's voice. See design.md §56.1.
 
 ## Dependencies
 
 - [[readers]] — the reader shell the control mounts into.
 - [[overview]] — stack and module map.
-- `design.md` §34 (Audio tab), §35 (Japam), §53 (Read Aloud), §54 (Rate Stepper).
-- `RULEBOOK.md` §3 (read-aloud bullets), §11.14 (synthetic recitation is assistive).
+- `design.md` §34 (Audio tab), §35 (Japam), §56 (Read Aloud), §57 (Rate Stepper).
+- `RULEBOOK.md` §3 (read-aloud bullets), §11.15 (synthetic recitation is assistive).
 - `docs/roadmap/prds/02-verse-audio.md` — the bundled-recitation plan read-aloud complements.
 
 ## Gotchas

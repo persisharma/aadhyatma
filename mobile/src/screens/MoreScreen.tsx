@@ -16,6 +16,7 @@ import { buildAppShareMessage, INSTAGRAM_HANDLE, INSTAGRAM_URL } from '@/data/sh
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useTour } from '@/contexts/TourContext';
+import { useRatingPrompt } from '@/contexts/RatingPromptContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import LanguagePickerSheet from '@/components/LanguagePickerSheet';
@@ -111,6 +112,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
   const { resetTour } = useTour();
+  const { open: openRatingPrompt } = useRatingPrompt();
   const { alarms: japamAlarms } = useJapamAlarms();
   const { scale } = useFontScale();
   const { prefs: readAloudPrefs } = useReadAloudPrefs();
@@ -333,6 +335,23 @@ export default function MoreScreen({ navigation }: Props) {
                     gu: 'Vedansh ઍપ શેર કરો',
                     kn: 'Vedansh ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ',
                   })}
+                />
+                {/* Manual entry point for the rating ask (§54). Opens the same
+                    sheet the gate auto-opens, but bypasses the gate and spends
+                    no ask slot — the user came looking for it. */}
+                <SettingsRow
+                  icon="★"
+                  iconBg={colors.gold}
+                  iconFontSize={18}
+                  label={pick(lang, {
+                    hi: 'ऐप को रेटिंग दें',
+                    en: 'Rate the App',
+                    gu: 'ઍપને રેટિંગ આપો',
+                    kn: 'ಆ್ಯಪ್‌ಗೆ ರೇಟಿಂಗ್ ನೀಡಿ',
+                  })}
+                  labelFontFamily={labelFont}
+                  onPress={openRatingPrompt}
+                  accessibilityLabel="Rate the app"
                 />
                 {/* Leaves the app for the public @vedansh.app profile (§37). */}
                 <SettingsRow

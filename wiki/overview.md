@@ -2,7 +2,7 @@
 title: Overview
 type: overview
 sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
-last_verified_date: 2026-07-25
+last_verified_date: 2026-08-01
 confidence: medium
 status: current
 ---
@@ -25,7 +25,7 @@ backend.
 - **Audio:** `expo-audio` (japam + the bhajan library). **Speech:** `expo-speech` ~14.0.8 — on-device TTS read-aloud on the Gita and chalisa readers (see [[audio]]). **Notifications:** `expo-notifications`. **Calendar math:** `astronomy-engine` ~2.1.19.
 - **Fonts:** Noto Serif Devanagari (Devanagari), Cormorant Garamond (Latin), Noto Serif Gujarati + Noto Serif Kannada (the gu/kn reading languages).
 - **Reading languages:** `hi · en · gu · kn` (one shared `useGitaLanguage()` pref). gu/kn carry no authored content — derived at runtime by transliterating the Devanagari. See [[languages]].
-- **App version:** 1.4.6 (`mobile/app.json`).
+- **App version:** 1.4.6, iOS build 46 (`mobile/app.json`).
 - **Entry Point:** `mobile/index.ts` → `registerRootComponent(App)` → `mobile/App.tsx`.
 
 ## Request Shape
@@ -117,8 +117,10 @@ ID changes. User language preference, routines (`@vedansh/routines`) and daily d
 - **Not expo-router** — navigation is hand-wired React Navigation stacks; there is no file-based routing.
 - **Content is bundled** — OTA ships the JS bundle, **not** new festival data or audio; those require a store release. **Native modules too**: read-aloud (`expo-speech`) shipped as a store release, and that version bump drags `APP_TOUR_VERSION` + a `whatsNew` entry with it.
 - **Two test runners** — never add `src/data` tests to Jest; they run via `tsx --test` and Jest's `testMatch` excludes them.
+- **Jest suites that render a FlatList/VirtualizedList must unmount their trees** (`afterEach` + `act`). VirtualizedList schedules cell-batch `setTimeout`s; a timer that outlives its suite fires after teardown and Jest converts the late console.error into "Cannot log after tests are done" — **the run exits 1 under a fully green summary** (all suites PASS, exit code 1). Diagnosed Aug 2026 via `LocationPickerModal.test.tsx`; note the summary line alone can't be trusted — check `$?`, and don't pipe Jest through `tail`/`grep` when you need its exit code.
 - **Romanization is by source language, not module** — Sanskrit = IAST; Awadhi/Hindi = pronunciation ASCII (design.md §3.1).
 - **Scripts are manual** — `scripts/*.mjs` are one-time transform/repair tools, not part of the build.
+- **Notification permission goes through `src/notifications/permissionState.ts`** — on Android, expo's raw `getPermissionsAsync()` reports a never-requested `POST_NOTIFICATIONS` as `denied`, so "never asked" and "user refused" are indistinguishable from `status` alone. The module resolves an effective status from `canAskAgain` + a persisted app-wide "we asked" flag, and both reminder features (daily verse, japam alarms) read it. See [[japam-alarms]].
 - **Three design-token rules are lint-enforced, because all three fail silently in RN** —
   `mobile/eslint.config.js` (`no-restricted-syntax`) rejects a font-family **string literal**, a
   hex on **`shadowColor`**, and a **`fontSize` below 10** anywhere in `src/` outside `src/theme/`.

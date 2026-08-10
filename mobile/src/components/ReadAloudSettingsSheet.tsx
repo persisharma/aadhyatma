@@ -20,7 +20,7 @@ import { languageName } from './readAloud/ReadAloudButton';
 import { READING_SIZE_SAMPLE } from './ReadingSizePickerSheet';
 
 /**
- * Bottom sheet for read-aloud: voice, speed, and what gets spoken (design.md §53).
+ * Bottom sheet for read-aloud: voice, speed, and what gets spoken (design.md §56).
  * Structural clone of `ReadingSizePickerSheet` — same modal/backdrop/grabber/pill
  * language, and like that sheet it stays open on selection so the live preview is
  * usable. Only the preview speaks; nothing here plays automatically.

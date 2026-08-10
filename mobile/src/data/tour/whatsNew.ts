@@ -44,6 +44,22 @@ export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
         bodyEn:
           'Tap ♪ while reading the Gita or a Chalisa and your device voice reads the verse and its meaning, turning the pages as it goes. Pick the voice and speed in More → Read Aloud.',
       },
+      {
+        titleHi: 'वाल्मीकि रामायण',
+        titleEn: 'Valmiki Ramayan',
+        bodyHi:
+          'सम्पूर्ण वाल्मीकि रामायण अब पुस्तकालय में — सातों काण्ड, 648 सर्ग एवं 23,000+ श्लोक, संस्कृत मूल तथा हिन्दी अनुवाद सहित।',
+        bodyEn:
+          'The complete Valmiki Ramayan is now in the library — all 7 kandas, 648 sargas and 23,000+ shlokas, with the Sanskrit original and translation.',
+      },
+      {
+        titleHi: 'नए भजन',
+        titleEn: 'New bhajans',
+        bodyHi:
+          'भजन प्लेयर में पाँच नए भजन जुड़े — गोविन्द बोलो, ॐ गं गणपतये नमः, नारायण हरि हरि, जय नंदलाल की एवं कृष्णाय वासुदेवाय।',
+        bodyEn:
+          'Five new bhajans in the player — Govind Bolo, Om Gam Ganapataye Namah, Narayan Hari Hari, Jai Nandlal Ki and Krishnaya Vasudevaya.',
+      },
     ],
   },
   '1.4.5': {

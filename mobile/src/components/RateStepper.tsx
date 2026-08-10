@@ -7,7 +7,7 @@ import { useTheme } from '@/theme/ThemeContext';
  * A `− 1.0× +` stepper for a playback or speech rate.
  *
  * Extracted from `JapamAudioPlayer`'s tempo block when read-aloud needed the same
- * control in its settings sheet (design.md §54). The two callers pass different
+ * control in its settings sheet (design.md §57). The two callers pass different
  * bounds and labels but the geometry, disabled-at-bounds treatment and a11y are
  * fixed here — the same reasoning that produced `ReaderHeader` and `TextField`.
  *

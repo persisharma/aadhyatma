@@ -15,7 +15,7 @@ export function languageName(lang: Lang): string {
 
 /**
  * The reader top-bar read-aloud control, rendered in `ReaderHeader`'s `right` slot
- * beside the page counter and the recorded-audio ▶ (design.md §53).
+ * beside the page counter and the recorded-audio ▶ (design.md §56).
  *
  * Three states: ♪ idle · ❚❚ speaking · muted-and-disabled when the device has no
  * voice for the reading language. The muted state is deliberate — hiding the control

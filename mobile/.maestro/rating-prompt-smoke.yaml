@@ -1,0 +1,92 @@
+# App Rating Prompt Smoke Test — design.md §54
+#
+# Covers the rating ask through its MANUAL entry point: More → "Rate the App"
+# opens the sheet, and each non-committal exit closes it. That row bypasses the
+# eligibility gate on purpose (a user who goes looking has opted in), which is
+# exactly what makes the feature testable at all.
+#
+# Scope — what this flow covers and deliberately omits:
+#   - COVERS the sheet: it opens from More, shows its copy, "Maybe later"
+#     dismisses it, and it reopens on demand afterwards.
+#   - OMITS the AUTO-open path. That gate needs 5 cold starts, 3 active days,
+#     and 20 verse reads (data/ratingPrompt.ts) — `_launch.yaml` runs with
+#     clearState:true, so a Maestro run can never satisfy it. The gate is
+#     unit-tested instead (components/__tests__/RatingPromptSheet.test.tsx
+#     drives every clause, the delay, and the persisted outcomes).
+#   - OMITS the primary "Rate Vedansh" button. It hands off to the App Store /
+#     Play listing via Linking, and the flow could not come back from that —
+#     the same reason more-smoke.yaml never taps the Instagram row.
+#
+# Two actions only: the sheet ships "now" and "later" and NO permanent opt-out
+# (design.md §54), so this flow also pins that absence — a re-added third button
+# should fail here as well as in the unit tests.
+#
+# Selector notes (verified against MoreScreen.tsx / RatingPromptSheet.tsx):
+#   - The More row's a11y label is "Rate the app" (the visible label is
+#     localized: "Rate the App" in English, "ऐप को रेटिंग दें" in Hindi).
+#   - The sheet's buttons expose constant English a11y labels — "Maybe later"
+#     and "Rate Vedansh on the store" — so they are stable in every reading
+#     language.
+#   - The sheet is a TRANSPARENT Modal over More; config.yaml's
+#     snapshotKeyHonorModalViews:false lets Maestro read its RN content.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Step 1: Boot Vedansh (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Set reading language to English so the sheet copy is assertable ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Language,.*"
+    timeout: 15000
+- tapOn: "Language,.*"
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 10000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Step 3: The rating row lives in the "App" group, below the fold ──
+- scrollUntilVisible:
+    element:
+      text: "Rate the App"
+    centerElement: true
+- assertVisible: "Rate the App"
+
+# ── Step 4: Open the sheet ──
+- tapOn: "Rate the app"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Enjoying Vedansh\\?"
+    timeout: 10000
+- assertVisible: "Maybe later"
+- assertVisible: "Rate Vedansh"
+# Two actions only — no permanent opt-out on this card.
+- assertNotVisible: "Don't ask again"
+- assertNotVisible: "फिर न पूछें"
+
+# ── Step 5: "Maybe later" closes it without leaving the app ──
+- tapOn: "Maybe later"
+- waitForAnimationToEnd
+- assertNotVisible: "Enjoying Vedansh\\?"
+- assertVisible: "Rate the App"
+
+# ── Step 6: Reopens on demand — dismissing is never permanent ──
+# "Maybe later" only closes the card; the 5-day cadence brings it back and the
+# More row reopens it immediately. There is no state a user can reach from this
+# sheet that makes it unavailable.
+- tapOn: "Rate the app"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Enjoying Vedansh\\?"
+    timeout: 10000
+- tapOn: "Maybe later"
+- waitForAnimationToEnd
+- assertNotVisible: "Enjoying Vedansh\\?"
+- assertVisible: "Rate the App"
+
+# ── Cleanup — termination resets navigation for the next flow ──
+- stopApp:
+    appId: com.prashantsharma.vedansh

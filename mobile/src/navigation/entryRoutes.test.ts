@@ -102,6 +102,7 @@ for (const sourceId of [
   'vishnu-sahasranama',
   'hanuman-ashtak',
   'ram-stuti',
+  'valmiki-ramayan',
   'durga-stotram',
   'ganesh-stotram',
   'shiva-strotam',
@@ -304,6 +305,7 @@ for (const sourceId of [
     ['ganesh-stotram', 'GaneshStotramChapters'],
     ['saraswati-stotram', 'SaraswatiStotramChapters'],
     ['krishna-stotram', 'KrishnaStotramChapters'],
+    ['valmiki-ramayan', 'ValmikiRamayanChapters'],
   ] as const) {
     assert.deepEqual(
       buildEntryStartTarget(entry(id)),

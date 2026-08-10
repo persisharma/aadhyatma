@@ -15,6 +15,7 @@
 - [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, Daily Muhurat, Kundali (Lagna · grahas · whole-sign houses · Vimshottari Dasha), and deterministic Daily Rashifal.
 - [[japam-alarms]] — Japam Alarms: repeat-days, one-time, and skip-next; native AlarmKit/AlarmManager tier with expo fallback.
 - [[audio]] — the three sound sources (recorded library, japam loop, read-aloud TTS), the playback arbiter that keeps them mutually exclusive, and the expo-speech platform traps.
+- [[notifications]] — local notifications: the four families (daily verse, vrat, festive, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.

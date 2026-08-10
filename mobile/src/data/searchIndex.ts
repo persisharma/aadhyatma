@@ -84,6 +84,10 @@ import {
   ramcharitmanasChaptersManifest,
   type RamcharitmanasVerse,
 } from './ramcharitmanas';
+import {
+  valmikiRamayanDailySelection,
+  type ValmikiRamayanVerse,
+} from './valmiki-ramayan';
 import { getSanskar, sanskarIds } from './sanskar';
 import { getPurposeMeta } from './purposes';
 import { purposesForText } from './discoveryMeta';
@@ -390,6 +394,11 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.id === 'valmiki-ramayan') {
+      pushChapteredValmikiRamayan(verses, entry);
+      continue;
+    }
+
     if (entry.category === 'aarti') {
       pushAarti(verses, entry);
       continue;
@@ -643,6 +652,29 @@ function pushChapteredRamcharitmanas(
       );
     });
   }
+}
+
+function pushChapteredValmikiRamayan(out: SearchVerseEntry[], entry: LibraryEntry) {
+  // Index the established anchor selection, not all 23k verses. The global
+  // index duplicates normalized text in memory; indexing the complete epic
+  // would make opening Search load every kāṇḍa and materially regress startup.
+  valmikiRamayanDailySelection.forEach((v: ValmikiRamayanVerse) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        chapter: v.kanda,
+        verseIndex: v.numInSection - 1,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
 }
 
 function pushAarti(out: SearchVerseEntry[], entry: LibraryEntry) {

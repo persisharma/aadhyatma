@@ -35,11 +35,12 @@ jest.mock('@assets/audio-library', () => ({
 import * as ExpoAudio from 'expo-audio';
 import { AudioPlayerProvider, useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 import { registerStopper, __resetPlaybackArbiter } from '@/audio/playbackArbiter';
-import type { AudioTrack } from '@/data/audio/tracks';
+import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
 
 const mockPlayer = (ExpoAudio as unknown as { __player: {
   play: jest.Mock;
   replace: jest.Mock;
+  loop: boolean;
   _emit: (evt: string, s: Partial<AudioStatus>) => void;
 } }).__player;
 
@@ -68,14 +69,28 @@ function emitStatus(partial: Partial<AudioStatus>) {
       currentTime: 0,
       duration: 0,
       loop: false,
+      didJustFinish: false,
       ...partial,
     } as AudioStatus);
   });
 }
 
+/** Load `t` and drive it to the "playing" state the auto-advance gate expects. */
+function startPlaying(t: AudioTrack) {
+  act(() => ctx.playTrack(t));
+  emitStatus({ isLoaded: true, playing: true, currentTime: 1, duration: t.durationSec ?? 100 });
+}
+
+/** Emit the end-of-track status for `t`. */
+function emitFinished(t: AudioTrack, extra: Partial<AudioStatus> = {}) {
+  const duration = t.durationSec ?? 100;
+  emitStatus({ isLoaded: true, playing: false, currentTime: duration, duration, didJustFinish: true, ...extra });
+}
+
 beforeEach(() => {
   mockPlayer.play.mockClear();
   mockPlayer.replace.mockClear();
+  mockPlayer.loop = false;
 });
 
 function mount() {
@@ -134,5 +149,87 @@ describe('AudioPlayerContext.playTrack', () => {
 
     expect(stopTts).toHaveBeenCalledTimes(1);
     expect(stopJapam).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('AudioPlayerContext end-of-track auto-advance', () => {
+  // `hasRealAudio` is mocked true, so the playable set is the whole catalog.
+  const first = AUDIO_TRACKS[0];
+  const second = AUDIO_TRACKS[1];
+  const last = AUDIO_TRACKS[AUDIO_TRACKS.length - 1];
+
+  test('plays the next track when the current one finishes', () => {
+    mount();
+    startPlaying(first);
+    expect(ctx.currentTrack?.id).toBe(first.id);
+
+    emitFinished(first);
+
+    expect(ctx.currentTrack?.id).toBe(second.id);
+    // The new source is loaded but not started until it reports ready.
+    expect(mockPlayer.replace).toHaveBeenCalledTimes(2);
+    emitStatus({ isLoaded: true, currentTime: 0, duration: second.durationSec ?? 100 });
+    expect(mockPlayer.play).toHaveBeenCalledTimes(2); // first track + auto-advanced one
+  });
+
+  test('advances only once per ending, even as end-position ticks repeat', () => {
+    mount();
+    startPlaying(first);
+
+    emitFinished(first);
+    expect(ctx.currentTrack?.id).toBe(second.id);
+
+    // Trailing ticks from the finished source must not skip a second track.
+    emitFinished(first);
+    emitFinished(first);
+    expect(ctx.currentTrack?.id).toBe(second.id);
+  });
+
+  test('stays on the track when repeat is enabled', () => {
+    mount();
+    startPlaying(first);
+    act(() => ctx.toggleLoop());
+    expect(mockPlayer.loop).toBe(true);
+
+    emitFinished(first);
+
+    // Native looping restarts the same track — no advance.
+    expect(ctx.currentTrack?.id).toBe(first.id);
+    expect(mockPlayer.replace).toHaveBeenCalledTimes(1);
+  });
+
+  test('detects the ending by position when didJustFinish is never emitted', () => {
+    mount();
+    startPlaying(first);
+
+    // Some platforms stop reporting `didJustFinish`; position at duration with
+    // playback stopped is the fallback signal.
+    emitFinished(first, { didJustFinish: false });
+
+    expect(ctx.currentTrack?.id).toBe(second.id);
+  });
+
+  test('stops at the end of the library instead of wrapping to the top', () => {
+    mount();
+    startPlaying(last);
+
+    emitFinished(last);
+
+    expect(ctx.currentTrack?.id).toBe(last.id);
+    expect(mockPlayer.replace).toHaveBeenCalledTimes(1);
+  });
+
+  test('re-arms after the ending so the next track also auto-advances', () => {
+    mount();
+    startPlaying(first);
+
+    emitFinished(first);
+    expect(ctx.currentTrack?.id).toBe(second.id);
+
+    // Second track loads, plays through, and ends in turn.
+    emitStatus({ isLoaded: true, playing: true, currentTime: 1, duration: second.durationSec ?? 100 });
+    emitFinished(second);
+
+    expect(ctx.currentTrack?.id).toBe(AUDIO_TRACKS[2].id);
   });
 });

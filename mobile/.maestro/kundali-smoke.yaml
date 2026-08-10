@@ -174,6 +174,10 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "4:5 · 1080×1350"
 - assertVisible: ".*includes the chart name, birth date, time, and city.*"
+# The card's own method footer is the last thing inside the fixed 4:5 box, so it is
+# the first casualty when the stack overruns: it was trimmed by `overflow: 'hidden'`
+# in August 2026. Assert it, not just the sheet chrome around it.
+- assertVisible: ".*Computed on device.*"
 - assertVisible: "Open share sheet"
 - tapOn: "Close share preview"
 - waitForAnimationToEnd

@@ -12,6 +12,7 @@ module.exports = {
     '<rootDir>/src/utils/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/contexts/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/components/__tests__/**/*.test.{ts,tsx}',
+    '<rootDir>/src/navigation/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/theme/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/notifications/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/audio/__tests__/**/*.jest.test.{ts,tsx}',

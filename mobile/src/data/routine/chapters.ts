@@ -15,6 +15,7 @@ import { krishnaStotramChaptersManifest } from '@/data/krishna-stotram';
 import { bajrangBaanChaptersManifest } from '@/data/bajrang-baan';
 import { ramStutiChaptersManifest } from '@/data/ram-stuti';
 import { ramcharitmanasChaptersManifest } from '@/data/ramcharitmanas';
+import { valmikiRamayanChaptersManifest } from '@/data/valmiki-ramayan';
 
 export type ChapterInfo = { chapter: number; titleHi: string; titleEn: string };
 
@@ -33,6 +34,7 @@ const REGISTRY: Record<string, Manifest> = {
   'bajrang-baan': bajrangBaanChaptersManifest,
   'ram-stuti': ramStutiChaptersManifest,
   ramcharitmanas: ramcharitmanasChaptersManifest,
+  'valmiki-ramayan': valmikiRamayanChaptersManifest,
 };
 
 /** Chapters for a source, or [] if the source has no chapter structure. */

@@ -2,7 +2,7 @@
  * Normalizes a string for the speech synthesizer.
  *
  * This ONLY affects the text handed to `Speech.speak`. Displayed text, shared verse
- * cards, and the search index are never touched — RULEBOOK §11.14 requires that
+ * cards, and the search index are never touched — RULEBOOK §11.15 requires that
  * synthetic recitation never alters the authored text, and keeping the mutation on
  * this side of the boundary is how that holds.
  *

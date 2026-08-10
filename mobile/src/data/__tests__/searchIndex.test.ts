@@ -176,3 +176,31 @@ const index = getSearchIndex();
   // Chalisas have no chapter — should be undefined, not 0.
   assert.equal(chalisaVerses[0]!.chapter, undefined);
 }
+
+// Vālmīki Rāmāyaṇa verses are searchable in Devanagari and in IAST, and every
+// hit carries the kāṇḍa as `chapter` so the result row can route into the
+// chaptered reader (RULEBOOK §8 Path A).
+{
+  const valmikiVerses = index.verses.filter((v) => v.sourceId === 'valmiki-ramayan');
+  assert.equal(valmikiVerses.length, 28, 'expected the 28 lightweight Valmiki Ramayan search anchors');
+  for (const v of valmikiVerses) {
+    assert.ok(v.chapter != null, 'valmiki-ramayan verse must carry its kāṇḍa as chapter');
+    assert.ok(v.chapter >= 1 && v.chapter <= 7, `unexpected kāṇḍa ${v.chapter}`);
+    assert.ok(typeof v.verseIndex === 'number');
+  }
+
+  const hindi = runSearch('मा निषाद', index);
+  assert.ok(
+    hindi.verses.some((h) => h.entry.sourceId === 'valmiki-ramayan'),
+    'Devanagari query should reach the Valmiki Ramayan verse'
+  );
+
+  const latin = runSearch('anirveda', index);
+  assert.ok(
+    latin.verses.some((h) => h.entry.sourceId === 'valmiki-ramayan'),
+    'IAST-folded query should reach the Valmiki Ramayan verse'
+  );
+
+  const section = runSearch('Valmiki Ramayan', index);
+  assert.equal(section.sections[0]?.entry.sourceId, 'valmiki-ramayan');
+}
