@@ -573,3 +573,27 @@ Intent-driven discovery is metadata over bundled content, not new scripture text
 - The Dasha surface exposes the current Mahadasha/Antardasha, dates, elapsed and remaining time, and a full nine-period timeline. Those timing values must also be accessible to assistive technology.
 - Kundali and Rashifal share cards use the app theme and a 4:5 preview. Kundali must warn that personal birth details are included; Rashifal must state that name and birth details are excluded. Do not place duplicate share controls inside Kundali tabs.
 - Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest for new UI, and `.maestro/kundali-smoke.yaml` on an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.
+
+## 15. Guna Milan engine (PRD-16)
+
+### 15.1 One pure engine on a pinned convention
+
+- Add `gunaMilan.ts` to the existing `mobile/src/panchang/` stack and reuse `getSiderealPlanetLongitude('moon', date)`. Do not add a second astrology SDK, network ephemeris, or screen-local calculation.
+- `gunaMilan.ts` and `gunaMilanConvention.ts` stay pure: explicit longitudes/dates in, typed data out. No React, AsyncStorage, wall-clock reads, randomness, fetch, or platform APIs (pinned by the engine source-purity test).
+- The calculation is pinned in `docs/roadmap/conventions/guna-milan-v1.md` (`vedansh-ashtakoota-v1`): all classification tables/matrices, the वर→वधू direction of directional kootas, every half-point score, the exact 15° Vashya splits, the band boundaries plus DrikPanchang Bhakoot/Nadi display modifiers, and the single auditable Bhakoot cancellation (same rashi-lord or Graha-Maitri 5). A table or rule change requires a **new convention id** and fixture review; it must never silently change old results. The base score is always the arithmetic sum of the eight kootas — a cancellation changes only the explanatory flag.
+- v1 uses India/IST civil time only and needs no birthplace. It must not mutate `PanchangLocationContext` or the Kundali birth profile.
+
+### 15.2 Independent fixture contract
+
+- `gunaMilan.golden.test.ts` holds expected row scores transcribed from independently published compatibility reports (Mini/Jose 20/36; Chitra/Uttara-Ashadha 19.5/36), never captured from Vedansh output, plus every supported Bhakoot cancellation branch and the same-Nadi 28/36 display-band case.
+- The 108×108 engine sweep pins the complete set of reachable score values for every koota, and boundary tests exercise below/at/above each pada, rashi, and 15° Vashya boundary. Domain sign-off of the tables (direction, fractions, cancellations) remains a human gate before merge (PRD-16 gate 1).
+
+### 15.3 Privacy and safety
+
+- Inputs are session-only by default. Persistence is opt-in under a versioned key with a visible clear action and is never implicitly restored. The share card is a strict allow-list — optional names, वर/वधू roles, total, band, eight component scores, disclaimer, brand footer — and never embeds birth date, time, location, or profile id.
+- Output frames a traditional calculation, not a verdict: no fear copy, remedy/gemstone/consultation upsell, lead capture, Mangal-dosha or full-chart claims, or any cancellation not backed by a pinned, tested rule. Unknown birth time is a checked interval across the full IST civil day, never a substituted noon and never a persisted fabricated time.
+
+### 15.4 Product and verification contract
+
+- Guna Milan is a card below Kundali and Rashifal on the Jyotish landing and lives inside the Panchang stack (not a duplicate root route). Saved-Kundali autofill must work for either directional role.
+- Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest (`GunaMilanExperience.test.tsx`), and `.maestro/guna-milan-smoke.yaml` on iOS and Android with an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.

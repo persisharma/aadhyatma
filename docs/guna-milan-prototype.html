@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-16 · Guna Milan (अष्टकूट मिलान) — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#f3e7c9; --parchment-soft:#f8efd6; --parchment-hi:#fff5e0;
+    --gradient-end:#e9d9b1; --gold:#a67c34; --gold-soft:#c9b896; --gold-tint:#d8c393;
+    --saffron:#b8621b; --saffron-deep:#8a3e0b; --saffron-tint:rgba(184,98,27,0.10);
+    --ink:#2f1e10; --ink-soft:#5c4326; --ink-muted:#8a6a47; --divider:#d9c9a6;
+    --avoid:#9c4a32; --avoid-deep:#7a3722; --avoid-tint:rgba(156,74,50,0.12);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:920px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:920px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:920px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap .n{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .topaction{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron)}
+  .deva{font-family:var(--deva)}
+  .en-it{font-family:var(--serif);font-style:italic}
+
+  /* numbered callout dot inside screens */
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* segment control (Panchang tab) */
+  .segment{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:3px;margin-bottom:16px}
+  .segment .seg{flex:1;text-align:center;padding:8px 0;border-radius:9px;font-family:var(--deva);font-size:13.5px;color:var(--ink-muted)}
+  .segment .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:0 1px 4px rgba(47,30,16,.10)}
+
+  /* jyotish landing cards */
+  .jcard{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:16px;margin-bottom:12px;position:relative}
+  .jcard.hot{border:1.5px solid var(--saffron);background:linear-gradient(120deg,var(--parchment-hi),var(--parchment-soft))}
+  .jcard .jt{font-family:var(--deva);font-size:17px;color:var(--ink);display:flex;align-items:center;gap:8px}
+  .jcard .js{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);margin-top:6px;line-height:1.5}
+  .jcard .chev{position:absolute;right:14px;top:16px;color:var(--saffron);font-size:18px}
+  .tag{font-size:10px;font-weight:600;color:var(--saffron-deep);background:var(--saffron-tint);padding:2px 7px;border-radius:8px;font-family:var(--sans)}
+  .glyph{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;
+    font-family:var(--deva);font-size:16px;color:var(--saffron-deep);background:var(--parchment-hi);flex:none}
+
+  /* input form */
+  .personcard{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:14px;margin-bottom:14px}
+  .personcard.varhdr{border-top:3px solid var(--saffron)}
+  .personcard.vadhuhdr{border-top:3px solid var(--gold)}
+  .ptitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .ptitle .pt{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .chip{font-size:11px;font-weight:600;color:var(--saffron);border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    padding:4px 10px;border-radius:20px;font-family:var(--sans)}
+  .field{margin-bottom:10px}
+  .flabel{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans);margin-bottom:4px}
+  .finput{height:48px;border:1px solid var(--divider);border-radius:12px;background:var(--parchment-hi);
+    display:flex;align-items:center;padding:0 14px;font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .finput.empty{color:var(--ink-muted);font-family:var(--serif);font-style:italic;font-size:13.5px}
+  .frow{display:flex;gap:10px}
+  .frow .field{flex:1}
+  .fnote{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+  .remember{min-height:44px;display:flex;align-items:center;gap:9px;border:1px solid var(--divider);border-radius:12px;
+    background:var(--parchment-hi);padding:9px 12px;font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);margin:4px 0 10px}
+  .remember .box{width:20px;height:20px;border:1.5px solid var(--gold);border-radius:5px;background:var(--parchment-soft);flex:none}
+  .btn{display:block;width:100%;text-align:center;background:var(--saffron);color:#fff8ec;border:none;
+    border-radius:12px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:6px;cursor:pointer;position:sticky;bottom:8px;z-index:4;
+    box-shadow:0 8px 18px rgba(47,30,16,.2)}
+  .btn.disabled{background:var(--gold-soft);color:#fff8ec}
+  .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.6}
+
+  /* result */
+  .scoredial{width:170px;height:170px;border-radius:50%;margin:8px auto 4px;position:relative;
+    background:conic-gradient(var(--saffron) 0deg 280deg, var(--divider) 280deg 360deg);display:flex;align-items:center;justify-content:center}
+  .scoredial.low{background:conic-gradient(var(--avoid) 0deg 170deg, var(--divider) 170deg 360deg)}
+  .scoredial .inner{width:138px;height:138px;border-radius:50%;background:var(--parchment-hi);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 2px 8px rgba(47,30,16,.08)}
+  .scoredial .big{font-family:var(--deva);font-size:34px;color:var(--ink);line-height:1.1}
+  .scoredial .of{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted)}
+  .verdict{text-align:center;margin-bottom:4px}
+  .verdict .v{display:inline-block;font-family:var(--deva);font-size:15px;color:var(--saffron-deep);
+    background:var(--saffron-tint);border-radius:20px;padding:5px 16px}
+  .verdict .v.warn{color:var(--avoid-deep);background:var(--avoid-tint)}
+  .names{font-family:var(--deva);text-align:center;font-size:14.5px;color:var(--ink-soft);margin-bottom:12px}
+  .names .amp{color:var(--gold);font-family:var(--serif)}
+  .kootarow{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:14px;padding:12px 14px;margin-bottom:9px;cursor:pointer}
+  .kootarow.open{border:1.4px solid var(--saffron)}
+  .kr-top{display:flex;align-items:center;gap:10px}
+  .kr-top .kn{flex:1}
+  .kr-top .knt{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .kr-top .kns{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted)}
+  .kr-top .kp{font-family:var(--deva);font-size:15px;color:var(--saffron-deep);white-space:nowrap}
+  .kr-top .kp.zero{color:var(--avoid-deep)}
+  .kbar{height:5px;border-radius:3px;background:var(--divider);margin-top:8px;overflow:hidden}
+  .kbar>i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--saffron))}
+  .kbar>i.zero{background:var(--avoid)}
+  .kr-detail{border-top:1px solid var(--divider);margin-top:10px;padding-top:10px}
+  .kr-detail .pair{display:flex;gap:10px;margin-bottom:8px}
+  .kr-detail .pv{flex:1;background:var(--parchment-hi);border:1px solid var(--divider);border-radius:10px;padding:8px 10px}
+  .kr-detail .pv .pvl{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans)}
+  .kr-detail .pv .pvv{font-family:var(--deva);font-size:13.5px;color:var(--ink);margin-top:2px}
+  .kr-detail .meaning{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);line-height:1.8}
+  .doshabanner{border:1.4px solid var(--avoid-deep);background:var(--avoid-tint);border-radius:14px;padding:13px 14px;margin:4px 0 12px}
+  .doshabanner .dt{font-family:var(--deva);font-size:14.5px;color:var(--avoid-deep);font-weight:600}
+  .doshabanner .ds{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);margin-top:4px;line-height:1.7}
+  .disclaimer{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);text-align:center;margin-top:14px;line-height:1.6;padding:0 8px}
+  .rangebox{border:1.5px solid var(--gold);border-radius:18px;background:var(--parchment-soft);padding:18px 16px;text-align:center;margin:12px 0}
+  .rangebox .range{font-family:var(--deva);font-size:34px;color:var(--ink);line-height:1.2}
+  .rangebox .rl{font-family:var(--deva);font-size:13px;color:var(--ink-soft);margin-top:5px}
+  .rangebox .rs{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:7px;line-height:1.5}
+
+  /* share card artifact */
+  .sharecard{width:300px;margin:0 auto;border:2px solid var(--gold);border-radius:18px;overflow:hidden;
+    background:linear-gradient(160deg,var(--parchment-hi),var(--parchment));box-shadow:0 10px 30px rgba(0,0,0,.18)}
+  .sharecard .sc-orn{text-align:center;font-family:var(--deva);color:var(--gold);font-size:15px;padding-top:14px;letter-spacing:6px}
+  .sharecard .sc-title{font-family:var(--deva);text-align:center;font-size:18px;color:var(--ink);margin-top:4px}
+  .sharecard .sc-names{font-family:var(--deva);text-align:center;font-size:13.5px;color:var(--ink-soft);margin-top:2px}
+  .sharecard .sc-score{font-family:var(--deva);text-align:center;font-size:40px;color:var(--saffron-deep);margin:8px 0 0}
+  .sharecard .sc-of{font-family:var(--serif);font-style:italic;text-align:center;font-size:12.5px;color:var(--ink-muted)}
+  .sharecard .sc-verdict{font-family:var(--deva);text-align:center;font-size:14px;color:var(--saffron-deep);margin:6px 0 10px}
+  .sharecard .sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 16px 14px}
+  .sharecard .sc-k{display:flex;justify-content:space-between;font-size:11.5px;font-family:var(--deva);color:var(--ink-soft);
+    background:var(--parchment-soft);border:1px solid var(--divider);border-radius:8px;padding:5px 9px}
+  .sharecard .sc-footer{border-top:1px solid var(--gold-tint);padding:9px 0;text-align:center;
+    font-family:var(--deva);font-size:12px;color:var(--saffron-deep);background:var(--parchment-soft)}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--parchment-hi);border-radius:22px 22px 0 0;
+    border-top:1px solid var(--divider);padding:16px;box-shadow:0 -12px 30px rgba(47,30,16,.22)}
+  .sheet .grab{width:40px;height:4px;border-radius:2px;background:var(--divider);margin:0 auto 12px}
+  .sheet .srow{display:flex;gap:14px;justify-content:center}
+  .sheet .sopt{width:64px;text-align:center;font-size:10.5px;color:var(--ink-soft);font-family:var(--sans)}
+  .sheet .sopt .si{width:48px;height:48px;border-radius:14px;background:var(--parchment-soft);border:1px solid var(--divider);
+    display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 5px}
+
+  .tabbar{position:sticky;bottom:0;height:52px;background:var(--parchment-soft);border-top:1px solid var(--divider);display:flex}
+  .tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;color:var(--ink-muted)}
+  .tabbar .tab.active{color:var(--saffron)}
+  .tabbar .tab .ic{font-size:16px}
+</style>
+</head>
+<body>
+  <h1>Guna Milan — अष्टकूट मिलान</h1>
+  <div class="sub">PRD-16 · Revised UI prototype. Static mockups in the app's parchment system — not the live build.</div>
+  <div class="legend">Enters through <b>Panchang → ज्योतिष</b> and pushes within the existing Panchang stack. V1 uses controlled birth-form primitives for name/date/time, fixed India/IST semantics, and no birthplace. Unknown time produces a checked result range when necessary — never a hidden noon default. Calculation and optional persistence remain on-device; the scoring convention still requires fixture sign-off.</div>
+
+  <!-- ============ 1 · ENTRY ============ -->
+  <div class="phaselabel">1 · Entry — where it lands in the current app</div>
+  <div class="phasedesc">The Jyotish landing (Panchang tab, ज्योतिष segment) today shows two cards: Kundali and Rashifal. Guna Milan becomes the third.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="toptitle" style="font-size:20px">पंचांग</div><div class="topaction">जयपुर ›</div></div>
+        <div class="segment"><div class="seg">पंचांग</div><div class="seg on">ज्योतिष</div></div>
+
+        <div class="jcard">
+          <div class="jt"><span class="glyph">ल</span> मेरी कुंडली <span class="chev">›</span></div>
+          <div class="js">Lagna · grahas · dasha — computed from your saved birth details.</div>
+        </div>
+        <div class="jcard">
+          <div class="jt"><span class="glyph">रा</span> दैनिक राशिफल <span class="chev">›</span></div>
+          <div class="js">Today's guidance for your rashi — deterministic, on-device.</div>
+        </div>
+        <div class="jcard hot" style="position:relative">
+          <div class="dot" style="right:-8px;top:-8px">1</div>
+          <div class="jt"><span class="glyph">॥</span> अष्टकूट मिलान <span class="tag">NEW</span> <span class="chev">›</span></div>
+          <div class="js">Guna Milan — the traditional 36-guna compatibility reading between two birth charts. Fully offline.</div>
+        </div>
+
+        <div class="note">सभी गणनाएँ आपके फ़ोन पर ही होती हैं ·<br/>no account, no internet</div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><span class="ic">ॐ</span>Home</div>
+        <div class="tab"><span class="ic">☀</span>Bhakti</div>
+        <div class="tab active"><span class="ic">☾</span>Panchang</div>
+        <div class="tab"><span class="ic">♪</span>Bhajan</div>
+        <div class="tab"><span class="ic">⋯</span>More</div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>Jyotish landing — the entry point.</b><br/>
+      <span class="n">1</span><b>Tap the new अष्टकूट मिलान card</b> → pushes <i>GunaMilan</i> inside the existing Panchang stack. The card carries the standard versioned NEW badge. Back behavior stays consistent with Kundali and Rashifal.</div>
+    </div>
+
+    <!-- 2. Input -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">अष्टकूट मिलान · Guna Milan</div></div>
+
+        <div class="personcard varhdr" style="position:relative">
+          <div class="dot" style="right:-8px;top:-8px">2</div>
+          <div class="ptitle"><div class="pt">वर · Groom</div><span class="chip">मेरे विवरण यहाँ</span></div>
+          <div class="field"><div class="flabel">नाम (वैकल्पिक)</div><div class="finput">आरव</div></div>
+          <div class="frow">
+            <div class="field"><div class="flabel">जन्म तिथि</div><div class="finput">12 मार्च 1994</div></div>
+            <div class="field"><div class="flabel">समय</div><div class="finput">07:25 AM</div></div>
+          </div>
+        </div>
+
+        <div class="personcard vadhuhdr" style="position:relative">
+          <div class="dot" style="right:-8px;top:-8px">3</div>
+          <div class="ptitle"><div class="pt">वधू · Bride</div><span class="chip">मेरे विवरण यहाँ</span></div>
+          <div class="field"><div class="flabel">नाम (वैकल्पिक)</div><div class="finput">सिया</div></div>
+          <div class="frow">
+            <div class="field"><div class="flabel">जन्म तिथि</div><div class="finput">02 जुलाई 1996</div></div>
+            <div class="field"><div class="flabel">समय</div><div class="finput empty">ज्ञात नहीं</div></div>
+          </div>
+          <div class="fnote">“ज्ञात नहीं” में पूरे IST जन्म-दिन की सम्भावनाएँ जाँची जाती हैं। नक्षत्र या अंक बदलें तो एकल स्कोर के बजाय परिणाम-सीमा दिखेगी।</div>
+        </div>
+
+        <div class="remember"><span class="box" aria-hidden="true"></span><span>इस फ़ोन पर याद रखें · Remember on this device</span></div>
+        <div class="fnote" style="margin-bottom:8px">V1 uses India/IST civil time. Birthplace is not needed for Moon-based Ashtakoota.</div>
+
+        <div style="position:relative"><div class="dot" style="left:-8px;top:6px">4</div>
+        <button class="btn">मिलान करें · Match</button></div>
+        <div class="note">डिफ़ॉल्ट रूप से केवल इस सत्र तक · session-only by default<br/>nothing leaves this device</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Input — two birth-detail cards.</b><br/>
+      <span class="n">2</span><b>“मेरे विवरण यहाँ” appears on both roles</b> — saved Kundali name/date/time can fill either वर or वधू; the app never assumes who owns the device. Controlled birth-form primitives preserve the familiar 48 pt fields without mutating Panchang location.<br/>
+      <span class="n">3</span><b>Unknown birth time</b> — no noon substitution. The engine checks the entire IST civil day; if any possible nakshatra or score changes, the result is a range and identifies affected kootas.<br/>
+      <span class="n">4</span><b>मिलान करें</b> — enabled once both dates are present. The sticky, keyboard-safe action computes locally. Inputs are session-only unless the unchecked “Remember on this device” control is explicitly selected.</div>
+    </div>
+  </div>
+
+  <!-- ============ 2 · RESULT ============ -->
+  <div class="phaselabel">2 · Result — the 36-guna readout</div>
+  <div class="phasedesc">Score dial, verdict band, and the eight koota rows — each expandable in place. Warm auspicious/avoid palette only (gold-saffron / muted terracotta) — never green/red.</div>
+  <div class="wrap">
+
+    <!-- 3. Result collapsed -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">मिलान फल</div>
+          <div class="topaction" style="position:relative">साझा ›<div class="dot" style="right:-14px;top:-10px">7</div></div></div>
+
+        <div class="scoredial"><div class="inner"><div class="big">28</div><div class="of">of 36 gunas</div></div></div>
+        <div class="verdict"><span class="v">उत्तम मिलान · Very good</span></div>
+        <div class="names">वर: आरव <span class="amp">·</span> वधू: सिया</div>
+
+        <div class="kootarow" role="button" tabindex="0" aria-expanded="false" aria-label="वर्ण, 1 में से 1 अंक। विवरण खोलें।" style="position:relative"><div class="dot" style="right:-8px;top:10px">5</div>
+          <div class="kr-top"><div class="kn"><div class="knt">वर्ण</div><div class="kns">Varna · spiritual ground</div></div><div class="kp">1 / 1</div></div>
+          <div class="kbar"><i style="width:100%"></i></div>
+        </div>
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">वश्य</div><div class="kns">Vashya · mutual regard</div></div><div class="kp">2 / 2</div></div>
+          <div class="kbar"><i style="width:100%"></i></div>
+        </div>
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">तारा</div><div class="kns">Tara · birth-star destiny</div></div><div class="kp">1.5 / 3</div></div>
+          <div class="kbar"><i style="width:50%"></i></div>
+        </div>
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">योनि</div><div class="kns">Yoni · instinctive nature</div></div><div class="kp">3 / 4</div></div>
+          <div class="kbar"><i style="width:75%"></i></div>
+        </div>
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">ग्रह मैत्री</div><div class="kns">Graha Maitri · minds' friendship</div></div><div class="kp">4.5 / 5</div></div>
+          <div class="kbar"><i style="width:90%"></i></div>
+        </div>
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">गण</div><div class="kns">Gana · temperament</div></div><div class="kp">6 / 6</div></div>
+          <div class="kbar"><i style="width:100%"></i></div>
+        </div>
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">भकूट</div><div class="kns">Bhakoot · shared prosperity</div></div><div class="kp">2 / 7</div></div>
+          <div class="kbar"><i style="width:29%"></i></div>
+        </div>
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">नाड़ी</div><div class="kns">Nadi · vitality</div></div><div class="kp">8 / 8</div></div>
+          <div class="kbar"><i style="width:100%"></i></div>
+        </div>
+
+        <div class="disclaimer">यह पारम्परिक अष्टकूट गणना है — मार्गदर्शन हेतु, निर्णय हेतु नहीं। विवाह-निर्णय अपने कुल-पुरोहित से परामर्श कर ही लें।</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Result — collapsed readout.</b><br/>
+      The production dial uses <i>react-native-svg</i>; this CSS ring is illustrative. The base label follows the pinned bands: 31–36 excellent · 21–30 very good · 17–20 middling · 0–16 below the reference threshold; the displayed interpretation also applies the pinned unfavorable-Bhakoot/Nadi modifiers.<br/>
+      <span class="n">5</span><b>Tap any koota row</b> → expands it in place (next phone). One row open at a time; scroll position preserved.<br/>
+      <span class="n">7</span><b>साझा</b> → renders the branded share card (last phone). A standing serif disclaimer anchors the screen — guidance, not verdict.</div>
+    </div>
+
+    <!-- 4. Row expanded -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">मिलान फल</div><div class="topaction">साझा ›</div></div>
+
+        <div class="scoredial" style="width:120px;height:120px"><div class="inner" style="width:94px;height:94px"><div class="big" style="font-size:24px">28</div><div class="of" style="font-size:11px">of 36</div></div></div>
+        <div class="names">वर: आरव <span class="amp">·</span> वधू: सिया</div>
+
+        <div class="kootarow open" role="button" tabindex="0" aria-expanded="true" aria-label="गण, 6 में से 6 अंक। विवरण खुला है।" style="position:relative"><div class="dot" style="right:-8px;top:10px">6</div>
+          <div class="kr-top"><div class="kn"><div class="knt">गण</div><div class="kns">Gana · temperament</div></div><div class="kp">6 / 6</div></div>
+          <div class="kbar"><i style="width:100%"></i></div>
+          <div class="kr-detail">
+            <div class="pair">
+              <div class="pv"><div class="pvl">आरव · रोहिणी</div><div class="pvv">मानव गण</div></div>
+              <div class="pv"><div class="pvl">सिया · उत्तराषाढ़ा</div><div class="pvv">मानव गण</div></div>
+            </div>
+            <div class="meaning">दोनों का गण एक ही है — स्वभाव व जीवन-दृष्टि में सहज मेल। गण कूट स्वभाव-अनुकूलता का सूचक माना जाता है; समान गण पूर्ण अंक पाता है।</div>
+          </div>
+        </div>
+
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">भकूट</div><div class="kns">Bhakoot · shared prosperity</div></div><div class="kp">2 / 7</div></div>
+          <div class="kbar"><i style="width:29%"></i></div>
+        </div>
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">नाड़ी</div><div class="kns">Nadi · vitality</div></div><div class="kp">8 / 8</div></div>
+          <div class="kbar"><i style="width:100%"></i></div>
+        </div>
+
+        <div class="disclaimer">प्रत्येक कूट के साथ दोनों पक्षों का नक्षत्र/राशि-आधार और उसका पारम्परिक अर्थ दिखता है — कभी केवल अंक नहीं।</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Koota row — expanded state.</b><br/>
+      <span class="n">6</span><b>The open row shows its working</b>: each person's nakshatra/rashi basis for that koota (two labelled value tiles) and a two-line Devanagari explanation of what the koota traditionally reads. Educational, not oracular — the user always sees <i>why</i> the number is what it is. Tap again (or tap another row) to collapse.</div>
+    </div>
+
+    <!-- 5. Unknown-time range -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">समय-अनिश्चित फल</div></div>
+
+        <div class="rangebox" role="status" aria-label="सम्भावित गुण 24 से 28। सही एकल परिणाम के लिए जन्म समय जोड़ें।">
+          <div class="range">२४–२८</div>
+          <div class="rl">सम्भावित गुण · possible score</div>
+          <div class="rs">सिया के पूरे IST जन्म-दिन की सभी नक्षत्र सीमाएँ जाँची गईं</div>
+        </div>
+        <div class="verdict"><span class="v">सटीक समय आवश्यक · exact time needed</span></div>
+        <div class="names">वर: आरव <span class="amp">·</span> वधू: सिया</div>
+
+        <div class="doshabanner">
+          <div class="dt">॥ परिणाम क्यों बदलता है?</div>
+          <div class="ds">दिन में चन्द्रमा रोहिणी से मृगशिरा में प्रवेश कर सकता है। इसलिए तारा, योनि और गण के अंक समय के अनुसार बदलते हैं।</div>
+        </div>
+        <div class="kootarow" role="button" tabindex="0" aria-expanded="false" aria-label="तारा, सम्भावित अंक 1.5 से 3। विवरण खोलें।">
+          <div class="kr-top"><div class="kn"><div class="knt">तारा</div><div class="kns">Tara · changes with possible nakshatra</div></div><div class="kp">1.5–3 / 3</div></div>
+          <div class="kbar"><i style="width:75%"></i></div>
+        </div>
+        <div class="kootarow" role="button" tabindex="0" aria-expanded="false" aria-label="योनि, सम्भावित अंक 2 से 4। विवरण खोलें।">
+          <div class="kr-top"><div class="kn"><div class="knt">योनि</div><div class="kns">Yoni · changes with possible nakshatra</div></div><div class="kp">2–4 / 4</div></div>
+          <div class="kbar"><i style="width:75%"></i></div>
+        </div>
+        <button class="btn">जन्म समय जोड़ें · Add exact time</button>
+        <div class="disclaimer">एकल verdict या exact-score share तब तक उपलब्ध नहीं, जब तक सही समय न दिया जाए।</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Unknown time — honest range.</b><br/>
+      The engine checks every possible nakshatra classification across the IST civil day. If the outcome changes, this screen shows the min–max score and affected kootas. It never fills a single dial, selects one verdict band, or offers an exact-score share.</div>
+    </div>
+
+    <!-- 6. Dosha state -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">मिलान फल</div><div class="topaction">साझा ›</div></div>
+
+        <div class="scoredial low"><div class="inner"><div class="big">17</div><div class="of">of 36 gunas</div></div></div>
+        <div class="verdict"><span class="v warn">मध्यम · middling</span></div>
+        <div class="names">वर: देव <span class="amp">·</span> वधू: मीरा</div>
+
+        <div class="doshabanner" style="position:relative"><div class="dot" style="right:-8px;top:-8px">8</div>
+          <div class="dt">॥ नाड़ी दोष</div>
+          <div class="ds">दोनों की नाड़ी एक (आदि) है। पिन किए गए convention के सभी समर्थित परिहार नियम जाँचे गए; इस उदाहरण में कोई नियम लागू नहीं हुआ। अंतिम नाड़ी अंक 0 / 8 है।</div>
+        </div>
+
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">नाड़ी</div><div class="kns">Nadi · vitality</div></div><div class="kp zero">0 / 8</div></div>
+          <div class="kbar"><i class="zero" style="width:4%"></i></div>
+        </div>
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">भकूट</div><div class="kns">Bhakoot · shared prosperity</div></div><div class="kp">7 / 7</div></div>
+          <div class="kbar"><i style="width:100%"></i></div>
+        </div>
+        <div class="kootarow">
+          <div class="kr-top"><div class="kn"><div class="knt">गण</div><div class="kns">Gana · temperament</div></div><div class="kp">3 / 6</div></div>
+          <div class="kbar"><i style="width:50%"></i></div>
+        </div>
+
+        <div class="disclaimer">दोष कभी "अशुभ लाल" में नहीं — म्यूटेड टेराकोटा, सदा परिहार-टिप्पणी के साथ। भय नहीं, समझ।</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Dosha state — handled with care.</b><br/>
+      <span class="n">8</span><b>Nadi/Bhakoot finding banner</b> uses <i>avoidTint</i> with high-contrast <i>avoidDeep</i> text, never color alone. It names the fired rule, checks only pinned cancellation rules, and shows the score effect. The 17-point label remains the convention's middling band; there is no “reject,” fear copy, or remedy upsell.</div>
+    </div>
+
+    <!-- 6. Share -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad" style="padding-bottom:150px">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">साझा करें</div></div>
+
+        <div class="sharecard" style="position:relative"><div class="dot" style="right:-8px;top:-8px">9</div>
+          <div class="sc-orn">॥ ॐ ॥</div>
+          <div class="sc-title">अष्टकूट मिलान</div>
+          <div class="sc-names">वर: आरव · वधू: सिया</div>
+          <div class="sc-score">२८</div>
+          <div class="sc-of">of 36 gunas</div>
+          <div class="sc-verdict">उत्तम मिलान</div>
+          <div class="sc-grid">
+            <div class="sc-k"><span>वर्ण</span><span>1/1</span></div>
+            <div class="sc-k"><span>वश्य</span><span>2/2</span></div>
+            <div class="sc-k"><span>तारा</span><span>1.5/3</span></div>
+            <div class="sc-k"><span>योनि</span><span>3/4</span></div>
+            <div class="sc-k"><span>ग्रह मैत्री</span><span>4.5/5</span></div>
+            <div class="sc-k"><span>गण</span><span>6/6</span></div>
+            <div class="sc-k"><span>भकूट</span><span>2/7</span></div>
+            <div class="sc-k"><span>नाड़ी</span><span>8/8</span></div>
+          </div>
+          <div class="sc-footer">ॐ वेदांश़</div>
+        </div>
+      </div>
+      <div class="sheet" style="position:absolute">
+        <div class="grab"></div>
+        <div class="srow" style="position:relative"><div class="dot" style="right:8px;top:-4px">10</div>
+          <div class="sopt"><div class="si">✉</div>Messages</div>
+          <div class="sopt"><div class="si">◎</div>WhatsApp</div>
+          <div class="sopt"><div class="si">▽</div>Save</div>
+          <div class="sopt"><div class="si">⋯</div>More</div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>Share — the forward-able artifact.</b><br/>
+      <span class="n">9</span><b>Privacy-safe preview</b> — exact score, band, roles, eight kootas, disclaimer, and the ॐ वेदांश़ footer are rendered through <i>react-native-view-shot</i>. Names appear only if typed. Date, time, city, saved-profile IDs, and input metadata are excluded by an explicit allow-list.<br/>
+      <span class="n">10</span><b>OS share sheet</b> — opens only after preview confirmation. Local diagnostics record “preview generated” and “share sheet opened,” never claim the downstream share completed.</div>
+    </div>
+  </div>
+
+  <div class="phaselabel" style="margin-top:34px">Interaction inventory</div>
+  <div class="legend" style="max-width:920px">
+    ① Jyotish landing → tap अष्टकूट मिलान card → GunaMilan input screen.
+    ② “मेरे विवरण यहाँ” on either role → copies only applicable saved Kundali name/date/time into that controlled card.
+    ③ Time field → “ज्ञात नहीं” → checks the whole IST civil day; stable outcome is exact, changing outcome is a range.
+    ④ मिलान करें → on-device compute → exact or uncertain result. Session-only unless Remember is selected.
+    ⑤ Tap or keyboard-activate a koota row → expand in place (one open at a time, accessible expanded state).
+    ⑥ Expanded row → both persons' nakshatra basis + traditional meaning.
+    ⑦ साझा → privacy-safe share-card preview; unavailable for a changing unknown-time range.
+    ⑧ Finding banner → avoidTint/avoidDeep + pinned cancellation outcome (never red, never fear).
+    ⑨ Branded card renders via the existing view-shot pipeline from an allow-listed share model.
+    ⑩ Confirm preview → system share sheet; local metric records sheet-open only.
+    Back (‹) pops the Panchang stack. A previous match returns only when the user explicitly enabled Remember on this device.
+  </div>
+</body>
+</html>
