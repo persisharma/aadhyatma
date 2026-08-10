@@ -227,6 +227,31 @@ export default function HomeScreen({ navigation }: Props) {
       icon: <CategoryIcon iconKey="theerth" />,
       onPress: () => navigation.navigate('TheerthMap', {}),
     },
+    {
+      // Launch-release Discover card (PRD-15 §3.4, design.md §HomeWidgets). One
+      // spotlight raising awareness of home-screen widgets; it opens the in-app
+      // Widget Gallery (which carries the platform add-widget instructions) —
+      // it never promises a system widget-picker jump. WidgetGallery lives on
+      // the More stack, so route through the MoreTab like the tour steps do.
+      key: 'home-widgets',
+      titleHi: 'होम-स्क्रीन विजेट', titleEn: 'Home-Screen Widgets',
+      descHi: 'आज का श्लोक, पंचांग और जप—होम स्क्रीन पर।',
+      descEn: "Today's verse, Panchang, and japa on your home screen.",
+      ctaHi: 'देखें', ctaEn: 'View',
+      hasNew: true,
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.saffronDeep,
+          }}
+        >
+          वि
+        </Text>
+      ),
+      onPress: () => rootNav.navigate('MoreTab', { screen: 'WidgetGallery' }),
+    },
   ];
 
   // All cards always render (awareness = coverage); their order is shuffled once

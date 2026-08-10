@@ -53,6 +53,7 @@ let calendarSystemValue: CalendarSystem = 'purnimant';
 // AsyncStorage hydration must never clobber an explicit in-session choice.
 let calendarSystemDirty = false;
 let calendarSystemHydration: Promise<void> | null = null;
+let calendarSystemHydrated = false;
 const calendarSystemListeners = new Set<() => void>();
 
 function notifyCalendarSystemListeners(): void {
@@ -72,6 +73,10 @@ function hydrateCalendarSystemOnce(): Promise<void> {
         // A transient storage failure must not poison the session — clear the
         // settled promise so the next subscriber retries the read.
         calendarSystemHydration = null;
+      })
+      .finally(() => {
+        calendarSystemHydrated = true;
+        notifyCalendarSystemListeners();
       });
   }
   return calendarSystemHydration;
@@ -104,12 +109,18 @@ export function __resetCalendarSystemStoreForTests(value: CalendarSystem = 'purn
   calendarSystemValue = value;
   calendarSystemDirty = false;
   calendarSystemHydration = null;
+  calendarSystemHydrated = false;
   calendarSystemListeners.clear();
 }
 
 export function usePanchangCalendarSystem(): [CalendarSystem, (next: CalendarSystem) => void] {
   const calendarSystem = useSyncExternalStore(subscribeCalendarSystem, getCalendarSystemSnapshot);
   return [calendarSystem, setCalendarSystemGlobal];
+}
+
+/** True only after the persisted calendar-system preference has settled. */
+export function usePanchangCalendarHydrated(): boolean {
+  return useSyncExternalStore(subscribeCalendarSystem, () => calendarSystemHydrated);
 }
 
 export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): UsePanchangResult {

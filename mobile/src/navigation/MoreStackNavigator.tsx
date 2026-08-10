@@ -5,6 +5,7 @@ import WishlistScreen from '@/screens/WishlistScreen';
 import ProfileScreen from '@/screens/ProfileScreen';
 import ReminderSettingsScreen from '@/screens/ReminderSettingsScreen';
 import JapamAlarmsScreen from '@/screens/JapamAlarmsScreen';
+import WidgetGalleryScreen from '@/screens/WidgetGalleryScreen';
 import type { MoreStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<MoreStackParamList>();
@@ -22,6 +23,7 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="Wishlist" component={WishlistScreen} />
       <Stack.Screen name="Reminders" component={ReminderSettingsScreen} />
       <Stack.Screen name="JapamAlarms" component={JapamAlarmsScreen} />
+      <Stack.Screen name="WidgetGallery" component={WidgetGalleryScreen} />
     </Stack.Navigator>
   );
 }

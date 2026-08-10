@@ -573,3 +573,29 @@ Intent-driven discovery is metadata over bundled content, not new scripture text
 - The Dasha surface exposes the current Mahadasha/Antardasha, dates, elapsed and remaining time, and a full nine-period timeline. Those timing values must also be accessible to assistive technology.
 - Kundali and Rashifal share cards use the app theme and a 4:5 preview. Kundali must warn that personal birth details are included; Rashifal must state that name and birth details are excluded. Do not place duplicate share controls inside Kundali tabs.
 - Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest for new UI, and `.maestro/kundali-smoke.yaml` on an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.
+
+## 15. Home-screen widgets (PRD-15)
+
+### 15.1 One versioned, bundle-only payload
+
+- Widgets read a single pre-computed document, never live app state. The schema is `WidgetPayloadV1` in `mobile/src/widgets/contract.ts`: `schemaVersion`, provenance (`generatedAt`, `writerAppVersion`), `locale`, a ~14-day **IST** Panchang window, a device-local verse window, and a Japam snapshot. Add fields additively; bump `schemaVersion` for any breaking change and keep native readers rejecting unsupported versions.
+- The planner (`planner.ts`) stays pure: explicit inputs in, typed payload out. No React, AsyncStorage, wall-clock reads, randomness, `fetch`, or platform APIs. There is no background/headless JS runner at widget-draw time.
+- The deferred coordinator (`WidgetCoordinator.tsx`) must dynamically `import()` the planner after `InteractionManager` settles, never statically import the Panchang graph — Home's first-frame/first-tap path must not pull the astronomy stack. It dedupes by a stable key over day/location/calendar/language/japam revision, throttles writes, persists atomically, then requests a native reload. Do not regress the `startup` test that pins this.
+
+### 15.2 Cross-language parity, fail-closed
+
+- A committed fixture — `mobile/src/widgets/fixtures/widget-payload-v1.json` — is decoded by TypeScript (`contract.ts`), Swift (`plugins/home-widgets/ios/WidgetPayloadContract.swift`), and Kotlin (`plugins/home-widgets/android/WidgetPayloadContract.kt`). All three must stay in parity; a schema change updates the fixture and all three decoders in the same PR.
+- Native readers validate schema, required fields, dates, and freshness and **fail closed** — never a partially decoded value, never an old entry labelled as today. Every missing/corrupt/incompatible/expired state resolves to a safe "open वेदांश़" recovery card (per design.md §56). No wrong-date Panchang is a hard release gate.
+- All four languages (`hi`/`en`/`gu`/`kn`) are required in the payload and their serif faces (Noto Serif Devanagari/Gujarati/Kannada + Inter) must be bundled into the native targets. A Hindi-only native surface would be a separate product decision, not a silent omission.
+
+### 15.3 Native delivery and OTA safety
+
+- Initial delivery is **store-binary-only**. No OTA may add or change native target code, entitlements, SwiftUI/RemoteViews layout, or fonts. A JS planner/copy change may ship OTA only to a runtime whose native reader already supports that schema — mind the store runtime version ([[ota-runtime-version-mismatch]] gotcha).
+- The iOS surface is a real WidgetKit **app extension** target (`VedanshWidgets`), not a main-app-linked Swift module, generated reproducibly from the CNG config plugins (`mobile/plugins/withHomeWidgets.js`, `withHomeWidgetsIos.js`, sources under `mobile/plugins/home-widgets/`). App Group entitlement (`group.com.prashantsharma.vedansh.widgets`) must be present on both app and extension; Android uses a dedicated SharedPreferences payload + AppWidget provider. `mobile/ios/` is prebuild output (gitignored) — the plugin is canonical.
+- Deep links use the `vedansh://widget/{verse|panchang|japam}` scheme only, parsed/dispatched by `mobile/src/widgets/deepLink.ts` on cold and warm start. Widget taps route through existing entry targets — they never invent a default mantra or a fabricated destination.
+
+### 15.4 Product and verification contract
+
+- Discovery surfaces: the `होम-स्क्रीन विजेट` More row (one-release NEW), the in-app **Widget Gallery** (`WidgetGalleryScreen.tsx`, previews from the same validated payload the native consumers read + accurate platform add-instructions — no promise of a system widget-picker jump), and one launch-release Home Discover spotlight. No new permission prompt is introduced.
+- Required automatable checks: `npm run typecheck`, the `src/widgets/__tests__/` suites (contract round-trip incl. missing/corrupt/expired/newer-schema; planner streak/>108/TZ-boundary/two-line; deep-link parse+route; coordinator no-static-import), targeted Jest for touched UI, and `.maestro/home-widgets-smoke.yaml`. If Maestro is not run, say so before merge.
+- **Device-only gates** (cannot be closed in CI/worktree; state their status explicitly before shipping): a clean CNG prebuild that reproducibly creates/entitles/signs the extension with no Xcode drift, an EAS build installing every signed target on a physical device, an app-write → widget-reload check, and per-size render / VoiceOver-TalkBack / large-text / Devanagari-matra screenshots. A local Swift module is not accepted as proof of extension-target feasibility.
