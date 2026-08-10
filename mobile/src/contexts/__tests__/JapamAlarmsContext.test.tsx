@@ -142,8 +142,60 @@ describe('JapamAlarmsContext permission — iOS AlarmKit', () => {
   });
 });
 
+describe('JapamAlarmsContext permission-gated mutations', () => {
+  const STORAGE_KEY = '@vedansh/japam-alarms';
+
+  test.each(['denied', 'undetermined'] as const)(
+    'does not create an enabled alarm when permission resolves as %s',
+    async (status) => {
+      mockRequestNotifPerms.mockResolvedValue({ status });
+      await mountAndHydrate();
+
+      let result: Awaited<ReturnType<Ctx['addAlarm']>> | undefined;
+      await act(async () => {
+        result = await captured.addAlarm({
+          mantraId: 'om-namah-shivaya',
+          time: { hour: 6, minute: 0 },
+        });
+      });
+
+      expect(result).toBeNull();
+      expect(captured.alarms).toEqual([]);
+      expect(await AsyncStorage.getItem(STORAGE_KEY)).toBeNull();
+    }
+  );
+
+  test('keeps a disabled alarm off when an enable request is refused', async () => {
+    await AsyncStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify([
+        {
+          id: 'disabled-alarm',
+          mantraId: 'om-namah-shivaya',
+          time: { hour: 6, minute: 0 },
+          enabled: false,
+        },
+      ])
+    );
+    mockRequestNotifPerms.mockResolvedValue({ status: 'denied' });
+    await mountAndHydrate();
+
+    await act(async () => {
+      await captured.toggleAlarm('disabled-alarm', true);
+    });
+
+    expect(captured.alarms[0].enabled).toBe(false);
+    expect(mockRequestNotifPerms).toHaveBeenCalledTimes(1);
+    expect(JSON.parse((await AsyncStorage.getItem(STORAGE_KEY))!)[0].enabled).toBe(false);
+  });
+});
+
 describe('JapamAlarmsContext — repeat days, skip-next, one-time housekeeping', () => {
   const STORAGE_KEY = '@vedansh/japam-alarms';
+
+  beforeEach(() => {
+    mockRequestNotifPerms.mockResolvedValue({ status: 'granted' });
+  });
 
   test('addAlarm normalizes repeat days; all-seven is stored as daily (no field)', async () => {
     await mountAndHydrate();
