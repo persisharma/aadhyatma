@@ -17,6 +17,7 @@ module.exports = {
     '<rootDir>/src/notifications/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/audio/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/data/__tests__/**/*.jest.test.{ts,tsx}',
+    '<rootDir>/src/widgets/__tests__/**/*.jest.test.{ts,tsx}',
   ],
   moduleNameMapper: {
     // Audio assets aren't transformed by the RN preset — stub them so a

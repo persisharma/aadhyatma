@@ -95,6 +95,7 @@ describe('MoreScreen (redesign)', () => {
     expect(byLabel(tree, 'Japam alarms, none set')).toBeDefined();
     expect(byLabel(tree, 'Language, Hindi')).toBeDefined();
     expect(byLabel(tree, 'Reading size, Standard')).toBeDefined();
+    expect(byLabel(tree, 'Home-Screen Widgets, new')).toBeDefined();
     expect(byLabel(tree, 'Rate the app')).toBeDefined();
     expect(byLabel(tree, 'Follow on Instagram')).toBeDefined();
     expect(byLabel(tree, 'About and disclaimer')).toBeDefined();
@@ -119,6 +120,8 @@ describe('MoreScreen (redesign)', () => {
     expect(nav.navigate).toHaveBeenCalledWith('Reminders');
     act(() => byLabel(tree, 'Japam alarms, none set').props.onPress());
     expect(nav.navigate).toHaveBeenCalledWith('JapamAlarms');
+    act(() => byLabel(tree, 'Home-Screen Widgets, new').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('WidgetGallery');
   });
 
   test('tapping Rate the app opens the rating sheet instead of leaving the app', async () => {

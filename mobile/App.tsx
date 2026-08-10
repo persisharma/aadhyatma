@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { View } from 'react-native';
+import { Linking, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -76,6 +76,8 @@ import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
+import WidgetCoordinator from '@/widgets/WidgetCoordinator';
+import { retryWidgetDeepLink } from '@/widgets/deepLink';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* noop — already prevented */
@@ -162,6 +164,23 @@ export default function App() {
     };
   }, [fontsReady]);
 
+  // WidgetKit/AppWidget taps arrive as ordinary app links. Retry a cold-start
+  // URL briefly until the navigation container is ready; warm links dispatch
+  // immediately through the same validated parser.
+  useEffect(() => {
+    if (!fontsReady) return undefined;
+    let cancelled = false;
+    const cancellations = new Set<() => void>();
+    const route = (url: string) => {
+      if (cancelled) return;
+      const cancel = retryWidgetDeepLink(url);
+      cancellations.add(cancel);
+    };
+    Linking.getInitialURL().then((url) => { if (url?.startsWith('vedansh://widget/')) route(url); }).catch(() => undefined);
+    const sub = Linking.addEventListener('url', ({ url }) => { if (url.startsWith('vedansh://widget/')) route(url); });
+    return () => { cancelled = true; cancellations.forEach((cancel) => cancel()); cancellations.clear(); sub.remove(); };
+  }, [fontsReady]);
+
   if (!fontsReady) {
     return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
   }
@@ -215,6 +234,7 @@ export default function App() {
                                 PanchangLocationProvider — the notification
                                 provider itself sits above it. */}
                             <DailyVerseAngaBridge />
+                            <WidgetCoordinator />
                             <MiniPlayer />
                             <NowPlayingScreen />
                             {/* Top-level so the spotlight overlays the tab bar +

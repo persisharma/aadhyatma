@@ -51,6 +51,7 @@ type RowProps = {
   stateFontFamily?: string;
   onPress: () => void;
   accessibilityLabel: string;
+  testID?: string;
   first?: boolean;
 };
 
@@ -66,11 +67,13 @@ function SettingsRow({
   stateFontFamily,
   onPress,
   accessibilityLabel,
+  testID,
   first,
 }: RowProps) {
   const { colors } = useTheme();
   return (
     <Pressable
+      testID={testID}
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
@@ -302,6 +305,19 @@ export default function MoreScreen({ navigation }: Props) {
                     accessibilityLabel={`Reading size, ${scale === 'L' ? 'Large' : 'Standard'}`}
                   />
                 </View>
+                <SettingsRow
+                  icon="▦"
+                  iconBg={colors.gold}
+                  iconFontFamily={fontFamilies.interSemiBold}
+                  iconFontSize={18}
+                  label={pick(lang, { hi: 'होम-स्क्रीन विजेट', en: 'Home-Screen Widgets', gu: 'હોમ-સ્ક્રીન વિજેટ', kn: 'ಹೋಮ್-ಸ್ಕ್ರೀನ್ ವಿಜೆಟ್' })}
+                  labelFontFamily={labelFont}
+                  state="NEW"
+                  stateFontFamily={fontFamilies.interSemiBold}
+                  onPress={() => navigation.navigate('WidgetGallery')}
+                  accessibilityLabel="Home-Screen Widgets, new"
+                  testID="more-home-widgets"
+                />
                 <SettingsRow
                   icon="↗"
                   iconBg={colors.saffron}
