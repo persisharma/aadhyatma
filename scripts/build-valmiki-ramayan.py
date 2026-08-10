@@ -348,10 +348,71 @@ def split_lines(text: str) -> list[str]:
     return [f"{part}{'॥' if index == len(parts) - 1 else '।'}" for index, part in enumerate(parts)]
 
 
+# The four rare/corrupt code points the structured export emits.
+#
+# CAUTION — this map is applied to the ROMANIZATION only, on purpose. It was written
+# to keep devanagari_to_iast() from emitting stray glyphs, and it silently became the
+# reason 7.16.48 shipped as linesEn "kṣhatritrayān" beside lines "क्षत्ऺित्रयान्": the
+# roman side got cleaned, the Devanagari side kept the dotted circle. Do NOT reach for
+# this map in clean_sanskrit() to make the Devanagari well-formed. ऺ→र turns
+# क्षत्ऺित्रयान् into क्षत्रित्रयान्, which merely hides the defect — the verse means
+# "Kshatriyas" (क्षत्रियान्), so the substitution is a guess, not a correction.
+# Malformed Devanagari must fail the build (see assert_devanagari_well_formed) and be
+# fixed against the source recension, never normalized away. RULEBOOK §11.3/§11.14.
+EXPORT_CODEPOINT_FIXES = str.maketrans({"ऱ": "र", "ऺ": "र", "ॆ": "े", "ॊ": "ो"})
+
+# Devanagari combining marks, by the role they play in a cluster. Used to reject
+# marks that have no legal base — see assert_devanagari_well_formed().
+_MATRAS = set(range(0x093A, 0x093C)) | set(range(0x093E, 0x094D)) | set(range(0x094E, 0x0950)) | set(
+    range(0x0955, 0x0958)
+) | set(range(0x0962, 0x0964))
+_BINDUS = set(range(0x0900, 0x0904))
+_VIRAMA = 0x094D
+_NUKTA = 0x093C
+_CONSONANTS = set(range(0x0915, 0x093A)) | set(range(0x0958, 0x0960)) | set(range(0x0978, 0x0980))
+_INDEPENDENT_VOWELS = set(range(0x0904, 0x0915)) | {0x0960, 0x0961} | set(range(0x0972, 0x0978))
+
+
+def assert_devanagari_well_formed(text: str, where: str) -> None:
+    """Reject any combining mark that has no legal base.
+
+    The pre-existing per-line guard only asked whether every character sits inside
+    U+0900–U+097F. An orphaned matra passes that test — it is a legal codepoint in an
+    illegal position — and HarfBuzz renders it as U+25CC DOTTED CIRCLE on device. That
+    membership-only check is why `क्षत्ऺित्रयान्`, a leading-virama line, and a stranded
+    visarga all shipped. Mirrors mobile/src/data/devanagariWellFormed.ts; keep in sync.
+    """
+    for index, char in enumerate(text):
+        code = ord(char)
+        if code not in _MATRAS and code not in _BINDUS and code not in (_VIRAMA, _NUKTA):
+            continue
+        prev = ord(text[index - 1]) if index else None
+        if prev is None:
+            kind = "mark at start"
+        elif not 0x0900 <= prev <= 0x097F:
+            kind = "mark after non-Devanagari char"
+        elif prev == _VIRAMA and (code in _MATRAS or code in _BINDUS):
+            kind = "matra after virama"
+        elif prev in _MATRAS and code in _MATRAS:
+            kind = "matra after matra"
+        elif prev in _MATRAS and code == _NUKTA:
+            kind = "nukta after matra"
+        elif prev in _BINDUS and (code in _MATRAS or code in (_NUKTA, _VIRAMA)):
+            kind = "mark after anusvara/visarga"
+        elif prev in _INDEPENDENT_VOWELS and (code in _MATRAS or code == _VIRAMA):
+            kind = "matra on independent vowel"
+        elif prev not in _CONSONANTS and prev != _NUKTA and prev not in _MATRAS and prev not in _BINDUS:
+            kind = "mark on non-base Devanagari char"
+        else:
+            continue
+        raise ValueError(
+            f"malformed Devanagari in {where}: {kind} "
+            f"(U+{code:04X} {char!r}) at index {index} of {text!r} — renders as U+25CC on device"
+        )
+
+
 def devanagari_to_iast(text: str) -> str:
-    # Normalize four rare/corrupt code points in the source export before the
-    # deterministic Devanagari-to-IAST pass.
-    text = text.translate(str.maketrans({"ऱ": "र", "ऺ": "र", "ॆ": "े", "ॊ": "ो"}))
+    text = text.translate(EXPORT_CODEPOINT_FIXES)
     output: list[str] = []
     i = 0
     while i < len(text):
@@ -536,6 +597,9 @@ def build(corpus_path: Path, hindi_dir: Path) -> None:
         for line in lines:
             if re.search(r"[^\u0900-\u097f\s।॥]", line):
                 raise ValueError(f"non-Sanskrit export artifact in {reference_key}: {line!r}")
+            # The check above is a character-set membership test and cannot see a
+            # combining mark sitting on the wrong base; this one can. RULEBOOK §11.14.
+            assert_devanagari_well_formed(line, reference_key)
         lines_en = [devanagari_to_iast(line) for line in lines]
         if not meaning_en:
             raise ValueError(f"missing English meaning for {reference_key}")
