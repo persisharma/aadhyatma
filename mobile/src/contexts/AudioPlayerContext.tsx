@@ -28,6 +28,10 @@ const PLAYABLE_TRACKS = AUDIO_TRACKS.filter((t) => hasRealAudio(t.id));
 const MIN_RATE = 0.5;
 const MAX_RATE = 1.5;
 const SKIP_SECONDS = 15;
+// How close to the reported duration counts as "the track ended". The status
+// tick is 500 ms and the final position often lands a hair short of duration,
+// so an exact compare would miss the ending on some platforms.
+const END_EPSILON_SEC = 0.35;
 
 type AudioPlayerContextValue = {
   currentTrack: AudioTrack | null;
@@ -158,28 +162,76 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     [player, status?.currentTime]
   );
 
-  const trackIndex = useCallback(
-    (offset: number) => {
+  /**
+   * The track `offset` positions from the current one within the playable set.
+   * `wrap` (the manual ◀◀/▶▶ buttons) rolls round the ends; without it the
+   * ends return `null`, which is what stops end-of-track auto-advance from
+   * looping the whole library forever.
+   */
+  const trackAtOffset = useCallback(
+    (offset: number, wrap: boolean) => {
       const list = PLAYABLE_TRACKS;
       if (list.length === 0) return null;
       if (!currentTrack) return list[0];
       const i = list.findIndex((t) => t.id === currentTrack.id);
       // If the current track isn't in the playable set, start from the first.
       const base = i === -1 ? 0 : i;
-      const next = (base + offset + list.length) % list.length;
-      return list[next];
+      const next = base + offset;
+      if (!wrap) return list[next] ?? null;
+      return list[(next + list.length) % list.length];
     },
     [currentTrack]
   );
 
   const skipToNext = useCallback(() => {
-    const t = trackIndex(1);
+    const t = trackAtOffset(1, true);
     if (t) playTrack(t);
-  }, [playTrack, trackIndex]);
+  }, [playTrack, trackAtOffset]);
   const skipToPrevious = useCallback(() => {
-    const t = trackIndex(-1);
+    const t = trackAtOffset(-1, true);
     if (t) playTrack(t);
-  }, [playTrack, trackIndex]);
+  }, [playTrack, trackAtOffset]);
+
+  // Latches for one full playback of the current source, so the auto-advance
+  // below fires exactly once per ending.
+  const finishedRef = useRef(false);
+
+  /**
+   * End-of-track auto-advance: when a track plays out, roll straight on to the
+   * next one — unless repeat is on, in which case the player's native `loop`
+   * restarts the same track and we stay put.
+   *
+   * `didJustFinish` is the primary signal, but it isn't emitted uniformly
+   * across platforms (see the note in `JapamAudioPlayer`), so a position that
+   * has reached the duration with playback stopped counts as an ending too.
+   * `finishedRef` keeps the two paths from double-firing, and re-arms as soon
+   * as playback moves off the end (a resume, a seek back, or a new source).
+   */
+  useEffect(() => {
+    if (!currentTrack || !status?.isLoaded) return;
+    // A freshly-replaced source hasn't started yet — ignore the trailing
+    // status of the track we just left.
+    if (wantPlayRef.current) return;
+
+    const duration = status.duration ?? 0;
+    const atEnd = duration > 0 && (status.currentTime ?? 0) >= duration - END_EPSILON_SEC;
+    const finished = status.didJustFinish === true || (atEnd && !status.playing);
+
+    if (!finished) {
+      if (!atEnd) finishedRef.current = false;
+      return;
+    }
+    if (finishedRef.current) return;
+    finishedRef.current = true;
+
+    // Repeat-one: the native loop flag already restarts this track.
+    if (player.loop) return;
+
+    // No wrap — at the end of the library playback simply stops, rather than
+    // cycling the catalog indefinitely in the background.
+    const next = trackAtOffset(1, false);
+    if (next) playTrack(next);
+  }, [status, currentTrack, player, playTrack, trackAtOffset]);
 
   const setRate = useCallback(
     (next: number) => {
