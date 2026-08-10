@@ -26,13 +26,34 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.4.6';
+export const APP_TOUR_VERSION = '1.4.7';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.4.7': {
+    version: '1.4.7',
+    items: [
+      {
+        titleHi: 'होम-स्क्रीन विजेट',
+        titleEn: 'Home-screen widgets',
+        bodyHi:
+          'अब होम स्क्रीन पर विजेट जोड़ें — दैनिक श्लोक, आज का पंचांग एवं जप गणना, ऐप खोले बिना एक नज़र में।',
+        bodyEn:
+          'Add widgets to your home screen — the daily verse, today’s Panchang and your Japam count, all at a glance without opening the app.',
+      },
+      {
+        titleHi: 'गुण मिलान · कुंडली अनुकूलता',
+        titleEn: 'Guna Milan · compatibility',
+        bodyHi:
+          'ज्योतिष में अष्टकूट गुण मिलान — दो कुंडलियों के बीच 36 गुणों पर आधारित विवाह अनुकूलता की गणना।',
+        bodyEn:
+          'Ashtakoota Guna Milan in Jyotish — 36-guna marriage compatibility scoring between two birth charts.',
+      },
+    ],
+  },
   '1.4.6': {
     version: '1.4.6',
     items: [
