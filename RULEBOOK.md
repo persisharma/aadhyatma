@@ -337,6 +337,8 @@ Deity `nameHi`/`nameEn` must use the popularly recognized devotional name that u
 A text must exist in exactly one location/category. Standalone Ashtak/Ashtakam texts (like Sankat Mochan Hanumanashtak) belong in the Ashtakam category — not duplicated in aarti or stotram. Before adding content, grep the repo for the text's first line to confirm it doesn't already exist elsewhere. Origin: Sankat Mochan existed in both aarti/ and hanuman-ashtak/ with different (both wrong) versions.
 
 ### 11.12 Transliteration integrity
+This section gates the **romanization** only. The Devanagari side has its own contract in **§11.14** — do not treat a green §11.12 as script validation, since every check here is a character-range test that cannot see a malformed cluster.
+
 No Devanagari characters (U+0900–U+097F) in `linesEn`/`transliteration` fields. No empty strings (use "(transliteration pending)" if unavailable). Correct romanization scheme per `design.md §3.1`: Sanskrit texts use IAST with Hunterian digraphs; Awadhi/Hindi uses pronunciation-based ASCII. Run `grep -rP '[ऀ-ॿ]'` on transliteration fields before shipping. Check IAST character-by-character against the Devanagari — common slips: anusvara (ṃ vs n/m), visarga (ḥ), retroflex consonants (ṭ/ḍ/ṇ vs t/d/n), and long vowels (ā/ī/ū). Origin: 23 Sundarkand lines had raw Devanagari, 19 Gita verses had transliteration spillover between adjacent verses.
 
 **No raw ITRANS / scheme-encoder residue.** `linesEn`/`transliteration` is the *reader-facing* romanization, never the raw encoder source it was derived from. The following are a hard reject anywhere in these fields — they mean an ITRANS/Harvard-Kyoto string was pasted in unconverted (the bug behind Krishna Stotram, Ramcharitmanas Mangalacharan, and three stotrams in the OTA audit):
@@ -381,6 +383,33 @@ Origin: the same raw-ITRANS paste recurred across Krishna Stotram, Ramcharitmana
 
 ### 11.13 Meaning faithfulness
 Hindi and English meanings must faithfully convey the verse's meaning without adding theological interpretation beyond what the verse states. Simplification for readability is fine; invention is not.
+
+### 11.14 Devanagari well-formedness — every combining mark needs a legal base
+Every Devanagari string that reaches a reader must be a valid sequence, not merely valid characters. A combining mark (matra, virama, nukta, anusvara/visarga) attached to a base that cannot carry it is rendered by HarfBuzz — on both iOS and Android — as **U+25CC DOTTED CIRCLE**, the stray `◌` a reader sees mid-word. Because gu/kn are derived at runtime by transliterating this same Devanagari (§3, `utils/transliterate.ts`), **one malformed cluster mis-renders in three of the four reading languages.**
+
+**Why the existing checks cannot catch it.** §11.12's gate, contentCorrectness §5's `DEVANAGARI_RANGE`, and the Valmiki builder's "non-Sanskrit export artifact" guard are all *character-set membership* tests — they ask whether a codepoint sits inside U+0900–U+097F. An orphaned matra passes every one of them: it is a perfectly legal codepoint in an illegal position. **There is no U+25CC in the data to grep for.** The defect is the sequence, so only a cluster-grammar check finds it. Never add a membership test and call the script validated.
+
+**The rules.** Rejected outright:
+
+| Sequence | Example shipped | Correct | Origin |
+|---|---|---|---|
+| matra after virama | `भक्ितयोगेन`, `निश्िचतं` | `भक्तियोगेन`, `निश्चितं` | legacy visual-order encoding converted without reordering the i-matra past the conjunct |
+| nukta after matra | `पितृ़न्`, `जो़ड़ना` | `पितॄन्`, `जोड़ना` | legacy fonts faked `ॄ` as `ृ`+nukta glyph pair; stray nukta in Hindi prose |
+| matra after matra | `मूिर्च्छत`, `धिार्मकं` | `मूर्च्छित`, `धार्मिकं` | OCR transposition |
+| mark after anusvara/visarga, on an independent vowel, on a danda/digit/avagraha, at string start, or after ZWJ/ZWNJ | `्वं`, `कोऽंशुमान्`, `महाबल ः` | — | truncated/garbled scrape rows |
+
+**Normalizing a defect away is a §11.3 violation.** Substituting a plausible character to silence the dotted circle turns visibly-broken scripture into invisibly-wrong scripture, which is worse. The Valmiki builder's `ऺ→र` map is the cautionary case: applied to the romanization it produced `linesEn: "kṣhatritrayān"` beside `lines: "क्षत्ऺित्रयान्"` — roman side clean, Devanagari side still dotted — and applying it to the Devanagari too would only yield `क्षत्रित्रयान्` when the verse means `क्षत्रियान्`. Malformed Devanagari **fails the build** and is fixed against the source recension.
+
+**Automated gates (all three, and they run in `npm test`).**
+1. `src/data/devanagariWellFormed.ts` — the one canonical rule. Generators, tests and scripts import it; do not reimplement it, partially or otherwise.
+2. `src/data/__tests__/devanagariWellFormed.test.ts` — sweeps every string in every shipped content JSON, unit-tests the validator, and reports the exact field path (`gita/chapter-14.json → verses[0].sanskrit[0]`). Wired into `npm run test:data`.
+3. `npm run verify:devanagari` (`mobile/scripts/verify-devanagari.mts`) — scans the **generator inputs** (`BhagwadGita/chapters/*.md`, the raw scrape, `mobile/src/data`). `scripts/parse-gita.mjs` calls it and refuses to regenerate while the source is dirty; `scripts/build-valmiki-ramayan.py`'s `assert_devanagari_well_formed()` raises per verse.
+
+**Fix the source, never the generated file.** `mobile/src/data/gita/*.json` is generated from `BhagwadGita/chapters/*.md` by `scripts/parse-gita.mjs` (a whitespace-only pass-through). A hand-patched JSON is erased by the next regeneration — that is why the earlier round of Gita corruption fixes (`scripts/fix-gita-*corruption.mjs`, which handled `?`-as-comma, Bengali danda `৷` and missing spaces) never touched this class and the count never moved.
+
+**`devanagariWellFormed.baseline.json` is a debt ledger, not a config knob.** It quarantines the 107 instances present when the gate was written so the gate can block *new* ones today. Every entry is a real reader-visible defect. It may only shrink; the test also fails when an entry is stale, so it cannot rot. **Adding an entry to turn a red build green is a rulebook violation** — fix the text.
+
+Origin: the reader reported a stray `◌` in BG 14.26 (`भक्ितयोगेन`). It was not a regression — `git log` over every commit that touched content shows the count strictly monotonic (98 from the first Gita import, 155 after the Valmiki corpus landed); **no commit ever reduced it.** 205 instances across the pipeline had been invisible to CI since the corpus was imported, because every check pointed at the romanization and none at the Devanagari. The July gu/kn spec surfaced the nukta subset, estimated it at "~6 Gita source strings", marked it out of scope, and never ticketed it — the real count was 47 shipped.
 
 ---
 
