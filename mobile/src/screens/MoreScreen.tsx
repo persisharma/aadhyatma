@@ -21,6 +21,10 @@ import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import LanguagePickerSheet from '@/components/LanguagePickerSheet';
 import ReadingSizePickerSheet, { readingSizeLabel } from '@/components/ReadingSizePickerSheet';
+import ReadAloudSettingsSheet, { readAloudRowLabel } from '@/components/ReadAloudSettingsSheet';
+import { READ_ALOUD_GLYPH } from '@/components/readAloud/ReadAloudButton';
+import { useReadAloudPrefs } from '@/contexts/ReadAloudPrefsContext';
+import { useReadAloud } from '@/contexts/ReadAloudContext';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 import type { TimeOfDay } from '@/notifications/pure';
 import type { MoreStackParamList } from '@/navigation/types';
@@ -114,6 +118,8 @@ export default function MoreScreen({ navigation }: Props) {
   const { open: openRatingPrompt } = useRatingPrompt();
   const { alarms: japamAlarms } = useJapamAlarms();
   const { scale } = useFontScale();
+  const { prefs: readAloudPrefs } = useReadAloudPrefs();
+  const { availability: readAloudAvailability } = useReadAloud();
   const activeJapamAlarms = japamAlarms.filter((a) => a.enabled);
   // Feature-tour spotlight targets (§47) — both rows sit in the "App" group,
   // below the fold on smaller devices, so each declares a reveal that scrolls
@@ -124,6 +130,7 @@ export default function MoreScreen({ navigation }: Props) {
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
   const [langSheet, setLangSheet] = useState(false);
   const [sizeSheet, setSizeSheet] = useState(false);
+  const [readAloudSheet, setReadAloudSheet] = useState(false);
 
   const hi = helpContent.hi;
   const en = helpContent.en;
@@ -305,6 +312,20 @@ export default function MoreScreen({ navigation }: Props) {
                     accessibilityLabel={`Reading size, ${scale === 'L' ? 'Large' : 'Standard'}`}
                   />
                 </View>
+                {/* Sits AFTER the two tour-target rows: RULEBOOK §6.1 pins the tour's
+                    final steps to Language + Reading Size, and the tour finds them by
+                    ref — so a row below them is safe as long as no tour step is added. */}
+                <SettingsRow
+                  icon={READ_ALOUD_GLYPH}
+                  iconBg={colors.saffronDeep}
+                  iconFontSize={15}
+                  label={pick(lang, { hi: 'पाठ सुनें', en: 'Read Aloud', gu: 'પાઠ સાંભળો', kn: 'ಪಾಠ ಕೇಳಿ' })}
+                  labelFontFamily={labelFont}
+                  state={readAloudRowLabel(readAloudPrefs, lang, readAloudAvailability)}
+                  stateFontFamily={chromeFont}
+                  onPress={() => setReadAloudSheet(true)}
+                  accessibilityLabel="Read aloud settings"
+                />
                 <SettingsRow
                   icon="▦"
                   iconBg={colors.gold}
@@ -407,6 +428,7 @@ export default function MoreScreen({ navigation }: Props) {
 
       <LanguagePickerSheet visible={langSheet} onClose={() => setLangSheet(false)} />
       <ReadingSizePickerSheet visible={sizeSheet} onClose={() => setSizeSheet(false)} />
+      <ReadAloudSettingsSheet visible={readAloudSheet} onClose={() => setReadAloudSheet(false)} />
 
       {/* Disclaimer Modal */}
       <Modal

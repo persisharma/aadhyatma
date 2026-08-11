@@ -37,6 +37,14 @@ export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
     version: '1.4.6',
     items: [
       {
+        titleHi: 'पाठ सुनें',
+        titleEn: 'Read aloud',
+        bodyHi:
+          'गीता और चालीसा पढ़ते समय ♪ दबाएँ — उपकरण की आवाज़ श्लोक और अर्थ पढ़ेगी, और पृष्ठ स्वयं आगे बढ़ते जाएँगे। गति व आवाज़ अन्य → पाठ सुनें में चुनें।',
+        bodyEn:
+          'Tap ♪ while reading the Gita or a Chalisa and your device voice reads the verse and its meaning, turning the pages as it goes. Pick the voice and speed in More → Read Aloud.',
+      },
+      {
         titleHi: 'वाल्मीकि रामायण',
         titleEn: 'Valmiki Ramayan',
         bodyHi:

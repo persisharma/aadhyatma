@@ -17,6 +17,8 @@ module.exports = {
     '<rootDir>/src/notifications/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/audio/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/data/__tests__/**/*.jest.test.{ts,tsx}',
+    // src/readAloud holds no tsx scripts, so the plain suffix is safe here.
+    '<rootDir>/src/readAloud/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/widgets/__tests__/**/*.jest.test.{ts,tsx}',
   ],
   moduleNameMapper: {
