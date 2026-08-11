@@ -31,6 +31,8 @@ import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from './_useReaderReadAloud';
 import type { RootStackParamList } from '@/navigation/types';
 
 type NextTransitionItem = {
@@ -106,6 +108,17 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   const listRef = useRef<FlatList<FlatListItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const hasNavigatedRef = useRef(false);
+
+  // Called before the null-chapter early return below, so hook order stays stable;
+  // with no chapter it simply has zero pages to speak.
+  const readAloud = useReaderReadAloud({
+    sourceId: 'bhagavad-gita',
+    data,
+    offset,
+    verseCount,
+    currentIndex,
+    listRef,
+  });
 
   useEffect(() => {
     if (chapter == null) return;
@@ -214,6 +227,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           title={topTitle}
           onBack={() => navigation.goBack()}
           backAccessibilityLabel="Back to chapters"
+          // Bare counter only — the read-aloud control now lives on the toggle row.
           sideWidth={60}
           right={
             <Text
@@ -234,9 +248,14 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
+        <View style={styles.toggleRow}>
           <LanguageToggle />
           <AddToRoutineButton sourceId="bhagavad-gita" chapter={chapter.chapter} />
+          {/* Pinned to the right edge so the toggle group stays centred; the read-aloud
+              pill (▶ + "सुनें") sits inline with the toggle, clear of the progress bar. */}
+          <View style={styles.readAloudSlot}>
+            <ReadAloudButton control={readAloud} />
+          </View>
         </View>
 
         <View style={styles.listContainer}>
@@ -366,9 +385,19 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   toggleRow: {
-    paddingVertical: 6,
-    paddingBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    gap: 18,
+    paddingTop: 6,
+    paddingBottom: 12,
+  },
+  readAloudSlot: {
+    position: 'absolute',
+    right: 16,
+    top: 6,
+    bottom: 12,
+    justifyContent: 'center',
   },
   listContainer: {
     flex: 1,

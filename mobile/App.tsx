@@ -57,6 +57,8 @@ import {
 } from '@/contexts/NotificationPreferencesContext';
 import { PanchangLocationProvider } from '@/contexts/PanchangLocationContext';
 import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext';
+import { ReadAloudPrefsProvider } from '@/contexts/ReadAloudPrefsContext';
+import { ReadAloudProvider } from '@/contexts/ReadAloudContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
@@ -192,6 +194,11 @@ export default function App() {
         <ThemeProvider>
           <GitaLanguageProvider>
             <AudioPlayerProvider>
+            {/* Read-aloud needs the reading language and its own prefs; it sits
+                inside AudioPlayerProvider so both register with the playback
+                arbiter that keeps recorded audio and TTS mutually exclusive. */}
+            <ReadAloudPrefsProvider>
+            <ReadAloudProvider>
             <BookmarksProvider>
               <VratFollowProvider>
               <UserActivityProvider>
@@ -266,6 +273,8 @@ export default function App() {
               </UserActivityProvider>
               </VratFollowProvider>
             </BookmarksProvider>
+            </ReadAloudProvider>
+            </ReadAloudPrefsProvider>
             </AudioPlayerProvider>
           </GitaLanguageProvider>
         </ThemeProvider>

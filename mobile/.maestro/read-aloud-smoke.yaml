@@ -1,0 +1,115 @@
+# Read Aloud (पाठ सुनें) Smoke Test — on-device TTS (design.md §53)
+#
+# Covers the two surfaces the feature ships on: the More → Read Aloud settings
+# sheet, and the in-reader control on Hanuman Chalisa.
+#
+# NATIVE BUILD ONLY. expo-speech is a native module, so this flow (like
+# bhajan-audio-smoke) cannot run under Expo Go.
+#
+# Two halves, deliberately split by determinism:
+#   • The settings sheet is fully deterministic — it renders and persists
+#     preferences whether or not the device has a voice installed. Asserted hard.
+#   • The in-reader speaking assertions depend on the device actually having a voice
+#     for the ACTIVE READING LANGUAGE — Hindi here, since that is the default.
+#     Read-aloud never substitutes another language, so a bare CI emulator with no
+#     Hindi voice renders the control MUTED ("Read aloud unavailable") by design.
+#     Those steps are therefore `optional: true` — the control's presence is still
+#     asserted, only the play/pause transition is allowed to be skipped.
+#
+# Selector notes:
+#   • Read-aloud a11y labels are English and un-localized on purpose (same rule
+#     as ReaderHeader's "Back"): "Read aloud" / "Pause reading aloud" /
+#     "Read aloud unavailable", plus "Read aloud settings" for the More row.
+#     The default reading language is `hi`, so localized labels would break e2e.
+#   • RateStepper's buttons are "Slower" / "Faster", also un-localized.
+#   • The rate value renders as "1.2" and "×" in separate Text children, so it is
+#     matched with a wildcard rather than the literal "1.2×".
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── Part 1: the settings sheet (deterministic) ────────────────────────────────
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Read aloud settings"
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- tapOn: "Read aloud settings"
+- waitForAnimationToEnd
+
+# Sheet header — "पाठ सुनें" in the default Hindi reading language.
+- extendedWaitUntil:
+    visible: "पाठ सुनें"
+    timeout: 10000
+
+# Speed stepper: 1.0 → 1.2 via two taps on Faster.
+- tapOn: "Faster"
+- tapOn: "Faster"
+- assertVisible: "1.2.*"
+
+# Step back down so the flow leaves the persisted rate as it found it — this
+# preference survives app restarts and would otherwise leak into other flows.
+- tapOn: "Slower"
+- tapOn: "Slower"
+- assertVisible: "1.0.*"
+
+# "What to read" — meaning is ON by default; toggle commentary on and back off.
+- tapOn: "Read commentary"
+- tapOn: "Read commentary"
+
+# Preview only exists when a voice is installed; skip cleanly when it is not.
+- tapOn:
+    text: "Preview voice"
+    optional: true
+
+- tapOn: "हो गया"
+- waitForAnimationToEnd
+
+# ── Part 2: the in-reader control on Hanuman Chalisa ──────────────────────────
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- assertVisible: "Chalisa\\..*Tap to open\\."
+- tapOn: "Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Hanuman Chalisa\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Hanuman Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# A resume sheet can intercept if a previous flow left reading progress.
+- tapOn:
+    text: "शुरू से पढ़ें|Start from beginning"
+    optional: true
+
+# The control is always present in the reader top bar — either actionable or
+# muted-and-disabled when the device has no Hindi voice. One of the two must show.
+- extendedWaitUntil:
+    visible: "Read aloud|Read aloud unavailable"
+    timeout: 15000
+
+# Speak → pause → back to idle. Optional because a voiceless device shows only
+# the muted control and these taps have nothing to act on.
+- tapOn:
+    text: "Read aloud"
+    optional: true
+- assertVisible:
+    text: "Pause reading aloud"
+    optional: true
+- tapOn:
+    text: "Pause reading aloud"
+    optional: true
+- assertVisible:
+    text: "Read aloud"
+    optional: true
+
+# Leaving the reader must end the session — verified by unit test; here we just
+# confirm the navigation still works with the control mounted.
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+
+- stopApp
