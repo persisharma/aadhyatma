@@ -29,6 +29,15 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Skip tour"
     optional: true
+# The post-tour setup sheet asks for reading language + size before Home is
+# reachable. Pick English (also satisfies the English-assertion baseline) and
+# confirm with Begin.
+- tapOn:
+    text: "English"
+    optional: true
+- tapOn:
+    text: "Begin|आरंभ करें"
+    optional: true
 - tapOn:
     text: "Close"
     optional: true
@@ -96,12 +105,23 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: ".*tap to change year"
 - tapOn: "Month August"
+# The year list is a ScrollView inside a transparent Modal; Maestro's
+# scrollUntilVisible can't drive that inner scroller, but coordinate swipes do
+# (see the e2e-verification runbook). 1992 is ~34 rows below 2026 ≈ 4 swipes.
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "50%, 70%"
+          end: "50%, 50%"
+          duration: 250
 - tapOn: "Year 1992"
 - tapOn: "14 August 1992"
 - tapOn: "Confirm date"
 - waitForAnimationToEnd
 # Birth time via the reminder-style stepper. Tapping the field commits the 06:00
-# default and reveals the stepper; step down 18 minutes to reach 05:42 AM.
+# default and reveals the stepper; step down 18 minutes to reach 05:42 AM, then
+# tap the field again to collapse the stepper so Generate clears the tab bar.
 - tapOn:
     id: "kundali-time-input"
 - waitForAnimationToEnd
@@ -109,6 +129,9 @@ appId: com.prashantsharma.vedansh
     times: 18
     commands:
       - tapOn: "Decrease Minute"
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
 
 # No city is silently preselected. Pin the golden-fixture city explicitly.
 - scrollUntilVisible:
