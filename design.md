@@ -2098,7 +2098,7 @@ unreachable under `clearState`, so the gate is unit-tested instead.
 
 **Motion (§11).** One sway: ±0.7° rotation about the string's tie-line (`transformOrigin: '50% 0%'`), 6 s per full alternate cycle, native driver. `useReducedMotion()` hangs the garland still — no other animation exists on the surface.
 
-**Layout.** The component always occupies its fixed `TORAN_HEIGHT` (74 dp: 46 garland + chip), so once mounted it can never nudge the Today strip (the §48 reserved-height lesson). It scrolls away with the wordmark — deliberately not pinned.
+**Layout.** The component always occupies its fixed `TORAN_HEIGHT` (90 dp: 46 garland + ~26 chip + ~16 clearance so the greeting chip never touches the Today strip's Panchang banner below it), so once mounted it can never nudge the Today strip (the §48 reserved-height lesson). It scrolls away with the wordmark — deliberately not pinned.
 
 **A11y (§12).** The garland is decorative: `accessibilityElementsHidden` + `importantForAccessibility="no-hide-descendants"`. The chip's greeting text is the surface's one accessible element.
 

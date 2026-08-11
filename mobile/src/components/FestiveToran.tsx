@@ -24,7 +24,9 @@ import { useReducedMotion } from '@/utils/useReducedMotion';
  *    nudge the Today strip once mounted.
  */
 
-export const TORAN_HEIGHT = 74;
+// 46 garland + ~26 chip (top offset 48 + ~25 tall) + ~16 clearance so the
+// greeting chip never kisses the Today strip's Panchang banner below it.
+export const TORAN_HEIGHT = 90;
 const GARLAND_HEIGHT = 46;
 
 /**
