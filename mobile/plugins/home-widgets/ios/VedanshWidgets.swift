@@ -7,10 +7,18 @@ private let payloadName = "widget-payload-v1.json"
 // One reviewed mapping of the app's theme tokens (design.md §2) into the widget
 // target, so a token value lives in exactly one place instead of scattered RGB
 // literals that drift shade-by-shade (PRD-15 §9).
+// The widget background is always the light parchment (containerBackground
+// below), so text MUST NOT use SwiftUI's scheme-adaptive .primary/.secondary —
+// those invert to light shades in dark mode and vanish on the fixed cream, and
+// even in light mode .secondary renders a washed-out gray below AA on parchment.
+// Every glyph therefore gets an explicit ink/inkMuted token here, matching the
+// app tokens (colors.ts) and the in-app gallery preview.
 enum WidgetTheme {
-  static let parchment = Color(red: 0.97, green: 0.94, blue: 0.84)   // colors.parchment
-  static let saffronDeep = Color(red: 0.48, green: 0.22, blue: 0.13) // colors.saffronDeep
-  static let gold = Color(red: 0.65, green: 0.49, blue: 0.20)        // colors.gold
+  static let parchment = Color(red: 0.973, green: 0.937, blue: 0.839) // colors.parchmentSoft #F8EFD6 (card surface, matches Android)
+  static let ink = Color(red: 0.102, green: 0.055, blue: 0.012)       // colors.ink #1A0E03
+  static let inkMuted = Color(red: 0.431, green: 0.322, blue: 0.188)  // colors.inkMuted #6E5230 (~5.9:1 on parchment)
+  static let saffronDeep = Color(red: 0.541, green: 0.243, blue: 0.043) // colors.saffronDeep #8A3E0B
+  static let gold = Color(red: 0.651, green: 0.486, blue: 0.204)      // colors.gold #A67C34
 }
 
 private extension View {
@@ -94,17 +102,17 @@ struct VedanshWidgetView: View {
       if let p = p {
         VStack(alignment: .leading, spacing: 5) {
           Text("\(p.representedDate.value(lang)) · \(payload.panchang.cityLabel.value(lang))").font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep)
-          Text(p.tithi.value(lang)).font(.custom(fontName(lang, bold: true), size: 21)).lineLimit(1)
-          if let vrat = p.vrat { Text(vrat.value(lang)).font(.custom(fontName(lang, bold: false), size: 12)).lineLimit(1) }
-          Text("\(p.sunrise.value(lang))   \(p.rahuKaal.value(lang))").font(.system(size: 10, weight: .semibold)).lineLimit(1)
+          Text(p.tithi.value(lang)).font(.custom(fontName(lang, bold: true), size: 21)).foregroundStyle(WidgetTheme.ink).lineLimit(1)
+          if let vrat = p.vrat { Text(vrat.value(lang)).font(.custom(fontName(lang, bold: false), size: 12)).foregroundStyle(WidgetTheme.inkMuted).lineLimit(1) }
+          Text("\(p.sunrise.value(lang))   \(p.rahuKaal.value(lang))").font(.system(size: 10, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted).lineLimit(1)
           brand()
         }.widgetURL(URL(string: p.deepLink)).accessibilityElement(children: .combine)
       } else { recovery("पंचांग ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh") }
     } else if let v = v {
       VStack(alignment: .leading, spacing: 7) {
         Text(lang == "en" ? "TODAY'S VERSE" : "आज का श्लोक").font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep)
-        Text(v.excerpt.value(lang)).font(.custom(fontName(lang, bold: false), size: 15)).lineLimit(2).minimumScaleFactor(0.85)
-        Text(v.source.value(lang)).font(.system(size: 10, weight: .semibold)).foregroundStyle(.secondary).lineLimit(1)
+        Text(v.excerpt.value(lang)).font(.custom(fontName(lang, bold: false), size: 15)).foregroundStyle(WidgetTheme.ink).lineLimit(2).minimumScaleFactor(0.85)
+        Text(v.source.value(lang)).font(.system(size: 10, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted).lineLimit(1)
         brand()
       }.widgetURL(URL(string: v.deepLink)).accessibilityLabel(v.accessibilityLabel.value(lang))
     } else { recovery("विजेट ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh") }
@@ -120,8 +128,8 @@ struct VedanshWidgetView: View {
     } else {
       VStack(alignment: .leading, spacing: 8) {
         Text(lang == "en" ? "JAPAM PRACTICE" : "जप-साधना").font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep)
-        Text("\(payload.japam.totalBeads) / 108").font(.custom(fontName(lang, bold: true), size: 27))
-        Text(lang == "en" ? "\(payload.japam.totalRounds) rounds · \(payload.japam.japaStreak) days" : "\(payload.japam.totalRounds) माला · \(payload.japam.japaStreak) जप-दिन").font(.system(size: 11, weight: .semibold)).foregroundStyle(.secondary)
+        Text("\(payload.japam.totalBeads) / 108").font(.custom(fontName(lang, bold: true), size: 27)).foregroundStyle(WidgetTheme.ink)
+        Text(lang == "en" ? "\(payload.japam.totalRounds) rounds · \(payload.japam.japaStreak) days" : "\(payload.japam.totalRounds) माला · \(payload.japam.japaStreak) जप-दिन").font(.system(size: 11, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted)
         brand()
       }.widgetURL(URL(string: payload.japam.deepLink)).accessibilityElement(children: .combine)
     }
@@ -129,7 +137,7 @@ struct VedanshWidgetView: View {
 
   private func recovery(_ hi: String, _ en: String) -> some View {
     let key = widgetDateKey(entry.date, timeZone: widgetIstTimeZone)
-    return VStack(alignment: .leading, spacing: 8) { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 13)); Text(hi).font(.custom("NotoSerifDevanagari-Medium", size: 13)); Text(en).font(.system(size: 10, weight: .semibold)).foregroundStyle(.secondary) }
+    return VStack(alignment: .leading, spacing: 8) { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 13)).foregroundStyle(WidgetTheme.ink); Text(hi).font(.custom("NotoSerifDevanagari-Medium", size: 13)).foregroundStyle(WidgetTheme.ink); Text(en).font(.system(size: 10, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted) }
       .widgetURL(URL(string: "vedansh://widget/panchang?date=\(key)"))
   }
   private func brand() -> some View { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 10)).foregroundStyle(WidgetTheme.gold) }
