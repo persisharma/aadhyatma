@@ -18,6 +18,11 @@ const audioLibrary: Record<string, AudioSource> = {
   'govinda-hari-govinda': require('./govinda-hari-govinda.mp3'),
   'har-har-bhole': require('./har-har-bhole.mp3'),
   'mahamrityunjay-mantra': require('./mahamrityunjay-mantra.mp3'),
+  'govind-bolo': require('./govind-bolo.mp3'),
+  'om-gam-ganapataye-namah': require('./om-gam-ganapataye-namah.mp3'),
+  'narayan-hari-hari': require('./narayan-hari-hari.mp3'),
+  'jai-nandlal-ki': require('./jai-nandlal-ki.mp3'),
+  'krishnaya-vasudevaya': require('./krishnaya-vasudevaya.mp3'),
 };
 
 /** True when a real recording is bundled for this track id. */

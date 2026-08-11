@@ -2,6 +2,7 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 import RoutineBanner from '@/components/RoutineBanner';
+import { TilePressProvider, useTilePressController } from '@/contexts/TilePressContext';
 
 // ---- mutable mock state (reset in beforeEach) ----
 let mockLang: 'hi' | 'en' = 'hi';
@@ -78,6 +79,45 @@ describe('RoutineBanner — nudge (no routine)', () => {
     const pressable = tree.root.findAll((n) => typeof n.props?.onPress === 'function')[0];
     act(() => pressable.props.onPress());
     expect(mockNavigate).toHaveBeenCalledWith('HomeTab', { screen: 'RoutineCreate' });
+  });
+});
+
+describe('RoutineBanner — first-tap recovery (Home ScrollView)', () => {
+  // On Home the banner lives inside the vertical ScrollView, where iOS can
+  // cancel a plain Pressable's onPress on the very first tap. Like every other
+  // Home card, the banner must route its press through the shared TilePress
+  // controller so a no-drag press still navigates via the one-tick fallback.
+  function TilePressHarness({ variant }: { variant?: 'docked' | 'inline' }) {
+    const controller = useTilePressController();
+    return (
+      <TilePressProvider value={controller}>
+        <RoutineBanner variant={variant} />
+      </TilePressProvider>
+    );
+  }
+
+  it('navigates via the fallback when the first-tap onPress is swallowed', () => {
+    jest.useFakeTimers();
+    try {
+      mockToday = { hasRoutine: true, doneCount: 1, total: 3 };
+      let tree!: TestRenderer.ReactTestRenderer;
+      act(() => {
+        tree = TestRenderer.create(<TilePressHarness variant="inline" />);
+      });
+      const pressable = tree.root.findAll((n) => typeof n.props?.onPressIn === 'function')[0];
+      // Simulate the swallowed tap: pressIn + pressOut fire, but onPress never does.
+      act(() => {
+        pressable.props.onPressIn();
+        pressable.props.onPressOut();
+      });
+      expect(mockNavigate).not.toHaveBeenCalled();
+      act(() => {
+        jest.runAllTimers();
+      });
+      expect(mockNavigate).toHaveBeenCalledWith('HomeTab', { screen: 'RoutineToday' });
+    } finally {
+      jest.useRealTimers();
+    }
   });
 });
 

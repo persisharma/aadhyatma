@@ -1,23 +1,34 @@
-// Bundled city list for location-aware panchang. Deliberately coarse: sunrise shifts
-// ~4 min per degree of longitude, so major cities + pilgrimage centres are all the
-// granularity that meaningfully changes the computed panchang. GPS fixes are snapped
-// to the nearest entry so every location the engine ever sees has a stable cityId
-// (finite cache keys) and an offline Hindi/English label (no reverse geocoding).
-// India-only for v1: the engine and the precomputed observance tables assume the
-// device-local day boundary ≈ IST.
+// Bundled city list for location-aware panchang, in two tiers: `MAJOR_CITIES` covers
+// the country coarsely (sunrise shifts ~4 min per degree of longitude, so state
+// capitals + pilgrimage centres are enough to change the computed panchang
+// meaningfully), and `RAJASTHAN_TEHSILS` fills one state in at tehsil granularity.
+// GPS fixes are snapped to the nearest entry so every location the engine ever sees
+// has a stable cityId (finite cache keys) and an offline Hindi/English label (no
+// reverse geocoding). India-only for v1: the engine and the precomputed observance
+// tables assume the device-local day boundary ≈ IST.
 import { UJJAIN_CITY_ID, UJJAIN_GEO } from './engine';
+import { RAJASTHAN_TEHSILS } from './rajasthanTehsils';
 import type { LocationSource, PanchangLocation } from './types';
 
 export type City = {
   id: string;
   nameHi: string;
   nameEn: string;
+  /**
+   * Parent district, present only on the tehsil-level entries. Tehsil names repeat
+   * across Rajasthan (Rajgarh, Ramgarh, Shahpura…), so the picker needs it to tell
+   * two rows apart, and search matches on it.
+   */
+  districtHi?: string;
+  districtEn?: string;
   latitude: number;
   longitude: number;
   elevation: number;
 };
 
-export const CITIES: City[] = [
+// Major cities and pilgrimage centres, nationwide. Ujjain must stay first —
+// `DEFAULT_LOCATION` is `CITIES[0]`.
+export const MAJOR_CITIES: City[] = [
   { id: UJJAIN_CITY_ID, nameHi: 'उज्जैन', nameEn: 'Ujjain', latitude: UJJAIN_GEO.latitude, longitude: UJJAIN_GEO.longitude, elevation: UJJAIN_GEO.elevation },
   { id: 'agra', nameHi: 'आगरा', nameEn: 'Agra', latitude: 27.1767, longitude: 78.0081, elevation: 171 },
   { id: 'ahmedabad', nameHi: 'अहमदाबाद', nameEn: 'Ahmedabad', latitude: 23.0225, longitude: 72.5714, elevation: 53 },
@@ -72,10 +83,31 @@ export const CITIES: City[] = [
   { id: 'visakhapatnam', nameHi: 'विशाखापत्तनम', nameEn: 'Visakhapatnam', latitude: 17.6868, longitude: 83.2185, elevation: 45 },
 ];
 
+// The picker partitions this on `districtEn` into two labelled groups, so the order
+// here only sets the order *within* each group — but keep the tehsils last anyway, so
+// the flat list reads the same way the picker renders it.
+export const CITIES: City[] = [...MAJOR_CITIES, ...RAJASTHAN_TEHSILS];
+
 const cityById = new Map(CITIES.map((city) => [city.id, city] as const));
 
 export function getCityById(id: string): City | undefined {
   return cityById.get(id);
+}
+
+/**
+ * Shared search predicate for both city pickers: matches the English or Hindi name
+ * and, for tehsils, the parent district — so "alwar" surfaces every tehsil in Alwar,
+ * not just the town.
+ */
+export function cityMatchesQuery(city: City, query: string): boolean {
+  const needle = query.trim().toLowerCase();
+  if (!needle) return true;
+  return (
+    city.nameEn.toLowerCase().includes(needle) ||
+    city.nameHi.includes(needle) ||
+    (city.districtEn?.toLowerCase().includes(needle) ?? false) ||
+    (city.districtHi?.includes(needle) ?? false)
+  );
 }
 
 export function toPanchangLocation(city: City, source: LocationSource): PanchangLocation {

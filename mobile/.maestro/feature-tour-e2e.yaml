@@ -36,7 +36,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Open More and replay the tour ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

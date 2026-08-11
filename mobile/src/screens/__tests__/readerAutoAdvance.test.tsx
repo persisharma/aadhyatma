@@ -47,6 +47,9 @@ const saraswati = jest.requireActual<typeof import('@/data/saraswati-stotram')>(
 const vishnu = jest.requireActual<typeof import('@/data/vishnu-sahasranama')>(
   '@/data/vishnu-sahasranama'
 );
+const valmiki = jest.requireActual<typeof import('@/data/valmiki-ramayan')>(
+  '@/data/valmiki-ramayan'
+);
 
 const DurgaScreen = jest.requireActual<typeof import('../DurgaStotramReaderScreen')>(
   '../DurgaStotramReaderScreen'
@@ -59,6 +62,9 @@ const SaraswatiScreen = jest.requireActual<typeof import('../SaraswatiStotramRea
 ).default;
 const VishnuScreen = jest.requireActual<typeof import('../VishnuSahasranamaReaderScreen')>(
   '../VishnuSahasranamaReaderScreen'
+).default;
+const ValmikiScreen = jest.requireActual<typeof import('../ValmikiRamayanReaderScreen')>(
+  '../ValmikiRamayanReaderScreen'
 ).default;
 
 type AnyScreen = (props: { navigation: any; route: any }) => React.ReactElement | null;
@@ -96,6 +102,12 @@ const READERS: ReaderCase[] = [
     routeName: 'VishnuSahasranamaReader',
     Screen: VishnuScreen,
     chapterCount: vishnu.vishnuSahasranamaChaptersManifest.length,
+  },
+  {
+    name: 'Valmiki Ramayan',
+    routeName: 'ValmikiRamayanReader',
+    Screen: ValmikiScreen,
+    chapterCount: valmiki.valmikiRamayanChaptersManifest.length,
   },
 ];
 

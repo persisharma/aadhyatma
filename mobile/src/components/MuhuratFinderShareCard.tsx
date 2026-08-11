@@ -21,7 +21,7 @@ function monthName(d: Date, lang: Lang): string {
 }
 
 /**
- * The finder's shareable day card (PRD-16; design.md §53) — captured
+ * The finder's shareable day card (PRD-16; design.md §60) — captured
  * off-screen to a PNG, same pipeline as MuhuratCardBody's share variant.
  * Carries no personal data by construction: occasion, date, panchang line,
  * tier + convention, windows, brand. Never rendered for excluded days.

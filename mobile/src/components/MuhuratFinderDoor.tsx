@@ -7,7 +7,7 @@ import { scriptTitleFont } from '@/utils/langType';
 
 /**
  * The Panchang tab's door into the Event Muhurat Finder (PRD-16; design.md
- * §33/§53). Sits between the Daily Muhurat glance card and the anga grid —
+ * §33/§60). Sits between the Daily Muhurat glance card and the anga grid —
  * the reader of "is now auspicious?" is the user with a date decision to
  * make. One row, additive; the glance card and tiles are untouched.
  */

@@ -25,7 +25,7 @@ function weekdayName(dateMs: number, lang: Lang): string {
 }
 
 /**
- * Ranked results — answer-first (design.md §53): the best window is the
+ * Ranked results — answer-first (design.md §60): the best window is the
  * dominant element on each card; the factor breakdown lives on the day detail
  * behind "यह तिथि क्यों?". Two tiers only, never a score (the Rashifal
  * no-luck-score rule). A zero-result window renders the empty-with-reason

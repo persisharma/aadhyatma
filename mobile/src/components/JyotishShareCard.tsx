@@ -21,7 +21,42 @@ import type { BirthProfile } from '@/panchang/useKundali';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { isLatinLang, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+
+/** Share-image geometry, shared by both cards so the two can't drift apart. */
+const CARD_ASPECT = 4 / 5;
+const CARD_PADDING_RATIO = 0.051;
+
+/**
+ * Leading for the 10 pt micro lines (header meta, method/trust footers). Devanagari
+ * matras clip below ~1.4× leading — the same trap design.md §3.0 records for the
+ * Panchang calendar `dateTag` — and all three of those lines shipped at
+ * `lineHeight === fontSize`, which sits the first baseline so high that the top of
+ * the line is sliced off: the Kundali header read "जन्म कुंडला" for कुंडली and its
+ * method footer lost its shirorekha (reported August 2026).
+ */
+const MICRO_LEADING = 14;
+
+/**
+ * Fixed-height chrome stacked around the diagram inside the Kundali card, in dp:
+ * brand header + rule, the name/date lockup, the chart's top margin, the chip row,
+ * and the two-line method footer. None of it scales with card width — it is type at
+ * fixed point sizes — so the diagram has to take the height that is *left* rather
+ * than a flat fraction of the width. Sizing it `width * 0.61` overran the fixed 4:5
+ * box on every card narrower than ~334 dp (a 360 dp phone gets 312), which pushed
+ * the footer into the padding and then out through the card's `overflow: 'hidden'`.
+ */
+const KUNDALI_CHROME_HEIGHT = 196;
+
+/**
+ * The diagram size that leaves the method footer its full height inside the 4:5 box.
+ * Capped at the historic 208 / 61%-of-width so a wide card never grows past today's
+ * chart; floored well below any real card width so the value stays positive.
+ */
+export function kundaliChartSize(width: number): number {
+  const contentHeight = width / CARD_ASPECT - width * CARD_PADDING_RATIO * 2;
+  return Math.max(96, Math.min(208, width * 0.61, contentHeight - KUNDALI_CHROME_HEIGHT));
+}
 
 type RashifalProps = {
   kind: 'rashifal';
@@ -76,6 +111,32 @@ function signPair(lang: Lang, index: number): { primary: string; secondary: stri
     primary: contentByLang(lang, RASHI_NAMES_HI[index], RASHI_NAMES_EN[index]),
     secondary: lang === 'en' ? RASHI_NAMES_WESTERN[index] : RASHI_NAMES_EN[index],
   };
+}
+
+/**
+ * The two-line label at the right of the brand row. It carries reading-language
+ * content, so it needs a face that actually has the script: Inter (the chrome face)
+ * has no Indic glyphs, and while the OS still draws the text through its fallback,
+ * that fallback's metrics are taller than anything a fixed leading here could
+ * predict. Route hi/gu/kn to the script serif and keep Inter for English.
+ */
+function CardMeta({ lang, children }: { lang: Lang; children: React.ReactNode }) {
+  const { colors } = useTheme();
+  return (
+    <Text
+      style={[
+        styles.meta,
+        {
+          color: colors.inkMuted,
+          fontFamily: isLatinLang(lang)
+            ? fontFamilies.interSemiBold
+            : scriptTitleFont(lang, fontFamilies.devanagariBold),
+        },
+      ]}
+    >
+      {children}
+    </Text>
+  );
 }
 
 function BrandHeader({
@@ -144,10 +205,10 @@ function RashifalShareCard(props: RashifalProps) {
         styles.card,
         {
           width: props.width,
-          aspectRatio: 4 / 5,
+          aspectRatio: CARD_ASPECT,
           borderColor: colors.saffronDeep,
           borderRadius: radii.lg,
-          padding: props.width * 0.051,
+          padding: props.width * CARD_PADDING_RATIO,
         },
       ]}
     >
@@ -167,11 +228,11 @@ function RashifalShareCard(props: RashifalProps) {
       <BrandHeader
         lang={props.lang}
         right={(
-          <Text style={[styles.meta, { color: colors.inkMuted }]}>
+          <CardMeta lang={props.lang}>
             {contentByLang(props.lang, 'आज का राशिफल', 'Daily Rashifal')}
             {'\n'}
             {formatDate(props.date)}
-          </Text>
+          </CardMeta>
         )}
       />
       <View style={styles.signLockup}>
@@ -294,7 +355,7 @@ function RashifalShareCard(props: RashifalProps) {
             color: colors.inkMuted,
             fontFamily: scriptBodyFont(props.lang, typography.meaning.fontFamily),
             fontSize: 10,
-            lineHeight: 10,
+            lineHeight: MICRO_LEADING,
             textAlign: 'center',
           }}
         >
@@ -330,7 +391,7 @@ function KundaliShareCard(props: KundaliProps) {
   const currentDasha = getCurrentDasha(props.chart, new Date());
   const lagna = signPair(props.lang, props.chart.lagnaRashiIndex);
   const moonSign = signPair(props.lang, moon.rashiIndex);
-  const chartSize = Math.min(208, props.width * 0.61);
+  const chartSize = kundaliChartSize(props.width);
 
   return (
     <LinearGradient
@@ -339,10 +400,10 @@ function KundaliShareCard(props: KundaliProps) {
         styles.card,
         {
           width: props.width,
-          aspectRatio: 4 / 5,
+          aspectRatio: CARD_ASPECT,
           borderColor: colors.saffronDeep,
           borderRadius: radii.lg,
-          padding: props.width * 0.051,
+          padding: props.width * CARD_PADDING_RATIO,
         },
       ]}
     >
@@ -362,11 +423,11 @@ function KundaliShareCard(props: KundaliProps) {
       <BrandHeader
         lang={props.lang}
         right={(
-          <Text style={[styles.meta, { color: colors.inkMuted }]}>
+          <CardMeta lang={props.lang}>
             {contentByLang(props.lang, 'जन्म कुंडली', 'Birth Kundali')}
             {'\n'}
             {contentByLang(props.lang, 'लाहिरी · पूर्ण राशि भाव', 'Lahiri · Whole-sign houses')}
-          </Text>
+          </CardMeta>
         )}
       />
       <View style={styles.kundaliHeading}>
@@ -435,7 +496,7 @@ function KundaliShareCard(props: KundaliProps) {
             color: colors.inkMuted,
             fontFamily: scriptBodyFont(props.lang, typography.meaning.fontFamily),
             fontSize: 10,
-            lineHeight: 10,
+            lineHeight: MICRO_LEADING,
             textAlign: 'center',
           }}
         >
@@ -490,9 +551,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   meta: {
-    fontFamily: fontFamilies.interSemiBold,
+    // fontFamily comes from CardMeta — it is script-dependent.
     fontSize: 10,
-    lineHeight: 10,
+    lineHeight: MICRO_LEADING,
     textAlign: 'right',
   },
   rule: {

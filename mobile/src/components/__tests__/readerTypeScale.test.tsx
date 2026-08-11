@@ -63,6 +63,12 @@ const { getBajrangBaanChapter } = jest.requireActual<typeof import('@/data/bajra
   '@/data/bajrang-baan'
 );
 const { getSanskar } = jest.requireActual<typeof import('@/data/sanskar')>('@/data/sanskar');
+const ValmikiRamayanVersePage = jest.requireActual<typeof import('../ValmikiRamayanVersePage')>(
+  '../ValmikiRamayanVersePage'
+).default;
+const { getValmikiRamayanChapter } = jest.requireActual<typeof import('@/data/valmiki-ramayan')>(
+  '@/data/valmiki-ramayan'
+);
 
 const MEANING_EN = typography.meaningEnglish.fontSize;
 const MEANING_HI = typography.meaning.fontSize;
@@ -152,6 +158,16 @@ describe('reader type scale — rendered per component', () => {
     );
     if (!verse) throw new Error('no suitable Bajrang Baan verse fixture');
     const el = <BajrangBaanVersePage verse={verse} sourceId="bajrang-baan" width={375} />;
+    expect(fontSizeOf(el, 'en', verse.linesEn[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
+    expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
+  });
+
+  test('ValmikiRamayanVersePage (Sundarkand re-export): verse 24 > meaning 20; Hindi meaning 20', () => {
+    const verse = getValmikiRamayanChapter(1).verses[0];
+    const el = (
+      <ValmikiRamayanVersePage verse={verse} sourceId="valmiki-ramayan" width={375} />
+    );
     expect(fontSizeOf(el, 'en', verse.linesEn[0])).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);

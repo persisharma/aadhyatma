@@ -79,6 +79,13 @@ fallback rather than treating generated prose as verified native translation.
 
 ## Gotchas
 
+- **A malformed Devanagari cluster breaks three languages, not one.** gu/kn are transliterated from
+  the Devanagari at runtime and the mapping is faithful, so a combining mark on an illegal base
+  (matra after virama, nukta after matra, …) renders as `◌` U+25CC in hi, gu **and** kn. There is no
+  U+25CC in the data to grep for — the defect is the *sequence*, and every character-range check in
+  the repo is blind to it by construction. Canonical validator: `data/devanagariWellFormed.ts`;
+  gates and the debt ledger in RULEBOOK §11.14. 205 instances sat in the corpus undetected from the
+  first Gita import until 2026-08-10 because §11.12 only ever gated the romanization direction.
 - **No two-way ternaries for user-facing strings.** `lang === 'hi' ? hi : en` silently shows
   English for gu/kn — a correctness bug tsc cannot catch. Always route through the helpers.
 - **Verse lines use `verseToken(lang)`; meaning uses `meaningToken(meaningSourceLang(lang))`** —

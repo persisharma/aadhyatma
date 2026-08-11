@@ -1,6 +1,9 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Modal } from 'react-native';
+import { Linking, Modal, Text } from 'react-native';
+import { INSTAGRAM_URL } from '@/data/shareLinks';
+import { readAloudRowLabel } from '@/components/ReadAloudSettingsSheet';
+import { DEFAULT_READ_ALOUD_PREFS } from '@/readAloud/prefs';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 
@@ -42,6 +45,10 @@ const mockResetTour = jest.fn();
 jest.mock('@/contexts/TourContext', () => ({
   useTour: () => ({ resetTour: mockResetTour }),
 }));
+const mockOpenRatingPrompt = jest.fn();
+jest.mock('@/contexts/RatingPromptContext', () => ({
+  useRatingPrompt: () => ({ open: mockOpenRatingPrompt }),
+}));
 
 const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/language')>(
   '@/data/gita/language'
@@ -79,6 +86,7 @@ describe('MoreScreen (redesign)', () => {
     mockGetItem.mockReset().mockResolvedValue(null);
     mockSetItem.mockReset().mockResolvedValue(undefined);
     mockResetTour.mockClear();
+    mockOpenRatingPrompt.mockClear();
   });
 
   test('renders the practice/app/info rows with their a11y labels', async () => {
@@ -89,6 +97,10 @@ describe('MoreScreen (redesign)', () => {
     expect(byLabel(tree, 'Japam alarms, none set')).toBeDefined();
     expect(byLabel(tree, 'Language, Hindi')).toBeDefined();
     expect(byLabel(tree, 'Reading size, Standard')).toBeDefined();
+    expect(byLabel(tree, 'Read aloud settings')).toBeDefined();
+    expect(byLabel(tree, 'Home-Screen Widgets, new')).toBeDefined();
+    expect(byLabel(tree, 'Rate the app')).toBeDefined();
+    expect(byLabel(tree, 'Follow on Instagram')).toBeDefined();
     expect(byLabel(tree, 'About and disclaimer')).toBeDefined();
     expect(byLabel(tree, 'Report an error')).toBeDefined();
     expect(byLabel(tree, 'Show App Tour')).toBeDefined();
@@ -111,6 +123,26 @@ describe('MoreScreen (redesign)', () => {
     expect(nav.navigate).toHaveBeenCalledWith('Reminders');
     act(() => byLabel(tree, 'Japam alarms, none set').props.onPress());
     expect(nav.navigate).toHaveBeenCalledWith('JapamAlarms');
+    act(() => byLabel(tree, 'Home-Screen Widgets, new').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('WidgetGallery');
+  });
+
+  test('tapping Rate the app opens the rating sheet instead of leaving the app', async () => {
+    const openURL = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+    const tree = await renderMore(makeNav());
+    act(() => byLabel(tree, 'Rate the app').props.onPress());
+    expect(mockOpenRatingPrompt).toHaveBeenCalledTimes(1);
+    // The store hand-off happens from the sheet's primary button, not this row.
+    expect(openURL).not.toHaveBeenCalled();
+    openURL.mockRestore();
+  });
+
+  test('tapping Follow on Instagram opens the public profile URL', async () => {
+    const openURL = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+    const tree = await renderMore(makeNav());
+    await act(async () => byLabel(tree, 'Follow on Instagram').props.onPress());
+    expect(openURL).toHaveBeenCalledWith(INSTAGRAM_URL);
+    openURL.mockRestore();
   });
 
   const openModals = (tree: TestRenderer.ReactTestRenderer) =>
@@ -128,5 +160,38 @@ describe('MoreScreen (redesign)', () => {
     expect(openModals(tree)).toBe(0);
     act(() => byLabel(tree, 'Reading size, Standard').props.onPress());
     expect(openModals(tree)).toBe(1);
+  });
+
+  test('tapping Read Aloud opens its settings sheet', async () => {
+    const tree = await renderMore(makeNav());
+    expect(openModals(tree)).toBe(0);
+    act(() => byLabel(tree, 'Read aloud settings').props.onPress());
+    expect(openModals(tree)).toBe(1);
+  });
+
+  test('the Read Aloud row shows what will be spoken, from the shared label helper', async () => {
+    // State text comes from `readAloudRowLabel`, the same function the sheet uses, so
+    // the row and the sheet cannot drift (mirrors the readingSizeLabel arrangement).
+    const tree = await renderMore(makeNav());
+    const text = tree.root
+      .findAllByType(Text)
+      .map((n) => n.props.children)
+      .flat(Number.POSITIVE_INFINITY)
+      .join(' ');
+    expect(text).toContain(readAloudRowLabel(DEFAULT_READ_ALOUD_PREFS, 'hi', 'unknown'));
+  });
+
+  test('the Read Aloud row sits after the two feature-tour anchor rows', async () => {
+    // RULEBOOK §6.1 pins the tour's final steps to Language + Reading Size. A row
+    // below them is safe only while no tour step is added for it; this asserts the
+    // order the docs claim.
+    const tree = await renderMore(makeNav());
+    const labels = tree.root
+      .findAll((n) => typeof n.props.accessibilityLabel === 'string' && typeof n.props.onPress === 'function')
+      .map((n) => n.props.accessibilityLabel as string);
+    expect(labels.indexOf('Read aloud settings')).toBeGreaterThan(labels.indexOf('Language, Hindi'));
+    expect(labels.indexOf('Read aloud settings')).toBeGreaterThan(
+      labels.indexOf('Reading size, Standard')
+    );
   });
 });

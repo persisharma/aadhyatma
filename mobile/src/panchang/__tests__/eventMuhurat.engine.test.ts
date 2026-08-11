@@ -148,7 +148,7 @@ test('Pushya yoga days: Ravi Pushya on 1 Nov 2026, none on adjacent days', () =>
   assert.equal(pushyaYogaFor(computePanchangForDate(nov2), nov2.getDay()), null);
 });
 
-test('every rule table is explicitly marked draft until §10 review lands (RULEBOOK §14)', () => {
+test('every rule table is explicitly marked draft until §10 review lands (RULEBOOK §17)', () => {
   for (const r of EVENT_RULES) {
     assert.equal(r.source.verified, false, `${r.id} must not claim verification before §10 review`);
     assert.ok(r.source.referenceUrls.length >= 1);

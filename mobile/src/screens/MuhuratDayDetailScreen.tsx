@@ -44,7 +44,7 @@ async function waitForLayout() {
 }
 
 /**
- * Day detail — Answer → Action → Evidence (design.md §53). One dominant
+ * Day detail — Answer → Action → Evidence (design.md §60). One dominant
  * element (the best window); the panchang reasoning renders below the
  * actions, never above them. Provenance is part of the copy: the tier line
  * names the convention, the footer says traditions may differ.

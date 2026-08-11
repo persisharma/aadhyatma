@@ -30,9 +30,16 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Ganesh Chalisa\\..*Tap to open\\."
 - assertVisible: "Gayatri Chalisa\\..*Tap to open\\."
 - assertVisible: "Ram Chalisa\\..*Tap to open\\."
-- assertVisible: "Krishna Chalisa\\..*Tap to open\\."
-# Vishnu & Saraswati are below the fold on the 9-section list — scroll to them
-# (the list grew past one screen; plain assertVisible only sees the top rows).
+# Krishna, Vishnu & Saraswati are below the fold on the 9-section list — scroll
+# to each. Android's shorter viewport folds earlier than iOS (Krishna, the 7th
+# row, is off-screen here), so use scrollUntilVisible rather than a plain
+# assertVisible that only sees the top rows. scrollUntilVisible is a no-op when
+# the row is already on-screen, so this stays correct on both platforms.
+- scrollUntilVisible:
+    element:
+      text: "Krishna Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
 - scrollUntilVisible:
     element:
       text: "Vishnu Chalisa\\..*Tap to open\\."

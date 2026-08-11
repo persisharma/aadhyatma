@@ -12,11 +12,16 @@
 #     remove control appears, remove it, confirm it disappears. The Times card
 #     and its add/remove controls render independent of the on/off toggle and
 #     of notification permission, so this is deterministic on a simulator.
-#   - OMITS the on/off toggle. Enabling daily verse can trigger the native iOS
-#     notification-permission dialog, which is non-deterministic on CI; the
-#     toggle + scheduling logic is unit-tested in src/notifications/__tests__/
-#     (scheduler.test.ts, reminderVerseLookup.test.ts). The notification-TAP
-#     deep link likewise can't be driven by Maestro (see daily-bhakti-smoke).
+#   - COVERS the presence of the default-on "Festival reminders" card, which
+#     renders below Times regardless of permission state.
+#   - OMITS every on/off toggle (daily verse AND festival reminders). Enabling
+#     either can trigger the native iOS notification-permission dialog, which is
+#     non-deterministic on CI; the toggles + scheduling logic are unit-tested in
+#     src/notifications/__tests__/ (scheduler.test.ts, reminderVerseLookup.test.ts,
+#     festiveReminderPure.test.ts, festiveReminders.test.ts,
+#     festiveScheduler.jest.test.ts). The notification-TAP deep link likewise
+#     can't be driven by Maestro (see daily-bhakti-smoke) — it is covered by
+#     deepLink.jest.test.tsx.
 #
 # Why English first:
 #   The card titles switch to English with the global reading language
@@ -38,7 +43,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Step 2: Set global reading language to English (More tab) ──
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
 - waitForAnimationToEnd
@@ -72,7 +77,17 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertNotVisible: "Remove reminder.*"
 
-# ── Step 6: Back to More (round-trip) ──
+# ── Step 6: Festival reminders card is present and default-on (design.md §38) ──
+# Below the Times card; scroll so it is on screen. Only presence + the toggle's
+# existence is asserted — flipping it would raise the permission dialog.
+- scrollUntilVisible:
+    element:
+      text: "Festival reminders"
+    centerElement: true
+- assertVisible: "Festival reminders"
+- assertVisible: "Toggle festival reminders"
+
+# ── Step 7: Back to More (round-trip) ──
 - tapOn: "Back"
 - waitForAnimationToEnd
 - assertVisible: "More"

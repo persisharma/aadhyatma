@@ -29,6 +29,15 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Skip tour"
     optional: true
+# The post-tour setup sheet asks for reading language + size before Home is
+# reachable. Pick English (also satisfies the English-assertion baseline) and
+# confirm with Begin.
+- tapOn:
+    text: "English"
+    optional: true
+- tapOn:
+    text: "Begin|आरंभ करें"
+    optional: true
 - tapOn:
     text: "Close"
     optional: true
@@ -44,7 +53,7 @@ appId: com.prashantsharma.vedansh
 
 # Use English for stable visible-text assertions; accessibility labels stay
 # English in every language, but the explanatory headings below are localized.
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -53,7 +62,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # Permanent Home launcher — this must not depend on the shuffled Discover row.
@@ -88,14 +97,41 @@ appId: com.prashantsharma.vedansh
     id: "kundali-name-input"
 - eraseText: 40
 - inputText: "Aarav"
+# Birth date via the calendar: open the month/year overlay, jump to the fixed
+# golden month/year, then pick the day. The calendar lands on today's month, so
+# the overlay (not the month arrows) is what keeps this run deterministic.
 - tapOn:
     id: "kundali-date-input"
-- eraseText: 20
-- inputText: "1992-08-14"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month August"
+# The year list is a ScrollView inside a transparent Modal; Maestro's
+# scrollUntilVisible can't drive that inner scroller, but coordinate swipes do
+# (see the e2e-verification runbook). 1992 is ~34 rows below 2026 ≈ 4 swipes.
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "50%, 70%"
+          end: "50%, 50%"
+          duration: 250
+- tapOn: "Year 1992"
+- tapOn: "14 August 1992"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
+# Birth time via the reminder-style stepper. Tapping the field commits the 06:00
+# default and reveals the stepper; step down 18 minutes to reach 05:42 AM, then
+# tap the field again to collapse the stepper so Generate clears the tab bar.
 - tapOn:
     id: "kundali-time-input"
-- eraseText: 10
-- inputText: "05:42"
+- waitForAnimationToEnd
+- repeat:
+    times: 18
+    commands:
+      - tapOn: "Decrease Minute"
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
 
 # No city is silently preselected. Pin the golden-fixture city explicitly.
 - scrollUntilVisible:
@@ -174,6 +210,10 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "4:5 · 1080×1350"
 - assertVisible: ".*includes the chart name, birth date, time, and city.*"
+# The card's own method footer is the last thing inside the fixed 4:5 box, so it is
+# the first casualty when the stack overruns: it was trimmed by `overflow: 'hidden'`
+# in August 2026. Assert it, not just the sheet chrome around it.
+- assertVisible: ".*Computed on device.*"
 - assertVisible: "Open share sheet"
 - tapOn: "Close share preview"
 - waitForAnimationToEnd

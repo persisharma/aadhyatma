@@ -12,7 +12,7 @@ import type { PanchangStackParamList } from '@/navigation/types';
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratFinder'>;
 
 /**
- * शुभ मुहूर्त खोज — the occasion picker (PRD-16 Phase 1, design.md §53).
+ * शुभ मुहूर्त खोज — the occasion picker (PRD-16 Phase 1, design.md §60).
  * One decision: the occasion. The window defaults to ~3 months
  * (FINDER_WINDOW_DAYS); a range chooser is deliberately NOT on this screen
  * (v2 design review: "occasion is the one real decision").

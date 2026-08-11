@@ -1,0 +1,51 @@
+[
+  {
+    "chapter": 1,
+    "titleHi": "बालकाण्ड",
+    "titleEn": "Bala Kanda",
+    "sargaCount": 77,
+    "verseCount": 2217
+  },
+  {
+    "chapter": 2,
+    "titleHi": "अयोध्याकाण्ड",
+    "titleEn": "Ayodhya Kanda",
+    "sargaCount": 119,
+    "verseCount": 4262
+  },
+  {
+    "chapter": 3,
+    "titleHi": "अरण्यकाण्ड",
+    "titleEn": "Aranya Kanda",
+    "sargaCount": 75,
+    "verseCount": 2439
+  },
+  {
+    "chapter": 4,
+    "titleHi": "किष्किन्धाकाण्ड",
+    "titleEn": "Kishkindha Kanda",
+    "sargaCount": 67,
+    "verseCount": 2445
+  },
+  {
+    "chapter": 5,
+    "titleHi": "सुन्दरकाण्ड",
+    "titleEn": "Sundara Kanda",
+    "sargaCount": 68,
+    "verseCount": 2772
+  },
+  {
+    "chapter": 6,
+    "titleHi": "युद्धकाण्ड",
+    "titleEn": "Yuddha Kanda",
+    "sargaCount": 131,
+    "verseCount": 5693
+  },
+  {
+    "chapter": 7,
+    "titleHi": "उत्तरकाण्ड",
+    "titleEn": "Uttara Kanda",
+    "sargaCount": 111,
+    "verseCount": 3461
+  }
+]

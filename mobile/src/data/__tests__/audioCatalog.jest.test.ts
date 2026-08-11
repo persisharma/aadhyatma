@@ -18,6 +18,11 @@ describe('audio library catalog ↔ registry', () => {
     'govinda-hari-govinda',
     'har-har-bhole',
     'mahamrityunjay-mantra',
+    'govind-bolo',
+    'om-gam-ganapataye-namah',
+    'narayan-hari-hari',
+    'jai-nandlal-ki',
+    'krishnaya-vasudevaya',
   ];
 
   test.each(bundledIds)('%s has a real recording and a catalog entry', (id) => {
@@ -41,6 +46,34 @@ describe('audio library catalog ↔ registry', () => {
       deity: 'shiva',
       kind: 'standalone',
       durationSec: 103,
+    });
+  });
+
+  test('the five new bhajans carry the expected metadata', () => {
+    expect(getTrackById('govind-bolo')).toMatchObject({
+      deity: 'krishna',
+      kind: 'standalone',
+      durationSec: 109,
+    });
+    expect(getTrackById('om-gam-ganapataye-namah')).toMatchObject({
+      deity: 'ganesha',
+      kind: 'standalone',
+      durationSec: 153,
+    });
+    expect(getTrackById('narayan-hari-hari')).toMatchObject({
+      deity: 'vishnu',
+      kind: 'standalone',
+      durationSec: 92,
+    });
+    expect(getTrackById('jai-nandlal-ki')).toMatchObject({
+      deity: 'krishna',
+      kind: 'standalone',
+      durationSec: 153,
+    });
+    expect(getTrackById('krishnaya-vasudevaya')).toMatchObject({
+      deity: 'krishna',
+      kind: 'standalone',
+      durationSec: 134,
     });
   });
 

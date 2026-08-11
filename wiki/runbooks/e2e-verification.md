@@ -2,7 +2,7 @@
 title: E2E (Maestro) — authoring, verification, and the ship-with-e2e policy
 type: runbook
 sources: [mobile/.maestro, mobile/.maestro/README.md, mobile/.maestro/_launch.yaml, RULEBOOK.md]
-last_verified_date: 2026-07-24
+last_verified_date: 2026-08-01
 confidence: high
 status: current
 ---
@@ -31,6 +31,9 @@ in addition to unit tests. Concretely:
   `scrollUntilVisible` for the new card. (`.maestro/README.md` §"Adding a new section".)
 - **New screen / nav route** → add a smoke flow that reaches it from Home and asserts its key surface.
 - **Changed label / structure a flow asserts** → update every flow that selects it (grep `.maestro/`).
+- **Expanded a large bundled corpus** → make the owning smoke load a late subsection, not only
+  assert the library card. `granth-smoke.yaml` scrolls through all seven Vālmīki kāṇḍa counts,
+  opens Uttara Kāṇḍa, and pages from `7.1.1`, while data tests exhaustively validate all records.
 - **Pure logic with no user-facing surface** → unit test only; no e2e required.
 
 A change is not "done" until its e2e is written **and** the flow parses (`js-yaml` load) — and, for
@@ -113,4 +116,4 @@ Use this when a flow declares `appId: com.prashantsharma.vedansh`:
 - `mobile/.maestro/README.md` — setup, running, flow catalog, element-selection rules (authority).
 - `mobile/.maestro/_launch.yaml` — shared boot subflow (onboarding dismissal, Home canary).
 - [[readers]] — multi-instance reader dispatch (chalisas/aartis) the smokes exercise.
-- `RULEBOOK.md` §0 (test gate), §3 (multi-instance readers), §13 (readers serve right content).
+- `RULEBOOK.md` §0 (test gate), §3 (multi-instance readers), §4 (readers serve right content).

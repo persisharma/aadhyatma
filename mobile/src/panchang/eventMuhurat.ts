@@ -1,13 +1,13 @@
 /**
  * Event Muhurat Finder — occasion-level day grading (PRD-16 Phase 1).
- * See docs/roadmap/prds/16-event-muhurat-finder.md and RULEBOOK §14.
+ * See docs/roadmap/prds/16-event-muhurat-finder.md and RULEBOOK §17.
  *
  * PURE: verdicts are derived from a `PanchangData` + `MuhuratDay` the caller
  * already computed — no I/O and no wall-clock reads. The one
  * astronomy import is `getSiderealPlanetLongitude` (itself pure, same boundary
  * as kundali.ts) for the Shukra/Guru asta check; callers pass the instant.
  *
- * ⚠ CONTENT GATE (RULEBOOK §14): the nakshatra/tithi/vara tables in
+ * ⚠ CONTENT GATE (RULEBOOK §17): the nakshatra/tithi/vara tables in
  * EVENT_RULES are DRAFT. Factor model (nakshatra + vara + tithi + masa
  * shuddhi) and the asta rule follow DrikPanchang's stated method (citing
  * Muhurta Chintamani / Dharmasindhu); the Nov-2026 output was cross-checked
@@ -53,7 +53,7 @@ export type EventRule = {
   /** Weekdays that block a two-factor day from the workable tier. */
   avoidVaras: readonly number[];
   doshas: readonly DoshaKey[];
-  /** §10 provenance. `verified: false` = tables are draft (RULEBOOK §14). */
+  /** §10 provenance. `verified: false` = tables are draft (RULEBOOK §17). */
   source: { convention: 'drikpanchang'; verified: boolean; referenceUrls: readonly string[]; notes: string };
 };
 

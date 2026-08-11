@@ -53,6 +53,8 @@ export type HomeStackParamList = {
   RamStutiReader: { chapter: number; initialIndex?: number };
   RamcharitmanasChapters: undefined;
   RamcharitmanasReader: { chapter: number; initialIndex?: number };
+  ValmikiRamayanChapters: undefined;
+  ValmikiRamayanReader: { chapter: number; initialIndex?: number };
   AartiReader: { aartiIndex: number; initialIndex?: number };
   SanskarReader: { sanskarId: string; initialIndex?: number };
   JapamCounter: { mantraId: string; autoPlay?: boolean };
@@ -78,6 +80,7 @@ export type MoreStackParamList = {
   Profile: undefined;
   Reminders: undefined;
   JapamAlarms: undefined;
+  WidgetGallery: undefined;
 };
 
 export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
@@ -88,6 +91,7 @@ export type PanchangStackParamList = {
   PanchangHome:
     | {
         initialTab?: PanchangHomeMode;
+        dateMs?: number;
         /** PRD-16: ring these days (epoch ms) on the month calendar for an occasion. */
         muhuratOverlay?: { occasionId: OccasionId; days: number[] };
       }
@@ -104,6 +108,7 @@ export type PanchangStackParamList = {
   AbujhDays: undefined;
   Kundali: { editing?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
+  GunaMilan: undefined;
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing

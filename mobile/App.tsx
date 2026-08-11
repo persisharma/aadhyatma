@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { View } from 'react-native';
+import { Linking, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -57,21 +57,29 @@ import {
 } from '@/contexts/NotificationPreferencesContext';
 import { PanchangLocationProvider } from '@/contexts/PanchangLocationContext';
 import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext';
+import { ReadAloudPrefsProvider } from '@/contexts/ReadAloudPrefsContext';
+import { ReadAloudProvider } from '@/contexts/ReadAloudContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import OnboardingSetupSheet from '@/components/OnboardingSetupSheet';
 import WhatsNewModal from '@/components/WhatsNewModal';
+import RatingPromptSheet from '@/components/RatingPromptSheet';
 import { TourProvider } from '@/contexts/TourContext';
+import { RatingPromptProvider } from '@/contexts/RatingPromptContext';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
+import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
+import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
 import RootNavigator from '@/navigation/RootNavigator';
+import WidgetCoordinator from '@/widgets/WidgetCoordinator';
+import { retryWidgetDeepLink } from '@/widgets/deepLink';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* noop — already prevented */
@@ -158,6 +166,23 @@ export default function App() {
     };
   }, [fontsReady]);
 
+  // WidgetKit/AppWidget taps arrive as ordinary app links. Retry a cold-start
+  // URL briefly until the navigation container is ready; warm links dispatch
+  // immediately through the same validated parser.
+  useEffect(() => {
+    if (!fontsReady) return undefined;
+    let cancelled = false;
+    const cancellations = new Set<() => void>();
+    const route = (url: string) => {
+      if (cancelled) return;
+      const cancel = retryWidgetDeepLink(url);
+      cancellations.add(cancel);
+    };
+    Linking.getInitialURL().then((url) => { if (url?.startsWith('vedansh://widget/')) route(url); }).catch(() => undefined);
+    const sub = Linking.addEventListener('url', ({ url }) => { if (url.startsWith('vedansh://widget/')) route(url); });
+    return () => { cancelled = true; cancellations.forEach((cancel) => cancel()); cancellations.clear(); sub.remove(); };
+  }, [fontsReady]);
+
   if (!fontsReady) {
     return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
   }
@@ -169,6 +194,11 @@ export default function App() {
         <ThemeProvider>
           <GitaLanguageProvider>
             <AudioPlayerProvider>
+            {/* Read-aloud needs the reading language and its own prefs; it sits
+                inside AudioPlayerProvider so both register with the playback
+                arbiter that keeps recorded audio and TTS mutually exclusive. */}
+            <ReadAloudPrefsProvider>
+            <ReadAloudProvider>
             <BookmarksProvider>
               <VratFollowProvider>
               <UserActivityProvider>
@@ -182,6 +212,10 @@ export default function App() {
                         <JapamAlarmsProvider>
                         <PanchangLocationProvider>
                         <TourProvider>
+                        {/* Inside TourProvider + NotificationPreferencesProvider:
+                            the rating gate reads their "a surface is already
+                            asking" flags so prompts can't stack (§54). */}
+                        <RatingPromptProvider>
                         <ShareProvider>
                           <AppReadyGate>
                           <View style={{ flex: 1 }}>
@@ -195,7 +229,19 @@ export default function App() {
                             <RoutineCelebrationOverlay />
                             <SadhanaCompletionOverlay />
                             <VratReminderScheduler />
+                            {/* Default-on festival pushes. Below
+                                NotificationPreferencesProvider for the pref +
+                                shared permission grant; needs no panchang
+                                location (festival dates come from the bundled
+                                precomputed table). */}
+                            <FestiveReminderScheduler />
                             <SadhanaReminderScheduler />
+                            {/* Feeds the daily-verse scheduler each fire day's
+                                tithi/vrat for its title. Must stay inside
+                                PanchangLocationProvider — the notification
+                                provider itself sits above it. */}
+                            <DailyVerseAngaBridge />
+                            <WidgetCoordinator />
                             <MiniPlayer />
                             <NowPlayingScreen />
                             {/* Top-level so the spotlight overlays the tab bar +
@@ -206,9 +252,14 @@ export default function App() {
                                 install (or a replay) — language + reading size,
                                 the two settings the last tour steps point at. */}
                             <OnboardingSetupSheet />
+                          {/* Last in the stack: the rating ask never competes
+                              with the tour, onboarding, or What's New — its gate
+                              stands down while any of those want the screen. */}
+                          <RatingPromptSheet />
                           </View>
                           </AppReadyGate>
                         </ShareProvider>
+                        </RatingPromptProvider>
                         </TourProvider>
                         </PanchangLocationProvider>
                         </JapamAlarmsProvider>
@@ -222,6 +273,8 @@ export default function App() {
               </UserActivityProvider>
               </VratFollowProvider>
             </BookmarksProvider>
+            </ReadAloudProvider>
+            </ReadAloudPrefsProvider>
             </AudioPlayerProvider>
           </GitaLanguageProvider>
         </ThemeProvider>

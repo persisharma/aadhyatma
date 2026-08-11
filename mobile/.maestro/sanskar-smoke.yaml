@@ -49,8 +49,14 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Meal Prayer\\..*Tap to open\\."
 - assertVisible: "Serving Cows & Birds\\..*Tap to open\\."
 - assertVisible: "Evening Lamp\\..*Tap to open\\."
-- assertVisible: "Bedtime Slokas\\..*Tap to open\\."
-# Vidyarambha Prarthana is the last card — scroll to it (list now exceeds one screen)
+# Bedtime Slokas & Vidyarambha Prarthana fall below the fold — Android's shorter
+# viewport folds after ~6 rows, so scroll to them rather than a plain
+# assertVisible (a no-op scroll when already on-screen, correct on both platforms).
+- scrollUntilVisible:
+    element:
+      text: "Bedtime Slokas\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
 - scrollUntilVisible:
     element:
       text: "Vidyarambha Prarthana\\..*Tap to open\\."

@@ -3,6 +3,7 @@
 // Run from repo root:  node scripts/parse-gita.mjs
 
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -232,7 +233,35 @@ function parseChapterFile(filePath) {
   };
 }
 
+// This parser is a whitespace-only pass-through: whatever Devanagari the source
+// markdown holds lands in shipped JSON verbatim. That is how 28 malformed clusters
+// (भक्ितयोगेन for भक्तियोगेन, and friends) reached the reader as dotted circles, and
+// why hand-patching the JSON never held — the next regeneration overwrote it.
+// Delegate to the canonical validator rather than reimplementing the rule here; a
+// partial copy of the rule is what let the class through in the first place.
+function assertSourceDevanagariWellFormed() {
+  const verifier = join(REPO_ROOT, 'mobile', 'scripts', 'verify-devanagari.mts');
+  const result = spawnSync('npx', ['tsx', verifier, 'BhagwadGita/chapters'], {
+    cwd: join(REPO_ROOT, 'mobile'),
+    encoding: 'utf8',
+  });
+  if (result.error || result.status === null) {
+    throw new Error(
+      `cannot run the Devanagari well-formedness gate (${result.error?.message ?? 'no exit status'}).\n` +
+        `Run "npm run verify:devanagari" in mobile/ manually before regenerating. RULEBOOK §11.14.`
+    );
+  }
+  if (result.status !== 0) {
+    process.stderr.write(result.stdout ?? '');
+    throw new Error(
+      'BhagwadGita/chapters contains malformed Devanagari — regeneration would ship dotted circles (U+25CC).\n' +
+        'Fix the chapter markdown, not the generated JSON. RULEBOOK §11.14.'
+    );
+  }
+}
+
 function main() {
+  assertSourceDevanagariWellFormed();
   mkdirSync(OUT_DIR, { recursive: true });
   const files = readdirSync(SRC_DIR)
     .filter((f) => /^chapter-\d{2}-.+\.md$/.test(f))
