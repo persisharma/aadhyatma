@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
+import { StepperColumn } from './StepperColumn';
 import type { TimeOfDay } from '@/notifications/pure';
 
 type Props = {
@@ -76,7 +77,7 @@ export default function TimeStepper({
       ]}
       accessibilityLabel={`Time: ${hh}:${mm}`}
     >
-      <Column
+      <StepperColumn
         label="HR"
         valueText={hh}
         onUp={() => bumpHour(1)}
@@ -85,7 +86,7 @@ export default function TimeStepper({
         chevronColor={colors.saffron}
       />
       <Text style={[styles.colon, { color: colors.inkMuted }]}>:</Text>
-      <Column
+      <StepperColumn
         label="MIN"
         valueText={mm}
         onUp={() => bumpMinute(1)}
@@ -93,97 +94,6 @@ export default function TimeStepper({
         accentColor={colors.saffronDeep}
         chevronColor={colors.saffron}
       />
-    </View>
-  );
-}
-
-type ColumnProps = {
-  label: string;
-  valueText: string;
-  onUp: () => void;
-  onDown: () => void;
-  accentColor: string;
-  chevronColor: string;
-};
-
-const HOLD_DELAY_MS = 350;
-const HOLD_INTERVAL_MS = 90;
-
-/**
- * Chevron that steps once per tap and auto-repeats while held — makes
- * 1-minute stepping usable without demanding 59 taps. The single step fires
- * on press-UP (onPress) and the repeat starts from onLongPress: a scroll
- * drag that merely begins on the chevron is terminated by the ScrollView
- * before either fires, so it can never mutate the time. (RN suppresses
- * onPress after onLongPress, so a held press doesn't double-step.)
- */
-function RepeatChevron({
-  onStep,
-  accessibilityLabel,
-  glyph,
-  color,
-}: {
-  onStep: () => void;
-  accessibilityLabel: string;
-  glyph: string;
-  color: string;
-}) {
-  const stepRef = useRef(onStep);
-  stepRef.current = onStep;
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const stop = useCallback(() => {
-    if (timerRef.current !== null) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-  }, []);
-
-  const startRepeat = useCallback(() => {
-    stepRef.current();
-    const tick = () => {
-      stepRef.current();
-      timerRef.current = setTimeout(tick, HOLD_INTERVAL_MS);
-    };
-    timerRef.current = setTimeout(tick, HOLD_INTERVAL_MS);
-  }, []);
-
-  useEffect(() => stop, [stop]);
-
-  return (
-    <Pressable
-      onPress={() => stepRef.current()}
-      onLongPress={startRepeat}
-      delayLongPress={HOLD_DELAY_MS}
-      onPressOut={stop}
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel}
-      hitSlop={10}
-      style={({ pressed }) => [styles.chevron, pressed && { opacity: 0.5 }]}
-    >
-      <Text style={[styles.chevronText, { color }]}>{glyph}</Text>
-    </Pressable>
-  );
-}
-
-function Column({ label, valueText, onUp, onDown, accentColor, chevronColor }: ColumnProps) {
-  const { colors } = useTheme();
-  return (
-    <View style={styles.col}>
-      <RepeatChevron
-        onStep={onUp}
-        accessibilityLabel={`Increase ${label}`}
-        glyph="▵"
-        color={chevronColor}
-      />
-      <Text style={[styles.value, { color: accentColor }]}>{valueText}</Text>
-      <RepeatChevron
-        onStep={onDown}
-        accessibilityLabel={`Decrease ${label}`}
-        glyph="▿"
-        color={chevronColor}
-      />
-      <Text style={[styles.label, { color: colors.inkMuted }]}>{label}</Text>
     </View>
   );
 }
@@ -199,40 +109,11 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     gap: 2,
   },
-  col: {
-    alignItems: 'center',
-    width: 48,
-  },
   colon: {
     fontSize: 18,
     fontFamily: fontFamilies.interSemiBold,
     lineHeight: 22,
     marginBottom: 14,
-    includeFontPadding: false,
-  },
-  chevron: {
-    width: 36,
-    height: 26,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chevronText: {
-    fontSize: 16,
-    includeFontPadding: false,
-  },
-  value: {
-    fontSize: 22,
-    lineHeight: 28,
-    fontFamily: fontFamilies.interSemiBold,
-    textAlign: 'center',
-    includeFontPadding: false,
-    marginVertical: 1,
-  },
-  label: {
-    fontSize: 10,
-    fontFamily: fontFamilies.inter,
-    letterSpacing: 1.5,
-    marginTop: 2,
     includeFontPadding: false,
   },
 });

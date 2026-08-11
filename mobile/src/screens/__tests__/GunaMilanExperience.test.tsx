@@ -4,6 +4,8 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import CalendarDatePicker from '@/components/CalendarDatePicker';
+import ClockTimePicker from '@/components/ClockTimePicker';
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { calculateGunaMilanFromLongitudes } from '@/panchang/gunaMilan';
 import { localizedKootaInput, localizedNakshatraList } from '@/panchang/gunaMilanDisplay';
@@ -51,6 +53,24 @@ function textOf(tree: TestRenderer.ReactTestRenderer): string {
   return tree.root.findAllByType(Text).map((node) => node.props.children).flat(Infinity).join(' ');
 }
 
+// Open a role's calendar and emit a date through it — the picker's own
+// navigation/day-selection is covered by CalendarDatePicker.test.tsx.
+function setDate(tree: TestRenderer.ReactTestRenderer, roleLabel: string, date: string) {
+  act(() => tree.root.findByProps({ accessibilityLabel: roleLabel }).props.onPress());
+  const picker = tree.root.findAllByType(CalendarDatePicker).find((node) => node.props.visible);
+  act(() => {
+    picker!.props.onSelect(date);
+    picker!.props.onClose();
+  });
+}
+
+// Reveal a role's time stepper (commits the default) then emit an exact time.
+function setTime(tree: TestRenderer.ReactTestRenderer, setLabel: string, timeLabel: string, time: string) {
+  act(() => tree.root.findByProps({ accessibilityLabel: setLabel }).props.onPress());
+  const picker = tree.root.findAllByType(ClockTimePicker).find((node) => node.props.label === timeLabel);
+  act(() => picker!.props.onChange(time));
+}
+
 test('saved Kundali details can fill either role and exact rows expose expansion state', async () => {
   const tree = render();
   const button = (label: string) => tree.root.findAll((node) => node.props.accessibilityLabel === label && typeof node.props.onPress === 'function')[0];
@@ -95,10 +115,9 @@ test('saved Kundali details can fill either role and exact rows expose expansion
 
 test('unknown time shows a range and never exposes exact sharing', () => {
   const tree = render();
-  const set = (label: string, value: string) => act(() => tree.root.findByProps({ accessibilityLabel: label }).props.onChangeText(value));
-  set('Groom birth date, YYYY-MM-DD', '1968-03-13');
-  set('Groom birth time, 24 hour IST', '08:00');
-  set('Bride birth date, YYYY-MM-DD', '1970-01-15');
+  setDate(tree, 'Groom birth date', '1968-03-13');
+  setTime(tree, 'Set Groom birth time', 'Groom birth time', '08:00');
+  setDate(tree, 'Bride birth date', '1970-01-15');
   act(() => tree.root.findByProps({ accessibilityLabel: 'Bride birth time unknown' }).props.onPress());
   act(() => tree.root.findByProps({ accessibilityLabel: 'Calculate Guna Milan' }).props.onPress());
 
@@ -111,10 +130,9 @@ test('unknown time shows a range and never exposes exact sharing', () => {
 
 test('unknown time also names possible nakshatras when every score stays exact', () => {
   const tree = render();
-  const set = (label: string, value: string) => act(() => tree.root.findByProps({ accessibilityLabel: label }).props.onChangeText(value));
-  set('Groom birth date, YYYY-MM-DD', '1968-03-13');
-  set('Groom birth time, 24 hour IST', '08:00');
-  set('Bride birth date, YYYY-MM-DD', '1970-02-07');
+  setDate(tree, 'Groom birth date', '1968-03-13');
+  setTime(tree, 'Set Groom birth time', 'Groom birth time', '08:00');
+  setDate(tree, 'Bride birth date', '1970-02-07');
   act(() => tree.root.findByProps({ accessibilityLabel: 'Bride birth time unknown' }).props.onPress());
   act(() => tree.root.findByProps({ accessibilityLabel: 'Calculate Guna Milan' }).props.onPress());
 

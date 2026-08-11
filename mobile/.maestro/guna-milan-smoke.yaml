@@ -129,10 +129,15 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 10000
 - tapOn: "Edit Guna Milan details"
-- tapOn: "Bride birth date, YYYY-MM-DD"
-- eraseText: 20
-- inputText: "1970-01-15"
-- pressKey: ENTER
+# Bride birth date via the calendar overlay (deterministic month/year jump).
+- tapOn: "Bride birth date"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month January"
+- tapOn: "Year 1970"
+- tapOn: "15 January 1970"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
 - tapOn: "Bride birth time unknown"
 - scrollUntilVisible:
     element: "Calculate Guna Milan"

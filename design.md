@@ -1812,7 +1812,7 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 **Discovery and landing state.** Kundali is a permanent `CategoryCard variant="launcher"` on Home (`कुंडली · Kundali`, insight glyph, NEW badge), not a shuffled Discover card. It deep-links to `PanchangHome({ initialTab: 'jyotish' })`. Panchang's top peer selector is `Panchang | Vrat & Parv | Jyotish`; it remains the fixed first control in every mode, while location/calendar-system/My Vrat controls appear beneath it only for the two Panchang-derived modes. A guest sees Create Kundali, Daily Rashifal, and one Navagraha practice card. Once a birth profile is saved, the landing becomes daily-first: the full Favour/Pause/Reflect Rashifal card leads, a compact Kundali reference follows, and the same single practice card closes the page. Returning from creation must refresh this saved state immediately. Birth city remains independent of the current Panchang location.
 
-**Birth input and state.** One card asks for optional name, `YYYY-MM-DD`, 24-hour `HH:mm`, and a bundled Indian city. No city or “Default profile” is silently supplied: the city field begins at “Choose an Indian city”, and nearby copy plainly explains that current calculation support covers Indian birth places and their local IST time. The profile persists on-device under `@vedansh:kundali-birth-profile:v1`; Edit opens the manage form, where removal is deliberately secondary to Save/Cancel. Copy explains that correct birth time matters for Lagna/houses. Loading, guest, saved, persistence-error, and corrupt-profile recovery are explicit states; a failed save/delete must never masquerade as success. Opening/closing the city picker dismisses its keyboard, and a successful calculation returns the result to its top.
+**Birth input and state.** One card asks for optional name, birth date, birth time, and a bundled Indian city. Date and time are entered through pickers, not free text: the date field-button opens `CalendarDatePicker` (a parchment month-grid bottom sheet with a month/year overlay for jumping across decades, range `1900-01-01`…today-IST) and the time field-button reveals the inline reminder-style `ClockTimePicker` (12-hour AM/PM stepper). Both still emit the stored contract — `YYYY-MM-DD` and 24-hour `HH:mm` — so validation, IST→UTC conversion, and persistence are unchanged; the `kundali-date-input`/`kundali-time-input` testIDs move onto the field-buttons. Tapping the time field commits a 06:00 default so the shown value and stored value always agree, and an untouched time still validates as missing. No city or “Default profile” is silently supplied: the city field begins at “Choose an Indian city”, and nearby copy plainly explains that current calculation support covers Indian birth places and their local IST time. The profile persists on-device under `@vedansh:kundali-birth-profile:v1`; Edit opens the manage form, where removal is deliberately secondary to Save/Cancel. Copy explains that correct birth time matters for Lagna/houses. Loading, guest, saved, persistence-error, and corrupt-profile recovery are explicit states; a failed save/delete must never masquerade as success. Opening/closing the city picker dismisses its keyboard, and a successful calculation returns the result to its top.
 
 **Novice-first result.** The default `Overview` tab precedes `Chart | Grahas | Dasha`. Its three cards are real buttons and route to their underlying detail tabs; each tab change resets the scroll position. Rashi names pair the traditional form with a plain-English equivalent (`Karka · Cancer`, never the same name twice). The Lagna card uses: “Lagna is the sign rising at birth and sets the first house. In traditional Jyotish it is the starting lens for reading the rest of the chart.” The Moon card uses: “The Moon sign is a traditional lens on inner rhythm, and the nakshatra refines its placement. A reflection aid, not a personality verdict.” A Navagraha practice card routes through the existing library/reader dispatcher. Never lead a novice with an unexplained chart.
 
@@ -1826,11 +1826,11 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 **Share-card fit (August 2026).** The card's height is *pinned* — `aspectRatio` 4:5 on a width of `min(334, screenWidth - 2 × spacing.xxl)`, with `overflow: 'hidden'` — while everything stacked inside it is type at fixed point sizes that does not scale with width. So the Kundali diagram takes **the height that is left** (`kundaliChartSize()`: content height minus a 196 dp chrome budget for the brand header, name lockup, chip row and two-line method footer, capped at the historic `min(208, width × 0.61)`), never a flat fraction of the width. Sizing it by width alone overran the box on every card below ~334 dp — a 360 dp phone gets 312 — and the `marginTop: 'auto'` method footer was the piece pushed out and clipped. The footer's own leading follows §3.0 (10/14, script-aware face). Both invariants are pinned by `components/__tests__/jyotishShareCardFit.test.tsx` and the footer line is asserted in `kundali-smoke.yaml`. **Known gap:** the Rashifal card's chrome is *entirely* fixed-height (three `minHeight` guidance rows + practice + disclaimer ≈ 375 dp), so it has no comparable slack on ≤ 360 dp phones; it fits at 334 and its disclaimer leading is fixed, but the row block wants the same treatment before that card is trusted on small screens.
 
-**Surface family.** Continue the existing warm manuscript palette only: parchment gradients, `cardActiveBorder`, saffron/gold tints, `radii.lg`, theme elevation, existing script-aware type helpers, and controls that respect the §12 minimum — back buttons at 44 (both KundaliScreen and RashifalScreen drifted to 40 and were corrected in July 2026), form fields via the `TextField` `form` variant at 48 (§52). Do not introduce one-off colours for guidance rows, practice, or share cards; all variants must come from theme tokens already used by the app. English accessibility labels include both traditional and plain-English sign names and remain stable for Maestro even when Hindi is the visible reading language.
+**Surface family.** Continue the existing warm manuscript palette only: parchment gradients, `cardActiveBorder`, saffron/gold tints, `radii.lg`, theme elevation, existing script-aware type helpers, and controls that respect the §12 minimum — back buttons at 44 (both KundaliScreen and RashifalScreen drifted to 40 and were corrected in July 2026), the name field via the `TextField` `form` variant at 48 (§52), and the date/time via the shared `CalendarDatePicker` + `ClockTimePicker` controls (§52a) — all field-buttons at a 48 minimum. Do not introduce one-off colours for guidance rows, practice, or share cards; all variants must come from theme tokens already used by the app. English accessibility labels include both traditional and plain-English sign names and remain stable for Maestro even when Hindi is the visible reading language.
 
 **Readability sizing (July 2026).** The §3.0 floor (10) is a *minimum*, not a target — Kundali and Rashifal carry unusually dense content (sign grids, graha tables, dasha timelines), so their read-tier text sits **above** the floor for comfort: the Rashi-picker grid uses traditional name **16** / plain-English **14** on taller (`minHeight 64`) tiles; its "choose your sign" **title** reads as a heading at **15** with a **14** description and a **13** disclaimer above; the guidance-row headers/body and their graha·bhava context chips, the Kundali overview eyebrow, and the result-screen labels (`lagnaLabel`/`lagnaTranslation`, grahas `tablePrimary` **14** / `tableTranslation` **12**, `eyebrowText`, `progressCaption`, `practiceLabel`) were raised to **12** (space-constrained dasha `antarChip`/`nowTag` to **11**). Micro-chrome shared with the Panchang tab (the `jyotishSectionLabel` kicker, tab-bar) stays at the floor.
 
-**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`; `NorthIndianChart.tsx`, `KundaliOverview.tsx`, `JyotishGuidanceRows.tsx`, `JyotishPracticeCard.tsx`, `JyotishShareCard.tsx`, `JyotishShareSheet.tsx`, `JyotishStateCard.tsx`; `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.
+**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`; `NorthIndianChart.tsx`, `KundaliOverview.tsx`, `JyotishGuidanceRows.tsx`, `JyotishPracticeCard.tsx`, `JyotishShareCard.tsx`, `JyotishShareSheet.tsx`, `JyotishStateCard.tsx`, `CalendarDatePicker.tsx`, `ClockTimePicker.tsx`, `StepperColumn.tsx` (§52a); `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.
 
 ---
 
@@ -1863,8 +1863,43 @@ visible change to its most-used surface and is left as an explicit product decis
 than folded into the July 2026 token pass — it is the one place the rule above is not applied.
 
 **Files:** `mobile/src/components/TextField.tsx`. Consumers: `KathaLibraryScreen`,
-`ObservanceListScreen`, `PanchangScreen` (catalog search), `KundaliScreen` (form fields + city
+`ObservanceListScreen`, `PanchangScreen` (catalog search), `KundaliScreen` (name field + city
 picker).
+
+---
+
+## 52a. Components: Date & Time pickers (`CalendarDatePicker.tsx`, `ClockTimePicker.tsx`, `StepperColumn.tsx`)
+
+**Purpose.** Birth date and birth time are picked, not typed. Two shared controls replace the
+free-text `YYYY-MM-DD` / `HH:mm` fields at every Jyotish touch point (Kundali; Guna Milan groom
+and bride). Both emit the same stored strings the text fields did — `YYYY-MM-DD` and 24-hour
+`HH:mm` — so validation, IST→UTC conversion, persistence, and every engine test are untouched;
+this is an input-control swap, not a data-model change.
+
+**`CalendarDatePicker`.** A parchment bottom-sheet `Modal` (same family as the Kundali city
+picker): a 7-column month grid with the selected day as a `saffronTint` pill and a Confirm/Cancel
+footer. The header month-year is a button that opens an overlay of month chips + a scrollable
+year list, so a birth date decades back is two taps (month, year) rather than dozens of month
+pages. Range is `1900-01-01`…today (the **IST** civil day; range checks are lexicographic on the
+`YYYY-MM-DD` strings, so they are timezone-proof); out-of-range days are muted and non-selectable.
+Days carry English `"<d> <Month> <year>"` accessibility labels for stable Maestro/Jest targeting
+regardless of reading language. Emits `YYYY-MM-DD` on Confirm.
+
+**`ClockTimePicker`.** The reminder stepper (§ Japam/Reminders) in 12-hour form: HR and MIN
+columns plus an AM/PM toggle. HR/MIN step the underlying 24-hour minute-of-day (so the hour
+column crosses noon/midnight the way a clock does); AM/PM is derived from the current hour and the
+toggle shifts ±12h. Emits zero-padded 24-hour `HH:mm`. In the screens it is revealed by a
+field-button that commits a `06:00` default on first open, so the shown value and stored value
+always agree while an untouched time still validates as missing.
+
+**`StepperColumn`.** The single-column up/value/down control with the press-once-on-release +
+hold-to-repeat chevrons, extracted verbatim from `TimeStepper` so the reminder stepper and
+`ClockTimePicker` share one implementation. `TimeStepper`'s public API and behaviour are
+unchanged (its test is the guard). Do not fork the chevron/hold logic.
+
+**Files:** `mobile/src/components/CalendarDatePicker.tsx`, `ClockTimePicker.tsx`,
+`StepperColumn.tsx`; consumers `KundaliScreen.tsx`, `BirthDetailsForm.tsx`. Tests:
+`__tests__/CalendarDatePicker.test.tsx`, `ClockTimePicker.test.tsx`, `TimeStepper.test.tsx`.
 
 ---
 
@@ -2280,7 +2315,7 @@ because they are different concerns that happen to agree today.
 
 **Placement.** A card below Kundali and Rashifal on the ज्योतिष landing (`PanchangScreen`'s `JyotishLanding`), with the standard versioned NEW badge. Tap pushes `GunaMilan` inside the **Panchang stack** (`PanchangStackParamList` — not a duplicate root route); back and screen tracking follow the §51 Jyotish screens.
 
-**Input.** Two `BirthDetailsForm` cards keep the directional roles **वर · Groom** and **वधू · Bride** (never assuming the device owner is the groom). Each offers "मेरे विवरण यहाँ" to copy the saved Kundali's name/date/time into that role only. Fields use the §52 `TextField` `form` variant (48). Name is optional display-only; date (`YYYY-MM-DD`) and 24-hour `HH:mm` are IST calculation inputs. No birthplace is requested in v1 (only Moon longitude is needed), and the flow **never** reuses `LocationPickerModal` — it must not mutate the global Panchang location.
+**Input.** Two `BirthDetailsForm` cards keep the directional roles **वर · Groom** and **वधू · Bride** (never assuming the device owner is the groom). Each offers "मेरे विवरण यहाँ" to copy the saved Kundali's name/date/time into that role only. Name uses the §52 `TextField` `form` variant (48); date and time are entered through the shared §52a pickers — the date field-button opens `CalendarDatePicker` and, when the time is known, the inline reminder-style `ClockTimePicker` (12-hour AM/PM stepper) sits where the field was. Name is optional display-only; date (`YYYY-MM-DD`) and 24-hour `HH:mm` are IST calculation inputs — the pickers still emit exactly those strings, so validation/parsing is untouched. The **"ज्ञात नहीं · Unknown"** time control is preserved verbatim (it stores `null`); when the time is known but not yet set, a "समय चुनें · Select time" field-button reveals the stepper and commits a 06:00 default. No birthplace is requested in v1 (only Moon longitude is needed), and the flow **never** reuses `LocationPickerModal` — it must not mutate the global Panchang location.
 
 **Unknown time is an interval, not noon.** "ज्ञात नहीं" never substitutes 12:00 and never persists a fabricated time. The engine enumerates every nakshatra/charana/rashi/Vashya-boundary classification the Moon can occupy across the full `00:00–23:59:59` IST civil day (Cartesian product when both times are unknown). If all possibilities agree, the exact result shows with an "all times checked" note; if any koota changes, a min–max **range** with the varying kootas shows instead — with no single dial fill and no exact-share action.
 

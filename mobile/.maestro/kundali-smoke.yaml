@@ -88,14 +88,27 @@ appId: com.prashantsharma.vedansh
     id: "kundali-name-input"
 - eraseText: 40
 - inputText: "Aarav"
+# Birth date via the calendar: open the month/year overlay, jump to the fixed
+# golden month/year, then pick the day. The calendar lands on today's month, so
+# the overlay (not the month arrows) is what keeps this run deterministic.
 - tapOn:
     id: "kundali-date-input"
-- eraseText: 20
-- inputText: "1992-08-14"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month August"
+- tapOn: "Year 1992"
+- tapOn: "14 August 1992"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
+# Birth time via the reminder-style stepper. Tapping the field commits the 06:00
+# default and reveals the stepper; step down 18 minutes to reach 05:42 AM.
 - tapOn:
     id: "kundali-time-input"
-- eraseText: 10
-- inputText: "05:42"
+- waitForAnimationToEnd
+- repeat:
+    times: 18
+    commands:
+      - tapOn: "Decrease Minute"
 
 # No city is silently preselected. Pin the golden-fixture city explicitly.
 - scrollUntilVisible:
