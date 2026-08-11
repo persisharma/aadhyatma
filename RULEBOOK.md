@@ -102,6 +102,9 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
 - **Background image.** Render with `<ImageBackground source={…} resizeMode="cover">` then layer the parchment `<LinearGradient>` overlay on top per `design.md` §6. Selection must be **deterministic per verse id** (e.g. `images[hash(verse.id) % images.length]`) — not random per render.
 - **Reader shell.** Horizontal paginated `FlatList`, ornament divider (`Ornament.tsx`), pager dots, language-aware top-bar title. Match the layouts of `GitaReaderScreen.tsx` and `SundarkandReaderScreen.tsx` — do not invent a third shell.
 - **The top bar is `ReaderHeader`, never a local copy.** Every reader and chapters/index screen renders `mobile/src/components/ReaderHeader.tsx` — `variant="reader"` (16 pt title) for readers, `variant="index"` (22/20) for chapters and index landing screens. Screens pass content (`title`, `right`, `onBack`) and never geometry. Hand-rolling a `topBar` + `back` + `title` style block is a hard reject: ~32 screens each carried their own copy until July 2026 and they had drifted to two gutters, three bottom paddings, two button sizes and an off-token title size. The back control's `accessibilityLabel` defaults to the **English, un-localized** `"Back"` because the Maestro flows tap that string and the default reading language is `hi`; override it only to name a destination. (`design.md` §9)
+- **Read-aloud is exposed only through the shared hook + button, never a raw `Speech.speak`.** A reader gains TTS by calling `useReaderReadAloud()` (`mobile/src/screens/_useReaderReadAloud.ts`) and rendering `ReadAloudButton` in `ReaderHeader`'s `right` slot — never by importing `expo-speech` in a screen, and never by putting the control in a verse page's `topActions` (which renders once per page). Widen `sideWidth` so both header side columns still match, or the centred title shifts. Add every newly-enabled reader to the table in `mobile/src/screens/__tests__/readerReadAloud.test.tsx`, the same way `readerAutoAdvance.test.tsx` tables the chaptered readers. (`design.md` §56)
+- **Read-aloud speaks each reading language in its own voice, or reports unavailable.** Never substitute another language's voice for a missing one — the user would read one script and hear another, and for gu/kn it would silently discard authored `meaningGu`/`meaningKn`. `speechLangFor()` is identity by design, `resolveVoice()` returns `null` rather than falling back across languages (and only honours a saved identifier that still speaks the requested language), and the controller's `start()` refuses outright when availability is `unavailable` — because both platforms would otherwise hand the text to the device default voice with no error. Voices are stored per language in `voiceByTarget`. (`design.md` §56.1, §56.4)
+- **Never pass a region-tagged locale as `expo-speech`'s `language` on Android.** Always build options with `speakOptionsFor()` (`mobile/src/readAloud/voices.ts`). Android's native module does `Locale(options.language)`, and Java's single-arg `Locale` constructor treats the whole string as the language — so `'hi-IN'` becomes `"hi-in"`, resolves to `LANG_NOT_SUPPORTED`, and **silently falls back to the device default voice**, i.e. Devanagari read in an American accent with no error. Equally, **never trust `onError` to report a missing voice**: both platforms fail silently, so availability must come from a `getAvailableVoicesAsync()` probe plus the `onStart` watchdog. (`design.md` §56.1, §56.4)
 - **Text inputs are `TextField`, with one of two variants.** `mobile/src/components/TextField.tsx` — `variant="search"` (44, Cormorant 15) for searching **content**, `variant="form"` (48, Inter 14) for **data entry**. Do not hand-roll a `TextInput` height/face/padding: there were three specs for one control class until July 2026. (`design.md` §52)
 - **Back buttons are 44 visually.** `hitSlop` counts toward the 44 *touch* minimum, but the back control is the one control on every screen, so a 40 among 44s reads as a defect regardless of its hit area. Smaller controls of other classes are allowed when `hitSlop` clears 44 **and** the size is deliberate and commented (today: the Panchang month stepper at 34 + `hitSlop={10}`). (`design.md` §12)
 - **Chaptered readers auto-advance across subsection boundaries.** A reader whose text has more than one subsection (`<section>ChaptersManifest.length > 1`) must let the user cross chapter/kāṇḍa boundaries **by swiping** — it must never dead-end on the last page of a subsection. Match `GitaReaderScreen.tsx` / `ShivaStrotamReaderScreen.tsx`: inject a `NextChapterCard` after the last verse (unless it is the last chapter) and a `PrevChapterCard` before the first verse (unless it is the first chapter) into the `FlatList` `data`; detect those `__type: 'transition' | 'prev-transition'` items in `onViewableItemsChanged` and `navigation.replace(<thisRoute>, { chapter })` (the prev case lands on the previous chapter's last verse via `initialIndex`). The prepended prev card shifts indices by one, so carry an `offset` through `initialScrollIndex`, `handleScroll`, and the viewable-index math. `mobile/src/screens/__tests__/readerAutoAdvance.test.tsx` enforces this for every multi-chapter reader — add a new chaptered reader to its table when you create one. (Origin: Durga / Ganesh / Saraswati / Vishnu Sahasranama readers rendered only `chapter.verses`, so swiping past a chapter's last verse dead-ended instead of advancing to the next subsection.)
@@ -337,6 +340,8 @@ Deity `nameHi`/`nameEn` must use the popularly recognized devotional name that u
 A text must exist in exactly one location/category. Standalone Ashtak/Ashtakam texts (like Sankat Mochan Hanumanashtak) belong in the Ashtakam category — not duplicated in aarti or stotram. Before adding content, grep the repo for the text's first line to confirm it doesn't already exist elsewhere. Origin: Sankat Mochan existed in both aarti/ and hanuman-ashtak/ with different (both wrong) versions.
 
 ### 11.12 Transliteration integrity
+This section gates the **romanization** only. The Devanagari side has its own contract in **§11.14** — do not treat a green §11.12 as script validation, since every check here is a character-range test that cannot see a malformed cluster.
+
 No Devanagari characters (U+0900–U+097F) in `linesEn`/`transliteration` fields. No empty strings (use "(transliteration pending)" if unavailable). Correct romanization scheme per `design.md §3.1`: Sanskrit texts use IAST with Hunterian digraphs; Awadhi/Hindi uses pronunciation-based ASCII. Run `grep -rP '[ऀ-ॿ]'` on transliteration fields before shipping. Check IAST character-by-character against the Devanagari — common slips: anusvara (ṃ vs n/m), visarga (ḥ), retroflex consonants (ṭ/ḍ/ṇ vs t/d/n), and long vowels (ā/ī/ū). Origin: 23 Sundarkand lines had raw Devanagari, 19 Gita verses had transliteration spillover between adjacent verses.
 
 **No raw ITRANS / scheme-encoder residue.** `linesEn`/`transliteration` is the *reader-facing* romanization, never the raw encoder source it was derived from. The following are a hard reject anywhere in these fields — they mean an ITRANS/Harvard-Kyoto string was pasted in unconverted (the bug behind Krishna Stotram, Ramcharitmanas Mangalacharan, and three stotrams in the OTA audit):
@@ -381,6 +386,51 @@ Origin: the same raw-ITRANS paste recurred across Krishna Stotram, Ramcharitmana
 
 ### 11.13 Meaning faithfulness
 Hindi and English meanings must faithfully convey the verse's meaning without adding theological interpretation beyond what the verse states. Simplification for readability is fine; invention is not.
+
+### 11.14 Devanagari well-formedness — every combining mark needs a legal base
+Every Devanagari string that reaches a reader must be a valid sequence, not merely valid characters. A combining mark (matra, virama, nukta, anusvara/visarga) attached to a base that cannot carry it is rendered by HarfBuzz — on both iOS and Android — as **U+25CC DOTTED CIRCLE**, the stray `◌` a reader sees mid-word. Because gu/kn are derived at runtime by transliterating this same Devanagari (§3, `utils/transliterate.ts`), **one malformed cluster mis-renders in three of the four reading languages.**
+
+**Why the existing checks cannot catch it.** §11.12's gate, contentCorrectness §5's `DEVANAGARI_RANGE`, and the Valmiki builder's "non-Sanskrit export artifact" guard are all *character-set membership* tests — they ask whether a codepoint sits inside U+0900–U+097F. An orphaned matra passes every one of them: it is a perfectly legal codepoint in an illegal position. **There is no U+25CC in the data to grep for.** The defect is the sequence, so only a cluster-grammar check finds it. Never add a membership test and call the script validated.
+
+**The rules.** Rejected outright:
+
+| Sequence | Example shipped | Correct | Origin |
+|---|---|---|---|
+| matra after virama | `भक्ितयोगेन`, `निश्िचतं` | `भक्तियोगेन`, `निश्चितं` | legacy visual-order encoding converted without reordering the i-matra past the conjunct |
+| nukta after matra | `पितृ़न्`, `जो़ड़ना` | `पितॄन्`, `जोड़ना` | legacy fonts faked `ॄ` as `ृ`+nukta glyph pair; stray nukta in Hindi prose |
+| matra after matra | `मूिर्च्छत`, `धिार्मकं` | `मूर्च्छित`, `धार्मिकं` | OCR transposition |
+| mark after anusvara/visarga, on an independent vowel, on a danda/digit/avagraha, at string start, or after ZWJ/ZWNJ | `्वं`, `कोऽंशुमान्`, `महाबल ः` | — | truncated/garbled scrape rows |
+
+**Normalizing a defect away is a §11.3 violation.** Substituting a plausible character to silence the dotted circle turns visibly-broken scripture into invisibly-wrong scripture, which is worse. The Valmiki builder's `ऺ→र` map is the cautionary case: applied to the romanization it produced `linesEn: "kṣhatritrayān"` beside `lines: "क्षत्ऺित्रयान्"` — roman side clean, Devanagari side still dotted — and applying it to the Devanagari too would only yield `क्षत्रित्रयान्` when the verse means `क्षत्रियान्`. Malformed Devanagari **fails the build** and is fixed against the source recension.
+
+**Automated gates (all three, and they run in `npm test`).**
+1. `src/data/devanagariWellFormed.ts` — the one canonical rule. Generators, tests and scripts import it; do not reimplement it, partially or otherwise.
+2. `src/data/__tests__/devanagariWellFormed.test.ts` — sweeps every string in every shipped content JSON, unit-tests the validator, and reports the exact field path (`gita/chapter-14.json → verses[0].sanskrit[0]`). Wired into `npm run test:data`.
+3. `npm run verify:devanagari` (`mobile/scripts/verify-devanagari.mts`) — scans the **generator inputs** (`BhagwadGita/chapters/*.md`, the raw scrape, `mobile/src/data`). `scripts/parse-gita.mjs` calls it and refuses to regenerate while the source is dirty; `scripts/build-valmiki-ramayan.py`'s `assert_devanagari_well_formed()` raises per verse.
+
+**Fix the source, never the generated file.** `mobile/src/data/gita/*.json` is generated from `BhagwadGita/chapters/*.md` by `scripts/parse-gita.mjs` (a whitespace-only pass-through). A hand-patched JSON is erased by the next regeneration — that is why the earlier round of Gita corruption fixes (`scripts/fix-gita-*corruption.mjs`, which handled `?`-as-comma, Bengali danda `৷` and missing spaces) never touched this class and the count never moved.
+
+**`devanagariWellFormed.baseline.json` is a debt ledger, not a config knob.** It quarantines the 107 instances present when the gate was written so the gate can block *new* ones today. Every entry is a real reader-visible defect. It may only shrink; the test also fails when an entry is stale, so it cannot rot. **Adding an entry to turn a red build green is a rulebook violation** — fix the text.
+
+Origin: the reader reported a stray `◌` in BG 14.26 (`भक्ितयोगेन`). It was not a regression — `git log` over every commit that touched content shows the count strictly monotonic (98 from the first Gita import, 155 after the Valmiki corpus landed); **no commit ever reduced it.** 205 instances across the pipeline had been invisible to CI since the corpus was imported, because every check pointed at the romanization and none at the Devanagari. The July gu/kn spec surfaced the nukta subset, estimated it at "~6 Gita source strings", marked it out of scope, and never ticketed it — the real count was 47 shipped.
+
+### 11.15 Synthetic recitation is assistive, never authoritative
+§11.3 forbids AI-**generated** liturgical text. A synthetic **voice** reading authored text is a
+different thing, but close enough to need its own rule, because a `hi-IN` voice applies Hindi
+phonology to Sanskrit: word-final schwa deletion (`रामः` → "raam"), mishandled visarga and
+anusvāra, no vedic accent, `ॐ` frequently clipped, and anuṣṭubh metre flattened to prose. On a
+devotional reader that can read as disrespectful rather than merely imperfect. So:
+
+- **TTS may read authored verse; it must never alter it.** The pronunciation normalizer
+  (`mobile/src/readAloud/pronounce.ts`) affects **only** the string handed to the synthesizer.
+  Displayed text, share cards, and the search index are never touched.
+- **Never present it as human recitation.** The settings sheet names it a device voice
+  ("उपकरण की आवाज़ से — मानव पाठ नहीं"). Where a real recording exists (`hasRealAudio`), the
+  recorded `▶` stays **first** in the reader top bar and read-aloud second.
+- **Never record, cache, or ship TTS output as an audio asset.** Pre-rendering synthetic
+  recitation into bundled files would make it indistinguishable from a commissioned recording —
+  that is squarely inside §11.3.
+- **Always opt-in per press.** Read-aloud never autoplays on opening a reader.
 
 ---
 
@@ -544,3 +594,53 @@ Intent-driven discovery is metadata over bundled content, not new scripture text
 - The Dasha surface exposes the current Mahadasha/Antardasha, dates, elapsed and remaining time, and a full nine-period timeline. Those timing values must also be accessible to assistive technology.
 - Kundali and Rashifal share cards use the app theme and a 4:5 preview. Kundali must warn that personal birth details are included; Rashifal must state that name and birth details are excluded. Do not place duplicate share controls inside Kundali tabs.
 - Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest for new UI, and `.maestro/kundali-smoke.yaml` on an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.
+
+## 15. Guna Milan engine (PRD-16)
+
+### 15.1 One pure engine on a pinned convention
+
+- Add `gunaMilan.ts` to the existing `mobile/src/panchang/` stack and reuse `getSiderealPlanetLongitude('moon', date)`. Do not add a second astrology SDK, network ephemeris, or screen-local calculation.
+- `gunaMilan.ts` and `gunaMilanConvention.ts` stay pure: explicit longitudes/dates in, typed data out. No React, AsyncStorage, wall-clock reads, randomness, fetch, or platform APIs (pinned by the engine source-purity test).
+- The calculation is pinned in `docs/roadmap/conventions/guna-milan-v1.md` (`vedansh-ashtakoota-v1`): all classification tables/matrices, the वर→वधू direction of directional kootas, every half-point score, the exact 15° Vashya splits, the band boundaries plus DrikPanchang Bhakoot/Nadi display modifiers, and the single auditable Bhakoot cancellation (same rashi-lord or Graha-Maitri 5). A table or rule change requires a **new convention id** and fixture review; it must never silently change old results. The base score is always the arithmetic sum of the eight kootas — a cancellation changes only the explanatory flag.
+- v1 uses India/IST civil time only and needs no birthplace. It must not mutate `PanchangLocationContext` or the Kundali birth profile.
+
+### 15.2 Independent fixture contract
+
+- `gunaMilan.golden.test.ts` holds expected row scores transcribed from independently published compatibility reports (Mini/Jose 20/36; Chitra/Uttara-Ashadha 19.5/36), never captured from Vedansh output, plus every supported Bhakoot cancellation branch and the same-Nadi 28/36 display-band case.
+- The 108×108 engine sweep pins the complete set of reachable score values for every koota, and boundary tests exercise below/at/above each pada, rashi, and 15° Vashya boundary. Domain sign-off of the tables (direction, fractions, cancellations) remains a human gate before merge (PRD-16 gate 1).
+
+### 15.3 Privacy and safety
+
+- Inputs are session-only by default. Persistence is opt-in under a versioned key with a visible clear action and is never implicitly restored. The share card is a strict allow-list — optional names, वर/वधू roles, total, band, eight component scores, disclaimer, brand footer — and never embeds birth date, time, location, or profile id.
+- Output frames a traditional calculation, not a verdict: no fear copy, remedy/gemstone/consultation upsell, lead capture, Mangal-dosha or full-chart claims, or any cancellation not backed by a pinned, tested rule. Unknown birth time is a checked interval across the full IST civil day, never a substituted noon and never a persisted fabricated time.
+
+### 15.4 Product and verification contract
+
+- Guna Milan is a card below Kundali and Rashifal on the Jyotish landing and lives inside the Panchang stack (not a duplicate root route). Saved-Kundali autofill must work for either directional role.
+- Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest (`GunaMilanExperience.test.tsx`), and `.maestro/guna-milan-smoke.yaml` on iOS and Android with an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.
+
+## 16. Home-screen widgets (PRD-15)
+
+### 15.1 One versioned, bundle-only payload
+
+- Widgets read a single pre-computed document, never live app state. The schema is `WidgetPayloadV1` in `mobile/src/widgets/contract.ts`: `schemaVersion`, provenance (`generatedAt`, `writerAppVersion`), `locale`, a ~14-day **IST** Panchang window, a device-local verse window, and a Japam snapshot. Add fields additively; bump `schemaVersion` for any breaking change and keep native readers rejecting unsupported versions.
+- The planner (`planner.ts`) stays pure: explicit inputs in, typed payload out. No React, AsyncStorage, wall-clock reads, randomness, `fetch`, or platform APIs. There is no background/headless JS runner at widget-draw time.
+- The deferred coordinator (`WidgetCoordinator.tsx`) must dynamically `import()` the planner after `InteractionManager` settles, never statically import the Panchang graph — Home's first-frame/first-tap path must not pull the astronomy stack. It dedupes by a stable key over day/location/calendar/language/japam revision, throttles writes, persists atomically, then requests a native reload. Do not regress the `startup` test that pins this.
+
+### 15.2 Cross-language parity, fail-closed
+
+- A committed fixture — `mobile/src/widgets/fixtures/widget-payload-v1.json` — is decoded by TypeScript (`contract.ts`), Swift (`plugins/home-widgets/ios/WidgetPayloadContract.swift`), and Kotlin (`plugins/home-widgets/android/WidgetPayloadContract.kt`). All three must stay in parity; a schema change updates the fixture and all three decoders in the same PR.
+- Native readers validate schema, required fields, dates, and freshness and **fail closed** — never a partially decoded value, never an old entry labelled as today. Every missing/corrupt/incompatible/expired state resolves to a safe "open वेदांश़" recovery card (per design.md §59). No wrong-date Panchang is a hard release gate.
+- All four languages (`hi`/`en`/`gu`/`kn`) are required in the payload and their serif faces (Noto Serif Devanagari/Gujarati/Kannada + Inter) must be bundled into the native targets. A Hindi-only native surface would be a separate product decision, not a silent omission.
+
+### 15.3 Native delivery and OTA safety
+
+- Initial delivery is **store-binary-only**. No OTA may add or change native target code, entitlements, SwiftUI/RemoteViews layout, or fonts. A JS planner/copy change may ship OTA only to a runtime whose native reader already supports that schema — mind the store runtime version ([[ota-runtime-version-mismatch]] gotcha).
+- The iOS surface is a real WidgetKit **app extension** target (`VedanshWidgets`), not a main-app-linked Swift module, generated reproducibly from the CNG config plugins (`mobile/plugins/withHomeWidgets.js`, `withHomeWidgetsIos.js`, sources under `mobile/plugins/home-widgets/`). App Group entitlement (`group.com.prashantsharma.vedansh.widgets`) must be present on both app and extension; Android uses a dedicated SharedPreferences payload + AppWidget provider. `mobile/ios/` is prebuild output (gitignored) — the plugin is canonical.
+- Deep links use the `vedansh://widget/{verse|panchang|japam}` scheme only, parsed/dispatched by `mobile/src/widgets/deepLink.ts` on cold and warm start. Widget taps route through existing entry targets — they never invent a default mantra or a fabricated destination.
+
+### 15.4 Product and verification contract
+
+- Discovery surfaces: the `होम-स्क्रीन विजेट` More row (one-release NEW), the in-app **Widget Gallery** (`WidgetGalleryScreen.tsx`, previews from the same validated payload the native consumers read + accurate platform add-instructions — no promise of a system widget-picker jump), and one launch-release Home Discover spotlight. No new permission prompt is introduced.
+- Required automatable checks: `npm run typecheck`, the `src/widgets/__tests__/` suites (contract round-trip incl. missing/corrupt/expired/newer-schema; planner streak/>108/TZ-boundary/two-line; deep-link parse+route; coordinator no-static-import), targeted Jest for touched UI, and `.maestro/home-widgets-smoke.yaml`. If Maestro is not run, say so before merge.
+- **Device-only gates** (cannot be closed in CI/worktree; state their status explicitly before shipping): a clean CNG prebuild that reproducibly creates/entitles/signs the extension with no Xcode drift, an EAS build installing every signed target on a physical device, an app-write → widget-reload check, and per-size render / VoiceOver-TalkBack / large-text / Devanagari-matra screenshots. A local Swift module is not accepted as proof of extension-target feasibility.

@@ -15,6 +15,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import CalendarDatePicker from '@/components/CalendarDatePicker';
+import ClockTimePicker from '@/components/ClockTimePicker';
 import KundaliOverview from '@/components/KundaliOverview';
 import TextField from '@/components/TextField';
 import JyotishPracticeCard from '@/components/JyotishPracticeCard';
@@ -64,6 +66,9 @@ const EMPTY_PROFILE: BirthProfile = {
   time: '',
   cityId: '',
 };
+
+const TIME_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
+const DEFAULT_BIRTH_TIME = '06:00';
 
 function formatDegrees(value: number): string {
   const degrees = Math.floor(value);
@@ -414,6 +419,22 @@ function BirthInput({
   elevation: any;
 }) {
   const city = getCityById(draft.cityId);
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const [timeOpen, setTimeOpen] = useState(false);
+  const timeKnownValid = TIME_PATTERN.test(draft.time);
+  const openDate = () => {
+    Keyboard.dismiss();
+    setDatePickerVisible(true);
+  };
+  const openTime = () => {
+    Keyboard.dismiss();
+    if (!timeKnownValid) {
+      onChange({ ...draft, time: DEFAULT_BIRTH_TIME });
+      setTimeOpen(true);
+      return;
+    }
+    setTimeOpen((open) => !open);
+  };
   return (
     <>
       <View
@@ -467,35 +488,57 @@ function BirthInput({
       <View style={styles.inputRow}>
         <View style={{ flex: 1 }}>
           <FieldLabel hi="जन्म तिथि" en="Birth date" lang={lang} colors={colors} typography={typography} />
-          <TextField
-            variant="form"
+          <Pressable
             testID="kundali-date-input"
-            accessibilityLabel="Birth date YYYY-MM-DD"
-            value={draft.date}
-            onChangeText={(date) => onChange({ ...draft, date })}
-            placeholder="YYYY-MM-DD"
-            keyboardType="numbers-and-punctuation"
-            maxLength={10}
-            style={errors.date ? { borderColor: colors.avoid } : undefined}
-          />
+            onPress={openDate}
+            accessibilityRole="button"
+            accessibilityLabel="Birth date"
+            style={({ pressed }) => [
+              styles.pickerField,
+              { backgroundColor: colors.parchmentSoft, borderColor: errors.date ? colors.avoid : colors.divider, borderRadius: radii.md },
+              pressed && { opacity: 0.7 },
+            ]}
+          >
+            <Text style={{ color: draft.date ? colors.ink : colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15 }}>
+              {draft.date ? formatBirthDate(draft.date) : contentByLang(lang, 'तिथि', 'Select')}
+            </Text>
+            <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>▾</Text>
+          </Pressable>
           {errors.date && <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.date}</Text>}
         </View>
-        <View style={{ flex: 0.72 }}>
+        <View style={{ flex: 0.82 }}>
           <FieldLabel hi="समय" en="Time" lang={lang} colors={colors} typography={typography} />
-          <TextField
-            variant="form"
+          <Pressable
             testID="kundali-time-input"
-            accessibilityLabel="Birth time HH:mm"
-            value={draft.time}
-            onChangeText={(time) => onChange({ ...draft, time })}
-            placeholder="HH:mm"
-            keyboardType="numbers-and-punctuation"
-            maxLength={5}
-            style={errors.time ? { borderColor: colors.avoid } : undefined}
-          />
+            onPress={openTime}
+            accessibilityRole="button"
+            accessibilityLabel="Birth time"
+            style={({ pressed }) => [
+              styles.pickerField,
+              { backgroundColor: colors.parchmentSoft, borderColor: errors.time ? colors.avoid : colors.divider, borderRadius: radii.md },
+              pressed && { opacity: 0.7 },
+            ]}
+          >
+            <Text style={{ color: timeKnownValid ? colors.ink : colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15 }}>
+              {timeKnownValid ? formatBirthTime(draft.time) : contentByLang(lang, 'समय', 'Select')}
+            </Text>
+            <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>{timeOpen ? '▴' : '▾'}</Text>
+          </Pressable>
           {errors.time && <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.time}</Text>}
         </View>
       </View>
+      {timeOpen && timeKnownValid && (
+        <View style={styles.timePickerHost}>
+          <ClockTimePicker value={draft.time} onChange={(time) => onChange({ ...draft, time })} label="Birth time" />
+        </View>
+      )}
+      <CalendarDatePicker
+        visible={datePickerVisible}
+        value={draft.date}
+        lang={lang}
+        onSelect={(date) => onChange({ ...draft, date })}
+        onClose={() => setDatePickerVisible(false)}
+      />
 
       <FieldLabel hi="जन्म नगर" en="Birth city" lang={lang} colors={colors} typography={typography} />
       <Pressable
@@ -1285,6 +1328,8 @@ const styles = StyleSheet.create({
   actionText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   heroCard: { borderWidth: 1, padding: 18 },
   inputRow: { flexDirection: 'row', gap: 12 },
+  pickerField: { minHeight: 48, borderWidth: 1, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  timePickerHost: { marginTop: 10, alignItems: 'flex-start' },
   error: { fontFamily: fontFamilies.inter, fontSize: 12, marginTop: 4 },
   saveError: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 17, marginTop: 8, textAlign: 'center' },
   cityButton: { minHeight: 56, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },

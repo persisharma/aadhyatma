@@ -4,6 +4,7 @@ import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { ensureBackgroundAudioMode } from '@/audio/audioSession';
+import { claimPlayback, registerStopper } from '@/audio/playbackArbiter';
 import { getJapamAudioRepetitions, getJapamAudioSource } from '@assets/japam-audio';
 import {
   advanceBeadProgress,
@@ -12,6 +13,7 @@ import {
 } from '@/components/japamBeadProgress';
 import type { Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
+import RateStepper from './RateStepper';
 
 type Props = {
   mantraId: string;
@@ -133,6 +135,7 @@ function ActiveAudioPlayer({
     if (!status.isLoaded) return;
     autoPlayedRef.current = true;
     try {
+      claimPlayback('japam');
       player.play();
       clearCapTimer();
       capTimerRef.current = setTimeout(() => {
@@ -196,6 +199,20 @@ function ActiveAudioPlayer({
     };
   }, [player, clearCapTimer]);
 
+  // Let read-aloud / the recorded player silence this loop when they start.
+  useEffect(
+    () =>
+      registerStopper('japam', () => {
+        clearCapTimer();
+        try {
+          player.pause();
+        } catch {
+          /* player may already be released */
+        }
+      }),
+    [player, clearCapTimer]
+  );
+
   const isPlaying = status.playing;
 
   const togglePlay = useCallback(() => {
@@ -205,17 +222,10 @@ function ActiveAudioPlayer({
     if (status.playing) {
       player.pause();
     } else {
+      claimPlayback('japam');
       player.play();
     }
   }, [player, status.playing, clearCapTimer]);
-
-  const decreaseRate = useCallback(() => {
-    setRate((r) => Math.max(MIN_RATE, +(r - RATE_STEP).toFixed(2)));
-  }, []);
-
-  const increaseRate = useCallback(() => {
-    setRate((r) => Math.min(MAX_RATE, +(r + RATE_STEP).toFixed(2)));
-  }, []);
 
   const playLabel = isPlaying
     ? pick(lang, { hi: 'विराम', en: 'Pause', gu: 'વિરામ', kn: 'ವಿರಾಮ' })
@@ -278,72 +288,15 @@ function ActiveAudioPlayer({
         </Text>
       </Pressable>
 
-      <View style={styles.tempoBlock}>
-        <Text
-          style={[
-            styles.tempoLabel,
-            {
-              color: colors.inkMuted,
-              fontFamily: labelSubFont,
-            },
-          ]}
-        >
-          {tempoLabel}
-        </Text>
-        <View style={styles.tempoRow}>
-          <Pressable
-            onPress={decreaseRate}
-            accessibilityRole="button"
-            accessibilityLabel="Slower"
-            accessibilityState={{ disabled: rate <= MIN_RATE + 1e-3 }}
-            disabled={rate <= MIN_RATE + 1e-3}
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.tempoBtn,
-              {
-                borderColor: colors.divider,
-                borderRadius: radii.md,
-              },
-              pressed && { opacity: 0.7 },
-              rate <= MIN_RATE + 1e-3 && { opacity: 0.4 },
-            ]}
-          >
-            <Text style={[styles.tempoGlyph, { color: colors.inkSoft }]}>−</Text>
-          </Pressable>
-
-          <Text
-            style={[
-              styles.tempoValue,
-              {
-                color: colors.ink,
-                fontFamily: typography.pageCounter.fontFamily,
-              },
-            ]}
-          >
-            {rate.toFixed(1)}×
-          </Text>
-
-          <Pressable
-            onPress={increaseRate}
-            accessibilityRole="button"
-            accessibilityLabel="Faster"
-            accessibilityState={{ disabled: rate >= MAX_RATE - 1e-3 }}
-            disabled={rate >= MAX_RATE - 1e-3}
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.tempoBtn,
-              {
-                borderColor: colors.divider,
-                borderRadius: radii.md,
-              },
-              pressed && { opacity: 0.7 },
-              rate >= MAX_RATE - 1e-3 && { opacity: 0.4 },
-            ]}
-          >
-            <Text style={[styles.tempoGlyph, { color: colors.inkSoft }]}>+</Text>
-          </Pressable>
-        </View>
-      </View>
+      <RateStepper
+        value={rate}
+        onChange={setRate}
+        min={MIN_RATE}
+        max={MAX_RATE}
+        step={RATE_STEP}
+        label={tempoLabel}
+        labelFontFamily={labelSubFont}
+      />
     </View>
   );
 }
@@ -405,38 +358,6 @@ const styles = StyleSheet.create({
   },
   playLabel: {
     fontSize: 14,
-    includeFontPadding: false,
-  },
-  tempoBlock: {
-    alignItems: 'center',
-  },
-  tempoLabel: {
-    fontSize: 11,
-    fontStyle: 'italic',
-    includeFontPadding: false,
-    marginBottom: 4,
-  },
-  tempoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  tempoBtn: {
-    width: 32,
-    height: 32,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tempoGlyph: {
-    fontSize: 18,
-    lineHeight: 20,
-    includeFontPadding: false,
-  },
-  tempoValue: {
-    fontSize: 14,
-    minWidth: 38,
-    textAlign: 'center',
     includeFontPadding: false,
   },
   unavailable: {

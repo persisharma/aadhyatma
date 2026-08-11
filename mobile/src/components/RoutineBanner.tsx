@@ -5,6 +5,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
+import { useTilePress } from '@/contexts/TilePressContext';
 import { bannerStatus, bannerLine } from './routineBannerView';
 import LotusMark from './LotusMark';
 
@@ -29,10 +30,11 @@ export default function RoutineBanner({
   const { lang } = useGitaLanguage();
   const navigation = useNavigation<any>();
   const { hasRoutine, doneCount, total } = useRoutineToday();
+  const { beginTilePress, finishTilePress, activateTile } = useTilePress();
 
   const status = bannerStatus({ hasRoutine, doneCount, total });
   const line = bannerLine(status, lang);
-  const open = (screen: 'RoutineToday' | 'RoutineCreate') =>
+  const open = (screen: 'RoutineToday' | 'RoutineCreate') => () =>
     navigation.navigate('HomeTab', { screen });
 
   // Docked: floating chip just above the tab bar. The tab bar already owns the
@@ -86,7 +88,9 @@ export default function RoutineBanner({
       <Pressable
         ref={bannerRef}
         collapsable={false}
-        onPress={() => open('RoutineCreate')}
+        onPress={() => activateTile(open('RoutineCreate'))}
+        onPressIn={() => beginTilePress(open('RoutineCreate'))}
+        onPressOut={finishTilePress}
         accessibilityRole="button"
         accessibilityLabel={pick(lang, { hi: 'अपनी नित्य साधना बनाएँ', en: 'Set your daily practice', gu: 'તમારી નિત્ય સાધના સેટ કરો', kn: 'ನಿಮ್ಮ ನಿತ್ಯ ಸಾಧನೆ ಹೊಂದಿಸಿ' })}
         style={({ pressed }) => [
@@ -114,7 +118,9 @@ export default function RoutineBanner({
       <Pressable
         ref={bannerRef}
         collapsable={false}
-        onPress={() => open('RoutineToday')}
+        onPress={() => activateTile(open('RoutineToday'))}
+        onPressIn={() => beginTilePress(open('RoutineToday'))}
+        onPressOut={finishTilePress}
         accessibilityRole="button"
         accessibilityLabel={pick(lang, { hi: 'आज की साधना पूर्ण', en: "Today's practice complete", gu: 'આજની સાધના પૂર્ણ', kn: 'ಇಂದಿನ ಸಾಧನೆ ಪೂರ್ಣ' })}
         style={({ pressed }) => [
@@ -141,7 +147,9 @@ export default function RoutineBanner({
     <Pressable
       ref={bannerRef}
       collapsable={false}
-      onPress={() => open('RoutineToday')}
+      onPress={() => activateTile(open('RoutineToday'))}
+      onPressIn={() => beginTilePress(open('RoutineToday'))}
+      onPressOut={finishTilePress}
       accessibilityRole="button"
       accessibilityLabel={pick(lang, { hi: 'आज की साधना', en: "Today's practice", gu: 'આજની સાધના', kn: 'ಇಂದಿನ ಸಾಧನೆ' })}
       style={({ pressed }) => [

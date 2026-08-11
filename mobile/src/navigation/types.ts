@@ -79,6 +79,7 @@ export type MoreStackParamList = {
   Profile: undefined;
   Reminders: undefined;
   JapamAlarms: undefined;
+  WidgetGallery: undefined;
 };
 
 export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
@@ -86,7 +87,7 @@ export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
 export type PanchangStackParamList = {
-  PanchangHome: { initialTab?: PanchangHomeMode } | undefined;
+  PanchangHome: { initialTab?: PanchangHomeMode; dateMs?: number } | undefined;
   ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
   ObservanceDetail: { ruleId: string };
   KathaLibrary: undefined;
@@ -95,6 +96,7 @@ export type PanchangStackParamList = {
   MuhuratDetail: { dateMs: number };
   Kundali: { editing?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
+  GunaMilan: undefined;
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing

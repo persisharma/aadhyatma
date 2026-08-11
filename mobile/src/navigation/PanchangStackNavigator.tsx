@@ -8,6 +8,7 @@ import MyVratScreen from '@/screens/MyVratScreen';
 import MuhuratDetailScreen from '@/screens/MuhuratDetailScreen';
 import KundaliScreen from '@/screens/KundaliScreen';
 import RashifalScreen from '@/screens/RashifalScreen';
+import GunaMilanScreen from '@/screens/GunaMilanScreen';
 import type { PanchangStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<PanchangStackParamList>();
@@ -52,6 +53,11 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="Rashifal"
         component={RashifalScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="GunaMilan"
+        component={GunaMilanScreen}
         options={{ animation: 'slide_from_right' }}
       />
     </Stack.Navigator>

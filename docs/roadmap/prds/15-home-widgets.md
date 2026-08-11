@@ -2,91 +2,158 @@
 
 | | |
 |---|---|
-| **Status** | Draft for review — prototype attached |
-| **T-shirt size** | M–L (native WidgetKit/AppWidget targets; JS side is small) |
-| **Prototype** | [`docs/widgets-prototype.html`](../../widgets-prototype.html) — all three widgets on iOS home/lock screen + Android, the More-tab Widget Gallery, and the stale fallback, every interaction annotated |
-| **Feasibility** | ✅ Confirmed — the repo already ships custom native code via CNG (`modules/japam-alarm-ios` local Swift module, `plugins/withJapamAlarmIos.js`, `plugins/native-android`), so the EAS pipeline and team can carry native targets. New surface: an iOS widget-extension target + App Group, an Android `AppWidgetProvider`. **Store release only — no OTA path.** |
+| **Status** | Revised draft — native feasibility gate required before implementation |
+| **T-shirt size** | M–L after Phase 0 (new WidgetKit/AppWidget targets; JS planner is small, native delivery/signing is the risk) |
+| **Prototype** | [`docs/widgets-prototype.html`](../../widgets-prototype.html) — iOS home/lock-screen states, Android, the in-app Widget Gallery, and freshness fallbacks |
+| **Feasibility** | 🟡 Architecture plausible, not yet proven. Existing CNG native modules show that the repo can carry native code, but not that a clean prebuild can reproducibly create, entitle, sign, install, and update a second iOS application target. Phase 0 must prove that path before feature work begins. The initial feature requires a store binary; later JS-planner changes are OTA-safe only while the native payload schema remains compatible with that binary. |
 
-> **Design intent (validated in the prototype):** widgets are the **parchment system rendered on the OS canvas** — `parchment-hi → parchment` gradient card, ॐ brand mark top-right, Noto Serif Devanagari content, no emoji. Three widgets in v1: **आज का श्लोक** (daily verse), **आज का पंचांग** (tithi · vrat · timings), **जप-साधना** (streak ring). All state is precomputed by the app; widgets never compute or fetch.
+> **Design intent:** widgets are the parchment system rendered on the OS canvas — `parchment-hi → parchment`, ॐ brand mark, script-aware serif content, no emoji. V1 surfaces are **आज का श्लोक** (daily verse), **आज का पंचांग** (tithi · vrat · timings), and **जप-साधना** (japa-only progress and streak). JS precomputes content without delaying Home; native code validates, selects, and renders the correct dated entry without performing astronomy or network work.
 
 ---
 
-**Bundle-only:** the app writes a ~14-day JSON payload (verse-of-day, per-day panchang summary, streak/japam counters) into the shared container (iOS App Group / Android SharedPreferences) on every foreground and after the headless notification scheduler runs. The native widget reads that payload on its midnight timeline. **No network, no account, no new runtime dependency on the JS side.**
+**Bundle-only data:** the app writes a versioned ~14-day payload into an iOS App Group / dedicated Android SharedPreferences file after foreground interactions settle, and again when the selected Panchang location/calendar system, app language, or Japam activity changes. Writes are deduplicated and throttled. There is no background/headless JS runner at notification-delivery time. After a successful atomic write, native glue explicitly requests a WidgetKit timeline reload / Android AppWidget update.
 
 ## 1. Problem
 
-Vedansh's daily-return loop currently has exactly two re-entry surfaces: the user remembering to open the app, and notifications (PRD-01 families). Notifications are interruptive and capped by the shared iOS pending budget; memory is unreliable. The highest-retention surface in mobile — the **home screen itself** — carries nothing. Competing panchang apps ship tithi widgets as table stakes; devotional users check "आज कौन सी तिथि/व्रत है?" multiple times a day, and today that always costs a full app open (or goes to a competitor's widget).
+Vedansh's daily-return loop currently has two re-entry surfaces: the user remembering to open the app and notifications. Notifications are interruptive and share a finite iOS pending budget; memory is unreliable. Devotional users repeatedly ask “आज कौन सी तिथि/व्रत है?”, but the home screen currently carries none of Vedansh's daily value.
 
-## 2. Goal
+## 2. Goal and measurement boundary
 
-Put the three highest-frequency glances — today's verse, today's panchang, the japam streak — on the user's home and lock screen as **zero-interruption ambient surfaces**. Success = D7/D30 lift in the widget-adopter cohort (local launch-ring-buffer comparison, per the Q3 measurement approach) and widget adoption ≥ 20% of active devices within two releases.
+Put the three highest-frequency glances — today's verse, today's Panchang, and today's Japam practice — on the user's home and lock screen as quiet ambient surfaces.
 
-## 3. Where it lands in the app (surfaces)
+V1 adds **no remote analytics**. A local ring buffer may record widget installation visibility, payload freshness, widget deep-link opens, and subsequent app-launch days for on-device diagnostics, but it cannot establish fleet-wide adoption or causal D7/D30 lift. “20% of active devices” and cohort-retention claims require a separate, explicitly approved consented-telemetry decision. Until then, release gates are operational:
 
-Validated in the prototype; five surfaces total:
+- no measurable regression to Home first-frame or first-tap readiness;
+- no wrong-date Panchang display in missing, corrupt, incompatible, or expired payload states;
+- every widget deep link reaches the intended destination on a cold and warm app;
+- a foregrounded app refreshes changed content and requests a widget reload;
+- every supported size passes native-device Devanagari/Gujarati/Kannada/English, contrast, truncation, VoiceOver/TalkBack, and large-text checks.
+
+## 3. Where it lands in the app
 
 ### 3.1 iOS home screen — small + medium WidgetKit widgets
-- **आज का श्लोक (small):** one verse from the Daily-Bhakti pool, refreshed at local midnight. Tap → Daily Bhakti tab (existing `entryRoutes` deep link).
-- **आज का पंचांग (medium):** tithi headline + today's vrat line (the same line PRD-followup #237 leads notification titles with) + sunrise / Rahu Kaal / Abhijit tiles from the PRD-14 muhurat engine. Tap → Panchang tab. City follows the in-app panchang location.
-- **जप-साधना (small):** 108-bead progress ring for today + day-streak count from `UserActivityContext`. Tap → Japam counter. **Read-only in v1.**
 
-### 3.2 iOS lock screen — accessory widgets
-- **Inline (above clock):** today's tithi, or the vrat name on observance days.
-- **Circular:** the streak ring. Accessories are OS-tinted/monochrome; the design carries no colour-only state, so it survives desaturation (design.md §12 discipline).
+- **आज का श्लोक (small):** a deterministic Daily-Bhakti selection for the devotional/device-local day. The widget renders a maximum of two verse lines plus a compact source. Long verses use a deterministic excerpt/fallback selected by the planner; the full verse and source remain in the accessibility label. Tap → the exact Daily Bhakti entry through the existing deep-link dispatcher.
+- **आज का पंचांग (medium):** represented IST date + tithi headline + vrat line + sunrise / Rahu Kaal / Abhijit from the PRD-14 engine. It carries the selected city and lunar calendar system used to compute it. Tap → Panchang on the represented date.
+- **जप-साधना (small, Phase 2):** **Japam-only**, not the broader `UserActivityContext.currentStreak()`. The ring fills toward the first 108 beads of the day and stays full after 108; the caption shows actual total beads/rounds and a separately computed japa-active-day streak. The payload carries `lastUsedMantraId?`. Tap → that mantra's counter when present, otherwise the existing Japam library/category; it never invents a default mantra. Read-only in v1.
 
-### 3.3 Android home screen — one resizable 4×2 AppWidget (Phase 2)
-Panchang block + one-line verse teaser. 4×1 collapses to the tithi line; 4×3 expands the verse. Two tap zones: panchang → Panchang tab, verse → Daily Bhakti. Ships through the existing `plugins/native-android` config-plugin path.
+### 3.2 iOS lock screen — accessory widgets (Phase 2)
 
-### 3.4 In-app: More → "होम-स्क्रीन विजेट" row + Widget Gallery screen
-A new row in the existing MoreHome list (standard NEW badge, one release). The gallery renders each widget preview **with today's real values** (the same JS that writes the payload) and per-OS "how to add" steps. No permission prompts anywhere — widgets need none.
+- **Inline:** represented IST date's tithi, or the vrat name on observance days.
+- **Circular:** japa-only progress/streak with a numeric/text cue that survives monochrome and tinted appearances.
 
-### 3.5 Stale fallback state
-If the app hasn't run past the precomputed window, the widget must never show a wrong tithi. It swaps to a reverent "पंचांग ताज़ा करने हेतु वेदांश खोलें" card; tapping opens the app, which rewrites the payload.
+Accessory widgets require the supported OS family; unsupported versions simply do not advertise those families.
 
-### Discovery
-One Home-tab DISCOVER carousel card (existing `FeatureCard` mechanism, design.md §32) in the launch release, pointing at the gallery.
+### 3.3 Android home screen — one responsive AppWidget (Phase 2)
 
-## 4. Architecture (the shape that keeps native thin)
+One widget provides explicit responsive layouts rather than assuming launcher cell dimensions: compact = dated tithi line; standard ≈ 4×2 = Panchang + one-line verse teaser; expanded = two-line verse. Panchang and verse are separate tap zones. On Android 8+ launchers that support it, the gallery offers the system `requestPinAppWidget()` confirmation. Unsupported launchers fall back to written steps.
+
+Android midnight refresh is **best-effort**, never exact: `updatePeriodMillis`/WorkManager may be delayed by the OS. Every layout therefore shows or exposes the represented date, rejects expired data, and refreshes immediately when the app next writes a payload.
+
+### 3.4 In-app: More → “होम-स्क्रीन विजेट” + Widget Gallery
+
+Add the standard MoreHome row with a one-release NEW badge. The gallery renders previews from the same validated payload contract as native consumers and shows platform-specific instructions.
+
+- **Android:** “Add widget” invokes `requestPinAppWidget()` only when supported, otherwise shows steps.
+- **iOS:** show accurate long-press → Edit Home Screen → Add Widget instructions. Do not promise a system widget-picker jump; WidgetKit exposes configuration discovery/reload, not an in-app add-widget API.
+- No permission prompt is introduced.
+
+One launch-release Home DISCOVER card may point to this gallery through the existing `FeatureCard` mechanism.
+
+### 3.5 Missing, invalid, and expired states
+
+The native reader validates schema, required fields, dates, and freshness before rendering:
+
+- **first run / missing:** “विजेट तैयार करने हेतु वेदांश़ खोलें”;
+- **corrupt or incompatible:** same safe open-app recovery, never partially decoded values;
+- **Panchang expired:** “पंचांग ताज़ा करने हेतु वेदांश़ खोलें” and no old tithi;
+- **verse expired:** a neutral open-app card, not an old verse labelled as today;
+- **Japam snapshot old:** show the last-updated date or a refresh prompt, never imply that an old count is today's.
+
+Tap opens the relevant app surface; a successful app write requests an immediate native reload rather than waiting for an unspecified next timeline tick.
+
+## 4. Architecture
+
+### 4.1 Versioned payload
+
+The shared document includes at minimum:
+
+```ts
+type WidgetPayloadV1 = {
+  schemaVersion: 1;
+  generatedAt: string;
+  writerAppVersion: string;
+  locale: 'hi' | 'en' | 'gu' | 'kn';
+  panchang: {
+    timeZone: 'Asia/Kolkata';
+    cityId: string;
+    calendarSystem: 'purnimant' | 'amanta';
+    validThrough: string;
+    days: PanchangWidgetDay[];
+  };
+  verses: { timeZone: string; validThrough: string; days: VerseWidgetDay[] };
+  japam: { dateKey: string; timeZone: string; totalBeads: number; totalRounds: number; japaStreak: number; lastUsedMantraId?: string };
+};
+```
+
+Native readers ignore unknown additive fields, reject unsupported schema versions, and never assume missing required values. JS writes to a temporary file/value and atomically replaces the committed payload. A committed JSON fixture is decoded by TypeScript, Swift, and Kotlin tests to pin cross-language parity.
+
+### 4.2 Responsibilities
 
 | Layer | Responsibility |
 |---|---|
-| JS "widget planner" (new, pure) | Build the 14-day payload: per-day `{tithi, vratName?, sunrise, rahuKaal, abhijit}` via `computePanchangForDate` + `muhurat.ts`; verse-of-day ids from the Daily-Bhakti pool; streak/japam snapshot. Pure function + `tsx --test` suite, same pattern as the notification planner. |
-| JS glue | Serialize payload → shared container on app foreground + after the headless scheduler runs. |
-| iOS widget extension (Swift/SwiftUI) | Read App-Group JSON, render, midnight timeline entries, deep-link URLs. **No computation.** |
-| Android `AppWidgetProvider` (Kotlin) | Same, from SharedPreferences, `AlarmManager`-free (midnight update via `updatePeriodMillis`/WorkManager). |
+| Pure JS planner | Build dated Panchang/verse entries and Japam snapshot from explicit inputs. No React, storage, network, wall clock, or native APIs. |
+| Deferred JS coordinator | After interactions, deduplicate by day/location/calendar/language/activity revision, plan only when stale, atomically persist, then request native reload. It must not import/evaluate the Panchang graph on Home's initial path. |
+| iOS extension | Decode and validate App-Group payload; emit dated WidgetKit timeline entries; render supported families; route deep links. No astronomy/network. |
+| Android provider/worker | Decode and validate dedicated SharedPreferences payload; choose responsive RemoteViews; perform best-effort refresh; route PendingIntents. No astronomy/network. |
 
-The "pure planner + native consumer" split mirrors the notification subsystem deliberately — it keeps all logic testable in TypeScript and the native code dumb.
+The active app language is respected: Hindi/English/Gujarati/Kannada copy and the corresponding existing serif assets must be included in the extension/provider targets. A deliberate Hindi-only native surface would require a separate product decision rather than silently ignoring the app preference.
 
-## 5. Constraints & risks (why this is M–L, not S)
+## 5. Phase 0 — mandatory native feasibility gate
 
-1. **New native targets.** iOS widget extension = a separate app target with its own provisioning profile — added via a config plugin (`expo-apple-targets` or equivalent), plus an **App Group** entitlement on both app and extension. EAS credentials must be updated.
-2. **Store release only.** No OTA path for any of it; align with the next binary bump (content releases already ride store versions).
-3. **Fonts in the extension.** Noto Serif Devanagari must be bundled into the widget target explicitly — the RN font pipeline does not reach extensions. The lint rule's lesson (silent system-font fallback) applies doubly here; verification must include a Devanagari render check on device.
-4. **Timeline discipline.** WidgetKit budgets refreshes; one midnight entry per day + payload-rewrite on app-open stays far inside the budget.
-5. **New Architecture / SDK 54** — WidgetKit extensions are independent of the RN runtime, so no interaction with the New-Arch flag; the Android provider must avoid the full-screen-intent class of permissions (#216 lesson).
+Before estimating/starting Phase 1, a throwaway vertical spike must prove all of the following from a **clean CNG prebuild**:
 
-## 6. What it does NOT do (non-goals)
+1. Reproducible WidgetKit target creation with a stable extension bundle identifier.
+2. App Group entitlement present in both compiled app and extension provisioning profiles.
+3. EAS development/internal build signs every target and installs on a physical device.
+4. Main app atomically writes a fixture; extension reads it; `WidgetCenter` reload displays the changed value.
+5. Cold/warm widget deep links reach the intended nested route.
+6. Noto Serif Devanagari plus Gujarati/Kannada assets render from the extension target without fallback/clipping.
+7. A second clean prebuild produces no unexplained Xcode-project drift.
 
-- **No interactive widgets in v1** — counting japam from the widget (App Intents) is Phase 3.
-- **No Live Activities / Dynamic Island**, no Apple Watch app.
-- **No configurable widget options** (choosing a deity/text per widget) in v1 — one canonical form each.
-- **No Android lock-screen widgets** (fragmented OS support).
-- **No new notification behaviour** — widgets are the quiet counterpart to PRD-01, not an extension of it.
+Failure of any gate returns the PRD to architecture review. A local Swift module is not accepted as proof of extension-target feasibility.
+
+## 6. Constraints and non-goals
+
+- Initial delivery is store-binary-only. No OTA can add or change native target code, entitlements, SwiftUI/RemoteViews layout, or fonts.
+- Compatible JS planner/copy changes may ship only to a runtime whose native reader supports that schema.
+- No interactive counting, Live Activities, Dynamic Island, Apple Watch app, account, network fetch, or notification behavior.
+- No per-widget deity/text configuration in v1.
+- No Android lock-screen widget promise.
+- WidgetKit/Android refresh dates are requests, not exact execution guarantees.
 
 ## 7. Phasing
 
-1. **Phase 1 (iOS):** widget planner + payload glue; आज का पंचांग (medium) + आज का श्लोक (small); Widget Gallery + More row; stale state; deep links.
-2. **Phase 2 (Android + lock screen):** the 4×2 AppWidget; iOS accessory widgets; जप-साधना small widget.
-3. **Phase 3 (optional):** App-Intents japam counting from the widget; per-widget configuration.
+0. **Native spike:** Phase 0 gate above.
+1. **iOS:** payload schema/planner/coordinator; Panchang medium + verse small; gallery/More/Discover; recovery states; deep links.
+2. **Android + accessories + Japam:** responsive Android widget with supported pin flow; iOS accessory families; japa-only widget.
+3. **Optional:** App-Intent Japam counting and per-widget configuration, each requiring a fresh product/privacy review.
 
-## 8. Why it fits the moat
+## 8. Verification
 
-Every competitor widget is an ad-funnel or requires an account; Vedansh's is computed on-device from an engine already validated against DrikPanchang, renders in a reverent visual system, and asks for nothing — no permission, no login, no network. It converts the app's strongest asset (the panchang engine) into daily ambient presence.
+- Pure planner fixtures: date/time-zone boundaries, location/calendar/language changes, long-verse truncation selection, japa-only streak and >108 behavior.
+- Shared-schema round trip in TypeScript/Swift/Kotlin; missing/corrupt/expired/newer-schema fixtures.
+- Startup benchmark proving no Home first-frame/first-tap regression and no eager Panchang-stack evaluation.
+- Clean prebuild drift check plus EAS multi-target build/sign/install evidence.
+- Physical iOS and Android screenshots for every supported size, light/tinted/monochrome where applicable, and hostile wallpapers.
+- VoiceOver/TalkBack labels include complete verse/source, represented date/location, each timing label/value, bead total and streak.
+- Real cold/warm deep-link tests and app-write → widget-reload tests.
 
-## 9. Design compliance (design.md is authoritative)
+## 9. Design compliance
 
-- **Colour** — widget cards use only `parchment*`, `ink*`, `saffron*`, `gold`, `divider` token values; Rahu Kaal uses the PRD-14 terracotta `avoid` tone, never red. No hex outside the token values mirrored into the native targets (documented as the single sanctioned mirror, kept in sync by a checklist item in the RULEBOOK verification steps).
-- **Type** — Noto Serif Devanagari for Devanagari, Cormorant Garamond for Latin secondary lines, Inter for tiny uppercase kickers (§3); bundled into each native target.
-- **Iconography** — **no emoji** (§5); the ॐ mark and `॥` ornament only.
-- **Accessibility** — no colour-only state (§12): the avoid window carries its label, the streak ring carries its number; accessory widgets are designed monochrome-first.
-- **Bilingual, Hindi-led** — Devanagari primary, Latin/times secondary (§1).
+- Mirror documented theme token values into native targets through one reviewed mapping; use `avoidDeep` for text on terracotta-tinted surfaces.
+- Final native specs—not scaled prototype CSS—must keep meaningful widget text at **10 pt or above**. Remove labels that cannot fit instead of shrinking them.
+- Numerals/times/status labels use a readable non-italic ≥600 face; italic Cormorant remains limited to short prose flourishes.
+- The verse has a deterministic two-line fit policy and full accessible text; dynamic/large-text snapshots must not clip Devanagari matras.
+- State is never colour-only; the streak carries a number/label and avoid windows carry their names.
+- No emoji in widget or in-app feature chrome; OS-app icons shown in the prototype are illustrative context only.

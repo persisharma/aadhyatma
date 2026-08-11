@@ -2,91 +2,174 @@
 
 | | |
 |---|---|
-| **Status** | Draft for review — prototype attached |
-| **T-shirt size** | S–M (compute is pure lookup tables over the existing kundali engine; UI is one input screen + one result screen + a share card) |
-| **Prototype** | [`docs/guna-milan-prototype.html`](../../guna-milan-prototype.html) — entry card, two-person input, 36-guna result, expanded koota, dosha state, share card, every interaction annotated |
-| **Feasibility** | ✅ Confirmed — `getSiderealPlanetLongitude('chandra', date)` (`mobile/src/panchang/kundali.ts`) yields birth nakshatra (`⌊λ / 13°20′⌋`) and rashi (`⌊λ / 30°⌋`) for any birth moment; the eight koota scores are fixed lookup tables over those indices. **No new dependency, no native change — OTA-shippable.** |
+| **Status** | Implemented candidate — convention and fixture sign-off required before merge |
+| **T-shirt size** | M — the arithmetic is pure, but convention tables, directional roles, uncertain birth times, privacy, and boundary validation make this more than a small UI feature |
+| **Prototype** | [`docs/guna-milan-prototype.html`](../../guna-milan-prototype.html) — entry, two-person input, exact and uncertain results, expanded koota, dosha state, and privacy-safe sharing |
+| **Feasibility** | Implemented without a new native dependency and OTA-capable. The pure engine reuses `getSiderealPlanetLongitude('moon', date)`; [`guna-milan-v1.md`](../conventions/guna-milan-v1.md) pins the convention, sources, and external golden-fixture policy pending final domain sign-off. |
 
-> **Design intent (validated in the prototype):** third card on the existing **Jyotish landing** (Panchang tab → ज्योतिष segment), beside Kundali and Rashifal. Result = score dial + verdict chip + eight expandable koota rows that always **show their working** (each person's nakshatra basis + the koota's traditional meaning). Dosha handling uses the warm terracotta `avoid` tone with the परिहार (cancellation) check always computed and stated — **never red, never fear, never a remedy upsell.**
+> **Product stance:** a traditional calculation with visible working, not a verdict. The experience is calm, private, and explicit about uncertainty. No red alarm treatment, fear copy, remedy upsell, or hidden noon assumption.
 
----
+## 1. Problem and goal
 
-**Bundle-only:** both charts are computed on-device from birth date/time/place via the existing sidereal engine; koota scoring is pure arithmetic. Inputs persist only in AsyncStorage (`@vedansh/guna-milan`). No account, no network, nothing leaves the phone — and the UI says so at both entry and input.
+People seeking a traditional marriage compatibility calculation often encounter lead forms, opaque scores, and anxiety-driven upsells. Vedansh can offer an offline, inspectable alternative using its existing sidereal engine.
 
-## 1. Problem
+The v1 goal is narrow: calculate the pinned Ashtakoota convention for two people, explain every component, express birth-time uncertainty honestly, and generate an optional privacy-safe share image.
 
-Kundali matching is one of the highest-intent searches in this entire category — every family checks it during marriage conversations, and today that intent lands on ad-heavy astrology portals that demand phone numbers, upsell "remedies," and paywall the result. Vedansh already ships the hard part (a DrikPanchang-validated sidereal engine with per-user birth charts, #215/#217) but captures none of this audience. Guna Milan is the rare feature that is simultaneously a **new-audience acquisition door** (family members who don't yet use the app), a **wedding-season share moment**, and a two-week build on existing code.
+Success is measured locally and only with user-visible diagnostics:
 
-## 2. Goal
+- number of Guna Milan calculations started and completed on this device;
+- share-card previews generated and system share sheets opened.
 
-Answer "इन दोनों का मिलान कितना है?" in one screen — traditional Ashtakoota, computed honestly, explained educationally, shared beautifully. Success = Guna Milan usage among Jyotish-segment visitors ≥ 25% (local counter), and share-card renders per match ≥ 15%.
+Do not describe a share as completed: the OS does not reliably report the downstream outcome. Do not publish aggregate adoption claims unless a separately reviewed telemetry plan is introduced.
 
-## 3. Where it lands in the app (surfaces)
+## 2. Placement and navigation
 
-Validated in the prototype; four surfaces:
+`PanchangScreen` → ज्योतिष (`JyotishLanding`) gains an **अष्टकूट मिलान** card below Kundali and Rashifal, with the standard versioned NEW badge.
 
-### 3.1 Entry — third card on the Jyotish landing
-`PanchangScreen`'s ज्योतिष segment (`JyotishLanding`) gains an **अष्टकूट मिलान** card under Kundali and Rashifal, with the standard NEW badge. Tap → new root-stack route `GunaMilan` (same pattern as the `Kundali` / `Rashifal` routes in `navigation/types.ts`).
+Tap pushes `GunaMilan` inside the existing **Panchang stack**. Add it to `PanchangStackParamList`; do not add a duplicate root-stack route. Back behavior, deep-link fallback, and screen tracking follow the existing Panchang/Jyotish screens.
 
-### 3.2 Input — two birth-detail cards (वर · वधू)
-- Reuses the Kundali form controls verbatim: 48 pt `TextField variant="form"`, the date/time pickers, and `LocationPickerModal` (city + Rajasthan-tehsil list). Hand-rolling any of these is a RULEBOOK §3 hard reject.
-- **"मेरी कुंडली से भरें"** chip on Person 1 — one tap copies the user's saved Kundali birth details (the dominant use case).
-- **Unknown birth time** is a first-class state: "ज्ञात नहीं" defaults to 12:00 noon with a serif note explaining the ~13°/day moon-motion caveat; matching degrades gracefully because Ashtakoota is nakshatra-granular.
-- Names are optional and used only for display/share.
+## 3. Input experience
 
-### 3.3 Result — dial, verdict, eight koota rows
-- **Score dial** (saffron-gold conic fill) + verdict chip on fixed bands: 33–36 अति उत्तम · 25–32 उत्तम · 18–24 मध्यम · <18 न्यून (softened language — never "reject").
-- **Eight rows** — वर्ण/1 · वश्य/2 · तारा/3 · योनि/4 · ग्रह मैत्री/5 · गण/6 · भकूट/7 · नाड़ी/8 — each with a point chip and mini progress bar; **tap expands in place** (one open at a time) to show both persons' nakshatra/rashi basis for that koota plus a two-line traditional meaning. Educational, never oracular.
-- **Dosha banner** (Nadi/Bhakoot) in the terracotta `avoid` tone, always paired with its computed **परिहार** check (e.g. nakshatra-charana difference for Nadi). A zero-scoring koota shows a terracotta point chip; the bar never disappears.
-- A standing serif **disclaimer** anchors the screen: "मार्गदर्शन हेतु, निर्णय हेतु नहीं" — consult your family purohit for the decision.
+### 3.1 Directional roles without assuming the user
 
-### 3.4 Share — the branded artifact
-साझा renders a portrait card (score, verdict, all 8 kootas, `ॐ वेदांश़ · <city>` footer) via the **existing Jyotish share pipeline** (`JyotishShareCard` / `react-native-view-shot` → `expo-sharing`). Names appear only if typed; **birth details never appear on the card.** The wedding-season family forward is this feature's organic-growth moment.
+The selected scoring convention is directional, so the inputs remain **वर · Groom** and **वधू · Bride**. Each card offers **“मेरे विवरण यहाँ”** when saved Kundali details exist; never assume the device owner is the groom. The result and share card preserve these roles even when names are omitted.
 
-## 4. What it computes (all from existing code)
+Names are optional display-only values. Date and time are calculation inputs.
 
-| Output | Source |
+### 3.2 Reuse through controlled form primitives
+
+Use a reusable, controlled `BirthDetailsForm` primitive derived from the Kundali flow. It accepts `value`, `onChange`, validation, disabled state, role-specific saved-profile copy, and a context-specific persistence policy.
+
+Do **not** reuse `LocationPickerModal` directly: its current behavior mutates the global Panchang location. Guna Milan must not change Panchang preferences while entering another person's details.
+
+V1 uses fixed India/IST civil-time semantics and only needs Moon longitude, so birthplace is not requested. Saved Kundali autofill copies the applicable name/date/time only. If Phase 2 adds Mangal-dosha or full-chart matching, location becomes a separately designed and validated input.
+
+### 3.3 Unknown birth time is an interval, not noon
+
+“ज्ञात नहीं” never substitutes 12:00 noon and never persists a fabricated time.
+
+For an unknown time, evaluate Moon longitude across the entire local civil day, including every nakshatra, charana, rashi, and degree-sensitive Vashya boundary that falls within `00:00–23:59:59` IST. When both times are unknown, evaluate the Cartesian product of each person's possible classifications:
+
+- if all possible times yield the same score, koota breakdown, and convention flags, show the exact result with an “all times checked” note;
+- if any result changes, show the minimum–maximum score and the affected kootas/nakshatras;
+- do not show one verdict band or share an exact score until an exact time is provided.
+
+The Moon can cross a nakshatra during a civil day, so “effect is minimal” is not acceptable product copy.
+
+### 3.4 Privacy and persistence
+
+Inputs are session-only by default. Offer an explicit unchecked **“Remember on this device”** toggle. If enabled, store a versioned record under a dedicated key, with a visible clear action. Never restore a previous match implicitly when the toggle was off.
+
+All calculations remain on-device. No account or network is required, and this is stated beside the form.
+
+## 4. Pinned calculation contract
+
+### 4.1 Inputs derived from the existing engine
+
+For each exact birth moment:
+
+```ts
+const longitude = getSiderealPlanetLongitude('moon', birthMoment);
+const nakshatraIndex = Math.floor(longitude / (360 / 27));
+const charanaIndex = Math.floor(longitude / (360 / 108)) % 4;
+const rashiIndex = Math.floor(longitude / 30);
+```
+
+Normalize longitude to `[0, 360)` before classification. Civil date/time is interpreted as India/IST in v1; timezone handling must not depend on the device timezone.
+
+### 4.2 Convention document is part of the feature
+
+The checked-in [`guna-milan-v1.md`](../conventions/guna-milan-v1.md) convention document and fixture source note pin:
+
+- the authoritative DrikPanchang edition/pages and retrieval date;
+- all 27 nakshatra, 108 charana, and 12 rashi classifications;
+- वर→वधू direction for directional calculations such as Varna and Tara;
+- every half-point/fractional score;
+- the full rashi-lord and friendship tables (these are new pure data; they are not currently exported by `kundali.ts`);
+- Vashya's degree-sensitive classification, including the Sagittarius and Capricorn 15° splits;
+- Bhakoot/Nadi flags and every supported cancellation rule, including precedence;
+- score-band labels and exact inclusive boundaries.
+
+Base bands follow the pinned DrikPanchang convention: **31–36 excellent, 21–30 very good, 17–20 middling, 0–16 inauspicious**. The engine also exposes the separately interpreted display band required by DrikPanchang's unfavorable-Bhakoot and unfavorable-Nadi modifiers. UI copy softens the last band to **“पारम्परिक अनुकूल सीमा से कम · below the reference threshold”** and keeps the standing guidance disclaimer. If the fixture source and product labels diverge, the convention document wins and this PRD/prototype must be updated before shipping.
+
+### 4.3 Eight outputs
+
+| Koota | Max | Required basis |
+|---|---:|---|
+| वर्ण · Varna | 1 | Directional rashi-based hierarchy from वर to वधू |
+| वश्य · Vashya | 2 | Degree-sensitive Moon classification and pinned pair matrix |
+| तारा · Tara | 3 | Both directional nakshatra counts, modulo-9 classes, and fractional combination rule |
+| योनि · Yoni | 4 | Pinned nakshatra animal/sex classifications and complete pair matrix |
+| ग्रह मैत्री · Graha Maitri | 5 | Rashi lords and pinned natural-friendship matrix |
+| गण · Gana | 6 | Pinned nakshatra gana pair matrix |
+| भकूट · Bhakoot | 7 | Directional rashi distance and pinned cancellation precedence |
+| नाड़ी · Nadi | 8 | Pinned nakshatra nadi rule and cancellation precedence |
+
+The displayed total is the exact sum, including halves. Formatting and band comparisons must share one numeric source so decimal scores have no gaps or rounding disagreements.
+
+## 5. Result experience
+
+- An exact result shows a 36-point dial, pinned band label, optional names, roles, and eight expandable koota rows.
+- An uncertain result shows a score range and the kootas that vary. It has no single dial fill or exact-share action.
+- Each row shows its score, maximum, visual bar, inputs used for that rule, and a short Hindi-first explanation. Only one row is open at a time.
+- Nadi/Bhakoot findings use `avoidTint` with `avoidDeep` text/border, never raw `avoid` text on a tint. A zero remains understandable without color.
+- A dosha/cancellation banner states what rule fired, whether a supported cancellation applies, and what remained in the final score. Never claim a cancellation without a pinned and tested rule.
+- The standing disclaimer reads: **“यह पारम्परिक अष्टकूट गणना है — मार्गदर्शन हेतु, निर्णय हेतु नहीं।”**
+
+The production dial uses the existing `react-native-svg` stack. The HTML prototype's CSS conic gradient is illustrative only.
+
+## 6. Share experience
+
+Share opens a preview first. The portrait card may contain:
+
+- optional names and their वर/वधू roles;
+- exact total, band label, and eight component scores;
+- standing guidance disclaimer;
+- the brand footer `ॐ वेदांश़`.
+
+It never contains birth date, time, location, a saved-profile identifier, or hidden metadata containing those values. Because birthplace is irrelevant in v1, the footer never appends a city. The share action is unavailable for a time-uncertain range; the user may instead share a neutral “exact time needed” educational card in a later phase.
+
+Render with the existing `react-native-view-shot` → `expo-sharing` path. Track only preview generation and share-sheet opening locally.
+
+## 7. Non-goals
+
+- Mangal-dosha or full-chart compatibility;
+- wedding-date muhurat;
+- saved-match history or cloud sync;
+- predictions, remedies, gemstones, paid consultations, or lead capture;
+- South-Indian 10-porutham matching;
+- claiming scientific validation or replacing personal/family judgment.
+
+## 8. Architecture and delivery
+
+| Layer | Responsibility |
 |---|---|
-| Birth nakshatra + charana, rashi (both persons) | `getSiderealPlanetLongitude('chandra', birthMoment)`; nakshatra = `⌊λ / 13°20′⌋`, charana = `⌊λ / 3°20′⌋ mod 4`, rashi = `⌊λ / 30°⌋` |
-| वर्ण (1) · वश्य (2) · योनि (4) · गण (6) · नाड़ी (8) | Fixed per-nakshatra/per-rashi classification tables (new, pure data) |
-| तारा (3) | Count from each nakshatra to the other mod 9, per the standard table |
-| ग्रह मैत्री (5) | Rashi-lord friendship matrix (lords already enumerated in `kundali.ts` graha data) |
-| भकूट (7) | Relative rashi positions (2/12, 5/9, 6/8 patterns) |
-| Doshas + परिहार | Nadi: same-nadi ⇒ dosha, cancelled by charana/rashi conditions; Bhakoot: 6/8 · 2/12 · 5/9, cancelled by Graha-Maitri conditions — all stated inline |
+| `gunaMilanConvention.ts` | Immutable, versioned classifications, matrices, bands, cancellations, and source metadata |
+| `gunaMilan.ts` | Pure exact-time calculation, uncertain-day enumeration, score aggregation, and explainable rule outputs |
+| Controlled birth-form primitives | Context-free date/time/name editing without mutating Panchang preferences |
+| Screen state | Session-default input, optional versioned persistence, validation, expansion state, and clear action |
+| Share model | Explicit allow-list of privacy-safe display fields; never serialize the input object |
 
-Scoring convention pinned to **DrikPanchang** (matching the panchang engine's existing fixture discipline), gated by a `tsx --test` suite in `mobile/src/panchang/__tests__/gunaMilan.test.ts` with a fixture corpus of known matches — the same pattern as `kundali.swiss-corpus.test.ts`.
+No new native dependency is expected, so Phase 1 can ship by OTA after the normal runtime and channel checks.
 
-## 5. Sensitivity & tone (product stance, locked)
+## 9. Verification gates
 
-This feature touches real family decisions. The stance, enforced in copy review:
-1. **Guidance, never verdict** — the disclaimer is permanent, verdicts use soft language, and a low score is "below par," never "incompatible/rejected."
-2. **Always show the working** — every number is explainable by expanding its row; we never present an unexplained oracle.
-3. **No fear, no upsell** — doshas always ship with their traditional परिहार computed and stated; there are no "remedies," no pandit-consultation funnels, no monetization hooks. This is precisely the incumbents' pattern we differentiate against.
-4. **Privacy is a feature** — birth details of a third party (the prospective match) never leave the device and never appear on the share card.
+Implementation is not complete until all of these pass:
 
-## 6. What it does NOT do (non-goals)
+1. **Convention review:** a domain reviewer signs off the pinned source note, direction, tables, fractions, bands, and cancellations.
+2. **Golden corpus:** independently sourced known matches cover every score matrix and cancellation branch; expected results are not generated by the implementation under test.
+3. **Boundary corpus:** test immediately below/at/above every nakshatra, charana, rashi, and Vashya 15° boundary. Existing astronomy tolerance must be considered when selecting fixture moments.
+4. **Properties:** every component stays within `[0, max]`; totals equal component sums and stay within `[0, 36]`; role swaps are explicitly tested as symmetric or directional according to the pinned rule.
+5. **Uncertain time:** stable-day exact result, boundary-crossing range, multiple changing kootas, IST day edges, and no fabricated/persisted noon.
+6. **Privacy:** session-default behavior, opt-in storage, clear/migration behavior, safe share allow-list, no birth details or city in rendered/embedded share output.
+7. **UI/accessibility:** 44 pt controls; expanded/collapsed semantics and labels; screen-reader score/range summaries; dynamic type; hi/en/gu/kn; high-contrast text tokens; no color-only states.
+8. **Integration:** navigation/back/deep-link fallback, saved-Kundali copy on either role, no Panchang location mutation, share preview/cancel, typecheck, focused Jest/tsx suites, Maestro flow, and representative iOS/Android screenshots.
 
-- **No Mangal-dosha / full-chart matching in v1** (computable from existing graha positions — explicit Phase 2 candidate, kept out to hold v1 at S–M).
-- **No marriage-date muhurat planner** (PRD-14 non-goal stands).
-- **No saved-match history in v1** — only the last inputs persist for re-entry; a named-matches list is Phase 2.
-- **No predictions, remedies, or gemstone/pooja recommendations — ever** (stance §5.3).
-- **No south-Indian (10-porutham) system in v1.**
+## 10. Design requirements
 
-## 7. Phasing
-
-1. **Phase 1** — `gunaMilan.ts` pure module + fixture tests; entry card; input screen (with saved-Kundali autofill); result screen with expandable rows + dosha/परिहार; share card. Ships the whole feature, **OTA-shippable**.
-2. **Phase 2 (optional)** — saved matches list; Mangal-dosha panel; per-koota deep-dive content.
-
-## 8. Why it fits the moat
-
-The incumbents monetize anxiety; Vedansh computes the same traditional result on-device, explains it, and asks for nothing. It reuses the app's most technically defensible asset (the validated sidereal engine) and its most viral mechanism (branded share cards) — and it is the only feature in the backlog that acquires an entirely new user segment for a two-week, OTA-shippable build.
-
-## 9. Design compliance (design.md is authoritative)
-
-- **Colour** — only `parchment*`, `ink*`, `saffron*`, `gold`, `divider` tokens; dosha/zero states use the PRD-14 terracotta `avoid` tone (added to `colors.ts` before use, per design.md §13). **Never green/red**; the dial's fill is the saffron-gold gradient.
-- **Type** — Noto Serif Devanagari for all Devanagari (koota names, meanings, disclaimer); Cormorant Garamond italic for Latin secondary lines; Inter only for tiny uppercase field labels (§3). No fontSize below the 10 pt floor (§3.0).
-- **Components** — `ReaderHeader variant="index"` for the top bar; `TextField variant="form"` + `LocationPickerModal` for all inputs; the share card follows the §39 ShareCard spec. No hand-rolled duplicates (RULEBOOK §3).
-- **Iconography** — no emoji (§5); `॥`/`ॐ` ornaments and `‹`/`›` chevrons only.
-- **Accessibility** — dosha/verdict states never colour-only: every state carries a text label; expandable rows are 44 pt+ touch targets (§12).
-- **Bilingual, Hindi-led** — Devanagari primary, Latin/serif secondary (§1); koota meanings authored in Hindi first.
-- **Motion** — row expand/collapse uses the standard layout-animation curve (§11); no celebratory confetti on high scores (tone stance §5).
+- Use existing `parchment*`, `ink*`, `saffron*`, `gold`, `divider`, `avoid`, `avoidTint`, and `avoidDeep` tokens. No raw red/green semantic colors.
+- Use `ReaderHeader variant="index"`; back and row targets are at least 44 pt. Expandable rows expose button role, accessible name, and expanded state.
+- Noto Serif Devanagari for Hindi-led content, Cormorant Garamond italic for Latin secondary text, and Inter for compact labels. No native font below the 10 pt floor.
+- Copy and accessibility labels ship in Hindi, English, Gujarati, and Kannada.
+- The primary **मिलान करें** action remains reachable above the keyboard or in a keyboard-safe sticky footer.
+- Row expansion uses the standard layout animation; respect reduced-motion settings.

@@ -262,9 +262,14 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
   const addAlarm = useCallback<JapamAlarmsContextValue['addAlarm']>(
     async (draft) => {
       if (alarmsRef.current.length >= MAX_JAPAM_ALARMS) return null;
-      if (permissionStatus !== 'granted') {
-        await requestPermission();
-      }
+      const status =
+        permissionStatus === 'granted'
+          ? permissionStatus
+          : await requestPermission();
+      // Do not create an alarm that the OS cannot deliver. In particular, a
+      // refused permission request must not leave an enabled row/countdown in
+      // the UI while the reconcile effect silently cancels its native schedule.
+      if (status !== 'granted') return null;
       const days =
         draft.repeatDays !== undefined
           ? normalizeRepeatDays(draft.repeatDays)
@@ -332,7 +337,9 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
   const toggleAlarm = useCallback<JapamAlarmsContextValue['toggleAlarm']>(
     async (id, enabled) => {
       if (enabled && permissionStatus !== 'granted') {
-        await requestPermission();
+        const status = await requestPermission();
+        // Keep the stored switch off when the OS cannot deliver the alarm.
+        if (status !== 'granted') return;
       }
       await persist((prev) =>
         prev.map((a) => (a.id === id ? { ...a, enabled } : a))

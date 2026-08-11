@@ -62,7 +62,12 @@ export function useTilePressController(): TilePressHandlers {
   const activateTile = React.useCallback((fallbackAction: () => void) => {
     const p = pending.current;
     if (p?.fallback !== undefined) clearTimeout(p.fallback);
-    const action = p?.action ?? fallbackAction;
+    // Only consume a pending action that belongs to THIS gesture. A dragged
+    // pending is a scroll whose press was cancelled and is never cleared by
+    // finishTilePress, so it would otherwise linger; an accessibility tap
+    // invokes onPress with no preceding onPressIn, so without this guard it
+    // would fire that stale action instead of the tapped card's own action.
+    const action = p && !p.didDrag ? p.action : fallbackAction;
     if (p) p.handled = true;
     pending.current = null;
     action();
