@@ -73,9 +73,15 @@ function withTarget(config) {
     project.addToPbxFileReferenceSection(fixture); project.addToPbxBuildFileSection(fixture); project.addToPbxResourcesBuildPhase(fixture); project.addToPbxGroup(fixture, group.uuid);
     project.addFramework('WidgetKit.framework', { target: target.uuid });
     project.addFramework('SwiftUI.framework', { target: target.uuid });
+    // EAS only injects DEVELOPMENT_TEAM into the main app target's build
+    // settings, so the extension's `$(DEVELOPMENT_TEAM)` resolves empty and
+    // xcodebuild fails with "Signing for VedanshWidgets requires a development
+    // team". Set it explicitly (overridable via env for other Apple accounts).
+    const DEVELOPMENT_TEAM = process.env.APPLE_TEAM_ID || 'S72ZMP59GG';
     for (const build of targetBuildConfigurations(project, target)) {
       Object.assign(build.buildSettings, {
         APPLICATION_EXTENSION_API_ONLY: 'YES',
+        DEVELOPMENT_TEAM,
         CODE_SIGN_ENTITLEMENTS: `"${TARGET}/VedanshWidgets.entitlements"`,
         CURRENT_PROJECT_VERSION: `"${cfg.ios.buildNumber || '1'}"`,
         GENERATE_INFOPLIST_FILE: 'NO',
@@ -90,7 +96,7 @@ function withTarget(config) {
         TARGETED_DEVICE_FAMILY: '"1,2"',
       });
     }
-    project.addTargetAttribute('DevelopmentTeam', '"$(DEVELOPMENT_TEAM)"', target);
+    project.addTargetAttribute('DevelopmentTeam', DEVELOPMENT_TEAM, target);
     cfg.modResults = project;
     return cfg;
   });
