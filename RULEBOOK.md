@@ -594,3 +594,53 @@ Intent-driven discovery is metadata over bundled content, not new scripture text
 - The Dasha surface exposes the current Mahadasha/Antardasha, dates, elapsed and remaining time, and a full nine-period timeline. Those timing values must also be accessible to assistive technology.
 - Kundali and Rashifal share cards use the app theme and a 4:5 preview. Kundali must warn that personal birth details are included; Rashifal must state that name and birth details are excluded. Do not place duplicate share controls inside Kundali tabs.
 - Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest for new UI, and `.maestro/kundali-smoke.yaml` on an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.
+
+## 15. Guna Milan engine (PRD-16)
+
+### 15.1 One pure engine on a pinned convention
+
+- Add `gunaMilan.ts` to the existing `mobile/src/panchang/` stack and reuse `getSiderealPlanetLongitude('moon', date)`. Do not add a second astrology SDK, network ephemeris, or screen-local calculation.
+- `gunaMilan.ts` and `gunaMilanConvention.ts` stay pure: explicit longitudes/dates in, typed data out. No React, AsyncStorage, wall-clock reads, randomness, fetch, or platform APIs (pinned by the engine source-purity test).
+- The calculation is pinned in `docs/roadmap/conventions/guna-milan-v1.md` (`vedansh-ashtakoota-v1`): all classification tables/matrices, the वर→वधू direction of directional kootas, every half-point score, the exact 15° Vashya splits, the band boundaries plus DrikPanchang Bhakoot/Nadi display modifiers, and the single auditable Bhakoot cancellation (same rashi-lord or Graha-Maitri 5). A table or rule change requires a **new convention id** and fixture review; it must never silently change old results. The base score is always the arithmetic sum of the eight kootas — a cancellation changes only the explanatory flag.
+- v1 uses India/IST civil time only and needs no birthplace. It must not mutate `PanchangLocationContext` or the Kundali birth profile.
+
+### 15.2 Independent fixture contract
+
+- `gunaMilan.golden.test.ts` holds expected row scores transcribed from independently published compatibility reports (Mini/Jose 20/36; Chitra/Uttara-Ashadha 19.5/36), never captured from Vedansh output, plus every supported Bhakoot cancellation branch and the same-Nadi 28/36 display-band case.
+- The 108×108 engine sweep pins the complete set of reachable score values for every koota, and boundary tests exercise below/at/above each pada, rashi, and 15° Vashya boundary. Domain sign-off of the tables (direction, fractions, cancellations) remains a human gate before merge (PRD-16 gate 1).
+
+### 15.3 Privacy and safety
+
+- Inputs are session-only by default. Persistence is opt-in under a versioned key with a visible clear action and is never implicitly restored. The share card is a strict allow-list — optional names, वर/वधू roles, total, band, eight component scores, disclaimer, brand footer — and never embeds birth date, time, location, or profile id.
+- Output frames a traditional calculation, not a verdict: no fear copy, remedy/gemstone/consultation upsell, lead capture, Mangal-dosha or full-chart claims, or any cancellation not backed by a pinned, tested rule. Unknown birth time is a checked interval across the full IST civil day, never a substituted noon and never a persisted fabricated time.
+
+### 15.4 Product and verification contract
+
+- Guna Milan is a card below Kundali and Rashifal on the Jyotish landing and lives inside the Panchang stack (not a duplicate root route). Saved-Kundali autofill must work for either directional role.
+- Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest (`GunaMilanExperience.test.tsx`), and `.maestro/guna-milan-smoke.yaml` on iOS and Android with an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.
+
+## 16. Home-screen widgets (PRD-15)
+
+### 15.1 One versioned, bundle-only payload
+
+- Widgets read a single pre-computed document, never live app state. The schema is `WidgetPayloadV1` in `mobile/src/widgets/contract.ts`: `schemaVersion`, provenance (`generatedAt`, `writerAppVersion`), `locale`, a ~14-day **IST** Panchang window, a device-local verse window, and a Japam snapshot. Add fields additively; bump `schemaVersion` for any breaking change and keep native readers rejecting unsupported versions.
+- The planner (`planner.ts`) stays pure: explicit inputs in, typed payload out. No React, AsyncStorage, wall-clock reads, randomness, `fetch`, or platform APIs. There is no background/headless JS runner at widget-draw time.
+- The deferred coordinator (`WidgetCoordinator.tsx`) must dynamically `import()` the planner after `InteractionManager` settles, never statically import the Panchang graph — Home's first-frame/first-tap path must not pull the astronomy stack. It dedupes by a stable key over day/location/calendar/language/japam revision, throttles writes, persists atomically, then requests a native reload. Do not regress the `startup` test that pins this.
+
+### 15.2 Cross-language parity, fail-closed
+
+- A committed fixture — `mobile/src/widgets/fixtures/widget-payload-v1.json` — is decoded by TypeScript (`contract.ts`), Swift (`plugins/home-widgets/ios/WidgetPayloadContract.swift`), and Kotlin (`plugins/home-widgets/android/WidgetPayloadContract.kt`). All three must stay in parity; a schema change updates the fixture and all three decoders in the same PR.
+- Native readers validate schema, required fields, dates, and freshness and **fail closed** — never a partially decoded value, never an old entry labelled as today. Every missing/corrupt/incompatible/expired state resolves to a safe "open वेदांश़" recovery card (per design.md §59). No wrong-date Panchang is a hard release gate.
+- All four languages (`hi`/`en`/`gu`/`kn`) are required in the payload and their serif faces (Noto Serif Devanagari/Gujarati/Kannada + Inter) must be bundled into the native targets. A Hindi-only native surface would be a separate product decision, not a silent omission.
+
+### 15.3 Native delivery and OTA safety
+
+- Initial delivery is **store-binary-only**. No OTA may add or change native target code, entitlements, SwiftUI/RemoteViews layout, or fonts. A JS planner/copy change may ship OTA only to a runtime whose native reader already supports that schema — mind the store runtime version ([[ota-runtime-version-mismatch]] gotcha).
+- The iOS surface is a real WidgetKit **app extension** target (`VedanshWidgets`), not a main-app-linked Swift module, generated reproducibly from the CNG config plugins (`mobile/plugins/withHomeWidgets.js`, `withHomeWidgetsIos.js`, sources under `mobile/plugins/home-widgets/`). App Group entitlement (`group.com.prashantsharma.vedansh.widgets`) must be present on both app and extension; Android uses a dedicated SharedPreferences payload + AppWidget provider. `mobile/ios/` is prebuild output (gitignored) — the plugin is canonical.
+- Deep links use the `vedansh://widget/{verse|panchang|japam}` scheme only, parsed/dispatched by `mobile/src/widgets/deepLink.ts` on cold and warm start. Widget taps route through existing entry targets — they never invent a default mantra or a fabricated destination.
+
+### 15.4 Product and verification contract
+
+- Discovery surfaces: the `होम-स्क्रीन विजेट` More row (one-release NEW), the in-app **Widget Gallery** (`WidgetGalleryScreen.tsx`, previews from the same validated payload the native consumers read + accurate platform add-instructions — no promise of a system widget-picker jump), and one launch-release Home Discover spotlight. No new permission prompt is introduced.
+- Required automatable checks: `npm run typecheck`, the `src/widgets/__tests__/` suites (contract round-trip incl. missing/corrupt/expired/newer-schema; planner streak/>108/TZ-boundary/two-line; deep-link parse+route; coordinator no-static-import), targeted Jest for touched UI, and `.maestro/home-widgets-smoke.yaml`. If Maestro is not run, say so before merge.
+- **Device-only gates** (cannot be closed in CI/worktree; state their status explicitly before shipping): a clean CNG prebuild that reproducibly creates/entitles/signs the extension with no Xcode drift, an EAS build installing every signed target on a physical device, an app-write → widget-reload check, and per-size render / VoiceOver-TalkBack / large-text / Devanagari-matra screenshots. A local Swift module is not accepted as proof of extension-target feasibility.

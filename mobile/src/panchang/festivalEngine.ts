@@ -205,6 +205,24 @@ export function getObservancesForDate(
     .filter((item) => isSameLocalDate(item.date, date));
 }
 
+// Date-key variant for persisted/background surfaces. Unlike Date#getFullYear
+// matching, this remains stable if the JS process time zone changes after the
+// resolved-year cache was populated.
+export function getObservancesForDateKey(
+  dateKey: string,
+  calendarSystem: CalendarSystem = 'purnimant',
+  location?: ObservanceLocation
+): ResolvedObservance[] {
+  const year = Number(dateKey.slice(0, 4));
+  const cityId = locationKey(location);
+  const exact = cityId === UJJAIN_CITY_ID
+    ? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`]
+    : getStoredObservanceYear(cityId, calendarSystem, year);
+  const entries = exact ?? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
+  if (entries) return reconstructPrecomputed(entries.filter((item) => item.date === dateKey));
+  return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location);
+}
+
 export function getObservancesForMonth(
   year: number,
   month: number,

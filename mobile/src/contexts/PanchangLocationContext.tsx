@@ -19,6 +19,7 @@ export type GpsStatus = 'idle' | 'locating' | 'denied' | 'error';
 
 type PanchangLocationContextValue = {
   location: PanchangLocation;
+  isLoading: boolean;
   gpsStatus: GpsStatus;
   selectCity: (cityId: string) => void;
   requestDeviceLocation: () => Promise<'granted' | 'denied' | 'error'>;
@@ -26,6 +27,7 @@ type PanchangLocationContextValue = {
 
 const PanchangLocationContext = createContext<PanchangLocationContextValue>({
   location: DEFAULT_LOCATION,
+  isLoading: true,
   gpsStatus: 'idle',
   selectCity: () => undefined,
   requestDeviceLocation: async () => 'error',
@@ -88,6 +90,7 @@ async function getDevicePosition(): Promise<{ latitude: number; longitude: numbe
 
 export function PanchangLocationProvider({ children }: { children: React.ReactNode }) {
   const [location, setLocation] = useState<PanchangLocation>(DEFAULT_LOCATION);
+  const [isLoading, setIsLoading] = useState(true);
   const [gpsStatus, setGpsStatus] = useState<GpsStatus>('idle');
   const loadedRef = useRef(false);
 
@@ -119,7 +122,8 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
       })
       .catch(() => {
         loadedRef.current = true;
-      });
+      })
+      .finally(() => { if (!cancelled) setIsLoading(false); });
     return () => {
       cancelled = true;
       if (warmTimer !== undefined) clearTimeout(warmTimer);
@@ -166,7 +170,7 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
   }, [applyLocation]);
 
   return (
-    <PanchangLocationContext.Provider value={{ location, gpsStatus, selectCity, requestDeviceLocation }}>
+    <PanchangLocationContext.Provider value={{ location, isLoading, gpsStatus, selectCity, requestDeviceLocation }}>
       {children}
     </PanchangLocationContext.Provider>
   );

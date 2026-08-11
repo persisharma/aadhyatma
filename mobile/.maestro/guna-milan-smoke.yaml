@@ -1,0 +1,156 @@
+# PRD-16 Guna Milan — platform-neutral iOS + Android smoke.
+#
+# Covers Panchang-stack navigation/back, saved-Kundali autofill into either
+# directional role, exact-time result, expanded accessibility state,
+# privacy-safe share preview, and unknown-time IST range without exact sharing.
+# Run this same file on both platforms; record the two device runs separately.
+
+appId: com.prashantsharma.vedansh
+---
+# A clean launch clears the dev-client's remembered URL on iOS. Pass the
+# worktree Metro address explicitly, matching the established Kundali flow.
+# Android ignores the iOS launch argument and uses the debug build's port.
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8091"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don't Allow", optional: true }
+- tapOn: { text: "Skip tour", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "Begin", optional: true }
+- tapOn: { text: "Close", optional: true }
+- tapOn: { text: "Got it", optional: true }
+- tapOn: { text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ", optional: true }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
+
+# The React Navigation tab labels are visually rendered but are not exposed as
+# text nodes to Maestro on iOS. Percentage coordinates keep this platform-neutral
+# across phone sizes: More is the fifth tab and Panchang is the middle tab.
+- tapOn:
+    point: "90%,95%"
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn:
+    point: "50%,95%"
+- waitForAnimationToEnd
+- tapOn: "Jyotish"
+- extendedWaitUntil:
+    visible: "Understand Jyotish"
+    timeout: 20000
+
+# First save a Kundali profile so autofill is real, not a test-only seed.
+- tapOn: "Create Kundali"
+- waitForAnimationToEnd
+- tapOn: { id: "kundali-name-input" }
+- inputText: "Aarav"
+- tapOn: { id: "kundali-date-input" }
+- inputText: "1992-08-14"
+- tapOn: { id: "kundali-time-input" }
+- inputText: "05:42"
+- scrollUntilVisible:
+    element: { id: "kundali-city-button" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "kundali-city-button" }
+- waitForAnimationToEnd
+- tapOn: { id: "kundali-city-search" }
+- inputText: "Ujjain"
+- tapOn: "Select Ujjain birth city"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "kundali-generate-button" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "kundali-generate-button" }
+- extendedWaitUntil:
+    visible: "Kundali result"
+    timeout: 20000
+- tapOn: "Back to Jyotish|Back"
+- waitForAnimationToEnd
+
+# Saved landing keeps Guna Milan below the Kundali/Rashifal tools.
+- scrollUntilVisible:
+    element: "Open Guna Milan"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Open Guna Milan"
+- extendedWaitUntil:
+    visible: "36 points, with every step visible"
+    timeout: 15000
+- assertVisible: "Groom birth details, time in IST"
+- assertVisible: "Bride birth details, time in IST"
+- assertVisible: '.*IST \(UTC\+5:30\).*No location is needed.*'
+
+# The owner can be either role; exercise both explicit controls.
+- tapOn: "Use my saved Kundali details for Groom"
+- tapOn: "Use my saved Kundali details for Bride"
+- scrollUntilVisible:
+    element: "Calculate Guna Milan"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Calculate Guna Milan"
+- scrollUntilVisible:
+    element: { id: "guna-milan-score-dial" }
+    direction: UP
+    timeout: 20000
+    centerElement: true
+- assertVisible: { id: "guna-milan-score-dial" }
+- takeScreenshot: guna-milan-exact-result
+- tapOn: "Varna, .* collapsed"
+- assertVisible: "Varna, .* expanded"
+- scrollUntilVisible:
+    element: "Preview privacy-safe Guna Milan share card"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Preview privacy-safe Guna Milan share card"
+- waitForAnimationToEnd
+- assertVisible: "Share Guna Milan image preview"
+- assertVisible: ".*Birth date, time, and other private details are excluded.*"
+- assertNotVisible: "1992-08-14"
+- assertNotVisible: "05:42"
+- assertNotVisible: "Ujjain"
+- tapOn: "Close share preview"
+- waitForAnimationToEnd
+
+# Unknown time is a full IST-day range, never noon and never an exact share.
+- scrollUntilVisible:
+    element: "Edit Guna Milan details"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Edit Guna Milan details"
+- tapOn: "Bride birth date, YYYY-MM-DD"
+- eraseText: 20
+- inputText: "1970-01-15"
+- pressKey: ENTER
+- tapOn: "Bride birth time unknown"
+- scrollUntilVisible:
+    element: "Calculate Guna Milan"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Calculate Guna Milan"
+- extendedWaitUntil:
+    visible: "9.5–19.5"
+    timeout: 20000
+- assertVisible: "Exact time needed"
+- assertVisible: "Kootas that vary"
+- assertVisible: "Bride possible nakshatras: Ashwini · Bharani"
+- assertNotVisible: "Groom possible nakshatras:.*"
+- assertNotVisible: "Preview privacy-safe Guna Milan share card"
+- takeScreenshot: guna-milan-unknown-time-range
+
+- tapOn: "Back to Jyotish"
+- waitForAnimationToEnd
+- assertVisible: "Jyotish"
+- stopApp:
+    appId: com.prashantsharma.vedansh

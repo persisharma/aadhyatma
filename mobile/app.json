@@ -66,6 +66,7 @@
       ],
       "./plugins/withJapamAlarmNative.js",
       "./plugins/withJapamAlarmIos.js",
+      "./plugins/withHomeWidgets.js",
       [
         "expo-location",
         {
