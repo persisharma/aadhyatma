@@ -25,6 +25,9 @@ _Later PRDs (07–14) live in [`prds/`](./prds/) alongside these._
 |---|---|---|
 | [PRD-15](./prds/15-home-widgets.md) | Home-screen widgets (verse · panchang · streak) | Native targets; store release only. [Prototype](../widgets-prototype.html) |
 | [PRD-16](./prds/16-guna-milan.md) | Guna Milan — 36-guna Ashtakoota matching | Pure JS on the kundali engine; OTA-shippable. [Prototype](../guna-milan-prototype.html) |
+| [PRD-17](./prds/17-pitru-smaran.md) | पितृ स्मरण — tithi-based family remembrance | Festival-engine rule reuse; private, on-device; core OTA-shippable. [Prototype](../pitru-smaran-prototype.html) |
+| PRD-18 _(reserved)_ | Event Muhurat Finder | Already built on `claude/new-categories-source-competition-8ildri` (as "PRD-16" there); renumber to 18 when that branch merges |
+| [PRD-19](./prds/19-puja-vidhi.md) | पूजा विधि — guided step-by-step puja flows | Content-led (Gita Press canon, RULEBOOK §11 sourcing); new `vidhi` data family. [Prototype](../puja-vidhi-prototype.html) |
 
 ## Constraint
 
