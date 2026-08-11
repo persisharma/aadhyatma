@@ -21,7 +21,9 @@ appId: com.prashantsharma.vedansh
 - tapOn: { text: "Don't Allow", optional: true }
 - tapOn: { text: "Skip tour", optional: true }
 - waitForAnimationToEnd
-- tapOn: { text: "Begin", optional: true }
+# Post-tour setup sheet: pick English (baseline) then confirm with Begin.
+- tapOn: { text: "English", optional: true }
+- tapOn: { text: "Begin|आरंभ करें", optional: true }
 - tapOn: { text: "Close", optional: true }
 - tapOn: { text: "Got it", optional: true }
 - tapOn: { text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ", optional: true }
@@ -53,10 +55,30 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: { id: "kundali-name-input" }
 - inputText: "Aarav"
+# Birth date via the calendar overlay (see kundali-smoke.yaml for the pattern):
+# 1992 is ~34 rows below 2026 in the year list ≈ 4 coordinate swipes.
 - tapOn: { id: "kundali-date-input" }
-- inputText: "1992-08-14"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month August"
+- repeat:
+    times: 4
+    commands:
+      - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+- tapOn: "Year 1992"
+- tapOn: "14 August 1992"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
+# Birth time via the reminder-style stepper: field commits 06:00, step down 18
+# minutes to 05:42 AM, then collapse so Generate clears the tab bar.
 - tapOn: { id: "kundali-time-input" }
-- inputText: "05:42"
+- waitForAnimationToEnd
+- repeat:
+    times: 18
+    commands:
+      - tapOn: "Decrease Minute"
+- tapOn: { id: "kundali-time-input" }
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element: { id: "kundali-city-button" }
     direction: DOWN
@@ -129,10 +151,21 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 10000
 - tapOn: "Edit Guna Milan details"
-- tapOn: "Bride birth date, YYYY-MM-DD"
-- eraseText: 20
-- inputText: "1970-01-15"
-- pressKey: ENTER
+# Bride birth date via the calendar overlay. 1970 is ~56 rows below 2026 in the
+# year list ≈ 7 coordinate swipes (Maestro can't scrollUntilVisible the Modal's
+# inner year scroller — see the e2e-verification runbook).
+- tapOn: "Bride birth date"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month January"
+- repeat:
+    times: 7
+    commands:
+      - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+- tapOn: "Year 1970"
+- tapOn: "15 January 1970"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
 - tapOn: "Bride birth time unknown"
 - scrollUntilVisible:
     element: "Calculate Guna Milan"

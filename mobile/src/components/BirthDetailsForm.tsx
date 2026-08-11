@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import CalendarDatePicker from './CalendarDatePicker';
+import ClockTimePicker from './ClockTimePicker';
 import TextField from './TextField';
 import type { Lang } from '@/data/gita/language';
 import type { GunaMilanPersonInput } from '@/panchang/gunaMilan';
@@ -9,6 +11,16 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+
+const TIME_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
+const DEFAULT_BIRTH_TIME = '06:00';
+
+function formatBirthDate(value: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return value;
+  return new Intl.DateTimeFormat('en-IN', { timeZone: 'UTC', day: '2-digit', month: 'short', year: 'numeric' })
+    .format(new Date(`${value}T00:00:00.000Z`));
+}
 
 type Props = {
   role: 'groom' | 'bride';
@@ -32,9 +44,11 @@ export default function BirthDetailsForm({
   disabled,
 }: Props) {
   const { colors, typography, radii, elevation } = useTheme();
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
   const roleEn = role === 'groom' ? 'Groom' : 'Bride';
   const roleHi = role === 'groom' ? 'वर' : 'वधू';
   const update = (patch: Partial<GunaMilanPersonInput>) => onChange({ ...value, ...patch });
+  const timeKnownValid = value.time !== null && TIME_PATTERN.test(value.time);
   return (
     <View
       accessibilityLabel={contentByLang(lang, `${roleHi} जन्म विवरण, समय IST में`, `${roleEn} birth details, time in IST`)}
@@ -73,16 +87,30 @@ export default function BirthDetailsForm({
         accessibilityLabel={contentByLang(lang, `${roleHi} का नाम, वैकल्पिक`, `${roleEn} name, optional`)}
       />
       <Text style={[styles.label, { color: colors.inkMuted }]}>{contentByLang(lang, 'जन्म तिथि', 'Birth date')}</Text>
-      <TextField
-        variant="form"
-        value={value.date}
-        onChangeText={(date) => update({ date })}
-        editable={!disabled}
-        placeholder="YYYY-MM-DD"
-        keyboardType="numbers-and-punctuation"
-        accessibilityLabel={contentByLang(lang, `${roleHi} की जन्म तिथि, YYYY-MM-DD`, `${roleEn} birth date, YYYY-MM-DD`)}
-      />
+      <Pressable
+        onPress={() => setDatePickerVisible(true)}
+        disabled={disabled}
+        accessibilityRole="button"
+        accessibilityLabel={contentByLang(lang, `${roleHi} की जन्म तिथि`, `${roleEn} birth date`)}
+        style={[
+          styles.field,
+          { backgroundColor: colors.parchmentSoft, borderColor: errors.date ? colors.avoid : colors.divider, borderRadius: radii.md },
+        ]}
+      >
+        <Text style={{ color: value.date ? colors.ink : colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15 }}>
+          {value.date ? formatBirthDate(value.date) : contentByLang(lang, 'तिथि चुनें', 'Select date')}
+        </Text>
+        <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>▾</Text>
+      </Pressable>
       {errors.date ? <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.date}</Text> : null}
+      <CalendarDatePicker
+        visible={datePickerVisible}
+        value={value.date}
+        lang={lang}
+        onSelect={(date) => update({ date })}
+        onClose={() => setDatePickerVisible(false)}
+      />
+      {/* The picker's `label` distinguishes the two roles for tests/a11y. */}
       <View style={styles.timeHeading}>
         <Text style={[styles.label, styles.timeLabel, { color: colors.inkMuted }]}>{contentByLang(lang, 'जन्म समय · IST', 'Birth time · IST')}</Text>
         <Pressable
@@ -97,20 +125,32 @@ export default function BirthDetailsForm({
           <Text style={[styles.unknownText, { color: colors.ink }]}>{contentByLang(lang, 'ज्ञात नहीं', 'Unknown')}</Text>
         </Pressable>
       </View>
-      {value.time !== null ? (
-        <TextField
-          variant="form"
-          value={value.time}
-          onChangeText={(time) => update({ time })}
-          editable={!disabled}
-          placeholder="HH:mm"
-          keyboardType="numbers-and-punctuation"
-          accessibilityLabel={contentByLang(lang, `${roleHi} का जन्म समय, 24 घंटे IST`, `${roleEn} birth time, 24 hour IST`)}
-        />
-      ) : (
+      {value.time === null ? (
         <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18 }}>
           {meaningByLang(lang, 'पूरे IST दिन की सभी सम्भावनाएँ जाँची जाएँगी; दोपहर का समय नहीं माना जाएगा।', 'Every possibility across the IST civil day will be checked; noon is never assumed.')}
         </Text>
+      ) : timeKnownValid ? (
+        <ClockTimePicker
+          value={value.time}
+          onChange={(time) => update({ time })}
+          label={contentByLang(lang, `${roleHi} का जन्म समय`, `${roleEn} birth time`)}
+        />
+      ) : (
+        <Pressable
+          onPress={() => update({ time: DEFAULT_BIRTH_TIME })}
+          disabled={disabled}
+          accessibilityRole="button"
+          accessibilityLabel={contentByLang(lang, `${roleHi} का जन्म समय चुनें`, `Set ${roleEn} birth time`)}
+          style={[
+            styles.field,
+            { backgroundColor: colors.parchmentSoft, borderColor: errors.time ? colors.avoid : colors.divider, borderRadius: radii.md },
+          ]}
+        >
+          <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15 }}>
+            {contentByLang(lang, 'समय चुनें', 'Select time')}
+          </Text>
+          <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>▾</Text>
+        </Pressable>
       )}
       {errors.time ? <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.time}</Text> : null}
     </View>
@@ -124,6 +164,7 @@ const styles = StyleSheet.create({
   saved: { minHeight: 44, paddingHorizontal: 12, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   savedText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   label: { fontFamily: fontFamilies.interSemiBold, fontSize: 11, marginTop: 4 },
+  field: { minHeight: 48, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   error: { fontFamily: fontFamilies.inter, fontSize: 11 },
   timeHeading: { minHeight: 44, flexDirection: 'row', alignItems: 'center' },
   timeLabel: { flex: 1, marginTop: 0 },
