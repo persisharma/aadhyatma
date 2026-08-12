@@ -33,6 +33,7 @@ import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panc
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
+import { VIDHI_ENTRIES, getVidhiById } from '@/data/vidhi';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -253,6 +254,13 @@ export default function PanchangScreen({ route }: Props) {
   const openKatha = (kathaId: string) => {
     rootNav.navigate('HomeTab', { screen: 'VratKathaReader', params: { kathaId } });
   };
+
+  // PRD-19: the vidhi opens FOR the selected festival date — the samagri
+  // checklist persists per that occurrence, not per calendar day of entry.
+  const openVidhi = (vidhiId: string, dateMs: number) => {
+    rootNav.navigate('VidhiDetail', { vidhiId, dateMs });
+  };
+  const openVidhiCatalog = () => rootNav.navigate('VidhiCatalog');
 
   const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId });
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
@@ -617,6 +625,7 @@ export default function PanchangScreen({ route }: Props) {
                   elevation={elevation}
                   onOpenLink={openLinkedSection}
                   onOpenKatha={openKatha}
+                  onOpenVidhi={openVidhi}
                 />
               ))
             ) : (
@@ -659,6 +668,7 @@ export default function PanchangScreen({ route }: Props) {
               onOpenDetail={openObservanceDetail}
               onOpenCategory={openCategory}
               onOpenKathaLibrary={openKathaLibrary}
+              onOpenVidhiCatalog={openVidhiCatalog}
               onOpenMyVrat={openMyVrat}
               followCount={followCount}
               reminderCount={reminderCount}
@@ -1559,7 +1569,7 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
   );
 }
 
-function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha }: {
+function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
   item: ResolvedObservance;
   lang: Lang;
   colors: any;
@@ -1568,11 +1578,15 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
   elevation: any;
   onOpenLink: (sectionId: string) => void;
   onOpenKatha: (kathaId: string) => void;
+  onOpenVidhi: (vidhiId: string, dateMs: number) => void;
 }) {
   const linkedEntry = item.rule.linkSectionId
     ? library.find((entry) => entry.id === item.rule.linkSectionId)
     : null;
   const katha = item.rule.kathaId ? getKathaContent(item.rule.kathaId) : null;
+  // PRD-19: the vidhi pill renders only when the rule's vidhiId resolves to a
+  // published vidhi — the identical hook mechanism as kathaId.
+  const vidhi = item.rule.vidhiId ? getVidhiById(item.rule.vidhiId) : null;
 
   return (
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
@@ -1593,6 +1607,19 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
         {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
       </Text>
       <View style={styles.linkRow}>
+        {vidhi && (
+          <Pressable
+            onPress={() => onOpenVidhi(vidhi.id, item.date.getTime())}
+            testID={`observance-vidhi-${item.rule.id}`}
+            accessibilityRole="button"
+            accessibilityLabel={`Puja vidhi ${vidhi.titleEn}`}
+            style={({ pressed }) => [styles.kathaButton, { backgroundColor: colors.saffron, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
+          >
+            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 12, color: colors.parchment }}>
+              ॥ {contentByLang(lang, 'पूजा विधि', 'Puja Vidhi')}
+            </Text>
+          </Pressable>
+        )}
         {katha && item.rule.kathaId && (
           <Pressable
             onPress={() => onOpenKatha(item.rule.kathaId as string)}
@@ -1625,7 +1652,7 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
 function CatalogLanding({
   lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
-  onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenMyVrat, followCount, reminderCount,
+  onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount, reminderCount,
 }: {
   lang: Lang;
   today: Date;
@@ -1639,6 +1666,7 @@ function CatalogLanding({
   onOpenDetail: (ruleId: string) => void;
   onOpenCategory: (category: BrowseCategory) => void;
   onOpenKathaLibrary: () => void;
+  onOpenVidhiCatalog: () => void;
   onOpenMyVrat: () => void;
   followCount: number;
   reminderCount: number;
@@ -1812,6 +1840,26 @@ function CatalogLanding({
                 </Text>
                 <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
                   {kathaCount} {contentByLang(lang, 'कथाएँ', 'stories')}
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={onOpenVidhiCatalog}
+                testID="vidhi-catalog-tile"
+                accessibilityRole="button"
+                accessibilityLabel={`Puja vidhi catalog, ${VIDHI_ENTRIES.length}`}
+                style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
+              >
+                <View style={styles.tileGlyph}>
+                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>॥</Text>
+                </View>
+                <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink, marginTop: 8 }}>
+                  {contentByLang(lang, 'पूजा विधि', 'Puja Vidhi')}
+                </Text>
+                <Text style={{ ...captionFont(lang === 'en' ? 'चरण-दर-चरण पूजा' : 'Guided pujas'), fontSize: 12, color: colors.inkMuted }}>
+                  {lang === 'en' ? 'चरण-दर-चरण पूजा' : 'Guided pujas'}
+                </Text>
+                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
+                  {VIDHI_ENTRIES.length} {contentByLang(lang, 'विधियाँ', 'vidhis')}
                 </Text>
               </Pressable>
             </View>

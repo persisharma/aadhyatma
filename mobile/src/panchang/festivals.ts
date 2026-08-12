@@ -75,6 +75,7 @@ function createRule(seed: ObservanceSeed): ObservanceRule {
     detailRoute: seed.detailRoute,
     sourceUrl,
     kathaId: seed.kathaId,
+    vidhiId: seed.vidhiId,
     searchTerms: seed.searchTerms,
   };
 }
@@ -357,8 +358,8 @@ export const MONTHLY_VRAT_RULES: ObservanceRule[] = [
   vrat({ id: 'dwadashi-vrat-shukla', nameHi: 'शुक्ल द्वादशी व्रत', nameEn: 'Shukla Dwadashi Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 12, deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', linkSectionId: 'vishnu-sahasranama', kathaId: 'dwadashi-vrat-katha' }),
   vrat({ id: 'dwadashi-vrat-krishna', nameHi: 'कृष्ण द्वादशी व्रत', nameEn: 'Krishna Dwadashi Vrat', recurrence: 'monthly', paksha: 'krishna', tithi: 12, deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', linkSectionId: 'vishnu-sahasranama', kathaId: 'dwadashi-vrat-katha' }),
   vrat({ id: 'masik-shivaratri', nameHi: 'मासिक शिवरात्रि', nameEn: 'Masik Shivaratri', recurrence: 'monthly', paksha: 'krishna', tithi: 14, deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'maha-shivaratri-vrat-katha' }),
-  upavas({ id: 'purnima-vrat', nameHi: 'पूर्णिमा व्रत', nameEn: 'Purnima Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 15, deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', kathaId: 'satyanarayana-vrat-katha' }),
-  vrat({ id: 'shree-satyanarayan-vrat', nameHi: 'श्री सत्यनारायण व्रत', nameEn: 'Shree Satyanarayan Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 15, deityHi: 'श्री सत्यनारायण', deityEn: 'Shree Satyanarayan', linkSectionId: 'vishnu-sahasranama', kathaId: 'satyanarayana-vrat-katha' }),
+  upavas({ id: 'purnima-vrat', nameHi: 'पूर्णिमा व्रत', nameEn: 'Purnima Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 15, deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', kathaId: 'satyanarayana-vrat-katha', vidhiId: 'satyanarayan-puja' }),
+  vrat({ id: 'shree-satyanarayan-vrat', nameHi: 'श्री सत्यनारायण व्रत', nameEn: 'Shree Satyanarayan Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 15, deityHi: 'श्री सत्यनारायण', deityEn: 'Shree Satyanarayan', linkSectionId: 'vishnu-sahasranama', kathaId: 'satyanarayana-vrat-katha', vidhiId: 'satyanarayan-puja' }),
   upavas({ id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat', recurrence: 'monthly', paksha: 'krishna', tithi: 15, deityHi: 'पितृ तर्पण', deityEn: 'Pitru Tarpana', kathaId: 'amavasya-vrat-katha' }),
   vrat({ id: 'skanda-sashti', nameHi: 'स्कंद षष्ठी', nameEn: 'Skanda Sashti', recurrence: 'monthly', paksha: 'shukla', tithi: 6, deityHi: 'भगवान कार्तिकेय', deityEn: 'Lord Kartikeya', kathaId: 'skanda-sashti-katha' }),
   vrat({ id: 'masik-durgashtami', nameHi: 'मासिक दुर्गाष्टमी', nameEn: 'Masik Durgashtami', recurrence: 'monthly', paksha: 'shukla', tithi: 8, deityHi: 'मां दुर्गा', deityEn: 'Maa Durga', linkSectionId: 'durga-stotram', kathaId: 'masik-durgashtami-katha' }),

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-19 · पूजा विधि — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts exactly (Aug 2026) — deepened AAA/AA inks,
+       alpha divider, 0.12/0.14 tints, warm #3C1E0A shadow, card gradient tokens. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);   /* elevation.subtle */
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);     /* elevation.card */
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);  /* elevation.raised */
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:920px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:920px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:920px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap .n{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .topaction{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron)}
+  .deva{font-family:var(--deva)}
+
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* panchang day panel */
+  .dhead{text-align:center;margin:4px 0 12px}
+  .dhead .dt{font-family:var(--deva);font-size:17px;color:var(--ink)}
+  .dhead .ds{font-family:var(--deva);font-size:13px;color:var(--ink-soft);margin-top:2px}
+
+  /* ObservanceCard (design.md §33.5) — parchment-soft, radii.md, elevation.card,
+     category pill + deity + name + description + action pills */
+  .obscard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;
+    padding:14px;margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .catpill{display:inline-block;font-family:var(--deva);font-size:10.5px;font-weight:600;
+    color:var(--saffron-deep);background:var(--saffron-tint);border-radius:10px;padding:3px 10px}
+  .obscard .odeity{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:7px}
+  .obscard .oname{font-family:var(--deva);font-size:17.5px;color:var(--ink);margin-top:2px}
+  .obscard .odesc{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);margin-top:5px;line-height:1.7}
+  .apills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .apill{display:inline-flex;align-items:center;font-family:var(--deva);font-size:12.5px;border-radius:20px;
+    padding:8px 14px;min-height:36px}
+  .apill.gold{color:var(--saffron-deep);background:var(--gold-tint);border:1px solid transparent}
+  .apill.outline{color:var(--saffron);background:transparent;border:1px solid var(--gold-tint)}
+  .apill.filled{color:#fff8ec;background:var(--saffron);border:1px solid transparent}
+  .actionrow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:13px 14px;margin-bottom:10px;min-height:48px}
+  .actionrow .ai{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:14px;color:var(--saffron-deep);flex:none}
+  .actionrow .at{flex:1}
+  .actionrow .att{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .actionrow .ats{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .actionrow .chev{color:var(--saffron);font-size:17px}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
+
+  /* samagri checklist */
+  .convline{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-bottom:12px}
+  .modeseg{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:3px;margin-bottom:14px}
+  .modeseg .seg{flex:1;text-align:center;padding:9px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--ink-muted);min-height:38px}
+  .modeseg .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:var(--shadow-subtle)}
+  .srow{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid var(--divider);min-height:44px}
+  /* routine-item check circle (design.md §31 Today's Practice), not a square box */
+  .srow .box{width:26px;height:26px;border:2px solid var(--saffron);border-radius:50%;background:var(--parchment-hi);flex:none;
+    display:flex;align-items:center;justify-content:center;color:#fff8ec;font-size:13px}
+  .srow .box.on{background:var(--saffron);border-color:var(--saffron)}
+  .srow .st{flex:1;font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .srow .st.done{color:var(--ink-muted)}
+  .srow .qty{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted)}
+  .opt{font-size:10px;font-weight:600;color:var(--ink-muted);border:1px solid var(--divider);padding:2px 7px;border-radius:8px;font-family:var(--sans)}
+  .btn{display:block;width:100%;text-align:center;background:var(--saffron);color:#fff8ec;border:none;
+    border-radius:14px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:12px;min-height:48px}
+  .btn.ghost{background:transparent;border:1px solid var(--gold-tint);color:var(--saffron)}
+  .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.6}
+
+  /* conduct mode */
+  .conduct{background:linear-gradient(var(--parchment-hi),var(--gradient-end));min-height:100%}
+  .cphase{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--saffron-deep);
+    font-family:var(--sans);text-align:center;margin-top:4px}
+  .cstep{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:2px}
+  .dots{display:flex;gap:5px;justify-content:center;margin:10px 0 14px}
+  .dots i{width:6px;height:6px;border-radius:50%;background:var(--divider)}
+  .dots i.on{background:var(--saffron);width:16px;border-radius:3px}
+  .ctitle{font-family:var(--deva);font-size:21px;color:var(--ink);text-align:center;margin-bottom:10px}
+  .cinstr{font-family:var(--deva);font-size:15.5px;color:var(--ink-soft);line-height:2;text-align:center;padding:0 6px}
+  .mantrabox{border:1px solid var(--gold);background:var(--parchment-hi);border-radius:18px;padding:16px;margin:16px 0 8px;text-align:center}
+  .mantrabox .orn{font-family:var(--deva);color:var(--gold);font-size:13px;letter-spacing:5px}
+  .mantrabox .m{font-family:var(--deva);font-size:17px;color:var(--ink);line-height:2;margin-top:8px}
+  .mantrabox .iast{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);margin-top:8px;line-height:1.7}
+  .speak{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--gold-tint);background:var(--parchment-soft);
+    border-radius:20px;padding:8px 16px;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);margin-top:12px;min-height:36px}
+  .handoff{border:1.4px solid var(--saffron);background:linear-gradient(120deg,var(--card-from),var(--parchment-soft));
+    border-radius:18px;padding:15px;margin:16px 0 8px;text-align:center}
+  .handoff .ht{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .handoff .hs{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:3px}
+  .cnav{position:absolute;bottom:0;left:0;right:0;display:flex;gap:10px;padding:12px 16px 18px;
+    background:linear-gradient(transparent,var(--gradient-end) 40%)}
+  .cnav .prev{flex:1;text-align:center;border:1px solid var(--divider);color:var(--saffron);border-radius:14px;
+    padding:13px;font-family:var(--deva);font-size:14px;background:var(--parchment-soft);min-height:48px}
+  .cnav .next{flex:2;text-align:center;background:var(--saffron);color:#fff8ec;border-radius:14px;
+    padding:13px;font-family:var(--deva);font-size:14px;min-height:48px}
+  .awake{font-size:10.5px;color:var(--ink-muted);font-family:var(--sans);text-align:center;margin-top:10px}
+
+  /* completion */
+  .seal{width:84px;height:84px;border-radius:50%;margin:26px auto 10px;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 50% 40%,var(--parchment-hi),var(--gold-tint));border:2px solid var(--gold);
+    font-family:var(--deva);font-size:36px;color:var(--saffron-deep)}
+  .donet{font-family:var(--deva);font-size:20px;color:var(--ink);text-align:center}
+  .dones{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted);text-align:center;margin-top:4px;line-height:1.7}
+
+  /* catalog — LibraryCard active variant (design.md §8):
+     gradient #FFF5E0→#F5DEAC, border rgba(184,98,27,.4), elevation.raised,
+     letter thumb #F8D291→#E0A255, hi name / en italic / sub meta, saffron › */
+  .libcard{display:flex;align-items:center;gap:12px;border:1px solid var(--card-border);
+    background:linear-gradient(120deg,var(--card-from),var(--card-to));border-radius:18px;padding:14px;margin-bottom:12px;
+    box-shadow:var(--shadow-raised)}
+  .libcard .thumb{width:44px;height:44px;border-radius:14px;background:linear-gradient(150deg,#F8D291,#E0A255);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-weight:600;font-size:22px;color:#fff;flex:none}
+  .libcard .lc{flex:1;min-width:0}
+  .libcard .lname{font-family:var(--deva);font-weight:600;font-size:17px;color:var(--ink)}
+  .libcard .len{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted);margin-top:1px}
+  .libcard .lsub{font-family:var(--sans);font-size:11px;letter-spacing:.4px;color:var(--ink-muted);margin-top:3px}
+  .libcard .chev{color:var(--saffron);font-size:18px;flex:none}
+
+  .tabbar{position:sticky;bottom:0;height:52px;background:var(--parchment-soft);border-top:1px solid var(--divider);display:flex}
+  .tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;color:var(--ink-muted)}
+  .tabbar .tab.active{color:var(--saffron)}
+  .tabbar .tab .ic{font-size:16px}
+</style>
+</head>
+<body>
+  <h1>पूजा विधि — Guided Step-by-Step Puja Flows</h1>
+  <div class="sub">PRD-19 · Interactive UI prototype. Static mockups in the app's parchment system — not the live build.</div>
+  <div class="legend">Entered from <b>the day it's needed</b> — a पूजा विधि action pill on the shipped ObservanceCard (design.md §33.5), beside its existing katha/read pills — not from a new Home category; the catalog lists on the §8 LibraryCard. Two modes: <b>तैयारी</b> (samagri checklist, day before) and <b>पूजा</b> (full-screen conduct mode, one step per page, keep-awake). Mantras are transcribed from the declared Gita Press convention with IAST + read-aloud (#230 TTS); shipped texts (aarti, katha) are handed off by reference, never re-typed.</div>
+
+  <!-- ============ 1 · ENTRY + PREP ============ -->
+  <div class="phaselabel">1 · Entry &amp; तैयारी — the day before</div>
+  <div class="phasedesc">The festival row in the day panel gains a vidhi action (same mechanism as kathaId); the samagri checklist persists per festival date.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="toptitle" style="font-size:20px">पंचांग</div><div class="topaction">जयपुर ›</div></div>
+        <div class="dhead">
+          <div class="dt">शनिवार, 25 अगस्त 2026</div>
+          <div class="ds">भाद्रपद शुक्ल चतुर्थी</div>
+        </div>
+
+        <div style="font-family:var(--deva);font-size:14px;color:var(--ink);margin:2px 2px 8px">व्रत और पर्व</div>
+        <div class="obscard">
+          <span class="catpill">पर्व</span>
+          <div class="odeity">भगवान गणेश · Lord Ganesha</div>
+          <div class="oname">गणेश चतुर्थी</div>
+          <div class="odesc">विघ्नहर्ता गणेश जी की स्थापना का पर्व — घर-घर बप्पा विराजते हैं।</div>
+          <div class="apills" style="position:relative">
+            <div class="dot" style="right:-8px;top:-8px">1</div>
+            <span class="apill filled">॥ पूजा विधि <span class="tag" style="margin-left:6px;background:rgba(255,248,236,.25);color:#fff8ec">NEW</span></span>
+            <span class="apill gold">कथा पढ़ें · Read Katha</span>
+            <span class="apill outline">पढ़ें: गणेश आरती</span>
+          </div>
+        </div>
+
+        <div class="note">विधि-पिल केवल उन्हीं पर्वों पर दिखती है जिनकी विधि<br/>प्रकाशित है — vidhiId on the festival row</div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><span class="ic">ॐ</span>Home</div>
+        <div class="tab"><span class="ic">☀</span>Bhakti</div>
+        <div class="tab active"><span class="ic">☾</span>Panchang</div>
+        <div class="tab"><span class="ic">♪</span>Bhajan</div>
+        <div class="tab"><span class="ic">⋯</span>More</div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>Festival day panel — the primary door.</b><br/>
+      <span class="n">1</span><b>A third action pill on the shipped ObservanceCard</b> (design.md §33.5: category pill · deity · name · description · action pills). पूजा विधि joins the existing <i>कथा पढ़ें</i> (gold-tint) and <i>पढ़ें: &lt;section&gt;</i> (outline) pills as a filled-saffron pill, driven by a <i>vidhiId</i> on the festival row — the identical hook mechanism as <i>kathaId</i>. <b>Tap → the vidhi overview.</b> The same link fills the "How to observe" slot design.md §33 explicitly reserves on ObservanceDetail "until real vidhi content exists" — this PRD is that content. Also indexed in search.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad" style="padding-bottom:90px">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">गणेश चतुर्थी पूजन</div><div class="topaction" style="position:relative">साझा ›<div class="dot" style="right:-14px;top:-10px">3</div></div></div>
+        <div class="convline">गीता प्रेस परम्परा अनुसार · ~45 min</div>
+
+        <div class="modeseg" style="position:relative"><div class="dot" style="right:-8px;top:-8px">2</div>
+          <div class="seg on">तैयारी · Samagri</div><div class="seg">पूजा · 16 चरण</div>
+        </div>
+
+        <div class="srow"><div class="box on">✓</div><div class="st done">गणेश प्रतिमा (मिट्टी)</div><div class="qty">1</div></div>
+        <div class="srow"><div class="box on">✓</div><div class="st done">चौकी व लाल वस्त्र</div></div>
+        <div class="srow"><div class="box">&nbsp;</div><div class="st">दूर्वा</div><div class="qty">21</div></div>
+        <div class="srow"><div class="box">&nbsp;</div><div class="st">मोदक</div><div class="qty">21</div></div>
+        <div class="srow"><div class="box">&nbsp;</div><div class="st">रोली · अक्षत · कलावा</div></div>
+        <div class="srow"><div class="box">&nbsp;</div><div class="st">धूप · दीप · घी</div></div>
+        <div class="srow"><div class="box">&nbsp;</div><div class="st">पंचामृत</div><div class="opt">वैकल्पिक</div></div>
+
+        <button class="btn ghost">सूची साझा करें · Share list</button>
+        <div class="note">सूची की स्थिति इसी पर्व-तिथि के लिए सहेजी जाती है ·<br/>checklist state persists for this festival date</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Vidhi overview — तैयारी mode.</b><br/>
+      <span class="n">2</span><b>Two-segment header</b>: तैयारी (this checklist) and पूजा (the 16-step conduct mode). The convention line under the title declares the source tradition — never an anonymous procedure. Checked items persist per festival date; the day-before vrat reminder (when opted in) resurfaces this list.<br/>
+      <span class="n">3</span><b>सूची साझा करें</b> shares the samagri as plain text — the family shopping message; no image pipeline, nothing personal. This is the vidhi's only share surface.</div>
+    </div>
+  </div>
+
+  <!-- ============ 2 · CONDUCT MODE ============ -->
+  <div class="phaselabel">2 · पूजा — conduct mode on festival day</div>
+  <div class="phasedesc">One step per page, paged like the readers. Reader-grade type, keep-awake, mantra inline with IAST + read-aloud; shipped texts hand off by reference.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen conduct"><div class="pad" style="padding-bottom:110px">
+        <div class="topbar"><div class="back">×</div><div class="toptitle">गणेश चतुर्थी पूजन</div></div>
+        <div class="cphase">मुख्य पूजा</div>
+        <div class="cstep">चरण 5 / 16</div>
+        <div class="dots"><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+        <div class="ctitle">आवाहन</div>
+        <div class="cinstr">हाथ में अक्षत-पुष्प लेकर गणेश जी का ध्यान करें और आवाहन मंत्र बोलते हुए प्रतिमा के सम्मुख अर्पित करें।</div>
+
+        <div class="mantrabox" style="position:relative"><div class="dot" style="right:-8px;top:-8px">4</div>
+          <div class="orn">॥ ॐ ॥</div>
+          <div class="m">गजाननं भूतगणादिसेवितं<br/>कपित्थजम्बूफलचारुभक्षणम्।</div>
+          <div class="iast">gajānanaṁ bhūta-gaṇādi-sevitaṁ<br/>kapittha-jambū-phala-cāru-bhakṣaṇam</div>
+          <div class="speak">🔈 सुनें · Read aloud</div>
+        </div>
+
+        <div class="awake" style="position:relative"><span class="dot" style="left:34px;top:-4px">5</span>स्क्रीन पूजा के दौरान जलती रहेगी · screen stays awake</div>
+
+        <div class="cnav" style="position:absolute">
+          <div class="prev">‹ पिछला</div>
+          <div class="next" style="position:relative"><span class="dot" style="right:-8px;top:-8px">6</span>अगला चरण ›</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Conduct mode — a mantra step.</b><br/>
+      <span class="n">4</span><b>The mantra box</b>: transcribed Devanagari (character-checked against the canon scan, Devanagari well-formedness CI gate) with IAST beneath per §3.1 romanization rules, and the <b>read-aloud</b> affordance reusing the shipped on-device TTS (#230). Instruction text respects the reading-size setting.<br/>
+      <span class="n">5</span><b>Keep-awake</b> holds for the whole conduct session (wet hands — no tapping to wake), released on exit.<br/>
+      <span class="n">6</span><b>Paged navigation</b> — swipe or the अगला/पिछला bar, the same horizontal-page interaction as the readers. × exits with state saved; re-entering the same day offers the readers' resume sheet ("जहाँ थे वहीं से").</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen conduct"><div class="pad" style="padding-bottom:110px">
+        <div class="topbar"><div class="back">×</div><div class="toptitle">गणेश चतुर्थी पूजन</div></div>
+        <div class="cphase">समापन</div>
+        <div class="cstep">चरण 14 / 16</div>
+        <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div>
+
+        <div class="ctitle">आरती</div>
+        <div class="cinstr">दीप जलाकर परिवार सहित गणेश जी की आरती करें।</div>
+
+        <div class="handoff" style="position:relative"><div class="dot" style="right:-8px;top:-8px">7</div>
+          <div class="ht">जय गणेश देवा ›</div>
+          <div class="hs">Opens the shipped aarti with follow-along audio — returns here after</div>
+        </div>
+
+        <div class="note" style="margin-top:14px">आरती ऐप में पहले से है — विधि उसे सन्दर्भ से खोलती है,<br/>पाठ दोहराया नहीं जाता (single source of truth)</div>
+
+        <div class="cnav" style="position:absolute">
+          <div class="prev">‹ पिछला</div>
+          <div class="next">अगला चरण ›</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Conduct mode — a hand-off step.</b><br/>
+      <span class="n">7</span><b>Where the step IS a shipped text</b> (aarti, katha, sahasranama), the vidhi never re-types it — a hand-off card deep-links into that reader/audio by <i>{sectionId}</i> (the <i>linkSectionId</i> mechanism) and returns to the next step on back. One source of truth, verse-count sync intact, and the user gets the full follow-along audio experience they already know.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen conduct"><div class="pad">
+        <div class="topbar"><div class="back">×</div><div class="toptitle">गणेश चतुर्थी पूजन</div></div>
+
+        <div class="seal">ॐ</div>
+        <div class="donet">पूजा सम्पन्न</div>
+        <div class="dones">गणपति बप्पा मोरया ·<br/>16 चरण · गीता प्रेस परम्परा अनुसार</div>
+
+        <div style="margin-top:22px">
+          <div class="actionrow">
+            <div class="ai">क</div>
+            <div class="at"><div class="att">व्रत कथा पढ़ें</div><div class="ats">Ganesh Chaturthi vrat katha</div></div>
+            <div class="chev">›</div>
+          </div>
+          <div class="actionrow" style="position:relative"><div class="dot" style="right:-8px;top:-8px">8</div>
+            <div class="ai">+</div>
+            <div class="at"><div class="att">साधना में जोड़ें</div><div class="ats">Recurring pujas can join नित्य साधना</div></div>
+            <div class="chev">›</div>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:16px">समापन शान्त है — कोई उत्सव-एनीमेशन नहीं ·<br/>a puja ends in shanti, not confetti</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Completion — quiet by design.</b><br/>
+      The static ॐ seal replaces any celebration animation (the routine-celebration mechanism is deliberately not wired here). Follow-up rows link the day's katha and —
+      <span class="n">8</span><b>for recurring vidhis</b> (Satyanarayan on purnima) — the existing <i>AddToRoutineButton</i> flow, so the practice enters नित्य साधना with its own reminders.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">पूजा विधियाँ</div></div>
+
+        <div class="libcard" style="position:relative"><div class="dot" style="right:-8px;top:-8px">9</div>
+          <div class="thumb">स</div>
+          <div class="lc"><div class="lname">सत्यनारायण पूजा</div><div class="len">Satyanarayan Puja</div>
+            <div class="lsub">16 चरण · ~60 min · पूर्णिमा · कथा सहित</div></div>
+          <div class="chev">›</div>
+        </div>
+        <div class="libcard">
+          <div class="thumb">दी</div>
+          <div class="lc"><div class="lname">दीपावली लक्ष्मी-गणेश पूजन</div><div class="len">Diwali Lakshmi-Ganesh Pujan</div>
+            <div class="lsub">18 चरण · ~45 min · कार्तिक अमावस्या</div></div>
+          <div class="chev">›</div>
+        </div>
+        <div class="libcard">
+          <div class="thumb">ग</div>
+          <div class="lc"><div class="lname">गणेश चतुर्थी स्थापना</div><div class="len">Ganesh Chaturthi Sthapana</div>
+            <div class="lsub">16 चरण · ~45 min · भाद्रपद शु. चतुर्थी</div></div>
+          <div class="chev">›</div>
+        </div>
+        <div class="libcard">
+          <div class="thumb">न</div>
+          <div class="lc"><div class="lname">नवरात्रि घटस्थापना</div><div class="len">Navratri Ghatasthapana</div>
+            <div class="lsub">14 चरण · ~40 min · आश्विन शु. प्रतिपदा</div></div>
+          <div class="chev">›</div>
+        </div>
+        <div class="libcard">
+          <div class="thumb">क</div>
+          <div class="lc"><div class="lname">करवा चौथ पूजन</div><div class="len">Karwa Chauth Pujan</div>
+            <div class="lsub">12 चरण · ~30 min · कार्तिक कृ. चतुर्थी</div></div>
+          <div class="chev">›</div>
+        </div>
+        <div class="libcard">
+          <div class="thumb">शि</div>
+          <div class="lc"><div class="lname">महाशिवरात्रि पूजन</div><div class="len">Mahashivaratri Pujan</div>
+            <div class="lsub">15 चरण · ~40 min · फाल्गुन कृ. चतुर्दशी</div></div>
+          <div class="chev">›</div>
+        </div>
+        <div class="note">प्रत्येक विधि स्रोत-प्रमाणित है — गीता प्रेस परम्परा,<br/>दो स्वतंत्र सन्दर्भों से मिलान (RULEBOOK §11)</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>The vidhi catalog — six in v1, on the shipped LibraryCard.</b><br/>
+      <span class="n">9</span><b>Each row is the §8 LibraryCard active variant, not a new card</b>: the `#FFF5E0→#F5DEAC` gradient with the `rgba(184,98,27,.4)` border and `elevation.raised`, the first-letter thumb (`#F8D291→#E0A255`, white Devanagari 22), Hindi name over the Latin italic, a sub-meta line (चरण count · duration · tithi — the "43 verses · Hindi with meaning" slot), and the saffron ›. Routed in the Panchang stack; reached from the ObservanceCard pill, vrat-catalog details, search, and one DISCOVER card. <b>Deliberately not a Home-grid category</b> — the 5×3 launcher is closed by design (RULEBOOK §1).</div>
+    </div>
+  </div>
+
+  <div class="phaselabel" style="margin-top:34px">Interaction inventory</div>
+  <div class="legend" style="max-width:920px">
+    ① Festival day panel → पूजा विधि action pill on the ObservanceCard (§33.5; vidhiId hook, beside the कथा पढ़ें / पढ़ें pills) → vidhi overview; the same link fills ObservanceDetail's reserved vidhi slot.
+    ② तैयारी/पूजा segments — checklist uses the §31 routine check circles; state persists per festival date; day-before vrat reminder resurfaces it.
+    ③ सूची साझा करें → samagri list as plain text (the only share surface).
+    ④ Mantra box: transcribed Devanagari + IAST + read-aloud via shipped TTS; reading-size respected.
+    ⑤ Keep-awake for the whole conduct session, released on exit.
+    ⑥ Paged steps (swipe or bar); × saves state; same-day re-entry offers the readers' resume sheet.
+    ⑦ Shipped-text steps hand off by sectionId (aarti/katha reader + audio) and return.
+    ⑧ Completion: static ॐ seal, katha link, AddToRoutine for recurring vidhis — no celebration animation.
+    ⑨ Catalog reachable from day panel, vrat catalog, search, DISCOVER card — no new Home tile.
+  </div>
+</body>
+</html>

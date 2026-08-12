@@ -103,6 +103,12 @@ export type ObservanceRule = {
   detailRoute?: string;
   sourceUrl: string;
   kathaId?: string;
+  /**
+   * Published puja-vidhi hook (PRD-19) — id into VIDHI_BY_ID
+   * (mobile/src/data/vidhi). Same mechanism as kathaId: the day panel's
+   * ObservanceCard grows a "॥ पूजा विधि" action pill when this resolves.
+   */
+  vidhiId?: string;
   searchTerms?: string[];
 };
 

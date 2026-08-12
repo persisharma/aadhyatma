@@ -1,0 +1,136 @@
+# Puja Vidhi Smoke Test (PRD-19 Phase 1)
+#
+# Drives the guided-puja surfaces end-to-end through their always-available
+# entry (the Vrat & Parv catalog's पूजा विधि tile) — the ObservanceCard pill is
+# date-dependent (it appears only on purnima days for the Satyanarayan vidhi),
+# so the deterministic door is the catalog tile.
+#
+# Verifies:
+#   1. Panchang tab → Vrat & Parv → Puja Vidhi tile → vidhi catalog.
+#   2. The Satyanarayan card renders (16 steps · with katha) and opens detail.
+#   3. Detail: convention line, samagri checklist (a §31 check circle toggles),
+#      and the तैयारी/पूजा segments.
+#   4. पूजा segment: phase-grouped step list + "Begin the puja" → conduct mode.
+#   5. Conduct: step page renders, the next/prev bar pages forward (the mantra
+#      box on the dhyana step), back returns to the overview.
+#
+# Language: same recipe as panchang-smoke — flip the global reading language to
+# English first (Devanagari is unreliable in Maestro's iOS a11y tree), restore
+# Hindi at the end (best-effort).
+
+appId: com.prashantsharma.vedansh
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Reading language → English (More tab → Language picker) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Step 3: Panchang tab → Vrat & Parv catalog ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*Ujjain.*"
+    timeout: 30000
+- tapOn: "Vrat & Parv"
+- waitForAnimationToEnd
+
+# ── Step 4: The पूजा विधि tile opens the vidhi catalog ──
+- scrollUntilVisible:
+    element:
+      text: "Puja vidhi catalog,.*"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- tapOn: "Puja vidhi catalog,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Shri Satyanarayan Puja.*"
+    timeout: 15000
+
+# ── Step 5: Open the Satyanarayan vidhi detail ──
+- tapOn: "Shri Satyanarayan Puja.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*DrikPanchang.*"      # convention line — never an anonymous procedure
+    timeout: 15000
+- assertVisible: "Prepare · Samagri"
+- assertVisible: "Puja · 16 steps"
+
+# ── Step 6: तैयारी — toggle one samagri check circle ──
+- scrollUntilVisible:
+    element:
+      text: "Coconut (shriphala)"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn: "Coconut (shriphala)"
+- assertVisible:
+    text: "Coconut (shriphala)"
+    checked: true
+
+# ── Step 7: पूजा segment — phase-grouped steps, then begin ──
+- scrollUntilVisible:
+    element:
+      text: "Puja · 16 steps"
+    direction: UP
+    centerElement: true
+    timeout: 10000
+- tapOn: "Puja · 16 steps"
+- waitForAnimationToEnd
+- assertVisible: "Preparation"
+- assertVisible: "Main Puja"
+- scrollUntilVisible:
+    element:
+      text: "Begin puja"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- tapOn: "Begin puja"
+- waitForAnimationToEnd
+
+# ── Step 8: Conduct mode — page forward to the dhyana mantra step ──
+- extendedWaitUntil:
+    visible: "1 / 16"
+    timeout: 15000
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "4 / 16"
+- assertVisible: "॥ ॐ ॥"           # the gold mantra box on the dhyana step
+- tapOn: "Previous step"
+- waitForAnimationToEnd
+- assertVisible: "3 / 16"
+
+# ── Step 9: Exit conduct (state saved) → overview → out ──
+- tapOn: "Back to vidhi overview"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Step 10: Restore Hindi (best-effort) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn:
+    text: "Language,.*"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Cleanup ──
+- stopApp:
+    appId: com.prashantsharma.vedansh
