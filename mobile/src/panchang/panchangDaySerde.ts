@@ -15,7 +15,7 @@ import type { PanchangData } from './types';
 export type DayInputs = { p: PanchangData; asta: { shukraAsta: boolean; guruAsta: boolean } };
 
 /** Bump when the panchang engine changes so persisted days from an older engine are purged. */
-export const MUHURAT_DAY_CACHE_VERSION = 1;
+export const PANCHANG_DAY_CACHE_VERSION = 1;
 
 const DATE_TAG = '__d';
 type TaggedDate = { [DATE_TAG]: number };

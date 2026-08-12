@@ -15,16 +15,16 @@ import {
   dayStoreFor,
   dateKeyFor,
   scopeKeyFor,
-  subscribeMuhuratEviction,
-  muhuratStoreScopes,
-  __resetMuhuratDayStore,
+  subscribePanchangEviction,
+  panchangStoreScopes,
+  __resetPanchangDayStore,
   MAX_CITIES,
-} from '../muhuratDayStore';
+} from '../panchangDayStore';
 
 const opts = { calendarSystem: 'purnimant' as const, location: { ...UJJAIN_GEO, cityId: 'ujjain' } };
 
 test('computes a day once, then reuses it by absolute date', () => {
-  __resetMuhuratDayStore();
+  __resetPanchangDayStore();
   const map = dayStoreFor(scopeKeyFor(opts.location, 'purnimant'));
   const d = new Date(2026, 7, 20);
   const first = cachedDayInputs(map, d, opts);
@@ -47,12 +47,12 @@ test('scopeKeyFor separates cities, calendar systems, and cityId-less GPS points
 });
 
 test('holds at most 5 cities; a 6th evicts the least-recently-used only', () => {
-  __resetMuhuratDayStore();
+  __resetPanchangDayStore();
   const evicted: string[] = [];
-  const unsub = subscribeMuhuratEviction((s) => evicted.push(s));
+  const unsub = subscribePanchangEviction((s) => evicted.push(s));
 
   for (let i = 1; i <= MAX_CITIES; i += 1) dayStoreFor(`city${i}:purnimant`);
-  assert.equal(muhuratStoreScopes().length, 5);
+  assert.equal(panchangStoreScopes().length, 5);
 
   // Touch city1 so it becomes most-recently-used; city2 is now the LRU.
   dayStoreFor('city1:purnimant');
@@ -60,7 +60,7 @@ test('holds at most 5 cities; a 6th evicts the least-recently-used only', () => 
   dayStoreFor('city6:purnimant');
 
   assert.deepEqual(evicted, ['city2:purnimant'], 'evicted exactly the LRU city');
-  const scopes = muhuratStoreScopes();
+  const scopes = panchangStoreScopes();
   assert.equal(scopes.length, 5, 'still capped at 5');
   assert.ok(scopes.includes('city1:purnimant'), 'the recently-used city survived');
   assert.ok(scopes.includes('city6:purnimant'), 'the new city is held');
@@ -69,9 +69,9 @@ test('holds at most 5 cities; a 6th evicts the least-recently-used only', () => 
 });
 
 test('choosing a new city does not evict others while under the cap', () => {
-  __resetMuhuratDayStore();
+  __resetPanchangDayStore();
   dayStoreFor('a:purnimant');
   dayStoreFor('b:purnimant');
   dayStoreFor('c:purnimant'); // new city, still under 5
-  assert.deepEqual(muhuratStoreScopes().sort(), ['a:purnimant', 'b:purnimant', 'c:purnimant']);
+  assert.deepEqual(panchangStoreScopes().sort(), ['a:purnimant', 'b:purnimant', 'c:purnimant']);
 });

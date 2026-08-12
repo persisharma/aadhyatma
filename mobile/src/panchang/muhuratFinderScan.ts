@@ -3,18 +3,18 @@
  * the React hook so it holds NO react/react-native imports and is unit-testable
  * under the tsx engine suite.
  *
- * The per-day inputs themselves live in the shared `muhuratDayStore` — keyed by
+ * The per-day inputs themselves live in the shared `panchangDayStore` — keyed by
  * ABSOLUTE date and scoped to (location, calendar system), so a day solved by
  * any surface (the occasion finder, the picker warmup, the abujh calendar) is
  * free for every other one, survives a midnight rollover, and can be hydrated
  * from disk. The expensive part of every day is the sunrise/sunset bisection
- * inside `computePanchangForDate`, and it is occasion-INDEPENDENT.
+ * inside `computePanchangForDate` (reached via the store), and it is
+ * occasion-INDEPENDENT.
  */
 import { getUpcomingObservances } from './festivalEngine';
-import { computePanchangForDate } from './engine';
 import { ABUJH_RULE_IDS, pushyaYogaFor } from './abujhMuhurat';
-import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './muhuratDayStore';
-import type { ScanOptions } from './muhuratDayStore';
+import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
+import type { ScanOptions } from './panchangDayStore';
 import type { ResolvedObservance } from './types';
 
 /** Default finder horizon (~3 months) and the extended "first dates after" reach. */
@@ -23,7 +23,7 @@ export const FIRST_AFTER_MAX_DAYS = 260;
 export const CHUNK_DAYS = 7;
 
 /** The location/options shapes both scans pass to the engine — owned by the store. */
-export type { ScanLocation, ScanOptions, DayInputs } from './muhuratDayStore';
+export type { ScanLocation, ScanOptions, DayInputs } from './panchangDayStore';
 
 export const startOfToday = (): Date => {
   const now = new Date();
@@ -37,7 +37,7 @@ export const yieldToUi = (): Promise<void> => new Promise<void>((r) => setTimeou
 
 /**
  * The civil-date keys a scan of `count` days from `start` will touch — what the
- * hooks hand to `hydrateMuhuratDays` so the persisted solves are in memory
+ * hooks hand to `hydratePanchangDays` so the persisted solves are in memory
  * before the sweep begins.
  */
 export const dayKeysFrom = (start: Date, count: number): string[] =>
@@ -87,7 +87,11 @@ export async function scanAbujhDays(
     for (const o of observances) {
       if (hooks.isCancelled()) return [...festival].sort(byDate);
       try {
-        const p = computePanchangForDate(o.date, opts);
+        // Through the shared store: these observance days sit inside the sweep's
+        // own horizon, so solving them separately duplicated work the pushya loop
+        // below (or a previous session) already paid for.
+        const { inputs } = cachedDayInputs(scan, o.date, opts);
+        const p = inputs.p;
         festival.push({
           dateMs: o.date.getTime(),
           nameHi: o.rule.nameHi,

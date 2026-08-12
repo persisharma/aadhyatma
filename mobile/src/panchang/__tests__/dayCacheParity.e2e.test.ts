@@ -9,7 +9,7 @@
  *
  * If this ever fails, the cache is NOT safe to enable. It also documents the
  * engine-version coupling: change the astronomy and this pins that cached days
- * from the old engine would diverge (→ bump MUHURAT_DAY_CACHE_VERSION).
+ * from the old engine would diverge (→ bump PANCHANG_DAY_CACHE_VERSION).
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -18,15 +18,15 @@ import { computePanchangForDate, UJJAIN_GEO } from '../engine';
 import { computeMuhuratDay } from '../muhurat';
 import { getObservancesForDate } from '../festivalEngine';
 import { computeAstaFlags, evaluateDay, getEventRule } from '../eventMuhurat';
-import { serializeDayInputs, reviveDayInputs } from '../muhuratDaySerde';
+import { serializeDayInputs, reviveDayInputs } from '../panchangDaySerde';
 import {
   cachedDayInputs,
   computeDayInputs,
   dayStoreFor,
   scopeKeyFor,
-  __resetMuhuratDayStore,
+  __resetPanchangDayStore,
   type ScanOptions,
-} from '../muhuratDayStore';
+} from '../panchangDayStore';
 import type { CalendarSystem } from '../types';
 
 const LOCATIONS: { cityId?: string; latitude: number; longitude: number; elevation: number }[] = [
@@ -44,7 +44,7 @@ for (const location of LOCATIONS) {
   for (const calendarSystem of SYSTEMS) {
     const label = `${location.cityId ?? `${location.latitude},${location.longitude}`}/${calendarSystem}`;
     test(`1-year parity — fresh == cached == persisted (${label})`, () => {
-      __resetMuhuratDayStore();
+      __resetPanchangDayStore();
       const opts: ScanOptions = { calendarSystem, location };
       const map = dayStoreFor(scopeKeyFor(location, calendarSystem));
       const rule = getEventRule('griha-pravesh');

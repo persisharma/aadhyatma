@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { InteractionManager } from 'react-native';
 import { computeMuhuratDay } from './muhurat';
 import { evaluateDay, getEventRule, summarize, type DayVerdict, type FinderSummary, type OccasionId } from './eventMuhurat';
-import { cachedDayInputs, dayStoreFor, scopeKeyFor } from './muhuratDayStore';
-import { hydrateMuhuratDays, persistMuhuratDays } from './muhuratDayCache';
+import { cachedDayInputs, dayStoreFor, scopeKeyFor } from './panchangDayStore';
+import { hydratePanchangDays, persistPanchangDays } from './panchangDayCache';
 import {
   dayAt,
   dayKeysFrom,
@@ -42,7 +42,7 @@ export type FinderState = {
  * behind InteractionManager + setTimeout yields — the same responsiveness
  * boundary as useMuhurat/useObservancesForDate — so Home/Panchang interactions
  * are never blocked by the sweep. The per-day inputs come from the shared
- * `muhuratDayStore` (absolute-date keyed, per location+system) so the first
+ * `panchangDayStore` (absolute-date keyed, per location+system) so the first
  * occasion pays the astronomy cost once and every later occasion — plus a
  * re-entry, a midnight rollover, and a hydrated cold start — reuses it.
  */
@@ -61,7 +61,7 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
       // Disk → memory before the sweep, so days solved in an earlier session (or
       // an earlier launch) are never re-solved. One multiGet, short-circuited
       // entirely when the range is already warm.
-      await hydrateMuhuratDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
+      await hydratePanchangDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
       if (cancelled) return;
       const scan = dayStoreFor(scopeKeyFor(location, calendarSystem));
       let heavyThisChunk = false;
@@ -106,7 +106,7 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
       setState({ loading: false, summary: summarize(verdicts), firstAfter });
       // Fire-and-forget: the results are already on screen, and the next launch
       // gets them for free.
-      void persistMuhuratDays(location, calendarSystem);
+      void persistPanchangDays(location, calendarSystem);
     });
     return () => {
       cancelled = true;
@@ -135,7 +135,7 @@ export function useMuhuratFinderWarmup(days: number = FINDER_WINDOW_DAYS): void 
     const task = InteractionManager.runAfterInteractions(async () => {
       const opts = { calendarSystem, location };
       const start = startOfToday();
-      await hydrateMuhuratDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
+      await hydratePanchangDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
       if (cancelled) return;
       const scan = dayStoreFor(scopeKeyFor(location, calendarSystem));
       let heavy = false;
@@ -149,7 +149,7 @@ export function useMuhuratFinderWarmup(days: number = FINDER_WINDOW_DAYS): void 
           heavy = false;
         }
       }
-      void persistMuhuratDays(location, calendarSystem);
+      void persistPanchangDays(location, calendarSystem);
     });
     return () => {
       cancelled = true;
@@ -178,7 +178,7 @@ export function useAbujhDays(horizonDays: number = FIRST_AFTER_MAX_DAYS): AbujhS
       const opts = { calendarSystem, location };
       const start = startOfToday();
       try {
-        await hydrateMuhuratDays(location, calendarSystem, dayKeysFrom(start, horizonDays));
+        await hydratePanchangDays(location, calendarSystem, dayKeysFrom(start, horizonDays));
         if (cancelled) return;
         const days = await scanAbujhDays(start, horizonDays, opts, {
           isCancelled: () => cancelled,
@@ -189,7 +189,7 @@ export function useAbujhDays(horizonDays: number = FIRST_AFTER_MAX_DAYS): AbujhS
           },
         });
         if (!cancelled) setState({ loading: false, days });
-        void persistMuhuratDays(location, calendarSystem);
+        void persistPanchangDays(location, calendarSystem);
       } catch {
         // Defensive: the scan already guards each day, but never leave the
         // spinner stranded if something above the loop throws.

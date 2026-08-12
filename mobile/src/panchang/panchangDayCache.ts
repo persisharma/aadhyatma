@@ -1,38 +1,44 @@
 /**
- * Persistence for the shared muhurat day store. The per-day panchang solve is
- * the expensive part of the Muhurat Finder (~90 days on the first occasion,
- * ~260 when the window comes up empty), and it is deterministic from
- * (date, location, calendar system) — so it is worth keeping across app
- * launches, not just across screens.
+ * Persistence for the shared panchang day store. The per-day panchang solve is
+ * the expensive unit of work behind EVERY panchang surface — the Muhurat Finder's
+ * ~90–260 day sweep, the Panchang tab's selected day, Home's Today strip, the
+ * daily Muhurat card — and it is deterministic from (date, location, calendar
+ * system), so it is worth keeping across app launches, not just across screens.
  *
  * Same split as `observanceStore` ⇄ `observanceCache`: the RN-free
- * `muhuratDayStore` owns the in-memory map (and is importable under
+ * `panchangDayStore` owns the in-memory map (and is importable under
  * `tsx --test`), while this module is the only place that touches AsyncStorage.
  *
  * Shape of the data on disk: one key per (scope, civil day), so hydrating a
  * range is a single `multiGet` and a location change never has to rewrite
  * another city's days. Bounded by construction — the store holds at most
  * `MAX_CITIES` scopes (an eviction drops that scope's keys here too) and only
- * today-or-later days are ever written, with past days purged on hydrate.
+ * days from yesterday onward are ever written, with older ones purged on hydrate.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
-  MUHURAT_DAY_CACHE_VERSION,
+  PANCHANG_DAY_CACHE_VERSION,
   reviveDayInputs,
   serializeDayInputs,
-} from './muhuratDaySerde';
+} from './panchangDaySerde';
 import {
   dateKeyFor,
   dayStoreFor,
   scopeKeyFor,
-  subscribeMuhuratEviction,
+  subscribePanchangEviction,
   type ScanLocation,
-} from './muhuratDayStore';
+} from './panchangDayStore';
 import type { CalendarSystem } from './types';
 
-const KEY_ROOT = '@vedansh:muhurat-days:';
-const KEY_PREFIX = `${KEY_ROOT}v${MUHURAT_DAY_CACHE_VERSION}:`;
+const KEY_ROOT = '@vedansh:panchang-days:';
+const KEY_PREFIX = `${KEY_ROOT}v${PANCHANG_DAY_CACHE_VERSION}:`;
+/**
+ * The pre-generalization root, from when this cache served only the Muhurat
+ * Finder. Purged alongside stale versions so an internal build's keys don't sit
+ * on disk forever — no store build ever shipped it, but a dev/TestFlight one may.
+ */
+const LEGACY_KEY_ROOTS = ['@vedansh:muhurat-days:'];
 
 /**
  * `<root>v<version>:<scope>:<YYYY-MM-DD>`. The scope itself contains a `:`
@@ -40,7 +46,7 @@ const KEY_PREFIX = `${KEY_ROOT}v${MUHURAT_DAY_CACHE_VERSION}:`;
  * the civil day is always the segment after the LAST colon, and a scope's keys
  * are still an exact prefix match.
  */
-export function muhuratDayStorageKey(scope: string, dateKey: string): string {
+export function panchangDayStorageKey(scope: string, dateKey: string): string {
   return `${KEY_PREFIX}${scope}:${dateKey}`;
 }
 
@@ -63,7 +69,20 @@ const persistedFor = (scope: string): Set<string> => {
   return set;
 };
 
-const todayKey = (): string => dateKeyFor(new Date());
+/**
+ * How far into the past a persisted day stays useful. `useMuhurat`'s pre-dawn
+ * correction reads YESTERDAY's night choghadiya (before today's sunrise the
+ * active window belongs to yesterday), so dropping everything before today would
+ * leave Home solving one day on every cold start. One day back is all any reader
+ * needs; two-days-old keys are dead weight and get purged.
+ */
+const RETAINED_PAST_DAYS = 1;
+
+/** The oldest civil day still worth keeping — the cutoff for BOTH persist and purge. */
+function oldestUsefulDateKey(): string {
+  const n = new Date();
+  return dateKeyFor(new Date(n.getFullYear(), n.getMonth(), n.getDate() - RETAINED_PAST_DAYS));
+}
 
 /**
  * Drop every persisted day for a scope. Wired to the store's eviction listener:
@@ -81,22 +100,23 @@ async function dropScopeFromDisk(scope: string): Promise<void> {
   }
 }
 
-subscribeMuhuratEviction((scope) => {
+subscribePanchangEviction((scope) => {
   void dropScopeFromDisk(scope);
 });
 
 /**
  * Remove keys that can never serve a correct result again: days already in the
  * past, and anything written by an older cache version (the engine moved, so
- * those days would differ from a fresh solve — see MUHURAT_DAY_CACHE_VERSION).
+ * those days would differ from a fresh solve — see PANCHANG_DAY_CACHE_VERSION).
  */
 async function purgeUnusable(): Promise<void> {
   try {
-    const today = todayKey();
+    const oldest = oldestUsefulDateKey();
     const doomed = (await AsyncStorage.getAllKeys()).filter((key) => {
+      if (LEGACY_KEY_ROOTS.some((root) => key.startsWith(root))) return true;
       if (!key.startsWith(KEY_ROOT)) return false;
       if (!key.startsWith(KEY_PREFIX)) return true; // stale cache version
-      return dateKeyOf(key) < today; // lexical compare is chronological for YYYY-MM-DD
+      return dateKeyOf(key) < oldest; // lexical compare is chronological for YYYY-MM-DD
     });
     if (doomed.length > 0) await AsyncStorage.multiRemove(doomed);
   } catch {
@@ -109,7 +129,7 @@ async function purgeUnusable(): Promise<void> {
  * follow find them already solved. Days already warm in memory are never read
  * from disk. Safe to call repeatedly; never throws.
  */
-export async function hydrateMuhuratDays(
+export async function hydratePanchangDays(
   location: ScanLocation,
   calendarSystem: CalendarSystem,
   dateKeys: string[]
@@ -125,7 +145,7 @@ export async function hydrateMuhuratDays(
   await purgeUnusable();
 
   try {
-    const pairs = await AsyncStorage.multiGet(wanted.map((k) => muhuratDayStorageKey(scope, k)));
+    const pairs = await AsyncStorage.multiGet(wanted.map((k) => panchangDayStorageKey(scope, k)));
     const known = persistedFor(scope);
     pairs.forEach(([key, raw]) => {
       if (!raw) return;
@@ -142,24 +162,25 @@ export async function hydrateMuhuratDays(
 }
 
 /**
- * Flush this scope's not-yet-persisted days to disk. Past days are skipped (they
- * can never be a finder result again) and each day is written once per scope.
+ * Flush this scope's not-yet-persisted days to disk. Days older than
+ * `RETAINED_PAST_DAYS` are skipped (nothing reads them again) and each day is
+ * written once per scope.
  * Fire-and-forget from the hooks: never throws, and the scan does not wait on it.
  */
-export async function persistMuhuratDays(
+export async function persistPanchangDays(
   location: ScanLocation,
   calendarSystem: CalendarSystem
 ): Promise<void> {
   const scope = scopeKeyFor(location, calendarSystem);
   const map = dayStoreFor(scope);
   const known = persistedFor(scope);
-  const today = todayKey();
+  const oldest = oldestUsefulDateKey();
 
   const pending: [string, string][] = [];
   for (const [dateKey, inputs] of map) {
-    if (known.has(dateKey) || dateKey < today) continue;
+    if (known.has(dateKey) || dateKey < oldest) continue;
     try {
-      pending.push([muhuratDayStorageKey(scope, dateKey), serializeDayInputs(inputs)]);
+      pending.push([panchangDayStorageKey(scope, dateKey), serializeDayInputs(inputs)]);
     } catch {
       // a day that cannot be serialized is simply not persisted
     }
@@ -175,6 +196,6 @@ export async function persistMuhuratDays(
 }
 
 /** Test helper: forget what this process believes is already on disk. */
-export function __resetMuhuratDayCache(): void {
+export function __resetPanchangDayCache(): void {
   persisted.clear();
 }

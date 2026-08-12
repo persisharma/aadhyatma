@@ -2,7 +2,7 @@
  * Shared in-memory cache of per-day panchang inputs, keyed by ABSOLUTE date and
  * scoped to a (city, calendar system). RN-free (no react / react-native /
  * AsyncStorage) so the engine + scans stay importable under `tsx --test`, and so
- * this module and the AsyncStorage-backed `muhuratDayCache` never form a cycle —
+ * this module and the AsyncStorage-backed `panchangDayCache` never form a cycle —
  * the same split as `observanceStore` ⇄ `observanceCache`.
  *
  * Because a day's panchang is deterministic from (date, location, system), keying
@@ -17,11 +17,25 @@
 import { computePanchangForDate, locationKey } from './engine';
 import { computeAstaFlags } from './eventMuhurat';
 import type { CalendarSystem, GeoLocation } from './types';
-import type { DayInputs } from './muhuratDaySerde';
+import type { DayInputs } from './panchangDaySerde';
 
 export type { DayInputs };
 export type ScanLocation = GeoLocation & { cityId?: string };
-export type ScanOptions = { calendarSystem: CalendarSystem; location: ScanLocation };
+export type ScanOptions = {
+  calendarSystem: CalendarSystem;
+  location: ScanLocation;
+  /**
+   * Deliberately un-representable. `PanchangComputationOptions` accepts a
+   * `civilTimeZone` that re-anchors which civil day a solve describes, but the
+   * scope key below models only (location, calendar system) — so a
+   * civilTimeZone-bearing solve would ALIAS onto the device-local days and hand
+   * the wrong day to one of the two readers. The widget writer
+   * (`widgets/planPayload.ts`) solves with `civilTimeZone: WIDGET_TIME_ZONE` for
+   * exactly this reason and must keep its own solves; `never` makes routing it
+   * through here a compile error instead of a silent correctness bug.
+   */
+  civilTimeZone?: never;
+};
 
 /** Max cities (scopes) held in memory at once. A 6th evicts the LRU. */
 export const MAX_CITIES = 5;
@@ -30,7 +44,7 @@ const store = new Map<string, Map<string, DayInputs>>();
 const evictionListeners = new Set<(scope: string) => void>();
 
 /** Notified with the scope key when a city is evicted, so its disk data is dropped too. */
-export function subscribeMuhuratEviction(listener: (scope: string) => void): () => void {
+export function subscribePanchangEviction(listener: (scope: string) => void): () => void {
   evictionListeners.add(listener);
   return () => {
     evictionListeners.delete(listener);
@@ -100,9 +114,9 @@ export function cachedDayInputs(
 }
 
 /** Inspection + test helpers. */
-export function muhuratStoreScopes(): string[] {
+export function panchangStoreScopes(): string[] {
   return [...store.keys()];
 }
-export function __resetMuhuratDayStore(): void {
+export function __resetPanchangDayStore(): void {
   store.clear();
 }

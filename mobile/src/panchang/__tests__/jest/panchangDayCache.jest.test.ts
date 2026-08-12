@@ -1,5 +1,5 @@
 /**
- * The AsyncStorage layer under the shared muhurat day store. It is what turns a
+ * The AsyncStorage layer under the shared panchang day store. It is what turns a
  * one-session cache into a persistent one: re-entering the finder or cold-starting
  * the app must not re-solve ~90–260 days of astronomy.
  *
@@ -17,21 +17,21 @@
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { MUHURAT_DAY_CACHE_VERSION } from '../../muhuratDaySerde';
+import { PANCHANG_DAY_CACHE_VERSION } from '../../panchangDaySerde';
 import {
   dateKeyFor,
   dayStoreFor,
   scopeKeyFor,
-  __resetMuhuratDayStore,
+  __resetPanchangDayStore,
   MAX_CITIES,
   type DayInputs,
-} from '../../muhuratDayStore';
+} from '../../panchangDayStore';
 import {
-  hydrateMuhuratDays,
-  persistMuhuratDays,
-  muhuratDayStorageKey,
-  __resetMuhuratDayCache,
-} from '../../muhuratDayCache';
+  hydratePanchangDays,
+  persistPanchangDays,
+  panchangDayStorageKey,
+  __resetPanchangDayCache,
+} from '../../panchangDayCache';
 
 const UJJAIN = { cityId: 'ujjain', latitude: 23.1793, longitude: 75.7849, elevation: 494 };
 const DELHI = { cityId: 'delhi', latitude: 28.6139, longitude: 77.209, elevation: 216 };
@@ -75,18 +75,18 @@ beforeEach(async () => {
   jest.restoreAllMocks();
   jest.clearAllMocks();
   await AsyncStorage.clear();
-  __resetMuhuratDayStore();
-  __resetMuhuratDayCache();
+  __resetPanchangDayStore();
+  __resetPanchangDayCache();
 });
 
-describe('hydrateMuhuratDays', () => {
+describe('hydratePanchangDays', () => {
   test('loads persisted days into the in-memory store, Dates intact', async () => {
     const scope = scopeKeyFor(UJJAIN, SYSTEM);
     const key = dayKeyFromToday(1);
     await persistOne(scope, key);
-    __resetMuhuratDayStore(); // simulate a cold start: disk warm, memory empty
+    __resetPanchangDayStore(); // simulate a cold start: disk warm, memory empty
 
-    await hydrateMuhuratDays(UJJAIN, SYSTEM, [key]);
+    await hydratePanchangDays(UJJAIN, SYSTEM, [key]);
 
     const hit = dayStoreFor(scope).get(key);
     expect(hit).toBeDefined();
@@ -105,10 +105,10 @@ describe('hydrateMuhuratDays', () => {
     dayStoreFor(scope).set(warm, fakeDay(warm));
     const multiGet = spyOnStorage('multiGet');
 
-    await hydrateMuhuratDays(UJJAIN, SYSTEM, [warm, cold]);
+    await hydratePanchangDays(UJJAIN, SYSTEM, [warm, cold]);
 
     expect(multiGet).toHaveBeenCalledTimes(1);
-    expect(multiGet.mock.calls[0][0]).toEqual([muhuratDayStorageKey(scope, cold)]);
+    expect(multiGet.mock.calls[0][0]).toEqual([panchangDayStorageKey(scope, cold)]);
   });
 
   test('skips disk entirely when every wanted day is already in memory', async () => {
@@ -118,7 +118,7 @@ describe('hydrateMuhuratDays', () => {
     const multiGet = spyOnStorage('multiGet');
     const getAllKeys = spyOnStorage('getAllKeys');
 
-    await hydrateMuhuratDays(UJJAIN, SYSTEM, [key]);
+    await hydratePanchangDays(UJJAIN, SYSTEM, [key]);
 
     // Not even the purge sweep: re-entering a warm surface must not wait on a
     // disk round-trip that cannot tell it anything new.
@@ -126,18 +126,18 @@ describe('hydrateMuhuratDays', () => {
     expect(getAllKeys).not.toHaveBeenCalled();
   });
 
-  test('purges past-dated and stale-version keys', async () => {
+  test('purges too-old and stale-version keys', async () => {
     const scope = scopeKeyFor(UJJAIN, SYSTEM);
-    const past = muhuratDayStorageKey(scope, dayKeyFromToday(-1));
-    const stale = `@vedansh:muhurat-days:v${MUHURAT_DAY_CACHE_VERSION - 1}:${scope}:${dayKeyFromToday(3)}`;
-    const future = muhuratDayStorageKey(scope, dayKeyFromToday(3));
+    const past = panchangDayStorageKey(scope, dayKeyFromToday(-2));
+    const stale = `@vedansh:panchang-days:v${PANCHANG_DAY_CACHE_VERSION - 1}:${scope}:${dayKeyFromToday(3)}`;
+    const future = panchangDayStorageKey(scope, dayKeyFromToday(3));
     await AsyncStorage.multiSet([
       [past, '{}'],
       [stale, '{}'],
       [future, '{}'],
     ]);
 
-    await hydrateMuhuratDays(UJJAIN, SYSTEM, [dayKeyFromToday(3)]);
+    await hydratePanchangDays(UJJAIN, SYSTEM, [dayKeyFromToday(3)]);
 
     const keys = await AsyncStorage.getAllKeys();
     expect(keys).not.toContain(past);
@@ -145,62 +145,79 @@ describe('hydrateMuhuratDays', () => {
     expect(keys).toContain(future);
   });
 
+  test('purges keys from the pre-generalization muhurat-days root', async () => {
+    const scope = scopeKeyFor(UJJAIN, SYSTEM);
+    // Written by an internal build before the cache was generalized past the
+    // finder. Its shape is compatible, but the key root is dead — leaving it
+    // behind would strand bytes on disk that nothing ever reads or evicts.
+    const legacy = `@vedansh:muhurat-days:v1:${scope}:${dayKeyFromToday(3)}`;
+    await AsyncStorage.setItem(legacy, '{}');
+
+    await hydratePanchangDays(UJJAIN, SYSTEM, [dayKeyFromToday(3)]);
+
+    expect(await AsyncStorage.getAllKeys()).not.toContain(legacy);
+  });
+
   test('a corrupt entry is ignored, not fatal', async () => {
     const scope = scopeKeyFor(UJJAIN, SYSTEM);
     const key = dayKeyFromToday(1);
-    await AsyncStorage.setItem(muhuratDayStorageKey(scope, key), 'not json{{');
+    await AsyncStorage.setItem(panchangDayStorageKey(scope, key), 'not json{{');
 
-    await expect(hydrateMuhuratDays(UJJAIN, SYSTEM, [key])).resolves.toBeUndefined();
+    await expect(hydratePanchangDays(UJJAIN, SYSTEM, [key])).resolves.toBeUndefined();
     expect(dayStoreFor(scope).has(key)).toBe(false);
   });
 });
 
-describe('persistMuhuratDays', () => {
-  test('writes the scope’s future days and skips past ones', async () => {
+describe('persistPanchangDays', () => {
+  test('writes from yesterday onward and skips older days', async () => {
     const scope = scopeKeyFor(UJJAIN, SYSTEM);
     const map = dayStoreFor(scope);
+    const stale = dayKeyFromToday(-2);
     const yesterday = dayKeyFromToday(-1);
     const today = dayKeyFromToday(0);
     const tomorrow = dayKeyFromToday(1);
-    [yesterday, today, tomorrow].forEach((k) => map.set(k, fakeDay(k)));
+    [stale, yesterday, today, tomorrow].forEach((k) => map.set(k, fakeDay(k)));
 
-    await persistMuhuratDays(UJJAIN, SYSTEM);
+    await persistPanchangDays(UJJAIN, SYSTEM);
 
     const keys = await AsyncStorage.getAllKeys();
-    // Yesterday is dead weight — it can never be a finder result again.
-    expect(keys).not.toContain(muhuratDayStorageKey(scope, yesterday));
-    expect(keys).toContain(muhuratDayStorageKey(scope, today));
-    expect(keys).toContain(muhuratDayStorageKey(scope, tomorrow));
+    // Two days old is dead weight — nothing reads it again.
+    expect(keys).not.toContain(panchangDayStorageKey(scope, stale));
+    // Yesterday IS kept: useMuhurat's pre-dawn correction reads yesterday's night
+    // choghadiya, so dropping it would make Home solve a day on every cold start.
+    expect(keys).toContain(panchangDayStorageKey(scope, yesterday));
+    expect(keys).toContain(panchangDayStorageKey(scope, today));
+    expect(keys).toContain(panchangDayStorageKey(scope, tomorrow));
   });
 
   test('writes each day once — a second call with nothing new is a no-op', async () => {
     const scope = scopeKeyFor(UJJAIN, SYSTEM);
     const key = dayKeyFromToday(1);
     dayStoreFor(scope).set(key, fakeDay(key));
-    await persistMuhuratDays(UJJAIN, SYSTEM);
+    await persistPanchangDays(UJJAIN, SYSTEM);
 
     const multiSet = spyOnStorage('multiSet');
-    await persistMuhuratDays(UJJAIN, SYSTEM);
+    await persistPanchangDays(UJJAIN, SYSTEM);
     expect(multiSet).not.toHaveBeenCalled();
 
     // …but a newly solved day still gets written.
     const next = dayKeyFromToday(2);
     dayStoreFor(scope).set(next, fakeDay(next));
-    await persistMuhuratDays(UJJAIN, SYSTEM);
+    await persistPanchangDays(UJJAIN, SYSTEM);
     expect(multiSet).toHaveBeenCalledTimes(1);
     const written = multiSet.mock.calls[0][0] as readonly (readonly [string, string])[];
-    expect(written.map(([k]) => k)).toEqual([muhuratDayStorageKey(scope, next)]);
+    expect(written.map(([k]) => k)).toEqual([panchangDayStorageKey(scope, next)]);
   });
 
   test('round-trips through disk: persist → cold start → hydrate gives back the day', async () => {
     const scope = scopeKeyFor(UJJAIN, SYSTEM);
     const key = dayKeyFromToday(1);
     dayStoreFor(scope).set(key, fakeDay(key));
-    await persistMuhuratDays(UJJAIN, SYSTEM);
+    await persistPanchangDays(UJJAIN, SYSTEM);
 
-    __resetMuhuratDayStore();
-    __resetMuhuratDayCache();
-    await hydrateMuhuratDays(UJJAIN, SYSTEM, [key]);
+    __resetPanchangDayStore();
+    __resetPanchangDayCache();
+    await hydratePanchangDays(UJJAIN, SYSTEM, [key]);
 
     expect(dayStoreFor(scope).get(key)).toEqual(fakeDay(key));
   });
@@ -212,33 +229,33 @@ describe('eviction', () => {
     const delhiScope = scopeKeyFor(DELHI, SYSTEM);
     const key = dayKeyFromToday(1);
     dayStoreFor(ujjainScope).set(key, fakeDay(key));
-    await persistMuhuratDays(UJJAIN, SYSTEM);
+    await persistPanchangDays(UJJAIN, SYSTEM);
     dayStoreFor(delhiScope).set(key, fakeDay(key));
-    await persistMuhuratDays(DELHI, SYSTEM);
+    await persistPanchangDays(DELHI, SYSTEM);
 
     // Ujjain is the LRU (Delhi was touched last); one city past the cap evicts
     // exactly it — Delhi must survive, disk data included.
     await fillPastCap(2);
 
     const keys = await AsyncStorage.getAllKeys();
-    expect(keys).not.toContain(muhuratDayStorageKey(ujjainScope, key));
-    expect(keys).toContain(muhuratDayStorageKey(delhiScope, key));
+    expect(keys).not.toContain(panchangDayStorageKey(ujjainScope, key));
+    expect(keys).toContain(panchangDayStorageKey(delhiScope, key));
   });
 
   test('an evicted city re-persists from scratch (its persisted set is cleared)', async () => {
     const scope = scopeKeyFor(UJJAIN, SYSTEM);
     const key = dayKeyFromToday(1);
     dayStoreFor(scope).set(key, fakeDay(key));
-    await persistMuhuratDays(UJJAIN, SYSTEM);
+    await persistPanchangDays(UJJAIN, SYSTEM);
 
     await fillPastCap(1);
-    expect(await AsyncStorage.getAllKeys()).not.toContain(muhuratDayStorageKey(scope, key));
+    expect(await AsyncStorage.getAllKeys()).not.toContain(panchangDayStorageKey(scope, key));
 
     // Coming back to the city must rewrite its days — the in-memory "already on
     // disk" bookkeeping must not outlive the disk data it describes.
     dayStoreFor(scope).set(key, fakeDay(key));
-    await persistMuhuratDays(UJJAIN, SYSTEM);
-    expect(await AsyncStorage.getAllKeys()).toContain(muhuratDayStorageKey(scope, key));
+    await persistPanchangDays(UJJAIN, SYSTEM);
+    expect(await AsyncStorage.getAllKeys()).toContain(panchangDayStorageKey(scope, key));
   });
 });
 
@@ -247,7 +264,7 @@ describe('eviction', () => {
 /** Seed one day into the store and flush it to disk. */
 async function persistOne(scope: string, dateKey: string): Promise<void> {
   dayStoreFor(scope).set(dateKey, fakeDay(dateKey));
-  await persistMuhuratDays(scope === scopeKeyFor(DELHI, SYSTEM) ? DELHI : UJJAIN, SYSTEM);
+  await persistPanchangDays(scope === scopeKeyFor(DELHI, SYSTEM) ? DELHI : UJJAIN, SYSTEM);
 }
 
 /**

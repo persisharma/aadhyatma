@@ -9,7 +9,7 @@ import assert from 'node:assert/strict';
 
 import { computePanchangForDate, UJJAIN_GEO } from '../engine';
 import { computeAstaFlags } from '../eventMuhurat';
-import { serializeDayInputs, reviveDayInputs, type DayInputs } from '../muhuratDaySerde';
+import { serializeDayInputs, reviveDayInputs, type DayInputs } from '../panchangDaySerde';
 
 const opts = { calendarSystem: 'purnimant' as const, location: { ...UJJAIN_GEO, cityId: 'ujjain' } };
 const makeDay = (d: Date): DayInputs => ({

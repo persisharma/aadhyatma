@@ -11,12 +11,11 @@ import { contentByLang, pick } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
-import { computePanchangForDate } from '@/panchang/engine';
+import { cachedDayInputs, dayStoreFor, scopeKeyFor } from '@/panchang/panchangDayStore';
 import { computeMuhuratDay } from '@/panchang/muhurat';
 import {
   DOSHA_LABELS,
   TIER_LABELS,
-  computeAstaFlags,
   evaluateDay,
   getEventRule,
   type DayVerdict,
@@ -93,12 +92,21 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
   useEffect(() => {
     let cancelled = false;
     const id = setTimeout(() => {
+      // Read the SHARED store: arriving here from the results list, both days
+      // were already solved by the finder's sweep, so this is a cache hit rather
+      // than two fresh solves. `cachedDayInputs` also carries the asta flags the
+      // verdict needs, so they are not recomputed either.
       const opts = { calendarSystem, location };
-      const p = computePanchangForDate(date, opts);
-      const next = computePanchangForDate(new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1), opts);
-      const m = computeMuhuratDay(p.sunrise, p.sunset, next.sunrise, date.getDay());
-      const noon = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
-      const v = evaluateDay(rule, date.getTime(), date.getDay(), p, m, computeAstaFlags(noon));
+      const map = dayStoreFor(scopeKeyFor(location, calendarSystem));
+      const { inputs } = cachedDayInputs(map, date, opts);
+      const { inputs: nextInputs } = cachedDayInputs(
+        map,
+        new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
+        opts
+      );
+      const p = inputs.p;
+      const m = computeMuhuratDay(p.sunrise, p.sunset, nextInputs.p.sunrise, date.getDay());
+      const v = evaluateDay(rule, date.getTime(), date.getDay(), p, m, inputs.asta);
       if (!cancelled) setData({ v, p });
     }, 0);
     return () => {

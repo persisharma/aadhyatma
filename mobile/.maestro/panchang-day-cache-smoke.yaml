@@ -1,16 +1,21 @@
-# Persistent panchang day-cache smoke (design.md §60 "Persistence")
+# Persistent panchang day-cache smoke (design.md §60 "Performance"/"Persistence")
 #
-# The finder's per-day panchang solve is the expensive part of the feature
-# (~90 days for an occasion, ~260 when the window comes up empty). It is now
+# The per-day panchang solve is the expensive unit of work behind EVERY panchang
+# surface — the finder's ~90–260 day sweep, the Abujh calendar, Home's Today
+# strip, and the Panchang tab's own day. All of them now read one shared store,
 # persisted per (location, calendar system) and hydrated on entry, so the ONLY
 # thing that should force a re-solve is changing location or calendar system.
 #
 # This flow proves the user-visible half of that: warm the cache once, then
 # COLD-START the app (a real process restart — `clearState` deliberately absent,
-# so AsyncStorage survives) and assert both surfaces still render results, with a
-# much tighter budget than the first-run solve. The first pass allows 60 s (the
-# real astronomy sweep); the post-restart pass allows 20 s, which a re-solve of
+# so AsyncStorage survives) and assert every surface still renders, with a much
+# tighter budget than the first-run solve. The first pass allows 60 s (the real
+# astronomy sweep); the post-restart pass allows 20 s, which a re-solve of
 # 90–260 days does not fit on a simulator but a hydrate does.
+#
+# Pass 2 also asserts the CROSS-SURFACE half of the win: Home's Today strip and
+# the Panchang tab paint from days the finder's sweep solved, without their own
+# astronomy.
 #
 # Prerequisite: install the native debug app on the target simulator with
 # `npx expo run:ios --device <UDID> --port 8084` (isolated-simulator recipe in
@@ -115,6 +120,22 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Good Habits\\..*Tap to open\\."
     timeout: 60000
+
+# Home's Today strip resolves off the hydrated store (its solve used to run on
+# every cold start). The muhurat chips only render once the day is solved.
+- extendedWaitUntil:
+    visible: "Sunrise|Rahu Kaal|Choghadiya"
+    timeout: 20000
+
+# The Panchang tab's own day, same store.
+- tapOn: "Panchang, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Sunrise"
+    timeout: 20000
+- assertVisible: "Brahma Muhurta"
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
 
 # Finder results from the hydrated cache — tight budget, no re-solve.
 - scrollUntilVisible:

@@ -12,7 +12,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { UJJAIN_GEO } from '../engine';
-import { dateKeyFor, dayStoreFor, scopeKeyFor } from '../muhuratDayStore';
+import { dateKeyFor, dayStoreFor, scopeKeyFor } from '../panchangDayStore';
 import {
   scanAbujhDays,
   dayAt,
