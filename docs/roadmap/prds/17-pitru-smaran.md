@@ -30,16 +30,16 @@ Validated in the prototype; five surfaces:
 ### 3.1 Entry — a "पितृ स्मरण" row in the More hub
 More is the app's private/personal area (Wishlist · Sadhak Profile · Reminders · Widgets); this row joins it with the standard NEW badge for one release. Tap → `PitruSmaranList` (new routes in `MoreStackParamList`, same pattern as Reminders).
 
-### 3.2 List — one card per person
-Relation (चुनी हुई सूची: पिता, माता, दादा, दादी, नाना, नानी, अन्य…), optional name, the tithi in words ("माघ कृष्ण अष्टमी"), and the **next observance date** with a countdown ("इस वर्ष: 3 फ़रवरी 2027 · 176 दिन"). During Bhadrapada, a Pitru Paksha banner surfaces above the list. Empty state explains the feature in two reverent lines.
+### 3.2 List — one row per person, on the ObservanceList row pattern
+Reuses the §33 ObservanceList row (leading glyph · name + caption · right-aligned next date + relative label, sorted soonest-first): a `॥` lead instead of the follow star, relation as the name (चुनी हुई सूची: पिता, माता, दादा, दादी, नाना, नानी, अन्य…; optional personal name), the tithi in words as the caption ("माघ कृष्ण अष्टमी"), and the solved next date + `Nd` label at right. During Bhadrapada, a Pitru Paksha banner surfaces above the list. Empty state explains the feature in two reverent lines.
 
 ### 3.3 Add/edit — two ways in, one confirmation
 - **तिथि ज्ञात है** — pick month, paksha, tithi from the engine's own enumerations (the names users already see on the Panchang tab).
 - **केवल तारीख़ ज्ञात है** — enter the Gregorian death date; the app computes the tithi via `computePanchangForDate` (sunrise-anga convention, same as the engine's festival matching) and **shows it back in words for confirmation** — the user always approves the tithi, never trusts a silent conversion.
 - Unknown tithi entirely → the entry can be saved as **सर्वपितृ अमावस्या** (the traditional fallback day for forgotten tithis).
 
-### 3.4 Person detail — the annual answer
-This year's date and next year's, the Pitru Paksha shraddha day (the person's tithi mapped into Bhadrapada Krishna paksha — the traditional rule, independent of death month), an opt-in **स्मरण reminder** toggle (day-before + day-of), and linked observance content: **गीता पाठ** deep links to Gita adhyaya 15 / adhyaya 2 (both already shipped — `linkSectionId` pattern), plus the श्राद्ध विधि cross-link if PRD-19 ships its shraddha vidhi. Delete is one tap + confirm, and wipes cleanly.
+### 3.4 Person detail — the ObservanceDetail hero pattern
+Opens with the §33 ObservanceDetail hero (name 24 pt centred, caption line, the saffron-tint **"अगला · date · in N days"** pill), followed by next year's date and the Pitru Paksha shraddha day (the person's tithi mapped into Bhadrapada Krishna paksha — the traditional rule, independent of death month), an opt-in **स्मरण reminder** toggle (day-before + day-of), and linked observance content: **गीता पाठ** deep links to Gita adhyaya 15 / adhyaya 2 (both already shipped — `linkSectionId` pattern), plus the श्राद्ध विधि cross-link if PRD-19 ships its shraddha vidhi. Delete is one tap + confirm, and wipes cleanly. The Pitru Paksha overview screen lists the fortnight as §33.6 "Upcoming" rows (marker dot · short date · name), family-matched days on the saffron dot.
 
 ### 3.5 Panchang day integration — the private chip
 On a saved observance date, the Panchang day panel shows a small **॥ स्मरण** chip alongside the day's observance pills — visible only on this device, rendered in the muted gold tone, never in the festive style. Tapping opens the person detail.
@@ -88,7 +88,7 @@ This is the feature *most* protected by the app's stance: the data is unshareabl
 
 - **Colour** — muted registers only: `parchment*`, `ink*`, `gold`, `divider`; saffron reserved for interactive affordances (buttons, chevrons), never for celebratory accents. No new tokens.
 - **Type** — Noto Serif Devanagari primary; Cormorant Garamond for Latin secondary; ≥10 pt floor everywhere (§3.0).
-- **Components** — `ReaderHeader variant="index"`, `TextField variant="form"`, the shared month/paksha/tithi pickers from the vrat/panchang surfaces; no hand-rolled inputs (RULEBOOK §3).
+- **Components** — `ReaderHeader variant="index"`, `TextField variant="form"`, the shared month/paksha/tithi pickers from the vrat/panchang surfaces; the **§33 ObservanceList row** for the person list, the **§33 ObservanceDetail hero** for the person detail, and the **§33.6 Upcoming row** for the Pitru Paksha fortnight; no hand-rolled inputs or cards (RULEBOOK §3).
 - **Iconography** — `॥` and दीया glyph territory; **no emoji** (§5).
 - **A11y** — chips carry text labels, not colour-only meaning; delete confirm is a full sheet, not a swipe-only gesture (§12).
 - **Bilingual, Hindi-led** — Devanagari primary with the standard language system (hi/en/gu/kn) (§1).

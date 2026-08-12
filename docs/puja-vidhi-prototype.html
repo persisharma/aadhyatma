@@ -57,10 +57,22 @@
   .dhead{text-align:center;margin:4px 0 12px}
   .dhead .dt{font-family:var(--deva);font-size:17px;color:var(--ink)}
   .dhead .ds{font-family:var(--deva);font-size:13px;color:var(--ink-soft);margin-top:2px}
-  .fcard{border:1.4px solid var(--saffron);background:linear-gradient(120deg,var(--parchment-hi),var(--parchment-soft));
-    border-radius:16px;padding:14px;margin-bottom:12px}
-  .fcard .ft{font-family:var(--deva);font-size:17px;color:var(--ink)}
-  .fcard .fs{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:2px}
+
+  /* ObservanceCard (design.md §33.5) — parchment-soft, radii.md, elevation.card,
+     category pill + deity + name + description + action pills */
+  .obscard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;
+    padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(47,30,16,.08)}
+  .catpill{display:inline-block;font-family:var(--deva);font-size:10.5px;font-weight:600;
+    color:var(--saffron-deep);background:var(--saffron-tint);border-radius:10px;padding:3px 10px}
+  .obscard .odeity{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:7px}
+  .obscard .oname{font-family:var(--deva);font-size:17.5px;color:var(--ink);margin-top:2px}
+  .obscard .odesc{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);margin-top:5px;line-height:1.7}
+  .apills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .apill{display:inline-flex;align-items:center;font-family:var(--deva);font-size:12.5px;border-radius:20px;
+    padding:8px 14px;min-height:36px}
+  .apill.gold{color:var(--saffron-deep);background:var(--gold-tint);border:1px solid transparent}
+  .apill.outline{color:var(--saffron);background:transparent;border:1px solid var(--gold-tint)}
+  .apill.filled{color:#fff8ec;background:var(--saffron);border:1px solid transparent}
   .actionrow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
     border-radius:14px;padding:13px 14px;margin-bottom:10px;min-height:48px}
   .actionrow .ai{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
@@ -77,7 +89,8 @@
   .modeseg .seg{flex:1;text-align:center;padding:9px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--ink-muted);min-height:38px}
   .modeseg .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:0 1px 4px rgba(47,30,16,.10)}
   .srow{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid var(--divider);min-height:44px}
-  .srow .box{width:24px;height:24px;border:1.5px solid var(--gold);border-radius:7px;background:var(--parchment-hi);flex:none;
+  /* routine-item check circle (design.md §31 Today's Practice), not a square box */
+  .srow .box{width:26px;height:26px;border:2px solid var(--saffron);border-radius:50%;background:var(--parchment-hi);flex:none;
     display:flex;align-items:center;justify-content:center;color:#fff8ec;font-size:13px}
   .srow .box.on{background:var(--saffron);border-color:var(--saffron)}
   .srow .st{flex:1;font-family:var(--deva);font-size:14.5px;color:var(--ink)}
@@ -124,13 +137,19 @@
   .donet{font-family:var(--deva);font-size:20px;color:var(--ink);text-align:center}
   .dones{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted);text-align:center;margin-top:4px;line-height:1.7}
 
-  /* catalog */
-  .vcard{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:14px;margin-bottom:12px}
-  .vcard .vt{font-family:var(--deva);font-size:16.5px;color:var(--ink)}
-  .vcard .vs{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:3px;line-height:1.5}
-  .vcard .vmeta{display:flex;gap:8px;margin-top:9px;flex-wrap:wrap}
-  .vchip{font-size:10.5px;font-weight:600;color:var(--saffron-deep);background:var(--parchment-hi);
-    border:1px solid var(--gold-tint);padding:3px 9px;border-radius:20px;font-family:var(--sans)}
+  /* catalog — LibraryCard active variant (design.md §8):
+     gradient #FFF5E0→#F5DEAC, border rgba(184,98,27,.4), elevation.raised,
+     letter thumb #F8D291→#E0A255, hi name / en italic / sub meta, saffron › */
+  .libcard{display:flex;align-items:center;gap:12px;border:1px solid rgba(184,98,27,.4);
+    background:linear-gradient(120deg,#FFF5E0,#F5DEAC);border-radius:16px;padding:12px 14px;margin-bottom:12px;
+    box-shadow:0 4px 12px rgba(47,30,16,.12)}
+  .libcard .thumb{width:44px;height:44px;border-radius:12px;background:linear-gradient(150deg,#F8D291,#E0A255);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:22px;color:#fff;flex:none}
+  .libcard .lc{flex:1;min-width:0}
+  .libcard .lname{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .libcard .len{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:1px}
+  .libcard .lsub{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);margin-top:3px}
+  .libcard .chev{color:var(--saffron);font-size:18px;flex:none}
 
   .tabbar{position:sticky;bottom:0;height:52px;background:var(--parchment-soft);border-top:1px solid var(--divider);display:flex}
   .tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;color:var(--ink-muted)}
@@ -141,7 +160,7 @@
 <body>
   <h1>पूजा विधि — Guided Step-by-Step Puja Flows</h1>
   <div class="sub">PRD-19 · Interactive UI prototype. Static mockups in the app's parchment system — not the live build.</div>
-  <div class="legend">Entered from <b>the day it's needed</b> — the festival day panel on the Panchang tab (a "पूजा विधि" row beside the existing katha row) — not from a new Home category. Two modes: <b>तैयारी</b> (samagri checklist, day before) and <b>पूजा</b> (full-screen conduct mode, one step per page, keep-awake). Mantras are transcribed from the declared Gita Press convention with IAST + read-aloud (#230 TTS); shipped texts (aarti, katha) are handed off by reference, never re-typed.</div>
+  <div class="legend">Entered from <b>the day it's needed</b> — a पूजा विधि action pill on the shipped ObservanceCard (design.md §33.5), beside its existing katha/read pills — not from a new Home category; the catalog lists on the §8 LibraryCard. Two modes: <b>तैयारी</b> (samagri checklist, day before) and <b>पूजा</b> (full-screen conduct mode, one step per page, keep-awake). Mantras are transcribed from the declared Gita Press convention with IAST + read-aloud (#230 TTS); shipped texts (aarti, katha) are handed off by reference, never re-typed.</div>
 
   <!-- ============ 1 · ENTRY + PREP ============ -->
   <div class="phaselabel">1 · Entry &amp; तैयारी — the day before</div>
@@ -158,29 +177,21 @@
           <div class="ds">भाद्रपद शुक्ल चतुर्थी</div>
         </div>
 
-        <div class="fcard">
-          <div class="ft">★ गणेश चतुर्थी</div>
-          <div class="fs">Ganesh Chaturthi · भगवान गणेश</div>
+        <div style="font-family:var(--deva);font-size:14px;color:var(--ink);margin:2px 2px 8px">व्रत और पर्व</div>
+        <div class="obscard">
+          <span class="catpill">पर्व</span>
+          <div class="odeity">भगवान गणेश · Lord Ganesha</div>
+          <div class="oname">गणेश चतुर्थी</div>
+          <div class="odesc">विघ्नहर्ता गणेश जी की स्थापना का पर्व — घर-घर बप्पा विराजते हैं।</div>
+          <div class="apills" style="position:relative">
+            <div class="dot" style="right:-8px;top:-8px">1</div>
+            <span class="apill filled">॥ पूजा विधि <span class="tag" style="margin-left:6px;background:rgba(255,248,236,.25);color:#fff8ec">NEW</span></span>
+            <span class="apill gold">कथा पढ़ें · Read Katha</span>
+            <span class="apill outline">पढ़ें: गणेश आरती</span>
+          </div>
         </div>
 
-        <div class="actionrow">
-          <div class="ai">क</div>
-          <div class="at"><div class="att">व्रत कथा</div><div class="ats">Ganesh Chaturthi vrat katha</div></div>
-          <div class="chev">›</div>
-        </div>
-        <div class="actionrow" style="position:relative;border:1.4px solid var(--saffron)">
-          <div class="dot" style="right:-8px;top:-8px">1</div>
-          <div class="ai">॥</div>
-          <div class="at"><div class="att">पूजा विधि <span class="tag">NEW</span></div><div class="ats">स्थापना व षोडशोपचार पूजन — step by step</div></div>
-          <div class="chev">›</div>
-        </div>
-        <div class="actionrow">
-          <div class="ai">आ</div>
-          <div class="at"><div class="att">गणेश आरती</div><div class="ats">जय गणेश देवा · with audio</div></div>
-          <div class="chev">›</div>
-        </div>
-
-        <div class="note">विधि-पंक्ति केवल उन्हीं पर्वों पर दिखती है जिनकी<br/>विधि प्रकाशित है — vidhiId on the festival row</div>
+        <div class="note">विधि-पिल केवल उन्हीं पर्वों पर दिखती है जिनकी विधि<br/>प्रकाशित है — vidhiId on the festival row</div>
       </div>
       <div class="tabbar">
         <div class="tab"><span class="ic">ॐ</span>Home</div>
@@ -192,7 +203,7 @@
       </div>
     </div>
     <div class="cap"><b>Festival day panel — the primary door.</b><br/>
-      <span class="n">1</span><b>"पूजा विधि" action row</b> appears between the existing katha and aarti rows on festivals that carry a <i>vidhiId</i> — the identical hook mechanism as <i>kathaId</i> on the festival row. <b>Tap → the vidhi overview</b> (next phone). The same vidhi is also linked from the vrat-catalog detail and indexed in search ("सत्यनारायण" finds the puja, not just the katha).</div>
+      <span class="n">1</span><b>A third action pill on the shipped ObservanceCard</b> (design.md §33.5: category pill · deity · name · description · action pills). पूजा विधि joins the existing <i>कथा पढ़ें</i> (gold-tint) and <i>पढ़ें: &lt;section&gt;</i> (outline) pills as a filled-saffron pill, driven by a <i>vidhiId</i> on the festival row — the identical hook mechanism as <i>kathaId</i>. <b>Tap → the vidhi overview.</b> The same link fills the "How to observe" slot design.md §33 explicitly reserves on ObservanceDetail "until real vidhi content exists" — this PRD is that content. Also indexed in search.</div>
     </div>
 
     <div class="col">
@@ -328,48 +339,54 @@
       <div class="screen"><div class="pad">
         <div class="topbar"><div class="back">‹</div><div class="toptitle">पूजा विधियाँ</div></div>
 
-        <div class="vcard" style="position:relative"><div class="dot" style="right:-8px;top:-8px">9</div>
-          <div class="vt">सत्यनारायण पूजा</div>
-          <div class="vs">Every purnima — the recurring householder puja</div>
-          <div class="vmeta"><span class="vchip">पूर्णिमा</span><span class="vchip">~60 min</span><span class="vchip">कथा सहित</span></div>
+        <div class="libcard" style="position:relative"><div class="dot" style="right:-8px;top:-8px">9</div>
+          <div class="thumb">स</div>
+          <div class="lc"><div class="lname">सत्यनारायण पूजा</div><div class="len">Satyanarayan Puja</div>
+            <div class="lsub">16 चरण · ~60 min · पूर्णिमा · कथा सहित</div></div>
+          <div class="chev">›</div>
         </div>
-        <div class="vcard">
-          <div class="vt">दीपावली लक्ष्मी-गणेश पूजन</div>
-          <div class="vs">Kartik Amavasya evening</div>
-          <div class="vmeta"><span class="vchip">दीपावली</span><span class="vchip">~45 min</span></div>
+        <div class="libcard">
+          <div class="thumb">दी</div>
+          <div class="lc"><div class="lname">दीपावली लक्ष्मी-गणेश पूजन</div><div class="len">Diwali Lakshmi-Ganesh Pujan</div>
+            <div class="lsub">18 चरण · ~45 min · कार्तिक अमावस्या</div></div>
+          <div class="chev">›</div>
         </div>
-        <div class="vcard">
-          <div class="vt">गणेश चतुर्थी स्थापना</div>
-          <div class="vs">Sthapana &amp; shodashopachara pujan</div>
-          <div class="vmeta"><span class="vchip">भाद्रपद शु. चतुर्थी</span><span class="vchip">~45 min</span></div>
+        <div class="libcard">
+          <div class="thumb">ग</div>
+          <div class="lc"><div class="lname">गणेश चतुर्थी स्थापना</div><div class="len">Ganesh Chaturthi Sthapana</div>
+            <div class="lsub">16 चरण · ~45 min · भाद्रपद शु. चतुर्थी</div></div>
+          <div class="chev">›</div>
         </div>
-        <div class="vcard">
-          <div class="vt">नवरात्रि घटस्थापना</div>
-          <div class="vs">Kalash sthapana on Pratipada</div>
-          <div class="vmeta"><span class="vchip">आश्विन शु. प्रतिपदा</span><span class="vchip">~40 min</span></div>
+        <div class="libcard">
+          <div class="thumb">न</div>
+          <div class="lc"><div class="lname">नवरात्रि घटस्थापना</div><div class="len">Navratri Ghatasthapana</div>
+            <div class="lsub">14 चरण · ~40 min · आश्विन शु. प्रतिपदा</div></div>
+          <div class="chev">›</div>
         </div>
-        <div class="vcard">
-          <div class="vt">करवा चौथ पूजन</div>
-          <div class="vs">Evening puja &amp; chandra-arghya</div>
-          <div class="vmeta"><span class="vchip">कार्तिक कृ. चतुर्थी</span><span class="vchip">~30 min</span></div>
+        <div class="libcard">
+          <div class="thumb">क</div>
+          <div class="lc"><div class="lname">करवा चौथ पूजन</div><div class="len">Karwa Chauth Pujan</div>
+            <div class="lsub">12 चरण · ~30 min · कार्तिक कृ. चतुर्थी</div></div>
+          <div class="chev">›</div>
         </div>
-        <div class="vcard">
-          <div class="vt">महाशिवरात्रि पूजन</div>
-          <div class="vs">Ratri-prahar abhisheka pujan</div>
-          <div class="vmeta"><span class="vchip">फाल्गुन कृ. चतुर्दशी</span><span class="vchip">~40 min</span></div>
+        <div class="libcard">
+          <div class="thumb">शि</div>
+          <div class="lc"><div class="lname">महाशिवरात्रि पूजन</div><div class="len">Mahashivaratri Pujan</div>
+            <div class="lsub">15 चरण · ~40 min · फाल्गुन कृ. चतुर्दशी</div></div>
+          <div class="chev">›</div>
         </div>
         <div class="note">प्रत्येक विधि स्रोत-प्रमाणित है — गीता प्रेस परम्परा,<br/>दो स्वतंत्र सन्दर्भों से मिलान (RULEBOOK §11)</div>
       </div></div>
     </div>
-    <div class="cap"><b>The vidhi catalog — six in v1.</b><br/>
-      <span class="n">9</span><b>Each card</b> shows the festival linkage (the engine's own tithi vocabulary) and a duration hint. Routed in the Panchang stack; reached from day-panel rows, vrat-catalog details, search, and one launch-release DISCOVER card. <b>Deliberately not a Home-grid category</b> — the 5×3 launcher is closed by design; a `vidhi` category is deferred until the family earns it (RULEBOOK §1).</div>
+    <div class="cap"><b>The vidhi catalog — six in v1, on the shipped LibraryCard.</b><br/>
+      <span class="n">9</span><b>Each row is the §8 LibraryCard active variant, not a new card</b>: the `#FFF5E0→#F5DEAC` gradient with the `rgba(184,98,27,.4)` border and `elevation.raised`, the first-letter thumb (`#F8D291→#E0A255`, white Devanagari 22), Hindi name over the Latin italic, a sub-meta line (चरण count · duration · tithi — the "43 verses · Hindi with meaning" slot), and the saffron ›. Routed in the Panchang stack; reached from the ObservanceCard pill, vrat-catalog details, search, and one DISCOVER card. <b>Deliberately not a Home-grid category</b> — the 5×3 launcher is closed by design (RULEBOOK §1).</div>
     </div>
   </div>
 
   <div class="phaselabel" style="margin-top:34px">Interaction inventory</div>
   <div class="legend" style="max-width:920px">
-    ① Festival day panel → पूजा विधि row (vidhiId hook, beside katha/aarti rows) → vidhi overview.
-    ② तैयारी/पूजा segments — checklist state persists per festival date; day-before vrat reminder resurfaces it.
+    ① Festival day panel → पूजा विधि action pill on the ObservanceCard (§33.5; vidhiId hook, beside the कथा पढ़ें / पढ़ें pills) → vidhi overview; the same link fills ObservanceDetail's reserved vidhi slot.
+    ② तैयारी/पूजा segments — checklist uses the §31 routine check circles; state persists per festival date; day-before vrat reminder resurfaces it.
     ③ सूची साझा करें → samagri list as plain text (the only share surface).
     ④ Mantra box: transcribed Devanagari + IAST + read-aloud via shipped TTS; reading-size respected.
     ⑤ Keep-awake for the whole conduct session, released on exit.

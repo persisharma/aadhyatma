@@ -63,13 +63,17 @@
   .morerow .chev{color:var(--saffron);font-size:17px}
   .tag{font-size:10px;font-weight:600;color:var(--saffron-deep);background:var(--saffron-tint);padding:2px 7px;border-radius:8px;font-family:var(--sans)}
 
-  /* person cards — muted registers, gold not saffron */
-  .pcard{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:14px;margin-bottom:12px}
-  .pcard .prel{font-family:var(--deva);font-size:16.5px;color:var(--ink)}
-  .pcard .ptithi{font-family:var(--deva);font-size:13px;color:var(--ink-soft);margin-top:3px}
-  .pcard .pnext{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--divider);margin-top:11px;padding-top:10px}
-  .pcard .pdate{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
-  .pcard .pdays{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted)}
+  /* person list — ObservanceList row pattern (design.md §33):
+     leading glyph · name + caption · right-aligned next date + relative label; soonest-first */
+  .obsrow{display:flex;align-items:center;gap:12px;padding:13px 2px;border-bottom:1px solid var(--divider);min-height:56px}
+  .obsrow .lead{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:14px;color:var(--ink-muted);flex:none}
+  .obsrow .oi{flex:1;min-width:0}
+  .obsrow .oname{font-family:var(--deva);font-size:15.5px;color:var(--ink)}
+  .obsrow .ocap{font-family:var(--deva);font-size:12px;color:var(--ink-muted);margin-top:1px}
+  .obsrow .oright{text-align:right;flex:none}
+  .obsrow .odate{font-family:var(--deva);font-size:12.5px;color:var(--ink)}
+  .obsrow .orel{font-family:var(--sans);font-size:10.5px;font-weight:600;color:var(--ink-muted);margin-top:2px}
   .ppbanner{border:1px solid var(--gold);background:linear-gradient(120deg,var(--parchment-hi),var(--parchment-soft));
     border-radius:16px;padding:13px 14px;margin-bottom:14px}
   .ppbanner .bt{font-family:var(--deva);font-size:14.5px;color:var(--saffron-deep)}
@@ -96,11 +100,14 @@
     border-radius:12px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:6px;min-height:48px}
   .btn.ghost{background:transparent;border:1px solid var(--gold-tint);color:var(--saffron)}
 
-  /* detail */
+  /* detail — ObservanceDetail hero pattern (design.md §33):
+     name 24pt centred, other-language caption, saffron-tint "अगला · date · in N days" pill */
   .dhead{text-align:center;margin:4px 0 14px}
   .dhead .orn{font-family:var(--deva);color:var(--gold);font-size:14px;letter-spacing:6px}
-  .dhead .dt{font-family:var(--deva);font-size:21px;color:var(--ink);margin-top:4px}
+  .dhead .dt{font-family:var(--deva);font-size:24px;color:var(--ink);margin-top:4px}
   .dhead .ds{font-family:var(--deva);font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .nextpill{display:inline-block;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);
+    background:var(--saffron-tint);border-radius:20px;padding:7px 16px;margin-top:10px}
   .drow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
     border-radius:14px;padding:13px 14px;margin-bottom:10px;min-height:44px}
   .drow .di{flex:1}
@@ -113,14 +120,15 @@
   .toggle.on>i{left:21px}
   .danger{font-family:var(--deva);font-size:13px;color:var(--ink-muted);text-align:center;margin-top:14px;text-decoration:underline;text-underline-offset:3px}
 
-  /* pitru paksha overview */
-  .fortrow{display:flex;gap:11px;align-items:flex-start;padding:11px 2px;border-bottom:1px solid var(--divider)}
-  .fortrow .fd{width:56px;flex:none;text-align:center}
-  .fortrow .fdn{font-family:var(--deva);font-size:14px;color:var(--ink)}
-  .fortrow .fdd{font-size:10.5px;color:var(--ink-muted);font-family:var(--sans)}
+  /* pitru paksha overview — "आगामी · Upcoming" row pattern (design.md §33.6):
+     coloured marker dot · short date · name; family rows use the saffron star-tier dot */
+  .fortrow{display:flex;gap:11px;align-items:center;padding:11px 2px;border-bottom:1px solid var(--divider);min-height:44px}
+  .fortrow .mark{width:8px;height:8px;border-radius:50%;background:var(--gold);flex:none}
+  .fortrow .mark.fam{background:var(--saffron)}
+  .fortrow .fd{width:52px;flex:none;font-size:10.5px;color:var(--ink-muted);font-family:var(--sans)}
   .fortrow .ft{flex:1}
-  .fortrow .ftt{font-family:var(--deva);font-size:13.5px;color:var(--ink-soft)}
-  .fortrow .who{font-family:var(--deva);font-size:14px;color:var(--saffron-deep);margin-top:1px}
+  .fortrow .ftt{font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .fortrow .who{font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);margin-top:1px}
 
   /* panchang day panel */
   .anga{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
@@ -189,20 +197,20 @@
           <div class="bs">7 सितम्बर से — इस पखवाड़े में प्रत्येक की श्राद्ध-तिथि देखें ›</div>
         </div>
 
-        <div class="pcard" style="position:relative"><div class="dot" style="right:-8px;top:10px">3</div>
-          <div class="prel">पिताजी</div>
-          <div class="ptithi">श्राद्ध तिथि: माघ कृष्ण अष्टमी</div>
-          <div class="pnext"><div class="pdate">इस वर्ष: 31 जनवरी 2027</div><div class="pdays">173 din</div></div>
+        <div class="obsrow" style="position:relative"><div class="dot" style="right:-8px;top:12px">3</div>
+          <div class="lead">॥</div>
+          <div class="oi"><div class="oname">नानाजी</div><div class="ocap">तिथि अज्ञात — सर्वपितृ अमावस्या</div></div>
+          <div class="oright"><div class="odate">21 सित 2026</div><div class="orel">41d</div></div>
         </div>
-        <div class="pcard">
-          <div class="prel">दादीजी</div>
-          <div class="ptithi">श्राद्ध तिथि: आषाढ़ शुक्ल तृतीया</div>
-          <div class="pnext"><div class="pdate">इस वर्ष: 26 जून 2027</div><div class="pdays">319 din</div></div>
+        <div class="obsrow">
+          <div class="lead">॥</div>
+          <div class="oi"><div class="oname">पिताजी</div><div class="ocap">माघ कृष्ण अष्टमी</div></div>
+          <div class="oright"><div class="odate">31 जन 2027</div><div class="orel">173d</div></div>
         </div>
-        <div class="pcard">
-          <div class="prel">नानाजी</div>
-          <div class="ptithi">तिथि अज्ञात — सर्वपितृ अमावस्या</div>
-          <div class="pnext"><div class="pdate">इस वर्ष: 21 सितम्बर 2026</div><div class="pdays">41 din</div></div>
+        <div class="obsrow">
+          <div class="lead">॥</div>
+          <div class="oi"><div class="oname">दादीजी</div><div class="ocap">आषाढ़ शुक्ल तृतीया</div></div>
+          <div class="oright"><div class="odate">26 जून 2027</div><div class="orel">319d</div></div>
         </div>
 
         <button class="addbtn" style="position:relative"><span class="dot" style="left:-8px;top:10px">4</span>+ स्मरण जोड़ें · Add</button>
@@ -211,7 +219,7 @@
     </div>
     <div class="cap"><b>The remembrance list.</b><br/>
       <span class="n">2</span><b>Pitru Paksha banner</b> appears only in the weeks before Bhadrapada Krishna paksha → opens the fortnight overview (last phone). Muted gold border — never the festive saffron style.<br/>
-      <span class="n">3</span><b>One card per person</b> — relation (name optional), the tithi in words, and this year's solved date with a plain-days count. Ordered by next date. <b>Tap → person detail.</b><br/>
+      <span class="n">3</span><b>One row per person, on the shipped ObservanceList row pattern</b> (§33: leading glyph · name + caption · right-aligned next date + relative label, sorted soonest-first) — a ॥ lead instead of the follow star, the tithi as the caption, this year's solved date at right. <b>Tap → person detail.</b><br/>
       <span class="n">4</span><b>+ स्मरण जोड़ें</b> → the add flow. Empty state (first run) shows two reverent lines explaining tithi-based remembrance and this same button.</div>
     </div>
 
@@ -261,15 +269,13 @@
       <div class="screen"><div class="pad">
         <div class="topbar"><div class="back">‹</div><div class="toptitle">पितृ स्मरण</div><div class="topaction">सम्पादन</div></div>
 
-        <div class="dhead">
+        <div class="dhead" style="position:relative">
           <div class="orn">॥ ॐ ॥</div>
           <div class="dt">पिताजी</div>
           <div class="ds">श्राद्ध तिथि: माघ कृष्ण अष्टमी</div>
+          <div><span class="nextpill">अगला · 31 जनवरी 2027 · in 173 days</span><span class="dot" style="right:14px;top:96px">7</span></div>
         </div>
 
-        <div class="drow" style="position:relative"><div class="dot" style="right:-8px;top:10px">7</div>
-          <div class="di"><div class="dl">इस वर्ष</div><div class="dv">रविवार, 31 जनवरी 2027</div></div>
-        </div>
         <div class="drow">
           <div class="di"><div class="dl">अगले वर्ष</div><div class="dv">शुक्रवार, 20 जनवरी 2028</div></div>
         </div>
@@ -292,8 +298,8 @@
         <div class="danger">प्रविष्टि हटाएँ · Delete</div>
       </div></div>
     </div>
-    <div class="cap"><b>Person detail — the annual answer.</b><br/>
-      <span class="n">7</span><b>This year + next year</b>, solved by the festival engine's rule machinery (kshaya/vriddhi handled; in an adhik-maas year the nija month is used — pinned by fixture tests). The third row maps the tithi into this year's Pitru Paksha fortnight.<br/>
+    <div class="cap"><b>Person detail — the ObservanceDetail hero pattern.</b><br/>
+      <span class="n">7</span><b>The header reuses the §33 ObservanceDetail hero</b>: name at 24 pt centred, caption line, and the saffron-tint <i>"अगला · date · in N days"</i> pill — the exact affordance vrat details use. Below, next year's date and the Pitru Paksha mapping, all solved by the festival engine's rule machinery (kshaya/vriddhi handled; adhik-maas years use the nija month — pinned by fixture tests).<br/>
       <span class="n">8</span><b>Reminders are opt-in per person</b> (default OFF — the deliberate opposite of festive reminders): day-before + day-of, fixed reverent copy, scheduled through the existing planner/budget machinery.<br/>
       <span class="n">9</span><b>पाठ rows deep-link shipped content</b> — Gita adhyaya 15 and 2 (traditional shraddha paath), via the same <i>linkSectionId</i> mechanism festivals use. When PRD-19 ships the shraddha vidhi, it cross-links here. Delete = full confirm sheet, wipes the entry and its scheduled reminders.</div>
     </div>
@@ -308,22 +314,22 @@
           <div class="ds">भाद्रपद कृष्ण पक्ष · आपके परिवार की श्राद्ध-तिथियाँ</div>
         </div>
 
-        <div class="fortrow"><div class="fd"><div class="fdn">प्रतिपदा</div><div class="fdd">7 सित</div></div><div class="ft"><div class="ftt">प्रतिपदा श्राद्ध</div></div></div>
+        <div class="fortrow"><div class="mark"></div><div class="fd">7 सित</div><div class="ft"><div class="ftt">प्रतिपदा श्राद्ध</div></div></div>
         <div class="fortrow" style="position:relative"><div class="dot" style="right:-8px;top:10px">10</div>
-          <div class="fd"><div class="fdn">अष्टमी</div><div class="fdd">14 सित</div></div>
+          <div class="mark fam"></div><div class="fd">14 सित</div>
           <div class="ft"><div class="ftt">अष्टमी श्राद्ध</div><div class="who">॥ पिताजी</div></div>
         </div>
-        <div class="fortrow"><div class="fd"><div class="fdn">दशमी</div><div class="fdd">16 सित</div></div><div class="ft"><div class="ftt">दशमी श्राद्ध</div></div></div>
-        <div class="fortrow">
-          <div class="fd"><div class="fdn">अमावस्या</div><div class="fdd">21 सित</div></div>
+        <div class="fortrow"><div class="mark"></div><div class="fd">16 सित</div><div class="ft"><div class="ftt">दशमी श्राद्ध</div></div></div>
+        <div class="fortrow" style="position:relative">
+          <div class="mark fam"></div><div class="fd">21 सित</div>
           <div class="ft"><div class="ftt">सर्वपितृ अमावस्या — अज्ञात तिथियों हेतु</div><div class="who">॥ नानाजी</div></div>
         </div>
 
         <div class="note">तृतीया श्राद्ध (दादीजी) इस सूची में तब दिखेगा जब वह तिथि<br/>इस पखवाड़े में पड़े — मिलान पंचांग इंजन से।</div>
       </div></div>
     </div>
-    <div class="cap"><b>Pitru Paksha overview.</b><br/>
-      <span class="n">10</span><b>Each saved person is mapped onto their shraddha day</b> in the fortnight (the tithi rule, independent of death month), and unknown-tithi entries collect on Sarvapitri Amavasya. Rows without a family match render quietly — this is a reference of the fortnight, not a feed. Reached from the list banner or the Panchang tab during the paksha.</div>
+    <div class="cap"><b>Pitru Paksha overview — the §33 "आगामी · Upcoming" row pattern.</b><br/>
+      <span class="n">10</span><b>Marker dot · short date · name, exactly like the day panel's Upcoming rows</b> — family-matched days carry the saffron dot (the star-tier colour) and the person's name beneath; unmatched days keep the default gold dot and render quietly. Unknown-tithi entries collect on Sarvapitri Amavasya. Reached from the list banner or the Panchang tab during the paksha.</div>
     </div>
 
     <div class="col">
@@ -368,7 +374,7 @@
   <div class="legend" style="max-width:920px">
     ① More → पितृ स्मरण row → remembrance list.
     ② Pitru Paksha banner (seasonal) → fortnight overview.
-    ③ Person card → detail.
+    ③ Person row (ObservanceList row pattern §33, soonest-first) → detail (ObservanceDetail hero pattern).
     ④ + स्मरण जोड़ें → add flow (empty state carries the same action).
     ⑤ Mode toggle: tithi-known (month/paksha/tithi pickers) vs date-known (Gregorian input).
     ⑥ Computed tithi always shown for explicit confirmation — "तिथि स्वयं चुनें" overrides manually; unknown tithi saves to Sarvapitri Amavasya.

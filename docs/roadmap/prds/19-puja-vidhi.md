@@ -45,16 +45,16 @@ v1 ships **six vidhis**, chosen because their festivals already exist as engine 
 
 Validated in the prototype; five surfaces, **no new Home category** (the launcher grid is a closed 5×3 by design — a 16th tile breaks the full-row closure; a `vidhi` content category is deferred until the family earns it, per RULEBOOK §1):
 
-1. **Festival day panel (Panchang tab)** — the primary door. On a festival with a vidhi, the day panel's action rows gain **"पूजा विधि ›"** beside the existing katha row (`vidhiId` on the festival row, same mechanism as `kathaId`).
-2. **Vrat catalog detail** — vrats whose observance has a vidhi link it from the detail screen (PRD-09 surface).
-3. **Vidhi catalog screen** — the six vidhis browsable in one list (routed in the Panchang stack), each card showing festival linkage and duration hint; reachable from the day panel rows and search.
+1. **Festival day panel (Panchang tab)** — the primary door. On a festival with a vidhi, the shipped **ObservanceCard** (§33.5) gains a third action pill — **॥ पूजा विधि** (filled saffron) beside the existing `कथा पढ़ें` (gold-tint) and `पढ़ें: <section>` (outline) pills — driven by a `vidhiId` on the festival row, same mechanism as `kathaId`.
+2. **Observance detail** — design.md §33 explicitly reserves a "How to observe / vidhi" section on `ObservanceDetailScreen` "until real vidhi content exists"; this PRD fills that reserved slot (PRD-09 surface).
+3. **Vidhi catalog screen** — the six vidhis browsable in one list (routed in the Panchang stack), each row the **§8 LibraryCard active variant** (first-letter thumb, Hindi name, Latin italic, sub-meta line "16 चरण · ~45 min · तिथि", saffron chevron); reachable from the ObservanceCard pill and search.
 4. **Search** — each vidhi indexed (§7) so "सत्यनारायण" finds the puja, not just the katha.
 5. **Home DISCOVER FeatureCard** — one launch-release card pointing at the catalog (existing mechanism, design.md §32).
 
 ## 5. The two modes (UX contract)
 
 ### 5.1 तैयारी — samagri checklist (the day before)
-A checkable samagri list per vidhi (`{item, qty?, optional?}`), state persisted per upcoming festival date in AsyncStorage, resurfaced via the existing vrat-reminder day-before slot when the user has opted into that festival's reminders. One action: **"सूची साझा करें"** — shares the samagri list as plain text (the family shopping message; no image pipeline needed, nothing personal on it).
+A checkable samagri list per vidhi (`{item, qty?, optional?}`) using the routine-item check circles (§31 Today's Practice), state persisted per upcoming festival date in AsyncStorage, resurfaced via the existing vrat-reminder day-before slot when the user has opted into that festival's reminders. One action: **"सूची साझा करें"** — shares the samagri list as plain text (the family shopping message; no image pipeline needed, nothing personal on it).
 
 ### 5.2 पूजा — conduct mode (festival day)
 Full-screen, one step per page, paged horizontally like the readers (the interaction the user's hands already know):
@@ -106,7 +106,7 @@ Every step of a puja is a moment the incumbents monetize (samagri commerce, pand
 ## 10. Design compliance (design.md is authoritative)
 
 - **Colour/type/layout** — reader rules apply wholesale (§9): parchment system, Noto Serif Devanagari, per-verse type scale, 10 pt floor, card radius 18/padding 18. Conduct mode is a reader variant, not a new visual language.
-- **Components** — `ReaderHeader variant="reader"` in conduct mode, `variant="index"` on catalog/checklist; `AddToRoutineButton`; the readers' progress dots and resume sheet; **no hand-rolled duplicates** (RULEBOOK §3).
+- **Components** — `ReaderHeader variant="reader"` in conduct mode, `variant="index"` on catalog/checklist; the **§8 LibraryCard** for catalog rows and the **§33.5 ObservanceCard action pills** for the day-panel entry; §31 routine check circles on the samagri list; `AddToRoutineButton`; the readers' progress dots and resume sheet; **no hand-rolled duplicates** (RULEBOOK §3).
 - **Iconography** — `॥`/`ॐ`/दीया glyph territory, no emoji (§5).
 - **Motion/haptics** — page turns per reader spec (§11); completion is a static seal, no celebration animation.
 - **A11y** — steps are fully screen-reader traversable; keep-awake announced; mantra + IAST both exposed as text (§12).
