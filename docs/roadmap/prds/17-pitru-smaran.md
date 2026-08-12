@@ -44,6 +44,14 @@ Opens with the §33 ObservanceDetail hero (name 24 pt centred, caption line, the
 ### 3.5 Panchang day integration — the private chip
 On a saved observance date, the Panchang day panel shows a small **॥ स्मरण** chip alongside the day's observance pills — visible only on this device, rendered in the muted gold tone, never in the festive style. Tapping opens the person detail.
 
+### 3.6 व्रत-पर्व catalog — the year-round touchpoint (beyond More)
+The catalog view (§33) already pins a personal-ledger row: **My Vrat** (gold-tint fill, 1.5 px gold border). पितृ स्मरण adds the structural sibling directly beneath it, in the identical pinned-row treatment: `॥` glyph, title + NEW badge, subtitle carrying the live count and soonest next date ("3 स्मरण · अगला: 21 सित"). Tap → the remembrance list (same screen as the More entry). Empty state renders the row once with invitation copy ("अपने पितरों की तिथियाँ जोड़ें") and collapses if dismissed. My Vrat is the personal *vrat* ledger; this is the personal *shraddha* ledger — they belong side by side in the one view devotees open to plan observances.
+
+### 3.7 Home Today strip — the seasonal touchpoint
+Two moments, one shipped mechanism (§18/§32 — the strip renders each day's observance pill + windows line):
+- During **Pitru Paksha**, the paksha's observance pill ("पितृ पक्ष — अष्टमी श्राद्ध") appears automatically once this PRD adds the missing Pitru Paksha rules (see the §4 gap row) — no Home-specific code beyond the rules themselves.
+- On a **family date** (a saved person's annual tithi, or their Pitru Paksha day), the muted **॥ स्मरण** chip joins the strip → person detail. Device-only, quiet: no NEW badges or counters on Home.
+
 ### Notifications
 Reuses the established scheduler shape (pure planner + headless component + shared iOS pending budget, like `VratReminderScheduler`). **Default OFF, opt-in per person** — the deliberate opposite of the default-on festive family (#241), because an unexpected grief-adjacent notification is a harm, not a nudge. Copy is fixed and reverent: "कल <relation> की पुण्यतिथि है · श्राद्ध तिथि: <tithi>".
 
