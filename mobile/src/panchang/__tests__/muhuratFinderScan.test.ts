@@ -3,18 +3,19 @@
  * fixes that made the "Special days" card feel stuck on a real device:
  *   1. it always resolves (a single bad day-solve is skipped, never strands),
  *   2. it paints the cheap festival days first (progressive), and
- *   3. it reads/writes the SHARED day-input cache the finder + warmup fill,
- *      so re-entry and an already-warmed picker make it near-instant.
+ *   3. it reads/writes the SHARED day-input store the finder + warmup fill,
+ *      so re-entry and an already-warmed picker make it near-instant — keyed by
+ *      ABSOLUTE date, so a second scan starting on a different day still hits.
  * Real engine on a pinned 2026 date (Ujjain default) — no engine mocks.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { UJJAIN_GEO } from '../engine';
+import { dateKeyFor, dayStoreFor, scopeKeyFor } from '../muhuratDayStore';
 import {
   scanAbujhDays,
-  dayInputsFor,
-  scanKeyFor,
+  dayAt,
   FIRST_AFTER_MAX_DAYS,
   type AbujhDay,
 } from '../muhuratFinderScan';
@@ -50,35 +51,61 @@ test('paints festival days progressively — first onProgress arrives before the
   );
 });
 
-test('writes solved days into the SHARED day-input cache (finder/warmup reuse)', async () => {
-  const key = scanKeyFor(LOC, 'purnimant', START);
-  dayInputsFor(key).clear();
+test('writes solved days into the SHARED day store, keyed by absolute date', async () => {
+  const scope = scopeKeyFor(LOC, 'purnimant');
+  dayStoreFor(scope).clear();
   await scanAbujhDays(START, FIRST_AFTER_MAX_DAYS, OPTS, {
     isCancelled: () => false,
     onProgress: () => {},
   });
-  const cache = dayInputsFor(key);
-  assert.ok(cache.size > 0, 'the scan populated the shared cache the finder reads');
-  // A Thursday/Sunday index within the horizon must be present (pushya path).
-  const hasWeekendIndex = [...cache.keys()].some((i) => {
-    const wd = new Date(START.getFullYear(), START.getMonth(), START.getDate() + i).getDay();
-    return wd === 0 || wd === 4;
+  const cache = dayStoreFor(scope);
+  assert.ok(cache.size > 0, 'the scan populated the shared store the finder reads');
+  // A Thursday/Sunday day within the horizon must be present (pushya path), and
+  // it must be stored under its own civil date — not an index off `start`, which
+  // would miss the moment a later scan starts on a different day.
+  const firstThursday = (() => {
+    for (let i = 0; i < FIRST_AFTER_MAX_DAYS; i += 1) {
+      const d = dayAt(START, i);
+      if (d.getDay() === 4) return d;
+    }
+    throw new Error('no Thursday in horizon');
+  })();
+  assert.ok(cache.has(dateKeyFor(firstThursday)), 'cached a Thu solve under its absolute date key');
+});
+
+test('a second scan starting a day later reuses the first scan’s solves', async () => {
+  const scope = scopeKeyFor(LOC, 'purnimant');
+  dayStoreFor(scope).clear();
+  await scanAbujhDays(START, FIRST_AFTER_MAX_DAYS, OPTS, {
+    isCancelled: () => false,
+    onProgress: () => {},
   });
-  assert.ok(hasWeekendIndex, 'cached a Thu/Sun solve for later reuse');
+  const solved = new Map(dayStoreFor(scope));
+  // Tomorrow's scan covers the same calendar days minus one; every day it needs
+  // was already solved yesterday, so nothing may be recomputed for them — the
+  // whole point of absolute-date keying (a midnight rollover used to re-solve all).
+  await scanAbujhDays(dayAt(START, 1), FIRST_AFTER_MAX_DAYS - 1, OPTS, {
+    isCancelled: () => false,
+    onProgress: () => {},
+  });
+  const after = dayStoreFor(scope);
+  for (const [key, inputs] of solved) {
+    assert.equal(after.get(key), inputs, `day ${key} was re-solved instead of reused`);
+  }
 });
 
 test('a single bad day-solve is skipped, not fatal — the scan still resolves', async () => {
-  const key = scanKeyFor(LOC, 'purnimant', START);
-  const cache = dayInputsFor(key);
+  const scope = scopeKeyFor(LOC, 'purnimant');
+  const cache = dayStoreFor(scope);
   cache.clear();
-  // Poison the first Thursday index with a malformed panchang so pushyaYogaFor
-  // throws when the scan reads it. The per-day guard must swallow it.
-  let poisoned = -1;
+  // Poison the first Thursday with a malformed panchang so pushyaYogaFor throws
+  // when the scan reads it. The per-day guard must swallow it.
+  let poisoned = START;
   for (let i = 0; i < FIRST_AFTER_MAX_DAYS; i += 1) {
-    const wd = new Date(START.getFullYear(), START.getMonth(), START.getDate() + i).getDay();
-    if (wd === 4) { poisoned = i; break; }
+    const d = dayAt(START, i);
+    if (d.getDay() === 4) { poisoned = d; break; }
   }
-  cache.set(poisoned, { p: {} as never, asta: {} as never });
+  cache.set(dateKeyFor(poisoned), { p: {} as never, asta: {} as never });
   const days = await scanAbujhDays(START, FIRST_AFTER_MAX_DAYS, OPTS, {
     isCancelled: () => false,
     onProgress: () => {},

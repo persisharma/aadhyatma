@@ -3,28 +3,27 @@
  * the React hook so it holds NO react/react-native imports and is unit-testable
  * under the tsx engine suite.
  *
- * It owns the single shared per-day cache (`DAY_INPUT_CACHE`) that BOTH the
- * occasion finder, the picker warmup, and the abujh calendar read/write — the
- * expensive part of every day is the sunrise/sunset bisection inside
- * `computePanchangForDate`, and it is occasion-INDEPENDENT (depends only on
- * location + calendar system + civil day). Solving each day once here means the
- * first surface to touch a day pays the astronomy cost and every later surface
- * (a second occasion, a re-entry, or the abujh scan) reuses it for free.
+ * The per-day inputs themselves live in the shared `muhuratDayStore` — keyed by
+ * ABSOLUTE date and scoped to (location, calendar system), so a day solved by
+ * any surface (the occasion finder, the picker warmup, the abujh calendar) is
+ * free for every other one, survives a midnight rollover, and can be hydrated
+ * from disk. The expensive part of every day is the sunrise/sunset bisection
+ * inside `computePanchangForDate`, and it is occasion-INDEPENDENT.
  */
-import { computePanchangForDate } from './engine';
-import { computeAstaFlags } from './eventMuhurat';
 import { getUpcomingObservances } from './festivalEngine';
+import { computePanchangForDate } from './engine';
 import { ABUJH_RULE_IDS, pushyaYogaFor } from './abujhMuhurat';
-import type { CalendarSystem, GeoLocation, PanchangData, ResolvedObservance } from './types';
+import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './muhuratDayStore';
+import type { ScanOptions } from './muhuratDayStore';
+import type { ResolvedObservance } from './types';
 
 /** Default finder horizon (~3 months) and the extended "first dates after" reach. */
 export const FINDER_WINDOW_DAYS = 92;
 export const FIRST_AFTER_MAX_DAYS = 260;
 export const CHUNK_DAYS = 7;
 
-/** The location shape both scans pass to the engine (Ujjain default carries no cityId). */
-export type ScanLocation = GeoLocation & { cityId?: string };
-export type ScanOptions = { calendarSystem: CalendarSystem; location: ScanLocation };
+/** The location/options shapes both scans pass to the engine — owned by the store. */
+export type { ScanLocation, ScanOptions, DayInputs } from './muhuratDayStore';
 
 export const startOfToday = (): Date => {
   const now = new Date();
@@ -37,54 +36,12 @@ export const dayAt = (start: Date, i: number): Date =>
 export const yieldToUi = (): Promise<void> => new Promise<void>((r) => setTimeout(r, 0));
 
 /**
- * Occasion-independent per-day inputs: the panchang solve plus the combustion
- * (asta) flags. Cached module-side keyed by location + system + start-day.
+ * The civil-date keys a scan of `count` days from `start` will touch — what the
+ * hooks hand to `hydrateMuhuratDays` so the persisted solves are in memory
+ * before the sweep begins.
  */
-export type DayInputs = { p: PanchangData; asta: ReturnType<typeof computeAstaFlags> };
-const DAY_INPUT_CACHE = new Map<string, Map<number, DayInputs>>();
-const MAX_CACHED_KEYS = 3;
-
-export function dayInputsFor(key: string): Map<number, DayInputs> {
-  let cache = DAY_INPUT_CACHE.get(key);
-  if (!cache) {
-    if (DAY_INPUT_CACHE.size >= MAX_CACHED_KEYS) {
-      const oldest = DAY_INPUT_CACHE.keys().next().value;
-      if (oldest !== undefined) DAY_INPUT_CACHE.delete(oldest);
-    }
-    cache = new Map();
-    DAY_INPUT_CACHE.set(key, cache);
-  }
-  return cache;
-}
-
-/** Cache key for the shared day-inputs: location + calendar system + civil day. */
-export function scanKeyFor(
-  location: { cityId?: string; latitude: number; longitude: number },
-  calendarSystem: string,
-  start: Date
-): string {
-  return `${location.cityId ?? 'default'}|${location.latitude},${location.longitude}|${calendarSystem}|${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`;
-}
-
-function computeDayInputs(start: Date, i: number, opts: ScanOptions): DayInputs {
-  const d = dayAt(start, i);
-  const noon = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12);
-  return { p: computePanchangForDate(d, opts), asta: computeAstaFlags(noon) };
-}
-
-/** Read the shared cache; compute + store the day's inputs on a miss. */
-export function cachedDayInputs(
-  scan: Map<number, DayInputs>,
-  start: Date,
-  i: number,
-  opts: ScanOptions
-): { inputs: DayInputs; miss: boolean } {
-  const hit = scan.get(i);
-  if (hit) return { inputs: hit, miss: false };
-  const inputs = computeDayInputs(start, i, opts);
-  scan.set(i, inputs);
-  return { inputs, miss: true };
-}
+export const dayKeysFrom = (start: Date, count: number): string[] =>
+  Array.from({ length: count }, (_, i) => dateKeyFor(dayAt(start, i)));
 
 export type AbujhDay = {
   dateMs: number;
@@ -120,7 +77,7 @@ export async function scanAbujhDays(
   opts: ScanOptions,
   hooks: AbujhScanHooks
 ): Promise<AbujhDay[]> {
-  const scan = dayInputsFor(scanKeyFor(opts.location, opts.calendarSystem, start));
+  const scan = dayStoreFor(scopeKeyFor(opts.location, opts.calendarSystem));
 
   // 1) Festival abujh days — cheap, resolved up-front, painted immediately.
   const festival: AbujhDay[] = [];
@@ -158,7 +115,7 @@ export async function scanAbujhDays(
     // Only Thursdays/Sundays can carry the yoga — skip the other five solves.
     if (d.getDay() !== 0 && d.getDay() !== 4) continue;
     try {
-      const { inputs, miss } = cachedDayInputs(scan, start, i, opts);
+      const { inputs, miss } = cachedDayInputs(scan, d, opts);
       if (miss) heavyThisChunk = true;
       const yoga = pushyaYogaFor(inputs.p, d.getDay());
       if (yoga) {

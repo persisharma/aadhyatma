@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { InteractionManager } from 'react-native';
 import { computeMuhuratDay } from './muhurat';
 import { evaluateDay, getEventRule, summarize, type DayVerdict, type FinderSummary, type OccasionId } from './eventMuhurat';
+import { cachedDayInputs, dayStoreFor, scopeKeyFor } from './muhuratDayStore';
+import { hydrateMuhuratDays, persistMuhuratDays } from './muhuratDayCache';
 import {
-  cachedDayInputs,
   dayAt,
-  dayInputsFor,
+  dayKeysFrom,
   scanAbujhDays,
-  scanKeyFor,
   startOfToday,
   yieldToUi,
   CHUNK_DAYS,
@@ -20,6 +20,14 @@ import { usePanchangCalendarSystem } from './usePanchang';
 
 export { FINDER_WINDOW_DAYS };
 export type { AbujhDay };
+
+/**
+ * The range every surface hydrates: the widest sweep any of them can run (the
+ * finder's extended "first dates after" reach) plus the one extra day the
+ * finder reads for `nextSunrise`. Hydrating the union means the picker warmup
+ * and the abujh screen also prime the days a later occasion scan will want.
+ */
+const HYDRATE_DAYS = FIRST_AFTER_MAX_DAYS + 1;
 
 export type FinderState = {
   loading: boolean;
@@ -34,8 +42,9 @@ export type FinderState = {
  * behind InteractionManager + setTimeout yields — the same responsiveness
  * boundary as useMuhurat/useObservancesForDate — so Home/Panchang interactions
  * are never blocked by the sweep. The per-day inputs come from the shared
- * `DAY_INPUT_CACHE` (see muhuratFinderScan) so the first occasion pays the
- * astronomy cost once and every later occasion reuses it.
+ * `muhuratDayStore` (absolute-date keyed, per location+system) so the first
+ * occasion pays the astronomy cost once and every later occasion — plus a
+ * re-entry, a midnight rollover, and a hydrated cold start — reuses it.
  */
 export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_WINDOW_DAYS): FinderState {
   const { location } = usePanchangLocation();
@@ -49,10 +58,15 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
       const opts = { calendarSystem, location };
       const rule = getEventRule(occasionId);
       const start = startOfToday();
-      const scan = dayInputsFor(scanKeyFor(location, calendarSystem, start));
+      // Disk → memory before the sweep, so days solved in an earlier session (or
+      // an earlier launch) are never re-solved. One multiGet, short-circuited
+      // entirely when the range is already warm.
+      await hydrateMuhuratDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
+      if (cancelled) return;
+      const scan = dayStoreFor(scopeKeyFor(location, calendarSystem));
       let heavyThisChunk = false;
       const inputsAt = (i: number) => {
-        const { inputs, miss } = cachedDayInputs(scan, start, i, opts);
+        const { inputs, miss } = cachedDayInputs(scan, dayAt(start, i), opts);
         if (miss) heavyThisChunk = true;
         return inputs;
       };
@@ -90,6 +104,9 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
       }
       if (cancelled) return;
       setState({ loading: false, summary: summarize(verdicts), firstAfter });
+      // Fire-and-forget: the results are already on screen, and the next launch
+      // gets them for free.
+      void persistMuhuratDays(location, calendarSystem);
     });
     return () => {
       cancelled = true;
@@ -118,18 +135,21 @@ export function useMuhuratFinderWarmup(days: number = FINDER_WINDOW_DAYS): void 
     const task = InteractionManager.runAfterInteractions(async () => {
       const opts = { calendarSystem, location };
       const start = startOfToday();
-      const scan = dayInputsFor(scanKeyFor(location, calendarSystem, start));
+      await hydrateMuhuratDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
+      if (cancelled) return;
+      const scan = dayStoreFor(scopeKeyFor(location, calendarSystem));
       let heavy = false;
       // Warm one past the window: the scan reads day i AND i+1 (next sunrise).
       for (let i = 0; i <= days; i += 1) {
         if (cancelled) return;
-        const { miss } = cachedDayInputs(scan, start, i, opts);
+        const { miss } = cachedDayInputs(scan, dayAt(start, i), opts);
         if (miss) heavy = true;
         if (i % CHUNK_DAYS === CHUNK_DAYS - 1) {
           if (heavy) await yieldToUi();
           heavy = false;
         }
       }
+      void persistMuhuratDays(location, calendarSystem);
     });
     return () => {
       cancelled = true;
@@ -158,6 +178,8 @@ export function useAbujhDays(horizonDays: number = FIRST_AFTER_MAX_DAYS): AbujhS
       const opts = { calendarSystem, location };
       const start = startOfToday();
       try {
+        await hydrateMuhuratDays(location, calendarSystem, dayKeysFrom(start, horizonDays));
+        if (cancelled) return;
         const days = await scanAbujhDays(start, horizonDays, opts, {
           isCancelled: () => cancelled,
           // Progressive paint: reveal days (festival first, then pushya) as the
@@ -167,6 +189,7 @@ export function useAbujhDays(horizonDays: number = FIRST_AFTER_MAX_DAYS): AbujhS
           },
         });
         if (!cancelled) setState({ loading: false, days });
+        void persistMuhuratDays(location, calendarSystem);
       } catch {
         // Defensive: the scan already guards each day, but never leave the
         // spinner stranded if something above the loop throws.
