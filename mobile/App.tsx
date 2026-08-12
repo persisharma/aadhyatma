@@ -40,6 +40,7 @@ import { lightColors } from '@/theme/colors';
 import { GitaLanguageProvider, useGitaLanguage } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { VratFollowProvider } from '@/contexts/VratFollowContext';
+import { PitruSmaranProvider } from '@/contexts/PitruSmaranContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
 import { registerNativeAlarmForegroundHandler } from '@/notifications/japamAlarmNative';
@@ -201,6 +202,8 @@ export default function App() {
             <ReadAloudProvider>
             <BookmarksProvider>
               <VratFollowProvider>
+              {/* पितृ स्मरण entries (PRD-17) — device-only AsyncStorage, no sync. */}
+              <PitruSmaranProvider>
               <UserActivityProvider>
                 <NewContentProvider>
                   <ReadingProgressProvider>
@@ -271,6 +274,7 @@ export default function App() {
                   </ReadingProgressProvider>
                 </NewContentProvider>
               </UserActivityProvider>
+              </PitruSmaranProvider>
               </VratFollowProvider>
             </BookmarksProvider>
             </ReadAloudProvider>

@@ -13,6 +13,7 @@ import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
+import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import TextField from '@/components/TextField';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -624,6 +625,9 @@ export default function PanchangScreen({ route }: Props) {
                 {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
               </Text>
             )}
+            {/* PRD-17: the private ॥ स्मरण chip — renders only on a saved
+                observance date, muted gold register, device-only. */}
+            <PitruSmaranDayChip date={selectedDate} />
           </View>
 
           {upcoming.length > 0 && (

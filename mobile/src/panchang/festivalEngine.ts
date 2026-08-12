@@ -324,7 +324,11 @@ function matchesRuleOnDate(
   return matchesLunarTithiRuleOnDate(rule, date, calendarSystem, location);
 }
 
-function matchesLunarTithiRuleOnDate(
+// Exported for pitruSmaran.ts (PRD-17): personal shraddha tithis must resolve with
+// EXACTLY the conventions festival matching uses (sunrise anga, vriddhi dedupe,
+// kshaya fallback, adhik-maas nija guard) — sharing the matcher keeps the two
+// surfaces incapable of drifting apart. Not part of the observance-catalog API.
+export function matchesLunarTithiRuleOnDate(
   rule: ObservanceRule,
   date: Date,
   calendarSystem: CalendarSystem,

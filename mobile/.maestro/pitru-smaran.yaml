@@ -1,0 +1,109 @@
+# पितृ स्मरण (PRD-17 Phase 1) — More-hub entry, remembrance list, add flow
+# (tithi-known path), person detail, and delete round-trip.
+#
+# Scope — what this flow covers and deliberately omits:
+#   - COVERS the More → पितृ स्मरण row, the reverent empty state, adding an entry
+#     through the month/paksha/tithi pickers (माघ कृष्ण अष्टमी — the PRD's
+#     canonical example), the solved next-date row on the list, the detail hero +
+#     गीता पाठ rows, and the delete confirm sheet. Add-then-delete is net zero,
+#     so back-to-back runs stay clean.
+#   - OMITS the date→tithi derivation path and the Pitru Paksha overview: both
+#     depend on live astronomy solves whose values move with the calendar, and
+#     they are pinned deterministically in src/panchang/__tests__/pitruSmaran.test.ts
+#     (tsx) and src/screens/__tests__/PitruSmaranScreens.test.tsx (Jest).
+#   - OMITS the Panchang day chip: it renders only on a date matching a saved
+#     tithi, which is calendar-dependent; covered by PitruSmaranDayChip.test.tsx.
+#
+# Selector notes (verified against the screens):
+#   - The More row's a11y label is composed: "Pitru Smaran, none saved" /
+#     "Pitru Smaran, N entries" — anchor with a wildcard.
+#   - Picker chips expose constant English a11y labels ("Month Magha",
+#     "Paksha Krishna", "Tithi Ashtami"); actions are "Add smaran", "Save smaran",
+#     "Smaran Father" (list row), "Delete smaran entry", "Confirm delete".
+#   - The default reading language is Hindi, so visible copy asserted here is
+#     Devanagari; control labels stay English constants (Maestro-stable).
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── Open More → पितृ स्मरण ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Pitru Smaran.*"
+    centerElement: true
+- tapOn: "Pitru Smaran.*"
+- waitForAnimationToEnd
+
+# ── Empty state: two reverent lines + the add action ──
+- extendedWaitUntil:
+    visible: "अपने पितरों की तिथियाँ जोड़ें"
+    timeout: 15000
+- assertVisible: "Add smaran"
+
+# ── Add flow (तिथि ज्ञात है): माघ कृष्ण अष्टमी for पिताजी ──
+- tapOn: "Add smaran"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "स्मरण जोड़ें"
+    timeout: 15000
+- tapOn: "Relation Father"
+- scrollUntilVisible:
+    element:
+      text: "Month Magha"
+    centerElement: true
+- tapOn: "Month Magha"
+- scrollUntilVisible:
+    element:
+      text: "Paksha Krishna"
+    centerElement: true
+- tapOn: "Paksha Krishna"
+- scrollUntilVisible:
+    element:
+      text: "Tithi Ashtami"
+    centerElement: true
+- tapOn: "Tithi Ashtami"
+- scrollUntilVisible:
+    element:
+      text: "Save smaran"
+    centerElement: true
+- tapOn: "Save smaran"
+- waitForAnimationToEnd
+
+# ── List: one row, tithi caption in words, solved next date at right ──
+- extendedWaitUntil:
+    visible: "माघ कृष्ण अष्टमी"
+    timeout: 15000
+- assertVisible: "पिताजी"
+
+# ── Detail: hero + next pill + गीता पाठ rows ──
+- tapOn: "Smaran Father"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "श्राद्ध तिथि.*"
+    timeout: 15000
+- assertVisible: "अगला.*"
+- assertVisible: "गीता — पंचदश अध्याय"
+- assertVisible: "गीता — द्वितीय अध्याय"
+
+# ── Delete round-trip: confirm sheet, then back to the empty state ──
+- scrollUntilVisible:
+    element:
+      text: "Delete smaran entry"
+    centerElement: true
+- tapOn: "Delete smaran entry"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Confirm delete"
+    timeout: 10000
+- tapOn: "Confirm delete"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "अपने पितरों की तिथियाँ जोड़ें"
+    timeout: 15000
+
+# Clean up — termination resets navigation for the next flow.
+- stopApp:
+    appId: com.prashantsharma.vedansh
