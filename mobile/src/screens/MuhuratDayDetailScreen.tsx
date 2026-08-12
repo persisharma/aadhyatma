@@ -27,6 +27,7 @@ import { transliterateDevanagari } from '@/utils/transliterate';
 import type { PanchangData } from '@/panchang/types';
 import MuhuratFinderShareCard from '@/components/MuhuratFinderShareCard';
 import ShareButton from '@/components/ShareButton';
+import ReaderHeader from '@/components/ReaderHeader';
 import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratDayDetail'>;
@@ -133,28 +134,21 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']}>
-      <View style={[styles.topBar, { paddingHorizontal: spacing.xl }]}>
-        <Pressable
-          onPress={() => navigation.goBack()}
-          accessibilityRole="button"
-          accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછળ', kn: 'ಹಿಂದೆ' })}
-          hitSlop={12}
-          style={[styles.back, { borderColor: colors.border, backgroundColor: colors.surface, borderRadius: radii.xl }]}
-        >
-          <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 20 }}>‹</Text>
-        </Pressable>
-        <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink, flex: 1, lineHeight: 26 }}>
-          {contentByLang(lang, rule.nameHi, rule.nameEn)}
-        </Text>
-        {shareable && (
-          <ShareButton
-            onPress={onShare}
-            busy={busy}
-            accessibilityLabel={pick(lang, { hi: 'मुहूर्त साझा करें', en: 'Share muhurat', gu: 'મુહૂર્ત શેર કરો', kn: 'ಮುಹೂರ್ತ ಹಂಚಿ' })}
-            accessibilityHint=""
-          />
-        )}
-      </View>
+      <ReaderHeader
+        title={contentByLang(lang, rule.nameHi, rule.nameEn)}
+        variant="index"
+        onBack={() => navigation.goBack()}
+        right={
+          shareable ? (
+            <ShareButton
+              onPress={onShare}
+              busy={busy}
+              accessibilityLabel={pick(lang, { hi: 'मुहूर्त साझा करें', en: 'Share muhurat', gu: 'મુહૂર્ત શેર કરો', kn: 'ಮುಹೂರ್ತ ಹಂಚಿ' })}
+              accessibilityHint=""
+            />
+          ) : undefined
+        }
+      />
 
       {/* Off-screen share card — captured whole regardless of screen height,
           with an explicit measured output size (a content-sized view captured
@@ -324,8 +318,6 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   // Parked far off-screen; opacity:0 would still be composited over content.
   captureLayer: { position: 'absolute', left: -10000, top: 0 },
-  topBar: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingTop: 8, paddingBottom: 10 },
-  back: { width: 44, height: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   answer: { borderWidth: 1, padding: 16, marginTop: 6 },
   tierPill: { alignSelf: 'center', paddingHorizontal: 10, paddingVertical: 4, marginTop: 10 },

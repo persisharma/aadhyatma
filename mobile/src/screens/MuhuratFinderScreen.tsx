@@ -6,6 +6,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import ReaderHeader from '@/components/ReaderHeader';
 import { EVENT_RULES } from '@/panchang/eventMuhurat';
 import type { PanchangStackParamList } from '@/navigation/types';
 
@@ -25,27 +26,25 @@ export default function MuhuratFinderScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']}>
-      <View style={[styles.topBar, { paddingHorizontal: spacing.xl }]}>
-        <Pressable
-          onPress={() => navigation.goBack()}
-          accessibilityRole="button"
-          accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછળ', kn: 'ಹಿಂದೆ' })}
-          hitSlop={12}
-          style={[styles.back, { borderColor: colors.border, backgroundColor: colors.surface, borderRadius: radii.xl }]}
-        >
-          <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 20 }}>‹</Text>
-        </Pressable>
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink, lineHeight: 26 }}>
-            {contentByLang(lang, 'शुभ मुहूर्त खोज', 'Find a Muhurat')}
-          </Text>
-          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12.5, color: colors.inkMuted }}>
-            {contentByLang(lang, 'आप क्या करने जा रहे हैं?', 'What are you planning?')}
-          </Text>
-        </View>
-      </View>
+      <ReaderHeader
+        title={contentByLang(lang, 'शुभ मुहूर्त खोज', 'Find a Muhurat')}
+        variant="index"
+        onBack={() => navigation.goBack()}
+      />
 
-      <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl }}>
+      <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
+        <Text
+          style={{
+            fontFamily: typography.cardLatin.fontFamily,
+            fontSize: 13,
+            color: colors.inkMuted,
+            textAlign: 'center',
+            lineHeight: 20,
+            marginBottom: spacing.lg,
+          }}
+        >
+          {contentByLang(lang, 'आप क्या करने जा रहे हैं?', 'What are you planning?')}
+        </Text>
         <View
           style={[
             styles.list,
@@ -121,8 +120,6 @@ export default function MuhuratFinderScreen({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  topBar: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingTop: 8, paddingBottom: 14 },
-  back: { width: 44, height: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   list: { borderWidth: 1, overflow: 'hidden' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 12, minHeight: 58 },
   abujh: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 12, minHeight: 60, borderWidth: 1 },

@@ -4,8 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang, pick } from '@/utils/localize';
+import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
+import ReaderHeader from '@/components/ReaderHeader';
 import { useAbujhDays } from '@/panchang/useMuhuratFinder';
 import { formatShortDate } from '@/panchang/muhuratFormat';
 import { VARA_NAMES_HI, VARA_NAMES_EN } from '@/panchang/names';
@@ -28,32 +29,18 @@ export default function AbujhDaysScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']}>
-      <View style={[styles.topBar, { paddingHorizontal: spacing.xl }]}>
-        <Pressable
-          onPress={() => navigation.goBack()}
-          accessibilityRole="button"
-          accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછળ', kn: 'ಹಿಂದೆ' })}
-          hitSlop={12}
-          style={[styles.back, { borderColor: colors.border, backgroundColor: colors.surface, borderRadius: radii.xl }]}
-        >
-          <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 20 }}>‹</Text>
-        </Pressable>
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink, lineHeight: 26 }}>
-            {contentByLang(lang, 'विशेष शुभ दिन', 'Special auspicious days')}
-          </Text>
-          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12.5, color: colors.inkMuted }}>
-            {contentByLang(lang, 'अबूझ मुहूर्त', 'Abujh days — no muhurat needed')}
-          </Text>
-        </View>
-      </View>
+      <ReaderHeader
+        title={contentByLang(lang, 'विशेष शुभ दिन', 'Special auspicious days')}
+        variant="index"
+        onBack={() => navigation.goBack()}
+      />
 
       {loading ? (
         <View style={styles.loading} testID="abujh-loading">
           <ActivityIndicator color={colors.saffron} />
         </View>
       ) : (
-        <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl }}>
+        <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
           <Text
             style={{
               fontFamily: typography.cardLatin.fontFamily,
@@ -87,7 +74,7 @@ export default function AbujhDaysScreen({ navigation }: Props) {
                 onPress={() => navigation.navigate('MuhuratDetail', { dateMs: d.dateMs })}
                 style={[
                   styles.card,
-                  { borderColor: colors.border, backgroundColor: colors.cardSurface, borderRadius: radii.md },
+                  { borderColor: colors.border, backgroundColor: colors.cardSurface, borderRadius: radii.lg },
                   elevation.card,
                 ]}
               >
@@ -105,7 +92,7 @@ export default function AbujhDaysScreen({ navigation }: Props) {
                     {contentByLang(lang, d.nakshatraHi, d.nakshatraEn)}
                   </Text>
                 </View>
-                <Text style={{ color: colors.saffron, fontSize: 16, paddingTop: 4 }}>›</Text>
+                <Text style={{ color: colors.saffron, fontSize: 24, lineHeight: 28 }}>›</Text>
               </Pressable>
             );
           })}
@@ -117,8 +104,6 @@ export default function AbujhDaysScreen({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  topBar: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingTop: 8, paddingBottom: 10 },
-  back: { width: 44, height: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  card: { flexDirection: 'row', gap: 10, borderWidth: 1, padding: 14, marginBottom: 12 },
+  card: { flexDirection: 'row', alignItems: 'center', gap: 12, borderWidth: 1, padding: 16, marginBottom: 12 },
 });

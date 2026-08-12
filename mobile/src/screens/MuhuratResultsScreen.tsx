@@ -1,11 +1,13 @@
 import React from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang, pick } from '@/utils/localize';
+import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
+import ReaderHeader from '@/components/ReaderHeader';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useMuhuratFinder } from '@/panchang/useMuhuratFinder';
 import { DOSHA_LABELS, TIER_LABELS, getEventRule, type DayVerdict, type DoshaKey } from '@/panchang/eventMuhurat';
@@ -59,14 +61,17 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
         onPress={() => navigation.navigate('MuhuratDayDetail', { occasionId: rule.id, dateMs: v.dateMs })}
         style={[
           styles.card,
-          { borderColor: top ? colors.cardActiveBorder : colors.border, borderRadius: radii.md, backgroundColor: top ? colors.cardActiveFrom : colors.cardSurface },
+          { borderColor: top ? colors.cardActiveBorder : colors.border, borderRadius: radii.lg, backgroundColor: top ? 'transparent' : colors.cardSurface },
           top ? elevation.lifted : elevation.card,
         ]}
       >
-        {rank !== null && (
-          <Text style={{ fontFamily: typography.pageCounter.fontFamily, fontSize: 15, color: colors.gold, width: 16, textAlign: 'center', paddingTop: 2 }}>
-            {rank}
-          </Text>
+        {top && (
+          <LinearGradient
+            colors={[colors.cardActiveFrom, colors.cardActiveTo]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={[StyleSheet.absoluteFill, { borderRadius: radii.lg }]}
+          />
         )}
         <View style={{ flex: 1, minWidth: 0 }}>
           <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
@@ -90,7 +95,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
             </Text>
           )}
         </View>
-        <Text style={{ color: colors.saffron, fontSize: 16, paddingTop: 4 }}>›</Text>
+        <Text style={{ color: colors.saffron, fontSize: 24, lineHeight: 28 }}>›</Text>
       </Pressable>
     );
   };
@@ -138,32 +143,28 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']}>
-      <View style={[styles.topBar, { paddingHorizontal: spacing.xl }]}>
-        <Pressable
-          onPress={() => navigation.goBack()}
-          accessibilityRole="button"
-          accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછળ', kn: 'ಹಿಂದೆ' })}
-          hitSlop={12}
-          style={[styles.back, { borderColor: colors.border, backgroundColor: colors.surface, borderRadius: radii.xl }]}
-        >
-          <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 20 }}>‹</Text>
-        </Pressable>
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink, lineHeight: 26 }}>
-            {contentByLang(lang, rule.nameHi, rule.nameEn)}
-          </Text>
-          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 12.5, color: colors.inkMuted }}>
-            {contentByLang(lang, location.labelHi, location.labelEn)}
-          </Text>
-        </View>
-      </View>
+      <ReaderHeader
+        title={contentByLang(lang, rule.nameHi, rule.nameEn)}
+        variant="index"
+        onBack={() => navigation.goBack()}
+      />
 
       {loading ? (
         <View style={styles.loading} testID="muhurat-results-loading">
           <ActivityIndicator color={colors.saffron} />
         </View>
       ) : (
-        <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl }}>
+        <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
+          <Text
+            style={{
+              fontFamily: typography.cardLatin.fontFamily,
+              fontSize: 12.5,
+              color: colors.inkMuted,
+              textAlign: 'center',
+            }}
+          >
+            {contentByLang(lang, location.labelHi, location.labelEn)}
+          </Text>
           {hasResults ? (
             <>
               {summary!.shreshtha.length > 0 && (
@@ -238,10 +239,8 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  topBar: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingTop: 8, paddingBottom: 10 },
-  back: { width: 44, height: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  card: { flexDirection: 'row', gap: 10, borderWidth: 1, padding: 14, marginBottom: 12 },
+  card: { flexDirection: 'row', alignItems: 'center', gap: 12, borderWidth: 1, padding: 16, marginBottom: 12, overflow: 'hidden' },
   empty: { borderWidth: 1, padding: 16, marginTop: 12 },
   calendarLink: { borderWidth: 1, alignItems: 'center', paddingVertical: 12, marginTop: 4 },
   reason: { borderWidth: 1, padding: 12, marginTop: 12 },
