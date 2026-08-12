@@ -52,8 +52,17 @@ Two moments, one shipped mechanism (§18/§32 — the strip renders each day's o
 - During **Pitru Paksha**, the paksha's observance pill ("पितृ पक्ष — अष्टमी श्राद्ध") appears automatically once this PRD adds the missing Pitru Paksha rules (see the §4 gap row) — no Home-specific code beyond the rules themselves.
 - On a **family date** (a saved person's annual tithi, or their Pitru Paksha day), the muted **॥ स्मरण** chip joins the strip → person detail. Device-only, quiet: no NEW badges or counters on Home.
 
-### Notifications
-Reuses the established scheduler shape (pure planner + headless component + shared iOS pending budget, like `VratReminderScheduler`). **Default OFF, opt-in per person** — the deliberate opposite of the default-on festive family (#241), because an unexpected grief-adjacent notification is a harm, not a nudge. Copy is fixed and reverent: "कल <relation> की पुण्यतिथि है · श्राद्ध तिथि: <tithi>".
+### Notifications — two tiers with different defaults
+
+Reuses the established scheduler shape (pure planner + headless component + shared iOS pending budget, like `VratReminderScheduler` / `FestiveReminderScheduler`). Two tiers, deliberately different:
+
+1. **Pitru Paksha season reminder — festive family, default-ON.** The paksha is a public calendar season, not personal data, so it joins the default-on festive reminders (#241 pattern, with its own toggle in the Reminders hub like every festival). Two fires per year, gated on the new paksha rules (§4 gap row):
+   - **Eve of paksha start** (day before Bhadrapada Purnima): "कल से पितृ पक्ष — अपने पितरों का स्मरण करें". Tap → the Pitru Paksha overview when entries exist, else the remembrance list's invitation state.
+   - **Eve of Sarvapitri Amavasya**: "कल सर्वपितृ अमावस्या — पितृ पक्ष का अंतिम दिन". Tap → overview.
+   Copy follows the festive family's reading-invitation shape (a गीता पाठ link), stays fixed and reverent, and **never names a family member** — the season fire is identical on every device.
+2. **Per-person shraddha reminders — default OFF, opt-in per person** — the deliberate opposite default, because an unexpected grief-adjacent notification naming a family member is a harm, not a nudge. Day-before + day-of, fixed copy: "कल <relation> की पुण्यतिथि है · श्राद्ध तिथि: <tithi>".
+
+Both tiers appear under the existing Reminders hub (More → स्मरण) with independent toggles, and both draw from the shared iOS pending budget.
 
 ## 4. What it computes (all from existing engine)
 

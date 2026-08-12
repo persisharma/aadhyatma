@@ -177,6 +177,18 @@
   .gtile .gi{font-family:var(--deva);font-size:18px;color:var(--saffron-deep)}
   .gtile .gt2{font-family:var(--deva);font-size:11.5px;color:var(--ink)}
 
+  /* OS lock screen (for the season-reminder notification mock) */
+  .phone.os{background:linear-gradient(165deg,#241a2e 0%,#3a2438 45%,#1c1424 100%)}
+  .phone.os .statusbar{color:#f5eee2;background:transparent}
+  .phone.os .screen{background:transparent}
+  .lock{padding:40px 20px 0;text-align:center;color:#f5eee2}
+  .lock .ldate{font-size:14px;font-weight:500;opacity:.9}
+  .lock .ltime{font-size:66px;font-weight:600;letter-spacing:1px;line-height:1.05;margin-top:2px}
+  .locknotif{margin:26px 14px 0;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border-radius:18px;padding:12px 14px;text-align:left;color:#fff}
+  .locknotif .nt{font-size:12px;font-weight:600}
+  .locknotif .ns{font-size:12px;opacity:.9;margin-top:2px;font-family:var(--deva);line-height:1.6}
+  .locknotif .nm{font-size:10.5px;opacity:.6;margin-top:4px}
+
   .tabbar{position:sticky;bottom:0;height:52px;background:var(--parchment-soft);border-top:1px solid var(--divider);display:flex}
   .tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;color:var(--ink-muted)}
   .tabbar .tab.active{color:var(--saffron)}
@@ -494,6 +506,31 @@
     <div class="cap"><b>Home Today strip — the seasonal touchpoint.</b><br/>
       <span class="n">13</span><b>Two moments, one shipped mechanism.</b> The Today strip (§18/§32, "one observance pill + windows line") already shows each day's observance — so once PRD-17 adds the missing Pitru Paksha rules (the engine gap: `shraddha-dates` is a dead catalog placeholder today), <i>"पितृ पक्ष — अष्टमी श्राद्ध"</i> appears here automatically like any festival pill. On a <b>family</b> date (a saved person's tithi, or their Pitru-Paksha day), the muted <i>॥ स्मरण</i> chip joins it → tap opens the person detail. Private, device-only, and quiet — no NEW badges, no counters on Home.</div>
     </div>
+
+    <div class="col">
+    <div class="phone os">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="lock">
+        <div class="ldate">Sunday, 6 September</div>
+        <div class="ltime">9:41</div>
+
+        <div class="locknotif" style="position:relative"><div class="dot" style="right:-8px;top:-8px">14</div>
+          <div class="nt">ॐ वेदांश</div>
+          <div class="ns">कल से पितृ पक्ष — अपने पितरों का स्मरण करें · गीता पाठ ›</div>
+          <div class="nm">Festive reminder · 6:00 PM</div>
+        </div>
+
+        <div class="locknotif" style="position:relative"><div class="dot" style="right:-8px;top:-8px">15</div>
+          <div class="nt">ॐ वेदांश</div>
+          <div class="ns">कल पिताजी की पुण्यतिथि है · श्राद्ध तिथि: अष्टमी</div>
+          <div class="nm">स्मरण (opt-in) · 6:00 PM</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Season reminder — the festive tier, plus the opt-in personal tier.</b><br/>
+      <span class="n">14</span><b>पितृ पक्ष rides the default-on festive reminder family</b> (#241 — same mechanism, same Reminders-hub toggle as every festival, same reading-invitation shape). Two fires a year: eve of paksha start and eve of Sarvapitri Amavasya. The copy is identical on every device and <b>never names a family member</b>. Tap → the Pitru Paksha overview (or the invitation state when no entries exist).<br/>
+      <span class="n">15</span><b>The personal tier stays opt-in, default OFF</b> — a notification naming <i>पिताजी</i> fires only because the user enabled it on that person's detail (callout ⑧). Two tiers, two defaults: the public season announces itself; the family's dates never do unless asked.</div>
+    </div>
   </div>
 
   <div class="phaselabel" style="margin-top:34px">Interaction inventory</div>
@@ -511,6 +548,8 @@
     ⑪ Panchang day chip on observance dates → detail.
     ⑫ व्रत-पर्व catalog: pinned पितृ स्मरण row under My Vrat (§33 pinned-row treatment, live count + next date) → remembrance list.
     ⑬ Home Today strip: Pitru Paksha observance pill (automatic once the paksha rules exist) + the ॥ स्मरण chip on family dates → person detail.
+    ⑭ Season reminder (festive family, default-on, Reminders-hub toggle): eve of paksha start + eve of Sarvapitri Amavasya → Pitru Paksha overview; copy never names a person.
+    ⑮ Personal reminder (opt-in per person, default off): day-before + day-of on that person's dates → person detail.
     No streaks, no celebration animation, no share surface anywhere in this feature.
   </div>
 </body>
