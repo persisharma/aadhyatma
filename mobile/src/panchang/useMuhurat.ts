@@ -6,12 +6,23 @@
  * The engine solves run OFF the render path (setTimeout, like
  * usePanchangForSelection) — a couple of astronomy solves are enough to stutter
  * the tab on a real device, so they must never run synchronously during render.
+ *
+ * The solves themselves come from the shared, persisted `panchangDayStore`, so
+ * Home's Today strip and the daily Muhurat card no longer re-solve on every cold
+ * start, and they share days with the Muhurat Finder's sweep.
  */
 import { useEffect, useMemo, useState } from 'react';
 import { InteractionManager } from 'react-native';
-import { computePanchangForDate } from '@/panchang/engine';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useMinuteTick } from '@/utils/useMinuteTick';
+import {
+  cachedDayInputs,
+  dateKeyFor,
+  dayStoreFor,
+  scopeKeyFor,
+  type ScanOptions,
+} from '@/panchang/panchangDayStore';
+import { hydratePanchangDays, persistPanchangDays } from '@/panchang/panchangDayCache';
 import type { CalendarSystem, PanchangData } from '@/panchang/types';
 import {
   computeMuhuratDay,
@@ -49,32 +60,68 @@ type Solved = {
 };
 
 /**
- * The astronomy solve for a given (city, calendar day, calendar system, is-today)
- * is deterministic — sunrise/sunset for a fixed date and place never change within
- * a session — so we memoise it across mounts and date navigation. Only the live
- * "now" read changes minute-to-minute, and that is recomputed cheaply from the
- * cached solve via `useMinuteTick`. This makes revisiting a date (or re-mounting
- * the card) instant instead of re-paying the deferred solve each time.
+ * The astronomy solve for a given (location, civil day, calendar system) is
+ * deterministic, so it comes from the SHARED `panchangDayStore` — the same store
+ * the Muhurat Finder, the Panchang tab and the abujh calendar fill, and the one
+ * `panchangDayCache` persists. Consequences worth knowing:
+ *   - a day the finder already solved makes this hook instant, and vice versa;
+ *   - a hydrated cold start skips the solve entirely;
+ *   - `MuhuratDay` and `nowPeriods` are NOT cached — they are pure arithmetic
+ *     over the three cached days (~microseconds), so they are derived per call
+ *     rather than stored under an extra `isToday`-dependent key.
+ * This hook previously owned a private `SOLVE_CACHE`; it was per-session,
+ * cityId-keyed rather than locationKey-keyed, and invisible to every other
+ * surface. Do not reintroduce a local cache here.
  */
-const SOLVE_CACHE = new Map<string, Solved>();
-const SOLVE_CACHE_MAX = 90; // ~a season of daily navigation; bounds memory.
 
-function solveCacheKey(
-  cityId: string,
-  calendarSystem: CalendarSystem,
-  date: Date,
-  isToday: boolean
-): string {
-  const day = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-  return `${cityId}|${calendarSystem}|${day}|${isToday ? 1 : 0}`;
+/** The three civil days a day's muhurat needs: yesterday (pre-dawn), today, tomorrow. */
+function neededDateKeys(dateMs: number, isToday: boolean): string[] {
+  const keys = [dateKeyFor(new Date(dateMs)), dateKeyFor(new Date(dateMs + DAY_MS))];
+  if (isToday) keys.push(dateKeyFor(new Date(dateMs - DAY_MS)));
+  return keys;
 }
 
-function writeSolveCache(key: string, value: Solved): void {
-  SOLVE_CACHE.set(key, value);
-  if (SOLVE_CACHE.size > SOLVE_CACHE_MAX) {
-    const oldest = SOLVE_CACHE.keys().next().value;
-    if (oldest !== undefined) SOLVE_CACHE.delete(oldest);
+/**
+ * Compose the day's windows from the store. `allowSolve: false` reads cache-only
+ * and returns null on any miss — that is what lets a re-mount paint instantly
+ * without a solve, and what keeps the astronomy off the render path.
+ */
+function composeSolved(
+  dateMs: number,
+  isToday: boolean,
+  opts: ScanOptions,
+  allowSolve: boolean
+): Solved | null {
+  const map = dayStoreFor(scopeKeyFor(opts.location, opts.calendarSystem));
+  const read = (at: number): PanchangData | null => {
+    const d = new Date(at);
+    if (!allowSolve) return map.get(dateKeyFor(d))?.p ?? null;
+    return cachedDayInputs(map, d, opts).inputs.p;
+  };
+
+  const d = new Date(dateMs);
+  const today = read(dateMs);
+  const tomorrow = read(dateMs + DAY_MS);
+  if (!today || !tomorrow) return null;
+  // Guard against degenerate/inverted spans (bad input / polar latitudes).
+  if (today.sunset <= today.sunrise || tomorrow.sunrise <= today.sunset) return null;
+
+  const md = computeMuhuratDay(today.sunrise, today.sunset, tomorrow.sunrise, d.getDay());
+  const nowPeriods = [...md.dayChoghadiya, ...md.nightChoghadiya];
+
+  // Pre-dawn correction: before today's sunrise, the active choghadiya belongs to
+  // yesterday's night window. Only relevant when `date` is today.
+  if (isToday) {
+    const yd = new Date(dateMs - DAY_MS);
+    const yesterday = read(dateMs - DAY_MS);
+    if (!yesterday) return null;
+    if (yesterday.sunset > yesterday.sunrise && today.sunrise > yesterday.sunset) {
+      const prev = computeMuhuratDay(yesterday.sunrise, yesterday.sunset, today.sunrise, yd.getDay());
+      nowPeriods.unshift(...prev.nightChoghadiya);
+    }
   }
+
+  return { md, panchang: today, nowPeriods };
 }
 
 export function useMuhurat(
@@ -92,19 +139,23 @@ export function useMuhurat(
 ): UseMuhuratResult {
   const { location } = usePanchangLocation();
   const dateMs = date.getTime();
-  const cityId = location.cityId;
   const isToday = isSameLocalDay(date, new Date());
-  const cacheKey = solveCacheKey(cityId, calendarSystem, date, isToday);
+  const scope = scopeKeyFor(location, calendarSystem);
+  const cacheKey = `${scope}|${dateKeyFor(date)}|${isToday ? 1 : 0}`;
 
-  // Seed from the cache so a previously-solved date renders instantly (no null
-  // flash / skeleton) on re-mount or re-navigation.
-  const [solved, setSolved] = useState<Solved | null>(() => SOLVE_CACHE.get(cacheKey) ?? null);
+  // Seed from the shared store so an already-solved day renders instantly (no
+  // null flash / skeleton) on re-mount, re-navigation, or after another surface
+  // solved it. Cache-only — never a solve on the render path.
+  const [solved, setSolved] = useState<Solved | null>(() =>
+    composeSolved(dateMs, isToday, { calendarSystem, location }, false)
+  );
 
   useEffect(() => {
-    const cached = SOLVE_CACHE.get(cacheKey);
-    if (cached) {
-      // Synchronous set (no deferral) — the solve is already done for this day.
-      setSolved(cached);
+    const opts: ScanOptions = { calendarSystem, location };
+    const warm = composeSolved(dateMs, isToday, opts, false);
+    if (warm) {
+      // Synchronous set (no deferral) — every day it needs is already solved.
+      setSolved(warm);
       return;
     }
 
@@ -112,31 +163,18 @@ export function useMuhurat(
     setSolved(null);
     let handle: ReturnType<typeof setTimeout> | undefined;
     const interaction = InteractionManager.runAfterInteractions(() => {
-      handle = setTimeout(() => {
+      handle = setTimeout(async () => {
         try {
-          const d = new Date(dateMs);
-          const today = computePanchangForDate(d, { calendarSystem, location });
-          const tomorrow = computePanchangForDate(new Date(dateMs + DAY_MS), { calendarSystem, location });
-          // Guard against degenerate/inverted spans (bad input / polar latitudes).
-          if (today.sunset <= today.sunrise || tomorrow.sunrise <= today.sunset) return;
-
-          const md = computeMuhuratDay(today.sunrise, today.sunset, tomorrow.sunrise, d.getDay());
-          const nowPeriods = [...md.dayChoghadiya, ...md.nightChoghadiya];
-
-          // Pre-dawn correction: before today's sunrise, the active choghadiya
-          // belongs to yesterday's night window. Only relevant when `date` is today.
-          if (isToday) {
-            const yd = new Date(dateMs - DAY_MS);
-            const yesterday = computePanchangForDate(yd, { calendarSystem, location });
-            if (yesterday.sunset > yesterday.sunrise && today.sunrise > yesterday.sunset) {
-              const prev = computeMuhuratDay(yesterday.sunrise, yesterday.sunset, today.sunrise, yd.getDay());
-              nowPeriods.unshift(...prev.nightChoghadiya);
-            }
-          }
-
-          const value: Solved = { md, panchang: today, nowPeriods };
-          writeSolveCache(cacheKey, value);
-          if (!cancelled) setSolved(value);
+          // Disk → memory first: a day persisted by an earlier session (or by the
+          // finder's sweep) must not be re-solved. Skipped entirely when the range
+          // is already warm, so this costs nothing on a hit.
+          await hydratePanchangDays(location, calendarSystem, neededDateKeys(dateMs, isToday));
+          if (cancelled) return;
+          const value = composeSolved(dateMs, isToday, opts, true);
+          if (!cancelled && value) setSolved(value);
+          // Flush whatever this scope has solved so far — including days the
+          // synchronous Panchang hooks computed on the render path.
+          void persistPanchangDays(location, calendarSystem);
         } catch {
           /* invalid input — leave null so consumers show a skeleton */
         }

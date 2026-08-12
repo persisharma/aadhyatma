@@ -1,15 +1,22 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { InteractionManager } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { computePanchangForDate } from './engine';
 import {
   getObservancesForDate,
   getObservancesForMonth,
   getUpcomingObservances,
 } from './festivalEngine';
 import { subscribeObservanceStore } from './observanceStore';
+import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
+import { hydratePanchangDays, persistPanchangDays } from './panchangDayCache';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
-import type { CalendarSystem, PanchangData, ResolvedFestival, ResolvedObservance } from './types';
+import type {
+  CalendarSystem,
+  PanchangComputationOptions,
+  PanchangData,
+  ResolvedFestival,
+  ResolvedObservance,
+} from './types';
 
 export type UsePanchangResult = {
   today: PanchangData;
@@ -24,6 +31,35 @@ export type UsePanchangSelectionResult = {
 };
 
 const CALENDAR_SYSTEM_STORAGE_KEY = '@vedansh:panchang-calendar-system';
+
+/**
+ * Every panchang solve in this module goes through the shared, persisted
+ * `panchangDayStore` rather than a local `useMemo`/`useState` — so a day solved
+ * by the Today strip, the Muhurat Finder's sweep, or a previous app launch is
+ * free here, and a day solved here is free for them.
+ *
+ * `solvePanchangDay` computes on a miss (the synchronous hooks below must return
+ * a value, exactly as their `useMemo`s did); `warmPanchangDay` is the cache-only
+ * read, for the deferred paths that must not touch astronomy on the render path.
+ */
+function solvePanchangDay(
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location: PanchangComputationOptions['location'] & object
+): PanchangData {
+  const opts = { calendarSystem, location };
+  const map = dayStoreFor(scopeKeyFor(location, calendarSystem));
+  return cachedDayInputs(map, date, opts).inputs.p;
+}
+
+function warmPanchangDay(
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location: PanchangComputationOptions['location'] & object
+): PanchangData | null {
+  const map = dayStoreFor(scopeKeyFor(location, calendarSystem));
+  return map.get(dateKeyFor(date))?.p ?? null;
+}
 
 // Upcoming observances are limited to the next month, resolved asynchronously.
 const UPCOMING_WINDOW_DAYS = 30;
@@ -129,9 +165,11 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
   const storeVersion = useObservanceStoreVersion();
 
   // Today's panchang is cheap (~4ms — a handful of astronomy solves), so it is
-  // safe to compute on the render path. Memoised per calendar day.
+  // safe to compute on the render path. Read through the shared store, so it is
+  // usually already solved (by the Today strip, a previous launch, or the finder)
+  // and costs nothing.
   const today = useMemo(
-    () => computePanchangForDate(new Date(todayKey), { calendarSystem, location }),
+    () => solvePanchangDay(new Date(todayKey), calendarSystem, location),
     [todayKey, calendarSystem, location]
   );
 
@@ -217,13 +255,26 @@ export function usePanchangForSelection(
   // laptop but enough to stutter the tab on a real device, so we never run them
   // synchronously during render: the screen paints immediately (calendar + skeleton) and
   // the panchang fills in a frame later.
-  const [panchang, setPanchang] = useState<PanchangData | null>(null);
+  // Seeded cache-only, so re-selecting a day already in the store paints without
+  // a skeleton flash; the deferred branch below only runs on a genuine miss.
+  const [panchang, setPanchang] = useState<PanchangData | null>(() =>
+    warmPanchangDay(new Date(dateMs), calendarSystem, location)
+  );
   useEffect(() => {
     let cancelled = false;
+    const warm = warmPanchangDay(new Date(dateMs), calendarSystem, location);
+    if (warm) {
+      setPanchang(warm);
+      return;
+    }
     setPanchang(null);
-    const handle = setTimeout(() => {
-      const result = computePanchangForDate(new Date(dateMs), { calendarSystem, location });
+    const handle = setTimeout(async () => {
+      // Disk → memory before solving; free when the day is already warm.
+      await hydratePanchangDays(location, calendarSystem, [dateKeyFor(new Date(dateMs))]);
+      if (cancelled) return;
+      const result = solvePanchangDay(new Date(dateMs), calendarSystem, location);
       if (!cancelled) setPanchang(result);
+      void persistPanchangDays(location, calendarSystem);
     }, 0);
     return () => {
       cancelled = true;
@@ -293,7 +344,7 @@ export function usePanchangForDate(date: Date, calendarSystem: CalendarSystem = 
   const dateMs = date.getTime();
   const { location } = usePanchangLocation();
   return useMemo(
-    () => computePanchangForDate(new Date(dateMs), { calendarSystem, location }),
+    () => solvePanchangDay(new Date(dateMs), calendarSystem, location),
     [dateMs, calendarSystem, location]
   );
 }

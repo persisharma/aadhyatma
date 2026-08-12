@@ -15,6 +15,9 @@ module.exports = {
     '<rootDir>/src/navigation/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/theme/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/notifications/__tests__/**/*.jest.test.{ts,tsx}',
+    // Panchang Jest suites live in the nested __tests__/jest/ dir: test:engine
+    // globs __tests__/*.test.ts straight into `tsx --test`, which cannot run them.
+    '<rootDir>/src/panchang/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/audio/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/data/__tests__/**/*.jest.test.{ts,tsx}',
     // src/readAloud holds no tsx scripts, so the plain suffix is safe here.
