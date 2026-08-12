@@ -98,7 +98,7 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
             }}
             style={{ width: SHARE_CARD_WIDTH, backgroundColor: colors.parchment, padding: 18 }}
           >
-            <MuhuratCardBody p={p} md={md} variant="share" cityLabel={cityLabel} brand />
+            <MuhuratCardBody p={p} md={md} variant="share" cityLabel={cityLabel} brand isToday={muhurat.isToday} />
           </View>
         </View>
       )}
@@ -115,7 +115,9 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
           </Pressable>
           <Text style={{ flex: 1, fontFamily: titleFontByLang(lang), fontSize: 16, color: colors.ink }}>
-            {contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
+            {muhurat.isToday
+              ? contentByLang(lang, 'आज का पंचांग', "Today's Panchang")
+              : contentByLang(lang, 'इस दिन का पंचांग', "This Day's Panchang")}
           </Text>
           <ShareButton
             onPress={onShare}
@@ -127,7 +129,7 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
 
         <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           {ready ? (
-            <MuhuratCardBody p={p} md={md} variant="full" nowStartMs={nowStartMs} cityLabel={cityLabel} />
+            <MuhuratCardBody p={p} md={md} variant="full" nowStartMs={nowStartMs} cityLabel={cityLabel} isToday={muhurat.isToday} />
           ) : (
             <View style={{ paddingVertical: 72, alignItems: 'center' }}>
               <ActivityIndicator color={colors.saffron} />

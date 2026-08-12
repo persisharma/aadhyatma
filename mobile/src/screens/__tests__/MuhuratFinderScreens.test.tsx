@@ -15,7 +15,10 @@ import MuhuratResultsScreen from '@/screens/MuhuratResultsScreen';
 import MuhuratDayDetailScreen from '@/screens/MuhuratDayDetailScreen';
 import AbujhDaysScreen from '@/screens/AbujhDaysScreen';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
+import MuhuratCardBody from '@/components/MuhuratCardBody';
 import { EVENT_RULES } from '@/panchang/eventMuhurat';
+import { computePanchangForDate } from '@/panchang/engine';
+import { computeMuhuratDay } from '@/panchang/muhurat';
 
 const mockNavigation = { goBack: jest.fn(), navigate: jest.fn() };
 
@@ -225,4 +228,28 @@ test('MuhuratFinderDoor carries the NEW badge and fires its onPress', () => {
   });
   expect(onPress).toHaveBeenCalled();
   act(() => r.unmount());
+});
+
+// A finder result day opens the shipped MuhuratDetail for a FUTURE date
+// (design.md §60). The card must not claim to be "आज का पंचांग" (today's) when
+// it isn't — it reads "इस दिन का पंचांग" instead.
+test('MuhuratCardBody titles a non-today date "इस दिन का पंचांग", not "आज का"', () => {
+  const d = new Date(2026, 10, 26); // 26 Nov 2026 — the golden first-after Griha Pravesh day
+  const p = computePanchangForDate(d);
+  const next = computePanchangForDate(new Date(2026, 10, 27));
+  const md = computeMuhuratDay(p.sunrise, p.sunset, next.sunrise, d.getDay());
+
+  const today = renderWithLang(
+    <MuhuratCardBody p={p} md={md} variant="full" cityLabel="उज्जैन" isToday />
+  );
+  expect(texts(today)).toContain('आज का पंचांग');
+  expect(texts(today)).not.toContain('इस दिन का पंचांग');
+  act(() => today.unmount());
+
+  const otherDay = renderWithLang(
+    <MuhuratCardBody p={p} md={md} variant="full" cityLabel="उज्जैन" isToday={false} />
+  );
+  expect(texts(otherDay)).toContain('इस दिन का पंचांग');
+  expect(texts(otherDay)).not.toContain('आज का पंचांग');
+  act(() => otherDay.unmount());
 });
