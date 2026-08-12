@@ -70,13 +70,19 @@ const persistedFor = (scope: string): Set<string> => {
 };
 
 /**
- * How far into the past a persisted day stays useful. `useMuhurat`'s pre-dawn
- * correction reads YESTERDAY's night choghadiya (before today's sunrise the
- * active window belongs to yesterday), so dropping everything before today would
- * leave Home solving one day on every cold start. One day back is all any reader
- * needs; two-days-old keys are dead weight and get purged.
+ * How far into the past a persisted day stays useful.
+ *
+ * One day back is the hard requirement: `useMuhurat`'s pre-dawn correction reads
+ * YESTERDAY's night choghadiya (before today's sunrise the active window belongs
+ * to yesterday), so a today-onward cutoff left Home solving one day on every cold
+ * start. The second day is margin — the Panchang tab's date picker can step back
+ * a couple of days, and a future reader that needs one more day of history then
+ * degrades to a cache miss rather than silently re-solving every launch.
+ *
+ * Cheap at this size: two extra keys against a ~262-day scan horizon (~0.7% more
+ * storage). Anything older is dead weight and is purged on hydrate.
  */
-const RETAINED_PAST_DAYS = 1;
+const RETAINED_PAST_DAYS = 2;
 
 /** The oldest civil day still worth keeping — the cutoff for BOTH persist and purge. */
 function oldestUsefulDateKey(): string {

@@ -128,7 +128,7 @@ describe('hydratePanchangDays', () => {
 
   test('purges too-old and stale-version keys', async () => {
     const scope = scopeKeyFor(UJJAIN, SYSTEM);
-    const past = panchangDayStorageKey(scope, dayKeyFromToday(-2));
+    const past = panchangDayStorageKey(scope, dayKeyFromToday(-3));
     const stale = `@vedansh:panchang-days:v${PANCHANG_DAY_CACHE_VERSION - 1}:${scope}:${dayKeyFromToday(3)}`;
     const future = panchangDayStorageKey(scope, dayKeyFromToday(3));
     await AsyncStorage.multiSet([
@@ -169,22 +169,25 @@ describe('hydratePanchangDays', () => {
 });
 
 describe('persistPanchangDays', () => {
-  test('writes from yesterday onward and skips older days', async () => {
+  test('keeps the retained past window and skips anything older', async () => {
     const scope = scopeKeyFor(UJJAIN, SYSTEM);
     const map = dayStoreFor(scope);
-    const stale = dayKeyFromToday(-2);
+    const stale = dayKeyFromToday(-3);
+    const twoBack = dayKeyFromToday(-2);
     const yesterday = dayKeyFromToday(-1);
     const today = dayKeyFromToday(0);
     const tomorrow = dayKeyFromToday(1);
-    [stale, yesterday, today, tomorrow].forEach((k) => map.set(k, fakeDay(k)));
+    [stale, twoBack, yesterday, today, tomorrow].forEach((k) => map.set(k, fakeDay(k)));
 
     await persistPanchangDays(UJJAIN, SYSTEM);
 
     const keys = await AsyncStorage.getAllKeys();
-    // Two days old is dead weight — nothing reads it again.
+    // Beyond RETAINED_PAST_DAYS nothing reads it again — dead weight.
     expect(keys).not.toContain(panchangDayStorageKey(scope, stale));
-    // Yesterday IS kept: useMuhurat's pre-dawn correction reads yesterday's night
-    // choghadiya, so dropping it would make Home solve a day on every cold start.
+    // Yesterday is the hard requirement: useMuhurat's pre-dawn correction reads
+    // yesterday's night choghadiya, so dropping it made Home solve a day on every
+    // cold start. The second day back is margin for the Panchang date picker.
+    expect(keys).toContain(panchangDayStorageKey(scope, twoBack));
     expect(keys).toContain(panchangDayStorageKey(scope, yesterday));
     expect(keys).toContain(panchangDayStorageKey(scope, today));
     expect(keys).toContain(panchangDayStorageKey(scope, tomorrow));
