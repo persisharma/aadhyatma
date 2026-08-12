@@ -15,8 +15,8 @@
  * which is NOT strict mode, so a frozen-object write silently no-ops instead of
  * throwing — a freeze-only guard would pass while the mutation went undetected.
  * Freezing is kept as a second, louder net for strict-mode callers, but the
- * value comparison is what actually holds the line. `detectsMutation` below proves
- * the harness is not vacuous.
+ * value comparison is what actually holds the line. The first test below
+ * ("the guard detects a mutation") proves the harness is not vacuous.
  *
  * If this fails after you add a feature: make the consumer read-only, or clone
  * before mutating. Do not relax the assertion.
