@@ -122,6 +122,16 @@ export default function HomeScreen({ navigation }: Props) {
           panchangTabTarget('PanchangHome', { initialTab: 'jyotish' })
         ),
     };
+    const muhuratTile: TileItem = {
+      key: 'muhurat',
+      nameHi: 'मुहूर्त',
+      nameEn: 'Muhurat',
+      status: 'active',
+      icon: iconFor('muhurat'),
+      hasNew: true,
+      onPress: () =>
+        rootNav.navigate('PanchangTab', panchangTabTarget('MuhuratFinder', undefined)),
+    };
     const purposeTile: TileItem = {
       key: 'purpose',
       nameHi: 'उद्देश्य',
@@ -155,11 +165,12 @@ export default function HomeScreen({ navigation }: Props) {
             ? navigation.navigate('TheerthMap', {})
             : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
       });
-      if (c.id === 'japam') result.push(vratTile, kundaliTile);
+      if (c.id === 'japam') result.push(vratTile, kundaliTile, muhuratTile);
       if (c.id === 'theerth') result.push(deityTile, purposeTile);
     }
-    // नित्य साधना closes the grid at 15 tiles so every row is a full 3 (was 14
-    // → an orphan pair in the last row). Same RoutineToday target as the banner.
+    // नित्य साधना closes the grid. With मुहूर्त the count is 16 = 5 full rows
+    // + this closer, which renders full-width below (PRD-16; design.md §18) so
+    // the grid still ends clean rather than on an orphan pair.
     result.push(nityaSadhnaTile);
     return result;
   }, [hasNewInCategory, navigation, rootNav]);
@@ -323,7 +334,9 @@ export default function HomeScreen({ navigation }: Props) {
             {tiles.map((tile) => (
               <View
                 key={tile.key}
-                style={{ width: tileWidth }}
+                // नित्य साधना is the grid's full-width closing row (design.md §18);
+                // every other tile keeps the 3-column width.
+                style={{ width: tile.key === 'routine' ? tileWidth * 3 + 2 * gridGap : tileWidth }}
                 ref={
                   tile.key === 'japam'
                     ? japaTileRef

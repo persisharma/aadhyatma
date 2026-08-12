@@ -1,3 +1,4 @@
+import type { OccasionId } from '@/panchang/eventMuhurat';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
@@ -87,13 +88,24 @@ export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
 export type PanchangStackParamList = {
-  PanchangHome: { initialTab?: PanchangHomeMode; dateMs?: number } | undefined;
+  PanchangHome:
+    | {
+        initialTab?: PanchangHomeMode;
+        dateMs?: number;
+        /** PRD-16: ring these days (epoch ms) on the month calendar for an occasion. */
+        muhuratOverlay?: { occasionId: OccasionId; days: number[] };
+      }
+    | undefined;
   ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
   ObservanceDetail: { ruleId: string };
   KathaLibrary: undefined;
   MyVrat: undefined;
   // Daily Muhurat detail (Choghadiya / Rahu Kaal / Abhijit) — PRD-14
   MuhuratDetail: { dateMs: number };
+  MuhuratFinder: undefined;
+  MuhuratResults: { occasionId: OccasionId };
+  MuhuratDayDetail: { occasionId: OccasionId; dateMs: number };
+  AbujhDays: undefined;
   Kundali: { editing?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
   GunaMilan: undefined;

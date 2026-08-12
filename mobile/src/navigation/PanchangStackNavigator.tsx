@@ -6,6 +6,10 @@ import ObservanceDetailScreen from '@/screens/ObservanceDetailScreen';
 import KathaLibraryScreen from '@/screens/KathaLibraryScreen';
 import MyVratScreen from '@/screens/MyVratScreen';
 import MuhuratDetailScreen from '@/screens/MuhuratDetailScreen';
+import MuhuratFinderScreen from '@/screens/MuhuratFinderScreen';
+import MuhuratResultsScreen from '@/screens/MuhuratResultsScreen';
+import MuhuratDayDetailScreen from '@/screens/MuhuratDayDetailScreen';
+import AbujhDaysScreen from '@/screens/AbujhDaysScreen';
 import KundaliScreen from '@/screens/KundaliScreen';
 import RashifalScreen from '@/screens/RashifalScreen';
 import GunaMilanScreen from '@/screens/GunaMilanScreen';
@@ -43,6 +47,26 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="MuhuratDetail"
         component={MuhuratDetailScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="MuhuratFinder"
+        component={MuhuratFinderScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="MuhuratResults"
+        component={MuhuratResultsScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="MuhuratDayDetail"
+        component={MuhuratDayDetailScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="AbujhDays"
+        component={AbujhDaysScreen}
         options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen

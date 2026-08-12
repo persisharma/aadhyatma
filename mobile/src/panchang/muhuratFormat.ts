@@ -40,6 +40,17 @@ export function isSameLocalDay(a: Date, b: Date): boolean {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 }
 
+/** "17 Aug" / "17 अग" — the finder's result-card date (weekday rendered separately). */
+export function formatShortDate(d: Date, lang: Lang): string {
+  const month =
+    lang === 'en'
+      ? MONTHS_SHORT_EN[d.getMonth()]
+      : lang === 'hi'
+        ? MONTHS_SHORT_HI[d.getMonth()]
+        : transliterateDevanagari(MONTHS_SHORT_HI[d.getMonth()], lang);
+  return `${d.getDate()} ${month}`;
+}
+
 /**
  * Clock for an anga/muhurat end instant, with a short-date suffix whenever it
  * falls on a different civil day than `referenceDay` — a bare "2:04 AM" for

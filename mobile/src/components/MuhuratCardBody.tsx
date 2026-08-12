@@ -39,6 +39,7 @@ export default function MuhuratCardBody({
   nowStartMs,
   cityLabel,
   brand = false,
+  isToday = true,
 }: {
   p: PanchangData;
   md: MuhuratDay;
@@ -48,6 +49,10 @@ export default function MuhuratCardBody({
   nowStartMs?: number | null;
   cityLabel: string;
   brand?: boolean;
+  /** Titles the card "आज का पंचांग" when true (the daily surface); a specific
+   * future/past day (reached via the Muhurat Finder, design.md §60) reads
+   * "इस दिन का पंचांग" so it can't claim to be today. Defaults true. */
+  isToday?: boolean;
 }) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
@@ -112,7 +117,9 @@ export default function MuhuratCardBody({
     <View>
       <Text style={[styles.om, { color: colors.saffron, fontFamily: typography.readerTitle.fontFamily }]}>ॐ</Text>
       <Text style={[styles.title, { color: colors.ink, fontFamily: titleFont }]}>
-        {contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
+        {isToday
+          ? contentByLang(lang, 'आज का पंचांग', "Today's Panchang")
+          : contentByLang(lang, 'इस दिन का पंचांग', "This Day's Panchang")}
       </Text>
       <Text style={[styles.dateline, { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : bodyFont }]}>
         {contentByLang(lang, p.vara.nameHi, p.vara.nameEn)}, {fmtDate(p.date, lang)} · {contentByLang(lang, `संवत ${p.vikramSamvat}`, `Samvat ${p.vikramSamvat}`)}

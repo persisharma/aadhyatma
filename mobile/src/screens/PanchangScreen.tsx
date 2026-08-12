@@ -12,10 +12,12 @@ import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
+import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
 import TextField from '@/components/TextField';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
+import { getEventRule } from '@/panchang/eventMuhurat';
 import {
   NAKSHATRA_NAMES_EN,
   NAKSHATRA_NAMES_HI,
@@ -159,6 +161,21 @@ export default function PanchangScreen({ route }: Props) {
     });
     return tags;
   }, [monthObservances]);
+  // PRD-16 month-view overlay: ring an occasion's muhurat days on the same
+  // grid (one calendar vocabulary — the finder marks it, it doesn't fork it).
+  // Contextual: exists only while the param is set; ✕ clears it.
+  const muhuratOverlay = route.params?.muhuratOverlay;
+  const overlayKeys = useMemo(
+    () => new Set((muhuratOverlay?.days ?? []).map((ms) => dateKey(new Date(ms)))),
+    [muhuratOverlay]
+  );
+  const overlayRule = muhuratOverlay ? getEventRule(muhuratOverlay.occasionId) : null;
+  // The rings live on the month grid — arriving with an overlay must open it,
+  // or the chip and rings would sit behind a collapsed "Month view".
+  useEffect(() => {
+    if (muhuratOverlay) setCalendarExpanded(true);
+  }, [muhuratOverlay]);
+
   const calendarCells = useMemo(
     () => buildCalendarMonth({
       visibleMonth,
@@ -440,6 +457,26 @@ export default function PanchangScreen({ route }: Props) {
                     <Text style={{ color: colors.inkSoft, fontSize: 18 }}>›</Text>
                   </Pressable>
                 </View>
+                {overlayRule && (
+                  <View
+                    testID="muhurat-overlay-chip"
+                    style={[styles.overlayChip, { backgroundColor: colors.goldTint, borderColor: colors.divider, borderRadius: radii.md }]}
+                  >
+                    <Text style={{ flex: 1, fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: 12.5, color: colors.saffronDeep, lineHeight: 20 }}>
+                      {contentByLang(lang, overlayRule.nameHi, overlayRule.nameEn)}
+                      {contentByLang(lang, ' — शुभ दिन घेरे में', ' — muhurat days ringed')}
+                    </Text>
+                    <Pressable
+                      testID="muhurat-overlay-clear"
+                      accessibilityRole="button"
+                      accessibilityLabel={contentByLang(lang, 'घेरा हटाएँ', 'Clear muhurat overlay')}
+                      hitSlop={12}
+                      onPress={() => rootNav.setParams({ muhuratOverlay: undefined })}
+                    >
+                      <Text style={{ color: colors.saffron, fontSize: 15 }}>✕</Text>
+                    </Pressable>
+                  </View>
+                )}
                 <View style={styles.weekdayRow}>
                   {(lang === 'en' ? WEEKDAYS_EN : lang === 'hi' ? WEEKDAYS_HI : WEEKDAYS_HI.map((d) => transliterateDevanagari(d, lang))).map((day) => (
                     <Text key={day} style={[styles.weekdayText, { color: colors.inkMuted }]}>
@@ -455,9 +492,10 @@ export default function PanchangScreen({ route }: Props) {
                         key={cell.key}
                         onPress={() => handleSelectDate(cell.date)}
                         accessibilityRole="button"
-                        accessibilityLabel={`Select ${formatFullDate(cell.date, 'en')}${observanceTag ? ` ${calendarTagLabel(observanceTag, 'en')}` : ''}`}
+                        accessibilityLabel={`Select ${formatFullDate(cell.date, 'en')}${observanceTag ? ` ${calendarTagLabel(observanceTag, 'en')}` : ''}${overlayKeys.has(cell.key) ? ' Muhurat day.' : ''}`}
                         style={({ pressed }) => [
                           styles.dateCell,
+                          overlayKeys.has(cell.key) && { backgroundColor: colors.goldTint, borderColor: colors.gold, borderWidth: 1.5 },
                           cell.isSelected && { backgroundColor: colors.saffronTint, borderColor: colors.saffron },
                           !cell.isSelected && cell.isToday && { borderColor: colors.gold },
                           pressed && { opacity: 0.7 },
@@ -528,6 +566,11 @@ export default function PanchangScreen({ route }: Props) {
               onViewAll={() => rootNav.navigate('MuhuratDetail', { dateMs: selectedDate.getTime() })}
             />
           </View>
+
+          {/* Event Muhurat Finder door (PRD-16) — between the glance card and the
+              anga grid: the "is now auspicious?" reader is the user with a date
+              decision to make. Additive; nothing above or below moves. */}
+          <MuhuratFinderDoor onPress={() => rootNav.navigate('MuhuratFinder')} />
 
           {/* Two-tier anga grid: Tithi + Nakshatra lead (the two anchors users read
               first) on elevated off-white cards; Yoga + Karana sit as a quieter,
@@ -1883,6 +1926,7 @@ const styles = StyleSheet.create({
   // hitSlop={10} at the call site takes the real touch target to 54, clearing
   // the 44 minimum — the size exception is visual only (design.md §12).
   monthButton: { width: 34, height: 34, borderWidth: 1, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
+  overlayChip: { flexDirection: 'row', alignItems: 'center', gap: 10, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 8, marginBottom: 8, minHeight: 38 },
   weekdayRow: { flexDirection: 'row', marginBottom: 4 },
   weekdayText: { width: `${100 / 7}%`, textAlign: 'center', fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
   dateGrid: { flexDirection: 'row', flexWrap: 'wrap' },
