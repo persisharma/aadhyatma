@@ -9,10 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
 <style>
   :root{
-    --parchment:#f3e7c9; --parchment-soft:#f8efd6; --parchment-hi:#fff5e0;
-    --gradient-end:#e9d9b1; --gold:#a67c34; --gold-soft:#c9b896; --gold-tint:#d8c393;
-    --saffron:#b8621b; --saffron-deep:#8a3e0b; --saffron-tint:rgba(184,98,27,0.10);
-    --ink:#2f1e10; --ink-soft:#5c4326; --ink-muted:#8a6a47; --divider:#d9c9a6;
+    /* Mirrors mobile/src/theme/colors.ts exactly (Aug 2026) — deepened AAA/AA inks,
+       alpha divider, 0.12/0.14 tints, warm #3C1E0A shadow, card gradient tokens. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);   /* elevation.subtle */
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);     /* elevation.card */
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);  /* elevation.raised */
     --sans:'Inter',system-ui,sans-serif;
     --serif:'Cormorant Garamond',serif;
     --deva:'Noto Serif Devanagari',serif;
@@ -61,7 +68,7 @@
   /* ObservanceCard (design.md §33.5) — parchment-soft, radii.md, elevation.card,
      category pill + deity + name + description + action pills */
   .obscard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;
-    padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(47,30,16,.08)}
+    padding:14px;margin-bottom:12px;box-shadow:var(--shadow-card)}
   .catpill{display:inline-block;font-family:var(--deva);font-size:10.5px;font-weight:600;
     color:var(--saffron-deep);background:var(--saffron-tint);border-radius:10px;padding:3px 10px}
   .obscard .odeity{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:7px}
@@ -81,13 +88,13 @@
   .actionrow .att{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
   .actionrow .ats{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
   .actionrow .chev{color:var(--saffron);font-size:17px}
-  .tag{font-size:10px;font-weight:600;color:var(--saffron-deep);background:var(--saffron-tint);padding:2px 7px;border-radius:8px;font-family:var(--sans)}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
 
   /* samagri checklist */
   .convline{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-bottom:12px}
-  .modeseg{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:3px;margin-bottom:14px}
+  .modeseg{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:3px;margin-bottom:14px}
   .modeseg .seg{flex:1;text-align:center;padding:9px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--ink-muted);min-height:38px}
-  .modeseg .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:0 1px 4px rgba(47,30,16,.10)}
+  .modeseg .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:var(--shadow-subtle)}
   .srow{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid var(--divider);min-height:44px}
   /* routine-item check circle (design.md §31 Today's Practice), not a square box */
   .srow .box{width:26px;height:26px;border:2px solid var(--saffron);border-radius:50%;background:var(--parchment-hi);flex:none;
@@ -98,7 +105,7 @@
   .srow .qty{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted)}
   .opt{font-size:10px;font-weight:600;color:var(--ink-muted);border:1px solid var(--divider);padding:2px 7px;border-radius:8px;font-family:var(--sans)}
   .btn{display:block;width:100%;text-align:center;background:var(--saffron);color:#fff8ec;border:none;
-    border-radius:12px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:12px;min-height:48px}
+    border-radius:14px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:12px;min-height:48px}
   .btn.ghost{background:transparent;border:1px solid var(--gold-tint);color:var(--saffron)}
   .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.6}
 
@@ -112,21 +119,21 @@
   .dots i.on{background:var(--saffron);width:16px;border-radius:3px}
   .ctitle{font-family:var(--deva);font-size:21px;color:var(--ink);text-align:center;margin-bottom:10px}
   .cinstr{font-family:var(--deva);font-size:15.5px;color:var(--ink-soft);line-height:2;text-align:center;padding:0 6px}
-  .mantrabox{border:1px solid var(--gold);background:var(--parchment-hi);border-radius:16px;padding:16px;margin:16px 0 8px;text-align:center}
+  .mantrabox{border:1px solid var(--gold);background:var(--parchment-hi);border-radius:18px;padding:16px;margin:16px 0 8px;text-align:center}
   .mantrabox .orn{font-family:var(--deva);color:var(--gold);font-size:13px;letter-spacing:5px}
   .mantrabox .m{font-family:var(--deva);font-size:17px;color:var(--ink);line-height:2;margin-top:8px}
   .mantrabox .iast{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);margin-top:8px;line-height:1.7}
   .speak{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--gold-tint);background:var(--parchment-soft);
     border-radius:20px;padding:8px 16px;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);margin-top:12px;min-height:36px}
-  .handoff{border:1.4px solid var(--saffron);background:linear-gradient(120deg,var(--parchment-hi),var(--parchment-soft));
-    border-radius:16px;padding:15px;margin:16px 0 8px;text-align:center}
+  .handoff{border:1.4px solid var(--saffron);background:linear-gradient(120deg,var(--card-from),var(--parchment-soft));
+    border-radius:18px;padding:15px;margin:16px 0 8px;text-align:center}
   .handoff .ht{font-family:var(--deva);font-size:16px;color:var(--ink)}
   .handoff .hs{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:3px}
   .cnav{position:absolute;bottom:0;left:0;right:0;display:flex;gap:10px;padding:12px 16px 18px;
     background:linear-gradient(transparent,var(--gradient-end) 40%)}
-  .cnav .prev{flex:1;text-align:center;border:1px solid var(--gold-tint);color:var(--saffron);border-radius:12px;
+  .cnav .prev{flex:1;text-align:center;border:1px solid var(--divider);color:var(--saffron);border-radius:14px;
     padding:13px;font-family:var(--deva);font-size:14px;background:var(--parchment-soft);min-height:48px}
-  .cnav .next{flex:2;text-align:center;background:var(--saffron);color:#fff8ec;border-radius:12px;
+  .cnav .next{flex:2;text-align:center;background:var(--saffron);color:#fff8ec;border-radius:14px;
     padding:13px;font-family:var(--deva);font-size:14px;min-height:48px}
   .awake{font-size:10.5px;color:var(--ink-muted);font-family:var(--sans);text-align:center;margin-top:10px}
 
@@ -140,15 +147,15 @@
   /* catalog — LibraryCard active variant (design.md §8):
      gradient #FFF5E0→#F5DEAC, border rgba(184,98,27,.4), elevation.raised,
      letter thumb #F8D291→#E0A255, hi name / en italic / sub meta, saffron › */
-  .libcard{display:flex;align-items:center;gap:12px;border:1px solid rgba(184,98,27,.4);
-    background:linear-gradient(120deg,#FFF5E0,#F5DEAC);border-radius:16px;padding:12px 14px;margin-bottom:12px;
-    box-shadow:0 4px 12px rgba(47,30,16,.12)}
-  .libcard .thumb{width:44px;height:44px;border-radius:12px;background:linear-gradient(150deg,#F8D291,#E0A255);
-    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:22px;color:#fff;flex:none}
+  .libcard{display:flex;align-items:center;gap:12px;border:1px solid var(--card-border);
+    background:linear-gradient(120deg,var(--card-from),var(--card-to));border-radius:18px;padding:14px;margin-bottom:12px;
+    box-shadow:var(--shadow-raised)}
+  .libcard .thumb{width:44px;height:44px;border-radius:14px;background:linear-gradient(150deg,#F8D291,#E0A255);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-weight:600;font-size:22px;color:#fff;flex:none}
   .libcard .lc{flex:1;min-width:0}
-  .libcard .lname{font-family:var(--deva);font-size:16px;color:var(--ink)}
-  .libcard .len{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:1px}
-  .libcard .lsub{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);margin-top:3px}
+  .libcard .lname{font-family:var(--deva);font-weight:600;font-size:17px;color:var(--ink)}
+  .libcard .len{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted);margin-top:1px}
+  .libcard .lsub{font-family:var(--sans);font-size:11px;letter-spacing:.4px;color:var(--ink-muted);margin-top:3px}
   .libcard .chev{color:var(--saffron);font-size:18px;flex:none}
 
   .tabbar{position:sticky;bottom:0;height:52px;background:var(--parchment-soft);border-top:1px solid var(--divider);display:flex}

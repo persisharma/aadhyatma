@@ -9,10 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
 <style>
   :root{
-    --parchment:#f3e7c9; --parchment-soft:#f8efd6; --parchment-hi:#fff5e0;
-    --gradient-end:#e9d9b1; --gold:#a67c34; --gold-soft:#c9b896; --gold-tint:#d8c393;
-    --saffron:#b8621b; --saffron-deep:#8a3e0b; --saffron-tint:rgba(184,98,27,0.10);
-    --ink:#2f1e10; --ink-soft:#5c4326; --ink-muted:#8a6a47; --divider:#d9c9a6;
+    /* Mirrors mobile/src/theme/colors.ts exactly (Aug 2026) — deepened AAA/AA inks,
+       alpha divider, 0.12/0.14 tints, warm #3C1E0A shadow, card gradient tokens. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);   /* elevation.subtle */
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);     /* elevation.card */
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);  /* elevation.raised */
     --sans:'Inter',system-ui,sans-serif;
     --serif:'Cormorant Garamond',serif;
     --deva:'Noto Serif Devanagari',serif;
@@ -61,7 +68,7 @@
   .morerow .mtt{font-family:var(--deva);font-size:15.5px;color:var(--ink)}
   .morerow .mts{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
   .morerow .chev{color:var(--saffron);font-size:17px}
-  .tag{font-size:10px;font-weight:600;color:var(--saffron-deep);background:var(--saffron-tint);padding:2px 7px;border-radius:8px;font-family:var(--sans)}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
 
   /* person list — ObservanceList row pattern (design.md §33):
      leading glyph · name + caption · right-aligned next date + relative label; soonest-first */
@@ -74,30 +81,30 @@
   .obsrow .oright{text-align:right;flex:none}
   .obsrow .odate{font-family:var(--deva);font-size:12.5px;color:var(--ink)}
   .obsrow .orel{font-family:var(--sans);font-size:10.5px;font-weight:600;color:var(--ink-muted);margin-top:2px}
-  .ppbanner{border:1px solid var(--gold);background:linear-gradient(120deg,var(--parchment-hi),var(--parchment-soft));
-    border-radius:16px;padding:13px 14px;margin-bottom:14px}
+  .ppbanner{border:1px solid var(--gold);background:linear-gradient(120deg,var(--card-from),var(--parchment-soft));
+    border-radius:18px;padding:13px 14px;margin-bottom:14px}
   .ppbanner .bt{font-family:var(--deva);font-size:14.5px;color:var(--saffron-deep)}
   .ppbanner .bs{font-family:var(--deva);font-size:12px;color:var(--ink-soft);margin-top:3px;line-height:1.6}
   .addbtn{display:block;width:100%;text-align:center;background:var(--parchment-hi);color:var(--saffron-deep);
-    border:1.4px solid var(--gold);border-radius:12px;padding:13px;font-size:14.5px;font-family:var(--deva);margin-top:4px}
+    border:1.4px solid var(--gold);border-radius:14px;padding:13px;font-size:14.5px;font-family:var(--deva);margin-top:4px}
   .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.6}
 
   /* add form */
   .field{margin-bottom:11px}
   .flabel{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans);margin-bottom:4px}
-  .finput{min-height:48px;border:1px solid var(--divider);border-radius:12px;background:var(--parchment-hi);
+  .finput{min-height:48px;border:1px solid var(--divider);border-radius:14px;background:var(--parchment-hi);
     display:flex;align-items:center;padding:0 14px;font-family:var(--deva);font-size:15px;color:var(--ink)}
   .frow{display:flex;gap:10px}
   .frow .field{flex:1}
-  .modeseg{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:3px;margin-bottom:14px}
+  .modeseg{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:3px;margin-bottom:14px}
   .modeseg .seg{flex:1;text-align:center;padding:9px 0;border-radius:9px;font-family:var(--deva);font-size:12.5px;color:var(--ink-muted);min-height:38px}
-  .modeseg .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:0 1px 4px rgba(47,30,16,.10)}
+  .modeseg .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:var(--shadow-subtle)}
   .confirm{border:1px solid var(--gold);background:var(--parchment-hi);border-radius:14px;padding:13px 14px;margin:4px 0 12px}
   .confirm .ct{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans)}
   .confirm .cv{font-family:var(--deva);font-size:16.5px;color:var(--ink);margin-top:3px}
   .confirm .cs{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:3px}
   .btn{display:block;width:100%;text-align:center;background:var(--saffron);color:#fff8ec;border:none;
-    border-radius:12px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:6px;min-height:48px}
+    border-radius:14px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:6px;min-height:48px}
   .btn.ghost{background:transparent;border:1px solid var(--gold-tint);color:var(--saffron)}
 
   /* detail — ObservanceDetail hero pattern (design.md §33):
@@ -140,7 +147,7 @@
   .pill.smaran{border-color:var(--gold);color:var(--ink-soft);background:var(--parchment-soft)}
 
   /* व्रत-पर्व catalog view (design.md §33): search 44/radii.md, pinned My-Vrat-style rows, browse tiles */
-  .searchfield{height:44px;border:1px solid var(--divider);border-radius:12px;background:var(--parchment-hi);
+  .searchfield{height:44px;border:1px solid var(--divider);border-radius:14px;background:var(--parchment-hi);
     display:flex;align-items:center;gap:9px;padding:0 14px;font-family:var(--serif);font-style:italic;
     font-size:13px;color:var(--ink-muted);margin-bottom:12px}
   .pinrow{display:flex;align-items:center;gap:12px;background:var(--gold-tint);border:1.5px solid var(--gold);
@@ -158,8 +165,8 @@
 
   /* Home Today strip (design.md §18/§32 — quieter strip: one observance pill + windows line) */
   .wordmark{text-align:center;font-family:var(--deva);font-size:22px;color:var(--saffron-deep);margin:6px 0 12px;letter-spacing:2px}
-  .todaycard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:16px;padding:13px 14px;margin-bottom:14px;
-    box-shadow:0 2px 8px rgba(47,30,16,.08)}
+  .todaycard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:18px;padding:13px 14px;margin-bottom:14px;
+    box-shadow:var(--shadow-card)}
   .todaycard .tdate{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
   .todaycard .ttithi{font-family:var(--deva);font-size:12px;color:var(--ink-soft);margin-top:2px}
   .todaycard .tpills{display:flex;flex-wrap:wrap;margin-top:9px}
@@ -413,7 +420,7 @@
         <div class="topbar"><div class="toptitle" style="font-size:20px">पंचांग</div><div class="topaction">जयपुर ›</div></div>
         <div class="segment" style="display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:3px;margin-bottom:14px">
           <div style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--ink-muted)">पंचांग</div>
-          <div style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--saffron-deep);font-weight:600;background:var(--parchment-hi);box-shadow:0 1px 4px rgba(47,30,16,.10)">व्रत-पर्व</div>
+          <div style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--saffron-deep);font-weight:600;background:var(--parchment-hi);box-shadow:var(--shadow-subtle)">व्रत-पर्व</div>
           <div style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--ink-muted)">ज्योतिष</div>
         </div>
 
