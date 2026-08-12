@@ -1,6 +1,5 @@
 import React from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -8,6 +7,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
+import ListCard, { CardThumb } from '@/components/ListCard';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useMuhuratFinder } from '@/panchang/useMuhuratFinder';
 import { DOSHA_LABELS, TIER_LABELS, getEventRule, type DayVerdict, type DoshaKey } from '@/panchang/eventMuhurat';
@@ -19,6 +19,9 @@ import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratResults'>;
 
+const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTHS_HI = ['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्तूबर','नवंबर','दिसंबर'];
+
 function weekdayName(dateMs: number, lang: Lang): string {
   const wd = new Date(dateMs).getDay();
   if (lang === 'en') return VARA_NAMES_EN[wd];
@@ -27,11 +30,11 @@ function weekdayName(dateMs: number, lang: Lang): string {
 }
 
 /**
- * Ranked results — answer-first (design.md §60): the best window is the
- * dominant element on each card; the factor breakdown lives on the day detail
- * behind "यह तिथि क्यों?". Two tiers only, never a score (the Rashifal
- * no-luck-score rule). A zero-result window renders the empty-with-reason
- * card and the first dates after it — the trust surface, not a dead end.
+ * Ranked results — answer-first (design.md §60): the date is the answer, the
+ * best window is the emphasised line. Every card is the shared `ListCard` (the
+ * library list-card grammar) so the list reads like every other list in the app
+ * — no bespoke "hero" first card. Two tiers only, never a score. A zero-result
+ * window renders the empty-with-reason card and the first dates after it.
  */
 export default function MuhuratResultsScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
@@ -51,52 +54,38 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
     marginBottom: spacing.sm,
   };
 
-  const Card = ({ v, rank }: { v: DayVerdict; rank: number | null }) => {
-    const top = rank === 1;
+  const Card = ({ v }: { v: DayVerdict }) => {
+    const d = new Date(v.dateMs);
     const best = v.windows[0];
+    const tier = v.tier === 'shreshtha' ? 'shreshtha' : 'madhyam';
     return (
-      <Pressable
-        testID={`muhurat-result-${new Date(v.dateMs).getDate()}`}
-        accessibilityRole="button"
+      <ListCard
+        testID={`muhurat-result-${d.getDate()}`}
+        accessibilityLabel={`${formatShortDate(d, lang)} · ${weekdayName(v.dateMs, lang)}`}
         onPress={() => navigation.navigate('MuhuratDayDetail', { occasionId: rule.id, dateMs: v.dateMs })}
-        style={[
-          styles.card,
-          { borderColor: top ? colors.cardActiveBorder : colors.border, borderRadius: radii.lg, backgroundColor: top ? 'transparent' : colors.cardSurface },
-          top ? elevation.lifted : elevation.card,
-        ]}
+        leading={
+          <CardThumb>
+            <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 22, color: colors.parchmentSoft }}>
+              {d.getDate()}
+            </Text>
+          </CardThumb>
+        }
       >
-        {top && (
-          <LinearGradient
-            colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={[StyleSheet.absoluteFill, { borderRadius: radii.lg }]}
-          />
-        )}
-        <View style={{ flex: 1, minWidth: 0 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
-            <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 20, color: colors.ink, lineHeight: 30 }}>
-              {formatShortDate(new Date(v.dateMs), lang)}
+        <Text style={{ fontFamily: titleFont, fontSize: 16, color: colors.ink, lineHeight: 24 }}>
+          {contentByLang(lang, MONTHS_HI[d.getMonth()], MONTHS_EN[d.getMonth()])} · {weekdayName(v.dateMs, lang)}
+        </Text>
+        <Text style={{ fontFamily: titleFont, fontSize: 12, color: tier === 'shreshtha' ? colors.saffronDeep : colors.inkMuted, lineHeight: 19, marginTop: 1 }}>
+          {contentByLang(lang, TIER_LABELS[tier].hi, TIER_LABELS[tier].en)}
+        </Text>
+        {best && (
+          <Text style={{ marginTop: 4, fontFamily: typography.cardHindi.fontFamily, fontSize: 16, color: colors.ink, lineHeight: 25 }}>
+            <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
+              {contentByLang(lang, best.nameHi, best.nameEn)}{' '}
             </Text>
-            <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.inkSoft, lineHeight: 20 }}>
-              · {weekdayName(v.dateMs, lang)}
-            </Text>
-          </View>
-          <Text style={{ fontFamily: titleFont, fontSize: 12, color: v.tier === 'shreshtha' ? colors.saffronDeep : colors.inkMuted, lineHeight: 19 }}>
-            {contentByLang(lang, TIER_LABELS[v.tier === 'shreshtha' ? 'shreshtha' : 'madhyam'].hi, TIER_LABELS[v.tier === 'shreshtha' ? 'shreshtha' : 'madhyam'].en)}
-            {top ? contentByLang(lang, ' · दृक्पंचांग पद्धति', ' · DrikPanchang convention') : ''}
+            {formatRangeCompact(best.start, best.end)}
           </Text>
-          {best && (
-            <Text style={{ marginTop: 6, fontFamily: typography.cardHindi.fontFamily, fontSize: 17, color: colors.ink, lineHeight: 26 }}>
-              <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
-                {contentByLang(lang, best.nameHi, best.nameEn)}{' '}
-              </Text>
-              {formatRangeCompact(best.start, best.end)}
-            </Text>
-          )}
-        </View>
-        <Text style={{ color: colors.saffron, fontSize: 24, lineHeight: 28 }}>›</Text>
-      </Pressable>
+        )}
+      </ListCard>
     );
   };
 
@@ -164,14 +153,15 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
             }}
           >
             {contentByLang(lang, location.labelHi, location.labelEn)}
+            {contentByLang(lang, ' · दृक्पंचांग पद्धति', ' · DrikPanchang convention')}
           </Text>
           {hasResults ? (
             <>
               {summary!.shreshtha.length > 0 && (
                 <>
                   <Text style={sectionLabelStyle}>{contentByLang(lang, 'सर्वोत्तम तिथियाँ', 'Best dates')}</Text>
-                  {summary!.shreshtha.slice(0, 5).map((v, i) => (
-                    <Card key={v.dateMs} v={v} rank={i + 1} />
+                  {summary!.shreshtha.slice(0, 5).map((v) => (
+                    <Card key={v.dateMs} v={v} />
                   ))}
                 </>
               )}
@@ -179,7 +169,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
                 <>
                   <Text style={sectionLabelStyle}>{contentByLang(lang, 'अन्य उपयुक्त तिथियाँ', 'More suitable dates')}</Text>
                   {summary!.madhyam.slice(0, 6).map((v) => (
-                    <Card key={v.dateMs} v={v} rank={null} />
+                    <Card key={v.dateMs} v={v} />
                   ))}
                 </>
               )}
@@ -212,8 +202,8 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
               {firstAfter.length > 0 && (
                 <>
                   <Text style={sectionLabelStyle}>{contentByLang(lang, 'इसके बाद पहली तिथियाँ', 'First dates after')}</Text>
-                  {firstAfter.map((v, i) => (
-                    <Card key={v.dateMs} v={v} rank={i + 1} />
+                  {firstAfter.map((v) => (
+                    <Card key={v.dateMs} v={v} />
                   ))}
                 </>
               )}
@@ -240,7 +230,6 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  card: { flexDirection: 'row', alignItems: 'center', gap: 12, borderWidth: 1, padding: 16, marginBottom: 12, overflow: 'hidden' },
   empty: { borderWidth: 1, padding: 16, marginTop: 12 },
   calendarLink: { borderWidth: 1, alignItems: 'center', paddingVertical: 12, marginTop: 4 },
   reason: { borderWidth: 1, padding: 12, marginTop: 12 },
