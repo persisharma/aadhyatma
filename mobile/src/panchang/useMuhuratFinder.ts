@@ -67,6 +67,15 @@ function dayInputsFor(key: string): Map<number, DayInputs> {
   return cache;
 }
 
+/** Cache key for the shared day-inputs: location + calendar system + civil day. */
+function scanKeyFor(
+  location: { cityId: string; latitude: number; longitude: number },
+  calendarSystem: string,
+  start: Date
+): string {
+  return `${location.cityId}|${location.latitude},${location.longitude}|${calendarSystem}|${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`;
+}
+
 /**
  * Scan `days` civil days from today for the occasion, one panchang solve per
  * day (each day's "next sunrise" is the next day's solve, reused). Chunked
@@ -86,8 +95,7 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
       const opts = { calendarSystem, location };
       const rule = getEventRule(occasionId);
       const start = startOfToday();
-      const scanKey = `${location.cityId}|${location.latitude},${location.longitude}|${calendarSystem}|${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`;
-      const scan = dayInputsFor(scanKey);
+      const scan = dayInputsFor(scanKeyFor(location, calendarSystem, start));
       // Compute a day's occasion-independent inputs once, then reuse across every
       // occasion. Flags whether it actually did astronomy so the loop can skip
       // yielding in fully-cached chunks (a repeat occasion resolves in one tick).
@@ -123,6 +131,14 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
           if (anyInWindow || firstAfter.length >= 3) break;
         }
         if (i % CHUNK_DAYS === CHUNK_DAYS - 1) {
+          // Progressive paint: the moment the window has any qualifying day,
+          // show what's found and keep filling in — the list only needs the
+          // earliest matches, while the rest of the window keeps scanning for
+          // the calendar overlay. An empty window stays on the spinner until the
+          // scan finishes, so the empty-with-reason card never flashes early.
+          if (!cancelled && verdicts.some((x) => x.tier !== 'excluded')) {
+            setState({ loading: false, summary: summarize(verdicts), firstAfter });
+          }
           if (heavyThisChunk) await yieldToUi();
           heavyThisChunk = false;
         }
@@ -137,6 +153,49 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
   }, [occasionId, days, calendarSystem, location]);
 
   return state;
+}
+
+/**
+ * Intent-scoped pre-warm. The occasion picker calls this so the shared per-day
+ * cache (`DAY_INPUT_CACHE`) is mostly filled by the time the user taps an
+ * occasion — the results scan then reuses it and paints near-instantly. It is
+ * deliberately non-blocking: runs only inside the finder (never at launch),
+ * deferred behind `InteractionManager`, chunked with `yieldToUi` between batches,
+ * cache-only (no state → the picker never re-renders), and cancelled on unmount.
+ * If the user taps before it finishes, the scan simply continues from whatever
+ * is already cached — strictly no slower than before.
+ */
+export function useMuhuratFinderWarmup(days: number = FINDER_WINDOW_DAYS): void {
+  const { location } = usePanchangLocation();
+  const [calendarSystem] = usePanchangCalendarSystem();
+
+  useEffect(() => {
+    let cancelled = false;
+    const task = InteractionManager.runAfterInteractions(async () => {
+      const opts = { calendarSystem, location };
+      const start = startOfToday();
+      const scan = dayInputsFor(scanKeyFor(location, calendarSystem, start));
+      let heavy = false;
+      // Warm one past the window: the scan reads day i AND i+1 (next sunrise).
+      for (let i = 0; i <= days; i += 1) {
+        if (cancelled) return;
+        if (!scan.has(i)) {
+          const d = dayAt(start, i);
+          const noon = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12);
+          scan.set(i, { p: computePanchangForDate(d, opts), asta: computeAstaFlags(noon) });
+          heavy = true;
+        }
+        if (i % CHUNK_DAYS === CHUNK_DAYS - 1) {
+          if (heavy) await yieldToUi();
+          heavy = false;
+        }
+      }
+    });
+    return () => {
+      cancelled = true;
+      task.cancel();
+    };
+  }, [location, calendarSystem, days]);
 }
 
 export type AbujhDay = {

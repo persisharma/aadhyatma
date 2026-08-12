@@ -9,6 +9,7 @@ import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ListCard, { CardThumb } from '@/components/ListCard';
 import { EVENT_RULES, type OccasionId } from '@/panchang/eventMuhurat';
+import { useMuhuratFinderWarmup } from '@/panchang/useMuhuratFinder';
 import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratFinder'>;
@@ -31,6 +32,9 @@ const OCCASION_GLYPH: Record<OccasionId, string> = {
 export default function MuhuratFinderScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  // Warm the shared day-cache while the user reads the occasion list, so tapping
+  // an occasion resolves near-instantly. Non-blocking (see useMuhuratFinderWarmup).
+  useMuhuratFinderWarmup();
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
