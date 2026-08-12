@@ -87,6 +87,7 @@ jest.mock('@/panchang/useMuhuratFinder', () => {
   );
   return {
     FINDER_WINDOW_DAYS: 92,
+    useMuhuratFinderWarmup: () => {},
     useMuhuratFinder: () => ({ loading: false, summary: summarize([verdict]), firstAfter: [] }),
     useAbujhDays: () => ({
       loading: false,
