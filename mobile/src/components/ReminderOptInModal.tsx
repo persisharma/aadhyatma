@@ -12,9 +12,9 @@ import TimeStepper from './TimeStepper';
  * Opt-in sheet for daily verse notifications (PRD-01 §5, cadence design.md §38).
  *
  * Self-mounts based on `useNotificationPreferences().shouldShowOptIn`. The
- * provider gates it on the third app open (earn the ask, never ambush), then
- * keeps offering on every open until the user confirms a yes or a no; a "no"
- * (Not now / OS refusal / toggle off) snoozes it for 15 days per offer.
+ * provider offers it from the first app open, then keeps offering on every open
+ * until the user confirms a yes or a no; a "no" (Not now / OS refusal / toggle
+ * off) snoozes it for 15 days per offer.
  */
 export default function ReminderOptInModal() {
   const { colors, typography, spacing, radii } = useTheme();
