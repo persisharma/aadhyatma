@@ -246,8 +246,10 @@ const BODY_BY_GRAHA: Partial<Record<Graha, Body>> = {
 
 const DAY_MS = 86_400_000;
 const MEAN_TROPICAL_YEAR_DAYS = 365.2425;
-const NAKSHATRA_SPAN = 360 / 27;
-const PADA_SPAN = NAKSHATRA_SPAN / 4;
+/** Shared Lahiri nakshatra/charana boundaries. Keep every Jyotish engine on
+ * the same half-open flooring convention as `computeGrahaPositions`. */
+export const NAKSHATRA_SPAN = 360 / 27;
+export const PADA_SPAN = NAKSHATRA_SPAN / 4;
 const DEG = Math.PI / 180;
 
 function normalizeDegrees(value: number): number {

@@ -109,6 +109,12 @@ export type PanchangStackParamList = {
   Kundali: { editing?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
   GunaMilan: undefined;
+  Namkaran: undefined;
+  NamkaranResult: {
+    basis:
+      | { kind: 'birth'; date: string; time: string | null }
+      | { kind: 'manual'; nakshatraIndex: number; pada: 1 | 2 | 3 | 4 };
+  };
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing

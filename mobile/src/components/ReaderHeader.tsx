@@ -82,6 +82,11 @@ export default function ReaderHeader({
       </View>
 
       <Text
+        allowFontScaling
+        // Reader titles are navigation chrome. Cap them below the point where a
+        // long localized title can push into the status area or side controls;
+        // the reading body itself remains fully scalable.
+        maxFontSizeMultiplier={1.25}
         style={[
           styles.title,
           {
@@ -103,6 +108,7 @@ export default function ReaderHeader({
 
 const styles = StyleSheet.create({
   topBar: {
+    minHeight: 68,
     paddingHorizontal: spacing.readingGutter,
     paddingTop: 8,
     paddingBottom: 12,

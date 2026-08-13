@@ -23,7 +23,7 @@ function formatBirthDate(value: string): string {
 }
 
 type Props = {
-  role: 'groom' | 'bride';
+  role: 'groom' | 'bride' | 'child';
   lang: Lang;
   value: GunaMilanPersonInput;
   onChange: (value: GunaMilanPersonInput) => void;
@@ -45,8 +45,8 @@ export default function BirthDetailsForm({
 }: Props) {
   const { colors, typography, radii, elevation } = useTheme();
   const [datePickerVisible, setDatePickerVisible] = useState(false);
-  const roleEn = role === 'groom' ? 'Groom' : 'Bride';
-  const roleHi = role === 'groom' ? 'वर' : 'वधू';
+  const roleEn = role === 'groom' ? 'Groom' : role === 'bride' ? 'Bride' : 'Child';
+  const roleHi = role === 'groom' ? 'वर' : role === 'bride' ? 'वधू' : 'शिशु';
   const update = (patch: Partial<GunaMilanPersonInput>) => onChange({ ...value, ...patch });
   const timeKnownValid = value.time !== null && TIME_PATTERN.test(value.time);
   return (
@@ -77,15 +77,19 @@ export default function BirthDetailsForm({
           </Pressable>
         ) : null}
       </View>
-      <Text style={[styles.label, { color: colors.inkMuted }]}>{contentByLang(lang, 'नाम · वैकल्पिक', 'Name · optional')}</Text>
-      <TextField
-        variant="form"
-        value={value.name ?? ''}
-        onChangeText={(name) => update({ name })}
-        editable={!disabled}
-        placeholder={contentByLang(lang, 'नाम', 'Name')}
-        accessibilityLabel={contentByLang(lang, `${roleHi} का नाम, वैकल्पिक`, `${roleEn} name, optional`)}
-      />
+      {role !== 'child' ? (
+        <>
+          <Text style={[styles.label, { color: colors.inkMuted }]}>{contentByLang(lang, 'नाम · वैकल्पिक', 'Name · optional')}</Text>
+          <TextField
+            variant="form"
+            value={value.name ?? ''}
+            onChangeText={(name) => update({ name })}
+            editable={!disabled}
+            placeholder={contentByLang(lang, 'नाम', 'Name')}
+            accessibilityLabel={contentByLang(lang, `${roleHi} का नाम, वैकल्पिक`, `${roleEn} name, optional`)}
+          />
+        </>
+      ) : null}
       <Text style={[styles.label, { color: colors.inkMuted }]}>{contentByLang(lang, 'जन्म तिथि', 'Birth date')}</Text>
       <Pressable
         onPress={() => setDatePickerVisible(true)}

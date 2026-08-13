@@ -12,6 +12,9 @@
     --parchment:#f3e7c9; --parchment-soft:#f8efd6; --parchment-hi:#fff5e0;
     --gradient-end:#e9d9b1; --gold:#a67c34; --gold-soft:#c9b896; --gold-tint:#d8c393;
     --saffron:#b8621b; --saffron-deep:#8a3e0b; --saffron-tint:rgba(184,98,27,0.10);
+    /* shipped list-card tokens (theme/colors.ts): one card grammar for the whole app */
+    --card-border:rgba(184,98,27,0.4); --card-from:#fff5e0; --card-to:#f5deac;
+    --thumb-from:#f8d291; --thumb-to:#e0a255; --new-badge:rgba(184,98,27,0.16);
     --ink:#2f1e10; --ink-soft:#5c4326; --ink-muted:#8a6a47; --divider:#d9c9a6;
     --avoid:#9c4a32; --avoid-deep:#7a3722; --avoid-tint:rgba(156,74,50,0.12);
     --gold-chip:rgba(166,124,52,0.22);
@@ -69,29 +72,35 @@
   .segment .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:0 1px 4px rgba(47,30,16,.10)}
   .segment.small .seg{font-size:12.5px;padding:7px 0}
 
-  /* jyotish landing cards */
-  .jcard{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:16px;margin-bottom:12px;position:relative}
-  .jcard.hot{border:1.5px solid var(--saffron);background:linear-gradient(120deg,var(--parchment-hi),var(--parchment-soft))}
-  .jcard .jt{font-family:var(--deva);font-size:17px;color:var(--ink);display:flex;align-items:center;gap:8px}
-  .jcard .js{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);margin-top:6px;line-height:1.5}
-  .jcard .chev{position:absolute;right:14px;top:16px;color:var(--saffron);font-size:18px}
-  .tag{font-size:10px;font-weight:600;color:var(--saffron-deep);background:var(--saffron-tint);padding:2px 7px;border-radius:8px;font-family:var(--sans)}
-  .glyph{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;
-    font-family:var(--deva);font-size:16px;color:var(--saffron-deep);background:var(--parchment-hi);flex:none}
+  /* jyotish landing cards — the shipped JyotishToolCard (leading glyph · title+body · chevron) */
+  .jcard{display:flex;align-items:center;gap:12px;border:1px solid var(--card-border);background:var(--parchment-soft);
+    border-radius:18px;padding:14px;margin-bottom:10px;position:relative;min-height:98px}
+  .jcard .jbody{flex:1;min-width:0}
+  .jcard .jt{font-family:var(--deva);font-size:17px;color:var(--ink);display:flex;align-items:center;gap:7px}
+  .jcard .js{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);margin-top:4px;line-height:1.5}
+  .jcard .chev{color:var(--saffron-deep);font-size:20px;flex:none}
+  .tag{font-size:10px;font-weight:600;color:var(--saffron-deep);background:var(--new-badge);padding:2px 7px;border-radius:10px;font-family:var(--sans);letter-spacing:.3px}
+  /* rounded-square saffron-tint glyph, radii.md — matches JyotishToolCard */
+  .glyph{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--deva);font-size:18px;color:var(--saffron-deep);background:var(--saffron-tint);flex:none}
 
   /* form */
   .card{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:14px;margin-bottom:13px;position:relative}
   .field{margin-bottom:10px}
   .flabel{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans);margin-bottom:4px}
-  .finput{height:48px;border:1px solid var(--divider);border-radius:12px;background:var(--parchment-hi);
+  /* date/time field-button — the shipped BirthDetailsForm field (parchmentSoft · radii.md · ▾) */
+  .finput{height:48px;border:1px solid var(--divider);border-radius:14px;background:var(--parchment-soft);
     display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-family:var(--deva);font-size:15px;color:var(--ink)}
-  .finput .cal{font-size:13px;color:var(--saffron)}
+  .finput .cal{font-size:16px;color:var(--saffron-deep)}
   .finput.empty{color:var(--ink-muted);font-family:var(--serif);font-style:italic;font-size:13.5px}
   .frow{display:flex;gap:10px}
   .frow .field{flex:1}
   .fnote{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
-  .unknown{min-height:44px;display:flex;align-items:center;gap:8px;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);
-    border:1px dashed var(--gold-tint);border-radius:12px;background:var(--parchment-hi);padding:8px 12px;margin-top:2px}
+  /* time label + inline "unknown" checkbox, exactly as BirthDetailsForm renders it */
+  .timehead{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  .timehead .flabel{flex:1;margin-bottom:0}
+  .unkchk{min-height:44px;display:flex;align-items:center;gap:5px;font-family:var(--deva);font-size:12.5px;color:var(--ink)}
+  .unkchk .box{color:var(--saffron-deep);font-size:17px}
   .remember{min-height:44px;display:flex;align-items:center;gap:9px;border:1px solid var(--divider);border-radius:12px;
     background:var(--parchment-hi);padding:9px 12px;font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);margin:4px 0 10px}
   .remember .box{width:20px;height:20px;border:1.5px solid var(--gold);border-radius:5px;background:var(--parchment-soft);flex:none}
@@ -126,15 +135,17 @@
   .ctx .ck{font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted)}
   .ctx .cv{font-family:var(--deva);font-size:13px;color:var(--ink);margin-top:3px}
 
-  /* name rows (ListCard grammar) */
-  .lc{display:flex;align-items:center;gap:11px;border:1px solid var(--divider);border-radius:14px;
-    background:linear-gradient(120deg,#fff5e0,#f8efd6);padding:11px 12px;margin-bottom:9px;position:relative;
-    box-shadow:0 2px 6px rgba(47,30,16,.06)}
-  .lc .thumb{width:46px;height:46px;border-radius:11px;background:linear-gradient(150deg,#f8d291,#e0a255);
-    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:20px;color:#4a2a0c;flex:none}
-  .lc .thumb.flat{background:var(--parchment-hi);border:1px solid var(--gold-tint);color:var(--saffron-deep);font-size:15px}
+  /* list rows — the shared ListCard / GitaChapterCard shell (radii.lg · cardActive gradient · gradient thumb) */
+  .lc{display:flex;align-items:center;gap:14px;border:1px solid var(--card-border);border-radius:18px;
+    background:linear-gradient(135deg,var(--card-from),var(--card-to));padding:14px;margin-bottom:10px;position:relative;
+    box-shadow:0 6px 14px rgba(47,30,16,.10)}
+  .lc .thumb{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--thumb-from),var(--thumb-to));
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:20px;color:var(--parchment-hi);flex:none}
+  /* doors reuse the very same gradient thumb (MuhuratFinderDoor) — no flat variant in the app */
+  .lc .thumb.flat{font-size:15px}
   .lc .lcbody{flex:1;min-width:0}
   .lc .lct{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .lc .lcwin{font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);margin-top:2px}
   .lc .lcs{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:2px;line-height:1.45}
   .lc .star{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
     border:1px solid var(--gold-tint);background:var(--parchment-hi);color:var(--gold);font-size:16px;flex:none}
@@ -159,14 +170,6 @@
   .rangehdr{border:1px solid var(--gold-tint);background:var(--parchment-hi);border-radius:14px;padding:12px 13px;margin-bottom:12px}
   .rangehdr .rh{font-family:var(--deva);font-size:14px;color:var(--ink)}
   .rangehdr .rs{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:5px;line-height:1.6}
-  .cand{border:1px solid var(--divider);border-radius:14px;background:var(--parchment-soft);padding:12px 13px;margin-bottom:9px;
-    display:flex;align-items:center;gap:12px}
-  .cand .cs{font-family:var(--deva);font-size:30px;color:var(--ink);min-width:52px;text-align:center;line-height:1.25}
-  .cand .cb{flex:1}
-  .cand .cw{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--saffron-deep);background:var(--saffron-tint);
-    display:inline-block;padding:3px 8px;border-radius:8px}
-  .cand .cn{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);margin-top:5px}
-  .cand .cr{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:2px}
 
   /* sheet */
   .sheetdim{position:absolute;inset:0;background:rgba(47,30,16,.55);z-index:8}
@@ -225,7 +228,7 @@
 <body>
   <h1>Namkaran — नामकरण</h1>
   <div class="sub">PRD-17 · UI/UX prototype. Static mockups in the app's shipped parchment system — not the live build.</div>
-  <div class="legend">Enters through <b>Panchang → ज्योतिष</b>, below अष्टकूट मिलान, and pushes inside the existing Panchang stack. The calculation is one sidereal Moon longitude → <b>charana (pada) → नामाक्षर</b>; the naming-day muhurat door lands on the <b>already-shipped</b> <code>EVENT_RULES.namkaran</code> occasion. No birthplace is requested (the charana is geocentric), no Kundali autofill (that is an adult's chart), and an unknown birth time yields a <b>set of candidate syllables with IST windows</b> — never a hidden noon. Every screen here is assembled from shipped components: <b>ReaderHeader</b>, <b>ListCard</b>, <b>BirthDetailsForm</b>, <b>CalendarDatePicker</b>/<b>ClockTimePicker</b>, <b>ShareButton</b>, the 4:5 share-card family.</div>
+  <div class="legend">Enters through <b>Panchang → ज्योतिष</b>, below अष्टकूट मिलान, and pushes inside the existing Panchang stack. The calculation is one sidereal Moon longitude → <b>charana (pada) → नामाक्षर</b>; the naming-day muhurat door lands on the <b>already-shipped</b> <code>EVENT_RULES.namkaran</code> occasion. No birthplace is requested (the charana is geocentric), no Kundali autofill (that is an adult's chart), and an unknown birth time yields a <b>set of candidate syllables with IST windows</b> — never a hidden noon. Every screen here is assembled from shipped components: <b>ReaderHeader</b>, Home's 3-column <b>CategoryCard launcher</b> for the 27 nakshatras, <b>ListCard</b>, <b>BirthDetailsForm</b>, <b>CalendarDatePicker</b>/<b>ClockTimePicker</b>, <b>ShareButton</b>, the 4:5 share-card family.</div>
 
   <!-- ============ 1 · ENTRY + INPUT ============ -->
   <div class="phaselabel">1 · Entry and input</div>
@@ -241,24 +244,31 @@
         <div class="segment"><div class="seg">पंचांग</div><div class="seg">व्रत व पर्व</div><div class="seg on">ज्योतिष</div></div>
 
         <div class="jcard">
-          <div class="jt"><span class="glyph">रा</span> दैनिक राशिफल <span class="chev">›</span></div>
-          <div class="js">Today's guidance for your rashi — deterministic, on-device.</div>
+          <div class="glyph">रा</div>
+          <div class="jbody"><div class="jt">दैनिक राशिफल</div>
+            <div class="js">Today's guidance for your rashi.</div></div>
+          <div class="chev">›</div>
         </div>
         <div class="jcard">
-          <div class="jt"><span class="glyph">ल</span> मेरी कुंडली <span class="chev">›</span></div>
-          <div class="js">Lagna · grahas · dasha — from your saved birth details.</div>
+          <div class="glyph">ल</div>
+          <div class="jbody"><div class="jt">मेरी कुंडली</div>
+            <div class="js">Lagna · grahas · dasha — from your saved birth details.</div></div>
+          <div class="chev">›</div>
         </div>
         <div class="jcard">
-          <div class="jt"><span class="glyph">॥</span> अष्टकूट मिलान <span class="chev">›</span></div>
-          <div class="js">The traditional 36-guna compatibility reading.</div>
+          <div class="glyph">॥</div>
+          <div class="jbody"><div class="jt">अष्टकूट मिलान</div>
+            <div class="js">The traditional 36-guna compatibility reading.</div></div>
+          <div class="chev">›</div>
         </div>
-        <div class="jcard hot">
+        <div class="jcard">
           <div class="dot" style="right:-8px;top:-8px">1</div>
-          <div class="jt"><span class="glyph">ना</span> नामकरण <span class="tag">NEW</span> <span class="chev">›</span></div>
-          <div class="js">Namkaran — the child's नामाक्षर from the birth charana, with attested names and the naming-day muhurat.</div>
+          <div class="glyph">ना</div>
+          <div class="jbody"><div class="jt">नामकरण <span class="tag">नया · NEW</span></div>
+            <div class="js">Namkaran — the child's नामाक्षर from the birth charana, with attested names and the naming-day muhurat.</div></div>
+          <div class="chev">›</div>
         </div>
 
-        <div class="note">सभी गणनाएँ आपके फ़ोन पर ही होती हैं ·<br/>no account, no internet</div>
       </div>
       <div class="tabbar">
         <div class="tab"><span class="ic">ॐ</span>Home</div>
@@ -284,13 +294,18 @@
         <div class="card">
           <div class="dot" style="right:-8px;top:-8px">2</div>
           <div class="flabel" style="margin-bottom:8px">शिशु का जन्म विवरण</div>
-          <div class="field"><div class="flabel">जन्म तिथि</div><div class="finput">14 जुलाई 2026 <span class="cal">▤</span></div></div>
-          <div class="field"><div class="flabel">जन्म समय (IST)</div><div class="finput">04:52 AM <span class="cal">◷</span></div></div>
-          <div class="unknown"><span style="font-size:15px">◌</span> समय ज्ञात नहीं · time not known</div>
+          <div class="field"><div class="flabel">जन्म तिथि</div><div class="finput">14 जुलाई 2026 <span class="cal">▾</span></div></div>
+          <div class="field">
+            <div class="timehead">
+              <div class="flabel">जन्म समय · IST</div>
+              <div class="unkchk"><span class="box">☐</span> ज्ञात नहीं · Unknown</div>
+            </div>
+            <div class="finput">04:52 AM <span class="cal">▾</span></div>
+          </div>
           <div class="fnote">जन्म-स्थान की आवश्यकता नहीं — चरण चन्द्रमा के भूकेन्द्रित सिद्ध रेखांश से निकलता है, स्थान से नहीं।</div>
         </div>
 
-        <div class="remember"><span class="box" aria-hidden="true"></span><span>इस फ़ोन पर याद रखें · Remember on this device</span></div>
+        <div class="remember"><span class="box" aria-hidden="true"></span><span>जन्म विवरण याद रखें · Remember birth details</span></div>
         <div class="fnote" style="margin:-4px 0 12px">डिफ़ॉल्ट रूप से कुछ भी सहेजा नहीं जाता। शॉर्टलिस्ट अलग रहती है — जन्म विवरण हटाने पर भी बनी रहती है।</div>
 
         <div class="btn">नामाक्षर देखें</div>
@@ -313,7 +328,7 @@
     </div>
     <div class="cap"><b>Input — the smallest ask that works.</b><br/>
       <span class="n">2</span><b>Date + time only.</b> The shipped <i>BirthDetailsForm</i> primitive with <i>CalendarDatePicker</i> / <i>ClockTimePicker</i> field-buttons (48 pt). Date range is the last 24 months → today-IST: this is a newborn's rite. There is <b>no name field</b> — there is nothing to name yet — <b>no city</b>, and deliberately <b>no “मेरे विवरण यहाँ” Kundali autofill</b>: the saved profile is the device owner's adult chart and copying it would produce a confidently wrong syllable.
-      <br/><br/><span class="n">3</span><b>The browse doors are peers, not fallbacks.</b> A grandparent holding a purohit's slip, or anyone just curious, never enters a birth moment at all.</div>
+      <br/><br/><span class="n">3</span><b>The browse doors are peers, not fallbacks.</b> A grandparent holding a purohit's slip, or anyone just curious, never enters a birth moment at all. The nakshatra door opens Home's compact 3-column launcher grammar: 27 name-first choices in 9 rows, each current-language name fitted inside its tile with no ordinal-number title, then four full-width pada rows. This replaces the 27-card list shown in the first implementation.</div>
     </div>
 
     <!-- 3. Result -->
@@ -371,7 +386,7 @@
       </div></div>
     </div>
     <div class="cap"><b>Result — answer first, evidence second.</b><br/>
-      <span class="n">4</span><b>The syllable is the hero</b> — the largest glyph on the screen, in the shipped <i>cardActive</i> gradient with the gold ॥ mark. It gets an explicit fixed line box so the largest dynamic-type step cannot clip it. Provenance names nakshatra, pada <i>and</i> rashi, because families differ on which they name by. <b>कैसे निकला?</b> expands to longitude → charana → syllable plus the convention name and its DRAFT state — inspectable, not loud.
+      <span class="n">4</span><b>The syllable is the hero</b> — the largest glyph on the screen, in the shipped <i>cardActive</i> gradient with the gold ॥ mark. It gets an explicit fixed line box so the largest dynamic-type step cannot clip it. Provenance names nakshatra, pada <i>and</i> rashi, because families differ on which they name by. <b>कैसे निकला?</b> explains only the user-level Lahiri method; internal convention ids and review states never appear in customer copy.
       <br/><br/><span class="n">5</span><b>Names are shipped ListCard rows</b> — thumb = the syllable glyph, title = Devanagari, subtitle = pronunciation + one-line meaning, trailing = a 44 pt shortlist toggle (<b>not</b> the library's add-to-routine <b>+</b>). Shortlisted state is a filled star <b>and</b> a tint — legible in greyscale (§12).</div>
     </div>
   </div>
@@ -446,7 +461,7 @@
           <div class="chev2">›</div>
         </div>
 
-        <div class="draft"><b>DRAFT convention.</b> The 108-syllable table ships <code>verified: false</code> until two concordant sources sign off every row (RULEBOOK §11). The surface names its convention on-screen for exactly this reason.</div>
+        <div class="draft"><b>Release gate.</b> The 108-syllable table stays <code>verified: false</code> until two concordant sources sign off every row (RULEBOOK §11). This remains an internal release decision; the customer surface does not expose DRAFT, review, or version labels.</div>
 
         <div class="note">यह पारम्परिक गणना है — मार्गदर्शन हेतु, निर्णय हेतु नहीं।<br/><span class="en-it">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</span></div>
       </div></div>
@@ -469,20 +484,24 @@
           <div class="rs">चन्द्रमा दिन भर में नक्षत्र बदल सकता है, इसलिए सम्भावित अक्षर एक से अधिक हैं। सही समय मिलने पर यह एक हो जाएगा।<br/><b>14 जुलाई 2026 · पूरा IST दिन जाँचा गया</b></div>
         </div>
 
-        <div class="cand"><div class="cs">मी</div><div class="cb">
-          <span class="cw">12:00 AM – 6:41 AM</span>
-          <div class="cn">मघा नक्षत्र · पद २</div><div class="cr">Magha pada 2 · Mi</div></div></div>
-        <div class="cand"><div class="cs">मू</div><div class="cb">
-          <span class="cw">6:41 AM – 1:18 PM</span>
-          <div class="cn">मघा नक्षत्र · पद ३</div><div class="cr">Magha pada 3 · Mu</div></div></div>
-        <div class="cand"><div class="cs">मे</div><div class="cb">
-          <span class="cw">1:18 PM – 7:52 PM</span>
-          <div class="cn">मघा नक्षत्र · पद ४</div><div class="cr">Magha pada 4 · Me</div></div></div>
-        <div class="cand"><div class="cs">मो</div><div class="cb">
-          <span class="cw">7:52 PM – 11:59 PM</span>
-          <div class="cn">पूर्वा फाल्गुनी · पद १</div><div class="cr">Purva Phalguni pada 1 · Mo</div></div></div>
+        <div class="lc"><div class="thumb">मी</div><div class="lcbody">
+          <div class="lct">मघा नक्षत्र · पद २</div>
+          <div class="lcwin">12:00 AM – 6:41 AM</div>
+          <div class="lcs">Magha pada 2 · Mi</div></div><div class="chev2">›</div></div>
+        <div class="lc"><div class="thumb">मू</div><div class="lcbody">
+          <div class="lct">मघा नक्षत्र · पद ३</div>
+          <div class="lcwin">6:41 AM – 1:18 PM</div>
+          <div class="lcs">Magha pada 3 · Mu</div></div><div class="chev2">›</div></div>
+        <div class="lc"><div class="thumb">मे</div><div class="lcbody">
+          <div class="lct">मघा नक्षत्र · पद ४</div>
+          <div class="lcwin">1:18 PM – 7:52 PM</div>
+          <div class="lcs">Magha pada 4 · Me</div></div><div class="chev2">›</div></div>
+        <div class="lc"><div class="thumb">मो</div><div class="lcbody">
+          <div class="lct">पूर्वा फाल्गुनी · पद १</div>
+          <div class="lcwin">7:52 PM – 11:59 PM</div>
+          <div class="lcs">Purva Phalguni pada 1 · Mo</div></div><div class="chev2">›</div></div>
 
-        <div class="draft" style="border-style:solid"><b>No hero, no share.</b> No candidate is enlarged, ranked, or called “most likely”, and the header carries <b>no ShareButton</b> — an exact syllable cannot be shared from an uncertain result. Noon is never substituted and never persisted.</div>
+        <div class="draft" style="border-style:solid"><b>No hero, no share.</b> Every candidate is the <b>same ListCard row</b> — none enlarged, ranked, or called “most likely” — and the header carries <b>no ShareButton</b>: an exact syllable cannot be shared from an uncertain result. Noon is never substituted and never persisted.</div>
 
         <div class="btn ghost">सही समय दर्ज करें</div>
         <div class="note">प्रत्येक सम्भावना के नाम देखने के लिए उसे चुनें</div>
@@ -602,7 +621,7 @@
     <b>Calculation:</b> <code>getSiderealPlanetLongitude('moon', …)</code> + the Lahiri ayanamsa + the exact flooring convention already in <code>computeGrahaPositions</code>. ·
     <b>Labels:</b> <code>NAKSHATRA_NAMES_HI/EN</code>, <code>RASHI_NAMES_HI/EN</code>, <code>DASHA_ORDER</code>. ·
     <b>Input:</b> <code>BirthDetailsForm</code>, <code>CalendarDatePicker</code>, <code>ClockTimePicker</code>. ·
-    <b>Chrome:</b> <code>ReaderHeader variant="index"</code>, <code>ListCard</code>, <code>ShareButton</code>, <code>JyotishStateCard</code>. ·
+    <b>Chrome:</b> <code>ReaderHeader variant="index"</code>, <code>CategoryCard variant="launcher"</code> (27-choice nakshatra grid), <code>ListCard</code> (name rows, candidate rows, doors and padas), <code>JyotishToolCard</code> (the landing row), <code>ShareButton</code>, <code>JyotishStateCard</code>. ·
     <b>Muhurat:</b> <code>EVENT_RULES.namkaran</code> + <code>MuhuratResultsScreen</code> + <code>panchangDayStore</code> — already shipped. ·
     <b>Names → texts:</b> <code>deities.ts</code> + the Deity Index + the reader dispatcher. ·
     <b>Share:</b> the 4:5 / 1080×1350 card family + <code>view-shot → expo-sharing</code>. ·

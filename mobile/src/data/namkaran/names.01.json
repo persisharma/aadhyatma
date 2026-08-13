@@ -1,0 +1,29 @@
+{
+  "source": {
+    "verified": false,
+    "referenceUrls": [
+      "repo://docs/roadmap/conventions/namkaran-namakshar-v1.md",
+      "repo://docs/roadmap/prds/17-namkaran.md"
+    ],
+    "notes": "Development fixtures for UI and privacy verification only; these references define the draft contract and do not attest the names or meanings."
+  },
+  "names": [
+  { "id": "chudamani", "hi": "चूड़ामणि", "latin": "Chudamani", "gender": "any", "charanas": [0], "meaningHi": "शिरोभूषण; श्रेष्ठ रत्न", "meaningEn": "Crest-jewel; the finest of its kind", "root": "चूड़ा + मणि", "syllableCount": 4 },
+  { "id": "kamya", "hi": "काम्या", "latin": "Kamya", "gender": "girl", "charanas": [18], "meaningHi": "वांछनीय; जिसकी कामना की जाए", "meaningEn": "Desirable; one who is wished for", "root": "काम्य", "syllableCount": 2 },
+  { "id": "kartik", "hi": "कार्तिक", "latin": "Kartik", "gender": "boy", "charanas": [18], "meaningHi": "कार्तिक मास से सम्बन्धित; स्कन्द का एक नाम", "meaningEn": "Related to the month Kartika; a name of Skanda", "root": "कार्तिक", "syllableCount": 3 },
+  { "id": "keshav", "hi": "केशव", "latin": "Keshav", "gender": "boy", "charanas": [24], "meaningHi": "भगवान विष्णु-कृष्ण का एक नाम", "meaningEn": "A name of Vishnu-Krishna", "root": "केशव", "deityId": "krishna", "syllableCount": 3 },
+  { "id": "ketaki", "hi": "केतकी", "latin": "Ketaki", "gender": "girl", "charanas": [24], "meaningHi": "केतकी का सुगन्धित पुष्प", "meaningEn": "The fragrant ketaki flower", "root": "केतकी", "syllableCount": 3 },
+  { "id": "madhav", "hi": "माधव", "latin": "Madhav", "gender": "boy", "charanas": [36], "meaningHi": "भगवान कृष्ण-विष्णु का एक नाम", "meaningEn": "A name of Krishna-Vishnu", "root": "माधव", "deityId": "krishna", "syllableCount": 3 },
+  { "id": "malati", "hi": "मालती", "latin": "Malati", "gender": "girl", "charanas": [36], "meaningHi": "सुगन्धित चमेली की लता", "meaningEn": "A fragrant jasmine creeper", "root": "मालती", "syllableCount": 3 },
+  { "id": "meera", "hi": "मीरा", "latin": "Meera", "gender": "girl", "charanas": [37], "meaningHi": "भक्त-कवयित्री मीराबाई का प्रचलित नाम", "meaningEn": "The familiar name of the devotee-poet Mirabai", "root": "मीरा", "syllableCount": 2 },
+  { "id": "meenal", "hi": "मीनल", "latin": "Meenal", "gender": "girl", "charanas": [37], "meaningHi": "मीन से सम्बन्धित", "meaningEn": "Related to fish", "root": "मीन", "syllableCount": 3 },
+  { "id": "ram", "hi": "राम", "latin": "Ram", "gender": "boy", "charanas": [54], "meaningHi": "आनन्द देने वाला; श्रीराम का नाम", "meaningEn": "One who delights; the name of Shri Rama", "root": "रम्", "deityId": "rama", "syllableCount": 2 },
+  { "id": "radha", "hi": "राधा", "latin": "Radha", "gender": "girl", "charanas": [54], "meaningHi": "आराधना से जुड़ा नाम; श्रीकृष्ण की परम भक्त", "meaningEn": "A name linked with worship; Krishna's foremost devotee", "root": "राध्", "deityId": "krishna", "syllableCount": 2 },
+  { "id": "sarthak", "hi": "सार्थक", "latin": "Sarthak", "gender": "boy", "charanas": [93], "meaningHi": "अर्थपूर्ण; सफल", "meaningEn": "Meaningful; fulfilled", "root": "सार्थक", "syllableCount": 3 },
+  { "id": "sakshi", "hi": "साक्षी", "latin": "Sakshi", "gender": "girl", "charanas": [93], "meaningHi": "देखने या प्रमाण देने वाला साक्षी", "meaningEn": "A witness; one who observes or testifies", "root": "साक्षिन्", "syllableCount": 2 },
+  { "id": "dev", "hi": "देव", "latin": "Dev", "gender": "boy", "charanas": [104], "meaningHi": "देवता; प्रकाशमान", "meaningEn": "A deity; shining one", "root": "दिव्", "syllableCount": 2 },
+  { "id": "devika", "hi": "देविका", "latin": "Devika", "gender": "girl", "charanas": [104], "meaningHi": "देवी; दिव्य स्त्री", "meaningEn": "A goddess; a divine woman", "root": "देविका", "syllableCount": 3 },
+  { "id": "charu", "hi": "चारु", "latin": "Charu", "gender": "any", "charanas": [106], "meaningHi": "सुन्दर; प्रिय", "meaningEn": "Beautiful; pleasing", "root": "चारु", "syllableCount": 2 },
+  { "id": "charvi", "hi": "चार्वी", "latin": "Charvi", "gender": "girl", "charanas": [106], "meaningHi": "सुन्दर स्त्री", "meaningEn": "A beautiful woman", "root": "चार्वी", "syllableCount": 2 }
+  ]
+}

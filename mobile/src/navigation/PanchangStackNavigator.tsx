@@ -13,6 +13,8 @@ import AbujhDaysScreen from '@/screens/AbujhDaysScreen';
 import KundaliScreen from '@/screens/KundaliScreen';
 import RashifalScreen from '@/screens/RashifalScreen';
 import GunaMilanScreen from '@/screens/GunaMilanScreen';
+import NamkaranScreen from '@/screens/NamkaranScreen';
+import NamkaranResultScreen from '@/screens/NamkaranResultScreen';
 import type { PanchangStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<PanchangStackParamList>();
@@ -82,6 +84,16 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="GunaMilan"
         component={GunaMilanScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="Namkaran"
+        component={NamkaranScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="NamkaranResult"
+        component={NamkaranResultScreen}
         options={{ animation: 'slide_from_right' }}
       />
     </Stack.Navigator>

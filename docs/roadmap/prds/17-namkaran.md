@@ -34,13 +34,13 @@ and one calm screen that joins them**.
    with **no birth data entered at all**.
 2. Offer names that genuinely start with that syllable, each with a meaning and, where it exists, a
    link into content the app already ships.
-3. Let the parent shortlist candidates on-device and share the shortlist without leaking the birth
+3. Let the parent shortlist candidates and share the shortlist without leaking the birth
    moment.
 4. Connect the naming day to the muhurat finder that already exists.
 
 ### Success (local diagnostics only)
 
-Counted on-device and shown only in user-visible diagnostics, exactly per PRD-16's stance:
+Counted privately and shown only in user-visible diagnostics, exactly per PRD-16's stance:
 
 - namkaran sessions started, and started-with-birth-details vs started-in-browse;
 - shortlist adds and removals;
@@ -66,7 +66,9 @@ the "real" flow.
 ## 3. Placement and navigation
 
 `PanchangScreen` → **ज्योतिष** landing gains a **नामकरण · Namkaran** card **below** अष्टकूट मिलान,
-with the standard versioned NEW badge. The Jyotish landing order becomes:
+with the standard versioned NEW badge. It is a **fourth `JyotishToolCard`** — the identical
+leading-glyph row treatment as the दैनिक राशिफल / मेरी कुंडली / अष्टकूट मिलान cards, **not a new card
+design**. The Jyotish landing order becomes:
 
 ```
 [saved-profile state] दैनिक राशिफल → मेरी कुंडली (compact) → अष्टकूट मिलान → नामकरण → practice card
@@ -118,10 +120,12 @@ Moon covers ≈ 3.6–4.5 charanas in a civil day, so an unknown time genuinely 
 syllable sets**, and the surface says so:
 
 - enumerate every charana the Moon occupies during `00:00–23:59:59` IST;
-- render each candidate as its own syllable group, labelled with the IST window it corresponds to
-  (`12:00 AM – 6:41 AM · मघा पद 2 → मी`), ordered by time;
-- **no single hero syllable, no "most likely" ranking, no share of an exact syllable** — the same
-  restraint Guna Milan applies to an uncertain score (PRD-16 §3.3);
+- render each candidate as the shipped **`ListCard`** row (thumb = the candidate syllable, title =
+  nakshatra · pada, with the IST window it held as the emphasised line —
+  `12:00 AM – 6:41 AM · मघा पद 2 → मी`), ordered by time. **No forked "candidate" card** — a list is
+  a list, the same `ListCard` grammar as the name rows (§5.3) and the muhurat results;
+- **no single hero syllable, no "most likely" ranking, no share of an exact syllable** — the uniform
+  list rows *are* the restraint Guna Milan applies to an uncertain score (PRD-16 §3.3);
 - one line of copy explains why: *"चन्द्रमा दिन भर में नक्षत्र बदल सकता है — इसलिए सम्भावित अक्षर एक से अधिक हैं।"*
 
 If the parent later learns the exact time, re-entering it collapses the set to one group. That
@@ -131,9 +135,10 @@ transition must be visible, not silent.
 
 Two controls, no birth data:
 
-1. **नक्षत्र + पद picker** — a 27-row nakshatra list (Devanagari + counterpart, the shipped
-   `ListCard` grammar) then a 4-way pada segment. Lands on the same result screen with
-   `source: 'manual'`.
+1. **नक्षत्र + पद picker** — a compact **3-column × 9-row** nakshatra launcher grid
+   (Devanagari or English name fitted inside the shipped Home `CategoryCard` launcher tile; no
+   ordinal-number title) followed by four `ListCard` pada rows. This keeps all 27 choices scannable without a
+   27-card scroll, and lands on the same result screen with `source: 'manual'`.
 2. **सभी नामाक्षर · all 108** — the full convention table as a scrollable index, grouped by
    nakshatra, each cell tappable straight into that charana's names. This is also the honest
    "I just want to browse names" door.
@@ -144,7 +149,7 @@ Newborn birth date + time is the most sensitive record this app would hold, and 
 person who cannot consent. Therefore:
 
 - **Session-only by default.** Nothing about path A persists unless the user turns on an explicitly
-  unchecked **इस फ़ोन पर याद रखें · Remember on this device**, with a visible clear action — the
+  unchecked **जन्म विवरण याद रखें · Remember birth details**, with a visible clear action — the
   Guna Milan model (PRD-16 §3.4), including its invalidating-mutation-queue behaviour so turning the
   toggle off removes a write already in flight.
 - **The shortlist is separable.** A shortlist of names persists under its own key and contains
@@ -155,7 +160,10 @@ person who cannot consent. Therefore:
   device owner's), and copying it into a newborn's naming flow would produce a confidently wrong
   syllable. Guna Milan's "मेरे विवरण यहाँ" chip must **not** appear here. This is a deliberate
   break from §58 precedent — state it in the code comment so a later refactor doesn't "fix" it.
-- Stated on-surface beside the form: all calculation is on-device, no account, no internet.
+- **No implementation disclosure in customer copy.** The form explains only the action and its
+  consequence (for example, “अगली बार यह फ़ॉर्म पहले से भरा मिलेगा · Prefill this form next time”).
+  It must not mention on-device calculation/storage, offline or internet/account requirements,
+  local notifications, schema/convention versions, or similar architecture details (RULEBOOK §3).
 
 ## 5. Result experience
 
@@ -179,9 +187,9 @@ Answer-first, matching the muhurat day detail (design.md §60): the syllable **i
   shipped answer-block treatment.
 - The provenance line names nakshatra, pada, **and** rashi, because families differ on which they
   name by (§5.4).
-- Below it, a quiet **कैसे निकला? · How this was derived** disclosure expands to: sidereal Moon
-  longitude → charana → syllable, plus the convention name and its DRAFT state. Inspectable, not
-  loud — the same "answer → evidence" ordering as §60.
+- Below it, a quiet **कैसे निकला? · How this was derived** disclosure explains the user-level
+  tradition: the Lahiri method maps the Moon's nakshatra and pada at birth to a starting sound. It
+  never exposes a convention id, DRAFT/review state, implementation location, or connectivity claim.
 
 ### 5.2 Nakshatra context (display-only)
 
@@ -287,7 +295,7 @@ only with a scoped search-section design.
 | `getSiderealPlanetLongitude('moon', …)`, Lahiri ayanamsa | the one calculation |
 | `NAKSHATRA_NAMES_HI/EN`, `RASHI_NAMES_HI/EN/WESTERN`, `DASHA_ORDER` | every label; the lord-column equality test |
 | `BirthDetailsForm`, `CalendarDatePicker`, `ClockTimePicker`, `TextField` `form` variant | all input |
-| `ListCard`, `ReaderHeader variant="index"`, `ShareButton`, `JyotishStateCard`, `JyotishPracticeCard` | all chrome |
+| `CategoryCard variant="launcher"`, `ListCard`, `ReaderHeader variant="index"`, `ShareButton`, `JyotishStateCard`, `JyotishPracticeCard`, `JyotishToolCard` (the landing row) | the 27-choice grid plus all remaining chrome — shipped grammars, no forked look |
 | `EVENT_RULES.namkaran` + `MuhuratFinder`/`MuhuratResults` + `panchangDayStore` | the naming-day muhurat door — **zero new engine work** |
 | `deities.ts` + Deity Index (§42) + the reader dispatcher | name → deity → shipped texts |
 | `react-native-view-shot` → `expo-sharing`, the 4:5 / 1080×1350 share family | the share card |
@@ -320,8 +328,8 @@ do not raise the budget silently.
 | Phase | Contents | Ship |
 |---|---|---|
 | **1** | Convention + pure engine + result screen (paths A, A′, B) + corpus + shortlist + rashi cross-check + muhurat door + share | OTA-capable (pure JS + bundled JSON), gated on §11.1–§11.2 |
-| **2** | Namkaran vidhi `sanskar` module; Feature Spotlight entry; name-detail deity links for the full corpus | store release if the vidhi ships audio, else OTA |
-| **3** | Namkaran-day reminder (reuses the vrat `VratReminderPref` model, the same slice PRD-16 defers); Home tile alongside a grid re-flow; namkaran-day nakshatra as an explicit second basis | — |
+| **2** | Namkaran vidhi `sanskar` module; Feature Spotlight entry; name-detail deity links for the full corpus; customer-copy audit removes implementation/connectivity/version language in all four reading languages | store release if the vidhi ships audio, else OTA |
+| **3** | Namkaran-day reminder (reuses the vrat `VratReminderPref` model, the same slice PRD-16 defers) with action-only reminder copy; Home tile alongside a grid re-flow; namkaran-day nakshatra as an explicit second basis; no “local/on-device/offline” reassurance on any new surface | — |
 
 ## 10. Design requirements
 
@@ -341,6 +349,9 @@ do not raise the budget silently.
 - Every string authored in Devanagari + English through `contentByLang`; gu/kn derive by
   transliteration (wiki `languages`). Accessibility labels stay stable in English for Maestro even
   when Hindi is the visible reading language.
+- Customer-visible copy follows RULEBOOK §3: describe the action, content, or outcome; never expose
+  on-device/offline/internet/account/storage/version implementation details. This applies equally to
+  Phase 2 Spotlight/vidhi/deity-link copy and Phase 3 reminder/Home-tile copy in hi/en/gu/kn.
 - The syllable must be exposed to screen readers as a *pronounceable label plus its Latin aid*, not
   a bare glyph — a lone `चू` read by TTS in an English voice is unusable (wiki `audio` traps).
 
@@ -383,7 +394,7 @@ Not shippable until every gate passes:
 
 | Risk | Mitigation |
 |---|---|
-| **Convention divergence** — published syllable tables disagree, most sharply on Shravana | The convention doc is the contract and ships DRAFT; the surface names its convention on-screen and the rashi cross-check (§5.4) keeps the app from appearing to contradict a purohit |
+| **Convention divergence** — published syllable tables disagree, most sharply on Shravana | The convention doc is the internal contract and the feature remains release-gated until review closes; user copy names only the Lahiri method, while the rashi cross-check (§5.4) keeps the app from appearing to contradict a purohit |
 | **Corpus quality is the whole feature** — a wrong meaning is worse than a missing name | §11.2 is a hard gate; the initial-vs-charana check is mechanical; thin padas fall back rather than get filled with invented names |
 | **Scope creep toward a name-scoring app** | §7 non-goals are explicit; no numerology, no ranking, no best-pick |
 | **Newborn PII** | Session-default, separable shortlist, no city, no Kundali autofill, five testable invariants |

@@ -247,15 +247,23 @@ the opt-in remember row, the primary action, then the two path-B doors (`ListCar
 सभी नामाक्षर). Primary action stays reachable above the keyboard or in a keyboard-safe sticky footer
 (§58 precedent).
 
+Opening नक्षत्र से चुनें replaces the form with a **3-column, 9-row grid** of the shipped
+`CategoryCard variant="launcher"`: current-language nakshatra name fitted inside the tile (up to
+two lines, no ordinal-number title), and full English accessibility label. Selecting a tile reveals four conventional
+`ListCard` pada rows. The grid mounts only 27 lightweight choices and is intentionally not a nested
+`FlatList`; the 108-charana index remains the explicit long-list path.
+
 ### 7.2 `NamkaranResultScreen`
 Answer → context → list → cross-check → doors:
 
 1. **Syllable hero** — `cardActiveFrom→cardActiveTo` gradient + gold `॥`, `elevation.lifted`,
    `radii.lg`. The glyph gets an explicit fixed line box (not an inherited text style) so the
    largest dynamic-type step cannot clip it; a11y label = Devanagari name + Latin aid.
-   For `kind: 'range'`, this becomes **N stacked candidate groups**, each labelled with its IST
-   window — no hero treatment on any one of them, and the ShareButton is absent from the header.
-2. **कैसे निकला?** disclosure — longitude → charana → syllable + convention name and DRAFT state.
+   For `kind: 'range'` there is **no hero**: the N candidates render as uniform **`ListCard` rows**
+   (thumb = syllable, title = nakshatra · pada, the IST window as the emphasised line) — none
+   enlarged or ranked, the same grammar as the name list (§7.2.4), and the ShareButton is absent
+   from the header.
+2. **कैसे निकला?** disclosure — user-level Lahiri method: birth Moon's nakshatra + pada → traditional starting sound. Never show convention ids, DRAFT/review flags, storage/runtime details, or connectivity claims.
 3. **Nakshatra context** row — deity / lord / gana with the neutral gloss (convention §3).
 4. **Name list** — `ListCard` rows, gender segment + syllable-count chips, 44 pt shortlist toggle,
    thin-charana fallback notice as a `goldTint` row. `FlatList`, always — a `ScrollView` + `.map()`
@@ -345,7 +353,7 @@ VirtualizedList late-timer trap that makes a fully-green run exit 1 (wiki `overv
 - `.maestro/namkaran-smoke.yaml`
 
 **Edited**
-- `src/screens/PanchangScreen.tsx` — the नामकरण card in both Jyotish landing states
+- `src/screens/PanchangScreen.tsx` — a fourth `JyotishToolCard` (नामकरण) in both Jyotish landing states; no new card component
 - `src/navigation/types.ts` + `PanchangStackNavigator.tsx` — two routes in `PanchangStackParamList`
 - `src/panchang/kundali.ts` — export `NAKSHATRA_SPAN` / `PADA_SPAN` (or a shared `charanaOf`) instead of re-declaring them
 - `mobile/eslint.config.js` — `no-restricted-imports` barring `data/namkaran` from startup modules
@@ -353,7 +361,7 @@ VirtualizedList late-timer trap that makes a fully-green run exit 1 (wiki `overv
 - `design.md` (**new §61**), `RULEBOOK.md` (**new §18**), `docs/roadmap/README.md`
 
 **Reused unchanged:** `BirthDetailsForm`, `CalendarDatePicker`, `ClockTimePicker`, `TextField`,
-`ListCard`, `ReaderHeader`, `ShareButton`, `JyotishStateCard`, `deities.ts`, the reader dispatcher,
+`CategoryCard`, `ListCard`, `ReaderHeader`, `ShareButton`, `JyotishStateCard`, `deities.ts`, the reader dispatcher,
 `eventMuhurat.ts`, `MuhuratResultsScreen`, `panchangDayStore`, `utils/shareVerse.tsx`.
 
 ## 12. Design compliance
