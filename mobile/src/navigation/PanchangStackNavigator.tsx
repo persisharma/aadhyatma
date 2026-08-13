@@ -15,6 +15,9 @@ import RashifalScreen from '@/screens/RashifalScreen';
 import GunaMilanScreen from '@/screens/GunaMilanScreen';
 import NamkaranScreen from '@/screens/NamkaranScreen';
 import NamkaranResultScreen from '@/screens/NamkaranResultScreen';
+import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
+import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
+import VidhiConductScreen from '@/screens/VidhiConductScreen';
 import type { PanchangStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<PanchangStackParamList>();
@@ -94,6 +97,21 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="NamkaranResult"
         component={NamkaranResultScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="VidhiCatalog"
+        component={VidhiCatalogScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="VidhiDetail"
+        component={VidhiDetailScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="VidhiConduct"
+        component={VidhiConductScreen}
         options={{ animation: 'slide_from_right' }}
       />
     </Stack.Navigator>
