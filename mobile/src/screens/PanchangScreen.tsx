@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { GestureResponderEvent } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -1634,8 +1633,6 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
   );
 }
 
-const PITRU_LEDGER_DISMISSED_KEY = '@vedansh/pitru-ledger-invitation-dismissed';
-
 function PitruSmaranCatalogRow({
   lang, colors, typography, radii, elevation, onPress,
 }: {
@@ -1646,15 +1643,8 @@ function PitruSmaranCatalogRow({
   elevation: any;
   onPress: () => void;
 }) {
-  const { entries, isLoading } = usePitruSmaran();
+  const { entries } = usePitruSmaran();
   const [soonest, setSoonest] = useState<Date | null>(null);
-  const [dismissed, setDismissed] = useState(false);
-
-  useEffect(() => {
-    AsyncStorage.getItem(PITRU_LEDGER_DISMISSED_KEY)
-      .then((value) => setDismissed(value === '1'))
-      .catch(() => undefined);
-  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -1671,7 +1661,6 @@ function PitruSmaranCatalogRow({
     return () => { cancelled = true; clearTimeout(handle); };
   }, [entries]);
 
-  if (!isLoading && entries.length === 0 && dismissed) return null;
   const subtitle = entries.length > 0
     ? contentByLang(
         lang,
@@ -1681,45 +1670,29 @@ function PitruSmaranCatalogRow({
     : contentByLang(lang, 'अपने पितरों की तिथियाँ जोड़ें', 'Add your ancestors’ tithis');
 
   return (
-    <View
-      style={[
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`Pitru Smaran. ${entries.length > 0 ? `${entries.length} entries` : 'Add remembrance dates'}`}
+      style={({ pressed }) => [
         styles.myVratRow,
         styles.pitruLedgerRow,
         { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg },
         elevation.card,
+        pressed && { opacity: 0.8 },
       ]}
     >
-      <Pressable
-        onPress={onPress}
-        accessibilityRole="button"
-        accessibilityLabel={`Pitru Smaran. ${entries.length > 0 ? `${entries.length} entries` : 'Add remembrance dates'}`}
-        style={({ pressed }) => [styles.pitruLedgerMain, pressed && { opacity: 0.8 }]}
-      >
-        <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>॥</Text>
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-            {contentByLang(lang, 'पितृ स्मरण', 'Pitru Smaran')}
-          </Text>
-          <Text style={{ ...captionFont(subtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
-            {subtitle}
-          </Text>
-        </View>
-        {entries.length > 0 && <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>}
-      </Pressable>
-      {!isLoading && entries.length === 0 ? (
-        <Pressable
-          onPress={() => {
-            setDismissed(true);
-            AsyncStorage.setItem(PITRU_LEDGER_DISMISSED_KEY, '1').catch(() => undefined);
-          }}
-          hitSlop={10}
-          accessibilityRole="button"
-          accessibilityLabel="Dismiss Pitru Smaran invitation"
-        >
-          <Text style={{ fontSize: 18, color: colors.inkMuted }}>×</Text>
-        </Pressable>
-      ) : null}
-    </View>
+      <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>॥</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+          {contentByLang(lang, 'पितृ स्मरण', 'Pitru Smaran')}
+        </Text>
+        <Text style={{ ...captionFont(subtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+          {subtitle}
+        </Text>
+      </View>
+      <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
+    </Pressable>
   );
 }
 
@@ -1966,7 +1939,6 @@ const styles = StyleSheet.create({
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
   myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
   pitruLedgerRow: { marginTop: 10 },
-  pitruLedgerMain: { flex: 1, flexDirection: 'row', alignItems: 'center' },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },

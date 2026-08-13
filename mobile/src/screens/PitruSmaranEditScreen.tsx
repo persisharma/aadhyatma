@@ -9,6 +9,7 @@ import CalendarDatePicker from '@/components/CalendarDatePicker';
 import TextField from '@/components/TextField';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
+import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import {
   deriveTithiRuleFromDate,
   isValidTithiRule,
@@ -76,6 +77,7 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { getEntry, addEntry, updateEntry } = usePitruSmaran();
+  const { permissionStatus, requestPermission } = useNotificationPreferences();
 
   const editingId = route.params?.entryId;
   const existing = editingId ? getEntry(editingId) : null;
@@ -90,6 +92,7 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
   const [tithi, setTithi] = useState<number | null>(existingRule?.tithi ?? null);
   const [dateText, setDateText] = useState('');
   const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   // The confirmed conversion: rule + the exact date it was derived from. Cleared
   // the moment the selected date changes, so a stale tithi can never be saved.
   const [derived, setDerived] = useState<{ rule: TithiRule; forMs: number } | null>(null);
@@ -126,8 +129,9 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
       ? unknownTithi || (manualRule !== null && isValidTithiRule(manualRule))
       : derived !== null && parsedDate !== null && derived.forMs === parsedDate.getTime();
 
-  const save = () => {
-    if (!canSave) return;
+  const save = async () => {
+    if (!canSave || isSaving) return;
+    setIsSaving(true);
     const tithiRule: SmaranEntry['tithiRule'] =
       mode === 'tithi'
         ? unknownTithi
@@ -136,22 +140,33 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
         : (derived as { rule: TithiRule; forMs: number }).rule;
     const derivedFromDateMs = mode === 'date' ? derived?.forMs : undefined;
     const trimmed = name.trim();
-    if (existing) {
-      updateEntry(existing.id, {
-        relation,
-        name: trimmed.length > 0 ? trimmed : undefined,
-        tithiRule,
-        derivedFromDateMs,
-      });
-    } else {
-      addEntry({
-        id: `smaran-${Date.now()}`,
-        relation,
-        name: trimmed.length > 0 ? trimmed : undefined,
-        tithiRule,
-        derivedFromDateMs,
-        createdAtMs: Date.now(),
-      });
+    try {
+      if (existing) {
+        updateEntry(existing.id, {
+          relation,
+          name: trimmed.length > 0 ? trimmed : undefined,
+          tithiRule,
+          derivedFromDateMs,
+        });
+      } else {
+        // New remembrances default ON, but never claim an undeliverable switch:
+        // request the shared OS grant when needed and persist true only when the
+        // device can actually schedule the day-before/day-of pair.
+        const reminderPermission = permissionStatus === 'granted'
+          ? 'granted'
+          : await requestPermission().catch(() => 'denied' as const);
+        addEntry({
+          id: `smaran-${Date.now()}`,
+          relation,
+          name: trimmed.length > 0 ? trimmed : undefined,
+          tithiRule,
+          derivedFromDateMs,
+          reminderEnabled: reminderPermission === 'granted',
+          createdAtMs: Date.now(),
+        });
+      }
+    } finally {
+      setIsSaving(false);
     }
     navigation.goBack();
   };
@@ -241,7 +256,17 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
           />
 
           {/* Mode toggle */}
-          <View style={[styles.modeSeg, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
+          <View
+            accessibilityRole="radiogroup"
+            style={[
+              styles.modeSeg,
+              {
+                backgroundColor: colors.parchmentSoft,
+                borderColor: colors.gold,
+                borderRadius: radii.md,
+              },
+            ]}
+          >
             {(
               [
                 ['tithi', contentByLang(lang, 'तिथि ज्ञात है', 'Tithi known')],
@@ -253,12 +278,26 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
                 <Pressable
                   key={value}
                   onPress={() => setMode(value)}
-                  accessibilityRole="button"
+                  accessibilityRole="radio"
                   accessibilityState={{ selected: active }}
                   accessibilityLabel={value === 'tithi' ? 'Tithi known' : 'Only date known'}
-                  style={[styles.seg, active && { backgroundColor: colors.parchmentHighlight, borderRadius: radii.sm }]}
+                  style={({ pressed }) => [
+                    styles.seg,
+                    {
+                      borderColor: active ? colors.gold : 'transparent',
+                      borderRadius: radii.sm,
+                      backgroundColor: active ? colors.saffronTint : 'transparent',
+                    },
+                    pressed && { opacity: 0.7 },
+                  ]}
                 >
-                  <Text style={{ fontFamily: bodyFont, fontSize: 13, color: active ? colors.saffronDeep : colors.inkMuted }}>
+                  <Text
+                    style={{
+                      fontFamily: active ? labelFont : bodyFont,
+                      fontSize: 13,
+                      color: active ? colors.saffronDeep : colors.inkSoft,
+                    }}
+                  >
                     {label}
                   </Text>
                 </Pressable>
@@ -417,17 +456,28 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
           )}
 
           {/* Save */}
+          {!existing && (
+            <View style={[styles.reminderDefault, { backgroundColor: colors.goldTint, borderRadius: radii.md }]}>
+              <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 19, color: colors.inkSoft }}>
+                {contentByLang(
+                  lang,
+                  'अनुस्मारक डिफ़ॉल्ट रूप से चालू — एक दिन पहले और उसी दिन',
+                  'Reminder on by default — day before and day of'
+                )}
+              </Text>
+            </View>
+          )}
           <Pressable
-            onPress={save}
-            disabled={!canSave}
+            onPress={() => { void save(); }}
+            disabled={!canSave || isSaving}
             accessibilityRole="button"
-            accessibilityState={{ disabled: !canSave }}
+            accessibilityState={{ disabled: !canSave || isSaving }}
             accessibilityLabel="Save smaran"
             style={({ pressed }) => [
               styles.saveBtn,
               { backgroundColor: colors.saffron, borderRadius: radii.md },
-              !canSave && { opacity: 0.4 },
-              pressed && canSave && { opacity: 0.85 },
+              (!canSave || isSaving) && { opacity: 0.4 },
+              pressed && canSave && !isSaving && { opacity: 0.85 },
             ]}
           >
             <Text style={{ fontFamily: labelFont, fontSize: 15, color: colors.onPrimary }}>
@@ -486,11 +536,12 @@ const styles = StyleSheet.create({
   },
   chipWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   chip: { borderWidth: 1, paddingHorizontal: 12, minHeight: 34, justifyContent: 'center' },
-  modeSeg: { flexDirection: 'row', borderWidth: 1, padding: 3, marginTop: 16, marginBottom: 14 },
-  seg: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center' },
+  modeSeg: { flexDirection: 'row', gap: 3, borderWidth: 1, padding: 3, marginTop: 16, marginBottom: 14 },
+  seg: { flex: 1, minHeight: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   unknownRow: { flexDirection: 'row', alignItems: 'center', gap: 10, borderWidth: 1, paddingHorizontal: 13, paddingVertical: 12, minHeight: 44 },
   confirmCard: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 13, marginTop: 12 },
   dateField: { minHeight: 52, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
-  saveBtn: { minHeight: 48, alignItems: 'center', justifyContent: 'center', marginTop: 18 },
+  reminderDefault: { paddingHorizontal: 13, paddingVertical: 9, marginTop: 14 },
+  saveBtn: { minHeight: 48, alignItems: 'center', justifyContent: 'center', marginTop: 10 },
   ghostBtn: { minHeight: 44, alignItems: 'center', justifyContent: 'center', borderWidth: 1, marginTop: 8 },
 });

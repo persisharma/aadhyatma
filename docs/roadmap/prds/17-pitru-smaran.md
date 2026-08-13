@@ -37,20 +37,24 @@ Reuses the §33 ObservanceList row (leading glyph · name + caption · right-ali
 - **तिथि ज्ञात है** — pick month, paksha, tithi from the engine's own enumerations (the names users already see on the Panchang tab).
 - **केवल तारीख़ ज्ञात है** — enter the Gregorian death date; the app computes the tithi via `computePanchangForDate` (sunrise-anga convention, same as the engine's festival matching) and **shows it back in words for confirmation** — the user always approves the tithi, never trusts a silent conversion.
 - Unknown tithi entirely → the entry can be saved as **सर्वपितृ अमावस्या** (the traditional fallback day for forgotten tithis).
+- A new saved entry enables its day-before/day-of reminder by default after obtaining the shared OS notification grant. If the grant is refused or blocked, the entry still saves but its switch remains honestly off.
 
 ### 3.4 Person detail — the ObservanceDetail hero pattern
-Opens with the §33 ObservanceDetail hero (name 24 pt centred, caption line, the saffron-tint **"अगला · date · in N days"** pill), followed by next year's date and the Pitru Paksha shraddha day (the person's tithi mapped into Bhadrapada Krishna paksha — the traditional rule, independent of death month), an opt-in **स्मरण reminder** toggle (day-before + day-of), and linked observance content: **गीता पाठ** deep links to Gita adhyaya 15 / adhyaya 2 (both already shipped — `linkSectionId` pattern), plus the श्राद्ध विधि cross-link if PRD-19 ships its shraddha vidhi. Delete is one tap + confirm, and wipes cleanly. The Pitru Paksha overview screen lists the fortnight as §33.6 "Upcoming" rows (marker dot · short date · name), family-matched days on the saffron dot.
+Opens with the §33 ObservanceDetail hero (name 24 pt centred, caption line, the saffron-tint **"अगला · date · in N days"** pill), followed by next year's date and the Pitru Paksha shraddha day (the person's tithi mapped into Bhadrapada Krishna paksha — the traditional rule, independent of death month), a per-person **स्मरण reminder** toggle (new saves default on; day-before + day-of), and linked observance content: **गीता पाठ** deep links to Gita adhyaya 15 / adhyaya 2 (both already shipped — `linkSectionId` pattern), plus the श्राद्ध विधि cross-link if PRD-19 ships its shraddha vidhi. Delete is one tap + confirm, and wipes cleanly. The Pitru Paksha overview screen lists the fortnight as §33.6 "Upcoming" rows (marker dot · short date · name), family-matched days on the saffron dot.
 
 ### 3.5 Panchang day integration — the private chip
 On a saved observance date, the Panchang day panel shows a small **॥ स्मरण** chip alongside the day's observance pills — visible only on this device, rendered in the muted gold tone, never in the festive style. Tapping opens the person detail.
 
 ### 3.6 व्रत-पर्व catalog — the year-round touchpoint (beyond More)
-The catalog view (§33) already pins a personal-ledger row: **My Vrat** (gold-tint fill, 1.5 px gold border). पितृ स्मरण adds the structural sibling directly beneath it, in the identical pinned-row treatment: `॥` glyph, title + NEW badge, subtitle carrying the live count and soonest next date ("3 स्मरण · अगला: 21 सित"). Tap → the remembrance list (same screen as the More entry). Empty state renders the row once with invitation copy ("अपने पितरों की तिथियाँ जोड़ें") and collapses if dismissed. My Vrat is the personal *vrat* ledger; this is the personal *shraddha* ledger — they belong side by side in the one view devotees open to plan observances.
+The catalog view (§33) already pins a personal-ledger row: **My Vrat** (gold-tint fill, 1.5 px gold border). पितृ स्मरण adds the structural sibling directly beneath it, in the identical pinned-row treatment: `॥` glyph, title + NEW badge, subtitle carrying the live count and soonest next date ("3 स्मरण · अगला: 21 सित"). Tap → the remembrance list (same screen as the More entry). With zero entries it remains as a standing invitation ("अपने पितरों की तिथियाँ जोड़ें"); it cannot be dismissed. My Vrat is the personal *vrat* ledger; this is the personal *shraddha* ledger — they belong side by side in the one view devotees open to plan observances.
 
 ### 3.7 Home Today strip — the seasonal touchpoint
 Two moments, one shipped mechanism (§18/§32 — the strip renders each day's observance pill + windows line):
 - During **Pitru Paksha**, the paksha's observance pill ("पितृ पक्ष — अष्टमी श्राद्ध") appears automatically once this PRD adds the missing Pitru Paksha rules (see the §4 gap row) — no Home-specific code beyond the rules themselves.
 - On a **family date** (a saved person's annual tithi, or their Pitru Paksha day), the muted **॥ स्मरण** chip joins the strip → person detail. Device-only, quiet: no NEW badges or counters on Home.
+
+### 3.8 Home DISCOVER — the standing zero-state hook
+The contextual Today chip cannot explain a feature before any person is saved. Home therefore also carries a permanent launch-release **पितृ स्मरण** DISCOVER card (`॥` glyph, annual-answer explanation, **स्मरण जोड़ें / Set up**) that opens the same remembrance list. It renders even with zero entries; this is the established Home awareness mechanism, while the muted Panchang row remains the planning ledger.
 
 ### Notifications — two tiers with different defaults
 
@@ -60,7 +64,7 @@ Reuses the established scheduler shape (pure planner + headless component + shar
    - **Eve of paksha start** (day before Bhadrapada Purnima): "कल से पितृ पक्ष — अपने पितरों का स्मरण करें". Tap → the Pitru Paksha overview when entries exist, else the remembrance list's invitation state.
    - **Eve of Sarvapitri Amavasya**: "कल सर्वपितृ अमावस्या — पितृ पक्ष का अंतिम दिन". Tap → overview.
    Copy follows the festive family's reading-invitation shape (a गीता पाठ link), stays fixed and reverent, and **never names a family member** — the season fire is identical on every device.
-2. **Per-person shraddha reminders — default OFF, opt-in per person** — the deliberate opposite default, because an unexpected grief-adjacent notification naming a family member is a harm, not a nudge. Day-before + day-of, fixed copy: "कल <relation> की पुण्यतिथि है · श्राद्ध तिथि: <tithi>".
+2. **Per-person shraddha reminders — default ON when a person is deliberately saved.** Saving the entry is the explicit intent boundary: the app requests the shared OS grant if needed and enables that person's day-before + day-of pair. A refusal/hard denial saves the entry with the reminder off rather than lying about delivery. The detail switch can disable/re-enable each person independently. Fixed copy: "कल <relation> की पुण्यतिथि है · श्राद्ध तिथि: <tithi>".
 
 Both tiers appear under the existing Reminders hub (More → स्मरण) with independent toggles, and both draw from the shared iOS pending budget.
 
@@ -95,7 +99,7 @@ New pure module `mobile/src/panchang/pitruSmaran.ts` + `tsx --test` fixtures (in
 ## 7. Phasing
 
 1. **Phase 1 (shipped in branch):** data model + `pitruSmaran.ts` solve + fixtures; More row; list/add/detail screens; Panchang day chip; Gita paath links.
-2. **Phase 2 (shipped in branch):** opt-in personal reminders, default-on season reminders, Pitru Paksha overview, pinned Vrat-catalog ledger, public/private Home Today chips, and mapped-family day matching.
+2. **Phase 2 (shipped in branch):** default-on-at-save personal reminders, default-on season reminders, Pitru Paksha overview, standing Vrat-catalog ledger, permanent Home DISCOVER hook, public/private Home Today chips, and mapped-family day matching.
 3. **Phase 3 (with PRD-19):** shraddha/tarpan vidhi cross-link.
 
 ## 8. Why it fits the moat

@@ -226,7 +226,8 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
               </View>
             )}
 
-            {/* Personal notifications are deliberately OFF until this person is opted in. */}
+            {/* New entries arrive enabled after an OS grant; this remains the
+                per-person control and old omitted preferences remain off. */}
             <View style={[styles.row, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
               <View style={styles.rowMain}>
                 <Text style={[styles.rowLabel, { color: colors.inkMuted }]}>
@@ -243,6 +244,7 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
                 thumbColor={colors.parchmentHighlight}
                 accessibilityRole="switch"
                 accessibilityLabel="Smaran reminder"
+                accessibilityValue={{ text: entry.reminderEnabled === true ? 'On' : 'Off' }}
                 accessibilityHint="Notifies the day before and the day of this remembrance"
               />
             </View>

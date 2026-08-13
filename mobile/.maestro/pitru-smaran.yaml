@@ -6,8 +6,9 @@
 #     canonical example), the solved next-date row on the list, the detail hero +
 #     गीता पाठ rows, and the delete confirm sheet. Add-then-delete is net zero,
 #     so back-to-back runs stay clean.
-#   - COVERS the pinned Vrat-catalog ledger row, per-person reminder switch, and
-#     the shared civil-date calendar's real select/confirm/derive path.
+#   - COVERS the pinned Vrat-catalog ledger row, the new-entry default-on
+#     reminder, and the shared civil-date calendar's real select/confirm/derive
+#     path.
 #   - Calendar-year edge cases and notification fire dates remain pinned by pure
 #     tests because OS time cannot be safely changed during a simulator flow.
 #
@@ -24,15 +25,13 @@ appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
-# ── Empty catalog invitation can be dismissed without opening the ledger ──
+# ── Empty catalog invitation remains a standing Panchang entry point ──
 - tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - tapOn: "Vrat & Parv"
 - extendedWaitUntil:
     visible: "Pitru Smaran.*Add remembrance dates"
     timeout: 15000
-- tapOn: "Dismiss Pitru Smaran invitation"
-- assertNotVisible: "Pitru Smaran.*Add remembrance dates"
 
 # ── Open More → पितृ स्मरण ──
 - tapOn: { id: "tab-more" }
@@ -110,7 +109,6 @@ appId: com.prashantsharma.vedansh
       text: "Smaran reminder"
     centerElement: true
 - assertVisible: "Smaran reminder"
-- tapOn: "Smaran reminder"
 - scrollUntilVisible:
     element:
       text: "Open Gita — Adhyaya 15"

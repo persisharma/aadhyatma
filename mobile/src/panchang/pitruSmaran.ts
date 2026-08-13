@@ -60,7 +60,7 @@ export type SmaranEntry = {
   tithiRule: TithiRule | 'sarvapitri';
   /** Set when the tithi was derived from a Gregorian date the user confirmed. */
   derivedFromDateMs?: number;
-  /** Private notification opt-in. Omitted/false is deliberately the default. */
+  /** Private notification preference. Old omitted values are off; new saves default on after an OS grant. */
   reminderEnabled?: boolean;
   createdAtMs: number;
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Switch, Text } from 'react-native';
+import { StyleSheet, Switch, Text } from 'react-native';
 import CalendarDatePicker from '@/components/CalendarDatePicker';
 
 /**
@@ -53,10 +53,11 @@ jest.mock('@/contexts/PitruSmaranContext', () => ({
     getEntry: (id: string) => mockEntries.find((e) => e.id === id) ?? null,
   }),
 }));
-const mockRequestPermission = jest.fn(() => Promise.resolve('granted'));
+let mockPermissionStatus: 'undetermined' | 'granted' | 'denied' = 'granted';
+const mockRequestPermission = jest.fn(() => Promise.resolve<'undetermined' | 'granted' | 'denied'>('granted'));
 jest.mock('@/contexts/NotificationPreferencesContext', () => ({
   useNotificationPreferences: () => ({
-    permissionStatus: 'granted',
+    permissionStatus: mockPermissionStatus,
     requestPermission: mockRequestPermission,
   }),
 }));
@@ -151,6 +152,7 @@ afterEach(() => {
   });
   jest.clearAllMocks();
   mockEntries = [];
+  mockPermissionStatus = 'granted';
 });
 
 async function render(node: React.ReactElement): Promise<TestRenderer.ReactTestRenderer> {
@@ -231,6 +233,27 @@ describe('PitruSmaranListScreen', () => {
 });
 
 describe('PitruSmaranEditScreen', () => {
+  test('mode selector clearly bounds the active half and exposes radio semantics', async () => {
+    const tree = await render(
+      <PitruSmaranEditScreen navigation={makeNav() as never} route={{ key: 'e', name: 'PitruSmaranEdit', params: {} } as never} />
+    );
+    const group = tree.root.find((node) => node.props.accessibilityRole === 'radiogroup');
+    expect(StyleSheet.flatten(group.props.style)).toEqual(expect.objectContaining({ gap: 3, borderWidth: 1 }));
+
+    const tithi = byLabel(tree, 'Tithi known');
+    const date = byLabel(tree, 'Only date known');
+    expect(tithi.props.accessibilityRole).toBe('radio');
+    expect(tithi.props.accessibilityState.selected).toBe(true);
+    expect(date.props.accessibilityState.selected).toBe(false);
+    expect(StyleSheet.flatten(tithi.props.style({ pressed: false })).backgroundColor).not.toBe('transparent');
+    expect(StyleSheet.flatten(date.props.style({ pressed: false })).backgroundColor).toBe('transparent');
+
+    act(() => date.props.onPress());
+    expect(byLabel(tree, 'Tithi known').props.accessibilityState.selected).toBe(false);
+    expect(byLabel(tree, 'Only date known').props.accessibilityState.selected).toBe(true);
+    expect(StyleSheet.flatten(byLabel(tree, 'Only date known').props.style({ pressed: false })).borderColor).not.toBe('transparent');
+  });
+
   test('tithi mode: Save stays disabled until month+tithi are chosen, then persists the rule', async () => {
     const nav = makeNav();
     const tree = await render(
@@ -250,7 +273,39 @@ describe('PitruSmaranEditScreen', () => {
     const saved = mockAddEntry.mock.calls[0][0] as SmaranEntry;
     expect(saved.relation).toBe('mataji');
     expect(saved.tithiRule).toEqual({ lunarMonth: 11, paksha: 'krishna', tithi: 8 });
+    expect(saved.reminderEnabled).toBe(true);
+    expect(mockRequestPermission).not.toHaveBeenCalled();
     expect(nav.goBack).toHaveBeenCalled();
+  });
+
+  test('new entries request the shared permission and enable reminders when granted', async () => {
+    mockPermissionStatus = 'undetermined';
+    const nav = makeNav();
+    const tree = await render(
+      <PitruSmaranEditScreen navigation={nav as never} route={{ key: 'e', name: 'PitruSmaranEdit', params: {} } as never} />
+    );
+    act(() => byLabel(tree, 'Tithi unknown, save on Sarvapitri Amavasya').props.onPress());
+    await act(async () => {
+      byLabel(tree, 'Save smaran').props.onPress();
+      await Promise.resolve();
+    });
+    expect(mockRequestPermission).toHaveBeenCalledTimes(1);
+    expect(mockAddEntry).toHaveBeenCalledWith(expect.objectContaining({ reminderEnabled: true }));
+    expect(nav.goBack).toHaveBeenCalled();
+  });
+
+  test('a refused OS grant leaves the new reminder honestly off', async () => {
+    mockPermissionStatus = 'undetermined';
+    mockRequestPermission.mockResolvedValueOnce('denied');
+    const tree = await render(
+      <PitruSmaranEditScreen navigation={makeNav() as never} route={{ key: 'e', name: 'PitruSmaranEdit', params: {} } as never} />
+    );
+    act(() => byLabel(tree, 'Tithi unknown, save on Sarvapitri Amavasya').props.onPress());
+    await act(async () => {
+      byLabel(tree, 'Save smaran').props.onPress();
+      await Promise.resolve();
+    });
+    expect(mockAddEntry).toHaveBeenCalledWith(expect.objectContaining({ reminderEnabled: false }));
   });
 
   test('unknown tithi saves as sarvapitri', async () => {
@@ -332,7 +387,7 @@ describe('PitruSmaranEditScreen', () => {
 });
 
 describe('PitruSmaranDetailScreen', () => {
-  test('personal reminder is off by default and can be opted in per person', async () => {
+  test('legacy off reminder exposes its state and can be opted in per person', async () => {
     mockEntries = [FATHER];
     const tree = await render(
       <PitruSmaranDetailScreen
@@ -342,6 +397,7 @@ describe('PitruSmaranDetailScreen', () => {
     );
     const toggle = tree.root.findByType(Switch);
     expect(toggle.props.value).toBe(false);
+    expect(toggle.props.accessibilityValue).toEqual({ text: 'Off' });
     await act(async () => toggle.props.onValueChange(true));
     expect(mockUpdateEntry).toHaveBeenCalledWith('smaran-father', { reminderEnabled: true });
   });
