@@ -624,21 +624,6 @@ function BirthInput({
           </Text>
         )}
       </Pressable>
-      <Text
-        style={{
-          color: colors.inkMuted,
-          fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-          fontSize: 12,
-          textAlign: 'center',
-          marginTop: 9,
-        }}
-      >
-        {contentByLang(
-          lang,
-          'जन्म विवरण इसी उपकरण पर रहते हैं।',
-          'Your birth details stay on this device.'
-        )}
-      </Text>
       {!!saveError && (
         <Text
           accessibilityRole="alert"

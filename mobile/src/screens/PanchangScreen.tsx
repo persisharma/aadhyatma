@@ -277,6 +277,7 @@ export default function PanchangScreen({ route }: Props) {
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
   const openRashifal = () => rootNav.navigate('Rashifal');
   const openGunaMilan = () => rootNav.navigate('GunaMilan');
+  const openNamkaran = () => rootNav.navigate('Namkaran');
 
   return (
     <View style={styles.root}>
@@ -699,6 +700,7 @@ export default function PanchangScreen({ route }: Props) {
               onEditKundali={() => openKundali(true)}
               onOpenRashifal={openRashifal}
               onOpenGunaMilan={openGunaMilan}
+              onOpenNamkaran={openNamkaran}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
             />
           )}
@@ -723,6 +725,7 @@ function JyotishLanding({
   onEditKundali,
   onOpenRashifal,
   onOpenGunaMilan,
+  onOpenNamkaran,
   onOpenNavagraha,
 }: {
   lang: Lang;
@@ -738,6 +741,7 @@ function JyotishLanding({
   onEditKundali: () => void;
   onOpenRashifal: () => void;
   onOpenGunaMilan: () => void;
+  onOpenNamkaran: () => void;
   onOpenNavagraha: () => void;
 }) {
   const [shareVisible, setShareVisible] = useState(false);
@@ -794,8 +798,8 @@ function JyotishLanding({
           >
             {meaningByLang(
               lang,
-              'इस उपकरण पर सुरक्षित जन्म विवरण पढ़े जा रहे हैं।',
-              'Reading the birth details stored on this device.'
+              'सहेजे गए जन्म विवरण पढ़े जा रहे हैं।',
+              'Loading your saved birth details.'
             )}
           </Text>
         </View>
@@ -878,12 +882,27 @@ function JyotishLanding({
         <JyotishToolCard
           titleHi="अष्टकूट मिलान"
           titleEn="Guna Milan"
-          bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट हिसाब, निजी और ऑफ़लाइन।"
-          bodyEn="A private, offline 36-point match with every koota explained."
+          bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट और निजी हिसाब।"
+          bodyEn="A private 36-point match with every koota explained."
           badge="NEW"
           glyph="मि"
           onPress={onOpenGunaMilan}
           accessibilityLabel="Open Guna Milan"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
+        <JyotishToolCard
+          titleHi="नामकरण"
+          titleEn="Namkaran"
+          bodyHi="नवजात के जन्म-चन्द्र से नामाक्षर पाएँ, या नक्षत्र से बिना जन्म विवरण के देखें।"
+          bodyEn="Find a newborn's namakshar from the birth Moon, or browse by nakshatra without birth details."
+          badge="NEW"
+          glyph="ना"
+          onPress={onOpenNamkaran}
+          accessibilityLabel="Open Namkaran"
           lang={lang}
           colors={colors}
           typography={typography}
@@ -1083,7 +1102,7 @@ function JyotishLanding({
               ]}
             >
               <Text style={[styles.jyotishSavedText, { color: colors.inkMuted }]}>
-                {contentByLang(lang, 'इसी उपकरण पर सुरक्षित', 'Saved on this device')}
+                {contentByLang(lang, 'विवरण सहेजे गए', 'Details saved')}
               </Text>
             </View>
           </View>
@@ -1201,12 +1220,27 @@ function JyotishLanding({
         <JyotishToolCard
           titleHi="अष्टकूट मिलान"
           titleEn="Guna Milan"
-          bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट हिसाब, निजी और ऑफ़लाइन।"
-          bodyEn="A private, offline 36-point match with every koota explained."
+          bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट और निजी हिसाब।"
+          bodyEn="A private 36-point match with every koota explained."
           badge="NEW"
           glyph="मि"
           onPress={onOpenGunaMilan}
           accessibilityLabel="Open Guna Milan"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
+        <JyotishToolCard
+          titleHi="नामकरण"
+          titleEn="Namkaran"
+          bodyHi="नवजात के जन्म-चन्द्र से नामाक्षर पाएँ, या नक्षत्र से बिना जन्म विवरण के देखें।"
+          bodyEn="Find a newborn's namakshar from the birth Moon, or browse by nakshatra without birth details."
+          badge="NEW"
+          glyph="ना"
+          onPress={onOpenNamkaran}
+          accessibilityLabel="Open Namkaran"
           lang={lang}
           colors={colors}
           typography={typography}
@@ -1321,12 +1355,27 @@ function JyotishLanding({
       <JyotishToolCard
         titleHi="अष्टकूट मिलान"
         titleEn="Guna Milan"
-        bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट हिसाब, निजी और ऑफ़लाइन।"
-        bodyEn="A private, offline 36-point match with every koota explained."
+        bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट और निजी हिसाब।"
+        bodyEn="A private 36-point match with every koota explained."
         badge="NEW"
         glyph="मि"
         onPress={onOpenGunaMilan}
         accessibilityLabel="Open Guna Milan"
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        radii={radii}
+        elevation={elevation}
+      />
+      <JyotishToolCard
+        titleHi="नामकरण"
+        titleEn="Namkaran"
+        bodyHi="नवजात के जन्म-चन्द्र से नामाक्षर पाएँ, या नक्षत्र से बिना जन्म विवरण के देखें।"
+        bodyEn="Find a newborn's namakshar from the birth Moon, or browse by nakshatra without birth details."
+        badge="NEW"
+        glyph="ना"
+        onPress={onOpenNamkaran}
+        accessibilityLabel="Open Namkaran"
         lang={lang}
         colors={colors}
         typography={typography}

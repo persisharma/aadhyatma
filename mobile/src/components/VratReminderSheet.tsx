@@ -117,13 +117,13 @@ export default function VratReminderSheet({
           {titleName
             ? meaningByLang(
                 lang,
-                `${titleName} के लिए · केवल ऑन-डिवाइस सूचनाएँ`,
-                `For ${titleName}. Local notifications only — scheduled on-device.`
+                `${titleName} के लिए`,
+                `For ${titleName}.`
               )
             : meaningByLang(
                 lang,
-                'सभी फ़ॉलो किए व्रतों के लिए डिफ़ॉल्ट · ऑन-डिवाइस',
-                'Default for all followed vrats. Local notifications only — on-device.'
+                'सभी फ़ॉलो किए व्रतों के लिए डिफ़ॉल्ट',
+                'Default for all followed vrats.'
               )}
         </Text>
 

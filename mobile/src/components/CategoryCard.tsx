@@ -24,6 +24,10 @@ type Props = {
   variant?: 'card' | 'launcher';
   /** Short English label for the launcher grid; falls back to `nameEn`. */
   displayNameEn?: string;
+  /** Compact launchers default to one line; dense named indexes may opt into two. */
+  launcherLabelLines?: 1 | 2;
+  /** Home keeps captions below; dense indexes can place the title inside the tile. */
+  launcherLabelPosition?: 'below' | 'tile';
 };
 
 function CategoryCard({
@@ -37,6 +41,8 @@ function CategoryCard({
   hasNew,
   variant = 'card',
   displayNameEn,
+  launcherLabelLines = 1,
+  launcherLabelPosition = 'below',
 }: Props) {
   const { colors, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
@@ -60,15 +66,19 @@ function CategoryCard({
   if (isLauncher) {
     const launcherLabel = (
       <Text
-        numberOfLines={1}
+        numberOfLines={launcherLabelLines}
+        adjustsFontSizeToFit={launcherLabelPosition === 'tile'}
+        minimumFontScale={launcherLabelPosition === 'tile' ? 0.8 : undefined}
         style={[
           styles.launcherName,
+          launcherLabelPosition === 'tile' && styles.launcherNameInTile,
           {
             color: colors.ink,
             fontFamily: primary.fontFamily,
             fontSize: primary.fontSize,
             fontStyle: primary.fontStyle,
             letterSpacing: primary.letterSpacing,
+            lineHeight: launcherLabelPosition === 'tile' ? 21 : undefined,
           },
         ]}
       >
@@ -98,6 +108,7 @@ function CategoryCard({
             ]}
           >
             {icon}
+            {launcherLabelPosition === 'tile' ? launcherLabel : null}
             <View
               style={[
                 styles.badge,
@@ -110,7 +121,7 @@ function CategoryCard({
               </Text>
             </View>
           </View>
-          {launcherLabel}
+          {launcherLabelPosition === 'below' ? launcherLabel : null}
         </View>
       );
     }
@@ -146,6 +157,7 @@ function CategoryCard({
             style={[styles.cardBg, { borderRadius: radii.lg }]}
           />
           {icon}
+          {launcherLabelPosition === 'tile' ? launcherLabel : null}
           {hasNew && (
             <View
               style={[
@@ -161,7 +173,7 @@ function CategoryCard({
             </View>
           )}
         </View>
-        {launcherLabel}
+        {launcherLabelPosition === 'below' ? launcherLabel : null}
       </Pressable>
     );
   }
@@ -296,6 +308,10 @@ const styles = StyleSheet.create({
   launcherName: {
     marginTop: 6,
     textAlign: 'center',
+  },
+  launcherNameInTile: {
+    marginTop: 0,
+    paddingHorizontal: 8,
   },
   launcherBadge: {
     top: 6,

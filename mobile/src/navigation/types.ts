@@ -118,6 +118,12 @@ export type PanchangStackParamList = {
   Kundali: { editing?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
   GunaMilan: undefined;
+  Namkaran: undefined;
+  NamkaranResult: {
+    basis:
+      | { kind: 'birth'; date: string; time: string | null }
+      | { kind: 'manual'; nakshatraIndex: number; pada: 1 | 2 | 3 | 4 };
+  };
   // Guided puja flows (PRD-19). `dateMs` is the festival occurrence the vidhi
   // was opened for — the samagri checklist persists per that date.
   VidhiCatalog: undefined;

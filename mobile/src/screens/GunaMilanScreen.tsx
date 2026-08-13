@@ -109,7 +109,7 @@ export default function GunaMilanScreen({ navigation }: Props) {
       setBride(draft.bride);
       setRemember(true);
       setHasRememberedDraft(true);
-      setStorageMessage(contentByLang(lang, 'इस उपकरण से सहेजे गए विवरण लोड किए गए।', 'Remembered details loaded from this device.'));
+      setStorageMessage(contentByLang(lang, 'सहेजे गए विवरण लोड किए गए।', 'Saved details loaded.'));
     }).catch(() => undefined);
     return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- capture mount-time language; the load message is transient.
@@ -141,7 +141,7 @@ export default function GunaMilanScreen({ navigation }: Props) {
     if (remember) {
       void saveRememberedGunaMilanDraft({ groom, bride }).then(() => {
         setHasRememberedDraft(true);
-        setStorageMessage(contentByLang(lang, 'इस उपकरण पर सहेजा गया।', 'Remembered on this device.'));
+        setStorageMessage(contentByLang(lang, 'विवरण सहेजे गए।', 'Details saved.'));
       }).catch(() => setStorageMessage(contentByLang(lang, 'ये विवरण सहेजे नहीं जा सके।', 'Could not remember these details.')));
     } else {
       void clearRememberedGunaMilanDraft();
@@ -173,15 +173,15 @@ export default function GunaMilanScreen({ navigation }: Props) {
                   {contentByLang(lang, '३६ गुण — पूरा हिसाब सामने', '36 points, with every step visible')}
                 </Text>
                 <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, lineHeight: 20, marginTop: 5 }}>
-                  {meaningByLang(lang, 'जन्म तिथि और समय IST (UTC+5:30) में भरें। स्थान आवश्यक नहीं है। गणना केवल इस उपकरण पर होती है।', 'Enter birth date and time in IST (UTC+5:30). No location is needed. Calculation stays on this device.')}
+                  {meaningByLang(lang, 'जन्म तिथि और समय IST (UTC+5:30) में भरें। स्थान आवश्यक नहीं है।', 'Enter birth date and time in IST (UTC+5:30). No location is needed.')}
                 </Text>
               </View>
               <BirthDetailsForm role="groom" lang={lang} value={groom} onChange={(value) => { setGroom(value); setResult(null); }} errors={groomErrors} savedAvailable={Boolean(savedProfile)} onUseSaved={() => fillFromSaved('groom')} />
               <BirthDetailsForm role="bride" lang={lang} value={bride} onChange={(value) => { setBride(value); setResult(null); }} errors={brideErrors} savedAvailable={Boolean(savedProfile)} onUseSaved={() => fillFromSaved('bride')} />
               <View style={[styles.rememberRow, { borderColor: colors.divider, borderRadius: radii.md }]}>
                 <View style={{ flex: 1 }}>
-                  <Text style={{ color: colors.ink, fontFamily: fontFamilies.interSemiBold, fontSize: 12 }}>{contentByLang(lang, 'इस उपकरण पर याद रखें', 'Remember on this device')}</Text>
-                  <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 16, marginTop: 2 }}>{meaningByLang(lang, 'डिफ़ॉल्ट रूप से विवरण केवल इस सत्र तक रहते हैं।', 'Details are session-only by default.')}</Text>
+                  <Text style={{ color: colors.ink, fontFamily: fontFamilies.interSemiBold, fontSize: 12 }}>{contentByLang(lang, 'मिलान विवरण याद रखें', 'Remember match details')}</Text>
+                  <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 16, marginTop: 2 }}>{meaningByLang(lang, 'अगली बार यह फ़ॉर्म पहले से भरा मिलेगा।', 'Prefill this form next time.')}</Text>
                 </View>
                 <Switch
                   value={remember}
@@ -192,7 +192,7 @@ export default function GunaMilanScreen({ navigation }: Props) {
                   trackColor={{ false: colors.divider, true: colors.saffron }}
                   thumbColor={colors.parchment}
                   ios_backgroundColor={colors.divider}
-                  accessibilityLabel={contentByLang(lang, 'इस उपकरण पर मिलान विवरण याद रखें', 'Remember match details on this device')}
+                  accessibilityLabel={contentByLang(lang, 'मिलान विवरण याद रखें', 'Remember match details')}
                 />
               </View>
               {hasRememberedDraft ? <Pressable accessibilityRole="button" accessibilityLabel={contentByLang(lang, 'सहेजा गया मिलान हटाएँ', 'Clear remembered match')} onPress={clearSaved} style={styles.clearButton}><Text style={{ color: colors.avoidDeep, fontFamily: fontFamilies.interSemiBold, fontSize: 12 }}>{contentByLang(lang, 'सहेजा गया मिलान हटाएँ', 'Clear remembered match')}</Text></Pressable> : null}

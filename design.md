@@ -2315,7 +2315,7 @@ because they are different concerns that happen to agree today.
 
 ## 58. Guna Milan (अष्टकूट मिलान) — PRD-16
 
-**Purpose.** A traditional 36-guna Ashtakoota marriage-compatibility calculation with every step visible — a calm, private, offline tool, not a verdict. No red-alarm treatment, fear copy, remedy upsell, or hidden noon assumption. PRD: `docs/roadmap/prds/16-guna-milan.md`.
+**Purpose.** A traditional 36-guna Ashtakoota marriage-compatibility calculation with every step visible — a calm, private tool, not a verdict. No red-alarm treatment, fear copy, remedy upsell, or hidden noon assumption. PRD: `docs/roadmap/prds/16-guna-milan.md`.
 
 **Placement.** A card below Kundali and Rashifal on the ज्योतिष landing (`PanchangScreen`'s `JyotishLanding`), with the standard versioned NEW badge. Tap pushes `GunaMilan` inside the **Panchang stack** (`PanchangStackParamList` — not a duplicate root route); back and screen tracking follow the §51 Jyotish screens.
 
@@ -2327,7 +2327,7 @@ because they are different concerns that happen to agree today.
 
 **Share.** Reuses the §51 `JyotishShareSheet` (4:5, 1080×1350, `react-native-view-shot` → `expo-sharing`) with a `GunaMilanShareCard`. The card is a strict allow-list — optional names + वर/वधू roles, exact total, band, eight component scores, disclaimer, `ॐ वेदांश़` footer — and **never** contains birth date, time, location, saved-profile id, or hidden metadata (`buildGunaMilanShareModel` cannot serialize the input object). Share is unavailable for a time-uncertain range.
 
-**Privacy & persistence.** Inputs are session-only by default. An explicit, initially-unchecked "इस उपकरण पर याद रखें · Remember on this device" toggle stores a versioned record under `@vedansh:guna-milan-draft:v1` with a visible clear action; a previous match is never restored implicitly. Local diagnostics (start/complete/preview/share-sheet-opened counts) live under `@vedansh:guna-milan-metrics:v1` and carry no PII. All calculation stays on-device.
+**Privacy & persistence.** Inputs are session-only by default. An explicit, initially-unchecked "मिलान विवरण याद रखें · Remember match details" toggle says only "अगली बार यह फ़ॉर्म पहले से भरा मिलेगा · Prefill this form next time", stores a versioned record under `@vedansh:guna-milan-draft:v1`, and has a visible clear action; a previous match is never restored implicitly. Local diagnostics (start/complete/preview/share-sheet-opened counts) live under `@vedansh:guna-milan-metrics:v1` and carry no PII. Per RULEBOOK §3, screen and share copy do not expose on-device/offline/internet/account/storage implementation details.
 
 **A11y & i18n (§12).** Controls ≥ 44; expandable rows expose button role, accessible name, and expanded state; the dial and range carry screen-reader summaries; the primary **मिलान करें** action stays keyboard-safe. All visible copy and accessibility labels ship in hi/en/gu/kn — gu/kn re-script the Devanagari via `contentByLang`/`meaningByLang` per the language design, and faces use `scriptTitleFont`/`scriptBodyFont`. English accessibility labels stay stable for Maestro/Jest even when the visible reading language is not English.
 
@@ -2406,7 +2406,25 @@ Every list item in the feature is the shared **`ListCard`** (`components/ListCar
 
 ---
 
-## 61. Puja Vidhi (पूजा विधि — guided step-by-step puja flows, PRD-19)
+## 61. Namkaran (नामकरण) — PRD-17
+
+**Purpose and placement.** Namkaran supplies a traditional starting sound from the birth Moon and a shelf of reviewed names; it never ranks names, scores them, or makes claims about the child. It is the fourth shipped `JyotishToolCard`, immediately below Guna Milan in both guest and saved-profile Jyotish landings, and pushes `Namkaran` → `NamkaranResult` inside the existing Panchang stack. Phase 1 deliberately has no Home tile and no vidhi module.
+
+**Input and privacy.** The child mode of the shared `BirthDetailsForm` renders date + IST time only: no name, city, saved-Kundali autofill, or global Panchang-location mutation. Unknown time is stored as `null` and enumerates the whole IST civil day; noon is never fabricated. Birth input is session-only unless the initially-off `Remember birth details` switch is selected; its supporting copy says only that the form will be prefilled next time. The opt-out uses an invalidating mutation queue so clearing wins over an in-flight save. The shortlist is a separate id-only record and survives clearing birth input.
+
+**Answer grammar.** An exact result leads with the one new answer component, `NamaksharCard`: `cardActiveFrom → cardActiveTo`, gold `॥`, lifted elevation, a fixed generous line box for the syllable, pronunciation aid, then nakshatra/pada/rashi provenance. Unknown-time results have no hero and no share action; every candidate is a uniform shipped `ListCard` with an IST window. The two path-B doors, four pada choices, name rows, and muhurat door are also `ListCard`. The 27-choice nakshatra selector is the deliberate compact exception: the shipped Home `CategoryCard variant="launcher"` in a 3-column × 9-row grid, with the current-language name fitted inside the tile over at most two lines and no ordinal-number title. This is an explicit index variant of §18's label-below launcher: `adjustsFontSizeToFit` with a 0.8 floor keeps long names legible in three columns. It replaces the former 27 full-width rows without creating a new card grammar. The name list is a `FlatList` with word+tint gender, length, and shortlist states. The rashi card derives nine charanas from the same 108-cell table and explicitly says both naming traditions are in use.
+
+**Share boundary.** Exact results reuse `JyotishShareSheet` and a fixed 4:5 `NamkaranShareCard`. Its model allow-lists syllables, nakshatra, pada, rashi, disclaimer, and brand. Shortlisted names require a fresh per-share opt-in and are capped with an overflow line; birth date/time, location, basis, longitude, profile identifiers, and hidden metadata cannot enter the model. An unknown-time range has no exact share.
+
+**Content and release state.** `namakshar-v1` remains `verified:false`; the convention and full name corpus are release blockers under RULEBOOK §18. The checked-in `names.01.json` is an explicitly `releaseEligible:false` development shard used to exercise the UI/privacy flow without inventing editorial sign-off. The production corpus must meet the attestation and 6+6-per-charana/fallback contract before the card is exposed in a release.
+
+**Customer-copy boundary.** Screens and share output describe the tradition, actions, and outcomes only. They never expose on-device/offline/internet/account/storage implementation details, convention or schema versions, DRAFT/review status, or corpus eligibility. Release gates remain enforced by metadata and tests rather than customer-facing warnings. The `कैसे निकला?` line may name the Lahiri method and explain Moon nakshatra + pada → starting sound.
+
+**Design system.** Existing warm tokens only; no emoji or new colours. All controls are at least 44 pt and field buttons remain 48 pt. The nakshatra grid uses the same 72 pt launcher tiles, gradient, border, elevation, and three-column spacing as Home. Visible strings route through `contentByLang`/`meaningByLang`, gu/kn re-script from Devanagari, and English accessibility labels stay stable for Maestro. Files: `panchang/namkaran*.ts`, `data/namkaran/`, `screens/Namkaran*`, `components/NamaksharCard`, `NameDetailSheet`, `NamkaranShareCard`.
+
+---
+
+## 62. Puja Vidhi (पूजा विधि — guided step-by-step puja flows, PRD-19)
 
 **Purpose.** Own the *performed* moment of a festival day: samagri gathered the day before, every step guided in hand, and applicable katha/aarti/prayer texts opened from readers the app already ships. The v1 catalog ships all six household Vidhis: श्री सत्यनारायण पूजा (16 steps), दीपावली लक्ष्मी-गणेश पूजन (18), गणेश चतुर्थी स्थापना (16), नवरात्रि घटस्थापना (14), करवा चौथ पूजन (12), and महाशिवरात्रि पूजन (16) — 92 steps total.
 
@@ -2414,18 +2432,18 @@ Every list item in the feature is the shared **`ListCard`** (`components/ListCar
 
 **Data.** `mobile/src/data/vidhi/` — `types.ts` (`VidhiEntry`: id, bilingual title, `festivalIds[]`, `deities[]`, bilingual convention line, `durationHintMin`, `samagri[]`, `steps[]` with phase `prep|main|closing`, optional transcribed `mantra {devanagari, iast, sourceUrl}`, optional `ref {kind: 'katha'|'section', id}`, and a Valmiki-shaped `source` block), one content module per published Vidhi, and `index.ts` (`VIDHI_ENTRIES` / `VIDHI_BY_ID` / `getVidhiForFestival`). **Convention/source fields and `sourceUrl` are review-only and never render** — pinned across every page of all six entries by `VidhiScreens.test.tsx`; the conduct pager strips `sourceUrl` before steps enter its FlatList data. Checklist + resume state persist at `@vedansh/vidhi-checklist` (`data/vidhi/checklistStore.ts`): samagri checked-state keyed per (vidhi, festival date), conduct step keyed per (vidhi, civil day).
 
-### 61.1 Vidhi Catalog (`VidhiCatalogScreen`)
+### 62.1 Vidhi Catalog (`VidhiCatalogScreen`)
 
 `ReaderHeader variant="index"` ("पूजा विधियाँ"), then one card per published vidhi following the **§8 LibraryCard active-variant spec rebuilt from the same tokens** (`LibraryCard` itself is coupled to `LibraryEntry` + the routine sheet): `cardActiveFrom→cardActiveTo` gradient, `cardActiveBorder`, `radii.lg`, `elevation.raised`, 52pt first-letter thumb (`cardThumbActive*` gradient, `radii.md`, `typography.thumb`), `orderTitlesByLanguage` title pair (dev 17/lat 19 primary), and a localized `cardMeta` sub-line (`16 चरण · लगभग 60 मिनट · कथा सहित` / `16 steps · About 60 min · with katha`), saffron 26pt ›. No source-verification or tradition copy is published on the catalog surface.
 
-### 61.2 Vidhi Detail (`VidhiDetailScreen` — `{ vidhiId, dateMs? }`)
+### 62.2 Vidhi Detail (`VidhiDetailScreen` — `{ vidhiId, dateMs? }`)
 
 `ReaderHeader variant="index"` with the vidhi title; under it a quiet duration-only line (`लगभग 60 मिनट` / `About 60 min`, `ink-muted` 12, italic for Latin). Tradition and source attribution remain internal review metadata and are not published. Then a **two-segment control** `तैयारी · सामग्री / पूजा · N चरण` (13pt, the §33.1 segmented-pill pattern: `parchmentSoft` track, `divider` border, `radii.pill`, selected half `saffronTint` + `saffronDeep`).
 
 - **तैयारी** — the samagri checklist reuses §31 Today's Practice's summary-accordion + ledger language: an always-visible progress summary (`n / m सामग्री तैयार`, remaining count, gold→saffron track, rotating caret) expands/collapses the rows below. Rows have `divider` hairlines and the **§31 routine check circle** (28pt, 2px `saffron` ring, fills `saffron` with an `onPrimary` ✓; `accessibilityRole="checkbox"`), bilingual item/meta copy (checked → `ink-muted`, **never struck through**), qty in the meta line, and a `divider`-outline `वैकल्पिक` chip on optional rows. State persists per the festival date passed in `dateMs` (falls back to today) — a fresh occurrence starts a fresh list. One action: **सूची साझा करें** (ghost `goldTint`-border button) → the OS share sheet with the plain-text list (RN `Share.share`, same mechanism as MoreScreen's share row) — the family shopping message, no image pipeline, nothing personal.
 - **पूजा** — the phase-grouped step list (आरम्भ · मुख्य पूजा · समापन labels in `saffronDeep` 12), each step a `parchmentSoft` `radii.md` row: 30pt numbered circle, title, and a caption naming what the step carries (`॥ मन्त्र सहित` / `कथा पाठ` / `आरती`). Tapping a step or the filled-`saffron` **पूजा प्रारम्भ करें** button enters conduct mode (at that step / step 0). When today's saved conduct step exists a `goldTint` **जहाँ थे वहीं से · n/N** resume row leads the list (rehydrated on focus, so returning from conduct refreshes it).
 
-### 61.3 Conduct mode (`VidhiConductScreen` — `{ vidhiId, dateMs?, initialStep? }`)
+### 62.3 Conduct mode (`VidhiConductScreen` — `{ vidhiId, dateMs?, initialStep? }`)
 
 Full-screen, one step per page, a horizontal paged `FlatList` exactly like the readers (light haptic per page turn, §11). `ReaderHeader variant="reader"` carries the vidhi title and a step-scoped `n / m` counter (`pageCounter` italic). The only page-turn control is the familiar left/right swipe; there are no previous/next buttons and no swipe-instruction copy. One 6pt **progress dot per step** sits at the bottom (active dot `saffronDeep`, stretched to 18pt — the Hanuman Chalisa/current-reader pager treatment).
 
@@ -2439,9 +2457,10 @@ Full-screen, one step per page, a horizontal paged `FlatList` exactly like the r
 **Localisation.** Titles/instructions flow through `contentByLang`/`meaningByLang` (gu/kn derive); **mantras stay Devanagari + IAST in every language** (§3.1 — Sanskrit is not re-scripted or hidden behind the toggle here; the IAST line is the romanization). No emoji anywhere — ॥/ॐ glyphs (§5).
 
 **Files.** `mobile/src/data/vidhi/{types,index,checklistStore,satyanarayan-puja,diwali-lakshmi-ganesh-puja,ganesh-chaturthi-sthapana,navratri-ghatasthapana,karwa-chauth-puja,maha-shivaratri-puja}.ts` · `mobile/src/screens/Vidhi{Catalog,Detail,Conduct}Screen.tsx` · pill + tile in `mobile/src/screens/PanchangScreen.tsx` · routes in `mobile/src/navigation/{types.ts,PanchangStackNavigator.tsx}` · `vidhiId` hooks in `mobile/src/panchang/{types,festivals}.ts`. Tests: `src/data/__tests__/vidhiContent.test.ts` (tsx — six-entry registry, refs, source contract + Devanagari well-formedness), `src/screens/__tests__/VidhiScreens.test.tsx` (Jest — all screens + registry-wide source privacy), `.maestro/vidhi-smoke.yaml` (e2e).
+
 ---
 
-## 62. Pitru Smaran (पितृ स्मरण, PRD-17)
+## 63. Pitru Smaran (पितृ स्मरण, PRD-17)
 
 **Purpose.** Tithi-based family remembrance: record each departed family member once — by tithi (माघ कृष्ण अष्टमी) or by Gregorian death date — and the app answers **"इस वर्ष कब?"**, **"पितृ पक्ष में किस दिन?"**, and **"उस दिन क्या करें?"** (linked गीता पाठ) permanently. A quiet, private surface under the **More hub**; entries live only in AsyncStorage (`@vedansh/pitru-smaran`, versioned `{version:1, entries:[]}`) and every date is solved on-device by the festival engine's conventions.
 

@@ -45,4 +45,21 @@ module.exports = defineConfig([
     ignores: ["src/theme/**", "**/__tests__/**"],
     rules: designSystemRules,
   },
+  {
+    files: [
+      "App.{ts,tsx}",
+      "src/screens/HomeScreen.{ts,tsx}",
+      "src/navigation/TabNavigator.{ts,tsx}",
+      "src/data/texts.{ts,tsx}",
+      "src/data/searchIndex.{ts,tsx}",
+    ],
+    rules: {
+      'no-restricted-imports': ['error', {
+        patterns: [{
+          group: ['**/data/namkaran', '**/data/namkaran/**'],
+          message: 'Namkaran corpus must stay inside the already-lazy Panchang stack; never import it into startup or global-search modules.',
+        }],
+      }],
+    },
+  },
 ]);
