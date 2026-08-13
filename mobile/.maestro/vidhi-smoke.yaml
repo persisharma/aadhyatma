@@ -1,13 +1,13 @@
-# Puja Vidhi Smoke Test (PRD-19 Phase 1)
+# Puja Vidhi Smoke Test (PRD-19 v1)
 #
 # Drives the guided-puja surfaces end-to-end through their always-available
 # entry (the Vrat & Parv catalog's पूजा विधि tile) — the ObservanceCard pill is
-# date-dependent (it appears only on purnima days for the Satyanarayan vidhi),
+# date-dependent (each pill appears only on its linked observance day),
 # so the deterministic door is the catalog tile.
 #
 # Verifies:
 #   1. Panchang tab → Vrat & Parv → Puja Vidhi tile → vidhi catalog.
-#   2. The Satyanarayan card renders (16 steps · with katha) and opens detail.
+#   2. The six-entry catalog renders; the Satyanarayan card opens detail.
 #   3. Detail: private provenance, duration, the routine-style samagri summary
 #      + checklist (a §31 check circle toggles), and the तैयारी/पूजा segments.
 #   4. पूजा segment: phase-grouped step list + "Begin the puja" → conduct mode.
@@ -55,6 +55,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Shri Satyanarayan Puja.*"
     timeout: 15000
+- assertVisible: "Diwali Lakshmi-Ganesh Pujan.*"
 
 # ── Step 5: Open the Satyanarayan vidhi detail ──
 - tapOn: "Shri Satyanarayan Puja.*"

@@ -177,7 +177,7 @@
 <body>
   <h1>पूजा विधि — Guided Step-by-Step Puja Flows</h1>
   <div class="sub">PRD-19 · Interactive UI prototype. Static mockups in the app's parchment system — not the live build.</div>
-  <div class="legend">Entered from <b>the day it's needed</b> — a पूजा विधि action pill on the shipped ObservanceCard (design.md §33.5), beside its existing katha/read pills — not from a new Home category; the catalog lists on the §8 LibraryCard. Two modes: <b>तैयारी</b> (the shipped Today's Practice checklist pattern, day before) and <b>पूजा</b> (one Daily Bhakti-style reading card per step, horizontally paged, keep-awake). Mantras include Devanagari + IAST + read-aloud (#230 TTS); shipped texts (aarti, katha) are handed off by reference, never re-typed. Provenance remains internal review metadata and is not published in the UI.</div>
+  <div class="legend">Entered from <b>the day it's needed</b> — a पूजा विधि action pill on the shipped ObservanceCard (design.md §33.5), beside its existing katha/read pills — or from the always-available Vrat & Parv catalog, not a new Home category. Two modes: <b>तैयारी</b> (the shipped Today's Practice checklist pattern, day before) and <b>पूजा</b> (one Daily Bhakti-style reading card per step, horizontally paged). Verified mantras include Devanagari + IAST + read-aloud (#230 TTS); shipped texts (aarti, katha) are handed off by reference, never re-typed. Provenance remains internal review metadata and is not published in the UI.</div>
 
   <!-- ============ 1 · ENTRY + PREP ============ -->
   <div class="phaselabel">1 · Entry &amp; तैयारी — the day before</div>
@@ -218,7 +218,7 @@
       </div>
     </div>
     <div class="cap"><b>Festival day panel — the primary door.</b><br/>
-      <span class="n">1</span><b>A third action pill on the shipped ObservanceCard</b> (design.md §33.5: category pill · deity · name · description · action pills). पूजा विधि joins the existing <i>कथा पढ़ें</i> (gold-tint) and <i>पढ़ें: &lt;section&gt;</i> (outline) pills as a filled-saffron pill, driven by a <i>vidhiId</i> on the festival row — the identical hook mechanism as <i>kathaId</i>. <b>Tap → the vidhi overview.</b> The same link fills the "How to observe" slot design.md §33 explicitly reserves on ObservanceDetail "until real vidhi content exists" — this PRD is that content. Also indexed in search.</div>
+      <span class="n">1</span><b>A third action pill on the shipped ObservanceCard</b> (design.md §33.5: category pill · deity · name · description · action pills). पूजा विधि joins the existing <i>कथा पढ़ें</i> (gold-tint) and <i>पढ़ें: &lt;section&gt;</i> (outline) pills as a filled-saffron pill, driven by a <i>vidhiId</i> on the festival row — the identical hook mechanism as <i>kathaId</i>. <b>Tap → the vidhi overview.</b></div>
     </div>
 
     <div class="col">
@@ -260,7 +260,7 @@
 
   <!-- ============ 2 · CONDUCT MODE ============ -->
   <div class="phaselabel" id="conduct-mode">2 · पूजा — conduct mode on festival day</div>
-  <div class="phasedesc">One existing reading-card shell per step, horizontally paged exactly like the readers. The Hanuman Chalisa-style carousel dots sit at the bottom; reader-grade type, keep-awake, mantra with IAST + read-aloud, and linked shipped texts.</div>
+  <div class="phasedesc">One existing reading-card shell per step, horizontally paged exactly like the readers. The Hanuman Chalisa-style carousel dots sit at the bottom; reader-grade type, verified mantra with IAST + read-aloud, and linked shipped texts.</div>
   <div class="wrap">
 
     <div class="col">
@@ -286,7 +286,7 @@
     </div>
     <div class="cap"><b>Conduct mode — a mantra step.</b><br/>
       <span class="n">4</span><b>No new card system:</b> this is the Daily Bhakti reading card adapted with a phase pill, step title, instruction, the shipped ornament divider, mantra/IAST section, and read-aloud. The parchment-soft surface, 18pt radius, divider border, raised elevation, and reading hierarchy are all existing tokens. The horizontal pager owns left/right swipe; the card's vertical content can still scroll when a step is long.<br/>
-      <span class="n">5</span><b>Keep-awake</b> holds for the whole conduct session (wet hands — no tapping to wake), released on exit.<br/>
+      <span class="n">5</span><b>Keep-awake remains a recorded follow-up</b>; the current build adds no native dependency and makes no keep-awake promise.<br/>
       <span class="n">6</span><b>Reader-identical carousel navigation</b> — horizontal swipe changes steps; the bottom dots match Hanuman Chalisa and the other readers (6pt resting dots, 18pt active pill). There are no पिछला/अगला buttons and no swipe-instruction copy. × exits with state saved; re-entering the same day offers the readers' resume sheet ("जहाँ थे वहीं से").</div>
     </div>
 
@@ -321,21 +321,13 @@
       <div class="screen conduct"><div class="pad">
         <div class="topbar"><div class="back">×</div><div class="toptitle">गणेश चतुर्थी पूजन</div></div>
 
-        <div class="seal">ॐ</div>
+        <div class="seal" style="position:relative"><div class="dot" style="right:-8px;top:-8px">8</div>ॐ</div>
         <div class="donet">पूजा सम्पन्न</div>
         <div class="dones">गणपति बप्पा मोरया ·<br/>16 चरण पूर्ण</div>
-
-        <div style="margin-top:22px">
-          <div class="actionrow" style="position:relative"><div class="dot" style="right:-8px;top:-8px">8</div>
-            <div class="ai">+</div>
-            <div class="at"><div class="att">साधना में जोड़ें</div></div>
-            <div class="chev">›</div>
-          </div>
-        </div>
       </div></div>
     </div>
     <div class="cap"><b>Completion — quiet by design.</b><br/>
-      The static ॐ seal closes the guided steps without repeating the katha or aarti actions. <span class="n">8</span><b>For recurring vidhis</b> (Satyanarayan on purnima), the existing <i>AddToRoutineButton</i> flow can add the practice to नित्य साधना.</div>
+      <span class="n">8</span>The static ॐ seal closes the guided steps without repeating the katha or aarti actions.</div>
     </div>
 
     <div class="col">
@@ -377,27 +369,27 @@
         <div class="libcard">
           <div class="thumb">शि</div>
           <div class="lc"><div class="lname">महाशिवरात्रि पूजन</div><div class="len">Mahashivaratri Pujan</div>
-            <div class="lsub">15 चरण · लगभग 40 मिनट · फाल्गुन कृ. चतुर्दशी</div></div>
+            <div class="lsub">16 चरण · लगभग 40 मिनट · फाल्गुन कृ. चतुर्दशी</div></div>
           <div class="chev">›</div>
         </div>
       </div></div>
     </div>
     <div class="cap"><b>The vidhi catalog — six in v1, on the shipped LibraryCard.</b><br/>
-      <span class="n">9</span><b>Each row is the §8 LibraryCard active variant, not a new card</b>: the `#FFF5E0→#F5DEAC` gradient with the `rgba(184,98,27,.4)` border and `elevation.raised`, the first-letter thumb (`#F8D291→#E0A255`, white Devanagari 22), Hindi name over the Latin italic, a sub-meta line (चरण count · duration · tithi — the "43 verses · Hindi with meaning" slot), and the saffron ›. Routed in the Panchang stack; reached from the ObservanceCard pill, vrat-catalog details, search, and one DISCOVER card. <b>Deliberately not a Home-grid category</b> — the 5×3 launcher is closed by design (RULEBOOK §1).</div>
+      <span class="n">9</span><b>Each row is the §8 LibraryCard active variant, not a new card</b>: the `#FFF5E0→#F5DEAC` gradient with the `rgba(184,98,27,.4)` border and `elevation.raised`, the first-letter thumb (`#F8D291→#E0A255`, white Devanagari 22), Hindi name over the Latin italic, a sub-meta line (चरण count · duration · tithi — the "43 verses · Hindi with meaning" slot), and the saffron ›. Routed in the Panchang stack and reached from the Vrat & Parv catalog or a festival's ObservanceCard pill. <b>Deliberately not a Home-grid category.</b></div>
     </div>
   </div>
 
   <div class="phaselabel" style="margin-top:34px">Interaction inventory</div>
   <div class="legend" style="max-width:920px">
-    ① Festival day panel → पूजा विधि action pill on the ObservanceCard (§33.5; vidhiId hook, beside the कथा पढ़ें / पढ़ें pills) → vidhi overview; the same link fills ObservanceDetail's reserved vidhi slot.
+    ① Festival day panel → पूजा विधि action pill on the ObservanceCard (§33.5; vidhiId hook, beside the कथा पढ़ें / पढ़ें pills) → vidhi overview.
     ② तैयारी/पूजा segments — preparation reuses Today's Practice's expandable progress summary + item ledger + circular checks; state persists per festival date; day-before entry opens the ledger expanded.
     ③ सूची साझा करें → samagri list as plain text (the only share surface).
     ④ Conduct step: the Daily Bhakti reading-card shell with phase pill, instruction, ornament, mantra + IAST, and shipped read-aloud; no new card system; reading-size respected.
-    ⑤ Keep-awake for the whole conduct session, released on exit.
+    ⑤ Keep-awake is a documented follow-up, not current behavior.
     ⑥ One card per paged step: swipe navigation only; Hanuman Chalisa-style carousel dots at the bottom; no navigation buttons or swipe helper text; × saves state; same-day re-entry offers the readers' resume sheet.
     ⑦ Shipped-text steps hand off by sectionId (aarti/katha reader + audio) and return.
-    ⑧ Completion: static ॐ seal and completed-step count; no repeated katha/aarti action. AddToRoutine remains available for recurring vidhis.
-    ⑨ Catalog reachable from day panel, vrat catalog, search, DISCOVER card — no new Home tile.
+    ⑧ Completion: static ॐ seal and completed-step count; no repeated katha/aarti action.
+    ⑨ Catalog reachable from the Vrat & Parv catalog and festival day panels — no new Home tile.
   </div>
 </body>
 </html>

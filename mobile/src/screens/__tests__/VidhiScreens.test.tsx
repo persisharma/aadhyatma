@@ -15,6 +15,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { Share, View as mockView } from 'react-native';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
+import { VIDHI_ENTRIES } from '@/data/vidhi';
 import { satyanarayanPuja } from '@/data/vidhi/satyanarayan-puja';
 
 const mockNavigation = { goBack: jest.fn(), navigate: jest.fn() };
@@ -79,13 +80,21 @@ afterEach(() => {
   mockNavigation.goBack.mockClear();
 });
 
-test('VidhiCatalogScreen lists the Satyanarayan card without publishing provenance and opens its detail', () => {
+test('VidhiCatalogScreen lists all six v1 cards without publishing provenance and opens detail', () => {
   const r = render(<VidhiCatalogScreen navigation={nav} route={{ key: 'k', name: 'VidhiCatalog' } as never} />);
   const body = texts(r);
   expect(body).toContain('श्री सत्यनारायण पूजा');
   expect(body).toContain('Shri Satyanarayan Puja');
   expect(body).toContain('16 चरण');
   expect(body).toContain('लगभग 60 मिनट');
+  expect(body).toContain('दीपावली लक्ष्मी-गणेश पूजन');
+  expect(body).toContain('गणेश चतुर्थी स्थापना');
+  expect(body).toContain('नवरात्रि घटस्थापना');
+  expect(body).toContain('करवा चौथ पूजन');
+  expect(body).toContain('महाशिवरात्रि पूजन');
+  for (const vidhi of VIDHI_ENTRIES) {
+    r.root.findByProps({ testID: `vidhi-card-${vidhi.id}` });
+  }
   expect(body).not.toContain('~60 min');
   expect(body).not.toContain('स्रोत-प्रमाणित');
   expect(body).not.toContain('source-verified');
@@ -258,25 +267,30 @@ test('VidhiConductScreen: completion page is a quiet static ॐ seal without rep
 test('source/sourceUrl fields never render on any vidhi screen (review-only data)', async () => {
   const screens: React.ReactElement[] = [
     <VidhiCatalogScreen key="c" navigation={nav} route={{ key: 'k', name: 'VidhiCatalog' } as never} />,
-    <VidhiDetailScreen
-      key="d"
-      navigation={nav}
-      route={{ key: 'k', name: 'VidhiDetail', params: { vidhiId: 'satyanarayan-puja' } } as never}
-    />,
   ];
-  // Every conduct page, mantra steps included — none may leak a citation.
-  for (let i = 0; i <= satyanarayanPuja.steps.length; i += 1) {
+  // Every detail and conduct page across the complete registry — none may
+  // leak citation or convention metadata.
+  for (const vidhi of VIDHI_ENTRIES) {
     screens.push(
-      <VidhiConductScreen
-        key={`s${i}`}
+      <VidhiDetailScreen
+        key={`d-${vidhi.id}`}
         navigation={nav}
-        route={{
-          key: 'k',
-          name: 'VidhiConduct',
-          params: { vidhiId: 'satyanarayan-puja', initialStep: i },
-        } as never}
+        route={{ key: 'k', name: 'VidhiDetail', params: { vidhiId: vidhi.id } } as never}
       />
     );
+    for (let i = 0; i <= vidhi.steps.length; i += 1) {
+      screens.push(
+        <VidhiConductScreen
+          key={`${vidhi.id}-${i}`}
+          navigation={nav}
+          route={{
+            key: 'k',
+            name: 'VidhiConduct',
+            params: { vidhiId: vidhi.id, initialStep: i },
+          } as never}
+        />
+      );
+    }
   }
 
   const forbidden = [
@@ -287,11 +301,13 @@ test('source/sourceUrl fields never render on any vidhi screen (review-only data
     'canonicalEdition',
     'referenceUrls',
     'retrievedOn',
-    satyanarayanPuja.source.canonicalEditionStatus,
-    satyanarayanPuja.conventionLineHi,
-    satyanarayanPuja.conventionLineEn,
-    ...satyanarayanPuja.source.referenceUrls,
-    ...satyanarayanPuja.steps.flatMap((step) => (step.mantra ? [step.mantra.sourceUrl] : [])),
+    ...VIDHI_ENTRIES.flatMap((vidhi) => [
+      vidhi.source.canonicalEditionStatus,
+      vidhi.conventionLineHi,
+      vidhi.conventionLineEn,
+      ...vidhi.source.referenceUrls,
+      ...vidhi.steps.flatMap((step) => (step.mantra ? [step.mantra.sourceUrl] : [])),
+    ]),
   ];
 
   for (const el of screens) {
@@ -310,4 +326,4 @@ test('source/sourceUrl fields never render on any vidhi screen (review-only data
       }
     }
   }
-});
+}, 30_000);

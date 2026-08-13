@@ -1,4 +1,9 @@
 import type { VidhiEntry } from './types';
+import { diwaliLakshmiGaneshPuja } from './diwali-lakshmi-ganesh-puja';
+import { ganeshChaturthiSthapana } from './ganesh-chaturthi-sthapana';
+import { karwaChauthPuja } from './karwa-chauth-puja';
+import { mahaShivaratriPuja } from './maha-shivaratri-puja';
+import { navratriGhatasthapana } from './navratri-ghatasthapana';
 import { satyanarayanPuja } from './satyanarayan-puja';
 
 export type {
@@ -12,10 +17,17 @@ export type {
 } from './types';
 
 /**
- * The vidhi registry (PRD-19). One entry in Phase 1 (Satyanarayan); the
- * remaining five v1 vidhis land one PR each (RULEBOOK §10).
+ * The complete v1 vidhi registry (PRD-19). Order is the product's curated
+ * catalog order, not festival-calendar order.
  */
-export const VIDHI_ENTRIES: readonly VidhiEntry[] = [satyanarayanPuja];
+export const VIDHI_ENTRIES: readonly VidhiEntry[] = [
+  satyanarayanPuja,
+  diwaliLakshmiGaneshPuja,
+  ganeshChaturthiSthapana,
+  navratriGhatasthapana,
+  karwaChauthPuja,
+  mahaShivaratriPuja,
+];
 
 export const VIDHI_BY_ID: ReadonlyMap<string, VidhiEntry> = new Map(
   VIDHI_ENTRIES.map((entry) => [entry.id, entry] as const)

@@ -73,7 +73,7 @@ export type VidhiEntry = {
   festivalIds: string[];
   /** Deity tags from the shared Deity union (texts.ts / deities.ts). */
   deities: string[];
-  /** Declared tradition line shown under the title — never an anonymous procedure. */
+  /** Declared tradition for internal content review; never rendered in user UI. */
   conventionLineHi: string;
   conventionLineEn: string;
   durationHintMin: number;

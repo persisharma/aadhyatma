@@ -1,7 +1,7 @@
 ---
 title: Puja Vidhi
 type: subsystem
-sources: [mobile/src/data/vidhi/types.ts, mobile/src/data/vidhi/index.ts, mobile/src/data/vidhi/checklistStore.ts, mobile/src/screens/VidhiCatalogScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/screens/VidhiConductScreen.tsx, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/src/data/__tests__/vidhiContent.test.ts, docs/roadmap/prds/19-puja-vidhi.md, design.md]
+sources: [mobile/src/data/vidhi/types.ts, mobile/src/data/vidhi/index.ts, mobile/src/data/vidhi/satyanarayan-puja.ts, mobile/src/data/vidhi/diwali-lakshmi-ganesh-puja.ts, mobile/src/data/vidhi/ganesh-chaturthi-sthapana.ts, mobile/src/data/vidhi/navratri-ghatasthapana.ts, mobile/src/data/vidhi/karwa-chauth-puja.ts, mobile/src/data/vidhi/maha-shivaratri-puja.ts, mobile/src/data/vidhi/checklistStore.ts, mobile/src/screens/VidhiCatalogScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/screens/VidhiConductScreen.tsx, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/src/data/__tests__/vidhiContent.test.ts, docs/roadmap/prds/19-puja-vidhi.md, design.md]
 last_verified_date: 2026-08-13
 confidence: high
 status: current
@@ -9,10 +9,11 @@ status: current
 
 ## Summary
 
-Puja Vidhi provides offline, festival-linked household puja guidance. Phase 1 ships Shri
-Satyanarayan Puja with a day-before samagri checklist and a festival-day conduct reader. The
-feature deliberately reuses the app's established interaction language: Today's Practice for
-preparation and the Daily Bhakti/readers card + horizontal pager for conduct.
+Puja Vidhi provides offline, festival-linked household puja guidance. The v1 registry ships six
+complete guided procedures: Shri Satyanarayan, Diwali Lakshmi-Ganesha, Ganesh Chaturthi Sthapana,
+Navratri Ghatasthapana, Karwa Chauth, and Maha Shivaratri — 92 steps total. The feature deliberately
+reuses the app's established interaction language: Today's Practice for preparation and the Daily
+Bhakti/readers card + horizontal pager for conduct.
 
 ## Details
 
@@ -25,7 +26,8 @@ by vidhi + civil day under `@vedansh/vidhi-checklist`.
 **Entry surfaces.** `VidhiCatalogScreen` is the always-available catalog. Festival observances with
 a `vidhiId` expose the `॥ पूजा विधि` action and route to `VidhiDetailScreen`. The catalog and detail
 screens publish titles, step count, duration and content capabilities, but no source-verification
-or tradition attribution.
+or tradition attribution. The six hooks are Satyanarayan/Purnima, Diwali, Ganesh Chaturthi,
+Navratri Begins, Karwa Chauth, and Maha Shivaratri.
 
 **Preparation.** The `तैयारी` segment uses a Today's Practice-style summary accordion: completed
 count, remaining count, progress track and rotating caret above the samagri ledger. Ledger rows use
@@ -57,3 +59,5 @@ the quiet static ॐ seal with the completed-step count.
 - Completion clears saved conduct progress. Leaving on a step persists that step for the current
   civil day; samagri completion is separately keyed by festival occurrence.
 - Shipped kathas and sections are linked by reference and never copied into vidhi data.
+- Canonical-edition review state is honest per entry: a pending Gita Press/Dharmasindhu check stays
+  in private source metadata, while unverified variable liturgy remains instruction-only.

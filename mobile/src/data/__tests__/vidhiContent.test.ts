@@ -167,8 +167,20 @@ for (const rule of OBSERVANCE_RULES) {
   }
 }
 
-// Phase 1 pins: the Satyanarayan vidhi is hooked to both purnima rules that
-// share its katha (festivals.ts line ~115 relatedRuleIds).
+// V1 catalog pins: exact registry, festival hooks, and shipped-text hand-offs.
+assert.deepEqual(
+  VIDHI_ENTRIES.map((vidhi) => vidhi.id),
+  [
+    'satyanarayan-puja',
+    'diwali-lakshmi-ganesh-puja',
+    'ganesh-chaturthi-sthapana',
+    'navratri-ghatasthapana',
+    'karwa-chauth-puja',
+    'maha-shivaratri-puja',
+  ],
+  'all six v1 vidhis are published in curated catalog order'
+);
+
 const satyanarayan = VIDHI_BY_ID.get('satyanarayan-puja');
 assert.ok(satyanarayan, 'satyanarayan-puja published');
 assert.equal(getVidhiForFestival('shree-satyanarayan-vrat')?.id, 'satyanarayan-puja');
@@ -185,6 +197,30 @@ assert.ok(
 // was not verbatim-verifiable; never approximate liturgical text).
 const sankalp = satyanarayan.steps.find((step) => step.id === 'sankalp');
 assert.ok(sankalp && !sankalp.mantra, 'sankalp stays instruction-only until verbatim-verified');
+
+const v1Hooks = [
+  ['diwali', 'diwali-lakshmi-ganesh-puja'],
+  ['ganesh-chaturthi', 'ganesh-chaturthi-sthapana'],
+  ['navratri-start', 'navratri-ghatasthapana'],
+  ['karwa-chauth', 'karwa-chauth-puja'],
+  ['maha-shivaratri', 'maha-shivaratri-puja'],
+] as const;
+for (const [festivalId, vidhiId] of v1Hooks) {
+  assert.equal(getVidhiForFestival(festivalId)?.id, vidhiId, `${festivalId} → ${vidhiId}`);
+}
+
+const expectedRefs = new Map<string, readonly string[]>([
+  ['diwali-lakshmi-ganesh-puja', ['mahalakshmi-ashtakam', 'jai-ganesh-deva']],
+  ['ganesh-chaturthi-sthapana', ['ganesha-chaturthi-vrat-katha', 'jai-ganesh-deva']],
+  ['navratri-ghatasthapana', ['navratri-start-katha', 'jai-ambe-gauri']],
+  ['karwa-chauth-puja', ['karwa-chauth-vrat-katha']],
+  ['maha-shivaratri-puja', ['maha-shivaratri-vrat-katha', 'om-jai-shiv-omkara']],
+]);
+for (const [vidhiId, ids] of expectedRefs) {
+  const vidhi = VIDHI_BY_ID.get(vidhiId)!;
+  const refs = new Set(vidhi.steps.flatMap((step) => (step.ref ? [step.ref.id] : [])));
+  for (const id of ids) assert.ok(refs.has(id), `${vidhiId} references shipped '${id}'`);
+}
 
 console.log(
   `vidhi content: ${VIDHI_ENTRIES.length} vidhi(s), ` +
