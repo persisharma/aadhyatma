@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ObservanceDetailHero from '@/components/ObservanceDetailHero';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
@@ -121,32 +122,29 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
             contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
             showsVerticalScrollIndicator={false}
           >
-            {/* Hero */}
-            <View style={styles.hero}>
-              <View style={styles.heroTags}>
-                <View style={[styles.pill, { backgroundColor: rule.category === 'festival' ? colors.saffronTint : colors.goldTint, borderRadius: radii.pill }]}>
-                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep }}>
-                    {categoryLabel(rule.category, lang)}
-                  </Text>
-                </View>
-                <Text style={{ fontFamily: fontFamilies.latin, fontSize: 13, color: colors.inkMuted }}>
-                  {contentByLang(lang, rule.deityHi, rule.deityEn)}
-                </Text>
-              </View>
-              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 24, color: colors.ink, textAlign: 'center', marginTop: 8 }}>
-                {contentByLang(lang, rule.nameHi, rule.nameEn)}
-              </Text>
-              <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 15, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
-                {lang === 'en' ? rule.nameHi : rule.nameEn}
-              </Text>
-              {next && (
-                <View style={[styles.nextPill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
-                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
-                    {contentByLang(lang, 'अगला', 'Next')} · {formatDate(next.date, lang)} · {relativeLabel(next.date, today, lang)}
+            <ObservanceDetailHero
+              leading={(
+                <View style={styles.heroTags}>
+                  <View style={[styles.pill, { backgroundColor: rule.category === 'festival' ? colors.saffronTint : colors.goldTint, borderRadius: radii.pill }]}>
+                    <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep }}>
+                      {categoryLabel(rule.category, lang)}
+                    </Text>
+                  </View>
+                  <Text style={{ fontFamily: fontFamilies.latin, fontSize: 13, color: colors.inkMuted }}>
+                    {contentByLang(lang, rule.deityHi, rule.deityEn)}
                   </Text>
                 </View>
               )}
-            </View>
+              title={contentByLang(lang, rule.nameHi, rule.nameEn)}
+              caption={(
+                <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 15, color: colors.inkMuted, textAlign: 'center' }}>
+                  {lang === 'en' ? rule.nameHi : rule.nameEn}
+                </Text>
+              )}
+              nextLabel={next
+                ? `${contentByLang(lang, 'अगला', 'Next')} · ${formatDate(next.date, lang)} · ${relativeLabel(next.date, today, lang)}`
+                : null}
+            />
 
             {/* Actions (P2: Follow + Read Katha; Remind arrives in P3) */}
             <View style={styles.actionRow}>
@@ -255,10 +253,8 @@ const styles = StyleSheet.create({
   backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
   scroll: { paddingTop: 8, paddingBottom: 32 },
-  hero: { alignItems: 'center', marginTop: 6, marginBottom: 8 },
   heroTags: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   pill: { paddingHorizontal: 10, paddingVertical: 4 },
-  nextPill: { marginTop: 8, paddingHorizontal: 14, paddingVertical: 6 },
   actionRow: { flexDirection: 'row', gap: 8, marginTop: 4, marginBottom: 4 },
   actionBtn: { flex: 1, minHeight: 40, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14, borderWidth: 1.5 },
   confirmBar: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, paddingHorizontal: 12, paddingVertical: 9, marginTop: 8 },

@@ -4,7 +4,9 @@ import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
 
 export type TabParamList = {
-  HomeTab: undefined;
+  // Nested-navigator params so cross-tab jumps (e.g. Pitru Smaran's गीता पाठ
+  // links into the Gita reader) are type-checked.
+  HomeTab: NavigatorScreenParams<HomeStackParamList> | undefined;
   DailyBhaktiTab: { sourceId?: string; chapter?: number; verseIndex?: number } | undefined;
   // Nested-navigator params so cross-tab jumps like
   // navigate('PanchangTab', { screen: 'ObservanceList', params: {...}, initial: false })
@@ -12,7 +14,9 @@ export type TabParamList = {
   PanchangTab: NavigatorScreenParams<PanchangStackParamList> | undefined;
   // Dedicated audio library + media player.
   AudioTab: undefined;
-  MoreTab: undefined;
+  // Nested params typed so the Panchang day chip can deep-link to a Pitru Smaran
+  // detail (PRD-17) without an untyped navigator cast.
+  MoreTab: NavigatorScreenParams<MoreStackParamList> | undefined;
 };
 
 export type HomeStackParamList = {
@@ -81,6 +85,11 @@ export type MoreStackParamList = {
   Reminders: undefined;
   JapamAlarms: undefined;
   WidgetGallery: undefined;
+  // पितृ स्मरण — tithi-based family remembrance (PRD-17, same pattern as Reminders).
+  PitruSmaranList: undefined;
+  PitruSmaranEdit: { entryId?: string } | undefined;
+  PitruSmaranDetail: { entryId: string };
+  PitruPakshaOverview: undefined;
 };
 
 export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';

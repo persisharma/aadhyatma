@@ -14,6 +14,8 @@ import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
+import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
+import { pitruPakshaObservanceForDate, type PitruPakshaDayObservance } from '@/panchang/pitruSmaran';
 
 /**
  * Home "आज · Today" strip (design.md §48): a one-card daily-panchang glance —
@@ -46,6 +48,16 @@ export default function TodayStrip() {
   const today = React.useMemo(() => new Date(todayKey), [todayKey]);
   const observances = useObservancesForDate(today, calendarSystem);
   const { muhurat, panchang } = useMuhurat(today, calendarSystem, { live: false });
+  const [pitruPakshaToday, setPitruPakshaToday] = React.useState<PitruPakshaDayObservance | null>(null);
+  React.useEffect(() => {
+    let cancelled = false;
+    const handle = setTimeout(() => {
+      let result: PitruPakshaDayObservance | null = null;
+      try { result = pitruPakshaObservanceForDate(today); } catch { result = null; }
+      if (!cancelled) setPitruPakshaToday(result);
+    }, 0);
+    return () => { cancelled = true; clearTimeout(handle); };
+  }, [today]);
 
   const headlineFont =
     lang === 'en' ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold);
@@ -68,8 +80,18 @@ export default function TodayStrip() {
   // composites darker than the raw card surface (colors.contrast.test.ts pins
   // avoidDeep/saffronDeep against the composited chip surfaces). Ranges are
   // compact (shared meridiem written once) so the row needs less width.
-  type Chip = { key: string; labelHi: string; labelEn: string; range?: string; bg: string; fg: string };
+  type Chip = { key: string; labelHi: string; labelEn: string; range?: string; bg: string; fg: string; onPress?: () => void };
   const chips: Chip[] = [
+    ...(pitruPakshaToday
+      ? [{
+          key: 'pitru-paksha',
+          labelHi: pitruPakshaToday.labelHi,
+          labelEn: pitruPakshaToday.labelEn,
+          bg: colors.saffronTint,
+          fg: colors.saffronDeep,
+          onPress: () => rootNav.navigate('MoreTab', { screen: 'PitruPakshaOverview', initial: false }),
+        }]
+      : []),
     ...observances.slice(0, 2).map((o) => ({
       key: o.rule.id,
       labelHi: o.rule.nameHi,
@@ -206,11 +228,8 @@ export default function TodayStrip() {
   }, [stopAutoScroll]);
 
   return (
-    <Pressable
-      onPress={() => activateTile(openPanchang)}
-      onPressIn={() => beginTilePress(openPanchang)}
-      onPressOut={finishTilePress}
-      style={({ pressed }) => [
+    <View
+      style={[
         styles.card,
         elevation.raised,
         {
@@ -221,10 +240,7 @@ export default function TodayStrip() {
           // carries its own matching radius instead.
           backgroundColor: colors.cardActiveFrom,
         },
-        pressed && { opacity: 0.85 },
       ]}
-      accessibilityRole="button"
-      accessibilityLabel={a11y}
     >
       <LinearGradient
         colors={[colors.cardActiveFrom, colors.cardActiveTo]}
@@ -232,26 +248,37 @@ export default function TodayStrip() {
         end={{ x: 1, y: 1 }}
         style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]}
       />
-      <View style={styles.headRow}>
-        <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
-          {contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
-        </Text>
-        <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 14, color: colors.saffronDeep }}>
-          ›
-        </Text>
-      </View>
-      <Text
-        numberOfLines={1}
-        style={{
-          marginTop: 3,
-          fontFamily: headlineFont,
-          fontSize: lang === 'en' ? 17 : 16,
-          color: colors.ink,
-          ...(lang === 'en' ? { letterSpacing: 0.3 } : null),
-        }}
+      {/* The card shell is not one accessibility element: private Smaran chips
+          must remain independently focusable/tappable on iOS. This header keeps
+          the original Panchang action and label without swallowing its siblings. */}
+      <Pressable
+        onPress={() => activateTile(openPanchang)}
+        onPressIn={() => beginTilePress(openPanchang)}
+        onPressOut={finishTilePress}
+        accessibilityRole="button"
+        accessibilityLabel={a11y}
       >
-        {headline}
-      </Text>
+        <View style={styles.headRow}>
+          <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
+            {contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
+          </Text>
+          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 14, color: colors.saffronDeep }}>
+            ›
+          </Text>
+        </View>
+        <Text
+          numberOfLines={1}
+          style={{
+            marginTop: 3,
+            fontFamily: headlineFont,
+            fontSize: lang === 'en' ? 17 : 16,
+            color: colors.ink,
+            ...(lang === 'en' ? { letterSpacing: 0.3 } : null),
+          }}
+        >
+          {headline}
+        </Text>
+      </Pressable>
       {/* Reserve this row even before the deferred Panchang solve completes.
           Otherwise its later insertion moves the category grid during a press. */}
       <ScrollView
@@ -269,11 +296,26 @@ export default function TodayStrip() {
           replanAutoScroll();
         }}
         onScrollBeginDrag={onChipRowDrag}
+        onTouchStart={stopAutoScroll}
       >
-        {chips.map((chip) => (
-          <View
+        {/* Personal remembrance is the most time-sensitive item in this row;
+            keep it first so it is fully visible and tappable before overflow. */}
+        <PitruSmaranDayChip date={today} compact />
+        {chips.map((chip) => {
+          const action = chip.onPress ?? openPanchang;
+          return (
+          <Pressable
             key={chip.key}
-            style={[styles.chip, { backgroundColor: chip.bg, borderRadius: radii.pill }]}
+            onPress={() => activateTile(action)}
+            onPressIn={() => beginTilePress(action)}
+            onPressOut={finishTilePress}
+            accessibilityRole="button"
+            accessibilityLabel={chip.labelEn}
+            style={({ pressed }) => [
+              styles.chip,
+              { backgroundColor: chip.bg, borderRadius: radii.pill },
+              pressed && { opacity: 0.7 },
+            ]}
           >
             <Text numberOfLines={1} style={{ maxWidth: 200 }}>
               <Text style={[chipText, { color: chip.fg }]}>
@@ -287,10 +329,10 @@ export default function TodayStrip() {
                 </Text>
               )}
             </Text>
-          </View>
-        ))}
+          </Pressable>
+        );})}
       </ScrollView>
-    </Pressable>
+    </View>
   );
 }
 
