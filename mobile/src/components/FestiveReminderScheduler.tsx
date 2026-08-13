@@ -10,6 +10,11 @@ import {
 } from '@/notifications/festiveScheduler';
 import { FESTIVE_REMINDERS } from '@/notifications/festiveReminders';
 import type { FestiveReminderInput } from '@/notifications/festiveReminderPure';
+import { pitruPakshaWindow } from '@/panchang/pitruSmaran';
+import {
+  cancelAllPitruPakshaReminders,
+  schedulePitruPakshaReminders,
+} from '@/notifications/pitruPakshaScheduler';
 
 /** Occurrences resolved per rule. Annual festivals need one; the second covers an
  *  adhik-month year that can place the same rule twice inside the window. */
@@ -59,6 +64,7 @@ export default function FestiveReminderScheduler() {
 
     if (!prefs.festiveRemindersEnabled || permissionStatus !== 'granted') {
       cancelAllFestiveReminders().catch(() => undefined);
+      cancelAllPitruPakshaReminders().catch(() => undefined);
       return () => {
         cancelled = true;
       };
@@ -94,6 +100,10 @@ export default function FestiveReminderScheduler() {
 
       if (cancelled) return;
       scheduleFestiveReminders(inputs, now, lang).catch(() => undefined);
+      const windows = [today.getFullYear(), today.getFullYear() + 1]
+        .map((year) => ({ year, window: pitruPakshaWindow(year) }))
+        .filter((item): item is { year: number; window: NonNullable<typeof item.window> } => item.window !== null);
+      schedulePitruPakshaReminders(windows, now, lang).catch(() => undefined);
     });
 
     return () => {

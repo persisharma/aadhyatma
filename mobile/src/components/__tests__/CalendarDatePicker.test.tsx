@@ -113,4 +113,13 @@ describe('CalendarDatePicker', () => {
     expect(onSelect).toHaveBeenCalledWith('1992-02-29');
     await act(async () => tree.unmount());
   });
+
+  test('today has a stable calendar accessibility suffix for native automation', async () => {
+    const today = new Date();
+    const key = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    const { tree } = await renderPicker({ value: key, maxDate: key });
+    const labels = tree.root.findAll((n) => typeof n.props.accessibilityLabel === 'string').map((n) => n.props.accessibilityLabel);
+    expect(labels.some((label) => label.endsWith(', Today'))).toBe(true);
+    await act(async () => tree.unmount());
+  });
 });

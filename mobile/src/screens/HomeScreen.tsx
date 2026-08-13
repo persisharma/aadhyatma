@@ -230,6 +230,29 @@ export default function HomeScreen({ navigation }: Props) {
       onPress: () => navigation.navigate('SadhanaPrograms'),
     },
     {
+      // Standing zero-state discovery door. The Today strip is contextual and
+      // the Panchang ledger is a planning surface; this card makes the feature
+      // discoverable on Home before anybody has saved a family tithi.
+      key: 'pitru-smaran',
+      titleHi: 'पितृ स्मरण', titleEn: 'Pitru Smaran',
+      descHi: 'एक बार तिथि जोड़ें—हर वर्ष श्राद्ध की सही तारीख़ जानें।',
+      descEn: 'Save a tithi once and know its shraddha date every year.',
+      ctaHi: 'स्मरण जोड़ें', ctaEn: 'Set up',
+      hasNew: true,
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.gold,
+          }}
+        >
+          ॥
+        </Text>
+      ),
+      onPress: () => rootNav.navigate('MoreTab', { screen: 'PitruSmaranList', initial: false }),
+    },
+    {
       key: 'theerth',
       titleHi: 'तीर्थ यात्रा', titleEn: 'Sacred Journeys',
       descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
