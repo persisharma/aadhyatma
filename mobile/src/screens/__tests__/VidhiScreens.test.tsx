@@ -79,12 +79,14 @@ afterEach(() => {
   mockNavigation.goBack.mockClear();
 });
 
-test('VidhiCatalogScreen lists the Satyanarayan card and opens its detail', () => {
+test('VidhiCatalogScreen lists the Satyanarayan card without publishing provenance and opens its detail', () => {
   const r = render(<VidhiCatalogScreen navigation={nav} route={{ key: 'k', name: 'VidhiCatalog' } as never} />);
   const body = texts(r);
   expect(body).toContain('श्री सत्यनारायण पूजा');
   expect(body).toContain('Shri Satyanarayan Puja');
   expect(body).toContain('16 चरण');
+  expect(body).not.toContain('स्रोत-प्रमाणित');
+  expect(body).not.toContain('source-verified');
   act(() => {
     r.root.findByProps({ testID: 'vidhi-card-satyanarayan-puja' }).props.onPress();
   });
@@ -93,7 +95,7 @@ test('VidhiCatalogScreen lists the Satyanarayan card and opens its detail', () =
   });
 });
 
-test('VidhiDetailScreen: convention line, samagri checklist, share, and the steps mode', async () => {
+test('VidhiDetailScreen: routine-style samagri checklist, private provenance, share, and steps mode', async () => {
   const shareSpy = jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.dismissedAction });
   const r = render(
     <VidhiDetailScreen
@@ -103,11 +105,17 @@ test('VidhiDetailScreen: convention line, samagri checklist, share, and the step
   );
   await settle();
 
-  // Convention line declares the tradition + duration (never anonymous).
-  expect(texts(r)).toContain('दृक्पंचांग पद्धति अनुसार');
-  expect(texts(r)).toContain('60 min');
+  // Only duration is public. The source/tradition stays review-only data.
+  expect(texts(r)).not.toContain(satyanarayanPuja.conventionLineHi);
+  expect(texts(r)).not.toContain(satyanarayanPuja.conventionLineEn);
+  expect(texts(r)).toContain('60');
 
-  // तैयारी mode: every samagri item renders with a §31 check circle.
+  // तैयारी mode: the Today's Practice summary/accordion opens with its ledger
+  // visible, and completion updates both the row and summary.
+  const summary = r.root.findByProps({ testID: 'vidhi-samagri-summary' });
+  expect(summary.props.accessibilityState.expanded).toBe(true);
+  expect(texts(r)).toContain(`0 / ${satyanarayanPuja.samagri.length}`);
+  r.root.findByProps({ testID: 'vidhi-samagri-ledger' });
   expect(texts(r)).toContain('पंचामृत (दूध, दही, घी, शहद, शक्कर)');
   const firstItem = satyanarayanPuja.samagri[0];
   const row = r.root.findByProps({ testID: `vidhi-samagri-${firstItem.itemEn}` });
@@ -116,6 +124,12 @@ test('VidhiDetailScreen: convention line, samagri checklist, share, and the step
   expect(
     r.root.findByProps({ testID: `vidhi-samagri-${firstItem.itemEn}` }).props.accessibilityState.checked
   ).toBe(true);
+  expect(texts(r)).toContain(`1 / ${satyanarayanPuja.samagri.length}`);
+
+  act(() => summary.props.onPress());
+  expect(r.root.findByProps({ testID: 'vidhi-samagri-summary' }).props.accessibilityState.expanded).toBe(false);
+  expect(r.root.findAllByProps({ testID: 'vidhi-samagri-ledger' })).toHaveLength(0);
+  act(() => r.root.findByProps({ testID: 'vidhi-samagri-summary' }).props.onPress());
 
   // Plain-text share — the family shopping message (PRD-19 §5.1).
   act(() => {
@@ -155,7 +169,7 @@ test('VidhiDetailScreen: convention line, samagri checklist, share, and the step
   shareSpy.mockRestore();
 });
 
-test('VidhiConductScreen: mantra step renders Devanagari + IAST in the mantra box', async () => {
+test('VidhiConductScreen: mantra step renders Devanagari + IAST in the reading card', async () => {
   const dhyanaIndex = satyanarayanPuja.steps.findIndex((step) => step.id === 'dhyana');
   const r = render(
     <VidhiConductScreen
@@ -171,9 +185,21 @@ test('VidhiConductScreen: mantra step renders Devanagari + IAST in the mantra bo
   const body = texts(r);
   expect(body).toContain('ध्यायेत् सत्यं गुणातीतं गुणत्रयसमन्वितम्।');
   expect(body).toContain('dhyāyet satyaṁ guṇātītaṁ');
-  expect(body).toContain('॥ ॐ ॥');
+  // The card uses the same shared ornament as the current readers.
+  expect(body).toContain('॥');
   // Counter is step-scoped: 4 / 16.
   expect(body).toContain(`${dhyanaIndex + 1} / ${satyanarayanPuja.steps.length}`);
+  // Conduct reuses the reading-card shell and reader swipe contract. There is
+  // no duplicate previous/next button bar or swipe-instruction copy.
+  r.root.findByProps({ testID: 'vidhi-reading-card-dhyana' });
+  const pager = r.root.findByProps({ testID: 'vidhi-conduct-pager' });
+  expect(pager.props.horizontal).toBe(true);
+  expect(pager.props.pagingEnabled).toBe(true);
+  r.root.findByProps({ testID: 'vidhi-pager-dots' });
+  expect(r.root.findAllByProps({ testID: 'vidhi-prev' })).toHaveLength(0);
+  expect(r.root.findAllByProps({ testID: 'vidhi-next' })).toHaveLength(0);
+  expect(body).not.toContain('Swipe');
+  expect(body).not.toContain('swipe');
 });
 
 test('VidhiConductScreen: ref step hands off to the shipped katha reader and back', async () => {
@@ -216,6 +242,9 @@ test('VidhiConductScreen: completion page is a quiet static ॐ seal with a kath
   // Quiet by design: no celebration component in the tree (the routine
   // celebration mechanism is deliberately not wired here).
   expect(body).not.toContain('pushpa-varsha');
+  expect(body).not.toContain(satyanarayanPuja.conventionLineHi);
+  expect(body).not.toContain(satyanarayanPuja.conventionLineEn);
+  expect(r.root.findAllByProps({ testID: 'vidhi-pager-dots' })).toHaveLength(0);
   r.root.findByProps({ testID: 'vidhi-completion-katha' });
 });
 
@@ -252,6 +281,8 @@ test('source/sourceUrl fields never render on any vidhi screen (review-only data
     'referenceUrls',
     'retrievedOn',
     satyanarayanPuja.source.canonicalEditionStatus,
+    satyanarayanPuja.conventionLineHi,
+    satyanarayanPuja.conventionLineEn,
     ...satyanarayanPuja.source.referenceUrls,
     ...satyanarayanPuja.steps.flatMap((step) => (step.mantra ? [step.mantra.sourceUrl] : [])),
   ];

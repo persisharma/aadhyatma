@@ -25,7 +25,7 @@ Own the performed puja end-to-end offline: samagri gathered the day before, ever
 
 This is the PRD's hard part, so it is specified first. Five rules, mapped to the repo's existing content contract (RULEBOOK §11):
 
-### 3.1 Canon: one printed convention, declared per vidhi
+### 3.1 Canon: one printed convention, retained for review per vidhi
 Primary canon is the **Gita Press (Gorakhpur) householder corpus** — *Nitya Karma Puja Prakash* for the puja frame (shodashopachara sequence, sankalp form) and the *Vrat-Parichay* / Kalyan annuals for festival-specific vidhis. Rationale: (a) it is the most widely accepted householder standard in the app's North-Indian/purnimant convention — which the festival engine already normalizes to; (b) the repo already treats Gita Press editions as canonical (the Valmiki Ramayana section pins "Gita Press … complete 2-volume scan" with archive.org URLs and a verification status in its committed `source` block — #232); (c) public scans exist for verification. Each vidhi's JSON carries the same `source` block shape: `canonicalEdition`, `canonicalEditionUrls`, `canonicalEditionStatus` (what was checked, when), `referenceUrls`.
 
 ### 3.2 What is transcribed vs. what is authored
@@ -39,7 +39,7 @@ Texts the app already ships — aartis, chalisas, Vishnu Sahasranama, Gita adhya
 Every vidhi is cross-checked against **two independent published references** before merge: the Gita Press canon plus DrikPanchang's published puja-vidhi pages (already the repo's pinned naming convention for muhurat work). Divergences are resolved toward the printed canon and recorded in the `source` block. Internet verification is mandatory (§11.1) and the check is committed as `contentCorrectness`-style pins: every step's mantra ref resolves to a real section/verse, every samagri list is non-empty, every festival `vidhiId` resolves.
 
 ### 3.5 Scope ladder and regional honesty
-v1 ships **six vidhis**, chosen because their festivals already exist as engine rows with kathas — the content compounds instead of sprawling: **सत्यनारायण पूजा** (purnima, monthly recurrence), **दीपावली लक्ष्मी-गणेश पूजन**, **गणेश चतुर्थी स्थापना**, **नवरात्रि घटस्थापना**, **करवा चौथ**, **महाशिवरात्रि पूजन**. Each declares its convention line ("गीता प्रेस परम्परा अनुसार"); regional variants (Maharashtra Ganeshotsav, Bengali Lakshmi puja…) are explicitly out of v1 and listed as such per vidhi — we state the tradition we follow rather than inventing a homogenized "quick puja" (completeness rule §11.5 applies to the chosen source's vidhi as a whole).
+v1 ships **six vidhis**, chosen because their festivals already exist as engine rows with kathas — the content compounds instead of sprawling: **सत्यनारायण पूजा** (purnima, monthly recurrence), **दीपावली लक्ष्मी-गणेश पूजन**, **गणेश चतुर्थी स्थापना**, **नवरात्रि घटस्थापना**, **करवा चौथ**, **महाशिवरात्रि पूजन**. Each retains its convention and sources as internal review metadata; those fields do not render on catalog, detail, conduct, or completion surfaces. Regional variants (Maharashtra Ganeshotsav, Bengali Lakshmi puja…) are explicitly out of v1 and recorded per vidhi rather than folded into a homogenized "quick puja" (completeness rule §11.5 applies to the chosen source's vidhi as a whole).
 
 ## 4. Where it lands in the app (surfaces)
 
@@ -54,12 +54,12 @@ Validated in the prototype; five surfaces, **no new Home category** (the launche
 ## 5. The two modes (UX contract)
 
 ### 5.1 तैयारी — samagri checklist (the day before)
-A checkable samagri list per vidhi (`{item, qty?, optional?}`) using the routine-item check circles (§31 Today's Practice), state persisted per upcoming festival date in AsyncStorage, resurfaced via the existing vrat-reminder day-before slot when the user has opted into that festival's reminders. One action: **"सूची साझा करें"** — shares the samagri list as plain text (the family shopping message; no image pipeline needed, nothing personal on it).
+A checkable samagri list per vidhi (`{item, qty?, optional?}`) using Today's Practice's summary accordion, progress track, ledger rows, and routine-item check circles (§31). State persists per upcoming festival date in AsyncStorage and resurfaces via the existing vrat-reminder day-before slot when the user has opted into that festival's reminders. One action: **"सूची साझा करें"** — shares the samagri list as plain text (the family shopping message; no image pipeline needed, nothing personal on it).
 
 ### 5.2 पूजा — conduct mode (festival day)
-Full-screen, one step per page, paged horizontally like the readers (the interaction the user's hands already know):
-- Step header: phase (आरम्भ · मुख्य पूजा · समापन), step n/N, a thin progress track (dots at reader spec).
-- Instruction in reader-grade type (Devanagari primary, 10 pt+ floor, reading-size setting respected).
+Full-screen, one step per page, paged horizontally like the readers (the interaction the user's hands already know). Left/right swipe is the only page-turn mechanism: no back/forward buttons and no swipe-helper copy.
+- Daily Bhakti-style reading card: phase (आरम्भ · मुख्य पूजा · समापन), step n/N, title, and instruction in reader-grade type (Devanagari primary, 10 pt+ floor, reading-size setting respected).
+- Reader progress dots sit at the bottom; the active dot stretches as in Hanuman Chalisa. Dots disappear on completion.
 - The step's mantra inline with IAST romanization, with the **read-aloud** affordance (#230 TTS) — or, where the step *is* a shipped text (aarti, katha, sahasranama), a **hand-off card** that deep-links into that reader/audio and returns to the next step.
 - **Keep-awake while in conduct mode** (wet hands; no tapping to wake), auto-released on exit.
 - Exit resumes: re-entering the same day offers "जहाँ थे वहीं से" (same resume sheet pattern as the readers).
@@ -71,7 +71,7 @@ Full-screen, one step per page, paged horizontally like the readers (the interac
 ```
 VidhiEntry {
   id, titleHi/En, festivalIds[], deities[],
-  conventionLineHi/En,          // "गीता प्रेस परम्परा अनुसार"
+  conventionLineHi/En,          // internal review metadata; never rendered
   durationHintMin,
   samagri: [{ itemHi/En, qty?, optional? }],
   steps: [{

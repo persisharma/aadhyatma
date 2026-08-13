@@ -8,11 +8,11 @@
 # Verifies:
 #   1. Panchang tab → Vrat & Parv → Puja Vidhi tile → vidhi catalog.
 #   2. The Satyanarayan card renders (16 steps · with katha) and opens detail.
-#   3. Detail: convention line, samagri checklist (a §31 check circle toggles),
-#      and the तैयारी/पूजा segments.
+#   3. Detail: private provenance, duration, the routine-style samagri summary
+#      + checklist (a §31 check circle toggles), and the तैयारी/पूजा segments.
 #   4. पूजा segment: phase-grouped step list + "Begin the puja" → conduct mode.
-#   5. Conduct: step page renders, the next/prev bar pages forward (the mantra
-#      box on the dhyana step), back returns to the overview.
+#   5. Conduct: swipe-only reader paging reaches the dhyana mantra card; the
+#      bottom carousel dots replace previous/next controls; back returns.
 #
 # Language: same recipe as panchang-smoke — flip the global reading language to
 # English first (Devanagari is unreliable in Maestro's iOS a11y tree), restore
@@ -60,7 +60,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Shri Satyanarayan Puja.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: ".*DrikPanchang.*"      # convention line — never an anonymous procedure
+    visible: "About 60 min"
     timeout: 15000
 - assertVisible: "Prepare · Samagri"
 - assertVisible: "Puja · 16 steps"
@@ -97,19 +97,23 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Begin puja"
 - waitForAnimationToEnd
 
-# ── Step 8: Conduct mode — page forward to the dhyana mantra step ──
+# ── Step 8: Conduct mode — swipe forward to the dhyana mantra card ──
 - extendedWaitUntil:
     visible: "1 / 16"
     timeout: 15000
-- tapOn: "Next step"
+- swipe:
+    direction: LEFT
 - waitForAnimationToEnd
-- tapOn: "Next step"
+- swipe:
+    direction: LEFT
 - waitForAnimationToEnd
-- tapOn: "Next step"
+- swipe:
+    direction: LEFT
 - waitForAnimationToEnd
 - assertVisible: "4 / 16"
-- assertVisible: "॥ ॐ ॥"           # the gold mantra box on the dhyana step
-- tapOn: "Previous step"
+- assertVisible: "Mantra.*"
+- swipe:
+    direction: RIGHT
 - waitForAnimationToEnd
 - assertVisible: "3 / 16"
 

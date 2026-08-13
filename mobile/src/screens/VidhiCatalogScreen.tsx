@@ -7,8 +7,6 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
 import { spacing } from '@/theme/spacing';
-import { fontFamilies } from '@/theme/typography';
-import { scriptBodyFont } from '@/utils/langType';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
@@ -48,22 +46,6 @@ export default function VidhiCatalogScreen({ navigation }: Props) {
               onPress={() => navigation.navigate('VidhiDetail', { vidhiId: entry.id })}
             />
           ))}
-          <Text
-            style={[
-              styles.footNote,
-              {
-                color: colors.inkMuted,
-                fontFamily: lang === 'en' ? fontFamilies.latinItalic : scriptBodyFont(lang, fontFamilies.devanagari),
-                fontStyle: lang === 'en' ? 'italic' : 'normal',
-              },
-            ]}
-          >
-            {contentByLang(
-              lang,
-              'प्रत्येक विधि स्रोत-प्रमाणित है — घोषित परम्परा, दो स्वतंत्र सन्दर्भों से मिलान',
-              'Every vidhi is source-verified — a declared tradition, cross-checked against two independent references'
-            )}
-          </Text>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -183,10 +165,4 @@ const styles = StyleSheet.create({
   },
   meta: { flex: 1, minWidth: 0 },
   chev: { fontSize: 26, marginLeft: 4 },
-  footNote: {
-    fontSize: 12,
-    textAlign: 'center',
-    marginTop: 12,
-    lineHeight: 18,
-  },
 });

@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import { spacing } from '@/theme/spacing';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -32,10 +34,11 @@ const PHASE_LABELS: Record<VidhiPhase, { hi: string; en: string }> = {
 };
 
 /**
- * Vidhi overview (PRD-19 §5, design.md §61): convention line under the title,
- * then a two-segment तैयारी/पूजा control — the samagri checklist (persisted per
- * festival date, §31 check circles) and the phase-grouped step list that leads
- * into conduct mode.
+ * Vidhi overview (PRD-19 §5, design.md §61): duration under the title, then a
+ * two-segment तैयारी/पूजा control — the samagri checklist (persisted per
+ * festival date) reuses Today's Practice's summary accordion + ledger, while
+ * the phase-grouped step list leads into conduct mode. Source/tradition fields
+ * remain review-only data and never render.
  */
 export default function VidhiDetailScreen({ navigation, route }: Props) {
   const { colors, typography, radii } = useTheme();
@@ -45,6 +48,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
   const todayKey = vidhiDateKey(new Date());
   const [mode, setMode] = useState<Mode>('samagri');
   const [checked, setChecked] = useState<ReadonlySet<string>>(new Set());
+  const [samagriExpanded, setSamagriExpanded] = useState(true);
   const [resumeStep, setResumeStep] = useState<number | null>(null);
 
   // Hydrate checklist + same-day conduct progress; re-read on focus so
@@ -113,6 +117,10 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
 
   const bodyFont = scriptBodyFont(lang, fontFamilies.devanagari);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
+  const checkedCount = checked.size;
+  const samagriTotal = vidhi.samagri.length;
+  const remainingCount = Math.max(0, samagriTotal - checkedCount);
+  const checkedPct = samagriTotal > 0 ? Math.round((checkedCount / samagriTotal) * 100) : 0;
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -124,7 +132,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
         />
         <Text
           style={[
-            styles.convention,
+            styles.duration,
             {
               color: colors.inkMuted,
               fontFamily: lang === 'en' ? fontFamilies.latinItalic : bodyFont,
@@ -132,7 +140,11 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
             },
           ]}
         >
-          {`${contentByLang(lang, vidhi.conventionLineHi, vidhi.conventionLineEn)} · ~${vidhi.durationHintMin} min`}
+          {contentByLang(
+            lang,
+            `लगभग ${vidhi.durationHintMin} मिनट`,
+            `About ${vidhi.durationHintMin} min`
+          )}
         </Text>
 
         {/* Two-segment mode control — same 13pt segmented-pill pattern as the
@@ -194,59 +206,129 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
         >
           {mode === 'samagri' ? (
             <>
-              {vidhi.samagri.map((item) => {
-                const done = checked.has(item.itemEn);
-                return (
-                  <Pressable
-                    key={item.itemEn}
-                    onPress={() => toggleItem(item.itemEn)}
-                    testID={`vidhi-samagri-${item.itemEn}`}
-                    accessibilityRole="checkbox"
-                    accessibilityState={{ checked: done }}
-                    accessibilityLabel={item.itemEn}
-                    style={[styles.samagriRow, { borderBottomColor: colors.divider }]}
-                  >
-                    {/* §31 routine check circle: 26px saffron ring, fills on check. */}
-                    <View
-                      style={[
-                        styles.checkCircle,
-                        {
-                          borderColor: colors.saffron,
-                          backgroundColor: done ? colors.saffron : colors.parchmentSoft,
-                        },
-                      ]}
-                    >
-                      {done ? <Text style={[styles.checkMark, { color: colors.parchment }]}>✓</Text> : null}
-                    </View>
-                    <Text
-                      style={[
-                        styles.samagriText,
-                        { fontFamily: bodyFont, color: done ? colors.inkMuted : colors.ink },
-                      ]}
-                    >
-                      {contentByLang(lang, item.itemHi, item.itemEn)}
-                    </Text>
-                    {item.qty ? (
-                      <Text
-                        style={{
-                          fontFamily: fontFamilies.latinSemiBold,
-                          fontSize: 12,
-                          color: colors.inkMuted,
-                        }}
+              <Pressable
+                onPress={() => setSamagriExpanded((value) => !value)}
+                testID="vidhi-samagri-summary"
+                accessibilityRole="button"
+                accessibilityState={{ expanded: samagriExpanded }}
+                accessibilityLabel={contentByLang(lang, 'सामग्री तैयारी', 'Samagri preparation')}
+                accessibilityHint={contentByLang(
+                  lang,
+                  samagriExpanded ? 'सूची छिपाने के लिए टैप करें' : 'सूची दिखाने के लिए टैप करें',
+                  samagriExpanded ? 'Tap to hide the checklist' : 'Tap to show the checklist'
+                )}
+                style={[
+                  styles.summary,
+                  {
+                    backgroundColor: colors.parchmentSoft,
+                    borderColor: colors.goldTint,
+                    borderRadius: radii.lg,
+                  },
+                  elevation.card,
+                ]}
+              >
+                <Text style={[styles.summaryBig, { color: colors.ink, fontFamily: titleFont }]}>
+                  {contentByLang(
+                    lang,
+                    `${checkedCount} / ${samagriTotal} सामग्री तैयार`,
+                    `${checkedCount} / ${samagriTotal} items ready`
+                  )}
+                </Text>
+                <Text style={[styles.summarySmall, { color: colors.inkSoft, fontFamily: bodyFont }]}>
+                  {remainingCount === 0
+                    ? contentByLang(lang, 'सभी सामग्री तैयार है', 'Everything is ready')
+                    : contentByLang(
+                        lang,
+                        `${remainingCount} वस्तुएँ बाकी हैं`,
+                        `${remainingCount} items remaining`
+                      )}
+                </Text>
+                <View style={[styles.track, { backgroundColor: colors.parchmentDeep, borderRadius: radii.pill }]}>
+                  <LinearGradient
+                    colors={[colors.gold, colors.saffron]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={{ width: `${checkedPct}%`, height: '100%', borderRadius: radii.pill }}
+                  />
+                </View>
+                <Text
+                  style={[
+                    styles.summaryCaret,
+                    { color: colors.saffron, transform: [{ rotate: samagriExpanded ? '-90deg' : '90deg' }] },
+                  ]}
+                >
+                  ›
+                </Text>
+              </Pressable>
+
+              {samagriExpanded && (
+                <View testID="vidhi-samagri-ledger" style={styles.samagriLedger}>
+                  {vidhi.samagri.map((item, index) => {
+                    const done = checked.has(item.itemEn);
+                    const primary = contentByLang(lang, item.itemHi, item.itemEn);
+                    const alternate = lang === 'en' ? item.itemHi : item.itemEn;
+                    const meta = [alternate, item.qty].filter(Boolean).join(' · ');
+                    const last = index === vidhi.samagri.length - 1;
+                    return (
+                      <Pressable
+                        key={item.itemEn}
+                        onPress={() => toggleItem(item.itemEn)}
+                        testID={`vidhi-samagri-${item.itemEn}`}
+                        accessibilityRole="checkbox"
+                        accessibilityState={{ checked: done }}
+                        accessibilityLabel={item.itemEn}
+                        style={[
+                          styles.samagriRow,
+                          { borderBottomColor: colors.divider, borderBottomWidth: last ? 0 : 1 },
+                        ]}
                       >
-                        {item.qty}
-                      </Text>
-                    ) : null}
-                    {item.optional ? (
-                      <View style={[styles.optChip, { borderColor: colors.divider, borderRadius: radii.sm }]}>
-                        <Text style={{ fontFamily: bodyFont, fontSize: 10, lineHeight: 14, color: colors.inkMuted }}>
-                          {contentByLang(lang, 'वैकल्पिक', 'optional')}
-                        </Text>
-                      </View>
-                    ) : null}
-                  </Pressable>
-                );
-              })}
+                        <View
+                          style={[
+                            styles.checkCircle,
+                            {
+                              borderColor: colors.saffron,
+                              backgroundColor: done ? colors.saffron : 'transparent',
+                            },
+                          ]}
+                        >
+                          {done ? <Text style={[styles.checkMark, { color: colors.onPrimary }]}>✓</Text> : null}
+                        </View>
+                        <View style={styles.samagriInfo}>
+                          <Text
+                            style={[
+                              styles.samagriText,
+                              { fontFamily: titleFont, color: done ? colors.inkMuted : colors.ink },
+                            ]}
+                          >
+                            {primary}
+                          </Text>
+                          <Text
+                            style={[
+                              styles.samagriMeta,
+                              {
+                                fontFamily:
+                                  lang === 'en'
+                                    ? typography.cardMeta.fontFamily
+                                    : scriptBodyFont(lang, typography.meaning.fontFamily),
+                                color: done ? colors.inkMuted : colors.saffronDeep,
+                              },
+                            ]}
+                          >
+                            {meta}
+                          </Text>
+                        </View>
+                        {item.optional ? (
+                          <View style={[styles.optChip, { borderColor: colors.divider, borderRadius: radii.sm }]}>
+                            <Text style={{ fontFamily: bodyFont, fontSize: 10, lineHeight: 15, color: colors.inkMuted }}>
+                              {contentByLang(lang, 'वैकल्पिक', 'optional')}
+                            </Text>
+                          </View>
+                        ) : null}
+                      </Pressable>
+                    );
+                  })}
+                </View>
+              )}
               <Pressable
                 onPress={shareList}
                 testID="vidhi-share-list"
@@ -379,28 +461,36 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   scroll: { paddingTop: 14, paddingBottom: 32 },
-  convention: { fontSize: 12, textAlign: 'center', marginBottom: 12 },
+  duration: { fontSize: 12, textAlign: 'center', marginBottom: 12 },
   segmented: { flexDirection: 'row', borderWidth: 1, padding: 3 },
   segmentOption: { flex: 1, alignItems: 'center', paddingVertical: 9, minHeight: 38, justifyContent: 'center' },
   samagriRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    paddingVertical: 11,
-    borderBottomWidth: 1,
-    minHeight: 44,
+    alignItems: 'flex-start',
+    gap: 14,
+    paddingVertical: 14,
+    minHeight: 52,
   },
   checkCircle: {
-    width: 26,
-    height: 26,
-    borderRadius: 13, // circle = half its box — stays a literal (design.md §4)
+    width: 28,
+    height: 28,
+    borderRadius: 14, // circle = half its box — stays a literal (design.md §4)
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: -2,
   },
   checkMark: { fontSize: 13, lineHeight: 18 },
-  samagriText: { flex: 1, fontSize: 14.5 },
-  optChip: { borderWidth: 1, paddingHorizontal: 7, paddingVertical: 2 },
+  summary: { alignItems: 'center', borderWidth: 1, paddingHorizontal: 16, paddingTop: 14, paddingBottom: 12 },
+  summaryBig: { fontSize: 23, textAlign: 'center' },
+  summarySmall: { fontSize: 12.5, lineHeight: 19, textAlign: 'center', marginTop: 2 },
+  track: { height: 7, width: '100%', overflow: 'hidden', marginTop: 12 },
+  summaryCaret: { fontSize: 20, lineHeight: 20, marginTop: 7 },
+  samagriLedger: { marginTop: 8 },
+  samagriInfo: { flex: 1, minWidth: 0 },
+  samagriText: { fontSize: 16, lineHeight: 24 },
+  samagriMeta: { fontSize: 12, lineHeight: 18, marginTop: 2 },
+  optChip: { borderWidth: 1, paddingHorizontal: 7, paddingVertical: 2, marginTop: 3 },
   ghostButton: {
     borderWidth: 1,
     alignItems: 'center',
