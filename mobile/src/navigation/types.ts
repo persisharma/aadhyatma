@@ -118,6 +118,11 @@ export type PanchangStackParamList = {
   Kundali: { editing?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
   GunaMilan: undefined;
+  // Guided puja flows (PRD-19). `dateMs` is the festival occurrence the vidhi
+  // was opened for — the samagri checklist persists per that date.
+  VidhiCatalog: undefined;
+  VidhiDetail: { vidhiId: string; dateMs?: number };
+  VidhiConduct: { vidhiId: string; dateMs?: number; initialStep?: number };
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing
