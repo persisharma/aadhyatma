@@ -184,4 +184,23 @@ describe('handleNotificationResponse', () => {
     }
     expect(dispatchSpy).not.toHaveBeenCalled();
   });
+
+  test('a personal Pitru Smaran reminder opens that person detail', () => {
+    readySpy.mockReturnValue(true);
+    expect(handleNotificationResponse(responseWithData({ type: 'pitru-smaran-reminder', entryId: 'father' }))).toBe(true);
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      payload: {
+        name: 'MoreTab',
+        params: { screen: 'PitruSmaranDetail', params: { entryId: 'father' }, initial: false },
+      },
+    });
+  });
+
+  test('a public Pitru Paksha reminder opens the fortnight overview', () => {
+    readySpy.mockReturnValue(true);
+    expect(handleNotificationResponse(responseWithData({ type: 'pitru-paksha-reminder', year: 2026 }))).toBe(true);
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      payload: { name: 'MoreTab', params: { screen: 'PitruPakshaOverview', initial: false } },
+    });
+  });
 });

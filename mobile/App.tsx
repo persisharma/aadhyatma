@@ -40,6 +40,7 @@ import { lightColors } from '@/theme/colors';
 import { GitaLanguageProvider, useGitaLanguage } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { VratFollowProvider } from '@/contexts/VratFollowContext';
+import { PitruSmaranProvider } from '@/contexts/PitruSmaranContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
 import { registerNativeAlarmForegroundHandler } from '@/notifications/japamAlarmNative';
@@ -72,6 +73,7 @@ import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
 import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
+import PitruSmaranReminderScheduler from '@/components/PitruSmaranReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import MiniPlayer from '@/components/audio/MiniPlayer';
@@ -201,6 +203,8 @@ export default function App() {
             <ReadAloudProvider>
             <BookmarksProvider>
               <VratFollowProvider>
+              {/* पितृ स्मरण entries (PRD-17) — device-only AsyncStorage, no sync. */}
+              <PitruSmaranProvider>
               <UserActivityProvider>
                 <NewContentProvider>
                   <ReadingProgressProvider>
@@ -235,6 +239,7 @@ export default function App() {
                                 location (festival dates come from the bundled
                                 precomputed table). */}
                             <FestiveReminderScheduler />
+                            <PitruSmaranReminderScheduler />
                             <SadhanaReminderScheduler />
                             {/* Feeds the daily-verse scheduler each fire day's
                                 tithi/vrat for its title. Must stay inside
@@ -271,6 +276,7 @@ export default function App() {
                   </ReadingProgressProvider>
                 </NewContentProvider>
               </UserActivityProvider>
+              </PitruSmaranProvider>
               </VratFollowProvider>
             </BookmarksProvider>
             </ReadAloudProvider>

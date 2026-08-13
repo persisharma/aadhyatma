@@ -13,6 +13,9 @@ import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
+import PanchangTimelineRow from '@/components/PanchangTimelineRow';
+import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
+import PitruPakshaDayChip from '@/components/PitruPakshaDayChip';
 import TextField from '@/components/TextField';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -34,6 +37,9 @@ import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
+import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
+import { nextObservanceForEntry } from '@/panchang/pitruSmaran';
+import { shortDate as shortSmaranDate } from '@/panchang/pitruSmaranDisplay';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
@@ -258,6 +264,7 @@ export default function PanchangScreen({ route }: Props) {
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
+  const openPitruSmaran = () => rootNav.navigate('MoreTab', { screen: 'PitruSmaranList', initial: false });
   const openKundali = (editing = false) =>
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
   const openRashifal = () => rootNav.navigate('Rashifal');
@@ -624,6 +631,10 @@ export default function PanchangScreen({ route }: Props) {
                 {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
               </Text>
             )}
+            {/* PRD-17: the private ॥ स्मरण chip — renders only on a saved
+                observance date, muted gold register, device-only. */}
+            <PitruPakshaDayChip date={selectedDate} />
+            <PitruSmaranDayChip date={selectedDate} />
           </View>
 
           {upcoming.length > 0 && (
@@ -632,15 +643,14 @@ export default function PanchangScreen({ route }: Props) {
                 {contentByLang(lang, 'आगामी', 'Upcoming')}
               </Text>
               {upcoming.map((item, i) => (
-                <View key={`${item.rule.id}-${item.date.toDateString()}`} style={[styles.upcomingRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}>
-                  <View style={[styles.upcomingDot, { backgroundColor: markerColor(item.rule.marker, colors) }]} />
-                  <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, width: 50 }}>
-                    {formatShortDate(item.date, lang)}
-                  </Text>
-                  <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.ink, flex: 1 }}>
-                    {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
-                  </Text>
-                </View>
+                <PanchangTimelineRow
+                  key={`${item.rule.id}-${item.date.toDateString()}`}
+                  markerColor={markerColor(item.rule.marker, colors)}
+                  dateLabel={formatShortDate(item.date, lang)}
+                  title={contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
+                  showDivider={i < upcoming.length - 1}
+                  accessibilityLabel={`${formatShortDate(item.date, 'en')}, ${item.rule.nameEn}`}
+                />
               ))}
             </View>
           )}
@@ -660,6 +670,7 @@ export default function PanchangScreen({ route }: Props) {
               onOpenCategory={openCategory}
               onOpenKathaLibrary={openKathaLibrary}
               onOpenMyVrat={openMyVrat}
+              onOpenPitruSmaran={openPitruSmaran}
               followCount={followCount}
               reminderCount={reminderCount}
             />
@@ -1622,10 +1633,74 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
   );
 }
 
+function PitruSmaranCatalogRow({
+  lang, colors, typography, radii, elevation, onPress,
+}: {
+  lang: Lang;
+  colors: any;
+  typography: any;
+  radii: any;
+  elevation: any;
+  onPress: () => void;
+}) {
+  const { entries } = usePitruSmaran();
+  const [soonest, setSoonest] = useState<Date | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const handle = setTimeout(() => {
+      const today = startOfLocalDay(new Date());
+      const dates = entries
+        .map((entry) => {
+          try { return nextObservanceForEntry(entry, today); } catch { return null; }
+        })
+        .filter((date): date is Date => date !== null)
+        .sort((a, b) => a.getTime() - b.getTime());
+      if (!cancelled) setSoonest(dates[0] ?? null);
+    }, 0);
+    return () => { cancelled = true; clearTimeout(handle); };
+  }, [entries]);
+
+  const subtitle = entries.length > 0
+    ? contentByLang(
+        lang,
+        `${entries.length} स्मरण${soonest ? ` · अगला: ${shortSmaranDate(soonest, lang)}` : ''}`,
+        `${entries.length} remembrance${entries.length === 1 ? '' : 's'}${soonest ? ` · Next: ${shortSmaranDate(soonest, lang)}` : ''}`
+      )
+    : contentByLang(lang, 'अपने पितरों की तिथियाँ जोड़ें', 'Add your ancestors’ tithis');
+
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`Pitru Smaran. ${entries.length > 0 ? `${entries.length} entries` : 'Add remembrance dates'}`}
+      style={({ pressed }) => [
+        styles.myVratRow,
+        styles.pitruLedgerRow,
+        { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg },
+        elevation.card,
+        pressed && { opacity: 0.8 },
+      ]}
+    >
+      <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>॥</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+          {contentByLang(lang, 'पितृ स्मरण', 'Pitru Smaran')}
+        </Text>
+        <Text style={{ ...captionFont(subtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+          {subtitle}
+        </Text>
+      </View>
+      <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
+    </Pressable>
+  );
+}
+
 function CatalogLanding({
   lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenMyVrat, followCount, reminderCount,
+  onOpenPitruSmaran,
 }: {
   lang: Lang;
   today: Date;
@@ -1640,6 +1715,7 @@ function CatalogLanding({
   onOpenCategory: (category: BrowseCategory) => void;
   onOpenKathaLibrary: () => void;
   onOpenMyVrat: () => void;
+  onOpenPitruSmaran: () => void;
   followCount: number;
   reminderCount: number;
 }) {
@@ -1731,6 +1807,14 @@ function CatalogLanding({
             </View>
             <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
           </Pressable>
+          <PitruSmaranCatalogRow
+            lang={lang}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            elevation={elevation}
+            onPress={onOpenPitruSmaran}
+          />
           {upcoming.length > 0 && (
             <View style={{ marginTop: 14 }}>
               <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 8 }}>
@@ -1854,6 +1938,7 @@ const styles = StyleSheet.create({
   starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 16, height: 16, borderRadius: 8, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
   myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
+  pitruLedgerRow: { marginTop: 10 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },
@@ -1963,6 +2048,4 @@ const styles = StyleSheet.create({
   linkRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
   kathaButton: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
   upcomingSection: { marginTop: 12 },
-  upcomingRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, borderBottomWidth: StyleSheet.hairlineWidth, gap: 6 },
-  upcomingDot: { width: 5, height: 5, borderRadius: 2.5 },
 });
