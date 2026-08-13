@@ -90,6 +90,28 @@
   .actionrow .chev{color:var(--saffron);font-size:17px}
   .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
 
+  /* Vrat & Parv discovery — the existing catalog search, extended with Vidhi results. */
+  .searchfield{height:48px;border:1px solid var(--divider);background:var(--parchment-soft);border-radius:14px;
+    display:flex;align-items:center;padding:0 14px;margin-bottom:10px;box-shadow:var(--shadow-subtle)}
+  .searchfield .query{flex:1;font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .searchfield .clear{font-family:var(--sans);font-size:17px;color:var(--ink-muted)}
+  .vidhishortcut{position:relative;display:flex;align-items:center;gap:10px;border:1px solid var(--card-border);
+    background:linear-gradient(120deg,var(--card-from),var(--card-to));border-radius:14px;padding:11px 13px;
+    margin-bottom:18px;box-shadow:var(--shadow-card)}
+  .vidhishortcut .glyph{font-family:var(--deva);font-size:20px;color:var(--saffron);width:28px;text-align:center}
+  .vidhishortcut .copy{flex:1;min-width:0}
+  .vidhishortcut .title{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .vidhishortcut .subcopy{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted)}
+  .resultgroup{font-family:var(--deva);font-size:12px;font-weight:600;color:var(--saffron-deep);
+    letter-spacing:.25px;margin:14px 2px 4px}
+  .searchresult{display:flex;align-items:center;gap:10px;padding:11px 2px;border-bottom:1px solid var(--divider)}
+  .searchresult .resultcopy{flex:1;min-width:0}
+  .searchresult .resulttitle{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .searchresult .resultsub{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .searchresult .kind{font:600 9.5px var(--sans);letter-spacing:.35px;color:var(--saffron-deep);
+    background:var(--saffron-tint);border-radius:999px;padding:4px 8px;white-space:nowrap}
+  .searchresult .chev{font-size:18px;color:var(--saffron)}
+
   /* samagri checklist — reuses Today's Practice's expandable summary + ledger */
   .convline{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-bottom:12px}
   .modeseg{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:3px;margin-bottom:14px}
@@ -178,6 +200,95 @@
   <h1>पूजा विधि — Guided Step-by-Step Puja Flows</h1>
   <div class="sub">PRD-19 · Interactive UI prototype. Static mockups in the app's parchment system — not the live build.</div>
   <div class="legend">Entered from <b>the day it's needed</b> — a पूजा विधि action pill on the shipped ObservanceCard (design.md §33.5), beside its existing katha/read pills — or from the always-available Vrat & Parv catalog, not a new Home category. Two modes: <b>तैयारी</b> (the shipped Today's Practice checklist pattern, day before) and <b>पूजा</b> (one Daily Bhakti-style reading card per step, horizontally paged). Verified mantras include Devanagari + IAST + read-aloud (#230 TTS); shipped texts (aarti, katha) are handed off by reference, never re-typed. Provenance remains internal review metadata and is not published in the UI.</div>
+
+  <!-- ============ 0 · DISCOVERY ============ -->
+  <div class="phaselabel">0 · Discovery — find the six guided pujas</div>
+  <div class="phasedesc">The default Vrat &amp; Parv landing shows a compact six-Vidhi card directly below search, before My Vrat and Upcoming. Typing in the existing search then searches observances and Puja Vidhis together and labels them as different result types.</div>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="toptitle" style="font-size:20px">व्रत-पर्व</div><div class="topaction">जयपुर ›</div></div>
+
+          <div class="searchfield">
+            <div class="query" style="color:var(--ink-muted)">व्रत, पर्व, कथा या पूजा विधि खोजें…</div>
+          </div>
+          <div class="vidhishortcut" style="position:relative">
+            <div class="dot" style="right:-8px;top:-8px">10</div>
+            <div class="glyph">॥</div>
+            <div class="copy"><div class="title">पूजा विधि</div><div class="subcopy">6 चरण-दर-चरण पूजाएँ</div></div>
+            <div class="chev">›</div>
+          </div>
+
+          <div class="actionrow">
+            <div class="ai">★</div>
+            <div class="at"><div class="att">मेरा व्रत</div><div class="ats">अपने व्रत यहाँ रखें</div></div>
+            <div class="chev">›</div>
+          </div>
+
+          <div class="resultgroup" style="margin-top:18px">आगामी</div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">जन्माष्टमी</div><div class="resultsub">4 सितम्बर · पर्व</div></div>
+            <div class="chev">›</div>
+          </div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">गणेश चतुर्थी</div><div class="resultsub">15 सितम्बर · पर्व</div></div>
+            <div class="chev">›</div>
+          </div>
+
+          <div class="resultgroup" style="margin-top:18px">श्रेणी से देखें</div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">व्रत · पर्व · उपवास · कथा</div><div class="resultsub">सभी संग्रह और श्रेणियाँ</div></div>
+            <div class="chev">›</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Default Vrat &amp; Parv landing — no search required.</b><br/>
+        <span class="n">10</span><b>पूजा विधि · 6 is the first content card below search</b>, above My Vrat, Upcoming and Browse by type. It is visible on every visit and opens the six-card Vidhi catalog. This is the primary catalog doorway; the date-specific festival action remains the contextual doorway.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="toptitle" style="font-size:20px">व्रत-पर्व</div><div class="topaction">जयपुर ›</div></div>
+
+          <div class="searchfield" style="position:relative">
+            <div class="dot" style="right:-8px;top:-8px">11</div>
+            <div class="query">गणेश</div><div class="clear">×</div>
+          </div>
+          <div class="vidhishortcut">
+            <div class="glyph">॥</div>
+            <div class="copy"><div class="title">पूजा विधि</div><div class="subcopy">6 चरण-दर-चरण पूजाएँ</div></div>
+            <div class="chev">›</div>
+          </div>
+
+          <div class="resultgroup">पूजा विधि</div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">गणेश चतुर्थी स्थापना</div><div class="resultsub">16 चरण · लगभग 45 मिनट</div></div>
+            <div class="kind">पूजा विधि</div><div class="chev">›</div>
+          </div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">दीपावली लक्ष्मी-गणेश पूजन</div><div class="resultsub">18 चरण · लगभग 45 मिनट</div></div>
+            <div class="kind">पूजा विधि</div><div class="chev">›</div>
+          </div>
+
+          <div class="resultgroup">व्रत और पर्व</div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">गणेश चतुर्थी</div><div class="resultsub">Ganesh Chaturthi · पर्व</div></div>
+            <div class="chev">›</div>
+          </div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">संकष्टी चतुर्थी</div><div class="resultsub">Sankashti Chaturthi · व्रत</div></div>
+            <div class="chev">›</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="cap"><b>One search, two clearly labelled result families.</b><br/>
+        <span class="n">11</span><b>The existing search field also finds Vidhis directly</b> by Hindi/English title, linked festival, deity, and useful terms such as पूजा, स्थापना, घटस्थापना, लक्ष्मी, गणेश, शिव and करवा चौथ. Matching Vidhis appear first under their own heading; observances remain below, so a festival and its guided procedure are not mistaken for the same item. The default पूजा विधि shortcut remains directly below search; no extra Home category or second Vidhi search field is introduced.</div>
+    </div>
+  </div>
 
   <!-- ============ 1 · ENTRY + PREP ============ -->
   <div class="phaselabel">1 · Entry &amp; तैयारी — the day before</div>
@@ -390,6 +501,8 @@
     ⑦ Shipped-text steps hand off by sectionId (aarti/katha reader + audio) and return.
     ⑧ Completion: static ॐ seal and completed-step count; no repeated katha/aarti action.
     ⑨ Catalog reachable from the Vrat & Parv catalog and festival day panels — no new Home tile.
+    ⑩ Default Vrat & Parv landing shows पूजा विधि · 6 directly below search, before My Vrat and Upcoming.
+    ⑪ Existing Vrat & Parv search returns a labelled पूजा विधि group before observance matches; no second search box inside the six-card list.
   </div>
 </body>
 </html>
