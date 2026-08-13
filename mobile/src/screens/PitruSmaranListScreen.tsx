@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ReaderHeader from '@/components/ReaderHeader';
+import ObservanceListRow from '@/components/ObservanceListRow';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import {
@@ -159,25 +160,24 @@ export default function PitruSmaranListScreen({ navigation }: Props) {
             </View>
           ) : (
             rows.map(({ entry, next }) => (
-              <Pressable
+              <ObservanceListRow
                 key={entry.id}
-                onPress={() => navigation.navigate('PitruSmaranDetail', { entryId: entry.id })}
-                accessibilityRole="button"
-                accessibilityLabel={`Smaran ${entryDisplayName(entry, 'en')}`}
-                style={({ pressed }) => [styles.row, { borderBottomColor: colors.divider }, pressed && { opacity: 0.6 }]}
-              >
-                <View style={[styles.lead, { borderColor: colors.goldTint, backgroundColor: colors.parchmentHighlight }]}>
-                  <Text style={{ fontSize: 14, color: colors.inkMuted }}>॥</Text>
-                </View>
-                <View style={styles.rowMain}>
+                leading={(
+                  <View style={[styles.lead, { borderColor: colors.goldTint, backgroundColor: colors.parchmentHighlight }]}>
+                    <Text style={{ fontSize: 14, color: colors.inkMuted }}>॥</Text>
+                  </View>
+                )}
+                title={(
                   <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }} numberOfLines={1}>
                     {entryDisplayName(entry, lang)}
                   </Text>
+                )}
+                caption={(
                   <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkMuted, marginTop: 2 }} numberOfLines={1}>
                     {entryCaption(entry, lang)}
                   </Text>
-                </View>
-                {next && (
+                )}
+                trailing={next ? (
                   <View style={styles.rowRight}>
                     <Text style={{ fontFamily: dateFont(lang, typography), fontSize: 13, color: colors.inkSoft }}>
                       {shortDateWithYear(next, lang)}
@@ -186,8 +186,15 @@ export default function PitruSmaranListScreen({ navigation }: Props) {
                       {relativeDayLabel(next, today, lang)}
                     </Text>
                   </View>
-                )}
-              </Pressable>
+                ) : undefined}
+                onPress={() => navigation.navigate('PitruSmaranDetail', { entryId: entry.id })}
+                accessibilityLabel={[
+                  `Smaran ${entryDisplayName(entry, 'en')}`,
+                  entryDisplayName(entry, lang),
+                  entryCaption(entry, lang),
+                  next ? `Next ${shortDateWithYear(next, 'en')}, ${relativeDayLabel(next, today, 'en')}` : null,
+                ].filter(Boolean).join(', ')}
+              />
             ))
           )}
 
@@ -232,9 +239,7 @@ const styles = StyleSheet.create({
   banner: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 13, marginBottom: 14 },
   loading: { paddingVertical: 48, alignItems: 'center' },
   empty: { alignItems: 'center', paddingVertical: 28, paddingHorizontal: 12 },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth, minHeight: 56 },
   lead: { width: 34, height: 34, borderRadius: 17, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  rowMain: { flex: 1, minWidth: 0 },
   rowRight: { alignItems: 'flex-end' },
   addBtn: { borderWidth: 1.5, minHeight: 48, alignItems: 'center', justifyContent: 'center', marginTop: 16 },
 });

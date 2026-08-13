@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ReaderHeader from '@/components/ReaderHeader';
+import CalendarDatePicker from '@/components/CalendarDatePicker';
 import TextField from '@/components/TextField';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
@@ -31,8 +32,8 @@ type Props = NativeStackScreenProps<MoreStackParamList, 'PitruSmaranEdit'>;
 
 type EntryMode = 'tithi' | 'date';
 
-// Strict DD/MM/YYYY (also accepts - and . separators). Rejects impossible
-// calendar dates and anything outside 1800..today.
+// The shared calendar emits a strict civil date; this parser remains defensive
+// about impossible dates and anything outside 1800..today.
 function parseCivilDate(text: string): Date | null {
   const match = /^(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{4})$/.exec(text.trim());
   if (!match) return null;
@@ -44,6 +45,19 @@ function parseCivilDate(text: string): Date | null {
   if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
   if (date.getTime() > Date.now()) return null;
   return date;
+}
+
+function civilDateTextFromKey(key: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key);
+  return match ? `${match[3]}/${match[2]}/${match[1]}` : '';
+}
+
+function dateKey(date: Date): string {
+  return [
+    String(date.getFullYear()).padStart(4, '0'),
+    String(date.getMonth() + 1).padStart(2, '0'),
+    String(date.getDate()).padStart(2, '0'),
+  ].join('-');
 }
 
 function localizedHi(text: string, lang: Lang): string {
@@ -75,8 +89,9 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
   const [paksha, setPaksha] = useState<Paksha>(existingRule?.paksha ?? 'shukla');
   const [tithi, setTithi] = useState<number | null>(existingRule?.tithi ?? null);
   const [dateText, setDateText] = useState('');
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
   // The confirmed conversion: rule + the exact date it was derived from. Cleared
-  // the moment the typed date changes, so a stale tithi can never be saved.
+  // the moment the selected date changes, so a stale tithi can never be saved.
   const [derived, setDerived] = useState<{ rule: TithiRule; forMs: number } | null>(null);
 
   const parsedDate = useMemo(() => parseCivilDate(dateText), [dateText]);
@@ -355,14 +370,21 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
               <Text style={[styles.fieldLabel, { color: colors.inkMuted }]}>
                 {contentByLang(lang, 'देहावसान तिथि (अंग्रेज़ी)', 'DATE OF PASSING (GREGORIAN)')}
               </Text>
-              <TextField
-                variant="form"
-                value={dateText}
-                onChangeText={setDateText}
-                placeholder={contentByLang(lang, 'दिन/माह/वर्ष — 03/02/1998', 'DD/MM/YYYY — 03/02/1998')}
-                keyboardType="numbers-and-punctuation"
+              <Pressable
+                onPress={() => setDatePickerVisible(true)}
+                accessibilityRole="button"
                 accessibilityLabel="Date of passing"
-              />
+                style={({ pressed }) => [
+                  styles.dateField,
+                  { borderColor: colors.divider, backgroundColor: colors.parchmentSoft, borderRadius: radii.md },
+                  pressed && { opacity: 0.75 },
+                ]}
+              >
+                <Text style={{ fontFamily: bodyFont, fontSize: 15, color: dateText ? colors.ink : colors.inkMuted }}>
+                  {dateText || contentByLang(lang, 'कैलेंडर से तारीख़ चुनें', 'Choose a date from the calendar')}
+                </Text>
+                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 18, color: colors.saffronDeep }}>›</Text>
+              </Pressable>
 
               {derived && parsedDate && derived.forMs === parsedDate.getTime() ? (
                 <View style={[styles.confirmCard, { borderColor: colors.gold, backgroundColor: colors.parchmentHighlight, borderRadius: radii.md }]}>
@@ -438,6 +460,15 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
             )}
           </Text>
         </ScrollView>
+        <CalendarDatePicker
+          visible={datePickerVisible}
+          value={parsedDate ? dateKey(parsedDate) : ''}
+          lang={lang}
+          title={contentByLang(lang, 'देहावसान तिथि चुनें', 'Choose date of passing')}
+          minDate="1800-01-01"
+          onSelect={(key) => setDateText(civilDateTextFromKey(key))}
+          onClose={() => setDatePickerVisible(false)}
+        />
       </SafeAreaView>
     </View>
   );
@@ -459,6 +490,7 @@ const styles = StyleSheet.create({
   seg: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center' },
   unknownRow: { flexDirection: 'row', alignItems: 'center', gap: 10, borderWidth: 1, paddingHorizontal: 13, paddingVertical: 12, minHeight: 44 },
   confirmCard: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 13, marginTop: 12 },
+  dateField: { minHeight: 52, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   saveBtn: { minHeight: 48, alignItems: 'center', justifyContent: 'center', marginTop: 18 },
   ghostBtn: { minHeight: 44, alignItems: 'center', justifyContent: 'center', borderWidth: 1, marginTop: 8 },
 });

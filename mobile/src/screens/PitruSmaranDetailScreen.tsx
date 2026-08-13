@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ReaderHeader from '@/components/ReaderHeader';
+import ObservanceDetailHero from '@/components/ObservanceDetailHero';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import { addDays } from '@/panchang/calendarGrid';
@@ -166,25 +167,24 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
             contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
             showsVerticalScrollIndicator={false}
           >
-            {/* Hero — §33 ObservanceDetail pattern */}
-            <View style={styles.hero}>
-              <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.gold, letterSpacing: 6 }}>
-                ॥ ॐ ॥
-              </Text>
-              <Text style={{ fontFamily: titleFont, fontSize: 24, color: colors.ink, textAlign: 'center', marginTop: 6 }}>
-                {entryDisplayName(entry, lang)}
-              </Text>
-              <Text style={{ fontFamily: bodyFont, fontSize: 13, color: colors.inkSoft, textAlign: 'center', marginTop: 4 }}>
-                {contentByLang(lang, 'श्राद्ध तिथि:', 'Shraddha tithi:')} {entryCaption(entry, lang)}
-              </Text>
-              {solved?.next && (
-                <View style={[styles.nextPill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
-                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
-                    {contentByLang(lang, 'अगला', 'Next')} · {fullDate(solved.next, lang)} · {inDaysLabel(solved.next, today, lang)}
-                  </Text>
-                </View>
+            <ObservanceDetailHero
+              style={styles.hero}
+              layout="smaran"
+              leading={(
+                <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.gold, letterSpacing: 6 }}>
+                  ॥ ॐ ॥
+                </Text>
               )}
-            </View>
+              title={entryDisplayName(entry, lang)}
+              caption={(
+                <Text style={{ fontFamily: bodyFont, fontSize: 13, color: colors.inkSoft, textAlign: 'center' }}>
+                  {contentByLang(lang, 'श्राद्ध तिथि:', 'Shraddha tithi:')} {entryCaption(entry, lang)}
+                </Text>
+              )}
+              nextLabel={solved?.next
+                ? `${contentByLang(lang, 'अगला', 'Next')} · ${fullDate(solved.next, lang)} · ${inDaysLabel(solved.next, today, lang)}`
+                : null}
+            />
 
             {/* Next year */}
             {solved?.following && (
@@ -302,8 +302,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
   scroll: { paddingTop: 4, paddingBottom: 40 },
-  hero: { alignItems: 'center', marginTop: 4, marginBottom: 16 },
-  nextPill: { marginTop: 10, paddingHorizontal: 16, paddingVertical: 7 },
+  hero: { marginTop: 4, marginBottom: 16 },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

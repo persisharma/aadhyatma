@@ -19,7 +19,7 @@
 #     "Pitru Smaran, N entries" — anchor with a wildcard.
 #   - Picker chips expose constant English a11y labels ("Month Magha",
 #     "Paksha Krishna", "Tithi Ashtami"); actions are "Add smaran", "Save smaran",
-#     "Smaran Father" (list row), "Delete smaran entry", "Confirm delete".
+#     "Smaran Father, …" (list row), "Delete smaran entry", "Confirm delete".
 #   - The default reading language is Hindi, so visible copy asserted here is
 #     Devanagari; control labels stay English constants (Maestro-stable).
 
@@ -74,19 +74,27 @@ appId: com.prashantsharma.vedansh
 
 # ── List: one row, tithi caption in words, solved next date at right ──
 - extendedWaitUntil:
-    visible: "माघ कृष्ण अष्टमी"
+    visible: ".*माघ कृष्ण अष्टमी.*"
     timeout: 15000
-- assertVisible: "पिताजी"
+- assertVisible: ".*पिताजी.*"
 
 # ── Detail: hero + next pill + गीता पाठ rows ──
-- tapOn: "Smaran Father"
+- tapOn: "^Smaran Father,.*$"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "श्राद्ध तिथि.*"
     timeout: 15000
 - assertVisible: "अगला.*"
-- assertVisible: "गीता — पंचदश अध्याय"
-- assertVisible: "गीता — द्वितीय अध्याय"
+- scrollUntilVisible:
+    element:
+      text: "Open Gita — Adhyaya 15"
+    centerElement: true
+- assertVisible: "Open Gita — Adhyaya 15"
+- scrollUntilVisible:
+    element:
+      text: "Open Gita — Adhyaya 2"
+    centerElement: true
+- assertVisible: "Open Gita — Adhyaya 2"
 
 # ── Delete round-trip: confirm sheet, then back to the empty state ──
 - scrollUntilVisible:
@@ -103,6 +111,18 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "अपने पितरों की तिथियाँ जोड़ें"
     timeout: 15000
+
+# ── Civil-date branch reuses the shared calendar sheet ──
+- tapOn: "Add smaran"
+- waitForAnimationToEnd
+- tapOn: "Only date known"
+- tapOn: "Date of passing"
+- extendedWaitUntil:
+    visible: "देहावसान तिथि चुनें"
+    timeout: 10000
+- assertVisible: "Confirm date"
+- tapOn: "Close date picker"
+- tapOn: "Back"
 
 # Clean up — termination resets navigation for the next flow.
 - stopApp:

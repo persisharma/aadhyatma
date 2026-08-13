@@ -1,6 +1,7 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text } from 'react-native';
+import CalendarDatePicker from '@/components/CalendarDatePicker';
 
 /**
  * PRD-17 पितृ स्मरण screens — list (rows sorted soonest-first, seasonal banner,
@@ -184,7 +185,13 @@ describe('PitruSmaranListScreen', () => {
     // Soonest (नानाजी) renders before पिताजी.
     expect(text.indexOf('नानाजी')).toBeLessThan(text.indexOf('पिताजी'));
 
-    act(() => byLabel(tree, 'Smaran Grandfather (maternal)').props.onPress());
+    const nanajiRow = tree.root.findAll(
+      (node) =>
+        node.props.accessibilityLabel?.startsWith('Smaran Grandfather (maternal),') &&
+        typeof node.props.onPress === 'function'
+    )[0];
+    expect(nanajiRow.props.accessibilityLabel).toContain('तिथि अज्ञात — सर्वपितृ अमावस्या');
+    act(() => nanajiRow.props.onPress());
     expect(nav.navigate).toHaveBeenCalledWith('PitruSmaranDetail', { entryId: 'smaran-nanaji' });
   });
 
@@ -257,12 +264,15 @@ describe('PitruSmaranEditScreen', () => {
       <PitruSmaranEditScreen navigation={nav as never} route={{ key: 'e', name: 'PitruSmaranEdit', params: {} } as never} />
     );
     act(() => byLabel(tree, 'Only date known').props.onPress());
-    // No date typed yet → nothing derived, Save disabled.
+    // No date selected yet → nothing derived, Save disabled.
     expect(byLabel(tree, 'Save smaran').props.accessibilityState.disabled).toBe(true);
 
-    const input = tree.root.findAll((n) => n.props.accessibilityLabel === 'Date of passing')[0];
+    act(() => byLabel(tree, 'Date of passing').props.onPress());
+    const picker = tree.root.findAllByType(CalendarDatePicker).find((node) => node.props.visible)!;
+    expect(picker.props.title).toBe('देहावसान तिथि चुनें');
+    expect(picker.props.minDate).toBe('1800-01-01');
     await act(async () => {
-      input.props.onChangeText('03/02/1998');
+      picker.props.onSelect('1998-02-03');
     });
     await flush();
     // The confirmation card shows the tithi back IN WORDS before anything saves.
@@ -282,9 +292,10 @@ describe('PitruSmaranEditScreen', () => {
       <PitruSmaranEditScreen navigation={makeNav() as never} route={{ key: 'e', name: 'PitruSmaranEdit', params: {} } as never} />
     );
     act(() => byLabel(tree, 'Only date known').props.onPress());
-    const input = tree.root.findAll((n) => n.props.accessibilityLabel === 'Date of passing')[0];
+    act(() => byLabel(tree, 'Date of passing').props.onPress());
+    const picker = tree.root.findAllByType(CalendarDatePicker).find((node) => node.props.visible)!;
     await act(async () => {
-      input.props.onChangeText('03/02/1998');
+      picker.props.onSelect('1998-02-03');
     });
     await flush();
     act(() => byLabel(tree, 'Choose the tithi myself').props.onPress());

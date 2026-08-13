@@ -5,7 +5,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ReaderHeader from '@/components/ReaderHeader';
-import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import PanchangTimelineRow from '@/components/PanchangTimelineRow';
+import { useGitaLanguage } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import { addDays } from '@/panchang/calendarGrid';
 import { computeTithiAndMonth } from '@/panchang/engine';
@@ -155,33 +156,16 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
             </View>
 
             {state.rows.map((row, i) => (
-              <View
+              <PanchangTimelineRow
                 key={row.key}
-                style={[
-                  styles.row,
-                  { borderBottomColor: i < state.rows.length - 1 ? colors.divider : 'transparent' },
-                ]}
-              >
-                <View
-                  style={[
-                    styles.dot,
-                    { backgroundColor: row.family.length > 0 ? colors.saffron : colors.gold },
-                  ]}
-                />
-                <Text style={{ fontFamily: dateFont(lang, typography), fontSize: 11, color: colors.inkMuted, width: 52 }}>
-                  {shortDate(row.date, lang)}
-                </Text>
-                <View style={styles.rowMain}>
-                  <Text style={{ fontFamily: bodyFont, fontSize: 14, color: colors.ink }}>
-                    {contentByLang(lang, row.labelHi, row.labelEn)}
-                  </Text>
-                  {row.family.map((who, whoIndex) => (
-                    <Text key={`${row.key}-${whoIndex}`} style={{ fontFamily: bodyFont, fontSize: 12, color: colors.saffronDeep, marginTop: 1 }}>
-                      ॥ {who}
-                    </Text>
-                  ))}
-                </View>
-              </View>
+                markerColor={row.family.length > 0 ? colors.saffron : colors.gold}
+                dateLabel={shortDate(row.date, lang)}
+                title={contentByLang(lang, row.labelHi, row.labelEn)}
+                secondary={row.family.map((who) => `॥ ${who}`)}
+                density="comfortable"
+                showDivider={i < state.rows.length - 1}
+                accessibilityLabel={`${shortDate(row.date, 'en')}, ${row.labelEn}${row.family.length > 0 ? `, ${row.family.join(', ')}` : ''}`}
+              />
             ))}
 
             <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: 16 }}>
@@ -198,24 +182,10 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
   );
 }
 
-function dateFont(lang: Lang, typography: { meaning: { fontFamily: string } }): string {
-  return lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily);
-}
-
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 4, paddingBottom: 40 },
   hero: { marginTop: 2, marginBottom: 14 },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 11,
-    paddingVertical: 11,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    minHeight: 44,
-  },
-  dot: { width: 8, height: 8, borderRadius: 4 },
-  rowMain: { flex: 1 },
 });

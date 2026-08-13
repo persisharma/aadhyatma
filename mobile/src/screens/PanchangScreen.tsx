@@ -13,6 +13,7 @@ import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
+import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import TextField from '@/components/TextField';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
@@ -636,15 +637,14 @@ export default function PanchangScreen({ route }: Props) {
                 {contentByLang(lang, 'आगामी', 'Upcoming')}
               </Text>
               {upcoming.map((item, i) => (
-                <View key={`${item.rule.id}-${item.date.toDateString()}`} style={[styles.upcomingRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}>
-                  <View style={[styles.upcomingDot, { backgroundColor: markerColor(item.rule.marker, colors) }]} />
-                  <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, width: 50 }}>
-                    {formatShortDate(item.date, lang)}
-                  </Text>
-                  <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.ink, flex: 1 }}>
-                    {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
-                  </Text>
-                </View>
+                <PanchangTimelineRow
+                  key={`${item.rule.id}-${item.date.toDateString()}`}
+                  markerColor={markerColor(item.rule.marker, colors)}
+                  dateLabel={formatShortDate(item.date, lang)}
+                  title={contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
+                  showDivider={i < upcoming.length - 1}
+                  accessibilityLabel={`${formatShortDate(item.date, 'en')}, ${item.rule.nameEn}`}
+                />
               ))}
             </View>
           )}
@@ -1967,6 +1967,4 @@ const styles = StyleSheet.create({
   linkRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
   kathaButton: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
   upcomingSection: { marginTop: 12 },
-  upcomingRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, borderBottomWidth: StyleSheet.hairlineWidth, gap: 6 },
-  upcomingDot: { width: 5, height: 5, borderRadius: 2.5 },
 });

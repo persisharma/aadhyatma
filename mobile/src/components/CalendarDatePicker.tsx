@@ -23,6 +23,8 @@ type Props = {
   /** Current value as `YYYY-MM-DD`, or '' when unset. */
   value: string;
   lang: Lang;
+  /** Localized sheet title. Defaults to the birth-date wording used by Jyotish. */
+  title?: string;
   minDate?: string;
   maxDate?: string;
   onSelect: (date: string) => void;
@@ -62,6 +64,7 @@ export default function CalendarDatePicker({
   visible,
   value,
   lang,
+  title,
   minDate = '1900-01-01',
   maxDate,
   onSelect,
@@ -131,7 +134,7 @@ export default function CalendarDatePicker({
         >
           <View style={[styles.header, { paddingHorizontal: spacing.xxl, borderBottomColor: colors.divider }]}>
             <Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18 }}>
-              {contentByLang(lang, 'जन्म तिथि चुनें', 'Choose birth date')}
+              {title ?? contentByLang(lang, 'जन्म तिथि चुनें', 'Choose birth date')}
             </Text>
             <Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel="Close date picker" hitSlop={10}>
               <Text style={{ color: colors.saffronDeep, fontSize: 24 }}>×</Text>
