@@ -38,7 +38,8 @@ the shared reader ornament, and either an inline Devanagari + IAST mantra sectio
 an already-shipped katha/section reader. The read-aloud control is mounted once at screen level.
 Left/right swipe is the only page-turn interaction: there are no previous/next buttons and no
 swipe-helper text. Reader dots sit at the bottom, with the current dot stretched; the terminal
-completion page has no dots and shows a quiet static ॐ seal.
+completion page has no dots, does not repeat already-completed katha/aarti actions, and shows only
+the quiet static ॐ seal with the completed-step count.
 
 ## Dependencies
 

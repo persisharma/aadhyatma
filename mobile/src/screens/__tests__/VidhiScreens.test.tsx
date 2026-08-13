@@ -85,6 +85,8 @@ test('VidhiCatalogScreen lists the Satyanarayan card without publishing provenan
   expect(body).toContain('श्री सत्यनारायण पूजा');
   expect(body).toContain('Shri Satyanarayan Puja');
   expect(body).toContain('16 चरण');
+  expect(body).toContain('लगभग 60 मिनट');
+  expect(body).not.toContain('~60 min');
   expect(body).not.toContain('स्रोत-प्रमाणित');
   expect(body).not.toContain('source-verified');
   act(() => {
@@ -120,6 +122,8 @@ test('VidhiDetailScreen: routine-style samagri checklist, private provenance, sh
   const firstItem = satyanarayanPuja.samagri[0];
   const row = r.root.findByProps({ testID: `vidhi-samagri-${firstItem.itemEn}` });
   expect(row.props.accessibilityState.checked).toBe(false);
+  expect(row.props.accessibilityLabel).toBe(firstItem.itemHi);
+  expect(texts(r)).not.toContain('Checklist state');
   act(() => row.props.onPress());
   expect(
     r.root.findByProps({ testID: `vidhi-samagri-${firstItem.itemEn}` }).props.accessibilityState.checked
@@ -215,6 +219,8 @@ test('VidhiConductScreen: ref step hands off to the shipped katha reader and bac
     />
   );
   await settle();
+  expect(texts(r)).toContain('कथा पढ़कर यहीं लौटें');
+  expect(texts(r)).not.toContain('shipped text');
   act(() => {
     r.root.findByProps({ testID: 'vidhi-handoff-katha' }).props.onPress();
   });
@@ -224,7 +230,7 @@ test('VidhiConductScreen: ref step hands off to the shipped katha reader and bac
   });
 });
 
-test('VidhiConductScreen: completion page is a quiet static ॐ seal with a katha link', async () => {
+test('VidhiConductScreen: completion page is a quiet static ॐ seal without repeated actions', async () => {
   const r = render(
     <VidhiConductScreen
       navigation={nav}
@@ -245,7 +251,8 @@ test('VidhiConductScreen: completion page is a quiet static ॐ seal with a kath
   expect(body).not.toContain(satyanarayanPuja.conventionLineHi);
   expect(body).not.toContain(satyanarayanPuja.conventionLineEn);
   expect(r.root.findAllByProps({ testID: 'vidhi-pager-dots' })).toHaveLength(0);
-  r.root.findByProps({ testID: 'vidhi-completion-katha' });
+  expect(r.root.findAllByProps({ testID: 'vidhi-completion-katha' })).toHaveLength(0);
+  expect(body).not.toContain('व्रत कथा पढ़ें');
 });
 
 test('source/sourceUrl fields never render on any vidhi screen (review-only data)', async () => {

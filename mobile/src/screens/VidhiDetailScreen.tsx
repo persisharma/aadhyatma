@@ -178,7 +178,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                 testID={`vidhi-mode-${segment.key}`}
                 accessibilityRole="tab"
                 accessibilityState={{ selected }}
-                accessibilityLabel={segment.en}
+                accessibilityLabel={contentByLang(lang, segment.hi, segment.en)}
                 style={({ pressed }) => [
                   styles.segmentOption,
                   { borderRadius: radii.pill },
@@ -276,7 +276,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                         testID={`vidhi-samagri-${item.itemEn}`}
                         accessibilityRole="checkbox"
                         accessibilityState={{ checked: done }}
-                        accessibilityLabel={item.itemEn}
+                        accessibilityLabel={contentByLang(lang, item.itemHi, item.itemEn)}
                         style={[
                           styles.samagriRow,
                           { borderBottomColor: colors.divider, borderBottomWidth: last ? 0 : 1 },
@@ -333,7 +333,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                 onPress={shareList}
                 testID="vidhi-share-list"
                 accessibilityRole="button"
-                accessibilityLabel="Share samagri list"
+                accessibilityLabel={contentByLang(lang, 'सामग्री सूची साझा करें', 'Share samagri list')}
                 style={({ pressed }) => [
                   styles.ghostButton,
                   { borderColor: colors.goldTint, borderRadius: radii.md },
@@ -344,22 +344,6 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                   {contentByLang(lang, 'सूची साझा करें', 'Share list')}
                 </Text>
               </Pressable>
-              <Text
-                style={[
-                  styles.note,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: lang === 'en' ? fontFamilies.latinItalic : bodyFont,
-                    fontStyle: lang === 'en' ? 'italic' : 'normal',
-                  },
-                ]}
-              >
-                {contentByLang(
-                  lang,
-                  'सूची की स्थिति इसी पर्व-तिथि के लिए सहेजी जाती है',
-                  'Checklist state is saved for this festival date'
-                )}
-              </Text>
             </>
           ) : (
             <>
@@ -368,7 +352,11 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                   onPress={() => startConduct(resumeStep)}
                   testID="vidhi-resume"
                   accessibilityRole="button"
-                  accessibilityLabel={`Resume from step ${resumeStep + 1}`}
+                  accessibilityLabel={contentByLang(
+                    lang,
+                    `चरण ${resumeStep + 1} से पूजा जारी रखें`,
+                    `Resume puja from step ${resumeStep + 1}`
+                  )}
                   style={({ pressed }) => [
                     styles.resumeRow,
                     { backgroundColor: colors.goldTint, borderRadius: radii.md },
@@ -391,7 +379,11 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                       onPress={() => startConduct(index)}
                       testID={`vidhi-step-${step.id}`}
                       accessibilityRole="button"
-                      accessibilityLabel={`Step ${index + 1}. ${step.titleEn}`}
+                      accessibilityLabel={contentByLang(
+                        lang,
+                        `चरण ${index + 1}। ${step.titleHi}`,
+                        `Step ${index + 1}. ${step.titleEn}`
+                      )}
                       style={({ pressed }) => [
                         styles.stepRow,
                         {
@@ -438,7 +430,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                 onPress={() => startConduct(0)}
                 testID="vidhi-begin"
                 accessibilityRole="button"
-                accessibilityLabel="Begin puja"
+                accessibilityLabel={contentByLang(lang, 'पूजा प्रारम्भ करें', 'Begin puja')}
                 style={({ pressed }) => [
                   styles.primaryButton,
                   { backgroundColor: colors.saffron, borderRadius: radii.md },
@@ -499,7 +491,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
     justifyContent: 'center',
   },
-  note: { fontSize: 12, textAlign: 'center', marginTop: 12, lineHeight: 18 },
   resumeRow: { alignItems: 'center', paddingVertical: 12, minHeight: 44, justifyContent: 'center', marginBottom: 10 },
   phaseLabel: { fontSize: 12, marginTop: 14, marginBottom: 8, letterSpacing: 0.4 },
   stepRow: {

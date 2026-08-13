@@ -207,8 +207,6 @@
             <span class="apill outline">पढ़ें: गणेश आरती</span>
           </div>
         </div>
-
-        <div class="note">विधि-पिल केवल उन्हीं पर्वों पर दिखती है जिनकी विधि<br/>प्रकाशित है — vidhiId on the festival row</div>
       </div>
       <div class="tabbar">
         <div class="tab"><span class="ic">ॐ</span>Home</div>
@@ -228,7 +226,7 @@
       <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
       <div class="screen"><div class="pad" style="padding-bottom:90px">
         <div class="topbar"><div class="back">‹</div><div class="toptitle">गणेश चतुर्थी पूजन</div><div class="topaction" style="position:relative">साझा ›<div class="dot" style="right:-14px;top:-10px">3</div></div></div>
-        <div class="convline">लगभग 45 मिनट · ~45 min</div>
+        <div class="convline">लगभग 45 मिनट</div>
 
         <div class="modeseg" style="position:relative"><div class="dot" style="right:-8px;top:-8px">2</div>
           <div class="seg on">तैयारी · Samagri</div><div class="seg">पूजा · 16 चरण</div>
@@ -252,7 +250,6 @@
         </div>
 
         <button class="btn ghost">सूची साझा करें · Share list</button>
-        <div class="note">सूची की स्थिति इसी पर्व-तिथि के लिए सहेजी जाती है ·<br/>checklist state persists for this festival date</div>
       </div></div>
     </div>
     <div class="cap"><b>Vidhi overview — तैयारी mode.</b><br/>
@@ -283,7 +280,6 @@
           <div class="speakrow"><div class="speak">◖ सुनें · Read aloud</div></div>
         </div>
 
-        <div class="awake" style="position:relative"><span class="dot" style="left:34px;top:-4px">5</span>स्क्रीन पूजा के दौरान जलती रहेगी · screen stays awake</div>
         <div class="dots" style="margin-top:96px"><span class="dot" style="right:38px;top:-18px">6</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot on">━</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span></div>
       </div>
       </div>
@@ -308,9 +304,8 @@
           <div class="rclabel">ऐप में उपलब्ध पाठ</div>
           <div class="handoff" style="position:relative"><div class="dot" style="right:-8px;top:-8px">7</div>
             <div class="ht">जय गणेश देवा ›</div>
-            <div class="hs">Follow-along पाठ + audio · पूरा करके यहीं लौटें</div>
+            <div class="hs">आरती पूर्ण कर यहीं लौटें</div>
           </div>
-          <div class="note" style="margin-top:14px">आरती ऐप में पहले से है — विधि उसे सन्दर्भ से खोलती है,<br/>पाठ दोहराया नहीं जाता</div>
         </div>
         <div class="dots" style="margin-top:118px"><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot">•</span><span class="pagerdot on">━</span><span class="pagerdot">•</span><span class="pagerdot">•</span></div>
       </div>
@@ -331,24 +326,16 @@
         <div class="dones">गणपति बप्पा मोरया ·<br/>16 चरण पूर्ण</div>
 
         <div style="margin-top:22px">
-          <div class="actionrow">
-            <div class="ai">क</div>
-            <div class="at"><div class="att">व्रत कथा पढ़ें</div><div class="ats">Ganesh Chaturthi vrat katha</div></div>
-            <div class="chev">›</div>
-          </div>
           <div class="actionrow" style="position:relative"><div class="dot" style="right:-8px;top:-8px">8</div>
             <div class="ai">+</div>
-            <div class="at"><div class="att">साधना में जोड़ें</div><div class="ats">Recurring pujas can join नित्य साधना</div></div>
+            <div class="at"><div class="att">साधना में जोड़ें</div></div>
             <div class="chev">›</div>
           </div>
         </div>
-
-        <div class="note" style="margin-top:16px">समापन शान्त है — कोई उत्सव-एनीमेशन नहीं ·<br/>a puja ends in shanti, not confetti</div>
       </div></div>
     </div>
     <div class="cap"><b>Completion — quiet by design.</b><br/>
-      The static ॐ seal replaces any celebration animation (the routine-celebration mechanism is deliberately not wired here). Follow-up rows link the day's katha and —
-      <span class="n">8</span><b>for recurring vidhis</b> (Satyanarayan on purnima) — the existing <i>AddToRoutineButton</i> flow, so the practice enters नित्य साधना with its own reminders.</div>
+      The static ॐ seal closes the guided steps without repeating the katha or aarti actions. <span class="n">8</span><b>For recurring vidhis</b> (Satyanarayan on purnima), the existing <i>AddToRoutineButton</i> flow can add the practice to नित्य साधना.</div>
     </div>
 
     <div class="col">
@@ -360,37 +347,37 @@
         <div class="libcard" style="position:relative"><div class="dot" style="right:-8px;top:-8px">9</div>
           <div class="thumb">स</div>
           <div class="lc"><div class="lname">सत्यनारायण पूजा</div><div class="len">Satyanarayan Puja</div>
-            <div class="lsub">16 चरण · ~60 min · पूर्णिमा · कथा सहित</div></div>
+            <div class="lsub">16 चरण · लगभग 60 मिनट · पूर्णिमा · कथा सहित</div></div>
           <div class="chev">›</div>
         </div>
         <div class="libcard">
           <div class="thumb">दी</div>
           <div class="lc"><div class="lname">दीपावली लक्ष्मी-गणेश पूजन</div><div class="len">Diwali Lakshmi-Ganesh Pujan</div>
-            <div class="lsub">18 चरण · ~45 min · कार्तिक अमावस्या</div></div>
+            <div class="lsub">18 चरण · लगभग 45 मिनट · कार्तिक अमावस्या</div></div>
           <div class="chev">›</div>
         </div>
         <div class="libcard">
           <div class="thumb">ग</div>
           <div class="lc"><div class="lname">गणेश चतुर्थी स्थापना</div><div class="len">Ganesh Chaturthi Sthapana</div>
-            <div class="lsub">16 चरण · ~45 min · भाद्रपद शु. चतुर्थी</div></div>
+            <div class="lsub">16 चरण · लगभग 45 मिनट · भाद्रपद शु. चतुर्थी</div></div>
           <div class="chev">›</div>
         </div>
         <div class="libcard">
           <div class="thumb">न</div>
           <div class="lc"><div class="lname">नवरात्रि घटस्थापना</div><div class="len">Navratri Ghatasthapana</div>
-            <div class="lsub">14 चरण · ~40 min · आश्विन शु. प्रतिपदा</div></div>
+            <div class="lsub">14 चरण · लगभग 40 मिनट · आश्विन शु. प्रतिपदा</div></div>
           <div class="chev">›</div>
         </div>
         <div class="libcard">
           <div class="thumb">क</div>
           <div class="lc"><div class="lname">करवा चौथ पूजन</div><div class="len">Karwa Chauth Pujan</div>
-            <div class="lsub">12 चरण · ~30 min · कार्तिक कृ. चतुर्थी</div></div>
+            <div class="lsub">12 चरण · लगभग 30 मिनट · कार्तिक कृ. चतुर्थी</div></div>
           <div class="chev">›</div>
         </div>
         <div class="libcard">
           <div class="thumb">शि</div>
           <div class="lc"><div class="lname">महाशिवरात्रि पूजन</div><div class="len">Mahashivaratri Pujan</div>
-            <div class="lsub">15 चरण · ~40 min · फाल्गुन कृ. चतुर्दशी</div></div>
+            <div class="lsub">15 चरण · लगभग 40 मिनट · फाल्गुन कृ. चतुर्दशी</div></div>
           <div class="chev">›</div>
         </div>
       </div></div>
@@ -409,7 +396,7 @@
     ⑤ Keep-awake for the whole conduct session, released on exit.
     ⑥ One card per paged step: swipe navigation only; Hanuman Chalisa-style carousel dots at the bottom; no navigation buttons or swipe helper text; × saves state; same-day re-entry offers the readers' resume sheet.
     ⑦ Shipped-text steps hand off by sectionId (aarti/katha reader + audio) and return.
-    ⑧ Completion: static ॐ seal, katha link, AddToRoutine for recurring vidhis — no celebration animation.
+    ⑧ Completion: static ॐ seal and completed-step count; no repeated katha/aarti action. AddToRoutine remains available for recurring vidhis.
     ⑨ Catalog reachable from day panel, vrat catalog, search, DISCOVER card — no new Home tile.
   </div>
 </body>

@@ -63,7 +63,7 @@ Full-screen, one step per page, paged horizontally like the readers (the interac
 - The step's mantra inline with IAST romanization, with the **read-aloud** affordance (#230 TTS) — or, where the step *is* a shipped text (aarti, katha, sahasranama), a **hand-off card** that deep-links into that reader/audio and returns to the next step.
 - **Keep-awake while in conduct mode** (wet hands; no tapping to wake), auto-released on exit.
 - Exit resumes: re-entering the same day offers "जहाँ थे वहीं से" (same resume sheet pattern as the readers).
-- Completion: a quiet ॐ seal + the festival's katha/aarti links — deliberately *not* the routine celebration animation; a puja ends in shanti, not confetti.
+- Completion: a quiet ॐ seal and completed-step count. It does not repeat katha/aarti actions already completed in the guided steps and deliberately does not use the routine celebration animation.
 - **Add to routine:** recurring vidhis (Satyanarayan on purnima) offer the existing `AddToRoutineButton` so the practice enters नित्य साधना.
 
 ## 6. Data model (new family: `mobile/src/data/vidhi/`)

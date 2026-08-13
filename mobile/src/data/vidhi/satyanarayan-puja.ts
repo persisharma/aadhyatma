@@ -61,11 +61,11 @@ export const satyanarayanPuja: VidhiEntry = {
       id: 'sthapana',
       phase: 'prep',
       titleHi: 'स्थान शुद्धि व स्थापना',
-      titleEn: 'Purify the space & install the deity',
+      titleEn: 'Prepare the space & place the deity',
       instructionHi:
         'पूजा स्थान स्वच्छ कर चौकी पर पीला या लाल वस्त्र बिछाएँ और श्री सत्यनारायण भगवान की प्रतिमा या चित्र स्थापित करें। स्वच्छ, शान्त स्थान से पूजा में एकाग्रता आती है।',
       instructionEn:
-        'Clean the puja space, spread a yellow or red cloth on the chowki, and install the murti or picture of Shri Satyanarayan. A clean, calm spot settles the mind for worship.',
+        'Clean the puja space, spread a yellow or red cloth on the chowki, and place the murti or picture of Shri Satyanarayan. A clean, calm space helps focus the mind for worship.',
     },
     {
       id: 'kalash-deep',
@@ -85,7 +85,7 @@ export const satyanarayanPuja: VidhiEntry = {
       instructionHi:
         'दाहिने हाथ में जल, अक्षत और पुष्प लेकर अपना नाम, गोत्र, आज की तिथि और मनोकामना बोलते हुए श्री सत्यनारायण व्रत-पूजा का संकल्प लें, फिर जल भूमि पर छोड़ दें। संकल्प से पूजा का उद्देश्य निश्चित होता है।',
       instructionEn:
-        'Take water, akshat and a flower in your right palm; speak your name, gotra, today’s tithi and your wish, vowing to perform the Satyanarayan vrat-puja, then release the water. The sankalp fixes the purpose of the puja.',
+        'Take water, akshat and a flower in your right palm; speak your name, gotra, today’s tithi and your wish, vowing to perform the Satyanarayan vrat-puja, then pour the water onto the ground. The sankalp sets the intention for the puja.',
     },
     // ── मुख्य पूजा · Main worship ──────────────────────────────────────────
     {
@@ -112,7 +112,7 @@ export const satyanarayanPuja: VidhiEntry = {
       instructionHi:
         'हाथ में अक्षत-पुष्प लेकर आवाहन-मन्त्र बोलते हुए भगवान का आवाहन करें और अक्षत-पुष्प प्रतिमा के सम्मुख अर्पित करें। आवाहन से भगवान पूजा में आमंत्रित होते हैं।',
       instructionEn:
-        'With akshat and flowers in your joined palms, recite the avahan mantra inviting the Lord, and place them before the murti. Avahana welcomes the deity into the worship.',
+        'With akshat and flowers in your joined palms, recite the avahan mantra inviting the Lord, and place them before the murti. Avahana welcomes the Lord into the puja.',
       mantra: {
         devanagari: 'दामोदर समागच्छ लक्ष्म्या सह जगत्पते।\nइमां मया कृतां पूजां गृहाण सुरसत्तम॥',
         iast: 'dāmodara samāgaccha lakṣmyā saha jagatpate\nimāṁ mayā kṛtāṁ pūjāṁ gṛhāṇa surasattama',
@@ -211,7 +211,7 @@ export const satyanarayanPuja: VidhiEntry = {
       id: 'deep',
       phase: 'main',
       titleHi: 'दीप',
-      titleEn: 'Deep (lamp)',
+      titleEn: 'Dipa (lamp)',
       instructionHi: 'घी का दीपक भगवान के सम्मुख दिखाएँ। दीप ज्ञान के प्रकाश का प्रतीक है।',
       instructionEn:
         'Show the lit ghee lamp before the deity. The lamp stands for the light of knowledge.',

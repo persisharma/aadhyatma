@@ -64,8 +64,8 @@ function VidhiCard({ entry, onPress }: { entry: VidhiEntry; onPress: () => void 
   const hasKatha = entry.steps.some((step) => step.ref?.kind === 'katha');
   const sub = contentByLang(
     lang,
-    `${entry.steps.length} चरण · ~${entry.durationHintMin} min${hasKatha ? ' · कथा सहित' : ''}`,
-    `${entry.steps.length} steps · ~${entry.durationHintMin} min${hasKatha ? ' · with katha' : ''}`
+    `${entry.steps.length} चरण · लगभग ${entry.durationHintMin} मिनट${hasKatha ? ' · कथा सहित' : ''}`,
+    `${entry.steps.length} steps · About ${entry.durationHintMin} min${hasKatha ? ' · with katha' : ''}`
   );
 
   return (
@@ -73,7 +73,11 @@ function VidhiCard({ entry, onPress }: { entry: VidhiEntry; onPress: () => void 
       onPress={onPress}
       testID={`vidhi-card-${entry.id}`}
       accessibilityRole="button"
-      accessibilityLabel={`${entry.titleEn}. ${entry.steps.length} steps. Tap to open.`}
+      accessibilityLabel={contentByLang(
+        lang,
+        `${entry.titleHi}। ${entry.steps.length} चरण। खोलने के लिए टैप करें।`,
+        `${entry.titleEn}. ${entry.steps.length} steps. Tap to open.`
+      )}
       style={({ pressed }) => [
         styles.card,
         { borderRadius: radii.lg, borderColor: colors.cardActiveBorder },

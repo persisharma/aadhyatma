@@ -84,7 +84,6 @@ type ConductPage =
 export default function VidhiConductScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const rootNav = useNavigation<never>();
   const { width } = useWindowDimensions();
   const vidhi = getVidhiById(route.params.vidhiId);
   const steps = useMemo(() => vidhi?.steps ?? [], [vidhi]);
@@ -184,22 +183,6 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
     return null;
   }
 
-  const openRef = (step: VidhiStep) => {
-    if (!step.ref) return;
-    if (step.ref.kind === 'katha') {
-      (rootNav as { navigate: (name: string, params: unknown) => void }).navigate('HomeTab', {
-        screen: 'VratKathaReader',
-        params: { kathaId: step.ref.id },
-      });
-      return;
-    }
-    const entry = library.find((item) => item.id === (step.ref as { id: string }).id);
-    const target = entry ? buildEntryStartTarget(entry) : null;
-    if (target) {
-      (rootNav as { navigate: (name: string, params: unknown) => void }).navigate('HomeTab', target);
-    }
-  };
-
   const onStepPage = currentIndex < steps.length;
   const counterIndex = Math.min(currentIndex + 1, steps.length);
 
@@ -213,7 +196,7 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
         <ReaderHeader
           title={contentByLang(lang, vidhi.titleHi, vidhi.titleEn)}
           onBack={() => navigation.goBack()}
-          backAccessibilityLabel="Back to vidhi overview"
+          backAccessibilityLabel={contentByLang(lang, 'पूजा विवरण पर वापस जाएँ', 'Back to puja overview')}
           right={
             <Text
               style={{
@@ -258,8 +241,6 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
                   vidhiTitleHi={vidhi.titleHi}
                   vidhiTitleEn={vidhi.titleEn}
                   stepCount={steps.length}
-                  kathaStep={steps.find((step) => step.ref?.kind === 'katha')}
-                  onOpenRef={openRef}
                 />
               ) : (
                 <StepPage width={width} page={item} />
@@ -395,14 +376,7 @@ function StepPage({ width, page }: { width: number; page: Extract<ConductPage, {
             </View>
           )}
 
-          {step.ref && (
-            <View>
-              <Text style={[styles.sectionLabel, { color: colors.saffronDeep, fontFamily: titleFont }]}>
-                {contentByLang(lang, 'ऐप में उपलब्ध पाठ', 'Available in the app')}
-              </Text>
-              <StepHandoffCard step={step} />
-            </View>
-          )}
+          {step.ref && <StepHandoffCard step={step} />}
         </View>
       </ScrollView>
     </View>
@@ -438,7 +412,7 @@ function StepHandoffCard({ step }: { step: ConductStep }) {
       onPress={open}
       testID={`vidhi-handoff-${step.id}`}
       accessibilityRole="button"
-      accessibilityLabel={`Open ${titleEn}`}
+      accessibilityLabel={contentByLang(lang, `${titleHi} खोलें`, `Open ${titleEn}`)}
       style={({ pressed }) => [
         styles.handoffCard,
         { borderColor: colors.saffron, backgroundColor: colors.parchmentSoft, borderRadius: radii.lg },
@@ -460,8 +434,8 @@ function StepHandoffCard({ step }: { step: ConductStep }) {
       >
         {contentByLang(
           lang,
-          'ऐप में उपलब्ध पाठ खुलेगा — पढ़कर यहीं लौट आएँ',
-          'Opens the shipped text — return here after reading'
+          isKatha ? 'कथा पढ़कर यहीं लौटें' : 'आरती पूर्ण कर यहीं लौटें',
+          isKatha ? 'Read the katha, then return here' : 'Complete the aarti, then return here'
         )}
       </Text>
     </Pressable>
@@ -474,15 +448,11 @@ function CompletionPage({
   vidhiTitleHi,
   vidhiTitleEn,
   stepCount,
-  kathaStep,
-  onOpenRef,
 }: {
   width: number;
   vidhiTitleHi: string;
   vidhiTitleEn: string;
   stepCount: number;
-  kathaStep: VidhiStep | undefined;
-  onOpenRef: (step: VidhiStep) => void;
 }) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
@@ -520,28 +490,6 @@ function CompletionPage({
             `${stepCount} steps complete`
           )}`}
         </Text>
-
-        {kathaStep && (
-          <Pressable
-            onPress={() => onOpenRef(kathaStep)}
-            testID="vidhi-completion-katha"
-            accessibilityRole="button"
-            accessibilityLabel="Read the vrat katha"
-            style={({ pressed }) => [
-              styles.completionRow,
-              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md },
-              pressed && { opacity: 0.8 },
-            ]}
-          >
-            <View style={[styles.completionGlyph, { borderColor: colors.goldTint, backgroundColor: colors.parchmentHighlight }]}>
-              <Text style={{ fontFamily: fontFamilies.devanagari, fontSize: 14, color: colors.saffronDeep }}>क</Text>
-            </View>
-            <Text style={{ flex: 1, fontFamily: bodyFont, fontSize: 14.5, color: colors.ink }}>
-              {contentByLang(lang, 'व्रत कथा पढ़ें', 'Read the vrat katha')}
-            </Text>
-            <Text style={{ color: colors.saffron, fontSize: 17 }}>›</Text>
-          </Pressable>
-        )}
       </ScrollView>
     </View>
   );
@@ -581,22 +529,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   completeTitle: { fontSize: 20, textAlign: 'center' },
-  completionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    borderWidth: 1,
-    paddingHorizontal: 14,
-    paddingVertical: 13,
-    marginTop: 22,
-    minHeight: 48,
-  },
-  completionGlyph: {
-    width: 34,
-    height: 34,
-    borderRadius: 17, // circle = half its box (design.md §4)
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 });

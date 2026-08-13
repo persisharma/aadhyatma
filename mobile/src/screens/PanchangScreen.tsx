@@ -1612,7 +1612,11 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
             onPress={() => onOpenVidhi(vidhi.id, item.date.getTime())}
             testID={`observance-vidhi-${item.rule.id}`}
             accessibilityRole="button"
-            accessibilityLabel={`Puja vidhi ${vidhi.titleEn}`}
+            accessibilityLabel={contentByLang(
+              lang,
+              `${vidhi.titleHi} पूजा विधि`,
+              `Puja vidhi for ${vidhi.titleEn}`
+            )}
             style={({ pressed }) => [styles.kathaButton, { backgroundColor: colors.saffron, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
           >
             <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 12, color: colors.parchment }}>
@@ -1846,7 +1850,11 @@ function CatalogLanding({
                 onPress={onOpenVidhiCatalog}
                 testID="vidhi-catalog-tile"
                 accessibilityRole="button"
-                accessibilityLabel={`Puja vidhi catalog, ${VIDHI_ENTRIES.length}`}
+                accessibilityLabel={contentByLang(
+                  lang,
+                  `पूजा विधि सूची, ${VIDHI_ENTRIES.length}`,
+                  `Puja vidhi catalog, ${VIDHI_ENTRIES.length}`
+                )}
                 style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
               >
                 <View style={styles.tileGlyph}>
@@ -1859,7 +1867,11 @@ function CatalogLanding({
                   {lang === 'en' ? 'चरण-दर-चरण पूजा' : 'Guided pujas'}
                 </Text>
                 <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
-                  {VIDHI_ENTRIES.length} {contentByLang(lang, 'विधियाँ', 'vidhis')}
+                  {contentByLang(
+                    lang,
+                    `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'विधि' : 'विधियाँ'}`,
+                    `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'vidhi' : 'vidhis'}`
+                  )}
                 </Text>
               </Pressable>
             </View>
