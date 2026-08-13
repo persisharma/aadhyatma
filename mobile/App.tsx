@@ -73,6 +73,7 @@ import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
 import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
+import PitruSmaranReminderScheduler from '@/components/PitruSmaranReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import MiniPlayer from '@/components/audio/MiniPlayer';
@@ -238,6 +239,7 @@ export default function App() {
                                 location (festival dates come from the bundled
                                 precomputed table). */}
                             <FestiveReminderScheduler />
+                            <PitruSmaranReminderScheduler />
                             <SadhanaReminderScheduler />
                             {/* Feeds the daily-verse scheduler each fire day's
                                 tithi/vrat for its title. Must stay inside

@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, type NavigationProp } from '@react-navigation/native';
 
 import { useGitaLanguage } from '@/data/gita/language';
+import { useTilePress } from '@/contexts/TilePressContext';
 import { usePitruSmaranForDate } from '@/panchang/usePitruSmaranForDate';
 import { entryDisplayName } from '@/panchang/pitruSmaranDisplay';
 import { useTheme } from '@/theme/ThemeContext';
@@ -17,29 +18,34 @@ import type { TabParamList } from '@/navigation/types';
  * Tap → the person's detail in the More stack. This component plus its hook is
  * the entire Panchang integration; the day panel is otherwise unchanged.
  */
-export default function PitruSmaranDayChip({ date }: { date: Date }) {
+export default function PitruSmaranDayChip({ date, compact = false }: { date: Date; compact?: boolean }) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const navigation = useNavigation<NavigationProp<TabParamList>>();
+  const { beginTilePress, finishTilePress, activateTile } = useTilePress();
   const matches = usePitruSmaranForDate(date);
 
   if (matches.length === 0) return null;
 
   return (
-    <View style={styles.row}>
-      {matches.map((entry) => (
-        <Pressable
-          key={entry.id}
-          onPress={() =>
+    <View style={[styles.row, compact && styles.compactRow]}>
+      {matches.map((entry) => {
+        const openDetail = () =>
             navigation.navigate('MoreTab', {
               screen: 'PitruSmaranDetail',
               params: { entryId: entry.id },
-            })
-          }
+            });
+        return (
+        <Pressable
+          key={entry.id}
+          onPress={() => activateTile(openDetail)}
+          onPressIn={() => beginTilePress(openDetail)}
+          onPressOut={finishTilePress}
           accessibilityRole="button"
           accessibilityLabel={`Smaran, ${entryDisplayName(entry, 'en')}`}
           style={({ pressed }) => [
             styles.chip,
+            compact && styles.compactChip,
             {
               backgroundColor: colors.goldTint,
               borderColor: colors.gold,
@@ -59,17 +65,19 @@ export default function PitruSmaranDayChip({ date }: { date: Date }) {
             ॥ {contentByLang(lang, 'स्मरण', 'Smaran')} — {entryDisplayName(entry, lang)}
           </Text>
         </Pressable>
-      ))}
+      );})}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
+  compactRow: { flexWrap: 'nowrap', marginTop: 0, gap: 6 },
   chip: {
     borderWidth: 1,
     paddingHorizontal: 12,
     minHeight: 32,
     justifyContent: 'center',
   },
+  compactChip: { minHeight: 24, paddingHorizontal: 10 },
 });

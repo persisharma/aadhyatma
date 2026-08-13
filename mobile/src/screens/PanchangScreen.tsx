@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { GestureResponderEvent } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -15,6 +16,7 @@ import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
 import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
+import PitruPakshaDayChip from '@/components/PitruPakshaDayChip';
 import TextField from '@/components/TextField';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -36,6 +38,9 @@ import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
+import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
+import { nextObservanceForEntry } from '@/panchang/pitruSmaran';
+import { shortDate as shortSmaranDate } from '@/panchang/pitruSmaranDisplay';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
@@ -260,6 +265,7 @@ export default function PanchangScreen({ route }: Props) {
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
+  const openPitruSmaran = () => rootNav.navigate('MoreTab', { screen: 'PitruSmaranList', initial: false });
   const openKundali = (editing = false) =>
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
   const openRashifal = () => rootNav.navigate('Rashifal');
@@ -628,6 +634,7 @@ export default function PanchangScreen({ route }: Props) {
             )}
             {/* PRD-17: the private ॥ स्मरण chip — renders only on a saved
                 observance date, muted gold register, device-only. */}
+            <PitruPakshaDayChip date={selectedDate} />
             <PitruSmaranDayChip date={selectedDate} />
           </View>
 
@@ -664,6 +671,7 @@ export default function PanchangScreen({ route }: Props) {
               onOpenCategory={openCategory}
               onOpenKathaLibrary={openKathaLibrary}
               onOpenMyVrat={openMyVrat}
+              onOpenPitruSmaran={openPitruSmaran}
               followCount={followCount}
               reminderCount={reminderCount}
             />
@@ -1626,10 +1634,100 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
   );
 }
 
+const PITRU_LEDGER_DISMISSED_KEY = '@vedansh/pitru-ledger-invitation-dismissed';
+
+function PitruSmaranCatalogRow({
+  lang, colors, typography, radii, elevation, onPress,
+}: {
+  lang: Lang;
+  colors: any;
+  typography: any;
+  radii: any;
+  elevation: any;
+  onPress: () => void;
+}) {
+  const { entries, isLoading } = usePitruSmaran();
+  const [soonest, setSoonest] = useState<Date | null>(null);
+  const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem(PITRU_LEDGER_DISMISSED_KEY)
+      .then((value) => setDismissed(value === '1'))
+      .catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const handle = setTimeout(() => {
+      const today = startOfLocalDay(new Date());
+      const dates = entries
+        .map((entry) => {
+          try { return nextObservanceForEntry(entry, today); } catch { return null; }
+        })
+        .filter((date): date is Date => date !== null)
+        .sort((a, b) => a.getTime() - b.getTime());
+      if (!cancelled) setSoonest(dates[0] ?? null);
+    }, 0);
+    return () => { cancelled = true; clearTimeout(handle); };
+  }, [entries]);
+
+  if (!isLoading && entries.length === 0 && dismissed) return null;
+  const subtitle = entries.length > 0
+    ? contentByLang(
+        lang,
+        `${entries.length} स्मरण${soonest ? ` · अगला: ${shortSmaranDate(soonest, lang)}` : ''}`,
+        `${entries.length} remembrance${entries.length === 1 ? '' : 's'}${soonest ? ` · Next: ${shortSmaranDate(soonest, lang)}` : ''}`
+      )
+    : contentByLang(lang, 'अपने पितरों की तिथियाँ जोड़ें', 'Add your ancestors’ tithis');
+
+  return (
+    <View
+      style={[
+        styles.myVratRow,
+        styles.pitruLedgerRow,
+        { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg },
+        elevation.card,
+      ]}
+    >
+      <Pressable
+        onPress={onPress}
+        accessibilityRole="button"
+        accessibilityLabel={`Pitru Smaran. ${entries.length > 0 ? `${entries.length} entries` : 'Add remembrance dates'}`}
+        style={({ pressed }) => [styles.pitruLedgerMain, pressed && { opacity: 0.8 }]}
+      >
+        <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>॥</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+            {contentByLang(lang, 'पितृ स्मरण', 'Pitru Smaran')}
+          </Text>
+          <Text style={{ ...captionFont(subtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+            {subtitle}
+          </Text>
+        </View>
+        {entries.length > 0 && <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>}
+      </Pressable>
+      {!isLoading && entries.length === 0 ? (
+        <Pressable
+          onPress={() => {
+            setDismissed(true);
+            AsyncStorage.setItem(PITRU_LEDGER_DISMISSED_KEY, '1').catch(() => undefined);
+          }}
+          hitSlop={10}
+          accessibilityRole="button"
+          accessibilityLabel="Dismiss Pitru Smaran invitation"
+        >
+          <Text style={{ fontSize: 18, color: colors.inkMuted }}>×</Text>
+        </Pressable>
+      ) : null}
+    </View>
+  );
+}
+
 function CatalogLanding({
   lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenMyVrat, followCount, reminderCount,
+  onOpenPitruSmaran,
 }: {
   lang: Lang;
   today: Date;
@@ -1644,6 +1742,7 @@ function CatalogLanding({
   onOpenCategory: (category: BrowseCategory) => void;
   onOpenKathaLibrary: () => void;
   onOpenMyVrat: () => void;
+  onOpenPitruSmaran: () => void;
   followCount: number;
   reminderCount: number;
 }) {
@@ -1735,6 +1834,14 @@ function CatalogLanding({
             </View>
             <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
           </Pressable>
+          <PitruSmaranCatalogRow
+            lang={lang}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            elevation={elevation}
+            onPress={onOpenPitruSmaran}
+          />
           {upcoming.length > 0 && (
             <View style={{ marginTop: 14 }}>
               <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 8 }}>
@@ -1858,6 +1965,8 @@ const styles = StyleSheet.create({
   starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 16, height: 16, borderRadius: 8, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
   myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
+  pitruLedgerRow: { marginTop: 10 },
+  pitruLedgerMain: { flex: 1, flexDirection: 'row', alignItems: 'center' },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },

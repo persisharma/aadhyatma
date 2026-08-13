@@ -1,5 +1,4 @@
-# पितृ स्मरण (PRD-17 Phase 1) — More-hub entry, remembrance list, add flow
-# (tithi-known path), person detail, and delete round-trip.
+# पितृ स्मरण — native end-to-end coverage for the complete prototype flow.
 #
 # Scope — what this flow covers and deliberately omits:
 #   - COVERS the More → पितृ स्मरण row, the reverent empty state, adding an entry
@@ -7,12 +6,10 @@
 #     canonical example), the solved next-date row on the list, the detail hero +
 #     गीता पाठ rows, and the delete confirm sheet. Add-then-delete is net zero,
 #     so back-to-back runs stay clean.
-#   - OMITS the date→tithi derivation path and the Pitru Paksha overview: both
-#     depend on live astronomy solves whose values move with the calendar, and
-#     they are pinned deterministically in src/panchang/__tests__/pitruSmaran.test.ts
-#     (tsx) and src/screens/__tests__/PitruSmaranScreens.test.tsx (Jest).
-#   - OMITS the Panchang day chip: it renders only on a date matching a saved
-#     tithi, which is calendar-dependent; covered by PitruSmaranDayChip.test.tsx.
+#   - COVERS the pinned Vrat-catalog ledger row, per-person reminder switch, and
+#     the shared civil-date calendar's real select/confirm/derive path.
+#   - Calendar-year edge cases and notification fire dates remain pinned by pure
+#     tests because OS time cannot be safely changed during a simulator flow.
 #
 # Selector notes (verified against the screens):
 #   - The More row's a11y label is composed: "Pitru Smaran, none saved" /
@@ -26,6 +23,16 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
+
+# ── Empty catalog invitation can be dismissed without opening the ledger ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- tapOn: "Vrat & Parv"
+- extendedWaitUntil:
+    visible: "Pitru Smaran.*Add remembrance dates"
+    timeout: 15000
+- tapOn: "Dismiss Pitru Smaran invitation"
+- assertNotVisible: "Pitru Smaran.*Add remembrance dates"
 
 # ── Open More → पितृ स्मरण ──
 - tapOn: { id: "tab-more" }
@@ -78,6 +85,19 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - assertVisible: ".*पिताजी.*"
 
+# ── Same ledger is pinned under My Vrat in the Vrat & Parv catalog ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- tapOn: "Vrat & Parv"
+- extendedWaitUntil:
+    visible: "Pitru Smaran.*1 entries"
+    timeout: 15000
+- tapOn: "Pitru Smaran.*1 entries"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*माघ कृष्ण अष्टमी.*"
+    timeout: 15000
+
 # ── Detail: hero + next pill + गीता पाठ rows ──
 - tapOn: "^Smaran Father,.*$"
 - waitForAnimationToEnd
@@ -85,6 +105,12 @@ appId: com.prashantsharma.vedansh
     visible: "श्राद्ध तिथि.*"
     timeout: 15000
 - assertVisible: "अगला.*"
+- scrollUntilVisible:
+    element:
+      text: "Smaran reminder"
+    centerElement: true
+- assertVisible: "Smaran reminder"
+- tapOn: "Smaran reminder"
 - scrollUntilVisible:
     element:
       text: "Open Gita — Adhyaya 15"
@@ -121,7 +147,12 @@ appId: com.prashantsharma.vedansh
     visible: "देहावसान तिथि चुनें"
     timeout: 10000
 - assertVisible: "Confirm date"
-- tapOn: "Close date picker"
+- tapOn: ".*Today"
+- tapOn: "Confirm date"
+- extendedWaitUntil:
+    visible: "पंचांग से निकली तिथि — पुष्टि करें"
+    timeout: 15000
+- assertVisible: "Choose the tithi myself"
 - tapOn: "Back"
 
 # Clean up — termination resets navigation for the next flow.

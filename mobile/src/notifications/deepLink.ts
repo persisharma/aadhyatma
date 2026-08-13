@@ -45,6 +45,16 @@ function isSadhanaReminderPayload(data: unknown): data is { type: 'sadhana-remin
   return d.type === 'sadhana-reminder' && typeof d.programId === 'string';
 }
 
+function isPitruSmaranReminderPayload(data: unknown): data is { type: 'pitru-smaran-reminder'; entryId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return d.type === 'pitru-smaran-reminder' && typeof d.entryId === 'string';
+}
+
+function isPitruPakshaReminderPayload(data: unknown): data is { type: 'pitru-paksha-reminder' } {
+  return Boolean(data && typeof data === 'object' && (data as Record<string, unknown>).type === 'pitru-paksha-reminder');
+}
+
 /**
  * Resolve a notification response into a navigation dispatch. Returns true if
  * we recognised the payload and routed; false otherwise.
@@ -118,6 +128,26 @@ export function handleNotificationResponse(
       CommonActions.navigate({
         name: 'HomeTab',
         params: { screen: 'Home' },
+      } as never)
+    );
+    return true;
+  }
+
+  if (isPitruSmaranReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'MoreTab',
+        params: { screen: 'PitruSmaranDetail', params: { entryId: data.entryId }, initial: false },
+      } as never)
+    );
+    return true;
+  }
+
+  if (isPitruPakshaReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'MoreTab',
+        params: { screen: 'PitruPakshaOverview', initial: false },
       } as never)
     );
     return true;

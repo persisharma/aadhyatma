@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { useNavigation, type NavigationProp } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,6 +9,7 @@ import ReaderHeader from '@/components/ReaderHeader';
 import ObservanceDetailHero from '@/components/ObservanceDetailHero';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
+import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { addDays } from '@/panchang/calendarGrid';
 import {
   nextObservanceForEntry,
@@ -57,7 +58,8 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<NavigationProp<TabParamList>>();
-  const { getEntry, removeEntry } = usePitruSmaran();
+  const { getEntry, removeEntry, updateEntry } = usePitruSmaran();
+  const { permissionStatus, requestPermission } = useNotificationPreferences();
 
   const entry = getEntry(route.params.entryId);
   const today = startOfLocalDay(new Date());
@@ -108,6 +110,16 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
     setConfirmDelete(false);
     removeEntry(entry.id);
     navigation.goBack();
+  };
+
+  const setReminderEnabled = async (enabled: boolean) => {
+    if (!entry) return;
+    if (!enabled) {
+      updateEntry(entry.id, { reminderEnabled: false });
+      return;
+    }
+    const status = permissionStatus === 'granted' ? 'granted' : await requestPermission();
+    updateEntry(entry.id, { reminderEnabled: status === 'granted' });
   };
 
   const weekdayName = (d: Date): string =>
@@ -213,6 +225,27 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
                 </View>
               </View>
             )}
+
+            {/* Personal notifications are deliberately OFF until this person is opted in. */}
+            <View style={[styles.row, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
+              <View style={styles.rowMain}>
+                <Text style={[styles.rowLabel, { color: colors.inkMuted }]}>
+                  {contentByLang(lang, 'स्मरण अनुस्मारक', 'SMARAN REMINDER')}
+                </Text>
+                <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 19, color: colors.inkSoft, marginTop: 3 }}>
+                  {contentByLang(lang, 'एक दिन पहले और उसी दिन', 'Day before and day of')}
+                </Text>
+              </View>
+              <Switch
+                value={entry.reminderEnabled === true}
+                onValueChange={setReminderEnabled}
+                trackColor={{ false: colors.divider, true: colors.gold }}
+                thumbColor={colors.parchmentHighlight}
+                accessibilityRole="switch"
+                accessibilityLabel="Smaran reminder"
+                accessibilityHint="Notifies the day before and the day of this remembrance"
+              />
+            </View>
 
             {/* गीता पाठ deep links */}
             {GITA_PAATH_CHAPTERS.map(({ chapter, labelHi, labelEn }, i) => (

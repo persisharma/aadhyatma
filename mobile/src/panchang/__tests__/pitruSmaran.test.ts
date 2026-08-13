@@ -10,6 +10,7 @@ import {
   nextSarvapitriAmavasya,
   pakshaShraddhaDay,
   pitruPakshaWindow,
+  pitruPakshaObservanceForDate,
   solveNextOccurrence,
   tithiRuleLabel,
   __resetPitruPakshaWindowCacheForTests,
@@ -167,9 +168,19 @@ test('entryMatchesDate: fires only on the observance day (the Panchang day chip 
   assert.equal(entryMatchesDate(entry, new Date(2026, 8, 4)), true);
   assert.equal(entryMatchesDate(entry, new Date(2026, 8, 3)), false);
   assert.equal(entryMatchesDate(entry, new Date(2026, 8, 5)), false);
+  // The same private chip also joins the person's mapped day inside Pitru Paksha.
+  assert.equal(entryMatchesDate(entry, new Date(2026, 9, 3)), true);
   const unknown = { tithiRule: 'sarvapitri' as const };
   assert.equal(entryMatchesDate(unknown, new Date(2026, 9, 10)), true);
   assert.equal(entryMatchesDate(unknown, new Date(2026, 9, 9)), false);
+});
+
+test('pitruPakshaObservanceForDate exposes the public daily label only within the fortnight', () => {
+  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 8, 25)), null);
+  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 8, 26))?.labelEn, 'Pitru Paksha — Purnima Shraddha');
+  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 3))?.labelHi, 'पितृ पक्ष — सप्तमी व अष्टमी श्राद्ध');
+  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 10))?.labelEn, 'Pitru Paksha — Sarvapitri Amavasya');
+  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 11)), null);
 });
 
 test('kshaya day matches entryMatchesDate too (chip shows on the prevailing day)', () => {

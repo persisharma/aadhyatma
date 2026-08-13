@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text } from 'react-native';
+import { Switch, Text } from 'react-native';
 import CalendarDatePicker from '@/components/CalendarDatePicker';
 
 /**
@@ -51,6 +51,13 @@ jest.mock('@/contexts/PitruSmaranContext', () => ({
     updateEntry: mockUpdateEntry,
     removeEntry: mockRemoveEntry,
     getEntry: (id: string) => mockEntries.find((e) => e.id === id) ?? null,
+  }),
+}));
+const mockRequestPermission = jest.fn(() => Promise.resolve('granted'));
+jest.mock('@/contexts/NotificationPreferencesContext', () => ({
+  useNotificationPreferences: () => ({
+    permissionStatus: 'granted',
+    requestPermission: mockRequestPermission,
   }),
 }));
 
@@ -325,6 +332,20 @@ describe('PitruSmaranEditScreen', () => {
 });
 
 describe('PitruSmaranDetailScreen', () => {
+  test('personal reminder is off by default and can be opted in per person', async () => {
+    mockEntries = [FATHER];
+    const tree = await render(
+      <PitruSmaranDetailScreen
+        navigation={makeNav() as never}
+        route={{ key: 'd', name: 'PitruSmaranDetail', params: { entryId: 'smaran-father' } } as never}
+      />
+    );
+    const toggle = tree.root.findByType(Switch);
+    expect(toggle.props.value).toBe(false);
+    await act(async () => toggle.props.onValueChange(true));
+    expect(mockUpdateEntry).toHaveBeenCalledWith('smaran-father', { reminderEnabled: true });
+  });
+
   test('hero + rows render the solved dates; गीता पाठ rows deep-link the Gita reader', async () => {
     mockEntries = [FATHER];
     mockedNextObservance

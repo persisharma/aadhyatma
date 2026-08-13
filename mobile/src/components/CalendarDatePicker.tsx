@@ -265,7 +265,7 @@ export default function CalendarDatePicker({
                         disabled={disabled}
                         accessibilityRole="button"
                         accessibilityState={{ selected, disabled }}
-                        accessibilityLabel={`${cell.date.getDate()} ${MONTHS_EN[cell.date.getMonth()]} ${cell.date.getFullYear()}`}
+                        accessibilityLabel={`${cell.date.getDate()} ${MONTHS_EN[cell.date.getMonth()]} ${cell.date.getFullYear()}${cell.isToday ? ', Today' : ''}`}
                         style={styles.cell}
                       >
                         <View

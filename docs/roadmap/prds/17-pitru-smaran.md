@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Draft for review — prototype attached |
+| **Status** | Implemented and native-verified (iOS, 2026-08-13) |
 | **T-shirt size** | M (engine reuse is total; the work is 3 screens + a data model + reminder glue) |
 | **Prototype** | [`docs/pitru-smaran-prototype.html`](../../pitru-smaran-prototype.html) — More-hub entry, list, add flow (date-known and tithi-known), person detail, Pitru Paksha overview, Panchang day chip; every interaction annotated |
 | **Feasibility** | ✅ Confirmed against current main — annual projection is the exact `lunarMonth + paksha + tithi` rule solve the festival engine already runs for every festival row (`mobile/src/panchang/festivals.ts`), including kshaya/vriddhi and adhik-maas handling and purnimant normalization. Gregorian→tithi derivation is one `computePanchangForDate` call. **Pure JS — core is OTA-shippable.** |
@@ -94,8 +94,8 @@ New pure module `mobile/src/panchang/pitruSmaran.ts` + `tsx --test` fixtures (in
 
 ## 7. Phasing
 
-1. **Phase 1 (OTA-shippable):** data model + `pitruSmaran.ts` solve + fixtures; More row; list/add/detail screens; Panchang day chip; Gita paath links.
-2. **Phase 2:** opt-in reminders (planner + headless scheduler + budget integration); Pitru Paksha overview screen (all entries mapped into the fortnight, Sarvapitri fallback).
+1. **Phase 1 (shipped in branch):** data model + `pitruSmaran.ts` solve + fixtures; More row; list/add/detail screens; Panchang day chip; Gita paath links.
+2. **Phase 2 (shipped in branch):** opt-in personal reminders, default-on season reminders, Pitru Paksha overview, pinned Vrat-catalog ledger, public/private Home Today chips, and mapped-family day matching.
 3. **Phase 3 (with PRD-19):** shraddha/tarpan vidhi cross-link.
 
 ## 8. Why it fits the moat

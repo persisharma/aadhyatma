@@ -131,12 +131,20 @@ describe('PitruSmaranContext', () => {
     const { tree, value } = await renderWithProvider();
     trees.push(tree);
     await act(async () => {
-      value().updateEntry('smaran-1', { relation: 'dadaji', tithiRule: 'sarvapitri' });
+      value().updateEntry('smaran-1', { relation: 'dadaji', tithiRule: 'sarvapitri', reminderEnabled: true });
     });
     expect(value().entries).toEqual([
-      { ...VALID_ENTRY, relation: 'dadaji', tithiRule: 'sarvapitri' },
+      { ...VALID_ENTRY, relation: 'dadaji', tithiRule: 'sarvapitri', reminderEnabled: true },
     ]);
     expect(lastPersisted().entries[0].relation).toBe('dadaji');
+    expect(lastPersisted().entries[0].reminderEnabled).toBe(true);
+  });
+
+  test('rejects a malformed persisted reminder preference', async () => {
+    mockGetItem.mockResolvedValue(JSON.stringify({ version: 1, entries: [{ ...VALID_ENTRY, reminderEnabled: 'yes' }] }));
+    const { tree, value } = await renderWithProvider();
+    trees.push(tree);
+    expect(value().entries).toEqual([]);
   });
 
   test('removeEntry deletes and persists', async () => {

@@ -60,6 +60,8 @@ export type SmaranEntry = {
   tithiRule: TithiRule | 'sarvapitri';
   /** Set when the tithi was derived from a Gregorian date the user confirmed. */
   derivedFromDateMs?: number;
+  /** Private notification opt-in. Omitted/false is deliberately the default. */
+  reminderEnabled?: boolean;
   createdAtMs: number;
 };
 
@@ -316,12 +318,69 @@ export function entryMatchesDate(
   options: SolveOptions = {}
 ): boolean {
   const day = startOfLocalDay(date);
+  const pakshaDay = pakshaShraddhaDay(entry.tithiRule, day.getFullYear(), options);
+  if (pakshaDay && isSameLocalDay(pakshaDay, day)) return true;
   if (entry.tithiRule === 'sarvapitri') {
     const window = pitruPakshaWindow(day.getFullYear(), options);
     return window !== null && isSameLocalDay(window.end, day);
   }
   if (!isValidTithiRule(entry.tithiRule)) return false;
   return matchesLunarTithiRuleOnDate(toObservanceRule(entry.tithiRule), day, 'purnimant', options.location);
+}
+
+export type PitruPakshaDayObservance = {
+  tithi: number;
+  isPurnima: boolean;
+  isSarvapitri: boolean;
+  labelHi: string;
+  labelEn: string;
+};
+
+/** Public Pitru-Paksha observance for a civil date, or null outside the fortnight. */
+export function pitruPakshaObservanceForDate(
+  date: Date,
+  options: SolveOptions = {}
+): PitruPakshaDayObservance | null {
+  const day = startOfLocalDay(date);
+  const window = pitruPakshaWindow(day.getFullYear(), options);
+  if (!window || day.getTime() < window.purnima.getTime() || day.getTime() > window.end.getTime()) {
+    return null;
+  }
+  if (isSameLocalDay(day, window.purnima)) {
+    return {
+      tithi: 15,
+      isPurnima: true,
+      isSarvapitri: false,
+      labelHi: 'पितृ पक्ष — पूर्णिमा श्राद्ध',
+      labelEn: 'Pitru Paksha — Purnima Shraddha',
+    };
+  }
+  if (isSameLocalDay(day, window.end)) {
+    return {
+      tithi: 15,
+      isPurnima: false,
+      isSarvapitri: true,
+      labelHi: 'पितृ पक्ष — सर्वपितृ अमावस्या',
+      labelEn: 'Pitru Paksha — Sarvapitri Amavasya',
+    };
+  }
+  const data = computeTithiAndMonth(day, { calendarSystem: 'purnimant', location: options.location });
+  const next = computeTithiAndMonth(addDays(day, 1), { calendarSystem: 'purnimant', location: options.location });
+  const kshayaIndex = (data.tithiIndex + 2) % 30 === next.tithiIndex ? (data.tithiIndex + 1) % 30 : null;
+  const tithi = (data.tithiIndex % 15) + 1;
+  const nameHi = kshayaIndex === null
+    ? TITHI_NAMES_HI[data.tithiIndex]
+    : `${TITHI_NAMES_HI[data.tithiIndex]} व ${TITHI_NAMES_HI[kshayaIndex]}`;
+  const nameEn = kshayaIndex === null
+    ? TITHI_NAMES_EN[data.tithiIndex]
+    : `${TITHI_NAMES_EN[data.tithiIndex]} & ${TITHI_NAMES_EN[kshayaIndex]}`;
+  return {
+    tithi,
+    isPurnima: false,
+    isSarvapitri: false,
+    labelHi: `पितृ पक्ष — ${nameHi} श्राद्ध`,
+    labelEn: `Pitru Paksha — ${nameEn} Shraddha`,
+  };
 }
 
 /** Test-only: clear the per-year window memo. */

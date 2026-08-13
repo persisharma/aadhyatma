@@ -39,6 +39,7 @@ function isSmaranEntry(raw: unknown): raw is SmaranEntry {
   if (typeof entry.id !== 'string' || entry.id.length === 0) return false;
   if (!RELATIONS.includes(entry.relation)) return false;
   if (entry.name !== undefined && typeof entry.name !== 'string') return false;
+  if (entry.reminderEnabled !== undefined && typeof entry.reminderEnabled !== 'boolean') return false;
   if (typeof entry.createdAtMs !== 'number') return false;
   if (entry.tithiRule === 'sarvapitri') return true;
   return typeof entry.tithiRule === 'object' && entry.tithiRule !== null && isValidTithiRule(entry.tithiRule);
