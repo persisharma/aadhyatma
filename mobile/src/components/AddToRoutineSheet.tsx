@@ -7,12 +7,13 @@ import { scriptTitleFont, cardFontByLang, pillTextStyle } from '@/utils/langType
 import { useRoutines } from '@/contexts/RoutineContext';
 import { library } from '@/data/texts';
 import { findJapamMantra } from '@/data/japam';
+import { getVidhiById } from '@/data/vidhi';
 import { chaptersForSource } from '@/data/routine/chapters';
 import { navigationRef } from '@/notifications/deepLink';
 import type { Routine, RoutineItem } from '@/data/routine/types';
 
 type Props = {
-  /** Library entry id (or japam mantra id) to add; null hides the sheet. */
+  /** Library entry id, japam mantra id, or vidhi id to add; null hides the sheet. */
   sourceId: string | null;
   /** Pre-selected chapter for a chaptered source (e.g. opened from a reader). */
   initialChapter?: number;
@@ -20,13 +21,15 @@ type Props = {
 };
 
 /** The unit currently chosen in the sheet: the whole text or one chapter. */
-type Unit = { kind: 'section' | 'japam' } | { kind: 'chapter'; chapter: number };
+type Unit = { kind: 'section' | 'japam' | 'vidhi' } | { kind: 'chapter'; chapter: number };
 
 function findUnitItem(items: RoutineItem[], sourceId: string, unit: Unit): RoutineItem | undefined {
   if (unit.kind === 'chapter') {
     return items.find((i) => i.kind === 'chapter' && i.sourceId === sourceId && i.chapter === unit.chapter);
   }
-  return items.find((i) => i.sourceId === sourceId && (i.kind === 'section' || i.kind === 'japam'));
+  return items.find(
+    (i) => i.sourceId === sourceId && (i.kind === 'section' || i.kind === 'japam' || i.kind === 'vidhi')
+  );
 }
 
 export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }: Props) {
@@ -36,11 +39,12 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
 
   const entry = sourceId ? library.find((e) => e.id === sourceId) : undefined;
   const mantra = sourceId ? findJapamMantra(sourceId) : null;
-  const isJapam = entry?.category === 'japam' || (!entry && !!mantra);
-  const chapters = sourceId ? chaptersForSource(sourceId) : [];
+  const vidhi = sourceId && !entry ? getVidhiById(sourceId) : null;
+  const isJapam = entry?.category === 'japam' || (!entry && !vidhi && !!mantra);
+  const chapters = sourceId && !vidhi ? chaptersForSource(sourceId) : [];
 
-  const titleHi = entry?.nameHi ?? mantra?.nameHi ?? sourceId ?? '';
-  const titleEn = entry?.nameEn ?? mantra?.nameEn ?? sourceId ?? '';
+  const titleHi = entry?.nameHi ?? vidhi?.titleHi ?? mantra?.nameHi ?? sourceId ?? '';
+  const titleEn = entry?.nameEn ?? vidhi?.titleEn ?? mantra?.nameEn ?? sourceId ?? '';
   const tName = contentByLang(lang, titleHi, titleEn);
 
   // Selected unit: 'whole' (null) or a chapter number. Reset when the sheet
@@ -53,7 +57,7 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
   const unit: Unit =
     chapterSel != null
       ? { kind: 'chapter', chapter: chapterSel }
-      : { kind: isJapam ? 'japam' : 'section' };
+      : { kind: vidhi ? 'vidhi' : isJapam ? 'japam' : 'section' };
 
   const toggle = (routine: Routine) => {
     if (!sourceId) return;
@@ -67,6 +71,8 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
       addItem(routine.id, { kind: 'chapter', sourceId, chapter: unit.chapter, ...weekdayPart });
     } else if (unit.kind === 'japam') {
       addItem(routine.id, { kind: 'japam', sourceId, targetRounds: 1, ...weekdayPart });
+    } else if (unit.kind === 'vidhi') {
+      addItem(routine.id, { kind: 'vidhi', sourceId, ...weekdayPart });
     } else {
       addItem(routine.id, { kind: 'section', sourceId, ...weekdayPart });
     }

@@ -2,7 +2,7 @@
 title: Daily Routine (Nitya Sadhana)
 type: subsystem
 sources: [mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/data/routine/useRoutineToday.ts, mobile/src/data/routine/vaar.ts, mobile/src/data/sadhana/progress.ts, mobile/src/data/sadhana/useSadhanaToday.ts, mobile/src/contexts/RoutineContext.tsx, mobile/src/contexts/RoutineSheetProvider.tsx, mobile/src/components/RoutineBanner.tsx, mobile/src/components/SankalpTodayCard.tsx, mobile/src/components/routineBannerView.ts, mobile/src/components/AddToRoutineButton.tsx, mobile/src/components/RoutineCelebration.tsx, docs/roadmap/prds/07-daily-routine-sadhana.md, docs/roadmap/prds/11-sadhana-programs.md]
-last_verified_date: 2026-07-15
+last_verified_date: 2026-08-14
 confidence: high
 status: current
 ---
@@ -10,7 +10,8 @@ status: current
 ## Summary
 
 PRD-07 (#87; fixes #109; home chip #110). Users build named routines of reciting units —
-whole sections, single chapters/stotras, or japam round-targets — scheduled `daily` or
+whole sections, single chapters/stotras, japam round-targets, or (since PRD-19 Phase 2B)
+recurring puja vidhis — scheduled `daily` or
 per-`weekday` (with a vaar deity-of-the-day suggestion). "Today's practice" is computed live:
 completion is **derived from genuine reading/japa activity today**, with a manual check-off
 fallback. All state lives in AsyncStorage; no backend.
@@ -18,10 +19,15 @@ fallback. All state lives in AsyncStorage; no backend.
 ## Details
 
 **Data model** (`src/data/routine/types.ts`): `Routine { id, nameHi, nameEn, mode, items,
-createdAt }`; `RoutineItem { kind: 'section' | 'chapter' | 'japam', sourceId, chapter?,
+createdAt }`; `RoutineItem { kind: 'section' | 'chapter' | 'japam' | 'vidhi', sourceId, chapter?,
 targetRounds?, weekdays? }`. Item granularity is a complete reciting unit — never a single
 stotram verse (that is Daily Bhakti's job). `routineItemKey(routineId, itemId)` is the
-completion-tracking key.
+completion-tracking key. The `vidhi` kind (PRD-19 Phase 2B) carries a vidhi id as `sourceId`:
+`resolveRoutineItem` titles it with a `पूजा विधि` sub-line, `navigateToRoutineItem` routes it
+cross-tab to `VidhiDetail`, and `isItemAutoComplete` always returns false for it — conduct
+state lives in AsyncStorage outside the reading-progress contexts, so completion is
+**manual-mark only**. `AddToRoutineButton` is offered on `VidhiDetailScreen` only for vidhis
+whose festival rule recurs `'monthly'` (Satyanarayan/purnima today).
 
 **Scheduling** (`vaar.ts`): in `weekday` mode each item carries weekday numbers (0=Sun…6=Sat).
 `VAAR_DEITY` maps weekday → a deity that **must exist in the catalog** (drives the SUGGESTED

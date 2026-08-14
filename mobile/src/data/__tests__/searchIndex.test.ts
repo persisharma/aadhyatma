@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 
 import { deities } from '../deities';
 import { library } from '../texts';
+import { VIDHI_ENTRIES } from '../vidhi';
 import {
   _resetSearchIndexForTest,
   getSearchIndex,
@@ -43,12 +44,46 @@ const index = getSearchIndex();
   }
 }
 
-// Section count matches library count.
+// Section count matches library count plus one row per published vidhi
+// (PRD-19 Phase 2B — vidhi rows ride the section group).
 {
   const activeCount = library.filter((e) => e.status === 'active' && !e.hidden)
     .length;
-  assert.equal(index.sections.length, library.length);
+  assert.equal(index.sections.length, library.length + VIDHI_ENTRIES.length);
   assert.ok(activeCount > 0);
+}
+
+// Every published vidhi is findable by title and by the "पूजा विधि" keyword,
+// and its row carries the vidhi id as sourceId so SearchScreen can route it
+// to VidhiDetail. Vidhis are procedures, not texts — they contribute no verse
+// entries.
+{
+  const indexedSourceIds = new Set(index.sections.map((s) => s.sourceId));
+  for (const vidhi of VIDHI_ENTRIES) {
+    assert.ok(indexedSourceIds.has(vidhi.id), `vidhi '${vidhi.id}' missing from section rows`);
+  }
+  const verseSourceIds = new Set(index.verses.map((v) => v.sourceId));
+  for (const vidhi of VIDHI_ENTRIES) {
+    assert.ok(!verseSourceIds.has(vidhi.id), `vidhi '${vidhi.id}' must not produce verse rows`);
+  }
+
+  const byTitle = runSearch('घटस्थापना', index);
+  assert.ok(
+    byTitle.sections.some((h) => h.entry.sourceId === 'navratri-ghatasthapana'),
+    'Devanagari title query should find the Ghatasthapana vidhi row'
+  );
+  const byKeyword = runSearch('पूजा विधि', index);
+  for (const vidhi of VIDHI_ENTRIES) {
+    assert.ok(
+      byKeyword.sections.some((h) => h.entry.sourceId === vidhi.id),
+      `"पूजा विधि" should surface vidhi '${vidhi.id}'`
+    );
+  }
+  const byLatin = runSearch('karwa chauth', index);
+  assert.ok(
+    byLatin.sections.some((h) => h.entry.sourceId === 'karwa-chauth-puja'),
+    'Latin title query should find the Karwa Chauth vidhi row'
+  );
 }
 
 // Every deity is indexed.

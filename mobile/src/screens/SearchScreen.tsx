@@ -30,6 +30,7 @@ import {
   type SearchVerseEntry,
 } from '@/data/searchIndex';
 import { library } from '@/data/texts';
+import { getVidhiById } from '@/data/vidhi';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { contentByLang, pick } from '@/utils/localize';
@@ -37,6 +38,7 @@ import { pillTextStyle } from '@/utils/langType';
 import {
   buildProgressTarget,
   navigateToEntryStart,
+  panchangTabTarget,
 } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -129,6 +131,15 @@ export default function SearchScreen({ navigation }: Props) {
 
   const openSection = useCallback(
     (sourceId: string) => {
+      // Vidhi rows (PRD-19 Phase 2B) live on the Panchang stack, not the
+      // library readers — route them to VidhiDetail cross-tab.
+      if (getVidhiById(sourceId)) {
+        commitRecent(query);
+        Keyboard.dismiss();
+        (navigation as never as { navigate: (n: string, p: object) => void })
+          .navigate('PanchangTab', panchangTabTarget('VidhiDetail', { vidhiId: sourceId }));
+        return;
+      }
       const entry = library.find((e) => e.id === sourceId);
       if (!entry) return;
       markSeen(sourceId);

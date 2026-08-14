@@ -223,6 +223,15 @@ export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
  * opens the counter. Returns false if the source is unknown / unroutable.
  */
 export function navigateToRoutineItem(nav: Nav, item: RoutineItem): boolean {
+  if (item.kind === 'vidhi') {
+    // Vidhi screens live on the Panchang stack (PRD-19); the cross-tab
+    // navigate bubbles up from the Home stack to the tab navigator.
+    (nav.navigate as (name: string, params: object) => void)(
+      'PanchangTab',
+      panchangTabTarget('VidhiDetail', { vidhiId: item.sourceId })
+    );
+    return true;
+  }
   if (item.kind === 'japam') {
     nav.navigate('JapamCounter', { mantraId: item.sourceId });
     return true;
