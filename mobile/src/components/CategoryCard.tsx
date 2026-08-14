@@ -64,21 +64,29 @@ function CategoryCard({
   );
 
   if (isLauncher) {
+    const labelInTile = launcherLabelPosition === 'tile';
+    // Deliberately no `adjustsFontSizeToFit`: on iOS a multi-line label with a
+    // fixed `lineHeight` shrinks erratically and ignores `minimumFontScale`, so
+    // scattered tiles in the 27-tile Namkaran grid collapsed to a few points
+    // while their identically sized neighbours stayed at full size. The tile is
+    // wide enough for every shipped name at this size over two lines (the
+    // longest word in any of them is ~6 Devanagari clusters), so the label
+    // holds one fixed size and caps the system multiplier instead — the grid
+    // now reads as one uniform size, which is what auto-fit was meant to do.
     const launcherLabel = (
       <Text
         numberOfLines={launcherLabelLines}
-        adjustsFontSizeToFit={launcherLabelPosition === 'tile'}
-        minimumFontScale={launcherLabelPosition === 'tile' ? 0.8 : undefined}
+        maxFontSizeMultiplier={labelInTile ? 1.25 : undefined}
         style={[
           styles.launcherName,
-          launcherLabelPosition === 'tile' && styles.launcherNameInTile,
+          labelInTile && styles.launcherNameInTile,
           {
             color: colors.ink,
             fontFamily: primary.fontFamily,
             fontSize: primary.fontSize,
             fontStyle: primary.fontStyle,
             letterSpacing: primary.letterSpacing,
-            lineHeight: launcherLabelPosition === 'tile' ? 21 : undefined,
+            lineHeight: labelInTile ? 21 : undefined,
           },
         ]}
       >
@@ -108,7 +116,7 @@ function CategoryCard({
             ]}
           >
             {icon}
-            {launcherLabelPosition === 'tile' ? launcherLabel : null}
+            {labelInTile ? launcherLabel : null}
             <View
               style={[
                 styles.badge,
@@ -121,7 +129,7 @@ function CategoryCard({
               </Text>
             </View>
           </View>
-          {launcherLabelPosition === 'below' ? launcherLabel : null}
+          {labelInTile ? null : launcherLabel}
         </View>
       );
     }
@@ -157,7 +165,7 @@ function CategoryCard({
             style={[styles.cardBg, { borderRadius: radii.lg }]}
           />
           {icon}
-          {launcherLabelPosition === 'tile' ? launcherLabel : null}
+          {labelInTile ? launcherLabel : null}
           {hasNew && (
             <View
               style={[
@@ -173,7 +181,7 @@ function CategoryCard({
             </View>
           )}
         </View>
-        {launcherLabelPosition === 'below' ? launcherLabel : null}
+        {labelInTile ? null : launcherLabel}
       </Pressable>
     );
   }

@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { FlatList, Text, View as mockView } from 'react-native';
+import { FlatList, StyleSheet, Text, View as mockView } from 'react-native';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
 import ListCard from '@/components/ListCard';
+import { NAKSHATRA_NAMES_HI } from '@/panchang/names';
 import { calculateNamkaran, charanaSetForDay, type NamkaranResult } from '@/panchang/namkaran';
 
 const mockNavigation = { goBack: jest.fn(), navigate: jest.fn() };
@@ -119,6 +120,39 @@ test('manual nakshatra grid renders the complete Hindi names inside unclipped tw
   assert.ok(rendered.includes('उत्तराभाद्रपद'));
   assert.ok(rendered.includes('रेवती'));
   assert.equal(tree.root.findAll((node) => node.props.launcherLabelPosition === 'tile' && node.props.launcherLabelLines === 2).length, 27);
+  await unmountFlatListTree(tree);
+});
+
+// Regression: the in-tile labels used `adjustsFontSizeToFit`, and on iOS that
+// shrank scattered tiles (हस्त / चित्रा / स्वाती) to a few points — well past
+// the 0.8 `minimumFontScale` — while their identically sized neighbours stayed
+// full size. All 27 tiles must now carry one fixed, capped size.
+test('every nakshatra tile label renders at one fixed size, not platform auto-shrink', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-grid-size', name: 'Namkaran' } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Choose by nakshatra. If you know the nakshatra and pada, go straight to names.' }).props.onPress();
+  });
+
+  const labels = tree.root
+    .findAllByType(Text)
+    .filter((node) => NAKSHATRA_NAMES_HI.includes(node.props.children as string));
+  assert.equal(labels.length, 27);
+  for (const label of labels) {
+    assert.equal(label.props.adjustsFontSizeToFit, undefined);
+    assert.equal(label.props.minimumFontScale, undefined);
+    assert.equal(label.props.numberOfLines, 2);
+    assert.equal(label.props.maxFontSizeMultiplier, 1.25);
+  }
+  const sizes = new Set(labels.map((label) => StyleSheet.flatten(label.props.style).fontSize));
+  assert.deepEqual([...sizes], [13]);
   await unmountFlatListTree(tree);
 });
 
