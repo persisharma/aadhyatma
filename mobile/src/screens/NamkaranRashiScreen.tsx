@@ -30,7 +30,8 @@ type Props = NativeStackScreenProps<PanchangStackParamList, 'NamkaranRashi'>;
  * read-only strip of glyphs.
  */
 export default function NamkaranRashiScreen({ navigation, route }: Props) {
-  const { rashiIndex } = route.params;
+  const { rashiIndex, dayCharanas } = route.params;
+  const dayCharanaSet = useMemo(() => new Set(dayCharanas ?? []), [dayCharanas]);
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const [counts, setCounts] = useState<Readonly<Record<number, number>> | null>(null);
@@ -112,8 +113,10 @@ export default function NamkaranRashiScreen({ navigation, route }: Props) {
                 entry={entry}
                 lang={lang}
                 nameCount={counts?.[entry.charanaIndex] ?? 0}
+                ofDay={dayCharanaSet.has(entry.charanaIndex)}
                 onPress={() => navigation.navigate('NamkaranResult', {
                   basis: { kind: 'manual', nakshatraIndex: entry.nakshatraIndex, pada: entry.pada },
+                  ...(dayCharanaSet.has(entry.charanaIndex) ? { fromUnknownTime: true } : {}),
                 })}
               />
             ))}
@@ -132,7 +135,7 @@ export default function NamkaranRashiScreen({ navigation, route }: Props) {
   );
 }
 
-function CharanaRow({ entry, lang, nameCount, onPress }: { entry: CharanaEntry; lang: Lang; nameCount: number; onPress: () => void }) {
+function CharanaRow({ entry, lang, nameCount, ofDay, onPress }: { entry: CharanaEntry; lang: Lang; nameCount: number; ofDay: boolean; onPress: () => void }) {
   const { colors, typography } = useTheme();
   const hi = entry.syllables.map((value) => value.hi).join(' / ');
   const latin = entry.syllables.map((value) => value.latin).join(' / ');
@@ -144,11 +147,16 @@ function CharanaRow({ entry, lang, nameCount, onPress }: { entry: CharanaEntry; 
       testID={`namkaran-rashi-charana-${entry.charanaIndex}`}
       leading={<CardThumb><Text maxFontSizeMultiplier={1.25} style={{ color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold, fontSize: hi.length > 3 ? 13 : 19 }}>{hi}</Text></CardThumb>}
       onPress={onPress}
-      accessibilityLabel={`${NAKSHATRA_NAMES_EN[entry.nakshatraIndex]} pada ${entry.pada}, ${latin}. Open names.`}
+      accessibilityLabel={`${NAKSHATRA_NAMES_EN[entry.nakshatraIndex]} pada ${entry.pada}, ${latin}.${ofDay ? ' A possibility for that day.' : ''} Open names.`}
     >
       <Text maxFontSizeMultiplier={1.25} style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16 }}>
         {contentByLang(lang, `पद ${entry.pada} → ${hi}`, `Pada ${entry.pada} → ${latin}`)}
       </Text>
+      {ofDay ? (
+        <Text maxFontSizeMultiplier={1.25} style={[styles.dayTag, { color: colors.saffronDeep }]}>
+          {contentByLang(lang, 'इस दिन की सम्भावना', 'A POSSIBILITY FOR THAT DAY')}
+        </Text>
+      ) : null}
       <Text maxFontSizeMultiplier={1.25} numberOfLines={2} style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17, marginTop: 3 }}>
         {countLabel ? `${countLabel} · ` : ''}
         {entry.thin
@@ -168,4 +176,5 @@ const styles = StyleSheet.create({
   tile: { width: '31%', minHeight: 40, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   section: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 1.2, marginTop: 4 },
   group: { gap: 8 },
+  dayTag: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 15, letterSpacing: 0.6, marginTop: 3 },
 });

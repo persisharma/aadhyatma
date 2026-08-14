@@ -169,7 +169,12 @@ function NamkaranResultContent({ navigation, route, result }: Props & { result: 
           lang={lang}
           currentCharanas={currentCharanas}
           onOpenCharana={(entry) => navigation.navigate('NamkaranResult', { basis: { kind: 'manual', nakshatraIndex: entry.nakshatraIndex, pada: entry.pada } })}
-          onOpenRashi={() => navigation.navigate('NamkaranRashi', { rashiIndex })}
+          onOpenRashi={() => navigation.navigate('NamkaranRashi', {
+            rashiIndex,
+            // Carry the day's charanas so the detail cannot reopen one of them
+            // as a settled, shareable answer.
+            ...(result.kind === 'range' || fromUnknownTime ? { dayCharanas: [...currentCharanas] } : {}),
+          })}
         />
       ))}
       <Text maxFontSizeMultiplier={1.25} style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17 }}>{meaningByLang(lang, 'कुछ परिवार चरण के बजाय चन्द्र राशि से नाम रखते हैं; दोनों परम्पराएँ प्रचलित हैं।', 'Some families name by Moon rashi rather than charana; both traditions are in use.')}</Text>

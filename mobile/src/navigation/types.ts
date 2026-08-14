@@ -133,7 +133,14 @@ export type PanchangStackParamList = {
   /** Rashi-level naming detail: the 9 charanas a Moon sign holds. Its own
    * route because both the entry browse door and the result's rashi
    * cross-check reach it — a browse mode would strand the second caller. */
-  NamkaranRashi: { rashiIndex: number };
+  NamkaranRashi: {
+    rashiIndex: number;
+    /** Charana indices belonging to an unknown-time day, when the detail was
+     * opened from such a result. Those rows mark as that day's possibilities
+     * and pass `fromUnknownTime` on, so the detail cannot become a side door
+     * to an exact share the range path withholds (RULEBOOK §18.3/§18.8). */
+    dayCharanas?: readonly number[];
+  };
   // Guided puja flows (PRD-19). `dateMs` is the festival occurrence the vidhi
   // was opened for — the samagri checklist persists per that date.
   VidhiCatalog: undefined;

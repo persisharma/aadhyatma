@@ -503,3 +503,53 @@ test('the rashi detail lists nine charanas grouped by nakshatra and opens each o
   assert.equal(textOf(tree).includes('DRAFT'), false);
   await unmountFlatListTree(tree);
 });
+
+test('the rashi detail cannot reopen an unknown-time candidate as a settled answer', async () => {
+  // The loophole this closes: range result → rashi detail → tap a charana that
+  // is one of the day's own candidates → an exact result carrying a share the
+  // range path withholds (RULEBOOK §18.3/§18.8).
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranRashiScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranRashi-day', name: 'NamkaranRashi', params: { rashiIndex: 0, dayCharanas: [3, 4] } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(textOf(tree).includes('A POSSIBILITY FOR THAT DAY'));
+
+  await act(async () => { tree.root.findByProps({ testID: 'namkaran-rashi-charana-3' }).props.onPress(); });
+  const flagged = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(flagged?.[1]?.fromUnknownTime, true);
+
+  // A charana outside that day is an ordinary table lookup, not a claim.
+  await act(async () => { tree.root.findByProps({ testID: 'namkaran-rashi-charana-7' }).props.onPress(); });
+  const plain = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(plain?.[1]?.fromUnknownTime, undefined);
+  await unmountFlatListTree(tree);
+});
+
+test('a rashi detail opened from a browse door flags nothing', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranRashiScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranRashi-browse', name: 'NamkaranRashi', params: { rashiIndex: 0 } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.equal(textOf(tree).includes('A POSSIBILITY FOR THAT DAY'), false);
+  await act(async () => { tree.root.findByProps({ testID: 'namkaran-rashi-charana-3' }).props.onPress(); });
+  assert.equal(mockNavigation.navigate.mock.calls.at(-1)?.[1]?.fromUnknownTime, undefined);
+  await unmountFlatListTree(tree);
+});
