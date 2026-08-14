@@ -33,6 +33,8 @@ Out of scope: lagna sweeping and Hora (Phase 3), Tarabala/Chandrabala (Phase 4),
 | The dosha stack is computed once per day and reused across occasions | `dayDoshas` + `evaluateDay` | Window-time evaluation must not re-solve panchang; it re-derives indices from data already in `DayInputs`. |
 | `isChaturmasDay` reads the sunrise anga, purnimant-normalised, kshaya-safe | `eventMuhurat.ts` | Masa shuddhi extends this, it does not replace it. |
 | `panchangDayStore` is keyed by (location, calendar system, civil date) and persisted | `panchangDayStore.ts`, `panchangDayCache.ts` | Any change to `DayInputs` **must** bump `PANCHANG_DAY_CACHE_VERSION` (RULEBOOK §17.6). |
+| Derived caches are dropped on every build change (OTA or store release) | `derivedCacheReset.ts`, `buildFingerprint.ts` (#265) | The "first launch after upgrade re-solves" cost is now the **baseline for every release**, so Phase 2's bump adds nothing on top of it. |
+| `panchangDayPrewarm` keeps the persisted window `PREWARM_DAYS` (7) ahead of today | `panchangDayPrewarm.ts` (#265) | Phase 2's extra bisection is paid by the prewarm too — off the render path, chunked. And per RULEBOOK §17.6, any new daily surface must read **inside** that window, never sit on its edge. |
 | Abujh days lift only the seasonal doshas today | `evaluateDay(..., { abujh })` | Phase 2 must resolve the remaining half — see §4.5. |
 
 ### 1.1 Measured impact (Ujjain, 365 days from 14 Aug 2026, shipped engine)
@@ -122,8 +124,14 @@ export type DayVerdict = {
 ```
 
 > **RULE:** adding `karana.endTime` and `masa` changes `DayInputs`' effective shape, so
-> **`PANCHANG_DAY_CACHE_VERSION` must be bumped in the same PR** (RULEBOOK §17.6). Devices that
-> already scanned will otherwise hydrate Phase-1 days forever and never see a single Phase-2 verdict.
+> **`PANCHANG_DAY_CACHE_VERSION` must be bumped in the same PR** (RULEBOOK §17.6).
+>
+> Since #265 there is also a **build-change reset** (`derivedCacheReset` + `buildFingerprint`,
+> RULEBOOK §17.11): the derived caches are dropped whenever the running build moves — an OTA or a
+> store release — so a stale-cache bug cannot outlive the release that fixes it. That is a
+> **backstop for a forgotten bump, not a replacement for one**: it only fires when the build moves,
+> so within a release the version number is still the only thing that invalidates anything. Ship
+> Phase 2 with the bump; the reset is what saves you if it is missed.
 
 ---
 
@@ -214,7 +222,7 @@ Full walkthrough in the prototype. Four changes, all additive to shipped screens
 
 No additional panchang solves. One extra bisection per day (~the cost of the existing tithi bisection), inside the same `computeDayInputs` call, so the 92-day sweep gains roughly one tithi-solve's worth of work per day and every cached/persisted day is unaffected. `angaAt` and the masa lookup are integer arithmetic.
 
-The cache-version bump means **the first launch after upgrade re-solves**, which is the one real cost — call it out in the rollout.
+**The upgrade cost is no longer Phase 2's to carry.** Before #265 a cache-version bump meant the first launch after upgrade re-solved, and that was the one real cost of shipping Phase 2. The build-change reset now clears the derived caches on *every* OTA and store release, so a full re-solve on first launch is the baseline for any release at all — Phase 2's bump adds nothing measurable on top. The bisection cost lands in the same places the existing solve does: the finder sweep, and `panchangDayPrewarm`'s rolling 7-day warm.
 
 ---
 

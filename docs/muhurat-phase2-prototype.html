@@ -419,8 +419,12 @@
       <code>PanchangData.kshayaTithi</code>/<code>kshayaNakshatra</code> already carry it, so <code>angaAt</code> must consult them
       before stepping. This is the likeliest place for Phase 2 to introduce a silent wrong answer, and it gets its own test.</li>
     <li><b>The cache version.</b> Adding <code>karana.endTime</code> changes <code>DayInputs</code>, so
-      <code>PANCHANG_DAY_CACHE_VERSION</code> must be bumped in the same PR (RULEBOOK §17.6). Miss it and every device that has
-      already scanned keeps hydrating Phase-1 days forever — the fix reaching only fresh installs.</li>
+      <code>PANCHANG_DAY_CACHE_VERSION</code> must be bumped in the same PR (RULEBOOK §17.6). Since <b>#265</b> a
+      <b>build-change reset</b> also drops the derived caches on every OTA or store release, so a missed bump no longer strands
+      the fix forever — but it is explicitly a <b>backstop, not a replacement</b>: it fires only when the build moves, so within
+      a release the version number is still the only thing that invalidates anything. Bump it anyway.
+      <b>The upside:</b> a full re-solve on first launch is now the baseline for <i>every</i> release, so Phase 2's bump costs
+      nothing extra — the one real deployment cost this document originally flagged has been absorbed elsewhere.</li>
   </ul>
 
   <h3>Phase 1 debt Phase 2 inherits</h3>
