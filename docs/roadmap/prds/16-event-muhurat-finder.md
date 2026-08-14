@@ -116,7 +116,10 @@ Each phase is independently shippable and each leans only on primitives already 
 - Window = auspicious choghadiya minus kaal slots, plus Abhijit. Kaal and day-choghadiya are both exact eighths of daytime, so exclusion is *dropping a slot*, not clipping an interval.
 - **Empty-with-reason** is a Phase-1 requirement, not a polish item — it is the single most differentiating behaviour in the feature.
 
-### Phase 2 — Shuddhi depth *(code M, content M)*
+### Phase 2 — Shuddhi depth *(code M, content L)* — **[TRD-16/P2](../trds/16-event-muhurat-finder-phase2.trd.md)**, prototype [`docs/muhurat-phase2-prototype.html`](../../muhurat-phase2-prototype.html)
+
+Measured against the shipped engine (Ujjain, 365 days from 14 Aug 2026), the four items below are **not** comparable in cost. Window-time anga is free (`tithi.endTime`/`nakshatra.endTime` are already solved) and flips **115 verdicts a year**; Bhadra-as-a-window is the only item needing new astronomy (`karana.endTime` is hardcoded `null`) and adds **+26–45% qualifying days**; masa shuddhi and the six new occasions are content. See the TRD for the ordering and the three convention decisions that gate the tables.
+
 
 - **Masa shuddhi properly**: per-occasion preferred/barred lunar months, with the Chaturmas convention **named explicitly** (three attested readings exist; see §9).
 - **Shukra/Guru asta**: one elongation test over `getSiderealPlanetLongitude()`. Verified against the 2026 run — Jupiter combust 15 Jul–13 Aug 2026, Venus combust 18–30 Oct 2026 (retrograde, inferior conjunction 24 Oct). Orb must be stated (10° flat vs 8° retrograde Venus, 11° Jupiter) because it changes real answers.
