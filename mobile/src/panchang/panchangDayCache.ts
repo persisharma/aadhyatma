@@ -17,6 +17,7 @@
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { awaitDerivedCacheReset } from '@/utils/derivedCacheReset';
 import {
   PANCHANG_DAY_CACHE_VERSION,
   reviveDayInputs,
@@ -163,6 +164,10 @@ export async function hydratePanchangDays(
   // the next cold range.
   if (wanted.length === 0) return;
 
+  // A build change (store update or OTA) drops these days wholesale; hydrating
+  // first would pull the very data that sweep is about to delete back into
+  // memory, where it would serve this whole session.
+  await awaitDerivedCacheReset();
   await purgeUnusable();
 
   try {
@@ -192,6 +197,10 @@ export async function persistPanchangDays(
   location: ScanLocation,
   calendarSystem: CalendarSystem
 ): Promise<void> {
+  // Same gate as hydrate, for the opposite hazard: writing ahead of the sweep
+  // would leave `known` claiming days are on disk that the sweep then removed,
+  // so nothing would rewrite them and every later launch would re-solve.
+  await awaitDerivedCacheReset();
   const scope = scopeKeyFor(location, calendarSystem);
   const map = dayStoreFor(scope);
   const known = persistedFor(scope);
