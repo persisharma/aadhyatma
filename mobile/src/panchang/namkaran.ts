@@ -139,6 +139,26 @@ export function rashiSyllables(rashiIndex: number): readonly Syllable[] {
   return rashiCharanaEntries(rashiIndex).flatMap((entry) => entry.syllables);
 }
 
+/**
+ * The distinct Moon rashis a candidate set touches, in candidate order.
+ *
+ * An unknown-time day spans ≈ 3.6–4.5 charanas against the 9 a rashi holds, so
+ * roughly one day in two crosses a 30° boundary and genuinely occupies two
+ * rashis. Surfaces must render every one of them — naming the first candidate's
+ * rashi alone would rank a candidate the range path is required not to rank
+ * (convention §5.3, PRD-17 §4.2).
+ */
+export function distinctRashiIndices(
+  candidates: readonly CharanaCandidate[]
+): readonly number[] {
+  const seen = new Set<number>();
+  return candidates.flatMap((candidate) => {
+    if (seen.has(candidate.rashiIndex)) return [];
+    seen.add(candidate.rashiIndex);
+    return [candidate.rashiIndex];
+  });
+}
+
 export function calculateNamkaran(
   basis: NamkaranBasis,
   moonLongitudeAt: MoonLongitudeResolver = (date) => getSiderealPlanetLongitude('moon', date)

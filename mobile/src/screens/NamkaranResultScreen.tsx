@@ -16,7 +16,13 @@ import type { NameGender, NameRecord } from '@/data/namkaran/types';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { RASHI_NAMES_EN, RASHI_NAMES_HI } from '@/panchang/kundali';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from '@/panchang/names';
-import { rashiSyllables, type CharanaCandidate, type NamkaranResult } from '@/panchang/namkaran';
+import {
+  distinctRashiIndices,
+  rashiCharanaEntries,
+  type CharanaCandidate,
+  type NamkaranResult,
+} from '@/panchang/namkaran';
+import type { CharanaEntry } from '@/panchang/namkaranConvention';
 import { buildNamkaranShareModel } from '@/panchang/namkaranShare';
 import { useNamkaran } from '@/panchang/useNamkaran';
 import { useNamkaranShortlist } from '@/panchang/useNamkaranShortlist';
@@ -67,6 +73,10 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
     [result]
   );
   const primaryCandidate = candidates[0];
+  // An unknown-time day can cross a 30° boundary, so the rashi cross-check is a
+  // set, not the first candidate's rashi — naming one would rank a candidate
+  // the range path explicitly refuses to rank (PRD-17 §4.2).
+  const rashiIndices = useMemo(() => distinctRashiIndices(candidates), [candidates]);
 
   useEffect(() => {
     let active = true;
@@ -135,11 +145,17 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
   const footer = (
     <View style={styles.footer}>
       <Text style={[styles.section, { color: colors.inkMuted }]}>{contentByLang(lang, 'राशि अनुसार अक्षर', 'RASHI SOUNDS')}</Text>
-      <View style={[styles.rashi, { borderColor: colors.divider, borderRadius: radii.lg }]}>
-        <Text maxFontSizeMultiplier={1.25} style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18 }}>{contentByLang(lang, RASHI_NAMES_HI[primaryCandidate.rashiIndex], RASHI_NAMES_EN[primaryCandidate.rashiIndex])}</Text>
-        <View accessibilityLabel="Nine rashi sounds" style={styles.rashiGrid}>{rashiSyllables(primaryCandidate.rashiIndex).map((value, index) => <View key={`${value.hi}-${index}`} style={[styles.rashiSyllable, { backgroundColor: colors.saffronTint, borderColor: colors.goldTint, borderRadius: radii.sm }]}><Text style={{ color: colors.saffronDeep, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 17 }}>{value.hi}</Text></View>)}</View>
-        <Text maxFontSizeMultiplier={1.25} style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17, marginTop: 5 }}>{meaningByLang(lang, 'कुछ परिवार चरण के बजाय चन्द्र राशि से नाम रखते हैं; दोनों परम्पराएँ प्रचलित हैं।', 'Some families name by Moon rashi rather than charana; both traditions are in use.')}</Text>
-      </View>
+      {rashiIndices.length > 1 ? <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17 }}>{meaningByLang(lang, 'इस दिन चन्द्रमा ने राशि भी बदली — दोनों राशियों के अक्षर नीचे हैं।', 'The Moon also changed rashi during this day, so both rashis are shown.')}</Text> : null}
+      {rashiIndices.map((rashiIndex) => (
+        <RashiSoundsCard
+          key={rashiIndex}
+          rashiIndex={rashiIndex}
+          lang={lang}
+          onOpenCharana={(entry) => navigation.navigate('NamkaranResult', { basis: { kind: 'manual', nakshatraIndex: entry.nakshatraIndex, pada: entry.pada } })}
+          onOpenRashi={() => navigation.navigate('NamkaranRashi', { rashiIndex })}
+        />
+      ))}
+      <Text maxFontSizeMultiplier={1.25} style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17 }}>{meaningByLang(lang, 'कुछ परिवार चरण के बजाय चन्द्र राशि से नाम रखते हैं; दोनों परम्पराएँ प्रचलित हैं।', 'Some families name by Moon rashi rather than charana; both traditions are in use.')}</Text>
       {result.kind === 'exact' ? (
         <>
           {shortlistedNames.length ? <View style={[styles.shareOptIn, { borderColor: colors.divider, borderRadius: radii.md }]}><View style={{ flex: 1 }}><Text style={[styles.noticeTitle, { color: colors.ink }]}>{contentByLang(lang, 'चुने नाम शेयर में जोड़ें', 'INCLUDE SHORTLIST')}</Text><Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 10, lineHeight: 15 }}>{meaningByLang(lang, 'इसे हर शेयर के लिए अलग से चुनना होगा। जन्म तिथि और समय कभी शामिल नहीं होते।', 'This is a per-share opt-in. Birth date and time are never included.')}</Text></View><Switch value={includeShortlist} onValueChange={setIncludeShortlist} accessibilityLabel="Include shortlisted names in this share" trackColor={{ false: colors.divider, true: colors.saffron }} thumbColor={colors.parchment} /></View> : null}
@@ -167,6 +183,55 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
       <NameDetailSheet name={selectedName} lang={lang} shortlisted={Boolean(selectedName && shortlistIds.includes(selectedName.id))} onToggle={() => { if (selectedName) toggleShortlist(selectedName.id); }} onClose={() => setSelectedName(null)} onOpenDeity={(deityId) => { setSelectedName(null); rootNav.navigate('HomeTab', { screen: 'DeityDetail', params: { deityId } }); }} />
       {shareModel ? <JyotishShareSheet visible={shareVisible} lang={lang} titleHi="नामाक्षर साझा करें" titleEn="Share Namakshar" privacyHi={includeShortlist ? 'आपके चुने नाम शामिल होंगे। जन्म तिथि, समय और अन्य निजी विवरण शामिल नहीं हैं।' : 'केवल नामाक्षर, नक्षत्र, पद और राशि साझा होंगे। जन्म विवरण शामिल नहीं हैं।'} privacyEn={includeShortlist ? 'Your shortlisted names will be included. Birth date, time, and other private details are excluded.' : 'Only namakshar, nakshatra, pada, and rashi are shared. Birth details are excluded.'} onClose={() => setShareVisible(false)} renderCard={(width) => <NamkaranShareCard width={width} lang={lang} model={shareModel} />} /> : null}
     </SafeAreaView>
+  );
+}
+
+/**
+ * The rashi cross-check (PRD-17 §5.4), rendered as nine *charana* cells rather
+ * than a flattened syllable strip. Two reasons: a charana is the unit that maps
+ * to names, so every cell can be a real destination; and flattening breaks the
+ * 3×3 shape wherever a charana carries alternates (Shravana's ज/ख series gives
+ * Makara thirteen syllables across its nine charanas).
+ */
+function RashiSoundsCard({ rashiIndex, lang, onOpenCharana, onOpenRashi }: {
+  rashiIndex: number;
+  lang: Lang;
+  onOpenCharana: (entry: CharanaEntry) => void;
+  onOpenRashi: () => void;
+}) {
+  const { colors, radii, typography } = useTheme();
+  const entries = rashiCharanaEntries(rashiIndex);
+  return (
+    <View testID={`namkaran-rashi-card-${rashiIndex}`} style={[styles.rashi, { borderColor: colors.divider, borderRadius: radii.lg }]}>
+      <Text maxFontSizeMultiplier={1.25} style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18 }}>{contentByLang(lang, RASHI_NAMES_HI[rashiIndex], RASHI_NAMES_EN[rashiIndex])}</Text>
+      <View style={styles.rashiGrid}>
+        {entries.map((entry) => {
+          const hi = entry.syllables.map((value) => value.hi).join(' / ');
+          const latin = entry.syllables.map((value) => value.latin).join(' / ');
+          return (
+            <Pressable
+              key={entry.charanaIndex}
+              testID={`namkaran-rashi-sound-${entry.charanaIndex}`}
+              onPress={() => onOpenCharana(entry)}
+              accessibilityRole="button"
+              accessibilityLabel={`${NAKSHATRA_NAMES_EN[entry.nakshatraIndex]} pada ${entry.pada}, ${latin}. Open names.`}
+              style={({ pressed }) => [styles.rashiSyllable, { backgroundColor: colors.saffronTint, borderColor: colors.goldTint, borderRadius: radii.sm }, pressed && { opacity: 0.72 }]}
+            >
+              <Text maxFontSizeMultiplier={1.15} style={{ color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold, fontSize: hi.length > 3 ? 12 : 17 }}>{hi}</Text>
+            </Pressable>
+          );
+        })}
+      </View>
+      <Pressable
+        onPress={onOpenRashi}
+        accessibilityRole="button"
+        accessibilityLabel={`Open ${RASHI_NAMES_EN[rashiIndex]} rashi naming detail`}
+        style={styles.rashiDetail}
+      >
+        <Text maxFontSizeMultiplier={1.25} style={[styles.rashiDetailText, { color: colors.saffronDeep }]}>{contentByLang(lang, 'इस राशि का विवरण', 'Rashi naming detail')}</Text>
+        <Text style={{ color: colors.saffronDeep, fontSize: 18 }}>›</Text>
+      </Pressable>
+    </View>
   );
 }
 
@@ -203,6 +268,11 @@ const styles = StyleSheet.create({
   filter: { minHeight: 44, paddingHorizontal: 13, borderWidth: 1, justifyContent: 'center' }, filterText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   emptyState: { alignItems: 'center', gap: 4 }, empty: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18, textAlign: 'center', paddingVertical: 12 }, resetFilters: { minHeight: 44, borderWidth: 1, paddingHorizontal: 16, alignItems: 'center', justifyContent: 'center' }, resetText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 }, window: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 15 },
   thumbText: { fontFamily: fontFamilies.devanagariBold, fontSize: 18 }, nameRow: { position: 'relative' }, starSpace: { width: 44, height: 44 }, star: { position: 'absolute', right: 16, top: 16, width: 44, height: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, starGlyph: { fontSize: 18, includeFontPadding: false }, shortlistedRow: { opacity: 0.92 },
-  rashi: { borderWidth: 1, padding: 14 }, rashiGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 7, marginTop: 10 }, rashiSyllable: { width: '31%', minHeight: 40, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, shareOptIn: { borderWidth: 1, padding: 12, flexDirection: 'row', alignItems: 'center', gap: 10 },
+  rashi: { borderWidth: 1, padding: 14 }, rashiGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 7, marginTop: 10 },
+  // The cells are tap targets now, so they carry the 44 pt floor (design.md §12).
+  rashiSyllable: { width: '31%', minHeight: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  rashiDetail: { minHeight: 44, marginTop: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
+  rashiDetailText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
+  shareOptIn: { borderWidth: 1, padding: 12, flexDirection: 'row', alignItems: 'center', gap: 10 },
   primary: { minHeight: 50, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 18 }, secondary: { minHeight: 48, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, primaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 13 },
 });

@@ -124,6 +124,10 @@ export type PanchangStackParamList = {
       | { kind: 'birth'; date: string; time: string | null }
       | { kind: 'manual'; nakshatraIndex: number; pada: 1 | 2 | 3 | 4 };
   };
+  /** Rashi-level naming detail: the 9 charanas a Moon sign holds. Its own
+   * route because both the entry browse door and the result's rashi
+   * cross-check reach it — a browse mode would strand the second caller. */
+  NamkaranRashi: { rashiIndex: number };
   // Guided puja flows (PRD-19). `dateMs` is the festival occurrence the vidhi
   // was opened for — the samagri checklist persists per that date.
   VidhiCatalog: undefined;

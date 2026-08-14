@@ -15,6 +15,7 @@ import RashifalScreen from '@/screens/RashifalScreen';
 import GunaMilanScreen from '@/screens/GunaMilanScreen';
 import NamkaranScreen from '@/screens/NamkaranScreen';
 import NamkaranResultScreen from '@/screens/NamkaranResultScreen';
+import NamkaranRashiScreen from '@/screens/NamkaranRashiScreen';
 import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
 import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
 import VidhiConductScreen from '@/screens/VidhiConductScreen';
@@ -97,6 +98,11 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="NamkaranResult"
         component={NamkaranResultScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="NamkaranRashi"
+        component={NamkaranRashiScreen}
         options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen

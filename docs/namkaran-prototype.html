@@ -159,15 +159,44 @@
     font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);line-height:1.65;margin-bottom:11px}
 
   /* rashi cross-check */
-  .rashi{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:13px 14px;margin-bottom:12px}
+  .rashi{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:13px 14px;margin-bottom:12px;position:relative}
   .rashi .rt{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
   .rashi .grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 8px}
   .rashi .sy{min-width:38px;height:38px;padding:0 8px;border:1px solid var(--gold-tint);border-radius:10px;background:var(--parchment-hi);
     display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:15px;color:var(--saffron-deep)}
   .rashi .rn{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);line-height:1.55}
+  /* each cell is a 44 pt control that opens that charana's names — the strip is
+     a set of destinations, not decoration */
+  /* three columns, matching the app's 31% cells — not a compact strip */
+  .rashi .sy.tap{width:calc((100% - 12px)/3);min-height:44px;height:44px;background:var(--saffron-tint);
+    border-color:var(--gold-tint);box-shadow:0 1px 3px rgba(47,30,16,.10)}
+  .rashi .rdetail{min-height:44px;display:flex;align-items:center;justify-content:space-between;
+    font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron-deep);margin-bottom:2px}
+  .rashi .rdetail span{font-size:17px}
+
+  /* rashi detail — the nine charanas, grouped by nakshatra */
+  .rsum{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:14px;margin-bottom:12px;position:relative}
+  .rsum .rname{font-family:var(--deva);font-size:21px;color:var(--ink)}
+  .rsum .rmeta{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.4px;color:var(--saffron-deep);margin-top:3px}
+  .rsum .rgrid{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+  .rsum .rcell{width:31%;min-height:40px;border:1px solid var(--gold-tint);border-radius:9px;background:var(--saffron-tint);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:16px;color:var(--saffron-deep)}
+  .rsum .rcell.dual{font-size:12.5px}
+  .rgrouph{font-family:var(--deva);font-size:15px;color:var(--ink);margin:14px 0 8px}
+  /* Hindi body copy keeps a Devanagari-capable face — Cormorant carries no
+     Devanagari, the §3.0 trap that clipped JyotishShareCard */
+  .rnote{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);line-height:1.7;margin-top:10px}
+
+  /* the shipped Home CategoryCard launcher grid, reused for the 12 rashis */
+  .lgrid{display:flex;flex-wrap:wrap;gap:10px}
+  .ltile{width:calc((100% - 20px)/3);min-height:72px;border:1px solid var(--card-border);border-radius:16px;
+    background:linear-gradient(135deg,var(--card-from),var(--card-to));display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:2px;padding:8px 6px;box-shadow:0 4px 10px rgba(47,30,16,.10)}
+  .ltile .lth{font-family:var(--deva);font-size:14px;color:var(--ink);text-align:center;line-height:1.25}
+  .ltile .lte{font-family:var(--serif);font-style:italic;font-size:10px;color:var(--ink-muted);text-align:center}
 
   /* range (unknown time) */
-  .rangehdr{border:1px solid var(--gold-tint);background:var(--parchment-hi);border-radius:14px;padding:12px 13px;margin-bottom:12px}
+  .rangehdr{border:1px solid var(--gold-tint);background:var(--parchment-hi);border-radius:14px;padding:12px 13px;margin-bottom:12px;position:relative}
   .rangehdr .rh{font-family:var(--deva);font-size:14px;color:var(--ink)}
   .rangehdr .rs{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:5px;line-height:1.6}
 
@@ -318,6 +347,12 @@
           <div class="chev2">›</div>
         </div>
         <div class="lc">
+          <div class="dot" style="right:-8px;top:-8px">3a</div>
+          <div class="thumb flat">रा</div>
+          <div class="lcbody"><div class="lct">राशि से चुनें</div><div class="lcs">Know the Moon rashi? See its nine charanas and their sounds.</div></div>
+          <div class="chev2">›</div>
+        </div>
+        <div class="lc">
           <div class="thumb flat">१०८</div>
           <div class="lcbody"><div class="lct">सभी नामाक्षर</div><div class="lcs">Browse the full 108-charana index.</div></div>
           <div class="chev2">›</div>
@@ -328,7 +363,8 @@
     </div>
     <div class="cap"><b>Input — the smallest ask that works.</b><br/>
       <span class="n">2</span><b>Date + time only.</b> The shipped <i>BirthDetailsForm</i> primitive with <i>CalendarDatePicker</i> / <i>ClockTimePicker</i> field-buttons (48 pt). Date range is the last 24 months → today-IST: this is a newborn's rite. There is <b>no name field</b> — there is nothing to name yet — <b>no city</b>, and deliberately <b>no “मेरे विवरण यहाँ” Kundali autofill</b>: the saved profile is the device owner's adult chart and copying it would produce a confidently wrong syllable.
-      <br/><br/><span class="n">3</span><b>The browse doors are peers, not fallbacks.</b> A grandparent holding a purohit's slip, or anyone just curious, never enters a birth moment at all. The nakshatra door opens Home's compact 3-column launcher grammar: 27 name-first choices in 9 rows, each current-language name fitted inside its tile with no ordinal-number title, then four full-width pada rows. This replaces the 27-card list shown in the first implementation.</div>
+      <br/><br/><span class="n">3</span><b>The browse doors are peers, not fallbacks.</b> A grandparent holding a purohit's slip, or anyone just curious, never enters a birth moment at all. The nakshatra door opens Home's compact 3-column launcher grammar: 27 name-first choices in 9 rows, each current-language name fitted inside its tile with no ordinal-number title, then four full-width pada rows. This replaces the 27-card list shown in the first implementation.
+      <br/><br/><span class="n">3a</span><b>Rashi is the third door — because the rashi is what families are actually told.</b> A purohit's slip far more often says <i>मेष राशि</i> than <i>अश्विनी पद १</i>. Before this door, rashi existed only as an <i>output label</i>: it appeared in the hero's provenance line, the cross-check strip and the share card, but backed no action and no entry. It now uses the same twelve-tile launcher grid and lands on the rashi detail. <b>It is still not a second answer</b> — the charana stays the hero everywhere, because a rashi is exactly nine charanas of that same table.</div>
     </div>
 
     <!-- 3. Result -->
@@ -441,10 +477,11 @@
           <div class="dot" style="right:-8px;top:-8px">7</div>
           <div class="rt">राशि अनुसार अक्षर · मेष</div>
           <div class="grid">
-            <span class="sy">चू</span><span class="sy">चे</span><span class="sy">चो</span>
-            <span class="sy">ला</span><span class="sy">ली</span><span class="sy">लू</span>
-            <span class="sy">ले</span><span class="sy">लो</span><span class="sy">अ</span>
+            <span class="sy tap">चू</span><span class="sy tap">चे</span><span class="sy tap">चो</span>
+            <span class="sy tap">ला</span><span class="sy tap">ली</span><span class="sy tap">लू</span>
+            <span class="sy tap">ले</span><span class="sy tap">लो</span><span class="sy tap">अ</span>
           </div>
+          <div class="rdetail">इस राशि का विवरण <span>›</span></div>
           <div class="rn">Some families name by the Moon <i>rashi</i> rather than the charana — both are traditional. A rashi spans exactly 9 charanas, so this set is derived from the same table, never a second one.</div>
         </div>
 
@@ -467,7 +504,7 @@
       </div></div>
     </div>
     <div class="cap"><b>Cross-check and hand-off.</b><br/>
-      <span class="n">7</span><b>The rashi card keeps the app from appearing to contradict a purohit.</b> A rashi spans exactly 30° = 9 charanas, so these nine syllables are <i>derived</i> from the same 108-cell table — a hard-coded 12-row rashi-letter table would be a defect.
+      <span class="n">7</span><b>The rashi card keeps the app from appearing to contradict a purohit</b> — and every cell is now a <b>44 pt destination</b>, not a read-only glyph. Tapping one opens that charana's names; the <b>इस राशि का विवरण</b> row opens the full rashi detail. The cells are the rashi's nine <i>charanas</i> rather than a flattened syllable list, which is also what keeps the 3×3 shape intact: मकर spans श्रवण's dual ज/ख series, so flattening would render <b>thirteen</b> syllables into a nine-cell grid.
       <br/><br/><span class="n">8</span><b>The muhurat door is navigation only.</b> <code>EVENT_RULES.namkaran</code> — its nakshatras, tithis, varas and 6-dosha stack — shipped with PRD-16, and the scan already reuses <i>panchangDayStore</i>. Zero new engine work, zero new cache. Above it, the <b>thin-charana fallback</b>: for ङ / ञ / ष / ण / ठ / थ the surface widens to the nakshatra set and says so — it never invents a name or a syllable to fill the gap.</div>
     </div>
 
@@ -616,17 +653,153 @@
     </div>
   </div>
 
+  <!-- ============ 4 · RASHI AS A PEER PATH ============ -->
+  <div class="phaselabel">4 · Rashi as a peer path — entry, detail, and the boundary-crossing day</div>
+  <div class="phasedesc">The charana stays the answer. What changes here is that rashi stops being a decorative label and becomes a way <i>in</i> and a place to <i>go</i> — and an unknown-time day stops claiming one rashi it cannot justify.</div>
+  <div class="wrap">
+
+    <!-- 9. Rashi picker -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">नामकरण · Namkaran</div><div class="topaction"></div></div>
+
+        <div class="dot" style="right:16px;top:70px">12</div>
+        <div class="seclabel">राशि चुनें · choose rashi</div>
+        <div class="fnote" style="margin:-4px 0 12px">हर राशि नौ चरणों की होती है — उसी नक्षत्र-पद तालिका से।
+          <span class="en-it">Each rashi holds nine charanas of the same nakshatra-pada table.</span></div>
+
+        <div class="lgrid">
+          <div class="ltile"><div class="lth">मेष</div><div class="lte">Mesha</div></div>
+          <div class="ltile"><div class="lth">वृषभ</div><div class="lte">Vrishabha</div></div>
+          <div class="ltile"><div class="lth">मिथुन</div><div class="lte">Mithuna</div></div>
+          <div class="ltile"><div class="lth">कर्क</div><div class="lte">Karka</div></div>
+          <div class="ltile"><div class="lth">सिंह</div><div class="lte">Simha</div></div>
+          <div class="ltile"><div class="lth">कन्या</div><div class="lte">Kanya</div></div>
+          <div class="ltile"><div class="lth">तुला</div><div class="lte">Tula</div></div>
+          <div class="ltile"><div class="lth">वृश्चिक</div><div class="lte">Vrischika</div></div>
+          <div class="ltile"><div class="lth">धनु</div><div class="lte">Dhanu</div></div>
+          <div class="ltile"><div class="lth">मकर</div><div class="lte">Makara</div></div>
+          <div class="ltile"><div class="lth">कुम्भ</div><div class="lte">Kumbha</div></div>
+          <div class="ltile"><div class="lth">मीन</div><div class="lte">Meena</div></div>
+        </div>
+
+        <div class="footnote">No birth date, no birth time, no city — the same privacy floor as the nakshatra and 108 doors. The grid is the shipped Home <i>CategoryCard launcher</i>, three columns, exactly as the 27-nakshatra picker uses it.</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Rashi picker — the third privacy-minimal door.</b><br/>
+      <span class="n">12</span>Twelve tiles in the same launcher grammar as the 27 nakshatras, so no new card design enters the app. This closes the asymmetry the feature shipped with: <b>rashi was renderable but not reachable</b>. A family told only “मकर राशि” could read nine glyphs on the result screen and go no further — they had no way to start from the rashi at all.</div>
+    </div>
+
+    <!-- 10. Rashi detail -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">मकर राशि</div><div class="topaction"></div></div>
+
+        <div class="rsum">
+          <div class="dot" style="right:-8px;top:-8px">13</div>
+          <div class="rname">मकर</div>
+          <div class="rmeta">९ चरण · १३ अक्षर</div>
+          <div class="rgrid">
+            <div class="rcell">भो</div><div class="rcell">जा</div><div class="rcell">जी</div>
+            <div class="rcell dual">जू / खी</div><div class="rcell dual">जे / खू</div><div class="rcell dual">जो / खे</div>
+            <div class="rcell dual">घा / खो</div><div class="rcell">गा</div><div class="rcell">गी</div>
+          </div>
+          <div class="rnote">कुछ परिवार चरण के बजाय चन्द्र राशि से नाम रखते हैं; दोनों परम्पराएँ प्रचलित हैं। किसी भी चरण पर टैप करके उसके नाम देखें।</div>
+        </div>
+
+        <div class="seclabel">राशि के नौ चरण · the nine charanas</div>
+
+        <div class="rgrouph">उत्तराषाढ़ा · Uttarashadha</div>
+        <div class="lc"><div class="thumb">भो</div><div class="lcbody">
+          <div class="lct">पद २ → भो</div><div class="lcs">8 names · See the names for this charana</div></div><div class="chev2">›</div></div>
+        <div class="lc"><div class="thumb">जा</div><div class="lcbody">
+          <div class="lct">पद ३ → जा</div><div class="lcs">11 names · See the names for this charana</div></div><div class="chev2">›</div></div>
+        <div class="lc"><div class="thumb">जी</div><div class="lcbody">
+          <div class="lct">पद ४ → जी</div><div class="lcs">9 names · See the names for this charana</div></div><div class="chev2">›</div></div>
+
+        <div class="rgrouph">श्रवण · Shravana</div>
+        <div class="lc"><div class="thumb" style="font-size:13px">जू / खी</div><div class="lcbody">
+          <div class="lct">पद १ → जू / खी</div><div class="lcs">14 names · See the names for this charana</div></div><div class="chev2">›</div></div>
+        <div class="lc"><div class="thumb" style="font-size:13px">जे / खू</div><div class="lcbody">
+          <div class="lct">पद २ → जे / खू</div><div class="lcs">7 names · See the names for this charana</div></div><div class="chev2">›</div></div>
+
+        <div class="footnote">The exact charana at birth gives a <b>single</b> sound; a rashi gathers nine charanas of that same table. Name counts come from the bundled corpus and simply disappear when a charana has none — the charana rows are convention data and are always shown.</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Rashi detail — the “detailed view”.</b><br/>
+      <span class="n">13</span>A summary card (name, <b>९ चरण · १३ अक्षर</b>, the nine glyphs), then the nine charanas <b>grouped by nakshatra</b> — a rashi spans 2–3 nakshatras, so a flat list of nine would hide where the boundaries fall. Each row is a shipped <i>ListCard</i> carrying the pada, its sounds, and a lazily-counted name total; thin charanas say so instead of pretending. Every row lands on the same <code>NamkaranResult</code> a manual nakshatra+pada pick would produce — <b>one result screen, one grammar</b>. मकर is the honest worst case: nine charanas, thirteen syllables, because श्रवण carries the dual ज/ख series.</div>
+    </div>
+
+    <!-- 11. Unknown time crossing a rashi boundary -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">सम्भावित नामाक्षर</div><div class="topaction"></div></div>
+
+        <div class="rangehdr">
+          <div class="rh">समय ज्ञात नहीं — इसलिए ५ सम्भावनाएँ</div>
+          <div class="rs">चन्द्रमा दिन भर में नक्षत्र बदल सकता है, इसलिए सम्भावित अक्षर एक से अधिक हैं। किसी एक को अधिक सम्भावित नहीं माना गया।</div>
+        </div>
+
+        <div class="lc"><div class="thumb">डी</div><div class="lcbody">
+          <div class="lct">आश्लेषा · पद १</div><div class="lcwin">12:00 AM – 4:12 AM</div>
+          <div class="lcs">Ashlesha pada 1 · Di</div></div><div class="chev2">›</div></div>
+        <div class="lc" style="opacity:.55"><div class="thumb">डू</div><div class="lcbody">
+          <div class="lct">आश्लेषा · पद २</div><div class="lcwin">4:12 AM – 10:38 AM</div>
+          <div class="lcs">Ashlesha pada 2 · Du</div></div><div class="chev2">›</div></div>
+        <div class="lc" style="opacity:.55"><div class="thumb">मा</div><div class="lcbody">
+          <div class="lct">मघा · पद १</div><div class="lcwin">10:38 AM – 5:03 PM</div>
+          <div class="lcs">Magha pada 1 · Ma</div></div><div class="chev2">›</div></div>
+
+        <div class="seclabel">राशि अनुसार अक्षर</div>
+        <div class="rnote" style="margin:-4px 0 10px">इस दिन चन्द्रमा ने राशि भी बदली — दोनों राशियों के अक्षर नीचे हैं।
+          <span class="en-it">The Moon also changed rashi during this day, so both rashis are shown.</span></div>
+
+        <div class="rashi">
+          <div class="dot" style="right:-8px;top:-8px">14</div>
+          <div class="rt">कर्क</div>
+          <div class="grid">
+            <span class="sy tap">हू</span><span class="sy tap">हे</span><span class="sy tap">हो</span>
+            <span class="sy tap">डा</span><span class="sy tap">डी</span><span class="sy tap">डू</span>
+            <span class="sy tap">डे</span><span class="sy tap">डो</span><span class="sy tap">मा</span>
+          </div>
+          <div class="rdetail">इस राशि का विवरण <span>›</span></div>
+        </div>
+        <div class="rashi">
+          <div class="rt">सिंह</div>
+          <div class="grid">
+            <span class="sy tap">मी</span><span class="sy tap">मू</span><span class="sy tap">मे</span>
+            <span class="sy tap">मो</span><span class="sy tap">टा</span><span class="sy tap">टी</span>
+            <span class="sy tap">टू</span><span class="sy tap">टे</span><span class="sy tap">टो</span>
+          </div>
+          <div class="rdetail">इस राशि का विवरण <span>›</span></div>
+        </div>
+
+        <div class="draft" style="border-style:solid"><b>Still no hero, still no share.</b> Showing both rashis is the <i>restraint</i>, not a new claim: the surface refuses to pick one rashi exactly as it refuses to pick one syllable.</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>An unknown time can cross a rashi boundary too.</b><br/>
+      <span class="n">14</span>The Moon covers ≈ 3.6–4.5 charanas a day against the <b>9</b> a rashi holds, so roughly <b>one day in two</b> crosses a 30° boundary. The shipped surface named only the <i>first</i> candidate's rashi — an unhedged single answer sitting directly under copy that says “none is ranked as more likely”. It now renders <b>one card per distinct rashi the day touched</b>, in time order, with a line saying the Moon changed rashi. Same discipline as the candidate rows above it.</div>
+    </div>
+  </div>
+
   <div class="phaselabel" style="margin-top:34px">Reuse ledger — what this feature does not build</div>
   <div class="legend" style="margin-top:8px">
     <b>Calculation:</b> <code>getSiderealPlanetLongitude('moon', …)</code> + the Lahiri ayanamsa + the exact flooring convention already in <code>computeGrahaPositions</code>. ·
     <b>Labels:</b> <code>NAKSHATRA_NAMES_HI/EN</code>, <code>RASHI_NAMES_HI/EN</code>, <code>DASHA_ORDER</code>. ·
     <b>Input:</b> <code>BirthDetailsForm</code>, <code>CalendarDatePicker</code>, <code>ClockTimePicker</code>. ·
-    <b>Chrome:</b> <code>ReaderHeader variant="index"</code>, <code>CategoryCard variant="launcher"</code> (27-choice nakshatra grid), <code>ListCard</code> (name rows, candidate rows, doors and padas), <code>JyotishToolCard</code> (the landing row), <code>ShareButton</code>, <code>JyotishStateCard</code>. ·
+    <b>Chrome:</b> <code>ReaderHeader variant="index"</code>, <code>CategoryCard variant="launcher"</code> (the 27-choice nakshatra grid and the 12-choice rashi grid), <code>ListCard</code> (name rows, candidate rows, rashi charana rows, doors and padas), <code>JyotishToolCard</code> (the landing row), <code>ShareButton</code>, <code>JyotishStateCard</code>. ·
     <b>Muhurat:</b> <code>EVENT_RULES.namkaran</code> + <code>MuhuratResultsScreen</code> + <code>panchangDayStore</code> — already shipped. ·
     <b>Names → texts:</b> <code>deities.ts</code> + the Deity Index + the reader dispatcher. ·
     <b>Share:</b> the 4:5 / 1080×1350 card family + <code>view-shot → expo-sharing</code>. ·
     <b>Vidhi (Phase 2):</b> the existing <code>sanskar</code> category, reader and NEW badge.<br/><br/>
-    <b>Genuinely new:</b> the 108-charana convention table, the bundled name corpus (lazily required, ≤ 512 KB, CI-enforced), one pure engine module, one hook pair, two screens, three components.
+    <b>Genuinely new:</b> the 108-charana convention table, the bundled name corpus (lazily required, ≤ 512 KB, CI-enforced), one pure engine module, one hook pair, three screens, three components.<br/><br/>
+    <b>Nothing about the rashi path adds data.</b> The twelve rashi sets, their nine charanas, and every syllable on the rashi detail are derived from the same 108-cell table by <code>rashiCharanaEntries()</code> — a hard-coded 12-row rashi-letter table would be a defect (convention §4).
   </div>
 </body>
 </html>
