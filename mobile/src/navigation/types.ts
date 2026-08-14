@@ -123,6 +123,23 @@ export type PanchangStackParamList = {
     basis:
       | { kind: 'birth'; date: string; time: string | null }
       | { kind: 'manual'; nakshatraIndex: number; pada: 1 | 2 | 3 | 4 };
+    /** Set when this charana was opened from an unknown-time candidate list. It
+     * is one of the day's possibilities, not a settled answer, so the screen
+     * keeps its provenance visible and offers no exact-syllable share
+     * (PRD-17 §8.3 invariant 5). Browsing a rashi cell does NOT set it — that
+     * is a table lookup, not a claim about this child's birth. */
+    fromUnknownTime?: boolean;
+  };
+  /** Rashi-level naming detail: the 9 charanas a Moon sign holds. Its own
+   * route because both the entry browse door and the result's rashi
+   * cross-check reach it — a browse mode would strand the second caller. */
+  NamkaranRashi: {
+    rashiIndex: number;
+    /** Charana indices belonging to an unknown-time day, when the detail was
+     * opened from such a result. Those rows mark as that day's possibilities
+     * and pass `fromUnknownTime` on, so the detail cannot become a side door
+     * to an exact share the range path withholds (RULEBOOK §18.3/§18.8). */
+    dayCharanas?: readonly number[];
   };
   // Guided puja flows (PRD-19). `dateMs` is the festival occurrence the vidhi
   // was opened for — the samagri checklist persists per that date.

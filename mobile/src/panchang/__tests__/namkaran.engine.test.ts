@@ -7,6 +7,7 @@ import {
   candidateFromLongitude,
   charanaOf,
   charanaSetForDay,
+  distinctRashiIndices,
   rashiCharanaEntries,
   rashiSyllables,
 } from '../namkaran';
@@ -86,6 +87,27 @@ test('a stable injected day still returns a range with one honest window', () =>
   assert.equal(result.kind, 'range');
   assert.equal(result.candidates.length, 1);
   assert.equal(result.candidates[0].entry.charanaIndex, 3);
+});
+
+test('a day that crosses a rashi boundary reports both rashis, in order, once each', () => {
+  const start = Date.parse('2026-08-12T18:30:00.000Z');
+  // 28° at IST midnight, 15°/day: the Moon leaves charana 8 (Mesha) and spends
+  // the rest of the day in Vrishabha.
+  const crossing = charanaSetForDay(
+    '2026-08-13',
+    (date) => (28 + ((date.getTime() - start) / 86_400_000) * 15) % 360
+  );
+  assert.ok(crossing.length > 1);
+  assert.deepEqual(distinctRashiIndices(crossing), [0, 1]);
+  assert.equal(crossing[0].rashiIndex, 0);
+
+  // A day held entirely inside one rashi must still report exactly one.
+  const settled = charanaSetForDay(
+    '2026-08-13',
+    (date) => (34 + ((date.getTime() - start) / 86_400_000) * 12) % 360
+  );
+  assert.deepEqual(distinctRashiIndices(settled), [1]);
+  assert.deepEqual(distinctRashiIndices([]), []);
 });
 
 test('rashi sets are derived as twelve disjoint groups of nine charanas', () => {

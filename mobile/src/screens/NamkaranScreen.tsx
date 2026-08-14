@@ -9,7 +9,7 @@ import ListCard, { CardThumb } from '@/components/ListCard';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import type { PanchangStackParamList } from '@/navigation/types';
-import { GRAHA_NAMES_EN, GRAHA_NAMES_HI } from '@/panchang/kundali';
+import { GRAHA_NAMES_EN, GRAHA_NAMES_HI, RASHI_NAMES_EN, RASHI_NAMES_HI } from '@/panchang/kundali';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from '@/panchang/names';
 import { CHARANA_TABLE, NAKSHATRA_ATTRS, type CharanaEntry } from '@/panchang/namkaranConvention';
 import {
@@ -26,7 +26,7 @@ import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'Namkaran'>;
-type BrowseMode = 'landing' | 'nakshatra' | 'all';
+type BrowseMode = 'landing' | 'nakshatra' | 'rashi' | 'all';
 
 const EMPTY_INPUT: NamkaranInput = { date: '', time: '' };
 
@@ -79,6 +79,10 @@ export default function NamkaranScreen({ navigation }: Props) {
     navigation.navigate('NamkaranResult', { basis: { kind: 'manual', nakshatraIndex, pada } });
   };
 
+  const openRashi = (rashiIndex: number) => {
+    navigation.navigate('NamkaranRashi', { rashiIndex });
+  };
+
   const title = contentByLang(lang, 'नामकरण', 'Namkaran');
   const nakshatraGridGap = 10;
   // Floor the exact division: sub-pixel rounding can otherwise push the third
@@ -105,6 +109,10 @@ export default function NamkaranScreen({ navigation }: Props) {
               <Pressable onPress={calculate} accessibilityRole="button" accessibilityLabel="Calculate Namkaran syllable" style={({ pressed }) => [styles.primary, { backgroundColor: colors.saffronDeep, borderRadius: radii.pill }, pressed && { opacity: 0.72 }]}><Text style={[styles.primaryText, { color: colors.onPrimary }]}>{contentByLang(lang, 'नामाक्षर निकालें', 'Find namakshar')}</Text></Pressable>
               <Text style={[styles.section, { color: colors.inkMuted }]}>{contentByLang(lang, 'बिना जन्म विवरण', 'WITHOUT BIRTH DETAILS')}</Text>
               <BrowseDoor glyph="न" titleHi="नक्षत्र से चुनें" titleEn="Choose by nakshatra" bodyHi="नक्षत्र और पद पहले से जानते हैं तो सीधे नाम देखें।" bodyEn="If you know the nakshatra and pada, go straight to names." onPress={() => setBrowseMode('nakshatra')} />
+              {/* Rashi is a peer door, not a second answer: many families are
+                  told the Moon sign rather than the charana, and a rashi is
+                  exactly nine charanas of the same table (convention §4). */}
+              <BrowseDoor glyph="रा" titleHi="राशि से चुनें" titleEn="Choose by rashi" bodyHi="चन्द्र राशि पता है तो उसके नौ चरण और अक्षर देखें।" bodyEn="Know the Moon rashi? See its nine charanas and their sounds." onPress={() => setBrowseMode('rashi')} />
               <BrowseDoor glyph="१०८" titleHi="सभी नामाक्षर" titleEn="Browse all 108" bodyHi="पूरी नक्षत्र-पद तालिका से कोई भी अक्षर चुनें।" bodyEn="Choose any sound from the complete nakshatra-pada index." onPress={() => setBrowseMode('all')} />
             </>
           ) : browseMode === 'nakshatra' ? (
@@ -135,6 +143,26 @@ export default function NamkaranScreen({ navigation }: Props) {
                   })}
                 </>
               )}
+            </>
+          ) : browseMode === 'rashi' ? (
+            <>
+              <Text style={[styles.section, { color: colors.inkMuted }]}>{contentByLang(lang, 'राशि चुनें', 'CHOOSE RASHI')}</Text>
+              <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 16, marginTop: -6 }}>{meaningByLang(lang, 'हर राशि नौ चरणों की होती है — उसी नक्षत्र-पद तालिका से।', 'Each rashi holds nine charanas of the same nakshatra-pada table.')}</Text>
+              <View testID="namkaran-rashi-grid" style={[styles.nakshatraGrid, { gap: nakshatraGridGap }]}>
+                {RASHI_NAMES_HI.map((name, index) => (
+                  <View key={name} testID={`namkaran-rashi-${index + 1}`} style={{ width: nakshatraTileWidth }}>
+                    <CategoryCard
+                      nameHi={name}
+                      nameEn={RASHI_NAMES_EN[index]}
+                      status="active"
+                      variant="launcher"
+                      launcherLabelLines={2}
+                      launcherLabelPosition="tile"
+                      onPress={() => openRashi(index)}
+                    />
+                  </View>
+                ))}
+              </View>
             </>
           ) : (
             <>
