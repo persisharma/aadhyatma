@@ -15,7 +15,14 @@ import { getUpcomingObservances } from './festivalEngine';
 import { ABUJH_RULE_IDS, pushyaYogaFor } from './abujhMuhurat';
 import { computeMuhuratDay } from './muhurat';
 import { evaluateDay, type DayVerdict, type EventRule } from './eventMuhurat';
-import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
+import {
+  cachedDayInputs,
+  dateKeyFor,
+  dayAt,
+  dayStoreFor,
+  scopeKeyFor,
+  yieldToUi,
+} from './panchangDayStore';
 import type { ScanOptions } from './panchangDayStore';
 import type { PanchangData, ResolvedObservance } from './types';
 
@@ -27,23 +34,12 @@ export const CHUNK_DAYS = 7;
 /** The location/options shapes both scans pass to the engine — owned by the store. */
 export type { ScanLocation, ScanOptions, DayInputs } from './panchangDayStore';
 
-export const startOfToday = (): Date => {
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
-};
-
-export const dayAt = (start: Date, i: number): Date =>
-  new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
-
-export const yieldToUi = (): Promise<void> => new Promise<void>((r) => setTimeout(r, 0));
-
 /**
- * The civil-date keys a scan of `count` days from `start` will touch — what the
- * hooks hand to `hydratePanchangDays` so the persisted solves are in memory
- * before the sweep begins.
+ * Civil-day walking helpers. They live in `panchangDayStore` (RN-free, and free
+ * of this module's festival-engine dependency) and are re-exported here so the
+ * scans and their tests keep importing them from one place.
  */
-export const dayKeysFrom = (start: Date, count: number): string[] =>
-  Array.from({ length: count }, (_, i) => dateKeyFor(dayAt(start, i)));
+export { startOfToday, dayAt, dayKeysFrom, yieldToUi } from './panchangDayStore';
 
 /**
  * Civil-date keys of the FESTIVAL-anchored abujh days in a window.

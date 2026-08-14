@@ -158,6 +158,26 @@ describe('hydratePanchangDays', () => {
     expect(await AsyncStorage.getAllKeys()).not.toContain(legacy);
   });
 
+  test('sweeps the keyspace once per session, not once per cold range', async () => {
+    // The sweep reads EVERY AsyncStorage key, and what it collects can only turn
+    // up between launches (an older cache version) or at midnight (a day that
+    // fell out of retention) — so re-running it put a whole-keyspace scan in
+    // front of the first hydrate of every calendar day, on Home's critical path.
+    const getAllKeys = spyOnStorage('getAllKeys');
+
+    await hydratePanchangDays(UJJAIN, SYSTEM, [dayKeyFromToday(1)]);
+    expect(getAllKeys).toHaveBeenCalledTimes(1);
+
+    // A different cold range in the same session: hydrated, but not re-swept.
+    await hydratePanchangDays(UJJAIN, SYSTEM, [dayKeyFromToday(2)]);
+    expect(getAllKeys).toHaveBeenCalledTimes(1);
+
+    // …and the next launch sweeps again.
+    __resetPanchangDayCache();
+    await hydratePanchangDays(UJJAIN, SYSTEM, [dayKeyFromToday(3)]);
+    expect(getAllKeys).toHaveBeenCalledTimes(2);
+  });
+
   test('a corrupt entry is ignored, not fatal', async () => {
     const scope = scopeKeyFor(UJJAIN, SYSTEM);
     const key = dayKeyFromToday(1);
