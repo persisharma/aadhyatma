@@ -46,6 +46,46 @@ export const dayKeysFrom = (start: Date, count: number): string[] =>
   Array.from({ length: count }, (_, i) => dateKeyFor(dayAt(start, i)));
 
 /**
+ * Civil-date keys of the FESTIVAL-anchored abujh days in a window.
+ *
+ * Resolved through `festivalEngine` (never re-matched here — it owns the kshaya
+ * fallback and vriddhi dedupe), and memoised per (year, system, location) by
+ * `resolveObservancesForYear`, so calling this per-day is cheap.
+ *
+ * `count` is deliberately unbounded: `getUpcomingObservances` applies
+ * `.slice(0, count)` AFTER the horizon filter, so a small count silently
+ * truncates by OBSERVANCE COUNT rather than by date. Passing 60 here meant a
+ * 260-day scan actually stopped at the 60th observance — about 73 days in —
+ * and five of the six abujh rules (Akshaya Tritiya, Vasant Panchami,
+ * Dhanteras, Akshaya Navami, Dev Uthani Ekadashi) never reached the screen.
+ * `withinDays` is the only bound that belongs here.
+ */
+export function abujhFestivalKeys(start: Date, horizonDays: number, opts: ScanOptions): Set<string> {
+  const keys = new Set<string>();
+  try {
+    for (const o of getUpcomingObservances(
+      start,
+      Number.MAX_SAFE_INTEGER,
+      opts.calendarSystem,
+      horizonDays,
+      opts.location
+    )) {
+      if (ABUJH_RULE_IDS.includes(o.rule.id)) keys.add(dateKeyFor(o.date));
+    }
+  } catch {
+    // A festival-resolve failure must not take down grading; the day simply
+    // grades without its abujh exemption.
+  }
+  return keys;
+}
+
+/** Is this civil day अबूझ — festival-anchored or a computed Pushya yoga? */
+export function isAbujhDay(date: Date, p: PanchangData, opts: ScanOptions): boolean {
+  if (pushyaYogaFor(p, date.getDay())) return true;
+  return abujhFestivalKeys(date, 1, opts).has(dateKeyFor(date));
+}
+
+/**
  * Grade ONE civil day for one occasion, through the shared day store.
  *
  * The day detail and the follow scheduler both need exactly this — a single
@@ -73,7 +113,11 @@ export function verdictForDate(
     );
     const p = inputs.p;
     const m = computeMuhuratDay(p.sunrise, p.sunset, next.p.sunrise, date.getDay());
-    return { verdict: evaluateDay(rule, date.getTime(), date.getDay(), p, m, inputs.asta), p };
+    const abujh = isAbujhDay(date, p, opts);
+    return {
+      verdict: evaluateDay(rule, date.getTime(), date.getDay(), p, m, inputs.asta, { abujh }),
+      p,
+    };
   } catch {
     return null;
   }
@@ -118,8 +162,15 @@ export async function scanAbujhDays(
   // 1) Festival abujh days — cheap, resolved up-front, painted immediately.
   const festival: AbujhDay[] = [];
   try {
-    const observances = getUpcomingObservances(start, 60, opts.calendarSystem, horizonDays, opts.location)
-      .filter((o: ResolvedObservance) => ABUJH_RULE_IDS.includes(o.rule.id));
+    // Unbounded count — `withinDays` is the horizon. See abujhFestivalKeys for
+    // why a count cap here dropped five of the six abujh rules.
+    const observances = getUpcomingObservances(
+      start,
+      Number.MAX_SAFE_INTEGER,
+      opts.calendarSystem,
+      horizonDays,
+      opts.location
+    ).filter((o: ResolvedObservance) => ABUJH_RULE_IDS.includes(o.rule.id));
     for (const o of observances) {
       if (hooks.isCancelled()) return [...festival].sort(byDate);
       try {

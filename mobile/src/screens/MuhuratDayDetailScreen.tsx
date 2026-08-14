@@ -11,12 +11,10 @@ import { contentByLang, pick } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
-import { cachedDayInputs, dayStoreFor, scopeKeyFor } from '@/panchang/panchangDayStore';
-import { computeMuhuratDay } from '@/panchang/muhurat';
+import { verdictForDate } from '@/panchang/muhuratFinderScan';
 import {
   DOSHA_LABELS,
   TIER_LABELS,
-  evaluateDay,
   getEventRule,
   type DayVerdict,
 } from '@/panchang/eventMuhurat';
@@ -93,22 +91,12 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
   useEffect(() => {
     let cancelled = false;
     const id = setTimeout(() => {
-      // Read the SHARED store: arriving here from the results list, both days
-      // were already solved by the finder's sweep, so this is a cache hit rather
-      // than two fresh solves. `cachedDayInputs` also carries the asta flags the
-      // verdict needs, so they are not recomputed either.
-      const opts = { calendarSystem, location };
-      const map = dayStoreFor(scopeKeyFor(location, calendarSystem));
-      const { inputs } = cachedDayInputs(map, date, opts);
-      const { inputs: nextInputs } = cachedDayInputs(
-        map,
-        new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
-        opts
-      );
-      const p = inputs.p;
-      const m = computeMuhuratDay(p.sunrise, p.sunset, nextInputs.p.sunrise, date.getDay());
-      const v = evaluateDay(rule, date.getTime(), date.getDay(), p, m, inputs.asta);
-      if (!cancelled) setData({ v, p });
+      // One shared "grade a single day" path (`verdictForDate`). It reads the
+      // SHARED store, so arriving from the results list is a cache hit rather
+      // than two fresh solves, and it carries the abujh exemption that keeps
+      // this screen from contradicting the अबूझ list (PRD-16 §4.2).
+      const solved = verdictForDate(rule, date, { calendarSystem, location });
+      if (!cancelled && solved) setData({ v: solved.verdict, p: solved.p });
     }, 0);
     return () => {
       cancelled = true;

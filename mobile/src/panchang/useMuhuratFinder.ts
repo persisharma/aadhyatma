@@ -4,9 +4,10 @@ import { computeMuhuratDay } from './muhurat';
 import { evaluateDay, getEventRule, summarize, type DayVerdict, type FinderSummary, type OccasionId } from './eventMuhurat';
 import { ABUJH_RULE_IDS, pushyaYogaFor } from './abujhMuhurat';
 import { getUpcomingObservances } from './festivalEngine';
-import { cachedDayInputs, dayStoreFor, scopeKeyFor } from './panchangDayStore';
+import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
 import { hydratePanchangDays, persistPanchangDays } from './panchangDayCache';
 import {
+  abujhFestivalKeys,
   dayAt,
   dayKeysFrom,
   scanAbujhDays,
@@ -67,6 +68,10 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
       await hydratePanchangDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
       if (cancelled) return;
       const scan = dayStoreFor(scopeKeyFor(location, calendarSystem));
+      // One festival resolve for the whole sweep: abujh days lift the seasonal
+      // bars (PRD-16 §4.2), so a Chaturmas-barred occasion still surfaces
+      // Dev Uthani / Akshaya Tritiya rather than contradicting the abujh screen.
+      const abujhKeys = abujhFestivalKeys(start, FIRST_AFTER_MAX_DAYS, opts);
       let heavyThisChunk = false;
       const inputsAt = (i: number) => {
         const { inputs, miss } = cachedDayInputs(scan, dayAt(start, i), opts);
@@ -81,7 +86,8 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
         const { p, asta } = inputsAt(i);
         const { p: next } = inputsAt(i + 1);
         const m = computeMuhuratDay(p.sunrise, p.sunset, next.sunrise, d.getDay());
-        const v = evaluateDay(rule, d.getTime(), d.getDay(), p, m, asta);
+        const abujh = abujhKeys.has(dateKeyFor(d)) || pushyaYogaFor(p, d.getDay()) != null;
+        const v = evaluateDay(rule, d.getTime(), d.getDay(), p, m, asta, { abujh });
         if (i < days) {
           verdicts.push(v);
         } else if (v.tier !== 'excluded') {
