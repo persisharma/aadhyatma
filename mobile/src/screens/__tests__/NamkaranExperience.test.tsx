@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { FlatList, Text, View as mockView } from 'react-native';
+import { FlatList, StyleSheet, Text, View as mockView } from 'react-native';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
 import ListCard from '@/components/ListCard';
+import { NAKSHATRA_NAMES_HI } from '@/panchang/names';
 import {
   calculateNamkaran,
   charanaSetForDay,
@@ -129,6 +130,39 @@ test('manual nakshatra grid renders the complete Hindi names inside unclipped tw
   await unmountFlatListTree(tree);
 });
 
+// Regression: the in-tile labels used `adjustsFontSizeToFit`, and on iOS that
+// shrank scattered tiles (हस्त / चित्रा / स्वाती) to a few points — well past
+// the 0.8 `minimumFontScale` — while their identically sized neighbours stayed
+// full size. All 27 tiles must now carry one fixed, capped size.
+test('every nakshatra tile label renders at one fixed size, not platform auto-shrink', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-grid-size', name: 'Namkaran' } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Choose by nakshatra. If you know the nakshatra and pada, go straight to names.' }).props.onPress();
+  });
+
+  const labels = tree.root
+    .findAllByType(Text)
+    .filter((node) => NAKSHATRA_NAMES_HI.includes(node.props.children as string));
+  assert.equal(labels.length, 27);
+  for (const label of labels) {
+    assert.equal(label.props.adjustsFontSizeToFit, undefined);
+    assert.equal(label.props.minimumFontScale, undefined);
+    assert.equal(label.props.numberOfLines, 2);
+    assert.equal(label.props.maxFontSizeMultiplier, 1.25);
+  }
+  const sizes = new Set(labels.map((label) => StyleSheet.flatten(label.props.style).fontSize));
+  assert.deepEqual([...sizes], [13]);
+  await unmountFlatListTree(tree);
+});
+
 test('all-108 browse is a nakshatra-grouped grid of tappable pada cells, not a flat list', async () => {
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
@@ -192,6 +226,49 @@ test('exact manual result has one hero, a FlatList, filters, shortlist, and exac
   assert.ok(tree.root.findByProps({ accessibilityLabel: 'Open Mithuna rashi naming detail' }));
   assert.ok(!textOf(tree).includes('CONTENT REVIEW PENDING'));
   assert.ok(!textOf(tree).includes('namakshar-v1'));
+  await unmountFlatListTree(tree);
+});
+
+// Regression (August 2026): the result screen's micro labels shipped with Inter
+// plus Latin tracking, so in Hindi "नाम देखें" / "कैसे निकला?" / "राशि अनुसार अक्षर"
+// fell back to an unpredictable face with every cluster prised apart, and the
+// header ended flush against the first name card so the two collided visually.
+test('result-screen section labels are script-aware and clear the first name row', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <NamkaranResultScreen navigation={mockNavigation as any} route={{ key: 'NamkaranResult-labels', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+
+  // Asserted over *every* Devanagari line on the screen, not a list of known
+  // labels: PR #263 added three more section labels while this fix was in review,
+  // and a named list would have waved them through.
+  const indic = tree.root
+    .findAllByType(Text)
+    .map((node) => ({ text: [node.props.children].flat(Infinity).filter((part) => typeof part === 'string').join(''), style: StyleSheet.flatten(node.props.style) ?? {} }))
+    .filter(({ text }) => /[ऀ-ॣ०-ॿ]/.test(text));
+  assert.ok(indic.length > 10, 'expected the Hindi result screen to be mostly Devanagari');
+  const tracked = indic.filter(({ style }) => (style.letterSpacing ?? 0) !== 0).map(({ text }) => text);
+  assert.deepEqual(tracked, [], 'Latin tracking splits the shirorekha on Devanagari');
+  const cramped = indic
+    .filter(({ style }) => typeof style.lineHeight === 'number' && style.lineHeight / style.fontSize < 1.35)
+    .map(({ text }) => text);
+  assert.deepEqual(cramped, [], 'a Devanagari line under 1.35x leading crops its own matras');
+
+  // The named micro labels additionally may not name Inter, which has no Indic
+  // glyphs at all. (Chips and buttons still do — a separate, announced sweep.)
+  const named = indic.filter(({ text }) => ['नाम देखें', 'कैसे निकला?', 'राशि अनुसार अक्षर'].includes(text));
+  assert.equal(named.length, 3);
+  for (const { text, style } of named) {
+    assert.ok(!/^Inter/.test(style.fontFamily ?? ''), `${text} must name a face that has Devanagari`);
+  }
+
+  const headerStyle = StyleSheet.flatten(tree.root.findByProps({ testID: 'namkaran-name-list' }).props.ListHeaderComponent.props.style);
+  assert.ok(headerStyle.paddingBottom >= 12, 'the header must clear the first name row, whose card carries an upward shadow');
   await unmountFlatListTree(tree);
 });
 

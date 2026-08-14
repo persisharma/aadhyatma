@@ -50,6 +50,20 @@ export function pillTextStyle(
 }
 
 /**
+ * Mixed-case micro tag — the small Inter-tracked label class that is *not* an
+ * uppercase pill (`यही · this one`, `९ चरण · 12 अक्षर`). Latin keeps Inter with a
+ * touch of tracking; hi/gu/kn take the script serif with none, because Inter has
+ * no Indic glyphs and Latin tracking splits the shirorekha (design.md §3.0).
+ * Size and layout stay with the caller. Use {@link pillTextStyle} instead when
+ * the label is an uppercase section/pill token — that one also swaps the case.
+ */
+export function indicSafeTag(lang: Lang, latinTracking = 0.4): TextStyle {
+  return isLatinLang(lang)
+    ? { fontFamily: fontFamilies.interSemiBold, letterSpacing: latinTracking }
+    : { fontFamily: scriptTitleFont(lang, fontFamilies.devanagariBold), letterSpacing: 0 };
+}
+
+/**
  * Card eyebrow / kicker style (the small `saffron-deep` context line atop the
  * glance cards — Muhurat glance card, Home Today strip). The Latin face is the
  * italic Cormorant `cardLatin` cut with a touch of tracking; hi/gu/kn swap to

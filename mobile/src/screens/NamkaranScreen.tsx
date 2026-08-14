@@ -23,7 +23,7 @@ import {
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'Namkaran'>;
 type BrowseMode = 'landing' | 'nakshatra' | 'rashi' | 'all';
@@ -40,6 +40,10 @@ export default function NamkaranScreen({ navigation }: Props) {
   const [message, setMessage] = useState('');
   const [browseMode, setBrowseMode] = useState<BrowseMode>('landing');
   const [selectedNakshatra, setSelectedNakshatra] = useState<number | null>(null);
+  // Section labels carry Devanagari ('नक्षत्र चुनें', 'सभी १०८ नामाक्षर'), so face and
+  // tracking must be script-aware — Inter has no Indic glyphs and its Latin
+  // tracking prises the clusters apart (design.md §3.0).
+  const microLabel = pillTextStyle(lang, typography.sectionLabel);
 
   useEffect(() => {
     let active = true;
@@ -107,7 +111,7 @@ export default function NamkaranScreen({ navigation }: Props) {
               {hasSaved ? <Pressable onPress={clearSaved} accessibilityRole="button" accessibilityLabel="Clear remembered newborn birth details" style={styles.clear}><Text style={[styles.controlTitle, { color: colors.avoidDeep }]}>{contentByLang(lang, 'सहेजे जन्म विवरण हटाएँ', 'Clear remembered birth details')}</Text></Pressable> : null}
               {message ? <Text accessibilityLiveRegion="polite" style={[styles.message, { color: colors.inkMuted }]}>{message}</Text> : null}
               <Pressable onPress={calculate} accessibilityRole="button" accessibilityLabel="Calculate Namkaran syllable" style={({ pressed }) => [styles.primary, { backgroundColor: colors.saffronDeep, borderRadius: radii.pill }, pressed && { opacity: 0.72 }]}><Text style={[styles.primaryText, { color: colors.onPrimary }]}>{contentByLang(lang, 'नामाक्षर निकालें', 'Find namakshar')}</Text></Pressable>
-              <Text style={[styles.section, { color: colors.inkMuted }]}>{contentByLang(lang, 'बिना जन्म विवरण', 'WITHOUT BIRTH DETAILS')}</Text>
+              <Text style={[styles.section, microLabel, { color: colors.inkMuted }]}>{contentByLang(lang, 'बिना जन्म विवरण', 'WITHOUT BIRTH DETAILS')}</Text>
               <BrowseDoor glyph="न" titleHi="नक्षत्र से चुनें" titleEn="Choose by nakshatra" bodyHi="नक्षत्र और पद पहले से जानते हैं तो सीधे नाम देखें।" bodyEn="If you know the nakshatra and pada, go straight to names." onPress={() => setBrowseMode('nakshatra')} />
               {/* Rashi is a peer door, not a second answer: many families are
                   told the Moon sign rather than the charana, and a rashi is
@@ -117,7 +121,7 @@ export default function NamkaranScreen({ navigation }: Props) {
             </>
           ) : browseMode === 'nakshatra' ? (
             <>
-              <Text style={[styles.section, { color: colors.inkMuted }]}>{contentByLang(lang, 'नक्षत्र चुनें', 'CHOOSE NAKSHATRA')}</Text>
+              <Text style={[styles.section, microLabel, { color: colors.inkMuted }]}>{contentByLang(lang, 'नक्षत्र चुनें', 'CHOOSE NAKSHATRA')}</Text>
               {selectedNakshatra === null ? (
                 <View testID="namkaran-nakshatra-grid" style={[styles.nakshatraGrid, { gap: nakshatraGridGap }]}>
                   {NAKSHATRA_NAMES_HI.map((name, index) => (
@@ -146,7 +150,7 @@ export default function NamkaranScreen({ navigation }: Props) {
             </>
           ) : browseMode === 'rashi' ? (
             <>
-              <Text style={[styles.section, { color: colors.inkMuted }]}>{contentByLang(lang, 'राशि चुनें', 'CHOOSE RASHI')}</Text>
+              <Text style={[styles.section, microLabel, { color: colors.inkMuted }]}>{contentByLang(lang, 'राशि चुनें', 'CHOOSE RASHI')}</Text>
               <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 16, marginTop: -6 }}>{meaningByLang(lang, 'हर राशि नौ चरणों की होती है — उसी नक्षत्र-पद तालिका से।', 'Each rashi holds nine charanas of the same nakshatra-pada table.')}</Text>
               <View testID="namkaran-rashi-grid" style={[styles.nakshatraGrid, { gap: nakshatraGridGap }]}>
                 {RASHI_NAMES_HI.map((name, index) => (
@@ -166,7 +170,7 @@ export default function NamkaranScreen({ navigation }: Props) {
             </>
           ) : (
             <>
-              <Text style={[styles.section, { color: colors.inkMuted }]}>{contentByLang(lang, 'सभी १०८ नामाक्षर', 'ALL 108 NAMAKSHAR')}</Text>
+              <Text style={[styles.section, microLabel, { color: colors.inkMuted }]}>{contentByLang(lang, 'सभी १०८ नामाक्षर', 'ALL 108 NAMAKSHAR')}</Text>
               <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 16, marginTop: -6 }}>{meaningByLang(lang, 'कोई जन्म विवरण आवश्यक नहीं — किसी भी अक्षर पर टैप करें।', 'No birth details needed — tap any sound.')}</Text>
               <View testID="namkaran-all-grid" style={styles.allGrid}>
                 {NAKSHATRA_NAMES_HI.map((_, nakshatraIndex) => <NakshatraIndexGroup key={nakshatraIndex} nakshatraIndex={nakshatraIndex} lang={lang} onPick={openManual} />)}
@@ -241,5 +245,8 @@ const styles = StyleSheet.create({
   remember: { minHeight: 64, borderWidth: 1, paddingHorizontal: 14, paddingVertical: 9, flexDirection: 'row', alignItems: 'center', gap: 10 },
   controlTitle: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 }, clear: { minHeight: 44, justifyContent: 'center', alignSelf: 'flex-start' },
   message: { fontFamily: fontFamilies.inter, fontSize: 11 }, primary: { minHeight: 50, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 18 },
-  primaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 14 }, section: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 1.2, marginTop: 8 },
+  primaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 14 },
+  // Family/size/tracking/case come from `pillTextStyle` at the call site; this
+  // entry holds layout and the >=1.4x leading the 10 pt floor requires (§3.0).
+  section: { lineHeight: 16, marginTop: 8 },
 });

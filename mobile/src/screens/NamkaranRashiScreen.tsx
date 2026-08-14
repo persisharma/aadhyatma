@@ -15,7 +15,7 @@ import type { CharanaEntry } from '@/panchang/namkaranConvention';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { indicSafeTag, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'NamkaranRashi'>;
 
@@ -80,7 +80,7 @@ export default function NamkaranRashiScreen({ navigation, route }: Props) {
       <ScrollView contentContainerStyle={[styles.content, { paddingHorizontal: spacing.readingGutter }]}>
         <View testID="namkaran-rashi-summary" style={[styles.summary, { borderColor: colors.divider, borderRadius: radii.lg }]}>
           <Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 22 }}>{rashiName}</Text>
-          <Text maxFontSizeMultiplier={1.25} style={[styles.summaryMeta, { color: colors.saffronDeep }]}>
+          <Text maxFontSizeMultiplier={1.25} style={[styles.summaryMeta, indicSafeTag(lang), { color: colors.saffronDeep }]}>
             {contentByLang(lang, `९ चरण · ${syllableCount} अक्षर`, `9 charanas · ${syllableCount} sounds`)}
           </Text>
           <View accessibilityLabel={`Sounds of ${RASHI_NAMES_EN[rashiIndex]} rashi`} style={styles.grid}>
@@ -101,7 +101,7 @@ export default function NamkaranRashiScreen({ navigation, route }: Props) {
           </Text>
         </View>
 
-        <Text style={[styles.section, { color: colors.inkMuted }]}>{contentByLang(lang, 'राशि के नौ चरण', 'THE NINE CHARANAS')}</Text>
+        <Text style={[styles.section, pillTextStyle(lang, typography.sectionLabel), { color: colors.inkMuted }]}>{contentByLang(lang, 'राशि के नौ चरण', 'THE NINE CHARANAS')}</Text>
         {groups.map(({ nakshatraIndex, items }) => (
           <View key={nakshatraIndex} testID={`namkaran-rashi-group-${nakshatraIndex + 1}`} style={styles.group}>
             <Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16 }}>
@@ -153,7 +153,7 @@ function CharanaRow({ entry, lang, nameCount, ofDay, onPress }: { entry: Charana
         {contentByLang(lang, `पद ${entry.pada} → ${hi}`, `Pada ${entry.pada} → ${latin}`)}
       </Text>
       {ofDay ? (
-        <Text maxFontSizeMultiplier={1.25} style={[styles.dayTag, { color: colors.saffronDeep }]}>
+        <Text maxFontSizeMultiplier={1.25} style={[styles.dayTag, pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep }]}>
           {contentByLang(lang, 'इस दिन की सम्भावना', 'A POSSIBILITY FOR THAT DAY')}
         </Text>
       ) : null}
@@ -171,10 +171,13 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   content: { paddingBottom: 36, gap: 12 },
   summary: { borderWidth: 1, padding: 14 },
-  summaryMeta: { fontFamily: fontFamilies.interSemiBold, fontSize: 11, letterSpacing: 0.4, marginTop: 3 },
+  summaryMeta: { fontSize: 11, lineHeight: 16, marginTop: 3 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 7, marginTop: 11 },
   tile: { width: '31%', minHeight: 40, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  section: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 1.2, marginTop: 4 },
+  // Family/size/tracking/case come from `pillTextStyle` at the call site: this
+  // label carries Devanagari, which Inter has no glyphs for and Latin tracking
+  // prises off the shirorekha (design.md §3.0).
+  section: { lineHeight: 16, marginTop: 4 },
   group: { gap: 8 },
-  dayTag: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 15, letterSpacing: 0.6, marginTop: 3 },
+  dayTag: { lineHeight: 16, marginTop: 3 },
 });
