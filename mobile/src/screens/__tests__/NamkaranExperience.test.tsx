@@ -222,6 +222,37 @@ test('exact manual result has one hero, a FlatList, filters, shortlist, and exac
   await unmountFlatListTree(tree);
 });
 
+// Regression (August 2026): the result screen's micro labels shipped with Inter
+// plus Latin tracking, so in Hindi "नाम देखें" / "कैसे निकला?" / "राशि अनुसार अक्षर"
+// fell back to an unpredictable face with every cluster prised apart, and the
+// header ended flush against the first name card so the two collided visually.
+test('result-screen section labels are script-aware and clear the first name row', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <NamkaranResultScreen navigation={mockNavigation as any} route={{ key: 'NamkaranResult-labels', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+
+  const labels = tree.root
+    .findAllByType(Text)
+    .map((node) => ({ text: [node.props.children].flat(Infinity).filter((part) => typeof part === 'string').join(''), style: StyleSheet.flatten(node.props.style) ?? {} }))
+    .filter(({ text }) => ['नाम देखें', 'कैसे निकला?', 'राशि अनुसार अक्षर'].includes(text));
+  assert.equal(labels.length, 3);
+  for (const { text, style } of labels) {
+    assert.equal(style.letterSpacing, 0, `${text} must not carry Latin tracking`);
+    assert.ok(!/^Inter/.test(style.fontFamily ?? ''), `${text} must name a face that has Devanagari`);
+    assert.ok(style.lineHeight / style.fontSize >= 1.4, `${text} needs the 10 pt floor's leading`);
+  }
+
+  const headerStyle = StyleSheet.flatten(tree.root.findByProps({ testID: 'namkaran-name-list' }).props.ListHeaderComponent.props.style);
+  assert.ok(headerStyle.paddingBottom >= 12, 'the header must clear the first name row, whose card carries an upward shadow');
+  await unmountFlatListTree(tree);
+});
+
 test('name detail carries both meanings and allows copying only the candidate name', async () => {
   mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }) };
   let tree!: TestRenderer.ReactTestRenderer;

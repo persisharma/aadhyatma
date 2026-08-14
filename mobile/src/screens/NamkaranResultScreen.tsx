@@ -23,7 +23,7 @@ import { useNamkaranShortlist } from '@/panchang/useNamkaranShortlist';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'NamkaranResult'>;
 type CountFilter = 'all' | 2 | 3 | 4;
@@ -62,6 +62,11 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
   const [shareVisible, setShareVisible] = useState(false);
   const [includeShortlist, setIncludeShortlist] = useState(false);
   const { ids: shortlistIds, toggle: toggleShortlist, error: shortlistError } = useNamkaranShortlist();
+  // Micro-label face/tracking/case. The raw style carried Inter + Latin tracking,
+  // so in Hindi "नाम देखें" / "कैसे निकला?" / "राशि अनुसार अक्षर" rendered in an
+  // unpredictable fallback face with the tracking prising each cluster apart
+  // (design.md §3.0). Layout stays in the StyleSheet entries below.
+  const microLabel = pillTextStyle(lang, typography.sectionLabel);
   const candidates = useMemo(
     () => result.kind === 'exact' ? [result.candidate] : result.candidates,
     [result]
@@ -110,13 +115,13 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
       )}
       {result.kind === 'exact' ? <View style={[styles.notice, { borderColor: colors.divider, borderRadius: radii.md }]}>
         <Pressable onPress={() => setShowDerivation((current) => !current)} accessibilityRole="button" accessibilityState={{ expanded: showDerivation }} accessibilityLabel="How this namakshar was derived" style={styles.disclosure}>
-          <Text style={[styles.noticeTitle, { color: colors.saffronDeep }]}>{contentByLang(lang, 'कैसे निकला?', 'HOW THIS WAS DERIVED')}</Text>
+          <Text style={[styles.noticeTitle, microLabel, { color: colors.saffronDeep }]}>{contentByLang(lang, 'कैसे निकला?', 'HOW THIS WAS DERIVED')}</Text>
           <Text style={{ color: colors.saffronDeep, fontSize: 18 }}>{showDerivation ? '−' : '+'}</Text>
         </Pressable>
         {showDerivation ? <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17 }}>{meaningByLang(lang, 'लाहिरी पद्धति से जन्म के समय चन्द्रमा के नक्षत्र और चरण के अनुसार पारम्परिक नामाक्षर मिलता है।', 'The traditional starting sound follows the Moon’s nakshatra and pada at birth using the Lahiri method.')}</Text> : null}
       </View> : null}
       {fallbackUsed ? <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17 }}>{meaningByLang(lang, 'इस पद के लिए प्रचलित नाम सीमित हैं — पूरे नक्षत्र के उपलब्ध अक्षर दिखाए जा रहे हैं।', 'Common names for this pada are limited, so available sounds from the whole nakshatra are shown.')}</Text> : null}
-      <Text style={[styles.section, { color: colors.inkMuted }]}>{contentByLang(lang, 'नाम देखें', 'BROWSE NAMES')}</Text>
+      <Text style={[styles.section, microLabel, { color: colors.inkMuted }]}>{contentByLang(lang, 'नाम देखें', 'BROWSE NAMES')}</Text>
       <View style={styles.filters}>
         {(['all', 'boy', 'girl'] as const).map((value) => <FilterButton key={value} selected={gender === value} label={value === 'all' ? contentByLang(lang, 'सभी', 'All') : value === 'boy' ? contentByLang(lang, 'बालक', 'Boy') : contentByLang(lang, 'बालिका', 'Girl')} accessibilityLabel={`Filter names: ${value}`} onPress={() => setGender(value)} />)}
       </View>
@@ -134,7 +139,7 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
 
   const footer = (
     <View style={styles.footer}>
-      <Text style={[styles.section, { color: colors.inkMuted }]}>{contentByLang(lang, 'राशि अनुसार अक्षर', 'RASHI SOUNDS')}</Text>
+      <Text style={[styles.section, microLabel, { color: colors.inkMuted }]}>{contentByLang(lang, 'राशि अनुसार अक्षर', 'RASHI SOUNDS')}</Text>
       <View style={[styles.rashi, { borderColor: colors.divider, borderRadius: radii.lg }]}>
         <Text maxFontSizeMultiplier={1.25} style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18 }}>{contentByLang(lang, RASHI_NAMES_HI[primaryCandidate.rashiIndex], RASHI_NAMES_EN[primaryCandidate.rashiIndex])}</Text>
         <View accessibilityLabel="Nine rashi sounds" style={styles.rashiGrid}>{rashiSyllables(primaryCandidate.rashiIndex).map((value, index) => <View key={`${value.hi}-${index}`} style={[styles.rashiSyllable, { backgroundColor: colors.saffronTint, borderColor: colors.goldTint, borderRadius: radii.sm }]}><Text style={{ color: colors.saffronDeep, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 17 }}>{value.hi}</Text></View>)}</View>
@@ -142,7 +147,7 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
       </View>
       {result.kind === 'exact' ? (
         <>
-          {shortlistedNames.length ? <View style={[styles.shareOptIn, { borderColor: colors.divider, borderRadius: radii.md }]}><View style={{ flex: 1 }}><Text style={[styles.noticeTitle, { color: colors.ink }]}>{contentByLang(lang, 'चुने नाम शेयर में जोड़ें', 'INCLUDE SHORTLIST')}</Text><Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 10, lineHeight: 15 }}>{meaningByLang(lang, 'इसे हर शेयर के लिए अलग से चुनना होगा। जन्म तिथि और समय कभी शामिल नहीं होते।', 'This is a per-share opt-in. Birth date and time are never included.')}</Text></View><Switch value={includeShortlist} onValueChange={setIncludeShortlist} accessibilityLabel="Include shortlisted names in this share" trackColor={{ false: colors.divider, true: colors.saffron }} thumbColor={colors.parchment} /></View> : null}
+          {shortlistedNames.length ? <View style={[styles.shareOptIn, { borderColor: colors.divider, borderRadius: radii.md }]}><View style={{ flex: 1 }}><Text style={[styles.noticeTitle, microLabel, { color: colors.ink }]}>{contentByLang(lang, 'चुने नाम शेयर में जोड़ें', 'INCLUDE SHORTLIST')}</Text><Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 10, lineHeight: 15 }}>{meaningByLang(lang, 'इसे हर शेयर के लिए अलग से चुनना होगा। जन्म तिथि और समय कभी शामिल नहीं होते।', 'This is a per-share opt-in. Birth date and time are never included.')}</Text></View><Switch value={includeShortlist} onValueChange={setIncludeShortlist} accessibilityLabel="Include shortlisted names in this share" trackColor={{ false: colors.divider, true: colors.saffron }} thumbColor={colors.parchment} /></View> : null}
           <Pressable onPress={() => setShareVisible(true)} accessibilityRole="button" accessibilityLabel="Preview privacy-safe Namkaran share card" style={[styles.primary, { backgroundColor: colors.saffronDeep, borderRadius: radii.pill }]}><Text style={[styles.primaryText, { color: colors.onPrimary }]}>{contentByLang(lang, 'शेयर कार्ड देखें', 'Preview share card')}</Text></Pressable>
         </>
       ) : null}
@@ -197,9 +202,18 @@ function FilterButton({ selected, label, accessibilityLabel, onPress }: { select
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1 }, center: { alignItems: 'center', justifyContent: 'center', gap: 16, padding: 24 }, headerContent: { gap: 14 }, footer: { gap: 14, paddingTop: 6 },
-  notice: { borderWidth: 1, padding: 12, gap: 4 }, disclosure: { minHeight: 36, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }, noticeTitle: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 1.1 },
-  section: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 1.2, marginTop: 4 }, filters: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  root: { flex: 1 }, center: { alignItems: 'center', justifyContent: 'center', gap: 16, padding: 24 },
+  // `gap` only spaces the header's own children, so the first name row used to
+  // butt straight against the length-filter chips — close enough that the card's
+  // shadow bled over them and the two read as one overlapping block. The padding
+  // gives row 1 the same clearance the rows have from each other.
+  headerContent: { gap: 14, paddingBottom: 14 }, footer: { gap: 14, paddingTop: 6 },
+  notice: { borderWidth: 1, padding: 12, gap: 4 }, disclosure: { minHeight: 36, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
+  // Font family/size/tracking/case for both micro labels come from
+  // `pillTextStyle` at the call sites (script-aware, design.md §3.0); these
+  // entries hold only layout and the ≥1.4× leading the 10 pt floor requires.
+  noticeTitle: { lineHeight: 16, flexShrink: 1 },
+  section: { lineHeight: 16, marginTop: 4 }, filters: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   filter: { minHeight: 44, paddingHorizontal: 13, borderWidth: 1, justifyContent: 'center' }, filterText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   emptyState: { alignItems: 'center', gap: 4 }, empty: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18, textAlign: 'center', paddingVertical: 12 }, resetFilters: { minHeight: 44, borderWidth: 1, paddingHorizontal: 16, alignItems: 'center', justifyContent: 'center' }, resetText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 }, window: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 15 },
   thumbText: { fontFamily: fontFamilies.devanagariBold, fontSize: 18 }, nameRow: { position: 'relative' }, starSpace: { width: 44, height: 44 }, star: { position: 'absolute', right: 16, top: 16, width: 44, height: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, starGlyph: { fontSize: 18, includeFontPadding: false }, shortlistedRow: { opacity: 0.92 },

@@ -9,7 +9,7 @@ import type { CharanaCandidate } from '@/panchang/namkaran';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang } from '@/utils/localize';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 export default function NamaksharCard({ candidate, lang }: { candidate: CharanaCandidate; lang: Lang }) {
   const { colors, radii, elevation, typography } = useTheme();
@@ -24,12 +24,17 @@ export default function NamaksharCard({ candidate, lang }: { candidate: CharanaC
       accessibilityLabel={`${primary.hi}, ${primary.latin}. ${NAKSHATRA_NAMES_EN[candidate.entry.nakshatraIndex]}, pada ${candidate.entry.pada}.`}
       style={[styles.card, { borderColor: colors.cardActiveBorder, borderRadius: radii.lg }, elevation.raised]}
     >
-      <Text style={[styles.eyebrow, { color: colors.saffronDeep }]}>{contentByLang(lang, '॥ नामाक्षर', '॥ NAMAKSHAR')}</Text>
+      <Text style={[styles.eyebrow, pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep }]}>{contentByLang(lang, '॥ नामाक्षर', '॥ NAMAKSHAR')}</Text>
       <View style={styles.syllableBox}>
         <Text
           allowFontScaling
           maxFontSizeMultiplier={1.25}
-          style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 58, lineHeight: 78 }}
+          // No explicit `lineHeight`: at 58 pt the natural Devanagari line box is
+          // ~79 pt, so the fixed 78 sliced the top off an above-shirorekha matra
+          // (`के` rendered as `क` with a stub). A fixed leading also cannot
+          // follow `maxFontSizeMultiplier`, so it would clip again at the largest
+          // step; the box below supplies the rhythm instead (design.md §3.0).
+          style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 58 }}
         >
           {primary.hi}
         </Text>
@@ -52,8 +57,12 @@ export default function NamaksharCard({ candidate, lang }: { candidate: CharanaC
 const styles = StyleSheet.create({
   card: { borderWidth: 1, padding: 20, alignItems: 'center', overflow: 'hidden' },
   // The hero is intentionally given a real line box. At the largest supported
-  // type step, a bare Text line can otherwise crop Devanagari matras.
+  // type step, a bare Text line can otherwise crop Devanagari matras. `minHeight`
+  // (not `height`) so the natural line box can grow past it when the syllable
+  // scales up, instead of being clipped back to 96.
   syllableBox: { minHeight: 96, justifyContent: 'center', alignItems: 'center' },
-  eyebrow: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 1.2 },
+  // Face/tracking/case come from pillTextStyle — Inter carries no Indic glyphs
+  // and its Latin tracking splits the shirorekha (design.md §3.0).
+  eyebrow: { lineHeight: 16 },
   latin: { fontFamily: fontFamilies.latinSemiBoldItalic, fontSize: 18 },
 });
