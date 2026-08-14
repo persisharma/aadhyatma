@@ -190,6 +190,11 @@
      Devanagari, the §3.0 trap that clipped JyotishShareCard */
   .rnote{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);line-height:1.7;margin-top:10px}
 
+  /* provenance banner on a charana opened from an unknown-time day */
+  .uncertain{border:1px solid var(--gold);background:var(--gold-chip);border-radius:12px;padding:11px 13px;margin-bottom:12px;position:relative}
+  .uncertain .uk{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.7px;color:var(--saffron-deep)}
+  .uncertain .uv{font-family:var(--deva);font-size:11.5px;color:var(--ink);line-height:1.7;margin-top:4px}
+
   /* the shipped Home CategoryCard launcher grid, reused for the 12 rashis */
   .lgrid{display:flex;flex-wrap:wrap;gap:10px}
   .ltile{width:calc((100% - 20px)/3);min-height:72px;border:1px solid var(--card-border);border-radius:16px;
@@ -541,10 +546,10 @@
           <div class="lcwin">7:52 PM – 11:59 PM</div>
           <div class="lcs">Purva Phalguni pada 1 · Mo</div></div><div class="chev2">›</div></div>
 
-        <div class="draft" style="border-style:solid"><b>No hero, no share.</b> Every candidate is the <b>same ListCard row</b> — none enlarged, ranked, or called “most likely” — and the header carries <b>no ShareButton</b>: an exact syllable cannot be shared from an uncertain result. Noon is never substituted and never persisted.</div>
+        <div class="draft" style="border-style:solid"><b>No hero, no share.</b> Every candidate is the <b>same ListCard row</b> — none enlarged, ranked, or called “most likely” — and the header carries <b>no ShareButton</b>: an exact syllable cannot be shared from an uncertain result. Noon is never substituted and never persisted. The rows <i>are</i> tappable (frame 12): uniform rows are the anti-ranking discipline, and being navigable is not ranking.</div>
 
         <div class="btn ghost">सही समय दर्ज करें</div>
-        <div class="note">प्रत्येक सम्भावना के नाम देखने के लिए उसे चुनें</div>
+        <div class="note">किसी भी सम्भावना पर टैप करके उसका नामाक्षर और नाम देखें</div>
       </div></div>
     </div>
     <div class="cap"><b>Unknown time is an interval, not a guess.</b><br/>
@@ -788,6 +793,47 @@
     </div>
     <div class="cap"><b>An unknown time can cross a rashi boundary too.</b><br/>
       <span class="n">14</span>The Moon covers ≈ 3.6–4.5 charanas a day against the <b>9</b> a rashi holds, so roughly <b>one day in two</b> crosses a 30° boundary. The shipped surface named only the <i>first</i> candidate's rashi — an unhedged single answer sitting directly under copy that says “none is ranked as more likely”. It now renders <b>one card per distinct rashi the day touched</b>, in time order, with a line saying the Moon changed rashi. Same discipline as the candidate rows above it.</div>
+    </div>
+  </div>
+
+  <!-- ============ 5 · OPENING A CANDIDATE ============ -->
+  <div class="phaselabel">5 · Opening a candidate — the full card, without the certainty</div>
+  <div class="phasedesc">A parent who does not know the birth time still wants to read each possible syllable and its names. They get the whole card; what they do not get is a share that would assert one of them as the answer.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">नामाक्षर</div><div class="topaction"></div></div>
+
+        <div class="uncertain">
+          <div class="dot" style="right:-8px;top:-8px">15</div>
+          <div class="uk">दिन की एक सम्भावना · ONE OF THE DAY’S POSSIBILITIES</div>
+          <div class="uv">जन्म समय ज्ञात न होने से यह उस दिन के सम्भावित अक्षरों में से एक है। सही समय मिलने पर एक ही अक्षर रहेगा।</div>
+        </div>
+
+        <div class="hero">
+          <div class="mark">॥</div>
+          <div class="eyebrow">नामाक्षर · naming syllable</div>
+          <div class="syl">मी</div>
+          <div class="rom">Mi</div>
+          <div class="prov">मघा नक्षत्र · पद २ · सिंह राशि</div>
+        </div>
+
+        <div class="disclose">कैसे निकला? · How this was derived <span class="plus">+</span></div>
+
+        <div class="seclabel">नाम सुझाव</div>
+        <div class="lc"><div class="thumb">मी</div><div class="lcbody">
+          <div class="lct">मीरा</div><div class="lcs">Meera · the devotee-poet; the ocean</div></div><div class="star">☆</div></div>
+        <div class="lc"><div class="thumb">मी</div><div class="lcbody">
+          <div class="lct">मीनाक्षी</div><div class="lcs">Meenakshi · fish-eyed; a name of the Devi</div></div><div class="star">☆</div></div>
+
+        <div class="draft" style="border-style:solid"><b>No ShareButton, no “include shortlist” opt-in.</b> The shortlist star still works — keeping candidate names is exactly what this parent is doing — but nothing here can produce a card asserting <i>this</i> is the child's namakshar. The identical charana reached deliberately through the nakshatra or rashi browse <b>does</b> share: a table lookup is not a claim about this child's birth.</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>The candidate detail — full card, suppressed share.</b><br/>
+      <span class="n">15</span>The route carries a <code>fromUnknownTime</code> flag, and <b>the flag is what suppresses the share — not the basis</b>. That keeps two things true at once: the parent can read every possibility properly, and the app never turns “I don't know the birth time” into a shareable certainty in two taps. Without it, the range screen's own restraint would have been trivially routed around.</div>
     </div>
   </div>
 

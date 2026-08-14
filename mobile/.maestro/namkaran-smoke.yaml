@@ -141,5 +141,16 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*IST.*pada.*"
 - assertNotVisible: "Preview privacy-safe Namkaran share card"
 - takeScreenshot: namkaran-unknown-time-range
+
+# A candidate opens its own namakshar card, but stays flagged as one of the
+# day's possibilities and still offers no exact share.
+- tapOn: ".*IST.*pada.*Open namakshar.*"
+- extendedWaitUntil:
+    visible: "ONE OF THE DAY.S POSSIBILITIES"
+    timeout: 20000
+- assertVisible: { id: "namkaran-uncertain-notice" }
+- assertVisible: { id: "namkaran-name-list" }
+- assertNotVisible: "Preview privacy-safe Namkaran share card"
+- takeScreenshot: namkaran-uncertain-candidate-detail
 - stopApp:
     appId: com.prashantsharma.vedansh

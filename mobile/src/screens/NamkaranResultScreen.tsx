@@ -53,7 +53,8 @@ export default function NamkaranResultScreen({ navigation, route }: Props) {
   return <NamkaranResultContent navigation={navigation} route={route} result={computeState.result} />;
 }
 
-function NamkaranResultContent({ navigation, route: _route, result }: Props & { result: NamkaranResult }) {
+function NamkaranResultContent({ navigation, route, result }: Props & { result: NamkaranResult }) {
+  const fromUnknownTime = route.params.fromUnknownTime === true;
   const rootNav = useNavigation<any>();
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
@@ -109,17 +110,28 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
     setCount('all');
   };
   const shortlistedNames = useMemo(() => names.filter((name) => shortlistIds.includes(name.id)), [names, shortlistIds]);
-  const shareModel = result.kind === 'exact'
+  // A charana opened from an unknown-time day is browsable in full — hero,
+  // context, names, shortlist — but it is one of that day's possibilities, so
+  // it carries no exact-syllable share (PRD-17 §8.3 invariant 5).
+  const shareAllowed = result.kind === 'exact' && !fromUnknownTime;
+  const shareModel = shareAllowed
     ? buildNamkaranShareModel(primaryCandidate, includeShortlist ? shortlistedNames : [])
     : null;
 
   const header = (
     <View style={styles.headerContent}>
+      {result.kind === 'exact' && fromUnknownTime ? (
+        <View testID="namkaran-uncertain-notice" style={[styles.notice, { borderColor: colors.gold, backgroundColor: colors.goldChipBg, borderRadius: radii.md }]}>
+          <Text style={[styles.noticeTitle, { color: colors.saffronDeep }]}>{contentByLang(lang, 'दिन की एक सम्भावना', 'ONE OF THE DAY’S POSSIBILITIES')}</Text>
+          <Text maxFontSizeMultiplier={1.25} style={{ color: colors.ink, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17 }}>{meaningByLang(lang, 'जन्म समय ज्ञात न होने से यह उस दिन के सम्भावित अक्षरों में से एक है। सही समय मिलने पर एक ही अक्षर रहेगा।', 'Because the birth time is unknown, this is one of that day’s possible sounds. An exact time settles it to one.')}</Text>
+        </View>
+      ) : null}
       {result.kind === 'exact' ? <NamaksharCard candidate={primaryCandidate} lang={lang} /> : (
         <View>
           <Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 22 }}>{contentByLang(lang, 'सम्भावित नामाक्षर', 'Possible namakshar')}</Text>
           <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, marginTop: 5 }}>{meaningByLang(lang, 'चन्द्रमा दिन भर में नक्षत्र बदल सकता है — इसलिए सम्भावित अक्षर एक से अधिक हैं। किसी एक को अधिक सम्भावित नहीं माना गया।', 'The Moon can change charana through the day, so more than one starting sound is possible. None is ranked as more likely.')}</Text>
-          <View style={{ marginTop: 12 }}>{candidates.map((candidate) => <CandidateRow key={`${candidate.entry.charanaIndex}-${candidate.window?.startMs}`} candidate={candidate} lang={lang} />)}</View>
+          <View style={{ marginTop: 12 }}>{candidates.map((candidate) => <CandidateRow key={`${candidate.entry.charanaIndex}-${candidate.window?.startMs}`} candidate={candidate} lang={lang} onPress={() => navigation.navigate('NamkaranResult', { basis: { kind: 'manual', nakshatraIndex: candidate.entry.nakshatraIndex, pada: candidate.entry.pada }, fromUnknownTime: true })} />)}</View>
+          <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17, marginTop: 8 }}>{meaningByLang(lang, 'किसी भी सम्भावना पर टैप करके उसका नामाक्षर और नाम देखें।', 'Tap any possibility to see its namakshar and names.')}</Text>
         </View>
       )}
       {result.kind === 'exact' ? <View style={[styles.notice, { borderColor: colors.divider, borderRadius: radii.md }]}>
@@ -161,7 +173,7 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
         />
       ))}
       <Text maxFontSizeMultiplier={1.25} style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17 }}>{meaningByLang(lang, 'कुछ परिवार चरण के बजाय चन्द्र राशि से नाम रखते हैं; दोनों परम्पराएँ प्रचलित हैं।', 'Some families name by Moon rashi rather than charana; both traditions are in use.')}</Text>
-      {result.kind === 'exact' ? (
+      {shareAllowed ? (
         <>
           {shortlistedNames.length ? <View style={[styles.shareOptIn, { borderColor: colors.divider, borderRadius: radii.md }]}><View style={{ flex: 1 }}><Text style={[styles.noticeTitle, { color: colors.ink }]}>{contentByLang(lang, 'चुने नाम शेयर में जोड़ें', 'INCLUDE SHORTLIST')}</Text><Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 10, lineHeight: 15 }}>{meaningByLang(lang, 'इसे हर शेयर के लिए अलग से चुनना होगा। जन्म तिथि और समय कभी शामिल नहीं होते।', 'This is a per-share opt-in. Birth date and time are never included.')}</Text></View><Switch value={includeShortlist} onValueChange={setIncludeShortlist} accessibilityLabel="Include shortlisted names in this share" trackColor={{ false: colors.divider, true: colors.saffron }} thumbColor={colors.parchment} /></View> : null}
           <Pressable onPress={() => setShareVisible(true)} accessibilityRole="button" accessibilityLabel="Preview privacy-safe Namkaran share card" style={[styles.primary, { backgroundColor: colors.saffronDeep, borderRadius: radii.pill }]}><Text style={[styles.primaryText, { color: colors.onPrimary }]}>{contentByLang(lang, 'शेयर कार्ड देखें', 'Preview share card')}</Text></Pressable>
@@ -265,10 +277,16 @@ function RashiSoundsCard({ rashiIndex, lang, currentCharanas, onOpenCharana, onO
   );
 }
 
-function CandidateRow({ candidate, lang }: { candidate: CharanaCandidate; lang: Lang }) {
+/**
+ * A candidate is a destination, not a verdict. Opening one shows that charana's
+ * namakshar card, context and names — what the parent came for — while the row
+ * itself stays uniform with its siblings (no rank, no emphasis) and the opened
+ * screen keeps its uncertain provenance and offers no exact share.
+ */
+function CandidateRow({ candidate, lang, onPress }: { candidate: CharanaCandidate; lang: Lang; onPress: () => void }) {
   const { colors, typography } = useTheme();
   const syllable = candidate.entry.syllables[0];
-  return <ListCard testID="namkaran-candidate-row" leading={<CardThumb><Text style={{ color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold, fontSize: 20 }}>{syllable.hi}</Text></CardThumb>} accessibilityRole="summary" accessibilityLabel={`${formatWindow(candidate)}. ${NAKSHATRA_NAMES_EN[candidate.entry.nakshatraIndex]}, pada ${candidate.entry.pada}, ${syllable.latin}.`} right={<View />}><Text style={[styles.window, { color: colors.saffronDeep }]}>{formatWindow(candidate)}</Text><Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15 }}>{contentByLang(lang, `${NAKSHATRA_NAMES_HI[candidate.entry.nakshatraIndex]} · पद ${candidate.entry.pada} → ${syllable.hi}`, `${NAKSHATRA_NAMES_EN[candidate.entry.nakshatraIndex]} · Pada ${candidate.entry.pada} → ${syllable.latin}`)}</Text></ListCard>;
+  return <ListCard testID="namkaran-candidate-row" leading={<CardThumb><Text style={{ color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold, fontSize: 20 }}>{syllable.hi}</Text></CardThumb>} onPress={onPress} accessibilityLabel={`${formatWindow(candidate)}. ${NAKSHATRA_NAMES_EN[candidate.entry.nakshatraIndex]}, pada ${candidate.entry.pada}, ${syllable.latin}. Open namakshar.`}><Text style={[styles.window, { color: colors.saffronDeep }]}>{formatWindow(candidate)}</Text><Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15 }}>{contentByLang(lang, `${NAKSHATRA_NAMES_HI[candidate.entry.nakshatraIndex]} · पद ${candidate.entry.pada} → ${syllable.hi}`, `${NAKSHATRA_NAMES_EN[candidate.entry.nakshatraIndex]} · Pada ${candidate.entry.pada} → ${syllable.latin}`)}</Text></ListCard>;
 }
 
 function NameRow({ name, lang, shortlisted, onOpen, onToggle }: { name: NameRecord; lang: Lang; shortlisted: boolean; onOpen: () => void; onToggle: () => void }) {

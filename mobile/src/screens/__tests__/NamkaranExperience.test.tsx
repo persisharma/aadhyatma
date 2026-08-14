@@ -288,6 +288,66 @@ test('unknown-time result is uniform candidate rows with no hero or exact share'
   assert.equal(tree.root.findAll((node) => node.type === ListCard && node.props.testID === 'namkaran-candidate-row').length, candidates.length);
   assert.equal(tree.root.findAllByProps({ accessibilityLabel: 'Preview privacy-safe Namkaran share card' }).length, 0);
   assert.equal(tree.root.findAll((node) => typeof node.props.accessibilityLabel === 'string' && node.props.accessibilityLabel.includes('Ke. Punarvasu')).length, 0);
+
+  // Uniform rows, but each is a destination: opening one shows that charana's
+  // namakshar card and names, flagged as derived from an unknown time.
+  const rows = tree.root.findAll((node) => node.type === ListCard && node.props.testID === 'namkaran-candidate-row');
+  assert.ok(rows.every((row) => typeof row.props.onPress === 'function'));
+  await act(async () => { rows[0].props.onPress(); });
+  const call = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(call?.[0], 'NamkaranResult');
+  assert.equal(call?.[1]?.fromUnknownTime, true);
+  assert.deepEqual(call?.[1]?.basis, {
+    kind: 'manual',
+    nakshatraIndex: candidates[0].entry.nakshatraIndex,
+    pada: candidates[0].entry.pada,
+  });
+  await unmountFlatListTree(tree);
+});
+
+test('a charana opened from an unknown-time day keeps its provenance and offers no exact share', async () => {
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }) };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-uncertain', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 }, fromUnknownTime: true } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  // The parent gets what they came for: the hero, the context, the names.
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'के, Ke. Punarvasu, pada 1.' }));
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Add Keshav to shortlist' }));
+  // But it is one of the day's possibilities, so it says so and cannot be shared.
+  assert.ok(tree.root.findByProps({ testID: 'namkaran-uncertain-notice' }));
+  assert.ok(textOf(tree).includes('one of that day’s possible sounds'));
+  assert.equal(tree.root.findAllByProps({ accessibilityLabel: 'Preview privacy-safe Namkaran share card' }).length, 0);
+  assert.equal(tree.root.findAllByProps({ accessibilityLabel: 'Include shortlisted names in this share' }).length, 0);
+  await unmountFlatListTree(tree);
+});
+
+test('the same charana reached deliberately still shares — the flag is what suppresses it', async () => {
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }) };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-deliberate', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Preview privacy-safe Namkaran share card' }));
+  assert.equal(tree.root.findAllByProps({ testID: 'namkaran-uncertain-notice' }).length, 0);
   await unmountFlatListTree(tree);
 });
 
