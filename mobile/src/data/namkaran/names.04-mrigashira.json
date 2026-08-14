@@ -1,0 +1,16 @@
+{
+  "source": {
+    "verified": false,
+    "referenceUrls": [
+      "repo://docs/roadmap/conventions/namkaran-namakshar-v1.md",
+      "repo://docs/roadmap/prds/17-namkaran.md"
+    ],
+    "notes": "Development fixtures for UI and privacy verification only; these references define the draft contract and do not attest the names or meanings."
+  },
+  "nakshatraIndex": 4,
+  "nakshatra": "Mrigashira",
+  "names": [
+    { "id": "kamya", "hi": "काम्या", "latin": "Kamya", "gender": "girl", "charanas": [18], "meaningHi": "वांछनीय; जिसकी कामना की जाए", "meaningEn": "Desirable; one who is wished for", "root": "काम्य", "syllableCount": 2 },
+    { "id": "kartik", "hi": "कार्तिक", "latin": "Kartik", "gender": "boy", "charanas": [18], "meaningHi": "कार्तिक मास से सम्बन्धित; स्कन्द का एक नाम", "meaningEn": "Related to the month Kartika; a name of Skanda", "root": "कार्तिक", "syllableCount": 3 }
+  ]
+}

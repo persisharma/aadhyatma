@@ -1,0 +1,16 @@
+{
+  "source": {
+    "verified": false,
+    "referenceUrls": [
+      "repo://docs/roadmap/conventions/namkaran-namakshar-v1.md",
+      "repo://docs/roadmap/prds/17-namkaran.md"
+    ],
+    "notes": "Development fixtures for UI and privacy verification only; these references define the draft contract and do not attest the names or meanings."
+  },
+  "nakshatraIndex": 23,
+  "nakshatra": "Shatabhisha",
+  "names": [
+    { "id": "sakshi", "hi": "साक्षी", "latin": "Sakshi", "gender": "girl", "charanas": [93], "meaningHi": "देखने या प्रमाण देने वाला साक्षी", "meaningEn": "A witness; one who observes or testifies", "root": "साक्षिन्", "syllableCount": 2 },
+    { "id": "sarthak", "hi": "सार्थक", "latin": "Sarthak", "gender": "boy", "charanas": [93], "meaningHi": "अर्थपूर्ण; सफल", "meaningEn": "Meaningful; fulfilled", "root": "सार्थक", "syllableCount": 3 }
+  ]
+}
