@@ -1,7 +1,7 @@
 /**
- * Drop the app's DERIVED caches whenever the running build changes — a store
- * update or an OTA — so a bug that got baked into cached data cannot outlive the
- * release that fixes it.
+ * Drop the app's COMPUTED-CALENDAR caches whenever the running build changes — a
+ * store update or an OTA — so a bug that got baked into cached panchang/muhurat
+ * output cannot outlive the release that fixes it.
  *
  * WHY. Two caches persist the output of on-device engines: the per-day panchang
  * solves (`panchangDayCache`) and the per-city observance year scans
@@ -14,10 +14,11 @@
  * needless sweep costs a handful of re-solves on one launch, a stale cache costs
  * a user the fix entirely.
  *
- * SCOPE — derived data only, never user data. Everything listed below is
+ * SCOPE — engine-computed calendar output only. Everything listed below is
  * recomputable from the bundled content plus the engines. Nothing a user typed,
- * chose, counted, starred or was reminded of is touched: see EXCLUDED below,
- * which is the part of this file worth reading twice.
+ * chose, counted, starred or was reminded of is touched, and neither is derived
+ * state outside the calendar engines: see EXCLUDED below, which is the part of
+ * this file worth reading twice.
  *
  * DEPENDENCIES. This module imports AsyncStorage and nothing else — deliberately.
  * The build identity comes from `expo-updates`/`expo-constants`, which are
@@ -39,16 +40,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  *   still carries one is covered by this path too.
  * - `@vedansh:observances:` — per-city observance year scans (`observanceCache`).
  *   Pure function of (year, calendar system, location) — Ujjain reads the
- *   bundled precomputed table instead and caches nothing.
- * - `@vedansh/widget:last-plan-key-v1` — the widget writer's write-dedupe key
- *   (`WidgetCoordinator`), NOT the payload itself. Clearing it forces exactly one
- *   payload rewrite on the next coordinator pass, which is what recovers the
- *   narrow case where the key was stored but the payload it describes was wrong.
- *   The payload lives in native shared storage and is left intact, so the widget
- *   never blanks while waiting for the rewrite.
+ *   bundled precomputed table instead and caches nothing. Same family as the day
+ *   solves: it is where a wrong festival/vrat DATE would be cached, which is
+ *   exactly the bug class `CACHE_VERSION` exists to invalidate.
  *
- * EXCLUDED, and why — these all live under the same `@vedansh` namespace and are
- * NOT caches:
+ * EXCLUDED, and why. This is a computed-days sweep, so the bar is narrow: a key
+ * belongs above only if it holds engine-computed calendar output. Everything
+ * below lives under the same `@vedansh` namespace and stays:
+ * - `@vedansh/widget:last-plan-key-v1` — derived, but not a computed-days cache:
+ *   it is the widget writer's write-dedupe key. It also needs no help, because
+ *   `WidgetCoordinator` re-plans the payload from scratch on every pass and
+ *   compares keys — so a fixed engine that changes the payload changes the key
+ *   and rewrites anyway, and an unchanged payload had nothing to fix.
  * - `@vedansh:panchang-location`, `@vedansh:panchang-calendar-system` — the
  *   user's chosen city and purnimant/amanta setting. They look panchang-shaped
  *   and are the easiest mistake here: clearing them silently moves the user back
@@ -74,7 +77,6 @@ export const DERIVED_CACHE_KEY_PREFIXES = [
   '@vedansh:panchang-days:',
   '@vedansh:muhurat-days:',
   '@vedansh:observances:',
-  '@vedansh/widget:last-plan-key-v1',
 ] as const;
 
 /**

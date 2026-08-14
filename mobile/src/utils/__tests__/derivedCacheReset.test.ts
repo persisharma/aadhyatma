@@ -2,8 +2,9 @@
  * The build-change cache reset. Two claims are worth real tests here, and they
  * pull in opposite directions:
  *
- *   1. It DOES clear the derived caches when the build moves (a store update or
- *      an OTA), or the bug that got baked into cached data outlives its fix.
+ *   1. It DOES clear the computed-calendar caches (panchang/muhurat day solves,
+ *      observance date scans) when the build moves — a store update or an OTA —
+ *      or the bug baked into that cached output outlives its fix.
  *   2. It NEVER clears anything else. This is the dangerous half — the same
  *      `@vedansh` namespace holds bookmarks, japam counts, followed vrats, birth
  *      details, family remembrance entries and the chosen city. A sweep that
@@ -26,9 +27,10 @@ import {
 } from '../derivedCacheReset';
 
 /**
- * Every key the app writes that is NOT a derived cache, as of this suite. Drawn
- * from the `@vedansh` literals across src/ — user data, preferences, notification
- * bookkeeping and one-shot flags. The sweep must leave all of them alone.
+ * Every key the app writes that is NOT computed-calendar output, as of this
+ * suite. Drawn from the `@vedansh` literals across src/ — user data, preferences,
+ * notification bookkeeping, one-shot flags, and the one piece of derived state
+ * that is deliberately out of scope. The sweep must leave all of them alone.
  */
 const MUST_SURVIVE = [
   // Practice and history — irreplaceable.
@@ -76,6 +78,10 @@ const MUST_SURVIVE = [
   '@vedansh/whats-new-seen-v1.4.7',
   '@vedansh/onboarding-setup-v1',
   '@vedansh/rating-prompt',
+  // Derived, but NOT computed-calendar output and therefore out of scope: the
+  // widget writer's write-dedupe key. Listed here rather than omitted so a future
+  // change that starts sweeping it fails a test instead of passing silently.
+  '@vedansh/widget:last-plan-key-v1',
 ];
 
 /** Representative keys under each allowlisted prefix. */
@@ -83,7 +89,6 @@ const MUST_BE_SWEPT = [
   '@vedansh:panchang-days:v3:ujjain:purnimant:2026-08-14',
   '@vedansh:muhurat-days:v1:ujjain:purnimant:2026-08-14',
   '@vedansh:observances:v2:delhi:amanta:2026',
-  '@vedansh/widget:last-plan-key-v1',
 ];
 
 const seedAll = async (): Promise<void> => {
@@ -100,7 +105,7 @@ beforeEach(async () => {
 });
 
 describe('clearDerivedCaches', () => {
-  test('removes every derived-cache key', async () => {
+  test('removes every computed-calendar cache key', async () => {
     await seedAll();
 
     const removed = await clearDerivedCaches();
@@ -110,7 +115,7 @@ describe('clearDerivedCaches', () => {
     for (const key of MUST_BE_SWEPT) expect(left).not.toContain(key);
   });
 
-  test('leaves every non-cache key untouched — user data is not recomputable', async () => {
+  test('leaves everything else untouched — user data is not recomputable', async () => {
     await seedAll();
 
     await clearDerivedCaches();
