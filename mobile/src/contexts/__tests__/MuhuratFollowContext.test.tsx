@@ -236,10 +236,10 @@ describe('MuhuratFollowProvider', () => {
 
   it('keeps follows soonest-first as they are added out of order', async () => {
     const tree = await mountAndHydrate();
-    await actSync(() => captured.follow('a', keyOffset(30)));
-    await actSync(() => captured.follow('b', keyOffset(3)));
-    await actSync(() => captured.follow('c', keyOffset(10)));
-    expect(captured.follows.map((f) => f.occasionId)).toEqual(['b', 'c', 'a']);
+    await actSync(() => captured.follow('griha-pravesh', keyOffset(30)));
+    await actSync(() => captured.follow('vahan', keyOffset(3)));
+    await actSync(() => captured.follow('namkaran', keyOffset(10)));
+    expect(captured.follows.map((f) => f.occasionId)).toEqual(['vahan', 'namkaran', 'griha-pravesh']);
     tree.unmount();
   });
 
@@ -278,12 +278,12 @@ describe('MuhuratFollowProvider', () => {
   it('pruneExpired drops follows whose day has passed', async () => {
     const tree = await mountAndHydrate();
     await actSync(() => captured.follow('vahan', keyOffset(1)));
-    await actSync(() => captured.follow('later', keyOffset(9)));
+    await actSync(() => captured.follow('vidyarambh', keyOffset(9)));
     // Two days on: the first follow is dead.
     const twoDaysOn = new Date();
     twoDaysOn.setDate(twoDaysOn.getDate() + 2);
     await actSync(() => captured.pruneExpired(twoDaysOn));
-    expect(captured.follows.map((f) => f.occasionId)).toEqual(['later']);
+    expect(captured.follows.map((f) => f.occasionId)).toEqual(['vidyarambh']);
     tree.unmount();
   });
 

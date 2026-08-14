@@ -43,6 +43,22 @@ jest.mock('expo-audio', () => {
   };
 });
 
+// expo-location is untranspiled ESM for the same reason as expo-speech below,
+// and it is now reached transitively by Home: TodayStrip / TodayRecommendations
+// → useMuhuratFinder → PanchangLocationContext (PRD-16 §6.7's follow chip and
+// abujh card both need the location that every sunrise-derived window depends
+// on). Permission is never granted under test, so the context falls back to its
+// bundled default city — which is what these suites want anyway.
+jest.mock('expo-location', () => ({
+  PermissionStatus: { GRANTED: 'granted', DENIED: 'denied', UNDETERMINED: 'undetermined' },
+  Accuracy: { Lowest: 1, Low: 2, Balanced: 3, High: 4, Highest: 5, BestForNavigation: 6 },
+  requestForegroundPermissionsAsync: jest.fn(() => Promise.resolve({ status: 'denied', granted: false })),
+  getForegroundPermissionsAsync: jest.fn(() => Promise.resolve({ status: 'denied', granted: false })),
+  getCurrentPositionAsync: jest.fn(() => Promise.reject(new Error('location unavailable in tests'))),
+  getLastKnownPositionAsync: jest.fn(() => Promise.resolve(null)),
+  hasServicesEnabledAsync: jest.fn(() => Promise.resolve(false)),
+}));
+
 jest.mock('expo-speech', () => ({
   speak: jest.fn(),
   stop: jest.fn(() => Promise.resolve()),

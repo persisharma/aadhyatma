@@ -25,6 +25,7 @@ import { VARA_NAMES_HI, VARA_NAMES_EN, PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { PanchangData } from '@/panchang/types';
 import MuhuratFinderShareCard from '@/components/MuhuratFinderShareCard';
+import MuhuratFollowControl from '@/components/MuhuratFollowControl';
 import ShareButton from '@/components/ShareButton';
 import ReaderHeader from '@/components/ReaderHeader';
 import type { PanchangStackParamList } from '@/navigation/types';
@@ -226,6 +227,17 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
               </View>
             )}
           </LinearGradient>
+
+          {/* Action band — follow leads, then the shipped timings link. Both
+              stay ABOVE the evidence so Answer → Action → Evidence holds. */}
+          <MuhuratFollowControl
+            occasionId={rule.id}
+            occasionNameHi={rule.nameHi}
+            occasionNameEn={rule.nameEn}
+            date={date}
+            tier={data.v.tier}
+            bestWindow={data.v.windows[0] ?? null}
+          />
 
           <Pressable
             testID="muhurat-day-timings-link"

@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; follow/remind (+ Today-strip chip, FOR TODAY abujh card) are the next slice |
+| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; **follow/remind + Today-strip chip + FOR TODAY abujh card shipped Aug 2026** (see §6.7, design.md §60, RULEBOOK §17.7; prototype: [`docs/muhurat-follow-remind-prototype.html`](../../muhurat-follow-remind-prototype.html)). Next: Phase 2 shuddhi depth (Bhadra as a window, window-time anga evaluation, per-occasion masa tables) |
 | **Target release** | TBD (phased; Phase 1 is small) |
 | **T-shirt size** | Code S–M per phase · **content L** (rule tables are the real cost) |
 | **Owner** | TBA |
@@ -148,6 +148,14 @@ Full walkthrough in [`docs/muhurat-finder-prototype.html`](../../muhurat-finder-
 5. **Day detail** — factors, cleared-dosha list, and the day's windows with **Rahu Kaal struck through in place** so the user sees it was considered.
 6. **Personalised strip** (Phase 4) — a Tarabala/Chandrabala row on each day card when a Kundali is saved.
 7. **Reminder + share** — reuses the shipped local-notification scheduler and the muhurat share card. No new mechanism.
+
+### 6.7 Follow & remind — SHIPPED (Aug 2026)
+
+Follow is offered on the **day detail only** (every result card stays identical, design.md §60) and never on an excluded day. The `VratReminderPref` model is imported, not re-declared, and `VratReminderSheet` is extended rather than forked — but the vrat **store** does not transfer, because a vrat follow is a recurring rule while a muhurat follow is one dated civil day. That difference produces the four rules now in RULEBOOK §17.7: prune-on-load, never persist a window, excluded days fire nothing, and the day-of notice is clamped to `windowStart − 30 min` (the 17 Aug 2026 Vahan window opens 6:07 AM, so the shipped 07:00 default would have arrived after it).
+
+**One deviation from the plan.** The empty-with-reason CTA follows the **first qualifying date** rather than the season boundary. A 21 Nov Dev Uthani notice is not actionable when the first real Griha Pravesh muhurat is 25 Nov, and it would have inherited the §9.2 kshaya ambiguity. This keeps one follow kind instead of two.
+
+Still out of scope: following an **occasion** as a standing interest ("tell me when a श्रेष्ठ day appears"), which needs a background re-scan. Phase-2 candidate.
 
 Entry points: Panchang → Muhurat (primary), Home's **कुंडली/व्रत** grid neighbourhood (a **मुहूर्त** tile), and a contextual link from `MuhuratDetailScreen`.
 

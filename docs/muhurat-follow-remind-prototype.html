@@ -253,7 +253,7 @@
 <body>
 
 <h1>Follow &amp; Remind — the Event Muhurat Finder's next slice</h1>
-<p class="sub">PRD-16 §6.7 · design.md §60 · the slice named in the PRD header: follow/remind, the Today-strip chip, and the FOR TODAY abujh card.</p>
+<p class="sub">PRD-16 §6.7 · design.md §60 · the slice named in the PRD header: follow/remind, the Today-strip chip, and the FOR TODAY abujh card. <b>Shipped Aug 2026</b> — captions marked "changed during implementation" record where the built thing diverged from this plan.</p>
 <p class="legend">
   <b>Everything already shipped is drawn as it ships.</b> The finder's four screens, the day-detail Answer&rarr;Action&rarr;Evidence
   block, the share button, the Today strip, the FOR TODAY row and the Home grid are all v1.4.5 as-built; this prototype only adds
@@ -518,7 +518,7 @@
           </div>
         </div>
 
-        <div class="cta"><span class="st">☆</span>काल समाप्त होने पर स्मरण कराएँ</div>
+        <div class="cta"><span class="st">☆</span>25 नवम्बर के लिए स्मरण कराएँ</div>
 
         <div class="sechead">इसके बाद पहली तिथियाँ</div>
         <div class="res">
@@ -544,11 +544,13 @@
     </div>
     <p class="cap"><b>5 · Empty-with-reason finally ends in an action.</b> The gold-॥ card, the dosha day-counts and
       <b>इसके बाद पहली तिथियाँ</b> all ship today (real output: chaturmas on 92/92 days; first dates 25 &amp; 26 Nov 2026).
-      <span class="newmark">NEW:</span> a <b>season-open follow</b> — <code>☆ काल समाप्त होने पर स्मरण कराएँ</code> — a second
-      follow <i>kind</i> whose date is the season boundary (21 Nov 2026, Dev Uthani Ekadashi) rather than a graded day. This is
-      the follow that PRD-16 §8 measures: <i>"empty-result sessions ending in a reminder for a later date ≥ 30%"</i>. Note the
-      honest edge — Dev Uthani 2026 is a <b>kshaya</b> Ekadashi listed as both 20 and 21 Nov (§9.2), so the copy names the date
-      the engine resolves and the reminder fires on it, but the day detail keeps surfacing the ambiguity.</p>
+      <span class="newmark">NEW:</span> a follow on <b>the first date that actually qualifies</b> — this is the follow PRD-16 §8
+      measures (<i>"empty-result sessions ending in a reminder for a later date ≥ 30%"</i>).
+      <b>Changed during implementation:</b> the plan called for a second follow <i>kind</i> targeting the season boundary
+      (21 Nov 2026, Dev Uthani). It was dropped. The boundary is not actionable — the first real Griha Pravesh muhurat is
+      25 Nov, so a 21 Nov notice arrives four days early with nothing to do — and it inherited the kshaya ambiguity (§9.2 lists
+      Dev Uthani 2026 as both 20 and 21 Nov). Targeting a graded day keeps <b>one</b> follow kind, one code path, and a notice
+      that names a real window.</p>
   </div>
 
   <!-- ── 6. FOLLOW INVENTORY ───────────────────────────────── -->
@@ -592,10 +594,10 @@
         <div class="frow">
           <span class="fs">★</span>
           <div class="fb">
-            <div class="h">गृह प्रवेश · काल समाप्ति</div>
-            <div class="s">देव उठनी एकादशी</div>
+            <div class="h">गृह प्रवेश · मध्यम</div>
+            <div class="s">1 दिन पहले · अभिजित 11:43 AM</div>
           </div>
-          <div class="when">21 नव<small>99द</small></div>
+          <div class="when">25 नव<small>103द</small></div>
         </div>
         <div class="frow">
           <span class="fs">★</span>
@@ -730,7 +732,7 @@
     <tr><td><b>Lifetime</b></td><td>forever — Ekadashi comes round again</td><td><b>one-shot; prunes once past</b></td></tr>
     <tr><td><b>Priority under the cap</b></td><td>follow order (user-ranked)</td><td><b>soonest first</b> — a dated one-shot has no other sane ranking</td></tr>
     <tr><td><b>Time granularity</b></td><td>the day (07:00 morning notice)</td><td><b>the window</b> (6:07 AM) — hence the clamp</td></tr>
-    <tr><td><b>Second kind</b></td><td>—</td><td><b>season-open</b> follow from the empty state</td></tr>
+    <tr><td><b>Empty state</b></td><td>—</td><td>the same follow, targeting the <b>first qualifying date</b> — one kind, not two (see screen 5)</td></tr>
     <tr><td><b>Pref model</b></td><td colspan="2"><span class="tagreuse">SHARED</span> — <code>VratReminderPref</code> (<code>advanceDays 0|1|2|3</code>, <code>dayOf</code>, <code>dayOfTime</code>) is imported, not re-declared. Default stays 1 day + 07:00.</td></tr>
   </table>
 
@@ -787,8 +789,9 @@
 
   <h3>5. Open questions worth deciding before code</h3>
   <ul>
-    <li><b>Does a season-open follow survive its own ambiguity?</b> Dev Uthani 2026 is a kshaya Ekadashi listed as both 20 and
-      21 Nov (PRD §9.2). Fire on the engine's date, or fire on the earlier of the two and say "20–21 Nov"?</li>
+    <li><b>Should the empty state also NAME the season boundary?</b> Resolved for the follow itself (it targets the first
+      qualifying date), but the copy could still say "चातुर्मास 21 नवम्बर को समाप्त" as information. That needs a festival-engine
+      lookup and inherits the kshaya ambiguity (Dev Uthani 2026 is listed as both 20 and 21 Nov, PRD §9.2) — deferred.</li>
     <li><b>Follow the day, or follow the occasion?</b> Following <i>वाहन क्रय</i> as a standing interest ("tell me when a
       श्रेष्ठ day appears") is a larger, more valuable feature — and a much bigger one, since it needs a background re-scan.
       This slice deliberately follows <i>days</i>. Worth naming as a Phase-2 candidate rather than leaving implied.</li>

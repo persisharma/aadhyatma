@@ -40,6 +40,7 @@ import { lightColors } from '@/theme/colors';
 import { GitaLanguageProvider, useGitaLanguage } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { VratFollowProvider } from '@/contexts/VratFollowContext';
+import { MuhuratFollowProvider } from '@/contexts/MuhuratFollowContext';
 import { PitruSmaranProvider } from '@/contexts/PitruSmaranContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
@@ -72,6 +73,7 @@ import { RatingPromptProvider } from '@/contexts/RatingPromptContext';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
+import MuhuratReminderScheduler from '@/components/MuhuratReminderScheduler';
 import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
 import PitruSmaranReminderScheduler from '@/components/PitruSmaranReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
@@ -203,6 +205,9 @@ export default function App() {
             <ReadAloudProvider>
             <BookmarksProvider>
               <VratFollowProvider>
+              {/* Dated one-shot muhurat follows (PRD-16 §6.7). Sibling of the
+                  vrat store, not a reuse: the key is (occasion, civil day). */}
+              <MuhuratFollowProvider>
               {/* पितृ स्मरण entries (PRD-17) — device-only AsyncStorage, no sync. */}
               <PitruSmaranProvider>
               <UserActivityProvider>
@@ -233,6 +238,11 @@ export default function App() {
                             <RoutineCelebrationOverlay />
                             <SadhanaCompletionOverlay />
                             <VratReminderScheduler />
+                            {/* Muhurat follows (PRD-16 §6.7). Must stay inside
+                                PanchangLocationProvider: every window is
+                                sunrise-derived, so it re-derives them (and
+                                re-arms) on a location/calendar-system change. */}
+                            <MuhuratReminderScheduler />
                             {/* Default-on festival pushes. Below
                                 NotificationPreferencesProvider for the pref +
                                 shared permission grant; needs no panchang
@@ -277,6 +287,7 @@ export default function App() {
                 </NewContentProvider>
               </UserActivityProvider>
               </PitruSmaranProvider>
+              </MuhuratFollowProvider>
               </VratFollowProvider>
             </BookmarksProvider>
             </ReadAloudProvider>
