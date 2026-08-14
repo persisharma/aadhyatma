@@ -1,6 +1,7 @@
 # PRD-17 Namkaran — run this platform-neutral flow separately on iOS and Android.
-# Covers Jyotish entry, privacy-minimal browse, exact hero, filters, shortlist,
-# name detail/deity door, rashi cross-check, muhurat door, and unknown-time range.
+# Covers Jyotish entry, privacy-minimal browse (nakshatra and rashi), exact hero,
+# filters, shortlist, name detail/deity door, the rashi cross-check and its
+# detail, muhurat door, and unknown-time range.
 appId: com.prashantsharma.vedansh
 ---
 - launchApp:
@@ -67,6 +68,26 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 10000
 - assertVisible: "RASHI SOUNDS"
+
+# The cross-check is a real destination: nine tappable charanas, each landing on
+# that charana's names — not a read-only strip of glyphs.
+- tapOn: "Mrigashira pada 3, Ka. Open names."
+- extendedWaitUntil:
+    visible: "का, Ka.*Mrigashira.*pada 3.*"
+    timeout: 20000
+- tapOn: "Back to Namkaran input"
+- scrollUntilVisible:
+    element: "Open Mithuna rashi naming detail"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Open Mithuna rashi naming detail"
+- extendedWaitUntil:
+    visible: "THE NINE CHARANAS"
+    timeout: 15000
+- assertVisible: "9 charanas.*sounds"
+- assertVisible: "Punarvasu"
+- tapOn: "Back to Namkaran"
+
 - scrollUntilVisible:
     element: "Preview privacy-safe Namkaran share card"
     direction: DOWN
@@ -87,6 +108,22 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Back to Namkaran input"
 - tapOn: "Back to Namkaran start"
 
+# Rashi is a peer browse door, not an output-only label: twelve launcher tiles,
+# no birth data, landing on the same nine-charana detail.
+- scrollUntilVisible:
+    element: "Choose by rashi.*"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Choose by rashi.*"
+- assertVisible: "Makara.*Tap to open.*"
+- tapOn: "Makara.*Tap to open.*"
+- extendedWaitUntil:
+    visible: "THE NINE CHARANAS"
+    timeout: 15000
+- assertVisible: "Uttarashadha"
+- tapOn: "Back to Namkaran"
+- tapOn: "Back to Namkaran start"
+
 # Path A-prime: unknown time checks every charana of the selected IST day.
 - tapOn: "Child birth date"
 - waitForAnimationToEnd
@@ -104,5 +141,16 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*IST.*pada.*"
 - assertNotVisible: "Preview privacy-safe Namkaran share card"
 - takeScreenshot: namkaran-unknown-time-range
+
+# A candidate opens its own namakshar card, but stays flagged as one of the
+# day's possibilities and still offers no exact share.
+- tapOn: ".*IST.*pada.*Open namakshar.*"
+- extendedWaitUntil:
+    visible: "ONE OF THE DAY.S POSSIBILITIES"
+    timeout: 20000
+- assertVisible: { id: "namkaran-uncertain-notice" }
+- assertVisible: { id: "namkaran-name-list" }
+- assertNotVisible: "Preview privacy-safe Namkaran share card"
+- takeScreenshot: namkaran-uncertain-candidate-detail
 - stopApp:
     appId: com.prashantsharma.vedansh
