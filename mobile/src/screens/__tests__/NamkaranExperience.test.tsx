@@ -350,6 +350,16 @@ test('the rashi cross-check is nine tappable charanas, not a flattened syllable 
   assert.equal(cellIds.size, 9);
   assert.equal(new Set(tree.root.findAll((node) => /^namkaran-rashi-card-\d+$/.test(node.props.testID ?? '')).map((node) => node.props.testID as string)).size, 1);
 
+  // The charana this result already shows is marked, not a tap target: pushing
+  // a duplicate of the screen you are reading is not a destination.
+  // Uttarashadha pada 2 is charana 81 — the cell this very result is showing.
+  const currentNodes = tree.root.findAllByProps({ testID: 'namkaran-rashi-sound-81' });
+  assert.ok(currentNodes.length);
+  assert.equal(currentNodes.some((node) => node.props.accessibilityRole === 'button'), false);
+  assert.equal(currentNodes.some((node) => typeof node.props.onPress === 'function'), false);
+  assert.ok(textOf(tree).includes('this one'));
+  assert.ok(textOf(tree).includes('this one'));
+
   await act(async () => {
     tree.root.findByProps({ testID: 'namkaran-rashi-sound-84' }).props.onPress();
   });

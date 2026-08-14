@@ -77,6 +77,10 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
   // set, not the first candidate's rashi — naming one would rank a candidate
   // the range path explicitly refuses to rank (PRD-17 §4.2).
   const rashiIndices = useMemo(() => distinctRashiIndices(candidates), [candidates]);
+  const currentCharanas = useMemo(
+    () => new Set(candidates.map((candidate) => candidate.entry.charanaIndex)),
+    [candidates]
+  );
 
   useEffect(() => {
     let active = true;
@@ -151,6 +155,7 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
           key={rashiIndex}
           rashiIndex={rashiIndex}
           lang={lang}
+          currentCharanas={currentCharanas}
           onOpenCharana={(entry) => navigation.navigate('NamkaranResult', { basis: { kind: 'manual', nakshatraIndex: entry.nakshatraIndex, pada: entry.pada } })}
           onOpenRashi={() => navigation.navigate('NamkaranRashi', { rashiIndex })}
         />
@@ -193,9 +198,13 @@ function NamkaranResultContent({ navigation, route: _route, result }: Props & { 
  * 3×3 shape wherever a charana carries alternates (Shravana's ज/ख series gives
  * Makara thirteen syllables across its nine charanas).
  */
-function RashiSoundsCard({ rashiIndex, lang, onOpenCharana, onOpenRashi }: {
+function RashiSoundsCard({ rashiIndex, lang, currentCharanas, onOpenCharana, onOpenRashi }: {
   rashiIndex: number;
   lang: Lang;
+  /** Charanas this result already shows. Their cells mark as current instead of
+   * navigating — pushing a duplicate of the screen you are reading is not a
+   * destination, and the names for them are already in the list above. */
+  currentCharanas: ReadonlySet<number>;
   onOpenCharana: (entry: CharanaEntry) => void;
   onOpenRashi: () => void;
 }) {
@@ -208,6 +217,27 @@ function RashiSoundsCard({ rashiIndex, lang, onOpenCharana, onOpenRashi }: {
         {entries.map((entry) => {
           const hi = entry.syllables.map((value) => value.hi).join(' / ');
           const latin = entry.syllables.map((value) => value.latin).join(' / ');
+          const current = currentCharanas.has(entry.charanaIndex);
+          const glyphSize = hi.length > 3 ? 12 : current ? 15 : 17;
+          const glyph = (
+            <Text maxFontSizeMultiplier={1.15} style={{ color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold, fontSize: glyphSize }}>{hi}</Text>
+          );
+          // Word + tint, never tint alone (§12): the current cell is legible in
+          // greyscale by its "यही · this one" caption, not by its fill.
+          if (current) {
+            return (
+              <View
+                key={entry.charanaIndex}
+                testID={`namkaran-rashi-sound-${entry.charanaIndex}`}
+                accessibilityRole="summary"
+                accessibilityLabel={`${NAKSHATRA_NAMES_EN[entry.nakshatraIndex]} pada ${entry.pada}, ${latin}. This result.`}
+                style={[styles.rashiSyllable, styles.rashiSyllableCurrent, { backgroundColor: colors.goldChipBg, borderColor: colors.gold, borderRadius: radii.sm }]}
+              >
+                {glyph}
+                <Text maxFontSizeMultiplier={1.15} style={[styles.rashiCurrentTag, { color: colors.inkMuted }]}>{contentByLang(lang, 'यही', 'this one')}</Text>
+              </View>
+            );
+          }
           return (
             <Pressable
               key={entry.charanaIndex}
@@ -217,7 +247,7 @@ function RashiSoundsCard({ rashiIndex, lang, onOpenCharana, onOpenRashi }: {
               accessibilityLabel={`${NAKSHATRA_NAMES_EN[entry.nakshatraIndex]} pada ${entry.pada}, ${latin}. Open names.`}
               style={({ pressed }) => [styles.rashiSyllable, { backgroundColor: colors.saffronTint, borderColor: colors.goldTint, borderRadius: radii.sm }, pressed && { opacity: 0.72 }]}
             >
-              <Text maxFontSizeMultiplier={1.15} style={{ color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold, fontSize: hi.length > 3 ? 12 : 17 }}>{hi}</Text>
+              {glyph}
             </Pressable>
           );
         })}
@@ -271,6 +301,10 @@ const styles = StyleSheet.create({
   rashi: { borderWidth: 1, padding: 14 }, rashiGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 7, marginTop: 10 },
   // The cells are tap targets now, so they carry the 44 pt floor (design.md §12).
   rashiSyllable: { width: '31%', minHeight: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  // The tag holds the documented 10 pt chrome floor (§3.0), so the current cell
+  // is a little taller than its siblings — the grid rows size to the tallest.
+  rashiSyllableCurrent: { borderWidth: 1.5, paddingVertical: 5 },
+  rashiCurrentTag: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 14, letterSpacing: 0.4, marginTop: 1 },
   rashiDetail: { minHeight: 44, marginTop: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   rashiDetailText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   shareOptIn: { borderWidth: 1, padding: 12, flexDirection: 'row', alignItems: 'center', gap: 10 },
