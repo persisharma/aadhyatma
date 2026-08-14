@@ -14,6 +14,8 @@ import {
 } from '@/data/discoveryMeta';
 import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
 import { navigateToEntryStart } from '@/navigation/entryRoutes';
+import { useTodayAbujh } from '@/panchang/useMuhuratFinder';
+import { getTodayFestival } from '@/data/discoveryMeta';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
@@ -24,10 +26,28 @@ export default function TodayRecommendationsRow() {
   const navigation = useNavigation<Nav>();
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
   const todayKey = useTodayKey();
+  const today = React.useMemo(() => new Date(todayKey), [todayKey]);
   const recommendations = React.useMemo(
-    () => getTodayRecommendationDetails(new Date(todayKey)),
-    [todayKey]
+    () => getTodayRecommendationDetails(today),
+    [today]
   );
+  // अबूझ मुहूर्त (PRD-16 §4.2) — resolved off the render path, null on an
+  // ordinary day. It rides the ROW rather than `getTodayRecommendationDetails`
+  // because that function returns LibraryEntry recommendations and is asserted
+  // on by festiveReminders.test.ts; keeping it entry-only leaves the notification
+  // ⇄ FOR TODAY contract exactly as it is.
+  const abujh = useTodayAbujh(today);
+  // On a catalogued festival day the festival card must still LEAD (the same
+  // test pins that promise), so the abujh card slots in second. On any other
+  // abujh day — Guru/Ravi Pushya, which is the common case — it leads.
+  const abujhIndex = React.useMemo(() => {
+    if (!abujh) return -1;
+    try {
+      return getTodayFestival(today) ? 1 : 0;
+    } catch {
+      return 0;
+    }
+  }, [abujh, today]);
 
   if (recommendations.length === 0) return null;
 
@@ -59,10 +79,10 @@ export default function TodayRecommendationsRow() {
         // first-tap fallback so a swipe never opens a card.
         onScrollBeginDrag={markTileDrag}
       >
-        {recommendations.slice(0, 6).map((recommendation) => {
+        {recommendations.slice(0, 6).flatMap((recommendation, i) => {
           const { entry } = recommendation;
           const open = () => navigateToEntryStart(navigation, entry);
-          return (
+          const card = (
             <View key={entry.id} style={styles.cardWrap}>
               <FeatureCard
                 item={spotlightForEntry(
@@ -77,6 +97,41 @@ export default function TodayRecommendationsRow() {
               />
             </View>
           );
+          if (i !== abujhIndex || !abujh) return [card];
+          // Sibling tab — dispatch through the parent, same as TodayStrip's
+          // Panchang hand-off. `initial: false` so a cold tap cannot make
+          // AbujhDays the lazily-mounted Panchang stack's initial route.
+          const openAbujh = () =>
+            (navigation as unknown as { navigate: (n: string, p?: object) => void }).navigate(
+              'PanchangTab',
+              { screen: 'AbujhDays', initial: false }
+            );
+          const abujhCard = (
+            <View key="abujh-today" style={styles.cardWrap} testID="for-today-abujh">
+              <FeatureCard
+                item={{
+                  key: 'abujh-today',
+                  titleHi: abujh.nameHi,
+                  titleEn: abujh.nameEn,
+                  descHi: 'अबूझ मुहूर्त — कोई भी समय शुभ',
+                  descEn: 'Auspicious all day — no shuddhi needed',
+                  ctaHi: 'देखें',
+                  ctaEn: 'View',
+                  icon: (
+                    <Text style={{ color: colors.saffronDeep, fontFamily: typography.thumb.fontFamily, fontSize: 19 }}>
+                      ॥
+                    </Text>
+                  ),
+                }}
+                width={styles.cardWrap.width}
+                onPress={() => activateTile(openAbujh)}
+                onPressIn={() => beginTilePress(openAbujh)}
+                onPressOut={finishTilePress}
+              />
+            </View>
+          );
+          // Index 0 => abujh leads; index 1 => it follows the festival card.
+          return abujhIndex === 0 ? [abujhCard, card] : [card, abujhCard];
         })}
       </ScrollView>
     </View>

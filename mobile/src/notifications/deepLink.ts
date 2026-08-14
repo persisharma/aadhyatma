@@ -2,6 +2,7 @@ import { CommonActions, createNavigationContainerRef } from '@react-navigation/n
 import { panchangTabTarget } from '@/navigation/entryRoutes';
 import * as Notifications from 'expo-notifications';
 import { findJapamMantra } from '@/data/japam';
+import { EVENT_RULES } from '@/panchang/eventMuhurat';
 import { isJapamAlarmPayload } from './japamAlarms';
 import type { TabParamList } from '@/navigation/types';
 import type { NotificationPayload } from './pure';
@@ -26,6 +27,19 @@ function isVratReminderPayload(data: unknown): data is { type: 'vrat-reminder'; 
   if (!data || typeof data !== 'object') return false;
   const d = data as Record<string, unknown>;
   return d.type === 'vrat-reminder' && typeof d.ruleId === 'string';
+}
+
+function isMuhuratReminderPayload(
+  data: unknown
+): data is { type: 'muhurat-reminder'; occasionId: string; dateMs: number } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return (
+    d.type === 'muhurat-reminder' &&
+    typeof d.occasionId === 'string' &&
+    typeof d.dateMs === 'number' &&
+    Number.isFinite(d.dateMs)
+  );
 }
 
 function isFestiveReminderPayload(
@@ -107,6 +121,34 @@ export function handleNotificationResponse(
       })
     );
     return true;
+  }
+
+  // A muhurat-reminder tap (PRD-16 §6.7) opens the followed day's detail —
+  // the screen that carries the window the notification just named, plus the
+  // reasoning behind it. Nested in the Panchang stack like the vrat route, and
+  // `panchangTabTarget` carries initial:false so a cold-start tap cannot make
+  // MuhuratDayDetail the lazily-mounted stack's initial route.
+  //
+  // The date rides the payload rather than being re-derived from "today": a
+  // notice armed days ago names ONE specific muhurat, and an advance notice is
+  // by definition read on a different day than the one it points at.
+  if (isMuhuratReminderPayload(data)) {
+    // Validate the occasion against EVENT_RULES the same way the japam route
+    // validates its mantra: a notice armed months ago must not open a screen
+    // for an occasion a later release retired.
+    const known = EVENT_RULES.find((r) => r.id === data.occasionId);
+    if (known) {
+      navigationRef.dispatch(
+        CommonActions.navigate({
+          name: 'PanchangTab',
+          params: panchangTabTarget('MuhuratDayDetail', {
+            occasionId: known.id,
+            dateMs: data.dateMs,
+          }),
+        })
+      );
+      return true;
+    }
   }
 
   // A festive-reminder tap lands on the HOME screen, not on a reader.

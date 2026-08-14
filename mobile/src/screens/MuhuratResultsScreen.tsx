@@ -8,6 +8,7 @@ import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ListCard, { CardThumb } from '@/components/ListCard';
+import MuhuratFollowControl from '@/components/MuhuratFollowControl';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useMuhuratFinder } from '@/panchang/useMuhuratFinder';
 import { DOSHA_LABELS, TIER_LABELS, getEventRule, type DayVerdict, type DoshaKey } from '@/panchang/eventMuhurat';
@@ -199,8 +200,21 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
           ) : (
             <>
               <Empty />
+              {/* Empty-with-reason must END IN AN ACTION (PRD-16 §8 measures
+                  exactly this). The follow targets the first day that actually
+                  qualifies — a real graded muhurat with a window — rather than
+                  the season boundary, which would notify the user days early
+                  with nothing they could act on. */}
               {firstAfter.length > 0 && (
                 <>
+                  <MuhuratFollowControl
+                    occasionId={rule.id}
+                    occasionNameHi={rule.nameHi}
+                    occasionNameEn={rule.nameEn}
+                    date={new Date(firstAfter[0].dateMs)}
+                    tier={firstAfter[0].tier}
+                    bestWindow={firstAfter[0].windows[0] ?? null}
+                  />
                   <Text style={sectionLabelStyle}>{contentByLang(lang, 'इसके बाद पहली तिथियाँ', 'First dates after')}</Text>
                   {firstAfter.map((v) => (
                     <Card key={v.dateMs} v={v} />

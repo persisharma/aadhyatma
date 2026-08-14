@@ -268,15 +268,37 @@ export function auspiciousWindows(m: MuhuratDay): MuhuratWindow[] {
   return windows.sort((a, b) => priority(a) - priority(b) || a.start.getTime() - b.start.getTime());
 }
 
+/**
+ * The SEASONAL bars — the ones an abujh day lifts (PRD-16 §4.2).
+ *
+ * अबूझ days are auspicious in their entirety, so the app cannot list a day as
+ * "no shuddhi required" on one screen and reject it on another. But "abujh
+ * overrides everything" is a stronger claim than §4.2 makes, and it would let
+ * Guru Pushya override a rikta tithi for every occasion. The line drawn here is
+ * narrower and stated explicitly so the §10 review can move it: the SEASON-long
+ * bars (Chaturmas, Guru/Shukra asta) yield to an abujh day, while the per-day
+ * doshas (rikta, panchak, bhadra, amavasya, adhik, vyatipata, vaidhriti) still
+ * apply. This is an interpolation, not a sourced rule — RULEBOOK §17.8.
+ */
+const SEASONAL_DOSHAS: ReadonlySet<DoshaKey> = new Set<DoshaKey>(['chaturmas', 'guru-asta', 'shukra-asta']);
+
 export function evaluateDay(
   rule: EventRule,
   dateMs: number,
   weekday: number,
   p: PanchangData,
   m: MuhuratDay,
-  asta: { shukraAsta: boolean; guruAsta: boolean }
+  asta: { shukraAsta: boolean; guruAsta: boolean },
+  /**
+   * Whether this civil day is अबूझ. The caller supplies it because festival-
+   * anchored abujh days resolve through `festivalEngine`, which this module's
+   * purity contract forbids importing (see the file header).
+   */
+  opts?: { abujh?: boolean }
 ): DayVerdict {
-  const doshas = dayDoshas(p, asta).filter((d) => rule.doshas.includes(d));
+  const doshas = dayDoshas(p, asta)
+    .filter((d) => rule.doshas.includes(d))
+    .filter((d) => !(opts?.abujh && SEASONAL_DOSHAS.has(d)));
   const factors = {
     nakshatra: rule.nakshatras.includes(p.nakshatra.index),
     tithi: rule.tithis.includes(p.tithi.index),

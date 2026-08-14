@@ -1,0 +1,187 @@
+# PRD-16 §6.7 Follow & Remind native-build smoke
+#
+# The follow journey the finder smoke does not cover:
+# Home मुहूर्त tile → occasion picker → Vehicle Purchase → ranked results →
+# day detail → Follow → reminder sheet (muhurat window option) → save →
+# followed state showing the RESOLVED fire times → Panchang → My Vrat, where
+# the ★ inventory lists the followed muhurat → back into the day → unfollow.
+#
+# Why the followed state is asserted by its own testID rather than by a time
+# string: every window is sunrise-derived, so the exact clock value depends on
+# the simulator's date and location. The invariant under test is that the row
+# replaces the CTA and names two notices — not any particular minute (that is
+# pinned exactly in muhuratReminderPure.test.ts).
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084` (isolated-simulator recipe in
+# wiki/runbooks/e2e-verification.md). Launches the real bundle; never Expo Go.
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
+
+# English for stable visible-text assertions (same recipe as the finder smoke).
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+
+# ── Reach a graded day ──────────────────────────────────────────────────────
+- scrollUntilVisible:
+    element:
+      text: "Muhurat\\..*Tap to open\\."
+    direction: DOWN
+- tapOn: "Muhurat\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Find a Muhurat"
+    timeout: 20000
+- tapOn: "Vehicle Purchase"
+- waitForAnimationToEnd
+
+# Vehicle Purchase is the loosest rule set, so its window is reliably non-empty
+# on any real date — the follow path needs a gradeable day to exist.
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates"
+    timeout: 60000
+- tapOn:
+    text: "Shreshtha.*|Madhyam.*"
+    index: 0
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*DrikPanchang convention.*"
+    timeout: 20000
+
+# ── Follow: CTA → sheet → save → followed state ─────────────────────────────
+- assertVisible:
+    id: "muhurat-follow-cta"
+- tapOn:
+    id: "muhurat-follow-cta"
+- waitForAnimationToEnd
+
+# The shared vrat sheet, opened with the muhurat-only day-of option. Its
+# presence is what proves the sheet was reused rather than forked.
+- extendedWaitUntil:
+    visible:
+      id: "muhurat-reminder-sheet"
+    timeout: 10000
+- assertVisible: "30 min before"
+- assertVisible: "Advance notice"
+- tapOn: "1 day"
+- tapOn:
+    id: "reminder-sheet-save"
+- waitForAnimationToEnd
+
+# The CTA is replaced by the followed row, which states both fire times.
+- extendedWaitUntil:
+    visible:
+      id: "muhurat-followed"
+    timeout: 10000
+- assertNotVisible:
+    id: "muhurat-follow-cta"
+- assertVisible: "Following"
+
+# ── The ★ inventory: one follow list, shared with vrats ─────────────────────
+- tapOn: "Panchang, tab.*"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "My Vrat|मेरा व्रत"
+    direction: DOWN
+- tapOn: "My Vrat|मेरा व्रत"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Followed muhurats"
+    timeout: 20000
+- assertVisible:
+    id: "muhurat-follow-row-vahan"
+
+# Tapping the row returns to that exact day.
+- tapOn:
+    id: "muhurat-follow-row-vahan"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "muhurat-followed"
+    timeout: 20000
+
+# ── Unfollow: both notices off is how the sheet releases a day ──────────────
+- tapOn:
+    id: "muhurat-follow-edit"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "muhurat-reminder-sheet"
+    timeout: 10000
+- tapOn: "Off"
+- tapOn: "On the day"
+- tapOn:
+    id: "reminder-sheet-save"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "muhurat-follow-cta"
+    timeout: 10000
+- assertNotVisible:
+    id: "muhurat-followed"
+
+# ── Empty-with-reason still ends in an action ───────────────────────────────
+# Griha Pravesh is chaturmas-barred for a large part of the year; when its
+# window is empty the screen must offer a follow on the first date after.
+- back
+- waitForAnimationToEnd
+- tapOn: "Panchang, tab.*"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "muhurat-finder-door"
+    direction: DOWN
+- tapOn:
+    id: "muhurat-finder-door"
+- waitForAnimationToEnd
+- tapOn: "Griha Pravesh"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates|No auspicious muhurat.*"
+    timeout: 90000
+# Only the empty branch carries the "first dates after" section; on a date when
+# Griha Pravesh does have results this step is a no-op rather than a failure.
+- runFlow:
+    when:
+      visible: "First dates after"
+    commands:
+      - assertVisible:
+          id: "muhurat-follow-cta"

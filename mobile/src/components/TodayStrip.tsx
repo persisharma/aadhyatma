@@ -9,8 +9,11 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useTilePress } from '@/contexts/TilePressContext';
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import { useMuhurat } from '@/panchang/useMuhurat';
-import { formatRangeCompact } from '@/panchang/muhuratFormat';
-import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
+import { formatClock, formatRangeCompact } from '@/panchang/muhuratFormat';
+import { useMuhuratFollows } from '@/contexts/MuhuratFollowContext';
+import { useNextFollowedMuhurat } from '@/panchang/useMuhuratFinder';
+import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN, VARA_NAMES_EN, VARA_NAMES_HI } from '@/panchang/names';
+import { transliterateDevanagari } from '@/utils/transliterate';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
@@ -75,6 +78,25 @@ export default function TodayStrip() {
     fontSize: 10.5,
   });
 
+  // Followed muhurat (PRD-16 §6.7) — resolved off the render path, null unless
+  // one is upcoming and still grades.
+  const { follows } = useMuhuratFollows();
+  const nextFollow = useNextFollowedMuhurat(follows, today.getTime());
+  const followWhen = React.useMemo(() => {
+    if (!nextFollow) return undefined;
+    const d = new Date(nextFollow.dateMs);
+    const isToday = d.toDateString() === today.toDateString();
+    const wdHi = VARA_NAMES_HI[d.getDay()];
+    const day = isToday
+      ? contentByLang(lang, 'आज', 'Today')
+      : lang === 'en'
+        ? VARA_NAMES_EN[d.getDay()].slice(0, 3)
+        : lang === 'hi'
+          ? wdHi
+          : transliterateDevanagari(wdHi, lang);
+    return nextFollow.windowStart ? `${day} ${formatClock(nextFollow.windowStart)}` : day;
+  }, [nextFollow, today, lang]);
+
   // One normalized chip list — observances first, then the day's windows — so
   // the pill spec exists once. Chip text colors are the DEEP cuts: the tint
   // composites darker than the raw card surface (colors.contrast.test.ts pins
@@ -82,6 +104,26 @@ export default function TodayStrip() {
   // compact (shared meridiem written once) so the row needs less width.
   type Chip = { key: string; labelHi: string; labelEn: string; range?: string; bg: string; fg: string; onPress?: () => void };
   const chips: Chip[] = [
+    // A followed muhurat leads the row when one is near (PRD-16 §6.7). Purely
+    // contextual: `nextFollow` is null unless the user followed a day inside
+    // the horizon and it still grades, so a user who follows nothing sees the
+    // shipped strip unchanged.
+    ...(nextFollow
+      ? [{
+          key: `muhurat-follow-${nextFollow.dateMs}`,
+          labelHi: nextFollow.nameHi,
+          labelEn: nextFollow.nameEn,
+          range: followWhen,
+          bg: colors.saffronTint,
+          fg: colors.saffronDeep,
+          onPress: () =>
+            rootNav.navigate('PanchangTab', {
+              screen: 'MuhuratDayDetail',
+              params: { occasionId: nextFollow.occasionId, dateMs: nextFollow.dateMs },
+              initial: false,
+            }),
+        }]
+      : []),
     ...(pitruPakshaToday
       ? [{
           key: 'pitru-paksha',

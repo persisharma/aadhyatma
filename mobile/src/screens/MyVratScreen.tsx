@@ -9,6 +9,8 @@ import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { useVratFollows, type VratFollow, type VratReminderPref } from '@/contexts/VratFollowContext';
 import VratReminderSheet from '@/components/VratReminderSheet';
+import MuhuratFollowList from '@/components/MuhuratFollowList';
+import { useMuhuratFollows } from '@/contexts/MuhuratFollowContext';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
@@ -55,6 +57,9 @@ export default function MyVratScreen({ navigation }: Props) {
   const [calendarSystem] = usePanchangCalendarSystem();
   const { follows, followCount, reminderCount, reminderDefault, setReminder, setReminderDefault } =
     useVratFollows();
+  // Muhurat follows (PRD-16 §6.7) share this screen — one ★ inventory, not two.
+  // They also gate the empty state: a user may follow a muhurat before any vrat.
+  const { followCount: muhuratFollowCount } = useMuhuratFollows();
 
   const today = useMemo(() => startOfLocalDay(new Date()), []);
 
@@ -134,7 +139,7 @@ export default function MyVratScreen({ navigation }: Props) {
           <View style={{ width: 36 }} />
         </View>
 
-        {followCount === 0 ? (
+        {followCount === 0 && muhuratFollowCount === 0 ? (
           <View ref={myVratRef} collapsable={false} style={styles.empty}>
             <Text style={{ fontSize: 36, color: colors.gold, marginBottom: 10 }}>★</Text>
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18, color: colors.ink, textAlign: 'center' }}>
@@ -177,7 +182,9 @@ export default function MyVratScreen({ navigation }: Props) {
             contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
             showsVerticalScrollIndicator={false}
           >
-            {/* Metric band */}
+            {/* Metric band. The vrat blocks render only when a vrat is actually
+                followed — this screen can now be reached with muhurat follows
+                and none of its own. */}
             <View ref={myVratRef} collapsable={false} style={[styles.metricBand, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
               <Metric value={followCount} label={contentByLang(lang, 'फ़ॉलो', 'Following')} lang={lang} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
@@ -186,6 +193,7 @@ export default function MyVratScreen({ navigation }: Props) {
               <Metric value={thisMonthCount} label={contentByLang(lang, 'इस माह', 'This month')} lang={lang} colors={colors} />
             </View>
 
+            {followCount > 0 && (
             <Pressable
               onPress={() => setSheet({ mode: 'default' })}
               accessibilityRole="button"
@@ -197,8 +205,11 @@ export default function MyVratScreen({ navigation }: Props) {
               </Text>
               <Text style={{ fontSize: 16, color: colors.inkMuted }}>›</Text>
             </Pressable>
+            )}
 
             {/* Priority list */}
+            {followCount > 0 && (
+            <>
             <Text style={[styles.sectionHeading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
               {contentByLang(lang, 'मेरी प्राथमिकता', 'My priority')}
             </Text>
@@ -247,6 +258,14 @@ export default function MyVratScreen({ navigation }: Props) {
                 ))}
               </>
             )}
+            </>
+            )}
+
+            <MuhuratFollowList
+              onOpen={(occasionId, dateMs) =>
+                navigation.navigate('MuhuratDayDetail', { occasionId, dateMs })
+              }
+            />
           </ScrollView>
         )}
       </SafeAreaView>

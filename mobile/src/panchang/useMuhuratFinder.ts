@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react';
 import { InteractionManager } from 'react-native';
 import { computeMuhuratDay } from './muhurat';
 import { evaluateDay, getEventRule, summarize, type DayVerdict, type FinderSummary, type OccasionId } from './eventMuhurat';
-import { cachedDayInputs, dayStoreFor, scopeKeyFor } from './panchangDayStore';
+import { ABUJH_RULE_IDS, pushyaYogaFor } from './abujhMuhurat';
+import { getUpcomingObservances } from './festivalEngine';
+import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
 import { hydratePanchangDays, persistPanchangDays } from './panchangDayCache';
 import {
+  abujhFestivalKeys,
   dayAt,
   dayKeysFrom,
   scanAbujhDays,
   startOfToday,
+  verdictForDate,
   yieldToUi,
   CHUNK_DAYS,
   FINDER_WINDOW_DAYS,
@@ -64,6 +68,10 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
       await hydratePanchangDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
       if (cancelled) return;
       const scan = dayStoreFor(scopeKeyFor(location, calendarSystem));
+      // One festival resolve for the whole sweep: abujh days lift the seasonal
+      // bars (PRD-16 §4.2), so a Chaturmas-barred occasion still surfaces
+      // Dev Uthani / Akshaya Tritiya rather than contradicting the abujh screen.
+      const abujhKeys = abujhFestivalKeys(start, FIRST_AFTER_MAX_DAYS, opts);
       let heavyThisChunk = false;
       const inputsAt = (i: number) => {
         const { inputs, miss } = cachedDayInputs(scan, dayAt(start, i), opts);
@@ -78,7 +86,8 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
         const { p, asta } = inputsAt(i);
         const { p: next } = inputsAt(i + 1);
         const m = computeMuhuratDay(p.sunrise, p.sunset, next.sunrise, d.getDay());
-        const v = evaluateDay(rule, d.getTime(), d.getDay(), p, m, asta);
+        const abujh = abujhKeys.has(dateKeyFor(d)) || pushyaYogaFor(p, d.getDay()) != null;
+        const v = evaluateDay(rule, d.getTime(), d.getDay(), p, m, asta, { abujh });
         if (i < days) {
           verdicts.push(v);
         } else if (v.tier !== 'excluded') {
@@ -156,6 +165,140 @@ export function useMuhuratFinderWarmup(days: number = FINDER_WINDOW_DAYS): void 
       task.cancel();
     };
   }, [location, calendarSystem, days]);
+}
+
+/** How far ahead Home's Today strip will surface a followed muhurat. */
+export const FOLLOW_CHIP_HORIZON_DAYS = 7;
+
+export type NextFollowedMuhurat = {
+  occasionId: OccasionId;
+  dateMs: number;
+  nameHi: string;
+  nameEn: string;
+  /** Best window of that day, or null when the day has none. */
+  windowStart: Date | null;
+  windowEnd: Date | null;
+};
+
+/**
+ * The soonest followed muhurat inside the chip horizon, resolved for Home's
+ * Today strip (PRD-16 §6.7). Returns null when nothing is followed, nothing is
+ * near, or the followed day has re-graded to `excluded` — so a user who follows
+ * nothing sees exactly the shipped strip and zero extra chrome.
+ *
+ * The one solve it needs is deferred behind a `setTimeout(0)` (the same
+ * boundary the strip's Pitru Paksha lookup uses) and almost always a cache hit,
+ * because the finder's sweep already solved that day into the shared store.
+ */
+export function useNextFollowedMuhurat(
+  follows: readonly { occasionId: OccasionId; dateKey: string }[],
+  todayMs: number
+): NextFollowedMuhurat | null {
+  const { location } = usePanchangLocation();
+  const [calendarSystem] = usePanchangCalendarSystem();
+  const [result, setResult] = useState<NextFollowedMuhurat | null>(null);
+
+  // Only the identity of the candidate matters — re-resolving on every render
+  // of an unchanged follow list would put astronomy on Home's render path.
+  const candidateKey = follows.map((f) => `${f.occasionId}:${f.dateKey}`).join(',');
+
+  useEffect(() => {
+    let cancelled = false;
+    const id = setTimeout(() => {
+      const today = new Date(todayMs);
+      const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const horizon = new Date(start.getFullYear(), start.getMonth(), start.getDate() + FOLLOW_CHIP_HORIZON_DAYS);
+      let next: NextFollowedMuhurat | null = null;
+      // `follows` is already soonest-first, so the first qualifying hit wins.
+      for (const f of follows) {
+        const [y, m, d] = f.dateKey.split('-').map(Number);
+        if (!y || !m || !d) continue;
+        const date = new Date(y, m - 1, d);
+        if (date.getTime() < start.getTime() || date.getTime() > horizon.getTime()) continue;
+        let rule;
+        try {
+          rule = getEventRule(f.occasionId);
+        } catch {
+          continue;
+        }
+        const solved = verdictForDate(rule, date, { calendarSystem, location });
+        // Verdict drift (a location change re-graded the day): stay silent
+        // rather than advertise a day the engine now rejects.
+        if (!solved || solved.verdict.tier === 'excluded') continue;
+        const best = solved.verdict.windows[0] ?? null;
+        next = {
+          occasionId: rule.id,
+          dateMs: date.getTime(),
+          nameHi: rule.nameHi,
+          nameEn: rule.nameEn,
+          windowStart: best?.start ?? null,
+          windowEnd: best?.end ?? null,
+        };
+        break;
+      }
+      if (!cancelled) setResult(next);
+    }, 0);
+    return () => {
+      cancelled = true;
+      clearTimeout(id);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [candidateKey, todayMs, calendarSystem, location]);
+
+  return result;
+}
+
+export type TodayAbujh = { nameHi: string; nameEn: string; source: 'festival' | 'pushya' };
+
+/**
+ * Is TODAY an abujh day, and which one (PRD-16 §4.2)? Drives Home's FOR TODAY
+ * card. Returns null on an ordinary day, which is almost every day — abujh days
+ * are rare by construction, so this surface is contextual like the follow chip.
+ *
+ * Festival-anchored days come from the festival engine (which owns kshaya
+ * fallback and vriddhi dedupe — never re-match tithis here); Guru/Ravi Pushya
+ * is the one computed addition, read off the shared day store.
+ */
+export function useTodayAbujh(today: Date): TodayAbujh | null {
+  const { location } = usePanchangLocation();
+  const [calendarSystem] = usePanchangCalendarSystem();
+  const [result, setResult] = useState<TodayAbujh | null>(null);
+  const dayKey = today.toDateString();
+
+  useEffect(() => {
+    let cancelled = false;
+    const id = setTimeout(() => {
+      let found: TodayAbujh | null = null;
+      try {
+        const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const hit = getUpcomingObservances(start, 2, calendarSystem, 1, location).find(
+          (o) =>
+            ABUJH_RULE_IDS.includes(o.rule.id) &&
+            o.date.getFullYear() === start.getFullYear() &&
+            o.date.getMonth() === start.getMonth() &&
+            o.date.getDate() === start.getDate()
+        );
+        if (hit) {
+          found = { nameHi: hit.rule.nameHi, nameEn: hit.rule.nameEn, source: 'festival' };
+        } else if (start.getDay() === 0 || start.getDay() === 4) {
+          const map = dayStoreFor(scopeKeyFor(location, calendarSystem));
+          const { inputs } = cachedDayInputs(map, start, { calendarSystem, location });
+          const yoga = pushyaYogaFor(inputs.p, start.getDay());
+          if (yoga) found = { nameHi: yoga.nameHi, nameEn: yoga.nameEn, source: 'pushya' };
+        }
+      } catch {
+        found = null; // an unsolvable day simply shows no card
+      }
+      if (!cancelled) setResult(found);
+    }, 0);
+    return () => {
+      cancelled = true;
+      clearTimeout(id);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dayKey, calendarSystem, location]);
+
+  return result;
 }
 
 export type AbujhState = { loading: boolean; days: AbujhDay[] };
