@@ -9,7 +9,10 @@
  *
  * The solves themselves come from the shared, persisted `panchangDayStore`, so
  * Home's Today strip and the daily Muhurat card no longer re-solve on every cold
- * start, and they share days with the Muhurat Finder's sweep.
+ * start, and they share days with the Muhurat Finder's sweep. For a TODAY
+ * surface the same deferred task then rolls that persisted window a week forward
+ * (`panchangDayPrewarm`) — without it the window ended at tomorrow and the first
+ * launch after every midnight re-solved a day before the strip could paint.
  */
 import { useEffect, useMemo, useState } from 'react';
 import { InteractionManager } from 'react-native';
@@ -23,6 +26,7 @@ import {
   type ScanOptions,
 } from '@/panchang/panchangDayStore';
 import { hydratePanchangDays, persistPanchangDays } from '@/panchang/panchangDayCache';
+import { prewarmPanchangDays } from '@/panchang/panchangDayPrewarm';
 import type { CalendarSystem, PanchangData } from '@/panchang/types';
 import {
   computeMuhuratDay,
@@ -153,28 +157,41 @@ export function useMuhurat(
   useEffect(() => {
     const opts: ScanOptions = { calendarSystem, location };
     const warm = composeSolved(dateMs, isToday, opts, false);
-    if (warm) {
-      // Synchronous set (no deferral) — every day it needs is already solved.
-      setSolved(warm);
-      return;
-    }
+    // Synchronous set (no deferral) when every day it needs is already solved.
+    setSolved(warm);
+    // Warm AND not a today surface: nothing to solve and no window to roll —
+    // don't schedule a deferred task that would have no work to do.
+    if (warm && !isToday) return;
 
     let cancelled = false;
-    setSolved(null);
     let handle: ReturnType<typeof setTimeout> | undefined;
     const interaction = InteractionManager.runAfterInteractions(() => {
       handle = setTimeout(async () => {
         try {
-          // Disk → memory first: a day persisted by an earlier session (or by the
-          // finder's sweep) must not be re-solved. Skipped entirely when the range
-          // is already warm, so this costs nothing on a hit.
-          await hydratePanchangDays(location, calendarSystem, neededDateKeys(dateMs, isToday));
-          if (cancelled) return;
-          const value = composeSolved(dateMs, isToday, opts, true);
-          if (!cancelled && value) setSolved(value);
-          // Flush whatever this scope has solved so far — including days the
-          // synchronous Panchang hooks computed on the render path.
-          void persistPanchangDays(location, calendarSystem);
+          if (!warm) {
+            // Disk → memory first: a day persisted by an earlier session (or by the
+            // finder's sweep) must not be re-solved. Skipped entirely when the range
+            // is already warm, so this costs nothing on a hit.
+            await hydratePanchangDays(location, calendarSystem, neededDateKeys(dateMs, isToday));
+            if (cancelled) return;
+            const value = composeSolved(dateMs, isToday, opts, true);
+            if (!cancelled && value) setSolved(value);
+            // Flush whatever this scope has solved so far — including days the
+            // synchronous Panchang hooks computed on the render path. Eager and
+            // fire-and-forget on purpose: the days now on screen reach disk
+            // immediately, rather than waiting behind the roll-forward's solves.
+            void persistPanchangDays(location, calendarSystem);
+          }
+          if (isToday) {
+            // Roll the persisted window PAST tomorrow, so the next midnight
+            // rollover is a pure cache hit instead of a fresh solve on Home's
+            // critical path — the whole point of panchangDayPrewarm. It persists
+            // its own days; whichever flush lands second skips what the first
+            // already wrote.
+            await prewarmPanchangDays(location, calendarSystem, {
+              isCancelled: () => cancelled,
+            });
+          }
         } catch {
           /* invalid input — leave null so consumers show a skeleton */
         }

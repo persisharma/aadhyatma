@@ -11,6 +11,12 @@
  * "does it re-solve?" is the whole question — a test that only checked the
  * rendered output would pass just as happily while re-solving every launch.
  *
+ * The counting is scoped to the days the hook RENDERS (`renderedSolves`), not to
+ * every call: a today surface also rolls the persisted window a week forward
+ * (`panchangDayPrewarm`), and those background solves are the fix for the daily
+ * re-solve rather than a regression. The rollover test at the bottom is the one
+ * that pins the whole loop end to end.
+ *
  * `useMuhurat` is exercised through a probe component (react-test-renderer +
  * act, the pattern the component suites use); there is no renderHook here.
  */
@@ -28,6 +34,7 @@ import {
   __resetPanchangDayStore,
 } from '@/panchang/panchangDayStore';
 import { persistPanchangDays, __resetPanchangDayCache } from '@/panchang/panchangDayCache';
+import { PREWARM_DAYS, __resetPanchangDayPrewarm } from '@/panchang/panchangDayPrewarm';
 
 const UJJAIN = { ...engine.UJJAIN_GEO, cityId: 'ujjain' };
 const SYSTEM = 'purnimant' as const;
@@ -55,7 +62,9 @@ function renderUseMuhurat(date: Date): { latest: () => UseMuhuratResult | null; 
   act(() => {
     tree = TestRenderer.create(React.createElement(Probe));
   });
-  return { latest: () => latest, unmount: () => tree?.unmount() };
+  // Unmount inside `act` too — a teardown that flushes an effect's cleanup
+  // outside it trips react-test-renderer's not-wrapped-in-act warning.
+  return { latest: () => latest, unmount: () => act(() => { tree?.unmount(); }) };
 }
 
 const flush = async (): Promise<void> => {
@@ -66,11 +75,36 @@ const flush = async (): Promise<void> => {
   });
 };
 
+/**
+ * Drain the whole deferred chain, roll-forward included: hydrate, compose, then
+ * the prewarm's own hydrate + chunked solves (which yield through `setTimeout(0)`
+ * between batches). Generous tick budget — a fully warm run finishes in two.
+ */
+const settle = async (): Promise<void> => {
+  for (let i = 0; i < 30; i += 1) await flush();
+};
+
 /** The three civil days a day's muhurat windows need. */
 const DAY_MS = 86_400_000;
 const today = () => {
   const n = new Date();
   return new Date(n.getFullYear(), n.getMonth(), n.getDate());
+};
+
+/** The days `useMuhurat(d)` reads to render: yesterday (pre-dawn), today, tomorrow. */
+const renderedDayKeys = (d: Date): string[] =>
+  [-1, 0, 1].map((off) => dateKeyFor(new Date(d.getTime() + off * DAY_MS)));
+
+/**
+ * Solves that landed on a day the hook RENDERS. The roll-forward deliberately
+ * solves days beyond the window (that is what stops the next rollover costing
+ * anything), so a bare `not.toHaveBeenCalled()` would conflate the two.
+ */
+const renderedSolves = (spy: jest.SpyInstance, d: Date): string[] => {
+  const rendered = renderedDayKeys(d);
+  return spy.mock.calls
+    .map(([date]) => dateKeyFor(date as Date))
+    .filter((key) => rendered.includes(key));
 };
 
 beforeEach(async () => {
@@ -79,6 +113,11 @@ beforeEach(async () => {
   await AsyncStorage.clear();
   __resetPanchangDayStore();
   __resetPanchangDayCache();
+  __resetPanchangDayPrewarm();
+});
+
+afterEach(() => {
+  jest.useRealTimers();
 });
 
 test('a day already in the shared store costs ZERO engine solves', async () => {
@@ -90,9 +129,9 @@ test('a day already in the shared store costs ZERO engine solves', async () => {
 
   const spy = jest.spyOn(engine, 'computePanchangForDate');
   const { latest, unmount } = renderUseMuhurat(d);
-  await flush();
+  await settle();
 
-  expect(spy).not.toHaveBeenCalled();
+  expect(renderedSolves(spy, d)).toEqual([]);
   const result = latest();
   expect(result?.panchang).not.toBeNull();
   expect(result?.muhurat?.dayChoghadiya).toHaveLength(8);
@@ -125,9 +164,9 @@ test('a day only on disk is hydrated, not re-solved', async () => {
 
   const spy = jest.spyOn(engine, 'computePanchangForDate');
   const { latest, unmount } = renderUseMuhurat(d);
-  await flush();
+  await settle();
 
-  expect(spy).not.toHaveBeenCalled();
+  expect(renderedSolves(spy, d)).toEqual([]);
   expect(latest()?.muhurat?.dayChoghadiya).toHaveLength(8);
   unmount();
 });
@@ -144,6 +183,71 @@ test('a cold cache still solves — the fallback is intact', async () => {
   const keys = await AsyncStorage.getAllKeys();
   expect(keys.some((k) => k.includes(dateKeyFor(d)))).toBe(true);
   unmount();
+});
+
+/**
+ * Move the wall clock. Only `Date` is faked — the hooks' deferred chain runs on
+ * real `setTimeout`/microtasks, so faking those would deadlock `settle()`.
+ */
+function setClock(at: Date): void {
+  jest.useFakeTimers({
+    doNotFake: [
+      'setTimeout',
+      'clearTimeout',
+      'setInterval',
+      'clearInterval',
+      'setImmediate',
+      'clearImmediate',
+      'requestAnimationFrame',
+      'cancelAnimationFrame',
+      'requestIdleCallback',
+      'cancelIdleCallback',
+      'queueMicrotask',
+      'nextTick',
+      'performance',
+      'hrtime',
+    ],
+  });
+  jest.setSystemTime(at);
+}
+
+test('a midnight rollover costs Home no solve for the days it renders', async () => {
+  const dayOneAt = new Date(2026, 7, 14, 9, 0); // 14 Aug 2026, 09:00 local
+  setClock(dayOneAt);
+  const d1 = today();
+
+  // Session 1 — a cold start. It solves its own three days AND rolls the
+  // persisted window a week past tomorrow.
+  const first = renderUseMuhurat(d1);
+  await settle();
+  first.unmount();
+
+  // Next morning's cold start: disk survives a launch, memory does not.
+  __resetPanchangDayStore();
+  __resetPanchangDayCache();
+  __resetPanchangDayPrewarm();
+  setClock(new Date(dayOneAt.getTime() + DAY_MS));
+  const d2 = today();
+
+  const spy = jest.spyOn(engine, 'computePanchangForDate');
+  const second = renderUseMuhurat(d2);
+  await settle();
+
+  // The three days the strip actually renders — yesterday (the pre-dawn
+  // choghadiya), today, tomorrow (today's night window) — all came off disk.
+  // Before the roll-forward existed the persisted window ENDED at tomorrow, so
+  // `tomorrow` was a fresh solve right here, in front of the first paint, on
+  // every single calendar day: the "today's panchang is computed every day" bug.
+  expect(renderedSolves(spy, d2)).toEqual([]);
+  expect(second.latest()?.panchang).not.toBeNull();
+  expect(second.latest()?.muhurat?.dayChoghadiya).toHaveLength(8);
+
+  // The only astronomy left on a new day is the far edge of the window sliding
+  // one day out — background work for a day nothing on screen reads.
+  expect(spy.mock.calls.map(([date]) => dateKeyFor(date as Date))).toEqual([
+    dateKeyFor(new Date(d2.getTime() + PREWARM_DAYS * DAY_MS)),
+  ]);
+  second.unmount();
 });
 
 // Keep the module-level spy from leaking into the assertions above.
