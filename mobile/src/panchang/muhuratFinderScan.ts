@@ -13,9 +13,11 @@
  */
 import { getUpcomingObservances } from './festivalEngine';
 import { ABUJH_RULE_IDS, pushyaYogaFor } from './abujhMuhurat';
+import { computeMuhuratDay } from './muhurat';
+import { evaluateDay, type DayVerdict, type EventRule } from './eventMuhurat';
 import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
 import type { ScanOptions } from './panchangDayStore';
-import type { ResolvedObservance } from './types';
+import type { PanchangData, ResolvedObservance } from './types';
 
 /** Default finder horizon (~3 months) and the extended "first dates after" reach. */
 export const FINDER_WINDOW_DAYS = 92;
@@ -42,6 +44,40 @@ export const yieldToUi = (): Promise<void> => new Promise<void>((r) => setTimeou
  */
 export const dayKeysFrom = (start: Date, count: number): string[] =>
   Array.from({ length: count }, (_, i) => dateKeyFor(dayAt(start, i)));
+
+/**
+ * Grade ONE civil day for one occasion, through the shared day store.
+ *
+ * The day detail and the follow scheduler both need exactly this — a single
+ * day's verdict rather than a sweep — and both must read the SAME store the
+ * finder filled, so arriving from the results list is a cache hit rather than
+ * two fresh solves. Extracted here (rather than duplicated in each caller) so
+ * the "two solves: this day + the next day's sunrise" contract exists once.
+ *
+ * Returns null when the solve fails, so a caller can degrade instead of
+ * throwing — the scheduler in particular must never let one bad day take down
+ * the whole re-arm.
+ */
+export function verdictForDate(
+  rule: EventRule,
+  date: Date,
+  opts: ScanOptions
+): { verdict: DayVerdict; p: PanchangData } | null {
+  try {
+    const map = dayStoreFor(scopeKeyFor(opts.location, opts.calendarSystem));
+    const { inputs } = cachedDayInputs(map, date, opts);
+    const { inputs: next } = cachedDayInputs(
+      map,
+      new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
+      opts
+    );
+    const p = inputs.p;
+    const m = computeMuhuratDay(p.sunrise, p.sunset, next.p.sunrise, date.getDay());
+    return { verdict: evaluateDay(rule, date.getTime(), date.getDay(), p, m, inputs.asta), p };
+  } catch {
+    return null;
+  }
+}
 
 export type AbujhDay = {
   dateMs: number;
