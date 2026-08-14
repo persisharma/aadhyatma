@@ -55,6 +55,37 @@ Wed Aug 26 2026  Vahan  madhyam  → excluded  (Trayodashi → Chaturdashi)
 Thu Aug 27 2026  Vahan  excluded → shreshtha (Chaturdashi → Purnima)
 ```
 
+### 1.2 Blast radius — what Bhadra touches OUTSIDE the finder
+
+`karana.endTime` is a field on `PanchangData`, not on anything finder-local, and **two shipped
+renderers already print `endTime` when it is non-null**:
+
+```ts
+// MuhuratCardBody.tsx:24 — elementLine
+return e.endTime ? `${name} · ${formatEndInstant(e.endTime, referenceDay, lang)}` : name;
+```
+
+So solving it changes these surfaces with **no code change in them at all**:
+
+| Surface | Effect | Verdict |
+|---|---|---|
+| **Panchang tab anga grid** (`PanchangScreen` → `PanchangTile`, karana tile) | Karana gains "… तक 8:16 AM" | **Wanted.** Tithi and Nakshatra already show end times; Yoga and Karana showing none reads as missing data. |
+| **Daily Muhurat detail card** (`MuhuratCardBody` `variant="full"`) | Karana row gains its end instant | **Wanted**, same reason. |
+| Muhurat **share** card (`variant="share"`) | **None** — Yoga/Karana rows are gated behind `variant === 'full'` | Shared images are byte-identical. |
+| Home **widgets** (`widgets/planPayload.ts`) | **None** — the payload carries no karana | Untouched. |
+| **Choghadiya / Rahu Kaal / Abhijit** (`computeMuhuratDay`) | **None** — its only inputs are `sunrise`, `sunset`, `nextSunrise`, `weekday`. Bhadra is a karana and is not an input. | Not one minute moves. |
+| Existing tests | **None** — no suite asserts `karana.endTime === null`. | Verified. |
+
+**Consequence for this TRD:** Phase 2 is not a finder-only change. The engine field is shared, so the
+Panchang tab and the daily Muhurat card change too — which is a **design.md sync and a screenshot
+check**, not just a finder review. Yoga stays `null` (Vyatipata/Vaidhriti remain day-level flags), so
+that row is unchanged.
+
+**Open product decision this surfaces (see §10.6):** once the Bhadra interval exists, should the
+*daily* Muhurat card list it as an avoid window beside Rahu Kaal? It is nearly free and users would
+expect the two to sit together — but it widens the shipped daily surface beyond the finder, so it is
+a product call rather than a consequence.
+
 ---
 
 ## 2. Architecture
@@ -260,3 +291,4 @@ Steps 1–2 are code-only and could ship before the content review; steps 3–5 
 3. Does Bhadra's **punchha/mukha** (tail/face) refinement matter, or is the plain interval enough for v1?
 4. Do the six new occasions share Griha Pravesh's asta bar? PRD §9.4 leaves this open for vehicle purchase already.
 5. Does per-window tiering change the **share card**, which currently names one best window?
+6. Should the **daily** Muhurat card show Bhadra beside Rahu Kaal once the interval exists (§1.2)? Nearly free; widens a shipped surface.

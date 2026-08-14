@@ -427,6 +427,24 @@
       nothing extra — the one real deployment cost this document originally flagged has been absorbed elsewhere.</li>
   </ul>
 
+  <h3>Bhadra is an ENGINE change, not a finder change</h3>
+  <p><code>karana.endTime</code> lives on <code>PanchangData</code>, and two shipped renderers already print
+  <code>endTime</code> whenever it is non-null (<code>elementLine</code> in <code>MuhuratCardBody</code>,
+  <code>PanchangTile</code> in <code>PanchangScreen</code>). Solving it therefore changes surfaces that need no edit:</p>
+  <table>
+    <tr><th style="width:34%">Surface</th><th style="width:16%">Effect</th><th>Note</th></tr>
+    <tr><td><b>Panchang tab anga grid</b></td><td><span class="tagnew">CHANGES</span></td><td>Karana tile gains "तक 8:16 AM". Wanted — Tithi/Nakshatra already show end times, so Karana showing none reads as missing data.</td></tr>
+    <tr><td><b>Daily Muhurat card</b> (<code>variant="full"</code>)</td><td><span class="tagnew">CHANGES</span></td><td>Karana row gains its end instant. Same reasoning.</td></tr>
+    <tr><td>Muhurat <b>share</b> card</td><td><span class="tagfree">NONE</span></td><td>Yoga/Karana rows are gated behind <code>variant === 'full'</code>; shared images stay byte-identical.</td></tr>
+    <tr><td>Home <b>widgets</b></td><td><span class="tagfree">NONE</span></td><td>The widget payload carries no karana.</td></tr>
+    <tr><td><b>Choghadiya · Rahu Kaal · Abhijit</b></td><td><span class="tagfree">NONE</span></td><td><code>computeMuhuratDay(sunrise, sunset, nextSunrise, weekday)</code> — Bhadra is a karana and is not an input. Not one minute moves.</td></tr>
+    <tr><td>Existing tests</td><td><span class="tagfree">NONE</span></td><td>No suite asserts <code>karana.endTime === null</code>. Verified.</td></tr>
+  </table>
+  <p style="margin-top:8px">So Phase 2 needs a <b>design.md sync and a screenshot check</b>, not just a finder review. Yoga stays
+  <code>null</code>, so Vyatipata/Vaidhriti remain day-level flags and that row is unchanged. <b>Open product call:</b> once the
+  interval exists, should the <i>daily</i> Muhurat card list Bhadra beside Rahu Kaal? Nearly free, and users would expect the two
+  together — but it widens a shipped surface beyond the finder.</p>
+
   <h3>Phase 1 debt Phase 2 inherits</h3>
   <p><code>eventMuhurat.drikfixture.test.ts</code> is still owed. It matters more now, not less: window-time evaluation is
   <i>precisely</i> the change that decides whether we agree with published lists on early-changeover days. Shipping Phase 2 without
