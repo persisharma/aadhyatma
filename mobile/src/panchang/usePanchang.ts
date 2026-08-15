@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { InteractionManager } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   getObservancesForDate,
   getObservancesForMonth,
@@ -9,6 +8,13 @@ import {
 import { subscribeObservanceStore } from './observanceStore';
 import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
 import { hydratePanchangDays, persistPanchangDays } from './panchangDayCache';
+import {
+  getCalendarSystemHydrated,
+  getCalendarSystemSnapshot,
+  setCalendarSystemGlobal,
+  subscribeCalendarSystem,
+  __resetPanchangPrefsForTests,
+} from './panchangPrefs';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import type {
   CalendarSystem,
@@ -29,8 +35,6 @@ export type UsePanchangSelectionResult = {
   observances: ResolvedObservance[];
   upcoming: ResolvedObservance[];
 };
-
-const CALENDAR_SYSTEM_STORAGE_KEY = '@vedansh:panchang-calendar-system';
 
 /**
  * Every panchang solve in this module goes through the shared, persisted
@@ -65,10 +69,6 @@ function warmPanchangDay(
 const UPCOMING_WINDOW_DAYS = 30;
 const UPCOMING_MAX = 10;
 
-function isCalendarSystem(value: unknown): value is CalendarSystem {
-  return value === 'purnimant' || value === 'amanta';
-}
-
 // Bumps whenever a location's observance year lands in the in-memory store, so
 // hooks re-resolve and Ujjain-fallback results upgrade to location-accurate ones.
 function useObservanceStoreVersion(): number {
@@ -77,78 +77,14 @@ function useObservanceStoreVersion(): number {
   return version;
 }
 
-// The calendar system is a small module-level store, not per-instance state:
-// it is read by hooks on several always-mounted screens at once (the Panchang
-// tab AND the Home Today strip), so a change made on one screen must propagate
-// to every mounted instance immediately — per-instance useState hydrated once
-// from AsyncStorage left the Home strip on a stale system for the whole session.
-// Consumed via useSyncExternalStore, which is tearing-safe by construction (no
-// hand-rolled "re-sync between render and subscribe" patch needed).
-let calendarSystemValue: CalendarSystem = 'purnimant';
-// True once the user has explicitly chosen a system this session — a late
-// AsyncStorage hydration must never clobber an explicit in-session choice.
-let calendarSystemDirty = false;
-let calendarSystemHydration: Promise<void> | null = null;
-let calendarSystemHydrated = false;
-const calendarSystemListeners = new Set<() => void>();
-
-function notifyCalendarSystemListeners(): void {
-  calendarSystemListeners.forEach((listener) => listener());
-}
-
-function hydrateCalendarSystemOnce(): Promise<void> {
-  if (!calendarSystemHydration) {
-    calendarSystemHydration = AsyncStorage.getItem(CALENDAR_SYSTEM_STORAGE_KEY)
-      .then((stored) => {
-        if (!calendarSystemDirty && isCalendarSystem(stored) && stored !== calendarSystemValue) {
-          calendarSystemValue = stored;
-          notifyCalendarSystemListeners();
-        }
-      })
-      .catch(() => {
-        // A transient storage failure must not poison the session — clear the
-        // settled promise so the next subscriber retries the read.
-        calendarSystemHydration = null;
-      })
-      .finally(() => {
-        calendarSystemHydrated = true;
-        notifyCalendarSystemListeners();
-      });
-  }
-  return calendarSystemHydration;
-}
-
-function setCalendarSystemGlobal(next: CalendarSystem): void {
-  // Mark dirty and persist even for an equal-value "confirmation" tap, so an
-  // in-flight hydration of a stale stored value can never override the choice.
-  calendarSystemDirty = true;
-  AsyncStorage.setItem(CALENDAR_SYSTEM_STORAGE_KEY, next).catch(() => undefined);
-  if (next === calendarSystemValue) return;
-  calendarSystemValue = next;
-  notifyCalendarSystemListeners();
-}
-
-function subscribeCalendarSystem(onStoreChange: () => void): () => void {
-  calendarSystemListeners.add(onStoreChange);
-  hydrateCalendarSystemOnce();
-  return () => {
-    calendarSystemListeners.delete(onStoreChange);
-  };
-}
-
-function getCalendarSystemSnapshot(): CalendarSystem {
-  return calendarSystemValue;
-}
-
-/** Test-only: reset the module store between jest tests. */
-export function __resetCalendarSystemStoreForTests(value: CalendarSystem = 'purnimant'): void {
-  calendarSystemValue = value;
-  calendarSystemDirty = false;
-  calendarSystemHydration = null;
-  calendarSystemHydrated = false;
-  calendarSystemListeners.clear();
-}
-
+/**
+ * The calendar-system store itself now lives in `panchangPrefs`, where it shares
+ * ONE launch-time `multiGet` with the chosen city — the two values are read
+ * together because together they are the scope key every panchang cache is keyed
+ * by, and reading them separately (and lazily, on first subscriber) is what left
+ * Home's `आज का पंचांग` two serial round trips behind the screen it sits on. The
+ * hooks stay here so no call site moves.
+ */
 export function usePanchangCalendarSystem(): [CalendarSystem, (next: CalendarSystem) => void] {
   const calendarSystem = useSyncExternalStore(subscribeCalendarSystem, getCalendarSystemSnapshot);
   return [calendarSystem, setCalendarSystemGlobal];
@@ -156,7 +92,13 @@ export function usePanchangCalendarSystem(): [CalendarSystem, (next: CalendarSys
 
 /** True only after the persisted calendar-system preference has settled. */
 export function usePanchangCalendarHydrated(): boolean {
-  return useSyncExternalStore(subscribeCalendarSystem, () => calendarSystemHydrated);
+  return useSyncExternalStore(subscribeCalendarSystem, getCalendarSystemHydrated);
+}
+
+/** Test-only: reset the module store between jest tests. Re-exported from
+ * `panchangPrefs` so existing suites keep importing it from here. */
+export function __resetCalendarSystemStoreForTests(value: CalendarSystem = 'purnimant'): void {
+  __resetPanchangPrefsForTests(value);
 }
 
 export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): UsePanchangResult {

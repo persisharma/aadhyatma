@@ -94,6 +94,21 @@ export const dayAt = (start: Date, i: number): Date =>
 export const dayKeysFrom = (start: Date, count: number): string[] =>
   Array.from({ length: count }, (_, i) => dateKeyFor(dayAt(start, i)));
 
+/**
+ * The three civil days a TODAY surface's muhurat windows need: yesterday (the
+ * pre-dawn correction reads its night choghadiya), today, and tomorrow (today's
+ * `nextSunrise` closes the night window).
+ *
+ * Lives here so `useMuhurat` and the launch prefetch cannot drift apart: a
+ * prefetch that warms a different three days is a prefetch that does nothing,
+ * and the symptom — a cold-looking card on a warm cache — is exactly the one
+ * that took three attempts to kill.
+ */
+export const todayMuhuratDayKeys = (now: Date): string[] => {
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return [dayAt(start, -1), start, dayAt(start, 1)].map(dateKeyFor);
+};
+
 /** Cede the JS thread for one tick, so a long walk of solves can't block the UI. */
 export const yieldToUi = (): Promise<void> => new Promise<void>((r) => setTimeout(r, 0));
 

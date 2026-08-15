@@ -5,15 +5,25 @@ import * as Location from 'expo-location';
 import { DEFAULT_LOCATION, getCityById, nearestCity, toPanchangLocation } from '@/panchang/locations';
 import { hydrateObservanceCache, warmObservanceCache } from '@/panchang/observanceCache';
 import { UJJAIN_CITY_ID } from '@/panchang/engine';
+import {
+  getCalendarSystemSnapshot,
+  LOCATION_STORAGE_KEY,
+  loadPanchangPrefsOnce,
+  peekPanchangPrefs,
+} from '@/panchang/panchangPrefs';
 import type { CalendarSystem, PanchangLocation } from '@/panchang/types';
 
 // Location the whole panchang computes for. Any future location-sensitive feature
 // (e.g. Brahma-Muhurta reminders) must read this context, not its own geolocation.
-
-const LOCATION_STORAGE_KEY = '@vedansh:panchang-location';
-// Read directly (not via usePanchangCalendarSystem) so this provider has no
-// ordering dependency on where the calendar-system state lives.
-const CALENDAR_SYSTEM_STORAGE_KEY = '@vedansh:panchang-calendar-system';
+//
+// The stored city is read through `panchangPrefs`, which pairs it with the
+// calendar system in ONE `multiGet` kicked off at process start. Two consequences
+// worth knowing: this provider issues no storage read of its own (it awaits the
+// shared one), and when that read has already landed by the time React renders —
+// the normal case, because it races the splash gate rather than following it —
+// the provider starts on the user's real city with `isLoading` already false.
+// That is what lets Home's Today strip compose from cache on its FIRST render
+// instead of after two more round trips.
 
 export type GpsStatus = 'idle' | 'locating' | 'denied' | 'error';
 
@@ -33,28 +43,16 @@ const PanchangLocationContext = createContext<PanchangLocationContextValue>({
   requestDeviceLocation: async () => 'error',
 });
 
-function parseStoredLocation(raw: string | null): PanchangLocation | null {
-  if (!raw) return null;
-  try {
-    const parsed = JSON.parse(raw);
-    const city = typeof parsed?.cityId === 'string' ? getCityById(parsed.cityId) : undefined;
-    if (!city) return null;
-    const source = parsed.source === 'gps' || parsed.source === 'city' ? parsed.source : 'default';
-    // Rebuild from the bundled city so coordinates/labels always match the
-    // current app version, not whatever was persisted by an older one.
-    return toPanchangLocation(city, source);
-  } catch {
-    return null;
-  }
-}
-
+/**
+ * The system to warm a city's observance year against. Awaits the shared read so
+ * a launch-time call cannot warm against the placeholder, then takes the store's
+ * CURRENT value rather than the stored one — a user who switched to amanta and
+ * then changed city must get amanta dates, and `setCalendarSystemGlobal` updates
+ * the store before its own write reaches disk.
+ */
 async function activeCalendarSystem(): Promise<CalendarSystem> {
-  try {
-    const stored = await AsyncStorage.getItem(CALENDAR_SYSTEM_STORAGE_KEY);
-    return stored === 'amanta' ? 'amanta' : 'purnimant';
-  } catch {
-    return 'purnimant';
-  }
+  await loadPanchangPrefsOnce();
+  return getCalendarSystemSnapshot();
 }
 
 function warmInBackground(location: PanchangLocation) {
@@ -89,22 +87,30 @@ async function getDevicePosition(): Promise<{ latitude: number; longitude: numbe
 }
 
 export function PanchangLocationProvider({ children }: { children: React.ReactNode }) {
-  const [location, setLocation] = useState<PanchangLocation>(DEFAULT_LOCATION);
-  const [isLoading, setIsLoading] = useState(true);
+  // Lazy initializers, so a launch read that already landed costs zero renders
+  // on the Ujjain placeholder — and, with it, zero cold panchang chains spent on
+  // a scope the user is about to be moved off.
+  const [location, setLocation] = useState<PanchangLocation>(
+    () => peekPanchangPrefs()?.location ?? DEFAULT_LOCATION
+  );
+  const [isLoading, setIsLoading] = useState(() => peekPanchangPrefs() == null);
   const [gpsStatus, setGpsStatus] = useState<GpsStatus>('idle');
   const loadedRef = useRef(false);
 
-  // Load the persisted location, then verify/warm its observance cache off the
+  // Adopt the persisted location, then verify/warm its observance cache off the
   // startup path (covers both fresh installs and the December year rollover).
+  // The read itself is the shared one — awaiting it here rather than issuing a
+  // second `getItem` keeps the launch to a single panchang-preferences round trip.
   useEffect(() => {
     let cancelled = false;
     let warmTimer: ReturnType<typeof setTimeout> | undefined;
-    AsyncStorage.getItem(LOCATION_STORAGE_KEY)
-      .then((raw) => {
+    loadPanchangPrefsOnce()
+      .then(({ location: stored }) => {
         if (cancelled) return;
-        const stored = parseStoredLocation(raw);
         loadedRef.current = true;
-        if (!stored || stored.cityId === UJJAIN_CITY_ID) return;
+        // `DEFAULT_LOCATION` is already the initial value, so only a real choice
+        // needs applying — and only a real choice needs its observance year warmed.
+        if (stored.cityId === UJJAIN_CITY_ID) return;
         setLocation(stored);
         InteractionManager.runAfterInteractions(() => {
           if (cancelled) return;
