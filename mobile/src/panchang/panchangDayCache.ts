@@ -121,29 +121,53 @@ subscribePanchangEviction((scope) => {
  * behind, which are dead weight rather than wrong, and the next launch takes them.
  */
 let swept = false;
+/** The in-flight (or settled) sweep, so tests can await housekeeping. */
+let sweep: Promise<void> | null = null;
 
 /**
  * Remove keys that can never serve a correct result again: days already in the
  * past, and anything written by an older cache version (the engine moved, so
  * those days would differ from a fresh solve — see PANCHANG_DAY_CACHE_VERSION).
+ *
+ * NEVER awaited by a read. `getAllKeys` + `multiRemove` over the whole keyspace
+ * used to run BEFORE the `multiGet` that serves the caller, so the first cold
+ * surface of every launch waited on a sweep to learn nothing it needed — Home's
+ * `आज का पंचांग` sat on its `—` headline for the duration. Nothing about a read
+ * depends on it: a stale-version key lives under a different `KEY_PREFIX` and can
+ * never be returned by a current-prefix `multiGet`, and a still-readable day
+ * older than the retention window is a *correct* solve for that day (the version
+ * prefix is what guards correctness, not the date). So it is pure housekeeping,
+ * and it runs after the days are in memory.
  */
-async function purgeUnusable(): Promise<void> {
-  if (swept) return;
+function purgeUnusable(): Promise<void> {
+  if (swept) return sweep ?? Promise.resolve();
   // Set before the await, not after: a failed sweep must not retry on every
   // hydrate for the rest of the session (the keys survive to the next launch).
   swept = true;
-  try {
-    const oldest = oldestUsefulDateKey();
-    const doomed = (await AsyncStorage.getAllKeys()).filter((key) => {
-      if (LEGACY_KEY_ROOTS.some((root) => key.startsWith(root))) return true;
-      if (!key.startsWith(KEY_ROOT)) return false;
-      if (!key.startsWith(KEY_PREFIX)) return true; // stale cache version
-      return dateKeyOf(key) < oldest; // lexical compare is chronological for YYYY-MM-DD
-    });
-    if (doomed.length > 0) await AsyncStorage.multiRemove(doomed);
-  } catch {
-    // best-effort
-  }
+  sweep = (async () => {
+    try {
+      const oldest = oldestUsefulDateKey();
+      const doomed = (await AsyncStorage.getAllKeys()).filter((key) => {
+        if (LEGACY_KEY_ROOTS.some((root) => key.startsWith(root))) return true;
+        if (!key.startsWith(KEY_ROOT)) return false;
+        if (!key.startsWith(KEY_PREFIX)) return true; // stale cache version
+        return dateKeyOf(key) < oldest; // lexical compare is chronological for YYYY-MM-DD
+      });
+      if (doomed.length > 0) await AsyncStorage.multiRemove(doomed);
+    } catch {
+      // best-effort
+    }
+  })();
+  return sweep;
+}
+
+/**
+ * Resolve once this session's housekeeping sweep has finished (immediately when
+ * none is in flight). Only the cache's own tests need this — production code
+ * must never wait on the sweep, which is the entire point of detaching it.
+ */
+export function panchangDayCacheSwept(): Promise<void> {
+  return sweep ?? Promise.resolve();
 }
 
 /**
@@ -166,9 +190,9 @@ export async function hydratePanchangDays(
 
   // A build change (store update or OTA) drops these days wholesale; hydrating
   // first would pull the very data that sweep is about to delete back into
-  // memory, where it would serve this whole session.
+  // memory, where it would serve this whole session. This one IS a correctness
+  // gate, unlike the housekeeping purge below, so it stays ahead of the read.
   await awaitDerivedCacheReset();
-  await purgeUnusable();
 
   try {
     const pairs = await AsyncStorage.multiGet(wanted.map((k) => panchangDayStorageKey(scope, k)));
@@ -185,6 +209,10 @@ export async function hydratePanchangDays(
   } catch {
     // hydration is best-effort — a miss just means the scan solves that day
   }
+
+  // Housekeeping, deliberately last and deliberately unawaited: the caller now
+  // has its days and can paint. See `purgeUnusable`.
+  void purgeUnusable();
 }
 
 /**
@@ -229,4 +257,5 @@ export async function persistPanchangDays(
 export function __resetPanchangDayCache(): void {
   persisted.clear();
   swept = false;
+  sweep = null;
 }
