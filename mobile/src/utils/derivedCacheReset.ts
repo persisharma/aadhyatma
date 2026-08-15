@@ -43,6 +43,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  *   bundled precomputed table instead and caches nothing. Same family as the day
  *   solves: it is where a wrong festival/vrat DATE would be cached, which is
  *   exactly the bug class `CACHE_VERSION` exists to invalidate.
+ * - `@vedansh:pitru-solves:` — solved पितृ स्मरण occurrences and Pitru Paksha
+ *   windows (`pitruSmaranSolves`). Pure function of (tithi rule, engine); keyed
+ *   by TITHI ONLY, never by entry id, relation or name. Note the separator: this
+ *   is a computed cache and belongs here, while the user-authored
+ *   `@vedansh/pitru-smaran` below does NOT — they differ by one character.
  *
  * EXCLUDED, and why. This is a computed-days sweep, so the bar is narrow: a key
  * belongs above only if it holds engine-computed calendar output. Everything
@@ -64,6 +69,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  *   `search-recent`, `new-content-state` — the user's own practice and history.
  * - `@vedansh/vrat-follows`, `muhurat-follows`, `pitru-smaran` — followed days and
  *   family remembrance entries. Private, on-device, and not recomputable at all.
+ *   `pitru-smaran` is the entry ledger itself (relation, name, tithi) and must
+ *   never be swept; only the derived `@vedansh:pitru-solves:` dates above are.
  * - `@vedansh:kundali-birth-profile:v1`, `guna-milan-draft:v1`,
  *   `namkaran-session:v1`, `namkaran-shortlist:v1` — birth details and starred
  *   names, several of them privacy-sensitive by design.
@@ -77,6 +84,7 @@ export const DERIVED_CACHE_KEY_PREFIXES = [
   '@vedansh:panchang-days:',
   '@vedansh:muhurat-days:',
   '@vedansh:observances:',
+  '@vedansh:pitru-solves:',
 ] as const;
 
 /**

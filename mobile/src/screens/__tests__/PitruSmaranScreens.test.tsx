@@ -2,6 +2,7 @@ import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { StyleSheet, Switch, Text } from 'react-native';
 import CalendarDatePicker from '@/components/CalendarDatePicker';
+import { __resetSmaranSolvesForTests } from '@/panchang/pitruSmaranSolves';
 
 /**
  * PRD-17 पितृ स्मरण screens — list (rows sorted soonest-first, seasonal banner,
@@ -153,6 +154,10 @@ afterEach(() => {
   jest.clearAllMocks();
   mockEntries = [];
   mockPermissionStatus = 'granted';
+  // The solve cache is module state that outlives a test. Without this, the
+  // window mocked by one case is served to the next from memory and the mock is
+  // never consulted — the same trap `__resetPanchangPrefsForTests` exists for.
+  __resetSmaranSolvesForTests();
 });
 
 async function render(node: React.ReactElement): Promise<TestRenderer.ReactTestRenderer> {
@@ -417,10 +422,19 @@ describe('PitruSmaranDetailScreen', () => {
         route={{ key: 'd', name: 'PitruSmaranDetail', params: { entryId: 'smaran-father' } } as never}
       />
     );
+    // Stage one: the hero pill is published on its OWN solve. The two reference
+    // cards below it are still unsolved here, and that is the point — batching
+    // them made the pill wait on a year-long scan of a date further down the page.
+    const staged = allText(tree);
+    expect(staged).toContain('पिताजी');
+    expect(staged).toContain('माघ कृष्ण अष्टमी');
+    expect(staged).toContain('अगला');
+    expect(staged).toContain('173 दिन में');
+    expect(staged).not.toContain('अगले वर्ष');
+
+    // Stage two: next year's date and the fortnight mapping.
+    await flush();
     const text = allText(tree);
-    expect(text).toContain('पिताजी');
-    expect(text).toContain('माघ कृष्ण अष्टमी');
-    expect(text).toContain('अगला');
     expect(text).toContain('173 दिन में');
     expect(text).toContain('अगले वर्ष');
     expect(text).toContain('अष्टमी श्राद्ध');
