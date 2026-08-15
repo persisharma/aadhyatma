@@ -34,6 +34,7 @@ import {
   dateKeyFor,
   dayStoreFor,
   scopeKeyFor,
+  todayMuhuratDayKeys,
   type ScanOptions,
 } from '@/panchang/panchangDayStore';
 import { hydratePanchangDays, persistPanchangDays } from '@/panchang/panchangDayCache';
@@ -89,11 +90,15 @@ type Solved = {
  * surface. Do not reintroduce a local cache here.
  */
 
-/** The three civil days a day's muhurat needs: yesterday (pre-dawn), today, tomorrow. */
+/**
+ * The civil days a day's muhurat needs: today and tomorrow, plus yesterday for a
+ * today surface's pre-dawn correction. The today set comes from the shared
+ * `todayMuhuratDayKeys` because the launch prefetch warms exactly that set —
+ * they must not drift.
+ */
 function neededDateKeys(dateMs: number, isToday: boolean): string[] {
-  const keys = [dateKeyFor(new Date(dateMs)), dateKeyFor(new Date(dateMs + DAY_MS))];
-  if (isToday) keys.push(dateKeyFor(new Date(dateMs - DAY_MS)));
-  return keys;
+  if (isToday) return todayMuhuratDayKeys(new Date(dateMs));
+  return [dateKeyFor(new Date(dateMs)), dateKeyFor(new Date(dateMs + DAY_MS))];
 }
 
 /**

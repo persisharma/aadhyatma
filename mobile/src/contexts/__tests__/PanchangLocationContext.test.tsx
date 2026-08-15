@@ -2,6 +2,7 @@ import React from 'react';
 import { InteractionManager } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import { PanchangLocationProvider, usePanchangLocation } from '../PanchangLocationContext';
+import { __resetPanchangPrefsForTests } from '@/panchang/panchangPrefs';
 
 // Stateful in-memory AsyncStorage mock (jest requires the `mock` prefix to
 // reference the closure variable from the hoisted factory).
@@ -78,6 +79,11 @@ async function mountAndHydrate(): Promise<TestRenderer.ReactTestRenderer> {
 beforeEach(() => {
   mockStore = {};
   jest.clearAllMocks();
+  // The provider no longer reads storage itself — it awaits the process-wide
+  // panchang-preferences read, which is memoized so the launch prefetch and every
+  // consumer share one round trip. That memo has to be cleared between tests, or
+  // each case would be served the first case's (empty) storage.
+  __resetPanchangPrefsForTests();
   // Run deferred work immediately — InteractionManager's real scheduler keeps
   // timers alive past the test run and stalls the deferred warm-up path.
   jest
