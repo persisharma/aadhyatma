@@ -145,6 +145,11 @@ export function peekPanchangPrefs(): PanchangPrefs | null {
  * calendar-system subscribers and the launch prefetch share a single round trip
  * instead of issuing one each. Never rejects — a storage failure yields the
  * defaults, which is exactly the pre-read state.
+ *
+ * SUCCESS is what gets memoized. A transient storage failure clears the memo so
+ * the next caller retries, rather than pinning the whole session to Ujjain +
+ * purnimant with no way back — the same guarantee the calendar-system read made
+ * before it moved here, and easy to lose when consolidating two reads into one.
  */
 export function loadPanchangPrefsOnce(): Promise<PanchangPrefs> {
   if (!load) load = runLoad();
@@ -154,6 +159,7 @@ export function loadPanchangPrefsOnce(): Promise<PanchangPrefs> {
 async function runLoad(): Promise<PanchangPrefs> {
   let storedLocation: string | null = null;
   let storedSystem: string | null = null;
+  let failed = false;
   try {
     const pairs = await AsyncStorage.multiGet([
       LOCATION_STORAGE_KEY,
@@ -164,7 +170,12 @@ async function runLoad(): Promise<PanchangPrefs> {
       if (key === CALENDAR_SYSTEM_STORAGE_KEY) storedSystem = value;
     });
   } catch {
-    // Best-effort: fall through to the defaults, the status quo before the read.
+    // Best-effort: fall through to the defaults, the status quo before the read,
+    // but let the next caller try again (see above). The `await` above means
+    // `load` is already assigned by the time we get here, so clearing it here is
+    // never racing its own assignment.
+    failed = true;
+    load = null;
   }
 
   const result: PanchangPrefs = {
@@ -172,11 +183,17 @@ async function runLoad(): Promise<PanchangPrefs> {
     calendarSystem: parseCalendarSystem(storedSystem),
   };
   // Seed synchronously, before anyone can await this promise, so a consumer that
-  // peeks in the same tick sees the settled values.
-  snapshot = result;
+  // peeks in the same tick sees the settled values. A FAILED read seeds nothing:
+  // `peekPanchangPrefs()` must keep reporting "not known yet" so the provider
+  // still mounts in its loading state rather than presenting the fallback city as
+  // a settled answer.
+  if (!failed) snapshot = result;
   if (!calendarSystemDirty && result.calendarSystem !== calendarSystemValue) {
     calendarSystemValue = result.calendarSystem;
   }
+  // True even on failure, exactly as the old `.finally()` set it: the gate means
+  // "this read is no longer pending", and leaving it false would strand
+  // `useMuhurat` on a scope it never considers settled — no panchang at all.
   calendarSystemHydrated = true;
   notifyCalendarSystemListeners();
   return result;
