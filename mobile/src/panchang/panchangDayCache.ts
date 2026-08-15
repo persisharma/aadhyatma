@@ -17,6 +17,7 @@
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { awaitDerivedCacheReset } from '@/utils/derivedCacheReset';
 import {
   PANCHANG_DAY_CACHE_VERSION,
   reviveDayInputs,
@@ -111,11 +112,26 @@ subscribePanchangEviction((scope) => {
 });
 
 /**
+ * Whether this process has already swept. The sweep below reads the ENTIRE
+ * AsyncStorage keyspace, and what it collects can only appear between launches
+ * (keys from an older cache version) or at midnight (days that fell out of the
+ * retention window) — so re-running it per cold range just put a whole-keyspace
+ * scan in front of the first hydrate of every calendar day. Once per session is
+ * enough: a session that crosses midnight leaves a day or two of stale keys
+ * behind, which are dead weight rather than wrong, and the next launch takes them.
+ */
+let swept = false;
+
+/**
  * Remove keys that can never serve a correct result again: days already in the
  * past, and anything written by an older cache version (the engine moved, so
  * those days would differ from a fresh solve — see PANCHANG_DAY_CACHE_VERSION).
  */
 async function purgeUnusable(): Promise<void> {
+  if (swept) return;
+  // Set before the await, not after: a failed sweep must not retry on every
+  // hydrate for the rest of the session (the keys survive to the next launch).
+  swept = true;
   try {
     const oldest = oldestUsefulDateKey();
     const doomed = (await AsyncStorage.getAllKeys()).filter((key) => {
@@ -148,6 +164,10 @@ export async function hydratePanchangDays(
   // the next cold range.
   if (wanted.length === 0) return;
 
+  // A build change (store update or OTA) drops these days wholesale; hydrating
+  // first would pull the very data that sweep is about to delete back into
+  // memory, where it would serve this whole session.
+  await awaitDerivedCacheReset();
   await purgeUnusable();
 
   try {
@@ -177,6 +197,10 @@ export async function persistPanchangDays(
   location: ScanLocation,
   calendarSystem: CalendarSystem
 ): Promise<void> {
+  // Same gate as hydrate, for the opposite hazard: writing ahead of the sweep
+  // would leave `known` claiming days are on disk that the sweep then removed,
+  // so nothing would rewrite them and every later launch would re-solve.
+  await awaitDerivedCacheReset();
   const scope = scopeKeyFor(location, calendarSystem);
   const map = dayStoreFor(scope);
   const known = persistedFor(scope);
@@ -201,7 +225,8 @@ export async function persistPanchangDays(
   }
 }
 
-/** Test helper: forget what this process believes is already on disk. */
+/** Test helper: forget what this process believes is already on disk (and swept). */
 export function __resetPanchangDayCache(): void {
   persisted.clear();
+  swept = false;
 }

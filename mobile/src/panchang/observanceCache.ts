@@ -3,6 +3,7 @@
 // AsyncStorage, and hydrated into the in-memory observanceStore on app start —
 // the slow live scan never reruns for a city it has already covered.
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { awaitDerivedCacheReset } from '@/utils/derivedCacheReset';
 import { resolveObservancesForYearLiveChunked, type ObservanceLocation } from './festivalEngine';
 import { locationKey, UJJAIN_CITY_ID } from './engine';
 import {
@@ -51,6 +52,11 @@ export async function hydrateObservanceCache(
   calendarSystems: CalendarSystem[],
   years: number[]
 ): Promise<void> {
+  // A build change (store update or OTA) drops these scans wholesale — hydrate
+  // after that sweep, never into the teeth of it. `warmObservanceCache` always
+  // hydrates before it scans and persists, so gating here orders the writes too.
+  await awaitDerivedCacheReset();
+
   try {
     const allKeys = await AsyncStorage.getAllKeys();
     const stale = allKeys.filter((key) => key.startsWith(KEY_ROOT) && !key.startsWith(KEY_PREFIX));
