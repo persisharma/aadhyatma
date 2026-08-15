@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>आज के लिए — card-height options (app tokens)</title>
+<!--
+  Static prototype for shortening Home's FOR TODAY row (design.md §50).
+  Rendered with the app's REAL theme tokens (mobile/src/theme/colors.ts +
+  spacing.ts + the bundled Google fonts) — same convention as
+  panchang-redesign-preview.html and todays-practice-redesign-preview.html.
+
+  Four columns, identical content and identical viewport (390x844, the
+  iPhone 14/15 logical size). Every phone is clipped at the same fold, so
+  the column that shows more CATEGORIES tiles is literally the one that
+  fits more homepage. Card geometry below mirrors the RN styles 1dp = 1px.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Serif+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* mobile/src/theme/colors.ts (lightColors) */
+    --parchmentSoft:#F8EFD6; --parchmentDeep:#E9D9B1;
+    --parchmentHighlight:#F6ECD0; --parchmentGradientEnd:#F1E3BF;
+    --ink:#1A0E03; --inkSoft:#5A3A1E; --inkMuted:#6E5230;
+    --saffron:#B8621B; --saffronDeep:#8A3E0B; --gold:#A67C34;
+    --saffronTint:rgba(184,98,27,.12);
+    --divider:rgba(138,62,11,.18); --goldTint:rgba(166,124,52,.14);
+    --cardActiveFrom:#FFF5E0; --cardActiveTo:#F5DEAC;
+    --cardActiveBorder:rgba(184,98,27,.4);
+    --thumbFrom:#F8D291; --thumbTo:#E0A255;
+    /* spacing.ts */
+    --gutter:24px;
+    --latin:"Cormorant Garamond",serif;
+    --deva:"Noto Serif Devanagari",serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#cabfa6;font-family:var(--latin);padding:34px 14px 60px;
+    -webkit-font-smoothing:antialiased;color:var(--ink)}
+
+  h1.page{text-align:center;font-size:30px;font-weight:700;color:#3A2408}
+  p.page{text-align:center;font-size:17px;font-style:italic;color:#4A3010;margin:8px auto 30px;max-width:900px;line-height:1.45}
+
+  .rail{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .stage{display:flex;flex-direction:column;align-items:center;gap:12px;width:390px}
+
+  .hdr{text-align:center}
+  .hdr .tag{display:inline-block;font-family:var(--latin);font-weight:700;font-size:12px;
+    letter-spacing:.16em;text-transform:uppercase;color:#fff;background:#8A5A22;
+    border-radius:999px;padding:4px 12px}
+  .hdr .tag.now{background:#6E5230}
+  .hdr .tag.pick{background:#8A3E0B}
+  .hdr h2{font-family:var(--latin);font-weight:700;font-size:20px;color:#3A2408;margin-top:8px}
+  .hdr .meta{font-family:var(--latin);font-style:italic;font-size:14px;color:#4A3010;margin-top:2px}
+
+  /* ---- phone shell: fixed 390x844, clipped at the fold ---- */
+  .phone{width:390px;height:844px;border-radius:42px;overflow:hidden;position:relative;
+    background:linear-gradient(180deg,var(--parchmentHighlight),var(--parchmentGradientEnd));
+    box-shadow:0 24px 60px rgba(60,40,20,.35)}
+  .fold{position:absolute;left:0;right:0;bottom:0;height:78px;pointer-events:none;
+    background:linear-gradient(180deg,rgba(241,227,191,0),rgba(241,227,191,.96));z-index:5}
+  .foldline{position:absolute;left:0;right:0;bottom:30px;border-top:2px dashed rgba(138,62,11,.45);z-index:6}
+  .foldlabel{position:absolute;right:14px;bottom:8px;font-family:var(--latin);font-style:italic;
+    font-size:12px;color:var(--inkSoft);z-index:6}
+
+  .status{display:flex;justify-content:space-between;align-items:center;
+    padding:14px 28px 2px;color:var(--ink);font-size:15px;font-weight:600;font-family:var(--latin)}
+  .batt{border:1.5px solid var(--ink);border-radius:4px;padding:1px 5px;font-size:10px;font-weight:700}
+
+  .scroll{padding:4px var(--gutter) 0}
+
+  /* ---- HomeWordmark ---- */
+  .wordmark{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0 2px}
+  .wordmark .rule{width:34px;height:1px;background:var(--divider)}
+  .wordmark .om{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--saffron);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);
+    font-size:17px;color:var(--saffron)}
+  .wordmark .name{font-family:var(--deva);font-weight:600;font-size:26px;color:var(--ink)}
+  .tagline{text-align:center;font-family:var(--latin);font-style:italic;font-size:15px;
+    color:var(--inkMuted);margin-bottom:12px}
+
+  /* ---- TodayStrip (आज का पंचांग) — identical in every column ---- */
+  .strip{border:1px solid var(--cardActiveBorder);border-radius:18px;padding:14px 16px;
+    background:linear-gradient(135deg,var(--cardActiveFrom),var(--cardActiveTo));
+    box-shadow:0 3px 8px rgba(60,30,10,.10);position:relative}
+  .strip .eyebrow{font-family:var(--deva);font-weight:600;font-size:12px;color:var(--saffronDeep)}
+  .strip .chev{position:absolute;right:16px;top:14px;color:var(--inkMuted);font-size:16px}
+  .strip .tithi{font-family:var(--deva);font-weight:600;font-size:19px;color:var(--ink);
+    line-height:1.5;margin-top:2px}
+  .strip .pills{display:flex;gap:8px;margin-top:10px}
+  .strip .pill{background:var(--goldTint);border-radius:999px;padding:5px 11px;display:flex;
+    align-items:baseline;gap:6px}
+  .strip .pill b{font-family:var(--deva);font-weight:600;font-size:12px;color:var(--inkSoft)}
+  .strip .pill span{font-family:var(--latin);font-size:12px;color:var(--inkSoft)}
+
+  /* ---- section eyebrow ---- */
+  .eyebrowDeva{font-family:var(--deva);font-weight:600;font-size:11px;color:var(--inkMuted);
+    padding:0 4px}
+  .eyebrowLatin{font-family:var(--latin);font-weight:600;font-size:11px;color:var(--inkMuted);
+    letter-spacing:.22em;text-transform:uppercase;padding:0 4px}
+
+  /* ---- the FOR TODAY row (the thing under test) ---- */
+  .todaywrap{margin-left:calc(var(--gutter) * -1);margin-right:calc(var(--gutter) * -1);
+    padding:0 var(--gutter);overflow:hidden}
+  .todayrow{display:flex;gap:8px;padding-bottom:4px}
+  .fcard{flex:none;border:1px solid var(--cardActiveBorder);border-radius:18px;
+    background:linear-gradient(135deg,var(--cardActiveFrom),var(--cardActiveTo));
+    box-shadow:0 3px 8px rgba(60,30,10,.12)}
+
+  .icon{background:var(--saffronTint);border-radius:14px;display:flex;align-items:center;
+    justify-content:center;font-family:var(--deva);font-size:19px;color:var(--saffronDeep);flex:none}
+
+  /* A — shipped today: 292 wide, CTA pill, 130 tall */
+  .vA .fcard{width:292px;padding:14px;min-height:112px;display:flex;flex-direction:column}
+  .vA .icon{width:36px;height:36px}
+  .vA .head{display:flex;align-items:center;gap:10px}
+  .vA .title{font-family:var(--deva);font-weight:600;font-size:19px;color:var(--ink);
+    line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vA .desc{font-family:var(--deva);font-size:13px;line-height:22px;color:var(--inkSoft);margin-top:8px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vA .spacer{flex:1;min-height:6px}
+  .vA .cta{align-self:flex-start;display:flex;align-items:center;gap:6px;background:var(--saffronTint);
+    border-radius:999px;padding:6px 14px;font-family:var(--deva);font-size:13px;color:var(--saffronDeep)}
+  .vA .cta i{font-style:normal;font-size:16px;line-height:16px}
+
+  /* B — compact strip: icon · title over blurb · chevron */
+  .vB .fcard{width:248px;padding:11px 12px;display:flex;align-items:center;gap:10px}
+  .vB .icon{width:34px;height:34px}
+  .vB .col{flex:1;min-width:0}
+  .vB .title{font-family:var(--deva);font-weight:600;font-size:17px;color:var(--ink);
+    line-height:25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vB .desc{font-family:var(--deva);font-size:12px;line-height:20px;color:var(--inkSoft);margin-top:1px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vB .chev{color:var(--saffronDeep);font-size:16px;line-height:16px;flex:none}
+
+  /* C — title-only strip: closest to the नित्य साधना tile */
+  .vC .fcard{width:196px;padding:11px 12px;display:flex;align-items:center;gap:10px}
+  .vC .icon{width:34px;height:34px}
+  .vC .title{flex:1;min-width:0;font-family:var(--deva);font-weight:600;font-size:17px;color:var(--ink);
+    line-height:25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vC .chev{color:var(--saffronDeep);font-size:16px;line-height:16px;flex:none}
+
+  /* D — launcher tile, literally the नित्य साधना form (icon centred, caption below) */
+  .vD .tilewrap{flex:none;width:110px}
+  .vD .fcard{width:110px;height:72px;display:flex;align-items:center;justify-content:center}
+  .vD .icon{width:38px;height:38px;border-radius:14px}
+  .vD .cap{font-family:var(--deva);font-size:13px;color:var(--ink);text-align:center;margin-top:6px;
+    line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  /* ---- RoutineBanner (inline) ---- */
+  .routine{margin-top:16px;border:1px solid var(--cardActiveBorder);border-radius:18px;
+    padding:13px 16px;background:linear-gradient(135deg,var(--cardActiveFrom),var(--cardActiveTo));
+    box-shadow:0 3px 8px rgba(60,30,10,.10);display:flex;align-items:center;gap:12px}
+  .routine .lotus{width:34px;height:34px;flex:none}
+  .routine .rt{flex:1;min-width:0}
+  .routine .rk{font-family:var(--deva);font-weight:600;font-size:11px;color:var(--saffronDeep)}
+  .routine .rn{font-family:var(--deva);font-weight:600;font-size:16px;color:var(--ink);line-height:1.5}
+  .routine .rc{color:var(--inkMuted);font-size:16px}
+
+  /* ---- CATEGORIES grid ---- */
+  .grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:0}
+  .tile{width:calc((100% - 20px)/3)}
+  .tile.full{width:100%}
+  .tilebox{height:72px;border:1px solid var(--cardActiveBorder);border-radius:18px;
+    background:linear-gradient(135deg,var(--cardActiveFrom),var(--cardActiveTo));
+    box-shadow:0 2px 6px rgba(60,30,10,.10);display:flex;align-items:center;justify-content:center}
+  .glyph{width:38px;height:38px;border-radius:14px;background:var(--saffronTint);display:flex;
+    align-items:center;justify-content:center;font-family:var(--deva);font-size:19px;color:var(--saffronDeep)}
+  .tilecap{font-family:var(--deva);font-size:13px;color:var(--ink);text-align:center;margin-top:6px;
+    line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .newbadge{position:absolute;top:6px;right:6px;background:rgba(184,98,27,.16);border-radius:999px;
+    padding:2px 8px;font-family:var(--latin);font-weight:700;font-size:10px;letter-spacing:.16em;
+    color:var(--saffronDeep)}
+  .tilebox{position:relative}
+
+  /* lotus petals, approximating components/LotusMark.tsx */
+  .lotus svg circle{fill:#7A3B10}
+
+  /* ---- the readout under each phone ---- */
+  .readout{width:390px;background:rgba(255,247,229,.92);border:1px solid rgba(138,62,11,.25);
+    border-radius:16px;padding:14px 16px}
+  .readout dl{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:14px}
+  .readout dt{font-family:var(--latin);font-style:italic;color:var(--inkMuted)}
+  .readout dd{font-family:var(--latin);font-weight:600;color:#3A2408;text-align:right}
+  .readout dd.good{color:#2F6B33}
+  .readout .note{font-family:var(--latin);font-style:italic;font-size:13.5px;color:var(--inkSoft);
+    line-height:1.5;margin-top:10px;border-top:1px solid rgba(138,62,11,.16);padding-top:9px}
+  .readout .note b{font-style:normal;font-weight:700;color:#3A2408}
+
+  footer{max-width:1000px;margin:44px auto 0;background:rgba(255,247,229,.92);
+    border:1px solid rgba(138,62,11,.25);border-radius:16px;padding:20px 24px}
+  footer h3{font-family:var(--latin);font-weight:700;font-size:18px;color:#3A2408;margin-bottom:8px}
+  footer p,footer li{font-family:var(--latin);font-size:15px;color:var(--inkSoft);line-height:1.6}
+  footer ul{margin:6px 0 0 20px}
+  footer code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;
+    background:rgba(138,62,11,.10);border-radius:4px;padding:1px 5px;color:#3A2408}
+</style>
+</head>
+<body>
+
+<h1 class="page">आज के लिए — card-height options</h1>
+<p class="page">
+  Same content, same 390×844 viewport, same fold. The FOR TODAY row is the only thing
+  that differs. Whichever column shows more of the CATEGORIES grid above the dashed
+  line is the one that fits more homepage.
+</p>
+
+<div class="rail">
+
+  <!-- ============================ A — shipped ============================ -->
+  <div class="stage vA">
+    <div class="hdr">
+      <span class="tag now">A · shipped today</span>
+      <h2>Full spotlight card</h2>
+      <div class="meta">292 × 130 · पढ़ें pill</div>
+    </div>
+    <div class="phone">
+      <div class="status"><span>9:44</span><span class="batt">49</span></div>
+      <div class="scroll">
+        <div class="wordmark"><i class="rule"></i><span class="om">ॐ</span><span class="name">वेदांश़</span><span class="om">ॐ</span><i class="rule"></i></div>
+        <div class="tagline">Sacred Texts · Daily Reading</div>
+
+        <div class="strip">
+          <div class="eyebrow">आज का पंचांग</div><div class="chev">›</div>
+          <div class="tithi">शनिवार · शुक्ल तृतीया</div>
+          <div class="pills">
+            <div class="pill"><b>अभिजीत</b><span>11:58 AM – 12:49 PM</span></div>
+            <div class="pill"><b>राहु काल</b><span>9:15 – 10:49 AM</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px"></div>
+        <div class="eyebrowDeva" style="margin-bottom:8px">आज के लिए</div>
+        <div class="todaywrap"><div class="todayrow">
+          <div class="fcard">
+            <div class="head"><div class="icon">ह</div><div class="title">हनुमान चालीसा</div></div>
+            <div class="desc">आज के लिए अनुशंसित</div>
+            <div class="spacer"></div>
+            <div class="cta">पढ़ें <i>›</i></div>
+          </div>
+          <div class="fcard">
+            <div class="head"><div class="icon">सु</div><div class="title">सुन्दरकाण्ड</div></div>
+            <div class="desc">आज के लिए अनुशंसित</div>
+            <div class="spacer"></div>
+            <div class="cta">पढ़ें <i>›</i></div>
+          </div>
+        </div></div>
+
+        <div class="routine">
+          <svg class="lotus" viewBox="0 0 40 40"><g>
+            <ellipse cx="20" cy="8"  rx="3.4" ry="8" fill="#F0C079"/><ellipse cx="20" cy="32" rx="3.4" ry="8" fill="#F0C079"/>
+            <ellipse cx="8"  cy="20" rx="8" ry="3.4" fill="#F0C079"/><ellipse cx="32" cy="20" rx="8" ry="3.4" fill="#F0C079"/>
+            <ellipse cx="11.5" cy="11.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(-45 11.5 11.5)"/>
+            <ellipse cx="28.5" cy="11.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(45 28.5 11.5)"/>
+            <ellipse cx="11.5" cy="28.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(45 11.5 28.5)"/>
+            <ellipse cx="28.5" cy="28.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(-45 28.5 28.5)"/>
+            <circle cx="20" cy="20" r="5"/></g></svg>
+          <div class="rt"><div class="rk">नित्य साधना · आज</div><div class="rn">अपनी नित्य साधना बनाएँ</div></div>
+          <div class="rc">›</div>
+        </div>
+
+        <div class="eyebrowLatin" style="margin:16px 0 8px">Categories</div>
+        <div class="grid">
+          <div class="tile"><div class="tilebox"><div class="glyph">च</div></div><div class="tilecap">चालीसा</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">आ</div></div><div class="tilecap">आरती</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">स्तो</div></div><div class="tilecap">स्तोत्रम्</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ग्र</div></div><div class="tilecap">ग्रन्थ</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ज</div></div><div class="tilecap">जप</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">व्र</div></div><div class="tilecap">व्रत</div></div>
+          <div class="tile"><div class="tilebox"><span class="newbadge">NEW</span><div class="glyph">कुं</div></div><div class="tilecap">कुंडली</div></div>
+          <div class="tile"><div class="tilebox"><span class="newbadge">NEW</span><div class="glyph">मु</div></div><div class="tilecap">मुहूर्त</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">सं</div></div><div class="tilecap">संस्कार</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ती</div></div><div class="tilecap">तीर्थ</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">दे</div></div><div class="tilecap">देवता</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">उ</div></div><div class="tilecap">उद्देश्य</div></div>
+        </div>
+      </div>
+      <div class="fold"></div><div class="foldline"></div><div class="foldlabel">fold · 844pt</div>
+    </div>
+    <div class="readout">
+      <dl>
+        <dt>Card height</dt><dd>130 pt</dd>
+        <dt>Row block (label + cards)</dt><dd>170 pt</dd>
+        <dt>Grid rows above the fold</dt><dd>1½</dd>
+        <dt>Cards per viewport</dt><dd>1.2</dd>
+      </dl>
+      <div class="note">The card was built for the <b>DISCOVER</b> carousel, where it is one
+        of eight browsing cards. Here it repeats one blurb — <i>आज के लिए अनुशंसित</i> —
+        under a heading that already says आज के लिए, then spends 30 pt on a
+        <b>पढ़ें</b> pill that is not a button: the whole card is the tap target.</div>
+    </div>
+  </div>
+
+  <!-- ============================ B — compact strip ============================ -->
+  <div class="stage vB">
+    <div class="hdr">
+      <span class="tag pick">B · recommended</span>
+      <h2>Compact strip</h2>
+      <div class="meta">248 × 68 · chevron only</div>
+    </div>
+    <div class="phone">
+      <div class="status"><span>9:44</span><span class="batt">49</span></div>
+      <div class="scroll">
+        <div class="wordmark"><i class="rule"></i><span class="om">ॐ</span><span class="name">वेदांश़</span><span class="om">ॐ</span><i class="rule"></i></div>
+        <div class="tagline">Sacred Texts · Daily Reading</div>
+
+        <div class="strip">
+          <div class="eyebrow">आज का पंचांग</div><div class="chev">›</div>
+          <div class="tithi">शनिवार · शुक्ल तृतीया</div>
+          <div class="pills">
+            <div class="pill"><b>अभिजीत</b><span>11:58 AM – 12:49 PM</span></div>
+            <div class="pill"><b>राहु काल</b><span>9:15 – 10:49 AM</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px"></div>
+        <div class="eyebrowDeva" style="margin-bottom:6px">आज के लिए</div>
+        <div class="todaywrap"><div class="todayrow">
+          <div class="fcard">
+            <div class="icon">ह</div>
+            <div class="col"><div class="title">हनुमान चालीसा</div><div class="desc">आज के लिए अनुशंसित</div></div>
+            <div class="chev">›</div>
+          </div>
+          <div class="fcard">
+            <div class="icon">सु</div>
+            <div class="col"><div class="title">सुन्दरकाण्ड</div><div class="desc">आज के लिए अनुशंसित</div></div>
+            <div class="chev">›</div>
+          </div>
+        </div></div>
+
+        <div class="routine">
+          <svg class="lotus" viewBox="0 0 40 40"><g>
+            <ellipse cx="20" cy="8"  rx="3.4" ry="8" fill="#F0C079"/><ellipse cx="20" cy="32" rx="3.4" ry="8" fill="#F0C079"/>
+            <ellipse cx="8"  cy="20" rx="8" ry="3.4" fill="#F0C079"/><ellipse cx="32" cy="20" rx="8" ry="3.4" fill="#F0C079"/>
+            <ellipse cx="11.5" cy="11.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(-45 11.5 11.5)"/>
+            <ellipse cx="28.5" cy="11.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(45 28.5 11.5)"/>
+            <ellipse cx="11.5" cy="28.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(45 11.5 28.5)"/>
+            <ellipse cx="28.5" cy="28.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(-45 28.5 28.5)"/>
+            <circle cx="20" cy="20" r="5"/></g></svg>
+          <div class="rt"><div class="rk">नित्य साधना · आज</div><div class="rn">अपनी नित्य साधना बनाएँ</div></div>
+          <div class="rc">›</div>
+        </div>
+
+        <div class="eyebrowLatin" style="margin:16px 0 8px">Categories</div>
+        <div class="grid">
+          <div class="tile"><div class="tilebox"><div class="glyph">च</div></div><div class="tilecap">चालीसा</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">आ</div></div><div class="tilecap">आरती</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">स्तो</div></div><div class="tilecap">स्तोत्रम्</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ग्र</div></div><div class="tilecap">ग्रन्थ</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ज</div></div><div class="tilecap">जप</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">व्र</div></div><div class="tilecap">व्रत</div></div>
+          <div class="tile"><div class="tilebox"><span class="newbadge">NEW</span><div class="glyph">कुं</div></div><div class="tilecap">कुंडली</div></div>
+          <div class="tile"><div class="tilebox"><span class="newbadge">NEW</span><div class="glyph">मु</div></div><div class="tilecap">मुहूर्त</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">सं</div></div><div class="tilecap">संस्कार</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ती</div></div><div class="tilecap">तीर्थ</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">दे</div></div><div class="tilecap">देवता</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">उ</div></div><div class="tilecap">उद्देश्य</div></div>
+        </div>
+      </div>
+      <div class="fold"></div><div class="foldline"></div><div class="foldlabel">fold · 844pt</div>
+    </div>
+    <div class="readout">
+      <dl>
+        <dt>Card height</dt><dd class="good">68 pt <span style="font-weight:400">(−62)</span></dd>
+        <dt>Row block (label + cards)</dt><dd class="good">102 pt <span style="font-weight:400">(−68)</span></dd>
+        <dt>Grid rows above the fold</dt><dd class="good">2½</dd>
+        <dt>Cards per viewport</dt><dd class="good">1.4</dd>
+      </dl>
+      <div class="note">Keeps the blurb, because on a <b>festival day</b> that line is the
+        whole point — it turns into <i>आज दीपावली है</i>, and it is what makes the
+        morning notification and the homepage name the same day. Drops only the pill;
+        the chevron carries the affordance. <b>This is what is on the branch.</b></div>
+    </div>
+  </div>
+
+  <!-- ============================ C — title-only strip ============================ -->
+  <div class="stage vC">
+    <div class="hdr">
+      <span class="tag">C · leanest</span>
+      <h2>Title-only strip</h2>
+      <div class="meta">196 × 56 · no blurb</div>
+    </div>
+    <div class="phone">
+      <div class="status"><span>9:44</span><span class="batt">49</span></div>
+      <div class="scroll">
+        <div class="wordmark"><i class="rule"></i><span class="om">ॐ</span><span class="name">वेदांश़</span><span class="om">ॐ</span><i class="rule"></i></div>
+        <div class="tagline">Sacred Texts · Daily Reading</div>
+
+        <div class="strip">
+          <div class="eyebrow">आज का पंचांग</div><div class="chev">›</div>
+          <div class="tithi">शनिवार · शुक्ल तृतीया</div>
+          <div class="pills">
+            <div class="pill"><b>अभिजीत</b><span>11:58 AM – 12:49 PM</span></div>
+            <div class="pill"><b>राहु काल</b><span>9:15 – 10:49 AM</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px"></div>
+        <div class="eyebrowDeva" style="margin-bottom:6px">आज के लिए</div>
+        <div class="todaywrap"><div class="todayrow">
+          <div class="fcard"><div class="icon">ह</div><div class="title">हनुमान चालीसा</div><div class="chev">›</div></div>
+          <div class="fcard"><div class="icon">सु</div><div class="title">सुन्दरकाण्ड</div><div class="chev">›</div></div>
+        </div></div>
+
+        <div class="routine">
+          <svg class="lotus" viewBox="0 0 40 40"><g>
+            <ellipse cx="20" cy="8"  rx="3.4" ry="8" fill="#F0C079"/><ellipse cx="20" cy="32" rx="3.4" ry="8" fill="#F0C079"/>
+            <ellipse cx="8"  cy="20" rx="8" ry="3.4" fill="#F0C079"/><ellipse cx="32" cy="20" rx="8" ry="3.4" fill="#F0C079"/>
+            <ellipse cx="11.5" cy="11.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(-45 11.5 11.5)"/>
+            <ellipse cx="28.5" cy="11.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(45 28.5 11.5)"/>
+            <ellipse cx="11.5" cy="28.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(45 11.5 28.5)"/>
+            <ellipse cx="28.5" cy="28.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(-45 28.5 28.5)"/>
+            <circle cx="20" cy="20" r="5"/></g></svg>
+          <div class="rt"><div class="rk">नित्य साधना · आज</div><div class="rn">अपनी नित्य साधना बनाएँ</div></div>
+          <div class="rc">›</div>
+        </div>
+
+        <div class="eyebrowLatin" style="margin:16px 0 8px">Categories</div>
+        <div class="grid">
+          <div class="tile"><div class="tilebox"><div class="glyph">च</div></div><div class="tilecap">चालीसा</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">आ</div></div><div class="tilecap">आरती</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">स्तो</div></div><div class="tilecap">स्तोत्रम्</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ग्र</div></div><div class="tilecap">ग्रन्थ</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ज</div></div><div class="tilecap">जप</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">व्र</div></div><div class="tilecap">व्रत</div></div>
+          <div class="tile"><div class="tilebox"><span class="newbadge">NEW</span><div class="glyph">कुं</div></div><div class="tilecap">कुंडली</div></div>
+          <div class="tile"><div class="tilebox"><span class="newbadge">NEW</span><div class="glyph">मु</div></div><div class="tilecap">मुहूर्त</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">सं</div></div><div class="tilecap">संस्कार</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ती</div></div><div class="tilecap">तीर्थ</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">दे</div></div><div class="tilecap">देवता</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">उ</div></div><div class="tilecap">उद्देश्य</div></div>
+        </div>
+      </div>
+      <div class="fold"></div><div class="foldline"></div><div class="foldlabel">fold · 844pt</div>
+    </div>
+    <div class="readout">
+      <dl>
+        <dt>Card height</dt><dd class="good">56 pt <span style="font-weight:400">(−74)</span></dd>
+        <dt>Row block (label + cards)</dt><dd class="good">90 pt <span style="font-weight:400">(−80)</span></dd>
+        <dt>Grid rows above the fold</dt><dd class="good">2½</dd>
+        <dt>Cards per viewport</dt><dd class="good">1.8</dd>
+      </dl>
+      <div class="note">12 pt shorter than B, but it buys no extra grid row — and it costs
+        the festival line. On Diwali this row would show <i>हनुमान चालीसा</i> with no
+        hint that the day is Diwali, which breaks the promise the morning notification
+        made. <b>Only pick this if the festival attribution moves elsewhere.</b></div>
+    </div>
+  </div>
+
+  <!-- ============================ D — launcher tile ============================ -->
+  <div class="stage vD">
+    <div class="hdr">
+      <span class="tag">D · literal</span>
+      <h2>नित्य साधना tile form</h2>
+      <div class="meta">110 × 97 · caption below</div>
+    </div>
+    <div class="phone">
+      <div class="status"><span>9:44</span><span class="batt">49</span></div>
+      <div class="scroll">
+        <div class="wordmark"><i class="rule"></i><span class="om">ॐ</span><span class="name">वेदांश़</span><span class="om">ॐ</span><i class="rule"></i></div>
+        <div class="tagline">Sacred Texts · Daily Reading</div>
+
+        <div class="strip">
+          <div class="eyebrow">आज का पंचांग</div><div class="chev">›</div>
+          <div class="tithi">शनिवार · शुक्ल तृतीया</div>
+          <div class="pills">
+            <div class="pill"><b>अभिजीत</b><span>11:58 AM – 12:49 PM</span></div>
+            <div class="pill"><b>राहु काल</b><span>9:15 – 10:49 AM</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px"></div>
+        <div class="eyebrowDeva" style="margin-bottom:6px">आज के लिए</div>
+        <div class="todaywrap"><div class="todayrow" style="gap:10px">
+          <div class="tilewrap"><div class="fcard"><div class="icon">ह</div></div><div class="cap">हनुमान चालीसा</div></div>
+          <div class="tilewrap"><div class="fcard"><div class="icon">सु</div></div><div class="cap">सुन्दरकाण्ड</div></div>
+          <div class="tilewrap"><div class="fcard"><div class="icon">रा</div></div><div class="cap">राम स्तुति</div></div>
+        </div></div>
+
+        <div class="routine">
+          <svg class="lotus" viewBox="0 0 40 40"><g>
+            <ellipse cx="20" cy="8"  rx="3.4" ry="8" fill="#F0C079"/><ellipse cx="20" cy="32" rx="3.4" ry="8" fill="#F0C079"/>
+            <ellipse cx="8"  cy="20" rx="8" ry="3.4" fill="#F0C079"/><ellipse cx="32" cy="20" rx="8" ry="3.4" fill="#F0C079"/>
+            <ellipse cx="11.5" cy="11.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(-45 11.5 11.5)"/>
+            <ellipse cx="28.5" cy="11.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(45 28.5 11.5)"/>
+            <ellipse cx="11.5" cy="28.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(45 11.5 28.5)"/>
+            <ellipse cx="28.5" cy="28.5" rx="3.4" ry="8" fill="#EBB468" transform="rotate(-45 28.5 28.5)"/>
+            <circle cx="20" cy="20" r="5"/></g></svg>
+          <div class="rt"><div class="rk">नित्य साधना · आज</div><div class="rn">अपनी नित्य साधना बनाएँ</div></div>
+          <div class="rc">›</div>
+        </div>
+
+        <div class="eyebrowLatin" style="margin:16px 0 8px">Categories</div>
+        <div class="grid">
+          <div class="tile"><div class="tilebox"><div class="glyph">च</div></div><div class="tilecap">चालीसा</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">आ</div></div><div class="tilecap">आरती</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">स्तो</div></div><div class="tilecap">स्तोत्रम्</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ग्र</div></div><div class="tilecap">ग्रन्थ</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ज</div></div><div class="tilecap">जप</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">व्र</div></div><div class="tilecap">व्रत</div></div>
+          <div class="tile"><div class="tilebox"><span class="newbadge">NEW</span><div class="glyph">कुं</div></div><div class="tilecap">कुंडली</div></div>
+          <div class="tile"><div class="tilebox"><span class="newbadge">NEW</span><div class="glyph">मु</div></div><div class="tilecap">मुहूर्त</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">सं</div></div><div class="tilecap">संस्कार</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">ती</div></div><div class="tilecap">तीर्थ</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">दे</div></div><div class="tilecap">देवता</div></div>
+          <div class="tile"><div class="tilebox"><div class="glyph">उ</div></div><div class="tilecap">उद्देश्य</div></div>
+        </div>
+      </div>
+      <div class="fold"></div><div class="foldline"></div><div class="foldlabel">fold · 844pt</div>
+    </div>
+    <div class="readout">
+      <dl>
+        <dt>Card height</dt><dd>97 pt <span style="font-weight:400">(−33)</span></dd>
+        <dt>Row block (label + cards)</dt><dd>131 pt <span style="font-weight:400">(−39)</span></dd>
+        <dt>Grid rows above the fold</dt><dd>2</dd>
+        <dt>Cards per viewport</dt><dd>3.2</dd>
+      </dl>
+      <div class="note">The नित्य साधना tile taken literally. It saves the least of the three
+        (the caption sits <i>outside</i> the 72 pt tile), and at 110 pt wide the tile
+        cannot hold a text name — <i>हनुमान चालीसा</i> already truncates, and
+        <i>विष्णु सहस्रनाम अंश</i> would be unreadable. It also reads as a second
+        CATEGORIES grid 200 pt above the real one.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <h3>Why B</h3>
+  <p>
+    The नित्य साधना tile is the right <i>instinct</i> — low, calm, no chrome — but its
+    literal form (D) is a launcher for a fixed word like जप, not a carrier for text
+    titles that run 6–20 Devanagari clusters. B keeps what makes that tile feel light
+    (one row, icon + name, no button) while staying a card that can name a text.
+  </p>
+  <ul>
+    <li><b>The पढ़ें pill goes</b> in every option. It was never a button — the whole card is
+      the tap target — so it cost 30 pt for a chevron's worth of meaning.</li>
+    <li><b>The blurb stays in B</b> because it is not decoration: on a festival day it becomes
+      <code>आज दीपावली है</code>, which is the line that ties the morning notification, the
+      toran, and this row to the same festival (<code>festiveReminders.test.ts</code> fails if
+      they disagree).</li>
+    <li><b>Width 292 → 248</b> so a viewport shows more of the day's recommendations, not just
+      a shorter row.</li>
+  </ul>
+  <p style="margin-top:10px">
+    Geometry is 1 dp = 1 px against <code>mobile/src/theme/colors.ts</code> and
+    <code>spacing.ts</code>. Web font metrics differ slightly from the bundled Noto Serif
+    Devanagari, so card heights are accurate to roughly ±2 pt.
+  </p>
+</footer>
+
+</body>
+</html>
