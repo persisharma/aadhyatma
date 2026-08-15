@@ -75,6 +75,39 @@ describe('FeatureCard', () => {
     expect(pressable.props.accessibilityLabel).toMatch(/Tap to open\./);
   });
 
+  // The FOR TODAY strip (design.md §50) trades the CTA pill for a bare chevron
+  // so the card is about half as tall; the title and blurb must survive.
+  test('compact drops the CTA label but keeps title, blurb and the chevron', () => {
+    const tree = render(<FeatureCard item={item} width={248} onPress={() => undefined} compact />);
+    const text = textOf(tree);
+    expect(text).toMatch(/दैनिक भक्ति/); // title
+    expect(text).toMatch(/श्लोक/); // blurb
+    expect(text).not.toMatch(/पढ़ें/); // CTA label gone
+    expect(text).toMatch(/›/); // chevron affordance stays
+  });
+
+  test('compact keeps the whole-card press target and its English label', () => {
+    const onPress = jest.fn();
+    const tree = render(<FeatureCard item={item} width={248} onPress={onPress} compact />);
+    const pressable = tree.root.find(
+      (n) =>
+        typeof n.props?.accessibilityLabel === 'string' &&
+        n.props.accessibilityLabel.includes('Daily Verse')
+    );
+    act(() => {
+      pressable.props.onPress();
+    });
+    expect(onPress).toHaveBeenCalledTimes(1);
+    expect(pressable.props.accessibilityLabel).toMatch(/Tap to open\./);
+  });
+
+  test('compact still shows the NEW badge', () => {
+    const tree = render(
+      <FeatureCard item={{ ...item, hasNew: true }} width={248} onPress={() => undefined} compact />
+    );
+    expect(textOf(tree)).toMatch(/NEW/);
+  });
+
   test('forwards onPressIn/onPressOut for the Home first-tap fallback', () => {
     const onPressIn = jest.fn();
     const onPressOut = jest.fn();

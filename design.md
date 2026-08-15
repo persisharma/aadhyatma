@@ -743,7 +743,7 @@ When building new components, pull tokens from the theme — never hard-code a h
 2. Hero block: the **Home wordmark lockup** (Section 5) — `ॐ वेदांश़ ॐ` on one row over the "Sacred Texts · Daily Reading" tagline. (Earlier revisions stacked a crest above a 34px title; the lockup is the compact replacement.)
    - **On a catalog festival day only** (the 18 festivals of `notifications/festiveReminders.ts`): the **Festive Toran** (§55) hangs directly below the lockup — a marigold garland with the day's greeting chip. Absent every other day.
 3. **आज · Today strip** (§48) — a one-card daily-panchang glance (vara + tithi headline, one horizontal-scroll row of observance / Abhijit / Rahu Kaal chips). Tap → Panchang tab.
-4. **आज के लिए · For Today recommendations** (§50) — a compact horizontal row of `FeatureCard`s (292px wide, the same shell the DISCOVER carousel uses) chosen from today's vaar deity and active festival metadata. This keeps PRD-B's By-Day/By-Festival surfacing on Home without adding another calendar engine. Card tap → the text itself via `navigateToEntryStart` (§38) — single-chapter texts open their reader directly rather than a one-row chapters index.
+4. **आज के लिए · For Today recommendations** (§50) — a compact horizontal row of `FeatureCard compact` strips (248px wide, the same shell the DISCOVER carousel uses in its taller default form) chosen from today's vaar deity and active festival metadata. This keeps PRD-B's By-Day/By-Festival surfacing on Home without adding another calendar engine. Card tap → the text itself via `navigateToEntryStart` (§38) — single-chapter texts open their reader directly rather than a one-row chapters index.
 5. **Routine banner** (§30), **inline** (not docked) on Home — the नित्य साधना nudge / progress / complete chip, sitting directly under the Today strip / recommendations cluster (16px gap each side). It moved out of the bottom overlay (July 2026) so it no longer floats over — and clips — the DISCOVER carousel; the "today" cluster (panchang → today's recommendations → today's practice) now reads as one block above the library. Still **docked** above the tab bar on Daily Bhakti (§21).
 6. Section label "CATEGORIES" (Inter 11, uppercase, ink-muted, 0.22em tracking)
 7. **Category grid** (3-column launcher layout, wraps as tiles are added):
@@ -1116,7 +1116,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 │                               │
 │  शीर्षक            (primary)  │  title — language-aware (dev 19 / lat 21 primary)
 │  Title          (secondary)   │
-│  Two-line description that     │  blurb — ink-soft, numberOfLines 2 (truncates any length)
+│  One-line description that …   │  blurb — ink-soft, numberOfLines 1 (truncates any length)
 │  explains the section …        │
 │      (flex spacer)             │  pushes the CTA to the bottom so cards align
 │  [ खोलें  › ]                 │  CTA pill (saffron-tint fill, saffron-deep text)
@@ -1124,14 +1124,28 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 ```
 
 - **Surface.** `cardActiveFrom → cardActiveTo` gradient, `cardActiveBorder` 1px, `radii.lg`, `elevation.raised` (this is a focal hero element). `minHeight: 112` + the flex spacer keep the CTA pinned to a common baseline across cards of differing copy length.
-- **Icon tile.** 46×46, `saffronTint` fill, `radii.md`. Wraps any glyph: a `CategoryIcon` vector, the `LotusMark`, or a plain Devanagari `Text` glyph (e.g. `सं` for Sankalp) — the tile makes them all read as one family. Saffron-tint (light) keeps the `saffronDeep` vectors high-contrast.
+- **Icon tile.** 36×36 (34 in `compact`), `saffronTint` fill, `radii.md`. Wraps any glyph: a `CategoryIcon` vector, the `LotusMark`, or a plain Devanagari `Text` glyph (e.g. `सं` for Sankalp) — the tile makes them all read as one family. Saffron-tint (light) keeps the `saffronDeep` vectors high-contrast.
 - **Eyebrow.** Short uppercase context tag (`versePill` tokens, `saffronDeep`). When `hasNew`, the eyebrow slot is **replaced** by the saffron `NEW` badge (same geometry/colour as §19) — carries the text cue, never colour-only (§12).
 - **Title.** `orderTitlesByLanguage`, primary `numberOfLines 1`, secondary demoted to `ink-muted`.
-- **Description.** Hindi → Devanagari 13 `ink-soft`; English → Cormorant italic 14 `ink-soft`. `numberOfLines 2`.
+- **Description.** Hindi → Devanagari 13 `ink-soft`; English → Cormorant italic 14 `ink-soft`. `numberOfLines 1`.
 - **CTA pill.** `saffronTint` fill, `pill` radius, label (language-aware: `पढ़ें`/`Read`, `देखें`/`View`, …) + `›` chevron in `saffronDeep`. The whole card is the press target; the pill is a visual affordance, not a nested button.
 - **Accessibility.** Whole-card `Pressable`, `accessibilityRole="button"`, label = `"{titleEn}.{ New.?} {descEn} Tap to open."`.
 
-**Props.** `{ item: FeatureSpotlight; width: number; onPress: () => void }`. `width` is owned by the screen (viewport-sized). `FeatureSpotlight` is `{ key, eyebrowHi/En, titleHi/En, descHi/En, ctaHi/En, icon, hasNew? }`.
+**`compact` variant (Aug 2026).** A strip form of the same shell, used by the FOR TODAY row (§50) — the DISCOVER carousel keeps the tall default. Home's today cluster (strip + FOR TODAY + routine banner) was consuming most of the first screenful before the CATEGORIES grid came into view, so the FOR TODAY cards were flattened to roughly half their height (~68 vs ~130):
+
+```
+┌────────────────────────────────────┐
+│ [icon]  शीर्षक                   › │  one row: icon tile · title over blurb · chevron
+│         one-line blurb              │
+└────────────────────────────────────┘
+```
+
+- **Dropped:** the CTA pill and the flex spacer beneath it. The pill was never a button (the whole card is the press target), so the bare `›` chevron in `saffronDeep` carries the same affordance at a third of the height. `ctaHi/En` stay on `FeatureSpotlight` — the default variant still renders them.
+- **Height** comes from the row itself: `minHeight: 0`, `paddingVertical: 11`, `paddingHorizontal: 12`. No fixed height, so a font-scale bump grows the strip instead of clipping it.
+- **Icon tile** 34×34 (vs 36), **title** one step down (dev 17 / lat 18), **blurb** dev 12/20 · lat 13/18 sitting directly under the title (`marginTop: 1`), both `numberOfLines 1`.
+- **Unchanged:** gradient surface, border, `radii.lg`, `elevation.raised`, the `NEW` badge (inline after the title), and the accessibility label.
+
+**Props.** `{ item: FeatureSpotlight; width: number; onPress: () => void; compact?: boolean }`. `width` is owned by the screen (viewport-sized). `FeatureSpotlight` is `{ key, eyebrowHi/En, titleHi/En, descHi/En, ctaHi/En, icon, hasNew? }`.
 
 **Spotlight set (current).** Defined in `HomeScreen.tsx` with navigation wired per item: नित्य साधना → `RoutineToday`; दैनिक भक्ति → `DailyBhaktiTab`; संकल्प → `SadhanaPrograms` (a direct door into the §46 catalog — glyph tile `सं`); **पितृ स्मरण → `MoreTab/PitruSmaranList`** (standing zero-state awareness, `॥` gold glyph, NEW for its launch release); तीर्थ यात्रा → `TheerthMap`; Home-screen widgets → `MoreTab/WidgetGallery`. The former आज-का-पंचांग card was **retired** when the Today strip (§48) took over that surface — keeping both produced two "Today's Panchang." buttons for screen readers. Sibling-tab/More-stack targets navigate via the **parent** (`useNavigation()` → bubble up), not the Home stack — same pattern as `RoutineBanner`/`PanchangScreen`.
 
@@ -1805,7 +1819,9 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 ### For Today
 
-`TodayRecommendationsRow.tsx` sits below `TodayStrip` and above the Routine banner on Home. It calls `getTodayRecommendationDetails(new Date(useTodayKey()))`. The row is a horizontal scroll of `FeatureCard`s (292px, the §32 shell); tapping opens the existing reader target via `navigateToEntryStart` and opens on the **first** tap — each card and the row are wired to the shared Home first-tap controller (`TilePressContext`, §18). It is intentionally a small row, not a second panchang card.
+`TodayRecommendationsRow.tsx` sits below `TodayStrip` and above the Routine banner on Home. It calls `getTodayRecommendationDetails(new Date(useTodayKey()))`. The row is a horizontal scroll of `FeatureCard compact` strips (248px, the §32 shell); tapping opens the existing reader target via `navigateToEntryStart` and opens on the **first** tap — each card and the row are wired to the shared Home first-tap controller (`TilePressContext`, §18). It is intentionally a small row, not a second panchang card.
+
+**Strip height (Aug 2026).** The row used to carry the full §32 spotlight card — 292px wide, ~130 tall, CTA pill and all — which made Home's today cluster (Panchang strip + FOR TODAY + routine banner) fill the first screenful before a single category tile showed. It now uses the §32 `compact` variant: no CTA pill (the `पढ़ें`/*Read* label is gone; the chevron remains), title over blurb in one row beside the icon, ~68 tall. The eyebrow's own spacing tightened with it (`marginTop` 16 → 12, gap 8 → 6), and the card width dropped 292 → 248 so a viewport shows more of the day's recommendations per scroll. The abujh card (§57) rides the same variant, so the row stays one visual family.
 
 **Festival first (Aug 2026).** The recommendation order is four tiers, and the festival ones come before the weekday one: **(1)** the curated festival → reading mapping in `notifications/festiveReminders.ts`, **(2)** the observance rule's own `linkSectionId` (festivals outside that curated catalog), **(3)** texts whose `bestFestivals` metadata names one of today's observances, then **(4)** `deityForWeekday()`'s vaar deity, which is what an ordinary day is made of. An ordinary day is therefore unchanged; a festival day leads with the occasion. This is not cosmetic ordering: a festive reminder (§38) lands the user on **Home**, so the reading its message named has to be the first thing waiting — both surfaces read the same catalog, and `festiveReminders.test.ts` fails if they disagree. Entries returned with a festival attribution render `आज <festival> है` / *Today is `<festival>`* in place of the generic `आज के लिए अनुशंसित` / *Recommended for today* line, so the card names the occasion the notification greeted the user with. `getTodayRecommendationsForDate()` remains as the entry-only view for callers that don't need the attribution. An observance lookup that throws degrades to the weekday tier rather than emptying the row.
 

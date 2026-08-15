@@ -85,6 +85,7 @@ export default function TodayRecommendationsRow() {
           const card = (
             <View key={entry.id} style={styles.cardWrap}>
               <FeatureCard
+                compact
                 item={spotlightForEntry(
                   recommendation,
                   typography.thumb.fontFamily,
@@ -109,6 +110,7 @@ export default function TodayRecommendationsRow() {
           const abujhCard = (
             <View key="abujh-today" style={styles.cardWrap} testID="for-today-abujh">
               <FeatureCard
+                compact
                 item={{
                   key: 'abujh-today',
                   titleHi: abujh.nameHi,
@@ -171,14 +173,18 @@ function spotlightForEntry(
 
 const styles = StyleSheet.create({
   wrap: {
-    marginTop: 16,
-    gap: 8,
+    marginTop: 12,
+    gap: 6,
   },
   sectionLabel: {
     // textTransform/letterSpacing/fontFamily are owned by pillTextStyle (script-aware).
     paddingHorizontal: 4,
   },
   cardWrap: {
-    width: 292,
+    // Narrower than the 292 spotlight width: the compact strip carries no CTA
+    // pill, so it needs only enough room for the icon, a one-line title and its
+    // blurb — and the extra card that fits per viewport is more of today's
+    // recommendations in the same scroll.
+    width: 248,
   },
 });
