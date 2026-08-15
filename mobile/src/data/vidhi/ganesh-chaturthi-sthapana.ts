@@ -51,6 +51,12 @@ export const ganeshChaturthiSthapana: VidhiEntry = {
       instructionEn: 'Seat the murti on the akshat and invoke Shri Ganesha. Skip a new avahana-pratishtha for a permanent murti already worshipped daily.',
     },
     {
+      id: 'ganesh-vandana', phase: 'main', titleHi: 'गणेश वन्दना', titleEn: 'Ganesha vandana',
+      instructionHi: 'स्थापना के बाद "वक्रतुण्ड महाकाय" गणेश वन्दना का पाठ करें — सभी विघ्नों के नाश की प्रार्थना।',
+      instructionEn: 'After the installation, recite the "Vakratunda Mahakaya" Ganesha vandana — a prayer for the removal of all obstacles.',
+      ref: { kind: 'section', id: 'ganesh-stotram' },
+    },
+    {
       id: 'asana-padya', phase: 'main', titleHi: 'आसन व पाद्य', titleEn: 'Asana & padya',
       instructionHi: 'पाँच पुष्प से आसन अर्पित करें और चरण प्रक्षालन के लिए थोड़ा जल प्रतीक रूप में अर्पित करें।',
       instructionEn: 'Offer a seat with five flowers and symbolically offer a little water for washing the feet.',
@@ -116,9 +122,9 @@ export const ganeshChaturthiSthapana: VidhiEntry = {
   source: {
     canonicalEdition: 'Gita Press Nitya Karma Puja Prakash — Ganapati Puja chapter',
     canonicalEditionUrls: ['https://archive.org/search?query=nitya+karma+puja+prakash+gita+press'],
-    canonicalEditionStatus: 'PENDING — the named Gita Press scan has not yet been checked character-by-character; this entry therefore publishes no inline installation mantra.',
+    canonicalEditionStatus: 'PENDING — the named Gita Press scan has not yet been checked character-by-character; this entry therefore publishes no inline installation mantra. Re-attempted 2026-08-14: archive.org egress is blocked from this authoring environment as well.',
     referenceUrls: [DRIK_GANESH, 'https://ganeshchaturthi.com/important-how-tos/how-to-perform-ganesh-staphna/'],
     retrievedOn: '2026-08-13',
-    notes: 'The sequence follows DrikPanchang’s Ganesha Chaturthi Shodashopachara order and the independent household sthapana guide. Clay-murti handling and the permanent-murti avahana/visarjan distinction are explicit. Instructions are freshly authored; exact installation mantras remain omitted pending canonical comparison.',
+    notes: 'The sequence follows DrikPanchang’s Ganesha Chaturthi Shodashopachara order and the independent household sthapana guide. Clay-murti handling and the permanent-murti avahana/visarjan distinction are explicit. Instructions are freshly authored; exact installation mantras remain omitted pending canonical comparison. 2026-08-14: a Ganesha-vandana step now hands off to the shipped, verified ganesh-stotram section ("Vakratunda Mahakaya") — reference, never re-typed (§11.11/PRD-19 §3.3).',
   },
 };

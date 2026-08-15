@@ -8,6 +8,7 @@
  */
 import { library, type LibraryEntry } from '@/data/texts';
 import { findJapamMantra } from '@/data/japam';
+import { getVidhiById } from '@/data/vidhi';
 import { getVersePool } from '@/data/versePool';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { RoutineItem } from './types';
@@ -47,6 +48,15 @@ function lastPositionsBySource(): Record<string, LastPositions> {
 }
 
 export function resolveRoutineItem(item: RoutineItem): RoutineItemDisplay {
+  if (item.kind === 'vidhi') {
+    const vidhi = getVidhiById(item.sourceId);
+    return {
+      titleHi: vidhi?.titleHi ?? item.sourceId,
+      titleEn: vidhi?.titleEn ?? item.sourceId,
+      subHi: 'पूजा विधि',
+      subEn: 'Puja vidhi',
+    };
+  }
   if (item.kind === 'japam') {
     const m = findJapamMantra(item.sourceId);
     const target = item.targetRounds ?? 1;
@@ -84,6 +94,11 @@ export type CompletionCtx = {
 
 /** Whether the item counts as completed today via genuine reading / japa. */
 export function isItemAutoComplete(item: RoutineItem, ctx: CompletionCtx): boolean {
+  if (item.kind === 'vidhi') {
+    // Vidhi conduct state lives in AsyncStorage (checklistStore), outside the
+    // synchronous reading-progress/activity contexts — manual mark only.
+    return false;
+  }
   if (item.kind === 'japam') {
     return ctx.japaRoundsToday(item.sourceId) >= (item.targetRounds ?? 1);
   }

@@ -210,9 +210,14 @@ for (const [festivalId, vidhiId] of v1Hooks) {
 }
 
 const expectedRefs = new Map<string, readonly string[]>([
-  ['diwali-lakshmi-ganesh-puja', ['mahalakshmi-ashtakam', 'jai-ganesh-deva']],
-  ['ganesh-chaturthi-sthapana', ['ganesha-chaturthi-vrat-katha', 'jai-ganesh-deva']],
-  ['navratri-ghatasthapana', ['navratri-start-katha', 'jai-ambe-gauri']],
+  // Phase 2B liturgy hand-offs (§3.3 — reference, never re-type): the Ganesha
+  // vandana, Devi stuti and deepa shloka open their shipped verified sections.
+  [
+    'diwali-lakshmi-ganesh-puja',
+    ['mahalakshmi-ashtakam', 'jai-ganesh-deva', 'ganesh-stotram', 'sandhya-deepam'],
+  ],
+  ['ganesh-chaturthi-sthapana', ['ganesha-chaturthi-vrat-katha', 'jai-ganesh-deva', 'ganesh-stotram']],
+  ['navratri-ghatasthapana', ['navratri-start-katha', 'jai-ambe-gauri', 'durga-stotram']],
   ['karwa-chauth-puja', ['karwa-chauth-vrat-katha']],
   ['maha-shivaratri-puja', ['maha-shivaratri-vrat-katha', 'om-jai-shiv-omkara']],
 ]);
@@ -220,6 +225,17 @@ for (const [vidhiId, ids] of expectedRefs) {
   const vidhi = VIDHI_BY_ID.get(vidhiId)!;
   const refs = new Set(vidhi.steps.flatMap((step) => (step.ref ? [step.ref.id] : [])));
   for (const id of ids) assert.ok(refs.has(id), `${vidhiId} references shipped '${id}'`);
+}
+
+// The Panchakshara japa step carries the five-syllable mula mantra verbatim —
+// the exact rendering the app already ships verified in japam.json,
+// shiv-chalisa.json and shiva-strotam chapter 1.
+{
+  const shivaratri = VIDHI_BY_ID.get('maha-shivaratri-puja')!;
+  const japa = shivaratri.steps.find((step) => step.id === 'panchakshara-japa');
+  assert.ok(japa?.mantra, 'panchakshara-japa step carries the mantra inline');
+  assert.equal(japa.mantra.devanagari, 'ॐ नमः शिवाय');
+  assert.equal(japa.mantra.iast, 'oṁ namaḥ śivāya');
 }
 
 console.log(

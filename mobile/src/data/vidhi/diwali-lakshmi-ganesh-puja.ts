@@ -83,6 +83,15 @@ export const diwaliLakshmiGaneshPuja: VidhiEntry = {
       instructionEn: 'Meditate on and invoke Shri Ganesha with akshat and flowers, then symbolically offer a seat and water for padya, arghya and achamana.',
     },
     {
+      id: 'ganesh-vandana',
+      phase: 'main',
+      titleHi: 'गणेश वन्दना',
+      titleEn: 'Ganesha vandana',
+      instructionHi: 'आवाहन के बाद "वक्रतुण्ड महाकाय" गणेश वन्दना का पाठ करें — निर्विघ्न पूजन की प्रार्थना।',
+      instructionEn: 'After the avahana, recite the "Vakratunda Mahakaya" Ganesha vandana — a prayer that the puja proceed unobstructed.',
+      ref: { kind: 'section', id: 'ganesh-stotram' },
+    },
+    {
       id: 'ganesh-upachara',
       phase: 'main',
       titleHi: 'गणेश स्नान व उपचार',
@@ -173,6 +182,15 @@ export const diwaliLakshmiGaneshPuja: VidhiEntry = {
       instructionEn: 'Sing the Maa Lakshmi aarti followed in your family, then hold flowers and offer pushpanjali to both deities.',
     },
     {
+      id: 'deepa-shloka',
+      phase: 'closing',
+      titleHi: 'दीप श्लोक',
+      titleEn: 'Deepa shloka',
+      instructionHi: 'दीपमाला सजाने से पहले "शुभं करोति कल्याणम्" दीप श्लोक का पाठ करें — दीप-ज्योति को नमन।',
+      instructionEn: 'Before laying out the deepmala, recite the "Shubham Karoti Kalyanam" deepa shloka — salutations to the light of the lamp.',
+      ref: { kind: 'section', id: 'sandhya-deepam' },
+    },
+    {
       id: 'deepmala-kshama',
       phase: 'closing',
       titleHi: 'दीपमाला व क्षमा-प्रार्थना',
@@ -184,13 +202,13 @@ export const diwaliLakshmiGaneshPuja: VidhiEntry = {
   source: {
     canonicalEdition: 'Gita Press Nitya Karma Puja Prakash — Lakshmi-Ganesha Puja chapters',
     canonicalEditionUrls: ['https://archive.org/search?query=nitya+karma+puja+prakash+gita+press'],
-    canonicalEditionStatus: 'PENDING — the named Gita Press scan has not yet been checked character-by-character; no inline mantra from it is published in this entry.',
+    canonicalEditionStatus: 'PENDING — the named Gita Press scan has not yet been checked character-by-character; no inline mantra from it is published in this entry. Re-attempted 2026-08-14: archive.org egress is blocked from this authoring environment as well.',
     referenceUrls: [
       DRIK_DIWALI,
       'https://www.hinduscriptures.in/vedic-lifestyle/puja-vidhi-in-hindi/deepavali/devi-puja',
       'https://chinmayanewyork.org/wp-content/uploads/2020/11/Lakshmi-Puja-Vidhi-Final.pdf',
     ],
     retrievedOn: '2026-08-13',
-    notes: 'The household Lakshmi-Ganesha scope follows the common preparation, Ganapati-first worship, Lakshmi upacharas, naivedya, aarti and deepmala sequence shared by the cited sources. DrikPanchang’s larger complete Diwali sequence also includes Navagraha, Matrika, Kali, Saraswati, Kuber and account-book rites; those are outside this specifically named Lakshmi-Ganesha household vidhi. Instructions are freshly authored; variable sankalpa and unverified mantra text remain instruction-only.',
+    notes: 'The household Lakshmi-Ganesha scope follows the common preparation, Ganapati-first worship, Lakshmi upacharas, naivedya, aarti and deepmala sequence shared by the cited sources. DrikPanchang’s larger complete Diwali sequence also includes Navagraha, Matrika, Kali, Saraswati, Kuber and account-book rites; those are outside this specifically named Lakshmi-Ganesha household vidhi. Instructions are freshly authored; variable sankalpa and unverified mantra text remain instruction-only. 2026-08-14: Ganesha-vandana and deepa-shloka steps now hand off to the shipped, verified ganesh-stotram ("Vakratunda Mahakaya") and sandhya-deepam ("Shubham Karoti Kalyanam") sections — reference, never re-typed (§11.11/PRD-19 §3.3).',
   },
 };

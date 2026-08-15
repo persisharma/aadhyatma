@@ -31,6 +31,10 @@ jest.mock('expo-haptics', () => ({
   impactAsync: jest.fn(() => Promise.resolve()),
 }));
 
+jest.mock('expo-keep-awake', () => ({
+  useKeepAwake: jest.fn(),
+}));
+
 jest.mock('expo-linear-gradient', () => ({
   LinearGradient: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
     mockReact.createElement(mockView, props, children),

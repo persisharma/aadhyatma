@@ -17,13 +17,16 @@ export type RoutineScheduleMode = 'daily' | 'weekday';
  * - `chapter` : one chapter/sarga/stotra of a chaptered source (covers both a
  *               granth chapter and a single stotra of a multi-stotra stotram).
  * - `japam`   : a mantra with a round target.
+ * - `vidhi`   : a guided puja procedure (PRD-19 Phase 2B) — e.g. the monthly
+ *               Satyanarayan puja. Completion is manual-only: conduct progress
+ *               lives in AsyncStorage outside the reading-progress contexts.
  */
-export type RoutineItemKind = 'section' | 'chapter' | 'japam';
+export type RoutineItemKind = 'section' | 'chapter' | 'japam' | 'vidhi';
 
 export type RoutineItem = {
   id: string;
   kind: RoutineItemKind;
-  /** Library entry id, or japam mantra id for `japam`. */
+  /** Library entry id, japam mantra id for `japam`, or vidhi id for `vidhi`. */
   sourceId: string;
   /** Present for `chapter`. */
   chapter?: number;

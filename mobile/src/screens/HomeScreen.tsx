@@ -253,6 +253,29 @@ export default function HomeScreen({ navigation }: Props) {
       onPress: () => rootNav.navigate('MoreTab', { screen: 'PitruSmaranList', initial: false }),
     },
     {
+      // PRD-19 Phase 2B Discover card: the vidhi catalog's Home awareness door.
+      // The Panchang day-panel pill is date-dependent and the Vrat & Parv tile
+      // is two taps deep; this card makes guided pujas discoverable on Home.
+      key: 'puja-vidhi',
+      titleHi: 'पूजा विधि', titleEn: 'Guided Pujas',
+      descHi: 'सत्यनारायण से शिवरात्रि तक—हर चरण, हर मन्त्र साथ।',
+      descEn: 'Satyanarayan to Shivaratri — every step, guided in hand.',
+      ctaHi: 'विधि देखें', ctaEn: 'Open',
+      hasNew: true,
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.saffronDeep,
+          }}
+        >
+          ॥
+        </Text>
+      ),
+      onPress: () => rootNav.navigate('PanchangTab', panchangTabTarget('VidhiCatalog')),
+    },
+    {
       key: 'theerth',
       titleHi: 'तीर्थ यात्रा', titleEn: 'Sacred Journeys',
       descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
