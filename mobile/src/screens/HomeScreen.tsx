@@ -30,7 +30,7 @@ import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { useTilePressController, TilePressProvider } from '@/contexts/TilePressContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
-import { panchangTabTarget } from '@/navigation/entryRoutes';
+import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
@@ -250,7 +250,7 @@ export default function HomeScreen({ navigation }: Props) {
           ॥
         </Text>
       ),
-      onPress: () => rootNav.navigate('MoreTab', { screen: 'PitruSmaranList', initial: false }),
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList')),
     },
     {
       // PRD-19 Phase 2B Discover card: the vidhi catalog's Home awareness door.
@@ -310,7 +310,7 @@ export default function HomeScreen({ navigation }: Props) {
           वि
         </Text>
       ),
-      onPress: () => rootNav.navigate('MoreTab', { screen: 'WidgetGallery' }),
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
     },
   ];
 

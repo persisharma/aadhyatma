@@ -6,6 +6,7 @@ import { pitruPakshaObservanceForDate, type PitruPakshaDayObservance } from '@/p
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont } from '@/utils/langType';
+import { moreTabTarget } from '@/navigation/entryRoutes';
 import type { TabParamList } from '@/navigation/types';
 
 /** Public, seasonal counterpart to the private family chip. */
@@ -29,7 +30,7 @@ export default function PitruPakshaDayChip({ date }: { date: Date }) {
   if (!observance) return null;
   return (
     <Pressable
-      onPress={() => navigation.navigate('MoreTab', { screen: 'PitruPakshaOverview', initial: false })}
+      onPress={() => navigation.navigate('MoreTab', moreTabTarget('PitruPakshaOverview'))}
       accessibilityRole="button"
       accessibilityLabel={observance.labelEn}
       style={({ pressed }) => [

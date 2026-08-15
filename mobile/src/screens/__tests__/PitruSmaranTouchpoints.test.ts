@@ -5,7 +5,7 @@ describe('Pitru Smaran standing discovery', () => {
   test('Home always registers a zero-state DISCOVER card that opens the ledger', () => {
     const source = fs.readFileSync(path.resolve(__dirname, '..', 'HomeScreen.tsx'), 'utf8');
     expect(source).toMatch(/key: 'pitru-smaran'/);
-    expect(source).toMatch(/screen: 'PitruSmaranList'/);
+    expect(source).toMatch(/moreTabTarget\('PitruSmaranList'\)/);
     expect(source).toMatch(/Save a tithi once and know its shraddha date every year/);
   });
 

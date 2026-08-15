@@ -20,7 +20,7 @@ import { valmikiRamayanChaptersManifest } from '@/data/valmiki-ramayan';
 import { sundarkandChaptersManifest } from '@/data/sundarkand';
 import { gitaChaptersManifest } from '@/data/gita';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
-import type { HomeStackParamList, PanchangStackParamList } from './types';
+import type { HomeStackParamList, MoreStackParamList, PanchangStackParamList } from './types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
@@ -36,8 +36,27 @@ type Nav = NativeStackNavigationProp<HomeStackParamList>;
 export function panchangTabTarget<T extends keyof PanchangStackParamList>(
   screen: T,
   params?: PanchangStackParamList[T]
-): { screen: T; params?: PanchangStackParamList[T]; initial: false } {
-  return { screen, params, initial: false };
+): { screen: T; params: PanchangStackParamList[T]; initial: false } {
+  return { screen, params: params as PanchangStackParamList[T], initial: false };
+}
+
+/**
+ * Nested-navigation params for a screen inside the More tab's stack — the
+ * `panchangTabTarget` rule, applied to the other lazily-mounted tab.
+ *
+ * The Home DISCOVER widgets spotlight hand-rolled `{ screen: 'WidgetGallery' }`
+ * without `initial: false`, so tapping it before ever opening the More tab made
+ * the gallery the More stack's *initial* route: its back button had nothing to
+ * pop, and the whole hub (Wishlist, Profile, Reminders, Japam Alarms, Pitru
+ * Smaran) stayed unreachable for the rest of the session. Build every MoreTab
+ * hand-off through this helper rather than the raw `{ screen, params }` shape —
+ * `navigation/__tests__/tabTargets.test.ts` fails the hand-rolled form.
+ */
+export function moreTabTarget<T extends keyof MoreStackParamList>(
+  screen: T,
+  params?: MoreStackParamList[T]
+): { screen: T; params: MoreStackParamList[T]; initial: false } {
+  return { screen, params: params as MoreStackParamList[T], initial: false };
 }
 
 /**

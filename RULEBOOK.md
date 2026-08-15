@@ -170,7 +170,15 @@ New sections are registered in `mobile/src/navigation/HomeStackNavigator.tsx` (n
 
 No manual routing in HomeScreen is needed — `CategoryListScreen` filters items by their `category` field automatically.
 
-### 6.0 A flow with doors on two tabs is registered on both stacks
+### 6.0 Cross-tab hand-offs: build them with a `*TabTarget` helper
+
+The bottom tab navigator is **lazy** (`TabNavigator.tsx`) — every tab except the first (`HomeTab`) mounts on its first `navigate`. React Navigation's nested `navigate` defaults to `initial: true`, which makes the named screen that stack's **initial route** instead of pushing it above the stack's own `initialRouteName`. The result is always the same: the target's back button has nothing to pop, and the stack's real root stays unreachable **for the rest of the session**.
+
+So: never hand-roll `navigate('<X>Tab', { screen, params })`. Build it with `panchangTabTarget` / `moreTabTarget` (`navigation/entryRoutes.ts`), which pin `initial: false`. Add a helper for any new tab that gains a stack.
+
+`HomeTab` is exempt only because it is the tab bar's **first** `Tab.Screen` and therefore mounted from launch. That exemption is asserted, not assumed — reordering the tab bar fails `navigation/__tests__/tabTargets.test.ts`, which also scans every source file for the hand-rolled form. (Origin: Home's DISCOVER widgets spotlight shipped `{ screen: 'WidgetGallery' }`; tapping it before ever opening More stranded the user with a dead back button and no route to the hub — Wishlist, Profile, Reminders, Japam Alarms and Pitru Smaran all gone until app restart. The Pitru Smaran day chip on Home's Today strip had the same defect.)
+
+### 6.0.1 A flow with doors on two tabs is registered on both stacks
 
 A screen belongs to one stack by default. But when a flow has entry points on **two different tabs**, registering it on only one of them means every door on the other tab has to `navigate('<Other>Tab', …)` — and back then pops to *that* tab's root, stranding the user on a screen they never asked for. Puja Vidhi (design.md §62) shipped that way and was the bug: Home's DISCOVER card opened the catalog, and back dropped the user on the Panchang calendar, whose default mode carries no vidhi door at all.
 
