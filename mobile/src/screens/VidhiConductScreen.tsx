@@ -30,15 +30,15 @@ import { getVidhiById, type VidhiPhase, type VidhiStep } from '@/data/vidhi';
 import { clearConductStep, saveConductStep, vidhiDateKey } from '@/data/vidhi/checklistStore';
 import { library } from '@/data/texts';
 import { getKathaContent } from '@/panchang/kathaContent';
-import { buildEntryStartTarget } from '@/navigation/entryRoutes';
+import { buildEntryStartTarget, navigateToHomeStackTarget } from '@/navigation/entryRoutes';
 import ReaderHeader from '@/components/ReaderHeader';
 import Ornament from '@/components/Ornament';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import { clampIndex } from '@/utils/clamp';
-import type { PanchangStackParamList } from '@/navigation/types';
+import type { VidhiStackParamList } from '@/navigation/types';
 
-type Props = NativeStackScreenProps<PanchangStackParamList, 'VidhiConduct'>;
+type Props = NativeStackScreenProps<VidhiStackParamList, 'VidhiConduct'>;
 
 const PHASE_LABELS: Record<VidhiPhase, { hi: string; en: string }> = {
   prep: { hi: 'आरम्भ', en: 'Preparation' },
@@ -412,12 +412,16 @@ function StepHandoffCard({ step }: { step: ConductStep }) {
   const isAarti = entry?.category === 'aarti';
 
   const open = () => {
-    const nav = rootNav as { navigate: (name: string, params: unknown) => void };
     if (isKatha) {
-      nav.navigate('HomeTab', { screen: 'VratKathaReader', params: { kathaId: step.ref!.id } });
-    } else if (entry) {
+      navigateToHomeStackTarget(rootNav, {
+        screen: 'VratKathaReader',
+        params: { kathaId: step.ref!.id },
+      });
+      return;
+    }
+    if (entry) {
       const target = buildEntryStartTarget(entry);
-      if (target) nav.navigate('HomeTab', target);
+      if (target) navigateToHomeStackTarget(rootNav, target);
     }
   };
 

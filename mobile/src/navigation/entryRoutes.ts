@@ -40,6 +40,27 @@ export function panchangTabTarget<T extends keyof PanchangStackParamList>(
   return { screen, params, initial: false };
 }
 
+/**
+ * Open a Home-stack target from a screen that may be mounted on EITHER stack.
+ * The vidhi flow (PRD-19) is registered on both the Home and the Panchang stack
+ * so each door pushes in place; the readers it hands off to live only on the
+ * Home stack. Push in place when the enclosing stack already owns the target
+ * route — back then retraces the puja — and cross-tab otherwise.
+ */
+export function navigateToHomeStackTarget(
+  nav: {
+    navigate: (name: string, params?: object) => void;
+    getState?: () => { routeNames?: readonly string[] } | undefined;
+  },
+  target: { screen: string; params?: object }
+): void {
+  if (nav.getState?.()?.routeNames?.includes(target.screen)) {
+    nav.navigate(target.screen, target.params);
+    return;
+  }
+  nav.navigate('HomeTab', { screen: target.screen, params: target.params });
+}
+
 const chalisaIds = new Set([
   'hanuman-chalisa',
   'shiv-chalisa',
@@ -224,12 +245,10 @@ export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
  */
 export function navigateToRoutineItem(nav: Nav, item: RoutineItem): boolean {
   if (item.kind === 'vidhi') {
-    // Vidhi screens live on the Panchang stack (PRD-19); the cross-tab
-    // navigate bubbles up from the Home stack to the tab navigator.
-    (nav.navigate as (name: string, params: object) => void)(
-      'PanchangTab',
-      panchangTabTarget('VidhiDetail', { vidhiId: item.sourceId })
-    );
+    // The vidhi flow (PRD-19) is registered on the Home stack as well as the
+    // Panchang one, so a routine item opens it in place and back returns to
+    // the routine rather than to the Panchang calendar.
+    nav.navigate('VidhiDetail', { vidhiId: item.sourceId });
     return true;
   }
   if (item.kind === 'japam') {
