@@ -19,7 +19,7 @@ import PitruPakshaDayChip from '@/components/PitruPakshaDayChip';
 import TextField from '@/components/TextField';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
-import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
+import { buildCalendarMonth, calendarWeeks, dateKey } from '@/panchang/calendarGrid';
 import { getEventRule } from '@/panchang/eventMuhurat';
 import {
   NAKSHATRA_NAMES_EN,
@@ -192,6 +192,9 @@ export default function PanchangScreen({ route }: Props) {
     }),
     [visibleMonth, selectedDate, today, monthObservances]
   );
+  // Weeks, not one wrapping 42-cell row — see `calendarWeeks`. The column a date
+  // lands in is then its position in its own week, never a rounding outcome.
+  const calendarRows = useMemo(() => calendarWeeks(calendarCells), [calendarCells]);
 
   useEffect(() => {
     if (route.params?.initialTab) setPanchangTab(route.params.initialTab);
@@ -500,8 +503,9 @@ export default function PanchangScreen({ route }: Props) {
                     </Text>
                   ))}
                 </View>
-                <View style={styles.dateGrid}>
-                  {calendarCells.map((cell) => {
+                {calendarRows.map((week, weekIndex) => (
+                  <View key={week[0].key} testID={`calendar-week-${weekIndex}`} style={styles.dateWeekRow}>
+                  {week.map((cell) => {
                     const observanceTag = monthObservanceTags.get(cell.key);
                     return (
                       <Pressable
@@ -548,7 +552,8 @@ export default function PanchangScreen({ route }: Props) {
                       </Pressable>
                     );
                   })}
-                </View>
+                  </View>
+                ))}
               </View>
             )}
           </View>
@@ -2121,11 +2126,16 @@ const styles = StyleSheet.create({
   // the 44 minimum — the size exception is visual only (design.md §12).
   monthButton: { width: 34, height: 34, borderWidth: 1, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
   overlayChip: { flexDirection: 'row', alignItems: 'center', gap: 10, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 8, marginBottom: 8, minHeight: 38 },
+  // Seven `flex: 1` columns in a fixed row — never a percentage width inside a
+  // wrapping row. Yoga resolves percentages in 32-bit float, so `100 / 7` can sum
+  // to just over the container (320.000008 pt inside 320 pt on a 390 dp iPhone)
+  // and drop the seventh cell onto the next line, sliding every date one or more
+  // columns off its weekday. `flex: 1` divides the same row exactly, at any width.
   weekdayRow: { flexDirection: 'row', marginBottom: 4 },
-  weekdayText: { width: `${100 / 7}%`, textAlign: 'center', fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
-  dateGrid: { flexDirection: 'row', flexWrap: 'wrap' },
+  weekdayText: { flex: 1, textAlign: 'center', fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
+  dateWeekRow: { flexDirection: 'row' },
   dateCell: {
-    width: `${100 / 7}%`,
+    flex: 1,
     minHeight: 38,
     borderWidth: 1,
     borderColor: 'transparent',
