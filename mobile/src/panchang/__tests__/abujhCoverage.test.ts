@@ -13,6 +13,9 @@ import {
 } from '../muhuratFinderScan';
 import { dateKeyFor, __resetPanchangDayStore } from '../panchangDayStore';
 
+// Rikta tithis (both pakshas) — mirrors the engine's private RIKTA set.
+const RIKTA_TITHIS = new Set([3, 8, 13, 18, 23, 28]);
+
 /**
  * अबूझ coverage and the abujh↔finder contract (PRD-16 §4.2, RULEBOOK §17).
  *
@@ -151,17 +154,44 @@ test('an abujh day lifts the SEASONAL bars — chaturmas and asta', () => {
   assert.ok(!withAbujh.doshas.includes('shukra-asta'));
 });
 
-test('an abujh day does NOT lift the per-day doshas', () => {
-  // Guru Pushya, 15 Apr 2027, falls on a Navami — a rikta tithi. The narrow
-  // reading keeps that bar (RULEBOOK §17.8: this line is an interpolation and
-  // the §10 review may move it).
+test('an abujh day does NOT lift the per-day doshas (window-time, Phase 2)', () => {
+  // Guru Pushya, 15 Apr 2027: sunrise tithi is Navami — rikta — ending 1:21 PM.
+  // The narrow abujh reading keeps the rikta bar (RULEBOOK §17.8), and Phase 2
+  // applies it AT THE WINDOW: no offered window may sit on the rikta tithi, but
+  // a window after it ends (Shubh 5:12 PM, on Dashami) is legitimately offered.
   const date = new Date(2027, 3, 15);
   const p = computePanchangForDate(date, { location: OPTS.location });
   assert.ok(pushyaYogaFor(p, date.getDay()), 'expected Guru Pushya on 15 Apr 2027');
+  assert.ok(RIKTA_TITHIS.has(p.tithi.index), 'expected a rikta sunrise tithi');
+  assert.ok(p.tithi.endTime && p.tithi.endTime < p.sunset, 'expected the tithi to end in daylight');
 
   const v = verdictFor('griha-pravesh', date, true);
-  assert.ok(v.doshas.includes('rikta'), 'rikta must survive an abujh day');
-  assert.equal(v.tier, 'excluded');
+  // Every offered window starts after the rikta tithi has ended.
+  assert.ok(v.windows.length > 0, 'the post-rikta window should be offered');
+  for (const w of v.windows) {
+    assert.ok(w.start.getTime() >= p.tithi.endTime!.getTime(), `${w.nameEn} sits on the rikta tithi`);
+    assert.ok(w.angaAtWindow && !RIKTA_TITHIS.has(w.angaAtWindow.tithiIndex));
+  }
+});
+
+test('a rikta tithi covering ALL daylight windows still excludes the day, abujh or not', () => {
+  // The per-day dosha holds wherever the tithi does not end in time. Scan for a
+  // rikta day whose tithi outlasts the last window, and pin it.
+  let pinned = false;
+  for (let i = 0; i < 120 && !pinned; i += 1) {
+    const date = new Date(2026, 7, 14 + i);
+    const p = computePanchangForDate(date, { location: OPTS.location });
+    if (!RIKTA_TITHIS.has(p.tithi.index)) continue;
+    if (p.tithi.endTime && p.tithi.endTime < p.sunset) continue; // ends in daylight — not this case
+    // Skip days where an unrelated DAY-level dosha would pre-empt the rikta
+    // verdict (yoga flags, adhik) — the test is about the rikta path alone.
+    if (p.yoga.index === 16 || p.yoga.index === 26 || p.lunarMonth.isAdhik) continue;
+    const v = verdictFor('vahan', date, true);
+    assert.equal(v.tier, 'excluded', `${date.toDateString()} should be excluded`);
+    assert.ok(v.doshas.includes('rikta'), `${date.toDateString()} should name rikta`);
+    pinned = true;
+  }
+  assert.ok(pinned, 'no all-day rikta day found in 120 days — implausible');
 });
 
 test('the abujh exemption never makes a NON-abujh day better', () => {
