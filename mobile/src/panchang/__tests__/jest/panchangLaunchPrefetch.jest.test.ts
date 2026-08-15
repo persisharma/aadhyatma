@@ -268,3 +268,28 @@ test('a storage failure degrades to the defaults rather than hanging the launch'
   // And the prefetch on top of it stays fire-and-forget.
   await expect(prefetchTodayPanchang()).resolves.toBeUndefined();
 });
+
+test('a FAILED read is not memoized — the next caller retries', async () => {
+  // Consolidating two reads into one memoized read is exactly where this
+  // guarantee gets dropped: the calendar-system read used to clear its own
+  // promise on error so the next subscriber retried. Without that, one transient
+  // failure at launch pins the WHOLE session to Ujjain + purnimant, with no path
+  // back until the app is killed — a much worse outcome than the slow card this
+  // change set out to fix.
+  await AsyncStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify({ cityId: 'bengaluru', source: 'city' }));
+  await AsyncStorage.setItem(CALENDAR_SYSTEM_STORAGE_KEY, 'amanta');
+  const multiGet = jest.spyOn(AsyncStorage, 'multiGet');
+  multiGet.mockRejectedValueOnce(new Error('disk busy'));
+
+  const first = await loadPanchangPrefsOnce();
+  expect(first.location.cityId).not.toBe('bengaluru'); // fell back
+  // Nothing was seeded, so the provider still mounts in its loading state rather
+  // than presenting the fallback city as a settled answer.
+  expect(peekPanchangPrefs()).toBeNull();
+
+  // The retry gets the real values.
+  const second = await loadPanchangPrefsOnce();
+  expect(second.location.cityId).toBe('bengaluru');
+  expect(second.calendarSystem).toBe('amanta');
+  expect(peekPanchangPrefs()?.location.cityId).toBe('bengaluru');
+});
