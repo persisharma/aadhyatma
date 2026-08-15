@@ -24,14 +24,18 @@ test('native consumers include recovery and freshness validation', () => {
   }
 });
 
-test('iOS emits offline dated entries, distinct ambient/Japam kinds, and registers copied fonts', () => {
+test('iOS emits offline dated entries, one kind per content type, and registers copied fonts', () => {
   const source = fs.readFileSync(path.join(process.cwd(), 'plugins/home-widgets/ios/VedanshWidgets.swift'), 'utf8');
   const plist = fs.readFileSync(path.join(process.cwd(), 'plugins/home-widgets/ios/Info.plist'), 'utf8');
   assert.match(source, /payload\.panchang\.days/);
   assert.match(source, /payload\.verses\.days/);
-  assert.match(source, /VedanshAmbientWidget/);
-  assert.match(source, /VedanshJapamWidget/);
-  assert.match(source, /\.systemSmall, \.accessoryCircular/);
+  // Content and size are independent (design.md §59): one widget kind per content
+  // type, each advertising its own families — see catalog.test.ts for the exact
+  // family↔size parity with the in-app gallery.
+  for (const kind of ['VedanshVerseWidget', 'VedanshPanchangWidget', 'VedanshJapamWidget']) {
+    assert.match(source, new RegExp(`let kind = "${kind}"`));
+  }
+  assert.equal(source.match(/\.supportedFamilies\(/g)?.length, 3);
   assert.match(plist, /CFBundleExecutable/);
   assert.match(plist, /UIAppFonts/);
 });
