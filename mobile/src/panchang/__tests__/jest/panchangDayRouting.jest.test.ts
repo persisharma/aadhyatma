@@ -40,13 +40,41 @@ const UJJAIN = { ...engine.UJJAIN_GEO, cityId: 'ujjain' };
 const SYSTEM = 'purnimant' as const;
 const OPTS = { calendarSystem: SYSTEM, location: UJJAIN };
 
+/**
+ * Both of the hook's gates are mutable here, because both are the subject of a
+ * test below: `mockLocation.isLoading` stands in for the launch window during
+ * which `usePanchangLocation` still reports the DEFAULT city rather than the
+ * user's, and `mockInteractions.defer` stands in for a busy UI that never
+ * reports itself idle.
+ */
+const mockLocation = { isLoading: false };
+const mockInteractions: { defer: boolean; queue: (() => void)[] } = { defer: false, queue: [] };
+
 jest.mock('@/contexts/PanchangLocationContext', () => ({
-  usePanchangLocation: () => ({ location: { cityId: 'ujjain', latitude: 23.1793, longitude: 75.7849, elevation: 494 } }),
+  usePanchangLocation: () => ({
+    location: { cityId: 'ujjain', latitude: 23.1793, longitude: 75.7849, elevation: 494 },
+    isLoading: mockLocation.isLoading,
+  }),
 }));
 jest.mock('@/utils/useMinuteTick', () => ({ useMinuteTick: () => 0 }));
 jest.mock('react-native', () => ({
-  // Run deferred work immediately so the test does not depend on RN's scheduler.
-  InteractionManager: { runAfterInteractions: (fn: () => void) => { fn(); return { cancel: () => {} }; } },
+  // Run deferred work immediately so the test does not depend on RN's scheduler
+  // — unless a test deliberately holds the queue.
+  InteractionManager: {
+    runAfterInteractions: (fn: () => void) => {
+      if (!mockInteractions.defer) {
+        fn();
+        return { cancel: () => undefined };
+      }
+      mockInteractions.queue.push(fn);
+      return {
+        cancel: () => {
+          const at = mockInteractions.queue.indexOf(fn);
+          if (at >= 0) mockInteractions.queue.splice(at, 1);
+        },
+      };
+    },
+  },
 }));
 
 const solveSpy = jest.spyOn(engine, 'computePanchangForDate');
@@ -114,6 +142,9 @@ beforeEach(async () => {
   __resetPanchangDayStore();
   __resetPanchangDayCache();
   __resetPanchangDayPrewarm();
+  mockLocation.isLoading = false;
+  mockInteractions.defer = false;
+  mockInteractions.queue.length = 0;
 });
 
 afterEach(() => {
@@ -168,6 +199,54 @@ test('a day only on disk is hydrated, not re-solved', async () => {
 
   expect(renderedSolves(spy, d)).toEqual([]);
   expect(latest()?.muhurat?.dayChoghadiya).toHaveLength(8);
+  unmount();
+});
+
+test('a day on disk paints WITHOUT the interaction queue ever draining', async () => {
+  // The Aug 2026 report behind this: persistence worked, but the whole chain sat
+  // behind one `runAfterInteractions`, so a day already on disk could not reach
+  // the screen until the UI went idle — and Home's own chip auto-scroll was an
+  // endless non-native animation holding an interaction handle. Home's
+  // `आज का पंचांग` kept its `—` headline throughout, which reads exactly like a
+  // cache that isn't there. Hydration is I/O: it must not be gated on an idle UI.
+  const d = today();
+  const map = dayStoreFor(scopeKeyFor(UJJAIN, SYSTEM));
+  [-1, 0, 1].forEach((off) => cachedDayInputs(map, new Date(d.getTime() + off * DAY_MS), OPTS));
+  await persistPanchangDays(UJJAIN, SYSTEM);
+  __resetPanchangDayStore();
+  __resetPanchangDayCache();
+
+  // Nothing queued behind interactions will run for the rest of this test.
+  mockInteractions.defer = true;
+  const spy = jest.spyOn(engine, 'computePanchangForDate');
+  const { latest, unmount } = renderUseMuhurat(d);
+  await settle();
+
+  expect(latest()?.muhurat?.dayChoghadiya).toHaveLength(8);
+  expect(latest()?.panchang).not.toBeNull();
+  expect(renderedSolves(spy, d)).toEqual([]);
+  // The roll-forward, which IS astronomy, correctly stayed parked in the queue.
+  expect(mockInteractions.queue.length).toBeGreaterThan(0);
+  unmount();
+});
+
+test('nothing runs while the location is still a placeholder', async () => {
+  // `usePanchangLocation` reports the DEFAULT city until its AsyncStorage read
+  // lands, so the scope key is a placeholder for that window. Working through it
+  // spends a hydrate, three solves and a seven-day roll-forward on a city the
+  // user is about to be moved off — on the launch path, ahead of the real scope.
+  const d = today();
+  mockLocation.isLoading = true;
+  const multiGet = jest.spyOn(AsyncStorage, 'multiGet');
+  multiGet.mockClear();
+  const spy = jest.spyOn(engine, 'computePanchangForDate');
+
+  const { latest, unmount } = renderUseMuhurat(d);
+  await settle();
+
+  expect(spy).not.toHaveBeenCalled();
+  expect(multiGet).not.toHaveBeenCalled();
+  expect(latest()?.panchang).toBeNull();
   unmount();
 });
 
