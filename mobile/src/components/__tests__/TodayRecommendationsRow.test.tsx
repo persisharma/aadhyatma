@@ -113,9 +113,9 @@ describe('TodayRecommendationsRow', () => {
       .findAllByType(View)
       .filter((node) => node.props.accessibilityLabel?.startsWith('recommendation-'));
     expect(cards).toHaveLength(2);
-    expect(renderedFeatureCardProps.map((props) => props.width)).toEqual([248, 248]);
-    // The FOR TODAY row is a strip, not the taller DISCOVER spotlight: every
-    // card must opt into `compact` (no CTA pill, ~half the height).
+    expect(renderedFeatureCardProps.map((props) => props.width)).toEqual([196, 196]);
+    // The FOR TODAY row is a name-only strip, not the taller DISCOVER
+    // spotlight: every card must opt into `compact`.
     expect(renderedFeatureCardProps.every((props) => props.compact === true)).toBe(true);
     expect(renderedFeatureCardProps.map((props) => props.item.titleEn)).toEqual([
       'Vishnu Sahasranama Excerpt',
@@ -125,9 +125,12 @@ describe('TodayRecommendationsRow', () => {
   });
 
   // A festive reminder lands the user on Home, so the card that its message
-  // named must say which festival it is — not the generic "Recommended for
-  // today" line the rest of the row carries.
-  test('a festival-day card names the occasion instead of the generic line', () => {
+  // named carries the occasion rather than the generic "Recommended for today"
+  // line. Since the row went name-only (§50), this attribution is no longer
+  // painted on the card — it reaches the user through the card's accessibility
+  // label and the festive toran above the row — but the row must still hand it
+  // to FeatureCard, or both of those lose it too.
+  test('a festival-day card carries the occasion instead of the generic line', () => {
     mockRecommendations = [
       { entry: entries[0], festivalHi: 'दीपावली', festivalEn: 'Diwali' },
       { entry: entries[1] },

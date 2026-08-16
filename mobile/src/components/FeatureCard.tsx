@@ -17,10 +17,10 @@ import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
  * language and the old context eyebrow chip were dropped — the title conveys the
  * section on its own — to keep the card short.
  *
- * `compact` (design.md §50) is a shorter *strip* form of the same shell for the
- * FOR TODAY row: icon left, title over blurb in one text column, and a bare
- * chevron where the CTA pill sat. It roughly halves the card height (~68 vs
- * ~130) so Home's today cluster stops eating a screenful before the grid.
+ * `compact` (design.md §50) is a title-only *strip* form of the same shell for
+ * the FOR TODAY row: icon, name, chevron — one row, no blurb and no CTA pill.
+ * It is a little over a third the height of the default card (~56 vs ~130), so
+ * Home's today cluster stops eating a screenful before the grid.
  */
 export type FeatureSpotlight = {
   /** Stable key for the carousel list. */
@@ -49,8 +49,8 @@ type Props = {
   onPressIn?: () => void;
   onPressOut?: () => void;
   /**
-   * Short strip form (FOR TODAY row): one row of icon · title/blurb · chevron,
-   * no CTA pill. Roughly half the height of the default spotlight card.
+   * Title-only strip form (FOR TODAY row): one row of icon · name · chevron,
+   * no blurb and no CTA pill. ~56 tall against the default card's ~130.
    */
   compact?: boolean;
 };
@@ -87,8 +87,7 @@ export default function FeatureCard({
   const titleText = (
     <Text
       style={{
-        flex: compact ? undefined : 1,
-        flexShrink: compact ? 1 : undefined,
+        flex: 1,
         color: colors.ink,
         fontFamily: primary.fontFamily,
         fontSize: primary.fontSize,
@@ -110,6 +109,9 @@ export default function FeatureCard({
     </View>
   ) : null;
 
+  // Default variant only — the compact strip carries no blurb. `desc` still
+  // reaches the accessibility label in both, so a screen reader on a festival
+  // day still hears "Today is Diwali" off a card that shows only the name.
   const descText = (
     <Text
       style={[
@@ -117,12 +119,12 @@ export default function FeatureCard({
         {
           color: colors.inkSoft,
           fontFamily: isHi ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily,
-          fontSize: isHi ? (compact ? 12 : 13) : compact ? 13 : 14,
+          fontSize: isHi ? 13 : 14,
           fontStyle: isHi ? 'normal' : 'italic',
           // Devanagari needs ~1.7 leading (design.md type scale); the Latin
           // default of 19 is too tight for Hindi and clips the upper matras.
-          lineHeight: isHi ? (compact ? 20 : 22) : compact ? 18 : 19,
-          marginTop: compact ? 1 : spacing.sm,
+          lineHeight: isHi ? 22 : 19,
+          marginTop: spacing.sm,
         },
       ]}
       numberOfLines={1}
@@ -168,15 +170,11 @@ export default function FeatureCard({
           >
             {item.icon}
           </View>
-          <View style={styles.compactText}>
-            <View style={styles.compactTitleRow}>
-              {titleText}
-              {newBadge}
-            </View>
-            {descText}
-          </View>
-          {/* The CTA pill is dropped here — the chevron alone carries the
-              "opens something" affordance at strip height. */}
+          {titleText}
+          {newBadge}
+          {/* The blurb and the CTA pill are both dropped here — the name is the
+              card, and the chevron alone carries the "opens something"
+              affordance at strip height. */}
           <Text style={[styles.ctaChevron, { color: colors.saffronDeep }]}>›</Text>
         </View>
       </Pressable>
@@ -249,8 +247,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   cardCompact: {
-    // No flex spacer and no CTA pill: the strip is exactly its one row plus
-    // padding, which is what halves the FOR TODAY row's height.
+    // No blurb, no flex spacer, no CTA pill: the strip is exactly its one row
+    // plus padding (34 + 22 = 56), which is what shrinks the FOR TODAY row.
     minHeight: 0,
     paddingVertical: 11,
     paddingHorizontal: 12,
@@ -268,14 +266,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-  },
-  compactText: {
-    flex: 1,
-  },
-  compactTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
   },
   iconTile: {
     width: 36,

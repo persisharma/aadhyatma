@@ -181,10 +181,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   cardWrap: {
-    // Narrower than the 292 spotlight width: the compact strip carries no CTA
-    // pill, so it needs only enough room for the icon, a one-line title and its
-    // blurb — and the extra card that fits per viewport is more of today's
-    // recommendations in the same scroll.
-    width: 248,
+    // Much narrower than the 292 spotlight width: the compact strip is icon +
+    // name + chevron, so it needs room for a title and nothing else, and the
+    // extra card that fits per viewport is more of today's recommendations in
+    // the same scroll. This leaves ~108pt for the title — comfortable for a
+    // typical name (हनुमान चालीसा ≈ 80) but at the edge for the longest shipped
+    // one (विष्णु सहस्रनाम अंश ≈ 105), which ellipsizes under a raised system
+    // font scale. Widen here, not in FeatureCard, if that trade stops being
+    // acceptable — the strip sizes to whatever width the row hands it.
+    width: 196,
   },
 });

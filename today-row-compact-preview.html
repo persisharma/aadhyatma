@@ -295,7 +295,7 @@
   <!-- ============================ B — compact strip ============================ -->
   <div class="stage vB">
     <div class="hdr">
-      <span class="tag pick">B · recommended</span>
+      <span class="tag">B · runner-up</span>
       <h2>Compact strip</h2>
       <div class="meta">248 × 68 · chevron only</div>
     </div>
@@ -367,17 +367,17 @@
         <dt>Grid rows above the fold</dt><dd class="good">2½</dd>
         <dt>Cards per viewport</dt><dd class="good">1.4</dd>
       </dl>
-      <div class="note">Keeps the blurb, because on a <b>festival day</b> that line is the
-        whole point — it turns into <i>आज दीपावली है</i>, and it is what makes the
-        morning notification and the homepage name the same day. Drops only the pill;
-        the chevron carries the affordance. <b>This is what is on the branch.</b></div>
+      <div class="note">Keeps the blurb, because on a <b>festival day</b> that line turns
+        into <i>आज दीपावली है</i>. Drops only the pill; the chevron carries the
+        affordance. <b>Not taken</b> — C is shorter and the festival line survives
+        through the toran and the accessibility label anyway.</div>
     </div>
   </div>
 
   <!-- ============================ C — title-only strip ============================ -->
   <div class="stage vC">
     <div class="hdr">
-      <span class="tag">C · leanest</span>
+      <span class="tag pick">C · chosen</span>
       <h2>Title-only strip</h2>
       <div class="meta">196 × 56 · no blurb</div>
     </div>
@@ -441,10 +441,13 @@
         <dt>Grid rows above the fold</dt><dd class="good">2½</dd>
         <dt>Cards per viewport</dt><dd class="good">1.8</dd>
       </dl>
-      <div class="note">12 pt shorter than B, but it buys no extra grid row — and it costs
-        the festival line. On Diwali this row would show <i>हनुमान चालीसा</i> with no
-        hint that the day is Diwali, which breaks the promise the morning notification
-        made. <b>Only pick this if the festival attribution moves elsewhere.</b></div>
+      <div class="note">12 pt shorter than B and appreciably denser per viewport. The
+        festival line it drops is still <i>computed</i> and still handed to the card —
+        it reaches the user through the card's accessibility label (VoiceOver still
+        says <i>Today is Diwali</i>) and through the <b>festive toran</b>, which hangs
+        its garland right above this row on every catalog festival.
+        <b>This is what is on the branch.</b> Watch the title: ~108 pt of room, so the
+        longest shipped name ellipsizes at large font scales.</div>
     </div>
   </div>
 
@@ -527,22 +530,26 @@
 </div>
 
 <footer>
-  <h3>Why B</h3>
+  <h3>Chosen: C</h3>
   <p>
     The नित्य साधना tile is the right <i>instinct</i> — low, calm, no chrome — but its
     literal form (D) is a launcher for a fixed word like जप, not a carrier for text
-    titles that run 6–20 Devanagari clusters. B keeps what makes that tile feel light
-    (one row, icon + name, no button) while staying a card that can name a text.
+    titles that run 6–20 Devanagari clusters. C keeps what makes that tile feel light
+    (one row, icon + name, no button, nothing else) while staying a card that can name
+    a text.
   </p>
   <ul>
     <li><b>The पढ़ें pill goes</b> in every option. It was never a button — the whole card is
       the tap target — so it cost 30 pt for a chevron's worth of meaning.</li>
-    <li><b>The blurb stays in B</b> because it is not decoration: on a festival day it becomes
-      <code>आज दीपावली है</code>, which is the line that ties the morning notification, the
-      toran, and this row to the same festival (<code>festiveReminders.test.ts</code> fails if
-      they disagree).</li>
-    <li><b>Width 292 → 248</b> so a viewport shows more of the day's recommendations, not just
-      a shorter row.</li>
+    <li><b>The blurb goes too.</b> On an ordinary day it only said <code>आज के लिए अनुशंसित</code>
+      under a heading already reading आज के लिए. On a festival day it said
+      <code>आज दीपावली है</code> — and that attribution is still computed and still passed to
+      the card (<code>festiveReminders.test.ts</code> still fails if the row and the
+      notification disagree). It now reaches the user through the card's accessibility
+      label and through the festive toran hanging directly above the row.</li>
+    <li><b>Width 292 → 196</b> so a viewport shows more of the day's recommendations, not just
+      a shorter row. This is the one number to watch: it leaves ~108 pt for the title,
+      which the longest shipped name only just clears.</li>
   </ul>
   <p style="margin-top:10px">
     Geometry is 1 dp = 1 px against <code>mobile/src/theme/colors.ts</code> and
