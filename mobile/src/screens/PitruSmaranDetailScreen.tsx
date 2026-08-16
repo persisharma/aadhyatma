@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { useNavigation, type NavigationProp } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -10,13 +10,8 @@ import ObservanceDetailHero from '@/components/ObservanceDetailHero';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
-import { addDays } from '@/panchang/calendarGrid';
-import {
-  nextObservanceForEntry,
-  pakshaShraddhaDay,
-  pitruPakshaWindow,
-  tithiName,
-} from '@/panchang/pitruSmaran';
+import { tithiName } from '@/panchang/pitruSmaran';
+import { useSmaranDetailSolve } from '@/panchang/usePitruSmaranSolves';
 import {
   entryCaption,
   entryDisplayName,
@@ -33,13 +28,6 @@ import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import type { MoreStackParamList, TabParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'PitruSmaranDetail'>;
-
-type Solved = {
-  next: Date | null;
-  following: Date | null; // the occurrence after `next` ("अगले वर्ष")
-  pakshaYear: number;
-  pakshaDay: Date | null;
-};
 
 // गीता पाठ deep links: Adhyaya 15 (Purushottama Yoga) and Adhyaya 2 are the
 // traditional shraddha-paath chapters; both ship in the Gita reader already.
@@ -65,38 +53,12 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
   const today = startOfLocalDay(new Date());
   const todayMs = today.getTime();
 
-  const [solved, setSolved] = useState<Solved | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const tithiRule = entry?.tithiRule;
-  useEffect(() => {
-    if (!tithiRule) return undefined;
-    let cancelled = false;
-    const handle = setTimeout(() => {
-      const day = new Date(todayMs);
-      const result: Solved = { next: null, following: null, pakshaYear: day.getFullYear(), pakshaDay: null };
-      try {
-        result.next = nextObservanceForEntry({ tithiRule }, day);
-        if (result.next) {
-          result.following = nextObservanceForEntry({ tithiRule }, addDays(result.next, 1));
-        }
-        // "पितृ पक्ष में किस दिन" — this year's fortnight, or next year's once
-        // this year's सर्वपितृ अमावस्या has passed.
-        let year = day.getFullYear();
-        const window = pitruPakshaWindow(year);
-        if (window && window.end.getTime() < day.getTime()) year += 1;
-        result.pakshaYear = year;
-        result.pakshaDay = pakshaShraddhaDay(tithiRule, year);
-      } catch {
-        // leave nulls — rows render only when solved
-      }
-      if (!cancelled) setSolved(result);
-    }, 0);
-    return () => {
-      cancelled = true;
-      clearTimeout(handle);
-    };
-  }, [tithiRule, todayMs]);
+  // Warm-first and published in two stages: the hero pill lands as soon as the
+  // next occurrence is known, without waiting on next year's solve or the
+  // fortnight mapping below it. See `usePitruSmaranSolves`.
+  const solved = useSmaranDetailSolve(entry?.tithiRule, todayMs);
 
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
@@ -126,7 +88,7 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
     contentByLang(lang, VARA_NAMES_HI[d.getDay()], VARA_NAMES_EN[d.getDay()]);
 
   const pakshaDayLabel = (): string => {
-    if (!solved?.pakshaDay || !entry) return '';
+    if (!solved.pakshaDay || !entry) return '';
     const dateLabel = shortDateWithYear(solved.pakshaDay, lang);
     if (entry.tithiRule === 'sarvapitri') {
       return `${contentByLang(lang, 'सर्वपितृ अमावस्या', 'Sarvapitri Amavasya')} — ${dateLabel}`;
@@ -193,13 +155,13 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
                   {contentByLang(lang, 'श्राद्ध तिथि:', 'Shraddha tithi:')} {entryCaption(entry, lang)}
                 </Text>
               )}
-              nextLabel={solved?.next
+              nextLabel={solved.next
                 ? `${contentByLang(lang, 'अगला', 'Next')} · ${fullDate(solved.next, lang)} · ${inDaysLabel(solved.next, today, lang)}`
                 : null}
             />
 
             {/* Next year */}
-            {solved?.following && (
+            {solved.following && (
               <View style={[styles.row, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
                 <View style={styles.rowMain}>
                   <Text style={[styles.rowLabel, { color: colors.inkMuted }]}>
@@ -213,7 +175,7 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
             )}
 
             {/* Pitru Paksha mapping */}
-            {solved?.pakshaDay && (
+            {solved.pakshaDay && (
               <View style={[styles.row, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
                 <View style={styles.rowMain}>
                   <Text style={[styles.rowLabel, { color: colors.inkMuted }]}>

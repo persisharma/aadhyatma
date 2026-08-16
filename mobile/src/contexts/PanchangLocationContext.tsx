@@ -2,7 +2,8 @@ import React, { createContext, useCallback, useContext, useEffect, useRef, useSt
 import { InteractionManager } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
-import { DEFAULT_LOCATION, getCityById, nearestCity, toPanchangLocation } from '@/panchang/locations';
+import { DEFAULT_LOCATION, getCityById, toPanchangLocation } from '@/panchang/locations';
+import { lookupPincode, snapToNearestLocation, toPincodeLocation } from '@/panchang/pincodes';
 import { hydrateObservanceCache, warmObservanceCache } from '@/panchang/observanceCache';
 import { UJJAIN_CITY_ID } from '@/panchang/engine';
 import {
@@ -32,6 +33,8 @@ type PanchangLocationContextValue = {
   isLoading: boolean;
   gpsStatus: GpsStatus;
   selectCity: (cityId: string) => void;
+  /** Resolve a 6-digit pincode to its own coordinates. Returns false if unknown. */
+  selectPincode: (pincode: string) => boolean;
   requestDeviceLocation: () => Promise<'granted' | 'denied' | 'error'>;
 };
 
@@ -40,6 +43,7 @@ const PanchangLocationContext = createContext<PanchangLocationContextValue>({
   isLoading: true,
   gpsStatus: 'idle',
   selectCity: () => undefined,
+  selectPincode: () => false,
   requestDeviceLocation: async () => 'error',
 });
 
@@ -152,6 +156,17 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
     [applyLocation]
   );
 
+  const selectPincode = useCallback(
+    (pincode: string): boolean => {
+      const entry = lookupPincode(pincode);
+      if (!entry) return false;
+      setGpsStatus('idle');
+      applyLocation(toPincodeLocation(entry, 'pincode'));
+      return true;
+    },
+    [applyLocation]
+  );
+
   const requestDeviceLocation = useCallback(async (): Promise<'granted' | 'denied' | 'error'> => {
     setGpsStatus('locating');
     try {
@@ -165,8 +180,11 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
         setGpsStatus('error');
         return 'error';
       }
-      const city = nearestCity(coords.latitude, coords.longitude);
-      applyLocation(toPanchangLocation(city, 'gps'));
+      // Snaps to the nearest PINCODE centroid (usually a few km), falling back to the
+      // bundled city list only if the table fails to load. Before the pincode tier this
+      // was `nearestCity`, which outside Rajasthan could be 100 km+ away — a Kolhapur fix
+      // landed on Panaji, 135 km off, and computed Goa's sunrise.
+      applyLocation(snapToNearestLocation(coords.latitude, coords.longitude));
       setGpsStatus('idle');
       return 'granted';
     } catch {
@@ -176,7 +194,9 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
   }, [applyLocation]);
 
   return (
-    <PanchangLocationContext.Provider value={{ location, isLoading, gpsStatus, selectCity, requestDeviceLocation }}>
+    <PanchangLocationContext.Provider
+      value={{ location, isLoading, gpsStatus, selectCity, selectPincode, requestDeviceLocation }}
+    >
       {children}
     </PanchangLocationContext.Provider>
   );

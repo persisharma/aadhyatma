@@ -85,6 +85,7 @@ export default function TodayRecommendationsRow() {
           const card = (
             <View key={entry.id} style={styles.cardWrap}>
               <FeatureCard
+                compact
                 item={spotlightForEntry(
                   recommendation,
                   typography.thumb.fontFamily,
@@ -109,6 +110,7 @@ export default function TodayRecommendationsRow() {
           const abujhCard = (
             <View key="abujh-today" style={styles.cardWrap} testID="for-today-abujh">
               <FeatureCard
+                compact
                 item={{
                   key: 'abujh-today',
                   titleHi: abujh.nameHi,
@@ -171,14 +173,22 @@ function spotlightForEntry(
 
 const styles = StyleSheet.create({
   wrap: {
-    marginTop: 16,
-    gap: 8,
+    marginTop: 12,
+    gap: 6,
   },
   sectionLabel: {
     // textTransform/letterSpacing/fontFamily are owned by pillTextStyle (script-aware).
     paddingHorizontal: 4,
   },
   cardWrap: {
-    width: 292,
+    // Much narrower than the 292 spotlight width: the compact strip is icon +
+    // name + chevron, so it needs room for a title and nothing else, and the
+    // extra card that fits per viewport is more of today's recommendations in
+    // the same scroll. This leaves ~108pt for the title — comfortable for a
+    // typical name (हनुमान चालीसा ≈ 80) but at the edge for the longest shipped
+    // one (विष्णु सहस्रनाम अंश ≈ 105), which ellipsizes under a raised system
+    // font scale. Widen here, not in FeatureCard, if that trade stops being
+    // acceptable — the strip sizes to whatever width the row hands it.
+    width: 196,
   },
 });

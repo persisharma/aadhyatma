@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; **follow/remind + Today-strip chip + FOR TODAY abujh card shipped Aug 2026** (see §6.7, design.md §60, RULEBOOK §17.7; prototype: [`docs/muhurat-follow-remind-prototype.html`](../../muhurat-follow-remind-prototype.html)). Next: Phase 2 shuddhi depth (Bhadra as a window, window-time anga evaluation, per-occasion masa tables) |
+| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; **follow/remind + Today-strip chip + FOR TODAY abujh card shipped Aug 2026** (see §6.7, design.md §60, RULEBOOK §17.7; prototype: [`docs/muhurat-follow-remind-prototype.html`](../../muhurat-follow-remind-prototype.html)). **Phase 2 shuddhi depth BUILT (Aug 2026)** — window-time anga (per-window, kshaya-aware), Bhadra as a solved interval, masa mechanism (tables DRAFT), six new occasions, grouped picker; see TRD-16/P2. Remaining: §10 content review (now 12 occasions + masa tables), drikfixture goldens, late-onset Vishti |
 | **Target release** | TBD (phased; Phase 1 is small) |
 | **T-shirt size** | Code S–M per phase · **content L** (rule tables are the real cost) |
 | **Owner** | TBA |

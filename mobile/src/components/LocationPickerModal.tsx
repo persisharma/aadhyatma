@@ -1,25 +1,55 @@
-import React, { useMemo, useState } from 'react';
-import { ActivityIndicator, FlatList, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  InteractionManager,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { CITIES, cityMatchesQuery, type City } from '@/panchang/locations';
+import {
+  isPincodeQuery,
+  lookupPincode,
+  pincodeCityId,
+  toDevanagariDigits,
+  warmPincodeTable,
+  type PincodeEntry,
+} from '@/panchang/pincodes';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 
-type Row = { kind: 'header'; id: string; hi: string; en: string } | { kind: 'city'; city: City };
+type Row =
+  | { kind: 'header'; id: string; hi: string; en: string }
+  | { kind: 'city'; city: City }
+  | { kind: 'pincode'; entry: PincodeEntry }
+  | { kind: 'pincode-missing'; query: string };
 
 /**
- * City/GPS picker for the panchang reference location. GPS fixes are snapped to
- * the nearest bundled city (offline labels, finite observance-cache keys), so
- * the list below is the complete set of locations the engine computes for.
+ * City/pincode/GPS picker for the panchang reference location.
+ *
+ * THREE WAYS IN, in increasing precision:
+ *   - GPS, which snaps to the nearest pincode centroid (see `pincodes.ts`);
+ *   - a 6-digit pincode typed into the search box, resolved exactly;
+ *   - the browsable `CITIES` list.
  *
  * `CITIES` is two tiers — nationwide cities, then Rajasthan tehsils — and the tehsils
  * outnumber the cities several times over, so the list is split under two group
  * headers rather than rendered as one flat 390-row scroll. A tehsil is identified by
  * carrying a `districtEn`.
+ *
+ * The 18,466 pincodes are deliberately NOT browsable rows: they have no Devanagari place
+ * names (see `pincodes.ts`), and 18k rows is not a list anyone scrolls. They surface only
+ * when the query IS a pincode, which is also what keeps the 566 KB table off the launch
+ * path — it loads when this sheet opens, not when the app starts.
  */
 export default function LocationPickerModal({ visible, onClose }: {
   visible: boolean;
@@ -27,10 +57,28 @@ export default function LocationPickerModal({ visible, onClose }: {
 }) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const { location, gpsStatus, selectCity, requestDeviceLocation } = usePanchangLocation();
+  const { location, gpsStatus, selectCity, selectPincode, requestDeviceLocation } = usePanchangLocation();
   const [query, setQuery] = useState('');
 
+  // Parse the 566 KB table once the sheet is actually open, so the first pincode typed
+  // resolves instantly instead of paying for the load mid-keystroke.
+  useEffect(() => {
+    if (!visible) return;
+    const handle = InteractionManager.runAfterInteractions(() => warmPincodeTable());
+    return () => handle.cancel();
+  }, [visible]);
+
   const rows = useMemo<Row[]>(() => {
+    const trimmed = query.trim();
+    if (isPincodeQuery(trimmed)) {
+      const entry = lookupPincode(trimmed);
+      return entry
+        ? [
+            { kind: 'header', id: 'h-pincode', hi: 'पिनकोड', en: 'Pincode' },
+            { kind: 'pincode', entry },
+          ]
+        : [{ kind: 'pincode-missing', query: trimmed }];
+    }
     const matches = CITIES.filter((city) => cityMatchesQuery(city, query));
     const cities = matches.filter((city) => !city.districtEn);
     const tehsils = matches.filter((city) => city.districtEn);
@@ -54,6 +102,10 @@ export default function LocationPickerModal({ visible, onClose }: {
   const onPickCity = (city: City) => {
     selectCity(city.id);
     onClose();
+  };
+
+  const onPickPincode = (entry: PincodeEntry) => {
+    if (selectPincode(entry.pincode)) onClose();
   };
 
   return (
@@ -115,9 +167,9 @@ export default function LocationPickerModal({ visible, onClose }: {
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder={contentByLang(lang, 'शहर खोजें…', 'Search city…')}
+              placeholder={contentByLang(lang, 'शहर या पिनकोड खोजें…', 'Search city or pincode…')}
               placeholderTextColor={colors.inkMuted}
-              accessibilityLabel={contentByLang(lang, 'शहर खोजें', 'Search city')}
+              accessibilityLabel={contentByLang(lang, 'शहर या पिनकोड खोजें', 'Search city or pincode')}
               style={[
                 styles.search,
                 {
@@ -132,18 +184,69 @@ export default function LocationPickerModal({ visible, onClose }: {
             <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted }}>
               {meaningByLang(
                 lang,
-                'भारत के प्रमुख शहर व राजस्थान की तहसीलें — सूर्योदय व तिथि की गणना इसी स्थान के लिए होगी।',
-                'Major Indian cities plus every Rajasthan tehsil — sunrise and tithi are computed for this place.'
+                'कोई भी भारतीय पिनकोड लिखें, या सूची से शहर चुनें — सूर्योदय व तिथि की गणना इसी स्थान के लिए होगी।',
+                'Type any Indian pincode, or pick a city from the list — sunrise and tithi are computed for this place.'
               )}
             </Text>
           </View>
 
           <FlatList
             data={rows}
-            keyExtractor={(row) => (row.kind === 'header' ? row.id : row.city.id)}
+            keyExtractor={(row) => {
+              if (row.kind === 'header') return row.id;
+              if (row.kind === 'pincode') return `pin-${row.entry.pincode}`;
+              if (row.kind === 'pincode-missing') return `missing-${row.query}`;
+              return row.city.id;
+            }}
             contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingVertical: spacing.lg }}
             keyboardShouldPersistTaps="handled"
             renderItem={({ item: row }) => {
+              if (row.kind === 'pincode-missing') {
+                return (
+                  <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+                    {meaningByLang(
+                      lang,
+                      `पिनकोड ${toDevanagariDigits(row.query)} नहीं मिला — कृपया जाँचें, या सूची से निकटतम शहर चुनें।`,
+                      `Pincode ${row.query} was not found — check the digits, or pick the nearest city from the list.`
+                    )}
+                  </Text>
+                );
+              }
+              if (row.kind === 'pincode') {
+                const { entry } = row;
+                const selected = location.cityId === pincodeCityId(entry.pincode);
+                // District and taluka both, because neither alone is reliably the name a user
+                // recognises — 416001 is Kolhapur/Karvir, 781001 is Kamrup/Guwahati. Collapsed
+                // when they are equal (Mumbai). Latin in every language: neither source dataset
+                // has Devanagari place names, and guessing the spelling would be worse.
+                const place =
+                  entry.talukaEn && entry.talukaEn !== entry.districtEn
+                    ? `${entry.districtEn} · ${entry.talukaEn}`
+                    : entry.districtEn;
+                return (
+                  <Pressable
+                    onPress={() => onPickPincode(entry)}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected }}
+                    accessibilityLabel={`Pincode ${entry.pincode}, ${place}, ${entry.stateEn}${selected ? ', selected' : ''}`}
+                    style={({ pressed }) => [
+                      styles.cityRow,
+                      { borderBottomColor: colors.divider },
+                      pressed && { opacity: 0.7 },
+                    ]}
+                  >
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                        {contentByLang(lang, `${toDevanagariDigits(entry.pincode)} · ${entry.stateHi}`, `${entry.pincode} · ${entry.stateEn}`)}
+                      </Text>
+                      <Text style={{ ...captionFont(place), fontSize: 11, color: colors.inkMuted }}>
+                        {place}
+                      </Text>
+                    </View>
+                    {selected && <Text style={{ fontSize: 15, color: colors.saffronDeep }}>✓</Text>}
+                  </Pressable>
+                );
+              }
               if (row.kind === 'header') {
                 return (
                   <Text
