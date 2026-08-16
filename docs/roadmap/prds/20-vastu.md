@@ -2,12 +2,12 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — not started. Prototype required before build (house rule: every shipped surface is validated in an annotated HTML prototype first). |
+| **Status** | Proposed — prototype ready; build not started. |
 | **T-shirt size** | M (content-first: one new data family + 2–3 screens in the Panchang stack; engine work is nil — everything computes from bundled static content) |
-| **Prototype** | _none yet_ — `docs/vastu-prototype.html` to cover: mandala explorer, direction detail, facing guide, muhurat cross-link pill |
+| **Prototype** | [`docs/vastu-prototype.html`](../../vastu-prototype.html) — tools-shelf/DISCOVER/search entries, mandala explorer, direction page (with the gated quote slot), facing picker + facing page, muhurat cross-link pill; every interaction annotated |
 | **Feasibility** | ✅ Confirmed against current main — the Muhurat Finder already ships the three occasions Vastu users arrive from (`griha-pravesh`, `bhumi-pujan`, `sampatti` in `mobile/src/panchang/eventMuhurat.ts`); the deity registry already carries Kubera and Navagraha with shipped texts to hand off to (`kubera-stotram`, `navagraha-stotram`); the vidhi family (`mobile/src/data/vidhi/`, PRD-19) is the ready-made home for a वास्तु शान्ति vidhi. The only new capability is the content itself. A device compass is **not** feasible OTA (needs `expo-sensors`, a native module → store release) and is explicitly deferred. |
 
-> **Design intent (to validate in the prototype):** Vastu enters the app as a **calm reference tool**, not a verdict machine. The centrepiece is a tappable **Vastu Purusha Mandala** — a 3×3 direction grid (8 dik + ब्रह्मस्थान) rendered as View composition like the deity glyphs, no images, no SVG dependency. Tapping a direction opens its page: presiding dikpala, element, what tradition favours and avoids there, and hand-offs into shipped texts where the dikpala is a library deity (Kubera → कुबेर स्तोत्र, north). A second surface answers the one question every householder actually asks — *"my home faces X, what should I know?"* — via a facing picker, no sensors, no floor-plan upload.
+> **Design intent (validated in the prototype):** Vastu enters the app as a **calm reference tool**, not a verdict machine. The centrepiece is a tappable **Vastu Purusha Mandala** — a 3×3 direction grid (8 dik + ब्रह्मस्थान) rendered as View composition like the deity glyphs, no images, no SVG dependency. Tapping a direction opens its page: presiding dikpala, element, what tradition favours and avoids there, and hand-offs into shipped texts where the dikpala is a library deity (Kubera → कुबेर स्तोत्र, north). A second surface answers the one question every householder actually asks — *"my home faces X, what should I know?"* — via a facing picker, no sensors, no floor-plan upload.
 
 ---
 

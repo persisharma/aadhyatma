@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-20 · वास्तु — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts exactly (Aug 2026) — deepened AAA/AA inks,
+       alpha divider, 0.12/0.14 tints, warm #3C1E0A shadow, card gradient tokens. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:920px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:920px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:920px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap .n{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .deva{font-family:var(--deva)}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* shared card / row / pill grammar (design.md §8, §33.5) */
+  .actionrow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:13px 14px;margin-bottom:10px;min-height:48px;position:relative}
+  .actionrow .ai{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:14px;color:var(--saffron-deep);flex:none}
+  .actionrow .at{flex:1}
+  .actionrow .att{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .actionrow .ats{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .actionrow .chev{color:var(--saffron);font-size:17px}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
+  .apills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .apill{display:inline-flex;align-items:center;font-family:var(--deva);font-size:12.5px;border-radius:20px;
+    padding:8px 14px;min-height:36px;position:relative}
+  .apill.gold{color:var(--saffron-deep);background:var(--gold-tint);border:1px solid transparent}
+  .apill.outline{color:var(--saffron);background:transparent;border:1px solid var(--gold-tint)}
+  .apill.filled{color:#fff8ec;background:var(--saffron);border:1px solid transparent}
+  .searchfield{height:48px;border:1px solid var(--divider);background:var(--parchment-soft);border-radius:14px;
+    display:flex;align-items:center;padding:0 14px;margin-bottom:10px;box-shadow:var(--shadow-subtle)}
+  .searchfield .query{flex:1;font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .searchfield .clear{font-family:var(--sans);font-size:17px;color:var(--ink-muted)}
+  .resultgroup{font-family:var(--deva);font-size:12px;font-weight:600;color:var(--saffron-deep);letter-spacing:.25px;margin:14px 2px 4px}
+  .searchresult{display:flex;align-items:center;gap:10px;padding:11px 2px;border-bottom:1px solid var(--divider);position:relative}
+  .searchresult .resultcopy{flex:1;min-width:0}
+  .searchresult .resulttitle{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .searchresult .resultsub{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .searchresult .kind{font:600 9.5px var(--sans);letter-spacing:.35px;color:var(--saffron-deep);
+    background:var(--saffron-tint);border-radius:999px;padding:4px 8px;white-space:nowrap}
+  .searchresult .chev{font-size:18px;color:var(--saffron)}
+  .discover{position:relative;display:flex;align-items:center;gap:10px;border:1px solid var(--card-border);
+    background:linear-gradient(120deg,var(--card-from),var(--card-to));border-radius:14px;padding:11px 13px;
+    margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .discover .glyph{font-family:var(--deva);font-size:20px;color:var(--saffron);width:28px;text-align:center}
+  .discover .copy{flex:1;min-width:0}
+  .discover .title{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .discover .subcopy{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted)}
+  .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.6}
+
+  /* ---- mandala (View composition — no images, no SVG, deity-glyph discipline) ---- */
+  .mandala{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:6px 0 4px;position:relative}
+  .cell{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;min-height:88px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:var(--shadow-subtle);position:relative;padding:8px 4px}
+  .cell .dik{font-family:var(--deva);font-size:14.5px;font-weight:600;color:var(--ink);text-align:center}
+  .cell .pala{font-family:var(--deva);font-size:11px;color:var(--saffron-deep);text-align:center}
+  .cell .en{font-family:var(--serif);font-style:italic;font-size:9.5px;color:var(--ink-muted)}
+  .cell.center{background:linear-gradient(140deg,var(--card-from),var(--card-to));border-color:var(--card-border);box-shadow:var(--shadow-card)}
+  .cell.center .om{font-family:var(--deva);font-size:19px;color:var(--saffron);line-height:20px}
+  .compassline{display:flex;justify-content:space-between;font:600 10px var(--sans);letter-spacing:.5px;color:var(--ink-muted);padding:0 4px;margin-bottom:5px}
+
+  /* direction page */
+  .dirhero{text-align:center;margin:2px 0 14px;position:relative}
+  .dirhero .big{font-family:var(--deva);font-size:26px;font-weight:600;color:var(--ink)}
+  .dirhero .sanskrit{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);margin-top:2px}
+  .palacard{display:flex;align-items:center;gap:12px;background:var(--parchment-soft);border:1px solid var(--gold-tint);
+    border-radius:18px;padding:13px 14px;box-shadow:var(--shadow-card);margin-bottom:12px;position:relative}
+  .palacard .glyphring{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gold);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:19px;color:var(--saffron-deep);flex:none}
+  .palacard .pinfo{flex:1}
+  .palacard .pt{font-family:var(--deva);font-size:15.5px;color:var(--ink)}
+  .palacard .ps{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .kvrow{display:flex;gap:8px;margin-bottom:12px}
+  .kv{flex:1;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:10px 8px;text-align:center}
+  .kv .k{font:600 9.5px var(--sans);letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted)}
+  .kv .v{font-family:var(--deva);font-size:13.5px;color:var(--ink);margin-top:3px}
+  .listhead{font-family:var(--deva);font-size:12.5px;font-weight:600;color:var(--saffron-deep);margin:12px 2px 6px;position:relative}
+  .chiprow{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);background:var(--parchment-soft);
+    border:1px solid var(--divider);border-radius:999px;padding:7px 13px}
+  .quotecard{background:var(--parchment-soft);border:1px solid var(--gold-tint);border-radius:18px;padding:15px 16px;
+    margin-top:14px;text-align:center;box-shadow:var(--shadow-subtle);position:relative}
+  .quotecard .q{font-family:var(--deva);font-size:14.5px;line-height:1.9;color:var(--ink)}
+  .quotecard .iast{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:6px}
+  .quotecard .cite{font:600 9.5px var(--sans);letter-spacing:.4px;color:var(--saffron-deep);margin-top:8px}
+  .pendtag{display:inline-block;font:600 9px var(--sans);letter-spacing:.4px;color:var(--ink-muted);
+    border:1px dashed var(--gold-soft);border-radius:8px;padding:2px 8px;margin-top:8px}
+
+  /* facing picker */
+  .facegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:4px;position:relative}
+  .facecell{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;min-height:64px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+  .facecell .f1{font-family:var(--deva);font-size:14.5px;font-weight:600;color:var(--ink)}
+  .facecell .f2{font-family:var(--serif);font-style:italic;font-size:10.5px;color:var(--ink-muted)}
+  .facecell.on{background:linear-gradient(140deg,var(--card-from),var(--card-to));border-color:var(--card-border);box-shadow:var(--shadow-card)}
+  .facecell.on .f1{color:var(--saffron-deep)}
+  .bodycard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:18px;padding:16px;
+    box-shadow:var(--shadow-card);position:relative}
+  .bodycard p{font-family:var(--deva);font-size:13.5px;line-height:1.95;color:var(--ink-soft)}
+  .bodycard p + p{margin-top:10px}
+  .framing{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);text-align:center;margin-top:14px;line-height:1.6}
+
+  /* muhurat result card (PRD-16 grammar) */
+  .mucard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow-card);position:relative}
+  .mucard .mudate{font-family:var(--deva);font-size:16.5px;color:var(--ink)}
+  .mucard .muwin{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+  .mucard .mureason{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:5px;line-height:1.6}
+  .verdict{display:inline-block;font:600 9.5px var(--sans);letter-spacing:.4px;color:#fff8ec;background:var(--saffron);border-radius:999px;padding:4px 10px;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+  <h1>वास्तु — Directional Dharma of the Home</h1>
+  <div class="sub">PRD-20 · Interactive UI prototype. Static mockups in the app's parchment system — not the live build.</div>
+  <div class="legend">A <b>calm reference tool, not a verdict machine</b> — no dosha language, no warning colour, no remedies. Lands in the <b>Panchang stack</b> beside Kundali and Rashifal (no new Home category; the launcher grid is closed at 5×3). Centrepiece is a tappable <b>Vastu Purusha Mandala</b> — a 3×3 View-composition grid (8 dik + ब्रह्मस्थान), no images, no SVG. Direction pages hand off to shipped texts (Kubera → कुबेर स्तोत्र); the facing guide answers "मुख्य द्वार किस दिशा में?" with a picker, never a sensor. Classical quotes render <b>only after two-source verification</b> (RULEBOOK §11) — the slot shows its honest pending state here. Cross-linked from the Muhurat Finder's गृह प्रवेश and भूमि पूजन results.</div>
+
+  <!-- ============ 0 · DISCOVERY ============ -->
+  <div class="phaselabel">0 · Discovery — three doors, no new Home tile</div>
+  <div class="phasedesc">The Panchang tab's tools shelf (where Kundali and Rashifal already live) is the primary door; a Home DISCOVER rotation card and a search section-group row are the other two. Nothing is added to the closed launcher grid.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="toptitle" style="font-size:20px">पंचांग</div><div class="tag">जयपुर ›</div></div>
+
+          <div class="resultgroup" style="margin-top:2px">ज्योतिष साधन</div>
+          <div class="actionrow">
+            <div class="ai">☸</div>
+            <div class="at"><div class="att">कुंडली</div><div class="ats">जन्म कुंडली बनाएं</div></div>
+            <div class="chev">›</div>
+          </div>
+          <div class="actionrow">
+            <div class="ai">ॐ</div>
+            <div class="at"><div class="att">राशिफल</div><div class="ats">आज का राशिफल</div></div>
+            <div class="chev">›</div>
+          </div>
+          <div class="actionrow">
+            <div class="ai">॥</div>
+            <div class="at"><div class="att">मुहूर्त खोज</div><div class="ats">गृह प्रवेश, नामकरण, विद्यारम्भ…</div></div>
+            <div class="chev">›</div>
+          </div>
+          <div class="actionrow">
+            <div class="dot" style="right:-8px;top:-8px">1</div>
+            <div class="ai">⌂</div>
+            <div class="at"><div class="att">वास्तु</div><div class="ats">दिशा ज्ञान — घर की दिशाओं का परिचय</div></div>
+            <div class="tag">NEW</div>
+            <div class="chev">›</div>
+          </div>
+
+          <div class="resultgroup" style="margin-top:18px">आज</div>
+          <div class="actionrow">
+            <div class="ai">☀</div>
+            <div class="at"><div class="att">श्रावण शुक्ल त्रयोदशी</div><div class="ats">प्रदोष व्रत · सूर्योदय 6:07</div></div>
+            <div class="chev">›</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The Jyotish tools shelf is the natural home.</b><br/>
+        <span class="n">1</span><b>वास्तु joins Kundali, Rashifal and Muhurat Finder</b> as a fourth `actionrow` on the Panchang tab — the shelf users already visit for calendar-adjacent tools. Standard NEW badge on first release; no launcher-grid change anywhere.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="toptitle" style="font-size:20px">खोज</div></div>
+
+          <div class="searchfield" style="position:relative">
+            <div class="dot" style="right:-8px;top:-8px">3</div>
+            <div class="query">वास्तु</div><div class="clear">×</div>
+          </div>
+
+          <div class="resultgroup">साधन</div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">वास्तु — दिशा ज्ञान</div><div class="resultsub">9 दिशाएँ · मुख-दिशा मार्गदर्शन</div></div>
+            <div class="kind">वास्तु</div><div class="chev">›</div>
+          </div>
+
+          <div class="resultgroup" style="margin-top:16px">पाठ</div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">कुबेर स्तोत्र</div><div class="resultsub">उत्तर दिशा के दिक्पाल · स्तोत्रम्</div></div>
+            <div class="chev">›</div>
+          </div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">नवग्रह स्तोत्र</div><div class="resultsub">Navagraha Stotram · स्तोत्रम्</div></div>
+            <div class="chev">›</div>
+          </div>
+
+          <div style="height:14px"></div>
+          <div class="discover">
+            <div class="dot" style="right:-8px;top:-8px">2</div>
+            <div class="glyph">⌂</div>
+            <div class="copy"><div class="title">वास्तु — दिशा ज्ञान</div><div class="subcopy">दिक्पाल, मंडल और मुख-दिशा का शान्त परिचय</div></div>
+            <div class="chev" style="color:var(--saffron)">›</div>
+          </div>
+          <div class="note">(DISCOVER card shown here for annotation — it renders in the Home DISCOVER rotation, not under search.)</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The other two doors.</b><br/>
+        <span class="n">2</span><b>One Home DISCOVER rotation card</b> (PRD-19 Phase 2B precedent) opens VastuScreen — the card copy sells calm reference, not fear.<br/>
+        <span class="n">3</span><b>One search section-group row</b> ("वास्तु — दिशा ज्ञान", kind-tagged साधन) routes to VastuScreen; dikpala texts the library already ships surface beside it, so search shows the connection before the user even enters.</div>
+    </div>
+  </div>
+
+  <!-- ============ 1 · MANDALA EXPLORER ============ -->
+  <div class="phaselabel">1 · वास्तु पुरुष मंडल — the landing surface</div>
+  <div class="phasedesc">VastuScreen opens on the tappable 3×3 mandala — 8 directions around ब्रह्मस्थान, each cell naming its dikpala. Below it, the facing-guide door. View composition per the deity-glyph discipline: no emoji, no image assets, no SVG dependency.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle" style="font-size:20px">वास्तु</div></div>
+
+          <div class="note" style="margin:0 0 12px">दिशाओं का परंपरागत परिचय — बृहत्संहिता आदि शास्त्रों के आधार पर</div>
+
+          <div class="compassline"><span>NW</span><span style="color:var(--saffron-deep)">N · उत्तर ↑</span><span>NE</span></div>
+          <div class="mandala">
+            <div class="dot" style="left:-8px;top:-8px">4</div>
+            <div class="cell"><div class="dik">वायव्य</div><div class="pala">वायु</div><div class="en">north-west</div></div>
+            <div class="cell"><div class="dik">उत्तर</div><div class="pala">कुबेर</div><div class="en">north</div></div>
+            <div class="cell"><div class="dik">ईशान</div><div class="pala">ईश</div><div class="en">north-east</div></div>
+            <div class="cell"><div class="dik">पश्चिम</div><div class="pala">वरुण</div><div class="en">west</div></div>
+            <div class="cell center"><div class="dot" style="right:-8px;top:-8px">5</div><div class="om">ॐ</div><div class="dik" style="font-size:12.5px">ब्रह्मस्थान</div><div class="pala">ब्रह्मा</div></div>
+            <div class="cell"><div class="dik">पूर्व</div><div class="pala">इन्द्र</div><div class="en">east</div></div>
+            <div class="cell"><div class="dik">नैऋत्य</div><div class="pala">निर्ऋति</div><div class="en">south-west</div></div>
+            <div class="cell"><div class="dik">दक्षिण</div><div class="pala">यम</div><div class="en">south</div></div>
+            <div class="cell"><div class="dik">आग्नेय</div><div class="pala">अग्नि</div><div class="en">south-east</div></div>
+          </div>
+          <div class="note" style="margin-top:8px">मानचित्र-सम्मत: उत्तर ऊपर, पूर्व दाएँ। किसी दिशा पर स्पर्श करें।</div>
+
+          <div style="height:10px"></div>
+          <div class="discover">
+            <div class="dot" style="right:-8px;top:-8px">6</div>
+            <div class="glyph">⌂</div>
+            <div class="copy"><div class="title">मेरा घर किस दिशा में है?</div><div class="subcopy">मुख्य द्वार की दिशा चुनें — मुख-दिशा मार्गदर्शन</div></div>
+            <div class="chev" style="color:var(--saffron)">›</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The mandala is the map of the whole feature.</b><br/>
+        <span class="n">4</span><b>3×3 grid, north-up</b> (map convention; a one-line note handles the NE-up drawing tradition). Each cell: direction in Devanagari, presiding dikpala, small italic English. Every cell is a 44 pt+ tap target pushing its direction page; the grid is screen-reader traversable cell by cell ("दिशा, दिक्पाल").<br/>
+        <span class="n">5</span><b>ब्रह्मस्थान holds the centre</b> on the card-gradient treatment — the one visually distinct cell, matching its meaning (the open heart of the home).<br/>
+        <span class="n">6</span><b>The facing-guide door</b> sits directly below as a DISCOVER-grammar card — the single question most users arrive with gets the most prominent door.</div>
+    </div>
+
+    <!-- direction page -->
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">वास्तु · दिशा</div></div>
+
+          <div class="dirhero">
+            <div class="big">उत्तर</div>
+            <div class="sanskrit">uttara · north</div>
+          </div>
+
+          <div class="palacard">
+            <div class="dot" style="right:-8px;top:-8px">7</div>
+            <div class="glyphring">क</div>
+            <div class="pinfo"><div class="pt">दिक्पाल — कुबेर</div><div class="ps">धनाध्यक्ष, उत्तर दिशा के स्वामी</div></div>
+            <div class="chev" style="color:var(--saffron)">›</div>
+          </div>
+
+          <div class="kvrow">
+            <div class="kv"><div class="k">ग्रह</div><div class="v">बुध</div></div>
+            <div class="kv"><div class="k">भाव</div><div class="v">धन-संपदा</div></div>
+          </div>
+
+          <div class="listhead"><span class="dot" style="left:-26px;top:-2px">8</span>परंपरा यहाँ अनुकूल मानती है</div>
+          <div class="chiprow">
+            <div class="chip">धन-स्थान · तिजोरी</div>
+            <div class="chip">बैठक</div>
+            <div class="chip">खुला आँगन</div>
+          </div>
+          <div class="listhead">परंपरा यहाँ से बचने को कहती है</div>
+          <div class="chiprow">
+            <div class="chip">भारी संग्रह</div>
+            <div class="chip">रसोई</div>
+          </div>
+
+          <div class="quotecard">
+            <div class="dot" style="right:-8px;top:-8px">9</div>
+            <div class="q">श्लोक — सत्यापन के उपरान्त</div>
+            <div class="iast">verbatim classical line + IAST renders here</div>
+            <div class="cite">बृहत्संहिता · वास्तु-अध्याय</div>
+            <div class="pendtag">TWO-SOURCE VERIFICATION PENDING — SLOT DOES NOT SHIP EMPTY</div>
+          </div>
+
+          <div class="resultgroup" style="margin-top:16px">इस दिशा के पाठ</div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">कुबेर स्तोत्र</div><div class="resultsub">स्तोत्रम् · पढ़ें या सुनें</div></div>
+            <div class="chev">›</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Direction page ×9 — reference, never verdict.</b><br/>
+        <span class="n">7</span><b>Dikpala card</b> uses the existing deity-glyph ring where the registry has the deity (Kubera here) and routes to deity browse. Non-library dikpalas (निर्ऋति, वायु) render the same card without a route.<br/>
+        <span class="n">8</span><b>"Favours / avoid" as two calm chip lists</b> — token colours only, no warning red anywhere on the feature (§5.4 of the PRD: it reads, it does not diagnose). Every claim here carries two published references in its `source` block.<br/>
+        <span class="n">9</span><b>The quote slot shows its honest state:</b> a classical line renders only transcribed + cited after two-source verification (RULEBOOK §11.3). Until verified, the direction page ships <i>without</i> the quote card — this placeholder exists only in the prototype to spec the slot.</div>
+    </div>
+  </div>
+
+  <!-- ============ 2 · FACING GUIDE ============ -->
+  <div class="phaselabel">2 · मुख-दिशा मार्गदर्शन — "मुख्य द्वार किस दिशा में है?"</div>
+  <div class="phasedesc">An 8-way picker (no sensors, no floor plans) → one page per facing with the traditional reading. The selection may persist as a single AsyncStorage key. The footer carries the same quiet interpretive framing the Rashifal uses.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">मुख-दिशा</div></div>
+
+          <div class="note" style="margin:0 0 12px">घर के भीतर से बाहर देखते हुए, मुख्य द्वार जिस ओर खुलता है वही मुख-दिशा है।</div>
+
+          <div class="facegrid">
+            <div class="dot" style="left:-8px;top:-8px">10</div>
+            <div class="facecell on"><div class="f1">पूर्वमुखी</div><div class="f2">east-facing</div></div>
+            <div class="facecell"><div class="f1">पश्चिममुखी</div><div class="f2">west-facing</div></div>
+            <div class="facecell"><div class="f1">उत्तरमुखी</div><div class="f2">north-facing</div></div>
+            <div class="facecell"><div class="f1">दक्षिणमुखी</div><div class="f2">south-facing</div></div>
+            <div class="facecell"><div class="f1">ईशानमुखी</div><div class="f2">north-east</div></div>
+            <div class="facecell"><div class="f1">आग्नेयमुखी</div><div class="f2">south-east</div></div>
+            <div class="facecell"><div class="f1">वायव्यमुखी</div><div class="f2">north-west</div></div>
+            <div class="facecell"><div class="f1">नैऋत्यमुखी</div><div class="f2">south-west</div></div>
+          </div>
+
+          <div class="note" style="margin-top:14px">दिशा चुनने पर उसका परंपरागत विवरण खुलता है। यह चयन याद रखा जा सकता है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The picker is deliberately manual.</b><br/>
+        <span class="n">10</span><b>8 facing cells, 2×4</b> — cardinal facings lead, intercardinal follow. No compass: `expo-sensors` is a native module (store release), and a wrong magnetometer reading in an RCC-heavy building would be worse than asking. The one-line definition above the grid resolves the classic "facing which way?" confusion before it happens. Selection is operable without gesture (plain taps), and optionally persists as one AsyncStorage key.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">मुख-दिशा · पूर्वमुखी</div></div>
+
+          <div class="dirhero">
+            <div class="big">पूर्वमुखी घर</div>
+            <div class="sanskrit">east-facing · दिक्पाल इन्द्र · उदय की दिशा</div>
+          </div>
+
+          <div class="bodycard">
+            <div class="dot" style="right:-8px;top:-8px">11</div>
+            <p>पूर्व उदीयमान सूर्य की दिशा है — परंपरा इसे प्रकाश, आरोग्य और यश से जोड़ती है। पूर्वमुखी गृह में प्रातः का प्रकाश सीधे प्रवेश करता है, इसलिए शास्त्र इस मुख को गृहस्थ के लिए अनुकूल मानते हैं।</p>
+            <p>परंपरा मुख्य द्वार को पूर्व भित्ति के उत्तर-अर्ध (ईशान की ओर) में शुभ मानती है। प्रवेश-स्थल खुला और प्रकाशित रहे — यही इस मुख का सार है।</p>
+          </div>
+
+          <div class="listhead" style="margin-top:14px">इस मुख से जुड़ी दिशाएँ</div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">पूर्व — इन्द्र</div><div class="resultsub">दिशा-पृष्ठ देखें</div></div>
+            <div class="chev">›</div>
+          </div>
+          <div class="searchresult">
+            <div class="resultcopy"><div class="resulttitle">ईशान — ईश</div><div class="resultsub">दिशा-पृष्ठ देखें</div></div>
+            <div class="chev">›</div>
+          </div>
+
+          <div class="framing" style="position:relative"><span class="dot" style="right:-2px;top:-6px">12</span>परंपरागत संदर्भ — शास्त्र-सम्मत सामान्य परिचय। यह व्यक्तिगत परामर्श नहीं है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The facing page answers calmly and connects onward.</b><br/>
+        <span class="n">11</span><b>Two short authored paragraphs</b> (PRD §3.2 discipline: what + why, one to two lines per claim, two references each in the `source` block). Never a score, never "दोष".<br/>
+        <span class="n">12</span><b>The Rashifal's quiet framing line closes every facing page</b> — traditional reference, not personal consultation. Same serif-italic token treatment, no modal, no legalese.</div>
+    </div>
+  </div>
+
+  <!-- ============ 3 · MUHURAT CROSS-LINK ============ -->
+  <div class="phaselabel">3 · The connection — गृह प्रवेश muhurat → वास्तु</div>
+  <div class="phasedesc">The user planning a Griha Pravesh through the shipped Muhurat Finder is the Vastu user at exactly the right moment. Recommended-date results for गृह प्रवेश and भूमि पूजन gain one outline pill.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">मुहूर्त · गृह प्रवेश</div></div>
+
+          <div class="note" style="margin:0 0 12px">देवोत्थान के उपरान्त — अगले 90 दिनों में अनुशंसित तिथियाँ</div>
+
+          <div class="mucard">
+            <div class="verdict">अनुशंसित</div>
+            <div class="mudate">बुधवार, 25 नवम्बर 2026</div>
+            <div class="muwin">शुभ चौघड़िया 6:52 – 8:14 · अभिजित 11:48 – 12:32</div>
+            <div class="mureason">कार्तिक शुक्ल — चातुर्मास पूर्ण, शुक्र-गुरु अस्त नहीं, स्थिर लग्न उपलब्ध</div>
+            <div class="apills">
+              <div class="apill gold">॥ अनुस्मारक</div>
+              <div class="apill outline">वास्तु देखें<span class="dot" style="right:-10px;top:-10px">13</span></div>
+            </div>
+          </div>
+
+          <div class="mucard" style="opacity:.85">
+            <div class="verdict">अनुशंसित</div>
+            <div class="mudate">रविवार, 6 दिसम्बर 2026</div>
+            <div class="muwin">शुभ चौघड़िया 7:04 – 8:22</div>
+            <div class="mureason">मार्गशीर्ष शुक्ल — सभी मास/तिथि/वार द्वार खुले</div>
+            <div class="apills">
+              <div class="apill gold">॥ अनुस्मारक</div>
+              <div class="apill outline">वास्तु देखें</div>
+            </div>
+          </div>
+
+          <div class="note">वास्तु-पिल केवल गृह प्रवेश और भूमि पूजन परिणामों पर — अन्य अवसरों पर नहीं।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>One pill, two occasions, zero new engine work.</b><br/>
+        <span class="n">13</span><b>वास्तु देखें is an outline pill</b> in the shipped ObservanceCard pill grammar (gold-tint reminder pill stays primary). Driven by an optional `vastuLink` flag on the `griha-pravesh` / `bhumi-pujan` rows in `eventMuhurat.ts` — the identical mechanism `vidhiId` uses on festival rows. It routes to VastuScreen; it does not open a specific direction, because the muhurat user's next question is the whole-home one.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:34px;font-size:11.5px;color:#8a794f;max-width:920px">
+    PRD-20 §4–§5 surfaces covered: Panchang tools-shelf entry, DISCOVER card, search row, mandala explorer,
+    direction page (dikpala card · favours/avoids chips · gated quote slot · shipped-text hand-off),
+    facing picker + facing page with interpretive framing, and the Muhurat Finder cross-link pill.
+    Not mocked (out of v1 by design): compass overlay (Phase 3, store release), वास्तु शान्ति vidhi
+    (Phase 2 — renders in the PRD-19 vidhi surfaces, no new UI), plot/commercial vastu, any dosha or remedy surface.
+  </div>
+
+</body>
+</html>
