@@ -9,6 +9,7 @@ import { entryDisplayName } from '@/panchang/pitruSmaranDisplay';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont } from '@/utils/langType';
+import { moreTabTarget } from '@/navigation/entryRoutes';
 import type { TabParamList } from '@/navigation/types';
 
 /**
@@ -31,10 +32,7 @@ export default function PitruSmaranDayChip({ date, compact = false }: { date: Da
     <View style={[styles.row, compact && styles.compactRow]}>
       {matches.map((entry) => {
         const openDetail = () =>
-            navigation.navigate('MoreTab', {
-              screen: 'PitruSmaranDetail',
-              params: { entryId: entry.id },
-            });
+          navigation.navigate('MoreTab', moreTabTarget('PitruSmaranDetail', { entryId: entry.id }));
         return (
         <Pressable
           key={entry.id}

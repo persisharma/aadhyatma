@@ -1,8 +1,8 @@
 ---
 title: Puja Vidhi
 type: subsystem
-sources: [mobile/src/data/vidhi/types.ts, mobile/src/data/vidhi/index.ts, mobile/src/data/vidhi/satyanarayan-puja.ts, mobile/src/data/vidhi/diwali-lakshmi-ganesh-puja.ts, mobile/src/data/vidhi/ganesh-chaturthi-sthapana.ts, mobile/src/data/vidhi/navratri-ghatasthapana.ts, mobile/src/data/vidhi/karwa-chauth-puja.ts, mobile/src/data/vidhi/maha-shivaratri-puja.ts, mobile/src/data/vidhi/checklistStore.ts, mobile/src/screens/VidhiCatalogScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/screens/VidhiConductScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/data/searchIndex.ts, mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/components/AddToRoutineSheet.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/src/data/__tests__/vidhiContent.test.ts, docs/roadmap/prds/19-puja-vidhi.md, design.md]
-last_verified_date: 2026-08-14
+sources: [mobile/src/data/vidhi/types.ts, mobile/src/data/vidhi/index.ts, mobile/src/data/vidhi/satyanarayan-puja.ts, mobile/src/data/vidhi/diwali-lakshmi-ganesh-puja.ts, mobile/src/data/vidhi/ganesh-chaturthi-sthapana.ts, mobile/src/data/vidhi/navratri-ghatasthapana.ts, mobile/src/data/vidhi/karwa-chauth-puja.ts, mobile/src/data/vidhi/maha-shivaratri-puja.ts, mobile/src/data/vidhi/checklistStore.ts, mobile/src/screens/VidhiCatalogScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/screens/VidhiConductScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/data/searchIndex.ts, mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/components/AddToRoutineSheet.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/navigation/types.ts, mobile/src/navigation/HomeStackNavigator.tsx, mobile/src/navigation/PanchangStackNavigator.tsx, mobile/src/navigation/__tests__/vidhiBackNavigation.test.ts, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/src/data/__tests__/vidhiContent.test.ts, docs/roadmap/prds/19-puja-vidhi.md, design.md]
+last_verified_date: 2026-08-16
 confidence: high
 status: current
 ---
@@ -26,13 +26,21 @@ references. Source, citation URL and convention fields are retained for content 
 render. `checklistStore.ts` persists checked samagri by vidhi + festival date and conduct progress
 by vidhi + civil day under `@vedansh/vidhi-checklist`.
 
+**Stacks.** The three vidhi routes are registered on **both** the Home stack and the Panchang stack,
+declared once in the shared `VidhiStackParamList` that each stack's param list intersects
+(`navigation/types.ts`), with the screens typed against that shared list. Every door pushes in place:
+Home's DISCOVER card, search rows and routine items on the Home stack; the day-panel pill, the
+Vrat & Parv tile and Observance Detail on the Panchang stack. Before Aug 2026 the Home-side doors
+did a cross-tab `navigate('PanchangTab', panchangTabTarget(…))`, so back from the catalog popped to
+the Panchang calendar — a tab the user never chose, whose default mode has no vidhi door.
+
 **Entry surfaces.** `VidhiCatalogScreen` is the always-available catalog. Festival observances with
 a `vidhiId` expose the `॥ पूजा विधि` action and route to `VidhiDetailScreen`. The catalog and detail
 screens publish titles, step count, duration and content capabilities, but no source-verification
 or tradition attribution. The six hooks are Satyanarayan/Purnima, Diwali, Ganesh Chaturthi,
 Navratri Begins, Karwa Chauth, and Maha Shivaratri. Phase 2B doors: each vidhi contributes one
 **search section row** (`searchIndex.buildSectionEntries` appends them; sourceId = vidhi id; no
-verse rows; `SearchScreen.openSection` routes them cross-tab to `VidhiDetail`); the
+verse rows; `SearchScreen.openSection` opens `VidhiDetail` on the Home stack); the
 **Observance Detail** screen renders a "पूजा विधि · How to observe" card for rules whose
 `vidhiId` resolves (carrying the next occurrence's `dateMs`); and Home's DISCOVER carousel
 carries a पूजा विधि spotlight opening the catalog.
@@ -86,3 +94,11 @@ the quiet static ॐ seal with the completed-step count.
   2026-08-14; each entry's `canonicalEditionStatus` records the dated attempts.
 - Vidhi search rows change `searchIndex` section count to `library.length + VIDHI_ENTRIES.length`
   — `searchIndex.test.ts` pins this; a new vidhi automatically gains a row, no index code change.
+- The dual-stack registration makes "which stack am I on?" a runtime question for the conduct
+  screen's shipped-text hand-off: the readers live only on the Home stack. Route it through
+  `navigateToHomeStackTarget` (`navigation/entryRoutes.ts`), which checks
+  `getState().routeNames` and pushes in place or falls back to `HomeTab`. A hardcoded
+  `navigate('HomeTab', …)` rebuilds the stack and loses the puja the user was mid-way through.
+- A new vidhi route must be added to `VidhiStackParamList` **and** both navigators. The shared type
+  makes `tsc` catch a missing param declaration but not a missing `Stack.Screen` — that is what
+  `navigation/__tests__/vidhiBackNavigation.test.ts` pins.

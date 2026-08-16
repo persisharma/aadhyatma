@@ -7,7 +7,9 @@ import {
   buildBookmarkTarget,
   buildProgressTarget,
   navigateToBookmark,
+  navigateToHomeStackTarget,
   navigateToProgress,
+  navigateToRoutineItem,
 } from './entryRoutes';
 import type { HomeStackParamList } from './types';
 
@@ -344,5 +346,63 @@ for (const sourceId of [
   assert.deepEqual(calls, [
     { name: 'VishnuSahasranamaChapters', params: undefined },
     { name: 'VishnuSahasranamaReader', params: { chapter: 2, initialIndex: 3 } },
+  ]);
+}
+
+// PRD-19 back-navigation contract. The vidhi flow is registered on the Home
+// stack as well as the Panchang one, so a routine item opens VidhiDetail IN
+// PLACE. A cross-tab `navigate('PanchangTab', …)` here left back popping to the
+// Panchang calendar — a tab the user never chose, and one whose default mode
+// carries no vidhi door to re-enter from.
+{
+  const { nav, calls } = makeNav();
+  const ok = navigateToRoutineItem(nav as never, {
+    id: 'r1',
+    kind: 'vidhi',
+    sourceId: 'satyanarayan-puja',
+    titleHi: 'श्री सत्यनारायण पूजा',
+    titleEn: 'Shri Satyanarayan Puja',
+  } as never);
+  assert.equal(ok, true);
+  assert.deepEqual(calls, [
+    { name: 'VidhiDetail', params: { vidhiId: 'satyanarayan-puja' } },
+  ]);
+}
+
+// navigateToHomeStackTarget: the conduct screen's shipped-text hand-off. The
+// readers live only on the Home stack, and the conduct screen can be mounted on
+// either — push in place when the enclosing stack already owns the route.
+{
+  const { nav, calls } = makeNav();
+  navigateToHomeStackTarget(
+    {
+      navigate: nav.navigate as never,
+      getState: () => ({ routeNames: ['Home', 'VidhiConduct', 'VratKathaReader'] }),
+    },
+    { screen: 'VratKathaReader', params: { kathaId: 'satyanarayana-vrat-katha' } }
+  );
+  assert.deepEqual(calls, [
+    { name: 'VratKathaReader', params: { kathaId: 'satyanarayana-vrat-katha' } },
+  ]);
+}
+
+// …and cross-tab when it does not (the Panchang-stack mounting).
+{
+  const { nav, calls } = makeNav();
+  navigateToHomeStackTarget(
+    {
+      navigate: nav.navigate as never,
+      getState: () => ({ routeNames: ['PanchangHome', 'VidhiConduct'] }),
+    },
+    { screen: 'VratKathaReader', params: { kathaId: 'satyanarayana-vrat-katha' } }
+  );
+  assert.deepEqual(calls, [
+    {
+      name: 'HomeTab',
+      params: {
+        screen: 'VratKathaReader',
+        params: { kathaId: 'satyanarayana-vrat-katha' },
+      },
+    },
   ]);
 }

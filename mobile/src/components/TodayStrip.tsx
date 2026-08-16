@@ -18,6 +18,7 @@ import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
+import { moreTabTarget } from '@/navigation/entryRoutes';
 import { pitruPakshaObservanceForDate, type PitruPakshaDayObservance } from '@/panchang/pitruSmaran';
 
 /**
@@ -131,7 +132,7 @@ export default function TodayStrip() {
           labelEn: pitruPakshaToday.labelEn,
           bg: colors.saffronTint,
           fg: colors.saffronDeep,
-          onPress: () => rootNav.navigate('MoreTab', { screen: 'PitruPakshaOverview', initial: false }),
+          onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruPakshaOverview')),
         }]
       : []),
     ...observances.slice(0, 2).map((o) => ({
