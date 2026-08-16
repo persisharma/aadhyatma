@@ -12,11 +12,13 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 }));
 
 const mockSelectCity = jest.fn();
+const mockSelectPincode = jest.fn((_pincode: string) => true);
 jest.mock('@/contexts/PanchangLocationContext', () => ({
   usePanchangLocation: () => ({
     location: { cityId: 'ujjain', labelHi: 'उज्जैन', labelEn: 'Ujjain' },
     gpsStatus: 'idle',
     selectCity: (id: string) => mockSelectCity(id),
+    selectPincode: (pin: string) => mockSelectPincode(pin),
     requestDeviceLocation: () => Promise.resolve('granted'),
   }),
 }));
@@ -61,6 +63,8 @@ function rows(tree: TestRenderer.ReactTestRenderer) {
   return tree.root.findByType(FlatList).props.data as (
     | { kind: 'header'; en: string }
     | { kind: 'city'; city: City }
+    | { kind: 'pincode'; entry: { pincode: string; districtEn: string; stateEn: string } }
+    | { kind: 'pincode-missing'; query: string }
   )[];
 }
 
@@ -77,7 +81,11 @@ async function search(tree: TestRenderer.ReactTestRenderer, query: string) {
 }
 
 describe('LocationPickerModal', () => {
-  beforeEach(() => mockSelectCity.mockReset());
+  beforeEach(() => {
+    mockSelectCity.mockReset();
+    mockSelectPincode.mockReset();
+    mockSelectPincode.mockReturnValue(true);
+  });
 
   test('renders both tiers under group headers, national first', async () => {
     const tree = await renderPicker();
@@ -143,5 +151,51 @@ describe('LocationPickerModal', () => {
     )[0];
     act(() => row.props.onPress());
     expect(mockSelectCity).toHaveBeenCalledWith('rj-pokaran');
+  });
+
+  test('a 6-digit query replaces the city list with the resolved pincode', async () => {
+    const tree = await renderPicker();
+    await search(tree, '416001');
+    const data = rows(tree);
+    // The whole browse list gives way — a pincode is an exact answer, not a filter.
+    expect(data.filter((r) => r.kind === 'city')).toHaveLength(0);
+    expect(data.filter((r) => r.kind === 'header').map((r) => (r as { en: string }).en)).toEqual([
+      'Pincode',
+    ]);
+    const entry = data.find((r) => r.kind === 'pincode') as { entry: { districtEn: string; stateEn: string } };
+    expect(entry.entry.districtEn).toBe('Kolhapur');
+    expect(entry.entry.stateEn).toBe('Maharashtra');
+  });
+
+  test('picking the pincode row selects it by its digits', async () => {
+    const tree = await renderPicker();
+    await search(tree, '416001');
+    const row = tree.root.findAll(
+      (n) => typeof n.props.accessibilityLabel === 'string' && n.props.accessibilityLabel.startsWith('Pincode 416001')
+    )[0];
+    act(() => row.props.onPress());
+    expect(mockSelectPincode).toHaveBeenCalledWith('416001');
+    expect(mockSelectCity).not.toHaveBeenCalled();
+  });
+
+  test('a well-formed but unknown pincode says so instead of showing an empty list', async () => {
+    const tree = await renderPicker();
+    await search(tree, '999999');
+    const data = rows(tree);
+    expect(data).toHaveLength(1);
+    expect(data[0].kind).toBe('pincode-missing');
+  });
+
+  test('the pincode row shows district and taluka, and Devanagari digits in Hindi', async () => {
+    const tree = await renderPicker('hi');
+    await search(tree, '781001');
+    const texts = tree.root
+      .findAllByType(Text)
+      .map((n) => n.props.children)
+      .filter((c): c is string => typeof c === 'string');
+    // Guwahati is a taluka of Kamrup district; both show, because neither alone is the
+    // name every user recognises.
+    expect(texts).toContain('Kamrup · Guwahati');
+    expect(texts).toContain('७८१००१ · असम');
   });
 });
