@@ -5,13 +5,14 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { fontFamilies } from '@/theme/typography';
 import { radii, spacing } from '@/theme/spacing';
 import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/widgets/native';
 import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
+import { widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'WidgetGallery'>;
@@ -55,8 +56,8 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
     ? pick(lang, { hi: 'विजेट ताज़ा करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to refresh widgets', gu: 'વિજેટ તાજું કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ನವೀಕರಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ' })
     : pick(lang, { hi: 'विजेट तैयार करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to prepare widgets', gu: 'વિજેટ તૈયાર કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ಸಿದ್ಧಪಡಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ' });
 
-  const pin = async () => {
-    const opened = await requestPinWidget();
+  const pin = async (content: WidgetContent) => {
+    const opened = await requestPinWidget(content);
     if (!opened) Alert.alert('Widgets', pick(lang, { hi: 'होम स्क्रीन को दबाकर रखें, फिर विजेट चुनें।', en: 'Long-press the Home Screen, then choose Widgets.', gu: 'હોમ સ્ક્રીન દબાવી રાખો, પછી Widgets પસંદ કરો.', kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿದು Widgets ಆಯ್ಕೆಮಾಡಿ.' }));
   };
 
@@ -65,18 +66,18 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
       <ReaderHeader title={contentByLang(lang, 'होम-स्क्रीन विजेट', 'Home-Screen Widgets')} onBack={navigation.goBack} variant="index" />
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <Text style={[styles.intro, { color: colors.inkMuted, fontFamily: bodyFont }]}>
-          {pick(lang, { hi: 'आज का श्लोक और पंचांग एक नज़र में। जप-साधना केवल आपके जप की प्रगति दिखाती है।', en: 'See today’s verse and Panchang at a glance. Japam progress reflects Japam only.', gu: 'આજનો શ્લોક અને પંચાંગ એક નજરમાં. જપ પ્રગતિ ફક્ત જપ બતાવે છે.', kn: 'ಇಂದಿನ ಶ್ಲೋಕ ಮತ್ತು ಪಂಚಾಂಗ ಒಂದೇ ನೋಟದಲ್ಲಿ. ಜಪ ಪ್ರಗತಿ ಜಪವನ್ನು ಮಾತ್ರ ತೋರಿಸುತ್ತದೆ.' })}
+          {pick(lang, { hi: 'हर विजेट अलग है — जो चाहें, जिस आकार में चाहें जोड़ें। श्लोक चौड़े आकार में पूरा दिखता है, पंचांग छोटे में एक नज़र का रहता है।', en: 'Each widget is separate — add the one you want, in the size you want. The verse reads whole at Wide; the Panchang stays a glance at Small.', gu: 'દરેક વિજેટ અલગ છે — જે જોઈએ તે, જે કદમાં જોઈએ તે ઉમેરો. શ્લોક પહોળામાં આખો દેખાય છે, પંચાંગ નાનામાં એક નજરનું રહે છે.', kn: 'ಪ್ರತಿ ವಿಜೆಟ್ ಪ್ರತ್ಯೇಕ — ಬೇಕಾದದ್ದನ್ನು, ಬೇಕಾದ ಗಾತ್ರದಲ್ಲಿ ಸೇರಿಸಿ. ಶ್ಲೋಕ ಅಗಲದಲ್ಲಿ ಪೂರ್ಣ ಕಾಣುತ್ತದೆ, ಪಂಚಾಂಗ ಚಿಕ್ಕದರಲ್ಲಿ ಒಂದೇ ನೋಟ.' })}
         </Text>
         <View style={styles.grid}>
-          <Preview title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" colors={colors} eyebrowStyle={eyebrowStyle}>
+          <Preview content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             <Text numberOfLines={2} style={[styles.verse, { color: colors.ink, fontFamily: bodyFont }]}>{verse?.excerpt[lang] ?? recovery}</Text>
             {verse ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{verse.source[lang]}</Text> : null}
           </Preview>
-          <Preview title={contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle}>
+          <Preview content="panchang" title={contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{day?.tithi[lang] ?? recovery}</Text>
             {day ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{day.representedDate[lang]} · {day.sunrise[lang]} · {day.rahuKaal[lang]}</Text> : null}
           </Preview>
-          <Preview title={contentByLang(lang, 'जप-साधना', 'Japam practice')} accessibilityLabel="Japam widget preview" colors={colors} eyebrowStyle={eyebrowStyle}>
+          <Preview content="japam" title={contentByLang(lang, 'जप-साधना', 'Japam practice')} accessibilityLabel="Japam widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{japam ? `${japam.totalBeads} / 108` : recovery}</Text>
             {japam ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{japam.totalRounds} {contentByLang(lang, 'माला', 'rounds')} · {japam.japaStreak} {contentByLang(lang, 'जप-दिन', 'Japam days')}</Text> : null}
           </Preview>
@@ -84,11 +85,8 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
         <View style={[styles.instructions, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
           <Text style={[styles.instructionsTitle, { color: colors.ink, fontFamily: titleFont }]}>{contentByLang(lang, 'कैसे जोड़ें', 'How to add')}</Text>
           <Text style={[styles.instruction, { color: colors.inkSoft, fontFamily: bodyFont }]}>{Platform.OS === 'ios'
-            ? pick(lang, { hi: '1. होम स्क्रीन को दबाकर रखें  2. संपादित करें या + चुनें  3. “Vedansh” खोजें  4. विजेट चुनकर जोड़ें', en: '1. Long-press the Home Screen  2. Tap Edit or +  3. Search “Vedansh”  4. Choose a widget and add it', gu: '1. હોમ સ્ક્રીન દબાવી રાખો  2. Edit અથવા +  3. “Vedansh” શોધો  4. વિજેટ ઉમેરો', kn: '1. ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿಯಿರಿ  2. Edit ಅಥವಾ +  3. “Vedansh” ಹುಡುಕಿ  4. ವಿಜೆಟ್ ಸೇರಿಸಿ' })
-            : pick(lang, { hi: 'होम स्क्रीन को दबाकर रखें, Widgets खोलें और Vedansh चुनें।', en: 'Long-press the Home Screen, open Widgets, and choose Vedansh.', gu: 'હોમ સ્ક્રીન દબાવી રાખો, Widgets ખોલો અને Vedansh પસંદ કરો.', kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿದು Widgets ತೆರೆಯಿರಿ ಮತ್ತು Vedansh ಆಯ್ಕೆಮಾಡಿ.' })}</Text>
-          {Platform.OS === 'android' ? <Pressable testID="widget-add-button" accessibilityRole="button" accessibilityLabel="Add Vedansh widget" onPress={pin} style={({ pressed }) => [styles.button, { backgroundColor: colors.saffronDeep }, pressed && { opacity: .75 }]}>
-            <Text style={[styles.buttonText, { color: colors.onPrimary }]}>{pinSupported ? contentByLang(lang, 'विजेट जोड़ें', 'Add widget') : contentByLang(lang, 'जोड़ने के चरण देखें', 'View add steps')}</Text>
-          </Pressable> : null}
+            ? pick(lang, { hi: '1. होम स्क्रीन को दबाकर रखें  2. संपादित करें या + चुनें  3. “Vedansh” खोजें  4. विजेट चुनें, बग़ल में स्वाइप कर आकार चुनें, फिर जोड़ें', en: '1. Long-press the Home Screen  2. Tap Edit or +  3. Search “Vedansh”  4. Pick a widget, swipe sideways for its size, then add it', gu: '1. હોમ સ્ક્રીન દબાવી રાખો  2. Edit અથવા +  3. “Vedansh” શોધો  4. વિજેટ પસંદ કરો, બાજુમાં સ્વાઇપ કરી કદ પસંદ કરો, પછી ઉમેરો', kn: '1. ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿಯಿರಿ  2. Edit ಅಥವಾ +  3. “Vedansh” ಹುಡುಕಿ  4. ವಿಜೆಟ್ ಆಯ್ಕೆಮಾಡಿ, ಪಕ್ಕಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ ಗಾತ್ರ ಆರಿಸಿ, ನಂತರ ಸೇರಿಸಿ' })
+            : pick(lang, { hi: 'होम स्क्रीन को दबाकर रखें, Widgets खोलें और Vedansh चुनें। जोड़ने के बाद विजेट को दबाकर रखें और किनारे खींचकर आकार बदलें।', en: 'Long-press the Home Screen, open Widgets, and choose Vedansh. After adding, long-press the widget and drag its edges to resize.', gu: 'હોમ સ્ક્રીન દબાવી રાખો, Widgets ખોલો અને Vedansh પસંદ કરો. ઉમેર્યા પછી વિજેટ દબાવી રાખી કિનારી ખેંચીને કદ બદલો.', kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿದು Widgets ತೆರೆಯಿರಿ ಮತ್ತು Vedansh ಆಯ್ಕೆಮಾಡಿ. ಸೇರಿಸಿದ ನಂತರ ವಿಜೆಟ್ ಒತ್ತಿಹಿಡಿದು ಅಂಚುಗಳನ್ನು ಎಳೆದು ಗಾತ್ರ ಬದಲಿಸಿ.' })}</Text>
         </View>
         <Text style={[styles.note, { color: colors.inkMuted, fontFamily: bodyFont }]}>{contentByLang(lang, 'विजेट पुराने आँकड़ों को आज का बताकर नहीं दिखाते।', 'Widgets never present stale information as today’s.')}</Text>
       </ScrollView>
@@ -96,9 +94,43 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   );
 }
 
-function Preview({ title, accessibilityLabel, colors, eyebrowStyle, children }: { title: string; accessibilityLabel: string; colors: ReturnType<typeof useTheme>['colors']; eyebrowStyle: TextStyle; children: React.ReactNode }) {
-  return <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={[styles.preview, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
-    <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{title}</Text>{children}<Text style={[styles.brand, { color: colors.gold }]}>ॐ वेदांश़</Text>
+type PreviewProps = {
+  content: WidgetContent;
+  title: string;
+  accessibilityLabel: string;
+  colors: ReturnType<typeof useTheme>['colors'];
+  eyebrowStyle: TextStyle;
+  lang: Lang;
+  bodyFont: string;
+  pinSupported: boolean;
+  onPin: (content: WidgetContent) => void;
+  children: React.ReactNode;
+};
+
+// One card per widget kind: the facsimile, the sizes that kind can be placed at
+// (its best size marked), and — where the launcher supports pinning — an add
+// action for that kind alone. The sizes come from the shared catalog the native
+// surfaces mirror, so this screen can never advertise a size iOS/Android refuses.
+function Preview({ content, title, accessibilityLabel, colors, eyebrowStyle, lang, bodyFont, pinSupported, onPin, children }: PreviewProps) {
+  const entry = widgetCatalogEntry(content);
+  const canPin = Platform.OS === 'android' && !!entry.androidProvider;
+  const best = pick(lang, { hi: 'सुझाव', en: 'best', gu: 'સૂચિત', kn: 'ಶಿಫಾರಸು' });
+  const sizeLabels = entry.sizes.map((size) => `${widgetSizeLabel(size, lang)}${size === entry.recommended ? ` · ${best}` : ''}`);
+  return <View style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+    <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={styles.preview}>
+      <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{title}</Text>{children}<Text style={[styles.brand, { color: colors.gold }]}>ॐ वेदांश़</Text>
+    </View>
+    <View accessible accessibilityLabel={`${pick(lang, { hi: 'आकार', en: 'Sizes', gu: 'કદ', kn: 'ಗಾತ್ರ' })}: ${sizeLabels.join(', ')}`} style={styles.sizeRow}>
+      {entry.sizes.map((size, index) => {
+        const recommended = size === entry.recommended;
+        return <View key={size} style={[styles.sizeChip, { backgroundColor: recommended ? colors.saffronTint : 'transparent', borderColor: colors.divider }]}>
+          <Text style={[styles.sizeText, { color: recommended ? colors.saffronDeep : colors.inkMuted, fontFamily: bodyFont }]}>{sizeLabels[index]}</Text>
+        </View>;
+      })}
+    </View>
+    {canPin ? <Pressable testID={`widget-add-${content}`} accessibilityRole="button" accessibilityLabel={`Add Vedansh ${content} widget`} onPress={() => onPin(content)} style={({ pressed }) => [styles.button, { backgroundColor: colors.saffronDeep }, pressed && { opacity: .75 }]}>
+      <Text style={[styles.buttonText, { color: colors.onPrimary }]}>{pinSupported ? contentByLang(lang, 'यह विजेट जोड़ें', 'Add this widget') : contentByLang(lang, 'जोड़ने के चरण देखें', 'View add steps')}</Text>
+    </Pressable> : null}
   </View>;
 }
 
@@ -107,5 +139,5 @@ const styles = StyleSheet.create({
   // preview cards borrow the card-family corner (radii.lg) and the CTA is a pill.
   // Font sizes here are layout-tuned facsimile chrome for the widget previews (see
   // design.md §59) and stay ≥10 pt per the chrome floor.
-  root: { flex: 1 }, scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl + spacing.lg }, intro: { fontSize: 15, lineHeight: 23, marginBottom: spacing.xl }, grid: { gap: spacing.md }, preview: { minHeight: 142, borderRadius: radii.lg, borderWidth: 1, padding: spacing.lg, justifyContent: 'space-between' }, verse: { fontSize: 18, lineHeight: 29, marginVertical: spacing.md }, headline: { fontSize: 22, lineHeight: 31, marginVertical: spacing.md }, meta: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18 }, brand: { fontFamily: fontFamilies.devanagariBold, fontSize: 11, marginTop: spacing.md }, instructions: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.lg, marginTop: spacing.xxl }, instructionsTitle: { fontSize: 20, marginBottom: spacing.sm }, instruction: { fontSize: 14, lineHeight: 23 }, button: { minHeight: 48, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', marginTop: spacing.lg }, buttonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 15 }, note: { fontSize: 13, lineHeight: 20, textAlign: 'center', marginTop: spacing.lg },
+  root: { flex: 1 }, scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl + spacing.lg }, intro: { fontSize: 15, lineHeight: 23, marginBottom: spacing.xl }, grid: { gap: spacing.md }, card: { borderRadius: radii.lg, borderWidth: 1, padding: spacing.lg }, preview: { minHeight: 142, justifyContent: 'space-between' }, verse: { fontSize: 18, lineHeight: 29, marginVertical: spacing.md }, headline: { fontSize: 22, lineHeight: 31, marginVertical: spacing.md }, meta: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18 }, brand: { fontFamily: fontFamilies.devanagariBold, fontSize: 11, marginTop: spacing.md }, sizeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.xs, marginTop: spacing.md }, sizeChip: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: 4 }, sizeText: { fontSize: 12, lineHeight: 18 }, instructions: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.lg, marginTop: spacing.xxl }, instructionsTitle: { fontSize: 20, marginBottom: spacing.sm }, instruction: { fontSize: 14, lineHeight: 23 }, button: { minHeight: 48, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', marginTop: spacing.md }, buttonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 15 }, note: { fontSize: 13, lineHeight: 20, textAlign: 'center', marginTop: spacing.lg },
 });
