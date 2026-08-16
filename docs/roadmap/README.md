@@ -17,6 +17,7 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 | [PRD-05](./prds/05-share-verse-card.md) | Share verse on WhatsApp (image + app link) | v1.7.1 |
 | [PRD-06](./prds/06-foundation-hardening.md) | Test foundation, local crash log, on-device backup export/import | continuous |
 | [PRD-17](./prds/17-namkaran.md) | Namkaran — traditional namakshar and reviewed name suggestions | gated |
+| [PRD-20](./prds/20-vastu.md) | वास्तु — directional dharma of the home (mandala explorer, facing guide) | proposed |
 
 ## Constraint
 
