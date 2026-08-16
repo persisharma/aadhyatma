@@ -2,7 +2,7 @@
 title: Puja Vidhi
 type: subsystem
 sources: [mobile/src/data/vidhi/types.ts, mobile/src/data/vidhi/index.ts, mobile/src/data/vidhi/satyanarayan-puja.ts, mobile/src/data/vidhi/diwali-lakshmi-ganesh-puja.ts, mobile/src/data/vidhi/ganesh-chaturthi-sthapana.ts, mobile/src/data/vidhi/navratri-ghatasthapana.ts, mobile/src/data/vidhi/karwa-chauth-puja.ts, mobile/src/data/vidhi/maha-shivaratri-puja.ts, mobile/src/data/vidhi/checklistStore.ts, mobile/src/screens/VidhiCatalogScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/screens/VidhiConductScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/data/searchIndex.ts, mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/components/AddToRoutineSheet.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/navigation/types.ts, mobile/src/navigation/HomeStackNavigator.tsx, mobile/src/navigation/PanchangStackNavigator.tsx, mobile/src/navigation/__tests__/vidhiBackNavigation.test.ts, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/src/data/__tests__/vidhiContent.test.ts, docs/roadmap/prds/19-puja-vidhi.md, design.md]
-last_verified_date: 2026-08-15
+last_verified_date: 2026-08-16
 confidence: high
 status: current
 ---
