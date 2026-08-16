@@ -5,16 +5,25 @@ const { withAndroidManifest, withDangerousMod, withMainApplication, withEntitlem
 const GROUP = 'group.com.prashantsharma.vedansh.widgets';
 const ANDROID_FILES = ['WidgetPayloadContract.kt', 'VedanshWidgetModule.kt', 'VedanshWidgetPackage.kt', 'VedanshWidgetProvider.kt'];
 
+// One receiver per content type, so the launcher's widget picker offers "Vedansh
+// Panchang" and "Vedansh Verse" separately and each carries its own default cell
+// size (design.md §59). Their `info` resources hold the target cells.
+const ANDROID_RECEIVERS = [
+  { className: 'VedanshPanchangWidgetProvider', label: 'Vedansh Panchang', info: '@xml/vedansh_widget_panchang_info' },
+  { className: 'VedanshVerseWidgetProvider', label: 'Vedansh Verse', info: '@xml/vedansh_widget_verse_info' },
+];
+
 function withAndroidWidgetManifest(config) {
   return withAndroidManifest(config, (cfg) => {
     const app = AndroidConfig.Manifest.getMainApplicationOrThrow(cfg.modResults);
     app.receiver = app.receiver || [];
-    const name = `${cfg.android.package}.widgets.VedanshWidgetProvider`;
-    if (!app.receiver.some((r) => r.$?.['android:name'] === name)) {
+    for (const receiver of ANDROID_RECEIVERS) {
+      const name = `${cfg.android.package}.widgets.${receiver.className}`;
+      if (app.receiver.some((r) => r.$?.['android:name'] === name)) continue;
       app.receiver.push({
-        $: { 'android:name': name, 'android:exported': 'false', 'android:label': 'Vedansh' },
+        $: { 'android:name': name, 'android:exported': 'false', 'android:label': receiver.label },
         'intent-filter': [{ action: [{ $: { 'android:name': 'android.appwidget.action.APPWIDGET_UPDATE' } }] }],
-        'meta-data': [{ $: { 'android:name': 'android.appwidget.provider', 'android:resource': '@xml/vedansh_widget_info' } }],
+        'meta-data': [{ $: { 'android:name': 'android.appwidget.provider', 'android:resource': receiver.info } }],
       });
     }
     return cfg;

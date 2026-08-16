@@ -11,6 +11,7 @@ import {
   pakshaShraddhaDay,
   pitruPakshaWindow,
   pitruPakshaObservanceForDate,
+  primePitruPakshaWindow,
   solveNextOccurrence,
   tithiRuleLabel,
   __resetPitruPakshaWindowCacheForTests,
@@ -127,6 +128,39 @@ test('pitruPakshaWindow 2025: purnima 7 Sep, window 8–21 Sep', () => {
   assert.equal(iso(w!.purnima), '2025-09-07');
   assert.equal(iso(w!.start), '2025-09-08');
   assert.equal(iso(w!.end), '2025-09-21');
+});
+
+// The persistence layer (`pitruSmaranSolves.ts`) reads a window off disk and hands
+// it back here, so a cold launch skips the ~40 ms Bhadrapada-Purnima scan. What it
+// seeds must be what every solver downstream then sees — `pakshaShraddhaDay` and
+// `entryMatchesDate` reach the memo directly, not through the persistence layer.
+test('primePitruPakshaWindow seeds the memo, and downstream solvers use the seeded value', () => {
+  const ASHTAMI = { lunarMonth: 11, paksha: 'krishna', tithi: 8 } as const;
+  __resetPitruPakshaWindowCacheForTests();
+  const real = pitruPakshaWindow(2026);
+  assert.ok(real);
+  const freshShraddha = iso(pakshaShraddhaDay(ASHTAMI, 2026));
+
+  __resetPitruPakshaWindowCacheForTests();
+  primePitruPakshaWindow(2026, real!);
+  assert.deepEqual(pitruPakshaWindow(2026), real);
+  // A rule mapped into the fortnight must resolve identically off a seeded
+  // window — seeded == fresh is the whole contract, whatever the date is.
+  assert.equal(iso(pakshaShraddhaDay(ASHTAMI, 2026)), freshShraddha);
+});
+
+test('primePitruPakshaWindow never overwrites a year this session already solved', () => {
+  __resetPitruPakshaWindowCacheForTests();
+  const real = pitruPakshaWindow(2026);
+  assert.ok(real);
+  // A bogus seed arriving after the real solve must be ignored — other callers
+  // may already hold the `Date` instances the memo handed out.
+  primePitruPakshaWindow(2026, {
+    purnima: new Date(1990, 0, 1),
+    start: new Date(1990, 0, 2),
+    end: new Date(1990, 0, 15),
+  });
+  assert.equal(iso(pitruPakshaWindow(2026)!.purnima), '2026-09-26');
 });
 
 test('pakshaShraddhaDay maps a tithi into the fortnight (2026 anchors)', () => {

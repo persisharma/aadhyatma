@@ -18,7 +18,20 @@ import { GitaLanguageProvider } from '@/data/gita/language';
 import { VIDHI_ENTRIES } from '@/data/vidhi';
 import { satyanarayanPuja } from '@/data/vidhi/satyanarayan-puja';
 
-const mockNavigation = { goBack: jest.fn(), navigate: jest.fn() };
+/**
+ * `getState().routeNames` is how the shipped-text hand-off tells which stack the
+ * conduct screen is mounted on — it is registered on both (PRD-19 back
+ * navigation). Defaults to the Panchang mounting; the Home mounting is asserted
+ * by overriding it in place.
+ */
+const PANCHANG_STACK_ROUTES = ['PanchangHome', 'VidhiCatalog', 'VidhiDetail', 'VidhiConduct'];
+const HOME_STACK_ROUTES = [...PANCHANG_STACK_ROUTES.slice(1), 'Home', 'VratKathaReader'];
+
+const mockNavigation = {
+  goBack: jest.fn(),
+  navigate: jest.fn(),
+  getState: jest.fn(() => ({ routeNames: PANCHANG_STACK_ROUTES })),
+};
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => mockNavigation,
@@ -29,6 +42,10 @@ jest.mock('@react-navigation/native', () => ({
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light' },
   impactAsync: jest.fn(() => Promise.resolve()),
+}));
+
+jest.mock('expo-keep-awake', () => ({
+  useKeepAwake: jest.fn(),
 }));
 
 jest.mock('expo-linear-gradient', () => ({
@@ -78,6 +95,7 @@ afterEach(() => {
   }
   mockNavigation.navigate.mockClear();
   mockNavigation.goBack.mockClear();
+  mockNavigation.getState.mockReturnValue({ routeNames: PANCHANG_STACK_ROUTES });
 });
 
 test('VidhiCatalogScreen lists all six v1 cards without publishing provenance and opens detail', () => {
@@ -237,6 +255,33 @@ test('VidhiConductScreen: ref step hands off to the shipped katha reader and bac
     screen: 'VratKathaReader',
     params: { kathaId: 'satyanarayana-vrat-katha' },
   });
+});
+
+test('VidhiConductScreen: the katha hand-off pushes in place when opened from Home', async () => {
+  // Same conduct screen, mounted on the Home stack (the DISCOVER card / search /
+  // routine doors). The reader is already a sibling route here, so the hand-off
+  // must push rather than bounce through HomeTab — otherwise back from the katha
+  // rebuilds the stack and loses the puja the user was mid-way through.
+  mockNavigation.getState.mockReturnValue({ routeNames: HOME_STACK_ROUTES });
+  const kathaIndex = satyanarayanPuja.steps.findIndex((step) => step.id === 'katha');
+  const r = render(
+    <VidhiConductScreen
+      navigation={nav}
+      route={{
+        key: 'k',
+        name: 'VidhiConduct',
+        params: { vidhiId: 'satyanarayan-puja', initialStep: kathaIndex },
+      } as never}
+    />
+  );
+  await settle();
+  act(() => {
+    r.root.findByProps({ testID: 'vidhi-handoff-katha' }).props.onPress();
+  });
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('VratKathaReader', {
+    kathaId: 'satyanarayana-vrat-katha',
+  });
+  expect(mockNavigation.navigate).not.toHaveBeenCalledWith('HomeTab', expect.anything());
 });
 
 test('VidhiConductScreen: completion page is a quiet static ॐ seal without repeated actions', async () => {

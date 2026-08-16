@@ -8,11 +8,13 @@ export type GeoLocation = {
   elevation: number;
 };
 
-export type LocationSource = 'default' | 'city' | 'gps';
+export type LocationSource = 'default' | 'city' | 'gps' | 'pincode';
 
 export type PanchangLocation = GeoLocation & {
-  // Always the id of a bundled city (see locations.ts) — GPS fixes are snapped
-  // to the nearest bundled city so cache keys stay finite and labels work offline.
+  // Either the id of a bundled city (see locations.ts) or `pin-<6 digits>` for a
+  // pincode-resolved location (see pincodes.ts). GPS fixes are snapped to the
+  // nearest pincode centroid, falling back to the nearest bundled city, so cache
+  // keys stay finite and labels work offline in both cases.
   cityId: string;
   labelHi: string;
   labelEn: string;

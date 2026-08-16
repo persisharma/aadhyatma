@@ -1,5 +1,6 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  AccessibilityInfo,
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -13,6 +14,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
+import { useKeepAwake } from 'expo-keep-awake';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -28,15 +30,15 @@ import { getVidhiById, type VidhiPhase, type VidhiStep } from '@/data/vidhi';
 import { clearConductStep, saveConductStep, vidhiDateKey } from '@/data/vidhi/checklistStore';
 import { library } from '@/data/texts';
 import { getKathaContent } from '@/panchang/kathaContent';
-import { buildEntryStartTarget } from '@/navigation/entryRoutes';
+import { buildEntryStartTarget, navigateToHomeStackTarget } from '@/navigation/entryRoutes';
 import ReaderHeader from '@/components/ReaderHeader';
 import Ornament from '@/components/Ornament';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import { clampIndex } from '@/utils/clamp';
-import type { PanchangStackParamList } from '@/navigation/types';
+import type { VidhiStackParamList } from '@/navigation/types';
 
-type Props = NativeStackScreenProps<PanchangStackParamList, 'VidhiConduct'>;
+type Props = NativeStackScreenProps<VidhiStackParamList, 'VidhiConduct'>;
 
 const PHASE_LABELS: Record<VidhiPhase, { hi: string; en: string }> = {
   prep: { hi: 'आरम्भ', en: 'Preparation' },
@@ -78,12 +80,25 @@ type ConductPage =
  * shipped-text hand-off. Navigation is swipe-only, with the standard reader
  * dots at the bottom; completion is a quiet static ॐ seal.
  *
- * Keep-awake is a noted follow-up: expo-keep-awake is not a dependency yet and
- * PRD-19 ships bundle-only (no new native deps in this PR).
+ * The screen keeps the display awake for the whole conduct session (Phase 2B —
+ * wet hands cannot re-wake a locked phone mid-puja) and announces this to
+ * screen readers on entry (design.md §12).
  */
 export default function VidhiConductScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
+  useKeepAwake();
+  useEffect(() => {
+    AccessibilityInfo.announceForAccessibility(
+      contentByLang(
+        lang,
+        'पूजा के दौरान स्क्रीन जागृत रहेगी।',
+        'The screen will stay awake during the puja.'
+      )
+    );
+    // Announce once per conduct session, in the language active on entry.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const { width } = useWindowDimensions();
   const vidhi = getVidhiById(route.params.vidhiId);
   const steps = useMemo(() => vidhi?.steps ?? [], [vidhi]);
@@ -272,8 +287,6 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
           )}
         </View>
 
-        {/* Follow-up (PRD-19): keep-awake for the conduct session once
-            expo-keep-awake ships as a dependency — no new deps in this PR. */}
       </SafeAreaView>
     </View>
   );
@@ -396,14 +409,19 @@ function StepHandoffCard({ step }: { step: ConductStep }) {
   const entry = !isKatha ? library.find((item) => item.id === (step.ref as { id: string }).id) : null;
   const titleHi = isKatha ? (katha?.titleHi ?? step.titleHi) : (entry?.nameHi ?? step.titleHi);
   const titleEn = isKatha ? (katha?.titleEn ?? step.titleEn) : (entry?.nameEn ?? step.titleEn);
+  const isAarti = entry?.category === 'aarti';
 
   const open = () => {
-    const nav = rootNav as { navigate: (name: string, params: unknown) => void };
     if (isKatha) {
-      nav.navigate('HomeTab', { screen: 'VratKathaReader', params: { kathaId: step.ref!.id } });
-    } else if (entry) {
+      navigateToHomeStackTarget(rootNav, {
+        screen: 'VratKathaReader',
+        params: { kathaId: step.ref!.id },
+      });
+      return;
+    }
+    if (entry) {
       const target = buildEntryStartTarget(entry);
-      if (target) nav.navigate('HomeTab', target);
+      if (target) navigateToHomeStackTarget(rootNav, target);
     }
   };
 
@@ -434,8 +452,12 @@ function StepHandoffCard({ step }: { step: ConductStep }) {
       >
         {contentByLang(
           lang,
-          isKatha ? 'कथा पढ़कर यहीं लौटें' : 'आरती पूर्ण कर यहीं लौटें',
-          isKatha ? 'Read the katha, then return here' : 'Complete the aarti, then return here'
+          isKatha ? 'कथा पढ़कर यहीं लौटें' : isAarti ? 'आरती पूर्ण कर यहीं लौटें' : 'पाठ पूर्ण कर यहीं लौटें',
+          isKatha
+            ? 'Read the katha, then return here'
+            : isAarti
+              ? 'Complete the aarti, then return here'
+              : 'Complete the recitation, then return here'
         )}
       </Text>
     </Pressable>

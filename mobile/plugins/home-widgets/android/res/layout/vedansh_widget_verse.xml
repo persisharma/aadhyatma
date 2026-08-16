@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="16dp" android:gravity="center_vertical"
+    android:background="@drawable/vedansh_widget_background">
+    <TextView android:id="@+id/widget_kicker" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#8A3E0B" android:textSize="10sp" android:textStyle="bold" android:maxLines="1" />
+    <TextView android:id="@+id/widget_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:textColor="#1A0E03" android:textSize="15sp" android:lineSpacingExtra="3dp" android:fontFamily="serif" android:maxLines="3" />
+    <TextView android:id="@+id/widget_subtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:textColor="#6E5230" android:textSize="11sp" android:textStyle="bold" android:maxLines="1" />
+    <TextView android:id="@+id/widget_meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone" android:textColor="#6E5230" android:textSize="11sp" android:maxLines="1" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="ॐ वेदांश़" android:textColor="#A67C34" android:textSize="10sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="1" />
+</LinearLayout>

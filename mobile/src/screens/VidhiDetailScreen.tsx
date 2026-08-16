@@ -13,6 +13,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getVidhiById, type VidhiPhase, type VidhiStep } from '@/data/vidhi';
+import { library } from '@/data/texts';
 import {
   conductStepFor,
   loadVidhiState,
@@ -21,9 +22,11 @@ import {
   vidhiDateKey,
 } from '@/data/vidhi/checklistStore';
 import ReaderHeader from '@/components/ReaderHeader';
-import type { PanchangStackParamList } from '@/navigation/types';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
+import { getRuleById } from '@/panchang/vratCatalog';
+import type { VidhiStackParamList } from '@/navigation/types';
 
-type Props = NativeStackScreenProps<PanchangStackParamList, 'VidhiDetail'>;
+type Props = NativeStackScreenProps<VidhiStackParamList, 'VidhiDetail'>;
 
 type Mode = 'samagri' | 'steps';
 
@@ -86,6 +89,13 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
 
   if (!vidhi) return null;
 
+  // Add-to-routine is offered for RECURRING vidhis only (PRD-19 Phase 2B):
+  // a monthly observance (Satyanarayan on every purnima) belongs in a routine;
+  // an annual festival puja does not.
+  const isRecurring = vidhi.festivalIds.some(
+    (festivalId) => getRuleById(festivalId)?.recurrence === 'monthly'
+  );
+
   const toggleItem = (itemEn: string) => {
     const next = new Set(checked);
     if (next.has(itemEn)) next.delete(itemEn);
@@ -129,6 +139,8 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
           variant="index"
           title={contentByLang(lang, vidhi.titleHi, vidhi.titleEn)}
           onBack={() => navigation.goBack()}
+          right={isRecurring ? <AddToRoutineButton sourceId={vidhi.id} /> : undefined}
+          sideWidth={44}
         />
         <Text
           style={[
@@ -417,7 +429,9 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                               ? contentByLang(lang, '॥ मन्त्र सहित', '॥ with mantra')
                               : step.ref?.kind === 'katha'
                                 ? contentByLang(lang, 'कथा पाठ', 'Katha reading')
-                                : contentByLang(lang, 'आरती', 'Aarti')}
+                                : library.find((e) => e.id === step.ref?.id)?.category === 'aarti'
+                                  ? contentByLang(lang, 'आरती', 'Aarti')
+                                  : contentByLang(lang, 'पाठ', 'Recitation')}
                           </Text>
                         )}
                       </View>

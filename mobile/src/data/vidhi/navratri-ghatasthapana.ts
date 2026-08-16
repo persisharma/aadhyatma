@@ -87,6 +87,12 @@ export const navratriGhatasthapana: VidhiEntry = {
       instructionEn: 'Offer the five upacharas in order: fragrance, flowers, dhoop, dipa, and fruit or sweets as naivedya.',
     },
     {
+      id: 'devi-stuti', phase: 'main', titleHi: 'या देवी सर्वभूतेषु — देवी स्तुति', titleEn: 'Ya Devi Sarvabhuteshu — Devi stuti',
+      instructionHi: 'हाथ जोड़कर देवी महात्म्य की "या देवी सर्वभूतेषु" स्तुति का पाठ करें — शक्ति रूप में विराजमान देवी की वन्दना।',
+      instructionEn: 'With folded hands, recite the "Ya Devi Sarvabhuteshu" stuti from the Devi Mahatmya — salutations to the Goddess who resides in all beings as Shakti.',
+      ref: { kind: 'section', id: 'durga-stotram' },
+    },
+    {
       id: 'day-one-katha', phase: 'main', titleHi: 'नवरात्रि आरम्भ पाठ', titleEn: 'Navratri opening reading',
       instructionHi: 'परिवार सहित नवरात्रि आरम्भ की कथा पढ़ें और पहले दिन माँ शैलपुत्री का स्मरण करें।',
       instructionEn: 'Read the Navratri opening story with the family and remember Maa Shailaputri on the first day.',
@@ -107,9 +113,9 @@ export const navratriGhatasthapana: VidhiEntry = {
   source: {
     canonicalEdition: 'Gita Press Nitya Karma Puja Prakash — Kalash Sthapana and Devi Puja chapters',
     canonicalEditionUrls: ['https://archive.org/search?query=nitya+karma+puja+prakash+gita+press'],
-    canonicalEditionStatus: 'PENDING — the named Gita Press scan has not yet been checked character-by-character; no inline ghatasthapana mantra is published here.',
+    canonicalEditionStatus: 'PENDING — the named Gita Press scan has not yet been checked character-by-character; no inline ghatasthapana mantra is published here. Re-attempted 2026-08-14: archive.org egress is blocked from this authoring environment as well.',
     referenceUrls: [DRIK_GHATA, 'https://www.vedkosh.com/festivals/ghatasthapana'],
     retrievedOn: '2026-08-13',
-    notes: 'The physical three-layer grain bed, filled kalash, leaves, wrapped coconut, Devi avahana and Panchopachara sequence agrees across both cited procedures. The entry avoids unattended-flame instructions and keeps variable sankalpa/mantra wording instruction-only pending canonical verification.',
+    notes: 'The physical three-layer grain bed, filled kalash, leaves, wrapped coconut, Devi avahana and Panchopachara sequence agrees across both cited procedures. The entry avoids unattended-flame instructions and keeps variable sankalpa/mantra wording instruction-only pending canonical verification. 2026-08-14: a Devi-stuti step now hands off to the shipped, verified durga-stotram section ("Ya Devi Sarvabhuteshu", Devi Mahatmya ch. 5) — reference, never re-typed (§11.11/PRD-19 §3.3).',
   },
 };

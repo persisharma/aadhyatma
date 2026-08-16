@@ -11,6 +11,7 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
+import { getVidhiForFestival } from '@/data/vidhi';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { captionFont } from '@/utils/scriptFont';
@@ -59,6 +60,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
     [rule, today, calendarSystem]
   );
   const katha = rule?.kathaId ? getKathaContent(rule.kathaId) : null;
+  const vidhi = rule ? getVidhiForFestival(rule.id) : null;
 
   const { isFollowing, follow, unfollow } = useVratFollows();
   const following = rule ? isFollowing(rule.id) : false;
@@ -235,10 +237,47 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 </Pressable>
               </View>
             )}
-            {/* "How to observe" (उपवास विधि) is intentionally omitted until real
-                vidhi content exists — an empty "coming soon" placeholder made this
-                primary screen read as under-construction. Re-add the section gated
-                on a populated vidhi field once content lands (PRD-09 P4). */}
+            {/* "How to observe" — gated on a published vidhi (PRD-19 Phase 2B),
+                so the section only exists when there is a real procedure to open;
+                a "coming soon" placeholder never renders here. */}
+            {vidhi && (
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
+                  {contentByLang(lang, 'पूजा विधि', 'How to observe')}
+                </Text>
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate('VidhiDetail', {
+                      vidhiId: vidhi.id,
+                      ...(next ? { dateMs: next.date.getTime() } : {}),
+                    })
+                  }
+                  testID="observance-vidhi-card"
+                  accessibilityRole="button"
+                  accessibilityLabel={contentByLang(
+                    lang,
+                    `${vidhi.titleHi} पूजा विधि खोलें`,
+                    `Open ${vidhi.titleEn} puja vidhi`
+                  )}
+                  style={({ pressed }) => [styles.kathaCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
+                >
+                  <Text style={{ fontSize: 22, color: colors.saffron, marginRight: 12 }}>॥</Text>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                      {contentByLang(lang, vidhi.titleHi, vidhi.titleEn)}
+                    </Text>
+                    <Text style={{ ...captionFont(lang === 'en' ? vidhi.titleHi : vidhi.titleEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
+                      {contentByLang(
+                        lang,
+                        `${vidhi.steps.length} चरण · लगभग ${vidhi.durationHintMin} मिनट`,
+                        `${vidhi.steps.length} steps · About ${vidhi.durationHintMin} min`
+                      )}
+                    </Text>
+                  </View>
+                  <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
+                </Pressable>
+              </View>
+            )}
           </ScrollView>
         )}
       </SafeAreaView>

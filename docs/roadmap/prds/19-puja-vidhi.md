@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Implemented — six v1 Vidhis published; canonical-edition sign-off and discovery follow-ups remain |
+| **Status** | Implemented — six v1 Vidhis published, all Phase 2B surfaces shipped (search rows, Observance Detail slot, DISCOVER card, keep-awake, Add to Routine); canonical-edition sign-off remains (requires archive.org access) |
 | **T-shirt size** | L (content-heavy: new data family + sourcing/verification track + 3 screens; engine work is nil) |
 | **Prototype** | [`docs/puja-vidhi-prototype.html`](../../puja-vidhi-prototype.html) — festival-day entry, samagri checklist, conduct mode, aarti hand-off, completion, catalog; every interaction annotated |
 | **Feasibility** | ✅ Confirmed against current main — festivals already carry content hooks (`kathaId`, `linkSectionId` in `festivals.ts`); a `vidhiId` follows the identical pattern. Steps reference shipped mantric texts by section id. Read-aloud TTS (#230) and follow-along audio (PRD-13) cover recitation. The only new capability is the content itself. |
@@ -50,7 +50,7 @@ Validated in the prototype; **no new Home category** (the launcher grid is close
 3. **Vidhi detail** — occurrence-scoped samagri checklist plus the grouped procedure index.
 4. **Conduct reader** — one swipe-paged card per step, shipped-text hand-offs, resume state, and quiet completion.
 
-Search rows, the Observance Detail slot, and a Home DISCOVER card remain explicit follow-ups; they are not implied by the shipped catalog or festival-day pill.
+Phase 2B (Aug 2026) added the remaining doors: **search rows** (one section-group row per vidhi, routed to Vidhi Detail), the **Observance Detail "How to observe" card** (gated on a resolving `vidhiId` — never a placeholder), and the **Home DISCOVER card** (opens the catalog).
 
 ## 5. The two modes (UX contract)
 
@@ -62,10 +62,10 @@ Full-screen, one step per page, paged horizontally like the readers (the interac
 - Daily Bhakti-style reading card: phase (आरम्भ · मुख्य पूजा · समापन), step n/N, title, and instruction in reader-grade type (Devanagari primary, 10 pt+ floor, reading-size setting respected).
 - Reader progress dots sit at the bottom; the active dot stretches as in Hanuman Chalisa. Dots disappear on completion.
 - The step's mantra inline with IAST romanization, with the **read-aloud** affordance (#230 TTS) — or, where the step *is* a shipped text (aarti, katha, sahasranama), a **hand-off card** that deep-links into that reader/audio and returns to the next step.
-- **Keep-awake is deferred:** `expo-keep-awake` is not currently a dependency; conduct mode does not promise this yet.
+- **Keep-awake (shipped, Phase 2B):** conduct mode holds `useKeepAwake()` for the whole session and announces it for screen readers on entry.
 - Exit resumes: re-entering the same day offers "जहाँ थे वहीं से" (same resume sheet pattern as the readers).
 - Completion: a quiet ॐ seal and completed-step count. It does not repeat katha/aarti actions already completed in the guided steps and deliberately does not use the routine celebration animation.
-- **Add to routine is deferred:** recurring Vidhis do not yet expose `AddToRoutineButton`.
+- **Add to routine (shipped, Phase 2B):** recurring Vidhis (a festival rule with monthly recurrence — Satyanarayan/purnima today) expose `AddToRoutineButton` on the detail header; routine items use the new `vidhi` kind (manual-mark completion).
 
 ## 6. Data model (new family: `mobile/src/data/vidhi/`)
 
@@ -97,9 +97,9 @@ Registry questions (RULEBOOK §1), search rows (§7), and the reader-test requir
 ## 8. Phasing
 
 1. **Phase 1 — complete:** source and publish Satyanarayan end-to-end; build the three shared screens and tests.
-2. **Phase 2A — complete:** publish the remaining five v1 Vidhis and connect all six festival `vidhiId` hooks. The registry now contains 92 guided steps in total.
-3. **Phase 2B — deferred:** search rows, the Observance Detail slot, DISCOVER card, keep-awake, and Add to Routine.
-4. **Phase 3 (options):** shraddha vidhi (with PRD-17); recorded audio; regional variants as explicit alternates.
+2. **Phase 2A — complete:** publish the remaining five v1 Vidhis and connect all six festival `vidhiId` hooks.
+3. **Phase 2B — complete (Aug 2026):** search rows, the Observance Detail slot, DISCOVER card, keep-awake, and Add to Routine (recurring vidhis, `vidhi` routine-item kind). The same pass added liturgy hand-offs into shipped verified sections (Ganesha vandana → ganesh-stotram, Devi stuti → durga-stotram, deepa shloka → sandhya-deepam) and the inline Panchakshara mantra on the Shivaratri japa step — the registry now carries 96 guided steps and 12 transcribed mantras.
+4. **Phase 3 (options, all content-gated):** shraddha vidhi (with PRD-17) — **blocked on an authoring environment with content egress**: §3.4's two-source verification cannot be performed where DrikPanchang/archive.org are unreachable (attempted and recorded 2026-08-14), and §11.3 forbids authoring the liturgy or claiming unopened sources; recorded audio (a product size decision needing real recorded assets); regional variants as explicit alternates (same sourcing requirement). The canonical-edition sign-off for all six shipped vidhis carries the same environment requirement — every entry's `canonicalEditionStatus` records the honest pending state and how to clear it.
 
 ## 9. Why it fits the moat
 

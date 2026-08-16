@@ -70,6 +70,49 @@ export function dateKeyFor(d: Date): string {
 }
 
 /**
+ * Civil-day arithmetic over the store's keying, shared by every consumer that
+ * walks a range of days (the finder's sweeps, the abujh scan, the rolling warm).
+ * They live here rather than in `muhuratFinderScan` — where they started — so a
+ * module that only needs "which days" doesn't have to pull the festival engine
+ * in behind it. `muhuratFinderScan` re-exports them, so its importers are
+ * unaffected.
+ */
+export const startOfToday = (): Date => {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+};
+
+/** The civil day `i` days after `start` (month/year rollover handled by Date). */
+export const dayAt = (start: Date, i: number): Date =>
+  new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
+
+/**
+ * The civil-date keys a walk of `count` days from `start` will touch — what
+ * callers hand to `hydratePanchangDays` so the persisted solves are in memory
+ * before they begin.
+ */
+export const dayKeysFrom = (start: Date, count: number): string[] =>
+  Array.from({ length: count }, (_, i) => dateKeyFor(dayAt(start, i)));
+
+/**
+ * The three civil days a TODAY surface's muhurat windows need: yesterday (the
+ * pre-dawn correction reads its night choghadiya), today, and tomorrow (today's
+ * `nextSunrise` closes the night window).
+ *
+ * Lives here so `useMuhurat` and the launch prefetch cannot drift apart: a
+ * prefetch that warms a different three days is a prefetch that does nothing,
+ * and the symptom — a cold-looking card on a warm cache — is exactly the one
+ * that took three attempts to kill.
+ */
+export const todayMuhuratDayKeys = (now: Date): string[] => {
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return [dayAt(start, -1), start, dayAt(start, 1)].map(dateKeyFor);
+};
+
+/** Cede the JS thread for one tick, so a long walk of solves can't block the UI. */
+export const yieldToUi = (): Promise<void> => new Promise<void>((r) => setTimeout(r, 0));
+
+/**
  * The day-map for a scope, marking it most-recently-used. Creating a new scope
  * past `MAX_CITIES` evicts the least-recently-used one (oldest Map key) and fires
  * eviction listeners with its scope key.

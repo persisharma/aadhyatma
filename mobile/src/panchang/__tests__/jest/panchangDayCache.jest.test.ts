@@ -29,6 +29,7 @@ import {
 import {
   hydratePanchangDays,
   persistPanchangDays,
+  panchangDayCacheSwept,
   panchangDayStorageKey,
   __resetPanchangDayCache,
 } from '../../panchangDayCache';
@@ -138,6 +139,9 @@ describe('hydratePanchangDays', () => {
     ]);
 
     await hydratePanchangDays(UJJAIN, SYSTEM, [dayKeyFromToday(3)]);
+    // The sweep is detached from the read (see below), so wait for it explicitly
+    // rather than relying on it happening to land inside the hydrate's promise.
+    await panchangDayCacheSwept();
 
     const keys = await AsyncStorage.getAllKeys();
     expect(keys).not.toContain(past);
@@ -154,8 +158,60 @@ describe('hydratePanchangDays', () => {
     await AsyncStorage.setItem(legacy, '{}');
 
     await hydratePanchangDays(UJJAIN, SYSTEM, [dayKeyFromToday(3)]);
+    await panchangDayCacheSwept();
 
     expect(await AsyncStorage.getAllKeys()).not.toContain(legacy);
+  });
+
+  test('the read never waits on the housekeeping sweep', async () => {
+    // The regression this guards: the sweep (a whole-keyspace `getAllKeys` plus
+    // a `multiRemove`) used to run BEFORE the `multiGet` that serves the caller,
+    // so every cold surface of a launch — Home's `आज का पंचांग` first among them
+    // — sat on its placeholder until a scan that could tell it nothing finished.
+    // Stall the sweep indefinitely; the day must still reach memory.
+    const scope = scopeKeyFor(UJJAIN, SYSTEM);
+    const key = dayKeyFromToday(1);
+    await persistOne(scope, key);
+    __resetPanchangDayStore();
+    __resetPanchangDayCache();
+
+    let releaseSweep: (keys: string[]) => void = () => undefined;
+    const stalled = new Promise<string[]>((resolve) => {
+      releaseSweep = resolve;
+    });
+    // `mockImplementationOnce`, never `mockReturnValue` + `mockRestore`: a spy
+    // over an already-mocked method IS that mock, so restoring it strips the
+    // official mock's own implementation for every test that follows.
+    const getAllKeys = spyOnStorage('getAllKeys');
+    getAllKeys.mockImplementationOnce(() => stalled);
+
+    await hydratePanchangDays(UJJAIN, SYSTEM, [key]);
+
+    expect(dayStoreFor(scope).has(key)).toBe(true);
+    expect(getAllKeys).toHaveBeenCalledTimes(1); // started, just not awaited
+
+    releaseSweep([]);
+    await panchangDayCacheSwept();
+  });
+
+  test('sweeps the keyspace once per session, not once per cold range', async () => {
+    // The sweep reads EVERY AsyncStorage key, and what it collects can only turn
+    // up between launches (an older cache version) or at midnight (a day that
+    // fell out of retention) — so re-running it put a whole-keyspace scan in
+    // front of the first hydrate of every calendar day, on Home's critical path.
+    const getAllKeys = spyOnStorage('getAllKeys');
+
+    await hydratePanchangDays(UJJAIN, SYSTEM, [dayKeyFromToday(1)]);
+    expect(getAllKeys).toHaveBeenCalledTimes(1);
+
+    // A different cold range in the same session: hydrated, but not re-swept.
+    await hydratePanchangDays(UJJAIN, SYSTEM, [dayKeyFromToday(2)]);
+    expect(getAllKeys).toHaveBeenCalledTimes(1);
+
+    // …and the next launch sweeps again.
+    __resetPanchangDayCache();
+    await hydratePanchangDays(UJJAIN, SYSTEM, [dayKeyFromToday(3)]);
+    expect(getAllKeys).toHaveBeenCalledTimes(2);
   });
 
   test('a corrupt entry is ignored, not fatal', async () => {

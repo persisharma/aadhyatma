@@ -1,11 +1,12 @@
 import { NativeModules, Platform } from 'react-native';
 import { requireOptionalNativeModule } from 'expo-modules-core';
 import { decodeWidgetPayload, WIDGET_PAYLOAD_KEY, type WidgetPayloadV1 } from './contract';
+import { widgetCatalogEntry, type WidgetContent } from './catalog';
 
 type WidgetNativeModule = {
   writePayload(payload: string): Promise<void>;
   readPayload?(): Promise<string | null>;
-  requestPinWidget?(): Promise<boolean>;
+  requestPinWidget?(content: WidgetContent): Promise<boolean>;
   isPinWidgetSupported?(): Promise<boolean>;
 };
 
@@ -33,10 +34,12 @@ export async function isWidgetPinSupported(): Promise<boolean> {
   return Platform.OS === 'android' && !!mod?.isPinWidgetSupported && mod.isPinWidgetSupported();
 }
 
-export async function requestPinWidget(): Promise<boolean> {
+/** Asks the launcher to pin one specific widget; Android-only, and false when it declines. */
+export async function requestPinWidget(content: WidgetContent): Promise<boolean> {
   const mod = nativeModule();
   if (Platform.OS !== 'android' || !mod?.requestPinWidget) return false;
-  return mod.requestPinWidget();
+  if (!widgetCatalogEntry(content).androidProvider) return false;
+  return mod.requestPinWidget(content);
 }
 
 export { WIDGET_PAYLOAD_KEY };

@@ -18,6 +18,7 @@ import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
+import { moreTabTarget } from '@/navigation/entryRoutes';
 import { pitruPakshaObservanceForDate, type PitruPakshaDayObservance } from '@/panchang/pitruSmaran';
 
 /**
@@ -131,7 +132,7 @@ export default function TodayStrip() {
           labelEn: pitruPakshaToday.labelEn,
           bg: colors.saffronTint,
           fg: colors.saffronDeep,
-          onPress: () => rootNav.navigate('MoreTab', { screen: 'PitruPakshaOverview', initial: false }),
+          onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruPakshaOverview')),
         }]
       : []),
     ...observances.slice(0, 2).map((o) => ({
@@ -225,20 +226,34 @@ export default function TodayStrip() {
     const overflow = s.contentW - s.layoutW;
     if (s.dragged || !s.focused || s.reduceMotion || s.layoutW <= 0 || overflow <= 8) return;
     const duration = (overflow / AUTO_SCROLL_PX_PER_SEC) * 1000;
+    // `isInteraction: false` is load-bearing, not tidiness. It defaults to
+    // `!useNativeDriver` — and this loop cannot use the native driver, because
+    // it drives `scrollTo` from a JS listener — so every drift and pause used to
+    // register an InteractionManager handle. A never-ending loop then meant Home
+    // almost never reported an idle UI, and everything on it that waits for one
+    // (the day's observance chips, the pitru match, the muhurat/festive
+    // schedulers, the widget writer, and this strip's own rollover at midnight)
+    // was starved behind an animation that is purely decorative.
     const drift = (toValue: number) =>
       Animated.timing(s.x, {
         toValue,
         duration,
         easing: Easing.inOut(Easing.quad),
+        isInteraction: false,
+        useNativeDriver: false,
+      });
+    // A hold, not Animated.delay: `delay()` takes no config, so it would keep
+    // claiming an interaction handle for its 1.8s. Same effect — the value is
+    // already at `at`, so the tween is a no-op that just burns the pause.
+    const hold = (at: number) =>
+      Animated.timing(s.x, {
+        toValue: at,
+        duration: AUTO_SCROLL_END_PAUSE_MS,
+        isInteraction: false,
         useNativeDriver: false,
       });
     s.anim = Animated.loop(
-      Animated.sequence([
-        Animated.delay(AUTO_SCROLL_END_PAUSE_MS),
-        drift(overflow),
-        Animated.delay(AUTO_SCROLL_END_PAUSE_MS),
-        drift(0),
-      ])
+      Animated.sequence([hold(0), drift(overflow), hold(overflow), drift(0)])
     );
     s.anim.start();
   }, [stopAutoScroll]);

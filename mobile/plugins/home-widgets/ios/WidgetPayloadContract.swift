@@ -8,7 +8,10 @@ struct LocalizedText: Codable {
   let hi: String; let en: String; let gu: String; let kn: String
   func value(_ locale: String) -> String { locale == "en" ? en : locale == "gu" ? gu : locale == "kn" ? kn : hi }
 }
-struct LocalizedLines: Codable { let hi: [String]; let en: [String]; let gu: [String]; let kn: [String] }
+struct LocalizedLines: Codable {
+  let hi: [String]; let en: [String]; let gu: [String]; let kn: [String]
+  func value(_ locale: String) -> [String] { locale == "en" ? en : locale == "gu" ? gu : locale == "kn" ? kn : hi }
+}
 struct VerseDay: Codable { let dateKey, sourceId: String; let chapter: Int?; let verseIndex: Int; let lines: LocalizedLines; let excerpt, source, accessibilityLabel: LocalizedText; let deepLink: String }
 struct VerseSlice: Codable { let timeZone, validThrough: String; let days: [VerseDay] }
 struct PanchangDay: Codable { let dateKey: String; let representedDate, tithi: LocalizedText; let vrat: LocalizedText?; let sunrise, rahuKaal: LocalizedText; let abhijit: LocalizedText?; let deepLink: String }

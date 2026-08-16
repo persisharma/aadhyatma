@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; **follow/remind + Today-strip chip + FOR TODAY abujh card shipped Aug 2026** (see §6.7, design.md §60, RULEBOOK §17.7; prototype: [`docs/muhurat-follow-remind-prototype.html`](../../muhurat-follow-remind-prototype.html)). Next: Phase 2 shuddhi depth (Bhadra as a window, window-time anga evaluation, per-occasion masa tables) |
+| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; **follow/remind + Today-strip chip + FOR TODAY abujh card shipped Aug 2026** (see §6.7, design.md §60, RULEBOOK §17.7; prototype: [`docs/muhurat-follow-remind-prototype.html`](../../muhurat-follow-remind-prototype.html)). **Phase 2 shuddhi depth BUILT (Aug 2026)** — window-time anga (per-window, kshaya-aware), Bhadra as a solved interval, masa mechanism (tables DRAFT), six new occasions, grouped picker; see TRD-16/P2. Remaining: §10 content review (now 12 occasions + masa tables), drikfixture goldens, late-onset Vishti |
 | **Target release** | TBD (phased; Phase 1 is small) |
 | **T-shirt size** | Code S–M per phase · **content L** (rule tables are the real cost) |
 | **Owner** | TBA |
@@ -116,7 +116,10 @@ Each phase is independently shippable and each leans only on primitives already 
 - Window = auspicious choghadiya minus kaal slots, plus Abhijit. Kaal and day-choghadiya are both exact eighths of daytime, so exclusion is *dropping a slot*, not clipping an interval.
 - **Empty-with-reason** is a Phase-1 requirement, not a polish item — it is the single most differentiating behaviour in the feature.
 
-### Phase 2 — Shuddhi depth *(code M, content M)*
+### Phase 2 — Shuddhi depth *(code M, content L)* — **[TRD-16/P2](../trds/16-event-muhurat-finder-phase2.trd.md)**, prototype [`docs/muhurat-phase2-prototype.html`](../../muhurat-phase2-prototype.html)
+
+Measured against the shipped engine (Ujjain, 365 days from 14 Aug 2026), the four items below are **not** comparable in cost. Window-time anga is free (`tithi.endTime`/`nakshatra.endTime` are already solved) and flips **115 verdicts a year**; Bhadra-as-a-window is the only item needing new astronomy (`karana.endTime` is hardcoded `null`) and adds **+26–45% qualifying days**; masa shuddhi and the six new occasions are content. See the TRD for the ordering and the three convention decisions that gate the tables.
+
 
 - **Masa shuddhi properly**: per-occasion preferred/barred lunar months, with the Chaturmas convention **named explicitly** (three attested readings exist; see §9).
 - **Shukra/Guru asta**: one elongation test over `getSiderealPlanetLongitude()`. Verified against the 2026 run — Jupiter combust 15 Jul–13 Aug 2026, Venus combust 18–30 Oct 2026 (retrograde, inferior conjunction 24 Oct). Orb must be stated (10° flat vs 8° retrograde Venus, 11° Jupiter) because it changes real answers.
