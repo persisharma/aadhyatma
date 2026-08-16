@@ -31,18 +31,68 @@
  * composes from the in-memory store on its FIRST render and the headline paints
  * with the rest of Home instead of two round trips later.
  *
- * DEPENDENCIES. AsyncStorage and `locations.ts` only. It must stay importable by
- * both `PanchangLocationContext` (which pulls in `expo-location`) and the launch
- * prefetch (which must not), so it can never import either — same isolation rule
- * that keeps `panchangDayStore` RN-free and `expo-updates` out of the cache graph.
+ * DEPENDENCIES. AsyncStorage, `locations.ts`, and `pincodes.ts` for its `isPincodeCityId`
+ * regex ONLY — that module's 566 KB table sits behind a lazy require and must never be
+ * touched from here, which is why a stored pincode is validated structurally rather than
+ * looked up. It must stay importable by both `PanchangLocationContext` (which pulls in
+ * `expo-location`) and the launch prefetch (which must not), so it can never import
+ * either — same isolation rule that keeps `panchangDayStore` RN-free and `expo-updates`
+ * out of the cache graph.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DEFAULT_LOCATION, getCityById, toPanchangLocation } from './locations';
+import { isPincodeCityId } from './pincodes';
 import type { CalendarSystem, PanchangLocation } from './types';
 
 export const LOCATION_STORAGE_KEY = '@vedansh:panchang-location';
 export const CALENDAR_SYSTEM_STORAGE_KEY = '@vedansh:panchang-calendar-system';
+
+/** India bounding box — the same gate `scripts/build-pincodes.mjs` applies when generating. */
+const INDIA_BOUNDS = { latMin: 6.5, latMax: 37.6, lngMin: 68.0, lngMax: 97.5 };
+
+function isFiniteInRange(value: unknown, min: number, max: number): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max;
+}
+
+/**
+ * Rebuild a stored PINCODE location from the record itself rather than from a lookup table.
+ *
+ * A city location is rebuilt from the bundled list so it always matches the running build.
+ * A pincode cannot be: the table is 566 KB and lives behind a lazy require in `pincodes.ts`
+ * precisely so it never lands on the launch path, and this function IS the launch path. So a
+ * `pin-` record is self-describing on disk and validated structurally here — every field is
+ * range-checked, and anything malformed falls back to `DEFAULT_LOCATION` like any other
+ * corrupt record. Safe because the table is generated, immutable data: a stored record can
+ * only drift from the bundle if the dataset is regenerated, and its coordinates were correct
+ * when written.
+ */
+function parseStoredPincodeLocation(parsed: {
+  cityId: string;
+  labelHi?: unknown;
+  labelEn?: unknown;
+  latitude?: unknown;
+  longitude?: unknown;
+  elevation?: unknown;
+  source?: unknown;
+}): PanchangLocation | null {
+  const { labelHi, labelEn, latitude, longitude, elevation } = parsed;
+  if (typeof labelHi !== 'string' || labelHi.length === 0) return null;
+  if (typeof labelEn !== 'string' || labelEn.length === 0) return null;
+  if (!isFiniteInRange(latitude, INDIA_BOUNDS.latMin, INDIA_BOUNDS.latMax)) return null;
+  if (!isFiniteInRange(longitude, INDIA_BOUNDS.lngMin, INDIA_BOUNDS.lngMax)) return null;
+  if (!isFiniteInRange(elevation, -500, 9000)) return null;
+  return {
+    cityId: parsed.cityId,
+    labelHi,
+    labelEn,
+    latitude,
+    longitude,
+    elevation,
+    // A pincode reached by GPS keeps 'gps' so the picker can still show "using your location".
+    source: parsed.source === 'gps' ? 'gps' : 'pincode',
+  };
+}
 
 /**
  * Rebuild the stored city from the BUNDLED city list, so coordinates and labels
@@ -54,7 +104,9 @@ export function parseStoredLocation(raw: string | null): PanchangLocation | null
   if (!raw) return null;
   try {
     const parsed = JSON.parse(raw);
-    const city = typeof parsed?.cityId === 'string' ? getCityById(parsed.cityId) : undefined;
+    if (typeof parsed?.cityId !== 'string') return null;
+    if (isPincodeCityId(parsed.cityId)) return parseStoredPincodeLocation(parsed);
+    const city = getCityById(parsed.cityId);
     if (!city) return null;
     const source = parsed.source === 'gps' || parsed.source === 'city' ? parsed.source : 'default';
     return toPanchangLocation(city, source);
