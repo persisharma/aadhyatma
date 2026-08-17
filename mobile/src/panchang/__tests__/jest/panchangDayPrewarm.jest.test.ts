@@ -23,6 +23,7 @@ import {
   dayAt,
   dayStoreFor,
   scopeKeyFor,
+  startOfToday,
   __resetPanchangDayStore,
 } from '@/panchang/panchangDayStore';
 import {
@@ -39,8 +40,15 @@ const UJJAIN = { ...engine.UJJAIN_GEO, cityId: 'ujjain' };
 const SYSTEM = 'purnimant' as const;
 const SCOPE = scopeKeyFor(UJJAIN, SYSTEM);
 
-/** A fixed start day keeps the assertions independent of when the suite runs. */
-const START = new Date(2026, 7, 14); // 14 Aug 2026
+/**
+ * Anchor the window to TODAY, not a hardcoded calendar date. `persistPanchangDays`
+ * intentionally drops days older than RETAINED_PAST_DAYS (2), so a fixed past START
+ * silently falls out of the persisted window once the real clock passes it — which
+ * is what made this suite a time-bomb (it began failing the day the clock reached
+ * START + 3). Today-relative is what actually keeps the assertions independent of
+ * when the suite runs.
+ */
+const START = startOfToday();
 /** Small window: the contract is the same at 3 days and the suite stays quick. */
 const DAYS = 3;
 
