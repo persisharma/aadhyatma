@@ -218,6 +218,29 @@ export function solveNextOccurrence(rule: TithiRule, fromDate: Date, options: So
 
 const windowCache = new Map<string, PitruPakshaWindow | null>();
 
+function windowCacheKey(gregorianYear: number, options: SolveOptions): string {
+  return `${options.location?.cityId ?? 'ujjain'}:${gregorianYear}`;
+}
+
+/**
+ * Seed the per-year window memo from a persisted solve, so a cold launch does not
+ * repeat the ~40 ms Bhadrapada-Purnima scan that produced it. Used only by
+ * `pitruSmaranSolves.ts` (the AsyncStorage layer); the value MUST be a window this
+ * same engine version produced — see `PANCHANG_DAY_CACHE_VERSION`.
+ *
+ * A year already solved in this session is left alone: the in-memory answer and
+ * the disk one agree by construction, and overwriting would swap out `Date`
+ * instances other callers may already hold.
+ */
+export function primePitruPakshaWindow(
+  gregorianYear: number,
+  window: PitruPakshaWindow,
+  options: SolveOptions = {}
+): void {
+  const key = windowCacheKey(gregorianYear, options);
+  if (!windowCache.has(key)) windowCache.set(key, window);
+}
+
 /**
  * The Pitru Paksha (Mahalaya) fortnight of a Gregorian year, purnimant:
  * भाद्रपद पूर्णिमा, then Pratipada Shraddha (day after) through सर्वपितृ अमावस्या —
@@ -225,7 +248,7 @@ const windowCache = new Map<string, PitruPakshaWindow | null>();
  * adhik-Ashwin year cannot orphan the closing amavasya).
  */
 export function pitruPakshaWindow(gregorianYear: number, options: SolveOptions = {}): PitruPakshaWindow | null {
-  const cacheKey = `${options.location?.cityId ?? 'ujjain'}:${gregorianYear}`;
+  const cacheKey = windowCacheKey(gregorianYear, options);
   const cached = windowCache.get(cacheKey);
   if (cached !== undefined) return cached;
 

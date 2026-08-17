@@ -12,9 +12,9 @@ import { contentByLang } from '@/utils/localize';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { VIDHI_ENTRIES, type VidhiEntry } from '@/data/vidhi';
 import ReaderHeader from '@/components/ReaderHeader';
-import type { PanchangStackParamList } from '@/navigation/types';
+import type { VidhiStackParamList } from '@/navigation/types';
 
-type Props = NativeStackScreenProps<PanchangStackParamList, 'VidhiCatalog'>;
+type Props = NativeStackScreenProps<VidhiStackParamList, 'VidhiCatalog'>;
 
 /**
  * पूजा विधियाँ — the vidhi catalog (PRD-19, design.md §61). Each row follows

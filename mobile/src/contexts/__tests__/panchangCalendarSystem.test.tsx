@@ -6,14 +6,19 @@ import {
   __resetCalendarSystemStoreForTests,
 } from '@/panchang/usePanchang';
 
-// Controllable AsyncStorage mock so the hydration race is testable.
-let mockResolveGetItem: (value: string | null) => void = () => undefined;
+// Controllable AsyncStorage mock so the hydration race is testable. The stored
+// system now arrives in the shared panchang-preferences `multiGet` (one launch
+// read for city + calendar system) rather than its own `getItem`, so the
+// deferred read this mock hands back is that call — `mockResolveStoredSystem`
+// still stands for "the persisted preference finally lands".
+let mockResolveStoredSystem: (value: string | null) => void = () => undefined;
 const mockSetItem = jest.fn(() => Promise.resolve());
 jest.mock('@react-native-async-storage/async-storage', () => ({
-  getItem: jest.fn(
-    () =>
-      new Promise<string | null>((resolve) => {
-        mockResolveGetItem = resolve;
+  multiGet: jest.fn(
+    (keys: string[]) =>
+      new Promise<[string, string | null][]>((resolve) => {
+        mockResolveStoredSystem = (value) =>
+          resolve(keys.map((k) => [k, k === '@vedansh:panchang-calendar-system' ? value : null]));
       })
   ),
   setItem: (...args: unknown[]) => mockSetItem(...(args as [])),
@@ -69,7 +74,7 @@ describe('usePanchangCalendarSystem (module store)', () => {
       tree = TestRenderer.create(<Probe label="a" />);
     });
     await act(async () => {
-      mockResolveGetItem('amanta');
+      mockResolveStoredSystem('amanta');
     });
     expect(textOf(tree)).toBe('a:amanta');
   });
@@ -84,7 +89,7 @@ describe('usePanchangCalendarSystem (module store)', () => {
     act(() => latestSetter!('purnimant'));
     // …then the stale stored 'amanta' lands. It must NOT win.
     await act(async () => {
-      mockResolveGetItem('amanta');
+      mockResolveStoredSystem('amanta');
     });
     expect(textOf(tree)).toBe('a:purnimant');
     // And the explicit choice was persisted.

@@ -4,7 +4,7 @@
 |---|---|
 | **Companion PRD** | [PRD-16 §5 Phase 2](../prds/16-event-muhurat-finder.md) |
 | **Phase 1 as shipped** | design.md §60, RULEBOOK §17, `wiki/subsystems/panchang.md` |
-| **Status** | Draft — design for the Phase-2 build |
+| **Status** | **BUILT (Aug 2026)** — with one refinement over this design: grading is **per window**, finer than the single-instant window-time reading measured in §1.1 (see the note under the flips table) |
 | **T-shirt** | **Code M** (one new engine solver; everything else is arithmetic over primitives that already ship) · **Content L** (six new rule tables + three convention decisions) |
 | **Prototype** | [`docs/muhurat-phase2-prototype.html`](../../muhurat-phase2-prototype.html) — all dates/times real engine output |
 | **Feasibility** | ⚠️ Mixed, and the split is the whole point of this document. Window-time anga is nearly free (`tithi.endTime`/`nakshatra.endTime` already solved). Bhadra-as-a-window needs **one new bisection in `engine.ts`** — `karana.endTime` is hardcoded `null` today. |
@@ -54,6 +54,13 @@ Wed Aug 19 2026  Vahan  shreshtha → madhyam   (Swati → Vishakha by 12:04 PM)
 Wed Aug 26 2026  Vahan  madhyam  → excluded  (Trayodashi → Chaturdashi)
 Thu Aug 27 2026  Vahan  excluded → shreshtha (Chaturdashi → Purnima)
 ```
+
+> **As built:** the measurement above replaced the whole day's anga with the anga at ONE instant
+> (the best window). The shipped implementation grades **each window separately**, which is finer
+> and changes two of the three rows: 26 Aug is *offered* via its 6:07 AM window (genuinely on
+> Trayodashi; every Chaturdashi window is dropped), and 19 Aug stays *shreshtha* via its 6:04 AM
+> Swati window while all the Vishakha windows demote to madhyam per-window. 27 Aug flips exactly
+> as published. `eventMuhuratPhase2.test.ts` pins all three as built.
 
 ### 1.2 Blast radius — what Bhadra touches OUTSIDE the finder
 

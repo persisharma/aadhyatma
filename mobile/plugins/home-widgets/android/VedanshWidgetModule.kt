@@ -47,12 +47,17 @@ class VedanshWidgetModule(private val context: ReactApplicationContext) : ReactC
         promise.resolve(Build.VERSION.SDK_INT >= 26 && manager.isRequestPinAppWidgetSupported)
     }
 
+    /**
+     * `content` picks which widget the launcher is asked to pin — the user chooses
+     * per content type in the in-app gallery (design.md §59), not one catch-all.
+     */
     @ReactMethod
-    fun requestPinWidget(promise: Promise) {
+    fun requestPinWidget(content: String?, promise: Promise) {
         if (Build.VERSION.SDK_INT < 26) { promise.resolve(false); return }
         val manager = AppWidgetManager.getInstance(context)
         if (!manager.isRequestPinAppWidgetSupported) { promise.resolve(false); return }
-        val provider = ComponentName(context, VedanshWidgetProvider::class.java)
+        val surface = if (content == "verse") VedanshWidgetProvider.Surface.VERSE else VedanshWidgetProvider.Surface.PANCHANG
+        val provider = ComponentName(context, VedanshWidgetProvider.providerFor(surface))
         promise.resolve(manager.requestPinAppWidget(provider, null, null))
     }
 }

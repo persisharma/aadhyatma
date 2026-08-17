@@ -23,8 +23,9 @@ createdAt }`; `RoutineItem { kind: 'section' | 'chapter' | 'japam' | 'vidhi', so
 targetRounds?, weekdays? }`. Item granularity is a complete reciting unit — never a single
 stotram verse (that is Daily Bhakti's job). `routineItemKey(routineId, itemId)` is the
 completion-tracking key. The `vidhi` kind (PRD-19 Phase 2B) carries a vidhi id as `sourceId`:
-`resolveRoutineItem` titles it with a `पूजा विधि` sub-line, `navigateToRoutineItem` routes it
-cross-tab to `VidhiDetail`, and `isItemAutoComplete` always returns false for it — conduct
+`resolveRoutineItem` titles it with a `पूजा विधि` sub-line, `navigateToRoutineItem` opens
+`VidhiDetail` **on the Home stack** (which registers the vidhi flow alongside the Panchang one,
+see [[puja-vidhi]]) so back returns to the routine, and `isItemAutoComplete` always returns false for it — conduct
 state lives in AsyncStorage outside the reading-progress contexts, so completion is
 **manual-mark only**. `AddToRoutineButton` is offered on `VidhiDetailScreen` only for vidhis
 whose festival rule recurs `'monthly'` (Satyanarayan/purnima today).

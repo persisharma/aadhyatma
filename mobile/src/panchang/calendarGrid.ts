@@ -7,6 +7,9 @@ export type CalendarCell = {
   hasObservance: boolean;
 };
 
+/** Days in a calendar week — the one number the grid and its header agree on. */
+export const WEEK_LENGTH = 7;
+
 export type BuildCalendarMonthInput = {
   visibleMonth: Date;
   selectedDate: Date;
@@ -52,4 +55,26 @@ export function buildCalendarMonth({
       hasObservance: observanceKeys.has(key),
     };
   });
+}
+
+/**
+ * The month's cells split into explicit weeks of seven.
+ *
+ * Both calendars used to render all 42 cells into ONE `flexWrap: 'wrap'` row and
+ * let each cell's `width: '14.285714285714286%'` produce the columns. Yoga
+ * resolves percentages in 32-bit float, so on some container widths seven cells
+ * sum to a hair OVER 100% (e.g. 320.000008 pt inside 320 pt — the Panchang month
+ * grid on a 390 dp iPhone) and the seventh wraps to the next line. The grid then
+ * laid out six columns under a seven-column header, so every date sat under the
+ * wrong weekday: 15 Aug 2026 (a Saturday) read as मंगलवार / Tuesday.
+ *
+ * Rendering a row per week with `flex: 1` cells makes the column count
+ * structural — it cannot be lost to sub-pixel rounding, on any screen width.
+ */
+export function calendarWeeks(cells: CalendarCell[]): CalendarCell[][] {
+  const weeks: CalendarCell[][] = [];
+  for (let index = 0; index < cells.length; index += WEEK_LENGTH) {
+    weeks.push(cells.slice(index, index + WEEK_LENGTH));
+  }
+  return weeks;
 }

@@ -6,7 +6,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ListCard, { CardThumb } from '@/components/ListCard';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
-import { loadNamkaranNames } from '@/data/namkaran';
+import { loadNamkaranCharanaCounts } from '@/data/namkaran';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { RASHI_NAMES_EN, RASHI_NAMES_HI } from '@/panchang/kundali';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from '@/panchang/names';
@@ -48,22 +48,15 @@ export default function NamkaranRashiScreen({ navigation, route }: Props) {
   }, [entries]);
   const syllableCount = entries.reduce((total, entry) => total + entry.syllables.length, 0);
 
-  // The corpus stays lazily required inside the Panchang stack. A missing count
-  // simply hides the count line — it must never block the charana rows, which
-  // are convention data and always correct.
+  // Counts come from the generated per-charana index, not the corpus: a rashi's
+  // nine charanas span up to three nakshatra shards, and pulling all three to
+  // render nine numbers would defeat the sharding. A missing count simply hides
+  // the count line — it must never block the charana rows, which are convention
+  // data and always correct.
   useEffect(() => {
     let active = true;
-    void loadNamkaranNames()
-      .then((records) => {
-        if (!active) return;
-        const tally: Record<number, number> = {};
-        for (const record of records) {
-          for (const charanaIndex of record.charanas) {
-            tally[charanaIndex] = (tally[charanaIndex] ?? 0) + 1;
-          }
-        }
-        setCounts(tally);
-      })
+    void loadNamkaranCharanaCounts()
+      .then((tally) => { if (active) setCounts(tally); })
       .catch(() => { if (active) setCounts({}); });
     return () => { active = false; };
   }, []);

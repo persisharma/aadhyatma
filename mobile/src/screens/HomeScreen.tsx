@@ -30,7 +30,7 @@ import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { useTilePressController, TilePressProvider } from '@/contexts/TilePressContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
-import { panchangTabTarget } from '@/navigation/entryRoutes';
+import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
@@ -250,12 +250,15 @@ export default function HomeScreen({ navigation }: Props) {
           ॥
         </Text>
       ),
-      onPress: () => rootNav.navigate('MoreTab', { screen: 'PitruSmaranList', initial: false }),
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList')),
     },
     {
       // PRD-19 Phase 2B Discover card: the vidhi catalog's Home awareness door.
       // The Panchang day-panel pill is date-dependent and the Vrat & Parv tile
       // is two taps deep; this card makes guided pujas discoverable on Home.
+      // Pushed on the Home stack (the vidhi flow is registered on both stacks):
+      // a cross-tab jump left back popping to the Panchang calendar, which in
+      // its default mode shows no vidhi door at all.
       key: 'puja-vidhi',
       titleHi: 'पूजा विधि', titleEn: 'Guided Pujas',
       descHi: 'सत्यनारायण से शिवरात्रि तक—हर चरण, हर मन्त्र साथ।',
@@ -273,7 +276,7 @@ export default function HomeScreen({ navigation }: Props) {
           ॥
         </Text>
       ),
-      onPress: () => rootNav.navigate('PanchangTab', panchangTabTarget('VidhiCatalog')),
+      onPress: () => navigation.navigate('VidhiCatalog'),
     },
     {
       key: 'theerth',
@@ -307,7 +310,7 @@ export default function HomeScreen({ navigation }: Props) {
           वि
         </Text>
       ),
-      onPress: () => rootNav.navigate('MoreTab', { screen: 'WidgetGallery' }),
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
     },
   ];
 

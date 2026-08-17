@@ -83,6 +83,7 @@ import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
 import { currentBuildFingerprint } from '@/utils/buildFingerprint';
 import { resetDerivedCachesIfBuildChanged } from '@/utils/derivedCacheReset';
+import { prefetchTodayPanchang } from '@/panchang/panchangLaunchPrefetch';
 import RootNavigator from '@/navigation/RootNavigator';
 import WidgetCoordinator from '@/widgets/WidgetCoordinator';
 import { retryWidgetDeepLink } from '@/widgets/deepLink';
@@ -103,6 +104,20 @@ configureForegroundNotificationHandler();
 // registering it here is what guarantees it is in flight before React renders
 // anything that hydrates. Fire-and-forget — it never rejects.
 void resetDerivedCachesIfBuildChanged(currentBuildFingerprint());
+
+// Read the panchang preferences and pull today's persisted day solves into memory
+// NOW, concurrently with the splash gate below rather than behind it. Home's
+// `आज का पंचांग` card is the one thing on that screen which cannot render from
+// bundled JS, and its read used to be the launch's third serial storage round
+// trip — after the font/language gate, then after the calendar-system preference
+// that only a mounted Home subscribed to. Starting it here is what lets the
+// headline paint with the rest of Home instead of two round trips later.
+//
+// MODULE SCOPE for the same reason as the reset above: it has to be in flight
+// before React renders anything that reads it. Fire-and-forget, hydrate-only
+// (never a solve), and it never rejects — nothing waits on it and a lost race
+// just leaves the hooks on the path they already take.
+void prefetchTodayPanchang();
 
 export default function App() {
   const [notoLoaded] = useNotoFonts({
