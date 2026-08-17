@@ -27,6 +27,14 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Skip tour"
     optional: true
+# Post-tour setup sheet: pick English then confirm with Begin, else the
+# language sheet stays over Home and every assertion below fails.
+- tapOn:
+    text: "English"
+    optional: true
+- tapOn:
+    text: "Begin|आरंभ करें"
+    optional: true
 - tapOn:
     text: "Close"
     optional: true
@@ -58,6 +66,9 @@ appId: com.prashantsharma.vedansh
     element:
       text: "Muhurat\\..*Tap to open\\."
     direction: DOWN
+    # centerElement keeps the tap mid-screen; without it the grid tile settles
+    # at the bottom edge and the tap lands on the Home tab bar (resets to top).
+    centerElement: true
 - tapOn: "Muhurat\\..*Tap to open\\."
 - waitForAnimationToEnd
 
@@ -84,11 +95,12 @@ appId: com.prashantsharma.vedansh
     visible: "Best dates|More suitable dates|No auspicious muhurat.*"
     timeout: 60000
 
-# Open the top card (whatever its date) via its stable testID prefix is not
-# expressible in Maestro; the tier word is — every non-empty result set
-# renders at least one tier line.
+# Open the top card via its stable testID (muhurat-result-<dayOfMonth>).
+# The card is a Pressable whose accessibilityLabel is only "<date> · <weekday>"
+# — it collapses its children, so the tier word ("Shreshtha") is NOT in the a11y
+# tree and cannot be matched by text. Maestro DOES match testID by regex.
 - tapOn:
-    text: "Shreshtha.*|Madhyam.*"
+    id: "muhurat-result-.*"
     index: 0
 - waitForAnimationToEnd
 
@@ -111,9 +123,12 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: ".*Choghadiya.*|.*चौघड़िया.*"
     timeout: 20000
-- back
+# These screens set headerShown:false with a custom "Back" chevron; the iOS
+# edge-swipe (`- back`) does not pop them, so tap the chevron by its a11y label
+# (same pattern as namkaran/pitru/vidhi flows).
+- tapOn: "Back"
 - waitForAnimationToEnd
-- back
+- tapOn: "Back"
 - waitForAnimationToEnd
 
 # ── Month-view overlay: results → View on calendar → ringed days chip ──────
