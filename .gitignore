@@ -26,3 +26,10 @@ marketing/linkedin/frames/
 marketing/linkedin/slides/
 marketing/linkedin/*.mp4
 marketing/linkedin/.metro.log
+
+# Feature reel pipeline — regenerable outputs (keep the tooling, ignore the artifacts)
+marketing/reels/voice/
+marketing/reels/flows/
+marketing/reels/music/
+marketing/reels/out/
+marketing/reels/**/*.mov
