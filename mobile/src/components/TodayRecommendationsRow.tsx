@@ -69,11 +69,21 @@ export default function TodayRecommendationsRow() {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        decelerationRate="fast"
         style={{ marginHorizontal: -spacing.xxl }}
         contentContainerStyle={{
           paddingHorizontal: spacing.xxl,
           gap: spacing.sm,
-          paddingBottom: 4,
+          // The compact strip is only ~56pt tall. In a band that thin, a natural
+          // (slightly-arced) horizontal flick starts near the band edge and the
+          // horizontal ScrollView loses the first-pixel gesture negotiation to
+          // the card Pressable / outer vertical page-scroll — so onScrollBeginDrag
+          // never fires, markTileDrag never suppresses the tap-fallback, and the
+          // swipe randomly opens a card or stalls (#276 regression). Padding the
+          // band top+bottom enlarges the scrollable frame and the arc tolerance
+          // so the horizontal scroll reliably wins the drag. It grows the touch
+          // target, not the visible card (still ~56pt).
+          paddingVertical: 10,
         }}
         // A horizontal swipe here is a scroll, not a tap — suppress the shared
         // first-tap fallback so a swipe never opens a card.
@@ -174,7 +184,9 @@ function spotlightForEntry(
 const styles = StyleSheet.create({
   wrap: {
     marginTop: 12,
-    gap: 6,
+    // The scroll band below now carries its own top padding (the touch-band fix),
+    // so the label sits right above it without an extra gap on top of that.
+    gap: 0,
   },
   sectionLabel: {
     // textTransform/letterSpacing/fontFamily are owned by pillTextStyle (script-aware).
