@@ -1,0 +1,13 @@
+{
+  "source": {
+    "verified": false,
+    "referenceUrls": [
+      "repo://docs/roadmap/conventions/namkaran-namakshar-v1.md",
+      "repo://docs/roadmap/prds/17-namkaran.md"
+    ],
+    "notes": "Development fixtures for UI and privacy verification only; these references define the draft contract and do not attest the names or meanings."
+  },
+  "nakshatraIndex": 24,
+  "nakshatra": "Purva Bhadrapada",
+  "names": []
+}
