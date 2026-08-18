@@ -100,7 +100,7 @@ New pure module `mobile/src/panchang/pitruSmaran.ts` + `tsx --test` fixtures (in
 
 1. **Phase 1 (shipped in branch):** data model + `pitruSmaran.ts` solve + fixtures; More row; list/add/detail screens; Panchang day chip; Gita paath links.
 2. **Phase 2 (shipped in branch):** default-on-at-save personal reminders, default-on season reminders, Pitru Paksha overview, standing Vrat-catalog ledger, permanent Home DISCOVER hook, public/private Home Today chips, and mapped-family day matching.
-3. **Phase 3 (with PRD-19):** shraddha/tarpan vidhi cross-link. — **detailed in [19-shraddha-vidhi-phase3.md](./19-shraddha-vidhi-phase3.md)**
+3. **Phase 3 (with PRD-19):** shraddha/tarpan vidhi cross-link. — **detailed in [19-shraddha-vidhi-phase3.md](./19-shraddha-vidhi-phase3.md); ON HOLD (product decision, 2026-08-18)**
 
 ## 8. Why it fits the moat
 

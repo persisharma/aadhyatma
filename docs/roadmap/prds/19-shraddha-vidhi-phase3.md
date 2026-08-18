@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — detail PRD for the final phase; hard content-gated (egress required); prototype attached |
+| **Status** | **ON HOLD — product decision, 2026-08-18.** Not scheduled for implementation right now (unlike the dropped 14-P2/17-P2–3, this one may be revived). Detail PRD and prototype remain the approved spec when it is picked up. Do NOT pick this up from a backlog/enrichment sweep without an explicit product go. Hard content gate unchanged: egress-capable authoring environment required. |
 | **Parent** | [PRD-19 पूजा विधि](./19-puja-vidhi.md) §8 Phase 3 · [PRD-17 पितृ स्मरण](./17-pitru-smaran.md) §7 Phase 3 (the cross-link — this document IS both phase lines; neither PRD has any further phase after this) |
 | **T-shirt size** | Part A: M (one vidhi entry + a new anchor kind + 3 door surfaces + third-stack registration). Part B: M–L (assets + player wiring; store release). Part C: M per varianted vidhi (verification dominates) |
 | **Prototype** | [`docs/shraddha-vidhi-prototype.html`](../../shraddha-vidhi-prototype.html) — person-detail vidhi door, tarpan तैयारी checklist, conduct card with Gita-paath hand-off + the Part-B audio affordance, variant selection; **every liturgical string in it is an illustrative placeholder** |
