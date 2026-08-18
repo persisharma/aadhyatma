@@ -1,0 +1,131 @@
+# Per-Routine Reminder Smoke Test — PRD-07 Phase 3 (साधना स्मरण)
+#
+# Asserts ONLY that the स्मरण / Reminder card renders on RoutineDetail with the
+# toggle present and OFF by default. Maestro cannot drive a notification tap,
+# nor safely flip the toggle — enabling raises the native permission dialog,
+# which is non-deterministic on CI (the shipped reminders-smoke.yaml records
+# the same limitation). The planner, scheduler glue, context persistence, and
+# deep link are unit-covered instead:
+#   - src/notifications/__tests__/routineReminderPure.test.ts (tsx)
+#   - src/notifications/__tests__/deepLink.jest.test.tsx (routine-reminder tap)
+#   - src/contexts/__tests__/RoutineContext.test.tsx (setReminder persistence)
+#
+# Flow: create a daily routine (no items needed — the reminder card renders
+# regardless), open its detail from My Routines, assert the card, delete the
+# routine to reset state for re-runs.
+#
+# Why English first: every routine screen reads the GLOBAL reading language
+# (default Hindi → Devanagari, which Maestro's iOS accessibility tree can't
+# read reliably) — same preamble as routine-smoke.yaml.
+#
+# Selector notes (verified against RoutineDetailScreen.tsx):
+#   - The card's toggle exposes accessibilityLabel "Toggle routine reminder".
+#   - Off-state subtitle: "Off by default — turn on to pick a time".
+#   - For a 'daily' routine the row title is "Daily reminder" (weekday
+#     routines read "Weekly reminder" — this flow uses daily for determinism).
+#
+# PRECONDITION: no routine exists yet (fresh install / clean slate). The flow
+# deletes the routine it creates at the end, so back-to-back runs stay clean.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Set global reading language to English (More tab) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"   # More opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# ── Step 3: Create a daily routine from the inline Home banner ──
+- extendedWaitUntil:
+    visible: "Set your daily practice"
+    timeout: 15000
+- tapOn: "Set your daily practice"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "How would you like to begin.*"
+    timeout: 15000
+- tapOn: "Build your own.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Name your routine"
+    timeout: 15000
+- tapOn: "Morning Sadhana"          # English-name field placeholder
+- inputText: "E2E Reminder Routine"
+- hideKeyboard
+- tapOn: "Next"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Same every day, or by weekday.*"
+    timeout: 10000
+- tapOn: "Daily — same every day.*"
+- waitForAnimationToEnd
+- tapOn: "Create routine"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Step 4: Skip content — the reminder card renders with zero items ──
+- extendedWaitUntil:
+    visible: "Add Content"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Done"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 60000
+- tapOn: "Done"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Step 5: Into the routine's detail via My Routines ──
+- extendedWaitUntil:
+    visible: "Today's Practice"
+    timeout: 15000
+- tapOn: "All routines"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "My Routines"
+    timeout: 10000
+- tapOn: "E2E Reminder Routine.*"
+- waitForAnimationToEnd
+
+# ── Step 6: The स्मरण card renders, toggle present and OFF by default ──
+# Off state = the "off by default" subtitle shows and NO time stepper renders
+# (TimeStepper's a11y label "Time: HH:MM" appears only once a reminder is set).
+- extendedWaitUntil:
+    visible: "Daily reminder"
+    timeout: 10000
+- assertVisible: "Off by default — turn on to pick a time"
+- assertVisible: "Toggle routine reminder"
+- assertNotVisible: "Time: .*"
+# Deliberately NOT tapping the toggle — it is the app's permission moment and
+# would raise the native notification-permission dialog (see header).
+
+# ── Step 7: Delete the routine (resets state for re-runs) ──
+- scrollUntilVisible:
+    element:
+      text: "Delete this routine"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 15000
+- tapOn: "Delete this routine"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "No routines yet"
+    timeout: 10000
+
+# ── Cleanup — Expo Go termination resets navigation for the next flow ──
+- stopApp:
+    appId: com.prashantsharma.vedansh
