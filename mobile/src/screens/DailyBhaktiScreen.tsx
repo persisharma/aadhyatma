@@ -17,7 +17,9 @@ import {
 import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
+import { getReaderBackground } from '@/data/backgrounds';
 import type { TabParamList } from '@/navigation/types';
+import BackgroundLayer from '@/components/BackgroundLayer';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -150,8 +152,13 @@ export default function DailyBhaktiScreen() {
             </Text>
           </View>
 
-          {/* Verse Card */}
+          {/* Verse Card — carries the same faded source sketch as the verse's own
+              reader page (getReaderBackground). `chapter` doubles as the stanza/kāṇḍa
+              key for the sources whose plate varies per subsection. */}
           <View ref={dailyVerseRef} collapsable={false} style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+            <BackgroundLayer
+              source={getReaderBackground(verse.sourceId, { stanza: verse.chapter })}
+            />
             {/* Top row: source pill + action icons */}
             <View style={styles.cardHeader}>
               <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
@@ -185,6 +192,7 @@ export default function DailyBhaktiScreen() {
                       share(
                         {
                           sourceId: verse.sourceId,
+                          stanza: verse.chapter,
                           sectionNameHi: verse.sourceNameHi,
                           sectionNameEn: verse.sourceNameEn,
                           verseLabelHi: verse.labelHi ?? '',
@@ -284,6 +292,9 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 1,
     padding: 20,
+    // Clips the BackgroundLayer sketch to the rounded corners; the card's own
+    // backgroundColor keeps the iOS shadow rendering despite the clip.
+    overflow: 'hidden',
     ...elevation.raised,
   },
   cardHeader: {

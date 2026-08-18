@@ -294,6 +294,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
                           share(
                             {
                               sourceId: 'sundarkand',
+                              stanza: item.stanza,
                               sectionNameHi: chapter.titleHi,
                               sectionNameEn: chapter.titleEn,
                               verseLabelHi: item.labelHi,

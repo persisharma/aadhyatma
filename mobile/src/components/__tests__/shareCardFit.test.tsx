@@ -1,7 +1,17 @@
-import React from 'react';
+import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text } from 'react-native';
+import { Text, View as mockView } from 'react-native';
 import ShareCard, { type ShareCardProps } from '../ShareCard';
+
+// ShareCard now renders BackgroundLayer (the reader-page source sketch), whose
+// overlay is an expo-linear-gradient — untranspiled ESM Jest cannot parse.
+jest.mock('expo-linear-gradient', () => ({
+  LinearGradient: ({
+    children,
+    ...props
+  }: React.PropsWithChildren<Record<string, unknown>>) =>
+    mockReact.createElement(mockView, props, children),
+}));
 
 /**
  * Guard: the ShareCard is a fixed-size promo image, so a long meaning must be
@@ -21,6 +31,7 @@ const longMeaning =
   'seated upon the lotus, holding a crystal rosary in her hand.';
 
 const baseProps: ShareCardProps = {
+  sourceId: 'saraswati-stotram',
   sectionNameHi: 'सरस्वती वंदना',
   sectionNameEn: 'Saraswati Vandana',
   verseLabelHi: 'श्लोक · 2.2',
