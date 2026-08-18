@@ -9,8 +9,10 @@ import { scriptTitleFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ListCard, { CardThumb } from '@/components/ListCard';
 import MuhuratFollowControl from '@/components/MuhuratFollowControl';
+import MuhuratBalaStrip from '@/components/MuhuratBalaStrip';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useMuhuratFinder } from '@/panchang/useMuhuratFinder';
+import { useMuhuratBala, type MuhuratBalaItem } from '@/panchang/useMuhuratBala';
 import {
   DISHA_LABELS,
   DISHA_ORDER,
@@ -79,6 +81,24 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
   const [direction, setDirection] = useState<DishaDirection | undefined>(undefined);
   const { loading, summary, firstAfter } = useMuhuratFinder(rule.id, undefined, direction);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
+
+  // Phase 4: the quiet personal row (saved Kundali only — §8). The hook reads
+  // the profile itself; with none saved `hasProfile` stays false and every
+  // card renders exactly as before. It ANNOTATES ONLY: verdicts, ordering and
+  // sections above never touch it.
+  const listedVerdicts = [
+    ...(summary?.shreshtha.slice(0, 5) ?? []),
+    ...(summary?.madhyam.slice(0, 6) ?? []),
+    ...firstAfter,
+  ];
+  const balaItems: MuhuratBalaItem[] = listedVerdicts
+    .filter((v) => v.windows[0])
+    .map((v) => ({
+      dateMs: v.dateMs,
+      windowStart: v.windows[0].start,
+      nakshatraIndex: v.windows[0].angaAtWindow?.nakshatraIndex ?? v.sunriseAnga.nakshatraIndex,
+    }));
+  const { hydrated: balaHydrated, hasProfile, balaByDate } = useMuhuratBala(balaItems);
 
   const sectionLabelStyle = {
     fontFamily: typography.sectionLabel.fontFamily,
@@ -169,6 +189,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
             </Text>
           </>
         )}
+        {balaByDate?.get(v.dateMs) && <MuhuratBalaStrip bala={balaByDate.get(v.dateMs)} variant="row" />}
       </ListCard>
     );
   };
@@ -344,6 +365,42 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
                 </>
               )}
             </>
+          )}
+          {/* Phase 4 no-profile state (§8.4): the ONLY trace of the personal
+              strip is this one italic footer line, results list only, styled
+              as the disclaimer beside it, deep-linking to the shipped Kundali
+              screen. Never on day cards, never on the detail, never a badge. */}
+          {balaHydrated && !hasProfile && hasResults && (
+            <Pressable
+              testID="muhurat-bala-footer"
+              accessibilityRole="button"
+              accessibilityLabel={contentByLang(
+                lang,
+                'कुंडली सहेजने पर हर दिन आपके तारा/चन्द्र बल के साथ दिखेगा',
+                'Save your Kundali to see each day with your Tara/Chandra bala'
+              )}
+              onPress={() => navigation.navigate('Kundali', undefined)}
+            >
+              <Text
+                style={{
+                  fontFamily: typography.cardLatin.fontFamily,
+                  fontStyle: 'italic',
+                  fontSize: 11.5,
+                  color: colors.inkMuted,
+                  textAlign: 'center',
+                  marginTop: spacing.lg,
+                  lineHeight: 18,
+                  textDecorationLine: 'underline',
+                  textDecorationColor: colors.divider,
+                }}
+              >
+                {contentByLang(
+                  lang,
+                  'कुंडली सहेजने पर हर दिन आपके तारा/चन्द्र बल के साथ दिखेगा',
+                  'Save your Kundali to see each day with your Tara/Chandra bala'
+                )}
+              </Text>
+            </Pressable>
           )}
           <Text
             style={{

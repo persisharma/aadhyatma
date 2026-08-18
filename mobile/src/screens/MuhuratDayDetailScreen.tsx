@@ -12,6 +12,7 @@ import { scriptTitleFont } from '@/utils/langType';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { verdictForDate } from '@/panchang/muhuratFinderScan';
+import { useMuhuratBala } from '@/panchang/useMuhuratBala';
 import {
   DOSHA_LABELS,
   TIER_LABELS,
@@ -25,6 +26,7 @@ import { HORA_NAMES_HI, HORA_NAMES_EN } from '@/panchang/hora';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { PanchangData } from '@/panchang/types';
 import MuhuratFinderShareCard from '@/components/MuhuratFinderShareCard';
+import MuhuratBalaStrip from '@/components/MuhuratBalaStrip';
 import MuhuratFollowControl from '@/components/MuhuratFollowControl';
 import ShareButton from '@/components/ShareButton';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -150,6 +152,22 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
     lang === 'en' ? RASHI_NAMES_EN[i] : lang === 'hi' ? RASHI_NAMES_HI[i] : transliterateDevanagari(RASHI_NAMES_HI[i], lang);
   const best = data?.v.windows[0] ?? null;
 
+  // Phase 4: the आपके लिए strip (saved Kundali only, §8). Absent without a
+  // profile — zero chrome here, not even a hint (the one footer line lives on
+  // the results list). Annotates only; the verdict above never reads it.
+  const { balaByDate } = useMuhuratBala(
+    best && data
+      ? [
+          {
+            dateMs: data.v.dateMs,
+            windowStart: best.start,
+            nakshatraIndex: best.angaAtWindow?.nakshatraIndex ?? data.v.sunriseAnga.nakshatraIndex,
+          },
+        ]
+      : []
+  );
+  const bala = data ? balaByDate?.get(data.v.dateMs) : null;
+
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']}>
       <ReaderHeader
@@ -241,6 +259,10 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
               </View>
             )}
           </LinearGradient>
+
+          {/* Phase 4: the personal strip sits between answer and actions
+              (prototype phone c) — present only with a saved Kundali. */}
+          {data.v.tier !== 'excluded' && <MuhuratBalaStrip bala={bala} variant="card" />}
 
           {/* Action band — follow leads, then the shipped timings link. Both
               stay ABOVE the evidence so Answer → Action → Evidence holds. */}
