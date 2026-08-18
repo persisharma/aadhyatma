@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — detail PRD for the two final phases; prototype attached |
+| **Status** | **BUILT (Aug 2026)** — both phases, shipped Phase 3 first then Phase 4, per §11. As-built deltas: lagna preference tables ship **EMPTY** (not populated-DRAFT) with candidate rows in `conventions/muhurat-lagna-v1.md`, because the authoring environment had no content egress; the hora tie-break sits AFTER the Phase-1 window priority (tier → lagna → priority → hora — "tie-break" read literally, §4.5); `MuhuratWindow.lagnaRashiIndex`/`horaRuler` are nullable for the legacy no-spans path; §0's drikfixture goldens landed (published Nov-2026 Griha Pravesh rows, Chaturmas divergence asserted as such) and late-onset Vishti landed (`PanchangData.lateVishti`, re-pinning 27 Aug 2026). Release exposure still gates on the §10 review of every DRAFT table (§0.1). |
 | **Parent** | [PRD-16 §5 Phase 3 / Phase 4](./16-event-muhurat-finder.md) — the ONLY remaining unbuilt phases. Phase 5 (Vivah, deva pratishtha, multi-party) stays **deferred by explicit parent decision** and is not scoped here. |
 | **Phase 2 as built** | [TRD-16/P2](../trds/16-event-muhurat-finder-phase2.trd.md), design.md §60, `wiki/subsystems/panchang.md` |
 | **Prototype** | [`docs/muhurat-lagna-personalised-prototype.html`](../../muhurat-lagna-personalised-prototype.html) — all astrological values in it are **ILLUSTRATIVE**, not engine output |
