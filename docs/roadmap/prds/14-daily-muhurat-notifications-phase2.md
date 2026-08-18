@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — detail PRD for the final phase; prototype attached |
+| **Status** | **DROPPED — product decision, 2026-08-18.** Not scheduled for implementation; kept for the record. PRD-14 is complete at Phase 1 (Phase 2 was always optional). Do NOT pick this up from a backlog/enrichment sweep without an explicit product re-decision. |
 | **Parent PRD** | [`14-daily-muhurat.md`](./14-daily-muhurat.md) (Phase 2 of §6 — **the only remaining phase; PRD-14 is complete when this ships**) |
 | **Parent TRD** | [`../trds/14-daily-muhurat.trd.md`](../trds/14-daily-muhurat.trd.md) (§13 reserved this phase for the scheduler) |
 | **Prototype** | [`docs/muhurat-notifications-prototype.html`](../../muhurat-notifications-prototype.html) — settings, both lock-screen notices, landed detail |
