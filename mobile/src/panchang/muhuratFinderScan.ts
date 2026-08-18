@@ -110,8 +110,13 @@ export function verdictForDate(
     const p = inputs.p;
     const m = computeMuhuratDay(p.sunrise, p.sunset, next.p.sunrise, date.getDay());
     const abujh = isAbujhDay(date, p, opts);
+    // No `direction` here: यात्रा's दिशा is a scan-time input the results screen
+    // owns — a followed day re-grades direction-free (nothing is persisted).
     return {
-      verdict: evaluateDay(rule, date.getTime(), date.getDay(), p, m, inputs.asta, { abujh }),
+      verdict: evaluateDay(rule, date.getTime(), date.getDay(), p, m, inputs.asta, {
+        abujh,
+        lagnas: inputs.lagnas,
+      }),
       p,
     };
   } catch {

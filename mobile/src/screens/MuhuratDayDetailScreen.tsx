@@ -20,6 +20,8 @@ import {
 } from '@/panchang/eventMuhurat';
 import { formatRangeCompact } from '@/panchang/muhuratFormat';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI, TITHI_NAMES_EN, TITHI_NAMES_HI, VARA_NAMES_HI, VARA_NAMES_EN, PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
+import { RASHI_NAMES_HI, RASHI_NAMES_EN } from '@/panchang/kundali';
+import { HORA_NAMES_HI, HORA_NAMES_EN } from '@/panchang/hora';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { PanchangData } from '@/panchang/types';
 import MuhuratFinderShareCard from '@/components/MuhuratFinderShareCard';
@@ -144,6 +146,9 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
     lang === 'en' ? NAKSHATRA_NAMES_EN[i] : lang === 'hi' ? NAKSHATRA_NAMES_HI[i] : transliterateDevanagari(NAKSHATRA_NAMES_HI[i], lang);
   const tithiName = (i: number) =>
     lang === 'en' ? TITHI_NAMES_EN[i] : lang === 'hi' ? TITHI_NAMES_HI[i] : transliterateDevanagari(TITHI_NAMES_HI[i], lang);
+  const rashiName = (i: number) =>
+    lang === 'en' ? RASHI_NAMES_EN[i] : lang === 'hi' ? RASHI_NAMES_HI[i] : transliterateDevanagari(RASHI_NAMES_HI[i], lang);
+  const best = data?.v.windows[0] ?? null;
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']}>
@@ -219,6 +224,11 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
                     </Text>
                     <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep, textAlign: 'center', lineHeight: 21 }}>
                       {contentByLang(lang, data.v.windows[0].nameHi, data.v.windows[0].nameEn)}
+                      {/* Phase 3: the prevailing lagna joins the best-window
+                          line — splitting guarantees one span covers it. */}
+                      {data.v.windows[0].lagnaRashiIndex != null
+                        ? ` · ${rashiName(data.v.windows[0].lagnaRashiIndex)} ${contentByLang(lang, 'लग्न', 'lagna')}`
+                        : ''}
                     </Text>
                   </View>
                 )}
@@ -281,6 +291,33 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
               v={weekday}
               verdict={data.v.factors.vara ? contentByLang(lang, 'अनुकूल', 'Favourable') : contentByLang(lang, 'सामान्य', 'Neutral')}
             />
+            {/* Phase 3 (PRD-16/P3 §7): the lagna prevailing over the WHOLE
+                best window (splitting guarantees that), graded अनुकूल only on
+                a preferred-lagna match — inert while the tables are DRAFT. */}
+            {best?.lagnaRashiIndex != null && (
+              <KV
+                k={contentByLang(lang, 'लग्न', 'Lagna')}
+                v={rashiName(best.lagnaRashiIndex)}
+                sub={contentByLang(lang, 'पूरे समय-खंड पर', 'Prevails over the whole window')}
+                verdict={best.factors.lagna ? contentByLang(lang, 'अनुकूल', 'Favourable') : contentByLang(lang, 'सामान्य', 'Neutral')}
+              />
+            )}
+            {/* होरा is evidence and tie-break only — the साक्ष्य word keeps it
+                visibly outside the tier contract (RULEBOOK §17). */}
+            {best?.horaRuler && (
+              <KV
+                k={contentByLang(lang, 'होरा', 'Hora')}
+                v={`${
+                  lang === 'en'
+                    ? HORA_NAMES_EN[best.horaRuler]
+                    : lang === 'hi'
+                      ? HORA_NAMES_HI[best.horaRuler]
+                      : transliterateDevanagari(HORA_NAMES_HI[best.horaRuler], lang)
+                } ${contentByLang(lang, 'होरा', 'hora')}`}
+                sub={contentByLang(lang, 'श्रेणी नहीं बदलता', 'Evidence only — never changes the tier')}
+                verdict={contentByLang(lang, 'साक्ष्य', 'Evidence')}
+              />
+            )}
           </View>
 
           <Text style={sectionLabelStyle}>
@@ -346,6 +383,8 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
                   </Text>
                   <Text style={{ fontFamily: titleFont, fontSize: 11, color: colors.saffronDeep, marginLeft: 8, lineHeight: 18 }}>
                     {contentByLang(lang, TIER_LABELS[w.tier].hi, TIER_LABELS[w.tier].en)}
+                    {/* Phase 3: per-segment lagna beside the tier word. */}
+                    {w.lagnaRashiIndex != null ? ` · ${rashiName(w.lagnaRashiIndex)}` : ''}
                   </Text>
                 </View>
               ))}

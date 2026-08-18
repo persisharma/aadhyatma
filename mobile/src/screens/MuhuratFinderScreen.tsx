@@ -28,6 +28,7 @@ const OCCASION_GLYPH: Record<OccasionId, string> = {
   upanayana: 'उ',
   sampatti: 'सं',
   swarna: 'स्व',
+  yatra: 'या',
 };
 
 /** Occasion-specific caption lines, where the generic transliteration is not enough. */
@@ -35,6 +36,7 @@ const OCCASION_CAPTION: Partial<Record<OccasionId, { hi: string; en: string }>> 
   annaprashan: { hi: 'छठे–आठवें मास में', en: 'Annaprashan · 6th–8th month' },
   upanayana: { hi: 'जनेऊ संस्कार', en: 'Upanayana · Janeu' },
   mundan: { hi: 'चूड़ाकर्ण संस्कार', en: 'Mundan · Chudakarana' },
+  yatra: { hi: 'दिशा शूल सहित', en: 'Travel · with Disha Shool' },
 };
 
 /**

@@ -105,7 +105,7 @@ test('a single bad day-solve is skipped, not fatal — the scan still resolves',
     const d = dayAt(START, i);
     if (d.getDay() === 4) { poisoned = d; break; }
   }
-  cache.set(dateKeyFor(poisoned), { p: {} as never, asta: {} as never });
+  cache.set(dateKeyFor(poisoned), { p: {} as never, asta: {} as never, lagnas: [] });
   const days = await scanAbujhDays(START, FIRST_AFTER_MAX_DAYS, OPTS, {
     isCancelled: () => false,
     onProgress: () => {},

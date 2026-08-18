@@ -413,6 +413,16 @@ function sunriseFor(localDate: Date, location?: GeoLocation & { cityId?: string 
   return cached;
 }
 
+/**
+ * A civil day's local sunrise, through the shared memo (PRD-16/P3). The lagna
+ * sweep needs [sunrise, nextSunrise) and `computePanchangForDate` has already
+ * solved tomorrow's sunrise for kshaya detection, so this is a cache hit in
+ * every real call path — never a second root-find.
+ */
+export function sunriseForDate(localDate: Date, options: PanchangComputationOptions = {}): Date {
+  return sunriseFor(localDate, options.location, options.civilTimeZone);
+}
+
 // Lightweight tithi + lunar-month for a date, computed at sunrise — exactly the
 // two values festival matching needs. Skips the end-time bisections and the
 // sunset/moonrise rise/set solves that computePanchangForDate also performs.
@@ -460,7 +470,20 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
   // is what lets Bhadra be an interval instead of a whole-day flag, and it
   // surfaces on the Panchang tab / Muhurat card automatically (elementLine
   // prints endTime whenever it is non-null — TRD §1.2 blast radius).
-  const karanaEndTime = bisectKaranaEnd(sunrise, karanaAbsoluteAt(sunLng, moonLng), options.civilTimeZone);
+  const karanaAbsolute = karanaAbsoluteAt(sunLng, moonLng);
+  const karanaEndTime = bisectKaranaEnd(sunrise, karanaAbsolute, options.civilTimeZone);
+
+  // Late-onset Vishti (PRD-16/P3 §0.3): a Bhadra whose karana BEGINS during
+  // the day was invisible while only the sunrise karana was read — a finder
+  // quoting minute-grade windows must not miss an afternoon Bhadra. A karana
+  // lasts ~10–13.4 h, so at most one boundary falls inside daylight: checking
+  // the slot after the sunrise karana suffices for the daytime windows the
+  // finder offers. One extra bisection on ~13% of days.
+  let lateVishti: PanchangData['lateVishti'] = null;
+  if (karanaIndex !== 6 && karanaNameIndexFor((karanaAbsolute + 1) % 60) === 6 && karanaEndTime) {
+    const lateEnd = bisectKaranaEnd(karanaEndTime, (karanaAbsolute + 1) % 60, options.civilTimeZone);
+    if (lateEnd) lateVishti = { start: karanaEndTime, end: lateEnd };
+  }
 
   // Kshaya detection: a tithi or nakshatra can begin after this sunrise and end
   // before the next, touching neither — it is then the sunrise-anga of no civil
@@ -545,6 +568,7 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
       nameEn: KARANA_NAMES_EN[karanaIndex],
       endTime: karanaEndTime,
     },
+    lateVishti,
     sunrise,
     sunset,
     moonrise,

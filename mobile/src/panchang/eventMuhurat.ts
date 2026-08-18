@@ -19,6 +19,8 @@
 import type { MuhuratDay, ChoghadiyaPeriod } from './muhurat';
 import type { PanchangData } from './types';
 import { getSiderealPlanetLongitude } from './kundali';
+import { lagnaAt, type LagnaSpan } from './lagnaSweep';
+import { horaForDay, horaAt, BENEFIC_HORA, type HoraRuler } from './hora';
 
 export type OccasionId =
   | 'griha-pravesh'
@@ -33,7 +35,9 @@ export type OccasionId =
   | 'karnavedha'
   | 'upanayana'
   | 'sampatti'
-  | 'swarna';
+  | 'swarna'
+  // Phase 3 (PRD-16/P3 §4.6): the 13th occasion, with दिशा शूल.
+  | 'yatra';
 
 /** Picker grouping (TRD-16/P2 §6.1): twelve occasions need sections. */
 export type OccasionGroup = 'bhavan' | 'sanskar' | 'arambh';
@@ -57,7 +61,58 @@ export type DoshaKey =
   | 'chaturmas'
   | 'masa'
   | 'guru-asta'
-  | 'shukra-asta';
+  | 'shukra-asta'
+  | 'disha-shool';
+
+/** The eight travel directions the यात्रा picker offers (PRD-16/P3 §4.6). */
+export type DishaDirection =
+  | 'east'
+  | 'southeast'
+  | 'south'
+  | 'southwest'
+  | 'west'
+  | 'northwest'
+  | 'north'
+  | 'northeast';
+
+export const DISHA_ORDER: readonly DishaDirection[] = [
+  'east',
+  'southeast',
+  'south',
+  'southwest',
+  'west',
+  'northwest',
+  'north',
+  'northeast',
+];
+
+export const DISHA_LABELS: Readonly<Record<DishaDirection, { hi: string; en: string }>> = {
+  east: { hi: 'पूर्व', en: 'East' },
+  southeast: { hi: 'आग्नेय', en: 'South-East' },
+  south: { hi: 'दक्षिण', en: 'South' },
+  southwest: { hi: 'नैऋत्य', en: 'South-West' },
+  west: { hi: 'पश्चिम', en: 'West' },
+  northwest: { hi: 'वायव्य', en: 'North-West' },
+  north: { hi: 'उत्तर', en: 'North' },
+  northeast: { hi: 'ईशान', en: 'North-East' },
+};
+
+/**
+ * दिशा शूल — the vara-keyed barred CARDINAL direction, 0 = Sunday
+ * (Sun/Fri → पश्चिम, Mon/Sat → पूर्व, Tue/Wed → उत्तर, Thu → दक्षिण).
+ * ⚠ CONTENT — DRAFT rows pinned in docs/roadmap/conventions/muhurat-lagna-v1.md
+ * pending §10 two-source review; intercardinal directions carry no shool in v1
+ * (a recorded variant choice, same doc).
+ */
+export const DISHA_SHOOL_BY_VARA: readonly DishaDirection[] = [
+  'west',
+  'east',
+  'north',
+  'north',
+  'south',
+  'west',
+  'east',
+];
 
 /**
  * Per-occasion lunar-month rules (TRD-16/P2 §4.3). Indices are the
@@ -72,6 +127,22 @@ export type MasaRule = {
 
 const NO_MASA_RULE: MasaRule = { preferred: [], barred: [] };
 
+/**
+ * Per-occasion lagna preference (PRD-16/P3 §4.4). Indices are 0-based rashis
+ * (0 = Mesha … 11 = Meena). A PREFERRED lagna is a tie-break + evidence word;
+ * a BARRED lagna demotes a shreshtha segment to madhyam — it never excludes a
+ * day by itself (variant choice recorded in muhurat-lagna-v1.md).
+ * ⚠ CONTENT — all tables ship EMPTY (grading inert; the lagna chip still
+ * renders) until the §10 two-source review lands the muhurat-lagna-v1.md
+ * candidate rows. Pinned by test.
+ */
+export type LagnaRule = {
+  preferred: readonly number[];
+  barred: readonly number[];
+};
+
+const NO_LAGNA_RULE: LagnaRule = { preferred: [], barred: [] };
+
 export type EventRule = {
   id: OccasionId;
   nameHi: string;
@@ -79,6 +150,8 @@ export type EventRule = {
   group: OccasionGroup;
   /** Masa shuddhi (Phase 2). DRAFT content, same §10 gate as the anga tables. */
   masa: MasaRule;
+  /** Lagna preference (Phase 3). DRAFT — ships empty until §10 (see LagnaRule). */
+  lagna: LagnaRule;
   /** 0-based indexes into the 27-nakshatra tables (names.ts). */
   nakshatras: readonly number[];
   /** 0-based indexes into the 30-tithi array (shukla 1..15 → 0..14, krishna → 15..29). */
@@ -102,22 +175,36 @@ export type MuhuratWindow = {
   end: Date;
   /** Phase 2: this window's own grade, from the anga prevailing at its start. */
   tier: Exclude<MuhuratTier, 'excluded'>;
-  factors: { nakshatra: boolean; tithi: boolean; vara: boolean };
+  /** Phase 3: `lagna` = preferred-lagna match (false while the tables are empty DRAFT). */
+  factors: { nakshatra: boolean; tithi: boolean; vara: boolean; lagna: boolean };
   /** The angas during THIS window, when they differ from sunrise; else null. */
   angaAtWindow: { nakshatraIndex: number; tithiIndex: number } | null;
+  /**
+   * Phase 3: the lagna span this segment sits in (0-based rashi). Splitting
+   * guarantees one span covers the whole segment. Null only on the legacy
+   * no-spans path (a caller that passed no `lagnas` — the §4.2 fallback).
+   */
+  lagnaRashiIndex: number | null;
+  /** Phase 3: the hora at the segment start — EVIDENCE and tie-break only. */
+  horaRuler: HoraRuler | null;
+  /** Phase 3: the parent window's kind when this segment came from a split. */
+  splitFrom: 'choghadiya' | 'abhijit' | null;
 };
 
 export type DayVerdict = {
   dateMs: number;
   tier: MuhuratTier;
-  /** Best window's factors; sunrise factors when the day is excluded. */
-  factors: { nakshatra: boolean; tithi: boolean; vara: boolean };
+  /** Best window's factors; sunrise factors (lagna false) when the day is excluded. */
+  factors: { nakshatra: boolean; tithi: boolean; vara: boolean; lagna: boolean };
   doshas: DoshaKey[];
-  /** Qualifying windows (kaal + bhadra removed, window-graded), best first; empty when excluded. */
+  /** Qualifying windows (kaal + bhadra removed, split + window-graded), best first; empty when excluded. */
   windows: MuhuratWindow[];
   /** Sunrise anga, retained: the almanac reading the Panchang tab shows. */
   sunriseAnga: { nakshatraIndex: number; tithiIndex: number };
-  /** Bhadra as an interval when Vishti is the sunrise karana; else null. */
+  /**
+   * Bhadra as an interval — sunrise-Vishti (sunrise → karana end) or the
+   * Phase-3 late-onset Vishti (karana end → its own end); else null.
+   */
   bhadra: { start: Date; end: Date } | null;
 };
 
@@ -132,7 +219,7 @@ export type FinderSummary = {
 // Rikta tithis (Chaturthi/Navami/Chaturdashi, both pakshas) + Amavasya.
 const RIKTA = new Set([3, 8, 13, 18, 23, 28]);
 const AMAVASYA = 29;
-const VISHTI_KARANA_INDEX = 6; // भद्रा — sunrise karana only; window solver is Phase 2 (PRD-16 §5).
+const VISHTI_KARANA_INDEX = 6; // भद्रा — sunrise interval (Phase 2) + late-onset via p.lateVishti (Phase 3).
 const PANCHAK_FIRST = 22; // Dhanishta … Revati (coarse: whole-nakshatra, not half-Dhanishta).
 
 const GENERAL_GOOD_TITHIS = [1, 2, 4, 6, 9, 10, 12, 14, 16, 17, 19, 21, 24, 25, 27] as const;
@@ -145,6 +232,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     id: 'griha-pravesh',
     group: 'bhavan',
     masa: { preferred: [11, 12, 2, 3], barred: [] },
+    lagna: NO_LAGNA_RULE,
     nameHi: 'गृह प्रवेश',
     nameEn: 'Griha Pravesh',
     nakshatras: [3, 4, 11, 13, 16, 20, 22, 25, 26],
@@ -161,6 +249,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     id: 'vahan',
     group: 'arambh',
     masa: NO_MASA_RULE,
+    lagna: NO_LAGNA_RULE,
     nameHi: 'वाहन क्रय',
     nameEn: 'Vehicle Purchase',
     nakshatras: [0, 3, 4, 6, 7, 12, 13, 14, 16, 22, 23, 26],
@@ -174,6 +263,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     id: 'namkaran',
     group: 'sanskar',
     masa: NO_MASA_RULE,
+    lagna: NO_LAGNA_RULE,
     nameHi: 'नामकरण',
     nameEn: 'Naming Ceremony',
     nakshatras: [0, 3, 4, 6, 7, 11, 12, 13, 14, 16, 20, 21, 22, 23, 25, 26],
@@ -187,6 +277,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     id: 'vidyarambh',
     group: 'sanskar',
     masa: NO_MASA_RULE,
+    lagna: NO_LAGNA_RULE,
     nameHi: 'विद्यारम्भ',
     nameEn: 'Starting Education',
     nakshatras: [0, 6, 7, 12, 13, 14, 16, 20, 21, 22, 23, 26],
@@ -200,6 +291,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     id: 'bhumi-pujan',
     group: 'bhavan',
     masa: { preferred: [11, 12, 2, 3], barred: [] },
+    lagna: NO_LAGNA_RULE,
     nameHi: 'भूमि पूजन',
     nameEn: 'Bhumi Pujan',
     nakshatras: [3, 4, 6, 7, 11, 12, 13, 16, 20, 21, 22, 25, 26],
@@ -213,6 +305,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     id: 'vyapar',
     group: 'arambh',
     masa: NO_MASA_RULE,
+    lagna: NO_LAGNA_RULE,
     nameHi: 'व्यापार आरम्भ',
     nameEn: 'Starting a Business',
     nakshatras: [0, 3, 6, 7, 11, 12, 13, 14, 16, 20, 21, 22, 23, 26],
@@ -229,6 +322,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     nameEn: 'Mundan',
     group: 'sanskar',
     masa: NO_MASA_RULE,
+    lagna: NO_LAGNA_RULE,
     nakshatras: [0, 4, 6, 7, 12, 13, 14, 17, 21, 22, 23],
     tithis: GENERAL_GOOD_TITHIS,
     varas: [1, 3, 4, 5],
@@ -242,6 +336,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     nameEn: 'Annaprashan',
     group: 'sanskar',
     masa: NO_MASA_RULE,
+    lagna: NO_LAGNA_RULE,
     nakshatras: [0, 3, 4, 6, 7, 11, 12, 13, 14, 16, 20, 21, 22, 23, 25, 26],
     tithis: [1, 2, 4, 6, 9, 11, 12, 14, 16, 17, 19, 21, 24, 26, 27],
     varas: [1, 3, 4, 5],
@@ -258,6 +353,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     nameEn: 'Karnavedha',
     group: 'sanskar',
     masa: NO_MASA_RULE,
+    lagna: NO_LAGNA_RULE,
     nakshatras: [4, 6, 7, 12, 13, 14, 16, 21, 22, 26],
     tithis: GENERAL_GOOD_TITHIS,
     varas: [1, 3, 4, 5],
@@ -274,6 +370,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     // traditional window is Magha–Jyeshtha; Margashirsha/Pausha are barred
     // beyond the Chaturmas months. DRAFT — the sharpest §10 review target.
     masa: { preferred: [11, 12, 1, 2, 3], barred: [5, 6, 7, 8, 9, 10] },
+    lagna: NO_LAGNA_RULE,
     nakshatras: [0, 3, 4, 6, 7, 12, 13, 14, 16, 21, 22, 23, 26],
     tithis: [1, 2, 4, 9, 10, 11],
     varas: [1, 3, 4, 5],
@@ -287,6 +384,7 @@ export const EVENT_RULES: readonly EventRule[] = [
     nameEn: 'Property Purchase',
     group: 'arambh',
     masa: NO_MASA_RULE,
+    lagna: NO_LAGNA_RULE,
     nakshatras: [3, 4, 6, 7, 11, 12, 13, 16, 20, 21, 22, 25, 26],
     tithis: GENERAL_GOOD_TITHIS,
     varas: [1, 3, 4, 5],
@@ -300,12 +398,38 @@ export const EVENT_RULES: readonly EventRule[] = [
     nameEn: 'Gold Purchase',
     group: 'arambh',
     masa: NO_MASA_RULE,
+    lagna: NO_LAGNA_RULE,
     nakshatras: [0, 3, 6, 7, 11, 12, 13, 20, 21, 25, 26],
     tithis: GENERAL_GOOD_TITHIS,
     varas: [1, 3, 4, 5],
     avoidVaras: [2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti'],
     source: DRAFT('gold-purchase-dates-with-muhurat.html', 'DRAFT §10 pending. Overlaps the abujh days heavily by design (PRD §4.3).'),
+  },
+  // ── Phase 3 occasion (PRD-16/P3 §4.6): यात्रा completes parent §4.3. ──
+  {
+    id: 'yatra',
+    nameHi: 'यात्रा',
+    nameEn: 'Travel',
+    group: 'arambh',
+    masa: NO_MASA_RULE,
+    lagna: NO_LAGNA_RULE,
+    // Classical laghu/kshipra travel set: Ashwini, Mrigashira, Punarvasu,
+    // Pushya, Hasta, Anuradha, Shravana, Dhanishta, Revati. DRAFT.
+    nakshatras: [0, 4, 6, 7, 12, 16, 21, 22, 26],
+    tithis: GENERAL_GOOD_TITHIS,
+    varas: [1, 3, 4, 5],
+    avoidVaras: [2, 6],
+    doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti', 'disha-shool'],
+    source: {
+      convention: 'drikpanchang',
+      verified: false,
+      referenceUrls: [DP],
+      notes:
+        'DRAFT §10 pending — the exact published-list page slug is unverified (authored without content egress). ' +
+        'दिशा शूल rows and the intercardinal variant choice are pinned in docs/roadmap/conventions/muhurat-lagna-v1.md. ' +
+        'No destination geocoding, no Chandra-vasa in v1 (PRD-16/P3 §14).',
+    },
   },
 ];
 
@@ -327,6 +451,9 @@ export const DOSHA_LABELS: Readonly<Record<DoshaKey, { hi: string; en: string }>
   masa: { hi: 'मास शुद्धि', en: 'Unsuitable month' },
   'guru-asta': { hi: 'गुरु अस्त', en: 'Guru asta (Jupiter combust)' },
   'shukra-asta': { hi: 'शुक्र अस्त', en: 'Shukra asta (Venus combust)' },
+  // The UI appends the chosen direction's name (the reason must NAME the
+  // direction — PRD-16/P3 §4.6); the engine label stays direction-free.
+  'disha-shool': { hi: 'दिशा शूल', en: 'Disha Shool' },
 };
 
 export const TIER_LABELS: Readonly<Record<Exclude<MuhuratTier, 'excluded'>, { hi: string; en: string }>> = {
@@ -445,16 +572,24 @@ export function angaAt(
  * data cannot reach here after the cache-version bump, but stay defensive)
  * degrades to the Phase-1 whole-day reading via `end: null` → callers treat
  * the interval as open-ended.
+ *
+ * Phase 3 (PRD-16/P3 §0.3): a Vishti that STARTS during the day — the karana
+ * after the sunrise karana — is solved by the engine into `p.lateVishti` and
+ * returned here, so an afternoon Bhadra removes windows exactly like a
+ * sunrise one. `?? null` keeps a pre-v3 cached day (no such field) defensive.
  */
 export function bhadraInterval(p: PanchangData): { start: Date; end: Date | null } | null {
-  if (p.karana.index !== VISHTI_KARANA_INDEX) return null;
-  return { start: p.sunrise, end: p.karana.endTime };
+  if (p.karana.index === VISHTI_KARANA_INDEX) return { start: p.sunrise, end: p.karana.endTime };
+  return p.lateVishti ?? null;
 }
 
 const AUSPICIOUS_CHOGHADIYA = new Set<ChoghadiyaPeriod['key']>(['labh', 'amrit', 'shubh', 'char']);
 
 /** A window before grading — what `auspiciousWindows` yields. */
-export type RawMuhuratWindow = Omit<MuhuratWindow, 'tier' | 'factors' | 'angaAtWindow'>;
+export type RawMuhuratWindow = Omit<
+  MuhuratWindow,
+  'tier' | 'factors' | 'angaAtWindow' | 'lagnaRashiIndex' | 'horaRuler' | 'splitFrom'
+>;
 
 /**
  * Usable daytime windows: auspicious day-choghadiya whose slot is not a kaal
@@ -494,17 +629,44 @@ export function windowsOutsideBhadra(
 const SEASONAL_DOSHAS: ReadonlySet<DoshaKey> = new Set<DoshaKey>(['chaturmas', 'masa', 'guru-asta', 'shukra-asta']);
 
 /**
- * Grade one civil day for one occasion (PRD-16; Phase 2 = TRD-16/P2 §2).
+ * Minimum usable segment length after splitting — ~1 ghatika (PRD-16/P3 §4.3).
+ * Shorter split parts are DROPPED, never clipped or merged — the same doctrine
+ * as kaal slots and bhadra. This also settles the boundary-within-minutes-of-
+ * window-start edge case: the leading sliver falls under the floor and the
+ * window effectively starts at the boundary (no hysteresis — the rule is
+ * length, not distance).
+ */
+export const MIN_SEGMENT_MINUTES = 24;
+const MIN_SEGMENT_MS = MIN_SEGMENT_MINUTES * 60_000;
+
+/**
+ * Grade one civil day for one occasion (PRD-16; Phase 2 = TRD-16/P2 §2,
+ * Phase 3 = PRD-16/P3 §4.3).
  *
  * Two passes:
  *  1. DAY pass — doshas that hold from sunrise to sunset (masa, chaturmas,
- *     adhik, yoga flags, asta). Any hit ⇒ excluded outright.
- *  2. WINDOW pass — bhadra-overlapped windows dropped, then each surviving
- *     window graded on the anga prevailing AT ITS START (kshaya-aware) plus
- *     the anga doshas at that instant. The day's tier is the best window's.
+ *     adhik, yoga flags, asta, and — for यात्रा with a chosen direction — the
+ *     vara-keyed दिशा शूल). Any hit ⇒ excluded outright.
+ *  2. WINDOW pass — bhadra-overlapped windows dropped, then each survivor is
+ *     SPLIT at every lagna boundary and every anga (tithi/nakshatra)
+ *     changeover inside it; sub-24-minute parts are dropped; each remaining
+ *     segment is graded on the anga prevailing at ITS start (kshaya-aware)
+ *     plus the anga doshas at that instant, plus the lagna factor from the
+ *     one span that now covers the whole segment. The day's tier is the best
+ *     segment's. This resolves TRD-16/P2 §4.1's "graded at start, flagged"
+ *     deferral — the segment IS the window.
+ *
+ * Lagna rule (§4.3): श्रेष्ठ requires all three anga factors AND a non-barred
+ * lagna; a barred lagna demotes to मध्यम (never excludes a day by itself); a
+ * PREFERRED lagna is a tie-break + evidence word. Hora is EVIDENCE and
+ * tie-break only — it never moves a tier (RULEBOOK §17).
  *
  * `opts.abujh` lifts the SEASONAL bars only (chaturmas, masa, asta) — the
  * narrow reading recorded in RULEBOOK §17.8; per-window doshas still apply.
+ * `opts.lagnas` are the day's spans from `DayInputs`; when absent (legacy
+ * callers — the §4.2 fallback) no lagna splitting happens and the lagna
+ * factor is inert. `opts.direction` is यात्रा's chosen travel direction —
+ * scan-time input only, never persisted.
  */
 export function evaluateDay(
   rule: EventRule,
@@ -513,7 +675,7 @@ export function evaluateDay(
   p: PanchangData,
   m: MuhuratDay,
   asta: { shukraAsta: boolean; guruAsta: boolean },
-  opts?: { abujh?: boolean }
+  opts?: { abujh?: boolean; lagnas?: readonly LagnaSpan[]; direction?: DishaDirection }
 ): DayVerdict {
   const sunriseAnga = { nakshatraIndex: p.nakshatra.index, tithiIndex: p.tithi.index };
   const bhadra = rule.doshas.includes('bhadra') ? bhadraInterval(p) : null;
@@ -521,6 +683,7 @@ export function evaluateDay(
     nakshatra: rule.nakshatras.includes(p.nakshatra.index),
     tithi: rule.tithis.includes(p.tithi.index),
     vara: rule.varas.includes(weekday),
+    lagna: false,
   };
   const base = {
     dateMs,
@@ -532,41 +695,87 @@ export function evaluateDay(
   const dayDoshaList = dayLevelDoshas(rule, p, asta)
     .filter((d) => rule.doshas.includes(d) || d === 'masa')
     .filter((d) => !(opts?.abujh && SEASONAL_DOSHAS.has(d)));
+  if (
+    rule.doshas.includes('disha-shool') &&
+    opts?.direction &&
+    DISHA_SHOOL_BY_VARA[weekday] === opts.direction
+  ) {
+    dayDoshaList.push('disha-shool');
+  }
   if (dayDoshaList.length > 0) {
     return { ...base, tier: 'excluded', factors: sunriseFactors, doshas: dayDoshaList, windows: [] };
   }
 
-  // ── pass 2: per-window ──
+  // ── pass 2: split-and-grade per window ──
+  // Splits run over windows AFTER kaal/bhadra removal, so a boundary landing
+  // inside a removed interval is unreachable by construction (§13).
+  const spans = opts?.lagnas && opts.lagnas.length > 0 ? opts.lagnas : null;
+  const horas = horaForDay(m.sunrise, m.sunset, m.nextSunrise, weekday);
   const candidates = windowsOutsideBhadra(auspiciousWindows(m), bhadra);
   const graded: MuhuratWindow[] = [];
   const failedDoshas = new Set<DoshaKey>();
   for (const w of candidates) {
-    const tithiIndex = angaAt(p.tithi, p.kshayaTithi, w.start, 30);
-    const nakshatraIndex = angaAt(p.nakshatra, p.kshayaNakshatra, w.start, 27);
-    const wDoshas = angaDoshas(tithiIndex, nakshatraIndex).filter((d) => rule.doshas.includes(d));
-    if (wDoshas.length > 0) {
-      for (const d of wDoshas) failedDoshas.add(d);
-      continue;
-    }
-    const factors = {
-      nakshatra: rule.nakshatras.includes(nakshatraIndex),
-      tithi: rule.tithis.includes(tithiIndex),
-      vara: rule.varas.includes(weekday),
+    const startMs = w.start.getTime();
+    const endMs = w.end.getTime();
+    // Boundaries strictly inside the window: anga changeovers (kshaya ends
+    // included — the skipped anga inserts its own segment, §13) and lagna
+    // span starts.
+    const cuts = new Set<number>();
+    const addCut = (d: Date | null | undefined) => {
+      if (!d) return;
+      const t = d.getTime();
+      if (t > startMs && t < endMs) cuts.add(t);
     };
-    const ok = Number(factors.nakshatra) + Number(factors.tithi) + Number(factors.vara);
-    let tier: Exclude<MuhuratTier, 'excluded'>;
-    if (ok === 3) tier = 'shreshtha';
-    else if (ok === 2 && !rule.avoidVaras.includes(weekday)) tier = 'madhyam';
-    else continue; // this window fails on factors — not offered
-    graded.push({
-      ...w,
-      tier,
-      factors,
-      angaAtWindow:
-        tithiIndex === sunriseAnga.tithiIndex && nakshatraIndex === sunriseAnga.nakshatraIndex
-          ? null
-          : { nakshatraIndex, tithiIndex },
-    });
+    addCut(p.tithi.endTime);
+    addCut(p.kshayaTithi?.endTime);
+    addCut(p.nakshatra.endTime);
+    addCut(p.kshayaNakshatra?.endTime);
+    if (spans) for (const s of spans) addCut(s.start);
+    const edges = [startMs, ...[...cuts].sort((a, b) => a - b), endMs];
+    const splitFrom = cuts.size > 0 ? w.kind : null;
+
+    for (let i = 0; i < edges.length - 1; i += 1) {
+      if (edges[i + 1] - edges[i] < MIN_SEGMENT_MS) continue; // dropped, never clipped
+      const segStart = new Date(edges[i]);
+      const segEnd = new Date(edges[i + 1]);
+      const tithiIndex = angaAt(p.tithi, p.kshayaTithi, segStart, 30);
+      const nakshatraIndex = angaAt(p.nakshatra, p.kshayaNakshatra, segStart, 27);
+      const segDoshas = angaDoshas(tithiIndex, nakshatraIndex).filter((d) => rule.doshas.includes(d));
+      if (segDoshas.length > 0) {
+        for (const d of segDoshas) failedDoshas.add(d);
+        continue;
+      }
+      const lagnaRashiIndex = spans ? lagnaAt(spans, segStart) : null;
+      const lagnaBarred = lagnaRashiIndex !== null && rule.lagna.barred.includes(lagnaRashiIndex);
+      const factors = {
+        nakshatra: rule.nakshatras.includes(nakshatraIndex),
+        tithi: rule.tithis.includes(tithiIndex),
+        vara: rule.varas.includes(weekday),
+        lagna: lagnaRashiIndex !== null && rule.lagna.preferred.includes(lagnaRashiIndex),
+      };
+      const ok = Number(factors.nakshatra) + Number(factors.tithi) + Number(factors.vara);
+      let tier: Exclude<MuhuratTier, 'excluded'>;
+      if (ok === 3 && !lagnaBarred) tier = 'shreshtha';
+      else if (ok === 3) tier = 'madhyam'; // barred lagna demotes, never excludes (§4.3)
+      else if (ok === 2 && !rule.avoidVaras.includes(weekday)) tier = 'madhyam';
+      else continue; // this segment fails on factors — not offered
+      graded.push({
+        kind: w.kind,
+        nameHi: w.nameHi,
+        nameEn: w.nameEn,
+        start: segStart,
+        end: segEnd,
+        tier,
+        factors,
+        angaAtWindow:
+          tithiIndex === sunriseAnga.tithiIndex && nakshatraIndex === sunriseAnga.nakshatraIndex
+            ? null
+            : { nakshatraIndex, tithiIndex },
+        lagnaRashiIndex,
+        horaRuler: horaAt(horas, segStart)?.ruler ?? null,
+        splitFrom,
+      });
+    }
   }
 
   if (graded.length === 0) {
@@ -577,10 +786,25 @@ export function evaluateDay(
     return { ...base, tier: 'excluded', factors: sunriseFactors, doshas, windows: [] };
   }
 
-  // Best-first: shreshtha windows lead; within a tier the priority order from
-  // auspiciousWindows is preserved (stable sort).
+  // Best-first: shreshtha segments lead; within a tier a PREFERRED lagna wins
+  // (§4.3 — "distinguishes the best segment among equals"); then the window
+  // priority from auspiciousWindows (Amrit → Abhijit → Shubh → rest) holds as
+  // it has since Phase 1; a benefic hora (Guru/Shukra/Budh) breaks only the
+  // remaining ties — TIE-break, not a reordering (§4.5): it must never move a
+  // window past a higher-priority equal-tier one, let alone move a tier.
+  // Within full ties the stable sort keeps time order.
   const rank = (t: MuhuratTier) => (t === 'shreshtha' ? 0 : 1);
-  graded.sort((a, b) => rank(a.tier) - rank(b.tier));
+  const lagnaRank = (x: MuhuratWindow) => (x.factors.lagna ? 0 : 1);
+  const priorityRank = (x: MuhuratWindow) =>
+    x.nameEn === 'Amrit' ? 0 : x.kind === 'abhijit' ? 1 : x.nameEn === 'Shubh' ? 2 : 3;
+  const horaRank = (x: MuhuratWindow) => (x.horaRuler && BENEFIC_HORA.has(x.horaRuler) ? 0 : 1);
+  graded.sort(
+    (a, b) =>
+      rank(a.tier) - rank(b.tier) ||
+      lagnaRank(a) - lagnaRank(b) ||
+      priorityRank(a) - priorityRank(b) ||
+      horaRank(a) - horaRank(b)
+  );
   return { ...base, tier: graded[0].tier, factors: graded[0].factors, doshas: [], windows: graded };
 }
 
