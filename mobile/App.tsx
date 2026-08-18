@@ -223,13 +223,17 @@ export default function App() {
       {/* `initialMetrics` is the launch-jerk fix, not an optimization to trim.
           Without it the provider renders NOTHING until the first native inset
           event crosses the (busy) launch JS thread, and the whole tree then
-          mounts on whatever that first event carried — on Android cold starts
-          under edge-to-edge that can be a pre-attach zero, so Home painted
-          flush under the status bar, sat frozen behind the mount burst, and
-          lurched down by the status-bar height when the corrected insets
-          finally applied. Seeding from the native module's constants gives the
-          first committed frame its final insets, so any later inset event is a
-          no-op instead of a visible reflow. */}
+          mounts on whatever that first event carried — which on a cold start
+          can be ZERO on both platforms: the iOS provider view reports its own
+          `safeAreaInsets`, which UIKit leaves zero until the view is attached
+          to the window (its guard only checks for a zero SIZE), and Android
+          under edge-to-edge can dispatch a pre-attach zero likewise. Home then
+          painted flush under the notch/status bar, sat frozen behind the mount
+          burst, and lurched down by the top inset when the correction event
+          finally applied. The module constants are read from the KEY WINDOW —
+          attached by definition when JS loads — so seeding from them gives the
+          first committed frame its final insets and makes any later inset
+          event a no-op instead of a visible reflow. */}
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <FontScaleProvider>
         <ThemeProvider>
