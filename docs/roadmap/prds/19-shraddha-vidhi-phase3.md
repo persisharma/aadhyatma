@@ -83,7 +83,7 @@ export type VidhiRef =
   | { kind: 'gita'; chapter: number };                     // NEW — Gita-paath hand-off
 ```
 
-> **Reconcile with PRD-17 Phases 2–3:** [17-namkaran-phase2-3.md](./17-namkaran-phase2-3.md) independently proposes `occasion?: 'festival' | 'sanskar'` on `VidhiEntry` for the namkaran-sanskar vidhi. `anchor` (where the date comes from) and `occasion` (what kind of rite) are different dimensions; whichever PRD lands second must fold both into one reviewed `VidhiEntry` change and one updated `vidhiContent.test.ts` invariant rather than relaxing the `festivalIds.length >= 1` assertion twice.
+> **Reconciliation note (resolved):** [17-namkaran-phase2-3.md](./17-namkaran-phase2-3.md) independently proposed `occasion?: 'festival' | 'sanskar'` on `VidhiEntry`, but that PRD was **dropped by product decision on 2026-08-18** — `anchor?:` can land here as the single reviewed `VidhiEntry` change with one updated `vidhiContent.test.ts` invariant. If the namkaran phases are ever revived, that PRD must reconcile with whatever this one shipped.
 
 The `gita` ref kind is required because `GitaReader` is chaptered (`{ chapter }` route param) and no `section` id addresses a single adhyaya. Hand-off caption for it is **पाठ** (the category-aware caption rule — never "आरती"). `vidhiContent.test.ts` pins that every `gita` ref's chapter is 1–18 and that this entry's refs cover the same chapters PRD-17 links (15 and 2) so the two features can never drift apart.
 

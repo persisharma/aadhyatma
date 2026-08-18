@@ -347,7 +347,7 @@ for the rashi detail come from the generated index, never from loading shards to
 | **2** | Namkaran vidhi `sanskar` module; Feature Spotlight entry; name-detail deity links for the full corpus; customer-copy audit removes implementation/connectivity/version language in all four reading languages | store release if the vidhi ships audio, else OTA |
 | **3** | Namkaran-day reminder (reuses the vrat `VratReminderPref` model, the same slice PRD-16 defers) with action-only reminder copy; Home tile alongside a grid re-flow; namkaran-day nakshatra as an explicit second basis; no “local/on-device/offline” reassurance on any new surface | — |
 
-— **Phases 2–3 detailed in [17-namkaran-phase2-3.md](./17-namkaran-phase2-3.md)**
+— **Phases 2–3 DROPPED (product decision, 2026-08-18); Namkaran stays as shipped at Phase 1.** Detail PRD kept for the record: [17-namkaran-phase2-3.md](./17-namkaran-phase2-3.md)
 
 ## 10. Design requirements
 

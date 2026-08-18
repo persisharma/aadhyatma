@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — detail PRD for the two final phases; vidhi content-gated; prototype attached |
+| **Status** | **DROPPED — product decision, 2026-08-18.** Phases 2–3 are not being built; Namkaran stays as shipped at Phase 1 (its store-release gates — convention sign-off, shipping corpus, Android Maestro — still stand for what IS shipped). Kept for the record. Do NOT pick this up from a backlog/enrichment sweep without an explicit product re-decision. |
 | **Parent** | [PRD-17](./17-namkaran.md) §9 Phases 2–3 · [TRD-17](../trds/17-namkaran.trd.md) (as-built Phase 1) · [`namkaran-namakshar-v1.md`](../conventions/namkaran-namakshar-v1.md) |
 | **Prototype** | [`docs/namkaran-phase2-3-prototype.html`](../../namkaran-phase2-3-prototype.html) — 6 frames: result screen with vidhi door + deity row + reminder action, vidhi prep, vidhi conduct card, Home DISCOVER Spotlight, lock-screen reminder, naming-day Today-strip chip |
 | **T-shirt size** | **M** — engine work is nil; the cost is one sourced vidhi (content), one tiny notification family, and copy in hi/en with gu/kn derived by transliteration |
