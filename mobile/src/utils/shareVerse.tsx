@@ -15,6 +15,14 @@ import type { Lang } from '@/data/gita/language';
 
 export type ShareableVerse = {
   sourceId: string;
+  /**
+   * Reader-background subsection key (optional) — the kāṇḍa/stanza number
+   * `getReaderBackground` uses for sources whose plate varies per subsection
+   * (Valmiki Ramayan, Sundarkand). Readers pass the verse's own `stanza`;
+   * Daily Bhakti passes the pool verse's `chapter` (kāṇḍa for Valmiki, a close
+   * proxy for Sundarkand). Absent, the source-level plate is used.
+   */
+  stanza?: number;
   sectionNameHi: string;
   sectionNameEn: string;
   verseLabelHi: string;
@@ -160,6 +168,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}
           >
             <ShareCard
+              sourceId={pending.verse.sourceId}
+              stanza={pending.verse.stanza}
               sectionNameHi={pending.verse.sectionNameHi}
               sectionNameEn={pending.verse.sectionNameEn}
               verseLabelHi={pending.verse.verseLabelHi}

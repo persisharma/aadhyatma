@@ -5,9 +5,19 @@ import { fontFamilies } from '@/theme/typography';
 import type { Lang } from '@/data/gita/language';
 import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
 import { fitMeaningType, meaningScriptFor, shareCardMetrics } from '@/utils/shareCardType';
+import { getReaderBackground } from '@/data/backgrounds';
+import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
 
 export type ShareCardProps = {
+  /** Source id — resolves the same faded sketch the source's reader page shows. */
+  sourceId: string;
+  /**
+   * Subsection key (kāṇḍa/stanza) for sources whose reader plate varies per
+   * subsection (Valmiki Ramayan, Sundarkand); absent, the source-level plate
+   * is used.
+   */
+  stanza?: number;
   sectionNameHi: string;
   sectionNameEn: string;
   verseLabelHi: string;
@@ -75,6 +85,11 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
         },
       ]}
     >
+      {/* Same faded source sketch + parchment overlay as the reader page; falls
+          back to the plain parchment gradient for sources without a plate. */}
+      <BackgroundLayer
+        source={getReaderBackground(props.sourceId, { stanza: props.stanza })}
+      />
       <View style={styles.headerBand}>
         <Text
           style={[
@@ -177,6 +192,8 @@ export default ShareCard;
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
+    // Keeps the BackgroundLayer sketch inside the card's 1px border.
+    overflow: 'hidden',
     // Geometry is shared with the meaning's line budget — change both together.
     paddingTop: shareCardMetrics.paddingTop,
     paddingBottom: shareCardMetrics.paddingBottom,

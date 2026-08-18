@@ -848,7 +848,7 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 1. Status bar
 2. Title area (centered): "दैनिक भक्ति" (Noto Serif 20 600, ink) + "Daily Verse" (Cormorant 14 400 italic, ink-muted, 4px below)
 3. **Verse card** (centered, 28px side margins):
-   - Background: `parchment-soft`
+   - Background: `parchment-soft` base + the verse's **reader-page sketch** — `BackgroundLayer` over `getReaderBackground(verse.sourceId, { stanza: verse.chapter })`, so the card carries the same faded deity/source plate as the source's own reader (the pool verse's `chapter` doubles as the kāṇḍa/stanza key for Valmiki Ramayan / Sundarkand; sources without a plate fall back to the plain parchment gradient). Card clips it with `overflow: hidden`
    - Border: 1px `divider`
    - Shadow: `md` (runtime: **`elevation.raised`** — was an inline `0.14/24` shadow until July 2026)
    - Radius: 18
@@ -1392,7 +1392,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
 
 ### Component: Share Card (`ShareCard.tsx`)
 
-A fixed-size 540×675 dp card (4:5 portrait), rendered **off-screen** and captured at 1080×1350 px PNG — the WhatsApp-friendly output size. Surface: `parchment` fill, 1 px `divider` border, padding 28 top / 28 horizontal / 22 bottom.
+A fixed-size 540×675 dp card (4:5 portrait), rendered **off-screen** and captured at 1080×1350 px PNG — the WhatsApp-friendly output size. Surface: `parchment` fill under the verse's **reader-page sketch** — `BackgroundLayer` over `getReaderBackground(sourceId, { stanza })`, the same faded plate + parchment overlay the source's reader shows (sources without a plate fall back to the plain gradient); 1 px `divider` border (`overflow: hidden` keeps the sketch inside it), padding 28 top / 28 horizontal / 22 bottom. `sourceId` is required; `stanza` is the optional kāṇḍa/stanza key for the per-subsection sources — the Valmiki Ramayan and Sundarkand readers pass the verse's own `stanza`, Daily Bhakti passes the pool verse's `chapter`. Guarded by `components/__tests__/shareCardBackground.test.tsx`.
 
 **Structure (top to bottom):**
 
