@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-17 Phases 2–3 · Namkaran संस्कार विधि · Spotlight · Reminder — UI/UX Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#f3e7c9; --parchment-soft:#f8efd6; --parchment-hi:#fff5e0;
+    --gradient-end:#e9d9b1; --gold:#a67c34; --gold-soft:#c9b896; --gold-tint:#d8c393;
+    --saffron:#b8621b; --saffron-deep:#8a3e0b; --saffron-tint:rgba(184,98,27,0.10);
+    /* shipped list-card tokens (theme/colors.ts): one card grammar for the whole app */
+    --card-border:rgba(184,98,27,0.4); --card-from:#fff5e0; --card-to:#f5deac;
+    --thumb-from:#f8d291; --thumb-to:#e0a255; --new-badge:rgba(184,98,27,0.16);
+    --ink:#2f1e10; --ink-soft:#5c4326; --ink-muted:#8a6a47; --divider:#d9c9a6;
+    --avoid:#9c4a32; --avoid-deep:#7a3722; --avoid-tint:rgba(156,74,50,0.12);
+    --gold-chip:rgba(166,124,52,0.22);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:960px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:960px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:960px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:360px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap .n{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame (360 × 740) ---- */
+  .phone{width:360px;height:740px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px;flex:none}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1;text-align:center}
+  .topaction{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron);min-width:44px;text-align:right}
+  .deva{font-family:var(--deva)}
+  .en-it{font-family:var(--serif);font-style:italic}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:56px;display:flex;background:var(--parchment-soft);
+    border-top:1px solid var(--divider)}
+  .tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    font-size:9.5px;font-weight:500;color:var(--ink-muted)}
+  .tabbar .tab.active{color:var(--saffron-deep)}
+  .tabbar .tab .ic{font-family:var(--deva);font-size:15px}
+
+  /* ---- shared shipped grammars ---- */
+  .seclabel{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;
+    color:var(--ink-muted);margin:16px 0 8px}
+  .hero{border:1.5px solid var(--gold-tint);border-radius:18px;padding:16px 16px 18px;margin-bottom:12px;position:relative;
+    background:linear-gradient(160deg,#fff5e0,#f5deac);box-shadow:0 10px 22px rgba(47,30,16,.14)}
+  .hero .mark{font-family:var(--deva);color:var(--gold);font-size:15px;text-align:center;line-height:1}
+  .hero .eyebrow{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;
+    color:var(--ink-muted);text-align:center;margin-top:6px}
+  .hero .syl{font-family:var(--deva);font-size:64px;line-height:1.2;color:var(--ink);text-align:center;margin-top:2px}
+  .hero .rom{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--saffron-deep);text-align:center;margin-top:-2px}
+  .hero .prov{font-family:var(--deva);font-size:13.5px;color:var(--ink-soft);text-align:center;margin-top:10px;
+    padding-top:10px;border-top:1px solid rgba(138,62,11,.18)}
+  .lc{display:flex;align-items:center;gap:14px;border:1px solid var(--card-border);border-radius:18px;
+    background:linear-gradient(135deg,var(--card-from),var(--card-to));padding:14px;margin-bottom:10px;position:relative;
+    box-shadow:0 6px 14px rgba(47,30,16,.10)}
+  .lc .thumb{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--thumb-from),var(--thumb-to));
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:20px;color:var(--parchment-hi);flex:none}
+  .lc .lcbody{flex:1;min-width:0}
+  .lc .lct{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .lc .lcs{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:2px;line-height:1.45}
+  .lc .chev2{color:var(--saffron);font-size:22px;flex:none;padding-left:2px}
+  .btn{display:block;width:100%;text-align:center;background:var(--saffron);color:#fff8ec;border:none;
+    border-radius:12px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:6px;cursor:pointer;
+    box-shadow:0 8px 18px rgba(47,30,16,.2)}
+  .btn.ghost{background:transparent;color:var(--saffron-deep);border:1px solid var(--gold-tint);box-shadow:none}
+  .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.6}
+  .draft{border:1px dashed var(--gold);border-radius:12px;background:rgba(166,124,52,.10);padding:10px 12px;
+    font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--saffron-deep);
+    line-height:1.6;margin-bottom:12px;text-transform:uppercase}
+
+  /* nakshatra context row + deity-link row */
+  .ctx{display:flex;gap:8px;margin-bottom:10px}
+  .ctx .cbox{flex:1;border:1px solid var(--divider);border-radius:12px;background:var(--parchment-soft);padding:9px 10px;text-align:center}
+  .ctx .ck{font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted)}
+  .ctx .cv{font-family:var(--deva);font-size:13px;color:var(--ink);margin-top:3px}
+  .deityrow{display:flex;align-items:center;gap:11px;min-height:44px;border:1px solid var(--gold-tint);
+    border-radius:12px;background:var(--saffron-tint);padding:9px 12px;margin-bottom:12px}
+  .deityrow .dg{width:32px;height:32px;border-radius:10px;background:var(--gold-chip);display:flex;align-items:center;
+    justify-content:center;font-family:var(--deva);font-size:15px;color:var(--saffron-deep);flex:none}
+  .deityrow .db{flex:1}
+  .deityrow .dt{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .deityrow .ds{font-family:var(--serif);font-style:italic;font-size:10.5px;color:var(--ink-muted);margin-top:1px}
+  .deityrow .chev{color:var(--saffron-deep);font-size:18px}
+  .remindrow{display:flex;align-items:center;gap:11px;min-height:48px;border:1px solid var(--divider);
+    border-radius:12px;background:var(--parchment-hi);padding:10px 12px;margin-bottom:10px}
+  .remindrow .rb{flex:1}
+  .remindrow .rt{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .remindrow .rs{font-family:var(--serif);font-style:italic;font-size:10.5px;color:var(--ink-muted);margin-top:1px;line-height:1.45}
+  .switch{width:44px;height:26px;border-radius:13px;background:var(--divider);position:relative;flex:none}
+  .switch.on{background:var(--saffron)}
+  .switch .knob{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:var(--parchment-hi);
+    box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .switch.on .knob{left:auto;right:2px}
+
+  /* ---- vidhi surfaces (shipped PRD-19 grammars) ---- */
+  .accordion{border:1px solid var(--divider);border-radius:16px;background:var(--parchment-soft);padding:13px 14px;margin-bottom:12px;position:relative}
+  .accordion .at{display:flex;align-items:baseline;justify-content:space-between}
+  .accordion .ah{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .accordion .ac{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--saffron-deep)}
+  .track{height:6px;border-radius:3px;background:var(--divider);margin-top:10px;overflow:hidden}
+  .track .fill{height:100%;width:38%;border-radius:3px;background:var(--saffron)}
+  .ledger{border:1px solid var(--divider);border-radius:16px;background:var(--parchment-soft);overflow:hidden;margin-bottom:12px}
+  .lrow{display:flex;align-items:center;gap:12px;min-height:52px;padding:9px 13px;border-bottom:1px solid var(--divider)}
+  .lrow:last-child{border-bottom:none}
+  .lrow .circ{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--gold);background:var(--parchment-hi);
+    flex:none;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--saffron-deep)}
+  .lrow .circ.done{background:var(--gold-chip)}
+  .lrow .li{flex:1}
+  .lrow .lih{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .lrow .lim{font-family:var(--serif);font-style:italic;font-size:10.5px;color:var(--ink-muted)}
+  .lrow .qty{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--ink-muted)}
+  .segment{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:3px;margin-bottom:14px}
+  .segment .seg{flex:1;text-align:center;padding:8px 0;border-radius:9px;font-family:var(--deva);font-size:13.5px;color:var(--ink-muted)}
+  .segment .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:0 1px 4px rgba(47,30,16,.10)}
+  /* conduct reading card (Daily Bhakti card grammar) */
+  .conduct{border:1.5px solid var(--gold-tint);border-radius:18px;background:linear-gradient(165deg,#fff5e0,#f3e3ba);
+    box-shadow:0 10px 22px rgba(47,30,16,.14);padding:18px 16px;position:relative;margin-bottom:12px}
+  .conduct .phase{display:inline-block;font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:.7px;
+    text-transform:uppercase;color:var(--saffron-deep);background:var(--saffron-tint);border-radius:12px;padding:4px 10px}
+  .conduct .stepn{font-family:var(--sans);font-size:10px;font-weight:600;color:var(--ink-muted);float:right;margin-top:5px}
+  .conduct .ct{font-family:var(--deva);font-size:19px;color:var(--ink);margin-top:12px;line-height:1.5}
+  .conduct .ci{font-family:var(--deva);font-size:13.5px;color:var(--ink-soft);margin-top:8px;line-height:1.85}
+  .conduct .cie{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:6px;line-height:1.6}
+  .conduct .orn{font-family:var(--deva);color:var(--gold);text-align:center;font-size:13px;margin-top:12px}
+  .handoff{display:flex;align-items:center;gap:12px;border:1px solid var(--gold-tint);border-radius:14px;
+    background:var(--parchment-hi);padding:11px 12px;margin-top:12px}
+  .handoff .hg{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--thumb-from),var(--thumb-to));
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:16px;color:var(--parchment-hi);flex:none}
+  .handoff .hb{flex:1}
+  .handoff .hk{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-muted)}
+  .handoff .ht{font-family:var(--deva);font-size:13.5px;color:var(--ink);margin-top:2px}
+  .handoff .chev{color:var(--saffron-deep);font-size:18px}
+  .dots{display:flex;justify-content:center;gap:5px;margin-top:6px}
+  .dots i{width:6px;height:6px;border-radius:3px;background:var(--gold-tint)}
+  .dots i.cur{width:18px;background:var(--saffron)}
+
+  /* ---- Home (DISCOVER + Today strip) ---- */
+  .wordmark{font-family:var(--deva);font-size:22px;color:var(--saffron-deep);text-align:center;padding:8px 0 2px}
+  .wordsub{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);text-align:center;margin-bottom:10px}
+  .strip{border:1px solid var(--divider);border-radius:16px;background:var(--parchment-soft);padding:11px 13px;margin-bottom:12px;position:relative}
+  .strip .sh{display:flex;justify-content:space-between;align-items:baseline}
+  .strip .st{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .strip .sd{font-family:var(--sans);font-size:10px;font-weight:600;color:var(--ink-muted)}
+  .stripchips{display:flex;gap:7px;margin-top:9px;flex-wrap:nowrap;overflow:hidden}
+  .schip{display:flex;align-items:center;gap:5px;border:1px solid var(--divider);border-radius:18px;background:var(--parchment-hi);
+    padding:7px 11px;font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);white-space:nowrap;flex:none}
+  .schip.gold{border-color:var(--gold);background:var(--gold-chip);color:var(--saffron-deep)}
+  .fcard{border:1px solid var(--card-border);border-radius:18px;background:linear-gradient(135deg,var(--card-from),var(--card-to));
+    box-shadow:0 6px 14px rgba(47,30,16,.10);padding:14px;position:relative;margin-bottom:10px;min-height:112px;
+    display:flex;flex-direction:column}
+  .fcard .fh{display:flex;align-items:center;gap:10px}
+  .fcard .ficon{width:36px;height:36px;border-radius:12px;background:var(--saffron-tint);display:flex;align-items:center;
+    justify-content:center;font-family:var(--deva);font-size:18px;color:var(--saffron-deep);flex:none}
+  .fcard .ft{font-family:var(--deva);font-size:17px;color:var(--ink);flex:1}
+  .fcard .fd{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);margin-top:8px;line-height:1.7}
+  .fcard .fcta{align-self:flex-start;display:flex;align-items:center;gap:6px;background:var(--saffron-tint);
+    border-radius:18px;padding:6px 14px;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);margin-top:12px}
+  .tag{font-size:10px;font-weight:600;color:var(--saffron-deep);background:var(--new-badge);padding:2px 7px;border-radius:10px;
+    font-family:var(--sans);letter-spacing:.3px}
+  .peek{position:absolute;top:0;bottom:0;right:-14px;width:26px;border:1px solid var(--card-border);border-radius:18px;
+    background:linear-gradient(135deg,var(--card-from),var(--card-to));opacity:.55}
+  .lgrid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+  .ltile{width:calc((100% - 20px)/3);min-height:64px;border:1px solid var(--card-border);border-radius:16px;
+    background:linear-gradient(135deg,var(--card-from),var(--card-to));display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:2px;padding:8px 6px;box-shadow:0 4px 10px rgba(47,30,16,.10)}
+  .ltile .lth{font-family:var(--deva);font-size:13px;color:var(--ink);text-align:center;line-height:1.25}
+  .ltile .lte{font-family:var(--serif);font-style:italic;font-size:9.5px;color:var(--ink-muted);text-align:center}
+
+  /* ---- lock screen ---- */
+  .lockphone{width:360px;height:740px;border-radius:38px;border:10px solid #0d0804;position:relative;overflow:hidden;flex:none;
+    background:linear-gradient(200deg,#2a2118,#161009 70%);box-shadow:0 24px 60px rgba(0,0,0,.55)}
+  .lock .clock{font-family:var(--sans);font-weight:600;font-size:64px;color:#efe3c2;text-align:center;margin-top:110px;letter-spacing:1px}
+  .lock .date{font-family:var(--sans);font-size:15px;color:#bfae87;text-align:center;margin-top:2px}
+  .notif{margin:36px 16px 0;border-radius:20px;background:rgba(248,239,214,.94);padding:13px 14px;box-shadow:0 10px 26px rgba(0,0,0,.4)}
+  .notif .nh{display:flex;align-items:center;gap:8px}
+  .notif .napp{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--thumb-from),var(--thumb-to));
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:12px;color:var(--parchment-hi);flex:none}
+  .notif .nname{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--ink-soft);flex:1;letter-spacing:.3px}
+  .notif .ntime{font-family:var(--sans);font-size:10.5px;color:var(--ink-muted)}
+  .notif .ntitle{font-family:var(--deva);font-size:14.5px;color:var(--ink);margin-top:7px}
+  .notif .nbody{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);margin-top:3px;line-height:1.65}
+  .lock .hint{font-family:var(--sans);font-size:11px;color:#8d7c58;text-align:center;position:absolute;bottom:26px;left:0;right:0}
+
+  .footer{margin-top:34px;font-size:11.5px;color:#8d7c58;max-width:960px;line-height:1.7}
+  .footer b{color:#b7a377}
+</style>
+</head>
+<body>
+
+<h1>Namkaran — Phases 2 &amp; 3 <span style="font-family:var(--deva)">· नामकरण</span></h1>
+<div class="sub">PRD-17.2/3 prototype — संस्कार विधि door &amp; content, deity-link, Home DISCOVER Spotlight, one-shot naming-day reminder, and the naming-day Today-strip chip. These two phases <b>complete</b> the feature.</div>
+<div class="legend">
+  Exact house tokens from <b>docs/namkaran-prototype.html</b> / theme/colors.ts — parchment · ink · saffron · gold, Noto Serif Devanagari / Cormorant Garamond / Inter, no emoji.
+  Numbered gold dots ● are annotated below each phone.
+  <b>All liturgical/vidhi copy on these frames is ILLUSTRATIVE SAMPLE ONLY</b> — the real नामकरण संस्कार vidhi is content-gated on RULEBOOK §3.4/§11 two-source verification in an egress-capable environment and stays DRAFT until sign-off. It must not be transcribed from this file.
+</div>
+
+<!-- ============================ PHASE 2 ============================ -->
+<div class="phaselabel">Phase 2 · विधि door · deity-link · Spotlight</div>
+<div class="phasedesc">Frame A: the shipped Phase-1 result screen gains three additions — the vidhi door (below the shipped muhurat door), the tappable deity row (only where the nakshatra devata resolves in deities.ts), and the Phase-3 reminder action shown here in context. Frames B/C: the vidhi's prep and conduct surfaces are the shipped PRD-19 screens, reused unchanged. Frame D: the Home DISCOVER Spotlight card.</div>
+
+<div class="wrap">
+
+  <!-- ================= FRAME A · result screen with new rows ================= -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>॥</span></div>
+      <div class="screen"><div class="pad" style="padding-bottom:70px">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">नामाक्षर परिणाम</div><div class="topaction">शेयर</div></div>
+
+        <div class="hero">
+          <div class="mark">॥</div>
+          <div class="eyebrow">नामाक्षर · Nāmākṣara</div>
+          <div class="syl">जू</div>
+          <div class="rom">Ju</div>
+          <div class="prov">श्रवण नक्षत्र · पद 1 · मकर राशि</div>
+        </div>
+
+        <div class="ctx">
+          <div class="cbox"><div class="ck">देवता</div><div class="cv">विष्णु</div></div>
+          <div class="cbox"><div class="ck">स्वामी</div><div class="cv">चन्द्र</div></div>
+          <div class="cbox"><div class="ck">गण</div><div class="cv">देव</div></div>
+        </div>
+
+        <div class="deityrow" style="position:relative">
+          <div class="dot" style="top:-9px;right:-6px">1</div>
+          <div class="dg">ॐ</div>
+          <div class="db">
+            <div class="dt">श्री विष्णु — पाठ व स्तोत्र</div>
+            <div class="ds">Presiding devata in the Deity Index</div>
+          </div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="seclabel">आगे के द्वार · Doors</div>
+
+        <div class="lc">
+          <div class="thumb">मु</div>
+          <div class="lcbody">
+            <div class="lct">नामकरण मुहूर्त</div>
+            <div class="lcs">Browse suitable naming-ceremony days</div>
+          </div>
+          <div class="chev2">›</div>
+        </div>
+
+        <div class="lc" style="position:relative">
+          <div class="dot" style="top:-9px;left:-6px">2</div>
+          <div class="thumb">॥</div>
+          <div class="lcbody">
+            <div class="lct">नामकरण संस्कार विधि</div>
+            <div class="lcs">Prepare and perform the naming rite, step by step</div>
+          </div>
+          <div class="chev2">›</div>
+        </div>
+
+        <div class="remindrow" style="position:relative">
+          <div class="dot" style="top:-9px;right:-6px">3</div>
+          <div class="rb">
+            <div class="rt">नामकरण दिवस की याद दिलाएँ</div>
+            <div class="rs">Remind me on the naming day — pick the chosen day</div>
+          </div>
+          <div class="switch"><div class="knob"></div></div>
+        </div>
+
+        <button class="btn ghost">विवरण बदलें</button>
+        <div class="note">नाम, अक्षर और जन्म विवरण किसी सूचना या होम कार्ड पर कभी नहीं दिखते।</div>
+      </div></div>
+      <div class="tabbar">
+        <div class="tab"><span class="ic">ॐ</span>होम</div>
+        <div class="tab"><span class="ic">॥</span>दैनिक भक्ति</div>
+        <div class="tab active"><span class="ic">☽</span>पंचांग</div>
+        <div class="tab"><span class="ic">…</span>अधिक</div>
+      </div>
+    </div>
+    <div class="cap">
+      <b>A · Result screen — the Phase-2/3 additions in place</b><br/>
+      <span class="n">1</span><b>Deity-link row (Phase 2c).</b> Renders <b>only</b> when the nakshatra's presiding devata resolves in the curated <b>NAKSHATRA_DEITY_LINKS</b> map → deities.ts (v1: Shravana → Vishnu; Ardra → Shiva pending reviewer sign-off). For every other nakshatra the देवता stays plain text in the context boxes — <b>no link renders, no placeholder</b>. 44&nbsp;pt row, word + tint, existing Deity Index destination.<br/>
+      <span class="n">2</span><b>Vidhi door (Phase 2a).</b> The TRD-planned second ListCard door, below the shipped muhurat door, identical grammar. Shown on exact <b>and</b> range results. It passes <b>no result data</b> — the vidhi is generic content. The door does not exist at all until the content-gated vidhi entry lands (no disabled state, no "coming soon").<br/>
+      <span class="n">3</span><b>Reminder opt-in (Phase 3).</b> Initially-off switch → date picker for the family's chosen day → OS grant requested; persists only on success. One reminder record at a time. Clearing remembered birth details cancels a session-based reminder in the same invalidating mutation queue.
+    </div>
+  </div>
+
+  <!-- ================= FRAME B · vidhi prep ================= -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>॥</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">नामकरण संस्कार</div><div class="topaction"></div></div>
+
+        <div class="draft" style="position:relative"><div class="dot" style="top:-9px;right:-6px">1</div>
+          Illustrative sample · content-gated (RULEBOOK §3.4/§11) · draft until sign-off — status lives in private source metadata, never in this UI</div>
+
+        <div class="segment"><div class="seg on">तैयारी</div><div class="seg">पूजा</div></div>
+
+        <div class="accordion" style="position:relative">
+          <div class="dot" style="top:-9px;left:-6px">2</div>
+          <div class="at"><div class="ah">सामग्री सूची</div><div class="ac">5 / 13 तैयार</div></div>
+          <div class="track"><div class="fill"></div></div>
+        </div>
+
+        <div class="ledger">
+          <div class="lrow"><div class="circ done">✓</div><div class="li"><div class="lih">चौकी व पीला वस्त्र</div><div class="lim">Chowki &amp; yellow cloth</div></div><div class="qty">1</div></div>
+          <div class="lrow"><div class="circ done">✓</div><div class="li"><div class="lih">कलश व आम के पत्ते</div><div class="lim">Kalash &amp; mango leaves</div></div><div class="qty">1</div></div>
+          <div class="lrow"><div class="circ"></div><div class="li"><div class="lih">रोली · अक्षत · कलावा</div><div class="lim">Roli · akshat · mauli</div></div></div>
+          <div class="lrow"><div class="circ"></div><div class="li"><div class="lih">दीपक · घी · बाती</div><div class="lim">Diya · ghee · wicks</div></div></div>
+          <div class="lrow"><div class="circ"></div><div class="li"><div class="lih">शहद (मधु)</div><div class="lim">Honey · <span style="color:var(--gold)">वैकल्पिक</span></div></div></div>
+        </div>
+
+        <button class="btn ghost">सूची साझा करें</button>
+        <button class="btn">पूजा प्रारम्भ करें</button>
+        <div class="note">सूची में केवल सामग्री है — कोई नाम या जन्म विवरण नहीं।</div>
+      </div></div>
+    </div>
+    <div class="cap">
+      <b>B · तैयारी — the shipped PRD-19 detail screen, reused unchanged</b><br/>
+      <span class="n">1</span><b>Content gate, honestly.</b> The entry is authored only in an egress-capable environment (two-source verification: DrikPanchang + one independent karmakand reference; Gita Press canonical edition recorded read-or-pending). The DRAFT banner exists on this prototype frame only — the app never renders review state, versions, or sources (RULEBOOK §3).<br/>
+      <span class="n">2</span><b>Existing grammar throughout:</b> Today's-Practice accordion, routine check circles, occurrence-scoped checklistStore, plain-text share. Data-model delta: <b>occasion:&nbsp;'sanskar'</b> lets this VidhiEntry carry an empty festivalIds — no day-panel pill, no Add-to-Routine; its doors are the result screen, the vidhi catalog, and the automatic search row.
+    </div>
+  </div>
+
+  <!-- ================= FRAME C · vidhi conduct card ================= -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>॥</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">नामकरण संस्कार · पूजा</div><div class="topaction">वाचन</div></div>
+
+        <div class="conduct" style="position:relative">
+          <div class="dot" style="top:-9px;right:-6px">1</div>
+          <span class="phase">मुख्य पूजा</span><span class="stepn">चरण 6 / 11</span>
+          <div class="ct">गणेश स्मरण</div>
+          <div class="ci">दीप प्रज्वलित कर सबसे पहले श्री गणेश का स्मरण करें — हर संस्कार का आरम्भ विघ्नहर्ता की वन्दना से होता है। <span style="color:var(--ink-muted);font-size:11px">(इलस्ट्रेटिव सैंपल)</span></div>
+          <div class="cie">Light the diya and invoke Shri Ganesha first — every sanskar begins with the remover of obstacles. (Illustrative sample.)</div>
+
+          <div class="handoff" style="position:relative">
+            <div class="dot" style="top:-9px;left:-6px">2</div>
+            <div class="hg">ग</div>
+            <div class="hb">
+              <div class="hk">पाठ · shipped text</div>
+              <div class="ht">श्री गणेश स्तोत्रम् — वन्दना पढ़ें</div>
+            </div>
+            <div class="chev">›</div>
+          </div>
+
+          <div class="orn">॥ ॐ ॥</div>
+        </div>
+
+        <div class="dots"><i></i><i></i><i></i><i></i><i></i><i class="cur"></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="note" style="position:relative">बाएँ–दाएँ स्वाइप से चरण बदलें<br/>
+        <span style="font-size:10.5px">स्क्रीन पूजा के दौरान जलती रहती है</span></div>
+      </div></div>
+    </div>
+    <div class="cap">
+      <b>C · पूजा — one conduct card (shipped PRD-19 conduct reader)</b><br/>
+      <span class="n">1</span><b>Reader-grade card:</b> phase pill · step n/N · title · authored instruction (hi + en). Swipe is the only page turn; keep-awake held for the session; resume state per civil day. The naming step itself explains the नामाक्षर tradition, the गुप्त-नाम custom, and the ceremony-day-nakshatra variant <b>in copy</b> — no second calculation basis is built.<br/>
+      <span class="n">2</span><b>Mantra hand-off row:</b> shipped texts are referenced by section id, never re-typed (§11.11) — Ganesha vandana → <b>ganesh-stotram</b>, deepa shloka → <b>sandhya-deepam</b>. Inline mantras appear only as verbatim-verified VidhiMantra records with per-mantra citations; unverified liturgy (e.g. the sankalp wording) stays instruction-only. All step text here is <b>ILLUSTRATIVE SAMPLE</b>.
+    </div>
+  </div>
+
+  <!-- ================= FRAME D · Home DISCOVER spotlight ================= -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span></div>
+      <div class="screen"><div class="pad" style="padding-bottom:70px">
+        <div class="wordmark">ॐ वेदांश़</div>
+        <div class="wordsub">Daily devotion, offline</div>
+
+        <div class="strip">
+          <div class="sh"><div class="st">आज का पंचांग</div><div class="sd">18 AUG · उज्जैन</div></div>
+          <div class="stripchips">
+            <div class="schip">तृतीया · 2:14 PM तक</div>
+            <div class="schip">राहु काल 7:41–9:18</div>
+          </div>
+        </div>
+
+        <div class="seclabel">Discover</div>
+        <div class="fcard" style="position:relative;width:300px">
+          <div class="peek"></div>
+          <div class="dot" style="top:-9px;right:-6px">1</div>
+          <div class="fh">
+            <div class="ficon">ना</div>
+            <div class="ft">नामकरण</div>
+            <span class="tag">NEW</span>
+          </div>
+          <div class="fd">जन्म नक्षत्र से नामाक्षर और अर्थ-सहित नाम पाएँ।</div>
+          <div class="fcta">देखें <span style="font-size:15px">›</span></div>
+        </div>
+
+        <div class="seclabel">ग्रंथ संग्रह</div>
+        <div class="lgrid">
+          <div class="ltile"><div class="lth">गीता</div><div class="lte">Gita</div></div>
+          <div class="ltile"><div class="lth">चालीसा</div><div class="lte">Chalisa</div></div>
+          <div class="ltile"><div class="lth">आरती</div><div class="lte">Aarti</div></div>
+          <div class="ltile"><div class="lth">कुंडली</div><div class="lte">Kundali</div></div>
+          <div class="ltile"><div class="lth">मुहूर्त</div><div class="lte">Muhurat</div></div>
+          <div class="ltile"><div class="lth">जप</div><div class="lte">Japa</div></div>
+        </div>
+      </div></div>
+      <div class="tabbar">
+        <div class="tab active"><span class="ic">ॐ</span>होम</div>
+        <div class="tab"><span class="ic">॥</span>दैनिक भक्ति</div>
+        <div class="tab"><span class="ic">☽</span>पंचांग</div>
+        <div class="tab"><span class="ic">…</span>अधिक</div>
+      </div>
+    </div>
+    <div class="cap">
+      <b>D · Home — DISCOVER Spotlight (Phase 2b)</b><br/>
+      <span class="n">1</span><b>One FeatureSpotlight, existing rules.</b> Registered in HomeScreen's spotlights array; all cards render, order shuffled once per app open (shuffleBySeed) — no pinning, no weighting. Standard NEW badge; Devanagari glyph tile (no emoji). Opens the Namkaran <b>entry</b> screen via panchangTabTarget — never a saved result.<br/>
+      <b>Privacy rule (hard):</b> the card is <b>static copy only</b> — it never reads Namkaran storage, so it can never surface a saved birth detail, computed syllable, shortlist count, or even a "resume" hint. A source guard test pins that the Home module imports nothing from data/namkaran/. The launcher grid stays 16 tiles — <b>no 17th tile</b>.
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================ PHASE 3 ============================ -->
+<div class="phaselabel">Phase 3 · naming-day reminder · Home presence</div>
+<div class="phasedesc">The eighth local-notification family (`namkaran-reminder`): one pending slot ever, generic lock-screen copy, self-cancelling. On the day itself, the Today strip carries a generic chip — the Pitru Smaran private-chip precedent. With these, PRD-17 is complete.</div>
+
+<div class="wrap">
+
+  <!-- ================= FRAME E · lock screen ================= -->
+  <div class="col">
+    <div class="lockphone">
+      <div class="lock">
+        <div class="clock">7:00</div>
+        <div class="date">गुरुवार, 27 अगस्त</div>
+        <div class="notif" style="position:relative">
+          <div class="dot" style="top:-9px;right:-6px">1</div>
+          <div class="nh">
+            <div class="napp">ॐ</div>
+            <div class="nname">VEDANSH</div>
+            <div class="ntime">now</div>
+          </div>
+          <div class="ntitle">नामकरण</div>
+          <div class="nbody">आज नामकरण संस्कार का चुना हुआ दिन है। तैयारी और विधि देखें।</div>
+        </div>
+        <div class="hint">Tap → PanchangTab → saved Namkaran result</div>
+      </div>
+    </div>
+    <div class="cap">
+      <b>E · Lock screen — the one-shot naming-day reminder</b><br/>
+      <span class="n">1</span><b>Generic by rule, not by choice of words.</b> Title is the fixed word <b>नामकरण</b>; the body is fixed copy baked at schedule time in the reading language (hi/en authored; gu/kn transliterated). <b>Never on the lock screen:</b> the child's name, any shortlisted name, the syllable/nakshatra/pada/rashi, birth date or time, the printed ceremony date, or the fact that details are remembered. Payload allow-list is <code style="color:#e9d9b1">{ type, dateKey }</code> — schema-tested.<br/>
+      <b>Budget &amp; lifecycle:</b> prefix <b>namkaran-reminder</b>, cap = 1 pending slot against the shared iOS 64-slot pool (audited in the same PR). Fires 07:00 local on the chosen day only — no advance notice, no recurrence. Cancelled/re-planned when the saved result is deleted, the date changes, or the day passes (prune on load + foreground). Tap deep-links to the saved result; a missing record falls back to the Namkaran entry screen.
+    </div>
+  </div>
+
+  <!-- ================= FRAME F · naming-day Home chip ================= -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span></div>
+      <div class="screen"><div class="pad" style="padding-bottom:70px">
+        <div class="wordmark">ॐ वेदांश़</div>
+        <div class="wordsub">Daily devotion, offline</div>
+
+        <div class="strip" style="position:relative">
+          <div class="dot" style="top:-9px;right:-6px">1</div>
+          <div class="sh"><div class="st">आज का पंचांग</div><div class="sd">27 AUG · उज्जैन</div></div>
+          <div class="stripchips">
+            <div class="schip gold">॥ नामकरण · आज का दिन</div>
+            <div class="schip">पंचमी · 4:02 PM तक</div>
+            <div class="schip">राहु काल 1:5…</div>
+          </div>
+        </div>
+
+        <div class="seclabel">For today</div>
+        <div class="lc">
+          <div class="thumb">॥</div>
+          <div class="lcbody">
+            <div class="lct">आज की अनुशंसा</div>
+            <div class="lcs">Today's reading, as usual — unrelated to Namkaran</div>
+          </div>
+          <div class="chev2">›</div>
+        </div>
+
+        <div class="seclabel">ग्रंथ संग्रह</div>
+        <div class="lgrid">
+          <div class="ltile"><div class="lth">गीता</div><div class="lte">Gita</div></div>
+          <div class="ltile"><div class="lth">चालीसा</div><div class="lte">Chalisa</div></div>
+          <div class="ltile"><div class="lth">आरती</div><div class="lte">Aarti</div></div>
+          <div class="ltile"><div class="lth">कुंडली</div><div class="lte">Kundali</div></div>
+          <div class="ltile"><div class="lth">मुहूर्त</div><div class="lte">Muhurat</div></div>
+          <div class="ltile"><div class="lth">जप</div><div class="lte">Japa</div></div>
+        </div>
+
+        <div class="note" style="position:relative">
+          <div class="dot" style="top:-6px;right:40px">2</div>
+          कल यह चिप स्वतः हट जाती है — दिन बीतने पर रिकॉर्ड व सूचना दोनों साफ़।
+        </div>
+      </div></div>
+      <div class="tabbar">
+        <div class="tab active"><span class="ic">ॐ</span>होम</div>
+        <div class="tab"><span class="ic">॥</span>दैनिक भक्ति</div>
+        <div class="tab"><span class="ic">☽</span>पंचांग</div>
+        <div class="tab"><span class="ic">…</span>अधिक</div>
+      </div>
+    </div>
+    <div class="cap">
+      <b>F · Naming-day Home presence — a chip, not a tile</b><br/>
+      <span class="n">1</span><b>Today-strip chip (Pitru Smaran private-chip precedent):</b> muted-gold <b>॥ नामकरण · आज का दिन</b>, rendered only while the reminder record exists and its dateKey is today. Decision: <b>generic on-device copy only</b> — Home is glanceable by anyone, so it follows the same never-list as the lock screen (no name, no syllable, no birth data). Tap opens the saved result. Derived from the one reminder record — no new storage, no panchang solve, no widget or share exposure.<br/>
+      <span class="n">2</span><b>Self-cleaning:</b> past dateKey prunes on load/foreground; chip and pending notification disappear together. The launcher grid is untouched — the parent PRD's "Home tile alongside a grid re-flow" is fulfilled by this chip; no grid re-flow is scheduled.
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <b>Content gates carried, not re-scoped:</b> the three open Phase-1 gates — namakshar convention sign-off (§11.1), the attested shipping name corpus (§11.2), and the independent Android Maestro run (§11.9) — block any store release of every Namkaran surface, including everything on this page. The नामकरण संस्कार vidhi carries its own PRD-19-style gate: two-source verification in an egress-capable environment, DRAFT until sign-off, illustrative copy above never transcribed.
+  <b>Privacy:</b> newborn birth details remain the app's most sensitive data; no surface on this page — notification, Spotlight, chip, vidhi checklist — may carry a name, syllable, or birth field. Both phases are pure JS + bundled JSON → OTA-capable (no audio). No external assets besides Google Fonts.
+</div>
+
+</body>
+</html>
