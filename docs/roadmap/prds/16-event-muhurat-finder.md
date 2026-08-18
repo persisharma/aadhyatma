@@ -126,11 +126,11 @@ Measured against the shipped engine (Ujjain, 365 days from 14 Aug 2026), the fou
 - **Bhadra as a window**, not a sunrise flag — solve karana boundaries like tithi end-times already are.
 - **Window-time anga evaluation.** Validation against a published list showed exact agreement on three of six days and divergence on exactly the two where the nakshatra turns over within hours of sunrise. The engine reports the *sunrise* anga (udaya-vyapini, correct for the almanac); muhurat lists report the anga prevailing *during the window*. **The finder must evaluate at the candidate window** or it will disagree with every published list on early-changeover days.
 
-### Phase 3 — Lagna-grade windows *(code M)*
+### Phase 3 — Lagna-grade windows *(code M)* — **detailed in [16-muhurat-finder-phase3-4.md](./16-muhurat-finder-phase3-4.md)**
 
 Replace ~96-minute choghadiya blocks with a precise muhurat window: sweep `computeLagna()` across the day, score lagna/hora quality, and return windows to the minute. Adds the Hora layer (§4.1) and enables यात्रा with दिशा शूल.
 
-### Phase 4 — Personalised muhurat *(code S — the differentiator)*
+### Phase 4 — Personalised muhurat *(code S — the differentiator)* — **detailed in [16-muhurat-finder-phase3-4.md](./16-muhurat-finder-phase3-4.md)**
 
 PRD-C already ships a saved birth profile with the Moon's nakshatra and rashi. **Tarabala** (the 9-tara cycle from janma nakshatra to the day's nakshatra) and **Chandrabala** (Moon's rashi relative to janma rashi) are pure arithmetic over two integers each.
 
