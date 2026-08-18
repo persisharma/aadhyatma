@@ -7,6 +7,7 @@ import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
 import { useMuhurat } from '@/panchang/useMuhurat';
+import { nextAuspiciousPeriod } from '@/panchang/muhurat';
 import { formatClock, formatRange } from '@/panchang/muhuratFormat';
 import type { CalendarSystem } from '@/panchang/types';
 
@@ -71,6 +72,23 @@ export default function MuhuratGlanceCard({
 
   const showNow = isToday && nowChoghadiya != null;
   const nowAvoid = nowChoghadiya?.quality === 'avoid';
+  // Live progress through the running period; the useMuhurat minute tick is what
+  // re-renders this card, so the fraction advances once a minute.
+  const at = Date.now();
+  const nowProgress = showNow
+    ? Math.min(
+        1,
+        Math.max(
+          0,
+          (at - nowChoghadiya!.start.getTime()) /
+            Math.max(1, nowChoghadiya!.end.getTime() - nowChoghadiya!.start.getTime())
+        )
+      )
+    : 0;
+  // "When is it good next?" — only while an avoid period runs (an auspicious
+  // "now" already answers the question). Null late at night when nothing
+  // auspicious remains before the next sunrise.
+  const nextShubh = showNow && nowAvoid ? nextAuspiciousPeriod(muhurat, new Date(at)) : null;
 
   return (
     <LinearGradient
@@ -112,6 +130,21 @@ export default function MuhuratGlanceCard({
                 ? formatRange(abhijit.start, abhijit.end)
                 : ''}
           </Text>
+          {showNow && (
+            <View
+              style={[styles.progressTrack, { backgroundColor: colors.divider }]}
+              accessibilityRole="progressbar"
+              accessibilityValue={{ min: 0, max: 100, now: Math.round(nowProgress * 100) }}
+              accessibilityLabel={contentByLang(lang, 'चौघड़िया प्रगति', 'Choghadiya progress')}
+            >
+              <View
+                style={[
+                  styles.progressFill,
+                  { backgroundColor: colors.saffron, width: `${Math.round(nowProgress * 100)}%` },
+                ]}
+              />
+            </View>
+          )}
         </View>
         {showNow && (
           <Text
@@ -130,6 +163,33 @@ export default function MuhuratGlanceCard({
           </Text>
         )}
       </View>
+
+      {/* While an avoid period runs, answer the natural follow-up — "when is it
+          good next?" — inline, so the inauspicious case doesn't need a tap into
+          the detail. Quality is carried by the gold dot PLUS the text (§12). */}
+      {nextShubh && (
+        <View style={styles.nextShubhRow} accessibilityLabel={`Next auspicious: ${nextShubh.nameEn}, from ${formatClock(nextShubh.start)}`}>
+          <View style={[styles.nextDot, { backgroundColor: colors.gold }]} />
+          <Text style={{ flexShrink: 1 }} numberOfLines={1}>
+            <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.inkSoft }}>
+              {contentByLang(lang, 'अगला शुभ: ', 'Next auspicious: ')}
+            </Text>
+            <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.ink }}>
+              {contentByLang(lang, `${nextShubh.nameHi} चौघड़िया`, `${nextShubh.nameEn} Choghadiya`)}
+            </Text>
+            {/* Clock digits stay on the Latin semibold face; the Indic 'से'
+                suffix must not — Cormorant has no Indic glyphs (§3). */}
+            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.saffronDeep }}>
+              {lang === 'en' ? ` from ${formatClock(nextShubh.start)}` : ` ${formatClock(nextShubh.start)}`}
+            </Text>
+            {lang !== 'en' && (
+              <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.inkSoft }}>
+                {contentByLang(lang, ' से', '')}
+              </Text>
+            )}
+          </Text>
+        </View>
+      )}
 
       <View style={styles.tiles}>
         <View style={[styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
@@ -161,6 +221,10 @@ const styles = StyleSheet.create({
   // No fontWeight: the call site sets fontFamilies.latinBold, a static 700 file
   // that already carries the weight (see utils/langType.ts).
   tag: { fontSize: 10, letterSpacing: 0.4, textTransform: 'uppercase', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, overflow: 'hidden' },
+  progressTrack: { height: 4, borderRadius: 2, marginTop: 8, overflow: 'hidden' },
+  progressFill: { height: 4, borderRadius: 2 },
+  nextShubhRow: { flexDirection: 'row', alignItems: 'center', gap: 7, marginTop: 10 },
+  nextDot: { width: 8, height: 8, borderRadius: 4 },
   tiles: { flexDirection: 'row', gap: 10, marginTop: 13 },
   tile: { flex: 1, borderWidth: 1, padding: 11 },
   viewAll: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 14, paddingTop: 12, borderTopWidth: 1 },

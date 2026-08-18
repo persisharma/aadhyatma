@@ -151,6 +151,23 @@ function contains(start: Date, end: Date, at: Date): boolean {
   return t >= start.getTime() && t < end.getTime();
 }
 
+/**
+ * The next auspicious choghadiya starting at/after `at` (day then night, in
+ * chronological order — the wheel arrays are already sorted). Null when nothing
+ * auspicious remains in this muhurat day (late night before the next sunrise).
+ * Callers use this to answer "when is it good next?" while an avoid period is
+ * running — a period whose start equals the running one's end matches, since
+ * choghadiya are contiguous.
+ */
+export function nextAuspiciousPeriod(md: MuhuratDay, at: Date): ChoghadiyaPeriod | null {
+  const t = at.getTime();
+  return (
+    [...md.dayChoghadiya, ...md.nightChoghadiya].find(
+      (p) => p.quality === 'auspicious' && p.start.getTime() >= t
+    ) ?? null
+  );
+}
+
 /** Which choghadiya + kaal (if any) contain `at`. Caller passes the clock. */
 export function classifyNow(
   md: MuhuratDay,
