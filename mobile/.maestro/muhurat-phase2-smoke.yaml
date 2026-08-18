@@ -46,7 +46,7 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 
 # English chrome for stable assertions (same recipe as the other smokes).
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -55,7 +55,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # ── The grouped twelve-occasion picker ───────────────────────────────────────
@@ -141,7 +141,7 @@ appId: com.prashantsharma.vedansh
 # ── Blast radius (§1.2): karana end time on the daily Muhurat card ──────────
 - back
 - waitForAnimationToEnd
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

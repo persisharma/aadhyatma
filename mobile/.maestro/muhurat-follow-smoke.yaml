@@ -55,7 +55,7 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 
 # English for stable visible-text assertions (same recipe as the finder smoke).
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -64,7 +64,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # ── Reach a graded day ──────────────────────────────────────────────────────
@@ -126,7 +126,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Following"
 
 # ── The ★ inventory: one follow list, shared with vrats ─────────────────────
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -175,7 +175,7 @@ appId: com.prashantsharma.vedansh
 # headerShown:false custom back chevron — tap it (edge-swipe `- back` won't pop).
 - tapOn: "Back"
 - waitForAnimationToEnd
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

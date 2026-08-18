@@ -49,7 +49,7 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 
 # English for stable visible-text assertions (same recipe as kundali-smoke).
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -58,7 +58,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # ── Entry 1: the permanent Home launcher tile (after कुंडली) ─────────────────
@@ -147,7 +147,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Entry 2: the Panchang-tab door + the Abujh calendar ─────────────────────
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

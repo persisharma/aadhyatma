@@ -54,7 +54,7 @@ appId: com.prashantsharma.vedansh
 
 # English chrome for stable visible-text assertions (same recipe as
 # muhurat-finder-smoke / kundali-smoke).
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -63,7 +63,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # Warm the day cache through the occasion scan…
@@ -128,13 +128,13 @@ appId: com.prashantsharma.vedansh
     timeout: 20000
 
 # The Panchang tab's own day, same store.
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Sunrise"
     timeout: 20000
 - assertVisible: "Brahma Muhurta"
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # Finder results from the hydrated cache — tight budget, no re-solve.
