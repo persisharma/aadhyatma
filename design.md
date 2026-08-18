@@ -2565,3 +2565,21 @@ Full-screen, one step per page, a horizontal paged `FlatList` exactly like the r
 **Privacy & non-goals.** Nothing syncs, nothing shares, no export in v1 (PRD-06 is the future transfer path). Public season notification copy is identical on every device; personal notification copy exists only after the user deliberately saves that person's entry and the OS notification grant succeeds. No Gregorian-anniversary mode, no gotra/genealogy fields.
 
 **Files.** `panchang/pitruSmaran.ts` · `panchang/pitruSmaranDisplay.ts` · `panchang/pitruSmaranSolves.ts` · `panchang/usePitruSmaranSolves.ts` · `panchang/usePitruSmaranForDate.ts` · `contexts/PitruSmaranContext.tsx` · `screens/PitruSmaranListScreen.tsx` / `PitruSmaranEditScreen.tsx` / `PitruSmaranDetailScreen.tsx` / `PitruPakshaOverviewScreen.tsx` · `components/PitruSmaranDayChip.tsx` / `PitruPakshaDayChip.tsx` / `PitruSmaranReminderScheduler.tsx` · `notifications/pitruSmaranReminderPure.ts` / `pitruSmaranScheduler.ts` / `pitruPakshaReminderPure.ts` / `pitruPakshaScheduler.ts` · catalog row in `PanchangScreen.tsx` · Home integration in `TodayStrip.tsx` · routes in `navigation/types.ts` + `MoreStackNavigator.tsx`. Tests: `panchang/__tests__/pitruSmaran.test.ts` (tsx), `panchang/__tests__/jest/pitruSmaranSolves.jest.test.ts`, `notifications/__tests__/pitruReminderPure.test.ts` / `pitruSchedulers.jest.test.ts`, component/context/screen suites, and `.maestro/pitru-smaran.yaml`. PRD: `docs/roadmap/prds/17-pitru-smaran.md`; prototype: `docs/pitru-smaran-prototype.html`.
+
+---
+
+## 64. App Launch & First Frame
+
+**Purpose.** One place for the launch contract every other section assumes: **Home's first visible frame is already its final frame.** Nothing may reflow, insert, or shift after the native splash lifts — a launch-time layout jump reads as jank on every screen the app will ever show, and an immediate first press must land on the tile the user aimed at.
+
+**The reveal pipeline (`mobile/App.tsx`).**
+1. `SplashScreen.preventAutoHideAsync()` at module scope; the derived-cache reset and `prefetchTodayPanchang()` start beside it (§60) so storage is already in flight before React renders anything.
+2. The five font families gate the provider tree (`fontsReady`) — an unloaded family silently falls back to the system font (§3), so no text renders before the real faces exist.
+3. **`AppReadyGate`** holds the splash until the two **layout-critical** preferences have hydrated — font scale and reading language — because both change Home geometry. The splash hides via the gate's `useEffect` + a belt-and-braces `onLayout` on the mounted tree.
+4. **Safe-area insets are seeded, not awaited**: the root `SafeAreaProvider` receives `initialMetrics={initialWindowMetrics}`. Without it the provider renders nothing until the first native inset event crosses the launch-busy JS thread, and the tree then mounts on whatever that event carried — on Android cold starts under `edgeToEdgeEnabled` that can be a pre-attach zero, so Home painted flush under the status bar, sat unresponsive behind the mount burst, and lurched down by the status-bar height when the corrected insets applied (the August 2026 "launch jerk" report). With the seed, the first committed frame carries its final insets and any later inset event is a no-op.
+
+**Geometry that must stay reserved.** Surfaces that hydrate after the reveal must occupy their final space from the first frame — never insert or grow later: the Today strip reserves its 24 pt chip row before the deferred Panchang solve lands (§48); `RoutineBanner`'s three states share one height (`minHeight 57` = the progress variant's natural height) so the nudge → progress flip on routine hydration cannot move the CATEGORIES grid (§31); `FestiveToran` is a fixed `TORAN_HEIGHT` box resolved synchronously from the bundled catalog (§55). Anything new above the Home grid inherits this rule.
+
+**CPU stays off the reveal.** Astronomy, the 7-day prewarm, widget payload planning, and every reminder scheduler run behind `InteractionManager` after the splash lifts (§59/§60) — the launch path spends I/O only. Moving work earlier must never move CPU onto it.
+
+**Files.** `mobile/App.tsx` (`AppReadyGate`, `SafeAreaProvider` seeding) · `mobile/src/panchang/panchangLaunchPrefetch.ts` · reserved-geometry owners per their sections.

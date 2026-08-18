@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { Linking, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Notifications from 'expo-notifications';
@@ -220,7 +220,17 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
+      {/* `initialMetrics` is the launch-jerk fix, not an optimization to trim.
+          Without it the provider renders NOTHING until the first native inset
+          event crosses the (busy) launch JS thread, and the whole tree then
+          mounts on whatever that first event carried — on Android cold starts
+          under edge-to-edge that can be a pre-attach zero, so Home painted
+          flush under the status bar, sat frozen behind the mount burst, and
+          lurched down by the status-bar height when the corrected insets
+          finally applied. Seeding from the native module's constants gives the
+          first committed frame its final insets, so any later inset event is a
+          no-op instead of a visible reflow. */}
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <FontScaleProvider>
         <ThemeProvider>
           <GitaLanguageProvider>
