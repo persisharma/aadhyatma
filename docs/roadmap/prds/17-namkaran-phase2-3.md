@@ -119,6 +119,13 @@ pill never appears for this entry — its doors are the Namkaran result screen, 
 row, and the automatic search section row (`searchIndex` picks it up with zero index changes,
 pinned by the existing count assertion). No Add-to-Routine button: there is no recurrence.
 
+> **Reconcile with PRD-19 Phase 3:** [19-shraddha-vidhi-phase3.md](./19-shraddha-vidhi-phase3.md)
+> independently proposes `anchor?: 'festival' | 'personal-tithi'` on `VidhiEntry` for the shraddha
+> vidhi. `occasion` (what kind of rite) and `anchor` (where its date comes from) are different
+> dimensions, but whichever PRD lands second must fold both into one reviewed `VidhiEntry` change
+> and one updated `vidhiContent.test.ts` invariant — two uncoordinated relaxations of the
+> `festivalIds.length >= 1` assertion are not acceptable.
+
 ### 3.5 The vidhi door on `NamkaranResultScreen`
 
 Per TRD §7.2.6, a second `ListCard` door lands directly below the shipped नामकरण मुहूर्त door
@@ -180,7 +187,7 @@ the Phase-1 `NameRecord.deityId` links.
 we do not auto-pick a "best" day). Saving requests the shared OS grant when needed and persists
 only after success — the Pitru Smaran precedent; a refusal leaves the action honestly off.
 
-**The eighth notification family** — pure planner + glue + headless scheduler, the shape all
+**A new notification family** — pure planner + glue + headless scheduler, the shape all
 seven existing families use:
 
 | Property | Value |

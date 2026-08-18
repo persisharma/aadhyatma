@@ -109,7 +109,7 @@ Mirror the sadhana family file-for-file (all under `mobile/src/`):
 | Scheduling glue | `notifications/routineScheduler.ts` | `notifications/sadhanaScheduler.ts` |
 | Headless arm-er | `components/RoutineReminderScheduler.tsx` (mounted in `App.tsx` inside `NotificationPreferencesProvider` + `RoutineProvider`) | `components/SadhanaReminderScheduler.tsx` |
 
-- **Identifier prefix `routine-reminder`** — the eighth prefix; slot ids `routine-reminder:{routineId}:{dateKey}` so the cancel-then-reschedule cycle (`cancelAllRoutineReminders` filters `getAllScheduledNotificationsAsync` by prefix) can never touch another family's slots.
+- **Identifier prefix `routine-reminder`** — a new per-family prefix; slot ids `routine-reminder:{routineId}:{dateKey}` so the cancel-then-reschedule cycle (`cancelAllRoutineReminders` filters `getAllScheduledNotificationsAsync` by prefix) can never touch another family's slots.
 - **Planner purity:** `planRoutineReminders(inputs, now, windowDays?, cap?)` — no `Date.now()`, no `expo-notifications`, no imports beyond constants; `now` always parameterised. Input per routine: `{ routineId, order, nameHi, nameEn, time, days: 'daily' | number[], completedToday?: boolean }`. The **weekday filter is planner logic**: for `days: number[]`, only fire dates whose local weekday is in the set are candidates (empty set ⇒ no candidates).
 - **Glue** cancels-then-schedules with `SchedulableTriggerInputTypes.DATE` triggers, per-slot failures non-fatal, exactly as `scheduleSadhanaReminders`.
 - **Headless component** re-arms on: `routines` (any create/delete/rename/re-time/reminder change), `permissionStatus`, foreground tick (`AppState` → the rolling window advances with the calendar), and today's per-routine completion signal (§7). Cancels everything when permission is not granted. Renders nothing.
@@ -182,7 +182,7 @@ Per repo convention, `src/notifications` is **excluded from Jest**; pure suites 
 
 ## 12. Rollout
 
-Pure TypeScript over already-linked `expo-notifications` — **no config-plugin, entitlement, or native-module change**, so the phase ships as an **EAS Update (OTA)** on the current binary. Docs in the same PR (per `.claude/rules/design-doc-sync.md`): design.md gains a RoutineDetail-reminder subsection; the wiki `routine`/`notifications` pages take the eighth family via the `llm-wiki` skill flow.
+Pure TypeScript over already-linked `expo-notifications` — **no config-plugin, entitlement, or native-module change**, so the phase ships as an **EAS Update (OTA)** on the current binary. Docs in the same PR (per `.claude/rules/design-doc-sync.md`): design.md gains a RoutineDetail-reminder subsection; the wiki `routine`/`notifications` pages take the new family via the `llm-wiki` skill flow.
 
 ## 13. Open questions
 

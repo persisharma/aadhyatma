@@ -286,7 +286,7 @@
         <div class="legend"><ul>
           <li>Title <code>नित्य साधना स्मरण</code>, body <code>«nameHi» · आज की साधना</code> — the exact shape of the shipped sankalp copy (<code>formatSadhanaReminderContent</code>); <code>nameEn</code> fallback when the Hindi name is blank.</li>
           <li><b>No "2 of 5 left":</b> content is baked at <i>schedule</i> time, not fire time, so any count would be stale. The name is stable; progress is what the tap reveals.</li>
-          <li>Slot identity <code>routine-reminder:{id}:{dateKey}</code> — the eighth prefix; cancel-then-reschedule can never touch another family. Only <b>Mon &amp; Sat</b> slots exist for this routine, and today's slot is <b>cancelled if practice finishes before it fires</b>.</li>
+          <li>Slot identity <code>routine-reminder:{id}:{dateKey}</code> — a new per-family prefix; cancel-then-reschedule can never touch another family. Only <b>Mon &amp; Sat</b> slots exist for this routine, and today's slot is <b>cancelled if practice finishes before it fires</b>.</li>
         </ul></div>
       </div>
     </div>

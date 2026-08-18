@@ -50,7 +50,7 @@ Phase 1 made "is now a good time?" answerable **when the user opens the app**. B
 | Identifier prefix | `muhurat-reminder` | `daily-muhurat` (see §7 — deliberately NOT an extension of any existing prefix) |
 | Deep link | `MuhuratDayDetail { occasionId, dateMs }` | `MuhuratDetail { dateMs }` / `PanchangHome { dateMs }` |
 
-## 5. Architecture — the eighth family, same three-layer shape
+## 5. Architecture — a new family, same three-layer shape
 
 Mirror `muhuratReminderPure.ts` / `muhuratScheduler.ts` / `MuhuratReminderScheduler.tsx` end-to-end:
 
