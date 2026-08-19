@@ -149,15 +149,16 @@
 <body>
 
 <h1>Muhurat results — lagna chip &amp; आपके लिए strip fix</h1>
-<p class="sub">The अन्नप्राशन results card, before and after: real pills, a breathing lagna chip, and a wrap that stays tidy. Data mirrors the Bengaluru screenshot of 19 Aug 2026.</p>
+<p class="sub">The अन्नप्राशन results card, before and after — plus the real question: how much of the personal strip belongs on a list card at all? Data mirrors the Bengaluru screenshot of 19 Aug 2026.</p>
 <p class="legend">
-  <b>Root cause:</b> both chips render as styled <code>&lt;Text&gt;</code>. The lagna chip is <i>nested inside</i> the window
-  line's Text run, and iOS ignores <code>borderRadius</code>/<code>overflow</code>/<code>padding</code> on nested Text — it paints
-  a square highlight glued to "AM" (its only separation is a space character that gets the chip background). The आपके लिए pills
-  are standalone Texts with horizontal padding only, and the row wraps its second pill flush under the tiny label.
-  <b>Fix:</b> chips become <code>View</code>-wrapped pills (real corners + vertical air on both platforms); the lagna chip leaves
-  the text run for a centre-aligned row sibling with a 6&nbsp;px gap; the strip gets a fixed label column so wrapped pills align
-  under the first pill. <b>Unchanged:</b> tier, ordering, copy, privacy — annotates, never re-grades (§8.3).
+  <b>Root cause of the visual bugs:</b> both chips render as styled <code>&lt;Text&gt;</code>. The lagna chip is <i>nested inside</i>
+  the window line's Text run, and iOS ignores <code>borderRadius</code>/<code>overflow</code>/<code>padding</code> on nested Text —
+  it paints a square highlight glued to "AM". The आपके लिए pills have horizontal padding only, and the row wraps its second pill
+  flush under the tiny label. <b>The altitude question:</b> the strip can never re-rank days (annotates, never re-grades — §8.3),
+  so the list is the <i>only</i> place personal fit can steer which day gets picked — remove it entirely and comparing days means
+  opening every detail. But the factor <i>names</i> (वध तारा, चंद्राष्टम) are evidence, and evidence belongs on the day detail
+  (answer → action → evidence). <b>Recommendation: (b)</b> — one worst-of-two summary chip on cards, full breakdown on the detail.
+  <b>Unchanged in every option:</b> tier, ordering, copy, privacy.
 </p>
 <span class="illus">⚠ सभी ज्योतिषीय मान उदाहरण हैं · ALL ASTROLOGICAL VALUES ON THIS PAGE ARE ILLUSTRATIVE, NOT ENGINE OUTPUT</span>
 
@@ -241,7 +242,82 @@
       reading as a ragged second sentence rather than a labelled group.</div>
   </div>
 
-  <!-- ================= PHONE B — AFTER (fixed results card) ================= -->
+  <!-- ================= PHONE B — AFTER (compact summary chip · RECOMMENDED) ================= -->
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>7:29</span><span>वेदांश</span></div><div class="screen"><div class="pad">
+      <div class="navrow"><div class="back">‹</div><div class="title">अन्नप्राशन</div><div class="navslot"></div></div>
+      <div class="city">बेंगलुरु · दृक्पंचांग पद्धति</div>
+
+      <div class="sechead">सर्वोत्तम तिथियाँ</div>
+
+      <div class="lc">
+        <div class="thumb">19</div>
+        <div class="lcb">
+          <div class="lct">अगस्त · बुधवार</div>
+          <div class="lcd">श्रेष्ठ</div>
+          <div class="wline-after"><span class="wtime"><span class="wname">लाभ </span>6:08 – 6:45 AM</span><span class="lag-after">सिंह लग्न</span></div>
+          <div class="bala-row-after">
+            <span class="plabel">आपके लिए</span>
+            <span class="pills"><span class="pill-after bad">प्रतिकूल</span></span>
+          </div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="lc">
+        <div class="thumb">26</div>
+        <div class="lcb">
+          <div class="lct">अगस्त · बुधवार</div>
+          <div class="lcd">श्रेष्ठ</div>
+          <div class="wline-after"><span class="wtime"><span class="wname">लाभ </span>6:08 – 7:39 AM</span><span class="lag-after">सिंह लग्न</span></div>
+          <div class="bala-row-after">
+            <span class="plabel">आपके लिए</span>
+            <span class="pills"><span class="pill-after bad">प्रतिकूल</span></span>
+          </div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="lc">
+        <div class="thumb">28</div>
+        <div class="lcb">
+          <div class="lct">अगस्त · शुक्रवार</div>
+          <div class="lcd">श्रेष्ठ</div>
+          <div class="wline-after"><span class="wtime"><span class="wname">चर </span>6:08 – 7:31 AM</span><span class="lag-after">सिंह लग्न</span></div>
+          <div class="bala-row-after">
+            <span class="plabel">आपके लिए</span>
+            <span class="pills"><span class="pill-after bad">प्रतिकूल</span></span>
+          </div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="lc">
+        <div class="thumb">14</div>
+        <div class="lcb">
+          <div class="lct">सितंबर · सोमवार</div>
+          <div class="lcd">श्रेष्ठ</div>
+          <div class="wline-after"><span class="wtime"><span class="wname">अमृत </span>6:24 – 7:07 AM</span><span class="lag-after">कन्या लग्न</span></div>
+          <div class="bala-row-after">
+            <span class="plabel">आपके लिए</span>
+            <span class="pills"><span class="pill-after good">अनुकूल</span></span>
+          </div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
+    </div></div></div>
+    <div class="cap"><b>(b) AFTER — compact summary chip. RECOMMENDED.</b> The card keeps exactly one personal signal:
+      a worst-of-two chip — any factor unfavourable → <span class="bugmark">प्रतिकूल</span>, all favourable →
+      <span class="fixmark">अनुकूल</span>, contested-only → मत भिन्न. The factor <i>names</i> move to the day detail (d),
+      where the explainer already lives. This kills the two-red-pills-under-श्रेष्ठ contradiction, keeps cards one line
+      shorter, and preserves the strip's whole point at list level: <b>Sep 14 pops as the one day that also suits
+      you personally</b> — visible here without opening four details. Pure presentation change in
+      <code>MuhuratBalaStrip</code>'s row variant; engine, ordering and the §8.3 invariant untouched.</div>
+  </div>
+
+  <!-- ================= PHONE C — AFTER (full pills on card · alternative) ================= -->
   <div class="col">
     <div class="phone"><div class="statusbar"><span>7:29</span><span>वेदांश</span></div><div class="screen"><div class="pad">
       <div class="navrow"><div class="back">‹</div><div class="title">अन्नप्राशन</div><div class="navslot"></div></div>
@@ -319,17 +395,14 @@
 
       <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
     </div></div></div>
-    <div class="cap"><b>(b) AFTER — the fixed card.</b>
-      <span class="fixmark">Chip out of the text run:</span> the window line becomes a centre-aligned row
-      (<code>flexDirection:'row'</code>), the chip a real <code>View</code> pill — radius 6, padding 1×6, 6&nbsp;px gap —
-      so corners round and the baseline no longer sags on iOS.
-      <span class="fixmark">Pills breathe:</span> padding 2×7 puts air around the matras.
-      <span class="fixmark">Anchored label:</span> आपके लिए is a fixed leading column; the pills wrap in their own
-      column, so an overflowing pill lands under the <i>first pill</i> (card 19) — the group stays labelled.
-      Tier, order and copy are untouched — the strip still annotates, never re-grades.</div>
+    <div class="cap"><b>(c) AFTER — full pills, fixed. The alternative if the breakdown must stay on cards.</b>
+      Same chip mechanics as (b): the window line becomes a centre-aligned row, the lagna chip a real <code>View</code>
+      pill (radius 6, padding 1×6, 6&nbsp;px gap); bala pills get 2×7 padding; आपके लिए becomes a fixed leading column so
+      an overflowing pill lands under the <i>first pill</i>, never under the label. Honest about the cost: cards run
+      two lines taller, and a श्रेष्ठ card can still carry two red pills — the tension (b) removes.</div>
   </div>
 
-  <!-- ================= PHONE C — AFTER (day-detail card variant) ================= -->
+  <!-- ================= PHONE D — AFTER (day-detail card variant) ================= -->
   <div class="col">
     <div class="phone"><div class="statusbar"><span>7:29</span><span>वेदांश</span></div><div class="screen"><div class="pad">
       <div class="navrow"><div class="back">‹</div><div class="title">19 अगस्त</div><div class="navslot">⇪</div></div>
@@ -370,12 +443,12 @@
 
       <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
     </div></div></div>
-    <div class="cap"><b>(c) AFTER — the day-detail <code>card</code> variant.</b> The full-width strip keeps its shipped
-      structure (label · pills · one italic explainer naming the janma nakshatra/rashi it counted from) and gains the same
-      <code>View</code> pills at the card's 13&nbsp;px size, padding 3×9. The lower duplicate shows the shipped cramped pills
-      for contrast — same tints, no vertical air. Privacy line and the "never re-grades" sentence are verbatim shipped copy;
-      the share card and notifications remain tara/chandra-free (test-pinned). When this ships, design.md §60's strip spec
-      gets the pill metrics (radius 6 · row 2×7 @ 11.5 · card 3×9 @ 13 · label column) per the design-doc-sync rule.</div>
+    <div class="cap"><b>(d) AFTER — the day detail, now the one home of the full breakdown.</b> Under option (b) this is
+      where the named factors (वध तारा, चंद्राष्टम) live — the card's summary chip resolves here, next to the explainer
+      that names the janma nakshatra/rashi it counted from. Pills are the same <code>View</code> treatment at 13&nbsp;px,
+      padding 3×9; the lower duplicate shows the shipped cramped pills for contrast. Privacy line and the "never
+      re-grades" sentence are verbatim shipped copy; share card and notifications remain tara/chandra-free (test-pinned).
+      When this ships, design.md §60's strip spec gets the summary-chip rule + pill metrics per the design-doc-sync rule.</div>
   </div>
 
 </div>
