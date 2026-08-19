@@ -317,7 +317,7 @@ export function getSiderealPlanetLongitude(graha: Graha, date: Date): number {
   return normalizeDegrees(tropicalPlanetLongitude(graha, date) - ayanamsa);
 }
 
-function isRetrograde(graha: Graha, date: Date): boolean {
+export function isRetrograde(graha: Graha, date: Date): boolean {
   if (graha === 'rahu' || graha === 'ketu') return true;
   if (graha === 'sun' || graha === 'moon') return false;
   const before = getSiderealPlanetLongitude(graha, new Date(date.getTime() - DAY_MS / 2));
@@ -424,7 +424,7 @@ export function computeWholeSignHouses(lagnaRashiIndex: number): readonly number
   return Array.from({ length: 12 }, (_, index) => (lagnaRashiIndex + index) % 12);
 }
 
-function houseForRashi(rashiIndex: number, lagnaRashiIndex: number): number {
+export function houseForRashi(rashiIndex: number, lagnaRashiIndex: number): number {
   return ((rashiIndex - lagnaRashiIndex + 12) % 12) + 1;
 }
 
@@ -582,7 +582,7 @@ export function buildKundaliInsights(
   ];
 }
 
-const TRANSIT_SUPPORT_HOUSES: Readonly<Record<Graha, readonly number[]>> = {
+export const TRANSIT_SUPPORT_HOUSES: Readonly<Record<Graha, readonly number[]>> = {
   sun: [3, 6, 10, 11],
   moon: [1, 3, 6, 7, 10, 11],
   mars: [3, 6, 11],
@@ -594,7 +594,7 @@ const TRANSIT_SUPPORT_HOUSES: Readonly<Record<Graha, readonly number[]>> = {
   ketu: [3, 6, 10, 11],
 };
 
-const HOUSE_THEME_HI = [
+export const HOUSE_THEME_HI = [
   'स्वयं और ऊर्जा',
   'संसाधन और वाणी',
   'संवाद और प्रयास',
@@ -609,7 +609,7 @@ const HOUSE_THEME_HI = [
   'विश्राम और समापन',
 ] as const;
 
-const HOUSE_THEME_EN = [
+export const HOUSE_THEME_EN = [
   'self and energy',
   'resources and speech',
   'communication and effort',
@@ -624,7 +624,7 @@ const HOUSE_THEME_EN = [
   'rest and closure',
 ] as const;
 
-function indiaDayAnchor(date: Date): Date {
+export function indiaDayAnchor(date: Date): Date {
   if (!Number.isFinite(date.getTime())) throw new Error('Invalid date');
   const shifted = new Date(date.getTime() + 330 * 60_000);
   return new Date(
@@ -638,7 +638,7 @@ function indiaDayAnchor(date: Date): Date {
   );
 }
 
-function indiaDateKey(date: Date): string {
+export function indiaDateKey(date: Date): string {
   const shifted = new Date(date.getTime() + 330 * 60_000);
   return [
     shifted.getUTCFullYear(),
