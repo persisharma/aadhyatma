@@ -210,6 +210,39 @@ test('Daily Rashifal uses the saved Moon sign and remains guidance, not certaint
   assert.ok(textOf(tree).includes('No name or birth details are included'));
 });
 
+test('personal reading layers only on the natal Moon sign, never on a manual pick', () => {
+  const tree = render(
+    <RashifalScreen
+      navigation={mockNavigation as any}
+      route={{ key: 'Rashifal-test', name: 'Rashifal', params: undefined } as any}
+    />
+  );
+
+  const moon = mockChart.grahas.find((position) => position.graha === 'moon')!;
+  let text = textOf(tree);
+  assert.ok(text.includes('Personal reading'), 'natal selection carries the personal chip');
+  assert.ok(text.includes('Tara bala'), 'natal selection shows tara bala');
+  assert.ok(text.includes('from Lagna'), 'natal selection shows dual house context');
+
+  // Pick a different sign manually — every personal extra must disappear.
+  act(() => {
+    tree.root.findByProps({ accessibilityLabel: 'Change Moon sign' }).props.onPress();
+  });
+  const otherIndex = (moon.rashiIndex + 1) % 12;
+  act(() => {
+    tree.root
+      .findByProps({
+        accessibilityLabel: `${RASHI_NAMES_EN[otherIndex]}, ${RASHI_NAMES_WESTERN[otherIndex]} Moon sign`,
+      })
+      .props.onPress();
+  });
+  text = textOf(tree);
+  assert.ok(!text.includes('Personal reading'));
+  assert.ok(!text.includes('Tara bala'));
+  assert.ok(!text.includes('from Lagna'));
+  assert.ok(!text.includes('Dasha note'));
+});
+
 test('birth profile parsing is strict and converts India wall time to the correct UTC instant', () => {
   assert.deepEqual(validateBirthProfile(mockProfile), {});
   assert.equal(

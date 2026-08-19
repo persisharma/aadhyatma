@@ -53,8 +53,8 @@ import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
+import { computePersonalGuidance } from '@/panchang/gochar';
 import {
-  computeRashifal,
   getCurrentDasha,
   GRAHA_NAMES_EN,
   GRAHA_NAMES_HI,
@@ -771,8 +771,8 @@ function JyotishLanding({
   const [shareVisible, setShareVisible] = useState(false);
   const moon = chart?.grahas.find((position) => position.graha === 'moon');
   const guidance = useMemo(
-    () => (moon ? computeRashifal(today, moon.rashiIndex) : null),
-    [moon, today]
+    () => (chart ? computePersonalGuidance(chart, today) : null),
+    [chart, today]
   );
   const currentDasha = chart ? getCurrentDasha(chart, today) : null;
   const city = profile ? getCityById(profile.cityId) : null;
@@ -987,8 +987,8 @@ function JyotishLanding({
           >
             {meaningByLang(
               lang,
-              'दैनिक चन्द्र-राशि मार्गदर्शन पहले; आपकी पूरी कुंडली एक स्पर्श दूर।',
-              'Daily Moon-sign guidance first; your full chart remains one tap away.'
+              'आज का मार्गदर्शन आपकी पूरी कुंडली से; चार्ट स्वयं एक स्पर्श दूर।',
+              'Today’s guidance reads your full chart; the chart itself stays one tap away.'
             )}
           </Text>
         </View>
@@ -1023,8 +1023,8 @@ function JyotishLanding({
               >
                 {contentByLang(
                   lang,
-                  'चन्द्र राशि · आपकी कुंडली से',
-                  'Moon sign · From your Kundali'
+                  'आपकी पूरी कुंडली से',
+                  'From your full chart'
                 )}
               </Text>
               <Text
@@ -1063,7 +1063,7 @@ function JyotishLanding({
               </Text>
             </Pressable>
           </View>
-          <JyotishGuidanceRows guidance={guidance} lang={lang} />
+          <JyotishGuidanceRows guidance={guidance} lang={lang} showContext />
           <View
             style={[
               styles.jyotishGuidanceFooter,

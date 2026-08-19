@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { Lang } from '@/data/gita/language';
+import type { PersonalGuidance } from '@/panchang/gochar';
 import {
   GRAHA_NAMES_EN,
   GRAHA_NAMES_HI,
@@ -14,10 +15,16 @@ import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont } from '@/utils/langType';
 
 type Props = {
-  guidance: RashifalGuidance;
+  guidance: RashifalGuidance | PersonalGuidance;
   lang: Lang;
   showContext?: boolean;
 };
+
+function isPersonal(
+  guidance: RashifalGuidance | PersonalGuidance
+): guidance is PersonalGuidance {
+  return 'taraBala' in guidance;
+}
 
 function ordinal(value: number): string {
   const mod100 = value % 100;
@@ -28,11 +35,23 @@ function ordinal(value: number): string {
   return `${value}th`;
 }
 
-function contextLabel(lang: Lang, graha: Graha, house: number): string {
+function contextLabel(
+  lang: Lang,
+  graha: Graha,
+  house: number,
+  lagnaHouse: number | null
+): string {
+  if (lagnaHouse === null) {
+    return contentByLang(
+      lang,
+      `${GRAHA_NAMES_HI[graha]} · ${house} भाव`,
+      `${GRAHA_NAMES_EN[graha]} · ${ordinal(house)} bhava`
+    );
+  }
   return contentByLang(
     lang,
-    `${GRAHA_NAMES_HI[graha]} · ${house} भाव`,
-    `${GRAHA_NAMES_EN[graha]} · ${ordinal(house)} bhava`
+    `${GRAHA_NAMES_HI[graha]} · चन्द्र से ${house} भाव · लग्न से ${lagnaHouse} भाव`,
+    `${GRAHA_NAMES_EN[graha]} · ${ordinal(house)} bhava from Moon · ${ordinal(lagnaHouse)} from Lagna`
   );
 }
 
@@ -42,6 +61,7 @@ export default function JyotishGuidanceRows({
   showContext = false,
 }: Props) {
   const { colors, typography, radii } = useTheme();
+  const personal = isPersonal(guidance) ? guidance : null;
   const rows = [
     {
       id: 'favour',
@@ -52,6 +72,7 @@ export default function JyotishGuidanceRows({
       bodyEn: guidance.favourEn,
       graha: guidance.favourGraha,
       house: guidance.favourHouse,
+      lagnaHouse: personal?.favourHouseFromLagna ?? null,
       accent: colors.gold,
       tint: colors.goldTint,
     },
@@ -64,6 +85,7 @@ export default function JyotishGuidanceRows({
       bodyEn: guidance.pauseEn,
       graha: guidance.pauseGraha,
       house: guidance.pauseHouse,
+      lagnaHouse: personal?.pauseHouseFromLagna ?? null,
       accent: colors.avoidDeep,
       tint: colors.avoidTint,
     },
@@ -76,6 +98,7 @@ export default function JyotishGuidanceRows({
       bodyEn: guidance.reflectionEn,
       graha: guidance.reflectionGraha,
       house: guidance.reflectionHouse,
+      lagnaHouse: personal?.reflectionHouseFromLagna ?? null,
       accent: colors.saffronDeep,
       tint: colors.saffronTint,
     },
@@ -140,13 +163,46 @@ export default function JyotishGuidanceRows({
                 ]}
               >
                 <Text style={[styles.contextText, { color: colors.inkMuted }]}>
-                  {contextLabel(lang, row.graha, row.house)}
+                  {contextLabel(lang, row.graha, row.house, row.lagnaHouse)}
                 </Text>
               </View>
             )}
           </View>
         </View>
       ))}
+      {personal?.dashaNoteHi && personal.dashaNoteEn && (
+        <View
+          accessibilityLabel={`Dasha note. ${personal.dashaNoteEn}`}
+          style={[
+            styles.dashaNote,
+            {
+              backgroundColor: colors.goldTint,
+              borderLeftColor: colors.gold,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              pillTextStyle(lang, typography.sectionLabel),
+              styles.label,
+              { color: colors.inkSoft },
+            ]}
+          >
+            {contentByLang(lang, 'दशा संकेत', 'Dasha note')}
+          </Text>
+          <Text
+            style={{
+              color: colors.ink,
+              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+              fontSize: 12,
+              lineHeight: 18,
+              marginTop: 2,
+            }}
+          >
+            {meaningByLang(lang, personal.dashaNoteHi, personal.dashaNoteEn)}
+          </Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -183,6 +239,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderWidth: 1,
+  },
+  dashaNote: {
+    paddingVertical: 11,
+    paddingHorizontal: 13,
+    borderLeftWidth: 4,
   },
   contextText: {
     fontFamily: fontFamilies.interSemiBold,
