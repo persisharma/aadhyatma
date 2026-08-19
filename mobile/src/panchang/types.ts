@@ -50,6 +50,11 @@ export type PanchangData = {
   nakshatra: PanchangElement;
   yoga: PanchangElement;
   karana: PanchangElement;
+  // Late-onset Vishti (PRD-16/P3 §0.3): a Bhadra that STARTS after sunrise —
+  // the karana following the sunrise karana is Vishti. Null when the sunrise
+  // karana is itself Vishti (that interval is sunrise → karana.endTime) or when
+  // no Vishti begins this day. start = karana.endTime; end is its solved end.
+  lateVishti: { start: Date; end: Date } | null;
   sunrise: Date;
   sunset: Date;
   moonrise: Date | null;

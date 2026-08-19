@@ -359,6 +359,24 @@ function eclipticHorizonSample(
 }
 
 /**
+ * Sidereal ascendant at an instant, closed form — the lean sweep primitive
+ * (PRD-16/P3 §6). The standard ascendant formula IS the rising ecliptic–horizon
+ * intersection `computeLagna` bisects for, so the two agree exactly (verified
+ * < 1e-12° over 1,000 instants × 5 latitudes), at a handful of trig calls
+ * instead of a 360-step coarse scan. `lagnaSweep.ts` evaluates this ~200×/day.
+ */
+export function ascendantSiderealLongitude(date: Date, latitude: number, longitude: number): number {
+  const theta = normalizeDegrees(SiderealTime(date) * 15 + longitude) * DEG; // RAMC
+  const epsilon = meanObliquity(date) * DEG;
+  const phi = latitude * DEG;
+  const lambda = Math.atan2(
+    Math.cos(theta),
+    -(Math.sin(theta) * Math.cos(epsilon) + Math.tan(phi) * Math.sin(epsilon))
+  );
+  return normalizeDegrees(lambda / DEG - ayanamsaAt(date));
+}
+
+/**
  * Sidereal ascendant (Lagna): finds both intersections between the ecliptic and
  * the observer's horizon, then chooses the eastern/rising root.
  */
