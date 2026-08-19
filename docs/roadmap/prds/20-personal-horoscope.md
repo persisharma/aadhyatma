@@ -4,6 +4,7 @@
 |---|---|
 | **Status** | Phase 1 (engine) implemented; UI phases land incrementally per this document |
 | **T-shirt size** | L — six engine/UI phases, but each is small and every calculation reuses the shipped PRD-C primitives |
+| **Prototype** | [`docs/personal-horoscope-prototype.html`](../../personal-horoscope-prototype.html) — personalized landing, Rashifal personal layer + privacy boundary, Gochar (transit table, weekly outlook, Sade Sati, ingresses), Dasha reading, and the compiled report with its warned share |
 | **Feasibility** | No new dependency. Everything derives from `kundali.ts`'s existing sidereal primitives (`getSiderealPlanetLongitude`, whole-sign houses, Vimshottari) at the shared 06:00 IST day anchor. Fully offline and deterministic. |
 
 > **Product stance:** the personal-astrologer experience of consumer astrology apps, minus their business model. Everything is computed on-device from the saved Kundali, framed as traditional guidance/reflection (RULEBOOK §14.3) — never predictions, fear copy, luck scores, remedial claims, or upsells. No network, AI, or randomness in current scope.

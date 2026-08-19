@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-20 · Deep Personal Horoscope (गोचर · व्यक्तिगत मार्गदर्शन · पूर्ण विवेचन) — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#f3e7c9; --parchment-soft:#f8efd6; --parchment-hi:#fff5e0;
+    --gradient-end:#e9d9b1; --gold:#a67c34; --gold-soft:#c9b896; --gold-tint:#d8c393;
+    --saffron:#b8621b; --saffron-deep:#8a3e0b; --saffron-tint:rgba(184,98,27,0.10);
+    --ink:#2f1e10; --ink-soft:#5c4326; --ink-muted:#8a6a47; --divider:#d9c9a6;
+    --avoid:#9c4a32; --avoid-deep:#7a3722; --avoid-tint:rgba(156,74,50,0.12);
+    --gold-row:rgba(166,124,52,0.14);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:960px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:960px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:960px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap .n{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px;flex:none}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .toptitle .ts{display:block;font-family:var(--sans);font-size:10.5px;color:var(--ink-muted);margin-top:1px}
+  .topaction{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--saffron);border:1px solid var(--divider);
+    background:var(--parchment-soft);border-radius:18px;padding:8px 10px}
+  .deva{font-family:var(--deva)}
+  .en-it{font-family:var(--serif);font-style:italic}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* shared bits */
+  .kicker{font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans);margin:16px 0 7px}
+  .kicker.first{margin-top:2px}
+  .eyebrow{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--saffron-deep);font-family:var(--sans)}
+  .infonote{display:flex;align-items:center;gap:8px;margin:0 0 12px}
+  .infonote .i{width:18px;height:18px;border:1px solid var(--divider);border-radius:50%;display:flex;align-items:center;
+    justify-content:center;font-size:10px;font-weight:600;color:var(--saffron);flex:none}
+  .infonote .t{font-family:var(--deva);font-size:12px;color:var(--ink-muted);line-height:1.7}
+  .card{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;margin-bottom:12px;position:relative}
+  .card.hot{border:1.4px solid rgba(184,98,27,.45);background:linear-gradient(150deg,var(--parchment-hi),var(--parchment-soft))}
+  .card .inner{padding:14px}
+  .pill{display:inline-block;font-family:var(--sans);font-size:10px;font-weight:600;border:1px solid var(--divider);
+    border-radius:16px;padding:3px 9px;color:var(--ink-soft);background:var(--parchment-hi)}
+  .pill.goldbg{background:var(--gold-row);border-color:var(--gold-tint)}
+  .pill.safbg{background:var(--saffron-tint)}
+
+  /* guidance rows */
+  .grow{display:flex;gap:10px;padding:11px 13px;border-left:4px solid var(--gold);background:var(--parchment-soft);
+    border-bottom:1px solid var(--divider)}
+  .grow.pause{border-left-color:var(--avoid-deep)}
+  .grow.reflect{border-left-color:var(--saffron-deep);border-bottom:none}
+  .grow .mark{width:29px;height:29px;border-radius:50%;background:var(--gold-row);display:flex;align-items:center;
+    justify-content:center;font-size:12px;font-weight:600;color:var(--gold);flex:none}
+  .grow.pause .mark{background:var(--avoid-tint);color:var(--avoid-deep)}
+  .grow.reflect .mark{background:var(--saffron-tint);color:var(--saffron-deep)}
+  .grow .gl{font-size:10.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans)}
+  .grow .gb{font-family:var(--deva);font-size:12.5px;color:var(--ink);line-height:1.75;margin-top:2px}
+  .grow .ctx{display:inline-block;border:1px solid var(--divider);background:var(--parchment-hi);border-radius:14px;
+    padding:3px 8px;margin-top:6px;font-family:var(--deva);font-size:10.5px;color:var(--ink-muted)}
+  .dnote{padding:11px 13px;border-left:4px solid var(--gold);background:var(--gold-row)}
+  .dnote .gl{font-size:10.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--ink-soft);font-family:var(--sans)}
+  .dnote .gb{font-family:var(--deva);font-size:12px;color:var(--ink);line-height:1.75;margin-top:2px}
+  .gfoot{padding:10px 13px;font-family:var(--sans);font-size:11px;font-weight:600;color:var(--saffron)}
+
+  /* compact kundali facts */
+  .factgrid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .fact{flex:1 1 44%;border:1px solid var(--divider);background:var(--parchment-hi);border-radius:11px;padding:8px 10px}
+  .fact .fl{font-size:9.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans)}
+  .fact .fv{font-family:var(--deva);font-size:13.5px;color:var(--ink);margin-top:2px}
+  .fact .fd{font-family:var(--serif);font-style:italic;font-size:10.5px;color:var(--ink-muted)}
+  .teaser{display:flex;align-items:center;gap:8px;border:1px solid var(--divider);border-radius:11px;
+    background:var(--gold-row);padding:9px 11px;margin-top:10px}
+  .teaser .t{flex:1;font-family:var(--deva);font-size:11px;color:var(--ink-soft);line-height:1.6}
+  .teaser .c{color:var(--saffron-deep);font-size:15px}
+  .actions{display:flex;gap:8px;margin-top:11px}
+  .abtn{flex:none;border-radius:20px;padding:10px 16px;font-family:var(--deva);font-size:12px}
+  .abtn.primary{background:var(--saffron-deep);color:#fff5e0}
+  .abtn.ghost{border:1px solid var(--divider);background:var(--parchment-soft);color:var(--saffron-deep)}
+  .inlinelink{font-family:var(--deva);font-size:12px;font-weight:600;color:var(--saffron-deep);margin-top:10px;display:inline-block}
+
+  /* tool cards */
+  .tool{display:flex;align-items:center;gap:11px;border:1px solid rgba(184,98,27,.35);background:var(--parchment-soft);
+    border-radius:16px;padding:13px;margin-bottom:10px;position:relative}
+  .tool .glyph{width:34px;height:34px;border-radius:10px;background:var(--saffron-tint);display:flex;align-items:center;
+    justify-content:center;font-family:var(--deva);font-size:16px;font-weight:600;color:var(--saffron-deep);flex:none}
+  .tool .tt{font-family:var(--deva);font-size:15px;color:var(--ink);display:flex;align-items:center;gap:7px}
+  .tool .tsb{font-family:var(--deva);font-size:11px;color:var(--ink-muted);line-height:1.65;margin-top:3px}
+  .tool .chev{margin-left:auto;color:var(--saffron);font-size:18px;flex:none}
+  .tag{font-size:9px;font-weight:700;letter-spacing:.4px;color:#fff5e0;background:var(--saffron);padding:2px 6px;border-radius:8px;font-family:var(--sans)}
+
+  /* gochar table */
+  .thead{display:flex;padding:9px 13px;border-bottom:1px solid var(--divider);font-family:var(--sans);
+    font-size:9.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--ink-muted)}
+  .trow{display:flex;align-items:center;min-height:40px;padding:0 13px;border-bottom:1px solid rgba(217,201,166,.6);
+    font-family:var(--deva);font-size:12px;color:var(--ink-soft)}
+  .trow:last-of-type{border-bottom:none}
+  .cg{flex:1.4;display:flex;align-items:center;gap:7px;color:var(--ink)}
+  .cc{flex:1}
+  .sdot{width:6px;height:6px;border-radius:3px;background:var(--gold);flex:none}
+  .sdot.off{background:var(--divider)}
+  .rx{color:var(--saffron-deep);font-size:10px}
+  .tlegend{display:flex;align-items:center;gap:7px;padding:9px 13px;font-family:var(--sans);font-size:10px;color:var(--ink-muted)}
+  .chipwrap{display:flex;flex-wrap:wrap;gap:7px}
+  .hchip{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:6px 10px;
+    font-family:var(--deva);font-size:11px;color:var(--ink-soft)}
+
+  /* weekly strip */
+  .wrow{display:flex;align-items:center;gap:8px;min-height:40px;padding:5px 12px;border-bottom:1px solid rgba(217,201,166,.6)}
+  .wrow .wd{width:58px;font-family:var(--sans);font-size:10.5px;font-weight:600;color:var(--ink-soft);flex:none}
+  .wrow .tdot{width:7px;height:7px;border-radius:4px;flex:none}
+  .tdot.fav{background:var(--gold)} .tdot.ref{background:var(--saffron-deep)} .tdot.mix{background:var(--divider)}
+  .wrow .wt{flex:1;font-family:var(--deva);font-size:10.5px;color:var(--ink-soft);line-height:1.5}
+  .wrow .tone{font-family:var(--deva);font-size:11px;font-weight:600}
+  .tone.fav{color:var(--gold)} .tone.ref{color:var(--saffron-deep)} .tone.mix{color:var(--ink-muted)}
+  .wbasis{padding:8px 12px;font-family:var(--sans);font-size:9.5px;color:var(--ink-muted);line-height:1.55}
+
+  /* sade sati + ingress */
+  .ssb{font-family:var(--sans);font-size:10.5px;color:var(--ink-muted);margin-top:7px}
+  .plink{display:inline-block;border:1px solid var(--divider);background:var(--parchment-soft);border-radius:18px;
+    padding:9px 13px;margin-top:10px;font-family:var(--sans);font-size:10.5px;font-weight:600;color:var(--saffron-deep)}
+  .irow{display:flex;align-items:center;gap:10px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:12px;padding:11px 12px;margin-bottom:7px}
+  .irow .it{flex:1;font-family:var(--deva);font-size:12px;color:var(--ink)}
+  .irow .idt{font-family:var(--sans);font-size:10.5px;color:var(--ink-muted)}
+
+  /* dasha tab */
+  .dcurrent{border:1.4px solid rgba(184,98,27,.45);background:linear-gradient(150deg,var(--parchment-hi),var(--parchment-soft));
+    border-radius:16px;padding:14px;margin-bottom:12px}
+  .dbar{height:6px;border-radius:3px;background:var(--divider);margin-top:10px;overflow:hidden}
+  .dbar>i{display:block;height:100%;width:68%;background:linear-gradient(90deg,var(--gold),var(--saffron))}
+  .dread{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:14px;margin-bottom:12px}
+  .dread p{font-family:var(--deva);font-size:12px;color:var(--ink-soft);line-height:1.8;margin-top:6px}
+  .dread p.muted{color:var(--ink-muted)}
+  .tlrow{display:flex;gap:10px;margin-bottom:8px}
+  .tlrail{width:14px;display:flex;flex-direction:column;align-items:center;flex:none}
+  .tlrail .knob{width:10px;height:10px;border-radius:5px;border:2px solid var(--gold);background:var(--parchment-hi)}
+  .tlrail .knob.on{background:var(--saffron);border-color:var(--saffron-deep)}
+  .tlrail .line{flex:1;width:2px;background:var(--divider)}
+  .tlcard{flex:1;border:1px solid var(--divider);background:var(--parchment-soft);border-radius:12px;padding:9px 12px}
+  .tlcard .tn{font-family:var(--deva);font-size:13px;color:var(--ink)}
+  .tlcard .td{font-family:var(--sans);font-size:10px;color:var(--ink-muted);margin-top:2px}
+
+  /* report */
+  .band{border:1px solid var(--divider);background:var(--gold-row);border-radius:12px;padding:10px 12px;
+    font-family:var(--deva);font-size:10.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:11px}
+  .rsection{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:14px;margin-bottom:11px}
+  .rsection .rt{font-family:var(--deva);font-size:15px;color:var(--ink);margin-top:3px}
+  .rsection p{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);line-height:1.8;margin-top:7px}
+  .rfact{display:flex;justify-content:space-between;gap:10px;min-height:28px;align-items:center;
+    border-bottom:1px solid rgba(217,201,166,.6);padding:4px 0}
+  .rfact .rl{font-size:9.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans)}
+  .rfact .rv{font-family:var(--deva);font-size:11.5px;color:var(--ink);text-align:right}
+  .agearow{display:flex;gap:8px;align-items:baseline;border-bottom:1px solid rgba(217,201,166,.6);padding:7px 0}
+  .agearow .ag{width:88px;font-family:var(--sans);font-size:10px;font-weight:600;color:var(--ink-muted);flex:none}
+  .agearow .al{flex:1;font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);line-height:1.6}
+  .agearow.now .al{color:var(--ink)} .agearow.now .ag{color:var(--saffron-deep)}
+  .nowchip{font-size:9px;font-weight:700;color:#fff5e0;background:var(--saffron);border-radius:8px;padding:1px 6px;font-family:var(--sans)}
+
+  /* north indian chart sketch */
+  .nchart{display:flex;justify-content:center;padding:6px 0 2px}
+
+  /* share sheet */
+  .sheetwrap{position:absolute;left:0;right:0;bottom:0;top:32px;background:rgba(26,20,12,.35)}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--parchment-hi);border-radius:22px 22px 0 0;
+    padding:12px 16px 20px;box-shadow:0 -12px 32px rgba(0,0,0,.3)}
+  .sheet .grab{width:44px;height:5px;border-radius:3px;background:var(--divider);margin:0 auto 10px}
+  .sheet .st{font-family:var(--deva);font-size:15px;color:var(--ink);text-align:center}
+  .sheet .warn{border:1.2px solid var(--avoid-deep);background:var(--avoid-tint);border-radius:12px;padding:10px 12px;
+    font-family:var(--deva);font-size:11px;color:var(--avoid-deep);line-height:1.7;margin:10px 0}
+  .minicard{width:180px;margin:0 auto;border:2px solid var(--gold);border-radius:14px;background:var(--parchment-hi);
+    padding:10px;text-align:center}
+  .minicard .mt{font-family:var(--deva);font-size:12px;color:var(--saffron-deep)}
+  .minicard .mn{font-family:var(--deva);font-size:14px;color:var(--ink);margin-top:3px}
+  .minicard .md{font-family:var(--sans);font-size:9px;color:var(--ink-muted);margin-top:3px}
+  .sheet .sbtn{display:block;width:100%;text-align:center;background:var(--saffron);color:#fff8ec;border-radius:12px;
+    padding:12px;font-family:var(--deva);font-size:13.5px;margin-top:12px}
+</style>
+</head>
+<body>
+  <h1>Deep Personal Horoscope — गोचर · व्यक्तिगत मार्गदर्शन · पूर्ण विवेचन</h1>
+  <div class="sub">PRD-20 interactive prototype · the shipped Jyotish area extended into a personal-astrologer experience — fully on-device, deterministic, and guidance-framed (never predictions, never fear copy).</div>
+  <div class="legend">Sample data is the real golden fixture the engine tests pin: <b>Aarav · 14 Aug 1992 · 5:42 AM · Ujjain</b> → <b>कर्क लग्न (Cancer rising) · कुम्भ चन्द्र (Aquarius Moon) · धनिष्ठा नक्षत्र · गुरु महादशा</b>. Saturn currently transits मीन — the 2nd from the janma rashi — so this chart is genuinely in the <b>closing phase of Sade Sati</b>, which is why that card is prominent below. Transit/ingress dates are representative.</div>
+
+  <!-- ══════════════ PHASE 2 · personalized landing ══════════════ -->
+  <div class="phaselabel">Phase 2 · Saved Jyotish landing — full-chart daily guidance</div>
+  <div class="phasedesc">The contractual row order (guidance rows → compact Kundali → practice) is untouched; the rows are now computed by <b>computePersonalGuidance</b> — byte-identical Favour/Pause/Reflect bodies (superset lock), plus dual house context, a dasha note, and the new PRD-20 doors.</div>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>॥ श्री ॥</span><span>▮▮▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="eyebrow">बुधवार, 19 अगस्त 2026</div>
+        <div class="deva" style="font-size:24px;color:var(--ink);margin-top:3px">आज आपका ज्योतिष</div>
+        <div class="deva" style="font-size:11.5px;color:var(--ink-muted);margin-top:3px;line-height:1.7">आज का मार्गदर्शन आपकी पूरी कुंडली से; चार्ट स्वयं एक स्पर्श दूर।</div>
+
+        <div class="kicker">आज का राशिफल</div>
+        <div class="card hot" style="overflow:hidden;position:relative"><div class="dot" style="right:10px;top:10px">1</div>
+          <div style="padding:13px 13px 10px;border-bottom:1px solid var(--divider)">
+            <div class="eyebrow">आपकी पूरी कुंडली से</div>
+            <div class="deva" style="font-size:19px;color:var(--ink);margin-top:3px">कुम्भ <span class="en-it" style="font-size:12px;color:var(--ink-muted)">· Aquarius</span></div>
+          </div>
+          <div class="grow" style="position:relative"><div class="dot" style="right:8px;top:8px">2</div>
+            <div class="mark">↑</div>
+            <div style="flex:1">
+              <div class="gl">जिसे स्थान दें · Favour</div>
+              <div class="gb">परिवर्तन और धैर्य में शांत, क्रमबद्ध प्रयास को स्थान दें।</div>
+              <span class="ctx">बुध · चन्द्र से 8 भाव · लग्न से 3 भाव</span>
+            </div>
+          </div>
+          <div class="grow pause">
+            <div class="mark">—</div>
+            <div style="flex:1">
+              <div class="gl">जहाँ ठहरें · Pause</div>
+              <div class="gb">संबंध और सहयोग से जुड़े विषयों में जल्दबाज़ी या निश्चित निष्कर्ष से रुकें।</div>
+              <span class="ctx">सूर्य · चन्द्र से 7 भाव · लग्न से 2 भाव</span>
+            </div>
+          </div>
+          <div class="grow reflect">
+            <div class="mark">?</div>
+            <div style="flex:1">
+              <div class="gl">चिंतन प्रश्न · Reflect</div>
+              <div class="gb">आज परिवर्तन और धैर्य को किस प्रकार धैर्य चाहिए?</div>
+              <span class="ctx">चन्द्र · चन्द्र से 8 भाव · लग्न से 3 भाव</span>
+            </div>
+          </div>
+          <div class="dnote" style="position:relative"><div class="dot" style="right:8px;top:8px">3</div>
+            <div class="gl">दशा संकेत · Dasha note</div>
+            <div class="gb">आज का ठहराव-संकेत उसी सूर्य से जुड़ा है जिसकी अन्तर्दशा इस समय चल रही है — परम्परा में ऐसे दिन धैर्य और नियमित साधना को विशेष महत्व दिया जाता है।</div>
+          </div>
+          <div class="gfoot">पूरा राशिफल खोलें ›</div>
+        </div>
+
+        <div class="kicker">आपकी कुंडली</div>
+        <div class="card"><div class="inner" style="position:relative">
+          <div class="eyebrow">कुंडली की एक झलक</div>
+          <div class="deva" style="font-size:15px;color:var(--ink);margin-top:3px">Aarav <span class="pill" style="float:right">विवरण सहेजे गए</span></div>
+          <div class="factgrid">
+            <div class="fact"><div class="fl">लग्न</div><div class="fv">कर्क</div><div class="fd">Cancer rising</div></div>
+            <div class="fact"><div class="fl">चन्द्र राशि</div><div class="fv">कुम्भ</div><div class="fd">Aquarius</div></div>
+            <div class="fact"><div class="fl">नक्षत्र</div><div class="fv">धनिष्ठा</div><div class="fd">पद 2</div></div>
+            <div class="fact"><div class="fl">वर्तमान दशा</div><div class="fv">गुरु</div><div class="fd">महादशा</div></div>
+          </div>
+          <div class="teaser" style="position:relative"><div class="dot" style="right:6px;top:6px">4</div>
+            <div class="t">साढ़े साती का पारम्परिक काल चल रहा है — गोचर में देखें।</div><div class="c">›</div>
+          </div>
+          <div class="actions">
+            <div class="abtn primary">कुंडली खोलें</div>
+            <div class="abtn ghost">विवरण बदलें</div>
+          </div>
+          <span class="inlinelink" style="position:relative">पूर्ण कुंडली विवेचन खोलें ›<span class="dot" style="right:-26px;top:0">5</span></span>
+        </div></div>
+
+        <div class="kicker">गोचर</div>
+        <div class="tool" style="position:relative"><div class="dot" style="right:8px;top:8px">6</div>
+          <div class="glyph">गो</div>
+          <div style="flex:1">
+            <div class="tt">गोचर <span class="tag">NEW</span></div>
+            <div class="tsb">आज के नौ ग्रह आपकी कुंडली में—साढ़े साती और आगामी राशि-प्रवेश सहित।</div>
+          </div>
+          <div class="chev">›</div>
+        </div>
+        <div class="kicker">मिलान</div>
+        <div class="tool"><div class="glyph">मि</div>
+          <div style="flex:1"><div class="tt">अष्टकूट मिलान</div><div class="tsb">वर-वधू के ३६ गुण—हर कूट का स्पष्ट और निजी हिसाब।</div></div>
+          <div class="chev">›</div>
+        </div>
+        <div class="tool"><div class="glyph">ना</div>
+          <div style="flex:1"><div class="tt">नामकरण</div><div class="tsb">नवजात के जन्म-चन्द्र से नामाक्षर पाएँ।</div></div>
+          <div class="chev">›</div>
+        </div>
+        <div class="kicker">साधना</div>
+        <div class="tool"><div class="glyph">ॐ</div>
+          <div style="flex:1"><div class="tt">नवग्रह स्तोत्रम्</div><div class="tsb">आज के मार्गदर्शन के साथ सुझाई गई साधना।</div></div>
+          <div class="chev">›</div>
+        </div>
+      </div></div></div>
+      <div class="cap"><b>Saved landing — the personal astrologer's daily page.</b><br/>
+        <span class="n">1</span><b>New eyebrow</b> — "आपकी पूरी कुंडली से" replaces the Moon-sign-only label; the three rows render byte-identical bodies (the engine's superset lock) so nothing shifts for existing users.<br/>
+        <span class="n">2</span><b>Dual house context</b> — every row now names the transit's house from the Moon AND from the Lagna.<br/>
+        <span class="n">3</span><b>Dasha note</b> — appears only when a focus transit belongs to a running Vimshottari lord; quiet gold row, never an alert.<br/>
+        <span class="n">4</span><b>Sade Sati teaser</b> — shown only while a phase is actually running; taps into Gochar.<br/>
+        <span class="n">5</span><b>Report door</b> — the compiled full-chart reading (Phase 6).<br/>
+        <span class="n">6</span><b>गोचर tool card</b> — placed after the contractual trio, with Guna Milan/Namkaran. Guests see none of this — every PRD-20 surface needs the saved chart.</div>
+    </div>
+
+    <!-- Rashifal personal layer -->
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>॥ श्री ॥</span><span>▮▮▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div>
+          <div class="toptitle">आज का राशिफल<span class="ts">Wednesday, 19 August 2026 · Moon sign</span></div>
+          <div class="topaction">↗ साझा करें</div>
+        </div>
+        <div class="infonote"><div class="i">i</div><div class="t">पारम्परिक गोचर-आधारित मार्गदर्शन—निश्चित भविष्यवाणी नहीं।</div></div>
+        <div class="card"><div class="inner">
+          <div class="eyebrow">चन्द्र राशि · आपकी कुंडली से</div>
+          <div class="deva" style="font-size:18px;color:var(--ink);margin-top:3px">कुम्भ <span class="en-it" style="font-size:12px;color:var(--ink-muted)">· Aquarius</span></div>
+          <div class="deva" style="font-size:10px;color:var(--ink-muted);margin-top:2px">आपकी जन्म चन्द्र राशि प्रतिदिन अपने-आप चुनी जाती है।</div>
+        </div></div>
+        <div class="card hot" style="overflow:hidden">
+          <div style="padding:13px;border-bottom:1px solid var(--divider);position:relative"><div class="dot" style="right:10px;top:10px">7</div>
+            <div class="eyebrow">चन्द्र राशि · आपकी कुंडली से</div>
+            <div class="deva" style="font-size:19px;color:var(--ink);margin-top:3px">कुम्भ <span class="en-it" style="font-size:12px;color:var(--ink-muted)">· Aquarius</span></div>
+            <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+              <span class="pill goldbg">तारा बल · परम मित्र</span>
+              <span class="pill">व्यक्तिगत पाठ · Personal reading</span>
+            </div>
+          </div>
+          <div class="grow"><div class="mark">↑</div>
+            <div style="flex:1"><div class="gl">जिसे स्थान दें</div>
+              <div class="gb">परिवर्तन और धैर्य में शांत, क्रमबद्ध प्रयास को स्थान दें।</div>
+              <span class="ctx">बुध · चन्द्र से 8 भाव · लग्न से 3 भाव</span></div>
+          </div>
+          <div class="grow pause"><div class="mark">—</div>
+            <div style="flex:1"><div class="gl">जहाँ ठहरें</div>
+              <div class="gb">संबंध और सहयोग से जुड़े विषयों में जल्दबाज़ी से रुकें।</div>
+              <span class="ctx">सूर्य · चन्द्र से 7 भाव · लग्न से 2 भाव</span></div>
+          </div>
+          <div class="grow reflect"><div class="mark">?</div>
+            <div style="flex:1"><div class="gl">चिंतन प्रश्न</div>
+              <div class="gb">आज परिवर्तन और धैर्य को किस प्रकार धैर्य चाहिए?</div>
+              <span class="ctx">चन्द्र · चन्द्र से 8 भाव · लग्न से 3 भाव</span></div>
+          </div>
+          <div class="dnote"><div class="gl">दशा संकेत</div>
+            <div class="gb">आज का ठहराव-संकेत उसी सूर्य से जुड़ा है जिसकी अन्तर्दशा चल रही है — धैर्य और नियमित साधना का दिन।</div>
+          </div>
+        </div>
+        <div class="kicker">यदि दूसरी राशि चुनें —</div>
+        <div class="card" style="position:relative"><div class="dot" style="right:10px;top:10px">8</div><div class="inner">
+          <div class="eyebrow">आज का मार्गदर्शन · चन्द्र राशि</div>
+          <div class="deva" style="font-size:17px;color:var(--ink);margin-top:3px">मेष <span class="en-it" style="font-size:11.5px;color:var(--ink-muted)">· Aries</span></div>
+          <div class="deva" style="font-size:11px;color:var(--ink-muted);margin-top:6px;line-height:1.7">सामान्य चन्द्र-राशि पाठ — कोई तारा-बल पिल नहीं, कोई दशा संकेत नहीं, कोई लग्न-भाव संदर्भ नहीं। साझा-कार्ड में नाम या जन्म विवरण कभी नहीं जाते।</div>
+        </div></div>
+      </div></div></div>
+      <div class="cap"><b>Rashifal — the personal layer and its privacy boundary.</b><br/>
+        <span class="n">7</span><b>Personal extras only on the natal sign</b> — the तारा बल pill (tinted by tone: gold favourable · saffron reflective · plain steady) and the "व्यक्तिगत पाठ" chip appear only when the selected sign IS the saved chart's Moon sign.<br/>
+        <span class="n">8</span><b>Manual pick strips everything</b> — choosing any other sign renders the plain Moon-sign reading: no tara pill, no dasha note, no Lagna context. The share card keeps its existing no-name/no-birth-details contract in both cases. Pinned by <i>KundaliExperience.test.tsx</i>.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ PHASE 3+5 · Gochar ══════════════ -->
+  <div class="phaselabel">Phase 3 + 5 · Gochar — transits, weekly outlook, Sade Sati</div>
+  <div class="phasedesc">Cheap fixed-anchor solves render immediately; the ingress day-walks and Saturn boundary defer behind InteractionManager (the useMuhurat discipline). Nothing is persisted; every value derives from the 06:00 IST anchor. <b>No share card, by decision</b> — the surface exposes janma rashi and Sade Sati state.</div>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>॥ श्री ॥</span><span>▮▮▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div>
+          <div class="toptitle">गोचर<span class="ts">19 August 2026 · Today's grahas in your chart</span></div>
+        </div>
+        <div class="infonote" style="position:relative"><div class="dot" style="right:0;top:-2px">9</div>
+          <div class="i">i</div><div class="t">पारम्परिक गोचर दृष्टि—निश्चित भविष्यवाणी नहीं।</div></div>
+        <div class="card"><div class="inner" style="display:flex;gap:12px;padding:12px 14px">
+          <div style="flex:1"><div class="fl eyebrow" style="color:var(--ink-muted)">जन्म राशि (चन्द्र)</div>
+            <div class="deva" style="font-size:14px;color:var(--ink);margin-top:2px">कुम्भ <span class="en-it" style="font-size:10.5px;color:var(--ink-muted)">· Aquarius</span></div></div>
+          <div style="flex:1"><div class="fl eyebrow" style="color:var(--ink-muted)">लग्न</div>
+            <div class="deva" style="font-size:14px;color:var(--ink);margin-top:2px">कर्क <span class="en-it" style="font-size:10.5px;color:var(--ink-muted)">· Cancer</span></div></div>
+        </div></div>
+
+        <div class="kicker">आज के गोचर</div>
+        <div class="card hot" style="overflow:hidden;position:relative"><div class="dot" style="right:10px;top:8px">10</div>
+          <div class="thead"><span style="flex:1.4">ग्रह</span><span class="cc">राशि</span><span class="cc">चन्द्र से</span><span class="cc">लग्न से</span></div>
+          <div class="trow"><div class="cg"><span class="sdot off"></span>सूर्य</div><div class="cc">सिंह</div><div class="cc">7 भाव</div><div class="cc">2 भाव</div></div>
+          <div class="trow"><div class="cg"><span class="sdot off"></span>चन्द्र</div><div class="cc">कन्या</div><div class="cc">8 भाव</div><div class="cc">3 भाव</div></div>
+          <div class="trow"><div class="cg"><span class="sdot off"></span>मंगल</div><div class="cc">तुला</div><div class="cc">9 भाव</div><div class="cc">4 भाव</div></div>
+          <div class="trow"><div class="cg"><span class="sdot"></span>बुध</div><div class="cc">कन्या</div><div class="cc">8 भाव</div><div class="cc">3 भाव</div></div>
+          <div class="trow"><div class="cg"><span class="sdot"></span>गुरु</div><div class="cc">मिथुन</div><div class="cc">5 भाव</div><div class="cc">12 भाव</div></div>
+          <div class="trow"><div class="cg"><span class="sdot"></span>शुक्र</div><div class="cc">मिथुन</div><div class="cc">5 भाव</div><div class="cc">12 भाव</div></div>
+          <div class="trow"><div class="cg"><span class="sdot off"></span>शनि <span class="rx">℞</span></div><div class="cc">मीन</div><div class="cc">2 भाव</div><div class="cc">9 भाव</div></div>
+          <div class="trow"><div class="cg"><span class="sdot off"></span>राहु <span class="rx">℞</span></div><div class="cc">कुम्भ</div><div class="cc">1 भाव</div><div class="cc">8 भाव</div></div>
+          <div class="trow"><div class="cg"><span class="sdot off"></span>केतु <span class="rx">℞</span></div><div class="cc">सिंह</div><div class="cc">7 भाव</div><div class="cc">2 भाव</div></div>
+          <div class="tlegend"><span class="sdot"></span><span>पारम्परिक रूप से सहायक भाव में · ℞ वक्री</span></div>
+        </div>
+
+        <div class="kicker">सक्रिय भाव-विषय</div>
+        <div class="chipwrap" style="position:relative"><div class="dot" style="right:0;top:-4px">11</div>
+          <span class="hchip">5 भाव · रचनात्मकता और अध्ययन</span>
+          <span class="hchip">8 भाव · परिवर्तन और धैर्य</span>
+        </div>
+
+        <div class="kicker">सप्ताह की झलक</div>
+        <div class="card" style="overflow:hidden;position:relative"><div class="dot" style="right:10px;top:8px">12</div>
+          <div class="wrow"><span class="wd">बुध 19</span><span class="tdot mix"></span><span class="wt">चन्द्र कन्या · 8 भाव · परम मित्र</span><span class="tone mix">सम</span></div>
+          <div class="wrow"><span class="wd">गुरु 20</span><span class="tdot mix"></span><span class="wt">चन्द्र कन्या · 8 भाव · जन्म</span><span class="tone mix">सम</span></div>
+          <div class="wrow"><span class="wd">शुक्र 21</span><span class="tdot fav"></span><span class="wt">चन्द्र तुला · 9 भाव · सम्पत्</span><span class="tone mix">सम</span></div>
+          <div class="wrow"><span class="wd">शनि 22</span><span class="tdot fav"></span><span class="wt">चन्द्र वृश्चिक · 10 भाव · साधक</span><span class="tone fav">अनुकूल</span></div>
+          <div class="wrow"><span class="wd">रवि 23</span><span class="tdot fav"></span><span class="wt">चन्द्र वृश्चिक · 10 भाव · मित्र</span><span class="tone fav">अनुकूल</span></div>
+          <div class="wrow"><span class="wd">सोम 24</span><span class="tdot ref"></span><span class="wt">चन्द्र धनु · 11 भाव · विपत्</span><span class="tone mix">सम</span></div>
+          <div class="wrow"><span class="wd">मंगल 25</span><span class="tdot ref"></span><span class="wt">चन्द्र मकर · 12 भाव · वध</span><span class="tone ref">चिंतन</span></div>
+          <div class="wbasis">आधार: चन्द्र बल व तारा बल — पारम्परिक दृष्टि, अंक या निर्णय नहीं।</div>
+        </div>
+
+        <div class="kicker">साढ़े साती</div>
+        <div class="card hot"><div class="inner" style="position:relative"><div class="dot" style="right:10px;top:10px">13</div>
+          <div class="deva" style="font-size:16px;color:var(--ink)">साढ़े साती · तृतीय चरण (समापन)</div>
+          <p class="deva" style="font-size:11.5px;color:var(--ink-soft);line-height:1.8;margin-top:6px">शनि आपकी जन्म राशि से दूसरे भाव में गोचर कर रहा है — परम्परा में यह साढ़े साती का समापन चरण है, जिसे संसाधनों, वाणी और परिवार के विषयों में संयम से जोड़ा जाता है। नियमित साधना और सहज धैर्य ही इसका पारम्परिक उत्तर है।</p>
+          <div class="ssb">शनि का अगला राशि-प्रवेश · 3 जून 2027</div>
+          <span class="plink">शनि अष्टकम् पढ़ें ›</span>
+        </div></div>
+
+        <div class="kicker">आगामी राशि-प्रवेश</div>
+        <div style="position:relative"><div class="dot" style="right:0;top:-4px">14</div>
+        <div class="irow"><span class="it">मंगल → वृश्चिक</span><span class="idt">28 अगस्त 2026</span></div>
+        <div class="irow"><span class="it">शुक्र → कर्क</span><span class="idt">1 सितम्बर 2026</span></div>
+        <div class="irow"><span class="it">बुध → तुला</span><span class="idt">3 सितम्बर 2026</span></div>
+        <div class="irow"><span class="it">सूर्य → कन्या</span><span class="idt">17 सितम्बर 2026</span></div>
+        <div class="irow"><span class="it">राहु → मकर</span><span class="idt">27 मई 2027</span></div>
+        <div class="irow"><span class="it">शनि → मेष</span><span class="idt">3 जून 2027</span></div>
+        </div>
+      </div></div></div>
+      <div class="cap"><b>Gochar — today's sky read against THIS chart.</b><br/>
+        <span class="n">9</span><b>Framing first</b> — the not-a-prediction note is part of the surface, exactly like Rashifal's.<br/>
+        <span class="n">10</span><b>Nine-graha table</b> — gold dot = transit sits in a classically supportive house from the Moon (the shipped TRANSIT_SUPPORT_HOUSES tables); ℞ = retrograde; both Moon-house and Lagna-house shown. One accessibility label narrates the whole table (the chart text-equivalence rule).<br/>
+        <span class="n">11</span><b>Active house themes</b> — the life-area lens, transit half: chips for each supportive house's theme.<br/>
+        <span class="n">12</span><b>Weekly outlook</b> — 7 anchored days × chandra bala + tara bala → three quiet tones (अनुकूल/सम/चिंतन). The basis is named IN the row; the footnote says plainly it is not a rating.<br/>
+        <span class="n">13</span><b>Sade Sati card</b> — prominent only while a phase runs (this fixture is genuinely in the closing phase). Boundary date from ingress bisection; the शनि अष्टकम् link routes through the shipped allow-listed practice dispatcher.<br/>
+        <span class="n">14</span><b>Upcoming sign changes</b> — slow movers within 400 days, fast within 45; renders "गणना हो रही है…" until the deferred solve lands.</div>
+    </div>
+
+    <!-- Dasha tab -->
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>॥ श्री ॥</span><span>▮▮▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div>
+          <div class="toptitle">कुंडली · दशा<span class="ts">Kundali result · Dasha tab</span></div>
+        </div>
+        <div class="deva" style="font-size:12px;color:var(--ink-muted);line-height:1.7;margin-bottom:12px">चन्द्र नक्षत्र से निकली ग्रह-अवधियाँ। ये समय पर चिंतन का पारम्परिक ढाँचा हैं, घटना की गारंटी नहीं।</div>
+        <div class="dcurrent">
+          <div class="eyebrow">CURRENT PERIOD</div>
+          <div class="deva" style="font-size:15px;color:var(--ink);margin-top:4px">गुरु महादशा · सूर्य अन्तर्दशा</div>
+          <div style="font-family:var(--sans);font-size:10.5px;color:var(--ink-muted);margin-top:3px">Sep 2015 — Sep 2031 · 10y 11m elapsed · 5y 1m left</div>
+          <div class="dbar"><i></i></div>
+        </div>
+        <div class="dread" style="position:relative"><div class="dot" style="right:10px;top:10px">15</div>
+          <div class="eyebrow">इस अवधि का पाठ · Reading this period</div>
+          <div class="deva" style="font-size:14.5px;color:var(--ink);margin-top:4px">गुरु महादशा · सूर्य अन्तर्दशा</div>
+          <p>परम्परा में गुरु की अवधि को विद्या, विस्तार और धर्म से जोड़ा जाता है — सीखने, सिखाने और श्रद्धा के विषयों का काल।</p>
+          <p>आपकी कुंडली में गुरु कन्या राशि में, 3 भाव (संवाद और प्रयास) में स्थित है — परम्परा में इस अवधि के विषय इसी स्थान की दृष्टि से पढ़े जाते हैं।</p>
+          <p class="muted">इस समय सूर्य की अन्तर्दशा है (जन्म में 2 भाव, संसाधन और वाणी) — मुख्य अवधि का स्वर बना रहता है और यह उसमें अपना रंग जोड़ती है।</p>
+        </div>
+        <div class="kicker">पूर्ण महादशा क्रम</div>
+        <div class="tlrow"><div class="tlrail"><div class="knob"></div><div class="line"></div></div>
+          <div class="tlcard"><div class="tn">मंगल महादशा</div><div class="td">1992 — 1997 · जन्म पर शेष</div></div></div>
+        <div class="tlrow"><div class="tlrail"><div class="knob"></div><div class="line"></div></div>
+          <div class="tlcard"><div class="tn">राहु महादशा</div><div class="td">1997 — 2015 · 18 वर्ष</div></div></div>
+        <div class="tlrow"><div class="tlrail"><div class="knob on"></div><div class="line"></div></div>
+          <div class="tlcard" style="border-color:rgba(184,98,27,.45)"><div class="tn">गुरु महादशा <span class="nowchip">NOW</span></div><div class="td">2015 — 2031 · 16 वर्ष</div></div></div>
+        <div class="tlrow"><div class="tlrail"><div class="knob"></div><div class="line"></div></div>
+          <div class="tlcard"><div class="tn">शनि महादशा</div><div class="td">2031 — 2050 · 19 वर्ष</div></div></div>
+        <div class="tlrow"><div class="tlrail"><div class="knob"></div></div>
+          <div class="tlcard"><div class="tn">बुध महादशा</div><div class="td">2050 — 2067 · 17 वर्ष</div></div></div>
+      </div></div></div>
+      <div class="cap"><b>Phase 4 · Dasha reading — the period explained, structurally.</b><br/>
+        <span class="n">15</span><b>"इस अवधि का पाठ"</b> sits between the current-period block and the shipped nine-period timeline. Three composed parts: the lord's authored classical signification (every one opens "परम्परा में… / Tradition links…"), the lord's natal rashi + house placement in THIS chart, and a muted Antardasha overlay. All 81 Mahadasha×Antardasha combinations are engine-tested; a banned-vocabulary scan keeps every sentence structural — no event claims, ever.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ PHASE 6 · compiled report ══════════════ -->
+  <div class="phaselabel">Phase 6 · पूर्ण कुंडली विवेचन — the compiled report</div>
+  <div class="phasedesc">One long reading built from a <b>versioned, fully serializable KundaliReportModel</b> (plain JSON — also the grounding object a future AI phase would consume). Eleven fixed sections; disclaimers frame both ends; share goes only through the warned Kundali path.</div>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>॥ श्री ॥</span><span>▮▮▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div>
+          <div class="toptitle">पूर्ण कुंडली विवेचन<span class="ts">Aarav</span></div>
+          <div class="topaction">↗ साझा करें</div>
+        </div>
+        <div class="band" style="position:relative"><div class="dot" style="right:8px;top:8px">16</div>
+          यह विवेचन पारम्परिक ज्योतिष की संरचनात्मक दृष्टि है — मार्गदर्शन और चिंतन के लिए, निश्चित भविष्यवाणी नहीं। स्वास्थ्य, धन या विधिक निर्णयों का आधार नहीं।</div>
+        <div class="card"><div class="nchart">
+          <svg width="200" height="200" viewBox="0 0 200 200">
+            <rect x="4" y="4" width="192" height="192" fill="#fff5e0" stroke="#a67c34" stroke-width="2"/>
+            <line x1="4" y1="4" x2="196" y2="196" stroke="#a67c34" stroke-width="1.4"/>
+            <line x1="196" y1="4" x2="4" y2="196" stroke="#a67c34" stroke-width="1.4"/>
+            <line x1="100" y1="4" x2="4" y2="100" stroke="#a67c34" stroke-width="1.4"/>
+            <line x1="100" y1="4" x2="196" y2="100" stroke="#a67c34" stroke-width="1.4"/>
+            <line x1="4" y1="100" x2="100" y2="196" stroke="#a67c34" stroke-width="1.4"/>
+            <line x1="196" y1="100" x2="100" y2="196" stroke="#a67c34" stroke-width="1.4"/>
+            <text x="100" y="56" text-anchor="middle" font-size="11" fill="#5c4326" font-family="Inter">4</text>
+            <text x="100" y="46" text-anchor="middle" font-size="9" fill="#8a3e0b" font-family="Inter">La</text>
+            <text x="52" y="34" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">3</text>
+            <text x="148" y="34" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">5 Su Me</text>
+            <text x="30" y="72" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">2</text>
+            <text x="170" y="72" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">6</text>
+            <text x="52" y="105" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">1 Ju</text>
+            <text x="148" y="105" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">7</text>
+            <text x="30" y="140" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">12 Ve</text>
+            <text x="170" y="140" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">8 Mo</text>
+            <text x="52" y="175" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">11 Ma</text>
+            <text x="148" y="175" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">9 Sa Ra</text>
+            <text x="100" y="160" text-anchor="middle" font-size="10" fill="#8a6a47" font-family="Inter">10 Ke</text>
+          </svg>
+        </div></div>
+        <div class="rsection" style="position:relative"><div class="dot" style="right:10px;top:10px">17</div>
+          <div class="eyebrow">परिचय</div>
+          <div class="rt">जन्म विवरण और कुंडली सार</div>
+          <div style="margin-top:8px">
+            <div class="rfact"><span class="rl">नाम</span><span class="rv">Aarav</span></div>
+            <div class="rfact"><span class="rl">जन्म तिथि</span><span class="rv">14 अगस्त 1992</span></div>
+            <div class="rfact"><span class="rl">जन्म समय</span><span class="rv">5:42 AM</span></div>
+            <div class="rfact"><span class="rl">जन्म स्थान</span><span class="rv">उज्जैन</span></div>
+            <div class="rfact"><span class="rl">लग्न</span><span class="rv">कर्क · Cancer rising</span></div>
+            <div class="rfact"><span class="rl">चन्द्र राशि</span><span class="rv">कुम्भ · Aquarius</span></div>
+            <div class="rfact"><span class="rl">जन्म नक्षत्र</span><span class="rv">धनिष्ठा · पद 2</span></div>
+          </div>
+          <p>यह विवेचन आपकी सहेजी गई जन्म कुंडली से उसी लाहिड़ी (चित्रपक्ष) अयनांश और पूर्ण-राशि भाव पद्धति पर बना है जो ऐप की कुंडली में प्रयुक्त होती है।</p>
+        </div>
+        <div class="rsection">
+          <div class="eyebrow">आरम्भ बिंदु</div>
+          <div class="rt">कर्क लग्न</div>
+          <p>जन्म के समय पूर्वी क्षितिज पर कर्क राशि उदित थी — परम्परा इस राशि को पोषण, स्मृति और संवेदना से जोड़ती है और इसी से प्रथम भाव आरम्भ होता है।</p>
+          <p>लग्न का स्वामी चन्द्र आपकी कुंडली में 8 भाव (परिवर्तन और धैर्य) में स्थित है — परम्परा में लग्नेश की स्थिति पूरे विवेचन की एक प्रमुख धुरी मानी जाती है। यह स्वभाव का निर्णय नहीं, पढ़ने का आरम्भिक कोण है।</p>
+        </div>
+        <div class="rsection">
+          <div class="eyebrow">अन्तर लय</div>
+          <div class="rt">कुम्भ चन्द्र · धनिष्ठा नक्षत्र</div>
+          <p>आपका चन्द्र कुम्भ राशि में है — परम्परा मन की लय को इस राशि के गुणों (चिंतन, समुदाय और नवीनता) की दृष्टि से पढ़ती है।</p>
+          <p>जन्म नक्षत्र धनिष्ठा (पद 2) है, जिसे परम्परा लय और समृद्धि से जोड़ती है। यही नक्षत्र विम्शोत्तरी दशा-क्रम और तारा बल का आधार भी है।</p>
+        </div>
+      </div></div></div>
+      <div class="cap"><b>Report, part 1 — identity and the chart's two anchors.</b><br/>
+        <span class="n">16</span><b>Disclaimer band</b> — non-dismissable, rendered at the TOP and again at the bottom of the report.<br/>
+        <span class="n">17</span><b>Summary facts</b> — name/date/time/city plus Lagna, Moon, nakshatra as label:value rows (dense chrome caps its font multiplier at 1.25). The North Indian chart reuses the shipped SVG component with its full accessibility narration. Every section below is composed from typed phrase tables in the pure engine — the same object could later ground an AI reading (PRD-20 §5) without the engine changing.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>॥ श्री ॥</span><span>▮▮▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="rsection" style="position:relative"><div class="dot" style="right:10px;top:10px">18</div>
+          <div class="eyebrow">जीवन-क्षेत्र</div>
+          <div class="rt">कर्म और कार्यक्षेत्र</div>
+          <p>10 भाव (कर्तव्य और काम) में मेष राशि है; परम्परा इस राशि को पहल, सीधापन और ऊर्जा से जोड़ती है। भाव का स्वामी मंगल आपकी कुंडली में 11 भाव में स्थित है। भाव में केतु स्थित है।</p>
+          <p style="color:var(--ink-muted)">यह भावों की संरचनात्मक दृष्टि है — जीवन के निर्णय आपके अपने विवेक के विषय हैं।</p>
+        </div>
+        <div class="rsection">
+          <div class="eyebrow">जीवन-क्षेत्र</div>
+          <div class="rt">संबंध</div>
+          <p>7 भाव (संबंध और सहयोग) में मकर राशि है; परम्परा इस राशि को अनुशासन, कर्म और व्यावहारिकता से जोड़ती है। भाव का स्वामी शनि आपकी कुंडली में 9 भाव में स्थित है। भाव में कोई ग्रह नहीं है — परम्परा में तब भाव स्वामी की स्थिति देखी जाती है।</p>
+        </div>
+        <div class="rsection" style="position:relative"><div class="dot" style="right:10px;top:10px">19</div>
+          <div class="eyebrow">पारम्परिक अवलोकन</div>
+          <div class="rt">गोचर व योग की वर्तमान स्थिति</div>
+          <div style="margin-top:8px"><div class="rfact"><span class="rl">साढ़े साती</span><span class="rv">तृतीय चरण (समापन)</span></div></div>
+          <p>शनि आपकी जन्म राशि से दूसरे भाव में गोचर कर रहा है — परम्परा में यह साढ़े साती का समापन चरण है… नियमित साधना और सहज धैर्य ही इसका पारम्परिक उत्तर है।</p>
+          <span class="plink">शनि अष्टकम् पढ़ें ›</span>
+        </div>
+        <div class="rsection" style="position:relative"><div class="dot" style="right:10px;top:10px">20</div>
+          <div class="eyebrow">समय दृष्टि</div>
+          <div class="rt">विम्शोत्तरी दशा — जीवन-वर्षों की झलक</div>
+          <div style="margin-top:6px">
+            <div class="agearow"><span class="ag">आयु 0–4</span><span class="al">मंगल महादशा — ऊर्जा, साहस और परिश्रम का काल।</span></div>
+            <div class="agearow"><span class="ag">आयु 4–22</span><span class="al">राहु महादशा — नवीनता और अपरिचित दिशाओं का काल।</span></div>
+            <div class="agearow now"><span class="ag">आयु 22–38 <span class="nowchip">वर्तमान</span></span><span class="al">गुरु महादशा — विद्या, विस्तार और धर्म का काल।</span></div>
+            <div class="agearow"><span class="ag">आयु 38–57</span><span class="al">शनि महादशा — अनुशासन, धैर्य और सेवा का काल।</span></div>
+            <div class="agearow"><span class="ag">आयु 57–74</span><span class="al">बुध महादशा — बुद्धि, संवाद और विश्लेषण का काल।</span></div>
+          </div>
+          <p style="color:var(--ink-muted)">दशा-क्रम समय पर विचार की पारम्परिक पद्धति है — यह किसी घटना की सूचना या गारंटी नहीं देता।</p>
+        </div>
+        <div class="band">यह विवेचन पारम्परिक ज्योतिष की संरचनात्मक दृष्टि है — मार्गदर्शन और चिंतन के लिए, निश्चित भविष्यवाणी नहीं।</div>
+      </div>
+      <div class="sheetwrap"><div class="sheet" style="position:absolute">
+        <div class="grab"></div>
+        <div class="st">कुंडली सार साझा करें</div>
+        <div class="warn" style="position:relative"><div class="dot" style="right:6px;top:6px">21</div>
+          इस कार्ड में नाम, जन्म तिथि, समय और नगर शामिल हैं। साझा करने से पहले जाँच लें।</div>
+        <div class="minicard">
+          <div class="mt">जन्म कुंडली</div>
+          <div class="mn">Aarav</div>
+          <div class="md">14 Aug 1992 · 5:42 AM · Ujjain</div>
+          <div class="md">कर्क लग्न · कुम्भ चन्द्र · धनिष्ठा</div>
+          <div class="md" style="margin-top:6px">ॐ वेदांश़ · 4:5 · 1080×1350</div>
+        </div>
+        <div class="sbtn">साझा करें</div>
+      </div></div>
+      </div></div>
+      <div class="cap"><b>Report, part 2 — life areas, observations, the life-year view, and the warned share.</b><br/>
+        <span class="n">18</span><b>Six life-area sections</b> (career 10th · relationships 7th · wealth 2/11 · self 1/6 · home-learning 4/5 · dharma 9th) — each states the house's sign, its classical lord and where that lord sits, and the occupants; an empty house is stated plainly, never inferred as good or bad.<br/>
+        <span class="n">19</span><b>Safety-triaged observations</b> — Sade Sati always; <b>Mangal Dosha is engine-complete but display-gated OFF</b> pending content review (when enabled its copy is prevalence-normalizing and never uses the dosha label); <b>Kaal Sarp is excluded by recorded decision</b> — a test pins that it appears nowhere in emitted models.<br/>
+        <span class="n">20</span><b>Vimshottari life-year narrative</b> — all nine periods as आयु X–Y rows reusing the Phase-4 lord themes; the running period is flagged.<br/>
+        <span class="n">21</span><b>Warned share only</b> — one header share → the existing Kundali 4:5 card with the explicit birth-details warning. The Rashifal no-birth-details path is never used for report content; full-PDF export is deferred (new dependency).</div>
+    </div>
+  </div>
+
+  <div class="phaselabel" style="margin-top:34px">Interaction inventory</div>
+  <div class="legend" style="max-width:960px">
+    ① Saved Jyotish landing → rows personalised from the full chart (guest landing unchanged — every PRD-20 surface requires the saved chart).
+    ② Row context pill → transit house from Moon AND from Lagna.
+    ③ दशा संकेत row appears only when a focus transit belongs to the running Mahadasha/Antardasha lord.
+    ④ Sade Sati teaser (only while a phase runs) → Gochar.
+    ⑤ "पूर्ण कुंडली विवेचन खोलें" → compiled report; also reachable from the Kundali Overview CTA.
+    ⑥ गोचर tool card → Gochar screen.
+    ⑦ Rashifal on the natal sign → tara-bala pill + personal chip + dasha note.
+    ⑧ Any manually chosen sign → plain reading; all personal extras stripped; share stays birth-detail-free.
+    ⑨–⑭ Gochar: framing note → reference card → nine-graha table (one full a11y summary) → house-theme chips → weekly strip (tones, never scores) → Sade Sati card (practice link via the allow-listed dispatcher) → deferred ingress list.
+    ⑮ Dasha tab → "इस अवधि का पाठ" reading card above the shipped timeline.
+    ⑯–⑳ Report: top disclaimer → chart → summary facts → Lagna/Moon readings → life areas → observations (Mangal gated, Kaal Sarp excluded) → life-year dasha rows → bottom disclaimer.
+    ㉑ Share → warned Kundali 4:5 preview only. Back (‹) pops the Panchang stack everywhere. Everything computes on-device at the 06:00 IST anchor; nothing is persisted, fetched, or randomised.
+  </div>
+</body>
+</html>
