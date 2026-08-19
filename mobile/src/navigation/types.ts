@@ -138,6 +138,8 @@ export type PanchangStackParamList = VidhiStackParamList & {
   Rashifal: { rashiIndex?: number } | undefined;
   // Gochar (transits vs the saved chart) — PRD-20
   Gochar: undefined;
+  // Compiled full-chart reading — PRD-20 Phase 6
+  KundaliReport: undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
   NamkaranResult: {

@@ -339,6 +339,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
                 onChangeTab={handleTabChange}
                 onOpenPractice={() => openPractice()}
                 onManageDetails={() => setEditing(true)}
+                onOpenReport={() => navigation.navigate('KundaliReport')}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -697,6 +698,7 @@ function KundaliResult({
   onChangeTab,
   onOpenPractice,
   onManageDetails,
+  onOpenReport,
   colors,
   typography,
   radii,
@@ -709,6 +711,7 @@ function KundaliResult({
   onChangeTab: (tab: KundaliResultTab) => void;
   onOpenPractice: () => void;
   onManageDetails: () => void;
+  onOpenReport: () => void;
   colors: any;
   typography: any;
   radii: any;
@@ -808,11 +811,55 @@ function KundaliResult({
       </View>
 
       {activeTab === 'overview' && (
+        <View>
           <KundaliOverview
             chart={chart}
             at={new Date()}
             onOpenTab={onChangeTab}
           />
+          <Pressable
+            onPress={onOpenReport}
+            accessibilityRole="button"
+            accessibilityLabel="Open full Kundali reading"
+            style={({ pressed }) => [
+              styles.reportCta,
+              {
+                borderColor: colors.cardActiveBorder,
+                backgroundColor: colors.cardActiveFrom,
+                borderRadius: radii.lg,
+              },
+              pressed && { opacity: 0.72 },
+            ]}
+          >
+            <View style={{ flex: 1 }}>
+              <Text
+                style={{
+                  color: colors.ink,
+                  fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                  fontSize: 15,
+                }}
+              >
+                {contentByLang(lang, 'पूर्ण कुंडली विवेचन', 'Full chart reading')}
+              </Text>
+              <Text
+                style={{
+                  color: colors.inkMuted,
+                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                  fontSize: 11,
+                  lineHeight: 16,
+                  marginTop: 3,
+                }}
+              >
+                {meaningByLang(
+                  lang,
+                  'लग्न, चन्द्र, जीवन-क्षेत्र और दशा-क्रम — एक संकलित पाठ।',
+                  'Lagna, Moon, life areas, and the dasha sequence — one compiled reading.'
+                )}
+              </Text>
+            </View>
+            <Text style={{ color: colors.saffronDeep, fontSize: 20 }}>›</Text>
+          </Pressable>
+        </View>
       )}
       {activeTab === 'chart' && (
         <View>
@@ -1389,6 +1436,17 @@ const styles = StyleSheet.create({
   tableTranslation: { fontFamily: fontFamilies.inter, fontSize: 12 },
   eyebrowText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12, letterSpacing: 1.3 },
   currentDasha: { borderWidth: 1, padding: 14, marginBottom: 14 },
+  reportCta: {
+    minHeight: 60,
+    marginTop: 4,
+    marginBottom: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 11,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
   dashaReading: { borderWidth: 1, padding: 14, marginBottom: 14 },
   dashaReadingBody: { fontSize: 12, lineHeight: 19, marginTop: 6 },
   currentDashaTitle: { fontFamily: fontFamilies.interSemiBold, fontSize: 14, marginTop: 5 },

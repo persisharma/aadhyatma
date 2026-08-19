@@ -280,6 +280,7 @@ export default function PanchangScreen({ route }: Props) {
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
   const openRashifal = () => rootNav.navigate('Rashifal');
   const openGochar = () => rootNav.navigate('Gochar');
+  const openKundaliReport = () => rootNav.navigate('KundaliReport');
   const openGunaMilan = () => rootNav.navigate('GunaMilan');
   const openNamkaran = () => rootNav.navigate('Namkaran');
 
@@ -725,6 +726,7 @@ export default function PanchangScreen({ route }: Props) {
               onEditKundali={() => openKundali(true)}
               onOpenRashifal={openRashifal}
               onOpenGochar={openGochar}
+              onOpenReport={openKundaliReport}
               onOpenGunaMilan={openGunaMilan}
               onOpenNamkaran={openNamkaran}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
@@ -751,6 +753,7 @@ function JyotishLanding({
   onEditKundali,
   onOpenRashifal,
   onOpenGochar,
+  onOpenReport,
   onOpenGunaMilan,
   onOpenNamkaran,
   onOpenNavagraha,
@@ -768,6 +771,7 @@ function JyotishLanding({
   onEditKundali: () => void;
   onOpenRashifal: () => void;
   onOpenGochar: () => void;
+  onOpenReport: () => void;
   onOpenGunaMilan: () => void;
   onOpenNamkaran: () => void;
   onOpenNavagraha: () => void;
@@ -1275,6 +1279,19 @@ function JyotishLanding({
               </Text>
             </Pressable>
           </View>
+          <Pressable
+            onPress={onOpenReport}
+            accessibilityRole="button"
+            accessibilityLabel="Open full Kundali reading"
+            style={({ pressed }) => [
+              styles.jyotishReportLink,
+              pressed && { opacity: 0.65 },
+            ]}
+          >
+            <Text style={[styles.jyotishInlineLink, { color: colors.saffronDeep }]}>
+              {contentByLang(lang, 'पूर्ण कुंडली विवेचन खोलें', 'Open the full chart reading')} ›
+            </Text>
+          </Pressable>
         </View>
 
         {sectionLabel('गोचर', 'Transits')}
@@ -2157,6 +2174,12 @@ const styles = StyleSheet.create({
   jyotishFactLabel: { fontSize: 10 },
   jyotishFactDetail: { fontFamily: fontFamilies.inter, fontSize: 10, marginTop: 1 },
   jyotishActions: { marginTop: 12, flexDirection: 'row', gap: 8 },
+  jyotishReportLink: {
+    minHeight: 44,
+    marginTop: 2,
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+  },
   jyotishTeaser: {
     marginTop: 10,
     minHeight: 44,

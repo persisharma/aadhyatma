@@ -1,0 +1,185 @@
+# PRD-20 compiled Kundali report native-build smoke
+#
+# Verifies the report path: birth input (golden fixture Aarav/Ujjain) →
+# Kundali Overview CTA → full reading with disclaimers at both ends, every
+# section heading, and the warned birth-details share preview.
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084`. This flow launches the real
+# app bundle with React Native's native Metro-location argument; it never opens
+# Expo Go or depends on the simulator's previous packager.
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    text: "English"
+    optional: true
+- tapOn:
+    text: "Begin|आरंभ करें"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
+
+# Use English for stable visible-text assertions.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# Home permanent launcher → create the golden-fixture chart.
+- scrollUntilVisible:
+    element:
+      text: "Kundali. New. Tap to open."
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Kundali. New. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Understand Jyotish"
+    timeout: 15000
+- tapOn: "Create Kundali"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Edit birth details"
+    optional: true
+- tapOn:
+    id: "kundali-name-input"
+- eraseText: 40
+- inputText: "Aarav"
+- tapOn:
+    id: "kundali-date-input"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month August"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "50%, 70%"
+          end: "50%, 50%"
+          duration: 250
+- tapOn: "Year 1992"
+- tapOn: "14 August 1992"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
+- repeat:
+    times: 18
+    commands:
+      - tapOn: "Decrease Minute"
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "kundali-city-button"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "kundali-city-button"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-city-search"
+- inputText: "Ujjain"
+- tapOn: "Select Ujjain birth city"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "kundali-generate-button"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "kundali-generate-button"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Kundali result"
+    timeout: 20000
+
+# Overview CTA → full reading.
+- scrollUntilVisible:
+    element:
+      text: "Full chart reading"
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Open full Kundali reading"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Full Kundali reading"
+    timeout: 15000
+- assertVisible: ".*not a certain prediction.*"
+- assertVisible: "Birth details and chart summary"
+- assertVisible: "Aarav"
+- assertVisible: "Ujjain"
+- scrollUntilVisible:
+    element:
+      text: "Career and work"
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Current classical observations"
+    direction: DOWN
+    timeout: 20000
+- assertVisible: ".*Sade Sati.*"
+- scrollUntilVisible:
+    element:
+      text: "Vimshottari Dasha — a life-year view"
+    direction: DOWN
+    timeout: 20000
+- assertVisible: ".*Mahadasha \\(current\\).*"
+# The closing disclaimer sits under the last section.
+- scrollUntilVisible:
+    element:
+      text: ".*not a basis for medical, financial, or legal decisions.*"
+    direction: DOWN
+    timeout: 20000
+
+# The share preview must carry the birth-details warning.
+- scrollUntilVisible:
+    element:
+      text: "Full Kundali reading"
+    direction: UP
+    timeout: 20000
+- tapOn: "Share chart summary"
+- waitForAnimationToEnd
+- assertVisible: ".*includes the chart name, birth date, time, and city.*"
+- tapOn: "Close share preview"
+- waitForAnimationToEnd
+
+- stopApp:
+    appId: com.prashantsharma.vedansh
