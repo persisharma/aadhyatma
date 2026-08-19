@@ -1,7 +1,8 @@
 /**
  * The personalised Tarabala/Chandrabala strip (PRD-16 Phase 4, prototype
  * phones c–d). Two variants:
- *  - `row`   — one quiet personal line under a result card's best window;
+ *  - `row`   — a quiet personal block under a result card's best window: the
+ *              आपके लिए label on its own line, both pills together beneath it;
  *  - `card`  — the full-width आपके लिए strip on the day detail, with the
  *              one-line explainer naming the janma nakshatra it counted from.
  *
@@ -65,21 +66,28 @@ export default function MuhuratBalaStrip({
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
   if (!bala) return null;
 
+  // A real View-wrapped pill: nested/standalone Text ignores borderRadius and
+  // padding on iOS, which shipped as square, cramped highlights.
   const pill = (text: string, cls: TaraClass) => (
-    <Text
+    <View
       style={{
-        fontFamily: titleFont,
-        fontSize: variant === 'row' ? 11.5 : 13,
-        lineHeight: variant === 'row' ? 18 : 21,
-        color: cls === 'unfavourable' ? colors.avoidDeep : colors.saffronDeep,
         backgroundColor: cls === 'unfavourable' ? colors.avoidChipBg : colors.goldTint,
         borderRadius: 6,
-        overflow: 'hidden',
-        paddingHorizontal: 6,
+        paddingHorizontal: variant === 'row' ? 7 : 9,
+        paddingVertical: variant === 'row' ? 2 : 3,
       }}
     >
-      {text} — {contentByLang(lang, CLASS_LABELS[cls].hi, CLASS_LABELS[cls].en)}
-    </Text>
+      <Text
+        style={{
+          fontFamily: titleFont,
+          fontSize: variant === 'row' ? 11.5 : 13,
+          lineHeight: variant === 'row' ? 16 : 19,
+          color: cls === 'unfavourable' ? colors.avoidDeep : colors.saffronDeep,
+        }}
+      >
+        {text} — {contentByLang(lang, CLASS_LABELS[cls].hi, CLASS_LABELS[cls].en)}
+      </Text>
+    </View>
   );
 
   const label = (
@@ -97,11 +105,16 @@ export default function MuhuratBalaStrip({
   );
 
   if (variant === 'row') {
+    // The label owns its own line so the two pills share the next one — a
+    // wrapped pill (large font scales) lands under the FIRST PILL, never
+    // flush under the label.
     return (
       <View testID="muhurat-bala-row" style={styles.row}>
         {label}
-        {pill(taraLine(bala, lang), bala.tara.cls)}
-        {pill(chandraLine(bala, lang), bala.chandra.cls)}
+        <View style={styles.pillRow}>
+          {pill(taraLine(bala, lang), bala.tara.cls)}
+          {pill(chandraLine(bala, lang), bala.chandra.cls)}
+        </View>
       </View>
     );
   }
@@ -154,7 +167,8 @@ export default function MuhuratBalaStrip({
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6, marginTop: 4 },
+  row: { marginTop: 5 },
+  pillRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 5, marginTop: 3 },
   card: { borderWidth: 1, paddingHorizontal: 16, paddingVertical: 10 },
-  cardRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginTop: 4 },
+  cardRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6, marginTop: 5 },
 });

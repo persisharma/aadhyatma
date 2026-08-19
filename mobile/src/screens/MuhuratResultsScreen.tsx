@@ -113,38 +113,41 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
   // Phase 3 (design.md §60): the best-window line gains a quiet lagna chip;
   // a split shows as two window lines with a `लग्न सीमा पर विभाजित` note.
   // Every card stays the identical shipped ListCard — no hero, no ordinals.
+  // A View pill, not a nested Text: iOS ignores borderRadius/overflow/padding
+  // on nested Text, which shipped as a square highlight glued to the time.
   const LagnaChip = ({ index }: { index: number }) => (
-    <Text
-      style={{
-        fontFamily: titleFont,
-        fontSize: 11,
-        color: colors.saffronDeep,
-        backgroundColor: colors.goldChipBg,
-        borderRadius: 6,
-        overflow: 'hidden',
-        paddingHorizontal: 5,
-      }}
-    >
-      {' '}{rashiName(index, lang)} {contentByLang(lang, 'लग्न', 'lagna')}{' '}
-    </Text>
+    <View style={{ backgroundColor: colors.goldChipBg, borderRadius: 6, paddingHorizontal: 6, paddingVertical: 1 }}>
+      <Text style={{ fontFamily: titleFont, fontSize: 11, lineHeight: 15, color: colors.saffronDeep }}>
+        {rashiName(index, lang)} {contentByLang(lang, 'लग्न', 'lagna')}
+      </Text>
+    </View>
   );
 
   const WindowLine = ({ w, secondary }: { w: MuhuratWindow; secondary?: boolean }) => (
-    <Text
+    <View
       style={{
         marginTop: secondary ? 1 : 4,
-        fontFamily: typography.cardHindi.fontFamily,
-        fontSize: secondary ? 14 : 16,
-        color: secondary ? colors.inkSoft : colors.ink,
-        lineHeight: secondary ? 22 : 25,
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        columnGap: 6,
       }}
     >
-      <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
-        {contentByLang(lang, w.nameHi, w.nameEn)}{' '}
+      <Text
+        style={{
+          fontFamily: typography.cardHindi.fontFamily,
+          fontSize: secondary ? 14 : 16,
+          color: secondary ? colors.inkSoft : colors.ink,
+          lineHeight: secondary ? 22 : 25,
+        }}
+      >
+        <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
+          {contentByLang(lang, w.nameHi, w.nameEn)}{' '}
+        </Text>
+        {formatRangeCompact(w.start, w.end)}
       </Text>
-      {formatRangeCompact(w.start, w.end)}
       {w.lagnaRashiIndex != null && <LagnaChip index={w.lagnaRashiIndex} />}
-    </Text>
+    </View>
   );
 
   const Card = ({ v }: { v: DayVerdict }) => {

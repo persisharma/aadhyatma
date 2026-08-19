@@ -103,11 +103,10 @@
   .wline-after .wname{font-family:var(--deva);font-weight:600;font-size:13px;color:var(--saffron-deep)}
   .lag-after{font-family:var(--deva);font-weight:600;font-size:11px;line-height:16px;color:var(--saffron-deep);
     background:var(--gold-chip);border-radius:6px;padding:1px 6px;white-space:nowrap;flex:none}
-  /* Bala row: fixed label column + a wrapping pill column, so a wrapped pill
-     aligns under the FIRST PILL, never under the label. */
-  .bala-row-after{display:flex;flex-direction:row;align-items:flex-start;gap:6px;margin-top:5px}
-  .bala-row-after .plabel{padding-top:4px}
-  .pills{flex:1;display:flex;flex-direction:row;flex-wrap:wrap;gap:5px}
+  /* Bala block (SHIPPED layout): the label owns its own line, both pills share
+     the next one; a wrapped pill aligns under the FIRST PILL, never the label. */
+  .bala-row-after{margin-top:5px}
+  .pills{display:flex;flex-direction:row;flex-wrap:wrap;gap:5px;margin-top:3px}
   .pill-after{font-family:var(--deva);font-weight:600;font-size:11.5px;line-height:1.45;
     border-radius:6px;padding:2px 7px;white-space:nowrap}
   .pill-after.bad{color:var(--avoid-deep);background:var(--avoid-chip)}
@@ -157,8 +156,9 @@
   flush under the tiny label. <b>The altitude question:</b> the strip can never re-rank days (annotates, never re-grades — §8.3),
   so the list is the <i>only</i> place personal fit can steer which day gets picked — remove it entirely and comparing days means
   opening every detail. But the factor <i>names</i> (वध तारा, चंद्राष्टम) are evidence, and evidence belongs on the day detail
-  (answer → action → evidence). <b>Recommendation: (b)</b> — one worst-of-two summary chip on cards, full breakdown on the detail.
-  <b>Unchanged in every option:</b> tier, ordering, copy, privacy.
+  (answer → action → evidence). <b>Decision (Aug 2026): (c) SHIPPED</b> — both pills stay on the card; the आपके लिए label
+  takes its own line so the two pills render together on one line beneath it. The compact chip (b) stays on this page as
+  the considered-and-not-chosen alternative. <b>Unchanged in every option:</b> tier, ordering, copy, privacy.
 </p>
 <span class="illus">⚠ सभी ज्योतिषीय मान उदाहरण हैं · ALL ASTROLOGICAL VALUES ON THIS PAGE ARE ILLUSTRATIVE, NOT ENGINE OUTPUT</span>
 
@@ -242,7 +242,7 @@
       reading as a ragged second sentence rather than a labelled group.</div>
   </div>
 
-  <!-- ================= PHONE B — AFTER (compact summary chip · RECOMMENDED) ================= -->
+  <!-- ================= PHONE B — compact summary chip (considered, NOT chosen) ================= -->
   <div class="col">
     <div class="phone"><div class="statusbar"><span>7:29</span><span>वेदांश</span></div><div class="screen"><div class="pad">
       <div class="navrow"><div class="back">‹</div><div class="title">अन्नप्राशन</div><div class="navslot"></div></div>
@@ -308,7 +308,7 @@
 
       <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
     </div></div></div>
-    <div class="cap"><b>(b) AFTER — compact summary chip. RECOMMENDED.</b> The card keeps exactly one personal signal:
+    <div class="cap"><b>(b) Compact summary chip — considered, NOT chosen.</b> The card keeps exactly one personal signal:
       a worst-of-two chip — any factor unfavourable → <span class="bugmark">प्रतिकूल</span>, all favourable →
       <span class="fixmark">अनुकूल</span>, contested-only → मत भिन्न. The factor <i>names</i> move to the day detail (d),
       where the explainer already lives. This kills the two-red-pills-under-श्रेष्ठ contradiction, keeps cards one line
@@ -395,11 +395,12 @@
 
       <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
     </div></div></div>
-    <div class="cap"><b>(c) AFTER — full pills, fixed. The alternative if the breakdown must stay on cards.</b>
-      Same chip mechanics as (b): the window line becomes a centre-aligned row, the lagna chip a real <code>View</code>
-      pill (radius 6, padding 1×6, 6&nbsp;px gap); bala pills get 2×7 padding; आपके लिए becomes a fixed leading column so
-      an overflowing pill lands under the <i>first pill</i>, never under the label. Honest about the cost: cards run
-      two lines taller, and a श्रेष्ठ card can still carry two red pills — the tension (b) removes.</div>
+    <div class="cap"><b>(c) Full pills — CHOSEN &amp; SHIPPED (Aug 2026).</b>
+      The window line becomes a centre-aligned row with the lagna chip as a real <code>View</code> pill (radius 6,
+      padding 1×6, 6&nbsp;px gap, 11/15 text); the आपके लिए label owns its own line and <b>both bala pills share the
+      next one</b> (<code>View</code> pills, radius 6, padding 2×7, 11.5/16 text) — on overflow a wrapped pill aligns
+      under the first pill, never flush under the label. Implemented in <code>MuhuratBalaStrip.tsx</code> (row variant)
+      and <code>MuhuratResultsScreen.tsx</code> (LagnaChip/WindowLine); spec in design.md §60.</div>
   </div>
 
   <!-- ================= PHONE D — AFTER (day-detail card variant) ================= -->
