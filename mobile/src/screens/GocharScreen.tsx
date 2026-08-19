@@ -34,6 +34,7 @@ import {
   RASHI_NAMES_WESTERN,
 } from '@/panchang/kundali';
 import { useKundali } from '@/panchang/useKundali';
+import { computeWeeklyOutlook } from '@/panchang/weeklyOutlook';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -118,6 +119,10 @@ export default function GocharScreen({ navigation }: Props) {
 
   const sadeSatiView = sadeSati ?? sadeSatiNow;
   const themes = snapshot ? activeHouseThemes(snapshot) : [];
+  const weekly = useMemo(
+    () => (chart ? computeWeeklyOutlook(chart, today) : null),
+    [chart, today]
+  );
   const shaniEntry = library.find((entry) => entry.id === 'shani-ashtakam');
 
   const openShaniPractice = () => {
@@ -495,6 +500,102 @@ export default function GocharScreen({ navigation }: Props) {
                 </>
               )}
 
+              {weekly && (
+                <>
+                  {sectionLabel('सप्ताह की झलक', 'Week at a glance')}
+                  <View
+                    style={[
+                      styles.weeklyStrip,
+                      {
+                        borderColor: colors.divider,
+                        backgroundColor: colors.parchmentSoft,
+                        borderRadius: radii.lg,
+                      },
+                    ]}
+                  >
+                    {weekly.days.map((day, index) => (
+                      <View
+                        key={day.dateKey}
+                        accessible
+                        accessibilityLabel={day.lineEn}
+                        style={[
+                          styles.weeklyRow,
+                          {
+                            borderBottomColor:
+                              index < weekly.days.length - 1
+                                ? colors.divider
+                                : 'transparent',
+                          },
+                        ]}
+                      >
+                        <Text style={[styles.weeklyDate, { color: colors.inkSoft }]}>
+                          {new Intl.DateTimeFormat(DATE_LOCALES[lang], {
+                            timeZone: 'Asia/Kolkata',
+                            weekday: 'short',
+                            day: 'numeric',
+                          }).format(day.anchor)}
+                        </Text>
+                        <View
+                          style={[
+                            styles.toneDot,
+                            {
+                              backgroundColor:
+                                day.tone === 'favourable'
+                                  ? colors.gold
+                                  : day.tone === 'reflective'
+                                    ? colors.saffronDeep
+                                    : colors.divider,
+                            },
+                          ]}
+                        />
+                        <Text
+                          style={{
+                            flex: 1,
+                            color: colors.inkSoft,
+                            fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                            fontSize: 11,
+                            lineHeight: 16,
+                          }}
+                        >
+                          {contentByLang(
+                            lang,
+                            `चन्द्र ${RASHI_NAMES_HI[day.moonRashiIndex]} · ${day.chandraBalaHouse} भाव · ${day.taraBala.nameHi}`,
+                            `Moon ${RASHI_NAMES_EN[day.moonRashiIndex]} · ${ordinal(day.chandraBalaHouse)} · ${day.taraBala.nameEn}`
+                          )}
+                        </Text>
+                        <Text
+                          style={[
+                            pillTextStyle(lang, typography.sectionLabel),
+                            styles.weeklyTone,
+                            {
+                              color:
+                                day.tone === 'favourable'
+                                  ? colors.gold
+                                  : day.tone === 'reflective'
+                                    ? colors.saffronDeep
+                                    : colors.inkMuted,
+                            },
+                          ]}
+                        >
+                          {day.tone === 'favourable'
+                            ? contentByLang(lang, 'अनुकूल', 'Favourable')
+                            : day.tone === 'reflective'
+                              ? contentByLang(lang, 'चिंतन', 'Reflective')
+                              : contentByLang(lang, 'सम', 'Steady')}
+                        </Text>
+                      </View>
+                    ))}
+                    <Text style={[styles.weeklyBasis, { color: colors.inkMuted }]}>
+                      {contentByLang(
+                        lang,
+                        'आधार: चन्द्र बल व तारा बल — पारम्परिक दृष्टि, अंक या निर्णय नहीं।',
+                        'Basis: chandra bala and tara bala — a traditional lens, not a rating or verdict.'
+                      )}
+                    </Text>
+                  </View>
+                </>
+              )}
+
               {sadeSatiView && (
                 <>
                   {sectionLabel('साढ़े साती', 'Sade Sati')}
@@ -766,6 +867,39 @@ const styles = StyleSheet.create({
   sadeSatiCard: {
     padding: 14,
     borderWidth: 1,
+  },
+  weeklyStrip: {
+    borderWidth: 1,
+    overflow: 'hidden',
+  },
+  weeklyRow: {
+    minHeight: 44,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  weeklyDate: {
+    width: 64,
+    fontFamily: fontFamilies.interSemiBold,
+    fontSize: 11,
+  },
+  toneDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
+  },
+  weeklyTone: {
+    fontSize: 12,
+  },
+  weeklyBasis: {
+    fontFamily: fontFamilies.inter,
+    fontSize: 10,
+    lineHeight: 15,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
   },
   sadeSatiBoundary: {
     fontFamily: fontFamilies.inter,

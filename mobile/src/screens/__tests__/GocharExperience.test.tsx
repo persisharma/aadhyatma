@@ -134,6 +134,18 @@ test('saved state renders the nine-graha table, themes, Sade Sati, and ingress l
   assert.ok(summary[0].props.accessibilityLabel.includes('retrograde'));
 
   assert.ok(text.includes('Active house themes'));
+
+  // Weekly strip: seven day rows, each labeled with its full basis line.
+  assert.ok(text.includes('Week at a glance'));
+  assert.ok(text.includes('not a rating or verdict'));
+  const weeklyRows = tree.root.findAll(
+    (node) =>
+      node.props.accessible === true
+      && typeof node.props.accessibilityLabel === 'string'
+      && / tara — /.test(node.props.accessibilityLabel)
+  );
+  assert.ok(weeklyRows.length >= 7, 'seven weekly rows carry their basis lines');
+
   assert.ok(text.includes('Sade Sati'));
   const expected = computeSadeSati(savedChart, new Date(), { boundaryScanDays: 0 });
   assert.ok(text.includes(expected.headlineEn.replace('Sade Sati · ', '')) || text.includes(expected.headlineEn));
