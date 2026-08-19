@@ -28,6 +28,7 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
+import { buildDashaReading } from '@/panchang/dashaReading';
 import {
   DASHA_YEARS,
   GRAHA_NAMES_EN,
@@ -1043,6 +1044,54 @@ function KundaliResult({
               </View>
             </View>
           )}
+          {(() => {
+            const reading = buildDashaReading(chart, now);
+            if (!reading) return null;
+            return (
+              <View
+                accessible
+                accessibilityLabel={`Dasha reading. ${reading.titleEn}. ${reading.themeEn} ${reading.placementEn}${reading.antarEn ? ` ${reading.antarEn}` : ''}`}
+                style={[
+                  styles.dashaReading,
+                  {
+                    borderColor: colors.divider,
+                    backgroundColor: colors.parchmentSoft,
+                    borderRadius: radii.lg,
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    pillTextStyle(lang, typography.sectionLabel),
+                    { color: colors.saffronDeep, fontSize: 10 },
+                  ]}
+                >
+                  {contentByLang(lang, 'इस अवधि का पाठ', 'Reading this period')}
+                </Text>
+                <Text
+                  style={{
+                    color: colors.ink,
+                    fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                    fontSize: 15,
+                    marginTop: 4,
+                  }}
+                >
+                  {contentByLang(lang, reading.titleHi, reading.titleEn)}
+                </Text>
+                <Text style={[styles.dashaReadingBody, { color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
+                  {meaningByLang(lang, reading.themeHi, reading.themeEn)}
+                </Text>
+                <Text style={[styles.dashaReadingBody, { color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
+                  {meaningByLang(lang, reading.placementHi, reading.placementEn)}
+                </Text>
+                {reading.antarHi && reading.antarEn && (
+                  <Text style={[styles.dashaReadingBody, { color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
+                    {meaningByLang(lang, reading.antarHi, reading.antarEn)}
+                  </Text>
+                )}
+              </View>
+            );
+          })()}
           <View accessibilityLabel="Full Mahadasha timeline">
             {chart.vimshottari.map((period, index) => {
               const selected = period === currentDasha?.maha;
@@ -1340,6 +1389,8 @@ const styles = StyleSheet.create({
   tableTranslation: { fontFamily: fontFamilies.inter, fontSize: 12 },
   eyebrowText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12, letterSpacing: 1.3 },
   currentDasha: { borderWidth: 1, padding: 14, marginBottom: 14 },
+  dashaReading: { borderWidth: 1, padding: 14, marginBottom: 14 },
+  dashaReadingBody: { fontSize: 12, lineHeight: 19, marginTop: 6 },
   currentDashaTitle: { fontFamily: fontFamilies.interSemiBold, fontSize: 14, marginTop: 5 },
   progressTrack: { height: 6, marginTop: 10, overflow: 'hidden' },
   progressFill: { height: '100%' },

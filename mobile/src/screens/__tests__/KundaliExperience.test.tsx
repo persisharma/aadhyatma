@@ -150,6 +150,10 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   text = textOf(tree);
   assert.ok(text.includes('Vimshottari Dasha'));
   assert.ok(text.includes('not an event guarantee'));
+  // PRD-20 Phase 4: the period reading sits above the timeline, structural only.
+  assert.ok(text.includes('Reading this period'));
+  assert.ok(text.includes('Tradition links'));
+  assert.ok(text.includes('tradition reads this period’s themes through that placement'));
   assert.ok(text.includes('CURRENT PERIOD'));
   assert.ok(text.includes('elapsed'));
   assert.ok(text.includes('left'));
