@@ -12,6 +12,7 @@ import MuhuratDayDetailScreen from '@/screens/MuhuratDayDetailScreen';
 import AbujhDaysScreen from '@/screens/AbujhDaysScreen';
 import KundaliScreen from '@/screens/KundaliScreen';
 import RashifalScreen from '@/screens/RashifalScreen';
+import GocharScreen from '@/screens/GocharScreen';
 import GunaMilanScreen from '@/screens/GunaMilanScreen';
 import NamkaranScreen from '@/screens/NamkaranScreen';
 import NamkaranResultScreen from '@/screens/NamkaranResultScreen';
@@ -83,6 +84,11 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="Rashifal"
         component={RashifalScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="Gochar"
+        component={GocharScreen}
         options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen

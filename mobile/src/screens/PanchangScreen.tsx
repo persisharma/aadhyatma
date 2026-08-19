@@ -279,6 +279,7 @@ export default function PanchangScreen({ route }: Props) {
   const openKundali = (editing = false) =>
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
   const openRashifal = () => rootNav.navigate('Rashifal');
+  const openGochar = () => rootNav.navigate('Gochar');
   const openGunaMilan = () => rootNav.navigate('GunaMilan');
   const openNamkaran = () => rootNav.navigate('Namkaran');
 
@@ -723,6 +724,7 @@ export default function PanchangScreen({ route }: Props) {
               onOpenKundali={() => openKundali(false)}
               onEditKundali={() => openKundali(true)}
               onOpenRashifal={openRashifal}
+              onOpenGochar={openGochar}
               onOpenGunaMilan={openGunaMilan}
               onOpenNamkaran={openNamkaran}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
@@ -748,6 +750,7 @@ function JyotishLanding({
   onOpenKundali,
   onEditKundali,
   onOpenRashifal,
+  onOpenGochar,
   onOpenGunaMilan,
   onOpenNamkaran,
   onOpenNavagraha,
@@ -764,6 +767,7 @@ function JyotishLanding({
   onOpenKundali: () => void;
   onEditKundali: () => void;
   onOpenRashifal: () => void;
+  onOpenGochar: () => void;
   onOpenGunaMilan: () => void;
   onOpenNamkaran: () => void;
   onOpenNavagraha: () => void;
@@ -1204,6 +1208,39 @@ function JyotishLanding({
               </View>
             ))}
           </View>
+          {guidance.sadeSatiPhase !== 'none' && (
+            <Pressable
+              onPress={onOpenGochar}
+              accessibilityRole="button"
+              accessibilityLabel="Sade Sati is running. Open Gochar"
+              style={({ pressed }) => [
+                styles.jyotishTeaser,
+                {
+                  borderColor: colors.divider,
+                  backgroundColor: colors.goldTint,
+                  borderRadius: radii.md,
+                },
+                pressed && { opacity: 0.72 },
+              ]}
+            >
+              <Text
+                style={{
+                  flex: 1,
+                  color: colors.inkSoft,
+                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                  fontSize: 11,
+                  lineHeight: 16,
+                }}
+              >
+                {meaningByLang(
+                  lang,
+                  'साढ़े साती का पारम्परिक काल चल रहा है — गोचर में देखें।',
+                  'A traditional Sade Sati period is running — see it in Gochar.'
+                )}
+              </Text>
+              <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>›</Text>
+            </Pressable>
+          )}
           <View style={styles.jyotishActions}>
             <Pressable
               onPress={onOpenKundali}
@@ -1240,6 +1277,22 @@ function JyotishLanding({
           </View>
         </View>
 
+        {sectionLabel('गोचर', 'Transits')}
+        <JyotishToolCard
+          titleHi="गोचर"
+          titleEn="Gochar"
+          bodyHi="आज के नौ ग्रह आपकी कुंडली में—साढ़े साती और आगामी राशि-प्रवेश सहित।"
+          bodyEn="Today's nine grahas in your chart—with Sade Sati and upcoming sign changes."
+          badge="NEW"
+          glyph="गो"
+          onPress={onOpenGochar}
+          accessibilityLabel="Open Gochar"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
         {sectionLabel('मिलान', 'Compatibility')}
         <JyotishToolCard
           titleHi="अष्टकूट मिलान"
@@ -2104,6 +2157,16 @@ const styles = StyleSheet.create({
   jyotishFactLabel: { fontSize: 10 },
   jyotishFactDetail: { fontFamily: fontFamilies.inter, fontSize: 10, marginTop: 1 },
   jyotishActions: { marginTop: 12, flexDirection: 'row', gap: 8 },
+  jyotishTeaser: {
+    marginTop: 10,
+    minHeight: 44,
+    paddingHorizontal: 11,
+    paddingVertical: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   jyotishPrimary: { minHeight: 42, flex: 1, paddingHorizontal: 15, alignItems: 'center', justifyContent: 'center' },
   jyotishPrimaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   jyotishSecondary: { minHeight: 42, flex: 1, paddingHorizontal: 15, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
