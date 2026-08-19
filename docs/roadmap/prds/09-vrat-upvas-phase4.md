@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — detail PRD for the final phase; content-gated; prototype attached |
+| **Status** | Engineering shipped (Aug 2026) — registry, `upvasId` hook, parana helper, screen section, and tests landed with all 8 entries at `status: 'draft'` (§8.2 content-egress blocker, attempt dated 2026-08-18); user-invisible until entries verify |
 | **Parent** | [PRD-09 व्रत-पर्व (Vrat & Parv)](./09-vrat-katha-catalog.md) — P1–P3 shipped; this details the remaining half of P4 |
 | **T-shirt size** | M (one small data family + one screen section + one pure helper; the hard part is content verification, not code) |
 | **Prototype** | [`docs/vrat-upvas-prototype.html`](../../vrat-upvas-prototype.html) — three Observance Detail states (upvas only · upvas + vidhi ordering · unverified/absent), annotated |
