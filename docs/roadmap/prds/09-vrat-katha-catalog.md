@@ -162,6 +162,6 @@ The v1 prototype (`docs/panchang-vrat-catalog-prototype.html`) was the starting 
 - **Navigation:** browse-by-type landing (no chips); detail vertical; katha as a push.
 - **Detail order:** hero (with deity, rule, next date) → About → Story → How-to-observe (Coming soon, last). No "When it occurs", no panchang facts on the detail.
 - **Reminders:** advance (evening) + day-of (morning), local-only, iOS-cap-safe rolling re-arm.
-- **Upvas content & location:** deferred to P4 — **upvas half detailed in [09-vrat-upvas-phase4.md](./09-vrat-upvas-phase4.md); location half shipped via the nationwide location picker**.
+- **Upvas content & location:** deferred to P4 — **upvas half detailed in [09-vrat-upvas-phase4.md](./09-vrat-upvas-phase4.md) (engineering shipped Aug 2026, content-gated: entries draft until two-source verification); location half shipped via the nationwide location picker**.
 
 **Open:** none blocking P1–P3. P4 (authored upvas guidance, location config) tracked as follow-ups. Whether a followed vrat can seed a PRD-07 festival-day routine is a future cross-PRD question.
