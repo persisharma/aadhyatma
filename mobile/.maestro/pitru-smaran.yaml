@@ -134,6 +134,40 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - assertVisible: "Open Gita — Adhyaya 2"
 
+# ── Sourced household tila-tarpana guide pushes inside the More stack ──
+- scrollUntilVisible:
+    element:
+      id: "pitru-smaran-vidhi-door"
+    direction: UP
+    centerElement: true
+- tapOn: { id: "pitru-smaran-vidhi-door" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "तैयारी · सामग्री"
+    timeout: 15000
+- assertVisible: "विधि · 10 चरण"
+- tapOn: { id: "vidhi-mode-steps" }
+- scrollUntilVisible:
+    element:
+      id: "vidhi-step-gita-15"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- tapOn: { id: "vidhi-step-gita-15" }
+- waitForAnimationToEnd
+- assertVisible: "8 / 10"
+- tapOn: { id: "vidhi-handoff-gita-15" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*अध्याय 15.*"
+    timeout: 15000
+- tapOn: "Back to chapters"
+- waitForAnimationToEnd
+- tapOn: "विधि विवरण पर वापस जाएँ"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
 # ── Re-entry serves the cached answers: every row is present again ──
 - tapOn: "Back"
 - waitForAnimationToEnd

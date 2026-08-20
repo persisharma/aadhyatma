@@ -102,6 +102,11 @@ export const NAKSHATRA_ATTRS: readonly NakshatraAttrs[] = ATTR_ROWS.map(
 export const NAMAKSHAR_SOURCE = {
   convention: 'namakshar-v1',
   verified: false,
-  referenceUrls: [] as readonly string[],
-  notes: 'Draft table. Two-source editorial review is required before release.',
+  referenceUrls: [
+    'https://www.drikpanchang.com/swar-siddhanta/nakshatra/nakshatra-pada-swar-siddhanta.html?lang=en',
+    'https://mypanchang.com/2019pdfs/2019torontofullpanchang.pdf',
+    'https://www.panchanga.lv/wp-content/uploads/2020/06/Introduction-to-Vedic-Astrology-Sanjay-Rath.pdf',
+    'https://epublications.vu.lt/object/elaba%3A184788178/184788178.pdf',
+  ] as const,
+  notes: 'SOURCED 2026-08-19, but still gated. DrikPanchang and myPanchang Toronto 2019 (PDF p. 6) provide complete independent 108-pada tables; Sanjay Rath supplies a published Gana table, and the Vilnius University paper supplies an academic deity cross-check. Editorial sign-off is still required for vowel-length spellings, Purva Ashadha pada 4, and especially the Shravana ja/kha regional variant. The development name corpus also remains independently release-ineligible.',
 } as const;
