@@ -142,6 +142,8 @@ appId: com.prashantsharma.vedansh
     visible: "Full Kundali reading"
     timeout: 15000
 - assertVisible: ".*not a certain prediction.*"
+# Full-text handoff row (warned; not driven here — OS alert/share sheet).
+- assertVisible: "Share full text"
 - assertVisible: "Birth details and chart summary"
 - assertVisible: "Aarav"
 - assertVisible: "Ujjain"

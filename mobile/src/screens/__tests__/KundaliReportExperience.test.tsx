@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text, View as mockView } from 'react-native';
+import { Alert, Share, Text, View as mockView } from 'react-native';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { computeKundali, type KundaliChart } from '@/panchang/kundali';
@@ -134,6 +134,53 @@ test('saved report renders every section in order with disclaimers at both ends'
       && node.props.children.includes('not a certain prediction')
   );
   assert.ok(disclaimers.length >= 2, 'disclaimer frames the report at both ends');
+  act(() => tree.unmount());
+});
+
+test('full-text share warns first, then hands the complete export to the OS sheet', () => {
+  mockKundaliState = {
+    profile: { name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
+    chart: savedChart,
+    hydrated: true,
+    loadState: 'saved',
+  };
+  const alertSpy = jest.spyOn(Alert, 'alert').mockImplementation((_t, _m, buttons) => {
+    const share = buttons?.find((button) => button.text?.includes('Share') || button.text?.includes('साझा'));
+    share?.onPress?.();
+  });
+  const shareSpy = jest.spyOn(Share, 'share').mockResolvedValue({ action: 'sharedAction' } as any);
+
+  const tree = render(
+    <KundaliReportScreen
+      navigation={mockNavigation as any}
+      route={{ key: 'KundaliReport-test', name: 'KundaliReport' } as any}
+    />
+  );
+  act(() => {
+    tree.root
+      .findByProps({ accessibilityLabel: 'Share the full reading as text' })
+      .props.onPress();
+  });
+
+  // The warning names the birth details before anything leaves the screen.
+  const warning = String(alertSpy.mock.calls[0]?.[1] ?? '');
+  assert.ok(warning.includes('birth date'), 'warning names birth details');
+  assert.ok(warning.includes('AI assistant'), 'warning names the AI handoff');
+
+  // The payload is the complete export: birth facts, chart table, dasha
+  // dates, every section, and the machine-readable JSON model.
+  const message = String(shareSpy.mock.calls[0]?.[0]?.message ?? '');
+  assert.ok(message.includes('Jyotish) chart export'));
+  assert.ok(message.includes('Name: Aarav'));
+  assert.ok(message.includes('Birth place: Ujjain'));
+  assert.ok(message.includes('Lagna (ascendant):'));
+  assert.ok(message.includes('Vimshottari Mahadasha table'));
+  assert.ok(message.includes('## Vimshottari Dasha — a life-year view'));
+  assert.ok(message.includes('```json'));
+  assert.ok(message.includes('"reportVersion":1'));
+
+  alertSpy.mockRestore();
+  shareSpy.mockRestore();
   act(() => tree.unmount());
 });
 
