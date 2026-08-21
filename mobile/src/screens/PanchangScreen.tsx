@@ -452,56 +452,6 @@ export default function PanchangScreen({ route }: Props) {
                 <Text style={{ color: colors.inkSoft, fontSize: 18 }}>›</Text>
               </Pressable>
             </View>
-            {/* Tithi band — the day's tithi promoted into the always-first
-                calendar card. The anga grid sits below the muhurat hero and the
-                finder door, past the first viewport on most phones, yet the
-                tithi is the single fact devotees open a panchang for. The band
-                states it once, prominently, without moving the glance card.
-                Non-interactive (the date block above owns the expand tap); a
-                space placeholder keeps the card height stable while the day
-                solves. Kshaya days append the skipped tithi in the quiet face
-                so the band never disagrees with the tile below. */}
-            <View style={[styles.tithiBand, { backgroundColor: colors.goldTint, borderRadius: radii.md }]}>
-              <Text
-                style={{
-                  fontSize: 10,
-                  color: colors.saffronDeep,
-                  // Same label treatment as the anga tiles: tracked uppercase
-                  // Cormorant tag in English; plain script serif otherwise
-                  // (letterSpacing splits the shirorekha, §3.0).
-                  fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.cardHindi.fontFamily),
-                  letterSpacing: lang === 'en' ? 1 : 0,
-                  textTransform: lang === 'en' ? 'uppercase' : 'none',
-                }}
-              >
-                {contentByLang(lang, 'तिथि', 'Tithi')}
-              </Text>
-              <Text
-                numberOfLines={1}
-                adjustsFontSizeToFit
-                minimumFontScale={0.75}
-                style={{ flexShrink: 1, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink }}
-              >
-                {p ? (
-                  <>
-                    {contentByLang(lang, p.tithi.nameHi, p.tithi.nameEn)}
-                    {p.tithi.endTime && (
-                      <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft }}>
-                        {'  '}{contentByLang(lang, 'तक ', 'till ')}{formatEndInstant(p.tithi.endTime, p.date, lang)}
-                      </Text>
-                    )}
-                    {p.kshayaTithi && (
-                      <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft }}>
-                        {'  ·  '}{contentByLang(lang, p.kshayaTithi.nameHi, p.kshayaTithi.nameEn)}
-                        {p.kshayaTithi.endTime ? ` ${contentByLang(lang, 'तक ', 'till ')}${formatEndInstant(p.kshayaTithi.endTime, p.date, lang)}` : ''}
-                      </Text>
-                    )}
-                  </>
-                ) : (
-                  ' '
-                )}
-              </Text>
-            </View>
             {/* Bottom action row: the month-view toggle (left — the redundant
                 "<Month> <Year>" label it replaces already lives in the big date
                 line above and in the expanded grid's own header) and the आज
@@ -2186,10 +2136,6 @@ const styles = StyleSheet.create({
   dateNavButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   selectedDateButton: { flex: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
   datePagerPage: { flex: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
-  // Tithi band inside the calendar card: baseline-aligns the 10pt tag with the
-  // 16pt value so both scripts sit on one visual line. No fixed height — the
-  // value line measures itself (§3.0), padding carries the band.
-  tithiBand: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'center', gap: 7, marginTop: 8, paddingVertical: 7, paddingHorizontal: 12 },
   compactActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginTop: 8 },
   // Text-only affordance, so padding (with the row's height) carries it to the
   // 44pt floor; hitSlop tops it up.

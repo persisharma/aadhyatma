@@ -27,7 +27,7 @@ export default function MuhuratGlanceCard({
 }) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const { isToday, nowChoghadiya, muhurat } = useMuhurat(date, calendarSystem);
+  const { isToday, nowChoghadiya, muhurat, panchang } = useMuhurat(date, calendarSystem);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
 
   // The solve runs off the render path (and only the first time per day — it is
@@ -95,9 +95,26 @@ export default function MuhuratGlanceCard({
       colors={[colors.cardActiveFrom, colors.cardActiveTo]}
       style={[styles.card, { borderColor: colors.cardActiveBorder, borderRadius: radii.lg, padding: spacing.lg }, elevation.raised]}
     >
-      <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
-        {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
-      </Text>
+      {/* Kicker row: the eyebrow on the left, the day's tithi on the right —
+          the one calendar fact promoted into the first-viewport hero card (the
+          anga grid it belongs to sits past the fold on most phones). Name only:
+          the end instant and kshaya treatment stay on the Tithi tile below,
+          which remains the canonical detail. */}
+      <View style={styles.kickerRow}>
+        <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
+          {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
+        </Text>
+        {panchang && (
+          <Text numberOfLines={1} style={styles.kickerTithi}>
+            <Text style={[eyebrowTextStyle(lang, 10, 0.6), { color: colors.saffronDeep }]}>
+              {contentByLang(lang, 'तिथि · ', 'Tithi · ')}
+            </Text>
+            <Text style={{ fontFamily: titleFont, fontSize: 14.5, color: colors.ink }}>
+              {contentByLang(lang, panchang.tithi.nameHi, panchang.tithi.nameEn)}
+            </Text>
+          </Text>
+        )}
+      </View>
 
       {/* Hero line: current choghadiya when today, else the day's Abhijit. */}
       <View style={styles.nowRow}>
@@ -216,6 +233,10 @@ export default function MuhuratGlanceCard({
 
 const styles = StyleSheet.create({
   card: { borderWidth: 1 },
+  // Baseline-aligned so the 12pt eyebrow and the 14.5pt tithi name share one
+  // visual line; the tithi shrinks first if the row runs out of width.
+  kickerRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 },
+  kickerTithi: { flexShrink: 1 },
   nowRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10 },
   dot: { width: 12, height: 12, borderRadius: 6 },
   // No fontWeight: the call site sets fontFamilies.latinBold, a static 700 file
