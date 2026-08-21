@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Alert, Share, Text, View as mockView } from 'react-native';
+import { Share, Text, View as mockView } from 'react-native';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { computeKundali, type KundaliChart } from '@/panchang/kundali';
@@ -137,17 +137,13 @@ test('saved report renders every section in order with disclaimers at both ends'
   act(() => tree.unmount());
 });
 
-test('full-text share warns first, then hands the complete export to the OS sheet', () => {
+test('one Share button offers both the card and the warned full-text export', () => {
   mockKundaliState = {
     profile: { name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
     chart: savedChart,
     hydrated: true,
     loadState: 'saved',
   };
-  const alertSpy = jest.spyOn(Alert, 'alert').mockImplementation((_t, _m, buttons) => {
-    const share = buttons?.find((button) => button.text?.includes('Share') || button.text?.includes('साझा'));
-    share?.onPress?.();
-  });
   const shareSpy = jest.spyOn(Share, 'share').mockResolvedValue({ action: 'sharedAction' } as any);
 
   const tree = render(
@@ -156,16 +152,29 @@ test('full-text share warns first, then hands the complete export to the OS shee
       route={{ key: 'KundaliReport-test', name: 'KundaliReport' } as any}
     />
   );
+  // The single header Share opens the sheet; nothing text-share related
+  // renders on the page itself.
+  assert.equal(
+    tree.root.findAll((node) => node.props.accessibilityLabel === 'Share the full reading as text').length,
+    0,
+    'detail action lives only inside the sheet'
+  );
   act(() => {
-    tree.root
-      .findByProps({ accessibilityLabel: 'Share the full reading as text' })
-      .props.onPress();
+    tree.root.findByProps({ accessibilityLabel: 'Share chart summary' }).props.onPress();
   });
 
-  // The warning names the birth details before anything leaves the screen.
-  const warning = String(alertSpy.mock.calls[0]?.[1] ?? '');
-  assert.ok(warning.includes('birth date'), 'warning names birth details');
-  assert.ok(warning.includes('AI assistant'), 'warning names the AI handoff');
+  // The sheet is the warning surface for BOTH actions.
+  const text = textOf(tree);
+  assert.ok(text.includes('Both the card and the full text include the chart name, birth date, time, and city'));
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Open share sheet' }), 'card share stays primary');
+  assert.ok(text.includes('for notes or an AI assistant'));
+
+  act(() => {
+    tree.root
+      .findAllByProps({ accessibilityLabel: 'Share the full reading as text' })
+      .find((node) => typeof node.props.onPress === 'function')!
+      .props.onPress();
+  });
 
   // The payload is the complete export: birth facts, chart table, dasha
   // dates, every section, and the machine-readable JSON model.
@@ -179,7 +188,6 @@ test('full-text share warns first, then hands the complete export to the OS shee
   assert.ok(message.includes('```json'));
   assert.ok(message.includes('"reportVersion":1'));
 
-  alertSpy.mockRestore();
   shareSpy.mockRestore();
   act(() => tree.unmount());
 });
@@ -201,7 +209,7 @@ test('sharing the summary goes through the warned Kundali path', () => {
     tree.root.findByProps({ accessibilityLabel: 'Share chart summary' }).props.onPress();
   });
   assert.ok(
-    textOf(tree).includes('includes the chart name, birth date, time, and city'),
+    textOf(tree).includes('include the chart name, birth date, time, and city'),
     'the Kundali-style birth-details warning is visible'
   );
   act(() => tree.unmount());

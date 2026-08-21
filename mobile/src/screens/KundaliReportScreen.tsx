@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Alert, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -86,28 +86,12 @@ export default function KundaliReportScreen({ navigation }: Props) {
   };
 
   // The complete text export (chart table, dasha dates, every section, JSON
-  // model) — for the user's notes or an AI assistant of their choice. It
-  // carries every birth detail, so it goes out only through this explicit
-  // warning + the OS share sheet; the app itself never contacts a service.
+  // model) — for the user's notes or an AI assistant of their choice. It is
+  // offered only inside the warned share sheet, whose privacy line names the
+  // birth details both actions carry; the app itself never contacts a service.
   const shareFullText = () => {
     if (!chart || !report) return;
-    Alert.alert(
-      contentByLang(lang, 'पूर्ण पाठ साझा करें', 'Share the full text'),
-      contentByLang(
-        lang,
-        'इस पाठ में नाम, जन्म तिथि, समय, नगर, पूरी ग्रह-सारणी, दशा-क्रम और सम्पूर्ण विवेचन शामिल हैं। इसे आप नोट्स या अपनी पसंद के AI सहायक को सौंप सकते हैं — साझा करने से पहले जाँच लें।',
-        'This text includes the chart name, birth date, time, city, the full graha table, the dasha sequence, and the whole reading. You can hand it to notes or an AI assistant of your choice — review it before sharing.'
-      ),
-      [
-        { text: contentByLang(lang, 'रद्द करें', 'Cancel'), style: 'cancel' },
-        {
-          text: contentByLang(lang, 'साझा करें', 'Share'),
-          onPress: () => {
-            void Share.share({ message: buildKundaliHandoffText(chart, report) });
-          },
-        },
-      ]
-    );
+    void Share.share({ message: buildKundaliHandoffText(chart, report) });
   };
 
   const disclaimer = report && (
@@ -276,48 +260,6 @@ export default function KundaliReportScreen({ navigation }: Props) {
           {report && chart && (
             <>
               {disclaimer}
-              <Pressable
-                onPress={shareFullText}
-                accessibilityRole="button"
-                accessibilityLabel="Share the full reading as text"
-                style={({ pressed }) => [
-                  styles.textShare,
-                  {
-                    borderColor: colors.divider,
-                    backgroundColor: colors.parchmentSoft,
-                    borderRadius: radii.md,
-                  },
-                  pressed && { opacity: 0.72 },
-                ]}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text
-                    style={{
-                      color: colors.ink,
-                      fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-                      fontSize: 13,
-                    }}
-                  >
-                    {contentByLang(lang, 'पूर्ण पाठ साझा करें', 'Share full text')}
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.inkMuted,
-                      fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                      fontSize: 10.5,
-                      lineHeight: 15,
-                      marginTop: 2,
-                    }}
-                  >
-                    {meaningByLang(
-                      lang,
-                      'पूरा विवेचन, ग्रह-सारणी व दशा-क्रम पाठ रूप में — नोट्स या AI सहायक के लिए।',
-                      'The whole reading, graha table, and dasha sequence as text — for notes or an AI assistant.'
-                    )}
-                  </Text>
-                </View>
-                <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>⇪</Text>
-              </Pressable>
               <View
                 style={[
                   styles.chartCard,
@@ -354,8 +296,13 @@ export default function KundaliReportScreen({ navigation }: Props) {
           lang={lang}
           titleHi="कुंडली सार साझा करें"
           titleEn="Share the chart summary"
-          privacyHi="इस कार्ड में नाम, जन्म तिथि, समय और नगर शामिल हैं। साझा करने से पहले जाँच लें।"
-          privacyEn="This card includes the chart name, birth date, time, and city. Review it before sharing."
+          privacyHi="कार्ड और पूर्ण पाठ — दोनों में नाम, जन्म तिथि, समय और नगर शामिल हैं। साझा करने से पहले जाँच लें।"
+          privacyEn="Both the card and the full text include the chart name, birth date, time, and city. Review before sharing."
+          detailTitleHi="पूर्ण पाठ साझा करें"
+          detailTitleEn="Share full text"
+          detailSubtitleHi="पूरा विवेचन, ग्रह-सारणी व दशा-क्रम पाठ रूप में — नोट्स या AI सहायक के लिए।"
+          detailSubtitleEn="The whole reading, graha table, and dasha sequence as text — for notes or an AI assistant."
+          onShareDetail={shareFullText}
           onClose={() => setShareVisible(false)}
           renderCard={(width) => (
             <JyotishShareCard
@@ -552,16 +499,6 @@ const styles = StyleSheet.create({
   createText: {
     fontFamily: fontFamilies.interSemiBold,
     fontSize: 10,
-  },
-  textShare: {
-    minHeight: 52,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    paddingHorizontal: 13,
-    paddingVertical: 9,
-    borderWidth: 1,
-    marginBottom: 10,
   },
   chartCard: {
     padding: 14,

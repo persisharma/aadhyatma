@@ -142,8 +142,6 @@ appId: com.prashantsharma.vedansh
     visible: "Full Kundali reading"
     timeout: 15000
 - assertVisible: ".*not a certain prediction.*"
-# Full-text handoff row (warned; not driven here — OS alert/share sheet).
-- assertVisible: "Share full text"
 - assertVisible: "Birth details and chart summary"
 - assertVisible: "Aarav"
 - assertVisible: "Ujjain"
@@ -171,7 +169,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 20000
 
-# The share preview must carry the birth-details warning.
+# One Share button; the sheet offers the warned card AND the full-text export.
 - scrollUntilVisible:
     element:
       text: "Full Kundali reading"
@@ -179,7 +177,10 @@ appId: com.prashantsharma.vedansh
     timeout: 20000
 - tapOn: "Share chart summary"
 - waitForAnimationToEnd
-- assertVisible: ".*includes the chart name, birth date, time, and city.*"
+- assertVisible: ".*include the chart name, birth date, time, and city.*"
+- assertVisible: "Open share sheet"
+- assertVisible: "Share full text"
+- assertVisible: ".*for notes or an AI assistant.*"
 - tapOn: "Close share preview"
 - waitForAnimationToEnd
 
