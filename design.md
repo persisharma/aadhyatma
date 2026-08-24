@@ -1853,9 +1853,9 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 ## 51. Kundali + Daily Rashifal (PRD-C)
 
-**Discovery and landing state.** Kundali is a permanent `CategoryCard variant="launcher"` on Home (`कुंडली · Kundali`, insight glyph, NEW badge), not a shuffled Discover card. It deep-links to `PanchangHome({ initialTab: 'jyotish' })`. Panchang's top peer selector is `Panchang | Vrat & Parv | Jyotish`; it remains the fixed first control in every mode, while location/calendar-system/My Vrat controls appear beneath it only for the two Panchang-derived modes. A guest sees Create Kundali, Daily Rashifal, and one Navagraha practice card. Once a birth profile is saved, the landing becomes daily-first: the full Favour/Pause/Reflect Rashifal card leads, a compact Kundali reference follows, and the same single practice card closes the page. Returning from creation must refresh this saved state immediately. Birth city remains independent of the current Panchang location.
+**Discovery and landing state.** Kundali is a permanent `CategoryCard variant="launcher"` on Home (`कुंडली · Kundali`, insight glyph, NEW badge), not a shuffled Discover card. It deep-links to `PanchangHome({ initialTab: 'jyotish' })`. Panchang's top peer selector is `Panchang | Vrat & Parv | Jyotish`; it remains the fixed first control in every mode, while location/calendar-system/My Vrat controls appear beneath it only for the two Panchang-derived modes. A guest sees Create Kundali, Daily Rashifal, and one Navagraha practice card. Once a birth profile is saved, the landing becomes daily-first: the person switcher (§51a) leads, then the full Favour/Pause/Reflect Rashifal card, a compact Kundali reference, and the same single practice card closing the page. Returning from creation must refresh this saved state immediately. Birth city remains independent of the current Panchang location.
 
-**Birth input and state.** One card asks for optional name, birth date, birth time, and a bundled Indian city. Date and time are entered through pickers, not free text: the date field-button opens `CalendarDatePicker` (a parchment month-grid bottom sheet with a month/year overlay for jumping across decades, range `1900-01-01`…today-IST) and the time field-button reveals the inline reminder-style `ClockTimePicker` (12-hour AM/PM stepper). Both still emit the stored contract — `YYYY-MM-DD` and 24-hour `HH:mm` — so validation, IST→UTC conversion, and persistence are unchanged; the `kundali-date-input`/`kundali-time-input` testIDs move onto the field-buttons. Tapping the time field commits a 06:00 default so the shown value and stored value always agree, and an untouched time still validates as missing. No city or “Default profile” is silently supplied: the city field begins at “Choose an Indian city”, and nearby copy plainly explains that current calculation support covers Indian birth places and their local IST time. The profile persists on-device under `@vedansh:kundali-birth-profile:v1`; Edit opens the manage form, where removal is deliberately secondary to Save/Cancel. Copy explains that correct birth time matters for Lagna/houses. Loading, guest, saved, persistence-error, and corrupt-profile recovery are explicit states; a failed save/delete must never masquerade as success. Opening/closing the city picker dismisses its keyboard, and a successful calculation returns the result to its top.
+**Birth input and state.** One card asks for optional name, birth date, birth time, and a bundled Indian city. Date and time are entered through pickers, not free text: the date field-button opens `CalendarDatePicker` (a parchment month-grid bottom sheet with a month/year overlay for jumping across decades, range `1900-01-01`…today-IST) and the time field-button reveals the inline reminder-style `ClockTimePicker` (12-hour AM/PM stepper). Both still emit the stored contract — `YYYY-MM-DD` and 24-hour `HH:mm` — so validation, IST→UTC conversion, and persistence are unchanged; the `kundali-date-input`/`kundali-time-input` testIDs move onto the field-buttons. Tapping the time field commits a 06:00 default so the shown value and stored value always agree, and an untouched time still validates as missing. No city or “Default profile” is silently supplied: the city field begins at “Choose an Indian city”, and nearby copy plainly explains that current calculation support covers Indian birth places and their local IST time. Profiles persist on-device in the birth-profile roster under `@vedansh:kundali-profiles:v1` (**§51a** — several people, one active selection; the PRD-C single-profile key migrates into it once); Edit opens the manage form for the active person, where removal is deliberately secondary to Save/Cancel. Copy explains that correct birth time matters for Lagna/houses. Loading, guest, saved, persistence-error, and corrupt-profile recovery are explicit states; a failed save/delete must never masquerade as success. Opening/closing the city picker dismisses its keyboard, and a successful calculation returns the result to its top.
 
 **Novice-first result.** The default `Overview` tab precedes `Chart | Grahas | Dasha`. Its three cards are real buttons and route to their underlying detail tabs; each tab change resets the scroll position. Rashi names pair the traditional form with a plain-English equivalent (`Karka · Cancer`, never the same name twice). The Lagna card uses: “Lagna is the sign rising at birth and sets the first house. In traditional Jyotish it is the starting lens for reading the rest of the chart.” The Moon card uses: “The Moon sign is a traditional lens on inner rhythm, and the nakshatra refines its placement. A reflection aid, not a personality verdict.” A Navagraha practice card routes through the existing library/reader dispatcher. Never lead a novice with an unexplained chart.
 
@@ -1863,7 +1863,7 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 **Grahas and Dasha.** Graha rows show the traditional sign plus its plain-English equivalent, degree/minute, house, actual nakshatra/pada, and `℞` for retrograde. The Dasha view leads with the current Mahadasha/Antardasha, date range, progress bar, elapsed time, remaining time, and an inline `Now` Antardasha chip; a connected vertical timeline then shows all nine Mahadashas with dates. Both views include a short explanation before raw data, and Dasha timing is included in the accessible summary.
 
-**Rashifal.** Daily Rashifal selects the saved Kundali's Moon sign when available, otherwise lets the user choose any of twelve signs. The source card says whether it came from the Kundali, and Change exposes a 12-sign grid pairing every traditional name with its plain-English equivalent. Guidance is consistently `Favour`, `Pause`, and `Reflect`; the full Rashifal page adds the supporting graha/bhava chip to each row, followed by the one existing Surya/Shani/Navagraha reader selected by the pure transit rules. The disclaimer is part of the surface, not fine print: “traditional transit-based guidance—not a certain prediction.” No luck score, guaranteed event, fear copy, random generation, AI call, or remote horoscope feed.
+**Rashifal.** Daily Rashifal selects the ACTIVE person's Kundali Moon sign when available, otherwise lets the user choose any of twelve signs; with more than one person saved it also carries the §51a switcher, and choosing a person adopts that person's natal sign. The source card says whether it came from the Kundali, and Change exposes a 12-sign grid pairing every traditional name with its plain-English equivalent. Guidance is consistently `Favour`, `Pause`, and `Reflect`; the full Rashifal page adds the supporting graha/bhava chip to each row, followed by the one existing Surya/Shani/Navagraha reader selected by the pure transit rules. The disclaimer is part of the surface, not fine print: “traditional transit-based guidance—not a certain prediction.” No luck score, guaranteed event, fear copy, random generation, AI call, or remote horoscope feed.
 
 **Sharing.** Both result surfaces use the same 4:5, 1080×1350 share-preview family and expose a single header Share action. Kundali sharing is opt-in and warns that chart name, birth date, time, and city are included. Rashifal sharing includes Moon-sign guidance and the suggested existing practice, but explicitly excludes name and birth details. There is no second or floating share button inside the Kundali tabs.
 
@@ -1873,7 +1873,82 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 **Readability sizing (July 2026).** The §3.0 floor (10) is a *minimum*, not a target — Kundali and Rashifal carry unusually dense content (sign grids, graha tables, dasha timelines), so their read-tier text sits **above** the floor for comfort: the Rashi-picker grid uses traditional name **16** / plain-English **14** on taller (`minHeight 64`) tiles; its "choose your sign" **title** reads as a heading at **15** with a **14** description and a **13** disclaimer above; the guidance-row headers/body and their graha·bhava context chips, the Kundali overview eyebrow, and the result-screen labels (`lagnaLabel`/`lagnaTranslation`, grahas `tablePrimary` **14** / `tableTranslation` **12**, `eyebrowText`, `progressCaption`, `practiceLabel`) were raised to **12** (space-constrained dasha `antarChip`/`nowTag` to **11**). Micro-chrome shared with the Panchang tab (the `jyotishSectionLabel` kicker, tab-bar) stays at the floor.
 
-**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`; `NorthIndianChart.tsx`, `KundaliOverview.tsx`, `JyotishGuidanceRows.tsx`, `JyotishPracticeCard.tsx`, `JyotishShareCard.tsx`, `JyotishShareSheet.tsx`, `JyotishStateCard.tsx`, `CalendarDatePicker.tsx`, `ClockTimePicker.tsx`, `StepperColumn.tsx` (§52a); `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.
+**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`, `birthProfiles.ts`, `birthProfileStore.ts` (§51a); `NorthIndianChart.tsx`, `KundaliOverview.tsx`, `JyotishGuidanceRows.tsx`, `JyotishPracticeCard.tsx`, `JyotishShareCard.tsx`, `JyotishShareSheet.tsx`, `JyotishStateCard.tsx`, `PersonChips.tsx` (§51a), `CalendarDatePicker.tsx`, `ClockTimePicker.tsx`, `StepperColumn.tsx` (§52a); `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.
+
+---
+
+## 51a. Multi-person Jyotish — the birth-profile roster (August 2026)
+
+**Purpose.** One phone, several people. PRD-C stored exactly ONE birth profile, so
+a household could hold one person's Kundali at a time and a second person meant
+overwriting the first. The profile is now a **roster** — every saved person plus
+one **active** selection — and every personalised surface reads that selection:
+the Kundali result, the Jyotish landing's Daily Rashifal card and chart glance,
+the Rashifal screen, and the muhurat finder's आपके लिए Tarabala/Chandrabala strip.
+
+**One selection, one store.** `panchang/birthProfiles.ts` is the pure model
+(validate, parse, add/update/remove/select, `activePerson`) and
+`panchang/birthProfileStore.ts` is its AsyncStorage half with one in-memory
+snapshot, a subscriber list and a serialized write queue — the same
+pure-store/RN-cache split as `panchangDayStore` ⇄ `panchangDayCache`. **No screen
+may keep its own "current person":** switching anywhere is true everywhere on the
+same render, which is the whole point of the feature.
+
+**Storage.** `@vedansh:kundali-profiles:v1` = `{ activeId, people[] }`; a
+`PersonProfile.id` is a persisted key, never a display string. `MAX_PEOPLE` is
+**8** — a household ceiling, not a technical one: at the cap the `+ जोड़ें` chip
+is replaced by a plain sentence instead of failing a save silently. The shipped
+single-profile key `@vedansh:kundali-birth-profile:v1` migrates **once** into
+person one and is then removed, because leaving it would keep a readable copy of
+birth details after that person is removed. An *unreadable* legacy record is never
+deleted and still lands in the shipped corrupt-profile recovery state.
+
+**The switcher (`PersonChips.tsx`).** A horizontal chip row, never a dropdown:
+who a chart belongs to is *visible state*, not a setting — on a shared phone the
+wrong active person is a wrong Rashifal, and a collapsed picker hides that. Chips
+are controls, so they carry the §12 44 pt floor, a `1.25` font-scale cap (dense
+chrome, §61's rule), `radii.pill`, `saffronTint`/`saffronDeep` for the selected
+one and `parchmentSoft`/`divider` otherwise; the trailing add chip is dashed. A
+person is labelled by their **name**, or by their birth date when unnamed — never
+an invented "Person 2" and never an id. Labels per surface: `किसकी कुंडली · Whose
+chart` (Kundali), `किसका ज्योतिष · Whose Jyotish` (landing), `किसका राशिफल · Whose
+Rashifal` (Rashifal). English accessibility labels stay stable in every reading
+language: `Show Kundali for <label>`, `Show Jyotish for <label>`, `Show Rashifal
+for <label>`, `Add another person`, and the row itself is `Person switcher`.
+
+**Placement.** The switcher sits ABOVE what it changes: on the Kundali screen it
+is the first thing under the top bar in every state (so adding a second person is
+one tap from the first person's own chart), and on the Jyotish landing it sits
+between the intro and the Rashifal card. It renders only when at least one person
+is saved — a guest still gets the untouched creation landing.
+
+**Adding is additive, never a rewrite.** `+ जोड़ें` opens a BLANK form
+(`Kundali { newPerson: true }`, heading `नई कुंडली जोड़ें · Add another Kundali`)
+with the saved people untouched and no chip selected; `बदलें · Edit` still edits
+the active person. Removing one of several people lands on a **survivor's** chart,
+not the blank form; removing the last one returns the guest state and the switcher
+disappears with them.
+
+**Whose is it?** With more than one person saved, copy that used to say "your"
+names the person instead — `चन्द्र राशि · <नाम> की कुंडली से · Moon sign · From
+<name>'s Kundali` on the landing and Rashifal, and the muhurat strip's label
+becomes `<नाम> के लिए · For <name>`. With a single saved person every one of those
+strings is unchanged, so the solo experience is exactly what shipped.
+
+**Unchanged by design.** Birth city is still not the Panchang location; Rashifal
+remains guidance, not prediction; the muhurat strip still only annotates (it never
+re-grades a day, and no name reaches a share card or a notification); Guna Milan's
+"use saved details" copies the active person, as it always copied the saved one;
+Namkaran still never reads a birth profile at all.
+
+**Files.** `mobile/src/panchang/birthProfiles.ts`, `birthProfileStore.ts`,
+`useKundali.ts`, `useMuhuratBala.ts`; `components/PersonChips.tsx`,
+`MuhuratBalaStrip.tsx`; `KundaliScreen.tsx`, `RashifalScreen.tsx`,
+`PanchangScreen.tsx`; `navigation/types.ts`. Tests:
+`panchang/__tests__/jest/birthProfiles.jest.test.ts`,
+`screens/__tests__/MultiProfileJyotish.test.tsx`,
+`screens/__tests__/MuhuratPersonalStrip.test.tsx`;
+`.maestro/multi-profile-jyotish-smoke.yaml`.
 
 ---
 

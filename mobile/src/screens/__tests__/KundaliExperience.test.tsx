@@ -57,16 +57,29 @@ jest.mock('expo-sharing', () => ({
   shareAsync: jest.fn(() => Promise.resolve()),
 }));
 
+// One saved person — the shipped single-profile shape, now expressed as a
+// one-entry roster. The multi-person behaviour is covered by
+// MultiProfileJyotish.test.tsx against the real store.
+const mockPerson = { id: 'p-test-1', ...mockProfile };
+
 jest.mock('@/panchang/useKundali', () => ({
   ...jest.requireActual('@/panchang/useKundali'),
   useKundali: () => ({
-    profile: mockProfile,
+    profile: mockPerson,
     chart: mockChart,
     hydrated: true,
     loadState: 'saved',
+    people: [mockPerson],
+    activeId: mockPerson.id,
+    activePerson: mockPerson,
+    canAddPerson: true,
     saveProfile: jest.fn(),
     clearProfile: jest.fn(),
     reloadProfile: jest.fn(),
+    selectPerson: jest.fn(),
+    addPerson: jest.fn(),
+    updatePerson: jest.fn(),
+    removePerson: jest.fn(),
   }),
 }));
 

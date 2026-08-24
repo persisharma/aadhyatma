@@ -20,6 +20,12 @@ import MuhuratResultsScreen from '@/screens/MuhuratResultsScreen';
 import MuhuratDayDetailScreen from '@/screens/MuhuratDayDetailScreen';
 import MuhuratFinderShareCard from '@/components/MuhuratFinderShareCard';
 import { KUNDALI_PROFILE_STORAGE_KEY } from '@/panchang/useKundali';
+import {
+  addPerson,
+  removePerson,
+  selectPerson,
+  __resetBirthProfileStoreForTests,
+} from '@/panchang/birthProfileStore';
 import { __resetJanmaMemoForTests } from '@/panchang/useMuhuratBala';
 import { computePanchangForDate, sunriseForDate } from '@/panchang/engine';
 import { computeMuhuratDay } from '@/panchang/muhurat';
@@ -147,6 +153,9 @@ const detail = (
 beforeEach(async () => {
   await AsyncStorage.clear();
   __resetJanmaMemoForTests();
+  // The roster is an in-memory store over AsyncStorage, so clearing storage is
+  // not enough — the snapshot has to be dropped with it.
+  __resetBirthProfileStoreForTests();
   mockNavigation.navigate.mockClear();
 });
 
@@ -171,7 +180,7 @@ test('no saved Kundali: the strip is absent everywhere; the ONLY trace is the re
 });
 
 test('with a saved Kundali: the quiet row on result cards, the full strip on the day detail, no footer', async () => {
-  await AsyncStorage.setItem(KUNDALI_PROFILE_STORAGE_KEY, JSON.stringify(PROFILE));
+  await addPerson(PROFILE);
 
   const r = render(results);
   await settle();
@@ -192,13 +201,13 @@ test('with a saved Kundali: the quiet row on result cards, the full strip on the
 });
 
 test('removing the profile clears the strip on the next read', async () => {
-  await AsyncStorage.setItem(KUNDALI_PROFILE_STORAGE_KEY, JSON.stringify(PROFILE));
+  const person = await addPerson(PROFILE);
   const withProfile = render(results);
   await settle();
   withProfile.root.findByProps({ testID: 'muhurat-bala-row' });
   act(() => withProfile.unmount());
 
-  await AsyncStorage.removeItem(KUNDALI_PROFILE_STORAGE_KEY);
+  await removePerson(person!.id);
   const after = render(results);
   await settle();
   expect(after.root.findAllByProps({ testID: 'muhurat-bala-row' })).toHaveLength(0);
@@ -206,6 +215,9 @@ test('removing the profile clears the strip on the next read', async () => {
   act(() => after.unmount());
 });
 
+// Written under the PRD-C single-profile key deliberately: an unreadable legacy
+// record is what the roster's one-shot migration hits on an upgrading device, and
+// it must still be a guest state rather than a rendered guess.
 test('a corrupt profile is a guest state — no strip, never a rendered guess', async () => {
   await AsyncStorage.setItem(KUNDALI_PROFILE_STORAGE_KEY, '{"date":"not-a-date"}');
   const r = render(results);
@@ -215,8 +227,32 @@ test('a corrupt profile is a guest state — no strip, never a rendered guess', 
   act(() => r.unmount());
 });
 
+test('with several people saved the strip NAMES whose bala it is, and follows the switch', async () => {
+  await addPerson(PROFILE);
+  const meera = await addPerson({ name: 'Meera', date: '1996-02-03', time: '19:10', cityId: 'jaipur' });
+
+  // Adding selects, so the newest person is the one annotated.
+  const r = render(results);
+  await settle();
+  r.root.findByProps({ testID: 'muhurat-bala-row' });
+  expect(texts(r)).toContain('Meera के लिए');
+  expect(texts(r)).not.toContain('आपके लिए');
+  act(() => r.unmount());
+
+  // Switching back to the unnamed first person drops the name — the shipped
+  // wording is correct again once there is nobody to disambiguate from.
+  await selectPerson((await addPerson({ date: '2001-11-09', time: '06:00', cityId: 'varanasi' }))!.id);
+  const other = render(results);
+  await settle();
+  other.root.findByProps({ testID: 'muhurat-bala-row' });
+  expect(texts(other)).toContain('आपके लिए');
+  expect(texts(other)).not.toContain('Meera के लिए');
+  expect(meera).toBeTruthy();
+  act(() => other.unmount());
+});
+
 test('the share card carries NO personal row, even with a profile saved (absence pinned)', async () => {
-  await AsyncStorage.setItem(KUNDALI_PROFILE_STORAGE_KEY, JSON.stringify(PROFILE));
+  await addPerson(PROFILE);
   const d = new Date(2026, 7, 17);
   const p = computePanchangForDate(d);
   const next = computePanchangForDate(new Date(2026, 7, 18));
