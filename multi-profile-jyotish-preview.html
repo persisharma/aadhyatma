@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Multi-person Jyotish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@500;600;700&family=Noto+Serif+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ------------------------------------------------------------------ tokens
+     Screen tokens are the SHIPPED app values (mobile/src/theme/colors.ts) and
+     never change with the host theme: these are pictures of a light parchment
+     app. Only the page chrome around the devices is theme-aware. */
+  :root{
+    --parchment:#F3E7C9; --parchmentSoft:#F8EFD6; --parchmentDeep:#E9D9B1;
+    --screenTop:#F6ECD0; --screenEnd:#F1E3BF;
+    --ink:#1A0E03; --inkSoft:#5A3A1E; --inkMuted:#6E5230;
+    --saffron:#B8621B; --saffronDeep:#8A3E0B; --gold:#A67C34;
+    --divider:rgba(138,62,11,0.18);
+    --saffronTint:rgba(184,98,27,0.12); --goldTint:rgba(166,124,52,0.14);
+    --goldChip:rgba(166,124,52,0.22); --avoidChip:rgba(158,74,46,0.20);
+    --avoidDeep:#7A3722; --avoidTint:rgba(158,74,46,0.12);
+    --cardSurface:rgba(255,250,235,0.72);
+    --cardActiveFrom:#FFF5E0; --cardActiveBorder:rgba(184,98,27,0.4);
+    --onPrimary:#FFFFFF;
+
+    --dev:'Noto Serif Devanagari','Noto Serif',serif;
+    --cg:'Cormorant Garamond',Georgia,serif;
+    --ui:'Inter','Helvetica Neue',sans-serif;
+
+    /* page chrome — light host */
+    --ground:#CDBB92;
+    --groundEdge:#C0AC7F;
+    --pageInk:#33220F;
+    --pageMuted:#5E4527;
+    --pageRule:rgba(51,34,15,0.22);
+    --pageCard:rgba(255,250,235,0.5);
+    --callout:#8A3E0B;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#241B12;
+      --groundEdge:#1A130C;
+      --pageInk:#F1E3BF;
+      --pageMuted:#C3A87C;
+      --pageRule:rgba(241,227,191,0.22);
+      --pageCard:rgba(241,227,191,0.06);
+      --callout:#E0A255;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#241B12;
+    --groundEdge:#1A130C;
+    --pageInk:#F1E3BF;
+    --pageMuted:#C3A87C;
+    --pageRule:rgba(241,227,191,0.22);
+    --pageCard:rgba(241,227,191,0.06);
+    --callout:#E0A255;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--ground);
+    background-image:radial-gradient(120% 80% at 50% 0%, var(--ground) 0%, var(--groundEdge) 100%);
+    color:var(--pageInk);
+    font-family:var(--cg);
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:1660px;margin:0 auto;padding:56px 32px 88px}
+
+  /* ---------------------------------------------------------------- masthead */
+  .masthead{display:flex;flex-direction:column;gap:14px;max-width:66ch}
+  .eyebrow{font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--pageMuted)}
+  h1{margin:0;font-family:var(--cg);font-weight:600;font-size:clamp(38px,5vw,62px);line-height:1.02;letter-spacing:-.015em;text-wrap:balance}
+  h1 .devtitle{font-family:var(--dev);font-weight:600;font-size:.62em;display:block;color:var(--pageMuted);letter-spacing:0;margin-bottom:.18em}
+  .dek{margin:0;font-size:19px;line-height:1.5;color:var(--pageMuted)}
+  .dek b{color:var(--pageInk);font-weight:600}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .key{display:flex;align-items:center;gap:9px;border:1px solid var(--pageRule);background:var(--pageCard);border-radius:999px;padding:7px 15px 7px 11px;font-family:var(--ui);font-size:11.5px;font-weight:500;color:var(--pageMuted)}
+  .key .swatch{width:20px;height:20px;border-radius:6px;border:2px dashed var(--callout);flex:none}
+  .key .dot{width:20px;height:20px;border-radius:999px;background:var(--callout);color:var(--ground);font-weight:700;font-size:11px;display:grid;place-items:center;flex:none}
+  .key b{color:var(--pageInk);font-weight:600}
+
+  /* ------------------------------------------------------------------- rails */
+  .seq{margin-top:52px}
+  .seqhead{display:flex;align-items:baseline;gap:14px;padding-bottom:12px;border-bottom:1px solid var(--pageRule)}
+  .seqhead h2{margin:0;font-family:var(--cg);font-weight:600;font-size:27px;letter-spacing:-.01em}
+  .seqhead p{margin:0;font-size:16px;font-style:italic;color:var(--pageMuted)}
+  .rail{display:flex;gap:34px;overflow-x:auto;padding:30px 4px 12px;scroll-snap-type:x proximity}
+  .slot{margin:0;flex:none;width:392px;scroll-snap-align:center;display:flex;flex-direction:column;gap:16px}
+  .step{display:flex;align-items:center;gap:10px}
+  .step .n{font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--callout);border:1px solid var(--pageRule);border-radius:999px;padding:3px 9px}
+  .step .t{font-family:var(--ui);font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--pageInk)}
+  figcaption{font-size:16.5px;line-height:1.46;color:var(--pageMuted)}
+  figcaption b{color:var(--pageInk);font-weight:600}
+
+  /* ------------------------------------------------------------------ device */
+  .phone{width:392px;height:812px;border-radius:46px;background:#241A10;padding:11px;box-shadow:0 30px 64px rgba(36,24,14,.42);flex:none}
+  .screen{width:100%;height:100%;border-radius:35px;overflow:hidden;position:relative;background:linear-gradient(180deg,var(--screenTop),var(--screenEnd));color:var(--ink)}
+  .statusbar{height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 24px 0 26px;font-family:var(--ui);font-size:13px;font-weight:600;color:var(--ink)}
+  .statusbar .sig{letter-spacing:2px;font-size:10px}
+  .stage{padding:2px 20px 0;height:calc(100% - 38px);overflow:hidden}
+
+  /* shared app components (mirrors the shipped React Native components) */
+  .topbar{display:flex;align-items:center;gap:12px;margin:2px 0 14px}
+  .back{width:36px;height:36px;border-radius:18px;border:1px solid var(--divider);background:var(--parchmentSoft);display:grid;place-items:center;color:var(--inkSoft);font-size:19px;flex:none}
+  .tstack{flex:1;min-width:0}
+  .ttitle{font-family:var(--dev);font-size:18px;font-weight:600;line-height:1.25}
+  .tsub{font-family:var(--cg);font-size:11.5px;font-style:italic;color:var(--inkMuted);margin-top:1px}
+  .tacts{display:flex;align-items:center;gap:11px;flex:none}
+  .pilla{border:1px solid var(--divider);background:var(--parchmentSoft);border-radius:999px;padding:6px 11px;font-family:var(--dev);font-size:11.5px;font-weight:600;color:var(--saffronDeep)}
+  .linka{font-family:var(--dev);font-size:13px;font-weight:600;color:var(--saffronDeep)}
+  /* Latin fragment inside a Devanagari micro label — the only half that may be
+     tracked and uppercased. */
+  .lat{font-family:var(--ui);font-size:.86em;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+  .nm{font-family:var(--ui);font-weight:600;letter-spacing:0}
+
+  .kicker{font-family:var(--dev);font-size:10.5px;font-weight:600;line-height:1.5;color:var(--saffronDeep)}
+  .kicker.mute{color:var(--inkMuted)}
+  .lead{font-family:var(--dev);font-size:26px;font-weight:600;line-height:1.14;margin-top:4px}
+  .leadsub{font-family:var(--cg);font-size:13px;line-height:1.45;color:var(--inkMuted);margin-top:4px}
+  .seclabel{font-family:var(--dev);font-size:11px;font-weight:600;color:var(--inkMuted);margin:16px 0 8px}
+
+  /* the new control: the person switcher */
+  .switcher{position:relative}
+  .switcher .slabel{font-family:var(--dev);font-size:11px;font-weight:600;color:var(--inkMuted);margin-bottom:7px}
+  .chips{display:flex;gap:8px;align-items:center}
+  .chip{min-height:44px;display:flex;align-items:center;padding:0 16px;border-radius:999px;border:1px solid var(--divider);background:var(--parchmentSoft);font-family:var(--dev);font-size:14px;color:var(--inkSoft);white-space:nowrap}
+  .chip.on{border-color:var(--saffronDeep);background:var(--saffronTint);color:var(--saffronDeep);font-weight:600}
+  .chip.add{border-style:dashed;background:var(--cardSurface);color:var(--saffronDeep)}
+  .chip.fade{opacity:.5}
+  .capline{font-family:var(--cg);font-size:11.5px;font-style:italic;color:var(--inkMuted);margin-top:7px}
+
+  /* the callout: dashed ring + numbered marker on what is new */
+  .ring{position:absolute;inset:-9px -10px -11px -10px;border:2px dashed var(--callout);border-radius:20px;pointer-events:none}
+  .ring.low .mk{top:auto;bottom:-11px}
+  .ring .mk{position:absolute;top:-11px;left:14px;background:var(--callout);color:#FFF5E0;font-family:var(--ui);font-size:10px;font-weight:700;letter-spacing:.06em;border-radius:999px;padding:2px 9px;white-space:nowrap}
+
+  .card{background:var(--parchmentSoft);border:1px solid var(--divider);border-radius:18px;padding:14px 15px}
+  .card.active{background:var(--cardActiveFrom);border-color:var(--cardActiveBorder);box-shadow:0 2px 10px rgba(60,30,10,.09)}
+  .card.tight{padding:12px 13px}
+  .card + .card{margin-top:10px}
+
+  .rowhead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+  .bigrashi{font-family:var(--dev);font-size:21px;font-weight:600;margin-top:3px}
+  .bigrashi span{font-family:var(--cg);font-style:italic;font-size:13.5px;font-weight:400;color:var(--inkMuted)}
+  .datemeta{font-family:var(--cg);font-size:11.5px;color:var(--inkMuted);margin-top:3px}
+
+  .grow{display:flex;gap:11px;padding:11px 0;border-top:1px solid var(--divider)}
+  .grow .mark{width:22px;height:22px;border-radius:11px;display:grid;place-items:center;font-family:var(--ui);font-size:11px;font-weight:700;flex:none}
+  .grow .gl{font-family:var(--dev);font-size:10.5px;font-weight:600}
+  .grow .gd{font-family:var(--dev);font-size:12.5px;font-weight:500;color:var(--ink);margin-top:2px;line-height:1.45}
+  .grow .gc{font-family:var(--cg);font-size:11.5px;font-style:italic;color:var(--inkMuted);margin-top:3px}
+  .g-fav .mark{background:var(--goldChip);color:var(--gold)}
+  .g-fav .gl{color:var(--gold)}
+  .g-pause .mark{background:var(--avoidTint);color:var(--avoidDeep)}
+  .g-pause .gl{color:var(--avoidDeep)}
+  .g-ref .mark{background:var(--saffronTint);color:var(--saffronDeep)}
+  .g-ref .gl{color:var(--saffronDeep)}
+  .cardfoot{border-top:1px solid var(--divider);padding-top:10px;margin-top:2px}
+  .explain{margin:7px 0 0;font-family:var(--dev);font-size:12.5px;font-weight:500;line-height:1.45;color:var(--ink)}
+
+  .tabs{display:flex;gap:6px;background:var(--parchmentSoft);border:1px solid var(--divider);border-radius:999px;padding:4px;margin:12px 0}
+  .tabs span{flex:1;text-align:center;font-family:var(--dev);font-size:13px;padding:7px 0;border-radius:999px;color:var(--inkMuted)}
+  .tabs span.on{background:var(--saffronTint);color:var(--saffronDeep);font-weight:600}
+
+  .ocard{background:var(--parchmentSoft);border:1px solid var(--divider);border-radius:16px;padding:12px 13px;display:flex;gap:11px;align-items:flex-start}
+  .ocard + .ocard{margin-top:9px}
+  .ocard .glyph{width:38px;height:38px;border-radius:12px;background:var(--goldTint);display:grid;place-items:center;font-family:var(--dev);font-size:18px;color:var(--saffronDeep);flex:none}
+  .ocard .oname{font-family:var(--dev);font-size:15.5px;font-weight:600}
+  .ocard .ometa{font-family:var(--cg);font-size:12px;color:var(--inkMuted);margin-top:2px}
+  .ocard .chev{color:var(--saffronDeep);font-size:17px;align-self:center}
+
+  .factgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px}
+  .fact{border:1px solid var(--divider);background:var(--cardSurface);border-radius:14px;padding:9px 10px}
+  .fact .fl{font-family:var(--dev);font-size:10px;font-weight:600;color:var(--inkMuted)}
+  .fact .fv{font-family:var(--dev);font-size:14px;font-weight:600;margin-top:3px}
+  .fact .fd{font-family:var(--cg);font-size:11px;font-style:italic;color:var(--inkMuted);margin-top:1px}
+
+  .actions{display:flex;gap:9px;margin-top:12px}
+  .btn{border-radius:999px;padding:12px 18px;font-family:var(--dev);font-size:14px;font-weight:600;text-align:center}
+  .btn.primary{background:var(--saffronDeep);color:var(--onPrimary);flex:1}
+  .btn.ghost{border:1px solid var(--divider);background:var(--parchmentSoft);color:var(--saffronDeep);flex:1}
+  .btn.wide{width:100%}
+  .quiet{font-family:var(--dev);font-size:13.5px;font-weight:600;color:var(--saffronDeep);text-align:center;margin-top:12px}
+
+  .field{margin-top:11px}
+  .flabel{font-family:var(--dev);font-size:10.5px;font-weight:600;color:var(--inkMuted);margin-bottom:5px}
+  .fbox{min-height:48px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--divider);background:var(--parchmentSoft);border-radius:14px;padding:0 13px}
+  .fbox .ph{font-family:var(--cg);font-size:15px;color:var(--inkMuted)}
+  .fbox .val{font-family:var(--dev);font-size:15px;color:var(--ink)}
+  .fbox .caret{color:var(--saffronDeep);font-size:15px}
+  .fpair{display:flex;gap:9px}
+  .fpair > *{flex:1;min-width:0}
+  .note{display:flex;gap:9px;border:1px solid var(--divider);background:var(--goldTint);border-radius:14px;padding:10px 12px;margin-top:13px}
+  .note .i{width:17px;height:17px;border-radius:9px;border:1px solid var(--divider);display:grid;place-items:center;font-family:var(--ui);font-size:10px;font-weight:700;color:var(--gold);flex:none}
+  .note p{margin:0;font-family:var(--cg);font-size:12px;line-height:1.42;color:var(--inkSoft)}
+
+  /* muhurat result card + the personal strip */
+  .rescard{background:var(--cardActiveFrom);border:1px solid var(--cardActiveBorder);border-radius:18px;padding:13px 14px;box-shadow:0 2px 10px rgba(60,30,10,.09)}
+  .rescard + .rescard{margin-top:11px}
+  .restop{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .resdate{font-family:var(--dev);font-size:17px;font-weight:600}
+  .resday{font-family:var(--cg);font-size:12px;font-style:italic;color:var(--inkMuted)}
+  .tier{border-radius:999px;padding:3px 10px;font-family:var(--dev);font-size:11.5px;font-weight:600;background:var(--goldChip);color:var(--saffronDeep);white-space:nowrap}
+  .winline{display:flex;align-items:baseline;gap:7px;margin-top:9px;padding-top:9px;border-top:1px solid var(--divider);flex-wrap:wrap}
+  .winline .wn{font-family:var(--dev);font-size:14px;font-weight:600;color:var(--ink)}
+  .winline .wt{font-family:var(--ui);font-size:12.5px;font-weight:600;color:var(--inkSoft);font-variant-numeric:tabular-nums}
+  .winline .wl{font-family:var(--cg);font-size:11.5px;font-style:italic;color:var(--inkMuted)}
+  .strip{margin-top:9px;position:relative}
+  .strip .sl{font-family:var(--dev);font-size:10.5px;font-weight:600;color:var(--inkMuted)}
+  .pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+  .bpill{font-family:var(--dev);font-size:11.5px;line-height:1.55;border-radius:6px;padding:1px 7px;background:var(--goldTint);color:var(--saffronDeep)}
+  .bpill.bad{background:var(--avoidChip);color:var(--avoidDeep)}
+  .provenance{font-family:var(--cg);font-size:11px;font-style:italic;color:var(--inkMuted);margin-top:11px;text-align:center}
+  .fadeout{position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(180deg,rgba(241,227,191,0),var(--screenEnd))}
+
+  /* ------------------------------------------------------------------- notes */
+  .rules{margin-top:56px;padding-top:26px;border-top:1px solid var(--pageRule)}
+  .rules h2{margin:0 0 20px;font-family:var(--cg);font-weight:600;font-size:27px}
+  .rulegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+  .rule{border:1px solid var(--pageRule);background:var(--pageCard);border-radius:16px;padding:18px 19px}
+  .rule h3{margin:0;font-family:var(--ui);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--callout)}
+  .rule p{margin:9px 0 0;font-size:16px;line-height:1.5;color:var(--pageMuted)}
+  .rule p b{color:var(--pageInk);font-weight:600}
+  .rule .pair{display:flex;gap:10px;margin-top:13px;flex-wrap:wrap}
+  .rule .pair .bpill{font-size:12.5px}
+  footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--pageRule);font-size:14.5px;color:var(--pageMuted);display:flex;flex-wrap:wrap;gap:8px 22px}
+  footer code{font-family:var(--ui);font-size:12.5px;background:var(--pageCard);border:1px solid var(--pageRule);border-radius:5px;padding:1px 6px}
+  @media (prefers-reduced-motion:no-preference){
+    .slot{transition:transform .2s ease}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <p class="eyebrow">Aadhyatma · Jyotish · August 2026</p>
+    <h1><span class="devtitle">किसकी कुंडली?</span>Multi-person Jyotish</h1>
+    <p class="dek">One phone, several people. Birth details used to be a single profile, so a second person meant overwriting the first. They are now a <b>roster with one active selection</b> — and the Kundali, the daily Rashifal and the muhurat strip all answer for whoever is chosen.</p>
+    <div class="legend">
+      <span class="key"><span class="swatch"></span><b>Dashed ring</b> — new in this build</span>
+      <span class="key"><span class="dot">आ</span>Aarav · 14 Aug 1992 · 5:42 AM · Ujjain</span>
+      <span class="key"><span class="dot">मी</span>Meera · 3 Feb 1996 · 7:10 PM · Jaipur</span>
+      <span class="key"><b>Every value is real engine output</b> for 24 &amp; 26 Aug 2026</span>
+    </div>
+  </header>
+
+  <!-- ================================================= sequence one ======= -->
+  <section class="seq">
+    <div class="seqhead">
+      <h2>Whose chart is this</h2>
+      <p>the switcher, and what it replaced</p>
+    </div>
+    <div class="rail">
+
+      <!-- 01 · before -->
+      <figure class="slot">
+        <div class="step"><span class="n">01</span><span class="t">Before</span></div>
+        <div class="phone"><div class="screen">
+          <div class="statusbar"><span>9:41</span><span class="sig">▮▮▮ ⌁ ▰</span></div>
+          <div class="stage">
+            <div class="topbar">
+              <div class="back">‹</div>
+              <div class="tstack">
+                <div class="ttitle">जन्म कुंडली</div>
+                <div class="tsub">Lahiri · Whole-sign houses · IST</div>
+              </div>
+              <div class="tacts"><span class="pilla">↗ साझा करें</span><span class="linka">बदलें</span></div>
+            </div>
+            <p class="kicker">आपकी जन्म कुंडली</p>
+            <div class="lead">Aarav</div>
+            <div class="leadsub">14 Aug 1992 · 5:42 AM · Ujjain</div>
+            <div class="tabs"><span class="on">सार</span><span>कुंडली</span><span>ग्रह</span><span>दशा</span></div>
+            <div class="card active">
+              <p class="kicker">लग्न</p>
+              <div class="bigrashi">कर्क <span>· Cancer rising</span></div>
+              <p class="explain">जन्म के समय उदित राशि, जो प्रथम भाव तय करती है।</p>
+            </div>
+            <div class="card">
+              <p class="kicker">चन्द्र राशि</p>
+              <div class="bigrashi">कुम्भ <span>· Aquarius</span></div>
+              <div class="datemeta">धनिष्ठा · पद 4</div>
+            </div>
+            <div class="card">
+              <p class="kicker">वर्तमान दशा</p>
+              <div class="bigrashi">गुरु <span>· Jupiter mahadasha</span></div>
+              <div class="datemeta">अंतर्दशा राहु</div>
+            </div>
+            <div class="fadeout"></div>
+          </div>
+        </div></div>
+        <figcaption>Today's screen. One saved profile, and no way to ask about anybody else — <b>reading Meera's chart meant overwriting Aarav's.</b></figcaption>
+      </figure>
+
+      <!-- 02 · after -->
+      <figure class="slot">
+        <div class="step"><span class="n">02</span><span class="t">After</span></div>
+        <div class="phone"><div class="screen">
+          <div class="statusbar"><span>9:41</span><span class="sig">▮▮▮ ⌁ ▰</span></div>
+          <div class="stage">
+            <div class="topbar">
+              <div class="back">‹</div>
+              <div class="tstack">
+                <div class="ttitle">जन्म कुंडली</div>
+                <div class="tsub">Lahiri · Whole-sign houses · IST</div>
+              </div>
+              <div class="tacts"><span class="pilla">↗ साझा करें</span><span class="linka">बदलें</span></div>
+            </div>
+            <div class="switcher">
+              <div class="slabel">किसकी कुंडली <span class="lat">· Whose chart</span></div>
+              <div class="chips">
+                <span class="chip on">Aarav</span>
+                <span class="chip">Meera</span>
+                <span class="chip add">+ जोड़ें</span>
+              </div>
+              <div class="ring"><span class="mk">NEW · person switcher</span></div>
+            </div>
+            <div style="height:18px"></div>
+            <p class="kicker">आपकी जन्म कुंडली</p>
+            <div class="lead">Aarav</div>
+            <div class="leadsub">14 Aug 1992 · 5:42 AM · Ujjain</div>
+            <div class="tabs"><span class="on">सार</span><span>कुंडली</span><span>ग्रह</span><span>दशा</span></div>
+            <div class="card active">
+              <p class="kicker">लग्न</p>
+              <div class="bigrashi">कर्क <span>· Cancer rising</span></div>
+            </div>
+            <div class="card">
+              <p class="kicker">चन्द्र राशि</p>
+              <div class="bigrashi">कुम्भ <span>· Aquarius</span></div>
+              <div class="datemeta">धनिष्ठा · पद 4</div>
+            </div>
+            <div class="card">
+              <p class="kicker">वर्तमान दशा</p>
+              <div class="bigrashi">गुरु <span>· Jupiter mahadasha</span></div>
+              <div class="datemeta">अंतर्दशा राहु</div>
+            </div>
+            <div class="ocard" style="margin-top:10px">
+              <span class="glyph">न</span>
+              <div style="flex:1">
+                <div class="oname">नवग्रह स्तोत्रम्</div>
+                <div class="ometa">कुंडली के साथ सुझाया गया पाठ</div>
+              </div>
+              <span class="chev">›</span>
+            </div>
+            <div class="fadeout"></div>
+          </div>
+        </div></div>
+        <figcaption>Chips, not a dropdown: whose chart you are reading is <b>visible state</b>. Tapping <em>Meera</em> swaps the whole result — her Simha lagna, her Karka Moon.</figcaption>
+      </figure>
+
+      <!-- 03 · add -->
+      <figure class="slot">
+        <div class="step"><span class="n">03</span><span class="t">Adding is additive</span></div>
+        <div class="phone"><div class="screen">
+          <div class="statusbar"><span>9:41</span><span class="sig">▮▮▮ ⌁ ▰</span></div>
+          <div class="stage">
+            <div class="topbar">
+              <div class="back">‹</div>
+              <div class="tstack">
+                <div class="ttitle">जन्म कुंडली</div>
+                <div class="tsub">Lahiri · Whole-sign houses · IST</div>
+              </div>
+            </div>
+            <div class="switcher">
+              <div class="slabel">किसकी कुंडली <span class="lat">· Whose chart</span></div>
+              <div class="chips">
+                <span class="chip fade">Aarav</span>
+                <span class="chip fade">Meera</span>
+                <span class="chip add">+ जोड़ें</span>
+              </div>
+            </div>
+            <div style="height:14px"></div>
+            <div class="card active">
+              <div style="font-family:var(--dev);font-size:21px;font-weight:600">नई कुंडली जोड़ें</div>
+              <p class="leadsub" style="margin-top:6px">पहले सहेजी कुंडलियाँ यथावत रहेंगी। नाम देने से बाद में चुनना आसान होता है।</p>
+            </div>
+            <div class="field">
+              <div class="flabel">नाम (वैकल्पिक)</div>
+              <div class="fbox"><span class="ph">Name</span></div>
+            </div>
+            <div class="field fpair">
+              <div>
+                <div class="flabel">जन्म तिथि</div>
+                <div class="fbox"><span class="ph">तिथि</span><span class="caret">▾</span></div>
+              </div>
+              <div>
+                <div class="flabel">जन्म समय</div>
+                <div class="fbox"><span class="ph">समय</span><span class="caret">▾</span></div>
+              </div>
+            </div>
+            <div class="field">
+              <div class="flabel">जन्म नगर</div>
+              <div class="fbox"><span class="ph">भारत का जन्म नगर चुनें</span><span class="caret">⌄</span></div>
+            </div>
+            <div class="note">
+              <span class="i">i</span>
+              <p>कुंडली की गणना अभी भारत के जन्म स्थानों के लिए उपलब्ध है। चुने हुए स्थान का स्थानीय समय भरें (IST, UTC+5:30)।</p>
+            </div>
+            <div class="actions"><span class="btn primary wide">कुंडली बनाएँ</span></div>
+            <div class="quiet">रद्द करें</div>
+            <div class="fadeout"></div>
+          </div>
+        </div></div>
+        <figcaption>A <b>blank</b> form, with the saved people untouched and no chip selected. Nothing is pre-filled from whoever was on screen — and removal isn't offered for a person who doesn't exist yet.</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- ================================================= sequence two ======= -->
+  <section class="seq">
+    <div class="seqhead">
+      <h2>Everything follows the selection</h2>
+      <p>one store, so the switch is true everywhere</p>
+    </div>
+    <div class="rail">
+
+      <!-- 04 · landing -->
+      <figure class="slot">
+        <div class="step"><span class="n">04</span><span class="t">Jyotish landing</span></div>
+        <div class="phone"><div class="screen">
+          <div class="statusbar"><span>9:41</span><span class="sig">▮▮▮ ⌁ ▰</span></div>
+          <div class="stage">
+            <div class="tabs" style="margin-top:6px"><span>पंचांग</span><span>व्रत व पर्व</span><span class="on">ज्योतिष</span></div>
+            <p class="kicker">सोमवार, 24 अगस्त 2026</p>
+            <div class="lead">आज आपका ज्योतिष</div>
+            <div class="leadsub">दैनिक चन्द्र-राशि मार्गदर्शन पहले; आपकी पूरी कुंडली एक स्पर्श दूर।</div>
+            <div style="height:14px"></div>
+            <div class="switcher">
+              <div class="slabel">किसका ज्योतिष <span class="lat">· Whose Jyotish</span></div>
+              <div class="chips">
+                <span class="chip">Aarav</span>
+                <span class="chip on">Meera</span>
+                <span class="chip add">+ जोड़ें</span>
+              </div>
+              <div class="ring"><span class="mk">NEW · above the guidance it changes</span></div>
+            </div>
+            <div style="height:20px"></div>
+            <p class="seclabel">आज का राशिफल</p>
+            <div class="card active" style="padding:0">
+              <div style="padding:13px 14px 11px">
+                <div class="rowhead">
+                  <div>
+                    <p class="kicker">चन्द्र राशि · <span class="nm">Meera</span> की कुंडली से</p>
+                    <div class="bigrashi">कर्क <span>· Cancer</span></div>
+                  </div>
+                  <span class="pilla">↗ साझा करें</span>
+                </div>
+              </div>
+              <div style="padding:0 14px">
+                <div class="grow g-fav">
+                  <span class="mark">↑</span>
+                  <div><div class="gl">जिसे स्थान दें</div><div class="gd">दिनचर्या और सेवा में शांत, क्रमबद्ध प्रयास को स्थान दें।</div></div>
+                </div>
+                <div class="grow g-pause">
+                  <span class="mark">—</span>
+                  <div><div class="gl">जहाँ ठहरें</div><div class="gd">संसाधन और वाणी से जुड़े विषयों में जल्दबाज़ी या निश्चित निष्कर्ष से रुकें।</div></div>
+                </div>
+              </div>
+              <div class="cardfoot" style="padding:10px 14px 12px"><span class="linka">पूरा राशिफल खोलें ›</span></div>
+            </div>
+            <p class="seclabel">आपकी कुंडली</p>
+            <div class="card">
+              <div class="rowhead">
+                <div><p class="kicker">कुंडली की एक झलक</p><div style="font-family:var(--dev);font-size:17px;font-weight:600;margin-top:3px">Meera</div></div>
+                <span class="pilla" style="color:var(--inkMuted)">विवरण सहेजे गए</span>
+              </div>
+              <div class="factgrid">
+                <div class="fact"><div class="fl">लग्न</div><div class="fv">सिंह</div><div class="fd">Leo rising</div></div>
+                <div class="fact"><div class="fl">चन्द्र राशि</div><div class="fv">कर्क</div><div class="fd">Cancer</div></div>
+              </div>
+            </div>
+            <div class="fadeout"></div>
+          </div>
+        </div></div>
+        <figcaption>With more than one person saved, copy that said "your" <b>names the person</b>: <em>Meera की कुंडली से</em>. Her Rashifal, her chart glance, her share card.</figcaption>
+      </figure>
+
+      <!-- 05 · rashifal -->
+      <figure class="slot">
+        <div class="step"><span class="n">05</span><span class="t">Daily Rashifal</span></div>
+        <div class="phone"><div class="screen">
+          <div class="statusbar"><span>9:41</span><span class="sig">▮▮▮ ⌁ ▰</span></div>
+          <div class="stage">
+            <div class="topbar">
+              <div class="back">‹</div>
+              <div class="tstack">
+                <div class="ttitle">आज का राशिफल</div>
+                <div class="tsub">Monday, 24 August 2026 · चन्द्र राशि</div>
+              </div>
+              <div class="tacts"><span class="pilla">↗ साझा करें</span></div>
+            </div>
+            <div class="switcher">
+              <div class="slabel">किसका राशिफल <span class="lat">· Whose Rashifal</span></div>
+              <div class="chips">
+                <span class="chip on">Aarav</span>
+                <span class="chip">Meera</span>
+              </div>
+              <div class="ring"><span class="mk">NEW · switching adopts that person's sign</span></div>
+            </div>
+            <div style="height:18px"></div>
+            <div class="card">
+              <p class="kicker"><span class="nm">Aarav</span> की कुंडली से</p>
+              <div class="bigrashi">कुम्भ <span>· Aquarius</span></div>
+              <div class="leadsub"><span class="nm">Aarav</span> की जन्म चन्द्र राशि प्रतिदिन अपने-आप चुनी जाती है।</div>
+              <div class="cardfoot" style="margin-top:11px"><span class="linka">चन्द्र राशि बदलें ›</span></div>
+            </div>
+            <div class="card" style="padding:2px 14px 12px">
+              <div class="grow g-fav" style="border-top:0">
+                <span class="mark">↑</span>
+                <div>
+                  <div class="gl">जिसे स्थान दें</div>
+                  <div class="gd">समुदाय और सहयोग में शांत, क्रमबद्ध प्रयास को स्थान दें।</div>
+                  <div class="gc">चन्द्र · 11 भाव</div>
+                </div>
+              </div>
+              <div class="grow g-pause">
+                <span class="mark">—</span>
+                <div>
+                  <div class="gl">जहाँ ठहरें</div>
+                  <div class="gd">संबंध और सहयोग से जुड़े विषयों में जल्दबाज़ी या निश्चित निष्कर्ष से रुकें।</div>
+                  <div class="gc">सूर्य · 7 भाव</div>
+                </div>
+              </div>
+              <div class="grow g-ref">
+                <span class="mark">?</span>
+                <div>
+                  <div class="gl">चिंतन प्रश्न</div>
+                  <div class="gd">आज समुदाय और सहयोग को किस प्रकार धैर्य चाहिए?</div>
+                </div>
+              </div>
+            </div>
+            <div class="note">
+              <span class="i">i</span>
+              <p>पारम्परिक गोचर-आधारित मार्गदर्शन—निश्चित भविष्यवाणी नहीं।</p>
+            </div>
+            <div class="ocard" style="margin-top:11px">
+              <span class="glyph">सू</span>
+              <div style="flex:1">
+                <div class="oname">सूर्याष्टकम्</div>
+                <div class="ometa">आज के मार्गदर्शन के साथ सुझाया गया पाठ</div>
+              </div>
+              <span class="chev">›</span>
+            </div>
+            <div class="fadeout"></div>
+          </div>
+        </div></div>
+        <figcaption>Switching person is a <b>fresh natal selection</b>, not a manual one — so the card can honestly say whose Kundali the sign came from. The manual 12-sign picker is untouched.</figcaption>
+      </figure>
+
+      <!-- 06 · muhurat -->
+      <figure class="slot">
+        <div class="step"><span class="n">06</span><span class="t">Muhurat · आपके लिए</span></div>
+        <div class="phone"><div class="screen">
+          <div class="statusbar"><span>9:41</span><span class="sig">▮▮▮ ⌁ ▰</span></div>
+          <div class="stage">
+            <div class="topbar">
+              <div class="back">‹</div>
+              <div class="tstack">
+                <div class="ttitle">वाहन क्रय</div>
+                <div class="tsub">उज्जैन · अगले 3 महीने</div>
+              </div>
+            </div>
+            <p class="kicker mute">शुभ दिन · दृक्पंचांग पद्धति</p>
+            <div class="rescard" style="margin-top:9px">
+              <div class="restop">
+                <div>
+                  <div class="resdate">26 अगस्त 2026</div>
+                  <div class="resday">बुधवार · श्रवण नक्षत्र</div>
+                </div>
+                <span class="tier">मध्यम</span>
+              </div>
+              <div class="winline">
+                <span class="wn">लाभ</span>
+                <span class="wt">6:07 – 7:42 AM</span>
+                <span class="wl">· सिंह लग्न</span>
+              </div>
+              <div class="strip">
+                <div class="sl"><span class="nm">Meera</span> के लिए</div>
+                <div class="pills">
+                  <span class="bpill">साधक तारा — अनुकूल</span>
+                  <span class="bpill">चन्द्र 7वाँ — अनुकूल</span>
+                </div>
+                <div class="ring low" style="inset:-7px -8px -9px -8px"><span class="mk">NEW · named, and it follows the switch</span></div>
+              </div>
+            </div>
+            <div class="rescard">
+              <div class="restop">
+                <div>
+                  <div class="resdate">28 अगस्त 2026</div>
+                  <div class="resday">शुक्रवार · शतभिषा नक्षत्र</div>
+                </div>
+                <span class="tier">श्रेष्ठ</span>
+              </div>
+              <div class="winline">
+                <span class="wn">अमृत</span>
+                <span class="wt">9:17 – 9:47 AM</span>
+                <span class="wl">· कन्या लग्न</span>
+              </div>
+              <div class="strip">
+                <div class="sl"><span class="nm">Meera</span> के लिए</div>
+                <div class="pills">
+                  <span class="bpill">मित्र तारा — अनुकूल</span>
+                  <span class="bpill bad">चंद्राष्टम — प्रतिकूल</span>
+                </div>
+              </div>
+            </div>
+            <div class="rescard">
+              <div class="restop">
+                <div>
+                  <div class="resdate">3 सितंबर 2026</div>
+                  <div class="resday">गुरुवार · कृत्तिका नक्षत्र</div>
+                </div>
+                <span class="tier">मध्यम</span>
+              </div>
+              <div class="winline">
+                <span class="wn">शुभ</span>
+                <span class="wt">5:08 – 5:45 PM</span>
+                <span class="wl">· मकर लग्न</span>
+              </div>
+              <div class="strip">
+                <div class="sl"><span class="nm">Meera</span> के लिए</div>
+                <div class="pills">
+                  <span class="bpill bad">प्रत्यरि तारा — प्रतिकूल</span>
+                  <span class="bpill">चन्द्र 11वाँ — अनुकूल</span>
+                </div>
+              </div>
+            </div>
+            <div class="rescard">
+              <div class="restop">
+                <div>
+                  <div class="resdate">4 सितंबर 2026</div>
+                  <div class="resday">शुक्रवार · रोहिणी नक्षत्र</div>
+                </div>
+                <span class="tier">मध्यम</span>
+              </div>
+              <div class="winline">
+                <span class="wn">अमृत</span>
+                <span class="wt">9:19 – 10:51 AM</span>
+                <span class="wl">· तुला लग्न</span>
+              </div>
+              <div class="strip">
+                <div class="sl"><span class="nm">Meera</span> के लिए</div>
+                <div class="pills">
+                  <span class="bpill">साधक तारा — अनुकूल</span>
+                  <span class="bpill">चन्द्र 11वाँ — अनुकूल</span>
+                </div>
+              </div>
+            </div>
+            <div class="provenance">यह पट्टी दिन की श्रेणी नहीं बदलती — 28 अगस्त श्रेष्ठ ही रहता है</div>
+            <div class="fadeout"></div>
+          </div>
+        </div></div>
+        <figcaption>The personal strip reads the same active person and now says whose it is. It <b>annotates, never re-grades</b> — 28 Aug stays श्रेष्ठ even while Meera's चंद्राष्टम shows against it, and no name reaches a share card or a notification.</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- ===================================================== rules =========== -->
+  <section class="rules">
+    <h2>Three rules the prototype is showing</h2>
+    <div class="rulegrid">
+
+      <div class="rule">
+        <h3>Same day, two people</h3>
+        <p>28 Aug 2026 is <b>श्रेष्ठ</b> for वाहन क्रय whoever is selected — the tier, the ordering and the reminders never move. Only the annotation beside it changes, and here it is the difference between a clear day and a चंद्राष्टम.</p>
+        <div class="pair">
+          <span class="bpill">Aarav — सम्पत् तारा · चन्द्र 1वाँ</span>
+          <span class="bpill bad">Meera — मित्र तारा · चंद्राष्टम</span>
+        </div>
+      </div>
+
+      <div class="rule">
+        <h3>One person changes nothing</h3>
+        <p>With a single saved person the switcher hides and every string is what shipped — <b>आपके लिए</b>, <b>From your Kundali</b>. The naming variants need two people <em>and</em> a name, so the solo experience can't regress into "For undefined".</p>
+      </div>
+
+      <div class="rule">
+        <h3>Your existing chart just becomes person one</h3>
+        <p>The old single profile migrates once, keeps its details, and stays selected — so an upgrading device opens on exactly the chart it opened on before. Up to <b>8</b> people; at the cap the add chip becomes a sentence instead of a failing save.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>Devices are 392 × 812 — the real screen the app ships on.</span>
+    <span>Chart, dasha, Rashifal, muhurat window and bala values are computed output, not sketch text.</span>
+    <span>Prototype for <code>claude/multi-user-panchang-un6b83</code> · design.md §51a</span>
+  </footer>
+
+</div>
+</body>
+</html>
