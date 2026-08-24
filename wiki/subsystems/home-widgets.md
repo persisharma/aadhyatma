@@ -2,7 +2,7 @@
 title: Home Widgets
 type: subsystem
 sources: [mobile/src/widgets, mobile/src/screens/WidgetGalleryScreen.tsx, mobile/plugins/withHomeWidgets.js, mobile/plugins/withHomeWidgetsIos.js, mobile/plugins/home-widgets, mobile/modules/home-widgets-ios, mobile/App.tsx]
-last_verified_date: 2026-08-15
+last_verified_date: 2026-08-24
 confidence: high
 status: current
 ---
@@ -22,7 +22,7 @@ The schema is `WidgetPayloadV1` in `widgets/contract.ts`:
 - every localized field carries `hi`, `en`, `gu`, and `kn` so native consumers never transliterate.
 - Japam stores true total beads/rounds, a japa-only streak, the last-used mantra, and its snapshot date.
 
-Content and size are independent. Each content type is its own widget kind — `VedanshVerseWidget`, `VedanshPanchangWidget`, `VedanshJapamWidget` on iOS; `VedanshVerseWidgetProvider` and `VedanshPanchangWidgetProvider` on Android — so the OS gallery lists them separately and the user picks the size. `widgets/catalog.ts` declares content → native kind, offered sizes, and recommended size once; the gallery renders from it and `catalog.test.ts` fails when the Swift `supportedFamilies`, the Kotlin providers, the `withHomeWidgets.js` receivers, or their `appwidget-provider`/layout resources drift from it. Every kind renders every size it advertises: the verse switches from the two-line excerpt to the full `lines` array on large/tall cells, and the Panchang from a tithi glance to labelled sunrise/Rahu Kaal/Abhijit rows.
+Content and size are independent. Each content type is its own widget kind — `VedanshVerseWidget`, `VedanshPanchangWidget`, `VedanshJapamWidget` on iOS; `VedanshVerseWidgetProvider` and `VedanshPanchangWidgetProvider` on Android — so the OS gallery lists them separately and the user picks the size. `widgets/catalog.ts` declares content → native kind, offered sizes, and recommended size once; the gallery renders from it and `catalog.test.ts` fails when the Swift `supportedFamilies`, the Kotlin providers, the `withHomeWidgets.js` receivers, or their `appwidget-provider`/layout resources drift from it. Every kind renders every size it advertises: the verse reads the full `lines` array on every cell except the small square (large gives each pada its own line, wide flows them as one ` · `-joined paragraph over three lines), and the Panchang goes from a tithi glance to labelled sunrise/Rahu Kaal/Abhijit rows.
 
 Android stores the complete document as one synchronously committed SharedPreferences string, updates both `AppWidgetProvider`s, and supports per-kind launcher pin requests (`requestPinWidget(content)`). iOS writes a temporary file into the shared App Group, replaces/moves it atomically, and reloads WidgetKit timelines. The Expo config plugins generate the Android receiver/package wiring and an iOS 16 widget extension with an explicit host target dependency, Embed App Extensions phase, App Group entitlements, and bundled Indic/Latin fonts.
 
@@ -46,4 +46,5 @@ Deep links are exact and shared by warm/cold starts: verse links carry source/ch
 - Lock-screen Japam is a snapshot, not an interactive counter; when its `dateKey` is stale, show a refresh affordance rather than yesterday's progress as current.
 - Maestro verifies gallery/deep-link app behavior on both platforms, but cannot establish that iOS WidgetKit or an Android launcher actually rendered the OS widget. That needs signed-device/launcher evidence.
 - A widget kind is an OS-persisted identity: renaming or removing one drops every placed instance of it. The Aug 2026 split retired `VedanshAmbientWidget` (and the single combined Android receiver) deliberately — placed instances of the old kind disappear and must be re-added from the gallery.
+- `twoLineExcerpt` is a **small-cell** budget (88 characters ≈ 4 lines at 13 pt), not a payload-wide summary. The wide verse cell rendered it too and so ellipsized any verse past the cap on a card sized for three 16 pt lines — BG 5.12 lost its closing pada with the third line empty. Only the iOS small / Android narrow (<180 dp) cell may read `excerpt`; everything wider reads `lines`. `catalog.test.ts` pins that in both native sources. Generally: never apply a size-specific cap on the shared payload path — put the full text in the payload and let the widest consumer decide.
 - Section eyebrows (`आज का श्लोक`, `जप-साधना`) are not in the payload, so both native surfaces carry their own four-language literals. Anything else user-visible must come from the payload, which is always fully localized.

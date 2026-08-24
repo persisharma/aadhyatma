@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildWidgetPayload, computeJapaStreak, twoLineExcerpt } from '../planner';
+import { buildWidgetPayload, computeJapaStreak, flowedVerse, twoLineExcerpt } from '../planner';
 import { DEFAULT_LOCATION } from '@/panchang/locations';
 
 const localized = { hi: 'अ', en: 'A', gu: 'અ', kn: 'ಅ' };
@@ -56,4 +56,18 @@ test('two-line excerpt never leaves a dangling virama/joiner before the ellipsis
   assert.ok(!excerpt.includes('◌'), 'contains no dotted-circle placeholder');
   // A trailing matra is a legal final and must be preserved (not over-trimmed).
   assert.equal(twoLineExcerpt(['को '.repeat(20)], 12).includes('…'), true);
+});
+
+test('the flowed verse the wide/large cells render is complete and never ellipsized', () => {
+  // The bug this pins: BG 5.12 is 90 characters flowed — two characters past the
+  // small-cell excerpt cap — so the wide cell showed "…फले सक्तो…" with its third
+  // line empty. The wide cell reads this instead, and it carries every pada.
+  const bg512 = ['युक्तः कर्मफलं त्यक्त्वा शान्तिमाप्नोति नैष्ठिकीम्।', 'अयुक्तः कामकारेण फले सक्तो निबध्यते॥'];
+  const flowed = flowedVerse(bg512);
+  assert.equal(flowed, `${bg512[0]} · ${bg512[1]}`);
+  assert.ok(!flowed.includes('…'), 'the flowed verse is never truncated');
+  assert.ok(flowed.length > twoLineExcerpt(bg512).length, 'the excerpt really did cut this verse short');
+  // Blank/padded padas are dropped and trimmed, exactly as the excerpt does, so
+  // the two strings differ only in where they stop.
+  assert.equal(flowedVerse([' अ ', '', '  ', 'ब']), 'अ · ब');
 });
