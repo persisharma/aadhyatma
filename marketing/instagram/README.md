@@ -11,6 +11,11 @@ with different rules.
 > will confirm or kill each hypothesis in a week. Platform specifics drift — treat
 > pixel measurements and product names as "verify in the app", not gospel.
 
+> **Before working through any of this, do the settings pass in
+> [`account-setup.md`](./account-setup.md).** Two account-level settings can flatten
+> reach on their own regardless of content quality — if the account isn't eligible to
+> be recommended to non-followers, nothing below will fix it.
+
 ---
 
 ## 1. The diagnosis
@@ -165,7 +170,8 @@ Per post, in order:
    from Instagram's own library. Using in-app audio keeps the post attached to that
    sound's discovery surface; muxing your own file does not. Devotional instrumental
    or a low flute bed suits the brand. `--audio <file>` exists for licensed audio you
-   own, and should be the exception.
+   own, and should be the exception. **If the trending library looks thin in the audio
+   picker, you're on a Business account** — see [`account-setup.md`](./account-setup.md) §2.
 2. **Cover frame.** Pick the hook frame, not a mid-reel frame. It's the grid thumbnail.
 3. **Caption first line = the searchable question**, in Hindi, verbatim as someone
    would type it: `एकादशी कब है? · Ekadashi 2026`. Keywords in the caption do work;
@@ -223,7 +229,8 @@ Generated output (`frames/`, `carousel/`, `*.mp4`) is git-ignored — regenerabl
 
 ## 7. How to tell whether any of this worked
 
-Stop looking at views. Views is the output, not a lever. In Insights, per reel, pull:
+Stop looking at views. Views is the output, not a lever. In Insights, per reel, pull
+(Insights needs a Professional account — [`account-setup.md`](./account-setup.md) §1.2):
 
 1. **Watch time / average seconds watched.** This is the one that decides reach.
    Rising = the hooks and the pacing are working.
