@@ -89,6 +89,29 @@ test('only the small verse cell reads the excerpt — wider cells read the full 
   assert.match(read('home-widgets', 'android', 'res', 'layout', 'vedansh_widget_verse.xml'), /android:id="@\+id\/widget_title"[^>]*android:ellipsize="end"/);
 });
 
+// A widget is four text lines tall; the ॐ mark used to spend one of them on
+// itself, which is what left the medium verse cell too short for a three-line
+// shloka. It now rides the eyebrow row (both are 10 pt and the eyebrow never
+// fills the width), so no surface may put it back on a line of its own.
+test('the ॐ mark rides the eyebrow row on every widget surface', () => {
+  const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
+  assert.match(swift, /private func eyebrowRow<Content: View>[\s\S]{0,400}?brand\(\)\.fixedSize\(\)/, 'eyebrowRow must carry the mark');
+  assert.equal(swift.match(/^\s*brand\(\)$/gm), null, 'brand() may not sit on its own line in a surface VStack');
+  assert.equal(swift.match(/eyebrowRow \{/g)?.length, 3, 'all three iOS surfaces must use the eyebrow row');
+
+  for (const layout of ['vedansh_widget_verse', 'vedansh_widget_panchang']) {
+    const xml = read('home-widgets', 'android', 'res', 'layout', `${layout}.xml`);
+    assert.equal(xml.match(/ॐ वेदांश़/g)?.length, 1, `${layout} must carry exactly one ॐ mark`);
+    assert.match(xml, /orientation="horizontal"[\s\S]*?@\+id\/widget_brand/, `${layout} must place the mark in a horizontal eyebrow row`);
+  }
+
+  // The reapply trap: a widget that hit recovery once keeps the mark hidden
+  // unless every content render sets it back (same reason recovery resets maxLines).
+  const kotlin = read('home-widgets', 'android', 'VedanshWidgetProvider.kt');
+  assert.match(kotlin, /R\.id\.widget_brand, View\.VISIBLE/, 'content renders must restore the mark');
+  assert.match(kotlin, /R\.id\.widget_brand, View\.GONE/, 'the recovery card hides the redundant mark');
+});
+
 test('size labels exist in all four reading languages', () => {
   for (const size of new Set(WIDGET_CATALOG.flatMap((entry) => entry.sizes))) {
     for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {

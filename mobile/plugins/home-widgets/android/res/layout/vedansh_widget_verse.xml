@@ -3,12 +3,18 @@
     android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical" android:padding="16dp" android:gravity="center_vertical"
     android:background="@drawable/vedansh_widget_background">
-    <TextView android:id="@+id/widget_kicker" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#8A3E0B" android:textSize="10sp" android:textStyle="bold" android:maxLines="1" />
-    <!-- The provider now feeds this the full verse and lets the maxLines it sets
-         per cell size do the trimming, so the view must ellipsize rather than
-         clip a wrapped line mid-word when a long shloka really does overrun. -->
+    <!-- Eyebrow row: section label left, ॐ mark right. The mark used to own a
+         line at the foot of the card, which on a 4x2 cell is a third of the
+         shloka's body; both are 10sp and the eyebrow never fills the width, so
+         pairing them costs no height and hands that line to the verse. -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:baselineAligned="true">
+        <TextView android:id="@+id/widget_kicker" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:textColor="#8A3E0B" android:textSize="10sp" android:textStyle="bold" android:maxLines="1" android:ellipsize="end" />
+        <TextView android:id="@+id/widget_brand" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:text="ॐ वेदांश़" android:textColor="#A67C34" android:textSize="10sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="1" />
+    </LinearLayout>
+    <!-- The provider feeds this the full verse and lets the maxLines it sets per
+         cell size do the trimming, so the view must ellipsize rather than clip a
+         wrapped line mid-word when a long shloka really does overrun. -->
     <TextView android:id="@+id/widget_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:textColor="#1A0E03" android:textSize="15sp" android:lineSpacingExtra="3dp" android:fontFamily="serif" android:maxLines="3" android:ellipsize="end" />
     <TextView android:id="@+id/widget_subtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:textColor="#6E5230" android:textSize="11sp" android:textStyle="bold" android:maxLines="1" />
     <TextView android:id="@+id/widget_meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone" android:textColor="#6E5230" android:textSize="11sp" android:maxLines="1" />
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="ॐ वेदांश़" android:textColor="#A67C34" android:textSize="10sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="1" />
 </LinearLayout>

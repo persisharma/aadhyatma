@@ -121,8 +121,15 @@ function Preview({ content, title, accessibilityLabel, colors, eyebrowStyle, lan
   const best = pick(lang, { hi: 'सुझाव', en: 'best', gu: 'સૂચિત', kn: 'ಶಿಫಾರಸು' });
   const sizeLabels = entry.sizes.map((size) => `${widgetSizeLabel(size, lang)}${size === entry.recommended ? ` · ${best}` : ''}`);
   return <View style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+    {/* Eyebrow row: section label left, ॐ mark right — the mark owns no line of
+        its own on any Vedansh widget (design.md §59), and the facsimile has to
+        show the same card the launcher will. */}
     <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={styles.preview}>
-      <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{title}</Text>{children}<Text style={[styles.brand, { color: colors.gold }]}>ॐ वेदांश़</Text>
+      <View style={styles.eyebrowRow}>
+        <Text numberOfLines={1} style={[eyebrowStyle, styles.eyebrow, { color: colors.saffronDeep }]}>{title}</Text>
+        <Text style={[styles.brand, { color: colors.gold }]}>ॐ वेदांश़</Text>
+      </View>
+      {children}
     </View>
     <View accessible accessibilityLabel={`${pick(lang, { hi: 'आकार', en: 'Sizes', gu: 'કદ', kn: 'ಗಾತ್ರ' })}: ${sizeLabels.join(', ')}`} style={styles.sizeRow}>
       {entry.sizes.map((size, index) => {
@@ -143,5 +150,5 @@ const styles = StyleSheet.create({
   // preview cards borrow the card-family corner (radii.lg) and the CTA is a pill.
   // Font sizes here are layout-tuned facsimile chrome for the widget previews (see
   // design.md §59) and stay ≥10 pt per the chrome floor.
-  root: { flex: 1 }, scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl + spacing.lg }, intro: { fontSize: 15, lineHeight: 23, marginBottom: spacing.xl }, grid: { gap: spacing.md }, card: { borderRadius: radii.lg, borderWidth: 1, padding: spacing.lg }, preview: { minHeight: 142, justifyContent: 'space-between' }, verse: { fontSize: 18, lineHeight: 29, marginVertical: spacing.md }, headline: { fontSize: 22, lineHeight: 31, marginVertical: spacing.md }, meta: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18 }, brand: { fontFamily: fontFamilies.devanagariBold, fontSize: 11, marginTop: spacing.md }, sizeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.xs, marginTop: spacing.md }, sizeChip: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: 4 }, sizeText: { fontSize: 12, lineHeight: 18 }, instructions: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.lg, marginTop: spacing.xxl }, instructionsTitle: { fontSize: 20, marginBottom: spacing.sm }, instruction: { fontSize: 14, lineHeight: 23 }, button: { minHeight: 48, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', marginTop: spacing.md }, buttonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 15 }, note: { fontSize: 13, lineHeight: 20, textAlign: 'center', marginTop: spacing.lg },
+  root: { flex: 1 }, scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl + spacing.lg }, intro: { fontSize: 15, lineHeight: 23, marginBottom: spacing.xl }, grid: { gap: spacing.md }, card: { borderRadius: radii.lg, borderWidth: 1, padding: spacing.lg }, preview: { minHeight: 142, justifyContent: 'space-between' }, verse: { fontSize: 18, lineHeight: 29, marginVertical: spacing.md }, headline: { fontSize: 22, lineHeight: 31, marginVertical: spacing.md }, meta: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18 }, eyebrowRow: { flexDirection: 'row', alignItems: 'baseline', gap: spacing.sm }, eyebrow: { flexShrink: 1 }, brand: { fontFamily: fontFamilies.devanagariBold, fontSize: 11, marginLeft: 'auto' }, sizeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.xs, marginTop: spacing.md }, sizeChip: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: 4 }, sizeText: { fontSize: 12, lineHeight: 18 }, instructions: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.lg, marginTop: spacing.xxl }, instructionsTitle: { fontSize: 20, marginBottom: spacing.sm }, instruction: { fontSize: 14, lineHeight: 23 }, button: { minHeight: 48, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', marginTop: spacing.md }, buttonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 15 }, note: { fontSize: 13, lineHeight: 20, textAlign: 'center', marginTop: spacing.lg },
 });

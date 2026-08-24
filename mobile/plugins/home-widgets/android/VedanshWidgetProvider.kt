@@ -66,6 +66,9 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             // unless this card sets it back.
             views.setInt(__APP_PACKAGE__.R.id.widget_title, "setMaxLines", 3)
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_meta, View.GONE)
+            // This card already says "वेदांश़" in its eyebrow and again in both
+            // message lines; the ॐ mark beside the eyebrow would be a fourth.
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_brand, View.GONE)
             val today = WidgetPayloadContract.currentDateKey("Asia/Kolkata")
             views.setOnClickPendingIntent(__APP_PACKAGE__.R.id.widget_root, link(context, "vedansh://widget/panchang?date=$today", requestCode(id, surface)))
             manager.updateAppWidget(id, views)
@@ -82,6 +85,10 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
                 val width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 250)
                 val height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 110)
                 val views = RemoteViews(context.packageName, layoutFor(surface))
+                // Same reapply trap as the recovery card's maxLines reset: a widget
+                // that hit recovery once would keep its ॐ mark hidden for good
+                // unless every content render puts it back.
+                views.setViewVisibility(__APP_PACKAGE__.R.id.widget_brand, View.VISIBLE)
                 when (surface) {
                     Surface.PANCHANG -> renderPanchang(context, views, root, locale, id, width)
                     Surface.VERSE -> renderVerse(context, views, root, locale, id, width, height)

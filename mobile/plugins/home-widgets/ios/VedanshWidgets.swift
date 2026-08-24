@@ -115,7 +115,9 @@ struct VedanshWidgetView: View {
     let lang = payload.locale
     if let v = payload.verses.days.first(where: { $0.dateKey == key }) {
       VStack(alignment: .leading, spacing: family == .systemSmall ? 5 : 7) {
-        Text(verseKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep).lineLimit(1)
+        eyebrowRow {
+          Text(verseKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep).lineLimit(1)
+        }
         if family == .systemLarge {
           VStack(alignment: .leading, spacing: 5) {
             ForEach(Array(v.lines.value(lang).prefix(8).enumerated()), id: \.offset) { item in
@@ -138,7 +140,6 @@ struct VedanshWidgetView: View {
         if family != .systemSmall {
           Text(v.source.value(lang)).font(.system(size: 10, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted).lineLimit(1)
         }
-        brand()
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .widgetURL(URL(string: v.deepLink)).accessibilityLabel(v.accessibilityLabel.value(lang))
@@ -156,9 +157,11 @@ struct VedanshWidgetView: View {
         Text(p.vrat?.value(lang) ?? p.tithi.value(lang))
       } else {
         VStack(alignment: .leading, spacing: family == .systemLarge ? 7 : 5) {
-          Text("\(p.representedDate.value(lang)) · \(payload.panchang.cityLabel.value(lang))")
-            .font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep)
-            .lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.85)
+          eyebrowRow {
+            Text("\(p.representedDate.value(lang)) · \(payload.panchang.cityLabel.value(lang))")
+              .font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep)
+              .lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.85)
+          }
           Text(p.tithi.value(lang))
             .font(.custom(fontName(lang, bold: true), size: family == .systemLarge ? 32 : family == .systemSmall ? 20 : 21))
             .foregroundStyle(WidgetTheme.ink).lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.75)
@@ -176,7 +179,6 @@ struct VedanshWidgetView: View {
           } else {
             Text("\(p.sunrise.value(lang))   \(p.rahuKaal.value(lang))").font(.system(size: 10, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted).lineLimit(1)
           }
-          brand()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .widgetURL(URL(string: p.deepLink)).accessibilityElement(children: .combine)
@@ -194,10 +196,11 @@ struct VedanshWidgetView: View {
         .widgetURL(URL(string: payload.japam.deepLink)).accessibilityLabel("\(payload.japam.totalBeads) beads, \(payload.japam.japaStreak) Japam days")
     } else {
       VStack(alignment: .leading, spacing: 8) {
-        Text(japamKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep).lineLimit(1)
+        eyebrowRow {
+          Text(japamKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep).lineLimit(1)
+        }
         Text("\(payload.japam.totalBeads) / 108").font(.custom(fontName(lang, bold: true), size: family == .systemMedium ? 34 : 27)).foregroundStyle(WidgetTheme.ink)
         Text(lang == "en" ? "\(payload.japam.totalRounds) rounds · \(payload.japam.japaStreak) days" : "\(payload.japam.totalRounds) माला · \(payload.japam.japaStreak) जप-दिन").font(.system(size: 11, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted)
-        brand()
       }
       .frame(maxWidth: .infinity, alignment: .leading)
       .widgetURL(URL(string: payload.japam.deepLink)).accessibilityElement(children: .combine)
@@ -208,6 +211,22 @@ struct VedanshWidgetView: View {
     let key = widgetDateKey(entry.date, timeZone: widgetIstTimeZone)
     return VStack(alignment: .leading, spacing: 8) { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 13)).foregroundStyle(WidgetTheme.ink); Text(hi).font(.custom("NotoSerifDevanagari-Medium", size: 13)).foregroundStyle(WidgetTheme.ink); Text(en).font(.system(size: 10, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted) }
       .widgetURL(URL(string: "vedansh://widget/panchang?date=\(key)"))
+  }
+  // The eyebrow row: section label on the left, ॐ mark on the right.
+  //
+  // The mark used to sit on its own line at the foot of every card, and on a
+  // widget that is four text lines tall that line is expensive — on the medium
+  // verse cell it was a third of the shloka's body, so a verse that needed three
+  // lines only ever got two of them at full size. Pairing it with the eyebrow
+  // costs no height at all: both are 10 pt and the eyebrow never fills the width.
+  // The mark is `fixedSize` so a long eyebrow (the Panchang's date · city) gives
+  // ground first — it already carries `minimumScaleFactor`/`lineLimit(2)` for it.
+  private func eyebrowRow<Content: View>(@ViewBuilder _ eyebrow: () -> Content) -> some View {
+    HStack(alignment: .firstTextBaseline, spacing: 6) {
+      eyebrow()
+      Spacer(minLength: 6)
+      brand().fixedSize()
+    }
   }
   private func brand() -> some View { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 10)).foregroundStyle(WidgetTheme.gold) }
   // The verse as one flowing paragraph, padas separated the way the planner's
