@@ -92,7 +92,11 @@ export default function MuhuratBalaStrip({
         color: colors.inkMuted,
       }}
     >
-      {contentByLang(lang, 'आपके लिए', 'For you')}
+      {/* With several people saved, the strip says WHOSE bala it is — on a shared
+          phone "for you" beside another person's tara is simply wrong. */}
+      {bala.personName
+        ? contentByLang(lang, `${bala.personName} के लिए`, `For ${bala.personName}`)
+        : contentByLang(lang, 'आपके लिए', 'For you')}
     </Text>
   );
 
@@ -143,11 +147,17 @@ export default function MuhuratBalaStrip({
           marginTop: 4,
         }}
       >
-        {contentByLang(
-          lang,
-          `जन्म नक्षत्र ${janmaNak} व राशि ${janmaRashi} से गिनकर · निजी — साझा कार्ड पर कभी नहीं। यह दिन की श्रेणी नहीं बदलता।`,
-          `Counted from your janma nakshatra (${janmaNak}) and rashi (${janmaRashi}). Private — never on the share card. It never changes the day's tier.`
-        )}
+        {bala.personName
+          ? contentByLang(
+            lang,
+            `${bala.personName} के जन्म नक्षत्र ${janmaNak} व राशि ${janmaRashi} से गिनकर · निजी — साझा कार्ड पर कभी नहीं। यह दिन की श्रेणी नहीं बदलता।`,
+            `Counted from ${bala.personName}'s janma nakshatra (${janmaNak}) and rashi (${janmaRashi}). Private — never on the share card. It never changes the day's tier.`
+          )
+          : contentByLang(
+            lang,
+            `जन्म नक्षत्र ${janmaNak} व राशि ${janmaRashi} से गिनकर · निजी — साझा कार्ड पर कभी नहीं। यह दिन की श्रेणी नहीं बदलता।`,
+            `Counted from your janma nakshatra (${janmaNak}) and rashi (${janmaRashi}). Private — never on the share card. It never changes the day's tier.`
+          )}
       </Text>
     </View>
   );

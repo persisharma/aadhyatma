@@ -1,9 +1,12 @@
 /**
  * Personalised Tarabala/Chandrabala for finder surfaces (PRD-16 Phase 4).
  *
- * Source of truth is the SAVED Kundali profile (`@vedansh:kundali-birth-
- * profile:v1`) — never re-asked, excluded from the derived-cache sweep by
- * name. This hook:
+ * Source of truth is the ACTIVE person in the saved birth-profile roster
+ * (`birthProfileStore`, `@vedansh:kundali-profiles:v1`) — never re-asked,
+ * excluded from the derived-cache sweep by name. Switching person on any Jyotish
+ * surface re-derives this strip, because both read that one store; with more than
+ * one person saved the strip also NAMES whose bala it is, since "for you" would
+ * otherwise be a silent guess on a shared phone. This hook:
  *  - derives janma nakshatra + rashi at runtime from the profile's birth
  *    instant via the shipped Moon-longitude primitive (one per-session memo
  *    keyed on the profile record — an edited profile recomputes on next read);
@@ -16,15 +19,13 @@
  * Verdicts, ordering, tiers, follows and the share card never read it.
  */
 import { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 
 import {
-  KUNDALI_PROFILE_STORAGE_KEY,
   birthProfileToInput,
-  parseStoredBirthProfile,
+  useBirthProfileRoster,
   type BirthProfile,
 } from './useKundali';
+import { activePerson as resolveActivePerson } from './birthProfiles';
 import { getSiderealPlanetLongitude } from './kundali';
 import {
   chandrabala,
@@ -48,6 +49,13 @@ export type MuhuratBala = {
   /** So the detail strip can name what it counted from (auditable vs the Kundali screen). */
   janmaNakshatraIndex: number;
   janmaRashiIndex: number;
+  /**
+   * Whose bala this is — set ONLY when the roster holds more than one person and
+   * that person has a name. With a single saved profile the strip keeps its
+   * shipped "आपके लिए" wording. Device-local UI only: it must never reach the
+   * share card or a notification (absence pinned).
+   */
+  personName?: string;
 };
 
 export type MuhuratBalaState = {
@@ -76,38 +84,31 @@ export function __resetJanmaMemoForTests(): void {
 }
 
 /**
- * Bala for a set of listed days. `itemsKey` (identity of the item set) and a
- * navigation focus listener drive re-reads, so saving/removing the profile on
- * the Kundali screen updates the strip when the finder surface is back.
- * The Moon reads are deferred behind setTimeout(0) — the same boundary as the
- * day detail's solve — and there is at most one per rendered card.
+ * Bala for a set of listed days. Re-derives on two inputs: `itemsKey` (identity
+ * of the item set) and the active person from the shared roster store — so
+ * saving, removing or SWITCHING person anywhere in the app updates the strip
+ * without a focus round trip. The Moon reads are deferred behind setTimeout(0) —
+ * the same boundary as the day detail's solve — and there is at most one per
+ * rendered card.
  */
 export function useMuhuratBala(items: readonly MuhuratBalaItem[]): MuhuratBalaState {
-  const navigation = useNavigation();
+  const { hydrated: rosterHydrated, roster, error: rosterError } = useBirthProfileRoster();
   const [state, setState] = useState<MuhuratBalaState>({ hydrated: false, hasProfile: false, balaByDate: null });
-  const [focusTick, setFocusTick] = useState(0);
   const itemsKey = items.map((i) => `${i.dateMs}:${i.windowStart.getTime()}:${i.nakshatraIndex}`).join(',');
+  const person = resolveActivePerson(roster);
+  // Corrupt storage = guest = no strip, never a rendered guess.
+  const profile: BirthProfile | null = rosterError ? null : person;
+  const personKey = person ? `${person.id}|${person.date}|${person.time}` : '';
+  const personName = roster.people.length > 1 ? person?.name?.trim() : undefined;
 
   useEffect(() => {
-    // Optional-chained: test shells mock a minimal navigation object.
-    const unsubscribe = navigation.addListener?.('focus', () => setFocusTick((t) => t + 1));
-    return unsubscribe;
-  }, [navigation]);
-
-  useEffect(() => {
+    if (!rosterHydrated) return;
+    if (!profile) {
+      setState({ hydrated: true, hasProfile: false, balaByDate: null });
+      return;
+    }
     let cancelled = false;
-    const id = setTimeout(async () => {
-      let profile: BirthProfile | null = null;
-      try {
-        profile = parseStoredBirthProfile(await AsyncStorage.getItem(KUNDALI_PROFILE_STORAGE_KEY));
-      } catch {
-        profile = null; // storage failure = guest state, never a rendered guess
-      }
-      if (cancelled) return;
-      if (!profile) {
-        setState({ hydrated: true, hasProfile: false, balaByDate: null });
-        return;
-      }
+    const id = setTimeout(() => {
       try {
         const janma = janmaForProfile(profile);
         const map = new Map<number, MuhuratBala>();
@@ -118,6 +119,7 @@ export function useMuhuratBala(items: readonly MuhuratBalaItem[]): MuhuratBalaSt
             chandra: chandrabala(janma.rashiIndex, dayMoonRashi),
             janmaNakshatraIndex: janma.nakshatraIndex,
             janmaRashiIndex: janma.rashiIndex,
+            ...(personName ? { personName } : {}),
           });
         }
         if (!cancelled) setState({ hydrated: true, hasProfile: true, balaByDate: map });
@@ -131,7 +133,7 @@ export function useMuhuratBala(items: readonly MuhuratBalaItem[]): MuhuratBalaSt
       clearTimeout(id);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemsKey, focusTick]);
+  }, [itemsKey, personKey, personName, rosterHydrated, Boolean(profile)]);
 
   return state;
 }
