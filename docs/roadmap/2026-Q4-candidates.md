@@ -124,6 +124,8 @@ Feasibility is graded against the constraint that has actually stalled shipped w
 
 > *The highest daily-utility feature in this document, for the household member the app currently serves least.*
 
+**Prototype:** [`docs/bhog-naivedya-prototype.html`](../bhog-naivedya-prototype.html) — five annotated frames: the composition case on a fasting observance, भोग alone on a festival, the absence case with the full 8-state section matrix, the Vidhi तैयारी slot, and the merged shopping list. Every food line in it is an **illustrative placeholder**.
+
 **The gap.** `upvasContent` answers *whether and when* you eat — `fastType: 'phalahar'`, "grains are abstained", parana bound to Dwādaśī. It never names a food. And nothing in the binary names a **naivedya**. So on the morning of every vrat and every festival, the person actually running the house — usually not the person reading the Gita on the sofa — asks a question the app cannot answer: *what do I cook.*
 
 **What ships.** A sibling registry to `upvasContent`, deliberately inheriting its `status: 'draft' | 'verified'` gate and its `source.referenceUrls` + `verificationNote` shape:
@@ -145,6 +147,8 @@ Feasibility is graded against the constraint that has actually stalled shipped w
 ### PRD-24 — वास्तु दिशा · disha chakra, ghar-ka-mandir & murti placement
 
 > *A whole domain at zero coverage, consulted at every move, renovation, and Diwali cleaning.*
+
+**Prototype:** [`docs/vastu-disha-prototype.html`](../vastu-disha-prototype.html) — five annotated frames: the More-hub entry, the chakra working with guidance keyed to the pointed dik, the **degraded sensor state with the manual dik override**, घर का मंदिर, and the griha-pravesh door. All headings, degrees and the declination figure in it are **illustrative placeholders**, not sensor output.
 
 **The gap.** The only `disha` in the codebase is travel disha-shool inside the muhurat engine. Nothing addresses the questions asked constantly in Indian homes: **which direction should the mandir face; can the puja room share a wall with the bathroom; which way should my head point when I sleep; where does the tulsī go; is it allowed to keep two Gaṇeśa idols / a Śivaliṅga / a Naṭarāja at home.** These are asked at every move-in, every rental, every rearrangement — and the muhurat finder already dates the griha pravesh they cluster around.
 

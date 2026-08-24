@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-23 — भोग · नैवेद्य · व्रत भोजन — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#FFF5E0;
+    --parchment-deep:#E9D9B1; --gradient-end:#E9D9B1;
+    --ink:#2F1E10; --ink-soft:#5A3A1E; --ink-muted:#8A6A47;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34; --gold-soft:#C9B896;
+    --divider:rgba(138,62,11,0.18);
+    --saffron-tint:rgba(184,98,27,0.14); --gold-tint:rgba(166,124,52,0.16);
+    /* PRD-14 avoid-palette: muted terracotta for "not this", never red. */
+    --avoid:#8A4A2A; --avoid-tint:rgba(138,74,42,0.11); --avoid-line:rgba(138,74,42,0.30);
+    --shadow-lg:0 30px 70px rgba(20,12,4,0.40);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--sans);color:#EADCC2;padding:34px 20px 64px;line-height:1.5;
+    background:
+      radial-gradient(900px 360px at 50% -8%, rgba(184,98,27,0.22), transparent 64%),
+      linear-gradient(160deg,#1A140C 0%,#2A1D10 58%,#1A140C 100%);
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+  }
+  .intro{max-width:1120px;margin:0 auto 10px;text-align:center}
+  .intro h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,42px);color:var(--parchment)}
+  .intro .deva-sub{font-family:var(--deva);font-size:15px;color:var(--gold-soft);margin-top:2px}
+  .intro p{max-width:860px;margin:10px auto 0;font-size:14px;line-height:1.55;color:#D5C39D}
+  .samplebanner{
+    max-width:860px;margin:18px auto 34px;padding:12px 18px;border-radius:12px;
+    border:1.5px dashed var(--gold);background:rgba(166,124,52,0.10);
+    font-size:12.5px;color:#E7D8B6;text-align:center;line-height:1.6;
+  }
+  .samplebanner b{color:#FFF5E0;letter-spacing:.08em}
+
+  .scenario{max-width:1120px;margin:0 auto 58px}
+  .scenario > h2{
+    font-family:var(--serif);font-size:22px;font-weight:600;color:#FFF5E0;
+    border-bottom:1px solid #3A2A16;padding-bottom:8px;margin-bottom:4px;
+  }
+  .scenario > .sc-sub{font-size:12.5px;color:var(--gold-soft);font-style:italic;margin-bottom:20px}
+  .wrap{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap}
+
+  /* ---- phone frame (house 360×740) ---- */
+  /* Frames render the FULL scroll length — frame height == real screen length,
+     so a reviewer never has to scroll inside a phone to see the rest of a state.
+     Minimum is the house 740 so short frames stay comparable. */
+  .phone{width:360px;min-height:760px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0D0804;box-shadow:var(--shadow-lg),0 0 0 1px rgba(166,124,52,0.18);
+    position:relative;overflow:hidden;flex:none;display:flex;flex-direction:column}
+  .statusbar{height:34px;flex:none;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);
+    background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{flex:1;position:relative;
+    background:
+      radial-gradient(110% 42% at 50% -12%, rgba(184,98,27,0.14), transparent 62%),
+      linear-gradient(180deg,var(--parchment-hi) 0%,var(--gradient-end) 100%)}
+  .fold{position:absolute;left:0;right:0;height:0;border-top:1px dashed rgba(138,62,11,0.30);z-index:2}
+  .fold::after{content:attr(data-label);position:absolute;right:6px;top:-7px;
+    font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--gold);background:var(--parchment-hi);
+    border:1px solid rgba(138,62,11,0.22);border-radius:999px;padding:1px 7px;line-height:1.5}
+  .pad{padding:6px 18px 34px}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 10px}
+  .topbar .back{width:34px;height:34px;border:1px solid var(--divider);border-radius:17px;
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px;cursor:pointer}
+  .topbar .tt{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .topbar .sp{width:34px}
+  .topbar .act{font-size:12px;font-weight:600;color:var(--saffron-deep);font-family:var(--sans)}
+
+  .hero{text-align:center;padding:8px 0 14px;border-bottom:1px solid var(--divider)}
+  .hero .tags{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:9px}
+  .pill{display:inline-block;background:var(--gold-tint);color:var(--saffron-deep);
+    font-size:10.5px;font-weight:700;font-family:var(--sans);padding:3px 10px;border-radius:999px}
+  .pill.fest{background:var(--saffron-tint)}
+  .hero .deity{font-size:12.5px;color:var(--ink-muted)}
+  .hero .name{font-family:var(--deva);font-size:26px;color:var(--ink);line-height:1.35}
+  .hero .name-en{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-muted);margin-top:1px}
+  .hero .rule{font-family:var(--deva);font-size:12px;color:var(--ink-muted);margin-top:6px}
+  .hero .next{display:inline-block;margin-top:9px;background:var(--saffron-tint);color:var(--saffron-deep);
+    border-radius:999px;padding:4px 13px;font-size:11.5px;font-weight:600}
+
+  .actions{display:flex;gap:8px;margin:12px 0 2px}
+  .abtn{flex:1;min-height:38px;display:flex;align-items:center;justify-content:center;
+    border:1.5px solid var(--saffron);border-radius:999px;font-size:12.5px;font-weight:600;
+    color:var(--saffron-deep);cursor:pointer;font-family:var(--sans)}
+  .abtn.fill{background:var(--saffron);color:var(--parchment-hi)}
+
+  .block{margin-top:18px}
+  .bh{font-family:var(--deva);font-size:15px;color:var(--ink);margin-bottom:8px}
+  .bh .en{font-family:var(--serif);font-style:italic;font-weight:400;font-size:12px;color:var(--ink-muted)}
+  .body{font-size:13px;line-height:1.65;color:var(--ink-soft);font-family:var(--deva)}
+
+  .card{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);
+    background:var(--parchment-soft);border-radius:16px;padding:13px;cursor:pointer;
+    box-shadow:0 1px 2px rgba(60,30,10,0.06)}
+  .card .glyph{font-size:21px;color:var(--saffron);font-family:var(--deva)}
+  .card .ct{flex:1;min-width:0}
+  .card .ct .t{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .card .ct .m{font-size:11.5px;color:var(--ink-muted);margin-top:2px;font-family:var(--serif);font-style:italic}
+  .card .chev{font-size:18px;color:var(--ink-muted)}
+
+  /* ---- shipped upvas panel (unchanged — shown for composition context) ---- */
+  .panel-box{border:1px solid var(--gold-soft);background:var(--parchment-soft);
+    border-radius:16px;padding:14px 14px 12px;box-shadow:0 1px 2px rgba(60,30,10,0.06)}
+  .fasttype{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:11px;
+    border-bottom:1px solid var(--divider)}
+  .ftchip{display:inline-flex;align-items:center;gap:5px;background:var(--saffron);
+    color:var(--parchment-hi);font-family:var(--deva);font-size:12.5px;font-weight:600;
+    padding:4px 12px;border-radius:999px;line-height:1.5}
+  .ftnote{font-size:11.5px;color:var(--ink-muted);font-family:var(--deva)}
+  .frow{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--divider)}
+  .frow:last-of-type{border-bottom:0}
+  .frow .fl{flex:0 0 76px;font-size:10px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--gold);padding-top:2px}
+  .frow .fl .d{display:block;font-family:var(--deva);font-size:12px;font-weight:600;
+    letter-spacing:0;text-transform:none;color:var(--saffron-deep)}
+  .frow .fv{flex:1;font-family:var(--deva);font-size:12.5px;line-height:1.6;color:var(--ink-soft)}
+  .computed{margin-top:6px;background:var(--gold-tint);border-radius:10px;padding:7px 10px;
+    font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--saffron-deep)}
+  .computed .loc{display:block;font-weight:400;font-size:10px;color:var(--ink-muted);margin-top:1px}
+  .footnote{margin-top:9px;font-family:var(--serif);font-style:italic;font-size:11.5px;
+    line-height:1.55;color:var(--ink-muted)}
+
+  /* ---- NEW: भोग panel ---- */
+  .subpanel{margin-top:12px}
+  .subhead{display:flex;align-items:baseline;gap:7px;margin-bottom:7px}
+  .subhead .dv{font-family:var(--deva);font-size:13px;font-weight:600;color:var(--saffron-deep)}
+  .subhead .en{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted)}
+
+  /* नैवेद्य — offering rows */
+  .offer{display:flex;gap:9px;padding:8px 0;border-bottom:1px solid var(--divider)}
+  .offer:last-child{border-bottom:0}
+  .offer .mark{flex:none;width:16px;font-family:var(--deva);font-size:12px;color:var(--gold);padding-top:2px}
+  .offer .oc{flex:1;min-width:0}
+  .offer .oi{font-family:var(--deva);font-size:13px;color:var(--ink);line-height:1.5}
+  .offer .ow{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:1px;line-height:1.5}
+  .offer .opt{font-size:9.5px;font-weight:700;letter-spacing:.06em;color:var(--gold);
+    text-transform:uppercase;margin-left:6px}
+
+  /* निषेध — the prohibition block */
+  .nishedh{margin-top:12px;border:1px solid var(--avoid-line);background:var(--avoid-tint);
+    border-radius:14px;padding:11px 12px 9px}
+  .nishedh .nh{display:flex;align-items:baseline;gap:7px;margin-bottom:6px}
+  .nishedh .nh .dv{font-family:var(--deva);font-size:12.5px;font-weight:600;color:var(--avoid)}
+  .nishedh .nh .en{font-family:var(--serif);font-style:italic;font-size:10.5px;color:var(--ink-muted)}
+  .nrow{display:flex;gap:8px;padding:6px 0;border-bottom:1px dashed var(--avoid-line)}
+  .nrow:last-child{border-bottom:0}
+  .nrow .nm{flex:none;width:14px;font-size:11px;color:var(--avoid);padding-top:2px}
+  .nrow .nt{flex:1;font-family:var(--deva);font-size:12.5px;line-height:1.55;color:var(--ink-soft)}
+  .nrow .nt i{font-family:var(--serif);font-size:11px;color:var(--ink-muted);display:block;margin-top:1px}
+
+  /* व्रत भोजन — the plate, as chip groups */
+  .plate{margin-top:12px}
+  .pgroup{margin-top:8px}
+  .plabel{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:5px}
+  .plabel .d{font-family:var(--deva);font-size:11.5px;font-weight:600;letter-spacing:0;
+    text-transform:none;color:var(--saffron-deep);margin-right:5px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .chip{font-family:var(--deva);font-size:11.5px;padding:3px 10px;border-radius:999px;
+    background:var(--gold-tint);color:var(--saffron-deep);line-height:1.6}
+  .chip.no{background:var(--avoid-tint);color:var(--avoid);
+    text-decoration:line-through;text-decoration-color:var(--avoid-line)}
+  .saltrow{margin-top:11px;background:var(--parchment-hi);border:1px solid var(--divider);
+    border-radius:11px;padding:8px 10px}
+  .saltrow .sl{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+  .saltrow .sv{font-family:var(--deva);font-size:12.5px;color:var(--ink);margin-top:2px;line-height:1.55}
+
+  /* shopping list */
+  .listhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+  .listhdr .cnt{font-size:11px;color:var(--ink-muted);font-family:var(--sans)}
+  .lgroup{margin-top:14px}
+  .lglabel{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+  .lglabel .dv{font-family:var(--deva);font-size:12.5px;font-weight:600;color:var(--saffron-deep)}
+  .lglabel .src{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--gold);border:1px solid var(--gold-soft);border-radius:999px;padding:1px 7px}
+  .li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--divider)}
+  .li:last-child{border-bottom:0}
+  .box{flex:none;width:19px;height:19px;border:1.5px solid var(--gold);border-radius:5px;
+    display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent}
+  .box.on{background:var(--saffron);border-color:var(--saffron);color:var(--parchment-hi)}
+  .li .lt{flex:1;font-family:var(--deva);font-size:13px;color:var(--ink)}
+  .li.done .lt{color:var(--ink-muted);text-decoration:line-through;text-decoration-color:var(--divider)}
+  .li .lq{font-size:11px;color:var(--ink-muted);font-family:var(--sans)}
+
+  .absent{margin-top:16px;border:1px dashed var(--gold-soft);border-radius:14px;padding:14px;
+    text-align:center;font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted)}
+  .endcap{margin-top:24px;text-align:center;color:var(--gold);font-family:var(--deva);font-size:16px;opacity:.55}
+
+  /* ---- side annotation panel ---- */
+  .panel{flex:1;min-width:320px;max-width:560px}
+  .acard{background:#23190E;border:1px solid #3A2A16;border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  .acard h3{font-family:var(--serif);font-size:17px;color:#FFF5E0;margin-bottom:8px}
+  .acard ul{list-style:none}
+  .acard li{position:relative;padding:6px 0 6px 22px;font-size:12.5px;line-height:1.6;color:#C9B896;
+    border-bottom:1px dashed #3A2A16}
+  .acard li:last-child{border-bottom:0}
+  .acard li::before{content:"◆";position:absolute;left:2px;top:7px;font-size:9px;color:var(--saffron)}
+  .acard li b{color:#FFF5E0}
+  .acard li code{font-size:11px;background:#2A1D10;border:1px solid #3A2A16;border-radius:5px;
+    padding:1px 5px;color:#E7D8B6}
+  .acard .warn{margin-top:10px;border:1px dashed var(--gold);border-radius:9px;padding:8px 11px;
+    font-size:11.5px;color:#E7D8B6}
+
+  /* ---- fit map ---- */
+  table.fit{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+  table.fit th,table.fit td{border:1px solid #3A2A16;padding:7px 9px;text-align:left;vertical-align:top;color:#C9B896}
+  table.fit th{background:#2A1D10;color:#FFF5E0;font-family:var(--sans);font-size:10.5px;
+    letter-spacing:.06em;text-transform:uppercase}
+  table.fit code{font-size:11px;background:#2A1D10;border:1px solid #3A2A16;border-radius:5px;padding:1px 5px;color:#E7D8B6}
+  table.fit td b{color:#FFF5E0}
+  .matrix td.y{color:#E7D8B6}
+  .matrix td.n{color:#7A6647}
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>PRD-23 — भोग · नैवेद्य · व्रत भोजन</h1>
+  <div class="deva-sub">क्या अर्पित करें · क्या ग्रहण करें · क्या वर्जित है</div>
+  <p>
+    Five frames. <b>A</b> and <b>B</b> show the new भोग panel inside the <i>shipped</i>
+    Observance Detail screen — first composing with a verified upvas entry (the fasting case),
+    then standing alone on a festival with no fast. <b>C</b> is the absence case. <b>D</b> puts the
+    offering block into the shipped Vidhi तैयारी screen, and <b>E</b> is the one net-new surface:
+    a merged samagri + bhog shopping list. No new tab, no new Home category, no new navigation stack.
+  </p>
+  <p style="font-size:12.5px;color:#B9A57E;margin-top:8px">
+    Each frame renders its <b>full scroll length</b>, so frame height is the real screen length.
+    The dashed <b>fold · one screen</b> line marks where a 360×740 device cuts off — anything below it
+    needs a scroll on a real phone.
+  </p>
+</div>
+
+<div class="samplebanner">
+  <b>⚠ ILLUSTRATIVE SAMPLE</b> — every food, offering, prohibition, salt rule, quantity, and date on these
+  frames is placeholder copy written for layout only. It is <b>not verified content</b> and must not be
+  transcribed into the app. Real entries ship only after the two-concordant-source review gate clears
+  and <code>status</code> flips to <code>verified</code>.
+</div>
+
+<!-- ============================================================ A =============== -->
+<section class="scenario">
+  <h2>A — Fasting observance · उपवास + भोग compose in one section · एकादशी</h2>
+  <div class="sc-sub">The composition case. "How to observe" stays one home: fast facts first (shipped, unchanged), the भोग panel beneath them, inside the same section.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">व्रत विवरण</div><div class="sp"></div></div>
+
+        <div class="hero">
+          <div class="tags"><span class="pill">व्रत</span><span class="deity">श्री विष्णु</span></div>
+          <div class="name">देवशयनी एकादशी</div>
+          <div class="name-en">Devshayani Ekadashi</div>
+          <div class="rule">आषाढ़ · शुक्ल पक्ष · एकादशी</div>
+          <div class="next">अगला · 25 जुलाई 2027 · 341 दिन में</div>
+        </div>
+
+        <div class="actions">
+          <div class="abtn">★ फ़ॉलो करें</div>
+          <div class="abtn fill">॥ कथा पढ़ें</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">विधि <span class="en">· How to observe</span></div>
+
+          <!-- SHIPPED: upvas facts panel, untouched -->
+          <div class="panel-box">
+            <div class="fasttype">
+              <span class="ftchip">फलाहार</span>
+              <span class="ftnote">अन्न वर्जित — फलाहार</span>
+            </div>
+            <div class="frow">
+              <div class="fl"><span class="d">उपवास काल</span>window</div>
+              <div class="fv">एकादशी के सूर्योदय से द्वादशी के पारण तक।</div>
+            </div>
+            <div class="frow">
+              <div class="fl"><span class="d">पारण</span>parana</div>
+              <div class="fv">
+                द्वादशी के दिन सूर्योदय के बाद, द्वादशी तिथि रहते पारण करें।
+                <div class="computed">पारण · 26 जुलाई 2027 · 5:58 – 8:24 AM
+                  <span class="loc">आपके पंचांग स्थान (उज्जैन) से परिकलित</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- NEW: भोग sub-panels, inside the same box -->
+            <div class="subpanel" style="border-top:1px solid var(--divider);padding-top:11px">
+              <div class="subhead">
+                <span class="dv">नैवेद्य</span><span class="en">· What is offered</span>
+              </div>
+              <div class="offer">
+                <div class="mark">॥</div>
+                <div class="oc">
+                  <div class="oi">तुलसी पत्र</div>
+                  <div class="ow">Tulsī — held essential to Viṣṇu naivedya</div>
+                </div>
+              </div>
+              <div class="offer">
+                <div class="mark">॥</div>
+                <div class="oc">
+                  <div class="oi">पंचामृत</div>
+                  <div class="ow">Pañcāmṛta — dūdh, dahi, ghī, madhu, śarkarā</div>
+                </div>
+              </div>
+              <div class="offer">
+                <div class="mark">॥</div>
+                <div class="oc">
+                  <div class="oi">ऋतु फल <span class="opt">optional</span></div>
+                  <div class="ow">Seasonal fruit as available</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- निषेध -->
+            <div class="nishedh">
+              <div class="nh"><span class="dv">निषेध</span><span class="en">· Not offered / not done</span></div>
+              <div class="nrow">
+                <div class="nm">✕</div>
+                <div class="nt">एकादशी के दिन तुलसी न तोड़ें — पूर्व दिवस संचित पत्र प्रयोग करें
+                  <i>Tulsī is not plucked on Ekādaśī itself; leaves gathered the previous day are used.</i></div>
+              </div>
+              <div class="nrow">
+                <div class="nm">✕</div>
+                <div class="nt">चावल एवं अन्न — नैवेद्य व आहार दोनों में
+                  <i>Rice and grains, in both the offering and the meal.</i></div>
+              </div>
+            </div>
+
+            <!-- व्रत भोजन -->
+            <div class="plate">
+              <div class="subhead"><span class="dv">व्रत भोजन</span><span class="en">· The vrat plate</span></div>
+              <div class="pgroup">
+                <div class="plabel"><span class="d">ग्राह्य</span>permitted</div>
+                <div class="chips">
+                  <span class="chip">फल</span><span class="chip">दूध</span><span class="chip">दही</span>
+                  <span class="chip">मेवा</span><span class="chip">आलू</span><span class="chip">मखाना</span>
+                </div>
+              </div>
+              <div class="pgroup">
+                <div class="plabel"><span class="d">वर्जित</span>abstained</div>
+                <div class="chips">
+                  <span class="chip no">चावल</span><span class="chip no">गेहूँ</span><span class="chip no">दाल</span>
+                  <span class="chip no">प्याज़-लहसुन</span>
+                </div>
+              </div>
+              <div class="saltrow">
+                <div class="sl">नमक · salt</div>
+                <div class="sv">सेंधा नमक — साधारण नमक वर्जित</div>
+              </div>
+              <div class="pgroup">
+                <div class="plabel"><span class="d">पारण भोजन</span>breaking the fast</div>
+                <div class="body" style="font-size:12.5px">पारण में अन्न सहित सात्त्विक भोजन; प्रायः खिचड़ी अथवा चावल-दाल से आरम्भ।</div>
+              </div>
+            </div>
+
+            <div class="footnote">परम्परा-भेद · कठोर वैष्णव परम्परा में साबूदाना भी वर्जित माना जाता है; स्मार्त और वैष्णव आचार भिन्न हो सकते हैं। · Family and sampradāya practice differs; strict Vaiṣṇava observance also abstains from sābudānā.</div>
+          </div>
+        </div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame A</h3>
+        <ul>
+          <li><b>One "विधि" home, not two.</b> The shipped screen already composes upvas + vidhi inside a single section (<code>{(upvas || vidhi) &amp;&amp; …}</code> in <code>ObservanceDetailScreen.tsx</code>). भोग becomes a third sub-panel <i>inside the same box</i> — not a fourth top-level block. Adding another block header would make the screen read as four competing answers to one question.</li>
+          <li><b>Ordering is causal, not alphabetical:</b> whether you eat (fast type) → when (window/parana) → what you <i>offer</i> (नैवेद्य) → what is <i>never</i> offered (निषेध) → what you <i>eat</i> (plate) → how you break it. Each row answers the question the previous row raises.</li>
+          <li><b>निषेध gets its own bordered block</b> because it is the material users cannot reliably find elsewhere — it is the trust-earning half of the feature and must not read as a footnote. Palette is the PRD-14 <b>muted terracotta</b> avoid tone (<code>--avoid</code>), never red: this is "not this", not "danger".</li>
+          <li><b>Foods are chips, not prose.</b> A permitted/abstained list is scanned in a kitchen, one-handed, mid-cooking — struck-through terracotta chips carry "no" without a second reading. Prose would be read once and forgotten.</li>
+          <li><b>Salt is a first-class row</b>, not a chip among chips. Sendhā-vs-common salt is the single most-asked fasting question and it is a rule, not an ingredient.</li>
+          <li><b>पारण भोजन sits directly under the computed parana time</b> from the shipped P4 engine — the two features compose into one answer ("at 5:58 AM, eat this") instead of two disconnected facts.</li>
+          <li><b>Variance is stated, never resolved.</b> The footnote reuses the upvas <code>strictness</code> voice: sampradāya divergence is named as divergence. The app does not pick a winner between a Smārta and a Vaiṣṇava plate.</li>
+        </ul>
+        <div class="warn">All foods, offerings, prohibitions and times here are ILLUSTRATIVE SAMPLE copy — layout stand-ins, not verified guidance.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ B =============== -->
+<section class="scenario">
+  <h2>B — Festival, no fast · भोग alone · गणेश चतुर्थी</h2>
+  <div class="sc-sub">Most observances are not fasts. Here there is no upvas entry, so the भोग panel is the whole section — and the plate group is absent, not empty.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">पर्व विवरण</div><div class="sp"></div></div>
+
+        <div class="hero">
+          <div class="tags"><span class="pill fest">पर्व</span><span class="deity">श्री गणेश</span></div>
+          <div class="name">गणेश चतुर्थी</div>
+          <div class="name-en">Ganesh Chaturthi</div>
+          <div class="rule">भाद्रपद · शुक्ल पक्ष · चतुर्थी</div>
+          <div class="next">अगला · 14 सितम्बर 2026 · 21 दिन में</div>
+        </div>
+
+        <div class="actions">
+          <div class="abtn">★ फ़ॉलो करें</div>
+          <div class="abtn fill">॥ कथा पढ़ें</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">विधि <span class="en">· How to observe</span></div>
+          <div class="panel-box">
+
+            <div class="subpanel" style="margin-top:0">
+              <div class="subhead"><span class="dv">नैवेद्य</span><span class="en">· What is offered</span></div>
+              <div class="offer">
+                <div class="mark">॥</div>
+                <div class="oc">
+                  <div class="oi">मोदक</div>
+                  <div class="ow">Modak — the offering most closely associated with Gaṇeśa</div>
+                </div>
+              </div>
+              <div class="offer">
+                <div class="mark">॥</div>
+                <div class="oc">
+                  <div class="oi">दूर्वा — २१ दल</div>
+                  <div class="ow">Dūrvā grass, traditionally twenty-one blades</div>
+                </div>
+              </div>
+              <div class="offer">
+                <div class="mark">॥</div>
+                <div class="oc">
+                  <div class="oi">गुड़ · नारियल <span class="opt">optional</span></div>
+                  <div class="ow">Jaggery and coconut, per family practice</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="nishedh">
+              <div class="nh"><span class="dv">निषेध</span><span class="en">· Not offered</span></div>
+              <div class="nrow">
+                <div class="nm">✕</div>
+                <div class="nt">तुलसी पत्र गणेश पूजन में अर्पित नहीं किए जाते
+                  <i>Tulsī is not offered in Gaṇeśa pūjā.</i></div>
+              </div>
+            </div>
+
+            <div class="footnote">दूर्वा गणेश पूजन की विशेष सामग्री है; अन्य देवों के नैवेद्य में इसका प्रयोग नहीं होता। · Regional practice varies in the accompanying offerings.</div>
+
+            <!-- vidhi card composing beneath, as shipped -->
+            <div class="subpanel" style="border-top:1px solid var(--divider);padding-top:12px">
+              <div class="card" style="background:var(--parchment-hi)">
+                <div class="glyph">॥</div>
+                <div class="ct">
+                  <div class="t">गणेश चतुर्थी स्थापना विधि</div>
+                  <div class="m">Ganesh Chaturthi Sthapana · 14 steps · ~35 min</div>
+                </div>
+                <div class="chev">›</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame B</h3>
+        <ul>
+          <li><b>No fast means no plate.</b> The <code>permitted</code>/<code>abstained</code>/<code>saltRule</code> group is <b>absent</b>, not rendered empty — same discipline the upvas panel already follows. A festival is not a fast and must not be dressed as one.</li>
+          <li><b>निषेध survives without a fast.</b> "No tulsī to Gaṇeśa" is the highest-value line on this screen and has nothing to do with fasting — proof that <code>nishedha</code> belongs on the bhog entry, not folded into upvas.</li>
+          <li><b>The vidhi card keeps its shipped position</b> beneath the facts, inside the same section (PRD-09/P4's settled ordering). भोग slots <i>above</i> it: what you offer is known before the procedure that offers it.</li>
+          <li><b>This is the common case.</b> 8 of ~162 observance rules carry a <code>vidhiId</code> and 12 carry an <code>upvasId</code> — so for most festivals this panel will be the <i>only</i> thing in the section. It has to stand alone gracefully, which is why it carries its own footnote rather than borrowing the upvas one.</li>
+          <li><b>Deity-keyed reuse:</b> a Gaṇeśa naivedya entry is shared by every Gaṇeśa observance (Saṅkaṣṭī Caturthī, Gaṇeśa Jayantī, Sakaṭ Cauth) exactly as all Ekādaśīs share one upvas entry — so coverage grows faster than the entry count suggests.</li>
+        </ul>
+        <div class="warn">ILLUSTRATIVE SAMPLE — offerings and prohibitions are layout stand-ins, not verified content.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ C =============== -->
+<section class="scenario">
+  <h2>C — Nothing verified · the section is absent, never a placeholder</h2>
+  <div class="sc-sub">The draft-gate case. <code>getBhogInfo</code> returns null for a draft entry exactly as for an unknown id, so no call site carries status logic and no screen shows an empty shell.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">व्रत विवरण</div><div class="sp"></div></div>
+
+        <div class="hero">
+          <div class="tags"><span class="pill">व्रत</span><span class="deity">श्री कृष्ण</span></div>
+          <div class="name">मासिक कालाष्टमी</div>
+          <div class="name-en">Masik Kalashtami</div>
+          <div class="rule">प्रत्येक मास · कृष्ण पक्ष · अष्टमी</div>
+          <div class="next">अगला · 9 सितम्बर 2026 · 16 दिन में</div>
+        </div>
+
+        <div class="actions">
+          <div class="abtn">★ फ़ॉलो करें</div>
+          <div class="abtn fill">॥ कथा पढ़ें</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">महत्व <span class="en">· About</span></div>
+          <div class="body">कालाष्टमी भैरव उपासना का दिन है, जो प्रत्येक मास कृष्ण पक्ष की अष्टमी को पड़ता है।</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">कथा <span class="en">· Story</span></div>
+          <div class="card">
+            <div class="glyph">॥</div>
+            <div class="ct">
+              <div class="t">मासिक कालाष्टमी कथा</div>
+              <div class="m">Masik Kalashtami Katha · 1 section</div>
+            </div>
+            <div class="chev">›</div>
+          </div>
+        </div>
+
+        <div class="absent">
+          — no "विधि" section renders here —<br />
+          <span style="font-style:normal;font-family:var(--sans);font-size:10.5px;letter-spacing:.05em">
+            annotation only; not a UI element
+          </span>
+        </div>
+
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>The gate, and the state matrix it creates</h3>
+        <ul>
+          <li><b>Draft ≡ absent.</b> <code>getBhogInfo(id)</code> returns <code>null</code> for an unknown id <i>and</i> for <code>status: 'draft'</code> — copied verbatim from <code>getUpvasInfo</code>. Flipping <code>status</code> is a reviewed content change; a green test run never authorizes it.</li>
+          <li><b>This is why PRD-23 can ship before its content is verified.</b> The registry, the hook, the panel and the tests land OTA and are simply invisible until entries clear review — the pattern PRD-09/P4 established.</li>
+          <li><b>The real cost, stated plainly:</b> the section guard goes from a 4-state matrix to 8. Every combination needs a designed answer, and three of them are new. This is the one place PRD-23 is more than "copy the upvas pattern".</li>
+        </ul>
+        <table class="fit matrix">
+          <tr><th>upvas</th><th>bhog</th><th>vidhi</th><th>What renders</th></tr>
+          <tr><td class="n">—</td><td class="n">—</td><td class="n">—</td><td>No section at all (frame C)</td></tr>
+          <tr><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td>Shipped behaviour, unchanged</td></tr>
+          <tr><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td>Shipped behaviour, unchanged</td></tr>
+          <tr><td class="y">✓</td><td class="n">—</td><td class="y">✓</td><td>Shipped behaviour, unchanged</td></tr>
+          <tr><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td><b>NEW</b> — frame A</td></tr>
+          <tr><td class="n">—</td><td class="y">✓</td><td class="y">✓</td><td><b>NEW</b> — frame B</td></tr>
+          <tr><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td><b>NEW</b> — bhog alone; header must not say "उपवास विधि"</td></tr>
+          <tr><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td><b>NEW</b> — the tallest section; scroll/priority pass needed</td></tr>
+        </table>
+        <div class="warn">The header string is state-dependent: today it reads "उपवास विधि" when upvas exists and "पूजा विधि" otherwise. With a third input the neutral <b>"विधि · How to observe"</b> used across these frames is the only label that stays true in all seven non-empty states.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ D =============== -->
+<section class="scenario">
+  <h2>D — Vidhi तैयारी · भोग beside सामग्री</h2>
+  <div class="sc-sub">The shipped prep screen already lists puja materials. The kitchen half slots in as a sibling group, because samagri and groceries are one errand.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">तैयारी</div><div class="act">सूची ›</div></div>
+
+        <div class="hero" style="border-bottom:0;padding-bottom:6px">
+          <div class="tags"><span class="pill fest">पूजा विधि</span></div>
+          <div class="name" style="font-size:22px">दीपावली लक्ष्मी-गणेश पूजन</div>
+          <div class="name-en">Diwali Lakshmi-Ganesh Puja</div>
+          <div class="next">8 नवम्बर 2026 · कल</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">सामग्री <span class="en">· Puja materials</span></div>
+          <div class="panel-box" style="padding:6px 14px">
+            <div class="li"><div class="box on">✓</div><div class="lt">रोली · अक्षत</div><div class="lq">थोड़ा</div></div>
+            <div class="li"><div class="box on">✓</div><div class="lt">कलश · आम्र पल्लव</div><div class="lq">1</div></div>
+            <div class="li"><div class="box"></div><div class="lt">कमल पुष्प</div><div class="lq">5</div></div>
+            <div class="li"><div class="box"></div><div class="lt">घृत दीप</div><div class="lq">11</div></div>
+          </div>
+        </div>
+
+        <!-- NEW -->
+        <div class="block">
+          <div class="bh">भोग सामग्री <span class="en">· For the offering</span></div>
+          <div class="panel-box" style="padding:6px 14px">
+            <div class="li"><div class="box on">✓</div><div class="lt">बताशा</div><div class="lq">1 पुड़िया</div></div>
+            <div class="li"><div class="box"></div><div class="lt">खीर — दूध, चावल, शर्करा</div><div class="lq">—</div></div>
+            <div class="li"><div class="box"></div><div class="lt">ऋतु फल</div><div class="lq">5 प्रकार</div></div>
+            <div class="li"><div class="box"></div><div class="lt">पान · सुपारी</div><div class="lq">2</div></div>
+          </div>
+          <div class="nishedh" style="margin-top:10px">
+            <div class="nh"><span class="dv">निषेध</span><span class="en">· Not offered</span></div>
+            <div class="nrow">
+              <div class="nm">✕</div>
+              <div class="nt">लक्ष्मी पूजन में तुलसी अर्पित नहीं की जाती
+                <i>Tulsī is not offered in Lakṣmī pūjā.</i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:20px">
+          <div class="abtn fill">पूजा आरम्भ करें</div>
+        </div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame D</h3>
+        <ul>
+          <li><b>Two groups, not one merged list.</b> Puja materials and food are bought in different shops and prepared by different people; merging them on the prep screen would help nobody. They merge only on the <b>shopping list</b> (frame E), where a single errand is the point.</li>
+          <li><b>Checkboxes are the shipped mechanic.</b> <code>data/vidhi/checklistStore.ts</code> already persists samagri ticks per-vidhi-per-festival-date at <code>@vedansh/vidhi-checklist</code>, keyed so last year's list cannot come back pre-ticked. भोग items extend <i>that</i> document — a second store would silently diverge on the date-key rule.</li>
+          <li><b>निषेध repeats here on purpose.</b> On the prep screen it is actionable ("do not buy tulsī for this") in a way it is not on a reference screen. Same data, different job.</li>
+          <li><b>"सूची ›" in the top bar</b> is the only new affordance on this screen — it opens frame E. Placed in the header, not as a third button, so the primary action stays "पूजा आरम्भ करें".</li>
+        </ul>
+        <div class="warn">ILLUSTRATIVE SAMPLE — items and quantities are layout stand-ins.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ E =============== -->
+<section class="scenario">
+  <h2>E — सामग्री सूची · the one net-new screen</h2>
+  <div class="sc-sub">Puja materials and offering ingredients merged into a single checkable errand list, source-tagged so it is obvious which shop each group belongs to.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">सामग्री सूची</div><div class="act">साझा</div></div>
+
+        <div class="listhdr" style="margin-top:6px">
+          <div>
+            <div style="font-family:var(--deva);font-size:15px;color:var(--ink)">दीपावली · 8 नवम्बर</div>
+            <div style="font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted)">Diwali Lakshmi-Ganesh Puja</div>
+          </div>
+          <div class="cnt">3 / 12</div>
+        </div>
+
+        <div class="lgroup">
+          <div class="lglabel"><span class="dv">पूजा सामग्री</span><span class="src">vidhi</span></div>
+          <div class="panel-box" style="padding:4px 14px">
+            <div class="li done"><div class="box on">✓</div><div class="lt">रोली · अक्षत</div><div class="lq">थोड़ा</div></div>
+            <div class="li done"><div class="box on">✓</div><div class="lt">कलश · आम्र पल्लव</div><div class="lq">1</div></div>
+            <div class="li"><div class="box"></div><div class="lt">कमल पुष्प</div><div class="lq">5</div></div>
+            <div class="li"><div class="box"></div><div class="lt">घृत दीप</div><div class="lq">11</div></div>
+            <div class="li"><div class="box"></div><div class="lt">धूप · कपूर</div><div class="lq">—</div></div>
+            <div class="li"><div class="box"></div><div class="lt">मौली</div><div class="lq">1</div></div>
+          </div>
+        </div>
+
+        <div class="lgroup">
+          <div class="lglabel"><span class="dv">भोग सामग्री</span><span class="src">bhog</span></div>
+          <div class="panel-box" style="padding:4px 14px">
+            <div class="li done"><div class="box on">✓</div><div class="lt">बताशा</div><div class="lq">1 पुड़िया</div></div>
+            <div class="li"><div class="box"></div><div class="lt">दूध</div><div class="lq">1 ली</div></div>
+            <div class="li"><div class="box"></div><div class="lt">चावल · शर्करा</div><div class="lq">खीर हेतु</div></div>
+            <div class="li"><div class="box"></div><div class="lt">ऋतु फल</div><div class="lq">5 प्रकार</div></div>
+            <div class="li"><div class="box"></div><div class="lt">पान · सुपारी</div><div class="lq">2</div></div>
+            <div class="li"><div class="box"></div><div class="lt">नारियल</div><div class="lq">1</div></div>
+          </div>
+        </div>
+
+        <div class="nishedh" style="margin-top:16px">
+          <div class="nh"><span class="dv">न लाएँ</span><span class="en">· Do not buy</span></div>
+          <div class="nrow">
+            <div class="nm">✕</div>
+            <div class="nt">तुलसी — लक्ष्मी पूजन में अर्पित नहीं होती
+              <i>Tulsī is not offered in Lakṣmī pūjā.</i></div>
+          </div>
+        </div>
+
+        <div class="footnote" style="text-align:center">सूची इस तिथि के लिए सुरक्षित है · This list is saved for 8 November only</div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame E</h3>
+        <ul>
+          <li><b>Source tags earn their pixels.</b> <code>vidhi</code> / <code>bhog</code> chips tell you which group came from the puja and which from the kitchen — the difference between one shop and two. Without them a merged list is just longer.</li>
+          <li><b>"न लाएँ" is निषेध re-voiced for the errand.</b> Same entry field, imperative register. A prohibition is only useful at the moment it can still be obeyed, and that moment is in the shop.</li>
+          <li><b>Date-scoped, and it says so.</b> The footer states the list belongs to this festival date, matching the <code>checklistStore</code> contract. A list that silently persists across years is a bug users cannot see.</li>
+          <li><b>Share is text, not a card.</b> This one goes to a family WhatsApp thread as a plain checklist someone reads in a shop — the 4:5 parchment share-card family is for verses and reference surfaces, not errands. Deliberate departure; worth pinning in the PRD so it is not "corrected" later.</li>
+          <li><b>Degrades to vidhi-only.</b> With no verified bhog entry the second group is absent and this is exactly today's samagri list with a header — so the screen is shippable before any bhog content clears review.</li>
+        </ul>
+        <div class="warn">ILLUSTRATIVE SAMPLE — items, quantities and dates are layout stand-ins.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FIT =============== -->
+<section class="scenario">
+  <h2>Where PRD-23 fits in the shipped app</h2>
+  <div class="sc-sub">No new tab, no new Home category, no new navigation stack. One data hook, one screen section, one net-new screen inside an existing stack.</div>
+
+  <div class="acard">
+    <h3>Navigation placement</h3>
+    <table class="fit">
+      <tr><th>Surface</th><th>Where it already is</th><th>What PRD-23 adds</th></tr>
+      <tr>
+        <td><b>Observance Detail</b><br />frames A · B · C</td>
+        <td><code>PanchangStackNavigator</code> → <code>ObservanceDetailScreen</code>, reached from the Panchang day panel, the Vrat &amp; Parv catalog, and My Vrat</td>
+        <td>A third sub-panel inside the existing <code>{(upvas || vidhi)}</code> section; the header string becomes state-neutral <b>"विधि"</b></td>
+      </tr>
+      <tr>
+        <td><b>Vidhi तैयारी</b><br />frame D</td>
+        <td><code>HomeStackNavigator</code> → <code>VidhiDetailScreen</code>, reached from the festival day panel and <code>VidhiCatalogScreen</code></td>
+        <td>A <b>भोग सामग्री</b> group beside <code>samagri</code>, plus a <code>सूची ›</code> header action</td>
+      </tr>
+      <tr>
+        <td><b>सामग्री सूची</b><br />frame E</td>
+        <td>— net new —</td>
+        <td>One screen registered in the same stack as <code>VidhiDetailScreen</code>. No tab-bar change.</td>
+      </tr>
+      <tr>
+        <td><b>Search</b></td>
+        <td><code>searchIndex.ts</code></td>
+        <td>Naivedya and food terms indexed per RULEBOOK §7 so "मोदक" or "सेंधा नमक" resolves to its observance</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="acard">
+    <h3>Code surface</h3>
+    <table class="fit">
+      <tr><th>File</th><th>Change</th></tr>
+      <tr><td><code>panchang/types.ts</code></td><td><code>bhogId?: string</code> on <code>ObservanceRule</code> — the fourth content hook, alongside <code>kathaId</code> / <code>vidhiId</code> / <code>upvasId</code>. New <code>BhogInfoEntry</code> type.</td></tr>
+      <tr><td><code>panchang/bhogContent.ts</code></td><td>New accessor. <code>getBhogInfo(id)</code> + <code>isBhogEntryExposed(entry)</code> + module-load invariants — a line-for-line sibling of <code>upvasContent.ts</code>.</td></tr>
+      <tr><td><code>panchang/bhogContent/entries/*.ts</code></td><td>Entries via a <code>bhogEntry()</code> identity helper, each with <code>status</code> + <code>source</code>. Ship <code>draft</code>.</td></tr>
+      <tr><td><code>panchang/festivals.ts</code></td><td><code>bhogId</code> wired on rules as entries verify. Deity-shared ids (all Ekādaśīs → one entry) keep the count low.</td></tr>
+      <tr><td><code>screens/ObservanceDetailScreen.tsx</code></td><td>The 8-state section guard + the three sub-panels.</td></tr>
+      <tr><td><code>screens/VidhiDetailScreen.tsx</code></td><td>भोग group + <code>सूची</code> action.</td></tr>
+      <tr><td><code>data/vidhi/checklistStore.ts</code></td><td>Extend the persisted document with bhog ticks — same date-key rule, no second store.</td></tr>
+      <tr><td>Tests</td><td><code>bhogContent.test.ts</code> (invariants + a <b>non-vacuous</b> draft-exclusion assertion), an ObservanceDetail state-matrix suite, and a Maestro flow per RULEBOOK §0. Note <code>panchang/</code> and <code>data/</code> suites run under <code>tsx --test</code>, <b>never</b> Jest.</td></tr>
+      <tr><td>Docs</td><td><code>design.md</code> §65 extended (or a new § for the list screen) and a <code>RULEBOOK.md</code> §21 content contract — same PR, per RULEBOOK §0.1.</td></tr>
+    </table>
+  </div>
+
+  <div class="acard">
+    <h3>What this prototype deliberately does not show</h3>
+    <ul>
+      <li><b>No recipes.</b> Ingredients and offerings only. The moment a method step appears, this becomes a cookery app and the verification burden changes completely.</li>
+      <li><b>No nutrition, no health framing.</b> No calories, no "detox", no benefits copy. Traditional practice as observed.</li>
+      <li><b>No quantity for the plate.</b> Permitted/abstained is a rule; how much you eat is not the app's business.</li>
+      <li><b>No single "correct" regional answer.</b> Where practice diverges the entry says so, in the upvas <code>strictness</code> voice.</li>
+      <li><b>No badge, streak or celebration</b> on any of these surfaces.</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>

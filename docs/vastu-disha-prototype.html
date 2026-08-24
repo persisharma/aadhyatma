@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-24 — वास्तु दिशा (Disha Chakra) — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#FFF5E0;
+    --parchment-deep:#E9D9B1; --gradient-end:#E9D9B1;
+    --ink:#2F1E10; --ink-soft:#5A3A1E; --ink-muted:#8A6A47;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34; --gold-soft:#C9B896;
+    --divider:rgba(138,62,11,0.18);
+    --saffron-tint:rgba(184,98,27,0.14); --gold-tint:rgba(166,124,52,0.16);
+    --avoid:#8A4A2A; --avoid-tint:rgba(138,74,42,0.11); --avoid-line:rgba(138,74,42,0.30);
+    --shadow-lg:0 30px 70px rgba(20,12,4,0.40);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--sans);color:#EADCC2;padding:34px 20px 64px;line-height:1.5;
+    background:
+      radial-gradient(900px 360px at 50% -8%, rgba(184,98,27,0.22), transparent 64%),
+      linear-gradient(160deg,#1A140C 0%,#2A1D10 58%,#1A140C 100%);
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+  }
+  .intro{max-width:1120px;margin:0 auto 10px;text-align:center}
+  .intro h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,42px);color:var(--parchment)}
+  .intro .deva-sub{font-family:var(--deva);font-size:15px;color:var(--gold-soft);margin-top:2px}
+  .intro p{max-width:860px;margin:10px auto 0;font-size:14px;line-height:1.55;color:#D5C39D}
+  .samplebanner{
+    max-width:860px;margin:18px auto 34px;padding:12px 18px;border-radius:12px;
+    border:1.5px dashed var(--gold);background:rgba(166,124,52,0.10);
+    font-size:12.5px;color:#E7D8B6;text-align:center;line-height:1.6;
+  }
+  .samplebanner b{color:#FFF5E0;letter-spacing:.08em}
+
+  .scenario{max-width:1120px;margin:0 auto 58px}
+  .scenario > h2{
+    font-family:var(--serif);font-size:22px;font-weight:600;color:#FFF5E0;
+    border-bottom:1px solid #3A2A16;padding-bottom:8px;margin-bottom:4px;
+  }
+  .scenario > .sc-sub{font-size:12.5px;color:var(--gold-soft);font-style:italic;margin-bottom:20px}
+  .wrap{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap}
+
+  /* Frames render the FULL scroll length — frame height == real screen length,
+     so a reviewer never has to scroll inside a phone to see the rest of a state.
+     Minimum is the house 740 so short frames stay comparable. */
+  .phone{width:360px;min-height:760px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0D0804;box-shadow:var(--shadow-lg),0 0 0 1px rgba(166,124,52,0.18);
+    position:relative;overflow:hidden;flex:none;display:flex;flex-direction:column}
+  .statusbar{height:34px;flex:none;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);
+    background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{flex:1;position:relative;
+    background:
+      radial-gradient(110% 42% at 50% -12%, rgba(184,98,27,0.14), transparent 62%),
+      linear-gradient(180deg,var(--parchment-hi) 0%,var(--gradient-end) 100%)}
+  .fold{position:absolute;left:0;right:0;height:0;border-top:1px dashed rgba(138,62,11,0.30);z-index:2}
+  .fold::after{content:attr(data-label);position:absolute;right:6px;top:-7px;
+    font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--gold);background:var(--parchment-hi);
+    border:1px solid rgba(138,62,11,0.22);border-radius:999px;padding:1px 7px;line-height:1.5}
+  .pad{padding:6px 18px 34px}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 10px}
+  .topbar .back{width:34px;height:34px;border:1px solid var(--divider);border-radius:17px;
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px;cursor:pointer}
+  .topbar .tt{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .topbar .sp{width:34px}
+  .topbar .act{font-size:12px;font-weight:600;color:var(--saffron-deep);font-family:var(--sans)}
+
+  .pill{display:inline-block;background:var(--gold-tint);color:var(--saffron-deep);
+    font-size:10.5px;font-weight:700;font-family:var(--sans);padding:3px 10px;border-radius:999px}
+  .block{margin-top:18px}
+  .bh{font-family:var(--deva);font-size:15px;color:var(--ink);margin-bottom:8px}
+  .bh .en{font-family:var(--serif);font-style:italic;font-weight:400;font-size:12px;color:var(--ink-muted)}
+  .body{font-size:13px;line-height:1.65;color:var(--ink-soft);font-family:var(--deva)}
+  .panel-box{border:1px solid var(--gold-soft);background:var(--parchment-soft);
+    border-radius:16px;padding:14px;box-shadow:0 1px 2px rgba(60,30,10,0.06)}
+  .footnote{margin-top:9px;font-family:var(--serif);font-style:italic;font-size:11.5px;
+    line-height:1.55;color:var(--ink-muted)}
+  .endcap{margin-top:24px;text-align:center;color:var(--gold);font-family:var(--deva);font-size:16px;opacity:.55}
+
+  /* More-hub rows */
+  .mhead{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--gold);margin:16px 0 8px 2px}
+  .mrow{display:flex;align-items:center;gap:13px;background:var(--parchment-soft);
+    border:1px solid var(--divider);border-radius:14px;padding:13px;margin-bottom:8px;cursor:pointer}
+  .mrow .mg{width:30px;text-align:center;font-family:var(--deva);font-size:19px;color:var(--saffron)}
+  .mrow .ml{flex:1;font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .mrow .mv{font-size:11.5px;color:var(--ink-muted);font-family:var(--sans)}
+  .mrow .chev{font-size:18px;color:var(--ink-muted)}
+  .mrow.newrow{border-color:var(--saffron);box-shadow:0 0 0 2px var(--saffron-tint)}
+  .newtag{font-size:8.5px;font-weight:800;letter-spacing:.1em;background:var(--saffron);
+    color:var(--parchment-hi);border-radius:999px;padding:2px 7px;margin-left:6px;vertical-align:2px}
+
+  /* chakra */
+  .chakra-wrap{display:flex;flex-direction:column;align-items:center;padding:6px 0 2px}
+  .heading{display:flex;align-items:baseline;gap:8px;justify-content:center;margin-bottom:2px}
+  .heading .dv{font-family:var(--deva);font-size:26px;color:var(--ink)}
+  .heading .deg{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--saffron-deep)}
+  .heading-en{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center}
+  .acc{display:inline-flex;align-items:center;gap:6px;margin-top:9px;border-radius:999px;
+    padding:3px 11px;font-size:10.5px;font-weight:700;font-family:var(--sans);letter-spacing:.04em}
+  .acc.ok{background:var(--gold-tint);color:var(--saffron-deep)}
+  .acc.low{background:var(--avoid-tint);color:var(--avoid)}
+  .acc .dot{width:6px;height:6px;border-radius:3px;background:currentColor}
+  .truenorth{margin-top:7px;font-family:var(--sans);font-size:10px;color:var(--ink-muted);text-align:center}
+
+  /* reading card */
+  .reading{margin-top:14px;border:1px solid var(--gold-soft);background:var(--parchment-soft);
+    border-radius:16px;padding:13px 14px;box-shadow:0 1px 2px rgba(60,30,10,0.06)}
+  .reading .rh{display:flex;align-items:baseline;gap:8px;padding-bottom:9px;border-bottom:1px solid var(--divider)}
+  .reading .rh .dv{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .reading .rh .en{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted)}
+  .reading .rh .tier{margin-left:auto;font-size:9.5px;font-weight:700;letter-spacing:.07em;
+    text-transform:uppercase;background:var(--saffron);color:var(--parchment-hi);
+    border-radius:999px;padding:2px 8px}
+  .rrow{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--divider)}
+  .rrow:last-of-type{border-bottom:0}
+  .rrow .rl{flex:0 0 72px;font-size:9.5px;font-weight:700;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--gold);padding-top:2px}
+  .rrow .rl .d{display:block;font-family:var(--deva);font-size:11.5px;font-weight:600;
+    letter-spacing:0;text-transform:none;color:var(--saffron-deep)}
+  .rrow .rv{flex:1;font-family:var(--deva);font-size:12.5px;line-height:1.6;color:var(--ink-soft)}
+  .rrow .rv i{font-family:var(--serif);font-size:11px;color:var(--ink-muted);display:block;margin-top:2px}
+  .avoidbox{margin-top:11px;border:1px solid var(--avoid-line);background:var(--avoid-tint);
+    border-radius:12px;padding:9px 11px}
+  .avoidbox .ah{font-family:var(--deva);font-size:12px;font-weight:600;color:var(--avoid);margin-bottom:5px}
+  .avoidbox .arow{display:flex;gap:8px;padding:4px 0}
+  .avoidbox .am{flex:none;width:13px;font-size:10.5px;color:var(--avoid)}
+  .avoidbox .at{flex:1;font-family:var(--deva);font-size:12px;line-height:1.55;color:var(--ink-soft)}
+  .accom{margin-top:10px;background:var(--parchment-hi);border:1px dashed var(--gold-soft);
+    border-radius:11px;padding:9px 11px}
+  .accom .at{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gold)}
+  .accom .av{font-family:var(--deva);font-size:12px;line-height:1.6;color:var(--ink-soft);margin-top:3px}
+
+  /* room strip */
+  .rooms{display:flex;gap:6px;overflow-x:auto;padding:4px 0 6px;margin-top:12px}
+  .rooms::-webkit-scrollbar{height:0}
+  .rchip{flex:none;font-family:var(--deva);font-size:12px;padding:6px 13px;border-radius:999px;
+    border:1px solid var(--divider);background:var(--parchment-soft);color:var(--ink-soft);cursor:pointer}
+  .rchip.on{background:var(--saffron);border-color:var(--saffron);color:var(--parchment-hi);font-weight:600}
+
+  /* manual override */
+  .dikgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+  .dik{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:11px;
+    padding:8px 4px;text-align:center;cursor:pointer}
+  .dik .dv{font-family:var(--deva);font-size:12.5px;color:var(--ink)}
+  .dik .en{font-family:var(--sans);font-size:9px;color:var(--ink-muted);letter-spacing:.05em}
+  .dik.on{background:var(--saffron);border-color:var(--saffron)}
+  .dik.on .dv,.dik.on .en{color:var(--parchment-hi)}
+  .calib{border:1px solid var(--avoid-line);background:var(--avoid-tint);border-radius:14px;
+    padding:12px 13px;margin-top:12px}
+  .calib .ch{font-family:var(--deva);font-size:13px;font-weight:600;color:var(--avoid);margin-bottom:5px}
+  .calib .cb{font-family:var(--deva);font-size:12px;line-height:1.6;color:var(--ink-soft)}
+  .calib .fig{margin-top:9px;text-align:center;font-size:22px;color:var(--avoid);letter-spacing:6px}
+
+  /* mandir list */
+  .mitem{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--divider)}
+  .mitem:last-child{border-bottom:0}
+  .mitem .mk{flex:none;width:16px;font-family:var(--deva);font-size:12px;color:var(--gold);padding-top:2px}
+  .mitem .mt{flex:1;font-family:var(--deva);font-size:12.5px;line-height:1.6;color:var(--ink-soft)}
+  .mitem .mt i{font-family:var(--serif);font-size:11px;color:var(--ink-muted);display:block;margin-top:1px}
+  .mitem.no .mk{color:var(--avoid)}
+
+  /* muhurat window rows (existing shape, for the door frame) */
+  .win{display:flex;align-items:center;gap:11px;border:1px solid var(--divider);
+    background:var(--parchment-soft);border-radius:14px;padding:11px 13px;margin-bottom:8px}
+  .win .tier{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--gold-tint);color:var(--saffron-deep);border-radius:999px;padding:2px 8px}
+  .win .wt{flex:1;font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink)}
+  .win .wd{font-family:var(--deva);font-size:11.5px;color:var(--ink-muted)}
+  .door{display:flex;align-items:center;gap:12px;border:1.5px solid var(--saffron);
+    background:var(--saffron-tint);border-radius:16px;padding:13px;margin-top:14px;cursor:pointer}
+  .door .dg{font-family:var(--deva);font-size:20px;color:var(--saffron-deep)}
+  .door .dc{flex:1}
+  .door .dt{font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .door .dm{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .door .chev{font-size:18px;color:var(--saffron-deep)}
+
+  /* annotation panel */
+  .panel{flex:1;min-width:320px;max-width:560px}
+  .acard{background:#23190E;border:1px solid #3A2A16;border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  .acard h3{font-family:var(--serif);font-size:17px;color:#FFF5E0;margin-bottom:8px}
+  .acard ul{list-style:none}
+  .acard li{position:relative;padding:6px 0 6px 22px;font-size:12.5px;line-height:1.6;color:#C9B896;
+    border-bottom:1px dashed #3A2A16}
+  .acard li:last-child{border-bottom:0}
+  .acard li::before{content:"◆";position:absolute;left:2px;top:7px;font-size:9px;color:var(--saffron)}
+  .acard li b{color:#FFF5E0}
+  .acard li code{font-size:11px;background:#2A1D10;border:1px solid #3A2A16;border-radius:5px;
+    padding:1px 5px;color:#E7D8B6}
+  .acard .warn{margin-top:10px;border:1px dashed var(--gold);border-radius:9px;padding:8px 11px;
+    font-size:11.5px;color:#E7D8B6}
+  table.fit{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+  table.fit th,table.fit td{border:1px solid #3A2A16;padding:7px 9px;text-align:left;vertical-align:top;color:#C9B896}
+  table.fit th{background:#2A1D10;color:#FFF5E0;font-family:var(--sans);font-size:10.5px;
+    letter-spacing:.06em;text-transform:uppercase}
+  table.fit code{font-size:11px;background:#2A1D10;border:1px solid #3A2A16;border-radius:5px;padding:1px 5px;color:#E7D8B6}
+  table.fit td b{color:#FFF5E0}
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>PRD-24 — वास्तु दिशा</h1>
+  <div class="deva-sub">दिशा चक्र · घर का मंदिर · कक्ष-निर्देश</div>
+  <p>
+    Six frames. <b>A</b> shows where the feature lands in the shipped More hub. <b>B</b> is the
+    instrument working — a north-fixed disha chakra with a heading pointer, and guidance keyed to
+    whichever dik you are actually pointing at. <b>C</b> is the honest degraded state, which is
+    <i>part</i> of this feature rather than an error case. <b>D</b> is घर का मंदिर, <b>E</b> is the
+    contextual door from a griha-pravesh muhurat result, and the last section maps the fit.
+  </p>
+  <p style="font-size:12.5px;color:#B9A57E;margin-top:8px">
+    Each frame renders its <b>full scroll length</b>, so frame height is the real screen length.
+    The dashed <b>fold · one screen</b> line marks where a 360×740 device cuts off — anything below it
+    needs a scroll on a real phone.
+  </p>
+</div>
+
+<div class="samplebanner">
+  <b>⚠ ILLUSTRATIVE SAMPLE</b> — every heading, degree value, declination figure, and placement line on these
+  frames is placeholder copy written for layout only. It is <b>not verified content</b>, and the compass values
+  are not sensor output. Real entries ship only after the content review gate clears.
+</div>
+
+<!-- ============================================================ A =============== -->
+<section class="scenario">
+  <h2>A — Entry · the More hub's साधना group</h2>
+  <div class="sc-sub">Not a Home launcher, not a tab. It joins the personal/reference group beside पितृ स्मरण — reached when you need it, not surfaced daily.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div style="padding:10px 2px 2px">
+          <div style="font-family:var(--serif);font-size:30px;color:var(--ink)">अन्य</div>
+        </div>
+
+        <div class="mhead">साधना · Practice</div>
+        <div class="mrow">
+          <div class="mg">◈</div><div class="ml">साधक प्रोफ़ाइल</div><div class="chev">›</div>
+        </div>
+        <div class="mrow">
+          <div class="mg">❖</div><div class="ml">संग्रह</div><div class="mv">14</div><div class="chev">›</div>
+        </div>
+        <div class="mrow">
+          <div class="mg">◷</div><div class="ml">स्मरण</div><div class="mv">7:00 AM</div><div class="chev">›</div>
+        </div>
+        <div class="mrow">
+          <div class="mg">◉</div><div class="ml">जप अलार्म</div><div class="mv">2</div><div class="chev">›</div>
+        </div>
+        <div class="mrow">
+          <div class="mg">✧</div><div class="ml">पितृ स्मरण</div><div class="mv">3</div><div class="chev">›</div>
+        </div>
+
+        <!-- NEW ROW -->
+        <div class="mrow newrow">
+          <div class="mg">✥</div>
+          <div class="ml">वास्तु दिशा <span class="newtag">NEW</span></div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="mhead">ऐप · App</div>
+        <div class="mrow">
+          <div class="mg">अ</div><div class="ml">भाषा</div><div class="mv">हिन्दी</div><div class="chev">›</div>
+        </div>
+        <div class="mrow">
+          <div class="mg">◫</div><div class="ml">होम-स्क्रीन विजेट</div><div class="chev">›</div>
+        </div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame A</h3>
+        <ul>
+          <li><b>साधना group, not ऐप.</b> The More hub already splits into <i>practice</i> (Profile, संग्रह, स्मरण, जप अलार्म, पितृ स्मरण) and <i>app settings</i> (भाषा, पाठ का आकार, विजेट). Vastu is reference practice, so it belongs in the first group — beside पितृ स्मरण, which set the precedent for a quiet, occasional, personal surface living here.</li>
+          <li><b>Deliberately <i>not</i> a Home launcher tile.</b> This is consulted a handful of times a year — at a move, a renovation, a new murti — not daily. A permanent Home tile would claim daily real estate for an occasional need and dilute the launcher grid.</li>
+          <li><b>No count badge.</b> Every other row in this group shows state (14 saved, 2 alarms, 3 people). Vastu is stateless — it holds nothing of yours — so the row stays bare rather than inventing a number.</li>
+          <li><b>NEW badge flows through the shipped mechanism</b> (<code>NewContentContext</code> / <code>addedInVersion</code>), so upgraders see it flag once and fresh installs stay quiet.</li>
+          <li><b>The second entry point is contextual</b> (frame E), and that is the one that will actually get used — More is the durable address, the muhurat result is the moment of need.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ B =============== -->
+<section class="scenario">
+  <h2>B — दिशा चक्र working · pointing ईशान, sensor trusted</h2>
+  <div class="sc-sub">North-fixed chakra, saffron heading pointer, guidance for the dik the pointer lands in. The instrument and the knowledge are one screen, not two.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">वास्तु दिशा</div><div class="act">स्थान</div></div>
+
+        <div class="chakra-wrap">
+          <svg width="240" height="240" viewBox="0 0 240 240" role="img"
+               aria-label="Disha chakra. Device is pointing north-east, Ishan, at 47 degrees from true north.">
+            <circle cx="120" cy="120" r="104" fill="#F8EFD6" stroke="#C9B896" stroke-width="1.5"/>
+            <!-- highlighted sector: ईशान, 22.5°–67.5° -->
+            <path d="M120,120 L159.8,23.9 A104,104 0 0 1 216.1,80.2 Z" fill="rgba(184,98,27,0.16)"/>
+            <!-- sector boundaries -->
+            <g stroke="rgba(138,62,11,0.18)" stroke-width="1">
+              <line x1="120" y1="120" x2="159.8" y2="23.9"/>
+              <line x1="120" y1="120" x2="216.1" y2="80.2"/>
+              <line x1="120" y1="120" x2="216.1" y2="159.8"/>
+              <line x1="120" y1="120" x2="159.8" y2="216.1"/>
+              <line x1="120" y1="120" x2="80.2" y2="216.1"/>
+              <line x1="120" y1="120" x2="23.9" y2="159.8"/>
+              <line x1="120" y1="120" x2="23.9" y2="80.2"/>
+              <line x1="120" y1="120" x2="80.2" y2="23.9"/>
+            </g>
+            <!-- brahmasthan -->
+            <circle cx="120" cy="120" r="31" fill="#FFF5E0" stroke="#C9B896" stroke-width="1.5"/>
+            <text x="120" y="117" text-anchor="middle" font-family="'Noto Serif Devanagari',serif"
+                  font-size="9" fill="#A67C34">ब्रह्म</text>
+            <text x="120" y="128" text-anchor="middle" font-family="'Noto Serif Devanagari',serif"
+                  font-size="9" fill="#A67C34">स्थान</text>
+            <!-- dik labels -->
+            <g font-family="'Noto Serif Devanagari',serif" font-size="12" fill="#5A3A1E" text-anchor="middle">
+              <text x="120" y="44">उत्तर</text>
+              <text x="177" y="67" fill="#8A3E0B" font-weight="600">ईशान</text>
+              <text x="200" y="124">पूर्व</text>
+              <text x="177" y="181">आग्नेय</text>
+              <text x="120" y="204">दक्षिण</text>
+              <text x="63" y="181">नैऋत्य</text>
+              <text x="40" y="124">पश्चिम</text>
+              <text x="63" y="67">वायव्य</text>
+            </g>
+            <!-- true-north tick -->
+            <line x1="120" y1="16" x2="120" y2="30" stroke="#A67C34" stroke-width="2"/>
+            <!-- heading pointer at 47° -->
+            <line x1="141.9" y1="99.5" x2="166.8" y2="76.4" stroke="#B8621B" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="166.8" cy="76.4" r="4.5" fill="#B8621B"/>
+          </svg>
+
+          <div class="heading">
+            <span class="dv">ईशान</span>
+            <span class="deg">47°</span>
+          </div>
+          <div class="heading-en">Īśāna · north-east</div>
+          <span class="acc ok"><span class="dot"></span>दिशा स्पष्ट · GOOD</span>
+          <div class="truenorth">वास्तविक उत्तर से · corrected for declination +1.2° at उज्जैन</div>
+        </div>
+
+        <div class="rooms">
+          <div class="rchip on">पूजा कक्ष</div>
+          <div class="rchip">रसोई</div>
+          <div class="rchip">शयन</div>
+          <div class="rchip">मुख्य द्वार</div>
+          <div class="rchip">तुलसी</div>
+          <div class="rchip">शौच</div>
+        </div>
+
+        <div class="reading">
+          <div class="rh">
+            <span class="dv">ईशान</span>
+            <span class="en">· puja room</span>
+            <span class="tier">श्रेष्ठ</span>
+          </div>
+          <div class="rrow">
+            <div class="rl"><span class="d">स्थान</span>place</div>
+            <div class="rv">पूजा कक्ष के लिए ईशान कोण सर्वोत्तम माना गया है — प्रकाशयुक्त, स्वच्छ और खुला रखा जाता है।
+              <i>The north-east is held the most suitable corner for a home shrine.</i></div>
+          </div>
+          <div class="rrow">
+            <div class="rl"><span class="d">मुख</span>facing</div>
+            <div class="rv">देव-प्रतिमा का मुख पश्चिम की ओर — जिससे उपासक का मुख पूर्व की ओर रहे।
+              <i>The image faces west, so the worshipper faces east.</i></div>
+          </div>
+          <div class="rrow">
+            <div class="rl"><span class="d">हेतु</span>why</div>
+            <div class="rv">ईशान जल एवं प्रकाश का कोण कहा गया है; प्रातःकाल का प्रथम प्रकाश इसी दिशा से आता है।
+              <i>Stated as the traditional reasoning, not as a rule of its own.</i></div>
+          </div>
+          <div class="avoidbox">
+            <div class="ah">इस कोण में नहीं</div>
+            <div class="arow"><div class="am">✕</div><div class="at">शौचालय अथवा सीढ़ी</div></div>
+            <div class="arow"><div class="am">✕</div><div class="at">भारी संग्रह अथवा रद्दी</div></div>
+          </div>
+          <div class="accom">
+            <div class="at">यदि सम्भव न हो · if this is not possible</div>
+            <div class="av">पूर्व दिशा को अगला विकल्प माना जाता है। पृथक कक्ष न हो तो शयन कक्ष में परदे अथवा पट से पृथक स्थान बनाया जाता है।</div>
+          </div>
+          <div class="footnote">पारम्परिक वास्तु-आचार; क्षेत्र एवं परम्परा अनुसार भेद सम्भव। · Classical convention; regional practice varies.</div>
+        </div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame B</h3>
+        <ul>
+          <li><b>North-fixed chakra, not a spinning rose.</b> The single most consequential call on this screen. A compass app rotates the dial so your heading sits at top; a <i>vastu</i> chakra must keep उत्तर at top and ईशान at upper-right, because that is how every vastu plan is drawn and how the user will map it onto their floor plan. The <b>pointer</b> moves, the dik labels never do.</li>
+          <li><b>Guidance is keyed to where you point.</b> That is what makes this an instrument rather than a listicle: you turn, and the card under the chakra changes. The room chips let you ask the inverse question ("where should the kitchen go?") without leaving the screen.</li>
+          <li><b>ब्रह्मस्थान is drawn, not described.</b> The open centre is a real vastu concept and a filled circle at the middle of the chakra teaches it in one glance.</li>
+          <li><b>Declination is stated on the face of the screen</b>, with the location it came from. Derived from <code>panchang/locations.ts</code> lat/long via the shipped GPS snap — the same city that drives Panchang. A silent correction is indistinguishable from no correction; naming it makes the instrument auditable.</li>
+          <li><b>"श्रेष्ठ" reuses the muhurat tier vocabulary</b> (शुभ/श्रेष्ठ/मध्यम) the app already ships — one grading language across the product, not a second one invented here.</li>
+          <li><b>The avoid block is the muted terracotta</b> avoid tone, never red — same token as the muhurat "avoid" palette (design.md §60).</li>
+          <li><b>"यदि सम्भव न हो" is load-bearing, not a nicety.</b> Most people cannot move a puja room. A vastu surface with no accommodation line becomes a list of things wrong with your home — the exact failure mode this feature must avoid. Every direction entry carries one.</li>
+          <li><b>The chakra is one accessible image</b> with a full narration, and every value on it also appears as text below — the <code>NorthIndianChart</code> precedent (geometry is never the only representation).</li>
+        </ul>
+        <div class="warn">ILLUSTRATIVE SAMPLE — heading, degrees, declination figure and all placement lines are layout stand-ins, not verified content or sensor output.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ C =============== -->
+<section class="scenario">
+  <h2>C — Sensor cannot be trusted · the honest degraded state</h2>
+  <div class="sc-sub">Indoors, near rebar and appliances, is exactly where this feature is used. This frame is not an error screen — it is the feature's second normal mode.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">वास्तु दिशा</div><div class="act">स्थान</div></div>
+
+        <div class="chakra-wrap">
+          <svg width="240" height="240" viewBox="0 0 240 240" role="img"
+               aria-label="Disha chakra. Compass accuracy is low; no direction is being claimed. Choose a direction manually below.">
+            <circle cx="120" cy="120" r="104" fill="#F8EFD6" stroke="#C9B896" stroke-width="1.5"/>
+            <g stroke="rgba(138,62,11,0.18)" stroke-width="1">
+              <line x1="120" y1="120" x2="159.8" y2="23.9"/>
+              <line x1="120" y1="120" x2="216.1" y2="80.2"/>
+              <line x1="120" y1="120" x2="216.1" y2="159.8"/>
+              <line x1="120" y1="120" x2="159.8" y2="216.1"/>
+              <line x1="120" y1="120" x2="80.2" y2="216.1"/>
+              <line x1="120" y1="120" x2="23.9" y2="159.8"/>
+              <line x1="120" y1="120" x2="23.9" y2="80.2"/>
+              <line x1="120" y1="120" x2="80.2" y2="23.9"/>
+            </g>
+            <circle cx="120" cy="120" r="31" fill="#FFF5E0" stroke="#C9B896" stroke-width="1.5"/>
+            <text x="120" y="117" text-anchor="middle" font-family="'Noto Serif Devanagari',serif"
+                  font-size="9" fill="#C9B896">ब्रह्म</text>
+            <text x="120" y="128" text-anchor="middle" font-family="'Noto Serif Devanagari',serif"
+                  font-size="9" fill="#C9B896">स्थान</text>
+            <g font-family="'Noto Serif Devanagari',serif" font-size="12" fill="#A08863" text-anchor="middle">
+              <text x="120" y="44">उत्तर</text><text x="177" y="67">ईशान</text>
+              <text x="200" y="124">पूर्व</text><text x="177" y="181">आग्नेय</text>
+              <text x="120" y="204">दक्षिण</text><text x="63" y="181">नैऋत्य</text>
+              <text x="40" y="124">पश्चिम</text><text x="63" y="67">वायव्य</text>
+            </g>
+            <line x1="120" y1="16" x2="120" y2="30" stroke="#C9B896" stroke-width="2"/>
+            <!-- no pointer: the app refuses to claim a heading -->
+            <circle cx="120" cy="120" r="4" fill="#C9B896"/>
+          </svg>
+
+          <div class="heading"><span class="dv" style="color:var(--ink-muted)">—</span></div>
+          <div class="heading-en">no direction is being shown</div>
+          <span class="acc low"><span class="dot"></span>दिशा अस्पष्ट · LOW</span>
+        </div>
+
+        <div class="calib">
+          <div class="ch">दिशा-यंत्र स्थिर नहीं है</div>
+          <div class="cb">
+            फ़ोन को समतल रखें और धातु, विद्युत उपकरण एवं चुम्बकीय आवरण से दूर ले जाएँ।
+            फिर आठ का अंक बनाते हुए घुमाएँ।
+          </div>
+          <div class="fig">∞</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">अथवा दिशा स्वयं चुनें <span class="en">· or set the direction yourself</span></div>
+          <div class="dikgrid">
+            <div class="dik"><div class="dv">उत्तर</div><div class="en">N</div></div>
+            <div class="dik on"><div class="dv">ईशान</div><div class="en">NE</div></div>
+            <div class="dik"><div class="dv">पूर्व</div><div class="en">E</div></div>
+            <div class="dik"><div class="dv">आग्नेय</div><div class="en">SE</div></div>
+            <div class="dik"><div class="dv">दक्षिण</div><div class="en">S</div></div>
+            <div class="dik"><div class="dv">नैऋत्य</div><div class="en">SW</div></div>
+            <div class="dik"><div class="dv">पश्चिम</div><div class="en">W</div></div>
+            <div class="dik"><div class="dv">वायव्य</div><div class="en">NW</div></div>
+          </div>
+          <div class="footnote">चुनी गई दिशा से निर्देश उसी प्रकार दिखेंगे। · Guidance reads the same from a chosen direction.</div>
+        </div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame C</h3>
+        <ul>
+          <li><b>The app refuses to claim a heading it does not have.</b> No pointer is drawn, the dik reads "—", and the labels drop to muted. A wrong direction, confidently rendered, in a feature whose entire subject is direction, is the worst outcome available to this PRD — worse than showing nothing.</li>
+          <li><b>The manual dik grid is not a fallback, it is a peer path.</b> Selecting ईशान by hand yields the identical guidance card from frame B. That single decision makes the whole feature usable (a) indoors near rebar, (b) on a device with no magnetometer, and (c) by someone reading their own floor plan rather than standing in the room.</li>
+          <li><b>Calibration instruction is concrete</b> — hold flat, away from metal, figure-eight — because "low accuracy" alone tells the user nothing they can act on.</li>
+          <li><b>Two states, one screen.</b> No modal, no error page, no dead end. Accuracy is a chip on the same surface, so the transition between trusted and untrusted is legible rather than jarring.</li>
+          <li><b>This frame is why Phase 0 exists.</b> Whether the magnetometer settles usably on target hardware, and how often this state appears in a real Indian home, is a measurement — not something to assume during PRD writing.</li>
+        </ul>
+        <div class="warn">ILLUSTRATIVE SAMPLE — accuracy state and copy are layout stand-ins.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ D =============== -->
+<section class="scenario">
+  <h2>D — घर का मंदिर · the upkeep set</h2>
+  <div class="sc-sub">The half that has nothing to do with the compass: what belongs in a home shrine, what does not, and where ancestor photographs go.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">घर का मंदिर</div><div class="sp"></div></div>
+
+        <div style="text-align:center;padding:6px 0 14px;border-bottom:1px solid var(--divider)">
+          <span class="pill">वास्तु दिशा</span>
+          <div style="font-family:var(--deva);font-size:24px;color:var(--ink);margin-top:8px">घर का मंदिर</div>
+          <div style="font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted)">The home shrine</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">स्थापना <span class="en">· Placement</span></div>
+          <div class="panel-box">
+            <div class="mitem">
+              <div class="mk">◆</div>
+              <div class="mt">ईशान कोण, अथवा पूर्व — भूमि से कुछ ऊँचाई पर, चौकी अथवा पट पर।
+                <i>Raised off the floor, on a chauki or shelf.</i></div>
+            </div>
+            <div class="mitem no">
+              <div class="mk">✕</div>
+              <div class="mt">शौचालय की दीवार से लगा हुआ, अथवा उसके ठीक ऊपर-नीचे।</div>
+            </div>
+            <div class="mitem no">
+              <div class="mk">✕</div>
+              <div class="mt">सीढ़ी के नीचे।</div>
+            </div>
+            <div class="accom" style="margin-top:6px">
+              <div class="at">यदि पृथक कक्ष न हो</div>
+              <div class="av">शयन कक्ष में परदे अथवा पट से पृथक स्थान बनाया जाता है — यह भी परम्परा में स्वीकृत व्यवस्था है।</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="bh">प्रतिमा <span class="en">· The images</span></div>
+          <div class="panel-box">
+            <div class="mitem">
+              <div class="mk">◆</div>
+              <div class="mt">प्रतिमा का मुख पश्चिम की ओर — उपासक पूर्वाभिमुख बैठे।</div>
+            </div>
+            <div class="mitem no">
+              <div class="mk">✕</div>
+              <div class="mt">खण्डित अथवा चटकी प्रतिमा — परम्परा अनुसार विसर्जित की जाती है।
+                <i>A chipped image is traditionally given visarjan, not kept.</i></div>
+            </div>
+            <div class="mitem no">
+              <div class="mk">✕</div>
+              <div class="mt">एक ही देव की एक से अधिक प्रतिमा — विशेषतः गणेश।</div>
+            </div>
+            <div class="mitem no">
+              <div class="mk">✕</div>
+              <div class="mt">युद्ध अथवा उग्र प्रसंग के चित्र।</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="bh">पूर्वज-चित्र <span class="en">· Ancestor photographs</span></div>
+          <div class="panel-box">
+            <div class="mitem">
+              <div class="mk">◆</div>
+              <div class="mt">पूर्वजों के चित्र देव-स्थान में नहीं, पृथक स्थान पर — प्रायः दक्षिण दिशा की दीवार पर।
+                <i>Kept apart from the deity shelf; the two are different observances.</i></div>
+            </div>
+            <div class="mitem">
+              <div class="mk">◆</div>
+              <div class="mt">तिथि-आधारित स्मरण के लिए पितृ स्मरण देखें।</div>
+            </div>
+            <div class="card" style="margin-top:10px;background:var(--parchment-hi);display:flex;align-items:center;gap:12px;border:1px solid var(--divider);border-radius:14px;padding:12px;cursor:pointer">
+              <div style="font-family:var(--deva);font-size:19px;color:var(--saffron)">✧</div>
+              <div style="flex:1">
+                <div style="font-family:var(--deva);font-size:14px;color:var(--ink)">पितृ स्मरण</div>
+                <div style="font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted)">Pitru Smaran · 3 people</div>
+              </div>
+              <div style="font-size:18px;color:var(--ink-muted)">›</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footnote" style="text-align:center">पारम्परिक आचार; परम्परा एवं क्षेत्र अनुसार भेद सम्भव।</div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame D</h3>
+        <ul>
+          <li><b>A sub-screen, not a third tab on the chakra.</b> This content is not direction-keyed — it answers "what goes in the shrine", which does not change as you turn. Folding it into the compass card would make the chakra screen a scroll dump.</li>
+          <li><b>Same ◆ / ✕ grammar as the direction cards</b> and the same terracotta for "not this". One visual language for permitted/avoided across the whole feature — and it matches the निषेध treatment PRD-23 uses, so the two features read as siblings.</li>
+          <li><b>The ancestor-photograph section links to पितृ स्मरण</b> — a shipped feature that is exactly the right home for the observance this placement rule points at. This is the kind of join that makes an app feel coherent rather than assembled, and it costs one card.</li>
+          <li><b>"यदि पृथक कक्ष न हो" is stated as an accepted traditional arrangement</b>, not a compromise. Most Indian homes do not have a separate puja room; a surface that treats the common case as a deviation is a surface people close.</li>
+          <li><b>The chipped-image line names visarjan</b> rather than saying "do not keep" — the tradition supplies the action, so the app relays it instead of leaving a prohibition with no exit.</li>
+        </ul>
+        <div class="warn">ILLUSTRATIVE SAMPLE — all placement and image lines are layout stand-ins, not verified content.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ E =============== -->
+<section class="scenario">
+  <h2>E — The contextual door · griha pravesh muhurat result</h2>
+  <div class="sc-sub">The app already dates griha pravesh — its highest-demand occasion. This is the moment every vastu question in the feature goes live, and today the screen stops at a date.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">शुभ मुहूर्त</div><div class="act">साझा</div></div>
+
+        <div style="text-align:center;padding:6px 0 14px;border-bottom:1px solid var(--divider)">
+          <span class="pill">भवन</span>
+          <div style="font-family:var(--deva);font-size:23px;color:var(--ink);margin-top:8px">गृह प्रवेश</div>
+          <div style="font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted)">Griha Pravesh</div>
+          <div style="font-family:var(--deva);font-size:12px;color:var(--ink-muted);margin-top:6px">नवम्बर 2026 · उज्जैन</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">शुभ दिवस <span class="en">· Auspicious days</span></div>
+          <div class="win">
+            <span class="tier">श्रेष्ठ</span>
+            <div class="wt">18 Nov · 7:12 – 10:48 AM</div>
+            <div class="wd">रोहिणी</div>
+          </div>
+          <div class="win">
+            <span class="tier">श्रेष्ठ</span>
+            <div class="wt">21 Nov · 6:58 – 9:24 AM</div>
+            <div class="wd">उत्तरा</div>
+          </div>
+          <div class="win">
+            <span class="tier" style="background:var(--gold-tint)">मध्यम</span>
+            <div class="wt">26 Nov · 11:04 AM – 1:30 PM</div>
+            <div class="wd">मृगशिरा</div>
+          </div>
+        </div>
+
+        <!-- NEW DOOR -->
+        <div class="door">
+          <div class="dg">✥</div>
+          <div class="dc">
+            <div class="dt">वास्तु दिशा</div>
+            <div class="dm">Puja room, kitchen, main door — before you move in</div>
+          </div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="footnote">मुहूर्त गणना पारम्परिक नियमों पर आधारित है · Traditional rule-based computation.</div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame E</h3>
+        <ul>
+          <li><b>This is the entry that will carry the feature.</b> The More-hub row is the durable address; this card is the moment of need. Someone reading griha-pravesh dates is, by definition, about to arrange rooms in a house they have not moved into.</li>
+          <li><b>It closes the "when but not how" gap on the app's most-used occasion.</b> The same asymmetry PRD-22 addresses for rites, PRD-24 addresses for space — and this single card is the cheapest possible instance of it.</li>
+          <li><b>One door, filled, below the windows</b> — never above them. The muhurat result's job is the date; the door is the obvious next step, not a competing headline.</li>
+          <li><b>Occasion-gated.</b> This card appears only on <code>griha-pravesh</code> and <code>bhumi-pujan</code> results, where placement questions are live. It does not appear on vahan, swarna, or vidyārambha — a door on every result is an ad.</li>
+          <li><b>Copy is in the user's tense</b> — "before you move in" — because that is the window in which the guidance is actionable at zero cost.</li>
+        </ul>
+        <div class="warn">ILLUSTRATIVE SAMPLE — dates, windows and nakshatras are layout stand-ins, not engine output.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FIT =============== -->
+<section class="scenario">
+  <h2>Where PRD-24 fits in the shipped app</h2>
+  <div class="sc-sub">One More-hub row, one occasion-gated card on an existing result screen, and a small new stack. The only feature of the five that needs a store release.</div>
+
+  <div class="acard">
+    <h3>Navigation placement</h3>
+    <table class="fit">
+      <tr><th>Surface</th><th>Where it already is</th><th>What PRD-24 adds</th></tr>
+      <tr>
+        <td><b>More hub</b><br />frame A</td>
+        <td><code>MoreStackNavigator</code> → <code>MoreScreen</code>, साधना group (Profile · संग्रह · स्मरण · जप अलार्म · पितृ स्मरण)</td>
+        <td>One row, <b>वास्तु दिशा</b>, after पितृ स्मरण. No tab-bar change, no Home launcher tile.</td>
+      </tr>
+      <tr>
+        <td><b>दिशा चक्र</b><br />frames B · C</td>
+        <td>— net new —</td>
+        <td><code>VastuDishaScreen</code> registered in <code>MoreStackNavigator</code></td>
+      </tr>
+      <tr>
+        <td><b>घर का मंदिर</b><br />frame D</td>
+        <td>— net new —</td>
+        <td><code>GharMandirScreen</code>, same stack; links out to <code>PitruSmaranList</code></td>
+      </tr>
+      <tr>
+        <td><b>Muhurat result</b><br />frame E</td>
+        <td><code>PanchangStackNavigator</code> → <code>MuhuratResultsScreen</code> / <code>MuhuratDayDetailScreen</code></td>
+        <td>An occasion-gated door card on <code>griha-pravesh</code> and <code>bhumi-pujan</code> only</td>
+      </tr>
+      <tr>
+        <td><b>Search</b></td>
+        <td><code>searchIndex.ts</code></td>
+        <td>Dik and room terms indexed per RULEBOOK §7 — "ईशान", "पूजा कक्ष", "रसोई दिशा"</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="acard">
+    <h3>Code surface, and the one new dependency</h3>
+    <table class="fit">
+      <tr><th>File / package</th><th>Change</th></tr>
+      <tr><td><code>expo-sensors</code></td><td><b>NEW native dependency</b> → store release, not OTA. Per the repo's own gotcha this drags <code>APP_TOUR_VERSION</code> and a <code>whatsNew</code> entry with it. This is the whole reason PRD-24 runs on its own track.</td></tr>
+      <tr><td><code>vastu/declination.ts</code></td><td>Pure. lat/long → declination. Input comes from the shipped <code>panchang/locations.ts</code> city (54 major cities + Rajasthan tehsils, each with lat/long/elevation) via the existing <code>expo-location</code> GPS snap. <b>No new location plumbing.</b></td></tr>
+      <tr><td><code>vastu/dik.ts</code></td><td>Pure. heading° → one of 8 dik + the sector boundaries. Trivially unit-testable, which is where the sector-edge cases belong.</td></tr>
+      <tr><td><code>vastu/guidance.ts</code></td><td>The content registry: per dik and per room — place, facing, reasoning, avoid list, accommodation. <code>status</code> + <code>source</code>, and the same <b>draft ≡ absent</b> accessor rule as <code>getUpvasInfo</code>.</td></tr>
+      <tr><td><code>components/DishaChakra.tsx</code></td><td><code>react-native-svg</code> (already a dependency). One accessible image with a full narration; every value also rendered as text. The <code>NorthIndianChart.tsx</code> precedent.</td></tr>
+      <tr><td><code>hooks/useHeading.ts</code></td><td>Magnetometer subscription + smoothing + accuracy state + manual override. The <b>only</b> place sensor code lives, so the screens stay pure-ish and testable.</td></tr>
+      <tr><td>Tests</td><td><code>dik</code> boundary suite, <code>declination</code> suite, a guidance-registry invariant suite with a non-vacuous draft-exclusion assertion, a chakra a11y-label test, and a Maestro flow that exercises the <b>manual-override path</b> (a simulator has no usable magnetometer — so the override path is what e2e can actually assert). Per RULEBOOK §0.</td></tr>
+      <tr><td>Docs</td><td>A new <code>design.md</code> § for the chakra, the reading card, and both accuracy states; a <code>RULEBOOK.md</code> § for the vastu content contract. Same PR, per §0.1.</td></tr>
+    </table>
+  </div>
+
+  <div class="acard">
+    <h3>Phase 0 — the spike that gates the build</h3>
+    <ul>
+      <li><b>Does the magnetometer settle usably</b> on target hardware, indoors, in a real home? Measure how often frame C is the state, not frame B.</li>
+      <li><b>Which declination approach:</b> a bundled coarse grid over India, a per-city value alongside the existing city list, or state magnetic north honestly and skip the correction. Decide it in the PRD and write it down — a silently-off compass in a direction feature is worse than no compass.</li>
+      <li><b>Does a clean prebuild carry <code>expo-sensors</code></b> through EAS without disturbing the existing CNG native modules?</li>
+      <li><b>What does the manual-override path cost</b> if the sensor turns out to be unusable often enough that it becomes the primary path? If so, P1 ships override-first and the compass becomes the enhancement — a legitimate outcome the spike should be allowed to reach.</li>
+    </ul>
+  </div>
+
+  <div class="acard">
+    <h3>What this prototype deliberately does not show</h3>
+    <ul>
+      <li><b>No "वास्तु दोष" verdict, score, or severity.</b> Nothing on any frame evaluates the user's home. The feature states convention; it never grades a house.</li>
+      <li><b>No remedy products</b> — no pyramids, yantras, mirrors-for-sale, or paid consultation. Same no-upsell rule as design.md §51.</li>
+      <li><b>No fear copy.</b> Not one line says what will go wrong. The register is "this is held suitable, and here is the reasoning", plus the accommodation.</li>
+      <li><b>No floor-plan capture, no camera, no AR overlay.</b> Out of scope, and it would turn a reference instrument into a project.</li>
+      <li><b>No saved rooms or house profile.</b> The feature is stateless — which is also why its More row carries no count badge.</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>
