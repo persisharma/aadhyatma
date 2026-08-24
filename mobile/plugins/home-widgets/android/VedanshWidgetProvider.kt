@@ -117,16 +117,27 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             val today = WidgetPayloadContract.currentDateKey(verses.getString("timeZone"))
             val days = verses.getJSONArray("days")
             val vd = (0 until days.length()).map { days.getJSONObject(it) }.firstOrNull { it.getString("dateKey") == today } ?: return null
-            // Tall cells get the verse line-by-line from `lines` (the payload has
-            // always carried it); short cells keep the planner's two-line excerpt.
+            // Tall cells get the verse line-by-line from `lines`; wide-but-short
+            // cells flow those same lines into the 3 lines they budget. Only a
+            // narrow cell falls back to the planner's excerpt, whose character cap
+            // is sized for that square — handing it to the default 4x2 cell was
+            // the "shloka cut with space still on the card" bug: an 88-character
+            // cap ellipsized a ~90-character two-line shloka while the third line
+            // sat empty. The full verse has always been in the payload.
             val lines = vd.getJSONObject("lines").getJSONArray(locale)
+            val padas = (0 until lines.length()).map { lines.getString(it).trim() }.filter { it.isNotEmpty() }
             val tall = height >= 180
-            val body = if (tall) (0 until lines.length()).joinToString("\n") { lines.getString(it) } else vd.getJSONObject("excerpt").getString(locale)
+            val narrow = width < 180
+            val body = when {
+                tall -> padas.joinToString("\n")
+                narrow -> vd.getJSONObject("excerpt").getString(locale)
+                else -> padas.joinToString(" · ")
+            }
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_kicker, verseKicker(locale))
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_title, body)
-            views.setInt(__APP_PACKAGE__.R.id.widget_title, "setMaxLines", if (tall) 8 else if (width < 180) 4 else 3)
+            views.setInt(__APP_PACKAGE__.R.id.widget_title, "setMaxLines", if (tall) 8 else if (narrow) 4 else 3)
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_subtitle, vd.getJSONObject("source").getString(locale))
-            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_subtitle, if (width < 180) View.GONE else View.VISIBLE)
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_subtitle, if (narrow) View.GONE else View.VISIBLE)
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_meta, View.GONE)
             views.setContentDescription(__APP_PACKAGE__.R.id.widget_root, vd.getJSONObject("accessibilityLabel").getString(locale))
             views.setOnClickPendingIntent(__APP_PACKAGE__.R.id.widget_root, link(context, vd.getString("deepLink"), requestCode(id, Surface.VERSE)))
