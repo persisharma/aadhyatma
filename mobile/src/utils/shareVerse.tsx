@@ -6,11 +6,13 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Platform, Share, View } from 'react-native';
+import { Clipboard, Platform, Share, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
-import { buildShareCaption } from '@/data/shareLinks';
+import ShareTargetSheet from '@/components/ShareTargetSheet';
+import { buildInstagramCaption, buildShareCaption } from '@/data/shareLinks';
+import { buildVerseHashtags, formatHashtags } from '@/data/shareHashtags';
 import type { Lang } from '@/data/gita/language';
 
 export type ShareableVerse = {
@@ -38,14 +40,29 @@ export type ShareableVerse = {
 
 type ShareMode = 'card' | 'screenshot';
 
+/**
+ * Where the share is going.
+ *
+ * - `system`    — the OS share sheet with the short WhatsApp-style caption.
+ * - `instagram` — the same 1080×1350 card, but the caption carries a hashtag block
+ *   derived from this verse and is copied to the clipboard first, because Instagram
+ *   accepts no pre-filled caption from a share intent (design.md §39).
+ */
+export type ShareTarget = 'system' | 'instagram';
+
 type ShareOptions = {
   mode?: ShareMode;
   /** Used by mode='screenshot'; defaults to the off-screen card. */
   screenshotRef?: React.RefObject<View | null>;
+  /**
+   * Skip the target picker and go straight to this destination. Omitted (the
+   * reader default), `share()` opens the picker so Instagram is one tap away.
+   */
+  target?: ShareTarget;
 };
 
 type ShareContextValue = {
-  /** Compose the verse card, then open the OS share sheet. */
+  /** Compose the verse card, then open the target picker (or the given `target`). */
   share: (verse: ShareableVerse, lang: Lang, opts?: ShareOptions) => Promise<void>;
   /** True while a capture/share is in flight (debounces tap). */
   busy: boolean;
@@ -66,12 +83,22 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     verse: ShareableVerse;
     lang: Lang;
   } | null>(null);
+  const [chooser, setChooser] = useState<{
+    verse: ShareableVerse;
+    lang: Lang;
+    opts?: ShareOptions;
+  } | null>(null);
   const [busy, setBusy] = useState(false);
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
 
-  const share = useCallback(
-    async (verse: ShareableVerse, lang: Lang, opts?: ShareOptions) => {
+  const run = useCallback(
+    async (
+      verse: ShareableVerse,
+      lang: Lang,
+      opts: ShareOptions | undefined,
+      target: ShareTarget
+    ) => {
       if (inFlightRef.current) return;
       inFlightRef.current = true;
       setBusy(true);
@@ -100,7 +127,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           }
         }
 
-        const caption = buildShareCaption({
+        const captionParams = {
           sectionNameHi: verse.sectionNameHi,
           sectionNameEn: verse.sectionNameEn,
           verseLabelHi: verse.verseLabelHi,
@@ -108,10 +135,40 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           firstLineHi: verse.linesHi[0] ?? '',
           firstLineEn: verse.linesEn[0] ?? verse.linesHi[0] ?? '',
           lang,
-        });
+        };
+        const caption =
+          target === 'instagram'
+            ? buildInstagramCaption({ ...captionParams, sourceId: verse.sourceId })
+            : buildShareCaption(captionParams);
+
+        if (target === 'instagram') {
+          // Instagram's share intent ignores any text handed to it, so the caption
+          // goes to the clipboard for the reader to paste. Deprecated RN API, but
+          // the one already in use app-wide (NameDetailSheet) — no native dep, so
+          // this whole feature still ships over OTA.
+          try {
+            Clipboard.setString(caption);
+          } catch {
+            // Clipboard is best-effort: the card itself still carries the branding.
+          }
+        }
 
         if (fileUri) {
-          if (Platform.OS === 'ios') {
+          if (target === 'instagram') {
+            // Always the expo-sharing route: on iOS the RN Share `message` would
+            // ride along uselessly (Instagram drops it) and on some builds pushes
+            // Instagram out of the activity list in favour of text-capable targets.
+            const canShare = await Sharing.isAvailableAsync();
+            if (canShare) {
+              await Sharing.shareAsync(fileUri, {
+                mimeType: 'image/png',
+                UTI: 'public.png',
+                dialogTitle: 'Share on Instagram',
+              });
+            } else {
+              await Share.share({ message: caption }, { dialogTitle: 'Share on Instagram' });
+            }
+          } else if (Platform.OS === 'ios') {
             // iOS UIActivityViewController accepts file + caption together; WhatsApp
             // populates the caption field automatically.
             await Share.share(
@@ -146,11 +203,62 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     []
   );
 
+  const share = useCallback(
+    async (verse: ShareableVerse, lang: Lang, opts?: ShareOptions) => {
+      if (inFlightRef.current) return;
+      // No explicit target → let the reader pick, so "Share on Instagram" is
+      // discoverable from every share button without a second control.
+      if (!opts?.target) {
+        setChooser({ verse, lang, opts });
+        return;
+      }
+      await run(verse, lang, opts, opts.target);
+    },
+    [run]
+  );
+
   const value = useMemo<ShareContextValue>(() => ({ share, busy }), [share, busy]);
+
+  const hashtagPreview = useMemo(
+    () =>
+      chooser
+        ? formatHashtags(
+            buildVerseHashtags({
+              sourceId: chooser.verse.sourceId,
+              sectionNameHi: chooser.verse.sectionNameHi,
+              sectionNameEn: chooser.verse.sectionNameEn,
+              verseLabelEn: chooser.verse.verseLabelEn,
+              lang: chooser.lang,
+            })
+          )
+        : '',
+    [chooser]
+  );
+
+  const pickTarget = useCallback(
+    (target: ShareTarget) => {
+      if (!chooser) return;
+      const { verse, lang, opts } = chooser;
+      setChooser(null);
+      void run(verse, lang, opts, target);
+    },
+    [chooser, run]
+  );
 
   return (
     <ShareContext.Provider value={value}>
       {children}
+      {chooser ? (
+        <ShareTargetSheet
+          visible
+          lang={chooser.lang}
+          hashtagPreview={hashtagPreview}
+          busy={busy}
+          onShareSystem={() => pickTarget('system')}
+          onShareInstagram={() => pickTarget('instagram')}
+          onClose={() => setChooser(null)}
+        />
+      ) : null}
       {pending ? (
         <View
           pointerEvents="none"

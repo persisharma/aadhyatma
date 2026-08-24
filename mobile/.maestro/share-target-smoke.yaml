@@ -1,0 +1,64 @@
+# Share Target Smoke Test — verse share picker + Instagram destination
+#
+# Covers design.md §39.1: tapping a reader's Share button no longer opens the OS
+# share sheet directly, it opens the in-app target picker with two destinations
+# (Share / Share on Instagram) and a live hashtag preview built from the verse
+# (§39.2).
+#
+# The flow deliberately stops at the picker and cancels. Everything past the
+# picker is a NATIVE share sheet (UIActivityViewController / Android chooser),
+# which Maestro cannot drive reliably and which would leave Instagram or a mail
+# composer in the foreground for the next flow. Picker structure is the part
+# that lives in our code; the caption + hashtag content is pinned by
+# utils/__tests__/shareHashtags.test.ts and shareVerseTarget.test.tsx.
+#
+# Selectors use the stable English a11y labels — "Share verse" on the reader
+# button, "Share to other apps" / "Share on Instagram" / "Cancel" in the picker.
+# The visible row titles localize to Devanagari in the default hi mode, which
+# Maestro's iOS tree cannot read. The picker's system row is deliberately NOT
+# labelled "Share verse": that would collide with the reader button underneath
+# it and make the selector ambiguous while the sheet is open.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# Open Hanuman Chalisa: the canonical reader, reached the same way chalisa-smoke
+# reaches it. The `.*` absorbs an optional " New." on the category tile.
+- assertVisible: "Chalisa\\..*Tap to open\\."
+- tapOn: "Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+- extendedWaitUntil:
+    visible: "Hanuman Chalisa\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Hanuman Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss the Resume sheet if a prior session left reading progress.
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+
+# The Share button sits in the verse page header row, beside Bookmark (§39).
+- assertVisible: "Share verse"
+- tapOn: "Share verse"
+- waitForAnimationToEnd
+
+# The picker — both destinations plus the per-verse hashtag preview. The preview
+# exposes "Hashtags: #…", and Hanuman Chalisa must contribute its own text and
+# deity tags rather than a generic block.
+- assertVisible: "Share on Instagram"
+- assertVisible: "Cancel"
+- assertVisible: ".*Hashtags: .*#HanumanChalisa.*"
+- assertVisible: ".*Hashtags: .*#JaiHanuman.*"
+
+# Cancel closes the picker and leaves the reader intact — no native sheet opened.
+- tapOn: "Cancel"
+- waitForAnimationToEnd
+- assertVisible: "Share verse"
+
+# Clean up — termination resets the navigation stack for the next flow.
+- stopApp:
+    appId: com.prashantsharma.vedansh
