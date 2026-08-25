@@ -7,7 +7,12 @@
 
 import type { Lang } from '@/data/gita/language';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
-import { STORY_MAX_HASHTAGS, buildVerseHashtags, formatHashtags } from '@/data/shareHashtags';
+import {
+  STORY_MAX_HASHTAGS,
+  buildVerseHashtags,
+  formatHashtags,
+  type TimelyContext,
+} from '@/data/shareHashtags';
 
 const IOS_APP_ID = '6766086529';
 
@@ -70,6 +75,8 @@ export type InstagramCaptionParams = ShareCaptionParams & {
    * `STORY_MAX_HASHTAGS`. Defaults to `'post'`.
    */
   format?: 'post' | 'story';
+  /** Festival / vrat / vaar inputs for the share date; absent → a date-free block. */
+  timely?: TimelyContext;
 };
 
 /**
@@ -88,6 +95,7 @@ export function buildInstagramCaption(p: InstagramCaptionParams): string {
       verseLabelEn: p.verseLabelEn,
       lang: p.lang,
       limit: p.format === 'story' ? STORY_MAX_HASHTAGS : undefined,
+      timely: p.timely,
     })
   );
   return [

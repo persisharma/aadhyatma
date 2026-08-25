@@ -132,6 +132,98 @@ describe('buildVerseHashtags', () => {
     expect(buildVerseHashtags({ ...gita, lang: 'en', limit: 0 })).toEqual([]);
   });
 
+  describe('timely tags', () => {
+    const hanumanJayanti = {
+      nameHi: 'हनुमान जयंती',
+      nameEn: 'Hanuman Jayanti',
+      deityEn: 'Hanuman',
+    };
+    const navratri = { nameHi: 'नवरात्रि', nameEn: 'Navratri', deityEn: 'Durga' };
+
+    test("the day's festival leads the block when it is the text's own deity", () => {
+      const tags = buildVerseHashtags({
+        ...chalisa,
+        lang: 'en',
+        timely: { occasions: [hanumanJayanti], year: 2026 },
+      });
+      expect(tags[0]).toBe('HanumanJayanti');
+      expect(tags[1]).toBe('HanumanJayanti2026');
+    });
+
+    test('an unrelated festival is dropped, not bolted on', () => {
+      const tags = buildVerseHashtags({
+        ...chalisa,
+        lang: 'en',
+        timely: { occasions: [navratri], year: 2026 },
+      });
+      expect(tags).not.toContain('Navratri');
+      expect(tags).not.toContain('Navratri2026');
+      // …and the same festival on a Durga text does attach.
+      const durga = buildVerseHashtags({
+        sourceId: 'durga-chalisa',
+        sectionNameHi: 'दुर्गा चालीसा',
+        sectionNameEn: 'Durga Chalisa',
+        verseLabelEn: 'Verse 4',
+        lang: 'en',
+        timely: { occasions: [navratri], year: 2026 },
+      });
+      expect(durga).toContain('Navratri');
+    });
+
+    test('hi adds the festival in Devanagari; en does not', () => {
+      const hi = buildVerseHashtags({
+        ...chalisa,
+        lang: 'hi',
+        timely: { occasions: [hanumanJayanti], year: 2026 },
+      });
+      expect(hi).toContain('हनुमानजयंती');
+      const en = buildVerseHashtags({
+        ...chalisa,
+        lang: 'en',
+        timely: { occasions: [hanumanJayanti], year: 2026 },
+      });
+      expect(en).not.toContain('हनुमानजयंती');
+    });
+
+    test('the vaar tag needs the day AND the deity to match the text', () => {
+      // Tuesday (2) is Hanuman's vaar.
+      const tuesday = buildVerseHashtags({
+        ...chalisa,
+        lang: 'en',
+        timely: { weekday: 2, weekdayDeity: 'hanuman' },
+      });
+      expect(tuesday).toContain('Mangalwar');
+      // Same text on Wednesday (Ganesha's vaar) gets nothing.
+      const wednesday = buildVerseHashtags({
+        ...chalisa,
+        lang: 'en',
+        timely: { weekday: 3, weekdayDeity: 'ganesha' },
+      });
+      expect(wednesday).not.toContain('Budhwar');
+    });
+
+    test('no timely context leaves the block exactly as it was', () => {
+      expect(buildVerseHashtags({ ...chalisa, lang: 'en', timely: {} })).toEqual(
+        buildVerseHashtags({ ...chalisa, lang: 'en' })
+      );
+    });
+
+    test('at most two occasions contribute, and the cap still holds', () => {
+      const many = Array.from({ length: 6 }, (_, i) => ({
+        nameHi: `हनुमान पर्व ${i}`,
+        nameEn: `Hanuman Parv ${i}`,
+        deityEn: 'Hanuman',
+      }));
+      const tags = buildVerseHashtags({
+        ...chalisa,
+        lang: 'en',
+        timely: { occasions: many, year: 2026 },
+      });
+      expect(tags.filter((t) => t.startsWith('HanumanParv')).length).toBe(4); // 2 × (tag + year)
+      expect(tags.length).toBeLessThanOrEqual(MAX_HASHTAGS);
+    });
+  });
+
   test('is deterministic — a re-share reuses the same indexed tags', () => {
     expect(buildVerseHashtags({ ...gita, lang: 'hi' })).toEqual(
       buildVerseHashtags({ ...gita, lang: 'hi' })

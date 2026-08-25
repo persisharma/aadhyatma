@@ -29,6 +29,21 @@ jest.mock('react-native-view-shot', () => ({
 jest.mock('@/components/ShareCard', () => 'ShareCard');
 jest.mock('@/components/ShareStoryCanvas', () => 'ShareStoryCanvas');
 
+// Pinned date so the timely tags are deterministic: Wednesday is Ganesha's vaar,
+// which the Hanuman-tagged fixture does not match, so the default block stays
+// date-free and the exact-caption assertion below holds on any run date. (The real
+// hook also registers a midnight/foreground listener that would keep Jest alive.)
+jest.mock('@/utils/useTodayKey', () => ({ useTodayKey: () => 'Wed Aug 26 2026' }));
+
+// The real hook runs a whole-year observance solve. Stub it: this suite is about
+// the share flow, and the tag rules themselves are pinned by shareHashtags.test.ts.
+// `mockObservances` drives the one test that checks the timely tags reach the caption.
+let mockObservances: { rule: { nameHi: string; nameEn: string; deityEn: string } }[] = [];
+jest.mock('@/panchang/usePanchang', () => ({
+  usePanchangCalendarSystem: () => ['purnimant', jest.fn()],
+  useObservancesForDate: () => mockObservances,
+}));
+
 const setString = jest.spyOn(Clipboard, 'setString').mockImplementation(() => {});
 const rnShare = jest
   .spyOn(Share, 'share')
@@ -51,6 +66,8 @@ function Trigger() {
   );
 }
 
+const trees: TestRenderer.ReactTestRenderer[] = [];
+
 async function openPicker() {
   let tree: TestRenderer.ReactTestRenderer;
   await act(async () => {
@@ -62,6 +79,7 @@ async function openPicker() {
       </ThemeProvider>
     );
   });
+  trees.push(tree!);
   await act(async () => byLabel(tree!, 'trigger').props.onPress());
   return tree!;
 }
@@ -88,6 +106,12 @@ describe('share target flow', () => {
     mockShareAsync.mockClear();
     setString.mockClear();
     rnShare.mockClear();
+    mockObservances = [];
+  });
+
+  afterEach(() => {
+    // Unmount so the provider's effects tear down; a live tree keeps Jest running.
+    for (const tree of trees.splice(0)) act(() => tree.unmount());
   });
 
   test('the share button opens the picker instead of sharing straight away', async () => {
@@ -157,6 +181,26 @@ describe('share target flow', () => {
     expect(story.root.findAllByType('ShareStoryCanvas' as never).length).toBe(1);
     expect(story.root.findAllByType('ShareCard' as never).length).toBe(0);
     await settle();
+  });
+
+  test("today's festival reaches the caption when it is the text's deity", async () => {
+    mockObservances = [
+      { rule: { nameHi: 'हनुमान जयंती', nameEn: 'Hanuman Jayanti', deityEn: 'Hanuman' } },
+    ];
+    const tree = await openPicker();
+    await act(async () => byLabel(tree, 'Share on Instagram').props.onPress());
+    await settle();
+    const copied = setString.mock.calls[0][0] as unknown as string;
+    expect(copied).toContain('#HanumanJayanti');
+  });
+
+  test('no observance today leaves the caption date-free', async () => {
+    const tree = await openPicker();
+    await act(async () => byLabel(tree, 'Share on Instagram').props.onPress());
+    await settle();
+    const copied = setString.mock.calls[0][0] as unknown as string;
+    expect(copied).not.toContain('Jayanti');
+    expect(copied).toContain('#HanumanChalisa');
   });
 
   test('the plain Share branch does not touch the clipboard', async () => {

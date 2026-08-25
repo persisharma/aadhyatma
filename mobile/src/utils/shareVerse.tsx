@@ -2,6 +2,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -13,7 +14,14 @@ import ShareCard from '@/components/ShareCard';
 import ShareStoryCanvas from '@/components/ShareStoryCanvas';
 import ShareTargetSheet from '@/components/ShareTargetSheet';
 import { buildInstagramCaption, buildShareCaption } from '@/data/shareLinks';
-import { buildVerseHashtags, formatHashtags } from '@/data/shareHashtags';
+import {
+  buildVerseHashtags,
+  formatHashtags,
+  type TimelyContext,
+} from '@/data/shareHashtags';
+import { deityForWeekday } from '@/data/routine/vaar';
+import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
+import { useTodayKey } from '@/utils/useTodayKey';
 import {
   STORY_OUTPUT_HEIGHT,
   STORY_OUTPUT_WIDTH,
@@ -97,6 +105,47 @@ const CARD_HEIGHT = 675;
 const OUTPUT_WIDTH = 1080;
 const OUTPUT_HEIGHT = 1350;
 
+/** Date-free default: the tag block falls back to exactly its pre-timely form. */
+const EMPTY_TIMELY: TimelyContext = {};
+
+/**
+ * Resolves the share date's observances + vaar deity and hands them up.
+ *
+ * Renders nothing, and is mounted **only while the target picker is open**. That
+ * placement is load-bearing: `useObservancesForDate` runs a whole-year observance
+ * solve on a cold cache, and `ShareProvider` wraps the entire app — putting these
+ * hooks in the provider body made every app start (and every reader unit test that
+ * mounts the provider) pay for a solve nobody had asked for. Gated behind the
+ * picker, the cost lands only when someone is actually about to share, by which
+ * point Home's Today strip has almost always warmed the same year already.
+ *
+ * The resolve is `InteractionManager`-deferred, so on a genuinely cold cache the
+ * first paint of the picker shows the date-free block and the occasion tags appear
+ * a beat later. The resolved value is kept after the picker closes — it stays valid
+ * for the rest of the day, so a second share is instant.
+ */
+function TimelyTagsResolver({ onResolve }: { onResolve: (t: TimelyContext) => void }) {
+  const [calendarSystem] = usePanchangCalendarSystem();
+  const todayKey = useTodayKey();
+  const today = useMemo(() => new Date(todayKey), [todayKey]);
+  const observances = useObservancesForDate(today, calendarSystem);
+
+  useEffect(() => {
+    onResolve({
+      occasions: observances.map((o) => ({
+        nameHi: o.rule.nameHi,
+        nameEn: o.rule.nameEn,
+        deityEn: o.rule.deityEn,
+      })),
+      year: today.getFullYear(),
+      weekday: today.getDay(),
+      weekdayDeity: deityForWeekday(today.getDay()),
+    });
+  }, [observances, today, onResolve]);
+
+  return null;
+}
+
 export function ShareProvider({ children }: { children: React.ReactNode }) {
   const [pending, setPending] = useState<{
     verse: ShareableVerse;
@@ -111,6 +160,17 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const [busy, setBusy] = useState(false);
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
+
+  // Timely tags (design.md §39.2). Resolved by `TimelyTagsResolver`, which mounts
+  // ONLY while the picker is open — see the note on that component for why this
+  // must not live in the always-mounted provider body.
+  const [timely, setTimely] = useState<TimelyContext>(EMPTY_TIMELY);
+  const timelyRef = useRef(timely);
+  timelyRef.current = timely;
+  const onTimelyResolved = useCallback((next: TimelyContext) => {
+    timelyRef.current = next;
+    setTimely(next);
+  }, []);
 
   const run = useCallback(
     async (
@@ -161,7 +221,12 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         };
         const caption =
           target === 'instagram'
-            ? buildInstagramCaption({ ...captionParams, sourceId: verse.sourceId, format })
+            ? buildInstagramCaption({
+                ...captionParams,
+                sourceId: verse.sourceId,
+                format,
+                timely: timelyRef.current,
+              })
             : buildShareCaption(captionParams);
 
         if (target === 'instagram') {
@@ -259,10 +324,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               sectionNameEn: chooser.verse.sectionNameEn,
               verseLabelEn: chooser.verse.verseLabelEn,
               lang: chooser.lang,
+              timely,
             })
           )
         : '',
-    [chooser]
+    [chooser, timely]
   );
 
   const pickTarget = useCallback(
@@ -278,6 +344,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   return (
     <ShareContext.Provider value={value}>
       {children}
+      {chooser ? <TimelyTagsResolver onResolve={onTimelyResolved} /> : null}
       {chooser ? (
         <ShareTargetSheet
           visible

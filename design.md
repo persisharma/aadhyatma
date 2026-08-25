@@ -1430,14 +1430,22 @@ All three rows are 44 pt minimum and drop to 50 % opacity + `disabled` while `bu
 
 | # | Tier | Source | Example (Gita 2.47, `hi`) |
 |---|------|--------|---------------------------|
+| 0 | **Occasion** | the festival/vrat falling on the share date, **only when it belongs to one of the text's deities** | `#Janmashtami` `#Janmashtami2026` |
 | 1 | Section / chapter | `sectionNameEn` when narrower than the text; chapter parsed out of `Verse X.Y` | `#GitaChapter2` |
 | 2 | Text | `LibraryEntry.nameEn`, IAST-folded to PascalCase; plus the title in the reading language's own script | `#BhagavadGita` `#भगवद्गीता` |
 | 3 | Deity | curated 2–3 tags per `Deity`, first two deities on the entry | `#Krishna` `#JaiShreeKrishna` `#RadheRadhe` |
+| 3b | **Vaar** | the weekday tag, only when that day's presiding deity is one of the text's | `#Budhwar` on a Ganesha text, Wednesday |
 | 4 | Category | curated tags per `ContentCategory` | `#SacredTexts` `#Scripture` |
 | 5 | Broad | fixed evergreen set | `#Bhakti` `#SanatanDharma` `#Hinduism` … |
 | 6 | Language + brand | per-`Lang` discovery tags, then `#Vedansh` `#VedanshApp` | `#भक्ति` `#सनातनधर्म` |
 
 Broad tags alone bury a post on posting; behind the specific tags they add the volume ceiling without costing the ranking. Deities are capped at the first two on the entry so a four-deity text can't spend the whole budget on them.
+
+**What is deliberately absent.** No `#viral`, `#trending`, `#explorepage`, `#fyp`. Tags with no topical relation to the post are what integrity systems look for, several in that family have been restricted outright, and they dilute the classification the specific tags exist to provide. Hashtags are in any case a modest lever since Instagram de-emphasised hashtag discovery — they classify a post's topic more than they distribute it — which is an argument for a clean block, not a loud one.
+
+**The timely tier (§0 and §3b).** The one reach advantage this app has that a generic quote account does not: the panchang engine knows what today is. Sharing a Krishna verse on Janmashtami adds `#Janmashtami` + `#Janmashtami2026` — hyper-relevant *and* spiking in volume on exactly the day it is used. Both timely tiers are **gated on deity relevance**: the observance's `deityEn` (plus its name) is matched against `DEITY_MATCH_TOKENS` for the deities the registry files the text under, so `#HanumanJayanti` attaches to a Hanuman Chalisa verse and to nothing else. Ungated, this would be exactly the irrelevance the paragraph above refuses. At most two observances contribute; `hi` also gets the festival name in Devanagari.
+
+`shareHashtags.ts` stays pure and date-free — resolving observances needs a location and a warmed year cache, so the **caller** supplies a `TimelyContext`. `ShareProvider` builds it from `useObservancesForDate(today, calendarSystem)` + `deityForWeekday()`, with `useTodayKey` rolling it over at midnight/foreground. The resolve is `InteractionManager`-deferred and shares the year cache Home's Today strip already warms, so it adds no work the app wasn't doing. Absent a `timely` input the block is byte-identical to the date-free one.
 
 **Slug rules.** Latin titles run through the search normalizer (`data/searchNormalize.ts`) so IAST diacritics fold (`Bhagavad Gītā` → `BhagavadGita`) and dandas/`·`/punctuation drop before the words join. Native-script titles keep `\p{L}`, `\p{N}` **and `\p{M}`** — matras are combining marks, and stripping them would shred the word — and drop everything else including spaces. `gu`/`kn` re-script the Devanagari title the same way every other content string does. Output is deduped case-insensitively, capped at `MAX_HASHTAGS = 30`, and drops anything over 40 characters or with no letter in it. Deterministic: the same verse + language always produces the same block, so a re-share reuses tags Instagram has already indexed the account under.
 

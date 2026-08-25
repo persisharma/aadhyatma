@@ -18,6 +18,11 @@
  *
  * Tags are emitted **specific → broad**:
  *
+ *   0. occasion            — the festival or vrat falling on the share date, when it
+ *                            belongs to one of the text's own deities ("#HanumanJayanti").
+ *                            The single highest-value tag we can emit: hyper-relevant
+ *                            AND spiking in volume on exactly the day it is used.
+ *                            Supplied by the caller (`timely`) — see below.
  *   1. section / chapter   — the long tail ("#GitaChapter2"). Tiny feeds, but the
  *                            post can actually rank in them, and ranking is what
  *                            gets it in front of anyone at all.
@@ -33,6 +38,14 @@
  *
  * The blend (a handful of niche, a handful of mid, a handful of broad) is the part
  * that matters for reach; the exact word list below is editorial and safe to tune.
+ *
+ * ## What is deliberately NOT here
+ *
+ * No `#viral`, `#trending`, `#explorepage`, `#fyp`. Tags with no topical relation to
+ * the post are what integrity systems look for, several in that family have been
+ * restricted outright, and they dilute the classification the specific tags exist to
+ * provide. Every tag in this module earns its place by describing the verse; the
+ * timely tier below is gated on relevance for exactly the same reason.
  */
 
 import { library, type ContentCategory, type Deity } from './texts';
@@ -114,6 +127,79 @@ const LANGUAGE_TAGS: Record<Lang, readonly string[]> = {
 const BRAND_TAGS = ['Vedansh', 'VedanshApp'] as const;
 
 /**
+ * Weekday (vaar) tags, keyed by `Date#getDay()`. Emitted **only** when the day's
+ * presiding deity (`deityForWeekday`, `data/routine/vaar.ts`) is one the text is
+ * actually tagged with — a Tuesday `#Mangalwar` on a Saraswati stotra is the same
+ * irrelevance the module refuses everywhere else.
+ */
+const WEEKDAY_TAGS: Readonly<Record<number, { latin: string; hi: string }>> = {
+  0: { latin: 'Ravivar', hi: 'रविवार' },
+  1: { latin: 'Somvar', hi: 'सोमवार' },
+  2: { latin: 'Mangalwar', hi: 'मंगलवार' },
+  3: { latin: 'Budhwar', hi: 'बुधवार' },
+  4: { latin: 'Guruvar', hi: 'गुरुवार' },
+  5: { latin: 'Shukrawar', hi: 'शुक्रवार' },
+  6: { latin: 'Shanivar', hi: 'शनिवार' },
+};
+
+/**
+ * Search tokens per deity, used to decide whether the day's observance belongs to
+ * this text. Matched against the normalized `deityEn` + `nameEn` of the observance
+ * rule, so `Hanuman Jayanti` (deityEn "Hanuman") attaches to a Hanuman-tagged text
+ * and to nothing else. Lowercase and diacritic-free — compared post-`normalize`.
+ */
+const DEITY_MATCH_TOKENS: Record<Deity, readonly string[]> = {
+  rama: ['ram', 'rama', 'raghu'],
+  krishna: ['krishna', 'krsna', 'kanha', 'gopal'],
+  vishnu: ['vishnu', 'visnu', 'narayan', 'hari'],
+  shiva: ['shiv', 'siva', 'mahadev', 'shankar'],
+  hanuman: ['hanuman', 'bajrang', 'maruti'],
+  durga: ['durga', 'ambe', 'sherawali'],
+  ganesha: ['ganesh', 'ganesa', 'ganpati', 'vinayak'],
+  savitr: ['gayatri', 'savitr'],
+  saraswati: ['saraswati', 'sarasvati'],
+  lakshmi: ['lakshmi', 'laksmi'],
+  surya: ['surya', 'sun'],
+  radha: ['radha'],
+  kartikeya: ['kartikeya', 'murugan', 'skanda'],
+  kubera: ['kubera', 'kuber'],
+  ganga: ['ganga'],
+  parvati: ['parvati', 'gauri'],
+  narasimha: ['narasimha', 'narsimha'],
+  dattatreya: ['dattatreya', 'datta'],
+  shani: ['shani', 'sani'],
+  kali: ['kali'],
+  navagraha: ['navagraha', 'graha'],
+};
+
+/** One observance falling on the share date, as much of it as the tags need. */
+export type TimelyOccasion = {
+  nameHi: string;
+  nameEn: string;
+  /** `ObservanceRule.deityEn` — the relevance test runs against this. */
+  deityEn: string;
+};
+
+/**
+ * Date-dependent inputs. Supplied by the **caller** rather than read here: this
+ * module stays pure and deterministic, and resolving observances needs a location
+ * and a warmed year cache that only a React tree can provide (`useObservancesForDate`).
+ */
+export type TimelyContext = {
+  /** Observances on the share date, engine order. Only deity-relevant ones are used. */
+  occasions?: readonly TimelyOccasion[];
+  /** Calendar year of the share date — powers the `#HanumanJayanti2026` variant. */
+  year?: number;
+  /** `Date#getDay()` of the share date, for the vaar tag. */
+  weekday?: number;
+  /** That weekday's presiding deity (`deityForWeekday`). */
+  weekdayDeity?: Deity;
+};
+
+/** At most this many observances contribute tags — a day can carry several. */
+const MAX_OCCASIONS = 2;
+
+/**
  * Short, higher-volume aliases for texts whose registry name is long. Used for
  * the chapter tag, where "#BhagavadGitaChapter2" is a dead tag and "#GitaChapter2"
  * is a live one. Keyed by `LibraryEntry.id`; absent = use the full slug.
@@ -175,6 +261,8 @@ export type VerseHashtagParams = {
   lang: Lang;
   /** Cap; defaults to {@link MAX_HASHTAGS}. Pass {@link STORY_MAX_HASHTAGS} for a story. */
   limit?: number;
+  /** Date-dependent tags (festival / vrat / vaar). Absent → the block is date-free. */
+  timely?: TimelyContext;
 };
 
 /**
@@ -192,7 +280,24 @@ export function buildVerseHashtags(p: VerseHashtagParams): string[] {
   const sectionTag = latinTag(p.sectionNameEn);
   const alias = SHORT_ALIAS[p.sourceId] ?? textTag;
 
+  const deityTokens = (entry?.deities ?? []).flatMap((d) => DEITY_MATCH_TOKENS[d]);
   const ordered: string[] = [];
+
+  // 0. Occasion — the festival or vrat falling today, but ONLY when it belongs to
+  //    one of this text's deities. `#HanumanJayanti` on a Hanuman Chalisa verse is
+  //    the best tag in the block; the same tag on a Saraswati stotra is spam.
+  for (const occ of (p.timely?.occasions ?? []).slice(0, MAX_OCCASIONS)) {
+    const haystack = normalize(`${occ.deityEn} ${occ.nameEn}`);
+    const relevant = deityTokens.some((t) => haystack.includes(t));
+    if (!relevant) continue;
+    const occTag = latinTag(occ.nameEn);
+    if (occTag) {
+      ordered.push(occTag);
+      // Year-suffixed festival tags carry real, sharply seasonal volume.
+      if (p.timely?.year) ordered.push(`${occTag}${p.timely.year}`);
+    }
+    if (p.lang === 'hi') ordered.push(nativeScriptTag(occ.nameHi));
+  }
 
   // 1. Long tail — the section (when it names something narrower than the text)
   //    and the chapter.
@@ -216,6 +321,20 @@ export function buildVerseHashtags(p: VerseHashtagParams): string[] {
   //    four deities would otherwise spend the whole budget on them.
   for (const deity of (entry?.deities ?? []).slice(0, 2)) {
     ordered.push(...DEITY_TAGS[deity]);
+  }
+
+  // 3b. Vaar — Tuesday on a Hanuman text, Saturday on a Shani one. Gated on the
+  //     day's deity actually being one of this text's, same rule as the occasion.
+  const weekdayDeity = p.timely?.weekdayDeity;
+  const weekday = p.timely?.weekday;
+  if (
+    weekdayDeity !== undefined &&
+    weekday !== undefined &&
+    (entry?.deities ?? []).includes(weekdayDeity) &&
+    WEEKDAY_TAGS[weekday]
+  ) {
+    ordered.push(WEEKDAY_TAGS[weekday].latin);
+    if (p.lang === 'hi') ordered.push(WEEKDAY_TAGS[weekday].hi);
   }
 
   // 4. Form of the text, 5. the broad ceiling, 6. language + brand.
