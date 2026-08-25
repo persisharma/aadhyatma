@@ -25,17 +25,17 @@ none of them are fixed by better content.
 A private account gets **zero** non-follower reach — nothing is eligible for Explore,
 Reels, hashtags or search. Trivial to check, catastrophic if wrong, so check it.
 
-### 1.2 Is it a Professional account?
+### 1.2 Is it a Professional account? — ✅ yes (Creator)
 
-`Settings → Account type and tools → Switch to professional account`
+`Settings → Account type and tools`
 
-Two reasons this is step one:
+Creator *is* a Professional account type (see §2), so this is settled. Two things it
+means you already have:
 
-- **Without it you have no Insights**, which means the measurement plan in README §7
-  (watch time, sends per reach, non-follower reach %) can't run at all. You'd be
-  iterating blind.
-- Professional accounts get the Account Status panel in §1.3, which is the single most
-  valuable thing on this page.
+- **Insights**, so the measurement plan in README §7 (watch time, sends per reach,
+  non-follower reach %) can actually run.
+- **The Account Status panel** in §1.3 — which you now have access to, and which is
+  still the highest-value unchecked item on this page.
 
 ### 1.3 Account Status — are you eligible to be recommended?
 
@@ -64,36 +64,31 @@ toggle in particular is easy to have switched off years ago and forgotten.
 
 ---
 
-## 2. Creator vs Business — this one has teeth
+## 2. Creator vs Business — ✅ resolved: on Creator
 
 `Settings → Account type and tools`
 
-Both are Professional accounts and both give you Insights, so it looks like a cosmetic
-choice. It isn't, for one specific reason that lands directly on README §1.3:
+**Confirmed on a Creator account, so this is not a problem — and one hypothesis is
+dead.** Recorded here so nobody re-opens it later.
 
-**Business accounts see a restricted audio library.** Instagram licenses its
-trending-audio catalogue for personal/creator use; accounts flagged as businesses get a
-smaller commercial-safe library. Creator accounts get the full one.
+Why it was worth checking: Business accounts see a restricted audio library (Instagram
+licenses its trending catalogue for personal/creator use; business-flagged accounts get
+a smaller commercial-safe set). Had the account been Business, it would have been
+quietly removing the fix for the silent-reels cause in README §1.3.
 
-Since "the reels are silent" is one of the diagnosed causes and the fix is *add audio
-from Instagram's own library in the composer*, being on a Business account may be
-quietly removing the exact fix you need.
+**Two consequences now that Creator is confirmed:**
 
-**Verify it directly** rather than trusting this doc: open the Reels composer, tap the
-audio picker, and see whether trending/popular tracks are offered or whether you only
-get a generic royalty-free set.
+- **The audio fix is available — use it.** Full trending library in the composer. Silent
+  reels stay a live cause of flat reach, and now there is nothing blocking the remedy.
+  See README §5.1.
+- **Trial reels should be available.** Creator accounts can test a reel against
+  non-followers *without* showing it to existing followers. This is the cheapest way to
+  test hooks — post the same content with three different opening frames as trials and
+  keep the winner. Check the Reels composer for the toggle.
 
-| | Creator | Business |
-|---|---|---|
-| Full trending audio library | ✅ | ⚠️ restricted |
-| Insights | ✅ | ✅ |
-| Native scheduling (Meta Business Suite) | partial | ✅ |
-| Third-party schedulers / API posting | limited | ✅ |
-| Action buttons, shop, ads | limited | ✅ |
-
-**Recommendation: Creator.** You have no ad spend and no shop; audio access matters more
-than scheduling, and you can schedule manually. Switching is reversible — but do it
-once and leave it, since flip-flopping account types is not a free operation.
+**Stay on Creator.** No ad spend and no shop, so the Business-side advantages (native
+scheduling, third-party API posting, action buttons) buy nothing here, and switching
+would cost the audio library. Don't flip account types to get a scheduling feature.
 
 ---
 
@@ -200,16 +195,20 @@ Not reach levers, but the downside is total loss of the account:
 
 ## 7. Do this in one sitting
 
-1. Public? Professional? → §1.1, §1.2
-2. **Account Status — recommendation eligibility.** If this is bad, stop and fix it
-   before anything else. → §1.3
-3. Open the audio picker; if trending tracks are missing, switch to Creator. → §2
+0. ~~Professional account?~~ ✅ Creator, confirmed. → §1.2, §2
+1. Public? → §1.1
+2. **Account Status — recommendation eligibility.** Still unchecked, and still the one
+   that can invalidate everything else. If this is bad, stop and fix it first. → §1.3
+3. Check the suggestion toggles haven't been switched off. → §1.4
 4. Rewrite the Name field with keywords. → §3.1
 5. Turn on resharing, remixes, downloads, auto-captions. → §4
-6. Check Hidden Words isn't eating comments. → §5
-7. Enable 2FA. → §6
+6. **Add audio from Instagram's library to the next reel.** Unblocked — the Creator
+   account has the full trending catalogue. → §2, README §5.1
+7. Check Hidden Words isn't eating comments. → §5
+8. Enable 2FA. → §6
 
-Steps 2–5 are the ones that plausibly move the number. Everything else is hygiene.
+Steps 2, 5 and 6 are the ones that plausibly move the number. Everything else is
+hygiene.
 
 Then give it two weeks before judging any of it, and change one thing at a time —
 same rule as README §7.

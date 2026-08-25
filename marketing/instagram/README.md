@@ -12,9 +12,10 @@ with different rules.
 > pixel measurements and product names as "verify in the app", not gospel.
 
 > **Before working through any of this, do the settings pass in
-> [`account-setup.md`](./account-setup.md).** Two account-level settings can flatten
-> reach on their own regardless of content quality — if the account isn't eligible to
-> be recommended to non-followers, nothing below will fix it.
+> [`account-setup.md`](./account-setup.md).** The account is confirmed on Creator, which
+> rules out the audio-library problem — but **Account Status / recommendation
+> eligibility is still unchecked**, and if the account isn't eligible to be shown to
+> non-followers, nothing below will fix it.
 
 ---
 
@@ -170,8 +171,8 @@ Per post, in order:
    from Instagram's own library. Using in-app audio keeps the post attached to that
    sound's discovery surface; muxing your own file does not. Devotional instrumental
    or a low flute bed suits the brand. `--audio <file>` exists for licensed audio you
-   own, and should be the exception. **If the trending library looks thin in the audio
-   picker, you're on a Business account** — see [`account-setup.md`](./account-setup.md) §2.
+   own, and should be the exception. The account is on Creator, so the full trending
+   library is available — see [`account-setup.md`](./account-setup.md) §2.
 2. **Cover frame.** Pick the hook frame, not a mid-reel frame. It's the grid thumbnail.
 3. **Caption first line = the searchable question**, in Hindi, verbatim as someone
    would type it: `एकादशी कब है? · Ekadashi 2026`. Keywords in the caption do work;
@@ -249,9 +250,10 @@ Two useful confirmations, early:
 - If watch time is flat across *every* format, the problem is upstream of format —
   it's the hook, and §1.2 is where to spend the next iteration.
 
-Instagram also has a way to test reels against non-followers without showing them to
-your existing audience (a "trial"/test-reel mode in the composer). If it's available
-on the account, it's the cheapest way to test hooks — check the composer.
+Instagram can test a reel against non-followers without showing it to your existing
+audience ("trial" reels in the composer) — a Creator-account feature, so it should be
+available here. It is the cheapest hook test there is: same content, three different
+opening frames, keep the winner. Use it before committing a hook to a real post.
 
 ---
 
