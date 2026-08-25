@@ -1381,12 +1381,12 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
 
 ## 39. Share Verse Cards
 
-**Purpose.** Let a reader send any verse out of the app as a branded parchment image — composed off-screen, captured as a PNG, and handed to the native share sheet with a caption + install link (PRD-05). `ShareProvider` / `useShare()` in `mobile/src/utils/shareVerse.tsx`; card in `ShareCard.tsx`; links in `mobile/src/data/shareLinks.ts`. For a verse-less invite (the multi-line feature-list message + download link, §37), the More hub's **Share the App** card calls `buildAppShareMessage(lang)` from the same `shareLinks.ts` and opens the native share sheet directly.
+**Purpose.** Let a reader send any verse out of the app as a branded parchment image — composed off-screen, captured as a PNG, and handed to the native share sheet with a caption + install link (PRD-05). Tapping the share button opens a **target picker** (§39.1) with three destinations: the plain share sheet, an **Instagram post** (4:5), and an **Instagram story / reel** (9:16, §39.3) — the Instagram routes carry the same card with a per-verse hashtag block (§39.2). `ShareProvider` / `useShare()` in `mobile/src/utils/shareVerse.tsx`; card in `ShareCard.tsx`; picker in `ShareTargetSheet.tsx`; 9:16 wrapper in `ShareStoryCanvas.tsx`; links + captions in `mobile/src/data/shareLinks.ts`; hashtags in `mobile/src/data/shareHashtags.ts`. For a verse-less invite (the multi-line feature-list message + download link, §37), the More hub's **Share the App** card calls `buildAppShareMessage(lang)` from the same `shareLinks.ts` and opens the native share sheet directly.
 
 ### Component: Share Button (`ShareButton.tsx`)
 
 - Same family as the Bookmark button (§25): 34×34 circle, `parchment-soft` fill, 1 px `divider` border, `↗` glyph in `saffron` (18, weight 600). 12 px `hitSlop`.
-- Placement: in the verse page's **header row**, right of the verse-type pill, alongside the Bookmark button (readers pass both via the verse page's `topActions` slot). Every reader carries one — all 15 reader screens plus Daily Bhakti and the Japam counter. It is also the **only** share affordance elsewhere in the app: the **Today's Panchang** (Muhurat detail) header uses this same circle rather than a bespoke button, so the share glyph reads identically everywhere.
+- Placement: in the verse page's **header row**, right of the verse-type pill, alongside the Bookmark button (readers pass both via the verse page's `topActions` slot). Every reader carries one — all 15 reader screens plus Daily Bhakti and the Japam counter. Because the picker lives inside the provider, all ~24 call sites gained the Instagram destination without a single call-site change; the button's own props are unchanged. It is also the **only** share affordance elsewhere in the app: the **Today's Panchang** (Muhurat detail) header uses this same circle rather than a bespoke button, so the share glyph reads identically everywhere.
 - While a capture/share is in flight (`busy`), the button disables and drops to 50 % opacity — this debounces double-taps. On the Muhurat detail screen `busy` also covers the pre-ready window before the panchang is computed.
 - Accessibility: `accessibilityRole="button"`; label defaults to "Share verse" and hint to "Long-press to share a screenshot of this reader instead", but both are **optional props** — non-verse surfaces override them (the Panchang header passes a localized "Share panchang" label and no hint, since it has no long-press path). [The verse provider supports a `mode: 'screenshot'` capture of a caller-supplied ref, and the button accepts `onLongPress` — but no shipping reader currently wires `onLongPress`, so only the card path is live today.]
 
@@ -1404,14 +1404,71 @@ A fixed-size 540×675 dp card (4:5 portrait), rendered **off-screen** and captur
    **Why not platform auto-fit (August 2026).** This block shipped as italic 14/24 with `numberOfLines={5}` + `adjustsFontSizeToFit` down to `minimumFontScale={0.5}`. The 5-line cap forced nearly every real meaning to shrink, the shrink bottomed out at **7 pt** — below the §3.0 10 pt floor — and because `lineHeight` stayed pinned at 24 while the glyphs shrank, the leading ratio blew out to ~3.4×: a scatter of tiny characters in cavernous white space, reported as unreadable in a shared WhatsApp image. That is the same trap already recorded on `CategoryCard` and Namkaran (§61) — *on iOS a multi-line label with a fixed `lineHeight` shrinks erratically and ignores `minimumFontScale`* — so the rule to carry forward is: **a fixed leading and platform auto-fit must never appear on the same Text.** Size it in JS, derive the leading from the size, and take the line cap from real geometry. Guarded by `components/__tests__/shareCardFit.test.tsx` (no auto-fit props, ≥12 pt, 1.4–1.7× leading, upright Indic) and `utils/__tests__/shareCardType.test.ts` (the ladder, the budget, and that the fitted block still fits the card).
 5. **Branding footer** (1 px `divider` top rule, 14 above): `वेदांश़` wordmark (reader-title face, 18, `ink`) · `Vedansh — Sacred Texts, Daily Reading` (italic 12, `saffron-deep`) · `NOW AVAILABLE ON IOS & ANDROID` (uppercase 10, `ink-muted`, 2.0 tracking).
 
+### §39.1 Component: Share Target Sheet (`ShareTargetSheet.tsx`)
+
+A bottom sheet in the `LanguagePickerSheet` family (§37 sheet chrome): `parchment-highlight` base, 22 px top corners, 40×4 grabber, `xxl` horizontal padding, `modalBackdrop` behind, backdrop tap dismisses. Opened by `share(verse, lang)` when the caller names no `target`.
+
+**Structure (top to bottom):**
+
+1. **Title** — `श्लोक साझा करें` / `Share this verse` / gu / kn, `cardFontByLang` at 18, `ink`, centred.
+2. **Row: Share** — `↗` glyph in `saffron` (18, 22-wide column), title at 17 (`cardFontByLang`, `ink`), sub-label "WhatsApp, Messages, anywhere" at 12. 1 px `divider` bottom rule. Runs the unchanged §39 flow.
+3. **Row: Instagram post** — `◉` glyph, sub-label "4:5 card — for the feed", trailing **`4:5`** pill chip (10, `ink-muted`, 1 px `divider`, pill radius). 1 px `divider` bottom rule.
+4. **Row: Instagram story / reel** — `▮` glyph, sub-label "Full screen 9:16 — nothing gets cropped", trailing **`9:16`** chip. Exports the §39.3 canvas.
+5. **Copy note** — one shared line under both Instagram rows: "Either way the caption + hashtags are copied — just paste in Instagram". It sits below the rows rather than inside each, so the two rows differ only by the thing that actually differs: the aspect.
+6. **Hashtag preview** — `parchment-soft` panel, 1 px `divider`, `radii.md`; an `indicSafeTag` eyebrow at 10 (`हैशटैग` / `HASHTAGS` / gu / kn) over the live tag line at 12/18 in `saffron-deep`, inside a 76 dp `maxHeight` scroll. The preview is not decoration: the tags change per verse, and a reader about to post under their own name gets to see them first.
+7. **Cancel** — 44 pt text button, 13, `ink-muted`.
+
+**Why Instagram is two rows.** The destination decides the aspect, and the reader is the only one who knows which they are about to post. A feed post shows a 4:5 image whole; a story or reel is 9:16 and fills the frame from a 4:5 source by scaling up and cropping — which takes the card's header band and branding footer with it. Offering one "Share on Instagram" row means half the shares silently ship a cropped card. The aspect chip states the difference numerically as well as in prose.
+
+All three rows are 44 pt minimum and drop to 50 % opacity + `disabled` while `busy`. Every sub-label and eyebrow goes through `eyebrowTextStyle` / `indicSafeTag` (§3.0) rather than the Inter-based `sectionLabel` token — Inter has no Indic glyphs and Latin tracking splits the shirorekha. Accessibility: the rows carry the stable English labels **`Share to other apps`**, `Share on Instagram` and `Share as Instagram story or reel` — the first is deliberately not `Share verse`, which is the reader button's own label and would be ambiguous to an e2e selector (and to a screen reader) while the sheet is open. The Instagram row's hint states that the caption is copied; the preview exposes `Hashtags: <line>`. Guarded by `components/__tests__/ShareTargetSheet.test.tsx`.
+
+### §39.2 Instagram hashtags (`data/shareHashtags.ts`)
+
+**Why derived, not canned.** One fixed tag block on every share teaches Instagram nothing: a Chalisa chaupai and a Gita shloka land in the same bucket and compete with each other. Every tag is instead built from the verse being shared — its section title, its chapter, and the deities + category the registry (`library`, §41) files that text under. Change the verse and the block changes with it. Pure, bundle-only, no native deps — so it ships over OTA like the rest of `shareLinks.ts`.
+
+**Order is the strategy.** Tags are emitted **specific → broad**, and the 30-tag Instagram cap therefore only ever trims from the broad end:
+
+| # | Tier | Source | Example (Gita 2.47, `hi`) |
+|---|------|--------|---------------------------|
+| 1 | Section / chapter | `sectionNameEn` when narrower than the text; chapter parsed out of `Verse X.Y` | `#GitaChapter2` |
+| 2 | Text | `LibraryEntry.nameEn`, IAST-folded to PascalCase; plus the title in the reading language's own script | `#BhagavadGita` `#भगवद्गीता` |
+| 3 | Deity | curated 2–3 tags per `Deity`, first two deities on the entry | `#Krishna` `#JaiShreeKrishna` `#RadheRadhe` |
+| 4 | Category | curated tags per `ContentCategory` | `#SacredTexts` `#Scripture` |
+| 5 | Broad | fixed evergreen set | `#Bhakti` `#SanatanDharma` `#Hinduism` … |
+| 6 | Language + brand | per-`Lang` discovery tags, then `#Vedansh` `#VedanshApp` | `#भक्ति` `#सनातनधर्म` |
+
+Broad tags alone bury a post on posting; behind the specific tags they add the volume ceiling without costing the ranking. Deities are capped at the first two on the entry so a four-deity text can't spend the whole budget on them.
+
+**Slug rules.** Latin titles run through the search normalizer (`data/searchNormalize.ts`) so IAST diacritics fold (`Bhagavad Gītā` → `BhagavadGita`) and dandas/`·`/punctuation drop before the words join. Native-script titles keep `\p{L}`, `\p{N}` **and `\p{M}`** — matras are combining marks, and stripping them would shred the word — and drop everything else including spaces. `gu`/`kn` re-script the Devanagari title the same way every other content string does. Output is deduped case-insensitively, capped at `MAX_HASHTAGS = 30`, and drops anything over 40 characters or with no letter in it. Deterministic: the same verse + language always produces the same block, so a re-share reuses tags Instagram has already indexed the account under.
+
+**Story cap.** A post's caption takes 30 tags; a story's live in a **text sticker**, which takes far fewer — and thirty tags stuck on a frame looks like spam. `buildVerseHashtags` therefore accepts a `limit`, and the story route passes `STORY_MAX_HASHTAGS = 10`. Because the list is built specific → broad, the story block is a **prefix** of the post block: what gets dropped is the broad tail, and the picker's preview stays truthful for both formats.
+
+**Caption.** `buildInstagramCaption` (`shareLinks.ts`) = the §39 verse caption, then `<Follow line> @vedansh.app`, then a **blank line**, then the tag line; `format: 'story'` trims the tag line to the story cap. The blank line is deliberate — Instagram collapses a caption after ~3 lines, so the preview shows the verse and not the tags. Guarded by `utils/__tests__/shareHashtags.test.ts`.
+
+**Why the clipboard.** Instagram accepts no pre-filled caption from a share intent on either platform, and the Stories pasteboard route needs a native module (and a store rebuild). So the Instagram branch copies the caption to the clipboard via RN's deprecated-but-present `Clipboard` — the same API `NameDetailSheet` already uses, i.e. no new native dependency and the whole feature ships OTA — then opens the share sheet with the PNG. The sheet's sub-label tells the reader the caption is waiting to be pasted.
+
+### §39.3 Story / Reel canvas (`ShareStoryCanvas.tsx`, `utils/shareStoryLayout.ts`)
+
+**The failure it fixes.** The share card is 4:5 — the tallest aspect a feed post shows whole. Posted to a **Story** or a **Reel**, which are 9:16, Instagram scales the image up to fill the frame and crops the overflow off the top and bottom: exactly the header band and the branding footer. Reported from the field after §39.1 shipped.
+
+**Two separate hazards.** *Crop* is solved by exporting a true 1080×1920 frame, so nothing is scaled to fill. *Chrome* is solved by keeping the card out of the strips Instagram paints over: the avatar/progress row at the top, the Reel caption + audio strip at the bottom, the Reel action rail down the right edge. `storySafeInsets` is the **union** of Story and Reel chrome — top 125, bottom 170, horizontal 50 dp (×2 = 250 / 340 / 100 px) — so one exported image is safe posted either way. The horizontal inset is mirrored on the left so the card stays optically centred.
+
+**Geometry.** Canvas 540×960 dp, captured at 1080×1920. `placeStoryCard()` takes the largest uniform scale that fits the safe box and centres the card **in the safe box, not the canvas** — canvas-centring would drop the branding footer under the Reel caption strip. At the shipped sizes the fit is width-constrained: 440×550 dp, scale ≈ 0.815, sitting 182.5 dp from the top.
+
+**The card is scaled, not re-laid-out.** `ShareStoryCanvas` renders `ShareCard` at its native 540×675 and applies a `transform` scale. Re-flowing it at story width would re-wrap the verse lines and re-run `fitMeaningType` against different geometry — silently changing a composition that §39's fit tests already pin. Behind the card sits the same source sketch, full-bleed, so the frame reads as a designed story rather than a letterboxed screenshot.
+
+Guarded by `utils/__tests__/shareStoryLayout.test.ts` (9:16 export, card wholly inside the safe box, uniform scale, safe-box centring) and the capture-size assertions in `utils/__tests__/shareVerseTarget.test.tsx`.
+
 ### Share flow (`ShareProvider` / `useShare()`)
 
-1. `share(verse, lang)` mounts the card **off-screen** (absolute-positioned at −10000,−10000, `pointerEvents="none"`) inside the provider, waits one animation frame + 60 ms for layout/fonts, then captures it with `react-native-view-shot`'s `captureRef` (PNG, quality 1, tmpfile, scaled to 1080×1350).
+0. `share(verse, lang)` with no `opts.target` opens the target picker (§39.1) and returns; the picker calls back with `'system'` or `'instagram'`. A caller that already knows the destination passes `opts.target` and skips the sheet.
+1. The chosen target mounts the card **off-screen** (absolute-positioned at −10000,−10000, `pointerEvents="none"`) inside the provider, waits one animation frame + 60 ms for layout/fonts, then captures it with `react-native-view-shot`'s `captureRef` (PNG, quality 1, tmpfile, scaled to 1080×1350).
 2. A **text caption** is always built via `buildShareCaption` (`shareLinks.ts`): section · verse label header, the quoted first verse line, then a language-localised CTA ("Read on Vedansh:" / "Vedansh ऐप पर पढ़ें:" / gu / kn equivalents) followed by the public smart link (`SMART_LINK`, a GitHub Pages redirect page; `APP_STORE_URL` / `PLAY_STORE_URL` constants live alongside it). Bundle-only — no runtime fetch.
-3. **Platform split:** iOS shares image + caption together through RN `Share.share({ message, url })` (UIActivityViewController fills WhatsApp's caption field automatically). Android's RN Share drops file URIs, so the image goes through `expo-sharing`'s `shareAsync` (mimeType `image/png`) and the caption is left to the user — the branding footer on the card itself carries the fallback.
-4. **Fallbacks:** capture failure → text-only `Share.share(caption)`; sheet dismissal / any error is swallowed. An in-flight ref guarantees one share at a time; `busy` drives the button's disabled state.
+3. **Instagram target:** the off-screen mount is the plain card for `format: 'post'` and the §39.3 canvas for `format: 'story'`, captured at 1080×1350 or 1080×1920 accordingly. The caption is `buildInstagramCaption` (verse caption + `@handle` + hashtag block, §39.2, trimmed to 10 tags for a story), copied to the clipboard, and the PNG always goes out through `expo-sharing` on **both** platforms — the RN Share `message` would ride along uselessly (Instagram drops it) and on some builds pushes Instagram out of the activity list in favour of text-capable targets. `dialogTitle: 'Share on Instagram'`.
+4. **Platform split (system target):** iOS shares image + caption together through RN `Share.share({ message, url })` (UIActivityViewController fills WhatsApp's caption field automatically). Android's RN Share drops file URIs, so the image goes through `expo-sharing`'s `shareAsync` (mimeType `image/png`) and the caption is left to the user — the branding footer on the card itself carries the fallback.
+5. **Fallbacks:** capture failure → text-only `Share.share(caption)`; `Sharing.isAvailableAsync()` false → the same text-only path; sheet dismissal / any error is swallowed. An in-flight ref guarantees one share at a time; `busy` drives the button's disabled state.
 
-**Files:** `mobile/src/components/ShareButton.tsx`, `ShareCard.tsx`, `mobile/src/utils/shareVerse.tsx`, `mobile/src/utils/shareCardType.ts`, `mobile/src/data/shareLinks.ts`. `ShareProvider` mounts once in `App.tsx`.
+**Files:** `mobile/src/components/ShareButton.tsx`, `ShareCard.tsx`, `ShareStoryCanvas.tsx`, `ShareTargetSheet.tsx`, `mobile/src/utils/shareVerse.tsx`, `mobile/src/utils/shareCardType.ts`, `mobile/src/utils/shareStoryLayout.ts`, `mobile/src/data/shareLinks.ts`, `mobile/src/data/shareHashtags.ts`. `ShareProvider` mounts once in `App.tsx` and owns both the off-screen card and the target picker. Tests: `utils/__tests__/shareHashtags.test.ts`, `utils/__tests__/shareStoryLayout.test.ts`, `utils/__tests__/shareVerseTarget.test.tsx`, `components/__tests__/ShareTargetSheet.test.tsx`, e2e `mobile/.maestro/share-target-smoke.yaml`.
 
 ---
 
