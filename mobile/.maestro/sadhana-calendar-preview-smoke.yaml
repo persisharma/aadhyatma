@@ -84,7 +84,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: ".*Sankalp · 0 / 9.*"
 - waitForAnimationToEnd
 - assertVisible: "Durga Chalisa.*Tap to read.*"
-- takeScreenshot: /tmp/vedansh-sankalp-preview
+- takeScreenshot: e2e-shots/vedansh-sankalp-preview
 
 # ── Cleanup — Back to the (active) detail, then set the sankalp aside ──
 - tapOn: "Back"

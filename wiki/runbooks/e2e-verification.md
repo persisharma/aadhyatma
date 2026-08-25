@@ -120,12 +120,21 @@ information over the accessibility tree. Rules, in order:
    genuinely *visual* question remains (layout overlap, theming, clipping), read ONE
    screenshot — downscaled first: `sips -Z 640 shot.png --out /tmp/shot-small.png`
    (~4–5× fewer tokens than full-res).
-5. **True visual/design review** (alignment, spacing, colour): downscale every capture as
-   above, and prefer delegating the image-reading to a subagent that returns a one-line
-   text verdict, so pixels never enter the main context.
-6. **Prefer adding an `assertVisible` over a screenshot check.** If you needed to look at a
+5. **Visual regressions are caught by the cached golden-diff harness, not by eyeballing.**
+   Flow checkpoints (`takeScreenshot: e2e-shots/<name>`) are pixel-diffed against committed
+   goldens by `mobile/scripts/e2e-visual-check.sh` (normalize to 440×956 → per-pixel compare,
+   status-bar clock masked). Unchanged screens verify at ZERO token cost (`PASS 0.014%`);
+   a real change exits 1 with a `FAIL <diff%> bbox=…` line and writes
+   `e2e-shots/<name>.diff.png` (changed pixels in red) — read that one small image, nothing
+   else. Intentional UI change → delete the golden, re-run to reseed, commit the new golden.
+   Thresholds: `E2E_VISUAL_THRESH` (default 0.10 %), `E2E_DIFF_TOL`, `E2E_DIFF_MASK_TOP`.
+6. **True visual/design review** (a new screen with no golden yet): downscale every capture
+   (`sips -Z 640`), and prefer delegating the image-reading to a subagent that returns a
+   one-line text verdict, so pixels never enter the main context.
+7. **Prefer adding an `assertVisible` over a screenshot check.** If you needed to look at a
    screen to verify a change, encode that check as a flow assertion — it's cheaper on every
-   future run and survives as a regression gate.
+   future run and survives as a regression gate. Reserve `takeScreenshot` checkpoints for
+   genuinely visual surfaces (layout, theming, celebration overlays).
 
 ## Gotchas
 

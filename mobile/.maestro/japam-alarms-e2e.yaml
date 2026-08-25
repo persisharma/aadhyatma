@@ -26,7 +26,7 @@ appId: com.prashantsharma.vedansh
 # The card is a Pressable with an explicit accessibilityLabel, which collapses
 # its child Text — so match the a11y label, not the inner "Japam Alarms" text.
 - assertVisible: "Japam alarms, none set"
-- takeScreenshot: jalarms-1-more-card
+- takeScreenshot: e2e-shots/jalarms-1-more-card
 
 # (2) Open the Japam Alarms screen — empty state
 - tapOn: "Japam alarms, none set"
@@ -35,7 +35,7 @@ appId: com.prashantsharma.vedansh
     visible: "No alarms yet"
     timeout: 10000
 - assertVisible: "Add your first Japam alarm to begin."
-- takeScreenshot: jalarms-2-empty
+- takeScreenshot: e2e-shots/jalarms-2-empty
 
 # (3) Open the new-alarm editor: day chips + label input + preview must render.
 - tapOn: "Add alarm"
@@ -46,7 +46,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Repeat Saturday"
 - assertVisible: "Alarm label"
 - assertVisible: "Next ring preview"
-- takeScreenshot: jalarms-3-editor
+- takeScreenshot: e2e-shots/jalarms-3-editor
 
 # (4) Repeat selection: deselect Sunday + Saturday → "Weekdays"
 - tapOn: "Repeat Sunday"
@@ -57,7 +57,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Alarm label"
 - inputText: "Morning Japa"
 - hideKeyboard
-- takeScreenshot: jalarms-4-editor-filled
+- takeScreenshot: e2e-shots/jalarms-4-editor-filled
 
 # (6) Confirm add (defaults to 06:00, first mantra). The row's a11y label is
 # stable 24h regardless of the device's 12/24h display convention.
@@ -66,7 +66,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Edit alarm at 06:00"
     timeout: 10000
-- takeScreenshot: jalarms-5-after-add
+- takeScreenshot: e2e-shots/jalarms-5-after-add
 
 # (7) Reopen in EDIT mode — the skip-next control only exists here.
 - tapOn: "Edit alarm at 06:00"
@@ -75,18 +75,18 @@ appId: com.prashantsharma.vedansh
     visible: "Skip next alarm"
     timeout: 10000
 - tapOn: "Skip next alarm"
-- takeScreenshot: jalarms-6-skip-armed
+- takeScreenshot: e2e-shots/jalarms-6-skip-armed
 - tapOn: "Confirm alarm"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Edit alarm at 06:00"
     timeout: 10000
-- takeScreenshot: jalarms-7-after-skip-save
+- takeScreenshot: e2e-shots/jalarms-7-after-skip-save
 
 # (8) Toggle the alarm switch off (persistence write path)
 - tapOn: "Toggle alarm"
 - waitForAnimationToEnd
-- takeScreenshot: jalarms-8-toggled
+- takeScreenshot: e2e-shots/jalarms-8-toggled
 
 # (9) Reopen editor once more (proves edit entry-point + persistence read)
 - tapOn: "Edit alarm at 06:00"
@@ -94,7 +94,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Confirm alarm"
     timeout: 10000
-- takeScreenshot: jalarms-9-editor-edit
+- takeScreenshot: e2e-shots/jalarms-9-editor-edit
 
 - stopApp:
     appId: com.prashantsharma.vedansh
