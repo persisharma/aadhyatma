@@ -43,6 +43,14 @@ import { transliterateDevanagari } from '@/utils/transliterate';
 /** Instagram's hard per-post cap. A caption past this drops the whole tag block. */
 export const MAX_HASHTAGS = 30;
 
+/**
+ * Instagram's cap for a **story**: a story's hashtags live in a text sticker, and
+ * it accepts far fewer than a post's caption. Ten also just looks better stuck on
+ * a frame than thirty. Because the list is built specific → broad, the story block
+ * is a prefix of the post block — the tags that get dropped are the broad tail.
+ */
+export const STORY_MAX_HASHTAGS = 10;
+
 /** Deity → curated tags, most canonical first. Keys mirror `Deity` in `texts.ts`. */
 const DEITY_TAGS: Record<Deity, readonly string[]> = {
   rama: ['JaiShriRam', 'Ram', 'Ramayan'],
@@ -165,6 +173,8 @@ export type VerseHashtagParams = {
   verseLabelEn: string;
   /** Active reading language: selects the native-script title + language tags. */
   lang: Lang;
+  /** Cap; defaults to {@link MAX_HASHTAGS}. Pass {@link STORY_MAX_HASHTAGS} for a story. */
+  limit?: number;
 };
 
 /**
@@ -214,9 +224,12 @@ export function buildVerseHashtags(p: VerseHashtagParams): string[] {
   ordered.push(...LANGUAGE_TAGS[p.lang]);
   ordered.push(...BRAND_TAGS);
 
+  const cap = Math.max(0, Math.min(p.limit ?? MAX_HASHTAGS, MAX_HASHTAGS));
   const seen = new Set<string>();
   const out: string[] = [];
   for (const tag of ordered) {
+    // Checked before the push, not after: a cap of 0 must yield nothing at all.
+    if (out.length >= cap) break;
     if (!tag || tag.length > MAX_TAG_LENGTH) continue;
     // A purely numeric hashtag is not a hashtag on Instagram.
     if (!/[\p{L}]/u.test(tag)) continue;
@@ -224,7 +237,6 @@ export function buildVerseHashtags(p: VerseHashtagParams): string[] {
     if (seen.has(key)) continue;
     seen.add(key);
     out.push(tag);
-    if (out.length === MAX_HASHTAGS) break;
   }
   return out;
 }

@@ -10,9 +10,15 @@ import { Clipboard, Platform, Share, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
+import ShareStoryCanvas from '@/components/ShareStoryCanvas';
 import ShareTargetSheet from '@/components/ShareTargetSheet';
 import { buildInstagramCaption, buildShareCaption } from '@/data/shareLinks';
 import { buildVerseHashtags, formatHashtags } from '@/data/shareHashtags';
+import {
+  STORY_OUTPUT_HEIGHT,
+  STORY_OUTPUT_WIDTH,
+  storyCanvas,
+} from '@/utils/shareStoryLayout';
 import type { Lang } from '@/data/gita/language';
 
 export type ShareableVerse = {
@@ -50,6 +56,17 @@ type ShareMode = 'card' | 'screenshot';
  */
 export type ShareTarget = 'system' | 'instagram';
 
+/**
+ * Aspect of the exported image.
+ *
+ * - `post`  — 1080×1350 (4:5), the tallest a feed post shows whole.
+ * - `story` — 1080×1920 (9:16) with the card inside the Story/Reel safe area.
+ *   A 4:5 image posted to a Story or Reel gets scaled up to fill the frame and
+ *   cropped top and bottom, which eats the card's header and branding footer
+ *   (design.md §39.3).
+ */
+export type ShareFormat = 'post' | 'story';
+
 type ShareOptions = {
   mode?: ShareMode;
   /** Used by mode='screenshot'; defaults to the off-screen card. */
@@ -59,6 +76,8 @@ type ShareOptions = {
    * reader default), `share()` opens the picker so Instagram is one tap away.
    */
   target?: ShareTarget;
+  /** Export aspect; defaults to `post`. Only meaningful with `target`. */
+  format?: ShareFormat;
 };
 
 type ShareContextValue = {
@@ -82,6 +101,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const [pending, setPending] = useState<{
     verse: ShareableVerse;
     lang: Lang;
+    format: ShareFormat;
   } | null>(null);
   const [chooser, setChooser] = useState<{
     verse: ShareableVerse;
@@ -97,7 +117,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       verse: ShareableVerse,
       lang: Lang,
       opts: ShareOptions | undefined,
-      target: ShareTarget
+      target: ShareTarget,
+      format: ShareFormat
     ) => {
       if (inFlightRef.current) return;
       inFlightRef.current = true;
@@ -107,10 +128,12 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
 
       try {
         if (mode === 'card') {
-          setPending({ verse, lang });
+          setPending({ verse, lang, format });
           await waitForLayout();
           captureTarget = cardRef as React.RefObject<View | null>;
         }
+        const outWidth = format === 'story' ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH;
+        const outHeight = format === 'story' ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
 
         let fileUri: string | null = null;
         if (captureTarget?.current) {
@@ -119,8 +142,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               format: 'png',
               quality: 1,
               result: 'tmpfile',
-              width: mode === 'card' ? OUTPUT_WIDTH : undefined,
-              height: mode === 'card' ? OUTPUT_HEIGHT : undefined,
+              width: mode === 'card' ? outWidth : undefined,
+              height: mode === 'card' ? outHeight : undefined,
             });
           } catch {
             fileUri = null;
@@ -138,7 +161,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         };
         const caption =
           target === 'instagram'
-            ? buildInstagramCaption({ ...captionParams, sourceId: verse.sourceId })
+            ? buildInstagramCaption({ ...captionParams, sourceId: verse.sourceId, format })
             : buildShareCaption(captionParams);
 
         if (target === 'instagram') {
@@ -163,10 +186,17 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               await Sharing.shareAsync(fileUri, {
                 mimeType: 'image/png',
                 UTI: 'public.png',
-                dialogTitle: 'Share on Instagram',
+                dialogTitle:
+                  format === 'story' ? 'Share to Instagram story' : 'Share on Instagram',
               });
             } else {
-              await Share.share({ message: caption }, { dialogTitle: 'Share on Instagram' });
+              await Share.share(
+                { message: caption },
+                {
+                  dialogTitle:
+                    format === 'story' ? 'Share to Instagram story' : 'Share on Instagram',
+                }
+              );
             }
           } else if (Platform.OS === 'ios') {
             // iOS UIActivityViewController accepts file + caption together; WhatsApp
@@ -212,7 +242,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         setChooser({ verse, lang, opts });
         return;
       }
-      await run(verse, lang, opts, opts.target);
+      await run(verse, lang, opts, opts.target, opts.format ?? 'post');
     },
     [run]
   );
@@ -236,11 +266,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   );
 
   const pickTarget = useCallback(
-    (target: ShareTarget) => {
+    (target: ShareTarget, format: ShareFormat) => {
       if (!chooser) return;
       const { verse, lang, opts } = chooser;
       setChooser(null);
-      void run(verse, lang, opts, target);
+      void run(verse, lang, opts, target, format);
     },
     [chooser, run]
   );
@@ -254,8 +284,9 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           lang={chooser.lang}
           hashtagPreview={hashtagPreview}
           busy={busy}
-          onShareSystem={() => pickTarget('system')}
-          onShareInstagram={() => pickTarget('instagram')}
+          onShareSystem={() => pickTarget('system', 'post')}
+          onShareInstagramPost={() => pickTarget('instagram', 'post')}
+          onShareInstagramStory={() => pickTarget('instagram', 'story')}
           onClose={() => setChooser(null)}
         />
       ) : null}
@@ -266,32 +297,53 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             position: 'absolute',
             left: -10000,
             top: -10000,
-            width: CARD_WIDTH,
-            height: CARD_HEIGHT,
+            width: pending.format === 'story' ? storyCanvas.width : CARD_WIDTH,
+            height: pending.format === 'story' ? storyCanvas.height : CARD_HEIGHT,
           }}
         >
           <View
             ref={cardRef}
             collapsable={false}
-            style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}
+            style={{
+              width: pending.format === 'story' ? storyCanvas.width : CARD_WIDTH,
+              height: pending.format === 'story' ? storyCanvas.height : CARD_HEIGHT,
+            }}
           >
-            <ShareCard
-              sourceId={pending.verse.sourceId}
-              stanza={pending.verse.stanza}
-              sectionNameHi={pending.verse.sectionNameHi}
-              sectionNameEn={pending.verse.sectionNameEn}
-              verseLabelHi={pending.verse.verseLabelHi}
-              verseLabelEn={pending.verse.verseLabelEn}
-              linesHi={pending.verse.linesHi}
-              linesEn={pending.verse.linesEn}
-              meaningHi={pending.verse.meaningHi}
-              meaningEn={pending.verse.meaningEn}
-              meaningGu={pending.verse.meaningGu}
-              meaningKn={pending.verse.meaningKn}
-              lang={pending.lang}
-              width={CARD_WIDTH}
-              height={CARD_HEIGHT}
-            />
+            {pending.format === 'story' ? (
+              <ShareStoryCanvas
+                sourceId={pending.verse.sourceId}
+                stanza={pending.verse.stanza}
+                sectionNameHi={pending.verse.sectionNameHi}
+                sectionNameEn={pending.verse.sectionNameEn}
+                verseLabelHi={pending.verse.verseLabelHi}
+                verseLabelEn={pending.verse.verseLabelEn}
+                linesHi={pending.verse.linesHi}
+                linesEn={pending.verse.linesEn}
+                meaningHi={pending.verse.meaningHi}
+                meaningEn={pending.verse.meaningEn}
+                meaningGu={pending.verse.meaningGu}
+                meaningKn={pending.verse.meaningKn}
+                lang={pending.lang}
+              />
+            ) : (
+              <ShareCard
+                sourceId={pending.verse.sourceId}
+                stanza={pending.verse.stanza}
+                sectionNameHi={pending.verse.sectionNameHi}
+                sectionNameEn={pending.verse.sectionNameEn}
+                verseLabelHi={pending.verse.verseLabelHi}
+                verseLabelEn={pending.verse.verseLabelEn}
+                linesHi={pending.verse.linesHi}
+                linesEn={pending.verse.linesEn}
+                meaningHi={pending.verse.meaningHi}
+                meaningEn={pending.verse.meaningEn}
+                meaningGu={pending.verse.meaningGu}
+                meaningKn={pending.verse.meaningKn}
+                lang={pending.lang}
+                width={CARD_WIDTH}
+                height={CARD_HEIGHT}
+              />
+            )}
           </View>
         </View>
       ) : null}

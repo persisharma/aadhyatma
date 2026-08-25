@@ -4,6 +4,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { ShareProvider, useShare, type ShareableVerse } from '@/utils/shareVerse';
 import { buildInstagramCaption } from '@/data/shareLinks';
+import { STORY_OUTPUT_HEIGHT, STORY_OUTPUT_WIDTH } from '@/utils/shareStoryLayout';
 
 /**
  * End-to-end guard for the share-target flow (design.md §39): the share button
@@ -11,6 +12,7 @@ import { buildInstagramCaption } from '@/data/shareLinks';
  * before opening the sheet, and the plain branch still behaves exactly as it did.
  */
 
+const mockCaptureRef = jest.fn((..._args: unknown[]) => Promise.resolve('file:///tmp/verse.png'));
 const mockShareAsync = jest.fn((..._args: unknown[]) => Promise.resolve());
 jest.mock('expo-sharing', () => ({
   isAvailableAsync: jest.fn(() => Promise.resolve(true)),
@@ -18,12 +20,14 @@ jest.mock('expo-sharing', () => ({
 }));
 
 jest.mock('react-native-view-shot', () => ({
-  captureRef: jest.fn(() => Promise.resolve('file:///tmp/verse.png')),
+  captureRef: (...args: unknown[]) => mockCaptureRef(...args),
 }));
 
 // ShareCard pulls in the reader background plates (image assets + gradients); the
-// flow under test only cares that something mounted and was captured.
+// flow under test only cares that something mounted and was captured. The story
+// canvas is stubbed the same way — its geometry is pinned by shareStoryLayout.test.ts.
 jest.mock('@/components/ShareCard', () => 'ShareCard');
+jest.mock('@/components/ShareStoryCanvas', () => 'ShareStoryCanvas');
 
 const setString = jest.spyOn(Clipboard, 'setString').mockImplementation(() => {});
 const rnShare = jest
@@ -80,6 +84,7 @@ function byLabel(tree: TestRenderer.ReactTestRenderer, label: string) {
 
 describe('share target flow', () => {
   beforeEach(() => {
+    mockCaptureRef.mockClear();
     mockShareAsync.mockClear();
     setString.mockClear();
     rnShare.mockClear();
@@ -116,6 +121,42 @@ describe('share target flow', () => {
 
     expect(mockShareAsync).toHaveBeenCalledTimes(1);
     expect(mockShareAsync.mock.calls[0][0]).toBe('file:///tmp/verse.png');
+  });
+
+  test('the post row exports 4:5 and the story row exports a full 9:16 frame', async () => {
+    const post = await openPicker();
+    await act(async () => byLabel(post, 'Share on Instagram').props.onPress());
+    await settle();
+    expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080, height: 1350 });
+
+    mockCaptureRef.mockClear();
+    const story = await openPicker();
+    await act(async () =>
+      byLabel(story, 'Share as Instagram story or reel').props.onPress()
+    );
+    await settle();
+    // A 4:5 export here is the bug: Instagram fills the 9:16 frame from it and
+    // crops the card's header band and branding footer away.
+    expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({
+      width: STORY_OUTPUT_WIDTH,
+      height: STORY_OUTPUT_HEIGHT,
+    });
+  });
+
+  test('the story row mounts the 9:16 canvas, the post row the bare card', async () => {
+    const post = await openPicker();
+    await act(async () => byLabel(post, 'Share on Instagram').props.onPress());
+    expect(post.root.findAllByType('ShareCard' as never).length).toBe(1);
+    expect(post.root.findAllByType('ShareStoryCanvas' as never).length).toBe(0);
+    await settle();
+
+    const story = await openPicker();
+    await act(async () =>
+      byLabel(story, 'Share as Instagram story or reel').props.onPress()
+    );
+    expect(story.root.findAllByType('ShareStoryCanvas' as never).length).toBe(1);
+    expect(story.root.findAllByType('ShareCard' as never).length).toBe(0);
+    await settle();
   });
 
   test('the plain Share branch does not touch the clipboard', async () => {

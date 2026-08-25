@@ -9,6 +9,7 @@
 
 import {
   MAX_HASHTAGS,
+  STORY_MAX_HASHTAGS,
   buildVerseHashtags,
   chapterFromVerseLabel,
   formatHashtags,
@@ -114,6 +115,23 @@ describe('buildVerseHashtags', () => {
     }
   });
 
+  test('the story cap trims the broad tail, keeping the specific tags', () => {
+    const post = buildVerseHashtags({ ...gita, lang: 'en' });
+    const story = buildVerseHashtags({ ...gita, lang: 'en', limit: STORY_MAX_HASHTAGS });
+    expect(story.length).toBe(STORY_MAX_HASHTAGS);
+    // Prefix, so the preview shown in the picker stays truthful for both formats.
+    expect(story).toEqual(post.slice(0, STORY_MAX_HASHTAGS));
+    expect(story).toContain('GitaChapter2');
+    expect(story).toContain('BhagavadGita');
+  });
+
+  test('the cap can never exceed the Instagram maximum', () => {
+    expect(buildVerseHashtags({ ...gita, lang: 'en', limit: 500 }).length).toBeLessThanOrEqual(
+      MAX_HASHTAGS
+    );
+    expect(buildVerseHashtags({ ...gita, lang: 'en', limit: 0 })).toEqual([]);
+  });
+
   test('is deterministic — a re-share reuses the same indexed tags', () => {
     expect(buildVerseHashtags({ ...gita, lang: 'hi' })).toEqual(
       buildVerseHashtags({ ...gita, lang: 'hi' })
@@ -156,6 +174,15 @@ describe('buildInstagramCaption', () => {
     expect(lines[lines.length - 1]).toBe(
       formatHashtags(buildVerseHashtags({ ...params, lang: 'en' }))
     );
+  });
+
+  test('a story caption carries the trimmed block, a post the full one', () => {
+    const post = buildInstagramCaption({ ...params, lang: 'en' });
+    const story = buildInstagramCaption({ ...params, lang: 'en', format: 'story' });
+    const count = (c: string) => (c.match(/#/g) ?? []).length;
+    expect(count(story)).toBe(STORY_MAX_HASHTAGS);
+    expect(count(post)).toBeGreaterThan(STORY_MAX_HASHTAGS);
+    expect(story).toContain('#GitaChapter2');
   });
 
   test('the tag block changes when the verse changes', () => {

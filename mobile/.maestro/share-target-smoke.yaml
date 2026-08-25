@@ -1,9 +1,11 @@
 # Share Target Smoke Test — verse share picker + Instagram destination
 #
 # Covers design.md §39.1: tapping a reader's Share button no longer opens the OS
-# share sheet directly, it opens the in-app target picker with two destinations
-# (Share / Share on Instagram) and a live hashtag preview built from the verse
-# (§39.2).
+# share sheet directly, it opens the in-app target picker with three destinations
+# (Share / Instagram post 4:5 / Instagram story or reel 9:16) and a live hashtag
+# preview built from the verse (§39.2). The post/story split exists because a 4:5
+# image posted to a story or reel gets cropped top and bottom (§39.3), so both
+# rows must be present — a picker that offers only the post aspect is the bug.
 #
 # The flow deliberately stops at the picker and cancels. Everything past the
 # picker is a NATIVE share sheet (UIActivityViewController / Android chooser),
@@ -13,7 +15,8 @@
 # utils/__tests__/shareHashtags.test.ts and shareVerseTarget.test.tsx.
 #
 # Selectors use the stable English a11y labels — "Share verse" on the reader
-# button, "Share to other apps" / "Share on Instagram" / "Cancel" in the picker.
+# button, "Share to other apps" / "Share on Instagram" / "Share as Instagram
+# story or reel" / "Cancel" in the picker.
 # The visible row titles localize to Devanagari in the default hi mode, which
 # Maestro's iOS tree cannot read. The picker's system row is deliberately NOT
 # labelled "Share verse": that would collide with the reader button underneath
@@ -46,10 +49,14 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Share verse"
 - waitForAnimationToEnd
 
-# The picker — both destinations plus the per-verse hashtag preview. The preview
-# exposes "Hashtags: #…", and Hanuman Chalisa must contribute its own text and
-# deity tags rather than a generic block.
+# The picker — all three destinations plus the per-verse hashtag preview. The
+# preview exposes "Hashtags: #…", and Hanuman Chalisa must contribute its own text
+# and deity tags rather than a generic block.
 - assertVisible: "Share on Instagram"
+- assertVisible: "Share as Instagram story or reel"
+# The aspect chips are the visible statement of the crop trade-off.
+- assertVisible: "4:5"
+- assertVisible: "9:16"
 - assertVisible: "Cancel"
 - assertVisible: ".*Hashtags: .*#HanumanChalisa.*"
 - assertVisible: ".*Hashtags: .*#JaiHanuman.*"

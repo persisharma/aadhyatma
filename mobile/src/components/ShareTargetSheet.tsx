@@ -18,6 +18,11 @@ import { cardFontByLang, eyebrowTextStyle, indicSafeTag } from '@/utils/langType
  * The hashtags are previewed here on purpose: they change with every verse, and a
  * reader about to post wants to see what is going out with their name on it (and
  * can trim tags after pasting).
+ *
+ * Instagram is two rows, not one, because the destination decides the aspect: a
+ * feed post shows the 4:5 card whole, while a Story or Reel is 9:16 and crops a
+ * 4:5 image top and bottom — taking the card's header and branding footer with it.
+ * The story row exports a real 1080×1920 frame instead (design.md §39.3).
  */
 
 type Props = {
@@ -26,7 +31,10 @@ type Props = {
   /** The hashtag line exactly as it will be pasted (`#A #B …`). */
   hashtagPreview: string;
   onShareSystem: () => void;
-  onShareInstagram: () => void;
+  /** 4:5 — the tallest a feed post shows whole. */
+  onShareInstagramPost: () => void;
+  /** 9:16 — the card inside the Story/Reel safe area, so nothing is cropped. */
+  onShareInstagramStory: () => void;
   onClose: () => void;
   /** True while a capture/share is running — both rows disable. */
   busy?: boolean;
@@ -37,7 +45,8 @@ export default function ShareTargetSheet({
   lang,
   hashtagPreview,
   onShareSystem,
-  onShareInstagram,
+  onShareInstagramPost,
+  onShareInstagramStory,
   onClose,
   busy,
 }: Props) {
@@ -118,33 +127,84 @@ export default function ShareTargetSheet({
           </Pressable>
 
           <Pressable
-            onPress={onShareInstagram}
+            onPress={onShareInstagramPost}
             disabled={busy}
             accessibilityRole="button"
             accessibilityLabel="Share on Instagram"
-            accessibilityHint="Copies the caption and hashtags, then opens the share sheet"
-            style={({ pressed }) => [styles.row, { opacity: busy ? 0.5 : pressed ? 0.7 : 1 }]}
+            accessibilityHint="Instagram post, 4 by 5. Copies the caption and hashtags, then opens the share sheet"
+            style={({ pressed }) => [
+              styles.row,
+              {
+                borderBottomWidth: 1,
+                borderBottomColor: colors.divider,
+                opacity: busy ? 0.5 : pressed ? 0.7 : 1,
+              },
+            ]}
           >
             <Text style={[styles.glyph, { color: colors.saffron }]}>◉</Text>
             <View style={styles.rowText}>
               <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink }}>
                 {pick(lang, {
-                  hi: 'Instagram पर शेयर करें',
-                  en: 'Share on Instagram',
-                  gu: 'Instagram પર શેર કરો',
-                  kn: 'Instagram ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ',
+                  hi: 'Instagram पोस्ट',
+                  en: 'Instagram post',
+                  gu: 'Instagram પોસ્ટ',
+                  kn: 'Instagram ಪೋಸ್ಟ್',
                 })}
               </Text>
               <Text style={[subLabel, { color: colors.inkMuted }]}>
                 {pick(lang, {
-                  hi: 'कैप्शन और हैशटैग कॉपी हो जाएँगे — पेस्ट कर दें',
-                  en: 'Caption + hashtags are copied — just paste',
-                  gu: 'કૅપ્શન અને હૅશટૅગ કૉપી થશે — પેસ્ટ કરો',
-                  kn: 'ಶೀರ್ಷಿಕೆ ಮತ್ತು ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್ ಕಾಪಿ ಆಗುತ್ತವೆ — ಪೇಸ್ಟ್ ಮಾಡಿ',
+                  hi: 'फ़ीड के लिए 4:5 कार्ड',
+                  en: '4:5 card — for the feed',
+                  gu: 'ફીડ માટે 4:5 કાર્ડ',
+                  kn: 'ಫೀಡ್‌ಗಾಗಿ 4:5 ಕಾರ್ಡ್',
                 })}
               </Text>
             </View>
+            <Text style={[styles.ratio, { color: colors.inkMuted, borderColor: colors.divider }]}>
+              4:5
+            </Text>
           </Pressable>
+
+          <Pressable
+            onPress={onShareInstagramStory}
+            disabled={busy}
+            accessibilityRole="button"
+            accessibilityLabel="Share as Instagram story or reel"
+            accessibilityHint="Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens the share sheet"
+            style={({ pressed }) => [styles.row, { opacity: busy ? 0.5 : pressed ? 0.7 : 1 }]}
+          >
+            <Text style={[styles.glyph, { color: colors.saffron }]}>▮</Text>
+            <View style={styles.rowText}>
+              <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink }}>
+                {pick(lang, {
+                  hi: 'Instagram स्टोरी / रील',
+                  en: 'Instagram story / reel',
+                  gu: 'Instagram સ્ટોરી / રીલ',
+                  kn: 'Instagram ಸ್ಟೋರಿ / ರೀಲ್',
+                })}
+              </Text>
+              <Text style={[subLabel, { color: colors.inkMuted }]}>
+                {pick(lang, {
+                  hi: 'पूरी स्क्रीन 9:16 — कुछ भी नहीं कटेगा',
+                  en: 'Full screen 9:16 — nothing gets cropped',
+                  gu: 'આખી સ્ક્રીન 9:16 — કશું કપાશે નહીં',
+                  kn: 'ಪೂರ್ಣ ಪರದೆ 9:16 — ಏನೂ ಕತ್ತರಿಸುವುದಿಲ್ಲ',
+                })}
+              </Text>
+            </View>
+            <Text style={[styles.ratio, { color: colors.inkMuted, borderColor: colors.divider }]}>
+              9:16
+            </Text>
+          </Pressable>
+
+          <Text style={[subLabel, styles.copyNote, { color: colors.inkMuted }]}>
+            {pick(lang, {
+              hi: 'दोनों में कैप्शन और हैशटैग कॉपी हो जाएँगे — Instagram में पेस्ट कर दें',
+              en: 'Either way the caption + hashtags are copied — just paste in Instagram',
+              gu: 'બંનેમાં કૅપ્શન અને હૅશટૅગ કૉપી થશે — Instagram માં પેસ્ટ કરો',
+              kn: 'ಎರಡರಲ್ಲೂ ಶೀರ್ಷಿಕೆ ಮತ್ತು ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್ ಕಾಪಿ ಆಗುತ್ತವೆ — Instagram ನಲ್ಲಿ ಪೇಸ್ಟ್ ಮಾಡಿ',
+            })}
+          </Text>
 
           <View
             style={[
@@ -203,6 +263,18 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', paddingVertical: 14, gap: 14, minHeight: 44 },
   rowText: { flex: 1, gap: 2 },
   glyph: { fontSize: 18, width: 22, textAlign: 'center' },
+  // Aspect chip on the two Instagram rows — the size difference IS the choice,
+  // so it is stated numerically as well as in the sub-label.
+  ratio: {
+    fontSize: 10,
+    letterSpacing: 0.6,
+    borderWidth: 1,
+    borderRadius: 999,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    overflow: 'hidden',
+  },
+  copyNote: { marginTop: 10 },
   preview: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 10 },
   previewScroll: { maxHeight: 76 },
   cancel: { minHeight: 44, alignItems: 'center', justifyContent: 'center', marginTop: 4 },

@@ -30,7 +30,8 @@ async function renderSheet(props: Partial<React.ComponentProps<typeof ShareTarge
           lang="en"
           hashtagPreview={hashtags}
           onShareSystem={jest.fn()}
-          onShareInstagram={jest.fn()}
+          onShareInstagramPost={jest.fn()}
+          onShareInstagramStory={jest.fn()}
           onClose={jest.fn()}
           {...props}
         />
@@ -47,23 +48,48 @@ function byLabel(tree: TestRenderer.ReactTestRenderer, label: string) {
 }
 
 describe('ShareTargetSheet', () => {
-  test('offers both destinations', async () => {
+  test('offers all three destinations, post and story separately', async () => {
     const tree = await renderSheet();
     expect(byLabel(tree, 'Share to other apps')).toBeDefined();
     expect(byLabel(tree, 'Share on Instagram')).toBeDefined();
+    expect(byLabel(tree, 'Share as Instagram story or reel')).toBeDefined();
   });
 
   test('picking a destination calls the matching handler', async () => {
     const onShareSystem = jest.fn();
-    const onShareInstagram = jest.fn();
-    const tree = await renderSheet({ onShareSystem, onShareInstagram });
+    const onShareInstagramPost = jest.fn();
+    const onShareInstagramStory = jest.fn();
+    const tree = await renderSheet({
+      onShareSystem,
+      onShareInstagramPost,
+      onShareInstagramStory,
+    });
 
     await act(async () => byLabel(tree, 'Share on Instagram').props.onPress());
-    expect(onShareInstagram).toHaveBeenCalledTimes(1);
+    expect(onShareInstagramPost).toHaveBeenCalledTimes(1);
+    expect(onShareInstagramStory).not.toHaveBeenCalled();
     expect(onShareSystem).not.toHaveBeenCalled();
+
+    await act(async () => byLabel(tree, 'Share as Instagram story or reel').props.onPress());
+    expect(onShareInstagramStory).toHaveBeenCalledTimes(1);
+    expect(onShareInstagramPost).toHaveBeenCalledTimes(1);
 
     await act(async () => byLabel(tree, 'Share to other apps').props.onPress());
     expect(onShareSystem).toHaveBeenCalledTimes(1);
+  });
+
+  test('each Instagram row states its aspect, so the crop trade-off is visible', async () => {
+    const tree = await renderSheet();
+    // Each label matches twice — the composite <Text> and its host node — so
+    // dedupe while keeping render order.
+    const chips = [
+      ...new Set(
+        tree.root
+          .findAll((n) => n.props.children === '4:5' || n.props.children === '9:16')
+          .map((n) => n.props.children as string)
+      ),
+    ];
+    expect(chips).toEqual(['4:5', '9:16']);
   });
 
   test('previews the verse hashtags so the reader sees what is being pasted', async () => {
@@ -76,10 +102,11 @@ describe('ShareTargetSheet', () => {
     expect(hashtags).toContain('#JaiHanuman');
   });
 
-  test('both rows disable while a capture is in flight', async () => {
+  test('every row disables while a capture is in flight', async () => {
     const tree = await renderSheet({ busy: true });
     expect(byLabel(tree, 'Share to other apps').props.disabled).toBe(true);
     expect(byLabel(tree, 'Share on Instagram').props.disabled).toBe(true);
+    expect(byLabel(tree, 'Share as Instagram story or reel').props.disabled).toBe(true);
   });
 
   test('cancel closes without sharing', async () => {
