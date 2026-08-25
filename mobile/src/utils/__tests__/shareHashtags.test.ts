@@ -9,7 +9,6 @@
 
 import {
   MAX_HASHTAGS,
-  STORY_MAX_HASHTAGS,
   buildVerseHashtags,
   chapterFromVerseLabel,
   formatHashtags,
@@ -53,32 +52,69 @@ describe('slug helpers', () => {
 });
 
 describe('buildVerseHashtags', () => {
-  test('leads with the verse-specific tags, ends with the broad + brand ones', () => {
-    const tags = buildVerseHashtags({ ...gita, lang: 'en' });
-    expect(tags[0]).toBe('GitaChapter2');
-    expect(tags).toContain('BhagavadGita');
-    // Broad/brand tags exist but sit behind every derived tag.
-    expect(tags.indexOf('Bhakti')).toBeGreaterThan(tags.indexOf('BhagavadGita'));
-    expect(tags.indexOf('Vedansh')).toBeGreaterThan(tags.indexOf('Bhakti'));
+  test('spends its five slots on name, deity and one anchor', () => {
+    // The whole block, for a real share. Five tags, in this order, is the feature.
+    // en has no native-script slot to spend, so the fifth is filled from the tail
+    // in priority order — the second deity here, the chapter for a chaptered text.
+    expect(buildVerseHashtags({ ...chalisa, lang: 'en' })).toEqual([
+      'HanumanChalisa',
+      'Hanuman',
+      'JaiHanuman',
+      'Bhakti',
+      'JaiShriRam',
+    ]);
+    expect(buildVerseHashtags({ ...gita, lang: 'en' })).toEqual([
+      'BhagavadGita',
+      'Krishna',
+      'JaiShreeKrishna',
+      'Bhakti',
+      'GitaChapter2',
+    ]);
+    // hi spends one slot on the native-script title, which is where that audience
+    // searches — so the block fills to five.
+    expect(buildVerseHashtags({ ...chalisa, lang: 'hi' })).toEqual([
+      'HanumanChalisa',
+      'हनुमानचालीसा',
+      'Hanuman',
+      'JaiHanuman',
+      'Bhakti',
+    ]);
   });
 
-  test('the chapter tag tracks the verse being shared', () => {
-    const two = buildVerseHashtags({ ...gita, lang: 'en' });
-    const twelve = buildVerseHashtags({ ...gita, verseLabelEn: 'Verse 12.6', lang: 'en' });
-    expect(two).toContain('GitaChapter2');
-    expect(twelve).toContain('GitaChapter12');
-    expect(twelve).not.toContain('GitaChapter2');
+  test('exactly one broad anchor, and it is last', () => {
+    for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+      const tags = buildVerseHashtags({ ...gita, lang });
+      const broad = tags.filter((t) =>
+        ['Bhakti', 'SanatanDharma', 'Hinduism', 'Devotional', 'Spirituality', 'DailyPrayer'].includes(t)
+      );
+      expect(broad).toEqual(['Bhakti']);
+    }
   });
 
-  test('deity + category tags come from the registry entry, not the title', () => {
-    const tags = buildVerseHashtags({ ...chalisa, lang: 'en' });
-    expect(tags).toContain('JaiHanuman'); // deities: ['hanuman', 'rama']
-    expect(tags).toContain('JaiShriRam');
-    expect(tags).toContain('Chalisa'); // category: 'chalisa'
+  test('no slot goes to the brand — the card and the @handle already carry it', () => {
+    expect(buildVerseHashtags({ ...chalisa, lang: 'en' })).not.toContain('Vedansh');
+    expect(buildVerseHashtags({ ...chalisa, lang: 'en' })).not.toContain('VedanshApp');
+  });
+
+  test('the chapter tag still tracks the verse, and yields to higher-value tags', () => {
+    expect(buildVerseHashtags({ ...gita, lang: 'en' })).toContain('GitaChapter2');
+    expect(buildVerseHashtags({ ...gita, verseLabelEn: 'Verse 12.6', lang: 'en' })).toContain(
+      'GitaChapter12'
+    );
+    // hi spends that slot on the native-script title instead — the better trade.
+    expect(buildVerseHashtags({ ...gita, lang: 'hi' })).not.toContain('GitaChapter2');
+  });
+
+  test('deity tags come from the registry entry, not the title', () => {
+    expect(buildVerseHashtags({ ...chalisa, lang: 'en' })).toContain('JaiHanuman');
     expect(buildVerseHashtags({ ...gita, lang: 'en' })).toContain('Krishna');
+    // Two tags from the primary deity, never three — the third would cost the
+    // anchor. (`limit` only ever shrinks the block, so there is no wider cap to
+    // check against: MAX_HASHTAGS is a ceiling, not a default.)
+    expect(buildVerseHashtags({ ...chalisa, lang: 'en' })).not.toContain('BajrangBali');
   });
 
-  test('a section narrower than the text keeps its own tag', () => {
+  test('a section narrower than the text leads, and both names fit', () => {
     const tags = buildVerseHashtags({
       sourceId: 'shiva-strotam',
       sectionNameHi: 'शिव तांडव स्तोत्र',
@@ -87,7 +123,7 @@ describe('buildVerseHashtags', () => {
       lang: 'en',
     });
     expect(tags[0]).toBe('ShivaTandavaStotram');
-    expect(tags).toContain('ShivaStotram');
+    expect(tags[1]).toBe('ShivaStotram');
   });
 
   test('the reading language selects a native-script title tag', () => {
@@ -104,7 +140,7 @@ describe('buildVerseHashtags', () => {
     for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
       const tags = buildVerseHashtags({ ...gita, lang });
       expect(tags.length).toBeLessThanOrEqual(MAX_HASHTAGS);
-      expect(tags.length).toBeGreaterThanOrEqual(10);
+      expect(tags.length).toBeGreaterThanOrEqual(4);
       const lowered = tags.map((t) => t.toLowerCase());
       expect(new Set(lowered).size).toBe(tags.length);
       for (const tag of tags) {
@@ -115,21 +151,17 @@ describe('buildVerseHashtags', () => {
     }
   });
 
-  test('the story cap trims the broad tail, keeping the specific tags', () => {
-    const post = buildVerseHashtags({ ...gita, lang: 'en' });
-    const story = buildVerseHashtags({ ...gita, lang: 'en', limit: STORY_MAX_HASHTAGS });
-    expect(story.length).toBe(STORY_MAX_HASHTAGS);
-    // Prefix, so the preview shown in the picker stays truthful for both formats.
-    expect(story).toEqual(post.slice(0, STORY_MAX_HASHTAGS));
-    expect(story).toContain('GitaChapter2');
-    expect(story).toContain('BhagavadGita');
+  test('a smaller limit trims from the least valuable end', () => {
+    const five = buildVerseHashtags({ ...gita, lang: 'en' });
+    expect(buildVerseHashtags({ ...gita, lang: 'en', limit: 2 })).toEqual(five.slice(0, 2));
+    expect(buildVerseHashtags({ ...gita, lang: 'en', limit: 0 })).toEqual([]);
   });
 
-  test('the cap can never exceed the Instagram maximum', () => {
+  test('the cap can never exceed the platform maximum', () => {
+    expect(MAX_HASHTAGS).toBe(5);
     expect(buildVerseHashtags({ ...gita, lang: 'en', limit: 500 }).length).toBeLessThanOrEqual(
       MAX_HASHTAGS
     );
-    expect(buildVerseHashtags({ ...gita, lang: 'en', limit: 0 })).toEqual([]);
   });
 
   describe('timely tags', () => {
@@ -140,24 +172,29 @@ describe('buildVerseHashtags', () => {
     };
     const navratri = { nameHi: 'नवरात्रि', nameEn: 'Navratri', deityEn: 'Durga' };
 
-    test("the day's festival leads the block when it is the text's own deity", () => {
-      const tags = buildVerseHashtags({
-        ...chalisa,
-        lang: 'en',
-        timely: { occasions: [hanumanJayanti], year: 2026 },
-      });
-      expect(tags[0]).toBe('HanumanJayanti');
-      expect(tags[1]).toBe('HanumanJayanti2026');
+    test("the day's festival takes the first slot, and costs the anchor", () => {
+      expect(
+        buildVerseHashtags({ ...chalisa, lang: 'en', timely: { occasions: [hanumanJayanti] } })
+      ).toEqual(['HanumanJayanti', 'HanumanChalisa', 'Hanuman', 'JaiHanuman', 'Bhakti']);
+    });
+
+    test('only one occasion contributes, even on a crowded day', () => {
+      const two = [
+        hanumanJayanti,
+        { nameHi: 'हनुमान व्रत', nameEn: 'Hanuman Vrat', deityEn: 'Hanuman' },
+      ];
+      const tags = buildVerseHashtags({ ...chalisa, lang: 'en', timely: { occasions: two } });
+      expect(tags).toContain('HanumanJayanti');
+      expect(tags).not.toContain('HanumanVrat');
     });
 
     test('an unrelated festival is dropped, not bolted on', () => {
       const tags = buildVerseHashtags({
         ...chalisa,
         lang: 'en',
-        timely: { occasions: [navratri], year: 2026 },
+        timely: { occasions: [navratri]},
       });
       expect(tags).not.toContain('Navratri');
-      expect(tags).not.toContain('Navratri2026');
       // …and the same festival on a Durga text does attach.
       const durga = buildVerseHashtags({
         sourceId: 'durga-chalisa',
@@ -165,7 +202,7 @@ describe('buildVerseHashtags', () => {
         sectionNameEn: 'Durga Chalisa',
         verseLabelEn: 'Verse 4',
         lang: 'en',
-        timely: { occasions: [navratri], year: 2026 },
+        timely: { occasions: [navratri]},
       });
       expect(durga).toContain('Navratri');
     });
@@ -174,19 +211,19 @@ describe('buildVerseHashtags', () => {
       const hi = buildVerseHashtags({
         ...chalisa,
         lang: 'hi',
-        timely: { occasions: [hanumanJayanti], year: 2026 },
+        timely: { occasions: [hanumanJayanti]},
       });
       expect(hi).toContain('हनुमानजयंती');
       const en = buildVerseHashtags({
         ...chalisa,
         lang: 'en',
-        timely: { occasions: [hanumanJayanti], year: 2026 },
+        timely: { occasions: [hanumanJayanti]},
       });
       expect(en).not.toContain('हनुमानजयंती');
     });
 
     test('the vaar tag needs the day AND the deity to match the text', () => {
-      // Tuesday (2) is Hanuman's vaar.
+      // Tuesday (2) is Hanuman's vaar — it takes the fifth slot on a Hanuman text.
       const tuesday = buildVerseHashtags({
         ...chalisa,
         lang: 'en',
@@ -208,20 +245,6 @@ describe('buildVerseHashtags', () => {
       );
     });
 
-    test('at most two occasions contribute, and the cap still holds', () => {
-      const many = Array.from({ length: 6 }, (_, i) => ({
-        nameHi: `हनुमान पर्व ${i}`,
-        nameEn: `Hanuman Parv ${i}`,
-        deityEn: 'Hanuman',
-      }));
-      const tags = buildVerseHashtags({
-        ...chalisa,
-        lang: 'en',
-        timely: { occasions: many, year: 2026 },
-      });
-      expect(tags.filter((t) => t.startsWith('HanumanParv')).length).toBe(4); // 2 × (tag + year)
-      expect(tags.length).toBeLessThanOrEqual(MAX_HASHTAGS);
-    });
   });
 
   test('is deterministic — a re-share reuses the same indexed tags', () => {
@@ -238,9 +261,9 @@ describe('buildVerseHashtags', () => {
       verseLabelEn: 'Verse 1',
       lang: 'en',
     });
-    expect(tags).toContain('SomeText');
+    expect(tags[0]).toBe('SomeText');
     expect(tags).toContain('Bhakti');
-    expect(tags).toContain('Vedansh');
+    expect(tags.length).toBe(MAX_HASHTAGS);
   });
 });
 
@@ -268,24 +291,21 @@ describe('buildInstagramCaption', () => {
     );
   });
 
-  test('a story caption carries the trimmed block, a post the full one', () => {
-    const post = buildInstagramCaption({ ...params, lang: 'en' });
-    const story = buildInstagramCaption({ ...params, lang: 'en', format: 'story' });
-    const count = (c: string) => (c.match(/#/g) ?? []).length;
-    expect(count(story)).toBe(STORY_MAX_HASHTAGS);
-    expect(count(post)).toBeGreaterThan(STORY_MAX_HASHTAGS);
-    expect(story).toContain('#GitaChapter2');
+  test('the caption carries exactly five hashtags', () => {
+    const caption = buildInstagramCaption({ ...params, lang: 'en' });
+    expect((caption.match(/#/g) ?? []).length).toBeLessThanOrEqual(MAX_HASHTAGS);
   });
 
-  test('the tag block changes when the verse changes', () => {
-    const a = buildInstagramCaption({ ...params, lang: 'en' });
-    const b = buildInstagramCaption({
+  test('the tag block follows the text being shared', () => {
+    expect(buildInstagramCaption({ ...params, lang: 'en' })).toContain('#BhagavadGita');
+    const chalisaCaption = buildInstagramCaption({
       ...params,
-      verseLabelHi: 'श्लोक 18.66',
-      verseLabelEn: 'Verse 18.66',
+      sourceId: 'hanuman-chalisa',
+      sectionNameHi: 'हनुमान चालीसा',
+      sectionNameEn: 'Hanuman Chalisa',
       lang: 'en',
     });
-    expect(a).toContain('#GitaChapter2');
-    expect(b).toContain('#GitaChapter18');
+    expect(chalisaCaption).toContain('#HanumanChalisa');
+    expect(chalisaCaption).not.toContain('#BhagavadGita');
   });
 });

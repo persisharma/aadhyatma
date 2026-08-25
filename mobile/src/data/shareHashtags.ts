@@ -14,30 +14,35 @@
  * the registry files that text under (`library` in `data/texts.ts`). Change the
  * verse and the tag block changes with it.
  *
- * ## Order is the reach strategy
+ * ## Five slots, and what goes in them
  *
- * Tags are emitted **specific → broad**:
+ * Instagram takes five hashtags ({@link MAX_HASHTAGS}), which is a different problem
+ * from filling thirty. With thirty you can lead with the long tail and let the broad
+ * tags ride behind; with five, a tag that only a handful of people ever search is a
+ * fifth of the budget spent. So the order is a deliberate blend, not "most specific
+ * first":
  *
- *   0. occasion            — the festival or vrat falling on the share date, when it
- *                            belongs to one of the text's own deities ("#HanumanJayanti").
- *                            The single highest-value tag we can emit: hyper-relevant
- *                            AND spiking in volume on exactly the day it is used.
- *                            Supplied by the caller (`timely`) — see below.
- *   1. section / chapter   — the long tail ("#GitaChapter2"). Tiny feeds, but the
- *                            post can actually rank in them, and ranking is what
- *                            gets it in front of anyone at all.
- *   2. text                — "#HanumanChalisa", plus the native-script form of the
- *                            title for the reading language (Devanagari hashtags are
- *                            first-class on Instagram and carry the Hindi audience).
- *   3. deity               — mid-volume devotional feeds ("#JaiHanuman").
- *   4. category            — the form of the text ("#Chalisa", "#Stotram").
- *   5. broad devotional    — the volume ceiling ("#Bhakti", "#SanatanDharma"). Alone
- *                            these bury a post in seconds; behind the specific tags
- *                            they add reach without costing the ranking above.
- *   6. language + brand    — discovery for the reading language, then "#Vedansh".
+ *   1. occasion   — the festival or vrat falling on the share date, when it belongs
+ *                   to one of the text's own deities ("#HanumanJayanti"). The single
+ *                   best tag available: exactly on-topic AND spiking in volume on the
+ *                   one day it is used. Supplied by the caller (`timely`).
+ *   2. name       — the work itself, section first when narrower than the text
+ *                   ("#ShivaTandavaStotram" before "#ShivaStotram"). What someone
+ *                   looking for this verse actually types.
+ *   3. native name— the same title in the reading language's script ("#हनुमानचालीसा").
+ *                   Devanagari hashtags are first-class on Instagram and this is
+ *                   where the Hindi audience searches.
+ *   4. deity      — two tags from the text's PRIMARY deity ("#Hanuman #JaiHanuman").
+ *                   Mid-volume devotional feeds, still squarely on-topic.
+ *   5. anchor     — exactly one broad tag ("#Bhakti"). Five pure-niche tags give the
+ *                   post nowhere big to rank; six broad ones would drown it. One.
  *
- * The blend (a handful of niche, a handful of mid, a handful of broad) is the part
- * that matters for reach; the exact word list below is editorial and safe to tune.
+ * Chapter, vaar, category, second deity, language and brand tags are still built,
+ * in priority order, but fall outside the cap — they exist so raising
+ * {@link MAX_HASHTAGS} is a one-constant edit rather than a redesign.
+ *
+ * The blend is the part that matters for reach; the exact word list is editorial
+ * and safe to tune.
  *
  * ## What is deliberately NOT here
  *
@@ -53,16 +58,17 @@ import { normalize } from './searchNormalize';
 import type { Lang } from './gita/language';
 import { transliterateDevanagari } from '@/utils/transliterate';
 
-/** Instagram's hard per-post cap. A caption past this drops the whole tag block. */
-export const MAX_HASHTAGS = 30;
-
 /**
- * Instagram's cap for a **story**: a story's hashtags live in a text sticker, and
- * it accepts far fewer than a post's caption. Ten also just looks better stuck on
- * a frame than thirty. Because the list is built specific → broad, the story block
- * is a prefix of the post block — the tags that get dropped are the broad tail.
+ * Hashtags per share. Five, because that is what Instagram accepts — and five is
+ * also what Instagram's own guidance has long recommended, so this is the right
+ * number on reach grounds regardless of the ceiling.
+ *
+ * Five changes the strategy, not just the length. A thirty-tag block could afford
+ * to lead with the long tail and let the broad tags ride along behind; five cannot.
+ * Every slot has to earn itself, which is why the ordering below is a deliberate
+ * blend — name, deity, one volume anchor — rather than "most specific first".
  */
-export const STORY_MAX_HASHTAGS = 10;
+export const MAX_HASHTAGS = 5;
 
 /** Deity → curated tags, most canonical first. Keys mirror `Deity` in `texts.ts`. */
 const DEITY_TAGS: Record<Deity, readonly string[]> = {
@@ -188,16 +194,17 @@ export type TimelyOccasion = {
 export type TimelyContext = {
   /** Observances on the share date, engine order. Only deity-relevant ones are used. */
   occasions?: readonly TimelyOccasion[];
-  /** Calendar year of the share date — powers the `#HanumanJayanti2026` variant. */
-  year?: number;
   /** `Date#getDay()` of the share date, for the vaar tag. */
   weekday?: number;
   /** That weekday's presiding deity (`deityForWeekday`). */
   weekdayDeity?: Deity;
 };
 
-/** At most this many observances contribute tags — a day can carry several. */
-const MAX_OCCASIONS = 2;
+/**
+ * At most this many observances contribute. One: a day can carry several, and at
+ * five slots even a second festival tag crowds out the deity and the anchor.
+ */
+const MAX_OCCASIONS = 1;
 
 /**
  * Short, higher-volume aliases for texts whose registry name is long. Used for
@@ -259,7 +266,7 @@ export type VerseHashtagParams = {
   verseLabelEn: string;
   /** Active reading language: selects the native-script title + language tags. */
   lang: Lang;
-  /** Cap; defaults to {@link MAX_HASHTAGS}. Pass {@link STORY_MAX_HASHTAGS} for a story. */
+  /** Cap; defaults to (and is clamped to) {@link MAX_HASHTAGS}. */
   limit?: number;
   /** Date-dependent tags (festival / vrat / vaar). Absent → the block is date-free. */
   timely?: TimelyContext;
@@ -270,8 +277,8 @@ export type VerseHashtagParams = {
  *
  * Deterministic: the same verse + language always produces the same block, so a
  * re-share reuses the tags Instagram has already indexed the account under.
- * Deduped case-insensitively and capped at {@link MAX_HASHTAGS}; because the list
- * is built specific-first, the cap only ever trims from the broad end.
+ * Deduped case-insensitively and capped at {@link MAX_HASHTAGS}; the list is built
+ * in priority order, so the cap only ever trims from the least valuable end.
  */
 export function buildVerseHashtags(p: VerseHashtagParams): string[] {
   const entry = library.find((e) => e.id === p.sourceId);
@@ -290,25 +297,21 @@ export function buildVerseHashtags(p: VerseHashtagParams): string[] {
     const haystack = normalize(`${occ.deityEn} ${occ.nameEn}`);
     const relevant = deityTokens.some((t) => haystack.includes(t));
     if (!relevant) continue;
-    const occTag = latinTag(occ.nameEn);
-    if (occTag) {
-      ordered.push(occTag);
-      // Year-suffixed festival tags carry real, sharply seasonal volume.
-      if (p.timely?.year) ordered.push(`${occTag}${p.timely.year}`);
-    }
+    // No `#Janmashtami2026` variant: it duplicates the topic of `#Janmashtami`
+    // at a fraction of the volume, and a five-slot block cannot pay for that.
+    ordered.push(latinTag(occ.nameEn));
     if (p.lang === 'hi') ordered.push(nativeScriptTag(occ.nameHi));
   }
 
-  // 1. Long tail — the section (when it names something narrower than the text)
-  //    and the chapter.
+  // 1. The work's own name — the single most searched thing about this verse.
+  //    Section first when it names something narrower than the text
+  //    (`#ShivaTandavaStotram` before `#ShivaStotram`).
   if (sectionTag && sectionTag !== textTag) ordered.push(sectionTag);
-  const chapter = chapterFromVerseLabel(p.verseLabelEn);
-  if (chapter !== null && alias) ordered.push(`${alias}Chapter${chapter}`);
-
-  // 2. The text itself, in Latin and in the reading language's own script. The
-  //    native form comes from the Devanagari title — re-scripted for gu/kn the
-  //    same way every other content string is (`contentByLang`).
   if (textTag) ordered.push(textTag);
+
+  // 2. The same name in the reading language's own script — this is where the
+  //    Hindi/Gujarati/Kannada audience actually searches. Derived from the
+  //    Devanagari title, re-scripted for gu/kn like every other content string.
   const nativeTitle =
     p.lang === 'hi'
       ? nativeScriptTag(p.sectionNameHi)
@@ -317,14 +320,23 @@ export function buildVerseHashtags(p: VerseHashtagParams): string[] {
         : '';
   if (nativeTitle) ordered.push(nativeTitle);
 
-  // 3. Deities, capped at the first two the registry lists — a text filed under
-  //    four deities would otherwise spend the whole budget on them.
-  for (const deity of (entry?.deities ?? []).slice(0, 2)) {
-    ordered.push(...DEITY_TAGS[deity]);
-  }
+  // 3. The primary deity, two tags at most. The registry's FIRST deity only —
+  //    at five slots a second deity's tags would push out the volume anchor.
+  const primaryDeity = entry?.deities[0];
+  if (primaryDeity) ordered.push(...DEITY_TAGS[primaryDeity].slice(0, 2));
 
-  // 3b. Vaar — Tuesday on a Hanuman text, Saturday on a Shani one. Gated on the
-  //     day's deity actually being one of this text's, same rule as the occasion.
+  // 4. One broad anchor. A block of five pure-niche tags has no volume in it at
+  //    all; exactly one large tag gives the post somewhere big to rank, without
+  //    the dilution six of them would cause. `#Bhakti` is the widest devotional
+  //    tag that is still true of every verse in the app.
+  ordered.push(BROAD_TAGS[0]);
+
+  // ── Everything below here only appears if the cap is raised. Kept in the list
+  //    so the ordering stays a single readable statement of priority, and so a
+  //    future platform change is a one-constant edit. ────────────────────────
+
+  // Vaar — Tuesday on a Hanuman text, Saturday on a Shani one. Gated on the
+  // day's deity actually being one of this text's, same rule as the occasion.
   const weekdayDeity = p.timely?.weekdayDeity;
   const weekday = p.timely?.weekday;
   if (
@@ -337,9 +349,14 @@ export function buildVerseHashtags(p: VerseHashtagParams): string[] {
     if (p.lang === 'hi') ordered.push(WEEKDAY_TAGS[weekday].hi);
   }
 
-  // 4. Form of the text, 5. the broad ceiling, 6. language + brand.
+  const chapter = chapterFromVerseLabel(p.verseLabelEn);
+  if (chapter !== null && alias) ordered.push(`${alias}Chapter${chapter}`);
+  for (const deity of (entry?.deities ?? []).slice(1, 2)) {
+    ordered.push(...DEITY_TAGS[deity]);
+  }
+  if (primaryDeity) ordered.push(...DEITY_TAGS[primaryDeity].slice(2));
   if (entry) ordered.push(...CATEGORY_TAGS[entry.category]);
-  ordered.push(...BROAD_TAGS);
+  ordered.push(...BROAD_TAGS.slice(1));
   ordered.push(...LANGUAGE_TAGS[p.lang]);
   ordered.push(...BRAND_TAGS);
 

@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Clipboard, Platform, Share, View } from 'react-native';
+import { Alert, Clipboard, Platform, Share, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
@@ -27,6 +27,7 @@ import {
   STORY_OUTPUT_WIDTH,
   storyCanvas,
 } from '@/utils/shareStoryLayout';
+import { pick } from '@/utils/localize';
 import type { Lang } from '@/data/gita/language';
 
 export type ShareableVerse = {
@@ -137,7 +138,6 @@ function TimelyTagsResolver({ onResolve }: { onResolve: (t: TimelyContext) => vo
         nameEn: o.rule.nameEn,
         deityEn: o.rule.deityEn,
       })),
-      year: today.getFullYear(),
       weekday: today.getDay(),
       weekdayDeity: deityForWeekday(today.getDay()),
     });
@@ -224,7 +224,6 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             ? buildInstagramCaption({
                 ...captionParams,
                 sourceId: verse.sourceId,
-                format,
                 timely: timelyRef.current,
               })
             : buildShareCaption(captionParams);
@@ -283,6 +282,24 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               await Share.share({ message: caption }, { dialogTitle: 'Share verse' });
             }
           }
+        } else if (target === 'instagram') {
+          // Instagram takes an image or nothing: a text-only sheet would simply not
+          // list it, which reads as "the button did nothing". Say so instead of
+          // opening a sheet the reader cannot use.
+          Alert.alert(
+            pick(lang, {
+              hi: 'अभी शेयर नहीं हो पाया',
+              en: "Couldn't share just now",
+              gu: 'અત્યારે શેર ન થઈ શક્યું',
+              kn: 'ಈಗ ಹಂಚಿಕೊಳ್ಳಲಾಗಲಿಲ್ಲ',
+            }),
+            pick(lang, {
+              hi: 'कृपया दोबारा कोशिश करें।',
+              en: 'Please try again.',
+              gu: 'કૃપા કરીને ફરી પ્રયાસ કરો.',
+              kn: 'ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
+            })
+          );
         } else {
           // Image capture failed — share text-only so the user still gets something.
           await Share.share({ message: caption }, { dialogTitle: 'Share verse' });
