@@ -102,16 +102,15 @@ function formatBirthTime(value: string): string {
 }
 
 function formatDuration(milliseconds: number, roundUp = false): string {
-  const totalMonths = Math.max(
-    0,
-    roundUp
-      ? Math.ceil(milliseconds / (365.2425 / 12 * 86_400_000))
-      : Math.floor(milliseconds / (365.2425 / 12 * 86_400_000))
-  );
+  const round = roundUp ? Math.ceil : Math.floor;
+  const totalMonths = Math.max(0, round(milliseconds / (365.2425 / 12 * 86_400_000)));
   const years = Math.floor(totalMonths / 12);
   const months = totalMonths % 12;
   if (years && months) return `${years} y ${months} m`;
   if (years) return `${years} y`;
+  // Antardashas are as short as ~3.6 months, so their edges need day
+  // granularity — "0 m elapsed" would read as a stopped clock.
+  if (!months) return `${Math.max(0, round(milliseconds / 86_400_000))} d`;
   return `${months} m`;
 }
 
@@ -820,22 +819,19 @@ function KundaliResult({
   const city = getCityById(profile.cityId)!;
   const now = new Date();
   const currentDasha = getCurrentDasha(chart, now);
-  const currentElapsed = currentDasha
-    ? now.getTime() - currentDasha.maha.start.getTime()
-    : 0;
-  const currentRemaining = currentDasha
-    ? currentDasha.maha.end.getTime() - now.getTime()
-    : 0;
-  const currentProgress = currentDasha
-    ? Math.max(
-      0,
-      Math.min(
-        1,
-        currentElapsed
-          / (currentDasha.maha.end.getTime() - currentDasha.maha.start.getTime())
-      )
-    )
-    : 0;
+  // Both nested periods are running at once, so the card shows each one —
+  // Mahadasha and Antardasha — with its own dates, progress bar and
+  // elapsed/remaining readings; neither level speaks for the other. The
+  // Antardasha entry is absent only when float accumulation in the engine
+  // leaves `now` outside all nine sub-periods at a boundary.
+  const currentWindows = currentDasha
+    ? [
+      { key: 'maha', labelHi: 'महादशा', labelEn: 'Mahadasha', period: currentDasha.maha },
+      ...(currentDasha.antar
+        ? [{ key: 'antar', labelHi: 'अन्तर्दशा', labelEn: 'Antardasha', period: currentDasha.antar }]
+        : []),
+    ]
+    : [];
   return (
     <>
       <View
@@ -1040,9 +1036,8 @@ function KundaliResult({
                 currentDasha.antar
                   ? `${GRAHA_NAMES_EN[currentDasha.antar.lord]} Antardasha`
                   : null,
-                `${formatPeriodDate(currentDasha.maha.start)} to ${formatPeriodDate(currentDasha.maha.end)}`,
-                `${formatDuration(currentElapsed)} elapsed`,
-                `${formatDuration(currentRemaining, true)} left`,
+                ...currentWindows.map((window) =>
+                  `${window.labelEn} ${formatPeriodDate(window.period.start)} to ${formatPeriodDate(window.period.end)}, ${formatDuration(now.getTime() - window.period.start.getTime())} elapsed, ${formatDuration(window.period.end.getTime() - now.getTime(), true)} left`),
               ]
                 .filter(Boolean)
                 .join(', ')}
@@ -1073,41 +1068,65 @@ function KundaliResult({
                   )} ${contentByLang(lang, 'अन्तर्दशा', 'Antardasha')}`
                   : ''}
               </Text>
-              <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 4 }]}>
-                {formatPeriodDate(currentDasha.maha.start)} — {formatPeriodDate(currentDasha.maha.end)}
+              {currentWindows.map((window) => {
+                const elapsed = now.getTime() - window.period.start.getTime();
+                const remaining = window.period.end.getTime() - now.getTime();
+                const progress = Math.max(
+                  0,
+                  Math.min(
+                    1,
+                    elapsed
+                      / (window.period.end.getTime() - window.period.start.getTime())
+                  )
+                );
+                return (
+                  <View key={window.key} style={{ marginTop: window.key === 'maha' ? 4 : 10 }}>
+                    <Text style={[styles.caption, { color: colors.inkMuted }]}>
+                      {contentByLang(lang, window.labelHi, window.labelEn)}{' '}
+                      {formatPeriodDate(window.period.start)} — {formatPeriodDate(window.period.end)}
+                    </Text>
+                    <View
+                      testID={`dasha-progress-${window.key}`}
+                      accessibilityRole="progressbar"
+                      accessibilityValue={{
+                        min: 0,
+                        max: 100,
+                        now: Math.round(progress * 100),
+                      }}
+                      style={[
+                        styles.progressTrack,
+                        { backgroundColor: colors.divider, borderRadius: radii.pill },
+                      ]}
+                    >
+                      <View
+                        style={[
+                          styles.progressFill,
+                          {
+                            width: `${progress * 100}%`,
+                            backgroundColor: colors.saffron,
+                            borderRadius: radii.pill,
+                          },
+                        ]}
+                      />
+                    </View>
+                    <View style={styles.progressCaptions}>
+                      <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
+                        {formatDuration(elapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
+                      </Text>
+                      <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
+                        {formatDuration(remaining, true)} {contentByLang(lang, 'शेष', 'left')}
+                      </Text>
+                    </View>
+                  </View>
+                );
+              })}
+              <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 10 }]}>
+                {contentByLang(
+                  lang,
+                  'इस महादशा की नौ अन्तर्दशाएँ',
+                  'The nine Antardashas within this Mahadasha'
+                )}
               </Text>
-              <View
-                testID="dasha-progress"
-                accessibilityRole="progressbar"
-                accessibilityValue={{
-                  min: 0,
-                  max: 100,
-                  now: Math.round(currentProgress * 100),
-                }}
-                style={[
-                  styles.progressTrack,
-                  { backgroundColor: colors.divider, borderRadius: radii.pill },
-                ]}
-              >
-                <View
-                  style={[
-                    styles.progressFill,
-                    {
-                      width: `${currentProgress * 100}%`,
-                      backgroundColor: colors.saffron,
-                      borderRadius: radii.pill,
-                    },
-                  ]}
-                />
-              </View>
-              <View style={styles.progressCaptions}>
-                <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
-                  {formatDuration(currentElapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
-                </Text>
-                <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
-                  {formatDuration(currentRemaining, true)} {contentByLang(lang, 'शेष', 'left')}
-                </Text>
-              </View>
               <View
                 accessibilityLabel="Antardasha timeline"
                 style={styles.antarChips}
@@ -1147,6 +1166,14 @@ function KundaliResult({
               </View>
             </View>
           )}
+          <Text
+            style={[
+              styles.eyebrowText,
+              { color: colors.saffronDeep, marginTop: 18, marginBottom: 8 },
+            ]}
+          >
+            {contentByLang(lang, 'महादशा समयरेखा', 'MAHADASHA TIMELINE')}
+          </Text>
           <View accessibilityLabel="Full Mahadasha timeline">
             {chart.vimshottari.map((period, index) => {
               const selected = period === currentDasha?.maha;
