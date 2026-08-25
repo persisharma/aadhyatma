@@ -38,6 +38,13 @@ maestro test .maestro/
 maestro test --debug-output ./maestro-debug .maestro/sanskar-smoke.yaml
 ```
 
+## Token-cheap verification (for agents)
+
+A green `maestro test` exit code is the verdict — do not read screenshots to re-confirm a pass.
+To inspect the current screen or debug a selector, use `mobile/scripts/e2e-screen-text.sh [UDID]`
+(text dump of the same a11y tree Maestro matches, ~10× cheaper than reading an image). Full
+policy: `wiki/runbooks/e2e-verification.md` § "Token-cheap verification".
+
 ## Flow conventions
 
 - **Filename**: `{feature}-{intent}.yaml` (e.g., `sanskar-smoke.yaml`, `search-navigation.yaml`)

@@ -1,8 +1,8 @@
 ---
 title: E2E (Maestro) — authoring, verification, and the ship-with-e2e policy
 type: runbook
-sources: [mobile/.maestro, mobile/.maestro/README.md, mobile/.maestro/_launch.yaml, RULEBOOK.md]
-last_verified_date: 2026-08-01
+sources: [mobile/.maestro, mobile/.maestro/README.md, mobile/.maestro/_launch.yaml, mobile/scripts/e2e-screen-text.sh, RULEBOOK.md]
+last_verified_date: 2026-08-17
 confidence: high
 status: current
 ---
@@ -78,8 +78,9 @@ worktree's **own** Metro:
    Wait for `iOS Bundled … index.ts` in the Metro log.
 4. Run against that device explicitly:
    `maestro --device <UDID> test .maestro/<flow>.yaml`.
-   The screenshot in `~/.maestro/tests/<ts>/` confirms the correct bundle loaded
-   (look for the app's version, e.g. the What's New sheet showing the expected `V1.4.x`).
+   Confirm the correct bundle loaded with TEXT, not a screenshot: prove bundle freshness with
+   `curl 'http://127.0.0.1:8084/index.bundle?platform=ios&dev=true&minify=false' -o /tmp/b.out && grep -c '<UniqueStringFromYourEdit>' /tmp/b.out`
+   (must be >0), and/or run `mobile/scripts/e2e-screen-text.sh <UDID>` and check an expected label.
 
 ### Native debug build (Kundali and native-module coverage)
 
@@ -97,6 +98,34 @@ Use this when a flow declares `appId: com.prashantsharma.vedansh`:
    The flow clears only this app's simulator state and launches the native development build with
    React Native's `RCT_jsLocation=127.0.0.1:8084` launch argument, so it cannot inherit a Metro
    server from another workspace and never touches Expo Go.
+
+## Token-cheap verification (agent policy)
+
+Reading screenshots into an LLM context costs ~1,100–1,600 tokens per full-res image; a whole
+verification session can burn hundreds of thousands of tokens on pixels that carry no extra
+information over the accessibility tree. Rules, in order:
+
+1. **A green `maestro test` exit is the verdict.** The flows are assertion-based
+   (`assertVisible` against the a11y tree). After a pass, do NOT open any screenshot —
+   including the `takeScreenshot` artifacts some flows emit (those are for humans).
+2. **"What's on screen?" → `mobile/scripts/e2e-screen-text.sh [UDID]`.** Wraps
+   `maestro hierarchy`: one line per labelled element (`[bounds] #testID label`), typically
+   ~100–300 tokens for a full screen. It prints the exact merged a11y strings Maestro
+   regex-matches, so it's also the right tool for debugging selector failures (the
+   comma-joined Pressable labels, NEW-badge variants, etc.).
+3. **Bundle freshness is proven by `curl` + `grep`** (see step 4 above), never by
+   eyeballing the run screenshot.
+4. **On a failure**, escalate in this order: (a) Maestro's console output — it names the
+   failed step and reason; (b) `e2e-screen-text.sh` against the failure state; (c) only if a
+   genuinely *visual* question remains (layout overlap, theming, clipping), read ONE
+   screenshot — downscaled first: `sips -Z 640 shot.png --out /tmp/shot-small.png`
+   (~4–5× fewer tokens than full-res).
+5. **True visual/design review** (alignment, spacing, colour): downscale every capture as
+   above, and prefer delegating the image-reading to a subagent that returns a one-line
+   text verdict, so pixels never enter the main context.
+6. **Prefer adding an `assertVisible` over a screenshot check.** If you needed to look at a
+   screen to verify a change, encode that check as a flow assertion — it's cheaper on every
+   future run and survives as a regression gate.
 
 ## Gotchas
 
