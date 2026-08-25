@@ -182,7 +182,8 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   // as a contradiction.
   assert.ok(text.includes('The nine Antardashas within this Mahadasha'));
   assert.ok(text.includes('MAHADASHA TIMELINE'));
-  assert.ok(tree.root.findByProps({ testID: 'dasha-progress' }));
+  assert.ok(tree.root.findByProps({ testID: 'dasha-progress-maha' }));
+  assert.ok(tree.root.findByProps({ testID: 'dasha-progress-antar' }));
   assert.ok(tree.root.findByProps({ accessibilityLabel: 'Full Mahadasha timeline' }));
   const currentDashaLabel = tree.root.findAll((node) =>
     typeof node.props.accessibilityLabel === 'string'
@@ -190,9 +191,9 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   );
   assert.ok(currentDashaLabel.length > 0);
 
-  // The current-period card is headlined by the Antardasha, so its dates and
-  // progress must describe that sub-period — never the Mahadasha span it sits
-  // inside (a Rahu Antardasha once read as the full 17-year Mercury window).
+  // Both nested periods run at once, so the card shows each with its own
+  // dates and progress — a Rahu Antardasha once read as the full 17-year
+  // Mercury window because a single unlabelled bar tracked the Mahadasha.
   const dasha = getCurrentDasha(mockChart, new Date())!;
   assert.ok(dasha.antar);
   const label = currentDashaLabel[0].props.accessibilityLabel as string;
@@ -210,12 +211,12 @@ test('Kundali result leads with plain-language insights and exposes all expert t
 
   const spanOf = (period: { start: Date; end: Date }) =>
     (Date.now() - period.start.getTime()) / (period.end.getTime() - period.start.getTime());
-  const shownProgress = tree.root.findByProps({ testID: 'dasha-progress' }).props
-    .accessibilityValue.now as number;
-  const antarProgress = Math.round(spanOf(dasha.antar!) * 100);
-  assert.ok(Math.abs(shownProgress - antarProgress) <= 1);
-  // A Mahadasha always spans all nine of its Antardashas, so the two progress
-  // readings are different measurements — the bar must report the shorter one.
+  const barValue = (testID: string) =>
+    tree.root.findByProps({ testID }).props.accessibilityValue.now as number;
+  assert.ok(Math.abs(barValue('dasha-progress-maha') - Math.round(spanOf(dasha.maha) * 100)) <= 1);
+  assert.ok(Math.abs(barValue('dasha-progress-antar') - Math.round(spanOf(dasha.antar!) * 100)) <= 1);
+  // A Mahadasha always spans all nine of its Antardashas, so the two bars are
+  // genuinely different measurements — each must track its own window.
   assert.ok(
     dasha.antar!.end.getTime() - dasha.antar!.start.getTime()
     < dasha.maha.end.getTime() - dasha.maha.start.getTime()

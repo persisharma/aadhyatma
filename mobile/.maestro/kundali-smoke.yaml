@@ -193,11 +193,12 @@ appId: com.prashantsharma.vedansh
     timeout: 10000
 - tapOn: "Jupiter Mahadasha. Learn more in dasha."
 - assertVisible: "Vimshottari Dasha"
+# Both nested periods run at once, so each gets its own labelled dates and
+# progress bar — the Mahadasha and the Antardasha inside it.
 - assertVisible:
-    id: "dasha-progress"
-# Both windows of the golden chart are labelled and distinct: the progress bar,
-# elapsed and left readings belong to the Antardasha, never to the Mahadasha
-# span that contains all nine of them.
+    id: "dasha-progress-maha"
+- assertVisible:
+    id: "dasha-progress-antar"
 - assertVisible: ".*Mahadasha 16 Jan 2012 . 16 Jan 2028.*"
 - assertVisible: ".*Antardasha 23 Aug 2025 . 16 Jan 2028.*"
 - assertVisible: ".*elapsed.*"

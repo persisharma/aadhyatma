@@ -819,23 +819,19 @@ function KundaliResult({
   const city = getCityById(profile.cityId)!;
   const now = new Date();
   const currentDasha = getCurrentDasha(chart, now);
-  // The card is headlined by the Antardasha, so its dates, progress and
-  // elapsed/remaining must describe that sub-period — not the Mahadasha it
-  // sits inside (the Mahadasha span is its own labelled line plus the
-  // timeline below). Fall back to the Mahadasha only when no Antardasha
-  // brackets `now`.
-  const currentWindow = currentDasha ? currentDasha.antar ?? currentDasha.maha : null;
-  const currentElapsed = currentWindow ? now.getTime() - currentWindow.start.getTime() : 0;
-  const currentRemaining = currentWindow ? currentWindow.end.getTime() - now.getTime() : 0;
-  const currentProgress = currentWindow
-    ? Math.max(
-      0,
-      Math.min(
-        1,
-        currentElapsed / (currentWindow.end.getTime() - currentWindow.start.getTime())
-      )
-    )
-    : 0;
+  // Both nested periods are running at once, so the card shows each one —
+  // Mahadasha and Antardasha — with its own dates, progress bar and
+  // elapsed/remaining readings; neither level speaks for the other. The
+  // Antardasha entry is absent only when float accumulation in the engine
+  // leaves `now` outside all nine sub-periods at a boundary.
+  const currentWindows = currentDasha
+    ? [
+      { key: 'maha', labelHi: 'महादशा', labelEn: 'Mahadasha', period: currentDasha.maha },
+      ...(currentDasha.antar
+        ? [{ key: 'antar', labelHi: 'अन्तर्दशा', labelEn: 'Antardasha', period: currentDasha.antar }]
+        : []),
+    ]
+    : [];
   return (
     <>
       <View
@@ -1040,12 +1036,8 @@ function KundaliResult({
                 currentDasha.antar
                   ? `${GRAHA_NAMES_EN[currentDasha.antar.lord]} Antardasha`
                   : null,
-                `Mahadasha ${formatPeriodDate(currentDasha.maha.start)} to ${formatPeriodDate(currentDasha.maha.end)}`,
-                currentDasha.antar
-                  ? `Antardasha ${formatPeriodDate(currentDasha.antar.start)} to ${formatPeriodDate(currentDasha.antar.end)}`
-                  : null,
-                `${formatDuration(currentElapsed)} elapsed`,
-                `${formatDuration(currentRemaining, true)} left`,
+                ...currentWindows.map((window) =>
+                  `${window.labelEn} ${formatPeriodDate(window.period.start)} to ${formatPeriodDate(window.period.end)}, ${formatDuration(now.getTime() - window.period.start.getTime())} elapsed, ${formatDuration(window.period.end.getTime() - now.getTime(), true)} left`),
               ]
                 .filter(Boolean)
                 .join(', ')}
@@ -1076,48 +1068,58 @@ function KundaliResult({
                   )} ${contentByLang(lang, 'अन्तर्दशा', 'Antardasha')}`
                   : ''}
               </Text>
-              <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 4 }]}>
-                {contentByLang(lang, 'महादशा', 'Mahadasha')}{' '}
-                {formatPeriodDate(currentDasha.maha.start)} — {formatPeriodDate(currentDasha.maha.end)}
-              </Text>
-              {currentDasha.antar && (
-                <Text style={[styles.caption, { color: colors.ink, marginTop: 2 }]}>
-                  {contentByLang(lang, 'अन्तर्दशा', 'Antardasha')}{' '}
-                  {formatPeriodDate(currentDasha.antar.start)} — {formatPeriodDate(currentDasha.antar.end)}
-                </Text>
-              )}
-              <View
-                testID="dasha-progress"
-                accessibilityRole="progressbar"
-                accessibilityValue={{
-                  min: 0,
-                  max: 100,
-                  now: Math.round(currentProgress * 100),
-                }}
-                style={[
-                  styles.progressTrack,
-                  { backgroundColor: colors.divider, borderRadius: radii.pill },
-                ]}
-              >
-                <View
-                  style={[
-                    styles.progressFill,
-                    {
-                      width: `${currentProgress * 100}%`,
-                      backgroundColor: colors.saffron,
-                      borderRadius: radii.pill,
-                    },
-                  ]}
-                />
-              </View>
-              <View style={styles.progressCaptions}>
-                <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
-                  {formatDuration(currentElapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
-                </Text>
-                <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
-                  {formatDuration(currentRemaining, true)} {contentByLang(lang, 'शेष', 'left')}
-                </Text>
-              </View>
+              {currentWindows.map((window) => {
+                const elapsed = now.getTime() - window.period.start.getTime();
+                const remaining = window.period.end.getTime() - now.getTime();
+                const progress = Math.max(
+                  0,
+                  Math.min(
+                    1,
+                    elapsed
+                      / (window.period.end.getTime() - window.period.start.getTime())
+                  )
+                );
+                return (
+                  <View key={window.key} style={{ marginTop: window.key === 'maha' ? 4 : 10 }}>
+                    <Text style={[styles.caption, { color: colors.inkMuted }]}>
+                      {contentByLang(lang, window.labelHi, window.labelEn)}{' '}
+                      {formatPeriodDate(window.period.start)} — {formatPeriodDate(window.period.end)}
+                    </Text>
+                    <View
+                      testID={`dasha-progress-${window.key}`}
+                      accessibilityRole="progressbar"
+                      accessibilityValue={{
+                        min: 0,
+                        max: 100,
+                        now: Math.round(progress * 100),
+                      }}
+                      style={[
+                        styles.progressTrack,
+                        { backgroundColor: colors.divider, borderRadius: radii.pill },
+                      ]}
+                    >
+                      <View
+                        style={[
+                          styles.progressFill,
+                          {
+                            width: `${progress * 100}%`,
+                            backgroundColor: colors.saffron,
+                            borderRadius: radii.pill,
+                          },
+                        ]}
+                      />
+                    </View>
+                    <View style={styles.progressCaptions}>
+                      <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
+                        {formatDuration(elapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
+                      </Text>
+                      <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
+                        {formatDuration(remaining, true)} {contentByLang(lang, 'शेष', 'left')}
+                      </Text>
+                    </View>
+                  </View>
+                );
+              })}
               <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 10 }]}>
                 {contentByLang(
                   lang,
