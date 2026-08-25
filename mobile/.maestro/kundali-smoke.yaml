@@ -195,6 +195,11 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Vimshottari Dasha"
 - assertVisible:
     id: "dasha-progress"
+# Both windows of the golden chart are labelled and distinct: the progress bar,
+# elapsed and left readings belong to the Antardasha, never to the Mahadasha
+# span that contains all nine of them.
+- assertVisible: ".*Mahadasha 16 Jan 2012 . 16 Jan 2028.*"
+- assertVisible: ".*Antardasha 23 Aug 2025 . 16 Jan 2028.*"
 - assertVisible: ".*elapsed.*"
 - assertVisible: ".*left.*"
 - assertVisible: "Now"

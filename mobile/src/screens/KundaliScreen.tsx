@@ -102,16 +102,15 @@ function formatBirthTime(value: string): string {
 }
 
 function formatDuration(milliseconds: number, roundUp = false): string {
-  const totalMonths = Math.max(
-    0,
-    roundUp
-      ? Math.ceil(milliseconds / (365.2425 / 12 * 86_400_000))
-      : Math.floor(milliseconds / (365.2425 / 12 * 86_400_000))
-  );
+  const round = roundUp ? Math.ceil : Math.floor;
+  const totalMonths = Math.max(0, round(milliseconds / (365.2425 / 12 * 86_400_000)));
   const years = Math.floor(totalMonths / 12);
   const months = totalMonths % 12;
   if (years && months) return `${years} y ${months} m`;
   if (years) return `${years} y`;
+  // Antardashas are as short as ~3.6 months, so their edges need day
+  // granularity — "0 m elapsed" would read as a stopped clock.
+  if (!months) return `${Math.max(0, round(milliseconds / 86_400_000))} d`;
   return `${months} m`;
 }
 
@@ -820,19 +819,20 @@ function KundaliResult({
   const city = getCityById(profile.cityId)!;
   const now = new Date();
   const currentDasha = getCurrentDasha(chart, now);
-  const currentElapsed = currentDasha
-    ? now.getTime() - currentDasha.maha.start.getTime()
-    : 0;
-  const currentRemaining = currentDasha
-    ? currentDasha.maha.end.getTime() - now.getTime()
-    : 0;
-  const currentProgress = currentDasha
+  // The card is headlined by the Antardasha, so its dates, progress and
+  // elapsed/remaining must describe that sub-period — not the Mahadasha it
+  // sits inside (the Mahadasha span is its own labelled line plus the
+  // timeline below). Fall back to the Mahadasha only when no Antardasha
+  // brackets `now`.
+  const currentWindow = currentDasha ? currentDasha.antar ?? currentDasha.maha : null;
+  const currentElapsed = currentWindow ? now.getTime() - currentWindow.start.getTime() : 0;
+  const currentRemaining = currentWindow ? currentWindow.end.getTime() - now.getTime() : 0;
+  const currentProgress = currentWindow
     ? Math.max(
       0,
       Math.min(
         1,
-        currentElapsed
-          / (currentDasha.maha.end.getTime() - currentDasha.maha.start.getTime())
+        currentElapsed / (currentWindow.end.getTime() - currentWindow.start.getTime())
       )
     )
     : 0;
@@ -1040,7 +1040,10 @@ function KundaliResult({
                 currentDasha.antar
                   ? `${GRAHA_NAMES_EN[currentDasha.antar.lord]} Antardasha`
                   : null,
-                `${formatPeriodDate(currentDasha.maha.start)} to ${formatPeriodDate(currentDasha.maha.end)}`,
+                `Mahadasha ${formatPeriodDate(currentDasha.maha.start)} to ${formatPeriodDate(currentDasha.maha.end)}`,
+                currentDasha.antar
+                  ? `Antardasha ${formatPeriodDate(currentDasha.antar.start)} to ${formatPeriodDate(currentDasha.antar.end)}`
+                  : null,
                 `${formatDuration(currentElapsed)} elapsed`,
                 `${formatDuration(currentRemaining, true)} left`,
               ]
@@ -1074,8 +1077,15 @@ function KundaliResult({
                   : ''}
               </Text>
               <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 4 }]}>
+                {contentByLang(lang, 'महादशा', 'Mahadasha')}{' '}
                 {formatPeriodDate(currentDasha.maha.start)} — {formatPeriodDate(currentDasha.maha.end)}
               </Text>
+              {currentDasha.antar && (
+                <Text style={[styles.caption, { color: colors.ink, marginTop: 2 }]}>
+                  {contentByLang(lang, 'अन्तर्दशा', 'Antardasha')}{' '}
+                  {formatPeriodDate(currentDasha.antar.start)} — {formatPeriodDate(currentDasha.antar.end)}
+                </Text>
+              )}
               <View
                 testID="dasha-progress"
                 accessibilityRole="progressbar"

@@ -10,6 +10,7 @@ import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import {
   computeKundali,
+  getCurrentDasha,
   RASHI_NAMES_EN,
   RASHI_NAMES_WESTERN,
 } from '@/panchang/kundali';
@@ -100,6 +101,15 @@ function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
   return tree;
 }
 
+function periodDate(date: Date): string {
+  return new Intl.DateTimeFormat('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
+}
+
 function textOf(tree: TestRenderer.ReactTestRenderer): string {
   return tree.root
     .findAllByType(Text)
@@ -169,11 +179,41 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   assert.ok(text.includes('Now'));
   assert.ok(tree.root.findByProps({ testID: 'dasha-progress' }));
   assert.ok(tree.root.findByProps({ accessibilityLabel: 'Full Mahadasha timeline' }));
+  const currentDashaLabel = tree.root.findAll((node) =>
+    typeof node.props.accessibilityLabel === 'string'
+    && node.props.accessibilityLabel.startsWith('Current Dasha,')
+  );
+  assert.ok(currentDashaLabel.length > 0);
+
+  // The current-period card is headlined by the Antardasha, so its dates and
+  // progress must describe that sub-period — never the Mahadasha span it sits
+  // inside (a Rahu Antardasha once read as the full 17-year Mercury window).
+  const dasha = getCurrentDasha(mockChart, new Date())!;
+  assert.ok(dasha.antar);
+  const label = currentDashaLabel[0].props.accessibilityLabel as string;
   assert.ok(
-    tree.root.findAll((node) =>
-      typeof node.props.accessibilityLabel === 'string'
-      && node.props.accessibilityLabel.startsWith('Current Dasha,')
-    ).length > 0
+    label.includes(
+      `Mahadasha ${periodDate(dasha.maha.start)} to ${periodDate(dasha.maha.end)}`
+    )
+  );
+  assert.ok(
+    label.includes(
+      `Antardasha ${periodDate(dasha.antar!.start)} to ${periodDate(dasha.antar!.end)}`
+    )
+  );
+  assert.ok(text.includes(periodDate(dasha.antar!.end)));
+
+  const spanOf = (period: { start: Date; end: Date }) =>
+    (Date.now() - period.start.getTime()) / (period.end.getTime() - period.start.getTime());
+  const shownProgress = tree.root.findByProps({ testID: 'dasha-progress' }).props
+    .accessibilityValue.now as number;
+  const antarProgress = Math.round(spanOf(dasha.antar!) * 100);
+  assert.ok(Math.abs(shownProgress - antarProgress) <= 1);
+  // A Mahadasha always spans all nine of its Antardashas, so the two progress
+  // readings are different measurements — the bar must report the shorter one.
+  assert.ok(
+    dasha.antar!.end.getTime() - dasha.antar!.start.getTime()
+    < dasha.maha.end.getTime() - dasha.maha.start.getTime()
   );
 
   act(() => {
