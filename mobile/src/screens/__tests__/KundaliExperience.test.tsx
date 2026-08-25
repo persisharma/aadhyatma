@@ -177,6 +177,11 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   assert.ok(text.includes('elapsed'));
   assert.ok(text.includes('left'));
   assert.ok(text.includes('Now'));
+  // Two levels are both "Now" at once (e.g. Rahu chip inside a Mercury
+  // Mahadasha row), so each level must be visibly named or the pair reads
+  // as a contradiction.
+  assert.ok(text.includes('The nine Antardashas within this Mahadasha'));
+  assert.ok(text.includes('MAHADASHA TIMELINE'));
   assert.ok(tree.root.findByProps({ testID: 'dasha-progress' }));
   assert.ok(tree.root.findByProps({ accessibilityLabel: 'Full Mahadasha timeline' }));
   const currentDashaLabel = tree.root.findAll((node) =>

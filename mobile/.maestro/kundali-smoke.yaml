@@ -203,6 +203,10 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*elapsed.*"
 - assertVisible: ".*left.*"
 - assertVisible: "Now"
+# Each "Now" level is named: the chip row is the Antardasha sequence, the
+# vertical list below is the Mahadasha timeline.
+- assertVisible: "The nine Antardashas within this Mahadasha"
+- assertVisible: "MAHADASHA TIMELINE"
 - scrollUntilVisible:
     element:
       text: "Mercury Mahadasha"

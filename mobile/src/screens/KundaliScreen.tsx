@@ -1118,6 +1118,13 @@ function KundaliResult({
                   {formatDuration(currentRemaining, true)} {contentByLang(lang, 'शेष', 'left')}
                 </Text>
               </View>
+              <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 10 }]}>
+                {contentByLang(
+                  lang,
+                  'इस महादशा की नौ अन्तर्दशाएँ',
+                  'The nine Antardashas within this Mahadasha'
+                )}
+              </Text>
               <View
                 accessibilityLabel="Antardasha timeline"
                 style={styles.antarChips}
@@ -1157,6 +1164,14 @@ function KundaliResult({
               </View>
             </View>
           )}
+          <Text
+            style={[
+              styles.eyebrowText,
+              { color: colors.saffronDeep, marginTop: 18, marginBottom: 8 },
+            ]}
+          >
+            {contentByLang(lang, 'महादशा समयरेखा', 'MAHADASHA TIMELINE')}
+          </Text>
           <View accessibilityLabel="Full Mahadasha timeline">
             {chart.vimshottari.map((period, index) => {
               const selected = period === currentDasha?.maha;
