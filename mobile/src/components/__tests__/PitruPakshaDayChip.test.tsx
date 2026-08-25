@@ -37,6 +37,10 @@ afterEach(() => {
 });
 
 async function render(): Promise<TestRenderer.ReactTestRenderer> {
+  // Force real timers here too (not just beforeEach): under the full runInBand
+  // suite a sibling can leave fake timers installed, which would stall the chip's
+  // setTimeout(0) observance solve and leave the guide door unrendered.
+  jest.useRealTimers();
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
@@ -48,8 +52,16 @@ async function render(): Promise<TestRenderer.ReactTestRenderer> {
         </ThemeProvider>
       </FontScaleProvider>
     );
-    await new Promise((resolve) => setTimeout(resolve, 0));
   });
+  // The chip resolves `observance` through a setTimeout(0) effect; flush it on
+  // real timers, polling to survive scheduler jitter late in the suite.
+  for (let i = 0; i < 20; i++) {
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 5));
+    });
+    if (tree.root.findAllByProps({ accessibilityLabel: 'Open Tila-Tarpana remembrance guide' }).length > 0) break;
+    if (tree.root.findAllByProps({ accessibilityRole: 'button' }).length > 0 && i >= 2) break;
+  }
   trees.push(tree);
   return tree;
 }
