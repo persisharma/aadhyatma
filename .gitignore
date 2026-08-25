@@ -26,3 +26,7 @@ marketing/linkedin/frames/
 marketing/linkedin/slides/
 marketing/linkedin/*.mp4
 marketing/linkedin/.metro.log
+
+# Source research artifacts — kept local only; verified content lives as text and
+# sources are cited by public URL (never commit these)
+tmp/

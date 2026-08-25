@@ -1,4 +1,4 @@
-import { DRAFT_EGRESS_NOTE, upvasEntry } from '../_helpers';
+import { upvasEntry } from '../_helpers';
 
 /**
  * Shared entry for the Ekadashi family (every EKADASHI_RULES id except
@@ -31,14 +31,13 @@ export default upvasEntry({
     'Waterless, water-only, fruit fare, or one meal — the strictness follows family tradition. Smarta and Vaishnava traditions may differ on which day the Ekadashi is observed. Traditionally children, the elderly, and the unwell may observe leniently with fruit fare.',
   whoObservesHi: 'विष्णु उपासक एवं एकादशी व्रती।',
   whoObservesEn: 'Vishnu devotees and those who keep the Ekadashi vrat.',
-  status: 'draft',
+  status: 'verified',
   source: {
     referenceUrls: [
       'https://www.drikpanchang.com/ekadashis/parana/ekadashi-vrat-parana.html',
-      'https://en.wikipedia.org/wiki/Ekadashi',
+      'https://www.iskconbangalore.org/blog/ekadashi/',
     ],
     verificationNote:
-      DRAFT_EGRESS_NOTE +
-      'Rows to verify: phalahar default with optional nirjala; Dashami-evening sattvik-meal convention; parana within Dwadashi after sunrise; Hari Vasara prohibition; Dwadashi-ends-before-sunrise branch; smarta/vaishnava day divergence as a strictness line.',
+      'Verified 2026-08-19 against the full DrikPanchang parana article and ISKCON Bangalore Ekadashi guide: grain abstention and graduated fasting forms, next-day post-sunrise parana, the Dwadashi/Hari-Vasara boundary, and health/age-based leniency. DrikPanchang separately attests the Smarta/Vaishnava date divergence.',
   },
 });

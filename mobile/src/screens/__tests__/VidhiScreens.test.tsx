@@ -17,6 +17,7 @@ import { Share, View as mockView } from 'react-native';
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { VIDHI_ENTRIES } from '@/data/vidhi';
 import { satyanarayanPuja } from '@/data/vidhi/satyanarayan-puja';
+import { shraddhaTarpanVidhi } from '@/data/vidhi/shraddha-tarpan-vidhi';
 
 /**
  * `getState().routeNames` is how the shipped-text hand-off tells which stack the
@@ -98,7 +99,7 @@ afterEach(() => {
   mockNavigation.getState.mockReturnValue({ routeNames: PANCHANG_STACK_ROUTES });
 });
 
-test('VidhiCatalogScreen lists all six v1 cards without publishing provenance and opens detail', () => {
+test('VidhiCatalogScreen lists all seven cards without publishing provenance and opens detail', () => {
   const r = render(<VidhiCatalogScreen navigation={nav} route={{ key: 'k', name: 'VidhiCatalog' } as never} />);
   const body = texts(r);
   expect(body).toContain('श्री सत्यनारायण पूजा');
@@ -110,6 +111,7 @@ test('VidhiCatalogScreen lists all six v1 cards without publishing provenance an
   expect(body).toContain('नवरात्रि घटस्थापना');
   expect(body).toContain('करवा चौथ पूजन');
   expect(body).toContain('महाशिवरात्रि पूजन');
+  expect(body).toContain('पितृ तिल-तर्पण स्मरण');
   for (const vidhi of VIDHI_ENTRIES) {
     r.root.findByProps({ testID: `vidhi-card-${vidhi.id}` });
   }
@@ -282,6 +284,30 @@ test('VidhiConductScreen: the katha hand-off pushes in place when opened from Ho
     kathaId: 'satyanarayana-vrat-katha',
   });
   expect(mockNavigation.navigate).not.toHaveBeenCalledWith('HomeTab', expect.anything());
+});
+
+test('Shraddha guide: Gita hand-off opens the exact chapter without retyping it', async () => {
+  const gitaIndex = shraddhaTarpanVidhi.steps.findIndex((step) => step.id === 'gita-15');
+  const r = render(
+    <VidhiConductScreen
+      navigation={nav}
+      route={{
+        key: 'k',
+        name: 'VidhiConduct',
+        params: { vidhiId: 'shraddha-tarpan-vidhi', initialStep: gitaIndex },
+      } as never}
+    />
+  );
+  await settle();
+  expect(texts(r)).toContain('भगवद् गीता — अध्याय 15');
+  expect(texts(r)).toContain('पाठ पूर्ण कर यहीं लौटें');
+  act(() => {
+    r.root.findByProps({ testID: 'vidhi-handoff-gita-15' }).props.onPress();
+  });
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('HomeTab', {
+    screen: 'GitaReader',
+    params: { chapter: 15 },
+  });
 });
 
 test('VidhiConductScreen: completion page is a quiet static ॐ seal without repeated actions', async () => {

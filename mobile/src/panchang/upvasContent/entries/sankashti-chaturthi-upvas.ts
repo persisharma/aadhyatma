@@ -1,4 +1,4 @@
-import { DRAFT_EGRESS_NOTE, upvasEntry } from '../_helpers';
+import { upvasEntry } from '../_helpers';
 
 export default upvasEntry({
   id: 'sankashti-chaturthi-upvas',
@@ -16,19 +16,19 @@ export default upvasEntry({
     textEn: 'Break the fast at night after sighting the moon and offering it arghya, following the Ganesha puja.',
   },
   strictnessHi:
-    'कोई निर्जल और कोई फलाहार रूप में रखता है; व्रत चंद्र दर्शन से ही पूर्ण माना जाता है। परंपरा अनुसार बालक, वृद्ध एवं अस्वस्थ छूट रख सकते हैं।',
+    'दिन का उपवास संध्या की गणेश पूजा, चंद्र दर्शन और चंद्रमा को अर्घ्य देने के बाद पूर्ण किया जाता है।',
   strictnessEn:
-    'Some keep it waterless and some on fruit fare; the vrat is held complete only upon sighting the moon. Traditionally children, the elderly, and the unwell may observe leniently.',
+    'The day fast is completed after the evening Ganesha worship, sighting the moon, and offering arghya to it.',
   whoObservesHi: 'गणेश उपासक; प्रत्येक कृष्ण पक्ष की चतुर्थी को।',
   whoObservesEn: 'Ganesha devotees; on the Chaturthi of every dark fortnight.',
-  status: 'draft',
+  status: 'verified',
   source: {
     referenceUrls: [
-      'https://www.drikpanchang.com/vrat-katha/sankashti/sankashti-chaturthi-vrat-katha.html',
-      'https://en.wikipedia.org/wiki/Sankashti_Chaturthi',
+      'https://www.drikpanchang.com/vrats/sankashti-chaturthi-dates.html',
+      'https://www.ganapati.org/sankatahara-chaturthi',
+      'https://saveca.ca/SANKASHTAHARA%20GANAPATHI%20VRATHAM.PDF',
     ],
     verificationNote:
-      DRAFT_EGRESS_NOTE +
-      'Rows to verify: moonrise-bound window; arghya-then-break sequence; strictness variants.',
+      'Verified 2026-08-19 against DrikPanchang, Maha Ganapati Temple of Arizona, and Sankara Vedic Culture and Arts: monthly Krishna-Paksha Chaturthi, sunrise-to-moonrise fasting, evening Ganesha worship, moon sighting, and arghya before completion of the vrat.',
   },
 });

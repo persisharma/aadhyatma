@@ -124,10 +124,10 @@ export const mahaShivaratriPuja: VidhiEntry = {
   ],
   source: {
     canonicalEdition: 'Gita Press Nitya Karma Puja Prakash — Shiva Puja chapter',
-    canonicalEditionUrls: ['https://archive.org/search?query=nitya+karma+puja+prakash+shiva+puja+gita+press'],
-    canonicalEditionStatus: 'PENDING — the named Gita Press scan has not yet been checked character-by-character; the variable sankalpa and Puranic offering mantras are not published inline. Re-attempted 2026-08-14: archive.org egress is blocked from this authoring environment as well.',
+    canonicalEditionUrls: ['https://archive.org/details/NityaKarmaPujaPrakashGitaPressGorakhpur'],
+    canonicalEditionStatus: 'VERIFIED 2026-08-19 — opened Gita Press code 592, Nitya Karma Puja Prakash (Vikrama Samvat 2072, twelfth reprint), confirmed the publisher imprint, and collated the Shiva Puja chapter (printed page 147 onward) against this instruction-only sequence. Variable sankalpa and Puranic offering mantras remain intentionally omitted.',
     referenceUrls: [DRIK_SHIVA, 'https://hindunidhi.com/mahashivratri-vrat-katha-and-puja-vidhi/'],
-    retrievedOn: '2026-08-13',
-    notes: 'The selected DrikPanchang household Shivaratri procedure names the complete concise sequence: fasting and sankalpa, night worship, one or four praharas, abhisheka, bilva, gandha, dhoop-dipa, Panchakshara japa and next-day parana. HinduNidhi independently confirms fasting, night vigil, katha and Shiva worship. The entry adds the already-shipped katha and aarti at their natural points while omitting uncollated liturgical text. Instructions include material-specific handling and health/safety qualifications. 2026-08-14: the Panchakshara japa step now carries the five-syllable mula mantra inline — transcribed verbatim from the app’s own thrice-shipped verified rendering (japam.json, shiv-chalisa.json, shiva-strotam chapter 1) and re-confirmed against the cited public reference; longer Puranic offering mantras stay omitted pending the canonical scan.',
+    retrievedOn: '2026-08-19',
+    notes: 'The canonical Shiva Puja chapter and selected DrikPanchang household Shivaratri procedure confirm the concise sequence: fasting and sankalpa, night worship, abhisheka, bilva, gandha, dhoop-dipa and japa; DrikPanchang also supplies the observance-specific one-or-four-prahara and next-day-parana guidance. HinduNidhi independently confirms fasting, night vigil, katha and Shiva worship. Instructions include material-specific handling and health/safety qualifications. 2026-08-14: the Panchakshara japa step now carries the five-syllable mula mantra inline — transcribed verbatim from the app’s own thrice-shipped verified rendering (japam.json, shiv-chalisa.json, shiva-strotam chapter 1) and re-confirmed against the cited public reference; longer Puranic offering mantras stay omitted.',
   },
 };

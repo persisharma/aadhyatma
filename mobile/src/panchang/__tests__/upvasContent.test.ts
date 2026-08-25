@@ -112,8 +112,13 @@ test('§6.1 attached-rule sets are pinned literally', () => {
   assert.deepEqual(rulesFor('pradosh-upvas'), ['pradosh-vrat-krishna', 'pradosh-vrat-shukla']);
   assert.deepEqual(rulesFor('sankashti-chaturthi-upvas'), ['sankashti-chaturthi-vrat']);
   assert.deepEqual(rulesFor('karwa-chauth-upvas'), ['karwa-chauth']);
-  assert.deepEqual(rulesFor('maha-shivaratri-upvas'), ['maha-shivaratri', 'masik-shivaratri'].sort());
-  assert.deepEqual(rulesFor('janmashtami-upvas'), ['janmashtami', 'masik-krishna-janmashtami'].sort());
+  // Annual rules are not inherited by the monthly observances: the source
+  // review found distinct procedures, so monthly entries remain absent until
+  // they independently clear the two-source gate.
+  assert.deepEqual(rulesFor('maha-shivaratri-upvas'), ['maha-shivaratri']);
+  assert.deepEqual(rulesFor('janmashtami-upvas'), ['janmashtami']);
+  assert.equal(OBSERVANCE_RULES.find((r) => r.id === 'masik-shivaratri')?.upvasId, undefined);
+  assert.equal(OBSERVANCE_RULES.find((r) => r.id === 'masik-krishna-janmashtami')?.upvasId, undefined);
 });
 
 test('content-correctness pins — facts asserted literally so refactors cannot swap rules', () => {

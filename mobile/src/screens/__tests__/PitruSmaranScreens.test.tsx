@@ -85,6 +85,9 @@ const PitruSmaranEditScreen = jest.requireActual<typeof import('../PitruSmaranEd
 const PitruSmaranDetailScreen = jest.requireActual<typeof import('../PitruSmaranDetailScreen')>(
   '../PitruSmaranDetailScreen'
 ).default;
+const PitruPakshaOverviewScreen = jest.requireActual<typeof import('../PitruPakshaOverviewScreen')>(
+  '../PitruPakshaOverviewScreen'
+).default;
 
 const mockedNextObservance = jest.mocked(nextObservanceForEntry);
 const mockedWindow = jest.mocked(pitruPakshaWindow);
@@ -413,7 +416,8 @@ describe('PitruSmaranDetailScreen', () => {
       .mockReturnValueOnce(daysFromNow(173)) // next
       .mockReturnValueOnce(daysFromNow(538)); // following year
     mockedWindow.mockReturnValue({ purnima: daysFromNow(40), start: daysFromNow(41), end: daysFromNow(55) });
-    mockedPakshaDay.mockReturnValue(daysFromNow(48));
+    const pakshaOccurrence = daysFromNow(48);
+    mockedPakshaDay.mockReturnValue(pakshaOccurrence);
 
     const nav = makeNav();
     const tree = await render(
@@ -438,6 +442,12 @@ describe('PitruSmaranDetailScreen', () => {
     expect(text).toContain('173 दिन में');
     expect(text).toContain('अगले वर्ष');
     expect(text).toContain('अष्टमी श्राद्ध');
+
+    act(() => byLabel(tree, 'Open Tila-Tarpana remembrance guide').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('VidhiDetail', {
+      vidhiId: 'shraddha-tarpan-vidhi',
+      dateMs: pakshaOccurrence.getTime(),
+    });
 
     act(() => byLabel(tree, 'Open Gita — Adhyaya 15').props.onPress());
     expect(mockRootNavigate).toHaveBeenCalledWith('HomeTab', {
@@ -478,5 +488,28 @@ describe('PitruSmaranDetailScreen', () => {
     );
     act(() => byLabel(tree, 'Edit smaran').props.onPress());
     expect(nav.navigate).toHaveBeenCalledWith('PitruSmaranEdit', { entryId: 'smaran-father' });
+  });
+});
+
+describe('PitruPakshaOverviewScreen', () => {
+  test('opens the registered household guide for the nearest family-matched day', async () => {
+    mockEntries = [FATHER];
+    const start = daysFromNow(10);
+    const matched = daysFromNow(12);
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(9), start, end: daysFromNow(24) });
+    mockedPakshaDay.mockReturnValue(matched);
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={nav as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    act(() => byLabel(tree, 'Open Tila-Tarpana remembrance guide').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('VidhiDetail', {
+      vidhiId: 'shraddha-tarpan-vidhi',
+      dateMs: matched.getTime(),
+    });
   });
 });
