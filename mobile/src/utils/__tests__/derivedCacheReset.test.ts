@@ -56,6 +56,7 @@ const MUST_SURVIVE = [
   '@vedansh/muhurat-follows',
   '@vedansh/pitru-smaran',
   // Birth details and starred names, several privacy-sensitive by design.
+  '@vedansh:kundali-profiles:v1',
   '@vedansh:kundali-birth-profile:v1',
   '@vedansh:guna-milan-draft:v1',
   '@vedansh:guna-milan-metrics:v1',

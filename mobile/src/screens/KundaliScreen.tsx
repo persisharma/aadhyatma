@@ -42,11 +42,13 @@ import {
 import { CITIES, cityMatchesQuery, getCityById, type City } from '@/panchang/locations';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from '@/panchang/names';
 import {
+  MAX_PEOPLE,
   useKundali,
   validateBirthProfile,
   type BirthProfile,
   type BirthProfileErrors,
 } from '@/panchang/useKundali';
+import PersonChips from '@/components/PersonChips';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -127,12 +129,21 @@ export default function KundaliScreen({ navigation, route }: Props) {
     chart,
     hydrated,
     loadState,
+    people,
+    activeId,
+    canAddPerson,
     saveProfile,
     clearProfile,
+    selectPerson,
+    addPerson,
   } = useKundali();
   const [draft, setDraft] = useState<BirthProfile>(EMPTY_PROFILE);
   const [errors, setErrors] = useState<BirthProfileErrors>({});
   const [editing, setEditing] = useState(true);
+  // A SECOND, additive mode beside `editing`: entering a new person must not
+  // write over the person currently on screen, so the create form is its own
+  // state rather than "edit with the fields blanked".
+  const [creating, setCreating] = useState(route.params?.newPerson === true);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
   const [activeTab, setActiveTab] = useState<KundaliResultTab>('overview');
@@ -143,6 +154,9 @@ export default function KundaliScreen({ navigation, route }: Props) {
 
   useEffect(() => {
     if (!hydrated) return;
+    // While creating, the draft belongs to nobody yet — the active person's
+    // details must not be copied into it.
+    if (creating) return;
     if (profile) {
       setDraft(profile);
       setEditing(openInEditMode.current);
@@ -152,7 +166,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
     } else if (loadState === 'error') {
       setEditing(false);
     }
-  }, [hydrated, loadState, profile]);
+  }, [creating, hydrated, loadState, profile]);
 
   useEffect(() => {
     if (!hydrated || editing || !chart) return;
@@ -167,7 +181,24 @@ export default function KundaliScreen({ navigation, route }: Props) {
     setSaveError('');
     setSaving(true);
     try {
-      await saveProfile(draft);
+      if (creating) {
+        const added = await addPerson(draft);
+        // At the cap the roster refuses the add; say so instead of quietly
+        // dropping the details the user just entered.
+        if (!added) {
+          setSaveError(
+            contentByLang(
+              lang,
+              `${MAX_PEOPLE} लोग तक सहेजे जा सकते हैं। नया जोड़ने के लिए किसी को हटाएँ।`,
+              `Up to ${MAX_PEOPLE} people can be saved. Remove someone to add another.`
+            )
+          );
+          return;
+        }
+        setCreating(false);
+      } else {
+        await saveProfile(draft);
+      }
       setActiveTab('overview');
       setEditing(false);
     } catch {
@@ -192,13 +223,57 @@ export default function KundaliScreen({ navigation, route }: Props) {
     setActiveTab(tab);
   };
 
+  const beginNewPerson = () => {
+    Keyboard.dismiss();
+    setCreating(true);
+    setEditing(false);
+    setDraft(EMPTY_PROFILE);
+    setErrors({});
+    setSaveError('');
+  };
+
+  const cancelNewPerson = () => {
+    setCreating(false);
+    setDraft(profile ?? EMPTY_PROFILE);
+    setErrors({});
+    setSaveError('');
+  };
+
+  const handleSelectPerson = async (id: string) => {
+    if (id === activeId && !creating) return;
+    setCreating(false);
+    setErrors({});
+    setSaveError('');
+    setActiveTab('overview');
+    setEditing(false);
+    try {
+      await selectPerson(id);
+    } catch {
+      setSaveError(
+        contentByLang(
+          lang,
+          'व्यक्ति नहीं बदला जा सका। कृपया फिर प्रयास करें।',
+          'The person could not be switched. Please try again.'
+        )
+      );
+    }
+  };
+
   const startOver = async () => {
+    // Removing one of several people returns to the NEXT person's chart; only
+    // removing the last one empties the screen back to the blank form.
+    const wasLast = people.length <= 1;
     try {
       await clearProfile();
-      setDraft(EMPTY_PROFILE);
       setActiveTab('overview');
       setSaveError('');
-      setEditing(true);
+      setCreating(false);
+      if (wasLast) {
+        setDraft(EMPTY_PROFILE);
+        setEditing(true);
+      } else {
+        setEditing(false);
+      }
     } catch {
       setSaveError(
         contentByLang(
@@ -245,7 +320,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
               {contentByLang(lang, 'लाहिरी · पूर्ण राशि भाव · IST', 'Lahiri · Whole-sign houses · IST')}
             </Text>
           </View>
-          {chart && profile && !editing ? (
+          {chart && profile && !editing && !creating ? (
             <View style={styles.headerActions}>
               <Pressable
                 onPress={() => setShareVisible(true)}
@@ -296,6 +371,23 @@ export default function KundaliScreen({ navigation, route }: Props) {
             keyboardDismissMode="on-drag"
             showsVerticalScrollIndicator={false}
           >
+            {/* The switcher sits above every state, so who a chart belongs to is
+                never a guess — and adding a second person is one tap from the
+                first person's own chart (design.md §51a). */}
+            <PersonChips
+              people={people}
+              activeId={creating ? null : activeId}
+              lang={lang}
+              onSelect={handleSelectPerson}
+              onAdd={beginNewPerson}
+              canAdd={canAddPerson}
+              labelHi="किसकी कुंडली"
+              labelEn="Whose chart"
+              selectAccessibilityLabel={(label) => `Show Kundali for ${label}`}
+              addAccessibilityLabel="Add another person"
+              fullMessageHi={`${MAX_PEOPLE} लोग तक सहेजे जा सकते हैं। नया जोड़ने के लिए किसी को हटाएँ।`}
+              fullMessageEn={`Up to ${MAX_PEOPLE} people can be saved. Remove someone to add another.`}
+            />
             {loadState === 'error' && !editing ? (
               <JyotishStateCard
                 kind="error"
@@ -309,21 +401,22 @@ export default function KundaliScreen({ navigation, route }: Props) {
                 actionAccessibilityLabel="Re-enter birth details"
                 onAction={startOver}
               />
-            ) : editing || !chart ? (
+            ) : creating || editing || !chart ? (
               <BirthInput
                 draft={draft}
                 errors={errors}
                 saving={saving}
                 saveError={saveError}
                 lang={lang}
+                creating={creating}
                 onChange={setDraft}
                 onChooseCity={() => {
                   Keyboard.dismiss();
                   setCityPickerVisible(true);
                 }}
                 onGenerate={handleGenerate}
-                onCancel={chart ? () => setEditing(false) : undefined}
-                onDelete={profile ? startOver : undefined}
+                onCancel={creating ? cancelNewPerson : chart ? () => setEditing(false) : undefined}
+                onDelete={!creating && profile ? startOver : undefined}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -393,6 +486,7 @@ function BirthInput({
   saving,
   saveError,
   lang,
+  creating = false,
   onChange,
   onChooseCity,
   onGenerate,
@@ -408,6 +502,8 @@ function BirthInput({
   saving: boolean;
   saveError: string;
   lang: Lang;
+  /** Adding a person beside the existing ones, not editing the current one. */
+  creating?: boolean;
   onChange: (profile: BirthProfile) => void;
   onChooseCity: () => void;
   onGenerate: () => void;
@@ -455,7 +551,9 @@ function BirthInput({
             fontSize: 21,
           }}
         >
-          {contentByLang(lang, 'अपनी कुंडली बनाएँ', 'Create your Kundali')}
+          {creating
+            ? contentByLang(lang, 'नई कुंडली जोड़ें', 'Add another Kundali')
+            : contentByLang(lang, 'अपनी कुंडली बनाएँ', 'Create your Kundali')}
         </Text>
         <Text
           style={{
@@ -466,11 +564,17 @@ function BirthInput({
             marginTop: 7,
           }}
         >
-          {meaningByLang(
-            lang,
-            'सटीक समय से लग्न और भाव की गणना सबसे विश्वसनीय होती है।',
-            'An exact time gives the most reliable Lagna and house calculation.'
-          )}
+          {creating
+            ? meaningByLang(
+              lang,
+              'पहले सहेजी कुंडलियाँ यथावत रहेंगी। नाम देने से बाद में चुनना आसान होता है।',
+              'The charts you already saved stay as they are. A name makes switching easier later.'
+            )
+            : meaningByLang(
+              lang,
+              'सटीक समय से लग्न और भाव की गणना सबसे विश्वसनीय होती है।',
+              'An exact time gives the most reliable Lagna and house calculation.'
+            )}
         </Text>
       </View>
 
@@ -481,7 +585,7 @@ function BirthInput({
         accessibilityLabel="Birth name"
         value={draft.name ?? ''}
         onChangeText={(name) => onChange({ ...draft, name })}
-        placeholder="Your name"
+        placeholder={creating ? 'Name' : 'Your name'}
         autoCapitalize="words"
       />
 

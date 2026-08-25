@@ -6,6 +6,12 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 - [**Q3 2026 Roadmap**](./2026-Q3-roadmap.md) — Jul–Sep 2026
 
+## Next
+
+- [**Q4 2026 Candidates**](./2026-Q4-candidates.md) — household-practice gap analysis and the next five
+  proposed features (PRD-20 … PRD-24, numbers reserved). Read this for what is *missing*; the table
+  below is the Q3 slate only and has not tracked PRDs 07–19.
+
 ## PRDs (Q3 2026)
 
 | ID | Title | Target release |

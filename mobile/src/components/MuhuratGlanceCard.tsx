@@ -4,11 +4,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
-import { scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
+import { scriptTitleFont, scriptBodyFont, eyebrowTextStyle } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { nextAuspiciousPeriod } from '@/panchang/muhurat';
-import { formatClock, formatRange } from '@/panchang/muhuratFormat';
+import { prevailingTithi } from '@/panchang/prevailingTithi';
+import { formatClock, formatRange, formatEndInstant } from '@/panchang/muhuratFormat';
 import type { CalendarSystem } from '@/panchang/types';
 
 /**
@@ -27,7 +28,7 @@ export default function MuhuratGlanceCard({
 }) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const { isToday, nowChoghadiya, muhurat } = useMuhurat(date, calendarSystem);
+  const { isToday, nowChoghadiya, muhurat, panchang } = useMuhurat(date, calendarSystem);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
 
   // The solve runs off the render path (and only the first time per day — it is
@@ -90,14 +91,54 @@ export default function MuhuratGlanceCard({
   // auspicious remains before the next sunrise.
   const nextShubh = showNow && nowAvoid ? nextAuspiciousPeriod(muhurat, new Date(at)) : null;
 
+  // The kicker tithi is LIVE on a today surface: a tithi usually ends mid-day
+  // (and kshaya days hold two), so past the end instant the minute tick moves
+  // this to the tithi actually running now — never a stale sunrise answer next
+  // to a live "now" row. Browsed dates keep the sunrise (udaya-vyapini) tithi,
+  // the almanac's answer for that day.
+  const kickerTithi = panchang
+    ? isToday
+      ? prevailingTithi(panchang, new Date(at))
+      : { nameHi: panchang.tithi.nameHi, nameEn: panchang.tithi.nameEn, endTime: panchang.tithi.endTime }
+    : null;
+
   return (
     <LinearGradient
       colors={[colors.cardActiveFrom, colors.cardActiveTo]}
       style={[styles.card, { borderColor: colors.cardActiveBorder, borderRadius: radii.lg, padding: spacing.lg }, elevation.raised]}
     >
-      <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
-        {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
-      </Text>
+      {/* Kicker row: the eyebrow on the left, the running tithi on the right —
+          the one calendar fact promoted into the first-viewport hero card (the
+          anga grid it belongs to sits past the fold on most phones). The end
+          instant renders when this day's solve knows it (the successor tithi's
+          end belongs to tomorrow's solve — name only there, never a guess);
+          formatEndInstant adds a short date on past-midnight ends. The anga
+          tile below stays the canonical sunrise-tithi + kshaya detail. */}
+      <View style={styles.kickerRow}>
+        <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
+          {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
+        </Text>
+        {kickerTithi && panchang && (
+          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.kickerTithi}>
+            <Text style={[eyebrowTextStyle(lang, 10, 0.6), { color: colors.saffronDeep }]}>
+              {contentByLang(lang, 'तिथि · ', 'Tithi · ')}
+            </Text>
+            <Text style={{ fontFamily: titleFont, fontSize: 14.5, color: colors.ink }}>
+              {contentByLang(lang, kickerTithi.nameHi, kickerTithi.nameEn)}
+            </Text>
+            {kickerTithi.endTime && (
+              // Same face rule as the anga tiles' तक line: Latin semibold for
+              // en; the script body face otherwise — Cormorant has no Indic
+              // glyphs, and formatEndInstant's short-date suffix is Devanagari
+              // in hi (§3).
+              <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft }}>
+                {contentByLang(lang, ' तक ', ' till ')}
+                {formatEndInstant(kickerTithi.endTime, panchang.date, lang)}
+              </Text>
+            )}
+          </Text>
+        )}
+      </View>
 
       {/* Hero line: current choghadiya when today, else the day's Abhijit. */}
       <View style={styles.nowRow}>
@@ -216,6 +257,10 @@ export default function MuhuratGlanceCard({
 
 const styles = StyleSheet.create({
   card: { borderWidth: 1 },
+  // Baseline-aligned so the 12pt eyebrow and the 14.5pt tithi name share one
+  // visual line; the tithi shrinks first if the row runs out of width.
+  kickerRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 },
+  kickerTithi: { flexShrink: 1 },
   nowRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10 },
   dot: { width: 12, height: 12, borderRadius: 6 },
   // No fontWeight: the call site sets fontFamilies.latinBold, a static 700 file

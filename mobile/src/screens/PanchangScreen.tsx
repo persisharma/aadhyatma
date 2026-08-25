@@ -64,10 +64,13 @@ import {
   type KundaliChart,
 } from '@/panchang/kundali';
 import {
+  MAX_PEOPLE,
   useKundali,
   type BirthProfile,
   type KundaliLoadState,
+  type PersonProfile,
 } from '@/panchang/useKundali';
+import PersonChips from '@/components/PersonChips';
 import { getCityById } from '@/panchang/locations';
 import type { PanchangHomeMode, PanchangStackParamList } from '@/navigation/types';
 
@@ -155,6 +158,10 @@ export default function PanchangScreen({ route }: Props) {
     chart: kundaliChart,
     loadState: kundaliLoadState,
     reloadProfile,
+    people: kundaliPeople,
+    activeId: kundaliActiveId,
+    canAddPerson: canAddKundaliPerson,
+    selectPerson: selectKundaliPerson,
   } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
   const monthObservances = usePanchangMonthObservances(visibleMonth, calendarSystem);
@@ -278,6 +285,7 @@ export default function PanchangScreen({ route }: Props) {
   const openPitruSmaran = () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList'));
   const openKundali = (editing = false) =>
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
+  const openAddPerson = () => rootNav.navigate('Kundali', { newPerson: true });
   const openRashifal = () => rootNav.navigate('Rashifal');
   const openGunaMilan = () => rootNav.navigate('GunaMilan');
   const openNamkaran = () => rootNav.navigate('Namkaran');
@@ -720,6 +728,11 @@ export default function PanchangScreen({ route }: Props) {
               loadState={kundaliLoadState}
               profile={kundaliProfile}
               chart={kundaliChart}
+              people={kundaliPeople}
+              activeId={kundaliActiveId}
+              canAddPerson={canAddKundaliPerson}
+              onSelectPerson={(id) => { void selectKundaliPerson(id); }}
+              onAddPerson={openAddPerson}
               onOpenKundali={() => openKundali(false)}
               onEditKundali={() => openKundali(true)}
               onOpenRashifal={openRashifal}
@@ -745,6 +758,11 @@ function JyotishLanding({
   loadState,
   profile,
   chart,
+  people,
+  activeId,
+  canAddPerson,
+  onSelectPerson,
+  onAddPerson,
   onOpenKundali,
   onEditKundali,
   onOpenRashifal,
@@ -761,6 +779,11 @@ function JyotishLanding({
   loadState: KundaliLoadState;
   profile: BirthProfile | null;
   chart: KundaliChart | null;
+  people: readonly PersonProfile[];
+  activeId: string | null;
+  canAddPerson: boolean;
+  onSelectPerson: (id: string) => void;
+  onAddPerson: () => void;
   onOpenKundali: () => void;
   onEditKundali: () => void;
   onOpenRashifal: () => void;
@@ -993,6 +1016,24 @@ function JyotishLanding({
           </Text>
         </View>
 
+        {/* Whose day this is, above the guidance it changes. Everything below —
+            Rashifal, the chart glance, the share card — follows this selection,
+            and so does the muhurat finder's आपके लिए strip (design.md §51a). */}
+        <PersonChips
+          people={people}
+          activeId={activeId}
+          lang={lang}
+          onSelect={onSelectPerson}
+          onAdd={onAddPerson}
+          canAdd={canAddPerson}
+          labelHi="किसका ज्योतिष"
+          labelEn="Whose Jyotish"
+          selectAccessibilityLabel={(label) => `Show Jyotish for ${label}`}
+          addAccessibilityLabel="Add another person"
+          fullMessageHi={`${MAX_PEOPLE} लोग तक सहेजे जा सकते हैं।`}
+          fullMessageEn={`Up to ${MAX_PEOPLE} people can be saved.`}
+        />
+
         {sectionLabel('आज का राशिफल', 'Today’s Rashifal')}
         <View
           style={[
@@ -1021,11 +1062,19 @@ function JyotishLanding({
                   { color: colors.saffronDeep, fontSize: 10 },
                 ]}
               >
-                {contentByLang(
-                  lang,
-                  'चन्द्र राशि · आपकी कुंडली से',
-                  'Moon sign · From your Kundali'
-                )}
+                {/* With more than one person saved, "your" would be a guess —
+                    name whose chart this Moon sign came from. */}
+                {people.length > 1 && profile.name
+                  ? contentByLang(
+                    lang,
+                    `चन्द्र राशि · ${profile.name} की कुंडली से`,
+                    `Moon sign · From ${profile.name}’s Kundali`
+                  )
+                  : contentByLang(
+                    lang,
+                    'चन्द्र राशि · आपकी कुंडली से',
+                    'Moon sign · From your Kundali'
+                  )}
               </Text>
               <Text
                 style={{

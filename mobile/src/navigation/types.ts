@@ -139,7 +139,10 @@ export type PanchangStackParamList = VidhiStackParamList & {
   MuhuratResults: { occasionId: OccasionId };
   MuhuratDayDetail: { occasionId: OccasionId; dateMs: number };
   AbujhDays: undefined;
-  Kundali: { editing?: boolean } | undefined;
+  // `newPerson` opens the blank add-a-person form beside the people already
+  // saved (the Jyotish landing's + जोड़ें chip); `editing` still opens the
+  // ACTIVE person's details for editing.
+  Kundali: { editing?: boolean; newPerson?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
