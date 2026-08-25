@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -8,12 +8,8 @@ import ReaderHeader from '@/components/ReaderHeader';
 import ObservanceListRow from '@/components/ObservanceListRow';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
-import {
-  nextObservanceForEntry,
-  pitruPakshaWindow,
-  type PitruPakshaWindow,
-  type SmaranEntry,
-} from '@/panchang/pitruSmaran';
+import { type SmaranEntry } from '@/panchang/pitruSmaran';
+import { useSmaranListSolve } from '@/panchang/usePitruSmaranSolves';
 import {
   daysUntil,
   entryCaption,
@@ -51,47 +47,26 @@ export default function PitruSmaranListScreen({ navigation }: Props) {
   const today = startOfLocalDay(new Date());
   const todayMs = today.getTime();
 
-  // The per-entry annual solves and the paksha window run OFF the render path —
-  // a handful of memoised tithi solves each, but never on first paint.
-  const [rows, setRows] = useState<Row[] | null>(null);
-  const [window_, setWindow] = useState<PitruPakshaWindow | null>(null);
-  useEffect(() => {
-    let cancelled = false;
-    const handle = setTimeout(() => {
-      const day = new Date(todayMs);
-      const solved: Row[] = entries.map((entry) => {
-        let next: Date | null = null;
-        try {
-          next = nextObservanceForEntry(entry, day);
-        } catch {
-          next = null;
-        }
-        return { entry, next };
-      });
-      solved.sort((a, b) => {
-        const at = a.next?.getTime() ?? Number.MAX_SAFE_INTEGER;
-        const bt = b.next?.getTime() ?? Number.MAX_SAFE_INTEGER;
-        return at - bt;
-      });
-      let paksha: PitruPakshaWindow | null = null;
-      try {
-        paksha = pitruPakshaWindow(day.getFullYear()) ?? null;
-        if (paksha && paksha.end.getTime() < day.getTime()) {
-          paksha = pitruPakshaWindow(day.getFullYear() + 1) ?? null;
-        }
-      } catch {
-        paksha = null;
-      }
-      if (!cancelled) {
-        setRows(solved);
-        setWindow(paksha);
-      }
-    }, 0);
-    return () => {
-      cancelled = true;
-      clearTimeout(handle);
-    };
-  }, [entries, todayMs]);
+  // Annual solves come from the shared cache: warm on the first render when the
+  // answers are already on disk or in memory, and never on the render path when
+  // they are not. It also prewarms what the detail screen needs — see
+  // `usePitruSmaranSolves`.
+  const solve = useSmaranListSolve(entries, todayMs);
+  const window_ = solve?.window ?? null;
+
+  const rows = useMemo<Row[] | null>(() => {
+    if (!solve) return null;
+    const solved: Row[] = entries.map((entry) => ({
+      entry,
+      next: solve.nextByEntryId.get(entry.id) ?? null,
+    }));
+    solved.sort((a, b) => {
+      const at = a.next?.getTime() ?? Number.MAX_SAFE_INTEGER;
+      const bt = b.next?.getTime() ?? Number.MAX_SAFE_INTEGER;
+      return at - bt;
+    });
+    return solved;
+  }, [solve, entries]);
 
   const showBanner =
     window_ !== null &&

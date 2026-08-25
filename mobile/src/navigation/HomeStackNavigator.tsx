@@ -55,6 +55,9 @@ import RoutineAddItemsScreen from '@/screens/RoutineAddItemsScreen';
 import RoutineDetailScreen from '@/screens/RoutineDetailScreen';
 import SadhanaProgramListScreen from '@/screens/SadhanaProgramListScreen';
 import SadhanaProgramDetailScreen from '@/screens/SadhanaProgramDetailScreen';
+import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
+import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
+import VidhiConductScreen from '@/screens/VidhiConductScreen';
 import type { HomeStackParamList } from './types';
 
 const LazyJapamCounterScreen = lazy(() => import('@/screens/JapamCounterScreen'));
@@ -237,6 +240,16 @@ export default function HomeStackNavigator() {
       <Stack.Screen name="RoutineDetail" component={RoutineDetailScreen} />
       <Stack.Screen name="SadhanaPrograms" component={SadhanaProgramListScreen} />
       <Stack.Screen name="SadhanaProgramDetail" component={SadhanaProgramDetailScreen} />
+      {/*
+        The vidhi flow is registered here as well as on the Panchang stack
+        (see VidhiStackParamList). Home's DISCOVER card, the search rows and
+        routine items push it in place, so back retraces the Home journey
+        instead of stranding the user on the Panchang calendar — which carries
+        no vidhi door of its own in its default mode.
+      */}
+      <Stack.Screen name="VidhiCatalog" component={VidhiCatalogScreen} />
+      <Stack.Screen name="VidhiDetail" component={VidhiDetailScreen} />
+      <Stack.Screen name="VidhiConduct" component={VidhiConductScreen} />
     </Stack.Navigator>
   );
 }

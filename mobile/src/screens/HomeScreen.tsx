@@ -30,7 +30,7 @@ import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { useTilePressController, TilePressProvider } from '@/contexts/TilePressContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
-import { panchangTabTarget } from '@/navigation/entryRoutes';
+import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
@@ -250,12 +250,15 @@ export default function HomeScreen({ navigation }: Props) {
           ॥
         </Text>
       ),
-      onPress: () => rootNav.navigate('MoreTab', { screen: 'PitruSmaranList', initial: false }),
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList')),
     },
     {
       // PRD-19 Phase 2B Discover card: the vidhi catalog's Home awareness door.
       // The Panchang day-panel pill is date-dependent and the Vrat & Parv tile
       // is two taps deep; this card makes guided pujas discoverable on Home.
+      // Pushed on the Home stack (the vidhi flow is registered on both stacks):
+      // a cross-tab jump left back popping to the Panchang calendar, which in
+      // its default mode shows no vidhi door at all.
       key: 'puja-vidhi',
       titleHi: 'पूजा विधि', titleEn: 'Guided Pujas',
       descHi: 'सत्यनारायण से शिवरात्रि तक—हर चरण, हर मन्त्र साथ।',
@@ -273,7 +276,7 @@ export default function HomeScreen({ navigation }: Props) {
           ॥
         </Text>
       ),
-      onPress: () => rootNav.navigate('PanchangTab', panchangTabTarget('VidhiCatalog')),
+      onPress: () => navigation.navigate('VidhiCatalog'),
     },
     {
       key: 'theerth',
@@ -307,7 +310,7 @@ export default function HomeScreen({ navigation }: Props) {
           वि
         </Text>
       ),
-      onPress: () => rootNav.navigate('MoreTab', { screen: 'WidgetGallery' }),
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
     },
   ];
 
@@ -412,6 +415,7 @@ export default function HomeScreen({ navigation }: Props) {
             style={[
               styles.sectionLabel,
               styles.sectionLabelSpaced,
+              styles.discoverLabel,
               {
                 color: colors.inkMuted,
                 fontSize: typography.sectionLabel.fontSize,
@@ -436,7 +440,17 @@ export default function HomeScreen({ navigation }: Props) {
               contentContainerStyle={{
                 paddingHorizontal: gridPadding,
                 gap: featureGap,
-                paddingBottom: 4,
+                // The FOR TODAY strip's touch-band fix, mirrored here: the cards
+                // are Pressables inside this horizontal ScrollView, and the shared
+                // first-tap fallback is only suppressed when onScrollBeginDrag
+                // fires. An arced horizontal flick that starts near the band edge
+                // can lose the first-pixel gesture negotiation to the card
+                // Pressable / outer vertical page-scroll — so the swipe randomly
+                // opens a card or stalls instead of scrolling. Padding the band
+                // top+bottom enlarges the scrollable frame and the arc tolerance
+                // so the horizontal scroll reliably wins the drag. It grows the
+                // touch target, not the visible cards.
+                paddingVertical: 10,
               }}
               // A horizontal swipe here is a scroll, not a tap — suppress the
               // shared first-tap fallback so a swipe never opens a card.
@@ -532,6 +546,11 @@ const styles = StyleSheet.create({
   },
   sectionLabelSpaced: {
     marginTop: 16,
+  },
+  discoverLabel: {
+    // The DISCOVER band below carries its own top padding (the touch-band fix),
+    // so drop the label's bottom margin rather than stacking the two spacings.
+    marginBottom: 0,
   },
   routineInline: {
     marginTop: 16,

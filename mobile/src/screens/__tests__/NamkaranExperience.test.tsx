@@ -382,6 +382,59 @@ test('unknown-time result is uniform candidate rows with no hero or exact share'
   await unmountFlatListTree(tree);
 });
 
+const FALLBACK_NOTICE = 'available sounds from the whole nakshatra are shown';
+
+test('the fallback notice appears on an exact thin charana', async () => {
+  // Charana 22 (Ardra pada 3, ङ) is thin, so an exact result broadens to the
+  // nakshatra and says so.
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 5, pada: 3 }) };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-thin', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 5, pada: 3 } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(textOf(tree).includes(FALLBACK_NOTICE));
+  await unmountFlatListTree(tree);
+});
+
+test('a range never claims the fallback, because a range never broadens', async () => {
+  // A range deliberately does not widen to one candidate's nakshatra — that
+  // would rank a candidate the unknown-time path refuses to rank. So even
+  // though these candidates return no names, the notice must stay away: it
+  // would describe a broadening that never happened.
+  //
+  // The span starts at 201° so the day covers charanas 60–64: none of them is
+  // thin and none carries a development name, which is what forces the
+  // fallback branch to be considered at all. A span touching a charana that
+  // does have a name (charana 0, say) would satisfy this test vacuously.
+  const start = Date.parse('2026-08-12T18:30:00.000Z');
+  const candidates = charanaSetForDay('2026-08-13', (date) => (201 + ((date.getTime() - start) / 86_400_000) * 15) % 360);
+  mockComputeState = { status: 'result', result: { kind: 'range', candidates, conventionVersion: 1 } };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-range-fallback', name: 'NamkaranResult', params: { basis: { kind: 'birth', date: '2026-08-13', time: null } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(!textOf(tree).includes(FALLBACK_NOTICE));
+  await unmountFlatListTree(tree);
+});
+
 test('a charana opened from an unknown-time day keeps its provenance and offers no exact share', async () => {
   mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }) };
   let tree!: TestRenderer.ReactTestRenderer;

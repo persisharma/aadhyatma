@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; **follow/remind + Today-strip chip + FOR TODAY abujh card shipped Aug 2026** (see §6.7, design.md §60, RULEBOOK §17.7; prototype: [`docs/muhurat-follow-remind-prototype.html`](../../muhurat-follow-remind-prototype.html)). Next: Phase 2 shuddhi depth (Bhadra as a window, window-time anga evaluation, per-occasion masa tables) |
+| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; **follow/remind + Today-strip chip + FOR TODAY abujh card shipped Aug 2026** (see §6.7, design.md §60, RULEBOOK §17.7; prototype: [`docs/muhurat-follow-remind-prototype.html`](../../muhurat-follow-remind-prototype.html)). **Phase 2 shuddhi depth BUILT (Aug 2026)** — window-time anga (per-window, kshaya-aware), Bhadra as a solved interval, masa mechanism (tables DRAFT), six new occasions, grouped picker; see TRD-16/P2. **Phase 3 BUILT (Aug 2026)** — lagna sweep + split-and-grade windows (cache v3), hora evidence/tie-break, late-onset Vishti solved, यात्रा + दिशा शूल, drikfixture goldens landed; lagna tables ship EMPTY DRAFT pending `conventions/muhurat-lagna-v1.md` review. **Phase 4 BUILT (Aug 2026)** — Tarabala/Chandrabala strip from the saved Kundali, annotate-only, share-card/notification absence pinned; classes DRAFT pending `conventions/muhurat-tarabala-v1.md`. See [16-muhurat-finder-phase3-4.md](./16-muhurat-finder-phase3-4.md), design.md §60, RULEBOOK §17. Remaining: §10 content review (13 occasions + masa + lagna/hora/disha + tarabala tables — the sole release gate), Maestro phase3/phase4 device runs |
 | **Target release** | TBD (phased; Phase 1 is small) |
 | **T-shirt size** | Code S–M per phase · **content L** (rule tables are the real cost) |
 | **Owner** | TBA |
@@ -126,11 +126,11 @@ Measured against the shipped engine (Ujjain, 365 days from 14 Aug 2026), the fou
 - **Bhadra as a window**, not a sunrise flag — solve karana boundaries like tithi end-times already are.
 - **Window-time anga evaluation.** Validation against a published list showed exact agreement on three of six days and divergence on exactly the two where the nakshatra turns over within hours of sunrise. The engine reports the *sunrise* anga (udaya-vyapini, correct for the almanac); muhurat lists report the anga prevailing *during the window*. **The finder must evaluate at the candidate window** or it will disagree with every published list on early-changeover days.
 
-### Phase 3 — Lagna-grade windows *(code M)*
+### Phase 3 — Lagna-grade windows *(code M)* — **detailed in [16-muhurat-finder-phase3-4.md](./16-muhurat-finder-phase3-4.md)**
 
 Replace ~96-minute choghadiya blocks with a precise muhurat window: sweep `computeLagna()` across the day, score lagna/hora quality, and return windows to the minute. Adds the Hora layer (§4.1) and enables यात्रा with दिशा शूल.
 
-### Phase 4 — Personalised muhurat *(code S — the differentiator)*
+### Phase 4 — Personalised muhurat *(code S — the differentiator)* — **detailed in [16-muhurat-finder-phase3-4.md](./16-muhurat-finder-phase3-4.md)**
 
 PRD-C already ships a saved birth profile with the Moon's nakshatra and rashi. **Tarabala** (the 9-tara cycle from janma nakshatra to the day's nakshatra) and **Chandrabala** (Moon's rashi relative to janma rashi) are pure arithmetic over two integers each.
 

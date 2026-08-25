@@ -8,11 +8,13 @@ export type GeoLocation = {
   elevation: number;
 };
 
-export type LocationSource = 'default' | 'city' | 'gps';
+export type LocationSource = 'default' | 'city' | 'gps' | 'pincode';
 
 export type PanchangLocation = GeoLocation & {
-  // Always the id of a bundled city (see locations.ts) — GPS fixes are snapped
-  // to the nearest bundled city so cache keys stay finite and labels work offline.
+  // Either the id of a bundled city (see locations.ts) or `pin-<6 digits>` for a
+  // pincode-resolved location (see pincodes.ts). GPS fixes are snapped to the
+  // nearest pincode centroid, falling back to the nearest bundled city, so cache
+  // keys stay finite and labels work offline in both cases.
   cityId: string;
   labelHi: string;
   labelEn: string;
@@ -48,6 +50,11 @@ export type PanchangData = {
   nakshatra: PanchangElement;
   yoga: PanchangElement;
   karana: PanchangElement;
+  // Late-onset Vishti (PRD-16/P3 §0.3): a Bhadra that STARTS after sunrise —
+  // the karana following the sunrise karana is Vishti. Null when the sunrise
+  // karana is itself Vishti (that interval is sunrise → karana.endTime) or when
+  // no Vishti begins this day. start = karana.endTime; end is its solved end.
+  lateVishti: { start: Date; end: Date } | null;
   sunrise: Date;
   sunset: Date;
   moonrise: Date | null;
@@ -109,6 +116,15 @@ export type ObservanceRule = {
    * ObservanceCard grows a "॥ पूजा विधि" action pill when this resolves.
    */
   vidhiId?: string;
+  /**
+   * Structured fasting-info hook (PRD-09 Phase 4) — id into the
+   * `upvasContent/` registry (mobile/src/panchang/upvasContent). Same
+   * mechanism as kathaId/vidhiId; many rules may share one entry (all
+   * Ekadashis → 'ekadashi-upvas'). Resolves through `getUpvasInfo`, which
+   * exposes VERIFIED entries only — a draft entry is indistinguishable from
+   * no entry at every call site.
+   */
+  upvasId?: string;
   searchTerms?: string[];
 };
 
@@ -163,3 +179,65 @@ export type KathaContentEntry = {
 
 export type FestivalRule = ObservanceRule;
 export type ResolvedFestival = ResolvedObservance;
+
+// ─── Structured upvas/fasting content (PRD-09 Phase 4) ──────────────────────
+
+/** The fast's kind, rendered as the panel's headline chip. */
+export type UpvasFastType = 'nirjala' | 'phalahar' | 'one-meal' | 'night-vigil';
+
+export type UpvasWindowKind =
+  | 'sunrise-to-next-sunrise'
+  | 'sunrise-to-moonrise'
+  | 'sunrise-to-parana'
+  | 'day-and-night-vigil';
+
+/**
+ * How the parana (fast-breaking) rule renders. The verified TEXT is canonical
+ * and always renders; a derived date/time line is added beneath it only for
+ * the two machine-checkable kinds (see `upvasParana.ts`), and only when the
+ * derivation is honest — never an invented time.
+ */
+export type UpvasParanaKind =
+  | 'next-day-sunrise-tithi-bound' // computable: parana-day sunrise → boundTithi end
+  | 'same-day-after-moonrise' // computable: the occurrence day's moonrise
+  | 'text-only'; // the rule renders in words only, ever
+
+export type UpvasParanaRule = {
+  kind: UpvasParanaKind;
+  /** 1–15 within the paksha; required iff kind === 'next-day-sunrise-tithi-bound'. */
+  boundTithi?: number;
+  /** The rule in words — ALWAYS present and always rendered. */
+  textHi: string;
+  textEn: string;
+};
+
+/**
+ * Verification state (PRD-09/P4 §8). Entries enter the repo as 'draft' with a
+ * dated `verificationNote`; `getUpvasInfo` exposes 'verified' only. Flipping to
+ * 'verified' is a reviewed content change — two concordant published sources
+ * per entry — never authorized by automation passing.
+ */
+export type UpvasContentStatus = 'draft' | 'verified';
+
+export type UpvasInfoEntry = {
+  id: string;
+  fastType: UpvasFastType;
+  /** One line beside the chip, e.g. "जल भी वर्जित" / "Even water is abstained". */
+  fastTypeNoteHi: string;
+  fastTypeNoteEn: string;
+  window: {
+    kind: UpvasWindowKind;
+    /** Authored, verified — always what renders. */
+    textHi: string;
+    textEn: string;
+  };
+  parana?: UpvasParanaRule;
+  /** Variants note: nirjala vs phalahar options, traditional exemptions. */
+  strictnessHi: string;
+  strictnessEn: string;
+  whoObservesHi?: string;
+  whoObservesEn?: string;
+  status: UpvasContentStatus;
+  /** Review metadata — never rendered. ≥2 reference URLs per entry. */
+  source: { referenceUrls: string[]; verificationNote: string };
+};

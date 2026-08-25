@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Draft — planning. No code yet. Convention sign-off (§11 gate 1) and corpus content gate (§11 gate 2) both block a store release. |
+| **Status** | Phase 1 engineering shipped (#261, #262, #263). Convention sign-off (§11 gate 1) and corpus content gate (§11 gate 2) are both still open and both block a store release; the corpus in the repo is a development sample, not the shipping set. Android Maestro (§11.9) also outstanding. |
 | **T-shirt size** | **L** — the arithmetic is trivial (one Moon longitude), but a bundled name corpus with attested meanings, a 108-cell convention table, newborn-grade privacy, and four reading languages make this the largest Jyotish slice so far. |
 | **Prototype** | [`docs/namkaran-prototype.html`](../../namkaran-prototype.html) — 7 frames: entry, birth input, nāmākṣara result, name detail, unknown-time range, shortlist + share, guest browse |
 | **Convention** | [`namkaran-namakshar-v1.md`](../conventions/namkaran-namakshar-v1.md) — the 108-charana syllable table, nakshatra attributes, and the derived rashi rule |
@@ -210,8 +210,11 @@ The core deliverable. Each row is the shipped **`ListCard`** (design.md §60) �
   (2/3/4+ अक्षर) because "short name" is the single most common real constraint.
 
 **Corpus coverage requirement.** Every charana that a real Moon can occupy must return names — an
-empty result on a legitimate syllable is a shipping defect, not an edge case. Target: **≥ 6 boy and
-≥ 6 girl names per charana**. Where the traditional syllable begins essentially no modern name
+empty result on a legitimate syllable is a shipping defect, not an edge case. Target: **≥ 12 boy and
+≥ 12 girl names per charana** (raised from 6 + 6 by the corpus-depth decision, August 2026: at the
+6 + 6 floor a parent narrowing to one gender *and* a syllable count could be left with one or two
+rows, which reads as a broken screen rather than a short list). A name classed `any` counts toward
+both genders, matching the runtime filter. Where the traditional syllable begins essentially no modern name
 (ङ, ञ, ष, ण, ठ, थ — convention §2 open rows 2–3), the surface **falls back to the nakshatra-level
 syllable set**, says so in one line (*"इस पद के लिए प्रचलित नाम सीमित हैं — पूरे नक्षत्र के अक्षर दिखाए जा रहे हैं"*),
 and **never invents a name or a syllable** to fill the gap.
@@ -248,7 +251,7 @@ Two rows at the foot of the result, both pure navigation into shipped surfaces:
 
 | Asset | Shape | Gate |
 |---|---|---|
-| **Name corpus** | `mobile/src/data/namkaran/` — sharded JSON, ~1,300–1,600 names, each `{ id, hi, latin, gender, charana[], meaningHi, meaningEn, root?, deityId? }` | RULEBOOK §11 content integrity — every name needs an attested meaning; **no invented names, no living-person/celebrity lists, no "trending names"** |
+| **Name corpus** | `mobile/src/data/namkaran/` — **one shard per nakshatra** (`names.<NN>-<slug>.json`, 27 files), ~2,450 names, each `{ id, hi, latin, gender, charanas[], meaningHi, meaningEn, root?, deityId?, syllableCount }`, plus a generated `counts.json` charana → count index | RULEBOOK §11 content integrity — every name needs an attested meaning; **no invented names, no living-person/celebrity lists, no "trending names"** |
 | **Namkaran vidhi** | one `sanskar` content module (नामकरण संस्कार — the rite's steps and its mantras) | RULEBOOK §1–§4 + §9 (explanation and importance of every sloka and ritual) |
 | **Convention data** | `namkaranConvention.ts` mirroring [`namkaran-namakshar-v1.md`](../conventions/namkaran-namakshar-v1.md) | Convention sign-off, `verified: false` until then |
 
@@ -319,9 +322,22 @@ like every other panchang surface (design.md §60: do not add a private cache).
 
 The corpus is the first sizeable data addition outside a content module. It must be **lazily
 required from inside the already-lazy Panchang stack** so it cannot touch Home's first frame, and
-CI must fail if the corpus exceeds an agreed byte budget (start at **512 KB** raw JSON for the
-sharded set). If the corpus outgrows that, shard by syllable group and load one shard per result —
-do not raise the budget silently.
+CI must fail if it exceeds the agreed byte budgets.
+
+The original single budget was **512 KB** raw JSON with the instruction to shard rather than raise it
+silently. The 12 + 12 depth decision put the corpus at roughly 750 KB, so that escape hatch was
+taken: the reviewed sharding decision (RULEBOOK §18.4) splits the corpus **one shard per nakshatra**
+and replaces the single cap with two:
+
+- **≤ 64 KB per shard** — the budget that protects the user, because a screen reads at most two
+  shards. Worst case is an unknown-time day straddling a nakshatra boundary: ~58 KB against the
+  512 KB a single file would have cost.
+- **≤ 1,024 KB total** — the bundle ceiling, not a runtime figure.
+
+Sharding by nakshatra rather than by syllable group (the original §8.4 wording) follows the access
+pattern: `charana → nakshatra` is `floor(c/4)`, so an exact result reads exactly one shard and the
+thin-charana fallback reads exactly one shard, because a nakshatra *is* a shard. Per-charana counts
+for the rashi detail come from the generated index, never from loading shards to tally them.
 
 ## 9. Phasing
 
@@ -330,6 +346,8 @@ do not raise the budget silently.
 | **1** | Convention + pure engine + result screen (paths A, A′, B) + corpus + shortlist + rashi cross-check + muhurat door + share | OTA-capable (pure JS + bundled JSON), gated on §11.1–§11.2 |
 | **2** | Namkaran vidhi `sanskar` module; Feature Spotlight entry; name-detail deity links for the full corpus; customer-copy audit removes implementation/connectivity/version language in all four reading languages | store release if the vidhi ships audio, else OTA |
 | **3** | Namkaran-day reminder (reuses the vrat `VratReminderPref` model, the same slice PRD-16 defers) with action-only reminder copy; Home tile alongside a grid re-flow; namkaran-day nakshatra as an explicit second basis; no “local/on-device/offline” reassurance on any new surface | — |
+
+— **Phases 2–3 detailed in [17-namkaran-phase2-3.md](./17-namkaran-phase2-3.md)**
 
 ## 10. Design requirements
 
@@ -365,7 +383,11 @@ Not shippable until every gate passes:
 2. **Corpus content gate** — every name has an attested meaning in both languages; no invented
    names; no living-person lists; charana assignment matches the name's actual first syllable
    (mechanically checkable — a test asserts the Devanagari initial against the convention cell);
-   coverage ≥ 6 + 6 per charana or an explicit fallback entry; no duplicate ids.
+   coverage ≥ 12 + 12 per charana, or — for a thin charana — a nakshatra-level fallback pool that
+   itself clears 12 + 12, since a fallback that is also empty is not a fallback; no duplicate ids.
+   `namkaranCorpus.test.ts` enforces the floor the moment `NAMKARAN_CORPUS.releaseEligible` becomes
+   `true`, and while it is `false` it asserts the inverse — that gaps still exist — so a finished
+   corpus cannot sit behind a stale flag.
 3. **Boundary corpus** — longitudes immediately below / at / above every one of the 108 charana
    boundaries (multiples of 3°20′) resolve to the correct cell, with the existing astronomy
    tolerance considered when choosing fixture instants. Golden charana values sourced
@@ -403,11 +425,16 @@ Not shippable until every gate passes:
 
 ## 13. Open questions
 
-1. **Shravana's ज/ख series** — one series or both? (convention §2 open row 1) — needs an editorial
-   ruling before the corpus is assembled, since it changes which names that nakshatra needs.
-2. **Corpus size target** — 6 + 6 per charana is the floor (≈ 1,300); is a richer ~2,500-name corpus
-   worth the bundle cost, or is depth better spent on meanings for a smaller set? Recommendation:
-   the smaller, fully-attested set.
+1. **Shravana's ज/ख series** — one series or both? (convention §2 open row 1) — **still open**, and
+   still needs the §11.1 domain reviewer; it is a claim about tradition, not a product call.
+   *Corpus policy is settled, though, so authoring is no longer blocked on it:* Shravana's four
+   charanas are filled to 12 + 12 each drawing from **either** series, exactly like every other
+   nakshatra. The UI already renders ज primary with ख as अन्य विकल्प. If the reviewer later drops a
+   series, those names are re-filed rather than re-collected.
+2. ~~**Corpus size target**~~ — **settled (August 2026): 12 + 12 per charana**, ≈ 2,450 names.
+   The recommendation here had been the smaller 6 + 6 set on bundle-cost grounds; the depth decision
+   went the other way for filter quality (§5.3) and paid for it with the nakshatra sharding in §8.4
+   rather than with thinner meanings.
 3. **Gender vocabulary** — `बालक/बालिका` vs `लड़का/लड़की`; and whether `सभी` or a gender is the
    default. Recommendation: `बालक · बालिका · सभी`, defaulting to `सभी`.
 4. **Should the vidhi module ship in Phase 1** rather than 2? It is the piece that makes this a

@@ -1,0 +1,16 @@
+{
+  "source": {
+    "verified": false,
+    "referenceUrls": [
+      "repo://docs/roadmap/conventions/namkaran-namakshar-v1.md",
+      "repo://docs/roadmap/prds/17-namkaran.md"
+    ],
+    "notes": "Development fixtures for UI and privacy verification only; these references define the draft contract and do not attest the names or meanings."
+  },
+  "nakshatraIndex": 6,
+  "nakshatra": "Punarvasu",
+  "names": [
+    { "id": "keshav", "hi": "केशव", "latin": "Keshav", "gender": "boy", "charanas": [24], "meaningHi": "भगवान विष्णु-कृष्ण का एक नाम", "meaningEn": "A name of Vishnu-Krishna", "root": "केशव", "deityId": "krishna", "syllableCount": 3 },
+    { "id": "ketaki", "hi": "केतकी", "latin": "Ketaki", "gender": "girl", "charanas": [24], "meaningHi": "केतकी का सुगन्धित पुष्प", "meaningEn": "The fragrant ketaki flower", "root": "केतकी", "syllableCount": 3 }
+  ]
+}

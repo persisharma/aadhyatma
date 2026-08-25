@@ -11,11 +11,17 @@
  * it on the way in — robust to schema changes.
  */
 import type { PanchangData } from './types';
+import type { LagnaSpan } from './lagnaSweep';
 
-export type DayInputs = { p: PanchangData; asta: { shukraAsta: boolean; guruAsta: boolean } };
+export type DayInputs = {
+  p: PanchangData;
+  asta: { shukraAsta: boolean; guruAsta: boolean };
+  /** The day's lagna spans, [sunrise, nextSunrise) (PRD-16/P3 §4.2). */
+  lagnas: LagnaSpan[];
+};
 
 /** Bump when the panchang engine changes so persisted days from an older engine are purged. */
-export const PANCHANG_DAY_CACHE_VERSION = 1;
+export const PANCHANG_DAY_CACHE_VERSION = 3; // v3: DayInputs.lagnas + lateVishti solved (PRD-16 Phase 3)
 
 const DATE_TAG = '__d';
 type TaggedDate = { [DATE_TAG]: number };

@@ -94,12 +94,19 @@ function NamkaranResultContent({ navigation, route, result }: Props & { result: 
     const load = async () => {
       const direct = (await Promise.all(candidates.map((candidate) => loadNamesForCharana(candidate.entry.charanaIndex)))).flat();
       const needsFallback = candidates.some((candidate) => candidate.entry.thin) || direct.length === 0;
-      const loaded = needsFallback && result.kind === 'exact'
+      // A range deliberately does not broaden: widening to one candidate's
+      // nakshatra would privilege that candidate, which is exactly the ranking
+      // the unknown-time path refuses to do (PRD-17 §4.2). So the notice tracks
+      // whether the fallback was *applied*, not whether it was wanted — claiming
+      // "showing the whole nakshatra" while still listing one charana's names
+      // describes a broadening that never happened.
+      const fallbackApplied = needsFallback && result.kind === 'exact';
+      const loaded = fallbackApplied
         ? await loadNamesForNakshatra(primaryCandidate.entry.nakshatraIndex)
         : direct;
       if (!active) return;
       setNames([...new Map(loaded.map((name) => [name.id, name])).values()]);
-      setFallbackUsed(needsFallback);
+      setFallbackUsed(fallbackApplied);
       setNameError(false);
     };
     void load().catch(() => { if (active) setNameError(true); }).finally(() => { if (active) setLoadingNames(false); });

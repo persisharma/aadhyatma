@@ -12,6 +12,7 @@ import { scriptTitleFont } from '@/utils/langType';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { verdictForDate } from '@/panchang/muhuratFinderScan';
+import { useMuhuratBala } from '@/panchang/useMuhuratBala';
 import {
   DOSHA_LABELS,
   TIER_LABELS,
@@ -19,10 +20,13 @@ import {
   type DayVerdict,
 } from '@/panchang/eventMuhurat';
 import { formatRangeCompact } from '@/panchang/muhuratFormat';
-import { VARA_NAMES_HI, VARA_NAMES_EN, PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
+import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI, TITHI_NAMES_EN, TITHI_NAMES_HI, VARA_NAMES_HI, VARA_NAMES_EN, PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
+import { RASHI_NAMES_HI, RASHI_NAMES_EN } from '@/panchang/kundali';
+import { HORA_NAMES_HI, HORA_NAMES_EN } from '@/panchang/hora';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { PanchangData } from '@/panchang/types';
 import MuhuratFinderShareCard from '@/components/MuhuratFinderShareCard';
+import MuhuratBalaStrip from '@/components/MuhuratBalaStrip';
 import MuhuratFollowControl from '@/components/MuhuratFollowControl';
 import ShareButton from '@/components/ShareButton';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -119,15 +123,50 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
     marginBottom: spacing.sm,
   };
 
-  const KV = ({ k, v, verdict }: { k: string; v?: string; verdict: string }) => (
+  const KV = ({ k, v, sub, verdict }: { k: string; v?: string; sub?: string; verdict: string }) => (
     <View style={[styles.kv, { borderBottomColor: colors.border }]}>
       <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.inkSoft, flex: 1, lineHeight: 21 }}>{k}</Text>
-      {v ? <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.ink, lineHeight: 21 }}>{v}</Text> : null}
+      <View style={{ alignItems: 'flex-end' }}>
+        {v ? <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.ink, lineHeight: 21 }}>{v}</Text> : null}
+        {sub ? (
+          <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 11, color: colors.inkMuted, lineHeight: 17 }}>
+            {sub}
+          </Text>
+        ) : null}
+      </View>
       <Text style={{ fontFamily: titleFont, fontSize: 12, color: colors.saffronDeep, minWidth: 56, textAlign: 'right', lineHeight: 20 }}>
         {verdict}
       </Text>
     </View>
   );
+
+  // Phase 2 (TRD-16/P2 §6.3): the verdict line shows the anga AT THE WINDOW;
+  // the sunrise (udaya) anga stays visible as a quiet second line when they
+  // differ, so cross-checking the Panchang tab can never look like a bug.
+  const windowAnga = data?.v.windows[0]?.angaAtWindow ?? null;
+  const nakName = (i: number) =>
+    lang === 'en' ? NAKSHATRA_NAMES_EN[i] : lang === 'hi' ? NAKSHATRA_NAMES_HI[i] : transliterateDevanagari(NAKSHATRA_NAMES_HI[i], lang);
+  const tithiName = (i: number) =>
+    lang === 'en' ? TITHI_NAMES_EN[i] : lang === 'hi' ? TITHI_NAMES_HI[i] : transliterateDevanagari(TITHI_NAMES_HI[i], lang);
+  const rashiName = (i: number) =>
+    lang === 'en' ? RASHI_NAMES_EN[i] : lang === 'hi' ? RASHI_NAMES_HI[i] : transliterateDevanagari(RASHI_NAMES_HI[i], lang);
+  const best = data?.v.windows[0] ?? null;
+
+  // Phase 4: the आपके लिए strip (saved Kundali only, §8). Absent without a
+  // profile — zero chrome here, not even a hint (the one footer line lives on
+  // the results list). Annotates only; the verdict above never reads it.
+  const { balaByDate } = useMuhuratBala(
+    best && data
+      ? [
+          {
+            dateMs: data.v.dateMs,
+            windowStart: best.start,
+            nakshatraIndex: best.angaAtWindow?.nakshatraIndex ?? data.v.sunriseAnga.nakshatraIndex,
+          },
+        ]
+      : []
+  );
+  const bala = data ? balaByDate?.get(data.v.dateMs) : null;
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']}>
@@ -203,6 +242,11 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
                     </Text>
                     <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep, textAlign: 'center', lineHeight: 21 }}>
                       {contentByLang(lang, data.v.windows[0].nameHi, data.v.windows[0].nameEn)}
+                      {/* Phase 3: the prevailing lagna joins the best-window
+                          line — splitting guarantees one span covers it. */}
+                      {data.v.windows[0].lagnaRashiIndex != null
+                        ? ` · ${rashiName(data.v.windows[0].lagnaRashiIndex)} ${contentByLang(lang, 'लग्न', 'lagna')}`
+                        : ''}
                     </Text>
                   </View>
                 )}
@@ -215,6 +259,10 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
               </View>
             )}
           </LinearGradient>
+
+          {/* Phase 4: the personal strip sits between answer and actions
+              (prototype phone c) — present only with a saved Kundali. */}
+          {data.v.tier !== 'excluded' && <MuhuratBalaStrip bala={bala} variant="card" />}
 
           {/* Action band — follow leads, then the shipped timings link. Both
               stay ABOVE the evidence so Answer → Action → Evidence holds. */}
@@ -242,12 +290,22 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
           <View style={[styles.evidence, { borderColor: colors.border, backgroundColor: colors.surface, borderRadius: radii.md }, elevation.card]}>
             <KV
               k={contentByLang(lang, 'नक्षत्र', 'Nakshatra')}
-              v={contentByLang(lang, data.p.nakshatra.nameHi, data.p.nakshatra.nameEn)}
+              v={windowAnga ? nakName(windowAnga.nakshatraIndex) : contentByLang(lang, data.p.nakshatra.nameHi, data.p.nakshatra.nameEn)}
+              sub={
+                windowAnga && windowAnga.nakshatraIndex !== data.v.sunriseAnga.nakshatraIndex
+                  ? contentByLang(lang, `उदय: ${data.p.nakshatra.nameHi}`, `At sunrise: ${data.p.nakshatra.nameEn}`)
+                  : undefined
+              }
               verdict={data.v.factors.nakshatra ? contentByLang(lang, 'अनुकूल', 'Favourable') : contentByLang(lang, 'सामान्य', 'Neutral')}
             />
             <KV
               k={contentByLang(lang, 'तिथि', 'Tithi')}
-              v={contentByLang(lang, data.p.tithi.nameHi, data.p.tithi.nameEn)}
+              v={windowAnga ? tithiName(windowAnga.tithiIndex) : contentByLang(lang, data.p.tithi.nameHi, data.p.tithi.nameEn)}
+              sub={
+                windowAnga && windowAnga.tithiIndex !== data.v.sunriseAnga.tithiIndex
+                  ? contentByLang(lang, `उदय: ${data.p.tithi.nameHi}`, `At sunrise: ${data.p.tithi.nameEn}`)
+                  : undefined
+              }
               verdict={data.v.factors.tithi ? contentByLang(lang, 'अनुकूल', 'Favourable') : contentByLang(lang, 'सामान्य', 'Neutral')}
             />
             <KV
@@ -255,6 +313,33 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
               v={weekday}
               verdict={data.v.factors.vara ? contentByLang(lang, 'अनुकूल', 'Favourable') : contentByLang(lang, 'सामान्य', 'Neutral')}
             />
+            {/* Phase 3 (PRD-16/P3 §7): the lagna prevailing over the WHOLE
+                best window (splitting guarantees that), graded अनुकूल only on
+                a preferred-lagna match — inert while the tables are DRAFT. */}
+            {best?.lagnaRashiIndex != null && (
+              <KV
+                k={contentByLang(lang, 'लग्न', 'Lagna')}
+                v={rashiName(best.lagnaRashiIndex)}
+                sub={contentByLang(lang, 'पूरे समय-खंड पर', 'Prevails over the whole window')}
+                verdict={best.factors.lagna ? contentByLang(lang, 'अनुकूल', 'Favourable') : contentByLang(lang, 'सामान्य', 'Neutral')}
+              />
+            )}
+            {/* होरा is evidence and tie-break only — the साक्ष्य word keeps it
+                visibly outside the tier contract (RULEBOOK §17). */}
+            {best?.horaRuler && (
+              <KV
+                k={contentByLang(lang, 'होरा', 'Hora')}
+                v={`${
+                  lang === 'en'
+                    ? HORA_NAMES_EN[best.horaRuler]
+                    : lang === 'hi'
+                      ? HORA_NAMES_HI[best.horaRuler]
+                      : transliterateDevanagari(HORA_NAMES_HI[best.horaRuler], lang)
+                } ${contentByLang(lang, 'होरा', 'hora')}`}
+                sub={contentByLang(lang, 'श्रेणी नहीं बदलता', 'Evidence only — never changes the tier')}
+                verdict={contentByLang(lang, 'साक्ष्य', 'Evidence')}
+              />
+            )}
           </View>
 
           <Text style={sectionLabelStyle}>
@@ -285,9 +370,28 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
             })}
           </View>
 
-          {data.v.windows.length > 1 && (
+          {(data.v.windows.length > 1 || data.v.bhadra) && (
             <>
               <Text style={sectionLabelStyle}>{contentByLang(lang, 'दिन के अन्य शुभ समय', 'Other windows that day')}</Text>
+              {/* भद्रा struck through in place — the Rahu Kaal treatment
+                  (design.md §60): the user sees it was considered, and why the
+                  morning is gone. */}
+              {data.v.bhadra && (
+                <View
+                  testID="muhurat-bhadra-row"
+                  style={[styles.windowRow, { backgroundColor: colors.avoidChipBg, borderRadius: radii.md }]}
+                >
+                  <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.avoidDeep, lineHeight: 21, textDecorationLine: 'line-through' }}>
+                    {contentByLang(lang, 'भद्रा', 'Bhadra')}
+                  </Text>
+                  <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 13, color: colors.avoidDeep, marginLeft: 'auto', lineHeight: 21, textDecorationLine: 'line-through' }}>
+                    {formatRangeCompact(data.v.bhadra.start, data.v.bhadra.end)}
+                  </Text>
+                  <Text style={{ fontFamily: titleFont, fontSize: 11, color: colors.avoidDeep, marginLeft: 8, lineHeight: 18 }}>
+                    {contentByLang(lang, 'वर्ज्य', 'Avoid')}
+                  </Text>
+                </View>
+              )}
               {data.v.windows.slice(1, 4).map((w) => (
                 <View
                   key={w.start.getTime()}
@@ -298,6 +402,11 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
                   </Text>
                   <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 13, color: colors.ink, marginLeft: 'auto', lineHeight: 21 }}>
                     {formatRangeCompact(w.start, w.end)}
+                  </Text>
+                  <Text style={{ fontFamily: titleFont, fontSize: 11, color: colors.saffronDeep, marginLeft: 8, lineHeight: 18 }}>
+                    {contentByLang(lang, TIER_LABELS[w.tier].hi, TIER_LABELS[w.tier].en)}
+                    {/* Phase 3: per-segment lagna beside the tier word. */}
+                    {w.lagnaRashiIndex != null ? ` · ${rashiName(w.lagnaRashiIndex)}` : ''}
                   </Text>
                 </View>
               ))}

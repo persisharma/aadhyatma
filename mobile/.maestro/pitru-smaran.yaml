@@ -9,6 +9,11 @@
 #   - COVERS the pinned Vrat-catalog ledger row, the new-entry default-on
 #     reminder, and the shared civil-date calendar's real select/confirm/derive
 #     path.
+#   - COVERS both stages of the detail screen's staged reveal (the hero pill is
+#     solved and published ahead of अगले वर्ष / पितृ पक्ष) and a re-entry, which
+#     reads the prewarmed answers back out of the persisted solve cache. Load
+#     TIMING is not assertable here — the ms budget is pinned by the measurements
+#     in design.md §63 and by the engine-call counts in the Jest suite.
 #   - Calendar-year edge cases and notification fire dates remain pinned by pure
 #     tests because OS time cannot be safely changed during a simulator flow.
 #
@@ -104,6 +109,15 @@ appId: com.prashantsharma.vedansh
     visible: "श्राद्ध तिथि.*"
     timeout: 15000
 - assertVisible: "अगला.*"
+# The pill is published on its own solve; अगले वर्ष and पितृ पक्ष follow in a
+# second stage. Both must actually arrive — asserting only the pill would pass
+# even if stage two never ran.
+- extendedWaitUntil:
+    visible: "अगले वर्ष"
+    timeout: 15000
+- extendedWaitUntil:
+    visible: "पितृ पक्ष.*में"
+    timeout: 15000
 - scrollUntilVisible:
     element:
       text: "Smaran reminder"
@@ -119,6 +133,17 @@ appId: com.prashantsharma.vedansh
       text: "Open Gita — Adhyaya 2"
     centerElement: true
 - assertVisible: "Open Gita — Adhyaya 2"
+
+# ── Re-entry serves the cached answers: every row is present again ──
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "^Smaran Father,.*$"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "अगला.*"
+    timeout: 15000
+- assertVisible: "अगले वर्ष"
+- assertVisible: "पितृ पक्ष.*में"
 
 # ── Delete round-trip: confirm sheet, then back to the empty state ──
 - scrollUntilVisible:

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-16 Phase 3+4 · Lagna Windows &amp; Personalised Muhurat — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  /* Tokens mirrored 1:1 from mobile/src/theme/*.ts — same block as the Phase-1,
+     follow, and Phase-2 prototypes, so the four cannot drift. */
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-deep:#E9D9B1;
+    --parchment-hi:#F6ECD0; --gradient-end:#F1E3BF;
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34;
+    --divider:rgba(138,62,11,0.18);
+    --saffron-tint:rgba(184,98,27,0.12);
+    --gold-tint:rgba(166,124,52,0.14); --gold-chip:rgba(166,124,52,0.22);
+    --avoid:#9E4A2E; --avoid-tint:rgba(158,74,46,0.12); --avoid-chip:rgba(158,74,46,0.20);
+    --avoid-deep:#7A3722;
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --card-surface:rgba(255,250,235,0.72);
+    --card-active-from:#FFF5E0; --card-active-to:#F5DEAC;
+    --card-active-border:rgba(184,98,27,0.4);
+    --modal-backdrop:rgba(47,30,16,0.55); --on-primary:#FFFFFF;
+    --s-xs:4px; --s-sm:8px; --s-md:12px; --s-lg:16px; --s-xl:20px; --s-xxl:24px;
+    --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-pill:999px;
+    --e-subtle:0 1px 4px rgba(60,30,10,.06); --e-card:0 2px 6px rgba(60,30,10,.10);
+    --e-lifted:0 4px 12px rgba(60,30,10,.11); --e-raised:0 6px 14px rgba(60,30,10,.16);
+    --e-overlay:0 6px 14px rgba(60,30,10,.25);
+    --deva:'Noto Serif Devanagari',serif;
+    --latin:'Cormorant Garamond',serif;
+    --inter:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--inter);font-weight:500;background:#24160B;color:var(--parchment-deep);padding:24px;line-height:1.5}
+  h1{font-family:var(--latin);font-weight:600;font-size:28px;color:var(--parchment-hi);margin-bottom:2px}
+  .sub{font-family:var(--latin);font-style:italic;color:var(--gold);font-size:15px;margin-bottom:6px;max-width:1060px}
+  .legend{font-size:12.5px;color:#B79B6B;margin-bottom:12px;max-width:1060px;line-height:1.75}
+  .legend b{color:var(--parchment-deep)}
+  .legend code{background:rgba(246,236,208,.08);padding:1px 5px;border-radius:4px;font-size:11.5px}
+  .illus{display:inline-block;background:rgba(158,74,46,.25);border:1px solid rgba(158,74,46,.5);color:#E7C9A8;
+    font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;border-radius:6px;padding:3px 8px;margin-bottom:20px}
+  .wrap{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;align-items:center}
+  .cap{width:340px;font-size:12px;color:#B79B6B;margin-top:10px;text-align:left;line-height:1.65}
+  .cap b{color:var(--parchment-deep)} .cap code{font-size:11px;background:rgba(246,236,208,.08);padding:1px 4px;border-radius:3px}
+  .cap .newmark{color:var(--gold);font-weight:600}
+  .cap .gate{color:#D9A45B;font-weight:600}
+
+  .phone{width:340px;height:730px;background:var(--parchment);border-radius:38px;border:10px solid #120A03;
+    box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--s-xxl);
+    font-size:12px;font-weight:600;color:var(--ink);background:var(--parchment-hi)}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:var(--s-md) var(--s-lg) var(--s-xxl)}
+
+  .navrow{display:flex;align-items:center;gap:var(--s-md);margin-bottom:var(--s-md)}
+  .back{width:34px;height:34px;border-radius:var(--r-xl);border:1px solid var(--divider);
+    background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--saffron);
+    font-size:16px;flex:none;box-shadow:var(--e-subtle)}
+  .title{flex:1;text-align:center;font-family:var(--latin);font-weight:700;font-size:19px;color:var(--ink);line-height:1.3}
+  .navslot{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:var(--saffron);flex:none}
+  .sechead{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--ink-muted);margin:var(--s-lg) 0 var(--s-sm)}
+  .sechead:first-of-type{margin-top:var(--s-sm)}
+  .city{font-family:var(--latin);font-size:12.5px;color:var(--ink-muted);text-align:center;margin-bottom:var(--s-sm)}
+
+  /* ListCard grammar — shared with the shipped finder */
+  .lc{display:flex;align-items:center;gap:var(--s-md);
+    background:linear-gradient(var(--card-active-from),var(--card-active-to));
+    border:1px solid var(--card-active-border);border-radius:var(--r-lg);
+    padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-sm);box-shadow:var(--e-card);min-height:58px}
+  .thumb{width:44px;height:44px;border-radius:var(--r-sm);flex:none;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(var(--saffron),var(--saffron-deep));font-family:var(--deva);font-weight:600;
+    font-size:18px;color:var(--parchment-soft)}
+  .thumb.num{font-family:var(--latin);font-weight:700;font-size:19px}
+  .lcb{flex:1;min-width:0}
+  .lct{font-family:var(--deva);font-weight:600;font-size:15px;color:var(--ink);line-height:1.55}
+  .lcs{font-family:var(--latin);font-style:italic;font-size:12.5px;color:var(--ink-muted);line-height:1.5}
+  .lcd{font-family:var(--latin);font-weight:600;font-size:13px;color:var(--saffron-deep);line-height:1.5}
+  .lcw{font-family:var(--latin);font-weight:700;font-size:14.5px;color:var(--ink);line-height:1.5;white-space:nowrap}
+  .chev{color:var(--saffron);font-size:22px;flex:none}
+
+  /* Phase 3: lagna chip on a window line */
+  .lagchip{display:inline-block;font-family:var(--deva);font-weight:600;font-size:11px;color:var(--saffron-deep);
+    background:var(--gold-chip);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:1px;white-space:nowrap}
+  .splitnote{font-family:var(--latin);font-style:italic;font-size:11px;color:var(--ink-muted);line-height:1.5;margin-top:1px}
+
+  /* Phase 4: the quiet personal strip */
+  .personal{display:flex;align-items:center;gap:6px;margin-top:4px;
+    font-family:var(--deva);font-weight:600;font-size:11.5px;color:var(--ink-soft);line-height:1.5}
+  .personal .plabel{font-family:var(--inter);font-weight:600;font-size:9px;letter-spacing:1.2px;text-transform:uppercase;
+    color:var(--ink-muted);flex:none}
+  .personal .pgood{color:var(--saffron-deep);background:var(--gold-tint);border-radius:6px;padding:0 6px}
+  .personal .pbad{color:var(--avoid-deep);background:var(--avoid-tint);border-radius:6px;padding:0 6px}
+  .pstrip{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);
+    padding:10px var(--s-lg);margin-bottom:var(--s-md);box-shadow:var(--e-subtle)}
+  .pstrip .ph{display:flex;align-items:center;gap:var(--s-sm);margin-bottom:4px}
+  .pstrip .ph .plabel{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted)}
+  .pstrip .row{display:flex;gap:var(--s-sm);flex-wrap:wrap}
+  .pstrip .bala{font-family:var(--deva);font-weight:600;font-size:13px;color:var(--ink);line-height:1.6}
+  .pstrip .bala b{color:var(--saffron-deep)}
+  .pstrip .bala.bad b{color:var(--avoid-deep)}
+  .pstrip .pexp{font-family:var(--latin);font-style:italic;font-size:11.5px;color:var(--ink-muted);line-height:1.55;margin-top:3px}
+
+  /* answer block */
+  .answer{background:linear-gradient(var(--card-active-from),var(--card-active-to));
+    border:1px solid var(--card-active-border);border-radius:var(--r-lg);padding:var(--s-lg);
+    text-align:center;margin-bottom:var(--s-md);box-shadow:var(--e-raised)}
+  .danda{font-family:var(--deva);font-size:18px;color:var(--gold);line-height:1.6}
+  .ad{font-family:var(--latin);font-weight:700;font-size:26px;color:var(--ink);line-height:1.15}
+  .aw{font-family:var(--latin);font-size:13px;color:var(--ink-soft);margin-top:2px;line-height:1.6}
+  .tierpill{display:inline-block;margin-top:var(--s-sm);background:var(--gold-chip);color:var(--saffron-deep);
+    border-radius:var(--r-sm);padding:4px 10px;font-family:var(--latin);font-weight:600;font-size:12.5px}
+  .abest{margin-top:var(--s-md);padding-top:var(--s-md);border-top:1px solid var(--divider)}
+  .albl{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted)}
+  .abig{font-family:var(--latin);font-weight:700;font-size:23px;color:var(--ink);margin-top:3px;white-space:nowrap}
+  .anm{font-family:var(--latin);font-weight:600;font-size:14px;color:var(--saffron-deep);margin-top:2px}
+
+  /* window list with struck-through bars */
+  .wlist{border:1px solid var(--divider);background:var(--card-surface);border-radius:var(--r-md);
+    overflow:hidden;box-shadow:var(--e-subtle);margin-bottom:var(--s-md)}
+  .wrow{display:flex;align-items:center;gap:var(--s-sm);padding:9px var(--s-lg);border-bottom:1px solid var(--divider);min-height:42px}
+  .wrow:last-child{border-bottom:none}
+  .wrow .wn{font-family:var(--deva);font-weight:600;font-size:13px;color:var(--ink);width:60px;flex:none}
+  .wrow .wt{flex:1;font-family:var(--latin);font-weight:600;font-size:13.5px;color:var(--ink-soft);white-space:nowrap}
+  .wrow .wtag{font-family:var(--latin);font-weight:600;font-size:11.5px;color:var(--saffron-deep);flex:none;text-align:right}
+  .wrow.good{background:var(--gold-tint)}
+  .wrow.struck{background:var(--avoid-tint)}
+  .wrow.struck .wn,.wrow.struck .wt{color:var(--avoid-deep);text-decoration:line-through;text-decoration-thickness:1px}
+  .wrow.struck .wtag{color:var(--avoid-deep);text-decoration:none}
+  .wrow.seg{border-left:3px solid var(--gold)}
+
+  /* "यह समय क्यों?" factor rows */
+  .jrow{display:flex;align-items:center;gap:var(--s-md);background:var(--card-surface);border:1px solid var(--divider);
+    border-radius:var(--r-md);padding:9px var(--s-lg);margin-bottom:var(--s-sm);box-shadow:var(--e-subtle)}
+  .jrow .k{font-family:var(--deva);font-size:13px;color:var(--ink-soft);width:56px;flex:none}
+  .jrow .v{flex:1;font-family:var(--deva);font-size:13.5px;color:var(--ink);line-height:1.5}
+  .jrow .v small{display:block;font-family:var(--latin);font-style:italic;font-size:11.5px;color:var(--ink-muted);line-height:1.5}
+  .jrow .verdict{font-family:var(--deva);font-weight:600;font-size:12.5px;color:var(--saffron-deep);flex:none}
+  .jrow .verdict.no{color:var(--ink-muted)}
+  .jrow.newrow{border-left:3px solid var(--gold)}
+
+  .cta2{margin-top:var(--s-sm);border:1px solid var(--divider);color:var(--saffron-deep);
+    border-radius:var(--r-pill);padding:11px;text-align:center;font-family:var(--latin);font-weight:600;font-size:14.5px;
+    background:var(--parchment-soft)}
+  .disc{margin-top:var(--s-md);font-family:var(--latin);font-style:italic;font-size:11.5px;
+    color:var(--ink-muted);line-height:1.6;text-align:center}
+  .footnote{margin-top:var(--s-md);font-family:var(--latin);font-style:italic;font-size:11.5px;
+    color:var(--ink-muted);line-height:1.6;text-align:center}
+  .footnote u{text-decoration-color:var(--divider)}
+</style>
+</head>
+<body>
+
+<h1>Muhurat Finder — Phase 3 (लग्न-grade windows) &amp; Phase 4 (personalised strip)</h1>
+<p class="sub">PRD-16/P3+P4 · four screens over the shipped Phase-2 finder — lagna chips, split windows, the "यह समय क्यों?" evidence block, and the private Tarabala/Chandrabala strip.</p>
+<p class="legend">
+  <b>Gold-left-bordered rows are new</b> in these phases; everything else is the shipped Phase-2 grammar (ListCard, answer block,
+  struck-through भद्रा/राहु rows). <b>Content gates:</b> every lagna preference, hora role, दिशा शूल row, and tara/chandra class shown
+  here is <b>DRAFT</b> until pinned in <code>docs/roadmap/conventions/muhurat-lagna-v1.md</code> /
+  <code>muhurat-tarabala-v1.md</code> with two dated sources (same treatment as the masa tables, RULEBOOK §14/§17).
+  <b>Privacy:</b> the personal strip is on-device only — it never reaches the share card (<code>MuhuratFinderShareCard</code>
+  stays "no personal data by construction") nor any notification.
+</p>
+<span class="illus">⚠ सभी ज्योतिषीय मान उदाहरण हैं · ALL ASTROLOGICAL VALUES ON THIS PAGE ARE ILLUSTRATIVE, NOT ENGINE OUTPUT</span>
+
+<div class="wrap">
+
+  <!-- ================= PHONE A — results with lagna chips + a split window ================= -->
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:41</span><span>वेदांश</span></div><div class="screen"><div class="pad">
+      <div class="navrow"><div class="back">‹</div><div class="title">गृह प्रवेश</div><div class="navslot"></div></div>
+      <div class="city">उज्जैन · दृक्पंचांग पद्धति</div>
+
+      <div class="sechead">सर्वोत्तम तिथियाँ</div>
+
+      <div class="lc">
+        <div class="thumb num">25</div>
+        <div class="lcb">
+          <div class="lct">नवम्बर · बुधवार</div>
+          <div class="lcd">श्रेष्ठ</div>
+          <div class="lcw">शुभ 8:05 – 9:31 AM<span class="lagchip">वृश्चिक लग्न</span></div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="lc">
+        <div class="thumb num">27</div>
+        <div class="lcb">
+          <div class="lct">नवम्बर · शुक्रवार</div>
+          <div class="lcd">श्रेष्ठ</div>
+          <div class="lcw">लाभ 9:28 – 10:12 AM<span class="lagchip">धनु लग्न</span></div>
+          <div class="lcw" style="font-weight:600;font-size:13px;color:var(--ink-soft)">लाभ 10:12 – 10:54 AM<span class="lagchip">मकर लग्न</span></div>
+          <div class="splitnote">लग्न सीमा पर विभाजित · one choghadiya, split at the 10:12 lagna boundary</div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="sechead">अन्य उपयुक्त तिथियाँ</div>
+
+      <div class="lc">
+        <div class="thumb num">30</div>
+        <div class="lcb">
+          <div class="lct">नवम्बर · सोमवार</div>
+          <div class="lcd">मध्यम</div>
+          <div class="lcw">अमृत 6:52 – 8:16 AM<span class="lagchip">वृश्चिक लग्न</span></div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="lc">
+        <div class="thumb num">4</div>
+        <div class="lcb">
+          <div class="lct">दिसम्बर · शुक्रवार</div>
+          <div class="lcd">मध्यम</div>
+          <div class="lcw">चर 12:04 – 1:28 PM<span class="lagchip">कुंभ लग्न</span></div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="cta2">कैलेंडर में देखें</div>
+      <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
+    </div></div></div>
+    <div class="cap"><b>(a) Results — lagna chips &amp; a visible split.</b> Every card is still the identical shipped
+      <code>ListCard</code> (no hero, no ordinals — design.md §60). The best-window line gains one
+      <span class="newmark">lagna chip</span>; the 27 Nov card shows <b>one choghadiya split into two graded segments</b>
+      at a lagna boundary — the split replaces Phase 2's "graded at start, flagged" rule. Segments shorter than
+      24 min are dropped, never shown. <span class="gate">CONTENT GATE:</span> which lagnas each occasion prefers is a
+      DRAFT table pending two-source review — chips render regardless; the <i>grading</i> effect waits on the table.</div>
+  </div>
+
+  <!-- ================= PHONE B — day detail, यह समय क्यों? ================= -->
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:41</span><span>वेदांश</span></div><div class="screen"><div class="pad">
+      <div class="navrow"><div class="back">‹</div><div class="title">25 नवम्बर</div><div class="navslot">⇪</div></div>
+
+      <div class="answer">
+        <div class="danda">॥</div>
+        <div class="ad">बुधवार, 25 नवम्बर</div>
+        <div class="aw">शुक्ल द्वादशी · श्रवण नक्षत्र</div>
+        <span class="tierpill">श्रेष्ठ · दृक्पंचांग पद्धति</span>
+        <div class="abest">
+          <div class="albl">सर्वोत्तम समय</div>
+          <div class="abig">8:05 – 9:31 AM</div>
+          <div class="anm">शुभ चौघड़िया · वृश्चिक लग्न</div>
+        </div>
+      </div>
+
+      <div class="cta2" style="margin-top:0">☆ इस मुहूर्त का अनुसरण करें</div>
+      <div class="cta2">दिन के सभी शुभ समय</div>
+
+      <div class="sechead">यह समय क्यों?</div>
+      <div class="jrow"><div class="k">नक्षत्र</div><div class="v">श्रवण<small>in the गृह प्रवेश list · window-time reading</small></div><div class="verdict">अनुकूल</div></div>
+      <div class="jrow"><div class="k">तिथि</div><div class="v">शुक्ल द्वादशी<small>उदय: एकादशी — sunrise anga shown when it differs</small></div><div class="verdict">अनुकूल</div></div>
+      <div class="jrow"><div class="k">वार</div><div class="v">बुधवार</div><div class="verdict">अनुकूल</div></div>
+      <div class="jrow newrow"><div class="k">लग्न</div><div class="v">वृश्चिक — स्थिर लग्न<small>prevails over the whole window (8:05–9:31)</small></div><div class="verdict">अनुकूल</div></div>
+      <div class="jrow newrow"><div class="k">होरा</div><div class="v">गुरु होरा<small>evidence &amp; tie-break only — never changes the tier</small></div><div class="verdict no">साक्ष्य</div></div>
+
+      <div class="sechead">दिन के समय</div>
+      <div class="wlist">
+        <div class="wrow good seg"><div class="wn">शुभ</div><div class="wt">8:05 – 9:31 AM</div><div class="wtag">श्रेष्ठ · वृश्चिक</div></div>
+        <div class="wrow struck"><div class="wn">राहु</div><div class="wt">12:11 – 1:32 PM</div><div class="wtag">वर्ज्य</div></div>
+        <div class="wrow good seg"><div class="wn">चर</div><div class="wt">1:32 – 2:19 PM</div><div class="wtag">मध्यम · कुंभ</div></div>
+        <div class="wrow good seg"><div class="wn">चर</div><div class="wt">2:19 – 2:56 PM</div><div class="wtag">मध्यम · मीन</div></div>
+      </div>
+      <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
+    </div></div></div>
+    <div class="cap"><b>(b) Day detail — the evidence block earns two rows.</b> Answer → Action → Evidence holds; the
+      <span class="newmark">लग्न row</span> states the span prevailing over the <i>whole</i> window (splitting guarantees
+      that is now always true) and the <span class="newmark">होरा row</span> is explicitly marked evidence/tie-break —
+      wording, not colour, keeps it out of the tier contract. The dual-anga rule survives from Phase 2: the sunrise
+      (उदय) reading stays visible whenever it differs, so this screen never contradicts the Panchang tab. The windows
+      list shows per-segment lagna + tier; भद्रा/राहु stay struck through in place.</div>
+  </div>
+
+  <!-- ================= PHONE C — day detail WITH saved Kundali ================= -->
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:41</span><span>वेदांश</span></div><div class="screen"><div class="pad">
+      <div class="navrow"><div class="back">‹</div><div class="title">25 नवम्बर</div><div class="navslot">⇪</div></div>
+
+      <div class="answer">
+        <div class="danda">॥</div>
+        <div class="ad">बुधवार, 25 नवम्बर</div>
+        <div class="aw">शुक्ल द्वादशी · श्रवण नक्षत्र</div>
+        <span class="tierpill">श्रेष्ठ · दृक्पंचांग पद्धति</span>
+        <div class="abest">
+          <div class="albl">सर्वोत्तम समय</div>
+          <div class="abig">8:05 – 9:31 AM</div>
+          <div class="anm">शुभ चौघड़िया · वृश्चिक लग्न</div>
+        </div>
+      </div>
+
+      <div class="pstrip">
+        <div class="ph"><span class="plabel">आपके लिए · from your saved Kundali</span></div>
+        <div class="row">
+          <div class="bala"><b>साधक तारा</b> — अनुकूल</div>
+          <div class="bala">चन्द्र <b>7वाँ</b> — अनुकूल</div>
+        </div>
+        <div class="pexp">जन्म नक्षत्र पुष्य से गिनकर · counted from your janma nakshatra (Pushya) and rashi (Karka).
+          Private — never on the share card. यह दिन की श्रेणी नहीं बदलता।</div>
+      </div>
+
+      <div class="cta2" style="margin-top:0">☆ इस मुहूर्त का अनुसरण करें</div>
+      <div class="cta2">दिन के सभी शुभ समय</div>
+
+      <div class="sechead">यह समय क्यों?</div>
+      <div class="jrow"><div class="k">नक्षत्र</div><div class="v">श्रवण</div><div class="verdict">अनुकूल</div></div>
+      <div class="jrow newrow"><div class="k">लग्न</div><div class="v">वृश्चिक — स्थिर लग्न</div><div class="verdict">अनुकूल</div></div>
+      <div class="jrow newrow"><div class="k">होरा</div><div class="v">गुरु होरा</div><div class="verdict no">साक्ष्य</div></div>
+
+      <div class="sechead" style="margin-top:var(--s-lg)">दूसरा दिन — चंद्राष्टम उदाहरण</div>
+      <div class="lc">
+        <div class="thumb num">2</div>
+        <div class="lcb">
+          <div class="lct">दिसम्बर · बुधवार</div>
+          <div class="lcd">मध्यम</div>
+          <div class="lcw">लाभ 10:44 – 12:08 PM<span class="lagchip">मकर लग्न</span></div>
+          <div class="personal"><span class="plabel">आपके लिए</span><span class="pgood">मित्र तारा</span><span class="pbad">चंद्राष्टम — प्रतिकूल</span></div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
+    </div></div></div>
+    <div class="cap"><b>(c) With a saved Kundali — the personal strip.</b> One quiet
+      <span class="newmark">आपके लिए strip</span> between answer and actions on the detail, and a one-line personal row
+      on result cards. It <b>annotates, never re-grades</b>: the 2 Dec card keeps its मध्यम tier and its rank even under
+      चंद्राष्टम — the strongest word the strip can say (tint + word, never colour alone, §12).
+      <span class="gate">CONTENT GATE:</span> the 9-tara classes (विपत्/प्रत्यरि/वध unfavourable, जन्म contested) and the
+      chandra 4/8/12 bars must be pinned row-for-row in <code>muhurat-tarabala-v1.md</code> before release — and that
+      convention deliberately diverges from the Guna-Milan Tara koota already in the repo.
+      <span class="gate">PRIVACY:</span> strip data never reaches <code>MuhuratFinderShareCard</code> or any
+      notification; absence is test-pinned.</div>
+  </div>
+
+  <!-- ================= PHONE D — no saved Kundali ================= -->
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:41</span><span>वेदांश</span></div><div class="screen"><div class="pad">
+      <div class="navrow"><div class="back">‹</div><div class="title">गृह प्रवेश</div><div class="navslot"></div></div>
+      <div class="city">उज्जैन · दृक्पंचांग पद्धति</div>
+
+      <div class="sechead">सर्वोत्तम तिथियाँ</div>
+
+      <div class="lc">
+        <div class="thumb num">25</div>
+        <div class="lcb">
+          <div class="lct">नवम्बर · बुधवार</div>
+          <div class="lcd">श्रेष्ठ</div>
+          <div class="lcw">शुभ 8:05 – 9:31 AM<span class="lagchip">वृश्चिक लग्न</span></div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="lc">
+        <div class="thumb num">27</div>
+        <div class="lcb">
+          <div class="lct">नवम्बर · शुक्रवार</div>
+          <div class="lcd">श्रेष्ठ</div>
+          <div class="lcw">लाभ 9:28 – 10:12 AM<span class="lagchip">धनु लग्न</span></div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="sechead">अन्य उपयुक्त तिथियाँ</div>
+
+      <div class="lc">
+        <div class="thumb num">30</div>
+        <div class="lcb">
+          <div class="lct">नवम्बर · सोमवार</div>
+          <div class="lcd">मध्यम</div>
+          <div class="lcw">अमृत 6:52 – 8:16 AM<span class="lagchip">वृश्चिक लग्न</span></div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+
+      <div class="cta2">कैलेंडर में देखें</div>
+
+      <div class="footnote"><u>कुंडली सहेजने पर</u> हर दिन आपके तारा/चन्द्र बल के साथ दिखेगा</div>
+      <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
+    </div></div></div>
+    <div class="cap"><b>(d) No saved Kundali — the strip simply isn't there.</b> No modal, no badge, no per-card CTA,
+      nothing on the day detail. The <b>only</b> trace is one italic footer line on the results list, styled exactly
+      like the disclaimer beside it, deep-linking to the shipped Kundali screen.
+      <b>Annotation — is even this too naggy?</b> It appears once per results screen, below the fold on most scans,
+      in disclaimer type; the recorded alternative is <i>nothing at all</i> (discovery via release notes/Jyotish tab).
+      Recommendation: ship the footer line, measure its tap-through (target ≥ 2% of no-profile sessions), and strike
+      it at the first design review if it reads as a nag. It must never migrate onto cards or the detail screen.</div>
+  </div>
+
+</div>
+
+</body>
+</html>

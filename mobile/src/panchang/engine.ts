@@ -157,20 +157,63 @@ function angularAdvance(from: number, to: number): number {
   return (to - from + 360) % 360;
 }
 
-function computeKaranaIndex(tithiIndex: number, sunLng: number, moonLng: number): number {
+/**
+ * Which of the 60 half-tithi slots the elongation sits in (0..59), with the
+ * same near-boundary snap `computeKaranaIndex` has always used. Extracted so
+ * the karana END solver targets the boundary of the SAME slot the displayed
+ * karana came from — recomputing it from the lossy name index would be wrong
+ * (each movable name repeats eight times per month).
+ */
+function karanaAbsoluteAt(sunLng: number, moonLng: number): number {
   const diff = (moonLng - sunLng + 360) % 360;
   const karanaBoundaryTolerance = 0.001;
   const karanaProgress = diff / 6;
   const nextBoundary = Math.ceil(karanaProgress);
-  const karanaAbsolute = nextBoundary - karanaProgress <= karanaBoundaryTolerance
+  return nextBoundary - karanaProgress <= karanaBoundaryTolerance
     ? nextBoundary
     : Math.floor(karanaProgress);
+}
+
+function karanaNameIndexFor(karanaAbsolute: number): number {
   if (karanaAbsolute === 0) return 10;
   if (karanaAbsolute >= 57) {
     const fixed = [7, 8, 9, 10];
     return fixed[karanaAbsolute - 57] ?? 0;
   }
   return ((karanaAbsolute - 1) % 7);
+}
+
+function computeKaranaIndex(tithiIndex: number, sunLng: number, moonLng: number): number {
+  return karanaNameIndexFor(karanaAbsoluteAt(sunLng, moonLng));
+}
+
+/**
+ * End of the karana in slot `karanaAbsolute` (PRD-16 Phase 2 / TRD-16/P2 §4.2):
+ * the instant the Sun–Moon elongation crosses the slot's upper 6° boundary.
+ * A parameterised twin of `bisectTithiEnd` — karana boundaries sit every 6°
+ * where tithi boundaries sit every 12°, so a karana is half a tithi
+ * (~10–13.4 h) and the 30 h bracket is generous.
+ */
+function bisectKaranaEnd(sunrise: Date, karanaAbsolute: number, civilTimeZone?: string): Date | null {
+  let lo = sunrise;
+  let hi = new Date(lo.getTime() + 30 * 60 * 60 * 1000);
+  const year = instantYear(sunrise, civilTimeZone);
+  const targetBoundary = (((karanaAbsolute + 1) % 60) * 6) % 360;
+
+  for (let i = 0; i < 20; i++) {
+    const mid = new Date((lo.getTime() + hi.getTime()) / 2);
+    const sunLng = getSiderealSunLng(mid, year);
+    const moonLng = getSiderealMoonLng(mid, year);
+    const diff = (moonLng - sunLng + 360) % 360;
+
+    if (diff >= targetBoundary && (diff - targetBoundary) < 180) {
+      hi = mid;
+    } else {
+      lo = mid;
+    }
+  }
+
+  return new Date((lo.getTime() + hi.getTime()) / 2);
 }
 
 function bisectTithiEnd(sunrise: Date, currentTithiIndex: number, civilTimeZone?: string): Date | null {
@@ -370,6 +413,16 @@ function sunriseFor(localDate: Date, location?: GeoLocation & { cityId?: string 
   return cached;
 }
 
+/**
+ * A civil day's local sunrise, through the shared memo (PRD-16/P3). The lagna
+ * sweep needs [sunrise, nextSunrise) and `computePanchangForDate` has already
+ * solved tomorrow's sunrise for kshaya detection, so this is a cache hit in
+ * every real call path — never a second root-find.
+ */
+export function sunriseForDate(localDate: Date, options: PanchangComputationOptions = {}): Date {
+  return sunriseFor(localDate, options.location, options.civilTimeZone);
+}
+
 // Lightweight tithi + lunar-month for a date, computed at sunrise — exactly the
 // two values festival matching needs. Skips the end-time bisections and the
 // sunset/moonrise rise/set solves that computePanchangForDate also performs.
@@ -413,6 +466,24 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
 
   const tithiEndTime = bisectTithiEnd(sunrise, tithiIndex, options.civilTimeZone);
   const nakshatraEndTime = bisectNakshatraEnd(sunrise, nakshatraIndex, options.civilTimeZone);
+  // Phase 2 (TRD-16/P2 §4.2): the karana's end, solved like the tithi's. This
+  // is what lets Bhadra be an interval instead of a whole-day flag, and it
+  // surfaces on the Panchang tab / Muhurat card automatically (elementLine
+  // prints endTime whenever it is non-null — TRD §1.2 blast radius).
+  const karanaAbsolute = karanaAbsoluteAt(sunLng, moonLng);
+  const karanaEndTime = bisectKaranaEnd(sunrise, karanaAbsolute, options.civilTimeZone);
+
+  // Late-onset Vishti (PRD-16/P3 §0.3): a Bhadra whose karana BEGINS during
+  // the day was invisible while only the sunrise karana was read — a finder
+  // quoting minute-grade windows must not miss an afternoon Bhadra. A karana
+  // lasts ~10–13.4 h, so at most one boundary falls inside daylight: checking
+  // the slot after the sunrise karana suffices for the daytime windows the
+  // finder offers. One extra bisection on ~13% of days.
+  let lateVishti: PanchangData['lateVishti'] = null;
+  if (karanaIndex !== 6 && karanaNameIndexFor((karanaAbsolute + 1) % 60) === 6 && karanaEndTime) {
+    const lateEnd = bisectKaranaEnd(karanaEndTime, (karanaAbsolute + 1) % 60, options.civilTimeZone);
+    if (lateEnd) lateVishti = { start: karanaEndTime, end: lateEnd };
+  }
 
   // Kshaya detection: a tithi or nakshatra can begin after this sunrise and end
   // before the next, touching neither — it is then the sunrise-anga of no civil
@@ -495,8 +566,9 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
       index: karanaIndex,
       nameHi: KARANA_NAMES_HI[karanaIndex],
       nameEn: KARANA_NAMES_EN[karanaIndex],
-      endTime: null,
+      endTime: karanaEndTime,
     },
+    lateVishti,
     sunrise,
     sunset,
     moonrise,

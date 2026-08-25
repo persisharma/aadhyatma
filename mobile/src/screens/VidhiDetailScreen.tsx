@@ -24,9 +24,9 @@ import {
 import ReaderHeader from '@/components/ReaderHeader';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { getRuleById } from '@/panchang/vratCatalog';
-import type { PanchangStackParamList } from '@/navigation/types';
+import type { VidhiStackParamList } from '@/navigation/types';
 
-type Props = NativeStackScreenProps<PanchangStackParamList, 'VidhiDetail'>;
+type Props = NativeStackScreenProps<VidhiStackParamList, 'VidhiDetail'>;
 
 type Mode = 'samagri' | 'steps';
 

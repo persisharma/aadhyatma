@@ -14,8 +14,9 @@
  * fires eviction listeners so the persistence layer can drop that city's disk
  * data too. Choosing a new city never evicts the others until the cap forces it.
  */
-import { computePanchangForDate, locationKey } from './engine';
+import { computePanchangForDate, locationKey, sunriseForDate } from './engine';
 import { computeAstaFlags } from './eventMuhurat';
+import { lagnaSpansForDay } from './lagnaSweep';
 import type { CalendarSystem, GeoLocation } from './types';
 import type { DayInputs } from './panchangDaySerde';
 
@@ -139,7 +140,16 @@ export function dayStoreFor(scope: string): Map<string, DayInputs> {
 
 export function computeDayInputs(date: Date, opts: ScanOptions): DayInputs {
   const noon = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
-  return { p: computePanchangForDate(date, opts), asta: computeAstaFlags(noon) };
+  const p = computePanchangForDate(date, opts);
+  // Tomorrow's sunrise closes the lagna tiling. It comes from the engine's
+  // shared sunrise memo, which computePanchangForDate above just filled for
+  // its kshaya detection — a lookup, never a second root-find.
+  const nextSunrise = sunriseForDate(dayAt(date, 1), opts);
+  return {
+    p,
+    asta: computeAstaFlags(noon),
+    lagnas: lagnaSpansForDay(p.sunrise, nextSunrise, opts.location.latitude, opts.location.longitude),
+  };
 }
 
 /** Read a scope's day-map by absolute date; compute + store on a miss. */

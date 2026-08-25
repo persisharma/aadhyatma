@@ -300,6 +300,7 @@ export default function ValmikiRamayanReaderScreen({ navigation, route }: Props)
                           share(
                             {
                               sourceId: SOURCE_ID,
+                              stanza: item.stanza,
                               sectionNameHi: chapter.titleHi,
                               sectionNameEn: chapter.titleEn,
                               verseLabelHi: item.labelHi,

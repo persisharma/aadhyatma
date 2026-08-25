@@ -48,6 +48,7 @@ export default function ListCard({
   accessibilityRole = 'button',
   testID,
   style,
+  variant = 'active',
 }: {
   leading?: React.ReactNode;
   /** The title/subtitle column — caller-styled so section typography stays local. */
@@ -59,8 +60,16 @@ export default function ListCard({
   accessibilityRole?: AccessibilityRole;
   testID?: string;
   style?: StyleProp<ViewStyle>;
+  /**
+   * 'active' — the cardActive gradient shell (default). 'flat' — plain
+   * `parchment-soft` on a `divider` border, for rows that must NOT compete with
+   * an adjacent gradient card (e.g. the Muhurat Finder door under the glance
+   * card, design.md §33): the gradient stays reserved for the live surface.
+   */
+  variant?: 'active' | 'flat';
 }) {
   const { colors, radii } = useTheme();
+  const flat = variant === 'flat';
   return (
     <Pressable
       testID={testID}
@@ -71,23 +80,25 @@ export default function ListCard({
         styles.card,
         {
           borderRadius: radii.lg,
-          borderColor: colors.cardActiveBorder,
+          borderColor: flat ? colors.divider : colors.cardActiveBorder,
           // Opaque base so the Android shadow renders; the gradient carries its
           // own radius rather than overflow:'hidden', which clips the iOS shadow
           // (design.md §4 — same pattern as LibraryCard/CategoryCard).
-          backgroundColor: colors.cardActiveFrom,
+          backgroundColor: flat ? colors.parchmentSoft : colors.cardActiveFrom,
         },
         elevation.card,
         pressed && styles.pressed,
         style,
       ]}
     >
-      <LinearGradient
-        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[StyleSheet.absoluteFill, { borderRadius: radii.lg }]}
-      />
+      {!flat && (
+        <LinearGradient
+          colors={[colors.cardActiveFrom, colors.cardActiveTo]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={[StyleSheet.absoluteFill, { borderRadius: radii.lg }]}
+        />
+      )}
       {leading != null && <View style={styles.leading}>{leading}</View>}
       <View style={styles.meta}>{children}</View>
       {right ?? <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>}

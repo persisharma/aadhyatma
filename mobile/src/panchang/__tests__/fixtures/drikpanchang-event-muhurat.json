@@ -1,0 +1,47 @@
+{
+  "source": {
+    "convention": "drikpanchang",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/shubh-dates/griha-pravesh-dates-with-muhurat.html"
+    ],
+    "notes": "Golden rows from DrikPanchang's PUBLISHED Griha Pravesh muhurat list for November 2026, as recorded in this repository during the PRD-16 Phase 1-2 validation work: PRD-16 ('Nov-2026 output matched published lists on 11/25/26 Nov' - exact tithi/nakshatra/vara match) and TRD-16/P2 SS4.3 ('11 and 14 Nov 2026 are excluded for Griha Pravesh while published lists include them'). These rows were transcribed from the published page by the sessions that authored those documents; this session had no content egress to re-retrieve it. EXTEND this fixture from the live published lists (more occasions, window times) at the SS10 content review. NEVER populate a row from this engine's own output - the standing golden-fixture gotcha.",
+    "recordedFrom": [
+      "docs/roadmap/prds/16-event-muhurat-finder.md (validation note, Aug 2026)",
+      "docs/roadmap/trds/16-event-muhurat-finder-phase2.trd.md SS4.3 (Chaturmas decision 1, Aug 2026)",
+      "mobile/src/panchang/eventMuhurat.ts griha-pravesh source.notes"
+    ],
+    "locationCityId": "ujjain"
+  },
+  "rows": [
+    {
+      "occasionId": "griha-pravesh",
+      "date": "2026-11-11",
+      "publishedListed": true,
+      "expected": "documented-divergence",
+      "divergenceDosha": "chaturmas",
+      "note": "Published lists resume Griha Pravesh in Kartik Shukla post-Diwali (PRD-16 SS9.1 third reading); the shipped tithi-span Chaturmas (Devshayani -> Dev Uthani, 21 Nov 2026) still bars this day. The engine must exclude it AND name chaturmas until that convention decision changes - at which point this row flips to 'offered' and the boundary tests move with it."
+    },
+    {
+      "occasionId": "griha-pravesh",
+      "date": "2026-11-14",
+      "publishedListed": true,
+      "expected": "documented-divergence",
+      "divergenceDosha": "chaturmas",
+      "note": "Same divergence as 2026-11-11 (TRD-16/P2 SS4.3: ~2 weeks a year)."
+    },
+    {
+      "occasionId": "griha-pravesh",
+      "date": "2026-11-25",
+      "publishedListed": true,
+      "expected": "offered",
+      "note": "PRD-16 validation: exact tithi/nakshatra/vara agreement with the published list."
+    },
+    {
+      "occasionId": "griha-pravesh",
+      "date": "2026-11-26",
+      "publishedListed": true,
+      "expected": "offered",
+      "note": "PRD-16 validation: exact tithi/nakshatra/vara agreement with the published list; the 26 Nov 2026 golden RULEBOOK SS17.10 names."
+    }
+  ]
+}

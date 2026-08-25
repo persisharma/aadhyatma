@@ -33,6 +33,14 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Skip tour"
     optional: true
+# Post-tour setup sheet: pick English then confirm with Begin, else the
+# language sheet stays over Home and every assertion below fails.
+- tapOn:
+    text: "English"
+    optional: true
+- tapOn:
+    text: "Begin|आरंभ करें"
+    optional: true
 - tapOn:
     text: "Close"
     optional: true
@@ -47,7 +55,7 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 
 # English for stable visible-text assertions (same recipe as the finder smoke).
-- tapOn: "More, tab.*"
+- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
@@ -56,7 +64,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn: "Home, tab.*"
+- tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
 # ── Reach a graded day ──────────────────────────────────────────────────────
@@ -64,6 +72,9 @@ appId: com.prashantsharma.vedansh
     element:
       text: "Muhurat\\..*Tap to open\\."
     direction: DOWN
+    # centerElement keeps the tap mid-screen; without it the grid tile settles
+    # at the bottom edge and the tap lands on the Home tab bar (resets to top).
+    centerElement: true
 - tapOn: "Muhurat\\..*Tap to open\\."
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -78,7 +89,7 @@ appId: com.prashantsharma.vedansh
     visible: "Best dates|More suitable dates"
     timeout: 60000
 - tapOn:
-    text: "Shreshtha.*|Madhyam.*"
+    id: "muhurat-result-.*"
     index: 0
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -115,7 +126,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Following"
 
 # ── The ★ inventory: one follow list, shared with vrats ─────────────────────
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -161,9 +172,10 @@ appId: com.prashantsharma.vedansh
 # ── Empty-with-reason still ends in an action ───────────────────────────────
 # Griha Pravesh is chaturmas-barred for a large part of the year; when its
 # window is empty the screen must offer a follow on the first date after.
-- back
+# headerShown:false custom back chevron — tap it (edge-swipe `- back` won't pop).
+- tapOn: "Back"
 - waitForAnimationToEnd
-- tapOn: "Panchang, tab.*"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

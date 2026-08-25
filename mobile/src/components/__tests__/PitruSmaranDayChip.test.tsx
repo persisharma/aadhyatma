@@ -83,9 +83,14 @@ describe('PitruSmaranDayChip', () => {
     expect(textNode.props.style.color).toBe(lightColors.inkSoft);
 
     act(() => chip.props.onPress());
+    // `initial: false` is the load-bearing part: this chip renders on Home's
+    // Today strip, so it is a common FIRST touch of the lazily-mounted More
+    // tab. Without it the detail becomes the More stack's initial route — dead
+    // back button, hub unreachable for the session (navigation/__tests__/tabTargets).
     expect(mockNavigate).toHaveBeenCalledWith('MoreTab', {
       screen: 'PitruSmaranDetail',
       params: { entryId: 'smaran-father' },
+      initial: false,
     });
   });
 });

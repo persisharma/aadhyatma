@@ -24,9 +24,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { computePanchangForDate, UJJAIN_GEO } from '../engine';
+import { computePanchangForDate, sunriseForDate, UJJAIN_GEO } from '../engine';
 import { classifyNow, computeMuhuratDay } from '../muhurat';
 import { auspiciousWindows, computeAstaFlags, evaluateDay, getEventRule, isChaturmasDay, summarize } from '../eventMuhurat';
+import { lagnaSpansForDay } from '../lagnaSweep';
 import { pushyaYogaFor } from '../abujhMuhurat';
 import { formatClock, formatEndInstant, formatRange, formatRangeCompact } from '../muhuratFormat';
 import { serializeDayInputs, reviveDayInputs } from '../panchangDaySerde';
@@ -51,10 +52,15 @@ function deepFreeze<T>(value: T, seen = new Set<unknown>()): T {
   return value;
 }
 
-const computeDay = (d: Date): DayInputs => ({
-  p: computePanchangForDate(d, OPTS),
-  asta: computeAstaFlags(new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12)),
-});
+const computeDay = (d: Date): DayInputs => {
+  const p = computePanchangForDate(d, OPTS);
+  const nextSunrise = sunriseForDate(new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1), OPTS);
+  return {
+    p,
+    asta: computeAstaFlags(new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12)),
+    lagnas: lagnaSpansForDay(p.sunrise, nextSunrise, OPTS.location.latitude, OPTS.location.longitude),
+  };
+};
 const frozenDay = (d: Date): DayInputs => deepFreeze(computeDay(d));
 
 /**

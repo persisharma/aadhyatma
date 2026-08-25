@@ -19,7 +19,26 @@ export type TabParamList = {
   MoreTab: NavigatorScreenParams<MoreStackParamList> | undefined;
 };
 
-export type HomeStackParamList = {
+/**
+ * Guided puja flows (PRD-19). `dateMs` is the festival occurrence the vidhi was
+ * opened for — the samagri checklist persists per that date.
+ *
+ * These three routes are registered on BOTH the Home stack and the Panchang
+ * stack, and this shared type is the single source of truth for their params.
+ * The duplication is deliberate: a vidhi journey has doors on both tabs (Home's
+ * DISCOVER card, search rows and routine items; Panchang's Vrat & Parv tile,
+ * day pill and observance detail), and a cross-tab `navigate` would leave back
+ * popping to whichever tab root hosted the screen instead of the surface the
+ * user actually came from. Registering the flow in both stacks lets every door
+ * push in place, so back always retraces the journey.
+ */
+export type VidhiStackParamList = {
+  VidhiCatalog: undefined;
+  VidhiDetail: { vidhiId: string; dateMs?: number };
+  VidhiConduct: { vidhiId: string; dateMs?: number; initialStep?: number };
+};
+
+export type HomeStackParamList = VidhiStackParamList & {
   Home: undefined;
   Search: undefined;
   CategoryList: { categoryId: ContentCategory };
@@ -96,7 +115,7 @@ export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
-export type PanchangStackParamList = {
+export type PanchangStackParamList = VidhiStackParamList & {
   PanchangHome:
     | {
         initialTab?: PanchangHomeMode;
@@ -115,7 +134,10 @@ export type PanchangStackParamList = {
   MuhuratResults: { occasionId: OccasionId };
   MuhuratDayDetail: { occasionId: OccasionId; dateMs: number };
   AbujhDays: undefined;
-  Kundali: { editing?: boolean } | undefined;
+  // `newPerson` opens the blank add-a-person form beside the people already
+  // saved (the Jyotish landing's + जोड़ें chip); `editing` still opens the
+  // ACTIVE person's details for editing.
+  Kundali: { editing?: boolean; newPerson?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
@@ -141,11 +163,6 @@ export type PanchangStackParamList = {
      * to an exact share the range path withholds (RULEBOOK §18.3/§18.8). */
     dayCharanas?: readonly number[];
   };
-  // Guided puja flows (PRD-19). `dateMs` is the festival occurrence the vidhi
-  // was opened for — the samagri checklist persists per that date.
-  VidhiCatalog: undefined;
-  VidhiDetail: { vidhiId: string; dateMs?: number };
-  VidhiConduct: { vidhiId: string; dateMs?: number; initialStep?: number };
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing

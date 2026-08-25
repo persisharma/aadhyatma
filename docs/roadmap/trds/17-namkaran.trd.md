@@ -188,9 +188,10 @@ charanas per rashi and that the 12 sets partition all 108.
 **Shape on disk** (`mobile/src/data/namkaran/`):
 
 ```
-index.ts                 // lazy loader + charana→ids index accessor (no name data at module scope)
-charanaIndex.json        // { "0": ["kesh-1","chan-4", …], … }  108 keys → name ids
-names.01.json … names.NN.json   // sharded records, ~200 names per shard
+index.ts                 // static 27-shard require map + count-index accessor (no name data at module scope)
+counts.json              // { "version": 1, "charana": { "0": 12, … } }  generated, non-zero charanas only
+names.00-ashwini.json …  // one shard per nakshatra, 27 files, ~96 names each
+names.26-revati.json
 types.ts
 ```
 
@@ -200,13 +201,21 @@ types.ts
   `no-restricted-imports` rule for this, in the spirit of the three lint-enforced token rules
   (wiki `overview` gotchas): the failure mode is a silent startup regression, exactly the class the
   repo already chose to lint rather than review for.
-- `charanaIndex.json` is **generated** from the shards by `scripts/gen-namkaran-index.mjs` (manual,
-  like every other script in `scripts/`), so the index can never disagree with the records. The
-  generator also emits the coverage report (names per charana × gender) that gate §11.2 reads.
-- Shard boundaries follow charana groups so a result loads one or two shards, not all of them.
+- `counts.json` is **generated** from the shards by `scripts/namkaran-build-index.mts` (manual, like
+  every other script in `scripts/`), so the index can never disagree with the records; the corpus
+  test re-derives the tally independently rather than calling the generator, so a bug in the
+  generator cannot certify its own output.
+- Shard boundaries follow **nakshatra**, not arbitrary charana groups: `charana → nakshatra` is
+  `floor(c/4)`, so an exact result loads one shard and the thin-charana fallback — which needs a
+  whole nakshatra — also loads exactly one. Worst case is an unknown-time day straddling a
+  nakshatra boundary, at two shards. Metro cannot resolve a computed require path, so the 27
+  entries are listed literally.
 
-**Byte budget.** CI asserts the raw JSON total ≤ **512 KB** (PRD §8.4). If exceeded: shard finer or
-trim the corpus — never raise the budget in the same commit that breaches it.
+**Byte budget.** Two caps, per the reviewed sharding decision (RULEBOOK §18.4a): **≤ 64 KB per
+shard** — the one that protects the user, since a screen reads at most two — and **≤ 1,024 KB
+total** as a bundle ceiling. These replaced a single ≤ 512 KB cap when the corpus depth moved to
+12 + 12. If a cap is breached: shard finer or trim — never raise a budget in the same commit that
+breaches it, and never without a recorded decision.
 
 ## 6. React integration
 
@@ -329,7 +338,7 @@ all on this screen; the muhurat door pays that cost inside the shipped finder, r
 | `charanaSetForDay` | stable-charana day; multi-crossing day; 360° wrap; IST day edges; window ordering; no noon | `tsx` |
 | `rashiSyllables` | 9 charanas per rashi; the 12 sets partition 108 | `tsx` |
 | Convention integrity | 108 entries; 27 attrs; `lord === DASHA_ORDER[n % 9]`; non-empty syllables; `verified === false` | `tsx` |
-| Corpus integrity | Devanagari initial matches its charana cell; coverage ≥ 6+6 or `thin` fallback; unique ids; meanings present hi+en; `deityId` resolves in `deities.ts`; byte budget | `tsx` → `test:data` (**not** Jest — `src/data` is excluded by `jest.config.js`) |
+| Corpus integrity | Devanagari initial matches its charana cell; coverage ≥ 12+12, or a `thin` charana's nakshatra fallback pool itself ≥ 12+12; unique ids; meanings present hi+en; `deityId` resolves in `deities.ts`; cross-nakshatra records byte-identical in both shards; `counts.json` matches an independent re-derivation; per-shard and total byte budgets | `tsx` → `test:data` (**not** Jest — `src/data` is excluded by `jest.config.js`) |
 | Source purity | `namkaran.ts` imports no React / AsyncStorage / clock | `tsx` |
 | `useNamkaran` | IST→UTC; opt-in persistence + in-flight cancel; no Kundali-profile read; error states; non-IST device parity | Jest (mock storage) |
 | Shortlist hook | independence from the session key; version-mismatch re-derivation | Jest |
