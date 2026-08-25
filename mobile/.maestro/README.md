@@ -48,7 +48,8 @@ policy: `wiki/runbooks/e2e-verification.md` § "Token-cheap verification".
 ### Visual regression (cached goldens — zero tokens when unchanged)
 
 Flows capture visual checkpoints with `takeScreenshot: e2e-shots/<name>` (relative to `mobile/`,
-where maestro runs; captures are gitignored). After a run:
+where maestro runs; captures are gitignored). After a **green** run — never seed or compare
+goldens from a failed run (its captures show mid-flow states; `rm e2e-shots/*.png` after a red):
 
 ```bash
 ./scripts/e2e-visual-check.sh
