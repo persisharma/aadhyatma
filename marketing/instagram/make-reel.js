@@ -9,6 +9,10 @@
  *   node make-reel.js tithi --safe           # burn the IG safe-zone overlay in (preview only)
  *   node make-reel.js gita --audio bg.m4a    # mux an audio bed (see README — usually add audio in-app)
  *   node make-reel.js app --shots ../linkedin/shots/vrat
+ *   node make-reel.js gita --check          # lint the manifest, render nothing
+ *
+ * Every render lints the manifest first against reel-checklist.md (hook, loop seam,
+ * copy budgets, pacing, Devanagari-first). Warnings advise; errors block unless --force.
  *
  * Sibling of ../linkedin/make-reel.js. Same brand tokens, same zero-dep
  * HTML → headless-Chrome → ffmpeg pipeline. What differs is everything Instagram
@@ -401,6 +405,116 @@ function slideHtml(M, s, shotsDir, opts) {
   return { html: textSlide(M, s, opts), dur: s.dur || 1.9 };
 }
 
+/*
+ * -- Manifest lint -----------------------------------------------------------
+ * Encodes the machine-checkable rules from reel-checklist.md so they are enforced
+ * at render time rather than remembered. Runs automatically before every render.
+ *
+ * The character budgets are HEURISTICS - they approximate what fits the live box
+ * at each slide's type size. They catch copy that is obviously too long; they
+ * cannot prove a line fits. `--safe` remains the ground truth for layout.
+ *
+ * Warnings never block. Errors block unless --force, because each one produces a
+ * reel broken in a way you would not notice until it was posted.
+ */
+const LIMITS = {
+  hookHiChars: 30, hookWords: 6,     // 112px in a 740px box
+  textHiChars: 42,                   // 88px
+  ctaHiChars: 34,                    // 88px
+  enChars: 95,                       // the English support line, any slide
+  kickerChars: 16,
+  verseLineChars: 62,                // 62px, per newline-separated line
+  slideMin: 1.4, slideMax: 4.2,      // dwell time per slide
+  reelMin: 7, reelMax: 22,           // total runtime
+  slideCountMax: 8,
+};
+const DEVANAGARI = /[\u0900-\u097F]/;
+
+function kindOf(s) {
+  if (s.hook) return 'hook';
+  if (s.cta) return 'cta';
+  if (s.verse) return 'verse';
+  if (s.shot) return 'shot';
+  return 'text';
+}
+
+function lintReel(reel, cfg, shotsDir, M) {
+  const errors = [], warnings = [];
+  const E = (m) => errors.push(m), W = (m) => warnings.push(m);
+  const slides = cfg.slides || [];
+  const at = (i, k) => `slide ${i} (${k})`;
+
+  if (!slides.length) { E('manifest has no slides'); return { errors, warnings }; }
+
+  // Checklist section 2 - structure. The hook and the loop seam are the two
+  // things that decide whether the reel gets watched twice.
+  if (kindOf(slides[0]) !== 'hook') E('slide 0 must be a `hook` - checklist 2.1');
+  const last = slides[slides.length - 1];
+  if (kindOf(last) !== 'cta') {
+    W('last slide is not a `cta` - nothing closes the loop (checklist 2.2)');
+  } else if (kindOf(slides[0]) === 'hook' && last.hi !== slides[0].hi) {
+    W('cta.hi does not repeat hook.hi verbatim - the loop seam will be visible (checklist 2.2)');
+  }
+  if (slides.length > LIMITS.slideCountMax) {
+    W(`${slides.length} slides; over ${LIMITS.slideCountMax} the reel outruns its hook (checklist 2.3)`);
+  }
+
+  // Sections 3 (copy budgets) and 4 (Devanagari-first).
+  let total = 0;
+  slides.forEach((s, i) => {
+    const k = kindOf(s);
+    const dur = s.dur || (k === 'hook' ? 2.0 : k === 'cta' ? 2.4 : k === 'verse' ? 3.2 : k === 'shot' ? 2.6 : 1.9);
+    total += dur;
+
+    if (dur < LIMITS.slideMin) W(`${at(i, k)}: ${dur}s is below ${LIMITS.slideMin}s - not enough to read (checklist 5.1)`);
+    if (dur > LIMITS.slideMax) W(`${at(i, k)}: ${dur}s is over ${LIMITS.slideMax}s - dead air (checklist 5.1)`);
+
+    if (k === 'verse') {
+      if (!s.sanskrit) { E(`${at(i, k)}: verse slide has no \`sanskrit\``); return; }
+      String(s.sanskrit).split('\n').forEach((line, n) => {
+        if (line.length > LIMITS.verseLineChars) {
+          W(`${at(i, k)}: sanskrit line ${n + 1} is ${line.length} chars (budget ${LIMITS.verseLineChars}) - it will wrap raggedly (checklist 3.4)`);
+        }
+      });
+      if (!DEVANAGARI.test(s.sanskrit)) W(`${at(i, k)}: \`sanskrit\` has no Devanagari - is it transliterated by mistake?`);
+      if (s.ref && !DEVANAGARI.test(s.ref)) W(`${at(i, k)}: \`ref\` is not in Devanagari (checklist 4)`);
+      return;
+    }
+
+    if (!s.hi && !s.en) { E(`${at(i, k)}: no \`hi\` and no \`en\` - the slide is blank`); return; }
+    if (!s.hi) W(`${at(i, k)}: no \`hi\` - Devanagari leads on every slide (checklist 4)`);
+
+    if (s.hi) {
+      const budget = k === 'hook' ? LIMITS.hookHiChars : k === 'cta' ? LIMITS.ctaHiChars : LIMITS.textHiChars;
+      if (s.hi.length > budget) {
+        W(`${at(i, k)}: hi is ${s.hi.length} chars (budget ${budget}) - likely to overflow or shrink illegibly (checklist 3.1)`);
+      }
+      if (!DEVANAGARI.test(s.hi)) {
+        W(`${at(i, k)}: \`hi\` contains no Devanagari - that field is the Hindi headline (checklist 4)`);
+      }
+      if (k === 'hook') {
+        const words = s.hi.trim().split(/\s+/).length;
+        if (words > LIMITS.hookWords) {
+          W(`${at(i, k)}: hook is ${words} words (budget ${LIMITS.hookWords}) - a hook has to land in one glance (checklist 2.1)`);
+        }
+      }
+    }
+    if (s.en && s.en.length > LIMITS.enChars) W(`${at(i, k)}: en is ${s.en.length} chars (budget ${LIMITS.enChars}) - trim it (checklist 3.2)`);
+    if (s.en && DEVANAGARI.test(s.en)) W(`${at(i, k)}: \`en\` contains Devanagari - hi/en look swapped (checklist 4)`);
+    if (s.kicker && s.kicker.length > LIMITS.kickerChars) W(`${at(i, k)}: kicker is ${s.kicker.length} chars (budget ${LIMITS.kickerChars}) (checklist 3.3)`);
+    if (k === 'shot' && !fs.existsSync(path.join(shotsDir, s.shot + '.png'))) {
+      E(`${at(i, k)}: screenshot not found - ${path.join(shotsDir, s.shot + '.png')}`);
+    }
+  });
+
+  // Section 5 - runtime. Only meaningful for reels; a carousel has no duration.
+  if (M === MODES.reel) {
+    if (total > LIMITS.reelMax) W(`total ${total.toFixed(1)}s is over ${LIMITS.reelMax}s - long reels need a reason (checklist 5.2)`);
+    if (total < LIMITS.reelMin) W(`total ${total.toFixed(1)}s is under ${LIMITS.reelMin}s - too short to say anything (checklist 5.2)`);
+  }
+  return { errors, warnings };
+}
+
 function argValue(flag) {
   const i = process.argv.indexOf(flag);
   return i > -1 ? process.argv[i + 1] : null;
@@ -412,10 +526,12 @@ function main() {
   const carousel = argv.includes('--carousel');
   const slidesOnly = argv.includes('--slides-only');
   const safeOverlay = argv.includes('--safe');
+  const checkOnly = argv.includes('--check');
+  const force = argv.includes('--force');
   const audio = argValue('--audio');
 
   if (!REELS[reel]) {
-    console.error('usage: node make-reel.js <' + Object.keys(REELS).join('|') + '> [--carousel] [--slides-only] [--safe] [--audio <file>] [--shots <dir>]');
+    console.error('usage: node make-reel.js <' + Object.keys(REELS).join('|') + '> [--carousel] [--slides-only] [--safe] [--check] [--force] [--audio <file>] [--shots <dir>]');
     process.exit(1);
   }
   const cfg = REELS[reel];
@@ -423,6 +539,20 @@ function main() {
   const shotsDir = path.resolve(CTX, argValue('--shots') || cfg.shotsDefault || path.join('shots', reel));
   const outDir = path.join(CTX, carousel ? 'carousel' : 'frames');
   fs.mkdirSync(outDir, { recursive: true });
+
+  // Checklist gate (reel-checklist.md). Runs before anything is rendered.
+  const { errors, warnings } = lintReel(reel, cfg, shotsDir, M);
+  warnings.forEach(w => console.warn('  ! ' + w));
+  errors.forEach(e => console.error('  x ' + e));
+  if (errors.length && !force) {
+    console.error(`\n${errors.length} blocking issue(s). Fix them, or re-run with --force to render anyway.`);
+    process.exit(3);
+  }
+  if (checkOnly) {
+    console.log(`checked ${reel}: ${errors.length} error(s), ${warnings.length} warning(s)`);
+    process.exit(errors.length ? 3 : 0);
+  }
+  if (warnings.length) console.log('');
 
   if (safeOverlay && !slidesOnly && !carousel) {
     console.warn('  ⚠ --safe burns the overlay into the video. Preview only — do not post this file.');

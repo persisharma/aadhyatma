@@ -220,6 +220,12 @@ node make-reel.js app --shots ../linkedin/shots/routine   # or any other shot di
 are `hook`, `text`, `verse`, `shot`, `cta` — each documented inline. The `tithi` reel
 is meant to be re-edited per occasion: change the strings, re-run, post.
 
+**Before you edit a manifest, read [`reel-checklist.md`](./reel-checklist.md)** — the
+per-reel production rules (hook, loop seam, copy budgets, pacing, Devanagari-first).
+The builder enforces the checkable ones on every render and quotes the section numbers;
+`node make-reel.js <reel> --check` runs the check without rendering, and `--force`
+overrides a blocking error.
+
 **Brand tokens** (`C`) mirror `../linkedin/make-reel.js` and `mobile/src/theme`:
 saffron `#B8621B`, parchment `#F3E7C9`, ink `#1A0E03`; Cormorant Garamond +
 Noto Serif Devanagari.
