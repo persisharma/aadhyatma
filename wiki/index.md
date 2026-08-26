@@ -18,6 +18,7 @@
 - [[notifications]] — seven local notification families (daily verse, vrat, **muhurat**, festive, personal Pitru Smaran, public Pitru Paksha, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.
 - [[home-widgets]] — cross-platform Home/Lock Screen widgets: versioned 14-day IST snapshot, atomic native bridges, generated extension/provider wiring, gallery, and exact deep links.
 - [[puja-vidhi]] — festival and personal-tithi household guidance: occurrence-scoped preparation, swipe-only conduct, private provenance, and shipped-text hand-offs.
+- [[bhog-naivedya]] — verified offerings, vrat food, prohibited offerings, parana meals, and the Vidhi kitchen-checklist integration.
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.

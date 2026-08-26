@@ -136,6 +136,8 @@ Feasibility is graded against the constraint that has actually stalled shipped w
 
 **Feasibility.** 🟡 Code is trivial (one registry, one screen section, one list surface — the upvas pattern, copied). **Content is the whole cost and it is egress-gated.** Ship the registry + surfaces + tests with entries at `draft`, and it flips to visible the moment verification is possible — the exact pattern PRD-09/P4 established.
 
+**Implemented 2026-08-25.** Content egress was available: ten profiles were checked against two or more independent published sources, variant conflicts were recorded rather than flattened, and all ten cleared the verified-only gate. Observance Detail, Vidhi preparation, the occurrence-scoped grocery checklist/share path, tests, and the full source dossier are specified in [`prds/23-bhog-naivedya-vrat-food.md`](./prds/23-bhog-naivedya-vrat-food.md). The original blanket Tulsi-plucking and durva prohibitions were not shipped because the source pass did not establish them as universal rules.
+
 **Stance guard.** Traditional practice as observed, with family-variance stated plainly. No dietary or health claims, no "sattvic detox" wellness register, and an explicit note that fasting leniency for children, the elderly, the unwell, and the pregnant is itself traditional — the upvas entries already say this and the tone should match exactly.
 
 ---

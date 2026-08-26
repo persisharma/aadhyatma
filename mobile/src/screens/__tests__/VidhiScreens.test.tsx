@@ -148,6 +148,19 @@ test('VidhiDetailScreen: routine-style samagri checklist, private provenance, sh
   expect(texts(r)).toContain(`0 / ${satyanarayanPuja.samagri.length}`);
   r.root.findByProps({ testID: 'vidhi-samagri-ledger' });
   expect(texts(r)).toContain('पंचामृत (दूध, दही, घी, शहद, शक्कर)');
+  // PRD-23: sourced guidance sits beside preparation, and its additive
+  // groceries use the same occurrence-scoped checklist store.
+  r.root.findByProps({ testID: 'vidhi-bhog-panel' });
+  expect(texts(r)).toContain('श्री सत्यनारायण प्रसाद');
+  r.root.findByProps({ testID: 'vidhi-bhog-shopping-ledger' });
+  const grocery = r.root.findByProps({ testID: 'vidhi-bhog-shopping-semolina-flour' });
+  expect(grocery.props.accessibilityState.checked).toBe(false);
+  act(() => grocery.props.onPress());
+  expect(
+    r.root.findByProps({ testID: 'vidhi-bhog-shopping-semolina-flour' }).props.accessibilityState.checked
+  ).toBe(true);
+  // Grocery completion does not corrupt the base-samagri progress total.
+  expect(texts(r)).toContain(`0 / ${satyanarayanPuja.samagri.length}`);
   const firstItem = satyanarayanPuja.samagri[0];
   const row = r.root.findByProps({ testID: `vidhi-samagri-${firstItem.itemEn}` });
   expect(row.props.accessibilityState.checked).toBe(false);
@@ -172,6 +185,8 @@ test('VidhiDetailScreen: routine-style samagri checklist, private provenance, sh
   const message = shareSpy.mock.calls[0][0].message as string;
   expect(message).toContain('श्री सत्यनारायण पूजा');
   expect(message).toContain(firstItem.itemHi);
+  expect(message).toContain('भोग और रसोई');
+  expect(message).toContain('सूजी या गेहूँ का आटा');
   expect(message).not.toContain('http'); // nothing but the list
 
   // पूजा mode: phase-grouped steps, and "पूजा प्रारम्भ" enters conduct at step 0.

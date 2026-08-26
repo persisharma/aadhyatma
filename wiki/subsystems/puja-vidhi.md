@@ -2,7 +2,7 @@
 title: Puja Vidhi
 type: subsystem
 sources: [mobile/src/data/vidhi/types.ts, mobile/src/data/vidhi/index.ts, mobile/src/data/vidhi/satyanarayan-puja.ts, mobile/src/data/vidhi/diwali-lakshmi-ganesh-puja.ts, mobile/src/data/vidhi/ganesh-chaturthi-sthapana.ts, mobile/src/data/vidhi/navratri-ghatasthapana.ts, mobile/src/data/vidhi/karwa-chauth-puja.ts, mobile/src/data/vidhi/maha-shivaratri-puja.ts, mobile/src/data/vidhi/shraddha-tarpan-vidhi.ts, mobile/src/data/vidhi/checklistStore.ts, mobile/src/screens/VidhiCatalogScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/screens/VidhiConductScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/screens/PitruSmaranDetailScreen.tsx, mobile/src/screens/PitruPakshaOverviewScreen.tsx, mobile/src/components/PitruPakshaDayChip.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/data/searchIndex.ts, mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/components/AddToRoutineSheet.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/navigation/types.ts, mobile/src/navigation/HomeStackNavigator.tsx, mobile/src/navigation/PanchangStackNavigator.tsx, mobile/src/navigation/MoreStackNavigator.tsx, mobile/src/navigation/__tests__/vidhiBackNavigation.test.ts, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/src/screens/__tests__/PitruSmaranScreens.test.tsx, mobile/src/components/__tests__/PitruPakshaDayChip.test.tsx, mobile/src/data/__tests__/vidhiContent.test.ts, mobile/.maestro/pitru-smaran.yaml, docs/roadmap/prds/19-puja-vidhi.md, docs/roadmap/prds/19-shraddha-vidhi-phase3.md, docs/roadmap/conventions/shraddha-tarpan-source-dossier.md, design.md]
-last_verified_date: 2026-08-20
+last_verified_date: 2026-08-25
 confidence: high
 status: current
 ---
@@ -61,6 +61,11 @@ manual-mark-only completion semantics. The detail header offers `AddToRoutineBut
 count, remaining count, progress track and rotating caret above the samagri ledger. Ledger rows use
 the routine 28 px check circle, bilingual item/meta copy, quantity and optional chips. Checked state
 is occurrence-scoped; the list can be shared as plain text.
+
+PRD-23 composes [[bhog-naivedya]] into this mode without changing the samagri domain: a verified
+Vidhi-linked profile renders its read-only food/offerings panel above the accordion, and additive
+kitchen purchases render in a separately headed checklist/share section. Grocery keys share the
+occurrence-scoped record but are namespaced and excluded from the samagri progress calculation.
 
 **Conduct.** `VidhiConductScreen` is a horizontal, `pagingEnabled` FlatList with one Daily
 Bhakti-style reading card per step. The screen holds `useKeepAwake()` (`expo-keep-awake`,
