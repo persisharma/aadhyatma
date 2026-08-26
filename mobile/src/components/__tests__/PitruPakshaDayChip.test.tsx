@@ -23,22 +23,22 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
 
 const trees: TestRenderer.ReactTestRenderer[] = [];
 
-// Own the timer lifecycle so sibling suites cannot change when the chip's
-// deferred observance lookup settles in a runInBand full-suite execution.
+// The chip resolves its observance through a real setTimeout(0) in useEffect, so
+// pin real timers here — otherwise fake timers leaked by a sibling suite (runInBand)
+// leave `observance` null and the guide door never renders.
 beforeEach(() => {
-  jest.useFakeTimers();
+  jest.useRealTimers();
 });
 
 afterEach(() => {
   act(() => trees.splice(0).forEach((tree) => tree.unmount()));
-  jest.useRealTimers();
   mockNavigate.mockClear();
   mockObservance = null;
 });
 
 async function render(): Promise<TestRenderer.ReactTestRenderer> {
   let tree!: TestRenderer.ReactTestRenderer;
-  act(() => {
+  await act(async () => {
     tree = TestRenderer.create(
       <FontScaleProvider>
         <ThemeProvider>
@@ -49,10 +49,18 @@ async function render(): Promise<TestRenderer.ReactTestRenderer> {
       </FontScaleProvider>
     );
   });
-  await act(async () => {
-    jest.runOnlyPendingTimers();
-    await Promise.resolve();
-  });
+  // The chip resolves its observance in a passive effect that schedules its own
+  // setTimeout(0), so awaiting a single macrotask here is a race: whether the
+  // chip's timer is scheduled BEFORE the awaited one depends on when React
+  // flushes passive effects, which in turn shifts with where this suite lands in
+  // the run order. It passed for as long as this file happened to run first.
+  // Flush until the chip has rendered instead — same assertions, no dependence
+  // on suite order. Bounded so a genuine regression still fails fast.
+  for (let i = 0; i < 20 && tree.toJSON() === null; i += 1) {
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+  }
   trees.push(tree);
   return tree;
 }
