@@ -62,7 +62,7 @@ function fastTypeLabel(fastType: UpvasFastType, lang: Lang): string {
     case 'phalahar':
       return contentByLang(lang, 'फलाहार', 'Phalahar');
     case 'one-meal':
-      return contentByLang(lang, 'एक भुक्त', 'One meal');
+      return contentByLang(lang, 'एक समय भोजन', 'One meal');
     case 'night-vigil':
       return contentByLang(lang, 'रात्रि जागरण', 'Night vigil');
   }

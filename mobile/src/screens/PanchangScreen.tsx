@@ -1884,10 +1884,6 @@ function CatalogLanding({
     festival: { glyph: '✺', hi: 'पर्व', en: 'Festivals' },
     upavas: { glyph: '☾', hi: 'उपवास', en: 'Upvas' },
   };
-  const categoryShort = (category: string): string =>
-    category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat')
-      : category === 'upavas' ? contentByLang(lang, 'उपवास', 'Upvas')
-        : contentByLang(lang, 'पर्व', 'Festival');
   // Same glyph vocabulary as the "Browse by type" tiles (ॐ / ☾ / ✺), reused on the
   // upcoming cards so they read as devotional, not as a plain list of text.
   const categoryGlyph = (category: string): string =>
@@ -1984,18 +1980,15 @@ function CatalogLanding({
                     style={({ pressed }) => [styles.upCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.75 }]}
                   >
                     <View style={styles.upCardTop}>
-                      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 20, color: colors.saffron }}>
+                      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.saffron }}>
                         {categoryGlyph(item.rule.category)}
                       </Text>
                       <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4 }}>
                         {formatShortDate(item.date, lang).toUpperCase()}
                       </Text>
                     </View>
-                    <Text numberOfLines={2} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 8 }}>
+                    <Text numberOfLines={1} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 6 }}>
                       {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
-                    </Text>
-                    <Text style={{ ...captionFont(categoryShort(item.rule.category)), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
-                      {categoryShort(item.rule.category)}
                     </Text>
                   </Pressable>
                 ))}
@@ -2016,20 +2009,19 @@ function CatalogLanding({
                     onPress={() => onOpenCategory(category)}
                     accessibilityRole="button"
                     accessibilityLabel={`${meta.en}, ${count}`}
-                    style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
+                    style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.8 }]}
                   >
-                    <View style={styles.tileGlyph}>
-                      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>{meta.glyph}</Text>
+                    <View style={[styles.tileGlyph, { backgroundColor: colors.saffronTint }]}>
+                      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.saffron }}>{meta.glyph}</Text>
                     </View>
-                    <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink, marginTop: 8 }}>
-                      {contentByLang(lang, meta.hi, meta.en)}
-                    </Text>
-                    <Text style={{ ...captionFont(lang === 'en' ? meta.hi : meta.en), fontSize: 12, color: colors.inkMuted }}>
-                      {lang === 'en' ? meta.hi : meta.en}
-                    </Text>
-                    <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
-                      {count} {contentByLang(lang, 'व्रत-पर्व', 'observances')}
-                    </Text>
+                    <View style={styles.tileInfo}>
+                      <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                        {contentByLang(lang, meta.hi, meta.en)}
+                      </Text>
+                      <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 1 }}>
+                        {count} {contentByLang(lang, 'व्रत-पर्व', 'observances')}
+                      </Text>
+                    </View>
                   </Pressable>
                 );
               })}
@@ -2037,20 +2029,19 @@ function CatalogLanding({
                 onPress={onOpenKathaLibrary}
                 accessibilityRole="button"
                 accessibilityLabel={`Katha library, ${kathaCount}`}
-                style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
+                style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.8 }]}
               >
-                <View style={styles.tileGlyph}>
-                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>॥</Text>
+                <View style={[styles.tileGlyph, { backgroundColor: colors.saffronTint }]}>
+                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.saffron }}>॥</Text>
                 </View>
-                <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink, marginTop: 8 }}>
-                  {contentByLang(lang, 'कथा', 'Katha')}
-                </Text>
-                <Text style={{ ...captionFont(lang === 'en' ? 'कथा संग्रह' : 'Katha library'), fontSize: 12, color: colors.inkMuted }}>
-                  {lang === 'en' ? 'कथा संग्रह' : 'Katha library'}
-                </Text>
-                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
-                  {kathaCount} {contentByLang(lang, 'कथाएँ', 'stories')}
-                </Text>
+                <View style={styles.tileInfo}>
+                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                    {contentByLang(lang, 'कथा', 'Katha')}
+                  </Text>
+                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 1 }}>
+                    {kathaCount} {contentByLang(lang, 'कथाएँ', 'stories')}
+                  </Text>
+                </View>
               </Pressable>
             </View>
             <View style={styles.finalTileRow}>
@@ -2063,24 +2054,23 @@ function CatalogLanding({
                   `पूजा विधि सूची, ${VIDHI_ENTRIES.length}`,
                   `Puja vidhi catalog, ${VIDHI_ENTRIES.length}`
                 )}
-                style={({ pressed }) => [styles.tile, styles.finalTile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
+                style={({ pressed }) => [styles.tile, styles.finalTile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.8 }]}
               >
-                <View style={styles.tileGlyph}>
-                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>॥</Text>
+                <View style={[styles.tileGlyph, { backgroundColor: colors.saffronTint }]}>
+                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.saffron }}>॥</Text>
                 </View>
-                <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink, marginTop: 8 }}>
-                  {contentByLang(lang, 'पूजा विधि', 'Puja Vidhi')}
-                </Text>
-                <Text style={{ ...captionFont(lang === 'en' ? 'चरण-दर-चरण पूजा' : 'Guided pujas'), fontSize: 12, color: colors.inkMuted }}>
-                  {lang === 'en' ? 'चरण-दर-चरण पूजा' : 'Guided pujas'}
-                </Text>
-                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
-                  {contentByLang(
-                    lang,
-                    `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'विधि' : 'विधियाँ'}`,
-                    `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'vidhi' : 'vidhis'}`
-                  )}
-                </Text>
+                <View style={styles.tileInfo}>
+                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                    {contentByLang(lang, 'पूजा विधि', 'Puja Vidhi')}
+                  </Text>
+                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 1 }}>
+                    {contentByLang(
+                      lang,
+                      `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'विधि' : 'विधियाँ'}`,
+                      `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'vidhi' : 'vidhis'}`
+                    )}
+                  </Text>
+                </View>
               </Pressable>
             </View>
           </View>
@@ -2160,19 +2150,25 @@ const styles = StyleSheet.create({
   jyotishSecondary: { minHeight: 42, flex: 1, paddingHorizontal: 15, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   jyotishSecondaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
-  upCard: { width: 150, borderWidth: 1, padding: 12 },
+  // Compact upcoming card (design.md § catalog view): date + glyph top row and a
+  // one-line name — the category caption is dropped, the ॐ/☾/✺ glyph carries it.
+  upCard: { width: 136, height: 72, borderWidth: 1, paddingVertical: 10, paddingHorizontal: 12 },
   upCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   tileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   // Explicit two-column width keeps the paired rows stable. The odd final tile
   // lives in its own row below so ScrollView measures it on every renderer.
-  tile: { width: '48%', borderWidth: 1, padding: 14, minHeight: 104 },
+  // Slim half-tile (design.md § catalog view): glyph roundel inline-left, title +
+  // count in one column, no secondary-language echo — the primary language stays
+  // in focus and the section costs ~60% less height than the old 104pt tiles.
+  tile: { width: '48%', height: 60, borderWidth: 1, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center', gap: 10 },
   finalTileRow: { marginTop: 12 },
   finalTile: { width: '100%' },
-  // Fixed-height glyph box: the category glyphs (ॐ ✺ ☾ ॥) come from different
-  // fonts with different line metrics; pinning the box height keeps the title and
-  // caption rows aligned across every tile. The glyph renders at its natural line
-  // height (no tight lineHeight, which clipped the tall ॐ) centred in this box.
-  tileGlyph: { height: 34, justifyContent: 'center', alignItems: 'flex-start' },
+  // Circular tinted roundel: the category glyphs (ॐ ✺ ☾ ॥) come from different
+  // fonts with different line metrics; centring them in a fixed 34pt circle keeps
+  // every tile's leading edge aligned. The glyph renders at its natural line
+  // height (no tight lineHeight, which clipped the tall ॐ).
+  tileGlyph: { width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center' },
+  tileInfo: { flex: 1, minWidth: 0 },
   systemToggle: {
     flexDirection: 'row',
     alignSelf: 'center',
