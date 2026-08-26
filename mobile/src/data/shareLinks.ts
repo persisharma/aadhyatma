@@ -7,7 +7,11 @@
 
 import type { Lang } from '@/data/gita/language';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
-import { STORY_MAX_HASHTAGS, buildVerseHashtags, formatHashtags } from '@/data/shareHashtags';
+import {
+  buildVerseHashtags,
+  formatHashtags,
+  type TimelyContext,
+} from '@/data/shareHashtags';
 
 const IOS_APP_ID = '6766086529';
 
@@ -64,12 +68,8 @@ const IG_FOLLOW: LocalizedStrings = {
 export type InstagramCaptionParams = ShareCaptionParams & {
   /** `LibraryEntry.id` of the text — the hashtag block is derived from it. */
   sourceId: string;
-  /**
-   * Which surface the caption is for. A story's hashtags go in a text sticker and
-   * Instagram accepts far fewer of them, so the block is trimmed to
-   * `STORY_MAX_HASHTAGS`. Defaults to `'post'`.
-   */
-  format?: 'post' | 'story';
+  /** Festival / vrat / vaar inputs for the share date; absent → a date-free block. */
+  timely?: TimelyContext;
 };
 
 /**
@@ -87,7 +87,7 @@ export function buildInstagramCaption(p: InstagramCaptionParams): string {
       sectionNameEn: p.sectionNameEn,
       verseLabelEn: p.verseLabelEn,
       lang: p.lang,
-      limit: p.format === 'story' ? STORY_MAX_HASHTAGS : undefined,
+      timely: p.timely,
     })
   );
   return [
