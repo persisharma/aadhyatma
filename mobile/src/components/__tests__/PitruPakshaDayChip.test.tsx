@@ -48,8 +48,20 @@ async function render(): Promise<TestRenderer.ReactTestRenderer> {
         </ThemeProvider>
       </FontScaleProvider>
     );
-    await new Promise((resolve) => setTimeout(resolve, 0));
   });
+  // The chip resolves its observance in a passive effect that schedules its own
+  // setTimeout(0), so awaiting a single macrotask here is a race: whether the
+  // chip's timer is scheduled BEFORE the awaited one depends on when React
+  // flushes passive effects, which in turn shifts with where this suite lands in
+  // the run order. It passed for as long as this file happened to run first.
+  // Flush until the chip has rendered instead — same assertions, no dependence
+  // on suite order. Bounded so a genuine regression still fails fast.
+  for (let i = 0; i < 20 && tree.toJSON() === null; i += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+  }
   trees.push(tree);
   return tree;
 }

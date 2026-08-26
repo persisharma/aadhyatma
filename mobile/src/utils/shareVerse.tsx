@@ -2,7 +2,6 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -19,9 +18,6 @@ import {
   formatHashtags,
   type TimelyContext,
 } from '@/data/shareHashtags';
-import { deityForWeekday } from '@/data/routine/vaar';
-import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
-import { useTodayKey } from '@/utils/useTodayKey';
 import {
   STORY_OUTPUT_HEIGHT,
   STORY_OUTPUT_WIDTH,
@@ -109,41 +105,33 @@ const OUTPUT_HEIGHT = 1350;
 /** Date-free default: the tag block falls back to exactly its pre-timely form. */
 const EMPTY_TIMELY: TimelyContext = {};
 
+type TimelyResolverProps = { onResolve: (t: TimelyContext) => void };
+let resolverComponent: React.ComponentType<TimelyResolverProps> | null = null;
+
 /**
- * Resolves the share date's observances + vaar deity and hands them up.
+ * Mounts the festival/vaar resolver, loading its module on first render rather
+ * than at import time.
  *
- * Renders nothing, and is mounted **only while the target picker is open**. That
- * placement is load-bearing: `useObservancesForDate` runs a whole-year observance
- * solve on a cold cache, and `ShareProvider` wraps the entire app — putting these
- * hooks in the provider body made every app start (and every reader unit test that
- * mounts the provider) pay for a solve nobody had asked for. Gated behind the
- * picker, the cost lands only when someone is actually about to share, by which
- * point Home's Today strip has almost always warmed the same year already.
+ * A static `import` would pull the panchang engine, the precomputed observance
+ * tables and `astronomy-engine` into the import graph of every screen that mounts
+ * this provider — which is all of them. Measured at ~10 % on every reader test
+ * suite (13.8 s → 15.2 s for one suite, cold cache), enough to push unrelated
+ * timing-sensitive suites past their 5 s timeouts and turn CI red.
  *
- * The resolve is `InteractionManager`-deferred, so on a genuinely cold cache the
- * first paint of the picker shows the date-free block and the occasion tags appear
- * a beat later. The resolved value is kept after the picker closes — it stays valid
- * for the rest of the day, so a second share is instant.
+ * A deferred `require` keeps the module in Metro's graph — no bundle change, this
+ * still ships over OTA — while deferring its *execution* to the moment the picker
+ * opens. `React.lazy` + `import()` would express the same thing, but Jest cannot
+ * run a real dynamic import without `--experimental-vm-modules`, and the resolver
+ * renders `null` so there is nothing for a Suspense boundary to do anyway.
  */
-function TimelyTagsResolver({ onResolve }: { onResolve: (t: TimelyContext) => void }) {
-  const [calendarSystem] = usePanchangCalendarSystem();
-  const todayKey = useTodayKey();
-  const today = useMemo(() => new Date(todayKey), [todayKey]);
-  const observances = useObservancesForDate(today, calendarSystem);
-
-  useEffect(() => {
-    onResolve({
-      occasions: observances.map((o) => ({
-        nameHi: o.rule.nameHi,
-        nameEn: o.rule.nameEn,
-        deityEn: o.rule.deityEn,
-      })),
-      weekday: today.getDay(),
-      weekdayDeity: deityForWeekday(today.getDay()),
-    });
-  }, [observances, today, onResolve]);
-
-  return null;
+function TimelyTagsResolver(props: TimelyResolverProps) {
+  if (!resolverComponent) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    resolverComponent = require('@/components/TimelyTagsResolver')
+      .default as React.ComponentType<TimelyResolverProps>;
+  }
+  const Resolver = resolverComponent;
+  return <Resolver {...props} />;
 }
 
 export function ShareProvider({ children }: { children: React.ReactNode }) {
