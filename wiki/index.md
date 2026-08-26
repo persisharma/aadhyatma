@@ -18,10 +18,12 @@
 - [[notifications]] — seven local notification families (daily verse, vrat, **muhurat**, festive, personal Pitru Smaran, public Pitru Paksha, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.
 - [[home-widgets]] — cross-platform Home/Lock Screen widgets: versioned 14-day IST snapshot, atomic native bridges, generated extension/provider wiring, gallery, and exact deep links.
 - [[puja-vidhi]] — festival and personal-tithi household guidance: occurrence-scoped preparation, swipe-only conduct, private provenance, and shipped-text hand-offs.
+- [[sharing]] — verse share card, the three-destination picker (other apps / Instagram post 4:5 / story-reel 9:16), the five-tag per-verse Instagram hashtag block, and the deferred-import rule that keeps the app-wide provider cheap.
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
 - [[deity-icons]] — deity avatar glyph system: 21 hand-drawn View-composition glyphs (`deityGlyphs/` total registry), baked palette, 36 dp canvas/scaling contract, no-emoji rule.
+- [[jest-suite-hygiene]] — why CI fails in files your diff never touched: suite order dependence, the shared 5 s time budget, and how to tell a real regression from a slow container.
 
 ## Entities
 _(none yet — add per-model pages as they warrant)_
